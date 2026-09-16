@@ -1,0 +1,1544 @@
+{
+  "schema_version": 1,
+  "created_on": "2026-09-17",
+  "question_count": 30,
+  "audience": "Israeli electrical/electronics students and junior candidates",
+  "status": "review_seed_not_production_import",
+  "notes": [
+    "One question identity has both Hebrew and English translations.",
+    "Source links are conceptual references, not evidence of employer usage.",
+    "Includes answer keys: do not serve this entire file as a public frontend asset.",
+    "Map topic slugs to catalog skill IDs and add approved rubrics before publication."
+  ],
+  "questions": [
+    {
+      "id": "HW-001",
+      "key": "sensor-majority",
+      "version": 1,
+      "category": "hardware",
+      "topic": "boolean_logic",
+      "topic_title": {
+        "en": "Boolean logic",
+        "he": "אלגברה בוליאנית"
+      },
+      "difficulty": 2,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 5,
+      "format": "truth_table",
+      "practice_modes": [
+        "quick"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: digital logic topic catalog",
+          "url": "https://hdlbits.01xz.net/wiki/Problem_sets"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Two-out-of-three sensor vote",
+          "prompt": "Three one-bit sensors A, B, C are 1 when they detect a fault. Assert alarm if at least two sensors are 1. Give all eight truth-table rows and a simplified Boolean expression. Explain why XOR of the three inputs is not sufficient.",
+          "hint": "List the three possible pairs of asserted sensors.",
+          "reference_solution": "alarm = (A & B) | (A & C) | (B & C). For ABC from 000 through 111 the outputs are 0,0,0,1,0,1,1,1. XOR detects odd parity, including a single asserted sensor, and rejects two asserted sensors."
+        },
+        "he": {
+          "title": "הכרעת רוב בין שלושה חיישנים",
+          "prompt": "שלושה חיישנים של ביט אחד, A, B, C, מחזירים 1 כאשר הם מזהים תקלה. יש להפעיל alarm כאשר לפחות שני חיישנים מחזירים 1. כתבו את כל שמונה שורות טבלת האמת וביטוי בוליאני מצומצם. הסבירו מדוע XOR של שלושת הקלטים אינו מספיק.",
+          "hint": "רשמו את שלושת הזוגות האפשריים של חיישנים פעילים.",
+          "reference_solution": "הביטוי הוא alarm = (A & B) | (A & C) | (B & C). עבור ABC מ־000 עד 111 הפלטים הם 0,0,0,1,0,1,1,1. פעולת XOR מזהה זוגיות אי־זוגית, ולכן מפעילה אזעקה גם לחיישן יחיד ואינה מפעילה אותה לשני חיישנים."
+        }
+      },
+      "markdown_path": "hardware/boolean_logic/hw-001-sensor-majority.md"
+    },
+    {
+      "id": "HW-002",
+      "key": "nand-only-enable",
+      "version": 1,
+      "category": "hardware",
+      "topic": "boolean_logic",
+      "topic_title": {
+        "en": "Boolean logic",
+        "he": "אלגברה בוליאנית"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 8,
+      "format": "construct",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: digital logic topic catalog",
+          "url": "https://hdlbits.01xz.net/wiki/Problem_sets"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Enable logic using only NAND gates",
+          "prompt": "A device runs when enable E is 1 and at least one request A or B is 1: Y = E & (A | B). Implement Y using only two-input NAND gates, with no free inverted inputs. Provide a gate-by-gate description and verify the cases E=0 and A=B=0. Minimum gate count is not required.",
+          "hint": "A NAND gate with both inputs tied together acts as an inverter.",
+          "reference_solution": "One five-gate implementation is nA=NAND(A,A), nB=NAND(B,B), R=NAND(nA,nB), nY=NAND(E,R), Y=NAND(nY,nY). R implements A OR B by De Morgan. Either disabled E or no requests forces Y=0."
+        },
+        "he": {
+          "title": "לוגיקת הפעלה באמצעות שערי NAND בלבד",
+          "prompt": "התקן פועל כאשר אות ההפעלה E הוא 1 ולפחות אחת מהבקשות A או B היא 1: Y = E & (A | B). ממשו את Y באמצעות שערי NAND בעלי שני קלטים בלבד, ללא קלטים מהופכים זמינים מראש. תארו את השערים ובדקו את המצבים E=0 וכן A=B=0. אין צורך להוכיח מספר שערים מינימלי.",
+          "hint": "שער NAND ששני קלטיו מחוברים לאותו אות פועל כמהפך.",
+          "reference_solution": "מימוש אפשרי בחמישה שערים: nA=NAND(A,A), nB=NAND(B,B), R=NAND(nA,nB), nY=NAND(E,R), Y=NAND(nY,nY). לפי דה־מורגן R מממש OR. אם E אינו פעיל או שאין בקשות, מתקבל Y=0."
+        }
+      },
+      "markdown_path": "hardware/boolean_logic/hw-002-nand-only-enable.md"
+    },
+    {
+      "id": "HW-003",
+      "key": "masked-equality",
+      "version": 1,
+      "category": "hardware",
+      "topic": "boolean_logic",
+      "topic_title": {
+        "en": "Boolean logic",
+        "he": "אלגברה בוליאנית"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 7,
+      "format": "construct",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: equality comparator background",
+          "url": "https://hdlbits.01xz.net/wiki/Mt2015_eq2"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Compare only enabled bits",
+          "prompt": "A, B, and M are four-bit vectors. M[i]=1 means bit i must be compared; M[i]=0 means ignore it. Produce equal=1 exactly when every selected bit matches. Give a Boolean or HDL expression. Determine the result for A=1010, B=1001, M=1100, and explain M=0000.",
+          "hint": "First compute the mismatch vector.",
+          "reference_solution": "equal = ~|((A ^ B) & M), where ~| is reduction NOR. The example gives 1. A zero mask selects no mismatches, so equal=1. Bitwise inversion alone would return a vector rather than the required single bit."
+        },
+        "he": {
+          "title": "השוואת ביטים לפי מסכה",
+          "prompt": "הווקטורים A, B, M הם ברוחב ארבעה ביטים. כאשר M[i]=1 יש להשוות את הביט i, וכאשר M[i]=0 מתעלמים ממנו. הפיקו equal=1 אם ורק אם כל הביטים שנבחרו זהים. כתבו ביטוי בוליאני או קוד תיאור חומרה. חשבו את התוצאה עבור A=1010, B=1001, M=1100, והסבירו את המקרה M=0000.",
+          "hint": "התחילו מווקטור המציין היכן הביטים שונים.",
+          "reference_solution": "הביטוי הוא equal = ~|((A ^ B) & M), כאשר ~| הוא reduction NOR. בדוגמה מתקבל 1. מסכה של אפסים אינה בוחרת אף אי־התאמה ולכן equal=1. היפוך ביטי רגיל בלבד היה מחזיר וקטור במקום ביט יחיד."
+        }
+      },
+      "markdown_path": "hardware/boolean_logic/hw-003-masked-equality.md"
+    },
+    {
+      "id": "HW-004",
+      "key": "mux-tree-eight-inputs",
+      "version": 1,
+      "category": "hardware",
+      "topic": "combinational_circuits",
+      "topic_title": {
+        "en": "Combinational circuits",
+        "he": "מעגלים קומבינטוריים"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 8,
+      "format": "construct",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: multiplexer background",
+          "url": "https://hdlbits.01xz.net/wiki/Mux2to1"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Build an eight-input multiplexer",
+          "prompt": "Build an 8-to-1, one-bit MUX from 2-to-1 MUX cells only. Input D[k] must be selected when the three-bit select equals k. Draw or describe the tree, count cells, and identify the select bit used at each level. Assume equal cell delay t and ignore wire delays; what is the maximum input-to-output delay?",
+          "hint": "Pair adjacent data inputs before combining pairs.",
+          "reference_solution": "Use four first-level cells controlled by s[0], two second-level cells by s[1], and one final cell by s[2]. Total 7 cells and 3t maximum data-path delay, assuming stable select signals."
+        },
+        "he": {
+          "title": "בניית מרבב בעל שמונה קלטים",
+          "prompt": "בנו MUX מסוג 8 ל־1, עם קלטים של ביט אחד, באמצעות תאי MUX מסוג 2 ל־1 בלבד. הקלט D[k] נבחר כאשר אות הבחירה בן שלושת הביטים שווה ל־k. תארו או ציירו את העץ, ספרו תאים וציינו איזה ביט בחירה משמש בכל רמה. הניחו השהיה t לכל תא והזניחו חיווט; מהי השהיית הקלט־פלט המרבית?",
+          "hint": "חברו תחילה זוגות של קלטים סמוכים.",
+          "reference_solution": "ארבעה תאים ברמה הראשונה נשלטים בידי s[0], שניים ברמה השנייה בידי s[1], ותא אחרון בידי s[2]. בסך הכול שבעה תאים והשהיה מרבית של 3t במסלול הנתונים, כאשר אותות הבחירה יציבים."
+        }
+      },
+      "markdown_path": "hardware/combinational_circuits/hw-004-mux-tree-eight-inputs.md"
+    },
+    {
+      "id": "HW-005",
+      "key": "interrupt-priority",
+      "version": 1,
+      "category": "hardware",
+      "topic": "combinational_circuits",
+      "topic_title": {
+        "en": "Combinational circuits",
+        "he": "מעגלים קומבינטוריים"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 8,
+      "format": "hdl",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: priority encoder background",
+          "url": "https://hdlbits.01xz.net/wiki/Always_case2"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Interrupt priority with a valid flag",
+          "prompt": "Four interrupt requests are req[3:0], with req[3] highest priority. Design a combinational encoder returning a two-bit index and valid. If no request is active, require valid=0 and index=0. Give logic or HDL, and outputs for req=0101, 1010, and 0000.",
+          "hint": "An ordered if/else chain makes priority explicit.",
+          "reference_solution": "Check bits in order 3,2,1,0 and default both outputs to zero. The outputs (valid,index) are (1,2), (1,3), (0,0). valid distinguishes no request from a request on bit 0."
+        },
+        "he": {
+          "title": "קידוד עדיפות לפסיקות",
+          "prompt": "ארבע בקשות פסיקה מופיעות ב־req[3:0], כאשר req[3] בעלת העדיפות הגבוהה ביותר. תכננו מקודד קומבינטורי המחזיר index בן שני ביטים ואות valid. אם אין בקשה פעילה, נדרש valid=0 וגם index=0. כתבו לוגיקה או קוד תיאור חומרה וחשבו פלט עבור req=0101, 1010, 0000.",
+          "hint": "שרשרת if/else מסודרת מגדירה את העדיפות במפורש.",
+          "reference_solution": "בודקים לפי הסדר 3,2,1,0 ומגדירים ברירת מחדל אפס לשני הפלטים. הזוגות (valid,index) הם (1,2), (1,3), (0,0). אות valid מבדיל בין היעדר בקשה לבין בקשה בביט 0."
+        }
+      },
+      "markdown_path": "hardware/combinational_circuits/hw-005-interrupt-priority.md"
+    },
+    {
+      "id": "HW-006",
+      "key": "enabled-decoder",
+      "version": 1,
+      "category": "hardware",
+      "topic": "combinational_circuits",
+      "topic_title": {
+        "en": "Combinational circuits",
+        "he": "מעגלים קומבינטוריים"
+      },
+      "difficulty": 2,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 5,
+      "format": "construct",
+      "practice_modes": [
+        "quick"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: digital logic topic catalog",
+          "url": "https://hdlbits.01xz.net/wiki/Problem_sets"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Enabled one-hot decoder",
+          "prompt": "Design a 2-to-4 decoder with enable E. For E=1 exactly one bit of Y[3:0] is 1, at index A[1:0]; for E=0 all outputs are 0. Give four equations and the outputs for A=10 at both enable values. Can two output bits be 1 for a stable valid input?",
+          "hint": "Write one minterm for each address.",
+          "reference_solution": "Y0=E&~A1&~A0; Y1=E&~A1&A0; Y2=E&A1&~A0; Y3=E&A1&A0. A=10 gives 0100 when enabled and 0000 otherwise. Terms are mutually exclusive for stable binary inputs; this does not claim glitch-free transitions."
+        },
+        "he": {
+          "title": "מפענח עם אות הפעלה",
+          "prompt": "תכננו מפענח 2 ל־4 עם אות הפעלה E. כאשר E=1 בדיוק ביט אחד ב־Y[3:0] הוא 1, באינדקס A[1:0]; כאשר E=0 כל הפלטים אפס. כתבו ארבע משוואות ואת הפלט עבור A=10 בשני ערכי ההפעלה. האם שני ביטי פלט יכולים להיות 1 עבור קלט חוקי ויציב?",
+          "hint": "כתבו minterm אחד לכל כתובת.",
+          "reference_solution": "המשוואות: Y0=E&~A1&~A0; Y1=E&~A1&A0; Y2=E&A1&~A0; Y3=E&A1&A0. עבור A=10 מתקבל 0100 כשההפעלה פעילה ו־0000 אחרת. התנאים זרים זה לזה בקלטים בינאריים יציבים; אין בכך הבטחה להיעדר גליצ׳ים בזמן מעבר."
+        }
+      },
+      "markdown_path": "hardware/combinational_circuits/hw-006-enabled-decoder.md"
+    },
+    {
+      "id": "HW-007",
+      "key": "rotate-versus-shift",
+      "version": 1,
+      "category": "hardware",
+      "topic": "combinational_circuits",
+      "topic_title": {
+        "en": "Combinational circuits",
+        "he": "מעגלים קומבינטוריים"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 7,
+      "format": "construct",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: rotation background",
+          "url": "https://hdlbits.01xz.net/wiki/Rotate100"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Rotate versus logical shift",
+          "prompt": "An eight-bit combinational unit performs either rotate-right or logical shift-right by k, where 0<=k<=7. For x=10110100 and k=3, give both outputs. Describe a MUX-stage implementation for variable k and explain where the discarded bits go in each mode.",
+          "hint": "Separate the three low bits from the remaining five.",
+          "reference_solution": "Rotate gives 10010110; logical shift gives 00010110. Three conditional stages shift/rotate by 1,2,4 under k[0],k[1],k[2]. Rotation wraps low bits into the high positions; logical shift inserts zeros."
+        },
+        "he": {
+          "title": "סיבוב לעומת הזזה לוגית",
+          "prompt": "יחידה קומבינטורית ברוחב שמונה ביטים מבצעת rotate-right או logical shift-right במספר מקומות k, כאשר 0<=k<=7. עבור x=10110100 ו־k=3, חשבו את שני הפלטים. תארו מימוש באמצעות שלבי MUX עבור k משתנה והסבירו מה קורה לביטים שיוצאים מצד ימין בכל מצב.",
+          "hint": "הפרידו את שלושת הביטים הנמוכים מחמשת הביטים האחרים.",
+          "reference_solution": "סיבוב נותן 10010110; הזזה לוגית נותנת 00010110. שלושה שלבים מותנים מבצעים הזזה או סיבוב ב־1,2,4 לפי k[0],k[1],k[2]. בסיבוב הביטים הנמוכים חוזרים לצד הגבוה; בהזזה לוגית נכנסים אפסים."
+        }
+      },
+      "markdown_path": "hardware/combinational_circuits/hw-007-rotate-versus-shift.md"
+    },
+    {
+      "id": "HW-008",
+      "key": "full-adder-composition",
+      "version": 1,
+      "category": "hardware",
+      "topic": "binary_arithmetic",
+      "topic_title": {
+        "en": "Binary arithmetic",
+        "he": "אריתמטיקה בינארית"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 8,
+      "format": "construct",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: full adder background",
+          "url": "https://hdlbits.01xz.net/wiki/Fadd"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Compose a full adder",
+          "prompt": "Construct a one-bit full adder using two half adders and one OR gate. Its inputs are A, B, Cin and outputs S, Cout. Derive both output equations and explain why the two intermediate carry signals cannot both be 1. Check A=B=Cin=1.",
+          "hint": "Use the sum from the first half adder as input to the second.",
+          "reference_solution": "First half adder: p=A^B and c1=A&B. Second: S=p^Cin and c2=p&Cin. Cout=c1|c2. c1=1 implies p=0, hence c2=0. For all inputs 1, S=1 and Cout=1."
+        },
+        "he": {
+          "title": "הרכבת מחבר מלא",
+          "prompt": "בנו full adder של ביט אחד באמצעות שני half adders ושער OR אחד. הקלטים הם A, B, Cin והפלטים S, Cout. גזרו משוואות לשני הפלטים והסבירו מדוע שני אותות הנשא הביניים אינם יכולים להיות 1 יחד. בדקו A=B=Cin=1.",
+          "hint": "העבירו את הסכום של המחבר הראשון לקלט של המחבר השני.",
+          "reference_solution": "המחבר הראשון מפיק p=A^B ו־c1=A&B. השני מפיק S=p^Cin ו־c2=p&Cin. הנשא הוא Cout=c1|c2. אם c1=1 אז p=0 ולכן c2=0. עבור שלושה קלטים של 1 מתקבלים S=1 ו־Cout=1."
+        }
+      },
+      "markdown_path": "hardware/binary_arithmetic/hw-008-full-adder-composition.md"
+    },
+    {
+      "id": "HW-009",
+      "key": "signed-overflow",
+      "version": 1,
+      "category": "hardware",
+      "topic": "binary_arithmetic",
+      "topic_title": {
+        "en": "Binary arithmetic",
+        "he": "אריתמטיקה בינארית"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 5,
+      "format": "short_answer",
+      "practice_modes": [
+        "quick"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: signed overflow background",
+          "url": "https://hdlbits.01xz.net/wiki/Exams/ece241_2014_q1c"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Carry and signed overflow",
+          "prompt": "Add four-bit words and keep only four result bits. For 0110+0101 and 1110+1111, give the result bits, carry-out, and signed-overflow flag. Interpret each input and result as two's complement. Give a sign-bit rule for signed overflow.",
+          "hint": "Four-bit two's complement represents -8 through 7.",
+          "reference_solution": "6+5 gives 1011 (-5), carry=0, overflow=1. (-2)+(-1) gives 1101 (-3), carry=1, overflow=0. Overflow occurs when inputs have the same sign and the result has the opposite sign."
+        },
+        "he": {
+          "title": "נשא וגלישה בחיבור מספרים מסומנים",
+          "prompt": "חברו מילים של ארבעה ביטים ושמרו ארבעה ביטים בתוצאה. עבור 0110+0101 ועבור 1110+1111, תנו את ביטי התוצאה, הנשא החוצה ודגל הגלישה המסומנת. פרשו קלטים ותוצאות במשלים ל־2. כתבו כלל המבוסס על ביטי הסימן לזיהוי גלישה.",
+          "hint": "טווח משלים ל־2 בארבעה ביטים הוא מ־‎-8 עד 7.",
+          "reference_solution": "החיבור 6+5 נותן 1011, כלומר ‎-5, עם carry=0 ו־overflow=1. החיבור ‎(-2)+(-1) נותן 1101, כלומר ‎-3, עם carry=1 ו־overflow=0. גלישה מתרחשת כשהקלטים בעלי אותו סימן והתוצאה בעלת סימן הפוך."
+        }
+      },
+      "markdown_path": "hardware/binary_arithmetic/hw-009-signed-overflow.md"
+    },
+    {
+      "id": "HW-010",
+      "key": "unsigned-saturating-adder",
+      "version": 1,
+      "category": "hardware",
+      "topic": "binary_arithmetic",
+      "topic_title": {
+        "en": "Binary arithmetic",
+        "he": "אריתמטיקה בינארית"
+      },
+      "difficulty": 4,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 8,
+      "format": "hdl",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: full adder background",
+          "url": "https://hdlbits.01xz.net/wiki/Fadd"
+        },
+        {
+          "name": "HDLBits: signed overflow background",
+          "url": "https://hdlbits.01xz.net/wiki/Exams/ece241_2014_q1c"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Unsigned saturating addition",
+          "prompt": "Design an eight-bit unsigned saturating adder: y=min(a+b,255). Provide pseudocode or HDL and the width of the intermediate sum. Evaluate (250,12), (120,80), and (255,0). Explain why inspecting only an eight-bit wrapped result is insufficient.",
+          "hint": "Preserve the carry before choosing the final output.",
+          "reference_solution": "Use a nine-bit sum formed by zero-extending both operands. If sum[8]=1 output 255, otherwise sum[7:0]. Results are 255,200,255. Truncation loses carry and can make an overflowing sum appear small."
+        },
+        "he": {
+          "title": "חיבור ללא סימן עם רוויה",
+          "prompt": "תכננו מחבר רוויה ללא סימן ברוחב שמונה ביטים: y=min(a+b,255). כתבו פסאודו־קוד או קוד תיאור חומרה וציינו את רוחב סכום הביניים. חשבו עבור (250,12), (120,80), (255,0). הסבירו מדוע בדיקת תוצאה שנקטעה לשמונה ביטים אינה מספיקה.",
+          "hint": "שמרו את הנשא לפני בחירת הפלט הסופי.",
+          "reference_solution": "מחשבים סכום בן תשעה ביטים לאחר הרחבת שני הקלטים באפס. אם sum[8]=1 מחזירים 255, אחרת את sum[7:0]. התוצאות הן 255,200,255. קיטוע מאבד את הנשא ועלול להפוך סכום שגלש לערך קטן."
+        }
+      },
+      "markdown_path": "hardware/binary_arithmetic/hw-010-unsigned-saturating-adder.md"
+    },
+    {
+      "id": "HW-011",
+      "key": "mod-six-counter",
+      "version": 1,
+      "category": "hardware",
+      "topic": "sequential_circuits",
+      "topic_title": {
+        "en": "Sequential circuits",
+        "he": "מעגלים סינכרוניים"
+      },
+      "difficulty": 4,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 10,
+      "format": "hdl",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: bounded counter background",
+          "url": "https://hdlbits.01xz.net/wiki/Count10"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Enabled modulo-six counter",
+          "prompt": "Design a positive-edge counter q that cycles 0,1,2,3,4,5,0 while enable=1 and holds while enable=0. Reset is synchronous, active high, and has priority. If q somehow equals 6 or 7, recover to 0 at the next edge even when enable=0. Give next-state logic and the trace from q=4 for enable samples 1,0,1,1 with reset=0.",
+          "hint": "Treat invalid states separately from normal counting.",
+          "reference_solution": "Use three flip-flops. Priority: reset -> 0; q>=6 -> 0; enabled -> (q==5 ? 0 : q+1); otherwise hold. Values after the four edges are 5,5,0,1. Recovery is above enable in priority."
+        },
+        "he": {
+          "title": "מונה מודולו שש עם הפעלה",
+          "prompt": "תכננו מונה q הפועל בחזית עולה ועובר בין 0,1,2,3,4,5,0 כאשר enable=1, ושומר ערך כאשר enable=0. האיפוס סינכרוני, פעיל בגבוה ובעל עדיפות. אם q מגיע ל־6 או 7, יש לחזור ל־0 בחזית הבאה גם אם enable=0. כתבו לוגיקת מצב הבא ואת העקבה החל מ־q=4 עבור ערכי enable של 1,0,1,1 כאשר reset=0.",
+          "hint": "הפרידו טיפול במצבים לא חוקיים מהספירה הרגילה.",
+          "reference_solution": "נדרשים שלושה flip-flops. סדר העדיפויות: איפוס לאפס; התאוששות לאפס אם q>=6; אם מופעל, מעבר לאפס מ־5 או הגדלה באחד; אחרת שמירה. הערכים אחרי ארבע החזיתות הם 5,5,0,1. ההתאוששות קודמת להפעלה."
+        }
+      },
+      "markdown_path": "hardware/sequential_circuits/hw-011-mod-six-counter.md"
+    },
+    {
+      "id": "HW-012",
+      "key": "load-and-serial-shift",
+      "version": 1,
+      "category": "hardware",
+      "topic": "sequential_circuits",
+      "topic_title": {
+        "en": "Sequential circuits",
+        "he": "מעגלים סינכרוניים"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 8,
+      "format": "hdl",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: rotation background",
+          "url": "https://hdlbits.01xz.net/wiki/Rotate100"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Load and serial shift priorities",
+          "prompt": "A four-bit register has synchronous active-high reset, parallel load, and shift-right enable. Priority is reset, then load, then shift, then hold. A shift inserts serial_in at bit 3. Write next-state logic. Starting from q=1010, apply a shift with serial_in=1, then load=1 and shift=1 with data=0110, then hold. Give the three resulting values.",
+          "hint": "Write the priority chain before describing the shift.",
+          "reference_solution": "Use if/else priority and q_next={serial_in,q[3:1]} for a shift. The resulting values are 1101,0110,0110. Simultaneous load and shift performs only the load."
+        },
+        "he": {
+          "title": "עדיפויות בטעינה ובהזזה טורית",
+          "prompt": "לאוגר בן ארבעה ביטים יש איפוס סינכרוני פעיל בגבוה, טעינה מקבילית והפעלת הזזה ימינה. סדר העדיפויות הוא איפוס, טעינה, הזזה, שמירה. בהזזה מוכנס serial_in לביט 3. כתבו לוגיקת מצב הבא. החל מ־q=1010 בצעו הזזה עם serial_in=1, אחר כך load=1 וגם shift=1 עם data=0110, ואז שמירה. תנו את שלושת הערכים; האיפוס אינו פעיל בעקבה.",
+          "hint": "כתבו את שרשרת העדיפויות לפני מימוש ההזזה.",
+          "reference_solution": "משתמשים בסדר if/else ובהזזה q_next={serial_in,q[3:1]}. התוצאות הן 1101,0110,0110. כאשר טעינה והזזה פעילות יחד, מתבצעת טעינה בלבד."
+        }
+      },
+      "markdown_path": "hardware/sequential_circuits/hw-012-load-and-serial-shift.md"
+    },
+    {
+      "id": "HW-013",
+      "key": "sampled-rising-edge",
+      "version": 1,
+      "category": "hardware",
+      "topic": "sequential_circuits",
+      "topic_title": {
+        "en": "Sequential circuits",
+        "he": "מעגלים סינכרוניים"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 8,
+      "format": "waveform",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: edge detection background",
+          "url": "https://hdlbits.01xz.net/wiki/Edgedetect"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "One-cycle sampled rising-edge pulse",
+          "prompt": "Input x is synchronous to clk. At each rising edge, update registered pulse to 1 if the newly sampled x is 1 and the previous sample was 0; otherwise update it to 0. Store the current sample for next time. Reset both registers synchronously to 0. After reset, x samples are 0,1,1,0,1. Give pulse after each edge and explain why a continuously high x produces only one pulse.",
+          "hint": "The stored previous value must refer to the preceding edge.",
+          "reference_solution": "Use pulse <= x & ~previous and previous <= x with nonblocking assignments. The pulse trace is 0,1,0,0,1. A sustained high input has previous=1 after its first high sample."
+        },
+        "he": {
+          "title": "פולס של מחזור אחד לזיהוי עלייה",
+          "prompt": "הקלט x סינכרוני לשעון clk. בכל חזית עולה עדכנו פלט רשום pulse ל־1 אם הדגימה הנוכחית של x היא 1 והקודמת הייתה 0; אחרת עדכנו ל־0. שמרו את הדגימה הנוכחית לפעם הבאה. שני האוגרים מתאפסים סינכרונית ל־0. לאחר האיפוס דגימות x הן 0,1,1,0,1. תנו את pulse אחרי כל חזית והסבירו מדוע x שנשאר גבוה יוצר פולס יחיד.",
+          "hint": "הערך previous צריך להתייחס לחזית הקודמת.",
+          "reference_solution": "משתמשים בהשמות לא חוסמות: pulse <= x & ~previous וגם previous <= x. עקבת pulse היא 0,1,0,0,1. לאחר הדגימה הגבוהה הראשונה, previous שווה 1 ולכן קלט שנשאר גבוה אינו יוצר פולס נוסף."
+        }
+      },
+      "markdown_path": "hardware/sequential_circuits/hw-013-sampled-rising-edge.md"
+    },
+    {
+      "id": "HW-014",
+      "key": "overlapping-sequence-1011",
+      "version": 1,
+      "category": "hardware",
+      "topic": "finite_state_machines",
+      "topic_title": {
+        "en": "Finite state machines",
+        "he": "מכונות מצבים"
+      },
+      "difficulty": 5,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 15,
+      "format": "construct",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: sequence recognition background",
+          "url": "https://hdlbits.01xz.net/wiki/Fsm_hdlc"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Overlapping 1011 detector",
+          "prompt": "Design a Mealy FSM that consumes one input bit per cycle and detects the suffix 1011. Overlap is allowed. Give state meanings and the full transition/output table. For stream 1011011, identify detections using one-based bit positions. The output is evaluated from the current state and current input before the state update.",
+          "hint": "Track the longest suffix that is also a prefix of the target.",
+          "reference_solution": "States S0,S1,S2,S3 represent matched prefixes empty,1,10,101. On inputs 0/1 respectively, next states are S0/S1, S2/S1, S0/S3, S2/S1. Only S3 with input 1 emits 1. Detections are at positions 4 and 7; keeping S1 after a detection preserves overlap."
+        },
+        "he": {
+          "title": "גלאי לרצף חופף 1011",
+          "prompt": "תכננו Mealy FSM הקולט ביט אחד בכל מחזור ומזהה סיומת 1011, כולל חפיפה. הגדירו משמעות לכל מצב וכתבו טבלת מעברים ופלט מלאה. עבור הזרם 1011011 ציינו באילו מיקומי ביט מתרחשים זיהויים, כשהספירה מתחילה ב־1. הפלט מחושב מהמצב והקלט הנוכחיים לפני עדכון המצב.",
+          "hint": "עקבו אחר הסיומת הארוכה ביותר שהיא גם קידומת של הרצף המבוקש.",
+          "reference_solution": "המצבים S0,S1,S2,S3 מייצגים קידומות ריקה,1,10,101. עבור הקלטים 0/1 המצבים הבאים הם בהתאמה S0/S1, S2/S1, S0/S3, S2/S1. רק במצב S3 עם קלט 1 הפלט הוא 1. הזיהויים במיקומים 4 ו־7; מעבר ל־S1 לאחר זיהוי שומר את החפיפה."
+        }
+      },
+      "markdown_path": "hardware/finite_state_machines/hw-014-overlapping-sequence-1011.md"
+    },
+    {
+      "id": "HW-015",
+      "key": "credit-dispenser",
+      "version": 1,
+      "category": "hardware",
+      "topic": "finite_state_machines",
+      "topic_title": {
+        "en": "Finite state machines",
+        "he": "מכונות מצבים"
+      },
+      "difficulty": 4,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 12,
+      "format": "construct",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "MIT 6.111: sequential assignments and FSMs",
+          "url": "https://classes.csail.mit.edu/6.111/f2006/handouts/L06.pdf"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Credit dispenser state machine",
+          "prompt": "A dispenser costs 3 credits. Each cycle accepts a coin worth 1 or 2, or no coin; these events are mutually exclusive. Track credit 0,1,2. When the current credit plus the coin reaches or exceeds 3, assert dispense for that event, return any excess as change, and return credit to 0. Define a Mealy transition table, including outputs, and trace coins 2,2,1,2 from reset.",
+          "hint": "Define outputs on transitions that cross the price threshold.",
+          "reference_solution": "No coin holds credit and emits (dispense,change)=(0,0). For a coin v, total=c+v: if total<3, next=total and outputs zero; otherwise next=0, dispense=1, change=total-3. The trace of (next credit,dispense,change) is (2,0,0),(0,1,1),(1,0,0),(0,1,0)."
+        },
+        "he": {
+          "title": "מכונת מצבים לצבירת קרדיט",
+          "prompt": "מכונה דורשת 3 יחידות קרדיט. בכל מחזור מתקבל מטבע של 1, מטבע של 2 או שאין מטבע; האירועים זרים זה לזה. עקבו אחר קרדיט 0,1,2. כאשר הקרדיט ועוד המטבע מגיעים לפחות ל־3, הפעילו dispense באותו אירוע, החזירו את העודף ב־change ואפסו את הקרדיט. כתבו טבלת Mealy מלאה עם פלטים ועקבה למטבעות 2,2,1,2 אחרי איפוס.",
+          "hint": "הגדירו את הפלטים במעברים שחוצים את מחיר המוצר.",
+          "reference_solution": "ללא מטבע שומרים קרדיט ומפיקים (dispense,change)=(0,0). עבור מטבע v מחשבים total=c+v: אם total<3 שומרים את הסכום והפלטים אפס; אחרת עוברים לאפס, מפעילים dispense ומחזירים total-3. העקבה (קרדיט הבא,dispense,change) היא (2,0,0),(0,1,1),(1,0,0),(0,1,0)."
+        }
+      },
+      "markdown_path": "hardware/finite_state_machines/hw-015-credit-dispenser.md"
+    },
+    {
+      "id": "HW-016",
+      "key": "request-acknowledge",
+      "version": 1,
+      "category": "hardware",
+      "topic": "finite_state_machines",
+      "topic_title": {
+        "en": "Finite state machines",
+        "he": "מכונות מצבים"
+      },
+      "difficulty": 4,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 12,
+      "format": "construct",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "MIT 6.111: sequential assignments and FSMs",
+          "url": "https://classes.csail.mit.edu/6.111/f2006/handouts/L06.pdf"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Request and acknowledgement controller",
+          "prompt": "Design a Moore FSM with states IDLE, WAIT_ACK, DONE. In IDLE, a sampled start=1 enters WAIT_ACK. In WAIT_ACK, req=1 until a sampled ack=1 enters DONE. DONE asserts done=1 for one full cycle then returns to IDLE unconditionally. start outside IDLE and ack outside WAIT_ACK are ignored. Reset enters IDLE. Give outputs, transitions, and behavior if start remains high continuously.",
+          "hint": "Do not add an undocumented wait-for-start-to-fall state.",
+          "reference_solution": "Outputs (req,done): IDLE=(0,0), WAIT_ACK=(1,0), DONE=(0,1). Transitions follow the specified guards. A continuously high start launches another request at the next sampling edge in IDLE after DONE. This is a level-sensitive request interface, not a once-per-rising-edge interface."
+        },
+        "he": {
+          "title": "בקר בקשה ואישור",
+          "prompt": "תכננו Moore FSM עם המצבים IDLE, WAIT_ACK, DONE. ב־IDLE דגימת start=1 מעבירה ל־WAIT_ACK. ב־WAIT_ACK הפלט req=1 עד שדגימת ack=1 מעבירה ל־DONE. במצב DONE הפלט done=1 במשך מחזור שלם ואז חוזרים ל־IDLE ללא תנאי. מתעלמים מ־start מחוץ ל־IDLE ומ־ack מחוץ ל־WAIT_ACK. איפוס מעביר ל־IDLE. תנו פלטים, מעברים והתנהגות כאשר start נשאר גבוה ברציפות.",
+          "hint": "אל תוסיפו מצב המתנה לירידת start שלא נדרש במפרט.",
+          "reference_solution": "הפלטים (req,done): במצב IDLE הם (0,0), ב־WAIT_ACK הם (1,0), וב־DONE הם (0,1). המעברים לפי התנאים שניתנו. start שנשאר גבוה מפעיל בקשה נוספת בחזית הדגימה הבאה ב־IDLE לאחר DONE. הממשק רגיש לרמה ואינו מבטיח בקשה יחידה לכל עלייה."
+        }
+      },
+      "markdown_path": "hardware/finite_state_machines/hw-016-request-acknowledge.md"
+    },
+    {
+      "id": "HW-017",
+      "key": "setup-hold-calculation",
+      "version": 1,
+      "category": "hardware",
+      "topic": "timing_and_cdc",
+      "topic_title": {
+        "en": "Timing and clock-domain crossing",
+        "he": "תזמון ומעבר בין תחומי שעון"
+      },
+      "difficulty": 5,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 10,
+      "format": "short_answer",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "MIT 6.004: sequential logic and timing",
+          "url": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c5/c5s1/"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Setup and hold constraints",
+          "prompt": "For a register-to-register path, clock-to-Q max/min are 0.12/0.05 ns, combinational delay max/min are 1.10/0.08 ns, setup is 0.18 ns, and hold is 0.10 ns. Assume zero skew, zero jitter, and no additional uncertainty. Find the minimum clock period, maximum frequency, and hold slack. Does reducing frequency repair a hold violation?",
+          "hint": "Use maximum delays for setup and minimum delays for hold.",
+          "reference_solution": "Tmin=0.12+1.10+0.18=1.40 ns; fmax is about 714.3 MHz. Hold slack=0.05+0.08-0.10=+0.03 ns, so this path passes hold. Hold concerns the same capture edge; lowering frequency does not repair such a minimum-delay violation under these assumptions."
+        },
+        "he": {
+          "title": "חישוב אילוצי Setup ו־Hold",
+          "prompt": "במסלול בין שני אוגרים, זמני clock-to-Q המרבי והמזערי הם 0.12/0.05 ננו־שניות, והשהיות הלוגיקה המרבית והמזערית הן 1.10/0.08 ננו־שניות. זמן setup הוא 0.18 ננו־שניות וזמן hold הוא 0.10 ננו־שניות. הניחו skew ואי־ודאות אפס, ללא jitter. חשבו זמן מחזור מזערי, תדר מרבי ו־hold slack. האם הורדת התדר מתקנת הפרת hold?",
+          "hint": "השתמשו בהשהיות מרביות ל־setup ובמזעריות ל־hold.",
+          "reference_solution": "זמן המחזור המזערי הוא 0.12+1.10+0.18=1.40 ננו־שניות; התדר המרבי כ־714.3 מגה־הרץ. מרווח hold הוא 0.05+0.08-0.10=+0.03 ננו־שניות, ולכן האילוץ מתקיים. בדיקת hold מתייחסת לאותה חזית קליטה; הורדת התדר אינה מתקנת הפרת השהיה מזערית בהנחות האלה."
+        }
+      },
+      "markdown_path": "hardware/timing_and_cdc/hw-017-setup-hold-calculation.md"
+    },
+    {
+      "id": "HW-018",
+      "key": "asynchronous-pulse-transfer",
+      "version": 1,
+      "category": "hardware",
+      "topic": "timing_and_cdc",
+      "topic_title": {
+        "en": "Timing and clock-domain crossing",
+        "he": "תזמון ומעבר בין תחומי שעון"
+      },
+      "difficulty": 5,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 10,
+      "format": "explain",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "Nandland: metastability",
+          "url": "https://nandland.com/lesson-13-metastability/"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "A pulse crossing into a slower clock",
+          "prompt": "A source clock is 100 MHz and a destination clock is 25 MHz with unrelated phase. A source event is high for one source cycle. Someone proposes two destination-clock flip-flops in series. Explain whether every event is guaranteed to arrive, distinguish pulse loss from metastability, and propose a handshake that guarantees delivery if the source waits for acknowledgement before sending another event.",
+          "hint": "Compare pulse width with destination sampling interval.",
+          "reference_solution": "A 10 ns pulse can fall entirely between 40 ns destination edges. Two flops reduce metastability propagation probability but do not guarantee pulse capture or eliminate metastability. Hold a request until a synchronized acknowledgement returns; synchronize each crossing and complete the return-to-zero handshake before reusing it."
+        },
+        "he": {
+          "title": "העברת פולס לתחום שעון איטי",
+          "prompt": "שעון המקור הוא 100 מגה־הרץ ושעון היעד הוא 25 מגה־הרץ, עם מופע לא קשור. אירוע המקור גבוה במשך מחזור מקור יחיד. מוצע להעבירו דרך שני flip-flops בטור הפועלים בשעון היעד. האם כל אירוע מובטח להגיע? הבדילו בין אובדן פולס ל־metastability והציעו handshake המבטיח העברה אם המקור ממתין לאישור לפני האירוע הבא.",
+          "hint": "השוו את רוחב הפולס למרווח בין דגימות היעד.",
+          "reference_solution": "פולס של 10 ננו־שניות יכול להופיע כולו בין חזיתות יעד המרוחקות 40 ננו־שניות. שני אוגרים מקטינים את הסתברות התפשטות metastability, אך אינם מבטיחים קליטת פולס או מבטלים metastability. מחזיקים בקשה עד שחוזר אישור מסונכרן; מסנכרנים כל מעבר ומשלימים handshake של חזרה לאפס לפני אירוע חדש."
+        }
+      },
+      "markdown_path": "hardware/timing_and_cdc/hw-018-asynchronous-pulse-transfer.md"
+    },
+    {
+      "id": "HW-019",
+      "key": "nonblocking-pipeline-trace",
+      "version": 1,
+      "category": "hardware",
+      "topic": "hdl_reasoning",
+      "topic_title": {
+        "en": "HDL reasoning",
+        "he": "ניתוח קוד תיאור חומרה"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 7,
+      "format": "waveform",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "MIT 6.111: sequential assignments and FSMs",
+          "url": "https://classes.csail.mit.edu/6.111/f2006/handouts/L06.pdf"
+        }
+      ],
+      "shared_code": "always @(posedge clk) begin\n  if (reset) begin\n    a <= 1'b0;\n    b <= 1'b0;\n  end else begin\n    a <= in_bit;\n    b <= a;\n  end\nend",
+      "code_language": "verilog",
+      "translations": {
+        "en": {
+          "title": "Trace a nonblocking pipeline",
+          "prompt": "In the shared Verilog block, a and b are one-bit registers and are initially 0 after synchronous reset. With reset=0, the next three sampled input values are 1,0,1. Give (a,b) after each edge. Then replace both <= operators inside the else block with = and give the values produced by this block in simulation. Explain the difference; assume no other process reads or writes these registers.",
+          "hint": "Mark which value of a the second assignment reads.",
+          "reference_solution": "With nonblocking assignments: (1,0),(0,1),(1,0). With blocking assignments in this order: (1,1),(0,0),(1,1). Nonblocking right-hand sides use old register values; blocking updates a before b reads it within this block."
+        },
+        "he": {
+          "title": "מעקב אחר צינור עם השמות לא חוסמות",
+          "prompt": "בקטע Verilog המשותף a ו־b הם אוגרים של ביט אחד, ששניהם אפס לאחר איפוס סינכרוני. כאשר reset=0, שלוש דגימות הקלט הבאות הן 1,0,1. תנו את (a,b) אחרי כל חזית. לאחר מכן החליפו את שני אופרטורי <= שבענף else באופרטור = ותנו את הערכים שמפיק קטע זה בסימולציה. הסבירו את ההבדל; הניחו שאין תהליך אחר שקורא או כותב את האוגרים.",
+          "hint": "סמנו איזה ערך של a נקרא בהשמה השנייה.",
+          "reference_solution": "בהשמות לא חוסמות: (1,0),(0,1),(1,0). בהשמות חוסמות בסדר הנתון: (1,1),(0,0),(1,1). בהשמות לא חוסמות צד ימין משתמש בערכי האוגרים הישנים; בהשמות חוסמות a מתעדכן לפני ש־b קורא אותו בתוך הקטע."
+        }
+      },
+      "markdown_path": "hardware/hdl_reasoning/hw-019-nonblocking-pipeline-trace.md"
+    },
+    {
+      "id": "HW-020",
+      "key": "incomplete-combinational-assignment",
+      "version": 1,
+      "category": "hardware",
+      "topic": "hdl_reasoning",
+      "topic_title": {
+        "en": "HDL reasoning",
+        "he": "ניתוח קוד תיאור חומרה"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 7,
+      "format": "hdl",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "HDLBits: incomplete assignments and latches",
+          "url": "https://hdlbits.01xz.net/wiki/Always_nolatches"
+        }
+      ],
+      "shared_code": "always @(*) begin\n  if (en)\n    y = d;\nend",
+      "code_language": "verilog",
+      "translations": {
+        "en": {
+          "title": "Find the unintended latch",
+          "prompt": "The shared Verilog block is intended to implement y = en ? d : 0, with four-bit y and d. What happens when en=0 in the current code, and what hardware behavior is inferred? Fix it as combinational logic and explain why adding a clock would change the specification.",
+          "hint": "Check whether every output receives a value on every path.",
+          "reference_solution": "When en=0, y is not assigned and retains its previous value: latch behavior. Add else y=4'b0000, or set a default y=0 before the if. A clocked register would update only on clock edges and would not implement the intended combinational function."
+        },
+        "he": {
+          "title": "איתור Latch לא מכוון",
+          "prompt": "קטע Verilog המשותף אמור לממש y = en ? d : 0, כאשר y ו־d הם בני ארבעה ביטים. מה קורה בקוד הקיים כאשר en=0, ואיזו התנהגות חומרה מתקבלת? תקנו ללוגיקה קומבינטורית והסבירו מדוע הוספת שעון תשנה את המפרט.",
+          "hint": "בדקו האם כל פלט מקבל ערך בכל מסלול ביצוע.",
+          "reference_solution": "כאשר en=0 אין השמה ל־y ולכן הוא שומר את ערכו הקודם: התנהגות של latch. מוסיפים else y=4'b0000, או ברירת מחדל y=0 לפני ה־if. אוגר עם שעון היה מתעדכן רק בחזיתות ולא היה מממש את הפונקציה הקומבינטורית שנדרשה."
+        }
+      },
+      "markdown_path": "hardware/hdl_reasoning/hw-020-incomplete-combinational-assignment.md"
+    },
+    {
+      "id": "SW-001",
+      "key": "count-set-bits",
+      "version": 1,
+      "category": "software",
+      "topic": "bit_manipulation",
+      "topic_title": {
+        "en": "Bit manipulation",
+        "he": "פעולות על ביטים"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 8,
+      "format": "code",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "Python documentation: integer and bitwise operations",
+          "url": "https://docs.python.org/3/library/stdtypes.html"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Count asserted status bits",
+          "prompt": "Given a nonnegative integer x with at most 32 bits, count its 1 bits without a built-in population-count function or converting it to a string. Give code or pseudocode, explain why it terminates, and analyze complexity. Test x=0, x=0b10110100, and x=0xFFFFFFFF.",
+          "hint": "Inspect how subtracting one changes the lowest set bit.",
+          "reference_solution": "Repeatedly apply x = x & (x-1) while x!=0 and increment a counter. Each step clears the lowest set bit. Counts: 0,4,32. For word width W and k set bits, time O(k)<=O(W), extra space O(1); at fixed W=32 the worst case is bounded."
+        },
+        "he": {
+          "title": "ספירת ביטים פעילים",
+          "prompt": "נתון מספר שלם לא שלילי x המיוצג לכל היותר ב־32 ביטים. ספרו את ביטי ה־1 ללא פונקציית population count מובנית וללא המרה למחרוזת. כתבו קוד או פסאודו־קוד, הסבירו מדוע הוא מסתיים ונתחו סיבוכיות. בדקו x=0, x=0b10110100, x=0xFFFFFFFF.",
+          "hint": "בדקו כיצד חיסור אחד משנה את ביט ה־1 הנמוך ביותר.",
+          "reference_solution": "כל עוד x שונה מאפס מבצעים x = x & (x-1) ומגדילים מונה. כל צעד מנקה את ביט ה־1 הנמוך ביותר. התוצאות: 0,4,32. עבור רוחב מילה W ו־k ביטים פעילים, הזמן O(k)<=O(W) והזיכרון הנוסף O(1); ברוחב קבוע 32 מספר הצעדים חסום."
+        }
+      },
+      "markdown_path": "software/bit_manipulation/sw-001-count-set-bits.md"
+    },
+    {
+      "id": "SW-002",
+      "key": "power-of-two-check",
+      "version": 1,
+      "category": "software",
+      "topic": "bit_manipulation",
+      "topic_title": {
+        "en": "Bit manipulation",
+        "he": "פעולות על ביטים"
+      },
+      "difficulty": 2,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 5,
+      "format": "code",
+      "practice_modes": [
+        "quick"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "Python documentation: integer and bitwise operations",
+          "url": "https://docs.python.org/3/library/stdtypes.html"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Recognize a power of two",
+          "prompt": "Write a test for whether an unsigned 32-bit integer x is a power of two, using a constant number of bitwise/arithmetic operations and no loop. Define 1 as a power of two and 0 as not. Explain your expression and evaluate 0,1,12,16, and 0x80000000.",
+          "hint": "A power of two has exactly one 1 bit.",
+          "reference_solution": "x!=0 && (x & (x-1))==0. A positive power of two has exactly one set bit. Results: false,true,false,true,true. The nonzero guard prevents accepting 0."
+        },
+        "he": {
+          "title": "זיהוי חזקה של שתיים",
+          "prompt": "כתבו בדיקה האם מספר שלם x ללא סימן ברוחב 32 ביטים הוא חזקה של שתיים, באמצעות מספר קבוע של פעולות ביטיות או חשבוניות וללא לולאה. הגדירו 1 כחזקה של שתיים ו־0 כלא. הסבירו את הביטוי ובדקו 0,1,12,16, 0x80000000.",
+          "hint": "לחזקה של שתיים יש בדיוק ביט 1 אחד.",
+          "reference_solution": "הביטוי הוא x!=0 && (x & (x-1))==0. לחזקה חיובית של שתיים יש בדיוק ביט 1 יחיד. התוצאות: false,true,false,true,true. התנאי השולל אפס מונע קבלה שגויה שלו."
+        }
+      },
+      "markdown_path": "software/bit_manipulation/sw-002-power-of-two-check.md"
+    },
+    {
+      "id": "SW-003",
+      "key": "extract-register-field",
+      "version": 1,
+      "category": "software",
+      "topic": "bit_manipulation",
+      "topic_title": {
+        "en": "Bit manipulation",
+        "he": "פעולות על ביטים"
+      },
+      "difficulty": 4,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 8,
+      "format": "code",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "SEI CERT C: valid shift counts",
+          "url": "https://cmu-sei.github.io/secure-coding-standards/sei-cert-c-coding-standard/rules/integers-int/int34-c/"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Extract a register field",
+          "prompt": "Write C code or precise pseudocode to extract width consecutive bits from uint32_t reg, starting at bit lsb (bit 0 is least significant), returning them right-aligned. Valid inputs satisfy 1<=width<=32, 0<=lsb<=31, and lsb+width<=32. Avoid any shift by 32. Evaluate reg=0xD6, lsb=2, width=3 and the full-width case.",
+          "hint": "Handle the full-width boundary before constructing the mask.",
+          "reference_solution": "For width==32 return reg (validity implies lsb==0). Otherwise mask=(UINT32_C(1)<<width)-1 and return (reg>>lsb)&mask. The example returns 5 (101). A uint64_t intermediate mask is another valid approach. Full-width output equals reg."
+        },
+        "he": {
+          "title": "חילוץ שדה מתוך אוגר",
+          "prompt": "כתבו קוד C או פסאודו־קוד מדויק לחילוץ width ביטים רצופים מתוך uint32_t reg, החל מביט lsb, כאשר ביט 0 הוא הנמוך ביותר. החזירו אותם מיושרים לימין. קלט חוקי מקיים 1<=width<=32, 0<=lsb<=31, lsb+width<=32. הימנעו מהזזה ב־32. חשבו עבור reg=0xD6, lsb=2, width=3, וכן במקרה של רוחב מלא.",
+          "hint": "טפלו במקרה של רוחב מלא לפני יצירת המסכה.",
+          "reference_solution": "אם width==32 מחזירים reg; חוקיות הקלט מחייבת אז lsb==0. אחרת מחשבים mask=(UINT32_C(1)<<width)-1 ומחזירים (reg>>lsb)&mask. בדוגמה מתקבל 5, כלומר 101. גם מסכה המחושבת במשתנה uint64_t היא פתרון תקין. ברוחב מלא מוחזר reg."
+        }
+      },
+      "markdown_path": "software/bit_manipulation/sw-003-extract-register-field.md"
+    },
+    {
+      "id": "SW-004",
+      "key": "first-greater-or-equal",
+      "version": 1,
+      "category": "software",
+      "topic": "arrays_and_search",
+      "topic_title": {
+        "en": "Arrays and search",
+        "he": "מערכים וחיפוש"
+      },
+      "difficulty": 4,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 12,
+      "format": "code",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "Python documentation: binary search and insertion points",
+          "url": "https://docs.python.org/3/library/bisect.html"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "First element at least a target",
+          "prompt": "Given a nondecreasing integer array a of length n, return the first index i with a[i]>=target, or n if none exists. Implement it without a library search in O(log n) time and O(1) extra space. For a=[2,4,4,9], evaluate targets 4,8,10. Explain empty input and repeated values.",
+          "hint": "On equality, keep looking to the left.",
+          "reference_solution": "Maintain half-open interval [lo,hi), initially [0,n). While lo<hi, mid=lo+(hi-lo)//2; if a[mid]<target set lo=mid+1, otherwise hi=mid. Return lo. Results: 1,3,4; empty input returns 0."
+        },
+        "he": {
+          "title": "האיבר הראשון שאינו קטן מהיעד",
+          "prompt": "נתון מערך שלמים a באורך n, ממוין בסדר לא יורד. החזירו את האינדקס הראשון i שעבורו a[i]>=target, או n אם אין כזה. ממשו ללא חיפוש ספרייה בזמן O(log n) ובזיכרון נוסף O(1). עבור a=[2,4,4,9] בדקו יעדים 4,8,10. הסבירו טיפול במערך ריק ובערכים חוזרים.",
+          "hint": "גם במציאת שוויון ממשיכים לחפש שמאלה.",
+          "reference_solution": "מחזיקים טווח חצי פתוח [lo,hi), המתחיל ב־[0,n). כל עוד lo<hi מחשבים mid=lo+(hi-lo)//2; אם a[mid]<target מעדכנים lo=mid+1, אחרת hi=mid. מחזירים lo. התוצאות: 1,3,4; במערך ריק מוחזר 0."
+        }
+      },
+      "markdown_path": "software/arrays_and_search/sw-004-first-greater-or-equal.md"
+    },
+    {
+      "id": "SW-005",
+      "key": "merge-measurement-streams",
+      "version": 1,
+      "category": "software",
+      "topic": "arrays_and_search",
+      "topic_title": {
+        "en": "Arrays and search",
+        "he": "מערכים וחיפוש"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 10,
+      "format": "code",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "Python documentation: merging sorted inputs",
+          "url": "https://docs.python.org/3/library/heapq.html#heapq.merge"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Merge sorted measurement lists",
+          "prompt": "Two integer arrays of lengths n and m are sorted in nondecreasing order. Merge them into a new sorted array, preserving every occurrence, in O(n+m) time without calling sort. Explain auxiliary space separately from output storage. Show the result for [1,4,4] and [2,4,7], and handle an empty input.",
+          "hint": "Use one cursor per array.",
+          "reference_solution": "Advance two indices, append the smaller current value, then append the remaining suffix. On equality either side may go first but neither occurrence is discarded. Result: [1,2,4,4,4,7]. Output uses O(n+m); auxiliary state beyond output is O(1)."
+        },
+        "he": {
+          "title": "מיזוג רשימות מדידות ממוינות",
+          "prompt": "שני מערכי שלמים באורכים n ו־m ממוינים בסדר לא יורד. מזגו אותם למערך חדש ממוין, תוך שמירת כל המופעים, בזמן O(n+m) וללא קריאה למיון. הפרידו בין זיכרון עזר לזיכרון הפלט. הציגו תוצאה עבור [1,4,4] ו־[2,4,7], וטפלו בקלט ריק.",
+          "hint": "השתמשו בסמן נפרד לכל מערך.",
+          "reference_solution": "מקדמים שני אינדקסים, מוסיפים בכל צעד את הערך הנוכחי הקטן יותר ולבסוף את השארית. בשוויון אפשר לבחור כל צד תחילה אך אין להשמיט מופע. התוצאה: [1,2,4,4,4,7]. הפלט דורש O(n+m) והמצב הנוסף מעבר לפלט הוא O(1)."
+        }
+      },
+      "markdown_path": "software/arrays_and_search/sw-005-merge-measurement-streams.md"
+    },
+    {
+      "id": "SW-006",
+      "key": "pair-sum-indices",
+      "version": 1,
+      "category": "software",
+      "topic": "arrays_and_search",
+      "topic_title": {
+        "en": "Arrays and search",
+        "he": "מערכים וחיפוש"
+      },
+      "difficulty": 4,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 12,
+      "format": "code",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "Python documentation: stacks, queues, and dictionaries",
+          "url": "https://docs.python.org/3/tutorial/datastructures.html"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Find two distinct matching indices",
+          "prompt": "Given an unsorted integer array and target T, return any two distinct indices whose values sum to T, or indicate no solution. Assume arithmetic does not overflow. Aim for expected O(n) time using a hash map and state the space cost. Explain [6,6] with T=12 and [6] with T=12. Do not reuse the same element.",
+          "hint": "Search for the complement before recording the current element.",
+          "reference_solution": "For each (i,x), look for T-x among earlier values before inserting x->i. Return its stored index and i on a match. [6,6] returns (0,1); [6] has no pair. Expected O(n) time under ordinary hash assumptions and O(n) space; worst-case hashing can be worse."
+        },
+        "he": {
+          "title": "מציאת שני אינדקסים שונים שסכומם נתון",
+          "prompt": "נתונים מערך שלמים לא ממוין ויעד T. החזירו שני אינדקסים שונים כלשהם שערכיהם מסתכמים ל־T, או ציינו שאין פתרון. הניחו שאין גלישה חשבונית. שאפו לזמן צפוי O(n) באמצעות hash map וציינו עלות זיכרון. הסבירו את [6,6] עם T=12 ואת [6] עם T=12. אסור להשתמש באותו איבר פעמיים.",
+          "hint": "חפשו את הערך המשלים לפני שמירת האיבר הנוכחי.",
+          "reference_solution": "לכל (i,x) מחפשים T-x בין הערכים הקודמים לפני הכנסת x->i. בהתאמה מחזירים את האינדקס שנשמר ואת i. עבור [6,6] מוחזר (0,1); עבור [6] אין זוג. הזמן הצפוי O(n) בהנחות הגיבוב הרגילות והזיכרון O(n); במקרה הגרוע גיבוב עשוי להיות איטי יותר."
+        }
+      },
+      "markdown_path": "software/arrays_and_search/sw-006-pair-sum-indices.md"
+    },
+    {
+      "id": "SW-007",
+      "key": "bounded-circular-queue",
+      "version": 1,
+      "category": "software",
+      "topic": "data_structures",
+      "topic_title": {
+        "en": "Data structures",
+        "he": "מבני נתונים"
+      },
+      "difficulty": 4,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 12,
+      "format": "code",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "OpenDSA: list representations",
+          "url": "https://opendsa.org/OpenDSA/Books/Catalog/html/ListIntro.html"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Fixed-capacity circular queue",
+          "prompt": "Implement a single-threaded FIFO queue of capacity 4 using an array, a head index, and a size counter. Enqueue on a full queue must fail without overwriting; dequeue on empty must fail. Define the insertion index and updates. Trace enqueue 10,20,30; dequeue twice; enqueue 40,50,60. Give logical contents, head, and size, starting from head=0,size=0.",
+          "hint": "The count distinguishes full and empty even when indices wrap.",
+          "reference_solution": "Insert at (head+size)%4, then increment size if not full. Remove at head, set head=(head+1)%4 and decrement size if nonempty. Final logical contents [30,40,50,60], head=2,size=4; physical array [50,60,30,40]. Both operations are O(1)."
+        },
+        "he": {
+          "title": "תור מעגלי בקיבולת קבועה",
+          "prompt": "ממשו תור FIFO לתהליכון יחיד בקיבולת 4 באמצעות מערך, אינדקס head ומונה size. הכנסה לתור מלא נכשלת ללא דריסה; הוצאה מתור ריק נכשלת. הגדירו את אינדקס ההכנסה והעדכונים. עקבו אחרי הכנסת 10,20,30; שתי הוצאות; הכנסת 40,50,60. תנו תוכן לוגי, head ו־size, החל מ־head=0,size=0.",
+          "hint": "המונה מבדיל בין מלא לריק גם כשהאינדקסים נכרכים.",
+          "reference_solution": "מכניסים ב־(head+size)%4 ומגדילים size אם התור אינו מלא. מוציאים מ־head, מעדכנים head=(head+1)%4 ומקטינים size אם אינו ריק. לבסוף התוכן הלוגי [30,40,50,60], עם head=2,size=4; המערך הפיזי [50,60,30,40]. שתי הפעולות O(1)."
+        }
+      },
+      "markdown_path": "software/data_structures/sw-007-bounded-circular-queue.md"
+    },
+    {
+      "id": "SW-008",
+      "key": "balanced-brackets",
+      "version": 1,
+      "category": "software",
+      "topic": "data_structures",
+      "topic_title": {
+        "en": "Data structures",
+        "he": "מבני נתונים"
+      },
+      "difficulty": 3,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 10,
+      "format": "code",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "Python documentation: stacks, queues, and dictionaries",
+          "url": "https://docs.python.org/3/tutorial/datastructures.html"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Validate nested brackets",
+          "prompt": "A string contains only (), [], and {} characters. Determine whether it is correctly nested. The empty string is valid. Give an algorithm and time/space complexity. Evaluate \"([]{})\", \"([)]\", and \"]\". Explain why counting opening and closing brackets alone is insufficient.",
+          "hint": "The most recent unmatched opener must close first.",
+          "reference_solution": "Push opening brackets onto a stack. A closing bracket must match the top; reject an empty stack or mismatch. Accept only if the stack is empty at the end. Results true,false,false. Time O(n), worst-case space O(n). Counts miss nesting order."
+        },
+        "he": {
+          "title": "בדיקת תקינות סוגריים מקוננים",
+          "prompt": "מחרוזת מכילה רק תווי סוגריים מסוג (), [], {}. קבעו אם הקינון תקין; מחרוזת ריקה תקינה. תנו אלגוריתם וסיבוכיות זמן וזיכרון. בדקו \"([]{})\", \"([)]\", \"]\". הסבירו מדוע ספירת סוגריים פותחים וסוגרים בלבד אינה מספיקה.",
+          "hint": "הסוגר הפותח האחרון שעדיין לא נסגר צריך להיסגר ראשון.",
+          "reference_solution": "דוחפים סוגר פותח למחסנית. סוגר סוגר חייב להתאים לראש המחסנית; מחסנית ריקה או אי־התאמה גוררות דחייה. מקבלים רק אם המחסנית ריקה בסוף. התוצאות true,false,false. זמן O(n), זיכרון במקרה הגרוע O(n). ספירה אינה בודקת סדר קינון."
+        }
+      },
+      "markdown_path": "software/data_structures/sw-008-balanced-brackets.md"
+    },
+    {
+      "id": "SW-009",
+      "key": "reverse-singly-linked-list",
+      "version": 1,
+      "category": "software",
+      "topic": "data_structures",
+      "topic_title": {
+        "en": "Data structures",
+        "he": "מבני נתונים"
+      },
+      "difficulty": 4,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 12,
+      "format": "code",
+      "practice_modes": [
+        "deep",
+        "simulation"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "OpenDSA: list representations",
+          "url": "https://opendsa.org/OpenDSA/Books/Catalog/html/ListIntro.html"
+        }
+      ],
+      "shared_code": null,
+      "code_language": null,
+      "translations": {
+        "en": {
+          "title": "Reverse a linked list in place",
+          "prompt": "Given the head of a finite, acyclic singly linked list, reverse the links in place and return the new head. Use O(n) time and O(1) extra space without recursion or new nodes. Show pointer updates and explain empty and one-node lists. Preserve all nodes.",
+          "hint": "Preserve access to the remaining list before reversing a link.",
+          "reference_solution": "Initialize prev=null,curr=head. Repeatedly save next=curr.next, assign curr.next=prev, then prev=curr and curr=next. Return prev. Saving next before overwriting the link preserves the unprocessed suffix. Empty returns null; one node returns that node with next=null."
+        },
+        "he": {
+          "title": "היפוך רשימה מקושרת במקום",
+          "prompt": "נתון ראש של רשימה מקושרת חד־כיוונית, סופית וללא מעגלים. הפכו את הקישורים במקום והחזירו את הראש החדש. השתמשו בזמן O(n) ובזיכרון נוסף O(1), ללא רקורסיה או צמתים חדשים. הציגו עדכון מצביעים והסבירו רשימה ריקה ורשימה של צומת אחד. יש לשמר את כל הצמתים.",
+          "hint": "שמרו גישה לשאר הרשימה לפני הפיכת הקישור.",
+          "reference_solution": "מאתחלים prev=null,curr=head. בכל צעד שומרים next=curr.next, מבצעים curr.next=prev ואז prev=curr ו־curr=next. מחזירים prev. שמירת next לפני דריסת הקישור שומרת גישה לשאר הרשימה. רשימה ריקה מחזירה null; צומת יחיד מוחזר עם next=null."
+        }
+      },
+      "markdown_path": "software/data_structures/sw-009-reverse-singly-linked-list.md"
+    },
+    {
+      "id": "SW-010",
+      "key": "array-bound-off-by-one",
+      "version": 1,
+      "category": "software",
+      "topic": "code_debugging",
+      "topic_title": {
+        "en": "Code debugging",
+        "he": "איתור שגיאות בקוד"
+      },
+      "difficulty": 2,
+      "difficulty_scale": "1-10",
+      "estimated_minutes": 5,
+      "format": "code",
+      "practice_modes": [
+        "quick"
+      ],
+      "status": "in_review",
+      "origin": "original",
+      "authorship": "AI-assisted original wording and examples using standard technical concepts",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "translation_parity_reviewed_by": null,
+      "company_attribution": null,
+      "source_relation": "concept_background_not_copied_question",
+      "source_checked_on": "2026-09-17",
+      "sources": [
+        {
+          "name": "SEI CERT C: array bounds",
+          "url": "https://cmu-sei.github.io/secure-coding-standards/sei-cert-c-coding-standard/rules/arrays-arr/arr30-c/"
+        }
+      ],
+      "shared_code": "#include <stddef.h>\n\nint sum_samples(const int *a, size_t n) {\n    int total = 0;\n    for (size_t i = 0; i <= n; ++i) {\n        total += a[i];\n    }\n    return total;\n}",
+      "code_language": "c",
+      "translations": {
+        "en": {
+          "title": "Find an array boundary error",
+          "prompt": "The shared C function should sum exactly n int elements. For n>0, a points to at least n valid elements. For n=0, a may be NULL. Assume every partial sum fits in int. Identify and fix the error, explain n=0 and n=1, and state time and extra-space complexity.",
+          "hint": "Count iterations, not just the starting index.",
+          "reference_solution": "Replace i<=n with i<n. Valid indices are 0 through n-1. The original reads a[n], and even dereferences a at n=0. Correct code returns 0 without access for n=0 and a[0] for n=1. Time O(n), extra space O(1)."
+        },
+        "he": {
+          "title": "איתור שגיאת גבול במערך",
+          "prompt": "פונקציית C המשותפת אמורה לסכום בדיוק n איברים מסוג int. עבור n>0, המצביע a מצביע לפחות ל־n איברים חוקיים. עבור n=0 מותר ש־a יהיה NULL. הניחו שכל סכום ביניים נכנס ב־int. מצאו ותקנו את השגיאה, הסבירו n=0 ו־n=1 וציינו סיבוכיות זמן וזיכרון נוסף.",
+          "hint": "ספרו את מספר האיטרציות, לא רק את אינדקס ההתחלה.",
+          "reference_solution": "מחליפים i<=n ב־i<n. האינדקסים החוקיים הם מ־0 עד n-1. הקוד המקורי קורא a[n] ואף ניגש דרך a כאשר n=0. הקוד המתוקן מחזיר 0 ללא גישה עבור n=0 ואת a[0] עבור n=1. זמן O(n), זיכרון נוסף O(1)."
+        }
+      },
+      "markdown_path": "software/code_debugging/sw-010-array-bound-off-by-one.md"
+    }
+  ]
+}
