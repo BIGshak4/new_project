@@ -1,0 +1,154 @@
+{
+  "components": [
+    {
+      "css": ".ds-control{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;;}.ds-control:hover{;}.ds-control:focus-visible{outline:3px solid #b58a31;outline-offset:3px}.ds-control:disabled{cursor:wait;opacity:.55}",
+      "html": "<button class=\"ds-control\">Save practice</button>",
+      "kind": "button",
+      "name": "Primary Button",
+      "description": "Observed shared control variant.",
+      "refersTo": "button-primary"
+    },
+    {
+      "css": ".ds-control{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;;}.ds-control:hover{}.ds-control:focus-visible{outline:3px solid #b58a31;outline-offset:3px}.ds-control:disabled{cursor:wait;opacity:.55}",
+      "html": "<button class=\"ds-control\">View solution</button>",
+      "kind": "button",
+      "name": "Default Button",
+      "description": "Observed shared control variant.",
+      "refersTo": "button-default"
+    },
+    {
+      "css": ".ds-control{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;;}.ds-control:hover{}.ds-control:focus-visible{outline:3px solid #b58a31;outline-offset:3px}.ds-control:disabled{cursor:wait;opacity:.55}",
+      "html": "<button class=\"ds-control\">Filter</button>",
+      "kind": "button",
+      "name": "Secondary Button",
+      "description": "Observed shared control variant.",
+      "refersTo": "button-secondary"
+    },
+    {
+      "css": ".ds-control{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;;}.ds-control:hover{}.ds-control:focus-visible{outline:3px solid #b58a31;outline-offset:3px}.ds-control:disabled{cursor:wait;opacity:.55}",
+      "html": "<button class=\"ds-control\">Back to library</button>",
+      "kind": "button",
+      "name": "Text Button",
+      "description": "Observed shared control variant.",
+      "refersTo": "button-text"
+    },
+    {
+      "css": ".ds-label{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65; display:grid;gap:6px;font-weight:500}.ds-field{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;}.ds-field:focus{}.ds-field::placeholder{color:#65726b}",
+      "html": "<label class=\"ds-label\">Email<input class=\"ds-field\" type=\"email\" placeholder=\"you@example.com\"></label>",
+      "kind": "input",
+      "name": "Text Field",
+      "description": "Shared input with a green focus ring.",
+      "refersTo": "input"
+    },
+    {
+      "css": ".ds-control{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;}.ds-nav{;}.ds-nav:hover{}.ds-control:focus-visible{outline:3px solid #b58a31;outline-offset:3px}",
+      "html": "<nav><button class=\"ds-control ds-nav\" aria-current=\"page\">Practice library</button></nav>",
+      "kind": "nav",
+      "name": "Navigation",
+      "description": "Selected navigation retains its written label.",
+      "refersTo": "nav-active"
+    },
+    {
+      "css": ".ds-badge{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;;}",
+      "html": "<span class=\"ds-badge\">In progress</span>",
+      "kind": "chip",
+      "name": "Status Badge",
+      "description": "Written status with semantic fill.",
+      "refersTo": "badge"
+    },
+    {
+      "css": ".ds-control{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;}.ds-card{}.ds-card:hover{}.ds-card h3{}.ds-meta{font-size:12px;color:var(--muted,#5f6e66)}.ds-badge{;}.ds-control:focus-visible{outline:3px solid #b58a31;outline-offset:3px}",
+      "html": "<button class=\"ds-control ds-card\"><span class=\"ds-badge\">To do</span><h3>Review practice questions</h3><span class=\"ds-meta\">Harel · Today</span></button>",
+      "kind": "card",
+      "name": "Task Card",
+      "description": "Interactive task container with quiet hover depth.",
+      "refersTo": "task-card"
+    }
+  ],
+  "schemaVersion": 2,
+  "extensions": {
+    "motion": [
+      {
+        "purpose": "Shared button state changes.",
+        "value": "background .18s ease, border-color .18s ease",
+        "name": "control-state"
+      },
+      {
+        "purpose": "Root view transition; reduced-motion override disables effects.",
+        "value": "180ms",
+        "name": "view-transition"
+      }
+    ],
+    "shadows": [
+      {
+        "purpose": "Interactive task cards at rest.",
+        "value": "0 2px 3px #1a321407",
+        "name": "task-rest"
+      },
+      {
+        "purpose": "Interactive task cards on hover.",
+        "value": "0 5px 13px #1a32140c",
+        "name": "task-hover"
+      },
+      {
+        "purpose": "Input focus with green border.",
+        "value": "0 0 0 3px #225d4818",
+        "name": "field-focus"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop",
+        "value": "1150px"
+      },
+      {
+        "name": "mobile",
+        "value": "760px"
+      },
+      {
+        "name": "narrow-mobile",
+        "value": "430px"
+      }
+    ]
+  },
+  "narrative": {
+    "rules": [
+      {
+        "section": "colors",
+        "body": "Status colors accompany written labels; keep the status meaning available in text.",
+        "name": "The Labelled State Rule"
+      },
+      {
+        "section": "typography",
+        "body": "Use logical alignment for interface text and preserve explicit LTR treatment for code and email fields.",
+        "name": "The Direction-Aware Text Rule"
+      },
+      {
+        "section": "elevation",
+        "body": "Use the observed subtle card shadows for interactive task cards; working sheets rely on borders and tonal separation.",
+        "name": "The Quiet Depth Rule"
+      }
+    ],
+    "northStar": "Engineering working notebook / ledger",
+    "donts": [
+      "Don't remove labels when compact navigation hides its icons.",
+      "Don't use the code font for ordinary interface text.",
+      "Don't present this implementation assumption as a user-approved visual identity."
+    ],
+    "overview": "This is the implemented direction, chosen autonomously for the build; it is not a user-approved metaphor. Pale sage backgrounds, white working sheets, deep-green actions, and Heebo text support reading and writing in Hebrew and English. The visual system is shared by the practice and founder applications.\n\nThe interface concentrates detail inside question rows, task cards, and full-page work areas. Short labels, restrained borders, and visible keyboard focus organize routine actions without decorative imagery.",
+    "keyCharacteristics": [
+      "Hebrew-first typography with logical alignment for RTL and LTR.",
+      "Sage surroundings and white working surfaces.",
+      "Green primary actions and text-labelled status colors.",
+      "Compact controls and responsive working panes."
+    ],
+    "dos": [
+      "Do preserve readable Hebrew and English through logical alignment and explicit code direction.",
+      "Do pair semantic colors with written status labels.",
+      "Do retain visible focus and the reduced-motion override.",
+      "Do use the shared surface, spacing, and type roles across both applications."
+    ]
+  },
+  "title": "Design System: JobRun",
+  "generatedAt": "2026-09-17T20:12:19.6827770Z"
+}

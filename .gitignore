@@ -3,3 +3,17 @@ __pycache__/
 .venv/
 venv/
 .env
+
+node_modules/
+.next/
+.vercel/
+*.tsbuildinfo
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+.netlify/
+.impeccable/review/
+.impeccable/mocks/
+test-results/
+**/supabase/.temp/

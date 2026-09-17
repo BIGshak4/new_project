@@ -1,0 +1,5 @@
+# Minimal hosted configuration: undeclared settings remain unchanged.
+project_id = "jobrun-hosted-auth"
+[auth]
+site_url = "https://jobrun-practice.netlify.app"
+additional_redirect_urls = ["https://jobrun-practice.netlify.app", "https://jobrun-tasks.netlify.app", "http://localhost:3000", "http://localhost:3001"]
