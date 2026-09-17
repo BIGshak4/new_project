@@ -1,0 +1,1146 @@
+{
+  "schema_version": 1,
+  "prepared_on": "2026-09-17",
+  "question_count": 30,
+  "source_sha256": "c7eb56a0a0e10511be4923edbaa50e72be61e1d9a4eccd218b60764b63a190f4",
+  "purpose": "Faithful organization and English translation of user-supplied material",
+  "company_claims_verified": false,
+  "human_review_completed": false,
+  "questions": [
+    {
+      "id": "VHW-001",
+      "source_number": 1,
+      "category": "hardware",
+      "topic": "digital_logic_and_clocking",
+      "topic_title": {
+        "en": "Digital logic and clocking",
+        "he": "לוגיקה ספרתית ושעונים"
+      },
+      "reported_company": "NVIDIA",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "מימוש פונקציות באמצעות Multiplexer",
+          "prompt": "ממש שער XOR של 2 כניסות ($A, B$) תוך שימוש ב-MUX 2:1 אחד בלבד, ללא שערים נוספים (ניתן להשתמש בערכים קבועים '0' ו-'1' או במשתנים ככניסות נתונים ובקרת). כיצד תממש שער Full Adder באמצעות צמד רכיבי MUX 4:1?",
+          "assessed_skills": "יכולת פישוט בוליאני, תפיסת MUX כטבלת אמת חומרתית, ויעילות שטח."
+        },
+        "en": {
+          "title": "Implementing functions with multiplexers",
+          "prompt": "Implement a two-input XOR gate (A, B) using only one 2:1 MUX and no additional gates. Constants 0 and 1, or the variables, may be used as data and select inputs. How would you implement a full adder using a pair of 4:1 MUX components?",
+          "assessed_skills": "Boolean simplification, understanding a MUX as a hardware truth table, and area efficiency."
+        }
+      },
+      "editorial_notes": {
+        "en": "The first part is not realizable with a standard non-inverting 2:1 MUX whose pins can receive only A, B, 0, or 1. Exhaustive enumeration of all 64 pin assignments confirms this. Allow an inverted input or another component, or explicitly ask the candidate to prove impossibility. The two-4:1-MUX full-adder part also needs a clear rule about availability of complemented inputs.",
+        "he": "החלק הראשון אינו ניתן למימוש ב־MUX רגיל 2:1 ללא פלט מהופך, כאשר כל פין יכול לקבל רק A, B, 0 או 1. בדיקה ממצה של כל 64 השמות הקלט מאשרת זאת. יש לאפשר קלט מהופך או רכיב נוסף, או לבקש במפורש הוכחת אי־אפשרות. גם בחלק על שני רכיבי MUX 4:1 יש להגדיר אם קלטים מהופכים זמינים."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/digital_logic_and_clocking/vhw-001-mux-functions.md"
+    },
+    {
+      "id": "VHW-002",
+      "source_number": 2,
+      "category": "hardware",
+      "topic": "digital_logic_and_clocking",
+      "topic_title": {
+        "en": "Digital logic and clocking",
+        "he": "לוגיקה ספרתית ושעונים"
+      },
+      "reported_company": "Apple",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "גלאי זוגיות (Parity Generator)",
+          "prompt": "תכנן מעגל קומבינטורי שמקבל וקטור של 8 ביט ומפיק '1' אם מספר האחדות בוקטור הוא אי-זוגי. מהו עומק הלוגיקה (Logic Depth) המינימלי שניתן להשיג, וכיצד תבנה עץ שערים אופטימלי למהירות?",
+          "assessed_skills": "הבנה של עצי שערים (XOR trees), השפעת עומק לוגי על Delay, ואיזון מסלולים."
+        },
+        "en": {
+          "title": "Parity generator",
+          "prompt": "Design a combinational circuit that receives an eight-bit vector and outputs 1 if the number of set bits is odd. What is the minimum achievable logic depth, and how would you build a gate tree optimized for speed?",
+          "assessed_skills": "Understanding XOR trees, the effect of logic depth on delay, and path balancing."
+        }
+      },
+      "editorial_notes": {
+        "en": "Specify permitted gate fan-in and the delay model before asking for minimum depth. With two-input XOR gates, a balanced eight-input parity tree has three XOR levels.",
+        "he": "יש להגדיר fan-in מותר ומודל השהיות לפני בקשת עומק מינימלי. בשערי XOR בעלי שני קלטים, לעץ מאוזן של שמונה קלטים יש שלוש רמות XOR."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/digital_logic_and_clocking/vhw-002-eight-bit-parity.md"
+    },
+    {
+      "id": "VHW-003",
+      "source_number": 3,
+      "category": "hardware",
+      "topic": "digital_logic_and_clocking",
+      "topic_title": {
+        "en": "Digital logic and clocking",
+        "he": "לוגיקה ספרתית ושעונים"
+      },
+      "reported_company": "Intel",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "פענוח כתובות ו-Priority Encoder",
+          "prompt": "ממש Priority Encoder של 4 כניסות המוציא את האינדקס הבינארי של הכניסה הגבוהה ביותר שדולקת וסיגנל Valid. האם עדיף לממש אותו במבנה מקבילי או טורי, ומה המחיר במונחי שטח ועיכוב?",
+          "assessed_skills": "הבנת טרייד-אוף בין ביצועים לשטח במעגלים קומבינטוריים."
+        },
+        "en": {
+          "title": "Address decoding and priority encoding",
+          "prompt": "Implement a four-input priority encoder that outputs the binary index of the highest-index asserted input and a Valid signal. Is a parallel or serial structure preferable, and what are the area and delay costs?",
+          "assessed_skills": "Understanding performance-versus-area trade-offs in combinational circuits."
+        }
+      },
+      "editorial_notes": {
+        "en": "Define bit numbering, outputs when all inputs are zero, and the gate/cell cost model. Neither serial nor parallel implementation is universally best.",
+        "he": "יש להגדיר מספור ביטים, פלט במצב שכל הקלטים אפס ומודל עלות לשערים או לתאים. אין העדפה מוחלטת למימוש טורי או מקבילי."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/digital_logic_and_clocking/vhw-003-priority-encoder.md"
+    },
+    {
+      "id": "VHW-004",
+      "source_number": 4,
+      "category": "hardware",
+      "topic": "digital_logic_and_clocking",
+      "topic_title": {
+        "en": "Digital logic and clocking",
+        "he": "לוגיקה ספרתית ושעונים"
+      },
+      "reported_company": "Amazon (Annapurna Labs)",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "חלוקת תדר ללא Phase Locked Loop (PLL)",
+          "prompt": "נתון שעון ראשי בתדר $F$. תכנן מעגל סינכרוני המייצר שעון חדש בתדר $F/3$ עם Duty Cycle של בדיוק 50%. (רמז: שימוש בשני קצוות השעון – חיובי ושלילי).",
+          "assessed_skills": "עבודה עם שני קצוות שעון (posedge/negedge), מעגלי חלוקה אי-זוגיים, ומניעת גליצ'ים."
+        },
+        "en": {
+          "title": "Frequency division without a phase-locked loop",
+          "prompt": "Given a main clock of frequency F, design a synchronous circuit that generates a new clock of frequency F/3 with an exactly 50% duty cycle. Hint: use both the rising and falling edges of the clock.",
+          "assessed_skills": "Working with both clock edges (posedge/negedge), odd clock dividers, and glitch prevention."
+        }
+      },
+      "editorial_notes": {
+        "en": "Specify input duty cycle, reset behavior, and an ideal timing model versus real implementation tolerances. The 50% output claim depends on these assumptions; using both edges also introduces half-cycle timing paths.",
+        "he": "יש להגדיר duty cycle של הקלט, התנהגות איפוס והאם מדובר במודל תזמון אידאלי או במימוש פיזי. הדרישה ל־50% תלויה בהנחות אלה; שימוש בשתי חזיתות יוצר גם מסלולי תזמון של חצי מחזור."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/digital_logic_and_clocking/vhw-004-divide-by-three.md"
+    },
+    {
+      "id": "VHW-005",
+      "source_number": 5,
+      "category": "hardware",
+      "topic": "digital_logic_and_clocking",
+      "topic_title": {
+        "en": "Digital logic and clocking",
+        "he": "לוגיקה ספרתית ושעונים"
+      },
+      "reported_company": "Google",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "מניעת גליצ'ים (Glitch-free Clock Mux)",
+          "prompt": "נתונים שני שעונים אסינכרוניים, $Clk_A$ ו-$Clk_B$, וסיגנל בחירה $Select$. תכנן מעגל הממתג בין השעונים ללא ייצור שברי שעון (runt pulses) או גליצ'ים במוצא.",
+          "assessed_skills": "הבנה עמוקה של שעוני חומרה, סנכרון רב-שלבי, ומניעת תופעות מעבר הרסניות."
+        },
+        "en": {
+          "title": "Glitch-free clock multiplexer",
+          "prompt": "Given two asynchronous clocks, Clk_A and Clk_B, and a Select signal, design a circuit that switches between the clocks without generating runt pulses or glitches at the output.",
+          "assessed_skills": "A deep understanding of hardware clocks, multistage synchronization, and prevention of destructive switching transients."
+        }
+      },
+      "editorial_notes": {
+        "en": "State whether both clocks run continuously, whether an extended low interval is allowed, and whether completion is required when a clock stops. Define the synchronization and clock-gating cells permitted.",
+        "he": "יש לציין אם שני השעונים רציפים, אם מותר מרווח נמוך ממושך ואם החלפה חייבת להסתיים גם כששעון נעצר. יש להגדיר רכיבי סנכרון ומיתוג שעון מותרים."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/digital_logic_and_clocking/vhw-005-glitch-free-clock-mux.md"
+    },
+    {
+      "id": "VHW-006",
+      "source_number": 6,
+      "category": "hardware",
+      "topic": "finite_state_machines",
+      "topic_title": {
+        "en": "Finite state machines",
+        "he": "מכונות מצבים"
+      },
+      "reported_company": "Intel",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "גלאי רצף (Sequence Detector) חופף ולא חופף",
+          "prompt": "תכנן מכונת מצבים (FSM) שמזהה את הרצף `1011` בסדרת ביטים טורית. השווה בין מימוש Mealy למימוש Moore במונחי מספר המצבים, זמני התגובה, והרגישות לגליצ'ים בכניסה.",
+          "assessed_skills": "הבחנה ברורה בין Mealy ל-Moore, זיהוי חפיפות ברצפים, ותרגום נכון לטבלת מעברים."
+        },
+        "en": {
+          "title": "Overlapping and non-overlapping sequence detection",
+          "prompt": "Design a finite state machine (FSM) that detects the sequence 1011 in a serial bit stream. Compare Mealy and Moore implementations in terms of state count, response timing, and sensitivity to input glitches.",
+          "assessed_skills": "A clear distinction between Mealy and Moore machines, recognition of overlapping sequences, and correct construction of a transition table."
+        }
+      },
+      "editorial_notes": {
+        "en": "The heading mentions overlapping and non-overlapping detection, but the prompt does not explicitly request both. Specify overlap policy and exactly when outputs are sampled before comparing latency and state count.",
+        "he": "הכותרת מזכירה זיהוי חופף ולא חופף, אך גוף השאלה אינו דורש במפורש את שניהם. יש להגדיר מדיניות חפיפה ומועד דגימת הפלט לפני השוואת זמן תגובה ומספר מצבים."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/finite_state_machines/vhw-006-sequence-detector.md"
+    },
+    {
+      "id": "VHW-007",
+      "source_number": 7,
+      "category": "hardware",
+      "topic": "finite_state_machines",
+      "topic_title": {
+        "en": "Finite state machines",
+        "he": "מכונות מצבים"
+      },
+      "reported_company": "NVIDIA",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "תכנון מכונת בקרת זיכרון / FIFO Controller",
+          "prompt": "תכנן מכונת מצבים לבקרת תור מעגלי (Synchronous FIFO). הגדר את המצבים עבור Empty, Full, Normal, Overflow ו-Underflow. כיצד תוודא שה-FSM לא נכנס למצב תקוע (Deadlock) במקרה של Soft Error (Bit flip)?",
+          "assessed_skills": "ארכיטקטורת FSM חסינה, Safe State Encoding (One-Hot vs. Gray vs. Binary), וטיפול בחריגות."
+        },
+        "en": {
+          "title": "Memory control / FIFO controller",
+          "prompt": "Design a state machine to control a circular queue (a synchronous FIFO). Define states for Empty, Full, Normal, Overflow, and Underflow. How would you ensure that the FSM does not become stuck in a deadlock after a soft error such as a bit flip?",
+          "assessed_skills": "Robust FSM architecture, safe state encoding (one-hot versus Gray versus binary), and exception handling."
+        }
+      },
+      "editorial_notes": {
+        "en": "Define FIFO depth, simultaneous read/write behavior, whether overflow/underflow are pulses or sticky errors, and the fault model. Empty/full are often derived flags rather than separate stored FSM states. Specify whether recovery may discard buffered data.",
+        "he": "יש להגדיר עומק FIFO, קריאה וכתיבה בו־זמנית, האם שגיאות הן פולסים או דגלים נשמרים, ומודל תקלה. Empty/Full הם לעיתים דגלים נגזרים ולא מצבים נשמרים נפרדים. יש להגדיר אם התאוששות רשאית לאבד נתונים."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/finite_state_machines/vhw-007-fifo-controller.md"
+    },
+    {
+      "id": "VHW-008",
+      "source_number": 8,
+      "category": "hardware",
+      "topic": "finite_state_machines",
+      "topic_title": {
+        "en": "Finite state machines",
+        "he": "מכונות מצבים"
+      },
+      "reported_company": "Amazon (Annapurna Labs)",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "גלאי דפוס עם שגיאה אחת מותרת (Fault-Tolerant Detector)",
+          "prompt": "תכנן FSM המקבל זרם ביטים ומזהה הגעת מילת סינכרון באורך 4 ביט (`1101`), כאשר מותרת שגיאה של לכל היותר ביט אחד (מרחק המינג $\\le 1$). הגדר דיאגרמת מצבים מינימלית.",
+          "assessed_skills": "פירוק בעיה לא טריוויאלית, הגדרת מרחב מצבים ללא פיצוץ קומבינטורי, ואימות תנאי גבול."
+        },
+        "en": {
+          "title": "Pattern detector allowing one bit error",
+          "prompt": "Design an FSM that receives a bit stream and detects a four-bit synchronization word, 1101, while allowing at most one bit error (Hamming distance <= 1). Define a minimal state diagram.",
+          "assessed_skills": "Decomposing a nontrivial problem, defining the state space without combinatorial explosion, and checking boundary conditions."
+        }
+      },
+      "editorial_notes": {
+        "en": "Minimal state count depends on sliding-window versus aligned-word detection, overlap, output timing, and reset semantics. Fix these before requiring a minimal machine; require a minimality argument if minimality is scored.",
+        "he": "מספר המצבים המינימלי תלוי בזיהוי בחלון נע או במילים מיושרות, בחפיפה, בתזמון הפלט ובאיפוס. יש לקבע זאת לפני דרישת מינימליות, ולבקש נימוק למינימליות אם נותנים עליה ציון."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/finite_state_machines/vhw-008-fault-tolerant-detector.md"
+    },
+    {
+      "id": "VHW-009",
+      "source_number": 9,
+      "category": "hardware",
+      "topic": "finite_state_machines",
+      "topic_title": {
+        "en": "Finite state machines",
+        "he": "מכונות מצבים"
+      },
+      "reported_company": "Apple",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "מפענח חבילות פרוטוקול (Packet Header Parser)",
+          "prompt": "ממש FSM המקבל בייט בכל מחזור שעון ומפענח חבילה בעלת מבנה: Preamble (0xAA) $\\to$ Length (N בייטים) $\\to$ Payload (N בייטים) $\\to$ Checksum (בייט אחד). כיצד המכונה מסתנכרנת מחדש אם ה-Checksum שגוי?",
+          "assessed_skills": "תכנון ממשקי תקשורת חומרתיים, שילוב מונה (Counter) עם בקרת מצבים, וטיפול בשגיאות מסגרת."
+        },
+        "en": {
+          "title": "Packet header parser",
+          "prompt": "Implement an FSM that receives one byte per clock cycle and parses a packet with this structure: Preamble (0xAA), then Length (N bytes), then Payload (N bytes), then Checksum (one byte). How does the machine resynchronize if the checksum is incorrect?",
+          "assessed_skills": "Designing hardware communication interfaces, combining a counter with state control, and handling framing errors."
+        }
+      },
+      "editorial_notes": {
+        "en": "The original phrase \"Length (N bytes)\" is ambiguous: N may be the payload length or the byte width of the length field. Define field width, N=0, checksum algorithm and coverage, escaping of 0xAA in payload, and the resynchronization policy. The English translation preserves this ambiguity.",
+        "he": "הניסוח המקורי \"Length (N בייטים)\" עמום: האם N הוא אורך המטען או רוחב שדה האורך? יש להגדיר רוחב שדה, N=0, אלגוריתם checksum והכיסוי שלו, escaping של 0xAA במטען ומדיניות סנכרון מחדש. התרגום לאנגלית שומר את העמימות המקורית."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/finite_state_machines/vhw-009-packet-parser.md"
+    },
+    {
+      "id": "VHW-010",
+      "source_number": 10,
+      "category": "hardware",
+      "topic": "finite_state_machines",
+      "topic_title": {
+        "en": "Finite state machines",
+        "he": "מכונות מצבים"
+      },
+      "reported_company": "Marvell",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "מונה Gray Code ומכונת מצבים",
+          "prompt": "תכנן FSM המייצר מונה Gray Code של 3 ביט. מדוע קוד גרי קריטי לתקשורת בין שעונים וב-Asynchronous FIFOs?",
+          "assessed_skills": "הבנת תופעת ה-Meta-stability במעבר ריבוי ביטים, ותכנון לוגי מותאם CDC."
+        },
+        "en": {
+          "title": "Gray-code counter and state machine",
+          "prompt": "Design an FSM that generates a three-bit Gray-code counter. Why is Gray code critical for communication across clock domains and in asynchronous FIFOs?",
+          "assessed_skills": "Understanding metastability during multibit crossings and designing CDC-aware logic."
+        }
+      },
+      "editorial_notes": {
+        "en": "Gray coding does not eliminate metastability. Distinguish the one-bit-change property from synchronization and bus-skew constraints. Not every multibit clock-domain crossing should use Gray code.",
+        "he": "קוד Gray אינו מבטל metastability. יש להפריד בין תכונת שינוי ביט יחיד לבין סנכרון ואילוצי הפרשי השהיה בין ביטים. לא כל מעבר של bus בין שעונים דורש קוד Gray."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/finite_state_machines/vhw-010-gray-code-counter.md"
+    },
+    {
+      "id": "VHW-011",
+      "source_number": 11,
+      "category": "hardware",
+      "topic": "timing_and_cdc",
+      "topic_title": {
+        "en": "Timing, STA, and CDC",
+        "he": "תזמון, ניתוח תזמון ומעבר בין שעונים"
+      },
+      "reported_company": "Apple",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "חישובי Setup ו-Hold בסיסיים",
+          "prompt": "נתונים שני פליפ-פלופים עם קו שעון משותף. נתון: $T_{clk}=10\\text{ns}$, $T_{cq}=2\\text{ns}$, $T_{setup}=1.5\\text{ns}$, $T_{hold}=1\\text{ns}$, ו-Skew מרבי של $0.8\\text{ns}$.\nמהו תחום הזמנים המותר (מינימלי ומקסימלי) עבור עיכוב הלוגיקה הקומבינטורית ($T_{comb}$) בין שני הפלופים למניעת Setup Violation ו-Hold Violation?",
+          "assessed_skills": "הבנה מתמטית מדויקת של משוואות תזמון ומשמעות Clock Skew."
+        },
+        "en": {
+          "title": "Basic setup and hold calculations",
+          "prompt": "Two flip-flops share a clock source. Given T_clk = 10 ns, T_cq = 2 ns, T_setup = 1.5 ns, T_hold = 1 ns, and a maximum skew of 0.8 ns, what is the allowed range, minimum and maximum, of the combinational logic delay T_comb between the flip-flops to avoid setup and hold violations?",
+          "assessed_skills": "Precise mathematical understanding of timing equations and the meaning of clock skew."
+        }
+      },
+      "editorial_notes": {
+        "en": "Define signed skew as capture-clock arrival minus launch-clock arrival, and distinguish minimum from maximum clock-to-Q and combinational delays. If skew can be anywhere in [-0.8,+0.8] ns and clock-to-Q is exactly 2 ns in this simplified model, setup gives T_comb,max <= 5.7 ns and hold gives T_comb,min >= -0.2 ns; any nonnegative minimum delay passes hold. Other interpretations change the answer.",
+        "he": "יש להגדיר skew כהפרש בין זמן הגעת שעון הקליטה לזמן הגעת שעון השיגור, ולהבחין בין clock-to-Q מינימלי ומקסימלי ובין השהיות לוגיקה מינימליות ומקסימליות. אם skew בטווח [-0.8,+0.8] ננו־שניות ו־clock-to-Q הוא בדיוק 2 ננו־שניות במודל הפשוט, setup דורש T_comb,max <= 5.7 ננו־שניות ו־hold דורש T_comb,min >= -0.2 ננו־שניות; כל השהיה מינימלית לא שלילית מקיימת hold. פירושים אחרים משנים את התוצאה."
+      },
+      "editorial_references": [
+        {
+          "name": "MIT: sequential logic and timing",
+          "url": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c5/c5s1/"
+        }
+      ],
+      "markdown_path": "hardware/timing_and_cdc/vhw-011-setup-hold.md"
+    },
+    {
+      "id": "VHW-012",
+      "source_number": 12,
+      "category": "hardware",
+      "topic": "timing_and_cdc",
+      "topic_title": {
+        "en": "Timing, STA, and CDC",
+        "he": "תזמון, ניתוח תזמון ומעבר בין שעונים"
+      },
+      "reported_company": "NVIDIA",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "תיקון הפרות תזמון (Violations Fixing)",
+          "prompt": "קיבלת דו\"ח STA המציג Hold Violation במסלול מסוים לאחר ה-Place & Route, ו-Setup Violation במסלול אחר. אילו פעולות תבצע לתיקון כל אחת מההפרות? האם העלאת תדר השעון תשפיע על הפרת Hold?",
+          "assessed_skills": "הבנה עקרונית שהפרת Hold אינה תלויה בזמן המחזור ($T_{clk}$) אלא במבנה המעגל והאינברטרים, לעומת Setup שתלוי בתדר."
+        },
+        "en": {
+          "title": "Fixing timing violations",
+          "prompt": "After place and route, an STA report shows a hold violation on one path and a setup violation on another. What actions would you take to fix each violation? Would increasing the clock frequency affect the hold violation?",
+          "assessed_skills": "The principle that a hold violation does not depend on the clock period (T_clk) but on circuit structure and inverters, whereas setup depends on frequency."
+        }
+      },
+      "editorial_notes": {
+        "en": "Keep the hold-versus-period distinction under an explicitly fixed clock/path model. Physical fixes must be rechecked across setup/hold corners; a useful fix for one constraint can worsen another.",
+        "he": "יש להסביר את עצמאות hold מזמן המחזור בהנחה שמבנה השעון והמסלול נשאר קבוע. תיקון פיזי נבדק מחדש בכל פינות setup/hold, כי שיפור אילוץ אחד עלול לפגוע באחר."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/timing_and_cdc/vhw-012-timing-repair.md"
+    },
+    {
+      "id": "VHW-013",
+      "source_number": 13,
+      "category": "hardware",
+      "topic": "timing_and_cdc",
+      "topic_title": {
+        "en": "Timing, STA, and CDC",
+        "he": "תזמון, ניתוח תזמון ומעבר בין שעונים"
+      },
+      "reported_company": "Amazon (Annapurna Labs)",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "מסנכרן דו-שלבי ו-MTBF",
+          "prompt": "מדוע מסנכרן של שני פליפ-פלופים (2-FF Synchronizer) פותר מטא-סטביליות עבור אות בקרה של ביט בודד? מהו MTBF (Mean Time Between Failures), ומדוע אסור להשתמש ב-2-FF Sync עבור אות מרובה ביטים (Bus)?",
+          "assessed_skills": "פיזיקה של מטא-סטביליות, הסתברות לקריסת אות, ושיטות מבוססות Handshake / FIFO להעברת Bus."
+        },
+        "en": {
+          "title": "Two-stage synchronizer and MTBF",
+          "prompt": "Why does a two-flip-flop synchronizer (2-FF synchronizer) solve metastability for a single-bit control signal? What is MTBF (mean time between failures), and why must a 2-FF synchronizer not be used for a multibit signal (bus)?",
+          "assessed_skills": "The physics of metastability, the probability of signal failure, and handshake- or FIFO-based approaches for transferring a bus."
+        }
+      },
+      "editorial_notes": {
+        "en": "Replace \"solves metastability\" in a future reviewed revision with \"reduces the probability of metastability propagating.\" Independent per-bit synchronizers do not preserve arbitrary bus coherence; this is more precise than a blanket prohibition on all multibit uses. Specify signal stability and event-capture requirements.",
+        "he": "בגרסה מתוקנת יש להחליף \"פותר מטא־סטביליות\" ב־\"מקטין את ההסתברות להתפשטות מטא־סטביליות\". מסנכרנים נפרדים לכל ביט אינם משמרים קוהרנטיות של bus שרירותי; זה מדויק יותר מאיסור גורף על כל שימוש רב־ביטי. יש להגדיר יציבות אות ודרישות קליטת אירועים."
+      },
+      "editorial_references": [
+        {
+          "name": "Nandland: metastability",
+          "url": "https://nandland.com/lesson-13-metastability/"
+        }
+      ],
+      "markdown_path": "hardware/timing_and_cdc/vhw-013-synchronizer-mtbf.md"
+    },
+    {
+      "id": "VHW-014",
+      "source_number": 14,
+      "category": "hardware",
+      "topic": "timing_and_cdc",
+      "topic_title": {
+        "en": "Timing, STA, and CDC",
+        "he": "תזמון, ניתוח תזמון ומעבר בין שעונים"
+      },
+      "reported_company": "Google",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "תופעת Clock Jitter לעומת Clock Skew",
+          "prompt": "הסבר את ההבדל העקרוני בין Clock Skew לבין Clock Jitter. כיצד כל אחד מהם משפיע על משוואות ה-Setup וה-Hold, וכיצד רשת חלוקת שעון (H-Tree / Clock Mesh) מסייעת בצמצום ה-Skew?",
+          "assessed_skills": "הבנה הנדסית של עצי שעון ואילוצים פיזיקליים בתכנון סיליקון מתקדם."
+        },
+        "en": {
+          "title": "Clock jitter versus clock skew",
+          "prompt": "Explain the fundamental difference between clock skew and clock jitter. How does each affect setup and hold equations, and how does a clock distribution network such as an H-tree or clock mesh help reduce skew?",
+          "assessed_skills": "Engineering understanding of clock trees and physical constraints in advanced silicon design."
+        }
+      },
+      "editorial_notes": {
+        "en": "Define the skew sign, jitter/uncertainty model, and which edges are compared. Do not assume all jitter contributions add independently or that clock topology alone eliminates skew.",
+        "he": "יש להגדיר סימן skew, מודל jitter ואי־ודאות ואילו חזיתות מושוות. אין להניח שכל תרומות ה־jitter בלתי תלויות או שטופולוגיית השעון לבדה מבטלת skew."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/timing_and_cdc/vhw-014-jitter-skew.md"
+    },
+    {
+      "id": "VHW-015",
+      "source_number": 15,
+      "category": "hardware",
+      "topic": "timing_and_cdc",
+      "topic_title": {
+        "en": "Timing, STA, and CDC",
+        "he": "תזמון, ניתוח תזמון ומעבר בין שעונים"
+      },
+      "reported_company": "Marvell",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "שחזור שעון ו-Clock Gating",
+          "prompt": "כיצד פועל תא Integrated Clock Gating (ICG)? מדוע לא מומלץ לחבר ישירות שער AND בין קו השעון לאות ה-Enable? שרטט את מבנה ה-Latch-based ICG ומנע גליצ'ים.",
+          "assessed_skills": "אופטימיזציית הספק (Dynamic Power Reduction) ללא פגיעה בשלמות השעון."
+        },
+        "en": {
+          "title": "Clock recovery and clock gating",
+          "prompt": "How does an integrated clock-gating (ICG) cell work? Why is directly connecting an AND gate between the clock and an Enable signal not recommended? Draw a latch-based ICG structure that prevents glitches.",
+          "assessed_skills": "Reducing dynamic power without compromising clock integrity."
+        }
+      },
+      "editorial_notes": {
+        "en": "The heading mentions clock recovery, but the prompt is about clock gating. Specify clock polarity and latch transparency phase; clock-gating setup/hold checks still apply.",
+        "he": "הכותרת מזכירה שחזור שעון, אך השאלה עוסקת ב־clock gating. יש להגדיר קוטביות שעון ואת שלב השקיפות של ה־latch; עדיין חלים אילוצי תזמון של clock gating."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/timing_and_cdc/vhw-015-integrated-clock-gating.md"
+    },
+    {
+      "id": "VHW-016",
+      "source_number": 16,
+      "category": "hardware",
+      "topic": "cells_and_architecture",
+      "topic_title": {
+        "en": "Cells and hardware architecture",
+        "he": "מבנה תאים וארכיטקטורת חומרה"
+      },
+      "reported_company": "Intel",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "Latch לעומת Flip-Flop",
+          "prompt": "מהו ההבדל המבני והתפקודי בין D-Latch (Level-sensitive) לבין D-Flip-Flop (Edge-triggered)? כיצד בונים Edge-triggered Flip-Flop מ-Master-Slave Latches? מהם הסיכונים בשימוש בלתי מכוון ב-Latches בקוד RTL?",
+          "assessed_skills": "מניעת יצירת Latches לא רצויים בסינתזה כתוצאה מ-`if` או `case` לא מלאים."
+        },
+        "en": {
+          "title": "Latch versus flip-flop",
+          "prompt": "What are the structural and functional differences between a level-sensitive D latch and an edge-triggered D flip-flop? How can an edge-triggered flip-flop be built from master-slave latches? What are the risks of unintentionally using latches in RTL?",
+          "assessed_skills": "Preventing unwanted latch inference during synthesis caused by incomplete if or case statements."
+        }
+      },
+      "editorial_notes": {
+        "en": "Specify active level and edge polarity when drawing master-slave latches. Intentional latch-based design is valid; the concern is unintended storage or an unanalysed timing model.",
+        "he": "יש להגדיר רמה פעילה וקוטביות חזית בשרטוט master-slave. תכנון מכוון מבוסס latches הוא תקין; הבעיה היא אגירה לא מכוונת או מודל תזמון שלא נותח."
+      },
+      "editorial_references": [
+        {
+          "name": "MIT: latches and registers",
+          "url": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c5/c5s1/"
+        }
+      ],
+      "markdown_path": "hardware/cells_and_architecture/vhw-016-latch-versus-flip-flop.md"
+    },
+    {
+      "id": "VHW-017",
+      "source_number": 17,
+      "category": "hardware",
+      "topic": "cells_and_architecture",
+      "topic_title": {
+        "en": "Cells and hardware architecture",
+        "he": "מבנה תאים וארכיטקטורת חומרה"
+      },
+      "reported_company": "Qualcomm",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "שער CMOS ומאפייני מעבר",
+          "prompt": "שרטט שער NAND של 2 כניסות ברמת הטרנזיסטור (CMOS: רשת Pull-Up ורשת Pull-Down). מדוע הטרנזיסטורים ב-PMOS מחוברים במקביל וה-NMOS בטור? מדוע טרנזיסטור PMOS מתוכנן ברוחב (W) כפול מ-NMOS?",
+          "assessed_skills": "הבנת ניידות נושאי מטען (Mobility של אלקטרונים מול חורים) ואיזון זמני Rise/Fall."
+        },
+        "en": {
+          "title": "CMOS gate and transition characteristics",
+          "prompt": "Draw a two-input NAND gate at transistor level, including the CMOS pull-up and pull-down networks. Why are the PMOS transistors connected in parallel and the NMOS transistors in series? Why is a PMOS transistor designed with a width W twice that of an NMOS transistor?",
+          "assessed_skills": "Understanding carrier mobility (electrons versus holes) and balancing rise and fall times."
+        }
+      },
+      "editorial_notes": {
+        "en": "A PMOS-to-NMOS width ratio of exactly two is not a universal rule, particularly in a NAND with series NMOS devices. Ask about process-dependent drive strength and relative sizing under a stated reference model.",
+        "he": "יחס רוחב PMOS ל־NMOS של בדיוק שתיים אינו כלל אוניברסלי, בפרט ב־NAND עם NMOS בטור. יש לשאול על חוזק הנעה תלוי־תהליך ועל sizing יחסי לפי מודל ייחוס מוגדר."
+      },
+      "editorial_references": [
+        {
+          "name": "MIT: CMOS technology",
+          "url": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c3/c3s1/"
+        }
+      ],
+      "markdown_path": "hardware/cells_and_architecture/vhw-017-cmos-nand.md"
+    },
+    {
+      "id": "VHW-018",
+      "source_number": 18,
+      "category": "hardware",
+      "topic": "cells_and_architecture",
+      "topic_title": {
+        "en": "Cells and hardware architecture",
+        "he": "מבנה תאים וארכיטקטורת חומרה"
+      },
+      "reported_company": "Mobileye",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "מימוש מכפיל חומרתי (Hardware Multiplier)",
+          "prompt": "כיצד פועל אלגוריתם כפל מבוסס Booth Encoding או עץ Wallace Tree? מה היתרון שלו על פני חיבור טורי פשוט של Partial Products?",
+          "assessed_skills": "הבנה של מאיצי חישוב ייעודיים ל-DSP ו-Deep Learning."
+        },
+        "en": {
+          "title": "Hardware multiplier",
+          "prompt": "How does a multiplication algorithm based on Booth encoding or a Wallace tree work? What advantage does it have over straightforward serial addition of partial products?",
+          "assessed_skills": "Understanding dedicated computation accelerators for DSP and deep learning."
+        }
+      },
+      "editorial_notes": {
+        "en": "Booth recoding reduces or changes partial-product generation; a Wallace tree compresses partial products. They can be combined. Define signedness and bit width, and compare area, delay, and complexity separately.",
+        "he": "קידוד Booth משנה או מקטין יצירת מכפלות חלקיות; עץ Wallace דוחס אותן. ניתן לשלב ביניהם. יש להגדיר סימן ורוחב ולהשוות שטח, השהיה ומורכבות בנפרד."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/cells_and_architecture/vhw-018-hardware-multiplier.md"
+    },
+    {
+      "id": "VHW-019",
+      "source_number": 19,
+      "category": "hardware",
+      "topic": "cells_and_architecture",
+      "topic_title": {
+        "en": "Cells and hardware architecture",
+        "he": "מבנה תאים וארכיטקטורת חומרה"
+      },
+      "reported_company": "NVIDIA",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "מנגנון איפוס – Synchronous vs. Asynchronous Reset",
+          "prompt": "השווה בין Reset סינכרוני ל-Reset אסינכרוני עם שחרור סינכרוני (Asynchronous Assert, Synchronous Deassert). מה הסכנה בשחרור אסינכרוני של איפוס בסמוך לקצה שעון (Recovery and Removal Violations)?",
+          "assessed_skills": "אמינות תהליך ה-Boot וה-Power-On של המערכת."
+        },
+        "en": {
+          "title": "Synchronous versus asynchronous reset",
+          "prompt": "Compare a synchronous reset with a reset that asserts asynchronously and deasserts synchronously. What is the danger of asynchronously releasing reset near a clock edge, in terms of recovery and removal violations?",
+          "assessed_skills": "Reliability of system boot and power-on behavior."
+        }
+      },
+      "editorial_notes": {
+        "en": "Specify clock availability during reset and per-domain reset release. A synchronously deasserted reset requires appropriate synchronization in each destination domain.",
+        "he": "יש להגדיר זמינות שעון בזמן האיפוס ושחרור בכל תחום שעון. שחרור מסונכרן דורש סנכרון מתאים בכל תחום יעד."
+      },
+      "editorial_references": [],
+      "markdown_path": "hardware/cells_and_architecture/vhw-019-reset-strategies.md"
+    },
+    {
+      "id": "VHW-020",
+      "source_number": 20,
+      "category": "hardware",
+      "topic": "cells_and_architecture",
+      "topic_title": {
+        "en": "Cells and hardware architecture",
+        "he": "מבנה תאים וארכיטקטורת חומרה"
+      },
+      "reported_company": "Apple",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "תכנון זיכרון SRAM לעומת DRAM",
+          "prompt": "הסבר את המבנה של תא 6T SRAM לעומת תא 1T DRAM. מדוע רגיסטרים ו-L1 Caches ממומשים ב-SRAM, ומהן פעולות ה-Precharge וה-Sense Amplifier במהלך קריאה?",
+          "assessed_skills": "זיכרונות פנימיים בשבב, זמני גישה, ומגבלות שטח מול מהירות."
+        },
+        "en": {
+          "title": "SRAM versus DRAM memory design",
+          "prompt": "Explain the structure of a 6T SRAM cell versus a 1T DRAM cell. Why are registers and L1 caches implemented in SRAM, and what do precharge and the sense amplifier do during a read?",
+          "assessed_skills": "On-chip memories, access times, and area-versus-speed constraints."
+        }
+      },
+      "editorial_notes": {
+        "en": "Use 1T1C for the conventional DRAM cell. The claim that registers are implemented in SRAM is too broad: distinguish ordinary state registers, register files, and cache arrays. Clarify the precharge/read mechanism separately for each memory technology.",
+        "he": "לתא DRAM קונבנציונלי יש לציין 1T1C. האמירה שאוגרים ממומשים ב־SRAM רחבה מדי: יש להבחין בין אוגרי מצב רגילים, register files ומערכי cache. יש להפריד בין מנגנוני precharge וקריאה של הטכנולוגיות."
+      },
+      "editorial_references": [
+        {
+          "name": "MIT: memory technologies and caches",
+          "url": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c14/c14s1/"
+        }
+      ],
+      "markdown_path": "hardware/cells_and_architecture/vhw-020-sram-dram.md"
+    },
+    {
+      "id": "VSW-001",
+      "source_number": 1,
+      "category": "software",
+      "topic": "bit_manipulation",
+      "topic_title": {
+        "en": "Bit manipulation",
+        "he": "פעולות על ביטים"
+      },
+      "reported_company": "Apple",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "ספירת ביטים דולקים (Popcount / Hamming Weight)",
+          "prompt": "כתוב פונקציה יעילה ב-C המקבלת מספר שלם חיובי של 32 ביט ומחזירה את מספר הביטים שערכם '1'. ממש פתרון של $O(\\text{number of set bits})$ באמצעות הטריק של `n & (n - 1)`. כיצד תבצע זאת ב-$O(1)$ באמצעות לוח חיפוש (Lookup Table)?",
+          "assessed_skills": "שליטה בפעולות בינאריות וטרייד-אוף בין זיכרון לחישוב."
+        },
+        "en": {
+          "title": "Population count / Hamming weight",
+          "prompt": "Write an efficient C function that receives a positive 32-bit integer and returns the number of bits equal to 1. Implement an O(number of set bits) solution using n & (n - 1). How would you implement it in O(1) using a lookup table?",
+          "assessed_skills": "Mastery of binary operations and memory-versus-computation trade-offs."
+        }
+      },
+      "editorial_notes": {
+        "en": "State unsigned input type and treatment of zero. Lookup-table O(1) assumes fixed 32-bit width; a 256-entry byte table uses four lookups. Account for preprocessing and table memory.",
+        "he": "יש להגדיר טיפוס ללא סימן וטיפול באפס. זמן O(1) עם lookup table מניח רוחב קבוע של 32 ביטים; טבלה בת 256 ערכים דורשת ארבע גישות. יש להתייחס להכנה ולזיכרון הטבלה."
+      },
+      "editorial_references": [],
+      "markdown_path": "software/bit_manipulation/vsw-001-popcount.md"
+    },
+    {
+      "id": "VSW-002",
+      "source_number": 2,
+      "category": "software",
+      "topic": "bit_manipulation",
+      "topic_title": {
+        "en": "Bit manipulation",
+        "he": "פעולות על ביטים"
+      },
+      "reported_company": "Google",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "זיהוי חזקה של 2 ומציאת הביט הגבוה ביותר (MSB)",
+          "prompt": "כתוב ביטוי בוליאני בשורה אחת הבודק האם מספר שלם הוא חזקה מדויקת של 2. בנוסף, מצא את האינדקס של ה-Most Significant Bit הדולק ב-$O(1)$ או $O(\\log N)$.",
+          "assessed_skills": "אלגנטיות קוד, הבנת ייצוג בינארי ומספרים שליליים (משלים ל-2)."
+        },
+        "en": {
+          "title": "Power-of-two test and highest set bit",
+          "prompt": "Write a one-line Boolean expression that determines whether an integer is an exact power of two. Also find the index of its most significant set bit (MSB) in O(1) or O(log N) time.",
+          "assessed_skills": "Code clarity, binary representation, and negative numbers in two's complement."
+        }
+      },
+      "editorial_notes": {
+        "en": "Define signedness, word width W, zero handling, and whether MSB indexing starts at zero. Clarify whether N means the numeric value or word width and whether hardware bit-scan intrinsics are permitted.",
+        "he": "יש להגדיר סימן, רוחב מילה W, טיפול באפס ומספור אינדקס MSB מאפס או מאחד. יש להבהיר האם N הוא הערך המספרי או רוחב המילה והאם מותרות פקודות bit-scan מובנות."
+      },
+      "editorial_references": [],
+      "markdown_path": "software/bit_manipulation/vsw-002-power-two-msb.md"
+    },
+    {
+      "id": "VSW-003",
+      "source_number": 3,
+      "category": "software",
+      "topic": "bit_manipulation",
+      "topic_title": {
+        "en": "Bit manipulation",
+        "he": "פעולות על ביטים"
+      },
+      "reported_company": "NVIDIA",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "הפיכת סדר ביטים (Bit Reversal)",
+          "prompt": "נתון משתנה בגודל 32 ביט. הפוך את סדר הביטים שלו (ביט 0 מתחלף עם ביט 31, ביט 1 עם 30 וכו'). פתור את הבעיה בגישת Divide and Conquer באמצעות מסכות (Masks) והזזות (Shifts) ב-$O(\\log(\\text{word\\_size}))$.",
+          "assessed_skills": "חשיבה מקבילית של מניפולציות ביטים ללא לולאות איטיות."
+        },
+        "en": {
+          "title": "Bit reversal",
+          "prompt": "Given a 32-bit variable, reverse its bit order: bit 0 swaps with bit 31, bit 1 with bit 30, and so on. Solve the problem with a divide-and-conquer approach using masks and shifts in O(log(word_size)) time.",
+          "assessed_skills": "Parallel thinking about bit manipulation without slow per-bit loops."
+        }
+      },
+      "editorial_notes": {
+        "en": "Use unsigned operands and an explicit 32-bit width. The generalized algorithm has logarithmic stages in word width; for the fixed 32-bit exercise there are five mask/swap stages.",
+        "he": "יש להשתמש באופרנדים ללא סימן וברוחב מפורש של 32 ביטים. באלגוריתם הכללי מספר השלבים לוגריתמי ברוחב; עבור 32 ביטים יש חמישה שלבי מסכות והחלפות."
+      },
+      "editorial_references": [],
+      "markdown_path": "software/bit_manipulation/vsw-003-bit-reversal.md"
+    },
+    {
+      "id": "VSW-004",
+      "source_number": 4,
+      "category": "software",
+      "topic": "queues_and_stacks",
+      "topic_title": {
+        "en": "Queues and stacks",
+        "he": "תורים ומחסניות"
+      },
+      "reported_company": "Amazon (Annapurna Labs)",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "מימוש תור מעגלי (Ring Buffer / Circular Queue)",
+          "prompt": "ממש Circular Queue יעיל ב-C מעל מערך סטטי עבור תקשורת בין Producer ל-Consumer (ללא שימוש ב-Modulo `%` כדי למנוע חילוק חומרתי איטי – רמז: גודל מערך שהוא חזקה של 2 ומסכת ביטים `size - 1`).",
+          "assessed_skills": "כתיבת קוד Low-Level אופטימלי לדרייברים ו-Firmware."
+        },
+        "en": {
+          "title": "Ring buffer / circular queue",
+          "prompt": "Implement an efficient circular queue in C over a static array for communication between a producer and a consumer. Do not use the modulo operator (%) in order to avoid slow hardware division. Hint: use a power-of-two array size and the bit mask size - 1.",
+          "assessed_skills": "Low-level code optimized for drivers and firmware."
+        }
+      },
+      "editorial_notes": {
+        "en": "Specify single-threaded versus concurrent use, producer/consumer count, full/empty behavior, capacity convention, and overflow rules. Concurrent C code needs a defined synchronization/memory-order model. Modulo by a compile-time power of two need not compile to hardware division.",
+        "he": "יש להגדיר שימוש חד־תהליכוני או מקבילי, מספר יצרנים וצרכנים, טיפול במלא וריק, קיבולת וכללי גלישה. קוד C מקבילי דורש מודל סנכרון וסדר זיכרון. מודולו בחזקה קבועה של שתיים אינו חייב להפוך לחילוק חומרתי."
+      },
+      "editorial_references": [],
+      "markdown_path": "software/queues_and_stacks/vsw-004-ring-buffer.md"
+    },
+    {
+      "id": "VSW-005",
+      "source_number": 5,
+      "category": "software",
+      "topic": "bit_manipulation",
+      "topic_title": {
+        "en": "Bit manipulation",
+        "he": "פעולות על ביטים"
+      },
+      "reported_company": "Intel",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "בדיקת Endianness של מערכת",
+          "prompt": "כתוב פונקציה קצרה ב-C הבודקת האם המעבד הנוכחי הוא Little-Endian או Big-Endian. כיצד תממש המרה יעילה של 32-bit Integer מ-Little ל-Big Endian (Byte Swap)?",
+          "assessed_skills": "הבנת ארגון זיכרון ופוינטרים, המרת טיפוסים (Casting)."
+        },
+        "en": {
+          "title": "Detecting endianness",
+          "prompt": "Write a short C function that detects whether the current processor is little-endian or big-endian. How would you efficiently convert a 32-bit integer from little-endian to big-endian representation using a byte swap?",
+          "assessed_skills": "Memory organization, pointers, and casting."
+        }
+      },
+      "editorial_notes": {
+        "en": "Specify eight-bit bytes and uint32_t availability, use permitted character access to inspect object representation, and distinguish byte swapping from interpreting serialized bytes. Do not assume every possible architecture is purely little- or big-endian.",
+        "he": "יש להגדיר בייט בן שמונה ביטים וזמינות uint32_t, להשתמש בגישה חוקית דרך טיפוס תו לייצוג האובייקט ולהבחין בין byte swap לפרשנות בייטים בסריאליזציה. לא כל ארכיטקטורה אפשרית היא בהכרח little-endian או big-endian טהורה."
+      },
+      "editorial_references": [],
+      "markdown_path": "software/bit_manipulation/vsw-005-endianness.md"
+    },
+    {
+      "id": "VSW-006",
+      "source_number": 6,
+      "category": "software",
+      "topic": "queues_and_stacks",
+      "topic_title": {
+        "en": "Queues and stacks",
+        "he": "תורים ומחסניות"
+      },
+      "reported_company": "Mobileye",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "מימוש מחסנית עם תמיכה ב-Min ב-$O(1)$ (Min-Stack)",
+          "prompt": "ממש מבנה נתונים של מחסנית (Stack) התומך בפעולות `push`, `pop`, ו-`getMin` כולן בסיבוכיות זמן של $O(1)$. כיצד תמזער את תקורה הזיכרון (Memory Overhead)?",
+          "assessed_skills": "הבנה של מבני נתונים בסיסיים ושימוש במחסנית עזר או קידוד הפרשים."
+        },
+        "en": {
+          "title": "Stack with constant-time minimum",
+          "prompt": "Implement a stack supporting push, pop, and getMin, all in O(1) time. How would you minimize memory overhead?",
+          "assessed_skills": "Fundamental data structures and the use of an auxiliary stack or difference encoding."
+        }
+      },
+      "editorial_notes": {
+        "en": "Define empty-stack behavior, duplicate minima, and allocation assumptions for worst-case versus amortized O(1). Difference encoding needs explicit overflow handling or a wider type.",
+        "he": "יש להגדיר פעולות על מחסנית ריקה, מינימום שחוזר והנחות הקצאת זיכרון עבור O(1) במקרה הגרוע לעומת משוערך. קידוד הפרשים דורש טיפול בגלישה או טיפוס רחב יותר."
+      },
+      "editorial_references": [],
+      "markdown_path": "software/queues_and_stacks/vsw-006-min-stack.md"
+    },
+    {
+      "id": "VSW-007",
+      "source_number": 7,
+      "category": "software",
+      "topic": "linked_lists",
+      "topic_title": {
+        "en": "Linked lists",
+        "he": "רשימות מקושרות"
+      },
+      "reported_company": "Qualcomm",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "זיהוי מעגל ברשימה מקושרת (Floyd's Cycle Detection)",
+          "prompt": "נתונה רשימה מקושרת יחידה. קבע האם קיים בה מעגל מבלי לשנות את הרשימה ובסיבוכיות זיכרון של $O(1)$. אם קיים מעגל, מצא את הצומת שבו המעגל מתחיל.",
+          "assessed_skills": "אלגוריתם שני מצביעים (Tortoise and Hare) וחשיבה מתמטית על מרחקים."
+        },
+        "en": {
+          "title": "Floyd's cycle detection",
+          "prompt": "Given a singly linked list, determine whether it contains a cycle without modifying the list and using O(1) extra space. If a cycle exists, find the node where it begins.",
+          "assessed_skills": "The two-pointer tortoise-and-hare algorithm and mathematical reasoning about distances."
+        }
+      },
+      "editorial_notes": {
+        "en": "Specify that node identity, not stored value equality, determines pointer meetings. Include empty, one-node, and self-loop cases, and explain termination when no cycle exists.",
+        "he": "יש להבהיר שפגישת מצביעים מבוססת על זהות צומת ולא על שוויון הערכים שבו. יש לכלול רשימה ריקה, צומת יחיד ומעגל עצמי ולהסביר עצירה ללא מעגל."
+      },
+      "editorial_references": [],
+      "markdown_path": "software/linked_lists/vsw-007-floyd-cycle.md"
+    },
+    {
+      "id": "VSW-008",
+      "source_number": 8,
+      "category": "software",
+      "topic": "bit_manipulation",
+      "topic_title": {
+        "en": "Bit manipulation",
+        "he": "פעולות על ביטים"
+      },
+      "reported_company": "Microsoft",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "מימוש מנגנון Bitset / Bitmap קומפקטי",
+          "prompt": "ממש מחלקה או מבנה המנהל מערך בוליאני של מיליון דגלים (Flags) במינימום זיכרון. תמוך בפעולות `set(index)`, `clear(index)`, ו-`test(index)` בסיבוכיות זמן של $O(1)$.",
+          "assessed_skills": "מיפוי אינדקסים למערך של `uint32_t`, פעולות מודולו והזזה ברמת המכונה."
+        },
+        "en": {
+          "title": "Compact bitset / bitmap",
+          "prompt": "Implement a class or structure that manages a Boolean array of one million flags using minimal memory. Support set(index), clear(index), and test(index) in O(1) time.",
+          "assessed_skills": "Mapping indices into a uint32_t array and using machine-level modulo and shift operations."
+        }
+      },
+      "editorial_notes": {
+        "en": "Define valid indices 0 through 999999 and behavior on invalid input. The raw bitmap is 1,000,000 bits = 125,000 eight-bit bytes = 31,250 uint32_t words, excluding metadata and alignment. State whether operations are concurrent.",
+        "he": "יש להגדיר אינדקסים חוקיים מ־0 עד 999999 וטיפול בקלט לא חוקי. המפה עצמה דורשת 1,000,000 ביטים, כלומר 125,000 בייטים בני שמונה ביטים או 31,250 מילים מסוג uint32_t, ללא מטא־נתונים ויישור. יש להגדיר אם הפעולות מקביליות."
+      },
+      "editorial_references": [],
+      "markdown_path": "software/bit_manipulation/vsw-008-compact-bitset.md"
+    },
+    {
+      "id": "VSW-009",
+      "source_number": 9,
+      "category": "software",
+      "topic": "bit_manipulation",
+      "topic_title": {
+        "en": "Bit manipulation",
+        "he": "פעולות על ביטים"
+      },
+      "reported_company": "Marvell",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "איתור אלמנט יחיד במערך כפילויות (Single Number)",
+          "prompt": "נתון מערך שבו כל מספר מופיע בדיוק פעמיים, למעט מספר אחד שמופיע פעם אחת בלבד. מצא את המספר בסיבוכיות זמן של $O(N)$ וזיכרון נוסף של $O(1)$. כיצד תפתור אם כל מספר מופיע 3 פעמים והבודד מופיע פעם אחת?",
+          "assessed_skills": "שימוש בתכונות האלגבריות של XOR ($x \\oplus x = 0$), וסכימת ביטים מודולו 3 למקרה המורחב."
+        },
+        "en": {
+          "title": "Unique value among duplicates",
+          "prompt": "An array contains each number exactly twice, except for one number that appears once. Find that number in O(N) time and O(1) extra space. How would you solve the variant in which every other number appears three times and the unique number appears once?",
+          "assessed_skills": "The algebraic properties of XOR (x XOR x = 0) and bit sums modulo 3 for the extended variant."
+        }
+      },
+      "editorial_notes": {
+        "en": "Specify input guarantees and fixed integer width, particularly for negative values in the three-occurrence variant. O(N) for the bit-count approach assumes word width is fixed.",
+        "he": "יש להגדיר את הבטחות הקלט ורוחב השלמים, במיוחד למספרים שליליים בגרסת שלושת המופעים. זמן O(N) בגישת ספירת ביטים מניח רוחב מילה קבוע."
+      },
+      "editorial_references": [],
+      "markdown_path": "software/bit_manipulation/vsw-009-single-number.md"
+    },
+    {
+      "id": "VSW-010",
+      "source_number": 10,
+      "category": "software",
+      "topic": "intervals_and_sorting",
+      "topic_title": {
+        "en": "Intervals and sorting",
+        "he": "טווחים ומיון"
+      },
+      "reported_company": "Google",
+      "company_attribution_status": "unverified_user_supplied",
+      "content_status": "in_review",
+      "source_kind": "user_supplied_text",
+      "source_file": "source-original-he.md",
+      "source_date": null,
+      "translation_status": "ai_translated_pending_human_review",
+      "reviewed_by": null,
+      "published": false,
+      "translations": {
+        "he": {
+          "title": "בדיקת חפיפת טווחים (Interval Overlap & Merging)",
+          "prompt": "נתונה רשימה של מקטעי זיכרון מוקצים המיוצגים כצמדי `[start, end]`. כתוב אלגוריתם הממזג את כל המקטעים החופפים. מהי סיבוכיות הזמן והמקום, ומדוע מיון מוקדם הוא הגישה האופטימלית?",
+          "assessed_skills": "ניהול זיכרון, עבודה עם מערכים ומיון, וטיפול יסודי במקרי קצה (מקטעים נושקים או מוכלים)."
+        },
+        "en": {
+          "title": "Interval overlap and merging",
+          "prompt": "You are given allocated memory regions represented as pairs [start, end]. Write an algorithm that merges all overlapping regions. What are its time and space complexities, and why is sorting first the optimal approach?",
+          "assessed_skills": "Memory management, arrays and sorting, and careful handling of boundary cases such as touching or contained intervals."
+        }
+      },
+      "editorial_notes": {
+        "en": "Define closed versus half-open intervals, whether touching intervals merge, output ordering, and whether input may be mutated. Sort-and-scan is a general O(n log n) approach; optimality requires assumptions and already sorted input admits a linear scan.",
+        "he": "יש להגדיר טווחים סגורים או חצי פתוחים, איחוד טווחים נושקים, סדר הפלט ושינוי הקלט. מיון וסריקה הם גישה כללית בזמן O(n log n); טענת אופטימליות דורשת הנחות, ובקלט שכבר ממוין אפשר לסרוק בזמן ליניארי."
+      },
+      "editorial_references": [],
+      "markdown_path": "software/intervals_and_sorting/vsw-010-interval-merging.md"
+    }
+  ]
+}
