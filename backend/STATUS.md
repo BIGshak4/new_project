@@ -23,7 +23,7 @@ Harel's Next.js apps (`apps/web`, `apps/tasks`) are the face of the product. The
 | 2 | The engine, seeds, terminal practice tool, seed loader, FastAPI shell | `40dd1c8` | Done |
 | 3 | Harel's 30 questions enriched for the engine (skills, rubrics, hints, errors, checks) | `18bfaa2` | Done, files only |
 | 4a | Engine hardening for real-world use, from Harel's review (`docs/backend-review-for-shaked.md`, R1–R5) | | Done |
-| 4b | HTTP API per the contract in `docs/backend-frontend-integration-readiness.md` | | Next |
+| 4b | HTTP API per the contract in `docs/backend-frontend-integration-readiness.md`: A login + pilot access (`74eea90`), B migration `practice_submissions` applied (`865b83c`), C–G in progress | | In progress |
 | 5 | Connect `apps/web` to the API (with Harel) | | |
 
 ---
@@ -65,7 +65,8 @@ Harel's Next.js apps (`apps/web`, `apps/tasks`) are the face of the product. The
 ### Tools (`scripts/`)
 
 - `cli_practice.py`: the whole coaching loop in the terminal. Works without an API key.
-- `seed_db.py`: validates the seeds (`--check`) and upserts them into Supabase.
+- `seed_db.py`: validates the seeds (`--check`), upserts them into Supabase, `--dry-run` reports and rolls back.
+- `dry_run_sql.py`: runs a migration file in an explicitly opened, always-rolled-back transaction and proves nothing it creates is left behind. Required before asking for approval to apply a migration.
 - `build_example_bank.py`: merges Harel's `example_question/questions.json` with `seeds/questions/enrichment/*.json`.
 
 ### App shell (`app/`)
@@ -126,7 +127,7 @@ Deferred to 4b, because they belong in the persistence layer: a database uniquen
 
 ## 6. Known gaps and open items
 
-- **Database password** needed in `backend/.env` before `seed_db.py` can load the skills, role, tips, glossary and enriched questions. Everything is validated, nothing is loaded.
+- **Content not loaded yet.** `backend/.env` now has `DATABASE_URL`; `seed_db.py --dry-run` passes against the live database. The real load (30 questions get skills, rubrics, hints, checks) is stage G of 4b.
 - **Review before publishing.** All 30 questions stay `in_review` until a person checks technical correctness, rubric weights and Hebrew/English parity (checklist in `seeds/questions/README.md`).
 - **Bank coverage: 14 of the role's 27 skills** have a primary question. Missing: latches/flip-flops, state tables, Moore vs Mealy, truth tables, number representation, reset strategies, sequential HDL coding, debugging methodology, project walkthrough, state encoding, testbench basics.
 - **Anthropic API key** not created yet; the `AnthropicProvider` is written against SDK 1.6.0 but has not run against the real API.
@@ -161,4 +162,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 | 2026-09-18 | Step 2 hardening: stale subject status at rebalance, hard clock stop, parser bounds, prose-tolerant expression extraction; 324 tests; committed and pushed |
 | 2026-09-18 | Step 3: enrichment files, build script, named-value numeric check, shared code in prompts, hints as string arrays, two tips; golden set folded into Harel's keys; 328 tests |
 | 2026-09-18 | Harel's review and integration checklist landed in `docs/` (`be08576`) |
+| 2026-09-18 | seed_db: None → SQL NULL for jsonb columns, found by the first live dry-run (`afc48a9`) |
+| 2026-09-18 | Step 4b-A: settings, Supabase token verification (JWKS/ES256), pilot access via `jr_members`, error shape, `/v1/me`; 392 tests (`74eea90`) |
+| 2026-09-18 | Step 4b-B: migration `20260918170000_practice_submissions` (attempt_submission with unique idempotency key, attempt.exposures/engine_state, user_skill_profile.version) applied, history recorded (`865b83c`). Incident: an ad-hoc dry-run ran the DDL in autocommit because the asyncpg adapter begins lazily; `scripts/dry_run_sql.py` added so dry-runs open the transaction explicitly and verify the rollback |
 | 2026-09-18 | Step 4a: submissions as revisions with idempotency keys, evaluation status and retry, exposure events, restart recovery, per-role call deadlines, tip metering, content-hash review preservation and `--dry-run` in the seed loader, local store recovery; 370 tests |
