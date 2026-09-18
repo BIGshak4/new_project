@@ -8,8 +8,9 @@ no_pending_follow_up, nothing_to_retry, usage_limit, evaluation_unavailable.
 from __future__ import annotations
 
 from fastapi import FastAPI, Request
-from fastapi.exceptions import RequestValidationError
+from fastapi.exceptions import HTTPException, RequestValidationError
 from fastapi.responses import JSONResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 STATUS_FOR_CODE = {
     "unauthenticated": 401,
@@ -46,6 +47,13 @@ def install(app: FastAPI) -> None:
     @app.exception_handler(ApiError)
     async def _api_error(_: Request, exc: ApiError) -> JSONResponse:
         return JSONResponse(_body(exc.code, exc.message), status_code=exc.status, headers=exc.headers)
+
+    @app.exception_handler(StarletteHTTPException)
+    @app.exception_handler(HTTPException)
+    async def _http_error(_: Request, exc: StarletteHTTPException) -> JSONResponse:
+        code = {404: "not_found", 405: "method_not_allowed", 413: "payload_too_large", 401: "unauthenticated",
+                403: "forbidden"}.get(exc.status_code, "error")
+        return JSONResponse(_body(code, str(exc.detail)), status_code=exc.status_code, headers=getattr(exc, "headers", None))
 
     @app.exception_handler(RequestValidationError)
     async def _validation(_: Request, exc: RequestValidationError) -> JSONResponse:

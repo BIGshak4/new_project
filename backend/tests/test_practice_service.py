@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import uuid
 
 import pytest
@@ -231,3 +232,46 @@ class TestFailuresAndRaces:
         assert sub.status == "done" and sub.band == "STRONG" and sub.evidence == "none"
         assert "revealed_before_submit_no_evidence" in sub.flags
         assert all(m["evidence_weight"] == 0 for m in store.metrics)
+
+
+class TestHousekeeping:
+    async def test_locks_do_not_accumulate(self, catalog):
+        svc, _ = service(catalog, scripted([GOOD] * 20))
+        for _ in range(10):
+            view = await svc.start(USER, question_key=Q)
+            await svc.next_hint(USER, uuid.UUID(view.id))
+            await svc.submit(USER, uuid.UUID(view.id), "alarm = (A&B)|(A&C)|(B&C)", idempotency_key="k")
+        assert svc._locks == {}
+
+    async def test_concurrent_actions_on_one_attempt_are_serialized(self, catalog):
+        svc, _ = service(catalog, scripted([GOOD] * 5))
+        view = await svc.start(USER, question_key=Q)
+        attempt_id = uuid.UUID(view.id)
+        results = await asyncio.gather(svc.next_hint(USER, attempt_id), svc.next_hint(USER, attempt_id),
+                                       svc.next_hint(USER, attempt_id), svc.next_hint(USER, attempt_id))
+        levels = sorted(h.level for h, _ in results if h is not None)
+        assert levels == [1, 2, 3] and svc._locks == {}
+
+
+class TestDemoProvider:
+    async def test_the_default_provider_completes_the_loop_and_is_metered(self, catalog):
+        from app.services.demo_provider import DemoProvider
+        svc, store = service(catalog, DemoProvider())
+        view = await svc.start(USER, question_key=Q)
+        attempt_id = uuid.UUID(view.id)
+        sub, view = await svc.submit(USER, attempt_id, "alarm = A ^ B ^ C", idempotency_key="k1")     # check fails
+        assert sub.status == "done" and sub.band == "WEAK" and sub.card is not None
+        turns = 0
+        while view.pending_follow_up is not None and turns < 3:
+            fsub, view = await svc.submit(USER, attempt_id, "a longer follow-up answer that explains the majority idea in detail",
+                                          idempotency_key=f"f{turns}", follow_up_turn=view.pending_follow_up.turn)
+            assert fsub.status == "done"
+            turns += 1
+        assert view.status == "done"
+        assert store.usage and all(u["tokens_in"] > 0 for u in store.usage)
+
+        strong = await svc.start(USER, question_key=Q)
+        sub, _ = await svc.submit(USER, uuid.UUID(strong.id), "alarm = (A & B) | (A & C) | (B & C) because any two of the "
+                                  "three sensors asserted must raise the alarm and each pair gives one product term",
+                                  idempotency_key="k2")
+        assert sub.band == "STRONG" and sub.check.passed is True

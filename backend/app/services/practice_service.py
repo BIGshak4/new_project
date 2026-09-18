@@ -19,6 +19,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import uuid
+from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
 
@@ -259,8 +260,15 @@ class PracticeService:
             raise ApiError("validation", f"language must be one of {', '.join(LANGUAGES)}")
         return language
 
-    def _lock(self, attempt_id: uuid.UUID) -> asyncio.Lock:
-        return self._locks.setdefault(attempt_id, asyncio.Lock())
+    @asynccontextmanager
+    async def _lock(self, attempt_id: uuid.UUID):
+        """One action at a time per attempt. The lock is forgotten once nobody holds or waits for it,
+        so the table does not grow with every attempt the process has ever seen."""
+        lock = self._locks.setdefault(attempt_id, asyncio.Lock())
+        async with lock:
+            yield
+        if not lock.locked() and not getattr(lock, "_waiters", None) and self._locks.get(attempt_id) is lock:
+            del self._locks[attempt_id]
 
     def _plan(self, seniority: str) -> tuple[dict[str, int], dict[str, float], int]:
         if seniority not in self._plans:

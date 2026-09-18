@@ -190,6 +190,28 @@ class TestErrors:
         response = await client.post(BASE, json={"question_key": Q}, headers=h)
         assert response.status_code == 429 and response.json()["error"]["code"] == "usage_limit"
 
+    async def test_unknown_paths_and_methods_use_the_error_shape(self, client, user):
+        _, h = user
+        response = await client.get("/v1/nothing-here", headers=h)
+        assert response.status_code == 404 and response.json()["error"]["code"] == "not_found"
+        response = await client.delete(f"{BASE}/{uuid.uuid4()}", headers=h)
+        assert response.status_code == 405 and response.json()["error"]["code"] == "method_not_allowed"
+
+    async def test_oversized_bodies_are_413_before_parsing(self, client, user):
+        _, h = user
+        aid = (await start(client, h))["id"]
+        response = await client.post(f"{BASE}/{aid}/submissions", content=b"x" * (300 * 1024),
+                                     headers={**h, "Content-Type": "application/json"})
+        assert response.status_code == 413 and response.json()["error"]["code"] == "payload_too_large"
+
+    async def test_hebrew_survives_the_wire(self, client, user):
+        _, h = user
+        attempt = await start(client, h, language="he")
+        assert any("֐" <= ch <= "׿" for ch in attempt["question"]["prompt"])
+        hint = (await client.post(f"{BASE}/{attempt['id']}/hints/next", headers=h))
+        assert hint.status_code == 200
+        assert any("֐" <= ch <= "׿" for ch in hint.json()["hint"]["text"])
+
     async def test_unknown_attempt_and_bad_ids(self, client, user):
         _, h = user
         assert (await client.get(f"{BASE}/{uuid.uuid4()}", headers=h)).status_code == 404

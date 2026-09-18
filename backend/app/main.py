@@ -67,12 +67,19 @@ app.include_router(questions.router)
 app.include_router(practice.router)
 
 
+MAX_BODY_BYTES = 256 * 1024          # an answer is at most 20 000 characters; anything larger is not a request we serve
+
+
 @app.middleware("http")
 async def request_log(request: Request, call_next):
     """One line per request: id, route, user, status, duration. Never the body, never a token."""
     request_id = request.headers.get("X-Request-Id") or uuid.uuid4().hex[:12]
     request.state.request_id = request_id
     started = time.perf_counter()
+    declared = request.headers.get("content-length")
+    if declared and declared.isdigit() and int(declared) > MAX_BODY_BYTES:
+        return JSONResponse({"error": {"code": "payload_too_large", "message": f"the request body exceeds {MAX_BODY_BYTES} bytes"}},
+                            status_code=413, headers={"X-Request-Id": request_id})
     try:
         response = await call_next(request)
     except Exception:
