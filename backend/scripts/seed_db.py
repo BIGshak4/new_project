@@ -18,7 +18,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from sqlalchemy import delete, select  # noqa: E402
+from sqlalchemy import delete, null, select  # noqa: E402
 from sqlalchemy.dialects.postgresql import insert  # noqa: E402
 
 from app import db  # noqa: E402
@@ -51,7 +51,10 @@ async def upsert(connection, table, rows: list[dict], conflict: list[str], *, re
     """Insert or update by `conflict` columns. Returns {key value: id} when `key` is given."""
     ids: dict = {}
     for row in rows:
-        statement = insert(table).values(**row)
+        # None must become SQL NULL, not the JSON value null: the jsonb check constraints
+        # (question_check_type_chk, ...) accept "is null" but reject jsonb 'null'
+        values = {c: (null() if v is None else v) for c, v in row.items()}
+        statement = insert(table).values(**values)
         updates = {c: statement.excluded[c] for c in row if c not in conflict}
         statement = (statement.on_conflict_do_update(index_elements=conflict, set_=updates) if updates
                      else statement.on_conflict_do_nothing(index_elements=conflict))
