@@ -90,7 +90,7 @@ class TestProviders:
 
 class TestEvaluator:
     def block(self, catalog, language="en"):
-        question = catalog.questions["fsm_seq_detect_1011_overlap"]
+        question = catalog.questions["example-overlapping-sequence-1011"]
         return question, evaluator.question_block(question, language, catalog.skills[question.primary_skill])
 
     async def run(self, catalog, provider, answer="S0..S3 with fallback", **kw):
@@ -151,17 +151,17 @@ class TestEvaluator:
 
 class TestGeneratorAndFeedback:
     def test_bank_question_is_served_verbatim_without_a_model_call(self, catalog):
-        question = catalog.questions["counter_mod6_enable_recovery"]
+        question = catalog.questions["example-mod-six-counter"]
         result = generator.from_bank(question, "he")
         assert result.source == "bank" and result.question.question_text == question.text("he").prompt
 
     def test_bank_hints_by_level(self, catalog):
-        question = catalog.questions["majority_vote_three_sensors"]
+        question = catalog.questions["example-sensor-majority"]
         assert generator.bank_hint(question, 1, "en").startswith("Instead of thinking")
         assert generator.bank_hint(question, 4, "en") is None
 
     async def test_hint_decision_carries_the_reviewed_hint_only(self, catalog):
-        question = catalog.questions["fsm_seq_detect_1011_overlap"]
+        question = catalog.questions["example-overlapping-sequence-1011"]
         provider = ScriptedProvider([FOLLOW_UP])
         decision = Decision(action=Action.HINT, reason_code="weak_answer_budget_available", deliver_hint=True,
                             hint_level=2, target_skill=question.primary_skill, target_difficulty=5)
@@ -177,7 +177,7 @@ class TestGeneratorAndFeedback:
         assert result.source == "fallback" and "fallback_question" in result.flags and result.question.question_text
 
     async def test_feedback_card_falls_back_to_a_plain_card(self, catalog):
-        question = catalog.questions["majority_vote_three_sensors"]
+        question = catalog.questions["example-sensor-majority"]
         evaluation = make_evaluation(correctness=0.3, key_points_missed=["XOR is odd parity"],
                                      misconceptions=["xor_confused_with_majority"])
         result = await feedback.build_card(ScriptedProvider([LLMError("down")]), question=question,
@@ -191,7 +191,7 @@ class TestGeneratorAndFeedback:
 
 class TestDeepPractice:
     async def test_wrong_answer_check_caps_correctness_weak_hint_follow_up(self, catalog):
-        question = catalog.questions["majority_vote_three_sensors"]
+        question = catalog.questions["example-sensor-majority"]
         provider = scripted([evaluation_json(correctness=0.9, depth=0.7, misconceptions=["xor_confused_with_majority"]),
                              evaluation_json(correctness=0.8, depth=0.6)])
         attempt = PracticeAttempt(context(catalog, provider), question, {}, self_confidence=5)
@@ -217,7 +217,7 @@ class TestDeepPractice:
         assert row["misconceptions_hit"] == ["xor_confused_with_majority"]
 
     async def test_correct_answer_passes_check_and_escalates_once(self, catalog):
-        question = catalog.questions["majority_vote_three_sensors"]
+        question = catalog.questions["example-sensor-majority"]
         provider = scripted([evaluation_json(correctness=0.5, depth=0.8, clarity=0.9),
                              evaluation_json(correctness=0.9, depth=0.8), evaluation_json(correctness=0.9, depth=0.8)])
         attempt = PracticeAttempt(context(catalog, provider), question, {})
@@ -232,7 +232,7 @@ class TestDeepPractice:
             assert third.follow_up is None                                              # at most two follow-ups
 
     async def test_hints_before_submitting_lower_the_evidence(self, catalog):
-        question = catalog.questions["fsm_seq_detect_1011_overlap"]
+        question = catalog.questions["example-overlapping-sequence-1011"]
         attempt = PracticeAttempt(context(catalog, scripted([evaluation_json()])), question, {})
         assert [attempt.next_hint()[0] for _ in range(3)] == [1, 2, 3] and attempt.next_hint() is None
         outcome = await attempt.submit("states ...")
@@ -240,10 +240,10 @@ class TestDeepPractice:
         assert outcome.metrics[0]["hint_level"] == 3
 
     async def test_revealing_first_gives_zero_evidence_but_still_feedback(self, catalog):
-        question = catalog.questions["counter_mod6_enable_recovery"]
+        question = catalog.questions["example-mod-six-counter"]
         states: dict = {}
         attempt = PracticeAttempt(context(catalog, scripted([evaluation_json(correctness=0.95, depth=0.9)])), question, states)
-        assert "q >= 6" in attempt.reveal_reference()
+        assert "q>=6" in attempt.reveal_reference()
         k_before = attempt._state("counters").k
         outcome = await attempt.submit("copied the reference")
         assert outcome.evidence_weight == 0.0 and states["counters"].k == k_before
@@ -252,13 +252,13 @@ class TestDeepPractice:
         assert attempt.attempt_row()["revealed_before_submit"] is True
 
     async def test_evaluator_outage_never_breaks_the_attempt(self, catalog):
-        question = catalog.questions["counter_mod6_enable_recovery"]
+        question = catalog.questions["example-mod-six-counter"]
         provider = ScriptedProvider([LLMError("a", retryable=True), LLMError("b", retryable=True)])
         outcome = await PracticeAttempt(context(catalog, provider), question, {}).submit("an answer")
         assert outcome.band is None and "saved_without_evaluation" in outcome.flags
 
     async def test_hebrew_attempt_uses_hebrew_everywhere(self, catalog):
-        question = catalog.questions["fsm_seq_detect_1011_overlap"]
+        question = catalog.questions["example-overlapping-sequence-1011"]
         provider = scripted([evaluation_json(correctness=0.2, depth=0.2)])
         attempt = PracticeAttempt(context(catalog, provider, "he"), question, {})
         assert "תכננו" in attempt.prompt()
@@ -269,7 +269,7 @@ class TestDeepPractice:
         assert "keep in English" in evaluator_request.system[0]
 
     async def test_profile_state_carries_between_attempts(self, catalog):
-        question = catalog.questions["counter_mod6_enable_recovery"]
+        question = catalog.questions["example-mod-six-counter"]
         states: dict = {}
         for _ in range(2):
             provider = scripted([evaluation_json(correctness=0.9, depth=0.8)] * 3)

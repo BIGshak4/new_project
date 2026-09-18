@@ -38,7 +38,7 @@ class TestBankSelection:
         return bank.select_question(list(catalog.questions.values()), **{**defaults, **kw})
 
     def test_picks_the_primary_skill_match(self, catalog):
-        assert self.select(catalog).question.key == "fsm_seq_detect_1011_overlap"
+        assert self.select(catalog).question.key == "example-overlapping-sequence-1011"
 
     def test_production_rules_serve_nothing_unreviewed(self, catalog):
         assert self.select(catalog, allow_in_review=False, require_parity=True) is None
@@ -53,17 +53,17 @@ class TestBankSelection:
         assert self.select(catalog, skill="boolean_algebra", difficulty=2, mode="quick") is not None
 
     def test_seen_questions_are_not_repeated(self, catalog):
-        assert self.select(catalog, seen_keys={"fsm_seq_detect_1011_overlap"}) is None
+        assert self.select(catalog, seen_keys={"example-overlapping-sequence-1011"}) is None
 
     def test_unseen_variation_of_a_seen_question(self, catalog):
-        base = catalog.questions["fsm_seq_detect_1011_overlap"]
+        base = catalog.questions["example-overlapping-sequence-1011"]
         variation = base.model_copy(update={"key": "fsm_seq_detect_1101_overlap", "variation_of": base.key})
         chosen = bank.select_question([base, variation], skill="fsm_sequence_detectors", difficulty=5, mode="deep",
                                       language="en", seen_keys={base.key}, allow_in_review=True, require_parity=False)
         assert (chosen.question.key, chosen.familiarity) == (variation.key, "seen_variation")
 
     def test_prefers_the_least_served(self, catalog):
-        base = catalog.questions["fsm_seq_detect_1011_overlap"]
+        base = catalog.questions["example-overlapping-sequence-1011"]
         busy = base.model_copy(update={"key": "a_busy", "times_served": 50})
         fresh = base.model_copy(update={"key": "b_fresh", "times_served": 1})
         chosen = bank.select_question([busy, fresh], skill="fsm_sequence_detectors", difficulty=5, mode="deep",
@@ -77,7 +77,7 @@ class TestBankSelection:
     def test_coverage(self, catalog):
         coverage = bank.coverage_by_skill(list(catalog.questions.values()), language="he", allow_in_review=True,
                                           require_parity=False)
-        assert coverage["boolean_algebra"] == {"quick": 1, "deep": 1}
+        assert coverage["boolean_algebra"] == {"quick": 1, "deep": 1, "simulation": 1}
 
 
 # ----------------------------------------------------------------------------- tips

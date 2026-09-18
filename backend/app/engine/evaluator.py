@@ -48,7 +48,7 @@ def question_block(question: BankQuestion, language: str, skill: CatalogSkill | 
               for e in question.common_errors]
     parts = [
         f"<question key=\"{question.key}\" format=\"{question.format}\" difficulty=\"{question.difficulty}\">",
-        f"<prompt>\n{text.prompt}\n</prompt>",
+        f"<prompt>\n{question.prompt_with_code(language)}\n</prompt>",
         f"<requirements>\n{text.requirements}\n</requirements>",
         f"<rubric>\n{json.dumps(rubric, ensure_ascii=False, indent=1)}\n</rubric>",
         f"<reference_solution>\n{text.reference_solution}\n</reference_solution>",

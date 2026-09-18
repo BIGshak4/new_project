@@ -130,6 +130,14 @@ class BankQuestion(BaseModel):
     def languages_ready(self) -> list[str]:
         return [language for language, text in self.translations.items() if text.parity_checked]
 
+    def prompt_with_code(self, language: str) -> str:
+        """The prompt plus the shared code block, which is stored once in assets and never translated."""
+        prompt = self.text(language).prompt
+        code = self.assets.get("shared_code")
+        if not code:
+            return prompt
+        return f"{prompt}\n\n```{self.assets.get('code_language') or ''}\n{code.rstrip()}\n```"
+
 
 class TipCondition(BaseModel):
     signal: str

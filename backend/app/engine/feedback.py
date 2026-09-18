@@ -94,7 +94,7 @@ async def build_card(provider: Provider | None, *, question: BankQuestion, evalu
         return FeedbackResult(plain, source="fallback")
     text = question.text(language)
     context = "\n".join([
-        f"<question key=\"{question.key}\">", f"<prompt>\n{text.prompt}\n</prompt>",
+        f"<question key=\"{question.key}\">", f"<prompt>\n{question.prompt_with_code(language)}\n</prompt>",
         f"<reference_solution>\n{text.reference_solution}\n</reference_solution>",
         "<accepted_approaches>\n" + ("\n".join(f"- {a}" for a in text.accepted_approaches) or "none listed") + "\n</accepted_approaches>",
         f"<common_errors>\n{json.dumps(text.common_errors, ensure_ascii=False, indent=1)}\n</common_errors>", "</question>",

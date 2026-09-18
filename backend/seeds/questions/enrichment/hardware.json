@@ -1,0 +1,603 @@
+{
+  "_about": "Additions to Harel's example_question/questions.json, keyed by the database question key. His prompt, hint and reference solution are never changed here. `hint_position` says which level (1-3) his hint takes; `hints` holds the other two, in order. Built into example_bank.json by scripts/build_example_bank.py.",
+
+  "example-sensor-majority": {
+    "skills": [{"skill": "boolean_algebra", "weight": 0.6, "primary": true}, {"skill": "truth_tables", "weight": 0.4}],
+    "archetype": "conceptual", "exposure_risk": "high", "hint_position": 3,
+    "hints": {
+      "en": ["Instead of thinking about all eight rows at once, think about which pairs of sensors are enough to raise the alarm.",
+             "This is the majority function. Its minimal form has one product term for each pair of inputs."],
+      "he": ["במקום לחשוב על כל שמונה השורות בבת אחת, חשבו אילו זוגות של חיישנים מספיקים כדי להפעיל את האזעקה.",
+             "זו פונקציית הרוב (majority). בצורה המינימלית שלה יש מכפלה אחת לכל זוג קלטים."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) lists all eight input rows with the correct output, (2) gives a simplified expression equivalent to AB + AC + BC, and (3) explains what three-input XOR actually computes and why that is not a majority.",
+      "he": "תשובה מלאה (1) מפרטת את כל שמונה שורות הקלט עם הפלט הנכון, (2) נותנת ביטוי מצומצם השקול ל-AB + AC + BC, ו-(3) מסבירה מה XOR של שלושה קלטים מחשב בפועל ומדוע זו אינה פונקציית רוב."
+    },
+    "rubric": [
+      {"key": "truth_table_rows", "weight": 0.30, "en": "All eight rows are given and the output is 1 exactly for 011, 101, 110 and 111.", "he": "כל שמונה השורות מופיעות, והפלט הוא 1 בדיוק עבור 011, 101, 110 ו-111."},
+      {"key": "simplified_expression", "weight": 0.40, "en": "The expression is simplified to AB + AC + BC or an equivalent form of the same size, not left as the four minterms.", "he": "הביטוי מצומצם ל-AB + AC + BC או לצורה שקולה באותו גודל, ואינו נשאר כארבעת המינטרמים."},
+      {"key": "xor_explanation", "weight": 0.30, "en": "Explains that three-input XOR computes odd parity: 1 for a single asserted sensor and 0 for exactly two, the opposite of what is needed.", "he": "מסבירים ש-XOR של שלושה קלטים מחשב זוגיות אי-זוגית: 1 עבור חיישן פעיל יחיד ו-0 עבור שניים בדיוק, ההפך ממה שנדרש."}
+    ],
+    "common_errors": [
+      {"key": "unsimplified_minterms", "core": false, "skill": "boolean_algebra", "en": "The expression is left as the four minterms. Correct, but the question asks for a simplified form with three two-input product terms.", "he": "הביטוי נשאר כארבעת המינטרמים. נכון, אבל השאלה מבקשת צורה מצומצמת עם שלוש מכפלות של שני קלטים."},
+      {"key": "xor_confused_with_majority", "core": true, "skill": "boolean_algebra", "tip_key": "trace_a_second_example", "en": "XOR is treated as 'more than one input is 1'. Three-input XOR is odd parity: 1 for one or three asserted inputs, 0 for exactly two.", "he": "מתייחסים ל-XOR כאילו פירושו 'יותר מקלט אחד הוא 1'. XOR של שלושה קלטים הוא זוגיות אי-זוגית: 1 עבור קלט פעיל אחד או שלושה, 0 עבור שניים בדיוק."},
+      {"key": "exactly_two_instead_of_at_least_two", "core": false, "skill": "truth_tables", "tip_key": "restate_the_requirement", "en": "Row 111 is given output 0, reading 'at least two' as 'exactly two'.", "he": "לשורה 111 ניתן פלט 0, מתוך קריאת 'לפחות שניים' כ'בדיוק שניים'."}
+    ],
+    "accepted_approaches": {
+      "en": ["A Karnaugh map grouping instead of algebraic manipulation.", "An equivalent factored form such as A(B + C) + BC.", "The product-of-sums form (A + B)(A + C)(B + C)."],
+      "he": ["קיבוץ במפת Karnaugh במקום מניפולציה אלגברית.", "צורה מפורקת שקולה כמו A(B + C) + BC.", "צורת מכפלת סכומים (A + B)(A + C)(B + C)."]
+    },
+    "deterministic_check": {"type": "truth_table", "spec": {"variables": ["A", "B", "C"], "minterms": [3, 5, 6, 7], "output_name": "alarm"}},
+    "check_self_test": {"pass": ["alarm = AB + AC + BC", "(A & B) | (A & C) | (B & C)", "alarm = (A+B)(A+C)(B+C) which is POS", "Rows 011,101,110,111 give 1.\nalarm = A(B + C) + BC"], "fail": ["alarm = A ^ B ^ C", "AB + AC", "alarm = A + B + C"]}
+  },
+
+  "example-nand-only-enable": {
+    "skills": [{"skill": "universal_gates", "weight": 0.7, "primary": true}, {"skill": "boolean_algebra", "weight": 0.3}],
+    "archetype": "design", "hint_position": 1,
+    "hints": {
+      "en": ["De Morgan turns an OR of two signals into a NAND of their complements. Which two gates give you the complements?",
+             "Build it in three steps: invert A and B with self-connected NAND gates, NAND those two results to get A OR B, then NAND with E and invert the result once more."],
+      "he": ["De Morgan הופך OR של שני אותות ל-NAND של המשלימים שלהם. אילו שני שערים נותנים לכם את המשלימים?",
+             "בנו בשלושה שלבים: הפכו את A ו-B בעזרת שערי NAND עם כניסות מחוברות, בצעו NAND על שתי התוצאות כדי לקבל A OR B, ואז NAND עם E והפכו את התוצאה פעם נוספת."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) uses only two-input NAND gates with no inverted inputs, (2) describes each gate and what it computes, (3) shows how A OR B is obtained from NAND gates, and (4) verifies E=0 and A=B=0 both give Y=0.",
+      "he": "תשובה מלאה (1) משתמשת רק בשערי NAND דו-כניסתיים ללא כניסות הפוכות, (2) מתארת כל שער ומה הוא מחשב, (3) מראה איך מתקבל A OR B משערי NAND, ו-(4) מוודאת ש-E=0 ו-A=B=0 נותנים שניהם Y=0."
+    },
+    "rubric": [
+      {"key": "nand_only", "weight": 0.30, "en": "Only two-input NAND gates are used; inverters are built from NAND with tied inputs.", "he": "נעשה שימוש רק בשערי NAND דו-כניסתיים; מהפכים נבנים מ-NAND עם כניסות מחוברות."},
+      {"key": "or_via_demorgan", "weight": 0.30, "en": "A OR B is obtained as NAND(NOT A, NOT B) and the De Morgan step is stated.", "he": "A OR B מתקבל כ-NAND(NOT A, NOT B) ושלב ה-De Morgan מוסבר."},
+      {"key": "correct_function", "weight": 0.25, "en": "The final network computes E AND (A OR B); the last NAND's inversion is undone.", "he": "הרשת הסופית מחשבת E AND (A OR B); ההיפוך של ה-NAND האחרון מבוטל."},
+      {"key": "verification", "weight": 0.15, "en": "E=0 and A=B=0 are traced through the gates and both give Y=0.", "he": "המקרים E=0 ו-A=B=0 נעקבים דרך השערים ושניהם נותנים Y=0."}
+    ],
+    "common_errors": [
+      {"key": "forgot_final_inversion", "core": true, "skill": "universal_gates", "tip_key": "trace_a_second_example", "en": "The network ends at NAND(E, A OR B), which is NOT Y. One more NAND with tied inputs is needed.", "he": "הרשת מסתיימת ב-NAND(E, A OR B), שהוא NOT Y. נדרש עוד NAND אחד עם כניסות מחוברות."},
+      {"key": "used_free_inverter", "core": false, "skill": "universal_gates", "en": "An inverter or an inverted input is used, which the question forbids.", "he": "נעשה שימוש במהפך או בכניסה הפוכה, בניגוד לדרישת השאלה."},
+      {"key": "or_built_wrong", "core": true, "skill": "boolean_algebra", "en": "A OR B is built as NAND(A, B), which is actually NOT(A AND B).", "he": "A OR B נבנה כ-NAND(A, B), שהוא למעשה NOT(A AND B)."}
+    ],
+    "accepted_approaches": {
+      "en": ["Any correct NAND-only network, of any gate count.", "A drawing instead of a text description, if each gate's inputs are clear."],
+      "he": ["כל רשת נכונה של NAND בלבד, בכל מספר שערים.", "ציור במקום תיאור מילולי, אם כניסות כל שער ברורות."]
+    }
+  },
+
+  "example-masked-equality": {
+    "skills": [{"skill": "boolean_algebra", "weight": 0.5, "primary": true}, {"skill": "combinational_blocks", "weight": 0.5}],
+    "archetype": "design", "hint_position": 2,
+    "hints": {
+      "en": ["A bit contributes a mismatch only if it differs AND it is selected. Write that per bit first.",
+             "Compute d = (A XOR B) AND M, a vector of selected mismatches. equal is 1 exactly when every bit of d is 0, which is a NOR reduction of d."],
+      "he": ["ביט תורם אי-התאמה רק אם הוא שונה וגם נבחר. כתבו זאת קודם לכל ביט בנפרד.",
+             "חשבו d = (A XOR B) AND M, וקטור של אי-ההתאמות שנבחרו. equal הוא 1 בדיוק כאשר כל ביט של d הוא 0, כלומר NOR מצומצם של d."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) computes a per-bit mismatch vector gated by the mask, (2) reduces it to a single bit correctly, (3) gives equal=1 for A=1010, B=1001, M=1100, and (4) explains that M=0000 gives equal=1 because nothing is compared.",
+      "he": "תשובה מלאה (1) מחשבת וקטור אי-התאמה לכל ביט בשליטת המסיכה, (2) מצמצמת אותו לביט יחיד נכון, (3) נותנת equal=1 עבור A=1010, B=1001, M=1100, ו-(4) מסבירה ש-M=0000 נותן equal=1 כי לא מושווה דבר."
+    },
+    "rubric": [
+      {"key": "mismatch_vector", "weight": 0.30, "en": "Uses (A XOR B) AND M, or an equivalent, for the selected mismatches.", "he": "משתמשים ב-(A XOR B) AND M, או בשקול לו, לאי-ההתאמות שנבחרו."},
+      {"key": "reduction_to_one_bit", "weight": 0.30, "en": "The vector is reduced to a single bit (NOR reduction, or 'no bit is 1'), not just inverted bitwise.", "he": "הווקטור מצומצם לביט יחיד (NOR מצומצם, או 'אף ביט אינו 1'), ולא רק הופך ביט-ביט."},
+      {"key": "worked_example", "weight": 0.20, "en": "The example evaluates to equal=1 with the intermediate vector shown.", "he": "הדוגמה נותנת equal=1 עם הווקטור הביניים מוצג."},
+      {"key": "zero_mask", "weight": 0.20, "en": "M=0000 is explained: no bit is compared, so equal=1 by definition.", "he": "המקרה M=0000 מוסבר: אף ביט אינו מושווה, ולכן equal=1 מהגדרה."}
+    ],
+    "common_errors": [
+      {"key": "bitwise_not_instead_of_reduction", "core": true, "skill": "combinational_blocks", "en": "~((A ^ B) & M) is a four-bit vector, not the single bit the question asks for.", "he": "~((A ^ B) & M) הוא וקטור של ארבעה ביטים, ולא הביט היחיד שהשאלה מבקשת."},
+      {"key": "mask_applied_after_reduction", "core": false, "skill": "boolean_algebra", "en": "The mismatches are reduced before the mask is applied, so ignored bits still block equality.", "he": "אי-ההתאמות מצומצמות לפני החלת המסיכה, ולכן ביטים שאמורים להיות מוזנחים עדיין מונעים שוויון."},
+      {"key": "zero_mask_gives_zero", "core": false, "skill": "boolean_algebra", "tip_key": "restate_the_requirement", "en": "M=0000 is said to give equal=0. With nothing selected, every selected bit trivially matches.", "he": "נטען ש-M=0000 נותן equal=0. כשלא נבחר דבר, כל ביט שנבחר תואם באופן טריוויאלי."}
+    ],
+    "accepted_approaches": {
+      "en": ["equal = &(~(A ^ B) | ~M), an AND reduction over 'matches or ignored'.", "A gate-level description with four XOR gates, four AND gates and a NOR."],
+      "he": ["equal = &(~(A ^ B) | ~M), צמצום AND על 'תואם או מוזנח'.", "תיאור ברמת שערים עם ארבעה XOR, ארבעה AND ו-NOR אחד."]
+    }
+  },
+
+  "example-mux-tree-eight-inputs": {
+    "skills": [{"skill": "combinational_blocks", "weight": 1.0, "primary": true}],
+    "archetype": "design", "hint_position": 1,
+    "hints": {
+      "en": ["Which select bit distinguishes D[0] from D[1]? That is the bit the first level of cells needs.",
+             "Level 1: four cells pick between (D0,D1), (D2,D3), (D4,D5), (D6,D7) using s[0]. Level 2: two cells using s[1]. Level 3: one cell using s[2]. Count the cells and the levels a data bit passes through."],
+      "he": ["איזה ביט בחירה מבדיל בין D[0] ל-D[1]? זה הביט שהרמה הראשונה של התאים צריכה.",
+             "רמה 1: ארבעה תאים בוחרים בין (D0,D1), (D2,D3), (D4,D5), (D6,D7) לפי s[0]. רמה 2: שני תאים לפי s[1]. רמה 3: תא אחד לפי s[2]. ספרו את התאים ואת הרמות שביט נתונים עובר."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) describes a three-level tree, (2) assigns s[0] to the first level, s[1] to the second and s[2] to the third, (3) counts 7 cells, and (4) gives a maximum data-path delay of 3t with the assumption stated.",
+      "he": "תשובה מלאה (1) מתארת עץ בן שלוש רמות, (2) משייכת את s[0] לרמה הראשונה, s[1] לשנייה ו-s[2] לשלישית, (3) סופרת 7 תאים, ו-(4) נותנת השהיית נתונים מרבית של 3t עם ההנחה מצוינת."
+    },
+    "rubric": [
+      {"key": "tree_structure", "weight": 0.30, "en": "A 4-2-1 tree of 2:1 cells is described.", "he": "מתואר עץ 4-2-1 של תאי 2:1."},
+      {"key": "select_bits_per_level", "weight": 0.30, "en": "s[0] at the first level, s[1] at the second, s[2] at the last, with the reason.", "he": "s[0] ברמה הראשונה, s[1] בשנייה, s[2] באחרונה, עם הנימוק."},
+      {"key": "cell_count", "weight": 0.20, "en": "7 cells.", "he": "7 תאים."},
+      {"key": "delay", "weight": 0.20, "en": "3t, stated as the data path with stable selects.", "he": "3t, מוצג כמסלול הנתונים עם אותות בחירה יציבים."}
+    ],
+    "common_errors": [
+      {"key": "select_bits_reversed", "core": true, "skill": "combinational_blocks", "tip_key": "trace_a_second_example", "en": "s[2] is used at the first level. Then select=1 (001) does not pick D[1]; tracing one value exposes it.", "he": "s[2] משמש ברמה הראשונה. אז select=1 (001) אינו בוחר את D[1]; עקבה של ערך אחד חושפת זאת."},
+      {"key": "wrong_cell_count", "core": false, "skill": "combinational_blocks", "en": "The count is 8 or 6 instead of 7 (4 + 2 + 1).", "he": "הספירה היא 8 או 6 במקום 7 (4 + 2 + 1)."},
+      {"key": "delay_as_cell_count", "core": false, "skill": "combinational_blocks", "en": "The delay is given as 7t; a data bit passes through only one cell per level.", "he": "ההשהיה ניתנת כ-7t; ביט נתונים עובר דרך תא אחד בלבד בכל רמה."}
+    ],
+    "accepted_approaches": {
+      "en": ["Any level order that is consistent with which bit selects at each level, for example s[2] first with the pairing (D0,D4), if the pairing is stated.", "A drawing instead of a description."],
+      "he": ["כל סדר רמות עקבי עם הביט הבוחר בכל רמה, למשל s[2] ראשון עם הזיווג (D0,D4), אם הזיווג מצוין.", "ציור במקום תיאור."]
+    }
+  },
+
+  "example-interrupt-priority": {
+    "skills": [{"skill": "combinational_blocks", "weight": 0.7, "primary": true}, {"skill": "hdl_combinational_coding", "weight": 0.3}],
+    "archetype": "design", "hint_position": 2,
+    "hints": {
+      "en": ["What should the outputs be when nothing is requested, and how will a reader tell that case apart from a request on bit 0?",
+             "Write: default valid=0, index=0; then if req[3] then index=3, valid=1; else if req[2] ... down to req[0]. Now read off the three example inputs."],
+      "he": ["מה צריכים להיות הפלטים כשאין בקשה, ואיך יבחין קורא בין מקרה זה לבקשה בביט 0?",
+             "כתבו: ברירת מחדל valid=0, index=0; אז אם req[3] אז index=3, valid=1; אחרת אם req[2] ... עד req[0]. עכשיו קראו את שלוש דוגמאות הקלט."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) checks the requests from bit 3 down to bit 0, (2) sets valid=0 and index=0 with no request, (3) explains why valid is needed, and (4) gives (valid,index) = (1,2), (1,3), (0,0) for the three inputs.",
+      "he": "תשובה מלאה (1) בודקת את הבקשות מביט 3 עד ביט 0, (2) קובעת valid=0 ו-index=0 כשאין בקשה, (3) מסבירה למה valid נחוץ, ו-(4) נותנת (valid,index) = (1,2), (1,3), (0,0) לשלושת הקלטים."
+    },
+    "rubric": [
+      {"key": "priority_order", "weight": 0.35, "en": "Bit 3 wins over 2, 2 over 1, 1 over 0, expressed as an ordered chain or equivalent logic.", "he": "ביט 3 גובר על 2, 2 על 1, 1 על 0, מבוטא כשרשרת מסודרת או לוגיקה שקולה."},
+      {"key": "no_request_case", "weight": 0.25, "en": "No request gives valid=0, index=0, and the role of valid is explained.", "he": "ללא בקשה מתקבל valid=0, index=0, ותפקיד valid מוסבר."},
+      {"key": "examples", "weight": 0.25, "en": "0101 -> (1,2), 1010 -> (1,3), 0000 -> (0,0).", "he": "0101 -> (1,2), 1010 -> (1,3), 0000 -> (0,0)."},
+      {"key": "complete_assignment", "weight": 0.15, "en": "Every path assigns both outputs (defaults or a full chain), so no latch is inferred.", "he": "כל מסלול מקצה את שני הפלטים (ברירות מחדל או שרשרת מלאה), כך שלא נוצר latch."}
+    ],
+    "common_errors": [
+      {"key": "priority_reversed", "core": true, "skill": "combinational_blocks", "en": "The chain checks bit 0 first, so 0101 returns index 0.", "he": "השרשרת בודקת קודם את ביט 0, ולכן 0101 מחזיר index 0."},
+      {"key": "valid_missing_or_wrong", "core": false, "skill": "combinational_blocks", "tip_key": "cover_every_case", "en": "valid is left out or stays 1 with no request, so a request on bit 0 and no request look the same.", "he": "valid מושמט או נשאר 1 ללא בקשה, ולכן בקשה בביט 0 והעדר בקשה נראים זהים."},
+      {"key": "incomplete_assignment", "core": false, "skill": "hdl_combinational_coding", "tip_key": "cover_every_case", "en": "Not every branch assigns both outputs, which infers a latch in HDL.", "he": "לא כל ענף מקצה את שני הפלטים, מה שיוצר latch ב-HDL."}
+    ],
+    "accepted_approaches": {
+      "en": ["A casez with don't-cares (4'b1???, 4'b01??, ...).", "Explicit Boolean equations for index[1], index[0] and valid."],
+      "he": ["casez עם don't-cares (4'b1???, 4'b01??, ...).", "משוואות בוליאניות מפורשות עבור index[1], index[0] ו-valid."]
+    }
+  },
+
+  "example-enabled-decoder": {
+    "skills": [{"skill": "combinational_blocks", "weight": 0.7, "primary": true}, {"skill": "truth_tables", "weight": 0.3}],
+    "archetype": "conceptual", "hint_position": 2,
+    "hints": {
+      "en": ["Each output is 1 for exactly one address. What single product term describes 'address is 10 and enabled'?",
+             "Y2 = E & A1 & ~A0. Do the same for addresses 00, 01 and 11, then evaluate A=10 with E=1 and E=0."],
+      "he": ["כל פלט הוא 1 עבור כתובת אחת בדיוק. איזו מכפלה יחידה מתארת 'הכתובת היא 10 והרכיב מופעל'?",
+             "Y2 = E & A1 & ~A0. עשו אותו דבר לכתובות 00, 01 ו-11, ואז חשבו A=10 עם E=1 ועם E=0."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) gives four minterm equations each gated by E, (2) gives 0100 for A=10 enabled and 0000 disabled, and (3) argues that the terms are mutually exclusive for a stable input, without claiming glitch-free transitions.",
+      "he": "תשובה מלאה (1) נותנת ארבע משוואות מינטרם, כל אחת בשליטת E, (2) נותנת 0100 עבור A=10 מופעל ו-0000 מושבת, ו-(3) מנמקת שהאיברים מוציאים זה את זה עבור קלט יציב, בלי לטעון להעדר גליצ'ים במעברים."
+    },
+    "rubric": [
+      {"key": "four_equations", "weight": 0.40, "en": "Y0..Y3 are correct minterms of A1, A0, each ANDed with E.", "he": "Y0..Y3 הם מינטרמים נכונים של A1, A0, כל אחד ב-AND עם E."},
+      {"key": "example_outputs", "weight": 0.30, "en": "A=10: 0100 when enabled, 0000 when disabled.", "he": "A=10: 0100 כשמופעל, 0000 כשמושבת."},
+      {"key": "mutual_exclusion", "weight": 0.30, "en": "Explains that two outputs cannot both be 1 for a stable input because the minterms are disjoint, and separates this from transient glitches.", "he": "מסבירים ששני פלטים לא יכולים להיות 1 יחד עבור קלט יציב כי המינטרמים זרים, ומפרידים זאת מגליצ'ים חולפים."}
+    ],
+    "common_errors": [
+      {"key": "enable_not_in_every_term", "core": true, "skill": "combinational_blocks", "en": "E is left out of some or all equations, so outputs are 1 while disabled.", "he": "E מושמט מחלק מהמשוואות או מכולן, ולכן פלטים הם 1 גם כשהרכיב מושבת."},
+      {"key": "bit_order_swapped", "core": false, "skill": "truth_tables", "en": "A1 and A0 are swapped, so A=10 activates Y1 instead of Y2.", "he": "A1 ו-A0 הוחלפו, ולכן A=10 מפעיל את Y1 במקום Y2."},
+      {"key": "glitch_free_claimed", "core": false, "skill": "combinational_blocks", "en": "Mutual exclusion for stable inputs is presented as a guarantee about transitions, which it is not.", "he": "ההדדיות עבור קלטים יציבים מוצגת כערובה לגבי מעברים, וזה אינו נכון."}
+    ],
+    "accepted_approaches": {
+      "en": ["A truth table with E, A1, A0 as inputs instead of equations.", "A 1-to-2 decoder tree with E feeding the first stage."],
+      "he": ["טבלת אמת עם E, A1, A0 כקלטים במקום משוואות.", "עץ מפענחים 1-ל-2 עם E מזין את השלב הראשון."]
+    },
+    "deterministic_check": {"type": "truth_table", "spec": {"variables": ["E", "A1", "A0"], "minterms": [6], "output_name": "Y2"}},
+    "check_self_test": {"pass": ["Y0=E&~A1&~A0; Y1=E&~A1&A0; Y2=E&A1&~A0; Y3=E&A1&A0", "Y2 = E & A1 & A0'"], "fail": ["Y2 = A1 & ~A0", "Y2 = E & ~A1 & A0"]}
+  },
+
+  "example-rotate-versus-shift": {
+    "skills": [{"skill": "combinational_blocks", "weight": 0.6, "primary": true}, {"skill": "registers_shifters", "weight": 0.4}],
+    "archetype": "design", "hint_position": 1,
+    "hints": {
+      "en": ["For k=3, which three bits leave the low end, and where does each mode put them?",
+             "Rotate: the low three bits 100 move to the top, giving 100 10110. Shift: zeros enter at the top, giving 000 10110. For variable k, use three stages that each conditionally move by 1, 2 and 4 positions."],
+      "he": ["עבור k=3, אילו שלושה ביטים יוצאים מהקצה הנמוך, ולאן כל מצב שם אותם?",
+             "סיבוב: שלושת הביטים הנמוכים 100 עוברים לראש, ומתקבל 100 10110. הזזה: אפסים נכנסים בראש, ומתקבל 000 10110. עבור k משתנה, השתמשו בשלושה שלבים שכל אחד מזיז בתנאי ב-1, 2 ו-4 מקומות."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) gives 10010110 for rotate and 00010110 for shift, (2) describes a barrel structure of three conditional stages controlled by k[0], k[1], k[2], and (3) explains that rotation wraps the discarded bits to the top while a logical shift inserts zeros.",
+      "he": "תשובה מלאה (1) נותנת 10010110 לסיבוב ו-00010110 להזזה, (2) מתארת מבנה barrel של שלושה שלבים מותנים בשליטת k[0], k[1], k[2], ו-(3) מסבירה שסיבוב מחזיר את הביטים שיצאו לראש בעוד הזזה לוגית מכניסה אפסים."
+    },
+    "rubric": [
+      {"key": "both_outputs", "weight": 0.35, "en": "10010110 and 00010110.", "he": "10010110 ו-00010110."},
+      {"key": "barrel_stages", "weight": 0.35, "en": "Three MUX stages by 1, 2, 4 selected by the bits of k; any k in 0..7 is covered.", "he": "שלושה שלבי MUX ב-1, 2, 4 שנבחרים לפי הביטים של k; כל k בין 0 ל-7 מכוסה."},
+      {"key": "discarded_bits", "weight": 0.30, "en": "Where the low bits go in each mode is stated correctly.", "he": "מצוין נכון לאן הביטים הנמוכים הולכים בכל מצב."}
+    ],
+    "common_errors": [
+      {"key": "rotate_direction_wrong", "core": true, "skill": "registers_shifters", "tip_key": "trace_a_second_example", "en": "The rotate result is a left rotation or wraps the wrong bits.", "he": "תוצאת הסיבוב היא סיבוב שמאלה או מחזירה את הביטים הלא נכונים."},
+      {"key": "arithmetic_shift_used", "core": false, "skill": "registers_shifters", "en": "The sign bit is replicated instead of zeros, which is an arithmetic shift, not the logical shift asked for.", "he": "ביט הסימן משוכפל במקום אפסים, וזו הזזה אריתמטית ולא ההזזה הלוגית שנדרשה."},
+      {"key": "no_variable_k_structure", "core": false, "skill": "combinational_blocks", "en": "Only the k=3 case is solved; no structure handles a variable k.", "he": "נפתר רק המקרה k=3; אין מבנה שמטפל ב-k משתנה."}
+    ],
+    "accepted_approaches": {
+      "en": ["An 8:1 MUX per output bit selecting among the eight rotations, with a mode input.", "Stages in the order 4, 2, 1 instead of 1, 2, 4."],
+      "he": ["MUX 8:1 לכל ביט פלט הבוחר בין שמונת הסיבובים, עם קלט מצב.", "שלבים בסדר 4, 2, 1 במקום 1, 2, 4."]
+    }
+  },
+
+  "example-full-adder-composition": {
+    "skills": [{"skill": "binary_arithmetic", "weight": 0.8, "primary": true}, {"skill": "boolean_algebra", "weight": 0.2}],
+    "archetype": "design", "hint_position": 1,
+    "hints": {
+      "en": ["A half adder computes a sum and a carry from two bits. You have three bits to add; which two go first?",
+             "First half adder: p = A XOR B, c1 = A AND B. Second: S = p XOR Cin, c2 = p AND Cin. Now look at c1 and c2 together: when c1 = 1, what is p?"],
+      "he": ["חצי מחבר מחשב סכום ונשא משני ביטים. יש לכם שלושה ביטים לחבר; אילו שניים ראשונים?",
+             "חצי מחבר ראשון: p = A XOR B, c1 = A AND B. שני: S = p XOR Cin, c2 = p AND Cin. עכשיו הסתכלו על c1 ו-c2 יחד: כאשר c1 = 1, מהו p?"]
+    },
+    "requirements": {
+      "en": "A complete answer (1) derives S = A XOR B XOR Cin and Cout = (A AND B) OR ((A XOR B) AND Cin), (2) explains that c1 = 1 forces p = 0 and therefore c2 = 0, and (3) checks A=B=Cin=1 gives S=1, Cout=1.",
+      "he": "תשובה מלאה (1) גוזרת S = A XOR B XOR Cin ו-Cout = (A AND B) OR ((A XOR B) AND Cin), (2) מסבירה ש-c1 = 1 כופה p = 0 ולכן c2 = 0, ו-(3) בודקת ש-A=B=Cin=1 נותן S=1, Cout=1."
+    },
+    "rubric": [
+      {"key": "equations", "weight": 0.40, "en": "Both output equations are derived from the two half adders and the OR.", "he": "שתי משוואות הפלט נגזרות משני חצאי המחברים וה-OR."},
+      {"key": "carries_exclusive", "weight": 0.35, "en": "The argument that c1 and c2 cannot both be 1 goes through p: c1 = 1 means A = B = 1, so p = 0.", "he": "הנימוק שc1 ו-c2 לא יכולים להיות 1 יחד עובר דרך p: c1 = 1 פירושו A = B = 1, ולכן p = 0."},
+      {"key": "check_all_ones", "weight": 0.25, "en": "A=B=Cin=1 gives S=1 and Cout=1 with the intermediate values shown.", "he": "A=B=Cin=1 נותן S=1 ו-Cout=1 עם ערכי הביניים מוצגים."}
+    ],
+    "common_errors": [
+      {"key": "carries_combined_with_xor", "core": false, "skill": "binary_arithmetic", "en": "Cout is built with XOR instead of OR; it works only because the carries are exclusive, and the question asks for the OR gate.", "he": "Cout נבנה עם XOR במקום OR; זה עובד רק כי הנשאים מוציאים זה את זה, והשאלה מבקשת שער OR."},
+      {"key": "sum_wrong", "core": true, "skill": "binary_arithmetic", "en": "S is given as A XOR B (the carry-in is dropped) or as an AND.", "he": "S ניתן כ-A XOR B (הנשא הנכנס הושמט) או כ-AND."},
+      {"key": "exclusivity_asserted_not_argued", "core": false, "skill": "boolean_algebra", "tip_key": "explain_the_why", "en": "It is stated that both carries cannot be 1, without the reason through p.", "he": "נטען ששני הנשאים לא יכולים להיות 1, ללא הנימוק דרך p."}
+    ],
+    "accepted_approaches": {
+      "en": ["A truth table of all eight inputs showing c1 and c2 never both 1.", "Majority form Cout = AB + ACin + BCin with an argument that it equals the OR form."],
+      "he": ["טבלת אמת של כל שמונת הקלטים המראה ש-c1 ו-c2 לעולם לא 1 יחד.", "צורת הרוב Cout = AB + ACin + BCin עם נימוק שהיא שווה לצורת ה-OR."]
+    }
+  },
+
+  "example-signed-overflow": {
+    "skills": [{"skill": "binary_arithmetic", "weight": 0.6, "primary": true}, {"skill": "number_representation", "weight": 0.4}],
+    "archetype": "conceptual", "hint_position": 1,
+    "hints": {
+      "en": ["Carry-out and overflow answer different questions: one is about the fifth bit, the other about whether the signed result still makes sense.",
+             "Add the bits; the carry-out is the bit that falls off the left. Then compare signs: if both inputs are positive and the result reads negative (or both negative and the result reads positive), that is overflow."],
+      "he": ["נשא יוצא וגלישה עונים על שאלות שונות: האחד על הביט החמישי, השני על השאלה אם התוצאה עם סימן עדיין הגיונית.",
+             "חברו את הביטים; הנשא היוצא הוא הביט שנופל משמאל. אז השוו סימנים: אם שני הקלטים חיוביים והתוצאה נקראת שלילית (או שניהם שליליים והתוצאה חיובית), זו גלישה."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) gives 1011, carry 0, overflow 1 for the first sum and 1101, carry 1, overflow 0 for the second, (2) interprets the values in two's complement, and (3) states the sign rule: overflow when both operands share a sign and the result has the other sign.",
+      "he": "תשובה מלאה (1) נותנת 1011, נשא 0, גלישה 1 לסכום הראשון ו-1101, נשא 1, גלישה 0 לשני, (2) מפרשת את הערכים במשלים ל-2, ו-(3) מנסחת את כלל הסימן: גלישה כאשר לשני האופרנדים אותו סימן ולתוצאה הסימן ההפוך."
+    },
+    "rubric": [
+      {"key": "first_sum", "weight": 0.30, "en": "0110 + 0101 = 1011 (-5), carry 0, overflow 1.", "he": "0110 + 0101 = 1011 (-5), נשא 0, גלישה 1."},
+      {"key": "second_sum", "weight": 0.30, "en": "1110 + 1111 = 1101 (-3), carry 1, overflow 0.", "he": "1110 + 1111 = 1101 (-3), נשא 1, גלישה 0."},
+      {"key": "sign_rule", "weight": 0.40, "en": "The overflow rule is given in terms of operand and result signs, and carry is clearly separated from overflow.", "he": "כלל הגלישה מנוסח במונחי סימני האופרנדים והתוצאה, והנשא מופרד בבירור מהגלישה."}
+    ],
+    "common_errors": [
+      {"key": "carry_equals_overflow", "core": true, "skill": "binary_arithmetic", "en": "Carry-out is used as the overflow flag; the second sum has carry 1 and no overflow.", "he": "הנשא היוצא משמש כדגל גלישה; לסכום השני יש נשא 1 וללא גלישה."},
+      {"key": "unsigned_interpretation", "core": false, "skill": "number_representation", "tip_key": "restate_the_requirement", "en": "Results are read as unsigned (1011 = 11) although the question asks for two's complement.", "he": "התוצאות נקראות כלא-מסומנות (1011 = 11) אף שהשאלה מבקשת משלים ל-2."},
+      {"key": "rule_from_carries_unexplained", "core": false, "skill": "binary_arithmetic", "en": "The rule 'carry into the sign bit differs from carry out' is given without connecting it to signs, when the question asks for a sign-bit rule.", "he": "הכלל 'נשא נכנס לביט הסימן שונה מהנשא היוצא' ניתן בלי לקשר אותו לסימנים, כשהשאלה מבקשת כלל על ביטי הסימן."}
+    ],
+    "accepted_approaches": {
+      "en": ["The equivalent rule: overflow = carry into the sign bit XOR carry out of it, if it is also tied to the sign interpretation."],
+      "he": ["הכלל השקול: גלישה = נשא נכנס לביט הסימן XOR נשא יוצא ממנו, אם הוא גם מקושר לפירוש הסימן."]
+    }
+  },
+
+  "example-unsigned-saturating-adder": {
+    "skills": [{"skill": "binary_arithmetic", "weight": 0.7, "primary": true}, {"skill": "hdl_combinational_coding", "weight": 0.3}],
+    "archetype": "design", "hint_position": 1,
+    "hints": {
+      "en": ["How many bits can the true sum of two eight-bit values need?",
+             "Compute a nine-bit sum by zero-extending a and b. If bit 8 is set the true sum is at least 256, so output 255; otherwise output the low eight bits."],
+      "he": ["כמה ביטים יכול הסכום האמיתי של שני ערכים בני שמונה ביטים לדרוש?",
+             "חשבו סכום בן תשעה ביטים על ידי הרחבת a ו-b באפסים. אם ביט 8 דולק הסכום האמיתי הוא לפחות 256, ולכן הפלט 255; אחרת הפלט הוא שמונת הביטים הנמוכים."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) uses a nine-bit intermediate sum, (2) selects 255 when the carry bit is set and the low byte otherwise, (3) gives 255, 200, 255 for the three cases, and (4) explains that an eight-bit wrapped result hides the overflow.",
+      "he": "תשובה מלאה (1) משתמשת בסכום ביניים בן תשעה ביטים, (2) בוחרת 255 כשביט הנשא דולק ואת הבית הנמוך אחרת, (3) נותנת 255, 200, 255 לשלושת המקרים, ו-(4) מסבירה שתוצאה מקופלת בת שמונה ביטים מסתירה את הגלישה."
+    },
+    "rubric": [
+      {"key": "nine_bit_sum", "weight": 0.35, "en": "The intermediate sum is nine bits wide, with the reason.", "he": "סכום הביניים ברוחב תשעה ביטים, עם הנימוק."},
+      {"key": "saturation_select", "weight": 0.25, "en": "y = sum[8] ? 255 : sum[7:0], or equivalent.", "he": "y = sum[8] ? 255 : sum[7:0], או שקול."},
+      {"key": "examples", "weight": 0.20, "en": "255, 200, 255.", "he": "255, 200, 255."},
+      {"key": "why_truncation_fails", "weight": 0.20, "en": "Explains that 250 + 12 wraps to 6, which looks valid, so the carry must be kept.", "he": "מסבירים ש-250 + 12 מתקפל ל-6, שנראה תקין, ולכן חייבים לשמור את הנשא."}
+    ],
+    "common_errors": [
+      {"key": "compare_after_truncation", "core": true, "skill": "binary_arithmetic", "en": "The check 'if sum > 255' is done on an eight-bit sum, which can never be greater than 255.", "he": "הבדיקה 'אם sum > 255' נעשית על סכום בן שמונה ביטים, שלעולם אינו גדול מ-255."},
+      {"key": "wrong_width", "core": false, "skill": "hdl_combinational_coding", "en": "The intermediate is declared eight bits wide in HDL, so the carry is lost before the comparison.", "he": "משתנה הביניים מוצהר ברוחב שמונה ביטים ב-HDL, ולכן הנשא אובד לפני ההשוואה."},
+      {"key": "saturate_wrong_value", "core": false, "skill": "binary_arithmetic", "en": "Saturation outputs 256 or 0 instead of 255.", "he": "הרוויה מוציאה 256 או 0 במקום 255."}
+    ],
+    "accepted_approaches": {
+      "en": ["Detecting overflow as a + b < a on eight-bit values (wraparound test) and then outputting 255.", "y = (a > 255 - b) ? 255 : a + b."],
+      "he": ["זיהוי גלישה כ-a + b < a על ערכים בני שמונה ביטים (בדיקת קיפול) ואז פלט 255.", "y = (a > 255 - b) ? 255 : a + b."]
+    }
+  },
+
+  "example-mod-six-counter": {
+    "skills": [{"skill": "counters", "weight": 0.75, "primary": true}, {"skill": "reset_strategies", "weight": 0.25}],
+    "archetype": "design", "hint_position": 1,
+    "hints": {
+      "en": ["There are four different things that can happen at a clock edge. List them before writing any logic.",
+             "Start the chain with reset, then the invalid-state check q >= 6, and only then look at enable. With that order fixed, write what q becomes in each branch."],
+      "he": ["יש ארבעה דברים שונים שיכולים לקרות בחזית שעון. רשמו אותם לפני שכותבים לוגיקה.",
+             "התחילו את השרשרת ב-reset, אחריו בדיקת המצב הלא חוקי q >= 6, ורק אז הסתכלו על enable. כשהסדר קבוע, כתבו מה q הופך להיות בכל ענף."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) states the priority between reset, recovery, counting and holding, (2) wraps from 5 to 0, (3) recovers from 6 and 7 regardless of enable, (4) uses a synchronous active-high reset, and (5) gives 5, 5, 0, 1 as the trace.",
+      "he": "תשובה מלאה (1) מגדירה את סדר העדיפויות בין איפוס, התאוששות, ספירה ושמירה, (2) חוזרת מ-5 ל-0, (3) מתאוששת מ-6 ומ-7 ללא תלות ב-enable, (4) משתמשת באיפוס סינכרוני פעיל בגבוה, ו-(5) נותנת 5, 5, 0, 1 כעקבה."
+    },
+    "rubric": [
+      {"key": "priority_order", "weight": 0.35, "en": "Reset first, then recovery from 6 or 7, then enabled counting, otherwise hold.", "he": "קודם איפוס, אחריו התאוששות מ-6 או 7, אחריו ספירה כאשר enable פעיל, ואחרת שמירה."},
+      {"key": "wrap_at_five", "weight": 0.20, "en": "5 wraps to 0; 6 is never reached in normal counting.", "he": "5 חוזר ל-0; 6 אינו מושג בספירה רגילה."},
+      {"key": "recovery_ignores_enable", "weight": 0.20, "en": "6 or 7 recover to 0 even with enable=0.", "he": "6 או 7 מתאוששים ל-0 גם כאשר enable=0."},
+      {"key": "synchronous_reset", "weight": 0.10, "en": "Reset is sampled at the edge; three flip-flops.", "he": "האיפוס נדגם בחזית; שלושה flip-flops."},
+      {"key": "trace", "weight": 0.15, "en": "5, 5, 0, 1.", "he": "5, 5, 0, 1."}
+    ],
+    "common_errors": [
+      {"key": "recovery_gated_by_enable", "core": false, "skill": "counters", "tip_key": "state_the_priority_order", "en": "The 6-or-7 check sits inside the enable branch, so a disabled counter stays in an invalid state.", "he": "הבדיקה של 6 או 7 נמצאת בתוך הענף של enable, ולכן מונה מושבת נשאר במצב לא חוקי."},
+      {"key": "wrap_at_wrong_value", "core": true, "skill": "counters", "tip_key": "trace_a_second_example", "en": "The counter wraps at 6 or 7, so it is not modulo six.", "he": "המונה חוזר לאפס ב-6 או ב-7, ולכן אינו מודולו שש."},
+      {"key": "asynchronous_reset_used", "core": false, "skill": "reset_strategies", "en": "Reset appears in the sensitivity list (asynchronous) although a synchronous reset was specified.", "he": "האיפוס מופיע ברשימת הרגישות (אסינכרוני) אף שנדרש איפוס סינכרוני."},
+      {"key": "hold_forgotten", "core": false, "skill": "counters", "tip_key": "cover_every_case", "en": "Nothing says what happens with enable=0.", "he": "לא נאמר מה קורה כאשר enable=0."}
+    ],
+    "accepted_approaches": {
+      "en": ["Next-state equations or a Karnaugh map per bit instead of Verilog.", "A next-state table for all eight values of q and both enable values.", "SystemVerilog always_ff, or a separate combinational next-state block."],
+      "he": ["משוואות מצב הבא או מפת Karnaugh לכל ביט במקום Verilog.", "טבלת מצב הבא לכל שמונת ערכי q ולשני ערכי enable.", "always_ff של SystemVerilog, או בלוק קומבינטורי נפרד למצב הבא."]
+    }
+  },
+
+  "example-load-and-serial-shift": {
+    "skills": [{"skill": "registers_shifters", "weight": 0.7, "primary": true}, {"skill": "hdl_sequential_coding", "weight": 0.3}],
+    "archetype": "design", "hint_position": 1,
+    "hints": {
+      "en": ["Reset, load and shift can all be requested in the same cycle. Which one wins, and what happens to the others?",
+             "Write if reset ... else if load q <= data; else if shift q <= {serial_in, q[3:1]}; else hold. Then apply the three steps to 1010 one at a time."],
+      "he": ["איפוס, טעינה והזזה יכולים להתבקש באותו מחזור. מי מנצח, ומה קורה לאחרים?",
+             "כתבו if reset ... else if load q <= data; else if shift q <= {serial_in, q[3:1]}; else hold. אז החילו את שלושת הצעדים על 1010 בזה אחר זה."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) writes the priority chain reset, load, shift, hold, (2) inserts serial_in at bit 3 and drops bit 0 on a shift, (3) gives 1101, 0110, 0110, and (4) states that simultaneous load and shift performs only the load.",
+      "he": "תשובה מלאה (1) כותבת את שרשרת העדיפויות איפוס, טעינה, הזזה, שמירה, (2) מכניסה את serial_in בביט 3 ומשליכה את ביט 0 בהזזה, (3) נותנת 1101, 0110, 0110, ו-(4) מציינת שטעינה והזזה בו-זמנית מבצעות רק את הטעינה."
+    },
+    "rubric": [
+      {"key": "priority_chain", "weight": 0.35, "en": "Reset > load > shift > hold, in that order.", "he": "איפוס > טעינה > הזזה > שמירה, בסדר הזה."},
+      {"key": "shift_semantics", "weight": 0.25, "en": "Shift right: new bit 3 is serial_in, bit 0 is discarded.", "he": "הזזה ימינה: ביט 3 החדש הוא serial_in, ביט 0 מושלך."},
+      {"key": "trace", "weight": 0.25, "en": "1101, 0110, 0110.", "he": "1101, 0110, 0110."},
+      {"key": "simultaneous_case", "weight": 0.15, "en": "Load wins over shift when both are asserted.", "he": "טעינה גוברת על הזזה כששתיהן פעילות."}
+    ],
+    "common_errors": [
+      {"key": "shift_direction_wrong", "core": true, "skill": "registers_shifters", "tip_key": "trace_a_second_example", "en": "The register shifts left or inserts serial_in at bit 0, giving 0101 instead of 1101.", "he": "הרגיסטר מזיז שמאלה או מכניס את serial_in בביט 0, ומתקבל 0101 במקום 1101."},
+      {"key": "load_and_shift_both_applied", "core": false, "skill": "registers_shifters", "tip_key": "state_the_priority_order", "en": "With load and shift both high, the data is loaded and then shifted, which the priority forbids.", "he": "כאשר load ו-shift שניהם גבוהים, הנתונים נטענים ואז מוזזים, בניגוד לעדיפות."},
+      {"key": "blocking_in_clocked_block", "core": false, "skill": "hdl_sequential_coding", "en": "Blocking assignments are used in the clocked block, which can change the shift behavior in simulation.", "he": "השמות blocking משמשות בבלוק הסינכרוני, מה שיכול לשנות את התנהגות ההזזה בסימולציה."}
+    ],
+    "accepted_approaches": {
+      "en": ["A case statement on {reset, load, shift} with the same priority.", "Per-bit next-state equations."],
+      "he": ["משפט case על {reset, load, shift} עם אותה עדיפות.", "משוואות מצב הבא לכל ביט."]
+    }
+  },
+
+  "example-sampled-rising-edge": {
+    "skills": [{"skill": "edge_detection", "weight": 0.7, "primary": true}, {"skill": "hdl_sequential_coding", "weight": 0.3}],
+    "archetype": "design", "hint_position": 2,
+    "hints": {
+      "en": ["You need to compare the value sampled now with the value sampled at the previous edge. How many registers is that?",
+             "Two registers: previous <= x and pulse <= x & ~previous, both updated at the same edge with non-blocking assignments. Walk the five samples through them, starting from both at 0."],
+      "he": ["צריך להשוות את הערך שנדגם עכשיו לערך שנדגם בחזית הקודמת. כמה רגיסטרים זה?",
+             "שני רגיסטרים: previous <= x ו-pulse <= x & ~previous, שניהם מתעדכנים באותה חזית עם השמות non-blocking. העבירו את חמש הדגימות דרכם, כששניהם מתחילים ב-0."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) uses a stored previous sample and pulse = x AND NOT previous, (2) gives the trace 0, 1, 0, 0, 1, and (3) explains that a continuously high x sets previous=1 after its first sample so the pulse cannot repeat.",
+      "he": "תשובה מלאה (1) משתמשת בדגימה קודמת שמורה ו-pulse = x AND NOT previous, (2) נותנת את העקבה 0, 1, 0, 0, 1, ו-(3) מסבירה ש-x גבוה ברציפות מעביר את previous ל-1 אחרי הדגימה הראשונה ולכן הפולס לא יכול לחזור."
+    },
+    "rubric": [
+      {"key": "structure", "weight": 0.35, "en": "Two registers, non-blocking updates, pulse computed from the new sample and the old one.", "he": "שני רגיסטרים, עדכוני non-blocking, הפולס מחושב מהדגימה החדשה והישנה."},
+      {"key": "trace", "weight": 0.35, "en": "0, 1, 0, 0, 1.", "he": "0, 1, 0, 0, 1."},
+      {"key": "single_pulse_reason", "weight": 0.30, "en": "The one-pulse behavior is explained through previous becoming 1.", "he": "התנהגות הפולס הבודד מוסברת דרך previous שהופך ל-1."}
+    ],
+    "common_errors": [
+      {"key": "previous_updated_before_compare", "core": true, "skill": "edge_detection", "tip_key": "trace_a_second_example", "en": "previous is updated first (blocking order), so the comparison always sees the new value and pulse is always 0.", "he": "previous מתעדכן קודם (סדר blocking), ולכן ההשוואה תמיד רואה את הערך החדש ו-pulse תמיד 0."},
+      {"key": "pulse_combinational", "core": false, "skill": "edge_detection", "en": "pulse is computed combinationally from x and previous instead of registered, so its timing differs from the specification.", "he": "pulse מחושב קומבינטורית מ-x ו-previous במקום להיות רגיסטר, ולכן התזמון שלו שונה מהמפרט."},
+      {"key": "reset_ignored_in_trace", "core": false, "skill": "hdl_sequential_coding", "tip_key": "cover_every_case", "en": "The trace starts with previous undefined instead of 0 after reset.", "he": "העקבה מתחילה עם previous לא מוגדר במקום 0 אחרי איפוס."}
+    ],
+    "accepted_approaches": {
+      "en": ["A two-bit shift register of x with pulse = q[0] AND NOT q[1], if the timing matches.", "A waveform drawing instead of a list of values."],
+      "he": ["רגיסטר הזזה בן שני ביטים של x עם pulse = q[0] AND NOT q[1], אם התזמון תואם.", "ציור צורת גל במקום רשימת ערכים."]
+    }
+  },
+
+  "example-overlapping-sequence-1011": {
+    "skills": [{"skill": "fsm_sequence_detectors", "weight": 0.7, "primary": true}, {"skill": "fsm_state_tables", "weight": 0.3}],
+    "archetype": "design", "exposure_risk": "medium", "hint_position": 2,
+    "hints": {
+      "en": ["After a mismatch, some of the bits you have already seen may still be useful. Which ones?",
+             "Name four states for the matched prefixes empty, 1, 10 and 101. From S3 on input 1 you detect, and the last 1 is itself the prefix 1, so go to S1. On input 0 you have seen 1010, which ends in 10, so go to S2. Now do the other states."],
+      "he": ["אחרי אי-התאמה, ייתכן שחלק מהביטים שכבר ראיתם עדיין שימושיים. אילו?",
+             "הגדירו ארבעה מצבים עבור הקידומות ריק, 1, 10 ו-101. מ-S3 עם קלט 1 יש זיהוי, וה-1 האחרון הוא בעצמו הקידומת 1, ולכן עוברים ל-S1. עם קלט 0 ראיתם 1010, שמסתיים ב-10, ולכן עוברים ל-S2. עכשיו עשו את שאר המצבים."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) names the states and says what each means, (2) gives next state and output for both inputs from every state, (3) handles overlap after a detection and on a mismatch, (4) shows a Mealy output in the cycle of the last bit, and (5) reports detections at positions 4 and 7.",
+      "he": "תשובה מלאה (1) נותנת שם לכל מצב ומסבירה מה משמעותו, (2) נותנת מצב הבא ופלט לשני הקלטים מכל מצב, (3) מטפלת בחפיפה אחרי זיהוי ובאי-התאמה, (4) מציגה פלט Mealy במחזור של הביט האחרון, ו-(5) מדווחת על זיהויים במיקומים 4 ו-7."
+    },
+    "rubric": [
+      {"key": "state_meanings", "weight": 0.20, "en": "Every state has a meaning: the longest prefix of 1011 matched so far.", "he": "לכל מצב יש משמעות: הקידומת הארוכה ביותר של 1011 שזוהתה עד כה."},
+      {"key": "transitions_complete", "weight": 0.30, "en": "Both inputs from every state, every next state correct.", "he": "שני הקלטים מכל מצב, כל מצב הבא נכון."},
+      {"key": "overlap_handling", "weight": 0.25, "en": "S1 on 1 stays in S1, S3 on 0 goes to S2, after a detection the next state is S1.", "he": "מ-S1 עם 1 נשארים ב-S1, מ-S3 עם 0 עוברים ל-S2, אחרי זיהוי המצב הבא הוא S1."},
+      {"key": "mealy_output", "weight": 0.15, "en": "Output 1 only in S3 with input 1, in the same cycle as the last bit.", "he": "פלט 1 רק ב-S3 עם קלט 1, באותו מחזור של הביט האחרון."},
+      {"key": "trace_detections", "weight": 0.10, "en": "Positions 4 and 7.", "he": "מיקומים 4 ו-7."}
+    ],
+    "common_errors": [
+      {"key": "missing_overlap_transition", "core": true, "skill": "fsm_sequence_detectors", "tip_key": "trace_a_second_example", "en": "After detecting 1011 the machine returns to S0, so the second detection in 1011011 is missed.", "he": "אחרי זיהוי 1011 המכונה חוזרת ל-S0, ולכן הזיהוי השני ב-1011011 מתפספס."},
+      {"key": "reset_to_start_on_mismatch", "core": false, "skill": "fsm_sequence_detectors", "tip_key": "trace_a_second_example", "en": "Every mismatch returns to S0; S1 on 1 must stay in S1 and S3 on 0 must go to S2.", "he": "כל אי-התאמה חוזרת ל-S0; מ-S1 עם 1 צריך להישאר ב-S1 ומ-S3 עם 0 לעבור ל-S2."},
+      {"key": "moore_output_in_mealy_design", "core": false, "skill": "fsm_moore_mealy", "en": "The output is attached to a fifth state, which is a Moore machine and reports one cycle later.", "he": "הפלט הוצמד למצב חמישי, שזו מכונת Moore המדווחת מחזור אחד מאוחר יותר."},
+      {"key": "incomplete_transition_table", "core": false, "skill": "fsm_state_tables", "tip_key": "cover_every_case", "en": "Some state and input pairs have no next state.", "he": "לחלק מזוגות המצב והקלט אין מצב הבא."}
+    ],
+    "accepted_approaches": {
+      "en": ["Any state naming or encoding, as long as each state's meaning is stated.", "A state diagram instead of a table, with both outgoing transitions and outputs per state.", "Deriving the fallback transitions with the KMP failure function."],
+      "he": ["כל שמות או קידוד למצבים, כל עוד משמעות כל מצב מוגדרת.", "דיאגרמת מצבים במקום טבלה, עם שני המעברים היוצאים והפלטים לכל מצב.", "גזירת מעברי הנסיגה באמצעות פונקציית הכישלון של KMP."]
+    }
+  },
+
+  "example-credit-dispenser": {
+    "skills": [{"skill": "fsm_controllers", "weight": 0.6, "primary": true}, {"skill": "fsm_state_tables", "weight": 0.4}],
+    "archetype": "design", "hint_position": 1,
+    "hints": {
+      "en": ["The state is the credit so far. With three coin events per state, how many transitions must the table have?",
+             "For a coin of value v in state c: if c + v < 3 go to c + v with no output; otherwise output dispense=1, change=c + v - 3 and go to 0. Fill all nine cases, then trace 2, 2, 1, 2."],
+      "he": ["המצב הוא הזיכוי שנצבר. עם שלושה אירועי מטבע לכל מצב, כמה מעברים חייבת הטבלה להכיל?",
+             "עבור מטבע בערך v במצב c: אם c + v < 3 עברו ל-c + v ללא פלט; אחרת הוציאו dispense=1, change=c + v - 3 ועברו ל-0. מלאו את כל תשעת המקרים, ואז עקבו אחרי 2, 2, 1, 2."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) uses states 0, 1, 2 with transitions for no coin, coin 1 and coin 2 from each, (2) puts dispense and change on the transitions that reach or pass 3, (3) returns to credit 0 after dispensing, and (4) traces 2, 2, 1, 2 to (2,0,0), (0,1,1), (1,0,0), (0,1,0).",
+      "he": "תשובה מלאה (1) משתמשת במצבים 0, 1, 2 עם מעברים לאין מטבע, מטבע 1 ומטבע 2 מכל מצב, (2) שמה את dispense ו-change על המעברים שמגיעים ל-3 או עוברים אותו, (3) חוזרת לזיכוי 0 אחרי ההנפקה, ו-(4) עוקבת אחרי 2, 2, 1, 2 אל (2,0,0), (0,1,1), (1,0,0), (0,1,0)."
+    },
+    "rubric": [
+      {"key": "complete_table", "weight": 0.35, "en": "Nine transitions (3 states x 3 events) with next state and both outputs.", "he": "תשעה מעברים (3 מצבים x 3 אירועים) עם מצב הבא ושני הפלטים."},
+      {"key": "outputs_on_transitions", "weight": 0.25, "en": "dispense and change are Mealy outputs on the transitions that cross the price, not on states.", "he": "dispense ו-change הם פלטי Mealy על המעברים שחוצים את המחיר, לא על מצבים."},
+      {"key": "change_value", "weight": 0.15, "en": "change = total - 3 (0 or 1).", "he": "change = total - 3 (0 או 1)."},
+      {"key": "trace", "weight": 0.25, "en": "(2,0,0), (0,1,1), (1,0,0), (0,1,0).", "he": "(2,0,0), (0,1,1), (1,0,0), (0,1,0)."}
+    ],
+    "common_errors": [
+      {"key": "extra_state_for_dispense", "core": false, "skill": "fsm_controllers", "en": "A fourth 'dispense' state is added, which delays the output by a cycle and is not the Mealy design asked for.", "he": "נוסף מצב רביעי 'dispense', שמעכב את הפלט במחזור ואינו תכנון ה-Mealy שנדרש."},
+      {"key": "change_forgotten", "core": true, "skill": "fsm_controllers", "tip_key": "cover_every_case", "en": "Credit 2 plus coin 2 dispenses without returning the extra credit.", "he": "זיכוי 2 ועוד מטבע 2 מנפיק בלי להחזיר את העודף."},
+      {"key": "credit_not_reset", "core": false, "skill": "fsm_state_tables", "en": "After dispensing, the machine keeps the excess as credit instead of returning to 0 as specified.", "he": "אחרי ההנפקה המכונה שומרת את העודף כזיכוי במקום לחזור ל-0 כנדרש."}
+    ],
+    "accepted_approaches": {
+      "en": ["A state diagram with labeled edges instead of a table.", "Encoding the coin as a two-bit value with 00 meaning no coin."],
+      "he": ["דיאגרמת מצבים עם קשתות מסומנות במקום טבלה.", "קידוד המטבע כערך בן שני ביטים כאשר 00 פירושו אין מטבע."]
+    }
+  },
+
+  "example-request-acknowledge": {
+    "skills": [{"skill": "fsm_controllers", "weight": 0.7, "primary": true}, {"skill": "fsm_moore_mealy", "weight": 0.3}],
+    "archetype": "design", "hint_position": 3,
+    "hints": {
+      "en": ["In a Moore machine every output belongs to a state. Write the (req, done) pair for each of the three states first.",
+             "Transitions: IDLE goes to WAIT_ACK when start is sampled 1; WAIT_ACK goes to DONE when ack is sampled 1; DONE always goes to IDLE. Everything else stays put."],
+      "he": ["במכונת Moore כל פלט שייך למצב. כתבו קודם את הזוג (req, done) לכל אחד משלושת המצבים.",
+             "מעברים: IDLE עובר ל-WAIT_ACK כאשר start נדגם 1; WAIT_ACK עובר ל-DONE כאשר ack נדגם 1; DONE תמיד עובר ל-IDLE. כל השאר נשאר במקום."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) gives Moore outputs IDLE=(0,0), WAIT_ACK=(1,0), DONE=(0,1), (2) gives the three transitions and the self-loops, (3) explains that DONE lasts exactly one cycle, and (4) states that a continuously high start launches a new request from IDLE after DONE, because the interface is level-sensitive.",
+      "he": "תשובה מלאה (1) נותנת פלטי Moore: IDLE=(0,0), WAIT_ACK=(1,0), DONE=(0,1), (2) נותנת את שלושת המעברים והלולאות העצמיות, (3) מסבירה ש-DONE נמשך מחזור אחד בדיוק, ו-(4) קובעת ש-start גבוה ברציפות מפעיל בקשה חדשה מ-IDLE אחרי DONE, כי הממשק רגיש לרמה."
+    },
+    "rubric": [
+      {"key": "moore_outputs", "weight": 0.30, "en": "(req, done) per state, correct.", "he": "(req, done) לכל מצב, נכון."},
+      {"key": "transitions", "weight": 0.30, "en": "The guards and the unconditional DONE -> IDLE, with inputs ignored outside their state.", "he": "התנאים והמעבר הבלתי מותנה DONE -> IDLE, כשקלטים מוזנחים מחוץ למצב שלהם."},
+      {"key": "held_start", "weight": 0.25, "en": "A continuously high start re-triggers; this is stated as level-sensitive behavior, not a bug.", "he": "start גבוה ברציפות מפעיל שוב; זה מוצג כהתנהגות רגישה לרמה, לא כתקלה."},
+      {"key": "done_one_cycle", "weight": 0.15, "en": "done is high for exactly one cycle.", "he": "done גבוה מחזור אחד בדיוק."}
+    ],
+    "common_errors": [
+      {"key": "undocumented_wait_state", "core": true, "skill": "fsm_controllers", "tip_key": "restate_the_requirement", "en": "A state that waits for start to fall is added, changing the specified behavior.", "he": "נוסף מצב שממתין ש-start יירד, מה שמשנה את ההתנהגות שהוגדרה."},
+      {"key": "outputs_on_transitions", "core": false, "skill": "fsm_moore_mealy", "en": "req or done are placed on transitions, which is Mealy, not the Moore machine requested.", "he": "req או done מוצבים על מעברים, שזה Mealy ולא מכונת ה-Moore שנדרשה."},
+      {"key": "done_multi_cycle", "core": false, "skill": "fsm_controllers", "en": "DONE waits for something before returning to IDLE, so done lasts more than one cycle.", "he": "DONE ממתין למשהו לפני החזרה ל-IDLE, ולכן done נמשך יותר ממחזור אחד."}
+    ],
+    "accepted_approaches": {
+      "en": ["A state diagram with outputs written inside the states.", "One-hot encoded HDL with the same three states."],
+      "he": ["דיאגרמת מצבים עם הפלטים כתובים בתוך המצבים.", "HDL בקידוד one-hot עם אותם שלושה מצבים."]
+    }
+  },
+
+  "example-setup-hold-calculation": {
+    "skills": [{"skill": "setup_hold_timing", "weight": 1.0, "primary": true}],
+    "archetype": "conceptual", "hint_position": 2,
+    "hints": {
+      "en": ["Setup asks: can the slowest path arrive before the next edge? Hold asks: can the fastest path change before the same edge is done capturing? Each question uses different numbers.",
+             "Tmin = tcq(max) + tcomb(max) + tsetup. Hold slack = tcq(min) + tcomb(min) - thold. Compute both, then ask what changing the period does to the hold expression."],
+      "he": ["setup שואל: האם המסלול האיטי ביותר יגיע לפני החזית הבאה? hold שואל: האם המסלול המהיר ביותר ישתנה לפני שאותה חזית סיימה לדגום? לכל שאלה מספרים אחרים.",
+             "Tmin = tcq(max) + tcomb(max) + tsetup. מרווח hold = tcq(min) + tcomb(min) - thold. חשבו את שניהם, ואז שאלו מה שינוי המחזור עושה לביטוי ה-hold."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) gives Tmin = 1.40 ns and fmax about 714 MHz, (2) gives hold slack +0.03 ns using minimum delays, and (3) explains that hold is checked against the same edge, so a slower clock does not fix a hold violation.",
+      "he": "תשובה מלאה (1) נותנת Tmin = 1.40 ns ו-fmax בערך 714 MHz, (2) נותנת מרווח hold של +0.03 ns באמצעות השהיות מינימליות, ו-(3) מסבירה ש-hold נבדק מול אותה חזית, ולכן שעון איטי יותר אינו מתקן הפרת hold."
+    },
+    "rubric": [
+      {"key": "setup_period", "weight": 0.35, "en": "Tmin = 0.12 + 1.10 + 0.18 = 1.40 ns; fmax about 714 MHz.", "he": "Tmin = 0.12 + 1.10 + 0.18 = 1.40 ns; fmax בערך 714 MHz."},
+      {"key": "hold_slack", "weight": 0.35, "en": "0.05 + 0.08 - 0.10 = +0.03 ns, positive, so hold passes.", "he": "0.05 + 0.08 - 0.10 = +0.03 ns, חיובי, ולכן hold עובר."},
+      {"key": "frequency_and_hold", "weight": 0.30, "en": "Explains why the period does not appear in the hold check.", "he": "מסבירים מדוע המחזור אינו מופיע בבדיקת ה-hold."}
+    ],
+    "common_errors": [
+      {"key": "max_delays_in_hold", "core": true, "skill": "setup_hold_timing", "tip_key": "restate_the_requirement", "en": "Hold is computed with maximum delays, giving a large false margin.", "he": "hold מחושב עם השהיות מקסימליות, ומתקבל מרווח מזויף גדול."},
+      {"key": "setup_missing_tcq", "core": false, "skill": "setup_hold_timing", "en": "Tmin omits clock-to-Q (1.28 ns) or the setup time (1.22 ns).", "he": "Tmin משמיט את clock-to-Q (1.28 ns) או את זמן ה-setup (1.22 ns)."},
+      {"key": "slower_clock_fixes_hold", "core": true, "skill": "setup_hold_timing", "en": "Claims that lowering the frequency repairs the hold violation.", "he": "נטען שהורדת התדר מתקנת את הפרת ה-hold."}
+    ],
+    "accepted_approaches": {
+      "en": ["Any consistent units (ps instead of ns).", "Expressing hold as a required minimum path delay of 0.10 ns compared with the actual 0.13 ns."],
+      "he": ["כל יחידות עקביות (ps במקום ns).", "הצגת hold כדרישה להשהיית מסלול מינימלית של 0.10 ns מול ה-0.13 ns בפועל."]
+    },
+    "deterministic_check": {"type": "numeric", "spec": {"expected": 1.40, "unit": "ns", "tolerance_abs": 0.01, "output_names": ["Tmin", "T_min", "T min", "minimum clock period", "minimum period", "min period"]}},
+    "check_self_test": {"pass": ["tcq 0.12 + comb 1.10 + setup 0.18 -> Tmin = 1.40 ns, fmax = 714.3 MHz, hold slack = 0.05+0.08-0.10 = 0.03 ns", "The minimum clock period is 1.4 ns", "T_min = 1400 ps"], "fail": ["Tmin = 1.22 ns", "minimum period = 1.28 ns"]}
+  },
+
+  "example-asynchronous-pulse-transfer": {
+    "skills": [{"skill": "clock_domain_crossing", "weight": 1.0, "primary": true}],
+    "archetype": "design", "hint_position": 1,
+    "hints": {
+      "en": ["The two-flop synchronizer solves one problem. Name that problem, then ask whether a 10 ns pulse is even guaranteed to be sampled by a 40 ns clock.",
+             "Separate the two failures: a pulse that falls between destination edges is lost (a width problem); a pulse sampled near an edge can go metastable (a timing problem). Then: hold the request high, synchronize it, return an acknowledge through its own synchronizer, and only drop the request after the acknowledge is seen."],
+      "he": ["מסנכרן שני ה-flip-flops פותר בעיה אחת. תנו לה שם, ואז שאלו האם פולס של 10 ns בכלל מובטח להידגם על ידי שעון של 40 ns.",
+             "הפרידו בין שני הכשלים: פולס שנופל בין חזיתות היעד אובד (בעיית רוחב); פולס שנדגם ליד חזית יכול להיכנס ל-metastability (בעיית תזמון). ואז: החזיקו את הבקשה גבוהה, סנכרנו אותה, החזירו אישור דרך מסנכרן משלו, והורידו את הבקשה רק אחרי שהאישור נראה."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) states that a one-cycle 10 ns pulse is not guaranteed to be captured by 40 ns sampling, (2) distinguishes pulse loss from metastability and says what the two flops do and do not fix, and (3) proposes a request/acknowledge handshake with a synchronizer in each direction and a return to zero before reuse.",
+      "he": "תשובה מלאה (1) קובעת שפולס של מחזור אחד (10 ns) אינו מובטח להילכד בדגימה של 40 ns, (2) מבחינה בין אובדן פולס ל-metastability ואומרת מה שני ה-flip-flops מתקנים ומה לא, ו-(3) מציעה handshake של בקשה ואישור עם מסנכרן בכל כיוון וחזרה לאפס לפני שימוש חוזר."
+    },
+    "rubric": [
+      {"key": "pulse_loss", "weight": 0.30, "en": "Shows that the pulse can fall entirely between destination edges.", "he": "מראים שהפולס יכול ליפול כולו בין חזיתות היעד."},
+      {"key": "metastability_vs_loss", "weight": 0.30, "en": "Two flops reduce metastability propagation; they neither guarantee capture nor eliminate metastability.", "he": "שני flip-flops מפחיתים התפשטות metastability; הם אינם מבטיחים לכידה ואינם מבטלים metastability."},
+      {"key": "handshake", "weight": 0.40, "en": "Level request held until a synchronized acknowledge returns, synchronizers both ways, return-to-zero before the next event.", "he": "בקשת רמה מוחזקת עד שאישור מסונכרן חוזר, מסנכרנים בשני הכיוונים, חזרה לאפס לפני האירוע הבא."}
+    ],
+    "common_errors": [
+      {"key": "synchronizer_guarantees_capture", "core": true, "skill": "clock_domain_crossing", "en": "Claims the two-flop chain guarantees every event arrives.", "he": "נטען ששרשרת שני ה-flip-flops מבטיחה שכל אירוע מגיע."},
+      {"key": "ack_not_synchronized", "core": false, "skill": "clock_domain_crossing", "tip_key": "cover_every_case", "en": "The acknowledge crosses back without its own synchronizer.", "he": "האישור חוצה חזרה ללא מסנכרן משלו."},
+      {"key": "request_dropped_early", "core": false, "skill": "clock_domain_crossing", "en": "The request is released before the acknowledge is seen, so the next event can be lost or merged.", "he": "הבקשה משוחררת לפני שהאישור נראה, ולכן האירוע הבא עלול ללכת לאיבוד או להתמזג."}
+    ],
+    "accepted_approaches": {
+      "en": ["A toggle-based crossing (toggle on each event, edge-detect in the destination), if the source waits for acknowledgement.", "An asynchronous FIFO for the general case, if the handshake is also given."],
+      "he": ["חצייה מבוססת toggle (היפוך בכל אירוע, גילוי חזית ביעד), אם המקור ממתין לאישור.", "FIFO אסינכרוני למקרה הכללי, אם ה-handshake גם ניתן."]
+    }
+  },
+
+  "example-nonblocking-pipeline-trace": {
+    "skills": [{"skill": "hdl_blocking_nonblocking", "weight": 1.0, "primary": true}],
+    "archetype": "debugging", "hint_position": 1,
+    "hints": {
+      "en": ["With <=, every right-hand side is read before any register changes. With =, the second line sees what the first line just wrote.",
+             "Non-blocking: at each edge b takes the old a while a takes in_bit, giving (1,0), (0,1), (1,0). Blocking: a changes first and b copies the new a, giving (1,1), (0,0), (1,1)."],
+      "he": ["עם <=, כל אגף ימין נקרא לפני שרגיסטר כלשהו משתנה. עם =, השורה השנייה רואה את מה שהראשונה כרגע כתבה.",
+             "non-blocking: בכל חזית b מקבל את a הישן בעוד a מקבל את in_bit, ומתקבל (1,0), (0,1), (1,0). blocking: a משתנה קודם ו-b מעתיק את a החדש, ומתקבל (1,1), (0,0), (1,1)."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) gives (1,0), (0,1), (1,0) for the non-blocking version, (2) gives (1,1), (0,0), (1,1) for the blocking version, and (3) explains that non-blocking right-hand sides use old values while blocking updates a before b reads it.",
+      "he": "תשובה מלאה (1) נותנת (1,0), (0,1), (1,0) לגרסת ה-non-blocking, (2) נותנת (1,1), (0,0), (1,1) לגרסת ה-blocking, ו-(3) מסבירה שאגפי ימין של non-blocking משתמשים בערכים ישנים בעוד blocking מעדכן את a לפני ש-b קורא אותו."
+    },
+    "rubric": [
+      {"key": "nonblocking_trace", "weight": 0.35, "en": "(1,0), (0,1), (1,0).", "he": "(1,0), (0,1), (1,0)."},
+      {"key": "blocking_trace", "weight": 0.35, "en": "(1,1), (0,0), (1,1).", "he": "(1,1), (0,0), (1,1)."},
+      {"key": "explanation", "weight": 0.30, "en": "The difference is explained through evaluation order, not just asserted.", "he": "ההבדל מוסבר דרך סדר החישוב, ולא רק נטען."}
+    ],
+    "common_errors": [
+      {"key": "blocking_treated_as_nonblocking", "core": true, "skill": "hdl_blocking_nonblocking", "tip_key": "trace_a_second_example", "en": "Both versions are given the same trace.", "he": "לשתי הגרסאות ניתנת אותה עקבה."},
+      {"key": "pipeline_off_by_one", "core": false, "skill": "hdl_blocking_nonblocking", "en": "b is given the value of a from two edges ago, or the trace starts one edge early.", "he": "ל-b ניתן הערך של a משתי חזיתות אחורה, או שהעקבה מתחילה חזית אחת מוקדם מדי."},
+      {"key": "claims_blocking_is_illegal", "core": false, "skill": "hdl_blocking_nonblocking", "en": "States that blocking assignments cannot be used in a clocked block, instead of describing what they do.", "he": "נטען שאי אפשר להשתמש בהשמות blocking בבלוק סינכרוני, במקום לתאר מה הן עושות."}
+    ],
+    "accepted_approaches": {
+      "en": ["A waveform instead of a list of pairs.", "Noting that the blocking version synthesizes to a single register feeding both outputs."],
+      "he": ["צורת גל במקום רשימת זוגות.", "ציון שגרסת ה-blocking מסונתזת לרגיסטר יחיד המזין את שני הפלטים."]
+    }
+  },
+
+  "example-incomplete-combinational-assignment": {
+    "skills": [{"skill": "hdl_combinational_coding", "weight": 0.8, "primary": true}, {"skill": "latches_flip_flops", "weight": 0.2}],
+    "archetype": "debugging", "hint_position": 1,
+    "hints": {
+      "en": ["In a combinational block, what does hardware have to do if the output is not assigned for some input? It has to remember.",
+             "Add else y = 4'b0000, or set y = 4'b0000 before the if as a default. A clock would turn y into a register that updates only on edges, which is a different specification."],
+      "he": ["בבלוק קומבינטורי, מה החומרה חייבת לעשות אם הפלט לא מוקצה עבור קלט מסוים? היא חייבת לזכור.",
+             "הוסיפו else y = 4'b0000, או קבעו y = 4'b0000 לפני ה-if כברירת מחדל. שעון יהפוך את y לרגיסטר שמתעדכן רק בחזיתות, וזה מפרט אחר."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) says y holds its previous value when en=0 and that this infers a latch, (2) fixes it with an else branch or a default assignment, and (3) explains why a clocked always block would implement a register, not the intended combinational function.",
+      "he": "תשובה מלאה (1) אומרת ש-y שומר על ערכו הקודם כאשר en=0 ושזה יוצר latch, (2) מתקנת עם ענף else או השמת ברירת מחדל, ו-(3) מסבירה מדוע בלוק always עם שעון יממש רגיסטר ולא את הפונקציה הקומבינטורית המבוקשת."
+    },
+    "rubric": [
+      {"key": "latch_identified", "weight": 0.40, "en": "Names the unassigned path and the inferred latch.", "he": "מזהים את המסלול הלא מוקצה ואת ה-latch שנוצר."},
+      {"key": "fix", "weight": 0.35, "en": "else branch or default assignment covering every path.", "he": "ענף else או השמת ברירת מחדל שמכסה כל מסלול."},
+      {"key": "clock_changes_spec", "weight": 0.25, "en": "A clock makes y a register with edge-timed updates, which is not what was asked.", "he": "שעון הופך את y לרגיסטר עם עדכונים בחזיתות, וזה לא מה שנדרש."}
+    ],
+    "common_errors": [
+      {"key": "says_y_becomes_zero", "core": true, "skill": "hdl_combinational_coding", "en": "Claims y becomes 0 (or X) when en=0; unassigned means held.", "he": "נטען ש-y הופך ל-0 (או X) כאשר en=0; לא מוקצה פירושו נשמר."},
+      {"key": "fix_by_adding_clock", "core": false, "skill": "hdl_combinational_coding", "tip_key": "restate_the_requirement", "en": "The proposed fix is a clocked block, which changes the function.", "he": "התיקון המוצע הוא בלוק עם שעון, שמשנה את הפונקציה."},
+      {"key": "latch_called_flip_flop", "core": false, "skill": "latches_flip_flops", "en": "The inferred element is called a flip-flop; it is a level-sensitive latch.", "he": "הרכיב שנוצר מכונה flip-flop; זהו latch רגיש לרמה."}
+    ],
+    "accepted_approaches": {
+      "en": ["assign y = en ? d : 4'b0; as the fix.", "A ternary inside the always block."],
+      "he": ["assign y = en ? d : 4'b0; כתיקון.", "ternary בתוך בלוק ה-always."]
+    }
+  }
+}

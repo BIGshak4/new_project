@@ -58,8 +58,9 @@ FALLBACK_TEXT = {
 def from_bank(question: BankQuestion, language: str) -> GenerationResult:
     """A reviewed bank question is served as written. No model call, no drift."""
     text = question.text(language)
-    body = text.prompt if not text.choices else text.prompt + "\n\n" + "\n".join(
-        f"{chr(ord('A') + i)}. {choice}" for i, choice in enumerate(text.choices))
+    body = question.prompt_with_code(language)
+    if text.choices:
+        body += "\n\n" + "\n".join(f"{chr(ord('A') + i)}. {choice}" for i, choice in enumerate(text.choices))
     return GenerationResult(
         GeneratedQuestion(question_text=body, question_archetype=question.archetype,
                           expected_answer_outline=text.reference_solution,
@@ -94,7 +95,7 @@ def decision_payload(decision: Decision, *, skill: CatalogSkill | None, question
                             "proficiency_rubric": skill.proficiency_rubric}
     if question is not None:
         text = question.text(language)
-        payload["bank_question"] = {"prompt": text.prompt, "requirements": text.requirements,
+        payload["bank_question"] = {"prompt": question.prompt_with_code(language), "requirements": text.requirements,
                                     "common_errors": list(text.common_errors.values())}
     if company_style:
         payload["company_style"] = company_style

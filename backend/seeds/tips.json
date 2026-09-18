@@ -130,6 +130,44 @@
     }
   },
   {
+    "key": "check_the_boundary",
+    "category": "technical",
+    "severity": 4,
+    "delivery_timing": "both",
+    "trigger_conditions": {
+      "any_of": [
+        { "signal": "ignored_edge_cases", "op": "==", "value": true },
+        { "signal": "check_passed", "op": "==", "value": false }
+      ],
+      "all_of": [ { "signal": "question_archetype", "op": "in", "value": ["coding", "debugging"] } ],
+      "cooldown_turns": 4
+    },
+    "improves_skills": ["code_debugging", "arrays_and_search", "bit_manipulation"],
+    "templates": {
+      "en": "The mistake sits at a boundary: the first index, the last index, zero, or the full width. Next time, try running your code by hand on the smallest input and on the largest one before you call it done.",
+      "he": "הטעות יושבת בגבול: האינדקס הראשון, האחרון, אפס או הרוחב המלא. בפעם הבאה, נסו להריץ את הקוד ביד על הקלט הקטן ביותר ועל הגדול ביותר לפני שמסיימים."
+    }
+  },
+  {
+    "key": "state_the_priority_order",
+    "category": "technical",
+    "severity": 4,
+    "delivery_timing": "both",
+    "trigger_conditions": {
+      "any_of": [
+        { "signal": "incomplete_answer", "op": "==", "value": true },
+        { "signal": "ignored_edge_cases", "op": "==", "value": true }
+      ],
+      "all_of": [ { "signal": "question_archetype", "op": "in", "value": ["design"] } ],
+      "cooldown_turns": 5
+    },
+    "improves_skills": ["counters", "registers_shifters", "fsm_controllers", "reset_strategies"],
+    "templates": {
+      "en": "When several control inputs can be true at once, the order in which they win is part of the design. Next time, try writing the priority chain (reset, then ..., otherwise hold) as the first line of your answer.",
+      "he": "כשכמה אותות בקרה יכולים להיות פעילים יחד, הסדר שבו הם מנצחים הוא חלק מהתכנון. בפעם הבאה, נסו לכתוב את שרשרת העדיפויות (איפוס, אחר כך ..., אחרת שמירה) כשורה הראשונה של התשובה."
+    }
+  },
+  {
     "key": "explain_the_why",
     "category": "technical",
     "severity": 2,

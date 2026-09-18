@@ -155,7 +155,7 @@ async def seed(catalog: Catalog) -> dict[str, int]:
                 "difficulty": question.difficulty, "estimated_minutes": question.estimated_minutes,
                 "requirements": english.requirements, "accepted_approaches": english.accepted_approaches,
                 "reference_solution": english.reference_solution,
-                "hints": [{"level": i, "text": h} for i, h in enumerate(english.hints, start=1)],
+                "hints": list(english.hints),          # plain strings, level 1 to 3; the format the web app renders
                 "common_errors": [{"key": e.key, "core": e.core, "skill": e.skill,
                                    "tip_id": str(tip_ids[e.tip_key]) if e.tip_key else None,
                                    "explanation": english.common_errors.get(e.key)} for e in question.common_errors],
@@ -181,7 +181,7 @@ async def seed(catalog: Catalog) -> dict[str, int]:
 
             translations = [{
                 "question_id": question_id, "language": language, "prompt": text.prompt,
-                "requirements": text.requirements, "hints": [{"level": i, "text": h} for i, h in enumerate(text.hints, start=1)],
+                "requirements": text.requirements, "hints": list(text.hints),
                 "reference_solution": text.reference_solution, "choices": text.choices,
                 "common_errors": text.common_errors, "parity_checked": text.parity_checked,
                 "parity_checked_by": text.parity_checked_by,

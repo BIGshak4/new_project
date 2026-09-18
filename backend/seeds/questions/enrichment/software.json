@@ -1,0 +1,303 @@
+{
+  "_about": "Additions to Harel's software questions (SW-001..SW-010). Same format as hardware.json.",
+
+  "example-count-set-bits": {
+    "skills": [{"skill": "bit_manipulation", "weight": 1.0, "primary": true}],
+    "archetype": "coding", "exposure_risk": "high", "hint_position": 2,
+    "hints": {
+      "en": ["A loop that looks at every bit works. Can you make each iteration remove exactly one set bit instead?",
+             "x & (x - 1) clears the lowest set bit. Loop while x is not zero, counting iterations. Each iteration removes one 1, so the loop runs exactly k times."],
+      "he": ["לולאה שמסתכלת על כל ביט עובדת. האם אפשר לגרום לכל איטרציה להסיר בדיוק ביט דולק אחד במקום זאת?",
+             "x & (x - 1) מכבה את הביט הדולק הנמוך ביותר. לולאה כל עוד x אינו אפס, תוך ספירת איטרציות. כל איטרציה מסירה 1 אחד, ולכן הלולאה רצה בדיוק k פעמים."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) gives working code or pseudocode without popcount or strings, (2) explains why the loop terminates, (3) states time and space complexity, and (4) gives 0, 4, 32 for the three tests.",
+      "he": "תשובה מלאה (1) נותנת קוד או פסאודו-קוד עובד ללא popcount או מחרוזות, (2) מסבירה למה הלולאה מסתיימת, (3) מציינת סיבוכיות זמן ומקום, ו-(4) נותנת 0, 4, 32 לשלוש הבדיקות."
+    },
+    "rubric": [
+      {"key": "correct_algorithm", "weight": 0.40, "en": "The code counts set bits correctly for every 32-bit input, including 0 and all ones.", "he": "הקוד סופר ביטים דולקים נכון לכל קלט של 32 ביטים, כולל 0 וכולם אחדות."},
+      {"key": "termination", "weight": 0.20, "en": "Explains why the loop ends: each step strictly reduces x or the remaining bits.", "he": "מסבירים למה הלולאה נגמרת: כל צעד מקטין את x או את הביטים שנותרו."},
+      {"key": "complexity", "weight": 0.20, "en": "O(W) or O(k) time as appropriate for the method, O(1) extra space.", "he": "זמן O(W) או O(k) בהתאם לשיטה, מקום נוסף O(1)."},
+      {"key": "tests", "weight": 0.20, "en": "0, 4, 32.", "he": "0, 4, 32."}
+    ],
+    "common_errors": [
+      {"key": "infinite_loop_on_negative_or_shift", "core": true, "skill": "bit_manipulation", "tip_key": "check_the_boundary", "en": "A signed right shift or a loop condition that never reaches zero for 0xFFFFFFFF.", "he": "הזזה ימינה עם סימן או תנאי לולאה שלעולם לא מגיע לאפס עבור 0xFFFFFFFF."},
+      {"key": "complexity_overstated", "core": false, "skill": "bit_manipulation", "tip_key": "explain_the_why", "en": "The loop is called O(1) without noting the fixed word width, or O(n) in the value of x.", "he": "הלולאה מכונה O(1) בלי לציין את רוחב המילה הקבוע, או O(n) בערך של x."},
+      {"key": "off_by_one_count", "core": false, "skill": "bit_manipulation", "tip_key": "check_the_boundary", "en": "The count is off by one for 0 or for a single set bit.", "he": "הספירה שגויה באחד עבור 0 או עבור ביט דולק יחיד."}
+    ],
+    "accepted_approaches": {
+      "en": ["Shift-and-test over all 32 bits, O(W).", "Kernighan's x & (x - 1), O(k).", "A lookup table per byte, if built without a builtin."],
+      "he": ["הזזה ובדיקה על כל 32 הביטים, O(W).", "x & (x - 1) של Kernighan, O(k).", "טבלת חיפוש לכל בית, אם נבנתה ללא פונקציה מובנית."]
+    }
+  },
+
+  "example-power-of-two-check": {
+    "skills": [{"skill": "bit_manipulation", "weight": 1.0, "primary": true}],
+    "archetype": "coding", "exposure_risk": "high", "hint_position": 1,
+    "hints": {
+      "en": ["What does x - 1 look like in binary when x has exactly one set bit?",
+             "For a power of two, x and x - 1 share no bits, so x & (x - 1) is 0. Add a guard for x = 0, which would otherwise pass."],
+      "he": ["איך נראה x - 1 בבינארי כאשר ל-x יש בדיוק ביט דולק אחד?",
+             "עבור חזקה של 2, ל-x ול-x - 1 אין ביטים משותפים, ולכן x & (x - 1) הוא 0. הוסיפו בדיקה עבור x = 0, שאחרת היה עובר."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) gives a loop-free constant-time expression, (2) explains why it works through the bit pattern of x - 1, (3) handles 0 correctly, and (4) evaluates 0, 1, 12, 16, 0x80000000 as false, true, false, true, true.",
+      "he": "תשובה מלאה (1) נותנת ביטוי ללא לולאה בזמן קבוע, (2) מסבירה למה הוא עובד דרך תבנית הביטים של x - 1, (3) מטפלת ב-0 נכון, ו-(4) מחשבת 0, 1, 12, 16, 0x80000000 כ-false, true, false, true, true."
+    },
+    "rubric": [
+      {"key": "expression", "weight": 0.40, "en": "x != 0 && (x & (x - 1)) == 0, or equivalent.", "he": "x != 0 && (x & (x - 1)) == 0, או שקול."},
+      {"key": "explanation", "weight": 0.25, "en": "Why x & (x - 1) is zero exactly for one set bit.", "he": "למה x & (x - 1) הוא אפס בדיוק עבור ביט דולק אחד."},
+      {"key": "zero_guard", "weight": 0.15, "en": "0 is excluded explicitly.", "he": "0 מוחרג במפורש."},
+      {"key": "evaluations", "weight": 0.20, "en": "false, true, false, true, true.", "he": "false, true, false, true, true."}
+    ],
+    "common_errors": [
+      {"key": "zero_accepted", "core": true, "skill": "bit_manipulation", "tip_key": "check_the_boundary", "en": "0 & (0 - 1) is 0, so 0 is wrongly reported as a power of two.", "he": "0 & (0 - 1) הוא 0, ולכן 0 מדווח בטעות כחזקה של 2."},
+      {"key": "loop_used", "core": false, "skill": "bit_manipulation", "tip_key": "restate_the_requirement", "en": "A loop over the bits is used although the question forbids loops.", "he": "נעשה שימוש בלולאה על הביטים אף שהשאלה אוסרת לולאות."},
+      {"key": "msb_case_wrong", "core": false, "skill": "bit_manipulation", "en": "0x80000000 is evaluated as false because of signed arithmetic.", "he": "0x80000000 מחושב כ-false בגלל אריתמטיקה עם סימן."}
+    ],
+    "accepted_approaches": {
+      "en": ["(x & -x) == x with a nonzero guard, in unsigned arithmetic.", "A popcount-equals-one formulation if popcount itself is constant time."],
+      "he": ["(x & -x) == x עם בדיקת אי-אפס, באריתמטיקה ללא סימן.", "ניסוח של popcount שווה אחד, אם popcount עצמו בזמן קבוע."]
+    }
+  },
+
+  "example-extract-register-field": {
+    "skills": [{"skill": "bit_manipulation", "weight": 0.8, "primary": true}, {"skill": "code_debugging", "weight": 0.2}],
+    "archetype": "coding", "hint_position": 1,
+    "hints": {
+      "en": ["Shift the field down to bit 0 first, then keep only width bits. What mask keeps exactly width bits?",
+             "mask = (1u << width) - 1 works for width up to 31; for width == 32 the shift is undefined, so return reg directly (validity implies lsb == 0). Result: (reg >> lsb) & mask."],
+      "he": ["הזיזו קודם את השדה למטה לביט 0, ואז שמרו רק width ביטים. איזו מסיכה שומרת בדיוק width ביטים?",
+             "mask = (1u << width) - 1 עובד עבור width עד 31; עבור width == 32 ההזזה לא מוגדרת, ולכן החזירו את reg ישירות (תקינות הקלט מחייבת lsb == 0). התוצאה: (reg >> lsb) & mask."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) shifts right by lsb and masks width bits, (2) avoids any shift by 32 (special-cases width == 32 or uses a wider type), (3) returns 5 for reg=0xD6, lsb=2, width=3, and (4) returns reg for the full-width case.",
+      "he": "תשובה מלאה (1) מזיזה ימינה ב-lsb וממסכת width ביטים, (2) נמנעת מכל הזזה ב-32 (מקרה מיוחד ל-width == 32 או טיפוס רחב יותר), (3) מחזירה 5 עבור reg=0xD6, lsb=2, width=3, ו-(4) מחזירה את reg במקרה הרוחב המלא."
+    },
+    "rubric": [
+      {"key": "shift_and_mask", "weight": 0.35, "en": "(reg >> lsb) & mask with a correct mask.", "he": "(reg >> lsb) & mask עם מסיכה נכונה."},
+      {"key": "full_width_boundary", "weight": 0.35, "en": "width == 32 never produces a shift by 32.", "he": "width == 32 לעולם אינו יוצר הזזה ב-32."},
+      {"key": "example", "weight": 0.15, "en": "5.", "he": "5."},
+      {"key": "types", "weight": 0.15, "en": "Unsigned arithmetic throughout; the literal 1 has the right width.", "he": "אריתמטיקה ללא סימן לאורך כל הדרך; הליטרל 1 ברוחב הנכון."}
+    ],
+    "common_errors": [
+      {"key": "shift_by_32", "core": true, "skill": "bit_manipulation", "tip_key": "check_the_boundary", "en": "(1u << 32) - 1 is evaluated for the full-width case, which is undefined behavior in C.", "he": "(1u << 32) - 1 מחושב במקרה הרוחב המלא, וזו התנהגות לא מוגדרת ב-C."},
+      {"key": "signed_literal_shift", "core": false, "skill": "bit_manipulation", "en": "1 << 31 is done on a signed int, which overflows.", "he": "1 << 31 מבוצע על int עם סימן, וזה גולש."},
+      {"key": "mask_before_shift", "core": false, "skill": "bit_manipulation", "en": "The mask is applied at the field's position but the result is not shifted down, so it is not right-aligned.", "he": "המסיכה מוחלת במיקום השדה אבל התוצאה לא מוזזת למטה, ולכן אינה מיושרת לימין."}
+    ],
+    "accepted_approaches": {
+      "en": ["A uint64_t intermediate mask, avoiding the special case.", "mask = ~0u >> (32 - width), which is defined for width in 1..32."],
+      "he": ["מסיכת ביניים מסוג uint64_t, שמונעת את המקרה המיוחד.", "mask = ~0u >> (32 - width), שמוגדר עבור width בין 1 ל-32."]
+    }
+  },
+
+  "example-first-greater-or-equal": {
+    "skills": [{"skill": "arrays_and_search", "weight": 1.0, "primary": true}],
+    "archetype": "coding", "exposure_risk": "medium", "hint_position": 1,
+    "hints": {
+      "en": ["Binary search, but you want the leftmost qualifying index, so an equal element is not the end of the search.",
+             "Keep [lo, hi) with lo = 0, hi = n. While lo < hi: mid = lo + (hi - lo) / 2; if a[mid] < target then lo = mid + 1 else hi = mid. Return lo; it is n when nothing qualifies and 0 for an empty array."],
+      "he": ["חיפוש בינארי, אבל רוצים את האינדקס השמאלי ביותר שמתאים, ולכן איבר שווה אינו סוף החיפוש.",
+             "שמרו [lo, hi) עם lo = 0, hi = n. כל עוד lo < hi: mid = lo + (hi - lo) / 2; אם a[mid] < target אז lo = mid + 1 אחרת hi = mid. החזירו lo; הוא n כשאין איבר מתאים ו-0 למערך ריק."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) implements a correct O(log n), O(1)-space search, (2) returns the first index at or above target and n when none, (3) gives 1, 3, 4 for targets 4, 8, 10, and (4) explains empty input (returns 0) and duplicates (leftmost).",
+      "he": "תשובה מלאה (1) מממשת חיפוש נכון ב-O(log n) ומקום O(1), (2) מחזירה את האינדקס הראשון בערך target או מעליו ו-n כשאין, (3) נותנת 1, 3, 4 עבור 4, 8, 10, ו-(4) מסבירה קלט ריק (מחזיר 0) וכפילויות (השמאלי ביותר)."
+    },
+    "rubric": [
+      {"key": "invariant_and_boundaries", "weight": 0.40, "en": "The interval convention is stated and the loop condition and updates match it; no infinite loop, no out-of-range access.", "he": "מוסכמת הקטע מוצהרת ותנאי הלולאה והעדכונים תואמים לה; אין לולאה אינסופית ואין גישה מחוץ לטווח."},
+      {"key": "leftmost_on_equal", "weight": 0.25, "en": "Equality moves hi, not lo, so duplicates return the first occurrence.", "he": "שוויון מזיז את hi ולא את lo, ולכן כפילויות מחזירות את המופע הראשון."},
+      {"key": "examples", "weight": 0.20, "en": "1, 3, 4, and 0 for empty input.", "he": "1, 3, 4, ו-0 לקלט ריק."},
+      {"key": "complexity", "weight": 0.15, "en": "O(log n) time, O(1) space.", "he": "זמן O(log n), מקום O(1)."}
+    ],
+    "common_errors": [
+      {"key": "stops_on_first_equal", "core": true, "skill": "arrays_and_search", "tip_key": "check_the_boundary", "en": "Returns mid on a[mid] == target, which can return index 2 instead of 1 for [2,4,4,9].", "he": "מחזיר mid כאשר a[mid] == target, מה שיכול להחזיר אינדקס 2 במקום 1 עבור [2,4,4,9]."},
+      {"key": "infinite_loop_boundary", "core": true, "skill": "arrays_and_search", "tip_key": "check_the_boundary", "en": "Mixing a closed interval with hi = mid (or an open one with hi = mid - 1) loops forever or skips an element.", "he": "ערבוב קטע סגור עם hi = mid (או פתוח עם hi = mid - 1) יוצר לולאה אינסופית או מדלג על איבר."},
+      {"key": "mid_overflow", "core": false, "skill": "arrays_and_search", "en": "mid = (lo + hi) / 2 can overflow for large indices; lo + (hi - lo) / 2 cannot.", "he": "mid = (lo + hi) / 2 עלול לגלוש באינדקסים גדולים; lo + (hi - lo) / 2 לא."}
+    ],
+    "accepted_approaches": {
+      "en": ["A closed interval [lo, hi] with hi = mid - 1 and the answer tracked separately.", "Any language, or precise pseudocode."],
+      "he": ["קטע סגור [lo, hi] עם hi = mid - 1 והתשובה נשמרת בנפרד.", "כל שפה, או פסאודו-קוד מדויק."]
+    }
+  },
+
+  "example-merge-measurement-streams": {
+    "skills": [{"skill": "arrays_and_search", "weight": 0.7, "primary": true}, {"skill": "basic_data_structures", "weight": 0.3}],
+    "archetype": "coding", "exposure_risk": "high", "hint_position": 1,
+    "hints": {
+      "en": ["Both inputs are already sorted. At every step, which element must come next?",
+             "Keep an index into each array. Append the smaller current element and advance that index. When one array runs out, append the rest of the other. Equal values: take either; both still get appended eventually."],
+      "he": ["שני הקלטים כבר ממוינים. בכל צעד, איזה איבר חייב לבוא הבא?",
+             "שמרו אינדקס לכל מערך. הוסיפו את האיבר הנוכחי הקטן יותר וקדמו את האינדקס שלו. כשמערך אחד נגמר, הוסיפו את שארית השני. ערכים שווים: קחו כל אחד; שניהם עדיין יתווספו בסוף."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) merges with two cursors in O(n + m) without sorting, (2) appends the remaining suffix when one input is exhausted, (3) keeps every occurrence of equal values, (4) gives [1,2,4,4,4,7], and (5) separates output storage O(n + m) from O(1) auxiliary space.",
+      "he": "תשובה מלאה (1) ממזגת עם שני סמנים ב-O(n + m) ללא מיון, (2) מוסיפה את השארית כשקלט אחד נגמר, (3) שומרת כל מופע של ערכים שווים, (4) נותנת [1,2,4,4,4,7], ו-(5) מפרידה בין אחסון הפלט O(n + m) למקום העזר O(1)."
+    },
+    "rubric": [
+      {"key": "two_cursor_merge", "weight": 0.35, "en": "Correct two-pointer loop.", "he": "לולאת שני סמנים נכונה."},
+      {"key": "tail_handling", "weight": 0.25, "en": "The leftover suffix of the longer input is appended; empty inputs work.", "he": "השארית של הקלט הארוך מתווספת; קלטים ריקים עובדים."},
+      {"key": "duplicates_preserved", "weight": 0.15, "en": "Equal values are all kept.", "he": "כל הערכים השווים נשמרים."},
+      {"key": "space_analysis", "weight": 0.25, "en": "Output O(n + m) versus auxiliary O(1) are distinguished.", "he": "מבחינים בין פלט O(n + m) למקום עזר O(1)."}
+    ],
+    "common_errors": [
+      {"key": "tail_dropped", "core": true, "skill": "arrays_and_search", "tip_key": "check_the_boundary", "en": "The loop stops when either array ends and the remaining elements of the other are lost.", "he": "הלולאה נעצרת כשאחד המערכים נגמר ושאר האיברים של השני אובדים."},
+      {"key": "duplicate_dropped", "core": false, "skill": "arrays_and_search", "en": "On equality both cursors advance but only one value is appended.", "he": "בשוויון שני הסמנים מתקדמים אך רק ערך אחד מתווסף."},
+      {"key": "sorted_afterwards", "core": false, "skill": "arrays_and_search", "tip_key": "restate_the_requirement", "en": "The arrays are concatenated and sorted, which the question forbids and is O((n + m) log(n + m)).", "he": "המערכים משורשרים וממוינים, מה שהשאלה אוסרת והוא O((n + m) log(n + m))."}
+    ],
+    "accepted_approaches": {
+      "en": ["A single loop that handles exhaustion with sentinels.", "Building the output in reverse from the ends."],
+      "he": ["לולאה אחת שמטפלת בסיום עם ערכי זקיף.", "בניית הפלט בסדר הפוך מהקצוות."]
+    }
+  },
+
+  "example-pair-sum-indices": {
+    "skills": [{"skill": "basic_data_structures", "weight": 0.6, "primary": true}, {"skill": "arrays_and_search", "weight": 0.4}],
+    "archetype": "coding", "exposure_risk": "high", "hint_position": 1,
+    "hints": {
+      "en": ["For each element, what single value would you need to have seen already?",
+             "Walk the array once. For element x at index i, look up T - x in a map of value -> index built from earlier elements; if found, return that index and i; otherwise store x -> i. Because you look before you store, an element cannot pair with itself."],
+      "he": ["לכל איבר, איזה ערך יחיד הייתם צריכים שכבר ראיתם?",
+             "עברו על המערך פעם אחת. לאיבר x באינדקס i, חפשו את T - x במפה של ערך -> אינדקס שנבנתה מאיברים קודמים; אם נמצא, החזירו את האינדקס הזה ו-i; אחרת שמרו x -> i. מכיוון שמחפשים לפני ששומרים, איבר לא יכול להזדווג עם עצמו."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) uses one pass with a hash map of value -> index, (2) looks up the complement before inserting the current element so no element pairs with itself, (3) returns (0,1) for [6,6] and no solution for [6], and (4) states expected O(n) time and O(n) space with the hashing caveat.",
+      "he": "תשובה מלאה (1) משתמשת במעבר אחד עם מפת גיבוב של ערך -> אינדקס, (2) מחפשת את המשלים לפני הכנסת האיבר הנוכחי כך שאף איבר אינו מזדווג עם עצמו, (3) מחזירה (0,1) עבור [6,6] ואין פתרון עבור [6], ו-(4) מציינת זמן צפוי O(n) ומקום O(n) עם הסייג של גיבוב."
+    },
+    "rubric": [
+      {"key": "lookup_before_insert", "weight": 0.35, "en": "The complement is checked before the current element is stored.", "he": "המשלים נבדק לפני שמירת האיבר הנוכחי."},
+      {"key": "correct_examples", "weight": 0.25, "en": "[6,6] gives (0,1); [6] gives no pair.", "he": "[6,6] נותן (0,1); [6] נותן שאין זוג."},
+      {"key": "complexity", "weight": 0.25, "en": "Expected O(n) time, O(n) space, with a note on hash worst case.", "he": "זמן צפוי O(n), מקום O(n), עם הערה על המקרה הגרוע של גיבוב."},
+      {"key": "no_solution_path", "weight": 0.15, "en": "The no-solution case returns a clear indication.", "he": "מקרה ללא פתרון מחזיר ציון ברור."}
+    ],
+    "common_errors": [
+      {"key": "element_paired_with_itself", "core": true, "skill": "basic_data_structures", "tip_key": "check_the_boundary", "en": "The map is filled first, so [6] with T=12 returns (0,0).", "he": "המפה מתמלאת קודם, ולכן [6] עם T=12 מחזיר (0,0)."},
+      {"key": "duplicates_overwrite", "core": false, "skill": "basic_data_structures", "en": "Storing all values first overwrites the index of the first 6, losing (0,1).", "he": "שמירת כל הערכים קודם דורסת את האינדקס של ה-6 הראשון, ומאבדת את (0,1)."},
+      {"key": "quadratic_solution", "core": false, "skill": "arrays_and_search", "tip_key": "restate_the_requirement", "en": "Two nested loops, O(n^2), when the question asks for expected O(n).", "he": "שתי לולאות מקוננות, O(n^2), כשהשאלה מבקשת O(n) צפוי."}
+    ],
+    "accepted_approaches": {
+      "en": ["Sorting index pairs and using two pointers, if the O(n log n) cost is stated as a trade-off."],
+      "he": ["מיון זוגות אינדקסים ושימוש בשני מצביעים, אם העלות O(n log n) מוצגת כפשרה."]
+    }
+  },
+
+  "example-bounded-circular-queue": {
+    "skills": [{"skill": "basic_data_structures", "weight": 1.0, "primary": true}],
+    "archetype": "coding", "exposure_risk": "medium", "hint_position": 1,
+    "hints": {
+      "en": ["With only head and size, where does the next element go? Write the tail index as a formula.",
+             "tail = (head + size) % capacity. Enqueue: if size == capacity fail, else store at tail and size += 1. Dequeue: if size == 0 fail, else read a[head], head = (head + 1) % capacity, size -= 1. Now run the trace."],
+      "he": ["עם head ו-size בלבד, לאן הולך האיבר הבא? כתבו את אינדקס הזנב כנוסחה.",
+             "tail = (head + size) % capacity. הכנסה: אם size == capacity כישלון, אחרת שמירה ב-tail ו-size += 1. הוצאה: אם size == 0 כישלון, אחרת קריאת a[head], head = (head + 1) % capacity, size -= 1. עכשיו הריצו את העקבה."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) derives the insertion index (head + size) % 4, (2) rejects enqueue when full and dequeue when empty without corrupting state, (3) traces to contents [30,40,50,60], head=2, size=4 (physical [50,60,30,40]), and (4) states O(1) per operation.",
+      "he": "תשובה מלאה (1) גוזרת את אינדקס ההכנסה (head + size) % 4, (2) דוחה הכנסה כשמלא והוצאה כשריק בלי לפגוע במצב, (3) עוקבת אל התוכן [30,40,50,60], head=2, size=4 (פיזית [50,60,30,40]), ו-(4) מציינת O(1) לפעולה."
+    },
+    "rubric": [
+      {"key": "index_arithmetic", "weight": 0.35, "en": "Tail from head and size with modulo; head advances with modulo.", "he": "זנב מ-head ו-size עם מודולו; head מתקדם עם מודולו."},
+      {"key": "full_empty", "weight": 0.25, "en": "Full and empty are decided by size, and failures leave the queue unchanged.", "he": "מלא וריק נקבעים לפי size, וכישלונות משאירים את התור ללא שינוי."},
+      {"key": "trace", "weight": 0.30, "en": "Final head=2, size=4, logical [30,40,50,60].", "he": "בסוף head=2, size=4, לוגית [30,40,50,60]."},
+      {"key": "complexity", "weight": 0.10, "en": "O(1) both operations.", "he": "O(1) לשתי הפעולות."}
+    ],
+    "common_errors": [
+      {"key": "missing_modulo", "core": true, "skill": "basic_data_structures", "tip_key": "check_the_boundary", "en": "The tail or head index runs past the array end instead of wrapping.", "he": "אינדקס הזנב או הראש עובר את סוף המערך במקום להתעטף."},
+      {"key": "overwrite_when_full", "core": false, "skill": "basic_data_structures", "en": "Enqueue on a full queue overwrites the oldest element instead of failing.", "he": "הכנסה לתור מלא דורסת את האיבר הישן ביותר במקום להיכשל."},
+      {"key": "full_equals_empty", "core": false, "skill": "basic_data_structures", "en": "Full and empty are decided from head and tail alone, which cannot distinguish them at capacity.", "he": "מלא וריק נקבעים מ-head ו-tail בלבד, שלא יכולים להבדיל ביניהם כשהתור מלא."}
+    ],
+    "accepted_approaches": {
+      "en": ["A separate tail index maintained alongside size, if kept consistent.", "Any language."],
+      "he": ["אינדקס זנב נפרד שמתוחזק לצד size, אם נשמר עקבי.", "כל שפה."]
+    }
+  },
+
+  "example-balanced-brackets": {
+    "skills": [{"skill": "basic_data_structures", "weight": 1.0, "primary": true}],
+    "archetype": "coding", "exposure_risk": "high", "hint_position": 1,
+    "hints": {
+      "en": ["When you meet a closing bracket, which opening bracket must it match: the first one you saw, or the most recent unmatched one?",
+             "Push every opener. On a closer, the stack must be non-empty and its top must be the matching opener; pop it. At the end the stack must be empty. That rejects ([)] and ] and accepts the empty string."],
+      "he": ["כשפוגשים סוגר סוגר, לאיזה סוגר פותח הוא חייב להתאים: לראשון שראיתם, או לאחרון שעדיין לא נסגר?",
+             "דחפו כל פותח. בסוגר, המחסנית חייבת להיות לא ריקה והראש שלה חייב להיות הפותח המתאים; הוציאו אותו. בסוף המחסנית חייבת להיות ריקה. זה דוחה את ([)] ואת ] ומקבל את המחרוזת הריקה."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) uses a stack with matching on the top element, (2) handles an empty stack on a closer and a non-empty stack at the end, (3) gives true, false, false, and (4) explains why counting alone misses nesting order, with O(n) time and O(n) worst-case space.",
+      "he": "תשובה מלאה (1) משתמשת במחסנית עם התאמה לאיבר העליון, (2) מטפלת במחסנית ריקה בסוגר ובמחסנית לא ריקה בסוף, (3) נותנת true, false, false, ו-(4) מסבירה למה ספירה בלבד מפספסת את סדר הקינון, עם זמן O(n) ומקום O(n) במקרה הגרוע."
+    },
+    "rubric": [
+      {"key": "stack_algorithm", "weight": 0.35, "en": "Push openers, match closers against the top, pop.", "he": "דחיפת פותחים, התאמת סוגרים מול הראש, הוצאה."},
+      {"key": "edge_cases", "weight": 0.25, "en": "Closer on an empty stack is rejected; leftover openers at the end are rejected; empty string accepted.", "he": "סוגר על מחסנית ריקה נדחה; פותחים שנותרו בסוף נדחים; מחרוזת ריקה מתקבלת."},
+      {"key": "examples", "weight": 0.20, "en": "true, false, false.", "he": "true, false, false."},
+      {"key": "why_counting_fails", "weight": 0.20, "en": "A counting argument accepts ([)] because counts match but order does not.", "he": "טיעון ספירה מקבל את ([)] כי הספירות תואמות אבל הסדר לא."}
+    ],
+    "common_errors": [
+      {"key": "end_state_unchecked", "core": true, "skill": "basic_data_structures", "tip_key": "check_the_boundary", "en": "\"((\" is accepted because the stack is never checked to be empty at the end.", "he": "\"((\" מתקבל כי המחסנית לעולם לא נבדקת להיות ריקה בסוף."},
+      {"key": "pop_from_empty", "core": false, "skill": "basic_data_structures", "en": "A closer with an empty stack causes an error or is ignored instead of returning false.", "he": "סוגר עם מחסנית ריקה גורם לשגיאה או מוזנח במקום להחזיר false."},
+      {"key": "type_not_matched", "core": false, "skill": "basic_data_structures", "en": "Any closer pops any opener, so ([)] is accepted.", "he": "כל סוגר מוציא כל פותח, ולכן ([)] מתקבל."}
+    ],
+    "accepted_approaches": {
+      "en": ["A map from closer to opener instead of a chain of comparisons.", "Any language."],
+      "he": ["מפה מסוגר לפותח במקום שרשרת השוואות.", "כל שפה."]
+    }
+  },
+
+  "example-reverse-singly-linked-list": {
+    "skills": [{"skill": "basic_data_structures", "weight": 1.0, "primary": true}],
+    "archetype": "coding", "exposure_risk": "high", "hint_position": 1,
+    "hints": {
+      "en": ["The moment you point a node backwards, you lose the way forward. What must you save before that?",
+             "Three pointers: prev = null, curr = head. Loop: next = curr.next; curr.next = prev; prev = curr; curr = next. Return prev. Walk it on a two-node list to see every step."],
+      "he": ["ברגע שמפנים צומת אחורה, מאבדים את הדרך קדימה. מה חייבים לשמור לפני כן?",
+             "שלושה מצביעים: prev = null, curr = head. לולאה: next = curr.next; curr.next = prev; prev = curr; curr = next. החזירו prev. הריצו על רשימה של שני צמתים כדי לראות כל צעד."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) reverses in place with prev/curr/next and no recursion or new nodes, (2) saves next before overwriting the link, (3) returns prev as the new head, and (4) explains empty (null) and one-node (unchanged, next = null) lists.",
+      "he": "תשובה מלאה (1) הופכת במקום עם prev/curr/next ללא רקורסיה או צמתים חדשים, (2) שומרת את next לפני דריסת הקישור, (3) מחזירה prev כראש החדש, ו-(4) מסבירה רשימה ריקה (null) ורשימה של צומת אחד (ללא שינוי, next = null)."
+    },
+    "rubric": [
+      {"key": "pointer_updates", "weight": 0.40, "en": "The four updates in the right order.", "he": "ארבעת העדכונים בסדר הנכון."},
+      {"key": "new_head", "weight": 0.15, "en": "Returns prev, not curr or head.", "he": "מחזיר prev, לא curr או head."},
+      {"key": "edge_cases", "weight": 0.25, "en": "Empty and single-node lists handled by the same loop.", "he": "רשימה ריקה ורשימה של צומת אחד מטופלות באותה לולאה."},
+      {"key": "constraints", "weight": 0.20, "en": "O(n) time, O(1) space, no recursion, all nodes preserved.", "he": "זמן O(n), מקום O(1), ללא רקורסיה, כל הצמתים נשמרים."}
+    ],
+    "common_errors": [
+      {"key": "next_lost", "core": true, "skill": "basic_data_structures", "tip_key": "check_the_boundary", "en": "curr.next is overwritten before it is saved, so the rest of the list is lost after the first node.", "he": "curr.next נדרס לפני שנשמר, ולכן שאר הרשימה אובדת אחרי הצומת הראשון."},
+      {"key": "returns_wrong_head", "core": false, "skill": "basic_data_structures", "en": "The original head is returned; its next is now null.", "he": "הראש המקורי מוחזר; ה-next שלו הוא עכשיו null."},
+      {"key": "recursion_used", "core": false, "skill": "basic_data_structures", "tip_key": "restate_the_requirement", "en": "A recursive solution, which uses O(n) stack space and is forbidden.", "he": "פתרון רקורסיבי, שמשתמש במקום מחסנית O(n) ואסור."}
+    ],
+    "accepted_approaches": {
+      "en": ["Iterating with a tuple assignment in languages that support it.", "A diagram of pointer states per iteration."],
+      "he": ["איטרציה עם השמת tuple בשפות שתומכות בכך.", "דיאגרמה של מצבי המצביעים בכל איטרציה."]
+    }
+  },
+
+  "example-array-bound-off-by-one": {
+    "skills": [{"skill": "code_debugging", "weight": 0.8, "primary": true}, {"skill": "arrays_and_search", "weight": 0.2}],
+    "archetype": "debugging", "exposure_risk": "medium", "hint_position": 1,
+    "hints": {
+      "en": ["How many times does the loop body run for n = 1? It should run once.",
+             "The condition i <= n runs n + 1 times and reads a[n], one past the end. Change it to i < n. Then n = 0 never touches a, and n = 1 reads only a[0]."],
+      "he": ["כמה פעמים גוף הלולאה רץ עבור n = 1? הוא צריך לרוץ פעם אחת.",
+             "התנאי i <= n רץ n + 1 פעמים וקורא את a[n], אחד מעבר לסוף. שנו אותו ל-i < n. אז n = 0 לעולם לא נוגע ב-a, ו-n = 1 קורא רק את a[0]."]
+    },
+    "requirements": {
+      "en": "A complete answer (1) identifies i <= n as reading one element past the end, (2) fixes it to i < n, (3) explains that n = 0 must return 0 without dereferencing a (which may be NULL) and n = 1 returns a[0], and (4) states O(n) time and O(1) extra space.",
+      "he": "תשובה מלאה (1) מזהה ש-i <= n קורא איבר אחד מעבר לסוף, (2) מתקנת ל-i < n, (3) מסבירה ש-n = 0 חייב להחזיר 0 בלי לגשת ל-a (שעשוי להיות NULL) ו-n = 1 מחזיר את a[0], ו-(4) מציינת זמן O(n) ומקום נוסף O(1)."
+    },
+    "rubric": [
+      {"key": "bug_located", "weight": 0.35, "en": "The off-by-one in the loop condition is named, with the out-of-bounds read a[n].", "he": "השגיאה באחד בתנאי הלולאה מזוהה, עם הקריאה מחוץ לתחום a[n]."},
+      {"key": "fix", "weight": 0.25, "en": "i < n, and nothing else changed.", "he": "i < n, ושום דבר אחר לא השתנה."},
+      {"key": "edge_cases", "weight": 0.25, "en": "n = 0 returns 0 with no access (a may be NULL); n = 1 sums a[0] only.", "he": "n = 0 מחזיר 0 ללא גישה (a עשוי להיות NULL); n = 1 מסכם רק את a[0]."},
+      {"key": "complexity", "weight": 0.15, "en": "O(n) time, O(1) extra space.", "he": "זמן O(n), מקום נוסף O(1)."}
+    ],
+    "common_errors": [
+      {"key": "start_index_changed", "core": true, "skill": "code_debugging", "tip_key": "check_the_boundary", "en": "The fix changes i = 0 to i = 1, which skips the first element and still reads a[n].", "he": "התיקון משנה i = 0 ל-i = 1, מה שמדלג על האיבר הראשון ועדיין קורא את a[n]."},
+      {"key": "null_case_ignored", "core": false, "skill": "code_debugging", "tip_key": "cover_every_case", "en": "n = 0 is not discussed, although the original code dereferences a NULL pointer there.", "he": "n = 0 לא נדון, אף שהקוד המקורי ניגש למצביע NULL במקרה זה."},
+      {"key": "extra_guard_instead_of_fix", "core": false, "skill": "code_debugging", "en": "A special case for n == 0 is added while the loop bound stays wrong for every other n.", "he": "נוסף מקרה מיוחד ל-n == 0 בעוד גבול הלולאה נשאר שגוי לכל n אחר."}
+    ],
+    "accepted_approaches": {
+      "en": ["Rewriting the loop with a pointer end = a + n and while (a != end).", "Noting that size_t makes i < n safe for all n."],
+      "he": ["כתיבת הלולאה מחדש עם מצביע end = a + n ו-while (a != end).", "ציון ש-size_t הופך את i < n לבטוח לכל n."]
+    }
+  }
+}

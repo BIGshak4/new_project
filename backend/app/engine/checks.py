@@ -185,9 +185,10 @@ def _evaluate(node, env: dict[str, bool]) -> bool:
 
 def parse_boolean(expression: str, variables: list[str]):
     """Parse a Boolean expression into a tree. Raises BooleanParseError."""
-    # accept "F = A + B" by dropping the left-hand side
-    if "=" in expression:
-        expression = expression.split("=", 1)[1]
+    # accept "F = A + B" by dropping a left-hand side that is a bare name
+    assignment = re.match(r"^\s*[A-Za-z_]\w*\s*=(?!=)\s*(.*)$", expression, re.S)
+    if assignment:
+        expression = assignment.group(1)
     if len(expression) > MAX_EXPRESSION_LENGTH:
         raise BooleanParseError(f"expression longer than {MAX_EXPRESSION_LENGTH} characters")
     return _Parser(_tokenize(expression, variables), variables).parse()
@@ -353,11 +354,31 @@ def parse_quantity(text: str | float | int, base_units: set[str]) -> tuple[float
     return value, None
 
 
+def locate_named_value(text: str, names: list[str]) -> str | None:
+    """'Tmin = 1.40 ns, so fmax = 714 MHz' with names ['Tmin'] -> '1.40 ns'. Last match wins."""
+    found = None
+    for name in names:
+        pattern = re.compile(rf"{re.escape(name)}\s*(?:is|=|:|≈|~|of)?\s*(?:about|approximately|approx\.?)?\s*"
+                             rf"({_NUMBER_RE.pattern}\s*[A-Za-zµμΩ]*)", re.IGNORECASE)
+        for match in pattern.finditer(text):
+            found = match.group(1)
+    return found
+
+
 def check_numeric(spec: dict, answer: str | float | int | dict) -> CheckResult:
-    """spec: {"expected": 12.5, "unit": "ns", "tolerance_abs": 0.1 | "tolerance_rel": 0.02}"""
+    """spec: {"expected": 12.5, "unit": "ns", "tolerance_abs": 0.1 | "tolerance_rel": 0.02,
+             "output_names": ["Tmin", "minimum period"]}   # optional: which number in a long answer"""
     started = time.perf_counter()
     if isinstance(answer, dict):
         answer = answer.get("value", answer.get("text", ""))
+    names = spec.get("output_names") or ([spec["output_name"]] if spec.get("output_name") else [])
+    if names and isinstance(answer, str):
+        located = locate_named_value(answer, names)
+        if located is None:
+            return CheckResult(type="numeric", passed=None,
+                               detail=f"no value named {', '.join(names)} was found in the answer",
+                               runtime_ms=int((time.perf_counter() - started) * 1000))
+        answer = located
     unit = spec.get("unit")
     base_units = {"s", "Hz", "V", "A", "W", "F", "Ω", "ohm", "b", "B", "bit", "bits"}
     expected_factor, expected_base = (1.0, None)
