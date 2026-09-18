@@ -1,0 +1,114 @@
+"""The persistence boundary the practice service talks to.
+
+    Store.transaction()  ->  Tx   one unit of work; commits on exit, rolls back on error
+
+`DbStore` is the real one (Supabase through app.repo). `InMemoryStore` in
+memory_store.py follows the same rules and is what the route and service tests use.
+Both raise the same exceptions on the two races that matter:
+
+    DuplicateSubmissionKey   another process accepted this idempotency key first
+    StaleProfile             another request updated the skill profile first
+"""
+
+from __future__ import annotations
+
+import uuid
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+from datetime import datetime
+from typing import Protocol
+
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine
+
+from app import db
+from app.repo import attempts, events, profiles, questions
+from app.repo.attempts import DuplicateSubmissionKey, StoredAttempt
+from app.repo.profiles import LoadedProfile, StaleProfile
+from app.repo.questions import LoadedQuestion, QuestionSummary
+from app.schemas.engine import SkillState
+
+__all__ = ["DuplicateSubmissionKey", "StaleProfile", "Store", "Tx", "DbStore"]
+
+
+class Tx(Protocol):
+    async def load_question(self, *, key: str | None = None, question_id: uuid.UUID | None = None) -> LoadedQuestion | None: ...
+    async def list_questions(self, *, language: str, subject: str | None = None) -> list[QuestionSummary]: ...
+    async def load_attempt(self, attempt_id: uuid.UUID, *, user_id: uuid.UUID) -> StoredAttempt | None: ...
+    async def save_attempt(self, *, user_id: uuid.UUID, question_id: uuid.UUID, row: dict) -> None: ...
+    async def started_today(self, user_id: uuid.UUID, *, now: datetime | None = None) -> int: ...
+    async def recent_attempts(self, user_id: uuid.UUID, *, limit: int = 20) -> list[dict]: ...
+    async def load_profile(self, user_id: uuid.UUID) -> LoadedProfile: ...
+    async def save_profile(self, loaded: LoadedProfile, states: dict[str, SkillState], *,
+                           attempt_id: uuid.UUID | None = None) -> dict[str, int]: ...
+    async def user_seniority(self, user_id: uuid.UUID) -> str | None: ...
+    async def record_metrics(self, *, user_id: uuid.UUID, attempt_id: uuid.UUID, metrics: list[dict],
+                             seniority: str | None) -> int: ...
+    async def record_usage(self, *, user_id: uuid.UUID, attempt_id: uuid.UUID, usage_rows: list[dict]) -> int: ...
+    async def record_tip(self, *, attempt_id: uuid.UUID, tip_key: str, skill_key: str | None, text: str) -> None: ...
+
+
+class Store(Protocol):
+    def transaction(self) -> AsyncIterator[Tx]: ...
+
+
+class DbTx:
+    def __init__(self, connection: AsyncConnection, *, allow_in_review: bool):
+        self.connection = connection
+        self.allow_in_review = allow_in_review
+
+    async def load_question(self, *, key=None, question_id=None):
+        return await questions.load_question(self.connection, key=key, question_id=question_id,
+                                             allow_in_review=self.allow_in_review)
+
+    async def list_questions(self, *, language, subject=None):
+        return await questions.list_questions(self.connection, language=language, subject=subject,
+                                              allow_in_review=self.allow_in_review)
+
+    async def load_attempt(self, attempt_id, *, user_id):
+        return await attempts.load(self.connection, attempt_id, user_id=user_id)
+
+    async def save_attempt(self, *, user_id, question_id, row):
+        await attempts.save(self.connection, user_id=user_id, question_id=question_id, row=row)
+
+    async def started_today(self, user_id, *, now=None):
+        return await attempts.started_today(self.connection, user_id, now=now)
+
+    async def recent_attempts(self, user_id, *, limit=20):
+        return await attempts.recent(self.connection, user_id, limit=limit)
+
+    async def load_profile(self, user_id):
+        return await profiles.load(self.connection, user_id)
+
+    async def save_profile(self, loaded, states, *, attempt_id=None):
+        return await profiles.save(self.connection, loaded, states, attempt_id=attempt_id)
+
+    async def user_seniority(self, user_id):
+        profile = await db.table("user_profile")
+        return (await self.connection.execute(
+            select(profile.c.seniority_self_assessed).where(profile.c.id == user_id))).scalar_one_or_none()
+
+    async def record_metrics(self, *, user_id, attempt_id, metrics, seniority):
+        return await events.record_metrics(self.connection, user_id=user_id, attempt_id=attempt_id, metrics=metrics,
+                                           seniority=seniority)
+
+    async def record_usage(self, *, user_id, attempt_id, usage_rows):
+        return await events.record_usage(self.connection, user_id=user_id, attempt_id=attempt_id, usage_rows=usage_rows)
+
+    async def record_tip(self, *, attempt_id, tip_key, skill_key, text):
+        await events.record_tip(self.connection, attempt_id=attempt_id, tip_key=tip_key, skill_key=skill_key, text=text)
+
+
+class DbStore:
+    def __init__(self, engine: AsyncEngine | None = None, *, allow_in_review: bool = False):
+        self._engine = engine
+        self.allow_in_review = allow_in_review
+
+    @property
+    def engine(self) -> AsyncEngine:
+        return self._engine or db.get_engine()
+
+    @asynccontextmanager
+    async def transaction(self):
+        async with self.engine.begin() as connection:
+            yield DbTx(connection, allow_in_review=self.allow_in_review)

@@ -250,6 +250,10 @@ class PracticeAttempt:
     # ------------------------------------------------------------------ derived state
 
     @property
+    def attempt_id_uuid(self) -> uuid.UUID:
+        return uuid.UUID(str(self.attempt_id))
+
+    @property
     def hints_used(self) -> int:
         return max((e.level for e in self.exposures if e.kind == "hint"), default=0)
 
@@ -354,32 +358,52 @@ class PracticeAttempt:
     async def submit(self, answer, *, idempotency_key: str | None = None, latency_ms: int | None = None,
                      revision_count: int | None = None) -> PracticeOutcome:
         """Accept the main answer and evaluate it. Idempotent per key; a second different answer is a conflict."""
-        async with self._lock:
-            main = self.main_submission
-            if main is not None and main.status != EvaluationStatus.FAILED:
-                existing = next((s for s in self.submissions if s.key == idempotency_key), None) if idempotency_key else None
-                if existing is not None and existing.turn == 0:
-                    return self._replay(existing, answer)
-                raise PracticeError("already_submitted",
-                                    "this attempt already has an evaluated answer; start a new attempt to try again")
-            submission, replay = self._accept(answer, turn=0, idempotency_key=idempotency_key)
-            if replay:
-                return self._replay(submission, answer)
-            return await self._evaluate(submission, latency_ms=latency_ms, revision_count=revision_count)
+        submission, replay = await self.accept(answer, idempotency_key=idempotency_key)
+        if replay is not None:
+            return replay
+        return await self.evaluate(submission, latency_ms=latency_ms, revision_count=revision_count)
 
     async def submit_follow_up(self, answer, *, idempotency_key: str | None = None,
                                latency_ms: int | None = None) -> PracticeOutcome:
+        submission, replay = await self.accept(answer, idempotency_key=idempotency_key, follow_up=True)
+        if replay is not None:
+            return replay
+        return await self.evaluate(submission, latency_ms=latency_ms)
+
+    async def accept(self, answer, *, idempotency_key: str | None = None,
+                     follow_up: bool = False) -> tuple[Submission, PracticeOutcome | None]:
+        """Step 1 of a submission: record the answer as a revision, before any model call.
+
+        Returns (submission, None) for a new revision, or (submission, stored outcome) when the key was
+        seen before. A caller that persists between the two steps can survive a crash mid-evaluation.
+        """
         async with self._lock:
-            pending = self.pending_follow_up
-            if pending is None:
-                raise PracticeError("no_pending_follow_up", "there is no follow-up question to answer")
-            turn_index = pending["turn"]
             existing = next((s for s in self.submissions if s.key == idempotency_key), None) if idempotency_key else None
-            if existing is not None:
-                return self._replay(existing, answer)
-            submission, _ = self._accept(answer, turn=turn_index, idempotency_key=idempotency_key)
-            pending["submission_revision"] = submission.revision
-            return await self._evaluate(submission, latency_ms=latency_ms, revision_count=None)
+            if follow_up:
+                pending = self.pending_follow_up
+                if existing is not None:
+                    return existing, self._replay(existing, answer)
+                if pending is None:
+                    raise PracticeError("no_pending_follow_up", "there is no follow-up question to answer")
+                submission, _ = self._accept(answer, turn=pending["turn"], idempotency_key=idempotency_key)
+                pending["submission_revision"] = submission.revision
+                return submission, None
+            main = self.main_submission
+            if main is not None and main.status != EvaluationStatus.FAILED:
+                if existing is not None and existing.turn == 0:
+                    return existing, self._replay(existing, answer)
+                raise PracticeError("already_submitted",
+                                    "this attempt already has an evaluated answer; start a new attempt to try again")
+            submission, replay = self._accept(answer, turn=0, idempotency_key=idempotency_key)
+            return submission, (self._replay(submission, answer) if replay else None)
+
+    async def evaluate(self, submission: Submission, *, latency_ms: int | None = None,
+                       revision_count: int | None = None) -> PracticeOutcome:
+        """Step 2: evaluate an accepted revision. A revision already evaluated is replayed, never scored twice."""
+        async with self._lock:
+            if submission.status == EvaluationStatus.DONE:
+                return self._replay(submission, submission.answer)
+            return await self._evaluate(submission, latency_ms=latency_ms, revision_count=revision_count)
 
     async def retry_evaluation(self) -> PracticeOutcome:
         """Evaluate the latest failed submission again, with the same saved answer and the same exposure."""
