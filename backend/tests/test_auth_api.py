@@ -120,6 +120,13 @@ class TestServerConfiguration:
                          allowed_origins="https://a", llm_provider="anthropic", anthropic_api_key="k")
         assert ready.production_problems() == []
 
+    def test_the_direct_database_host_is_flagged(self):
+        direct = Settings(_env_file=None, database_url="postgresql://postgres:x@db.abcdefghij.supabase.co:5432/postgres")
+        pooler = Settings(_env_file=None, database_url="postgresql://postgres.abc:x@aws-0-eu-central-1.pooler.supabase.com:5432/postgres")
+        assert direct.database_host_kind == "direct" and pooler.database_host_kind == "pooler"
+        assert any("IPv6" in p for p in direct.production_problems())
+        assert not any("IPv6" in p for p in pooler.production_problems())
+
     def test_issuer_is_derived_from_the_project_url(self):
         assert make_verifier().issuer == ISSUER
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from functools import lru_cache
 from pathlib import Path
 from typing import Annotated
@@ -65,11 +66,24 @@ class Settings(BaseSettings):
     def is_production(self) -> bool:
         return self.env == "production"
 
+    @property
+    def database_host_kind(self) -> str | None:
+        """direct | pooler | other | None. Supabase's direct host (db.<ref>.supabase.co) resolves only to
+        IPv6, which Docker containers and most hosts (Render included) cannot reach; the Session pooler
+        is IPv4. Found the hard way in a container."""
+        if not self.database_url:
+            return None
+        match = re.search(r"@([^:/]+)", self.database_url)
+        host = match.group(1) if match else ""
+        return "direct" if host.startswith("db.") and host.endswith(".supabase.co") else "pooler" if "pooler" in host else "other"
+
     def production_problems(self) -> list[str]:
         """What is missing for a safe production start. Empty means go."""
         problems = []
         if not self.database_url:
             problems.append("DATABASE_URL is not set")
+        elif self.database_host_kind == "direct":
+            problems.append("DATABASE_URL uses the direct host (IPv6 only); use the Session pooler string")
         if not self.supabase_url:
             problems.append("SUPABASE_URL is not set (needed to verify login tokens)")
         if not self.allowed_origins:

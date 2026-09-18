@@ -98,7 +98,8 @@ async def health() -> dict:
     settings = get_settings()
     runtime = getattr(app.state, "runtime", None)
     return {"status": "ok", "engine_version": ENGINE_VERSION, "env": settings.env, "llm_provider": settings.llm_provider,
-            "database_configured": bool(settings.database_url), "auth_configured": bool(settings.supabase_url),
+            "database_configured": bool(settings.database_url), "database_host": settings.database_host_kind,
+            "auth_configured": bool(settings.supabase_url),
             "allowed_origins": len(settings.allowed_origins), "store": runtime.store_kind if runtime else None}
 
 
