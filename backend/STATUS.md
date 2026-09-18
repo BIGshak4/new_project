@@ -3,7 +3,7 @@
 A living summary of what exists in `backend/`, how it was verified, what was decided, and what is next.
 Updated at the end of every build step. Newest changes are at the bottom of the changelog.
 
-**Last updated:** 2026-09-18 (step 4b, stage G in progress) · **Tests:** 484 offline + 14 live + `scripts/smoke_http.py` · **Latest commit:** see changelog
+**Last updated:** 2026-09-19 (deployed; step 5 started) · **Tests:** 506 offline + 14 live + `scripts/smoke_http.py` against Render · **Latest commit:** see changelog
 
 ---
 
@@ -23,7 +23,8 @@ Harel's Next.js apps (`apps/web`, `apps/tasks`) are the face of the product. The
 | 2 | The engine, seeds, terminal practice tool, seed loader, FastAPI shell | `40dd1c8` | Done |
 | 3 | Harel's 30 questions enriched for the engine (skills, rubrics, hints, errors, checks) | `18bfaa2` | Done, files only |
 | 4a | Engine hardening for real-world use, from Harel's review (`docs/backend-review-for-shaked.md`, R1–R5) | | Done |
-| 4b | HTTP API per the contract in `docs/backend-frontend-integration-readiness.md`: A login + pilot access (`74eea90`), B migration `practice_submissions` applied (`865b83c`), C repository + D service (`8eb0fce`), live sweep (`62fa488`), E routes + F route tests (`685827c`), verification pass (`b9670dc`), G: content loaded, Dockerfile + `render.yaml` + integration note; Render service pending | | Content live; deploy pending |
+| 4b | HTTP API per the contract in `docs/backend-frontend-integration-readiness.md`: A login + pilot access (`74eea90`), B migration `practice_submissions` applied (`865b83c`), C repository + D service (`8eb0fce`), live sweep (`62fa488`), E routes + F route tests (`685827c`), verification pass (`b9670dc`), G: content loaded, Docker image verified, **deployed at https://jobrun-api.onrender.com** (staging, scripted model, pooler DB) | | Done |
+| 5 | Connect `apps/web`: typed client `apps/web/src/lib/practice-api.ts` (contract-tested), integration note; Harel rewires the practice page; Anthropic key; real-model quality check | | Started |
 | 5 | Connect `apps/web` to the API (with Harel) | | |
 
 ---
@@ -142,11 +143,35 @@ Rule learned the hard way: **every migration goes through `scripts/dry_run_sql.p
 
 ---
 
+## 5c. Independent code review (2026-09-19) and profiling
+
+A fresh reviewer read the API, service, repository, auth and engine-practice layers with the deployment in mind (Render, several workers, remote database). Thirteen findings, all fixed the same night, each with a regression test:
+
+| # | Finding | Fix |
+|---|---|---|
+| 1 | Two workers could both accept "revision N" with different keys; the second upsert silently overwrote the first, so the unique idempotency key never fired | New revisions are a plain `INSERT … ON CONFLICT DO NOTHING` (no row → reload, replay or 409 `conflict`); existing revisions an `UPDATE … WHERE status <> 'done'` (no row → `AlreadyEvaluated` → the winner's result is returned, the loser's usage still recorded) |
+| 2 | `restore()` marked any pending revision as failed at once, so a refresh during a live evaluation showed "failed / retry" and a retry could double-score | `evaluating_since` stamp; a revision counts as interrupted only after `EVALUATION_BUDGET_SECONDS` (10 min); until then the view says `evaluating`, retry/submit are refused |
+| 3 | On a profile version race the evaluation was thrown away (a retry re-ran every model call and left a dangling follow-up) | The scores are re-applied on top of the fresh profile with the pure scoring functions (`_rescore`); no second model call. Only a second race falls back to "failed", with the follow-up turn undone |
+| 4 | `StaleProfile` in `start` / `next_hint` was a 500 | Redone once with a fresh load, then 409 `conflict` |
+| 5 | Route timeout (300 s) was shorter than the worst-case chain of model deadlines and could cancel mid-persist | Submit answers **202 `evaluating`** after 120 s and the evaluation continues shielded in the background; clients poll `GET` (`waitForEvaluation` in the TS client). Per-role deadlines lowered (evaluator 90 s, generator 60, feedback 60, tip 30) |
+| 6 | Pilot access resolved with ~7 round trips on every request | Cached per user for 120 s |
+| 7 | Every save re-upserted every revision; metrics and usage inserted row by row | Only changed revisions are written; multi-row inserts |
+| 8 | Lock table cleanup skipped when an action raised | `finally` |
+| 9 | Lost duplicate-key race could 500 | 409 `conflict` / replay |
+| 10 | Schema reflection ran on the first user request per worker | At startup, under a lock |
+| 11 | `first_assessed_at` never set on the update path | `coalesce(first_assessed_at, now())` |
+| 12 | Member e-mail compared case-sensitively; production allowed the pilot gate off; unverified e-mails accepted | `lower()` on both sides; `REQUIRE_PILOT_MEMBERSHIP=false` is a production problem; `email_verified: false` is refused |
+| 13 | An unknown key id refetched the JWKS on every request | Unknown kids remembered for 5 minutes |
+
+**Profiling** (`scripts/profile_service.py`): in memory, a full loop (start → hint → submit → follow-ups → refresh → progress) is ~66 ms, 60% of it Pydantic validating skill states — negligible next to the database. Against Supabase from the dev machine (~130 ms per round trip; Render sits in the same region as the database, so roughly a tenth of that): before the fixes a submit made 26–28 statements (3.7–5.3 s), a refresh 6 (0.8 s), the first listing 5 (1.4 s); after them a submit is 18 statements (2.3 s on that link, and 4 of the 18 are the test harness's own savepoints), the rest unchanged. The in-memory store deep-copied everything on every transaction and got slower with every attempt; it now copies containers only.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
-- **Deployment**: `backend/Dockerfile` and `render.yaml` are written; the image builds (345 MB, non-root, healthy in 10 s) and passes `smoke_http.py` in a container. **The database string must be the Session pooler (IPv4)**: the direct `db.<ref>.supabase.co` host is IPv6-only and unreachable from containers and Render (found by running the container; `/health` now reports `database_host` and production refuses `direct`). The Render service itself must be created under a JobRun account and given `DATABASE_URL` and `ALLOWED_ORIGINS`. Then `scripts/smoke_http.py --url <render url>`.
+- **Deployed**: https://jobrun-api.onrender.com (Render free tier, Frankfurt, `ENV=staging`, `LLM_PROVIDER=scripted`, `ALLOW_IN_REVIEW_CONTENT=true`). `scripts/smoke_http.py --url https://jobrun-api.onrender.com` passes, including CORS from `https://jobrun-practice.netlify.app`. Free tier sleeps after 15 idle minutes (~40 s wake).
+- `backend/Dockerfile` and `render.yaml`: the image builds (345 MB, non-root, healthy in 10 s) and passes `smoke_http.py` in a container. **The database string must be the Session pooler (IPv4)**: the direct `db.<ref>.supabase.co` host is IPv6-only and unreachable from containers and Render (found by running the container; `/health` now reports `database_host` and production refuses `direct`). The Render service itself must be created under a JobRun account and given `DATABASE_URL` and `ALLOWED_ORIGINS`. Then `scripts/smoke_http.py --url <render url>`.
 - **Shaked's e-mail is not yet in `jr_members`**; without it the API answers 403 for him.
+- **Anthropic key not created**; the real-model path is exercised only against a fake SDK client.
 - **Review before publishing.** All 30 questions stay `in_review` until a person checks technical correctness, rubric weights and Hebrew/English parity (checklist in `seeds/questions/README.md`).
 - **Bank coverage: 14 of the role's 27 skills** have a primary question. Missing: latches/flip-flops, state tables, Moore vs Mealy, truth tables, number representation, reset strategies, sequential HDL coding, debugging methodology, project walkthrough, state encoding, testbench basics.
 - **Anthropic API key** not created yet; the `AnthropicProvider` is written against SDK 1.6.0 but has not run against the real API.
@@ -188,6 +213,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 | 2026-09-18 | Step 4b-A: settings, Supabase token verification (JWKS/ES256), pilot access via `jr_members`, error shape, `/v1/me`; 392 tests (`74eea90`) |
 | 2026-09-18 | Step 4b-C/D: repository layer, store boundary, practice service; migration `skill_profile_engine_state`; 409 tests (`8eb0fce`) |
 | 2026-09-18 | Live verification sweep: RollbackStore harness, 13 live tests; fixes: JSON null in every writer (`db.sql_values`), batch question loading + caches, `reuse_status` preserved on re-import, migration `client_read_grants` (20 tables had policies but no grant) |
+| 2026-09-19 | Render deployment live and smoke-tested; TS client + contract test (`24e6263`); independent code review, 13 findings fixed; profiling script, submit path cut, memory store O(1) snapshots |
 | 2026-09-18 | Docker image built and smoke-tested in a container (WSL 2 installed); finding: direct Supabase host is IPv6-only, pooler required; detection added |
 | 2026-09-18 | Stage G: content loaded into Supabase (approved), `Dockerfile`, `.dockerignore`, `render.yaml`, `docs/practice-api-integration.md` for Harel |
 | 2026-09-18 | Verification pass: chaos test, Anthropic provider tests, `smoke_http.py` over real TCP + real JWKS; fixes: error shape on 404/405, 413 body limit, idle locks dropped, demo provider covered; 484 offline tests |

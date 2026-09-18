@@ -96,6 +96,8 @@ class Settings(BaseSettings):
             problems.append("LLM_PROVIDER=scripted returns fake evaluations")
         if self.allow_in_review_content:
             problems.append("ALLOW_IN_REVIEW_CONTENT=true would serve unreviewed questions")
+        if not self.require_pilot_membership:
+            problems.append("REQUIRE_PILOT_MEMBERSHIP=false would let any signed-in account practise")
         return problems
 
 

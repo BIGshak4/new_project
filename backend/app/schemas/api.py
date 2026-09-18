@@ -36,7 +36,7 @@ class SubmissionView(BaseModel):
     key: str
     turn: int                                   # 0 = main question, n = n-th follow-up
     answer: str
-    status: str                                 # pending | evaluating | done | failed
+    status: str                                 # evaluating | done | failed
     accepted_at: str
     evaluated_at: str | None = None
     band: str | None = None

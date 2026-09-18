@@ -14,6 +14,7 @@ The user id is the token's `sub`. Request bodies never carry a user id.
 from __future__ import annotations
 
 import asyncio
+import time
 import uuid
 from dataclasses import dataclass, field
 from typing import Annotated
@@ -27,6 +28,7 @@ from app.api.errors import ApiError
 AUDIENCE = "authenticated"
 ASYMMETRIC = ("ES256", "RS256")
 LEEWAY_SECONDS = 30
+UNKNOWN_KID_SECONDS = 300
 
 
 @dataclass(frozen=True)
@@ -51,6 +53,7 @@ class TokenVerifier:
         if jwks_client is None and self.issuer:
             jwks_client = jwt.PyJWKClient(self.issuer + "/.well-known/jwks.json", cache_keys=True, lifespan=3600)
         self._jwks = jwks_client
+        self._unknown_kids: dict[str | None, float] = {}
 
     @property
     def configured(self) -> bool:
@@ -63,10 +66,14 @@ class TokenVerifier:
             raise ApiError("unauthenticated", "the token is malformed") from exc
         algorithm = header.get("alg")
         if algorithm in ASYMMETRIC and self._jwks is not None:
+            kid = header.get("kid")
+            if kid in self._unknown_kids and time.monotonic() - self._unknown_kids[kid] < UNKNOWN_KID_SECONDS:
+                raise ApiError("unauthenticated", "the token's signing key is not known")
             try:
                 # network on first use only; keys are cached afterwards
                 signing_key = await asyncio.to_thread(self._jwks.get_signing_key_from_jwt, token)
             except jwt.PyJWTError as exc:
+                self._unknown_kids[kid] = time.monotonic()      # do not refetch the JWKS for this kid again soon
                 raise ApiError("unauthenticated", "the token's signing key is not known") from exc
             key = signing_key.key
         elif algorithm == "HS256" and self.jwt_secret:
@@ -87,6 +94,8 @@ class TokenVerifier:
             raise ApiError("unauthenticated", "the token has no valid user id") from exc
         if claims.get("is_anonymous"):
             raise ApiError("unauthenticated", "anonymous sessions cannot practise")
+        if (claims.get("user_metadata") or {}).get("email_verified") is False:
+            raise ApiError("unauthenticated", "confirm your e-mail address first")
         email = claims.get("email")
         return AuthenticatedUser(id=user_id, email=email.lower() if email else None,
                                  role=str(claims.get("role") or AUDIENCE), claims=claims)

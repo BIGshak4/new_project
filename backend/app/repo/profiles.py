@@ -15,7 +15,7 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import UTC, date, datetime
 
-from sqlalchemy import select, update
+from sqlalchemy import func, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncConnection
 
@@ -38,6 +38,7 @@ class LoadedProfile:
     versions: dict[str, int] = field(default_factory=dict)              # skill key -> version as loaded
     retention: dict[str, dict] = field(default_factory=dict)            # skill key -> {due, passed, last_at}
     level_history: dict[str, list] = field(default_factory=dict)
+    seniority: str | None = None                                        # filled by the service on load
 
 
 async def _skill_ids(connection: AsyncConnection) -> dict[str, uuid.UUID]:
@@ -110,6 +111,7 @@ async def save(connection: AsyncConnection, loaded: LoadedProfile, states: dict[
         else:
             if state.turns:
                 columns["last_assessed_at"] = now
+                columns["first_assessed_at"] = func.coalesce(profile.c.first_assessed_at, now)
             result = await connection.execute(
                 update(profile).where(profile.c.user_id == loaded.user_id, profile.c.skill_id == skill_ids[key],
                                       profile.c.version == seen)

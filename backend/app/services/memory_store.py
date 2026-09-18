@@ -10,7 +10,7 @@ from contextlib import asynccontextmanager
 from datetime import UTC, datetime
 
 from app.engine.catalog import Catalog
-from app.repo.attempts import DuplicateSubmissionKey, StoredAttempt
+from app.repo.attempts import AlreadyEvaluated, DuplicateSubmissionKey, StoredAttempt
 from app.repo.profiles import LoadedProfile, StaleProfile, derived_columns
 from app.repo.questions import LoadedQuestion, QuestionSummary, summary
 from app.schemas.engine import SkillState
@@ -27,6 +27,7 @@ class InMemoryStore:
         self.tips: list[dict] = []
         self.seniority: dict[uuid.UUID, str] = {}
         self.failures: set[str] = set()                           # names of operations that should raise (tests)
+        self.fail_once: set[str] = set()                          # ... only the next time
         self._commits = 0
 
     @asynccontextmanager
@@ -34,7 +35,10 @@ class InMemoryStore:
         # a snapshot, restored if the unit of work raises: the transactional promise in miniature.
         # If another transaction committed meanwhile (an interleaved "server"), its work stays,
         # as it would in a real database; only a clean, uninterleaved failure is rolled back.
-        snapshot = copy.deepcopy((self.attempts, self.profiles, self.metrics, self.usage, self.tips))
+        # shallow copies suffice: saved rows are deep-copied on the way in and never mutated in place,
+        # so rolling back means restoring the containers, not the rows (a full deepcopy per action
+        # made every action slower as the store grew)
+        snapshot = (dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips))
         commits_before = self._commits
         try:
             yield _MemoryTx(self)
@@ -79,17 +83,23 @@ class _MemoryTx:
                              question_key=stored["row"]["question_key"], started_at=stored["started_at"],
                              row=copy.deepcopy(stored["row"]))
 
-    async def save_attempt(self, *, user_id, question_id, row):
+    async def save_attempt(self, *, user_id, question_id, row, revisions=None, known_revisions=0):
         if "save_attempt" in self.s.failures:
             raise RuntimeError("simulated database failure")
         attempt_id = uuid.UUID(str(row["id"]))
         existing = self.s.attempts.get(attempt_id)
         if existing is not None:
-            known = {(s["revision"], s["key"]) for s in existing["row"]["submissions"]}
-            keys = {k for _, k in known}
+            by_revision = {s["revision"]: s for s in existing["row"]["submissions"]}
+            keys = {s["key"] for s in by_revision.values()}
             for s in row["submissions"]:
-                if (s["revision"], s["key"]) not in known and s["key"] in keys:
-                    raise DuplicateSubmissionKey(s["key"])
+                if revisions is not None and s["revision"] not in revisions:
+                    continue
+                current = by_revision.get(s["revision"])
+                if s["revision"] > known_revisions:
+                    if current is not None or s["key"] in keys:
+                        raise DuplicateSubmissionKey(s["key"])          # revision number or key taken meanwhile
+                elif current is not None and current["status"] == "done" and s["status"] != current["status"]:
+                    raise AlreadyEvaluated(s["revision"])
         self.s.attempts[attempt_id] = {"user_id": user_id, "question_id": question_id, "row": copy.deepcopy(row),
                                        "started_at": existing["started_at"] if existing else datetime.now(UTC)}
 
@@ -119,7 +129,8 @@ class _MemoryTx:
         return loaded
 
     async def save_profile(self, loaded, states, *, attempt_id=None):
-        if "save_profile" in self.s.failures:
+        if "save_profile" in self.s.failures or "save_profile" in self.s.fail_once:
+            self.s.fail_once.discard("save_profile")
             raise StaleProfile("simulated")
         now = datetime.now(UTC)
         versions = {}

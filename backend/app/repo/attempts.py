@@ -13,9 +13,8 @@ import uuid
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 
-from sqlalchemy import func, select
+from sqlalchemy import func, select, update
 from sqlalchemy.dialects.postgresql import insert
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app import db
@@ -26,7 +25,11 @@ SUBMISSION_COLUMNS = ("revision", "key", "turn", "answer", "hints_seen", "refere
 
 
 class DuplicateSubmissionKey(Exception):
-    """Another process already accepted a revision with this idempotency key."""
+    """Another process already accepted a revision with this idempotency key, or took this revision number."""
+
+
+class AlreadyEvaluated(Exception):
+    """Another process finished evaluating this revision first; the caller must reload and replay it."""
 
 
 @dataclass
@@ -70,8 +73,14 @@ def _submission_dict(row) -> dict:
     }
 
 
-async def save(connection: AsyncConnection, *, user_id: uuid.UUID, question_id: uuid.UUID, row: dict) -> None:
-    """Upsert the attempt and every revision. Raises DuplicateSubmissionKey when another process got there first."""
+async def save(connection: AsyncConnection, *, user_id: uuid.UUID, question_id: uuid.UUID, row: dict,
+               revisions: set[int] | None = None, known_revisions: int = 0) -> None:
+    """Upsert the attempt and its revisions.
+
+    `revisions` limits which revisions are written (None = all); `known_revisions` is how many were
+    already in the database when the attempt was loaded, so only genuinely new rows need the
+    savepoint that turns a refused idempotency key into DuplicateSubmissionKey.
+    """
     attempt, submission = await db.table("attempt"), await db.table("attempt_submission")
     main = next((s for s in reversed(row["submissions"]) if s["turn"] == 0), None)
     values = {
@@ -84,28 +93,37 @@ async def save(connection: AsyncConnection, *, user_id: uuid.UUID, question_id: 
         "misconceptions_hit": list(row.get("misconceptions_hit") or []), "familiarity": row["familiarity"],
         "duration_ms": row.get("duration_ms"), "submitted_at": _dt(main["accepted_at"]) if main else None,
         "exposures": row.get("exposures") or [],
-        "engine_state": {"evidence_mode": row.get("evidence_mode"), "tip_turns": row.get("tip_turns") or {}},
+        "engine_state": {"evidence_mode": row.get("evidence_mode"), "tip_turns": row.get("tip_turns") or {},
+                         # attempt_submission has no column for this; it lives here, keyed by revision
+                         "evaluating_since": {str(s["revision"]): s["evaluating_since"] for s in row["submissions"]
+                                              if s.get("evaluating_since")}},
     }
     statement = insert(attempt).values(**db.sql_values(values))
     updates = {c: statement.excluded[c] for c in values if c not in ("id", "user_id", "question_id", "started_at")}
     await connection.execute(statement.on_conflict_do_update(index_elements=["id"], set_=updates))
 
     for s in row["submissions"]:
+        if revisions is not None and s["revision"] not in revisions:
+            continue
         sub = _submission_row(values["id"], s)
-        statement = insert(submission).values(**db.sql_values(sub))
-        mutable = {c: statement.excluded[c] for c in sub if c not in ("attempt_id", "revision", "idempotency_key", "turn",
-                                                                       "answer", "hints_seen", "reference_seen",
-                                                                       "exposure_sequence", "accepted_at")}
-        savepoint = await connection.begin_nested()          # a refused key must not abort the whole transaction
-        try:
-            await connection.execute(statement.on_conflict_do_update(index_elements=["attempt_id", "revision"], set_=mutable))
-        except IntegrityError as exc:
-            await savepoint.rollback()
-            if "attempt_submission_key_uq" in str(exc.orig):
-                raise DuplicateSubmissionKey(s["key"]) from exc
-            raise
-        else:
-            await savepoint.commit()
+        if s["revision"] > known_revisions:
+            # a NEW revision: a plain insert. If another process took this revision number or this key
+            # first, DO NOTHING returns no row and the caller reloads instead of overwriting anyone.
+            inserted = (await connection.execute(
+                insert(submission).values(**db.sql_values(sub)).on_conflict_do_nothing().returning(submission.c.revision))).first()
+            if inserted is None:
+                raise DuplicateSubmissionKey(s["key"])
+            continue
+        # an EXISTING revision: only its evaluation state may change, and never once it is done.
+        # Zero rows means another process finished it first; the caller reloads and replays.
+        mutable = {c: v for c, v in sub.items() if c not in ("attempt_id", "revision", "idempotency_key", "turn", "answer",
+                                                              "hints_seen", "reference_seen", "exposure_sequence", "accepted_at")}
+        updated = (await connection.execute(
+            update(submission).where(submission.c.attempt_id == values["id"], submission.c.revision == s["revision"],
+                                     submission.c.status != "done")
+            .values(**db.sql_values(mutable)).returning(submission.c.revision))).first()
+        if updated is None:
+            raise AlreadyEvaluated(s["revision"])
 
 
 async def load(connection: AsyncConnection, attempt_id: uuid.UUID, *, user_id: uuid.UUID) -> StoredAttempt | None:
@@ -127,7 +145,9 @@ async def load(connection: AsyncConnection, attempt_id: uuid.UUID, *, user_id: u
         "revealed_before_submit": row.revealed_before_submit, "follow_up_turns": list(row.follow_up_turns or []),
         "misconceptions_hit": list(row.misconceptions_hit or []), "familiarity": row.familiarity,
         "evidence_mode": state.get("evidence_mode"), "duration_ms": row.duration_ms,
-        "tip_turns": state.get("tip_turns") or {}, "submissions": [_submission_dict(s) for s in subs],
+        "tip_turns": state.get("tip_turns") or {},
+        "submissions": [{**_submission_dict(s), "evaluating_since": (state.get("evaluating_since") or {}).get(str(s.revision))}
+                        for s in subs],
         "exposures": list(row.exposures or []),
     }
     return StoredAttempt(id=row.id, user_id=row.user_id, question_id=row.question_id, question_key=row.question_key,

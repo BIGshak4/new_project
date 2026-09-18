@@ -10,6 +10,8 @@ is the only writer for content, sessions, attempts and evaluation tables.
 
 from __future__ import annotations
 
+import asyncio
+
 from sqlalchemy import MetaData, Table, null
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
@@ -39,13 +41,22 @@ def get_engine() -> AsyncEngine:
     return _engine
 
 
+_reflect_lock: asyncio.Lock | None = None
+
+
 async def get_metadata() -> MetaData:
-    global _metadata
-    if _metadata is None:
-        metadata = MetaData(schema="public")
-        async with get_engine().connect() as connection:
-            await connection.run_sync(metadata.reflect)
-        _metadata = metadata
+    """Reflected once per process (the lifespan calls this at startup); concurrent first callers wait."""
+    global _metadata, _reflect_lock
+    if _metadata is not None:
+        return _metadata
+    if _reflect_lock is None:
+        _reflect_lock = asyncio.Lock()
+    async with _reflect_lock:
+        if _metadata is None:
+            metadata = MetaData(schema="public")
+            async with get_engine().connect() as connection:
+                await connection.run_sync(metadata.reflect)
+            _metadata = metadata
     return _metadata
 
 
@@ -55,10 +66,10 @@ async def table(name: str) -> Table:
 
 
 async def dispose() -> None:
-    global _engine, _metadata
+    global _engine, _metadata, _reflect_lock
     if _engine is not None:
         await _engine.dispose()
-    _engine, _metadata = None, None
+    _engine, _metadata, _reflect_lock = None, None, None
 
 
 def sql_values(values: dict) -> dict:

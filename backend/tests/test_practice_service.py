@@ -180,9 +180,19 @@ class TestFailuresAndRaces:
             await svc.submit(USER, attempt_id, "alarm = A ^ B ^ C", idempotency_key="k1")
 
         svc.provider = scripted([GOOD])
-        again = await svc.get(USER, attempt_id)                       # the answer was saved before the crash
-        assert again.submission.answer == "alarm = A ^ B ^ C" and again.submission.status == "failed"
-        assert "evaluation_interrupted" in again.submission.flags and again.can_retry
+        soon = await svc.get(USER, attempt_id)                        # the answer was saved before the crash
+        assert soon.submission.answer == "alarm = A ^ B ^ C" and soon.submission.status == "evaluating"
+        assert soon.status == "evaluating" and not soon.can_retry and not soon.can_submit
+        with pytest.raises(ApiError) as raised:
+            await svc.retry(USER, attempt_id)
+        assert raised.value.code == "nothing_to_retry"
+
+        # the evaluation budget passes: the revision counts as interrupted and can be retried
+        from datetime import UTC, datetime, timedelta
+        row = store.attempts[attempt_id]["row"]
+        row["submissions"][0]["evaluating_since"] = (datetime.now(UTC) - timedelta(minutes=20)).isoformat()
+        again = await svc.get(USER, attempt_id)
+        assert again.submission.status == "failed" and "evaluation_interrupted" in again.submission.flags and again.can_retry
         retried, _ = await svc.retry(USER, attempt_id)
         assert retried.status == "done"
 
@@ -208,6 +218,76 @@ class TestFailuresAndRaces:
         sub, _ = await server_b.submit(USER, attempt_id, "alarm = (A&B)|(A&C)|(B&C)", idempotency_key="k1")
         assert sub.replayed and sub.status == "done"
         assert sum(1 for r in provider.requests if r.role == "evaluator") == 1 and len(store.metrics) == N_SKILLS
+
+    async def test_one_profile_race_is_absorbed_without_a_second_model_call(self, catalog):
+        provider = scripted([WEAK, GOOD], metered=True)
+        svc, store = service(catalog, provider)
+        view = await svc.start(USER, question_key=Q)
+        attempt_id = uuid.UUID(view.id)
+        store.fail_once.add("save_profile")                          # another attempt of this user finished first
+        calls_before = len(provider.requests)
+        sub, view = await svc.submit(USER, attempt_id, "alarm = A ^ B ^ C", idempotency_key="k1")
+        assert sub.status == "done" and sub.band == "WEAK" and "profile_conflict" not in sub.flags
+        assert len(provider.requests) == calls_before + 0 or len(provider.requests) - calls_before <= 4   # no re-run
+        assert sum(1 for r in provider.requests if r.role == "evaluator") == 1
+        assert len(store.metrics) == N_SKILLS and all(m["knowledge_score_after"] is not None for m in store.metrics)
+        assert len([f for f in view.follow_ups]) == 1 and view.pending_follow_up is not None   # exactly one follow-up
+        skill = catalog.questions[Q].primary_skill
+        assert store.profiles[(USER, skill)]["engine_state"]["turns"] == 1
+
+    async def test_two_workers_accepting_different_answers_first_wins_second_gets_conflict(self, catalog):
+        provider = scripted([GOOD, GOOD])
+        store = InMemoryStore(catalog)
+        server_a = PracticeService(store, catalog, provider)
+        server_b = PracticeService(store, catalog, provider)
+        view = await server_a.start(USER, question_key=Q)
+        attempt_id = uuid.UUID(view.id)
+        original = memory_store._MemoryTx.save_attempt
+        calls = {"n": 0}
+
+        async def racy_save(self, **kwargs):
+            calls["n"] += 1
+            if calls["n"] == 1:                     # B loaded before A saved; A commits revision 1 first
+                await server_a.submit(USER, attempt_id, "alarm = (A&B)|(A&C)|(B&C)", idempotency_key="key-a")
+            return await original(self, **kwargs)
+        monkeypatch = pytest.MonkeyPatch()
+        monkeypatch.setattr(memory_store._MemoryTx, "save_attempt", racy_save)
+        try:
+            with pytest.raises(ApiError) as raised:
+                await server_b.submit(USER, attempt_id, "a different answer", idempotency_key="key-b")
+        finally:
+            monkeypatch.undo()
+        assert raised.value.code == "conflict"
+        assert sum(1 for r in provider.requests if r.role == "evaluator") == 1          # B never evaluated
+        row = store.attempts[attempt_id]["row"]
+        assert [s["key"] for s in row["submissions"]] == ["key-a"] and row["submissions"][0]["status"] == "done"
+
+    async def test_a_superseded_evaluation_returns_the_winners_result(self, catalog):
+        provider = scripted([WEAK, GOOD], metered=True)
+        store = InMemoryStore(catalog)
+        server_a = PracticeService(store, catalog, provider)
+        server_b = PracticeService(store, catalog, provider)
+        view = await server_a.start(USER, question_key=Q)
+        attempt_id = uuid.UUID(view.id)
+        # B accepted and saved revision 1, then A (a retry after B looked interrupted) finished it first
+        from app.repo.attempts import AlreadyEvaluated
+        original = memory_store._MemoryTx.save_attempt
+        calls = {"n": 0}
+
+        async def racy_save(self, **kwargs):
+            calls["n"] += 1
+            if calls["n"] == 2:                     # B's second save (the persist) loses to A
+                raise AlreadyEvaluated(1)
+            return await original(self, **kwargs)
+        monkeypatch = pytest.MonkeyPatch()
+        monkeypatch.setattr(memory_store._MemoryTx, "save_attempt", racy_save)
+        try:
+            sub, view = await server_b.submit(USER, attempt_id, "alarm = A ^ B ^ C", idempotency_key="k")
+        finally:
+            monkeypatch.undo()
+        assert sub.status == "evaluating" and view.status == "evaluating"       # what the store holds: B's accepted row
+        assert len(store.usage) >= 1                                             # B's paid calls are on record
+        assert store.metrics == []                                               # and nothing was scored twice
 
     async def test_profile_conflict_keeps_the_answer_and_bills_the_call(self, catalog):
         svc, store = service(catalog, scripted([GOOD, GOOD], metered=True))

@@ -20,6 +20,13 @@ from app.repo import cache
 NOT_COLUMNS = {"band", "check_passed", "submission_revision", "subject_key", "skill_key"}
 
 
+def _same_columns(rows: list[dict]) -> list[dict]:
+    """A multi-row INSERT needs every row to name the same columns; absent ones become NULL.
+    (Plain None is right here: none of these columns is JSON.)"""
+    columns = sorted({key for row in rows for key in row})
+    return [{column: row.get(column) for column in columns} for row in rows]
+
+
 async def _ids(connection: AsyncConnection, table_name: str) -> dict[str, uuid.UUID]:
     async def load():
         table = await db.table(table_name)
@@ -32,7 +39,7 @@ async def record_metrics(connection: AsyncConnection, *, user_id: uuid.UUID, att
     table = await db.table("evaluation_metrics")
     skill_ids = await _ids(connection, "skill")
     columns = set(table.c.keys())
-    written = 0
+    rows = []
     for metric in metrics:
         row = {k: v for k, v in metric.items() if k in columns and k not in NOT_COLUMNS}
         row.update({
@@ -43,24 +50,25 @@ async def record_metrics(connection: AsyncConnection, *, user_id: uuid.UUID, att
         })
         if metric.get("skill_next"):
             row["skill_next_id"] = skill_ids.get(metric["skill_next"])
-        await connection.execute(insert(table).values(**db.sql_values(row)))
-        written += 1
-    return written
+        rows.append(row)
+    if rows:
+        await connection.execute(insert(table), _same_columns(rows))                     # one statement
+    return len(rows)
 
 
 async def record_usage(connection: AsyncConnection, *, user_id: uuid.UUID, attempt_id: uuid.UUID,
                        usage_rows: list[dict]) -> int:
     table = await db.table("usage_event")
-    for row in usage_rows:
-        await connection.execute(insert(table).values(**db.sql_values({"user_id": user_id, "attempt_id": attempt_id, **row})))
+    if usage_rows:
+        await connection.execute(insert(table), _same_columns([{"user_id": user_id, "attempt_id": attempt_id, **row}
+                                                               for row in usage_rows]))
     return len(usage_rows)
 
 
 async def record_tip(connection: AsyncConnection, *, attempt_id: uuid.UUID, tip_key: str, skill_key: str | None,
                      text: str, timing: str = "post_session") -> uuid.UUID | None:
-    tips = await db.table("tips_library")
     delivered = await db.table("delivered_tip")
-    tip_id = (await connection.execute(select(tips.c.id).where(tips.c.key == tip_key))).scalar_one_or_none()
+    tip_id = (await _ids(connection, "tips_library")).get(tip_key)
     if tip_id is None:
         return None
     skill_ids = await _ids(connection, "skill")

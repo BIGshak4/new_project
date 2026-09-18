@@ -443,6 +443,18 @@ class TestRestartRecovery:
         submission.status = EvaluationStatus.EVALUATING
         assert attempt.attempt_row()["answer"]["status"] == "evaluating"
 
+        # a moment later it is still being evaluated (perhaps by another process): not failed, not retryable
+        live = restored(catalog, attempt, states, provider)
+        assert live.main_submission.status == EvaluationStatus.EVALUATING and live.pending_follow_up is None
+        with pytest.raises(PracticeError) as raised:
+            await live.retry_evaluation()
+        assert raised.value.code == "nothing_to_retry"
+        peek = await live.submit("my answer", idempotency_key="k")
+        assert peek.replayed and peek.status == EvaluationStatus.EVALUATING
+
+        # long after the evaluation budget it counts as interrupted and can be retried
+        from datetime import UTC, datetime, timedelta
+        submission.evaluating_since = (datetime.now(UTC) - timedelta(minutes=20)).isoformat()
         again = restored(catalog, attempt, states, provider)
         assert again.main_submission.status == EvaluationStatus.FAILED
         assert "evaluation_interrupted" in again.main_submission.flags

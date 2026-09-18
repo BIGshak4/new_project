@@ -92,7 +92,7 @@ class Provider(Protocol):
 
 # A model call that never returns must not hold a user forever. The SDK has its own timeout;
 # this one also covers the manual provider and anything a future provider might do.
-CALL_TIMEOUT_SECONDS: dict[str, float] = {"evaluator": 120, "generator": 120, "tip": 60, "feedback": 120, "report": 300}
+CALL_TIMEOUT_SECONDS: dict[str, float] = {"evaluator": 90, "generator": 60, "tip": 30, "feedback": 60, "report": 300}
 
 
 async def call(provider: Provider, request: LLMRequest, *, timeout_seconds: float | None = None) -> LLMResponse:

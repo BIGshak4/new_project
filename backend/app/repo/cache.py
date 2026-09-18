@@ -37,8 +37,11 @@ class TTLCache[T]:
 # skill and tip ids never change once loaded; question content changes only on a content load
 ID_MAPS: TTLCache[dict] = TTLCache(seconds=300)
 QUESTIONS: TTLCache[object] = TTLCache(seconds=60)
+# pilot access per user: a new member waits at most this long; a removed member keeps access at most this long
+ACCESS: TTLCache[object] = TTLCache(seconds=120)
 
 
 def clear() -> None:
     ID_MAPS.invalidate()
     QUESTIONS.invalidate()
+    ACCESS.invalidate()

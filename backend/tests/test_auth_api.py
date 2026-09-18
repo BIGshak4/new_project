@@ -136,3 +136,31 @@ class TestHealth:
         body = (await client.get("/health")).json()
         assert body["status"] == "ok" and set(body) >= {"database_configured", "auth_configured", "allowed_origins"}
         assert not any(isinstance(v, str) and "postgres" in v for v in body.values())
+
+
+class TestHardening:
+    async def test_unknown_key_ids_do_not_refetch_the_jwks_every_time(self, client):
+        from tests.authtools import FakeJWKSClient
+        calls = {"n": 0}
+        original = FakeJWKSClient.get_signing_key_from_jwt
+
+        def counting(self, token):
+            calls["n"] += 1
+            return original(self, token)
+        FakeJWKSClient.get_signing_key_from_jwt = counting
+        try:
+            for _ in range(5):
+                _, token = make_token(kid="rotated-away")
+                assert (await client.get("/v1/me", headers=auth(token))).status_code == 401
+        finally:
+            FakeJWKSClient.get_signing_key_from_jwt = original
+        assert calls["n"] == 1                                            # remembered as unknown for a while
+
+    async def test_an_explicitly_unverified_email_is_refused(self, client):
+        _, token = make_token(extra={"user_metadata": {"email_verified": False}})
+        response = await client.get("/v1/me", headers=auth(token))
+        assert response.status_code == 401 and "confirm" in response.json()["error"]["message"]
+
+    def test_production_keeps_the_pilot_gate(self):
+        open_gate = Settings(_env_file=None, env="production", require_pilot_membership=False)
+        assert any("REQUIRE_PILOT_MEMBERSHIP" in p for p in open_gate.production_problems())

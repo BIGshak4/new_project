@@ -15,22 +15,26 @@ one the server generates it and returns it as `submission.key`, so a retry can r
 from __future__ import annotations
 
 import asyncio
+import logging
 import uuid
 from typing import Annotated
 
 from fastapi import APIRouter, Header, Path, status
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from app.api.deps import CurrentAccess, Practice
 from app.api.errors import ApiError
 from app.engine.practice import MAX_ANSWER_CHARS
 from app.schemas.api import AttemptView, HintView, SubmissionView
+from app.services.practice_service import PracticeService
 
 router = APIRouter(prefix="/v1/practice/attempts", tags=["practice"])
 
-# the answer is saved before the model is called, so a request that runs past this returns 503
-# and the client recovers with GET + retry; the model calls have their own per-role deadlines
-SUBMIT_TIMEOUT_SECONDS = 300
+# The answer is saved before the model is called. If the evaluation is not done within this budget the
+# request answers 202 with the attempt in state "evaluating" while the evaluation continues in the
+# background (shielded), and the client polls GET. Model calls have their own per-role deadlines.
+RESPONSE_BUDGET_SECONDS = 120
 
 
 class StartAttemptRequest(BaseModel):
@@ -79,12 +83,31 @@ def _answer(body: SubmitRequest):
     return body.answer if isinstance(body.answer, str) else {"text": body.answer.text}
 
 
-async def _submit(coroutine) -> SubmissionResponse:
+_background: set[asyncio.Task] = set()
+
+
+def _log_outcome(task: asyncio.Task) -> None:
+    _background.discard(task)
+    if not task.cancelled() and task.exception() is not None:
+        logging.getLogger("app.practice").error("background evaluation failed: %r", task.exception())
+
+
+async def _submit(practice: PracticeService, user_id: uuid.UUID, attempt_id: uuid.UUID, coroutine, *, turn: int | None = None):
+    task = asyncio.ensure_future(coroutine)
+    _background.add(task)
+    task.add_done_callback(_log_outcome)
     try:
-        submission, attempt = await asyncio.wait_for(coroutine, timeout=SUBMIT_TIMEOUT_SECONDS)
-    except TimeoutError as exc:
-        raise ApiError("evaluation_unavailable", "the evaluation is taking too long; your answer is saved, "
-                       "reload the attempt and retry the evaluation") from exc
+        submission, attempt = await asyncio.wait_for(asyncio.shield(task), timeout=RESPONSE_BUDGET_SECONDS)
+    except TimeoutError:
+        # still evaluating: report the saved answer as such; the task keeps running to completion
+        attempt = await practice.get(user_id, attempt_id)
+        pending = attempt.submission if turn is None else next(
+            (f.submission for f in attempt.follow_ups if f.turn == turn), None)
+        if pending is None:
+            raise ApiError("evaluation_unavailable", "the evaluation is taking longer than usual; reload the attempt",
+                           status=503) from None
+        body = SubmissionResponse(submission=pending, attempt=attempt)
+        return JSONResponse(body.model_dump(mode="json"), status_code=status.HTTP_202_ACCEPTED)
     return SubmissionResponse(submission=submission, attempt=attempt)
 
 
@@ -116,10 +139,12 @@ async def reveal_reference(attempt_id: AttemptId, access: CurrentAccess, practic
 
 
 @router.post("/{attempt_id}/submissions", response_model=SubmissionResponse, summary="Submit the answer",
-             responses={409: {"description": "conflict / already_submitted"}, 503: {"description": "evaluation_unavailable"}})
+             responses={202: {"description": "accepted, still evaluating: poll GET"}, 409: {"description": "conflict / already_submitted"},
+                        503: {"description": "evaluation_unavailable"}})
 async def submit(attempt_id: AttemptId, body: SubmitRequest, access: CurrentAccess, practice: Practice,
                  idempotency_key: IdempotencyKey = None) -> SubmissionResponse:
-    return await _submit(practice.submit(access.user_id, attempt_id, _answer(body), idempotency_key=_key(idempotency_key, body),
+    return await _submit(practice, access.user_id, attempt_id,
+                         practice.submit(access.user_id, attempt_id, _answer(body), idempotency_key=_key(idempotency_key, body),
                                          latency_ms=body.latency_ms, revision_count=body.revision_count))
 
 
@@ -128,8 +153,9 @@ async def submit(attempt_id: AttemptId, body: SubmitRequest, access: CurrentAcce
              responses={409: {"description": "no_pending_follow_up / conflict"}})
 async def submit_follow_up(attempt_id: AttemptId, turn: Annotated[int, Path(ge=1, le=9)], body: SubmitRequest,
                            access: CurrentAccess, practice: Practice, idempotency_key: IdempotencyKey = None) -> SubmissionResponse:
-    return await _submit(practice.submit(access.user_id, attempt_id, _answer(body), idempotency_key=_key(idempotency_key, body),
-                                         latency_ms=body.latency_ms, follow_up_turn=turn))
+    return await _submit(practice, access.user_id, attempt_id,
+                         practice.submit(access.user_id, attempt_id, _answer(body), idempotency_key=_key(idempotency_key, body),
+                                         latency_ms=body.latency_ms, follow_up_turn=turn), turn=turn)
 
 
 @router.post("/{attempt_id}/submissions/{revision}/retry", response_model=SubmissionResponse,
@@ -143,4 +169,5 @@ async def retry(attempt_id: AttemptId, revision: Annotated[int, Path(ge=1)], acc
     waiting = failed[-1] if failed else None                  # the engine retries the latest failed revision
     if waiting is None or waiting.revision != revision:
         raise ApiError("nothing_to_retry", f"revision {revision} is not waiting for evaluation")
-    return await _submit(practice.retry(access.user_id, attempt_id))
+    return await _submit(practice, access.user_id, attempt_id, practice.retry(access.user_id, attempt_id),
+                         turn=waiting.turn or None)

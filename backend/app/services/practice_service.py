@@ -35,7 +35,7 @@ from app.engine.practice import (
     PracticeOutcome,
 )
 from app.engine.providers import Provider
-from app.repo.attempts import DuplicateSubmissionKey, StoredAttempt
+from app.repo.attempts import AlreadyEvaluated, DuplicateSubmissionKey, StoredAttempt
 from app.repo.profiles import LoadedProfile, StaleProfile
 from app.repo.questions import LoadedQuestion, QuestionDetail, QuestionSummary, detail
 from app.schemas.api import (
@@ -49,7 +49,7 @@ from app.schemas.api import (
     SubmissionView,
     TipView,
 )
-from app.schemas.engine import Evaluation, SkillState
+from app.schemas.engine import Archetype, Band, Evaluation, SkillState
 from app.services.store import Store
 
 log = logging.getLogger("app.practice")
@@ -95,26 +95,32 @@ class PracticeService:
         if mode not in MODES:
             raise ApiError("validation", f"mode must be one of {', '.join(MODES)}")
         language = self._language(language)
-        async with self.store.transaction() as tx:
-            started = await tx.started_today(user_id)
-            if started >= self.config.daily_attempt_limit:
-                raise ApiError("usage_limit", f"you have started {started} attempts today; the daily limit is "
-                                              f"{self.config.daily_attempt_limit}. Come back tomorrow.")
-            loaded = await tx.load_question(key=question_key, question_id=question_id)
-            if loaded is None:
-                raise ApiError("not_found", "this question does not exist or is not available")
-            profile = await tx.load_profile(user_id)
-            seniority = await tx.user_seniority(user_id) or "student"
-            ctx = self._context(seniority, language)
+        for _try in range(2):                                        # a profile race (two tabs) is redone once
             try:
-                attempt = PracticeAttempt(ctx, loaded.question, profile.states, mode=mode, familiarity="new",
-                                          self_confidence=self_confidence)
-            except PracticeError as exc:
-                raise ApiError(exc.code, str(exc)) from exc
-            row = attempt.attempt_row()
-            await tx.save_attempt(user_id=user_id, question_id=loaded.id, row=row)
-            await tx.save_profile(profile, {attempt.question.primary_skill: profile.states[attempt.question.primary_skill]},
-                                  attempt_id=attempt.attempt_id_uuid)
+                async with self.store.transaction() as tx:
+                    started = await tx.started_today(user_id)
+                    if started >= self.config.daily_attempt_limit:
+                        raise ApiError("usage_limit", f"you have started {started} attempts today; the daily limit is "
+                                                      f"{self.config.daily_attempt_limit}. Come back tomorrow.")
+                    loaded = await tx.load_question(key=question_key, question_id=question_id)
+                    if loaded is None:
+                        raise ApiError("not_found", "this question does not exist or is not available")
+                    profile = await tx.load_profile(user_id)
+                    seniority = await tx.user_seniority(user_id) or "student"
+                    ctx = self._context(seniority, language)
+                    try:
+                        attempt = PracticeAttempt(ctx, loaded.question, profile.states, mode=mode, familiarity="new",
+                                                  self_confidence=self_confidence)
+                    except PracticeError as exc:
+                        raise ApiError(exc.code, str(exc)) from exc
+                    row = attempt.attempt_row()
+                    await tx.save_attempt(user_id=user_id, question_id=loaded.id, row=row, revisions=set())
+                    await tx.save_profile(profile, self._primary_state(attempt, profile), attempt_id=attempt.attempt_id_uuid)
+                break
+            except StaleProfile:
+                continue
+        else:
+            raise ApiError("conflict", "your profile was updated by another request; try again")
         stored = StoredAttempt(id=attempt.attempt_id_uuid, user_id=user_id, question_id=loaded.id,
                                question_key=loaded.question.key, started_at=_now(), row=row)
         return self._view(attempt, stored, loaded, language)
@@ -125,12 +131,21 @@ class PracticeService:
 
     async def next_hint(self, user_id: uuid.UUID, attempt_id: uuid.UUID) -> tuple[HintView | None, AttemptView]:
         async with self._lock(attempt_id):
-            attempt, stored, loaded, profile = await self._load(user_id, attempt_id)
-            result = attempt.next_hint()
-            if result is not None:
-                async with self.store.transaction() as tx:
-                    await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row())
-                    await tx.save_profile(profile, self._primary_state(attempt, profile), attempt_id=attempt_id)
+            for _try in range(2):
+                attempt, stored, loaded, profile = await self._load(user_id, attempt_id)
+                result = attempt.next_hint()
+                if result is None:
+                    break
+                try:
+                    async with self.store.transaction() as tx:
+                        await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
+                                              revisions=set())
+                        await tx.save_profile(profile, self._primary_state(attempt, profile), attempt_id=attempt_id)
+                    break
+                except StaleProfile:
+                    continue
+            else:
+                raise ApiError("conflict", "your profile was updated by another request; try again")
             hint = HintView(level=result[0], text=result[1]) if result else None
             return hint, self._view(attempt, stored, loaded, stored.row["practice_language"])
 
@@ -141,7 +156,8 @@ class PracticeService:
             text = attempt.reveal_reference()
             if not was_revealed:
                 async with self.store.transaction() as tx:
-                    await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row())
+                    await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
+                                          revisions=set())
             return text, self._view(attempt, stored, loaded, stored.row["practice_language"])
 
     async def submit(self, user_id: uuid.UUID, attempt_id: uuid.UUID, answer, *, idempotency_key: str | None,
@@ -163,21 +179,29 @@ class PracticeService:
                 return self._submission_view(replay.submission, replay), self._view(attempt, stored, loaded, language)
 
             # 1. the answer is durable before any model call
+            known = len(stored.row["submissions"])
             try:
                 async with self.store.transaction() as tx:
-                    await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row())
+                    await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
+                                          revisions={submission.revision}, known_revisions=known)
             except DuplicateSubmissionKey:
-                # another process accepted this key first: answer with what it stored
+                # another process accepted a revision first: answer with what it stored, or say so
                 attempt, stored, loaded, profile = await self._load(user_id, attempt_id)
-                existing = next(s for s in attempt.submissions if s.key == idempotency_key)
-                replay = attempt._replay(existing, answer)
+                if not any(s.key == idempotency_key for s in attempt.submissions):
+                    raise ApiError("conflict", "another answer was accepted on this attempt a moment ago; "
+                                              "reload the attempt") from None
+                try:
+                    existing, replay = await attempt.accept(answer, idempotency_key=idempotency_key,
+                                                            follow_up=follow_up_turn is not None)
+                except PracticeError as exc:
+                    raise ApiError(exc.code, str(exc)) from exc
                 return self._submission_view(existing, replay), self._view(attempt, stored, loaded, language)
 
             # 2. evaluate: model calls happen here, with no transaction open
             outcome = await attempt.evaluate(submission, latency_ms=latency_ms, revision_count=revision_count)
 
             # 3. everything the evaluation produced, in one transaction
-            await self._persist_outcome(user_id, attempt, stored, profile, outcome)
+            attempt, stored, loaded, outcome = await self._persist_outcome(user_id, attempt, stored, loaded, profile, outcome)
             return self._submission_view(outcome.submission, outcome), self._view(attempt, stored, loaded, language)
 
     async def retry(self, user_id: uuid.UUID, attempt_id: uuid.UUID) -> tuple[SubmissionView, AttemptView]:
@@ -187,40 +211,109 @@ class PracticeService:
                 outcome = await attempt.retry_evaluation()
             except PracticeError as exc:
                 raise ApiError(exc.code, str(exc)) from exc
-            await self._persist_outcome(user_id, attempt, stored, profile, outcome)
+            attempt, stored, loaded, outcome = await self._persist_outcome(user_id, attempt, stored, loaded, profile, outcome)
             return self._submission_view(outcome.submission, outcome), self._view(attempt, stored, loaded,
                                                                                     stored.row["practice_language"])
 
     async def _persist_outcome(self, user_id: uuid.UUID, attempt: PracticeAttempt, stored: StoredAttempt,
-                               profile: LoadedProfile, outcome: PracticeOutcome) -> None:
-        seniority = None
-        try:
-            async with self.store.transaction() as tx:
-                if outcome.status == EvaluationStatus.DONE:
-                    seniority = await tx.user_seniority(user_id)
-                    await tx.save_profile(profile, self._touched_states(attempt, outcome), attempt_id=attempt.attempt_id_uuid)
-                    await tx.record_metrics(user_id=user_id, attempt_id=attempt.attempt_id_uuid, metrics=outcome.metrics,
-                                            seniority=seniority)
-                    if outcome.tip_key and outcome.tip_text:
-                        await tx.record_tip(attempt_id=attempt.attempt_id_uuid, tip_key=outcome.tip_key,
-                                            skill_key=attempt.question.primary_skill, text=outcome.tip_text)
-                if outcome.usage:
-                    await tx.record_usage(user_id=user_id, attempt_id=attempt.attempt_id_uuid,
-                                          usage_rows=[u.as_row(attempt.mode) for u in outcome.usage])
-                await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row())
-        except StaleProfile as exc:
-            # the profile moved under us (another attempt of the same user finished first). The answer is kept,
-            # the evaluation is marked failed so a retry can score it against the fresh profile.
-            log.warning("profile conflict on attempt %s skill %s", attempt.attempt_id, exc)
-            submission = outcome.submission
-            submission.status = EvaluationStatus.FAILED
-            submission.flags = [*submission.flags, "profile_conflict"]
-            outcome.flags = list(submission.flags)
-            async with self.store.transaction() as tx:
-                if outcome.usage:
-                    await tx.record_usage(user_id=user_id, attempt_id=attempt.attempt_id_uuid,
-                                          usage_rows=[u.as_row(attempt.mode) for u in outcome.usage])
-                await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row())
+                               loaded: LoadedQuestion, profile: LoadedProfile, outcome: PracticeOutcome
+                               ) -> tuple[PracticeAttempt, StoredAttempt, LoadedQuestion, PracticeOutcome]:
+        """Write everything one evaluation produced, in one transaction.
+
+        Two races are handled without a second model call: if the skill profile moved meanwhile
+        (another attempt of the same user finished first), the scores are re-applied on top of the
+        fresh profile; if another process finished evaluating this very revision first, its stored
+        result is returned instead of ours.
+        """
+        changed = {outcome.submission.revision}
+        for _try in range(2):
+            try:
+                async with self.store.transaction() as tx:
+                    if outcome.status == EvaluationStatus.DONE:
+                        await tx.save_profile(profile, self._touched_states(attempt, outcome), attempt_id=attempt.attempt_id_uuid)
+                        await tx.record_metrics(user_id=user_id, attempt_id=attempt.attempt_id_uuid, metrics=outcome.metrics,
+                                                seniority=profile.seniority)
+                        if outcome.tip_key and outcome.tip_text:
+                            await tx.record_tip(attempt_id=attempt.attempt_id_uuid, tip_key=outcome.tip_key,
+                                                skill_key=attempt.question.primary_skill, text=outcome.tip_text)
+                    if outcome.usage:
+                        await tx.record_usage(user_id=user_id, attempt_id=attempt.attempt_id_uuid,
+                                              usage_rows=[u.as_row(attempt.mode) for u in outcome.usage])
+                    await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
+                                          revisions=changed, known_revisions=len(attempt.submissions))
+                return attempt, stored, loaded, outcome
+            except StaleProfile as exc:
+                log.warning("profile moved during attempt %s (%s): re-applying the scores", attempt.attempt_id, exc)
+                async with self.store.transaction() as tx:
+                    fresh = await tx.load_profile(user_id)
+                fresh.seniority = profile.seniority
+                self._rescore(attempt, outcome, fresh)
+                profile = fresh
+            except AlreadyEvaluated:
+                log.warning("revision %s of attempt %s was evaluated elsewhere first; replaying it",
+                            outcome.submission.revision, attempt.attempt_id)
+                if outcome.usage:                                    # our model calls still happened and cost money
+                    async with self.store.transaction() as tx:
+                        await tx.record_usage(user_id=user_id, attempt_id=attempt.attempt_id_uuid,
+                                              usage_rows=[u.as_row(attempt.mode) for u in outcome.usage])
+                attempt, stored, loaded, _ = await self._load(user_id, attempt.attempt_id_uuid)
+                theirs = next(s for s in attempt.submissions if s.revision == outcome.submission.revision)
+                return attempt, stored, loaded, attempt._outcome_from(theirs)
+
+        # the profile keeps moving: keep the answer, undo this run's side effects, let a retry score it
+        log.error("profile conflict twice on attempt %s; leaving the evaluation for retry", attempt.attempt_id)
+        submission = outcome.submission
+        self._undo_follow_up(attempt, outcome)
+        submission.status = EvaluationStatus.FAILED
+        submission.evaluating_since = None
+        submission.flags = [*submission.flags, "profile_conflict"]
+        submission.follow_up = None
+        outcome.flags = list(submission.flags)
+        async with self.store.transaction() as tx:
+            if outcome.usage:
+                await tx.record_usage(user_id=user_id, attempt_id=attempt.attempt_id_uuid,
+                                      usage_rows=[u.as_row(attempt.mode) for u in outcome.usage])
+            await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
+                                  revisions=changed, known_revisions=len(attempt.submissions))
+        return attempt, stored, loaded, outcome
+
+    def _rescore(self, attempt: PracticeAttempt, outcome: PracticeOutcome, fresh: LoadedProfile) -> None:
+        """Re-apply one evaluation's scores on top of a profile that moved (pure functions, no model call)."""
+        ctx, params, evaluation = attempt.ctx, attempt.ctx.params, outcome.evaluation
+        old_states, attempt.skill_states = attempt.skill_states, fresh.states
+        core = bool(set(evaluation.misconceptions) & attempt.question.core_misconception_keys)
+        for m in outcome.metrics:
+            state = attempt._state(m["skill_key"])
+            update = scores.update_scores(
+                k_old=state.k, c_old=state.c, evaluation=evaluation, difficulty=m["difficulty_asked"],
+                difficulty_ceiling=ctx.difficulty_ceiling, turns_on_skill=state.turns, hint_level=m["hint_level"],
+                latency_ms=m["response_latency_ms"], revision_count=m["revision_count"], weight=m["evidence_weight"],
+                params=params)
+            state.k, state.c = update.k_after, update.c_after
+            scores.record_turn(state, difficulty=m["difficulty_asked"], band=Band(m["band"]), evaluation=evaluation,
+                               hint_level=m["hint_level"], weight=m["evidence_weight"], core_misconception=core,
+                               archetype=Archetype(m["question_archetype"]), params=params)
+            m.update(knowledge_score_before=update.k_before, knowledge_score_after=update.k_after,
+                     confidence_score_before=update.c_before, confidence_score_after=update.c_after,
+                     provisional_level_after=state.provisional_level)
+        # this attempt's controller decisions (status, budget, hint level) belong to this attempt
+        primary = attempt.question.primary_skill
+        if primary in old_states:
+            new_primary, old_primary = attempt._state(primary), old_states[primary]
+            for name in ("status", "budget", "current_difficulty", "hint_level", "partial_count",
+                         "level3_hint_difficulty", "resolved_reason"):
+                setattr(new_primary, name, getattr(old_primary, name))
+
+    @staticmethod
+    def _undo_follow_up(attempt: PracticeAttempt, outcome: PracticeOutcome) -> None:
+        """Drop the follow-up turn (and its hint exposure) this evaluation appended, so a retry can create them anew."""
+        if not outcome.follow_up or not attempt.follow_up_turns:
+            return
+        last = attempt.follow_up_turns[-1]
+        if last.get("submission_revision") is None and last.get("question") == outcome.follow_up:
+            attempt.follow_up_turns.pop()
+            if last.get("action") == "hint" and attempt.exposures and attempt.exposures[-1].kind == "hint":
+                attempt.exposures.pop()
 
     # ------------------------------------------------------------------ progress
 
@@ -265,10 +358,12 @@ class PracticeService:
         """One action at a time per attempt. The lock is forgotten once nobody holds or waits for it,
         so the table does not grow with every attempt the process has ever seen."""
         lock = self._locks.setdefault(attempt_id, asyncio.Lock())
-        async with lock:
-            yield
-        if not lock.locked() and not getattr(lock, "_waiters", None) and self._locks.get(attempt_id) is lock:
-            del self._locks[attempt_id]
+        try:
+            async with lock:
+                yield
+        finally:
+            if not lock.locked() and not getattr(lock, "_waiters", None) and self._locks.get(attempt_id) is lock:
+                del self._locks[attempt_id]
 
     def _plan(self, seniority: str) -> tuple[dict[str, int], dict[str, float], int]:
         if seniority not in self._plans:
@@ -303,6 +398,7 @@ class PracticeService:
                 raise ApiError("not_found", "the question of this attempt is no longer available")
             profile = await tx.load_profile(user_id)
             seniority = await tx.user_seniority(user_id) or "student"
+        profile.seniority = seniority
         ctx = self._context(seniority, stored.row["practice_language"])
         attempt = PracticeAttempt.restore(ctx, loaded.question, profile.states, stored.row)
         return attempt, stored, loaded, profile
@@ -329,7 +425,8 @@ class PracticeService:
                               detail=submission.check.get("detail", ""))
         return SubmissionView(
             revision=submission.revision, key=submission.key, turn=submission.turn, answer=submission.answer,
-            status=submission.status.value, accepted_at=submission.accepted_at, evaluated_at=submission.evaluated_at,
+            status="evaluating" if submission.status == EvaluationStatus.PENDING else submission.status.value,
+            accepted_at=submission.accepted_at, evaluated_at=submission.evaluated_at,
             band=submission.band.value if submission.band else None,
             summary=evaluation.one_line_summary if evaluation else None,
             key_points_hit=list(evaluation.key_points_hit) if evaluation else [],
@@ -351,7 +448,10 @@ class PracticeService:
                                            submission=self._submission_view(sub) if sub else None))
         pending = attempt.pending_follow_up
         pending_view = next((f for f in follow_ups if f.turn == pending["turn"]), None) if pending else None
-        if main is None:
+        latest_any = attempt.submissions[-1] if attempt.submissions else None
+        if latest_any is not None and latest_any.status in (EvaluationStatus.PENDING, EvaluationStatus.EVALUATING):
+            status = "evaluating"                    # main or follow-up: something is being scored right now
+        elif main is None:
             status = "in_progress"
         elif main.status == EvaluationStatus.DONE:
             status = "in_progress" if pending is not None else "done"

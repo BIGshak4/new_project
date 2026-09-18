@@ -10,7 +10,7 @@ from __future__ import annotations
 import uuid
 from dataclasses import dataclass
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncConnection
@@ -34,20 +34,17 @@ async def resolve_access(connection: AsyncConnection, user: AuthenticatedUser) -
     is_member, can_manage = False, False
     if user.email:
         row = (await connection.execute(
-            select(members.c.can_manage_tasks).where(members.c.email == user.email.lower()))).first()
+            select(members.c.can_manage_tasks).where(func.lower(members.c.email) == user.email.lower()))).first()
         if row is not None:
             is_member, can_manage = True, bool(row.can_manage_tasks)
-    savepoint = await connection.begin_nested()
     try:
         result = await connection.execute(
             insert(profiles).values(id=user.id, display_name=(user.display_name or "")[:120] or None)
             .on_conflict_do_nothing(index_elements=["id"]).returning(profiles.c.id))
         created = result.first() is not None
     except IntegrityError as exc:
-        # a token for an account that no longer exists in Auth (deleted, token not yet expired)
-        await savepoint.rollback()
+        # a token for an account that no longer exists in Auth (deleted, token not yet expired).
+        # The caller's transaction is dedicated to this lookup, so it may simply fail.
         raise ApiError("unauthenticated", "this account no longer exists; sign in again") from exc
-    else:
-        await savepoint.commit()
     return Access(user_id=user.id, email=user.email, is_member=is_member, can_manage_tasks=can_manage,
                   profile_created=created)

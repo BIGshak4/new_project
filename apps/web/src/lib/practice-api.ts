@@ -52,7 +52,7 @@ export type Card = {
 };
 export type Tip = { key: string; text: string };
 
-export type SubmissionStatus = "pending" | "evaluating" | "done" | "failed";
+export type SubmissionStatus = "evaluating" | "done" | "failed";
 export type Band = "STRONG" | "PARTIAL" | "WEAK";
 
 export type Submission = {
@@ -278,5 +278,20 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
     /** After a submission with status "failed": evaluate the saved answer again. */
     retry: (attemptId: string, revision: number) =>
       call<SubmissionResponse>("POST", `/v1/practice/attempts/${attemptId}/submissions/${revision}/retry`),
+
+    /**
+     * submit/submitFollowUp/retry answer 202 with status "evaluating" when the model takes longer than
+     * the server's response budget (about two minutes); the evaluation continues on the server. Poll
+     * with this until the attempt leaves "evaluating". Resolves with the latest attempt view.
+     */
+    waitForEvaluation: async (attemptId: string, opts: { intervalMs?: number; timeoutMs?: number } = {}) => {
+      const interval = opts.intervalMs ?? 3000;
+      const deadline = Date.now() + (opts.timeoutMs ?? 10 * 60 * 1000);
+      for (;;) {
+        const attempt = await call<Attempt>("GET", `/v1/practice/attempts/${attemptId}`);
+        if (attempt.status !== "evaluating" || Date.now() > deadline) return attempt;
+        await new Promise((resolve) => setTimeout(resolve, interval));
+      }
+    },
   };
 }

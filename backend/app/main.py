@@ -48,6 +48,8 @@ async def lifespan(app: FastAPI):
         app.state.verifier = TokenVerifier(supabase_url=settings.supabase_url, jwt_secret=settings.supabase_jwt_secret)
     if not hasattr(app.state, "runtime"):
         app.state.runtime = build_runtime(settings)
+        if app.state.runtime.store_kind == "database":
+            await db.get_metadata()                       # reflect the schema now, not on the first user's request
         log.info("runtime: provider=%s store=%s questions=%d", settings.llm_provider, app.state.runtime.store_kind,
                  len(app.state.runtime.catalog.questions))
     yield

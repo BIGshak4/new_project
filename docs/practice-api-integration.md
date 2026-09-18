@@ -37,7 +37,8 @@ The backend verifies the signature against the project's JWKS, plus issuer, audi
 | 409 | `conflict`, `already_submitted`, `no_pending_follow_up`, `nothing_to_retry` | see §4 |
 | 422 | `validation` | bad input; `error.details` lists the fields |
 | 429 | `usage_limit` | daily attempt limit; the message says when to come back |
-| 503 | `evaluation_unavailable` | the evaluation took too long; the answer is saved, `GET` the attempt and retry |
+| 202 | — | the answer is saved and **still being evaluated** (slow model); the body has the same shape with `submission.status = "evaluating"`. Poll `GET` the attempt (the client's `waitForEvaluation`) until `attempt.status` leaves `evaluating` |
+| 503 | `evaluation_unavailable` | the evaluation could not be reported; the answer is saved, `GET` the attempt and retry |
 | 500 | `internal` | our bug; `error.request_id` for the logs |
 
 Every error body is `{"error": {"code": "...", "message": "..."}}`. Every response carries `X-Request-Id`.
@@ -58,12 +59,12 @@ GET  /v1/practice/attempts/{id}               → AttemptView (everything needed
 GET  /v1/me/progress                          → skills (level, status, trend), recent attempts, attempts_today
 ```
 
-`AttemptView.status` is `in_progress` | `evaluating` | `done` | `failed`; `can_submit`, `can_retry`, `hints_remaining`, `pending_follow_up` tell the UI what to show. `SubmissionView` has `band` (STRONG/PARTIAL/WEAK), `summary`, `key_points_hit/missed`, `check` (the automatic check, when the question has one), `card` (the four-part feedback), `tip`, `follow_up` (the next question, if any), `evidence` (`full` | `reduced` | `none`) and `flags`.
+`AttemptView.status` is `in_progress` | `evaluating` | `done` | `failed` (`evaluating` = a revision is being scored right now, possibly on another server); `can_submit`, `can_retry`, `hints_remaining`, `pending_follow_up` tell the UI what to show. `SubmissionView` has `band` (STRONG/PARTIAL/WEAK), `summary`, `key_points_hit/missed`, `check` (the automatic check, when the question has one), `card` (the four-part feedback), `tip`, `follow_up` (the next question, if any), `evidence` (`full` | `reduced` | `none`) and `flags`.
 
 ## 4. Rules the UI must respect
 
 1. **Generate an `Idempotency-Key` (uuid) per submit click and reuse it on retry.** A resend with the same key returns the same result with `replayed: true` and costs nothing. The same key with a different text is a 409 `conflict`. If you send none, the server generates one and returns it in `submission.key`.
-2. **Submit is synchronous** (typically 5–30 s with the real model). Show a waiting state; do not re-submit. If the request fails at the network level, `GET` the attempt: the answer is already saved. A `failed` status means the model was unavailable; offer "try again" → `retry`.
+2. **Submit waits for the result** (typically 5–30 s with the real model). Show a waiting state; do not re-submit. If it takes longer than ~2 minutes the response is **202** with `status: "evaluating"` and the evaluation continues on the server: poll `GET` (`api.waitForEvaluation(id)`) until the status changes. If the request fails at the network level, `GET` the attempt: the answer is already saved. A `failed` status means the model was unavailable; offer "try again" → `retry`. While a revision is `evaluating`, `retry` and a second submit are refused (409).
 3. **After the main answer, only follow-ups.** A second main answer is 409 `already_submitted`; the user starts a new attempt for the same question. Answer the follow-up whose `turn` is in `pending_follow_up`; anything else is 409 `no_pending_follow_up`.
 4. **Refresh = `GET` the attempt.** Never re-post. The view contains the hints shown, the reference if revealed, the submission with its card, and the pending follow-up.
 5. **The question detail never contains the answer.** Hints come one at a time from `/hints/next`; the reference from `/reference`. Direct reads of `question.reference_solution` / `hints` from the browser should be removed (review finding R6); `question` stays readable for browsing, but the practice page should use these routes.

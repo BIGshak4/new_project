@@ -10,13 +10,16 @@ from app import db
 from app.api.errors import ApiError
 from app.auth import AuthenticatedUser, current_user
 from app.config import get_settings
+from app.repo import cache
 from app.repo.users import Access, resolve_access
 from app.services.practice_service import PracticeService
 
 
 async def _db_access(user: AuthenticatedUser) -> Access:
-    async with db.get_engine().begin() as connection:
-        return await resolve_access(connection, user)
+    async def load() -> Access:
+        async with db.get_engine().begin() as connection:
+            return await resolve_access(connection, user)
+    return await cache.ACCESS.get((user.id, user.email), load)
 
 
 async def _memory_access(user: AuthenticatedUser) -> Access:

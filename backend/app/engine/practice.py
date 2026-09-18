@@ -56,6 +56,9 @@ from app.schemas.engine import (
 
 MAX_FOLLOW_UPS = 2
 MAX_ANSWER_CHARS = 20_000
+# a revision still pending/evaluating after this long was interrupted (crash, lost worker) and may be retried;
+# younger ones are being evaluated right now, possibly by another process
+EVALUATION_BUDGET_SECONDS = 600
 
 
 class PracticeError(Exception):
@@ -93,6 +96,7 @@ class Submission(BaseModel):
     status: EvaluationStatus = EvaluationStatus.PENDING
     attempts: int = 0
     accepted_at: str
+    evaluating_since: str | None = None        # set when an evaluation starts; cleared when it ends
     evaluated_at: str | None = None
     band: Band | None = None
     evaluation: dict | None = None
@@ -230,11 +234,19 @@ class PracticeAttempt:
         if self.follow_up_turns:
             self._follow_up_difficulty = self.follow_up_turns[-1].get("difficulty") or question.difficulty
         for submission in self.submissions:
-            if submission.status in (EvaluationStatus.PENDING, EvaluationStatus.EVALUATING):
+            if submission.status in (EvaluationStatus.PENDING, EvaluationStatus.EVALUATING) and self._interrupted(submission):
                 submission.status = EvaluationStatus.FAILED
+                submission.evaluating_since = None
                 submission.flags = [*submission.flags, "evaluation_interrupted"]
             self._outcomes[submission.revision] = self._outcome_from(submission)
         return self
+
+    @staticmethod
+    def _interrupted(submission: Submission, *, now: datetime | None = None) -> bool:
+        """A pending revision older than the evaluation budget was abandoned; a younger one is in flight."""
+        started = submission.evaluating_since or submission.accepted_at
+        age = (now or datetime.now(UTC)) - datetime.fromisoformat(started)
+        return age.total_seconds() > EVALUATION_BUDGET_SECONDS
 
     @staticmethod
     def _outcome_from(submission: Submission) -> PracticeOutcome:
@@ -403,6 +415,8 @@ class PracticeAttempt:
         async with self._lock:
             if submission.status == EvaluationStatus.DONE:
                 return self._replay(submission, submission.answer)
+            if submission.status == EvaluationStatus.EVALUATING and not self._interrupted(submission):
+                return self._replay(submission, submission.answer)          # in flight elsewhere: report, do not repeat
             return await self._evaluate(submission, latency_ms=latency_ms, revision_count=revision_count)
 
     async def retry_evaluation(self) -> PracticeOutcome:
@@ -453,6 +467,7 @@ class PracticeAttempt:
         is_follow_up = submission.turn > 0
         usage: list[UsageEvent] = []
         submission.status = EvaluationStatus.EVALUATING
+        submission.evaluating_since = _now()
         submission.attempts += 1
         if latency_ms is not None and latency_ms < 0:
             latency_ms = None
@@ -484,6 +499,7 @@ class PracticeAttempt:
         submission.check = check.model_dump(mode="json") if check else None
         if not result.ok:
             submission.status = EvaluationStatus.FAILED
+            submission.evaluating_since = None
             submission.flags = flags + ["saved_without_evaluation"]
             outcome = PracticeOutcome(submission, None, None, check, 0.0, None, None, None, None, None,
                                       usage=usage, flags=submission.flags)
@@ -494,6 +510,7 @@ class PracticeAttempt:
                                                 usage, is_follow_up=is_follow_up)
         outcome.flags = list(dict.fromkeys([*flags, *outcome.flags]))
         submission.status = EvaluationStatus.DONE
+        submission.evaluating_since = None
         submission.evaluated_at = _now()
         submission.band = outcome.band
         submission.evaluation = outcome.evaluation.model_dump()

@@ -296,3 +296,44 @@ class TestOpenApi:
         schemas = spec["components"]["schemas"]
         assert "AttemptView" in schemas and "SubmissionView" in schemas and "ProgressView" in schemas
         assert "evaluation" not in schemas["SubmissionView"]["properties"]
+
+
+class TestSlowEvaluations:
+    async def test_a_slow_evaluation_answers_202_and_finishes_in_the_background(self, client, user, catalog, monkeypatch):
+        import asyncio as _asyncio
+
+        from app.api.v1 import practice as practice_routes
+        from app.engine.providers import ScriptedProvider
+
+        class Slow(ScriptedProvider):
+            async def complete(self, request):
+                if request.role == "evaluator":
+                    await _asyncio.sleep(0.6)
+                return await super().complete(request)
+
+        app.state.runtime = runtime_with(catalog, Slow(lambda r: {"evaluator": GOOD, "generator": {
+            "question_text": "follow?", "question_archetype": "design", "expected_answer_outline": "x", "rubric_focus": []},
+            "feedback": {"what_happened": "w", "why_it_matters": "y", "next_step": "n", "your_reasoning_vs_reference": "c"},
+            "tip": "t"}[r.role]))
+        monkeypatch.setattr(practice_routes, "RESPONSE_BUDGET_SECONDS", 0.2)
+        _, h = user
+        aid = (await start(client, h))["id"]
+        response = await client.post(f"{BASE}/{aid}/submissions", json={"answer": "alarm = (A&B)|(A&C)|(B&C)"},
+                                     headers={**h, "Idempotency-Key": "slow-1"})
+        assert response.status_code == 202, response.text
+        body = response.json()
+        assert body["submission"]["status"] == "evaluating" and body["attempt"]["status"] == "evaluating"
+        assert not body["attempt"]["can_retry"] and not body["attempt"]["can_submit"]
+
+        retry = await client.post(f"{BASE}/{aid}/submissions/1/retry", headers=h)
+        assert retry.status_code == 409                                  # nothing to retry while it runs
+
+        for _ in range(30):                                              # the client polls
+            view = (await client.get(f"{BASE}/{aid}", headers=h)).json()
+            if view["status"] != "evaluating":
+                break
+            await _asyncio.sleep(0.1)
+        assert view["submission"]["status"] == "done" and view["submission"]["band"] == "STRONG"
+        replay = await client.post(f"{BASE}/{aid}/submissions", json={"answer": "alarm = (A&B)|(A&C)|(B&C)"},
+                                   headers={**h, "Idempotency-Key": "slow-1"})
+        assert replay.status_code == 200 and replay.json()["submission"]["replayed"] is True
