@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 
 from pydantic import BaseModel
 
-from app.engine import i18n
+from app.engine import i18n, providers
 from app.engine.evaluator import neutralize
 from app.engine.providers import LLMError, LLMRequest, LLMUsage, Provider
 from app.schemas.bank import BankQuestion
@@ -111,7 +111,7 @@ async def build_card(provider: Provider | None, *, question: BankQuestion, evalu
     request = LLMRequest(role="feedback", system=[i18n.stable_system_block("feedback", language, glossary), context],
                          user=user, schema=FeedbackCard, prompt_version=i18n.prompt_version("feedback"))
     try:
-        response = await provider.complete(request)
+        response = await providers.call(provider, request)
     except LLMError:
         return FeedbackResult(plain, source="fallback")
     return FeedbackResult(response.parsed, source="generated", usage=response.usage, model=response.model,

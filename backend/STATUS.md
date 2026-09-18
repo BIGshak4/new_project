@@ -3,7 +3,7 @@
 A living summary of what exists in `backend/`, how it was verified, what was decided, and what is next.
 Updated at the end of every build step. Newest changes are at the bottom of the changelog.
 
-**Last updated:** 2026-09-18 (after step 3) · **Tests:** 328 passing · **Latest commit:** `18bfaa2`
+**Last updated:** 2026-09-18 (after step 4a) · **Tests:** 370 passing · **Latest commit:** see changelog
 
 ---
 
@@ -22,7 +22,8 @@ Harel's Next.js apps (`apps/web`, `apps/tasks`) are the face of the product. The
 | 1 | Database schema in Supabase: 30 tables, row-level security, indexes, structural seed | `d7744f9` | Done, live |
 | 2 | The engine, seeds, terminal practice tool, seed loader, FastAPI shell | `40dd1c8` | Done |
 | 3 | Harel's 30 questions enriched for the engine (skills, rubrics, hints, errors, checks) | `18bfaa2` | Done, files only |
-| 4 | API and WebSocket so the web app can call the engine | | Next |
+| 4a | Engine hardening for real-world use, from Harel's review (`docs/backend-review-for-shaked.md`, R1–R5) | | Done |
+| 4b | HTTP API per the contract in `docs/backend-frontend-integration-readiness.md` | | Next |
 | 5 | Connect `apps/web` to the API (with Harel) | | |
 
 ---
@@ -40,12 +41,12 @@ Harel's Next.js apps (`apps/web`, `apps/tasks`) are the face of the product. The
 | `skill_controller.py` | Layer 1: escalate / hold / hint / step back / resolve (full transition table) | §3 |
 | `subject_router.py` | Layer 2: subject status, next subject and skill, entry difficulty, rebalancing, fatigue and ending overrides, bridges, hard clock stop | §4 |
 | `session.py` | One simulation turn end to end, no I/O | §4.9 |
-| `practice.py` | One deep or quick practice question end to end: hints, reveal, submit, follow-ups, feedback, tip | §1.1, §6.6 |
+| `practice.py` | One deep or quick practice question end to end: hints, reveal, submit, follow-ups, feedback, tip. Answers are accepted as immutable revisions with idempotency keys, evaluated with their own status, scored exactly once, and restorable after a restart | §1.1, §6.6 |
 | `plan_router.py` | Across days: next activity with a plain-language reason, weekly plan, retention checks, diagnostic | §4.11 |
 | `scorecards.py` | Role/company/overall fit with core-gap caps, profile roll-up, target fit | Data_Models §7 |
 | `bank.py` | Bank-first question selection, coverage per skill | §1.2 |
 | `catalog.py` | Loads and validates every seed file together | Data_Models §12 |
-| `providers.py` | `ScriptedProvider` (tests), `ManualProvider` (request/reply files, no key), `AnthropicProvider` (Opus 5) | Build guide §7 |
+| `providers.py` | `ScriptedProvider` (tests), `ManualProvider` (request/reply files, no key), `AnthropicProvider` (Opus 5); `call()` puts a per-role deadline on every model call | Build guide §7 |
 | `evaluator.py`, `generator.py`, `tips.py`, `feedback.py`, `reporter.py` | The model-facing roles, each with a fallback if the call fails | §2.3, §5, §6, §7 |
 | `i18n.py` + `prompts/` | Versioned prompt per role; Hebrew and English language blocks; glossary injection | Data_Models §17 |
 
@@ -75,13 +76,14 @@ Harel's Next.js apps (`apps/web`, `apps/tasks`) are the face of the product. The
 
 ## 4. How it was verified
 
-- **328 tests**, about 3 seconds, no network. They are built from the worked examples in the specs: the §6.3 merge table, every row of the §3.3 transition table, the §4.5 entry-difficulty cases, the fit caps, the roll-up weights.
+- **370 tests**, about 4 seconds, no network. They are built from the worked examples in the specs: the §6.3 merge table, every row of the §3.3 transition table, the §4.5 entry-difficulty cases, the fit caps, the roll-up weights.
 - **Persona bots** run whole sessions (always strong, always weak, weak in two subjects, strong then collapses) and check the promises: no hint followed by an escalation, weak core subjects get extra turns, strong subjects close early, the fatigue override fires.
 - **40 randomized sessions** assert invariants: terminates, difficulty in range, never re-enters a resolved skill, never targets an observed skill, budgets never negative, at most one turn past the clock.
 - **Fuzzing** of the Boolean parser (20,000 random inputs, deep nesting, 60,000-term chains): rejected cleanly, never crashes.
 - **A real practice session** was run in the terminal with the manual provider: wrong XOR answer → check fails → WEAK → feedback card and tip → level-1 hint → strong recovery → HOLD (not escalate) → probe on the one missed point → profile saved.
 - **Seed loader** checked column by column against the SQL schema; every deterministic check self-tests against known-good and known-bad answers.
 - Two independent review agents were started; both were cut off by session limits, so their open leads were verified by hand (and were real: stale subject status at rebalance time, no hard clock stop, parser recursion).
+- **Real-world behaviour tests** (`tests/test_practice_hardening.py`, 42 tests): double clicks and four simultaneous submits score once; the same key with a different answer is a conflict; the evaluator being down or stalling keeps the answer and a retry scores once; a hint or reveal after submitting does not change the evidence of the answer already given; a refresh or server restart shows the same card, tip and follow-up without re-scoring; a restart mid-evaluation leaves a retryable submission; every model role is metered, unknown model prices are "unknown", never free; re-importing an unchanged question keeps its review status; forged protocol tags in an answer are neutralised; the local store recovers from a corrupt file.
 
 ---
 
@@ -104,6 +106,24 @@ Assumptions where the spec was silent are marked `ASSUMPTION` in `params.py` and
 
 ---
 
+## 5a. Step 4a: what "hardened" means here
+
+Harel's review (`docs/backend-review-for-shaked.md`) asked for five things before an API is built on the engine. All five are in, with a test for each:
+
+| Finding | What changed |
+|---|---|
+| R1 exactly-once scoring | Every answer is a `Submission` revision with an idempotency key. A replay returns the stored outcome (`replayed=True`); a different answer under the same key is a `conflict`; a second main answer after an evaluated one is `already_submitted`. Concurrent duplicates are serialised by a lock. |
+| R2 answers survive failure | Acceptance and evaluation are separate. `EvaluationStatus` is pending / evaluating / done / failed. A failed evaluation keeps the answer; `retry_evaluation()` scores it once with the original exposure. |
+| R3 evidence bound to exposure | Every hint and reveal is an `ExposureEvent`. Each submission snapshots `hints_seen` / `reference_seen` at acceptance, so peeking after submitting changes nothing, and a retry keeps its evidence. `hint_at(level)` re-reads an exposed hint without advancing. |
+| R4 tips metered | `tips.compose()` returns `ComposedTip` with model, usage and latency; it is recorded like every other model call. `cost_usd()` returns `None` for an unknown model (never 0). |
+| R5 re-import keeps review | `seed_db.py` hashes the content of each question; an unchanged question keeps `status`, `reviewed_by`, `reviewed_at` and translation parity. A changed one is reset to `in_review` and reported. `--dry-run` shows the report and rolls back. |
+
+Further real-world bugs found while probing, and fixed: a hanging model call now hits a per-role deadline and becomes a retryable error (`providers.call`); a server restart rebuilds the attempt from `attempt_row()` via `PracticeAttempt.restore()` (card, tip, follow-up and check are stored on the revision, nothing is re-scored, the struggle budget is not reset, a submission caught mid-evaluation becomes retryable); the API answer shape `{"text": ...}` replays like a plain string; a `PracticeError` carries a stable code for the API; absent behaviour signals are False, unknown signals never match a tip; a corrupt local store file is set aside and recovered from.
+
+Deferred to 4b, because they belong in the persistence layer: a database uniqueness constraint on `(attempt_id, idempotency_key)`, optimistic versioning of the skill profile, and usage limits.
+
+---
+
 ## 6. Known gaps and open items
 
 - **Database password** needed in `backend/.env` before `seed_db.py` can load the skills, role, tips, glossary and enriched questions. Everything is validated, nothing is loaded.
@@ -121,7 +141,7 @@ Assumptions where the spec was silent are marked `ASSUMPTION` in `params.py` and
 ```powershell
 cd backend
 uv sync
-uv run pytest -q                                   # 328 tests
+uv run pytest -q                                   # 370 tests
 uv run python scripts/seed_db.py --check           # validate content
 uv run python scripts/cli_practice.py --debug      # practice in the terminal, manual provider
 uv run python scripts/cli_practice.py --language he
@@ -140,3 +160,5 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 | 2026-09-17 | Harel pushed `apps/web`, `apps/tasks`, three `jr_*` migrations and the 30 questions into the database |
 | 2026-09-18 | Step 2 hardening: stale subject status at rebalance, hard clock stop, parser bounds, prose-tolerant expression extraction; 324 tests; committed and pushed |
 | 2026-09-18 | Step 3: enrichment files, build script, named-value numeric check, shared code in prompts, hints as string arrays, two tips; golden set folded into Harel's keys; 328 tests |
+| 2026-09-18 | Harel's review and integration checklist landed in `docs/` (`be08576`) |
+| 2026-09-18 | Step 4a: submissions as revisions with idempotency keys, evaluation status and retry, exposure events, restart recovery, per-role call deadlines, tip metering, content-hash review preservation and `--dry-run` in the seed loader, local store recovery; 370 tests |

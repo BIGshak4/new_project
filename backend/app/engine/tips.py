@@ -8,11 +8,11 @@ sentence, and the tip still works if that call fails.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
-from app.engine import i18n
+from app.engine import i18n, providers
 from app.engine.evaluator import BEHAVIOR_SIGNALS
-from app.engine.providers import LLMError, LLMRequest, Provider
+from app.engine.providers import LLMError, LLMRequest, LLMUsage, Provider
 from app.schemas.bank import Tip
 from app.schemas.engine import Action, Band, Evaluation
 
@@ -116,22 +116,35 @@ def render(tip: Tip, language: str, placeholders: dict[str, str] | None = None) 
     return re.sub(r"\s{2,}", " ", text).strip()
 
 
+@dataclass
+class ComposedTip:
+    """Text plus the metering fields every model call carries, so tips are never invisible to usage accounting."""
+
+    text: str
+    polished: bool = False
+    model: str = ""
+    usage: LLMUsage = field(default_factory=LLMUsage)
+    latency_ms: int = 0
+
+
 async def compose(provider: Provider | None, choice: TipChoice, *, language: str,
-                  placeholders: dict[str, str] | None = None, tone: str | None = None) -> str:
+                  placeholders: dict[str, str] | None = None, tone: str | None = None) -> ComposedTip:
     """Render the template, then let the model polish it. The rendered text is the fallback."""
     rendered = render(choice.tip, language, placeholders)
     if provider is None:
-        return rendered
+        return ComposedTip(rendered)
     request = LLMRequest(
         role="tip", system=[i18n.stable_system_block("tip", language)], prompt_version=i18n.prompt_version("tip"),
         user=f"<tone>{tone or 'direct and encouraging'}</tone>\n<tip>\n{rendered}\n</tip>",
     )
     try:
-        response = await provider.complete(request)
+        response = await providers.call(provider, request)
     except LLMError:
-        return rendered
+        return ComposedTip(rendered)
     polished = " ".join(response.text.split())
-    return polished if 10 <= len(polished) <= 400 else rendered
+    text = polished if 10 <= len(polished) <= 400 else rendered
+    return ComposedTip(text, polished=text == polished, model=response.model, usage=response.usage,
+                       latency_ms=response.latency_ms)
 
 
 def tips_for_gaps(tips: list[Tip], gap_skills: list[str], limit: int = 3) -> list[Tip]:

@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 
 from pydantic import BaseModel
 
-from app.engine import i18n
+from app.engine import i18n, providers
 from app.engine.providers import LLMError, LLMRequest, LLMUsage, Provider
 from app.schemas.bank import BankQuestion
 from app.schemas.engine import Action, Archetype, CatalogSkill, Decision
@@ -121,7 +121,7 @@ async def generate(provider: Provider, decision: Decision, *, language: str, ski
     flags: list[str] = []
     for _attempt in range(2):
         try:
-            response = await provider.complete(request)
+            response = await providers.call(provider, request)
         except LLMError as exc:
             flags.append("generation_error_retryable" if exc.retryable else "generation_error")
             if not exc.retryable:

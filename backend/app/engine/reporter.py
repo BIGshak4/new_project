@@ -10,7 +10,7 @@ from __future__ import annotations
 import json
 from dataclasses import asdict, dataclass, field
 
-from app.engine import i18n, scores, tips
+from app.engine import i18n, providers, scores, tips
 from app.engine.params import DEFAULT_PARAMS, EngineParams
 from app.engine.providers import LLMError, LLMRequest, Provider
 from app.engine.scorecards import AssessedSkill, Scorecard, build_scorecard
@@ -193,7 +193,7 @@ async def narrative(provider: Provider | None, data: ReportData, *, language: st
                          user=json.dumps(payload, ensure_ascii=False, indent=1),
                          prompt_version=i18n.prompt_version("report"))
     try:
-        response = await provider.complete(request)
+        response = await providers.call(provider, request)
     except LLMError:
         return plain, "fallback"
     return (response.text.strip() or plain), "generated"

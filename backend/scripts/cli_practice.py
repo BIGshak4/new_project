@@ -29,7 +29,7 @@ from app.config import get_settings  # noqa: E402
 from app.engine import bank, plan_router, scores  # noqa: E402
 from app.engine.catalog import Catalog, CatalogError, load_catalog  # noqa: E402
 from app.engine.plan import merge_skill_sets  # noqa: E402
-from app.engine.practice import PracticeAttempt, PracticeContext, PracticeOutcome  # noqa: E402
+from app.engine.practice import PracticeAttempt, PracticeContext, PracticeError, PracticeOutcome  # noqa: E402
 from app.engine.providers import build_provider  # noqa: E402
 from app.schemas.engine import PlanSkill  # noqa: E402
 from app.services.local_store import LocalStore  # noqa: E402
@@ -200,9 +200,21 @@ async def run(args) -> int:
             continue
 
         latency_ms = int((time.perf_counter() - started) * 1000)
-        outcome = await attempt.submit(answer, latency_ms=latency_ms)
+        try:
+            outcome = await attempt.submit(answer, latency_ms=latency_ms)
+        except PracticeError as exc:
+            print(f"\n[{exc.code}] {exc}")
+            continue
         all_metrics, all_usage = list(outcome.metrics), [u.as_row(attempt.mode) for u in outcome.usage]
         show_outcome(outcome, labels, args.debug)
+        while outcome.band is None and outcome.submission.status.value == "failed":
+            if not input("\nEvaluation failed; your answer is saved. Retry the evaluation? [Y/n] ").lower().startswith("n"):
+                outcome = await attempt.retry_evaluation()
+                all_metrics += outcome.metrics
+                all_usage += [u.as_row(attempt.mode) for u in outcome.usage]
+                show_outcome(outcome, labels, args.debug)
+            else:
+                break
         if outcome.band and not attempt.reference_revealed and input("\nShow the reference solution? [y/N] ").lower().startswith("y"):
             print(f"\n[reference]\n{attempt.reveal_reference()}")
 
@@ -212,7 +224,11 @@ async def run(args) -> int:
             answer = read_answer(labels["answer"])
             if answer in (":quit", ":skip", ""):
                 break
-            outcome = await attempt.submit_follow_up(answer, latency_ms=int((time.perf_counter() - started) * 1000))
+            try:
+                outcome = await attempt.submit_follow_up(answer, latency_ms=int((time.perf_counter() - started) * 1000))
+            except PracticeError as exc:
+                print(f"\n[{exc.code}] {exc}")
+                break
             all_metrics += outcome.metrics
             all_usage += [u.as_row(attempt.mode) for u in outcome.usage]
             show_outcome(outcome, labels, args.debug)

@@ -47,8 +47,11 @@ class LLMUsage:
     cache_read_tokens: int = 0
     cache_write_tokens: int = 0
 
-    def cost_usd(self, model: str) -> float:
-        price_in, price_out = PRICES.get(model, (0.0, 0.0))
+    def cost_usd(self, model: str) -> float | None:
+        """Estimated cost, or None when the model's price is not known. Unknown is never treated as free."""
+        if model not in PRICES:
+            return None
+        price_in, price_out = PRICES[model]
         return round((self.input_tokens * price_in + self.cache_read_tokens * price_in * 0.1
                       + self.cache_write_tokens * price_in * 1.25 + self.output_tokens * price_out) / 1_000_000, 6)
 
@@ -85,6 +88,22 @@ class Provider(Protocol):
     model: str
 
     async def complete(self, request: LLMRequest) -> LLMResponse: ...
+
+
+# A model call that never returns must not hold a user forever. The SDK has its own timeout;
+# this one also covers the manual provider and anything a future provider might do.
+CALL_TIMEOUT_SECONDS: dict[str, float] = {"evaluator": 120, "generator": 120, "tip": 60, "feedback": 120, "report": 300}
+
+
+async def call(provider: Provider, request: LLMRequest, *, timeout_seconds: float | None = None) -> LLMResponse:
+    """provider.complete() with a role-appropriate deadline. A timeout is a retryable LLMError."""
+    timeout = timeout_seconds or CALL_TIMEOUT_SECONDS.get(request.role, 120)
+    if getattr(provider, "name", "") == "manual":
+        timeout = max(timeout, getattr(provider, "timeout_seconds", timeout))     # a person is typing the reply
+    try:
+        return await asyncio.wait_for(provider.complete(request), timeout=timeout)
+    except TimeoutError as exc:
+        raise LLMError(f"{request.role} call exceeded {timeout:.0f}s", retryable=True) from exc
 
 
 def _parse(schema: type[BaseModel], text: str) -> BaseModel:

@@ -11,7 +11,7 @@ import json
 import re
 from dataclasses import dataclass, field
 
-from app.engine import i18n
+from app.engine import i18n, providers
 from app.engine.providers import LLMError, LLMRefusal, LLMRequest, LLMUsage, Provider
 from app.schemas.bank import BankQuestion
 from app.schemas.engine import CatalogSkill, CheckResult, Evaluation
@@ -75,9 +75,17 @@ def follow_up_block(question_text: str, expected_answer_outline: str, skill: Cat
     return "\n".join(parts)
 
 
+PROTOCOL_TAGS = ("candidate_answer", "check_result", "question", "rubric", "reference_solution", "accepted_approaches",
+                 "common_errors", "skill", "proficiency_rubric", "expected_answer_outline", "language", "difficulty",
+                 "hint_level_given", "evaluation", "band", "tone", "tip", "prompt", "requirements")
+_PROTOCOL_TAG_RE = re.compile(r"<(\s*/?\s*)(" + "|".join(PROTOCOL_TAGS) + r")\b", re.IGNORECASE)
+
+
 def neutralize(answer: str) -> str:
-    """The answer is data. It must not be able to close its own delimiter."""
-    return re.sub(r"</?\s*candidate_answer", "<candidate-answer", answer, flags=re.IGNORECASE)
+    """The answer is data. It must not be able to close its own delimiter or forge any other protocol tag
+    (a fake <check_result passed="true"> inside the answer must stay visibly part of the answer)."""
+    cleaned = answer.replace("​", "").replace("‌", "").replace("‍", "").replace("﻿", "")
+    return _PROTOCOL_TAG_RE.sub(lambda m: "‹" + m.group(1) + m.group(2), cleaned)
 
 
 def user_message(*, language: str, difficulty: int, answer: str, check: CheckResult | None,
@@ -126,7 +134,7 @@ async def evaluate(provider: Provider, *, question_context: str, known_error_key
     for attempt in range(1, max_attempts + 1):
         result.attempts = attempt
         try:
-            response = await provider.complete(request)
+            response = await providers.call(provider, request)
         except LLMRefusal:
             result.flags.append("eval_refused")
             return result

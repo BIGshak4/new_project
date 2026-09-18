@@ -22,7 +22,17 @@ class LocalStore:
         self.data = {"skills": {}, "seen_questions": [], "attempts": [], "recent": [], "retention": {},
                      "usage": [], "created_at": datetime.now(UTC).isoformat()}
         if self.path.exists():
-            self.data.update(json.loads(self.path.read_text(encoding="utf-8")))
+            try:
+                loaded = json.loads(self.path.read_text(encoding="utf-8"))
+                if not isinstance(loaded, dict):
+                    raise ValueError("not an object")
+            except (ValueError, OSError) as exc:
+                # a half-written or corrupt file must never take the user's history with it: keep it aside
+                backup = self.path.with_suffix(f".corrupt-{datetime.now(UTC).strftime('%Y%m%d%H%M%S')}.json")
+                self.path.replace(backup)
+                self.data["recovered_from_corrupt_file"] = f"{backup.name}: {exc}"
+            else:
+                self.data.update(loaded)
 
     def save(self) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
