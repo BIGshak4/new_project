@@ -43,7 +43,7 @@ when its `parity_checked` is true. Nothing here is published yet. For each quest
 7. **Provenance.** `source_name`, `source_url`, `license` and `reuse_status` are filled in
    and true. Company attributions are never invented.
 
-Then set `status: "published"`, `reviewed_by` and `reviewed_at`.
+Then set `status: "published"`, `reviewed_by`, `reviewed_at` **and** `reuse_status` (`permitted` or `attribution_required`): the database refuses to publish otherwise. These five are reviewer decisions; re-running the loader keeps them for a question whose content has not changed.
 
 ## Exposure risk
 

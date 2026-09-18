@@ -10,7 +10,7 @@ is the only writer for content, sessions, attempts and evaluation tables.
 
 from __future__ import annotations
 
-from sqlalchemy import MetaData, Table
+from sqlalchemy import MetaData, Table, null
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 from app.config import get_settings
@@ -59,3 +59,13 @@ async def dispose() -> None:
     if _engine is not None:
         await _engine.dispose()
     _engine, _metadata = None, None
+
+
+def sql_values(values: dict) -> dict:
+    """Column values for an INSERT/UPDATE with Python None as SQL NULL.
+
+    SQLAlchemy serializes None for a JSON column as the JSON value null, which is not SQL NULL:
+    `col is null` is false for it and every `jsonb_typeof(col) = 'object'` check fails. Every
+    writer goes through this so the rule cannot be forgotten twice.
+    """
+    return {column: (null() if value is None else value) for column, value in values.items()}

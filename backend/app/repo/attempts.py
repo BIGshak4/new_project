@@ -86,13 +86,13 @@ async def save(connection: AsyncConnection, *, user_id: uuid.UUID, question_id: 
         "exposures": row.get("exposures") or [],
         "engine_state": {"evidence_mode": row.get("evidence_mode"), "tip_turns": row.get("tip_turns") or {}},
     }
-    statement = insert(attempt).values(**values)
+    statement = insert(attempt).values(**db.sql_values(values))
     updates = {c: statement.excluded[c] for c in values if c not in ("id", "user_id", "question_id", "started_at")}
     await connection.execute(statement.on_conflict_do_update(index_elements=["id"], set_=updates))
 
     for s in row["submissions"]:
         sub = _submission_row(values["id"], s)
-        statement = insert(submission).values(**sub)
+        statement = insert(submission).values(**db.sql_values(sub))
         mutable = {c: statement.excluded[c] for c in sub if c not in ("attempt_id", "revision", "idempotency_key", "turn",
                                                                        "answer", "hints_seen", "reference_seen",
                                                                        "exposure_sequence", "accepted_at")}

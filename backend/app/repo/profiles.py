@@ -23,6 +23,7 @@ from app import db
 from app.engine import scores
 from app.engine.params import DEFAULT_PARAMS, EngineParams
 from app.engine.plan_router import ProfileSkill
+from app.repo import cache
 from app.schemas.engine import EvidenceStatus, SkillState
 
 
@@ -40,8 +41,10 @@ class LoadedProfile:
 
 
 async def _skill_ids(connection: AsyncConnection) -> dict[str, uuid.UUID]:
-    skill = await db.table("skill")
-    return {row.key: row.id for row in await connection.execute(select(skill.c.id, skill.c.key))}
+    async def load():
+        skill = await db.table("skill")
+        return {row.key: row.id for row in await connection.execute(select(skill.c.id, skill.c.key))}
+    return await cache.ID_MAPS.get("skill_ids", load)
 
 
 async def load(connection: AsyncConnection, user_id: uuid.UUID) -> LoadedProfile:
@@ -99,7 +102,7 @@ async def save(connection: AsyncConnection, loaded: LoadedProfile, states: dict[
         if seen is None:
             columns.update(first_assessed_at=now if state.turns else None, last_assessed_at=now if state.turns else None)
             result = await connection.execute(
-                insert(profile).values(user_id=loaded.user_id, skill_id=skill_ids[key], version=1, **columns)
+                insert(profile).values(**db.sql_values({"user_id": loaded.user_id, "skill_id": skill_ids[key], "version": 1, **columns}))
                 .on_conflict_do_nothing(index_elements=["user_id", "skill_id"]).returning(profile.c.version))
             if result.first() is None:
                 raise StaleProfile(key)               # someone inserted this skill meanwhile
@@ -110,7 +113,7 @@ async def save(connection: AsyncConnection, loaded: LoadedProfile, states: dict[
             result = await connection.execute(
                 update(profile).where(profile.c.user_id == loaded.user_id, profile.c.skill_id == skill_ids[key],
                                       profile.c.version == seen)
-                .values(version=seen + 1, **columns).returning(profile.c.version))
+                .values(**db.sql_values({"version": seen + 1, **columns})).returning(profile.c.version))
             if result.first() is None:
                 raise StaleProfile(key)
             new_versions[key] = seen + 1
@@ -124,7 +127,7 @@ async def set_retention(connection: AsyncConnection, user_id: uuid.UUID, key: st
     values = {"retention_due_at": due, "retention_checks_passed": passed}
     if checked_at is not None:
         values["last_retention_check_at"] = checked_at
-    await connection.execute(update(profile).where(profile.c.user_id == user_id, profile.c.skill_id == skill_ids[key]).values(**values))
+    await connection.execute(update(profile).where(profile.c.user_id == user_id, profile.c.skill_id == skill_ids[key]).values(**db.sql_values(values)))
 
 
 def as_profile_skills(loaded: LoadedProfile, required_levels: dict[str, int],

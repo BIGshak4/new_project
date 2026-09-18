@@ -14,14 +14,17 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app import db
+from app.repo import cache
 
 # engine metric keys that are not columns of evaluation_metrics (they live on the submission)
 NOT_COLUMNS = {"band", "check_passed", "submission_revision", "subject_key", "skill_key"}
 
 
 async def _ids(connection: AsyncConnection, table_name: str) -> dict[str, uuid.UUID]:
-    table = await db.table(table_name)
-    return {row.key: row.id for row in await connection.execute(select(table.c.id, table.c.key))}
+    async def load():
+        table = await db.table(table_name)
+        return {row.key: row.id for row in await connection.execute(select(table.c.id, table.c.key))}
+    return await cache.ID_MAPS.get(f"{table_name}_ids", load)
 
 
 async def record_metrics(connection: AsyncConnection, *, user_id: uuid.UUID, attempt_id: uuid.UUID,
@@ -40,7 +43,7 @@ async def record_metrics(connection: AsyncConnection, *, user_id: uuid.UUID, att
         })
         if metric.get("skill_next"):
             row["skill_next_id"] = skill_ids.get(metric["skill_next"])
-        await connection.execute(insert(table).values(**row))
+        await connection.execute(insert(table).values(**db.sql_values(row)))
         written += 1
     return written
 
@@ -49,7 +52,7 @@ async def record_usage(connection: AsyncConnection, *, user_id: uuid.UUID, attem
                        usage_rows: list[dict]) -> int:
     table = await db.table("usage_event")
     for row in usage_rows:
-        await connection.execute(insert(table).values(user_id=user_id, attempt_id=attempt_id, **row))
+        await connection.execute(insert(table).values(**db.sql_values({"user_id": user_id, "attempt_id": attempt_id, **row})))
     return len(usage_rows)
 
 

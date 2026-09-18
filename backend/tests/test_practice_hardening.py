@@ -252,6 +252,14 @@ class TestReviewOwnership:
         english = question.translations["en"].model_copy(update={"parity_checked": True, "parity_checked_by": "Shaked"})
         assert content_hash(question.model_copy(update={"translations": {**question.translations, "en": english}})) == baseline
 
+    def test_every_reviewer_decision_survives_a_reimport(self):
+        import sys
+        sys.path.insert(0, str(SEEDS.parent / "scripts"))
+        from seed_db import REVIEW_COLUMNS
+        # publishing requires all of these to be settled in the database (question_publish_* checks);
+        # the seed file must never overwrite them for an unchanged question
+        assert {"status", "reviewed_by", "reviewed_at", "reuse_status"} <= set(REVIEW_COLUMNS)
+
 
 # ----------------------------------------------------------------------------- more real-world probes
 

@@ -16,6 +16,7 @@ from app import db
 from app.config import get_settings
 from app.engine.catalog import load_catalog
 from app.engine.practice import PracticeAttempt, PracticeContext
+from app.repo import cache
 from app.repo.attempts import DuplicateSubmissionKey
 from app.repo.profiles import StaleProfile
 from app.services.store import DbTx
@@ -38,7 +39,9 @@ async def tx():
                   ("skill", "skill_dependency", "role_template", "role_skill_set", "company_profile", "company_evidence",
                    "company_skill_set", "question", "question_skill", "question_translation", "tips_library",
                    "term_glossary")}
+        cache.clear()
         await _seed_in(connection, tables, catalog)
+        cache.clear()
         user_id = (await connection.execute(text("select id from public.user_profile limit 1"))).scalar_one()
         try:
             yield DbTx(connection, allow_in_review=True), catalog, user_id

@@ -18,14 +18,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from sqlalchemy import delete, null, select  # noqa: E402
+from sqlalchemy import delete, select  # noqa: E402
 from sqlalchemy.dialects.postgresql import insert  # noqa: E402
 
 from app import db  # noqa: E402
 from app.config import get_settings  # noqa: E402
 from app.engine.catalog import Catalog, CatalogError, load_catalog  # noqa: E402
+from app.repo import cache  # noqa: E402
 
-REVIEW_COLUMNS = ("status", "reviewed_by", "reviewed_at", "review_notes")
+# what a reviewer decides in the database; an unchanged question keeps these across re-imports
+REVIEW_COLUMNS = ("status", "reviewed_by", "reviewed_at", "review_notes", "reuse_status")
 REPORT: list[str] = []
 
 
@@ -51,10 +53,7 @@ async def upsert(connection, table, rows: list[dict], conflict: list[str], *, re
     """Insert or update by `conflict` columns. Returns {key value: id} when `key` is given."""
     ids: dict = {}
     for row in rows:
-        # None must become SQL NULL, not the JSON value null: the jsonb check constraints
-        # (question_check_type_chk, ...) accept "is null" but reject jsonb 'null'
-        values = {c: (null() if v is None else v) for c, v in row.items()}
-        statement = insert(table).values(**values)
+        statement = insert(table).values(**db.sql_values(row))       # None -> SQL NULL, never jsonb null
         updates = {c: statement.excluded[c] for c in row if c not in conflict}
         statement = (statement.on_conflict_do_update(index_elements=conflict, set_=updates) if updates
                      else statement.on_conflict_do_nothing(index_elements=conflict))
@@ -87,6 +86,7 @@ async def seed(catalog: Catalog, *, dry_run: bool = False) -> dict[str, int]:
                 raise DryRun
     except DryRun:
         pass
+    cache.clear()                                  # a running API must not serve the old ids or content
     return counts
 
 

@@ -22,6 +22,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app import db
+from app.repo import cache
 from app.schemas.bank import BankQuestion, CommonError, QuestionSkillLink, QuestionText, RubricCriterion
 from app.schemas.engine import Archetype
 
@@ -66,15 +67,17 @@ def _allowed_statuses(allow_in_review: bool) -> tuple[str, ...]:
 
 
 async def _skill_keys(connection: AsyncConnection) -> dict[uuid.UUID, str]:
-    skill = await db.table("skill")
-    rows = await connection.execute(select(skill.c.id, skill.c.key))
-    return {row.id: row.key for row in rows}
+    async def load():
+        skill = await db.table("skill")
+        return {row.id: row.key for row in await connection.execute(select(skill.c.id, skill.c.key))}
+    return await cache.ID_MAPS.get("skill_keys", load)
 
 
 async def _tip_keys(connection: AsyncConnection) -> dict[str, str]:
-    tips = await db.table("tips_library")
-    rows = await connection.execute(select(tips.c.id, tips.c.key))
-    return {str(row.id): row.key for row in rows}
+    async def load():
+        tips = await db.table("tips_library")
+        return {str(row.id): row.key for row in await connection.execute(select(tips.c.id, tips.c.key))}
+    return await cache.ID_MAPS.get("tip_keys", load)
 
 
 def _bank_question(row, translations: list, links: list, skill_keys: dict, tip_keys: dict) -> BankQuestion:
@@ -88,7 +91,7 @@ def _bank_question(row, translations: list, links: list, skill_keys: dict, tip_k
             title=(assets.get("titles") or {}).get(t.language, ""), prompt=t.prompt,
             requirements=t.requirements or row.requirements, reference_solution=t.reference_solution or row.reference_solution,
             hints=list(t.hints or []), common_errors=dict(t.common_errors or {}),
-            accepted_approaches=list(row.accepted_approaches or []) if t.language == "en" else list(row.accepted_approaches or []),
+            accepted_approaches=list(row.accepted_approaches or []),
             choices=list(t.choices) if t.choices else None, parity_checked=bool(t.parity_checked),
             parity_checked_by=t.parity_checked_by)
     return BankQuestion(
@@ -109,23 +112,49 @@ def _bank_question(row, translations: list, links: list, skill_keys: dict, tip_k
         exposure_risk=row.exposure_risk, times_served=row.times_served, translations=texts)
 
 
+async def load_questions(connection: AsyncConnection, *, ids: list[uuid.UUID] | None = None,
+                         allow_in_review: bool = False) -> list[LoadedQuestion]:
+    """Every servable, enriched question (or the given ids) in four round trips, whatever the count."""
+    question, translation, link = (await db.table("question"), await db.table("question_translation"),
+                                   await db.table("question_skill"))
+    condition = [question.c.status.in_(_allowed_statuses(allow_in_review))]
+    if ids is not None:
+        condition.append(question.c.id.in_(ids))
+    rows = (await connection.execute(select(question).where(*condition).order_by(question.c.difficulty, question.c.key))).all()
+    if not rows:
+        return []
+    found = [row.id for row in rows]
+    translations: dict[uuid.UUID, list] = {}
+    for t in (await connection.execute(select(translation).where(translation.c.question_id.in_(found))
+                                       .order_by(translation.c.language))).all():
+        translations.setdefault(t.question_id, []).append(t)
+    links: dict[uuid.UUID, list] = {}
+    for lk in (await connection.execute(select(link).where(link.c.question_id.in_(found))
+                                        .order_by(link.c.is_primary.desc(), link.c.weight.desc()))).all():
+        links.setdefault(lk.question_id, []).append(lk)
+    skill_keys, tip_keys = await _skill_keys(connection), await _tip_keys(connection)
+    out = []
+    for row in rows:
+        if row.id not in translations or not any(bool(lk.is_primary) for lk in links.get(row.id, [])):
+            continue                                 # not enriched yet: the engine cannot run it
+        out.append(LoadedQuestion(id=row.id, question=_bank_question(row, translations[row.id], links[row.id],
+                                                                     skill_keys, tip_keys), version=row.version))
+    return out
+
+
 async def load_question(connection: AsyncConnection, *, key: str | None = None, question_id: uuid.UUID | None = None,
                         allow_in_review: bool = False) -> LoadedQuestion | None:
     """The full engine object for one question, or None when it does not exist or may not be served."""
-    question, translation, link = (await db.table("question"), await db.table("question_translation"),
-                                   await db.table("question_skill"))
-    condition = question.c.key == key if key is not None else question.c.id == question_id
-    row = (await connection.execute(select(question).where(condition))).first()
-    if row is None or row.status not in _allowed_statuses(allow_in_review):
-        return None
-    translations = (await connection.execute(
-        select(translation).where(translation.c.question_id == row.id).order_by(translation.c.language))).all()
-    links = (await connection.execute(
-        select(link).where(link.c.question_id == row.id).order_by(link.c.is_primary.desc(), link.c.weight.desc()))).all()
-    if not translations or not any(bool(lk.is_primary) for lk in links):
-        return None                                  # not enriched yet: the engine cannot run it
-    bank = _bank_question(row, translations, links, await _skill_keys(connection), await _tip_keys(connection))
-    return LoadedQuestion(id=row.id, question=bank, version=row.version)
+    if question_id is None:
+        question = await db.table("question")
+        question_id = (await connection.execute(select(question.c.id).where(question.c.key == key))).scalar_one_or_none()
+        if question_id is None:
+            return None
+
+    async def load():
+        loaded = await load_questions(connection, ids=[question_id], allow_in_review=allow_in_review)
+        return loaded[0] if loaded else None
+    return await cache.QUESTIONS.get((question_id, allow_in_review), load)
 
 
 def summary(loaded: LoadedQuestion, language: str) -> QuestionSummary:
@@ -152,16 +181,5 @@ def detail(loaded: LoadedQuestion, language: str) -> QuestionDetail:
 async def list_questions(connection: AsyncConnection, *, language: str, allow_in_review: bool = False,
                          subject: str | None = None) -> list[QuestionSummary]:
     """Every servable, enriched question as a safe summary."""
-    question, link = await db.table("question"), await db.table("question_skill")
-    statuses = _allowed_statuses(allow_in_review)
-    enriched = select(link.c.question_id).where(link.c.is_primary.is_(True))
-    rows = (await connection.execute(
-        select(question.c.id).where(question.c.status.in_(statuses), question.c.id.in_(enriched))
-        .order_by(question.c.difficulty, question.c.key))).all()
-    out = []
-    for row in rows:
-        loaded = await load_question(connection, question_id=row.id, allow_in_review=allow_in_review)
-        if loaded is None or (subject and loaded.question.subject != subject):
-            continue
-        out.append(summary(loaded, language))
-    return out
+    loaded = await load_questions(connection, allow_in_review=allow_in_review)
+    return [summary(q, language) for q in loaded if subject is None or q.question.subject == subject]
