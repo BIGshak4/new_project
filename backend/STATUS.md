@@ -3,7 +3,7 @@
 A living summary of what exists in `backend/`, how it was verified, what was decided, and what is next.
 Updated at the end of every build step. Newest changes are at the bottom of the changelog.
 
-**Last updated:** 2026-09-18 (step 4b, stages A–D) · **Tests:** 410 offline + 13 live · **Latest commit:** see changelog
+**Last updated:** 2026-09-18 (step 4b, stages A–F) · **Tests:** 456 offline + 14 live · **Latest commit:** see changelog
 
 ---
 
@@ -23,7 +23,7 @@ Harel's Next.js apps (`apps/web`, `apps/tasks`) are the face of the product. The
 | 2 | The engine, seeds, terminal practice tool, seed loader, FastAPI shell | `40dd1c8` | Done |
 | 3 | Harel's 30 questions enriched for the engine (skills, rubrics, hints, errors, checks) | `18bfaa2` | Done, files only |
 | 4a | Engine hardening for real-world use, from Harel's review (`docs/backend-review-for-shaked.md`, R1–R5) | | Done |
-| 4b | HTTP API per the contract in `docs/backend-frontend-integration-readiness.md`: A login + pilot access (`74eea90`), B migration `practice_submissions` applied (`865b83c`), C repository + D service (`8eb0fce`), live verification sweep; E–G next | | In progress |
+| 4b | HTTP API per the contract in `docs/backend-frontend-integration-readiness.md`: A login + pilot access (`74eea90`), B migration `practice_submissions` applied (`865b83c`), C repository + D service (`8eb0fce`), live sweep (`62fa488`), E routes + F route tests; G (deploy, content load) next | | In progress |
 | 5 | Connect `apps/web` to the API (with Harel) | | |
 
 ---
@@ -131,6 +131,8 @@ Deferred to 4b, because they belong in the persistence layer: a database uniquen
 | A | `app/auth.py` verifies Supabase tokens (JWKS ES256, issuer, audience, expiry); `app/repo/users.py` pilot access from `jr_members`; `app/api/errors.py` one error shape; `GET /v1/me` |
 | B | Migrations `practice_submissions` (revisions with unique idempotency key, `attempt.exposures/engine_state`, `user_skill_profile.version`), `skill_profile_engine_state`, `client_read_grants` |
 | C | `app/repo/`: `questions.py` (database is the runtime source; safe summaries; four-query batch load; short caches), `attempts.py`, `profiles.py` (optimistic versioning), `events.py`, `cache.py` |
+| E | `app/api/v1/questions.py`, `practice.py`, `me.py`: the eleven contract routes; `app/runtime.py` builds catalog, provider, store and service once at startup; `app/services/demo_provider.py` (`LLM_PROVIDER=scripted`) gives instant fake evaluations so the web app can be built without a key; request log line per request (id, route, user, status, ms; never bodies or tokens); unexpected errors are a 500 with a request id, never a traceback |
+| F | `tests/test_api_routes.py` (46): the flow over HTTP, idempotency (header, body, generated key, conflict), reveal-then-answer, outage → retry by revision, every bad input is 422, wrong follow-up turn, daily limit 429, every `/v1` route in the OpenAPI document has a no-token and non-member test (the test fails if a route is added without one), another user's attempt is 404 on every route. Live: the real app with `DbStore` through the rollback harness (found: a token for a deleted account was a 500, now 401) |
 | D | `app/services/store.py` (`DbStore`, `Tx` boundary), `memory_store.py` (same rules in memory), `practice_service.py` (start / get / hint / reveal / submit / follow-up / retry / progress; answer saved before the model call; one transaction per result; profile conflict keeps the answer) |
 
 Rule learned the hard way: **every migration goes through `scripts/dry_run_sql.py` first**, and every writer goes through `db.sql_values()` so Python `None` is SQL NULL, never JSON `null`.
@@ -154,11 +156,14 @@ Rule learned the hard way: **every migration goes through `scripts/dry_run_sql.p
 ```powershell
 cd backend
 uv sync
-uv run pytest -q                                   # 370 tests
+uv run uvicorn app.main:app --reload              # the API: http://127.0.0.1:8000/docs is the contract
+uv run pytest -q                                   # 456 tests (13 more run when DATABASE_URL is set)
 uv run python scripts/seed_db.py --check           # validate content
 uv run python scripts/cli_practice.py --debug      # practice in the terminal, manual provider
 uv run python scripts/cli_practice.py --language he
 ```
+
+For the web app: `.env` with `SUPABASE_URL` (login verification), `ALLOWED_ORIGINS=http://localhost:3000`, `LLM_PROVIDER=scripted` (instant fake feedback, no key). Without `DATABASE_URL` everything runs in memory with the seed questions. Send the Supabase access token as `Authorization: Bearer <token>`; the e-mail must be in `jr_members`.
 
 With the manual provider, each model call appears as `workdir/manual_llm/NNN_<role>.request.md`; write the reply as `NNN_<role>.response.json` and the loop continues.
 
@@ -178,5 +183,6 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 | 2026-09-18 | Step 4b-A: settings, Supabase token verification (JWKS/ES256), pilot access via `jr_members`, error shape, `/v1/me`; 392 tests (`74eea90`) |
 | 2026-09-18 | Step 4b-C/D: repository layer, store boundary, practice service; migration `skill_profile_engine_state`; 409 tests (`8eb0fce`) |
 | 2026-09-18 | Live verification sweep: RollbackStore harness, 13 live tests; fixes: JSON null in every writer (`db.sql_values`), batch question loading + caches, `reuse_status` preserved on re-import, migration `client_read_grants` (20 tables had policies but no grant) |
+| 2026-09-18 | Step 4b-E/F: the eleven routes, runtime wiring, demo provider, request logging; 46 route tests + live HTTP smoke; 456 offline tests |
 | 2026-09-18 | Step 4b-B: migration `20260918170000_practice_submissions` (attempt_submission with unique idempotency key, attempt.exposures/engine_state, user_skill_profile.version) applied, history recorded (`865b83c`). Incident: an ad-hoc dry-run ran the DDL in autocommit because the asyncpg adapter begins lazily; `scripts/dry_run_sql.py` added so dry-runs open the transaction explicitly and verify the rollback |
 | 2026-09-18 | Step 4a: submissions as revisions with idempotency keys, evaluation status and retry, exposure events, restart recovery, per-role call deadlines, tip metering, content-hash review preservation and `--dry-run` in the seed loader, local store recovery; 370 tests |

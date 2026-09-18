@@ -1,0 +1,66 @@
+"""A model stand-in for running the API without a key (LLM_PROVIDER=scripted).
+
+It answers instantly and deterministically so the web app can be built and demoed:
+the evaluation depends only on how much the candidate wrote and whether the
+deterministic check passed (which is in the user message). Never used in production.
+"""
+
+from __future__ import annotations
+
+import re
+
+from app.engine.providers import LLMRequest, LLMResponse, LLMUsage, ScriptedProvider
+
+_CHECK_RE = re.compile(r'<check_result[^>]*passed="(true|false)"')
+_ANSWER_RE = re.compile(r"<candidate_answer>\n(.*?)\n</candidate_answer>", re.S)
+
+
+def _evaluation(request: LLMRequest) -> dict:
+    answer = (_ANSWER_RE.search(request.user) or [None, ""])[1]
+    words = len(answer.split())
+    check = _CHECK_RE.search(request.user)
+    if check and check.group(1) == "false":
+        correctness, depth, level = 0.25, 0.3, 2
+        summary = "The automatic check found a mismatch; the core idea is not right yet."
+    elif words < 12:
+        correctness, depth, level = 0.55, 0.35, 2
+        summary = "Too short to show the reasoning; the direction is plausible."
+    else:
+        correctness, depth, level = 0.85, 0.7, 4
+        summary = "Correct and reasonably explained."
+    return {"correctness": correctness, "depth": depth, "clarity": min(1.0, 0.4 + words / 100), "structure": 0.6,
+            "tradeoff_reasoning": 0.5, "risk_awareness": 0.5, "hedging_ratio": 0.1, "rubric_level_estimate": level,
+            "key_points_hit": ["states the main idea"] if correctness > 0.5 else [],
+            "key_points_missed": [] if correctness > 0.8 else ["justify each step with the requirement it satisfies"],
+            "misconceptions": [], "behavior_signals": ["no_structure"] if words < 12 else ["stated_assumptions"],
+            "one_line_summary": summary}
+
+
+def _respond(request: LLMRequest):
+    if request.role == "evaluator":
+        return _evaluation(request)
+    if request.role == "generator":
+        return {"question_text": "Demo follow-up: which requirement would break your solution first if it changed, and why?",
+                "question_archetype": "design", "expected_answer_outline": "names one requirement and the failure mode",
+                "rubric_focus": []}
+    if request.role == "feedback":
+        return {"what_happened": "Demo feedback: the main idea was stated.",
+                "why_it_matters": "Interviewers probe the justification next.",
+                "next_step": "Next time, tie each step to the requirement it satisfies.",
+                "your_reasoning_vs_reference": "Compare your steps with the reference and find the first difference."}
+    if request.role == "report":
+        return {"summary": "Demo report."}
+    return "Next time, write the requirements as a checklist before you start."
+
+
+class DemoProvider(ScriptedProvider):
+    name = "scripted"
+    model = "demo"
+
+    def __init__(self):
+        super().__init__(_respond)
+
+    async def complete(self, request: LLMRequest) -> LLMResponse:
+        response = await super().complete(request)
+        response.usage = LLMUsage(input_tokens=len(request.user) // 4, output_tokens=len(response.text) // 4)
+        return response

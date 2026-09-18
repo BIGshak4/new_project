@@ -12,9 +12,11 @@ from dataclasses import dataclass
 
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app import db
+from app.api.errors import ApiError
 from app.auth import AuthenticatedUser
 
 
@@ -35,9 +37,17 @@ async def resolve_access(connection: AsyncConnection, user: AuthenticatedUser) -
             select(members.c.can_manage_tasks).where(members.c.email == user.email.lower()))).first()
         if row is not None:
             is_member, can_manage = True, bool(row.can_manage_tasks)
-    result = await connection.execute(
-        insert(profiles).values(id=user.id, display_name=(user.display_name or "")[:120] or None)
-        .on_conflict_do_nothing(index_elements=["id"]).returning(profiles.c.id))
-    created = result.first() is not None
+    savepoint = await connection.begin_nested()
+    try:
+        result = await connection.execute(
+            insert(profiles).values(id=user.id, display_name=(user.display_name or "")[:120] or None)
+            .on_conflict_do_nothing(index_elements=["id"]).returning(profiles.c.id))
+        created = result.first() is not None
+    except IntegrityError as exc:
+        # a token for an account that no longer exists in Auth (deleted, token not yet expired)
+        await savepoint.rollback()
+        raise ApiError("unauthenticated", "this account no longer exists; sign in again") from exc
+    else:
+        await savepoint.commit()
     return Access(user_id=user.id, email=user.email, is_member=is_member, can_manage_tasks=can_manage,
                   profile_created=created)

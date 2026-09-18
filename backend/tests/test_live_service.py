@@ -273,3 +273,55 @@ class TestContentAndSpeed:
               f"seed: {case['seed_seconds']:.0f}s")
         assert list_seconds < 3.0, f"listing 30 questions took {list_seconds:.1f}s"
         assert one_seconds < 1.0
+
+
+class TestOverHttp:
+    async def test_the_http_flow_against_the_real_database(self, case):
+        """The FastAPI app with DbStore, a token for the real pilot user, the real access resolver."""
+        from httpx import ASGITransport, AsyncClient
+
+        from app.main import app
+        from app.runtime import build_runtime
+        from tests.authtools import make_token, make_verifier
+
+        settings = get_settings()
+        app.state.verifier = make_verifier()
+        app.state.access_resolver = None                                   # the real one: jr_members + user_profile
+        app.state.runtime = build_runtime(settings, catalog=case["catalog"], provider=provider_always(WEAK),
+                                          store=RollbackStore(case["connection"]))
+        _, token = make_token(case["user_id"], email=case["email"])
+        h = {"Authorization": f"Bearer {token}"}
+        base = "/v1/practice/attempts"
+        try:
+            async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+                me = (await client.get("/v1/me", headers=h)).json()
+                assert me["pilot_member"] is True and me["id"] == str(case["user_id"])
+                assert len((await client.get("/v1/questions", headers=h)).json()) == 30
+                attempt = (await client.post(base, json={"question_key": "example-sensor-majority", "language": "he"}, headers=h)).json()
+                aid = attempt["id"]
+                hint = (await client.post(f"{base}/{aid}/hints/next", headers=h)).json()["hint"]
+                assert any("\u0590" <= ch <= "\u05ff" for ch in hint["text"])
+                response = await client.post(f"{base}/{aid}/submissions", json={"answer": "alarm = A ^ B ^ C"},
+                                             headers={**h, "Idempotency-Key": "http-1"})
+                assert response.status_code == 200, response.text
+                sub = response.json()["submission"]
+                assert sub["status"] == "done" and sub["band"] == "WEAK" and sub["card"] and sub["follow_up"]
+                replay = await client.post(f"{base}/{aid}/submissions", json={"answer": "alarm = A ^ B ^ C"},
+                                           headers={**h, "Idempotency-Key": "http-1"})
+                assert replay.json()["submission"]["replayed"] is True
+                again = (await client.get(f"{base}/{aid}", headers=h)).json()
+                assert again["submission"]["card"] == sub["card"] and again["pending_follow_up"] is not None
+                progress = (await client.get("/v1/me/progress", headers=h)).json()
+                assert progress["attempts_today"] >= 1 and progress["skills"]
+                # a token whose user no longer exists in Auth: 401, never a 500 from the profile foreign key
+                _, ghost = make_token(email="nobody@example.com")
+                response = await client.get(f"{base}/{aid}", headers={"Authorization": f"Bearer {ghost}"})
+                assert response.status_code == 401 and response.json()["error"]["code"] == "unauthenticated"
+                # a real account that is not on the pilot list: 403
+                _, stranger = make_token(case["user_id"], email="not-a-member@example.com")
+                assert (await client.get(f"{base}/{aid}", headers={"Authorization": f"Bearer {stranger}"})).status_code == 403
+            assert await count(case["connection"], "select count(*) from public.attempt_submission where attempt_id = :a", a=aid) == 1
+        finally:
+            for name in ("verifier", "access_resolver", "runtime"):
+                if hasattr(app.state, name):
+                    delattr(app.state, name)

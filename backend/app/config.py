@@ -35,10 +35,10 @@ class Settings(BaseSettings):
     # Attempts a user may start per UTC day. Fails gracefully with 429, never silently.
     daily_attempt_limit: int = 30
 
-    # manual = prompts are written to files and a person (or Claude Code) writes the replies.
+    # scripted  = instant fake evaluations, for building and demoing the web app without a key.
+    # manual    = prompts are written to files and a person (or Claude Code) writes the replies.
     # anthropic = the real API; needs ANTHROPIC_API_KEY.
-    # scripted = canned replies, for tests only.
-    llm_provider: str = "manual"
+    llm_provider: str = "scripted"
     anthropic_api_key: str | None = None
     anthropic_model: str = "claude-opus-5"
     anthropic_enable_fallbacks: bool = True
@@ -78,6 +78,8 @@ class Settings(BaseSettings):
             problems.append("LLM_PROVIDER=anthropic but ANTHROPIC_API_KEY is not set")
         if self.llm_provider == "manual":
             problems.append("LLM_PROVIDER=manual waits for a person to answer each model call")
+        if self.llm_provider == "scripted":
+            problems.append("LLM_PROVIDER=scripted returns fake evaluations")
         if self.allow_in_review_content:
             problems.append("ALLOW_IN_REVIEW_CONTENT=true would serve unreviewed questions")
         return problems
