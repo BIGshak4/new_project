@@ -3,7 +3,7 @@
 A living summary of what exists in `backend/`, how it was verified, what was decided, and what is next.
 Updated at the end of every build step. Newest changes are at the bottom of the changelog.
 
-**Last updated:** 2026-09-18 (step 4b, stages A–F) · **Tests:** 484 offline + 14 live + `scripts/smoke_http.py` · **Latest commit:** see changelog
+**Last updated:** 2026-09-18 (step 4b, stage G in progress) · **Tests:** 484 offline + 14 live + `scripts/smoke_http.py` · **Latest commit:** see changelog
 
 ---
 
@@ -23,7 +23,7 @@ Harel's Next.js apps (`apps/web`, `apps/tasks`) are the face of the product. The
 | 2 | The engine, seeds, terminal practice tool, seed loader, FastAPI shell | `40dd1c8` | Done |
 | 3 | Harel's 30 questions enriched for the engine (skills, rubrics, hints, errors, checks) | `18bfaa2` | Done, files only |
 | 4a | Engine hardening for real-world use, from Harel's review (`docs/backend-review-for-shaked.md`, R1–R5) | | Done |
-| 4b | HTTP API per the contract in `docs/backend-frontend-integration-readiness.md`: A login + pilot access (`74eea90`), B migration `practice_submissions` applied (`865b83c`), C repository + D service (`8eb0fce`), live sweep (`62fa488`), E routes + F route tests; G (deploy, content load) next | | In progress |
+| 4b | HTTP API per the contract in `docs/backend-frontend-integration-readiness.md`: A login + pilot access (`74eea90`), B migration `practice_submissions` applied (`865b83c`), C repository + D service (`8eb0fce`), live sweep (`62fa488`), E routes + F route tests (`685827c`), verification pass (`b9670dc`), G: content loaded, Dockerfile + `render.yaml` + integration note; Render service pending | | Content live; deploy pending |
 | 5 | Connect `apps/web` to the API (with Harel) | | |
 
 ---
@@ -144,7 +144,9 @@ Rule learned the hard way: **every migration goes through `scripts/dry_run_sql.p
 
 ## 6. Known gaps and open items
 
-- **Content not loaded yet.** `backend/.env` now has `DATABASE_URL`; `seed_db.py --dry-run` passes against the live database. The real load (30 questions get skills, rubrics, hints, checks) is stage G of 4b.
+- **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
+- **Deployment**: `backend/Dockerfile` and `render.yaml` are written and the image contents were verified by booting from `app/` + `seeds/` with runtime deps only (Docker cannot run on this machine; Render builds it). The Render service itself must be created under a JobRun account and given `DATABASE_URL` and `ALLOWED_ORIGINS`. Then `scripts/smoke_http.py --url <render url>`.
+- **Shaked's e-mail is not yet in `jr_members`**; without it the API answers 403 for him.
 - **Review before publishing.** All 30 questions stay `in_review` until a person checks technical correctness, rubric weights and Hebrew/English parity (checklist in `seeds/questions/README.md`).
 - **Bank coverage: 14 of the role's 27 skills** have a primary question. Missing: latches/flip-flops, state tables, Moore vs Mealy, truth tables, number representation, reset strategies, sequential HDL coding, debugging methodology, project walkthrough, state encoding, testbench basics.
 - **Anthropic API key** not created yet; the `AnthropicProvider` is written against SDK 1.6.0 but has not run against the real API.
@@ -186,6 +188,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 | 2026-09-18 | Step 4b-A: settings, Supabase token verification (JWKS/ES256), pilot access via `jr_members`, error shape, `/v1/me`; 392 tests (`74eea90`) |
 | 2026-09-18 | Step 4b-C/D: repository layer, store boundary, practice service; migration `skill_profile_engine_state`; 409 tests (`8eb0fce`) |
 | 2026-09-18 | Live verification sweep: RollbackStore harness, 13 live tests; fixes: JSON null in every writer (`db.sql_values`), batch question loading + caches, `reuse_status` preserved on re-import, migration `client_read_grants` (20 tables had policies but no grant) |
+| 2026-09-18 | Stage G: content loaded into Supabase (approved), `Dockerfile`, `.dockerignore`, `render.yaml`, `docs/practice-api-integration.md` for Harel |
 | 2026-09-18 | Verification pass: chaos test, Anthropic provider tests, `smoke_http.py` over real TCP + real JWKS; fixes: error shape on 404/405, 413 body limit, idle locks dropped, demo provider covered; 484 offline tests |
 | 2026-09-18 | Step 4b-E/F: the eleven routes, runtime wiring, demo provider, request logging; 46 route tests + live HTTP smoke; 456 offline tests |
 | 2026-09-18 | Step 4b-B: migration `20260918170000_practice_submissions` (attempt_submission with unique idempotency key, attempt.exposures/engine_state, user_skill_profile.version) applied, history recorded (`865b83c`). Incident: an ad-hoc dry-run ran the DDL in autocommit because the asyncpg adapter begins lazily; `scripts/dry_run_sql.py` added so dry-runs open the transaction explicitly and verify the rollback |

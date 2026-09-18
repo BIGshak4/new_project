@@ -1,0 +1,76 @@
+# Connecting `apps/web` to the practice API
+
+- Date: 18 September 2026
+- For: Harel (frontend), Shaked (backend)
+- Backend baseline: `backend/` at commit `b9670dc` or later; contract at `/docs` of the running API
+
+## 1. Run it locally
+
+```powershell
+cd backend
+uv sync
+copy .env.example .env        # fill SUPABASE_URL (already there), ALLOWED_ORIGINS, optionally DATABASE_URL
+uv run uvicorn app.main:app --reload
+```
+
+- `http://127.0.0.1:8000/docs` is the contract (OpenAPI). Every response model there is exactly what the code returns.
+- `LLM_PROVIDER=scripted` (default) gives instant fake evaluations: enough to build every screen. No key.
+- Without `DATABASE_URL` the API keeps everything in memory and serves the 30 seed questions; attempts are lost on restart. With it, everything is durable in Supabase.
+- `uv run python scripts/smoke_http.py` starts a server and checks it over HTTP; `--url https://…` checks a deployment.
+
+## 2. Authentication
+
+Every `/v1` route needs the Supabase **access token** as a Bearer token, and the e-mail must be in `jr_members`:
+
+```ts
+const { data: { session } } = await supabase.auth.getSession();
+const res = await fetch(`${API}/v1/me`, { headers: { Authorization: `Bearer ${session.access_token}` } });
+```
+
+The backend verifies the signature against the project's JWKS, plus issuer, audience and expiry. The user id always comes from the token; never send a user id in a body.
+
+| Status | `error.code` | Meaning |
+|---|---|---|
+| 401 | `unauthenticated` | no / expired / invalid token, or the account no longer exists |
+| 403 | `forbidden` | signed in, but not on the pilot list (`jr_members`) |
+| 404 | `not_found` | unknown question or attempt, or an attempt that is not yours (we do not reveal which) |
+| 409 | `conflict`, `already_submitted`, `no_pending_follow_up`, `nothing_to_retry` | see §4 |
+| 422 | `validation` | bad input; `error.details` lists the fields |
+| 429 | `usage_limit` | daily attempt limit; the message says when to come back |
+| 503 | `evaluation_unavailable` | the evaluation took too long; the answer is saved, `GET` the attempt and retry |
+| 500 | `internal` | our bug; `error.request_id` for the logs |
+
+Every error body is `{"error": {"code": "...", "message": "..."}}`. Every response carries `X-Request-Id`.
+
+## 3. The flow
+
+```
+GET  /v1/questions?language=he                → list (safe: no reference, no hints)
+GET  /v1/questions/{key}?language=he          → prompt, code, choices, hint_count
+POST /v1/practice/attempts                    {question_key, mode: "deep"|"quick", language, self_confidence?}   → 201 AttemptView
+POST /v1/practice/attempts/{id}/hints/next    → {hint: {level, text} | null, attempt}
+POST /v1/practice/attempts/{id}/reference     → {reference, attempt}          (recorded; answers after it earn no evidence)
+POST /v1/practice/attempts/{id}/submissions   {answer: "..." | {text}, latency_ms?, revision_count?}
+                                              header Idempotency-Key: <uuid>   → {submission, attempt}
+POST /v1/practice/attempts/{id}/follow-ups/{turn}/submissions   {answer}, Idempotency-Key   → {submission, attempt}
+POST /v1/practice/attempts/{id}/submissions/{revision}/retry    → {submission, attempt}     (after status "failed")
+GET  /v1/practice/attempts/{id}               → AttemptView (everything needed to redraw the page after a refresh)
+GET  /v1/me/progress                          → skills (level, status, trend), recent attempts, attempts_today
+```
+
+`AttemptView.status` is `in_progress` | `evaluating` | `done` | `failed`; `can_submit`, `can_retry`, `hints_remaining`, `pending_follow_up` tell the UI what to show. `SubmissionView` has `band` (STRONG/PARTIAL/WEAK), `summary`, `key_points_hit/missed`, `check` (the automatic check, when the question has one), `card` (the four-part feedback), `tip`, `follow_up` (the next question, if any), `evidence` (`full` | `reduced` | `none`) and `flags`.
+
+## 4. Rules the UI must respect
+
+1. **Generate an `Idempotency-Key` (uuid) per submit click and reuse it on retry.** A resend with the same key returns the same result with `replayed: true` and costs nothing. The same key with a different text is a 409 `conflict`. If you send none, the server generates one and returns it in `submission.key`.
+2. **Submit is synchronous** (typically 5–30 s with the real model). Show a waiting state; do not re-submit. If the request fails at the network level, `GET` the attempt: the answer is already saved. A `failed` status means the model was unavailable; offer "try again" → `retry`.
+3. **After the main answer, only follow-ups.** A second main answer is 409 `already_submitted`; the user starts a new attempt for the same question. Answer the follow-up whose `turn` is in `pending_follow_up`; anything else is 409 `no_pending_follow_up`.
+4. **Refresh = `GET` the attempt.** Never re-post. The view contains the hints shown, the reference if revealed, the submission with its card, and the pending follow-up.
+5. **The question detail never contains the answer.** Hints come one at a time from `/hints/next`; the reference from `/reference`. Direct reads of `question.reference_solution` / `hints` from the browser should be removed (review finding R6); `question` stays readable for browsing, but the practice page should use these routes.
+6. `jr_practice_entries` keeps working for self-ratings, bookmarks and drafts. `self_confidence` on start is the 1–5 rating the engine uses for calibration.
+
+## 5. Deployment (stage G)
+
+`render.yaml` at the repo root deploys `backend/` as a Docker web service. Secrets are entered in the Render dashboard: `DATABASE_URL` (Session pooler URI), `ALLOWED_ORIGINS` (the Netlify URLs and `http://localhost:3000`), later `ANTHROPIC_API_KEY`. `ENV=staging` until the real model is in; `production` refuses to start with a scripted or manual model. The site then needs `NEXT_PUBLIC_API_BASE_URL=https://jobrun-api.onrender.com` (or whatever Render assigns).
+
+Free-tier note: the service sleeps after 15 minutes idle and takes ~30 s to wake; the first request after a pause will be slow. A paid plan removes that.
