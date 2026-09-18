@@ -17,3 +17,8 @@ node_modules/
 .impeccable/mocks/
 test-results/
 **/supabase/.temp/
+
+# backend runtime files
+backend/workdir/
+.pytest_cache/
+.ruff_cache/

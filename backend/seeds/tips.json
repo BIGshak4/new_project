@@ -1,0 +1,150 @@
+[
+  {
+    "key": "state_assumptions_first",
+    "category": "communication",
+    "severity": 4,
+    "delivery_timing": "both",
+    "trigger_conditions": {
+      "any_of": [
+        { "signal": "jumped_to_implementation", "op": "==", "value": true },
+        { "signal": "answered_different_question", "op": "==", "value": true }
+      ],
+      "all_of": [ { "signal": "question_archetype", "op": "in", "value": ["design", "coding", "debugging"] } ],
+      "cooldown_turns": 5
+    },
+    "improves_skills": ["structured_communication"],
+    "templates": {
+      "en": "You went straight to the solution before pinning down what was asked. Next time, try writing one line of assumptions first: what the inputs are, when they are sampled, and what counts as done.",
+      "he": "עברתם ישר לפתרון לפני שהגדרתם מה בדיוק נדרש. בפעם הבאה, נסו לכתוב קודם שורה אחת של הנחות: מהם הקלטים, מתי הם נדגמים, ומה נחשב לסיום."
+    },
+    "example_before": "States are S0 to S3...",
+    "example_after": "I assume one bit per cycle, overlap allowed, Mealy output. States are S0 to S3..."
+  },
+  {
+    "key": "structure_your_answer",
+    "category": "structure",
+    "severity": 3,
+    "delivery_timing": "both",
+    "trigger_conditions": {
+      "any_of": [
+        { "signal": "structure", "op": "<", "value": 0.45 },
+        { "signal": "no_structure", "op": "==", "value": true }
+      ],
+      "all_of": [ { "signal": "correctness", "op": ">=", "value": 0.45 } ],
+      "cooldown_turns": 5
+    },
+    "improves_skills": ["structured_communication"],
+    "templates": {
+      "en": "The right ideas are in your answer, but in the order you thought of them. Next time, try four short parts: assumptions, approach, result, check.",
+      "he": "הרעיונות הנכונים נמצאים בתשובה, אבל בסדר שבו חשבתם עליהם. בפעם הבאה, נסו ארבעה חלקים קצרים: הנחות, גישה, תוצאה, בדיקה."
+    }
+  },
+  {
+    "key": "trace_a_second_example",
+    "category": "problem_solving",
+    "severity": 4,
+    "delivery_timing": "both",
+    "trigger_conditions": {
+      "any_of": [
+        { "signal": "check_passed", "op": "==", "value": false },
+        { "signal": "overconfident_wrong", "op": "==", "value": true }
+      ],
+      "all_of": [ { "signal": "verified_with_example", "op": "!=", "value": true } ],
+      "cooldown_turns": 4
+    },
+    "improves_skills": ["estimation_sanity_checks", "fsm_sequence_detectors", "counters"],
+    "templates": {
+      "en": "The error here is one that a quick trace would have caught. Next time, try running your answer on one input you did not design it around, such as an overlapping or all-ones case, before you submit.",
+      "he": "את הטעות הזו עקבה קצרה הייתה תופסת. בפעם הבאה, נסו להריץ את התשובה על קלט אחד שלא תכננתם אותה סביבו, למשל מקרה חופף או קלט של אחדות בלבד, לפני ההגשה."
+    }
+  },
+  {
+    "key": "cover_every_case",
+    "category": "technical",
+    "severity": 4,
+    "delivery_timing": "both",
+    "trigger_conditions": {
+      "any_of": [
+        { "signal": "ignored_edge_cases", "op": "==", "value": true },
+        { "signal": "incomplete_answer", "op": "==", "value": true }
+      ],
+      "all_of": [ { "signal": "question_archetype", "op": "in", "value": ["design", "coding"] } ],
+      "cooldown_turns": 5
+    },
+    "improves_skills": ["risk_awareness", "fsm_state_tables"],
+    "templates": {
+      "en": "Some input combinations have no defined behavior in your answer. Next time, try listing every state and input pair (or every branch) first and filling each one in, including reset and the disabled case.",
+      "he": "לחלק מצירופי הקלט אין התנהגות מוגדרת בתשובה. בפעם הבאה, נסו לרשום קודם כל זוג של מצב וקלט (או כל ענף) ולמלא כל אחד מהם, כולל איפוס והמקרה שבו הרכיב מושבת."
+    }
+  },
+  {
+    "key": "restate_the_requirement",
+    "category": "communication",
+    "severity": 3,
+    "delivery_timing": "both",
+    "trigger_conditions": {
+      "any_of": [ { "signal": "answered_different_question", "op": "==", "value": true } ],
+      "cooldown_turns": 6
+    },
+    "improves_skills": ["structured_communication"],
+    "templates": {
+      "en": "Your answer solves a slightly different problem from the one asked. Next time, try restating the requirement in your own words before you start, and check the wording of quantities such as 'at least' and 'exactly'.",
+      "he": "התשובה פותרת בעיה מעט שונה מזו שנשאלה. בפעם הבאה, נסו לנסח מחדש את הדרישה במילים שלכם לפני שמתחילים, ושימו לב לניסוח של כמויות כמו 'לפחות' ו'בדיוק'."
+    }
+  },
+  {
+    "key": "commit_to_your_answer",
+    "category": "confidence",
+    "severity": 3,
+    "delivery_timing": "both",
+    "trigger_conditions": {
+      "any_of": [
+        { "signal": "hedging_ratio", "op": ">=", "value": 0.5 },
+        { "signal": "hedged_heavily", "op": "==", "value": true }
+      ],
+      "all_of": [ { "signal": "correctness", "op": ">=", "value": 0.7 } ],
+      "cooldown_turns": 6
+    },
+    "improves_skills": [],
+    "templates": {
+      "en": "Your answer was right, but you hedged most of it. Next time, try stating the result plainly, then say the one thing you would verify, instead of qualifying every sentence.",
+      "he": "התשובה הייתה נכונה, אבל סייגתם את רובה. בפעם הבאה, נסו לומר את התוצאה בפשטות ואז לציין את הדבר האחד שהייתם בודקים, במקום לסייג כל משפט."
+    }
+  },
+  {
+    "key": "slow_down_when_sure",
+    "category": "confidence",
+    "severity": 4,
+    "delivery_timing": "post_session",
+    "trigger_conditions": {
+      "all_of": [
+        { "signal": "calibration_gap", "op": ">=", "value": 0.35 },
+        { "signal": "self_confidence", "op": ">=", "value": 4 }
+      ],
+      "cooldown_turns": 3
+    },
+    "improves_skills": ["estimation_sanity_checks"],
+    "templates": {
+      "en": "You rated yourself highly before answering, and the result was lower than that. Next time, try treating a confident feeling as the signal to check one corner case before you submit.",
+      "he": "דירגתם את עצמכם גבוה לפני התשובה, והתוצאה הייתה נמוכה מזה. בפעם הבאה, נסו להתייחס לתחושת ביטחון כסימן לבדוק מקרה קצה אחד לפני ההגשה."
+    }
+  },
+  {
+    "key": "explain_the_why",
+    "category": "technical",
+    "severity": 2,
+    "delivery_timing": "post_session",
+    "trigger_conditions": {
+      "all_of": [
+        { "signal": "correctness", "op": ">=", "value": 0.75 },
+        { "signal": "depth", "op": "<", "value": 0.55 }
+      ],
+      "cooldown_turns": 5
+    },
+    "improves_skills": ["tradeoff_reasoning"],
+    "templates": {
+      "en": "Your answer was correct but stopped at the result. Next time, try adding one sentence on why it works, because interviewers usually ask for it next.",
+      "he": "התשובה הייתה נכונה אבל נעצרה בתוצאה. בפעם הבאה, נסו להוסיף משפט אחד על למה זה עובד, כי מראיינים בדרך כלל שואלים את זה מיד אחר כך."
+    }
+  }
+]

@@ -1,0 +1,286 @@
+[
+  {
+    "key": "fsm_seq_detect_1011_overlap",
+    "version": 1,
+    "status": "in_review",
+    "origin": "ai_assisted_reviewed",
+    "format": "construct",
+    "practice_modes": ["deep", "simulation"],
+    "subject": "fsms",
+    "difficulty": 5,
+    "estimated_minutes": 15,
+    "archetype": "design",
+    "skills": [
+      { "skill": "fsm_sequence_detectors", "weight": 0.7, "primary": true },
+      { "skill": "fsm_state_tables", "weight": 0.3 }
+    ],
+    "rubric": [
+      { "key": "state_meanings", "weight": 0.20, "description": {
+          "en": "Every state has a stated meaning as the longest prefix of 1011 matched so far (empty, 1, 10, 101).",
+          "he": "לכל מצב מוגדרת משמעות: הקידומת הארוכה ביותר של 1011 שזוהתה עד כה (ריק, 1, 10, 101)." } },
+      { "key": "transitions_complete", "weight": 0.30, "description": {
+          "en": "The transition table covers both inputs from every state and every next state is correct.",
+          "he": "טבלת המעברים מכסה את שני ערכי הקלט מכל מצב, וכל מצב הבא נכון." } },
+      { "key": "overlap_handling", "weight": 0.25, "description": {
+          "en": "On a mismatch or after a detection the machine falls back to the longest suffix that is also a prefix: S1 on input 1 stays in S1, S3 on input 0 goes to S2, and after a detection the next state is S1.",
+          "he": "באי-התאמה או אחרי זיהוי המכונה חוזרת לסיומת הארוכה ביותר שהיא גם קידומת: מ-S1 עם קלט 1 נשארים ב-S1, מ-S3 עם קלט 0 עוברים ל-S2, ואחרי זיהוי המצב הבא הוא S1." } },
+      { "key": "mealy_output", "weight": 0.15, "description": {
+          "en": "The output is 1 only in the 101 state with input 1, computed from the current state and input (Mealy), so it appears in the same cycle as the last bit.",
+          "he": "הפלט הוא 1 רק במצב 101 עם קלט 1, ומחושב מהמצב והקלט הנוכחיים (Mealy), ולכן מופיע באותו מחזור של הביט האחרון." } },
+      { "key": "trace_detections", "weight": 0.10, "description": {
+          "en": "The trace of 1011011 gives detections at bit positions 4 and 7.",
+          "he": "העקבה של 1011011 נותנת זיהויים במיקומי הביט 4 ו-7." } }
+    ],
+    "common_errors": [
+      { "key": "missing_overlap_transition", "core": true, "skill": "fsm_sequence_detectors", "tip_key": "trace_a_second_example" },
+      { "key": "reset_to_start_on_mismatch", "core": false, "skill": "fsm_sequence_detectors", "tip_key": "trace_a_second_example" },
+      { "key": "moore_output_in_mealy_design", "core": false, "skill": "fsm_moore_mealy" },
+      { "key": "incomplete_transition_table", "core": false, "skill": "fsm_state_tables", "tip_key": "cover_every_case" }
+    ],
+    "deterministic_check": null,
+    "assets": {},
+    "source_name": "example_question HW-014 (AI-assisted original wording, standard concept); rubric, hints and errors added",
+    "source_url": "https://hdlbits.01xz.net/wiki/Fsm_hdlc",
+    "license": "original",
+    "reuse_status": "permitted",
+    "exposure_risk": "medium",
+    "review_notes": "Golden-set question 1. Needs expert review of rubric weights and Hebrew parity before publishing.",
+    "translations": {
+      "en": {
+        "title": "Overlapping 1011 detector",
+        "prompt": "Design a Mealy FSM that consumes one input bit per cycle and detects the suffix 1011. Overlap is allowed. Give the meaning of each state and the full transition and output table. For the stream 1011011, identify the detections using one-based bit positions. The output is evaluated from the current state and the current input, before the state update.",
+        "requirements": "A complete answer (1) names the states and says what each one means, (2) gives the next state and the output for both input values from every state, (3) handles overlap, including what happens after a detection and on a mismatch, (4) shows the output as a Mealy output in the cycle of the last bit, and (5) traces 1011011 and reports the detection positions.",
+        "reference_solution": "States S0, S1, S2, S3 mean that the longest matched prefix is empty, 1, 10, 101. Next states for input 0 / 1: S0 -> S0 / S1, S1 -> S2 / S1, S2 -> S0 / S3, S3 -> S2 / S1. The output is 1 only in S3 with input 1; everywhere else it is 0. From S3 on input 1 the machine goes to S1, because the final 1 of 1011 can start a new match; from S3 on input 0 it goes to S2, because 1010 ends in 10. Tracing 1011011 from S0: S1, S2, S3, detect and go to S1, S2, S3, detect. Detections are at positions 4 and 7.",
+        "hints": [
+          "After a mismatch, some of the bits you have already seen may still be useful. Which ones?",
+          "This is the longest-suffix-that-is-also-a-prefix idea: after each bit, the state should be the longest prefix of 1011 that the recent input ends with.",
+          "Name four states for the matched prefixes empty, 1, 10 and 101. Start with S3: on input 1 you detect, and the last 1 is itself the prefix 1, so go to S1. On input 0 you have seen 1010, which ends in 10, so go to S2. Now do the same for the other states."
+        ],
+        "common_errors": {
+          "missing_overlap_transition": "After detecting 1011 the machine returns to the start state, so the final 1 is thrown away and an overlapping match such as the second one in 1011011 is missed.",
+          "reset_to_start_on_mismatch": "Every mismatch sends the machine back to the start state. From S1 on input 1 it must stay in S1, and from S3 on input 0 it must go to S2, otherwise sequences like 11011 or 101011 are missed.",
+          "moore_output_in_mealy_design": "The output is attached to a fifth state instead of to the S3 transition on input 1. That is a Moore machine: it needs one more state and reports the detection one cycle later.",
+          "incomplete_transition_table": "Some state and input combinations have no next state defined, so the behavior of the machine is unspecified for those inputs."
+        },
+        "accepted_approaches": [
+          "Any state naming or encoding, as long as each state's meaning is stated.",
+          "A state diagram instead of a table, if every state shows both outgoing transitions with outputs.",
+          "Deriving the fallback transitions with the KMP failure function."
+        ]
+      },
+      "he": {
+        "title": "גלאי לרצף חופף 1011",
+        "prompt": "תכננו Mealy FSM הקולט ביט אחד בכל מחזור ומזהה את הסיומת 1011, כולל חפיפה. הגדירו משמעות לכל מצב וכתבו טבלת מעברים ופלט מלאה. עבור הזרם 1011011 ציינו באילו מיקומי ביט מתרחשים זיהויים, כשהספירה מתחילה ב-1. הפלט מחושב מהמצב הנוכחי ומהקלט הנוכחי, לפני עדכון המצב.",
+        "requirements": "תשובה מלאה (1) נותנת שם לכל מצב ומסבירה מה משמעותו, (2) נותנת את המצב הבא ואת הפלט עבור שני ערכי הקלט מכל מצב, (3) מטפלת בחפיפה, כולל מה קורה אחרי זיהוי ובאי-התאמה, (4) מציגה את הפלט כפלט Mealy במחזור של הביט האחרון, ו-(5) עוקבת אחרי 1011011 ומדווחת על מיקומי הזיהוי.",
+        "reference_solution": "המצבים S0, S1, S2, S3 מציינים שהקידומת הארוכה ביותר שזוהתה היא ריקה, 1, 10, 101. המצבים הבאים עבור קלט 0 / 1: S0 -> S0 / S1, S1 -> S2 / S1, S2 -> S0 / S3, S3 -> S2 / S1. הפלט הוא 1 רק ב-S3 עם קלט 1; בכל מקום אחר הוא 0. מ-S3 עם קלט 1 המכונה עוברת ל-S1, כי ה-1 האחרון של 1011 יכול להתחיל התאמה חדשה; מ-S3 עם קלט 0 היא עוברת ל-S2, כי 1010 מסתיים ב-10. עקבה של 1011011 מ-S0: S1, S2, S3, זיהוי ומעבר ל-S1, S2, S3, זיהוי. הזיהויים במיקומים 4 ו-7.",
+        "hints": [
+          "אחרי אי-התאמה, ייתכן שחלק מהביטים שכבר ראיתם עדיין שימושיים. אילו?",
+          "זה הרעיון של הסיומת הארוכה ביותר שהיא גם קידומת: אחרי כל ביט, המצב צריך לייצג את הקידומת הארוכה ביותר של 1011 שהקלט האחרון מסתיים בה.",
+          "הגדירו ארבעה מצבים עבור הקידומות ריק, 1, 10 ו-101. התחילו מ-S3: עם קלט 1 יש זיהוי, וה-1 האחרון הוא בעצמו הקידומת 1, ולכן עוברים ל-S1. עם קלט 0 ראיתם 1010, שמסתיים ב-10, ולכן עוברים ל-S2. עכשיו עשו אותו דבר לשאר המצבים."
+        ],
+        "common_errors": {
+          "missing_overlap_transition": "אחרי זיהוי של 1011 המכונה חוזרת למצב ההתחלה, ולכן ה-1 האחרון נזרק והתאמה חופפת, כמו השנייה ב-1011011, מתפספסת.",
+          "reset_to_start_on_mismatch": "כל אי-התאמה מחזירה את המכונה למצב ההתחלה. מ-S1 עם קלט 1 צריך להישאר ב-S1, ומ-S3 עם קלט 0 צריך לעבור ל-S2, אחרת רצפים כמו 11011 או 101011 מתפספסים.",
+          "moore_output_in_mealy_design": "הפלט הוצמד למצב חמישי במקום למעבר מ-S3 עם קלט 1. זו מכונת Moore: היא דורשת מצב נוסף ומדווחת על הזיהוי מחזור אחד מאוחר יותר.",
+          "incomplete_transition_table": "לחלק מצירופי המצב והקלט לא הוגדר מצב הבא, ולכן התנהגות המכונה לא מוגדרת עבור הקלטים האלה."
+        },
+        "accepted_approaches": [
+          "כל שמות או קידוד למצבים, כל עוד משמעות כל מצב מוגדרת.",
+          "דיאגרמת מצבים במקום טבלה, אם מכל מצב מוצגים שני המעברים עם הפלטים.",
+          "גזירת מעברי הנסיגה באמצעות פונקציית הכישלון של KMP."
+        ]
+      }
+    }
+  },
+  {
+    "key": "counter_mod6_enable_recovery",
+    "version": 1,
+    "status": "in_review",
+    "origin": "ai_assisted_reviewed",
+    "format": "hdl",
+    "practice_modes": ["deep", "simulation"],
+    "subject": "sequential_logic",
+    "difficulty": 4,
+    "estimated_minutes": 10,
+    "archetype": "design",
+    "skills": [
+      { "skill": "counters", "weight": 0.75, "primary": true },
+      { "skill": "reset_strategies", "weight": 0.25 }
+    ],
+    "rubric": [
+      { "key": "priority_order", "weight": 0.35, "description": {
+          "en": "The priority is explicit and correct: reset first, then recovery from 6 or 7, then enabled counting, otherwise hold.",
+          "he": "סדר העדיפויות מפורש ונכון: קודם איפוס, אחריו התאוששות מ-6 או 7, אחריו ספירה כאשר enable פעיל, ואחרת שמירת הערך." } },
+      { "key": "wrap_at_five", "weight": 0.20, "description": {
+          "en": "The counter wraps from 5 to 0 and never reaches 6 in normal counting.",
+          "he": "המונה חוזר מ-5 ל-0 ואינו מגיע ל-6 בספירה רגילה." } },
+      { "key": "recovery_ignores_enable", "weight": 0.20, "description": {
+          "en": "Recovery from 6 or 7 to 0 happens at the next edge even when enable is 0.",
+          "he": "ההתאוששות מ-6 או 7 ל-0 מתרחשת בחזית הבאה גם כאשר enable הוא 0." } },
+      { "key": "synchronous_reset", "weight": 0.10, "description": {
+          "en": "Reset is sampled at the clock edge (synchronous, active high) and three flip-flops are used.",
+          "he": "האיפוס נדגם בחזית השעון (סינכרוני, פעיל בגבוה), ונעשה שימוש בשלושה flip-flops." } },
+      { "key": "trace", "weight": 0.15, "description": {
+          "en": "The trace from q=4 with enable 1,0,1,1 gives 5, 5, 0, 1.",
+          "he": "העקבה מ-q=4 עם enable של 1,0,1,1 נותנת 5, 5, 0, 1." } }
+    ],
+    "common_errors": [
+      { "key": "recovery_gated_by_enable", "core": false, "skill": "counters", "tip_key": "cover_every_case" },
+      { "key": "wrap_at_wrong_value", "core": true, "skill": "counters", "tip_key": "trace_a_second_example" },
+      { "key": "asynchronous_reset_used", "core": false, "skill": "reset_strategies" },
+      { "key": "hold_forgotten", "core": false, "skill": "counters", "tip_key": "cover_every_case" }
+    ],
+    "deterministic_check": null,
+    "assets": { "code_language": "verilog" },
+    "source_name": "example_question HW-011 (AI-assisted original wording, standard concept); rubric, hints and errors added",
+    "source_url": "https://hdlbits.01xz.net/wiki/Count10",
+    "license": "original",
+    "reuse_status": "permitted",
+    "exposure_risk": "low",
+    "review_notes": "Golden-set question 2. Needs expert review of rubric weights and Hebrew parity before publishing.",
+    "translations": {
+      "en": {
+        "title": "Enabled modulo-six counter",
+        "prompt": "Design a positive-edge counter q that cycles 0,1,2,3,4,5,0 while enable=1 and holds its value while enable=0. Reset is synchronous, active high, and has priority. If q somehow equals 6 or 7, recover to 0 at the next edge even when enable=0. Give the next-state logic (as equations, a table, or Verilog) and the trace from q=4 for enable samples 1,0,1,1 with reset=0.",
+        "requirements": "A complete answer (1) states the priority between reset, recovery, counting and holding, (2) wraps from 5 to 0, (3) recovers from 6 and 7 regardless of enable, (4) uses a synchronous active-high reset, and (5) gives the four values of the trace.",
+        "reference_solution": "Three flip-flops hold q. At each rising edge, in priority order: if reset, q becomes 0; else if q >= 6, q becomes 0; else if enable, q becomes 0 when q == 5 and q + 1 otherwise; else q holds. In Verilog: always @(posedge clk) if (reset) q <= 0; else if (q >= 6) q <= 0; else if (enable) q <= (q == 5) ? 0 : q + 1; The trace from q=4 with enable 1,0,1,1 is 5, 5, 0, 1. Recovery sits above enable in the priority, which is what makes it work while the counter is disabled.",
+        "hints": [
+          "There are four different things that can happen at a clock edge. List them before writing any logic.",
+          "This is a priority question: when two conditions are true at once, which one wins? Write the conditions as an if / else-if chain in the order of priority.",
+          "Start the chain with reset, then the invalid-state check q >= 6, and only then look at enable. With that order fixed, write what q becomes in each branch."
+        ],
+        "common_errors": {
+          "recovery_gated_by_enable": "The check for 6 or 7 is placed inside the enable branch, so a disabled counter that lands in an invalid state stays there.",
+          "wrap_at_wrong_value": "The counter wraps at the wrong value, for example at 6 or at 7, so it is not a modulo-six counter.",
+          "asynchronous_reset_used": "The reset is written as asynchronous (in the sensitivity list), while the specification asks for a synchronous reset.",
+          "hold_forgotten": "Nothing is said about enable=0, so it is unclear that the counter holds its value."
+        },
+        "accepted_approaches": [
+          "Next-state equations or a Karnaugh map per bit instead of Verilog.",
+          "A next-state table listing all eight values of q for enable 0 and 1.",
+          "SystemVerilog always_ff, or a separate combinational next-state block."
+        ]
+      },
+      "he": {
+        "title": "מונה מודולו שש עם enable",
+        "prompt": "תכננו מונה q הפועל בחזית עולה ועובר בין 0,1,2,3,4,5,0 כאשר enable=1, ושומר על ערכו כאשר enable=0. האיפוס סינכרוני, פעיל בגבוה ובעל עדיפות. אם q מגיע איכשהו ל-6 או 7, יש לחזור ל-0 בחזית הבאה גם כאשר enable=0. כתבו את לוגיקת המצב הבא (כמשוואות, כטבלה או ב-Verilog) ואת העקבה החל מ-q=4 עבור ערכי enable של 1,0,1,1 כאשר reset=0.",
+        "requirements": "תשובה מלאה (1) מגדירה את סדר העדיפויות בין איפוס, התאוששות, ספירה ושמירת ערך, (2) חוזרת מ-5 ל-0, (3) מתאוששת מ-6 ומ-7 ללא תלות ב-enable, (4) משתמשת באיפוס סינכרוני פעיל בגבוה, ו-(5) נותנת את ארבעת ערכי העקבה.",
+        "reference_solution": "שלושה flip-flops מחזיקים את q. בכל חזית עולה, לפי סדר העדיפויות: אם reset, q הופך ל-0; אחרת אם q >= 6, q הופך ל-0; אחרת אם enable, q הופך ל-0 כאשר q == 5 ול-q + 1 אחרת; אחרת q נשמר. ב-Verilog: always @(posedge clk) if (reset) q <= 0; else if (q >= 6) q <= 0; else if (enable) q <= (q == 5) ? 0 : q + 1; העקבה מ-q=4 עם enable של 1,0,1,1 היא 5, 5, 0, 1. ההתאוששות קודמת ל-enable בסדר העדיפויות, וזה מה שמאפשר לה לפעול גם כשהמונה מושבת.",
+        "hints": [
+          "יש ארבעה דברים שונים שיכולים לקרות בחזית שעון. רשמו אותם לפני שכותבים לוגיקה.",
+          "זו שאלה של עדיפויות: כששני תנאים מתקיימים יחד, מי מנצח? כתבו את התנאים כשרשרת if / else-if לפי סדר העדיפות.",
+          "התחילו את השרשרת ב-reset, אחריו בדיקת המצב הלא חוקי q >= 6, ורק אז הסתכלו על enable. כשהסדר קבוע, כתבו מה q הופך להיות בכל ענף."
+        ],
+        "common_errors": {
+          "recovery_gated_by_enable": "הבדיקה של 6 או 7 נמצאת בתוך הענף של enable, ולכן מונה מושבת שהגיע למצב לא חוקי נשאר בו.",
+          "wrap_at_wrong_value": "המונה חוזר לאפס בערך הלא נכון, למשל ב-6 או ב-7, ולכן אינו מונה מודולו שש.",
+          "asynchronous_reset_used": "האיפוס נכתב כאסינכרוני (ברשימת הרגישות), בעוד שהמפרט דורש איפוס סינכרוני.",
+          "hold_forgotten": "לא נאמר דבר על enable=0, ולכן לא ברור שהמונה שומר על ערכו."
+        },
+        "accepted_approaches": [
+          "משוואות מצב הבא או מפת Karnaugh לכל ביט במקום Verilog.",
+          "טבלת מצב הבא עם כל שמונת ערכי q עבור enable 0 ו-1.",
+          "always_ff של SystemVerilog, או בלוק קומבינטורי נפרד למצב הבא."
+        ]
+      }
+    }
+  },
+  {
+    "key": "majority_vote_three_sensors",
+    "version": 1,
+    "status": "in_review",
+    "origin": "ai_assisted_reviewed",
+    "format": "truth_table",
+    "practice_modes": ["quick", "deep"],
+    "subject": "digital_fundamentals",
+    "difficulty": 2,
+    "estimated_minutes": 5,
+    "archetype": "conceptual",
+    "skills": [
+      { "skill": "boolean_algebra", "weight": 0.6, "primary": true },
+      { "skill": "truth_tables", "weight": 0.4 }
+    ],
+    "rubric": [
+      { "key": "truth_table_rows", "weight": 0.30, "description": {
+          "en": "All eight rows are given and the output is 1 exactly for 011, 101, 110 and 111.",
+          "he": "כל שמונה השורות מופיעות, והפלט הוא 1 בדיוק עבור 011, 101, 110 ו-111." } },
+      { "key": "simplified_expression", "weight": 0.40, "description": {
+          "en": "The expression is simplified to AB + AC + BC or an equivalent form of the same size, not left as the four minterms.",
+          "he": "הביטוי מצומצם ל-AB + AC + BC או לצורה שקולה באותו גודל, ואינו נשאר כארבעת המינטרמים." } },
+      { "key": "xor_explanation", "weight": 0.30, "description": {
+          "en": "Explains that three-input XOR computes odd parity: it is 1 for a single asserted sensor and 0 for exactly two, which is the opposite of what is needed.",
+          "he": "מסבירים ש-XOR של שלושה קלטים מחשב זוגיות אי-זוגית: הוא 1 עבור חיישן פעיל יחיד ו-0 עבור שניים בדיוק, ההפך ממה שנדרש." } }
+    ],
+    "common_errors": [
+      { "key": "unsimplified_minterms", "core": false, "skill": "boolean_algebra" },
+      { "key": "xor_confused_with_majority", "core": true, "skill": "boolean_algebra", "tip_key": "trace_a_second_example" },
+      { "key": "exactly_two_instead_of_at_least_two", "core": false, "skill": "truth_tables", "tip_key": "restate_the_requirement" }
+    ],
+    "deterministic_check": {
+      "type": "truth_table",
+      "spec": { "variables": ["A", "B", "C"], "minterms": [3, 5, 6, 7], "output_name": "alarm" }
+    },
+    "check_self_test": {
+      "pass": [
+        "AB + AC + BC",
+        "(A & B) | (A & C) | (B & C)",
+        "A(B + C) + BC",
+        "alarm = AB + C(A ^ B)",
+        "The rows 011, 101, 110 and 111 give 1.\nalarm = AB + AC + BC\nXOR is odd parity, so it fires for a single sensor.",
+        "טבלת האמת: 0,0,0,1,0,1,1,1\nalarm = (A + B)(A + C)(B + C)"
+      ],
+      "fail": ["A ^ B ^ C", "AB + AC", "A + B + C", "ABC' + AB'C + A'BC", "I think it is an OR.\nalarm = A + B + C"]
+    },
+    "assets": {},
+    "source_name": "example_question HW-001 (AI-assisted original wording, standard concept); rubric, hints, errors and check added",
+    "source_url": "https://hdlbits.01xz.net/wiki/Problem_sets",
+    "license": "original",
+    "reuse_status": "permitted",
+    "exposure_risk": "high",
+    "review_notes": "Golden-set question 3. The deterministic check compares the candidate's expression with minterms 3,5,6,7. Needs expert review and Hebrew parity before publishing.",
+    "translations": {
+      "en": {
+        "title": "Two-out-of-three sensor vote",
+        "prompt": "Three one-bit sensors A, B, C are 1 when they detect a fault. Assert alarm if at least two sensors are 1. Give all eight truth-table rows and a simplified Boolean expression for alarm. Explain why the XOR of the three inputs is not sufficient.\n\nWrite your final expression on its own line, starting with: alarm =",
+        "requirements": "A complete answer (1) lists all eight input rows with the correct output, (2) gives a simplified expression equivalent to AB + AC + BC, and (3) explains what three-input XOR actually computes and why that is not a majority.",
+        "reference_solution": "alarm = AB + AC + BC. For ABC from 000 through 111 the outputs are 0,0,0,1,0,1,1,1. The four minterms A'BC + AB'C + ABC' + ABC simplify because ABC can be reused three times, once with each of the other minterms, and each pair drops one variable. Three-input XOR is 1 when an odd number of inputs are 1, so it fires for a single sensor (001, 010, 100) and stays 0 when exactly two sensors agree (011, 101, 110). It is a parity function, not a majority function.",
+        "hints": [
+          "Instead of thinking about all eight rows at once, think about which pairs of sensors are enough to raise the alarm.",
+          "This is the majority function. Its minimal form has one product term for each pair of inputs.",
+          "List the three pairs: A with B, A with C, B with C. If either pair is asserted the alarm is 1, so OR the three AND terms together, then check the result against the row 111 and the row 100."
+        ],
+        "common_errors": {
+          "unsimplified_minterms": "The expression is left as the four minterms from the truth table. It is correct, but the question asks for a simplified form, which needs three two-input product terms.",
+          "xor_confused_with_majority": "XOR is treated as if it meant 'more than one input is 1'. Three-input XOR is odd parity: it is 1 for one or three asserted inputs and 0 for exactly two.",
+          "exactly_two_instead_of_at_least_two": "The row 111 is given output 0, reading the requirement as 'exactly two' instead of 'at least two'."
+        },
+        "accepted_approaches": [
+          "A Karnaugh map grouping instead of algebraic manipulation.",
+          "An equivalent factored form such as A(B + C) + BC or AB + C(A ^ B).",
+          "The product-of-sums form (A + B)(A + C)(B + C)."
+        ]
+      },
+      "he": {
+        "title": "הכרעת רוב בין שלושה חיישנים",
+        "prompt": "שלושה חיישנים של ביט אחד, A, B, C, מחזירים 1 כאשר הם מזהים תקלה. יש להפעיל alarm כאשר לפחות שני חיישנים מחזירים 1. כתבו את כל שמונה שורות טבלת האמת וביטוי בוליאני מצומצם עבור alarm. הסבירו מדוע XOR של שלושת הקלטים אינו מספיק.\n\nכתבו את הביטוי הסופי בשורה נפרדת, שמתחילה ב: alarm =",
+        "requirements": "תשובה מלאה (1) מפרטת את כל שמונה שורות הקלט עם הפלט הנכון, (2) נותנת ביטוי מצומצם השקול ל-AB + AC + BC, ו-(3) מסבירה מה XOR של שלושה קלטים מחשב בפועל ומדוע זו אינה פונקציית רוב.",
+        "reference_solution": "alarm = AB + AC + BC. עבור ABC מ-000 עד 111 הפלטים הם 0,0,0,1,0,1,1,1. ארבעת המינטרמים A'BC + AB'C + ABC' + ABC מצטמצמים מפני שאפשר להשתמש ב-ABC שלוש פעמים, פעם עם כל אחד מהמינטרמים האחרים, וכל זוג מוריד משתנה אחד. XOR של שלושה קלטים הוא 1 כאשר מספר אי-זוגי של קלטים הוא 1, ולכן הוא פועל עבור חיישן יחיד (001, 010, 100) ונשאר 0 כאשר בדיוק שני חיישנים מסכימים (011, 101, 110). זו פונקציית זוגיות ולא פונקציית רוב.",
+        "hints": [
+          "במקום לחשוב על כל שמונה השורות בבת אחת, חשבו אילו זוגות של חיישנים מספיקים כדי להפעיל את האזעקה.",
+          "זו פונקציית הרוב (majority). בצורה המינימלית שלה יש מכפלה אחת לכל זוג קלטים.",
+          "רשמו את שלושת הזוגות: A עם B, A עם C, B עם C. אם אחד מהזוגות פעיל האזעקה היא 1, ולכן חברו ב-OR את שלוש מכפלות ה-AND, ואז בדקו את התוצאה מול השורה 111 והשורה 100."
+        ],
+        "common_errors": {
+          "unsimplified_minterms": "הביטוי נשאר כארבעת המינטרמים מטבלת האמת. הוא נכון, אבל השאלה מבקשת צורה מצומצמת, שדורשת שלוש מכפלות של שני קלטים.",
+          "xor_confused_with_majority": "מתייחסים ל-XOR כאילו פירושו 'יותר מקלט אחד הוא 1'. XOR של שלושה קלטים הוא זוגיות אי-זוגית: הוא 1 עבור קלט פעיל אחד או שלושה, ו-0 עבור שניים בדיוק.",
+          "exactly_two_instead_of_at_least_two": "לשורה 111 ניתן פלט 0, מתוך קריאת הדרישה כ'בדיוק שניים' במקום 'לפחות שניים'."
+        },
+        "accepted_approaches": [
+          "קיבוץ במפת Karnaugh במקום מניפולציה אלגברית.",
+          "צורה מפורקת שקולה כמו A(B + C) + BC או AB + C(A ^ B).",
+          "צורת מכפלת סכומים (A + B)(A + C)(B + C)."
+        ]
+      }
+    }
+  }
+]

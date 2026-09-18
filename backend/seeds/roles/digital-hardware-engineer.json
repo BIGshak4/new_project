@@ -1,0 +1,44 @@
+{
+  "slug": "digital-hardware-engineer",
+  "title": "Digital Hardware Engineer",
+  "family": "hardware",
+  "sub_family": "digital_design",
+  "description": "Entry-level digital design and verification roles in Israel: student positions and junior engineers. Launch track.",
+  "version": 1,
+  "seniority_profiles": {
+    "student": { "baseline_difficulty": 2, "difficulty_ceiling": 5 },
+    "junior":  { "baseline_difficulty": 2, "difficulty_ceiling": 6 }
+  },
+  "question_archetypes": { "conceptual": 0.30, "design": 0.30, "coding": 0.20, "debugging": 0.15, "behavioral": 0.05 },
+  "skill_set": [
+    { "skill": "boolean_algebra",          "weight": 0.06,  "importance": "core",         "required_level": { "student": 2, "junior": 3 } },
+    { "skill": "combinational_blocks",     "weight": 0.06,  "importance": "core",         "required_level": { "student": 2, "junior": 3 } },
+    { "skill": "latches_flip_flops",       "weight": 0.06,  "importance": "core",         "required_level": { "student": 2, "junior": 3 } },
+    { "skill": "counters",                 "weight": 0.05,  "importance": "core",         "required_level": { "student": 2, "junior": 3 } },
+    { "skill": "fsm_state_tables",         "weight": 0.06,  "importance": "core",         "required_level": { "student": 2, "junior": 3 } },
+    { "skill": "fsm_sequence_detectors",   "weight": 0.05,  "importance": "core",         "required_level": { "student": 2, "junior": 3 } },
+    { "skill": "fsm_moore_mealy",          "weight": 0.05,  "importance": "core",         "required_level": { "student": 2, "junior": 3 } },
+    { "skill": "setup_hold_timing",        "weight": 0.05,  "importance": "core",         "required_level": { "student": 2, "junior": 3 } },
+    { "skill": "hdl_blocking_nonblocking", "weight": 0.05,  "importance": "core",         "required_level": { "student": 2, "junior": 3 } },
+
+    { "skill": "truth_tables",             "weight": 0.03,  "importance": "important",    "required_level": { "student": 2, "junior": 3 } },
+    { "skill": "binary_arithmetic",        "weight": 0.04,  "importance": "important",    "required_level": { "student": 2, "junior": 2 } },
+    { "skill": "number_representation",    "weight": 0.03,  "importance": "important",    "required_level": { "student": 2, "junior": 2 } },
+    { "skill": "registers_shifters",       "weight": 0.03,  "importance": "important",    "required_level": { "student": 2, "junior": 2 } },
+    { "skill": "reset_strategies",         "weight": 0.03,  "importance": "important",    "required_level": { "student": 2, "junior": 2 } },
+    { "skill": "edge_detection",           "weight": 0.03,  "importance": "important",    "required_level": { "student": 2, "junior": 2 } },
+    { "skill": "fsm_controllers",          "weight": 0.04,  "importance": "important",    "required_level": { "student": 2, "junior": 2 } },
+    { "skill": "hdl_combinational_coding", "weight": 0.04,  "importance": "important",    "required_level": { "student": 2, "junior": 2 } },
+    { "skill": "hdl_sequential_coding",    "weight": 0.04,  "importance": "important",    "required_level": { "student": 2, "junior": 2 } },
+    { "skill": "bit_manipulation",         "weight": 0.03,  "importance": "important",    "required_level": { "student": 2, "junior": 2 } },
+    { "skill": "debugging_methodology",    "weight": 0.04,  "importance": "important",    "required_level": { "student": 2, "junior": 2 } },
+    { "skill": "project_walkthrough",      "weight": 0.04,  "importance": "important",    "required_level": { "student": 2, "junior": 3 } },
+    { "skill": "structured_communication", "weight": 0.03,  "importance": "important",    "required_level": { "student": 2, "junior": 3 }, "assessment_mode": "observed" },
+
+    { "skill": "universal_gates",          "weight": 0.01,  "importance": "nice_to_have", "required_level": { "student": 2, "junior": 2 } },
+    { "skill": "clock_domain_crossing",    "weight": 0.015, "importance": "nice_to_have", "required_level": { "student": 1, "junior": 2 } },
+    { "skill": "fsm_state_encoding",       "weight": 0.01,  "importance": "nice_to_have", "required_level": { "student": 1, "junior": 2 } },
+    { "skill": "testbench_basics",         "weight": 0.01,  "importance": "nice_to_have", "required_level": { "student": 1, "junior": 2 } },
+    { "skill": "tradeoff_reasoning",       "weight": 0.015, "importance": "nice_to_have", "required_level": { "student": 2, "junior": 2 }, "assessment_mode": "observed" }
+  ]
+}

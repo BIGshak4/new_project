@@ -41,7 +41,7 @@ The AI engine is still the product's brain, and it is built inside this sequence
 |---|---|---|
 | Redis session state | JSONB column on the session | Turn latency from DB reads exceeds 50 ms |
 | Event bus | FastAPI background tasks | More than one backend instance |
-| Kubernetes | Vercel (frontend) + Render or Railway (backend) + Neon (DB) | Hosting limits bite |
+| Kubernetes | Vercel (frontend) + Render or Railway (backend) + Supabase (DB and Auth) | Hosting limits bite |
 | Full code sandbox | Deterministic checker: Python truth tables and numeric checks; Verilator for a handful of small HDL checks | Arbitrary code execution needed |
 | Vector store | Rule-based tip matching in Python | Tips library exceeds ~200 entries |
 | Resume and JD upload | Not in the beta; background entered in onboarding | After day 42 |
@@ -153,8 +153,7 @@ Python, Pylance, Ruff, ESLint, Prettier, Tailwind CSS IntelliSense, Markdown Pre
 |---|---|---|
 | Anthropic Console | Claude API key with a monthly spend limit | Day 1 |
 | GitHub | Code, CI | Day 1 |
-| Neon or Supabase | Hosted Postgres | Day 2 |
-| Clerk | Auth | Day 4 |
+| Supabase | Hosted Postgres and Auth (project `djpwvqpsqbkvprlncjjg`; schema in `supabase/migrations/`) | Done |
 | Vercel, Render or Railway | Hosting | Day 5 (pilot environment from the first week) |
 | Sentry | Errors | Week 2 |
 | Email or push provider | One notification channel | Week 3 |
@@ -244,11 +243,11 @@ The current `app.py`, `requirements.txt`, and `src/__init__.py` are placeholders
 | Layer | Choice |
 |---|---|
 | Backend | Python 3.12, uv, FastAPI, SQLAlchemy 2.0 async, Alembic, Pydantic v2, pytest, Ruff |
-| Database | PostgreSQL 16 (Docker locally, Neon or Supabase hosted) |
+| Database | Supabase Postgres. Schema lives in `supabase/migrations/`; row-level security on every table; the backend (service role) is the only writer |
 | LLM | Claude API via the official `anthropic` SDK (§7) |
 | Deterministic checks | Python; Verilator in a container for small HDL checks |
 | Frontend | Next.js 15, React 19, TypeScript, TailwindCSS, shadcn/ui, Monaco, Zustand, TanStack Query, next-intl |
-| Auth | Clerk |
+| Auth | Supabase Auth. `user_profile.id` equals `auth.users.id`, a trigger creates the profile on signup, and RLS policies use `auth.uid()` directly (decided 2026-09-17, replacing Clerk) |
 | Notifications | One of web push or transactional email, chosen day 3 |
 | Hosting | Vercel, Render or Railway, Neon; Sentry on both apps |
 
