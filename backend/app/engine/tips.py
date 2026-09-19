@@ -141,7 +141,8 @@ async def compose(provider: Provider | None, choice: TipChoice, *, language: str
         response = await providers.call(provider, request)
     except LLMError:
         return ComposedTip(rendered)
-    polished = " ".join(response.text.split())
+    # the model sometimes echoes the delimiter it was given; the tip is the text inside it
+    polished = " ".join(re.sub(r"</?tip>|</?tone>", " ", response.text).split())
     text = polished if 10 <= len(polished) <= 400 else rendered
     return ComposedTip(text, polished=text == polished, model=response.model, usage=response.usage,
                        latency_ms=response.latency_ms)

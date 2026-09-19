@@ -24,7 +24,7 @@ Harel's Next.js apps (`apps/web`, `apps/tasks`) are the face of the product. The
 | 3 | Harel's 30 questions enriched for the engine (skills, rubrics, hints, errors, checks) | `18bfaa2` | Done, files only |
 | 4a | Engine hardening for real-world use, from Harel's review (`docs/backend-review-for-shaked.md`, R1–R5) | | Done |
 | 4b | HTTP API per the contract in `docs/backend-frontend-integration-readiness.md`: A login + pilot access (`74eea90`), B migration `practice_submissions` applied (`865b83c`), C repository + D service (`8eb0fce`), live sweep (`62fa488`), E routes + F route tests (`685827c`), verification pass (`b9670dc`), G: content loaded, Docker image verified, **deployed at https://jobrun-api.onrender.com** (staging, scripted model, pooler DB) | | Done |
-| 5 | `apps/web` wired to the API by Harel (quick mode, code editor, 202 polling, refresh recovery; browser reads of questions closed by his migration). P0 done: provenance per revision, demo data wiped. Next: P1 real model (needs the key) → P2 feedback check → joint review (`docs/shaked-human-review-handoff.md` §5) | | P0 done |
+| 5 | `apps/web` wired to the API by Harel (quick mode, code editor, 202 polling, refresh recovery; browser reads of questions closed by his migration). P0 done: provenance per revision, demo data wiped. Next: P1 real model (needs the key) → P2 feedback check → joint review (`docs/shaked-human-review-handoff.md` §5) | | P1 done: real model live on Render |
 | 5 | Connect `apps/web` to the API (with Harel) | | |
 
 ---
@@ -186,6 +186,19 @@ Harel wired the practice page to the API (six commits, documented in `docs/shake
 
 **Hardened before P1:** a 400 naming the fallbacks beta disables fallbacks and retries; a 400 rejecting the structured-output schema falls back to JSON-in-text; submit response budget 90 s (Render's proxy limit is 100 s). Open calibration question from Harel: `quick` base evidence weight is 0.3 (`params.py`) — now that quick is the whole flow, revisit after the first real session.
 
+## 5f. P1: the real model (2026-09-19)
+
+First real Claude calls, locally then through the service into production under Shaked's account (quick mode, as the site sends it):
+
+| | Hebrew, wrong answer (sensor majority) | English, mostly-right answer (mod-6 counter) |
+|---|---|---|
+| band / check | WEAK, truth-table check failed 6/8 | PARTIAL (caught that 6/7 recovery sat inside the enable branch and that the requested trace was missing) |
+| misconception | `xor_confused_with_majority` found | none |
+| wall time | 43 s | 41 s |
+| cost | ≈ $0.076 per answer: evaluate $0.038 + card $0.034 + tip $0.004 | |
+
+Prompt caching works (second evaluation of the same question: 3,978 tokens read from cache, $0.010 instead of $0.034). Structured output and the fallbacks beta were accepted by the account, so neither downgrade path fired. Feedback card at low effort: same quality in ~10 s instead of ~16 s → `ROLE_EFFORT["feedback"] = "low"`, max 2,000 tokens. Tip polish sometimes echoed the `<tip>` delimiter → stripped. Render runs `LLM_PROVIDER=anthropic` (`ENV=staging`); `/health` confirms. The key was rotated once during the session (a revoked key shows as `401 API key is invalid` and the card falls back to the template, as designed).
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -234,6 +247,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 | 2026-09-18 | Step 4b-A: settings, Supabase token verification (JWKS/ES256), pilot access via `jr_members`, error shape, `/v1/me`; 392 tests (`74eea90`) |
 | 2026-09-18 | Step 4b-C/D: repository layer, store boundary, practice service; migration `skill_profile_engine_state`; 409 tests (`8eb0fce`) |
 | 2026-09-18 | Live verification sweep: RollbackStore harness, 13 live tests; fixes: JSON null in every writer (`db.sql_values`), batch question loading + caches, `reuse_status` preserved on re-import, migration `client_read_grants` (20 tables had policies but no grant) |
+| 2026-09-19 | P1: real model verified locally and in production (both languages); feedback effort low; tip delimiter stripped |
 | 2026-09-19 | Harel's integration merged and verified; P0: provenance column + demo wipe; Anthropic path hardened (fallbacks/schema downgrades), budget 90 s (`07a2813`) |
 | 2026-09-19 | First production run with a real session; full verification bench; superseded-revision bug fixed; DATABASE_URL mistakes named at startup; live harness restructured (per-test connections) |
 | 2026-09-19 | Render deployment live and smoke-tested; TS client + contract test (`24e6263`); independent code review, 13 findings fixed; profiling script, submit path cut, memory store O(1) snapshots |

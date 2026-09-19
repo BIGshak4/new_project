@@ -500,3 +500,13 @@ class TestRestartRecovery:
         row = json.loads(json.dumps(attempt.attempt_row()))
         again = restored(catalog, attempt, states, scripted([]))
         assert json.loads(json.dumps(again.attempt_row())) == row
+
+
+class TestTipPolish:
+    async def test_an_echoed_delimiter_is_stripped(self, catalog):
+        from app.engine import tips
+        from app.engine.providers import ScriptedProvider
+        tip = next(iter(catalog.tips.values()))
+        provider = ScriptedProvider(lambda r: "<tip> Trace one more input before you submit. Next time, try the all-ones case. </tip>")
+        composed = await tips.compose(provider, tips.TipChoice(tip, "post_session", 1.0), language="en")
+        assert composed.polished and "<tip>" not in composed.text and composed.text.startswith("Trace one more")
