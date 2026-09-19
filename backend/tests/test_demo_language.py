@@ -1,7 +1,9 @@
 import pytest
+
 from app.engine.i18n import language_block
 from app.engine.providers import LLMRequest
 from app.services.demo_provider import _respond
+
 
 @pytest.mark.parametrize("role", ["evaluator", "generator", "feedback", "report", "tip"])
 def test_demo_respects_system_practice_language(role):
