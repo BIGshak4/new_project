@@ -112,6 +112,9 @@ def check_invariants(store: InMemoryStore, catalog):
         if pending:
             assert main_done, "a pending follow-up without an evaluated main answer"
         assert len(pending) <= 1, "more than one pending follow-up"
+        for turn in {s["turn"] for s in subs}:
+            scored = [s for s in subs if s["turn"] == turn and s["status"] == "done"]
+            assert len(scored) <= 1, f"turn {turn} was scored {len(scored)} times"
         question = catalog.questions[row["question_key"]]
         expected_rows = sum(len(question.skills) if s["turn"] == 0 else 1 for s in done)
         actual_rows = sum(1 for m in store.metrics if m["attempt_id"] == attempt_id)

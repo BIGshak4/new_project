@@ -91,6 +91,20 @@ class TestIdempotentSubmission:
             await attempt.submit("second", idempotency_key="k")
         assert raised.value.code == "conflict"
 
+    async def test_a_superseded_failed_answer_is_never_retried(self, catalog):
+        provider = scripted([LLMError("down", retryable=False), LLMError("down", retryable=False), GOOD, GOOD])
+        attempt, states = attempt_for(catalog, provider)
+        first = await attempt.submit("first try", idempotency_key="a")             # fails
+        second = await attempt.submit("second try", idempotency_key="b")           # replaces it, fails too
+        assert first.status == EvaluationStatus.FAILED and second.status == EvaluationStatus.FAILED
+        assert "superseded" in first.submission.flags and "superseded" not in second.submission.flags
+        retried = await attempt.retry_evaluation()
+        assert retried.submission.revision == 2 and retried.status == EvaluationStatus.DONE
+        with pytest.raises(PracticeError) as raised:                                  # revision 1 stays unscored
+            await attempt.retry_evaluation()
+        assert raised.value.code == "nothing_to_retry" and states["counters"].turns == 1
+        assert sum(1 for s in attempt.submissions if s.status == EvaluationStatus.DONE) == 1
+
     async def test_a_new_answer_after_an_evaluated_one_needs_a_new_attempt(self, catalog):
         attempt, states = attempt_for(catalog, scripted([GOOD, GOOD]))
         await attempt.submit("first", idempotency_key="a")

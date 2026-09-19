@@ -358,6 +358,9 @@ class PracticeAttempt:
                 raise PracticeError("conflict", "this idempotency key was already used for a different answer")
             return existing, True
 
+        for older in self.submissions:
+            if older.turn == turn and "superseded" not in older.flags:
+                older.flags = [*older.flags, "superseded"]         # never retried or scored again
         submission = Submission(
             revision=len(self.submissions) + 1, key=key, turn=turn, answer=answer_text,
             hints_seen=self.hints_used, reference_seen=self.reference_revealed,
@@ -413,7 +416,7 @@ class PracticeAttempt:
                        revision_count: int | None = None) -> PracticeOutcome:
         """Step 2: evaluate an accepted revision. A revision already evaluated is replayed, never scored twice."""
         async with self._lock:
-            if submission.status == EvaluationStatus.DONE:
+            if submission.status == EvaluationStatus.DONE or "superseded" in submission.flags:
                 return self._replay(submission, submission.answer)
             if submission.status == EvaluationStatus.EVALUATING and not self._interrupted(submission):
                 return self._replay(submission, submission.answer)          # in flight elsewhere: report, do not repeat
@@ -422,7 +425,8 @@ class PracticeAttempt:
     async def retry_evaluation(self) -> PracticeOutcome:
         """Evaluate the latest failed submission again, with the same saved answer and the same exposure."""
         async with self._lock:
-            failed = next((s for s in reversed(self.submissions) if s.status == EvaluationStatus.FAILED), None)
+            failed = next((s for s in reversed(self.submissions)
+                           if s.status == EvaluationStatus.FAILED and "superseded" not in s.flags), None)
             if failed is None:
                 raise PracticeError("nothing_to_retry", "no submission is waiting for evaluation")
             return await self._evaluate(failed, latency_ms=None, revision_count=None)
