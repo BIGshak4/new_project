@@ -2,7 +2,7 @@
 
 **Date:** 19 September 2026  
 **For:** Shaked Buzi and Harel Artman  
-**Code baseline:** `d055fa5` on `master`  
+**Code baseline:** visual-answer release on `master`, built on Shaked’s `6217647` updates; backend support introduced in `e5bbf26`  
 **Immediate goal:** both founders can sign in, solve real hardware/software questions, receive real model feedback, inspect the reference, and review the accuracy of the feedback and the saved learning evidence.
 
 The frontend-to-backend integration is already working. The next milestone is a controlled human review of real feedback, not another integration rewrite. This document consolidates the current implementation and the remaining work. Suggested solutions are not the only valid approach; Shaked owns backend implementation decisions, with API or product changes coordinated with Harel.
@@ -16,17 +16,17 @@ Use this as the current handoff. Earlier integration/readiness documents contain
 | Practice website | [jobrun-practice.netlify.app](https://jobrun-practice.netlify.app/) — `apps/web`, Next.js and TypeScript |
 | Founder task board | [jobrun-tasks.netlify.app](https://jobrun-tasks.netlify.app/) — `apps/tasks`, separate private founder workspace |
 | Practice API | [jobrun-api.onrender.com](https://jobrun-api.onrender.com/) — FastAPI in `backend`, deployed with Docker on Render |
-| Database and identity | Existing Supabase project `djpwvqpsqbkvprlncjjg`; Auth, Postgres and private task attachments |
+| Database and identity | Existing Supabase project `djpwvqpsqbkvprlncjjg`; Auth, Postgres, private task attachments and private answer images |
 | Model integration | Anthropic adapter exists in the backend; the deployed runtime still uses the scripted demonstration provider |
 
-During preparation of this document, `/health` returned `status=ok`, `env=staging`, `llm_provider=scripted`, `store=database`, and configured authentication and pooler database access. This establishes the reported runtime configuration, not a successful paid model call. No key, paid plan or database change was made for this handoff.
+During preparation of this document, `/health` returned `status=ok`, `env=staging`, `llm_provider=scripted`, `store=database`, and configured authentication and pooler database access. This establishes the reported runtime configuration, not a successful paid model call. No model key or paid plan was activated. The visual-answer migrations listed below were applied to the existing Supabase project.
 
 The local seed validator passes and reports **30 questions, all `in_review`**, 35 skills, six subjects, ten tips and 30 glossary terms. The deployed 30-question bilingual bank was verified during the integration work. The original target of at least 150 questions remains a later content milestone; 150 questions have not been implemented or reviewed.
 
 ```text
 Practice browser on Netlify
   ├─ Supabase Auth → user access token
-  ├─ Supabase → private bookmarks, notes and optional saved drafts
+  ├─ Supabase → private bookmarks, notes, optional saved drafts and answer images
   └─ authenticated HTTPS → FastAPI on Render
                             ├─ Supabase Postgres → questions, attempts, evaluations, profiles
                             └─ model provider → scripted now; real API next
@@ -66,7 +66,7 @@ Shaked's existing backend hardening already addresses immutable answer revisions
 - Separate explanation field and CodeMirror editor with line numbers, syntax highlighting, indentation, undo and language selection.
 - Supports C, C++, Python, JavaScript, Verilog, SystemVerilog, VHDL and plain text for formulas, truth tables and pseudocode.
 - C/C++ now have local completions for keywords, common library names, current-document words, and `for` / `if` / `while` snippets. Python and JavaScript retain their language completions. Ctrl+Space opens suggestions; Enter accepts; snippet fields support Tab navigation.
-- These editing aids run locally. They do not call a model, compile code, simulate HDL, or prove the answer correct. There is no schematic/drawing editor yet.
+- These editing aids run locally. They do not call a model, compile code, simulate HDL, or prove the answer correct. A separate circuit editor and simulator are now available below the text editor (section E).
 - Explanation and code are serialized into the existing answer text using a fenced code block. Draft restoration preserves both. No editor-related database migration was needed.
 
 ### D. Loading and answer exposure
@@ -76,6 +76,36 @@ Shaked's existing backend hardening already addresses immutable answer revisions
 - The old “Question requirements” disclosure was removed because some authored requirements contained answer details. The public detail response keeps an empty compatibility field; the full requirements remain available to the server evaluator.
 - The deployed exposure migration closes direct browser reads of `question`, `question_translation` and the internal `attempt.follow_up_turns` column. Do not reopen these grants to simplify frontend work.
 - The Render blueprint still uses a free service. Independent loading does not remove a cold start: Render documents idle suspension after 15 minutes and roughly a minute to wake. Measure cold and warm requests separately; choose an always-on instance if immediate first-load response becomes a required acceptance criterion. No hosting upgrade is required merely to start a scheduled internal feedback review. [Render documentation](https://render.com/docs/free)
+
+### E. Circuit drawing, simulation and answer images (new)
+
+The answer workspace now has **Draw a logic circuit** and **Attach answer image** controls. A learner can combine explanation, code, a diagram and photos, or submit a diagram/photo without filler text. Existing text-only answers stay compatible.
+
+- **25 component types:** input/output pins, constants, clock, AND/NAND/OR/NOR/XOR/XNOR/NOT/buffer, MUX/DEMUX, one-hot encoder, decoder, half/full adder, bus adder, unsigned comparator, D flip-flop, register, counter, splitter and joiner.
+- Custom SVG symbols and per-pin connections on a draggable, zoomable grid; an expanded workspace; component labels; undo/redo; deletion; and a list-based connection alternative for keyboard/mobile use.
+- Gate input counts and routing sizes are configurable. MUX/DEMUX/encoder/decoder counts are powers of two (2/4/8/16); their selector/address width is derived. Buses support 1–16 bits. Fixed-function pin counts follow the component definition instead of permitting electrically meaningless combinations.
+- A source may drive several inputs. A target input accepts one wire. Different widths are rejected; use splitter/joiner where needed. Reconfiguration removes incompatible wires with an explanation and undo.
+- Circuits are bounded to 100 components and 200 wires and stored as version-1 JSON. No simulation runtime, signed URLs or image data is embedded in the circuit. JSON export is available; Logisim file import/export is not implemented.
+- **Working local simulation:** change input values, inspect outputs and wire values, step the clock, reset. Gates use bitwise operations, adders include carry, the encoder expects one-hot inputs, and splitter/joiner bit 0 is the least significant bit. Sequential parts sample simultaneously on a rising direct clock; active-high reset is asynchronous and an unconnected reset defaults to 0. State starts at zero. Carry-in defaults to 0. Other missing inputs propagate unknown values.
+- This is a bounded, zero-delay digital simulator, not HDL execution or a correctness grader. Unknown values are shown as `?`; arbitrary feedback can remain unknown. Derived/ripple clocks are explicitly unsupported and yield unknown outputs instead of fabricated values. All CLOCK components share the manual clock step. Timing delays, independent clock domains and timing diagrams are deferred. A follow-up task was assigned to **Harel** on the founder board for those extensions.
+- **Images:** up to four per answer, JPG/PNG/WebP, input up to 10 MB and 40 megapixels. The browser decodes and re-encodes to JPEG, strips camera metadata, limits the longest edge to 3000 pixels and uploads at most 5 MB per object. Transparent images are flattened onto white. Uploading blocks submission until the selected files finish; errors retain already uploaded references and allow another selection.
+- Private Storage bucket: `practice-answer-images`, object path `<user UUID>/<attempt UUID>/<file UUID>.<extension>`. Ownership and pilot membership are checked by Storage RLS. The backend verifies each submitted locator belongs to the same user/attempt and matches existing object size/MIME metadata. It accepts no arbitrary URL or base64 image payload.
+- Submitted media objects are immutable for browser users: no overwrite/update/delete policies. Removing an image from a draft detaches its reference; it does not erase the object. Signed read URLs last 15 minutes and refresh while the view is open. They are never saved in the database or export. The JSON attempt export contains locators, **not a portable bundle of image bytes**; open the images separately while signed in for review.
+
+**Assessment is deliberately held:** every submission with a nonempty circuit or image list is saved with `status: "done"`, `assessed_by: "unassessed"`, `flags: ["visual_review_pending"]`, null grade/evaluation/model/evaluation timestamp and zero evidence. Here `done` means acceptance/storage finished, not that an evaluator judged it. No model call, scoring, follow-up or skill update occurs for the whole mixed answer. The assistant area explains this. Refresh and reference comparison work normally; assistance snapshots remain immutable. Simulation never changes assessment evidence.
+
+**Migrations already applied:** `20260919194357_visual_practice_answers.sql`, `20260919195523_answer_image_storage_compatibility.sql`, `20260919195612_unassessed_visual_submissions.sql`. The filenames match live migration history. Together they add `attempt_submission.visual_answer`, private Storage policies, and database constraints that allow a visual-only saved/unassessed answer while retaining the evaluated-text constraints. The compatibility migration removes the initial upload trigger because Storage performs persistence using its own internal role after RLS authorization. Do not reintroduce an `auth.uid()`-dependent Storage write trigger.
+
+**What Shaked still needs for visual AI feedback (suggested design, not the only option):**
+
+1. Add a multimodal provider contract that receives the entire accepted answer. Fetch images server-side from the fixed private bucket after ownership validation; do not give the model unrestricted URL fetching or rely on temporary browser URLs.
+2. Decode/check image bytes again on the trusted server before AI ingestion. Current bucket MIME/size checks and frontend decoding are useful, but are not a trusted server image decoder. Bound dimensions, image count, token cost and time; support unreadable handwriting and partially visible schematics as explicit uncertainty.
+3. Supply the structured circuit/netlist (or a verified rendering) alongside text and images. Do not grade only the text portion or mistake browser simulation output for proof that requirements were met. Add known-correct/incorrect circuits, bus widths, one-hot ambiguity, reset/clock assumptions and alternative solutions to the expert review set.
+4. Introduce an explicit versioned assessment/review operation for already saved visual answers. The existing retry route only handles failed evaluations; visual answers currently finish as saved/unassessed and cannot be blindly retried for grading. Keep accepted content immutable and apply evidence at most once after a genuine assessment.
+5. Add upload rate/storage quotas and cleanup of abandoned or detached images before a broad pilot. There is currently a four-image **submission** limit and a per-object Storage size limit, not a hard total upload quota. Maintenance must delete objects through the Storage API, after verifying they are unreferenced, not by deleting `storage.objects` rows. Define retention and account-deletion behavior explicitly. Do not enable browser deletion of submitted objects as a shortcut.
+6. Keep `assessed_by: "unassessed"` and `visual_review_pending` distinguishable from demo and real-model results until that entire pipeline is validated. The frontend already handles these states. Connecting a text model key alone must not silently enable visual grading.
+
+Reference APIs: [React Flow custom nodes](https://reactflow.dev/learn/customization/custom-nodes), [connection validation](https://reactflow.dev/examples/interaction/validation), [Supabase private buckets](https://supabase.com/docs/guides/storage/buckets/fundamentals), [bucket restrictions](https://supabase.com/docs/guides/storage/buckets/creating-buckets).
 
 ## 3. The API contract to preserve
 
@@ -100,7 +130,7 @@ All `/v1` calls require the user's bearer token. The normal frontend submission 
 }
 ```
 
-The current combined limit is **20,000 characters**, including code fences. The editor's language choice is represented in the fence, not a separate API field. If structured answer fields are added later, keep existing saved answers and clients compatible.
+The current text limit is **20,000 characters**, including code fences. `answer.visual` is an optional object with `circuit` and `images`; the response exposes the same accepted snapshot as `submission.visual`. Blank text is accepted only when visual content is present. The idempotency comparison includes both text and the entire visual document. The editor's language choice is represented in the fence, not a separate API field. Keep existing saved answers and text-only clients compatible.
 
 `SubmissionView` exposes the accepted answer's immutable `hints_seen` and `reference_seen`. Current assistance multipliers for 0/1/2/3 hints are 1.0/0.8/0.6/0.4, with a `quick` base evidence weight of 0.3 before familiarity and exposure factors. These are confidence/evidence weights, not percentage grades. Revealing the reference **before** submission yields no independent mastery evidence; revealing it **after** submission must not rewrite that answer's recorded assistance.
 
@@ -110,11 +140,11 @@ Review this calibration intentionally. If the new single-answer experience deser
 
 ### P0. Separate demonstration history from real assessment
 
-**Why this comes first:** the scripted pipeline has already written demonstration evaluations and profile updates. Hiding those values in the UI does not remove them. Today, the frontend decides whether to show assessment using the server's current `/health.llm_provider`; it does not know each historical submission's provider. Simply switching the server to Anthropic could expose old demonstration results as if they were real.
+**Current progress:** Shaked's latest changes persist `evaluator_model` and expose per-submission `assessed_by` / `model`; this release also prevents historical demo feedback from appearing in the assistant area based on that provenance. Visual answers are independently marked `unassessed`. The remaining risk is old demonstration profile/metrics data: hiding feedback does not remove previously counted demo evidence, and the progress view still uses runtime provider state.
 
 Choose and document a bounded transition:
 
-- Preferred durable approach: expose persisted evaluation provenance in the API, identify scripted/real results per submission, filter demo evidence from real progress, and coordinate the frontend display change. Model/version fields already exist in evaluation metrics and usage records; inspect them before adding another table.
+- Finish the durable approach already started: audit historical provenance, filter demo evidence from real progress, and coordinate any remaining frontend display changes. Model/version fields already exist in evaluation metrics and usage records; inspect them before adding another table.
 - A smaller internal-test alternative is an isolated clean dataset or test cohort. If Harel and Shaked want to use their existing personal accounts, agree on a scoped archive/reset of **practice assessment** data first. Preserve task-board records, accounts and any answers they want to keep. Do not perform a blanket database reset.
 
 **Done when:** a prior scripted attempt cannot be presented or counted as a real assessment, and each founder's first real test starts from an understood baseline.
@@ -189,6 +219,9 @@ This is the gate for beginning meaningful founder testing, not certification for
 | Incorrect / irrelevant answer | Feedback identifies the technical issue; fluent or long nonsense is not praised as correct. |
 | Different valid solution | Accepted when it meets the constraints, even if it differs from the reference. |
 | Hebrew and English | Meaning and feedback quality agree; code and technical notation stay readable. |
+| Circuit/photo-only or mixed answer | Diagram and private images reopen after refresh; no grade or skill evidence is invented before visual assessment is implemented. |
+| Simulation | Known truth tables, MUX selection, carry, bit ordering, rising-edge sampling and reset agree with hand calculations. Unsupported clocks show an explicit warning. |
+| Image privacy | Another user cannot read/upload to the owner’s path; a submitted image cannot be replaced or deleted from the browser. |
 | Explanation plus code / HDL / formula | Actual editor text is evaluated intact; no claim of execution unless a real check was run. |
 | Zero, one, two and three hints | Exact count is stored; assistance affects evidence using the chosen policy, separately from correctness. |
 | Reference before submission | Saved as assisted practice, without independent mastery evidence. |
@@ -235,9 +268,7 @@ The current JSON export includes the attempt view; it does not yet expose every 
 
 ## 7. Verification evidence and useful entry points
 
-Previously completed at the code baseline: **17 frontend tests**, TypeScript and the Netlify production build passed; the last backend run reported **531 passed, 16 environment-dependent tests skipped**. Browser checks covered desktop/mobile, answer persistence, hints, explicit reference exposure, C/C++ completion and unchanged Python completion. Temporary test accounts were removed. These are prior run results, not a claim that all tests were rerun for this documentation-only change, nor evidence of real-model accuracy.
-
-Fresh checks for this handoff: repository synchronization, source/configuration inspection, live `/health`, and `seed_db.py --check`. No paid model calls were made.
+For this visual-answer release, **27 frontend tests** and TypeScript passed; the backend suite reported **545 passed, 16 environment-dependent tests skipped**. New tests cover gate truth tables, selectors/decoders, encoder ambiguity, adders, bus ordering, register sampling/reset, counter wrap, derived-clock rejection, register resizing, unknowns, graph validation, visual-only persistence, replay conflicts and absent/foreign image locators. The live API/Storage check additionally verified image-only save/reload, same-key replay, blocked cross-user/public reads, rejected cross-user uploads, blocked replacement/deletion, and no score. Browser testing covered desktop and 390 px mobile, component configuration, wiring/fan-out, drag, undo after incompatible width changes, input toggling, simulation, image upload, visual-only save and reload. Tests used disposable QA accounts and synthetic images; no founder answers were edited. These checks do not establish real-model accuracy.
 
 Useful commands, from the indicated directories:
 
@@ -261,6 +292,8 @@ Live database tests require an appropriate configured test environment; inspect 
 | --- | --- |
 | Frontend attempt flow / assistant area | [practice-session.tsx](../apps/web/src/components/practice-session.tsx) |
 | Answer serialization / editor | [technical-answer.ts](../apps/web/src/lib/technical-answer.ts), [answer-editor.tsx](../apps/web/src/components/answer-editor.tsx) |
+| Circuits, simulation and image UI | [circuit.ts](../apps/web/src/lib/circuit.ts), [circuit-editor.tsx](../apps/web/src/components/circuit-editor.tsx), [visual-answer.tsx](../apps/web/src/components/visual-answer.tsx) |
+| Visual API schema and validation | [visual_answer.py](../backend/app/schemas/visual_answer.py), [store.py](../backend/app/services/store.py) |
 | C/C++ completions | [c-code-completions.ts](../apps/web/src/lib/c-code-completions.ts) |
 | API client / UI provider detection | [practice-api.ts](../apps/web/src/lib/practice-api.ts), [page.tsx](../apps/web/src/app/page.tsx) |
 | Provider configuration | [config.py](../backend/app/config.py), [runtime.py](../backend/app/runtime.py), [providers.py](../backend/app/engine/providers.py), [render.yaml](../render.yaml) |
@@ -278,6 +311,7 @@ Before any future schema deployment, reconcile the previously documented local/l
 - [ ] The question keys and prepared answers for the first joint review session.
 - [ ] Results for failure/retry, assistance snapshots and usage checks, plus any known limitations.
 - [ ] A practical review budget and observed feedback latency.
+- [ ] Explicit decision on the visual-assessment phase, image retention/cleanup, and private server-side image access. Text-feedback review can start before this; visual answers remain human-review-only.
 - [ ] Confirmation that both founders can sign in and begin the checklist in section 5.
 
 With these items ready, Harel and Shaked can test the actual learning experience together and turn disagreements into concrete content, prompt, scoring or UI fixes.

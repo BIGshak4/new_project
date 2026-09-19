@@ -10,6 +10,12 @@ import {
 } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import type { Lang } from "./auth";
+import { VisualAnswer } from "./visual-answer";
+import {
+  emptyVisual,
+  hasVisual,
+  type VisualAnswer as Visual,
+} from "../lib/circuit";
 import { AnswerEditor } from "./answer-editor";
 import { parseTechnicalAnswer } from "../lib/technical-answer";
 import { supabase } from "../lib/supabase";
@@ -71,6 +77,8 @@ export function PracticeSession({
   const [recoveryRequired, setRecoveryRequired] = useState(false);
   const [answer, setAnswer] = useState(""),
     [followAnswer, setFollowAnswer] = useState("");
+  const [visual, setVisual] = useState<Visual>(emptyVisual);
+  const [uploading, setUploading] = useState(false);
   const [pending, setPending] = useState<PendingAnswer | null>(null);
   const guard = useRef(false),
     live = useRef(true);
@@ -117,6 +125,7 @@ export function PracticeSession({
           setQuestion(a.question);
           const draft = readLocal<{
             answer?: string;
+            visual?: Visual;
             followAnswer?: string;
             pending?: PendingAnswer | null;
             turn?: number;
@@ -126,6 +135,7 @@ export function PracticeSession({
               ? draft.pending
               : null;
           setPending(p);
+          setVisual(a.submission?.visual ?? draft?.visual ?? emptyVisual());
           setAnswer(a.submission?.answer ?? draft?.answer ?? "");
           setFollowAnswer(
             draft?.turn === a.pending_follow_up?.turn
@@ -177,12 +187,14 @@ export function PracticeSession({
     if (!attemptId || loading || !attempt) return;
     writeLocal(key, {
       answer,
+      visual,
       followAnswer,
       pending,
       turn: attempt?.pending_follow_up?.turn,
     });
   }, [
     answer,
+    visual,
     followAnswer,
     pending,
     key,
@@ -308,6 +320,7 @@ export function PracticeSession({
     if (
       !attempt ||
       guard.current ||
+      uploading ||
       recoveryRequired ||
       attempt.status === "evaluating"
     )
@@ -315,16 +328,18 @@ export function PracticeSession({
     const turn = attempt.submission ? attempt.pending_follow_up?.turn : null;
     if (attempt.submission && turn === undefined) return;
     const text = turn === null ? answer : followAnswer;
-    if (!pending && !text.trim()) return;
+    if (!pending && !text.trim() && !hasVisual(visual)) return;
     const p: PendingAnswer = pending ?? {
       key: newIdempotencyKey(),
       text,
+      visual: hasVisual(visual) ? visual : null,
       turn: turn ?? null,
     };
     setPending(p);
     // Persist identity BEFORE the request; a response lost in transit must not become a new submission.
     writeLocal(key, {
       answer,
+      visual,
       followAnswer,
       pending: p,
       turn: attempt.pending_follow_up?.turn,
@@ -332,7 +347,11 @@ export function PracticeSession({
     await mutate(async () => {
       const result =
         p.turn === null
-          ? await api.submit(attempt.id, { text: p.text }, p.key)
+          ? await api.submit(
+              attempt.id,
+              { text: p.text, visual: p.visual },
+              p.key,
+            )
           : await api.submitFollowUp(
               attempt.id,
               p.turn,
@@ -610,6 +629,15 @@ export function PracticeSession({
                           codeLanguage={question.code_language}
                           starterCode={question.starter_code}
                         />
+                        <VisualAnswer
+                          value={visual}
+                          onChange={setVisual}
+                          lang={lang}
+                          attemptId={attempt.id}
+                          userId={user.id}
+                          disabled={disabled || !!pending}
+                          onUploading={setUploading}
+                        />
                         <p className="muted small">
                           {t(
                             "טיוטה בדפדפן · השליחה שומרת את התשובה בחשבון.",
@@ -639,8 +667,10 @@ export function PracticeSession({
                           className="primary"
                           disabled={
                             disabled ||
+                            uploading ||
                             (!pending &&
-                              (!answer.trim() || answer.length > 20000))
+                              ((!answer.trim() && !hasVisual(visual)) ||
+                                answer.length > 20000))
                           }
                           onClick={() => void submit()}
                         >
@@ -651,7 +681,7 @@ export function PracticeSession({
                                   "שליחה חוזרת של אותה תשובה",
                                   "Resend the same answer",
                                 )
-                              : demo
+                              : demo || hasVisual(visual)
                                 ? t("שמירת הפתרון", "Save my solution")
                                 : t("שליחה וקבלת משוב", "Submit for feedback")}
                         </button>
@@ -757,7 +787,14 @@ export function PracticeSession({
                     : t("משוב על הפתרון", "Solution feedback")}
                 </span>
               </div>
-              {demo ? (
+              {attempt?.submission?.visual ? (
+                <p>
+                  {t(
+                    "התשובה החזותית נשמרה לבדיקה אנושית. הערכת מעגלים ותמונות תתחבר בהמשך; לא חושב ציון ולא שונתה רמת המיומנות.",
+                    "Your visual answer is saved for human review. Circuit and image assessment will be connected later; no grade or skill update was generated.",
+                  )}
+                </p>
+              ) : demo || attempt?.submission?.assessed_by === "demo" ? (
                 <p>
                   {t(
                     "כאן תוכלו לקבל הכוונה אישית ולדון בדרך הפתרון. העוזר עדיין אינו מחובר, ולכן לא מוצגים ציונים או משובי הדגמה. בינתיים אפשר להיעזר ברמזים המדורגים ובפתרון המוצע.",
@@ -841,6 +878,7 @@ function SavedAnswer({
           <code>{parts.code}</code>
         </pre>
       )}
+      {s.visual && <VisualAnswer value={s.visual} lang={lang} />}
       <p className="help-status">
         {t("רמזים שנראו לפני השליחה", "Hints seen before submission")}:{" "}
         {s.hints_seen ?? "—"}

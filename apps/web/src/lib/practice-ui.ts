@@ -131,7 +131,12 @@ export function allSubmissions(a: Attempt): Submission[] {
 export function latestSubmission(a: Attempt) {
   return allSubmissions(a).sort((x, y) => y.revision - x.revision)[0];
 }
-export type PendingAnswer = { key: string; text: string; turn: number | null };
+export type PendingAnswer = {
+  key: string;
+  text: string;
+  turn: number | null;
+  visual?: import("./circuit").VisualAnswer | null;
+};
 export function hasAccepted(a: Attempt, pending: PendingAnswer) {
   return allSubmissions(a).some((s) => s.key === pending.key);
 }

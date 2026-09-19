@@ -4,7 +4,7 @@
 
 The candidate reads a question, starts an attempt, and writes one solution. The screen no longer asks for a practice mode or confidence score and does not show automatic follow-up questions. New attempts use the existing `quick` API mode. The deeper backend modes remain available for a future explicitly designed interview experience.
 
-The answer has two parts: an explanation with automatic text direction, and an optional technical editor with line numbers, syntax highlighting, indentation and undo. Supported choices are C, C++, Python, JavaScript, Verilog, SystemVerilog, VHDL and plain text for formulas, truth tables or pseudocode. This is a text editor, not a compiler, simulator, schematic editor or code execution service.
+The answer has two parts: an explanation with automatic text direction, and an optional technical editor with line numbers, syntax highlighting, indentation and undo. Supported choices are C, C++, Python, JavaScript, Verilog, SystemVerilog, VHDL and plain text for formulas, truth tables or pseudocode. The code editor itself does not compile or execute code. A separate circuit drawing/simulation editor and private answer-image attachments have now been added; see [the current handoff, section E](shaked-human-review-handoff.md#e-circuit-drawing-simulation-and-answer-images-new) for the complete visual-answer contract and remaining AI work.
 
 Code stays left-to-right, while Hebrew reasoning can remain right-to-left. The client serializes both parts into the existing answer string using a fenced code block. Existing answers remain readable. The submitted string, including fences, has the existing 20,000-character limit. Draft recovery, idempotency keys and interrupted-submission recovery are retained. No database migration is required.
 
@@ -52,7 +52,7 @@ Interactive guidance still needs a real authenticated conversation endpoint and 
 7. Store model/prompt version, assistance level and enough provenance to audit feedback. Separate real and scripted assessments, and use bounded conversation summaries rather than unbounded history.
 8. Add request limits, model budgets, failure/retry behavior and expert-reviewed evaluations before enabling the assistant for real candidates. Keep provider keys server-side.
 
-No paid API, paid hosting plan or new database tables were activated in this change.
+No paid API or hosting plan was activated. Visual-answer schema/Storage migrations were subsequently applied; see the current handoff before deployment.
 
 ## Verification
 

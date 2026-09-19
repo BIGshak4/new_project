@@ -13,6 +13,7 @@
  * Types mirror backend/app/schemas/api.py. Nothing here contains a reference solution or a
  * hidden hint: hints come one at a time from nextHint(), the reference from revealReference().
  */
+import type { VisualAnswer } from "./circuit";
 import { supabase } from "./supabase";
 
 export type ApiLang = "en" | "he";
@@ -60,6 +61,7 @@ export type Submission = {
   key: string;
   turn: number;
   answer: string;
+  visual?: VisualAnswer | null;
   status: SubmissionStatus;
   accepted_at: string;
   evaluated_at: string | null;
@@ -72,7 +74,7 @@ export type Submission = {
   tip: Tip | null;
   follow_up: string | null;
   /** "demo" while the server runs the scripted stand-in; only "model" results are real assessments. */
-  assessed_by: "demo" | "model";
+  assessed_by: "demo" | "model" | "unassessed";
   model: string | null;
   hints_seen?: number;
   reference_seen?: boolean;
@@ -139,7 +141,12 @@ export type Progress = {
   daily_limit: number;
 };
 
-export type Me = { id: string; email: string | null; pilot_member: boolean; can_manage_tasks: boolean };
+export type Me = {
+  id: string;
+  email: string | null;
+  pilot_member: boolean;
+  can_manage_tasks: boolean;
+};
 
 export type StartAttemptRequest = {
   question_key?: string;
@@ -151,6 +158,7 @@ export type StartAttemptRequest = {
 
 export type SubmitRequest = {
   text: string;
+  visual?: VisualAnswer | null;
   latency_ms?: number;
   revision_count?: number;
 };
@@ -201,7 +209,8 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
   async function token(): Promise<string> {
     const { data } = await supabase.auth.getSession();
     const access = data.session?.access_token;
-    if (!access) throw new PracticeApiError("unauthenticated", "not signed in", 401);
+    if (!access)
+      throw new PracticeApiError("unauthenticated", "not signed in", 401);
     return access;
   }
 
@@ -226,11 +235,17 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
         signal: AbortSignal.timeout(method === "GET" ? 65000 : 150000),
       });
     } catch (error) {
-      throw new PracticeApiError("network", `could not reach the practice API: ${String(error)}`, 0);
+      throw new PracticeApiError(
+        "network",
+        `could not reach the practice API: ${String(error)}`,
+        0,
+      );
     }
     const requestId = response.headers.get("x-request-id") ?? undefined;
     if (response.ok) return (await response.json()) as T;
-    let payload: { error?: { code?: string; message?: string; details?: unknown } } = {};
+    let payload: {
+      error?: { code?: string; message?: string; details?: unknown };
+    } = {};
     try {
       payload = await response.json();
     } catch {
@@ -253,52 +268,92 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
   };
 
   return {
-    health: () => call<{ llm_provider: string; env: string; store: string }>("GET", "/health"),
+    health: () =>
+      call<{ llm_provider: string; env: string; store: string }>(
+        "GET",
+        "/health",
+      ),
     me: () => call<Me>("GET", "/v1/me"),
     progress: () => call<Progress>("GET", "/v1/me/progress"),
 
     listQuestions: (language: ApiLang, subject?: string) =>
-      call<QuestionSummary[]>("GET", `/v1/questions${q({ language, subject })}`),
+      call<QuestionSummary[]>(
+        "GET",
+        `/v1/questions${q({ language, subject })}`,
+      ),
     getQuestion: (keyOrId: string, language: ApiLang) =>
-      call<QuestionDetail>("GET", `/v1/questions/${encodeURIComponent(keyOrId)}${q({ language })}`),
+      call<QuestionDetail>(
+        "GET",
+        `/v1/questions/${encodeURIComponent(keyOrId)}${q({ language })}`,
+      ),
 
-    startAttempt: (body: StartAttemptRequest) => call<Attempt>("POST", "/v1/practice/attempts", body),
-    getAttempt: (attemptId: string) => call<Attempt>("GET", `/v1/practice/attempts/${attemptId}`),
+    startAttempt: (body: StartAttemptRequest) =>
+      call<Attempt>("POST", "/v1/practice/attempts", body),
+    getAttempt: (attemptId: string) =>
+      call<Attempt>("GET", `/v1/practice/attempts/${attemptId}`),
     nextHint: (attemptId: string) =>
-      call<{ hint: Hint | null; attempt: Attempt }>("POST", `/v1/practice/attempts/${attemptId}/hints/next`),
+      call<{ hint: Hint | null; attempt: Attempt }>(
+        "POST",
+        `/v1/practice/attempts/${attemptId}/hints/next`,
+      ),
     revealReference: (attemptId: string) =>
-      call<{ reference: string; attempt: Attempt }>("POST", `/v1/practice/attempts/${attemptId}/reference`),
+      call<{ reference: string; attempt: Attempt }>(
+        "POST",
+        `/v1/practice/attempts/${attemptId}/reference`,
+      ),
 
     /** Main answer. `idempotencyKey`: one per click, reused on retry (newIdempotencyKey()). */
     submit: (attemptId: string, body: SubmitRequest, idempotencyKey: string) =>
       call<SubmissionResponse>(
         "POST",
         `/v1/practice/attempts/${attemptId}/submissions`,
-        { answer: { text: body.text }, latency_ms: body.latency_ms, revision_count: body.revision_count },
+        {
+          answer: { text: body.text, visual: body.visual },
+          latency_ms: body.latency_ms,
+          revision_count: body.revision_count,
+        },
         { "Idempotency-Key": idempotencyKey },
       ),
-    submitFollowUp: (attemptId: string, turn: number, body: SubmitRequest, idempotencyKey: string) =>
+    submitFollowUp: (
+      attemptId: string,
+      turn: number,
+      body: SubmitRequest,
+      idempotencyKey: string,
+    ) =>
       call<SubmissionResponse>(
         "POST",
         `/v1/practice/attempts/${attemptId}/follow-ups/${turn}/submissions`,
-        { answer: { text: body.text }, latency_ms: body.latency_ms },
+        {
+          answer: { text: body.text, visual: body.visual },
+          latency_ms: body.latency_ms,
+        },
         { "Idempotency-Key": idempotencyKey },
       ),
     /** After a submission with status "failed": evaluate the saved answer again. */
     retry: (attemptId: string, revision: number) =>
-      call<SubmissionResponse>("POST", `/v1/practice/attempts/${attemptId}/submissions/${revision}/retry`),
+      call<SubmissionResponse>(
+        "POST",
+        `/v1/practice/attempts/${attemptId}/submissions/${revision}/retry`,
+      ),
 
     /**
      * submit/submitFollowUp/retry answer 202 with status "evaluating" when the model takes longer than
      * the server's response budget (about two minutes); the evaluation continues on the server. Poll
      * with this until the attempt leaves "evaluating". Resolves with the latest attempt view.
      */
-    waitForEvaluation: async (attemptId: string, opts: { intervalMs?: number; timeoutMs?: number } = {}) => {
+    waitForEvaluation: async (
+      attemptId: string,
+      opts: { intervalMs?: number; timeoutMs?: number } = {},
+    ) => {
       const interval = opts.intervalMs ?? 3000;
       const deadline = Date.now() + (opts.timeoutMs ?? 10 * 60 * 1000);
       for (;;) {
-        const attempt = await call<Attempt>("GET", `/v1/practice/attempts/${attemptId}`);
-        if (attempt.status !== "evaluating" || Date.now() > deadline) return attempt;
+        const attempt = await call<Attempt>(
+          "GET",
+          `/v1/practice/attempts/${attemptId}`,
+        );
+        if (attempt.status !== "evaluating" || Date.now() > deadline)
+          return attempt;
         await new Promise((resolve) => setTimeout(resolve, interval));
       }
     },
