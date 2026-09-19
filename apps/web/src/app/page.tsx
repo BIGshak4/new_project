@@ -12,6 +12,7 @@ import {
   RotateCcw,
 } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
+import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
 import { Auth, type Lang } from "../components/auth";
 import { PracticeSession } from "../components/practice-session";
 import { supabase } from "../lib/supabase";
@@ -58,21 +59,29 @@ export default function Page() {
       localStorage.setItem("jobrun-language", lang);
     } catch {}
   }, [lang]);
+  const languageControl = (
+    <button
+      className="language-switch"
+      dir="ltr"
+      onClick={() => setLang(lang === "he" ? "en" : "he")}
+      aria-label={lang === "he" ? "החלפה לאנגלית" : "Switch to Hebrew"}
+      title={lang === "he" ? "החלפה לאנגלית" : "Switch to Hebrew"}
+    >
+      {lang === "he" ? "EN" : "עב"}
+    </button>
+  );
   return (
-    <>
-      <button
-        className="language-switch"
-        onClick={() => setLang(lang === "he" ? "en" : "he")}
-        aria-label={lang === "he" ? "החלפה לאנגלית" : "Switch to Hebrew"}
-      >
-        {lang === "he" ? "English" : "עברית"}
-      </button>
-      <Auth lang={lang} kind="practice">
-        {(user, signOut) => (
-          <Workspace key={user.id} user={user} signOut={signOut} lang={lang} />
-        )}
-      </Auth>
-    </>
+    <Auth lang={lang} kind="practice" controls={languageControl}>
+      {(user, signOut) => (
+        <Workspace
+          key={user.id}
+          user={user}
+          signOut={signOut}
+          lang={lang}
+          languageControl={languageControl}
+        />
+      )}
+    </Auth>
   );
 }
 
@@ -80,10 +89,12 @@ function Workspace({
   user,
   signOut,
   lang,
+  languageControl,
 }: {
   user: User;
   signOut: () => void;
   lang: Lang;
+  languageControl: React.ReactNode;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [api] = useState(() => practiceApi());
@@ -98,6 +109,12 @@ function Workspace({
   const [query, setQuery] = useState(""),
     [subject, setSubject] = useState("all");
   const generation = useRef(0);
+  const [progressReady, setProgressReady] = useState(false);
+  const [entriesReady, setEntriesReady] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [progressLoading, setProgressLoading] = useState(true);
+  const [entriesLoading, setEntriesLoading] = useState(true);
+  const [cachedQuestions, setCachedQuestions] = useState(false);
 
   useEffect(() => {
     const sync = () => setRoute(currentRoute());
@@ -120,32 +137,76 @@ function Workspace({
 
   const load = useCallback(async () => {
     const version = ++generation.current;
-    setLoading(true);
+    const current = () => version === generation.current;
+    const cached = readQuestionCache(user.id, lang);
+    setQuestions(cached ?? []);
+    setLoading(!cached);
+    setRefreshing(!!cached);
+    setCachedQuestions(!!cached);
+    setProgressLoading(true);
+    setEntriesLoading(true);
+    setProgressReady(false);
+    setEntriesReady(false);
     setError("");
-    try {
-      const [bank, p, saved, health] = await Promise.all([
-        api.listQuestions(lang),
-        api.progress(),
+    const report = (e: unknown) => {
+      if (current()) setError(apiMessage(e, lang));
+    };
+    // Each section becomes usable independently; progress and health never block the bank.
+    await Promise.allSettled([
+      api
+        .listQuestions(lang)
+        .then((bank) => {
+          if (!current()) return;
+          setQuestions(bank);
+          setCachedQuestions(false);
+          writeQuestionCache(user.id, lang, bank);
+        })
+        .catch(report)
+        .finally(() => {
+          if (current()) {
+            setLoading(false);
+            setRefreshing(false);
+          }
+        }),
+      api
+        .progress()
+        .then((p) => {
+          if (current()) {
+            setProgress(p);
+            setProgressReady(true);
+          }
+        })
+        .catch(report)
+        .finally(() => {
+          if (current()) setProgressLoading(false);
+        }),
+      Promise.resolve(
         supabase
           .from("jr_practice_entries")
           .select(
             "id,user_id,question_id,answer,self_rating,bookmarked,completed,version",
           )
           .eq("user_id", user.id),
-        api.health(),
-      ]);
-      if (version !== generation.current) return;
-      if (saved.error) throw saved.error;
-      setQuestions(bank);
-      setProgress(p);
-      setEntries((current) => mergeEntries(current, saved.data ?? []));
-      setDemo(health.llm_provider !== "anthropic");
-      setHealthKnown(true);
-    } catch (e) {
-      if (version === generation.current) setError(apiMessage(e, lang));
-    } finally {
-      if (version === generation.current) setLoading(false);
-    }
+      )
+        .then((saved) => {
+          if (!current()) return;
+          if (saved.error) throw saved.error;
+          setEntries((old) => mergeEntries(old, saved.data ?? []));
+          setEntriesReady(true);
+        })
+        .catch(report)
+        .finally(() => {
+          if (current()) setEntriesLoading(false);
+        }),
+      api
+        .health()
+        .then((health) => {
+          if (!current()) return;
+          setDemo(health.llm_provider !== "anthropic");
+          setHealthKnown(true);
+        })
+        .catch(report),
+    ]);
   }, [api, lang, user.id]);
   useEffect(() => {
     void load();
@@ -245,14 +306,16 @@ function Workspace({
           <span className="topbar-label">
             {t("סביבת התרגול שלכם", "Your practice workspace")}
           </span>
-          <button
-            className="icon-button"
-            style={{ marginInlineEnd: 95 }}
-            aria-label={t("יציאה", "Sign out")}
-            onClick={signOut}
-          >
-            <LogOut size={17} />
-          </button>
+          <div className="topbar-actions">
+            {languageControl}
+            <button
+              className="icon-button"
+              aria-label={t("יציאה", "Sign out")}
+              onClick={signOut}
+            >
+              <LogOut size={17} />
+            </button>
+          </div>
         </header>
         <main className="content">
           <div className="pilot-note" role="note">
@@ -318,17 +381,23 @@ function Workspace({
               </div>
               <div className="summary-strip">
                 <span>
-                  <strong>{questions.length}</strong>
+                  <strong>{loading ? "—" : questions.length}</strong>
                   {t("שאלות במאגר", "questions")}
                 </span>
                 <span>
                   <strong>
-                    {progress.attempts_today} / {progress.daily_limit}
+                    {progressReady
+                      ? `${progress.attempts_today} / ${progress.daily_limit}`
+                      : "—"}
                   </strong>
                   {t("תרגולים שנפתחו היום", "attempts started today")}
                 </span>
                 <span>
-                  <strong>{entries.filter((e) => e.bookmarked).length}</strong>
+                  <strong>
+                    {entriesReady
+                      ? entries.filter((e) => e.bookmarked).length
+                      : "—"}
+                  </strong>
                   {t("שמורים", "saved")}
                 </span>
               </div>
@@ -341,14 +410,33 @@ function Workspace({
                   </button>
                 </div>
               )}
-              {loading ? (
+              {cachedQuestions && (
+                <p className="muted small" role="status">
+                  {refreshing
+                    ? t(
+                        "מציגים את הרשימה מהביקור האחרון ומעדכנים אותה ברקע…",
+                        "Showing your last question list while refreshing in the background…",
+                      )
+                    : t(
+                        "זו הרשימה מהביקור האחרון. נסו לרענן כדי לוודא שהיא עדכנית.",
+                        "This is your last saved list. Retry to check for updates.",
+                      )}
+                </p>
+              )}
+              {loading ||
+              ((route.view === "progress" || route.view === "history") &&
+                progressLoading) ||
+              (route.view === "bookmarks" && entriesLoading) ? (
                 <div className="loading" role="status">
                   {t(
                     "טוענים את התרגול… אחרי הפסקה השרת עשוי להזדקק לכדקה.",
                     "Loading practice… after a pause the server may need about a minute.",
                   )}
                 </div>
-              ) : route.view === "progress" ? (
+              ) : ((route.view === "progress" || route.view === "history") &&
+                  !progressReady) ||
+                (route.view === "bookmarks" &&
+                  !entriesReady) ? null : route.view === "progress" ? (
                 <>
                   <h2>
                     {demo

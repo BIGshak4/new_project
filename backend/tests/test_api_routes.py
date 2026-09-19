@@ -54,6 +54,20 @@ async def start(client, headers, **body) -> dict:
 
 
 class TestTheContract:
+    @pytest.mark.parametrize("language", ["he", "en"])
+    async def test_grading_requirements_never_leave_question_or_attempt(self, client, user, catalog, language):
+        _, headers = user
+        # The engine still needs these instructions, but some contain the answer.
+        assert catalog.questions[Q].translations[language].requirements
+        response = await client.get(f"/v1/questions/{Q}", params={"language": language}, headers=headers)
+        assert response.status_code == 200
+        assert response.json()["requirements"] == ""
+        attempt = await start(client, headers, language=language)
+        assert attempt["question"]["requirements"] == ""
+        assert attempt["reference"] is None and attempt["hints"] == []
+        restored = (await client.get(f"{BASE}/{attempt['id']}", headers=headers)).json()
+        assert restored["question"]["requirements"] == ""
+
     async def test_the_whole_flow_over_http(self, client, user):
         _, h = user
         listing = (await client.get("/v1/questions", params={"language": "he"}, headers=h)).json()

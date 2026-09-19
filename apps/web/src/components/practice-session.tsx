@@ -430,7 +430,83 @@ export function PracticeSession({
                 )}
               </p>
             )}
-            <div className="practice-layout">
+            {!attempt && (
+              <section className="practice-setup" id="practice-setup">
+                <p className="small muted">
+                  {t(
+                    "התחילו תרגול כדי לכתוב תשובה, לקבל רמזים ולראות פתרון.",
+                    "Start an attempt to write your answer, get hints, and reveal the solution.",
+                  )}
+                </p>
+
+                <>
+                  <h2>
+                    {t("איך תרצו לתרגל?", "How would you like to practice?")}
+                  </h2>
+                  <label className="setup-label">
+                    {t("סוג התרגול", "Practice mode")}
+                    <select
+                      value={mode}
+                      onChange={(e) =>
+                        setMode(e.target.value as "quick" | "deep")
+                      }
+                    >
+                      <option value="deep">
+                        {t(
+                          "תרגול מעמיק עם שאלות המשך",
+                          "Deep practice with follow-ups",
+                        )}
+                      </option>
+                      <option value="quick">
+                        {t(
+                          "תרגול קצר — שאלה ומשוב",
+                          "Quick practice — one question and feedback",
+                        )}
+                      </option>
+                    </select>
+                  </label>
+                  <label className="setup-label">
+                    {t(
+                      "עד כמה אתם בטוחים שתדעו לפתור? (1–5)",
+                      "How confident are you that you can solve it? (1–5)",
+                    )}
+                    <select
+                      value={confidence}
+                      onChange={(e) => setConfidence(Number(e.target.value))}
+                    >
+                      {[1, 2, 3, 4, 5].map((n) => (
+                        <option key={n} value={n}>
+                          {n}
+                          {n === 1
+                            ? t(" — בכלל לא בטוחים", " — not confident")
+                            : n === 5
+                              ? t(" — בטוחים מאוד", " — very confident")
+                              : ""}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <button
+                    className="primary"
+                    onClick={() => void start()}
+                    disabled={busy}
+                  >
+                    {busy
+                      ? t("פותחים תרגול…", "Starting…")
+                      : t("פתיחת תרגול", "Start attempt")}
+                  </button>
+                  <p className="small muted">
+                    {t(
+                      "הפתיחה נספרת במכסה היומית. אחרי הפתיחה אפשר לחזור לאותו תרגול מתוך ההיסטוריה.",
+                      "Starting counts toward your daily limit. Reopen the same attempt from your history.",
+                    )}
+                  </p>
+                </>
+              </section>
+            )}
+            <div
+              className={`practice-layout ${!attempt ? "practice-preview" : ""}`}
+            >
               <section className="question-sheet">
                 <div className="row">
                   <span className="badge">
@@ -441,23 +517,24 @@ export function PracticeSession({
                   </span>
                 </div>
                 <h1 dir="auto">{question.title}</h1>
-                <RichText text={question.prompt} />
-                {question.requirements && (
-                  <details className="requirements">
-                    <summary>
-                      {t("דרישות השאלה", "Question requirements")}
-                    </summary>
-                    <RichText text={question.requirements} />
-                  </details>
-                )}
-                {question.choices && (
-                  <ol className="choices">
-                    {question.choices.map((c, i) => (
-                      <li key={i} dir="auto">
-                        {c}
-                      </li>
-                    ))}
-                  </ol>
+                {!attempt && (
+                  <div className="question-help">
+                    <div className="row">
+                      <button disabled>
+                        <Lightbulb size={16} />
+                        {t("קבלת רמז", "Get a hint")}
+                      </button>
+                      <button disabled>
+                        {t("הצגת פתרון השאלה", "Reveal solution")}
+                      </button>
+                    </div>
+                    <p className="muted small">
+                      {t(
+                        "הרמזים והפתרון ייפתחו לאחר לחיצה על ׳פתיחת תרגול׳ למעלה.",
+                        "Hints and the solution become available after you select ‘Start attempt’ above.",
+                      )}
+                    </p>
+                  </div>
                 )}
                 {attempt && (
                   <>
@@ -477,7 +554,8 @@ export function PracticeSession({
                         }
                       >
                         <Lightbulb size={16} />
-                        {t("הרמז הבא", "Next hint")} ({attempt.hints_remaining})
+                        {t("קבלת רמז", "Get a hint")} ({attempt.hints_remaining}
+                        )
                       </button>
                       <button
                         disabled={disabled || !!pending || !!attempt.reference}
@@ -488,7 +566,7 @@ export function PracticeSession({
                           )
                         }
                       >
-                        {t("הצגת פתרון מוצע", "Reveal reference")}
+                        {t("הצגת פתרון השאלה", "Reveal solution")}
                       </button>
                     </div>
                     <p className="muted small">
@@ -518,6 +596,16 @@ export function PracticeSession({
                     )}
                   </>
                 )}
+                <RichText text={question.prompt} />
+                {question.choices && (
+                  <ol className="choices">
+                    {question.choices.map((c, i) => (
+                      <li key={i} dir="auto">
+                        {c}
+                      </li>
+                    ))}
+                  </ol>
+                )}
                 <PersonalNotes
                   key={question.id}
                   user={user}
@@ -529,71 +617,7 @@ export function PracticeSession({
                 />
               </section>
               <section className="answer-sheet">
-                {!attempt ? (
-                  <>
-                    <h2>
-                      {t("איך תרצו לתרגל?", "How would you like to practice?")}
-                    </h2>
-                    <label className="setup-label">
-                      {t("סוג התרגול", "Practice mode")}
-                      <select
-                        value={mode}
-                        onChange={(e) =>
-                          setMode(e.target.value as "quick" | "deep")
-                        }
-                      >
-                        <option value="deep">
-                          {t(
-                            "תרגול מעמיק עם שאלות המשך",
-                            "Deep practice with follow-ups",
-                          )}
-                        </option>
-                        <option value="quick">
-                          {t(
-                            "תרגול קצר — שאלה ומשוב",
-                            "Quick practice — one question and feedback",
-                          )}
-                        </option>
-                      </select>
-                    </label>
-                    <label className="setup-label">
-                      {t(
-                        "עד כמה אתם בטוחים שתדעו לפתור? (1–5)",
-                        "How confident are you that you can solve it? (1–5)",
-                      )}
-                      <select
-                        value={confidence}
-                        onChange={(e) => setConfidence(Number(e.target.value))}
-                      >
-                        {[1, 2, 3, 4, 5].map((n) => (
-                          <option key={n} value={n}>
-                            {n}
-                            {n === 1
-                              ? t(" — בכלל לא בטוחים", " — not confident")
-                              : n === 5
-                                ? t(" — בטוחים מאוד", " — very confident")
-                                : ""}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                    <button
-                      className="primary"
-                      onClick={() => void start()}
-                      disabled={busy}
-                    >
-                      {busy
-                        ? t("פותחים תרגול…", "Starting…")
-                        : t("פתיחת תרגול", "Start attempt")}
-                    </button>
-                    <p className="small muted">
-                      {t(
-                        "הפתיחה נספרת במכסה היומית. אחרי הפתיחה אפשר לחזור לאותו תרגול מתוך ההיסטוריה.",
-                        "Starting counts toward your daily limit. Reopen the same attempt from your history.",
-                      )}
-                    </p>
-                  </>
-                ) : (
+                {attempt && (
                   <>
                     <h2>
                       {t("איך הייתם פותרים את זה?", "How would you solve it?")}

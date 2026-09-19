@@ -173,7 +173,7 @@ def detail(loaded: LoadedQuestion, language: str) -> QuestionDetail:
     q = loaded.question
     text = q.translations[base.language]
     return QuestionDetail(
-        **base.model_dump(), prompt=q.prompt_with_code(base.language), requirements=text.requirements,
+        **base.model_dump(), prompt=q.prompt_with_code(base.language), requirements="",  # Internal grading guidance may disclose the solution; never send it to candidates.
         choices=list(text.choices) if text.choices else None, starter_code=q.assets.get("starter_code"),
         code_language=q.assets.get("code_language"))
 
