@@ -68,7 +68,7 @@ GET  /v1/me/progress                          → skills (level, status, trend),
 2. **Submit waits for the result** (typically 5–30 s with the real model). Show a waiting state; do not re-submit. If it takes longer than ~2 minutes the response is **202** with `status: "evaluating"` and the evaluation continues on the server: poll `GET` (`api.waitForEvaluation(id)`) until the status changes. If the request fails at the network level, `GET` the attempt: the answer is already saved. A `failed` status means the model was unavailable; offer "try again" → `retry`. While a revision is `evaluating`, `retry` and a second submit are refused (409).
 3. **After the main answer, only follow-ups.** A second main answer is 409 `already_submitted`; the user starts a new attempt for the same question. Answer the follow-up whose `turn` is in `pending_follow_up`; anything else is 409 `no_pending_follow_up`.
 4. **Refresh = `GET` the attempt.** Never re-post. The view contains the hints shown, the reference if revealed, the submission with its card, and the pending follow-up.
-5. **The question detail never contains the answer.** Hints come one at a time from `/hints/next`; the reference from `/reference`. Direct reads of `question.reference_solution` / `hints` from the browser should be removed (review finding R6); `question` stays readable for browsing, but the practice page should use these routes.
+5. **The question detail never contains the answer.** Hints come one at a time from `/hints/next`; the reference from `/reference`. The frontend now browses through the safe API too. Migration `20260919093403_restrict_practice_question_reads.sql` closes direct browser reads of `question` and `question_translation`, including column grants, and withholds `attempt.follow_up_turns` because its internal JSON contains expected answers. Deploy the API-based frontend before applying this migration (review finding R6).
 6. `jr_practice_entries` keeps working for self-ratings, bookmarks and drafts. `self_confidence` on start is the 1–5 rating the engine uses for calibration.
 
 ## 5. Deployment (stage G)
@@ -76,3 +76,11 @@ GET  /v1/me/progress                          → skills (level, status, trend),
 `render.yaml` at the repo root deploys `backend/` as a Docker web service. Secrets are entered in the Render dashboard: `DATABASE_URL` (Session pooler URI), `ALLOWED_ORIGINS` (the Netlify URLs and `http://localhost:3000`), later `ANTHROPIC_API_KEY`. `ENV=staging` until the real model is in; `production` refuses to start with a scripted or manual model. The site then needs `NEXT_PUBLIC_API_BASE_URL=https://jobrun-api.onrender.com` (or whatever Render assigns).
 
 Free-tier note: the service sleeps after 15 minutes idle and takes ~30 s to wake; the first request after a pause will be slow. A paid plan removes that.
+
+## 6. Integrated frontend
+
+`apps/web/src/app/page.tsx` uses the typed client for the library, history and progress. `src/components/practice-session.tsx` implements start, hints, reference, main answer, follow-ups, failed-evaluation retry and saved-state recovery. URLs carry the attempt ID so reloads use GET and never silently start another attempt.
+
+The UI saves the pending submission's original text and idempotency key in session storage before sending. A lost response triggers a saved-state check; a resend keeps the same key and text. Mutations are disabled while a request is running or its outcome cannot be checked. Feedback and attempts always come from the server; local drafts are not a cross-device backup. Optional account draft saving, bookmarks and self-ratings still use the user's RLS-protected `jr_practice_entries`.
+
+The deployed provider is still `scripted`. The UI labels feedback and progress as simulated; a successful integration test is not a validation of AI feedback quality. See [pilot integration handoff](pilot-integration-handoff.md) for the verification record and founder test checklist.

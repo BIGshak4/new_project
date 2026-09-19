@@ -217,6 +217,8 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
         method,
         headers,
         body: body === undefined ? undefined : JSON.stringify(body),
+        cache: "no-store",
+        signal: AbortSignal.timeout(method === "GET" ? 65000 : 150000),
       });
     } catch (error) {
       throw new PracticeApiError("network", `could not reach the practice API: ${String(error)}`, 0);
@@ -246,6 +248,7 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
   };
 
   return {
+    health: () => call<{ llm_provider: string; env: string; store: string }>("GET", "/health"),
     me: () => call<Me>("GET", "/v1/me"),
     progress: () => call<Progress>("GET", "/v1/me/progress"),
 

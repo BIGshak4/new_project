@@ -232,6 +232,9 @@ class TestAccessBoundaries:
                               "select knowledge_score from public.user_skill_profile",
                               "select engine_state from public.user_skill_profile",
                               "select engine_state from public.attempt",
+                              "select follow_up_turns from public.attempt",
+                              "select reference_solution from public.question",
+                              "select hints from public.question_translation",
                               "select knowledge_score_after from public.evaluation_metrics"):
                 nested = await conn.begin_nested()
                 with pytest.raises(Exception, match="permission denied"):
@@ -242,7 +245,11 @@ class TestAccessBoundaries:
             assert await count(conn, "select count(*) from public.attempt") == 0
             assert await count(conn, "select count(*) from public.attempt_submission") == 0
             assert await count(conn, "select count(*) from public.user_skill_profile") == 0
-            assert await count(conn, "select count(*) from public.question") == 0     # not a member: no questions at all
+            # Question browsing now uses the safe API, even for pilot members.
+            nested = await conn.begin_nested()
+            with pytest.raises(Exception, match="permission denied"):
+                await conn.execute(text("select count(*) from public.question"))
+            await nested.rollback()
 
 
 class TestContentAndSpeed:
