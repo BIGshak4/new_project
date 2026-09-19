@@ -270,6 +270,8 @@ The current JSON export includes the attempt view; it does not yet expose every 
 
 For this visual-answer release, **27 frontend tests** and TypeScript passed; the backend suite reported **545 passed, 16 environment-dependent tests skipped**. New tests cover gate truth tables, selectors/decoders, encoder ambiguity, adders, bus ordering, register sampling/reset, counter wrap, derived-clock rejection, register resizing, unknowns, graph validation, visual-only persistence, replay conflicts and absent/foreign image locators. The live API/Storage check additionally verified image-only save/reload, same-key replay, blocked cross-user/public reads, rejected cross-user uploads, blocked replacement/deletion, and no score. Browser testing covered desktop and 390 px mobile, component configuration, wiring/fan-out, drag, undo after incompatible width changes, input toggling, simulation, image upload, visual-only save and reload. Tests used disposable QA accounts and synthetic images; no founder answers were edited. These checks do not establish real-model accuracy.
 
+Release `04f9bed` passed the optimized production build and was deployed to the practice site (Netlify deploy `6aaeed3752c77d8588f1f3c0`). The live signed-in question library loaded, and both web/API health checks returned HTTP 200. Temporary QA users, attempts and Storage images were removed after verification. The remaining founder-board task is **“הרחבת סימולציית המעגלים: שעונים נגזרים ותזמונים”**, assigned to Harel.
+
 Useful commands, from the indicated directories:
 
 ```powershell
