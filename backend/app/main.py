@@ -49,7 +49,12 @@ async def lifespan(app: FastAPI):
     if not hasattr(app.state, "runtime"):
         app.state.runtime = build_runtime(settings)
         if app.state.runtime.store_kind == "database":
-            await db.get_metadata()                       # reflect the schema now, not on the first user's request
+            try:
+                await db.get_metadata()                   # reflect the schema now, not on the first user's request
+            except Exception as exc:
+                hints = settings.database_url_problems() or ["check DATABASE_URL: Supabase -> Connect -> Session pooler, "
+                                                             "user postgres.<project-ref>, password percent-encoded"]
+                raise RuntimeError(f"cannot reach the database ({type(exc).__name__}: {exc}). " + "; ".join(hints)) from exc
         log.info("runtime: provider=%s store=%s questions=%d", settings.llm_provider, app.state.runtime.store_kind,
                  len(app.state.runtime.catalog.questions))
     yield

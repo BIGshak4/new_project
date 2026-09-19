@@ -77,6 +77,24 @@ class Settings(BaseSettings):
         host = match.group(1) if match else ""
         return "direct" if host.startswith("db.") and host.endswith(".supabase.co") else "pooler" if "pooler" in host else "other"
 
+    def database_url_problems(self) -> list[str]:
+        """Mistakes in the connection string that fail with a misleading 'password authentication failed'."""
+        if not self.database_url:
+            return []
+        problems = []
+        match = re.match(r"^\w+(?:\+\w+)?://([^:@/]+)(?::([^@]*))?@([^/?]+)", self.database_url)
+        if not match:
+            problems.append("DATABASE_URL does not look like postgresql://USER:PASSWORD@HOST:PORT/DB")
+            return problems
+        user, password, host = match.groups()
+        if "pooler" in host and "." not in user:
+            problems.append(f"the Session pooler needs the user 'postgres.<project-ref>', not '{user}'")
+        if password and ("[" in password or "YOUR-PASSWORD" in password):
+            problems.append("the password placeholder [YOUR-PASSWORD] was not replaced")
+        if password and re.search(r"[#?/\s]", password):
+            problems.append("the password contains characters that must be percent-encoded in a URL (# ? / space)")
+        return problems
+
     def production_problems(self) -> list[str]:
         """What is missing for a safe production start. Empty means go."""
         problems = []
@@ -84,6 +102,7 @@ class Settings(BaseSettings):
             problems.append("DATABASE_URL is not set")
         elif self.database_host_kind == "direct":
             problems.append("DATABASE_URL uses the direct host (IPv6 only); use the Session pooler string")
+        problems.extend(self.database_url_problems())
         if not self.supabase_url:
             problems.append("SUPABASE_URL is not set (needed to verify login tokens)")
         if not self.allowed_origins:

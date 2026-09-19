@@ -116,7 +116,8 @@ class TestServerConfiguration:
         settings = Settings(_env_file=None, env="production")
         problems = settings.production_problems()
         assert any("DATABASE_URL" in p for p in problems) and any("SUPABASE_URL" in p for p in problems)
-        ready = Settings(_env_file=None, env="production", database_url="postgresql://x", supabase_url="https://x",
+        ready = Settings(_env_file=None, env="production", supabase_url="https://x",
+                         database_url="postgresql://postgres.abc:pw@aws-0-eu-central-1.pooler.supabase.com:5432/postgres",
                          allowed_origins="https://a", llm_provider="anthropic", anthropic_api_key="k")
         assert ready.production_problems() == []
 
@@ -126,6 +127,19 @@ class TestServerConfiguration:
         assert direct.database_host_kind == "direct" and pooler.database_host_kind == "pooler"
         assert any("IPv6" in p for p in direct.production_problems())
         assert not any("IPv6" in p for p in pooler.production_problems())
+
+    @pytest.mark.parametrize("url, expected", [
+        ("postgresql://postgres:pw@aws-0-eu-central-1.pooler.supabase.com:5432/postgres", "postgres.<project-ref>"),
+        ("postgresql://postgres.abc:[YOUR-PASSWORD]@aws-0-eu-central-1.pooler.supabase.com:5432/postgres", "placeholder"),
+        ("postgresql://postgres.abc:p#w@aws-0-eu-central-1.pooler.supabase.com:5432/postgres", "percent-encoded"),
+        ("postgresql://postgres.abc:goodpw@aws-0-eu-central-1.pooler.supabase.com:5432/postgres", None),
+    ], ids=["plain-user-on-pooler", "placeholder", "unencoded", "fine"])
+    def test_connection_string_mistakes_are_named(self, url, expected):
+        problems = Settings(_env_file=None, database_url=url).database_url_problems()
+        if expected is None:
+            assert problems == []
+        else:
+            assert any(expected in p for p in problems), problems
 
     def test_issuer_is_derived_from_the_project_url(self):
         assert make_verifier().issuer == ISSUER
