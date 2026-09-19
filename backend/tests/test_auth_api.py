@@ -142,10 +142,9 @@ class TestServerConfiguration:
             assert any(expected in p for p in problems), problems
 
     def test_pasted_values_are_stripped(self):
-        settings = Settings(_env_file=None, database_url="postgresql://postgres.abc:pw@aws-0-x.pooler.supabase.com:5432/postgres
-",
-                            supabase_url=" https://x.supabase.co ", anthropic_api_key="sk-x
-")
+        settings = Settings(_env_file=None,
+                            database_url="postgresql://postgres.abc:pw@aws-0-x.pooler.supabase.com:5432/postgres\n",
+                            supabase_url=" https://x.supabase.co ", anthropic_api_key="sk-x\r\n")
         assert settings.database_url.endswith("/postgres") and settings.supabase_url == "https://x.supabase.co"
         assert settings.anthropic_api_key == "sk-x" and settings.database_url_problems() == []
 
