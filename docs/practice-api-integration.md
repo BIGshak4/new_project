@@ -60,7 +60,7 @@ GET  /v1/practice/attempts/{id}               → AttemptView (everything needed
 GET  /v1/me/progress                          → skills (level, status, trend), recent attempts, attempts_today
 ```
 
-`AttemptView.status` is `in_progress` | `evaluating` | `done` | `failed` (`evaluating` = a revision is being scored right now, possibly on another server); `can_submit`, `can_retry`, `hints_remaining`, `pending_follow_up` tell the UI what to show. `SubmissionView` has `band` (STRONG/PARTIAL/WEAK), `summary`, `key_points_hit/missed`, `check` (the automatic check, when the question has one), `card` (the four-part feedback), `tip`, `follow_up` (the next question, if any), `evidence` (`full` | `reduced` | `none`) and `flags`.
+`AttemptView.status` is `in_progress` | `evaluating` | `done` | `failed` (`evaluating` = a revision is being scored right now, possibly on another server); `can_submit`, `can_retry`, `hints_remaining`, `pending_follow_up` tell the UI what to show. `SubmissionView.assessed_by` is `demo` while the server runs the scripted stand-in and `model` (with `model` = the model id) for a real assessment — only `model` results are real feedback or evidence. `SubmissionView` also has `band` (STRONG/PARTIAL/WEAK), `summary`, `key_points_hit/missed`, `check` (the automatic check, when the question has one), `card` (the four-part feedback), `tip`, `follow_up` (the next question, if any), `evidence` (`full` | `reduced` | `none`) and `flags`.
 
 ## 4. Rules the UI must respect
 
