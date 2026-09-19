@@ -445,6 +445,7 @@ class PracticeService:
             check=check, card=CardView.model_validate(submission.card) if submission.card else None,
             tip=TipView(key=submission.tip_key, text=submission.tip_text) if submission.tip_key and submission.tip_text else None,
             follow_up=submission.follow_up,
+            hints_seen=submission.hints_seen, reference_seen=submission.reference_seen,
             evidence="none" if submission.status != EvaluationStatus.DONE or weight <= 0 else "full" if weight >= 1 else "reduced",
             flags=list(submission.flags), replayed=bool(outcome.replayed) if outcome is not None else False)
 

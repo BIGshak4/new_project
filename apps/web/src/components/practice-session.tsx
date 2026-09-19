@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import type { Lang } from "./auth";
+import { AnswerEditor } from "./answer-editor";
+import { parseTechnicalAnswer } from "../lib/technical-answer";
 import { supabase } from "../lib/supabase";
 import {
   newIdempotencyKey,
@@ -67,10 +69,6 @@ export function PracticeSession({
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   const [recoveryRequired, setRecoveryRequired] = useState(false);
-  const [mode, setMode] = useState<"quick" | "deep">("deep"),
-    [confidence, setConfidence] = useState<1 | 2 | 3 | 4 | 5 | undefined>(
-      undefined,
-    );
   const [answer, setAnswer] = useState(""),
     [followAnswer, setFollowAnswer] = useState("");
   const [pending, setPending] = useState<PendingAnswer | null>(null);
@@ -277,8 +275,7 @@ export function PracticeSession({
       const a = await api.startAttempt({
         question_key: question.key,
         language: lang,
-        mode,
-        ...(confidence !== undefined ? { self_confidence: confidence } : {}),
+        mode: "quick",
       });
       const old = readLocal<{ answer?: string }>(
         `jr-draft-${user.id}-${question.id}`,
@@ -475,8 +472,12 @@ export function PracticeSession({
                         }
                       >
                         <Lightbulb size={16} />
-                        {t("קבלת רמז", "Get a hint")} ({attempt.hints_remaining}
-                        )
+                        {t("הרמז הבא", "Next hint")} ·{" "}
+                        {Math.min(
+                          attempt.hints.length + 1,
+                          question.hint_count,
+                        )}
+                        /{question.hint_count}
                       </button>
                       <button
                         disabled={disabled || !!pending || !!attempt.reference}
@@ -492,9 +493,16 @@ export function PracticeSession({
                     </div>
                     <p className="muted small">
                       {t(
-                        "רמזים מפחיתים את משקל ההערכה. תשובה חדשה אחרי חשיפת פתרון אינה מעידה על פתרון עצמאי.",
-                        "Hints reduce assessment weight. A new answer after revealing the reference is not independent evidence.",
+                        "כל רמז מוסיף הכוונה. מספר הרמזים שנפתחו לפני השליחה נלקח בחשבון בהערכת העצמאות. חשיפת פתרון לפני השליחה מסמנת את התשובה כתרגול בעזרת פתרון.",
+                        "Each hint adds guidance. Hints opened before submission affect the assessment of independence. Revealing the solution first marks your answer as practice with a reference.",
                       )}
+                    </p>
+                    <p className="help-status" role="status">
+                      {t("רמזים שנפתחו", "Hints opened")}:{" "}
+                      {attempt.hints.length}/{question.hint_count} ·{" "}
+                      {attempt.reference
+                        ? t("הפתרון נחשף", "Solution revealed")
+                        : t("הפתרון טרם נחשף", "Solution not revealed")}
                     </p>
                     {attempt.hints.map((h) => (
                       <div className="hint" key={h.level}>
@@ -557,103 +565,6 @@ export function PracticeSession({
                         "This starts one attempt from your daily allowance. You can return to it later in My practice.",
                       )}
                     </p>
-                    <details className="practice-options">
-                      <summary>
-                        {t("אפשרויות תרגול", "Practice options")} ·{" "}
-                        {mode === "deep"
-                          ? t("עם שאלות המשך", "with follow-up questions")
-                          : t("תשובה ומשוב בלבד", "answer and feedback only")}
-                      </summary>
-                      <div className="practice-option-fields">
-                        <label className="setup-label">
-                          {t(
-                            "מה יקרה אחרי שליחת הפתרון?",
-                            "What happens after you submit?",
-                          )}
-                          <select
-                            value={mode}
-                            disabled={busy}
-                            onChange={(e) =>
-                              setMode(e.target.value as "quick" | "deep")
-                            }
-                          >
-                            <option value="deep">
-                              {t(
-                                "משוב ושאלות המשך",
-                                "Feedback and follow-up questions",
-                              )}
-                            </option>
-                            <option value="quick">
-                              {t("משוב בלבד", "Feedback only")}
-                            </option>
-                          </select>
-                          <span className="small muted">
-                            {t(
-                              "שאלות המשך מאפשרות להסביר ולחדד את התשובה, כמו בשיחה עם מראיין.",
-                              "Follow-ups let you explain and refine your answer, as you would with an interviewer.",
-                            )}
-                          </span>
-                        </label>
-                        <label className="setup-label">
-                          {t(
-                            "איך אתם מרגישים לגבי השאלה? (לא חובה)",
-                            "How do you feel about this question? (optional)",
-                          )}
-                          <select
-                            value={confidence ?? ""}
-                            disabled={busy}
-                            onChange={(e) =>
-                              setConfidence(
-                                e.target.value
-                                  ? (Number(e.target.value) as
-                                      1 | 2 | 3 | 4 | 5)
-                                  : undefined,
-                              )
-                            }
-                          >
-                            <option value="">
-                              {t("ללא דירוג", "Skip rating")}
-                            </option>
-                            <option value="1">
-                              {t(
-                                "לא יודעים מאיפה להתחיל",
-                                "Not sure where to start",
-                              )}
-                            </option>
-                            <option value="2">
-                              {t(
-                                "יש כיוון, אבל צריכים עזרה",
-                                "Have an idea, but need help",
-                              )}
-                            </option>
-                            <option value="3">
-                              {t(
-                                "חושבים שנצליח עם קצת מחשבה",
-                                "Think we can work it out",
-                              )}
-                            </option>
-                            <option value="4">
-                              {t(
-                                "די בטוחים בדרך לפתרון",
-                                "Fairly confident in the approach",
-                              )}
-                            </option>
-                            <option value="5">
-                              {t(
-                                "בטוחים שנדע לפתור ולהסביר",
-                                "Confident we can solve and explain it",
-                              )}
-                            </option>
-                          </select>
-                          <span className="small muted">
-                            {t(
-                              "זו התחושה שלכם לפני התרגול, לא ציון מקצועי.",
-                              "This is your confidence before practicing, not a skill score.",
-                            )}
-                          </span>
-                        </label>
-                      </div>
-                    </details>
                   </section>
                 )}
                 <PersonalNotes
@@ -680,18 +591,13 @@ export function PracticeSession({
                     </p>
                     {!attempt.submission ? (
                       <>
-                        <textarea
-                          autoFocus
-                          aria-label={t("הפתרון שלי", "My solution")}
-                          dir="auto"
-                          maxLength={20000}
+                        <AnswerEditor
                           value={answer}
-                          onChange={(e) => setAnswer(e.target.value)}
+                          onChange={setAnswer}
+                          lang={lang}
                           disabled={disabled || !!pending}
-                          placeholder={t(
-                            "מתחילים מהרעיון…",
-                            "Start with your approach…",
-                          )}
+                          codeLanguage={question.code_language}
+                          starterCode={question.starter_code}
                         />
                         <p className="muted small">
                           {t(
@@ -701,65 +607,42 @@ export function PracticeSession({
                         </p>
                       </>
                     ) : (
-                      <SubmissionFeedback
+                      <SavedAnswer
                         submission={attempt.submission}
                         lang={lang}
                         demo={demo}
                       />
                     )}
-                    {attempt.follow_ups.map((f) => (
-                      <section className="follow-up" key={f.turn}>
-                        <h3>
-                          {t("שאלת המשך", "Follow-up")} {f.turn}
-                        </h3>
-                        <RichText text={f.question} />
-                        {f.submission ? (
-                          <SubmissionFeedback
-                            submission={f.submission}
-                            lang={lang}
-                            demo={demo}
-                          />
-                        ) : attempt.pending_follow_up?.turn === f.turn ? (
-                          <textarea
-                            aria-label={t(
-                              "התשובה לשאלת ההמשך",
-                              "Follow-up answer",
-                            )}
-                            dir="auto"
-                            maxLength={20000}
-                            value={followAnswer}
-                            onChange={(e) => setFollowAnswer(e.target.value)}
-                            disabled={disabled || !!pending}
-                          />
-                        ) : null}
-                      </section>
-                    ))}
-                    {(attempt.can_submit ||
-                      (!!attempt.pending_follow_up &&
-                        !attempt.pending_follow_up.submission)) &&
+                    {attempt.follow_ups.length > 0 && (
+                      <p className="small muted">
+                        {t(
+                          "זהו תרגול מהמסלול הקודם. התשובות הקודמות נשמרו ונכללות בקובץ ההורדה. לתרגול החדש אין שאלות המשך.",
+                          "This attempt used the previous flow. Earlier answers remain saved and included in the download. New practice has no follow-up questions.",
+                        )}
+                      </p>
+                    )}
+                    {((attempt.can_submit && !attempt.submission) ||
+                      !!pending) &&
                       !attempt.can_retry && (
                         <button
                           className="primary"
                           disabled={
                             disabled ||
                             (!pending &&
-                              !(
-                                attempt.submission ? followAnswer : answer
-                              ).trim())
+                              (!answer.trim() || answer.length > 20000))
                           }
                           onClick={() => void submit()}
                         >
                           {busy
-                            ? t(
-                                "שומרים ומכינים משוב…",
-                                "Saving and preparing feedback…",
-                              )
+                            ? t("שומרים את הפתרון…", "Saving your solution…")
                             : pending
                               ? t(
                                   "שליחה חוזרת של אותה תשובה",
                                   "Resend the same answer",
                                 )
-                              : t("שליחה וקבלת משוב", "Submit for feedback")}
+                              : demo
+                                ? t("שמירת הפתרון", "Save my solution")
+                                : t("שליחה וקבלת משוב", "Submit for feedback")}
                         </button>
                       )}
                     {attempt.status === "evaluating" && (
@@ -796,12 +679,12 @@ export function PracticeSession({
                         </button>
                       </div>
                     )}
-                    {attempt.status === "done" && (
+                    {attempt.submission?.status === "done" && (
                       <div className="attempt-complete">
                         <p>
                           {t(
-                            "התרגול והמשוב נשמרו בחשבון.",
-                            "Your practice and feedback are saved.",
+                            "הפתרון והשימוש ברמזים נשמרו בחשבון.",
+                            "Your solution and hint usage are saved.",
                           )}
                         </p>
                         <button
@@ -821,6 +704,42 @@ export function PracticeSession({
                 )}
               </section>
             </div>
+            <aside
+              className="practice-coach"
+              aria-labelledby="practice-coach-title"
+            >
+              <div className="row spread">
+                <h2 id="practice-coach-title">
+                  {t("עוזר התרגול", "Practice assistant")}
+                </h2>
+                <span className="badge">
+                  {demo
+                    ? t("יחובר בהמשך", "Coming later")
+                    : t("משוב על הפתרון", "Solution feedback")}
+                </span>
+              </div>
+              {demo ? (
+                <p>
+                  {t(
+                    "כאן תוכלו לקבל הכוונה אישית ולדון בדרך הפתרון. העוזר עדיין אינו מחובר, ולכן לא מוצגים ציונים או משובי הדגמה. בינתיים אפשר להיעזר ברמזים המדורגים ובפתרון המוצע.",
+                    "This is where you will get personal guidance and discuss your approach. The assistant is not connected yet, so demo grades and feedback are hidden. For now, use the progressive hints and reference solution.",
+                  )}
+                </p>
+              ) : attempt?.submission ? (
+                <SubmissionFeedback
+                  submission={attempt.submission}
+                  lang={lang}
+                  demo={false}
+                />
+              ) : (
+                <p>
+                  {t(
+                    "אחרי שליחת הפתרון, המשוב יופיע כאן. להכוונה בזמן הפתרון אפשר להשתמש ברמזים.",
+                    "Feedback appears here after you submit. Use the hints for guidance while solving.",
+                  )}
+                </p>
+              )}
+            </aside>
           </>
         )
       )}
@@ -846,6 +765,58 @@ function RichText({ text }: { text: string }) {
   );
 }
 
+function SavedAnswer({
+  submission: s,
+  lang,
+  demo,
+}: {
+  submission: Submission;
+  lang: Lang;
+  demo: boolean;
+}) {
+  const t = (he: string, en: string) => (lang === "he" ? he : en);
+  const parts = parseTechnicalAnswer(s.answer);
+  return (
+    <section className="saved-answer">
+      <h3>{t("הפתרון שנשמר", "Your saved solution")}</h3>
+      {parts.explanation && <RichText text={parts.explanation} />}
+      {parts.code && (
+        <pre className="code-block" dir="ltr">
+          <code>{parts.code}</code>
+        </pre>
+      )}
+      <p className="help-status">
+        {t("רמזים שנראו לפני השליחה", "Hints seen before submission")}:{" "}
+        {s.hints_seen ?? "—"}
+      </p>
+      <p className="small muted">
+        {s.reference_seen === true
+          ? t(
+              "הפתרון נחשף לפני השליחה — נשמר כתרגול בעזרת פתרון, ללא ראיה לשליטה עצמאית.",
+              "The solution was revealed before submission — saved as assisted practice, without independent skill evidence.",
+            )
+          : s.reference_seen === false
+            ? t(
+                "הפתרון לא נחשף לפני שליחת התשובה.",
+                "The solution was not revealed before you submitted.",
+              )
+            : t(
+                "פרטי הסיוע נשמרים עם התרגול.",
+                "Assistance is recorded with the attempt.",
+              )}
+      </p>
+      {demo && (
+        <p className="small muted">
+          {t(
+            "הערכת הידע תתאפשר לאחר חיבור עוזר התרגול. כרגע נשמרים הפתרון והשימוש ברמזים.",
+            "Skill assessment will be available once the assistant is connected. Your solution and hint usage are saved now.",
+          )}
+        </p>
+      )}
+    </section>
+  );
+}
+
 function SubmissionFeedback({
   submission: s,
   lang,
@@ -858,10 +829,6 @@ function SubmissionFeedback({
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   return (
     <div className="submission-feedback">
-      <details open>
-        <summary>{t("התשובה שנשמרה", "Your saved answer")}</summary>
-        <RichText text={s.answer} />
-      </details>
       {s.status === "done" && (
         <>
           <div className="row">

@@ -326,8 +326,8 @@ function Workspace({
                 )
               : demo
                 ? t(
-                    "מצב בדיקה · המשובים והמדדים מדומים, ונועדו לבדוק את התהליך. הם אינם מעידים על הידע שלכם. השאלות בביקורת מקצועית.",
-                    "Test mode · Feedback and metrics are simulated to test the flow. They do not measure your knowledge. Questions are under review.",
+                    "פיילוט · עוזר התרגול עדיין אינו מחובר. אפשר לפתור שאלות ולהיעזר ברמזים. הפתרונות נשמרים; השאלות בביקורת מקצועית.",
+                    "Pilot · The practice assistant is not connected yet. Solve questions and use hints; your answers are saved. Questions are under review.",
                   )
                 : t(
                     "פיילוט פרטי · משוב אוטומטי עשוי לטעות. השוו לפתרון ובדקו עם איש מקצוע.",
@@ -436,7 +436,22 @@ function Workspace({
               ) : ((route.view === "progress" || route.view === "history") &&
                   !progressReady) ||
                 (route.view === "bookmarks" &&
-                  !entriesReady) ? null : route.view === "progress" ? (
+                  !entriesReady) ? null : route.view === "progress" && demo ? (
+                <div className="empty-column">
+                  <h2>
+                    {t(
+                      "הערכת המיומנויות תחובר בהמשך",
+                      "Skill assessment is coming later",
+                    )}
+                  </h2>
+                  <p>
+                    {t(
+                      "הפתרונות והרמזים שביקשתם נשמרים. אחרי חיבור העוזר נוכל להציג כאן הערכה מקצועית; כרגע לא מוצגים ציוני הדגמה.",
+                      "Your solutions and hint usage are saved. Once the assistant is connected, skill assessments can appear here. Demo scores are hidden.",
+                    )}
+                  </p>
+                </div>
+              ) : route.view === "progress" ? (
                 <>
                   <h2>
                     {demo
@@ -524,7 +539,11 @@ function Workspace({
                               : t("אנגלית", "English")}
                           </span>
                         </div>
-                        <span className="badge">{bandLabel(a.band, lang)}</span>
+                        <span className="badge">
+                          {demo
+                            ? t("תרגול שמור", "Saved practice")
+                            : bandLabel(a.band, lang)}
+                        </span>
                       </button>
                     ))}
                   </div>

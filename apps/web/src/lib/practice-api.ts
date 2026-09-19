@@ -71,6 +71,8 @@ export type Submission = {
   card: Card | null;
   tip: Tip | null;
   follow_up: string | null;
+  hints_seen?: number;
+  reference_seen?: boolean;
   evidence: "full" | "reduced" | "none";
   flags: string[];
   replayed: boolean;

@@ -36,7 +36,7 @@ def _evaluation(request: LLMRequest) -> dict:
             "one_line_summary": summary}
 
 
-def _respond(request: LLMRequest):
+def _respond_english(request: LLMRequest):
     if request.role == "evaluator":
         return _evaluation(request)
     if request.role == "generator":
@@ -51,6 +51,39 @@ def _respond(request: LLMRequest):
     if request.role == "report":
         return {"summary": "Demo report."}
     return "Next time, write the requirements as a checklist before you start."
+
+
+_HEBREW_DEMO = {
+    "The automatic check found a mismatch; the core idea is not right yet.": "משוב הדגמה: הבדיקה האוטומטית מצאה אי־התאמה.",
+    "Too short to show the reasoning; the direction is plausible.": "משוב הדגמה: נדרש פירוט נוסף של דרך הפתרון.",
+    "Correct and reasonably explained.": "משוב הדגמה: התשובה כוללת פתרון והסבר.",
+    "states the main idea": "הרעיון המרכזי מופיע בתשובה",
+    "justify each step with the requirement it satisfies": "נמקו כל שלב והסבירו על איזו דרישה הוא עונה",
+    "Demo follow-up: which requirement would break your solution first if it changed, and why?": "שאלת המשך להדגמה: שינוי באיזו דרישה יגרום לפתרון להפסיק לעבוד, ומדוע?",
+    "names one requirement and the failure mode": "ציון דרישה אחת והסבר כיצד השינוי בה יגרום לכשל",
+    "Demo feedback: the main idea was stated.": "משוב הדגמה: הרעיון המרכזי הוצג.",
+    "Interviewers probe the justification next.": "מראיינים עשויים לבקש לנמק את הבחירה בפתרון.",
+    "Next time, tie each step to the requirement it satisfies.": "בפעם הבאה, קשרו כל שלב לדרישה שהוא ממלא.",
+    "Compare your steps with the reference and find the first difference.": "השוו את שלבי הפתרון שלכם לפתרון המוצע ומצאו את ההבדל הראשון.",
+    "Demo report.": "דוח הדגמה.",
+    "Next time, write the requirements as a checklist before you start.": "בפעם הבאה, כתבו את הדרישות כרשימת בדיקה לפני תחילת הפתרון.",
+}
+
+
+def _respond(request: LLMRequest):
+    reply = _respond_english(request)
+    # Practice language is trusted system context, never guessed from the candidate's answer.
+    if not any("## שפת התרגול: עברית" in block for block in request.system):
+        return reply
+    def translate(value):
+        if isinstance(value, str):
+            return _HEBREW_DEMO.get(value, value)
+        if isinstance(value, dict):
+            return {key: translate(item) for key, item in value.items()}
+        if isinstance(value, list):
+            return [translate(item) for item in value]
+        return value
+    return translate(reply)
 
 
 class DemoProvider(ScriptedProvider):

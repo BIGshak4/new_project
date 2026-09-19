@@ -54,6 +54,32 @@ async def start(client, headers, **body) -> dict:
 
 
 class TestTheContract:
+    @pytest.mark.parametrize("hint_count", [0, 1, 2, 3])
+    @pytest.mark.parametrize("reveal_first", [False, True])
+    async def test_quick_practice_records_assistance_without_followups(self, client, user, hint_count, reveal_first):
+        _, headers = user
+        attempt = await start(client, headers, mode="quick", language="he")
+        path = f"{BASE}/{attempt['id']}"
+        for level in range(1, hint_count + 1):
+            hint = (await client.post(path + "/hints/next", headers=headers)).json()
+            assert hint["hint"]["level"] == level
+        if reveal_first:
+            assert (await client.post(path + "/reference", headers=headers)).status_code == 200
+        response = await client.post(path + "/submissions", headers={**headers, "Idempotency-Key": "technical-answer"},
+                                     json={"answer": {"text": "הסבר של הפתרון\n\n```verilog\nassign alarm = (A & B) | (A & C) | (B & C);\n```"}})
+        assert response.status_code == 200
+        view = response.json()["attempt"]
+        assert view["status"] == "done" and not view["follow_ups"] and view["pending_follow_up"] is None
+        assert view["submission"]["hints_seen"] == hint_count
+        assert view["submission"]["reference_seen"] is reveal_first
+        if reveal_first:
+            assert view["submission"]["evidence"] == "none"
+        # Revealing afterwards must not retroactively change the accepted answer's assistance.
+        await client.post(path + "/reference", headers=headers)
+        restored = (await client.get(path, headers=headers)).json()
+        assert restored["submission"]["hints_seen"] == hint_count
+        assert restored["submission"]["reference_seen"] is reveal_first
+
     @pytest.mark.parametrize("language", ["he", "en"])
     async def test_grading_requirements_never_leave_question_or_attempt(self, client, user, catalog, language):
         _, headers = user

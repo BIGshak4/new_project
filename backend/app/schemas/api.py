@@ -47,6 +47,8 @@ class SubmissionView(BaseModel):
     card: CardView | None = None
     tip: TipView | None = None
     follow_up: str | None = None                # the next question this answer produced, if any
+    hints_seen: int = 0                         # immutable assistance snapshot when this answer was accepted
+    reference_seen: bool = False
     evidence: str = "none"                      # full | reduced | none: whether and how much this counted
     flags: list[str] = Field(default_factory=list)
     replayed: bool = False
