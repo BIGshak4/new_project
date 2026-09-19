@@ -47,6 +47,8 @@ class SubmissionView(BaseModel):
     card: CardView | None = None
     tip: TipView | None = None
     follow_up: str | None = None                # the next question this answer produced, if any
+    assessed_by: str = "demo"                  # demo | model: whether a real model judged this answer
+    model: str | None = None                    # the model id when assessed_by == model
     hints_seen: int = 0                         # immutable assistance snapshot when this answer was accepted
     reference_seen: bool = False
     evidence: str = "none"                      # full | reduced | none: whether and how much this counted

@@ -71,6 +71,9 @@ export type Submission = {
   card: Card | null;
   tip: Tip | null;
   follow_up: string | null;
+  /** "demo" while the server runs the scripted stand-in; only "model" results are real assessments. */
+  assessed_by: "demo" | "model";
+  model: string | null;
   hints_seen?: number;
   reference_seen?: boolean;
   evidence: "full" | "reduced" | "none";

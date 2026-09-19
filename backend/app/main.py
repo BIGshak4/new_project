@@ -57,6 +57,9 @@ async def lifespan(app: FastAPI):
                 raise RuntimeError(f"cannot reach the database ({type(exc).__name__}: {exc}). " + "; ".join(hints)) from exc
         log.info("runtime: provider=%s store=%s questions=%d", settings.llm_provider, app.state.runtime.store_kind,
                  len(app.state.runtime.catalog.questions))
+        if settings.llm_provider != "anthropic" and app.state.runtime.store_kind == "database":
+            log.warning("the %s provider is writing DEMO evaluations into the real database; every submission is "
+                        "marked assessed_by=demo and must not be treated as real evidence", settings.llm_provider)
     yield
     await db.dispose()
 

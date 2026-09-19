@@ -436,3 +436,21 @@ class TestDroppedDatabaseConnections:
         finally:
             monkeypatch.undo()
         assert response.status_code == 500 and response.json()["error"]["code"] == "internal"
+
+
+class TestProvenance:
+    async def test_scripted_results_are_marked_demo_and_carry_no_model(self, client, user):
+        _, h = user
+        aid = (await start(client, h))["id"]
+        body = (await client.post(f"{BASE}/{aid}/submissions", json={"answer": "alarm = A ^ B ^ C"}, headers=h)).json()
+        assert body["submission"]["assessed_by"] == "demo" and body["submission"]["model"] is None
+        again = (await client.get(f"{BASE}/{aid}", headers=h)).json()
+        assert again["submission"]["assessed_by"] == "demo"
+
+    async def test_a_real_model_result_is_marked_model(self, client, user, catalog):
+        from tests.test_practice_hardening import scripted
+        app.state.runtime = runtime_with(catalog, scripted([GOOD], metered=True))      # reports claude-opus-5
+        _, h = user
+        aid = (await start(client, h))["id"]
+        body = (await client.post(f"{BASE}/{aid}/submissions", json={"answer": "alarm = (A&B)|(A&C)|(B&C)"}, headers=h)).json()
+        assert body["submission"]["assessed_by"] == "model" and body["submission"]["model"] == "claude-opus-5"

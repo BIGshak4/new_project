@@ -34,7 +34,7 @@ router = APIRouter(prefix="/v1/practice/attempts", tags=["practice"])
 # The answer is saved before the model is called. If the evaluation is not done within this budget the
 # request answers 202 with the attempt in state "evaluating" while the evaluation continues in the
 # background (shielded), and the client polls GET. Model calls have their own per-role deadlines.
-RESPONSE_BUDGET_SECONDS = 120
+RESPONSE_BUDGET_SECONDS = 90              # under Render's 100 s proxy limit
 
 
 class StartAttemptRequest(BaseModel):

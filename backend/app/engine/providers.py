@@ -236,6 +236,7 @@ class AnthropicProvider:
         self._anthropic = anthropic
         self.model = model
         self.enable_fallbacks = enable_fallbacks
+        self._schema_unsupported = False
         self.client = anthropic.AsyncAnthropic(api_key=api_key, timeout=timeout_seconds, max_retries=max_retries)
 
     def _system_blocks(self, request: LLMRequest) -> list[dict]:
@@ -249,6 +250,35 @@ class AnthropicProvider:
             return {}
         return {"extra_headers": {"anthropic-beta": self.FALLBACK_BETA}, "extra_body": {"fallbacks": "default"}}
 
+    async def _send(self, request: LLMRequest, common: dict):
+        """One API call, with two one-way downgrades for account/feature mismatches:
+        a 400 that names the fallbacks beta disables fallbacks for this process; a 400 that
+        rejects the structured-output schema switches structured requests to JSON-in-text."""
+        anthropic = self._anthropic
+        try:
+            if request.schema is not None and not self._schema_unsupported:
+                return await self.client.messages.parse(output_format=request.schema, **common)
+            if request.schema is not None:
+                common = {**common, "messages": [{"role": "user", "content": request.user + self._json_instruction(request)}]}
+            async with self.client.messages.stream(**common) as stream:
+                return await stream.get_final_message()
+        except anthropic.APIStatusError as exc:
+            text = str(getattr(exc, "message", exc)).lower()
+            if exc.status_code == 400 and self.enable_fallbacks and ("fallback" in text or "beta" in text):
+                self.enable_fallbacks = False                       # this account has no fallbacks beta: go without
+                common = {k: v for k, v in common.items() if k not in ("extra_headers", "extra_body")}
+                return await self._send(request, common)
+            if exc.status_code == 400 and request.schema is not None and not self._schema_unsupported \
+                    and ("output_format" in text or "schema" in text or "structured" in text):
+                self._schema_unsupported = True                     # ask for JSON in the text instead
+                return await self._send(request, common)
+            raise
+
+    @staticmethod
+    def _json_instruction(request: LLMRequest) -> str:
+        return ("\n\nReply with a single JSON object and nothing else, matching this JSON schema exactly:\n"
+                + json.dumps(request.schema.model_json_schema()))
+
     async def complete(self, request: LLMRequest) -> LLMResponse:
         anthropic = self._anthropic
         started = time.perf_counter()
@@ -258,11 +288,7 @@ class AnthropicProvider:
             output_config={"effort": request.resolved_effort()}, **self._extras(),
         )
         try:
-            if request.schema is not None:
-                message = await self.client.messages.parse(output_format=request.schema, **common)
-            else:
-                async with self.client.messages.stream(**common) as stream:
-                    message = await stream.get_final_message()
+            message = await self._send(request, common)
         except anthropic.RateLimitError as exc:
             raise LLMError(f"rate limited: {exc.message}", retryable=True) from exc
         except anthropic.APIStatusError as exc:

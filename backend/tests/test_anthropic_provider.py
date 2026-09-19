@@ -155,3 +155,47 @@ class TestThroughTheEvaluator:
         result = await evaluator.evaluate(provider, question_context="<question/>", known_error_keys=set(), language="en",
                                           difficulty=3, answer="x")
         assert not result.ok and result.attempts == 2 and "eval_failed" in result.flags
+
+
+class TestAccountMismatches:
+    """The first paid call must not fail on an optional feature the account lacks."""
+
+    async def test_a_400_about_the_fallbacks_beta_disables_fallbacks_and_retries(self, provider):
+        import anthropic
+        calls = []
+
+        async def parse(**kwargs):
+            calls.append(kwargs)
+            if "extra_headers" in kwargs:
+                raise http_error_with_message(anthropic.APIStatusError, 400, "Unsupported beta header: server-side-fallback")
+            return fake_message(text=GOOD.model_dump_json(), parsed=GOOD)
+        provider.client.messages.parse = parse
+        response = await provider.complete(request())
+        assert response.parsed == GOOD and len(calls) == 2 and "extra_headers" not in calls[1]
+        assert provider.enable_fallbacks is False                          # remembered for the rest of the process
+        await provider.complete(request())
+        assert len(calls) == 3 and "extra_headers" not in calls[2]
+
+    async def test_a_400_about_the_schema_falls_back_to_json_in_text(self, provider):
+        import anthropic
+
+        async def parse(**kwargs):
+            raise http_error_with_message(anthropic.APIStatusError, 400, "output_format: unsupported JSON schema keyword 'minimum'")
+        provider.client.messages.parse = parse
+        install_stream(provider, fake_message(text=GOOD.model_dump_json()))
+        response = await provider.complete(request())
+        assert response.parsed == GOOD and provider._schema_unsupported is True
+        assert "JSON schema" in provider.sent[-1]["messages"][0]["content"]
+
+    async def test_other_400s_are_still_errors(self, provider):
+        import anthropic
+        install_parse(provider, http_error_with_message(anthropic.APIStatusError, 400, "max_tokens too large"))
+        with pytest.raises(LLMError) as raised:
+            await provider.complete(request())
+        assert not raised.value.retryable
+
+
+def http_error_with_message(cls, status: int, message: str):
+    request_ = httpx.Request("POST", "https://api.anthropic.com/v1/messages")
+    response = httpx.Response(status, request=request_, json={"error": {"message": message}})
+    return cls(message, response=response, body={"error": {"message": message}})

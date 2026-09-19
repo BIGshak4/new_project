@@ -56,6 +56,12 @@ from app.schemas.engine import (
 
 MAX_FOLLOW_UPS = 2
 MAX_ANSWER_CHARS = 20_000
+DEMO_MODELS = {"demo", "scripted", "manual", ""}
+
+
+def assessed_by(model: str | None) -> str:
+    """'model' when a real model judged the answer, 'demo' for the scripted/manual stand-ins."""
+    return "demo" if (model or "") in DEMO_MODELS else "model"
 # a revision still pending/evaluating after this long was interrupted (crash, lost worker) and may be retried;
 # younger ones are being evaluated right now, possibly by another process
 EVALUATION_BUDGET_SECONDS = 600
@@ -108,6 +114,7 @@ class Submission(BaseModel):
     tip_key: str | None = None
     tip_text: str | None = None
     follow_up: str | None = None
+    evaluator_model: str | None = None         # which model judged this revision ("demo" for the scripted stand-in)
 
 
 @dataclass
@@ -496,6 +503,7 @@ class PracticeAttempt:
                 difficulty=difficulty, answer=submission.answer, check=check, hint_level=submission.hints_seen,
                 glossary=ctx.glossary)
         self._record_usage(usage, "evaluate", result)
+        submission.evaluator_model = result.model or getattr(ctx.provider, "model", None) or None
 
         flags = list(result.flags)
         if self.language_fallback:

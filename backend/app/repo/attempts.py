@@ -58,7 +58,7 @@ def _submission_row(attempt_id: uuid.UUID, s: dict) -> dict:
         "accepted_at": _dt(s["accepted_at"]), "evaluated_at": _dt(s.get("evaluated_at")), "band": s.get("band"),
         "evaluation": s.get("evaluation"), "check_result": s.get("check"), "evidence_weight": s.get("evidence_weight", 0.0),
         "card": s.get("card"), "tip_key": s.get("tip_key"), "tip_text": s.get("tip_text"), "follow_up": s.get("follow_up"),
-        "flags": list(s.get("flags") or []),
+        "flags": list(s.get("flags") or []), "evaluator_model": s.get("evaluator_model"),
     }
 
 
@@ -70,6 +70,7 @@ def _submission_dict(row) -> dict:
         "evaluated_at": _iso(row.evaluated_at), "band": row.band, "evaluation": row.evaluation,
         "flags": list(row.flags or []), "check": row.check_result, "evidence_weight": float(row.evidence_weight or 0),
         "card": row.card, "tip_key": row.tip_key, "tip_text": row.tip_text, "follow_up": row.follow_up,
+        "evaluator_model": row.evaluator_model,
     }
 
 
