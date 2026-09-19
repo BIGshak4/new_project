@@ -512,17 +512,13 @@ export function PracticeSession({
                         <RichText text={h.text} />
                       </div>
                     ))}
-                    {attempt.reference && (
-                      <div className="solution">
-                        <h3>
-                          {t(
-                            "פתרון מוצע · בביקורת מקצועית",
-                            "Reference · under technical review",
-                          )}
-                        </h3>
-                        <RichText text={attempt.reference} />
-                      </div>
-                    )}
+                    {attempt.reference &&
+                      attempt.submission?.status !== "done" && (
+                        <ReferenceSolution
+                          text={attempt.reference}
+                          lang={lang}
+                        />
+                      )}
                   </>
                 )}
                 <RichText text={question.prompt} />
@@ -581,13 +577,28 @@ export function PracticeSession({
                 {attempt && (
                   <>
                     <h2>
-                      {t("איך הייתם פותרים את זה?", "How would you solve it?")}
+                      {attempt.submission
+                        ? t("התשובה שלך נשמרה", "Your answer is saved")
+                        : t(
+                            "איך הייתם פותרים את זה?",
+                            "How would you solve it?",
+                          )}
                     </h2>
                     <p className="muted small">
-                      {t(
-                        "כתבו הנחות, הסבירו את הדרך ובדקו מקרי קצה.",
-                        "State assumptions, explain your reasoning, and check edge cases.",
-                      )}
+                      {attempt.submission && demo
+                        ? t(
+                            "התשובה עדיין לא נבדקה. משוב אישי יופיע לאחר חיבור עוזר התרגול. בינתיים אפשר לפתוח את הפתרון המוצע ולהשוות לתשובה שלך.",
+                            "Your answer has not been assessed yet. Personal feedback will be available once the practice assistant is connected. For now, reveal the reference solution and compare it with your answer.",
+                          )
+                        : attempt.submission
+                          ? t(
+                              "התשובה ששלחתם מופיעה כאן. מצב המשוב מוצג בהמשך.",
+                              "Your submitted answer is shown below. Feedback status follows.",
+                            )
+                          : t(
+                              "כתבו הנחות, הסבירו את הדרך ובדקו מקרי קצה.",
+                              "State assumptions, explain your reasoning, and check edge cases.",
+                            )}
                     </p>
                     {!attempt.submission ? (
                       <>
@@ -680,25 +691,53 @@ export function PracticeSession({
                       </div>
                     )}
                     {attempt.submission?.status === "done" && (
-                      <div className="attempt-complete">
-                        <p>
-                          {t(
-                            "הפתרון והשימוש ברמזים נשמרו בחשבון.",
-                            "Your solution and hint usage are saved.",
+                      <>
+                        <div className="attempt-complete">
+                          {!attempt.reference && (
+                            <>
+                              <button
+                                className="primary"
+                                disabled={disabled || !!pending}
+                                onClick={() =>
+                                  void mutate(
+                                    async () =>
+                                      (await api.revealReference(attempt.id))
+                                        .attempt,
+                                  )
+                                }
+                              >
+                                {t(
+                                  "הצגת הפתרון המוצע להשוואה",
+                                  "Reveal reference solution to compare",
+                                )}
+                              </button>
+                              <p className="small muted">
+                                {t(
+                                  "פתיחת הפתרון כעת לא תשנה את רמת הסיוע שנרשמה לתשובה שכבר שלחתם.",
+                                  "Revealing it now will not change the assistance recorded for your submitted answer.",
+                                )}
+                              </p>
+                            </>
                           )}
-                        </p>
-                        <button
-                          onClick={() => {
-                            removeLocal(key);
-                            onNew(question.key);
-                          }}
-                        >
-                          {t(
-                            "תרגול חדש של השאלה",
-                            "Practice this question again",
-                          )}
-                        </button>
-                      </div>
+                          <button
+                            onClick={() => {
+                              removeLocal(key);
+                              onNew(question.key);
+                            }}
+                          >
+                            {t(
+                              "תרגול חדש של השאלה",
+                              "Practice this question again",
+                            )}
+                          </button>
+                        </div>
+                        {attempt.reference && (
+                          <ReferenceSolution
+                            text={attempt.reference}
+                            lang={lang}
+                          />
+                        )}
+                      </>
                     )}
                   </>
                 )}
@@ -765,6 +804,23 @@ function RichText({ text }: { text: string }) {
   );
 }
 
+function ReferenceSolution({ text, lang }: { text: string; lang: Lang }) {
+  return (
+    <div
+      className="solution"
+      role="region"
+      aria-label={lang === "he" ? "הפתרון המוצע" : "Reference solution"}
+    >
+      <h3>
+        {lang === "he"
+          ? "פתרון מוצע · בביקורת מקצועית"
+          : "Reference · under technical review"}
+      </h3>
+      <RichText text={text} />
+    </div>
+  );
+}
+
 function SavedAnswer({
   submission: s,
   lang,
@@ -778,7 +834,7 @@ function SavedAnswer({
   const parts = parseTechnicalAnswer(s.answer);
   return (
     <section className="saved-answer">
-      <h3>{t("הפתרון שנשמר", "Your saved solution")}</h3>
+      <h3>{t("התשובה ששלחתם", "Your submitted answer")}</h3>
       {parts.explanation && <RichText text={parts.explanation} />}
       {parts.code && (
         <pre className="code-block" dir="ltr">

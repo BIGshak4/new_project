@@ -12,9 +12,11 @@ import { javascript } from "@codemirror/lang-javascript";
 import { verilog } from "@codemirror/legacy-modes/mode/verilog";
 import { vhdl } from "@codemirror/legacy-modes/mode/vhdl";
 import type { AnswerLanguage } from "../lib/technical-answer";
+import { cCodeCompletions } from "../lib/c-code-completions";
 
 function syntax(language: AnswerLanguage) {
-  if (language === "c" || language === "cpp") return cpp();
+  if (language === "c" || language === "cpp")
+    return [cpp(), cCodeCompletions(language)];
   if (language === "python") return python();
   if (language === "javascript") return javascript();
   if (language === "verilog" || language === "systemverilog")

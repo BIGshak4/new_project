@@ -124,8 +124,8 @@ export function AnswerEditor({
           />
           <p id="code-keyboard-help" className="small muted">
             {t(
-              "כתיבה משמאל לימין. Tab להזחה; Esc ואז Tab כדי לצאת מהעורך. הקוד נשמר כחלק מהתשובה ואינו מורץ כאן.",
-              "Left-to-right editing. Tab indents; Esc then Tab leaves the editor. Code is saved with your answer and is not executed here.",
+              "כתיבה משמאל לימין. Ctrl+Space לפתיחת הצעות השלמה; Enter לבחירה. Tab להזחה; Esc ואז Tab כדי לצאת מהעורך. הקוד נשמר כחלק מהתשובה ואינו מורץ כאן.",
+              "Left-to-right editing. Ctrl+Space opens completions; Enter accepts a suggestion. Tab indents; Esc then Tab leaves the editor. Code is saved with your answer and is not executed here.",
             )}
           </p>
         </>
