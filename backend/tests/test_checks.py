@@ -1,5 +1,6 @@
 import pytest
 
+from app.engine import checks
 from app.engine.checks import (
     BooleanParseError,
     check_numeric,
@@ -130,3 +131,23 @@ def test_run_check_dispatch():
     assert run_check(check, "AB' + A'B").passed is True
     with pytest.raises(ValueError):
         run_check({"type": "magic", "spec": {}}, "x")
+
+
+
+class TestNamedValueWithDerivation:
+    SPEC = {"type": "numeric", "spec": {"expected": 1.4, "unit": "ns", "tolerance_abs": 0.01,
+                                         "output_names": ["Tmin", "T_min", "minimum clock period", "min period"]}}
+
+    @pytest.mark.parametrize("answer, passed", [
+        ("Tmin = 0.12 + 1.10 + 0.18 = 1.40 ns", True),                                     # derivation: last quantity wins
+        ("Tmin = tcq,max + tcomb,max + tsetup = 0.12 + 1.10 + 0.18 = 1.40 ns, so fmax = 714 MHz.", True),
+        ("The minimum clock period is 1.40 ns (0.12 + 1.10 + 0.18).", True),
+        ("Tmin = 1400 ps and fmax ≈ 714 MHz", True),                                       # other unit of the same base
+        ("Tmin = 1.10 + 0.18 = 1.28 ns, so fmax = 781 MHz.", False),                       # wrong value, found correctly
+        ("Tmin = 1.4", True),                                                              # bare number: the asked unit
+        ("Tmin: about 1.39 ns; hold slack = 0.03 ns", True),
+        ("fmax = 714 MHz; the period follows", None),                                      # name absent: not checked
+        ("tcq 0.12 + comb 1.10 + setup 0.18 -> Tmin = 1.40 ns, fmax = 714.3 MHz, hold slack = 0.05+0.08-0.10 = 0.03 ns", True),
+    ])
+    def test_the_stated_result_is_checked_not_the_first_operand(self, answer, passed):
+        assert checks.run_check(self.SPEC, answer).passed is passed

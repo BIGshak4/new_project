@@ -3,7 +3,7 @@
 A living summary of what exists in `backend/`, how it was verified, what was decided, and what is next.
 Updated at the end of every build step. Newest changes are at the bottom of the changelog.
 
-**Last updated:** 2026-09-19 (deployed; step 5 started) · **Tests:** 536 offline + 16 live + `scripts/smoke_http.py` against Render · **Latest commit:** see changelog
+**Last updated:** 2026-09-19 (deployed; step 5 started) · **Tests:** 557 offline + 16 live + `scripts/smoke_http.py` against Render · **Latest commit:** see changelog
 
 ---
 
@@ -24,7 +24,7 @@ Harel's Next.js apps (`apps/web`, `apps/tasks`) are the face of the product. The
 | 3 | Harel's 30 questions enriched for the engine (skills, rubrics, hints, errors, checks) | `18bfaa2` | Done, files only |
 | 4a | Engine hardening for real-world use, from Harel's review (`docs/backend-review-for-shaked.md`, R1–R5) | | Done |
 | 4b | HTTP API per the contract in `docs/backend-frontend-integration-readiness.md`: A login + pilot access (`74eea90`), B migration `practice_submissions` applied (`865b83c`), C repository + D service (`8eb0fce`), live sweep (`62fa488`), E routes + F route tests (`685827c`), verification pass (`b9670dc`), G: content loaded, Docker image verified, **deployed at https://jobrun-api.onrender.com** (staging, scripted model, pooler DB) | | Done |
-| 5 | `apps/web` wired to the API by Harel (quick mode, code editor, 202 polling, refresh recovery; browser reads of questions closed by his migration). P0 done: provenance per revision, demo data wiped. Next: P1 real model (needs the key) → P2 feedback check → joint review (`docs/shaked-human-review-handoff.md` §5) | | P1 done: real model live on Render |
+| 5 | `apps/web` wired to the API by Harel (quick mode, code editor, 202 polling, refresh recovery; browser reads of questions closed by his migration). P0 done: provenance per revision, demo data wiped. Next: P1 real model (needs the key) → P2 feedback check → joint review (`docs/shaked-human-review-handoff.md` §5) | | P2 done: 13/13 review answers judged correctly; numeric-check bug fixed. Next: joint review session |
 | 5 | Connect `apps/web` to the API (with Harel) | | |
 
 ---
@@ -205,6 +205,12 @@ Model per role is configuration (`ANTHROPIC_MODEL` for the judge, `ANTHROPIC_ROL
 
 Same two answers as P1: **$0.106 vs $0.152** with Opus everywhere (−30%), 36 s / 22 s instead of 43 s / 41 s, both caches cold. Per answer: ≈ $0.05 cold, ≈ $0.025 warm (evaluator $0.039 cold / $0.010 warm, card $0.012, tip $0.002). For a heavy learner (300 answers/month) that is $8–15 on this mix versus $20+ on Opus alone; Sonnet as judge too would roughly halve it again — to be decided on the golden set, not by feel.
 
+## 5h. P2: the review answer set (2026-09-20)
+
+`scripts/p2_review_set.py` ran 13 answers (prose only, code only, Hebrew + C, formulas, a different valid approach, prompt injection, irrelevant text, confidently wrong, one-liner) through Opus 5 with Sonnet 5 cards, without database writes: **13/13 bands as a careful human would judge**, misconception keys precise, injection scored as content and named, alternative approach credited. $0.26. Report: `docs/p2-feedback-review.md`.
+
+Bug found and fixed: the numeric check took the *first* number after the name, so `Tmin = 0.12 + 1.10 + 0.18 = 1.40 ns` was checked as failed ("got 0.12") — and a failed check overrides the score. The locator now takes the last quantity with a compatible unit in the clause; the clause ends at the next assignment. Nine regression cases; the seed self-tests caught the first attempt.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -253,6 +259,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 | 2026-09-18 | Step 4b-A: settings, Supabase token verification (JWKS/ES256), pilot access via `jr_members`, error shape, `/v1/me`; 392 tests (`74eea90`) |
 | 2026-09-18 | Step 4b-C/D: repository layer, store boundary, practice service; migration `skill_profile_engine_state`; 409 tests (`8eb0fce`) |
 | 2026-09-18 | Live verification sweep: RollbackStore harness, 13 live tests; fixes: JSON null in every writer (`db.sql_values`), batch question loading + caches, `reuse_status` preserved on re-import, migration `client_read_grants` (20 tables had policies but no grant) |
+| 2026-09-20 | P2 review set 13/13; numeric locator fixed (derivations were marked wrong) |
 | 2026-09-20 | Per-role models (Opus judge, Sonnet prose), second cache point; −30% per answer |
 | 2026-09-19 | P1: real model verified locally and in production (both languages); feedback effort low; tip delimiter stripped |
 | 2026-09-19 | Harel's integration merged and verified; P0: provenance column + demo wipe; Anthropic path hardened (fallbacks/schema downgrades), budget 90 s (`07a2813`) |

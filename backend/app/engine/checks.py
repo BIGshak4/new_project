@@ -354,14 +354,39 @@ def parse_quantity(text: str | float | int, base_units: set[str]) -> tuple[float
     return value, None
 
 
-def locate_named_value(text: str, names: list[str]) -> str | None:
-    """'Tmin = 1.40 ns, so fmax = 714 MHz' with names ['Tmin'] -> '1.40 ns'. Last match wins."""
+# a named value's clause ends at a sentence end, a connective, or where the next assignment (", fmax = ...") begins
+_CLAUSE_END = re.compile(r"[;\n]|\.(?=\s|$)|\s+(?:so|therefore|hence|thus|then|which|giving|and)\s+"
+                         r"|,\s*(?=[A-Za-z_][\w ]*?\s*(?:=|:|≈|\bis\b))", re.IGNORECASE)
+_QUANTITY_RE = re.compile(rf"({_NUMBER_RE.pattern})\s*([A-Za-zµμΩ]+)?")
+
+
+def locate_named_value(text: str, names: list[str], *, expected_base: str | None = None,
+                       base_units: set[str] | None = None) -> str | None:
+    """The value the candidate assigns to a named quantity.
+
+    'Tmin = 1.40 ns, so fmax = 714 MHz' with ['Tmin'] -> '1.40 ns'. With a derivation,
+    'Tmin = 0.12 + 1.10 + 0.18 = 1.40 ns', the result is the LAST quantity in that clause that
+    carries a compatible unit (here ns), not the first number after the name; without any unit
+    in the clause, the last number. The last occurrence of a name wins.
+    """
     found = None
     for name in names:
-        pattern = re.compile(rf"{re.escape(name)}\s*(?:is|=|:|≈|~|of)?\s*(?:about|approximately|approx\.?)?\s*"
-                             rf"({_NUMBER_RE.pattern}\s*[A-Za-zµμΩ]*)", re.IGNORECASE)
-        for match in pattern.finditer(text):
-            found = match.group(1)
+        for match in re.finditer(rf"{re.escape(name)}\s*(?:is|=|:|≈|~|of)?\s*(?:about|approximately|approx\.?)?", text,
+                                 re.IGNORECASE):
+            clause = text[match.end():]
+            stop = _CLAUSE_END.search(clause)
+            clause = clause[:stop.start()] if stop else clause
+            quantities = [(q.group(1), q.group(2) or "") for q in _QUANTITY_RE.finditer(clause)]
+            if not quantities:
+                continue
+            if expected_base and base_units:
+                compatible = [(n, u) for n, u in quantities
+                              if u and (split := _split_unit(u.strip(".,;"), base_units)) and split[1] == expected_base]
+                if compatible:
+                    found = f"{compatible[-1][0]} {compatible[-1][1]}"
+                    continue
+            number, unit = quantities[-1]
+            found = f"{number} {unit}".strip()
     return found
 
 
@@ -372,19 +397,19 @@ def check_numeric(spec: dict, answer: str | float | int | dict) -> CheckResult:
     if isinstance(answer, dict):
         answer = answer.get("value", answer.get("text", ""))
     names = spec.get("output_names") or ([spec["output_name"]] if spec.get("output_name") else [])
-    if names and isinstance(answer, str):
-        located = locate_named_value(answer, names)
-        if located is None:
-            return CheckResult(type="numeric", passed=None,
-                               detail=f"no value named {', '.join(names)} was found in the answer",
-                               runtime_ms=int((time.perf_counter() - started) * 1000))
-        answer = located
     unit = spec.get("unit")
     base_units = {"s", "Hz", "V", "A", "W", "F", "Ω", "ohm", "b", "B", "bit", "bits"}
     expected_factor, expected_base = (1.0, None)
     if unit:
         split = _split_unit(unit, base_units)
         expected_factor, expected_base = split if split else (1.0, unit)
+    if names and isinstance(answer, str):
+        located = locate_named_value(answer, names, expected_base=expected_base, base_units=base_units)
+        if located is None:
+            return CheckResult(type="numeric", passed=None,
+                               detail=f"no value named {', '.join(names)} was found in the answer",
+                               runtime_ms=int((time.perf_counter() - started) * 1000))
+        answer = located
     expected = float(spec["expected"]) * expected_factor
 
     try:
