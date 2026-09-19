@@ -55,6 +55,14 @@ class Settings(BaseSettings):
     default_role: str = "digital-hardware-engineer"
     default_company: str = "generic"
 
+    @field_validator("database_url", "supabase_url", "supabase_jwt_secret", "anthropic_api_key", "anthropic_model",
+                     "llm_provider", "env", "default_language", mode="before")
+    @classmethod
+    def _strip(cls, value):
+        """Values pasted into a dashboard often carry a trailing newline or spaces; the database then
+        looks for a database literally named 'postgres\n'."""
+        return value.strip() if isinstance(value, str) else value
+
     @field_validator("allowed_origins", mode="before")
     @classmethod
     def _split_origins(cls, value):
