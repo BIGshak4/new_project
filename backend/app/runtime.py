@@ -31,7 +31,7 @@ def make_provider(settings: Settings) -> Provider:
         return DemoProvider()
     if settings.llm_provider == "anthropic":
         return build_provider("anthropic", api_key=settings.anthropic_api_key, model=settings.anthropic_model,
-                              enable_fallbacks=settings.anthropic_enable_fallbacks)
+                              enable_fallbacks=settings.anthropic_enable_fallbacks, role_models=settings.role_models)
     return build_provider("manual", manual_dir=settings.workdir / "manual_llm")
 
 

@@ -5,8 +5,8 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from app.schemas.visual_answer import VisualAnswer
 from app.repo.questions import QuestionDetail
+from app.schemas.visual_answer import VisualAnswer
 
 
 class HintView(BaseModel):

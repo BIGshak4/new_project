@@ -110,7 +110,8 @@ async def health() -> dict:
     return {"status": "ok", "engine_version": ENGINE_VERSION, "env": settings.env, "llm_provider": settings.llm_provider,
             "database_configured": bool(settings.database_url), "database_host": settings.database_host_kind,
             "auth_configured": bool(settings.supabase_url),
-            "allowed_origins": len(settings.allowed_origins), "store": runtime.store_kind if runtime else None}
+            "allowed_origins": len(settings.allowed_origins), "store": runtime.store_kind if runtime else None,
+            "models": {"evaluator": settings.anthropic_model, **settings.role_models} if settings.llm_provider == "anthropic" else None}
 
 
 @app.get("/catalog/summary", tags=["ops"])

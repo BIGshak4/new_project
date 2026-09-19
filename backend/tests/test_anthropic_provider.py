@@ -74,7 +74,8 @@ class TestWhatIsSent:
         assert sent["output_config"] == {"effort": "low"}                        # evaluator effort
         assert sent["max_tokens"] == 8000
         assert [b["text"] for b in sent["system"]] == ["stable block", "question block"]
-        assert "cache_control" not in sent["system"][0] and sent["system"][1]["cache_control"] == {"type": "ephemeral"}
+        assert sent["system"][0]["cache_control"] == {"type": "ephemeral"}      # instructions: shared by every question
+        assert sent["system"][1]["cache_control"] == {"type": "ephemeral"}      # question block: shared by its answerers
         assert sent["messages"] == [{"role": "user", "content": "<candidate_answer>x</candidate_answer>"}]
         assert sent["extra_headers"] == {"anthropic-beta": AnthropicProvider.FALLBACK_BETA}
         assert sent["extra_body"] == {"fallbacks": "default"}
@@ -100,6 +101,25 @@ class TestWhatIsSent:
         install_stream(provider, fake_message(text="Next time, write the requirements as a checklist."))
         response = await provider.complete(LLMRequest(role="tip", system=["s"], user="u"))
         assert response.text.startswith("Next time") and response.parsed is None
+
+
+class TestRoleModels:
+    async def test_prose_roles_use_the_cheaper_model_and_the_judge_keeps_opus(self):
+        p = AnthropicProvider(api_key="k", model="claude-opus-5",
+                              role_models={"feedback": "claude-sonnet-5", "tip": "claude-sonnet-5"})
+        p.sent = []
+        install_parse(p, fake_message(text=GOOD.model_dump_json(), parsed=GOOD))
+        install_stream(p, fake_message(text="a polished tip sentence here"))
+        await p.complete(request("evaluator"))
+        await p.complete(LLMRequest(role="feedback", system=["s"], user="u", schema=Evaluation))
+        await p.complete(LLMRequest(role="tip", system=["s"], user="u"))
+        assert [s["model"] for s in p.sent] == ["claude-opus-5", "claude-sonnet-5", "claude-sonnet-5"]
+
+    def test_role_models_parse_from_settings(self):
+        from app.config import Settings
+        s = Settings(_env_file=None, anthropic_role_models=" feedback=claude-sonnet-5, tip = claude-haiku-4-5 ,bad")
+        assert s.role_models == {"feedback": "claude-sonnet-5", "tip": "claude-haiku-4-5"}
+        assert Settings(_env_file=None, anthropic_role_models="").role_models == {}
 
 
 class TestOutcomes:

@@ -231,18 +231,28 @@ class AnthropicProvider:
     FALLBACK_BETA = "server-side-fallback-2026-07-01"
 
     def __init__(self, *, model: str = "claude-opus-5", api_key: str | None = None,
-                 enable_fallbacks: bool = True, timeout_seconds: float = 120.0, max_retries: int = 2):
+                 enable_fallbacks: bool = True, timeout_seconds: float = 120.0, max_retries: int = 2,
+                 role_models: dict[str, str] | None = None):
         import anthropic
 
         self._anthropic = anthropic
-        self.model = model
+        self.model = model                                    # the judge (evaluator) and any role not listed below
+        # cheaper models for the prose roles: the card and the tip only reword a judgement already made
+        self.role_models = dict(role_models or {})
         self.enable_fallbacks = enable_fallbacks
         self._schema_unsupported = False
         self.client = anthropic.AsyncAnthropic(api_key=api_key, timeout=timeout_seconds, max_retries=max_retries)
 
+    def model_for(self, role: str) -> str:
+        return self.role_models.get(role, self.model)
+
     def _system_blocks(self, request: LLMRequest) -> list[dict]:
+        """Two cache points: the role's instructions (shared by every question) and the question block
+        (shared by everyone answering that question). A breakpoint only on the last block would cache the
+        pair as one unit, so the instructions would be re-sent for every new question."""
         blocks = [{"type": "text", "text": text} for text in request.system if text]
         if blocks:
+            blocks[0]["cache_control"] = {"type": "ephemeral"}
             blocks[-1]["cache_control"] = {"type": "ephemeral"}
         return blocks
 
@@ -284,7 +294,7 @@ class AnthropicProvider:
         anthropic = self._anthropic
         started = time.perf_counter()
         common = dict(
-            model=self.model, max_tokens=request.resolved_max_tokens(), system=self._system_blocks(request),
+            model=self.model_for(request.role), max_tokens=request.resolved_max_tokens(), system=self._system_blocks(request),
             messages=[{"role": "user", "content": request.user}],
             output_config={"effort": request.resolved_effort()}, **self._extras(),
         )

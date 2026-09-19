@@ -7,8 +7,8 @@ from pydantic import ValidationError
 from app.api.errors import ApiError
 from app.engine.catalog import load_catalog
 from app.schemas.visual_answer import VisualAnswer
-from tests.test_practice_service import Q, USER, OTHER, service
 from tests.test_practice_hardening import SEEDS, scripted
+from tests.test_practice_service import OTHER, USER, Q, service
 
 
 def visual():
@@ -72,6 +72,7 @@ async def test_image_only_missing_cross_owner_and_cross_attempt_rejected(setup):
     lambda v: v["circuit"].update(wires=[{"id": "w", "source": "missing", "sourcePort": "Q", "target": "and", "targetPort": "A0"}]),
 ])
 def test_visual_payload_bounds(mutate):
-    v = visual(); mutate(v)
+    v = visual()
+    mutate(v)
     with pytest.raises(ValidationError):
         VisualAnswer.model_validate(v)

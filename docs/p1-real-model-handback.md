@@ -30,7 +30,7 @@ Measured per answer (quick flow = evaluate + card + tip):
 | Hebrew, wrong answer (sensor majority) | 43 s | $0.076 |
 | English, mostly-right answer (mod-6 counter) | 41 s | $0.076 |
 
-Breakdown: evaluation 5–9 s / $0.010–0.041 (the higher figure writes the prompt cache; the next answer to the same question reads it at a tenth of the price), feedback card ~10 s at the new `low` effort ($0.016–0.026), tip ~5 s ($0.004). Budget guidance: **about $0.08 per answer, ~$1 per 12 answers.** The Anthropic console's monthly limit is the hard stop; `DAILY_ATTEMPT_LIMIT` (30) bounds attempts per user per day.
+Breakdown: evaluation 5–9 s / $0.010–0.041 (the higher figure writes the prompt cache; the next answer to the same question reads it at a tenth of the price), feedback card ~10 s at the new `low` effort ($0.016–0.026), tip ~5 s ($0.004). Budget guidance: **about $0.08 per answer on Opus alone; ≈ $0.05 cold / $0.025 warm on the Opus-judge + Sonnet-prose mix now deployed (20 Sept).** The Anthropic console's monthly limit is the hard stop; `DAILY_ATTEMPT_LIMIT` (30) bounds attempts per user per day.
 
 Quality observations from the first two real answers: the evaluator found the `xor_confused_with_majority` misconception on the wrong answer and, on the "correct" counter, correctly pointed out that recovery from states 6/7 sat inside the enable branch and that the requested trace was missing. The Hebrew card was specific (named the exact truth-table rows), credited alternative approaches, and kept technical terms in English.
 

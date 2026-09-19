@@ -33,7 +33,6 @@ from datetime import UTC, datetime
 from enum import StrEnum
 
 from pydantic import BaseModel, Field, ValidationError
-from app.schemas.visual_answer import VisualAnswer
 
 from app.engine import ENGINE_VERSION, checks, evaluator, feedback, generator, scores, skill_controller, tips
 from app.engine.evaluator import EvaluationResult
@@ -54,6 +53,7 @@ from app.schemas.engine import (
     SkillSource,
     SkillState,
 )
+from app.schemas.visual_answer import VisualAnswer
 
 MAX_FOLLOW_UPS = 2
 MAX_ANSWER_CHARS = 20_000

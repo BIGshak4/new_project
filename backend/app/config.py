@@ -41,7 +41,10 @@ class Settings(BaseSettings):
     # anthropic = the real API; needs ANTHROPIC_API_KEY.
     llm_provider: str = "scripted"
     anthropic_api_key: str | None = None
-    anthropic_model: str = "claude-opus-5"
+    anthropic_model: str = "claude-opus-5"                 # the judge (evaluator), and any role not overridden
+    # role=model pairs for the prose roles. Measured 2026-09-19: Sonnet 5 writes the same card for a
+    # fifth of the price; the evaluator stays on Opus until the golden set says otherwise.
+    anthropic_role_models: str = "feedback=claude-sonnet-5,tip=claude-sonnet-5,generator=claude-sonnet-5"
     anthropic_enable_fallbacks: bool = True
 
     seeds_dir: Path = BACKEND_DIR / "seeds"
@@ -55,7 +58,7 @@ class Settings(BaseSettings):
     default_role: str = "digital-hardware-engineer"
     default_company: str = "generic"
 
-    @field_validator("database_url", "supabase_url", "supabase_jwt_secret", "anthropic_api_key", "anthropic_model",
+    @field_validator("database_url", "supabase_url", "supabase_jwt_secret", "anthropic_api_key", "anthropic_model", "anthropic_role_models",
                      "llm_provider", "env", "default_language", mode="before")
     @classmethod
     def _strip(cls, value):
@@ -69,6 +72,16 @@ class Settings(BaseSettings):
         if isinstance(value, str):
             return [origin.strip().rstrip("/") for origin in value.split(",") if origin.strip()]
         return value
+
+    @property
+    def role_models(self) -> dict[str, str]:
+        pairs = (p.strip() for p in (self.anthropic_role_models or "").split(",") if p.strip())
+        out = {}
+        for pair in pairs:
+            role, _, model = pair.partition("=")
+            if role.strip() and model.strip():
+                out[role.strip()] = model.strip()
+        return out
 
     @property
     def is_production(self) -> bool:

@@ -26,8 +26,8 @@ from pydantic import BaseModel, Field
 from app.api.deps import CurrentAccess, Practice
 from app.api.errors import ApiError
 from app.engine.practice import MAX_ANSWER_CHARS
-from app.schemas.visual_answer import VisualAnswer
 from app.schemas.api import AttemptView, HintView, SubmissionView
+from app.schemas.visual_answer import VisualAnswer
 from app.services.practice_service import PracticeService
 
 router = APIRouter(prefix="/v1/practice/attempts", tags=["practice"])

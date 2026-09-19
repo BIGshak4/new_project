@@ -199,6 +199,12 @@ First real Claude calls, locally then through the service into production under 
 
 Prompt caching works (second evaluation of the same question: 3,978 tokens read from cache, $0.010 instead of $0.034). Structured output and the fallbacks beta were accepted by the account, so neither downgrade path fired. Feedback card at low effort: same quality in ~10 s instead of ~16 s → `ROLE_EFFORT["feedback"] = "low"`, max 2,000 tokens. Tip polish sometimes echoed the `<tip>` delimiter → stripped. Render runs `LLM_PROVIDER=anthropic` (`ENV=staging`); `/health` confirms. The key was rotated once during the session (a revoked key shows as `401 API key is invalid` and the card falls back to the template, as designed).
 
+## 5g. Cost: the Opus/Sonnet mix (2026-09-20)
+
+Model per role is configuration (`ANTHROPIC_MODEL` for the judge, `ANTHROPIC_ROLE_MODELS` for the prose roles; `/health.models` shows the split). Default: **evaluator on Claude Opus 5; feedback card, tip and generator on Claude Sonnet 5.** A second cache point on the shared instructions block means the ~3k-token role prompt is cached across questions, not only per question.
+
+Same two answers as P1: **$0.106 vs $0.152** with Opus everywhere (−30%), 36 s / 22 s instead of 43 s / 41 s, both caches cold. Per answer: ≈ $0.05 cold, ≈ $0.025 warm (evaluator $0.039 cold / $0.010 warm, card $0.012, tip $0.002). For a heavy learner (300 answers/month) that is $8–15 on this mix versus $20+ on Opus alone; Sonnet as judge too would roughly halve it again — to be decided on the golden set, not by feel.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -247,6 +253,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 | 2026-09-18 | Step 4b-A: settings, Supabase token verification (JWKS/ES256), pilot access via `jr_members`, error shape, `/v1/me`; 392 tests (`74eea90`) |
 | 2026-09-18 | Step 4b-C/D: repository layer, store boundary, practice service; migration `skill_profile_engine_state`; 409 tests (`8eb0fce`) |
 | 2026-09-18 | Live verification sweep: RollbackStore harness, 13 live tests; fixes: JSON null in every writer (`db.sql_values`), batch question loading + caches, `reuse_status` preserved on re-import, migration `client_read_grants` (20 tables had policies but no grant) |
+| 2026-09-20 | Per-role models (Opus judge, Sonnet prose), second cache point; −30% per answer |
 | 2026-09-19 | P1: real model verified locally and in production (both languages); feedback effort low; tip delimiter stripped |
 | 2026-09-19 | Harel's integration merged and verified; P0: provenance column + demo wipe; Anthropic path hardened (fallbacks/schema downgrades), budget 90 s (`07a2813`) |
 | 2026-09-19 | First production run with a real session; full verification bench; superseded-revision bug fixed; DATABASE_URL mistakes named at startup; live harness restructured (per-test connections) |
