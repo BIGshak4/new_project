@@ -3,7 +3,7 @@
 A living summary of what exists in `backend/`, how it was verified, what was decided, and what is next.
 Updated at the end of every build step. Newest changes are at the bottom of the changelog.
 
-**Last updated:** 2026-09-19 (deployed; step 5 started) · **Tests:** 506 offline + 14 live + `scripts/smoke_http.py` against Render · **Latest commit:** see changelog
+**Last updated:** 2026-09-19 (deployed; step 5 started) · **Tests:** 516 offline + 16 live + `scripts/smoke_http.py` against Render · **Latest commit:** see changelog
 
 ---
 
@@ -165,6 +165,19 @@ A fresh reviewer read the API, service, repository, auth and engine-practice lay
 
 **Profiling** (`scripts/profile_service.py`): in memory, a full loop (start → hint → submit → follow-ups → refresh → progress) is ~66 ms, 60% of it Pydantic validating skill states — negligible next to the database. Against Supabase from the dev machine (~130 ms per round trip; Render sits in the same region as the database, so roughly a tenth of that): before the fixes a submit made 26–28 statements (3.7–5.3 s), a refresh 6 (0.8 s), the first listing 5 (1.4 s); after them a submit is 18 statements (2.3 s on that link, and 4 of the 18 are the test harness's own savepoints), the rest unchanged. The in-memory store deep-copied everything on every transaction and got slower with every attempt; it now copies containers only.
 
+## 5d. First production run and full verification (2026-09-19)
+
+With the founders' session token, the whole chain ran on Render: login → 30 Hebrew questions → start → hint → wrong answer (truth-table check failed, WEAK, reduced evidence, feedback card, tip, follow-up) → same click replayed for free → two follow-ups STRONG → refresh identical → progress (`boolean_algebra` level 2 assessed, `truth_tables` insufficient evidence). First call 23 s (free-tier wake-up), the rest 0.2–0.4 s. That attempt is real data under the JobRun account.
+
+Full bench afterwards: ruff; 513 offline tests; chaos sweep 40 seeds × 4 users × 80 steps (1,982 attempts, 197 failures, 75 retries, 70 superseded revisions, all invariants held); TypeScript typecheck + contract test; Docker image built from the latest code, healthy in 15 s, smoke green; Render smoke green; seed loader dry-run: all 30 questions unchanged, review state kept; live suite against Supabase.
+
+Bugs found and fixed by this pass:
+- **A superseded answer could be scored.** Main answer fails → user sends a new one → it fails → retry fixes the new one → a second retry picked up the *old* revision and scored it too (two scored main answers, two dangling follow-ups). Older revisions of a turn are now flagged `superseded` and never retried; chaos invariant: at most one scored revision per turn.
+- TypeScript client said `insufficient` where the engine says `insufficient_evidence`; the contract test now checks enum values.
+- Deployment config: a wrong `DATABASE_URL` failed with a misleading "password authentication failed"; startup now names the mistake (plain `postgres` user on the pooler, placeholder left in, characters needing percent-encoding), and pasted values are stripped of whitespace (a trailing newline made Postgres look for a database called `postgres
+`).
+- Live test harness: one transaction held open for ~10 minutes gets dropped by the pooler; each live test now uses its own connection and transaction, and the 30-question sweep runs in three chunks. Tests measure deltas, since the founders' account now has real attempts. The pooler also resets connections sporadically under sustained load from a home connection, so the API now answers a dropped database connection with **503 `temporarily_unavailable` + `Retry-After`** (the transaction rolled back atomically; nothing is lost) and retries the read-only load once.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -213,6 +226,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 | 2026-09-18 | Step 4b-A: settings, Supabase token verification (JWKS/ES256), pilot access via `jr_members`, error shape, `/v1/me`; 392 tests (`74eea90`) |
 | 2026-09-18 | Step 4b-C/D: repository layer, store boundary, practice service; migration `skill_profile_engine_state`; 409 tests (`8eb0fce`) |
 | 2026-09-18 | Live verification sweep: RollbackStore harness, 13 live tests; fixes: JSON null in every writer (`db.sql_values`), batch question loading + caches, `reuse_status` preserved on re-import, migration `client_read_grants` (20 tables had policies but no grant) |
+| 2026-09-19 | First production run with a real session; full verification bench; superseded-revision bug fixed; DATABASE_URL mistakes named at startup; live harness restructured (per-test connections) |
 | 2026-09-19 | Render deployment live and smoke-tested; TS client + contract test (`24e6263`); independent code review, 13 findings fixed; profiling script, submit path cut, memory store O(1) snapshots |
 | 2026-09-18 | Docker image built and smoke-tested in a container (WSL 2 installed); finding: direct Supabase host is IPv6-only, pooler required; detection added |
 | 2026-09-18 | Stage G: content loaded into Supabase (approved), `Dockerfile`, `.dockerignore`, `render.yaml`, `docs/practice-api-integration.md` for Harel |

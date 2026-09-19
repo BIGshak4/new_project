@@ -337,3 +337,62 @@ class TestSlowEvaluations:
         replay = await client.post(f"{BASE}/{aid}/submissions", json={"answer": "alarm = (A&B)|(A&C)|(B&C)"},
                                    headers={**h, "Idempotency-Key": "slow-1"})
         assert replay.status_code == 200 and replay.json()["submission"]["replayed"] is True
+
+
+class TestDroppedDatabaseConnections:
+    async def test_a_dropped_connection_is_a_503_with_retry_after(self, client, user, catalog):
+        from sqlalchemy.exc import DBAPIError
+
+        from app.services import memory_store
+
+        async def dropped(self, *a, **k):
+            raise DBAPIError("SELECT 1", {}, ConnectionResetError(10054, "forcibly closed"), connection_invalidated=True)
+        _, h = user
+        aid = (await start(client, h))["id"]
+        monkeypatch = pytest.MonkeyPatch()
+        monkeypatch.setattr(memory_store._MemoryTx, "load_attempt", dropped)
+        try:
+            response = await client.get(f"{BASE}/{aid}", headers=h)
+        finally:
+            monkeypatch.undo()
+        assert response.status_code == 503 and response.json()["error"]["code"] == "temporarily_unavailable"
+        assert response.headers.get("retry-after") == "2"
+
+    async def test_a_single_drop_during_load_is_retried_transparently(self, client, user, catalog):
+        from sqlalchemy.exc import DBAPIError
+
+        from app.services import memory_store
+        original = memory_store._MemoryTx.load_attempt
+        calls = {"n": 0}
+
+        async def flaky(self, *a, **k):
+            calls["n"] += 1
+            if calls["n"] == 1:
+                raise DBAPIError("SELECT 1", {}, ConnectionResetError(10054, "forcibly closed"), connection_invalidated=True)
+            return await original(self, *a, **k)
+        _, h = user
+        aid = (await start(client, h))["id"]
+        monkeypatch = pytest.MonkeyPatch()
+        monkeypatch.setattr(memory_store._MemoryTx, "load_attempt", flaky)
+        try:
+            response = await client.get(f"{BASE}/{aid}", headers=h)
+        finally:
+            monkeypatch.undo()
+        assert response.status_code == 200 and calls["n"] == 2
+
+    async def test_a_real_query_error_is_still_a_500(self, client, user, catalog):
+        from sqlalchemy.exc import DBAPIError
+
+        from app.services import memory_store
+
+        async def broken(self, *a, **k):
+            raise DBAPIError("SELECT nope", {}, Exception("column nope does not exist"))
+        _, h = user
+        aid = (await start(client, h))["id"]
+        monkeypatch = pytest.MonkeyPatch()
+        monkeypatch.setattr(memory_store._MemoryTx, "load_attempt", broken)
+        try:
+            response = await client.get(f"{BASE}/{aid}", headers=h)
+        finally:
+            monkeypatch.undo()
+        assert response.status_code == 500 and response.json()["error"]["code"] == "internal"

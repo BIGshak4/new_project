@@ -164,6 +164,7 @@ export type ApiErrorCode =
   | "nothing_to_retry"
   | "usage_limit"
   | "evaluation_unavailable"
+  | "temporarily_unavailable"
   | "payload_too_large"
   | "method_not_allowed"
   | "internal"

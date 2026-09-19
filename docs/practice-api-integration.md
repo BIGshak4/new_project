@@ -39,6 +39,7 @@ The backend verifies the signature against the project's JWKS, plus issuer, audi
 | 429 | `usage_limit` | daily attempt limit; the message says when to come back |
 | 202 | — | the answer is saved and **still being evaluated** (slow model); the body has the same shape with `submission.status = "evaluating"`. Poll `GET` the attempt (the client's `waitForEvaluation`) until `attempt.status` leaves `evaluating` |
 | 503 | `evaluation_unavailable` | the evaluation could not be reported; the answer is saved, `GET` the attempt and retry |
+| 503 | `temporarily_unavailable` | the database connection dropped mid-request (`Retry-After: 2`); nothing was written, repeat the same call with the same Idempotency-Key |
 | 500 | `internal` | our bug; `error.request_id` for the logs |
 
 Every error body is `{"error": {"code": "...", "message": "..."}}`. Every response carries `X-Request-Id`.

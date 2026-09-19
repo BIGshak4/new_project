@@ -389,6 +389,17 @@ class PracticeService:
 
     async def _load(self, user_id: uuid.UUID, attempt_id: uuid.UUID
                     ) -> tuple[PracticeAttempt, StoredAttempt, LoadedQuestion, LoadedProfile]:
+        try:
+            return await self._load_once(user_id, attempt_id)
+        except Exception as exc:                                   # noqa: BLE001 - only the lost-connection family
+            from app.api.errors import is_connection_error
+            if not is_connection_error(exc):
+                raise
+            log.warning("database connection dropped while loading attempt %s; retrying once", attempt_id)
+            return await self._load_once(user_id, attempt_id)     # reads only: safe to repeat
+
+    async def _load_once(self, user_id: uuid.UUID, attempt_id: uuid.UUID
+                         ) -> tuple[PracticeAttempt, StoredAttempt, LoadedQuestion, LoadedProfile]:
         async with self.store.transaction() as tx:
             stored = await tx.load_attempt(attempt_id, user_id=user_id)
             if stored is None:

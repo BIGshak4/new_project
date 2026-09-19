@@ -76,6 +76,9 @@ class TestLiveRepository:
         store, catalog, user_id = tx
         loaded = await store.load_question(key=Q)
         profile = await store.load_profile(user_id)
+        primary = loaded.question.primary_skill
+        seen_version = profile.versions.get(primary, 0)                 # the account may already have this skill
+        turns_before = profile.states[primary].turns if primary in profile.states else 0
         attempt = PracticeAttempt(context(catalog, scripted([WEAK])), loaded.question, profile.states)
         attempt.next_hint()
         outcome = await attempt.submit("alarm = A ^ B ^ C", idempotency_key="k1")
@@ -83,7 +86,7 @@ class TestLiveRepository:
 
         await store.save_attempt(user_id=user_id, question_id=loaded.id, row=attempt.attempt_row())
         versions = await store.save_profile(profile, attempt.skill_states, attempt_id=attempt.attempt_id_uuid)
-        assert set(versions) >= {loaded.question.primary_skill} and all(v == 1 for v in versions.values())
+        assert set(versions) >= {primary} and versions[primary] == seen_version + 1
         n = await store.record_metrics(user_id=user_id, attempt_id=attempt.attempt_id_uuid, metrics=outcome.metrics,
                                        seniority="student")
         assert n == len(outcome.metrics)
@@ -98,8 +101,8 @@ class TestLiveRepository:
         restored = PracticeAttempt.restore(context(catalog, scripted([])), loaded.question, again.states, stored.row)
         assert restored.main_submission.card == outcome.submission.card
         assert restored.pending_follow_up["question"] == outcome.follow_up and restored.hints_used == attempt.hints_used == 2
-        assert again.versions[loaded.question.primary_skill] == 1
-        assert again.states[loaded.question.primary_skill].turns == 1
+        assert again.versions[primary] == seen_version + 1
+        assert again.states[primary].turns == turns_before + 1
         assert await store.load_attempt(attempt.attempt_id_uuid, user_id=uuid.uuid4()) is None     # someone else
 
         # the database refuses a second revision with the same key, and a stale profile write
@@ -109,11 +112,14 @@ class TestLiveRepository:
         with pytest.raises(StaleProfile):
             await store.save_profile(profile, attempt.skill_states, attempt_id=attempt.attempt_id_uuid)   # old versions
         await store.save_profile(again, again.states, attempt_id=attempt.attempt_id_uuid)             # fresh ones
-        assert (await store.load_profile(user_id)).versions[loaded.question.primary_skill] == 2
+        assert (await store.load_profile(user_id)).versions[primary] == seen_version + 2
 
     async def test_second_attempt_scores_on_top_of_the_saved_profile(self, tx):
         store, catalog, user_id = tx
         loaded = await store.load_question(key=Q)
+        primary = loaded.question.primary_skill
+        initial = await store.load_profile(user_id)
+        turns_before = initial.states[primary].turns if primary in initial.states else 0
         for answer, reply in (("alarm = A ^ B ^ C", WEAK), ("alarm = (A&B)|(A&C)|(B&C)", GOOD)):
             profile = await store.load_profile(user_id)
             attempt = PracticeAttempt(context(catalog, scripted([reply])), loaded.question, profile.states)
@@ -121,6 +127,6 @@ class TestLiveRepository:
             await store.save_attempt(user_id=user_id, question_id=loaded.id, row=attempt.attempt_row())
             await store.save_profile(profile, attempt.skill_states, attempt_id=attempt.attempt_id_uuid)
         final = await store.load_profile(user_id)
-        assert final.states[loaded.question.primary_skill].turns == 2
+        assert final.states[primary].turns == turns_before + 2
         assert await store.started_today(user_id) >= 2
         assert [r["question_key"] for r in await store.recent_attempts(user_id, limit=2)] == [Q, Q]

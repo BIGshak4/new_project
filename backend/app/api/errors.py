@@ -10,6 +10,7 @@ from __future__ import annotations
 from fastapi import FastAPI, Request
 from fastapi.exceptions import HTTPException, RequestValidationError
 from fastapi.responses import JSONResponse
+from sqlalchemy.exc import DBAPIError, OperationalError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 STATUS_FOR_CODE = {
@@ -24,6 +25,7 @@ STATUS_FOR_CODE = {
     "stale_version": 409,
     "usage_limit": 429,
     "evaluation_unavailable": 503,
+    "temporarily_unavailable": 503,
 }
 
 
@@ -34,6 +36,21 @@ class ApiError(Exception):
         self.message = message
         self.status = status or STATUS_FOR_CODE.get(code, 400)
         self.headers = headers or {}
+
+
+CONNECTION_ERROR_NAMES = ("ConnectionDoesNotExistError", "ConnectionResetError", "InterfaceError",
+                          "ConnectionRefusedError", "TimeoutError", "CancelledError", "OSError")
+
+
+def is_connection_error(exc: BaseException) -> bool:
+    """True for the lost-connection family (asyncpg, socket), at any depth of the cause chain."""
+    seen = 0
+    while exc is not None and seen < 8:
+        if getattr(exc, "connection_invalidated", False) or type(exc).__name__ in CONNECTION_ERROR_NAMES                 or "connection was closed" in str(exc) or "forcibly closed" in str(exc):
+            return True
+        exc = getattr(exc, "orig", None) or exc.__cause__ or exc.__context__     # SQLAlchemy wraps the driver error in .orig
+        seen += 1
+    return False
 
 
 def _body(code: str, message: str, details=None) -> dict:
@@ -54,6 +71,18 @@ def install(app: FastAPI) -> None:
         code = {404: "not_found", 405: "method_not_allowed", 413: "payload_too_large", 401: "unauthenticated",
                 403: "forbidden"}.get(exc.status_code, "error")
         return JSONResponse(_body(code, str(exc.detail)), status_code=exc.status_code, headers=getattr(exc, "headers", None))
+
+    @app.exception_handler(OperationalError)
+    @app.exception_handler(DBAPIError)
+    async def _database_unavailable(request: Request, exc: DBAPIError) -> JSONResponse:
+        """A dropped or refused database connection. The failed transaction rolled back atomically,
+        so the client may simply retry; an accepted answer is never lost by this."""
+        if not (exc.connection_invalidated or is_connection_error(exc)):
+            raise exc                                          # a real query error: let the 500 path log it
+        request_id = getattr(request.state, "request_id", None)
+        return JSONResponse(_body("temporarily_unavailable", "the database connection dropped; please retry",
+                                  {"request_id": request_id} if request_id else None), status_code=503,
+                            headers={"Retry-After": "2"})
 
     @app.exception_handler(RequestValidationError)
     async def _validation(_: Request, exc: RequestValidationError) -> JSONResponse:
