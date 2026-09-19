@@ -17,6 +17,8 @@ Use Node.js 24. In either app run `npm ci`, copy `.env.example` to `.env.local`,
 
 ## Operate and deploy
 
+For the current implementation summary and remaining backend/model work before founder testing, start with [the handoff to Shaked for real-feedback human review](docs/shaked-human-review-handoff.md).
+
 See [the deployment and access guide](docs/netlify-and-supabase.md). Manual Netlify deployments are live; GitHub auto-deployment still needs repository-owner authorization. No paid upgrade was made.
 
 Supabase's canonical schema lives in `supabase/migrations`. The founder additions use `jr_` tables and preserve the existing product/AI schema. Seed generation is in `scripts/seed-example-questions.mjs`; it writes `supabase/seed-example-questions.sql` from the original example question bank. Seeding is an explicit database operation, never part of application startup.

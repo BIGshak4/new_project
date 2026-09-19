@@ -35,7 +35,7 @@ The previous English paragraphs came from `DemoProvider`, whose responses were f
 
 The scripted provider now supports Hebrew using the trusted practice-language instruction, so its developer-facing output also follows the selected language. Previously stored English demonstration responses are not rewritten. Old deep attempts retain their backend follow-up data for export and review, but the current UI offers a fresh one-answer practice flow instead.
 
-The backend still runs its existing scripted POC pipeline while `AI_PROVIDER=scripted`; hiding its output does not turn it into a real evaluator or remove prior demo skill records. Keep demonstration learning data separate from the real pilot, or explicitly reset it with the owners' approval before using profiles for real assessment. The current UI's demo state comes from server health; historical provenance needs to be handled before switching a mixed dataset to a live provider.
+The backend still runs its existing scripted POC pipeline while `LLM_PROVIDER=scripted`; hiding its output does not turn it into a real evaluator or remove prior demo skill records. Keep demonstration learning data separate from the real pilot, or explicitly reset it with the owners' approval before using profiles for real assessment. The current UI's demo state comes from server health; historical provenance needs to be handled before switching a mixed dataset to a live provider.
 
 ## Dedicated assistant area
 
