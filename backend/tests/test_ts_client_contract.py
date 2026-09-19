@@ -72,3 +72,10 @@ def test_error_codes_are_typed(spec, source):
     from app.api.errors import STATUS_FOR_CODE
     typed = set(re.findall(r'\|\s*"(\w+)"', source.split("export type ApiErrorCode")[1].split(";")[0]))
     assert set(STATUS_FOR_CODE) - {"stale_version"} <= typed, set(STATUS_FOR_CODE) - typed
+
+
+def test_enum_literals_match_the_engine(source):
+    from app.schemas.engine import Band, EvidenceStatus
+    assert set(re.findall(r'status: ((?:"\w+"(?: \| )?)+);', source.split("export type SkillProgress")[1].split("};")[0])[0]
+               .replace('"', "").split(" | ")) == {e.value for e in EvidenceStatus}
+    assert set(re.findall(r'"(\w+)"', source.split("export type Band =")[1].split(";")[0])) == {b.value for b in Band}

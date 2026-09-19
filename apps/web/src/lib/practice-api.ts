@@ -109,7 +109,7 @@ export type SkillProgress = {
   label: string;
   subject: string;
   level: number | null;
-  status: "not_assessed" | "insufficient" | "assessed";
+  status: "not_assessed" | "insufficient_evidence" | "assessed";
   trend: "new" | "stable" | "improving" | "declining";
   required_level: number;
   assessments: number;
