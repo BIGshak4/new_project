@@ -68,7 +68,9 @@ export function PracticeSession({
     [error, setError] = useState("");
   const [recoveryRequired, setRecoveryRequired] = useState(false);
   const [mode, setMode] = useState<"quick" | "deep">("deep"),
-    [confidence, setConfidence] = useState(3);
+    [confidence, setConfidence] = useState<1 | 2 | 3 | 4 | 5 | undefined>(
+      undefined,
+    );
   const [answer, setAnswer] = useState(""),
     [followAnswer, setFollowAnswer] = useState("");
   const [pending, setPending] = useState<PendingAnswer | null>(null);
@@ -276,7 +278,7 @@ export function PracticeSession({
         question_key: question.key,
         language: lang,
         mode,
-        self_confidence: confidence as 1 | 2 | 3 | 4 | 5,
+        ...(confidence !== undefined ? { self_confidence: confidence } : {}),
       });
       const old = readLocal<{ answer?: string }>(
         `jr-draft-${user.id}-${question.id}`,
@@ -430,80 +432,6 @@ export function PracticeSession({
                 )}
               </p>
             )}
-            {!attempt && (
-              <section className="practice-setup" id="practice-setup">
-                <p className="small muted">
-                  {t(
-                    "התחילו תרגול כדי לכתוב תשובה, לקבל רמזים ולראות פתרון.",
-                    "Start an attempt to write your answer, get hints, and reveal the solution.",
-                  )}
-                </p>
-
-                <>
-                  <h2>
-                    {t("איך תרצו לתרגל?", "How would you like to practice?")}
-                  </h2>
-                  <label className="setup-label">
-                    {t("סוג התרגול", "Practice mode")}
-                    <select
-                      value={mode}
-                      onChange={(e) =>
-                        setMode(e.target.value as "quick" | "deep")
-                      }
-                    >
-                      <option value="deep">
-                        {t(
-                          "תרגול מעמיק עם שאלות המשך",
-                          "Deep practice with follow-ups",
-                        )}
-                      </option>
-                      <option value="quick">
-                        {t(
-                          "תרגול קצר — שאלה ומשוב",
-                          "Quick practice — one question and feedback",
-                        )}
-                      </option>
-                    </select>
-                  </label>
-                  <label className="setup-label">
-                    {t(
-                      "עד כמה אתם בטוחים שתדעו לפתור? (1–5)",
-                      "How confident are you that you can solve it? (1–5)",
-                    )}
-                    <select
-                      value={confidence}
-                      onChange={(e) => setConfidence(Number(e.target.value))}
-                    >
-                      {[1, 2, 3, 4, 5].map((n) => (
-                        <option key={n} value={n}>
-                          {n}
-                          {n === 1
-                            ? t(" — בכלל לא בטוחים", " — not confident")
-                            : n === 5
-                              ? t(" — בטוחים מאוד", " — very confident")
-                              : ""}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  <button
-                    className="primary"
-                    onClick={() => void start()}
-                    disabled={busy}
-                  >
-                    {busy
-                      ? t("פותחים תרגול…", "Starting…")
-                      : t("פתיחת תרגול", "Start attempt")}
-                  </button>
-                  <p className="small muted">
-                    {t(
-                      "הפתיחה נספרת במכסה היומית. אחרי הפתיחה אפשר לחזור לאותו תרגול מתוך ההיסטוריה.",
-                      "Starting counts toward your daily limit. Reopen the same attempt from your history.",
-                    )}
-                  </p>
-                </>
-              </section>
-            )}
             <div
               className={`practice-layout ${!attempt ? "practice-preview" : ""}`}
             >
@@ -518,23 +446,16 @@ export function PracticeSession({
                 </div>
                 <h1 dir="auto">{question.title}</h1>
                 {!attempt && (
-                  <div className="question-help">
-                    <div className="row">
-                      <button disabled>
-                        <Lightbulb size={16} />
-                        {t("קבלת רמז", "Get a hint")}
-                      </button>
-                      <button disabled>
-                        {t("הצגת פתרון השאלה", "Reveal solution")}
-                      </button>
-                    </div>
-                    <p className="muted small">
-                      {t(
-                        "הרמזים והפתרון ייפתחו לאחר לחיצה על ׳פתיחת תרגול׳ למעלה.",
-                        "Hints and the solution become available after you select ‘Start attempt’ above.",
-                      )}
-                    </p>
-                  </div>
+                  <p className="preview-guide">
+                    {t(
+                      "קראו את השאלה ונסו לחשוב על פתרון. כשתהיו מוכנים, ",
+                      "Read the question and think through your approach. When you're ready, ",
+                    )}
+                    <a href="#start-answer">
+                      {t("עברו לכתיבת פתרון", "continue to your answer")}
+                    </a>
+                    .
+                  </p>
                 )}
                 {attempt && (
                   <>
@@ -606,6 +527,135 @@ export function PracticeSession({
                     ))}
                   </ol>
                 )}
+                {!attempt && (
+                  <section
+                    className="practice-start"
+                    id="start-answer"
+                    aria-labelledby="start-answer-title"
+                  >
+                    <h2 id="start-answer-title">
+                      {t("מוכנים לנסות?", "Ready to give it a try?")}
+                    </h2>
+                    <p>
+                      {t(
+                        "כתבו את הפתרון ואת הדרך שבה הגעתם אליו. אם תיתקעו, תוכלו לבקש רמז או להציג פתרון מוצע.",
+                        "Write your solution and explain your reasoning. If you get stuck, you can request a hint or reveal a suggested solution.",
+                      )}
+                    </p>
+                    <button
+                      className="primary"
+                      onClick={() => void start()}
+                      disabled={busy}
+                    >
+                      {busy
+                        ? t("פותחים מקום לפתרון…", "Opening your answer…")
+                        : t("כתיבת פתרון", "Write my answer")}
+                    </button>
+                    <p className="small muted">
+                      {t(
+                        "הלחיצה מתחילה תרגול אחד מהמכסה היומית. אפשר לחזור אליו בהמשך דרך ׳התרגול שלי׳.",
+                        "This starts one attempt from your daily allowance. You can return to it later in My practice.",
+                      )}
+                    </p>
+                    <details className="practice-options">
+                      <summary>
+                        {t("אפשרויות תרגול", "Practice options")} ·{" "}
+                        {mode === "deep"
+                          ? t("עם שאלות המשך", "with follow-up questions")
+                          : t("תשובה ומשוב בלבד", "answer and feedback only")}
+                      </summary>
+                      <div className="practice-option-fields">
+                        <label className="setup-label">
+                          {t(
+                            "מה יקרה אחרי שליחת הפתרון?",
+                            "What happens after you submit?",
+                          )}
+                          <select
+                            value={mode}
+                            disabled={busy}
+                            onChange={(e) =>
+                              setMode(e.target.value as "quick" | "deep")
+                            }
+                          >
+                            <option value="deep">
+                              {t(
+                                "משוב ושאלות המשך",
+                                "Feedback and follow-up questions",
+                              )}
+                            </option>
+                            <option value="quick">
+                              {t("משוב בלבד", "Feedback only")}
+                            </option>
+                          </select>
+                          <span className="small muted">
+                            {t(
+                              "שאלות המשך מאפשרות להסביר ולחדד את התשובה, כמו בשיחה עם מראיין.",
+                              "Follow-ups let you explain and refine your answer, as you would with an interviewer.",
+                            )}
+                          </span>
+                        </label>
+                        <label className="setup-label">
+                          {t(
+                            "איך אתם מרגישים לגבי השאלה? (לא חובה)",
+                            "How do you feel about this question? (optional)",
+                          )}
+                          <select
+                            value={confidence ?? ""}
+                            disabled={busy}
+                            onChange={(e) =>
+                              setConfidence(
+                                e.target.value
+                                  ? (Number(e.target.value) as
+                                      1 | 2 | 3 | 4 | 5)
+                                  : undefined,
+                              )
+                            }
+                          >
+                            <option value="">
+                              {t("ללא דירוג", "Skip rating")}
+                            </option>
+                            <option value="1">
+                              {t(
+                                "לא יודעים מאיפה להתחיל",
+                                "Not sure where to start",
+                              )}
+                            </option>
+                            <option value="2">
+                              {t(
+                                "יש כיוון, אבל צריכים עזרה",
+                                "Have an idea, but need help",
+                              )}
+                            </option>
+                            <option value="3">
+                              {t(
+                                "חושבים שנצליח עם קצת מחשבה",
+                                "Think we can work it out",
+                              )}
+                            </option>
+                            <option value="4">
+                              {t(
+                                "די בטוחים בדרך לפתרון",
+                                "Fairly confident in the approach",
+                              )}
+                            </option>
+                            <option value="5">
+                              {t(
+                                "בטוחים שנדע לפתור ולהסביר",
+                                "Confident we can solve and explain it",
+                              )}
+                            </option>
+                          </select>
+                          <span className="small muted">
+                            {t(
+                              "זו התחושה שלכם לפני התרגול, לא ציון מקצועי.",
+                              "This is your confidence before practicing, not a skill score.",
+                            )}
+                          </span>
+                        </label>
+                      </div>
+                    </details>
+                  </section>
+                )}
                 <PersonalNotes
                   key={question.id}
                   user={user}
@@ -631,6 +681,7 @@ export function PracticeSession({
                     {!attempt.submission ? (
                       <>
                         <textarea
+                          autoFocus
                           aria-label={t("הפתרון שלי", "My solution")}
                           dir="auto"
                           maxLength={20000}
