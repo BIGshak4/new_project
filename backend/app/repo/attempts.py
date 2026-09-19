@@ -53,7 +53,7 @@ def _iso(value: datetime | None) -> str | None:
 def _submission_row(attempt_id: uuid.UUID, s: dict) -> dict:
     return {
         "attempt_id": attempt_id, "revision": s["revision"], "idempotency_key": s["key"], "turn": s["turn"],
-        "answer": s["answer"], "hints_seen": s["hints_seen"], "reference_seen": s["reference_seen"],
+        "answer": s["answer"], "visual_answer": s.get("visual"), "hints_seen": s["hints_seen"], "reference_seen": s["reference_seen"],
         "exposure_sequence": s["exposure_sequence"], "status": s["status"], "attempts": s["attempts"],
         "accepted_at": _dt(s["accepted_at"]), "evaluated_at": _dt(s.get("evaluated_at")), "band": s.get("band"),
         "evaluation": s.get("evaluation"), "check_result": s.get("check"), "evidence_weight": s.get("evidence_weight", 0.0),
@@ -64,7 +64,7 @@ def _submission_row(attempt_id: uuid.UUID, s: dict) -> dict:
 
 def _submission_dict(row) -> dict:
     return {
-        "revision": row.revision, "key": row.idempotency_key, "turn": row.turn, "answer": row.answer,
+        "revision": row.revision, "key": row.idempotency_key, "turn": row.turn, "answer": row.answer, "visual": row.visual_answer,
         "hints_seen": row.hints_seen, "reference_seen": row.reference_seen, "exposure_sequence": row.exposure_sequence,
         "status": row.status, "attempts": row.attempts, "accepted_at": _iso(row.accepted_at),
         "evaluated_at": _iso(row.evaluated_at), "band": row.band, "evaluation": row.evaluation,
@@ -117,7 +117,7 @@ async def save(connection: AsyncConnection, *, user_id: uuid.UUID, question_id: 
             continue
         # an EXISTING revision: only its evaluation state may change, and never once it is done.
         # Zero rows means another process finished it first; the caller reloads and replays.
-        mutable = {c: v for c, v in sub.items() if c not in ("attempt_id", "revision", "idempotency_key", "turn", "answer",
+        mutable = {c: v for c, v in sub.items() if c not in ("attempt_id", "revision", "idempotency_key", "turn", "answer", "visual_answer",
                                                               "hints_seen", "reference_seen", "exposure_sequence", "accepted_at")}
         updated = (await connection.execute(
             update(submission).where(submission.c.attempt_id == values["id"], submission.c.revision == s["revision"],

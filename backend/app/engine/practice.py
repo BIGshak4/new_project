@@ -32,7 +32,8 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from enum import StrEnum
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ValidationError
+from app.schemas.visual_answer import VisualAnswer
 
 from app.engine import ENGINE_VERSION, checks, evaluator, feedback, generator, scores, skill_controller, tips
 from app.engine.evaluator import EvaluationResult
@@ -96,6 +97,7 @@ class Submission(BaseModel):
     key: str                                    # idempotency key from the client, or generated
     turn: int                                   # 0 = the main question, n = the n-th follow-up
     answer: str
+    visual: VisualAnswer | None = None
     hints_seen: int                             # exposure snapshot at acceptance
     reference_seen: bool
     exposure_sequence: int
@@ -262,7 +264,7 @@ class PracticeAttempt:
         if submission.status != EvaluationStatus.DONE:
             return PracticeOutcome(submission, None, None, check, 0.0, None, None, None, None, None,
                                    flags=list(submission.flags))
-        return PracticeOutcome(submission, submission.band, Evaluation.model_validate(submission.evaluation), check,
+        return PracticeOutcome(submission, submission.band, Evaluation.model_validate(submission.evaluation) if submission.evaluation else None, check,
                                submission.evidence_weight, FeedbackCard.model_validate(submission.card) if submission.card else None,
                                submission.tip_text, submission.tip_key, submission.follow_up, None, flags=list(submission.flags))
 
@@ -353,7 +355,8 @@ class PracticeAttempt:
     def _accept(self, answer, *, turn: int, idempotency_key: str | None) -> tuple[Submission, bool]:
         """Record the answer as a revision. Returns (submission, is_replay)."""
         answer_text = self._answer_text(answer)
-        if not answer_text:
+        visual = self._answer_visual(answer)
+        if not answer_text and visual is None:
             raise PracticeError("validation", "the answer is empty")
         if len(answer_text) > MAX_ANSWER_CHARS:
             raise PracticeError("validation", f"the answer is longer than {MAX_ANSWER_CHARS} characters")
@@ -361,7 +364,7 @@ class PracticeAttempt:
 
         existing = next((s for s in self.submissions if s.key == key), None)
         if existing is not None:
-            if existing.answer != answer_text or existing.turn != turn:
+            if existing.answer != answer_text or existing.turn != turn or existing.visual != visual:
                 raise PracticeError("conflict", "this idempotency key was already used for a different answer")
             return existing, True
 
@@ -369,7 +372,7 @@ class PracticeAttempt:
             if older.turn == turn and "superseded" not in older.flags:
                 older.flags = [*older.flags, "superseded"]         # never retried or scored again
         submission = Submission(
-            revision=len(self.submissions) + 1, key=key, turn=turn, answer=answer_text,
+            revision=len(self.submissions) + 1, key=key, turn=turn, answer=answer_text, visual=visual,
             hints_seen=self.hints_used, reference_seen=self.reference_revealed,
             exposure_sequence=len(self.exposures), accepted_at=_now())
         self.submissions.append(submission)
@@ -424,9 +427,9 @@ class PracticeAttempt:
         """Step 2: evaluate an accepted revision. A revision already evaluated is replayed, never scored twice."""
         async with self._lock:
             if submission.status == EvaluationStatus.DONE or "superseded" in submission.flags:
-                return self._replay(submission, submission.answer)
+                return self._replay(submission, {"text": submission.answer, "visual": submission.visual.model_dump() if submission.visual else None})
             if submission.status == EvaluationStatus.EVALUATING and not self._interrupted(submission):
-                return self._replay(submission, submission.answer)          # in flight elsewhere: report, do not repeat
+                return self._replay(submission, {"text": submission.answer, "visual": submission.visual.model_dump() if submission.visual else None})          # in flight elsewhere: report, do not repeat
             return await self._evaluate(submission, latency_ms=latency_ms, revision_count=revision_count)
 
     async def retry_evaluation(self) -> PracticeOutcome:
@@ -445,9 +448,20 @@ class PracticeAttempt:
             answer = answer.get("text") or answer.get("expression") or ""
         return str(answer).strip()
 
+    @staticmethod
+    def _answer_visual(answer) -> VisualAnswer | None:
+        raw = answer.get("visual") if isinstance(answer, dict) else None
+        if raw is None:
+            return None
+        try:
+            visual = VisualAnswer.model_validate(raw)
+        except ValidationError as exc:
+            raise PracticeError("validation", "invalid visual answer") from exc
+        return visual if visual.has_content else None
+
     def _replay(self, submission: Submission, answer) -> PracticeOutcome:
         answer_text = self._answer_text(answer)
-        if answer_text and answer_text != submission.answer:
+        if answer_text != submission.answer or self._answer_visual(answer) != submission.visual:
             raise PracticeError("conflict", "this idempotency key was already used for a different answer")
         outcome = self._outcomes.get(submission.revision)
         if outcome is None:                       # accepted but never finished (crash mid-evaluation)
@@ -474,6 +488,16 @@ class PracticeAttempt:
             usage.append(UsageEvent(action, result.model, result.usage, result.latency_ms))
 
     async def _evaluate(self, submission: Submission, *, latency_ms: int | None, revision_count: int | None) -> PracticeOutcome:
+        if submission.visual is not None:
+            # Accept and display visual work without sending an incomplete text-only answer
+            # to the evaluator. No model calls, metrics, tips or skill updates are produced.
+            submission.status = EvaluationStatus.DONE
+            submission.evaluating_since = None
+            submission.flags = ["visual_review_pending"]
+            outcome = PracticeOutcome(submission, None, None, None, 0.0, None, None, None, None, None,
+                                      flags=list(submission.flags))
+            self._outcomes[submission.revision] = outcome
+            return outcome
         ctx, question = self.ctx, self.question
         is_follow_up = submission.turn > 0
         usage: list[UsageEvent] = []

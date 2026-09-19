@@ -26,6 +26,7 @@ class InMemoryStore:
         self.usage: list[dict] = []
         self.tips: list[dict] = []
         self.seniority: dict[uuid.UUID, str] = {}
+        self.answer_images: dict[str, dict] = {}                 # storage fixture metadata
         self.failures: set[str] = set()                           # names of operations that should raise (tests)
         self.fail_once: set[str] = set()                          # ... only the next time
         self._commits = 0
@@ -56,6 +57,10 @@ class InMemoryStore:
 class _MemoryTx:
     def __init__(self, store: InMemoryStore):
         self.s = store
+
+    async def validate_answer_images(self, user_id, attempt_id, images):
+        return all(i.path.startswith(f"{user_id}/{attempt_id}/") and
+                   self.s.answer_images.get(i.path) == {"mime": i.mime, "size": i.size} for i in images)
 
     def _servable(self, q) -> bool:
         return q.status == "published" or (self.s.allow_in_review and q.status == "in_review")

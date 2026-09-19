@@ -179,6 +179,11 @@ class PracticeService:
             if replay is not None:
                 return self._submission_view(replay.submission, replay), self._view(attempt, stored, loaded, language)
 
+            if submission.visual and submission.visual.images:
+                async with self.store.transaction() as tx:
+                    if not await tx.validate_answer_images(user_id, attempt_id, submission.visual.images):
+                        raise ApiError("validation", "an answer image is missing or does not belong to this attempt")
+
             # 1. the answer is durable before any model call
             known = len(stored.row["submissions"])
             try:
@@ -230,7 +235,7 @@ class PracticeService:
         for _try in range(2):
             try:
                 async with self.store.transaction() as tx:
-                    if outcome.status == EvaluationStatus.DONE:
+                    if outcome.status == EvaluationStatus.DONE and outcome.evaluation is not None:
                         await tx.save_profile(profile, self._touched_states(attempt, outcome), attempt_id=attempt.attempt_id_uuid)
                         await tx.record_metrics(user_id=user_id, attempt_id=attempt.attempt_id_uuid, metrics=outcome.metrics,
                                                 seniority=profile.seniority)
@@ -436,7 +441,7 @@ class PracticeService:
             check = CheckView(type=submission.check.get("type", ""), passed=submission.check.get("passed"),
                               detail=submission.check.get("detail", ""))
         return SubmissionView(
-            revision=submission.revision, key=submission.key, turn=submission.turn, answer=submission.answer,
+            revision=submission.revision, key=submission.key, turn=submission.turn, answer=submission.answer, visual=submission.visual,
             status="evaluating" if submission.status == EvaluationStatus.PENDING else submission.status.value,
             accepted_at=submission.accepted_at, evaluated_at=submission.evaluated_at,
             band=submission.band.value if submission.band else None,
@@ -446,7 +451,7 @@ class PracticeService:
             check=check, card=CardView.model_validate(submission.card) if submission.card else None,
             tip=TipView(key=submission.tip_key, text=submission.tip_text) if submission.tip_key and submission.tip_text else None,
             follow_up=submission.follow_up,
-            assessed_by=assessed_by(submission.evaluator_model),
+            assessed_by="unassessed" if submission.visual else assessed_by(submission.evaluator_model),
             model=submission.evaluator_model if assessed_by(submission.evaluator_model) == "model" else None,
             hints_seen=submission.hints_seen, reference_seen=submission.reference_seen,
             evidence="none" if submission.status != EvaluationStatus.DONE or weight <= 0 else "full" if weight >= 1 else "reduced",

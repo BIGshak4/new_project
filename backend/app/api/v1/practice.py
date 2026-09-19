@@ -26,6 +26,7 @@ from pydantic import BaseModel, Field
 from app.api.deps import CurrentAccess, Practice
 from app.api.errors import ApiError
 from app.engine.practice import MAX_ANSWER_CHARS
+from app.schemas.visual_answer import VisualAnswer
 from app.schemas.api import AttemptView, HintView, SubmissionView
 from app.services.practice_service import PracticeService
 
@@ -46,7 +47,8 @@ class StartAttemptRequest(BaseModel):
 
 
 class AnswerBody(BaseModel):
-    text: str = Field(..., max_length=MAX_ANSWER_CHARS)
+    text: str = Field("", max_length=MAX_ANSWER_CHARS)
+    visual: VisualAnswer | None = None
 
 
 class SubmitRequest(BaseModel):
@@ -80,7 +82,7 @@ def _key(header: str | None, body: SubmitRequest) -> str:
 
 
 def _answer(body: SubmitRequest):
-    return body.answer if isinstance(body.answer, str) else {"text": body.answer.text}
+    return body.answer if isinstance(body.answer, str) else body.answer.model_dump(mode="json")
 
 
 _background: set[asyncio.Task] = set()

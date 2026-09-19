@@ -18,7 +18,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Protocol
 
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine
 
 from app import db
@@ -32,6 +32,7 @@ __all__ = ["DuplicateSubmissionKey", "StaleProfile", "Store", "Tx", "DbStore"]
 
 
 class Tx(Protocol):
+    async def validate_answer_images(self, user_id: uuid.UUID, attempt_id: uuid.UUID, images: list) -> bool: ...
     async def load_question(self, *, key: str | None = None, question_id: uuid.UUID | None = None) -> LoadedQuestion | None: ...
     async def list_questions(self, *, language: str, subject: str | None = None) -> list[QuestionSummary]: ...
     async def load_attempt(self, attempt_id: uuid.UUID, *, user_id: uuid.UUID) -> StoredAttempt | None: ...
@@ -57,6 +58,18 @@ class DbTx:
     def __init__(self, connection: AsyncConnection, *, allow_in_review: bool):
         self.connection = connection
         self.allow_in_review = allow_in_review
+
+    async def validate_answer_images(self, user_id, attempt_id, images):
+        prefix = f"{user_id}/{attempt_id}/"
+        for image in images:
+            if not image.path.startswith(prefix):
+                return False
+            metadata = (await self.connection.execute(text(
+                "select metadata from storage.objects where bucket_id = 'practice-answer-images' and name = :path"),
+                {"path": image.path})).scalar_one_or_none()
+            if not metadata or metadata.get("mimetype") != image.mime or int(metadata.get("size", 0)) != image.size:
+                return False
+        return True
 
     async def load_question(self, *, key=None, question_id=None):
         return await questions.load_question(self.connection, key=key, question_id=question_id,

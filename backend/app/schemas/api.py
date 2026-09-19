@@ -5,6 +5,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
+from app.schemas.visual_answer import VisualAnswer
 from app.repo.questions import QuestionDetail
 
 
@@ -36,6 +37,7 @@ class SubmissionView(BaseModel):
     key: str
     turn: int                                   # 0 = main question, n = n-th follow-up
     answer: str
+    visual: VisualAnswer | None = None
     status: str                                 # evaluating | done | failed
     accepted_at: str
     evaluated_at: str | None = None
