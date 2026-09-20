@@ -1,6 +1,6 @@
 # Render blueprint for the JobRun practice API (backend/). Render -> New -> Blueprint -> this repo.
 #
-# Secrets (DATABASE_URL, later ANTHROPIC_API_KEY) are entered in the Render dashboard, never here.
+# Server secrets are entered in the Render dashboard, never here.
 # Everything marked sync: false is asked for at deploy time.
 services:
   - type: web
@@ -16,7 +16,7 @@ services:
       - key: ENV
         value: staging                 # production refuses to start with a scripted model; switch when the key is in
       - key: LLM_PROVIDER
-        value: scripted                # instant fake feedback until the Anthropic key is added
+        sync: false                    # existing pilot uses anthropic; preserve the operator's selected provider
       - key: SUPABASE_URL
         value: https://djpwvqpsqbkvprlncjjg.supabase.co
       - key: REQUIRE_PILOT_MEMBERSHIP
@@ -26,7 +26,9 @@ services:
       - key: DATABASE_URL
         sync: false                    # Supabase -> Project Settings -> Database -> Session pooler URI
       - key: ANTHROPIC_API_KEY
-        sync: false                    # leave empty until step 5
+        sync: false                    # required for the real Anthropic provider
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false                    # backend-only read access to private answer photos; never a browser variable
       - key: ANTHROPIC_MODEL
         value: claude-opus-5
       - key: ALLOW_IN_REVIEW_CONTENT
