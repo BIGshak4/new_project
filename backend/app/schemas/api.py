@@ -41,6 +41,7 @@ class NextQuestionView(BaseModel):
     difficulty: int
     why: str                                    # reinforce | consolidate | advance | explore
     reason: str                                 # one sentence in the practice language
+    focus: str | None = None                    # what was hard in this attempt (a bank misconception's explanation)
 
 
 class SubmissionView(BaseModel):

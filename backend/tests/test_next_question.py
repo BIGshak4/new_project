@@ -54,8 +54,12 @@ class TestSuggest:
         assert s is not None and s.why in ("advance", "explore") and s.skill != "boolean_algebra"
 
     def test_seen_questions_are_skipped_and_none_when_exhausted(self, catalog):
-        same_skill = [k for k, q in catalog.questions.items() if q.primary_skill == "boolean_algebra"]
-        s = next_question.suggest(**_args(catalog, band=Band.WEAK, seen=same_skill))
+        primary_only = [k for k, q in catalog.questions.items() if q.primary_skill == "boolean_algebra"]
+        s = next_question.suggest(**_args(catalog, band=Band.WEAK, seen=primary_only))
+        assert s is not None and s.skill == "boolean_algebra"          # a question examining it as a secondary skill
+        assert catalog.questions[s.key].primary_skill != "boolean_algebra"
+        examines = [k for k, q in catalog.questions.items() if any(l.skill == "boolean_algebra" for l in q.skills)]
+        s = next_question.suggest(**_args(catalog, band=Band.WEAK, seen=examines))
         assert s is not None and s.skill != "boolean_algebra"          # falls through to advance
         everything = list(catalog.questions)
         assert next_question.suggest(**_args(catalog, band=Band.WEAK, seen=everything)) is None

@@ -101,6 +101,8 @@ export type NextQuestion = {
   difficulty: number;
   why: "reinforce" | "consolidate" | "advance" | "explore";
   reason: string;
+  /** what was hard in this attempt, in the practice language, when a known mistake was recognised */
+  focus?: string | null;
 };
 
 export type FollowUp = {

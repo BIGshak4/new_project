@@ -11,7 +11,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import type { Lang } from "./auth";
-import type { Check as CheckResult, Submission } from "../lib/practice-api";
+import type { Check as CheckResult, NextQuestion, Submission } from "../lib/practice-api";
 import { bandLabel, subjectLabel } from "../lib/practice-ui";
 import { bandFraction, whyLabel } from "../lib/charts";
 
@@ -23,15 +23,9 @@ import { bandFraction, whyLabel } from "../lib/charts";
 export function EvaluationPanel({
   submission: s,
   lang,
-  onStart,
-  nextReady,
 }: {
   submission: Submission;
   lang: Lang;
-  /** start a new attempt on the suggested question */
-  onStart: (key: string) => void;
-  /** false while a follow-up is still open: the suggestion waits until the attempt is complete */
-  nextReady?: boolean;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   if (s.status === "evaluating") {
@@ -202,36 +196,52 @@ export function EvaluationPanel({
         </aside>
       )}
 
-      {s.next_question && nextReady !== false && (
-        <section className="next-up" aria-labelledby="next-up-title">
-          <div className="next-up-head">
-            <Sparkles size={18} aria-hidden="true" />
-            <span id="next-up-title">
-              {t("השאלה הבאה המומלצת", "Suggested next question")}
-            </span>
-            <span className={`badge why-${s.next_question.why}`}>
-              {whyLabel(s.next_question.why, lang)}
-            </span>
-          </div>
-          <h4 dir="auto">{s.next_question.title}</h4>
-          <p className="small muted">
-            {subjectLabel(s.next_question.subject, lang)} ·{" "}
-            {t("רמת קושי", "Difficulty")} {s.next_question.difficulty}
-            <span className="difficulty-dots" aria-hidden="true">
-              {Array.from({ length: 5 }, (_, i) => (
-                <i key={i} className={i < Math.min(5, s.next_question!.difficulty) ? "on" : ""} />
-              ))}
-            </span>
-          </p>
-          <p dir="auto">{s.next_question.reason}</p>
-          <button type="button" onClick={() => onStart(s.next_question!.key)}>
-            {t("להתחיל את השאלה הבאה", "Start the next question")} <Arrow size={16} />
-          </button>
-        </section>
-      )}
-
       <p className="small muted">{evidenceText}</p>
     </div>
+  );
+}
+
+/**
+ * The suggested next question, shown once the attempt (main answer + follow-ups) is complete.
+ * When a known mistake was recognised, `focus` says what was hard in the candidate's own attempt.
+ */
+export function NextUpCard({
+  next,
+  lang,
+  onStart,
+}: {
+  next: NextQuestion;
+  lang: Lang;
+  onStart: (key: string) => void;
+}) {
+  const t = (he: string, en: string) => (lang === "he" ? he : en);
+  const Arrow = lang === "he" ? ArrowLeft : ArrowRight;
+  return (
+    <section className="next-up" aria-labelledby="next-up-title">
+      <div className="next-up-head">
+        <Sparkles size={18} aria-hidden="true" />
+        <span id="next-up-title">{t("השאלה הבאה המומלצת", "Suggested next question")}</span>
+        <span className={`badge why-${next.why}`}>{whyLabel(next.why, lang)}</span>
+      </div>
+      {next.focus && (
+        <p className="next-up-focus" dir="auto">
+          <strong>{t("מה היה קשה כאן:", "What was hard here:")}</strong> {next.focus}
+        </p>
+      )}
+      <h4 dir="auto">{next.title}</h4>
+      <p className="small muted">
+        {subjectLabel(next.subject, lang)} · {t("רמת קושי", "Difficulty")} {next.difficulty}
+        <span className="difficulty-dots" aria-hidden="true">
+          {Array.from({ length: 5 }, (_, i) => (
+            <i key={i} className={i < Math.min(5, next.difficulty) ? "on" : ""} />
+          ))}
+        </span>
+      </p>
+      <p dir="auto">{next.reason}</p>
+      <button type="button" onClick={() => onStart(next.key)}>
+        {t("להתחיל את השאלה הבאה", "Start the next question")} <Arrow size={16} />
+      </button>
+    </section>
   );
 }
 

@@ -298,17 +298,27 @@ class PracticeService:
             servable = await tx.list_questions(language=language)
             seen = await tx.seen_question_keys(user_id)
         candidates = [self.catalog.questions[s.key] for s in servable if s.key in self.catalog.questions]
+        question = attempt.question
+        # what was hard: the bank's own explanation of each known mistake this attempt hit, and the skill it undermines
+        text = question.translations.get(language) or question.translations.get("en")
+        explanations = text.common_errors if text else {}
+        hit = set(attempt.misconceptions_hit)
+        struggles = [next_question.Struggle(key=e.key, skill=e.skill or question.primary_skill,
+                                            text=explanations.get(e.key, ""), core=e.core)
+                     for e in question.common_errors if e.key in hit and explanations.get(e.key)]
+        follow_up_bands = [s.band for s in attempt.submissions if s.turn > 0 and s.band is not None]
         suggestion = next_question.suggest(
-            current=attempt.question, band=outcome.band, states=attempt.skill_states, candidates=candidates, seen=seen,
+            current=question, band=outcome.band, states=attempt.skill_states, candidates=candidates, seen=seen,
             required_levels=attempt.ctx.required_levels, skill_weights=attempt.ctx.skill_weights,
-            skill_labels=self.catalog.skill_labels(), language=language, difficulty_ceiling=attempt.ctx.difficulty_ceiling)
+            skill_labels=self.catalog.skill_labels(), language=language, difficulty_ceiling=attempt.ctx.difficulty_ceiling,
+            struggles=struggles, follow_up_bands=follow_up_bands)
         if suggestion is None:
             attempt.next_question = None
             return
         picked = next(s for s in servable if s.key == suggestion.key)
         attempt.next_question = {"key": suggestion.key, "title": picked.title, "subject": picked.subject,
                                  "skill": suggestion.skill, "difficulty": suggestion.difficulty, "why": suggestion.why,
-                                 "reason": suggestion.reason}
+                                 "reason": suggestion.reason, "focus": suggestion.focus}
 
     def _rescore(self, attempt: PracticeAttempt, outcome: PracticeOutcome, fresh: LoadedProfile) -> None:
         """Re-apply one evaluation's scores on top of a profile that moved (pure functions, no model call)."""

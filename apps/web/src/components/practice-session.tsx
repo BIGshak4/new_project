@@ -17,7 +17,7 @@ import {
   type VisualAnswer as Visual,
 } from "../lib/circuit";
 import { AnswerEditor } from "./answer-editor";
-import { EvaluationPanel } from "./evaluation-panel";
+import { EvaluationPanel, NextUpCard } from "./evaluation-panel";
 import { FollowUps } from "./follow-ups";
 import { parseTechnicalAnswer } from "../lib/technical-answer";
 import { supabase } from "../lib/supabase";
@@ -667,6 +667,15 @@ export function PracticeSession({
                         resend={!!pending && pending.turn !== null}
                       />
                     )}
+                    {attempt.status === "done" &&
+                      attempt.next_question &&
+                      !demo && (
+                        <NextUpCard
+                          next={attempt.next_question}
+                          lang={lang}
+                          onStart={(key) => onNew(key)}
+                        />
+                      )}
                     {((attempt.can_submit && !attempt.submission) ||
                       !!pending) &&
                       !attempt.can_retry && (
@@ -809,12 +818,7 @@ export function PracticeSession({
                   )}
                 </p>
               ) : attempt?.submission ? (
-                <EvaluationPanel
-                  submission={attempt.submission}
-                  lang={lang}
-                  onStart={(key) => onNew(key)}
-                  nextReady={attempt.status === "done"}
-                />
+                <EvaluationPanel submission={attempt.submission} lang={lang} />
               ) : (
                 <p>
                   {t(
