@@ -90,6 +90,22 @@ class TestThroughTheService:
         # the mistake stays on record for the attempt: the final suggestion still answers it
         assert view.next_question is not None and view.next_question.focus and "XOR" in view.next_question.focus
 
+    async def test_a_strong_follow_up_does_not_erase_a_partial_main_answer(self, catalog):
+        user = uuid.uuid4()
+        store = InMemoryStore(catalog)
+        partial = make_evaluation(correctness=0.6, depth=0.5, key_points_missed=["no truth table"]).model_dump()
+        svc = PracticeService(store, catalog, scripted([partial, GOOD]), ServiceConfig())
+        view = await svc.start(user, question_key=MAJORITY, mode="deep", language="en", self_confidence=3)
+        aid = uuid.UUID(view.id)
+        sub, view = await svc.submit(user, aid, "alarm = AB + BC + AC", idempotency_key="k1")
+        assert sub.band == "PARTIAL" and view.pending_follow_up is not None
+        fsub, view = await svc.submit(user, aid, "the table has 1 in rows 011, 101, 110, 111", idempotency_key="f1",
+                                      follow_up_turn=view.pending_follow_up.turn)
+        assert fsub.band == "STRONG" and view.status == "done"
+        # the main answer was only partial: consolidate the same skill, do not jump to a new one
+        assert view.next_question is not None and view.next_question.why == "consolidate"
+        assert view.next_question.skill == "boolean_algebra"
+
     async def test_secondary_skill_mistake_from_the_bank_texts(self, catalog):
         user = uuid.uuid4()
         store = InMemoryStore(catalog)

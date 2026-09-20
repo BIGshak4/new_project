@@ -128,6 +128,13 @@ async def generate(provider: Provider, decision: Decision, *, language: str, ski
                 break
             continue
         generated: GeneratedQuestion = response.parsed
+        if hint_text and question is not None and _restates_prompt(generated.question_text, question.text(language).prompt):
+            # the model pasted the whole question again with the hint tacked on (seen in Hebrew): say it briefly instead
+            template = FALLBACK_TEXT.get(language, FALLBACK_TEXT["en"])[Action.HINT]
+            generated = GeneratedQuestion(question_text=template.format(hint=hint_text),
+                                          question_archetype=generated.question_archetype,
+                                          expected_answer_outline=generated.expected_answer_outline)
+            flags.append("hint_restated_prompt")
         if previous_questions and _near_duplicate(generated.question_text, previous_questions):
             flags.append("near_duplicate_regenerated")
             request.user += "\n\nThe question you wrote repeats an earlier one in this session. Ask about a different aspect."
@@ -139,6 +146,16 @@ async def generate(provider: Provider, decision: Decision, *, language: str, ski
     text = template.format(hint=hint_text or "", skill=skill.label if skill else decision.target_skill or "")
     return GenerationResult(GeneratedQuestion(question_text=text, question_archetype=decision.target_archetype),
                             source="fallback", flags=[*flags, "fallback_question"])
+
+
+def _restates_prompt(candidate: str, prompt: str) -> bool:
+    """True when the generated follow-up contains most of the original prompt verbatim."""
+    prompt = " ".join(prompt.split())
+    candidate = " ".join(candidate.split())
+    if len(prompt) < 40:
+        return False
+    head = prompt[: max(40, int(len(prompt) * 0.6))]
+    return head in candidate
 
 
 def _near_duplicate(candidate: str, previous: list[str], threshold: float = 0.8) -> bool:

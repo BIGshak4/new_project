@@ -306,9 +306,12 @@ class PracticeService:
         struggles = [next_question.Struggle(key=e.key, skill=e.skill or question.primary_skill,
                                             text=explanations.get(e.key, ""), core=e.core)
                      for e in question.common_errors if e.key in hit and explanations.get(e.key)]
+        # the whole attempt decides, not only the answer just scored: main band + every follow-up band
+        main = attempt.main_submission
+        main_band = main.band if main is not None and main.band is not None else outcome.band
         follow_up_bands = [s.band for s in attempt.submissions if s.turn > 0 and s.band is not None]
         suggestion = next_question.suggest(
-            current=question, band=outcome.band, states=attempt.skill_states, candidates=candidates, seen=seen,
+            current=question, band=main_band, states=attempt.skill_states, candidates=candidates, seen=seen,
             required_levels=attempt.ctx.required_levels, skill_weights=attempt.ctx.skill_weights,
             skill_labels=self.catalog.skill_labels(), language=language, difficulty_ceiling=attempt.ctx.difficulty_ceiling,
             struggles=struggles, follow_up_bands=follow_up_bands)

@@ -170,6 +170,16 @@ class TestGeneratorAndFeedback:
         assert payload["decision"]["hint_text"] == question.text("en").hints[1]
         assert "reference_solution" not in provider.requests[0].user
 
+    async def test_a_hint_follow_up_that_pastes_the_whole_prompt_is_shortened(self, catalog):
+        question = catalog.questions["example-count-set-bits"]
+        prompt, hint = question.text("he").prompt, question.text("he").hints[0]
+        provider = ScriptedProvider([{**FOLLOW_UP, "question_text": prompt + " " + hint}])
+        decision = Decision(action=Action.HINT, reason_code="weak_answer_budget_available", deliver_hint=True,
+                            hint_level=1, target_skill=question.primary_skill, target_difficulty=3)
+        result = await generator.generate(provider, decision, language="he", question=question)
+        assert result.source == "generated" and "hint_restated_prompt" in result.flags
+        assert prompt[:40] not in result.question.question_text and hint in result.question.question_text
+
     async def test_two_failures_fall_back_to_a_template(self, catalog):
         provider = ScriptedProvider([LLMError("x", retryable=True), LLMError("y", retryable=True)])
         decision = Decision(action=Action.HOLD, reason_code="probe_gap", target_skill="counters", target_difficulty=4)

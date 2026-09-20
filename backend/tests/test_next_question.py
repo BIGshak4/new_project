@@ -58,7 +58,7 @@ class TestSuggest:
         s = next_question.suggest(**_args(catalog, band=Band.WEAK, seen=primary_only))
         assert s is not None and s.skill == "boolean_algebra"          # a question examining it as a secondary skill
         assert catalog.questions[s.key].primary_skill != "boolean_algebra"
-        examines = [k for k, q in catalog.questions.items() if any(l.skill == "boolean_algebra" for l in q.skills)]
+        examines = [k for k, q in catalog.questions.items() if any(link.skill == "boolean_algebra" for link in q.skills)]
         s = next_question.suggest(**_args(catalog, band=Band.WEAK, seen=examines))
         assert s is not None and s.skill != "boolean_algebra"          # falls through to advance
         everything = list(catalog.questions)
