@@ -1,5 +1,7 @@
 # JobRun: handoff to Shaked for the first real-feedback review
 
+> **20 September deployment update:** This document's runtime snapshot is historical. Shaked has since enabled the real Anthropic provider and added assessment/progress improvements. See [the deployment repair report](deployment-repair-2026-09-20.md) for current deployment automation, live checks and remaining operational work, and [the real-model handback](p1-real-model-handback.md) for the backend changes.
+
 **Date:** 19 September 2026  
 **For:** Shaked Buzi and Harel Artman  
 **Code baseline:** visual-answer release on `master`, built on Shaked’s `6217647` updates; backend support introduced in `e5bbf26`  

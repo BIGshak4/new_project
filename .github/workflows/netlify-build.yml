@@ -1,0 +1,68 @@
+name: Build and verify a Netlify site
+
+on:
+  workflow_call:
+    inputs:
+      site:
+        required: true
+        type: string
+    secrets:
+      build_hook:
+        required: true
+
+permissions: {}
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # No checkout, third-party action, or account-wide hosting token is needed.
+      # Netlify clones master and uses the selected app's committed build settings.
+      - name: Request the build and wait for the live source revision
+        env:
+          BUILD_HOOK: ${{ secrets.build_hook }}
+          SITE: ${{ inputs.site }}
+          EXPECTED_SHA: ${{ github.sha }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, re, time, urllib.error, urllib.parse, urllib.request
+
+          hook, site, sha = (os.environ[k] for k in ("BUILD_HOOK", "SITE", "EXPECTED_SHA"))
+          if site not in {"jobrun-practice", "jobrun-tasks"}:
+              raise SystemExit("Unexpected deployment target")
+          if not re.fullmatch(r"[0-9a-f]{40}", sha):
+              raise SystemExit("Invalid commit revision")
+          if not hook.startswith("https://api.netlify.com/build_hooks/"):
+              raise SystemExit("The repository build-hook secret is missing or invalid")
+          query = urllib.parse.urlencode({"trigger_branch": "master", "trigger_title": f"GitHub master {sha}"})
+          request = urllib.request.Request(hook + "?" + query, data=b"{}", method="POST",
+                                           headers={"Content-Type": "application/json"})
+          try:
+              with urllib.request.urlopen(request, timeout=45) as response:
+                  if not 200 <= response.status < 300:
+                      raise SystemExit("Netlify refused the build request")
+          except (urllib.error.URLError, TimeoutError):
+              # Do not print a secret hook URL, or blindly repeat an ambiguous POST.
+              raise SystemExit("Build request failed. Check Netlify before retrying this workflow.") from None
+
+          print(f"Netlify build requested for {site}; waiting for the published revision.", flush=True)
+          deadline = time.monotonic() + 12 * 60
+          while time.monotonic() < deadline:
+              url = f"https://{site}.netlify.app/api/health?expected={sha}"
+              try:
+                  with urllib.request.urlopen(url, timeout=15) as response:
+                      health = json.load(response)
+                  if health.get("status") == "ok" and health.get("revision") == sha:
+                      print(f"Published and verified {sha} on {site}.", flush=True)
+                      with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+                          summary.write(f"Published `{sha}` to [the live site](https://{site}.netlify.app/).\n")
+                      break
+              except (urllib.error.URLError, TimeoutError, ValueError):
+                  pass
+              time.sleep(20)
+          else:
+              raise SystemExit(f"The expected revision is not live. Inspect https://app.netlify.com/projects/{site}/deploys")
+          PY

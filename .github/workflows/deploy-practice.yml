@@ -1,0 +1,23 @@
+name: Deploy practice site
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'apps/web/**'
+      - '.github/workflows/deploy-practice.yml'
+      - '.github/workflows/netlify-build.yml'
+  workflow_dispatch:
+
+permissions: {}
+concurrency:
+  group: netlify-practice-master
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/netlify-build.yml
+    with:
+      site: jobrun-practice
+    secrets:
+      build_hook: ${{ secrets.NETLIFY_PRACTICE_BUILD_HOOK }}

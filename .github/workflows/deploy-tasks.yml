@@ -1,0 +1,23 @@
+name: Deploy founder task board
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'apps/tasks/**'
+      - '.github/workflows/deploy-tasks.yml'
+      - '.github/workflows/netlify-build.yml'
+  workflow_dispatch:
+
+permissions: {}
+concurrency:
+  group: netlify-tasks-master
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/netlify-build.yml
+    with:
+      site: jobrun-tasks
+    secrets:
+      build_hook: ${{ secrets.NETLIFY_TASKS_BUILD_HOOK }}
