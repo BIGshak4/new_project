@@ -7,7 +7,7 @@ from __future__ import annotations
 import copy
 import uuid
 from contextlib import asynccontextmanager
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 from app.engine.catalog import Catalog
 from app.repo.attempts import AlreadyEvaluated, DuplicateSubmissionKey, StoredAttempt
@@ -130,8 +130,10 @@ class _MemoryTx:
                 out.setdefault(subject, {})[a["row"]["band"]] = out.get(subject, {}).get(a["row"]["band"], 0) + 1
         return out
 
-    async def seen_question_keys(self, user_id):
-        return {a["row"]["question_key"] for a in self.s.attempts.values() if a["user_id"] == user_id}
+    async def seen_question_keys(self, user_id, *, days=30):
+        since = datetime.now(UTC) - timedelta(days=days)                 # same window as the database version
+        return {a["row"]["question_key"] for a in self.s.attempts.values()
+                if a["user_id"] == user_id and a["started_at"] >= since}
 
     async def load_profile(self, user_id):
         loaded = LoadedProfile(user_id=user_id)

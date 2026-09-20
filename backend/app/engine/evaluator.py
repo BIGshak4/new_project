@@ -96,8 +96,9 @@ def user_message(*, language: str, difficulty: int, answer: str, check: CheckRes
     if hint_level:
         parts.append(f"<hint_level_given>{hint_level}</hint_level_given>")
     if check is not None and check.passed is not None:
-        parts.append(f"<check_result type=\"{check.type}\" passed=\"{str(check.passed).lower()}\">\n{check.detail}\n"
-                     f"{json.dumps(check.mismatches, ensure_ascii=False) if check.mismatches else ''}\n</check_result>")
+        # a code test's "got"/"error" values are candidate-controlled text: neutralised like the answer itself
+        body = neutralize(f"{check.detail}\n{json.dumps(check.mismatches, ensure_ascii=False) if check.mismatches else ''}")
+        parts.append(f"<check_result type=\"{check.type}\" passed=\"{str(check.passed).lower()}\">\n{body}\n</check_result>")
     parts.append(f"<candidate_answer>\n{neutralize(answer)}\n</candidate_answer>")
     if circuit:
         parts.append("<candidate_circuit>\nThe candidate also drew this circuit in the editor. The netlist below was "

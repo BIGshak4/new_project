@@ -30,11 +30,14 @@ import sys
 import tempfile
 from pathlib import Path
 
-ALLOWED_MODULES = {"math", "itertools", "collections", "functools", "typing", "heapq", "bisect", "string", "re",
-                   "dataclasses", "operator", "fractions", "decimal", "enum", "abc", "array", "copy", "numbers"}
+# No module that turns a *string* into an attribute lookup or an evaluation at run time: `operator`
+# (attrgetter/methodcaller), `string` (Formatter.get_field) and typing's get_type_hints would let
+# candidate code walk object.__subclasses__() past the audit below to the real builtins.
+ALLOWED_MODULES = {"math", "itertools", "collections", "functools", "typing", "heapq", "bisect", "re",
+                   "dataclasses", "fractions", "decimal", "enum", "abc", "array", "copy", "numbers"}
 DENIED_NAMES = {"open", "exec", "eval", "compile", "__import__", "globals", "locals", "vars", "getattr", "setattr",
                 "delattr", "breakpoint", "input", "exit", "quit", "help", "memoryview", "__builtins__", "__loader__",
-                "__spec__"}
+                "__spec__", "get_type_hints", "_eval_type", "ForwardRef", "evaluate_forward_ref"}
 DENIED_ATTRS = {"__subclasses__", "__globals__", "__builtins__", "__class__", "__bases__", "__mro__", "__code__",
                 "__closure__", "__dict__", "__reduce__", "__reduce_ex__", "__getattribute__", "__getattr__",
                 "__import__", "__loader__", "__spec__", "__self__", "__func__", "__wrapped__", "__objclass__",
@@ -106,6 +109,9 @@ def audit(source: str) -> list[str]:
         elif isinstance(node, ast.ImportFrom):
             if (node.module or "").split(".")[0] not in ALLOWED_MODULES or node.level:
                 problems.append(f"import from {node.module or '.'} is not allowed")
+            for alias in node.names:
+                if alias.name in DENIED_NAMES or alias.name == "*":
+                    problems.append(f"import of {alias.name} is not allowed")
         elif isinstance(node, ast.Name) and node.id in DENIED_NAMES:
             problems.append(f"use of {node.id} is not allowed")
         elif isinstance(node, ast.Attribute) and node.attr in DENIED_ATTRS:

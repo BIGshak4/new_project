@@ -103,9 +103,9 @@ async def build_card(provider: Provider | None, *, question: BankQuestion, evalu
         f"<language>{i18n.LANGUAGE_NAMES.get(language, 'English')}</language>",
         f"<skill>{skill_label or question.primary_skill}</skill>", f"<band>{band.value}</band>",
         f"<evaluation>\n{evaluation.model_dump_json(include={'key_points_hit', 'key_points_missed', 'misconceptions', 'behavior_signals', 'one_line_summary'}, indent=1)}\n</evaluation>",
-        (f"<check_result passed=\"{str(check.passed).lower()}\">{check.detail} "
-         f"{json.dumps(check.mismatches, ensure_ascii=False) if check.mismatches else ''}</check_result>"
-         if check is not None and check.passed is not None else ""),
+        (f"<check_result passed=\"{str(check.passed).lower()}\">"
+         + neutralize(f"{check.detail} {json.dumps(check.mismatches, ensure_ascii=False) if check.mismatches else ''}")
+         + "</check_result>" if check is not None and check.passed is not None else ""),
         f"<candidate_answer>\n{neutralize(answer)}\n</candidate_answer>",
     ])
     request = LLMRequest(role="feedback", system=[i18n.stable_system_block("feedback", language, glossary), context],

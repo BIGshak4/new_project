@@ -56,6 +56,18 @@ class TestAudit:
     def test_attribute_routes_to_the_interpreter_are_refused(self, source):
         assert code_runner.audit(source)
 
+    @pytest.mark.parametrize("source", [
+        # operator.attrgetter / methodcaller resolve attribute names at run time, past the AST audit
+        "import operator\ndef f(x):\n    return operator.methodcaller('__subclasses__')(object)",
+        "from operator import attrgetter\ndef f(x):\n    return attrgetter('__init__.__globals__')(x)",
+        "import string\ndef f(x):\n    return string.Formatter().get_field('0.__class__', [x], {})",
+        "from typing import get_type_hints\ndef f(x):\n    return get_type_hints(f)",
+        "import typing\ndef f(x):\n    return typing.get_type_hints(f)",
+        "from math import *\ndef f(x):\n    return x",
+    ])
+    def test_run_time_attribute_lookups_are_refused(self, source):
+        assert code_runner.audit(source)
+
     def test_child_process_sees_no_secrets(self, monkeypatch):
         monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-secret")
         monkeypatch.setenv("DATABASE_URL", "postgresql://secret")
