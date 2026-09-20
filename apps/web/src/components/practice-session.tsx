@@ -18,6 +18,7 @@ import {
 } from "../lib/circuit";
 import { AnswerEditor } from "./answer-editor";
 import { EvaluationPanel } from "./evaluation-panel";
+import { FollowUps } from "./follow-ups";
 import { parseTechnicalAnswer } from "../lib/technical-answer";
 import { supabase } from "../lib/supabase";
 import {
@@ -287,7 +288,9 @@ export function PracticeSession({
       const a = await api.startAttempt({
         question_key: question.key,
         language: lang,
-        mode: "quick",
+        // deep: the engine may ask up to two short follow-ups after the main answer, and the
+        // answer counts as full evidence for the skill profile
+        mode: "deep",
       });
       const old = readLocal<{ answer?: string }>(
         `jr-draft-${user.id}-${question.id}`,
@@ -652,13 +655,17 @@ export function PracticeSession({
                         demo={demo}
                       />
                     )}
-                    {attempt.follow_ups.length > 0 && (
-                      <p className="small muted">
-                        {t(
-                          "זהו תרגול מהמסלול הקודם. התשובות הקודמות נשמרו ונכללות בקובץ ההורדה. לתרגול החדש אין שאלות המשך.",
-                          "This attempt used the previous flow. Earlier answers remain saved and included in the download. New practice has no follow-up questions.",
-                        )}
-                      </p>
+                    {attempt.submission && (
+                      <FollowUps
+                        attempt={attempt}
+                        lang={lang}
+                        value={followAnswer}
+                        onChange={setFollowAnswer}
+                        onSubmit={() => void submit()}
+                        disabled={disabled || !!pending}
+                        busy={busy}
+                        resend={!!pending && pending.turn !== null}
+                      />
                     )}
                     {((attempt.can_submit && !attempt.submission) ||
                       !!pending) &&
@@ -806,6 +813,7 @@ export function PracticeSession({
                   submission={attempt.submission}
                   lang={lang}
                   onStart={(key) => onNew(key)}
+                  nextReady={attempt.status === "done"}
                 />
               ) : (
                 <p>

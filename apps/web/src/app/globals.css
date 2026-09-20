@@ -1289,3 +1289,15 @@ summary { cursor: pointer; font-weight: 500; }
   .evaluation-head { align-items: flex-start; }
   .subject-card { flex-direction: column; align-items: flex-start; }
 }
+
+/* ---------------------------------------------------------------- follow-up questions */
+.follow-ups { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+.follow-ups h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 4px; font-size: 17px; }
+.follow-up-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 12px; }
+.follow-up { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; background: white; display: grid; gap: 8px; }
+.follow-up.open { border-color: var(--green); background: linear-gradient(135deg, var(--light), white 60%); }
+.follow-up-kind { font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--green); font-weight: 600; }
+.follow-up-question { margin: 0; font-weight: 500; font-size: 16px; }
+.follow-up-answer { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--muted); border-inline-start: 3px solid var(--line); padding-inline-start: 10px; }
+.follow-up textarea { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; resize: vertical; background: white; }
+.follow-up button { justify-self: start; }

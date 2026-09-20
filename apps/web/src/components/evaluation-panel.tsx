@@ -24,11 +24,14 @@ export function EvaluationPanel({
   submission: s,
   lang,
   onStart,
+  nextReady,
 }: {
   submission: Submission;
   lang: Lang;
   /** start a new attempt on the suggested question */
   onStart: (key: string) => void;
+  /** false while a follow-up is still open: the suggestion waits until the attempt is complete */
+  nextReady?: boolean;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   if (s.status === "evaluating") {
@@ -199,7 +202,7 @@ export function EvaluationPanel({
         </aside>
       )}
 
-      {s.next_question && (
+      {s.next_question && nextReady !== false && (
         <section className="next-up" aria-labelledby="next-up-title">
           <div className="next-up-head">
             <Sparkles size={18} aria-hidden="true" />
