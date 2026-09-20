@@ -5,6 +5,10 @@ publish = ".next"
 [build.environment]
 NODE_VERSION = "24"
 
+# Explicitly enable the server adapter for Git builds linked over HTTPS.
+[[plugins]]
+package = "@netlify/plugin-nextjs"
+
 [[headers]]
 for = "/*"
 [headers.values]
