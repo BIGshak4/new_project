@@ -4,6 +4,69 @@
   "example-count-set-bits": {
     "skills": [{"skill": "bit_manipulation", "weight": 1.0, "primary": true}],
     "archetype": "coding", "exposure_risk": "high", "hint_position": 2,
+    "deterministic_check": {
+      "type": "code_tests",
+      "spec": {
+        "language": "python",
+        "timeout_ms": 5000,
+        "entry": [
+          "count_set_bits",
+          "count_bits",
+          "popcount",
+          "count_ones",
+          "bit_count",
+          "hamming_weight",
+          "count"
+        ],
+        "cases": [
+          {
+            "args": [
+              0
+            ],
+            "expected": 0
+          },
+          {
+            "args": [
+              180
+            ],
+            "expected": 4
+          },
+          {
+            "args": [
+              4294967295
+            ],
+            "expected": 32
+          },
+          {
+            "args": [
+              1
+            ],
+            "expected": 1
+          },
+          {
+            "args": [
+              2147483648
+            ],
+            "expected": 1
+          },
+          {
+            "args": [
+              7
+            ],
+            "expected": 3
+          }
+        ]
+      }
+    },
+    "check_self_test": {
+      "pass": [
+        "```python\ndef count_set_bits(x):\n    n = 0\n    while x:\n        x &= x - 1\n        n += 1\n    return n\n```",
+        "Shift and test every bit, O(32).\n\n```python\ndef count_bits(x):\n    total = 0\n    for _ in range(32):\n        total += x & 1\n        x >>= 1\n    return total\n```"
+      ],
+      "fail": [
+        "```python\ndef count_set_bits(x):\n    total = 0\n    for i in range(31):\n        total += (x >> i) & 1\n    return total\n```"
+      ]
+    },
     "hints": {
       "en": ["A loop that looks at every bit works. Can you make each iteration remove exactly one set bit instead?",
              "x & (x - 1) clears the lowest set bit. Loop while x is not zero, counting iterations. Each iteration removes one 1, so the loop runs exactly k times."],
@@ -34,6 +97,67 @@
   "example-power-of-two-check": {
     "skills": [{"skill": "bit_manipulation", "weight": 1.0, "primary": true}],
     "archetype": "coding", "exposure_risk": "high", "hint_position": 1,
+    "deterministic_check": {
+      "type": "code_tests",
+      "spec": {
+        "language": "python",
+        "timeout_ms": 5000,
+        "entry": [
+          "is_power_of_two",
+          "is_pow2",
+          "power_of_two",
+          "is_power_of_2",
+          "ispow2",
+          "is_pow_2"
+        ],
+        "cases": [
+          {
+            "args": [
+              0
+            ],
+            "expected": false
+          },
+          {
+            "args": [
+              1
+            ],
+            "expected": true
+          },
+          {
+            "args": [
+              12
+            ],
+            "expected": false
+          },
+          {
+            "args": [
+              16
+            ],
+            "expected": true
+          },
+          {
+            "args": [
+              2147483648
+            ],
+            "expected": true
+          },
+          {
+            "args": [
+              3
+            ],
+            "expected": false
+          }
+        ]
+      }
+    },
+    "check_self_test": {
+      "pass": [
+        "```python\ndef is_power_of_two(x):\n    return x != 0 and (x & (x - 1)) == 0\n```"
+      ],
+      "fail": [
+        "```python\ndef is_power_of_two(x):\n    return (x & (x - 1)) == 0\n```"
+      ]
+    },
     "hints": {
       "en": ["What does x - 1 look like in binary when x has exactly one set bit?",
              "For a power of two, x and x - 1 share no bits, so x & (x - 1) is 0. Add a guard for x = 0, which would otherwise pass."],
@@ -64,6 +188,80 @@
   "example-extract-register-field": {
     "skills": [{"skill": "bit_manipulation", "weight": 0.8, "primary": true}, {"skill": "code_debugging", "weight": 0.2}],
     "archetype": "coding", "hint_position": 1,
+    "deterministic_check": {
+      "type": "code_tests",
+      "spec": {
+        "language": "python",
+        "timeout_ms": 5000,
+        "entry": [
+          "extract_field",
+          "extract_bits",
+          "get_field",
+          "extract_register_field",
+          "bit_field",
+          "get_bits",
+          "extract"
+        ],
+        "cases": [
+          {
+            "args": [
+              214,
+              2,
+              3
+            ],
+            "expected": 5
+          },
+          {
+            "args": [
+              214,
+              0,
+              32
+            ],
+            "expected": 214
+          },
+          {
+            "args": [
+              4294967295,
+              0,
+              32
+            ],
+            "expected": 4294967295
+          },
+          {
+            "args": [
+              4294967295,
+              31,
+              1
+            ],
+            "expected": 1
+          },
+          {
+            "args": [
+              2779096485,
+              4,
+              8
+            ],
+            "expected": 90
+          },
+          {
+            "args": [
+              2147483648,
+              31,
+              1
+            ],
+            "expected": 1
+          }
+        ]
+      }
+    },
+    "check_self_test": {
+      "pass": [
+        "```python\ndef extract_field(reg, lsb, width):\n    if width == 32:\n        return reg & 0xFFFFFFFF\n    mask = (1 << width) - 1\n    return (reg >> lsb) & mask\n```"
+      ],
+      "fail": [
+        "```python\ndef extract_field(reg, lsb, width):\n    mask = (1 << width) - 1\n    return (reg & mask) >> lsb\n```"
+      ]
+    },
     "hints": {
       "en": ["Shift the field down to bit 0 first, then keep only width bits. What mask keeps exactly width bits?",
              "mask = (1u << width) - 1 works for width up to 31; for width == 32 the shift is undefined, so return reg directly (validity implies lsb == 0). Result: (reg >> lsb) & mask."],
@@ -94,6 +292,110 @@
   "example-first-greater-or-equal": {
     "skills": [{"skill": "arrays_and_search", "weight": 1.0, "primary": true}],
     "archetype": "coding", "exposure_risk": "medium", "hint_position": 1,
+    "deterministic_check": {
+      "type": "code_tests",
+      "spec": {
+        "language": "python",
+        "timeout_ms": 5000,
+        "entry": [
+          "lower_bound",
+          "first_greater_or_equal",
+          "first_ge",
+          "first_index",
+          "binary_search",
+          "find_first",
+          "first_at_least",
+          "search"
+        ],
+        "cases": [
+          {
+            "args": [
+              [
+                2,
+                4,
+                4,
+                9
+              ],
+              4
+            ],
+            "expected": 1
+          },
+          {
+            "args": [
+              [
+                2,
+                4,
+                4,
+                9
+              ],
+              8
+            ],
+            "expected": 3
+          },
+          {
+            "args": [
+              [
+                2,
+                4,
+                4,
+                9
+              ],
+              10
+            ],
+            "expected": 4
+          },
+          {
+            "args": [
+              [],
+              5
+            ],
+            "expected": 0
+          },
+          {
+            "args": [
+              [
+                1,
+                1,
+                1
+              ],
+              1
+            ],
+            "expected": 0
+          },
+          {
+            "args": [
+              [
+                1,
+                3,
+                5,
+                7,
+                9,
+                11
+              ],
+              6
+            ],
+            "expected": 3
+          },
+          {
+            "args": [
+              [
+                5
+              ],
+              5
+            ],
+            "expected": 0
+          }
+        ]
+      }
+    },
+    "check_self_test": {
+      "pass": [
+        "```python\ndef lower_bound(a, target):\n    lo, hi = 0, len(a)\n    while lo < hi:\n        mid = lo + (hi - lo) // 2\n        if a[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n```"
+      ],
+      "fail": [
+        "```python\ndef lower_bound(a, target):\n    lo, hi = 0, len(a)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if a[mid] <= target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n```"
+      ]
+    },
     "hints": {
       "en": ["Binary search, but you want the leftmost qualifying index, so an equal element is not the end of the search.",
              "Keep [lo, hi) with lo = 0, hi = n. While lo < hi: mid = lo + (hi - lo) / 2; if a[mid] < target then lo = mid + 1 else hi = mid. Return lo; it is n when nothing qualifies and 0 for an empty array."],
@@ -124,6 +426,118 @@
   "example-merge-measurement-streams": {
     "skills": [{"skill": "arrays_and_search", "weight": 0.7, "primary": true}, {"skill": "basic_data_structures", "weight": 0.3}],
     "archetype": "coding", "exposure_risk": "high", "hint_position": 1,
+    "deterministic_check": {
+      "type": "code_tests",
+      "spec": {
+        "language": "python",
+        "timeout_ms": 5000,
+        "entry": [
+          "merge",
+          "merge_sorted",
+          "merge_arrays",
+          "merge_streams",
+          "merge_measurements",
+          "merge_two"
+        ],
+        "cases": [
+          {
+            "args": [
+              [
+                1,
+                4,
+                4
+              ],
+              [
+                2,
+                4,
+                7
+              ]
+            ],
+            "expected": [
+              1,
+              2,
+              4,
+              4,
+              4,
+              7
+            ]
+          },
+          {
+            "args": [
+              [],
+              [
+                1,
+                2
+              ]
+            ],
+            "expected": [
+              1,
+              2
+            ]
+          },
+          {
+            "args": [
+              [
+                3
+              ],
+              []
+            ],
+            "expected": [
+              3
+            ]
+          },
+          {
+            "args": [
+              [
+                1,
+                2,
+                3
+              ],
+              [
+                4,
+                5
+              ]
+            ],
+            "expected": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          {
+            "args": [
+              [
+                5
+              ],
+              [
+                1
+              ]
+            ],
+            "expected": [
+              1,
+              5
+            ]
+          },
+          {
+            "args": [
+              [],
+              []
+            ],
+            "expected": []
+          }
+        ]
+      }
+    },
+    "check_self_test": {
+      "pass": [
+        "```python\ndef merge(a, b):\n    i = j = 0\n    out = []\n    while i < len(a) and j < len(b):\n        if a[i] <= b[j]:\n            out.append(a[i]); i += 1\n        else:\n            out.append(b[j]); j += 1\n    out.extend(a[i:])\n    out.extend(b[j:])\n    return out\n```"
+      ],
+      "fail": [
+        "```python\ndef merge(a, b):\n    i = j = 0\n    out = []\n    while i < len(a) and j < len(b):\n        if a[i] < b[j]:\n            out.append(a[i]); i += 1\n        elif a[i] > b[j]:\n            out.append(b[j]); j += 1\n        else:\n            out.append(a[i]); i += 1; j += 1\n    return out + a[i:] + b[j:]\n```"
+      ]
+    },
     "hints": {
       "en": ["Both inputs are already sorted. At every step, which element must come next?",
              "Keep an index into each array. Append the smaller current element and advance that index. When one array runs out, append the rest of the other. Equal values: take either; both still get appended eventually."],
@@ -154,6 +568,134 @@
   "example-pair-sum-indices": {
     "skills": [{"skill": "basic_data_structures", "weight": 0.6, "primary": true}, {"skill": "arrays_and_search", "weight": 0.4}],
     "archetype": "coding", "exposure_risk": "high", "hint_position": 1,
+    "deterministic_check": {
+      "type": "code_tests",
+      "spec": {
+        "language": "python",
+        "timeout_ms": 5000,
+        "entry": [
+          "pair_sum",
+          "two_sum",
+          "pair_sum_indices",
+          "find_pair",
+          "two_sum_indices",
+          "pair_indices"
+        ],
+        "cases": [
+          {
+            "args": [
+              [
+                6,
+                6
+              ],
+              12
+            ],
+            "accept": [
+              [
+                0,
+                1
+              ]
+            ],
+            "unordered": true
+          },
+          {
+            "args": [
+              [
+                6
+              ],
+              12
+            ],
+            "accept": [
+              null,
+              [],
+              -1,
+              [
+                -1,
+                -1
+              ],
+              false
+            ]
+          },
+          {
+            "args": [
+              [
+                2,
+                7,
+                11,
+                15
+              ],
+              9
+            ],
+            "accept": [
+              [
+                0,
+                1
+              ]
+            ],
+            "unordered": true
+          },
+          {
+            "args": [
+              [
+                3,
+                2,
+                4
+              ],
+              6
+            ],
+            "accept": [
+              [
+                1,
+                2
+              ]
+            ],
+            "unordered": true
+          },
+          {
+            "args": [
+              [
+                1,
+                5,
+                3,
+                7
+              ],
+              10
+            ],
+            "accept": [
+              [
+                2,
+                3
+              ]
+            ],
+            "unordered": true
+          },
+          {
+            "args": [
+              [],
+              0
+            ],
+            "accept": [
+              null,
+              [],
+              -1,
+              [
+                -1,
+                -1
+              ],
+              false
+            ]
+          }
+        ]
+      }
+    },
+    "check_self_test": {
+      "pass": [
+        "```python\ndef pair_sum(values, target):\n    seen = {}\n    for i, x in enumerate(values):\n        if target - x in seen:\n            return seen[target - x], i\n        seen[x] = i\n    return None\n```"
+      ],
+      "fail": [
+        "```python\ndef pair_sum(values, target):\n    index = {x: i for i, x in enumerate(values)}\n    for i, x in enumerate(values):\n        if target - x in index:\n            return i, index[target - x]\n    return None\n```"
+      ]
+    },
     "hints": {
       "en": ["For each element, what single value would you need to have seen already?",
              "Walk the array once. For element x at index i, look up T - x in a map of value -> index built from earlier elements; if found, return that index and i; otherwise store x -> i. Because you look before you store, an element cannot pair with itself."],
@@ -214,6 +756,76 @@
   "example-balanced-brackets": {
     "skills": [{"skill": "basic_data_structures", "weight": 1.0, "primary": true}],
     "archetype": "coding", "exposure_risk": "high", "hint_position": 1,
+    "deterministic_check": {
+      "type": "code_tests",
+      "spec": {
+        "language": "python",
+        "timeout_ms": 5000,
+        "entry": [
+          "is_balanced",
+          "balanced",
+          "is_valid",
+          "valid_parentheses",
+          "check_balanced",
+          "is_balanced_brackets",
+          "balanced_brackets",
+          "is_nested",
+          "is_well_nested"
+        ],
+        "cases": [
+          {
+            "args": [
+              "([]{})"
+            ],
+            "expected": true
+          },
+          {
+            "args": [
+              "([)]"
+            ],
+            "expected": false
+          },
+          {
+            "args": [
+              "]"
+            ],
+            "expected": false
+          },
+          {
+            "args": [
+              ""
+            ],
+            "expected": true
+          },
+          {
+            "args": [
+              "((("
+            ],
+            "expected": false
+          },
+          {
+            "args": [
+              "{[()()]}"
+            ],
+            "expected": true
+          },
+          {
+            "args": [
+              "(]"
+            ],
+            "expected": false
+          }
+        ]
+      }
+    },
+    "check_self_test": {
+      "pass": [
+        "```python\ndef is_balanced(s):\n    pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\n    stack = []\n    for ch in s:\n        if ch in \"([{\":\n            stack.append(ch)\n        elif not stack or stack.pop() != pairs[ch]:\n            return False\n    return not stack\n```"
+      ],
+      "fail": [
+        "```python\ndef is_balanced(s):\n    opens = sum(1 for ch in s if ch in \"([{\")\n    closes = sum(1 for ch in s if ch in \")]}\")\n    return opens == closes\n```"
+      ]
+    },
     "hints": {
       "en": ["When you meet a closing bracket, which opening bracket must it match: the first one you saw, or the most recent unmatched one?",
              "Push every opener. On a closer, the stack must be non-empty and its top must be the matching opener; pop it. At the end the stack must be empty. That rejects ([)] and ] and accepts the empty string."],

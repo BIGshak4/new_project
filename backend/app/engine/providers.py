@@ -11,6 +11,7 @@ The engine never talks to an SDK directly. Swapping providers is configuration.
 from __future__ import annotations
 
 import asyncio
+import base64
 import json
 import time
 from collections.abc import Awaitable, Callable
@@ -66,6 +67,7 @@ class LLMRequest:
     prompt_version: str = ""
     effort: str | None = None
     max_tokens: int | None = None
+    images: list[tuple[str, bytes]] = field(default_factory=list)   # (mime, bytes) the model should look at
 
     def resolved_effort(self) -> str:
         return self.effort or ROLE_EFFORT.get(self.role, "medium")
@@ -270,7 +272,8 @@ class AnthropicProvider:
             if request.schema is not None and not self._schema_unsupported:
                 return await self.client.messages.parse(output_format=request.schema, **common)
             if request.schema is not None:
-                common = {**common, "messages": [{"role": "user", "content": request.user + self._json_instruction(request)}]}
+                common = {**common, "messages": [{"role": "user",
+                                                  "content": self._user_content(request, self._json_instruction(request))}]}
             async with self.client.messages.stream(**common) as stream:
                 return await stream.get_final_message()
         except anthropic.APIStatusError as exc:
@@ -290,12 +293,23 @@ class AnthropicProvider:
         return ("\n\nReply with a single JSON object and nothing else, matching this JSON schema exactly:\n"
                 + json.dumps(request.schema.model_json_schema()))
 
+    @staticmethod
+    def _user_content(request: LLMRequest, suffix: str = ""):
+        """Plain text, or image blocks followed by the text when the answer includes photos or drawings."""
+        text = request.user + suffix
+        if not request.images:
+            return text
+        blocks = [{"type": "image", "source": {"type": "base64", "media_type": mime,
+                                               "data": base64.b64encode(data).decode("ascii")}}
+                  for mime, data in request.images]
+        return [*blocks, {"type": "text", "text": text}]
+
     async def complete(self, request: LLMRequest) -> LLMResponse:
         anthropic = self._anthropic
         started = time.perf_counter()
         common = dict(
             model=self.model_for(request.role), max_tokens=request.resolved_max_tokens(), system=self._system_blocks(request),
-            messages=[{"role": "user", "content": request.user}],
+            messages=[{"role": "user", "content": self._user_content(request)}],
             output_config={"effort": request.resolved_effort()}, **self._extras(),
         )
         try:

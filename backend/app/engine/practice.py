@@ -27,14 +27,26 @@ from __future__ import annotations
 
 import asyncio
 import dataclasses
+import logging
 import uuid
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from enum import StrEnum
 
 from pydantic import BaseModel, Field, ValidationError
 
-from app.engine import ENGINE_VERSION, checks, evaluator, feedback, generator, scores, skill_controller, tips
+from app.engine import (
+    ENGINE_VERSION,
+    checks,
+    circuit_text,
+    evaluator,
+    feedback,
+    generator,
+    scores,
+    skill_controller,
+    tips,
+)
 from app.engine.evaluator import EvaluationResult
 from app.engine.feedback import FeedbackCard
 from app.engine.params import DEFAULT_PARAMS, EngineParams
@@ -119,6 +131,12 @@ class Submission(BaseModel):
     evaluator_model: str | None = None         # which model judged this revision ("demo" for the scripted stand-in)
 
 
+log = logging.getLogger("app.engine.practice")
+
+# path in the answer-images bucket -> (mime, bytes), or None when the photo cannot be read
+ImageFetcher = Callable[[str], Awaitable[tuple[str, bytes] | None]]
+
+
 @dataclass
 class PracticeContext:
     provider: Provider
@@ -133,6 +151,7 @@ class PracticeContext:
     role_family: str | None = "hardware"
     polish_tips: bool = True
     params: EngineParams = DEFAULT_PARAMS
+    image_fetcher: ImageFetcher | None = None       # None: attached photos are kept but not shown to the evaluator
 
 
 @dataclass
@@ -205,6 +224,7 @@ class PracticeAttempt:
         self.exposures: list[ExposureEvent] = []
         self.submissions: list[Submission] = []
         self.follow_up_turns: list[dict] = []              # [{turn, question, generated, action, difficulty, expected_answer_outline, submission_revision?}]
+        self.next_question: dict | None = None             # the latest suggestion (key, skill, difficulty, why, reason)
         self.misconceptions_hit: list[str] = []
         self._outcomes: dict[int, PracticeOutcome] = {}    # revision -> outcome, for idempotent replay
         self._lock = asyncio.Lock()
@@ -239,6 +259,7 @@ class PracticeAttempt:
         self.follow_up_turns = [dict(t) for t in row.get("follow_up_turns") or []]
         self.misconceptions_hit = list(row.get("misconceptions_hit") or [])
         self._tip_turns = {k: int(v) for k, v in (row.get("tip_turns") or {}).items()}
+        self.next_question = row.get("next_question") or None
         self._escalated = any(t.get("action") == Action.ESCALATE.value for t in self.follow_up_turns)
         if self.follow_up_turns:
             self._follow_up_difficulty = self.follow_up_turns[-1].get("difficulty") or question.difficulty
@@ -487,17 +508,45 @@ class PracticeAttempt:
         if getattr(result, "model", ""):
             usage.append(UsageEvent(action, result.model, result.usage, result.latency_ms))
 
+    async def _visual_evidence(self, visual: VisualAnswer) -> tuple[str | None, list[tuple[str, bytes]], int, list[str], str]:
+        """What a drawing or photos add to the answer: (circuit text, fetched images, images missing, flags, check lines)."""
+        circuit, images, missing, flags, lines = None, [], 0, [], ""
+        if visual.circuit is not None and visual.circuit.parts:
+            circuit = circuit_text.describe(visual.circuit)
+            lines = circuit_text.check_lines(visual.circuit)
+            flags.append("circuit_assessed")
+        if visual.images:
+            fetcher = self.ctx.image_fetcher
+            for image in visual.images:
+                fetched = None
+                if fetcher is not None:
+                    try:
+                        fetched = await fetcher(image.path)
+                    except Exception as exc:                    # noqa: BLE001 - a photo must never break the evaluation
+                        log.warning("image fetch raised path=%s error=%s", image.path, exc)
+                if fetched is None:
+                    missing += 1
+                else:
+                    images.append(fetched)
+            if images:
+                flags.append("images_assessed")
+            if missing:
+                flags.append("images_not_assessed" if fetcher is None else "images_unavailable")
+        return circuit, images, missing, flags, lines
+
     async def _evaluate(self, submission: Submission, *, latency_ms: int | None, revision_count: int | None) -> PracticeOutcome:
+        circuit, images, images_missing, visual_flags, check_lines = None, [], 0, [], ""
         if submission.visual is not None:
-            # Accept and display visual work without sending an incomplete text-only answer
-            # to the evaluator. No model calls, metrics, tips or skill updates are produced.
-            submission.status = EvaluationStatus.DONE
-            submission.evaluating_since = None
-            submission.flags = ["visual_review_pending"]
-            outcome = PracticeOutcome(submission, None, None, None, 0.0, None, None, None, None, None,
-                                      flags=list(submission.flags))
-            self._outcomes[submission.revision] = outcome
-            return outcome
+            circuit, images, images_missing, visual_flags, check_lines = await self._visual_evidence(submission.visual)
+            if not submission.answer.strip() and circuit is None and not images:
+                # Only photos the server cannot read: keep the answer, judge nothing, say so.
+                submission.status = EvaluationStatus.DONE
+                submission.evaluating_since = None
+                submission.flags = ["visual_review_pending", *visual_flags]
+                outcome = PracticeOutcome(submission, None, None, None, 0.0, None, None, None, None, None,
+                                          flags=list(submission.flags))
+                self._outcomes[submission.revision] = outcome
+                return outcome
         ctx, question = self.ctx, self.question
         is_follow_up = submission.turn > 0
         usage: list[UsageEvent] = []
@@ -520,16 +569,19 @@ class PracticeAttempt:
                 known_error_keys=set(), hint_level=state.hint_level, glossary=ctx.glossary)
         else:
             difficulty = question.difficulty
-            check = checks.run_check(question.deterministic_check, submission.answer) if question.deterministic_check else None
+            # a drawn circuit contributes its derived functions ("alarm = (A & B) | ...") to the check
+            checked_answer = (submission.answer + "\n" + check_lines).strip() if check_lines else submission.answer
+            check = (await asyncio.to_thread(checks.run_check, question.deterministic_check, checked_answer)
+                     if question.deterministic_check else None)        # code tests run a child process
             result = await evaluator.evaluate(
                 ctx.provider, question_context=evaluator.question_block(question, ctx.language, primary),
                 known_error_keys={e.key for e in question.common_errors}, language=ctx.language,
                 difficulty=difficulty, answer=submission.answer, check=check, hint_level=submission.hints_seen,
-                glossary=ctx.glossary)
+                glossary=ctx.glossary, circuit=circuit, images=images, images_missing=images_missing)
         self._record_usage(usage, "evaluate", result)
         submission.evaluator_model = result.model or getattr(ctx.provider, "model", None) or None
 
-        flags = list(result.flags)
+        flags = [*result.flags, *visual_flags]
         if self.language_fallback:
             flags.append("language_fallback_to_english")
         submission.check = check.model_dump(mode="json") if check else None
@@ -716,7 +768,7 @@ class PracticeAttempt:
             "revealed_before_submit": self.revealed_before_submit,
             "follow_up_turns": self.follow_up_turns, "misconceptions_hit": self.misconceptions_hit,
             "familiarity": self.familiarity, "evidence_mode": self.evidence_mode, "duration_ms": duration_ms,
-            "tip_turns": dict(self._tip_turns),
+            "tip_turns": dict(self._tip_turns), "next_question": self.next_question,
             "submissions": [s.model_dump(mode="json") for s in self.submissions],
             "exposures": [e.model_dump(mode="json") for e in self.exposures],
         }

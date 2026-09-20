@@ -256,7 +256,7 @@ def _self_test(question: BankQuestion) -> list[str]:
         return []
     problems = []
     try:
-        reference = checks.run_check(question.deterministic_check, "0")
+        reference = checks.run_check(question.deterministic_check, "0", sandbox=False)
         if reference is None:
             return [f"question {question.key}: deterministic_check has no type"]
     except (ValueError, KeyError, checks.BooleanParseError) as exc:
@@ -266,7 +266,7 @@ def _self_test(question: BankQuestion) -> list[str]:
         problems.append(f"question {question.key}: check_self_test needs at least one passing answer")
     for expected, answers in ((True, tests.get("pass", [])), (False, tests.get("fail", []))):
         for answer in answers:
-            result = checks.run_check(question.deterministic_check, answer)
+            result = checks.run_check(question.deterministic_check, answer, sandbox=False)   # our own answers
             if result.passed is not expected:
                 problems.append(f"question {question.key}: self-test answer {answer!r} gave {result.passed}, expected {expected}")
     return problems

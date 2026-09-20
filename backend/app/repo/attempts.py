@@ -95,6 +95,7 @@ async def save(connection: AsyncConnection, *, user_id: uuid.UUID, question_id: 
         "duration_ms": row.get("duration_ms"), "submitted_at": _dt(main["accepted_at"]) if main else None,
         "exposures": row.get("exposures") or [],
         "engine_state": {"evidence_mode": row.get("evidence_mode"), "tip_turns": row.get("tip_turns") or {},
+                         "next_question": row.get("next_question"),
                          # attempt_submission has no column for this; it lives here, keyed by revision
                          "evaluating_since": {str(s["revision"]): s["evaluating_since"] for s in row["submissions"]
                                               if s.get("evaluating_since")}},
@@ -146,7 +147,7 @@ async def load(connection: AsyncConnection, attempt_id: uuid.UUID, *, user_id: u
         "revealed_before_submit": row.revealed_before_submit, "follow_up_turns": list(row.follow_up_turns or []),
         "misconceptions_hit": list(row.misconceptions_hit or []), "familiarity": row.familiarity,
         "evidence_mode": state.get("evidence_mode"), "duration_ms": row.duration_ms,
-        "tip_turns": state.get("tip_turns") or {},
+        "tip_turns": state.get("tip_turns") or {}, "next_question": state.get("next_question"),
         "submissions": [{**_submission_dict(s), "evaluating_since": (state.get("evaluating_since") or {}).get(str(s.revision))}
                         for s in subs],
         "exposures": list(row.exposures or []),
@@ -174,12 +175,35 @@ async def seen_question_ids(connection: AsyncConnection, user_id: uuid.UUID, *, 
 
 async def recent(connection: AsyncConnection, user_id: uuid.UUID, *, limit: int = 20) -> list[dict]:
     """Newest first: what the history page and the plan router need."""
-    attempt, question = await db.table("attempt"), await db.table("question")
+    attempt, question, skill = await db.table("attempt"), await db.table("question"), await db.table("skill")
     rows = (await connection.execute(
         select(attempt.c.id, attempt.c.mode, attempt.c.band, attempt.c.started_at, attempt.c.submitted_at,
-               attempt.c.practice_language, attempt.c.hints_used, attempt.c.reference_revealed, question.c.key)
-        .join(question, question.c.id == attempt.c.question_id)
+               attempt.c.practice_language, attempt.c.hints_used, attempt.c.reference_revealed, question.c.key,
+               skill.c.key.label("subject"))
+        .join(question, question.c.id == attempt.c.question_id).join(skill, skill.c.id == question.c.subject_id)
         .where(attempt.c.user_id == user_id).order_by(attempt.c.started_at.desc()).limit(limit))).all()
-    return [{"id": str(r.id), "question_key": r.key, "mode": r.mode, "band": r.band, "started_at": _iso(r.started_at),
-             "submitted_at": _iso(r.submitted_at), "language": r.practice_language, "hints_used": r.hints_used,
-             "reference_revealed": r.reference_revealed} for r in rows]
+    return [{"id": str(r.id), "question_key": r.key, "subject": r.subject, "mode": r.mode, "band": r.band,
+             "started_at": _iso(r.started_at), "submitted_at": _iso(r.submitted_at), "language": r.practice_language,
+             "hints_used": r.hints_used, "reference_revealed": r.reference_revealed} for r in rows]
+
+
+async def band_counts(connection: AsyncConnection, user_id: uuid.UUID) -> dict[str, dict[str, int]]:
+    """{subject key: {band: scored answers}} over everything the user has answered."""
+    attempt, question, skill = await db.table("attempt"), await db.table("question"), await db.table("skill")
+    rows = (await connection.execute(
+        select(skill.c.key, attempt.c.band, func.count()).join(question, question.c.id == attempt.c.question_id)
+        .join(skill, skill.c.id == question.c.subject_id)
+        .where(attempt.c.user_id == user_id, attempt.c.band.is_not(None)).group_by(skill.c.key, attempt.c.band))).all()
+    out: dict[str, dict[str, int]] = {}
+    for subject, band, n in rows:
+        out.setdefault(subject, {})[str(band)] = int(n)
+    return out
+
+
+async def seen_question_keys(connection: AsyncConnection, user_id: uuid.UUID, *, days: int = 30) -> set[str]:
+    attempt, question = await db.table("attempt"), await db.table("question")
+    since = datetime.now(UTC) - timedelta(days=days)
+    rows = await connection.execute(
+        select(question.c.key).join(attempt, attempt.c.question_id == question.c.id)
+        .where(attempt.c.user_id == user_id, attempt.c.started_at >= since).distinct())
+    return {row.key for row in rows}

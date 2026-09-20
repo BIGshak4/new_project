@@ -5,7 +5,9 @@ truth table caps correctness, a pass raises the floor, and the rubric still scor
 reasoning (AI_Engine_Spec §2.3).
 
 Nothing here uses eval(): Boolean expressions go through a small parser so a
-candidate's answer can never execute code.
+candidate's answer can never execute code in this process. Code tests are the one
+check that runs a candidate's code, and they do it in an audited, isolated child
+interpreter (see code_runner.py).
 """
 
 from __future__ import annotations
@@ -14,6 +16,7 @@ import itertools
 import re
 import time
 
+from app.engine import code_runner
 from app.schemas.engine import CheckResult
 
 # ----------------------------------------------------------------------------- boolean parser
@@ -440,7 +443,60 @@ def check_numeric(spec: dict, answer: str | float | int | dict) -> CheckResult:
 # ----------------------------------------------------------------------------- dispatch
 
 
-def run_check(deterministic_check: dict | None, answer) -> CheckResult | None:
+# ----------------------------------------------------------------------------- code tests
+
+def check_code_tests(spec: dict, answer: dict | str, *, sandbox: bool = True) -> CheckResult:
+    """Run the Python in the answer against the question's cases.
+
+    spec:   {"language": "python", "entry": ["count_set_bits", "popcount"], "timeout_ms": 5000,
+             "cases": [{"args": [0], "expected": 0}, {"args": [[6, 6], 12], "accept": [[0, 1]], "unordered": true}]}
+    answer: free text; the code is taken from fenced blocks (```python, or untagged blocks that parse).
+
+    passed is None when there is nothing to run (prose, C, pseudocode, or code the audit refused):
+    the evaluator still reads the answer. It is False when the code runs and disagrees, raises,
+    or never finishes. `sandbox=False` runs in-process and is only for our own seed self-tests.
+    """
+    started = time.perf_counter()
+    cases = spec.get("cases")
+    if not isinstance(cases, list) or not cases:
+        raise ValueError("code_tests spec needs a non-empty 'cases' list")
+    if (spec.get("language") or "python") != "python":
+        raise ValueError(f"code_tests only runs python, not {spec.get('language')!r}")
+    text = answer.get("text", "") if isinstance(answer, dict) else str(answer)
+
+    def done(passed, detail, mismatches=()):
+        return CheckResult(type="code_tests", passed=passed, detail=detail, mismatches=list(mismatches)[:8],
+                           runtime_ms=int((time.perf_counter() - started) * 1000))
+
+    source = code_runner.extract_python(text)
+    if source is None:
+        return done(None, "no Python code to run; the answer is reviewed as written")
+    refused = code_runner.audit(source)
+    if refused:
+        return done(None, "the code was not run: " + "; ".join(refused[:3]))
+    timeout = max(1.0, float(spec.get("timeout_ms", code_runner.DEFAULT_TIMEOUT_MS)) / 1000)
+    outcome = (code_runner.run_in_subprocess(source, spec, timeout_seconds=timeout) if sandbox
+               else code_runner.run_cases(source, spec))
+    status = outcome.get("status")
+    if status == "timeout":
+        return done(False, f"the code did not finish within {timeout:g} s (an infinite loop?)")
+    if status == "raised":
+        return done(False, f"the code raised before any test ran: {outcome.get('error')}")
+    if status == "no_entry":
+        return done(None, "no function to call was found in the code")
+    if status != "ok":
+        return done(None, f"the code could not be run here: {outcome.get('error')}")
+    results = outcome.get("results", [])
+    failed = [r for r in results if not r.get("ok")]
+    mismatches = [{"case": r["case"], "inputs": r.get("inputs"), "expected": r.get("expected"),
+                   **({"error": r["error"]} if "error" in r else {"got": r.get("got")})} for r in failed]
+    entry = outcome.get("entry", "?")
+    if not failed:
+        return done(True, f"{entry}() passes all {len(results)} test cases", [])
+    return done(False, f"{entry}() fails {len(failed)} of {len(results)} test cases", mismatches)
+
+
+def run_check(deterministic_check: dict | None, answer, *, sandbox: bool = True) -> CheckResult | None:
     """Run the question's deterministic check, if it has one."""
     if not deterministic_check:
         return None
@@ -450,6 +506,8 @@ def run_check(deterministic_check: dict | None, answer) -> CheckResult | None:
         return check_truth_table(spec, answer)
     if kind == "numeric":
         return check_numeric(spec, answer)
+    if kind == "code_tests":
+        return check_code_tests(spec, answer, sandbox=sandbox)
     if kind == "sim":
         return CheckResult(type="sim", passed=None, detail="simulation checks are not available yet")
     raise ValueError(f"unknown deterministic check type {kind!r}")

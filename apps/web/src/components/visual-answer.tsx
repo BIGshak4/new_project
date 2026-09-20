@@ -308,8 +308,8 @@ export function VisualAnswer({
       {(!!value.images.length || !!value.circuit?.parts.length) && (
         <p className="visual-review-note">
           {t(
-            "השרטוט והתמונות יישמרו לבדיקה אנושית. בדיקת תשובות חזותיות בעזרת העוזר עדיין אינה פעילה, ולכן התשובה הזאת לא תקבל ציון אוטומטי.",
-            "Your circuit and images are saved for human review. AI assessment of visual answers is not active yet, so this answer will not receive an automatic grade.",
+            "השרטוט נבדק כחלק מהתשובה: העוזר מקבל את רשימת הרכיבים והחיבורים ואת הפונקציה הלוגית שנגזרה ממנו. תמונות נבדקות רק כשהשרת מורשה לקרוא אותן; אחרת הן נשמרות לבדיקה אנושית.",
+            "Your circuit is assessed as part of the answer: the assistant reads its components, wires and the logic function derived from it. Photos are assessed only when the server is allowed to read them; otherwise they are kept for human review.",
           )}
         </p>
       )}

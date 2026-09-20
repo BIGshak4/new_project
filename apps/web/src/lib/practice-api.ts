@@ -44,7 +44,14 @@ export type QuestionDetail = QuestionSummary & {
 };
 
 export type Hint = { level: number; text: string };
-export type Check = { type: string; passed: boolean | null; detail: string };
+export type Check = {
+  /** truth_table | numeric | code_tests */
+  type: string;
+  passed: boolean | null;
+  detail: string;
+  /** the first differing truth-table rows or failing test cases (shape depends on type) */
+  mismatches?: Record<string, unknown>[];
+};
 export type Card = {
   what_happened: string;
   why_it_matters: string;
@@ -81,6 +88,19 @@ export type Submission = {
   evidence: "full" | "reduced" | "none";
   flags: string[];
   replayed: boolean;
+  /** What to practise next, decided from this evaluation. Null when the bank has nothing left to suggest. */
+  next_question?: NextQuestion | null;
+};
+
+/** The engine's suggestion after an evaluation: a servable question and the reason, in the practice language. */
+export type NextQuestion = {
+  key: string;
+  title: string;
+  subject: string;
+  skill: string;
+  difficulty: number;
+  why: "reinforce" | "consolidate" | "advance" | "explore";
+  reason: string;
 };
 
 export type FollowUp = {
@@ -109,6 +129,8 @@ export type Attempt = {
   pending_follow_up: FollowUp | null;
   can_submit: boolean;
   can_retry: boolean;
+  /** The latest suggestion for this attempt; survives a refresh. */
+  next_question?: NextQuestion | null;
 };
 
 export type SkillProgress = {
@@ -124,11 +146,31 @@ export type SkillProgress = {
   retention_due_at: string | null;
 };
 
+/** One subject rolled up from its skills: what the progress donuts draw. */
+export type SubjectProgress = {
+  key: string;
+  label: string;
+  skills_total: number;
+  skills_assessed: number;
+  skills_started: number;
+  /** level ("1".."5") -> number of skills currently at that level */
+  levels: Record<string, number>;
+  average_level: number | null;
+  /** STRONG / PARTIAL / WEAK answer counts in this subject */
+  bands: Record<"STRONG" | "PARTIAL" | "WEAK", number>;
+  attempts: number;
+  /** share of the role plan, 0-1 */
+  weight: number;
+  questions_available: number;
+};
+
 export type Progress = {
   skills: SkillProgress[];
+  subjects: SubjectProgress[];
   recent: {
     id: string;
     question_key: string;
+    subject?: string;
     mode: string;
     band: Band | null;
     started_at: string;

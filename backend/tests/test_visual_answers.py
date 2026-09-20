@@ -7,7 +7,7 @@ from pydantic import ValidationError
 from app.api.errors import ApiError
 from app.engine.catalog import load_catalog
 from app.schemas.visual_answer import VisualAnswer
-from tests.test_practice_hardening import SEEDS, scripted
+from tests.test_practice_hardening import GOOD, SEEDS, scripted
 from tests.test_practice_service import OTHER, USER, Q, service
 
 
@@ -17,10 +17,10 @@ def visual():
 
 @pytest.fixture
 def setup():
-    return service(load_catalog(SEEDS), scripted([]))
+    return service(load_catalog(SEEDS), scripted([GOOD, GOOD]))
 
 
-async def test_circuit_only_roundtrip_replay_and_no_fake_assessment(setup):
+async def test_circuit_only_is_assessed_kept_and_replayed(setup):
     svc, store = setup
     a = await svc.start(USER, question_key=Q, mode="quick", language="he")
     aid = uuid.UUID(a.id)
@@ -29,9 +29,12 @@ async def test_circuit_only_roundtrip_replay_and_no_fake_assessment(setup):
     answer = {"text": "", "visual": visual()}
     s, a = await svc.submit(USER, aid, answer, idempotency_key="circuit")
     assert a.status == "done" and s.visual.model_dump() == visual()
-    assert s.assessed_by == "unassessed" and s.band is None and s.evidence == "none"
-    assert s.evaluated_at is None and s.flags == ["visual_review_pending"] and s.hints_seen == 1
-    assert not store.metrics and not store.usage and store.profiles == profiles_before
+    # a drawing is real work: the evaluator sees its netlist and the answer is scored like any other
+    assert s.assessed_by == "demo" and s.band is not None and s.evaluated_at is not None and s.hints_seen == 1
+    assert "circuit_assessed" in s.flags and "visual_review_pending" not in s.flags
+    assert store.metrics and store.profiles != profiles_before
+    request = svc.provider.requests[0]
+    assert "<candidate_circuit>" in request.user and 'AND "AND"' in request.user and request.images == []
     restored = await svc.get(USER, aid)
     assert restored.submission.visual == s.visual
     replay, _ = await svc.submit(USER, aid, answer, idempotency_key="circuit")
@@ -60,6 +63,9 @@ async def test_image_only_missing_cross_owner_and_cross_attempt_rejected(setup):
         await svc.submit(USER, uuid.UUID(other.id), answer, idempotency_key="wrong-attempt")
     s, _ = await svc.submit(USER, aid, answer, idempotency_key="image")
     assert s.visual.images[0].path == image["path"] and s.band is None
+    # no service key on this server: the photo is kept for a human, nothing is invented about it
+    assert s.assessed_by == "unassessed" and s.flags == ["visual_review_pending", "images_not_assessed"]
+    assert not svc.provider.requests
 
 
 @pytest.mark.parametrize("mutate", [

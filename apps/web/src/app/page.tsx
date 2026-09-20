@@ -15,6 +15,7 @@ import type { User } from "@supabase/supabase-js";
 import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
 import { Auth, type Lang } from "../components/auth";
 import { PracticeSession } from "../components/practice-session";
+import { SubjectCharts } from "../components/subject-charts";
 import { supabase } from "../lib/supabase";
 import {
   practiceApi,
@@ -32,6 +33,7 @@ import {
 type Route = { view: string; question?: string; attempt?: string };
 const emptyProgress: Progress = {
   skills: [],
+  subjects: [],
   recent: [],
   attempts_today: 0,
   daily_limit: 30,
@@ -464,6 +466,7 @@ function Workspace({
                       "Self-ratings, bookmarks and completion are separate from skill assessments.",
                     )}
                   </p>
+                  <SubjectCharts subjects={progress.subjects ?? []} lang={lang} />
                   <div className="question-table">
                     {progress.skills.map((s) => (
                       <div className="progress-row" key={s.key}>

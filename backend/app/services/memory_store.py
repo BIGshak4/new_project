@@ -116,10 +116,22 @@ class _MemoryTx:
     async def recent_attempts(self, user_id, *, limit=20):
         mine = sorted((a for a in self.s.attempts.values() if a["user_id"] == user_id),
                       key=lambda a: a["started_at"], reverse=True)[:limit]
-        return [{"id": a["row"]["id"], "question_key": a["row"]["question_key"], "mode": a["row"]["mode"],
+        return [{"id": a["row"]["id"], "question_key": a["row"]["question_key"],
+                 "subject": self.s.catalog.questions[a["row"]["question_key"]].subject, "mode": a["row"]["mode"],
                  "band": a["row"]["band"], "started_at": a["started_at"].isoformat(),
                  "submitted_at": None, "language": a["row"]["practice_language"], "hints_used": a["row"]["hints_used"],
                  "reference_revealed": a["row"]["reference_revealed"]} for a in mine]
+
+    async def band_counts(self, user_id):
+        out: dict[str, dict[str, int]] = {}
+        for a in self.s.attempts.values():
+            if a["user_id"] == user_id and a["row"]["band"]:
+                subject = self.s.catalog.questions[a["row"]["question_key"]].subject
+                out.setdefault(subject, {})[a["row"]["band"]] = out.get(subject, {}).get(a["row"]["band"], 0) + 1
+        return out
+
+    async def seen_question_keys(self, user_id):
+        return {a["row"]["question_key"] for a in self.s.attempts.values() if a["user_id"] == user_id}
 
     async def load_profile(self, user_id):
         loaded = LoadedProfile(user_id=user_id)

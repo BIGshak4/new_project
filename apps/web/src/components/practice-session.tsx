@@ -17,6 +17,7 @@ import {
   type VisualAnswer as Visual,
 } from "../lib/circuit";
 import { AnswerEditor } from "./answer-editor";
+import { EvaluationPanel } from "./evaluation-panel";
 import { parseTechnicalAnswer } from "../lib/technical-answer";
 import { supabase } from "../lib/supabase";
 import {
@@ -28,7 +29,6 @@ import {
 } from "../lib/practice-api";
 import {
   apiMessage,
-  bandLabel,
   hasAccepted,
   pendingResolved,
   latestSubmission,
@@ -787,11 +787,11 @@ export function PracticeSession({
                     : t("משוב על הפתרון", "Solution feedback")}
                 </span>
               </div>
-              {attempt?.submission?.visual ? (
+              {attempt?.submission?.assessed_by === "unassessed" ? (
                 <p>
                   {t(
-                    "התשובה החזותית נשמרה לבדיקה אנושית. הערכת מעגלים ותמונות תתחבר בהמשך; לא חושב ציון ולא שונתה רמת המיומנות.",
-                    "Your visual answer is saved for human review. Circuit and image assessment will be connected later; no grade or skill update was generated.",
+                    "התמונות שצירפתם נשמרו לבדיקה אנושית. השרת הזה עדיין לא יכול לקרוא תמונות מצורפות, ולכן לא חושב ציון ולא שונתה רמת המיומנות.",
+                    "Your attached photos are saved for human review. This server cannot read attached images yet, so no grade or skill update was generated.",
                   )}
                 </p>
               ) : demo || attempt?.submission?.assessed_by === "demo" ? (
@@ -802,10 +802,10 @@ export function PracticeSession({
                   )}
                 </p>
               ) : attempt?.submission ? (
-                <SubmissionFeedback
+                <EvaluationPanel
                   submission={attempt.submission}
                   lang={lang}
-                  demo={false}
+                  onStart={(key) => onNew(key)}
                 />
               ) : (
                 <p>
@@ -908,129 +908,6 @@ function SavedAnswer({
         </p>
       )}
     </section>
-  );
-}
-
-function SubmissionFeedback({
-  submission: s,
-  lang,
-  demo,
-}: {
-  submission: Submission;
-  lang: Lang;
-  demo: boolean;
-}) {
-  const t = (he: string, en: string) => (lang === "he" ? he : en);
-  return (
-    <div className="submission-feedback">
-      {s.status === "done" && (
-        <>
-          <div className="row">
-            <span className={`badge band-${s.band?.toLowerCase()}`}>
-              {bandLabel(s.band, lang)}
-            </span>
-            {demo && (
-              <span className="small muted">
-                {t("משוב מדומה", "Simulated feedback")}
-              </span>
-            )}
-          </div>
-          {s.summary && <p dir="auto">{s.summary}</p>}
-          {s.check && (
-            <div className="check-result">
-              <strong>
-                {s.check.passed === true
-                  ? t("הבדיקה האוטומטית עברה", "Automatic check passed")
-                  : s.check.passed === false
-                    ? t(
-                        "הבדיקה האוטומטית מצאה אי־התאמה",
-                        "Automatic check found a mismatch",
-                      )
-                    : t(
-                        "הבדיקה האוטומטית לא הכריעה",
-                        "Automatic check was inconclusive",
-                      )}
-              </strong>
-              <p dir="auto">{s.check.detail}</p>
-            </div>
-          )}
-          {s.card && (
-            <dl className="feedback-card">
-              {[
-                [t("מה קרה בתשובה", "What happened"), s.card.what_happened],
-                [
-                  t("למה זה חשוב בראיון", "Why it matters"),
-                  s.card.why_it_matters,
-                ],
-                [t("מה כדאי לעשות בהמשך", "Next step"), s.card.next_step],
-                [
-                  t("הדרך שלכם מול הפתרון", "Your reasoning and the reference"),
-                  s.card.your_reasoning_vs_reference,
-                ],
-              ].map(([label, value]) => (
-                <div key={label}>
-                  <dt>{label}</dt>
-                  <dd dir="auto">{value}</dd>
-                </div>
-              ))}
-            </dl>
-          )}
-          {!!s.key_points_hit.length && (
-            <>
-              <h4>{t("מה עשיתם היטב", "What went well")}</h4>
-              <ul>
-                {s.key_points_hit.map((p, i) => (
-                  <li dir="auto" key={i}>
-                    {p}
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-          {!!s.key_points_missed.length && (
-            <>
-              <h4>{t("מה כדאי לחזק", "What to work on")}</h4>
-              <ul>
-                {s.key_points_missed.map((p, i) => (
-                  <li dir="auto" key={i}>
-                    {p}
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-          {s.tip && (
-            <div className="hint" dir="auto">
-              {s.tip.text}
-            </div>
-          )}
-          <p className="small muted">
-            {s.evidence === "none"
-              ? t(
-                  "התשובה אינה מוסיפה ראיה לשליטה עצמאית.",
-                  "This answer adds no independent skill evidence.",
-                )
-              : s.evidence === "reduced"
-                ? t(
-                    "משקל ההערכה הופחת לפי תנאי התרגול והחשיפה לשאלה.",
-                    "Evidence weight is reduced based on practice conditions and question exposure.",
-                  )
-                : t(
-                    "התשובה נכללת בהערכת המיומנות.",
-                    "This answer contributes skill evidence.",
-                  )}
-          </p>
-        </>
-      )}
-      {s.status === "failed" && (
-        <p className="notice">
-          {t(
-            "ההערכה לא הושלמה. התשובה נשמרה.",
-            "Evaluation failed. Your answer is saved.",
-          )}
-        </p>
-      )}
-    </div>
   );
 }
 

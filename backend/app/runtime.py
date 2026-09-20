@@ -14,6 +14,7 @@ from app.engine.providers import Provider, build_provider
 from app.services.demo_provider import DemoProvider
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+from app.services.storage_images import StorageImageFetcher
 from app.services.store import DbStore, Store
 
 
@@ -24,6 +25,11 @@ class Runtime:
     store: Store
     practice: PracticeService
     store_kind: str                                  # database | memory
+    image_fetcher: StorageImageFetcher | None = None  # set when answer photos can be read for the evaluator
+
+    async def aclose(self) -> None:
+        if self.image_fetcher is not None:
+            await self.image_fetcher.aclose()
 
 
 def make_provider(settings: Settings) -> Provider:
@@ -50,5 +56,14 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
     config = ServiceConfig(role=settings.default_role, company=settings.default_company,
                            default_language=settings.default_language, daily_attempt_limit=settings.daily_attempt_limit,
                            polish_tips=settings.llm_provider == "anthropic")
+    fetcher = make_image_fetcher(settings)
     return Runtime(catalog=catalog, provider=provider, store=store,
-                   practice=PracticeService(store, catalog, provider, config), store_kind=kind)
+                   practice=PracticeService(store, catalog, provider, config, image_fetcher=fetcher), store_kind=kind,
+                   image_fetcher=fetcher)
+
+
+def make_image_fetcher(settings: Settings) -> StorageImageFetcher | None:
+    """Photos attached to answers can only be judged when the server may read the private bucket."""
+    if settings.supabase_url and settings.supabase_service_role_key:
+        return StorageImageFetcher(settings.supabase_url, settings.supabase_service_role_key)
+    return None

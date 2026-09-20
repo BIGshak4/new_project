@@ -211,16 +211,27 @@ Same two answers as P1: **$0.106 vs $0.152** with Opus everywhere (−30%), 36 s
 
 Bug found and fixed: the numeric check took the *first* number after the name, so `Tmin = 0.12 + 1.10 + 0.18 = 1.40 ns` was checked as failed ("got 0.12") — and a failed check overrides the score. The locator now takes the last quantity with a compatible unit in the clause; the clause ends at the next assignment. Nine regression cases; the seed self-tests caught the first attempt.
 
+## 5i. Overnight build (2026-09-20 → 21): next question, subject charts, code tests, visual assessment
+
+Shaked asked for five things before sleeping; all five are built, tested offline and wired into Harel's app.
+
+1. **Next suggested question after every evaluation** — `app/engine/next_question.py`. WEAK → *reinforce* (same skill, easier or equal, unseen); PARTIAL → *consolidate* (same skill, same level); STRONG → *advance/explore* (the skill the role plan weights most among those below their required level). Deterministic, explained in one sentence in the practice language, only ever a servable question. Stored in the attempt's `engine_state.next_question` so a refresh shows the same; exposed as `next_question` on `SubmissionView` and `AttemptView`.
+2. **Subject-level progress for charts** — `ProgressView.subjects`: per subject the plan's skills (total / started / assessed), level histogram, STRONG/PARTIAL/WEAK answer counts (one grouped query joining attempt → question → skill), plan weight, questions available. Harel's `apps/web` progress page now opens with one donut per subject (`subject-charts.tsx`, inline SVG, no library; helpers in `lib/charts.ts` with unit tests).
+3. **Code checking** — new deterministic check `code_tests` (`app/engine/code_runner.py`): the Python in the answer runs against the question's cases in a child interpreter (`python -I -S`), after an AST audit (allow-listed imports, no open/exec/eval/`__import__`/introspection), with restricted built-ins, a wall-clock timeout, and memory/CPU limits where the platform allows. C, pseudocode or prose → `passed: null` (the model still reviews). Specs + self-tests authored for 7 software questions (count set bits, power of two, register field, lower bound, merge, pair sum, balanced brackets); the loader runs the self-tests in-process through the same harness. **The database still has the old rows: `seed_db.py` must be re-run (approval) for the checks to reach production.** The check runs in a thread so it never blocks the event loop. The database constraint on check types needs the migration `20260921020000_code_tests_check_type.sql` before the rows can be loaded (found by the live suite; §6).
+4. **Visual assessment** — a drawn circuit becomes a netlist (`app/engine/circuit_text.py`) plus derived Boolean functions for one-bit combinational logic; the evaluator gets it in `<candidate_circuit>` and the truth-table check tests the derived function (a drawn majority gate passes the same check as a typed one). Photos are fetched server-side from the private bucket with the service-role key (`app/services/storage_images.py`, bytes sniffed again) and sent to Claude as image blocks (`LLMRequest.images`). Harel's early return ("visual → unassessed") is gone; only a photo-only answer that the server cannot read stays `unassessed`. **Needs `SUPABASE_SERVICE_ROLE_KEY` on Render and in `.env`** — until then photos are stored, not judged (`/health.answer_images`).
+5. **An attractive evaluation** — `apps/web/src/components/evaluation-panel.tsx` replaces the old feedback block: band ring, summary, chips (check, circuit/photos assessed, evidence, judged-by), the automatic check with a table of differing rows / failing test cases, the four-part card as tiles, what went well / what to work on, the coaching tip, and a "suggested next question" card with the reason and a start button. Styles appended to `globals.css`.
+
+Verification: `ruff` clean; **598 offline tests** (was 557; new: `test_next_question.py`, `test_code_tests.py`, `test_visual_assessment.py`, Harel's `test_visual_answers.py` updated to the new behaviour); TS client contract test passes with the new fields; `apps/web`: `tsc --noEmit` clean, 33 unit tests; live suite and `next build` results in §8.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
 - **Deployed**: https://jobrun-api.onrender.com (Render free tier, Frankfurt, `ENV=staging`, `LLM_PROVIDER=scripted`, `ALLOW_IN_REVIEW_CONTENT=true`). `scripts/smoke_http.py --url https://jobrun-api.onrender.com` passes, including CORS from `https://jobrun-practice.netlify.app`. Free tier sleeps after 15 idle minutes (~40 s wake).
 - `backend/Dockerfile` and `render.yaml`: the image builds (345 MB, non-root, healthy in 10 s) and passes `smoke_http.py` in a container. **The database string must be the Session pooler (IPv4)**: the direct `db.<ref>.supabase.co` host is IPv6-only and unreachable from containers and Render (found by running the container; `/health` now reports `database_host` and production refuses `direct`). The Render service itself must be created under a JobRun account and given `DATABASE_URL` and `ALLOWED_ORIGINS`. Then `scripts/smoke_http.py --url <render url>`.
-- **Shaked's e-mail is not yet in `jr_members`**; without it the API answers 403 for him.
-- **Anthropic key not created**; the real-model path is exercised only against a fake SDK client.
+- **Migration + content reload pending approval (2026-09-21):** the database's `question_check_type_chk` only allows `truth_table | numeric | sim`, so the 7 `code_tests` questions cannot be loaded yet — the live suite (16 tests) errors on the harness's seed step until `supabase/migrations/20260921020000_code_tests_check_type.sql` is applied (dry-run clean, see §8). Order in the morning: apply the migration (MCP, with approval) → `uv run python scripts/seed_db.py` → `uv run pytest -q tests/test_live_db.py tests/test_live_service.py`.
+- **`SUPABASE_SERVICE_ROLE_KEY` not set anywhere yet:** photos attached to answers are stored but not judged until it is added to Render (and `backend/.env` for local runs). Server-only secret.
 - **Review before publishing.** All 30 questions stay `in_review` until a person checks technical correctness, rubric weights and Hebrew/English parity (checklist in `seeds/questions/README.md`).
 - **Bank coverage: 14 of the role's 27 skills** have a primary question. Missing: latches/flip-flops, state tables, Moore vs Mealy, truth tables, number representation, reset strategies, sequential HDL coding, debugging methodology, project walkthrough, state encoding, testbench basics.
-- **Anthropic API key** not created yet; the `AnthropicProvider` is written against SDK 1.6.0 but has not run against the real API.
 - **Small schema follow-ups** for a later migration: a per-language template column on `tips_library` (Hebrew tip text lives only in the seed file); the `question.hints` column comment describes the old object format.
 - **Placeholders** `app.py`, `requirements.txt`, `src/__init__.py` still in the repo; deletion not yet confirmed.
 - Backend notes from the performance review, for step 4: generate UUIDv7 ids for the append-only tables; cap `state.history_window`; write daily-allowance checks as `created_at >= day_start`.
@@ -233,7 +244,7 @@ Bug found and fixed: the numeric check took the *first* number after the name, s
 cd backend
 uv sync
 uv run uvicorn app.main:app --reload              # the API: http://127.0.0.1:8000/docs is the contract
-uv run pytest -q                                   # 456 tests (13 more run when DATABASE_URL is set)
+uv run pytest -q                                   # 598 tests (16 more run when DATABASE_URL is set)
 uv run python scripts/seed_db.py --check           # validate content
 uv run python scripts/cli_practice.py --debug      # practice in the terminal, manual provider
 uv run python scripts/cli_practice.py --language he
@@ -259,6 +270,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 | 2026-09-18 | Step 4b-A: settings, Supabase token verification (JWKS/ES256), pilot access via `jr_members`, error shape, `/v1/me`; 392 tests (`74eea90`) |
 | 2026-09-18 | Step 4b-C/D: repository layer, store boundary, practice service; migration `skill_profile_engine_state`; 409 tests (`8eb0fce`) |
 | 2026-09-18 | Live verification sweep: RollbackStore harness, 13 live tests; fixes: JSON null in every writer (`db.sql_values`), batch question loading + caches, `reuse_status` preserved on re-import, migration `client_read_grants` (20 tables had policies but no grant) |
+| 2026-09-21 | Overnight build (§5i): next suggested question, subject progress + donut charts, `code_tests` check with sandboxed runner (7 questions), circuit netlist + photo assessment, evaluation panel in `apps/web`; 598 tests |
 | 2026-09-20 | P2 review set 13/13; numeric locator fixed (derivations were marked wrong) |
 | 2026-09-20 | Per-role models (Opus judge, Sonnet prose), second cache point; −30% per answer |
 | 2026-09-19 | P1: real model verified locally and in production (both languages); feedback effort low; tip delimiter stripped |

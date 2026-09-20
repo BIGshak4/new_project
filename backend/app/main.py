@@ -61,6 +61,9 @@ async def lifespan(app: FastAPI):
             log.warning("the %s provider is writing DEMO evaluations into the real database; every submission is "
                         "marked assessed_by=demo and must not be treated as real evidence", settings.llm_provider)
     yield
+    runtime = getattr(app.state, "runtime", None)
+    if runtime is not None:
+        await runtime.aclose()
     await db.dispose()
 
 
@@ -111,7 +114,8 @@ async def health() -> dict:
             "database_configured": bool(settings.database_url), "database_host": settings.database_host_kind,
             "auth_configured": bool(settings.supabase_url),
             "allowed_origins": len(settings.allowed_origins), "store": runtime.store_kind if runtime else None,
-            "models": {"evaluator": settings.anthropic_model, **settings.role_models} if settings.llm_provider == "anthropic" else None}
+            "models": {"evaluator": settings.anthropic_model, **settings.role_models} if settings.llm_provider == "anthropic" else None,
+            "answer_images": "assessed" if settings.supabase_service_role_key and settings.supabase_url else "stored_only"}
 
 
 @app.get("/catalog/summary", tags=["ops"])

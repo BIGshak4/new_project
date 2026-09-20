@@ -28,6 +28,9 @@ class Settings(BaseSettings):
     # still on the legacy shared-secret (HS256) setup.
     supabase_url: str | None = None
     supabase_jwt_secret: str | None = None
+    # Server-only key that lets the evaluator read the photos a candidate attached (private bucket
+    # practice-answer-images). Without it, answers with photos are stored but the photos are not judged.
+    supabase_service_role_key: str | None = None
     # Only e-mails listed in Harel's jr_members table may use the practice API during the pilot.
     require_pilot_membership: bool = True
 
@@ -58,8 +61,8 @@ class Settings(BaseSettings):
     default_role: str = "digital-hardware-engineer"
     default_company: str = "generic"
 
-    @field_validator("database_url", "supabase_url", "supabase_jwt_secret", "anthropic_api_key", "anthropic_model", "anthropic_role_models",
-                     "llm_provider", "env", "default_language", mode="before")
+    @field_validator("database_url", "supabase_url", "supabase_jwt_secret", "supabase_service_role_key", "anthropic_api_key",
+                     "anthropic_model", "anthropic_role_models", "llm_provider", "env", "default_language", mode="before")
     @classmethod
     def _strip(cls, value):
         """Values pasted into a dashboard often carry a trailing newline or spaces; the database then

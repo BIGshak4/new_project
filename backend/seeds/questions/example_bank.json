@@ -3134,8 +3134,69 @@
     "tip_key": "check_the_boundary"
    }
   ],
-  "deterministic_check": null,
-  "check_self_test": null,
+  "deterministic_check": {
+   "type": "code_tests",
+   "spec": {
+    "language": "python",
+    "timeout_ms": 5000,
+    "entry": [
+     "count_set_bits",
+     "count_bits",
+     "popcount",
+     "count_ones",
+     "bit_count",
+     "hamming_weight",
+     "count"
+    ],
+    "cases": [
+     {
+      "args": [
+       0
+      ],
+      "expected": 0
+     },
+     {
+      "args": [
+       180
+      ],
+      "expected": 4
+     },
+     {
+      "args": [
+       4294967295
+      ],
+      "expected": 32
+     },
+     {
+      "args": [
+       1
+      ],
+      "expected": 1
+     },
+     {
+      "args": [
+       2147483648
+      ],
+      "expected": 1
+     },
+     {
+      "args": [
+       7
+      ],
+      "expected": 3
+     }
+    ]
+   }
+  },
+  "check_self_test": {
+   "pass": [
+    "```python\ndef count_set_bits(x):\n    n = 0\n    while x:\n        x &= x - 1\n        n += 1\n    return n\n```",
+    "Shift and test every bit, O(32).\n\n```python\ndef count_bits(x):\n    total = 0\n    for _ in range(32):\n        total += x & 1\n        x >>= 1\n    return total\n```"
+   ],
+   "fail": [
+    "```python\ndef count_set_bits(x):\n    total = 0\n    for i in range(31):\n        total += (x >> i) & 1\n    return total\n```"
+   ]
+  },
   "assets": {
    "collection": "jobrun_example_v1",
    "category": "software",
@@ -3284,8 +3345,67 @@
     "skill": "bit_manipulation"
    }
   ],
-  "deterministic_check": null,
-  "check_self_test": null,
+  "deterministic_check": {
+   "type": "code_tests",
+   "spec": {
+    "language": "python",
+    "timeout_ms": 5000,
+    "entry": [
+     "is_power_of_two",
+     "is_pow2",
+     "power_of_two",
+     "is_power_of_2",
+     "ispow2",
+     "is_pow_2"
+    ],
+    "cases": [
+     {
+      "args": [
+       0
+      ],
+      "expected": false
+     },
+     {
+      "args": [
+       1
+      ],
+      "expected": true
+     },
+     {
+      "args": [
+       12
+      ],
+      "expected": false
+     },
+     {
+      "args": [
+       16
+      ],
+      "expected": true
+     },
+     {
+      "args": [
+       2147483648
+      ],
+      "expected": true
+     },
+     {
+      "args": [
+       3
+      ],
+      "expected": false
+     }
+    ]
+   }
+  },
+  "check_self_test": {
+   "pass": [
+    "```python\ndef is_power_of_two(x):\n    return x != 0 and (x & (x - 1)) == 0\n```"
+   ],
+   "fail": [
+    "```python\ndef is_power_of_two(x):\n    return (x & (x - 1)) == 0\n```"
+   ]
+  },
   "assets": {
    "collection": "jobrun_example_v1",
    "category": "software",
@@ -3436,8 +3556,80 @@
     "skill": "bit_manipulation"
    }
   ],
-  "deterministic_check": null,
-  "check_self_test": null,
+  "deterministic_check": {
+   "type": "code_tests",
+   "spec": {
+    "language": "python",
+    "timeout_ms": 5000,
+    "entry": [
+     "extract_field",
+     "extract_bits",
+     "get_field",
+     "extract_register_field",
+     "bit_field",
+     "get_bits",
+     "extract"
+    ],
+    "cases": [
+     {
+      "args": [
+       214,
+       2,
+       3
+      ],
+      "expected": 5
+     },
+     {
+      "args": [
+       214,
+       0,
+       32
+      ],
+      "expected": 214
+     },
+     {
+      "args": [
+       4294967295,
+       0,
+       32
+      ],
+      "expected": 4294967295
+     },
+     {
+      "args": [
+       4294967295,
+       31,
+       1
+      ],
+      "expected": 1
+     },
+     {
+      "args": [
+       2779096485,
+       4,
+       8
+      ],
+      "expected": 90
+     },
+     {
+      "args": [
+       2147483648,
+       31,
+       1
+      ],
+      "expected": 1
+     }
+    ]
+   }
+  },
+  "check_self_test": {
+   "pass": [
+    "```python\ndef extract_field(reg, lsb, width):\n    if width == 32:\n        return reg & 0xFFFFFFFF\n    mask = (1 << width) - 1\n    return (reg >> lsb) & mask\n```"
+   ],
+   "fail": [
+    "```python\ndef extract_field(reg, lsb, width):\n    mask = (1 << width) - 1\n    return (reg & mask) >> lsb\n```"
+   ]
+  },
   "assets": {
    "collection": "jobrun_example_v1",
    "category": "software",
@@ -3585,8 +3777,110 @@
     "skill": "arrays_and_search"
    }
   ],
-  "deterministic_check": null,
-  "check_self_test": null,
+  "deterministic_check": {
+   "type": "code_tests",
+   "spec": {
+    "language": "python",
+    "timeout_ms": 5000,
+    "entry": [
+     "lower_bound",
+     "first_greater_or_equal",
+     "first_ge",
+     "first_index",
+     "binary_search",
+     "find_first",
+     "first_at_least",
+     "search"
+    ],
+    "cases": [
+     {
+      "args": [
+       [
+        2,
+        4,
+        4,
+        9
+       ],
+       4
+      ],
+      "expected": 1
+     },
+     {
+      "args": [
+       [
+        2,
+        4,
+        4,
+        9
+       ],
+       8
+      ],
+      "expected": 3
+     },
+     {
+      "args": [
+       [
+        2,
+        4,
+        4,
+        9
+       ],
+       10
+      ],
+      "expected": 4
+     },
+     {
+      "args": [
+       [],
+       5
+      ],
+      "expected": 0
+     },
+     {
+      "args": [
+       [
+        1,
+        1,
+        1
+       ],
+       1
+      ],
+      "expected": 0
+     },
+     {
+      "args": [
+       [
+        1,
+        3,
+        5,
+        7,
+        9,
+        11
+       ],
+       6
+      ],
+      "expected": 3
+     },
+     {
+      "args": [
+       [
+        5
+       ],
+       5
+      ],
+      "expected": 0
+     }
+    ]
+   }
+  },
+  "check_self_test": {
+   "pass": [
+    "```python\ndef lower_bound(a, target):\n    lo, hi = 0, len(a)\n    while lo < hi:\n        mid = lo + (hi - lo) // 2\n        if a[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n```"
+   ],
+   "fail": [
+    "```python\ndef lower_bound(a, target):\n    lo, hi = 0, len(a)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if a[mid] <= target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n```"
+   ]
+  },
   "assets": {
    "collection": "jobrun_example_v1",
    "category": "software",
@@ -3738,8 +4032,118 @@
     "tip_key": "restate_the_requirement"
    }
   ],
-  "deterministic_check": null,
-  "check_self_test": null,
+  "deterministic_check": {
+   "type": "code_tests",
+   "spec": {
+    "language": "python",
+    "timeout_ms": 5000,
+    "entry": [
+     "merge",
+     "merge_sorted",
+     "merge_arrays",
+     "merge_streams",
+     "merge_measurements",
+     "merge_two"
+    ],
+    "cases": [
+     {
+      "args": [
+       [
+        1,
+        4,
+        4
+       ],
+       [
+        2,
+        4,
+        7
+       ]
+      ],
+      "expected": [
+       1,
+       2,
+       4,
+       4,
+       4,
+       7
+      ]
+     },
+     {
+      "args": [
+       [],
+       [
+        1,
+        2
+       ]
+      ],
+      "expected": [
+       1,
+       2
+      ]
+     },
+     {
+      "args": [
+       [
+        3
+       ],
+       []
+      ],
+      "expected": [
+       3
+      ]
+     },
+     {
+      "args": [
+       [
+        1,
+        2,
+        3
+       ],
+       [
+        4,
+        5
+       ]
+      ],
+      "expected": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ]
+     },
+     {
+      "args": [
+       [
+        5
+       ],
+       [
+        1
+       ]
+      ],
+      "expected": [
+       1,
+       5
+      ]
+     },
+     {
+      "args": [
+       [],
+       []
+      ],
+      "expected": []
+     }
+    ]
+   }
+  },
+  "check_self_test": {
+   "pass": [
+    "```python\ndef merge(a, b):\n    i = j = 0\n    out = []\n    while i < len(a) and j < len(b):\n        if a[i] <= b[j]:\n            out.append(a[i]); i += 1\n        else:\n            out.append(b[j]); j += 1\n    out.extend(a[i:])\n    out.extend(b[j:])\n    return out\n```"
+   ],
+   "fail": [
+    "```python\ndef merge(a, b):\n    i = j = 0\n    out = []\n    while i < len(a) and j < len(b):\n        if a[i] < b[j]:\n            out.append(a[i]); i += 1\n        elif a[i] > b[j]:\n            out.append(b[j]); j += 1\n        else:\n            out.append(a[i]); i += 1; j += 1\n    return out + a[i:] + b[j:]\n```"
+   ]
+  },
   "assets": {
    "collection": "jobrun_example_v1",
    "category": "software",
@@ -3891,8 +4295,134 @@
     "tip_key": "restate_the_requirement"
    }
   ],
-  "deterministic_check": null,
-  "check_self_test": null,
+  "deterministic_check": {
+   "type": "code_tests",
+   "spec": {
+    "language": "python",
+    "timeout_ms": 5000,
+    "entry": [
+     "pair_sum",
+     "two_sum",
+     "pair_sum_indices",
+     "find_pair",
+     "two_sum_indices",
+     "pair_indices"
+    ],
+    "cases": [
+     {
+      "args": [
+       [
+        6,
+        6
+       ],
+       12
+      ],
+      "accept": [
+       [
+        0,
+        1
+       ]
+      ],
+      "unordered": true
+     },
+     {
+      "args": [
+       [
+        6
+       ],
+       12
+      ],
+      "accept": [
+       null,
+       [],
+       -1,
+       [
+        -1,
+        -1
+       ],
+       false
+      ]
+     },
+     {
+      "args": [
+       [
+        2,
+        7,
+        11,
+        15
+       ],
+       9
+      ],
+      "accept": [
+       [
+        0,
+        1
+       ]
+      ],
+      "unordered": true
+     },
+     {
+      "args": [
+       [
+        3,
+        2,
+        4
+       ],
+       6
+      ],
+      "accept": [
+       [
+        1,
+        2
+       ]
+      ],
+      "unordered": true
+     },
+     {
+      "args": [
+       [
+        1,
+        5,
+        3,
+        7
+       ],
+       10
+      ],
+      "accept": [
+       [
+        2,
+        3
+       ]
+      ],
+      "unordered": true
+     },
+     {
+      "args": [
+       [],
+       0
+      ],
+      "accept": [
+       null,
+       [],
+       -1,
+       [
+        -1,
+        -1
+       ],
+       false
+      ]
+     }
+    ]
+   }
+  },
+  "check_self_test": {
+   "pass": [
+    "```python\ndef pair_sum(values, target):\n    seen = {}\n    for i, x in enumerate(values):\n        if target - x in seen:\n            return seen[target - x], i\n        seen[x] = i\n    return None\n```"
+   ],
+   "fail": [
+    "```python\ndef pair_sum(values, target):\n    index = {x: i for i, x in enumerate(values)}\n    for i, x in enumerate(values):\n        if target - x in index:\n            return i, index[target - x]\n    return None\n```"
+   ]
+  },
   "assets": {
    "collection": "jobrun_example_v1",
    "category": "software",
@@ -4185,8 +4715,76 @@
     "skill": "basic_data_structures"
    }
   ],
-  "deterministic_check": null,
-  "check_self_test": null,
+  "deterministic_check": {
+   "type": "code_tests",
+   "spec": {
+    "language": "python",
+    "timeout_ms": 5000,
+    "entry": [
+     "is_balanced",
+     "balanced",
+     "is_valid",
+     "valid_parentheses",
+     "check_balanced",
+     "is_balanced_brackets",
+     "balanced_brackets",
+     "is_nested",
+     "is_well_nested"
+    ],
+    "cases": [
+     {
+      "args": [
+       "([]{})"
+      ],
+      "expected": true
+     },
+     {
+      "args": [
+       "([)]"
+      ],
+      "expected": false
+     },
+     {
+      "args": [
+       "]"
+      ],
+      "expected": false
+     },
+     {
+      "args": [
+       ""
+      ],
+      "expected": true
+     },
+     {
+      "args": [
+       "((("
+      ],
+      "expected": false
+     },
+     {
+      "args": [
+       "{[()()]}"
+      ],
+      "expected": true
+     },
+     {
+      "args": [
+       "(]"
+      ],
+      "expected": false
+     }
+    ]
+   }
+  },
+  "check_self_test": {
+   "pass": [
+    "```python\ndef is_balanced(s):\n    pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\n    stack = []\n    for ch in s:\n        if ch in \"([{\":\n            stack.append(ch)\n        elif not stack or stack.pop() != pairs[ch]:\n            return False\n    return not stack\n```"
+   ],
+   "fail": [
+    "```python\ndef is_balanced(s):\n    opens = sum(1 for ch in s if ch in \"([{\")\n    closes = sum(1 for ch in s if ch in \")]}\")\n    return opens == closes\n```"
+   ]
+  },
   "assets": {
    "collection": "jobrun_example_v1",
    "category": "software",
