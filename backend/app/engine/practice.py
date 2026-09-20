@@ -67,7 +67,7 @@ from app.schemas.engine import (
 )
 from app.schemas.visual_answer import VisualAnswer
 
-MAX_FOLLOW_UPS = 2
+MAX_FOLLOW_UPS = 1                # one follow-up, then the next question from the bank (Shaked, 2026-09-21)
 MAX_ANSWER_CHARS = 20_000
 DEMO_MODELS = {"demo", "scripted", "manual", ""}
 
@@ -662,7 +662,7 @@ class PracticeAttempt:
                 "submission_revision": submission.revision,
             })
 
-        # what next: the skill controller, limited to two follow-ups and one escalation
+        # what next: the skill controller, limited to MAX_FOLLOW_UPS follow-ups and one escalation
         decision, follow_up_text = None, None
         if self.mode == "deep" and len(self.follow_up_turns) < MAX_FOLLOW_UPS and weight > 0:
             controller = skill_controller.decide(

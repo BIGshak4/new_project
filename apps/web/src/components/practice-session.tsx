@@ -288,8 +288,8 @@ export function PracticeSession({
       const a = await api.startAttempt({
         question_key: question.key,
         language: lang,
-        // deep: the engine may ask up to two short follow-ups after the main answer, and the
-        // answer counts as full evidence for the skill profile
+        // deep: the engine may ask one short follow-up after the main answer, then suggests the
+        // next bank question; the answer counts as full evidence for the skill profile
         mode: "deep",
       });
       const old = readLocal<{ answer?: string }>(

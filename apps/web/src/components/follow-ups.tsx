@@ -48,8 +48,8 @@ export function FollowUps({
       </h3>
       <p className="small muted">
         {t(
-          "אחרי התשובה הראשית, העוזר בודק את ההבנה בשאלה קצרה נוספת, לפי מה שראה בתשובה.",
-          "After your main answer, the assistant checks understanding with a short extra question based on what it saw.",
+          "אחרי התשובה הראשית, העוזר בודק את ההבנה בשאלה קצרה אחת לפי מה שראה בתשובה, ואז מציע את השאלה הבאה מהמאגר.",
+          "After your main answer, the assistant checks understanding with one short question based on what it saw, then suggests the next question from the bank.",
         )}
       </p>
       <ol className="follow-up-list">
