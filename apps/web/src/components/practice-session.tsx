@@ -662,7 +662,7 @@ export function PracticeSession({
                         value={followAnswer}
                         onChange={setFollowAnswer}
                         onSubmit={() => void submit()}
-                        disabled={disabled || !!pending}
+                        disabled={disabled}
                         busy={busy}
                         resend={!!pending && pending.turn !== null}
                       />

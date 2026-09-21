@@ -62,6 +62,19 @@ export function FollowUps({
             <p className="follow-up-answer" dir="auto">
               {f.submission!.answer}
             </p>
+            {f.submission!.status === "evaluating" && (
+              <p className="small muted" role="status">
+                {t("התשובה נשמרה, המשוב בהכנה…", "Answer saved, preparing feedback…")}
+              </p>
+            )}
+            {f.submission!.status === "failed" && (
+              <p className="small muted">
+                {t(
+                  "ההערכה לא הושלמה. אפשר להעריך שוב את אותה תשובה בכפתור למטה.",
+                  "Evaluation did not finish. You can retry the same answer with the button below.",
+                )}
+              </p>
+            )}
             {f.submission!.status === "done" && (
               <div className="row">
                 <span className={`badge band-${f.submission!.band?.toLowerCase()}`}>
@@ -85,7 +98,7 @@ export function FollowUps({
             <textarea
               value={value}
               onChange={(e) => onChange(e.target.value)}
-              disabled={disabled}
+              disabled={disabled || resend}
               rows={4}
               dir="auto"
               placeholder={t("התשובה שלכם לשאלת ההמשך…", "Your answer to the follow-up…")}
