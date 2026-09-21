@@ -33,6 +33,8 @@ export type QuestionSummary = {
   hint_count: number;
   has_reference: boolean;
   has_check: boolean;
+  /** published after human review; the only questions the coach suggests as "next" */
+  reviewed?: boolean;
 };
 
 export type QuestionDetail = QuestionSummary & {

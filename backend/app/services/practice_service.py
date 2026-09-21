@@ -69,6 +69,9 @@ class ServiceConfig:
     default_language: str = "en"
     daily_attempt_limit: int = 30
     polish_tips: bool = False
+    # The coach suggests only questions a person has reviewed and published. With nothing published there is
+    # no suggestion at all, never an unreviewed one (Shaked, 2026-09-21). False only for development and tests.
+    suggest_reviewed_only: bool = True
 
 
 class PracticeService:
@@ -297,6 +300,8 @@ class PracticeService:
         async with self.store.transaction() as tx:
             servable = await tx.list_questions(language=language)
             seen = await tx.seen_question_keys(user_id)
+        if self.config.suggest_reviewed_only:
+            servable = [s for s in servable if s.reviewed]
         candidates = [self.catalog.questions[s.key] for s in servable if s.key in self.catalog.questions]
         question = attempt.question
         # what was hard: the bank's own explanation of each known mistake this attempt hit, and the skill it undermines

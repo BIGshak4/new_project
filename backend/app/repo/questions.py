@@ -45,6 +45,7 @@ class QuestionSummary(BaseModel):
     hint_count: int
     has_reference: bool = True
     has_check: bool = False
+    reviewed: bool = False                     # published after human review; the only questions the coach suggests
 
 
 class QuestionDetail(QuestionSummary):
@@ -165,7 +166,8 @@ def summary(loaded: LoadedQuestion, language: str) -> QuestionSummary:
         id=str(loaded.id), key=q.key, title=text.title or (q.assets.get("titles") or {}).get("en", q.key),
         subject=q.subject, format=q.format, difficulty=q.difficulty, estimated_minutes=q.estimated_minutes,
         practice_modes=list(q.practice_modes), language=text_language, languages=q.languages_ready(), status=q.status,
-        hint_count=len(text.hints), has_check=q.deterministic_check is not None)
+        hint_count=len(text.hints), has_check=q.deterministic_check is not None,
+        reviewed=q.status == "published")     # publishing requires reviewed_by and a permitted reuse status
 
 
 def detail(loaded: LoadedQuestion, language: str) -> QuestionDetail:

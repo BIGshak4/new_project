@@ -107,7 +107,8 @@ async def main() -> None:
                               enable_fallbacks=settings.anthropic_enable_fallbacks, role_models=settings.role_models)
     catalog = load_catalog(settings.seeds_dir)
     store = InMemoryStore(catalog)
-    svc = PracticeService(store, catalog, provider, ServiceConfig(polish_tips=True))
+    # suggest_reviewed_only=False: the seed bank is still in review; production suggests published questions only
+    svc = PracticeService(store, catalog, provider, ServiceConfig(polish_tips=True, suggest_reviewed_only=False))
     user = uuid.uuid4()
     started = time.perf_counter()
 

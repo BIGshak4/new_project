@@ -663,7 +663,8 @@ class PracticeAttempt:
             })
 
         # what next: the skill controller, limited to MAX_FOLLOW_UPS follow-ups and one escalation
-        decision, follow_up_text = None, None
+        decision, follow_up_text, generate_coro = None, None, None
+        controller = action = next_difficulty = None
         if self.mode == "deep" and len(self.follow_up_turns) < MAX_FOLLOW_UPS and weight > 0:
             controller = skill_controller.decide(
                 primary_state, band=band, confidence=primary_state.c, depth=evaluation.depth,
@@ -688,34 +689,44 @@ class PracticeAttempt:
                     probe_focus="; ".join(evaluation.key_points_missed[:2]) or None,
                     deliver_hint=action == Action.HINT, hint_level=next_hint)
                 previous = [question.text(ctx.language).prompt, *[t["question"] for t in self.follow_up_turns]]
-                generated = await generator.generate(
+                generate_coro = generator.generate(
                     ctx.provider, decision, language=ctx.language, skill=ctx.skills.get(decision.target_skill),
                     question=question, last_question=previous[-1], last_answer_summary=evaluation.one_line_summary,
                     glossary=ctx.glossary, previous_questions=previous)
-                self._record_usage(usage, "generate", generated)
-                self._follow_up_difficulty = next_difficulty or difficulty
-                follow_up_text = generated.question.question_text
-                self.follow_up_turns.append({
-                    "turn": len(self.follow_up_turns) + 1, "question": follow_up_text, "generated": True,
-                    "source": generated.source, "action": action.value, "difficulty": self._follow_up_difficulty,
-                    "expected_answer_outline": generated.question.expected_answer_outline,
-                    "submission_revision": None, "created_at": _now()})
-                metrics[0]["decision_action"] = action.value
-                metrics[0]["decision_reason_code"] = controller.reason_code
-                metrics[0]["difficulty_next"] = next_difficulty
             else:
                 metrics[0]["decision_reason_code"] = controller.reason_code
 
-        # the feedback card belongs to the main question; follow-ups get the tip and the next question only
+        # The follow-up wording, the feedback card and the tip only need the evaluation, so they run at the
+        # same time: the candidate waits for the slowest of the three instead of their sum.
+        # The feedback card belongs to the main question; follow-ups get the tip and the next question only.
+        card_coro = feedback.build_card(
+            ctx.provider, question=question, evaluation=evaluation, band=band, answer=submission.answer, check=check,
+            language=ctx.language, skill_label=ctx.skills[question.primary_skill].label, glossary=ctx.glossary
+        ) if not is_follow_up else None
+        tip_turn = len(self.follow_up_turns) + (1 if generate_coro is not None else 0)
+        tip_coro = self._tip(evaluation, band, hint_level, check, usage, turn=tip_turn)
+        results = iter(await asyncio.gather(*[c for c in (generate_coro, card_coro, tip_coro) if c is not None]))
+        generated = next(results) if generate_coro is not None else None
+        built = next(results) if card_coro is not None else None
+        tip_text, tip_key = next(results)
+
         card = None
-        if not is_follow_up:
-            built = await feedback.build_card(
-                ctx.provider, question=question, evaluation=evaluation, band=band, answer=submission.answer, check=check,
-                language=ctx.language, skill_label=ctx.skills[question.primary_skill].label, glossary=ctx.glossary)
+        if generated is not None:
+            self._record_usage(usage, "generate", generated)
+        if built is not None:
             self._record_usage(usage, "feedback", built)
             card = built.card
-
-        tip_text, tip_key = await self._tip(evaluation, band, hint_level, check, usage)
+        if generated is not None:
+            self._follow_up_difficulty = next_difficulty or difficulty
+            follow_up_text = generated.question.question_text
+            self.follow_up_turns.append({
+                "turn": len(self.follow_up_turns) + 1, "question": follow_up_text, "generated": True,
+                "source": generated.source, "action": action.value, "difficulty": self._follow_up_difficulty,
+                "expected_answer_outline": generated.question.expected_answer_outline,
+                "submission_revision": None, "created_at": _now()})
+            metrics[0]["decision_action"] = action.value
+            metrics[0]["decision_reason_code"] = controller.reason_code
+            metrics[0]["difficulty_next"] = next_difficulty
         flags: list[str] = []
         if submission.reference_seen:
             flags.append("revealed_before_submit_no_evidence")
@@ -723,7 +734,7 @@ class PracticeAttempt:
                                decision, metrics=metrics, usage=usage, flags=flags)
 
     async def _tip(self, evaluation: Evaluation, band: Band, hint_level: int, check: CheckResult | None,
-                   usage: list[UsageEvent]) -> tuple[str | None, str | None]:
+                   usage: list[UsageEvent], *, turn: int | None = None) -> tuple[str | None, str | None]:
         ctx = self.ctx
         if not ctx.tips:
             return None, None
@@ -734,7 +745,7 @@ class PracticeAttempt:
         # tips named by a matched common error come first; then the rule-matched library
         named = [e.tip_key for e in self.question.common_errors if e.key in evaluation.misconceptions and e.tip_key]
         pool = [t for t in ctx.tips if t.key in named] or ctx.tips
-        turn = len(self.follow_up_turns)
+        turn = len(self.follow_up_turns) if turn is None else turn      # the follow-up may be appended after we ran
         choice = tips.select_tip(pool, signals, turn_index=turn, last_delivered_turn=self._tip_turns,
                                  skill_key=self.question.primary_skill, role_family=ctx.role_family,
                                  timing="post_session")

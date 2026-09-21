@@ -69,11 +69,31 @@ class TestSuggest:
         assert s is not None and any("֐" <= ch <= "ת" for ch in s.reason)
 
 
+class TestReviewedOnly:
+    async def test_nothing_published_means_no_suggestion_by_default(self, catalog):
+        """Every seed question is still in review: the coach must stay silent rather than suggest one."""
+        user = uuid.uuid4()
+        store = InMemoryStore(catalog)
+        svc = PracticeService(store, catalog, scripted([WEAK, GOOD, GOOD]), ServiceConfig())
+        view = await svc.start(user, question_key=MAJORITY, mode="quick", language="en", self_confidence=3)
+        sub, view = await svc.submit(user, uuid.UUID(view.id), "alarm = A ^ B ^ C", idempotency_key="k1")
+        assert sub.band == "WEAK" and sub.next_question is None and view.next_question is None
+        summaries = await svc.list_questions(language="en")
+        assert summaries and all(s.reviewed is False for s in summaries)
+
+    def test_reviewed_means_published(self, catalog):
+        from app.repo.questions import LoadedQuestion, summary
+        q = catalog.questions[MAJORITY]
+        assert summary(LoadedQuestion(id=uuid.uuid4(), question=q, version=1), "en").reviewed is False
+        published = q.model_copy(update={"status": "published", "reviewed_by": "harel", "reuse_status": "permitted"})
+        assert summary(LoadedQuestion(id=uuid.uuid4(), question=published, version=1), "en").reviewed is True
+
+
 class TestThroughTheService:
     async def test_submission_and_attempt_carry_the_suggestion(self, catalog):
         user = uuid.uuid4()
         store = InMemoryStore(catalog)
-        svc = PracticeService(store, catalog, scripted([WEAK, GOOD, GOOD]), ServiceConfig())
+        svc = PracticeService(store, catalog, scripted([WEAK, GOOD, GOOD]), ServiceConfig(suggest_reviewed_only=False))
         view = await svc.start(user, question_key=MAJORITY, mode="quick", language="en", self_confidence=3)
         attempt_id = uuid.UUID(view.id)
         sub, view = await svc.submit(user, attempt_id, "alarm = A ^ B ^ C", idempotency_key="k1")
@@ -93,7 +113,7 @@ class TestThroughTheService:
     async def test_progress_rolls_skills_up_to_subjects(self, catalog):
         user = uuid.uuid4()
         store = InMemoryStore(catalog)
-        svc = PracticeService(store, catalog, scripted([GOOD, GOOD, GOOD]), ServiceConfig())
+        svc = PracticeService(store, catalog, scripted([GOOD, GOOD, GOOD]), ServiceConfig(suggest_reviewed_only=False))
         view = await svc.start(user, question_key=MAJORITY, mode="quick", language="en", self_confidence=3)
         await svc.submit(user, uuid.UUID(view.id), "majority: at least two of three high", idempotency_key="k1")
         progress = await svc.progress(user, language="en")

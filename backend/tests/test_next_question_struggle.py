@@ -74,7 +74,7 @@ class TestThroughTheService:
         user = uuid.uuid4()
         store = InMemoryStore(catalog)
         # WEAK carries the core misconception xor_confused_with_majority; follow-ups answered well
-        svc = PracticeService(store, catalog, scripted([WEAK, GOOD, GOOD]), ServiceConfig())
+        svc = PracticeService(store, catalog, scripted([WEAK, GOOD, GOOD]), ServiceConfig(suggest_reviewed_only=False))
         view = await svc.start(user, question_key=MAJORITY, mode="deep", language="en", self_confidence=3)
         aid = uuid.UUID(view.id)
         sub, view = await svc.submit(user, aid, "alarm = A ^ B ^ C", idempotency_key="k1")
@@ -94,7 +94,7 @@ class TestThroughTheService:
         user = uuid.uuid4()
         store = InMemoryStore(catalog)
         partial = make_evaluation(correctness=0.6, depth=0.5, key_points_missed=["no truth table"]).model_dump()
-        svc = PracticeService(store, catalog, scripted([partial, GOOD]), ServiceConfig())
+        svc = PracticeService(store, catalog, scripted([partial, GOOD]), ServiceConfig(suggest_reviewed_only=False))
         view = await svc.start(user, question_key=MAJORITY, mode="deep", language="en", self_confidence=3)
         aid = uuid.UUID(view.id)
         sub, view = await svc.submit(user, aid, "alarm = AB + BC + AC", idempotency_key="k1")
@@ -110,7 +110,7 @@ class TestThroughTheService:
         user = uuid.uuid4()
         store = InMemoryStore(catalog)
         partial = make_evaluation(correctness=0.6, depth=0.5, misconceptions=["exactly_two_instead_of_at_least_two"]).model_dump()
-        svc = PracticeService(store, catalog, scripted([partial, GOOD, GOOD]), ServiceConfig())
+        svc = PracticeService(store, catalog, scripted([partial, GOOD, GOOD]), ServiceConfig(suggest_reviewed_only=False))
         view = await svc.start(user, question_key=MAJORITY, mode="quick", language="he", self_confidence=3)
         sub, _ = await svc.submit(user, uuid.UUID(view.id), "alarm = AB + BC", idempotency_key="k1")
         assert sub.next_question is not None and sub.next_question.skill == "truth_tables"

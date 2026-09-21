@@ -55,7 +55,8 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
         kind = "database" if isinstance(store, DbStore) else "memory"
     config = ServiceConfig(role=settings.default_role, company=settings.default_company,
                            default_language=settings.default_language, daily_attempt_limit=settings.daily_attempt_limit,
-                           polish_tips=settings.llm_provider == "anthropic")
+                           polish_tips=settings.llm_provider == "anthropic",
+                           suggest_reviewed_only=settings.suggest_reviewed_only)
     fetcher = make_image_fetcher(settings)
     return Runtime(catalog=catalog, provider=provider, store=store,
                    practice=PracticeService(store, catalog, provider, config, image_fetcher=fetcher), store_kind=kind,

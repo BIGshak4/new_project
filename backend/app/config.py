@@ -56,6 +56,8 @@ class Settings(BaseSettings):
     # Development only: serve questions that are still in review or lack a parity check.
     # Production serves published, parity-checked questions and nothing else.
     allow_in_review_content: bool = False
+    # The coach's "next question" comes only from reviewed, published questions; none published = no suggestion.
+    suggest_reviewed_only: bool = True
 
     default_language: str = "en"
     default_role: str = "digital-hardware-engineer"
