@@ -10,12 +10,14 @@ import {
   LogOut,
   ArrowUpRight,
   RotateCcw,
+  Mic,
 } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
 import { Auth, type Lang } from "../components/auth";
 import { PracticeSession } from "../components/practice-session";
 import { SubjectCharts } from "../components/subject-charts";
+import { InterviewSession } from "../components/interview-session";
 import { supabase } from "../lib/supabase";
 import {
   practiceApi,
@@ -30,7 +32,7 @@ import {
   type Entry,
 } from "../lib/practice-ui";
 
-type Route = { view: string; question?: string; attempt?: string };
+type Route = { view: string; question?: string; attempt?: string; interview?: string };
 const emptyProgress: Progress = {
   skills: [],
   subjects: [],
@@ -44,6 +46,7 @@ function currentRoute(): Route {
     view: q.get("view") ?? "library",
     question: q.get("question") ?? undefined,
     attempt: q.get("attempt") ?? undefined,
+    interview: q.get("interview") ?? undefined,
   };
 }
 
@@ -129,6 +132,7 @@ function Workspace({
     if (next.view !== "library") q.set("view", next.view);
     if (next.attempt) q.set("attempt", next.attempt);
     else if (next.question) q.set("question", next.question);
+    if (next.interview) q.set("interview", next.interview);
     window.history[replace ? "replaceState" : "pushState"](
       {},
       "",
@@ -276,6 +280,11 @@ function Workspace({
               icon: BarChart3,
               label: t("ההתקדמות שלי", "My progress"),
             },
+            {
+              id: "interview",
+              icon: Mic,
+              label: t("ראיון מדומה", "Mock interview"),
+            },
           ].map(({ id, icon: Icon, label }) => (
             <button
               key={id}
@@ -336,7 +345,24 @@ function Workspace({
                     "Private pilot · Automated feedback can be wrong. Compare with the reference and review with an expert.",
                   )}
           </div>
-          {active ? (
+          {route.view === "interview" ? (
+            <InterviewSession
+              key={route.interview ?? "lobby"}
+              api={api}
+              lang={lang}
+              userId={user.id}
+              interviewId={route.interview}
+              demo={demo}
+              onStarted={(id) => {
+                navigate({ view: "interview", interview: id }, true);
+                refreshProgress();
+              }}
+              onBack={() => {
+                navigate({ view: "interview" });
+                refreshProgress();
+              }}
+            />
+          ) : active ? (
             <PracticeSession
               key={route.attempt ?? route.question}
               api={api}

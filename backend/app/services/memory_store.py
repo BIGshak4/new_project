@@ -223,7 +223,7 @@ class _MemoryTx:
         today = datetime.now(UTC).date()
         return sum(1 for s in self.s.sessions.values() if s["user_id"] == user_id and s["created_at"].date() == today)
 
-    async def record_session_metrics(self, *, user_id, session_id, metrics, seniority):
+    async def record_session_metrics(self, *, user_id, session_id, metrics, seniority, role_slug, company_slug):
         self.s.metrics.extend({**m, "user_id": user_id, "session_id": session_id} for m in metrics)
         return len(metrics)
 

@@ -58,7 +58,7 @@ class Tx(Protocol):
     async def list_sessions(self, user_id: uuid.UUID, *, limit: int = 20) -> list[dict]: ...
     async def sessions_started_today(self, user_id: uuid.UUID) -> int: ...
     async def record_session_metrics(self, *, user_id: uuid.UUID, session_id: uuid.UUID, metrics: list[dict],
-                                     seniority: str | None) -> int: ...
+                                     seniority: str | None, role_slug: str, company_slug: str) -> int: ...
     async def record_session_usage(self, *, user_id: uuid.UUID, session_id: uuid.UUID, usage_rows: list[dict]) -> int: ...
 
 
@@ -141,9 +141,9 @@ class DbTx:
     async def sessions_started_today(self, user_id):
         return await sessions.started_today(self.connection, user_id)
 
-    async def record_session_metrics(self, *, user_id, session_id, metrics, seniority):
+    async def record_session_metrics(self, *, user_id, session_id, metrics, seniority, role_slug, company_slug):
         return await sessions.record_metrics(self.connection, user_id=user_id, session_id=session_id, metrics=metrics,
-                                             seniority=seniority)
+                                             seniority=seniority, role_slug=role_slug, company_slug=company_slug)
 
     async def record_session_usage(self, *, user_id, session_id, usage_rows):
         return await sessions.record_usage(self.connection, user_id=user_id, session_id=session_id, usage_rows=usage_rows)

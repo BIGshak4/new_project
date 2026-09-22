@@ -71,7 +71,9 @@ async def load(connection: AsyncConnection, session_id: uuid.UUID, *, user_id: u
     return StoredSession(
         id=row.id, user_id=row.user_id,
         row={"id": str(row.id), **{c: _iso(getattr(row, c)) for c in SESSION_COLUMNS}},
-        turns=[{"turn_index": t.turn_index, "skill_key": t.skill_key, "question_key": t.question_key,
+        turns=[{"turn_index": t.turn_index, "skill_key": t.skill_key,
+                # the bank key travels in the meta as well, so a turn survives a question row being re-keyed
+                "question_key": t.question_key or (t.question_generation_meta or {}).get("question_key"),
                 "question_id": str(t.question_id) if t.question_id else None, "created_at": _iso(t.created_at),
                 **{c: _iso(getattr(t, c)) for c in TURN_COLUMNS}} for t in turns])
 
@@ -131,16 +133,25 @@ async def started_today(connection: AsyncConnection, user_id: uuid.UUID, *, now:
 
 
 async def record_metrics(connection: AsyncConnection, *, user_id: uuid.UUID, session_id: uuid.UUID, metrics: list[dict],
-                         seniority: str | None) -> int:
-    """evaluation_metrics rows for interview turns: session-scoped, no attempt."""
+                         seniority: str | None, role_slug: str, company_slug: str) -> int:
+    """evaluation_metrics rows for interview turns: session-scoped, no attempt. Simulation rows must carry the
+    role, company, family and seniority context (evaluation_metrics_session_context_chk)."""
     table = await db.table("evaluation_metrics")
     skill_ids = await _ids(connection, "skill")
+    role = await db.table("role_template")
+    role_row = (await connection.execute(
+        select(role.c.id, role.c.version, role.c.family, role.c.sub_family).where(role.c.slug == role_slug))).first()
+    if role_row is None:
+        raise LookupError(f"role_template {role_slug!r} is not in the database")
+    company_id, _ = await _versioned_id(connection, "company_profile", company_slug)
     columns = set(table.c.keys())
     rows = []
     for metric in metrics:
         row = {k: v for k, v in metric.items() if k in columns and k not in NOT_COLUMNS}
         row.update({
             "user_id": user_id, "session_id": session_id, "attempt_id": None, "turn_index": metric.get("turn_index"),
+            "role_template_id": role_row.id, "role_template_version": role_row.version, "company_profile_id": company_id,
+            "family": role_row.family, "sub_family": role_row.sub_family,
             "subject_id": skill_ids[metric["subject_key"]], "skill_id": skill_ids[metric["skill_key"]],
             "seniority": seniority, "subject_switch": bool(metric.get("subject_switch", False)),
             "hint_requested_by_user": bool(metric.get("hint_requested_by_user", False)),

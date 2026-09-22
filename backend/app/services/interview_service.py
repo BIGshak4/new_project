@@ -83,6 +83,7 @@ class InterviewService:
         self._locks: dict[uuid.UUID, asyncio.Lock] = {}
         self._plans: dict[tuple[str, int], tuple[list[PlanSkill], int, int]] = {}
         self.clock = lambda: datetime.now(UTC)        # tests replace it to move the interview clock
+        self._question_ids: dict[str, str] = {}       # question key -> database id, filled when the pool is listed
 
     def _stamp(self) -> str:
         return self.clock().isoformat()
@@ -189,8 +190,10 @@ class InterviewService:
 
             # 3. scores and the next decision
             engine.core_misconception_keys = question.core_misconception_keys
+            # the interview clock runs from the moment the question was shown until the verdict is in,
+            # thinking time and evaluation wait alike, as it would with a human interviewer
             asked_at = datetime.fromisoformat(turn["asked_at"])
-            elapsed_ms = max(0, int((datetime.fromisoformat(now) - asked_at).total_seconds() * 1000))
+            elapsed_ms = max(0, int((self.clock() - asked_at).total_seconds() * 1000))
             outcome = engine.process_turn(
                 result.evaluation, archetype=question.archetype, check=check, latency_ms=latency_ms,
                 familiarity="new", exposure_risk=question.exposure_risk, turn_elapsed_ms=elapsed_ms, mode="simulation")
@@ -317,6 +320,8 @@ class InterviewService:
     def _pool(self, servable) -> list[BankQuestion]:
         """The questions this interview may ask: reviewed and published, unless configured for development."""
         keep = [s for s in servable if s.reviewed or not self.config.reviewed_only]
+        for s in keep:
+            self._question_ids[s.key] = s.id            # the database id the turn row points at
         return [self.catalog.questions[s.key] for s in keep if s.key in self.catalog.questions]
 
     async def _pool_for(self, language: str) -> list[BankQuestion]:
@@ -390,7 +395,7 @@ class InterviewService:
         state_difficulty = decision.target_difficulty or question.difficulty
         return {
             "turn_index": index, "skill_key": decision.target_skill or question.primary_skill,
-            "question_key": question.key, "question_id": None,
+            "question_key": question.key, "question_id": self._question_ids.get(question.key),
             "question_archetype": question.archetype.value, "difficulty": state_difficulty,
             "question_text": question.prompt_with_code(language), "expected_answer_outline": None,
             "question_generation_meta": {"source": "bank", "question_key": question.key, "status": "open",
@@ -437,7 +442,8 @@ class InterviewService:
             await tx.save_session(user_id=user_id, row=row, turns=turns, plan=None,
                                   role_slug=self.config.role, company_slug=self.config.company)
             if metrics:
-                await tx.record_session_metrics(user_id=user_id, session_id=session_id, metrics=metrics, seniority=seniority)
+                await tx.record_session_metrics(user_id=user_id, session_id=session_id, metrics=metrics, seniority=seniority,
+                                                role_slug=self.config.role, company_slug=self.config.company)
             if usage_rows:
                 await tx.record_session_usage(user_id=user_id, session_id=session_id, usage_rows=usage_rows)
 
