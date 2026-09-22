@@ -348,9 +348,16 @@ class InterviewService:
     def _pool(self, servable) -> list[BankQuestion]:
         """The questions this interview may ask: reviewed and published, unless configured for development."""
         keep = [s for s in servable if s.reviewed or not self.config.reviewed_only]
+        pool = []
         for s in keep:
             self._question_ids[s.key] = s.id            # the database id the turn row points at
-        return [self.catalog.questions[s.key] for s in keep if s.key in self.catalog.questions]
+            question = self.catalog.questions.get(s.key)
+            if question is None:
+                continue
+            if question.status != s.status:             # the database decides the state (trial/published), not the seed file
+                question = question.model_copy(update={"status": s.status})
+            pool.append(question)
+        return pool
 
     async def _pool_for(self, language: str) -> list[BankQuestion]:
         async with self.store.transaction() as tx:
@@ -427,6 +434,7 @@ class InterviewService:
             "question_archetype": question.archetype.value, "difficulty": state_difficulty,
             "question_text": question.prompt_with_code(language), "expected_answer_outline": None,
             "question_generation_meta": {"source": "bank", "question_key": question.key, "status": "open",
+                                         "trial": question.status == "trial",          # the database state at the time
                                          "hint_level": 0, "hints": [], "decision": decision.action.value,
                                          "reason_code": decision.reason_code, "subject_switch": decision.subject_switch},
             "answer_text": None, "answer_code": None, "answer_language": None, "check_result": None,
@@ -531,7 +539,7 @@ class InterviewService:
             index=turn["turn_index"], skill=skill, skill_label=catalog_skill.label if catalog_skill else skill,
             subject=(catalog_skill.subject if catalog_skill else None) or "", difficulty=turn["difficulty"],
             archetype=turn["question_archetype"], question=turn["question_text"], question_key=turn.get("question_key"),
-            trial=getattr(self.catalog.questions.get(turn.get("question_key") or ""), "status", None) == "trial",
+            trial=bool(meta.get("trial", False)),
             status=self._effective_status(meta), hints=[HintView(**h) for h in meta.get("hints", [])],
             answer=turn.get("answer_text"), asked_at=turn.get("asked_at") or turn.get("created_at"),
             answered_at=turn.get("answer_submitted_at"),
