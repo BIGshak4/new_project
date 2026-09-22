@@ -33,8 +33,10 @@ export type QuestionSummary = {
   hint_count: number;
   has_reference: boolean;
   has_check: boolean;
-  /** published after human review; the only questions the coach suggests as "next" */
+  /** published, or on trial by the founders' choice: what the coach may suggest as "next" */
   reviewed?: boolean;
+  /** "on trial": being checked live before publication; show a badge */
+  trial?: boolean;
 };
 
 export type QuestionDetail = QuestionSummary & {
@@ -210,6 +212,8 @@ export type InterviewTurn = {
   archetype: string;
   question: string;
   question_key: string | null;
+  /** the question is "on trial": being checked live before publication */
+  trial: boolean;
   status: InterviewTurnStatus;
   hints: Hint[];
   answer: string | null;

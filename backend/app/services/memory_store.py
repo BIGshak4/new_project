@@ -66,7 +66,7 @@ class _MemoryTx:
                    self.s.answer_images.get(i.path) == {"mime": i.mime, "size": i.size} for i in images)
 
     def _servable(self, q) -> bool:
-        return q.status == "published" or (self.s.allow_in_review and q.status == "in_review")
+        return q.status in ("published", "trial") or (self.s.allow_in_review and q.status == "in_review")
 
     async def load_question(self, *, key=None, question_id=None):
         if key is None:

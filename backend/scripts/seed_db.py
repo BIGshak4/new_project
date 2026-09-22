@@ -197,7 +197,7 @@ async def _seed_in(connection, t: dict, catalog: Catalog) -> dict[str, int]:
             if old_hash == new_hash:
                 preserve_review = True
                 REPORT.append(f"unchanged: {question.key} (review metadata kept: {existing.status})")
-            elif existing.status == "published" or existing.reviewed_by:
+            elif existing.status in ("published", "trial") or existing.reviewed_by:
                 REPORT.append(f"REVIEW RESET: {question.key} was {existing.status} (reviewed by {existing.reviewed_by}); "
                               f"content changed, now in_review")
             else:

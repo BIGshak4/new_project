@@ -158,6 +158,7 @@ class InterviewTurnView(BaseModel):
     archetype: str
     question: str
     question_key: str | None = None
+    trial: bool = False                         # the question is "on trial" (checked live before publication)
     status: str                                 # open | evaluating | done | failed
     hints: list[HintView] = Field(default_factory=list)
     answer: str | None = None

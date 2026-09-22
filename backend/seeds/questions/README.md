@@ -23,9 +23,12 @@ keeps every field it and his access policy rely on.
 
 ## What a reviewer checks before a question is published
 
-A question is served to real candidates only when `status` is `published`,
-`reuse_status` is `permitted` and `reviewed_by` is set, and a language is served only
-when its `parity_checked` is true. Nothing here is published yet. For each question:
+A question is served to real candidates when `status` is `published` (`reuse_status`
+`permitted`, `reviewed_by` set) **or `trial`**: "on trial" means the founders put it in front of
+pilot users to check it live, badged "on trial" in the app, usable by the coach's next-question
+suggestion and by the mock interview, before the formal review is complete. Move questions between
+states with `uv run python scripts/question_status.py --set trial <keys> --apply` (dry run without
+`--apply`). A language is served only when its `parity_checked` is true. For each question:
 
 1. **Technical correctness.** Is the reference solution right, including every number in a trace?
 2. **Rubric.** Do the criteria cover what a complete answer must contain, and do the

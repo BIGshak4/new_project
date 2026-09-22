@@ -531,6 +531,7 @@ class InterviewService:
             index=turn["turn_index"], skill=skill, skill_label=catalog_skill.label if catalog_skill else skill,
             subject=(catalog_skill.subject if catalog_skill else None) or "", difficulty=turn["difficulty"],
             archetype=turn["question_archetype"], question=turn["question_text"], question_key=turn.get("question_key"),
+            trial=getattr(self.catalog.questions.get(turn.get("question_key") or ""), "status", None) == "trial",
             status=self._effective_status(meta), hints=[HintView(**h) for h in meta.get("hints", [])],
             answer=turn.get("answer_text"), asked_at=turn.get("asked_at") or turn.get("created_at"),
             answered_at=turn.get("answer_submitted_at"),

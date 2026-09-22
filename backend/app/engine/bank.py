@@ -29,14 +29,15 @@ class Selection:
 
 
 def _servable(question: BankQuestion, *, mode: str, language: str, allow_in_review: bool, require_parity: bool) -> bool:
-    if question.status != "published" and not (allow_in_review and question.status in ("in_review", "draft")):
+    if question.status not in ("published", "trial") and not (allow_in_review and question.status in ("in_review", "draft")):
         return False
     if mode not in question.practice_modes:
         return False
     text = question.translations.get(language)
     if text is None:
         return False
-    return text.parity_checked or not require_parity
+    # a question on trial is being checked live, parity included: the parity gate applies once it is published
+    return text.parity_checked or not require_parity or question.status == "trial"
 
 
 def select_question(questions: list[BankQuestion], *, skill: str, difficulty: int, mode: str, language: str,

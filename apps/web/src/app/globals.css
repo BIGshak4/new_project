@@ -1345,3 +1345,4 @@ summary { cursor: pointer; font-weight: 500; }
 .report-turn { background: white; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 8px; }
 .report-answer { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--muted); border-inline-start: 3px solid var(--line); padding-inline-start: 10px; }
 @media (max-width: 640px) { .interview-bar { gap: 10px; } .interview-plan { display: none; } }
+.badge.trial { background: var(--warm); color: #7a4f0e; margin-inline-start: 8px; font-size: 11px; vertical-align: middle; }

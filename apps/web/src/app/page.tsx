@@ -679,7 +679,12 @@ function Workspace({
                           {String(i + 1).padStart(2, "0")}
                         </span>
                         <div>
-                          <h3>{q.title}</h3>
+                          <h3>
+                            {q.title}
+                            {q.trial && (
+                              <span className="badge trial">{t("בבדיקה חיה", "On trial")}</span>
+                            )}
+                          </h3>
                           <span className="topic">
                             {subjectLabel(q.subject, lang)}
                             {entries.some(

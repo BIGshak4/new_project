@@ -26,8 +26,8 @@ from app.repo import cache
 from app.schemas.bank import BankQuestion, CommonError, QuestionSkillLink, QuestionText, RubricCriterion
 from app.schemas.engine import Archetype
 
-SERVABLE_STATUSES = ("published",)
-DEVELOPMENT_STATUSES = ("published", "in_review")
+SERVABLE_STATUSES = ("published", "trial")           # trial: checked live by the founders, badged in the app
+DEVELOPMENT_STATUSES = ("published", "trial", "in_review")
 
 
 class QuestionSummary(BaseModel):
@@ -45,7 +45,8 @@ class QuestionSummary(BaseModel):
     hint_count: int
     has_reference: bool = True
     has_check: bool = False
-    reviewed: bool = False                     # published after human review; the only questions the coach suggests
+    reviewed: bool = False                     # published, or on trial by the founders' choice: what the coach may suggest
+    trial: bool = False                        # "on trial": being checked live before publication; the app badges it
 
 
 class QuestionDetail(QuestionSummary):
@@ -167,7 +168,8 @@ def summary(loaded: LoadedQuestion, language: str) -> QuestionSummary:
         subject=q.subject, format=q.format, difficulty=q.difficulty, estimated_minutes=q.estimated_minutes,
         practice_modes=list(q.practice_modes), language=text_language, languages=q.languages_ready(), status=q.status,
         hint_count=len(text.hints), has_check=q.deterministic_check is not None,
-        reviewed=q.status == "published")     # publishing requires reviewed_by and a permitted reuse status
+        reviewed=q.status in ("published", "trial"),   # publishing requires reviewed_by and a permitted reuse status
+        trial=q.status == "trial")
 
 
 def detail(loaded: LoadedQuestion, language: str) -> QuestionDetail:

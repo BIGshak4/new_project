@@ -291,7 +291,10 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
       {turn && (
         <article className="interview-question">
           <div className="row spread">
-            <span className="badge">{turn.skill_label}</span>
+            <span className="badge">
+              {turn.skill_label}
+              {turn.trial && <span className="badge trial">{t("בבדיקה חיה", "On trial")}</span>}
+            </span>
             <span className="small muted">
               {t("רמת קושי", "Difficulty")} {turn.difficulty}
               {turn.subject_switch && <> · {t("נושא חדש", "new subject")}</>}
