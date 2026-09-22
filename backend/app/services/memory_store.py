@@ -13,6 +13,7 @@ from app.engine.catalog import Catalog
 from app.repo.attempts import AlreadyEvaluated, DuplicateSubmissionKey, StoredAttempt
 from app.repo.profiles import LoadedProfile, StaleProfile, derived_columns
 from app.repo.questions import LoadedQuestion, QuestionSummary, summary
+from app.repo.sessions import StoredSession
 from app.schemas.engine import SkillState
 
 
@@ -25,6 +26,7 @@ class InMemoryStore:
         self.metrics: list[dict] = []
         self.usage: list[dict] = []
         self.tips: list[dict] = []
+        self.sessions: dict[uuid.UUID, dict] = {}                 # interview id -> {user_id, row, turns, plan, created_at}
         self.seniority: dict[uuid.UUID, str] = {}
         self.answer_images: dict[str, dict] = {}                 # storage fixture metadata
         self.failures: set[str] = set()                           # names of operations that should raise (tests)
@@ -39,13 +41,14 @@ class InMemoryStore:
         # shallow copies suffice: saved rows are deep-copied on the way in and never mutated in place,
         # so rolling back means restoring the containers, not the rows (a full deepcopy per action
         # made every action slower as the store grew)
-        snapshot = (dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips))
+        snapshot = (dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips),
+                    dict(self.sessions))
         commits_before = self._commits
         try:
             yield _MemoryTx(self)
         except BaseException:
             if self._commits == commits_before:
-                self.attempts, self.profiles, self.metrics, self.usage, self.tips = snapshot
+                self.attempts, self.profiles, self.metrics, self.usage, self.tips, self.sessions = snapshot
             raise
         self._commits += 1
 
@@ -185,3 +188,45 @@ class _MemoryTx:
 
     async def record_tip(self, *, attempt_id, tip_key, skill_key, text):
         self.s.tips.append({"attempt_id": attempt_id, "tip_key": tip_key, "skill_key": skill_key, "text": text})
+
+    # ------------------------------------------------------------------ mock interviews
+
+    async def load_session(self, session_id, *, user_id):
+        stored = self.s.sessions.get(session_id)
+        if stored is None or stored["user_id"] != user_id:
+            return None
+        return StoredSession(id=session_id, user_id=user_id, row=copy.deepcopy(stored["row"]),
+                             turns=copy.deepcopy(stored["turns"]))
+
+    async def save_session(self, *, user_id, row, turns, plan, role_slug, company_slug):
+        if "save_session" in self.s.failures or "save_session" in self.s.fail_once:
+            self.s.fail_once.discard("save_session")
+            raise ConnectionError("simulated database failure")
+        session_id = uuid.UUID(row["id"])
+        current = self.s.sessions.get(session_id)
+        by_index = {t["turn_index"]: copy.deepcopy(t) for t in (current["turns"] if current else [])}
+        for t in turns:
+            by_index[t["turn_index"]] = copy.deepcopy(t)
+        self.s.sessions[session_id] = {
+            "user_id": user_id, "row": copy.deepcopy(row), "turns": [by_index[i] for i in sorted(by_index)],
+            "plan": copy.deepcopy(plan) if plan is not None else (current["plan"] if current else None),
+            "created_at": current["created_at"] if current else datetime.now(UTC)}
+
+    async def list_sessions(self, user_id, *, limit=20):
+        mine = sorted((s for s in self.s.sessions.values() if s["user_id"] == user_id),
+                      key=lambda s: s["created_at"], reverse=True)[:limit]
+        return [{"id": s["row"]["id"], "status": s["row"]["status"], "duration_min": s["row"]["config"].get("duration_min"),
+                 "language": s["row"]["config"].get("language"), "turn_count": s["row"]["turn_count"],
+                 "started_at": s["row"].get("started_at"), "ended_at": s["row"].get("ended_at")} for s in mine]
+
+    async def sessions_started_today(self, user_id):
+        today = datetime.now(UTC).date()
+        return sum(1 for s in self.s.sessions.values() if s["user_id"] == user_id and s["created_at"].date() == today)
+
+    async def record_session_metrics(self, *, user_id, session_id, metrics, seniority):
+        self.s.metrics.extend({**m, "user_id": user_id, "session_id": session_id} for m in metrics)
+        return len(metrics)
+
+    async def record_session_usage(self, *, user_id, session_id, usage_rows):
+        self.s.usage.extend({**u, "user_id": user_id, "session_id": session_id} for u in usage_rows)
+        return len(usage_rows)

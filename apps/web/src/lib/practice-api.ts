@@ -221,6 +221,7 @@ export type ApiErrorCode =
   | "already_submitted"
   | "no_pending_follow_up"
   | "nothing_to_retry"
+  | "no_reviewed_questions"
   | "usage_limit"
   | "evaluation_unavailable"
   | "temporarily_unavailable"

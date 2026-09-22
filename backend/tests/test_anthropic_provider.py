@@ -84,7 +84,7 @@ class TestWhatIsSent:
         assert response.usage.cost_usd("claude-opus-5") > 0
 
     async def test_effort_follows_the_role(self, provider):
-        for role, effort in (("generator", "medium"), ("tip", "low"), ("report", "high"), ("feedback", "low")):
+        for role, effort in (("generator", "medium"), ("tip", "low"), ("report", "medium"), ("feedback", "low")):
             install_parse(provider, fake_message(text="{}", parsed=None))
             install_stream(provider, fake_message(text="a polished sentence of tip"))
             await provider.complete(LLMRequest(role=role, system=["s"], user="u", schema=None))

@@ -23,8 +23,8 @@ from pydantic import BaseModel, ValidationError
 
 # Effort per engine role (MVP_Build_Guide §7.1). One model keeps one prompt cache.
 # feedback measured on the real model (2026-09-19): low effort gives the same card in ~10 s instead of ~16 s
-ROLE_EFFORT = {"evaluator": "low", "generator": "medium", "tip": "low", "report": "high", "feedback": "low"}
-ROLE_MAX_TOKENS = {"evaluator": 8000, "generator": 8000, "tip": 2000, "report": 16000, "feedback": 2000}
+ROLE_EFFORT = {"evaluator": "low", "generator": "medium", "tip": "low", "report": "medium", "feedback": "low"}
+ROLE_MAX_TOKENS = {"evaluator": 8000, "generator": 8000, "tip": 2000, "report": 4000, "feedback": 2000}
 
 # USD per million tokens. Cache reads bill at 0.1x input, cache writes at 1.25x.
 PRICES = {"claude-opus-5": (5.00, 25.00), "claude-sonnet-5": (2.00, 10.00), "claude-haiku-4-5": (1.00, 5.00)}
@@ -95,7 +95,7 @@ class Provider(Protocol):
 
 # A model call that never returns must not hold a user forever. The SDK has its own timeout;
 # this one also covers the manual provider and anything a future provider might do.
-CALL_TIMEOUT_SECONDS: dict[str, float] = {"evaluator": 90, "generator": 60, "tip": 30, "feedback": 60, "report": 300}
+CALL_TIMEOUT_SECONDS: dict[str, float] = {"evaluator": 90, "generator": 60, "tip": 30, "feedback": 60, "report": 90}
 
 
 async def call(provider: Provider, request: LLMRequest, *, timeout_seconds: float | None = None) -> LLMResponse:

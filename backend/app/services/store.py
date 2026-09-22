@@ -22,10 +22,11 @@ from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine
 
 from app import db
-from app.repo import attempts, events, profiles, questions
+from app.repo import attempts, events, profiles, questions, sessions
 from app.repo.attempts import DuplicateSubmissionKey, StoredAttempt
 from app.repo.profiles import LoadedProfile, StaleProfile
 from app.repo.questions import LoadedQuestion, QuestionSummary
+from app.repo.sessions import StoredSession
 from app.schemas.engine import SkillState
 
 __all__ = ["DuplicateSubmissionKey", "StaleProfile", "Store", "Tx", "DbStore"]
@@ -50,6 +51,15 @@ class Tx(Protocol):
                              seniority: str | None) -> int: ...
     async def record_usage(self, *, user_id: uuid.UUID, attempt_id: uuid.UUID, usage_rows: list[dict]) -> int: ...
     async def record_tip(self, *, attempt_id: uuid.UUID, tip_key: str, skill_key: str | None, text: str) -> None: ...
+    # mock interviews
+    async def load_session(self, session_id: uuid.UUID, *, user_id: uuid.UUID) -> StoredSession | None: ...
+    async def save_session(self, *, user_id: uuid.UUID, row: dict, turns: list[dict], plan: list[dict] | None,
+                           role_slug: str, company_slug: str) -> None: ...
+    async def list_sessions(self, user_id: uuid.UUID, *, limit: int = 20) -> list[dict]: ...
+    async def sessions_started_today(self, user_id: uuid.UUID) -> int: ...
+    async def record_session_metrics(self, *, user_id: uuid.UUID, session_id: uuid.UUID, metrics: list[dict],
+                                     seniority: str | None) -> int: ...
+    async def record_session_usage(self, *, user_id: uuid.UUID, session_id: uuid.UUID, usage_rows: list[dict]) -> int: ...
 
 
 class Store(Protocol):
@@ -117,6 +127,26 @@ class DbTx:
 
     async def record_usage(self, *, user_id, attempt_id, usage_rows):
         return await events.record_usage(self.connection, user_id=user_id, attempt_id=attempt_id, usage_rows=usage_rows)
+
+    async def load_session(self, session_id, *, user_id):
+        return await sessions.load(self.connection, session_id, user_id=user_id)
+
+    async def save_session(self, *, user_id, row, turns, plan, role_slug, company_slug):
+        await sessions.save(self.connection, user_id=user_id, row=row, turns=turns, plan=plan,
+                            role_slug=role_slug, company_slug=company_slug)
+
+    async def list_sessions(self, user_id, *, limit=20):
+        return await sessions.list_sessions(self.connection, user_id, limit=limit)
+
+    async def sessions_started_today(self, user_id):
+        return await sessions.started_today(self.connection, user_id)
+
+    async def record_session_metrics(self, *, user_id, session_id, metrics, seniority):
+        return await sessions.record_metrics(self.connection, user_id=user_id, session_id=session_id, metrics=metrics,
+                                             seniority=seniority)
+
+    async def record_session_usage(self, *, user_id, session_id, usage_rows):
+        return await sessions.record_usage(self.connection, user_id=user_id, session_id=session_id, usage_rows=usage_rows)
 
     async def record_tip(self, *, attempt_id, tip_key, skill_key, text):
         await events.record_tip(self.connection, attempt_id=attempt_id, tip_key=tip_key, skill_key=skill_key, text=text)

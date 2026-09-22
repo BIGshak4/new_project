@@ -23,6 +23,7 @@ STATUS_FOR_CODE = {
     "no_pending_follow_up": 409,
     "nothing_to_retry": 409,
     "stale_version": 409,
+    "no_reviewed_questions": 409,              # the bank has no reviewed question for this role/plan yet
     "usage_limit": 429,
     "evaluation_unavailable": 503,
     "temporarily_unavailable": 503,

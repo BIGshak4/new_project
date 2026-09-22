@@ -133,3 +133,111 @@ class ProgressView(BaseModel):
     recent: list[dict]
     attempts_today: int
     daily_limit: int
+
+
+# ----------------------------------------------------------------------------- mock interviews
+
+
+class InterviewPlanSkill(BaseModel):
+    skill: str
+    label: str
+    subject: str
+    importance: str                             # core | important | nice_to_have
+    required_level: int
+    planned_turns: int
+
+
+class InterviewTurnView(BaseModel):
+    """One interviewer question. Results stay hidden until the interview is over, like a real interview."""
+
+    index: int
+    skill: str
+    skill_label: str
+    subject: str
+    difficulty: int
+    archetype: str
+    question: str
+    question_key: str | None = None
+    status: str                                 # open | evaluating | done | failed
+    hints: list[HintView] = Field(default_factory=list)
+    answer: str | None = None
+    asked_at: str
+    answered_at: str | None = None
+    # revealed only when the session is completed
+    band: str | None = None
+    summary: str | None = None
+    key_points_hit: list[str] = Field(default_factory=list)
+    key_points_missed: list[str] = Field(default_factory=list)
+    check: CheckView | None = None
+    action_after: str | None = None             # what the interviewer decided next: ESCALATE, HOLD, HINT, STEP_BACK, ENTER_SKILL, END
+    subject_switch: bool = False
+
+
+class InterviewView(BaseModel):
+    id: str
+    status: str                                 # in_progress | evaluating | completed
+    language: str
+    duration_min: int
+    elapsed_ms: int
+    remaining_min: float
+    started_at: str
+    ended_at: str | None = None
+    ended_early: bool = False
+    turn_count: int
+    current_turn: InterviewTurnView | None      # the question waiting for an answer
+    turns: list[InterviewTurnView]              # answered questions, oldest first
+    plan: list[InterviewPlanSkill]
+    can_answer: bool
+    can_hint: bool
+    hints_used: int
+    results_revealed: bool                      # bands and summaries are shown once the interview is over
+    report_ready: bool
+
+
+class FitView(BaseModel):
+    fit_score: float | None
+    skills_total: int
+    skills_assessed: int
+    skills_meeting_requirement: int
+    core_gaps: list[str] = Field(default_factory=list)
+    top_strengths: list[str] = Field(default_factory=list)
+    domain_breakdown: dict[str, float] = Field(default_factory=dict)
+    partial_evaluation: bool = False
+    cap_applied: float | None = None
+
+
+class SkillReportView(BaseModel):
+    key: str
+    label: str
+    subject: str
+    status: str                                 # assessed | insufficient_evidence | not_assessed
+    proficiency_level: int | None
+    required_level: int
+    level_gap: int | None
+    turns_count: int
+    hints_used: int
+    importance: str
+    strengths: list[str] = Field(default_factory=list)
+    gaps: list[str] = Field(default_factory=list)
+
+
+class LabelledSkill(BaseModel):
+    key: str
+    label: str
+
+
+class InterviewReportView(BaseModel):
+    session_id: str
+    language: str
+    duration_min: int
+    turn_count: int
+    fit: dict[str, FitView]                     # role | company | session_overall
+    skills: list[SkillReportView]
+    subjects: list[dict]
+    timeline: list[dict]
+    recommended_next_skills: list[LabelledSkill]
+    cover_next_time: list[LabelledSkill]
+    top_tips: list[str]
+    narrative_md: str
+    narrative_source: str                       # generated | fallback
+    turns: list[InterviewTurnView]
