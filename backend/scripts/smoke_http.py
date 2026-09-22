@@ -4,7 +4,7 @@
     uv run python scripts/smoke_http.py --url https://...     # tests a deployed instance (stage G / Render)
     uv run python scripts/smoke_http.py --origin https://jobrun.netlify.app   # the origin to test CORS with
 
-What is checked: /health, /docs, /openapi.json (all eleven /v1 routes present), CORS preflight from
+What is checked: /health, /docs, /openapi.json (every /v1 route present), CORS preflight from
 the allowed origin (allowed) and from a stranger (refused), 401 error shape without a token,
 404 and 405 error shapes, 413 for an oversized body, unknown-signature token is 401 not 500,
 and that the project's JWKS is reachable and carries the signing key the verifier will use.
@@ -35,6 +35,11 @@ V1_ROUTES = {
     ("POST", "/v1/practice/attempts/{attempt_id}/submissions"),
     ("POST", "/v1/practice/attempts/{attempt_id}/follow-ups/{turn}/submissions"),
     ("POST", "/v1/practice/attempts/{attempt_id}/submissions/{revision}/retry"),
+    # mock interviews
+    ("POST", "/v1/interviews"), ("GET", "/v1/interviews"), ("GET", "/v1/interviews/{interview_id}"),
+    ("POST", "/v1/interviews/{interview_id}/turns/{turn_index}/answer"),
+    ("POST", "/v1/interviews/{interview_id}/hints/next"), ("POST", "/v1/interviews/{interview_id}/end"),
+    ("GET", "/v1/interviews/{interview_id}/report"),
 }
 
 
@@ -81,7 +86,7 @@ async def run(base_url: str, origin: str) -> list[str]:
         check("docs page", docs.status_code == 200 and "swagger" in docs.text.lower())
         spec = (await client.get("/openapi.json")).json()
         routes = {(m.upper(), p) for p, ops in spec["paths"].items() if p.startswith("/v1") for m in ops}
-        check("all eleven v1 routes", routes == V1_ROUTES, f"missing {V1_ROUTES - routes} extra {routes - V1_ROUTES}")
+        check(f"all {len(V1_ROUTES)} v1 routes", routes == V1_ROUTES, f"missing {V1_ROUTES - routes} extra {routes - V1_ROUTES}")
 
         preflight = await client.options("/v1/questions", headers={"Origin": origin, "Access-Control-Request-Method": "GET",
                                                                    "Access-Control-Request-Headers": "authorization"})

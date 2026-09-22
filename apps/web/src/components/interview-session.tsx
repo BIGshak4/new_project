@@ -173,14 +173,15 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
       .catch((e) => live.current && setError(apiMessage(e, lang)));
   }, [api, interviewId, apply, draftKey, lang]);
 
-  // poll while the server is still evaluating an answer (a 202 or a refresh mid-evaluation)
+  // poll while the server is still evaluating an answer (a 202 or a refresh mid-evaluation); every poll
+  // replaces the interview object, which re-arms this effect until the status changes
   useEffect(() => {
     if (interview?.status !== "evaluating") return;
     const timer = setTimeout(() => {
       api.getInterview(interviewId).then((i) => live.current && apply(i)).catch(() => {});
     }, 3000);
     return () => clearTimeout(timer);
-  }, [api, interviewId, interview?.status, interview?.turn_count, apply]);
+  }, [api, interviewId, interview, apply]);
 
   useEffect(() => {
     if (!deadline) return;
@@ -210,8 +211,12 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
       const result = await api.answerInterview(interviewId, turn.index, answer, key);
       if (live.current) {
         apply(result.interview);
-        setAnswer("");
-        removeLocal(draftKey);
+        if (result.turn.status === "failed") {
+          setAnswer(result.turn.answer ?? answer);       // keep the text: the candidate may send it again
+        } else {
+          setAnswer("");
+          removeLocal(draftKey);
+        }
       }
     } catch (e) {
       const code = (e as PracticeApiError).code;
@@ -317,11 +322,19 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
                 </p>
               )}
               {error && <p className="notice error" role="alert">{error}</p>}
+              {secondsLeft === 0 && (
+                <p className="notice" role="status">
+                  {t(
+                    "הזמן נגמר. שלחו את מה שיש לכם; המראיין יסכם אחרי התשובה הזו.",
+                    "Time is up. Send what you have; the interviewer wraps up after this answer.",
+                  )}
+                </p>
+              )}
               <div className="row interview-actions">
                 <button className="primary" disabled={busy || !answer.trim()} onClick={() => void submit()}>
                   {busy ? t("שולחים…", "Sending…") : t("שליחת התשובה", "Send answer")} <Arrow size={16} />
                 </button>
-                {interview.can_hint && (
+                {interview.can_hint && secondsLeft > 0 && (
                   <button disabled={busy} onClick={() => void hint()}>
                     <Lightbulb size={16} /> {t("רמז", "Hint")}
                   </button>
@@ -485,7 +498,9 @@ function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang }) {
     <li className="report-turn">
       <div className="row spread">
         <span className="badge">{x.skill_label}</span>
-        <span className={`badge band-${x.band?.toLowerCase()}`}>{bandLabel(x.band, lang)}</span>
+        <span className={x.band ? `badge band-${x.band.toLowerCase()}` : "badge"}>
+          {x.status === "skipped" ? t("לא נענתה", "Not answered") : bandLabel(x.band, lang)}
+        </span>
       </div>
       <p className="interview-prompt" dir="auto">{x.question}</p>
       {x.answer && <p className="report-answer" dir="auto">{x.answer}</p>}
@@ -502,7 +517,8 @@ function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang }) {
             : x.check.passed === false
               ? t("הבדיקה האוטומטית נכשלה", "Automatic check failed")
               : t("הבדיקה האוטומטית לא הכריעה", "Automatic check inconclusive")}
-          : {x.check.detail}
+          {": "}
+          {x.check.detail}
         </p>
       )}
     </li>

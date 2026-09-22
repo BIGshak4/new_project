@@ -33,7 +33,7 @@ from app.engine.reporter import ReportData
 from app.engine.session import SessionEngine
 from app.engine.skill_controller import ControllerResult
 from app.repo.profiles import LoadedProfile, StaleProfile
-from app.repo.sessions import StoredSession
+from app.repo.sessions import StaleSession, StoredSession
 from app.schemas.api import (
     CheckView,
     FitView,
@@ -62,6 +62,7 @@ log = logging.getLogger("app.interview")
 LANGUAGES = ("en", "he")
 DURATIONS = (20, 30, 45)
 MAX_TURNS = 40
+EVALUATING_BUDGET_SECONDS = 300          # an evaluation older than this never finished: the process died
 _PLACEHOLDER = re.compile(r"\{\{\s*\w+\s*\}\}")
 
 
@@ -106,10 +107,11 @@ class InterviewService:
         plan, ceiling, baseline = self._plan(seniority, duration_min)
         plan = self._covered(plan, pool, language)
         priors = {k: (s.k, s.c) for k, s in profile.states.items() if s.k is not None and s.c is not None}
+        # the session starts from the profile's scores (k, c) but counts its own turns: the report is about
+        # this interview, the profile write-back after every turn is what carries the evidence forward
         state = subject_router.init_session_state(plan, seniority=seniority, baseline_difficulty=baseline,
                                                   difficulty_ceiling=ceiling, planned_duration_min=duration_min,
                                                   priors=priors)
-        self._continue_histories(state, profile)
         engine = self._engine(plan, state)
         decision, question = self._open(engine, plan, state, engine.start(), pool, seen=set(), language=language)
         if question is None:
@@ -118,7 +120,7 @@ class InterviewService:
         now = self._stamp()
         session_id = uuid.uuid4()
         wrapper = {"engine": state.model_dump(mode="json"), "metrics": [], "notes": {}, "flags": [], "ended_early": False,
-                   "narrative": None, "narrative_source": None}
+                   "narrative": None, "narrative_source": None, "revision": 0}
         row = {"id": str(session_id), "seniority": seniority, "baseline_difficulty": baseline, "difficulty_ceiling": ceiling,
                "status": "in_progress", "turn_count": 1, "hints_used": 0, "hints_requested_by_user": 0,
                "started_at": now, "ended_at": None, "state": wrapper,
@@ -154,7 +156,8 @@ class InterviewService:
                 if meta.get("idempotency_key") == idempotency_key:            # the same click again: same result
                     return self._turn_view(turn, language, revealed=row["status"] == "completed"), self._view(stored, state)
                 raise ApiError("already_submitted", "this question was already answered")
-            if meta.get("status") == "evaluating" and meta.get("idempotency_key") not in (None, idempotency_key):
+            if meta.get("status") == "evaluating" and meta.get("idempotency_key") not in (None, idempotency_key) \
+                    and not self._stale(meta):
                 raise ApiError("conflict", "this answer is being evaluated")
             text = answer.get("text", "") if isinstance(answer, dict) else str(answer or "")
             text = text.strip()
@@ -171,32 +174,44 @@ class InterviewService:
             meta.update(status="evaluating", idempotency_key=idempotency_key, evaluating_since=now)
             await self._persist(user_id, row, [turn], state=state)
 
-            # 2. check + evaluate
-            check = (await asyncio.to_thread(checks.run_check, question.deterministic_check, text)
-                     if question.deterministic_check else None)
-            skill = self.catalog.skills[question.primary_skill]
-            result = await evaluator.evaluate(
-                self.provider, question_context=evaluator.question_block(question, language, skill),
-                known_error_keys={e.key for e in question.common_errors}, language=language,
-                difficulty=turn["difficulty"], answer=text, check=check, hint_level=meta.get("hint_level", 0),
-                glossary=self.catalog.glossary)
-            usage_rows = ([UsageEvent("evaluate", result.model, result.usage, result.latency_ms).as_row("simulation")]
-                          if result.model else [])
-            turn["check_result"] = check.model_dump(mode="json") if check else None
-            if not result.ok:
-                meta.update(status="failed", flags=list(result.flags), evaluating_since=None)
-                await self._persist(user_id, row, [turn], state=state, usage_rows=usage_rows)
-                return self._turn_view(turn, language, revealed=False), self._view(stored, state)
+            # 2. check + evaluate. Whatever goes wrong from here on, the turn ends "failed", never stuck in
+            #    "evaluating": the candidate keeps the saved text and may send it again.
+            try:
+                check = (await asyncio.to_thread(checks.run_check, question.deterministic_check, text)
+                         if question.deterministic_check else None)
+                skill = self.catalog.skills[question.primary_skill]
+                result = await evaluator.evaluate(
+                    self.provider, question_context=evaluator.question_block(question, language, skill),
+                    known_error_keys={e.key for e in question.common_errors}, language=language,
+                    difficulty=turn["difficulty"], answer=text, check=check, hint_level=meta.get("hint_level", 0),
+                    glossary=self.catalog.glossary)
+                usage_rows = ([UsageEvent("evaluate", result.model, result.usage, result.latency_ms).as_row("simulation")]
+                              if result.model else [])
+                turn["check_result"] = check.model_dump(mode="json") if check else None
+                if not result.ok:
+                    meta.update(status="failed", flags=list(result.flags), evaluating_since=None)
+                    await self._persist(user_id, row, [turn], state=state, usage_rows=usage_rows)
+                    return self._turn_view(turn, language, revealed=False), self._view(stored, state)
 
-            # 3. scores and the next decision
-            engine.core_misconception_keys = question.core_misconception_keys
-            # the interview clock runs from the moment the question was shown until the verdict is in,
-            # thinking time and evaluation wait alike, as it would with a human interviewer
-            asked_at = datetime.fromisoformat(turn["asked_at"])
-            elapsed_ms = max(0, int((self.clock() - asked_at).total_seconds() * 1000))
-            outcome = engine.process_turn(
-                result.evaluation, archetype=question.archetype, check=check, latency_ms=latency_ms,
-                familiarity="new", exposure_risk=question.exposure_risk, turn_elapsed_ms=elapsed_ms, mode="simulation")
+                # 3. scores and the next decision
+                engine.core_misconception_keys = question.core_misconception_keys
+                # the interview clock runs from the moment the question was shown until the verdict is in,
+                # thinking time and evaluation wait alike, as it would with a human interviewer
+                asked_at = datetime.fromisoformat(turn["asked_at"])
+                elapsed_ms = max(0, int((self.clock() - asked_at).total_seconds() * 1000))
+                outcome = engine.process_turn(
+                    result.evaluation, archetype=question.archetype, check=check, latency_ms=latency_ms,
+                    familiarity="new", exposure_risk=question.exposure_risk, turn_elapsed_ms=elapsed_ms, mode="simulation")
+            except ApiError:
+                raise
+            except Exception:
+                meta.update(status="failed", evaluating_since=None,
+                            flags=[*meta.get("flags", []), "evaluation_crashed"])
+                try:
+                    await self._persist(user_id, row, [turn])
+                except Exception:                                   # noqa: BLE001 - the original error matters more
+                    log.exception("could not record the failed evaluation of interview %s", row["id"])
+                raise
             evaluation = outcome.evaluation
             metrics = {**outcome.metrics, "evaluator_model": result.model, "evaluator_version": result.prompt_version,
                        "eval_latency_ms": result.latency_ms, "eval_flags": list(result.flags)}
@@ -208,8 +223,7 @@ class InterviewService:
             meta.update(status="done", band=outcome.band.value, summary=evaluation.one_line_summary,
                         key_points_hit=list(evaluation.key_points_hit), key_points_missed=list(evaluation.key_points_missed),
                         evaluation=evaluation.model_dump(mode="json"), evidence_weight=outcome.evidence_weight,
-                        evaluator_model=result.model, flags=list(result.flags), evaluated_at=self._stamp(), evaluating_since=None,
-                        action_after=outcome.decision.action.value, subject_switch=outcome.decision.subject_switch)
+                        evaluator_model=result.model, flags=list(result.flags), evaluated_at=self._stamp(), evaluating_since=None)
 
             # 4. the next question, or the end
             changed = [turn]
@@ -224,12 +238,13 @@ class InterviewService:
                     changed.append(new_turn)
             if decision.action == Action.END or len(turns) >= MAX_TURNS and turns[-1] is turn:
                 self._finish(row, state, ended_early=False)
+            meta.update(action_after=decision.action.value, subject_switch=decision.subject_switch)   # the final decision
             row["turn_count"] = len(turns)
 
-            # 5. persist everything in one transaction, with the profile continuing through the interview
-            states = {question.primary_skill: state.skill_state[question.primary_skill]}
+            # 5. persist everything in one transaction; the candidate's long-lived profile takes this turn's evidence
+            merged = self._merge_into_profile(profile, question.primary_skill, state.skill_state[question.primary_skill])
             await self._persist(user_id, row, changed, state=state, metrics=[metrics], usage_rows=usage_rows,
-                                profile=(profile, states), seniority=row["seniority"])
+                                profile=(profile, {question.primary_skill: merged}), seniority=row["seniority"])
             return (self._turn_view(turn, language, revealed=row["status"] == "completed"), self._view(stored, state))
 
     async def hint(self, user_id: uuid.UUID, session_id: uuid.UUID) -> tuple[HintView | None, InterviewView]:
@@ -260,7 +275,7 @@ class InterviewService:
             row = stored.row
             if row["status"] == "in_progress":
                 open_turn = stored.turns[-1] if stored.turns else None
-                if open_turn is not None and open_turn["question_generation_meta"].get("status") in ("open", "failed"):
+                if open_turn is not None and open_turn["question_generation_meta"].get("status") in ("open", "failed", "evaluating"):
                     open_turn["question_generation_meta"]["status"] = "skipped"
                     open_turn["question_generation_meta"]["action_after"] = Action.END.value
                 self._finish(row, state, ended_early=True)
@@ -283,10 +298,11 @@ class InterviewService:
             wrapper = row["state"]
             if wrapper.get("narrative") is None and self.config.narrative:
                 labels = self.catalog.skill_labels()
-                text, source = await reporter.narrative(self.provider if self.config.narrative else None, data,
-                                                        language=language, labels=labels, glossary=self.catalog.glossary)
-                wrapper["narrative"], wrapper["narrative_source"] = text, source
-                await self._persist(user_id, row, [])
+                text, source = await reporter.narrative(self.provider, data, language=language, labels=labels,
+                                                        glossary=self.catalog.glossary)
+                if source == "generated":                  # a model hiccup must not freeze the plain report forever
+                    wrapper["narrative"], wrapper["narrative_source"] = text, source
+                    await self._persist(user_id, row, [])
             return self._report_view(stored, data)
 
     # ------------------------------------------------------------------ building blocks
@@ -299,6 +315,18 @@ class InterviewService:
 
     def _lock(self, session_id: uuid.UUID) -> asyncio.Lock:
         return self._locks.setdefault(session_id, asyncio.Lock())
+
+    def _stale(self, meta: dict) -> bool:
+        """An evaluation that started long ago and never ended: the process died mid-call. The turn is
+        treated as failed so the candidate can send the answer again."""
+        since = meta.get("evaluating_since")
+        if meta.get("status") != "evaluating" or not since:
+            return False
+        return (self.clock() - datetime.fromisoformat(since)).total_seconds() > EVALUATING_BUDGET_SECONDS
+
+    def _effective_status(self, meta: dict) -> str:
+        status = meta.get("status", "open")
+        return "failed" if status == "evaluating" and self._stale(meta) else status
 
     def _plan(self, seniority: str, duration_min: int) -> tuple[list[PlanSkill], int, int]:
         key = (seniority, duration_min)
@@ -340,20 +368,20 @@ class InterviewService:
         return kept
 
     @staticmethod
-    def _continue_histories(state: SessionState, profile: LoadedProfile) -> None:
-        """Start each session skill from the candidate's profile state, keeping its history and turn count;
-        only the session-local controller fields are reset."""
-        for key, fresh in state.skill_state.items():
-            known = profile.states.get(key)
-            if known is None:
-                continue
-            carried = known.model_copy(deep=True)
-            carried.status, carried.budget, carried.current_difficulty = SkillStatus.UNTOUCHED, fresh.budget, None
-            carried.hint_level, carried.partial_count, carried.resolved_reason = 0, 0, None
-            carried.core_misconception, carried.level3_hint_difficulty = False, None
-            if carried.k is None or carried.c is None:
-                carried.k, carried.c = fresh.k, fresh.c
-            state.skill_state[key] = carried
+    def _merge_into_profile(profile: LoadedProfile, key: str, session_state: SkillState) -> SkillState:
+        """The candidate's long-lived profile takes this turn's evidence: scores and level move to the session's
+        values and the turn joins the profile's own history. The session's counters (turns, hints, budget)
+        stay in the session, so a new interview never reports evidence from an earlier one."""
+        current = profile.states.get(key) or SkillState(key=key)
+        merged = current.model_copy(deep=True)
+        merged.k, merged.c, merged.provisional_level = session_state.k, session_state.c, session_state.provisional_level
+        merged.turns = current.turns + 1
+        if session_state.history:
+            merged.history = [*current.history, session_state.history[-1]]
+        if session_state.ceiling is not None:
+            merged.ceiling = max(current.ceiling or 0, session_state.ceiling)
+        profile.states[key] = merged
+        return merged
 
     def _engine(self, plan: list[PlanSkill], state: SessionState) -> SessionEngine:
         minimums = {k: s.min_difficulty for k, s in self.catalog.leaf_skills.items()}
@@ -408,6 +436,7 @@ class InterviewService:
     def _finish(self, row: dict, state: SessionState, *, ended_early: bool) -> None:
         row["status"] = "completed"
         row["ended_at"] = self._stamp()
+        self._locks.pop(uuid.UUID(row["id"]), None)        # nothing more will be written to this interview
         row["state"]["ended_early"] = ended_early
         row["state"]["engine"] = state.model_dump(mode="json")
 
@@ -432,20 +461,29 @@ class InterviewService:
         if state is not None:                      # the engine mutates the live state; the row must carry the latest
             row["state"]["engine"] = state.model_dump(mode="json")
         session_id = uuid.UUID(row["id"])
-        async with self.store.transaction() as tx:
-            if profile is not None:
-                loaded, states = profile
-                try:
-                    await tx.save_profile(loaded, states)
-                except StaleProfile:
-                    row["state"].setdefault("flags", []).append("profile_not_updated_stale")
-            await tx.save_session(user_id=user_id, row=row, turns=turns, plan=None,
-                                  role_slug=self.config.role, company_slug=self.config.company)
-            if metrics:
-                await tx.record_session_metrics(user_id=user_id, session_id=session_id, metrics=metrics, seniority=seniority,
-                                                role_slug=self.config.role, company_slug=self.config.company)
-            if usage_rows:
-                await tx.record_session_usage(user_id=user_id, session_id=session_id, usage_rows=usage_rows)
+        # optimistic revision: two servers (or two tabs) racing on the same interview cannot both write;
+        # the loser learns it before it evaluates anything
+        expected = int(row["state"].get("revision", 0))
+        row["state"]["revision"] = expected + 1
+        try:
+            async with self.store.transaction() as tx:
+                await tx.save_session(user_id=user_id, row=row, turns=turns, plan=None, role_slug=self.config.role,
+                                      company_slug=self.config.company, expected_revision=expected)
+                if profile is not None:
+                    loaded, states = profile
+                    try:
+                        await tx.save_profile(loaded, states)
+                    except StaleProfile:
+                        row["state"].setdefault("flags", []).append("profile_not_updated_stale")
+                if metrics:
+                    await tx.record_session_metrics(user_id=user_id, session_id=session_id, metrics=metrics,
+                                                    seniority=seniority, role_slug=self.config.role,
+                                                    company_slug=self.config.company)
+                if usage_rows:
+                    await tx.record_session_usage(user_id=user_id, session_id=session_id, usage_rows=usage_rows)
+        except StaleSession:
+            row["state"]["revision"] = expected
+            raise ApiError("conflict", "another request changed this interview at the same time; reload it") from None
 
     # ------------------------------------------------------------------ report
 
@@ -493,7 +531,7 @@ class InterviewService:
             index=turn["turn_index"], skill=skill, skill_label=catalog_skill.label if catalog_skill else skill,
             subject=(catalog_skill.subject if catalog_skill else None) or "", difficulty=turn["difficulty"],
             archetype=turn["question_archetype"], question=turn["question_text"], question_key=turn.get("question_key"),
-            status=meta.get("status", "open"), hints=[HintView(**h) for h in meta.get("hints", [])],
+            status=self._effective_status(meta), hints=[HintView(**h) for h in meta.get("hints", [])],
             answer=turn.get("answer_text"), asked_at=turn.get("asked_at") or turn.get("created_at"),
             answered_at=turn.get("answer_submitted_at"),
             band=meta.get("band") if revealed else None, summary=meta.get("summary") if revealed else None,
@@ -512,8 +550,13 @@ class InterviewService:
             open_turn = None
         done = [t for t in turns if t is not open_turn and t["question_generation_meta"].get("status") in ("done", "skipped")]
         status = row["status"]
-        if status == "in_progress" and open_turn is not None and open_turn["question_generation_meta"].get("status") == "evaluating":
+        open_status = self._effective_status(open_turn["question_generation_meta"]) if open_turn is not None else None
+        if status == "in_progress" and open_status == "evaluating":
             status = "evaluating"
+        remaining = state.remaining_min
+        if open_turn is not None and not completed:            # the clock keeps running while the question is open
+            asked = datetime.fromisoformat(open_turn.get("asked_at") or open_turn["created_at"])
+            remaining = max(0.0, remaining - (self.clock() - asked).total_seconds() / 60)
         labels = self.catalog.skill_labels()
         plan = [InterviewPlanSkill(skill=p["key"], label=labels.get(p["key"], p["key"]), subject=p["subject"],
                                    importance=p["importance"], required_level=p["required_level"],
@@ -528,11 +571,11 @@ class InterviewService:
                             and generator.bank_hint(question, level, language) is not None)
         return InterviewView(
             id=row["id"], status=status, language=language, duration_min=row["config"]["duration_min"],
-            elapsed_ms=state.elapsed_ms, remaining_min=round(state.remaining_min, 1), started_at=row["started_at"],
+            elapsed_ms=state.elapsed_ms, remaining_min=round(remaining, 1), started_at=row["started_at"],
             ended_at=row.get("ended_at"), ended_early=bool(row["state"].get("ended_early")), turn_count=len(turns),
             current_turn=self._turn_view(open_turn, language, revealed=False) if open_turn else None,
             turns=[self._turn_view(t, language, revealed=completed) for t in done], plan=plan,
-            can_answer=open_turn is not None and open_turn["question_generation_meta"].get("status") in ("open", "failed"),
+            can_answer=open_status in ("open", "failed"),
             can_hint=can_hint, hints_used=row.get("hints_used", 0), results_revealed=completed, report_ready=completed)
 
 

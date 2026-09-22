@@ -54,7 +54,7 @@ class Tx(Protocol):
     # mock interviews
     async def load_session(self, session_id: uuid.UUID, *, user_id: uuid.UUID) -> StoredSession | None: ...
     async def save_session(self, *, user_id: uuid.UUID, row: dict, turns: list[dict], plan: list[dict] | None,
-                           role_slug: str, company_slug: str) -> None: ...
+                           role_slug: str, company_slug: str, expected_revision: int | None = None) -> None: ...
     async def list_sessions(self, user_id: uuid.UUID, *, limit: int = 20) -> list[dict]: ...
     async def sessions_started_today(self, user_id: uuid.UUID) -> int: ...
     async def record_session_metrics(self, *, user_id: uuid.UUID, session_id: uuid.UUID, metrics: list[dict],
@@ -131,9 +131,9 @@ class DbTx:
     async def load_session(self, session_id, *, user_id):
         return await sessions.load(self.connection, session_id, user_id=user_id)
 
-    async def save_session(self, *, user_id, row, turns, plan, role_slug, company_slug):
+    async def save_session(self, *, user_id, row, turns, plan, role_slug, company_slug, expected_revision=None):
         await sessions.save(self.connection, user_id=user_id, row=row, turns=turns, plan=plan,
-                            role_slug=role_slug, company_slug=company_slug)
+                            role_slug=role_slug, company_slug=company_slug, expected_revision=expected_revision)
 
     async def list_sessions(self, user_id, *, limit=20):
         return await sessions.list_sessions(self.connection, user_id, limit=limit)

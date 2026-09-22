@@ -12,7 +12,7 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 
-from sqlalchemy import func, select
+from sqlalchemy import Integer, func, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncConnection
 
@@ -24,6 +24,10 @@ SESSION_COLUMNS = ("seniority", "baseline_difficulty", "difficulty_ceiling", "st
                    "hints_used", "hints_requested_by_user", "started_at", "ended_at")
 TURN_COLUMNS = ("question_archetype", "difficulty", "question_text", "expected_answer_outline", "question_generation_meta",
                 "answer_text", "answer_code", "answer_language", "check_result", "answer_started_at", "answer_submitted_at")
+
+
+class StaleSession(Exception):
+    """The session row changed under us (another server or tab wrote first); reload and redo."""
 
 
 @dataclass
@@ -79,8 +83,11 @@ async def load(connection: AsyncConnection, session_id: uuid.UUID, *, user_id: u
 
 
 async def save(connection: AsyncConnection, *, user_id: uuid.UUID, row: dict, turns: list[dict], plan: list[dict] | None,
-               role_slug: str, company_slug: str) -> None:
-    """Upsert the session row and the given turns; write the skill plan rows once (when `plan` is given)."""
+               role_slug: str, company_slug: str, expected_revision: int | None = None) -> None:
+    """Write the session row and the given turns; the skill plan rows once (when `plan` is given).
+
+    With `expected_revision` the session row is UPDATED only if its stored `state.revision` still equals it
+    (raises StaleSession otherwise); without it the row is inserted (or replaced) unconditionally."""
     session, turn, plan_table = await db.table("interview_session"), await db.table("session_turn"), await db.table("session_skill_plan")
     skill_ids = await _ids(connection, "skill")
     role_id, role_version = await _versioned_id(connection, "role_template", role_slug)
@@ -90,9 +97,18 @@ async def save(connection: AsyncConnection, *, user_id: uuid.UUID, row: dict, tu
               **{c: row.get(c) for c in SESSION_COLUMNS}}
     for c in ("started_at", "ended_at"):
         values[c] = _dt(values.get(c))
-    statement = insert(session).values(**db.sql_values(values))
-    updates = {c: statement.excluded[c] for c in SESSION_COLUMNS}
-    await connection.execute(statement.on_conflict_do_update(index_elements=["id"], set_=updates))
+    if expected_revision is None:
+        statement = insert(session).values(**db.sql_values(values))
+        updates = {c: statement.excluded[c] for c in SESSION_COLUMNS}
+        await connection.execute(statement.on_conflict_do_update(index_elements=["id"], set_=updates))
+    else:
+        columns = db.sql_values({c: values[c] for c in SESSION_COLUMNS})
+        result = await connection.execute(
+            update(session).where(session.c.id == row["id"], session.c.user_id == user_id,
+                                  func.coalesce(session.c.state["revision"].astext.cast(Integer), 0) == expected_revision)
+            .values(**columns))
+        if result.rowcount != 1:
+            raise StaleSession(f"interview {row['id']} moved past revision {expected_revision}")
 
     if plan:
         rows = [{"session_id": row["id"], "skill_id": skill_ids[p["key"]], "source": p["source"],

@@ -13,7 +13,7 @@ from app.engine.catalog import Catalog
 from app.repo.attempts import AlreadyEvaluated, DuplicateSubmissionKey, StoredAttempt
 from app.repo.profiles import LoadedProfile, StaleProfile, derived_columns
 from app.repo.questions import LoadedQuestion, QuestionSummary, summary
-from app.repo.sessions import StoredSession
+from app.repo.sessions import StaleSession, StoredSession
 from app.schemas.engine import SkillState
 
 
@@ -198,12 +198,16 @@ class _MemoryTx:
         return StoredSession(id=session_id, user_id=user_id, row=copy.deepcopy(stored["row"]),
                              turns=copy.deepcopy(stored["turns"]))
 
-    async def save_session(self, *, user_id, row, turns, plan, role_slug, company_slug):
+    async def save_session(self, *, user_id, row, turns, plan, role_slug, company_slug, expected_revision=None):
         if "save_session" in self.s.failures or "save_session" in self.s.fail_once:
             self.s.fail_once.discard("save_session")
             raise ConnectionError("simulated database failure")
         session_id = uuid.UUID(row["id"])
         current = self.s.sessions.get(session_id)
+        if expected_revision is not None:
+            stored_revision = int((current or {}).get("row", {}).get("state", {}).get("revision", 0)) if current else None
+            if current is None or stored_revision != expected_revision:
+                raise StaleSession(f"interview {session_id} moved past revision {expected_revision}")
         by_index = {t["turn_index"]: copy.deepcopy(t) for t in (current["turns"] if current else [])}
         for t in turns:
             by_index[t["turn_index"]] = copy.deepcopy(t)

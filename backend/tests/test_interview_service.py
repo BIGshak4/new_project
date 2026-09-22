@@ -10,6 +10,7 @@ import pytest
 from app.api.errors import ApiError
 from app.engine.catalog import load_catalog
 from app.engine.providers import LLMError, LLMRequest, ScriptedProvider
+from app.services import memory_store
 from app.services.interview_service import DURATIONS, MAX_TURNS, InterviewConfig, InterviewService
 from app.services.memory_store import InMemoryStore
 from tests.test_practice_hardening import GOOD, SEEDS, WEAK
@@ -174,6 +175,103 @@ class TestAWholeInterview:
         with pytest.raises(ApiError, match="duration"):
             await svc.start(OTHER, duration_min=25)
         assert DURATIONS == (20, 30, 45)
+
+
+class TestResilience:
+    async def test_a_stale_evaluation_is_treated_as_failed_and_can_be_answered_again(self, catalog):
+        svc, store = service(catalog, interviewer([GOOD]))
+        view = await svc.start(USER, duration_min=20)
+        sid = uuid.UUID(view.id)
+        # the process died right after "answer saved, evaluating": the row says evaluating since 10 minutes ago
+        turn = store.sessions[sid]["turns"][0]
+        turn["question_generation_meta"].update(status="evaluating", idempotency_key="lost-tab",
+                                                evaluating_since=(svc.clock() - timedelta(minutes=10)).isoformat())
+        turn["answer_text"] = "an answer that was never scored"
+        stuck = await svc.get(USER, sid)
+        assert stuck.status == "in_progress" and stuck.can_answer and stuck.current_turn.status == "failed"
+        result, view = await svc.answer(USER, sid, 0, "the answer again", idempotency_key="new-tab")
+        assert result.status == "done" and view.current_turn.index == 1
+
+    async def test_a_crash_inside_the_evaluation_leaves_a_failed_turn_not_a_stuck_one(self, catalog):
+        def respond(request):
+            if request.role == "evaluator":
+                raise RuntimeError("boom")
+            return "unused"
+        svc, store = service(catalog, ScriptedProvider(respond))
+        view = await svc.start(USER, duration_min=20)
+        sid = uuid.UUID(view.id)
+        with pytest.raises(RuntimeError):
+            await svc.answer(USER, sid, 0, "answer", idempotency_key="k0")
+        view = await svc.get(USER, sid)
+        assert view.can_answer and view.current_turn.status == "failed" and view.current_turn.answer == "answer"
+        assert "evaluation_crashed" in store.sessions[sid]["turns"][0]["question_generation_meta"]["flags"]
+
+    async def test_two_writers_cannot_both_score_the_same_turn(self, catalog, monkeypatch):
+        svc, store = service(catalog, interviewer([GOOD]))
+        view = await svc.start(USER, duration_min=20)
+        sid = uuid.UUID(view.id)
+        original = memory_store._MemoryTx.load_session
+
+        async def load_then_race(self, session_id, *, user_id):
+            stored = await original(self, session_id, user_id=user_id)
+            self.s.sessions[session_id]["row"]["state"]["revision"] += 1      # another server writes right after our read
+            return stored
+        monkeypatch.setattr(memory_store._MemoryTx, "load_session", load_then_race)
+        with pytest.raises(ApiError, match="another request"):
+            await svc.answer(USER, sid, 0, "answer", idempotency_key="k0")
+        assert not [m for m in store.metrics if m.get("session_id") == sid]        # nothing was scored
+
+    async def test_a_new_interview_reports_only_its_own_evidence(self, catalog):
+        svc, store = service(catalog, interviewer([GOOD]))
+        first = await svc.start(USER, duration_min=20)
+        first, asked = await run_to_the_end(svc, USER, first)
+        assert store.profiles                                              # the profile carried the evidence forward
+        turns_before = {k: v["engine_state"]["turns"] for k, v in store.profiles.items()}
+        second = await svc.start(USER, duration_min=20)
+        second = await svc.end(USER, uuid.UUID(second.id))
+        report = await svc.report(USER, uuid.UUID(second.id))
+        assert report.fit["session_overall"].skills_assessed == 0 and report.fit["session_overall"].fit_score is None
+        assert all(s.turns_count == 0 for s in report.skills)
+        assert {k: v["engine_state"]["turns"] for k, v in store.profiles.items()} == turns_before
+
+    async def test_profile_history_continues_across_practice_and_interviews(self, catalog):
+        svc, store = service(catalog, interviewer([GOOD]))
+        view = await svc.start(USER, duration_min=20)
+        sid = uuid.UUID(view.id)
+        skill = view.current_turn.skill
+        svc.clock.advance()
+        await svc.answer(USER, sid, 0, "answer", idempotency_key="k0")
+        state = store.profiles[(USER, skill)]["engine_state"]
+        assert state["turns"] == 1 and len(state["history"]) == 1 and state["k"] is not None
+
+    async def test_a_narrative_failure_is_not_cached(self, catalog):
+        failures = {"n": 1}
+
+        def respond(request):
+            if request.role == "evaluator":
+                return GOOD
+            if request.role == "report":
+                if failures["n"]:
+                    failures["n"] -= 1
+                    raise LLMError("report model down", retryable=False)
+                return REPORT
+            return "unused"
+        svc, _ = service(catalog, ScriptedProvider(respond))
+        view = await svc.start(USER, duration_min=20)
+        sid = uuid.UUID(view.id)
+        await svc.answer(USER, sid, 0, "answer", idempotency_key="k0")
+        await svc.end(USER, sid)
+        first = await svc.report(USER, sid)
+        assert first.narrative_source == "fallback" and first.narrative_md
+        second = await svc.report(USER, sid)
+        assert second.narrative_source == "generated" and second.narrative_md == REPORT
+
+    async def test_the_clock_runs_while_a_question_is_open(self, catalog):
+        svc, _ = service(catalog, interviewer([GOOD]))
+        view = await svc.start(USER, duration_min=20)
+        assert view.remaining_min == 20
+        svc.clock.now += timedelta(minutes=5)
+        assert (await svc.get(USER, uuid.UUID(view.id))).remaining_min == 15
 
 
 class TestReviewedOnly:
