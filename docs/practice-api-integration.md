@@ -69,6 +69,29 @@ Added 2026-09-20:
 - **`GET /v1/me/progress`** now returns **`subjects`**: one row per subject with `skills_total/assessed/started`, `levels` (`"1".."5"` → skills at that level), `average_level`, `bands` (STRONG/PARTIAL/WEAK answer counts), `attempts`, `weight` (share of the role plan) and `questions_available`. `recent[]` rows carry `subject`.
 - **Visual answers are assessed.** A drawn circuit is turned into a netlist plus derived Boolean functions (`alarm = (A & B) | ...`) that the evaluator reads and the truth-table check tests; flag `circuit_assessed`. Photos are fetched server-side from the private bucket when the server has `SUPABASE_SERVICE_ROLE_KEY` and shown to the model as images (flag `images_assessed`; `images_unavailable` for a photo that could not be read). Without the key: `images_not_assessed`; a photo-only answer with no text or circuit stays `assessed_by: "unassessed"` with flag `visual_review_pending`. `/health.answer_images` is `assessed` or `stored_only`.
 
+## 3b. Mock interviews (added 2026-09-22)
+
+A timed interview run by the session engine (subject router + skill controller). Bank questions only, and by
+default only questions a person has reviewed and published (`INTERVIEW_REVIEWED_ONLY=true`): a role skill with no
+reviewed question is left out of the interview, and with none left the start returns `409 no_reviewed_questions`.
+Nothing is generated. Like a real interview, bands and summaries are hidden until it is over.
+
+| Call | Purpose |
+|---|---|
+| `POST /v1/interviews` `{duration_min: 20|30|45, language?}` | start; returns the `Interview` with `current_turn` (the first question). `429 usage_limit` after `INTERVIEW_DAILY_LIMIT` (5) a day |
+| `GET /v1/interviews` | my interviews, newest first (`InterviewListItem[]`) |
+| `GET /v1/interviews/{id}` | the interview as it is now; refresh-safe |
+| `POST /v1/interviews/{id}/turns/{index}/answer` `{answer, idempotency_key?, latency_ms?}` + `Idempotency-Key` | answer the current question; `200 {turn, interview}`; `202` when the evaluation runs past 90 s (poll GET until `status` leaves `evaluating`); same key = same result, another key for an answered question = `409 already_submitted` |
+| `POST /v1/interviews/{id}/hints/next` | a bank hint for the current question (coach mode; `can_hint` says whether one is available); costs struggle budget |
+| `POST /v1/interviews/{id}/end` | stop early; the report covers what was answered |
+| `GET /v1/interviews/{id}/report` | scorecards (`fit.role`, `fit.session_overall`, `fit.company` when not Generic), per-skill levels with strengths and gaps, subjects, timeline, recommended next skills, tips, narrative markdown; `409` while the interview runs |
+
+`Interview.status` is `in_progress` | `evaluating` | `completed`; `remaining_min` counts down from the chosen duration
+by the time spent on each question; the engine ends the interview when time is up or nothing is left to ask
+(`turn_count` ≤ 40). `results_revealed` and `report_ready` turn true on completion, and `turns[]` then carry `band`,
+`summary`, key points and `action_after` (what the interviewer decided next). The candidate's skill profile continues
+through the interview and is updated after every scored turn.
+
 ## 4. Rules the UI must respect
 
 1. **Generate an `Idempotency-Key` (uuid) per submit click and reuse it on retry.** A resend with the same key returns the same result with `replayed: true` and costs nothing. The same key with a different text is a 409 `conflict`. If you send none, the server generates one and returns it in `submission.key`.

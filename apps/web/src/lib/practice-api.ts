@@ -187,6 +187,128 @@ export type Progress = {
   daily_limit: number;
 };
 
+// ---------------------------------------------------------------- mock interviews
+
+export type InterviewPlanSkill = {
+  skill: string;
+  label: string;
+  subject: string;
+  importance: "core" | "important" | "nice_to_have" | string;
+  required_level: number;
+  planned_turns: number;
+};
+
+export type InterviewTurnStatus = "open" | "evaluating" | "done" | "failed" | "skipped";
+
+/** One interviewer question. Bands and summaries are null until the interview is over. */
+export type InterviewTurn = {
+  index: number;
+  skill: string;
+  skill_label: string;
+  subject: string;
+  difficulty: number;
+  archetype: string;
+  question: string;
+  question_key: string | null;
+  status: InterviewTurnStatus;
+  hints: Hint[];
+  answer: string | null;
+  asked_at: string;
+  answered_at: string | null;
+  band: Band | null;
+  summary: string | null;
+  key_points_hit: string[];
+  key_points_missed: string[];
+  check: Check | null;
+  action_after: string | null;
+  subject_switch: boolean;
+};
+
+export type InterviewStatus = "in_progress" | "evaluating" | "completed";
+
+export type Interview = {
+  id: string;
+  status: InterviewStatus;
+  language: ApiLang;
+  duration_min: number;
+  elapsed_ms: number;
+  remaining_min: number;
+  started_at: string;
+  ended_at: string | null;
+  ended_early: boolean;
+  turn_count: number;
+  current_turn: InterviewTurn | null;
+  turns: InterviewTurn[];
+  plan: InterviewPlanSkill[];
+  can_answer: boolean;
+  can_hint: boolean;
+  hints_used: number;
+  results_revealed: boolean;
+  report_ready: boolean;
+};
+
+export type InterviewListItem = {
+  id: string;
+  status: string;
+  duration_min: number | null;
+  language: ApiLang | null;
+  turn_count: number;
+  started_at: string | null;
+  ended_at: string | null;
+};
+
+export type Fit = {
+  fit_score: number | null;
+  skills_total: number;
+  skills_assessed: number;
+  skills_meeting_requirement: number;
+  core_gaps: string[];
+  top_strengths: string[];
+  domain_breakdown: Record<string, number>;
+  partial_evaluation: boolean;
+  cap_applied: number | null;
+};
+
+export type SkillReport = {
+  key: string;
+  label: string;
+  subject: string;
+  status: "assessed" | "insufficient_evidence" | "not_assessed" | string;
+  proficiency_level: number | null;
+  required_level: number;
+  level_gap: number | null;
+  turns_count: number;
+  hints_used: number;
+  importance: string;
+  strengths: string[];
+  gaps: string[];
+};
+
+export type LabelledSkill = { key: string; label: string };
+
+export type InterviewReport = {
+  session_id: string;
+  language: ApiLang;
+  duration_min: number;
+  turn_count: number;
+  /** role | company | session_overall */
+  fit: Record<string, Fit>;
+  skills: SkillReport[];
+  subjects: Record<string, unknown>[];
+  timeline: Record<string, unknown>[];
+  recommended_next_skills: LabelledSkill[];
+  cover_next_time: LabelledSkill[];
+  top_tips: string[];
+  narrative_md: string;
+  narrative_source: "generated" | "fallback" | string;
+  turns: InterviewTurn[];
+};
+
+export type StartInterviewRequest = {
+  duration_min: 20 | 30 | 45;
+  language?: ApiLang;
+};
+
 export type Me = {
   id: string;
   email: string | null;
@@ -343,6 +465,36 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
         "POST",
         `/v1/practice/attempts/${attemptId}/hints/next`,
       ),
+
+    // mock interviews
+    startInterview: (body: StartInterviewRequest) =>
+      call<Interview>("POST", "/v1/interviews", body),
+    listInterviews: () => call<InterviewListItem[]>("GET", "/v1/interviews"),
+    getInterview: (interviewId: string) =>
+      call<Interview>("GET", `/v1/interviews/${interviewId}`),
+    /** 202 means saved and still being evaluated: poll getInterview until status leaves "evaluating". */
+    answerInterview: (
+      interviewId: string,
+      turnIndex: number,
+      answer: string,
+      idempotencyKey: string,
+      latencyMs?: number,
+    ) =>
+      call<{ turn: InterviewTurn; interview: Interview }>(
+        "POST",
+        `/v1/interviews/${interviewId}/turns/${turnIndex}/answer`,
+        { answer, idempotency_key: idempotencyKey, latency_ms: latencyMs },
+        { "Idempotency-Key": idempotencyKey },
+      ),
+    interviewHint: (interviewId: string) =>
+      call<{ hint: Hint | null; interview: Interview }>(
+        "POST",
+        `/v1/interviews/${interviewId}/hints/next`,
+      ),
+    endInterview: (interviewId: string) =>
+      call<Interview>("POST", `/v1/interviews/${interviewId}/end`),
+    interviewReport: (interviewId: string) =>
+      call<InterviewReport>("GET", `/v1/interviews/${interviewId}/report`),
     revealReference: (attemptId: string) =>
       call<{ reference: string; attempt: Attempt }>(
         "POST",

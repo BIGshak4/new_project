@@ -279,6 +279,11 @@ def every_route():
         ("POST", f"{BASE}/{aid}/hints/next", None), ("POST", f"{BASE}/{aid}/reference", None),
         ("POST", f"{BASE}/{aid}/submissions", {"answer": "x"}), ("POST", f"{BASE}/{aid}/follow-ups/1/submissions", {"answer": "x"}),
         ("POST", f"{BASE}/{aid}/submissions/1/retry", None),
+        # mock interviews
+        ("POST", "/v1/interviews", {"duration_min": 20}), ("GET", "/v1/interviews", None),
+        ("GET", f"/v1/interviews/{aid}", None), ("POST", f"/v1/interviews/{aid}/turns/0/answer", {"answer": "x"}),
+        ("POST", f"/v1/interviews/{aid}/hints/next", None), ("POST", f"/v1/interviews/{aid}/end", None),
+        ("GET", f"/v1/interviews/{aid}/report", None),
     ]
 
 
@@ -304,6 +309,8 @@ class TestEveryRouteIsProtected:
             normalized.add((m, "/".join(parts)))
         normalized = {(m, p.replace(f"/{Q}", "/{key_or_id}").replace("/follow-ups/1/", "/follow-ups/{turn}/")
                        .replace("/submissions/1/retry", "/submissions/{revision}/retry")) for m, p in normalized}
+        normalized = {(m, p.replace("/v1/interviews/{attempt_id}", "/v1/interviews/{interview_id}")
+                       .replace("/turns/0/answer", "/turns/{turn_index}/answer")) for m, p in normalized}
         assert v1 == normalized, f"routes without a protection test: {v1 - normalized}"
 
     async def test_another_users_attempt_is_404_on_every_route(self, client, user):

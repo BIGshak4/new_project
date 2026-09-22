@@ -12,6 +12,7 @@ from app.auth import AuthenticatedUser, current_user
 from app.config import get_settings
 from app.repo import cache
 from app.repo.users import Access, resolve_access
+from app.services.interview_service import InterviewService
 from app.services.practice_service import PracticeService
 
 
@@ -47,5 +48,13 @@ def practice_service(request: Request) -> PracticeService:
     return runtime.practice
 
 
+def interview_service(request: Request) -> InterviewService:
+    runtime = getattr(request.app.state, "runtime", None)
+    if runtime is None or getattr(runtime, "interview", None) is None:
+        raise ApiError("evaluation_unavailable", "the interview service is not started", status=503)
+    return runtime.interview
+
+
 CurrentAccess = Annotated[Access, Depends(current_access)]
 Practice = Annotated[PracticeService, Depends(practice_service)]
+Interview = Annotated[InterviewService, Depends(interview_service)]

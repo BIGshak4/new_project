@@ -194,6 +194,16 @@ class InterviewView(BaseModel):
     report_ready: bool
 
 
+class InterviewListItem(BaseModel):
+    id: str
+    status: str
+    duration_min: int | None = None
+    language: str | None = None
+    turn_count: int
+    started_at: str | None = None
+    ended_at: str | None = None
+
+
 class FitView(BaseModel):
     fit_score: float | None
     skills_total: int

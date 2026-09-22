@@ -264,7 +264,13 @@ class InterviewService:
                 await self._persist(user_id, row, [open_turn] if open_turn else [], state=state)
             return self._view(stored, state)
 
-    async def report(self, user_id: uuid.UUID, session_id: uuid.UUID) -> InterviewReportView:
+    async def report(self, user_id: uuid.UUID, session_id: uuid.UUID, *, narrative: bool = True) -> InterviewReportView:
+        """The report; `narrative=False` returns the plain (template) narrative without waiting for the model."""
+        if not narrative:
+            stored, plan, state, _, _ = await self._load(user_id, session_id)
+            if stored.row["status"] != "completed":
+                raise ApiError("conflict", "the report is available once the interview is over")
+            return self._report_view(stored, self._report_data(state, plan, stored.row))
         async with self._lock(session_id):
             stored, plan, state, engine, _ = await self._load(user_id, session_id)
             row, language = stored.row, stored.row["config"]["language"]
@@ -272,7 +278,7 @@ class InterviewService:
                 raise ApiError("conflict", "the report is available once the interview is over")
             data = self._report_data(state, plan, row)
             wrapper = row["state"]
-            if wrapper.get("narrative") is None:
+            if wrapper.get("narrative") is None and self.config.narrative:
                 labels = self.catalog.skill_labels()
                 text, source = await reporter.narrative(self.provider if self.config.narrative else None, data,
                                                         language=language, labels=labels, glossary=self.catalog.glossary)

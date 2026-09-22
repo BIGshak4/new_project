@@ -58,6 +58,9 @@ class Settings(BaseSettings):
     allow_in_review_content: bool = False
     # The coach's "next question" comes only from reviewed, published questions; none published = no suggestion.
     suggest_reviewed_only: bool = True
+    # Mock interviews ask only reviewed, published bank questions (never generated); none = no interview.
+    interview_reviewed_only: bool = True
+    interview_daily_limit: int = 5
 
     default_language: str = "en"
     default_role: str = "digital-hardware-engineer"

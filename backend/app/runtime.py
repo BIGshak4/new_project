@@ -12,6 +12,7 @@ from app.config import Settings
 from app.engine.catalog import Catalog, load_catalog
 from app.engine.providers import Provider, build_provider
 from app.services.demo_provider import DemoProvider
+from app.services.interview_service import InterviewConfig, InterviewService
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
 from app.services.storage_images import StorageImageFetcher
@@ -26,6 +27,7 @@ class Runtime:
     practice: PracticeService
     store_kind: str                                  # database | memory
     image_fetcher: StorageImageFetcher | None = None  # set when answer photos can be read for the evaluator
+    interview: InterviewService | None = None        # mock interviews
 
     async def aclose(self) -> None:
         if self.image_fetcher is not None:
@@ -58,9 +60,14 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                            polish_tips=settings.llm_provider == "anthropic",
                            suggest_reviewed_only=settings.suggest_reviewed_only)
     fetcher = make_image_fetcher(settings)
+    interview_config = InterviewConfig(role=settings.default_role, company=settings.default_company,
+                                       default_language=settings.default_language,
+                                       daily_limit=settings.interview_daily_limit,
+                                       reviewed_only=settings.interview_reviewed_only,
+                                       narrative=settings.llm_provider == "anthropic")
     return Runtime(catalog=catalog, provider=provider, store=store,
                    practice=PracticeService(store, catalog, provider, config, image_fetcher=fetcher), store_kind=kind,
-                   image_fetcher=fetcher)
+                   image_fetcher=fetcher, interview=InterviewService(store, catalog, provider, interview_config))
 
 
 def make_image_fetcher(settings: Settings) -> StorageImageFetcher | None:

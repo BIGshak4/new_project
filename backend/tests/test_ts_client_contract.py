@@ -20,7 +20,10 @@ pytestmark = pytest.mark.skipif(not CLIENT.exists(), reason="apps/web not checke
 MODELS = {"QuestionSummary": "QuestionSummary", "QuestionDetail": "QuestionDetail", "HintView": "Hint",
           "CheckView": "Check", "CardView": "Card", "TipView": "Tip", "SubmissionView": "Submission",
           "FollowUpView": "FollowUp", "AttemptView": "Attempt", "SkillProgress": "SkillProgress",
-          "ProgressView": "Progress", "Me": "Me"}
+          "ProgressView": "Progress", "Me": "Me",
+          "InterviewView": "Interview", "InterviewTurnView": "InterviewTurn", "InterviewPlanSkill": "InterviewPlanSkill",
+          "InterviewListItem": "InterviewListItem", "FitView": "Fit", "SkillReportView": "SkillReport",
+          "LabelledSkill": "LabelledSkill", "InterviewReportView": "InterviewReport"}
 
 
 def ts_fields(source: str, type_name: str) -> set[str]:
