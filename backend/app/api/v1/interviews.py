@@ -27,6 +27,7 @@ from pydantic import BaseModel, Field
 from app.api.deps import CurrentAccess, Interview
 from app.api.errors import ApiError
 from app.schemas.api import HintView, InterviewListItem, InterviewReportView, InterviewTurnView, InterviewView
+from app.schemas.visual_answer import VisualAnswer
 from app.services.interview_service import DURATIONS, InterviewService
 
 router = APIRouter(prefix="/v1/interviews", tags=["interviews"])
@@ -40,8 +41,13 @@ class StartInterviewRequest(BaseModel):
     language: str | None = Field(None, pattern="^(en|he)$")
 
 
+class InterviewAnswerBody(BaseModel):
+    text: str = Field("", max_length=20_000)
+    visual: VisualAnswer | None = None
+
+
 class InterviewAnswerRequest(BaseModel):
-    answer: str | dict = Field(..., description="the answer text, or an object with a text field")
+    answer: InterviewAnswerBody | str = Field(..., description="the answer text, or {text, visual}")
     idempotency_key: str | None = Field(None, min_length=1, max_length=128)
     latency_ms: int | None = Field(None, ge=0, description="time from question shown to submit, if measured")
 
@@ -92,7 +98,8 @@ async def get_interview(interview_id: InterviewId, access: CurrentAccess, interv
 async def answer(interview_id: InterviewId, turn_index: Annotated[int, Path(ge=0)], body: InterviewAnswerRequest,
                  access: CurrentAccess, interviews: Interview, idempotency_key: IdempotencyKey = None):
     key = idempotency_key or body.idempotency_key or str(uuid.uuid4())
-    task = asyncio.ensure_future(interviews.answer(access.user_id, interview_id, turn_index, body.answer,
+    answer = body.answer if isinstance(body.answer, str) else body.answer.model_dump(mode="json")
+    task = asyncio.ensure_future(interviews.answer(access.user_id, interview_id, turn_index, answer,
                                                    idempotency_key=key, latency_ms=body.latency_ms))
     _background.add(task)
     task.add_done_callback(_done)

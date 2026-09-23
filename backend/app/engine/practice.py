@@ -39,13 +39,13 @@ from pydantic import BaseModel, Field, ValidationError
 from app.engine import (
     ENGINE_VERSION,
     checks,
-    circuit_text,
     evaluator,
     feedback,
     generator,
     scores,
     skill_controller,
     tips,
+    visual_evidence,
 )
 from app.engine.evaluator import EvaluationResult
 from app.engine.feedback import FeedbackCard
@@ -510,29 +510,8 @@ class PracticeAttempt:
 
     async def _visual_evidence(self, visual: VisualAnswer) -> tuple[str | None, list[tuple[str, bytes]], int, list[str], str]:
         """What a drawing or photos add to the answer: (circuit text, fetched images, images missing, flags, check lines)."""
-        circuit, images, missing, flags, lines = None, [], 0, [], ""
-        if visual.circuit is not None and visual.circuit.parts:
-            circuit = circuit_text.describe(visual.circuit)
-            lines = circuit_text.check_lines(visual.circuit)
-            flags.append("circuit_assessed")
-        if visual.images:
-            fetcher = self.ctx.image_fetcher
-            for image in visual.images:
-                fetched = None
-                if fetcher is not None:
-                    try:
-                        fetched = await fetcher(image.path)
-                    except Exception as exc:                    # noqa: BLE001 - a photo must never break the evaluation
-                        log.warning("image fetch raised path=%s error=%s", image.path, exc)
-                if fetched is None:
-                    missing += 1
-                else:
-                    images.append(fetched)
-            if images:
-                flags.append("images_assessed")
-            if missing:
-                flags.append("images_not_assessed" if fetcher is None else "images_unavailable")
-        return circuit, images, missing, flags, lines
+        evidence = await visual_evidence.gather(visual, self.ctx.image_fetcher)
+        return evidence.circuit, evidence.images, evidence.missing, evidence.flags, evidence.check_lines
 
     async def _evaluate(self, submission: Submission, *, latency_ms: int | None, revision_count: int | None) -> PracticeOutcome:
         circuit, images, images_missing, visual_flags, check_lines = None, [], 0, [], ""

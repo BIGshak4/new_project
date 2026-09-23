@@ -65,6 +65,12 @@ async def table(name: str) -> Table:
     return metadata.tables[f"public.{name}"]
 
 
+async def has_table(name: str) -> bool:
+    """Whether the reflected schema has this table (a migration that is written but not yet applied has none)."""
+    metadata = await get_metadata()
+    return f"public.{name}" in metadata.tables
+
+
 async def dispose() -> None:
     global _engine, _metadata, _reflect_lock
     if _engine is not None:

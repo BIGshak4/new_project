@@ -67,7 +67,7 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                                        narrative=settings.llm_provider == "anthropic")
     return Runtime(catalog=catalog, provider=provider, store=store,
                    practice=PracticeService(store, catalog, provider, config, image_fetcher=fetcher), store_kind=kind,
-                   image_fetcher=fetcher, interview=InterviewService(store, catalog, provider, interview_config))
+                   image_fetcher=fetcher, interview=InterviewService(store, catalog, provider, interview_config, image_fetcher=fetcher))
 
 
 def make_image_fetcher(settings: Settings) -> StorageImageFetcher | None:

@@ -139,6 +139,24 @@ class BankQuestion(BaseModel):
         return f"{prompt}\n\n```{self.assets.get('code_language') or ''}\n{code.rstrip()}\n```"
 
 
+class JobType(BaseModel):
+    """A kind of job a candidate interviews for (verification, FPGA, embedded ...). It does not add skills:
+    it re-weights the role's skills, so the plan, the next-question suggestion and the mock interview lean
+    toward what that job asks about. Skills not listed keep emphasis 1.0."""
+
+    key: str
+    label: dict[str, str]                      # language -> label
+    description: dict[str, str] = Field(default_factory=dict)
+    emphasis: dict[str, float] = Field(default_factory=dict)   # skill key -> multiplier (0.3 .. 2.0)
+
+    def weight(self, skill: str) -> float:
+        return self.emphasis.get(skill, 1.0)
+
+    def text(self, field_name: str, language: str) -> str:
+        values = getattr(self, field_name)
+        return values.get(language) or values.get("en") or next(iter(values.values()), "")
+
+
 class TipCondition(BaseModel):
     signal: str
     op: str

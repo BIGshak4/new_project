@@ -98,6 +98,11 @@ class AttemptView(BaseModel):
     next_question: NextQuestionView | None = None   # the latest suggestion, kept across refreshes
 
 
+class LabelledSkill(BaseModel):
+    key: str
+    label: str
+
+
 class SkillProgress(BaseModel):
     key: str
     label: str
@@ -127,12 +132,82 @@ class SubjectProgress(BaseModel):
     questions_available: int
 
 
+class GoalView(BaseModel):
+    """What the user is preparing for. Asked once at the start; editable any time."""
+
+    job_type: str | None = None                 # a key from GET /v1/job-types
+    job_type_label: str | None = None
+    interview_date: str | None = None           # ISO date
+    days_to_interview: int | None = None        # negative once the date has passed
+    minutes_per_day: int | None = None
+    seniority: str | None = None                # student | junior | mid | senior | staff | principal
+    complete: bool = False                      # job type and minutes are known: the onboarding was answered
+
+
+class JobTypeView(BaseModel):
+    key: str
+    label: str
+    description: str
+
+
+class CompanyView(BaseModel):
+    slug: str
+    name: str
+    questions: int                              # distinct questions reported at this company
+    sightings: int                              # reports in total
+
+
+class ProgressOverview(BaseModel):
+    """The one card that should make the user feel the distance covered: counts and a level in words, no percentages."""
+
+    answered: int                               # scored answers so far
+    strong: int
+    partial: int
+    weak: int
+    skills_assessed: int
+    skills_total: int                           # skills in the plan for this user's goal
+    level: str                                  # a word: Getting started | Awareness | Foundational | Proficient | Advanced | Expert
+    level_rank: int                             # 0..5, for the meter
+    message: str                                # one encouraging sentence in the practice language
+
+
+class TimelinePoint(BaseModel):
+    day: str                                    # ISO date
+    answered: int
+    strong: int
+    partial: int
+    weak: int
+    level: float | None = None                  # average assessed level across skills at the end of that day
+
+
+class PlanItemView(BaseModel):
+    day_index: int                              # 0 = today
+    date: str                                   # ISO date
+    mode: str                                   # quick | deep | simulation | diagnostic | retention_check
+    skills: list[LabelledSkill] = Field(default_factory=list)
+    minutes: int
+    reason: str
+    done: bool = False                          # today's items: an answer covered one of these skills today
+
+
+class PlanView(BaseModel):
+    items: list[PlanItemView] = Field(default_factory=list)
+    minutes_per_day: int
+    days_to_interview: int | None = None
+    interview_date: str | None = None
+    generated_for: str                          # ISO date the plan starts on (today)
+
+
 class ProgressView(BaseModel):
     skills: list[SkillProgress]
     subjects: list[SubjectProgress] = Field(default_factory=list)
     recent: list[dict]
     attempts_today: int
     daily_limit: int
+    overview: ProgressOverview | None = None
+    timeline: list[TimelinePoint] = Field(default_factory=list)
+    plan: PlanView | None = None
+    goal: GoalView | None = None
 
 
 # ----------------------------------------------------------------------------- mock interviews
@@ -162,6 +237,8 @@ class InterviewTurnView(BaseModel):
     status: str                                 # open | evaluating | done | failed
     hints: list[HintView] = Field(default_factory=list)
     answer: str | None = None
+    visual: VisualAnswer | None = None          # a drawn circuit and/or photos sent with the answer
+    flags: list[str] = Field(default_factory=list)   # circuit_assessed | images_assessed | images_unavailable | ...
     asked_at: str
     answered_at: str | None = None
     # revealed only when the session is completed
@@ -230,11 +307,6 @@ class SkillReportView(BaseModel):
     importance: str
     strengths: list[str] = Field(default_factory=list)
     gaps: list[str] = Field(default_factory=list)
-
-
-class LabelledSkill(BaseModel):
-    key: str
-    label: str
 
 
 class InterviewReportView(BaseModel):

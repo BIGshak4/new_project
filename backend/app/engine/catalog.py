@@ -14,7 +14,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field, ValidationError
 
 from app.engine import checks
-from app.schemas.bank import LANGUAGES, BankQuestion, Tip
+from app.schemas.bank import LANGUAGES, BankQuestion, JobType, Tip
 from app.schemas.engine import CatalogSkill, CompanySkillRow, RoleSkillRow
 
 SENIORITIES = ("student", "junior", "mid", "senior", "staff", "principal")
@@ -60,6 +60,7 @@ class Catalog:
     questions: dict[str, BankQuestion] = field(default_factory=dict)
     tips: dict[str, Tip] = field(default_factory=dict)
     glossary: list[dict] = field(default_factory=list)
+    job_types: dict[str, JobType] = field(default_factory=dict)
 
     @property
     def leaf_skills(self) -> dict[str, CatalogSkill]:
@@ -134,6 +135,19 @@ def load_catalog(seeds_dir: Path, *, strict: bool = True) -> Catalog:
     glossary_path = seeds_dir / "glossary.json"
     if glossary_path.exists():
         catalog.glossary = _load_json(glossary_path)
+    job_types_path = seeds_dir / "job_types.json"
+    if job_types_path.exists():
+        for item in _load_json(job_types_path):
+            job = parse(JobType, item, f"job_types.json:{item.get('key')}")
+            if job:
+                if job.key in catalog.job_types:
+                    problems.append(f"job_types.json: duplicate job type {job.key!r}")
+                for skill_key, value in job.emphasis.items():
+                    if skill_key not in catalog.skills:
+                        problems.append(f"job_types.json:{job.key}: unknown skill {skill_key!r}")
+                    if not 0.2 <= value <= 2.5:
+                        problems.append(f"job_types.json:{job.key}: emphasis for {skill_key} out of range ({value})")
+                catalog.job_types[job.key] = job
 
     problems.extend(validate(catalog))
     if problems and strict:

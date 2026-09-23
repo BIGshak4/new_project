@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 
 from app.api.errors import ApiError
-from app.engine import bank, checks, evaluator, generator, reporter, subject_router
+from app.engine import bank, checks, evaluator, generator, reporter, subject_router, visual_evidence
 from app.engine.catalog import Catalog
 from app.engine.plan import merge_skill_sets
 from app.engine.practice import UsageEvent
@@ -32,6 +32,7 @@ from app.engine.providers import Provider
 from app.engine.reporter import ReportData
 from app.engine.session import SessionEngine
 from app.engine.skill_controller import ControllerResult
+from app.engine.visual_evidence import ImageFetcher
 from app.repo.profiles import LoadedProfile, StaleProfile
 from app.repo.sessions import StaleSession, StoredSession
 from app.schemas.api import (
@@ -55,6 +56,7 @@ from app.schemas.engine import (
     SkillState,
     SkillStatus,
 )
+from app.schemas.visual_answer import VisualAnswer
 from app.services.store import Store
 
 log = logging.getLogger("app.interview")
@@ -78,11 +80,13 @@ class InterviewConfig:
 
 
 class InterviewService:
-    def __init__(self, store: Store, catalog: Catalog, provider: Provider, config: InterviewConfig | None = None):
+    def __init__(self, store: Store, catalog: Catalog, provider: Provider, config: InterviewConfig | None = None, *,
+                 image_fetcher: ImageFetcher | None = None):
         self.store, self.catalog, self.provider = store, catalog, provider
         self.config = config or InterviewConfig()
+        self.image_fetcher = image_fetcher               # None: photos are kept but not shown to the evaluator
         self._locks: dict[uuid.UUID, asyncio.Lock] = {}
-        self._plans: dict[tuple[str, int], tuple[list[PlanSkill], int, int]] = {}
+        self._plans: dict[tuple[str, int, str | None], tuple[list[PlanSkill], int, int]] = {}
         self.clock = lambda: datetime.now(UTC)        # tests replace it to move the interview clock
         self._question_ids: dict[str, str] = {}       # question key -> database id, filled when the pool is listed
 
@@ -101,10 +105,12 @@ class InterviewService:
                 raise ApiError("usage_limit", f"you have started {started} interviews today; the limit is "
                                f"{self.config.daily_limit}", headers={"Retry-After": "3600"})
             profile = await tx.load_profile(user_id)
-            seniority = await tx.user_seniority(user_id) or "student"
+            goal = await tx.load_goal(user_id)
+            seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
             servable = await tx.list_questions(language=language)
         pool = self._pool(servable)
-        plan, ceiling, baseline = self._plan(seniority, duration_min)
+        job_type = goal.job_type if goal.job_type in self.catalog.job_types else None
+        plan, ceiling, baseline = self._plan(seniority, duration_min, job_type)
         plan = self._covered(plan, pool, language)
         priors = {k: (s.k, s.c) for k, s in profile.states.items() if s.k is not None and s.c is not None}
         # the session starts from the profile's scores (k, c) but counts its own turns: the report is about
@@ -126,7 +132,7 @@ class InterviewService:
                "started_at": now, "ended_at": None, "state": wrapper,
                "config": {"language": language, "duration_min": duration_min, "role": self.config.role,
                           "company": self.config.company, "reviewed_only": self.config.reviewed_only,
-                          "plan": [p.model_dump(mode="json") for p in plan]}}
+                          "job_type": job_type, "plan": [p.model_dump(mode="json") for p in plan]}}
         turns = [self._new_turn(0, decision, question, language, now)]
         async with self.store.transaction() as tx:
             await tx.save_session(user_id=user_id, row=row, turns=turns, plan=row["config"]["plan"],
@@ -160,31 +166,47 @@ class InterviewService:
                     and not self._stale(meta):
                 raise ApiError("conflict", "this answer is being evaluated")
             text = answer.get("text", "") if isinstance(answer, dict) else str(answer or "")
-            text = text.strip()
-            if not text:
+            text = (text or "").strip()
+            visual = self._visual(answer)
+            if not text and visual is None:
                 raise ApiError("validation", "an answer is required (say what you would try, even if unsure)")
             if len(text) > 20_000:
                 raise ApiError("validation", "the answer is too long (20,000 characters at most)")
+            if visual is not None and visual.images:
+                async with self.store.transaction() as tx:
+                    if not await tx.validate_answer_images(user_id, session_id, visual.images):
+                        raise ApiError("validation", "an answer image is missing or does not belong to this interview")
             question = self.catalog.questions[turn["question_key"]]
 
             # 1. keep the answer before the model is called
             now = self._stamp()
             turn["answer_text"] = text
             turn["answer_submitted_at"] = now
-            meta.update(status="evaluating", idempotency_key=idempotency_key, evaluating_since=now)
+            meta.update(status="evaluating", idempotency_key=idempotency_key, evaluating_since=now,
+                        answer_visual=visual.model_dump(mode="json") if visual is not None else None)
             await self._persist(user_id, row, [turn], state=state)
 
             # 2. check + evaluate. Whatever goes wrong from here on, the turn ends "failed", never stuck in
             #    "evaluating": the candidate keeps the saved text and may send it again.
             try:
-                check = (await asyncio.to_thread(checks.run_check, question.deterministic_check, text)
-                         if question.deterministic_check else None)
+                evidence = await visual_evidence.gather(visual, self.image_fetcher)
+                if not text and not evidence.has_content:
+                    # only photos the server cannot read: keep them for a human, judge nothing, say so
+                    meta.update(status="failed", evaluating_since=None, flags=["visual_review_pending", *evidence.flags])
+                    await self._persist(user_id, row, [turn], state=state)
+                    return self._turn_view(turn, language, revealed=False), self._view(stored, state)
+                # a drawn circuit contributes its derived functions ("alarm = (A & B) | ...") to the check
+                checked = (text + "\n" + evidence.check_lines).strip() if evidence.check_lines else text
+                check = (await asyncio.to_thread(checks.run_check, question.deterministic_check, checked)
+                         if question.deterministic_check and checked else None)
                 skill = self.catalog.skills[question.primary_skill]
                 result = await evaluator.evaluate(
                     self.provider, question_context=evaluator.question_block(question, language, skill),
                     known_error_keys={e.key for e in question.common_errors}, language=language,
                     difficulty=turn["difficulty"], answer=text, check=check, hint_level=meta.get("hint_level", 0),
-                    glossary=self.catalog.glossary)
+                    glossary=self.catalog.glossary, circuit=evidence.circuit, images=evidence.images,
+                    images_missing=evidence.missing)
+                result.flags = [*result.flags, *evidence.flags]
                 usage_rows = ([UsageEvent("evaluate", result.model, result.usage, result.latency_ms).as_row("simulation")]
                               if result.model else [])
                 turn["check_result"] = check.model_dump(mode="json") if check else None
@@ -328,15 +350,31 @@ class InterviewService:
         status = meta.get("status", "open")
         return "failed" if status == "evaluating" and self._stale(meta) else status
 
-    def _plan(self, seniority: str, duration_min: int) -> tuple[list[PlanSkill], int, int]:
-        key = (seniority, duration_min)
+    @staticmethod
+    def _visual(answer) -> VisualAnswer | None:
+        raw = answer.get("visual") if isinstance(answer, dict) else None
+        if not raw:
+            return None
+        try:
+            visual = VisualAnswer.model_validate(raw)
+        except ValueError as exc:
+            raise ApiError("validation", "invalid visual answer") from exc
+        return visual if visual.has_content else None
+
+    def _plan(self, seniority: str, duration_min: int, job_type: str | None = None) -> tuple[list[PlanSkill], int, int]:
+        """The interview plan for a seniority, a length and the user's job type (which re-weights the role's skills)."""
+        job = self.catalog.job_types.get(job_type) if job_type else None
+        key = (seniority, duration_min, job.key if job else None)
         if key not in self._plans:
             role = self.catalog.roles[self.config.role]
             company = self.catalog.companies[self.config.company]
             if seniority not in role.seniority_profiles:
                 seniority = next(iter(role.seniority_profiles))
             profile = role.seniority_profiles[seniority]
-            plan = merge_skill_sets(role_rows=role.skill_set, company_rows=company.skill_set, focus_skill_keys=[],
+            rows = role.skill_set
+            if job is not None:
+                rows = [row.model_copy(update={"weight": row.weight * job.weight(row.skill)}) for row in rows]
+            plan = merge_skill_sets(role_rows=rows, company_rows=company.skill_set, focus_skill_keys=[],
                                     company_weight_share=company.company_weight_share, seniority=seniority,
                                     planned_duration_min=duration_min, catalog=self.catalog.leaf_skills)
             ceiling = getattr(profile, "difficulty_ceiling", 5)
@@ -542,6 +580,8 @@ class InterviewService:
             trial=bool(meta.get("trial", False)),
             status=self._effective_status(meta), hints=[HintView(**h) for h in meta.get("hints", [])],
             answer=turn.get("answer_text"), asked_at=turn.get("asked_at") or turn.get("created_at"),
+            visual=VisualAnswer.model_validate(meta["answer_visual"]) if meta.get("answer_visual") else None,
+            flags=[f for f in meta.get("flags", []) if isinstance(f, str)],
             answered_at=turn.get("answer_submitted_at"),
             band=meta.get("band") if revealed else None, summary=meta.get("summary") if revealed else None,
             key_points_hit=meta.get("key_points_hit", []) if revealed else [],

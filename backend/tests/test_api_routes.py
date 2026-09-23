@@ -284,6 +284,10 @@ def every_route():
         ("GET", f"/v1/interviews/{aid}", None), ("POST", f"/v1/interviews/{aid}/turns/0/answer", {"answer": "x"}),
         ("POST", f"/v1/interviews/{aid}/hints/next", None), ("POST", f"/v1/interviews/{aid}/end", None),
         ("GET", f"/v1/interviews/{aid}/report", None),
+        # goal, job types, company sightings
+        ("GET", "/v1/me/goal", None), ("POST", "/v1/me/goal", {"job_type": "verification", "minutes_per_day": 30}),
+        ("GET", "/v1/job-types", None), ("GET", "/v1/companies", None),
+        ("POST", f"/v1/questions/{Q}/sightings", {"company": "Intel"}),
     ]
 
 

@@ -1,0 +1,78 @@
+[
+  {
+    "key": "digital_design",
+    "label": {"en": "Digital design (RTL)", "he": "תכנון ספרתי (RTL)"},
+    "description": {"en": "Logic design, timing, state machines and RTL coding for ASIC or FPGA teams.",
+                    "he": "תכנון לוגי, תזמונים, מכונות מצבים וכתיבת RTL לצוותי ASIC או FPGA."},
+    "emphasis": {
+      "boolean_algebra": 1.3, "truth_tables": 1.2, "combinational_blocks": 1.4, "binary_arithmetic": 1.2,
+      "universal_gates": 1.1, "latches_flip_flops": 1.4, "registers_shifters": 1.3, "counters": 1.3,
+      "reset_strategies": 1.3, "edge_detection": 1.3, "setup_hold_timing": 1.5, "clock_domain_crossing": 1.5,
+      "fsm_moore_mealy": 1.4, "fsm_state_tables": 1.4, "fsm_sequence_detectors": 1.4, "fsm_controllers": 1.4,
+      "fsm_state_encoding": 1.3, "hdl_blocking_nonblocking": 1.4, "hdl_combinational_coding": 1.4,
+      "hdl_sequential_coding": 1.4, "testbench_basics": 0.8, "bit_manipulation": 0.7, "arrays_and_search": 0.5,
+      "basic_data_structures": 0.5, "code_debugging": 0.7
+    }
+  },
+  {
+    "key": "verification",
+    "label": {"en": "Verification", "he": "וריפיקציה"},
+    "description": {"en": "Testbenches, stimulus and checking, debugging RTL and understanding the design under test.",
+                    "he": "טסטבנצ'ים, גירויים ובדיקות, דיבוג RTL והבנת התכן הנבדק."},
+    "emphasis": {
+      "testbench_basics": 1.8, "hdl_sequential_coding": 1.3, "hdl_blocking_nonblocking": 1.3, "hdl_combinational_coding": 1.1,
+      "code_debugging": 1.5, "debugging_methodology": 1.5, "fsm_state_tables": 1.2, "fsm_sequence_detectors": 1.1,
+      "fsm_controllers": 1.1, "basic_data_structures": 1.1, "bit_manipulation": 1.2, "reset_strategies": 1.1,
+      "setup_hold_timing": 0.8, "universal_gates": 0.5, "fsm_state_encoding": 0.8, "tradeoff_reasoning": 1.1,
+      "risk_awareness": 1.2
+    }
+  },
+  {
+    "key": "fpga",
+    "label": {"en": "FPGA engineering", "he": "הנדסת FPGA"},
+    "description": {"en": "RTL for FPGAs: timing closure, resets, clock domains, IP integration and lab debugging.",
+                    "he": "RTL ל-FPGA: סגירת תזמונים, איפוסים, תחומי שעון, שילוב IP ודיבוג במעבדה."},
+    "emphasis": {
+      "hdl_blocking_nonblocking": 1.4, "hdl_combinational_coding": 1.4, "hdl_sequential_coding": 1.4,
+      "setup_hold_timing": 1.4, "clock_domain_crossing": 1.4, "reset_strategies": 1.3, "fsm_moore_mealy": 1.3,
+      "fsm_state_tables": 1.3, "fsm_sequence_detectors": 1.2, "fsm_controllers": 1.3, "fsm_state_encoding": 1.2,
+      "counters": 1.2, "registers_shifters": 1.2, "combinational_blocks": 1.1, "testbench_basics": 1.1,
+      "debugging_methodology": 1.2, "arrays_and_search": 0.6, "basic_data_structures": 0.6
+    }
+  },
+  {
+    "key": "embedded_firmware",
+    "label": {"en": "Embedded and firmware", "he": "מערכות משובצות וקושחה"},
+    "description": {"en": "C on microcontrollers: registers, bit fields, interrupts, memory and debugging on hardware.",
+                    "he": "C על מיקרו-בקרים: רגיסטרים, שדות ביטים, פסיקות, זיכרון ודיבוג על חומרה."},
+    "emphasis": {
+      "bit_manipulation": 1.6, "code_debugging": 1.5, "basic_data_structures": 1.3, "arrays_and_search": 1.3,
+      "number_representation": 1.3, "binary_arithmetic": 1.2, "debugging_methodology": 1.4, "fsm_controllers": 1.1,
+      "registers_shifters": 1.0, "counters": 0.9, "edge_detection": 0.9, "setup_hold_timing": 0.6,
+      "clock_domain_crossing": 0.6, "hdl_blocking_nonblocking": 0.5, "hdl_combinational_coding": 0.5,
+      "hdl_sequential_coding": 0.5, "testbench_basics": 0.5, "universal_gates": 0.5
+    }
+  },
+  {
+    "key": "software",
+    "label": {"en": "Software engineering", "he": "הנדסת תוכנה"},
+    "description": {"en": "Algorithms, data structures, debugging and clean reasoning for software roles.",
+                    "he": "אלגוריתמים, מבני נתונים, דיבוג וחשיבה מסודרת לתפקידי תוכנה."},
+    "emphasis": {
+      "arrays_and_search": 1.6, "basic_data_structures": 1.6, "code_debugging": 1.5, "bit_manipulation": 1.2,
+      "debugging_methodology": 1.3, "number_representation": 1.0, "tradeoff_reasoning": 1.1, "structured_communication": 1.1,
+      "boolean_algebra": 0.5, "truth_tables": 0.5, "combinational_blocks": 0.4, "universal_gates": 0.3,
+      "latches_flip_flops": 0.3, "registers_shifters": 0.3, "counters": 0.3, "reset_strategies": 0.3,
+      "edge_detection": 0.3, "setup_hold_timing": 0.3, "clock_domain_crossing": 0.3, "fsm_moore_mealy": 0.5,
+      "fsm_state_tables": 0.6, "fsm_sequence_detectors": 0.5, "fsm_controllers": 0.8, "fsm_state_encoding": 0.3,
+      "hdl_blocking_nonblocking": 0.3, "hdl_combinational_coding": 0.3, "hdl_sequential_coding": 0.3, "testbench_basics": 0.4
+    }
+  },
+  {
+    "key": "student_general",
+    "label": {"en": "Student position, general hardware", "he": "משרת סטודנט, חומרה כללית"},
+    "description": {"en": "A first hardware role: the fundamentals in balance, nothing emphasised over the rest.",
+                    "he": "תפקיד חומרה ראשון: יסודות באיזון, בלי הדגשה של תחום אחד."},
+    "emphasis": {}
+  }
+]

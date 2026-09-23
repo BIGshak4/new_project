@@ -37,6 +37,54 @@ export type QuestionSummary = {
   reviewed?: boolean;
   /** "on trial": being checked live before publication; show a badge */
   trial?: boolean;
+  /** job types (keys from jobTypes()) this question is relevant to */
+  job_types?: string[];
+  /** "I saw it at ..." tags, most reported first */
+  companies?: CompanyTag[];
+  /** how well it fits the requested job type; only set when listQuestions was called with a job */
+  relevance?: number | null;
+};
+
+/** "Seen at company X" by `count` candidates. Aggregated, never who. */
+export type CompanyTag = { slug: string; name: string; count: number };
+
+export type JobType = { key: string; label: string; description: string };
+
+export type Company = {
+  slug: string;
+  name: string;
+  questions: number;
+  sightings: number;
+};
+
+/** What the user is preparing for. Asked once at the start; editable any time. */
+export type Goal = {
+  job_type: string | null;
+  job_type_label: string | null;
+  /** ISO date */
+  interview_date: string | null;
+  /** negative once the date has passed */
+  days_to_interview: number | null;
+  minutes_per_day: number | null;
+  seniority: Seniority | null;
+  /** job type and minutes are known: the onboarding was answered */
+  complete: boolean;
+};
+
+export type Seniority =
+  | "student"
+  | "junior"
+  | "mid"
+  | "senior"
+  | "staff"
+  | "principal";
+
+export type GoalRequest = {
+  job_type?: string | null;
+  interview_date?: string | null;
+  minutes_per_day?: number | null;
+  seniority?: Seniority | null;
+  language?: ApiLang;
 };
 
 export type QuestionDetail = QuestionSummary & {
@@ -170,9 +218,57 @@ export type SubjectProgress = {
   questions_available: number;
 };
 
+/** The one card meant to inspire: counts and a level in words, never a percentage. */
+export type ProgressOverview = {
+  answered: number;
+  strong: number;
+  partial: number;
+  weak: number;
+  skills_assessed: number;
+  skills_total: number;
+  /** Getting started | Awareness | Foundational | Proficient | Advanced | Expert (localised) */
+  level: string;
+  /** 0..5 for the meter */
+  level_rank: number;
+  message: string;
+};
+
+export type TimelinePoint = {
+  day: string;
+  answered: number;
+  strong: number;
+  partial: number;
+  weak: number;
+  /** average assessed level across skills at the end of that day */
+  level: number | null;
+};
+
+export type PlanItem = {
+  /** 0 = today */
+  day_index: number;
+  date: string;
+  mode: "quick" | "deep" | "simulation" | "diagnostic" | "retention_check" | string;
+  skills: LabelledSkill[];
+  minutes: number;
+  reason: string;
+  done: boolean;
+};
+
+export type Plan = {
+  items: PlanItem[];
+  minutes_per_day: number;
+  days_to_interview: number | null;
+  interview_date: string | null;
+  generated_for: string;
+};
+
 export type Progress = {
   skills: SkillProgress[];
   subjects: SubjectProgress[];
+  overview?: ProgressOverview | null;
+  timeline?: TimelinePoint[];
+  plan?: Plan | null;
+  goal?: Goal | null;
   recent: {
     id: string;
     question_key: string;
@@ -217,6 +313,10 @@ export type InterviewTurn = {
   status: InterviewTurnStatus;
   hints: Hint[];
   answer: string | null;
+  /** a drawn circuit and/or photos sent with the answer */
+  visual?: VisualAnswer | null;
+  /** circuit_assessed | images_assessed | images_unavailable | visual_review_pending ... */
+  flags?: string[];
   asked_at: string;
   answered_at: string | null;
   band: Band | null;
@@ -447,12 +547,31 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
         "/health",
       ),
     me: () => call<Me>("GET", "/v1/me"),
-    progress: () => call<Progress>("GET", "/v1/me/progress"),
+    progress: (language?: ApiLang) =>
+      call<Progress>("GET", `/v1/me/progress${q({ language })}`),
+    getGoal: (language?: ApiLang) =>
+      call<Goal>("GET", `/v1/me/goal${q({ language })}`),
+    saveGoal: (body: GoalRequest) => call<Goal>("POST", "/v1/me/goal", body),
+    jobTypes: (language: ApiLang) =>
+      call<JobType[]>("GET", `/v1/job-types${q({ language })}`),
+    companies: () => call<Company[]>("GET", "/v1/companies"),
 
-    listQuestions: (language: ApiLang, subject?: string) =>
+    /** With `job`, only questions relevant to that job type, most relevant first. `company` is a name or slug. */
+    listQuestions: (
+      language: ApiLang,
+      subject?: string,
+      filters: { job?: string; company?: string } = {},
+    ) =>
       call<QuestionSummary[]>(
         "GET",
-        `/v1/questions${q({ language, subject })}`,
+        `/v1/questions${q({ language, subject, job: filters.job, company: filters.company })}`,
+      ),
+    /** "I saw this question at company X". Resolves with the question's company tags afterwards. */
+    addSighting: (keyOrId: string, company: string) =>
+      call<{ companies: CompanyTag[] }>(
+        "POST",
+        `/v1/questions/${encodeURIComponent(keyOrId)}/sightings`,
+        { company },
       ),
     getQuestion: (keyOrId: string, language: ApiLang) =>
       call<QuestionDetail>(
@@ -480,14 +599,21 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
     answerInterview: (
       interviewId: string,
       turnIndex: number,
-      answer: string,
+      answer: string | { text: string; visual?: VisualAnswer | null },
       idempotencyKey: string,
       latencyMs?: number,
     ) =>
       call<{ turn: InterviewTurn; interview: Interview }>(
         "POST",
         `/v1/interviews/${interviewId}/turns/${turnIndex}/answer`,
-        { answer, idempotency_key: idempotencyKey, latency_ms: latencyMs },
+        {
+          answer:
+            typeof answer === "string"
+              ? answer
+              : { text: answer.text, visual: answer.visual ?? null },
+          idempotency_key: idempotencyKey,
+          latency_ms: latencyMs,
+        },
         { "Idempotency-Key": idempotencyKey },
       ),
     interviewHint: (interviewId: string) =>

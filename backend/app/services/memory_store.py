@@ -14,6 +14,8 @@ from app.repo.attempts import AlreadyEvaluated, DuplicateSubmissionKey, StoredAt
 from app.repo.profiles import LoadedProfile, StaleProfile, derived_columns
 from app.repo.questions import LoadedQuestion, QuestionSummary, summary
 from app.repo.sessions import StaleSession, StoredSession
+from app.repo.sightings import SightingsUnavailable, clean_name, slugify
+from app.repo.users import Goal
 from app.schemas.engine import SkillState
 
 
@@ -28,6 +30,9 @@ class InMemoryStore:
         self.tips: list[dict] = []
         self.sessions: dict[uuid.UUID, dict] = {}                 # interview id -> {user_id, row, turns, plan, created_at}
         self.seniority: dict[uuid.UUID, str] = {}
+        self.goals: dict[uuid.UUID, Goal] = {}
+        self.sightings: list[dict] = []                            # {question_id, user_id, company_name, company_slug}
+        self.sightings_enabled = True                              # False imitates a database without the table
         self.answer_images: dict[str, dict] = {}                 # storage fixture metadata
         self.failures: set[str] = set()                           # names of operations that should raise (tests)
         self.fail_once: set[str] = set()                          # ... only the next time
@@ -42,13 +47,14 @@ class InMemoryStore:
         # so rolling back means restoring the containers, not the rows (a full deepcopy per action
         # made every action slower as the store grew)
         snapshot = (dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips),
-                    dict(self.sessions))
+                    dict(self.sessions), dict(self.goals), list(self.sightings))
         commits_before = self._commits
         try:
             yield _MemoryTx(self)
         except BaseException:
             if self._commits == commits_before:
-                self.attempts, self.profiles, self.metrics, self.usage, self.tips, self.sessions = snapshot
+                (self.attempts, self.profiles, self.metrics, self.usage, self.tips, self.sessions, self.goals,
+                 self.sightings) = snapshot
             raise
         self._commits += 1
 
@@ -82,6 +88,64 @@ class _MemoryTx:
             if self._servable(q) and (subject is None or q.subject == subject):
                 out.append(summary(LoadedQuestion(id=self.s.question_id(q.key), question=q, version=q.version), language))
         return out
+
+    # ------------------------------------------------------------------ company sightings and the goal
+
+    async def sightings_for(self, question_ids):
+        wanted = {str(i) for i in question_ids}
+        counts: dict[str, dict[str, dict]] = {}
+        for row in self.s.sightings:
+            if row["question_id"] in wanted:
+                tag = counts.setdefault(row["question_id"], {}).setdefault(
+                    row["company_slug"], {"slug": row["company_slug"], "name": row["company_name"], "count": 0})
+                tag["count"] += 1
+        return {qid: sorted(tags.values(), key=lambda t: (-t["count"], t["slug"])) for qid, tags in counts.items()}
+
+    async def add_sighting(self, *, question_id, user_id, company):
+        if not self.s.sightings_enabled:
+            raise SightingsUnavailable("company tags are not enabled on this database yet")
+        name, slug = clean_name(company), slugify(company)
+        if not name or not slug:
+            raise ValueError("a company name is required")
+        row = {"question_id": str(question_id), "user_id": user_id, "company_name": name, "company_slug": slug}
+        if not any(r["question_id"] == row["question_id"] and r["user_id"] == user_id and r["company_slug"] == slug
+                   for r in self.s.sightings):
+            self.s.sightings.append(row)
+        return slug
+
+    async def question_ids_for_company(self, slug):
+        return {r["question_id"] for r in self.s.sightings if r["company_slug"] == slug}
+
+    async def companies(self):
+        out: dict[str, dict] = {}
+        for r in self.s.sightings:
+            entry = out.setdefault(r["company_slug"], {"slug": r["company_slug"], "name": r["company_name"],
+                                                       "questions": set(), "sightings": 0})
+            entry["questions"].add(r["question_id"])
+            entry["sightings"] += 1
+        rows = [{**e, "questions": len(e["questions"])} for e in out.values()]
+        return sorted(rows, key=lambda c: (-c["questions"], c["slug"]))
+
+    async def load_goal(self, user_id):
+        goal = self.s.goals.get(user_id)
+        if goal is None:
+            return Goal(seniority=self.s.seniority.get(user_id))
+        return Goal(**goal.__dict__)
+
+    async def save_goal(self, user_id, goal):
+        self.s.goals[user_id] = Goal(**goal.__dict__)
+        if goal.seniority:
+            self.s.seniority[user_id] = goal.seniority
+        return goal
+
+    async def daily_bands(self, user_id):
+        out: dict[str, dict] = {}
+        for a in sorted(self.s.attempts.values(), key=lambda a: a["started_at"]):
+            if a["user_id"] == user_id and a["row"]["band"]:
+                key = a["started_at"].date().isoformat()
+                entry = out.setdefault(key, {"day": key, "STRONG": 0, "PARTIAL": 0, "WEAK": 0})
+                entry[a["row"]["band"]] = entry.get(a["row"]["band"], 0) + 1
+        return [out[k] for k in sorted(out)]
 
     async def load_attempt(self, attempt_id, *, user_id):
         stored = self.s.attempts.get(attempt_id)

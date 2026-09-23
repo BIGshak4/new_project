@@ -207,3 +207,20 @@ async def seen_question_keys(connection: AsyncConnection, user_id: uuid.UUID, *,
         select(question.c.key).join(attempt, attempt.c.question_id == question.c.id)
         .where(attempt.c.user_id == user_id, attempt.c.started_at >= since).distinct())
     return {row.key for row in rows}
+
+
+async def daily_bands(connection: AsyncConnection, user_id: uuid.UUID, *, days: int = 60) -> list[dict]:
+    """Scored answers per UTC day, oldest first: {day, STRONG, PARTIAL, WEAK}. The progress graph's input."""
+    attempt = await db.table("attempt")
+    since = datetime.now(UTC) - timedelta(days=days)
+    day = func.date_trunc("day", attempt.c.started_at).label("day")
+    rows = (await connection.execute(
+        select(day, attempt.c.band, func.count())
+        .where(attempt.c.user_id == user_id, attempt.c.band.is_not(None), attempt.c.started_at >= since)
+        .group_by(day, attempt.c.band).order_by(day))).all()
+    out: dict[str, dict] = {}
+    for when, band, n in rows:
+        key = when.date().isoformat()
+        entry = out.setdefault(key, {"day": key, "STRONG": 0, "PARTIAL": 0, "WEAK": 0})
+        entry[str(band)] = entry.get(str(band), 0) + int(n)
+    return [out[k] for k in sorted(out)]

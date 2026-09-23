@@ -22,11 +22,12 @@ from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine
 
 from app import db
-from app.repo import attempts, events, profiles, questions, sessions
+from app.repo import attempts, events, profiles, questions, sessions, sightings, users
 from app.repo.attempts import DuplicateSubmissionKey, StoredAttempt
 from app.repo.profiles import LoadedProfile, StaleProfile
 from app.repo.questions import LoadedQuestion, QuestionSummary
 from app.repo.sessions import StoredSession
+from app.repo.users import Goal
 from app.schemas.engine import SkillState
 
 __all__ = ["DuplicateSubmissionKey", "StaleProfile", "Store", "Tx", "DbStore"]
@@ -36,6 +37,14 @@ class Tx(Protocol):
     async def validate_answer_images(self, user_id: uuid.UUID, attempt_id: uuid.UUID, images: list) -> bool: ...
     async def load_question(self, *, key: str | None = None, question_id: uuid.UUID | None = None) -> LoadedQuestion | None: ...
     async def list_questions(self, *, language: str, subject: str | None = None) -> list[QuestionSummary]: ...
+    # company sightings ("I saw it at X") and the user's goal
+    async def sightings_for(self, question_ids: list[str]) -> dict[str, list[dict]]: ...
+    async def add_sighting(self, *, question_id: str, user_id: uuid.UUID, company: str) -> str: ...
+    async def question_ids_for_company(self, slug: str) -> set[str]: ...
+    async def companies(self) -> list[dict]: ...
+    async def load_goal(self, user_id: uuid.UUID) -> Goal: ...
+    async def save_goal(self, user_id: uuid.UUID, goal: Goal) -> Goal: ...
+    async def daily_bands(self, user_id: uuid.UUID) -> list[dict]: ...
     async def load_attempt(self, attempt_id: uuid.UUID, *, user_id: uuid.UUID) -> StoredAttempt | None: ...
     async def save_attempt(self, *, user_id: uuid.UUID, question_id: uuid.UUID, row: dict,
                            revisions: set[int] | None = None, known_revisions: int = 0) -> None: ...
@@ -90,6 +99,28 @@ class DbTx:
     async def list_questions(self, *, language, subject=None):
         return await questions.list_questions(self.connection, language=language, subject=subject,
                                               allow_in_review=self.allow_in_review)
+
+    async def sightings_for(self, question_ids):
+        found = await sightings.for_questions(self.connection, [uuid.UUID(str(i)) for i in question_ids])
+        return {str(k): v for k, v in found.items()}
+
+    async def add_sighting(self, *, question_id, user_id, company):
+        return await sightings.add(self.connection, question_id=uuid.UUID(str(question_id)), user_id=user_id, company=company)
+
+    async def question_ids_for_company(self, slug):
+        return {str(i) for i in await sightings.question_ids_for_company(self.connection, slug)}
+
+    async def companies(self):
+        return await sightings.companies(self.connection)
+
+    async def load_goal(self, user_id):
+        return await users.load_goal(self.connection, user_id)
+
+    async def save_goal(self, user_id, goal):
+        return await users.save_goal(self.connection, user_id, goal)
+
+    async def daily_bands(self, user_id):
+        return await attempts.daily_bands(self.connection, user_id)
 
     async def load_attempt(self, attempt_id, *, user_id):
         return await attempts.load(self.connection, attempt_id, user_id=user_id)

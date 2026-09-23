@@ -17,7 +17,7 @@ from __future__ import annotations
 import uuid
 from dataclasses import dataclass
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncConnection
 
@@ -28,6 +28,14 @@ from app.schemas.engine import Archetype
 
 SERVABLE_STATUSES = ("published", "trial")           # trial: checked live by the founders, badged in the app
 DEVELOPMENT_STATUSES = ("published", "trial", "in_review")
+
+
+class CompanyTag(BaseModel):
+    """'Seen at company X' by n candidates. Aggregated; never who."""
+
+    slug: str
+    name: str
+    count: int
 
 
 class QuestionSummary(BaseModel):
@@ -47,6 +55,9 @@ class QuestionSummary(BaseModel):
     has_check: bool = False
     reviewed: bool = False                     # published, or on trial by the founders' choice: what the coach may suggest
     trial: bool = False                        # "on trial": being checked live before publication; the app badges it
+    job_types: list[str] = Field(default_factory=list)          # job types this question is relevant to (keys)
+    companies: list[CompanyTag] = Field(default_factory=list)   # "I saw it at ..." tags, most reported first
+    relevance: float | None = None             # how well it fits the requested job type (set only when one is asked)
 
 
 class QuestionDetail(QuestionSummary):
