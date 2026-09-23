@@ -219,9 +219,12 @@ class PracticeService:
                            question_id: uuid.UUID | None = None) -> QuestionDetail:
         async with self.store.transaction() as tx:
             loaded = await tx.load_question(key=key, question_id=question_id)
-        if loaded is None:
-            raise ApiError("not_found", "this question does not exist or is not available")
-        return detail(loaded, self._language(language))
+            if loaded is None:
+                raise ApiError("not_found", "this question does not exist or is not available")
+            tags = await tx.sightings_for([str(loaded.id)])
+        view = detail(loaded, self._language(language))
+        return view.model_copy(update={"job_types": self._job_types_for(loaded.question),
+                                       "companies": [CompanyTag(**t) for t in tags.get(str(loaded.id), [])]})
 
     # ------------------------------------------------------------------ attempts
 

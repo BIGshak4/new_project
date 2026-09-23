@@ -133,6 +133,7 @@ export function VisualAnswer({
   userId,
   disabled,
   onUploading,
+  photos = true,
 }: {
   value: Visual;
   onChange?: (v: Visual) => void;
@@ -141,6 +142,8 @@ export function VisualAnswer({
   userId?: string;
   disabled?: boolean;
   onUploading?: (busy: boolean) => void;
+  /** false hides the photo upload (a place where the storage bucket does not accept uploads yet) */
+  photos?: boolean;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [open, setOpen] = useState(!!value.circuit?.parts.length),
@@ -229,16 +232,18 @@ export function VisualAnswer({
                   ? t("עריכת המעגל", "Edit circuit")
                   : t("שרטוט מעגל לוגי", "Draw a logic circuit")}
             </button>
-            <button
-              type="button"
-              disabled={disabled || uploading || value.images.length >= 4}
-              onClick={() => fileInput.current?.click()}
-            >
-              <ImagePlus size={18} />
-              {uploading
-                ? t("מעלים תמונה…", "Uploading image…")
-                : t("צירוף תמונת פתרון", "Attach answer image")}
-            </button>
+            {photos && (
+              <button
+                type="button"
+                disabled={disabled || uploading || value.images.length >= 4}
+                onClick={() => fileInput.current?.click()}
+              >
+                <ImagePlus size={18} />
+                {uploading
+                  ? t("מעלים תמונה…", "Uploading image…")
+                  : t("צירוף תמונת פתרון", "Attach answer image")}
+              </button>
+            )}
             <input
               ref={fileInput}
               type="file"
@@ -253,11 +258,21 @@ export function VisualAnswer({
             />
           </div>
           <p className="small muted">
-            {t(
-              "אפשר לשלב הסבר, קוד, מעגל ותמונות — או לשלוח רק שרטוט. עד 4 תמונות, כל אחת עד 10 מגה־בייט לפני התאמה. קבצים נתמכים:",
-              "Combine explanation, code, a circuit and images — or submit a drawing on its own. Up to 4 images, 10 MB each before resizing. Formats:",
-            )}{" "}
-            <bdi>JPG, PNG, WebP</bdi>.
+            {photos
+              ? t(
+                  "אפשר לשלב הסבר, קוד, מעגל ותמונות — או לשלוח רק שרטוט. עד 4 תמונות, כל אחת עד 10 מגה־בייט לפני התאמה. קבצים נתמכים:",
+                  "Combine explanation, code, a circuit and images — or submit a drawing on its own. Up to 4 images, 10 MB each before resizing. Formats:",
+                )
+              : t(
+                  "אפשר לשלב הסבר, קוד ומעגל — או לשלוח רק שרטוט.",
+                  "Combine explanation, code and a circuit — or submit a drawing on its own.",
+                )}
+            {photos && (
+              <>
+                {" "}
+                <bdi>JPG, PNG, WebP</bdi>.
+              </>
+            )}
           </p>
         </>
       )}

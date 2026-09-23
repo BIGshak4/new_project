@@ -11,16 +11,22 @@ import {
   ArrowUpRight,
   RotateCcw,
   Mic,
+  Briefcase,
+  Building2,
 } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
 import { Auth, type Lang } from "../components/auth";
 import { PracticeSession } from "../components/practice-session";
-import { SubjectCharts } from "../components/subject-charts";
+import { GoalSetup } from "../components/goal-setup";
+import { OverviewCard, PlanTable, ProgressGraph } from "../components/progress-board";
 import { InterviewSession } from "../components/interview-session";
 import { supabase } from "../lib/supabase";
 import {
   practiceApi,
+  type Company,
+  type Goal,
+  type JobType,
   type Progress,
   type QuestionSummary,
 } from "../lib/practice-api";
@@ -120,6 +126,24 @@ function Workspace({
   const [progressLoading, setProgressLoading] = useState(true);
   const [entriesLoading, setEntriesLoading] = useState(true);
   const [cachedQuestions, setCachedQuestions] = useState(false);
+  // the user's goal drives the default job filter, the plan and the onboarding card
+  const [goal, setGoal] = useState<Goal | null>(null);
+  const [goalSkipped, setGoalSkipped] = useState(true);
+  const [editingGoal, setEditingGoal] = useState(false);
+  const [jobs, setJobs] = useState<JobType[]>([]);
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [jobFilter, setJobFilter] = useState(""),
+    [companyQuery, setCompanyQuery] = useState("");
+  const jobFilterTouched = useRef(false);
+  const [jobQuestions, setJobQuestions] = useState<QuestionSummary[] | null>(null);
+  const skipKey = `jobrun-goal-skipped-${user.id}`;
+  useEffect(() => {
+    try {
+      setGoalSkipped(localStorage.getItem(skipKey) === "1");
+    } catch {
+      setGoalSkipped(false);
+    }
+  }, [skipKey]);
 
   useEffect(() => {
     const sync = () => setRoute(currentRoute());
@@ -175,7 +199,7 @@ function Workspace({
           }
         }),
       api
-        .progress()
+        .progress(lang)
         .then((p) => {
           if (current()) {
             setProgress(p);
@@ -186,6 +210,22 @@ function Workspace({
         .finally(() => {
           if (current()) setProgressLoading(false);
         }),
+      api
+        .getGoal(lang)
+        .then((g) => {
+          if (!current()) return;
+          setGoal(g);
+          if (!jobFilterTouched.current) setJobFilter(g.job_type ?? "");
+        })
+        .catch(() => {}),
+      api
+        .jobTypes(lang)
+        .then((list) => current() && setJobs(list))
+        .catch(() => {}),
+      api
+        .companies()
+        .then((list) => current() && setCompanies(list))
+        .catch(() => {}),
       Promise.resolve(
         supabase
           .from("jr_practice_entries")
@@ -222,23 +262,62 @@ function Workspace({
   }, [load]);
   const refreshProgress = useCallback(() => {
     api
-      .progress()
+      .progress(lang)
       .then(setProgress)
       .catch(() => {});
-  }, [api]);
+  }, [api, lang]);
+  // a job filter asks the server for the relevance order; without one the plain (cached) list is shown
+  useEffect(() => {
+    if (!jobFilter) {
+      setJobQuestions(null);
+      return;
+    }
+    let cancelled = false;
+    api
+      .listQuestions(lang, undefined, { job: jobFilter })
+      .then((list) => {
+        if (!cancelled) setJobQuestions(list);
+      })
+      .catch(() => {
+        if (!cancelled) setJobQuestions(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [api, lang, jobFilter, questions.length]);
+  const onGoalSaved = (g: Goal) => {
+    setGoal(g);
+    setEditingGoal(false);
+    if (!jobFilterTouched.current) setJobFilter(g.job_type ?? "");
+    refreshProgress();
+  };
+  const skipGoal = () => {
+    setGoalSkipped(true);
+    try {
+      localStorage.setItem(skipKey, "1");
+    } catch {}
+  };
   const onSaved = (entry: Entry) =>
     setEntries((old) => mergeEntries(old, [entry]));
   const active = !!(route.question || route.attempt);
   const topics = [...new Set(questions.map((q) => q.subject))];
-  const filtered = questions.filter(
+  const shown = jobFilter && jobQuestions ? jobQuestions : questions;
+  const companyNeedle = companyQuery.trim().toLowerCase();
+  const filtered = shown.filter(
     (q) =>
       (subject === "all" || q.subject === subject) &&
       `${q.title} ${subjectLabel(q.subject, lang)}`
         .toLowerCase()
         .includes(query.toLowerCase()) &&
+      (!companyNeedle ||
+        (q.companies ?? []).some(
+          (c) => c.name.toLowerCase().includes(companyNeedle) || c.slug.includes(companyNeedle),
+        )) &&
       (route.view !== "bookmarks" ||
         entries.some((e) => e.question_id === q.id && e.bookmarked)),
   );
+  const showGoalSetup =
+    route.view === "library" && goal !== null && !goal.complete && !goalSkipped;
   const daily = questions.length
     ? questions[Math.floor(Date.now() / 86400000) % questions.length]
     : null;
@@ -464,85 +543,42 @@ function Workspace({
               ) : ((route.view === "progress" || route.view === "history") &&
                   !progressReady) ||
                 (route.view === "bookmarks" &&
-                  !entriesReady) ? null : route.view === "progress" && demo ? (
-                <div className="empty-column">
-                  <h2>
-                    {t(
-                      "הערכת המיומנויות תחובר בהמשך",
-                      "Skill assessment is coming later",
-                    )}
-                  </h2>
-                  <p>
-                    {t(
-                      "הפתרונות והרמזים שביקשתם נשמרים. אחרי חיבור העוזר נוכל להציג כאן הערכה מקצועית; כרגע לא מוצגים ציוני הדגמה.",
-                      "Your solutions and hint usage are saved. Once the assistant is connected, skill assessments can appear here. Demo scores are hidden.",
-                    )}
-                  </p>
-                </div>
-              ) : route.view === "progress" ? (
-                <>
-                  <h2>
-                    {demo
-                      ? t("מדדי הדגמה", "Demo metrics")
-                      : t("המיומנויות שלי", "My skills")}
-                  </h2>
-                  <p className="muted">
-                    {t(
-                      "דיווח עצמי, סימניות והשלמת תרגול נשמרים בנפרד מהערכת המיומנויות.",
-                      "Self-ratings, bookmarks and completion are separate from skill assessments.",
-                    )}
-                  </p>
-                  <SubjectCharts subjects={progress.subjects ?? []} lang={lang} />
-                  <div className="question-table">
-                    {progress.skills.map((s) => (
-                      <div className="progress-row" key={s.key}>
-                        <div>
-                          <h3 dir="auto">{s.label}</h3>
-                          <p className="muted small">
-                            {s.status === "not_assessed"
-                              ? t("טרם נאספו תשובות", "No evidence yet")
-                              : s.status === "insufficient_evidence"
-                                ? t(
-                                    "הערכה ראשונית · נדרשות עוד תשובות",
-                                    "Provisional · more answers needed",
-                                  )
-                                : t(
-                                    "מבוסס על תרגולים שנשלחו",
-                                    "Based on submitted practice",
-                                  )}
-                          </p>
-                        </div>
-                        <div>
-                          <span className="badge">
-                            {s.level === null
-                              ? t("טרם הוערך", "Not assessed")
-                              : `${s.level} / 5`}
-                          </span>
-                          <p className="small muted">
-                            {s.trend === "improving"
-                              ? t("מגמת שיפור", "Improving")
-                              : s.trend === "declining"
-                                ? t("נדרש חיזוק", "Needs reinforcement")
-                                : s.trend === "new"
-                                  ? t("מדידה חדשה", "New measurement")
-                                  : t("יציב", "Stable")}
-                          </p>
-                        </div>
-                        <span className="small">
-                          {s.assessments} {t("הערכות", "assessments")}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  {!progress.skills.length && (
-                    <div className="empty-column">
+                  !entriesReady) ? null : route.view === "progress" ? (
+                <div className="progress-board">
+                  {demo ? (
+                    <p className="notice">
                       {t(
-                        "אחרי שליחת התשובה הראשונה יופיעו כאן מדדים.",
-                        "Metrics appear after your first submission.",
+                        "עוזר התרגול עדיין אינו מחובר בסביבה הזו, ולכן לא מוצגים ציוני הדגמה. התוכנית עד הראיון פועלת.",
+                        "The practice assistant is not connected in this environment, so demo scores are hidden. The plan until the interview works.",
                       )}
-                    </div>
+                    </p>
+                  ) : (
+                    progress.overview && (
+                      <OverviewCard
+                        overview={progress.overview}
+                        goal={progress.goal ?? goal}
+                        lang={lang}
+                        onEditGoal={() => setEditingGoal((v) => !v)}
+                      />
+                    )
                   )}
-                </>
+                  {(editingGoal || (demo && goal && !goal.complete)) && (
+                    <GoalSetup
+                      api={api}
+                      lang={lang}
+                      goal={goal}
+                      compact
+                      onSaved={onGoalSaved}
+                      onSkip={editingGoal ? () => setEditingGoal(false) : undefined}
+                    />
+                  )}
+                  {!demo && <ProgressGraph timeline={progress.timeline ?? []} lang={lang} />}
+                  <PlanTable
+                    plan={progress.plan ?? null}
+                    lang={lang}
+                    onEditGoal={() => setEditingGoal(true)}
+                  />
+                </div>
               ) : route.view === "history" ? (
                 <>
                   <h2>{t("תרגולים אחרונים", "Recent attempts")}</h2>
@@ -623,7 +659,10 @@ function Workspace({
                 </>
               ) : (
                 <>
-                  {route.view === "library" && daily && (
+                  {showGoalSetup && (
+                    <GoalSetup api={api} lang={lang} goal={goal} onSaved={onGoalSaved} onSkip={skipGoal} />
+                  )}
+                  {route.view === "library" && daily && !showGoalSetup && (
                     <section className="daily-panel">
                       <div>
                         <h2>{t("שאלה אחת להיום", "One question for today")}</h2>
@@ -667,7 +706,48 @@ function Workspace({
                         </option>
                       ))}
                     </select>
+                    <label className="filter-select">
+                      <Briefcase size={16} aria-hidden="true" />
+                      <select
+                        aria-label={t("סוג תפקיד", "Job type")}
+                        value={jobFilter}
+                        onChange={(e) => {
+                          jobFilterTouched.current = true;
+                          setJobFilter(e.target.value);
+                        }}
+                      >
+                        <option value="">{t("כל התפקידים", "All job types")}</option>
+                        {jobs.map((j) => (
+                          <option key={j.key} value={j.key}>
+                            {j.label}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <div className="search company-search">
+                      <Building2 size={16} />
+                      <input
+                        list="company-list"
+                        aria-label={t("חיפוש לפי חברה", "Search by company")}
+                        placeholder={t("חברה שבה נשאלה…", "Asked at company…")}
+                        value={companyQuery}
+                        onChange={(e) => setCompanyQuery(e.target.value)}
+                      />
+                      <datalist id="company-list">
+                        {companies.map((c) => (
+                          <option key={c.slug} value={c.name} />
+                        ))}
+                      </datalist>
+                    </div>
                   </div>
+                  {jobFilter && (
+                    <p className="small muted filter-note" role="status">
+                      {t(
+                        "השאלות מסודרות לפי הרלוונטיות לתפקיד שבחרתם. השאלה הראשונה היא הכי חשובה לכם עכשיו.",
+                        "Questions are ordered by relevance to the job you chose. The first one matters most to you right now.",
+                      )}
+                    </p>
+                  )}
                   <div className="question-table">
                     {filtered.map((q, i) => (
                       <button
@@ -691,6 +771,12 @@ function Workspace({
                               (e) => e.question_id === q.id && e.bookmarked,
                             )
                               ? " · " + t("שמורה", "Saved")
+                              : ""}
+                            {q.companies && q.companies.length > 0
+                              ? " · " +
+                                t("נשאלה ב", "Asked at") +
+                                " " +
+                                q.companies.slice(0, 3).map((c) => c.name).join(", ")
                               : ""}
                           </span>
                         </div>

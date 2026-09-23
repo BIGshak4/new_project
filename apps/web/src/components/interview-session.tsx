@@ -1,9 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Clock3, Lightbulb, Mic, Square } from "lucide-react";
+import { ArrowLeft, ArrowRight, Clock3, Cpu, Lightbulb, Mic, Square } from "lucide-react";
 import type { Lang } from "./auth";
 import { AnswerEditor } from "./answer-editor";
+import { VisualAnswer } from "./visual-answer";
+import { emptyVisual, hasVisual, type VisualAnswer as Visual } from "../lib/circuit";
 import {
   newIdempotencyKey,
   type Interview,
@@ -26,6 +28,9 @@ type Props = {
 };
 
 const DURATIONS = [20, 30, 45] as const;
+// Photos in the interview need the storage rule in supabase/migrations/20260923000001_interview_answer_images.sql.
+// Until it is applied the bucket refuses interview paths, so only the circuit drawing is offered.
+const INTERVIEW_PHOTOS = false;
 
 /** The mock interview: a lobby to start one, then the timed room, then the report. */
 export function InterviewSession(props: Props) {
@@ -142,6 +147,8 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
   const [interview, setInterview] = useState<Interview | null>(null);
   const [report, setReport] = useState<InterviewReport | null>(null);
   const [answer, setAnswer] = useState("");
+  const [visual, setVisual] = useState<Visual>(emptyVisual);
+  const [uploading, setUploading] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [deadline, setDeadline] = useState<number | null>(null);
@@ -167,8 +174,11 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
       .then((i) => {
         if (!live.current) return;
         apply(i);
-        const draft = readLocal<{ answer?: string; turn?: number }>(draftKey);
-        if (draft && draft.turn === i.current_turn?.index) setAnswer(draft.answer ?? "");
+        const draft = readLocal<{ answer?: string; turn?: number; visual?: Visual }>(draftKey);
+        if (draft && draft.turn === i.current_turn?.index) {
+          setAnswer(draft.answer ?? "");
+          setVisual(draft.visual ?? emptyVisual());
+        }
       })
       .catch((e) => live.current && setError(apiMessage(e, lang)));
   }, [api, interviewId, apply, draftKey, lang]);
@@ -196,8 +206,8 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
   }, [api, interviewId, interview?.status, report, lang]);
 
   useEffect(() => {
-    if (interview?.current_turn) writeLocal(draftKey, { answer, turn: interview.current_turn.index });
-  }, [answer, draftKey, interview?.current_turn]);
+    if (interview?.current_turn) writeLocal(draftKey, { answer, visual, turn: interview.current_turn.index });
+  }, [answer, visual, draftKey, interview?.current_turn]);
 
   async function submit() {
     if (!interview?.current_turn || busy) return;
@@ -208,13 +218,19 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
     setBusy(true);
     setError("");
     try {
-      const result = await api.answerInterview(interviewId, turn.index, answer, key);
+      const result = await api.answerInterview(
+        interviewId,
+        turn.index,
+        { text: answer, visual: hasVisual(visual) ? visual : null },
+        key,
+      );
       if (live.current) {
         apply(result.interview);
         if (result.turn.status === "failed") {
-          setAnswer(result.turn.answer ?? answer);       // keep the text: the candidate may send it again
+          setAnswer(result.turn.answer ?? answer);       // keep the text and the drawing: the candidate may send again
         } else {
           setAnswer("");
+          setVisual(emptyVisual());
           removeLocal(draftKey);
         }
       }
@@ -319,9 +335,24 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
           ) : (
             <>
               <AnswerEditor value={answer} onChange={setAnswer} lang={lang} disabled={busy} codeLanguage={null} starterCode={null} />
+              <VisualAnswer
+                value={visual}
+                onChange={setVisual}
+                lang={lang}
+                attemptId={interviewId}
+                userId={userId}
+                disabled={busy}
+                onUploading={setUploading}
+                photos={INTERVIEW_PHOTOS}
+              />
               {turn.status === "failed" && (
                 <p className="notice">
-                  {t("ההערכה לא הושלמה. אפשר לשלוח את התשובה שוב.", "The evaluation did not finish. You can send your answer again.")}
+                  {turn.flags?.includes("visual_review_pending")
+                    ? t(
+                        "התמונות נשמרו, אבל השרת הזה לא יכול לקרוא אותן. הוסיפו הסבר במילים או שרטוט ושלחו שוב.",
+                        "Your photos are saved, but this server cannot read them. Add a written explanation or a drawing and send again.",
+                      )
+                    : t("ההערכה לא הושלמה. אפשר לשלוח את התשובה שוב.", "The evaluation did not finish. You can send your answer again.")}
                 </p>
               )}
               {error && <p className="notice error" role="alert">{error}</p>}
@@ -334,7 +365,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
                 </p>
               )}
               <div className="row interview-actions">
-                <button className="primary" disabled={busy || !answer.trim()} onClick={() => void submit()}>
+                <button className="primary" disabled={busy || uploading || (!answer.trim() && !hasVisual(visual))} onClick={() => void submit()}>
                   {busy ? t("שולחים…", "Sending…") : t("שליחת התשובה", "Send answer")} <Arrow size={16} />
                 </button>
                 {interview.can_hint && secondsLeft > 0 && (
@@ -507,6 +538,12 @@ function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang }) {
       </div>
       <p className="interview-prompt" dir="auto">{x.question}</p>
       {x.answer && <p className="report-answer" dir="auto">{x.answer}</p>}
+      {x.visual && hasVisual(x.visual) && <VisualAnswer value={x.visual} lang={lang} />}
+      {x.flags?.includes("circuit_assessed") && (
+        <span className="chip">
+          <Cpu size={14} /> {t("המעגל שציירתם נבדק", "Your circuit was assessed")}
+        </span>
+      )}
       {x.summary && <p dir="auto"><strong>{t("סיכום:", "Summary:")}</strong> {x.summary}</p>}
       {x.key_points_missed.length > 0 && (
         <p className="small" dir="auto">

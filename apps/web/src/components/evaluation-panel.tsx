@@ -80,7 +80,8 @@ export function EvaluationPanel({
         ],
       ]
     : [];
-  const Arrow = lang === "he" ? ArrowLeft : ArrowRight;
+  const missed = [...s.key_points_missed];
+  if (s.check && s.check.passed === false && s.check.detail) missed.push(s.check.detail);
   return (
     <div className={`evaluation tone-${tone}`}>
       <header className="evaluation-head">
@@ -108,95 +109,107 @@ export function EvaluationPanel({
         </div>
       </header>
 
-      <div className="evaluation-chips" aria-label={t("פרטי ההערכה", "Assessment details")}>
-        {s.check && (
-          <span className={`chip check-${s.check.passed === null ? "none" : s.check.passed}`}>
-            {s.check.passed === true
-              ? t("בדיקה אוטומטית עברה", "Automatic check passed")
-              : s.check.passed === false
-                ? t("בדיקה אוטומטית נכשלה", "Automatic check failed")
-                : t("בדיקה אוטומטית לא הכריעה", "Automatic check inconclusive")}
-          </span>
-        )}
-        {flags.has("circuit_assessed") && (
-          <span className="chip">
-            <Cpu size={14} /> {t("המעגל שציירתם נבדק", "Your circuit was assessed")}
-          </span>
-        )}
-        {flags.has("images_assessed") && (
-          <span className="chip">
-            <ImageIcon size={14} /> {t("התמונות נבדקו", "Your photos were assessed")}
-          </span>
-        )}
-        {photosNotAssessed && (
-          <span className="chip chip-warn">
-            <ImageIcon size={14} /> {t("התמונות לא נבדקו", "Photos not assessed")}
-          </span>
-        )}
-        <span className="chip chip-quiet">
-          {s.evidence === "full"
-            ? t("ראיה מלאה", "Full evidence")
-            : s.evidence === "reduced"
-              ? t("ראיה מופחתת", "Reduced evidence")
-              : t("ללא ראיה", "No evidence")}
-        </span>
-        {s.assessed_by === "model" && s.model && (
-          <span className="chip chip-quiet" title={s.model}>
-            {t("נבדק על ידי", "Judged by")} {modelName(s.model)}
-          </span>
-        )}
+      <div className="feedback-grid">
+        <section className="feedback-good">
+          <h4>
+            <Check size={16} aria-hidden="true" /> {t("מה היה טוב", "What was good")}
+          </h4>
+          {s.key_points_hit.length ? (
+            <ul>
+              {s.key_points_hit.map((p, i) => (
+                <li dir="auto" key={i}>
+                  {p}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="muted small">{t("הפעם לא נמצאו נקודות חזקות מובהקות.", "No clear strong points this time.")}</p>
+          )}
+        </section>
+        <section className="feedback-bad">
+          <h4>
+            <Circle size={14} aria-hidden="true" /> {t("מה היה חסר", "What was missing")}
+          </h4>
+          {missed.length ? (
+            <ul>
+              {missed.map((p, i) => (
+                <li dir="auto" key={i}>
+                  {p}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="muted small">{t("כלום. תשובה שלמה.", "Nothing. A complete answer.")}</p>
+          )}
+        </section>
       </div>
 
-      {s.check && <CheckBlock check={s.check} lang={lang} />}
-
-      {card.length > 0 && (
-        <div className="evaluation-card-grid">
-          {card.map(([label, value]) => (
-            <section className="evaluation-tile" key={label}>
-              <h4>{label}</h4>
-              <p dir="auto">{value}</p>
-            </section>
-          ))}
-        </div>
-      )}
-
-      {(s.key_points_hit.length > 0 || s.key_points_missed.length > 0) && (
-        <div className="evaluation-points">
-          {s.key_points_hit.length > 0 && (
-            <section>
-              <h4>{t("מה עשיתם היטב", "What went well")}</h4>
-              <ul>
-                {s.key_points_hit.map((p, i) => (
-                  <li dir="auto" key={i}>
-                    <Check size={16} aria-hidden="true" /> <span>{p}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-          {s.key_points_missed.length > 0 && (
-            <section>
-              <h4>{t("מה כדאי לחזק", "What to work on")}</h4>
-              <ul>
-                {s.key_points_missed.map((p, i) => (
-                  <li dir="auto" key={i}>
-                    <Circle size={14} aria-hidden="true" /> <span>{p}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-        </div>
-      )}
-
-      {s.tip && (
+      {(s.tip || s.card?.next_step) && (
         <aside className="evaluation-tip" dir="auto">
           <Lightbulb size={18} aria-hidden="true" />
-          <span>{s.tip.text}</span>
+          <div>
+            <h4>{t("טיפ לפעם הבאה", "A tip for next time")}</h4>
+            {s.tip && <p>{s.tip.text}</p>}
+            {s.card?.next_step && s.card.next_step !== s.tip?.text && <p>{s.card.next_step}</p>}
+          </div>
         </aside>
       )}
 
-      <p className="small muted">{evidenceText}</p>
+      <details className="evaluation-more">
+        <summary>{t("עוד פירוט על ההערכה", "More about this assessment")}</summary>
+        <div className="evaluation-chips" aria-label={t("פרטי ההערכה", "Assessment details")}>
+          {s.check && (
+            <span className={`chip check-${s.check.passed === null ? "none" : s.check.passed}`}>
+              {s.check.passed === true
+                ? t("בדיקה אוטומטית עברה", "Automatic check passed")
+                : s.check.passed === false
+                  ? t("בדיקה אוטומטית נכשלה", "Automatic check failed")
+                  : t("בדיקה אוטומטית לא הכריעה", "Automatic check inconclusive")}
+            </span>
+          )}
+          {flags.has("circuit_assessed") && (
+            <span className="chip">
+              <Cpu size={14} /> {t("המעגל שציירתם נבדק", "Your circuit was assessed")}
+            </span>
+          )}
+          {flags.has("images_assessed") && (
+            <span className="chip">
+              <ImageIcon size={14} /> {t("התמונות נבדקו", "Your photos were assessed")}
+            </span>
+          )}
+          {photosNotAssessed && (
+            <span className="chip chip-warn">
+              <ImageIcon size={14} /> {t("התמונות לא נבדקו", "Photos not assessed")}
+            </span>
+          )}
+          <span className="chip chip-quiet">
+            {s.evidence === "full"
+              ? t("ראיה מלאה", "Full evidence")
+              : s.evidence === "reduced"
+                ? t("ראיה מופחתת", "Reduced evidence")
+                : t("ללא ראיה", "No evidence")}
+          </span>
+          {s.assessed_by === "model" && s.model && (
+            <span className="chip chip-quiet" title={s.model}>
+              {t("נבדק על ידי", "Judged by")} {modelName(s.model)}
+            </span>
+          )}
+        </div>
+        {s.check && <CheckBlock check={s.check} lang={lang} />}
+        {card.length > 0 && (
+          <div className="evaluation-card-grid">
+            {card
+              .filter(([label]) => label !== t("מה כדאי לעשות בהמשך", "Next step"))
+              .map(([label, value]) => (
+                <section className="evaluation-tile" key={label}>
+                  <h4>{label}</h4>
+                  <p dir="auto">{value}</p>
+                </section>
+              ))}
+          </div>
+        )}
+        <p className="small muted">{evidenceText}</p>
+      </details>
     </div>
   );
 }

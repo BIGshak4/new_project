@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Bookmark,
+  Building2,
   Lightbulb,
   RotateCcw,
   Download,
@@ -24,7 +25,9 @@ import { supabase } from "../lib/supabase";
 import {
   newIdempotencyKey,
   type Attempt,
+  type CompanyTag,
   type PracticeApi,
+  type PracticeApiError,
   type QuestionDetail,
   type Submission,
 } from "../lib/practice-api";
@@ -464,6 +467,7 @@ export function PracticeSession({
                   </span>
                 </div>
                 <h1 dir="auto">{question.title}</h1>
+                <SawItAt api={api} question={question} lang={lang} />
                 {!attempt && (
                   <p className="preview-guide">
                     {t(
@@ -655,27 +659,6 @@ export function PracticeSession({
                         demo={demo}
                       />
                     )}
-                    {attempt.submission && (
-                      <FollowUps
-                        attempt={attempt}
-                        lang={lang}
-                        value={followAnswer}
-                        onChange={setFollowAnswer}
-                        onSubmit={() => void submit()}
-                        disabled={disabled}
-                        busy={busy}
-                        resend={!!pending && pending.turn !== null}
-                      />
-                    )}
-                    {attempt.status === "done" &&
-                      attempt.next_question &&
-                      !demo && (
-                        <NextUpCard
-                          next={attempt.next_question}
-                          lang={lang}
-                          onStart={(key) => onNew(key)}
-                        />
-                      )}
                     {((attempt.can_submit && !attempt.submission) ||
                       !!pending) &&
                       !attempt.can_retry && (
@@ -789,45 +772,47 @@ export function PracticeSession({
                 )}
               </section>
             </div>
-            <aside
-              className="practice-coach"
-              aria-labelledby="practice-coach-title"
-            >
-              <div className="row spread">
-                <h2 id="practice-coach-title">
-                  {t("עוזר התרגול", "Practice assistant")}
-                </h2>
-                <span className="badge">
-                  {demo
-                    ? t("יחובר בהמשך", "Coming later")
-                    : t("משוב על הפתרון", "Solution feedback")}
-                </span>
-              </div>
-              {attempt?.submission?.assessed_by === "unassessed" ? (
-                <p>
-                  {t(
-                    "התמונות שצירפתם נשמרו לבדיקה אנושית. השרת הזה עדיין לא יכול לקרוא תמונות מצורפות, ולכן לא חושב ציון ולא שונתה רמת המיומנות.",
-                    "Your attached photos are saved for human review. This server cannot read attached images yet, so no grade or skill update was generated.",
-                  )}
-                </p>
-              ) : demo || attempt?.submission?.assessed_by === "demo" ? (
-                <p>
-                  {t(
-                    "כאן תוכלו לקבל הכוונה אישית ולדון בדרך הפתרון. העוזר עדיין אינו מחובר, ולכן לא מוצגים ציונים או משובי הדגמה. בינתיים אפשר להיעזר ברמזים המדורגים ובפתרון המוצע.",
-                    "This is where you will get personal guidance and discuss your approach. The assistant is not connected yet, so demo grades and feedback are hidden. For now, use the progressive hints and reference solution.",
-                  )}
-                </p>
-              ) : attempt?.submission ? (
-                <EvaluationPanel submission={attempt.submission} lang={lang} />
-              ) : (
-                <p>
-                  {t(
-                    "אחרי שליחת הפתרון, המשוב יופיע כאן. להכוונה בזמן הפתרון אפשר להשתמש ברמזים.",
-                    "Feedback appears here after you submit. Use the hints for guidance while solving.",
-                  )}
-                </p>
-              )}
-            </aside>
+            {attempt?.submission && (
+              <section
+                className="practice-flow"
+                aria-label={t("המשוב וההמשך", "Feedback and what comes next")}
+              >
+                {attempt.submission.assessed_by === "unassessed" ? (
+                  <p className="notice">
+                    {t(
+                      "התמונות שצירפתם נשמרו לבדיקה אנושית. השרת הזה עדיין לא יכול לקרוא תמונות מצורפות, ולכן לא חושב ציון ולא שונתה רמת המיומנות.",
+                      "Your attached photos are saved for human review. This server cannot read attached images yet, so no grade or skill update was generated.",
+                    )}
+                  </p>
+                ) : demo || attempt.submission.assessed_by === "demo" ? (
+                  <p className="notice">
+                    {t(
+                      "עוזר התרגול עדיין אינו מחובר, ולכן לא מוצגים ציונים או משובי הדגמה. בינתיים אפשר להיעזר ברמזים המדורגים ובפתרון המוצע.",
+                      "The assistant is not connected yet, so demo grades and feedback are hidden. For now, use the progressive hints and reference solution.",
+                    )}
+                  </p>
+                ) : (
+                  <EvaluationPanel submission={attempt.submission} lang={lang} />
+                )}
+                <FollowUps
+                  attempt={attempt}
+                  lang={lang}
+                  value={followAnswer}
+                  onChange={setFollowAnswer}
+                  onSubmit={() => void submit()}
+                  disabled={disabled}
+                  busy={busy}
+                  resend={!!pending && pending.turn !== null}
+                />
+                {attempt.status === "done" && attempt.next_question && !demo && (
+                  <NextUpCard
+                    next={attempt.next_question}
+                    lang={lang}
+                    onStart={(key) => onNew(key)}
+                  />
+                )}
+              </section>
+            )}
           </>
         )
       )}
@@ -1060,6 +1045,92 @@ function PersonalNotes({
       <p className="small" role="status">
         {message}
       </p>
+    </div>
+  );
+}
+
+/** "I saw this question at company X": one line of tags and a small form; the tags help everyone search by company. */
+function SawItAt({
+  api,
+  question,
+  lang,
+}: {
+  api: PracticeApi;
+  question: QuestionDetail;
+  lang: Lang;
+}) {
+  const t = (he: string, en: string) => (lang === "he" ? he : en);
+  const [tags, setTags] = useState<CompanyTag[]>(question.companies ?? []);
+  const [open, setOpen] = useState(false),
+    [company, setCompany] = useState(""),
+    [busy, setBusy] = useState(false),
+    [message, setMessage] = useState("");
+  useEffect(() => {
+    setTags(question.companies ?? []);
+  }, [question.id, question.companies]);
+  async function save() {
+    const name = company.trim();
+    if (!name || busy) return;
+    setBusy(true);
+    setMessage("");
+    try {
+      const result = await api.addSighting(question.key, name);
+      setTags(result.companies);
+      setCompany("");
+      setOpen(false);
+      setMessage(t("תודה! נוסף לרשימת החברות של השאלה.", "Thanks! Added to this question's companies."));
+    } catch (e) {
+      const code = (e as PracticeApiError).code;
+      setMessage(
+        code === "temporarily_unavailable"
+          ? t("תיוג חברות ייפתח בקרוב.", "Company tags are opening soon.")
+          : apiMessage(e, lang),
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <div className="saw-it-at">
+      <div className="row">
+        {tags.length > 0 && (
+          <span className="small muted company-tags" dir="auto">
+            <Building2 size={14} aria-hidden="true" />
+            {t("נשאלה ב", "Asked at")}{" "}
+            {tags.map((tag) => (tag.count > 1 ? `${tag.name} (${tag.count})` : tag.name)).join(", ")}
+          </span>
+        )}
+        <button type="button" className="text-button" aria-expanded={open} onClick={() => setOpen(!open)}>
+          <Building2 size={15} aria-hidden="true" />
+          {t("ראיתי את זה בחברה…", "I saw it at a company…")}
+        </button>
+      </div>
+      {open && (
+        <form
+          className="row saw-it-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void save();
+          }}
+        >
+          <input
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+            maxLength={80}
+            placeholder={t("שם החברה, למשל Intel", "Company name, e.g. Intel")}
+            aria-label={t("שם החברה", "Company name")}
+            disabled={busy}
+          />
+          <button type="submit" className="primary" disabled={busy || !company.trim()}>
+            {busy ? t("שומרים…", "Saving…") : t("הוספה", "Add")}
+          </button>
+        </form>
+      )}
+      {message && (
+        <p className="small" role="status">
+          {message}
+        </p>
+      )}
     </div>
   );
 }

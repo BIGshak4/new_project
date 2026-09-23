@@ -66,12 +66,13 @@ def dsn() -> str:
     return url.replace("postgresql+asyncpg://", "postgresql://")
 
 
-async def dry_run(path: Path, checks: list[str]) -> int:
+async def dry_run(path: Path, checks: list[str], replaces: list[str]) -> int:
     sql = path.read_text(encoding="utf-8")
     objects = created_objects(sql)
     conn = await asyncpg.connect(dsn(), statement_cache_size=0)
     try:
-        before = await leftovers(conn, objects)
+        # an object the script drops and recreates (a policy rewritten in place) is expected to exist beforehand
+        before = [item for item in await leftovers(conn, objects) if item not in replaces]
         if before:
             print("already present before the run (the script would fail or is already applied):")
             for item in before:
@@ -88,7 +89,7 @@ async def dry_run(path: Path, checks: list[str]) -> int:
                 print(f"  check: {check}\n    -> {[dict(r) for r in rows][:5]}")
         finally:
             await transaction.rollback()
-        after = await leftovers(conn, objects)
+        after = [item for item in await leftovers(conn, objects) if item not in replaces]
         if after:
             print("ROLLBACK DID NOT HOLD, these exist now:")
             for item in after:
@@ -104,8 +105,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("script", type=Path)
     parser.add_argument("--check", action="append", default=[], help="a SELECT to run after the script, inside the transaction")
+    parser.add_argument("--replaces", action="append", default=[],
+                        help='an object the script drops and recreates, e.g. "policy learners upload answer images"')
     args = parser.parse_args()
-    sys.exit(asyncio.run(dry_run(args.script, args.check)))
+    sys.exit(asyncio.run(dry_run(args.script, args.check, args.replaces)))
 
 
 if __name__ == "__main__":
