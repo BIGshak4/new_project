@@ -1,8 +1,8 @@
 "use client";
 
-import { CalendarDays, Check, Circle, Flame, RefreshCw, Target, TrendingUp } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, Check, Circle, Flame, RefreshCw, Target, TrendingUp } from "lucide-react";
 import type { Lang } from "./auth";
-import type { Goal, Plan, ProgressOverview, TimelinePoint } from "../lib/practice-api";
+import type { Goal, Plan, PlanItem, ProgressOverview, TimelinePoint } from "../lib/practice-api";
 import { dayLabel, levelSteps, modeLabel, planByDay, tickDays, timelineLayout } from "../lib/timeline";
 
 /**
@@ -178,8 +178,23 @@ export function ProgressGraph({ timeline, lang }: { timeline: TimelinePoint[]; l
   );
 }
 
-export function PlanTable({ plan, lang, onEditGoal }: { plan: Plan | null; lang: Lang; onEditGoal: () => void }) {
+export function PlanTable({
+  plan,
+  lang,
+  onEditGoal,
+  onStart,
+  startingId,
+}: {
+  plan: Plan | null;
+  lang: Lang;
+  onEditGoal: () => void;
+  /** start this item now: opens the attempt (or the interview lobby) like "My program" does */
+  onStart?: (item: PlanItem) => void;
+  /** the item whose start is in flight, to disable its button */
+  startingId?: string | null;
+}) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
+  const Arrow = lang === "he" ? ArrowLeft : ArrowRight;
   const days = planByDay(plan?.items ?? []);
   const passed = plan?.days_to_interview !== null && plan?.days_to_interview !== undefined && plan.days_to_interview < 0;
   return (
@@ -225,6 +240,7 @@ export function PlanTable({ plan, lang, onEditGoal }: { plan: Plan | null; lang:
               <th>{t("על מה", "On what")}</th>
               <th>{t("זמן", "Time")}</th>
               <th>{t("למה", "Why")}</th>
+              {onStart && <th className="plan-start-head" aria-label={t("פעולה", "Action")} />}
             </tr>
           </thead>
           <tbody>
@@ -255,6 +271,28 @@ export function PlanTable({ plan, lang, onEditGoal }: { plan: Plan | null; lang:
                   <td className="plan-reason small" dir="auto">
                     {item.reason}
                   </td>
+                  {onStart && (
+                    <td className="plan-start">
+                      {item.id && (item.status === "planned" || item.status === "started") && (
+                        <button
+                          type="button"
+                          className={day.day_index === 0 ? "primary" : ""}
+                          disabled={!!startingId}
+                          onClick={() => onStart(item)}
+                          aria-label={`${t("להתחיל", "Start")}: ${modeLabel(item.mode, lang)} · ${item.skills.map((s) => s.label).join(", ")}`}
+                        >
+                          {startingId === item.id
+                            ? t("פותחים…", "Opening…")
+                            : item.mode === "simulation"
+                              ? t("לראיון", "Interview")
+                              : item.status === "started"
+                                ? t("להמשיך", "Continue")
+                                : t("להתחיל", "Start")}{" "}
+                          <Arrow size={14} aria-hidden="true" />
+                        </button>
+                      )}
+                    </td>
+                  )}
                 </tr>
               )),
             )}

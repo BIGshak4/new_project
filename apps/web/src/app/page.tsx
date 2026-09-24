@@ -297,6 +297,29 @@ function Workspace({
     if (!jobFilterTouched.current) setJobFilter(g.job_type ?? "");
     refreshProgress();
   };
+  const [startingItem, setStartingItem] = useState<string | null>(null);
+  const [startError, setStartError] = useState("");
+  // a plan row's Start does exactly what "My program" does: open the item's attempt, or the interview lobby
+  const startPlanItem = async (item: { id?: string | null }) => {
+    if (!item.id || startingItem) return;
+    setStartingItem(item.id);
+    setStartError("");
+    try {
+      const result = await api.startProgram(item.id, lang);
+      if (result.kind === "attempt" && result.attempt) {
+        navigate({ view: "library", attempt: result.attempt.id });
+        refreshProgress();
+      } else if (result.kind === "interview") navigate({ view: "interview" });
+      else {
+        setStartError(result.message ?? t("אין מה להתחיל כרגע.", "Nothing to start right now."));
+        refreshProgress();
+      }
+    } catch (e) {
+      setStartError(apiMessage(e, lang));
+    } finally {
+      setStartingItem(null);
+    }
+  };
   const skipGoal = () => {
     setGoalSkipped(true);
     try {
@@ -580,7 +603,14 @@ function Workspace({
                     plan={progress.plan ?? null}
                     lang={lang}
                     onEditGoal={() => setEditingGoal(true)}
+                    onStart={(item) => void startPlanItem(item)}
+                    startingId={startingItem}
                   />
+                  {startError && (
+                    <p className="notice error" role="alert">
+                      {startError}
+                    </p>
+                  )}
                 </div>
               ) : route.view === "history" ? (
                 <>
