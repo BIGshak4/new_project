@@ -213,7 +213,7 @@ async def daily_bands(connection: AsyncConnection, user_id: uuid.UUID, *, days: 
     """Scored answers per UTC day, oldest first: {day, STRONG, PARTIAL, WEAK}. The progress graph's input."""
     attempt = await db.table("attempt")
     since = datetime.now(UTC) - timedelta(days=days)
-    day = func.date_trunc("day", attempt.c.started_at).label("day")
+    day = func.date_trunc("day", func.timezone("UTC", attempt.c.started_at)).label("day")   # UTC days whatever the session zone
     rows = (await connection.execute(
         select(day, attempt.c.band, func.count())
         .where(attempt.c.user_id == user_id, attempt.c.band.is_not(None), attempt.c.started_at >= since)

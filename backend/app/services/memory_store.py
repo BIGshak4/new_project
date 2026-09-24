@@ -133,10 +133,11 @@ class _MemoryTx:
         return Goal(**goal.__dict__)
 
     async def save_goal(self, user_id, goal):
-        self.s.goals[user_id] = Goal(**goal.__dict__)
+        kept = goal.seniority or self.s.seniority.get(user_id)          # None keeps the stored seniority, as the database does
+        self.s.goals[user_id] = Goal(**{**goal.__dict__, "seniority": kept})
         if goal.seniority:
             self.s.seniority[user_id] = goal.seniority
-        return goal
+        return self.s.goals[user_id]
 
     async def daily_bands(self, user_id):
         out: dict[str, dict] = {}

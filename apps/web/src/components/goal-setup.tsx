@@ -53,7 +53,8 @@ export function GoalSetup({
   }, [api, lang]);
 
   const today = new Date();
-  const todayIso = today.toISOString().slice(0, 10);
+  // the user's local calendar day, not the UTC one (after midnight in Israel the UTC date is still yesterday)
+  const todayIso = new Date(today.getTime() - today.getTimezoneOffset() * 60_000).toISOString().slice(0, 10);
   const days = date ? Math.round((new Date(`${date}T12:00:00`).getTime() - new Date(`${todayIso}T12:00:00`).getTime()) / 86_400_000) : null;
 
   async function save() {

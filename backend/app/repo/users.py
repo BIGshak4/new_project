@@ -104,7 +104,7 @@ async def save_goal(connection: AsyncConnection, user_id: uuid.UUID, goal: Goal)
         background.pop("job_type", None)
     values = {"background": background, "target_interview_date": goal.interview_date,
               "available_minutes_per_day": goal.minutes_per_day}
-    if goal.seniority:
+    if goal.seniority:                       # None keeps the profile's value: the column is also Harel's app's
         values["seniority_self_assessed"] = goal.seniority
     await connection.execute(update(profiles).where(profiles.c.id == user_id).values(**db.sql_values(values)))
     return goal

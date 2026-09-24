@@ -279,7 +279,12 @@ function Workspace({
         if (!cancelled) setJobQuestions(list);
       })
       .catch(() => {
-        if (!cancelled) setJobQuestions(null);
+        // the server refused the filter (a job type that no longer exists): show everything, unfiltered
+        if (!cancelled) {
+          setJobQuestions(null);
+          jobFilterTouched.current = true;
+          setJobFilter("");
+        }
       });
     return () => {
       cancelled = true;
@@ -740,7 +745,7 @@ function Workspace({
                       </datalist>
                     </div>
                   </div>
-                  {jobFilter && (
+                  {jobFilter && jobQuestions && (
                     <p className="small muted filter-note" role="status">
                       {t(
                         "השאלות מסודרות לפי הרלוונטיות לתפקיד שבחרתם. השאלה הראשונה היא הכי חשובה לכם עכשיו.",

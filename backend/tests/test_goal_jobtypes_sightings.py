@@ -113,6 +113,18 @@ class TestTheLibraryByJobAndCompany:
             {"slug": "intel-corp", "name": "Intel Corp.", "questions": 1, "sightings": 2},
             {"slug": "nvidia", "name": "Nvidia", "questions": 1, "sightings": 1}]
 
+    def test_slugs_match_the_table_constraint_including_hebrew(self):
+        import re
+
+        from app.repo.sightings import MAX_NAME, slugify
+        sql = (SEEDS.parent.parent / "supabase" / "migrations" / "20260923000000_question_sightings.sql").read_text(encoding="utf-8")
+        pattern = re.compile(re.search(r"company_slug ~ '([^']+)'", sql).group(1))
+        for name in ("Intel Corp.", "  Nvidia  ", "אינטל", "Intel ישראל", "מובילאיי (Mobileye)", "a" * 200, "x-" * 60, "Ünïcode Çô"):
+            slug = slugify(name)
+            assert slug and pattern.fullmatch(slug), (name, slug)
+            assert len(slug) <= MAX_NAME and not slug.endswith("-")
+        assert slugify("אינטל") == "אינטל" and slugify("!!!") == ""
+
     async def test_sightings_are_validated_and_degrade_when_the_table_is_missing(self, catalog):
         svc, store = practice(catalog)
         with pytest.raises(ApiError) as e:
@@ -143,6 +155,10 @@ class TestTheGoal:
         again = await svc.get_goal(USER, language="en")
         assert again.model_dump() == {**view.model_dump(), "job_type_label": "Verification"}
         assert store.seniority[USER] == "junior"
+        # a request without seniority keeps the stored one, and the response says what is stored
+        partial = await svc.save_goal(USER, job_type="fpga", interview_date=None, minutes_per_day=45, seniority=None)
+        assert partial.seniority == "junior" and partial.interview_date is None and partial.job_type == "fpga"
+        assert (await svc.get_goal(USER)).model_dump() == partial.model_dump()
 
     @pytest.mark.parametrize("kw", [dict(job_type="astronaut"), dict(minutes_per_day=0), dict(minutes_per_day=1000),
                                     dict(seniority="ceo")])
@@ -184,6 +200,25 @@ class TestTheGoal:
         assert any(item.done for item in plan.items if item.day_index == 0) or not any(
             "boolean_algebra" in [s.key for s in item.skills] for item in plan.items if item.day_index == 0)
         assert progress.goal.job_type == "verification" and progress.goal.complete
+
+    async def test_an_abandoned_attempt_does_not_tick_the_plan(self, catalog):
+        svc, store = practice(catalog, scripted([GOOD]), suggest_reviewed_only=False)
+        await svc.start(USER, question_key=Q, mode="quick", language="en")          # opened, never answered
+        progress = await svc.progress(USER, language="en")
+        assert progress.overview.answered == 0 and not any(item.done for item in progress.plan.items)
+
+    async def test_the_plan_takes_the_question_state_from_the_database(self, catalog):
+        """Production: the seed file says in_review, the database says trial. The plan must see trial questions."""
+        from app.repo.questions import LoadedQuestion, summary
+        svc, store = practice(catalog)                                     # suggest_reviewed_only: the production default
+        trial = [summary(LoadedQuestion(id=store.question_id(q.key), question=q.model_copy(update={"status": "trial"}),
+                                        version=q.version), "en") for q in catalog.questions.values()]
+        assert all(r.reviewed and r.trial for r in trial) and all(q.status == "in_review" for q in catalog.questions.values())
+        profile = await (await store.transaction().__aenter__()).load_profile(USER)
+        _, required, _, plan_skills = svc._plan("student")
+        from app.repo.users import Goal
+        view = svc._weekly_plan(profile, plan_skills, required, trial, [], Goal(minutes_per_day=30), "en", date.today())
+        assert view.items, "trial questions in the database must feed the plan"
 
     async def test_with_nothing_reviewed_the_plan_is_empty_not_an_error(self, catalog):
         svc, _ = practice(catalog)                                        # suggest_reviewed_only: the production default

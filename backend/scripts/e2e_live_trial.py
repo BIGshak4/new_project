@@ -36,6 +36,7 @@ INTERVIEW_ANSWER = ("I would state the assumptions, derive it step by step from 
 
 
 async def main() -> None:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")   # Windows consoles default to cp1252
     settings = get_settings()
     if not settings.anthropic_api_key or not settings.database_url:
         raise SystemExit("ANTHROPIC_API_KEY and DATABASE_URL are needed")

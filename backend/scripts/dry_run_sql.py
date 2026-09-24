@@ -102,6 +102,7 @@ async def dry_run(path: Path, checks: list[str], replaces: list[str]) -> int:
 
 
 def main() -> None:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")   # Hebrew in --check output on a Windows console
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("script", type=Path)
     parser.add_argument("--check", action="append", default=[], help="a SELECT to run after the script, inside the transaction")

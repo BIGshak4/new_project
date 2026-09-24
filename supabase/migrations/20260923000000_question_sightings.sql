@@ -7,7 +7,7 @@ create table public.question_sighting (
   question_id    uuid not null references public.question(id) on delete cascade,
   user_id        uuid not null references public.user_profile(id) on delete cascade,
   company_name   varchar(80) not null check (length(btrim(company_name)) between 1 and 80),
-  company_slug   varchar(80) not null check (company_slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
+  company_slug   varchar(80) not null check (company_slug ~ '^[a-z0-9א-ת]+(-[a-z0-9א-ת]+)*$'),   -- same alphabet as app/repo/sightings.slugify
   created_at     timestamptz not null default now(),
   constraint question_sighting_uq unique (question_id, user_id, company_slug)
 );

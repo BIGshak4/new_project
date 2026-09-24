@@ -206,7 +206,8 @@ class PracticeService:
         goal = Goal(job_type=job_type, interview_date=interview_date, minutes_per_day=minutes_per_day, seniority=seniority)
         async with self.store.transaction() as tx:
             await tx.save_goal(user_id, goal)
-        return self._goal_view(goal, self._language(language))
+            stored = await tx.load_goal(user_id)                    # what the row says, not what the request said
+        return self._goal_view(stored, self._language(language))
 
     def _goal_view(self, goal: Goal, language: str) -> GoalView:
         job = self.catalog.job_types.get(goal.job_type) if goal.job_type else None
@@ -503,6 +504,7 @@ class PracticeService:
         async with self.store.transaction() as tx:
             profile = await tx.load_profile(user_id)
             recent = await tx.recent_attempts(user_id, limit=10)
+            history = await tx.recent_attempts(user_id, limit=60)        # the plan's memory: scored answers, today included
             started = await tx.started_today(user_id)
             goal = await tx.load_goal(user_id)
             seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
@@ -534,7 +536,7 @@ class PracticeService:
                             daily_limit=self.config.daily_attempt_limit,
                             overview=self._overview(skills, plan_skills, bands, language),
                             timeline=self._timeline(daily, profile),
-                            plan=self._weekly_plan(profile, plan_skills, required, servable, recent, goal, language, today),
+                            plan=self._weekly_plan(profile, plan_skills, required, servable, history, goal, language, today),
                             goal=self._goal_view(goal, language))
 
     @staticmethod
@@ -584,17 +586,24 @@ class PracticeService:
         """The Plan Router's week, from today until the interview (or seven days), within the user's minutes."""
         minutes = goal.minutes_per_day or DEFAULT_MINUTES_PER_DAY
         days_left = goal.days_to_interview(today)
-        pool = [self.catalog.questions[s.key] for s in servable
-                if s.key in self.catalog.questions and (s.reviewed or not self.config.suggest_reviewed_only)]
+        pool = []
+        for row in servable:
+            question = self.catalog.questions.get(row.key)
+            if question is None or not (row.reviewed or not self.config.suggest_reviewed_only):
+                continue
+            if question.status != row.status:            # the database decides the state (trial/published), not the seed file
+                question = question.model_copy(update={"status": row.status})
+            pool.append(question)
         coverage = bank.coverage_by_skill(pool, language=language, allow_in_review=not self.config.suggest_reviewed_only,
                                           require_parity=False)
-        history = [plan_router.RecentActivity(mode=r.get("mode") or "quick", band=r.get("band")) for r in recent]
+        scored = [r for r in recent if r.get("band")]
+        history = [plan_router.RecentActivity(mode=r.get("mode") or "quick", band=r.get("band")) for r in scored]
         items = plan_router.weekly_plan(plan=plan_skills, profile=as_profile_skills(profile, required), week_start=today,
                                         minutes_per_day=minutes, bank_coverage=coverage, days_to_interview=days_left,
                                         recent=history)
         labels = self.catalog.skill_labels()
         today_skills = set()
-        for r in recent:
+        for r in scored:                                          # an opened-and-abandoned question does not tick the plan
             started = r.get("started_at")
             question = self.catalog.questions.get(r.get("question_key") or "")
             if started and question is not None and datetime.fromisoformat(started).date() == today:

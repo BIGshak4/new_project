@@ -40,6 +40,9 @@ V1_ROUTES = {
     ("POST", "/v1/interviews/{interview_id}/turns/{turn_index}/answer"),
     ("POST", "/v1/interviews/{interview_id}/hints/next"), ("POST", "/v1/interviews/{interview_id}/end"),
     ("GET", "/v1/interviews/{interview_id}/report"),
+    # the goal, job types, company sightings (2026-09-23)
+    ("GET", "/v1/me/goal"), ("POST", "/v1/me/goal"), ("GET", "/v1/job-types"), ("GET", "/v1/companies"),
+    ("POST", "/v1/questions/{key_or_id}/sightings"),
 }
 
 

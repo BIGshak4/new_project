@@ -19,7 +19,9 @@ from app import db
 
 TABLE = "question_sighting"
 MAX_NAME = 80
-_SLUG_JUNK = re.compile(r"[^a-z0-9֐-׿]+")
+# Latin letters, digits and Hebrew letters (U+05D0..U+05EA, no vowel points); the table constraint in
+# supabase/migrations/20260923000000_question_sightings.sql accepts exactly the same alphabet
+_SLUG_JUNK = re.compile(r"[^a-z0-9\u05d0-\u05ea]+")
 
 
 class SightingsUnavailable(Exception):
@@ -29,8 +31,7 @@ class SightingsUnavailable(Exception):
 def slugify(name: str) -> str:
     """'  Intel Corp. ' -> 'intel-corp'. Hebrew letters are kept (folded to lowercase where that applies)."""
     folded = unicodedata.normalize("NFKC", name).strip().lower()
-    slug = _SLUG_JUNK.sub("-", folded).strip("-")
-    return slug[:MAX_NAME]
+    return _SLUG_JUNK.sub("-", folded)[:MAX_NAME].strip("-")          # cut first, so a slug never ends in "-"
 
 
 def clean_name(name: str) -> str:
