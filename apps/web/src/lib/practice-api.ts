@@ -251,7 +251,9 @@ export type TimelinePoint = {
 };
 
 export type PlanItem = {
-  /** 0 = today */
+  /** the saved plan item; start it with startProgram(id) */
+  id?: string | null;
+  /** 0 = today; an open item from an earlier day shows as today (carried) */
   day_index: number;
   date: string;
   mode: "quick" | "deep" | "simulation" | "diagnostic" | "retention_check" | string;
@@ -259,6 +261,9 @@ export type PlanItem = {
   minutes: number;
   reason: string;
   done: boolean;
+  status?: "planned" | "started" | "done" | "skipped" | string;
+  /** planned for an earlier day and not done yet */
+  carried?: boolean;
 };
 
 export type Plan = {
@@ -267,6 +272,26 @@ export type Plan = {
   days_to_interview: number | null;
   interview_date: string | null;
   generated_for: string;
+  /** persisted: skipped days are carried forward, finished items stay ticked */
+  saved?: boolean;
+};
+
+/** The saved program as it stands today. */
+export type Program = {
+  plan: Plan;
+  today: PlanItem[];
+  next: PlanItem | null;
+  done_today: number;
+  minutes_due_today: number;
+  goal_complete: boolean;
+};
+
+export type ProgramStart = {
+  kind: "attempt" | "interview" | "nothing" | string;
+  item: PlanItem | null;
+  attempt: Attempt | null;
+  interview_duration_min: number | null;
+  message: string | null;
 };
 
 export type Progress = {
@@ -559,6 +584,14 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
     getGoal: (language?: ApiLang) =>
       call<Goal>("GET", `/v1/me/goal${q({ language })}`),
     saveGoal: (body: GoalRequest) => call<Goal>("POST", "/v1/me/goal", body),
+    program: (language?: ApiLang) =>
+      call<Program>("GET", `/v1/me/program${q({ language })}`),
+    /** Start the next due item (or a given one): an attempt is opened, or the interview lobby is pointed to. */
+    startProgram: (itemId?: string, language?: ApiLang) =>
+      call<ProgramStart>("POST", "/v1/me/program/start", {
+        item_id: itemId ?? null,
+        language,
+      }),
     jobTypes: (language: ApiLang) =>
       call<JobType[]>("GET", `/v1/job-types${q({ language })}`),
     companies: () => call<Company[]>("GET", "/v1/companies"),

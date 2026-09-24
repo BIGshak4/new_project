@@ -26,7 +26,7 @@ MODELS = {"QuestionSummary": "QuestionSummary", "QuestionDetail": "QuestionDetai
           "LabelledSkill": "LabelledSkill", "InterviewReportView": "InterviewReport",
           "CompanyTag": "CompanyTag", "JobTypeView": "JobType", "CompanyView": "Company", "GoalView": "Goal",
           "ProgressOverview": "ProgressOverview", "TimelinePoint": "TimelinePoint", "PlanItemView": "PlanItem",
-          "PlanView": "Plan"}
+          "PlanView": "Plan", "ProgramView": "Program", "ProgramStartView": "ProgramStart"}
 
 
 def ts_fields(source: str, type_name: str) -> set[str]:

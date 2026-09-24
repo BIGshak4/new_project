@@ -15,15 +15,16 @@ from __future__ import annotations
 import uuid
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from datetime import datetime
+from datetime import date, datetime
 from typing import Protocol
 
 from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine
 
 from app import db
-from app.repo import attempts, events, profiles, questions, sessions, sightings, users
+from app.repo import attempts, events, plans, profiles, questions, sessions, sightings, users
 from app.repo.attempts import DuplicateSubmissionKey, StoredAttempt
+from app.repo.plans import StoredPlan
 from app.repo.profiles import LoadedProfile, StaleProfile
 from app.repo.questions import LoadedQuestion, QuestionSummary
 from app.repo.sessions import StoredSession
@@ -45,6 +46,14 @@ class Tx(Protocol):
     async def load_goal(self, user_id: uuid.UUID) -> Goal: ...
     async def save_goal(self, user_id: uuid.UUID, goal: Goal) -> Goal: ...
     async def daily_bands(self, user_id: uuid.UUID) -> list[dict]: ...
+    # the saved program
+    async def load_active_plan(self, user_id: uuid.UUID) -> StoredPlan | None: ...
+    async def create_plan(self, *, user_id: uuid.UUID, role_slug: str, seniority: str, week_start: date,
+                          minutes_per_day: int, interview_date: date | None, items: list[dict]) -> StoredPlan: ...
+    async def deactivate_plan(self, user_id: uuid.UUID) -> None: ...
+    async def update_plan_item(self, item_id: uuid.UUID, **fields) -> None: ...
+    async def link_attempt_to_plan_item(self, attempt_id: uuid.UUID, item_id: uuid.UUID) -> None: ...
+    async def attempt_plan_item(self, attempt_id: uuid.UUID) -> uuid.UUID | None: ...
     async def load_attempt(self, attempt_id: uuid.UUID, *, user_id: uuid.UUID) -> StoredAttempt | None: ...
     async def save_attempt(self, *, user_id: uuid.UUID, question_id: uuid.UUID, row: dict,
                            revisions: set[int] | None = None, known_revisions: int = 0) -> None: ...
@@ -121,6 +130,25 @@ class DbTx:
 
     async def daily_bands(self, user_id):
         return await attempts.daily_bands(self.connection, user_id)
+
+    async def load_active_plan(self, user_id):
+        return await plans.load_active(self.connection, user_id)
+
+    async def create_plan(self, *, user_id, role_slug, seniority, week_start, minutes_per_day, interview_date, items):
+        return await plans.create(self.connection, user_id=user_id, role_slug=role_slug, seniority=seniority,
+                                  week_start=week_start, minutes_per_day=minutes_per_day, interview_date=interview_date, items=items)
+
+    async def deactivate_plan(self, user_id):
+        await plans.deactivate(self.connection, user_id)
+
+    async def update_plan_item(self, item_id, **fields):
+        await plans.update_item(self.connection, item_id, **fields)
+
+    async def link_attempt_to_plan_item(self, attempt_id, item_id):
+        await plans.link_attempt(self.connection, attempt_id, item_id)
+
+    async def attempt_plan_item(self, attempt_id):
+        return await plans.attempt_item(self.connection, attempt_id)
 
     async def load_attempt(self, attempt_id, *, user_id):
         return await attempts.load(self.connection, attempt_id, user_id=user_id)

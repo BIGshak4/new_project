@@ -1505,3 +1505,14 @@ button { transition: background 0.18s ease, border-color 0.18s ease, transform 0
 .saw-it-form .primary { min-height: 40px; }
 
 .overview-refresh { display: inline-flex; align-items: center; gap: 6px; margin: -8px 0 0; color: #8a5a12; background: var(--warm); border-radius: 999px; padding: 6px 12px; justify-self: start; }
+
+/* my program */
+.program-panel { align-items: stretch; gap: 20px; }
+.program-main { display: grid; gap: 8px; min-width: 0; flex: 1; }
+.program-main h2 { font-size: 22px; line-height: 1.35; }
+.program-main p { margin: 0; color: var(--ink); }
+.program-meta { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; color: var(--muted) !important; }
+.program-actions { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 8px; flex: none; }
+.program-actions .primary { gap: 8px; }
+.plan-row.skipped td { color: var(--muted); }
+@media (max-width: 760px) { .program-panel { flex-direction: column; } .program-actions { align-items: stretch; } }

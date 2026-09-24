@@ -65,9 +65,15 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                                        daily_limit=settings.interview_daily_limit,
                                        reviewed_only=settings.interview_reviewed_only,
                                        narrative=settings.llm_provider == "anthropic")
-    return Runtime(catalog=catalog, provider=provider, store=store,
-                   practice=PracticeService(store, catalog, provider, config, image_fetcher=fetcher), store_kind=kind,
-                   image_fetcher=fetcher, interview=InterviewService(store, catalog, provider, interview_config, image_fetcher=fetcher))
+    practice = PracticeService(store, catalog, provider, config, image_fetcher=fetcher)
+
+    async def interview_finished(tx, user_id, session_id):
+        await practice._complete_program_item(tx, user_id, session_id=session_id)
+
+    return Runtime(catalog=catalog, provider=provider, store=store, practice=practice, store_kind=kind,
+                   image_fetcher=fetcher,
+                   interview=InterviewService(store, catalog, provider, interview_config, image_fetcher=fetcher,
+                                              on_finished=interview_finished))
 
 
 def make_image_fetcher(settings: Settings) -> StorageImageFetcher | None:

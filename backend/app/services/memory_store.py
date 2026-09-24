@@ -11,6 +11,7 @@ from datetime import UTC, datetime, timedelta
 
 from app.engine.catalog import Catalog
 from app.repo.attempts import AlreadyEvaluated, DuplicateSubmissionKey, StoredAttempt
+from app.repo.plans import PlanItemRow, StoredPlan
 from app.repo.profiles import LoadedProfile, StaleProfile, derived_columns
 from app.repo.questions import LoadedQuestion, QuestionSummary, summary
 from app.repo.sessions import StaleSession, StoredSession
@@ -31,6 +32,8 @@ class InMemoryStore:
         self.sessions: dict[uuid.UUID, dict] = {}                 # interview id -> {user_id, row, turns, plan, created_at}
         self.seniority: dict[uuid.UUID, str] = {}
         self.goals: dict[uuid.UUID, Goal] = {}
+        self.plans: dict[uuid.UUID, StoredPlan] = {}                # user id -> the active plan
+        self.plan_links: dict[uuid.UUID, uuid.UUID] = {}            # attempt id -> plan item id
         self.sightings: list[dict] = []                            # {question_id, user_id, company_name, company_slug}
         self.sightings_enabled = True                              # False imitates a database without the table
         self.answer_images: dict[str, dict] = {}                 # storage fixture metadata
@@ -47,14 +50,14 @@ class InMemoryStore:
         # so rolling back means restoring the containers, not the rows (a full deepcopy per action
         # made every action slower as the store grew)
         snapshot = (dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips),
-                    dict(self.sessions), dict(self.goals), list(self.sightings))
+                    dict(self.sessions), dict(self.goals), list(self.sightings), copy.deepcopy(self.plans), dict(self.plan_links))
         commits_before = self._commits
         try:
             yield _MemoryTx(self)
         except BaseException:
             if self._commits == commits_before:
                 (self.attempts, self.profiles, self.metrics, self.usage, self.tips, self.sessions, self.goals,
-                 self.sightings) = snapshot
+                 self.sightings, self.plans, self.plan_links) = snapshot
             raise
         self._commits += 1
 
@@ -147,6 +150,38 @@ class _MemoryTx:
                 entry = out.setdefault(key, {"day": key, "STRONG": 0, "PARTIAL": 0, "WEAK": 0})
                 entry[a["row"]["band"]] = entry.get(a["row"]["band"], 0) + 1
         return [out[k] for k in sorted(out)]
+
+    # ------------------------------------------------------------------ the saved program
+
+    async def load_active_plan(self, user_id):
+        plan = self.s.plans.get(user_id)
+        return copy.deepcopy(plan) if plan is not None else None
+
+    async def create_plan(self, *, user_id, role_slug, seniority, week_start, minutes_per_day, interview_date, items):
+        now = datetime.now(UTC)
+        rows = [PlanItemRow(id=uuid.uuid4(), day_index=int(i["day_index"]), mode=i["mode"], skills=list(i["skills"]),
+                            reason=i["reason"] or "-", minutes=max(1, min(120, int(i["minutes"] or 1))),
+                            created_at=i.get("created_at") or now) for i in items]
+        plan = StoredPlan(id=uuid.uuid4(), user_id=user_id, week_start=week_start, minutes_per_day=minutes_per_day,
+                          interview_date=interview_date, seniority=seniority, generated_at=now, items=rows)
+        self.s.plans[user_id] = plan
+        return copy.deepcopy(plan)
+
+    async def deactivate_plan(self, user_id):
+        self.s.plans.pop(user_id, None)
+
+    async def update_plan_item(self, item_id, **fields):
+        for plan in self.s.plans.values():
+            for item in plan.items:
+                if item.id == item_id:
+                    for name, value in fields.items():
+                        setattr(item, name, value)
+
+    async def link_attempt_to_plan_item(self, attempt_id, item_id):
+        self.s.plan_links[attempt_id] = item_id
+
+    async def attempt_plan_item(self, attempt_id):
+        return self.s.plan_links.get(attempt_id)
 
     async def load_attempt(self, attempt_id, *, user_id):
         stored = self.s.attempts.get(attempt_id)

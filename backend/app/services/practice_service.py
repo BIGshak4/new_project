@@ -38,6 +38,7 @@ from app.engine.practice import (
 )
 from app.engine.providers import Provider
 from app.repo.attempts import AlreadyEvaluated, DuplicateSubmissionKey, StoredAttempt
+from app.repo.plans import OPEN, PlanItemRow, StoredPlan
 from app.repo.profiles import LoadedProfile, StaleProfile, as_profile_skills
 from app.repo.questions import CompanyTag, LoadedQuestion, QuestionDetail, QuestionSummary, detail
 from app.repo.sightings import SightingsUnavailable, slugify
@@ -55,6 +56,8 @@ from app.schemas.api import (
     NextQuestionView,
     PlanItemView,
     PlanView,
+    ProgramStartView,
+    ProgramView,
     ProgressOverview,
     ProgressView,
     SkillProgress,
@@ -72,6 +75,16 @@ log = logging.getLogger("app.practice")
 LANGUAGES = ("en", "he")
 MODES = ("quick", "deep")
 MIN_MINUTES_PER_DAY, MAX_MINUTES_PER_DAY, DEFAULT_MINUTES_PER_DAY = 5, 600, 30
+PROGRAM_CARRY_DAYS = 3            # an item not done within 3 days of its day is dropped (the router re-adds the skill if it matters)
+INTERVIEW_DURATIONS = (20, 30, 45)
+PROGRAM_MESSAGES = {
+    "en": {"no_goal": "Tell us what you are preparing for and the program builds itself.",
+           "nothing_today": "Nothing is due today. Rest, or start tomorrow's first item early.",
+           "no_question": "The bank has no reviewed question for this item yet; it was skipped."},
+    "he": {"no_goal": "ספרו לנו לאיזה ראיון אתם מתכוננים, והתוכנית תיבנה מעצמה.",
+           "nothing_today": "אין משהו להיום. מנוחה, או להתחיל את הפריט הראשון של מחר מוקדם.",
+           "no_question": "במאגר אין עדיין שאלה מאושרת לפריט הזה; הוא דולג."},
+}
 
 # the level in words, never a percentage: what the overview card shows (Shaked, 2026-09-23)
 LEVEL_WORDS = {
@@ -206,6 +219,7 @@ class PracticeService:
         goal = Goal(job_type=job_type, interview_date=interview_date, minutes_per_day=minutes_per_day, seniority=seniority)
         async with self.store.transaction() as tx:
             await tx.save_goal(user_id, goal)
+            await tx.deactivate_plan(user_id)                       # a new goal means a new program
             stored = await tx.load_goal(user_id)                    # what the row says, not what the request said
         return self._goal_view(stored, self._language(language))
 
@@ -389,6 +403,9 @@ class PracticeService:
                                               usage_rows=[u.as_row(attempt.mode) for u in outcome.usage])
                     await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
                                           revisions=changed, known_revisions=len(attempt.submissions))
+                    if outcome.status == EvaluationStatus.DONE and outcome.band is not None and outcome.submission.turn == 0:
+                        await self._complete_program_item(tx, user_id, attempt_id=attempt.attempt_id_uuid,
+                                                          skills=[link.skill for link in attempt.question.skills])
                 return attempt, stored, loaded, outcome
             except StaleProfile as exc:
                 log.warning("profile moved during attempt %s (%s): re-applying the scores", attempt.attempt_id, exc)
@@ -536,12 +553,187 @@ class PracticeService:
                 loyalty=value, needs_refresh=level is not None and scores.needs_refresh(value)))
         subjects = self._subjects(skills, required, weights, bands, servable)
         today = date.today()
+        async with self.store.transaction() as tx:
+            program = await self._ensure_program(tx, user_id, profile, plan_skills, required, servable, history, goal, seniority,
+                                                 language, today)
         return ProgressView(skills=skills, subjects=subjects, recent=recent, attempts_today=started,
                             daily_limit=self.config.daily_attempt_limit,
                             overview=self._overview(skills, plan_skills, bands, language),
                             timeline=self._timeline(daily, profile),
-                            plan=self._weekly_plan(profile, plan_skills, required, servable, history, goal, language, today),
+                            plan=self._plan_view(program, goal, today),
                             goal=self._goal_view(goal, language))
+
+    # ------------------------------------------------------------------ the saved program
+
+    async def program(self, user_id: uuid.UUID, *, language: str | None = None) -> ProgramView:
+        """What is due today, carried-forward items first, and the one item to start now."""
+        language = self._language(language)
+        today = date.today()
+        async with self.store.transaction() as tx:
+            profile = await tx.load_profile(user_id)
+            goal = await tx.load_goal(user_id)
+            seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
+            servable = await tx.list_questions(language=language)
+            history = await tx.recent_attempts(user_id, limit=60)
+            required, _, _, plan_skills = self._plan(seniority, goal.job_type)
+            program = await self._ensure_program(tx, user_id, profile, plan_skills, required, servable, history, goal, seniority,
+                                                 language, today)
+        return self._program_view(program, goal, today)
+
+    async def start_program_item(self, user_id: uuid.UUID, *, item_id: uuid.UUID | None = None,
+                                 language: str | None = None) -> ProgramStartView:
+        """Open the item (the next due one unless given): a practice attempt on a bank question chosen for the item's
+        skill and the user's level, or the interview lobby for a simulation item."""
+        language = self._language(language)
+        today = date.today()
+        view = await self.program(user_id, language=language)
+        texts = PROGRAM_MESSAGES.get(language, PROGRAM_MESSAGES["en"])
+        if not view.goal_complete:
+            return ProgramStartView(kind="nothing", message=texts["no_goal"])
+        item = next((i for i in view.today if item_id is None or i.id == str(item_id)), None) or view.next
+        if item is None:
+            return ProgramStartView(kind="nothing", message=texts["nothing_today"])
+        if item.mode == "simulation":
+            duration = min(INTERVIEW_DURATIONS, key=lambda d: abs(d - item.minutes))
+            return ProgramStartView(kind="interview", item=item, interview_duration_min=duration)
+        mode = "deep" if item.mode == "deep" else "quick"
+        async with self.store.transaction() as tx:
+            profile = await tx.load_profile(user_id)
+            goal = await tx.load_goal(user_id)
+            seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
+            servable = await tx.list_questions(language=language)
+            seen = await tx.seen_question_keys(user_id)
+        required, _, ceiling, _ = self._plan(seniority, goal.job_type)
+        question = self._question_for(item, profile, servable, seen, required, ceiling, mode, language)
+        if question is None:
+            async with self.store.transaction() as tx:
+                await tx.update_plan_item(uuid.UUID(item.id), status="skipped")
+            return ProgramStartView(kind="nothing", item=item, message=texts["no_question"])
+        attempt = await self.start(user_id, question_key=question.key, mode=mode, language=language)
+        async with self.store.transaction() as tx:
+            await tx.link_attempt_to_plan_item(uuid.UUID(attempt.id), uuid.UUID(item.id))
+            await tx.update_plan_item(uuid.UUID(item.id), status="started")
+        del today
+        return ProgramStartView(kind="attempt", item=item.model_copy(update={"status": "started"}), attempt=attempt)
+
+    def _question_for(self, item: PlanItemView, profile: LoadedProfile, servable, seen: set[str], required: dict[str, int],
+                      ceiling: int, mode: str, language: str) -> BankQuestion | None:
+        """The same choice the coach makes after an answer: the item's skill, the user's level, unseen and reviewed first."""
+        pool = self._servable_pool(servable)
+        reviewed_only = self.config.suggest_reviewed_only
+        for skill_key in [s.key for s in item.skills]:
+            state = profile.states.get(skill_key)
+            target = min(ceiling, next_question._difficulty_now(state, required.get(skill_key, 2)))
+            for seen_keys, window in ((seen, 1), (seen, 3), (set(), 9)):
+                for try_mode in (mode, "quick", "deep", "simulation"):
+                    picked = bank.select_question(pool, skill=skill_key, difficulty=target, mode=try_mode, language=language,
+                                                  seen_keys=seen_keys, allow_in_review=not reviewed_only, require_parity=False,
+                                                  difficulty_window=window)
+                    if picked is not None:
+                        return picked.question
+        return None
+
+    def _servable_pool(self, servable) -> list[BankQuestion]:
+        """Catalog questions the coach may use, carrying the database's state (trial/published), not the seed file's."""
+        pool = []
+        for row in servable:
+            question = self.catalog.questions.get(row.key)
+            if question is None or not (row.reviewed or not self.config.suggest_reviewed_only):
+                continue
+            if question.status != row.status:
+                question = question.model_copy(update={"status": row.status})
+            pool.append(question)
+        return pool
+
+    async def _ensure_program(self, tx, user_id: uuid.UUID, profile: LoadedProfile, plan_skills: list[PlanSkill],
+                              required: dict[str, int], servable, history: list[dict], goal: Goal, seniority: str,
+                              language: str, today: date) -> StoredPlan:
+        """Today's plan. The program is rebuilt every day from the fresh profile (so a level that went stale or rose
+        overnight changes the plan), and the open items of earlier days that are still fresh lead it (carried
+        forward); an item more than PROGRAM_CARRY_DAYS past its day is dropped, the router re-adds the skill if it
+        still matters. Within one day the saved plan is reused, so a started item stays started."""
+        plan = await tx.load_active_plan(user_id)
+        minutes = goal.minutes_per_day or DEFAULT_MINUTES_PER_DAY
+        carried: list[PlanItemRow] = []
+        if plan is not None:
+            if plan.week_start == today and plan.minutes_per_day == minutes and plan.interview_date == goal.interview_date:
+                return plan
+            for item in plan.items:
+                planned_for = plan.week_start + timedelta(days=item.day_index)
+                if item.status in OPEN and planned_for <= today and (today - planned_for).days <= PROGRAM_CARRY_DAYS:
+                    carried.append(item)
+        routed = self._router_items(profile, plan_skills, required, servable, history, goal, language, today)
+        items: list[dict] = []
+        taken: set[tuple[str, tuple[str, ...]]] = set()
+        for item in carried:
+            signature = (item.mode, tuple(item.skills))
+            if signature in taken:
+                continue
+            taken.add(signature)
+            items.append({"day_index": 0, "mode": item.mode, "skills": item.skills, "reason": item.reason,
+                          "minutes": item.minutes, "created_at": item.created_at})
+        labels = self.catalog.skill_labels()
+        for planned in routed:
+            signature = (planned.activity.mode, tuple(planned.activity.skills))
+            if signature in taken:
+                continue
+            taken.add(signature)
+            items.append({"day_index": planned.day_index, "mode": planned.activity.mode, "skills": list(planned.activity.skills),
+                          "reason": plan_router.reason_text(planned.activity, language, labels),
+                          "minutes": planned.activity.estimated_minutes})
+        return await tx.create_plan(user_id=user_id, role_slug=self.config.role, seniority=seniority, week_start=today,
+                                    minutes_per_day=minutes, interview_date=goal.interview_date, items=items)
+
+    async def _complete_program_item(self, tx, user_id: uuid.UUID, *, attempt_id: uuid.UUID | None = None,
+                                     session_id: uuid.UUID | None = None, skills: list[str] | None = None,
+                                     today: date | None = None) -> None:
+        """Tick the program item this attempt or interview fulfilled: the one it was started from, else the earliest
+        open item due by today on one of the same skills (a practice item) or a simulation item (an interview)."""
+        plan = await tx.load_active_plan(user_id)
+        if plan is None:
+            return
+        today_index = plan.day_index_of(today or date.today())
+        linked = await tx.attempt_plan_item(attempt_id) if attempt_id is not None else None
+        open_items = [i for i in plan.items if i.status in OPEN and i.day_index <= max(today_index, 0)]
+        chosen = next((i for i in open_items if i.id == linked), None)
+        if chosen is None:
+            wanted = set(skills or [])
+            if session_id is not None:
+                fitting = [i for i in open_items if i.mode == "simulation"]
+            else:
+                fitting = [i for i in open_items if i.mode != "simulation" and wanted & set(i.skills)]
+            chosen = min(fitting, key=lambda i: (i.day_index, i.created_at), default=None)
+        if chosen is None:
+            return
+        fields = {"status": "done"}
+        if attempt_id is not None:
+            fields["completed_attempt_id"] = attempt_id
+        if session_id is not None:
+            fields["completed_session_id"] = session_id
+        await tx.update_plan_item(chosen.id, **fields)
+
+    def _plan_view(self, plan: StoredPlan, goal: Goal, today: date) -> PlanView:
+        labels = self.catalog.skill_labels()
+        offset = plan.day_index_of(today)                       # 0 for today's plan; a stale plan shifts by the days elapsed
+        views = []
+        for item in sorted(plan.items, key=lambda i: (i.day_index, i.created_at.date() >= plan.week_start, i.created_at)):
+            views.append(PlanItemView(
+                id=str(item.id), day_index=item.day_index - offset,
+                date=(plan.week_start + timedelta(days=item.day_index)).isoformat(), mode=item.mode,
+                skills=[LabelledSkill(key=k, label=labels.get(k, k)) for k in item.skills], minutes=item.minutes,
+                reason=item.reason, done=item.status == "done", status=item.status,
+                carried=item.created_at.date() < plan.week_start))          # created for an earlier plan: carried forward
+        return PlanView(items=views, minutes_per_day=plan.minutes_per_day, days_to_interview=goal.days_to_interview(today),
+                        interview_date=goal.interview_date.isoformat() if goal.interview_date else None,
+                        generated_for=plan.week_start.isoformat(), saved=True)
+
+    def _program_view(self, plan: StoredPlan, goal: Goal, today: date) -> ProgramView:
+        view = self._plan_view(plan, goal, today)
+        today_items = [i for i in view.items if i.day_index == 0 and i.status in OPEN]
+        today_items.sort(key=lambda i: (not i.carried, i.mode == "simulation"))     # carried first, interviews last
+        done_today = sum(1 for i in view.items if i.day_index == 0 and i.status == "done")
+        return ProgramView(plan=view, today=today_items, next=today_items[0] if today_items else None, done_today=done_today,
+                           minutes_due_today=sum(i.minutes for i in today_items), goal_complete=goal.complete)
 
     @staticmethod
     def _level_rank(skills: list[SkillProgress]) -> tuple[int, int]:
@@ -588,44 +780,20 @@ class PracticeService:
                                         weak=weak, level=round(sum(levels.values()) / len(levels), 2) if levels else None))
         return points
 
-    def _weekly_plan(self, profile: LoadedProfile, plan_skills: list[PlanSkill], required: dict[str, int], servable,
-                     recent: list[dict], goal: Goal, language: str, today: date) -> PlanView:
+    def _router_items(self, profile: LoadedProfile, plan_skills: list[PlanSkill], required: dict[str, int], servable,
+                      recent: list[dict], goal: Goal, language: str, today: date) -> list[plan_router.PlannedItem]:
         """The Plan Router's week, from today until the interview (or seven days), within the user's minutes."""
         minutes = goal.minutes_per_day or DEFAULT_MINUTES_PER_DAY
         days_left = goal.days_to_interview(today)
-        pool = []
-        for row in servable:
-            question = self.catalog.questions.get(row.key)
-            if question is None or not (row.reviewed or not self.config.suggest_reviewed_only):
-                continue
-            if question.status != row.status:            # the database decides the state (trial/published), not the seed file
-                question = question.model_copy(update={"status": row.status})
-            pool.append(question)
+        pool = self._servable_pool(servable)
         coverage = bank.coverage_by_skill(pool, language=language, allow_in_review=not self.config.suggest_reviewed_only,
                                           require_parity=False)
         scored = [r for r in recent if r.get("band")]
         history = [plan_router.RecentActivity(mode=r.get("mode") or "quick", band=r.get("band")) for r in scored]
-        items = plan_router.weekly_plan(plan=plan_skills, profile=as_profile_skills(profile, required), week_start=today,
-                                        minutes_per_day=minutes, bank_coverage=coverage, days_to_interview=days_left,
-                                        recent=history)
-        labels = self.catalog.skill_labels()
-        today_skills = set()
-        for r in scored:                                          # an opened-and-abandoned question does not tick the plan
-            started = r.get("started_at")
-            question = self.catalog.questions.get(r.get("question_key") or "")
-            if started and question is not None and datetime.fromisoformat(started).date() == today:
-                today_skills.update(link.skill for link in question.skills)
-        views = []
-        for item in items:
-            activity = item.activity
-            views.append(PlanItemView(
-                day_index=item.day_index, date=(today + timedelta(days=item.day_index)).isoformat(), mode=activity.mode,
-                skills=[LabelledSkill(key=k, label=labels.get(k, k)) for k in activity.skills], minutes=activity.estimated_minutes,
-                reason=plan_router.reason_text(activity, language, labels),
-                done=item.day_index == 0 and bool(set(activity.skills) & today_skills)))
-        return PlanView(items=views, minutes_per_day=minutes, days_to_interview=days_left,
-                        interview_date=goal.interview_date.isoformat() if goal.interview_date else None,
-                        generated_for=today.isoformat())
+        del language
+        return plan_router.weekly_plan(plan=plan_skills, profile=as_profile_skills(profile, required), week_start=today,
+                                       minutes_per_day=minutes, bank_coverage=coverage, days_to_interview=days_left,
+                                       recent=history)
 
     def _subjects(self, skills: list[SkillProgress], required: dict[str, int], weights: dict[str, float],
                   bands: dict[str, dict[str, int]], servable) -> list[SubjectProgress]:

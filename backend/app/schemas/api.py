@@ -184,13 +184,16 @@ class TimelinePoint(BaseModel):
 
 
 class PlanItemView(BaseModel):
-    day_index: int                              # 0 = today
-    date: str                                   # ISO date
+    id: str | None = None                       # the saved plan item (start it with POST /v1/me/program/start)
+    day_index: int                              # 0 = today; an open item from an earlier day shows as today (carried)
+    date: str                                   # ISO date of the day it is shown on
     mode: str                                   # quick | deep | simulation | diagnostic | retention_check
     skills: list[LabelledSkill] = Field(default_factory=list)
     minutes: int
     reason: str
-    done: bool = False                          # today's items: an answer covered one of these skills today
+    done: bool = False                          # status done: an attempt or interview fulfilled it
+    status: str = "planned"                     # planned | started | done | skipped
+    carried: bool = False                       # planned for an earlier day and not done yet: carried forward
 
 
 class PlanView(BaseModel):
@@ -198,7 +201,27 @@ class PlanView(BaseModel):
     minutes_per_day: int
     days_to_interview: int | None = None
     interview_date: str | None = None
-    generated_for: str                          # ISO date the plan starts on (today)
+    generated_for: str                          # ISO date the plan week starts on
+    saved: bool = False                         # persisted: skipped days are carried forward, finished items stay ticked
+
+
+class ProgramView(BaseModel):
+    """The saved program as it stands today: what is due now and what comes next."""
+
+    plan: PlanView
+    today: list[PlanItemView] = Field(default_factory=list)      # open items due today, carried-forward ones first
+    next: PlanItemView | None = None                             # the one to start now
+    done_today: int = 0
+    minutes_due_today: int = 0
+    goal_complete: bool = False
+
+
+class ProgramStartView(BaseModel):
+    kind: str                                   # attempt | interview | nothing
+    item: PlanItemView | None = None
+    attempt: AttemptView | None = None          # kind attempt: the attempt that was opened for the item
+    interview_duration_min: int | None = None   # kind interview: the duration to offer in the lobby
+    message: str | None = None                  # kind nothing: why (no goal, nothing due, no question in the bank)
 
 
 class ProgressView(BaseModel):

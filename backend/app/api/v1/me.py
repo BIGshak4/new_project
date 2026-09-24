@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
+import uuid
 from datetime import date
 
 from fastapi import APIRouter, Query
 from pydantic import BaseModel, Field
 
 from app.api.deps import CurrentAccess, Practice
-from app.schemas.api import GoalView, ProgressView
+from app.schemas.api import GoalView, ProgramStartView, ProgramView, ProgressView
 
 router = APIRouter(prefix="/v1/me", tags=["me"])
 
@@ -51,3 +52,21 @@ async def get_goal(access: CurrentAccess, practice: Practice,
 async def save_goal(body: GoalRequest, access: CurrentAccess, practice: Practice) -> GoalView:
     return await practice.save_goal(access.user_id, job_type=body.job_type, interview_date=body.interview_date,
                                     minutes_per_day=body.minutes_per_day, seniority=body.seniority, language=body.language)
+
+
+class ProgramStartRequest(BaseModel):
+    item_id: uuid.UUID | None = Field(None, description="a plan item from GET /v1/me/program; the next due one when omitted")
+    language: str | None = Field(None, pattern="^(en|he)$")
+
+
+@router.get("/program", response_model=ProgramView,
+            summary="My program: the saved plan rolled to today, what is due now, the item to start")
+async def program(access: CurrentAccess, practice: Practice,
+                  language: str | None = Query(None, pattern="^(en|he)$")) -> ProgramView:
+    return await practice.program(access.user_id, language=language)
+
+
+@router.post("/program/start", response_model=ProgramStartView,
+             summary="Start a program item: opens a practice attempt on a fitting question, or points to the interview lobby")
+async def start_program(body: ProgramStartRequest, access: CurrentAccess, practice: Practice) -> ProgramStartView:
+    return await practice.start_program_item(access.user_id, item_id=body.item_id, language=body.language)

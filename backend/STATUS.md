@@ -5,7 +5,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-09-24 (overnight build §5k) · **Tests:** 706 offline + 17 live + `scripts/smoke_http.py` against Render (23 routes) · **Latest commit:** see changelog
+**Last updated:** 2026-09-24 (loyalty and the saved program §5l) · **Tests:** 742 offline + 17 live + `scripts/smoke_http.py` against Render (25 routes) · **Latest commit:** see changelog
 
 ---
 
@@ -264,6 +264,14 @@ Decisions: emphasis multipliers stay within 0.2–2.5 and the plan is renormalis
 
 **Morning list:** (a) done 2026-09-24 with Shaked's approval: migrations `20260924045708_question_sightings` and `20260924045651_interview_answer_images` applied, `INTERVIEW_PHOTOS` on, company tags verified on the real database; (b) rotate the Netlify build hook pasted in chat and update the GitHub secret `NETLIFY_PRACTICE_BUILD_HOOK`; (c) decide on the Opus 5.5 comparison; (d) open the site once through the goal card and the progress page and say what feels off.
 
+## 5l. Loyalty and the saved program (2026-09-24, morning, Shaked's "go")
+
+**Loyalty (1..10) per skill.** How fresh the evidence behind a level is, not how good the level is: 10 on the day of the last scored answer on the skill, one less for every full three days since, never below 1; any scored answer (strong or weak) brings it back to 10. Computed on read from `user_skill_profile.last_assessed_at` (`scores.loyalty`), so no migration and no nightly job. Loyalty 6 or lower (12+ days) makes the level **provisional**: it is not counted as assessed in the overview and the Plan Router schedules a refresh (a retention check, reason "It has been N days since X was last checked") before new material. `SkillProgress.loyalty / needs_refresh`, `ProgressOverview.skills_to_refresh`, one line on the overview card.
+
+**The saved program.** The plan is no longer recomputed and forgotten on every load. `learning_plan` + `plan_item` (existing tables from step 1) hold one active plan per user (`app/repo/plans.py`). Rules: the program is rebuilt **every day** from the fresh profile (so a level that went stale or rose overnight changes the plan); open items of earlier days that are at most 3 days past their day are **carried forward** and lead the new day (marked "carried"); older ones are dropped, the router re-adds the skill if it still matters; within one day the saved plan is reused, so a started item stays started; a new goal deactivates the plan. **Ticking:** a scored main answer completes the item it was started from, else the earliest open item due by today on one of the question's skills (`plan_item.completed_attempt_id`); a finished mock interview completes the earliest open simulation item (`completed_session_id`, `InterviewService(on_finished=...)`). **"My program"** replaces "One question for today" in the library (`program-panel.tsx`): the next due item with its reason and minutes; Start chooses a bank question for the item's skill at the user's level (unseen and reviewed first, `bank.select_question`) and opens a practice attempt linked to the item (`attempt.plan_item_id`); a simulation item points to the interview lobby with the closest duration; an item the bank cannot serve is skipped with a message. `GET /v1/me/program`, `POST /v1/me/program/start`. The progress page's plan table reads the same saved plan (status, carried, started, skipped). Reasons are stored in the language the plan was built in.
+
+Verification: 742 offline tests (17 loyalty, 10 program), `scripts/e2e_goal_and_visuals.py` on the real database (plan rows written, item started and linked, the answer ticks it, rolled back), typecheck / 38 web tests / build, Render smoke with 25 routes.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -301,6 +309,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-09-24 | Loyalty per skill (1..10, -1 per 3 days without evidence, back to 10 on any scored answer; 6 or lower = provisional, refresh scheduled first); the saved program on `learning_plan`/`plan_item` (rebuilt daily, carried forward up to 3 days, ticked by attempts and interviews); "My program" replaces "One question for today"; 742 offline tests (§5l) |
 | 2026-09-24 | Overnight (§5k): the goal (job type, interview date, minutes a day) on `user_profile`; six job types that re-weight the role's skills for the plan, the next question and the interview; questions listed by job relevance and by company; "I saw it at company X" (migration `20260924045708`, applied); progress = overview in words + road-so-far graph + plan until the interview; practice feedback → follow-up → next question under the answer; drawn circuits in interview answers (photos: migration `20260924045651`, applied); visual refresh; 706 offline tests; `scripts/e2e_goal_and_visuals.py`; verification report `docs/system-verification-2026-09-24.md` |
 | 2026-09-17 | Step 1: schema designed from `Data_Models.md`, reviewed by 25 agents, dry-run in a rolled-back transaction, applied to Supabase; 44 review findings, 40 fixed; performance items applied |
 | 2026-09-17 | Step 2: engine, seeds, practice CLI, seed loader written; 272 tests |

@@ -88,6 +88,7 @@ class TestOnTheProfile:
         for (uid, _key), row in store.profiles.items():
             if uid == USER and row.get("last_assessed_at"):
                 row["last_assessed_at"] = row["last_assessed_at"] - timedelta(days=20)
+        store.plans.clear()                                   # the program is rebuilt each new day; imitate the next morning
         later = await svc.progress(USER, language="en")
         primary = next(s for s in later.skills if s.key == "boolean_algebra")
         assert primary.loyalty == 4 and primary.needs_refresh is True and primary.level is not None

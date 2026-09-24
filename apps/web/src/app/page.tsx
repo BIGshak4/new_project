@@ -19,6 +19,7 @@ import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
 import { Auth, type Lang } from "../components/auth";
 import { PracticeSession } from "../components/practice-session";
 import { GoalSetup } from "../components/goal-setup";
+import { ProgramPanel } from "../components/program-panel";
 import { OverviewCard, PlanTable, ProgressGraph } from "../components/progress-board";
 import { InterviewSession } from "../components/interview-session";
 import { supabase } from "../lib/supabase";
@@ -323,9 +324,6 @@ function Workspace({
   );
   const showGoalSetup =
     route.view === "library" && goal !== null && !goal.complete && !goalSkipped;
-  const daily = questions.length
-    ? questions[Math.floor(Date.now() / 86400000) % questions.length]
-    : null;
   const openQuestion = (q: QuestionSummary) =>
     navigate({ view: route.view, question: q.key });
   const date = (s: string) =>
@@ -667,22 +665,25 @@ function Workspace({
                   {showGoalSetup && (
                     <GoalSetup api={api} lang={lang} goal={goal} onSaved={onGoalSaved} onSkip={skipGoal} />
                   )}
-                  {route.view === "library" && daily && !showGoalSetup && (
-                    <section className="daily-panel">
-                      <div>
-                        <h2>{t("שאלה אחת להיום", "One question for today")}</h2>
-                        <p>
-                          {daily.title} · {daily.estimated_minutes ?? "—"}{" "}
-                          {t("דקות", "min")}
-                        </p>
-                      </div>
-                      <button
-                        className="primary"
-                        onClick={() => openQuestion(daily)}
-                      >
-                        {t("מתחילים לתרגל", "Start practicing")}
-                      </button>
-                    </section>
+                  {route.view === "library" && !showGoalSetup && (
+                    <ProgramPanel
+                      api={api}
+                      lang={lang}
+                      goalComplete={!!goal?.complete}
+                      refreshKey={`${progress.attempts_today}-${goal?.job_type ?? ""}-${goal?.minutes_per_day ?? ""}-${goal?.interview_date ?? ""}`}
+                      onOpenGoal={() => {
+                        setGoalSkipped(false);
+                        try {
+                          localStorage.removeItem(skipKey);
+                        } catch {}
+                      }}
+                      onStartAttempt={(id) => {
+                        navigate({ view: "library", attempt: id });
+                        refreshProgress();
+                      }}
+                      onStartInterview={() => navigate({ view: "interview" })}
+                      onOpenProgress={() => navigate({ view: "progress" })}
+                    />
                   )}
                   <div className="toolbar">
                     <div className="search">

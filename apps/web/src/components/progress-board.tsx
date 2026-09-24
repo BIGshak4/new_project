@@ -190,6 +190,7 @@ export function PlanTable({ plan, lang, onEditGoal }: { plan: Plan | null; lang:
         </h3>
         {plan && (
           <span className="small muted">
+            {plan.saved ? t("נשמרת ומתעדכנת כל יום · ", "Saved, refreshed every day · ") : ""}
             {plan.days_to_interview === null || plan.days_to_interview === undefined
               ? t("שבוע קדימה", "A week ahead")
               : plan.days_to_interview >= 0
@@ -229,7 +230,7 @@ export function PlanTable({ plan, lang, onEditGoal }: { plan: Plan | null; lang:
           <tbody>
             {days.map((day) =>
               day.items.map((item, i) => (
-                <tr key={`${day.day_index}-${i}`} className={`plan-row ${item.done ? "done" : ""} ${i === 0 ? "first" : ""}`}>
+                <tr key={item.id ?? `${day.day_index}-${i}`} className={`plan-row ${item.done ? "done" : ""} ${item.status === "skipped" ? "skipped" : ""} ${i === 0 ? "first" : ""}`}>
                   {i === 0 ? (
                     <th scope="rowgroup" rowSpan={day.items.length} className="plan-day">
                       <strong>{dayLabel(item.date, day.day_index, lang)}</strong>
@@ -242,6 +243,9 @@ export function PlanTable({ plan, lang, onEditGoal }: { plan: Plan | null; lang:
                     <span className="plan-mode">
                       {item.done ? <Check size={15} aria-hidden="true" /> : <Circle size={13} aria-hidden="true" />}
                       {modeLabel(item.mode, lang)}
+                      {item.carried && <span className="badge trial">{t("הועבר", "carried")}</span>}
+                      {item.status === "skipped" && <span className="small muted">{t("דולג", "skipped")}</span>}
+                      {item.status === "started" && <span className="small muted">{t("בתהליך", "in progress")}</span>}
                     </span>
                   </td>
                   <td dir="auto">{item.skills.map((s) => s.label).join(", ")}</td>

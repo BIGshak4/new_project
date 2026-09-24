@@ -288,6 +288,7 @@ def every_route():
         ("GET", "/v1/me/goal", None), ("POST", "/v1/me/goal", {"job_type": "verification", "minutes_per_day": 30}),
         ("GET", "/v1/job-types", None), ("GET", "/v1/companies", None),
         ("POST", f"/v1/questions/{Q}/sightings", {"company": "Intel"}),
+        ("GET", "/v1/me/program", None), ("POST", "/v1/me/program/start", {}),
     ]
 
 

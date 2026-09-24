@@ -217,8 +217,8 @@ class TestTheGoal:
         profile = await (await store.transaction().__aenter__()).load_profile(USER)
         _, required, _, plan_skills = svc._plan("student")
         from app.repo.users import Goal
-        view = svc._weekly_plan(profile, plan_skills, required, trial, [], Goal(minutes_per_day=30), "en", date.today())
-        assert view.items, "trial questions in the database must feed the plan"
+        items = svc._router_items(profile, plan_skills, required, trial, [], Goal(minutes_per_day=30), "en", date.today())
+        assert items, "trial questions in the database must feed the plan"
 
     async def test_with_nothing_reviewed_the_plan_is_empty_not_an_error(self, catalog):
         svc, _ = practice(catalog)                                        # suggest_reviewed_only: the production default

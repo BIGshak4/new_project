@@ -81,8 +81,9 @@ class InterviewConfig:
 
 class InterviewService:
     def __init__(self, store: Store, catalog: Catalog, provider: Provider, config: InterviewConfig | None = None, *,
-                 image_fetcher: ImageFetcher | None = None):
+                 image_fetcher: ImageFetcher | None = None, on_finished=None):
         self.store, self.catalog, self.provider = store, catalog, provider
+        self.on_finished = on_finished                   # async (tx, user_id, session_id) -> None: the program ticks its item
         self.config = config or InterviewConfig()
         self.image_fetcher = image_fetcher               # None: photos are kept but not shown to the evaluator
         self._locks: dict[uuid.UUID, asyncio.Lock] = {}
@@ -521,6 +522,9 @@ class InterviewService:
                         await tx.save_profile(loaded, states)
                     except StaleProfile:
                         row["state"].setdefault("flags", []).append("profile_not_updated_stale")
+                if row["status"] == "completed" and not row["state"].get("program_ticked") and self.on_finished is not None:
+                    row["state"]["program_ticked"] = True
+                    await self.on_finished(tx, user_id, session_id)
                 if metrics:
                     await tx.record_session_metrics(user_id=user_id, session_id=session_id, metrics=metrics,
                                                     seniority=seniority, role_slug=self.config.role,

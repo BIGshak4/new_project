@@ -43,6 +43,7 @@ V1_ROUTES = {
     # the goal, job types, company sightings (2026-09-23)
     ("GET", "/v1/me/goal"), ("POST", "/v1/me/goal"), ("GET", "/v1/job-types"), ("GET", "/v1/companies"),
     ("POST", "/v1/questions/{key_or_id}/sightings"),
+    ("GET", "/v1/me/program"), ("POST", "/v1/me/program/start"),
 }
 
 
