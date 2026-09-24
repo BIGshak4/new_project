@@ -117,7 +117,7 @@ class TestTheLibraryByJobAndCompany:
         import re
 
         from app.repo.sightings import MAX_NAME, slugify
-        sql = (SEEDS.parent.parent / "supabase" / "migrations" / "20260923000000_question_sightings.sql").read_text(encoding="utf-8")
+        sql = (SEEDS.parent.parent / "supabase" / "migrations" / "20260924045708_question_sightings.sql").read_text(encoding="utf-8")
         pattern = re.compile(re.search(r"company_slug ~ '([^']+)'", sql).group(1))
         for name in ("Intel Corp.", "  Nvidia  ", "אינטל", "Intel ישראל", "מובילאיי (Mobileye)", "a" * 200, "x-" * 60, "Ünïcode Çô"):
             slug = slugify(name)

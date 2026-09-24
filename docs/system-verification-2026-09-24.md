@@ -17,7 +17,7 @@ fixed, and what waits for a human decision in the morning. `backend/STATUS.md` �
 | Deploys | push → Render (API) and Netlify (practice site) through the GitHub workflow | both automatic; the workflow runs for all three commits succeeded in under a minute |
 | Production image | `docker build` of the same Dockerfile | **not run locally** (Docker Desktop's daemon is off on this machine); Render built it from the same file and the smoke test ran against that build |
 | Independent review | a second agent reviewed the whole diff for defects (it ran the offline suites itself) | 6 findings, all fixed the same night (§2) |
-| Database changes | `scripts/dry_run_sql.py` on both new migrations, rolled back, with a Hebrew-slug probe on the constraint | dry runs OK; **neither migration is applied** (§3) |
+| Database changes | `scripts/dry_run_sql.py` on both new migrations, rolled back, with a Hebrew-slug probe on the constraint | dry runs OK; **both applied on the morning of 24 September with Shaked's approval**; company tags verified on the real database afterwards |
 
 ### 1a. Live suite
 
@@ -35,8 +35,10 @@ fixed, and what waits for a human decision in the morning. `backend/STATUS.md` �
 
 ## 3. Waiting for Shaked (the morning list)
 
-1. **Apply migration `supabase/migrations/20260923000000_question_sightings.sql`** (the "I saw it at company X" table). Until then the button says "company tags are opening soon" and company search returns nothing. Dry run: `uv run python scripts/dry_run_sql.py ../supabase/migrations/20260923000000_question_sightings.sql`, then apply through the MCP as usual and rename the file to the version it assigns.
-2. **Apply migration `20260923000001_interview_answer_images.sql`** (photos in interview answers: the upload rule and its trigger also accept an in-progress interview of the same learner). Dry run needs `--replaces "policy learners upload answer images"`. Then set `INTERVIEW_PHOTOS = true` in `apps/web/src/components/interview-session.tsx` and push. Until then the interview offers the circuit drawing only, which works end to end today.
+Items 1 and 2 were done on the morning of 24 September after Shaked's approval (migrations `20260924045708` and `20260924045651`, `INTERVIEW_PHOTOS` on).
+
+1. **Apply migration `supabase/migrations/20260924045708_question_sightings.sql`** (the "I saw it at company X" table). Until then the button says "company tags are opening soon" and company search returns nothing. Dry run: `uv run python scripts/dry_run_sql.py ../supabase/migrations/20260924045708_question_sightings.sql`, then apply through the MCP as usual and rename the file to the version it assigns.
+2. **Apply migration `20260924045651_interview_answer_images.sql`** (photos in interview answers: the upload rule and its trigger also accept an in-progress interview of the same learner). Dry run needs `--replaces "policy learners upload answer images"`. Then set `INTERVIEW_PHOTOS = true` in `apps/web/src/components/interview-session.tsx` and push. Until then the interview offers the circuit drawing only, which works end to end today.
 3. **Rotate the Netlify build hook** that was pasted in chat and update the GitHub secret `NETLIFY_PRACTICE_BUILD_HOOK`.
 4. **Opus 5.5** exists (`claude-opus-5-5`, $4 in / $20 out per million tokens). Decide whether to run the 13-answer P2 set on it before changing the evaluator. Nothing was changed tonight.
 5. **Look at the site once**: sign in fresh (or clear the "later" flag) to see the goal card, pick a job type, open the progress page, answer one question and watch the feedback → follow-up → next question flow. Say what feels off; the visual refresh is a taste call.

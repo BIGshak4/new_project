@@ -28,9 +28,9 @@ type Props = {
 };
 
 const DURATIONS = [20, 30, 45] as const;
-// Photos in the interview need the storage rule in supabase/migrations/20260923000001_interview_answer_images.sql.
-// Until it is applied the bucket refuses interview paths, so only the circuit drawing is offered.
-const INTERVIEW_PHOTOS = false;
+// Photos in the interview need the storage rule in supabase/migrations/*_interview_answer_images.sql (applied 2026-09-24).
+// Set to false again if that rule is ever rolled back: the bucket would refuse interview paths.
+const INTERVIEW_PHOTOS = true;
 
 /** The mock interview: a lobby to start one, then the timed room, then the report. */
 export function InterviewSession(props: Props) {

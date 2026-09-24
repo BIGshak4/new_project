@@ -20,7 +20,7 @@ from app import db
 TABLE = "question_sighting"
 MAX_NAME = 80
 # Latin letters, digits and Hebrew letters (U+05D0..U+05EA, no vowel points); the table constraint in
-# supabase/migrations/20260923000000_question_sightings.sql accepts exactly the same alphabet
+# supabase/migrations/20260924045708_question_sightings.sql accepts exactly the same alphabet
 _SLUG_JUNK = re.compile(r"[^a-z0-9\u05d0-\u05ea]+")
 
 
