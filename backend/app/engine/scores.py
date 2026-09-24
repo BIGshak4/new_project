@@ -345,3 +345,28 @@ def momentum(bands: list[Band], window: int) -> float:
     if not recent:
         return 0.0
     return round(sum(BAND_VALUE[b] for b in recent) / len(recent), 2)
+
+
+# ----------------------------------------------------------------------------- loyalty (evidence freshness)
+
+LOYALTY_MAX = 10                 # a skill scored today
+LOYALTY_MIN = 1                  # never lower, however long ago
+LOYALTY_DECAY_DAYS = 3           # -1 for every full 3 days without a scored answer on the skill
+LOYALTY_PROVISIONAL_AT = 6       # at 6 or lower (12+ days) the level counts as provisional: it needs a refresh
+
+
+def loyalty(last_assessed_at, now) -> int | None:
+    """How much a skill's level can still be trusted, 1..10 (Shaked, 2026-09-24).
+
+    10 on the day of the last scored answer, one less for every full three days since, never below 1. Any scored
+    answer on the skill, strong or weak, brings it back to 10 (the level itself says how good the answer was).
+    None when the skill was never assessed: there is no level to trust."""
+    if last_assessed_at is None:
+        return None
+    days = max(0, (now - last_assessed_at).total_seconds()) // 86400
+    return int(max(LOYALTY_MIN, LOYALTY_MAX - days // LOYALTY_DECAY_DAYS))
+
+
+def needs_refresh(value: int | None) -> bool:
+    """A level whose loyalty dropped to the provisional band should be re-checked before it is trusted or built on."""
+    return value is not None and value <= LOYALTY_PROVISIONAL_AT

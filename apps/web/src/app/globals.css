@@ -1503,3 +1503,5 @@ button { transition: background 0.18s ease, border-color 0.18s ease, transform 0
 .saw-it-at .text-button { color: var(--green); padding: 4px 8px; min-height: 34px; }
 .saw-it-form input { flex: 1 1 200px; }
 .saw-it-form .primary { min-height: 40px; }
+
+.overview-refresh { display: inline-flex; align-items: center; gap: 6px; margin: -8px 0 0; color: #8a5a12; background: var(--warm); border-radius: 999px; padding: 6px 12px; justify-self: start; }

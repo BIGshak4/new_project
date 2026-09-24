@@ -213,6 +213,7 @@ class _MemoryTx:
             loaded.retention[key] = {"due": row.get("retention_due_at"), "passed": row.get("retention_checks_passed", 0),
                                      "last_at": None}
             loaded.level_history[key] = list(row["level_history"])
+            loaded.last_assessed[key] = row.get("last_assessed_at")
         return loaded
 
     async def save_profile(self, loaded, states, *, attempt_id=None):

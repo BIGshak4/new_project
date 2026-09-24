@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarDays, Check, Circle, Flame, Target, TrendingUp } from "lucide-react";
+import { CalendarDays, Check, Circle, Flame, RefreshCw, Target, TrendingUp } from "lucide-react";
 import type { Lang } from "./auth";
 import type { Goal, Plan, ProgressOverview, TimelinePoint } from "../lib/practice-api";
 import { dayLabel, levelSteps, modeLabel, planByDay, tickDays, timelineLayout } from "../lib/timeline";
@@ -69,6 +69,14 @@ export function OverviewCard({
           <span>{t("מיומנויות שהוערכו", "skills assessed")}</span>
         </div>
       </div>
+      {(overview.skills_to_refresh ?? 0) > 0 && (
+        <p className="overview-refresh small" dir="auto">
+          <RefreshCw size={14} aria-hidden="true" />{" "}
+          {overview.skills_to_refresh === 1
+            ? t("מיומנות אחת לא נבדקה כבר זמן מה; רענון שלה מתוכנן לפני חומר חדש.", "One skill has not been checked for a while; a refresh of it is planned before new material.")
+            : `${overview.skills_to_refresh} ${t("מיומנויות לא נבדקו כבר זמן מה; רענון שלהן מתוכנן לפני חומר חדש.", "skills have not been checked for a while; a refresh of them is planned before new material.")}`}
+        </p>
+      )}
       <footer className="overview-goal">
         <Target size={16} aria-hidden="true" />
         <span dir="auto">

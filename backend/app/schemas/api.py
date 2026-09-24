@@ -114,6 +114,8 @@ class SkillProgress(BaseModel):
     assessments: int
     last_assessed_at: str | None
     retention_due_at: str | None
+    loyalty: int | None = None                  # 1..10: how fresh the evidence behind the level is (None: never assessed)
+    needs_refresh: bool = False                 # loyalty in the provisional band: re-check before trusting the level
 
 
 class SubjectProgress(BaseModel):
@@ -164,7 +166,8 @@ class ProgressOverview(BaseModel):
     strong: int
     partial: int
     weak: int
-    skills_assessed: int
+    skills_assessed: int                        # assessed AND fresh enough to trust
+    skills_to_refresh: int = 0                  # assessed once, but the evidence is old: a refresh is scheduled
     skills_total: int                           # skills in the plan for this user's goal
     level: str                                  # a word: Getting started | Awareness | Foundational | Proficient | Advanced | Expert
     level_rank: int                             # 0..5, for the meter

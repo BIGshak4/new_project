@@ -23,6 +23,14 @@ class ProfileSkill:
     status: EvidenceStatus = EvidenceStatus.NOT_ASSESSED
     retention_due_at: date | None = None
     retention_checks_passed: int = 0
+    loyalty: int | None = None                 # 1..10 evidence freshness; None when never assessed
+    days_since_assessed: int | None = None
+
+    @property
+    def stale(self) -> bool:
+        """The level exists but its evidence is old enough to count as provisional (scores.needs_refresh)."""
+        from app.engine.scores import needs_refresh
+        return self.level is not None and needs_refresh(self.loyalty)
 
 
 @dataclass
@@ -101,7 +109,8 @@ def activity_value(activity: Activity, *, plan: list[PlanSkill], profile: dict[s
     by_key = {s.key: s for s in plan}
     skills = [by_key[k] for k in activity.skills if k in by_key]
     w_unassessed = p.w_unassessed_late if coverage(plan, profile) >= p.coverage_switch else p.w_unassessed_early
-    due = [s for s in skills if (entry := profile.get(s.key)) and entry.retention_due_at and entry.retention_due_at <= today]
+    due = [s for s in skills if (entry := profile.get(s.key))
+           and ((entry.retention_due_at and entry.retention_due_at <= today) or entry.stale)]
     core_below = any(s.importance == Importance.CORE and _gap(s, profile) > 0 for s in skills)
     last_two = recent[-2:]
     variety = bool(last_two) and all(a.mode != activity.mode for a in last_two)
@@ -133,6 +142,11 @@ def candidate_activities(*, plan: list[PlanSkill], profile: dict[str, ProfileSki
             activities.append(Activity("retention_check", [skill.key], minutes["retention_check"],
                                        reason_code="retention_due",
                                        reason_facts={"skill": skill.key, "level": entry.level}))
+        elif entry and entry.stale:
+            # the level is old news (loyalty in the provisional band): re-check it before building on it
+            activities.append(Activity("retention_check", [skill.key], minutes["retention_check"],
+                                       reason_code="stale",
+                                       reason_facts={"skill": skill.key, "level": entry.level, "days": entry.days_since_assessed}))
         available = bank_coverage.get(skill.key, {})
         for mode in ("quick", "deep"):
             if not available.get(mode):
@@ -258,6 +272,7 @@ REASONS = {
     "en": {
         "diagnostic": "A short diagnostic across your subjects, so the plan starts from what you actually know.",
         "retention_due": "Your level in {skill} went up recently. A new problem now shows whether it stuck.",
+        "stale": "It has been {days} days since {skill} was last checked. A fresh problem shows whether the level still holds.",
         "core_gap": "{skill} is a core skill for your target role, and you are at level {level} of the {required} it needs.",
         "gap": "You are at level {level} in {skill}; the role asks for {required}.",
         "unassessed": "We have no evidence on {skill} yet. One question tells us where to start.",
@@ -267,6 +282,7 @@ REASONS = {
     "he": {
         "diagnostic": "אבחון קצר על פני הנושאים שלכם, כדי שהתוכנית תתחיל ממה שאתם באמת יודעים.",
         "retention_due": "הרמה שלכם ב-{skill} עלתה לאחרונה. בעיה חדשה עכשיו תראה אם זה נשאר.",
+        "stale": "עברו {days} ימים מאז ש-{skill} נבדקה לאחרונה. בעיה חדשה תראה אם הרמה עדיין מחזיקה.",
         "core_gap": "{skill} היא מיומנות ליבה לתפקיד היעד, ואתם ברמה {level} מתוך {required} שנדרשת.",
         "gap": "אתם ברמה {level} ב-{skill}; התפקיד דורש {required}.",
         "unassessed": "עדיין אין לנו מידע על {skill}. שאלה אחת תראה מאיפה להתחיל.",
@@ -285,4 +301,4 @@ def reason_text(activity: Activity, language: str, skill_labels: dict[str, str] 
         code = "unassessed"
     key = facts.get("skill")
     facts["skill"] = (skill_labels or {}).get(key, key) if key else ""
-    return templates.get(code, templates["unassessed"]).format(**{"level": "", "required": "", **facts})
+    return templates.get(code, templates["unassessed"]).format(**{"level": "", "required": "", "days": "", **facts})

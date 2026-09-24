@@ -512,6 +512,7 @@ class PracticeService:
             daily = await tx.daily_bands(user_id)
             servable = await tx.list_questions(language=language)
         required, weights, _, plan_skills = self._plan(seniority, goal.job_type)
+        now = datetime.now(UTC)
         skills = []
         for key, state in sorted(profile.states.items()):
             catalog_skill = self.catalog.skills.get(key)
@@ -524,12 +525,15 @@ class PracticeService:
             trend = ("new" if state.turns == 0 else "stable" if last_level is None or level == last_level
                      else "improving" if (level or 0) > last_level else "declining")
             retention = profile.retention.get(key, {})
+            last = profile.last_assessed.get(key)
+            value = scores.loyalty(last, now) if status.value != "not_assessed" else None
             skills.append(SkillProgress(
                 key=key, label=catalog_skill.label, subject=catalog_skill.subject or "", level=level, status=status.value,
                 trend=trend, required_level=required.get(key, 2),
                 assessments=sum(1 for t in state.history if t.evidence_weight > 0),
-                last_assessed_at=history[-1]["at"] if history else None,
-                retention_due_at=retention.get("due").isoformat() if retention.get("due") else None))
+                last_assessed_at=last.isoformat() if last else (history[-1]["at"] if history else None),
+                retention_due_at=retention.get("due").isoformat() if retention.get("due") else None,
+                loyalty=value, needs_refresh=level is not None and scores.needs_refresh(value)))
         subjects = self._subjects(skills, required, weights, bands, servable)
         today = date.today()
         return ProgressView(skills=skills, subjects=subjects, recent=recent, attempts_today=started,
@@ -542,7 +546,7 @@ class PracticeService:
     @staticmethod
     def _level_rank(skills: list[SkillProgress]) -> tuple[int, int]:
         """(rank 0..5, assessed count): the average assessed level rounded, 0 when nothing is assessed yet."""
-        assessed = [s.level for s in skills if s.status == "assessed" and s.level]
+        assessed = [s.level for s in skills if s.status == "assessed" and s.level and not s.needs_refresh]
         if not assessed:
             return 0, 0
         return max(1, min(5, round(sum(assessed) / len(assessed)))), len(assessed)
@@ -552,12 +556,15 @@ class PracticeService:
         totals = {b: sum(per.get(b, 0) for per in bands.values()) for b in ("STRONG", "PARTIAL", "WEAK")}
         answered = sum(totals.values())
         plan_keys = {p.key for p in plan_skills if p.assessment_mode.value == "questioned"}
-        rank, assessed = self._level_rank([s for s in skills if s.key in plan_keys] or skills)
+        in_plan = [s for s in skills if s.key in plan_keys] or skills
+        rank, assessed = self._level_rank(in_plan)
+        to_refresh = sum(1 for s in in_plan if s.needs_refresh)
         words = LEVEL_WORDS.get(language, LEVEL_WORDS["en"])
         texts = MESSAGES.get(language, MESSAGES["en"])
         kind = "none" if answered == 0 else "few" if answered < 5 else "some" if answered < 20 else "many"
         return ProgressOverview(answered=answered, strong=totals["STRONG"], partial=totals["PARTIAL"], weak=totals["WEAK"],
-                                skills_assessed=assessed, skills_total=len(plan_keys), level=words[rank], level_rank=rank,
+                                skills_assessed=assessed, skills_to_refresh=to_refresh, skills_total=len(plan_keys),
+                                level=words[rank], level_rank=rank,
                                 message=texts[kind].format(answered=answered, strong=totals["STRONG"]))
 
     @staticmethod

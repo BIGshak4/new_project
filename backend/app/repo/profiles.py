@@ -38,6 +38,7 @@ class LoadedProfile:
     versions: dict[str, int] = field(default_factory=dict)              # skill key -> version as loaded
     retention: dict[str, dict] = field(default_factory=dict)            # skill key -> {due, passed, last_at}
     level_history: dict[str, list] = field(default_factory=dict)
+    last_assessed: dict[str, datetime | None] = field(default_factory=dict)   # skill key -> last scored answer (loyalty)
     seniority: str | None = None                                        # filled by the service on load
 
 
@@ -60,6 +61,7 @@ async def load(connection: AsyncConnection, user_id: uuid.UUID) -> LoadedProfile
         loaded.retention[row.key] = {"due": row.retention_due_at, "passed": row.retention_checks_passed,
                                      "last_at": row.last_retention_check_at}
         loaded.level_history[row.key] = list(row.level_history or [])
+        loaded.last_assessed[row.key] = row.last_assessed_at
     return loaded
 
 
@@ -136,10 +138,14 @@ def as_profile_skills(loaded: LoadedProfile, required_levels: dict[str, int],
                       params: EngineParams = DEFAULT_PARAMS) -> dict[str, ProfileSkill]:
     """What the plan router and the progress endpoint consume."""
     out = {}
+    now = datetime.now(UTC)
     for key, state in loaded.states.items():
         level, _ = scores.questioned_level(state, params)
         status = scores.evidence_status(state, required_levels.get(key, 2))
         retention = loaded.retention.get(key, {})
+        last = loaded.last_assessed.get(key)
+        value = scores.loyalty(last, now) if status != EvidenceStatus.NOT_ASSESSED else None
         out[key] = ProfileSkill(key=key, level=level if status != EvidenceStatus.NOT_ASSESSED else None, status=status,
-                                retention_due_at=retention.get("due"), retention_checks_passed=retention.get("passed", 0))
+                                retention_due_at=retention.get("due"), retention_checks_passed=retention.get("passed", 0),
+                                loyalty=value, days_since_assessed=int((now - last).total_seconds() // 86400) if last else None)
     return out

@@ -198,6 +198,10 @@ export type SkillProgress = {
   assessments: number;
   last_assessed_at: string | null;
   retention_due_at: string | null;
+  /** 1..10: how fresh the evidence behind the level is; null when never assessed */
+  loyalty?: number | null;
+  /** the evidence is old (loyalty 6 or lower): a refresh is scheduled before the level is trusted */
+  needs_refresh?: boolean;
 };
 
 /** One subject rolled up from its skills: what the progress donuts draw. */
@@ -224,7 +228,10 @@ export type ProgressOverview = {
   strong: number;
   partial: number;
   weak: number;
+  /** assessed and fresh enough to trust */
   skills_assessed: number;
+  /** assessed once, but the evidence is old: a refresh is scheduled */
+  skills_to_refresh?: number;
   skills_total: number;
   /** Getting started | Awareness | Foundational | Proficient | Advanced | Expert (localised) */
   level: string;
