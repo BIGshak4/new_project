@@ -286,6 +286,8 @@ Verification: 742 offline tests (17 loyalty, 10 program), `scripts/e2e_goal_and_
 
 Verification 2026-09-25: `ruff` clean; 772 offline tests; web typecheck, 48 tests, production build; Netlify workflow and Render redeploy confirmed (`/openapi.json` on Render lists the XP fields).
 
+**Follow-up (2026-09-25, morning):** the program's `carried` flag now compares one clock (an item created before the plan's `generated_at` is carried), which removes the UTC-vs-local-date disagreement after midnight behind the flaky test. XP is asserted on the real database by `scripts/e2e_goal_and_visuals.py` (+24 XP for a strong answer at difficulty 3, streak 1).
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
