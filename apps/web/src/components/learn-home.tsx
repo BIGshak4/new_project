@@ -117,7 +117,7 @@ export function LearnHome({
               {goal?.job_type_label ?? t("סוג התפקיד לא נבחר עדיין", "No job type chosen yet")}
               {interviewDate ? ` · ${t("ראיון ב", "interview on")}${lang === "he" ? "-" : " "}${interviewDate}` : ""}
             </div>
-            <h1>{daysLabel ? `${t("הדרך שלכם, ", "Your path, ")}${daysLabel}` : t("הדרך שלכם", "Your path")}</h1>
+            <h1 dir="auto">{daysLabel ? `${t("הדרך שלכם, ", "Your path, ")}${daysLabel}` : t("הדרך שלכם", "Your path")}</h1>
           </div>
           {minutes ? (
             <button type="button" className="pill-button" onClick={onOpenGoal} aria-label={t("עריכת היעד", "Edit goal")}>
@@ -130,9 +130,9 @@ export function LearnHome({
 
         <section className="path-card" aria-label={t("התוכנית שלי", "My program")}>
           <div className="unit-band">
-            <span className="unit-label">{t("היום", "Today")}</span>
+            <span className="unit-label">{goal?.job_type_label ? t("היעד", "Goal") : t("היום", "Today")}</span>
             <span className="unit-title" dir="auto">
-              {unitTitle}
+              {goal?.job_type_label ? `${goal.job_type_label}${program?.next ? ` · ${unitTitle}` : ""}` : unitTitle}
             </span>
             {today.total > 0 && (
               <span className="unit-count">
