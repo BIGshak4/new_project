@@ -142,6 +142,8 @@ export type Submission = {
   replayed: boolean;
   /** What to practise next, decided from this evaluation. Null when the bank has nothing left to suggest. */
   next_question?: NextQuestion | null;
+  /** XP this scored answer earned (a motivation layer computed from the stored result); null until scored */
+  xp_earned?: number | null;
 };
 
 /** The engine's suggestion after an evaluation: a servable question and the reason, in the practice language. */
@@ -202,6 +204,10 @@ export type SkillProgress = {
   loyalty?: number | null;
   /** the evidence is old (loyalty 6 or lower): a refresh is scheduled before the level is trusted */
   needs_refresh?: boolean;
+  /** XP earned on this skill: each answer's XP split by the question's skill weights */
+  xp?: number;
+  /** 0..1 fill toward the next level, from the engine's own level score */
+  level_progress?: number;
 };
 
 /** One subject rolled up from its skills: what the progress donuts draw. */
@@ -238,6 +244,12 @@ export type ProgressOverview = {
   /** 0..5 for the meter */
   level_rank: number;
   message: string;
+  /** XP over every scored answer and interview turn (computed on read) */
+  xp_total?: number;
+  /** ... of which today (UTC) */
+  xp_today?: number;
+  /** consecutive UTC days with a scored answer, ending today or yesterday */
+  streak_days?: number;
 };
 
 export type TimelinePoint = {
@@ -358,6 +370,8 @@ export type InterviewTurn = {
   check: Check | null;
   action_after: string | null;
   subject_switch: boolean;
+  /** XP for this turn, revealed with the results (interview turns count x1.5) */
+  xp_earned?: number | null;
 };
 
 export type InterviewStatus = "in_progress" | "evaluating" | "completed";

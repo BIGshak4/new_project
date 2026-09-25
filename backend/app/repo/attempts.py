@@ -224,3 +224,36 @@ async def daily_bands(connection: AsyncConnection, user_id: uuid.UUID, *, days: 
         entry = out.setdefault(key, {"day": key, "STRONG": 0, "PARTIAL": 0, "WEAK": 0})
         entry[str(band)] = entry.get(str(band), 0) + int(n)
     return [out[k] for k in sorted(out)]
+
+
+async def skill_links(connection: AsyncConnection, question_ids: set[uuid.UUID]) -> dict[uuid.UUID, list[list]]:
+    """{question id: [[skill key, weight], ...]} for the given questions: what XP splits an answer over."""
+    if not question_ids:
+        return {}
+    link, skill = await db.table("question_skill"), await db.table("skill")
+    rows = (await connection.execute(
+        select(link.c.question_id, skill.c.key, link.c.weight).join(skill, skill.c.id == link.c.skill_id)
+        .where(link.c.question_id.in_(list(question_ids))))).all()
+    out: dict[uuid.UUID, list[list]] = {}
+    for question_id, key, weight in rows:
+        out.setdefault(question_id, []).append([key, float(weight or 0)])
+    return out
+
+
+async def scored_submissions(connection: AsyncConnection, user_id: uuid.UUID, *, days: int = 365) -> list[dict]:
+    """Every scored answer revision of the last `days` (main answers and follow-ups), with what XP reads:
+    {day (UTC), band, difficulty, hints_seen, reference_seen, turn, skills}. Read-only: nothing is derived
+    here that the engine does not already store."""
+    attempt, submission, question = await db.table("attempt"), await db.table("attempt_submission"), await db.table("question")
+    since = datetime.now(UTC) - timedelta(days=days)
+    rows = (await connection.execute(
+        select(submission.c.accepted_at, submission.c.band, submission.c.turn, submission.c.hints_seen,
+               submission.c.reference_seen, question.c.difficulty, attempt.c.question_id)
+        .join(attempt, attempt.c.id == submission.c.attempt_id).join(question, question.c.id == attempt.c.question_id)
+        .where(attempt.c.user_id == user_id, submission.c.status == "done", submission.c.band.is_not(None),
+               submission.c.accepted_at >= since)
+        .order_by(submission.c.accepted_at))).all()
+    links = await skill_links(connection, {r.question_id for r in rows})
+    return [{"day": r.accepted_at.astimezone(UTC).date().isoformat(), "band": str(r.band), "difficulty": int(r.difficulty or 1),
+             "hints_seen": int(r.hints_seen or 0), "reference_seen": bool(r.reference_seen), "turn": int(r.turn or 0),
+             "interview": False, "skills": links.get(r.question_id, [])} for r in rows]

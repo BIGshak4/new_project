@@ -46,6 +46,9 @@ class Tx(Protocol):
     async def load_goal(self, user_id: uuid.UUID) -> Goal: ...
     async def save_goal(self, user_id: uuid.UUID, goal: Goal) -> Goal: ...
     async def daily_bands(self, user_id: uuid.UUID) -> list[dict]: ...
+    # XP reads (computed on read from stored results; see app.engine.xp)
+    async def scored_submissions(self, user_id: uuid.UUID, *, days: int = 365) -> list[dict]: ...
+    async def scored_interview_turns(self, user_id: uuid.UUID, *, days: int = 365) -> list[dict]: ...
     # the saved program
     async def load_active_plan(self, user_id: uuid.UUID) -> StoredPlan | None: ...
     async def create_plan(self, *, user_id: uuid.UUID, role_slug: str, seniority: str, week_start: date,
@@ -130,6 +133,12 @@ class DbTx:
 
     async def daily_bands(self, user_id):
         return await attempts.daily_bands(self.connection, user_id)
+
+    async def scored_submissions(self, user_id, *, days=365):
+        return await attempts.scored_submissions(self.connection, user_id, days=days)
+
+    async def scored_interview_turns(self, user_id, *, days=365):
+        return await sessions.scored_turns(self.connection, user_id, days=days)
 
     async def load_active_plan(self, user_id):
         return await plans.load_active(self.connection, user_id)

@@ -69,6 +69,7 @@ class SubmissionView(BaseModel):
     flags: list[str] = Field(default_factory=list)
     replayed: bool = False
     next_question: NextQuestionView | None = None   # what to practise next, decided from this evaluation
+    xp_earned: int | None = None                # XP this scored answer earned (app.engine.xp); None until it is scored
 
 
 class FollowUpView(BaseModel):
@@ -116,6 +117,8 @@ class SkillProgress(BaseModel):
     retention_due_at: str | None
     loyalty: int | None = None                  # 1..10: how fresh the evidence behind the level is (None: never assessed)
     needs_refresh: bool = False                 # loyalty in the provisional band: re-check before trusting the level
+    xp: int = 0                                 # XP earned on this skill (split of each answer's XP by the question's skill weights)
+    level_progress: float = 0.0                 # 0..1 fill toward the next level, from the engine's own level score (xp.level_progress)
 
 
 class SubjectProgress(BaseModel):
@@ -172,6 +175,9 @@ class ProgressOverview(BaseModel):
     level: str                                  # a word: Getting started | Awareness | Foundational | Proficient | Advanced | Expert
     level_rank: int                             # 0..5, for the meter
     message: str                                # one encouraging sentence in the practice language
+    xp_total: int = 0                           # XP over every scored answer and interview turn (computed on read)
+    xp_today: int = 0                           # ... of which today (UTC)
+    streak_days: int = 0                        # consecutive UTC days with a scored answer, ending today or yesterday
 
 
 class TimelinePoint(BaseModel):
@@ -275,6 +281,7 @@ class InterviewTurnView(BaseModel):
     check: CheckView | None = None
     action_after: str | None = None             # what the interviewer decided next: ESCALATE, HOLD, HINT, STEP_BACK, ENTER_SKILL, END
     subject_switch: bool = False
+    xp_earned: int | None = None                # XP for this turn, revealed with the results (interview turns count x1.5)
 
 
 class InterviewView(BaseModel):

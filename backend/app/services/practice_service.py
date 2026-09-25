@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 
 from app.api.errors import ApiError
-from app.engine import bank, next_question, plan_router, scores
+from app.engine import bank, next_question, plan_router, scores, xp
 from app.engine.catalog import Catalog
 from app.engine.plan import merge_skill_sets
 from app.engine.practice import (
@@ -330,7 +330,8 @@ class PracticeService:
             except PracticeError as exc:
                 raise ApiError(exc.code, str(exc)) from exc
             if replay is not None:
-                return self._submission_view(replay.submission, replay), self._view(attempt, stored, loaded, language)
+                return (self._submission_view(replay.submission, replay, xp_earned=self._xp_for(attempt, replay.submission)),
+                        self._view(attempt, stored, loaded, language))
 
             if submission.visual and submission.visual.images:
                 async with self.store.transaction() as tx:
@@ -354,14 +355,16 @@ class PracticeService:
                                                             follow_up=follow_up_turn is not None)
                 except PracticeError as exc:
                     raise ApiError(exc.code, str(exc)) from exc
-                return self._submission_view(existing, replay), self._view(attempt, stored, loaded, language)
+                return (self._submission_view(existing, replay, xp_earned=self._xp_for(attempt, existing)),
+                        self._view(attempt, stored, loaded, language))
 
             # 2. evaluate: model calls happen here, with no transaction open
             outcome = await attempt.evaluate(submission, latency_ms=latency_ms, revision_count=revision_count)
 
             # 3. everything the evaluation produced, in one transaction
             attempt, stored, loaded, outcome = await self._persist_outcome(user_id, attempt, stored, loaded, profile, outcome)
-            return (self._submission_view(outcome.submission, outcome, attempt.next_question),
+            return (self._submission_view(outcome.submission, outcome, attempt.next_question,
+                                          xp_earned=self._xp_for(attempt, outcome.submission)),
                     self._view(attempt, stored, loaded, language))
 
     async def retry(self, user_id: uuid.UUID, attempt_id: uuid.UUID) -> tuple[SubmissionView, AttemptView]:
@@ -372,7 +375,8 @@ class PracticeService:
             except PracticeError as exc:
                 raise ApiError(exc.code, str(exc)) from exc
             attempt, stored, loaded, outcome = await self._persist_outcome(user_id, attempt, stored, loaded, profile, outcome)
-            return (self._submission_view(outcome.submission, outcome, attempt.next_question),
+            return (self._submission_view(outcome.submission, outcome, attempt.next_question,
+                                          xp_earned=self._xp_for(attempt, outcome.submission)),
                     self._view(attempt, stored, loaded, stored.row["practice_language"]))
 
     async def _persist_outcome(self, user_id: uuid.UUID, attempt: PracticeAttempt, stored: StoredAttempt,
@@ -528,14 +532,17 @@ class PracticeService:
             bands = await tx.band_counts(user_id)
             daily = await tx.daily_bands(user_id)
             servable = await tx.list_questions(language=language)
+            # XP is read, never stored: the scored answers and interview turns as the engine left them
+            scored_rows = await tx.scored_submissions(user_id) + await tx.scored_interview_turns(user_id)
         required, weights, _, plan_skills = self._plan(seniority, goal.job_type)
         now = datetime.now(UTC)
+        experience = xp.summarise(xp.from_rows(scored_rows), now.date())
         skills = []
         for key, state in sorted(profile.states.items()):
             catalog_skill = self.catalog.skills.get(key)
             if catalog_skill is None:
                 continue
-            level, _ = scores.questioned_level(state)
+            level, level_score = scores.questioned_level(state)
             status = scores.evidence_status(state, required.get(key, 2))
             history = profile.level_history.get(key, [])
             last_level = history[-2]["level"] if len(history) >= 2 else None
@@ -550,7 +557,8 @@ class PracticeService:
                 assessments=sum(1 for t in state.history if t.evidence_weight > 0),
                 last_assessed_at=last.isoformat() if last else (history[-1]["at"] if history else None),
                 retention_due_at=retention.get("due").isoformat() if retention.get("due") else None,
-                loyalty=value, needs_refresh=level is not None and scores.needs_refresh(value)))
+                loyalty=value, needs_refresh=level is not None and scores.needs_refresh(value),
+                xp=experience.per_skill.get(key, 0), level_progress=xp.level_progress(level, level_score)))
         subjects = self._subjects(skills, required, weights, bands, servable)
         today = date.today()
         async with self.store.transaction() as tx:
@@ -558,7 +566,7 @@ class PracticeService:
                                                  language, today)
         return ProgressView(skills=skills, subjects=subjects, recent=recent, attempts_today=started,
                             daily_limit=self.config.daily_attempt_limit,
-                            overview=self._overview(skills, plan_skills, bands, language),
+                            overview=self._overview(skills, plan_skills, bands, language, experience),
                             timeline=self._timeline(daily, profile),
                             plan=self._plan_view(program, goal, today),
                             goal=self._goal_view(goal, language))
@@ -744,7 +752,8 @@ class PracticeService:
         return max(1, min(5, round(sum(assessed) / len(assessed)))), len(assessed)
 
     def _overview(self, skills: list[SkillProgress], plan_skills: list[PlanSkill], bands: dict[str, dict[str, int]],
-                  language: str) -> ProgressOverview:
+                  language: str, experience: xp.XpSummary | None = None) -> ProgressOverview:
+        experience = experience or xp.XpSummary()
         totals = {b: sum(per.get(b, 0) for per in bands.values()) for b in ("STRONG", "PARTIAL", "WEAK")}
         answered = sum(totals.values())
         plan_keys = {p.key for p in plan_skills if p.assessment_mode.value == "questioned"}
@@ -757,7 +766,8 @@ class PracticeService:
         return ProgressOverview(answered=answered, strong=totals["STRONG"], partial=totals["PARTIAL"], weak=totals["WEAK"],
                                 skills_assessed=assessed, skills_to_refresh=to_refresh, skills_total=len(plan_keys),
                                 level=words[rank], level_rank=rank,
-                                message=texts[kind].format(answered=answered, strong=totals["STRONG"]))
+                                message=texts[kind].format(answered=answered, strong=totals["STRONG"]),
+                                xp_total=experience.total, xp_today=experience.today, streak_days=experience.streak)
 
     @staticmethod
     def _timeline(daily: list[dict], profile: LoadedProfile) -> list[TimelinePoint]:
@@ -926,7 +936,16 @@ class PracticeService:
         return NextQuestionView.model_validate(raw) if raw else None
 
     @staticmethod
-    def _submission_view(submission, outcome: PracticeOutcome | None = None, next_question: dict | None = None) -> SubmissionView:
+    def _xp_for(attempt: PracticeAttempt, submission) -> int | None:
+        """The XP a scored answer earned, from what the submission already records. None until it is scored."""
+        if submission.status != EvaluationStatus.DONE or submission.band is None:
+            return None
+        return xp.answer_xp(submission.band.value, difficulty=attempt.question.difficulty, hints_seen=submission.hints_seen,
+                            reference_seen=submission.reference_seen, follow_up=submission.turn > 0)
+
+    @staticmethod
+    def _submission_view(submission, outcome: PracticeOutcome | None = None, next_question: dict | None = None,
+                         *, xp_earned: int | None = None) -> SubmissionView:
         evaluation = Evaluation.model_validate(submission.evaluation) if submission.evaluation else None
         weight = outcome.evidence_weight if outcome is not None else submission.evidence_weight
         check = None
@@ -950,7 +969,7 @@ class PracticeService:
             hints_seen=submission.hints_seen, reference_seen=submission.reference_seen,
             evidence="none" if submission.status != EvaluationStatus.DONE or weight <= 0 else "full" if weight >= 1 else "reduced",
             flags=list(submission.flags), replayed=bool(outcome.replayed) if outcome is not None else False,
-            next_question=PracticeService._next_view(next_question))
+            next_question=PracticeService._next_view(next_question), xp_earned=xp_earned)
 
     def _view(self, attempt: PracticeAttempt, stored: StoredAttempt, loaded: LoadedQuestion, language: str) -> AttemptView:
         by_revision = {s.revision: s for s in attempt.submissions}
@@ -960,7 +979,7 @@ class PracticeService:
             sub = by_revision.get(turn.get("submission_revision")) if turn.get("submission_revision") else None
             follow_ups.append(FollowUpView(turn=turn["turn"], question=turn["question"], action=turn.get("action", ""),
                                            created_at=turn.get("created_at", ""),
-                                           submission=self._submission_view(sub) if sub else None))
+                                           submission=self._submission_view(sub, xp_earned=self._xp_for(attempt, sub)) if sub else None))
         pending = attempt.pending_follow_up
         pending_view = next((f for f in follow_ups if f.turn == pending["turn"]), None) if pending else None
         latest_any = attempt.submissions[-1] if attempt.submissions else None
@@ -979,7 +998,8 @@ class PracticeService:
             hints=[HintView(level=level, text=attempt.hint_at(level)) for level in range(1, attempt.hints_used + 1)],
             hints_remaining=max(0, min(3, len(loaded.question.text(language).hints)) - attempt.hints_used) if main is None else 0,
             reference=attempt.question.text(language).reference_solution if attempt.reference_revealed else None,
-            submission=self._submission_view(main) if main else None, follow_ups=follow_ups, pending_follow_up=pending_view,
+            submission=self._submission_view(main, xp_earned=self._xp_for(attempt, main)) if main else None,
+            follow_ups=follow_ups, pending_follow_up=pending_view,
             can_submit=main is None or main.status == EvaluationStatus.FAILED,
             can_retry=latest is not None and latest.status == EvaluationStatus.FAILED,
             next_question=self._next_view(attempt.next_question))

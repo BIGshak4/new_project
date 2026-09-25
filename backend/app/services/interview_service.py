@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 
 from app.api.errors import ApiError
-from app.engine import bank, checks, evaluator, generator, reporter, subject_router, visual_evidence
+from app.engine import bank, checks, evaluator, generator, reporter, subject_router, visual_evidence, xp
 from app.engine.catalog import Catalog
 from app.engine.plan import merge_skill_sets
 from app.engine.practice import UsageEvent
@@ -593,7 +593,10 @@ class InterviewService:
             check=CheckView(type=check.get("type", ""), passed=check.get("passed"), detail=check.get("detail", ""),
                             mismatches=list(check.get("mismatches") or [])[:8]) if revealed and check else None,
             action_after=meta.get("action_after") if revealed else None,
-            subject_switch=bool(meta.get("subject_switch", False)))
+            subject_switch=bool(meta.get("subject_switch", False)),
+            xp_earned=(xp.answer_xp(meta["band"], difficulty=turn["difficulty"], hints_seen=int(meta.get("hint_level") or 0),
+                                    interview=True)
+                       if revealed and meta.get("status") == "done" and meta.get("band") else None))
 
     def _view(self, stored: StoredSession, state: SessionState) -> InterviewView:
         row, turns, language = stored.row, stored.turns, stored.row["config"]["language"]

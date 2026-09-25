@@ -151,6 +151,53 @@ class _MemoryTx:
                 entry[a["row"]["band"]] = entry.get(a["row"]["band"], 0) + 1
         return [out[k] for k in sorted(out)]
 
+    # ------------------------------------------------------------------ XP reads (same shape as the database readers)
+
+    def _links(self, question_key: str) -> list[list]:
+        question = self.s.catalog.questions.get(question_key)
+        return [[link.skill, float(link.weight)] for link in question.skills] if question else []
+
+    async def scored_submissions(self, user_id, *, days=365):
+        since = datetime.now(UTC) - timedelta(days=days)
+        out = []
+        for a in sorted(self.s.attempts.values(), key=lambda a: a["started_at"]):
+            if a["user_id"] != user_id:
+                continue
+            question = self.s.catalog.questions.get(a["row"]["question_key"])
+            for s in a["row"]["submissions"]:
+                if s.get("status") != "done" or not s.get("band"):
+                    continue
+                accepted = datetime.fromisoformat(s["accepted_at"])
+                if accepted.tzinfo is None:
+                    accepted = accepted.replace(tzinfo=UTC)
+                if accepted < since:
+                    continue
+                out.append({"day": accepted.astimezone(UTC).date().isoformat(), "band": str(s["band"]),
+                            "difficulty": int(question.difficulty if question else 1), "hints_seen": int(s.get("hints_seen") or 0),
+                            "reference_seen": bool(s.get("reference_seen")), "turn": int(s.get("turn") or 0), "interview": False,
+                            "skills": self._links(a["row"]["question_key"])})
+        return out
+
+    async def scored_interview_turns(self, user_id, *, days=365):
+        since = datetime.now(UTC) - timedelta(days=days)
+        out = []
+        for s in sorted(self.s.sessions.values(), key=lambda s: s["created_at"]):
+            if s["user_id"] != user_id or s["created_at"] < since:
+                continue
+            for t in s["turns"]:
+                meta = t.get("question_generation_meta") or {}
+                if meta.get("status") != "done" or not meta.get("band"):
+                    continue
+                when = t.get("answer_submitted_at") or t.get("created_at")
+                stamp = datetime.fromisoformat(when) if isinstance(when, str) else (when or s["created_at"])
+                if stamp.tzinfo is None:
+                    stamp = stamp.replace(tzinfo=UTC)
+                out.append({"day": stamp.astimezone(UTC).date().isoformat(), "band": str(meta["band"]),
+                            "difficulty": int(t.get("difficulty") or 1), "hints_seen": int(meta.get("hint_level") or 0),
+                            "reference_seen": False, "turn": 0, "interview": True,
+                            "skills": self._links(t.get("question_key") or "") or [[t["skill_key"], 1.0]]})
+        return out
+
     # ------------------------------------------------------------------ the saved program
 
     async def load_active_plan(self, user_id):

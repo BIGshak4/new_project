@@ -111,8 +111,8 @@ class TestCarryForward:
         keep = next(i for i in plan.items if i.day_index == 3)          # planned for two days ago: carried
         drop = next(i for i in plan.items if i.day_index == 0)          # planned five days ago: dropped
         view = await svc.program(USER, language="en")
-        reasons = [i.reason for i in view.plan.items if i.carried]
-        assert keep.reason in reasons and drop.reason not in reasons
+        carried = [(i.mode, [s.key for s in i.skills]) for i in view.plan.items if i.carried]   # ids are re-issued on rebuild
+        assert (keep.mode, keep.skills) in carried and (drop.mode, drop.skills) not in carried
 
 
 class TestStartingAndTicking:
