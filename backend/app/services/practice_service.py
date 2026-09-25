@@ -730,7 +730,9 @@ class PracticeService:
                 date=(plan.week_start + timedelta(days=item.day_index)).isoformat(), mode=item.mode,
                 skills=[LabelledSkill(key=k, label=labels.get(k, k)) for k in item.skills], minutes=item.minutes,
                 reason=item.reason, done=item.status == "done", status=item.status,
-                carried=item.created_at.date() < plan.week_start))          # created for an earlier plan: carried forward
+                # carried = the item existed before this plan was built (the rebuild stamps new items with generated_at);
+                # one clock on both sides, so no UTC-vs-local-date disagreement after midnight
+                carried=item.created_at < plan.generated_at - timedelta(seconds=1)))
         return PlanView(items=views, minutes_per_day=plan.minutes_per_day, days_to_interview=goal.days_to_interview(today),
                         interview_date=goal.interview_date.isoformat() if goal.interview_date else None,
                         generated_for=plan.week_start.isoformat(), saved=True)

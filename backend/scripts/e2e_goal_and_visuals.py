@@ -118,6 +118,11 @@ async def main() -> None:
                                             {"i": uuid.UUID(practice_item.id)})).first()
             print(f"  item now: {item.status} (db: {row.status}, attempt {row.completed_attempt_id == aid}); done today {after.done_today}")
             assert item.status == "done" and row.status == "done" and row.completed_attempt_id == aid
+            xp_view = await practice.progress(user, language="en")
+            print(f"  XP: this answer +{sub.xp_earned}; overview total {xp_view.overview.xp_total}, today {xp_view.overview.xp_today}, "
+                  f"streak {xp_view.overview.streak_days} day(s); level word {xp_view.overview.level}")
+            assert sub.xp_earned and sub.xp_earned > 0 and xp_view.overview.xp_today >= sub.xp_earned
+            assert xp_view.overview.streak_days >= 1
 
             print("\n=== mock interview: a turn answered with a drawn circuit, real evaluator")
             async def finished(tx, uid, session_id):
