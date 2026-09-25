@@ -135,8 +135,7 @@ export function Auth({
       <main className="auth-layout" dir={he ? "rtl" : "ltr"}>
         <section className="auth-story">
           <a href="/" className="wordmark" dir="ltr">
-            JobRun
-            <span className="logo-dot" />
+            jobrun
           </a>
           <div>
             <h1>

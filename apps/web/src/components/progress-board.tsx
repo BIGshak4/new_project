@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, CalendarDays, Check, Circle, Flame, RefreshCw, Target, TrendingUp } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, Check, Circle, Flame, RefreshCw, Star, Target, TrendingUp } from "lucide-react";
 import type { Lang } from "./auth";
 import type { Goal, Plan, PlanItem, ProgressOverview, TimelinePoint } from "../lib/practice-api";
 import { dayLabel, levelSteps, modeLabel, planByDay, tickDays, timelineLayout } from "../lib/timeline";
@@ -45,6 +45,18 @@ export function OverviewCard({
         </ol>
       </div>
       <div className="stat-tiles">
+        <div className="stat stat-xp">
+          <strong>
+            <Star size={18} aria-hidden="true" /> {overview.xp_total ?? 0}
+          </strong>
+          <span>XP{(overview.xp_today ?? 0) > 0 ? ` · +${overview.xp_today} ${t("היום", "today")}` : ""}</span>
+        </div>
+        <div className={`stat stat-streak ${(overview.streak_days ?? 0) > 0 ? "lit" : ""}`}>
+          <strong>
+            <Flame size={18} aria-hidden="true" /> {overview.streak_days ?? 0}
+          </strong>
+          <span>{t("ימים ברצף", "days in a row")}</span>
+        </div>
         <div className="stat">
           <strong>{overview.answered}</strong>
           <span>{t("תשובות שנענו", "answers given")}</span>

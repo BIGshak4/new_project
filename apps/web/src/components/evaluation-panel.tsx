@@ -100,7 +100,14 @@ export function EvaluationPanel({
           </text>
         </svg>
         <div className="evaluation-title">
-          <span className={`badge band-${tone}`}>{bandLabel(band, lang)}</span>
+          <div className="evaluation-badges">
+            <span className={`badge band-${tone}`}>{bandLabel(band, lang)}</span>
+            {(s.xp_earned ?? 0) > 0 && (
+              <span className="xp-pill" role="status" aria-label={`${s.xp_earned} ${t("נקודות ניסיון", "experience points")}`}>
+                <Sparkles size={14} aria-hidden="true" /> +{s.xp_earned} XP
+              </span>
+            )}
+          </div>
           {s.summary && (
             <p className="evaluation-summary" dir="auto">
               {s.summary}

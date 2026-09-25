@@ -80,6 +80,7 @@ export function FollowUps({
                 <span className={`badge band-${f.submission!.band?.toLowerCase()}`}>
                   {bandLabel(f.submission!.band, lang)}
                 </span>
+                {(f.submission!.xp_earned ?? 0) > 0 && <span className="xp-pill small">+{f.submission!.xp_earned} XP</span>}
                 {f.submission!.summary && (
                   <span className="small" dir="auto">
                     {f.submission!.summary}

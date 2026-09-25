@@ -532,8 +532,11 @@ function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang }) {
     <li className="report-turn">
       <div className="row spread">
         <span className="badge">{x.skill_label}</span>
-        <span className={x.band ? `badge band-${x.band.toLowerCase()}` : "badge"}>
-          {x.status === "skipped" ? t("לא נענתה", "Not answered") : bandLabel(x.band, lang)}
+        <span className="row">
+          <span className={x.band ? `badge band-${x.band.toLowerCase()}` : "badge"}>
+            {x.status === "skipped" ? t("לא נענתה", "Not answered") : bandLabel(x.band, lang)}
+          </span>
+          {(x.xp_earned ?? 0) > 0 && <span className="xp-pill small">+{x.xp_earned} XP</span>}
         </span>
       </div>
       <p className="interview-prompt" dir="auto">{x.question}</p>
