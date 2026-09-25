@@ -154,11 +154,15 @@ class _MemoryTx:
     # ------------------------------------------------------------------ XP reads (same shape as the database readers)
 
     def _links(self, question_key: str) -> list[list]:
+        """The question's skill links, the primary skill first (as the database reader orders them)."""
         question = self.s.catalog.questions.get(question_key)
-        return [[link.skill, float(link.weight)] for link in question.skills] if question else []
+        if question is None:
+            return []
+        links = sorted(question.skills, key=lambda link: (not link.primary, -link.weight))
+        return [[link.skill, float(link.weight)] for link in links]
 
-    async def scored_submissions(self, user_id, *, days=365):
-        since = datetime.now(UTC) - timedelta(days=days)
+    async def scored_submissions(self, user_id, *, days=None):
+        since = datetime.now(UTC) - timedelta(days=days) if days is not None else datetime.min.replace(tzinfo=UTC)
         out = []
         for a in sorted(self.s.attempts.values(), key=lambda a: a["started_at"]):
             if a["user_id"] != user_id:
@@ -178,12 +182,12 @@ class _MemoryTx:
                             "skills": self._links(a["row"]["question_key"])})
         return out
 
-    async def scored_interview_turns(self, user_id, *, days=365):
-        since = datetime.now(UTC) - timedelta(days=days)
+    async def scored_interview_turns(self, user_id, *, days=None):
+        since = datetime.now(UTC) - timedelta(days=days) if days is not None else datetime.min.replace(tzinfo=UTC)
         out = []
         for s in sorted(self.s.sessions.values(), key=lambda s: s["created_at"]):
-            if s["user_id"] != user_id or s["created_at"] < since:
-                continue
+            if s["user_id"] != user_id or s["created_at"] < since or s["row"].get("status") != "completed":
+                continue                                  # a running interview's results are hidden: no XP yet
             for t in s["turns"]:
                 meta = t.get("question_generation_meta") or {}
                 if meta.get("status") != "done" or not meta.get("band"):
@@ -195,7 +199,7 @@ class _MemoryTx:
                 out.append({"day": stamp.astimezone(UTC).date().isoformat(), "band": str(meta["band"]),
                             "difficulty": int(t.get("difficulty") or 1), "hints_seen": int(meta.get("hint_level") or 0),
                             "reference_seen": False, "turn": 0, "interview": True,
-                            "skills": self._links(t.get("question_key") or "") or [[t["skill_key"], 1.0]]})
+                            "skills": [[t["skill_key"], 1.0]]})
         return out
 
     # ------------------------------------------------------------------ the saved program

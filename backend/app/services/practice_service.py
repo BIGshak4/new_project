@@ -678,8 +678,11 @@ class PracticeService:
             if signature in taken:
                 continue
             taken.add(signature)
+            planned_for = plan.week_start + timedelta(days=item.day_index)
+            # an item planned for an earlier day keeps its old stamp (that is what "carried" means); one planned for
+            # today that survives a same-day rebuild (minutes or date changed) is today's item, stamped anew
             items.append({"day_index": 0, "mode": item.mode, "skills": item.skills, "reason": item.reason,
-                          "minutes": item.minutes, "created_at": item.created_at})
+                          "minutes": item.minutes, "created_at": item.created_at if planned_for < today else None})
         labels = self.catalog.skill_labels()
         for planned in routed:
             signature = (planned.activity.mode, tuple(planned.activity.skills))
@@ -724,15 +727,17 @@ class PracticeService:
         labels = self.catalog.skill_labels()
         offset = plan.day_index_of(today)                       # 0 for today's plan; a stale plan shifts by the days elapsed
         views = []
-        for item in sorted(plan.items, key=lambda i: (i.day_index, i.created_at.date() >= plan.week_start, i.created_at)):
+        def is_carried(i: PlanItemRow) -> bool:
+            # carried = created before this plan was built: the rebuild stamps new (and today's) items with generated_at
+            return i.created_at < plan.generated_at - timedelta(seconds=1)
+
+        for item in sorted(plan.items, key=lambda i: (i.day_index, not is_carried(i), i.created_at)):
             views.append(PlanItemView(
                 id=str(item.id), day_index=item.day_index - offset,
                 date=(plan.week_start + timedelta(days=item.day_index)).isoformat(), mode=item.mode,
                 skills=[LabelledSkill(key=k, label=labels.get(k, k)) for k in item.skills], minutes=item.minutes,
                 reason=item.reason, done=item.status == "done", status=item.status,
-                # carried = the item existed before this plan was built (the rebuild stamps new items with generated_at);
-                # one clock on both sides, so no UTC-vs-local-date disagreement after midnight
-                carried=item.created_at < plan.generated_at - timedelta(seconds=1)))
+                carried=is_carried(item)))
         return PlanView(items=views, minutes_per_day=plan.minutes_per_day, days_to_interview=goal.days_to_interview(today),
                         interview_date=goal.interview_date.isoformat() if goal.interview_date else None,
                         generated_for=plan.week_start.isoformat(), saved=True)

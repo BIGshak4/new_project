@@ -12,7 +12,7 @@
   --ink: #23302a;
   --muted: #55635b;
   --muted-2: #6b7a71;
-  --faint: #8c958f;
+  --faint: #6b7a71;          /* text on white and paper: 4.5:1 or better */
   --green: #2f9e44;        /* nodes, bars, icons on it */
   --green-button: #22823a; /* white text on it reads at 4.9:1 */
   --green-deep: #217a33;   /* the pressed shadow */
@@ -3493,3 +3493,5 @@ summary {
     scroll-behavior: auto !important;
   }
 }
+
+.path-done { margin: 18px 24px 0; font-weight: 700; color: var(--muted); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }

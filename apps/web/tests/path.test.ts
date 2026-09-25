@@ -47,11 +47,24 @@ test("the path marks done, one current, the rest locked, and interviews as their
   assert.deepEqual(nodes.map((n) => n.dayIndex), [0, 0, 1, 2, 2]);
 });
 
-test("without a named next item the first open one is current; a stale next id falls back too", () => {
+test("only the program's named next item is current; none when the program names none (today is done)", () => {
   const items = [item({ id: "a", status: "done", done: true }), item({ id: "b", status: "started" }), item({ id: "c" })];
-  assert.equal(pathNodes(items).find((n) => n.state === "current")?.item.id, "b");
-  assert.equal(pathNodes(items, "zzz").find((n) => n.state === "current")?.item.id, "b");
   assert.equal(pathNodes(items, "c").find((n) => n.state === "current")?.item.id, "c");
+  // no next item: the server would refuse to start tomorrow's item, so nothing offers a Start button
+  assert.equal(pathNodes(items).find((n) => n.state === "current"), undefined);
+  assert.equal(pathNodes(items, null).find((n) => n.state === "current"), undefined);
+  assert.equal(pathNodes(items, "zzz").find((n) => n.state === "current"), undefined);
+});
+
+test("drawing order: by day, done first, carried before new, interviews last within a day", () => {
+  const items = [
+    item({ id: "sim", day_index: 0, mode: "simulation" }),
+    item({ id: "new", day_index: 0 }),
+    item({ id: "old", day_index: 0, carried: true }),
+    item({ id: "done", day_index: 0, status: "done", done: true }),
+    item({ id: "tomorrow", day_index: 1 }),
+  ];
+  assert.deepEqual(pathNodes(items, "old").map((n) => n.item.id), ["done", "old", "new", "sim", "tomorrow"]);
 });
 
 test("nothing open means no current node", () => {

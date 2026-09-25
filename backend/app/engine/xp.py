@@ -15,6 +15,7 @@ stored rows always give the same XP.
 
 from __future__ import annotations
 
+import math
 from collections.abc import Iterable
 from dataclasses import dataclass, field
 from datetime import date, timedelta
@@ -51,7 +52,7 @@ def answer_xp(band: str | None, *, difficulty: int, hints_seen: int = 0, referen
         value *= FOLLOW_UP_FACTOR
     if interview:
         value *= INTERVIEW_FACTOR
-    return max(MIN_XP, int(round(value)))
+    return max(MIN_XP, math.floor(value + 0.5))          # half up, like the engine's rounding (2.5 -> 3)
 
 
 def split_by_skill(xp: int, links: Iterable[tuple[str, float]]) -> dict[str, int]:
@@ -139,7 +140,10 @@ def summarise(answers: Iterable[ScoredAnswer], today: date) -> XpSummary:
         if answer.day == today_iso:
             out.today += earned
         days.add(answer.day)
-        for key, part in split_by_skill(earned, answer.skills).items():
+        # a follow-up is evidence on the question's primary skill only (as the engine records it); the readers put
+        # the primary skill first
+        links = answer.skills[:1] if answer.follow_up and answer.skills else answer.skills
+        for key, part in split_by_skill(earned, [(k, 1.0) for k, _ in links] if answer.follow_up else links).items():
             out.per_skill[key] = out.per_skill.get(key, 0) + part
     out.streak = streak_days(days, today)
     return out

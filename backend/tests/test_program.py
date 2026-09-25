@@ -210,3 +210,13 @@ async def test_over_http(client):
         assert body["attempt"]["language"] == "he" and body["item"]["status"] == "started"
     bad = await client.post("/v1/me/program/start", json={"item_id": "not-a-uuid"}, headers=headers)
     assert bad.status_code == 422
+
+
+async def test_a_same_day_rebuild_does_not_mark_todays_items_carried(catalog):
+    svc, store = practice(catalog)
+    await with_goal(svc, minutes=30)
+    await svc.program(USER, language="en")
+    await with_goal(svc, minutes=45)                     # the goal changed: the plan is rebuilt the same day
+    view = await svc.program(USER, language="en")
+    assert view.plan.minutes_per_day == 45
+    assert not any(i.carried for i in view.plan.items), "today's own items must not show as carried after a same-day rebuild"

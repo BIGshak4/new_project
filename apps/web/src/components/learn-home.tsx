@@ -90,7 +90,7 @@ export function LearnHome({
     }
   }
 
-  const goalComplete = !!goal?.complete;
+  const goalComplete = goal ? !!goal.complete : !!program?.goal_complete;
   const items = program?.plan.items ?? [];
   const nodes = pathNodes(items, program?.next?.id ?? null);
   const today = todayProgress(program);
@@ -255,6 +255,16 @@ export function LearnHome({
               {message}
             </p>
           )}
+          {goalComplete && nodes.length > 0 && !program?.next && (
+            <p className="path-done" role="status">
+              {today.total > 0
+                ? t("להיום סיימתם. מחר מחכה הפריט הבא; בינתיים המאגר פתוח.", "You are done for today. Tomorrow’s item is waiting; the library is open meanwhile.")
+                : t("אין פריט מתוכנן להיום. אפשר לבחור שאלה מהמאגר.", "Nothing is planned for today. Pick a question from the library.")}{" "}
+              <button type="button" className="text-button" onClick={onOpenLibrary}>
+                {t("למאגר", "To the library")}
+              </button>
+            </p>
+          )}
           {goalComplete && nodes.length > 0 && (
             <div className="path-foot">
               <button type="button" className="text-button" onClick={onOpenProgress}>
@@ -273,7 +283,14 @@ export function LearnHome({
               {today.total > 0 ? `${today.done} ${t("מתוך", "of")} ${today.total}` : "—"}
             </span>
           </div>
-          <div className="meter" role="progressbar" aria-valuemin={0} aria-valuemax={today.total || 1} aria-valuenow={today.done}>
+          <div
+            className="meter"
+            role="progressbar"
+            aria-label={t("התקדמות היום", "Today's progress")}
+            aria-valuemin={0}
+            aria-valuemax={today.total || 1}
+            aria-valuenow={today.done}
+          >
             <span style={{ width: `${Math.round(today.fraction * 100)}%` }} />
           </div>
           <p>

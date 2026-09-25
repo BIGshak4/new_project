@@ -28,26 +28,42 @@ export function zigzagOffset(index: number): number {
   return ZIGZAG[((index % ZIGZAG.length) + ZIGZAG.length) % ZIGZAG.length];
 }
 
-/** The state of one plan item on the path. `nextId` is the program's "start now" item, when known. */
-export function nodeState(item: PlanItem, nextId: string | null | undefined, firstOpenId: string | null): NodeState {
+/**
+ * The state of one plan item on the path. Only the program's own "start now" item (`nextId`) is current: when the
+ * program names none (today is done), tomorrow's first item stays locked, because the server would refuse to start it.
+ */
+export function nodeState(item: PlanItem, nextId: string | null | undefined): NodeState {
   if (item.done || item.status === "done") return "done";
   if (item.status === "skipped") return "skipped";
-  const current = nextId ? item.id === nextId : item.id === firstOpenId;
-  return current ? "current" : "locked";
+  return nextId && item.id === nextId ? "current" : "locked";
+}
+
+/** Plan order for drawing: by day; within a day done first, then carried, practice before interviews (the server's
+ * order for "next"), so the current node never sits below a locked one of the same day. */
+export function pathOrder(items: PlanItem[]): PlanItem[] {
+  const rank = (i: PlanItem) => (i.done || i.status === "done" ? 0 : i.status === "skipped" ? 3 : i.mode === "simulation" ? 2 : 1);
+  return items
+    .map((item, index) => ({ item, index }))
+    .sort((a, b) =>
+      a.item.day_index - b.item.day_index ||
+      rank(a.item) - rank(b.item) ||
+      Number(!a.item.carried) - Number(!b.item.carried) ||
+      a.index - b.index,
+    )
+    .map((x) => x.item);
 }
 
 /**
- * The nodes of the path, in plan order (today first, carried items lead). Exactly one node is `current`:
- * the program's next item, or the first open one when the program did not name it.
+ * The nodes of the path, in drawing order (pathOrder). At most one node is `current`: the program's next item;
+ * none when today is done.
  */
 export function pathNodes(items: PlanItem[], nextId?: string | null): PathNode[] {
   const open = items.filter((i) => !i.done && (i.status === "planned" || i.status === "started"));
   const named = nextId && open.some((i) => i.id === nextId) ? nextId : null;
-  const firstOpenId = open[0]?.id ?? null;
-  return items.map((item, index) => ({
+  return pathOrder(items).map((item, index) => ({
     item,
     key: item.id ?? `${item.day_index}-${index}`,
-    state: nodeState(item, named, firstOpenId),
+    state: nodeState(item, named),
     kind: item.mode === "simulation" ? "interview" : "practice",
     offset: zigzagOffset(index),
     carried: !!item.carried,

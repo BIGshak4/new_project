@@ -370,7 +370,8 @@ function Workspace({
       timeStyle: "short",
     });
   const recentKeys = new Set(progress.recent.map((a) => a.question_key));
-  const overview = progress.overview ?? null;
+  // demo grades are hidden everywhere else, so the numbers derived from them (XP, streak, level) are hidden too
+  const overview = demo ? null : progress.overview ?? null;
   const activeTab = LIBRARY_VIEWS.has(route.view) ? "library" : route.view;
   const tabs = [
     { id: "learn", icon: Map, label: t("ללמוד", "Learn") },
@@ -409,6 +410,7 @@ function Workspace({
           <span
             className={`stat-chip streak ${(overview?.streak_days ?? 0) > 0 ? "lit" : ""}`}
             title={t("ימים ברצף עם תשובה", "Days in a row with an answer")}
+            role="img"
             aria-label={`${overview?.streak_days ?? 0} ${t("ימים ברצף", "day streak")}`}
           >
             <Flame size={20} aria-hidden="true" />
@@ -417,6 +419,7 @@ function Workspace({
           <span
             className="stat-chip xp"
             title={t("נקודות ניסיון והרמה", "Experience points and level")}
+            role="img"
             aria-label={`${overview?.xp_total ?? 0} XP · ${overview?.level ?? ""}`}
           >
             <Star size={20} aria-hidden="true" />
@@ -508,7 +511,7 @@ function Workspace({
               api={api}
               lang={lang}
               goal={goal}
-              progress={progress}
+              progress={demo ? { ...progress, overview: null, skills: [] } : progress}
               refreshKey={refreshKey}
               goalSlot={
                 showGoalSetup ? (
@@ -559,7 +562,7 @@ function Workspace({
               </div>
             </div>
             {activeTab === "library" && (
-              <div className="segmented library-views" role="tablist" aria-label={t("תצוגות המאגר", "Library views")}>
+              <div className="segmented library-views" role="group" aria-label={t("תצוגות המאגר", "Library views")}>
                 {[
                   { id: "library", icon: BookOpen, label: t("כל השאלות", "All questions") },
                   { id: "bookmarks", icon: Bookmark, label: t("שמורות", "Saved") },
@@ -567,8 +570,7 @@ function Workspace({
                 ].map(({ id, icon: Icon, label }) => (
                   <button
                     key={id}
-                    role="tab"
-                    aria-selected={route.view === id}
+                    aria-pressed={route.view === id}
                     className={route.view === id ? "active" : ""}
                     onClick={() => navigate({ view: id })}
                   >

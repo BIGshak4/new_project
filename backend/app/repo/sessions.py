@@ -191,30 +191,28 @@ async def record_usage(connection: AsyncConnection, *, user_id: uuid.UUID, sessi
     return len(usage_rows)
 
 
-async def scored_turns(connection: AsyncConnection, user_id: uuid.UUID, *, days: int = 365) -> list[dict]:
-    """Every interview turn with a revealed band in the last `days`: {day (UTC), band, difficulty, hints_seen,
-    interview: True, skills}. The band lives in `question_generation_meta`, written when the turn was scored."""
+async def scored_turns(connection: AsyncConnection, user_id: uuid.UUID, *, days: int | None = None) -> list[dict]:
+    """Every scored turn of a FINISHED interview (results are hidden while it runs, so XP must not reveal them;
+    all time unless `days` is given): {day (UTC), band, difficulty, hints_seen, interview: True, skills}. The band
+    lives in `question_generation_meta`; only the three fields XP needs are read from it. The turn's own skill is
+    credited, as the engine credits the question's primary skill (the bank picks a question whose primary is it)."""
     from datetime import timedelta
 
-    from app.repo.attempts import skill_links
-
     session, turn, skill = await db.table("interview_session"), await db.table("session_turn"), await db.table("skill")
-    since = datetime.now(UTC) - timedelta(days=days)
+    meta = turn.c.question_generation_meta
+    conditions = [session.c.user_id == user_id, session.c.status == "completed", meta["status"].astext == "done",
+                  meta["band"].astext.is_not(None)]
+    if days is not None:
+        conditions.append(turn.c.created_at >= datetime.now(UTC) - timedelta(days=days))
     rows = (await connection.execute(
-        select(turn.c.question_generation_meta, turn.c.difficulty, turn.c.question_id, turn.c.answer_submitted_at,
-               turn.c.created_at, skill.c.key.label("skill_key"))
+        select(meta["band"].astext.label("band"), meta["hint_level"].astext.label("hint_level"), turn.c.difficulty,
+               turn.c.answer_submitted_at, turn.c.created_at, skill.c.key.label("skill_key"))
         .join(session, session.c.id == turn.c.session_id).join(skill, skill.c.id == turn.c.skill_id)
-        .where(session.c.user_id == user_id, turn.c.created_at >= since,
-               turn.c.question_generation_meta["band"].astext.is_not(None))
-        .order_by(turn.c.created_at))).all()
-    links = await skill_links(connection, {r.question_id for r in rows if r.question_id})
+        .where(*conditions).order_by(turn.c.created_at))).all()
     out = []
     for r in rows:
-        meta = r.question_generation_meta or {}
-        if meta.get("status") != "done" or not meta.get("band"):
-            continue
         when = r.answer_submitted_at or r.created_at
-        out.append({"day": when.astimezone(UTC).date().isoformat(), "band": str(meta["band"]), "difficulty": int(r.difficulty or 1),
-                    "hints_seen": int(meta.get("hint_level") or 0), "reference_seen": False, "turn": 0, "interview": True,
-                    "skills": links.get(r.question_id) or [[r.skill_key, 1.0]]})
+        out.append({"day": when.astimezone(UTC).date().isoformat(), "band": str(r.band), "difficulty": int(r.difficulty or 1),
+                    "hints_seen": int(r.hint_level or 0), "reference_seen": False, "turn": 0, "interview": True,
+                    "skills": [[r.skill_key, 1.0]]})
     return out

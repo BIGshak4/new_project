@@ -203,3 +203,49 @@ class TestTheInterviewTurn:
             rows = await tx.scored_interview_turns(USER)
         assert len(rows) == len(scored) and all(r["interview"] for r in rows)
         assert sum(a.xp for a in xp.from_rows(rows)) == sum(t.xp_earned for t in scored)
+
+
+# ----------------------------------------------------------------------------- review fixes (2026-09-25)
+
+
+def test_rounding_is_half_up_like_the_engine():
+    from app.engine import xp as xpmod
+    # PARTIAL at difficulty 1 with the reference revealed: 10 x 0.25 = 2.5 -> 3 (half up), never 2 (half to even)
+    assert xpmod.answer_xp("PARTIAL", difficulty=1, reference_seen=True) == 3
+
+
+def test_a_follow_up_credits_the_primary_skill_only():
+    from datetime import date
+
+    from app.engine import xp as xpmod
+    answers = xpmod.from_rows([
+        {"day": "2026-09-25", "band": "STRONG", "difficulty": 1, "turn": 1, "skills": [["boolean_algebra", 0.7], ["truth_tables", 0.3]]},
+        {"day": "2026-09-25", "band": "STRONG", "difficulty": 1, "turn": 0, "skills": [["boolean_algebra", 0.7], ["truth_tables", 0.3]]},
+    ])
+    summary = xpmod.summarise(answers, date(2026, 9, 25))
+    assert summary.total == 10 + 20
+    assert summary.per_skill == {"boolean_algebra": 10 + 14, "truth_tables": 6}
+
+
+async def test_a_running_interview_earns_no_xp_until_it_is_over():
+    import uuid
+
+    from app.engine.catalog import load_catalog
+    from app.services.interview_service import InterviewConfig, InterviewService
+    from app.services.memory_store import InMemoryStore
+    from tests.test_interview_service import Clock, interviewer
+    from tests.test_practice_hardening import GOOD, SEEDS
+
+    catalog = load_catalog(SEEDS)
+    store = InMemoryStore(catalog)
+    svc = InterviewService(store, catalog, interviewer([GOOD]), InterviewConfig(reviewed_only=False))
+    svc.clock = Clock()
+    user = uuid.uuid4()
+    view = await svc.start(user, duration_min=45, language="en")
+    await svc.answer(user, uuid.UUID(view.id), view.current_turn.index, "a careful answer", idempotency_key="t0")
+    async with store.transaction() as tx:
+        assert await tx.scored_interview_turns(user) == []          # results hidden while it runs: XP must not tell
+    await svc.end(user, uuid.UUID(view.id))
+    async with store.transaction() as tx:
+        rows = await tx.scored_interview_turns(user)
+    assert rows and all(r["interview"] and len(r["skills"]) == 1 for r in rows)
