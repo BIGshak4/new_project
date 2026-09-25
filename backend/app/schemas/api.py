@@ -172,7 +172,7 @@ class ProgressOverview(BaseModel):
     skills_assessed: int                        # assessed AND fresh enough to trust
     skills_to_refresh: int = 0                  # assessed once, but the evidence is old: a refresh is scheduled
     skills_total: int                           # skills in the plan for this user's goal
-    level: str                                  # a word: Getting started | Awareness | Foundational | Proficient | Advanced | Expert
+    level: str                                  # a word: Getting started | First steps | Foundational | Proficient | Advanced | Expert
     level_rank: int                             # 0..5, for the meter
     message: str                                # one encouraging sentence in the practice language
     xp_total: int = 0                           # XP over every scored answer and interview turn (computed on read)
@@ -240,6 +240,7 @@ class ProgressView(BaseModel):
     timeline: list[TimelinePoint] = Field(default_factory=list)
     plan: PlanView | None = None
     goal: GoalView | None = None
+    focus_skills: list[SkillProgress] = Field(default_factory=list)   # the 5 skills that weigh most for the user's job, assessed or not
 
 
 # ----------------------------------------------------------------------------- mock interviews

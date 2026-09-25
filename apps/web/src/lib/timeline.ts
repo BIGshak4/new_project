@@ -112,6 +112,6 @@ export function modeLabel(mode: string, lang: "he" | "en"): string {
 /** The six words of the level meter, in the app's language (the server sends the current one already localised). */
 export function levelSteps(lang: "he" | "en"): string[] {
   return lang === "he"
-    ? ["בתחילת הדרך", "מודעות", "בסיס", "שליטה", "מתקדם", "מומחה"]
-    : ["Getting started", "Awareness", "Foundational", "Proficient", "Advanced", "Expert"];
+    ? ["בתחילת הדרך", "צעדים ראשונים", "בסיס", "שליטה", "מתקדם", "מומחה"]
+    : ["Getting started", "First steps", "Foundational", "Proficient", "Advanced", "Expert"];
 }

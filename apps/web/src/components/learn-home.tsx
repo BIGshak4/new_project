@@ -306,7 +306,7 @@ export function LearnHome({
             <p className="xp-today">+{overview.xp_today} XP {t("היום", "today")}</p>
           )}
         </section>
-        <SkillStrength skills={progress.skills} lang={lang} />
+        <SkillStrength skills={progress.focus_skills ?? []} lang={lang} limit={5} ordered />
         <StreakCard days={overview?.streak_days ?? 0} todayDone={(overview?.xp_today ?? 0) > 0} lang={lang} />
       </aside>
     </div>

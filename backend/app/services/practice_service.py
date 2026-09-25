@@ -88,8 +88,8 @@ PROGRAM_MESSAGES = {
 
 # the level in words, never a percentage: what the overview card shows (Shaked, 2026-09-23)
 LEVEL_WORDS = {
-    "en": ["Getting started", "Awareness", "Foundational", "Proficient", "Advanced", "Expert"],
-    "he": ["בתחילת הדרך", "מודעות", "בסיס", "שליטה", "מתקדם", "מומחה"],
+    "en": ["Getting started", "First steps", "Foundational", "Proficient", "Advanced", "Expert"],
+    "he": ["בתחילת הדרך", "צעדים ראשונים", "בסיס", "שליטה", "מתקדם", "מומחה"],
 }
 MESSAGES = {
     "en": {
@@ -569,7 +569,29 @@ class PracticeService:
                             overview=self._overview(skills, plan_skills, bands, language, experience),
                             timeline=self._timeline(daily, profile),
                             plan=self._plan_view(program, goal, today),
-                            goal=self._goal_view(goal, language))
+                            goal=self._goal_view(goal, language),
+                            focus_skills=self._focus_skills(skills, plan_skills, required))
+
+    FOCUS_SKILLS = 5
+
+    def _focus_skills(self, skills: list[SkillProgress], plan_skills: list[PlanSkill],
+                      required: dict[str, int]) -> list[SkillProgress]:
+        """The skills that weigh most in the plan for the user's job type (the job type multiplies the role's weights),
+        heaviest first, whether assessed yet or not: what the "Skill strength" card shows."""
+        by_key = {s.key: s for s in skills}
+        questioned = [p for p in plan_skills if p.assessment_mode.value == "questioned" and p.key in self.catalog.skills]
+        top = sorted(questioned, key=lambda p: (-p.combined_weight, p.key))[: self.FOCUS_SKILLS]
+        out = []
+        for p in top:
+            known = by_key.get(p.key)
+            if known is not None:
+                out.append(known)
+                continue
+            skill = self.catalog.skills[p.key]
+            out.append(SkillProgress(key=p.key, label=skill.label, subject=skill.subject or "", level=None, status="not_assessed",
+                                     trend="new", required_level=required.get(p.key, 2), assessments=0, last_assessed_at=None,
+                                     retention_due_at=None))
+        return out
 
     # ------------------------------------------------------------------ the saved program
 
@@ -604,7 +626,9 @@ class PracticeService:
         if item.mode == "simulation":
             duration = min(INTERVIEW_DURATIONS, key=lambda d: abs(d - item.minutes))
             return ProgramStartView(kind="interview", item=item, interview_duration_min=duration)
-        mode = "deep" if item.mode == "deep" else "quick"
+        # always deep: a program attempt gets the follow-up question and then the next question (Shaked, 2026-09-25);
+        # quick mode never asks a follow-up. The item's mode still sets its planned minutes.
+        mode = "deep"
         async with self.store.transaction() as tx:
             profile = await tx.load_profile(user_id)
             goal = await tx.load_goal(user_id)

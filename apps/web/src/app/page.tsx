@@ -670,7 +670,7 @@ function Workspace({
                 {!demo && (
                   <div className="progress-pair">
                     <ProgressGraph timeline={progress.timeline ?? []} lang={lang} />
-                    <SkillStrength skills={progress.skills} lang={lang} limit={8} />
+                    <SkillStrength skills={progress.focus_skills ?? []} lang={lang} limit={5} ordered />
                   </div>
                 )}
                 <PlanTable

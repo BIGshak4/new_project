@@ -239,7 +239,7 @@ export type ProgressOverview = {
   /** assessed once, but the evidence is old: a refresh is scheduled */
   skills_to_refresh?: number;
   skills_total: number;
-  /** Getting started | Awareness | Foundational | Proficient | Advanced | Expert (localised) */
+  /** Getting started | First steps | Foundational | Proficient | Advanced | Expert (localised) */
   level: string;
   /** 0..5 for the meter */
   level_rank: number;
@@ -313,6 +313,8 @@ export type Progress = {
   timeline?: TimelinePoint[];
   plan?: Plan | null;
   goal?: Goal | null;
+  /** the 5 skills that weigh most for the user's job, heaviest first, assessed or not */
+  focus_skills?: SkillProgress[];
   recent: {
     id: string;
     question_key: string;

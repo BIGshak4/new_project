@@ -6,9 +6,22 @@ import type { SkillProgress } from "../lib/practice-api";
 import { filledBlocks, skillLevelWord, strengthSkills, strengthTone } from "../lib/path";
 
 /** Five-block bars per skill, the level word and the XP earned on it; blue "needs a refresh" when the evidence is old. */
-export function SkillStrength({ skills, lang, limit = 6, title }: { skills: SkillProgress[]; lang: Lang; limit?: number; title?: string }) {
+export function SkillStrength({
+  skills,
+  lang,
+  limit = 6,
+  title,
+  ordered = false,
+}: {
+  skills: SkillProgress[];
+  lang: Lang;
+  limit?: number;
+  title?: string;
+  /** the list is already in the order to show (the job's focus skills), unassessed ones included */
+  ordered?: boolean;
+}) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
-  const shown = strengthSkills(skills, limit);
+  const shown = ordered ? skills.slice(0, limit) : strengthSkills(skills, limit);
   return (
     <section className="side-card skill-strength" aria-labelledby="strength-title">
       <h2 id="strength-title">{title ?? t("חוזק המיומנויות", "Skill strength")}</h2>

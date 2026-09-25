@@ -108,11 +108,11 @@ export function filledBlocks(level: number | null): number {
   return Math.max(0, Math.min(5, Math.round(level)));
 }
 
-/** The level in words for a skill (1..5 -> Awareness..Expert), or "Not assessed yet". */
+/** The level in words for a skill (1..5 -> First steps..Expert), or "Not assessed yet". */
 export function skillLevelWord(level: number | null, lang: "he" | "en"): string {
   const words = lang === "he"
-    ? ["טרם הוערכה", "מודעות", "בסיס", "שליטה", "מתקדם", "מומחה"]
-    : ["Not assessed yet", "Awareness", "Foundational", "Proficient", "Advanced", "Expert"];
+    ? ["טרם הוערכה", "צעדים ראשונים", "בסיס", "שליטה", "מתקדם", "מומחה"]
+    : ["Not assessed yet", "First steps", "Foundational", "Proficient", "Advanced", "Expert"];
   return words[filledBlocks(level)];
 }
 

@@ -125,7 +125,7 @@ class TestStartingAndTicking:
         assert started.kind == "attempt" and started.attempt is not None and started.item.status == "started"
         question = catalog.questions[started.attempt.question.key]
         assert {s.key for s in target.skills} & {link.skill for link in question.skills}
-        assert started.attempt.mode == ("deep" if target.mode == "deep" else "quick")
+        assert started.attempt.mode == "deep"                  # program attempts get the follow-up and the next question
         assert store.plan_links[uuid.UUID(started.attempt.id)] == uuid.UUID(target.id)
         after = await svc.program(USER, language="en")
         assert next(i for i in after.plan.items if i.id == target.id).status == "started"
@@ -220,3 +220,18 @@ async def test_a_same_day_rebuild_does_not_mark_todays_items_carried(catalog):
     view = await svc.program(USER, language="en")
     assert view.plan.minutes_per_day == 45
     assert not any(i.carried for i in view.plan.items), "today's own items must not show as carried after a same-day rebuild"
+
+
+async def test_the_skill_strength_card_shows_the_five_heaviest_skills_for_the_job(catalog):
+    svc, _ = practice(catalog)
+    await with_goal(svc)                                          # verification: testbenches and debugging weigh most
+    progress = await svc.progress(USER, language="en")
+    focus = progress.focus_skills
+    assert len(focus) == 5 and all(s.status == "not_assessed" and s.level is None for s in focus)
+    _, weights, _, _ = svc._plan("student", "verification")
+    assert [s.key for s in focus] == sorted((s.key for s in focus), key=lambda k: -weights[k])
+    heaviest = max((k for k in weights if catalog.skills[k].default_assessment_mode.value == "questioned"), key=lambda k: weights[k])
+    assert focus[0].key == heaviest
+    await svc.save_goal(USER, job_type="embedded_firmware", interview_date=None, minutes_per_day=30, seniority="student")
+    embedded = (await svc.progress(USER, language="en")).focus_skills
+    assert [s.key for s in embedded] != [s.key for s in focus]   # the job type changes which five matter
