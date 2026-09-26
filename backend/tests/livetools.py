@@ -8,6 +8,7 @@ exactly as in production, and nothing survives the run.
 
 from __future__ import annotations
 
+import asyncio
 import json
 import uuid
 from contextlib import asynccontextmanager
@@ -22,17 +23,21 @@ class RollbackStore(DbStore):
     def __init__(self, connection: AsyncConnection, *, allow_in_review: bool = True):
         super().__init__(None, allow_in_review=allow_in_review)
         self.connection = connection
+        # one connection runs one statement at a time: work started in the background (the feedback after the
+        # grade) waits for the unit of work in progress instead of interleaving on the same connection
+        self._one_at_a_time = asyncio.Lock()
 
     @asynccontextmanager
     async def transaction(self):
-        savepoint = await self.connection.begin_nested()
-        try:
-            yield DbTx(self.connection, allow_in_review=self.allow_in_review)
-        except BaseException:
-            await savepoint.rollback()
-            raise
-        else:
-            await savepoint.commit()
+        async with self._one_at_a_time:
+            savepoint = await self.connection.begin_nested()
+            try:
+                yield DbTx(self.connection, allow_in_review=self.allow_in_review)
+            except BaseException:
+                await savepoint.rollback()
+                raise
+            else:
+                await savepoint.commit()
 
 
 @asynccontextmanager

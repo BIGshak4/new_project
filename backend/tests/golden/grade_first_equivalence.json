@@ -1,0 +1,2527 @@
+{
+ "answers": [
+  {
+   "answer": "alarm = A ^ B ^ C",
+   "assessed_by": "demo",
+   "band": "WEAK",
+   "check": {
+    "detail": "6 of 8 specified rows differ",
+    "mismatches": [
+     {
+      "expected": 0,
+      "got": 1,
+      "inputs": {
+       "A": 0,
+       "B": 0,
+       "C": 1
+      },
+      "row": 1
+     },
+     {
+      "expected": 0,
+      "got": 1,
+      "inputs": {
+       "A": 0,
+       "B": 1,
+       "C": 0
+      },
+      "row": 2
+     },
+     {
+      "expected": 1,
+      "got": 0,
+      "inputs": {
+       "A": 0,
+       "B": 1,
+       "C": 1
+      },
+      "row": 3
+     },
+     {
+      "expected": 0,
+      "got": 1,
+      "inputs": {
+       "A": 1,
+       "B": 0,
+       "C": 0
+      },
+      "row": 4
+     },
+     {
+      "expected": 1,
+      "got": 0,
+      "inputs": {
+       "A": 1,
+       "B": 0,
+       "C": 1
+      },
+      "row": 5
+     },
+     {
+      "expected": 1,
+      "got": 0,
+      "inputs": {
+       "A": 1,
+       "B": 1,
+       "C": 0
+      },
+      "row": 6
+     }
+    ],
+    "passed": false,
+    "type": "truth_table"
+   },
+   "evidence": "reduced",
+   "hints_seen": 1,
+   "key": "a1-main",
+   "key_points_hit": [],
+   "key_points_missed": [],
+   "next_question": {
+    "difficulty": 3,
+    "focus": "XOR is treated as 'more than one input is 1'. Three-input XOR is odd parity: 1 for one or three asserted inputs, 0 for exactly two.",
+    "key": "example-masked-equality",
+    "reason": "The next question practises Boolean Algebra and Simplification again, from a simpler angle, so this idea settles.",
+    "skill": "boolean_algebra",
+    "subject": "digital_fundamentals",
+    "title": "Compare only enabled bits",
+    "why": "reinforce"
+   },
+   "reference_seen": false,
+   "revision": 1,
+   "status": "done",
+   "summary": "",
+   "turn": 0,
+   "xp_earned": 4
+  },
+  {
+   "answer": "maybe an AND of each pair, then an OR",
+   "assessed_by": "demo",
+   "band": "PARTIAL",
+   "check": null,
+   "evidence": "reduced",
+   "hints_seen": 2,
+   "key": "a1-f1",
+   "key_points_hit": [],
+   "key_points_missed": [],
+   "next_question": {
+    "difficulty": 3,
+    "focus": "XOR is treated as 'more than one input is 1'. Three-input XOR is odd parity: 1 for one or three asserted inputs, 0 for exactly two.",
+    "key": "example-masked-equality",
+    "reason": "The next question practises Boolean Algebra and Simplification again, from a simpler angle, so this idea settles.",
+    "skill": "boolean_algebra",
+    "subject": "digital_fundamentals",
+    "title": "Compare only enabled bits",
+    "why": "reinforce"
+   },
+   "reference_seen": false,
+   "revision": 2,
+   "status": "done",
+   "summary": "",
+   "turn": 1,
+   "xp_earned": 3
+  },
+  {
+   "answer": "def count_set_bits(x):\n    n = 0\n    while x:\n        x &= x - 1\n        n += 1\n    return n",
+   "assessed_by": "demo",
+   "band": "STRONG",
+   "check": {
+    "detail": "count_set_bits() passes all 6 test cases",
+    "mismatches": [],
+    "passed": true,
+    "type": "code_tests"
+   },
+   "evidence": "reduced",
+   "hints_seen": 0,
+   "key": "a2-main",
+   "key_points_hit": [],
+   "key_points_missed": [],
+   "next_question": {
+    "difficulty": 3,
+    "focus": null,
+    "key": "example-interrupt-priority",
+    "reason": "Nothing is pending on Bit Manipulation; Multiplexers, Decoders and Encoders has not been practised yet.",
+    "skill": "combinational_blocks",
+    "subject": "digital_fundamentals",
+    "title": "Interrupt priority with a valid flag",
+    "why": "explore"
+   },
+   "reference_seen": false,
+   "revision": 1,
+   "status": "done",
+   "summary": "",
+   "turn": 0,
+   "xp_earned": 24
+  },
+  {
+   "answer": "each step clears the lowest set bit, so at most 32 steps",
+   "assessed_by": "demo",
+   "band": "STRONG",
+   "check": null,
+   "evidence": "full",
+   "hints_seen": 0,
+   "key": "a2-f1",
+   "key_points_hit": [],
+   "key_points_missed": [],
+   "next_question": {
+    "difficulty": 3,
+    "focus": null,
+    "key": "example-interrupt-priority",
+    "reason": "Nothing is pending on Bit Manipulation; Multiplexers, Decoders and Encoders has not been practised yet.",
+    "skill": "combinational_blocks",
+    "subject": "digital_fundamentals",
+    "title": "Interrupt priority with a valid flag",
+    "why": "explore"
+   },
+   "reference_seen": false,
+   "revision": 2,
+   "status": "done",
+   "summary": "",
+   "turn": 1,
+   "xp_earned": 12
+  },
+  {
+   "answer": "equal = ~|((A ^ B) & M), כלומר NOR על אי־ההתאמות במסכה",
+   "assessed_by": "demo",
+   "band": "STRONG",
+   "check": null,
+   "evidence": "none",
+   "hints_seen": 0,
+   "key": "a3-main",
+   "key_points_hit": [],
+   "key_points_missed": [],
+   "next_question": {
+    "difficulty": 3,
+    "focus": null,
+    "key": "example-merge-measurement-streams",
+    "reason": "אין דבר פתוח ב-Boolean Algebra and Simplification; Arrays and Search עדיין לא תורגלה.",
+    "skill": "arrays_and_search",
+    "subject": "relevant_programming",
+    "title": "מיזוג רשימות מדידות ממוינות",
+    "why": "explore"
+   },
+   "reference_seen": true,
+   "revision": 1,
+   "status": "done",
+   "summary": "",
+   "turn": 0,
+   "xp_earned": 6
+  },
+  {
+   "answer": "One five-gate implementation is nA=NAND(A,A), nB=NAND(B,B), R=NAND(nA,nB), nY=NAND(E,R), Y=NAND(nY,nY). R implements A OR B by De Morgan. Either disabled E or no requests forces Y=0.",
+   "assessed_by": "demo",
+   "band": "STRONG",
+   "check": null,
+   "evidence": "full",
+   "hints_seen": 0,
+   "key": "a4-main",
+   "key_points_hit": [],
+   "key_points_missed": [],
+   "next_question": {
+    "difficulty": 3,
+    "focus": null,
+    "key": "example-merge-measurement-streams",
+    "reason": "Nothing is pending on NAND/NOR-only Implementation; Arrays and Search has not been practised yet.",
+    "skill": "arrays_and_search",
+    "subject": "relevant_programming",
+    "title": "Merge sorted measurement lists",
+    "why": "explore"
+   },
+   "reference_seen": false,
+   "revision": 1,
+   "status": "done",
+   "summary": "",
+   "turn": 0,
+   "xp_earned": 24
+  },
+  {
+   "answer": "the stuck input dominates the NAND output",
+   "assessed_by": "demo",
+   "band": "STRONG",
+   "check": null,
+   "evidence": "full",
+   "hints_seen": 0,
+   "key": "a4-f1",
+   "key_points_hit": [],
+   "key_points_missed": [],
+   "next_question": {
+    "difficulty": 3,
+    "focus": null,
+    "key": "example-merge-measurement-streams",
+    "reason": "Nothing is pending on NAND/NOR-only Implementation; Arrays and Search has not been practised yet.",
+    "skill": "arrays_and_search",
+    "subject": "relevant_programming",
+    "title": "Merge sorted measurement lists",
+    "why": "explore"
+   },
+   "reference_seen": false,
+   "revision": 2,
+   "status": "done",
+   "summary": "",
+   "turn": 1,
+   "xp_earned": 12
+  }
+ ],
+ "attempts": [
+  {
+   "can_retry": false,
+   "can_submit": false,
+   "follow_ups": [
+    {
+     "action": "HINT",
+     "created_at": "<t>",
+     "question": "Follow-up (HINT): what changes if one input is stuck at 1?",
+     "submission": {
+      "accepted_at": "<t>",
+      "answer": "maybe an AND of each pair, then an OR",
+      "assessed_by": "demo",
+      "band": "PARTIAL",
+      "card": null,
+      "check": null,
+      "evaluated_at": "<t>",
+      "evidence": "reduced",
+      "flags": [],
+      "follow_up": null,
+      "hints_seen": 2,
+      "key": "a1-f1",
+      "key_points_hit": [],
+      "key_points_missed": [],
+      "model": null,
+      "next_question": null,
+      "reference_seen": false,
+      "replayed": false,
+      "revision": 2,
+      "status": "done",
+      "summary": "",
+      "tip": null,
+      "turn": 1,
+      "visual": null,
+      "xp_earned": 3
+     },
+     "turn": 1
+    }
+   ],
+   "hints": [
+    {
+     "level": 1,
+     "text": "Instead of thinking about all eight rows at once, think about which pairs of sensors are enough to raise the alarm."
+    },
+    {
+     "level": 2,
+     "text": "This is the majority function. Its minimal form has one product term for each pair of inputs."
+    }
+   ],
+   "hints_remaining": 0,
+   "id": "#1",
+   "language": "en",
+   "mode": "deep",
+   "next_question": {
+    "difficulty": 3,
+    "focus": "XOR is treated as 'more than one input is 1'. Three-input XOR is odd parity: 1 for one or three asserted inputs, 0 for exactly two.",
+    "key": "example-masked-equality",
+    "reason": "The next question practises Boolean Algebra and Simplification again, from a simpler angle, so this idea settles.",
+    "skill": "boolean_algebra",
+    "subject": "digital_fundamentals",
+    "title": "Compare only enabled bits",
+    "why": "reinforce"
+   },
+   "pending_follow_up": null,
+   "question": {
+    "choices": null,
+    "code_language": null,
+    "companies": [],
+    "difficulty": 2,
+    "estimated_minutes": 5,
+    "format": "truth_table",
+    "has_check": true,
+    "has_reference": true,
+    "hint_count": 3,
+    "id": "#2",
+    "job_types": [],
+    "key": "example-sensor-majority",
+    "language": "en",
+    "languages": [],
+    "practice_modes": [
+     "quick"
+    ],
+    "prompt": "Three one-bit sensors A, B, C are 1 when they detect a fault. Assert alarm if at least two sensors are 1. Give all eight truth-table rows and a simplified Boolean expression. Explain why XOR of the three inputs is not sufficient.",
+    "relevance": null,
+    "requirements": "",
+    "reviewed": false,
+    "starter_code": null,
+    "status": "in_review",
+    "subject": "digital_fundamentals",
+    "title": "Two-out-of-three sensor vote",
+    "trial": false
+   },
+   "reference": null,
+   "self_confidence_before": 3,
+   "status": "done",
+   "submission": {
+    "accepted_at": "<t>",
+    "answer": "alarm = A ^ B ^ C",
+    "assessed_by": "demo",
+    "band": "WEAK",
+    "card": {
+     "next_step": "Next time, trace one more input.",
+     "what_happened": "band WEAK",
+     "why_it_matters": "interviews",
+     "your_reasoning_vs_reference": "close"
+    },
+    "check": {
+     "detail": "6 of 8 specified rows differ",
+     "mismatches": [
+      {
+       "expected": 0,
+       "got": 1,
+       "inputs": {
+        "A": 0,
+        "B": 0,
+        "C": 1
+       },
+       "row": 1
+      },
+      {
+       "expected": 0,
+       "got": 1,
+       "inputs": {
+        "A": 0,
+        "B": 1,
+        "C": 0
+       },
+       "row": 2
+      },
+      {
+       "expected": 1,
+       "got": 0,
+       "inputs": {
+        "A": 0,
+        "B": 1,
+        "C": 1
+       },
+       "row": 3
+      },
+      {
+       "expected": 0,
+       "got": 1,
+       "inputs": {
+        "A": 1,
+        "B": 0,
+        "C": 0
+       },
+       "row": 4
+      },
+      {
+       "expected": 1,
+       "got": 0,
+       "inputs": {
+        "A": 1,
+        "B": 0,
+        "C": 1
+       },
+       "row": 5
+      },
+      {
+       "expected": 1,
+       "got": 0,
+       "inputs": {
+        "A": 1,
+        "B": 1,
+        "C": 0
+       },
+       "row": 6
+      }
+     ],
+     "passed": false,
+     "type": "truth_table"
+    },
+    "evaluated_at": "<t>",
+    "evidence": "reduced",
+    "flags": [],
+    "follow_up": "Follow-up (HINT): what changes if one input is stuck at 1?",
+    "hints_seen": 1,
+    "key": "a1-main",
+    "key_points_hit": [],
+    "key_points_missed": [],
+    "model": null,
+    "next_question": null,
+    "reference_seen": false,
+    "replayed": false,
+    "revision": 1,
+    "status": "done",
+    "summary": "",
+    "tip": {
+     "key": "trace_a_second_example",
+     "text": "Polished: The error here is one that a quick trace would have caught. Next time, try running your answer on one input you did not"
+    },
+    "turn": 0,
+    "visual": null,
+    "xp_earned": 4
+   }
+  },
+  {
+   "can_retry": false,
+   "can_submit": false,
+   "follow_ups": [
+    {
+     "action": "ESCALATE",
+     "created_at": "<t>",
+     "question": "Follow-up (ESCALATE): what changes if one input is stuck at 1?",
+     "submission": {
+      "accepted_at": "<t>",
+      "answer": "each step clears the lowest set bit, so at most 32 steps",
+      "assessed_by": "demo",
+      "band": "STRONG",
+      "card": null,
+      "check": null,
+      "evaluated_at": "<t>",
+      "evidence": "full",
+      "flags": [],
+      "follow_up": null,
+      "hints_seen": 0,
+      "key": "a2-f1",
+      "key_points_hit": [],
+      "key_points_missed": [],
+      "model": null,
+      "next_question": null,
+      "reference_seen": false,
+      "replayed": false,
+      "revision": 2,
+      "status": "done",
+      "summary": "",
+      "tip": null,
+      "turn": 1,
+      "visual": null,
+      "xp_earned": 12
+     },
+     "turn": 1
+    }
+   ],
+   "hints": [],
+   "hints_remaining": 0,
+   "id": "#3",
+   "language": "en",
+   "mode": "deep",
+   "next_question": {
+    "difficulty": 3,
+    "focus": null,
+    "key": "example-interrupt-priority",
+    "reason": "Nothing is pending on Bit Manipulation; Multiplexers, Decoders and Encoders has not been practised yet.",
+    "skill": "combinational_blocks",
+    "subject": "digital_fundamentals",
+    "title": "Interrupt priority with a valid flag",
+    "why": "explore"
+   },
+   "pending_follow_up": null,
+   "question": {
+    "choices": null,
+    "code_language": null,
+    "companies": [],
+    "difficulty": 3,
+    "estimated_minutes": 8,
+    "format": "code",
+    "has_check": true,
+    "has_reference": true,
+    "hint_count": 3,
+    "id": "#4",
+    "job_types": [],
+    "key": "example-count-set-bits",
+    "language": "en",
+    "languages": [],
+    "practice_modes": [
+     "deep",
+     "simulation"
+    ],
+    "prompt": "Given a nonnegative integer x with at most 32 bits, count its 1 bits without a built-in population-count function or converting it to a string. Give code or pseudocode, explain why it terminates, and analyze complexity. Test x=0, x=0b10110100, and x=0xFFFFFFFF.",
+    "relevance": null,
+    "requirements": "",
+    "reviewed": false,
+    "starter_code": null,
+    "status": "in_review",
+    "subject": "relevant_programming",
+    "title": "Count asserted status bits",
+    "trial": false
+   },
+   "reference": null,
+   "self_confidence_before": 3,
+   "status": "done",
+   "submission": {
+    "accepted_at": "<t>",
+    "answer": "def count_set_bits(x):\n    n = 0\n    while x:\n        x &= x - 1\n        n += 1\n    return n",
+    "assessed_by": "demo",
+    "band": "STRONG",
+    "card": {
+     "next_step": "Next time, trace one more input.",
+     "what_happened": "band STRONG",
+     "why_it_matters": "interviews",
+     "your_reasoning_vs_reference": "close"
+    },
+    "check": {
+     "detail": "count_set_bits() passes all 6 test cases",
+     "mismatches": [],
+     "passed": true,
+     "type": "code_tests"
+    },
+    "evaluated_at": "<t>",
+    "evidence": "reduced",
+    "flags": [],
+    "follow_up": "Follow-up (ESCALATE): what changes if one input is stuck at 1?",
+    "hints_seen": 0,
+    "key": "a2-main",
+    "key_points_hit": [],
+    "key_points_missed": [],
+    "model": null,
+    "next_question": null,
+    "reference_seen": false,
+    "replayed": false,
+    "revision": 1,
+    "status": "done",
+    "summary": "",
+    "tip": null,
+    "turn": 0,
+    "visual": null,
+    "xp_earned": 24
+   }
+  },
+  {
+   "can_retry": false,
+   "can_submit": false,
+   "follow_ups": [],
+   "hints": [],
+   "hints_remaining": 0,
+   "id": "#5",
+   "language": "he",
+   "mode": "deep",
+   "next_question": {
+    "difficulty": 3,
+    "focus": null,
+    "key": "example-merge-measurement-streams",
+    "reason": "אין דבר פתוח ב-Boolean Algebra and Simplification; Arrays and Search עדיין לא תורגלה.",
+    "skill": "arrays_and_search",
+    "subject": "relevant_programming",
+    "title": "מיזוג רשימות מדידות ממוינות",
+    "why": "explore"
+   },
+   "pending_follow_up": null,
+   "question": {
+    "choices": null,
+    "code_language": null,
+    "companies": [],
+    "difficulty": 3,
+    "estimated_minutes": 7,
+    "format": "construct",
+    "has_check": false,
+    "has_reference": true,
+    "hint_count": 3,
+    "id": "#6",
+    "job_types": [],
+    "key": "example-masked-equality",
+    "language": "he",
+    "languages": [],
+    "practice_modes": [
+     "deep",
+     "simulation"
+    ],
+    "prompt": "הווקטורים A, B, M הם ברוחב ארבעה ביטים. כאשר M[i]=1 יש להשוות את הביט i, וכאשר M[i]=0 מתעלמים ממנו. הפיקו equal=1 אם ורק אם כל הביטים שנבחרו זהים. כתבו ביטוי בוליאני או קוד תיאור חומרה. חשבו את התוצאה עבור A=1010, B=1001, M=1100, והסבירו את המקרה M=0000.",
+    "relevance": null,
+    "requirements": "",
+    "reviewed": false,
+    "starter_code": null,
+    "status": "in_review",
+    "subject": "digital_fundamentals",
+    "title": "השוואת ביטים לפי מסכה",
+    "trial": false
+   },
+   "reference": "הביטוי הוא equal = ~|((A ^ B) & M), כאשר ~| הוא reduction NOR. בדוגמה מתקבל 1. מסכה של אפסים אינה בוחרת אף אי־התאמה ולכן equal=1. היפוך ביטי רגיל בלבד היה מחזיר וקטור במקום ביט יחיד.",
+   "self_confidence_before": 3,
+   "status": "done",
+   "submission": {
+    "accepted_at": "<t>",
+    "answer": "equal = ~|((A ^ B) & M), כלומר NOR על אי־ההתאמות במסכה",
+    "assessed_by": "demo",
+    "band": "STRONG",
+    "card": {
+     "next_step": "Next time, trace one more input.",
+     "what_happened": "band STRONG",
+     "why_it_matters": "interviews",
+     "your_reasoning_vs_reference": "close"
+    },
+    "check": null,
+    "evaluated_at": "<t>",
+    "evidence": "none",
+    "flags": [
+     "revealed_before_submit_no_evidence"
+    ],
+    "follow_up": null,
+    "hints_seen": 0,
+    "key": "a3-main",
+    "key_points_hit": [],
+    "key_points_missed": [],
+    "model": null,
+    "next_question": null,
+    "reference_seen": true,
+    "replayed": false,
+    "revision": 1,
+    "status": "done",
+    "summary": "",
+    "tip": null,
+    "turn": 0,
+    "visual": null,
+    "xp_earned": 6
+   }
+  },
+  {
+   "can_retry": false,
+   "can_submit": false,
+   "follow_ups": [
+    {
+     "action": "ESCALATE",
+     "created_at": "<t>",
+     "question": "Follow-up (ESCALATE): what changes if one input is stuck at 1?",
+     "submission": {
+      "accepted_at": "<t>",
+      "answer": "the stuck input dominates the NAND output",
+      "assessed_by": "demo",
+      "band": "STRONG",
+      "card": null,
+      "check": null,
+      "evaluated_at": "<t>",
+      "evidence": "full",
+      "flags": [],
+      "follow_up": null,
+      "hints_seen": 0,
+      "key": "a4-f1",
+      "key_points_hit": [],
+      "key_points_missed": [],
+      "model": null,
+      "next_question": null,
+      "reference_seen": false,
+      "replayed": false,
+      "revision": 2,
+      "status": "done",
+      "summary": "",
+      "tip": null,
+      "turn": 1,
+      "visual": null,
+      "xp_earned": 12
+     },
+     "turn": 1
+    }
+   ],
+   "hints": [],
+   "hints_remaining": 0,
+   "id": "#7",
+   "language": "en",
+   "mode": "deep",
+   "next_question": {
+    "difficulty": 3,
+    "focus": null,
+    "key": "example-merge-measurement-streams",
+    "reason": "Nothing is pending on NAND/NOR-only Implementation; Arrays and Search has not been practised yet.",
+    "skill": "arrays_and_search",
+    "subject": "relevant_programming",
+    "title": "Merge sorted measurement lists",
+    "why": "explore"
+   },
+   "pending_follow_up": null,
+   "question": {
+    "choices": null,
+    "code_language": null,
+    "companies": [],
+    "difficulty": 3,
+    "estimated_minutes": 8,
+    "format": "construct",
+    "has_check": false,
+    "has_reference": true,
+    "hint_count": 3,
+    "id": "#8",
+    "job_types": [],
+    "key": "example-nand-only-enable",
+    "language": "en",
+    "languages": [],
+    "practice_modes": [
+     "deep",
+     "simulation"
+    ],
+    "prompt": "A device runs when enable E is 1 and at least one request A or B is 1: Y = E & (A | B). Implement Y using only two-input NAND gates, with no free inverted inputs. Provide a gate-by-gate description and verify the cases E=0 and A=B=0. Minimum gate count is not required.",
+    "relevance": null,
+    "requirements": "",
+    "reviewed": false,
+    "starter_code": null,
+    "status": "in_review",
+    "subject": "digital_fundamentals",
+    "title": "Enable logic using only NAND gates",
+    "trial": false
+   },
+   "reference": null,
+   "self_confidence_before": 3,
+   "status": "done",
+   "submission": {
+    "accepted_at": "<t>",
+    "answer": "One five-gate implementation is nA=NAND(A,A), nB=NAND(B,B), R=NAND(nA,nB), nY=NAND(E,R), Y=NAND(nY,nY). R implements A OR B by De Morgan. Either disabled E or no requests forces Y=0.",
+    "assessed_by": "demo",
+    "band": "STRONG",
+    "card": {
+     "next_step": "Next time, trace one more input.",
+     "what_happened": "band STRONG",
+     "why_it_matters": "interviews",
+     "your_reasoning_vs_reference": "close"
+    },
+    "check": null,
+    "evaluated_at": "<t>",
+    "evidence": "full",
+    "flags": [],
+    "follow_up": "Follow-up (ESCALATE): what changes if one input is stuck at 1?",
+    "hints_seen": 0,
+    "key": "a4-main",
+    "key_points_hit": [],
+    "key_points_missed": [],
+    "model": null,
+    "next_question": null,
+    "reference_seen": false,
+    "replayed": false,
+    "revision": 1,
+    "status": "done",
+    "summary": "",
+    "tip": null,
+    "turn": 0,
+    "visual": null,
+    "xp_earned": 24
+   }
+  }
+ ],
+ "progress": {
+  "focus": [
+   "boolean_algebra",
+   "combinational_blocks",
+   "fsm_state_tables",
+   "latches_flip_flops",
+   "counters"
+  ],
+  "overview": {
+   "answered": 4,
+   "level": "Proficient",
+   "level_rank": 3,
+   "message": "4 answers in. Every one of them teaches the coach what to ask you next.",
+   "partial": 0,
+   "skills_assessed": 3,
+   "skills_to_refresh": 0,
+   "skills_total": 25,
+   "streak_days": 1,
+   "strong": 3,
+   "weak": 1,
+   "xp_today": 85,
+   "xp_total": 85
+  },
+  "skills": [
+   {
+    "assessments": 2,
+    "key": "bit_manipulation",
+    "label": "Bit Manipulation",
+    "last_assessed_at": "<t>",
+    "level": 3,
+    "level_progress": 0.07,
+    "loyalty": 10,
+    "needs_refresh": false,
+    "required_level": 2,
+    "retention_due_at": null,
+    "status": "assessed",
+    "subject": "relevant_programming",
+    "trend": "improving",
+    "xp": 36
+   },
+   {
+    "assessments": 3,
+    "key": "boolean_algebra",
+    "label": "Boolean Algebra and Simplification",
+    "last_assessed_at": "<t>",
+    "level": 2,
+    "level_progress": 0.88,
+    "loyalty": 10,
+    "needs_refresh": false,
+    "required_level": 2,
+    "retention_due_at": null,
+    "status": "assessed",
+    "subject": "digital_fundamentals",
+    "trend": "stable",
+    "xp": 15
+   },
+   {
+    "assessments": 0,
+    "key": "combinational_blocks",
+    "label": "Multiplexers, Decoders and Encoders",
+    "last_assessed_at": "<t>",
+    "level": 2,
+    "level_progress": 0.29,
+    "loyalty": null,
+    "needs_refresh": false,
+    "required_level": 2,
+    "retention_due_at": null,
+    "status": "not_assessed",
+    "subject": "digital_fundamentals",
+    "trend": "stable",
+    "xp": 3
+   },
+   {
+    "assessments": 1,
+    "key": "truth_tables",
+    "label": "Truth Tables and Logic Functions",
+    "last_assessed_at": "<t>",
+    "level": 2,
+    "level_progress": 0.28,
+    "loyalty": 10,
+    "needs_refresh": false,
+    "required_level": 2,
+    "retention_due_at": null,
+    "status": "insufficient_evidence",
+    "subject": "digital_fundamentals",
+    "trend": "stable",
+    "xp": 2
+   },
+   {
+    "assessments": 2,
+    "key": "universal_gates",
+    "label": "NAND/NOR-only Implementation",
+    "last_assessed_at": "<t>",
+    "level": 3,
+    "level_progress": 0.11,
+    "loyalty": 10,
+    "needs_refresh": false,
+    "required_level": 2,
+    "retention_due_at": null,
+    "status": "assessed",
+    "subject": "digital_fundamentals",
+    "trend": "improving",
+    "xp": 29
+   }
+  ]
+ },
+ "store": {
+  "attempts": [
+   {
+    "answer": {
+     "key": "a1-main",
+     "revision": 1,
+     "status": "done",
+     "text": "alarm = A ^ B ^ C"
+    },
+    "band": "WEAK",
+    "check_result": {
+     "detail": "6 of 8 specified rows differ",
+     "mismatches": [
+      {
+       "expected": 0,
+       "got": 1,
+       "inputs": {
+        "A": 0,
+        "B": 0,
+        "C": 1
+       },
+       "row": 1
+      },
+      {
+       "expected": 0,
+       "got": 1,
+       "inputs": {
+        "A": 0,
+        "B": 1,
+        "C": 0
+       },
+       "row": 2
+      },
+      {
+       "expected": 1,
+       "got": 0,
+       "inputs": {
+        "A": 0,
+        "B": 1,
+        "C": 1
+       },
+       "row": 3
+      },
+      {
+       "expected": 0,
+       "got": 1,
+       "inputs": {
+        "A": 1,
+        "B": 0,
+        "C": 0
+       },
+       "row": 4
+      },
+      {
+       "expected": 1,
+       "got": 0,
+       "inputs": {
+        "A": 1,
+        "B": 0,
+        "C": 1
+       },
+       "row": 5
+      },
+      {
+       "expected": 1,
+       "got": 0,
+       "inputs": {
+        "A": 1,
+        "B": 1,
+        "C": 0
+       },
+       "row": 6
+      }
+     ],
+     "passed": false,
+     "runtime_ms": "<t>",
+     "type": "truth_table"
+    },
+    "duration_ms": null,
+    "evaluation": {
+     "behavior_signals": [],
+     "clarity": 0.7,
+     "correctness": 0.2,
+     "depth": 0.2,
+     "hedging_ratio": 0.2,
+     "key_points_hit": [],
+     "key_points_missed": [],
+     "misconceptions": [
+      "xor_confused_with_majority"
+     ],
+     "one_line_summary": "",
+     "risk_awareness": 0.5,
+     "rubric_level_estimate": 3,
+     "structure": 0.6,
+     "tradeoff_reasoning": 0.5
+    },
+    "evidence_mode": "deep",
+    "exposures": [
+     {
+      "at": "<t>",
+      "kind": "hint",
+      "level": 1,
+      "sequence": 1
+     },
+     {
+      "at": "<t>",
+      "kind": "hint",
+      "level": 2,
+      "sequence": 2
+     }
+    ],
+    "familiarity": "new",
+    "follow_up_turns": [
+     {
+      "action": "HINT",
+      "created_at": "<t>",
+      "difficulty": 2,
+      "expected_answer_outline": "the stuck input",
+      "generated": true,
+      "question": "Follow-up (HINT): what changes if one input is stuck at 1?",
+      "source": "generated",
+      "submission_revision": 2,
+      "turn": 1
+     }
+    ],
+    "hints_used": 2,
+    "id": "#1",
+    "misconceptions_hit": [
+     "xor_confused_with_majority"
+    ],
+    "mode": "deep",
+    "next_question": {
+     "difficulty": 3,
+     "focus": "XOR is treated as 'more than one input is 1'. Three-input XOR is odd parity: 1 for one or three asserted inputs, 0 for exactly two.",
+     "key": "example-masked-equality",
+     "reason": "The next question practises Boolean Algebra and Simplification again, from a simpler angle, so this idea settles.",
+     "skill": "boolean_algebra",
+     "subject": "digital_fundamentals",
+     "title": "Compare only enabled bits",
+     "why": "reinforce"
+    },
+    "practice_language": "en",
+    "question_key": "example-sensor-majority",
+    "question_version": 1,
+    "reference_revealed": false,
+    "revealed_before_submit": false,
+    "self_confidence_before": 3,
+    "submissions": [
+     {
+      "accepted_at": "<t>",
+      "answer": "alarm = A ^ B ^ C",
+      "attempts": 1,
+      "band": "WEAK",
+      "card": {
+       "next_step": "Next time, trace one more input.",
+       "what_happened": "band WEAK",
+       "why_it_matters": "interviews",
+       "your_reasoning_vs_reference": "close"
+      },
+      "check": {
+       "detail": "6 of 8 specified rows differ",
+       "mismatches": [
+        {
+         "expected": 0,
+         "got": 1,
+         "inputs": {
+          "A": 0,
+          "B": 0,
+          "C": 1
+         },
+         "row": 1
+        },
+        {
+         "expected": 0,
+         "got": 1,
+         "inputs": {
+          "A": 0,
+          "B": 1,
+          "C": 0
+         },
+         "row": 2
+        },
+        {
+         "expected": 1,
+         "got": 0,
+         "inputs": {
+          "A": 0,
+          "B": 1,
+          "C": 1
+         },
+         "row": 3
+        },
+        {
+         "expected": 0,
+         "got": 1,
+         "inputs": {
+          "A": 1,
+          "B": 0,
+          "C": 0
+         },
+         "row": 4
+        },
+        {
+         "expected": 1,
+         "got": 0,
+         "inputs": {
+          "A": 1,
+          "B": 0,
+          "C": 1
+         },
+         "row": 5
+        },
+        {
+         "expected": 1,
+         "got": 0,
+         "inputs": {
+          "A": 1,
+          "B": 1,
+          "C": 0
+         },
+         "row": 6
+        }
+       ],
+       "passed": false,
+       "runtime_ms": "<t>",
+       "type": "truth_table"
+      },
+      "evaluated_at": "<t>",
+      "evaluating_since": null,
+      "evaluation": {
+       "behavior_signals": [],
+       "clarity": 0.7,
+       "correctness": 0.2,
+       "depth": 0.2,
+       "hedging_ratio": 0.2,
+       "key_points_hit": [],
+       "key_points_missed": [],
+       "misconceptions": [
+        "xor_confused_with_majority"
+       ],
+       "one_line_summary": "",
+       "risk_awareness": 0.5,
+       "rubric_level_estimate": 3,
+       "structure": 0.6,
+       "tradeoff_reasoning": 0.5
+      },
+      "evaluator_model": "scripted",
+      "evidence_weight": 0.48,
+      "exposure_sequence": 1,
+      "flags": [],
+      "follow_up": "Follow-up (HINT): what changes if one input is stuck at 1?",
+      "hints_seen": 1,
+      "key": "a1-main",
+      "reference_seen": false,
+      "revision": 1,
+      "status": "done",
+      "tip_key": "trace_a_second_example",
+      "tip_text": "Polished: The error here is one that a quick trace would have caught. Next time, try running your answer on one input you did not",
+      "turn": 0,
+      "visual": null
+     },
+     {
+      "accepted_at": "<t>",
+      "answer": "maybe an AND of each pair, then an OR",
+      "attempts": 1,
+      "band": "PARTIAL",
+      "card": null,
+      "check": null,
+      "evaluated_at": "<t>",
+      "evaluating_since": null,
+      "evaluation": {
+       "behavior_signals": [],
+       "clarity": 0.7,
+       "correctness": 0.55,
+       "depth": 0.45,
+       "hedging_ratio": 0.2,
+       "key_points_hit": [],
+       "key_points_missed": [],
+       "misconceptions": [],
+       "one_line_summary": "",
+       "risk_awareness": 0.5,
+       "rubric_level_estimate": 3,
+       "structure": 0.6,
+       "tradeoff_reasoning": 0.5
+      },
+      "evaluator_model": "scripted",
+      "evidence_weight": 0.6,
+      "exposure_sequence": 2,
+      "flags": [],
+      "follow_up": null,
+      "hints_seen": 2,
+      "key": "a1-f1",
+      "reference_seen": false,
+      "revision": 2,
+      "status": "done",
+      "tip_key": null,
+      "tip_text": null,
+      "turn": 1,
+      "visual": null
+     }
+    ],
+    "tip_turns": {
+     "trace_a_second_example": 1
+    }
+   },
+   {
+    "answer": {
+     "key": "a2-main",
+     "revision": 1,
+     "status": "done",
+     "text": "def count_set_bits(x):\n    n = 0\n    while x:\n        x &= x - 1\n        n += 1\n    return n"
+    },
+    "band": "STRONG",
+    "check_result": {
+     "detail": "count_set_bits() passes all 6 test cases",
+     "mismatches": [],
+     "passed": true,
+     "runtime_ms": "<t>",
+     "type": "code_tests"
+    },
+    "duration_ms": null,
+    "evaluation": {
+     "behavior_signals": [],
+     "clarity": 0.7,
+     "correctness": 0.9,
+     "depth": 0.8,
+     "hedging_ratio": 0.2,
+     "key_points_hit": [],
+     "key_points_missed": [],
+     "misconceptions": [],
+     "one_line_summary": "",
+     "risk_awareness": 0.5,
+     "rubric_level_estimate": 3,
+     "structure": 0.6,
+     "tradeoff_reasoning": 0.5
+    },
+    "evidence_mode": "deep",
+    "exposures": [],
+    "familiarity": "new",
+    "follow_up_turns": [
+     {
+      "action": "ESCALATE",
+      "created_at": "<t>",
+      "difficulty": 4,
+      "expected_answer_outline": "the stuck input",
+      "generated": true,
+      "question": "Follow-up (ESCALATE): what changes if one input is stuck at 1?",
+      "source": "generated",
+      "submission_revision": 2,
+      "turn": 1
+     }
+    ],
+    "hints_used": 0,
+    "id": "#3",
+    "misconceptions_hit": [],
+    "mode": "deep",
+    "next_question": {
+     "difficulty": 3,
+     "focus": null,
+     "key": "example-interrupt-priority",
+     "reason": "Nothing is pending on Bit Manipulation; Multiplexers, Decoders and Encoders has not been practised yet.",
+     "skill": "combinational_blocks",
+     "subject": "digital_fundamentals",
+     "title": "Interrupt priority with a valid flag",
+     "why": "explore"
+    },
+    "practice_language": "en",
+    "question_key": "example-count-set-bits",
+    "question_version": 1,
+    "reference_revealed": false,
+    "revealed_before_submit": false,
+    "self_confidence_before": 3,
+    "submissions": [
+     {
+      "accepted_at": "<t>",
+      "answer": "def count_set_bits(x):\n    n = 0\n    while x:\n        x &= x - 1\n        n += 1\n    return n",
+      "attempts": 1,
+      "band": "STRONG",
+      "card": {
+       "next_step": "Next time, trace one more input.",
+       "what_happened": "band STRONG",
+       "why_it_matters": "interviews",
+       "your_reasoning_vs_reference": "close"
+      },
+      "check": {
+       "detail": "count_set_bits() passes all 6 test cases",
+       "mismatches": [],
+       "passed": true,
+       "runtime_ms": "<t>",
+       "type": "code_tests"
+      },
+      "evaluated_at": "<t>",
+      "evaluating_since": null,
+      "evaluation": {
+       "behavior_signals": [],
+       "clarity": 0.7,
+       "correctness": 0.9,
+       "depth": 0.8,
+       "hedging_ratio": 0.2,
+       "key_points_hit": [],
+       "key_points_missed": [],
+       "misconceptions": [],
+       "one_line_summary": "",
+       "risk_awareness": 0.5,
+       "rubric_level_estimate": 3,
+       "structure": 0.6,
+       "tradeoff_reasoning": 0.5
+      },
+      "evaluator_model": "scripted",
+      "evidence_weight": 0.6,
+      "exposure_sequence": 0,
+      "flags": [],
+      "follow_up": "Follow-up (ESCALATE): what changes if one input is stuck at 1?",
+      "hints_seen": 0,
+      "key": "a2-main",
+      "reference_seen": false,
+      "revision": 1,
+      "status": "done",
+      "tip_key": null,
+      "tip_text": null,
+      "turn": 0,
+      "visual": null
+     },
+     {
+      "accepted_at": "<t>",
+      "answer": "each step clears the lowest set bit, so at most 32 steps",
+      "attempts": 1,
+      "band": "STRONG",
+      "card": null,
+      "check": null,
+      "evaluated_at": "<t>",
+      "evaluating_since": null,
+      "evaluation": {
+       "behavior_signals": [],
+       "clarity": 0.7,
+       "correctness": 0.9,
+       "depth": 0.8,
+       "hedging_ratio": 0.2,
+       "key_points_hit": [],
+       "key_points_missed": [],
+       "misconceptions": [],
+       "one_line_summary": "",
+       "risk_awareness": 0.5,
+       "rubric_level_estimate": 3,
+       "structure": 0.6,
+       "tradeoff_reasoning": 0.5
+      },
+      "evaluator_model": "scripted",
+      "evidence_weight": 1.0,
+      "exposure_sequence": 0,
+      "flags": [],
+      "follow_up": null,
+      "hints_seen": 0,
+      "key": "a2-f1",
+      "reference_seen": false,
+      "revision": 2,
+      "status": "done",
+      "tip_key": null,
+      "tip_text": null,
+      "turn": 1,
+      "visual": null
+     }
+    ],
+    "tip_turns": {}
+   },
+   {
+    "answer": {
+     "key": "a3-main",
+     "revision": 1,
+     "status": "done",
+     "text": "equal = ~|((A ^ B) & M), כלומר NOR על אי־ההתאמות במסכה"
+    },
+    "band": "STRONG",
+    "check_result": null,
+    "duration_ms": null,
+    "evaluation": {
+     "behavior_signals": [],
+     "clarity": 0.7,
+     "correctness": 0.9,
+     "depth": 0.8,
+     "hedging_ratio": 0.2,
+     "key_points_hit": [],
+     "key_points_missed": [],
+     "misconceptions": [],
+     "one_line_summary": "",
+     "risk_awareness": 0.5,
+     "rubric_level_estimate": 3,
+     "structure": 0.6,
+     "tradeoff_reasoning": 0.5
+    },
+    "evidence_mode": "deep",
+    "exposures": [
+     {
+      "at": "<t>",
+      "kind": "reference",
+      "level": 0,
+      "sequence": 1
+     }
+    ],
+    "familiarity": "new",
+    "follow_up_turns": [],
+    "hints_used": 0,
+    "id": "#5",
+    "misconceptions_hit": [],
+    "mode": "deep",
+    "next_question": {
+     "difficulty": 3,
+     "focus": null,
+     "key": "example-merge-measurement-streams",
+     "reason": "אין דבר פתוח ב-Boolean Algebra and Simplification; Arrays and Search עדיין לא תורגלה.",
+     "skill": "arrays_and_search",
+     "subject": "relevant_programming",
+     "title": "מיזוג רשימות מדידות ממוינות",
+     "why": "explore"
+    },
+    "practice_language": "he",
+    "question_key": "example-masked-equality",
+    "question_version": 1,
+    "reference_revealed": true,
+    "revealed_before_submit": true,
+    "self_confidence_before": 3,
+    "submissions": [
+     {
+      "accepted_at": "<t>",
+      "answer": "equal = ~|((A ^ B) & M), כלומר NOR על אי־ההתאמות במסכה",
+      "attempts": 1,
+      "band": "STRONG",
+      "card": {
+       "next_step": "Next time, trace one more input.",
+       "what_happened": "band STRONG",
+       "why_it_matters": "interviews",
+       "your_reasoning_vs_reference": "close"
+      },
+      "check": null,
+      "evaluated_at": "<t>",
+      "evaluating_since": null,
+      "evaluation": {
+       "behavior_signals": [],
+       "clarity": 0.7,
+       "correctness": 0.9,
+       "depth": 0.8,
+       "hedging_ratio": 0.2,
+       "key_points_hit": [],
+       "key_points_missed": [],
+       "misconceptions": [],
+       "one_line_summary": "",
+       "risk_awareness": 0.5,
+       "rubric_level_estimate": 3,
+       "structure": 0.6,
+       "tradeoff_reasoning": 0.5
+      },
+      "evaluator_model": "scripted",
+      "evidence_weight": 0.0,
+      "exposure_sequence": 1,
+      "flags": [
+       "revealed_before_submit_no_evidence"
+      ],
+      "follow_up": null,
+      "hints_seen": 0,
+      "key": "a3-main",
+      "reference_seen": true,
+      "revision": 1,
+      "status": "done",
+      "tip_key": null,
+      "tip_text": null,
+      "turn": 0,
+      "visual": null
+     }
+    ],
+    "tip_turns": {}
+   },
+   {
+    "answer": {
+     "key": "a4-main",
+     "revision": 1,
+     "status": "done",
+     "text": "One five-gate implementation is nA=NAND(A,A), nB=NAND(B,B), R=NAND(nA,nB), nY=NAND(E,R), Y=NAND(nY,nY). R implements A OR B by De Morgan. Either disabled E or no requests forces Y=0."
+    },
+    "band": "STRONG",
+    "check_result": null,
+    "duration_ms": null,
+    "evaluation": {
+     "behavior_signals": [],
+     "clarity": 0.7,
+     "correctness": 0.9,
+     "depth": 0.8,
+     "hedging_ratio": 0.2,
+     "key_points_hit": [],
+     "key_points_missed": [],
+     "misconceptions": [],
+     "one_line_summary": "",
+     "risk_awareness": 0.5,
+     "rubric_level_estimate": 3,
+     "structure": 0.6,
+     "tradeoff_reasoning": 0.5
+    },
+    "evidence_mode": "deep",
+    "exposures": [],
+    "familiarity": "new",
+    "follow_up_turns": [
+     {
+      "action": "ESCALATE",
+      "created_at": "<t>",
+      "difficulty": 4,
+      "expected_answer_outline": "the stuck input",
+      "generated": true,
+      "question": "Follow-up (ESCALATE): what changes if one input is stuck at 1?",
+      "source": "generated",
+      "submission_revision": 2,
+      "turn": 1
+     }
+    ],
+    "hints_used": 0,
+    "id": "#7",
+    "misconceptions_hit": [],
+    "mode": "deep",
+    "next_question": {
+     "difficulty": 3,
+     "focus": null,
+     "key": "example-merge-measurement-streams",
+     "reason": "Nothing is pending on NAND/NOR-only Implementation; Arrays and Search has not been practised yet.",
+     "skill": "arrays_and_search",
+     "subject": "relevant_programming",
+     "title": "Merge sorted measurement lists",
+     "why": "explore"
+    },
+    "practice_language": "en",
+    "question_key": "example-nand-only-enable",
+    "question_version": 1,
+    "reference_revealed": false,
+    "revealed_before_submit": false,
+    "self_confidence_before": 3,
+    "submissions": [
+     {
+      "accepted_at": "<t>",
+      "answer": "One five-gate implementation is nA=NAND(A,A), nB=NAND(B,B), R=NAND(nA,nB), nY=NAND(E,R), Y=NAND(nY,nY). R implements A OR B by De Morgan. Either disabled E or no requests forces Y=0.",
+      "attempts": 1,
+      "band": "STRONG",
+      "card": {
+       "next_step": "Next time, trace one more input.",
+       "what_happened": "band STRONG",
+       "why_it_matters": "interviews",
+       "your_reasoning_vs_reference": "close"
+      },
+      "check": null,
+      "evaluated_at": "<t>",
+      "evaluating_since": null,
+      "evaluation": {
+       "behavior_signals": [],
+       "clarity": 0.7,
+       "correctness": 0.9,
+       "depth": 0.8,
+       "hedging_ratio": 0.2,
+       "key_points_hit": [],
+       "key_points_missed": [],
+       "misconceptions": [],
+       "one_line_summary": "",
+       "risk_awareness": 0.5,
+       "rubric_level_estimate": 3,
+       "structure": 0.6,
+       "tradeoff_reasoning": 0.5
+      },
+      "evaluator_model": "scripted",
+      "evidence_weight": 1.0,
+      "exposure_sequence": 0,
+      "flags": [],
+      "follow_up": "Follow-up (ESCALATE): what changes if one input is stuck at 1?",
+      "hints_seen": 0,
+      "key": "a4-main",
+      "reference_seen": false,
+      "revision": 1,
+      "status": "done",
+      "tip_key": null,
+      "tip_text": null,
+      "turn": 0,
+      "visual": null
+     },
+     {
+      "accepted_at": "<t>",
+      "answer": "the stuck input dominates the NAND output",
+      "attempts": 1,
+      "band": "STRONG",
+      "card": null,
+      "check": null,
+      "evaluated_at": "<t>",
+      "evaluating_since": null,
+      "evaluation": {
+       "behavior_signals": [],
+       "clarity": 0.7,
+       "correctness": 0.9,
+       "depth": 0.8,
+       "hedging_ratio": 0.2,
+       "key_points_hit": [],
+       "key_points_missed": [],
+       "misconceptions": [],
+       "one_line_summary": "",
+       "risk_awareness": 0.5,
+       "rubric_level_estimate": 3,
+       "structure": 0.6,
+       "tradeoff_reasoning": 0.5
+      },
+      "evaluator_model": "scripted",
+      "evidence_weight": 1.0,
+      "exposure_sequence": 0,
+      "flags": [],
+      "follow_up": null,
+      "hints_seen": 0,
+      "key": "a4-f1",
+      "reference_seen": false,
+      "revision": 2,
+      "status": "done",
+      "tip_key": null,
+      "tip_text": null,
+      "turn": 1,
+      "visual": null
+     }
+    ],
+    "tip_turns": {}
+   }
+  ],
+  "metrics": [
+   {
+    "attempt_id": "#1",
+    "band": "WEAK",
+    "check_passed": false,
+    "clarity": 0.7,
+    "confidence_score_after": 52.77,
+    "confidence_score_before": 50.0,
+    "correctness": 0.2,
+    "decision_action": "HINT",
+    "decision_engine_version": "0.1.0",
+    "decision_reason_code": "weak_answer_budget_available",
+    "depth": 0.2,
+    "difficulty_asked": 2,
+    "difficulty_next": 2,
+    "eval_flags": [],
+    "eval_latency_ms": "<t>",
+    "evaluator_model": "scripted",
+    "evaluator_version": "evaluator.v1",
+    "evidence_weight": 0.48,
+    "familiarity": "new",
+    "hedging_ratio": 0.2,
+    "hint_delivered": true,
+    "hint_level": 1,
+    "knowledge_score_after": 29.37,
+    "knowledge_score_before": 32.0,
+    "mode": "deep",
+    "provisional_level_after": 2,
+    "question_archetype": "conceptual",
+    "response_latency_ms": null,
+    "revision_count": null,
+    "risk_awareness": 0.5,
+    "skill_combined_weight": 0.06,
+    "skill_key": "boolean_algebra",
+    "skill_required_level": 2,
+    "skill_source": "role",
+    "structure": 0.6,
+    "subject_key": "digital_fundamentals",
+    "submission_revision": 1,
+    "tradeoff_reasoning": 0.5,
+    "user_id": "#9"
+   },
+   {
+    "attempt_id": "#1",
+    "band": "WEAK",
+    "check_passed": false,
+    "clarity": 0.7,
+    "confidence_score_after": 51.85,
+    "confidence_score_before": 50.0,
+    "correctness": 0.2,
+    "decision_engine_version": "0.1.0",
+    "depth": 0.2,
+    "difficulty_asked": 2,
+    "eval_flags": [],
+    "eval_latency_ms": "<t>",
+    "evaluator_model": "scripted",
+    "evaluator_version": "evaluator.v1",
+    "evidence_weight": 0.32,
+    "familiarity": "new",
+    "hedging_ratio": 0.2,
+    "hint_delivered": true,
+    "hint_level": 1,
+    "knowledge_score_after": 30.25,
+    "knowledge_score_before": 32.0,
+    "mode": "deep",
+    "provisional_level_after": 2,
+    "question_archetype": "conceptual",
+    "response_latency_ms": null,
+    "revision_count": null,
+    "risk_awareness": 0.5,
+    "skill_combined_weight": 0.03,
+    "skill_key": "truth_tables",
+    "skill_required_level": 2,
+    "skill_source": "role",
+    "structure": 0.6,
+    "subject_key": "digital_fundamentals",
+    "submission_revision": 1,
+    "tradeoff_reasoning": 0.5,
+    "user_id": "#9"
+   },
+   {
+    "attempt_id": "#1",
+    "band": "PARTIAL",
+    "check_passed": null,
+    "clarity": 0.7,
+    "confidence_score_after": 53.97,
+    "confidence_score_before": 52.77,
+    "correctness": 0.55,
+    "decision_engine_version": "0.1.0",
+    "depth": 0.45,
+    "difficulty_asked": 2,
+    "eval_flags": [],
+    "eval_latency_ms": "<t>",
+    "evaluator_model": "scripted",
+    "evaluator_version": "evaluator.v1",
+    "evidence_weight": 0.6,
+    "familiarity": "new",
+    "hedging_ratio": 0.2,
+    "hint_delivered": true,
+    "hint_level": 2,
+    "knowledge_score_after": 35.42,
+    "knowledge_score_before": 29.37,
+    "mode": "deep",
+    "provisional_level_after": 2,
+    "question_archetype": "conceptual",
+    "response_latency_ms": null,
+    "revision_count": null,
+    "risk_awareness": 0.5,
+    "skill_combined_weight": 0.06,
+    "skill_key": "boolean_algebra",
+    "skill_required_level": 2,
+    "skill_source": "role",
+    "structure": 0.6,
+    "subject_key": "digital_fundamentals",
+    "submission_revision": 2,
+    "tradeoff_reasoning": 0.5,
+    "user_id": "#9"
+   },
+   {
+    "attempt_id": "#3",
+    "band": "STRONG",
+    "check_passed": true,
+    "clarity": 0.7,
+    "confidence_score_after": 55.14,
+    "confidence_score_before": 50.0,
+    "correctness": 0.9,
+    "decision_action": "ESCALATE",
+    "decision_engine_version": "0.1.0",
+    "decision_reason_code": "strong_answer",
+    "depth": 0.8,
+    "difficulty_asked": 3,
+    "difficulty_next": 4,
+    "eval_flags": [],
+    "eval_latency_ms": "<t>",
+    "evaluator_model": "scripted",
+    "evaluator_version": "evaluator.v1",
+    "evidence_weight": 0.6,
+    "familiarity": "new",
+    "hedging_ratio": 0.2,
+    "hint_delivered": false,
+    "hint_level": 0,
+    "knowledge_score_after": 48.48,
+    "knowledge_score_before": 32.0,
+    "mode": "deep",
+    "provisional_level_after": 2,
+    "question_archetype": "coding",
+    "response_latency_ms": null,
+    "revision_count": null,
+    "risk_awareness": 0.5,
+    "skill_combined_weight": 0.03,
+    "skill_key": "bit_manipulation",
+    "skill_required_level": 2,
+    "skill_source": "role",
+    "structure": 0.6,
+    "subject_key": "relevant_programming",
+    "submission_revision": 1,
+    "tradeoff_reasoning": 0.5,
+    "user_id": "#9"
+   },
+   {
+    "attempt_id": "#3",
+    "band": "STRONG",
+    "check_passed": null,
+    "clarity": 0.7,
+    "confidence_score_after": 61.92,
+    "confidence_score_before": 55.14,
+    "correctness": 0.9,
+    "decision_engine_version": "0.1.0",
+    "depth": 0.8,
+    "difficulty_asked": 4,
+    "eval_flags": [],
+    "eval_latency_ms": "<t>",
+    "evaluator_model": "scripted",
+    "evaluator_version": "evaluator.v1",
+    "evidence_weight": 1.0,
+    "familiarity": "new",
+    "hedging_ratio": 0.2,
+    "hint_delivered": false,
+    "hint_level": 0,
+    "knowledge_score_after": 69.47,
+    "knowledge_score_before": 48.48,
+    "mode": "deep",
+    "provisional_level_after": 3,
+    "question_archetype": "coding",
+    "response_latency_ms": null,
+    "revision_count": null,
+    "risk_awareness": 0.5,
+    "skill_combined_weight": 0.03,
+    "skill_key": "bit_manipulation",
+    "skill_required_level": 2,
+    "skill_source": "role",
+    "structure": 0.6,
+    "subject_key": "relevant_programming",
+    "submission_revision": 2,
+    "tradeoff_reasoning": 0.5,
+    "user_id": "#9"
+   },
+   {
+    "attempt_id": "#5",
+    "band": "STRONG",
+    "check_passed": null,
+    "clarity": 0.7,
+    "confidence_score_after": 53.97,
+    "confidence_score_before": 53.97,
+    "correctness": 0.9,
+    "decision_engine_version": "0.1.0",
+    "depth": 0.8,
+    "difficulty_asked": 3,
+    "eval_flags": [],
+    "eval_latency_ms": "<t>",
+    "evaluator_model": "scripted",
+    "evaluator_version": "evaluator.v1",
+    "evidence_weight": 0.0,
+    "familiarity": "new",
+    "hedging_ratio": 0.2,
+    "hint_delivered": false,
+    "hint_level": 0,
+    "knowledge_score_after": 35.42,
+    "knowledge_score_before": 35.42,
+    "mode": "deep",
+    "provisional_level_after": 2,
+    "question_archetype": "design",
+    "response_latency_ms": null,
+    "revision_count": null,
+    "risk_awareness": 0.5,
+    "skill_combined_weight": 0.06,
+    "skill_key": "boolean_algebra",
+    "skill_required_level": 2,
+    "skill_source": "role",
+    "structure": 0.6,
+    "subject_key": "digital_fundamentals",
+    "submission_revision": 1,
+    "tradeoff_reasoning": 0.5,
+    "user_id": "#9"
+   },
+   {
+    "attempt_id": "#5",
+    "band": "STRONG",
+    "check_passed": null,
+    "clarity": 0.7,
+    "confidence_score_after": 50.0,
+    "confidence_score_before": 50.0,
+    "correctness": 0.9,
+    "decision_engine_version": "0.1.0",
+    "depth": 0.8,
+    "difficulty_asked": 3,
+    "eval_flags": [],
+    "eval_latency_ms": "<t>",
+    "evaluator_model": "scripted",
+    "evaluator_version": "evaluator.v1",
+    "evidence_weight": 0.0,
+    "familiarity": "new",
+    "hedging_ratio": 0.2,
+    "hint_delivered": false,
+    "hint_level": 0,
+    "knowledge_score_after": 32.0,
+    "knowledge_score_before": 32.0,
+    "mode": "deep",
+    "provisional_level_after": 2,
+    "question_archetype": "design",
+    "response_latency_ms": null,
+    "revision_count": null,
+    "risk_awareness": 0.5,
+    "skill_combined_weight": 0.06,
+    "skill_key": "combinational_blocks",
+    "skill_required_level": 2,
+    "skill_source": "role",
+    "structure": 0.6,
+    "subject_key": "digital_fundamentals",
+    "submission_revision": 1,
+    "tradeoff_reasoning": 0.5,
+    "user_id": "#9"
+   },
+   {
+    "attempt_id": "#7",
+    "band": "STRONG",
+    "check_passed": null,
+    "clarity": 0.7,
+    "confidence_score_after": 58.57,
+    "confidence_score_before": 50.0,
+    "correctness": 0.9,
+    "decision_action": "ESCALATE",
+    "decision_engine_version": "0.1.0",
+    "decision_reason_code": "strong_answer",
+    "depth": 0.8,
+    "difficulty_asked": 3,
+    "difficulty_next": 4,
+    "eval_flags": [],
+    "eval_latency_ms": "<t>",
+    "evaluator_model": "scripted",
+    "evaluator_version": "evaluator.v1",
+    "evidence_weight": 1.0,
+    "familiarity": "new",
+    "hedging_ratio": 0.2,
+    "hint_delivered": false,
+    "hint_level": 0,
+    "knowledge_score_after": 59.47,
+    "knowledge_score_before": 32.0,
+    "mode": "deep",
+    "provisional_level_after": 2,
+    "question_archetype": "design",
+    "response_latency_ms": null,
+    "revision_count": null,
+    "risk_awareness": 0.5,
+    "skill_combined_weight": 0.01,
+    "skill_key": "universal_gates",
+    "skill_required_level": 2,
+    "skill_source": "role",
+    "structure": 0.6,
+    "subject_key": "digital_fundamentals",
+    "submission_revision": 1,
+    "tradeoff_reasoning": 0.5,
+    "user_id": "#9"
+   },
+   {
+    "attempt_id": "#7",
+    "band": "STRONG",
+    "check_passed": null,
+    "clarity": 0.7,
+    "confidence_score_after": 57.05,
+    "confidence_score_before": 53.97,
+    "correctness": 0.9,
+    "decision_engine_version": "0.1.0",
+    "depth": 0.8,
+    "difficulty_asked": 3,
+    "eval_flags": [],
+    "eval_latency_ms": "<t>",
+    "evaluator_model": "scripted",
+    "evaluator_version": "evaluator.v1",
+    "evidence_weight": 0.429,
+    "familiarity": "new",
+    "hedging_ratio": 0.2,
+    "hint_delivered": false,
+    "hint_level": 0,
+    "knowledge_score_after": 43.7,
+    "knowledge_score_before": 35.42,
+    "mode": "deep",
+    "provisional_level_after": 2,
+    "question_archetype": "design",
+    "response_latency_ms": null,
+    "revision_count": null,
+    "risk_awareness": 0.5,
+    "skill_combined_weight": 0.06,
+    "skill_key": "boolean_algebra",
+    "skill_required_level": 2,
+    "skill_source": "role",
+    "structure": 0.6,
+    "subject_key": "digital_fundamentals",
+    "submission_revision": 1,
+    "tradeoff_reasoning": 0.5,
+    "user_id": "#9"
+   },
+   {
+    "attempt_id": "#7",
+    "band": "STRONG",
+    "check_passed": null,
+    "clarity": 0.7,
+    "confidence_score_after": 64.15,
+    "confidence_score_before": 58.57,
+    "correctness": 0.9,
+    "decision_engine_version": "0.1.0",
+    "depth": 0.8,
+    "difficulty_asked": 4,
+    "eval_flags": [],
+    "eval_latency_ms": "<t>",
+    "evaluator_model": "scripted",
+    "evaluator_version": "evaluator.v1",
+    "evidence_weight": 1.0,
+    "familiarity": "new",
+    "hedging_ratio": 0.2,
+    "hint_delivered": false,
+    "hint_level": 0,
+    "knowledge_score_after": 74.39,
+    "knowledge_score_before": 59.47,
+    "mode": "deep",
+    "provisional_level_after": 3,
+    "question_archetype": "design",
+    "response_latency_ms": null,
+    "revision_count": null,
+    "risk_awareness": 0.5,
+    "skill_combined_weight": 0.01,
+    "skill_key": "universal_gates",
+    "skill_required_level": 2,
+    "skill_source": "role",
+    "structure": 0.6,
+    "subject_key": "digital_fundamentals",
+    "submission_revision": 2,
+    "tradeoff_reasoning": 0.5,
+    "user_id": "#9"
+   }
+  ],
+  "profiles": {
+   "bit_manipulation": {
+    "confidence_score": 61.92,
+    "engine_state": {
+     "budget": 2,
+     "c": 61.92,
+     "ceiling": 4,
+     "core_misconception": false,
+     "current_difficulty": 4,
+     "hint_level": 0,
+     "hints_used": 0,
+     "history": [
+      {
+       "archetype": "coding",
+       "band": "STRONG",
+       "core_misconception": false,
+       "difficulty": 3,
+       "evidence_weight": 0.6,
+       "hint_level": 0,
+       "rubric_level_estimate": 3
+      },
+      {
+       "archetype": "coding",
+       "band": "STRONG",
+       "core_misconception": false,
+       "difficulty": 4,
+       "evidence_weight": 1.0,
+       "hint_level": 0,
+       "rubric_level_estimate": 3
+      }
+     ],
+     "k": 69.47,
+     "level3_hint_difficulty": null,
+     "partial_count": 0,
+     "provisional_level": 3,
+     "resolved_reason": null,
+     "status": "escalating",
+     "turns": 2
+    },
+    "knowledge_score": 69.47,
+    "level_history": [
+     {
+      "at": "<t>",
+      "attempt_id": "#3",
+      "level": 2
+     },
+     {
+      "at": "<t>",
+      "attempt_id": "#3",
+      "level": 3
+     }
+    ],
+    "level_score": 2.57,
+    "proficiency_level": 3,
+    "trend": "improving",
+    "version": 3
+   },
+   "boolean_algebra": {
+    "confidence_score": 57.05,
+    "engine_state": {
+     "budget": 2,
+     "c": 57.05,
+     "ceiling": 3,
+     "core_misconception": true,
+     "current_difficulty": 3,
+     "hint_level": 0,
+     "hints_used": 2,
+     "history": [
+      {
+       "archetype": "conceptual",
+       "band": "WEAK",
+       "core_misconception": true,
+       "difficulty": 2,
+       "evidence_weight": 0.48,
+       "hint_level": 1,
+       "rubric_level_estimate": 3
+      },
+      {
+       "archetype": "conceptual",
+       "band": "PARTIAL",
+       "core_misconception": false,
+       "difficulty": 2,
+       "evidence_weight": 0.6,
+       "hint_level": 2,
+       "rubric_level_estimate": 3
+      },
+      {
+       "archetype": "design",
+       "band": "STRONG",
+       "core_misconception": false,
+       "difficulty": 3,
+       "evidence_weight": 0.0,
+       "hint_level": 0,
+       "rubric_level_estimate": 3
+      },
+      {
+       "archetype": "design",
+       "band": "STRONG",
+       "core_misconception": false,
+       "difficulty": 3,
+       "evidence_weight": 0.429,
+       "hint_level": 0,
+       "rubric_level_estimate": 3
+      }
+     ],
+     "k": 43.7,
+     "level3_hint_difficulty": null,
+     "partial_count": 0,
+     "provisional_level": 2,
+     "resolved_reason": null,
+     "status": "entering",
+     "turns": 4
+    },
+    "knowledge_score": 43.7,
+    "level_history": [
+     {
+      "at": "<t>",
+      "attempt_id": "#1",
+      "level": 2
+     }
+    ],
+    "level_score": 2.38,
+    "proficiency_level": 2,
+    "trend": "stable",
+    "version": 7
+   },
+   "combinational_blocks": {
+    "confidence_score": 50.0,
+    "engine_state": {
+     "budget": 2,
+     "c": 50.0,
+     "ceiling": null,
+     "core_misconception": false,
+     "current_difficulty": null,
+     "hint_level": 0,
+     "hints_used": 0,
+     "history": [
+      {
+       "archetype": "design",
+       "band": "STRONG",
+       "core_misconception": false,
+       "difficulty": 3,
+       "evidence_weight": 0.0,
+       "hint_level": 0,
+       "rubric_level_estimate": 3
+      }
+     ],
+     "k": 32.0,
+     "level3_hint_difficulty": null,
+     "partial_count": 0,
+     "provisional_level": 2,
+     "resolved_reason": null,
+     "status": "untouched",
+     "turns": 1
+    },
+    "knowledge_score": 32.0,
+    "level_history": [
+     {
+      "at": "<t>",
+      "attempt_id": "#5",
+      "level": 2
+     }
+    ],
+    "level_score": 1.79,
+    "proficiency_level": 2,
+    "trend": "stable",
+    "version": 1
+   },
+   "truth_tables": {
+    "confidence_score": 51.85,
+    "engine_state": {
+     "budget": 2,
+     "c": 51.85,
+     "ceiling": null,
+     "core_misconception": true,
+     "current_difficulty": null,
+     "hint_level": 0,
+     "hints_used": 1,
+     "history": [
+      {
+       "archetype": "conceptual",
+       "band": "WEAK",
+       "core_misconception": true,
+       "difficulty": 2,
+       "evidence_weight": 0.32,
+       "hint_level": 1,
+       "rubric_level_estimate": 3
+      }
+     ],
+     "k": 30.25,
+     "level3_hint_difficulty": null,
+     "partial_count": 0,
+     "provisional_level": 2,
+     "resolved_reason": null,
+     "status": "untouched",
+     "turns": 1
+    },
+    "knowledge_score": 30.25,
+    "level_history": [
+     {
+      "at": "<t>",
+      "attempt_id": "#1",
+      "level": 2
+     }
+    ],
+    "level_score": 1.78,
+    "proficiency_level": 2,
+    "trend": "stable",
+    "version": 1
+   },
+   "universal_gates": {
+    "confidence_score": 64.15,
+    "engine_state": {
+     "budget": 2,
+     "c": 64.15,
+     "ceiling": 4,
+     "core_misconception": false,
+     "current_difficulty": 4,
+     "hint_level": 0,
+     "hints_used": 0,
+     "history": [
+      {
+       "archetype": "design",
+       "band": "STRONG",
+       "core_misconception": false,
+       "difficulty": 3,
+       "evidence_weight": 1.0,
+       "hint_level": 0,
+       "rubric_level_estimate": 3
+      },
+      {
+       "archetype": "design",
+       "band": "STRONG",
+       "core_misconception": false,
+       "difficulty": 4,
+       "evidence_weight": 1.0,
+       "hint_level": 0,
+       "rubric_level_estimate": 3
+      }
+     ],
+     "k": 74.39,
+     "level3_hint_difficulty": null,
+     "partial_count": 0,
+     "provisional_level": 3,
+     "resolved_reason": null,
+     "status": "escalating",
+     "turns": 2
+    },
+    "knowledge_score": 74.39,
+    "level_history": [
+     {
+      "at": "<t>",
+      "attempt_id": "#7",
+      "level": 2
+     },
+     {
+      "at": "<t>",
+      "attempt_id": "#7",
+      "level": 3
+     }
+    ],
+    "level_score": 2.61,
+    "proficiency_level": 3,
+    "trend": "improving",
+    "version": 3
+   }
+  },
+  "tips": [
+   {
+    "attempt_id": "#1",
+    "skill_key": "boolean_algebra",
+    "text": "Polished: The error here is one that a quick trace would have caught. Next time, try running your answer on one input you did not",
+    "tip_key": "trace_a_second_example"
+   }
+  ],
+  "usage": [
+   {
+    "action": "evaluate",
+    "attempt_id": "#1",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "evaluate",
+    "attempt_id": "#1",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "evaluate",
+    "attempt_id": "#3",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "evaluate",
+    "attempt_id": "#3",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "evaluate",
+    "attempt_id": "#5",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "evaluate",
+    "attempt_id": "#7",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "evaluate",
+    "attempt_id": "#7",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "feedback",
+    "attempt_id": "#1",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "feedback",
+    "attempt_id": "#3",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "feedback",
+    "attempt_id": "#5",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "feedback",
+    "attempt_id": "#7",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "generate",
+    "attempt_id": "#1",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "generate",
+    "attempt_id": "#3",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "generate",
+    "attempt_id": "#7",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   },
+   {
+    "action": "tip",
+    "attempt_id": "#1",
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost_usd": 0.0,
+    "latency_ms": "<t>",
+    "meta": {
+     "price_known": false
+    },
+    "mode": "deep",
+    "model": "scripted",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "user_id": "#9"
+   }
+  ]
+ }
+}
