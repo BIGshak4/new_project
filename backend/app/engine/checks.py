@@ -12,9 +12,13 @@ interpreter (see code_runner.py).
 
 from __future__ import annotations
 
+import asyncio
+import contextvars
+import functools
 import itertools
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor
 
 from app.engine import code_runner
 from app.schemas.engine import CheckResult
@@ -494,6 +498,27 @@ def check_code_tests(spec: dict, answer: dict | str, *, sandbox: bool = True) ->
     if not failed:
         return done(True, f"{entry}() passes all {len(results)} test cases", [])
     return done(False, f"{entry}() fails {len(failed)} of {len(results)} test cases", mismatches)
+
+
+# Code tests run a child interpreter for up to their timeout (5 s). They get their own small pool: a burst of code
+# answers then waits for itself instead of holding the default thread pool that every request needs (token
+# verification, DNS for new database connections). The other checks are quick and run in the default pool as before.
+CODE_TEST_WORKERS = 4
+_code_pool: ThreadPoolExecutor | None = None
+
+
+async def run_check_async(deterministic_check: dict | None, answer) -> CheckResult | None:
+    """`run_check` off the event loop: the same function, the same result, in the right pool."""
+    global _code_pool
+    if not deterministic_check:
+        return None
+    if deterministic_check.get("type") != "code_tests":
+        return await asyncio.to_thread(run_check, deterministic_check, answer)
+    if _code_pool is None:
+        _code_pool = ThreadPoolExecutor(max_workers=CODE_TEST_WORKERS, thread_name_prefix="code-tests")
+    context = contextvars.copy_context()
+    return await asyncio.get_running_loop().run_in_executor(
+        _code_pool, functools.partial(context.run, run_check, deterministic_check, answer))
 
 
 def run_check(deterministic_check: dict | None, answer, *, sandbox: bool = True) -> CheckResult | None:

@@ -198,7 +198,7 @@ class InterviewService:
                     return self._turn_view(turn, language, revealed=False), self._view(stored, state)
                 # a drawn circuit contributes its derived functions ("alarm = (A & B) | ...") to the check
                 checked = (text + "\n" + evidence.check_lines).strip() if evidence.check_lines else text
-                check = (await asyncio.to_thread(checks.run_check, question.deterministic_check, checked)
+                check = (await checks.run_check_async(question.deterministic_check, checked)
                          if question.deterministic_check and checked else None)
                 skill = self.catalog.skills[question.primary_skill]
                 result = await evaluator.evaluate(

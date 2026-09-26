@@ -29,6 +29,9 @@ AUDIENCE = "authenticated"
 ASYMMETRIC = ("ES256", "RS256")
 LEEWAY_SECONDS = 30
 UNKNOWN_KID_SECONDS = 300
+KEY_CACHE_SECONDS = 3600              # a verified signing key is reused this long (PyJWKClient keeps the set as long)
+UNKNOWN_KID_REFRESH_SECONDS = 30      # at most one key-set fetch per this period is caused by an unknown `kid`
+MAX_UNKNOWN_KIDS = 1024               # remembered unknown kids; anyone can send tokens with made-up kids
 
 
 @dataclass(frozen=True)
@@ -54,6 +57,9 @@ class TokenVerifier:
             jwks_client = jwt.PyJWKClient(self.issuer + "/.well-known/jwks.json", cache_keys=True, lifespan=3600)
         self._jwks = jwks_client
         self._unknown_kids: dict[str | None, float] = {}
+        # kid -> (fetched at, key): a known key is used on the event loop, without a thread hop per request
+        self._keys: dict[str | None, tuple[float, object]] = {}
+        self._last_miss_fetch = -1e9
 
     @property
     def configured(self) -> bool:
@@ -66,16 +72,7 @@ class TokenVerifier:
             raise ApiError("unauthenticated", "the token is malformed") from exc
         algorithm = header.get("alg")
         if algorithm in ASYMMETRIC and self._jwks is not None:
-            kid = header.get("kid")
-            if kid in self._unknown_kids and time.monotonic() - self._unknown_kids[kid] < UNKNOWN_KID_SECONDS:
-                raise ApiError("unauthenticated", "the token's signing key is not known")
-            try:
-                # network on first use only; keys are cached afterwards
-                signing_key = await asyncio.to_thread(self._jwks.get_signing_key_from_jwt, token)
-            except jwt.PyJWTError as exc:
-                self._unknown_kids[kid] = time.monotonic()      # do not refetch the JWKS for this kid again soon
-                raise ApiError("unauthenticated", "the token's signing key is not known") from exc
-            key = signing_key.key
+            key = await self._signing_key(token, header.get("kid"))
         elif algorithm == "HS256" and self.jwt_secret:
             key = self.jwt_secret
         else:
@@ -99,6 +96,39 @@ class TokenVerifier:
         email = claims.get("email")
         return AuthenticatedUser(id=user_id, email=email.lower() if email else None,
                                  role=str(claims.get("role") or AUDIENCE), claims=claims)
+
+    async def _signing_key(self, token: str, kid: str | None):
+        """The project's public key for this token's `kid`.
+
+        A key verified before is reused from memory. Otherwise the key set is looked up in a worker thread (a
+        network fetch when PyJWKClient's own cache misses). A `kid` the project does not have makes PyJWKClient
+        refetch the whole key set, so such fetches are limited to one per UNKNOWN_KID_REFRESH_SECONDS: tokens
+        with made-up kids (anyone can send them) cannot turn every request into a JWKS download and a busy thread."""
+        now = time.monotonic()
+        cached = self._keys.get(kid)
+        if cached is not None and now - cached[0] < KEY_CACHE_SECONDS:
+            return cached[1]
+        if kid in self._unknown_kids and now - self._unknown_kids[kid] < UNKNOWN_KID_SECONDS:
+            raise ApiError("unauthenticated", "the token's signing key is not known")
+        if self._keys and now - self._last_miss_fetch < UNKNOWN_KID_REFRESH_SECONDS:
+            self._remember_unknown(kid, now)                     # keys are known and a refresh just happened
+            raise ApiError("unauthenticated", "the token's signing key is not known")
+        if self._keys:
+            self._last_miss_fetch = now
+        try:
+            signing_key = await asyncio.to_thread(self._jwks.get_signing_key_from_jwt, token)
+        except jwt.PyJWTError as exc:
+            self._remember_unknown(kid, now)                     # do not refetch the JWKS for this kid again soon
+            raise ApiError("unauthenticated", "the token's signing key is not known") from exc
+        self._keys[kid] = (now, signing_key.key)
+        return signing_key.key
+
+    def _remember_unknown(self, kid: str | None, now: float) -> None:
+        if len(self._unknown_kids) >= MAX_UNKNOWN_KIDS:
+            self._unknown_kids = {k: t for k, t in self._unknown_kids.items() if now - t < UNKNOWN_KID_SECONDS}
+            if len(self._unknown_kids) >= MAX_UNKNOWN_KIDS:
+                self._unknown_kids.clear()
+        self._unknown_kids[kid] = now
 
 
 _bearer = HTTPBearer(auto_error=False)

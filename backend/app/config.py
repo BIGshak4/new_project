@@ -22,6 +22,12 @@ class Settings(BaseSettings):
     # Supabase Postgres. Use the "Session pooler" or direct connection string from
     # Project Settings -> Database, with the scheme changed to postgresql+asyncpg://
     database_url: str | None = None
+    # The API's connection pool (per process). Measured 2026-09-26: Supabase's Session pooler (port 5432) refuses the
+    # ~10th client connection of the project (EMAXCONNSESSION), shared with every other session-mode client; the
+    # Transaction pooler (port 6543) accepted 40 at once and runs this app unchanged (statement cache off).
+    db_pool_size: int = 5
+    db_max_overflow: int = 5
+    db_pool_timeout: float = 30.0
 
     # Supabase Auth. Login tokens are verified against the project's public signing keys
     # (SUPABASE_URL/auth/v1/.well-known/jwks.json). SUPABASE_JWT_SECRET is only for projects
@@ -108,6 +114,16 @@ class Settings(BaseSettings):
         match = re.search(r"@([^:/]+)", self.database_url)
         host = match.group(1) if match else ""
         return "direct" if host.startswith("db.") and host.endswith(".supabase.co") else "pooler" if "pooler" in host else "other"
+
+    @property
+    def database_pooler_mode(self) -> str | None:
+        """session (port 5432) | transaction (port 6543) | None: Supabase's two pooler modes differ in how many
+        clients they accept."""
+        if self.database_host_kind != "pooler":
+            return None
+        match = re.search(r"@[^:/]+:([0-9]+)", self.database_url or "")
+        port = match.group(1) if match else "5432"
+        return "transaction" if port == "6543" else "session" if port == "5432" else f"port {port}"
 
     def database_url_problems(self) -> list[str]:
         """Mistakes in the connection string that fail with a misleading 'password authentication failed'."""

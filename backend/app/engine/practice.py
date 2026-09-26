@@ -578,7 +578,7 @@ class PracticeAttempt:
             difficulty = question.difficulty
             # a drawn circuit contributes its derived functions ("alarm = (A & B) | ...") to the check
             checked_answer = (submission.answer + "\n" + check_lines).strip() if check_lines else submission.answer
-            check = (await asyncio.to_thread(checks.run_check, question.deterministic_check, checked_answer)
+            check = (await checks.run_check_async(question.deterministic_check, checked_answer)
                      if question.deterministic_check else None)        # code tests run a child process
             result = await evaluator.evaluate(
                 ctx.provider, question_context=evaluator.question_block(question, ctx.language, primary),

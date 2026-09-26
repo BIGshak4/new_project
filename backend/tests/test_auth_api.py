@@ -157,6 +157,15 @@ class TestHealth:
         body = (await client.get("/health")).json()
         assert body["status"] == "ok" and set(body) >= {"database_configured", "auth_configured", "allowed_origins"}
         assert not any(isinstance(v, str) and "postgres" in v for v in body.values())
+        assert "database_pooler" in body and "database" not in body          # the round-trip probe only on request
+
+    def test_the_pooler_mode_is_read_from_the_port_never_the_password(self):
+        base = "postgresql://postgres.ref:secret-6543@aws-0-eu-central-1.pooler.supabase.com:{port}/postgres"
+        assert Settings(_env_file=None, database_url=base.format(port=5432)).database_pooler_mode == "session"
+        assert Settings(_env_file=None, database_url=base.format(port=6543)).database_pooler_mode == "transaction"
+        assert Settings(_env_file=None, database_url=None).database_pooler_mode is None
+        tuned = Settings(_env_file=None, db_pool_size=8, db_max_overflow=2)
+        assert (tuned.db_pool_size, tuned.db_max_overflow) == (8, 2)
 
 
 class TestHardening:
@@ -185,3 +194,46 @@ class TestHardening:
     def test_production_keeps_the_pilot_gate(self):
         open_gate = Settings(_env_file=None, env="production", require_pilot_membership=False)
         assert any("REQUIRE_PILOT_MEMBERSHIP" in p for p in open_gate.production_problems())
+
+
+class TestKeyLookups:
+    """Token verification must not cost a thread (or a JWKS download) per request (2026-09-26 load test)."""
+
+    @staticmethod
+    def counting(monkeypatch) -> dict:
+        from tests.authtools import FakeJWKSClient
+        calls = {"n": 0}
+        original = FakeJWKSClient.get_signing_key_from_jwt
+
+        def counted(self, token):
+            calls["n"] += 1
+            return original(self, token)
+        monkeypatch.setattr(FakeJWKSClient, "get_signing_key_from_jwt", counted)
+        return calls
+
+    async def test_a_known_key_is_used_from_memory(self, client, monkeypatch):
+        calls = self.counting(monkeypatch)
+        for _ in range(5):
+            _, token = make_token(email=MEMBER)
+            assert (await client.get("/v1/me", headers=auth(token))).status_code == 200
+        assert calls["n"] == 1                                            # looked up once, then reused
+        _, forged = make_token(email=MEMBER, wrong_key=True)              # a cached key still verifies the signature
+        assert (await client.get("/v1/me", headers=auth(forged))).status_code == 401
+
+    async def test_made_up_key_ids_cannot_force_a_key_set_download_per_request(self, client, monkeypatch):
+        calls = self.counting(monkeypatch)
+        _, token = make_token(email=MEMBER)
+        assert (await client.get("/v1/me", headers=auth(token))).status_code == 200
+        for i in range(50):                                               # an attacker varies the kid every time
+            _, token = make_token(kid=f"made-up-{i}")
+            assert (await client.get("/v1/me", headers=auth(token))).status_code == 401
+        assert calls["n"] <= 2                                            # the known key + at most one refresh
+        _, token = make_token(email=MEMBER)                               # real users are unaffected
+        assert (await client.get("/v1/me", headers=auth(token))).status_code == 200
+
+    def test_the_unknown_kid_memory_is_bounded(self):
+        from app import auth as auth_module
+        verifier = make_verifier()
+        for i in range(auth_module.MAX_UNKNOWN_KIDS * 3):
+            verifier._remember_unknown(f"kid-{i}", float(i))
+        assert len(verifier._unknown_kids) <= auth_module.MAX_UNKNOWN_KIDS

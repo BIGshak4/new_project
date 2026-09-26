@@ -32,11 +32,13 @@ def normalize_url(url: str) -> str:
 def get_engine() -> AsyncEngine:
     global _engine
     if _engine is None:
-        url = get_settings().database_url
+        settings = get_settings()
+        url = settings.database_url
         if not url:
             raise RuntimeError("DATABASE_URL is not set. Copy backend/.env.example to backend/.env and fill it in.")
         # statement_cache_size=0 keeps asyncpg compatible with Supabase's transaction pooler
-        _engine = create_async_engine(normalize_url(url), pool_pre_ping=True, pool_size=5, max_overflow=5,
+        _engine = create_async_engine(normalize_url(url), pool_pre_ping=True, pool_size=settings.db_pool_size,
+                                      max_overflow=settings.db_max_overflow, pool_timeout=settings.db_pool_timeout,
                                       connect_args={"statement_cache_size": 0})
     return _engine
 

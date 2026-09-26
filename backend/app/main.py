@@ -14,6 +14,7 @@ The OpenAPI document at /docs is the contract the web app is written against.
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import time
 import uuid
@@ -108,24 +109,63 @@ async def request_log(request: Request, call_next):
     return response
 
 
+_db_probe: dict = {}
+
+
+async def _database_round_trip() -> dict:
+    """Median of three `select 1` round trips on a pooled connection, plus the pool's state. Kept for 10 s so an
+    unauthenticated caller cannot turn /health into database load."""
+    now = time.monotonic()
+    if _db_probe.get("at", -1e9) > now - 10:
+        return _db_probe["value"]
+    from sqlalchemy import text
+
+    engine = db.get_engine()
+    timings = []
+    async with engine.connect() as connection:
+        for _ in range(3):
+            started = time.perf_counter()
+            await connection.execute(text("select 1"))
+            timings.append((time.perf_counter() - started) * 1000)
+    pool = engine.pool
+    value = {"round_trip_ms": round(sorted(timings)[1], 2), "pool_size": pool.size(), "pool_checked_out": pool.checkedout(),
+             "pool_overflow": pool.overflow()}
+    _db_probe.update(at=now, value=value)
+    return value
+
+
 @app.get("/health", tags=["ops"])
-async def health() -> dict:
+async def health(db_check: bool = False) -> dict:
+    """`?db_check=true` also measures one database round trip (cached 10 s)."""
     settings = get_settings()
     runtime = getattr(app.state, "runtime", None)
-    return {"status": "ok", "engine_version": ENGINE_VERSION, "env": settings.env, "llm_provider": settings.llm_provider,
+    body = {"status": "ok", "engine_version": ENGINE_VERSION, "env": settings.env, "llm_provider": settings.llm_provider,
             "database_configured": bool(settings.database_url), "database_host": settings.database_host_kind,
+            "database_pooler": settings.database_pooler_mode,
             "auth_configured": bool(settings.supabase_url),
             "allowed_origins": len(settings.allowed_origins), "store": runtime.store_kind if runtime else None,
             "models": {"evaluator": settings.anthropic_model, **settings.role_models} if settings.llm_provider == "anthropic" else None,
             "answer_images": "assessed" if settings.supabase_service_role_key and settings.supabase_url else "stored_only"}
+    if db_check and runtime is not None and runtime.store_kind == "database":
+        try:
+            body["database"] = await _database_round_trip()
+        except Exception as exc:                                  # noqa: BLE001 - reported, never raised
+            body["database"] = {"error": type(exc).__name__}
+    return body
 
 
 @app.get("/catalog/summary", tags=["ops"])
 async def catalog_summary() -> dict:
-    try:
-        catalog = load_catalog(get_settings().seeds_dir)
-    except CatalogError as exc:
-        return {"valid": False, "problems": exc.problems}
+    # the catalog the process serves, loaded and validated at startup (reloading it here cost ~35 ms of blocking
+    # work on the event loop for every unauthenticated request)
+    runtime = getattr(app.state, "runtime", None)
+    if runtime is not None:
+        catalog = runtime.catalog
+    else:
+        try:
+            catalog = await asyncio.to_thread(load_catalog, get_settings().seeds_dir)
+        except CatalogError as exc:
+            return {"valid": False, "problems": exc.problems}
     return {
         "valid": True, "subjects": sorted(catalog.domains), "skills": len(catalog.leaf_skills),
         "roles": sorted(catalog.roles), "companies": sorted(catalog.companies),

@@ -146,3 +146,36 @@ class TestRunning:
         isolated = checks.run_check(SPEC, GOOD)
         in_process = checks.run_check(SPEC, GOOD, sandbox=False)
         assert (isolated.passed, isolated.detail) == (in_process.passed, in_process.detail)
+
+
+class TestThePool:
+    """Code tests hold a thread for up to their timeout: they run in their own pool, never the default one."""
+
+    SPEC = {"type": "code_tests", "spec": {"language": "python", "timeout_ms": 5000, "entry": ["count_set_bits"],
+                                           "cases": [{"args": [0], "expected": 0}, {"args": [180], "expected": 4}]}}
+    CODE = "def count_set_bits(x):\n    n = 0\n    while x:\n        x &= x - 1\n        n += 1\n    return n\n"
+
+    async def test_same_result_in_the_code_test_pool(self, monkeypatch):
+        import threading
+
+        threads = []
+        real = checks.run_check
+
+        def spy(check, answer, **kwargs):
+            threads.append(threading.current_thread().name)
+            return real(check, answer, **kwargs)
+        monkeypatch.setattr(checks, "run_check", spy)
+        result = await checks.run_check_async(self.SPEC, self.CODE)
+        direct = real(self.SPEC, self.CODE)
+        assert result.model_dump(exclude={"runtime_ms"}) == direct.model_dump(exclude={"runtime_ms"})
+        assert result.passed is True
+        assert threads[0].startswith("code-tests")
+        from pathlib import Path
+
+        from app.engine.catalog import load_catalog
+        truth = load_catalog(Path(__file__).resolve().parent.parent / "seeds").questions["example-sensor-majority"]
+        await checks.run_check_async(truth.deterministic_check, "alarm = (A & B) | (A & C) | (B & C)")
+        assert not threads[-1].startswith("code-tests")              # the quick checks stay in the default pool
+
+    async def test_no_check_is_none(self):
+        assert await checks.run_check_async(None, "anything") is None

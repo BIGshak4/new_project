@@ -5,6 +5,7 @@ optimistic versioning. Questions come from the seed catalog."""
 from __future__ import annotations
 
 import copy
+import dataclasses
 import uuid
 from contextlib import asynccontextmanager
 from datetime import UTC, datetime, timedelta
@@ -50,7 +51,7 @@ class InMemoryStore:
         # so rolling back means restoring the containers, not the rows (a full deepcopy per action
         # made every action slower as the store grew)
         snapshot = (dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips),
-                    dict(self.sessions), dict(self.goals), list(self.sightings), copy.deepcopy(self.plans), dict(self.plan_links))
+                    dict(self.sessions), dict(self.goals), list(self.sightings), dict(self.plans), dict(self.plan_links))
         commits_before = self._commits
         try:
             yield _MemoryTx(self)
@@ -222,11 +223,12 @@ class _MemoryTx:
         self.s.plans.pop(user_id, None)
 
     async def update_plan_item(self, item_id, **fields):
-        for plan in self.s.plans.values():
-            for item in plan.items:
-                if item.id == item_id:
-                    for name, value in fields.items():
-                        setattr(item, name, value)
+        # copy-on-write, like every other row here: the transaction snapshot is a shallow copy of the container
+        # (deep-copying every user's plan on every transaction made the store the bottleneck of a 100-user load test)
+        for user_id, plan in list(self.s.plans.items()):
+            if any(item.id == item_id for item in plan.items):
+                items = [dataclasses.replace(item, **fields) if item.id == item_id else item for item in plan.items]
+                self.s.plans[user_id] = dataclasses.replace(plan, items=items)
 
     async def link_attempt_to_plan_item(self, attempt_id, item_id):
         self.s.plan_links[attempt_id] = item_id
