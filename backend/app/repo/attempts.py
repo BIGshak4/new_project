@@ -18,6 +18,7 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app import db
+from app.repo import cache
 
 SUBMISSION_COLUMNS = ("revision", "key", "turn", "answer", "hints_seen", "reference_seen", "exposure_sequence", "status",
                       "attempts", "accepted_at", "evaluated_at", "band", "evaluation", "flags", "check", "evidence_weight",
@@ -252,15 +253,18 @@ async def skill_links(connection: AsyncConnection, question_ids: set[uuid.UUID])
     main answer over (a follow-up credits the primary skill only, as the engine does)."""
     if not question_ids:
         return {}
-    link, skill = await db.table("question_skill"), await db.table("skill")
-    rows = (await connection.execute(
-        select(link.c.question_id, skill.c.key, link.c.weight).join(skill, skill.c.id == link.c.skill_id)
-        .where(link.c.question_id.in_(list(question_ids)))
-        .order_by(link.c.question_id, link.c.is_primary.desc(), link.c.weight.desc()))).all()
-    out: dict[uuid.UUID, list[list]] = {}
-    for question_id, key, weight in rows:
-        out.setdefault(question_id, []).append([key, float(weight or 0)])
-    return out
+
+    async def load_all():                                   # about fifty rows; they change only on a content load
+        link, skill = await db.table("question_skill"), await db.table("skill")
+        rows = (await connection.execute(
+            select(link.c.question_id, skill.c.key, link.c.weight).join(skill, skill.c.id == link.c.skill_id)
+            .order_by(link.c.question_id, link.c.is_primary.desc(), link.c.weight.desc()))).all()
+        every: dict[uuid.UUID, list[list]] = {}
+        for question_id, key, weight in rows:
+            every.setdefault(question_id, []).append([key, float(weight or 0)])
+        return every
+    every = await cache.ID_MAPS.get("question_skill_links", load_all)
+    return {q: [list(pair) for pair in every[q]] for q in question_ids if q in every}
 
 
 async def scored_submissions(connection: AsyncConnection, user_id: uuid.UUID, *, days: int | None = None) -> list[dict]:

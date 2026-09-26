@@ -155,9 +155,21 @@ async def load_questions(connection: AsyncConnection, *, ids: list[uuid.UUID] | 
     return out
 
 
+async def servable_questions(connection: AsyncConnection, *, allow_in_review: bool = False) -> list[LoadedQuestion]:
+    """Every servable question, kept for a short while: the library, the coach's next question, the plan and the
+    progress page all read the same list, and it changes only when content is (re)loaded or a question's status is
+    moved (seen here within QUESTIONS' 60 s)."""
+    async def load():
+        return await load_questions(connection, allow_in_review=allow_in_review)
+    return await cache.QUESTIONS.get(("servable", allow_in_review), load)
+
+
 async def load_question(connection: AsyncConnection, *, key: str | None = None, question_id: uuid.UUID | None = None,
                         allow_in_review: bool = False) -> LoadedQuestion | None:
     """The full engine object for one question, or None when it does not exist or may not be served."""
+    for cached in _cached_servable(allow_in_review):          # usually already in memory: no round trip
+        if (key is not None and cached.question.key == key) or (question_id is not None and cached.id == question_id):
+            return cached
     if question_id is None:
         question = await db.table("question")
         question_id = (await connection.execute(select(question.c.id).where(question.c.key == key))).scalar_one_or_none()
@@ -193,8 +205,12 @@ def detail(loaded: LoadedQuestion, language: str) -> QuestionDetail:
         code_language=q.assets.get("code_language"))
 
 
+def _cached_servable(allow_in_review: bool) -> list[LoadedQuestion]:
+    return cache.QUESTIONS.peek(("servable", allow_in_review)) or []
+
+
 async def list_questions(connection: AsyncConnection, *, language: str, allow_in_review: bool = False,
                          subject: str | None = None) -> list[QuestionSummary]:
     """Every servable, enriched question as a safe summary."""
-    loaded = await load_questions(connection, allow_in_review=allow_in_review)
+    loaded = await servable_questions(connection, allow_in_review=allow_in_review)
     return [summary(q, language) for q in loaded if subject is None or q.question.subject == subject]

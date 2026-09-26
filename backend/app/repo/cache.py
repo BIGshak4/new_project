@@ -27,6 +27,13 @@ class TTLCache[T]:
         self._entries[key] = (now, value)
         return value
 
+    def peek(self, key: object) -> T | None:
+        """The fresh value if there is one, without loading anything."""
+        entry = self._entries.get(key)
+        if entry is not None and time.monotonic() - entry[0] < self.seconds:
+            return entry[1]
+        return None
+
     def invalidate(self, key: object | None = None) -> None:
         if key is None:
             self._entries.clear()

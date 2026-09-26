@@ -441,11 +441,13 @@ class PracticeService:
         result is returned instead of ours.
         """
         changed = {outcome.submission.revision}
-        if outcome.status == EvaluationStatus.DONE and outcome.band is not None:
-            await self._suggest_next(user_id, attempt, outcome)
+        suggest = outcome.status == EvaluationStatus.DONE and outcome.band is not None
         for _try in range(2):
             try:
                 async with self.store.transaction() as tx:
+                    if suggest:                                      # its reads ride in the same unit of work
+                        await self._suggest_next(user_id, attempt, outcome, tx=tx)
+                        suggest = False
                     if outcome.status == EvaluationStatus.DONE and outcome.evaluation is not None:
                         await tx.save_profile(profile, self._touched_states(attempt, outcome), attempt_id=attempt.attempt_id_uuid)
                         await tx.record_metrics(user_id=user_id, attempt_id=attempt.attempt_id_uuid, metrics=outcome.metrics,
@@ -497,12 +499,11 @@ class PracticeService:
                                   revisions=changed, known_revisions=len(attempt.submissions))
         return attempt, stored, loaded, outcome
 
-    async def _suggest_next(self, user_id: uuid.UUID, attempt: PracticeAttempt, outcome: PracticeOutcome) -> None:
+    async def _suggest_next(self, user_id: uuid.UUID, attempt: PracticeAttempt, outcome: PracticeOutcome, *, tx) -> None:
         """Decide what to practise next from this evaluation; stored on the attempt so a refresh shows the same."""
         language = attempt.ctx.language
-        async with self.store.transaction() as tx:
-            servable = await tx.list_questions(language=language)
-            seen = await tx.seen_question_keys(user_id)
+        servable = await tx.list_questions(language=language)
+        seen = await tx.seen_question_keys(user_id)
         if self.config.suggest_reviewed_only:
             servable = [s for s in servable if s.reviewed]
         candidates = [self.catalog.questions[s.key] for s in servable if s.key in self.catalog.questions]
@@ -671,10 +672,11 @@ class PracticeService:
 
     async def progress(self, user_id: uuid.UUID, *, language: str | None = None) -> ProgressView:
         language = self._language(language)
-        async with self.store.transaction() as tx:
+        today = date.today()
+        async with self.store.transaction() as tx:          # one unit of work: every read, then the saved program
             profile = await tx.load_profile(user_id)
-            recent = await tx.recent_attempts(user_id, limit=10)
             history = await tx.recent_attempts(user_id, limit=60)        # the plan's memory: scored answers, today included
+            recent = history[:10]
             started = await tx.started_today(user_id)
             goal = await tx.load_goal(user_id)
             seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
@@ -683,7 +685,9 @@ class PracticeService:
             servable = await tx.list_questions(language=language)
             # XP is read, never stored: the scored answers and interview turns as the engine left them
             scored_rows = await tx.scored_submissions(user_id) + await tx.scored_interview_turns(user_id)
-        required, weights, _, plan_skills = self._plan(seniority, goal.job_type)
+            required, weights, _, plan_skills = self._plan(seniority, goal.job_type)
+            program = await self._ensure_program(tx, user_id, profile, plan_skills, required, servable, history, goal,
+                                                 seniority, language, today)
         now = datetime.now(UTC)
         experience = xp.summarise(xp.from_rows(scored_rows), now.date())
         skills = []
@@ -709,10 +713,6 @@ class PracticeService:
                 loyalty=value, needs_refresh=level is not None and scores.needs_refresh(value),
                 xp=experience.per_skill.get(key, 0), level_progress=xp.level_progress(level, level_score)))
         subjects = self._subjects(skills, required, weights, bands, servable)
-        today = date.today()
-        async with self.store.transaction() as tx:
-            program = await self._ensure_program(tx, user_id, profile, plan_skills, required, servable, history, goal, seniority,
-                                                 language, today)
         return ProgressView(skills=skills, subjects=subjects, recent=recent, attempts_today=started,
                             daily_limit=self.config.daily_attempt_limit,
                             overview=self._overview(skills, plan_skills, bands, language, experience),

@@ -92,6 +92,7 @@ class DbTx:
     def __init__(self, connection: AsyncConnection, *, allow_in_review: bool):
         self.connection = connection
         self.allow_in_review = allow_in_review
+        self._goals: dict[uuid.UUID, Goal] = {}        # load_goal already read user_profile.seniority_self_assessed
 
     async def validate_answer_images(self, user_id, attempt_id, images):
         prefix = f"{user_id}/{attempt_id}/"
@@ -127,7 +128,9 @@ class DbTx:
         return await sightings.companies(self.connection)
 
     async def load_goal(self, user_id):
-        return await users.load_goal(self.connection, user_id)
+        goal = await users.load_goal(self.connection, user_id)
+        self._goals[user_id] = goal
+        return goal
 
     async def save_goal(self, user_id, goal):
         return await users.save_goal(self.connection, user_id, goal)
@@ -190,6 +193,8 @@ class DbTx:
         return await profiles.save(self.connection, loaded, states, attempt_id=attempt_id)
 
     async def user_seniority(self, user_id):
+        if user_id in self._goals:                     # the same column, read a moment ago in this transaction
+            return self._goals[user_id].seniority
         profile = await db.table("user_profile")
         return (await self.connection.execute(
             select(profile.c.seniority_self_assessed).where(profile.c.id == user_id))).scalar_one_or_none()
