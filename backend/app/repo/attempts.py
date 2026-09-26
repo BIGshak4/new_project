@@ -128,6 +128,27 @@ async def save(connection: AsyncConnection, *, user_id: uuid.UUID, question_id: 
             raise AlreadyEvaluated(s["revision"])
 
 
+async def save_prose(connection: AsyncConnection, *, user_id: uuid.UUID, question_id: uuid.UUID, row: dict,
+                     revision: int) -> bool:
+    """Grade first: store the words (card, tip text, follow-up wording) of a revision that is already scored.
+
+    Only a done revision still flagged `feedback_pending` is updated, and only its word columns and flags, never a
+    result column; zero rows means the words are already there (another task or process was first) and nothing
+    else is written. The attempt row follows (its follow-up turn gets the question's words)."""
+    submission = await db.table("attempt_submission")
+    s = next(s for s in row["submissions"] if s["revision"] == revision)
+    words = {"card": s.get("card"), "tip_text": s.get("tip_text"), "follow_up": s.get("follow_up"),
+             "flags": list(s.get("flags") or [])}
+    updated = (await connection.execute(
+        update(submission).where(submission.c.attempt_id == uuid.UUID(str(row["id"])), submission.c.revision == revision,
+                                 submission.c.status == "done", submission.c.flags.any("feedback_pending"))
+        .values(**db.sql_values(words)).returning(submission.c.revision))).first()
+    if updated is None:
+        return False
+    await save(connection, user_id=user_id, question_id=question_id, row=row, revisions=set())
+    return True
+
+
 async def load(connection: AsyncConnection, attempt_id: uuid.UUID, *, user_id: uuid.UUID) -> StoredAttempt | None:
     """The attempt, only if it belongs to `user_id`. Ownership is checked here, always."""
     attempt, submission, question = await db.table("attempt"), await db.table("attempt_submission"), await db.table("question")

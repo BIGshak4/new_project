@@ -78,6 +78,10 @@ def assessed_by(model: str | None) -> str:
 # a revision still pending/evaluating after this long was interrupted (crash, lost worker) and may be retried;
 # younger ones are being evaluated right now, possibly by another process
 EVALUATION_BUDGET_SECONDS = 600
+# A scored revision whose words (feedback card, polished tip, follow-up wording) are still being written. The band,
+# the evaluation, the scores, the follow-up decision and the next question are final when this flag is set; only the
+# prose is missing, and writing it never changes a result (`write_prose` / `apply_prose`).
+FEEDBACK_PENDING = "feedback_pending"
 
 
 class PracticeError(Exception):
@@ -129,6 +133,11 @@ class Submission(BaseModel):
     tip_text: str | None = None
     follow_up: str | None = None
     evaluator_model: str | None = None         # which model judged this revision ("demo" for the scripted stand-in)
+
+    @property
+    def feedback_pending(self) -> bool:
+        """Scored, but the card / tip / follow-up wording are still being written."""
+        return self.status == EvaluationStatus.DONE and FEEDBACK_PENDING in self.flags
 
 
 log = logging.getLogger("app.engine.practice")
@@ -190,6 +199,17 @@ class PracticeOutcome:
     @property
     def status(self) -> EvaluationStatus:
         return self.submission.status
+
+
+@dataclass
+class ProseResult:
+    """The words written for one scored revision: what `write_prose` returns and `apply_prose` stores."""
+
+    revision: int
+    card: FeedbackCard | None = None
+    tip_text: str | None = None
+    follow_up: generator.GenerationResult | None = None
+    usage: list[UsageEvent] = field(default_factory=list)
 
 
 def _now() -> str:
@@ -431,6 +451,9 @@ class PracticeAttempt:
                     return existing, self._replay(existing, answer)
                 if pending is None:
                     raise PracticeError("no_pending_follow_up", "there is no follow-up question to answer")
+                if pending.get("wording_pending"):
+                    raise PracticeError("follow_up_not_ready", "the follow-up question is still being written; "
+                                                               "try again in a moment")
                 submission, _ = self._accept(answer, turn=pending["turn"], idempotency_key=idempotency_key)
                 pending["submission_revision"] = submission.revision
                 return submission, None
@@ -444,23 +467,27 @@ class PracticeAttempt:
             return submission, (self._replay(submission, answer) if replay else None)
 
     async def evaluate(self, submission: Submission, *, latency_ms: int | None = None,
-                       revision_count: int | None = None) -> PracticeOutcome:
-        """Step 2: evaluate an accepted revision. A revision already evaluated is replayed, never scored twice."""
+                       revision_count: int | None = None, defer_prose: bool = False) -> PracticeOutcome:
+        """Step 2: evaluate an accepted revision. A revision already evaluated is replayed, never scored twice.
+
+        `defer_prose`: return as soon as the answer is scored and every decision is made; the card, the tip and the
+        follow-up wording are left to `write_prose` + `apply_prose` (the revision carries FEEDBACK_PENDING until then)."""
         async with self._lock:
             if submission.status == EvaluationStatus.DONE or "superseded" in submission.flags:
                 return self._replay(submission, {"text": submission.answer, "visual": submission.visual.model_dump() if submission.visual else None})
             if submission.status == EvaluationStatus.EVALUATING and not self._interrupted(submission):
                 return self._replay(submission, {"text": submission.answer, "visual": submission.visual.model_dump() if submission.visual else None})          # in flight elsewhere: report, do not repeat
-            return await self._evaluate(submission, latency_ms=latency_ms, revision_count=revision_count)
+            return await self._evaluate(submission, latency_ms=latency_ms, revision_count=revision_count,
+                                        defer_prose=defer_prose)
 
-    async def retry_evaluation(self) -> PracticeOutcome:
+    async def retry_evaluation(self, *, defer_prose: bool = False) -> PracticeOutcome:
         """Evaluate the latest failed submission again, with the same saved answer and the same exposure."""
         async with self._lock:
             failed = next((s for s in reversed(self.submissions)
                            if s.status == EvaluationStatus.FAILED and "superseded" not in s.flags), None)
             if failed is None:
                 raise PracticeError("nothing_to_retry", "no submission is waiting for evaluation")
-            return await self._evaluate(failed, latency_ms=None, revision_count=None)
+            return await self._evaluate(failed, latency_ms=None, revision_count=None, defer_prose=defer_prose)
 
     @staticmethod
     def _answer_text(answer) -> str:
@@ -513,7 +540,8 @@ class PracticeAttempt:
         evidence = await visual_evidence.gather(visual, self.ctx.image_fetcher)
         return evidence.circuit, evidence.images, evidence.missing, evidence.flags, evidence.check_lines
 
-    async def _evaluate(self, submission: Submission, *, latency_ms: int | None, revision_count: int | None) -> PracticeOutcome:
+    async def _evaluate(self, submission: Submission, *, latency_ms: int | None, revision_count: int | None,
+                        defer_prose: bool = False) -> PracticeOutcome:
         circuit, images, images_missing, visual_flags, check_lines = None, [], 0, [], ""
         if submission.visual is not None:
             circuit, images, images_missing, visual_flags, check_lines = await self._visual_evidence(submission.visual)
@@ -573,9 +601,10 @@ class PracticeAttempt:
             self._outcomes[submission.revision] = outcome
             return outcome
 
-        outcome = await self._score_and_respond(submission, result, check, difficulty, latency_ms, revision_count,
-                                                usage, is_follow_up=is_follow_up)
-        outcome.flags = list(dict.fromkeys([*flags, *outcome.flags]))
+        # 1. the grade: scores, the controller's decision, the tip's choice. Every result is final here.
+        outcome = self._score_and_decide(submission, result, check, difficulty, latency_ms, revision_count,
+                                         usage, is_follow_up=is_follow_up)
+        outcome.flags = list(dict.fromkeys([*flags, *outcome.flags, FEEDBACK_PENDING]))
         submission.status = EvaluationStatus.DONE
         submission.evaluating_since = None
         submission.evaluated_at = _now()
@@ -583,14 +612,22 @@ class PracticeAttempt:
         submission.evaluation = outcome.evaluation.model_dump()
         submission.flags = outcome.flags
         submission.evidence_weight = outcome.evidence_weight
-        submission.card = outcome.card.model_dump() if outcome.card else None
-        submission.tip_key, submission.tip_text, submission.follow_up = outcome.tip_key, outcome.tip_text, outcome.follow_up
+        submission.card, submission.tip_text, submission.follow_up = None, None, None
+        submission.tip_key = outcome.tip_key
         self._outcomes[submission.revision] = outcome
+        # 2. the words: now, or later by the caller (the candidate sees the grade meanwhile)
+        if not defer_prose:
+            prose = await self.write_prose(submission)
+            self.apply_prose(submission, prose)
+            outcome.usage.extend(prose.usage)
         return outcome
 
-    async def _score_and_respond(self, submission: Submission, result: EvaluationResult, check: CheckResult | None,
-                                 difficulty: int, latency_ms: int | None, revision_count: int | None,
-                                 usage: list[UsageEvent], *, is_follow_up: bool) -> PracticeOutcome:
+    def _score_and_decide(self, submission: Submission, result: EvaluationResult, check: CheckResult | None,
+                          difficulty: int, latency_ms: int | None, revision_count: int | None,
+                          usage: list[UsageEvent], *, is_follow_up: bool) -> PracticeOutcome:
+        """Everything that is a RESULT: the band, the evidence, the scores per examined skill, the controller's
+        decision (and the follow-up turn it opens, still without words), the tip's choice. No model call here;
+        the words are written by `write_prose` and stored by `apply_prose`."""
         ctx, question, params = self.ctx, self.question, self.ctx.params
         evaluation = scores.apply_check_result(result.evaluation, check, params)
         core = bool(set(evaluation.misconceptions) & question.core_misconception_keys)
@@ -642,8 +679,7 @@ class PracticeAttempt:
             })
 
         # what next: the skill controller, limited to MAX_FOLLOW_UPS follow-ups and one escalation
-        decision, follow_up_text, generate_coro = None, None, None
-        controller = action = next_difficulty = None
+        decision = controller = action = next_difficulty = None
         if self.mode == "deep" and len(self.follow_up_turns) < MAX_FOLLOW_UPS and weight > 0:
             controller = skill_controller.decide(
                 primary_state, band=band, confidence=primary_state.c, depth=evaluation.depth,
@@ -667,56 +703,39 @@ class PracticeAttempt:
                     target_difficulty=next_difficulty, target_archetype=question.archetype,
                     probe_focus="; ".join(evaluation.key_points_missed[:2]) or None,
                     deliver_hint=action == Action.HINT, hint_level=next_hint)
-                previous = [question.text(ctx.language).prompt, *[t["question"] for t in self.follow_up_turns]]
-                generate_coro = generator.generate(
-                    ctx.provider, decision, language=ctx.language, skill=ctx.skills.get(decision.target_skill),
-                    question=question, last_question=previous[-1], last_answer_summary=evaluation.one_line_summary,
-                    glossary=ctx.glossary, previous_questions=previous)
             else:
                 metrics[0]["decision_reason_code"] = controller.reason_code
 
-        # The follow-up wording, the feedback card and the tip only need the evaluation, so they run at the
-        # same time: the candidate waits for the slowest of the three instead of their sum.
-        # The feedback card belongs to the main question; follow-ups get the tip and the next question only.
-        card_coro = feedback.build_card(
-            ctx.provider, question=question, evaluation=evaluation, band=band, answer=submission.answer, check=check,
-            language=ctx.language, skill_label=ctx.skills[question.primary_skill].label, glossary=ctx.glossary
-        ) if not is_follow_up else None
-        tip_turn = len(self.follow_up_turns) + (1 if generate_coro is not None else 0)
-        tip_coro = self._tip(evaluation, band, hint_level, check, usage, turn=tip_turn)
-        results = iter(await asyncio.gather(*[c for c in (generate_coro, card_coro, tip_coro) if c is not None]))
-        generated = next(results) if generate_coro is not None else None
-        built = next(results) if card_coro is not None else None
-        tip_text, tip_key = next(results)
+        # The tip is CHOSEN now (the choice is part of the attempt's state); its words are written with the rest.
+        tip_turn = len(self.follow_up_turns) + (1 if decision is not None else 0)
+        tip_choice = self._choose_tip(evaluation, band, hint_level, check, turn=tip_turn)
 
-        card = None
-        if generated is not None:
-            self._record_usage(usage, "generate", generated)
-        if built is not None:
-            self._record_usage(usage, "feedback", built)
-            card = built.card
-        if generated is not None:
+        if decision is not None:
+            # the follow-up is decided and opened now, without words: `write_prose` words it (the generator never
+            # fails, it falls back to a template) and `apply_prose` fills the question in
             self._follow_up_difficulty = next_difficulty or difficulty
-            follow_up_text = generated.question.question_text
             self.follow_up_turns.append({
-                "turn": len(self.follow_up_turns) + 1, "question": follow_up_text, "generated": True,
-                "source": generated.source, "action": action.value, "difficulty": self._follow_up_difficulty,
-                "expected_answer_outline": generated.question.expected_answer_outline,
-                "submission_revision": None, "created_at": _now()})
+                "turn": len(self.follow_up_turns) + 1, "question": "", "generated": True, "source": None,
+                "action": action.value, "difficulty": self._follow_up_difficulty, "expected_answer_outline": None,
+                "submission_revision": None, "created_at": _now(),
+                # transient, removed once the words are in: what `write_prose` needs after a restart
+                "wording_pending": True, "asked_after": submission.revision, "decision": decision.model_dump(mode="json")})
             metrics[0]["decision_action"] = action.value
             metrics[0]["decision_reason_code"] = controller.reason_code
             metrics[0]["difficulty_next"] = next_difficulty
         flags: list[str] = []
         if submission.reference_seen:
             flags.append("revealed_before_submit_no_evidence")
-        return PracticeOutcome(submission, band, evaluation, check, weight, card, tip_text, tip_key, follow_up_text,
+        return PracticeOutcome(submission, band, evaluation, check, weight, None, None,
+                               tip_choice.tip.key if tip_choice else None, None,
                                decision, metrics=metrics, usage=usage, flags=flags)
 
-    async def _tip(self, evaluation: Evaluation, band: Band, hint_level: int, check: CheckResult | None,
-                   usage: list[UsageEvent], *, turn: int | None = None) -> tuple[str | None, str | None]:
+    def _choose_tip(self, evaluation: Evaluation, band: Band, hint_level: int, check: CheckResult | None, *,
+                    turn: int) -> tips.TipChoice | None:
+        """At most one tip per answer, chosen by rule; remembered per tip so the same tip is not repeated too soon."""
         ctx = self.ctx
         if not ctx.tips:
-            return None, None
+            return None
         state = self._state(self.question.primary_skill)
         signals = tips.signals_from(evaluation, band=band, archetype=self.question.archetype.value,
                                     hint_level=hint_level, confidence=state.c, self_confidence=self.self_confidence,
@@ -724,7 +743,6 @@ class PracticeAttempt:
         # tips named by a matched common error come first; then the rule-matched library
         named = [e.tip_key for e in self.question.common_errors if e.key in evaluation.misconceptions and e.tip_key]
         pool = [t for t in ctx.tips if t.key in named] or ctx.tips
-        turn = len(self.follow_up_turns) if turn is None else turn      # the follow-up may be appended after we ran
         choice = tips.select_tip(pool, signals, turn_index=turn, last_delivered_turn=self._tip_turns,
                                  skill_key=self.question.primary_skill, role_family=ctx.role_family,
                                  timing="post_session")
@@ -732,14 +750,92 @@ class PracticeAttempt:
             forced = next((t for t in ctx.tips if t.key in named), None)
             choice = tips.TipChoice(forced, "post_session", float(forced.severity)) if forced else None
         if choice is None:
-            return None, None
+            return None
         self._tip_turns[choice.tip.key] = turn
+        return choice
+
+    # ------------------------------------------------------------------ the words after the grade
+
+    async def write_prose(self, submission: Submission) -> ProseResult:
+        """Word a scored revision: the feedback card (main answers), the tip, the follow-up question, concurrently.
+
+        Everything it reads was stored when the answer was scored (the evaluation, the band, the check, the tip's
+        key, the follow-up's decision), so it runs the same right after the grade, in a background task, or after
+        a restart. It changes nothing on the attempt; `apply_prose` stores the result."""
+        ctx, question = self.ctx, self.question
+        prose = ProseResult(revision=submission.revision)
+        if submission.status != EvaluationStatus.DONE or submission.evaluation is None or submission.band is None:
+            return prose
+        evaluation = Evaluation.model_validate(submission.evaluation)
+        band = submission.band
+        check = CheckResult.model_validate(submission.check) if submission.check else None
+        turn = self._wording_pending_turn(submission)
+        generate_coro = card_coro = tip_coro = None
+        if turn is not None:
+            index = self.follow_up_turns.index(turn)
+            previous = [question.text(ctx.language).prompt, *[t["question"] for t in self.follow_up_turns[:index]]]
+            decision = Decision.model_validate(turn["decision"])
+            generate_coro = generator.generate(
+                ctx.provider, decision, language=ctx.language, skill=ctx.skills.get(decision.target_skill),
+                question=question, last_question=previous[-1], last_answer_summary=evaluation.one_line_summary,
+                glossary=ctx.glossary, previous_questions=previous)
+        if submission.turn == 0:            # the feedback card belongs to the main question
+            card_coro = feedback.build_card(
+                ctx.provider, question=question, evaluation=evaluation, band=band, answer=submission.answer, check=check,
+                language=ctx.language, skill_label=ctx.skills[question.primary_skill].label, glossary=ctx.glossary)
+        tip = next((t for t in ctx.tips if t.key == submission.tip_key), None) if submission.tip_key else None
+        if tip is not None:
+            tip_coro = self._tip(tips.TipChoice(tip, "post_session", float(tip.severity)), evaluation, prose.usage)
+        # The follow-up wording, the feedback card and the tip only need the evaluation, so they run at the
+        # same time: the candidate waits for the slowest of the three instead of their sum.
+        results = iter(await asyncio.gather(*[c for c in (generate_coro, card_coro, tip_coro) if c is not None]))
+        generated = next(results) if generate_coro is not None else None
+        built = next(results) if card_coro is not None else None
+        prose.tip_text = next(results) if tip_coro is not None else None
+        if generated is not None:
+            self._record_usage(prose.usage, "generate", generated)
+            prose.follow_up = generated
+        if built is not None:
+            self._record_usage(prose.usage, "feedback", built)
+            prose.card = built.card
+        return prose
+
+    async def _tip(self, choice: tips.TipChoice, evaluation: Evaluation, usage: list[UsageEvent]) -> str:
+        """The chosen tip in words: the template, polished by the model when the context allows it."""
+        ctx = self.ctx
         placeholders = {"missed_point": (evaluation.key_points_missed or [""])[0],
                         "skill_label": ctx.skills[self.question.primary_skill].label}
         composed = await tips.compose(ctx.provider if ctx.polish_tips else None, choice, language=ctx.language,
                                       placeholders=placeholders)
         self._record_usage(usage, "tip", composed)         # metered like every other model call
-        return composed.text, choice.tip.key
+        return composed.text
+
+    def _wording_pending_turn(self, submission: Submission) -> dict | None:
+        return next((t for t in self.follow_up_turns
+                     if t.get("wording_pending") and t.get("asked_after") == submission.revision), None)
+
+    def apply_prose(self, submission: Submission, prose: ProseResult) -> bool:
+        """Store the words on the revision (and on the follow-up turn it opened). Idempotent: a revision whose words
+        are already there is left as it is and False is returned, so a replay never writes twice."""
+        if not submission.feedback_pending or prose.revision != submission.revision:
+            return False
+        submission.card = prose.card.model_dump() if prose.card else None
+        submission.tip_text = prose.tip_text if submission.tip_key else None
+        turn = self._wording_pending_turn(submission)
+        if turn is not None and prose.follow_up is not None:
+            generated = prose.follow_up
+            turn.update(question=generated.question.question_text, source=generated.source,
+                        expected_answer_outline=generated.question.expected_answer_outline)
+            for transient in ("wording_pending", "asked_after", "decision"):
+                turn.pop(transient, None)
+            submission.follow_up = generated.question.question_text
+        submission.flags = [f for f in submission.flags if f != FEEDBACK_PENDING]
+        outcome = self._outcomes.get(submission.revision)
+        if outcome is not None:
+            outcome.card = prose.card
+            outcome.tip_text, outcome.follow_up = submission.tip_text, submission.follow_up
+            outcome.flags = list(submission.flags)
+        return True
 
     # ------------------------------------------------------------------ what to persist
 

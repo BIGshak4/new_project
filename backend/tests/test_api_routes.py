@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import uuid
 
 import pytest
@@ -29,6 +30,16 @@ def catalog():
 def runtime_with(catalog, provider, **overrides):
     settings = Settings(_env_file=None, llm_provider="scripted", allow_in_review_content=True, **overrides)
     return build_runtime(settings, catalog=catalog, provider=provider, store=InMemoryStore(catalog))
+
+
+async def words(client, h, aid, polls: int = 50) -> dict:
+    """Poll the attempt like the app does until the grade's words (card, tip, follow-up question) are in."""
+    for _ in range(polls):
+        view = (await client.get(f"{BASE}/{aid}", headers=h)).json()
+        if not view["feedback_pending"]:
+            return view
+        await asyncio.sleep(0.01)
+    raise AssertionError("the feedback never arrived")
 
 
 @pytest.fixture
@@ -118,17 +129,22 @@ class TestTheContract:
         body = response.json()
         sub = body["submission"]
         assert sub["status"] == "done" and sub["band"] == "WEAK" and sub["check"]["passed"] is False
-        assert sub["card"]["next_step"] and sub["tip"]["key"] and sub["follow_up"] and sub["key"] == "k1"
+        # grade first: the result is complete, its words follow (the app polls)
+        assert sub["feedback_pending"] and sub["card"] is None and sub["xp_earned"] and sub["key"] == "k1"
         assert body["attempt"]["pending_follow_up"]["turn"] == 1 and not body["attempt"]["can_submit"]
+        assert body["attempt"]["pending_follow_up"]["question_pending"] and body["attempt"]["feedback_pending"]
         assert "evaluation" not in sub and "evidence_weight" not in sub          # internals never leave
 
-        view = body["attempt"]
+        view = await words(client, h, aid)
+        sub = view["submission"]
+        assert sub["card"]["next_step"] and sub["tip"]["key"] and sub["follow_up"] and not sub["feedback_pending"]
+        assert view["pending_follow_up"]["question"] == sub["follow_up"]
         while view["pending_follow_up"] is not None:
             turn = view["pending_follow_up"]["turn"]
             response = await client.post(f"{BASE}/{aid}/follow-ups/{turn}/submissions",
                                          json={"answer": "majority means at least two of three"}, headers=h)
             assert response.status_code == 200, response.text
-            view = response.json()["attempt"]
+            view = await words(client, h, aid)
         assert view["status"] == "done"
 
         again = (await client.get(f"{BASE}/{aid}", headers=h)).json()
@@ -146,7 +162,11 @@ class TestTheContract:
         second = await client.post(f"{BASE}/{aid}/submissions", json={"answer": "alarm = A ^ B ^ C"},
                                    headers={**h, "Idempotency-Key": "same"})
         assert second.status_code == 200 and second.json()["submission"]["replayed"] is True
-        assert second.json()["submission"]["card"] == first.json()["submission"]["card"]
+        assert second.json()["submission"]["band"] == first.json()["submission"]["band"]
+        settled = await words(client, h, aid)
+        third = await client.post(f"{BASE}/{aid}/submissions", json={"answer": "alarm = A ^ B ^ C"},
+                                  headers={**h, "Idempotency-Key": "same"})
+        assert third.json()["submission"]["card"] == settled["submission"]["card"] is not None
 
         conflict = await client.post(f"{BASE}/{aid}/submissions", json={"answer": "something else"},
                                      headers={**h, "Idempotency-Key": "same"})

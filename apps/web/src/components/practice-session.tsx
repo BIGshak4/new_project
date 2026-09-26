@@ -208,9 +208,12 @@ export function PracticeSession({
     attempt?.pending_follow_up?.turn,
   ]);
 
-  // Resume observation after reload. Poll only while the server is evaluating, with bounded retries.
+  // Resume observation after reload. Poll only while the server is evaluating, or while a graded answer's
+  // words (card, tip, follow-up question) are still being written (grade first), with bounded retries.
+  const wordsPending = !!attempt?.feedback_pending;
   useEffect(() => {
-    if (attempt?.status !== "evaluating" || recoveryRequired) return;
+    const evaluating = attempt?.status === "evaluating";
+    if ((!evaluating && !wordsPending) || recoveryRequired) return;
     let cancelled = false,
       timer: ReturnType<typeof setTimeout>;
     const deadline = Date.now() + 10 * 60 * 1000;
@@ -219,11 +222,11 @@ export function PracticeSession({
         const next = await api.getAttempt(attempt.id);
         if (cancelled) return;
         apply(next);
-        if (next.status !== "evaluating") {
-          onProgress();
-          return;
-        }
-        if (Date.now() < deadline) timer = setTimeout(poll, 3000);
+        // the grade changes progress (XP, levels); the words that follow it do not
+        if (evaluating && next.status !== "evaluating") onProgress();
+        if (next.status !== "evaluating" && !next.feedback_pending) return;
+        if (Date.now() < deadline)
+          timer = setTimeout(poll, next.status === "evaluating" ? 3000 : 1500);
         else {
           setRecoveryRequired(true);
           setError(
@@ -240,7 +243,7 @@ export function PracticeSession({
         }
       }
     };
-    timer = setTimeout(poll, 2000);
+    timer = setTimeout(poll, evaluating ? 2000 : 1200);
     return () => {
       cancelled = true;
       clearTimeout(timer);
@@ -249,13 +252,18 @@ export function PracticeSession({
     api,
     attempt?.id,
     attempt?.status,
+    wordsPending,
     apply,
     lang,
     onProgress,
     recoveryRequired,
   ]);
 
-  const mutate = async (work: () => Promise<Attempt>) => {
+  // `refreshProgress`: only actions that can change progress (an answer, a retry) reload the progress view
+  const mutate = async (
+    work: () => Promise<Attempt>,
+    refreshProgress = true,
+  ) => {
     if (guard.current) return;
     guard.current = true;
     setBusy(true);
@@ -265,7 +273,7 @@ export function PracticeSession({
       if (live.current) {
         apply(next);
         setRecoveryRequired(false);
-        onProgress();
+        if (refreshProgress) onProgress();
       }
     } catch (e) {
       if (!live.current) return;
@@ -333,6 +341,7 @@ export function PracticeSession({
       return;
     const turn = attempt.submission ? attempt.pending_follow_up?.turn : null;
     if (attempt.submission && turn === undefined) return;
+    if (turn != null && attempt.pending_follow_up?.question_pending) return;
     const text = turn === null ? answer : followAnswer;
     if (!pending && !text.trim() && !hasVisual(visual)) return;
     const p: PendingAnswer = pending ?? {
@@ -494,6 +503,7 @@ export function PracticeSession({
                           void mutate(
                             async () =>
                               (await api.nextHint(attempt.id)).attempt,
+                            false,
                           )
                         }
                       >
@@ -511,6 +521,7 @@ export function PracticeSession({
                           void mutate(
                             async () =>
                               (await api.revealReference(attempt.id)).attempt,
+                            false,
                           )
                         }
                       >

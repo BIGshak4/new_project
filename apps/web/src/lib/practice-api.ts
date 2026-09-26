@@ -144,6 +144,11 @@ export type Submission = {
   next_question?: NextQuestion | null;
   /** XP this scored answer earned (a motivation layer computed from the stored result); null until scored */
   xp_earned?: number | null;
+  /**
+   * Grade first: the band, summary, key points, check, evidence and XP are final, but the feedback card, the
+   * tip and the follow-up's wording are still being written. Poll getAttempt until it is false.
+   */
+  feedback_pending?: boolean;
 };
 
 /** The engine's suggestion after an evaluation: a servable question and the reason, in the practice language. */
@@ -161,10 +166,13 @@ export type NextQuestion = {
 
 export type FollowUp = {
   turn: number;
+  /** empty while `question_pending` */
   question: string;
   action: string;
   created_at: string;
   submission: Submission | null;
+  /** decided, but its words are still being written; answering it is refused until they arrive */
+  question_pending?: boolean;
 };
 
 export type AttemptStatus = "in_progress" | "evaluating" | "done" | "failed";
@@ -187,6 +195,8 @@ export type Attempt = {
   can_retry: boolean;
   /** The latest suggestion for this attempt; survives a refresh. */
   next_question?: NextQuestion | null;
+  /** some scored answer's words (card, tip, follow-up question) are still being written: keep polling */
+  feedback_pending?: boolean;
 };
 
 export type SkillProgress = {
@@ -495,6 +505,7 @@ export type ApiErrorCode =
   | "already_submitted"
   | "no_pending_follow_up"
   | "nothing_to_retry"
+  | "follow_up_not_ready"
   | "no_reviewed_questions"
   | "usage_limit"
   | "evaluation_unavailable"

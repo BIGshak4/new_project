@@ -93,13 +93,19 @@ export function FollowUps({
         {pending && (
           <li key={pending.turn} className="follow-up open">
             <span className="follow-up-kind">{actionLabel(pending.action)}</span>
-            <p className="follow-up-question" dir="auto">
-              {pending.question}
-            </p>
+            {pending.question_pending ? (
+              <p className="follow-up-question muted" role="status">
+                {t("כותבים את שאלת ההמשך…", "Writing your follow-up question…")}
+              </p>
+            ) : (
+              <p className="follow-up-question" dir="auto">
+                {pending.question}
+              </p>
+            )}
             <textarea
               value={value}
               onChange={(e) => onChange(e.target.value)}
-              disabled={disabled || resend}
+              disabled={disabled || resend || !!pending.question_pending}
               rows={4}
               dir="auto"
               placeholder={t("התשובה שלכם לשאלת ההמשך…", "Your answer to the follow-up…")}
@@ -107,7 +113,9 @@ export function FollowUps({
             <button
               type="button"
               className="primary"
-              disabled={disabled || (!resend && !value.trim())}
+              disabled={
+                disabled || !!pending.question_pending || (!resend && !value.trim())
+              }
               onClick={onSubmit}
             >
               {busy

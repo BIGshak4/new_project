@@ -210,3 +210,158 @@ async def test_the_scenario_reproduces_the_record_written_before_the_split(catal
     golden = json.loads(GOLDEN.read_text(encoding="utf-8"))
     got = json.loads(json.dumps(got, sort_keys=True, ensure_ascii=False))
     assert _strip_new_fields(got, golden) == golden
+
+
+# ---------------------------------------------------------------------------------------------- behaviour
+
+
+def _svc(catalog, prov=None, **config):
+    store = InMemoryStore(catalog)
+    kwargs = dict(suggest_reviewed_only=False, polish_tips=True, daily_attempt_limit=100, feedback_in_background=True)
+    return PracticeService(store, catalog, prov or provider(), ServiceConfig(**{**kwargs, **config})), store
+
+
+async def _no_sleep(_seconds):
+    return None
+
+
+def _calls(svc: PracticeService, role: str) -> int:
+    return sum(1 for r in svc.provider.requests if r.role == role)
+
+
+def copy_profiles(store: InMemoryStore) -> dict:
+    return json.loads(json.dumps({k[1]: {"state": v["engine_state"], "version": v["version"]}
+                                  for k, v in store.profiles.items()}, default=str, sort_keys=True))
+
+
+class TestGradeFirst:
+    async def test_the_grade_comes_first_and_the_words_follow(self, catalog):
+        import asyncio
+
+        from app.api.errors import ApiError
+
+        gate = asyncio.Event()
+        replies = provider()
+
+        async def slow_prose(request):                      # the prose calls wait until the test opens the gate
+            if request.role != "evaluator":
+                await gate.wait()
+            return replies._responder(request)
+        svc, store = _svc(catalog, ScriptedProvider(slow_prose))
+        view = await svc.start(USER, question_key="example-sensor-majority", mode="deep", language="en")
+        aid = uuid.UUID(view.id)
+        sub, view = await svc.submit(USER, aid, {"text": "alarm = A ^ B ^ C"}, idempotency_key="k")
+        # the grade is complete ...
+        assert sub.status == "done" and sub.band == "WEAK" and sub.xp_earned and sub.check is not None and sub.evidence != "none"
+        # ... the words are not, and the app is told so
+        assert sub.feedback_pending and view.feedback_pending and sub.card is None and sub.tip is None
+        assert view.pending_follow_up is not None and view.pending_follow_up.question_pending
+        assert view.pending_follow_up.question == ""
+        with pytest.raises(ApiError) as refused:            # a follow-up cannot be answered before it has words
+            await svc.submit(USER, aid, {"text": "x"}, idempotency_key="f", follow_up_turn=1)
+        assert refused.value.code == "follow_up_not_ready"
+        metrics_after_grade, profile_after_grade = len(store.metrics), copy_profiles(store)
+        gate.set()
+        await svc.drain()
+        view = await svc.get(USER, aid)
+        assert not view.feedback_pending and view.submission.card is not None and view.submission.tip is not None
+        assert view.pending_follow_up.question.startswith("Follow-up") and not view.pending_follow_up.question_pending
+        assert view.submission.follow_up == view.pending_follow_up.question
+        # writing the words scored nothing
+        assert len(store.metrics) == metrics_after_grade and copy_profiles(store) == profile_after_grade
+        assert len(store.tips) == 1 and {u["action"] for u in store.usage} >= {"generate", "feedback", "tip"}
+        sub2, view = await svc.submit(USER, aid, {"text": "maybe an AND of each pair"}, idempotency_key="f",
+                                      follow_up_turn=1)
+        assert sub2.status == "done" and sub2.band and sub2.feedback_pending        # a follow-up: its tip comes after
+        await svc.drain()
+        assert not (await svc.get(USER, aid)).feedback_pending
+
+    async def test_words_lost_in_a_crash_are_written_on_the_next_read_and_nothing_is_scored_again(self, catalog,
+                                                                                                   monkeypatch):
+        from app.services import practice_service
+
+        svc, store = _svc(catalog)
+        monkeypatch.setattr(PracticeService, "_start_feedback", lambda *a, **k: None)   # the process dies after the grade
+        view = await svc.start(USER, question_key="example-sensor-majority", mode="deep", language="en")
+        aid = uuid.UUID(view.id)
+        sub, _ = await svc.submit(USER, aid, {"text": "alarm = A ^ B ^ C"}, idempotency_key="k")
+        assert sub.feedback_pending
+        monkeypatch.undo()
+        metrics, profiles, evaluator_calls = len(store.metrics), copy_profiles(store), _calls(svc, "evaluator")
+
+        restarted = PracticeService(store, catalog, svc.provider, svc.config)          # a new process, same database
+        view = await restarted.get(USER, aid)                                           # young: another process may be on it
+        assert view.feedback_pending and not restarted._feedback_tasks
+        monkeypatch.setattr(practice_service, "FEEDBACK_STALE_SECONDS", 0)
+        await restarted.get(USER, aid)                                                  # abandoned: resumed
+        await restarted.drain()
+        view = await restarted.get(USER, aid)
+        assert not view.feedback_pending and view.submission.card and view.pending_follow_up.question
+        assert len(store.metrics) == metrics and copy_profiles(store) == profiles
+        assert _calls(svc, "evaluator") == evaluator_calls                              # never re-scored
+
+    async def test_retry_on_a_wordless_revision_writes_only_the_words_once(self, catalog, monkeypatch):
+        svc, store = _svc(catalog)
+        monkeypatch.setattr(PracticeService, "_start_feedback", lambda *a, **k: None)
+        view = await svc.start(USER, question_key="example-nand-only-enable", mode="deep", language="en")
+        aid = uuid.UUID(view.id)
+        await svc.submit(USER, aid, {"text": "a NAND answer"}, idempotency_key="k")
+        monkeypatch.undo()
+        evaluator_calls, metrics = _calls(svc, "evaluator"), len(store.metrics)
+        sub, view = await svc.retry(USER, aid)
+        assert not sub.feedback_pending and sub.card is not None and not view.feedback_pending
+        assert _calls(svc, "evaluator") == evaluator_calls and len(store.metrics) == metrics
+        # a second writer (another task, another process) finds the words there and writes nothing
+        assert await svc.finish_feedback(USER, aid, sub.revision) is False
+        tips_before = len(store.tips)
+        assert await svc.finish_feedback(USER, aid, sub.revision) is False
+        assert len(store.tips) == tips_before <= 1
+        assert (await svc.get(USER, aid)).submission.card == sub.card
+
+    async def test_a_failed_save_of_the_words_is_tried_again(self, catalog, monkeypatch):
+        from app.services import practice_service
+
+        svc, store = _svc(catalog)
+        real = practice_service.PracticeService._persist_feedback
+        failures = {"left": 1}
+
+        async def flaky(self, *args, **kwargs):
+            if failures["left"]:
+                failures["left"] -= 1
+                raise ConnectionError("database connection dropped")
+            return await real(self, *args, **kwargs)
+        monkeypatch.setattr(practice_service.PracticeService, "_persist_feedback", flaky)
+        monkeypatch.setattr(practice_service.asyncio, "sleep", _no_sleep)
+        view = await svc.start(USER, question_key="example-sensor-majority", mode="deep", language="en")
+        aid = uuid.UUID(view.id)
+        await svc.submit(USER, aid, {"text": "alarm = A ^ B ^ C"}, idempotency_key="k")
+        await svc.drain()
+        view = await svc.get(USER, aid)
+        assert not view.feedback_pending and view.submission.card is not None and failures["left"] == 0
+
+    async def test_a_replayed_submit_reports_the_words_as_they_are_and_scores_once(self, catalog):
+        svc, store = _svc(catalog)
+        view = await svc.start(USER, question_key="example-sensor-majority", mode="deep", language="en")
+        aid = uuid.UUID(view.id)
+        first, _ = await svc.submit(USER, aid, {"text": "alarm = A ^ B ^ C"}, idempotency_key="k")
+        again, _ = await svc.submit(USER, aid, {"text": "alarm = A ^ B ^ C"}, idempotency_key="k")
+        assert again.band == first.band and again.replayed
+        await svc.drain()
+        again, _ = await svc.submit(USER, aid, {"text": "alarm = A ^ B ^ C"}, idempotency_key="k")
+        assert not again.feedback_pending and again.card is not None
+        assert len(store.metrics) == 2                                      # scored once (two skills examined)
+
+    async def test_a_profile_conflict_undoes_the_wordless_follow_up(self, catalog):
+        svc, store = _svc(catalog)
+        view = await svc.start(USER, question_key="example-sensor-majority", mode="deep", language="en")
+        aid = uuid.UUID(view.id)
+        store.failures.add("save_profile")                                  # the profile keeps moving
+        sub, view = await svc.submit(USER, aid, {"text": "alarm = A ^ B ^ C"}, idempotency_key="k")
+        assert sub.status == "failed" and "profile_conflict" in sub.flags and not sub.feedback_pending
+        assert view.pending_follow_up is None and view.follow_ups == [] and not svc._feedback_tasks
+        store.failures.discard("save_profile")
+        sub, view = await svc.retry(USER, aid)
+        assert sub.status == "done" and sub.feedback_pending and view.pending_follow_up.question_pending
+        await svc.drain()
+        view = await svc.get(USER, aid)
+        assert len(view.follow_ups) == 1 and view.pending_follow_up.question

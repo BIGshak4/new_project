@@ -70,14 +70,18 @@ class SubmissionView(BaseModel):
     replayed: bool = False
     next_question: NextQuestionView | None = None   # what to practise next, decided from this evaluation
     xp_earned: int | None = None                # XP this scored answer earned (app.engine.xp); None until it is scored
+    # Grade first: the band, summary, key points, check, evidence and XP are final; the card, the tip and the
+    # follow-up's wording are still being written. Poll GET /v1/practice/attempts/{id} until it is false.
+    feedback_pending: bool = False
 
 
 class FollowUpView(BaseModel):
     turn: int
-    question: str
+    question: str                               # empty while `question_pending`
     action: str
     created_at: str
     submission: SubmissionView | None = None
+    question_pending: bool = False              # decided, but its words are still being written; answering waits
 
 
 class AttemptView(BaseModel):
@@ -97,6 +101,7 @@ class AttemptView(BaseModel):
     can_submit: bool
     can_retry: bool
     next_question: NextQuestionView | None = None   # the latest suggestion, kept across refreshes
+    feedback_pending: bool = False              # some scored answer's words are still being written: keep polling
 
 
 class LabelledSkill(BaseModel):

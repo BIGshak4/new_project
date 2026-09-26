@@ -21,6 +21,7 @@ STATUS_FOR_CODE = {
     "conflict": 409,
     "already_submitted": 409,
     "no_pending_follow_up": 409,
+    "follow_up_not_ready": 409,                # the follow-up is decided but its words are still being written
     "nothing_to_retry": 409,
     "stale_version": 409,
     "no_reviewed_questions": 409,              # the bank has no reviewed question for this role/plan yet

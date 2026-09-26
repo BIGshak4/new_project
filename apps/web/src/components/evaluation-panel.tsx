@@ -151,6 +151,11 @@ export function EvaluationPanel({
         </section>
       </div>
 
+      {s.feedback_pending && !s.tip && !s.card && (
+        <p className="small muted" role="status">
+          {t("כותבים לכם טיפ ומשוב מפורט…", "Writing your tip and detailed feedback…")}
+        </p>
+      )}
       {(s.tip || s.card?.next_step) && (
         <aside className="evaluation-tip" dir="auto">
           <Lightbulb size={18} aria-hidden="true" />

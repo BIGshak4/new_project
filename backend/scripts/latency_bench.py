@@ -193,7 +193,10 @@ async def run(args) -> dict:
             await connection.execute(text("select 1"))
             user = (await connection.execute(text("select id from public.user_profile limit 1"))).scalar_one()
             store = TimedStore(connection, allow_in_review=False)
-            svc = PracticeService(store, catalog, provider, ServiceConfig(polish_tips=True, daily_attempt_limit=10_000))
+            config = ServiceConfig(polish_tips=True, daily_attempt_limit=10_000)
+            if hasattr(config, "feedback_in_background"):       # grade first, as production runs it (unless --inline)
+                config.feedback_in_background = settings.feedback_in_background and not args.inline
+            svc = PracticeService(store, catalog, provider, config)
             cache.clear()
             await svc.list_questions(language="en")                # warm the reflected schema and id maps, as a live server is
             for name, key, language, answer, follow_up in ANSWERS:
@@ -286,6 +289,7 @@ def main() -> None:
     parser.add_argument("--label", default="run")
     parser.add_argument("--json", type=Path, help="also write the raw rows here")
     parser.add_argument("--only", help="run only the answers whose name contains this")
+    parser.add_argument("--inline", action="store_true", help="write the feedback inside submit (the old way)")
     args = parser.parse_args()
     result = asyncio.run(run(args))
     print()

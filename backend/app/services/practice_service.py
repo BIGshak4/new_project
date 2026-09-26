@@ -28,12 +28,15 @@ from app.engine import bank, next_question, plan_router, scores, xp
 from app.engine.catalog import Catalog
 from app.engine.plan import merge_skill_sets
 from app.engine.practice import (
+    FEEDBACK_PENDING,
     EvaluationStatus,
     ImageFetcher,
     PracticeAttempt,
     PracticeContext,
     PracticeError,
     PracticeOutcome,
+    ProseResult,
+    Submission,
     assessed_by,
 )
 from app.engine.providers import Provider
@@ -117,6 +120,16 @@ class ServiceConfig:
     # The coach suggests only questions a person has reviewed and published. With nothing published there is
     # no suggestion at all, never an unreviewed one (Shaked, 2026-09-21). False only for development and tests.
     suggest_reviewed_only: bool = True
+    # Grade first (2026-09-26): submit answers as soon as the answer is scored and saved; the feedback card, the
+    # tip and the follow-up's wording are written right after in a background task and saved into the same
+    # revision. Results are identical either way (tests/test_grade_first.py); only the time the words arrive moves.
+    feedback_in_background: bool = False
+
+
+# A revision whose words are still missing this long after it was scored, with no task writing them in this
+# process, was abandoned (a restart, a crash); the next read writes them. Another process may still be on it,
+# which costs a duplicate model call at worst: the save is conditional, so the words are never written twice.
+FEEDBACK_STALE_SECONDS = 30
 
 
 class PracticeService:
@@ -126,6 +139,7 @@ class PracticeService:
         self.config = config or ServiceConfig()
         self.image_fetcher = image_fetcher                 # None: photos are stored but not shown to the evaluator
         self._locks: dict[uuid.UUID, asyncio.Lock] = {}
+        self._feedback_tasks: dict[tuple[uuid.UUID, int], asyncio.Task] = {}      # (attempt, revision) -> writing its words
         self._plans: dict[tuple[str, str | None], tuple[dict[str, int], dict[str, float], int, list[PlanSkill]]] = {}
 
     # ------------------------------------------------------------------ questions
@@ -281,6 +295,7 @@ class PracticeService:
 
     async def get(self, user_id: uuid.UUID, attempt_id: uuid.UUID) -> AttemptView:
         attempt, stored, loaded, _ = await self._load(user_id, attempt_id)
+        self._resume_feedback(user_id, attempt)
         return self._view(attempt, stored, loaded, stored.row["practice_language"])
 
     async def next_hint(self, user_id: uuid.UUID, attempt_id: uuid.UUID) -> tuple[HintView | None, AttemptView]:
@@ -359,22 +374,58 @@ class PracticeService:
                         self._view(attempt, stored, loaded, language))
 
             # 2. evaluate: model calls happen here, with no transaction open
-            outcome = await attempt.evaluate(submission, latency_ms=latency_ms, revision_count=revision_count)
+            outcome = await attempt.evaluate(submission, latency_ms=latency_ms, revision_count=revision_count,
+                                             defer_prose=self.config.feedback_in_background)
 
-            # 3. everything the evaluation produced, in one transaction
-            attempt, stored, loaded, outcome = await self._persist_outcome(user_id, attempt, stored, loaded, profile, outcome)
+            # 3. everything the evaluation produced, in one transaction; the words are already being written
+            words, scored = self._write_words_now(attempt, outcome), outcome.submission
+            try:
+                attempt, stored, loaded, outcome = await self._persist_outcome(user_id, attempt, stored, loaded, profile,
+                                                                               outcome)
+            except BaseException:
+                if words is not None:
+                    words.cancel()                        # the grade was not saved: the next read or a retry redoes it
+                raise
+            # 4. the words are saved once they are ready, while the grade is on its way to the candidate
+            if outcome.submission is not scored and words is not None:
+                words.cancel()                            # another process scored this revision first: its words
+                words = None                              # belong to its evaluation, not to ours
+            self._start_feedback(user_id, attempt_id, outcome.submission, words)
             return (self._submission_view(outcome.submission, outcome, attempt.next_question,
                                           xp_earned=self._xp_for(attempt, outcome.submission)),
                     self._view(attempt, stored, loaded, language))
 
     async def retry(self, user_id: uuid.UUID, attempt_id: uuid.UUID) -> tuple[SubmissionView, AttemptView]:
+        """Evaluate the latest failed revision again; or, when nothing failed but a scored revision still lacks its
+        words, write only the words (never a second score)."""
+        async with self._lock(attempt_id):
+            attempt, stored, loaded, profile = await self._load(user_id, attempt_id)
+            failed = any(s.status == EvaluationStatus.FAILED and "superseded" not in s.flags for s in attempt.submissions)
+            wordless = next((s for s in reversed(attempt.submissions) if s.feedback_pending), None)
+        if not failed and wordless is not None:
+            await self.finish_feedback(user_id, attempt_id, wordless.revision)
+            attempt, stored, loaded, _ = await self._load(user_id, attempt_id)
+            sub = next(s for s in attempt.submissions if s.revision == wordless.revision)
+            return (self._submission_view(sub, None, attempt.next_question, xp_earned=self._xp_for(attempt, sub)),
+                    self._view(attempt, stored, loaded, stored.row["practice_language"]))
         async with self._lock(attempt_id):
             attempt, stored, loaded, profile = await self._load(user_id, attempt_id)
             try:
-                outcome = await attempt.retry_evaluation()
+                outcome = await attempt.retry_evaluation(defer_prose=self.config.feedback_in_background)
             except PracticeError as exc:
                 raise ApiError(exc.code, str(exc)) from exc
-            attempt, stored, loaded, outcome = await self._persist_outcome(user_id, attempt, stored, loaded, profile, outcome)
+            words, scored = self._write_words_now(attempt, outcome), outcome.submission
+            try:
+                attempt, stored, loaded, outcome = await self._persist_outcome(user_id, attempt, stored, loaded, profile,
+                                                                               outcome)
+            except BaseException:
+                if words is not None:
+                    words.cancel()
+                raise
+            if outcome.submission is not scored and words is not None:
+                words.cancel()                            # another process scored this revision first: its words
+                words = None                              # belong to its evaluation, not to ours
+            self._start_feedback(user_id, attempt_id, outcome.submission, words)
             return (self._submission_view(outcome.submission, outcome, attempt.next_question,
                                           xp_earned=self._xp_for(attempt, outcome.submission)),
                     self._view(attempt, stored, loaded, stored.row["practice_language"]))
@@ -435,7 +486,7 @@ class PracticeService:
         self._undo_follow_up(attempt, outcome)
         submission.status = EvaluationStatus.FAILED
         submission.evaluating_since = None
-        submission.flags = [*submission.flags, "profile_conflict"]
+        submission.flags = [*(f for f in submission.flags if f != FEEDBACK_PENDING), "profile_conflict"]
         submission.follow_up = None
         outcome.flags = list(submission.flags)
         async with self.store.transaction() as tx:
@@ -510,13 +561,111 @@ class PracticeService:
     @staticmethod
     def _undo_follow_up(attempt: PracticeAttempt, outcome: PracticeOutcome) -> None:
         """Drop the follow-up turn (and its hint exposure) this evaluation appended, so a retry can create them anew."""
-        if not outcome.follow_up or not attempt.follow_up_turns:
+        if not attempt.follow_up_turns:
             return
         last = attempt.follow_up_turns[-1]
-        if last.get("submission_revision") is None and last.get("question") == outcome.follow_up:
+        opened_here = (last.get("asked_after") == outcome.submission.revision if last.get("wording_pending")
+                       else bool(outcome.follow_up) and last.get("question") == outcome.follow_up)
+        if last.get("submission_revision") is None and opened_here:
             attempt.follow_up_turns.pop()
             if last.get("action") == "hint" and attempt.exposures and attempt.exposures[-1].kind == "hint":
                 attempt.exposures.pop()
+
+    # ------------------------------------------------------------------ the words after the grade
+
+    @staticmethod
+    def _write_words_now(attempt: PracticeAttempt, outcome: PracticeOutcome) -> asyncio.Task | None:
+        """Start the prose calls the moment the answer is scored, concurrently with saving the grade; saved later."""
+        if not outcome.submission.feedback_pending:
+            return None
+        return asyncio.get_running_loop().create_task(attempt.write_prose(outcome.submission))
+
+    def _start_feedback(self, user_id: uuid.UUID, attempt_id: uuid.UUID, submission: Submission,
+                        words: asyncio.Task | None = None) -> None:
+        """Save a scored revision's words in the background (grade first). One task per revision per process."""
+        key = (attempt_id, submission.revision)
+        if not submission.feedback_pending or key in self._feedback_tasks:
+            if words is not None:
+                words.cancel()                            # the grade we scored was not the one kept, or already handled
+            return
+        task = asyncio.get_running_loop().create_task(
+            self._feedback_task(user_id, attempt_id, submission.revision, words))
+        self._feedback_tasks[key] = task
+        task.add_done_callback(lambda t, key=key: self._feedback_done(key, t))
+
+    def _feedback_done(self, key: tuple[uuid.UUID, int], task: asyncio.Task) -> None:
+        if self._feedback_tasks.get(key) is task:
+            del self._feedback_tasks[key]
+        if not task.cancelled() and task.exception() is not None:
+            log.error("writing the feedback of attempt %s revision %s failed: %r", key[0], key[1], task.exception())
+
+    async def _feedback_task(self, user_id: uuid.UUID, attempt_id: uuid.UUID, revision: int,
+                             words: asyncio.Task | None = None) -> None:
+        for delay in (0.0, 2.0, 10.0):                    # a dropped connection or a database blip: try again, briefly
+            if delay:
+                await asyncio.sleep(delay)
+            try:
+                # a retry after a failed save reuses the words already written: no second model call
+                await self.finish_feedback(user_id, attempt_id, revision, words=words)
+                return
+            except ApiError:
+                return                                    # the attempt is gone or no longer this user's
+            except Exception as exc:                      # noqa: BLE001 - logged; the next read resumes it
+                log.warning("feedback for attempt %s revision %s not saved (%r); retrying", attempt_id, revision, exc)
+        log.error("feedback for attempt %s revision %s gave up; the next read of the attempt resumes it", attempt_id, revision)
+
+    def _resume_feedback(self, user_id: uuid.UUID, attempt: PracticeAttempt) -> None:
+        """A revision scored a while ago whose words never arrived (restart, crash): write them now."""
+        now = _now()
+        for submission in attempt.submissions:
+            if not submission.feedback_pending or (attempt.attempt_id_uuid, submission.revision) in self._feedback_tasks:
+                continue
+            scored_at = datetime.fromisoformat(submission.evaluated_at) if submission.evaluated_at else now
+            if (now - scored_at).total_seconds() >= FEEDBACK_STALE_SECONDS:
+                log.warning("resuming the feedback of attempt %s revision %s", attempt.attempt_id, submission.revision)
+                self._start_feedback(user_id, attempt.attempt_id_uuid, submission)
+
+    async def finish_feedback(self, user_id: uuid.UUID, attempt_id: uuid.UUID, revision: int, *,
+                              words: asyncio.Task | None = None) -> bool:
+        """Write (unless `words` already is) and save the words of one scored revision. Never scores anything.
+        Idempotent: True when this call stored them, False when they were already there (another task or process)."""
+        if words is not None:
+            prose = await asyncio.shield(words)
+        else:
+            attempt, _, _, _ = await self._load(user_id, attempt_id)
+            submission = next((s for s in attempt.submissions if s.revision == revision), None)
+            if submission is None or not submission.feedback_pending:
+                return False
+            prose = await attempt.write_prose(submission)                  # model calls, no lock and no transaction
+        async with self._lock(attempt_id):
+            attempt, stored, _, _ = await self._load(user_id, attempt_id)  # fresh: a reveal may have happened meanwhile
+            submission = next(s for s in attempt.submissions if s.revision == revision)
+            applied = attempt.apply_prose(submission, prose)
+            return await self._persist_feedback(user_id, attempt, stored, submission, prose, applied)
+
+    async def _persist_feedback(self, user_id: uuid.UUID, attempt: PracticeAttempt, stored: StoredAttempt,
+                                submission: Submission, prose: ProseResult, applied: bool) -> bool:
+        """The words, the tip delivery and the prose calls' usage, in one transaction; the revision's words are
+        written only if they are still missing in the database (a conditional update), never twice."""
+        async with self.store.transaction() as tx:
+            saved = applied and await tx.save_prose(user_id=user_id, question_id=stored.question_id,
+                                                    row=attempt.attempt_row(), revision=submission.revision)
+            if saved and submission.tip_key and submission.tip_text:
+                await tx.record_tip(attempt_id=attempt.attempt_id_uuid, tip_key=submission.tip_key,
+                                    skill_key=attempt.question.primary_skill, text=submission.tip_text)
+            if prose.usage:                                                # the calls happened and cost money either way
+                await tx.record_usage(user_id=user_id, attempt_id=attempt.attempt_id_uuid,
+                                      usage_rows=[u.as_row(attempt.mode) for u in prose.usage])
+        return bool(saved)
+
+    async def drain(self, timeout: float | None = None) -> None:
+        """Wait for the words being written (tests; a graceful shutdown)."""
+        deadline = None if timeout is None else asyncio.get_running_loop().time() + timeout
+        while self._feedback_tasks:
+            left = None if deadline is None else deadline - asyncio.get_running_loop().time()
+            if left is not None and left <= 0:
+                return
+            await asyncio.wait(list(self._feedback_tasks.values()), timeout=left)
 
     # ------------------------------------------------------------------ progress
 
@@ -1000,7 +1149,8 @@ class PracticeService:
             hints_seen=submission.hints_seen, reference_seen=submission.reference_seen,
             evidence="none" if submission.status != EvaluationStatus.DONE or weight <= 0 else "full" if weight >= 1 else "reduced",
             flags=list(submission.flags), replayed=bool(outcome.replayed) if outcome is not None else False,
-            next_question=PracticeService._next_view(next_question), xp_earned=xp_earned)
+            next_question=PracticeService._next_view(next_question), xp_earned=xp_earned,
+            feedback_pending=submission.feedback_pending)
 
     def _view(self, attempt: PracticeAttempt, stored: StoredAttempt, loaded: LoadedQuestion, language: str) -> AttemptView:
         by_revision = {s.revision: s for s in attempt.submissions}
@@ -1008,9 +1158,10 @@ class PracticeService:
         follow_ups = []
         for turn in attempt.follow_up_turns:
             sub = by_revision.get(turn.get("submission_revision")) if turn.get("submission_revision") else None
-            follow_ups.append(FollowUpView(turn=turn["turn"], question=turn["question"], action=turn.get("action", ""),
+            follow_ups.append(FollowUpView(turn=turn["turn"], question=turn["question"] or "", action=turn.get("action", ""),
                                            created_at=turn.get("created_at", ""),
-                                           submission=self._submission_view(sub, xp_earned=self._xp_for(attempt, sub)) if sub else None))
+                                           submission=self._submission_view(sub, xp_earned=self._xp_for(attempt, sub)) if sub else None,
+                                           question_pending=bool(turn.get("wording_pending"))))
         pending = attempt.pending_follow_up
         pending_view = next((f for f in follow_ups if f.turn == pending["turn"]), None) if pending else None
         latest_any = attempt.submissions[-1] if attempt.submissions else None
@@ -1033,7 +1184,8 @@ class PracticeService:
             follow_ups=follow_ups, pending_follow_up=pending_view,
             can_submit=main is None or main.status == EvaluationStatus.FAILED,
             can_retry=latest is not None and latest.status == EvaluationStatus.FAILED,
-            next_question=self._next_view(attempt.next_question))
+            next_question=self._next_view(attempt.next_question),
+            feedback_pending=any(s.feedback_pending for s in attempt.submissions))
 
 
 def _now() -> datetime:

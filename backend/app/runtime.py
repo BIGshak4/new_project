@@ -30,6 +30,8 @@ class Runtime:
     interview: InterviewService | None = None        # mock interviews
 
     async def aclose(self) -> None:
+        # a redeploy waits a little for feedback being written; anything unfinished is resumed on the next read
+        await self.practice.drain(timeout=20)
         if self.image_fetcher is not None:
             await self.image_fetcher.aclose()
 
@@ -58,7 +60,8 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
     config = ServiceConfig(role=settings.default_role, company=settings.default_company,
                            default_language=settings.default_language, daily_attempt_limit=settings.daily_attempt_limit,
                            polish_tips=settings.llm_provider == "anthropic",
-                           suggest_reviewed_only=settings.suggest_reviewed_only)
+                           suggest_reviewed_only=settings.suggest_reviewed_only,
+                           feedback_in_background=settings.feedback_in_background)
     fetcher = make_image_fetcher(settings)
     interview_config = InterviewConfig(role=settings.default_role, company=settings.default_company,
                                        default_language=settings.default_language,

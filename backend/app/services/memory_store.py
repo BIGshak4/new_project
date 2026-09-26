@@ -262,6 +262,16 @@ class _MemoryTx:
         self.s.attempts[attempt_id] = {"user_id": user_id, "question_id": question_id, "row": copy.deepcopy(row),
                                        "started_at": existing["started_at"] if existing else datetime.now(UTC)}
 
+    async def save_prose(self, *, user_id, question_id, row, revision):
+        if "save_attempt" in self.s.failures:
+            raise RuntimeError("simulated database failure")
+        existing = self.s.attempts.get(uuid.UUID(str(row["id"])))
+        current = next((s for s in (existing or {}).get("row", {}).get("submissions", []) if s["revision"] == revision), None)
+        if current is None or current["status"] != "done" or "feedback_pending" not in (current.get("flags") or []):
+            return False                                  # the words are already there: never written twice
+        self.s.attempts[uuid.UUID(str(row["id"]))] = {**existing, "row": copy.deepcopy(row)}
+        return True
+
     async def started_today(self, user_id, *, now=None):
         now = now or datetime.now(UTC)
         day_start = datetime(now.year, now.month, now.day, tzinfo=UTC)

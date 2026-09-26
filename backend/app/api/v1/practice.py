@@ -166,9 +166,12 @@ async def submit_follow_up(attempt_id: AttemptId, turn: Annotated[int, Path(ge=1
 async def retry(attempt_id: AttemptId, revision: Annotated[int, Path(ge=1)], access: CurrentAccess,
                 practice: Practice) -> SubmissionResponse:
     attempt = await practice.get(access.user_id, attempt_id)
-    failed = [s for s in [attempt.submission, *[f.submission for f in attempt.follow_ups if f.submission]]
-              if s is not None and s.status == "failed"]
-    waiting = failed[-1] if failed else None                  # the engine retries the latest failed revision
+    submissions = [s for s in [attempt.submission, *[f.submission for f in attempt.follow_ups if f.submission]] if s]
+    failed = [s for s in submissions if s.status == "failed"]
+    wordless = [s for s in submissions if s.feedback_pending]
+    # the engine retries the latest failed revision; with none failed, a scored revision whose words never arrived
+    # gets only its words written (never a second score)
+    waiting = failed[-1] if failed else wordless[-1] if wordless else None
     if waiting is None or waiting.revision != revision:
         raise ApiError("nothing_to_retry", f"revision {revision} is not waiting for evaluation")
     return await _submit(practice, access.user_id, attempt_id, practice.retry(access.user_id, attempt_id),

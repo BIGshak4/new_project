@@ -61,6 +61,9 @@ class Settings(BaseSettings):
     # Mock interviews ask only reviewed, published bank questions (never generated); none = no interview.
     interview_reviewed_only: bool = True
     interview_daily_limit: int = 5
+    # Grade first: a submission answers once the answer is scored; the feedback card, the tip and the follow-up's
+    # wording follow within seconds (the app polls). False = the old way, everything in one response.
+    feedback_in_background: bool = True
 
     default_language: str = "en"
     default_role: str = "digital-hardware-engineer"
