@@ -52,7 +52,8 @@ async def main() -> None:
         print("question statuses in the database:", {s: n for s, n in statuses})
         store = RollbackStore(connection, allow_in_review=False)          # production: no in-review content
         try:
-            practice = PracticeService(store, catalog, provider, ServiceConfig(polish_tips=True))   # reviewed-only default
+            practice = PracticeService(store, catalog, provider,                                  # reviewed-only default
+                                       ServiceConfig(polish_tips=True, feedback_in_background=settings.feedback_in_background))
             listed = await practice.list_questions(language="en")
             print(f"servable questions under production rules: {len(listed)} (trial: {sum(q.trial for q in listed)})")
 
@@ -62,12 +63,21 @@ async def main() -> None:
             t = time.perf_counter()
             sub, view = await practice.submit(user, aid, WEAK_ANSWER, idempotency_key="live-main")
             print(f"  main: band={sub.band} in {time.perf_counter() - t:.0f}s, assessed_by={sub.assessed_by}, model={sub.model}")
-            print(f"  check: {sub.check.passed if sub.check else None} | follow-up pending: {view.pending_follow_up is not None}")
+            print(f"  check: {sub.check.passed if sub.check else None} | follow-up pending: {view.pending_follow_up is not None}"
+                  f" | words pending: {sub.feedback_pending}")
+            if sub.feedback_pending:                                      # grade first: the app polls for the words
+                await practice.drain()
+                view = await practice.get(user, aid)
+                print(f"  words after {time.perf_counter() - t:.0f}s: card={view.submission.card is not None}, "
+                      f"tip={view.submission.tip is not None}, follow-up worded={bool(view.pending_follow_up and view.pending_follow_up.question)}")
+                assert not view.feedback_pending and view.submission.card is not None
             if view.pending_follow_up is not None:
                 t = time.perf_counter()
                 fsub, view = await practice.submit(user, aid, "Majority is at least two of three: AB + BC + AC. XOR is parity.",
                                                    idempotency_key="live-f1", follow_up_turn=view.pending_follow_up.turn)
                 print(f"  follow-up: band={fsub.band} in {time.perf_counter() - t:.0f}s")
+                await practice.drain()
+                view = await practice.get(user, aid)
             print(f"  status={view.status}; next question: "
                   f"{view.next_question.key if view.next_question else None} ({view.next_question.why if view.next_question else '-'})")
             if view.next_question and view.next_question.focus:

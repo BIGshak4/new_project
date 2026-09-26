@@ -288,6 +288,56 @@ Verification 2026-09-25: `ruff` clean; 772 offline tests; web typecheck, 48 test
 
 **Follow-up (2026-09-25, morning):** the program's `carried` flag now compares one clock (an item created before the plan's `generated_at` is carried), which removes the UTC-vs-local-date disagreement after midnight behind the flaky test. XP is asserted on the real database by `scripts/e2e_goal_and_visuals.py` (+24 XP for a strong answer at difficulty 3, streak 1).
 
+## 5n. Speed and many users (overnight 2026-09-25 → 26, Shaked's approved plan)
+
+Full numbers and the decisions: `docs/performance-2026-09-26.md`.
+
+1. **Measured first.** `scripts/latency_bench.py` times every stage of an answer on the real model and the real
+   database (rolled back): load, accept + save, check, evaluator, card, tip, follow-up wording, next question,
+   outcome save, words save, `progress()`, `program()`, statements per call. Before: **the candidate waited
+   16.8 s median (max 37 s)** for the grade, because `submit` also waited for the card, the tip and the follow-up
+   wording (Sonnet, 7–28 s) after the evaluator (Opus, ~5 s).
+2. **Grade first.** `PracticeAttempt._evaluate` now scores and decides (`_score_and_decide`: band, evidence, scores,
+   controller decision, tip choice, the follow-up turn opened without words) and marks the revision
+   `feedback_pending`; `write_prose` / `apply_prose` add the card, the polished tip and the follow-up wording.
+   `PracticeService.submit` answers after the grade is saved; the prose calls start the moment the answer is scored
+   (while the grade is saved) and a background task stores them with `attempts.save_prose`, a conditional update
+   (only a `done` revision still flagged `feedback_pending`: never written twice). Crash between the two saves: the
+   next read after 30 s writes the words, `retry` at once; neither re-scores. A failed save is retried with the words
+   already written. A follow-up without words refuses answers (`409 follow_up_not_ready`). Views:
+   `SubmissionView.feedback_pending`, `AttemptView.feedback_pending`, `FollowUpView.question_pending`. Web: the grade
+   shows at once, polling continues while words are pending, the follow-up box waits for its question, progress is
+   no longer reloaded after hints. `FEEDBACK_IN_BACKGROUND` (default true) switches it. Interview turns have no prose
+   per turn, so nothing to move there. **After: grade 8.1 s median (max 10.3 s)** from this machine; from Render
+   (4 ms database round trips instead of 71 ms) about 5 s.
+3. **Nothing about evaluation changed**, proven by `tests/test_grade_first.py`: a four-attempt scenario's full stored
+   result (bands, evaluations, evidence, XP, next question, every `engine_state`, level history, metrics, usage,
+   tips, card, tip and follow-up wording) equals a record written by the code before the split (`tests/golden/`),
+   inline and in the background. `evaluator.py`, `scores.py`, `skill_controller.py`, `params.py`, the prompts,
+   `feedback.py`, `generator.py`, `tips.py` and `providers.py` are byte-identical to `a9d8643`.
+4. **Fewer round trips.** Cached servable question list and question-skill links; one transaction for
+   `progress()`; next-question reads inside the outcome transaction; no second seniority read. Warm submit 29 → 22
+   statements, progress 20 → 12, library 6 → 3.
+5. **Many users** (`scripts/load_test.py`, local API over HTTP, scripted model with real timing, test tokens):
+   10 / 50 / 100 users, every flow completed, no errors, event-loop lag p99 ≤ 29 ms, 117 → 160 MB. Same harness,
+   50 users, old way: submit p50 14.1 s vs 7.8 s. Fixed: signing-key lookups took a default-pool thread per request
+   and code tests (up to 5 s each) shared that pool: 20 slow code answers stalled everyone's requests ~5 s on a
+   6-thread host; keys are now reused from memory and code tests have their own 4-thread pool (others stay at
+   10–40 ms). Made-up token `kid`s can no longer force a JWKS download per request. 429s from the evaluator (30 %):
+   answers kept, retries score them, nothing lost.
+6. **Database** (`scripts/db_concurrency.py`, rolled back): the Session pooler refuses the project's ~10th
+   simultaneous connection (`EMAXCONNSESSION`); the Transaction pooler (port 6543) accepted 40 and ran every flow.
+   Production round trip 4 ms (`/health?db_check=true`). Pool settings are now `DB_POOL_SIZE` / `DB_MAX_OVERFLOW` /
+   `DB_POOL_TIMEOUT`; `/health.database_pooler` says which pooler is in use.
+7. **Model capacity**: the account is on the Evaluation tier (1,000 RPM, 500k ITPM, 80k OTPM per model, read from
+   response headers): about 55–75 fully answered questions per minute, Sonnet's output tokens binding first.
+8. **Evaluator comparison** (P2, 13 answers): Sonnet 5 agreed with Opus 5 on 13/13 bands, 4.0 s vs 5.0 s median,
+   62 % cheaper, but missed or over-flagged misconception keys in 2 of 13. Opus stays (decision for Shaked).
+
+**Decisions for Shaked:** (a) set Render's `DATABASE_URL` to port 6543 (Transaction pooler); (b) the Anthropic tier
+(Start tier = ×4–5 capacity, $500/month cap); (c) Opus stays the judge unless you decide otherwise; (d) rotate the
+database password as a precaution (part of the connection string was printed to the agent's console once).
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -325,6 +375,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-09-26 | Overnight (§5n): latency bench (grade 16.8 s → 8.1 s median, 37 → 10 s max); grade first (words in a background task, conditional save, crash-safe, proven identical by a golden record); fewer round trips; load test 10/50/100 users over HTTP, all flows complete; signing keys reused from memory and code tests in their own pool (a slow code answer no longer stalls other users); JWKS refresh throttled; database concurrency check (Session pooler refuses the 10th connection, Transaction pooler recommended); model capacity from the account's headers (Evaluation tier); P2 Opus vs Sonnet as judge; `docs/performance-2026-09-26.md` |
 | 2026-09-25 | Overnight (§5m): XP computed on read (`app/engine/xp.py`: band × difficulty × hints × reference, follow-up ½, interview ×1.5, per-skill split, streak, `level_progress` from the engine's level score; engine untouched, proven by test); the Duolingo-style restyle of the web app (top bar + bottom tabs, Learn home with the program as a path, skill-strength bars, streak, XP pills); 772 offline tests, 48 web tests |
 | 2026-09-24 | Loyalty per skill (1..10, -1 per 3 days without evidence, back to 10 on any scored answer; 6 or lower = provisional, refresh scheduled first); the saved program on `learning_plan`/`plan_item` (rebuilt daily, carried forward up to 3 days, ticked by attempts and interviews); "My program" replaces "One question for today"; 742 offline tests (§5l) |
 | 2026-09-24 | Overnight (§5k): the goal (job type, interview date, minutes a day) on `user_profile`; six job types that re-weight the role's skills for the plan, the next question and the interview; questions listed by job relevance and by company; "I saw it at company X" (migration `20260924045708`, applied); progress = overview in words + road-so-far graph + plan until the interview; practice feedback → follow-up → next question under the answer; drawn circuits in interview answers (photos: migration `20260924045651`, applied); visual refresh; 706 offline tests; `scripts/e2e_goal_and_visuals.py`; verification report `docs/system-verification-2026-09-24.md` |

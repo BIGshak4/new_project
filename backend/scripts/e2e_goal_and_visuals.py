@@ -52,7 +52,8 @@ async def main() -> None:
         user = (await connection.execute(text("select id from public.user_profile limit 1"))).scalar_one()
         store = RollbackStore(connection, allow_in_review=False)
         try:
-            practice = PracticeService(store, catalog, provider, ServiceConfig(polish_tips=True))
+            practice = PracticeService(store, catalog, provider,
+                                       ServiceConfig(polish_tips=True, feedback_in_background=settings.feedback_in_background))
             table_present = await sightings.available()
             print(f"question_sighting table applied: {table_present}")
 
@@ -112,6 +113,7 @@ async def main() -> None:
             t = time.perf_counter()
             sub, _ = await practice.submit(user, aid, reference, idempotency_key="program-1")
             print(f"  answered with the reference: band={sub.band} in {time.perf_counter() - t:.0f}s")
+            await practice.drain()                                        # the words, saved before the rollback
             after = await practice.program(user, language="en")
             item = next(i for i in after.plan.items if i.id == practice_item.id)
             row = (await connection.execute(text("select status, completed_attempt_id from public.plan_item where id = :i"),
