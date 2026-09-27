@@ -541,23 +541,24 @@ function Workspace({
               <div>
                 <h1>
                   {route.view === "history"
-                    ? t(
-                        "ממשיכים מאיפה שעצרנו.",
-                        "Pick up where you left off.",
-                      )
+                    ? t("התרגול שלכם", "Your practice")
                     : route.view === "progress"
-                      ? t("רואים את הדרך.", "See how far you’ve come.")
+                      ? t("איפה אתם עומדים", "Where you stand")
                       : route.view === "bookmarks"
-                        ? t("שווה לחזור אליהן.", "Worth coming back to.")
-                        : t("בואו נחשוב על זה.", "Let’s think it through.")}
+                        ? t("שאלות ששמרתם", "Saved questions")
+                        : t("מאגר השאלות", "The question bank")}
                 </h1>
                 <p>
                   {route.view === "progress"
                     ? t("הרמה במילים, הדרך עד כאן והתוכנית עד הראיון.", "Your level in words, the road so far and the plan until the interview.")
-                    : t(
-                        "תרגול ממוקד לראיונות חומרה ותוכנה. בקצב שלכם.",
-                        "Focused hardware and software interview practice. At your pace.",
-                      )}
+                    : route.view === "history"
+                      ? t("כל תשובה ששלחתם, עם הציון והמשוב, מהחדשה לישנה.", "Every answer you sent, with its grade and feedback, newest first.")
+                      : route.view === "bookmarks"
+                        ? t("שאלות שסימנתם כדי לחזור אליהן. לחצו על שאלה כדי להתחיל.", "Questions you marked to come back to. Open one to start.")
+                        : t(
+                            "שאלות ראיון אמיתיות בלוגיקה ספרתית, מכונות מצבים ותכנות, מסודרות לפי מה שחשוב לתפקיד שבחרתם.",
+                            "Real interview questions in digital logic, state machines and code, ordered by what matters for the job you chose.",
+                          )}
                 </p>
               </div>
             </div>

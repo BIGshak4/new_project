@@ -442,7 +442,7 @@ function InterviewReportView({
                       ? t("התאמה לחברה", "Company fit")
                       : t("סך הכול", "Overall")}
                 </span>
-                <strong className="fit-score">{fit.fit_score === null ? "—" : `${Math.round(fit.fit_score)}%`}</strong>
+                <strong className={`fit-score ${fit.fit_score === null ? "fit-score-none" : ""}`}>{fit.fit_score === null ? t("עוד אין מספיק ראיות", "Not enough evidence yet") : `${Math.round(fit.fit_score)}%`}</strong>
                 <span className="small muted">
                   {fit.skills_assessed}/{fit.skills_total} {t("מיומנויות הוערכו", "skills assessed")}
                   {fit.cap_applied !== null && <> · {t("מוגבל בגלל פער במיומנות ליבה", "capped by a core-skill gap")}</>}

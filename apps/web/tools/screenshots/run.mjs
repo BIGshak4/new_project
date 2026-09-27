@@ -149,15 +149,16 @@ log("web up");
 
 // ------------------------------------------------------------------------------------------ the browser
 
-const profile = join(OUT, "edge-profile");
+const profile = join(OUT, `edge-profile-${process.pid}`);          // a fresh profile: a locked one from a killed run never blocks
+rmSync(profile, { recursive: true, force: true });
 const port = 9300 + Math.floor(Math.random() * 500);
-start(EDGE, ["--headless=new", "--disable-gpu", "--hide-scrollbars", `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`, "about:blank"], { name: "edge" });
+start(EDGE, ["--headless=new", "--disable-gpu", "--hide-scrollbars", "--no-first-run", "--no-default-browser-check", `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`, "about:blank"], { name: "edge" });
 let target;
-for (let i = 0; i < 100 && !target; i++) {
+for (let i = 0; i < 300 && !target; i++) {                             // a cold start of Edge can take a while
   await sleep(200);
   try { target = (await (await fetch(`http://127.0.0.1:${port}/json`)).json()).find((t) => t.type === "page"); } catch {}
 }
-if (!target) throw new Error("no DevTools target");
+if (!target) throw new Error("no DevTools target after 60 s");
 const ws = new WebSocket(target.webSocketDebuggerUrl);
 await new Promise((r) => ws.addEventListener("open", r, { once: true }));
 let id = 0; const pending = new Map(); const consoleErrors = [];
@@ -226,4 +227,5 @@ const overflow = index.filter((s) => s.overflow).map((s) => s.file);
 const missing = index.filter((s) => !s.found).map((s) => s.file);
 log(`done: ${index.length} shots in ${OUT}; overflow: ${overflow.length ? overflow.join(", ") : "none"}; not found: ${missing.length ? missing.join(", ") : "none"}`);
 stopAll();
+try { rmSync(profile, { recursive: true, force: true }); } catch {}   // Edge may still hold the profile for a moment
 process.exit(0);
