@@ -28,10 +28,8 @@ from app.api.errors import ApiError
 AUDIENCE = "authenticated"
 ASYMMETRIC = ("ES256", "RS256")
 LEEWAY_SECONDS = 30
-UNKNOWN_KID_SECONDS = 300
-KEY_CACHE_SECONDS = 3600              # a verified signing key is reused this long (PyJWKClient keeps the set as long)
-UNKNOWN_KID_REFRESH_SECONDS = 30      # at most one key-set fetch per this period is caused by an unknown `kid`
-MAX_UNKNOWN_KIDS = 1024               # remembered unknown kids; anyone can send tokens with made-up kids
+KEY_CACHE_SECONDS = 3600              # a key seen in the project's set is reused this long (PyJWKClient keeps the set as long)
+KEY_SET_FRESH_SECONDS = 30            # after a lookup, the set counts as current this long: at most one lookup per period
 
 
 @dataclass(frozen=True)
@@ -56,10 +54,10 @@ class TokenVerifier:
         if jwks_client is None and self.issuer:
             jwks_client = jwt.PyJWKClient(self.issuer + "/.well-known/jwks.json", cache_keys=True, lifespan=3600)
         self._jwks = jwks_client
-        self._unknown_kids: dict[str | None, float] = {}
-        # kid -> (fetched at, key): a known key is used on the event loop, without a thread hop per request
+        # kid -> (seen at, key), only kids of the project's real key set: used on the event loop, no thread per request
         self._keys: dict[str | None, tuple[float, object]] = {}
-        self._last_miss_fetch = -1e9
+        self._lookup: asyncio.Future | None = None
+        self._last_lookup = -1e9
 
     @property
     def configured(self) -> bool:
@@ -100,35 +98,51 @@ class TokenVerifier:
     async def _signing_key(self, token: str, kid: str | None):
         """The project's public key for this token's `kid`.
 
-        A key verified before is reused from memory. Otherwise the key set is looked up in a worker thread (a
-        network fetch when PyJWKClient's own cache misses). A `kid` the project does not have makes PyJWKClient
-        refetch the whole key set, so such fetches are limited to one per UNKNOWN_KID_REFRESH_SECONDS: tokens
-        with made-up kids (anyone can send them) cannot turn every request into a JWKS download and a busy thread."""
-        now = time.monotonic()
+        A key seen in the project's key set is reused from memory, without a thread per request. Otherwise the key set
+        is looked up, one lookup at a time, in a worker thread (PyJWKClient downloads it when its own cache misses or
+        does not hold the kid), and EVERY key of the set it saw is stored, so a lookup caused by anyone refreshes the
+        real keys too. After a lookup the set counts as current for KEY_SET_FRESH_SECONDS: a kid not in it is refused
+        without another download. Made-up kids (anyone can send them) therefore cost at most one lookup per
+        KEY_SET_FRESH_SECONDS and can never lock a real key out; a key added to the project waits at most that long."""
         cached = self._keys.get(kid)
-        if cached is not None and now - cached[0] < KEY_CACHE_SECONDS:
+        if cached is not None and time.monotonic() - cached[0] < KEY_CACHE_SECONDS:
             return cached[1]
-        if kid in self._unknown_kids and now - self._unknown_kids[kid] < UNKNOWN_KID_SECONDS:
-            raise ApiError("unauthenticated", "the token's signing key is not known")
-        if self._keys and now - self._last_miss_fetch < UNKNOWN_KID_REFRESH_SECONDS:
-            self._remember_unknown(kid, now)                     # keys are known and a refresh just happened
-            raise ApiError("unauthenticated", "the token's signing key is not known")
-        if self._keys:
-            self._last_miss_fetch = now
-        try:
-            signing_key = await asyncio.to_thread(self._jwks.get_signing_key_from_jwt, token)
-        except jwt.PyJWTError as exc:
-            self._remember_unknown(kid, now)                     # do not refetch the JWKS for this kid again soon
-            raise ApiError("unauthenticated", "the token's signing key is not known") from exc
-        self._keys[kid] = (now, signing_key.key)
-        return signing_key.key
+        if self._lookup is not None:                       # a lookup is on its way: its answer is this one's too
+            await asyncio.shield(self._lookup)
+        elif time.monotonic() - self._last_lookup >= KEY_SET_FRESH_SECONDS:
+            self._last_lookup = time.monotonic()
+            self._lookup = asyncio.ensure_future(self._look_up(token))
+            try:
+                await asyncio.shield(self._lookup)
+            finally:
+                self._lookup = None
+        cached = self._keys.get(kid)
+        if cached is not None and time.monotonic() - cached[0] < KEY_CACHE_SECONDS + KEY_SET_FRESH_SECONDS:
+            return cached[1]
+        raise ApiError("unauthenticated", "the token's signing key is not known")
 
-    def _remember_unknown(self, kid: str | None, now: float) -> None:
-        if len(self._unknown_kids) >= MAX_UNKNOWN_KIDS:
-            self._unknown_kids = {k: t for k, t in self._unknown_kids.items() if now - t < UNKNOWN_KID_SECONDS}
-            if len(self._unknown_kids) >= MAX_UNKNOWN_KIDS:
-                self._unknown_kids.clear()
-        self._unknown_kids[kid] = now
+    async def _look_up(self, token: str) -> None:
+        found = await asyncio.to_thread(self._fetch_keys, token)
+        now = time.monotonic()
+        for kid, key in found.items():
+            self._keys[kid] = (now, key)
+
+    def _fetch_keys(self, token: str) -> dict:
+        """(worker thread) {kid: key} for the token's kid if the project has it, and for every key of the set."""
+        found = {}
+        try:
+            signing = self._jwks.get_signing_key_from_jwt(token)        # downloads the set when needed
+            found[jwt.get_unverified_header(token).get("kid")] = signing.key
+        except jwt.PyJWTError:
+            pass                                                        # not in the project's set
+        every = getattr(self._jwks, "get_signing_keys", None)
+        if every is not None:
+            try:
+                for key in every():                                     # the set just seen, from the client's cache
+                    found[key.key_id] = key.key
+            except jwt.PyJWTError:
+                pass
+        return found
 
 
 _bearer = HTTPBearer(auto_error=False)

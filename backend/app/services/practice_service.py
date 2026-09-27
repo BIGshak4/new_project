@@ -358,7 +358,8 @@ class PracticeService:
             try:
                 async with self.store.transaction() as tx:
                     await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
-                                          revisions={submission.revision}, known_revisions=known)
+                                          revisions={submission.revision, *self._superseded_by(attempt, submission)},
+                                          known_revisions=known)
             except DuplicateSubmissionKey:
                 # another process accepted a revision first: answer with what it stored, or say so
                 attempt, stored, loaded, profile = await self._load(user_id, attempt_id)
@@ -395,15 +396,35 @@ class PracticeService:
                                           xp_earned=self._xp_for(attempt, outcome.submission)),
                     self._view(attempt, stored, loaded, language))
 
-    async def retry(self, user_id: uuid.UUID, attempt_id: uuid.UUID) -> tuple[SubmissionView, AttemptView]:
-        """Evaluate the latest failed revision again; or, when nothing failed but a scored revision still lacks its
-        words, write only the words (never a second score)."""
+    @staticmethod
+    def _superseded_by(attempt: PracticeAttempt, submission: Submission) -> set[int]:
+        """Earlier revisions of the same turn that accepting `submission` marked superseded. The database writes only
+        the revisions it is given, so they are saved with the new one (review finding, 2026-09-26: otherwise a retry
+        could pick an old, replaced answer and score it)."""
+        return {s.revision for s in attempt.submissions
+                if s.turn == submission.turn and s.revision < submission.revision and "superseded" in s.flags
+                and s.status != EvaluationStatus.DONE}
+
+    async def retry(self, user_id: uuid.UUID, attempt_id: uuid.UUID,
+                    revision: int | None = None) -> tuple[SubmissionView, AttemptView]:
+        """Evaluate the latest failed revision again; or, when that revision is scored but still lacks its words,
+        write only the words (never a second score). `revision`: the one the caller checked; nothing else is touched."""
         async with self._lock(attempt_id):
             attempt, stored, loaded, profile = await self._load(user_id, attempt_id)
-            failed = any(s.status == EvaluationStatus.FAILED and "superseded" not in s.flags for s in attempt.submissions)
+            failed = [s for s in attempt.submissions if s.status == EvaluationStatus.FAILED and "superseded" not in s.flags]
             wordless = next((s for s in reversed(attempt.submissions) if s.feedback_pending), None)
+            if revision is not None:
+                target = next((s for s in attempt.submissions if s.revision == revision), None)
+                if target is None or not (target.feedback_pending or (failed and failed[-1] is target)):
+                    raise ApiError("nothing_to_retry", f"revision {revision} is not waiting for evaluation")
+                wordless = target if target.feedback_pending else None
+                failed = [] if wordless is not None else failed
         if not failed and wordless is not None:
-            await self.finish_feedback(user_id, attempt_id, wordless.revision)
+            running = self._feedback_tasks.get((attempt_id, wordless.revision))
+            if running is not None:                      # the words are being written right now: wait, do not repeat
+                await asyncio.wait({running})
+            else:
+                await self.finish_feedback(user_id, attempt_id, wordless.revision)
             attempt, stored, loaded, _ = await self._load(user_id, attempt_id)
             sub = next(s for s in attempt.submissions if s.revision == wordless.revision)
             return (self._submission_view(sub, None, attempt.next_question, xp_earned=self._xp_for(attempt, sub)),

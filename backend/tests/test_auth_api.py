@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+import uuid
+
+import jwt
 import pytest
 from httpx import ASGITransport, AsyncClient
 
+from app.api.errors import ApiError
 from app.config import Settings, get_settings
 from app.main import app
 from tests.authtools import ISSUER, make_token, make_verifier, member_resolver
@@ -231,9 +235,67 @@ class TestKeyLookups:
         _, token = make_token(email=MEMBER)                               # real users are unaffected
         assert (await client.get("/v1/me", headers=auth(token))).status_code == 200
 
-    def test_the_unknown_kid_memory_is_bounded(self):
+    async def test_made_up_kids_never_lock_out_an_expired_real_key(self):
+        """Review finding (2026-09-26): when the real key's cache entry expired, a made-up kid sent every few seconds
+        used to get the real key refused. Every lookup now stores the whole real set."""
+        import time as clock
+
         from app import auth as auth_module
         verifier = make_verifier()
-        for i in range(auth_module.MAX_UNKNOWN_KIDS * 3):
-            verifier._remember_unknown(f"kid-{i}", float(i))
-        assert len(verifier._unknown_kids) <= auth_module.MAX_UNKNOWN_KIDS
+        _, real = make_token(email=MEMBER)
+        await verifier.verify(real)
+        kid, (seen, key) = next(iter(verifier._keys.items()))
+        verifier._keys[kid] = (seen - auth_module.KEY_CACHE_SECONDS - 60, key)       # an hour later: expired
+        verifier._last_lookup = clock.monotonic() - auth_module.KEY_SET_FRESH_SECONDS - 1
+        for i in range(5):                                                         # the attacker's tokens
+            _, fake = make_token(kid=f"made-up-{i}")
+            with pytest.raises(ApiError):
+                await verifier.verify(fake)
+        _, real = make_token(email=MEMBER)
+        assert (await verifier.verify(real)).email == MEMBER                      # the real key still works
+        assert set(verifier._keys) == {kid}                                        # made-up kids are never stored
+
+    async def test_a_rotated_in_key_is_accepted_within_one_refresh_period(self):
+        import time as clock
+
+        from cryptography.hazmat.primitives.asymmetric import ec
+
+        from app import auth as auth_module
+        from app.auth import TokenVerifier
+        from tests import authtools
+        new_private = ec.generate_private_key(ec.SECP256R1())
+
+        class Rotating(authtools.FakeJWKSClient):
+            rotated = False
+
+            def get_signing_key_from_jwt(self, token):
+                if self.rotated and jwt.get_unverified_header(token).get("kid") == "key-2":
+                    return authtools._Key(new_private.public_key(), "key-2")
+                return super().get_signing_key_from_jwt(token)
+
+            def get_signing_keys(self):
+                keys = super().get_signing_keys()
+                return keys + ([authtools._Key(new_private.public_key(), "key-2")] if self.rotated else [])
+
+        client = Rotating()
+        verifier = TokenVerifier(supabase_url=authtools.SUPABASE_URL, jwks_client=client)
+        _, old = make_token(email=MEMBER)
+        await verifier.verify(old)
+        client.rotated = True                                                      # the project adds key-2
+        now = int(clock.time())
+        claims = {"sub": str(uuid.uuid4()), "aud": "authenticated", "iss": authtools.ISSUER, "iat": now, "exp": now + 600,
+                  "email": MEMBER, "role": "authenticated"}
+        rotated = jwt.encode(claims, new_private, algorithm="ES256", headers={"kid": "key-2"})
+        with pytest.raises(ApiError):                                              # the set was looked up a moment ago
+            await verifier.verify(rotated)
+        verifier._last_lookup = clock.monotonic() - auth_module.KEY_SET_FRESH_SECONDS - 1
+        assert (await verifier.verify(rotated)).email == MEMBER                    # accepted at the next refresh
+
+    async def test_concurrent_first_requests_share_one_lookup(self, monkeypatch):
+        import asyncio as aio
+
+        calls = self.counting(monkeypatch)
+        verifier = make_verifier()
+        tokens = [make_token(email=MEMBER)[1] for _ in range(20)]
+        users = await aio.gather(*(verifier.verify(t) for t in tokens))
+        assert len(users) == 20 and calls["n"] == 1                                # a cold start: one lookup, not 20

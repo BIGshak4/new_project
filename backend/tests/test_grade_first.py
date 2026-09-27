@@ -365,3 +365,36 @@ class TestGradeFirst:
         await svc.drain()
         view = await svc.get(USER, aid)
         assert len(view.follow_ups) == 1 and view.pending_follow_up.question
+
+    async def test_retry_never_scores_a_replaced_answer(self, catalog, monkeypatch):
+        """Review finding (2026-09-26): on the database, the 'superseded' flag of a replaced failed answer was never
+        saved, so a retry aimed at the new answer's words re-scored the old answer."""
+        from app.api.errors import ApiError
+        from app.engine.providers import LLMError
+
+        replies, calls = provider(), {"evaluator": 0}
+
+        def respond(request):
+            if request.role == "evaluator":
+                calls["evaluator"] += 1
+                if calls["evaluator"] == 1:
+                    raise LLMError("the model is down", retryable=False)
+            return replies._responder(request)
+        svc, store = _svc(catalog, ScriptedProvider(respond))
+        view = await svc.start(USER, question_key="example-sensor-majority", mode="deep", language="en")
+        aid = uuid.UUID(view.id)
+        first, _ = await svc.submit(USER, aid, {"text": "alarm = A ^ B ^ C"}, idempotency_key="r1")
+        assert first.status == "failed"
+        monkeypatch.setattr(PracticeService, "_start_feedback", lambda *a, **k: None)   # the words never arrive
+        second, _ = await svc.submit(USER, aid, {"text": "alarm = A & B | A & C | B & C"}, idempotency_key="r2")
+        assert second.status == "done" and second.feedback_pending
+        monkeypatch.undo()
+        stored = {s["revision"]: s for s in store.attempts[aid]["row"]["submissions"]}
+        assert "superseded" in stored[1]["flags"]                          # saved with the new answer
+        evaluations, metrics = calls["evaluator"], len(store.metrics)
+        with pytest.raises(ApiError) as refused:
+            await svc.retry(USER, aid, revision=1)                          # the replaced answer: never again
+        assert refused.value.code == "nothing_to_retry"
+        sub, view = await svc.retry(USER, aid, revision=2)                  # the words of the new one, only
+        assert sub.revision == 2 and not sub.feedback_pending and sub.card is not None
+        assert calls["evaluator"] == evaluations and len(store.metrics) == metrics

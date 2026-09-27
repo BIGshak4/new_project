@@ -249,9 +249,14 @@ class _MemoryTx:
             raise RuntimeError("simulated database failure")
         attempt_id = uuid.UUID(str(row["id"]))
         existing = self.s.attempts.get(attempt_id)
+        stored = copy.deepcopy(row)
         if existing is not None:
+            # the database's rules (app/repo/attempts.save): the attempt row is written whole, but only the revisions
+            # named in `revisions` are written; the others keep what is stored. A new revision is an insert (a taken
+            # number or key is refused); an existing one is updated only while it is not done.
             by_revision = {s["revision"]: s for s in existing["row"]["submissions"]}
             keys = {s["key"] for s in by_revision.values()}
+            kept = dict(by_revision)
             for s in row["submissions"]:
                 if revisions is not None and s["revision"] not in revisions:
                     continue
@@ -259,19 +264,28 @@ class _MemoryTx:
                 if s["revision"] > known_revisions:
                     if current is not None or s["key"] in keys:
                         raise DuplicateSubmissionKey(s["key"])          # revision number or key taken meanwhile
-                elif current is not None and current["status"] == "done" and s["status"] != current["status"]:
+                elif current is not None and current["status"] == "done":
                     raise AlreadyEvaluated(s["revision"])
-        self.s.attempts[attempt_id] = {"user_id": user_id, "question_id": question_id, "row": copy.deepcopy(row),
+                kept[s["revision"]] = copy.deepcopy(s)
+            stored["submissions"] = [kept[r] for r in sorted(kept)]
+        self.s.attempts[attempt_id] = {"user_id": user_id, "question_id": question_id, "row": stored,
                                        "started_at": existing["started_at"] if existing else datetime.now(UTC)}
 
     async def save_prose(self, *, user_id, question_id, row, revision):
         if "save_attempt" in self.s.failures:
             raise RuntimeError("simulated database failure")
-        existing = self.s.attempts.get(uuid.UUID(str(row["id"])))
+        attempt_id = uuid.UUID(str(row["id"]))
+        existing = self.s.attempts.get(attempt_id)
         current = next((s for s in (existing or {}).get("row", {}).get("submissions", []) if s["revision"] == revision), None)
         if current is None or current["status"] != "done" or "feedback_pending" not in (current.get("flags") or []):
             return False                                  # the words are already there: never written twice
-        self.s.attempts[uuid.UUID(str(row["id"]))] = {**existing, "row": copy.deepcopy(row)}
+        # as the database: only the words and the flags of that revision, then the attempt row (no other revision)
+        mine = next(s for s in row["submissions"] if s["revision"] == revision)
+        worded = {**current, "card": copy.deepcopy(mine.get("card")), "tip_text": mine.get("tip_text"),
+                  "follow_up": mine.get("follow_up"), "flags": list(mine.get("flags") or [])}
+        stored = copy.deepcopy(row)
+        stored["submissions"] = [worded if s["revision"] == revision else s for s in existing["row"]["submissions"]]
+        self.s.attempts[attempt_id] = {**existing, "row": stored}
         return True
 
     async def started_today(self, user_id, *, now=None):

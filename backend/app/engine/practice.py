@@ -788,10 +788,24 @@ class PracticeAttempt:
             tip_coro = self._tip(tips.TipChoice(tip, "post_session", float(tip.severity)), evaluation, prose.usage)
         # The follow-up wording, the feedback card and the tip only need the evaluation, so they run at the
         # same time: the candidate waits for the slowest of the three instead of their sum.
-        results = iter(await asyncio.gather(*[c for c in (generate_coro, card_coro, tip_coro) if c is not None]))
+        # Each call already falls back to its template when the model fails; anything else that goes wrong in one of
+        # them (a bug, an unexpected reply) must not lose the other two or leave the revision without words
+        # (review finding, 2026-09-26): that call gets its template too.
+        results = iter(await asyncio.gather(*[c for c in (generate_coro, card_coro, tip_coro) if c is not None],
+                                            return_exceptions=True))
         generated = next(results) if generate_coro is not None else None
         built = next(results) if card_coro is not None else None
         prose.tip_text = next(results) if tip_coro is not None else None
+        if isinstance(generated, BaseException):
+            log.error("follow-up wording failed for attempt %s: %r; using the template", self.attempt_id, generated)
+            generated = self._template_follow_up(Decision.model_validate(turn["decision"]))
+        if isinstance(built, BaseException):
+            log.error("feedback card failed for attempt %s: %r; using the template", self.attempt_id, built)
+            built = feedback.FeedbackResult(feedback.fallback_card(question, evaluation, band, check, ctx.language),
+                                            source="fallback")
+        if isinstance(prose.tip_text, BaseException):
+            log.error("tip failed for attempt %s: %r; using the template", self.attempt_id, prose.tip_text)
+            prose.tip_text = tips.render(tip, ctx.language, self._tip_placeholders(evaluation))
         if generated is not None:
             self._record_usage(prose.usage, "generate", generated)
             prose.follow_up = generated
@@ -800,11 +814,26 @@ class PracticeAttempt:
             prose.card = built.card
         return prose
 
+    def _tip_placeholders(self, evaluation: Evaluation) -> dict[str, str]:
+        return {"missed_point": (evaluation.key_points_missed or [""])[0],
+                "skill_label": self.ctx.skills[self.question.primary_skill].label}
+
+    def _template_follow_up(self, decision: Decision) -> generator.GenerationResult:
+        """The generator's own template for this decision (what it returns when the model fails twice)."""
+        language, question = self.ctx.language, self.question
+        hint_text = generator.bank_hint(question, decision.hint_level, language) if decision.deliver_hint else None
+        skill = self.ctx.skills.get(decision.target_skill)
+        texts = generator.FALLBACK_TEXT.get(language, generator.FALLBACK_TEXT["en"])
+        template = texts.get(decision.action, generator.FALLBACK_TEXT["en"][Action.HOLD])
+        text = template.format(hint=hint_text or "", skill=skill.label if skill else decision.target_skill or "")
+        return generator.GenerationResult(generator.GeneratedQuestion(question_text=text,
+                                                                      question_archetype=decision.target_archetype),
+                                          source="fallback", flags=["fallback_question"])
+
     async def _tip(self, choice: tips.TipChoice, evaluation: Evaluation, usage: list[UsageEvent]) -> str:
         """The chosen tip in words: the template, polished by the model when the context allows it."""
         ctx = self.ctx
-        placeholders = {"missed_point": (evaluation.key_points_missed or [""])[0],
-                        "skill_label": ctx.skills[self.question.primary_skill].label}
+        placeholders = self._tip_placeholders(evaluation)
         composed = await tips.compose(ctx.provider if ctx.polish_tips else None, choice, language=ctx.language,
                                       placeholders=placeholders)
         self._record_usage(usage, "tip", composed)         # metered like every other model call

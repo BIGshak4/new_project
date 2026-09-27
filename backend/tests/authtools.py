@@ -20,8 +20,9 @@ _other_private_key = ec.generate_private_key(ec.SECP256R1())
 
 
 class _Key:
-    def __init__(self, key):
+    def __init__(self, key, key_id: str = KID):
         self.key = key
+        self.key_id = key_id
 
 
 class FakeJWKSClient:
@@ -32,6 +33,10 @@ class FakeJWKSClient:
         if header.get("kid") != KID:
             raise jwt.PyJWKClientError("kid not found")
         return _Key(_private_key.public_key())
+
+    def get_signing_keys(self):
+        """The whole set, as PyJWKClient returns it."""
+        return [_Key(_private_key.public_key())]
 
 
 def make_verifier() -> TokenVerifier:
