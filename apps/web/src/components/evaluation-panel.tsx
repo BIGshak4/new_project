@@ -104,7 +104,7 @@ export function EvaluationPanel({
             <span className={`badge band-${tone}`}>{bandLabel(band, lang)}</span>
             {(s.xp_earned ?? 0) > 0 && (
               <span className="xp-pill" role="status" aria-label={`${s.xp_earned} ${t("נקודות ניסיון", "experience points")}`}>
-                <Sparkles size={14} aria-hidden="true" /> +{s.xp_earned} XP
+                <Sparkles size={14} aria-hidden="true" /> <bdi dir="ltr">+{s.xp_earned} XP</bdi>
               </span>
             )}
           </div>

@@ -303,7 +303,7 @@ export function LearnHome({
                   : `${today.total - today.done} ${t("נותרו להיום.", "left today.")} ${remainingMinutes} ${t("דק׳.", "min.")}`}
           </p>
           {overview && (overview.xp_today ?? 0) > 0 && (
-            <p className="xp-today">+{overview.xp_today} XP {t("היום", "today")}</p>
+            <p className="xp-today"><bdi dir="ltr">+{overview.xp_today} XP</bdi> {t("היום", "today")}</p>
           )}
         </section>
         <SkillStrength skills={progress.focus_skills ?? []} lang={lang} limit={5} ordered />

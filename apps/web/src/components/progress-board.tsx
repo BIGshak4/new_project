@@ -49,7 +49,7 @@ export function OverviewCard({
           <strong>
             <Star size={18} aria-hidden="true" /> {overview.xp_total ?? 0}
           </strong>
-          <span>XP{(overview.xp_today ?? 0) > 0 ? ` · +${overview.xp_today} ${t("היום", "today")}` : ""}</span>
+          <span>XP{(overview.xp_today ?? 0) > 0 ? <> · <bdi dir="ltr">+{overview.xp_today}</bdi> {t("היום", "today")}</> : ""}</span>
         </div>
         <div className={`stat stat-streak ${(overview.streak_days ?? 0) > 0 ? "lit" : ""}`}>
           <strong>

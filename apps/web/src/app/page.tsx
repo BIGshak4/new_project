@@ -423,7 +423,7 @@ function Workspace({
             aria-label={`${overview?.xp_total ?? 0} XP · ${overview?.level ?? ""}`}
           >
             <Star size={20} aria-hidden="true" />
-            <span className="xp-number">{overview?.xp_total ?? 0} XP</span>
+            <span className="xp-number" dir="ltr">{overview?.xp_total ?? 0} XP</span>
             {overview?.level && <span className="level-word" dir="auto">{overview.level}</span>}
           </span>
         </div>

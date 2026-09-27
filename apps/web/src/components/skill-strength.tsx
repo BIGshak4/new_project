@@ -55,7 +55,7 @@ export function SkillStrength({
                 </div>
                 {(s.xp ?? 0) > 0 && (
                   <span className="strength-xp small muted">
-                    <Sparkles size={12} aria-hidden="true" /> {s.xp} XP
+                    <Sparkles size={12} aria-hidden="true" /> <bdi dir="ltr">{s.xp} XP</bdi>
                   </span>
                 )}
               </li>
