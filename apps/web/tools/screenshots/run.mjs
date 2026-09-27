@@ -180,7 +180,7 @@ const inject = (lang, signedIn) => `
   } catch (e) {}`;
 
 const SCREENS = [
-  ["signin", "/", false, ".auth-layout"],
+  ["signin", "/", false, ".landing"],
   ["learn", "/", true, ".learn, .path-card"],
   ["library", "/?view=library", true, ".question-table, .question-row"],
   ["question", "/?question=example-sensor-majority", true, ".question-sheet"],

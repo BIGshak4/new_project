@@ -629,8 +629,8 @@ export function PracticeSession({
                           )
                         : attempt.submission
                           ? t(
-                              "התשובה ששלחתם מופיעה כאן. מצב המשוב מוצג בהמשך.",
-                              "Your submitted answer is shown below. Feedback status follows.",
+                              "הציון, מה היה טוב ומה היה חסר, שאלת ההמשך והשאלה הבאה מחכים למטה.",
+                              "The grade, what was good and what was missing, the follow-up and the next question are below.",
                             )
                           : t(
                               "כתבו הנחות, הסבירו את הדרך ובדקו מקרי קצה.",

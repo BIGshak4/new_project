@@ -267,7 +267,7 @@ export function PlanTable({
                       </span>
                     </th>
                   ) : null}
-                  <td>
+                  <td className="plan-mode-cell">
                     <span className="plan-mode">
                       {item.done ? <Check size={15} aria-hidden="true" /> : <Circle size={13} aria-hidden="true" />}
                       {modeLabel(item.mode, lang)}
@@ -276,7 +276,9 @@ export function PlanTable({
                       {item.status === "started" && <span className="small muted">{t("בתהליך", "in progress")}</span>}
                     </span>
                   </td>
-                  <td dir="auto">{item.skills.map((s) => s.label).join(", ")}</td>
+                  <td dir="auto" className="plan-skills">
+                    {item.skills.map((s) => s.label).join(", ")}
+                  </td>
                   <td className="plan-minutes">
                     {item.minutes} {t("דק׳", "min")}
                   </td>

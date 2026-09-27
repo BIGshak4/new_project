@@ -75,7 +75,7 @@ function InterviewLobby({ api, lang, demo, onStarted }: Props) {
     <section className="interview-lobby">
       <div className="page-heading">
         <div>
-          <h1>{t("ראיון מדומה.", "A mock interview.")}</h1>
+          <h1>{t("ראיון מדומה", "Mock interview")}</h1>
           <p>
             {t(
               "מראיין אחד, שאלה אחת בכל פעם, נגד השעון. הוא עובר בין נושאים לפי התשובות שלכם: מחזק כשקשה, מעלה רמה כשקל. הציונים נחשפים רק בסוף, בדוח.",
@@ -420,7 +420,7 @@ function InterviewReportView({
     <section className="interview-report">
       <div className="page-heading">
         <div>
-          <h1>{t("הראיון הסתיים.", "The interview is over.")}</h1>
+          <h1>{t("דוח הראיון", "Interview report")}</h1>
           <p>
             {interview.turns.length} {t("שאלות", "questions")} · {interview.duration_min} {t("דקות", "min")}
             {interview.ended_early && <> · {t("הסתיים מוקדם", "ended early")}</>}

@@ -144,10 +144,10 @@ export function Auth({
       </p>
       <p dir="ltr">{user?.email}</p>
       {accessError && <p role="alert">{accessError}</p>}
-      <button className="primary" onClick={() => void checkAccess()}>
+      <button type="button" className="primary" onClick={() => void checkAccess()}>
         {he ? "בדיקת הרשאות מחדש" : "Check access again"}
       </button>
-      <button className="text-button" onClick={signOut}>
+      <button type="button" className="text-button" onClick={signOut}>
         <LogOut size={16} />
         {he ? "יציאה מהחשבון" : "Sign out"}
       </button>

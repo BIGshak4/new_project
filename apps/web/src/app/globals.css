@@ -3390,11 +3390,23 @@ summary {
   .plan-grid thead {
     display: none;
   }
+  /* on a phone each plan row is a small card: the day, the skill in bold with its Start button beside it,
+     the mode and minutes as a quiet line, the reason last */
+  .plan-grid,
+  .plan-grid tbody {
+    display: block;
+  }
   .plan-grid tr {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 4px 12px;
-    padding: 10px 0;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "day day day"
+      "skills skills start"
+      "mode minutes start"
+      "reason reason reason";
+    gap: 2px 10px;
+    align-items: center;
+    padding: 12px 0;
     border-bottom: 2px solid var(--line-soft);
   }
   .plan-grid td,
@@ -3402,15 +3414,50 @@ summary {
     border: 0;
     padding: 0;
   }
+  .plan-row.first td,
+  .plan-row.first th {
+    border-top: 0;
+  }
   .plan-day {
-    grid-column: 1 / -1;
+    grid-area: day;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .plan-day strong {
+    display: inline;
+  }
+  .plan-skills {
+    grid-area: skills;
+    font-weight: 800;
+    font-size: 15px;
+  }
+  .plan-mode-cell {
+    grid-area: mode;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .plan-mode-cell .plan-mode {
+    font-weight: 700;
+  }
+  .plan-minutes {
+    grid-area: minutes;
+    color: var(--muted);
+    font-size: 13px;
   }
   .plan-reason {
-    grid-column: 1 / -1;
+    grid-area: reason;
+    max-width: none;
+    margin-top: 4px;
   }
   .plan-start {
-    grid-column: 1 / -1;
-    text-align: start;
+    grid-area: start;
+    text-align: end;
+    align-self: center;
+  }
+  .plan-start:empty {
+    display: none;
   }
   .interview-bar {
     gap: 10px;

@@ -24,8 +24,10 @@ import time
 import uuid
 from pathlib import Path
 
-from fastapi import FastAPI, Request, Response          # module level: `from __future__ import annotations` turns the
-from fastapi.middleware.cors import CORSMiddleware      # route signatures into strings FastAPI resolves from globals
+from fastapi import FastAPI, Request, Response  # module level: `from __future__ import annotations` turns the
+from fastapi.middleware.cors import (
+    CORSMiddleware,  # route signatures into strings FastAPI resolves from globals
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
