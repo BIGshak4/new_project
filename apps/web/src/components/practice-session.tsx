@@ -33,6 +33,7 @@ import {
 } from "../lib/practice-api";
 import {
   apiMessage,
+  bandLabel,
   hasAccepted,
   pendingResolved,
   latestSubmission,
@@ -637,6 +638,21 @@ export function PracticeSession({
                               "State assumptions, explain your reasoning, and check edge cases.",
                             )}
                     </p>
+                    {attempt.submission && !demo && attempt.submission.assessed_by !== "demo" && attempt.submission.band && (
+                      <p className="answer-grade">
+                        <span className={`badge band-${attempt.submission.band.toLowerCase()}`}>
+                          {bandLabel(attempt.submission.band, lang)}
+                        </span>
+                        {(attempt.submission.xp_earned ?? 0) > 0 && (
+                          <span className="xp-pill">
+                            <bdi dir="ltr">+{attempt.submission.xp_earned} XP</bdi>
+                          </span>
+                        )}
+                        <a href="#feedback" className="text-button">
+                          {t("למשוב המלא", "To the full feedback")}
+                        </a>
+                      </p>
+                    )}
                     {!attempt.submission ? (
                       <>
                         <AnswerEditor
@@ -785,6 +801,7 @@ export function PracticeSession({
             </div>
             {attempt?.submission && (
               <section
+                id="feedback"
                 className="practice-flow"
                 aria-label={t("המשוב וההמשך", "Feedback and what comes next")}
               >

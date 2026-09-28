@@ -140,6 +140,22 @@ export function ProgressGraph({ timeline, lang }: { timeline: TimelinePoint[]; l
         <p className="empty-column">
           {t("הגרף מתחיל לצייר את עצמו אחרי התשובה הראשונה.", "The graph starts drawing itself after your first answer.")}
         </p>
+      ) : timeline.length < 3 ? (
+        <div className="graph-early">
+          {timeline.map((p) => (
+            <p key={p.day} className="graph-early-day">
+              <strong>{shortDate(p.day)}</strong>
+              <span>
+                {p.answered === 1 ? t("תשובה אחת", "1 answer") : `${p.answered} ${t("תשובות", "answers")}`}
+                {" · "}
+                {p.strong} {t("חזקות", "strong")}, {p.partial} {t("חלקיות", "partial")}, {p.weak} {t("לחיזוק", "to strengthen")}
+              </span>
+            </p>
+          ))}
+          <p className="small muted">
+            {t("הגרף מקבל צורה אחרי שלושה ימים של תשובות.", "The chart takes shape after three days of answers.")}
+          </p>
+        </div>
       ) : (
         <div className="graph-wrap" dir="ltr">
         <svg className="graph-svg" viewBox={`0 0 ${width} ${height}`} role="img"

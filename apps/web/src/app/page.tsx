@@ -589,7 +589,9 @@ function Workspace({
                 <span>
                   <strong>
                     {progressReady
-                      ? `${progress.attempts_today} / ${progress.daily_limit}`
+                      ? progress.daily_limit >= 1000
+                        ? progress.attempts_today
+                        : `${progress.attempts_today} / ${progress.daily_limit}`
                       : "—"}
                   </strong>
                   {t("תרגולים שנפתחו היום", "attempts started today")}

@@ -495,7 +495,17 @@ function InterviewReportView({
                 {report.recommended_next_skills.map((s) => (
                   <li key={s.key} dir="auto">{s.label}</li>
                 ))}
-                {report.recommended_next_skills.length === 0 && <li>{t("אין פערים מובהקים. כל הכבוד.", "No clear gaps. Well done.")}</li>}
+                {report.recommended_next_skills.length === 0 &&
+                  (report.skills.some((s) => s.status === "assessed") ? (
+                    <li>{t("אין פערים מובהקים. כל הכבוד.", "No clear gaps. Well done.")}</li>
+                  ) : (
+                    <li>
+                      {t(
+                        "עוד אין מספיק תשובות כדי להצביע על פערים. עוד ראיון או כמה תרגולים יראו אותם.",
+                        "Not enough answers yet to point at gaps. Another interview or a few practice questions will show them.",
+                      )}
+                    </li>
+                  ))}
               </ul>
               {report.top_tips.length > 0 && (
                 <>

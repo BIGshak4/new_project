@@ -3819,3 +3819,38 @@ summary {
 }
 
 .fit-score-none { font-size: 16px; color: var(--muted); font-weight: 800; }
+
+/* the grade line in the saved-answer card, and the road-so-far chart's first days (2026-09-28) */
+.answer-grade {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 12px 0 4px;
+}
+.answer-grade .text-button {
+  margin-inline-start: auto;
+}
+.answer-grade .xp-pill {
+  animation: none;
+}
+.graph-early {
+  display: grid;
+  gap: 8px;
+  padding: 6px 0 2px;
+}
+.graph-early-day {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  font-weight: 700;
+  color: var(--muted);
+}
+.graph-early-day strong {
+  color: var(--green-text);
+  font-weight: 900;
+}
+.practice-flow {
+  scroll-margin-top: 90px;
+}
