@@ -380,6 +380,37 @@ hanging; before a night run, set Windows not to sleep while plugged in.
 seed, a deterministic check's message, the second line of some tips, plan reasons in the plan's language); a
 first-week treatment for the chart exists now but the days are still UTC; the live suite's 3-s listing guard.
 
+## 5p. The interactive layer (night of 2026-09-28 → 29, Shaked's "start it")
+
+Four libraries joined the web app, each for one job, all styled from the brief; the palette, type, copy and layout
+did not change. Report: `docs/system-verification-2026-09-29.md`.
+
+1. **Motion** (`motion/react`, wrappers in `apps/web/src/components/ui/motion.tsx`): the Learn path's nodes arrive one
+   after another (45 ms apart, capped at half a second), the current node breathes until pressed, the page scrolls
+   to it once on open when it is out of view; the grade reveals itself in order (ring draws, glyph, band pops, XP
+   pops, "what was good", "what was missing", the tip; all inside 1.5 s, timings in `lib/ui.ts`); the top bar's XP
+   counts up to the new total; Skill strength bars fill from the start edge; views cross-fade in 160 ms. Every piece
+   goes through `useReducedMotion`, and `MotionConfig reducedMotion="user"` sits at the root, so the "reduce motion"
+   setting turns the whole layer off.
+2. **Radix** (`ui/select.tsx`, `ui/popover.tsx`, `ui/language-menu.tsx`): the library's topic and job-type selects
+   and the goal form's seniority select are Radix selects (keyboard, type-ahead, Escape, focus return, RTL through
+   `dir`; the app's "" value is mapped to a sentinel because Radix refuses empty item values); the long paragraph
+   about how hints affect the grade moved into a "?" popover beside the hint buttons; the language switch is a menu
+   with both languages listed and the current one ticked.
+3. **Sonner** (`components/toaster.tsx`, one toaster in the root layout, `dir="auto"`, unstyled and dressed by
+   `.ui-toast`): "saved to your account", "added to this question's companies" and "goal saved" are toasts; errors
+   stay inline.
+4. **Harness**: three more screens photograph the layers open (a select, the hint popover, the language menu) by
+   pressing the trigger through the DevTools protocol; the settle wait grew to 2 s so the grade sequence finishes;
+   52 shots now.
+5. **Verification**: `tsc` clean; 54 web tests (5 new in `tests/ui.test.ts` for the select value mapping, the stagger,
+   the grade order, the scroll rule, the counter); production build; 52 screenshots with no overflow, no missing
+   element and no console error, both languages and widths; Netlify green. Nothing under `backend/` changed.
+   Bundle: all client chunks gzipped 559 KB → 653 KB (about 94 KB for the four libraries, mostly Motion).
+
+**Night 2 (not started)**: Recharts for the road-so-far chart, motion in the interview room (timer, turn changes),
+page transitions between practice steps, a polish pass with fresh screenshots.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -418,6 +449,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-09-29 | Night (§5p): Motion (path arrival, breathing current node, scroll to today, the grade sequence, counting XP, filling bars, view cross-fade, all behind reduced-motion), Radix selects, hint popover and language menu, Sonner toasts, three harness screens with the layers open; 54 web tests |
 | 2026-09-28 | Overnight (§5o): the design brief and two design skills; the landing page; the token pass (Nunito + Assistant, 3D button, coloured shadows, purple XP, no all-caps); copy in the coach's voice; Skill strength overflow fixed; plan rows as cards on a phone; the grade shown beside the answer; early-days chart; honest interview report; the screenshot harness (40 shots, both languages and widths); 794 offline tests; `docs/system-verification-2026-09-28.md` |
 | 2026-09-26 | Overnight (§5n): latency bench (grade 16.8 s → 8.1 s median, 37 → 10 s max); grade first (words in a background task, conditional save, crash-safe, proven identical by a golden record); fewer round trips; load test 10/50/100 users over HTTP, all flows complete; signing keys reused from memory and code tests in their own pool (a slow code answer no longer stalls other users); JWKS refresh throttled; database concurrency check (Session pooler refuses the 10th connection, Transaction pooler recommended); model capacity from the account's headers (Evaluation tier); P2 Opus vs Sonnet as judge; `docs/performance-2026-09-26.md` |
 | 2026-09-25 | Overnight (§5m): XP computed on read (`app/engine/xp.py`: band × difficulty × hints × reference, follow-up ½, interview ×1.5, per-skill split, streak, `level_progress` from the engine's level score; engine untouched, proven by test); the Duolingo-style restyle of the web app (top bar + bottom tabs, Learn home with the program as a path, skill-strength bars, streak, XP pills); 772 offline tests, 48 web tests |
