@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JobRun · כיוון ד · סטודיו + מלווה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Heebo:wght@400;500;600;700;900&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14172b; --mute:#5f647e;
+    --paper:#eef1ff;                 /* C's sky, a touch lighter */
+    --cobalt:#1f3bff; --cobalt-deep:#1428b8; --cobalt-soft:#dfe4ff;
+    --sun:#ffd23f; --sun-deep:#d9ad00;
+    --peach:#ffb4a2; --peach-deep:#e08a75;
+    --leaf:#7bd389; --leaf-deep:#4f9a56;
+    --grape:#7c3aed;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{font-family:Heebo,"Bricolage Grotesque",system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.45}
+  .d{font-family:"Secular One",Heebo,sans-serif;font-weight:400}
+  .latin{font-family:"Bricolage Grotesque",sans-serif}
+  header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px}
+  .wordmark{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:26px;direction:ltr;letter-spacing:-0.03em;color:var(--cobalt-deep)}
+  .wordmark i{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--sun);margin-inline-start:4px;vertical-align:middle;border:3px solid var(--cobalt)}
+  nav{display:flex;gap:4px;background:#fff;border-radius:999px;padding:4px;box-shadow:0 10px 24px -20px rgba(20,23,43,.6)}
+  nav a{text-decoration:none;color:var(--ink);font-weight:700;padding:10px 18px;border-radius:999px}
+  nav a.on{background:var(--cobalt);color:#fff}
+  .pills{display:flex;gap:8px}
+  .pill{border-radius:999px;padding:8px 14px;font-weight:800;font-size:14px;background:#fff}
+  .pill.xp{background:var(--sun)}
+  .pill.st{background:var(--peach)}
+  main{max-width:1180px;margin:0 auto;padding:10px 32px 90px}
+  /* the hero: B's colour block with C's companion talking inside it */
+  .hero{background:var(--cobalt);color:#fff;border-radius:36px;padding:38px 44px 36px;display:grid;grid-template-columns:150px minmax(0,1fr) 260px;gap:26px;align-items:center;position:relative;overflow:hidden}
+  .hero:after{content:"";position:absolute;inset-inline-start:-90px;bottom:-160px;width:380px;height:380px;border-radius:50%;background:var(--sun)}
+  .buddy{width:150px;height:150px;position:relative;z-index:1;filter:drop-shadow(0 12px 0 rgba(0,0,0,.18))}
+  .say{position:relative;z-index:1}
+  .say .kick{font-weight:700;opacity:.8;margin-bottom:6px}
+  .say h1{font-size:60px;line-height:1}
+  .say h1 em{font-style:normal;color:var(--sun)}
+  .say p{font-size:18px;max-width:50ch;margin-top:14px;opacity:.95}
+  .say p b{color:var(--sun);font-weight:700}
+  .cta{position:relative;z-index:1;justify-self:end;background:#fff;color:var(--ink);text-decoration:none;font-weight:800;font-size:20px;padding:22px 28px;border-radius:24px;box-shadow:0 10px 0 rgba(0,0,0,.18);display:inline-flex;gap:12px;align-items:center;transition:transform .08s,box-shadow .08s}
+  .cta:active{transform:translateY(8px);box-shadow:0 2px 0 rgba(0,0,0,.18)}
+  .cta small{font-weight:600;font-size:14px;color:var(--mute)}
+  /* the path: C's stepping stones, drawn as B's stickers */
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;margin-top:18px}
+  .road{background:#fff;border-radius:32px;padding:26px 28px 28px}
+  .road h2{font-size:22px;display:flex;justify-content:space-between;color:var(--mute);font-weight:600;margin-bottom:18px}
+  .road h2 b{color:var(--ink)}
+  .stones{list-style:none;padding:0;display:grid;gap:14px;position:relative}
+  .stones:before{content:"";position:absolute;inset-inline-start:44px;top:24px;bottom:24px;border-inline-start:4px dotted #d9dcf3}
+  .stone{display:grid;grid-template-columns:92px 1fr;gap:14px;align-items:center}
+  .orb{width:92px;height:92px;border-radius:30px;display:grid;place-items:center;font-size:34px;position:relative;z-index:1;transform:rotate(var(--r,0));transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+  .stone:hover .orb{transform:rotate(0) scale(1.06)}
+  .done .orb{background:var(--leaf);box-shadow:0 8px 0 var(--leaf-deep);--r:-4deg}
+  .now .orb{background:var(--sun);box-shadow:0 8px 0 var(--sun-deep);outline:4px solid var(--ink);outline-offset:-4px;--r:3deg;transform:rotate(3deg) scale(1.1)}
+  .next .orb{background:#eef0fb;color:#a9adcc;box-shadow:0 8px 0 #d9dcf3;--r:-2deg}
+  .stone b{font-size:19px;display:block}
+  .stone span{color:var(--mute);font-size:14px}
+  .now .txt{background:var(--cobalt-soft);border-radius:22px;padding:14px 18px}
+  .go{display:inline-flex;align-items:center;gap:10px;margin-top:10px;background:var(--cobalt);color:#fff;text-decoration:none;font-weight:800;padding:13px 22px;border-radius:18px;box-shadow:0 6px 0 var(--cobalt-deep);transition:transform .08s,box-shadow .08s}
+  .go:active{transform:translateY(5px);box-shadow:0 1px 0 var(--cobalt-deep)}
+  aside{display:grid;gap:16px;align-content:start}
+  .card{background:#fff;border-radius:28px;padding:20px 22px}
+  .card h3{font-size:24px;line-height:1;margin-bottom:6px}
+  .card .sub{color:var(--mute);font-size:13px;font-weight:600;margin-bottom:12px}
+  .meter{height:16px;border-radius:999px;background:#eef0fb;overflow:hidden;margin:6px 0 10px}
+  .meter i{display:block;height:100%;width:20%;background:linear-gradient(90deg,var(--sun),var(--cobalt));border-radius:999px}
+  .garden{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:end;height:100px;margin:4px 0 6px}
+  .plant{display:grid;justify-items:center;gap:5px}
+  .plant i{width:24px;border-radius:12px 12px 5px 5px;background:var(--leaf);height:var(--h);box-shadow:inset 0 -6px 0 rgba(0,0,0,.12)}
+  .plant i.seed{background:#dfe2f5;height:10px;box-shadow:none}
+  .plant i.bud{background:var(--cobalt)}
+  .plant span{font-size:10px;color:var(--mute);text-align:center;line-height:1.1;font-weight:600}
+  .dark{background:var(--ink);color:#fff;border-radius:28px;padding:20px 22px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+  .dark .n{font-family:"Bricolage Grotesque";font-weight:800;font-size:64px;line-height:.9;color:var(--sun);letter-spacing:-0.04em}
+  .dark span{color:#c9cde6;font-size:14px}
+  @media (max-width:900px){header{padding:14px 16px}nav{display:none}main{padding:6px 16px 80px}.hero{grid-template-columns:1fr;padding:26px 22px;border-radius:28px;gap:14px}.buddy{width:96px;height:96px}.say h1{font-size:40px}.cta{justify-self:start}.layout{grid-template-columns:1fr}.stone{grid-template-columns:72px 1fr}.orb{width:72px;height:72px;font-size:28px;border-radius:24px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wordmark">jobrun<i></i></div>
+  <nav><a class="on" href="#">היום</a><a href="#">שאלות</a><a href="#">ראיון</a><a href="#">איפה אני</a></nav>
+  <div class="pills"><span class="pill xp">135 XP</span><span class="pill st">3 ימים 🔥</span><span class="pill">בסיס</span></div>
+</header>
+<main>
+  <section class="hero">
+    <svg class="buddy" viewBox="0 0 120 120" aria-hidden="true">
+      <rect x="22" y="26" width="76" height="70" rx="26" fill="#14172b"/>
+      <rect x="30" y="34" width="60" height="42" rx="18" fill="#ffd23f"/>
+      <circle cx="48" cy="55" r="6" fill="#14172b"/><circle cx="72" cy="55" r="6" fill="#14172b"/>
+      <circle cx="50" cy="53" r="2" fill="#fff"/><circle cx="74" cy="53" r="2" fill="#fff"/>
+      <path d="M50 66 q10 8 20 0" stroke="#14172b" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <rect x="54" y="12" width="12" height="16" rx="6" fill="#ffb4a2"/><circle cx="60" cy="10" r="6" fill="#7bd389"/>
+      <rect x="10" y="60" width="14" height="26" rx="7" fill="#14172b"/><rect x="96" y="60" width="14" height="26" rx="7" fill="#14172b"/>
+    </svg>
+    <div class="say">
+      <div class="kick">וריפיקציה · 9 ימים לראיון · 20 דק׳ ביום</div>
+      <h1 class="d">בוקר טוב, שקד. היום זה <em>מולטיפלקסרים.</em></h1>
+      <p>אתמול סגרת <b>Blocking/Non-blocking</b> בתשובה חזקה, אז היום אני פותח לך את הנושא שמראיינים הכי אוהבים לפתוח איתו. ארבע דקות, שאלה אחת, ואני איתך.</p>
+    </div>
+    <a class="cta" href="#">יאללה, מתחילים <small>4 דק׳</small></a>
+  </section>
+
+  <section class="layout">
+    <div class="road">
+      <h2><b>הדרך של היום</b><span>1 מתוך 5 · 16 דק׳ נשארו</span></h2>
+      <ol class="stones">
+        <li class="stone done"><div class="orb">✓</div><div><b>Blocking / Non-blocking</b><span>הושלם · תשובה חזקה · +33 XP</span></div></li>
+        <li class="stone now"><div class="orb">▶</div><div class="txt"><b>MUX, Decoders, Encoders</b><span>שאלה קצרה · 4 דק׳ · "MUX 4→1 בשתי דרכים, ואיזו היית שם על סיליקון"</span><br><a class="go" href="#">בוא נתחיל</a></div></li>
+        <li class="stone next"><div class="orb">3</div><div><b>Boolean Algebra</b><span>4 דק׳ · נפתח אחרי הקודם</span></div></li>
+        <li class="stone next"><div class="orb">4</div><div><b>Binary Arithmetic</b><span>4 דק׳</span></div></li>
+        <li class="stone next"><div class="orb">5</div><div><b>Bit Manipulation</b><span>4 דק׳</span></div></li>
+      </ol>
+    </div>
+    <aside>
+      <div class="card">
+        <h3 class="d">היום</h3>
+        <div class="meter"><i></i></div>
+        <div style="color:var(--mute);font-size:14px">עוד ארבע קצרות ואתה סוגר את היום. אני מחזיק לך את המקום.</div>
+      </div>
+      <div class="card">
+        <h3 class="d">הגינה שלך</h3>
+        <div class="sub">כל מיומנות היא צמח. תשובות משקות אותו.</div>
+        <div class="garden">
+          <div class="plant"><i class="seed"></i><span>State Diagrams</span></div>
+          <div class="plant"><i style="--h:50px"></i><span>Blocking</span></div>
+          <div class="plant"><i style="--h:46px"></i><span>Boolean</span></div>
+          <div class="plant"><i class="bud" style="--h:30px"></i><span>MUX</span></div>
+          <div class="plant"><i class="seed"></i><span>Debugging</span></div>
+        </div>
+      </div>
+      <div class="dark">
+        <div class="n">3</div>
+        <div><b class="d" style="font-size:22px">ימים ברצף.</b><br><span>היום נספר. המראיין לא לוקח יום חופש, וגם אתה לא.</span></div>
+      </div>
+    </aside>
+  </section>
+</main>
+</body>
+</html>

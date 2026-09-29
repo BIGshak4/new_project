@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JobRun · כיוון ג · המלווה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Miriam+Libre:wght@400;700&family=Heebo:wght@400;500;600;700;900&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241f3a; --mute:#6a6486;
+    --sky:#eef1ff; --cloud:#ffffff;
+    --plum:#5b2a86; --plum-deep:#3f1a60; --plum-soft:#ebdcf7;
+    --peach:#ffb4a2; --peach-deep:#e08a75;
+    --mustard:#f2c14e; --leaf:#7bc47f; --leaf-deep:#4f9a56;
+    --sea:#7fb7e6;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{font-family:Heebo,Fredoka,system-ui,sans-serif;background:var(--sky);color:var(--ink);line-height:1.5}
+  .d{font-family:"Miriam Libre",Heebo,serif;font-weight:700}
+  header{display:flex;align-items:center;justify-content:space-between;padding:16px 28px}
+  .wordmark{font-family:Fredoka,sans-serif;font-weight:700;font-size:24px;color:var(--plum);direction:ltr}
+  .chips{display:flex;gap:8px}
+  .chip{background:var(--cloud);border-radius:999px;padding:8px 14px;font-weight:700;font-size:14px;box-shadow:0 8px 20px -14px rgba(36,31,58,.5)}
+  .chip b{color:var(--plum)}
+  main{max-width:1120px;margin:0 auto;padding:10px 28px 90px;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:26px}
+  /* the companion: a small character that talks */
+  .talk{grid-column:1/-1;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px;align-items:center}
+  .buddy{width:120px;height:120px}
+  .bubble{background:var(--cloud);border-radius:28px;padding:22px 26px;position:relative;box-shadow:0 18px 40px -28px rgba(36,31,58,.5)}
+  .bubble:before{content:"";position:absolute;inset-inline-end:-10px;top:44px;border:12px solid transparent;border-inline-start-color:var(--cloud);border-inline-end:0}
+  .bubble h1{font-size:34px;line-height:1.15;margin-bottom:6px}
+  .bubble p{color:var(--mute);font-size:17px}
+  .bubble b{color:var(--plum)}
+  /* the path as stepping stones over a hill */
+  .hill{background:linear-gradient(180deg,var(--cloud),#f6f7ff);border-radius:32px;padding:26px 28px 30px;position:relative;overflow:hidden}
+  .hill h2{font-size:22px;color:var(--mute);font-weight:600;margin-bottom:18px;display:flex;justify-content:space-between}
+  .hill h2 b{color:var(--ink)}
+  .stones{list-style:none;padding:0;display:grid;gap:18px;position:relative}
+  .stones:before{content:"";position:absolute;inset-inline-start:41px;top:20px;bottom:20px;border-inline-start:4px dotted #d9d6ee}
+  .stone{display:grid;grid-template-columns:86px 1fr;gap:14px;align-items:center}
+  .orb{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;font-size:34px;position:relative;z-index:1;box-shadow:0 8px 0 rgba(36,31,58,.12)}
+  .done .orb{background:var(--leaf);box-shadow:0 8px 0 var(--leaf-deep)}
+  .now .orb{background:var(--peach);box-shadow:0 8px 0 var(--peach-deep);transform:scale(1.12)}
+  .next .orb{background:#e9e7f5;color:#a8a3c6;box-shadow:0 8px 0 #d6d3e8}
+  .stone b{font-size:19px;display:block}
+  .stone span{color:var(--mute);font-size:14px}
+  .now .txt{background:var(--plum-soft);border-radius:22px;padding:14px 18px}
+  .go{display:inline-flex;align-items:center;gap:10px;margin-top:10px;background:var(--plum);color:#fff;text-decoration:none;font-weight:800;padding:14px 22px;border-radius:20px;box-shadow:0 6px 0 var(--plum-deep);transition:transform .08s,box-shadow .08s}
+  .go:active{transform:translateY(5px);box-shadow:0 1px 0 var(--plum-deep)}
+  aside{display:grid;gap:18px;align-content:start}
+  .card{background:var(--cloud);border-radius:28px;padding:20px 22px;box-shadow:0 18px 40px -30px rgba(36,31,58,.5)}
+  .card h3{font-size:20px;margin-bottom:10px}
+  .garden{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:end;height:96px;margin:6px 0 10px}
+  .plant{display:grid;justify-items:center;gap:4px}
+  .plant i{width:22px;border-radius:11px 11px 4px 4px;background:var(--leaf);height:var(--h)}
+  .plant i.seed{background:#d9d6ee;height:10px}
+  .plant i.bud{background:var(--sea)}
+  .plant span{font-size:10px;color:var(--mute);text-align:center;line-height:1.1}
+  .sun{display:flex;align-items:center;gap:14px}
+  .sun .n{font-family:Fredoka;font-weight:700;font-size:54px;color:var(--mustard);line-height:1;text-shadow:0 4px 0 #d9a43a}
+  .meter{height:16px;border-radius:999px;background:#e9e7f5;overflow:hidden;margin:8px 0}
+  .meter i{display:block;height:100%;width:20%;background:linear-gradient(90deg,var(--peach),var(--plum));border-radius:999px}
+  @media (max-width:900px){main{grid-template-columns:1fr;padding:6px 16px 80px}.talk{grid-template-columns:80px 1fr}.buddy{width:80px;height:80px}.bubble h1{font-size:26px}.bubble:before{display:none}.stone{grid-template-columns:70px 1fr}.orb{width:70px;height:70px;font-size:28px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wordmark">jobrun</div>
+  <div class="chips"><span class="chip"><b>135</b> XP</span><span class="chip">🔥 <b>3</b></span><span class="chip">בסיס</span></div>
+</header>
+<main>
+  <section class="talk">
+    <svg class="buddy" viewBox="0 0 120 120" aria-hidden="true">
+      <ellipse cx="60" cy="112" rx="34" ry="6" fill="rgba(36,31,58,.12)"/>
+      <rect x="22" y="26" width="76" height="70" rx="26" fill="#5b2a86"/>
+      <rect x="30" y="34" width="60" height="42" rx="18" fill="#ebdcf7"/>
+      <circle cx="48" cy="55" r="6" fill="#241f3a"/><circle cx="72" cy="55" r="6" fill="#241f3a"/>
+      <circle cx="50" cy="53" r="2" fill="#fff"/><circle cx="74" cy="53" r="2" fill="#fff"/>
+      <path d="M50 66 q10 8 20 0" stroke="#241f3a" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <rect x="54" y="12" width="12" height="16" rx="6" fill="#ffb4a2"/><circle cx="60" cy="10" r="6" fill="#f2c14e"/>
+      <rect x="10" y="60" width="14" height="26" rx="7" fill="#5b2a86"/><rect x="96" y="60" width="14" height="26" rx="7" fill="#5b2a86"/>
+    </svg>
+    <div class="bubble">
+      <h1 class="d">שקד, 9 ימים לראיון. היום מפצחים מולטיפלקסרים.</h1>
+      <p>אתמול ענית על <b>Blocking/Non-blocking</b> כמו מישהו שכבר עבד בזה. אז היום ארבע דקות על <b>MUX</b>: הנושא שמראיינים פותחים איתו כדי לבדוק אם אתה חושב בחומרה או רק כותב אותה.</p>
+    </div>
+  </section>
+
+  <section class="hill">
+    <h2><b>היום במסלול</b><span>אחת מתוך חמש · 16 דק׳ עד הסוף</span></h2>
+    <ol class="stones">
+      <li class="stone done"><div class="orb">✓</div><div><b>Blocking / Non-blocking</b><span>תשובה חזקה, +33 XP. ככה נראית תשובה שמראיין זוכר.</span></div></li>
+      <li class="stone now"><div class="orb">▶</div><div class="txt"><b>MUX, Decoders, Encoders</b><span>שאלה קצרה, 4 דק׳: "MUX 4→1 בשתי דרכים. איזו היית שם על סיליקון, ולמה?"</span><br><a class="go" href="#">בוא נפצח את זה</a></div></li>
+      <li class="stone next"><div class="orb">🔒</div><div><b>Boolean Algebra</b><span>4 דק׳ · נפתח ברגע שסיימת עם MUX</span></div></li>
+      <li class="stone next"><div class="orb">🔒</div><div><b>Binary Arithmetic</b><span>4 דק׳ · ה־overflow שרוב המועמדים מפספסים</span></div></li>
+      <li class="stone next"><div class="orb">🔒</div><div><b>Bit Manipulation</b><span>4 דק׳ · הסיום של היום, קצר וחד</span></div></li>
+    </ol>
+  </section>
+
+  <aside>
+    <div class="card">
+      <h3 class="d">היום</h3>
+      <div class="meter"><i></i></div>
+      <div style="color:var(--mute);font-size:14px">אחת בפנים. עוד ארבע קצרות ואתה סוגר את היום עם יותר מ־100 XP.</div>
+    </div>
+    <div class="card">
+      <h3 class="d">הגינה שלך</h3>
+      <div style="color:var(--mute);font-size:13px">כל מיומנות צומחת מתשובות. MUX בדיוק נבט.</div>
+      <div class="garden">
+        <div class="plant"><i class="seed"></i><span>State Diagrams</span></div>
+        <div class="plant"><i style="--h:46px"></i><span>Blocking</span></div>
+        <div class="plant"><i style="--h:44px"></i><span>Boolean</span></div>
+        <div class="plant"><i class="bud" style="--h:30px"></i><span>MUX</span></div>
+        <div class="plant"><i class="seed"></i><span>Debugging</span></div>
+      </div>
+    </div>
+    <div class="card sun">
+      <div class="n">3</div>
+      <div><b>ימים ברצף</b><br><span style="color:var(--mute);font-size:14px">שלושה ימים שלא ויתרת. מחר בשעה הזאת נעשה את זה ארבעה.</span></div>
+    </div>
+  </aside>
+</main>
+</body>
+</html>
