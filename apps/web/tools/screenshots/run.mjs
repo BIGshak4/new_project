@@ -115,10 +115,20 @@ if (program.next && program.next.mode !== "simulation") {
   }
 }
 // interviews: one in progress (room), one finished (report)
+// two more scored answers on earlier days, so "The road so far" has three days to draw
+// the expression must be right, or the automatic truth-table check caps the band at "needs work"
+for (const [days, text] of [[2, "A strong, complete derivation: alarm = AB + BC + AC, read from the truth-table rows with two or more ones."], [1, "A partial answer that names the constraint: alarm = AB + BC + AC."]]) {
+  const past = await call("POST", "/v1/practice/attempts", { question_key: "example-sensor-majority", mode: "quick", language: "he" });
+  await call("POST", `/v1/practice/attempts/${past.id}/submissions`, { answer: { text } });
+  await waitWords(past.id);
+  await call("POST", "/__harness/backdate", { attempt_id: past.id, days });
+}
 const room = await call("POST", "/v1/interviews", { duration_min: 20, language: "he" });
 await call("POST", `/v1/interviews/${room.id}/turns/0/answer`, { answer: "A careful answer that states the assumptions and derives the result." });
 const done = await call("POST", "/v1/interviews", { duration_min: 20, language: "he" });
 await call("POST", `/v1/interviews/${done.id}/turns/0/answer`, { answer: "A careful answer that states the assumptions and derives the result." });
+await call("POST", `/v1/interviews/${done.id}/turns/1/answer`, { answer: "A partial answer that gets the idea but not the timing arithmetic." });
+await call("POST", `/v1/interviews/${done.id}/turns/2/answer`, { answer: "A strong answer with the state table and the reset path." });
 await call("POST", `/v1/interviews/${done.id}/end`);
 await call("GET", `/v1/interviews/${done.id}/report`);
 log("seeded: attempts", a.id.slice(0, 8), b.id.slice(0, 8), "interviews", room.id.slice(0, 8), done.id.slice(0, 8));

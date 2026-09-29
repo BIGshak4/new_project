@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Clock3, Cpu, Lightbulb, Mic, Square } from "lucide-react";
 import type { Lang } from "./auth";
+import { revealDelay, timerTone } from "../lib/ui";
+import { AnimatePresence, Pop, Reveal, motion, spring, useReducedMotion } from "./ui/motion";
 import { AnswerEditor } from "./answer-editor";
 import { VisualAnswer } from "./visual-answer";
 import { emptyVisual, hasVisual, type VisualAnswer as Visual } from "../lib/circuit";
@@ -144,6 +146,7 @@ function InterviewLobby({ api, lang, demo, onStarted }: Props) {
 
 function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { interviewId: string }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
+  const reduced = useReducedMotion();
   const [interview, setInterview] = useState<Interview | null>(null);
   const [report, setReport] = useState<InterviewReport | null>(null);
   const [answer, setAnswer] = useState("");
@@ -284,13 +287,14 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
 
   const turn = interview.current_turn;
   const secondsLeft = deadline ? Math.max(0, Math.round((deadline - now) / 1000)) : interview.remaining_min * 60;
+  const tone = timerTone(secondsLeft);
   const mm = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
   const ss = String(secondsLeft % 60).padStart(2, "0");
   const Arrow = lang === "he" ? ArrowLeft : ArrowRight;
   return (
     <section className="interview-room">
       <header className="interview-bar">
-        <span className="interview-timer" dir="ltr" aria-live="off">
+        <span className={`interview-timer tone-${tone}`} dir="ltr" aria-live={tone === "calm" ? "off" : "polite"}>
           <Clock3 size={16} /> {mm}:{ss}
         </span>
         <span className="small muted">
@@ -304,8 +308,16 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
         </button>
       </header>
 
+      <AnimatePresence mode="wait" initial={false}>
       {turn && (
-        <article className="interview-question">
+        <motion.article
+          key={turn.index}
+          className="interview-question"
+          initial={reduced ? false : { opacity: 0, x: lang === "he" ? -28 : 28 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={reduced ? undefined : { opacity: 0, x: lang === "he" ? 24 : -24 }}
+          transition={{ ...spring, opacity: { duration: 0.18 } }}
+        >
           <div className="row spread">
             <span className="badge">
               {turn.skill_label}
@@ -379,8 +391,9 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
               </div>
             </>
           )}
-        </article>
+        </motion.article>
       )}
+      </AnimatePresence>
 
       {interview.turns.length > 0 && (
         <details className="interview-answered">
@@ -415,6 +428,7 @@ function InterviewReportView({
   error: string;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
+  const reduced = useReducedMotion();
   const overall = report?.fit["session_overall"] ?? report?.fit["role"];
   return (
     <section className="interview-report">
@@ -433,8 +447,8 @@ function InterviewReportView({
       {report && (
         <>
           <div className="fit-cards">
-            {Object.entries(report.fit).map(([scope, fit]) => (
-              <div className="fit-card" key={scope}>
+            {Object.entries(report.fit).map(([scope, fit], i) => (
+              <Reveal className="fit-card" key={scope} delay={revealDelay(i, !!reduced, 0.12, 0.4)}>
                 <span className="small muted">
                   {scope === "role"
                     ? t("התאמה לתפקיד", "Role fit")
@@ -447,7 +461,7 @@ function InterviewReportView({
                   {fit.skills_assessed}/{fit.skills_total} {t("מיומנויות הוערכו", "skills assessed")}
                   {fit.cap_applied !== null && <> · {t("מוגבל בגלל פער במיומנות ליבה", "capped by a core-skill gap")}</>}
                 </span>
-              </div>
+              </Reveal>
             ))}
           </div>
           {overall && overall.core_gaps.length > 0 && (
@@ -496,7 +510,7 @@ function InterviewReportView({
                   <li key={s.key} dir="auto">{s.label}</li>
                 ))}
                 {report.recommended_next_skills.length === 0 &&
-                  (report.skills.some((s) => s.status === "assessed") ? (
+                  (report.skills.filter((s) => s.status === "assessed").length >= 3 ? (
                     <li>{t("אין פערים מובהקים. כל הכבוד.", "No clear gaps. Well done.")}</li>
                   ) : (
                     <li>
@@ -525,8 +539,10 @@ function InterviewReportView({
           <section>
             <h3>{t("השאלות והתשובות", "Questions and answers")}</h3>
             <ol className="report-turns">
-              {report.turns.map((x) => (
-                <TurnCard key={x.index} turn={x} lang={lang} />
+              {report.turns.map((x, i) => (
+                <Reveal as="li" className="report-turn" key={x.index} delay={revealDelay(i, !!reduced, 0.08, 0.5)}>
+                  <TurnCard turn={x} lang={lang} />
+                </Reveal>
               ))}
             </ol>
           </section>
@@ -539,14 +555,18 @@ function InterviewReportView({
 function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   return (
-    <li className="report-turn">
+    <>
       <div className="row spread">
         <span className="badge">{x.skill_label}</span>
         <span className="row">
           <span className={x.band ? `badge band-${x.band.toLowerCase()}` : "badge"}>
             {x.status === "skipped" ? t("לא נענתה", "Not answered") : bandLabel(x.band, lang)}
           </span>
-          {(x.xp_earned ?? 0) > 0 && <span className="xp-pill small"><bdi dir="ltr">+{x.xp_earned} XP</bdi></span>}
+          {(x.xp_earned ?? 0) > 0 && (
+            <Pop delay={0.3}>
+              <span className="xp-pill small"><bdi dir="ltr">+{x.xp_earned} XP</bdi></span>
+            </Pop>
+          )}
         </span>
       </div>
       <p className="interview-prompt" dir="auto">{x.question}</p>
@@ -574,7 +594,7 @@ function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang }) {
           {x.check.detail}
         </p>
       )}
-    </li>
+    </>
   );
 }
 

@@ -40,6 +40,13 @@ export function shouldScrollToNode(rect: { top: number; bottom: number }, viewpo
   return rect.top < topBar || rect.bottom > viewportHeight;
 }
 
+/** The interview timer's tone: calm, then amber for the last minute, then red for the last ten seconds. */
+export function timerTone(secondsLeft: number): "calm" | "warn" | "danger" {
+  if (secondsLeft <= 10) return "danger";
+  if (secondsLeft <= 60) return "warn";
+  return "calm";
+}
+
 /** Digits for the counting XP number: never negative, never fractional. */
 export function countDisplay(value: number): number {
   return Math.max(0, Math.round(value));

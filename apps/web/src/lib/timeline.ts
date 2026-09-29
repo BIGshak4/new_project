@@ -65,6 +65,16 @@ export function timelineLayout(points: TimelinePoint[], width = 640, height = 20
   return { bars, levelPath, levelPoints, maxAnswers, width, height, padding: p };
 }
 
+/** One row per practice day for the Recharts chart: the counts as numbers, the day as a short label. */
+export type ChartRow = { day: string; label: string; answered: number; strong: number; partial: number; weak: number; level: number | null };
+export function chartRows(points: TimelinePoint[], lang: "he" | "en"): ChartRow[] {
+  return points.map((p) => {
+    const d = new Date(`${p.day}T12:00:00`);
+    const label = Number.isNaN(d.getTime()) ? p.day : d.toLocaleDateString(lang === "he" ? "he-IL" : "en-GB", { day: "numeric", month: "short" });
+    return { day: p.day, label, answered: p.answered, strong: p.strong, partial: p.partial, weak: p.weak, level: p.level ?? null };
+  });
+}
+
 /** Which day labels to print under the bars so they never overlap: first, last and every n-th. */
 export function tickDays(points: TimelinePoint[], maxTicks = 6): Set<string> {
   if (!points.length) return new Set();

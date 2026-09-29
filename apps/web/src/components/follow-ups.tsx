@@ -2,6 +2,7 @@
 
 import { MessageSquare } from "lucide-react";
 import type { Lang } from "./auth";
+import { Pop, Reveal } from "./ui/motion";
 import type { Attempt } from "../lib/practice-api";
 import { bandLabel } from "../lib/practice-ui";
 
@@ -77,10 +78,16 @@ export function FollowUps({
             )}
             {f.submission!.status === "done" && (
               <div className="row">
-                <span className={`badge band-${f.submission!.band?.toLowerCase()}`}>
-                  {bandLabel(f.submission!.band, lang)}
-                </span>
-                {(f.submission!.xp_earned ?? 0) > 0 && <span className="xp-pill small"><bdi dir="ltr">+{f.submission!.xp_earned} XP</bdi></span>}
+                <Pop>
+                  <span className={`badge band-${f.submission!.band?.toLowerCase()}`}>
+                    {bandLabel(f.submission!.band, lang)}
+                  </span>
+                </Pop>
+                {(f.submission!.xp_earned ?? 0) > 0 && (
+                  <Pop delay={0.25}>
+                    <span className="xp-pill small"><bdi dir="ltr">+{f.submission!.xp_earned} XP</bdi></span>
+                  </Pop>
+                )}
                 {f.submission!.summary && (
                   <span className="small" dir="auto">
                     {f.submission!.summary}
@@ -91,7 +98,7 @@ export function FollowUps({
           </li>
         ))}
         {pending && (
-          <li key={pending.turn} className="follow-up open">
+          <Reveal as="li" key={pending.turn} className="follow-up open">
             <span className="follow-up-kind">{actionLabel(pending.action)}</span>
             {pending.question_pending ? (
               <p className="follow-up-question muted" role="status">
@@ -124,7 +131,7 @@ export function FollowUps({
                   ? t("שליחה חוזרת של אותה תשובה", "Resend the same answer")
                   : t("שליחת התשובה להמשך", "Send follow-up answer")}
             </button>
-          </li>
+          </Reveal>
         )}
       </ol>
     </section>

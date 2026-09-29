@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { EMPTY_OPTION, countDisplay, fromSelectValue, revealDelay, shouldScrollToNode, toSelectValue, GRADE_SEQUENCE } from "../src/lib/ui";
+import { EMPTY_OPTION, countDisplay, fromSelectValue, revealDelay, shouldScrollToNode, timerTone, toSelectValue, GRADE_SEQUENCE } from "../src/lib/ui";
+import { chartRows } from "../src/lib/timeline";
 
 test("the empty filter value survives the round trip through a Radix select", () => {
   assert.equal(toSelectValue(""), EMPTY_OPTION);
@@ -32,4 +33,25 @@ test("the path scrolls to the current node only when it is out of view", () => {
 test("the counting number is a whole, non-negative value", () => {
   assert.equal(countDisplay(61.6), 62);
   assert.equal(countDisplay(-3), 0);
+});
+
+test("the interview timer is calm, then amber for the last minute, then red for the last ten seconds", () => {
+  assert.equal(timerTone(600), "calm");
+  assert.equal(timerTone(61), "calm");
+  assert.equal(timerTone(60), "warn");
+  assert.equal(timerTone(11), "warn");
+  assert.equal(timerTone(10), "danger");
+  assert.equal(timerTone(0), "danger");
+});
+
+test("chart rows keep the counts and label the day in the page's language", () => {
+  const rows = chartRows([
+    { day: "2026-09-27", answered: 3, strong: 0, partial: 1, weak: 2, level: null },
+    { day: "2026-09-29", answered: 1, strong: 1, partial: 0, weak: 0, level: 2.4 },
+  ], "en");
+  assert.equal(rows.length, 2);
+  assert.deepEqual([rows[0].strong, rows[0].partial, rows[0].weak, rows[0].level], [0, 1, 2, null]);
+  assert.equal(rows[1].level, 2.4);
+  assert.match(rows[0].label, /27/);
+  assert.match(chartRows([{ day: "2026-09-27", answered: 1, strong: 1, partial: 0, weak: 0, level: 1 }], "he")[0].label, /27/);
 });

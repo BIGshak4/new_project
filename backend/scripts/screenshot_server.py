@@ -67,6 +67,11 @@ def build_api(user_id: uuid.UUID, email: str):
     def respond(request: LLMRequest):
         if request.role == "evaluator":
             text = request.user.lower()
+            # the harness's own marker phrases first (the question text may itself contain a caret)
+            if "a strong, complete" in text:
+                return strong
+            if "a partial answer" in text:
+                return partial
             return weak if "^" in text else partial if "partial" in text else strong
         if request.role == "generator":
             return {"question_text": "What changes if one sensor is stuck at 1? Write the new expression and say which "
@@ -94,7 +99,19 @@ def build_api(user_id: uuid.UUID, email: str):
     app.state.access_resolver = member
     provider = ScriptedProvider(respond)
     provider.model = "claude-opus-5"       # the screens treat a 'demo' judge as unassessed and hide the feedback; the harness photographs the real layout
-    app.state.runtime = build_runtime(settings, catalog=catalog, provider=provider, store=InMemoryStore(catalog))
+    store = InMemoryStore(catalog)
+    app.state.runtime = build_runtime(settings, catalog=catalog, provider=provider, store=store)
+
+    @app.post("/__harness/backdate")
+    async def backdate(body: dict):
+        """Harness only: move an attempt's start back by N days so the progress chart has several days to draw."""
+        from datetime import timedelta
+        attempt = store.attempts.get(uuid.UUID(body["attempt_id"]))
+        if attempt is None:
+            return Response(status_code=404)
+        attempt["started_at"] = attempt["started_at"] - timedelta(days=int(body["days"]))
+        return {"started_at": attempt["started_at"].isoformat()}
+
     return app
 
 

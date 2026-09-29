@@ -3,7 +3,8 @@
 import { ArrowLeft, ArrowRight, CalendarDays, Check, Circle, Flame, RefreshCw, Star, Target, TrendingUp } from "lucide-react";
 import type { Lang } from "./auth";
 import type { Goal, Plan, PlanItem, ProgressOverview, TimelinePoint } from "../lib/practice-api";
-import { dayLabel, levelSteps, modeLabel, planByDay, tickDays, timelineLayout } from "../lib/timeline";
+import { dayLabel, levelSteps, modeLabel, planByDay } from "../lib/timeline";
+import { RoadChart } from "./road-chart";
 
 /**
  * The progress page is three things and nothing else (Shaked, 2026-09-23): a card that says how far the
@@ -117,11 +118,6 @@ export function OverviewCard({
 
 export function ProgressGraph({ timeline, lang }: { timeline: TimelinePoint[]; lang: Lang }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
-  const width = 680,
-    height = 220;
-  const layout = timelineLayout(timeline, width, height);
-  const ticks = tickDays(timeline);
-  const baseline = height - layout.padding.bottom;
   const shortDate = (day: string) => {
     const d = new Date(`${day}T12:00:00`);
     return Number.isNaN(d.getTime()) ? day : d.toLocaleDateString(lang === "he" ? "he-IL" : "en-GB", { day: "numeric", month: "short" });
@@ -157,50 +153,17 @@ export function ProgressGraph({ timeline, lang }: { timeline: TimelinePoint[]; l
           </p>
         </div>
       ) : (
-        <div className="graph-wrap" dir="ltr">
-        <svg className="graph-svg" viewBox={`0 0 ${width} ${height}`} role="img"
-             aria-label={t("תשובות לפי יום ורמה ממוצעת", "Answers per day and average level")}>
-          <line className="graph-axis" x1={layout.padding.left} x2={width - layout.padding.right} y1={baseline} y2={baseline} />
-          <text className="graph-label" x={layout.padding.left - 6} y={layout.padding.top + 4} textAnchor="end">
-            {layout.maxAnswers}
-          </text>
-          <text className="graph-label" x={layout.padding.left - 6} y={baseline} textAnchor="end">
-            0
-          </text>
-          {layout.bars.map((bar) => (
-            <g key={bar.day}>
-              {bar.segments.map(([key, y, h]) => (
-                <rect key={key} className={`bar-seg bar-${key.toLowerCase()}`} x={bar.x} y={y} width={bar.width} height={h} rx={2}>
-                  <title>{`${shortDate(bar.day)}: ${bar.answered} ${t("תשובות", "answers")}`}</title>
-                </rect>
-              ))}
-              {ticks.has(bar.day) && (
-                <text className="graph-label" x={bar.x + bar.width / 2} y={height - 8} textAnchor="middle">
-                  {shortDate(bar.day)}
-                </text>
-              )}
-            </g>
-          ))}
-          {layout.levelPath && <path className="level-line" d={layout.levelPath} />}
-          {layout.levelPoints.map((pt) => (
-            <circle key={pt.day} className="level-dot" cx={pt.x} cy={pt.y} r={4}>
-              <title>{`${shortDate(pt.day)}: ${t("רמה", "level")} ${pt.level.toFixed(1)}`}</title>
-            </circle>
-          ))}
-          <text className="graph-label level-label" x={width - layout.padding.right + 2} y={layout.padding.top + 4} textAnchor="start">
-            5
-          </text>
-          <text className="graph-label level-label" x={width - layout.padding.right + 2} y={baseline} textAnchor="start">
-            1
-          </text>
-        </svg>
-        </div>
+        <RoadChart timeline={timeline} lang={lang} />
       )}
       <p className="chart-legend small muted">
         <span className="swatch strong" /> {t("חזקה", "Strong")}
         <span className="swatch partial" /> {t("חלקית", "Partial")}
         <span className="swatch weak" /> {t("לחיזוק", "Needs work")}
-        <span className="swatch line" /> {t("רמה ממוצעת (1-5)", "Average level (1-5)")}
+        {timeline.filter((p) => p.level !== null && p.level !== undefined).length >= 2 && (
+          <>
+            <span className="swatch line" /> {t("רמה ממוצעת (1-5)", "Average level (1-5)")}
+          </>
+        )}
       </p>
     </section>
   );

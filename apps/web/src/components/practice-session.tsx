@@ -20,6 +20,7 @@ import {
 import { AnswerEditor } from "./answer-editor";
 import { EvaluationPanel, NextUpCard } from "./evaluation-panel";
 import { HelpPopover } from "./ui/popover";
+import { Reveal } from "./ui/motion";
 import { toast } from "./toaster";
 import { FollowUps } from "./follow-ups";
 import { parseTechnicalAnswer } from "../lib/technical-answer";
@@ -226,7 +227,12 @@ export function PracticeSession({
         if (cancelled) return;
         apply(next);
         // the grade changes progress (XP, levels); the words that follow it do not
-        if (evaluating && next.status !== "evaluating") onProgress();
+        if (evaluating && next.status !== "evaluating") {
+          onProgress();
+          // bring the grade into view once, gently
+          const reduce = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+          document.getElementById("feedback")?.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
+        }
         if (next.status !== "evaluating" && !next.feedback_pending) return;
         if (Date.now() < deadline)
           timer = setTimeout(poll, next.status === "evaluating" ? 3000 : 1500);
@@ -837,11 +843,13 @@ export function PracticeSession({
                   resend={!!pending && pending.turn !== null}
                 />
                 {attempt.status === "done" && attempt.next_question && !demo && (
-                  <NextUpCard
-                    next={attempt.next_question}
-                    lang={lang}
-                    onStart={(key) => onNew(key)}
-                  />
+                  <Reveal delay={0.2}>
+                    <NextUpCard
+                      next={attempt.next_question}
+                      lang={lang}
+                      onStart={(key) => onNew(key)}
+                    />
+                  </Reveal>
                 )}
               </section>
             )}
