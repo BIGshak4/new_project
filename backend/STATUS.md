@@ -365,10 +365,10 @@ Vercel `web-interface-guidelines` with JobRun overrides) for this and future ses
    500 px, so 390 px needs emulation). Ten screens × two languages × two widths = 40 shots, each checked for
    sideways overflow, a missing main element and console errors. Output: `index.json` beside the PNGs.
 6. **Verification**: engine untouched (`git diff b9db3b1..HEAD -- backend/app/engine/` empty); ruff clean;
-   **794 offline tests**; live suites 12 of 17 passed, 4 lost their database connection mid-query from this machine (the long
-   transactions; no product assertion failed; rerun from a stable network, see the report), and 1 was a stale
-   assertion from before grade first (the HTTP-flow test expected the card in the submit response; it now waits
-   for the background words like the web app, and passes); `e2e_live_trial.py` and `e2e_goal_and_visuals.py` pass on the real
+   **794 offline tests**; live suites: all 17 passed tonight, though not in one run: 4 lost their database connection mid-query from this
+   machine (the long transactions) and passed on retry once the network settled, and 1 was a stale assertion from
+   before grade first (the HTTP-flow test expected the card in the submit response; it now waits for the
+   background words like the web app, and passes); `e2e_live_trial.py` and `e2e_goal_and_visuals.py` pass on the real
    model and database (rolled back); web `tsc`, 49 tests, production build; 40 screenshots with no overflow, no
    missing element, no console error; Render smoke 25 routes; Netlify workflow green for every push.
 
