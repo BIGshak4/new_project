@@ -311,7 +311,16 @@ class TestOverHttp:
                                              headers={**h, "Idempotency-Key": "http-1"})
                 assert response.status_code == 200, response.text
                 sub = response.json()["submission"]
-                assert sub["status"] == "done" and sub["band"] == "WEAK" and sub["card"] and sub["follow_up"]
+                # grade first: the band is final in the response; the card and the follow-up's words arrive a
+                # moment later from the background task, so read the attempt until they are there (the web app polls)
+                assert sub["status"] == "done" and sub["band"] == "WEAK"
+                for _ in range(60):
+                    again = (await client.get(f"{base}/{aid}", headers=h)).json()
+                    if not again["submission"]["feedback_pending"]:
+                        break
+                    await asyncio.sleep(0.5)
+                sub = again["submission"]
+                assert not sub["feedback_pending"] and sub["card"] and sub["follow_up"]
                 replay = await client.post(f"{base}/{aid}/submissions", json={"answer": "alarm = A ^ B ^ C"},
                                            headers={**h, "Idempotency-Key": "http-1"})
                 assert replay.json()["submission"]["replayed"] is True

@@ -338,6 +338,48 @@ Full numbers and the decisions: `docs/performance-2026-09-26.md`.
 (Start tier = ×4–5 capacity, $500/month cap); (c) Opus stays the judge unless you decide otherwise; (d) rotate the
 database password as a precaution (part of the connection string was printed to the agent's console once).
 
+## 5o. The look (overnight 2026-09-27 → 28, Shaked's approved plan, second half of §5n's night)
+
+Full report: `docs/system-verification-2026-09-28.md`. The brief every change was checked against:
+`docs/design-brief-2026-09-27.md`. Two design skills live under `.claude/skills/` (Anthropic `frontend-design`,
+Vercel `web-interface-guidelines` with JobRun overrides) for this and future sessions.
+
+1. **The landing page** (`apps/web/src/components/auth.tsx`, `PracticeLanding`): the sign-in screen is a page built
+   around a real question (the two-out-of-three sensor vote) with its answer, grade, XP and follow-up; six true
+   facts; the three daily steps as path nodes; the sign-in card. Hebrew/English, phone/desktop. The tasks app keeps
+   its own screen.
+2. **Tokens** (`globals.css`): Nunito + Assistant, radii 18/24/28, the 3D button (lifts on hover, presses on click),
+   soft coloured shadows, purple XP, bouncy question rows, no all-caps or tracked-out text (14 rules removed), the
+   pilot line as a quiet margin note.
+3. **Copy**: headings name the page (The question bank, Where you stand, Your practice, Saved questions, Mock
+   interview, Interview report); the saved-answer card shows the band and XP at once with a link to the full
+   feedback (`#feedback`); the report says "not enough evidence yet" / "not enough answers yet to point at gaps"
+   instead of a dash or "well done"; the library strip hides a daily allowance in the thousands.
+4. **Layout fixes**: Skill strength no longer overflows its card (header wraps, names wrap, side column can shrink);
+   the plan table on a phone is one small card per item; "+N XP" reads left-to-right in Hebrew (`<bdi dir="ltr">`);
+   "The road so far" shows the first two days as a sentence with counts instead of a lone bar.
+5. **Screenshot harness** (`apps/web/tools/screenshots/run.mjs`, `npm run screenshots`; API side
+   `backend/scripts/screenshot_server.py`): in-memory API with a scripted grader labelled as a model, a stub for the
+   login service, seeded attempts and interviews, production `next build`, a session injected into the browser,
+   headless Edge over the DevTools protocol with device emulation (headless windows cannot be narrower than about
+   500 px, so 390 px needs emulation). Ten screens × two languages × two widths = 40 shots, each checked for
+   sideways overflow, a missing main element and console errors. Output: `index.json` beside the PNGs.
+6. **Verification**: engine untouched (`git diff b9db3b1..HEAD -- backend/app/engine/` empty); ruff clean;
+   **794 offline tests**; live suites 12 of 17 passed, 4 lost their database connection mid-query from this machine (the long
+   transactions; no product assertion failed; rerun from a stable network, see the report), and 1 was a stale
+   assertion from before grade first (the HTTP-flow test expected the card in the submit response; it now waits
+   for the background words like the web app, and passes); `e2e_live_trial.py` and `e2e_goal_and_visuals.py` pass on the real
+   model and database (rolled back); web `tsc`, 49 tests, production build; 40 screenshots with no overflow, no
+   missing element, no console error; Render smoke 25 routes; Netlify workflow green for every push.
+
+**Lesson for night runs**: the laptop entered Modern Standby at 20:42 and woke at 00:21; every live-database run in
+between died mid-query. `pytest-timeout` (180 s per test) is now a dev dependency so a stalled test fails instead of
+hanging; before a night run, set Windows not to sleep while plugged in.
+
+**Follow-ups noted**: text that comes from data is not always in the interface language (English skill names in the
+seed, a deterministic check's message, the second line of some tips, plan reasons in the plan's language); a
+first-week treatment for the chart exists now but the days are still UTC; the live suite's 3-s listing guard.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -347,6 +389,7 @@ database password as a precaution (part of the connection string was printed to 
 - **`SUPABASE_SERVICE_ROLE_KEY` not set anywhere yet:** photos attached to answers are stored but not judged until it is added to Render (and `backend/.env` for local runs). Server-only secret.
 - **Review before publishing.** All 30 questions stay `in_review` until a person checks technical correctness, rubric weights and Hebrew/English parity (checklist in `seeds/questions/README.md`).
 - **Bank coverage: 14 of the role's 27 skills** have a primary question. Missing: latches/flip-flops, state tables, Moore vs Mealy, truth tables, number representation, reset strategies, sequential HDL coding, debugging methodology, project walkthrough, state encoding, testbench basics.
+- **Content that is not in the interface language** (seen in the 2026-09-28 screenshots): skill names are English in the seed, a deterministic check's message ("6 of 8 specified rows differ") and the second line of some tips are English, and a plan's reasons are written in the language the plan was built in. Interface strings are all bilingual; these are data and backend strings, for a content pass together with the tip-template column below.
 - **Small schema follow-ups** for a later migration: a per-language template column on `tips_library` (Hebrew tip text lives only in the seed file); the `question.hints` column comment describes the old object format.
 - **Placeholders** `app.py`, `requirements.txt`, `src/__init__.py` still in the repo; deletion not yet confirmed.
 - Backend notes from the performance review, for step 4: generate UUIDv7 ids for the append-only tables; cap `state.history_window`; write daily-allowance checks as `created_at >= day_start`.
@@ -375,6 +418,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-09-28 | Overnight (§5o): the design brief and two design skills; the landing page; the token pass (Nunito + Assistant, 3D button, coloured shadows, purple XP, no all-caps); copy in the coach's voice; Skill strength overflow fixed; plan rows as cards on a phone; the grade shown beside the answer; early-days chart; honest interview report; the screenshot harness (40 shots, both languages and widths); 794 offline tests; `docs/system-verification-2026-09-28.md` |
 | 2026-09-26 | Overnight (§5n): latency bench (grade 16.8 s → 8.1 s median, 37 → 10 s max); grade first (words in a background task, conditional save, crash-safe, proven identical by a golden record); fewer round trips; load test 10/50/100 users over HTTP, all flows complete; signing keys reused from memory and code tests in their own pool (a slow code answer no longer stalls other users); JWKS refresh throttled; database concurrency check (Session pooler refuses the 10th connection, Transaction pooler recommended); model capacity from the account's headers (Evaluation tier); P2 Opus vs Sonnet as judge; `docs/performance-2026-09-26.md` |
 | 2026-09-25 | Overnight (§5m): XP computed on read (`app/engine/xp.py`: band × difficulty × hints × reference, follow-up ½, interview ×1.5, per-skill split, streak, `level_progress` from the engine's level score; engine untouched, proven by test); the Duolingo-style restyle of the web app (top bar + bottom tabs, Learn home with the program as a path, skill-strength bars, streak, XP pills); 772 offline tests, 48 web tests |
 | 2026-09-24 | Loyalty per skill (1..10, -1 per 3 days without evidence, back to 10 on any scored answer; 6 or lower = provisional, refresh scheduled first); the saved program on `learning_plan`/`plan_item` (rebuilt daily, carried forward up to 3 days, ticked by attempts and interviews); "My program" replaces "One question for today"; 742 offline tests (§5l) |
