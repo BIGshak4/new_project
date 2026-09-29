@@ -21,6 +21,9 @@ import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
 import { Auth, type Lang } from "../components/auth";
 import { PracticeSession } from "../components/practice-session";
 import { GoalSetup } from "../components/goal-setup";
+import { LanguageMenu } from "../components/ui/language-menu";
+import { Select } from "../components/ui/select";
+import { AnimatePresence, CountUp, motion, useReducedMotion } from "../components/ui/motion";
 import { LearnHome } from "../components/learn-home";
 import { OverviewCard, PlanTable, ProgressGraph } from "../components/progress-board";
 import { SkillStrength } from "../components/skill-strength";
@@ -77,17 +80,7 @@ export default function Page() {
       localStorage.setItem("jobrun-language", lang);
     } catch {}
   }, [lang]);
-  const languageControl = (
-    <button
-      className="language-switch"
-      dir="ltr"
-      onClick={() => setLang(lang === "he" ? "en" : "he")}
-      aria-label={lang === "he" ? "החלפה לאנגלית" : "Switch to Hebrew"}
-      title={lang === "he" ? "החלפה לאנגלית" : "Switch to Hebrew"}
-    >
-      {lang === "he" ? "EN" : "עב"}
-    </button>
-  );
+  const languageControl = <LanguageMenu lang={lang} onChange={setLang} />;
   return (
     <Auth lang={lang} kind="practice" controls={languageControl}>
       {(user, signOut) => (
@@ -395,6 +388,7 @@ function Workspace({
         <span>{label}</span>
       </button>
     ));
+  const reducedMotion = useReducedMotion();
   const refreshKey = `${progress.attempts_today}-${goal?.job_type ?? ""}-${goal?.minutes_per_day ?? ""}-${goal?.interview_date ?? ""}-${overview?.xp_total ?? 0}`;
 
   return (
@@ -423,7 +417,7 @@ function Workspace({
             aria-label={`${overview?.xp_total ?? 0} XP · ${overview?.level ?? ""}`}
           >
             <Star size={20} aria-hidden="true" />
-            <span className="xp-number" dir="ltr">{overview?.xp_total ?? 0} XP</span>
+            <span className="xp-number" dir="ltr"><CountUp value={overview?.xp_total ?? 0} /> XP</span>
             {overview?.level && <span className="level-word" dir="auto">{overview.level}</span>}
           </span>
         </div>
@@ -458,6 +452,15 @@ function Workspace({
                   "Private pilot · Automated feedback can be wrong. Compare with the reference and review with an expert.",
                 )}
         </div>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={route.view}
+            className="view"
+            initial={reducedMotion ? false : { opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reducedMotion ? undefined : { opacity: 0, y: -4 }}
+            transition={{ duration: 0.16, ease: "easeOut" }}
+          >
         {route.view === "interview" ? (
           <InterviewSession
             key={route.interview ?? "lobby"}
@@ -782,38 +785,24 @@ function Workspace({
                       onChange={(e) => setQuery(e.target.value)}
                     />
                   </div>
-                  <select
-                    aria-label={t("נושא", "Topic")}
+                  <Select
+                    ariaLabel={t("נושא", "Topic")}
+                    dir={lang === "he" ? "rtl" : "ltr"}
                     value={subject}
-                    onChange={(e) => setSubject(e.target.value)}
-                  >
-                    <option value="all">
-                      {t("כל הנושאים", "All topics")}
-                    </option>
-                    {topics.map((s) => (
-                      <option key={s} value={s}>
-                        {subjectLabel(s, lang)}
-                      </option>
-                    ))}
-                  </select>
-                  <label className="filter-select">
-                    <Briefcase size={16} aria-hidden="true" />
-                    <select
-                      aria-label={t("סוג תפקיד", "Job type")}
-                      value={jobFilter}
-                      onChange={(e) => {
-                        jobFilterTouched.current = true;
-                        setJobFilter(e.target.value);
-                      }}
-                    >
-                      <option value="">{t("כל התפקידים", "All job types")}</option>
-                      {jobs.map((j) => (
-                        <option key={j.key} value={j.key}>
-                          {j.label}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
+                    onChange={setSubject}
+                    options={[{ value: "all", label: t("כל הנושאים", "All topics") }, ...topics.map((s) => ({ value: s, label: subjectLabel(s, lang) }))]}
+                  />
+                  <Select
+                    ariaLabel={t("סוג תפקיד", "Job type")}
+                    dir={lang === "he" ? "rtl" : "ltr"}
+                    icon={<Briefcase size={16} aria-hidden="true" />}
+                    value={jobFilter}
+                    onChange={(v) => {
+                      jobFilterTouched.current = true;
+                      setJobFilter(v);
+                    }}
+                    options={[{ value: "", label: t("כל התפקידים", "All job types") }, ...jobs.map((j) => ({ value: j.key, label: j.label }))]}
+                  />
                   <div className="search company-search">
                     <Building2 size={16} />
                     <input
@@ -893,6 +882,8 @@ function Workspace({
             )}
           </>
         )}
+          </motion.div>
+        </AnimatePresence>
       </main>
     </div>
   );

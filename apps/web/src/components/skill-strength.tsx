@@ -4,6 +4,8 @@ import { Flame, RefreshCw, Sparkles } from "lucide-react";
 import type { Lang } from "./auth";
 import type { SkillProgress } from "../lib/practice-api";
 import { filledBlocks, skillLevelWord, strengthSkills, strengthTone } from "../lib/path";
+import { revealDelay } from "../lib/ui";
+import { motion, spring, useReducedMotion } from "./ui/motion";
 
 /** Five-block bars per skill, the level word and the XP earned on it; blue "needs a refresh" when the evidence is old. */
 export function SkillStrength({
@@ -21,6 +23,7 @@ export function SkillStrength({
   ordered?: boolean;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
+  const reduced = useReducedMotion();
   const shown = ordered ? skills.slice(0, limit) : strengthSkills(skills, limit);
   return (
     <section className="side-card skill-strength" aria-labelledby="strength-title">
@@ -50,7 +53,14 @@ export function SkillStrength({
                 </div>
                 <div className="blocks" role="img" aria-label={`${s.label}: ${skillLevelWord(s.level, lang)}`}>
                   {Array.from({ length: 5 }, (_, i) => (
-                    <i key={i} className={i < filled ? "on" : ""} />
+                    <motion.i
+                      key={i}
+                      className={i < filled ? "on" : ""}
+                      style={{ originX: lang === "he" ? 1 : 0 }}
+                      initial={reduced || i >= filled ? false : { scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ ...spring, delay: revealDelay(i, !!reduced, 0.07, 0.35) }}
+                    />
                   ))}
                 </div>
                 {(s.xp ?? 0) > 0 && (

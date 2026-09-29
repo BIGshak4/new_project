@@ -19,6 +19,8 @@ import {
 } from "../lib/circuit";
 import { AnswerEditor } from "./answer-editor";
 import { EvaluationPanel, NextUpCard } from "./evaluation-panel";
+import { HelpPopover } from "./ui/popover";
+import { toast } from "./toaster";
 import { FollowUps } from "./follow-ups";
 import { parseTechnicalAnswer } from "../lib/technical-answer";
 import { supabase } from "../lib/supabase";
@@ -528,13 +530,15 @@ export function PracticeSession({
                       >
                         {t("הצגת פתרון השאלה", "Reveal solution")}
                       </button>
+                      <HelpPopover label={t("איך רמזים ופתרון משפיעים על ההערכה", "How hints and the solution affect the assessment")}>
+                        <p>
+                          {t(
+                            "כל רמז מוסיף הכוונה. מספר הרמזים שנפתחו לפני השליחה נלקח בחשבון בהערכת העצמאות. חשיפת פתרון לפני השליחה מסמנת את התשובה כתרגול בעזרת פתרון.",
+                            "Each hint adds guidance. Hints opened before submission affect the assessment of independence. Revealing the solution first marks your answer as practice with a reference.",
+                          )}
+                        </p>
+                      </HelpPopover>
                     </div>
-                    <p className="muted small">
-                      {t(
-                        "כל רמז מוסיף הכוונה. מספר הרמזים שנפתחו לפני השליחה נלקח בחשבון בהערכת העצמאות. חשיפת פתרון לפני השליחה מסמנת את התשובה כתרגול בעזרת פתרון.",
-                        "Each hint adds guidance. Hints opened before submission affect the assessment of independence. Revealing the solution first marks your answer as practice with a reference.",
-                      )}
-                    </p>
                     <p className="help-status" role="status">
                       {t("רמזים שנפתחו", "Hints opened")}:{" "}
                       {attempt.hints.length}/{question.hint_count} ·{" "}
@@ -991,7 +995,7 @@ function PersonalNotes({
             .single();
       if (result.error || !result.data) throw new Error("save conflict");
       onSaved(result.data);
-      setMessage(t("נשמר בחשבון.", "Saved to your account."));
+      toast.success(t("נשמר בחשבון.", "Saved to your account."));
     } catch {
       setMessage(
         t(
@@ -1106,7 +1110,7 @@ function SawItAt({
       setTags(result.companies);
       setCompany("");
       setOpen(false);
-      setMessage(t("תודה! נוסף לרשימת החברות של השאלה.", "Thanks! Added to this question's companies."));
+      toast.success(t("תודה! נוסף לרשימת החברות של השאלה.", "Thanks! Added to this question's companies."));
     } catch (e) {
       const code = (e as PracticeApiError).code;
       setMessage(

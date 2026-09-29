@@ -1,5 +1,8 @@
 "use client";
 
+import { Select } from "./ui/select";
+import { toast } from "./toaster";
+
 import { useEffect, useState } from "react";
 import { CalendarDays, Clock3, Sparkles, Target } from "lucide-react";
 import type { Lang } from "./auth";
@@ -70,6 +73,7 @@ export function GoalSetup({
         language: lang,
       });
       onSaved(saved);
+      toast.success(t("היעד נשמר. התוכנית מתעדכנת.", "Goal saved. Your plan is updating."));
     } catch (e) {
       setError(apiMessage(e, lang));
     } finally {
@@ -169,13 +173,13 @@ export function GoalSetup({
         </div>
         <div className="goal-field">
           <h3>{t("איפה אתם בקריירה?", "Where are you in your career?")}</h3>
-          <select value={seniority} onChange={(e) => setSeniority(e.target.value as Seniority)} aria-label={t("ניסיון", "Seniority")}>
-            {SENIORITIES.map((s) => (
-              <option key={s} value={s}>
-                {seniorityLabel(s)}
-              </option>
-            ))}
-          </select>
+          <Select
+            ariaLabel={t("ניסיון", "Seniority")}
+            dir={lang === "he" ? "rtl" : "ltr"}
+            value={seniority}
+            onChange={(v) => setSeniority(v as Seniority)}
+            options={SENIORITIES.map((s) => ({ value: s, label: seniorityLabel(s) }))}
+          />
         </div>
       </div>
 

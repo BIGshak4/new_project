@@ -190,13 +190,17 @@ const SCREENS = [
   ["interview-lobby", "/?view=interview", true, ".interview-lobby, .interview-setup"],
   ["interview-room", `/?view=interview&interview=${room.id}`, true, ".interview-room"],
   ["interview-report", `/?view=interview&interview=${done.id}`, true, ".interview-report"],
+  // the same screens with a Radix layer open: a select, the hint popover, the language menu
+  ["library-topic-open", "/?view=library", true, ".ui-select-trigger", ".ui-select-trigger"],
+  ["hint-help-open", `/?attempt=${a.id}`, true, ".help-trigger", ".help-trigger"],
+  ["language-menu-open", "/", true, ".language-switch", ".language-switch"],
 ];
 const index = [];
 for (const lang of LANGS) {
   for (const width of WIDTHS) {
     const height = width < 600 ? 844 : 900;
     await send("Emulation.setDeviceMetricsOverride", { width, height, deviceScaleFactor: 1, mobile: width < 600 });
-    for (const [name, path, signedIn, selector] of SCREENS) {
+    for (const [name, path, signedIn, selector, open] of SCREENS) {
       consoleErrors.length = 0;
       const { identifier } = (await send("Page.addScriptToEvaluateOnNewDocument", { source: inject(lang, signedIn) })).result;
       await send("Page.navigate", { url: `http://localhost:${WEB_PORT}${path}` });
@@ -206,7 +210,17 @@ for (const lang of LANGS) {
         const r = await send("Runtime.evaluate", { expression: `!!document.querySelector(${JSON.stringify(selector)})`, returnByValue: true });
         found = r.result?.result?.value === true;
       }
-      await sleep(found ? 1200 : 0);
+      if (found && open) {
+        // a real pointer press on the element's centre, so Radix's pointerdown handlers open it
+        const r = await send("Runtime.evaluate", { expression: `(() => { const b = document.querySelector(${JSON.stringify(open)}).getBoundingClientRect(); return JSON.stringify({x: b.left + b.width / 2, y: b.top + b.height / 2}); })()`, returnByValue: true });
+        const { x, y } = JSON.parse(r.result?.result?.value ?? "{}");
+        for (const type of ["mouseMoved", "mousePressed", "mouseReleased"]) {
+          await send("Input.dispatchMouseEvent", { type, x, y, button: "left", clickCount: 1, pointerType: "mouse" });
+        }
+        await sleep(700);
+      }
+      // long enough for the grade sequence (1.3 s) and the path's staggered arrival to finish
+      await sleep(found ? 2000 : 0);
       const metrics = await send("Runtime.evaluate", { expression: "JSON.stringify({inner: innerWidth, scroll: document.documentElement.scrollWidth, height: document.documentElement.scrollHeight, title: document.title, dir: document.documentElement.dir})", returnByValue: true });
       const info = JSON.parse(metrics.result?.result?.value ?? "{}");
       const file = `${name}-${lang}-${width}.png`;

@@ -14,6 +14,8 @@ import type { Lang } from "./auth";
 import type { Check as CheckResult, NextQuestion, Submission } from "../lib/practice-api";
 import { bandLabel, subjectLabel } from "../lib/practice-ui";
 import { bandFraction, whyLabel } from "../lib/charts";
+import { GRADE_SEQUENCE as G } from "../lib/ui";
+import { Pop, Reveal, motion, useReducedMotion } from "./ui/motion";
 
 /**
  * The evaluation a candidate sees after a real assessment: band ring, summary, automatic
@@ -28,6 +30,7 @@ export function EvaluationPanel({
   lang: Lang;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
+  const reduced = useReducedMotion();
   if (s.status === "evaluating") {
     return (
       <p className="notice" role="status">
@@ -87,25 +90,39 @@ export function EvaluationPanel({
       <header className="evaluation-head">
         <svg className="band-ring" viewBox="0 0 64 64" aria-hidden="true">
           <circle className="ring-track" cx="32" cy="32" r={radius} />
-          <circle
+          <motion.circle
             className="ring-fill"
             cx="32"
             cy="32"
             r={radius}
-            strokeDasharray={`${bandFraction(band) * circumference} ${circumference}`}
             transform="rotate(-90 32 32)"
+            initial={reduced ? false : { strokeDasharray: `0 ${circumference}` }}
+            animate={{ strokeDasharray: `${bandFraction(band) * circumference} ${circumference}` }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: G.ring }}
           />
-          <text className="ring-glyph" x="32" y="38" textAnchor="middle">
+          <motion.text
+            className="ring-glyph"
+            x="32"
+            y="38"
+            textAnchor="middle"
+            initial={reduced ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.25, delay: G.glyph }}
+          >
             {glyph}
-          </text>
+          </motion.text>
         </svg>
         <div className="evaluation-title">
           <div className="evaluation-badges">
-            <span className={`badge band-${tone}`}>{bandLabel(band, lang)}</span>
+            <Pop delay={G.band}>
+              <span className={`badge band-${tone}`}>{bandLabel(band, lang)}</span>
+            </Pop>
             {(s.xp_earned ?? 0) > 0 && (
-              <span className="xp-pill" role="status" aria-label={`${s.xp_earned} ${t("נקודות ניסיון", "experience points")}`}>
-                <Sparkles size={14} aria-hidden="true" /> <bdi dir="ltr">+{s.xp_earned} XP</bdi>
-              </span>
+              <Pop delay={G.xp}>
+                <span className="xp-pill" role="status" aria-label={`${s.xp_earned} ${t("נקודות ניסיון", "experience points")}`}>
+                  <Sparkles size={14} aria-hidden="true" /> <bdi dir="ltr">+{s.xp_earned} XP</bdi>
+                </span>
+              </Pop>
             )}
           </div>
           {s.summary && (
@@ -117,7 +134,7 @@ export function EvaluationPanel({
       </header>
 
       <div className="feedback-grid">
-        <section className="feedback-good">
+        <Reveal as="section" className="feedback-good" delay={G.good}>
           <h4>
             <Check size={16} aria-hidden="true" /> {t("מה היה טוב", "What was good")}
           </h4>
@@ -132,8 +149,8 @@ export function EvaluationPanel({
           ) : (
             <p className="muted small">{t("הפעם לא נמצאו נקודות חזקות מובהקות.", "No clear strong points this time.")}</p>
           )}
-        </section>
-        <section className="feedback-bad">
+        </Reveal>
+        <Reveal as="section" className="feedback-bad" delay={G.missing}>
           <h4>
             <Circle size={14} aria-hidden="true" /> {t("מה היה חסר", "What was missing")}
           </h4>
@@ -148,7 +165,7 @@ export function EvaluationPanel({
           ) : (
             <p className="muted small">{t("כלום. תשובה שלמה.", "Nothing. A complete answer.")}</p>
           )}
-        </section>
+        </Reveal>
       </div>
 
       {s.feedback_pending && !s.tip && !s.card && (
@@ -157,14 +174,14 @@ export function EvaluationPanel({
         </p>
       )}
       {(s.tip || s.card?.next_step) && (
-        <aside className="evaluation-tip" dir="auto">
+        <Reveal as="aside" className="evaluation-tip" dir="auto" delay={G.tip}>
           <Lightbulb size={18} aria-hidden="true" />
           <div>
             <h4>{t("טיפ לפעם הבאה", "A tip for next time")}</h4>
             {s.tip && <p>{s.tip.text}</p>}
             {s.card?.next_step && s.card.next_step !== s.tip?.text && <p>{s.card.next_step}</p>}
           </div>
-        </aside>
+        </Reveal>
       )}
 
       <details className="evaluation-more">

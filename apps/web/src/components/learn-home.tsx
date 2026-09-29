@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, Clock3, Lock, Mic, Play, RefreshCw, Target } from "lucide-react";
 import type { Lang } from "./auth";
 import { SkillStrength, StreakCard } from "./skill-strength";
@@ -8,6 +8,8 @@ import type { Goal, PracticeApi, Program, Progress } from "../lib/practice-api";
 import { apiMessage } from "../lib/practice-ui";
 import { dayLabel, modeLabel } from "../lib/timeline";
 import { daysToGoLabel, nodeStyle, pathNodes, todayProgress, type PathNode } from "../lib/path";
+import { revealDelay, shouldScrollToNode } from "../lib/ui";
+import { Breathe, Pop, motion, spring, useReducedMotion } from "./ui/motion";
 
 const AMPLITUDE = 150;
 
@@ -69,6 +71,19 @@ export function LearnHome({
     };
   }, [api, lang]);
   useEffect(() => load(), [load, refreshKey]);
+
+  // on open, bring today's node into view once (only if it is not already visible)
+  const reduced = useReducedMotion();
+  const scrolled = useRef(false);
+  useEffect(() => {
+    if (scrolled.current || !program) return;
+    const el = document.querySelector<HTMLElement>(".path-row.state-current");
+    if (!el) return;
+    scrolled.current = true;
+    if (shouldScrollToNode(el.getBoundingClientRect(), window.innerHeight)) {
+      el.scrollIntoView({ block: "center", behavior: reduced ? "auto" : "smooth" });
+    }
+  }, [program, reduced]);
 
   async function start(node: PathNode) {
     const id = node.item.id ?? undefined;
@@ -178,11 +193,18 @@ export function LearnHome({
                 const previousDay = i > 0 ? nodes[i - 1].dayIndex : null;
                 const showDay = node.dayIndex !== previousDay;
                 return (
-                  <li key={node.key} className={`path-row state-${node.state} kind-${node.kind}`} style={nodeStyle(node.offset, AMPLITUDE)}>
+                  <motion.li
+                    key={node.key}
+                    className={`path-row state-${node.state} kind-${node.kind}`}
+                    style={nodeStyle(node.offset, AMPLITUDE)}
+                    initial={reduced ? false : { opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ ...spring, delay: revealDelay(i, !!reduced) }}
+                  >
                     {showDay && node.dayIndex > 0 && (
                       <span className="path-day">{dayLabel(node.item.date, node.dayIndex, lang)}</span>
                     )}
-                    <div className="path-node-wrap">
+                    <Breathe className="path-node-wrap" active={node.state === "current" && !busy}>
                       {node.state === "current" ? (
                         <button
                           type="button"
@@ -196,7 +218,9 @@ export function LearnHome({
                       ) : (
                         <span className="path-node" aria-hidden="true">
                           {node.state === "done" ? (
-                            <Check size={32} strokeWidth={3.2} />
+                            <Pop delay={revealDelay(i, !!reduced) + 0.12}>
+                              <Check size={32} strokeWidth={3.2} />
+                            </Pop>
                           ) : node.kind === "interview" ? (
                             <Mic size={30} />
                           ) : (
@@ -204,7 +228,7 @@ export function LearnHome({
                           )}
                         </span>
                       )}
-                    </div>
+                    </Breathe>
                     <div className="path-text">
                       <div className="path-title" dir="auto">
                         {node.kind === "interview"
@@ -245,7 +269,7 @@ export function LearnHome({
                         </span>
                       )}
                     </div>
-                  </li>
+                  </motion.li>
                 );
               })}
             </ol>
