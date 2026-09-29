@@ -411,6 +411,28 @@ did not change. Report: `docs/system-verification-2026-09-29.md`.
 **Night 2 (not started)**: Recharts for the road-so-far chart, motion in the interview room (timer, turn changes),
 page transitions between practice steps, a polish pass with fresh screenshots.
 
+## 5q. Night 2 of the interactive layer (2026-09-29, Shaked's "go")
+
+Report: `docs/system-verification-2026-09-30.md`. Front-end only; the harness seed is the only change under `backend/`.
+
+1. **Recharts** (`apps/web/src/components/road-chart.tsx`, rows from `lib/timeline.ts: chartRows`): from the third
+   practice day "The road so far" is a composed chart: stacked bars per day (needs work, partial, strong in the
+   brief's colours), the average level as a line on its own right axis once two days have a level, a tooltip per day
+   in the page's language, bars that grow in (off under reduced motion). Days one and two keep the sentence. The
+   old hand-drawn SVG and `timelineLayout` are gone from the page; the helper and its tests stay.
+2. **Interview room**: the question card is keyed by turn and slides in from the reading side when the turn changes
+   (AnimatePresence); the timer turns orange for the last minute and red, beating once a second, for the last ten
+   (`lib/ui.ts: timerTone`, tested); in the report the fit cards and the turn cards arrive staggered and the XP pills pop.
+3. **Practice flow**: when the grade arrives the page scrolls the feedback into view once; the open follow-up slides
+   in; the answered follow-up's band and XP pop; the next-question card slides in after them.
+4. **Report honesty**: "no clear gaps, well done" needs at least three assessed skills; below that the report says
+   there are not enough answers to point at gaps.
+5. **Harness**: a `/__harness/backdate` route on the harness API moves an attempt's start back N days, so the seed
+   now has three practice days (strong two days ago, partial yesterday, today's weak deep attempt) and a three-turn
+   interview; the scripted grader reads the harness's marker phrases before its caret rule.
+6. **Verification**: `tsc` clean; **56 web tests** (timer tone, chart rows); 52 screenshots, no overflow, no missing
+   element, no console error; Netlify green; bundle 653 → 755 KB gzipped (Recharts, about 100 KB; a dynamic import on the Progress page would keep it off the other screens if that ever matters).
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -449,6 +471,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-09-29 | Night 2 (§5q): Recharts for the road-so-far chart from day three; the interview question slides in per turn and the timer changes tone; the practice steps flow into each other; harness seed with three days and a three-turn interview; 56 web tests |
 | 2026-09-29 | Night (§5p): Motion (path arrival, breathing current node, scroll to today, the grade sequence, counting XP, filling bars, view cross-fade, all behind reduced-motion), Radix selects, hint popover and language menu, Sonner toasts, three harness screens with the layers open; 54 web tests |
 | 2026-09-28 | Overnight (§5o): the design brief and two design skills; the landing page; the token pass (Nunito + Assistant, 3D button, coloured shadows, purple XP, no all-caps); copy in the coach's voice; Skill strength overflow fixed; plan rows as cards on a phone; the grade shown beside the answer; early-days chart; honest interview report; the screenshot harness (40 shots, both languages and widths); 794 offline tests; `docs/system-verification-2026-09-28.md` |
 | 2026-09-26 | Overnight (§5n): latency bench (grade 16.8 s → 8.1 s median, 37 → 10 s max); grade first (words in a background task, conditional save, crash-safe, proven identical by a golden record); fewer round trips; load test 10/50/100 users over HTTP, all flows complete; signing keys reused from memory and code tests in their own pool (a slow code answer no longer stalls other users); JWKS refresh throttled; database concurrency check (Session pooler refuses the 10th connection, Transaction pooler recommended); model capacity from the account's headers (Evaluation tier); P2 Opus vs Sonnet as judge; `docs/performance-2026-09-26.md` |
