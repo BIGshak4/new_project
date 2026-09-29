@@ -24,6 +24,7 @@ import { GoalSetup } from "../components/goal-setup";
 import { LanguageMenu } from "../components/ui/language-menu";
 import { Select } from "../components/ui/select";
 import { AnimatePresence, CountUp, motion, useReducedMotion } from "../components/ui/motion";
+import { SignOff } from "../components/sign-off";
 import { LearnHome } from "../components/learn-home";
 import { OverviewCard, PlanTable, ProgressGraph } from "../components/progress-board";
 import { SkillStrength } from "../components/skill-strength";
@@ -367,7 +368,7 @@ function Workspace({
   const overview = demo ? null : progress.overview ?? null;
   const activeTab = LIBRARY_VIEWS.has(route.view) ? "library" : route.view;
   const tabs = [
-    { id: "learn", icon: Map, label: t("ללמוד", "Learn") },
+    { id: "learn", icon: Map, label: t("היום", "Today") },
     { id: "library", icon: BookOpen, label: t("מאגר", "Library") },
     { id: "interview", icon: Mic, label: t("ראיון מדומה", "Mock interview") },
     { id: "progress", icon: BarChart3, label: t("התקדמות", "Progress") },
@@ -395,7 +396,7 @@ function Workspace({
     <div className="app-shell">
       <header className="topnav">
         <a href="/" className="wordmark" dir="ltr">
-          jobrun
+          job<b>run</b>
         </a>
         <nav className="tabs" aria-label={t("ניווט", "Navigation")}>
           {tabButtons(false)}
@@ -513,6 +514,7 @@ function Workspace({
             <LearnHome
               api={api}
               lang={lang}
+              userName={firstName(user)}
               goal={goal}
               progress={demo ? { ...progress, overview: null, skills: [] } : progress}
               refreshKey={refreshKey}
@@ -885,6 +887,14 @@ function Workspace({
           </motion.div>
         </AnimatePresence>
       </main>
+      <SignOff lang={lang} />
     </div>
   );
+}
+
+/** The user's first name from the sign-up metadata, or nothing (the kicker then starts with the job type). */
+function firstName(user: { user_metadata?: Record<string, unknown> | null; email?: string | null }): string | undefined {
+  const full = user.user_metadata?.full_name ?? user.user_metadata?.name;
+  if (typeof full === "string" && full.trim()) return full.trim().split(/\s+/)[0];
+  return undefined;
 }

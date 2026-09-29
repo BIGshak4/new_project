@@ -14,6 +14,7 @@ export function SkillStrength({
   limit = 6,
   title,
   ordered = false,
+  hotKey,
 }: {
   skills: SkillProgress[];
   lang: Lang;
@@ -21,13 +22,18 @@ export function SkillStrength({
   title?: string;
   /** the list is already in the order to show (the job's focus skills), unassessed ones included */
   ordered?: boolean;
+  /** the skill being trained today: its next block is drawn in copper */
+  hotKey?: string;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const reduced = useReducedMotion();
   const shown = ordered ? skills.slice(0, limit) : strengthSkills(skills, limit);
   return (
     <section className="side-card skill-strength" aria-labelledby="strength-title">
-      <h2 id="strength-title">{title ?? t("חוזק המיומנויות", "Skill strength")}</h2>
+      <h2 id="strength-title">
+        {title ?? t("חוזק", "Strength")}
+        <small>{t("המיומנויות שהתפקיד בודק", "the skills the job tests")}</small>
+      </h2>
       {shown.length === 0 ? (
         <p className="muted small">{t("אחרי התשובה הראשונה המיומנויות מתחילות להתמלא כאן.", "After your first answer the skills start filling up here.")}</p>
       ) : (
@@ -36,7 +42,7 @@ export function SkillStrength({
             const tone = strengthTone(s);
             const filled = filledBlocks(s.level);
             return (
-              <li key={s.key} className={`strength tone-${tone}`}>
+              <li key={s.key} className={`strength tone-${tone} ${s.key === hotKey ? "hot" : ""}`}>
                 <div className="strength-head">
                   <span className="strength-name" dir="auto">
                     {s.label}
@@ -55,7 +61,7 @@ export function SkillStrength({
                   {Array.from({ length: 5 }, (_, i) => (
                     <motion.i
                       key={i}
-                      className={i < filled ? "on" : ""}
+                      className={i < filled ? "on" : s.key === hotKey && i === filled ? "next" : ""}
                       style={{ originX: lang === "he" ? 1 : 0 }}
                       initial={reduced || i >= filled ? false : { scaleX: 0 }}
                       animate={{ scaleX: 1 }}
@@ -90,11 +96,15 @@ export function StreakCard({ days, todayDone, lang }: { days: number; todayDone:
     days === 0
       ? t("תשובה אחת היום פותחת רצף.", "One answer today starts a streak.")
       : todayDone
-        ? t("היום כבר נספר. נתראה מחר.", "Today is counted. See you tomorrow.")
+        ? t(`${days === 1 ? "יום אחד" : `${days} ימים`} שלא ויתרתם. מחר בשעה הזאת זה ${days + 1}.`, `${days} ${days === 1 ? "day" : "days"} without giving up. Same time tomorrow makes it ${days + 1}.`)
         : t("תשובה אחת היום שומרת עליו.", "One answer today keeps it going.");
   return (
     <section className={`side-card streak-card ${days > 0 ? "lit" : ""}`} aria-label={t("רצף", "Streak")}>
-      <Flame size={38} aria-hidden="true" className="streak-flame" />
+      {days > 0 ? (
+        <div className="streak-number" aria-hidden="true">{days}</div>
+      ) : (
+        <Flame size={34} aria-hidden="true" className="streak-flame" />
+      )}
       <div>
         <div className="streak-headline">{headline}</div>
         <div className="streak-line">{line}</div>

@@ -1,4 +1,7 @@
 "use client";
+
+import { SignOff } from "./sign-off";
+import { SubjectSketch, sketchCaption } from "./sketches";
 import { useEffect, useState, type ReactNode } from "react";
 import { ArrowRight, Check, Lock, LockKeyhole, LogOut, Mail, Play } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
@@ -315,7 +318,10 @@ function PracticeLanding({
 
       <section className="landing-hero">
         <div className="hero-copy">
-          <h1>{t("הראיון הבא מתחיל בתרגול של היום.", "The next interview starts with today’s practice.")}</h1>
+          <h1>
+            {t("הראיון הבא מתחיל ", "The next interview starts with ")}
+            <span className="mark">{t("בתרגול של היום.", "today’s practice.")}</span>
+          </h1>
           <p className="hero-sub">
             {t(
               "שאלות אמיתיות מראיונות חומרה ותוכנה, ציון תוך שניות, ותוכנית שמתעדכנת כל יום עד יום הראיון.",
@@ -335,6 +341,7 @@ function PracticeLanding({
             <span className="badge">{t("לוגיקה ספרתית", "Digital logic")}</span>
             <span className="small muted">{t("קושי 2 מתוך 10 · 5 דקות", "Difficulty 2 of 10 · 5 min")}</span>
           </div>
+          <SubjectSketch subject="digital_logic" caption={sketchCaption("digital_logic", he ? "he" : "en")} className="sample-sketch" />
           <h2 dir="auto">{t("הכרעת רוב בין שלושה חיישנים", "Two-out-of-three sensor vote")}</h2>
           <p className="sample-prompt" dir="auto">
             {t(
@@ -394,9 +401,7 @@ function PracticeLanding({
         {children}
       </section>
 
-      <footer className="landing-foot small muted">
-        {t("JobRun · פיילוט פרטי · השאלות בבדיקה מקצועית לפני פרסום", "JobRun · private pilot · questions are reviewed by an engineer before publication")}
-      </footer>
+      <SignOff lang={he ? "he" : "en"} />
     </div>
   );
 }

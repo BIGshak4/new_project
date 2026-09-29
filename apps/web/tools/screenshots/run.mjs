@@ -105,14 +105,10 @@ if (aView.pending_follow_up) {
 const b = await call("POST", "/v1/practice/attempts", { question_key: "example-sensor-majority", mode: "deep", language: "en" });
 await call("POST", `/v1/practice/attempts/${b.id}/submissions`, { answer: { text: "alarm = A ^ B ^ C" } });
 await waitWords(b.id);
-// one program item started (so Learn shows "Continue") and the answer ticks it
+// one program item started and left open, so Learn photographs the day's sheet with a current item ("Continue")
 const program = await call("GET", "/v1/me/program?language=he");
 if (program.next && program.next.mode !== "simulation") {
-  const startedItem = await call("POST", "/v1/me/program/start", { item_id: program.next.id, language: "he" });
-  if (startedItem.kind === "attempt") {
-    await call("POST", `/v1/practice/attempts/${startedItem.attempt.id}/submissions`, { answer: { text: "A careful partial answer that names the timing constraint." } });
-    await waitWords(startedItem.attempt.id);
-  }
+  await call("POST", "/v1/me/program/start", { item_id: program.next.id, language: "he" });
 }
 // interviews: one in progress (room), one finished (report)
 // two more scored answers on earlier days, so "The road so far" has three days to draw

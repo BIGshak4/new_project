@@ -2,56 +2,79 @@
    white cards with 2px sand borders and large radii, leaf green with a pressed 3D shadow, streak orange,
    refresh blue, interview yellow. Nunito carries Latin; Heebo carries Hebrew glyphs (Nunito has none), so
    the two are paired in the font stack. Logical properties everywhere: the app is RTL by default. */
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Assistant:wght@600;700;800&family=Heebo:wght@600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Assistant:wght@400;500;600;700;800&family=Heebo:wght@500;700&family=JetBrains+Mono:wght@500&family=Amatic+SC:wght@700&display=swap");
 
 :root {
-  --paper: #f6f5ef;
+  /* Workbench (docs/design-brief-2026-09-30-workbench.md): paper, navy ink, one signal yellow, copper for the hand */
+  --paper: #f3f4ef;
   --surface: #ffffff;
-  --line: #e6e3d8;
-  --line-soft: #edebe3;
-  --ink: #23302a;
-  --muted: #55635b;
-  --muted-2: #6b7a71;
-  --faint: #6b7a71;          /* text on white and paper: 4.5:1 or better */
-  --green: #2f9e44;        /* nodes, bars, icons on it */
-  --green-button: #22823a; /* white text on it reads at 4.9:1 */
-  --green-deep: #217a33;   /* the pressed shadow */
-  --green-press: #17592a;
-  --green-text: #1f7a34;
-  --green-soft: #e7f5e9;
-  --green-line: #bfe3c6;
-  --orange: #f97316;
-  --orange-text: #c2410c;
-  --orange-deep: #7c2d12;
-  --orange-soft: #ffedd5;
+  --line: #cfd5de;
+  --line-soft: #e3e7ee;
+  --grid: #e9ebe4;
+  --ink: #0f1b2d;
+  --ink-2: #2a3a52;
+  --muted: #4f5d72;
+  --muted-2: #5d6b80;
+  --faint: #5d6b80;          /* text on white and paper: 4.5:1 or better */
+  --navy: #14213d;
+  --navy-deep: #0c1428;
+  --navy-soft: #e6eaf3;
+  --signal: #ffb703;
+  --signal-deep: #c98a00;
+  --signal-soft: #fff1c9;
+  --signal-line: #f1d27a;
+  --signal-text: #7a5a00;
+  --copper: #b5651d;
+  --copper-text: #8a4a12;
+  --copper-soft: #f6e3d3;
+  --ok: #1b7f4e;
+  --ok-deep: #145f3a;
+  --ok-soft: #dff2e7;
+  --ok-line: #b9e2c8;
+  --sticky: #fff3b0;
+  /* the older names, mapped onto the bench so every existing rule lands on the new palette */
+  --green: var(--ok);            /* done nodes, bars, ticks */
+  --green-button: var(--navy);   /* primary actions */
+  --green-deep: var(--ok-deep);  /* the pressed shadow under a done node */
+  --green-press: var(--signal-deep);
+  --green-text: var(--navy);
+  --green-soft: var(--navy-soft);
+  --green-line: var(--line);
+  --orange: var(--copper);
+  --orange-text: var(--copper-text);
+  --orange-deep: #6b3a0f;
+  --orange-soft: var(--copper-soft);
   --blue: #1c64b8;
   --blue-soft: #e3eefb;
   --blue-bar: #9cc7f5;
-  --yellow-soft: #fff4d6;
-  --yellow-line: #f0d68a;
-  --yellow-shadow: #e8c766;
-  --yellow-text: #a16207;
-  --yellow-bar: #e0a800;
+  --yellow-soft: var(--signal-soft);
+  --yellow-line: var(--signal-line);
+  --yellow-shadow: var(--signal-deep);
+  --yellow-text: var(--signal-text);
+  --yellow-bar: var(--signal);
   --danger: #b42318;
   --danger-soft: #fee4e2;
-  --grey-node: #e9e7df;
-  --grey-shadow: #d2cfc4;
-  --radius: 18px;
-  --radius-lg: 24px;
-  --radius-xl: 28px;
-  --purple-soft: #ede9fe;
-  --purple-text: #5b3fbf;
-  --purple-line: #d8cff9;
-  /* shadows are soft and take the colour of what casts them; never plain black */
-  --shadow-card: 0 14px 30px -24px rgba(35, 48, 42, 0.5);
-  --shadow-green: 0 14px 30px -18px rgba(33, 122, 51, 0.55);
-  --shadow-yellow: 0 12px 26px -18px rgba(161, 98, 7, 0.45);
+  --grey-node: #e9ecf3;
+  --grey-shadow: #cfd5de;
+  --radius: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --purple-soft: var(--signal-soft);
+  --purple-text: var(--signal-text);
+  --purple-line: var(--signal-line);
+  /* shadows are soft and navy; never plain black */
+  --shadow-card: 0 18px 40px -26px rgba(20, 33, 61, 0.45);
+  --shadow-green: 0 14px 30px -18px rgba(27, 127, 78, 0.45);
+  --shadow-yellow: 0 12px 26px -18px rgba(201, 138, 0, 0.45);
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --font: Nunito, Assistant, Heebo, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font: Assistant, Heebo, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Frank Ruhl Libre", Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --font-hand: "Amatic SC", cursive;
   --tabbar-height: 64px;
   /* older names still referenced by a few rules */
-  --light: var(--green-soft);
-  --warm: var(--yellow-soft);
+  --light: var(--ok-soft);
+  --warm: var(--signal-soft);
 }
 * {
   box-sizing: border-box;
@@ -61,12 +84,15 @@ html {
 }
 body {
   margin: 0;
-  background: var(--paper);
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 100% 32px,
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 32px 100%,
+    var(--paper);
   color: var(--ink);
   font-family: var(--font);
-  font-size: 15px;
-  line-height: 1.6;
-  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.55;
+  font-weight: 500;
   overflow-x: hidden;
 }
 button,
@@ -104,10 +130,10 @@ button {
   background: var(--surface);
   color: var(--ink);
   border: 2px solid var(--line);
-  border-radius: 14px;
-  padding: 10px 16px;
+  border-radius: 999px;
+  padding: 10px 18px;
   min-height: 44px;
-  font-weight: 800;
+  font-weight: 700;
   transition: background 0.15s ease, border-color 0.15s ease, transform 0.08s ease, box-shadow 0.08s ease;
 }
 button:hover {
@@ -174,26 +200,30 @@ p {
   margin: 0;
 }
 h1 {
-  font-size: 34px;
-  line-height: 1.15;
-  font-weight: 900;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: 0;
 }
 h2 {
-  font-size: 22px;
-  line-height: 1.3;
-  font-weight: 900;
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 1.25;
+  font-weight: 700;
 }
 h3 {
-  font-size: 17px;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1.25;
+  font-weight: 700;
 }
 h4 {
-  font-weight: 800;
+  font-weight: 700;
 }
 ::selection {
-  background: #cfeed4;
-  color: #12341b;
+  background: var(--signal-soft);
+  color: var(--ink);
 }
 ::-webkit-scrollbar {
   width: 8px;
@@ -210,17 +240,17 @@ summary {
 
 /* ---------------------------------------------------------------- shared pieces */
 .primary {
-  background: var(--green-button);
+  background: var(--navy);
   color: #fff;
   border-color: transparent;
-  box-shadow: 0 5px 0 var(--green-press);
-  font-weight: 900;
-  border-radius: 18px;
-  padding-inline: 22px;
+  box-shadow: 0 5px 0 var(--signal-deep);
+  font-weight: 700;
+  border-radius: 999px;
+  padding-inline: 24px;
   transition: transform 120ms ease, box-shadow 120ms ease, background 160ms ease;
 }
 .primary:hover {
-  background: #1f7834;
+  background: var(--navy-deep);
   color: #fff;
   border-color: transparent;
   transform: translateY(-1px);
@@ -269,16 +299,21 @@ summary {
 .wordmark {
   display: inline-flex;
   align-items: center;
+  font-family: var(--font-display);
   font-size: 28px;
   font-weight: 900;
-  letter-spacing: -0.5px;
-  color: var(--green-text);
+  letter-spacing: -0.01em;
+  color: var(--navy);
   text-decoration: none;
   font-family: Nunito, system-ui, sans-serif;
 }
+.wordmark b {
+  color: var(--signal);
+  font-weight: 900;
+}
 .wordmark:hover {
   text-decoration: none;
-  color: var(--green-deep);
+  color: var(--navy-deep);
 }
 .row {
   display: flex;
@@ -559,7 +594,9 @@ summary {
   display: flex;
   align-items: center;
   gap: 22px;
-  border-bottom: 2px solid var(--line);
+  border-bottom: 0;
+  background: var(--navy);
+  color: #c9d3e6;
   background: var(--surface);
 }
 .tabs {
@@ -576,22 +613,23 @@ summary {
 .tab {
   border: 2px solid transparent;
   background: transparent;
-  color: var(--muted);
-  font-weight: 800;
+  color: #c9d3e6;
+  font-weight: 700;
   font-size: 15px;
-  padding: 9px 16px;
-  border-radius: 12px;
+  padding: 9px 18px;
+  border-radius: 999px;
   min-height: 44px;
   white-space: nowrap;
 }
 .tab:hover {
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
   border-color: transparent;
 }
 .tab.active {
-  background: var(--green-soft);
-  color: var(--green-text);
-  border-color: var(--green-line);
+  background: var(--signal);
+  color: var(--ink);
+  border-color: transparent;
 }
 .topnav-stats {
   display: flex;
@@ -652,11 +690,11 @@ summary {
   color: var(--muted);
   background: transparent;
   border: 0;
-  border-inline-start: 3px solid var(--yellow-line);
+  border-inline-start: 3px solid var(--copper);
   padding: 2px 12px;
   border-radius: 0;
   margin-bottom: 18px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .page-heading {
   display: flex;
@@ -4080,4 +4118,683 @@ summary {
   .road-chart {
     height: 200px;
   }
+}
+
+/* ================================================================ Workbench (2026-09-30): the shell and the hand */
+/* grain over the whole page, on top of everything, never in the way */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.32;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+/* the header's chips and controls on navy */
+.topnav .wordmark {
+  color: #fff;
+}
+.topnav .stat-chip {
+  color: #c9d3e6;
+  font-weight: 700;
+}
+.topnav .stat-chip.xp {
+  color: var(--signal);
+}
+.topnav .stat-chip.xp svg {
+  fill: rgba(255, 183, 3, 0.35);
+  stroke: var(--signal);
+}
+.topnav .stat-chip.streak.lit {
+  color: #f2b27a;
+}
+.topnav .stat-chip.streak.lit svg {
+  fill: var(--copper);
+  stroke: #f2b27a;
+}
+.topnav .level-word {
+  color: #fff;
+}
+.topnav .icon-button,
+.topnav .language-switch {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.topnav .icon-button:hover,
+.topnav .language-switch:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+/* the phone tab bar: navy too, the active tab a yellow pill */
+@media (max-width: 1150px) {
+  .tabbar {
+    background: var(--navy);
+    border-top: 0;
+    box-shadow: 0 -10px 30px -20px rgba(20, 33, 61, 0.6);
+  }
+  .tabbar .tab {
+    color: #c9d3e6;
+  }
+  .tabbar .tab.active {
+    background: var(--signal);
+    color: var(--ink);
+  }
+}
+/* the hand: handwriting, the highlighter, the corner stamp, the sticky note, the sign-off */
+.hand {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  color: var(--copper);
+  letter-spacing: 0.02em;
+}
+.mark {
+  position: relative;
+  isolation: isolate;
+  white-space: nowrap;
+}
+.mark::after {
+  content: "";
+  position: absolute;
+  inset-inline: -4px;
+  bottom: 0.08em;
+  height: 0.42em;
+  background: var(--signal);
+  opacity: 0.55;
+  z-index: -1;
+  border-radius: 3px;
+}
+.stamp {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.7;
+  direction: ltr;
+  text-align: left;
+  white-space: nowrap;
+}
+.sticky {
+  background: var(--sticky);
+  border-radius: 6px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 12px 24px -16px rgba(20, 33, 61, 0.5);
+  position: relative;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.sticky::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  inset-inline-start: 50%;
+  width: 70px;
+  height: 20px;
+  margin-inline-start: -35px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(20, 33, 61, 0.08);
+}
+.sticky small {
+  display: block;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-top: 8px;
+  letter-spacing: 0;
+}
+.signoff {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 12px 32px 40px;
+  color: var(--muted);
+  font-size: 14px;
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.signoff .hand {
+  font-size: 26px;
+  color: var(--ink-2);
+  border-bottom: 2px solid var(--copper);
+  padding-bottom: 1px;
+  white-space: nowrap;
+}
+@media (max-width: 1150px) {
+  .signoff {
+    padding: 8px 16px calc(var(--tabbar-height) + 28px);
+  }
+}
+
+/* ---------------------------------------------------------------- Workbench: the Learn page */
+.sheet {
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  padding: 24px 26px;
+  min-width: 0;
+}
+.panel {
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 18px 20px;
+  min-width: 0;
+}
+.panel h3,
+.side-card h2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.panel h3 small,
+.side-card h2 small {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.learn-head {
+  align-items: flex-end;
+  padding-bottom: 10px;
+  border-bottom: 2px dashed var(--line);
+}
+.learn-head h1 {
+  font-size: 44px;
+  line-height: 1.12;
+  max-width: 22ch;
+}
+.learn-head .kicker {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 15px;
+}
+.learn-head .stamp {
+  align-self: flex-start;
+}
+.today-sheet {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  scroll-margin-top: 90px;
+}
+.margin-note {
+  position: absolute;
+  inset-inline-end: 10px;
+  top: -40px;
+  font-size: 22px;
+  line-height: 1;
+  white-space: nowrap;
+}
+.margin-note svg {
+  width: 60px;
+  height: 26px;
+  vertical-align: middle;
+  margin-inline-start: 4px;
+}
+.sheet-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.tag {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--signal);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.sheet-skill {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+.sheet-sketch {
+  position: absolute;
+  inset-inline-end: 26px;
+  top: 70px;
+  width: 150px;
+  color: var(--ink-2);
+  opacity: 0.9;
+}
+.sketch svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.sketch-cap {
+  font-size: 20px;
+  line-height: 1;
+  margin-top: 2px;
+  text-align: center;
+}
+.sheet-title {
+  font-size: 30px;
+  line-height: 1.3;
+  margin-inline-end: 176px;
+  max-width: 34ch;
+}
+.sheet-why {
+  color: var(--ink-2);
+  max-width: 62ch;
+  margin-inline-end: 176px;
+  line-height: 1.6;
+}
+.sheet-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.sheet-actions .primary {
+  min-height: 52px;
+  font-size: 17px;
+  padding-inline: 28px;
+}
+.trace {
+  position: relative;
+  margin-top: 18px;
+  padding-top: 10px;
+}
+.trace-svg {
+  width: 100%;
+  height: 110px;
+  display: block;
+}
+[dir="rtl"] .trace-svg {
+  transform: scaleX(-1);
+}
+.probes {
+  list-style: none;
+  margin: -4px 0 0;
+  padding: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+.probe {
+  text-align: center;
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+}
+.probe-dot-wrap {
+  display: grid;
+  place-items: center;
+  margin-bottom: 8px;
+}
+.probe-dot {
+  width: 52px;
+  height: 52px;
+  min-height: 0;
+  padding: 0;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 16px;
+}
+.probe.state-locked .probe-dot,
+.probe.state-skipped .probe-dot {
+  border-style: dashed;
+}
+.probe.state-done .probe-dot {
+  background: var(--ok);
+  border-color: var(--ok);
+  color: #fff;
+  box-shadow: 0 5px 0 var(--ok-deep);
+}
+.probe.state-current .probe-dot {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--ink);
+  transform: scale(1.18);
+  box-shadow: 0 6px 0 var(--signal-deep);
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+.probe.state-current .probe-dot:hover {
+  background: #ffc42e;
+}
+.probe.state-current .probe-dot:active {
+  transform: scale(1.18) translateY(5px);
+  box-shadow: 0 1px 0 var(--signal-deep);
+}
+.probe.kind-interview.state-locked .probe-dot {
+  color: var(--signal-text);
+  border-color: var(--signal-line);
+}
+.probe b {
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.probe.state-locked b,
+.probe.state-skipped b {
+  color: var(--muted);
+}
+.probe span {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.later {
+  padding: 4px 6px 0;
+}
+.later h3 {
+  font-size: 18px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.later ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+.later li {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px dashed var(--line);
+  font-size: 15px;
+  align-items: baseline;
+}
+.later li.first {
+  border-top-color: var(--line);
+}
+.later-day {
+  color: var(--copper-text);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.later-what {
+  font-weight: 600;
+}
+.later-mode {
+  color: var(--muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.later .text-button {
+  margin-top: 8px;
+}
+.today-panel .bar {
+  height: 14px;
+  border-radius: 999px;
+  background: #e9ecf3;
+  position: relative;
+  margin: 8px 0 14px;
+  overflow: hidden;
+}
+.today-panel .bar i {
+  position: absolute;
+  inset: 0;
+  width: 0;
+  background: repeating-linear-gradient(-45deg, var(--signal) 0 6px, var(--signal-deep) 6px 8px);
+  transition: width 0.6s ease;
+}
+.today-panel .note {
+  font-size: 14px;
+  color: var(--muted);
+  border-inline-start: 3px solid var(--copper);
+  padding: 4px 10px;
+  line-height: 1.5;
+}
+.strength.hot .strength-name {
+  color: var(--copper-text);
+}
+.strength .blocks i.next {
+  background: var(--copper);
+  opacity: 0.85;
+}
+.tone-green .blocks i.on,
+.tone-yellow .blocks i.on {
+  background: var(--navy);
+}
+.tone-yellow .strength-word,
+.tone-green .strength-word {
+  color: var(--ink-2);
+}
+.streak-card {
+  background: var(--surface);
+}
+.streak-card.lit {
+  background: var(--surface);
+  border-color: var(--line);
+}
+.streak-number {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--copper);
+  flex: none;
+  min-width: 44px;
+  text-align: center;
+}
+.streak-card.lit .streak-headline {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 19px;
+}
+.learn-side .pill-button {
+  align-self: flex-start;
+}
+.learn-side .sticky {
+  margin-top: 6px;
+}
+.path-empty {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  max-width: 60ch;
+}
+.path-empty svg {
+  color: var(--copper);
+}
+@media (max-width: 1150px) {
+  .learn-head h1 {
+    font-size: 34px;
+  }
+  .learn-head .stamp {
+    display: none;
+  }
+  .margin-note {
+    display: none;
+  }
+  .sheet-sketch {
+    display: none;
+  }
+  .sheet-title,
+  .sheet-why {
+    margin-inline-end: 0;
+  }
+  .sheet-title {
+    font-size: 24px;
+  }
+  .sheet {
+    padding: 18px 16px;
+  }
+  .probes {
+    gap: 4px;
+  }
+  .probe b {
+    font-size: 11px;
+  }
+  .probe span {
+    font-size: 10px;
+  }
+  .probe-dot {
+    width: 42px;
+    height: 42px;
+    font-size: 14px;
+  }
+  .later li {
+    grid-template-columns: 90px minmax(0, 1fr);
+  }
+  .later-mode {
+    grid-column: 2;
+  }
+}
+
+/* the header and the landing header are navy whatever an earlier rule says; nothing on the bench tilts */
+.topnav,
+.landing-head {
+  background: var(--navy);
+  border-bottom: 0;
+  color: #c9d3e6;
+}
+.landing-head .wordmark {
+  color: #fff;
+}
+.landing-head .text-button,
+.landing-head .language-switch {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.sample,
+[dir="rtl"] .sample {
+  transform: none;
+}
+.landing-signin {
+  background: var(--navy-soft);
+  border-top: 2px solid var(--line);
+}
+
+/* grades on the bench: green means done and strong, yellow partial, copper needs work */
+.band-strong,
+.badge.band-strong {
+  background: var(--ok-soft);
+  color: var(--ok-deep);
+  border-color: var(--ok-line);
+}
+.band-partial,
+.badge.band-partial {
+  background: var(--signal-soft);
+  color: var(--signal-text);
+  border-color: var(--signal-line);
+}
+.band-weak,
+.badge.band-weak {
+  background: var(--copper-soft);
+  color: var(--copper-text);
+  border-color: #ecc9ad;
+}
+.feedback-good {
+  background: var(--ok-soft);
+  border-color: var(--ok-line);
+}
+.feedback-good h4 {
+  color: var(--ok-deep);
+}
+.feedback-bad {
+  background: var(--copper-soft);
+  border-color: #ecc9ad;
+}
+.feedback-bad h4 {
+  color: var(--copper-text);
+}
+.tone-strong .band-ring .ring-fill {
+  stroke: var(--ok);
+}
+.tone-strong .band-ring .ring-glyph {
+  fill: var(--ok-deep);
+}
+.evaluation-tip {
+  background: var(--surface);
+  border-color: var(--line);
+  border-inline-start: 4px solid var(--copper);
+}
+.evaluation-tip svg {
+  color: var(--copper);
+}
+/* sketches in corners */
+.question-sheet,
+.sample {
+  position: relative;
+}
+.sheet-sketch-corner {
+  position: absolute;
+  inset-inline-end: 22px;
+  top: 16px;
+  width: 104px;
+  color: var(--ink-2);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.sample-sketch {
+  position: absolute;
+  inset-inline-end: 22px;
+  top: 58px;
+  width: 96px;
+  color: var(--ink-2);
+  opacity: 0.8;
+}
+.sample h2,
+.sample .sample-prompt {
+  margin-inline-end: 112px;
+}
+@media (max-width: 1150px) {
+  .sheet-sketch-corner,
+  .sample-sketch {
+    display: none;
+  }
+  .sample h2,
+  .sample .sample-prompt {
+    margin-inline-end: 0;
+  }
+}
+
+/* the topic sits on its own line under the highlighter; the landing header's controls are transparent on navy */
+.learn-head h1 .mark {
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+.landing-head .language-switch,
+.landing-head .icon-button {
+  background: transparent;
+}
+.landing-head .language-switch:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* long Latin skill names must break rather than widen a phone */
+.learn-head h1,
+.sheet-title,
+.sheet-why,
+.sheet-skill,
+.later-what,
+.sticky {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.sheet-skill {
+  white-space: normal;
 }

@@ -20,6 +20,7 @@ import {
 import { AnswerEditor } from "./answer-editor";
 import { EvaluationPanel, NextUpCard } from "./evaluation-panel";
 import { HelpPopover } from "./ui/popover";
+import { SubjectSketch } from "./sketches";
 import { Reveal } from "./ui/motion";
 import { toast } from "./toaster";
 import { FollowUps } from "./follow-ups";
@@ -476,6 +477,7 @@ export function PracticeSession({
               className={`practice-layout ${!attempt ? "practice-preview" : ""}`}
             >
               <section className="question-sheet">
+                <SubjectSketch subject={question.subject} className="sheet-sketch-corner" />
                 <div className="row">
                   <span className="badge">
                     {t("קושי", "Difficulty")} {question.difficulty}/10

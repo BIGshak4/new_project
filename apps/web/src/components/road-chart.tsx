@@ -7,7 +7,7 @@ import { chartRows, type ChartRow } from "../lib/timeline";
 import { useReducedMotion } from "./ui/motion";
 
 /** The brief's colours, as hex because SVG presentation attributes are the safest place for them. */
-const COLOURS = { strong: "#2f9e44", partial: "#e0a800", weak: "#f97316", level: "#1c64b8", grid: "#edebe3", label: "#55635b" };
+const COLOURS = { strong: "#1b7f4e", partial: "#ffb703", weak: "#b5651d", level: "#1c64b8", grid: "#e3e7ee", label: "#5d6b80" };
 
 /**
  * "The road so far" from the third practice day on: stacked bars per day (strong, partial, needs work) and the
