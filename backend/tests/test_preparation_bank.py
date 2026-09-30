@@ -90,7 +90,8 @@ async def test_resource_exposure_requires_own_matching_revealed_attempt(catalog,
     await svc.reveal_reference(user, aid)
     shown = await svc.question_resources(user, q.key, attempt_id=aid)
     assert shown.solution_revealed and shown.technical_material["id"] == "PREP-001"
-    assert len(signed[-1]) == len(q.assets["bank_media"])
+    assert signed[-1] == question_resources.learner_media(q.assets["bank_media"])
+    assert all(not m.get("source_path", "").startswith("sources/") for m in signed[-1])
 
 
 async def test_unrated_feedback_keeps_profile_metrics_and_xp_unchanged(catalog):
@@ -142,3 +143,15 @@ async def test_question_images_are_separated_from_candidate_work():
 async def test_unsafe_storage_path_is_rejected_before_network():
     with pytest.raises(ApiError):
         await question_resources.sign_media([{"path": "../../other-bucket/file"}], "https://example.test", "key")
+
+
+async def test_archive_screenshots_never_receive_learner_links(catalog):
+    archive = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])
+               if m.get("source_path", "").startswith("sources/")]
+    assert len(archive) == 50
+    # No credentials or network needed: the boundary applies before signing.
+    assert await question_resources.sign_media(archive, "", "") == []
+    all_media = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])]
+    retained = question_resources.learner_media(all_media)
+    assert retained and len(retained) + len(archive) == len(all_media)
+    assert all(m["source_path"].startswith(("diagrams/", "solutions/")) for m in retained)

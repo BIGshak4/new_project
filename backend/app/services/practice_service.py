@@ -238,7 +238,7 @@ class PracticeService:
 
     async def question_resources(self, user_id: uuid.UUID, key: str, *, attempt_id: uuid.UUID | None = None):
         from app.config import get_settings
-        from app.services.question_resources import QuestionResources, sign_media
+        from app.services.question_resources import QuestionResources, learner_media, sign_media
 
         async with self.store.transaction() as tx:
             loaded = await tx.load_question(key=key)
@@ -251,7 +251,7 @@ class PracticeService:
                 raise ApiError("not_found", "the attempt does not belong to this question")
             revealed = attempt.reference is not None
         assets = loaded.question.assets
-        media = [m for m in assets.get("bank_media", []) if m.get("role") == "prompt" or revealed]
+        media = [m for m in learner_media(assets.get("bank_media", [])) if m.get("role") == "prompt" or revealed]
         settings = get_settings()
         return QuestionResources(
             media=await sign_media(media, settings.supabase_url, settings.supabase_service_role_key),

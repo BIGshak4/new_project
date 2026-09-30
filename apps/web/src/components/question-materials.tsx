@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import { Download, ExternalLink, RotateCcw } from "lucide-react";
 import type { Lang } from "./auth";
 import type { PracticeApi, QuestionResources, ResourceMedia } from "../lib/practice-api";
+import { visibleQuestionMedia } from "../lib/question-media";
 
 export function StudyText({ text }: { text: string }) {
   return <div className="study-text" dir="auto"><Markdown remarkPlugins={[remarkGfm]} skipHtml
@@ -49,16 +50,16 @@ export function QuestionFigures({ media, lang, role, onRefresh }: {
   media: ResourceMedia[]; lang: Lang; role: "prompt" | "solution"; onRefresh: () => void;
 }) {
   const [failed, setFailed] = useState<string[]>([]);
-  const files = media.filter(m => m.role === role);
+  const files = visibleQuestionMedia(media).filter(m => m.role === role);
   if (!files.length) return null;
   const images = files.filter(m => m.kind === "image");
   return <section className="question-resources" aria-label={lang === "he" ? "שרטוטים וקבצים" : "Diagrams and files"}>
     <div className="resource-heading"><h3>{role === "prompt"
-      ? lang === "he" ? "השאלה כפי שנמסרה" : "Original question material"
+      ? lang === "he" ? "שרטוטים לשאלה" : "Question diagrams"
       : lang === "he" ? "שרטוטי הפתרון וקבצי המימוש" : "Solution diagrams and implementation files"}</h3>
       <button className="text-button" onClick={onRefresh} aria-label={lang === "he" ? "רענון קישורי הקבצים" : "Refresh file links"}>
         <RotateCcw size={16} /></button></div>
-    <p className="small muted">{lang === "he" ? "לחצו על שרטוט לצפייה בגודל מלא. קובצי המקור נשמרו כפי שהם." : "Open any diagram at full size. Original files are preserved."}</p>
+    <p className="small muted">{lang === "he" ? "לחצו על שרטוט לצפייה בגודל מלא." : "Open any diagram at full size."}</p>
     <div className="question-figures">{images.map((m, i) => <figure key={m.id}>
       <a href={m.url} target="_blank" rel="noreferrer" aria-label={`${lang === "he" ? "פתיחת שרטוט" : "Open diagram"} ${i + 1}`}>
         {/* Signed private URLs must not be persisted by an image-optimization cache. */}

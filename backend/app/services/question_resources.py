@@ -34,7 +34,17 @@ class QuestionResources(BaseModel):
     solution_revealed: bool = False
 
 
+def learner_media(media: list[dict]) -> list[dict]:
+    """Archive screenshots are internal source records, not learner-facing illustrations.
+
+    Preserve their provenance and the authored diagrams/code. This also applies to
+    existing database manifests, without reseeding or changing learner attempts.
+    """
+    return [m for m in media if not str(m.get("source_path", "")).replace("\\", "/").startswith("sources/")]
+
+
 async def sign_media(media: list[dict], base_url: str, service_key: str) -> list[ResourceMedia]:
+    media = learner_media(media)
     if not media:
         return []
     if not base_url or not service_key:
