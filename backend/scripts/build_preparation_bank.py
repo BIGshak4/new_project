@@ -78,7 +78,10 @@ def load():
                 "common_errors": {}, "accepted_approaches": [], "parity_checked": False,
             }
         media = []
-        source_paths = {s["path"] for s in q["sources"] if s.get("path")}
+        # A sources/ file can itself be an answer, clarification or style reference.
+        # Only explicit question sources belong before the reveal boundary.
+        source_paths = {s["path"] for s in q["sources"] if s.get("path") and s.get("type") == "user_supplied_image"
+                        and not any(word in s.get("role", "") for word in ("answer", "clarification", "reference"))}
         refs = {p for p in paths_in(q) if p.endswith('.png')}
         for field in ("solution_code_path", "solution_code_paths", "alternative_solution_code_path", "solution_model_path"):
             refs.update(paths_in(q.get(field)))
@@ -93,7 +96,7 @@ def load():
                 raise ValueError(f"{ident}: missing/unsafe asset {relative}")
             digest = hashlib.sha256(path.read_bytes()).hexdigest()
             storage_path = f"{ident.lower()}/{digest[:20]}-{path.name}"
-            is_prompt = relative in source_paths or relative.startswith("sources/")
+            is_prompt = relative in source_paths
             media.append({"id": f"asset-{n + 1}", "path": storage_path, "filename": path.name,
                           "kind": "image" if path.suffix == ".png" else "file",
                           "role": "prompt" if is_prompt else "solution",

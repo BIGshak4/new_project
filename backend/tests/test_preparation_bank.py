@@ -37,6 +37,10 @@ def test_compilation_preserves_every_question_and_all_original_images(catalog):
     assert built == json.loads((SEEDS / "questions/preparation_bank.json").read_text(encoding="utf-8"))
     assert uploads == manifest["files"]
     assert len(source["questions"]) == len(built) == 37
+    for q in built:
+        for media in q["assets"]["bank_media"]:
+            if any(word in media["filename"] for word in ("external-answer", "clarification", "style-reference", "course-adder-summary")):
+                assert media["role"] == "solution", "An explanation screenshot must never leak before reference reveal"
     assert len(catalog.questions) == 67
     archived_images = {p.relative_to(ROOT / "interview_preparation").as_posix()
                        for folder in ("sources", "diagrams")
