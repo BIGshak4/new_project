@@ -25,7 +25,7 @@ export function sketchFor(subject: string | null | undefined): keyof typeof DRAW
 }
 
 const stroke = { fill: "none", stroke: "currentColor", strokeWidth: 2.2, strokeLinecap: "round", strokeLinejoin: "round" } as const;
-const label = { fontFamily: "'JetBrains Mono', monospace", fontSize: 9, fill: "currentColor", stroke: "none" } as const;
+const label = { fontFamily: "'Amatic SC', cursive", fontWeight: 700, fontSize: 13, fill: "currentColor", stroke: "none" } as const;
 
 const DRAWINGS = {
   mux: (

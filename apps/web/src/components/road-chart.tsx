@@ -21,7 +21,7 @@ export function RoadChart({ timeline, lang }: { timeline: TimelinePoint[]; lang:
   // one level point alone reads as a stray dot; the line appears once there are two days with a level
   const hasLevel = rows.filter((r) => r.level !== null).length >= 2;
   return (
-    <div className="road-chart" dir="ltr" role="img" aria-label={t("תשובות לפי יום ורמה ממוצעת", "Answers per day and average level")}>
+    <div className="road-chart" dir="ltr" role="figure" aria-label={t("תשובות לפי יום ורמה ממוצעת", "Answers per day and average level")}>
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart data={rows} margin={{ top: 8, right: hasLevel ? 8 : 4, bottom: 0, left: -18 }} barCategoryGap="30%">
           <CartesianGrid vertical={false} stroke={COLOURS.grid} strokeWidth={2} />

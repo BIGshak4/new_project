@@ -9,7 +9,7 @@ import type { Goal, PracticeApi, Program, Progress } from "../lib/practice-api";
 import { apiMessage } from "../lib/practice-ui";
 import { dayLabel, modeLabel } from "../lib/timeline";
 import { daysToGoLabel, pathNodes, todayProgress, type PathNode } from "../lib/path";
-import { revealDelay } from "../lib/ui";
+import { revealDelay, shouldScrollToNode } from "../lib/ui";
 import { Breathe, Pop, motion, spring, useReducedMotion } from "./ui/motion";
 
 /**
@@ -82,8 +82,7 @@ export function LearnHome({
     const el = document.querySelector<HTMLElement>(".today-sheet");
     if (!el) return;
     scrolled.current = true;
-    // only when the sheet has not even started inside the first screen; the title stays visible otherwise
-    if (el.getBoundingClientRect().top > window.innerHeight * 0.8) {
+    if (shouldScrollToNode(el.getBoundingClientRect(), window.innerHeight)) {
       el.scrollIntoView({ block: "start", behavior: reduced ? "auto" : "smooth" });
     }
   }, [program, reduced]);
@@ -130,17 +129,18 @@ export function LearnHome({
   // the corner stamp: yesterday's band from the timeline, today's items and minutes
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  const yPoint = progress.timeline?.find((p) => p.day === yesterday.toISOString().slice(0, 10));
+  const yKey = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, "0")}-${String(yesterday.getDate()).padStart(2, "0")}`;   // the local day, as the user counts days
+  const yPoint = progress.timeline?.find((p) => p.day === yKey);
   const yesterdayWord = !yPoint
     ? "—"
     : yPoint.strong >= yPoint.partial && yPoint.strong >= yPoint.weak
-      ? "strong"
+      ? t("חזקה", "strong")
       : yPoint.partial >= yPoint.weak
-        ? "partial"
-        : "needs work";
+        ? t("חלקית", "partial")
+        : t("לחיזוק", "needs work");
 
   // the title: the topic of the day with the highlighter under it
-  const topic = current ? current.item.skills[0]?.label ?? "" : "";
+  const topic = goalComplete && current ? current.item.skills[0]?.label ?? "" : "";
   const title = !goalComplete
     ? t("נבנה לכם תוכנית עד הראיון.", "Let’s build your plan until the interview.")
     : current
@@ -175,24 +175,24 @@ export function LearnHome({
             <h1 dir="auto">
               {daysLabel && goalComplete ? `${daysLabel}. ` : ""}
               {title}
-              {current && current.kind !== "interview" && <span className="mark">{topic}.</span>}
+              {topic && current?.kind !== "interview" && <span className="mark">{topic}.</span>}
             </h1>
           </div>
           {goalComplete && (
-            <div className="stamp" aria-label={t("סיכום היום", "Today in numbers")}>
-              {today.total} {today.total === 1 ? "item" : "items"} · {minutes ?? remainingMinutes} min
+            <p className="stamp" role="note" aria-label={t("סיכום היום", "Today in numbers")} dir={lang === "he" ? "rtl" : "ltr"}>
+              {today.total} {today.total === 1 ? t("פריט", "item") : t("פריטים", "items")} · {remainingMinutes || minutes || 0} {t("דק׳", "min")}
               <br />
-              yesterday: {yesterdayWord}
+              {t("אתמול", "yesterday")}: {yesterdayWord}
               <br />
-              streak: {overview?.streak_days ?? 0}
-            </div>
+              {t("רצף", "streak")}: {overview?.streak_days ?? 0}
+            </p>
           )}
         </header>
 
         {goalSlot}
 
         {loading && !program ? (
-          <p className="loading" role="status">
+          <p className="loading loading-sheet" role="status">
             {t("טוענים את התוכנית…", "Loading your program…")}
           </p>
         ) : !goalComplete ? (
@@ -239,7 +239,7 @@ export function LearnHome({
                     <span className="tag">
                       {t("עכשיו", "Now")} · {today.done + 1}/{today.total} · {current.item.minutes} {t("דק׳", "min")}
                     </span>
-                    <span className="sheet-skill" dir="ltr">{currentSkills}</span>
+                    <span className="sheet-skill" dir="auto">{currentSkills}</span>
                   </div>
                   {current.kind !== "interview" && <SubjectSketch subject={currentSubject} caption={sketchCaption(currentSubject, lang)} className="sheet-sketch" />}
                   <h2 className="sheet-title" dir="auto">
@@ -285,7 +285,7 @@ export function LearnHome({
               )}
 
               {todayNodes.length > 0 && (
-                <div className="trace" aria-label={t("הפריטים של היום", "Today’s items")}>
+                <div className="trace" role="group" aria-label={t("הפריטים של היום", "Today’s items")}>
                   <Trace count={todayNodes.length} lit={todayNodes.filter((n) => n.state === "done").length + (current ? 1 : 0)} />
                   <ol className="probes">
                     {todayNodes.map((node, i) => (
@@ -440,8 +440,8 @@ function Trace({ count, lit }: { count: number; lit: number }) {
   const litPath = litCount === 0 ? "" : `M0 90 ${Array.from({ length: litCount }, (_, i) => pulse(i)).join(" ")} H${(litCount * seg - 6).toFixed(1)}`;
   return (
     <svg className="trace-svg" viewBox={`0 0 ${w} 120`} preserveAspectRatio="none" aria-hidden="true">
-      <path d={all} fill="none" stroke="var(--line)" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />
-      {litPath && <path d={litPath} fill="none" stroke="var(--signal)" strokeWidth="6" strokeLinejoin="round" strokeLinecap="round" />}
+      <path d={all} fill="none" stroke="var(--line)" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      {litPath && <path d={litPath} fill="none" stroke="var(--signal)" strokeWidth="6" strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />}
     </svg>
   );
 }

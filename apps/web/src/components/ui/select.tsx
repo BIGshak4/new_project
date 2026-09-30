@@ -33,7 +33,7 @@ export function Select({
       <RadixSelect.Trigger className={`ui-select-trigger ${className ?? ""}`} aria-label={ariaLabel}>
         {icon}
         <span className="ui-select-value">
-          <RadixSelect.Value />
+          <RadixSelect.Value placeholder={ariaLabel} />
         </span>
         <RadixSelect.Icon className="ui-select-chevron">
           <ChevronDown size={16} aria-hidden="true" />

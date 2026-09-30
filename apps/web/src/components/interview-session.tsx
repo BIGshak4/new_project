@@ -294,8 +294,11 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
   return (
     <section className="interview-room">
       <header className="interview-bar">
-        <span className={`interview-timer tone-${tone}`} dir="ltr" aria-live={tone === "calm" ? "off" : "polite"}>
+        <span className={`interview-timer tone-${tone}`} dir="ltr" aria-live="off">
           <Clock3 size={16} /> {mm}:{ss}
+        </span>
+        <span className="sr-only" role="status" aria-live="polite">
+          {tone === "danger" ? t("עשר שניות אחרונות", "Ten seconds left") : tone === "warn" ? t("דקה אחרונה", "One minute left") : ""}
         </span>
         <span className="small muted">
           {t("שאלה", "Question")} {interview.turn_count} · {interview.turns.length} {t("נענו", "answered")}
@@ -442,7 +445,7 @@ function InterviewReportView({
         </div>
         <button onClick={onBack}>{t("חזרה לראיונות", "Back to interviews")}</button>
       </div>
-      {!report && !error && <div className="loading" role="status">{t("מכינים את הדוח…", "Preparing the report…")}</div>}
+      {!report && !error && <div className="loading loading-report" role="status">{t("מכינים את הדוח…", "Preparing the report…")}</div>}
       {error && <p className="notice error">{error}</p>}
       {report && (
         <>

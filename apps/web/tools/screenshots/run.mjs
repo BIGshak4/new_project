@@ -180,6 +180,11 @@ await send("Page.enable"); await send("Runtime.enable");
 const storageKey = `sb-${new URL(`http://localhost:${STUB_PORT}`).hostname.split(".")[0]}-auth-token`;
 const inject = (lang, signedIn) => `
   try {
+    window.__lcp = 0; window.__cls = 0;
+    new PerformanceObserver((l) => { for (const e of l.getEntries()) window.__lcp = e.startTime; }).observe({ type: "largest-contentful-paint", buffered: true });
+    new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!e.hadRecentInput) window.__cls += e.value; }).observe({ type: "layout-shift", buffered: true });
+  } catch (e) {}
+  try {
     localStorage.setItem("jobrun-language", ${JSON.stringify(lang)});
     ${signedIn ? `localStorage.setItem(${JSON.stringify(storageKey)}, ${JSON.stringify(JSON.stringify(session))});` : `localStorage.removeItem(${JSON.stringify(storageKey)});`}
     localStorage.setItem("jobrun-goal-skipped-${session.user.id}", "1");
@@ -227,7 +232,17 @@ for (const lang of LANGS) {
       }
       // long enough for the grade sequence (1.3 s) and the path's staggered arrival to finish
       await sleep(found ? 2000 : 0);
-      const metrics = await send("Runtime.evaluate", { expression: "JSON.stringify({inner: innerWidth, scroll: document.documentElement.scrollWidth, height: document.documentElement.scrollHeight, title: document.title, dir: document.documentElement.dir})", returnByValue: true });
+      // layout facts plus the page's own timing: first paint, largest paint, layout shift, load, script bytes
+      const metrics = await send("Runtime.evaluate", { expression: `JSON.stringify((() => {
+        const nav = performance.getEntriesByType("navigation")[0] || {};
+        const fcp = performance.getEntriesByName("first-contentful-paint")[0];
+        const res = performance.getEntriesByType("resource");
+        const kb = (t) => Math.round(res.filter((r) => r.initiatorType === t).reduce((a, r) => a + (r.transferSize || 0), 0) / 1024);
+        return { inner: innerWidth, scroll: document.documentElement.scrollWidth, height: document.documentElement.scrollHeight, title: document.title, dir: document.documentElement.dir,
+          fcp_ms: fcp ? Math.round(fcp.startTime) : null, lcp_ms: Math.round(window.__lcp || 0) || null, cls: Math.round((window.__cls || 0) * 1000) / 1000,
+          dcl_ms: Math.round(nav.domContentLoadedEventEnd || 0) || null, load_ms: Math.round(nav.loadEventEnd || 0) || null,
+          js_kb: kb("script"), css_kb: kb("link"), font_kb: kb("css") + kb("other"), heap_mb: performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1048576) : null };
+      })())`, returnByValue: true });
       const info = JSON.parse(metrics.result?.result?.value ?? "{}");
       const file = `${name}-${lang}-${width}.png`;
       const shot = await send("Page.captureScreenshot", { format: "png", captureBeyondViewport: false });
@@ -242,6 +257,12 @@ for (const lang of LANGS) {
   }
 }
 writeFileSync(join(OUT, "index.json"), JSON.stringify(index, null, 2));
+const med = (xs) => { const a = xs.filter((x) => typeof x === "number").sort((p, q) => p - q); return a.length ? a[Math.floor(a.length / 2)] : null; };
+const worst = (xs) => Math.max(...xs.filter((x) => typeof x === "number"), 0);
+for (const width of WIDTHS) {
+  const rows = index.filter((r) => r.width === width);
+  log(`timing @${width}: FCP median ${med(rows.map((r) => r.fcp_ms))} ms (worst ${worst(rows.map((r) => r.fcp_ms))}), LCP median ${med(rows.map((r) => r.lcp_ms))} ms (worst ${worst(rows.map((r) => r.lcp_ms))}), CLS worst ${worst(rows.map((r) => r.cls))}, load median ${med(rows.map((r) => r.load_ms))} ms, JS ${med(rows.map((r) => r.js_kb))} KB, heap ${med(rows.map((r) => r.heap_mb))} MB`);
+}
 ws.close();
 const overflow = index.filter((s) => s.overflow).map((s) => s.file);
 const missing = index.filter((s) => !s.found).map((s) => s.file);

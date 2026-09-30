@@ -24,10 +24,10 @@ test("the grade sequence keeps its order", () => {
   assert.ok(GRADE_SEQUENCE.tip < 1.5, "the whole reveal is over in under a second and a half");
 });
 
-test("the path scrolls to the current node only when it is out of view", () => {
-  assert.equal(shouldScrollToNode({ top: 200, bottom: 300 }, 900), false);
-  assert.equal(shouldScrollToNode({ top: 850, bottom: 950 }, 900), true);
-  assert.equal(shouldScrollToNode({ top: 20, bottom: 120 }, 900), true, "hidden under the top bar counts as out of view");
+test("the page scrolls to the day's sheet only when it starts below the first screen", () => {
+  assert.equal(shouldScrollToNode({ top: 200, bottom: 700 }, 900), false);
+  assert.equal(shouldScrollToNode({ top: 700, bottom: 1300 }, 900), false, "started inside the first 80 %: the title stays");
+  assert.equal(shouldScrollToNode({ top: 760, bottom: 1300 }, 900), true);
 });
 
 test("the counting number is a whole, non-negative value", () => {

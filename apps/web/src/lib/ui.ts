@@ -33,11 +33,11 @@ export const GRADE_SEQUENCE = {
 } as const;
 
 /**
- * Whether the Learn page should scroll the current node into view on open: only when the node is not already
- * fully visible, so a short path on a desktop does not jump.
+ * Whether the Today page should scroll the day's sheet into view on open: only when the sheet has not even started
+ * inside the first screen, so the title stays visible on a desktop and on most phones.
  */
-export function shouldScrollToNode(rect: { top: number; bottom: number }, viewportHeight: number, topBar = 90): boolean {
-  return rect.top < topBar || rect.bottom > viewportHeight;
+export function shouldScrollToNode(rect: { top: number; bottom: number }, viewportHeight: number, share = 0.8): boolean {
+  return rect.top > viewportHeight * share;
 }
 
 /** The interview timer's tone: calm, then amber for the last minute, then red for the last ten seconds. */
