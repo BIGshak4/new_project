@@ -492,6 +492,7 @@ export function PracticeSession({
                 </div>
                 <h1 dir="auto">{question.title}</h1>
                 {question.preparation_id && <p className="small muted"><bdi>{question.preparation_id}</bdi></p>}
+                {!!question.topics?.length && <p className="small muted" dir="auto">{question.topics.map(topic => topic.replaceAll("_", " ")).join(" · ")}</p>}
                 {question.assessment_ready === false && <p className="notice study-review-note">
                   {t("שאלה בבדיקה מקצועית. המשוב הוא ראשוני; התרגול נשמר, אך אינו משנה את רמת השליטה או מעניק נקודות עד לאישור התוכן ורמת הקושי.",
                     "This question is under technical review. Feedback is provisional; your practice is saved but does not change skill levels or earn points until its content and difficulty are approved.")}
@@ -516,6 +517,10 @@ export function PracticeSession({
                     .
                   </p>
                 )}
+                <RichText text={question.prompt} />
+                {question.has_media && (resources.data
+                  ? <QuestionFigures media={resources.data.media} lang={lang} role="prompt" onRefresh={resources.retry} />
+                  : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />)}
                 {attempt && (
                   <>
                     <div className="row" style={{ marginTop: 24 }}>
@@ -588,10 +593,6 @@ export function PracticeSession({
                       )}
                   </>
                 )}
-                <RichText text={question.prompt} />
-                {question.has_media && (resources.data
-                  ? <QuestionFigures media={resources.data.media} lang={lang} role="prompt" onRefresh={resources.retry} />
-                  : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />)}
                 {question.choices && (
                   <ol className="choices">
                     {question.choices.map((c, i) => (

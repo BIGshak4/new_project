@@ -21,19 +21,20 @@ export function StudyText({ text }: { text: string }) {
 
 export function useQuestionResources(api: PracticeApi, key: string | undefined, enabled: boolean,
   attemptId: string | undefined, revealed: boolean) {
-  const [data, setData] = useState<QuestionResources | null>(null);
+  const identity = `${key}:${attemptId}:${revealed}`;
+  const [loaded, setLoaded] = useState<{ identity: string; data: QuestionResources } | null>(null);
   const [error, setError] = useState(false);
   const [retry, setRetry] = useState(0);
   useEffect(() => {
     let current = true;
-    setData(null); setError(false);
+    setLoaded(null); setError(false);
     if (!key || !enabled) return;
     api.questionResources(key, attemptId).then(result => {
-      if (current) setData(result);
+      if (current) setLoaded({ identity, data: result });
     }).catch(() => { if (current) setError(true); });
     return () => { current = false; };
-  }, [api, key, enabled, attemptId, revealed, retry]);
-  return { data, error, retry: () => setRetry(v => v + 1) };
+  }, [api, key, enabled, attemptId, revealed, identity, retry]);
+  return { data: loaded?.identity === identity ? loaded.data : null, error, retry: () => setRetry(v => v + 1) };
 }
 
 export function ResourceStatus({ error, retry, lang }: { error: boolean; retry: () => void; lang: Lang }) {
@@ -47,6 +48,7 @@ export function ResourceStatus({ error, retry, lang }: { error: boolean; retry: 
 export function QuestionFigures({ media, lang, role, onRefresh }: {
   media: ResourceMedia[]; lang: Lang; role: "prompt" | "solution"; onRefresh: () => void;
 }) {
+  const [failed, setFailed] = useState<string[]>([]);
   const files = media.filter(m => m.role === role);
   if (!files.length) return null;
   const images = files.filter(m => m.kind === "image");
@@ -61,8 +63,10 @@ export function QuestionFigures({ media, lang, role, onRefresh }: {
       <a href={m.url} target="_blank" rel="noreferrer" aria-label={`${lang === "he" ? "פתיחת שרטוט" : "Open diagram"} ${i + 1}`}>
         {/* Signed private URLs must not be persisted by an image-optimization cache. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={m.url} alt={m.caption || `${lang === "he" ? "שרטוט" : "Diagram"} ${i + 1}: ${m.filename}`} loading="lazy" referrerPolicy="no-referrer" />
+        <img src={m.url} alt={m.caption || `${lang === "he" ? "שרטוט" : "Diagram"} ${i + 1}: ${m.filename}`} loading="lazy" referrerPolicy="no-referrer"
+          onError={() => setFailed(old => old.includes(m.url) ? old : [...old, m.url])} />
       </a>
+      {failed.includes(m.url) && <ResourceStatus error retry={onRefresh} lang={lang} />}
       <figcaption><span dir="auto">{m.caption || m.filename}</span><ExternalLink size={14} aria-hidden="true" /></figcaption>
     </figure>)}</div>
     {files.some(m => m.kind === "file") && <ul className="resource-files">{files.filter(m => m.kind === "file").map(m => <li key={m.id}>
