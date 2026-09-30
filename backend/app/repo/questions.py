@@ -44,7 +44,7 @@ class QuestionSummary(BaseModel):
     title: str
     subject: str
     format: str
-    difficulty: int
+    difficulty: int | None
     estimated_minutes: int | None
     practice_modes: list[str]
     language: str                              # the language the text is actually in
@@ -58,6 +58,12 @@ class QuestionSummary(BaseModel):
     job_types: list[str] = Field(default_factory=list)          # job types this question is relevant to (keys)
     companies: list[CompanyTag] = Field(default_factory=list)   # "I saw it at ..." tags, most reported first
     relevance: float | None = None             # how well it fits the requested job type (set only when one is asked)
+    preparation_id: str | None = None
+    category: str | None = None
+    topics: list[str] = Field(default_factory=list)
+    reported_companies: list[str] = Field(default_factory=list)  # source claims, NOT candidate sighting counts
+    assessment_ready: bool = True
+    has_media: bool = False
 
 
 class QuestionDetail(QuestionSummary):
@@ -188,11 +194,17 @@ def summary(loaded: LoadedQuestion, language: str) -> QuestionSummary:
     text = q.translations[text_language]
     return QuestionSummary(
         id=str(loaded.id), key=q.key, title=text.title or (q.assets.get("titles") or {}).get("en", q.key),
-        subject=q.subject, format=q.format, difficulty=q.difficulty, estimated_minutes=q.estimated_minutes,
+        subject=q.subject, format=q.format,
+        difficulty=None if q.assets.get("difficulty_status") == "unrated" else q.difficulty,
+        estimated_minutes=q.estimated_minutes,
         practice_modes=list(q.practice_modes), language=text_language, languages=q.languages_ready(), status=q.status,
         hint_count=len(text.hints), has_check=q.deterministic_check is not None,
-        reviewed=q.status in ("published", "trial"),   # publishing requires reviewed_by and a permitted reuse status
-        trial=q.status == "trial")
+        reviewed=q.status in ("published", "trial") and q.assets.get("assessment_ready", True),
+        trial=q.status == "trial", preparation_id=q.assets.get("preparation_id"),
+        category=q.assets.get("category"), topics=list(q.assets.get("topics") or []),
+        reported_companies=list(q.assets.get("reported_companies") or []),
+        assessment_ready=q.assets.get("assessment_ready", True),
+        has_media=bool(q.assets.get("bank_media") or q.assets.get("preparation_resource")))
 
 
 def detail(loaded: LoadedQuestion, language: str) -> QuestionDetail:

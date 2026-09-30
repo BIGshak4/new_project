@@ -140,7 +140,8 @@ class TestBoundaries:
     async def test_unreviewed_questions_are_hidden_in_production_mode(self, catalog):
         store = InMemoryStore(catalog, allow_in_review=False)
         svc = PracticeService(store, catalog, scripted([]))
-        assert await svc.list_questions(language="en") == []           # all 30 are still in_review
+        listed = await svc.list_questions(language="en")
+        assert len(listed) == 37 and all(q.preparation_id for q in listed)  # original 30 remain in_review
         with pytest.raises(ApiError) as raised:
             await svc.start(USER, question_key=Q)
         assert raised.value.code == "not_found"

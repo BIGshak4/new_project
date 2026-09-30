@@ -68,7 +68,9 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                                        daily_limit=settings.interview_daily_limit,
                                        reviewed_only=settings.interview_reviewed_only,
                                        narrative=settings.llm_provider == "anthropic")
-    practice = PracticeService(store, catalog, provider, config, image_fetcher=fetcher)
+    from app.services.question_resources import fetch_question_images
+    practice = PracticeService(store, catalog, provider, config, image_fetcher=fetcher,
+                               question_image_fetcher=fetch_question_images)
 
     async def interview_finished(tx, user_id, session_id):
         await practice._complete_program_item(tx, user_id, session_id=session_id)

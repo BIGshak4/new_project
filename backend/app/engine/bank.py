@@ -29,6 +29,8 @@ class Selection:
 
 
 def _servable(question: BankQuestion, *, mode: str, language: str, allow_in_review: bool, require_parity: bool) -> bool:
+    if question.assets.get("assessment_ready") is False:
+        return False  # available for manual study, not adaptive plans or assessed mock interviews yet
     if question.status not in ("published", "trial") and not (allow_in_review and question.status in ("in_review", "draft")):
         return False
     if mode not in question.practice_modes:

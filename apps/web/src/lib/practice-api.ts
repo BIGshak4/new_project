@@ -24,7 +24,7 @@ export type QuestionSummary = {
   title: string;
   subject: string;
   format: string;
-  difficulty: number;
+  difficulty: number | null;
   estimated_minutes: number | null;
   practice_modes: string[];
   language: ApiLang;
@@ -43,7 +43,16 @@ export type QuestionSummary = {
   companies?: CompanyTag[];
   /** how well it fits the requested job type; only set when listQuestions was called with a job */
   relevance?: number | null;
+  preparation_id?: string | null;
+  category?: string | null;
+  topics?: string[];
+  reported_companies?: string[];
+  assessment_ready?: boolean;
+  has_media?: boolean;
 };
+
+export type ResourceMedia = { id: string; filename: string; kind: "image" | "file"; role: "prompt" | "solution"; caption: string; url: string };
+export type QuestionResources = { media: ResourceMedia[]; technical_material: Record<string, unknown> | null; solution_revealed: boolean };
 
 /** "Seen at company X" by `count` candidates. Aggregated, never who. */
 export type CompanyTag = { slug: string; name: string; count: number };
@@ -647,6 +656,8 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
         "GET",
         `/v1/questions/${encodeURIComponent(keyOrId)}${q({ language })}`,
       ),
+    questionResources: (key: string, attemptId?: string) =>
+      call<QuestionResources>("GET", `/v1/questions/${encodeURIComponent(key)}/resources${q({ attempt_id: attemptId })}`),
 
     startAttempt: (body: StartAttemptRequest) =>
       call<Attempt>("POST", "/v1/practice/attempts", body),

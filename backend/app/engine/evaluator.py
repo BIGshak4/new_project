@@ -133,14 +133,18 @@ def sanitize(evaluation: Evaluation, known_error_keys: set[str]) -> Evaluation:
 async def evaluate(provider: Provider, *, question_context: str, known_error_keys: set[str], language: str,
                    difficulty: int, answer: str, check: CheckResult | None = None, hint_level: int = 0,
                    glossary: list[dict] | None = None, max_attempts: int = 2, circuit: str | None = None,
-                   images: list[tuple[str, bytes]] | None = None, images_missing: int = 0) -> EvaluationResult:
+                   images: list[tuple[str, bytes]] | None = None, images_missing: int = 0,
+                   question_images: list[tuple[str, bytes]] | None = None) -> EvaluationResult:
     images = list(images or [])
+    question_images = list(question_images or [])
+    image_note = (f"The FIRST {len(question_images)} attached images are SOURCE QUESTION material, NOT the candidate's answer. "
+                  f"Only the following {len(images)} images belong to the candidate.\n") if question_images else ""
     request = LLMRequest(
         role="evaluator",
         system=[i18n.stable_system_block("evaluator", language, glossary), question_context],
-        user=user_message(language=language, difficulty=difficulty, answer=answer, check=check, hint_level=hint_level,
+        user=image_note + user_message(language=language, difficulty=difficulty, answer=answer, check=check, hint_level=hint_level,
                           circuit=circuit, images=len(images), images_missing=images_missing),
-        schema=Evaluation, prompt_version=i18n.prompt_version("evaluator"), images=images,
+        schema=Evaluation, prompt_version=i18n.prompt_version("evaluator"), images=question_images + images,
     )
     result = EvaluationResult(evaluation=None, prompt_version=request.prompt_version)
     if not answer.strip() and not circuit and not images:

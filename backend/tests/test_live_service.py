@@ -85,7 +85,7 @@ class TestEveryQuestion:
         user, conn = case["user_id"], case["connection"]
         before = await count(conn, "select count(*) from public.attempt where user_id = :u", u=user)
         today_before = (await svc.progress(user)).attempts_today
-        all_keys = [q.key for q in await svc.list_questions(language="en")]
+        all_keys = [q.key for q in await svc.list_questions(language="en") if q.key.startswith("example-")]
         assert len(all_keys) == 30
         keys = all_keys[chunk * 10:(chunk + 1) * 10]
         problems = []
@@ -302,7 +302,7 @@ class TestOverHttp:
             async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
                 me = (await client.get("/v1/me", headers=h)).json()
                 assert me["pilot_member"] is True and me["id"] == str(case["user_id"])
-                assert len((await client.get("/v1/questions", headers=h)).json()) == 30
+                assert len((await client.get("/v1/questions", headers=h)).json()) == len(case["catalog"].questions)
                 attempt = (await client.post(base, json={"question_key": "example-sensor-majority", "language": "he"}, headers=h)).json()
                 aid = attempt["id"]
                 hint = (await client.post(f"{base}/{aid}/hints/next", headers=h)).json()["hint"]

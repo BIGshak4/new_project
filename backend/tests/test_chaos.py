@@ -117,6 +117,9 @@ def check_invariants(store: InMemoryStore, catalog):
             assert len(scored) <= 1, f"turn {turn} was scored {len(scored)} times"
         question = catalog.questions[row["question_key"]]
         expected_rows = sum(len(question.skills) if s["turn"] == 0 else 1 for s in done)
+        if question.assets.get("assessment_ready") is False:
+            expected_rows = 0
+            assert all("content_review_pending" in s["flags"] and s["evidence_weight"] == 0 for s in done)
         actual_rows = sum(1 for m in store.metrics if m["attempt_id"] == attempt_id)
         assert actual_rows == expected_rows, f"{attempt_id}: {actual_rows} metrics rows for {len(done)} done revisions"
         for s in subs:

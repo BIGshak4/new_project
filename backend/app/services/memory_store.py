@@ -190,6 +190,8 @@ class _MemoryTx:
             for s in a["row"]["submissions"]:
                 if s.get("status") != "done" or not s.get("band"):
                     continue
+                if "content_review_pending" in s.get("flags", []):
+                    continue
                 accepted = datetime.fromisoformat(s["accepted_at"])
                 if accepted.tzinfo is None:
                     accepted = accepted.replace(tzinfo=UTC)

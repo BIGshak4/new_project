@@ -272,7 +272,8 @@ async def scored_submissions(connection: AsyncConnection, user_id: uuid.UUID, *,
     reads: {day (UTC), band, difficulty, hints_seen, reference_seen, turn, skills}. Read-only: nothing is derived
     here that the engine does not already store."""
     attempt, submission, question = await db.table("attempt"), await db.table("attempt_submission"), await db.table("question")
-    conditions = [attempt.c.user_id == user_id, submission.c.status == "done", submission.c.band.is_not(None)]
+    conditions = [attempt.c.user_id == user_id, submission.c.status == "done", submission.c.band.is_not(None),
+                  ~submission.c.flags.contains(["content_review_pending"])]
     if days is not None:
         conditions.append(submission.c.accepted_at >= datetime.now(UTC) - timedelta(days=days))
     rows = (await connection.execute(

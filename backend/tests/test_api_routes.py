@@ -105,10 +105,10 @@ class TestTheContract:
         restored = (await client.get(f"{BASE}/{attempt['id']}", headers=headers)).json()
         assert restored["question"]["requirements"] == ""
 
-    async def test_the_whole_flow_over_http(self, client, user):
+    async def test_the_whole_flow_over_http(self, client, user, catalog):
         _, h = user
         listing = (await client.get("/v1/questions", params={"language": "he"}, headers=h)).json()
-        assert len(listing) == 30 and all(q["language"] == "he" for q in listing)
+        assert len(listing) == len(catalog.questions) and all(q["language"] == "he" for q in listing)
         assert "reference_solution" not in listing[0] and "hints" not in listing[0]
 
         detail = (await client.get(f"/v1/questions/{Q}", headers=h)).json()
@@ -295,7 +295,7 @@ def every_route():
     aid = str(uuid.uuid4())
     return [
         ("GET", "/v1/me", None), ("GET", "/v1/me/progress", None), ("GET", "/v1/questions", None),
-        ("GET", f"/v1/questions/{Q}", None), ("POST", BASE, {"question_key": Q}), ("GET", f"{BASE}/{aid}", None),
+        ("GET", f"/v1/questions/{Q}", None), ("GET", f"/v1/questions/{Q}/resources", None), ("POST", BASE, {"question_key": Q}), ("GET", f"{BASE}/{aid}", None),
         ("POST", f"{BASE}/{aid}/hints/next", None), ("POST", f"{BASE}/{aid}/reference", None),
         ("POST", f"{BASE}/{aid}/submissions", {"answer": "x"}), ("POST", f"{BASE}/{aid}/follow-ups/1/submissions", {"answer": "x"}),
         ("POST", f"{BASE}/{aid}/submissions/1/retry", None),
@@ -334,7 +334,7 @@ class TestEveryRouteIsProtected:
             parts = [("{attempt_id}" if _is_uuid(x) else x) for x in p.split("/")]
             normalized.add((m, "/".join(parts)))
         normalized = {(m, p.replace(f"/{Q}", "/{key_or_id}").replace("/follow-ups/1/", "/follow-ups/{turn}/")
-                       .replace("/submissions/1/retry", "/submissions/{revision}/retry")) for m, p in normalized}
+                       .replace("/submissions/1/retry", "/submissions/{revision}/retry").replace("/{key_or_id}/resources", "/{key}/resources")) for m, p in normalized}
         normalized = {(m, p.replace("/v1/interviews/{attempt_id}", "/v1/interviews/{interview_id}")
                        .replace("/turns/0/answer", "/turns/{turn_index}/answer")) for m, p in normalized}
         assert v1 == normalized, f"routes without a protection test: {v1 - normalized}"

@@ -45,6 +45,8 @@ def content_hash(question) -> str:
         "translations": {lang: t.model_dump(exclude={"parity_checked", "parity_checked_by"})
                          for lang, t in sorted(question.translations.items())},
     }
+    if question.assets.get("preparation_id"):
+        payload["prepared_content"] = {k: v for k, v in question.assets.items() if k != "content_hash"}
     return hashlib.sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()[:16]
 
 
@@ -174,6 +176,17 @@ async def _seed_in(connection, t: dict, catalog: Catalog) -> dict[str, int]:
                 for tip in catalog.tips.values()]
     tip_ids = await upsert(connection, t["tips_library"], tip_rows, ["key"], key="key")
     counts["tips_library"] = len(tip_rows)
+    counts.update(await seed_questions(connection, t, catalog, skill_ids, tip_ids))
+    glossary = [{"key": g["key"], "he": g["he"], "en": g["en"], "keep_english": g.get("keep_english", False),
+                 "notes": g.get("notes")} for g in catalog.glossary]
+    await upsert(connection, t["term_glossary"], glossary, ["key"], returning=None)
+    counts["term_glossary"] = len(glossary)
+    return counts
+
+
+async def seed_questions(connection, t: dict, catalog: Catalog, skill_ids: dict, tip_ids: dict) -> dict[str, int]:
+    """Upsert only this catalog's questions; preserve stable IDs, review state and all learner records."""
+    counts: dict[str, int] = {}
     # ---- questions: base row (English as the canonical text), skills, translations
     # Review metadata (status, reviewer, parity) belongs to a content revision. A re-import with the
     # same content keeps it; changed content sends the question back to review, and says so.
@@ -253,10 +266,6 @@ async def _seed_in(connection, t: dict, catalog: Catalog) -> dict[str, int]:
                     translation.pop(column)
             await upsert(connection, t["question_translation"], [translation], ["question_id", "language"], returning=None)
     counts["question"] = len(question_ids)
-    glossary = [{"key": g["key"], "he": g["he"], "en": g["en"], "keep_english": g.get("keep_english", False),
-                 "notes": g.get("notes")} for g in catalog.glossary]
-    await upsert(connection, t["term_glossary"], glossary, ["key"], returning=None)
-    counts["term_glossary"] = len(glossary)
     return counts
 
 

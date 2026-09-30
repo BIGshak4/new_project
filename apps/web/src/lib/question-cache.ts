@@ -26,6 +26,16 @@ export function writeQuestionCache(
       hint_count: q.hint_count,
       has_reference: q.has_reference,
       has_check: q.has_check,
+      reviewed: q.reviewed,
+      trial: q.trial,
+      category: q.category,
+      preparation_id: q.preparation_id,
+      topics: q.topics,
+      reported_companies: q.reported_companies,
+      assessment_ready: q.assessment_ready,
+      has_media: q.has_media,
+      companies: q.companies,
+      job_types: q.job_types,
     }));
     sessionStorage.setItem(
       key(userId, lang),

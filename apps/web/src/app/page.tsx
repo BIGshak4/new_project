@@ -120,6 +120,7 @@ function Workspace({
     [healthKnown, setHealthKnown] = useState(false);
   const [query, setQuery] = useState(""),
     [subject, setSubject] = useState("all");
+  const [category, setCategory] = useState("all");
   const generation = useRef(0);
   const [progressReady, setProgressReady] = useState(false);
   const [entriesReady, setEntriesReady] = useState(false);
@@ -343,11 +344,13 @@ function Workspace({
   const companyNeedle = companyQuery.trim().toLowerCase();
   const filtered = shown.filter(
     (q) =>
+      (category === "all" || q.category === category) &&
       (subject === "all" || q.subject === subject) &&
-      `${q.title} ${subjectLabel(q.subject, lang)}`
+      `${q.title} ${q.preparation_id ?? ""} ${(q.topics ?? []).join(" ")} ${subjectLabel(q.subject, lang)}`
         .toLowerCase()
         .includes(query.toLowerCase()) &&
       (!companyNeedle ||
+        (q.reported_companies ?? []).some(c => c.toLowerCase().includes(companyNeedle)) ||
         (q.companies ?? []).some(
           (c) => c.name.toLowerCase().includes(companyNeedle) || c.slug.includes(companyNeedle),
         )) &&
@@ -561,8 +564,8 @@ function Workspace({
                       : route.view === "bookmarks"
                         ? t("שאלות שסימנתם כדי לחזור אליהן. לחצו על שאלה כדי להתחיל.", "Questions you marked to come back to. Open one to start.")
                         : t(
-                            "שאלות ראיון אמיתיות בלוגיקה ספרתית, מכונות מצבים ותכנות, מסודרות לפי מה שחשוב לתפקיד שבחרתם.",
-                            "Real interview questions in digital logic, state machines and code, ordered by what matters for the job you chose.",
+                            "שאלות הכנה בלוגיקה ספרתית, מכונות מצבים, חידות ותכנות. שאלות מהמאגר שהכנתם מסומנות לפי מספרן המקורי.",
+                            "Practice questions in digital logic, state machines, puzzles and code. Your preparation collection keeps its original question numbers.",
                           )}
                 </p>
               </div>
@@ -788,6 +791,16 @@ function Workspace({
                     />
                   </div>
                   <Select
+                    ariaLabel={t("תחום", "Discipline")}
+                    dir={lang === "he" ? "rtl" : "ltr"}
+                    value={category}
+                    onChange={setCategory}
+                    options={[{ value: "all", label: t("כל התחומים", "All disciplines") },
+                      { value: "hardware", label: t("חומרה", "Hardware") },
+                      { value: "software", label: t("תוכנה", "Software") },
+                      { value: "logic", label: t("חידות והיגיון", "Logic & puzzles") }]}
+                  />
+                  <Select
                     ariaLabel={t("נושא", "Topic")}
                     dir={lang === "he" ? "rtl" : "ltr"}
                     value={subject}
@@ -810,13 +823,13 @@ function Workspace({
                     <input
                       list="company-list"
                       aria-label={t("חיפוש לפי חברה", "Search by company")}
-                      placeholder={t("חברה שבה נשאלה…", "Asked at company…")}
+                      placeholder={t("חברה שהוזכרה…", "Company mentioned…")}
                       value={companyQuery}
                       onChange={(e) => setCompanyQuery(e.target.value)}
                     />
                     <datalist id="company-list">
-                      {companies.map((c) => (
-                        <option key={c.slug} value={c.name} />
+                      {[...new Set([...companies.map(c => c.name), ...questions.flatMap(q => q.reported_companies ?? [])])].sort().map((name) => (
+                        <option key={name} value={name} />
                       ))}
                     </datalist>
                   </div>
@@ -843,11 +856,12 @@ function Workspace({
                         <h3>
                           {q.title}
                           {q.trial && (
-                            <span className="badge trial">{t("בבדיקה חיה", "On trial")}</span>
+                            <span className="badge trial">{q.assessment_ready === false ? t("לבדיקה מקצועית", "Review pending") : t("בבדיקה חיה", "On trial")}</span>
                           )}
                         </h3>
                         <span className="topic">
                           {subjectLabel(q.subject, lang)}
+                          {q.preparation_id && <> · <bdi>{q.preparation_id}</bdi></>}
                           {entries.some(
                             (e) => e.question_id === q.id && e.bookmarked,
                           )
@@ -860,6 +874,9 @@ function Workspace({
                               q.companies.slice(0, 3).map((c) => c.name).join(", ")
                             : ""}
                         </span>
+                        {!!q.reported_companies?.length && <span className="source-attribution small">
+                          {t("לפי המקור, לא אומת: ", "Source claim, unverified: ")}<bdi>{q.reported_companies.join(", ")}</bdi>
+                        </span>}
                       </div>
                       <span className="q-category small muted">
                         {recentKeys.has(q.key)
@@ -867,7 +884,7 @@ function Workspace({
                           : t("לתרגול", "Ready to practice")}
                       </span>
                       <span className="q-difficulty badge">
-                        {q.difficulty}/10
+                        {q.difficulty == null ? t("טרם דורג", "Unrated") : `${q.difficulty}/10`}
                       </span>
                       <span className="small muted">
                         {q.estimated_minutes ?? "—"} {t("דק׳", "min")}

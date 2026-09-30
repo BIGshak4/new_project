@@ -61,7 +61,7 @@ class TestLiveRepository:
     async def test_questions_round_trip_from_the_database(self, tx):
         store, catalog, _ = tx
         listing = await store.list_questions(language="he")
-        assert len(listing) == 30 and all(q.language == "he" for q in listing)
+        assert len(listing) == len(catalog.questions) and all(q.language == "he" for q in listing)
         loaded = await store.load_question(key=Q)
         seed = catalog.questions[Q]
         assert loaded.question.primary_skill == seed.primary_skill

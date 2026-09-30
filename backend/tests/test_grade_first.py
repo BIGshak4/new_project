@@ -186,7 +186,12 @@ def _strip_new_fields(value, golden):
     if isinstance(value, dict) and isinstance(golden, dict):
         extra = set(value) - set(golden)
         for key in extra:
-            assert value[key] in (False, None, [], {}), f"new field {key} not at rest: {value[key]!r}"
+            if key == "assessment_ready":
+                assert value[key] is True
+            elif key == "category":
+                assert value[key] in ("hardware", "software", "logic")
+            else:
+                assert value[key] in (False, None, [], {}), f"new field {key} not at rest: {value[key]!r}"
         return {k: _strip_new_fields(value[k], golden[k]) for k in golden if k in value} | \
                {k: None for k in golden if k not in value}
     if isinstance(value, list) and isinstance(golden, list) and len(value) == len(golden):

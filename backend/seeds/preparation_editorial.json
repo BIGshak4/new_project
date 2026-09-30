@@ -1,0 +1,391 @@
+{
+  "PREP-001": {
+    "hints": {
+      "en": [
+        "Consider the possible count range and the width required for the output.",
+        "A full adder conserves weight: a+b+c=S+2C. Group only signals of equal weight.",
+        "Reduce the weight-one column first, pass carries to weight two, and repeat for higher columns. Check the all-ones input."
+      ],
+      "he": [
+        "מה טווח מספר האחדות האפשרי, וכמה ביטים דרושים לפלט?",
+        "Full-Adder שומר על המשקל לפי a+b+c=S+2C. אילו אותות מותר לחבר יחד?",
+        "צמצמו קודם את עמודת משקל 1, העבירו נשאים לעמודת משקל 2 והמשיכו. בדקו גם את הקלט שבו כל הביטים הם 1."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-002": {
+    "hints": {
+      "en": [
+        "What does the fact that every label is wrong tell you about the bowl labelled mixed?",
+        "That bowl must contain only one color. A draw from it identifies its entire contents.",
+        "If that draw is white, the bowl labelled black cannot be all black or all white. What must it contain, and what remains for the last bowl?"
+      ],
+      "he": [
+        "מה אפשר ללמוד על הקערה המסומנת מעורב מכך שכל התוויות שגויות?",
+        "הקערה הזו מכילה צבע אחד בלבד. שליפה ממנה תגלה את התכולה שלה כולה.",
+        "אם יצאה גולה לבנה, הקערה המסומנת שחור לא יכולה להיות שחורה ולא לבנה. מה נשאר עבורה ועבור הקערה האחרונה?"
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending.",
+    "reference_solution": {
+      "he": "בהנחה שיש בדיוק קערה אחת מכל סוג, שכולן אינן ריקות ושכל התוויות שגויות, מספיקה שליפה אחת מהקערה המסומנת ״מעורב״. היא אינה מעורבת ולכן הגולה שנשלפה מזהה את הצבע של כל תכולתה. אם יצאה לבנה, הקערה המסומנת ״שחור״ אינה שחורה לפי הנתון ואינה לבנה כי זיהינו את קערת הלבנות; לכן היא מעורבת. הקערה המסומנת ״לבן״ היא השחורה. אם יצאה שחורה, הטיעון סימטרי: הקערה המסומנת ״לבן״ מעורבת, והמסומנת ״שחור״ לבנה. בלי שליפה קיימות שתי השמות אפשריות שבהן כל התוויות שגויות, ולכן אפס שליפות אינן מספיקות. מכאן שהמינימום הוא שליפה אחת. הפתרון נוסף בעת הייבוא לאתר וממתין לביקורת אנושית.",
+      "en": "Assume exactly one nonempty bowl of each kind, with every label wrong. One draw from the bowl labelled mixed suffices: that bowl is not mixed, so the drawn color identifies all its marbles. If it is white, the bowl labelled black can be neither all black (its label is wrong) nor all white (that bowl is already identified); it is mixed. The bowl labelled white is therefore all black. If the draw is black, the reasoning is symmetric: the bowl labelled white is mixed and the one labelled black is all white. Zero draws cannot distinguish the two assignments with no correct labels, so one draw is also necessary. This proposed solution was added during website import and awaits human review."
+    }
+  },
+  "PREP-003": {
+    "hints": {
+      "en": [
+        "Imagine cutting the cylinder vertically and laying its curved surface flat.",
+        "One turn advances by one circumference horizontally and by one fifth of the height vertically.",
+        "The unwound wire is a straight diagonal. Apply Pythagoras to one turn or to five circumferences and the full height."
+      ],
+      "he": [
+        "דמיינו שחותכים את מעטפת הגליל לאורך ופורסים אותה על מישור.",
+        "בכל סיבוב מתקדמים אופקית בהיקף אחד ועולים אנכית בחמישית מהגובה.",
+        "החוט הפרוס הוא אלכסון ישר. השתמשו במשפט פיתגורס עבור סיבוב אחד, או עבור חמישה היקפים והגובה המלא."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-004": {
+    "hints": {
+      "en": [
+        "Look at the two output pulses: what happened to In before each pulse, when does out respond relative to clock edges, and how long does it stay high?",
+        "At each rising edge, compare the current input with the previous sampled input. What output is needed when they differ? You will need to remember the previous sample.",
+        "Make a truth table for the sample pair: 00 and 11 mean no change; 01 and 10 mean change. Which gate detects this? Consider registering the comparison while updating the previous sample so the output stays stable between edges."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-005": {
+    "hints": {
+      "en": [
+        "Start with part A: sort two pairs independently. Which ordering relations are now known, and which comparisons between the pairs are missing?",
+        "The global minimum is one of the pair minima, and the global maximum one of the pair maxima. Which two additional comparators determine these extremes?",
+        "The unused outputs of those two comparisons fill the middle positions. Is their relative order known? In a larger network, track guaranteed ordering relations and identify redundant comparisons."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-006": {
+    "hints": {
+      "en": [
+        "Must SetAll immediately write every cell for future reads to return one value? Consider storing something globally.",
+        "After SetAll, a Set may update an individual cell. Get must distinguish cells updated since the last SetAll. What small piece of metadata could accompany each cell?",
+        "Create a new global generation identifier on SetAll, and record the current generation beside each Set value. Get compares the two generations to choose the local or global value."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-007": {
+    "hints": {
+      "en": [
+        "One reading of A and B reveals colors, but does it reveal direction? Follow a color boundary and determine which sensor changes first in each direction.",
+        "Treat AB as a two-bit state with four possibilities. Trace a slow rotation and list the state sequence. With the given placement and sufficiently frequent sampling, only one bit changes per step.",
+        "Remember the previous pair and compare it with the new pair. The same current state can be reached from two neighbors, indicating opposite directions. Add unchanged-state loops and separate handling for two-bit changes."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-008": {
+    "hints": {
+      "en": [
+        "Rotation hides switch identities but preserves adjacency and opposition. Classify shapes without permanently naming switches.",
+        "Ignoring rotation and complement, an unlit configuration has one exceptional switch, two adjacent ones, or two diagonal ones. Which moves solve each class, and what does failure imply?",
+        "Start by toggling a diagonal pair. Failure rules out the diagonal class. Track the entire set of possible configuration classes after each move and rotation, rather than a guessed arrangement."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-009": {
+    "hints": {
+      "en": [
+        "Race five groups of five. What ordering is known within each group, and what is still unknown between groups?",
+        "Compare the group winners. Any horse known to have at least three faster horses cannot finish in the top three.",
+        "Name the groups A through E by the winners' finishing order. Retain the first three in A, first two in B and first in C. One horse is already the overall winner; how many candidates remain for the other places?"
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-010": {
+    "hints": {
+      "en": [
+        "For input period T, what output period results from dividing by three? How long must the output be high for a 50% duty cycle?",
+        "Half of 3T requires transitions on half-cycle boundaries. Can rising edges alone achieve that, or will you need falling edges too?",
+        "Begin with a pulse lasting T once per 3T. Sample it on a falling edge to produce a half-cycle-delayed copy. Which gate combines the overlapping pulses into one pulse lasting 1.5T?"
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-011": {
+    "hints": {
+      "en": [
+        "Think of a MUX as an if statement: S=0 selects I0 and S=1 selects I1. Pick a selector and simplify the function for its two values.",
+        "Notice both negations: one on c and one over the whole product. In which single input combination is f zero, and what is f when a=0?",
+        "Select first on a: when a=0, output 1; when a=1, a function of b and c remains. Select that function on b: b=0 gives 1, while b=1 gives c."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-012": {
+    "hints": {
+      "en": [
+        "Trace small circles using the stated convention: 1 eliminates 2, then 3 acts. Track who acts next as the circle shrinks.",
+        "Check sizes 2, 4, 8 and 16. Who survives? Can the remaining participants be renumbered to recover a smaller copy of the problem?",
+        "Find the largest power of two not exceeding the population. How many initial eliminations reduce the population to it, and who acts immediately afterward?"
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-013": {
+    "hints": {
+      "en": [
+        "The box requires two input ones. How does tying one input permanently to one change that requirement?",
+        "With one input tied high, any one of the other three inputs activates the output. That covers three variables, but the problem has four.",
+        "Combine three variables first, then combine that result with the fourth using another box. Choose constants so either signal activates the second output."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-014": {
+    "hints": {
+      "en": [
+        "An output bit cannot depend only on its corresponding input bit. Which information about the more significant bits decides whether it may remain one?",
+        "Keep a one only if every more significant input bit is zero.",
+        "Compute a flag indicating any one among the higher bits. Share OR computations across positions, then combine each input with the inverted flag."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-015": {
+    "hints": {
+      "en": [
+        "Z is not zero: it means no drive. Every input combination must have a driver defining each internal wire, with no opposing active drivers.",
+        "The same signal may drive both inputs of a component. When do B(x,x) and B(y,y) drive zero? Can these outputs and A(x,y) define an internal wire for every input?",
+        "Tying A(x,y), B(x,x) and B(y,y) together yields n=NOT(x OR y). Use n to distinguish 00 from 01 and 10, then provide a one in the unequal cases and a zero in 00 and 11."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-016": {
+    "hints": {
+      "en": [
+        "Group the 16 inputs. Each group must report whether any interrupt is active and the highest-priority active position within it.",
+        "Use the group-valid signals to choose the winning group. You must also route only that group's local interrupt code.",
+        "A position in 0..15 needs four bits: two for the group and two within it. Select the local code with a MUX. Selecting the group can use another controller or gates, changing the controller count."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-017": {
+    "hints": {
+      "en": [
+        "The minute hand is easy to place at half past the hour. Does the hour hand remain exactly on 6 throughout that hour?",
+        "Divide 360 degrees into 12 equal intervals. What fraction of an interval does the hour hand traverse in half an hour?",
+        "At 6:30 the minute hand points to 6 and the hour hand lies halfway between 6 and 7. The smaller angle is half an interval."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-018": {
+    "hints": {
+      "en": [
+        "Separate the task into deciding which input is larger and routing that unchanged input to the output.",
+        "What can A-B reveal? How can its result provide a selection bit for a two-input selector?",
+        "Widen both numbers by one bit before subtracting to avoid overflow. The difference's sign selects an input. Distinguish zero extension for unsigned numbers from sign extension for two's-complement numbers."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-019": {
+    "hints": {
+      "en": [
+        "There are only three groups, and within-color order is irrelevant. Which colors can be moved immediately to the ends?",
+        "Maintain a left boundary for blue, a right boundary for red, and a scanning index for the unclassified region. Which region is already known to be green?",
+        "Move blue to the left boundary, advance past green, and swap red with the end of the unclassified region. After a right-side swap, do you know the color that just arrived at the scanning index?"
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-020": {
+    "hints": {
+      "en": [
+        "A path may enter a MUX through a data input or its select input. Follow every register-to-output path and add only delays in series on that path.",
+        "The two MUXes work in parallel, but their select inputs arrive from the black box. Does the inversion at the right MUX add delay to one path?",
+        "Write the product for selector values zero and one. Swapping a MUX's data inputs removes an inversion of its selector. If another multiplier is allowed, consider computing both products in parallel and selecting afterward."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-021": {
+    "hints": {
+      "en": [
+        "Focus on one lamp. What is its state after an even number of toggles, and after an odd number?",
+        "Which frogs reach lamp 12? Relate frog numbers to the lamp number, then try lamp 9.",
+        "Pair divisors whose product is the lamp number. When are both divisors in a pair the same number and therefore counted only once?"
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-022": {
+    "hints": {
+      "en": [
+        "Repeatedly drawing from 1..N may produce duplicates. How can you draw only from still-available numbers?",
+        "Keep remaining numbers in an array. Removing a selected number need not shift the others; a swap with an endpoint can help.",
+        "Split the array into fixed and unfixed parts. Uniformly choose an index in the remaining part and swap it into the next fixed position. Remember that rand(m) returns 1..m while Python indices start at zero."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-023": {
+    "hints": {
+      "en": [
+        "Write 1, 2, 4, 8 and 16 in binary. What property do they share?",
+        "Compare a power of two with the number one below it. Where do the set bits occur?",
+        "Try bitwise AND of n and n-1, including a non-power of two. Check zero and one separately."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-024": {
+    "hints": {
+      "en": [
+        "List paths to rungs two and three. Does a jump of one followed by two differ from two followed by one?",
+        "Consider the final jump to rung n. From which earlier rung can a jump of one or two arrive?",
+        "Partition paths by the final jump length. How do counts for the two previous rungs combine? Establish the base cases too."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-025": {
+    "hints": {
+      "en": [
+        "What changes once the first ball breaks? With one remaining ball, how can a range be checked without losing the ability to find the exact floor?",
+        "With a fixed jump size, what happens to the total when the first ball breaks late? How could decreasing jumps compensate for already-used throws?",
+        "Assume at most k throws. If the first ball breaks on throw one, k-1 remain for the second ball; if it breaks on throw two, k-2 remain. Build decreasing jumps and sum the floors covered."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-026": {
+    "hints": {
+      "en": [
+        "Distinguish a limit on the number of children from an ordering rule on values. Does a general binary tree locate the maximum for you?",
+        "Part two says binary tree, not necessarily search tree. Can you discard a subtree without examining it? Consider visiting every node.",
+        "Track the maximum seen. Initialize from an existing node rather than zero, define the empty-tree result, and choose how to store nodes still to be visited."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-027": {
+    "hints": {
+      "en": [
+        "Begin by counting occurrences; there are only ten possible digits. Which part of each count actually matters?",
+        "Look for a bitwise operation where equal operands cancel and operand order does not affect the result. What remains after every pair cancels?",
+        "Part B asks for constant time, not constant memory. Can correctness be guaranteed without reading a particular cell? Try changing only an unread cell while preserving the problem's promise."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-028": {
+    "hints": {
+      "en": [
+        "Must a single question receive only a yes/no answer? Consider how much information the observer can return in one reply.",
+        "Perhaps the observer may watch the lamp over time rather than only its final state. How can each switch have a recognizable pattern?",
+        "Number the switches and operate each a different number of times. Which single count could the observer report to identify the controlling switch?"
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-029": {
+    "hints": {
+      "en": [
+        "Number bushes 1 through 10. What happens to the parity of the rabbit's position after each move to a neighbor?",
+        "Assume initially that the rabbit starts at an even position. Sweep interior bushes from 2 to 9, shooting once at each. Can it cross the sweep without being caught?",
+        "One sweep covers only one initial parity. Shoot the last bush again before reversing the sweep, and check how that changes the parity alignment."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-030": {
+    "hints": {
+      "en": [
+        "For part A, sort two pairs, then compare their maxima and their minima. Once the overall extremes are known, which two values still need ordering?",
+        "For part B, compare a correct max-above/min-below comparator with a faulty unit that always crosses its inputs. Which input ordering hides the fault, and which exposes it?",
+        "Try four distinct values already sorted in the required output order. Compute the output with each possible faulty comparator and with no fault. Are all output signatures distinct?"
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-031": {
+    "hints": {
+      "en": [
+        "Condition on one input. Remember that only constant zero is allowed, with no constant one or NOT gate.",
+        "You need not produce a globally inverted signal: it only has to behave like an inverse in the branch where the next MUX selects it.",
+        "Use a as the final selector. When a=0, pass b. When a=1, you need NOT b: can a itself supply one inside that branch?"
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-032": {
+    "hints": {
+      "en": [
+        "A merge means the same node in memory, not two equal values. Can the lists diverge after sharing a node?",
+        "If the lists had equal length, two pointers advancing together would reach the merge together. What prevents that when lengths differ?",
+        "Compute both lengths. Advance the longer list's pointer by their difference, then advance both pointers together and compare node identity."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-033": {
+    "hints": {
+      "en": [
+        "Start with the last person. Which visible pair of hats would let that person deduce their own hat immediately?",
+        "An 'I do not know' answer also conveys information. Which pair of hats in front does it rule out?",
+        "Separate the branch where the last person knows from the branch where they do not. In the second branch, what would the middle person infer from a black front hat versus a white one?"
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-034": {
+    "hints": {
+      "en": [
+        "Which information must propagate from the least significant bit through a ripple-carry adder, and why does its delay accumulate?",
+        "Compute the upper half twice in advance, assuming incoming carry zero and one. What short operation remains when the actual carry arrives?",
+        "Apply the same idea inside each sub-adder. Each split shortens carry chains but adds selection and area. Define MUX delay separately from full-adder delay."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-035": {
+    "hints": {
+      "en": [
+        "How can multiplication be expressed as a repeated simpler operation?",
+        "How can you add a register's value using only unit increments and decrements? What happens to its original value?",
+        "Use the third register to remember transferred units, then restore the consumed register before the next iteration."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-036": {
+    "hints": {
+      "en": [
+        "How does appending a bit on the right change a binary number's value?",
+        "Must the machine remember the whole number, or only a smaller summary to decide divisibility by three?",
+        "Track the remainder modulo three. Compute the next remainder for each current remainder and input bit. Separately check how the example treats zero."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  },
+  "PREP-037": {
+    "hints": {
+      "en": [
+        "Which opening bracket must match the next closing bracket: the earliest opener, or the most recent one not yet closed?",
+        "Which data structure removes the last inserted item first?",
+        "Push opening brackets on a stack. For every closing bracket, check that an opener exists and matches its type. At the end, check that no openers remain."
+      ]
+    },
+    "note": "Website editorial supplement; human parity review pending."
+  }
+}

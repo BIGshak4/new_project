@@ -142,7 +142,7 @@ def test_example_bank_is_generated_from_harels_questions_and_the_enrichment():
 
 def test_every_bank_question_keeps_harels_key_text_and_hint(catalog):
     source = json.loads((SEEDS.parent.parent / "example_question" / "questions.json").read_text(encoding="utf-8"))
-    assert len(catalog.questions) == 30
+    assert len([k for k in catalog.questions if k.startswith("example-")]) == 30
     for item in source["questions"]:
         question = catalog.questions[f"example-{item['key']}"]
         for language in ("en", "he"):

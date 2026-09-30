@@ -22,6 +22,7 @@ import { EvaluationPanel, NextUpCard } from "./evaluation-panel";
 import { HelpPopover } from "./ui/popover";
 import { SubjectSketch } from "./sketches";
 import { QuestionReport } from "./question-report";
+import { StudyText, QuestionFigures, TechnicalMaterial, ResourceStatus, useQuestionResources } from "./question-materials";
 import { Reveal } from "./ui/motion";
 import { toast } from "./toaster";
 import { FollowUps } from "./follow-ups";
@@ -81,6 +82,8 @@ export function PracticeSession({
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [attempt, setAttempt] = useState<Attempt | null>(null),
     [question, setQuestion] = useState<QuestionDetail | null>(null);
+  const resources = useQuestionResources(api, question?.key, !!question?.has_media,
+    attempt?.id, !!attempt?.reference);
   const [loading, setLoading] = useState(true),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
@@ -481,13 +484,22 @@ export function PracticeSession({
                 <SubjectSketch subject={question.subject} className="sheet-sketch-corner" />
                 <div className="row">
                   <span className="badge">
-                    {t("קושי", "Difficulty")} {question.difficulty}/10
+                    {question.difficulty == null ? t("קושי טרם נקבע", "Difficulty not yet rated") : `${t("קושי", "Difficulty")} ${question.difficulty}/10`}
                   </span>
                   <span className="small muted">
                     {question.estimated_minutes ?? "—"} {t("דקות", "minutes")}
                   </span>
                 </div>
                 <h1 dir="auto">{question.title}</h1>
+                {question.preparation_id && <p className="small muted"><bdi>{question.preparation_id}</bdi></p>}
+                {question.assessment_ready === false && <p className="notice study-review-note">
+                  {t("שאלה בבדיקה מקצועית. המשוב הוא ראשוני; התרגול נשמר, אך אינו משנה את רמת השליטה או מעניק נקודות עד לאישור התוכן ורמת הקושי.",
+                    "This question is under technical review. Feedback is provisional; your practice is saved but does not change skill levels or earn points until its content and difficulty are approved.")}
+                </p>}
+                {!!question.reported_companies?.length && <p className="source-attribution small">
+                  {t("חברות שהוזכרו במקור · לא אומת באופן עצמאי: ", "Companies named in the source · not independently verified: ")}
+                  <bdi>{question.reported_companies.join(", ")}</bdi>
+                </p>}
                 <div className="row question-tools">
                   <SawItAt api={api} question={question} lang={lang} />
                   <QuestionReport api={api} questionKey={question.key} lang={lang} context="practice" />
@@ -570,12 +582,16 @@ export function PracticeSession({
                       attempt.submission?.status !== "done" && (
                         <ReferenceSolution
                           text={attempt.reference}
+                          resources={resources} hasMedia={question.has_media}
                           lang={lang}
                         />
                       )}
                   </>
                 )}
                 <RichText text={question.prompt} />
+                {question.has_media && (resources.data
+                  ? <QuestionFigures media={resources.data.media} lang={lang} role="prompt" onRefresh={resources.retry} />
+                  : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />)}
                 {question.choices && (
                   <ol className="choices">
                     {question.choices.map((c, i) => (
@@ -806,6 +822,7 @@ export function PracticeSession({
                         {attempt.reference && (
                           <ReferenceSolution
                             text={attempt.reference}
+                            resources={resources} hasMedia={question.has_media}
                             lang={lang}
                           />
                         )}
@@ -867,24 +884,12 @@ export function PracticeSession({
 }
 
 function RichText({ text }: { text: string }) {
-  return (
-    <div className="question-prompt">
-      {text.split(/(```[\s\S]*?```)/g).map((part, i) =>
-        part.startsWith("```") ? (
-          <pre className="code-block" key={i} dir="ltr">
-            <code>{part.replace(/^```[^\n]*\n?/, "").replace(/```$/, "")}</code>
-          </pre>
-        ) : (
-          <span dir="auto" key={i}>
-            {part}
-          </span>
-        ),
-      )}
-    </div>
-  );
+  return <div className="question-prompt"><StudyText text={text} /></div>;
 }
 
-function ReferenceSolution({ text, lang }: { text: string; lang: Lang }) {
+function ReferenceSolution({ text, lang, resources, hasMedia }: {
+  text: string; lang: Lang; resources: ReturnType<typeof useQuestionResources>; hasMedia?: boolean;
+}) {
   return (
     <div
       className="solution"
@@ -897,6 +902,12 @@ function ReferenceSolution({ text, lang }: { text: string; lang: Lang }) {
           : "Reference · under technical review"}
       </h3>
       <RichText text={text} />
+      {hasMedia && (!resources.data?.solution_revealed
+        ? <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />
+        : <>
+          <QuestionFigures media={resources.data.media} lang={lang} role="solution" onRefresh={resources.retry} />
+          {resources.data.technical_material && <TechnicalMaterial material={resources.data.technical_material} lang={lang} />}
+        </>)}
     </div>
   );
 }

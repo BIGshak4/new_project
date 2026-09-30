@@ -10,6 +10,7 @@ from pydantic import BaseModel, Field
 
 from app.api.deps import CurrentAccess, Practice
 from app.repo.questions import CompanyTag, QuestionDetail, QuestionSummary
+from app.services.question_resources import QuestionResources
 
 router = APIRouter(prefix="/v1/questions", tags=["questions"])
 
@@ -67,6 +68,12 @@ async def report_question(key_or_id: str, body: ReportRequest, access: CurrentAc
     else:
         count = await practice.report_question(access.user_id, question_id=question_id, **kwargs)
     return ReportResponse(reports=count)
+
+
+@router.get("/{key}/resources", response_model=QuestionResources, summary="Question images and revealed solution material")
+async def question_resources(key: str, access: CurrentAccess, practice: Practice,
+                             attempt_id: uuid.UUID | None = None) -> QuestionResources:
+    return await practice.question_resources(access.user_id, key, attempt_id=attempt_id)
 
 
 @router.get("/{key_or_id}", response_model=QuestionDetail, summary="One question: prompt, code, choices",

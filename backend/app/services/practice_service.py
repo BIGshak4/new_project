@@ -135,10 +135,11 @@ FEEDBACK_STALE_SECONDS = 30
 
 class PracticeService:
     def __init__(self, store: Store, catalog: Catalog, provider: Provider, config: ServiceConfig | None = None, *,
-                 image_fetcher: ImageFetcher | None = None):
+                 image_fetcher: ImageFetcher | None = None, question_image_fetcher=None):
         self.store, self.catalog, self.provider = store, catalog, provider
         self.config = config or ServiceConfig()
         self.image_fetcher = image_fetcher                 # None: photos are stored but not shown to the evaluator
+        self.question_image_fetcher = question_image_fetcher
         self._locks: dict[uuid.UUID, asyncio.Lock] = {}
         self._feedback_tasks: dict[tuple[uuid.UUID, int], asyncio.Task] = {}      # (attempt, revision) -> writing its words
         self._plans: dict[tuple[str, str | None], tuple[dict[str, int], dict[str, float], int, list[PlanSkill]]] = {}
@@ -154,7 +155,8 @@ class PracticeService:
             rows = await tx.list_questions(language=language, subject=subject)
             if company:
                 allowed = await tx.question_ids_for_company(slugify(company))
-                rows = [r for r in rows if r.id in allowed]
+                rows = [r for r in rows if r.id in allowed or any(
+                    slugify(name) == slugify(company) for name in r.reported_companies)]
             tags = await tx.sightings_for([r.id for r in rows]) if rows else {}
         return self._enrich(rows, tags, job_type)
 
@@ -189,7 +191,7 @@ class PracticeService:
                 continue
             out.append(row.model_copy(update=update))
         if job is not None:
-            out.sort(key=lambda r: (-(r.relevance or 0.0), r.difficulty, r.key))
+            out.sort(key=lambda r: (-(r.relevance or 0.0), r.difficulty or 0, r.key))
         return out
 
     def job_types(self, *, language: str) -> list[JobTypeView]:
@@ -233,6 +235,28 @@ class PracticeService:
                 raise ApiError("validation", str(exc)) from exc
 
     # ------------------------------------------------------------------ the goal
+
+    async def question_resources(self, user_id: uuid.UUID, key: str, *, attempt_id: uuid.UUID | None = None):
+        from app.config import get_settings
+        from app.services.question_resources import QuestionResources, sign_media
+
+        async with self.store.transaction() as tx:
+            loaded = await tx.load_question(key=key)
+        if loaded is None:
+            raise ApiError("not_found", "this question does not exist or is not available")
+        revealed = False
+        if attempt_id is not None:
+            attempt = await self.get(user_id, attempt_id)  # enforces ownership before any signing
+            if attempt.question.key != key:
+                raise ApiError("not_found", "the attempt does not belong to this question")
+            revealed = attempt.reference is not None
+        assets = loaded.question.assets
+        media = [m for m in assets.get("bank_media", []) if m.get("role") == "prompt" or revealed]
+        settings = get_settings()
+        return QuestionResources(
+            media=await sign_media(media, settings.supabase_url, settings.supabase_service_role_key),
+            technical_material=assets.get("preparation_resource") if revealed else None,
+            solution_revealed=revealed)
 
     async def get_goal(self, user_id: uuid.UUID, *, language: str | None = None) -> GoalView:
         async with self.store.transaction() as tx:
@@ -299,7 +323,8 @@ class PracticeService:
                         raise ApiError(exc.code, str(exc)) from exc
                     row = attempt.attempt_row()
                     await tx.save_attempt(user_id=user_id, question_id=loaded.id, row=row, revisions=set())
-                    await tx.save_profile(profile, self._primary_state(attempt, profile), attempt_id=attempt.attempt_id_uuid)
+                    if loaded.question.assets.get("assessment_ready") is not False:
+                        await tx.save_profile(profile, self._primary_state(attempt, profile), attempt_id=attempt.attempt_id_uuid)
                 break
             except StaleProfile:
                 continue
@@ -325,7 +350,8 @@ class PracticeService:
                     async with self.store.transaction() as tx:
                         await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
                                               revisions=set())
-                        await tx.save_profile(profile, self._primary_state(attempt, profile), attempt_id=attempt_id)
+                        if attempt.question.assets.get("assessment_ready") is not False:
+                            await tx.save_profile(profile, self._primary_state(attempt, profile), attempt_id=attempt_id)
                     break
                 except StaleProfile:
                     continue
@@ -478,14 +504,16 @@ class PracticeService:
         result is returned instead of ours.
         """
         changed = {outcome.submission.revision}
-        suggest = outcome.status == EvaluationStatus.DONE and outcome.band is not None
+        suggest = (outcome.status == EvaluationStatus.DONE and outcome.band is not None
+                   and attempt.question.assets.get("assessment_ready") is not False)
         for _try in range(2):
             try:
                 async with self.store.transaction() as tx:
                     if suggest:                                      # its reads ride in the same unit of work
                         await self._suggest_next(user_id, attempt, outcome, tx=tx)
                         suggest = False
-                    if outcome.status == EvaluationStatus.DONE and outcome.evaluation is not None:
+                    if (outcome.status == EvaluationStatus.DONE and outcome.evaluation is not None
+                            and attempt.question.assets.get("assessment_ready") is not False):
                         await tx.save_profile(profile, self._touched_states(attempt, outcome), attempt_id=attempt.attempt_id_uuid)
                         await tx.record_metrics(user_id=user_id, attempt_id=attempt.attempt_id_uuid, metrics=outcome.metrics,
                                                 seniority=profile.seniority)
@@ -497,7 +525,8 @@ class PracticeService:
                                               usage_rows=[u.as_row(attempt.mode) for u in outcome.usage])
                     await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
                                           revisions=changed, known_revisions=len(attempt.submissions))
-                    if outcome.status == EvaluationStatus.DONE and outcome.band is not None and outcome.submission.turn == 0:
+                    if (outcome.status == EvaluationStatus.DONE and outcome.band is not None and outcome.submission.turn == 0
+                            and attempt.question.assets.get("assessment_ready") is not False):
                         await self._complete_program_item(tx, user_id, attempt_id=attempt.attempt_id_uuid,
                                                           skills=[link.skill for link in attempt.question.skills])
                 return attempt, stored, loaded, outcome
@@ -541,6 +570,7 @@ class PracticeService:
         language = attempt.ctx.language
         servable = await tx.list_questions(language=language)
         seen = await tx.seen_question_keys(user_id)
+        servable = [s for s in servable if s.assessment_ready]
         if self.config.suggest_reviewed_only:
             servable = [s for s in servable if s.reviewed]
         candidates = [self.catalog.questions[s.key] for s in servable if s.key in self.catalog.questions]
@@ -1106,7 +1136,7 @@ class PracticeService:
                                seniority=seniority, difficulty_ceiling=ceiling, required_levels=required,
                                skill_weights=weights, tips=list(self.catalog.tips.values()), glossary=self.catalog.glossary,
                                role_family=role.family, polish_tips=self.config.polish_tips,
-                               image_fetcher=self.image_fetcher)
+                               image_fetcher=self.image_fetcher, question_image_fetcher=self.question_image_fetcher)
 
     async def _load(self, user_id: uuid.UUID, attempt_id: uuid.UUID
                     ) -> tuple[PracticeAttempt, StoredAttempt, LoadedQuestion, LoadedProfile]:
@@ -1157,6 +1187,8 @@ class PracticeService:
         """The XP a scored answer earned, from what the submission already records. None until it is scored."""
         if submission.status != EvaluationStatus.DONE or submission.band is None:
             return None
+        if "content_review_pending" in submission.flags:
+            return 0
         return xp.answer_xp(submission.band.value, difficulty=attempt.question.difficulty, hints_seen=submission.hints_seen,
                             reference_seen=submission.reference_seen, follow_up=submission.turn > 0)
 

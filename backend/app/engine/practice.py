@@ -161,6 +161,7 @@ class PracticeContext:
     polish_tips: bool = True
     params: EngineParams = DEFAULT_PARAMS
     image_fetcher: ImageFetcher | None = None       # None: attached photos are kept but not shown to the evaluator
+    question_image_fetcher: Callable[[BankQuestion], Awaitable[list[tuple[str, bytes]] | None]] | None = None
 
 
 @dataclass
@@ -576,6 +577,17 @@ class PracticeAttempt:
                 known_error_keys=set(), hint_level=state.hint_level, glossary=ctx.glossary)
         else:
             difficulty = question.difficulty
+            question_images = []
+            if any(m.get("role") == "prompt" and m.get("kind") == "image" for m in question.assets.get("bank_media", [])):
+                question_images = await ctx.question_image_fetcher(question) if ctx.question_image_fetcher else None
+                if question_images is None:
+                    submission.status = EvaluationStatus.FAILED
+                    submission.evaluating_since = None
+                    submission.flags = ["question_images_unavailable", "saved_without_evaluation"]
+                    outcome = PracticeOutcome(submission, None, None, None, 0.0, None, None, None, None, None,
+                                              flags=list(submission.flags))
+                    self._outcomes[submission.revision] = outcome
+                    return outcome
             # a drawn circuit contributes its derived functions ("alarm = (A & B) | ...") to the check
             checked_answer = (submission.answer + "\n" + check_lines).strip() if check_lines else submission.answer
             check = (await checks.run_check_async(question.deterministic_check, checked_answer)
@@ -584,7 +596,8 @@ class PracticeAttempt:
                 ctx.provider, question_context=evaluator.question_block(question, ctx.language, primary),
                 known_error_keys={e.key for e in question.common_errors}, language=ctx.language,
                 difficulty=difficulty, answer=submission.answer, check=check, hint_level=submission.hints_seen,
-                glossary=ctx.glossary, circuit=circuit, images=images, images_missing=images_missing)
+                glossary=ctx.glossary, circuit=circuit, images=images, images_missing=images_missing,
+                question_images=question_images)
         self._record_usage(usage, "evaluate", result)
         submission.evaluator_model = result.model or getattr(ctx.provider, "model", None) or None
 
@@ -642,9 +655,12 @@ class PracticeAttempt:
             self.evidence_mode, "new" if is_follow_up else self.familiarity, hint_level,
             "low" if is_follow_up else question.exposure_risk,
             revealed_before_submit=submission.reference_seen, params=params)
+        study_only = question.assets.get("assessment_ready") is False
+        if study_only:
+            weight = 0.0
 
         # one metrics row per examined skill; secondary skills get evidence in proportion to their share
-        links = [link for link in question.skills if link.primary] if is_follow_up else question.skills
+        links = [] if study_only else [link for link in question.skills if link.primary] if is_follow_up else question.skills
         primary_share = next(link.weight for link in question.skills if link.primary)
         metrics = []
         for link in links:
@@ -726,6 +742,8 @@ class PracticeAttempt:
         flags: list[str] = []
         if submission.reference_seen:
             flags.append("revealed_before_submit_no_evidence")
+        if study_only:
+            flags.append("content_review_pending")
         return PracticeOutcome(submission, band, evaluation, check, weight, None, None,
                                tip_choice.tip.key if tip_choice else None, None,
                                decision, metrics=metrics, usage=usage, flags=flags)

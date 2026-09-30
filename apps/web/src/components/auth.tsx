@@ -290,7 +290,7 @@ function PracticeLanding({
 }) {
   const t = (heText: string, en: string) => (he ? heText : en);
   const facts: [string, string][] = [
-    ["30", t("שאלות ראיון אמיתיות", "real interview questions")],
+    ["67", t("שאלות הכנה במאגר", "practice questions")],
     ["6", t("נושאים: מלוגיקה ספרתית ועד תכנות", "subjects, from digital logic to code")],
     ["6", t("סוגי תפקידים, מוריפיקציה ועד תוכנה", "job types, from verification to software")],
     ["~8", t("שניות עד הציון על תשובה", "seconds until an answer is graded")],

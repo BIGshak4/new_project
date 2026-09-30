@@ -30,7 +30,9 @@ MEMBER = "tester@example.com"
 
 @pytest.fixture(scope="module")
 def catalog():
-    return load_catalog(SEEDS)
+    catalog = load_catalog(SEEDS)
+    catalog.questions = {k: q for k, q in catalog.questions.items() if k.startswith("example-")}
+    return catalog
 
 
 def practice(catalog, provider=None, **config) -> tuple[PracticeService, InMemoryStore]:

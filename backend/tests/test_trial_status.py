@@ -22,7 +22,9 @@ TRIAL_KEYS = (MAJORITY, "example-masked-equality", "example-nand-only-enable", "
 
 @pytest.fixture(scope="module")
 def catalog():
-    return load_catalog(SEEDS)
+    catalog = load_catalog(SEEDS)
+    catalog.questions = {k: q for k, q in catalog.questions.items() if k.startswith("example-")}
+    return catalog
 
 
 @pytest.fixture(scope="module")

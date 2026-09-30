@@ -10,8 +10,8 @@ export function SignOff({ lang }: { lang: Lang }) {
       <span className="hand">{t("שקד והראל", "Shaked & Harel")}</span>
       <span>
         {t(
-          "שני סטודנטים להנדסה שעברו יותר מדי ראיונות, ובנו את הכלי שהיו רוצים לפני הראשון. כל שאלה במאגר נבדקת על ידי מהנדס לפני שהיא מגיעה אליכם.",
-          "Two engineering students who sat through too many interviews and built the tool they wanted before the first one. An engineer checks every question before it reaches you.",
+          "הראל ושקד, סטודנטים להנדסת חשמל ואלקטרוניקה, בונים כלי להכנה לראיונות. אנחנו בשלב הפיילוט: השאלות והמשובים עוברים בדיקה ושיפור.",
+          "Harel and Shaked, electrical and electronics engineering students, are building an interview preparation tool. This is a pilot: questions and feedback are being reviewed and improved.",
         )}
       </span>
     </footer>
