@@ -4,7 +4,11 @@
 .heading h1 { font: 750 26px/1.2 var(--nf-sans), sans-serif; margin: 0 0 5px; }
 .heading p, .detail p { margin: 0; font-size: 16px; line-height: 1.5; }
 .heading a { white-space: nowrap; color: #294e3f; text-underline-offset: 4px; }
-.picker { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 18px; }
+.collections { display: flex; gap: 22px; margin-top: 18px; border-bottom: 1px solid #d6ddd8; }
+.collections button { font: 650 15px/1.4 var(--nf-sans), sans-serif; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: transparent; color: #58645d; padding: 7px 0 11px; box-shadow: none; cursor: pointer; }
+.collections button[aria-pressed="true"] { color: #294e3f; border-bottom-color: #294e3f; }
+.collections button:hover { color: #294e3f; }
+.picker { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 15px; }
 .picker button, .tools button { font-family: inherit; color: #333b36; background: #fff; border: 1px solid #bdc6c0; border-radius: 7px; padding: 9px 16px; cursor: pointer; min-height: 42px; }
 .picker button[aria-pressed="true"], .tools button[aria-pressed="true"] { color: white; background: #294e3f; border-color: #294e3f; }
 .picker button:hover, .tools button:hover { border-color: #294e3f; }
