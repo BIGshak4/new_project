@@ -50,7 +50,7 @@ class Settings(BaseSettings):
     # anthropic = the real API; needs ANTHROPIC_API_KEY.
     llm_provider: str = "scripted"
     anthropic_api_key: str | None = None
-    anthropic_model: str = "claude-opus-5"                 # the judge (evaluator), and any role not overridden
+    anthropic_model: str = "claude-opus-5-5"               # the judge (evaluator), and any role not overridden; Opus 5 → 5.5 on 2026-10-01 (13/13 bands, same misconception keys)
     # role=model pairs for the prose roles. Measured 2026-09-19: Sonnet 5 writes the same card for a
     # fifth of the price; the evaluator stays on Opus until the golden set says otherwise.
     anthropic_role_models: str = "feedback=claude-sonnet-5,tip=claude-sonnet-5,generator=claude-sonnet-5"

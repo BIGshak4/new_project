@@ -27,7 +27,7 @@ ROLE_EFFORT = {"evaluator": "low", "generator": "medium", "tip": "low", "report"
 ROLE_MAX_TOKENS = {"evaluator": 8000, "generator": 8000, "tip": 2000, "report": 4000, "feedback": 2000}
 
 # USD per million tokens. Cache reads bill at 0.1x input, cache writes at 1.25x.
-PRICES = {"claude-opus-5": (5.00, 25.00), "claude-sonnet-5": (2.00, 10.00), "claude-haiku-4-5": (1.00, 5.00)}
+PRICES = {"claude-opus-5-5": (4.00, 20.00), "claude-opus-5": (5.00, 25.00), "claude-sonnet-5": (2.00, 10.00), "claude-haiku-4-5": (1.00, 5.00)}
 
 
 class LLMError(Exception):

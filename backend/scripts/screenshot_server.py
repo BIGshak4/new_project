@@ -98,7 +98,7 @@ def build_api(user_id: uuid.UUID, email: str):
         return Access(user_id=user.id, email=user.email, is_member=True, can_manage_tasks=False, profile_created=False)
     app.state.access_resolver = member
     provider = ScriptedProvider(respond)
-    provider.model = "claude-opus-5"       # the screens treat a 'demo' judge as unassessed and hide the feedback; the harness photographs the real layout
+    provider.model = "claude-opus-5-5"     # the screens treat a 'demo' judge as unassessed and hide the feedback; the harness photographs the real layout
     store = InMemoryStore(catalog)
     app.state.runtime = build_runtime(settings, catalog=catalog, provider=provider, store=store)
 

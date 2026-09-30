@@ -471,6 +471,21 @@ fixed (the timer's screen-reader chatter, the English corner stamp, the grain's 
 through `next/font` with Heebo retired, a UTC "yesterday", stroke scaling, a blank select, roles on labelled
 divs, phone tap targets, a dead helper). Two loading states hold their room to stop layout shift.
 
+## 5t. The judge on Opus 5.5, and the question generator (2026-10-01, Shaked: "start with 1, passing to opus 5.5")
+
+- **Judge**: `docs/judge-opus-5-5-2026-10-01.md`. The 13-answer review set on Opus 5 and Opus 5.5 back to back:
+  13/13 bands identical, identical misconception keys, correctness within 0.05, 6.0 s vs 5.1 s per answer, $0.20 vs
+  $0.19 for the set. Default `anthropic_model` is now `claude-opus-5-5`; Opus 5.5 priced in `PRICES`; local `.env`
+  updated. **Render still needs `ANTHROPIC_MODEL=claude-opus-5-5`** (Shaked, dashboard), then `/health` shows it.
+- **Generator**: `scripts/generate_questions.py` drafts questions in the seed format (both languages, rubric, three
+  hints, named errors, an optional truth_table / numeric / code_tests check with its own pass/fail answers) per
+  skill of the hardware and software tracks, validates each draft the way the loader does (shape, skills, tips,
+  check self-test), has the judge grade the draft's own reference (`--verify`, non-STRONG → `needs_attention`), and
+  writes `seeds/questions/generated_bank.json` (status `in_review`, origin `generated`) plus a coverage report under
+  `docs/question-bank-<date>.md`. Structured output needs typed spec fields (a free `dict` comes back empty) and the
+  error explanations on the error object (per-language dicts lost their keys). Trial: 2 of 2 drafts accepted and
+  judged STRONG, about $0.20 per draft including the judge. Nothing is loaded into the database by the script.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -509,6 +524,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-01 | Judge → Opus 5.5 (13/13 bands identical, same misconception keys; `docs/judge-opus-5-5-2026-10-01.md`); `scripts/generate_questions.py` drafts bank questions per skill in the seed format with validation and a judged reference (§5t) |
 | 2026-10-01 | Full check (§5s): 794 offline + live + real-model scripts, Render on the Transaction pooler, load test 10/50, CPU profile, page timings in the harness, independent front-end review with 14 fixes; `docs/full-check-2026-10-01.md` |
 | 2026-10-01 | Night (§5r): the Workbench identity from the brief of 30 September: tokens, type, shell, the Learn page rebuilt around the day's sheet and the signal trace, subject sketches, grade colours, landing page; front-end only |
 | 2026-09-29 | Night 2 (§5q): Recharts for the road-so-far chart from day three; the interview question slides in per turn and the timer changes tone; the practice steps flow into each other; harness seed with three days and a three-turn interview; 56 web tests |
