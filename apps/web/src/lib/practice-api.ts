@@ -640,6 +640,8 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
         `/v1/questions/${encodeURIComponent(keyOrId)}/sightings`,
         { company },
       ),
+    reportQuestion: (keyOrId: string, body: { reason: "unclear" | "wrong" | "other"; note?: string; language: ApiLang; context: "practice" | "interview" | "library" }) =>
+      call<{ recorded: boolean; reports: number }>("POST", `/v1/questions/${encodeURIComponent(keyOrId)}/reports`, body),
     getQuestion: (keyOrId: string, language: ApiLang) =>
       call<QuestionDetail>(
         "GET",

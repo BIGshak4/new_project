@@ -15,6 +15,9 @@ from app.repo.attempts import AlreadyEvaluated, DuplicateSubmissionKey, StoredAt
 from app.repo.plans import PlanItemRow, StoredPlan
 from app.repo.profiles import LoadedProfile, StaleProfile, derived_columns
 from app.repo.questions import LoadedQuestion, QuestionSummary, summary
+from app.repo.reports import CONTEXTS as REPORT_CONTEXTS
+from app.repo.reports import REASONS as REPORT_REASONS
+from app.repo.reports import ReportsUnavailable, clean_note
 from app.repo.sessions import StaleSession, StoredSession
 from app.repo.sightings import SightingsUnavailable, clean_name, slugify
 from app.repo.users import Goal
@@ -37,6 +40,8 @@ class InMemoryStore:
         self.plan_links: dict[uuid.UUID, uuid.UUID] = {}            # attempt id -> plan item id
         self.sightings: list[dict] = []                            # {question_id, user_id, company_name, company_slug}
         self.sightings_enabled = True                              # False imitates a database without the table
+        self.reports: list[dict] = []                              # {question_id, user_id, reason, note, language, context}
+        self.reports_enabled = True
         self.answer_images: dict[str, dict] = {}                 # storage fixture metadata
         self.failures: set[str] = set()                           # names of operations that should raise (tests)
         self.fail_once: set[str] = set()                          # ... only the next time
@@ -51,14 +56,15 @@ class InMemoryStore:
         # so rolling back means restoring the containers, not the rows (a full deepcopy per action
         # made every action slower as the store grew)
         snapshot = (dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips),
-                    dict(self.sessions), dict(self.goals), list(self.sightings), dict(self.plans), dict(self.plan_links))
+                    dict(self.sessions), dict(self.goals), list(self.sightings), dict(self.plans), dict(self.plan_links),
+                    list(self.reports))
         commits_before = self._commits
         try:
             yield _MemoryTx(self)
         except BaseException:
             if self._commits == commits_before:
                 (self.attempts, self.profiles, self.metrics, self.usage, self.tips, self.sessions, self.goals,
-                 self.sightings, self.plans, self.plan_links) = snapshot
+                 self.sightings, self.plans, self.plan_links, self.reports) = snapshot
             raise
         self._commits += 1
 
@@ -119,6 +125,18 @@ class _MemoryTx:
 
     async def question_ids_for_company(self, slug):
         return {r["question_id"] for r in self.s.sightings if r["company_slug"] == slug}
+
+    async def add_report(self, *, question_id, user_id, reason, note, language, context):
+        if not self.s.reports_enabled:
+            raise ReportsUnavailable("question reports are not enabled on this database yet")
+        if reason not in REPORT_REASONS or context not in REPORT_CONTEXTS or language not in ("he", "en"):
+            raise ValueError("reason, context or language out of range")
+        row = {"question_id": str(question_id), "user_id": user_id, "reason": reason, "note": clean_note(note),
+               "language": language, "context": context}
+        rows = [r for r in self.s.reports if not (r["question_id"] == row["question_id"] and r["user_id"] == user_id and r["reason"] == reason)]
+        rows.append(row)
+        self.s.reports = rows
+        return sum(1 for r in self.s.reports if r["question_id"] == row["question_id"])
 
     async def companies(self):
         out: dict[str, dict] = {}

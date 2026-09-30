@@ -22,7 +22,7 @@ from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine
 
 from app import db
-from app.repo import attempts, events, plans, profiles, questions, sessions, sightings, users
+from app.repo import attempts, events, plans, profiles, questions, reports, sessions, sightings, users
 from app.repo.attempts import DuplicateSubmissionKey, StoredAttempt
 from app.repo.plans import StoredPlan
 from app.repo.profiles import LoadedProfile, StaleProfile
@@ -41,6 +41,9 @@ class Tx(Protocol):
     # company sightings ("I saw it at X") and the user's goal
     async def sightings_for(self, question_ids: list[str]) -> dict[str, list[dict]]: ...
     async def add_sighting(self, *, question_id: str, user_id: uuid.UUID, company: str) -> str: ...
+    # "this question is not clear": one row per (question, user, reason); the API returns the open count
+    async def add_report(self, *, question_id: str, user_id: uuid.UUID, reason: str, note: str | None, language: str,
+                         context: str) -> int: ...
     async def question_ids_for_company(self, slug: str) -> set[str]: ...
     async def companies(self) -> list[dict]: ...
     async def load_goal(self, user_id: uuid.UUID) -> Goal: ...
@@ -120,6 +123,10 @@ class DbTx:
 
     async def add_sighting(self, *, question_id, user_id, company):
         return await sightings.add(self.connection, question_id=uuid.UUID(str(question_id)), user_id=user_id, company=company)
+
+    async def add_report(self, *, question_id, user_id, reason, note, language, context):
+        return await reports.add(self.connection, question_id=uuid.UUID(str(question_id)), user_id=user_id, reason=reason,
+                                 note=note, language=language, context=context)
 
     async def question_ids_for_company(self, slug):
         return {str(i) for i in await sightings.question_ids_for_company(self.connection, slug)}

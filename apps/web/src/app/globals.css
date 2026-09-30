@@ -4856,3 +4856,62 @@ body::before {
 .content {
   min-height: calc(100svh - 72px);
 }
+
+/* "this question is not clear": the flag and its popover */
+.question-tools {
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  align-items: baseline;
+}
+.report-trigger {
+  color: var(--muted);
+  font-weight: 600;
+}
+.report-trigger:hover {
+  color: var(--copper-text);
+}
+.report-popover {
+  width: min(360px, calc(100vw - 24px));
+}
+.report-popover form {
+  display: grid;
+  gap: 10px;
+}
+.report-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  line-height: 1.25;
+}
+.report-reasons {
+  display: grid;
+  gap: 6px;
+}
+.report-reason {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.report-reason.on {
+  border-color: var(--navy);
+  background: var(--navy-soft);
+}
+.report-reason input {
+  width: auto;
+  min-height: 0;
+  margin: 0;
+  accent-color: var(--navy);
+}
+.report-popover textarea {
+  margin: 0;
+  min-height: 56px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.report-actions {
+  justify-content: space-between;
+}

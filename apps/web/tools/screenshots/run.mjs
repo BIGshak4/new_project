@@ -205,6 +205,7 @@ const SCREENS = [
   ["library-topic-open", "/?view=library", true, ".ui-select-trigger", ".ui-select-trigger"],
   ["hint-help-open", `/?attempt=${a.id}`, true, ".help-trigger", ".help-trigger"],
   ["language-menu-open", "/", true, ".language-switch", ".language-switch"],
+  ["report-open", "/?question=example-sensor-majority", true, ".report-trigger", ".report-trigger"],
 ];
 const index = [];
 for (const lang of LANGS) {

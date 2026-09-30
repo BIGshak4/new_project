@@ -44,6 +44,7 @@ from app.repo.attempts import AlreadyEvaluated, DuplicateSubmissionKey, StoredAt
 from app.repo.plans import OPEN, PlanItemRow, StoredPlan
 from app.repo.profiles import LoadedProfile, StaleProfile, as_profile_skills
 from app.repo.questions import CompanyTag, LoadedQuestion, QuestionDetail, QuestionSummary, detail
+from app.repo.reports import ReportsUnavailable
 from app.repo.sightings import SightingsUnavailable, slugify
 from app.repo.users import SENIORITIES, Goal
 from app.schemas.api import (
@@ -215,6 +216,21 @@ class PracticeService:
                 raise ApiError("validation", str(exc)) from exc
             tags = await tx.sightings_for([str(loaded.id)])
         return [CompanyTag(**t) for t in tags.get(str(loaded.id), [])]
+
+    async def report_question(self, user_id: uuid.UUID, *, reason: str, note: str | None, language: str | None,
+                              context: str, key: str | None = None, question_id: uuid.UUID | None = None) -> int:
+        """'This question is not clear.' Returns the question's open report count; never shown to other users."""
+        async with self.store.transaction() as tx:
+            loaded = await tx.load_question(key=key, question_id=question_id)
+            if loaded is None:
+                raise ApiError("not_found", "this question does not exist or is not available")
+            try:
+                return await tx.add_report(question_id=str(loaded.id), user_id=user_id, reason=reason, note=note,
+                                           language=self._language(language), context=context)
+            except ReportsUnavailable as exc:
+                raise ApiError("temporarily_unavailable", str(exc), status=503) from exc
+            except ValueError as exc:
+                raise ApiError("validation", str(exc)) from exc
 
     # ------------------------------------------------------------------ the goal
 

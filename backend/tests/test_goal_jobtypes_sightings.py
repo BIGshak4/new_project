@@ -125,6 +125,23 @@ class TestTheLibraryByJobAndCompany:
             assert len(slug) <= MAX_NAME and not slug.endswith("-")
         assert slugify("אינטל") == "אינטל" and slugify("!!!") == ""
 
+    async def test_question_reports_count_per_user_and_degrade_without_the_table(self, catalog):
+        svc, store = practice(catalog)
+        assert await svc.report_question(USER, reason="unclear", note="  what is  'enable' here? ", language="he", context="practice", key=Q) == 1
+        assert await svc.report_question(USER, reason="unclear", note="second press", language="he", context="practice", key=Q) == 1   # same person, same reason: an update
+        assert store.reports[-1]["note"] == "second press" and store.reports[-1]["language"] == "he"
+        assert await svc.report_question(OTHER, reason="wrong", note=None, language="en", context="interview", key=Q) == 2
+        with pytest.raises(ApiError) as e:
+            await svc.report_question(USER, reason="unclear", note=None, language="he", context="practice", key="no-such-question")
+        assert e.value.code == "not_found"
+        with pytest.raises(ApiError) as e:
+            await svc.report_question(USER, reason="silly", note=None, language="he", context="practice", key=Q)
+        assert e.value.code == "validation"
+        store.reports_enabled = False
+        with pytest.raises(ApiError) as e:
+            await svc.report_question(USER, reason="unclear", note=None, language="he", context="practice", key=Q)
+        assert e.value.status == 503 and e.value.code == "temporarily_unavailable"
+
     async def test_sightings_are_validated_and_degrade_when_the_table_is_missing(self, catalog):
         svc, store = practice(catalog)
         with pytest.raises(ApiError) as e:

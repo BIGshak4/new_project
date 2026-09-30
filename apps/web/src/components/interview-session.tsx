@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, Clock3, Cpu, Lightbulb, Mic, Square } from "luci
 import type { Lang } from "./auth";
 import { revealDelay, timerTone } from "../lib/ui";
 import { AnimatePresence, Pop, Reveal, motion, spring, useReducedMotion } from "./ui/motion";
+import { QuestionReport } from "./question-report";
 import { AnswerEditor } from "./answer-editor";
 import { VisualAnswer } from "./visual-answer";
 import { emptyVisual, hasVisual, type VisualAnswer as Visual } from "../lib/circuit";
@@ -326,9 +327,12 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
               {turn.skill_label}
               {turn.trial && <span className="badge trial">{t("בבדיקה חיה", "On trial")}</span>}
             </span>
-            <span className="small muted">
-              {t("רמת קושי", "Difficulty")} {turn.difficulty}
-              {turn.subject_switch && <> · {t("נושא חדש", "new subject")}</>}
+            <span className="row">
+              <span className="small muted">
+                {t("רמת קושי", "Difficulty")} {turn.difficulty}
+                {turn.subject_switch && <> · {t("נושא חדש", "new subject")}</>}
+              </span>
+              {turn.question_key && <QuestionReport api={api} questionKey={turn.question_key} lang={lang} context="interview" />}
             </span>
           </div>
           <p className="interview-prompt" dir="auto">

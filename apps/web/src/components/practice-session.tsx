@@ -21,6 +21,7 @@ import { AnswerEditor } from "./answer-editor";
 import { EvaluationPanel, NextUpCard } from "./evaluation-panel";
 import { HelpPopover } from "./ui/popover";
 import { SubjectSketch } from "./sketches";
+import { QuestionReport } from "./question-report";
 import { Reveal } from "./ui/motion";
 import { toast } from "./toaster";
 import { FollowUps } from "./follow-ups";
@@ -487,7 +488,10 @@ export function PracticeSession({
                   </span>
                 </div>
                 <h1 dir="auto">{question.title}</h1>
-                <SawItAt api={api} question={question} lang={lang} />
+                <div className="row question-tools">
+                  <SawItAt api={api} question={question} lang={lang} />
+                  <QuestionReport api={api} questionKey={question.key} lang={lang} context="practice" />
+                </div>
                 {!attempt && (
                   <p className="preview-guide">
                     {t(

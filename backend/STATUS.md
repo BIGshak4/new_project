@@ -486,6 +486,23 @@ divs, phone tap targets, a dead helper). Two loading states hold their room to s
   error explanations on the error object (per-language dicts lost their keys). Trial: 2 of 2 drafts accepted and
   judged STRONG, about $0.20 per draft including the judge. Nothing is loaded into the database by the script.
 
+## 5u. "This question is not clear" (2026-10-01, Shaked's "go all")
+
+- **Table** `question_report` (question, user, reason unclear|wrong|other, note ≤500, language, context practice|interview|library,
+  created_at, resolved_at/by; unique per question+user+reason; RLS on, backend-only). Migration
+  `supabase/migrations/20261001180000_question_report.sql`, dry run OK, **approved by Shaked, NOT YET APPLIED**: the Supabase
+  MCP needed a fresh sign-in and the fallback `scripts/apply_sql.py --yes` was refused by the session's permission
+  classifier. Until it is applied the route answers 503 `temporarily_unavailable` and the web shows "הדיווח ייפתח בקרוב",
+  exactly like company tags did before their table.
+- **Backend**: `app/repo/reports.py` (add as an upsert per question+user+reason, open count, counts per question, open list,
+  resolve), store protocol + DbStore + memory store, `PracticeService.report_question`, `POST /v1/questions/{key}/reports`
+  ({reason, note, language, context} → {recorded, reports}); tests in `test_goal_jobtypes_sightings.py` and the protected-route table.
+- **Web**: `components/question-report.tsx`, a quiet flag "השאלה לא ברורה?" on the question sheet (next to "I saw it at a
+  company") and in the interview room next to the difficulty; a Radix popover with three reasons and an optional line;
+  toast on send. Harness screen `report-open`.
+- **Inbox**: `scripts/question_reports.py` lists open reports grouped by question (key, title, reason, note, language, where,
+  when; never the reporter's e-mail) and `--resolve <ids> --by <name>` marks them handled.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -524,6 +541,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-01 | "This question is not clear": `question_report` table (migration approved, apply pending), repo/store/service/route, the flag and popover on the question sheet and in the interview room, the inbox script (§5u) |
 | 2026-10-01 | Judge → Opus 5.5 (13/13 bands identical, same misconception keys; `docs/judge-opus-5-5-2026-10-01.md`); `scripts/generate_questions.py` drafts bank questions per skill in the seed format with validation and a judged reference (§5t) |
 | 2026-10-01 | Full check (§5s): 794 offline + live + real-model scripts, Render on the Transaction pooler, load test 10/50, CPU profile, page timings in the harness, independent front-end review with 14 fixes; `docs/full-check-2026-10-01.md` |
 | 2026-10-01 | Night (§5r): the Workbench identity from the brief of 30 September: tokens, type, shell, the Learn page rebuilt around the day's sheet and the signal trace, subject sketches, grade colours, landing page; front-end only |
