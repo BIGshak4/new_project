@@ -458,6 +458,19 @@ The green Path look is tagged `design/path-green`; Harel's original stays `desig
    missing element and no console error (five harness rounds, each fixing what the previous showed); client
    bundle 755 → 759 KB gzipped; Netlify green; nothing under `backend/app` changed.
 
+## 5s. Full check after the Workbench (2026-10-01, Shaked's "full verification and profiling and code review")
+
+Report: `docs/full-check-2026-10-01.md`. Backend code unchanged since §5n, so its numbers are a regression check:
+ruff clean, 794 offline tests, live suite and both real-model scripts on the real database, Render healthy on the
+**Transaction pooler** (Shaked's change; 3 ms round trip) with all 25 smoke routes, `profile_service.py` 48 ms per
+in-memory loop, `load_test.py` 10/50 users with every flow complete and event-loop lag p99 27 ms, `latency_bench.py`
+on the real model. Front end: 56 tests; the harness now records first paint, largest paint, layout shift, load,
+script bytes and heap per screen (paint medians 56–140 ms locally, 434 KB compressed JavaScript on the first page);
+an independent review of the three front-end nights found no high-severity defect and 14 medium/low findings, all
+fixed (the timer's screen-reader chatter, the English corner stamp, the grain's blend mode, fonts self-hosted
+through `next/font` with Heebo retired, a UTC "yesterday", stroke scaling, a blank select, roles on labelled
+divs, phone tap targets, a dead helper). Two loading states hold their room to stop layout shift.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -496,6 +509,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-01 | Full check (§5s): 794 offline + live + real-model scripts, Render on the Transaction pooler, load test 10/50, CPU profile, page timings in the harness, independent front-end review with 14 fixes; `docs/full-check-2026-10-01.md` |
 | 2026-10-01 | Night (§5r): the Workbench identity from the brief of 30 September: tokens, type, shell, the Learn page rebuilt around the day's sheet and the signal trace, subject sketches, grade colours, landing page; front-end only |
 | 2026-09-29 | Night 2 (§5q): Recharts for the road-so-far chart from day three; the interview question slides in per turn and the timer changes tone; the practice steps flow into each other; harness seed with three days and a three-turn interview; 56 web tests |
 | 2026-09-29 | Night (§5p): Motion (path arrival, breathing current node, scroll to today, the grade sequence, counting XP, filling bars, view cross-fade, all behind reduced-motion), Radix selects, hint popover and language menu, Sonner toasts, three harness screens with the layers open; 54 web tests |
