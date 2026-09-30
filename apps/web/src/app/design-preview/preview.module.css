@@ -138,7 +138,7 @@
 .trailIntro .softNote { font-size: 14px; }
 .path { position: relative; display: flex; flex-direction: column; gap: 20px; padding: 15px 0; }
 .pathLine { position: absolute; top: 65px; bottom: 80px; inset-inline-start: 27px; width: 2px; background: #acba9e; }
-.preview .pathStep { display: flex; gap: 22px; align-items: center; position: relative; border: 0; background: transparent; padding: 15px 0; border-radius: 0; color: var(--text); }
+.preview .pathStep { display: flex; justify-content: flex-start; gap: 22px; align-items: center; position: relative; z-index: 1; border: 0; background: transparent; padding: 15px 0; border-radius: 0; color: var(--text); }
 .pathStep > span:last-child { display: flex; flex-direction: column; text-align: start; }
 .pathStep small { font-size: 13px; color: var(--secondary); }
 .pathStep strong { font-size: 25px; margin-block: 3px; }
