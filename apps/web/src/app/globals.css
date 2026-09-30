@@ -4950,3 +4950,19 @@ body::before {
   .resource-heading h3 { font-size: 1rem; }
   .question-figures figcaption { font-size: .75rem; }
 }
+
+/* Discoverable question provenance and taxonomy, shared by library and practice. */
+.question-metadata { display: grid; gap: 7px; margin-block: 10px 4px; text-align: start; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.question-taxonomy { display: flex; align-items: baseline; flex-wrap: wrap; gap: 7px 16px; }
+.discipline-label { font-weight: 750; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 5px; padding: 2px 8px; }
+.metadata-label { font-weight: 700; color: var(--ink-2); }
+.metadata-id { font-size: 13px; color: var(--muted); }
+.question-topics { display: flex; flex-wrap: wrap; gap: 3px 12px; color: var(--muted); font-size: 14px; }
+.question-companies { text-align: start; font-size: 15px; line-height: 1.65; color: var(--ink-2); }
+.company-name { display: inline-block; margin-inline-end: 10px; font-weight: 650; }
+.metadata-empty { color: var(--muted); }
+.company-report-note { max-width: 85ch; color: var(--muted); font-size: 14px; line-height: 1.6; font-weight: 400; margin-block: 7px 12px; }
+.library-provenance { margin-block: 14px 20px; }
+.question-sheet .question-metadata { margin-block-end: 20px; }
+.question-tools, .saw-it-at { min-width: 0; }
+.question-companies, .question-topics { overflow-wrap: anywhere; }

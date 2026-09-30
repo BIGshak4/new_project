@@ -13,11 +13,13 @@ import {
   Briefcase,
   Building2,
   Flame,
-  Map,
+  Map as MapIcon,
   Star,
 } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
+import { companyNames, companyReportNote, matchesCompany, matchesQuestion, questionCategory } from "../lib/question-discovery";
+import { QuestionMetadata } from "../components/question-metadata";
 import { Auth, type Lang } from "../components/auth";
 import { PracticeSession } from "../components/practice-session";
 import { GoalSetup } from "../components/goal-setup";
@@ -340,20 +342,14 @@ function Workspace({
     setEntries((old) => mergeEntries(old, [entry]));
   const active = !!(route.question || route.attempt);
   const topics = [...new Set(questions.map((q) => q.subject))];
+  const questionsByKey = new Map(questions.map(q => [q.key, q]));
   const shown = jobFilter && jobQuestions ? jobQuestions : questions;
-  const companyNeedle = companyQuery.trim().toLowerCase();
   const filtered = shown.filter(
     (q) =>
-      (category === "all" || q.category === category) &&
+      (category === "all" || questionCategory(q) === category) &&
       (subject === "all" || q.subject === subject) &&
-      `${q.title} ${q.preparation_id ?? ""} ${(q.topics ?? []).join(" ")} ${subjectLabel(q.subject, lang)}`
-        .toLowerCase()
-        .includes(query.toLowerCase()) &&
-      (!companyNeedle ||
-        (q.reported_companies ?? []).some(c => c.toLowerCase().includes(companyNeedle)) ||
-        (q.companies ?? []).some(
-          (c) => c.name.toLowerCase().includes(companyNeedle) || c.slug.includes(companyNeedle),
-        )) &&
+      matchesQuestion(q, query, [subjectLabel(q.subject, "he"), subjectLabel(q.subject, "en")]) &&
+      matchesCompany(q, companyQuery) &&
       (route.view !== "bookmarks" ||
         entries.some((e) => e.question_id === q.id && e.bookmarked)),
   );
@@ -371,7 +367,7 @@ function Workspace({
   const overview = demo ? null : progress.overview ?? null;
   const activeTab = LIBRARY_VIEWS.has(route.view) ? "library" : route.view;
   const tabs = [
-    { id: "learn", icon: Map, label: t("היום", "Today") },
+    { id: "learn", icon: MapIcon, label: t("היום", "Today") },
     { id: "library", icon: BookOpen, label: t("מאגר", "Library") },
     { id: "interview", icon: Mic, label: t("ראיון מדומה", "Mock interview") },
     { id: "progress", icon: BarChart3, label: t("התקדמות", "Progress") },
@@ -715,6 +711,7 @@ function Workspace({
                           {questions.find((q) => q.key === a.question_key)
                             ?.title ?? a.question_key}
                         </h3>
+                        {questionsByKey.has(a.question_key) && <QuestionMetadata question={questionsByKey.get(a.question_key)!} lang={lang} />}
                         <span className="topic">
                           {date(a.started_at)} ·{" "}
                           {a.language === "he"
@@ -763,6 +760,7 @@ function Workspace({
                           <BookOpen size={17} />
                           <div>
                             <h3>{q.title}</h3>
+                            <QuestionMetadata question={q} lang={lang} />
                             <span className="topic">
                               {t(
                                 "הדיווח העצמי נשמר · ללא הערכה אוטומטית",
@@ -783,8 +781,8 @@ function Workspace({
                     <input
                       aria-label={t("חיפוש שאלות", "Search questions")}
                       placeholder={t(
-                        "חפשו שאלה או נושא…",
-                        "Search a question or topic…",
+                        "חפשו שאלה, נושא או חברה…",
+                        "Search a question, topic or company…",
                       )}
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
@@ -828,12 +826,13 @@ function Workspace({
                       onChange={(e) => setCompanyQuery(e.target.value)}
                     />
                     <datalist id="company-list">
-                      {[...new Set([...companies.map(c => c.name), ...questions.flatMap(q => q.reported_companies ?? [])])].sort().map((name) => (
+                      {[...new Set([...companies.map(c => c.name), ...questions.flatMap(companyNames)])].sort().map((name) => (
                         <option key={name} value={name} />
                       ))}
                     </datalist>
                   </div>
                 </div>
+                <p className="company-report-note library-provenance">{companyReportNote(lang)}</p>
                 {jobFilter && jobQuestions && (
                   <p className="small muted filter-note" role="status">
                     {t(
@@ -859,24 +858,8 @@ function Workspace({
                             <span className="badge trial">{q.assessment_ready === false ? t("לבדיקה מקצועית", "Review pending") : t("בבדיקה חיה", "On trial")}</span>
                           )}
                         </h3>
-                        <span className="topic">
-                          {subjectLabel(q.subject, lang)}
-                          {q.preparation_id && <> · <bdi>{q.preparation_id}</bdi></>}
-                          {entries.some(
-                            (e) => e.question_id === q.id && e.bookmarked,
-                          )
-                            ? " · " + t("שמורה", "Saved")
-                            : ""}
-                          {q.companies && q.companies.length > 0
-                            ? " · " +
-                              t("נשאלה ב", "Asked at") +
-                              " " +
-                              q.companies.slice(0, 3).map((c) => c.name).join(", ")
-                            : ""}
-                        </span>
-                        {!!q.reported_companies?.length && <span className="source-attribution small">
-                          {t("לפי המקור, לא אומת: ", "Source claim, unverified: ")}<bdi>{q.reported_companies.join(", ")}</bdi>
-                        </span>}
+                        <QuestionMetadata question={q} lang={lang} />
+                        {entries.some(e => e.question_id === q.id && e.bookmarked) && <span className="small muted">{t("שמורה", "Saved")}</span>}
                       </div>
                       <span className="q-category small muted">
                         {recentKeys.has(q.key)

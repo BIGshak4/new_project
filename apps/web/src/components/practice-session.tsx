@@ -1,5 +1,7 @@
 "use client";
 
+import { QuestionMetadata, ReportedCompanies } from "./question-metadata";
+
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
@@ -491,15 +493,10 @@ export function PracticeSession({
                   </span>
                 </div>
                 <h1 dir="auto">{question.title}</h1>
-                {question.preparation_id && <p className="small muted"><bdi>{question.preparation_id}</bdi></p>}
-                {!!question.topics?.length && <p className="small muted" dir="auto">{question.topics.map(topic => topic.replaceAll("_", " ")).join(" · ")}</p>}
+                <QuestionMetadata question={question} lang={lang} showCompanies={false} />
                 {question.assessment_ready === false && <p className="notice study-review-note">
                   {t("שאלה בבדיקה מקצועית. המשוב הוא ראשוני; התרגול נשמר, אך אינו משנה את רמת השליטה או מעניק נקודות עד לאישור התוכן ורמת הקושי.",
                     "This question is under technical review. Feedback is provisional; your practice is saved but does not change skill levels or earn points until its content and difficulty are approved.")}
-                </p>}
-                {!!question.reported_companies?.length && <p className="source-attribution small">
-                  {t("חברות שהוזכרו במקור · לא אומת באופן עצמאי: ", "Companies named in the source · not independently verified: ")}
-                  <bdi>{question.reported_companies.join(", ")}</bdi>
                 </p>}
                 <div className="row question-tools">
                   <SawItAt api={api} question={question} lang={lang} />
@@ -1150,14 +1147,8 @@ function SawItAt({
   }
   return (
     <div className="saw-it-at">
+      <ReportedCompanies question={{ reported_companies: question.reported_companies, companies: tags }} lang={lang} note />
       <div className="row">
-        {tags.length > 0 && (
-          <span className="small muted company-tags" dir="auto">
-            <Building2 size={14} aria-hidden="true" />
-            {t("נשאלה ב", "Asked at")}{" "}
-            {tags.map((tag) => (tag.count > 1 ? `${tag.name} (${tag.count})` : tag.name)).join(", ")}
-          </span>
-        )}
         <button type="button" className="text-button" aria-expanded={open} onClick={() => setOpen(!open)}>
           <Building2 size={15} aria-hidden="true" />
           {t("ראיתי את זה בחברה…", "I saw it at a company…")}
