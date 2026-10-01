@@ -300,7 +300,7 @@ async def draft_batch(provider, skill, subject_label, existing, count, band, tip
                          system=[SYSTEM],
                          user=user_prompt(skill, subject_label, existing, count, band, tip_keys, catalog_skills, track),
                          schema=DraftBatch, prompt_version="gen-1", effort="high", max_tokens=16000)
-    response = await call(provider, request, timeout_seconds=600)
+    response = await call(provider, request, timeout_seconds=420)   # a draft of two questions takes 2-5 min; longer is a stuck socket
     return response
 
 
@@ -444,7 +444,15 @@ async def main() -> int:
             band_low = low + (span * b) // max(1, batches)
             band_high = min(high, band_low + max(2, span // max(1, batches)))
             jobs.append(one_batch(skill, count, (band_low, band_high), b + 1))
-    await asyncio.gather(*jobs)
+    async def heartbeat():
+        while True:
+            await asyncio.sleep(300)
+            print(f"  … {time.strftime('%H:%M')} accepted {len(accepted) - len(previous)}, rejected {len(rejected)}, ${cost:.2f}", flush=True)
+    beat = asyncio.create_task(heartbeat())
+    try:
+        await asyncio.gather(*jobs)
+    finally:
+        beat.cancel()
     drafting_seconds = time.perf_counter() - started
 
     if args.verify:

@@ -198,6 +198,21 @@ class TestDurability:
         assert raised.value.code == "usage_limit"
         assert (await svc.progress(user)).attempts_today == today_before + 2
 
+    async def test_question_reports_land_in_the_real_table(self, case):
+        """'This question is not clear': an upsert per (question, user, reason) in public.question_report, rolled back."""
+        user = case["user_id"]
+        svc = service(case, provider_always(GOOD))
+        before = await count(case["connection"], "select count(*) from public.question_report where user_id = :u", u=user)
+        assert await svc.report_question(user, reason="unclear", note="what does 'enable' mean here?", language="he",
+                                         context="practice", key="example-sensor-majority") >= 1
+        assert await svc.report_question(user, reason="unclear", note="second press updates", language="he",
+                                         context="practice", key="example-sensor-majority") >= 1
+        rows = (await case["connection"].execute(text(
+            "select reason, note, language, context, resolved_at from public.question_report where user_id = :u"), {"u": user})).all()
+        assert len(rows) == before + 1 and rows[-1].note == "second press updates" and rows[-1].resolved_at is None
+        assert await svc.report_question(user, reason="wrong", note=None, language="en", context="interview",
+                                         key="example-sensor-majority") >= 2
+
 
 class TestAccessBoundaries:
     async def test_another_user_cannot_see_or_touch_the_attempt(self, case):
