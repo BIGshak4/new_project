@@ -481,8 +481,9 @@ divs, phone tap targets, a dead helper). Two loading states hold their room to s
   hints, named errors, an optional truth_table / numeric / code_tests check with its own pass/fail answers) per
   skill of the hardware and software tracks, validates each draft the way the loader does (shape, skills, tips,
   check self-test), has the judge grade the draft's own reference (`--verify`, non-STRONG → `needs_attention`), and
-  writes `seeds/questions/generated_bank.json` (status `in_review`, origin `generated`) plus a coverage report under
-  `docs/question-bank-<date>.md`. Structured output needs typed spec fields (a free `dict` comes back empty) and the
+  writes `seeds/question_drafts/generated_bank.json` (status `in_review`, origin `generated`) plus a coverage report under
+  `docs/question-bank-<date>.md`. **Shaked's decision (2026-10-01): the drafts stay aside as an option and are not loaded**;
+  the drafts folder sits outside `seeds/questions`, which the loader reads, so a reload cannot pick them up by accident. Structured output needs typed spec fields (a free `dict` comes back empty) and the
   error explanations on the error object (per-language dicts lost their keys). Trial: 2 of 2 drafts accepted and
   judged STRONG, about $0.20 per draft including the judge. Nothing is loaded into the database by the script.
 
@@ -502,6 +503,35 @@ divs, phone tap targets, a dead helper). Two loading states hold their room to s
   toast on send. Harness screen `report-open`.
 - **Inbox**: `scripts/question_reports.py` lists open reports grouped by question (key, title, reason, note, language, where,
   when; never the reporter's e-mail) and `--resolve <ids> --by <name>` marks them handled.
+
+## 5v. Backend to-do list (2026-10-01, Shaked's request) — the picture is in `docs/backend-roadmap.md`
+
+**Shaked (accounts and decisions)**
+1. Apply the `question_report` table: `cd backend && uv run python scripts/apply_sql.py ../supabase/migrations/20261001180000_question_report.sql --yes`
+   (or `/mcp` → sign in to Supabase → I apply it). Done when the command prints `table question_report: exists`.
+2. Render → Environment → `ANTHROPIC_MODEL=claude-opus-5-5`. Done when `/health` shows `"evaluator": "claude-opus-5-5"`.
+3. Rotate the database password (Supabase → Settings → Database → Reset); new Transaction-pooler string (port 6543) into
+   Render's `DATABASE_URL` and `backend/.env`. Done when `/health?db_check=true` is ok and `uv run pytest -q tests/test_live_db.py` passes.
+4. Rotate the Netlify build hook; update the GitHub secret `NETLIFY_PRACTICE_BUILD_HOOK`. Done when the next push deploys green.
+5. Anthropic tier, when a group larger than a few testers is planned.
+6. Windows: no sleep while plugged in, before night runs.
+7. Decide: plural ("אתם") or singular address in the copy.
+
+**Claude (code), in order**
+8. After item 1: smoke test and live suite; add the report route to `scripts/smoke_http.py`.
+9. The question drafts: finish the run, spot-check, validate with the loader, commit `seeds/question_drafts/` and the
+   coverage report. Not loaded (Shaked's decision).
+10. Hide an attempt or an interview from the screen, data kept (`user_hidden_item`: dry run → approval → apply; route; hide
+    with undo; "show hidden").
+11. Skip to the next item in today's program (`POST /v1/me/program/skip`; skipped, next opens, un-skip the same day; no XP).
+12. A review page for drafts (approve / edit / reject by skill, reviewer access via `can_manage_tasks`).
+13. The content pass: Hebrew skill names, bilingual check messages and tip lines, plan reasons in the page's language.
+14. Housekeeping: the placeholders `app.py`, `requirements.txt`, `src/__init__.py` (with confirmation); UUIDv7 for append-only
+    tables; cap `state.history_window`; daily-allowance checks as `created_at >= day_start`.
+
+**Harel / an engineer**
+15. Review and publish the 30 questions (`seeds/questions/README.md` checklist); then `ALLOW_IN_REVIEW_CONTENT` can go off on Render.
+16. Review the drafts once the page in item 12 exists.
 
 ## 6. Known gaps and open items
 
@@ -541,6 +571,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-01 | The backend to-do list (§5v) and `docs/backend-roadmap.md`: how the backend works (one answer step by step, the other flows, folders, data, tools, deployment, guarantees) and the roadmap with owners |
 | 2026-10-01 | "This question is not clear": `question_report` table (migration approved, apply pending), repo/store/service/route, the flag and popover on the question sheet and in the interview room, the inbox script (§5u) |
 | 2026-10-01 | Judge → Opus 5.5 (13/13 bands identical, same misconception keys; `docs/judge-opus-5-5-2026-10-01.md`); `scripts/generate_questions.py` drafts bank questions per skill in the seed format with validation and a judged reference (§5t) |
 | 2026-10-01 | Full check (§5s): 794 offline + live + real-model scripts, Render on the Transaction pooler, load test 10/50, CPU profile, page timings in the harness, independent front-end review with 14 fixes; `docs/full-check-2026-10-01.md` |

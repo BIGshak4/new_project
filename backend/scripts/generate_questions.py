@@ -12,10 +12,11 @@ What it does, per skill of the role (hardware) and of the software track:
      its own good answers and rejects its bad ones) and drops what fails, with the reason in the report;
   3. with --verify, has the judge grade the draft's own reference solution: a reference that does not band STRONG
      is kept but flagged `needs_attention`, because either the question or the reference is unclear;
-  4. writes seeds/questions/generated_bank.json (status in_review, origin generated, reuse pending_review; the
-     loader picks up every *.json under seeds/questions) and a coverage report under docs/.
+  4. writes seeds/question_drafts/generated_bank.json (status in_review, origin generated, reuse pending_review) and a
+     coverage report under docs/. The drafts folder sits OUTSIDE seeds/questions, which the loader reads, so nothing
+     reaches the database unless someone moves a reviewed question into seeds/questions and runs the loader.
 
-Nothing here touches the database: loading is `scripts/seed_db.py`, after a person has looked at the report.
+Nothing here touches the database. Shaked's decision of 2026-10-01: the drafts stay aside as an option.
 """
 from __future__ import annotations
 
@@ -44,7 +45,7 @@ from app.schemas.bank import BankQuestion  # noqa: E402
 
 BACKEND = Path(__file__).resolve().parent.parent
 SEEDS = BACKEND / "seeds"
-OUTPUT = SEEDS / "questions" / "generated_bank.json"
+OUTPUT = SEEDS / "question_drafts" / "generated_bank.json"   # outside seeds/questions on purpose: the loader must never pick drafts up by accident
 REPORT = BACKEND.parent / "docs" / f"question-bank-{date.today().isoformat()}.md"
 
 HARDWARE_SUBJECTS = ("digital_fundamentals", "sequential_logic", "fsms")
@@ -298,7 +299,7 @@ async def draft_batch(provider, skill, subject_label, existing, count, band, tip
     request = LLMRequest(role="generator",
                          system=[SYSTEM],
                          user=user_prompt(skill, subject_label, existing, count, band, tip_keys, catalog_skills, track),
-                         schema=DraftBatch, prompt_version="gen-1", effort="high", max_tokens=24000)
+                         schema=DraftBatch, prompt_version="gen-1", effort="high", max_tokens=16000)
     response = await call(provider, request, timeout_seconds=600)
     return response
 
@@ -322,7 +323,7 @@ async def verify_reference(provider, question: BankQuestion, cat) -> tuple[str, 
 async def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--per-skill", type=int, default=12, help="target questions per skill, existing ones included")
-    parser.add_argument("--batch", type=int, default=3, help="questions per model call")
+    parser.add_argument("--batch", type=int, default=2, help="questions per model call (2 keeps replies short enough to avoid read timeouts)")
     parser.add_argument("--skills", nargs="*", help="only these skill keys")
     parser.add_argument("--track", choices=["hardware", "software", "soft", "all", "hardware+software"], default="hardware+software",
                         help="hardware, software, soft (reasoning and behavioural) or all; default hardware and software")
@@ -364,7 +365,7 @@ async def main() -> int:
     total = sum(n for _, n in plan)
     calls = sum(-(-n // args.batch) for _, n in plan)
     print(f"{len(plan)} skills need questions; {total} drafts in about {calls} calls to {args.model}"
-          + (f", then {total} judge calls" if args.verify else ""))
+          + (f", then {total} judge calls" if args.verify else ""), flush=True)
     for skill, need in plan:
         print(f"  {skill.key:<28} have {len(existing[skill.key]):>2}  need {need:>2}  band {skill.min_difficulty}-{skill.max_difficulty}")
     if args.dry_run or not plan:
@@ -387,20 +388,34 @@ async def main() -> int:
     cost = 0.0
     started = time.perf_counter()
 
+    def save(rows: list[dict]) -> None:
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps(rows, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
     async def one_batch(skill, count, band, batch_index):
         nonlocal cost
         track = "hardware" if skill.subject in HARDWARE_SUBJECTS else "software" if skill.subject in SOFTWARE_SUBJECTS else "soft"
         async with semaphore:
-            for attempt in range(3):
+            response = None
+            for attempt in range(4):
                 try:
                     response = await draft_batch(drafter, skill, subject_label.get(skill.subject, skill.subject), existing[skill.key],
                                                  count, band, tip_keys, catalog_skills, track, args.model)
                     break
                 except LLMError as exc:
-                    if attempt == 2 or not exc.retryable:
+                    if attempt == 3 or not exc.retryable:
                         rejected.append((f"{skill.key} batch {batch_index}", f"model call failed: {exc}"))
                         return
-                    await asyncio.sleep(5 * (attempt + 1))
+                    await asyncio.sleep(8 * (attempt + 1))
+                except Exception as exc:  # noqa: BLE001 - a read timeout or a parse error must not kill the run
+                    if attempt == 3:
+                        rejected.append((f"{skill.key} batch {batch_index}", f"model call failed: {type(exc).__name__}: {exc}"))
+                        return
+                    print(f"  ~ {skill.key} batch {batch_index}: {type(exc).__name__}, retrying", flush=True)
+                    await asyncio.sleep(8 * (attempt + 1))
+            if response is None or response.parsed is None:
+                rejected.append((f"{skill.key} batch {batch_index}", "no structured reply"))
+                return
         cost += response.usage.cost_usd(response.model) or 0.0
         batch: DraftBatch = response.parsed  # type: ignore[assignment]
         for draft in batch.questions:
@@ -415,7 +430,8 @@ async def main() -> int:
                 continue
             existing[skill.key].append(title)
             accepted.append(question)
-            print(f"  + {question['key']}  d{question['difficulty']}  {title}")
+            print(f"  + {question['key']}  d{question['difficulty']}  {title}", flush=True)
+        save(accepted)
 
     jobs = []
     for skill, need in plan:
@@ -432,7 +448,7 @@ async def main() -> int:
     drafting_seconds = time.perf_counter() - started
 
     if args.verify:
-        print(f"verifying {len(accepted) - len(previous)} references with {judge.model}…")
+        print(f"verifying {len(accepted) - len(previous)} references with {judge.model}…", flush=True)
 
         async def one_verify(question: dict):
             nonlocal cost
@@ -440,13 +456,14 @@ async def main() -> int:
                 model = BankQuestion.model_validate(question)
                 try:
                     band, summary = await verify_reference(judge, model, cat)
-                except LLMError as exc:
-                    band, summary = "FAILED", str(exc)
+                except Exception as exc:  # noqa: BLE001
+                    band, summary = "FAILED", f"{type(exc).__name__}: {exc}"
             if band != "STRONG":
                 question["review_notes"] += f" needs_attention: the judge banded the reference {band} ({summary[:160]})."
                 flagged.append((question["key"], band, summary[:160]))
 
         await asyncio.gather(*(one_verify(q) for q in accepted[len(previous):]))
+        save(accepted)
 
     try:
         out_label = args.out.resolve().relative_to(BACKEND.parent).as_posix()
