@@ -7,7 +7,7 @@ import { chartRows, type ChartRow } from "../lib/timeline";
 import { useReducedMotion } from "./ui/motion";
 
 /** The brief's colours, as hex because SVG presentation attributes are the safest place for them. */
-const COLOURS = { strong: "#1b7f4e", partial: "#ffb703", weak: "#b5651d", level: "#1c64b8", grid: "#e3e7ee", label: "#5d6b80" };
+const COLOURS = { strong: "var(--ok)", partial: "var(--signal)", weak: "var(--copper)", level: "var(--link)", grid: "var(--line)", label: "var(--muted)" };
 
 /**
  * "The road so far" from the third practice day on: stacked bars per day (strong, partial, needs work) and the
@@ -30,12 +30,12 @@ export function RoadChart({ timeline, lang }: { timeline: TimelinePoint[]; lang:
           {hasLevel && (
             <YAxis yAxisId="level" orientation="right" domain={[1, 5]} ticks={[1, 3, 5]} tickLine={false} axisLine={false} tick={{ fontSize: 12, fontWeight: 700, fill: COLOURS.level }} width={26} />
           )}
-          <Tooltip content={<RoadTooltip lang={lang} />} cursor={{ fill: "rgba(35, 48, 42, 0.06)" }} />
+          <Tooltip content={<RoadTooltip lang={lang} />} cursor={{ fill: "var(--soft)" }} />
           <Bar yAxisId="answers" dataKey="weak" stackId="answers" fill={COLOURS.weak} isAnimationActive={!reduced} animationDuration={700} />
           <Bar yAxisId="answers" dataKey="partial" stackId="answers" fill={COLOURS.partial} isAnimationActive={!reduced} animationDuration={700} />
           <Bar yAxisId="answers" dataKey="strong" stackId="answers" fill={COLOURS.strong} radius={[6, 6, 0, 0]} isAnimationActive={!reduced} animationDuration={700} />
           {hasLevel && (
-            <Line yAxisId="level" type="monotone" dataKey="level" stroke={COLOURS.level} strokeWidth={3} dot={{ r: 4, strokeWidth: 3, fill: "#fff" }} activeDot={{ r: 6 }} connectNulls isAnimationActive={!reduced} animationDuration={900} animationBegin={400} />
+            <Line yAxisId="level" type="monotone" dataKey="level" stroke={COLOURS.level} strokeWidth={3} dot={{ r: 4, strokeWidth: 3, fill: "var(--surface)" }} activeDot={{ r: 6 }} connectNulls isAnimationActive={!reduced} animationDuration={900} animationBegin={400} />
           )}
         </ComposedChart>
       </ResponsiveContainer>

@@ -44,6 +44,7 @@ V1_ROUTES = {
     ("GET", "/v1/me/goal"), ("POST", "/v1/me/goal"), ("GET", "/v1/job-types"), ("GET", "/v1/companies"),
     ("POST", "/v1/questions/{key_or_id}/sightings"),
     ("GET", "/v1/me/program"), ("POST", "/v1/me/program/start"),
+    ("POST", "/v1/questions/{key_or_id}/reports"), ("GET", "/v1/questions/{key}/resources"),
 }
 
 

@@ -138,7 +138,7 @@ function Gate({ data, selected, id }: NodeProps<GateNode>) {
                 x2={side === "inputs" ? (left * 170) / 160 : 170}
                 y1={y}
                 y2={y}
-                stroke="#405c50"
+                stroke="var(--circuit-wire)"
                 strokeWidth="1.6"
               />
             );
@@ -385,15 +385,15 @@ export default function CircuitEditor({
           style: {
             stroke: running
               ? n == null
-                ? "#8c6323"
+                ? "var(--circuit-unknown)"
                 : n > 0
-                  ? "#225d48"
-                  : "#69766f"
-              : "#405c50",
+                  ? "var(--circuit-high)"
+                  : "var(--muted)"
+              : "var(--circuit-wire)",
             strokeWidth: w.id === selectedWire ? 3.5 : 2,
           },
-          labelStyle: { fill: "#172c27", fontSize: 12 },
-          labelBgStyle: { fill: "#f6f7f2" },
+          labelStyle: { fill: "var(--ink)", fontSize: 12 },
+          labelBgStyle: { fill: "var(--surface)" },
         };
       }),
     [value.wires, simulation, running, selectedWire],
@@ -604,7 +604,7 @@ export default function CircuitEditor({
               );
           }}
         >
-          <Background gap={20} size={1} color="#c8d4ca" />
+          <Background gap={20} size={1} color="var(--line)" />
           <Controls showInteractive={false} showFitView={false} />
         </ReactFlow>
         {!value.parts.length && (

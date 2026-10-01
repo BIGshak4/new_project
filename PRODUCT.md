@@ -17,7 +17,7 @@ Existing Next.js App Router, React, TypeScript, Supabase, and user-selected Netl
 Initial delivery: bilingual question library, written practice, hints, reference solutions and personal practice history; private founder task CRUD, filters, assignments, subtasks, comments, and conflict-safe saves. Supabase Auth and database authorization protect personal and internal data. Existing schema and Shaked's work must be preserved. AI evaluations need an actual provider and validated integration; do not fabricate them. Current repository has 30 original bilingual review questions, not 150 approved questions. Company provenance and expert approval must never be invented.
 
 ## Brand Commitments
-JobRun is a working name. Hebrew-first, complete English switching for the interview app, familiar English engineering terminology, responsive and professionally designed.
+JobRun is a working name. Hebrew-first, complete English switching for the interview app, familiar English engineering terminology, responsive and professionally designed. On 2026-10-01 the founders selected adaptive Ion for the production practice site: violet dark mode by default, cream/deep-purple light mode on demand, preserving the real backend workflows. This selection supersedes earlier visual assumptions for the practice site; the separate task app keeps its existing design.
 
 ## Operating Context
 Two founders collaborate asynchronously. Online previews and manual deployments precede GitHub integration, which needs the repository owner's authorization. Netlify currently has a Free team; no paid upgrade is authorized automatically.
@@ -29,4 +29,4 @@ example_question/questions.json contains 30 AI-assisted original questions marke
 Keep real progress distinct from self-assessment. Preserve unsaved text and prevent concurrent overwrites. Make current capabilities explicit. Keep internal work private.
 
 ## Open Decisions and Assumptions
-Founder personal emails are pending; seed only the verified business email jobrunerai@gmail.com. Working design assumption for autonomous implementation: calm daylight working surfaces with strong typography and restrained deep-green emphasis. User was asked asynchronously; no standing workflow preference is inferred.
+The original daylight/green visual assumption is superseded by the explicit adaptive Ion choice above. No general workflow preference is inferred. Earlier infrastructure and content inventories in this file describe the initial delivery; consult current deployment and handoff documents before using them as operational facts.

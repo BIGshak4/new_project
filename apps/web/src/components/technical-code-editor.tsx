@@ -5,7 +5,8 @@ import { basicSetup } from "codemirror";
 import { Compartment, EditorState } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
 import { indentWithTab } from "@codemirror/commands";
-import { StreamLanguage } from "@codemirror/language";
+import { HighlightStyle, syntaxHighlighting, StreamLanguage } from "@codemirror/language";
+import { tags } from "@lezer/highlight";
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 import { javascript } from "@codemirror/lang-javascript";
@@ -51,6 +52,13 @@ export default function TechnicalCodeEditor(props: Props) {
         doc: current.current.value,
         extensions: [
           basicSetup,
+          syntaxHighlighting(HighlightStyle.define([
+            { tag: [tags.keyword, tags.operatorKeyword, tags.typeName], color: "var(--code-keyword)" },
+            { tag: [tags.string, tags.regexp], color: "var(--code-string)" },
+            { tag: [tags.number, tags.bool], color: "var(--code-number)" },
+            { tag: tags.comment, color: "var(--code-comment)", fontStyle: "italic" },
+            { tag: [tags.variableName, tags.propertyName, tags.operator, tags.punctuation], color: "var(--ink)" },
+          ])),
           keymap.of([indentWithTab]),
           c.language.of(syntax(current.current.language)),
           c.access.of([
@@ -72,22 +80,22 @@ export default function TechnicalCodeEditor(props: Props) {
           EditorView.theme({
             "&": {
               fontSize: "14px",
-              backgroundColor: "#fbfcf8",
-              color: "#172c27",
+              backgroundColor: "var(--surface)",
+              color: "var(--ink)",
             },
             ".cm-content": {
               minHeight: "260px",
-              fontFamily: "Consolas, 'Courier New', monospace",
-              caretColor: "#225d48",
+              fontFamily: "var(--font-mono)",
+              caretColor: "var(--link)",
             },
             ".cm-scroller": { overflow: "auto", maxHeight: "540px" },
             ".cm-gutters": {
-              backgroundColor: "#f0f3ec",
-              color: "#626c61",
+              backgroundColor: "var(--surface-2)",
+              color: "var(--muted)",
               border: "none",
             },
             "&.cm-focused": {
-              outline: "2px solid #225d48",
+              outline: "2px solid var(--link)",
               outlineOffset: "2px",
             },
           }),

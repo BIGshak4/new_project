@@ -12,12 +12,7 @@ import { daysToGoLabel, pathNodes, todayProgress, type PathNode } from "../lib/p
 import { revealDelay, shouldScrollToNode } from "../lib/ui";
 import { Breathe, Pop, motion, spring, useReducedMotion } from "./ui/motion";
 
-/**
- * The Learn home on the Workbench (docs/design-brief-2026-09-30-workbench.md): the day's sheet with the item to do
- * now, a subject sketch and the coach's margin note; today's items as probes on a signal trace; the rest of the
- * week as a quiet list; the side column with today's bar, skill strength, the streak and the coach's sticky note.
- * Start goes through the same program flow as before: an attempt for a practice item, the lobby for a simulation.
- */
+/** The real adaptive program, displayed in the approved Ion shell. */
 export function LearnHome({
   api,
   lang,
@@ -123,7 +118,7 @@ export function LearnHome({
     : null;
   const remainingMinutes = program?.minutes_due_today ?? 0;
   const subjectOf = (skillKey: string | undefined) => progress.skills?.find((s) => s.key === skillKey)?.subject ?? null;
-  const currentSubject = subjectOf(current?.item.skills[0]?.key);
+
   const currentSkills = current?.item.skills.map((s) => s.label).join(", ") ?? "";
 
   // the corner stamp: yesterday's band from the timeline, today's items and minutes
@@ -139,7 +134,7 @@ export function LearnHome({
         ? t("חלקית", "partial")
         : t("לחיזוק", "needs work");
 
-  // the title: the topic of the day with the highlighter under it
+  // The title is grounded in the current program item.
   const topic = goalComplete && current ? current.item.skills[0]?.label ?? "" : "";
   const title = !goalComplete
     ? t("נבנה לכם תוכנית עד הראיון.", "Let’s build your plan until the interview.")
@@ -156,10 +151,9 @@ export function LearnHome({
     current?.kind === "interview"
       ? t(`ראיון של ${current.item.minutes} דקות. הציונים נחשפים בסוף, בדוח.`, `A ${current.item.minutes}-minute interview. Grades are revealed at the end, in the report.`)
       : current?.item.mode === "quick"
-        ? t("שאלה קצרה. ציון תוך שמונה שניות, ושאלת המשך אחת שנולדת מהתשובה שלכם. אין פה טריק, יש פה דיוק.", "A short question. A grade in eight seconds and one follow-up born from your answer. No trick here, just precision.")
+        ? t("שאלה קצרה. משוב ושאלת המשך שנולדת מהתשובה שלכם. אין פה טריק, יש פה דיוק.", "A short question. Feedback and a follow-up born from your answer. No trick here, just precision.")
         : t("תרגול מעמיק: התשובה, שאלת המשך, ואז השאלה הבאה שנבחרת לפי מה שכתבתם.", "Deep practice: your answer, one follow-up, then the next question chosen by what you wrote.");
-  // the handwritten note only when the plan's words are in the page's language (a plan built in Hebrew keeps Hebrew reasons)
-  const reasonNote = current && sameScript(current.item.reason, lang) ? firstSentence(current.item.reason) : "";
+
   const tomorrow = laterNodes.find((n) => n.dayIndex === 1) ?? laterNodes[0] ?? null;
 
   return (
@@ -167,16 +161,16 @@ export function LearnHome({
       <div className="learn-main">
         <header className="learn-head">
           <div>
-            <div className="kicker" dir="auto">
+            <h1 dir="auto">
+              {daysLabel && goalComplete ? `${daysLabel}. ` : ""}
+              {title}
+              {topic && current?.kind !== "interview" && <span className="mark"><bdi dir="auto">{topic}</bdi>.</span>}
+            </h1>
+            <div className="learn-context" dir="auto">
               {[userName, goal?.job_type_label ?? t("סוג התפקיד לא נבחר עדיין", "No job type chosen yet"), interviewDate ? `${t("ראיון ב", "interview on")}${lang === "he" ? "־" : " "}${interviewDate}` : null]
                 .filter(Boolean)
                 .join(" · ")}
             </div>
-            <h1 dir="auto">
-              {daysLabel && goalComplete ? `${daysLabel}. ` : ""}
-              {title}
-              {topic && current?.kind !== "interview" && <span className="mark">{topic}.</span>}
-            </h1>
           </div>
           {goalComplete && (
             <p className="stamp" role="note" aria-label={t("סיכום היום", "Today in numbers")} dir={lang === "he" ? "rtl" : "ltr"}>
@@ -226,27 +220,17 @@ export function LearnHome({
             <section className="sheet today-sheet" aria-label={t("הפריט של עכשיו", "The item to do now")}>
               {current ? (
                 <>
-                  {reasonNote && (
-                    <div className="margin-note hand" aria-hidden="true">
-                      {reasonNote}
-                      <svg viewBox="0 0 60 26" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                        <path d="M56 4 C40 6, 24 14, 6 20" />
-                        <path d="M14 22 L5 20 L9 12" />
-                      </svg>
-                    </div>
-                  )}
+                  <h2 className="sheet-title" dir="auto">
+                    {current.kind === "interview"
+                      ? t(`ראיון מדומה, ${current.item.minutes} דקות, על ${currentSkills}.`, `A ${current.item.minutes}-minute mock interview on ${currentSkills}.`)
+                      : `${modeLabel(current.item.mode, lang)} ${t("על", "on")} ${currentSkills}.`}
+                  </h2>
                   <div className="sheet-row">
                     <span className="tag">
                       {t("עכשיו", "Now")} · {today.done + 1}/{today.total} · {current.item.minutes} {t("דק׳", "min")}
                     </span>
                     <span className="sheet-skill" dir="auto">{currentSkills}</span>
                   </div>
-                  {current.kind !== "interview" && <SubjectSketch subject={currentSubject} caption={sketchCaption(currentSubject, lang)} className="sheet-sketch" />}
-                  <h2 className="sheet-title" dir="auto">
-                    {current.kind === "interview"
-                      ? t(`ראיון מדומה, ${current.item.minutes} דקות, על ${currentSkills}.`, `A ${current.item.minutes}-minute mock interview on ${currentSkills}.`)
-                      : `${modeLabel(current.item.mode, lang)} ${t("על", "on")} ${currentSkills}.`}
-                  </h2>
                   <p className="sheet-why" dir="auto">
                     {current.item.reason} {modeLine}
                   </p>
@@ -444,16 +428,6 @@ function Trace({ count, lit }: { count: number; lit: number }) {
       {litPath && <path d={litPath} fill="none" stroke="var(--signal)" strokeWidth="6" strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />}
     </svg>
   );
-}
-
-function sameScript(text: string, lang: "he" | "en"): boolean {
-  const hebrew = /[֐-׿]/.test(text ?? "");
-  return lang === "he" ? hebrew : !hebrew;
-}
-
-function firstSentence(text: string): string {
-  const s = (text ?? "").split(/(?<=[.!?])\s/)[0]?.trim() ?? "";
-  return s.length > 0 && s.length <= 48 ? s : "";   // handwriting needs room; a long reason stays in the sheet
 }
 
 function minutesWord(n: number, lang: "he" | "en"): string {
