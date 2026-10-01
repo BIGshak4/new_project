@@ -533,6 +533,14 @@ divs, phone tap targets, a dead helper). Two loading states hold their room to s
 15. Review and publish the 30 questions (`seeds/questions/README.md` checklist); then `ALLOW_IN_REVIEW_CONTENT` can go off on Render.
 16. Review the drafts once the page in item 12 exists.
 
+## 5w. Ownership rule (2026-10-01, Shaked): the front end is Harel's
+
+**Claude does not touch `apps/web` any more.** Harel owns the web app and its design (his five simulations under
+`/site-preview`; the Workbench and the earlier looks stay in git under `design/*` tags for reference). Claude's work is
+the backend, the content, the operator's tools and the documents. If a backend change needs a matching front-end change
+(a new route, a new field), Claude documents the contract in the route's docstring and in STATUS and leaves the web side
+to Harel. The web screenshot harness (`tools/screenshots/`, `scripts/screenshot_server.py`) stays available for him.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -571,6 +579,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-01 | Ownership: the front end is Harel's; Claude stays on the backend, content, tools and docs (§5w) |
 | 2026-10-01 | The backend to-do list (§5v) and `docs/backend-roadmap.md`: how the backend works (one answer step by step, the other flows, folders, data, tools, deployment, guarantees) and the roadmap with owners |
 | 2026-10-01 | "This question is not clear": `question_report` table (migration approved, apply pending), repo/store/service/route, the flag and popover on the question sheet and in the interview room, the inbox script (§5u) |
 | 2026-10-01 | Judge → Opus 5.5 (13/13 bands identical, same misconception keys; `docs/judge-opus-5-5-2026-10-01.md`); `scripts/generate_questions.py` drafts bank questions per skill in the seed format with validation and a judged reference (§5t) |
