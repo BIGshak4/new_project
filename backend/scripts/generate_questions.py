@@ -299,7 +299,7 @@ async def draft_batch(provider, skill, subject_label, existing, count, band, tip
     request = LLMRequest(role="generator",
                          system=[SYSTEM],
                          user=user_prompt(skill, subject_label, existing, count, band, tip_keys, catalog_skills, track),
-                         schema=DraftBatch, prompt_version="gen-1", effort="high", max_tokens=16000)
+                         schema=DraftBatch, prompt_version="gen-1", effort="medium", max_tokens=32000)   # one bilingual question with a check is ~8-12k tokens of JSON
     response = await call(provider, request, timeout_seconds=420)   # a draft of two questions takes 2-5 min; longer is a stuck socket
     return response
 
@@ -323,7 +323,7 @@ async def verify_reference(provider, question: BankQuestion, cat) -> tuple[str, 
 async def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--per-skill", type=int, default=12, help="target questions per skill, existing ones included")
-    parser.add_argument("--batch", type=int, default=2, help="questions per model call (2 keeps replies short enough to avoid read timeouts)")
+    parser.add_argument("--batch", type=int, default=1, help="questions per model call (1: a reply fits the token budget and a failure costs one draft)")
     parser.add_argument("--skills", nargs="*", help="only these skill keys")
     parser.add_argument("--track", choices=["hardware", "software", "soft", "all", "hardware+software"], default="hardware+software",
                         help="hardware, software, soft (reasoning and behavioural) or all; default hardware and software")
@@ -376,6 +376,9 @@ async def main() -> int:
         print("ANTHROPIC_API_KEY is not set", file=sys.stderr)
         return 2
     drafter = AnthropicProvider(api_key=settings.anthropic_api_key, model=args.model, role_models={"generator": args.model})
+    # the draft schema is far bigger than the API's structured-output grammar allows ("compiled grammar is too large"),
+    # so ask for JSON in the text with the schema in the prompt from the start; the reply is still validated by pydantic
+    drafter._schema_unsupported = True  # noqa: SLF001
     judge = AnthropicProvider(api_key=settings.anthropic_api_key, model=args.judge or settings.anthropic_model, role_models={})
     tip_keys = sorted(cat.tips)
     catalog_skills = sorted(k for k, s in cat.leaf_skills.items() if s.subject in wanted_subjects or s.subject in HARDWARE_SUBJECTS + SOFTWARE_SUBJECTS)
@@ -405,7 +408,9 @@ async def main() -> int:
                 except LLMError as exc:
                     if attempt == 3 or not exc.retryable:
                         rejected.append((f"{skill.key} batch {batch_index}", f"model call failed: {exc}"))
+                        print(f"  - {skill.key} batch {batch_index}: model call failed: {exc}", flush=True)
                         return
+                    print(f"  ~ {skill.key} batch {batch_index}: {exc}, retrying", flush=True)
                     await asyncio.sleep(8 * (attempt + 1))
                 except Exception as exc:  # noqa: BLE001 - a read timeout or a parse error must not kill the run
                     if attempt == 3:
@@ -427,6 +432,8 @@ async def main() -> int:
             if problems:
                 rejected.append((question["key"], "; ".join(problems)))
                 rejected_drafts.append(question)
+                print(f"  - {question['key']}: {'; '.join(problems)[:200]}", flush=True)
+                args.out.with_suffix(".rejected.json").write_text(json.dumps(rejected_drafts, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
                 continue
             existing[skill.key].append(title)
             accepted.append(question)

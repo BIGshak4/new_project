@@ -283,7 +283,7 @@ class AnthropicProvider:
                 common = {k: v for k, v in common.items() if k not in ("extra_headers", "extra_body")}
                 return await self._send(request, common)
             if exc.status_code == 400 and request.schema is not None and not self._schema_unsupported \
-                    and ("output_format" in text or "schema" in text or "structured" in text):
+                    and ("output_format" in text or "schema" in text or "structured" in text or "grammar" in text):   # "compiled grammar is too large" = the schema is too big for structured output
                 self._schema_unsupported = True                     # ask for JSON in the text instead
                 return await self._send(request, common)
             raise

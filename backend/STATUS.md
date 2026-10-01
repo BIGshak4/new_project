@@ -491,10 +491,10 @@ divs, phone tap targets, a dead helper). Two loading states hold their room to s
 
 - **Table** `question_report` (question, user, reason unclear|wrong|other, note ≤500, language, context practice|interview|library,
   created_at, resolved_at/by; unique per question+user+reason; RLS on, backend-only). Migration
-  `supabase/migrations/20261001180000_question_report.sql`, dry run OK, **approved by Shaked, NOT YET APPLIED**: the Supabase
-  MCP needed a fresh sign-in and the fallback `scripts/apply_sql.py --yes` was refused by the session's permission
-  classifier. Until it is applied the route answers 503 `temporarily_unavailable` and the web shows "הדיווח ייפתח בקרוב",
-  exactly like company tags did before their table.
+  `supabase/migrations/20261001180000_question_report.sql`, dry run OK, approved by Shaked, **applied and verified in the
+  database on 2026-10-01** (ten columns, both indexes, RLS on, no browser grants). A live test
+  (`test_question_reports_land_in_the_real_table`) writes a report into the real table inside a rolled-back transaction;
+  the inbox script reads it; the smoke test covers the route.
 - **Backend**: `app/repo/reports.py` (add as an upsert per question+user+reason, open count, counts per question, open list,
   resolve), store protocol + DbStore + memory store, `PracticeService.report_question`, `POST /v1/questions/{key}/reports`
   ({reason, note, language, context} → {recorded, reports}); tests in `test_goal_jobtypes_sightings.py` and the protected-route table.
@@ -540,6 +540,21 @@ divs, phone tap targets, a dead helper). Two loading states hold their room to s
 the backend, the content, the operator's tools and the documents. If a backend change needs a matching front-end change
 (a new route, a new field), Claude documents the contract in the route's docstring and in STATUS and leaves the web side
 to Harel. The web screenshot harness (`tools/screenshots/`, `scripts/screenshot_server.py`) stays available for him.
+
+## 5x. Harel's backend changes of 2026-09-30 (seen on the merge of 2026-10-01)
+
+Harel's commits `6716d0b`, `00b082b`, `f997eab` ("prepared question archive with private media and review safeguards")
+touch the backend as well as the web app:
+- `seeds/questions/preparation_bank.json`: **37 questions, status `trial`**, every one with prompt images in `bank_media`
+  and `assessment_ready: false`; `seeds/preparation_editorial.json`, `seeds/preparation_uploads.json`;
+  `scripts/import_preparation_bank.py`; `app/services/question_resources.py`; `GET /v1/questions/{key}/resources`.
+- **Engine**: `evaluator.evaluate` takes `question_images` and prepends a note telling the judge which images are the
+  question's and which the candidate's; `practice.py` fetches question images through a `question_image_fetcher` (a
+  missing image fails the submission with `question_images_unavailable`, nothing graded), and a question with
+  `assessment_ready: false` is **study only**: evidence weight 0, no skill links, flag `content_review_pending`.
+  Grading of the 30 original questions is unchanged (no `bank_media`, `assessment_ready` unset); 806 offline tests pass.
+- These 37 are in the loader's folder, so the next `seed_db.py` run loads them as `trial`, which the app serves. Whether
+  to load them is Shaked's and Harel's call (the file is Harel's content work).
 
 ## 6. Known gaps and open items
 
