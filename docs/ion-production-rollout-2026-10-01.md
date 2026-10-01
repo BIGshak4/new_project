@@ -43,6 +43,10 @@ The independent design review found two presentation fixes: flatten nested progr
 
 ## Release and recovery
 
-Push this change to the existing `master` branch. The practice workflow asks Netlify to build `apps/web`; the task-board workflow is not triggered by these frontend files. Confirm the released commit through the site's `/api/health` revision and inspect the live theme toggle before calling the release complete. Never deploy the local screenshot fixture or copy its fake public configuration to Netlify.
+Published frontend commit: `a29fdf0eb0f5e22eeca911f5572ce0d6c7d5f158`. The change was pulled/rebased on Shaked's `cc44b70` without conflicts before pushing. [Automatic deployment run 36840340425](https://github.com/BIGshak4/new_project/actions/runs/36840340425) completed successfully, and the live `/api/health` returned that exact revision.
+
+The authenticated live site then loaded all 67 questions from the real backend. Dark and cream modes, light preference persistence across reload, and Hebrew company search were verified in the deployed browser with no console errors. The site was left in dark mode with the search cleared. This was a read-only production check; synthetic answer submissions remained in the isolated fixture.
+
+The practice workflow asks Netlify to build `apps/web`; the task-board workflow is not triggered by these frontend files. Documentation-only follow-up commits do not rebuild the frontend, so its health revision correctly remains the published application commit. Never deploy the local screenshot fixture or copy its fake public configuration to Netlify.
 
 Rollback is the previous successful Netlify deployment or a Git revert of this release; no database rollback is needed. Preserve the browser preference when iterating on styling. Future human review should include one representative correct, partial and incorrect answer, a handwritten image and a circuit in both modes.

@@ -1,154 +1,1413 @@
 {
   "components": [
     {
+      "name": "Ion / Primary button",
+      "kind": "button",
+      "refersTo": "ion-dark-button-primary",
+      "html": "<button class=\"ds-ion-primary\">Start practice</button>",
+      "css": ".ds-ion-primary{font-family:var(--font,Heebo,system-ui,sans-serif);font-size:16px;line-height:1.65;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border:1px solid var(--line,#493a59);border-radius:7px;padding:10px 18px;font-weight:500;background:var(--surface,#21182f);color:var(--ink,#f5efff);transition:background .15s ease,border-color .15s ease,transform .08s ease;background:var(--action,#ffb85c);color:var(--action-ink,#24152e);border-color:var(--action,#ffb85c);font-weight:700;min-height:46px;padding-inline:24px;}.ds-ion-primary:hover{filter:brightness(1.06);}.ds-ion-primary:focus-visible{outline:2px solid var(--link,#c2a7fb);outline-offset:4px}.ds-ion-primary:disabled{opacity:.55;cursor:wait}.ds-ion-primary:active{transform:translateY(1px)}",
+      "description": "Practice scope; root variables follow either theme, with dark fallbacks."
+    },
+    {
+      "name": "Ion / Default button",
+      "kind": "button",
+      "refersTo": "ion-dark-button-default",
+      "html": "<button class=\"ds-ion-default\">Start practice</button>",
+      "css": ".ds-ion-default{font-family:var(--font,Heebo,system-ui,sans-serif);font-size:16px;line-height:1.65;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border:1px solid var(--line,#493a59);border-radius:7px;padding:10px 18px;font-weight:500;background:var(--surface,#21182f);color:var(--ink,#f5efff);transition:background .15s ease,border-color .15s ease,transform .08s ease;}.ds-ion-default:hover{background:var(--paper,#171024);border-color:var(--link,#c2a7fb);}.ds-ion-default:focus-visible{outline:2px solid var(--link,#c2a7fb);outline-offset:4px}.ds-ion-default:disabled{opacity:.55;cursor:wait}",
+      "description": "Practice scope; root variables follow either theme, with dark fallbacks."
+    },
+    {
+      "name": "Ion / Secondary button",
+      "kind": "button",
+      "refersTo": "ion-dark-button-secondary",
+      "html": "<button class=\"ds-ion-secondary\">Start practice</button>",
+      "css": ".ds-ion-secondary{font-family:var(--font,Heebo,system-ui,sans-serif);font-size:16px;line-height:1.65;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border:1px solid var(--line,#493a59);border-radius:7px;padding:10px 18px;font-weight:500;background:var(--surface,#21182f);color:var(--ink,#f5efff);transition:background .15s ease,border-color .15s ease,transform .08s ease;background:var(--soft,#332440);color:var(--link,#c2a7fb);}.ds-ion-secondary:hover{background:var(--paper,#171024);border-color:var(--link,#c2a7fb);}.ds-ion-secondary:focus-visible{outline:2px solid var(--link,#c2a7fb);outline-offset:4px}.ds-ion-secondary:disabled{opacity:.55;cursor:wait}",
+      "description": "Practice scope; root variables follow either theme, with dark fallbacks."
+    },
+    {
+      "name": "Ion / Text field",
+      "kind": "input",
+      "refersTo": "ion-dark-input",
+      "html": "<label class=\"ds-ion-label\">Email<input class=\"ds-ion-field\" type=\"email\" placeholder=\"you@example.com\"></label>",
+      "css": ".ds-ion-label{font-family:var(--font,Heebo,system-ui,sans-serif);font-size:16px;line-height:1.65;display:grid;gap:6px;font-weight:700;color:var(--ink,#f5efff)}.ds-ion-field{font-family:var(--font,Heebo,system-ui,sans-serif);font-size:16px;line-height:1.65;padding:11px 14px;min-height:44px;border:1px solid var(--line,#493a59);border-radius:7px;background:var(--surface,#21182f);color:var(--ink,#f5efff);font-weight:500;caret-color:var(--link,#c2a7fb)}.ds-ion-field:focus{border-color:var(--link,#c2a7fb);box-shadow:0 0 0 2px var(--soft,#332440)}.ds-ion-field:focus-visible{outline:2px solid var(--link,#c2a7fb);outline-offset:4px}.ds-ion-field::placeholder{color:var(--muted,#c0b3ce);font-weight:600}",
+      "description": "Theme-aware practice field."
+    },
+    {
+      "name": "Ion / Desktop navigation",
+      "kind": "nav",
+      "refersTo": "ion-dark-nav-active",
+      "html": "<nav class=\"ds-ion-nav\"><a href=\"#learn\" aria-current=\"page\">Learn</a><a href=\"#library\">Library</a></nav>",
+      "css": ".ds-ion-nav{font-family:var(--font,Heebo,system-ui,sans-serif);font-size:16px;line-height:1.65;display:flex;gap:22px;background:var(--paper,#171024)}.ds-ion-nav a{font-size:13px;font-weight:500;padding:12px 0;color:var(--muted,#c0b3ce);text-decoration:none;position:relative}.ds-ion-nav a:hover,.ds-ion-nav a[aria-current]{color:var(--ink,#f5efff)}.ds-ion-nav a[aria-current]::after{content:\"\";position:absolute;bottom:0;inset-inline:0;height:2px;background:var(--action,#ffb85c)}.ds-ion-nav a:focus-visible{outline:2px solid var(--link,#c2a7fb);outline-offset:4px}",
+      "description": "Practice tabs and action underline."
+    },
+    {
+      "name": "Ion / Topic tag",
+      "kind": "chip",
+      "refersTo": "ion-dark-tag",
+      "html": "<span class=\"ds-ion-tag\">Digital design</span>",
+      "css": ".ds-ion-tag{font-family:var(--font,Heebo,system-ui,sans-serif);font-size:16px;line-height:1.65;display:inline-block;font-size:12px;font-weight:500;padding:4px 12px;border-radius:5px;background:var(--soft,#332440);color:var(--link,#c2a7fb);white-space:nowrap}",
+      "description": "Noninteractive metadata; no invented hover state."
+    },
+    {
+      "name": "Ion / Working sheet",
+      "kind": "card",
+      "refersTo": "ion-dark-sheet",
+      "html": "<article class=\"ds-ion-sheet\"><h2>Today practice</h2><p>Explain your reasoning.</p></article>",
+      "css": ".ds-ion-sheet{font-family:var(--font,Heebo,system-ui,sans-serif);font-size:16px;line-height:1.65;padding:24px 26px;border:1px solid var(--line,#493a59);border-radius:12px;background:var(--surface,#21182f);color:var(--ink,#f5efff);box-shadow:none}.ds-ion-sheet h2{font:700 27px/1.4 var(--font,Heebo,system-ui,sans-serif);letter-spacing:-.025em;margin:0}.ds-ion-sheet p{margin:12px 0 0;color:var(--muted,#c0b3ce)}",
+      "description": "Noninteractive tonal working container."
+    },
+    {
       "css": ".ds-control{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;;}.ds-control:hover{;}.ds-control:focus-visible{outline:3px solid #b58a31;outline-offset:3px}.ds-control:disabled{cursor:wait;opacity:.55}",
       "html": "<button class=\"ds-control\">Save practice</button>",
       "kind": "button",
-      "name": "Primary Button",
-      "description": "Observed shared control variant.",
-      "refersTo": "button-primary"
+      "name": "Task app / Primary Button",
+      "description": "Task scope only; preserved incumbent snippet. Observed shared control variant.",
+      "refersTo": "task-button-primary"
     },
     {
       "css": ".ds-control{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;;}.ds-control:hover{}.ds-control:focus-visible{outline:3px solid #b58a31;outline-offset:3px}.ds-control:disabled{cursor:wait;opacity:.55}",
       "html": "<button class=\"ds-control\">View solution</button>",
       "kind": "button",
-      "name": "Default Button",
-      "description": "Observed shared control variant.",
-      "refersTo": "button-default"
+      "name": "Task app / Default Button",
+      "description": "Task scope only; preserved incumbent snippet. Observed shared control variant.",
+      "refersTo": "task-button-default"
     },
     {
       "css": ".ds-control{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;;}.ds-control:hover{}.ds-control:focus-visible{outline:3px solid #b58a31;outline-offset:3px}.ds-control:disabled{cursor:wait;opacity:.55}",
       "html": "<button class=\"ds-control\">Filter</button>",
       "kind": "button",
-      "name": "Secondary Button",
-      "description": "Observed shared control variant.",
-      "refersTo": "button-secondary"
+      "name": "Task app / Secondary Button",
+      "description": "Task scope only; preserved incumbent snippet. Observed shared control variant.",
+      "refersTo": "task-button-secondary"
     },
     {
       "css": ".ds-control{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;;}.ds-control:hover{}.ds-control:focus-visible{outline:3px solid #b58a31;outline-offset:3px}.ds-control:disabled{cursor:wait;opacity:.55}",
       "html": "<button class=\"ds-control\">Back to library</button>",
       "kind": "button",
-      "name": "Text Button",
-      "description": "Observed shared control variant.",
-      "refersTo": "button-text"
+      "name": "Task app / Text Button",
+      "description": "Task scope only; preserved incumbent snippet. Observed shared control variant.",
+      "refersTo": "task-button-text"
     },
     {
       "css": ".ds-label{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65; display:grid;gap:6px;font-weight:500}.ds-field{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;}.ds-field:focus{}.ds-field::placeholder{color:#65726b}",
       "html": "<label class=\"ds-label\">Email<input class=\"ds-field\" type=\"email\" placeholder=\"you@example.com\"></label>",
       "kind": "input",
-      "name": "Text Field",
-      "description": "Shared input with a green focus ring.",
-      "refersTo": "input"
+      "name": "Task app / Text Field",
+      "description": "Task scope only; preserved incumbent snippet. Shared input with a green focus ring.",
+      "refersTo": "task-input"
     },
     {
       "css": ".ds-control{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;}.ds-nav{;}.ds-nav:hover{}.ds-control:focus-visible{outline:3px solid #b58a31;outline-offset:3px}",
       "html": "<nav><button class=\"ds-control ds-nav\" aria-current=\"page\">Practice library</button></nav>",
       "kind": "nav",
-      "name": "Navigation",
-      "description": "Selected navigation retains its written label.",
-      "refersTo": "nav-active"
+      "name": "Task app / Navigation",
+      "description": "Task scope only; preserved incumbent snippet. Selected navigation retains its written label.",
+      "refersTo": "task-nav-active"
     },
     {
       "css": ".ds-badge{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;;}",
       "html": "<span class=\"ds-badge\">In progress</span>",
       "kind": "chip",
-      "name": "Status Badge",
-      "description": "Written status with semantic fill.",
-      "refersTo": "badge"
+      "name": "Task app / Status Badge",
+      "description": "Task scope only; preserved incumbent snippet. Written status with semantic fill.",
+      "refersTo": "task-badge"
     },
     {
       "css": ".ds-control{font-family:var(--font,Heebo,Arial,sans-serif);font-size:15px;line-height:1.65;}.ds-card{}.ds-card:hover{}.ds-card h3{}.ds-meta{font-size:12px;color:var(--muted,#5f6e66)}.ds-badge{;}.ds-control:focus-visible{outline:3px solid #b58a31;outline-offset:3px}",
       "html": "<button class=\"ds-control ds-card\"><span class=\"ds-badge\">To do</span><h3>Review practice questions</h3><span class=\"ds-meta\">Harel · Today</span></button>",
       "kind": "card",
-      "name": "Task Card",
-      "description": "Interactive task container with quiet hover depth.",
-      "refersTo": "task-card"
+      "name": "Task app / Task Card",
+      "description": "Task scope only; preserved incumbent snippet. Interactive task container with quiet hover depth.",
+      "refersTo": "task-task-card"
     }
   ],
   "schemaVersion": 2,
   "extensions": {
     "motion": [
       {
-        "purpose": "Shared button state changes.",
+        "purpose": "Task scope only. Shared button state changes.",
         "value": "background .18s ease, border-color .18s ease",
-        "name": "control-state"
+        "name": "task-control-state"
       },
       {
-        "purpose": "Root view transition; reduced-motion override disables effects.",
+        "purpose": "Task scope only. Root view transition; reduced-motion override disables effects.",
         "value": "180ms",
-        "name": "view-transition"
+        "name": "task-view-transition"
+      },
+      {
+        "name": "ion-chip-entrance",
+        "value": "0.65s cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Chip entrance; disabled by reduced motion."
+      },
+      {
+        "name": "ion-primary-state",
+        "value": "transform 120ms ease, box-shadow 120ms ease, background 160ms ease",
+        "purpose": "Practice primary control states."
       }
     ],
     "shadows": [
       {
-        "purpose": "Interactive task cards at rest.",
+        "purpose": "Task scope only. Interactive task cards at rest.",
         "value": "0 2px 3px #1a321407",
-        "name": "task-rest"
+        "name": "task-task-rest"
       },
       {
-        "purpose": "Interactive task cards on hover.",
+        "purpose": "Task scope only. Interactive task cards on hover.",
         "value": "0 5px 13px #1a32140c",
-        "name": "task-hover"
+        "name": "task-task-hover"
       },
       {
-        "purpose": "Input focus with green border.",
+        "purpose": "Task scope only. Input focus with green border.",
         "value": "0 0 0 3px #225d4818",
-        "name": "field-focus"
+        "name": "task-field-focus"
+      },
+      {
+        "name": "ion-panel",
+        "value": "none",
+        "purpose": "Practice panels and actions."
+      },
+      {
+        "name": "ion-field-focus",
+        "value": "0 0 0 2px var(--soft)",
+        "purpose": "Practice input focus."
       }
     ],
     "breakpoints": [
       {
-        "name": "compact-desktop",
+        "name": "task-compact-desktop",
         "value": "1150px"
       },
       {
-        "name": "mobile",
+        "name": "task-mobile",
         "value": "760px"
       },
       {
-        "name": "narrow-mobile",
+        "name": "task-narrow-mobile",
         "value": "430px"
+      },
+      {
+        "name": "ion-compact-header",
+        "value": "1150px"
+      },
+      {
+        "name": "ion-mobile",
+        "value": "780px"
+      },
+      {
+        "name": "ion-narrow",
+        "value": "370px"
       }
-    ]
+    ],
+    "colorMeta": {
+      "ion-dark-paper": {
+        "displayName": "Ion Dark Paper",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.04028 298.71)",
+          "oklch(26.43% 0.04028 298.71)",
+          "oklch(37.86% 0.04028 298.71)",
+          "oklch(49.29% 0.04028 298.71)",
+          "oklch(60.71% 0.04028 298.71)",
+          "oklch(72.14% 0.04028 298.71)",
+          "oklch(83.57% 0.04028 298.71)",
+          "oklch(95.00% 0.04028 298.71)"
+        ]
+      },
+      "ion-dark-surface": {
+        "displayName": "Ion Dark Surface",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.04472 301.02)",
+          "oklch(26.43% 0.04472 301.02)",
+          "oklch(37.86% 0.04472 301.02)",
+          "oklch(49.29% 0.04472 301.02)",
+          "oklch(60.71% 0.04472 301.02)",
+          "oklch(72.14% 0.04472 301.02)",
+          "oklch(83.57% 0.04472 301.02)",
+          "oklch(95.00% 0.04472 301.02)"
+        ]
+      },
+      "ion-dark-surface-2": {
+        "displayName": "Ion Dark Surface 2",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.05060 301.93)",
+          "oklch(26.43% 0.05060 301.93)",
+          "oklch(37.86% 0.05060 301.93)",
+          "oklch(49.29% 0.05060 301.93)",
+          "oklch(60.71% 0.05060 301.93)",
+          "oklch(72.14% 0.05060 301.93)",
+          "oklch(83.57% 0.05060 301.93)",
+          "oklch(95.00% 0.05060 301.93)"
+        ]
+      },
+      "ion-dark-ink": {
+        "displayName": "Ion Dark Ink",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.02215 302.94)",
+          "oklch(26.43% 0.02215 302.94)",
+          "oklch(37.86% 0.02215 302.94)",
+          "oklch(49.29% 0.02215 302.94)",
+          "oklch(60.71% 0.02215 302.94)",
+          "oklch(72.14% 0.02215 302.94)",
+          "oklch(83.57% 0.02215 302.94)",
+          "oklch(95.00% 0.02215 302.94)"
+        ]
+      },
+      "ion-dark-ink-2": {
+        "displayName": "Ion Dark Ink 2",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.03361 308.94)",
+          "oklch(26.43% 0.03361 308.94)",
+          "oklch(37.86% 0.03361 308.94)",
+          "oklch(49.29% 0.03361 308.94)",
+          "oklch(60.71% 0.03361 308.94)",
+          "oklch(72.14% 0.03361 308.94)",
+          "oklch(83.57% 0.03361 308.94)",
+          "oklch(95.00% 0.03361 308.94)"
+        ]
+      },
+      "ion-dark-muted": {
+        "displayName": "Ion Dark Muted",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.04028 307.11)",
+          "oklch(26.43% 0.04028 307.11)",
+          "oklch(37.86% 0.04028 307.11)",
+          "oklch(49.29% 0.04028 307.11)",
+          "oklch(60.71% 0.04028 307.11)",
+          "oklch(72.14% 0.04028 307.11)",
+          "oklch(83.57% 0.04028 307.11)",
+          "oklch(95.00% 0.04028 307.11)"
+        ]
+      },
+      "ion-dark-line": {
+        "displayName": "Ion Dark Line",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.05496 306.08)",
+          "oklch(26.43% 0.05496 306.08)",
+          "oklch(37.86% 0.05496 306.08)",
+          "oklch(49.29% 0.05496 306.08)",
+          "oklch(60.71% 0.05496 306.08)",
+          "oklch(72.14% 0.05496 306.08)",
+          "oklch(83.57% 0.05496 306.08)",
+          "oklch(95.00% 0.05496 306.08)"
+        ]
+      },
+      "ion-dark-link": {
+        "displayName": "Ion Dark Link",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(15.00% 0.12021 298.36)",
+          "oklch(26.43% 0.12021 298.36)",
+          "oklch(37.86% 0.12021 298.36)",
+          "oklch(49.29% 0.12021 298.36)",
+          "oklch(60.71% 0.12021 298.36)",
+          "oklch(72.14% 0.12021 298.36)",
+          "oklch(83.57% 0.12021 298.36)",
+          "oklch(95.00% 0.12021 298.36)"
+        ]
+      },
+      "ion-dark-action": {
+        "displayName": "Ion Dark Action",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(15.00% 0.13556 71.04)",
+          "oklch(26.43% 0.13556 71.04)",
+          "oklch(37.86% 0.13556 71.04)",
+          "oklch(49.29% 0.13556 71.04)",
+          "oklch(60.71% 0.13556 71.04)",
+          "oklch(72.14% 0.13556 71.04)",
+          "oklch(83.57% 0.13556 71.04)",
+          "oklch(95.00% 0.13556 71.04)"
+        ]
+      },
+      "ion-dark-action-ink": {
+        "displayName": "Ion Dark Action Ink",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.05076 310.58)",
+          "oklch(26.43% 0.05076 310.58)",
+          "oklch(37.86% 0.05076 310.58)",
+          "oklch(49.29% 0.05076 310.58)",
+          "oklch(60.71% 0.05076 310.58)",
+          "oklch(72.14% 0.05076 310.58)",
+          "oklch(83.57% 0.05076 310.58)",
+          "oklch(95.00% 0.05076 310.58)"
+        ]
+      },
+      "ion-dark-soft": {
+        "displayName": "Ion Dark Soft",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.05320 308.02)",
+          "oklch(26.43% 0.05320 308.02)",
+          "oklch(37.86% 0.05320 308.02)",
+          "oklch(49.29% 0.05320 308.02)",
+          "oklch(60.71% 0.05320 308.02)",
+          "oklch(72.14% 0.05320 308.02)",
+          "oklch(83.57% 0.05320 308.02)",
+          "oklch(95.00% 0.05320 308.02)"
+        ]
+      },
+      "ion-dark-ok": {
+        "displayName": "Ion Dark Ok",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.08955 167.00)",
+          "oklch(26.43% 0.08955 167.00)",
+          "oklch(37.86% 0.08955 167.00)",
+          "oklch(49.29% 0.08955 167.00)",
+          "oklch(60.71% 0.08955 167.00)",
+          "oklch(72.14% 0.08955 167.00)",
+          "oklch(83.57% 0.08955 167.00)",
+          "oklch(95.00% 0.08955 167.00)"
+        ]
+      },
+      "ion-dark-ok-soft": {
+        "displayName": "Ion Dark Ok Soft",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.03400 183.61)",
+          "oklch(26.43% 0.03400 183.61)",
+          "oklch(37.86% 0.03400 183.61)",
+          "oklch(49.29% 0.03400 183.61)",
+          "oklch(60.71% 0.03400 183.61)",
+          "oklch(72.14% 0.03400 183.61)",
+          "oklch(83.57% 0.03400 183.61)",
+          "oklch(95.00% 0.03400 183.61)"
+        ]
+      },
+      "ion-dark-ok-line": {
+        "displayName": "Ion Dark Ok Line",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.05291 172.54)",
+          "oklch(26.43% 0.05291 172.54)",
+          "oklch(37.86% 0.05291 172.54)",
+          "oklch(49.29% 0.05291 172.54)",
+          "oklch(60.71% 0.05291 172.54)",
+          "oklch(72.14% 0.05291 172.54)",
+          "oklch(83.57% 0.05291 172.54)",
+          "oklch(95.00% 0.05291 172.54)"
+        ]
+      },
+      "ion-dark-signal": {
+        "displayName": "Ion Dark Signal",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.13556 71.04)",
+          "oklch(26.43% 0.13556 71.04)",
+          "oklch(37.86% 0.13556 71.04)",
+          "oklch(49.29% 0.13556 71.04)",
+          "oklch(60.71% 0.13556 71.04)",
+          "oklch(72.14% 0.13556 71.04)",
+          "oklch(83.57% 0.13556 71.04)",
+          "oklch(95.00% 0.13556 71.04)"
+        ]
+      },
+      "ion-dark-signal-soft": {
+        "displayName": "Ion Dark Signal Soft",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.01830 45.84)",
+          "oklch(26.43% 0.01830 45.84)",
+          "oklch(37.86% 0.01830 45.84)",
+          "oklch(49.29% 0.01830 45.84)",
+          "oklch(60.71% 0.01830 45.84)",
+          "oklch(72.14% 0.01830 45.84)",
+          "oklch(83.57% 0.01830 45.84)",
+          "oklch(95.00% 0.01830 45.84)"
+        ]
+      },
+      "ion-dark-signal-line": {
+        "displayName": "Ion Dark Signal Line",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.04692 62.69)",
+          "oklch(26.43% 0.04692 62.69)",
+          "oklch(37.86% 0.04692 62.69)",
+          "oklch(49.29% 0.04692 62.69)",
+          "oklch(60.71% 0.04692 62.69)",
+          "oklch(72.14% 0.04692 62.69)",
+          "oklch(83.57% 0.04692 62.69)",
+          "oklch(95.00% 0.04692 62.69)"
+        ]
+      },
+      "ion-dark-signal-text": {
+        "displayName": "Ion Dark Signal Text",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.08134 70.07)",
+          "oklch(26.43% 0.08134 70.07)",
+          "oklch(37.86% 0.08134 70.07)",
+          "oklch(49.29% 0.08134 70.07)",
+          "oklch(60.71% 0.08134 70.07)",
+          "oklch(72.14% 0.08134 70.07)",
+          "oklch(83.57% 0.08134 70.07)",
+          "oklch(95.00% 0.08134 70.07)"
+        ]
+      },
+      "ion-dark-copper": {
+        "displayName": "Ion Dark Copper",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.09391 45.48)",
+          "oklch(26.43% 0.09391 45.48)",
+          "oklch(37.86% 0.09391 45.48)",
+          "oklch(49.29% 0.09391 45.48)",
+          "oklch(60.71% 0.09391 45.48)",
+          "oklch(72.14% 0.09391 45.48)",
+          "oklch(83.57% 0.09391 45.48)",
+          "oklch(95.00% 0.09391 45.48)"
+        ]
+      },
+      "ion-dark-copper-soft": {
+        "displayName": "Ion Dark Copper Soft",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.03381 1.27)",
+          "oklch(26.43% 0.03381 1.27)",
+          "oklch(37.86% 0.03381 1.27)",
+          "oklch(49.29% 0.03381 1.27)",
+          "oklch(60.71% 0.03381 1.27)",
+          "oklch(72.14% 0.03381 1.27)",
+          "oklch(83.57% 0.03381 1.27)",
+          "oklch(95.00% 0.03381 1.27)"
+        ]
+      },
+      "ion-dark-copper-text": {
+        "displayName": "Ion Dark Copper Text",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.09391 45.48)",
+          "oklch(26.43% 0.09391 45.48)",
+          "oklch(37.86% 0.09391 45.48)",
+          "oklch(49.29% 0.09391 45.48)",
+          "oklch(60.71% 0.09391 45.48)",
+          "oklch(72.14% 0.09391 45.48)",
+          "oklch(83.57% 0.09391 45.48)",
+          "oklch(95.00% 0.09391 45.48)"
+        ]
+      },
+      "ion-dark-danger": {
+        "displayName": "Ion Dark Danger",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.09946 20.94)",
+          "oklch(26.43% 0.09946 20.94)",
+          "oklch(37.86% 0.09946 20.94)",
+          "oklch(49.29% 0.09946 20.94)",
+          "oklch(60.71% 0.09946 20.94)",
+          "oklch(72.14% 0.09946 20.94)",
+          "oklch(83.57% 0.09946 20.94)",
+          "oklch(95.00% 0.09946 20.94)"
+        ]
+      },
+      "ion-dark-danger-soft": {
+        "displayName": "Ion Dark Danger Soft",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.04504 354.84)",
+          "oklch(26.43% 0.04504 354.84)",
+          "oklch(37.86% 0.04504 354.84)",
+          "oklch(49.29% 0.04504 354.84)",
+          "oklch(60.71% 0.04504 354.84)",
+          "oklch(72.14% 0.04504 354.84)",
+          "oklch(83.57% 0.04504 354.84)",
+          "oklch(95.00% 0.04504 354.84)"
+        ]
+      },
+      "ion-dark-code-keyword": {
+        "displayName": "Ion Dark Code Keyword",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.11324 304.57)",
+          "oklch(26.43% 0.11324 304.57)",
+          "oklch(37.86% 0.11324 304.57)",
+          "oklch(49.29% 0.11324 304.57)",
+          "oklch(60.71% 0.11324 304.57)",
+          "oklch(72.14% 0.11324 304.57)",
+          "oklch(83.57% 0.11324 304.57)",
+          "oklch(95.00% 0.11324 304.57)"
+        ]
+      },
+      "ion-dark-code-string": {
+        "displayName": "Ion Dark Code String",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.06407 153.30)",
+          "oklch(26.43% 0.06407 153.30)",
+          "oklch(37.86% 0.06407 153.30)",
+          "oklch(49.29% 0.06407 153.30)",
+          "oklch(60.71% 0.06407 153.30)",
+          "oklch(72.14% 0.06407 153.30)",
+          "oklch(83.57% 0.06407 153.30)",
+          "oklch(95.00% 0.06407 153.30)"
+        ]
+      },
+      "ion-dark-code-number": {
+        "displayName": "Ion Dark Code Number",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.09944 63.91)",
+          "oklch(26.43% 0.09944 63.91)",
+          "oklch(37.86% 0.09944 63.91)",
+          "oklch(49.29% 0.09944 63.91)",
+          "oklch(60.71% 0.09944 63.91)",
+          "oklch(72.14% 0.09944 63.91)",
+          "oklch(83.57% 0.09944 63.91)",
+          "oklch(95.00% 0.09944 63.91)"
+        ]
+      },
+      "ion-dark-code-comment": {
+        "displayName": "Ion Dark Code Comment",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.05489 306.41)",
+          "oklch(26.43% 0.05489 306.41)",
+          "oklch(37.86% 0.05489 306.41)",
+          "oklch(49.29% 0.05489 306.41)",
+          "oklch(60.71% 0.05489 306.41)",
+          "oklch(72.14% 0.05489 306.41)",
+          "oklch(83.57% 0.05489 306.41)",
+          "oklch(95.00% 0.05489 306.41)"
+        ]
+      },
+      "ion-dark-circuit-wire": {
+        "displayName": "Ion Dark Circuit Wire",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.04993 307.07)",
+          "oklch(26.43% 0.04993 307.07)",
+          "oklch(37.86% 0.04993 307.07)",
+          "oklch(49.29% 0.04993 307.07)",
+          "oklch(60.71% 0.04993 307.07)",
+          "oklch(72.14% 0.04993 307.07)",
+          "oklch(83.57% 0.04993 307.07)",
+          "oklch(95.00% 0.04993 307.07)"
+        ]
+      },
+      "ion-dark-circuit-high": {
+        "displayName": "Ion Dark Circuit High",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.08955 167.00)",
+          "oklch(26.43% 0.08955 167.00)",
+          "oklch(37.86% 0.08955 167.00)",
+          "oklch(49.29% 0.08955 167.00)",
+          "oklch(60.71% 0.08955 167.00)",
+          "oklch(72.14% 0.08955 167.00)",
+          "oklch(83.57% 0.08955 167.00)",
+          "oklch(95.00% 0.08955 167.00)"
+        ]
+      },
+      "ion-dark-circuit-unknown": {
+        "displayName": "Ion Dark Circuit Unknown",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.13556 71.04)",
+          "oklch(26.43% 0.13556 71.04)",
+          "oklch(37.86% 0.13556 71.04)",
+          "oklch(49.29% 0.13556 71.04)",
+          "oklch(60.71% 0.13556 71.04)",
+          "oklch(72.14% 0.13556 71.04)",
+          "oklch(83.57% 0.13556 71.04)",
+          "oklch(95.00% 0.13556 71.04)"
+        ]
+      },
+      "ion-light-paper": {
+        "displayName": "Ion Light Paper",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.01712 84.59)",
+          "oklch(26.43% 0.01712 84.59)",
+          "oklch(37.86% 0.01712 84.59)",
+          "oklch(49.29% 0.01712 84.59)",
+          "oklch(60.71% 0.01712 84.59)",
+          "oklch(72.14% 0.01712 84.59)",
+          "oklch(83.57% 0.01712 84.59)",
+          "oklch(95.00% 0.01712 84.59)"
+        ]
+      },
+      "ion-light-surface": {
+        "displayName": "Ion Light Surface",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.00854 84.57)",
+          "oklch(26.43% 0.00854 84.57)",
+          "oklch(37.86% 0.00854 84.57)",
+          "oklch(49.29% 0.00854 84.57)",
+          "oklch(60.71% 0.00854 84.57)",
+          "oklch(72.14% 0.00854 84.57)",
+          "oklch(83.57% 0.00854 84.57)",
+          "oklch(95.00% 0.00854 84.57)"
+        ]
+      },
+      "ion-light-surface-2": {
+        "displayName": "Ion Light Surface 2",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.01862 317.73)",
+          "oklch(26.43% 0.01862 317.73)",
+          "oklch(37.86% 0.01862 317.73)",
+          "oklch(49.29% 0.01862 317.73)",
+          "oklch(60.71% 0.01862 317.73)",
+          "oklch(72.14% 0.01862 317.73)",
+          "oklch(83.57% 0.01862 317.73)",
+          "oklch(95.00% 0.01862 317.73)"
+        ]
+      },
+      "ion-light-ink": {
+        "displayName": "Ion Light Ink",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.08422 302.14)",
+          "oklch(26.43% 0.08422 302.14)",
+          "oklch(37.86% 0.08422 302.14)",
+          "oklch(49.29% 0.08422 302.14)",
+          "oklch(60.71% 0.08422 302.14)",
+          "oklch(72.14% 0.08422 302.14)",
+          "oklch(83.57% 0.08422 302.14)",
+          "oklch(95.00% 0.08422 302.14)"
+        ]
+      },
+      "ion-light-ink-2": {
+        "displayName": "Ion Light Ink 2",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.07525 309.47)",
+          "oklch(26.43% 0.07525 309.47)",
+          "oklch(37.86% 0.07525 309.47)",
+          "oklch(49.29% 0.07525 309.47)",
+          "oklch(60.71% 0.07525 309.47)",
+          "oklch(72.14% 0.07525 309.47)",
+          "oklch(83.57% 0.07525 309.47)",
+          "oklch(95.00% 0.07525 309.47)"
+        ]
+      },
+      "ion-light-muted": {
+        "displayName": "Ion Light Muted",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.06072 308.30)",
+          "oklch(26.43% 0.06072 308.30)",
+          "oklch(37.86% 0.06072 308.30)",
+          "oklch(49.29% 0.06072 308.30)",
+          "oklch(60.71% 0.06072 308.30)",
+          "oklch(72.14% 0.06072 308.30)",
+          "oklch(83.57% 0.06072 308.30)",
+          "oklch(95.00% 0.06072 308.30)"
+        ]
+      },
+      "ion-light-line": {
+        "displayName": "Ion Light Line",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.03412 315.20)",
+          "oklch(26.43% 0.03412 315.20)",
+          "oklch(37.86% 0.03412 315.20)",
+          "oklch(49.29% 0.03412 315.20)",
+          "oklch(60.71% 0.03412 315.20)",
+          "oklch(72.14% 0.03412 315.20)",
+          "oklch(83.57% 0.03412 315.20)",
+          "oklch(95.00% 0.03412 315.20)"
+        ]
+      },
+      "ion-light-link": {
+        "displayName": "Ion Light Link",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(15.00% 0.12380 305.93)",
+          "oklch(26.43% 0.12380 305.93)",
+          "oklch(37.86% 0.12380 305.93)",
+          "oklch(49.29% 0.12380 305.93)",
+          "oklch(60.71% 0.12380 305.93)",
+          "oklch(72.14% 0.12380 305.93)",
+          "oklch(83.57% 0.12380 305.93)",
+          "oklch(95.00% 0.12380 305.93)"
+        ]
+      },
+      "ion-light-action": {
+        "displayName": "Ion Light Action",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(15.00% 0.11568 305.27)",
+          "oklch(26.43% 0.11568 305.27)",
+          "oklch(37.86% 0.11568 305.27)",
+          "oklch(49.29% 0.11568 305.27)",
+          "oklch(60.71% 0.11568 305.27)",
+          "oklch(72.14% 0.11568 305.27)",
+          "oklch(83.57% 0.11568 305.27)",
+          "oklch(95.00% 0.11568 305.27)"
+        ]
+      },
+      "ion-light-action-ink": {
+        "displayName": "Ion Light Action Ink",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.01184 79.79)",
+          "oklch(26.43% 0.01184 79.79)",
+          "oklch(37.86% 0.01184 79.79)",
+          "oklch(49.29% 0.01184 79.79)",
+          "oklch(60.71% 0.01184 79.79)",
+          "oklch(72.14% 0.01184 79.79)",
+          "oklch(83.57% 0.01184 79.79)",
+          "oklch(95.00% 0.01184 79.79)"
+        ]
+      },
+      "ion-light-soft": {
+        "displayName": "Ion Light Soft",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.02514 311.70)",
+          "oklch(26.43% 0.02514 311.70)",
+          "oklch(37.86% 0.02514 311.70)",
+          "oklch(49.29% 0.02514 311.70)",
+          "oklch(60.71% 0.02514 311.70)",
+          "oklch(72.14% 0.02514 311.70)",
+          "oklch(83.57% 0.02514 311.70)",
+          "oklch(95.00% 0.02514 311.70)"
+        ]
+      },
+      "ion-light-ok": {
+        "displayName": "Ion Light Ok",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.08352 165.58)",
+          "oklch(26.43% 0.08352 165.58)",
+          "oklch(37.86% 0.08352 165.58)",
+          "oklch(49.29% 0.08352 165.58)",
+          "oklch(60.71% 0.08352 165.58)",
+          "oklch(72.14% 0.08352 165.58)",
+          "oklch(83.57% 0.08352 165.58)",
+          "oklch(95.00% 0.08352 165.58)"
+        ]
+      },
+      "ion-light-ok-soft": {
+        "displayName": "Ion Light Ok Soft",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.01744 153.56)",
+          "oklch(26.43% 0.01744 153.56)",
+          "oklch(37.86% 0.01744 153.56)",
+          "oklch(49.29% 0.01744 153.56)",
+          "oklch(60.71% 0.01744 153.56)",
+          "oklch(72.14% 0.01744 153.56)",
+          "oklch(83.57% 0.01744 153.56)",
+          "oklch(95.00% 0.01744 153.56)"
+        ]
+      },
+      "ion-light-ok-line": {
+        "displayName": "Ion Light Ok Line",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.04987 153.37)",
+          "oklch(26.43% 0.04987 153.37)",
+          "oklch(37.86% 0.04987 153.37)",
+          "oklch(49.29% 0.04987 153.37)",
+          "oklch(60.71% 0.04987 153.37)",
+          "oklch(72.14% 0.04987 153.37)",
+          "oklch(83.57% 0.04987 153.37)",
+          "oklch(95.00% 0.04987 153.37)"
+        ]
+      },
+      "ion-light-signal": {
+        "displayName": "Ion Light Signal",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.11732 64.91)",
+          "oklch(26.43% 0.11732 64.91)",
+          "oklch(37.86% 0.11732 64.91)",
+          "oklch(49.29% 0.11732 64.91)",
+          "oklch(60.71% 0.11732 64.91)",
+          "oklch(72.14% 0.11732 64.91)",
+          "oklch(83.57% 0.11732 64.91)",
+          "oklch(95.00% 0.11732 64.91)"
+        ]
+      },
+      "ion-light-signal-soft": {
+        "displayName": "Ion Light Signal Soft",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.02951 80.66)",
+          "oklch(26.43% 0.02951 80.66)",
+          "oklch(37.86% 0.02951 80.66)",
+          "oklch(49.29% 0.02951 80.66)",
+          "oklch(60.71% 0.02951 80.66)",
+          "oklch(72.14% 0.02951 80.66)",
+          "oklch(83.57% 0.02951 80.66)",
+          "oklch(95.00% 0.02951 80.66)"
+        ]
+      },
+      "ion-light-signal-line": {
+        "displayName": "Ion Light Signal Line",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.05581 79.57)",
+          "oklch(26.43% 0.05581 79.57)",
+          "oklch(37.86% 0.05581 79.57)",
+          "oklch(49.29% 0.05581 79.57)",
+          "oklch(60.71% 0.05581 79.57)",
+          "oklch(72.14% 0.05581 79.57)",
+          "oklch(83.57% 0.05581 79.57)",
+          "oklch(95.00% 0.05581 79.57)"
+        ]
+      },
+      "ion-light-signal-text": {
+        "displayName": "Ion Light Signal Text",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.08941 71.82)",
+          "oklch(26.43% 0.08941 71.82)",
+          "oklch(37.86% 0.08941 71.82)",
+          "oklch(49.29% 0.08941 71.82)",
+          "oklch(60.71% 0.08941 71.82)",
+          "oklch(72.14% 0.08941 71.82)",
+          "oklch(83.57% 0.08941 71.82)",
+          "oklch(95.00% 0.08941 71.82)"
+        ]
+      },
+      "ion-light-copper": {
+        "displayName": "Ion Light Copper",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.10352 39.13)",
+          "oklch(26.43% 0.10352 39.13)",
+          "oklch(37.86% 0.10352 39.13)",
+          "oklch(49.29% 0.10352 39.13)",
+          "oklch(60.71% 0.10352 39.13)",
+          "oklch(72.14% 0.10352 39.13)",
+          "oklch(83.57% 0.10352 39.13)",
+          "oklch(95.00% 0.10352 39.13)"
+        ]
+      },
+      "ion-light-copper-soft": {
+        "displayName": "Ion Light Copper Soft",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.02224 49.92)",
+          "oklch(26.43% 0.02224 49.92)",
+          "oklch(37.86% 0.02224 49.92)",
+          "oklch(49.29% 0.02224 49.92)",
+          "oklch(60.71% 0.02224 49.92)",
+          "oklch(72.14% 0.02224 49.92)",
+          "oklch(83.57% 0.02224 49.92)",
+          "oklch(95.00% 0.02224 49.92)"
+        ]
+      },
+      "ion-light-copper-text": {
+        "displayName": "Ion Light Copper Text",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.10352 39.13)",
+          "oklch(26.43% 0.10352 39.13)",
+          "oklch(37.86% 0.10352 39.13)",
+          "oklch(49.29% 0.10352 39.13)",
+          "oklch(60.71% 0.10352 39.13)",
+          "oklch(72.14% 0.10352 39.13)",
+          "oklch(83.57% 0.10352 39.13)",
+          "oklch(95.00% 0.10352 39.13)"
+        ]
+      },
+      "ion-light-danger": {
+        "displayName": "Ion Light Danger",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.15636 16.04)",
+          "oklch(26.43% 0.15636 16.04)",
+          "oklch(37.86% 0.15636 16.04)",
+          "oklch(49.29% 0.15636 16.04)",
+          "oklch(60.71% 0.15636 16.04)",
+          "oklch(72.14% 0.15636 16.04)",
+          "oklch(83.57% 0.15636 16.04)",
+          "oklch(95.00% 0.15636 16.04)"
+        ]
+      },
+      "ion-light-danger-soft": {
+        "displayName": "Ion Light Danger Soft",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.02110 6.62)",
+          "oklch(26.43% 0.02110 6.62)",
+          "oklch(37.86% 0.02110 6.62)",
+          "oklch(49.29% 0.02110 6.62)",
+          "oklch(60.71% 0.02110 6.62)",
+          "oklch(72.14% 0.02110 6.62)",
+          "oklch(83.57% 0.02110 6.62)",
+          "oklch(95.00% 0.02110 6.62)"
+        ]
+      },
+      "ion-light-code-keyword": {
+        "displayName": "Ion Light Code Keyword",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.17463 304.48)",
+          "oklch(26.43% 0.17463 304.48)",
+          "oklch(37.86% 0.17463 304.48)",
+          "oklch(49.29% 0.17463 304.48)",
+          "oklch(60.71% 0.17463 304.48)",
+          "oklch(72.14% 0.17463 304.48)",
+          "oklch(83.57% 0.17463 304.48)",
+          "oklch(95.00% 0.17463 304.48)"
+        ]
+      },
+      "ion-light-code-string": {
+        "displayName": "Ion Light Code String",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.07944 158.59)",
+          "oklch(26.43% 0.07944 158.59)",
+          "oklch(37.86% 0.07944 158.59)",
+          "oklch(49.29% 0.07944 158.59)",
+          "oklch(60.71% 0.07944 158.59)",
+          "oklch(72.14% 0.07944 158.59)",
+          "oklch(83.57% 0.07944 158.59)",
+          "oklch(95.00% 0.07944 158.59)"
+        ]
+      },
+      "ion-light-code-number": {
+        "displayName": "Ion Light Code Number",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.10357 51.69)",
+          "oklch(26.43% 0.10357 51.69)",
+          "oklch(37.86% 0.10357 51.69)",
+          "oklch(49.29% 0.10357 51.69)",
+          "oklch(60.71% 0.10357 51.69)",
+          "oklch(72.14% 0.10357 51.69)",
+          "oklch(83.57% 0.10357 51.69)",
+          "oklch(95.00% 0.10357 51.69)"
+        ]
+      },
+      "ion-light-code-comment": {
+        "displayName": "Ion Light Code Comment",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.05737 311.05)",
+          "oklch(26.43% 0.05737 311.05)",
+          "oklch(37.86% 0.05737 311.05)",
+          "oklch(49.29% 0.05737 311.05)",
+          "oklch(60.71% 0.05737 311.05)",
+          "oklch(72.14% 0.05737 311.05)",
+          "oklch(83.57% 0.05737 311.05)",
+          "oklch(95.00% 0.05737 311.05)"
+        ]
+      },
+      "ion-light-circuit-wire": {
+        "displayName": "Ion Light Circuit Wire",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.07676 311.18)",
+          "oklch(26.43% 0.07676 311.18)",
+          "oklch(37.86% 0.07676 311.18)",
+          "oklch(49.29% 0.07676 311.18)",
+          "oklch(60.71% 0.07676 311.18)",
+          "oklch(72.14% 0.07676 311.18)",
+          "oklch(83.57% 0.07676 311.18)",
+          "oklch(95.00% 0.07676 311.18)"
+        ]
+      },
+      "ion-light-circuit-high": {
+        "displayName": "Ion Light Circuit High",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.08352 165.58)",
+          "oklch(26.43% 0.08352 165.58)",
+          "oklch(37.86% 0.08352 165.58)",
+          "oklch(49.29% 0.08352 165.58)",
+          "oklch(60.71% 0.08352 165.58)",
+          "oklch(72.14% 0.08352 165.58)",
+          "oklch(83.57% 0.08352 165.58)",
+          "oklch(95.00% 0.08352 165.58)"
+        ]
+      },
+      "ion-light-circuit-unknown": {
+        "displayName": "Ion Light Circuit Unknown",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.10771 69.05)",
+          "oklch(26.43% 0.10771 69.05)",
+          "oklch(37.86% 0.10771 69.05)",
+          "oklch(49.29% 0.10771 69.05)",
+          "oklch(60.71% 0.10771 69.05)",
+          "oklch(72.14% 0.10771 69.05)",
+          "oklch(83.57% 0.10771 69.05)",
+          "oklch(95.00% 0.10771 69.05)"
+        ]
+      },
+      "task-ink": {
+        "displayName": "Task Ink",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.02877 177.14)",
+          "oklch(26.43% 0.02877 177.14)",
+          "oklch(37.86% 0.02877 177.14)",
+          "oklch(49.29% 0.02877 177.14)",
+          "oklch(60.71% 0.02877 177.14)",
+          "oklch(72.14% 0.02877 177.14)",
+          "oklch(83.57% 0.02877 177.14)",
+          "oklch(95.00% 0.02877 177.14)"
+        ]
+      },
+      "task-muted": {
+        "displayName": "Task Muted",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.02195 162.34)",
+          "oklch(26.43% 0.02195 162.34)",
+          "oklch(37.86% 0.02195 162.34)",
+          "oklch(49.29% 0.02195 162.34)",
+          "oklch(60.71% 0.02195 162.34)",
+          "oklch(72.14% 0.02195 162.34)",
+          "oklch(83.57% 0.02195 162.34)",
+          "oklch(95.00% 0.02195 162.34)"
+        ]
+      },
+      "task-paper": {
+        "displayName": "Task Paper",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.00668 115.70)",
+          "oklch(26.43% 0.00668 115.70)",
+          "oklch(37.86% 0.00668 115.70)",
+          "oklch(49.29% 0.00668 115.70)",
+          "oklch(60.71% 0.00668 115.70)",
+          "oklch(72.14% 0.00668 115.70)",
+          "oklch(83.57% 0.00668 115.70)",
+          "oklch(95.00% 0.00668 115.70)"
+        ]
+      },
+      "task-surface": {
+        "displayName": "Task Surface",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95.00% 0.00000 89.88)"
+        ]
+      },
+      "task-line": {
+        "displayName": "Task Line",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.01488 132.48)",
+          "oklch(26.43% 0.01488 132.48)",
+          "oklch(37.86% 0.01488 132.48)",
+          "oklch(49.29% 0.01488 132.48)",
+          "oklch(60.71% 0.01488 132.48)",
+          "oklch(72.14% 0.01488 132.48)",
+          "oklch(83.57% 0.01488 132.48)",
+          "oklch(95.00% 0.01488 132.48)"
+        ]
+      },
+      "task-green": {
+        "displayName": "Task Green",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(15.00% 0.07093 166.55)",
+          "oklch(26.43% 0.07093 166.55)",
+          "oklch(37.86% 0.07093 166.55)",
+          "oklch(49.29% 0.07093 166.55)",
+          "oklch(60.71% 0.07093 166.55)",
+          "oklch(72.14% 0.07093 166.55)",
+          "oklch(83.57% 0.07093 166.55)",
+          "oklch(95.00% 0.07093 166.55)"
+        ]
+      },
+      "task-light": {
+        "displayName": "Task Light",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.02407 127.58)",
+          "oklch(26.43% 0.02407 127.58)",
+          "oklch(37.86% 0.02407 127.58)",
+          "oklch(49.29% 0.02407 127.58)",
+          "oklch(60.71% 0.02407 127.58)",
+          "oklch(72.14% 0.02407 127.58)",
+          "oklch(83.57% 0.02407 127.58)",
+          "oklch(95.00% 0.02407 127.58)"
+        ]
+      },
+      "task-warm": {
+        "displayName": "Task Warm",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.02498 89.21)",
+          "oklch(26.43% 0.02498 89.21)",
+          "oklch(37.86% 0.02498 89.21)",
+          "oklch(49.29% 0.02498 89.21)",
+          "oklch(60.71% 0.02498 89.21)",
+          "oklch(72.14% 0.02498 89.21)",
+          "oklch(83.57% 0.02498 89.21)",
+          "oklch(95.00% 0.02498 89.21)"
+        ]
+      },
+      "task-danger": {
+        "displayName": "Task Danger",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.13884 24.02)",
+          "oklch(26.43% 0.13884 24.02)",
+          "oklch(37.86% 0.13884 24.02)",
+          "oklch(49.29% 0.13884 24.02)",
+          "oklch(60.71% 0.13884 24.02)",
+          "oklch(72.14% 0.13884 24.02)",
+          "oklch(83.57% 0.13884 24.02)",
+          "oklch(95.00% 0.13884 24.02)"
+        ]
+      },
+      "task-primary-hover": {
+        "displayName": "Task Primary Hover",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.06063 163.28)",
+          "oklch(26.43% 0.06063 163.28)",
+          "oklch(37.86% 0.06063 163.28)",
+          "oklch(49.29% 0.06063 163.28)",
+          "oklch(60.71% 0.06063 163.28)",
+          "oklch(72.14% 0.06063 163.28)",
+          "oklch(83.57% 0.06063 163.28)",
+          "oklch(95.00% 0.06063 163.28)"
+        ]
+      },
+      "task-focus": {
+        "displayName": "Task Focus",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.11605 82.02)",
+          "oklch(26.43% 0.11605 82.02)",
+          "oklch(37.86% 0.11605 82.02)",
+          "oklch(49.29% 0.11605 82.02)",
+          "oklch(60.71% 0.11605 82.02)",
+          "oklch(72.14% 0.11605 82.02)",
+          "oklch(83.57% 0.11605 82.02)",
+          "oklch(95.00% 0.11605 82.02)"
+        ]
+      },
+      "task-input-border": {
+        "displayName": "Task Input Border",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.01979 152.75)",
+          "oklch(26.43% 0.01979 152.75)",
+          "oklch(37.86% 0.01979 152.75)",
+          "oklch(49.29% 0.01979 152.75)",
+          "oklch(60.71% 0.01979 152.75)",
+          "oklch(72.14% 0.01979 152.75)",
+          "oklch(83.57% 0.01979 152.75)",
+          "oklch(95.00% 0.01979 152.75)"
+        ]
+      },
+      "task-sidebar": {
+        "displayName": "Task Sidebar",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.01233 121.70)",
+          "oklch(26.43% 0.01233 121.70)",
+          "oklch(37.86% 0.01233 121.70)",
+          "oklch(49.29% 0.01233 121.70)",
+          "oklch(60.71% 0.01233 121.70)",
+          "oklch(72.14% 0.01233 121.70)",
+          "oklch(83.57% 0.01233 121.70)",
+          "oklch(95.00% 0.01233 121.70)"
+        ]
+      },
+      "task-nav-active": {
+        "displayName": "Task Nav Active",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.03040 129.76)",
+          "oklch(26.43% 0.03040 129.76)",
+          "oklch(37.86% 0.03040 129.76)",
+          "oklch(49.29% 0.03040 129.76)",
+          "oklch(60.71% 0.03040 129.76)",
+          "oklch(72.14% 0.03040 129.76)",
+          "oklch(83.57% 0.03040 129.76)",
+          "oklch(95.00% 0.03040 129.76)"
+        ]
+      },
+      "task-badge": {
+        "displayName": "Task Badge",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.00981 125.68)",
+          "oklch(26.43% 0.00981 125.68)",
+          "oklch(37.86% 0.00981 125.68)",
+          "oklch(49.29% 0.00981 125.68)",
+          "oklch(60.71% 0.00981 125.68)",
+          "oklch(72.14% 0.00981 125.68)",
+          "oklch(83.57% 0.00981 125.68)",
+          "oklch(95.00% 0.00981 125.68)"
+        ]
+      },
+      "task-doing-bg": {
+        "displayName": "Task Doing Bg",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.02583 259.05)",
+          "oklch(26.43% 0.02583 259.05)",
+          "oklch(37.86% 0.02583 259.05)",
+          "oklch(49.29% 0.02583 259.05)",
+          "oklch(60.71% 0.02583 259.05)",
+          "oklch(72.14% 0.02583 259.05)",
+          "oklch(83.57% 0.02583 259.05)",
+          "oklch(95.00% 0.02583 259.05)"
+        ]
+      },
+      "task-doing-text": {
+        "displayName": "Task Doing Text",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.10219 255.94)",
+          "oklch(26.43% 0.10219 255.94)",
+          "oklch(37.86% 0.10219 255.94)",
+          "oklch(49.29% 0.10219 255.94)",
+          "oklch(60.71% 0.10219 255.94)",
+          "oklch(72.14% 0.10219 255.94)",
+          "oklch(83.57% 0.10219 255.94)",
+          "oklch(95.00% 0.10219 255.94)"
+        ]
+      },
+      "task-blocked-bg": {
+        "displayName": "Task Blocked Bg",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.02189 42.57)",
+          "oklch(26.43% 0.02189 42.57)",
+          "oklch(37.86% 0.02189 42.57)",
+          "oklch(49.29% 0.02189 42.57)",
+          "oklch(60.71% 0.02189 42.57)",
+          "oklch(72.14% 0.02189 42.57)",
+          "oklch(83.57% 0.02189 42.57)",
+          "oklch(95.00% 0.02189 42.57)"
+        ]
+      },
+      "task-blocked-text": {
+        "displayName": "Task Blocked Text",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.12396 33.34)",
+          "oklch(26.43% 0.12396 33.34)",
+          "oklch(37.86% 0.12396 33.34)",
+          "oklch(49.29% 0.12396 33.34)",
+          "oklch(60.71% 0.12396 33.34)",
+          "oklch(72.14% 0.12396 33.34)",
+          "oklch(83.57% 0.12396 33.34)",
+          "oklch(95.00% 0.12396 33.34)"
+        ]
+      },
+      "task-done-bg": {
+        "displayName": "Task Done Bg",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.02994 134.40)",
+          "oklch(26.43% 0.02994 134.40)",
+          "oklch(37.86% 0.02994 134.40)",
+          "oklch(49.29% 0.02994 134.40)",
+          "oklch(60.71% 0.02994 134.40)",
+          "oklch(72.14% 0.02994 134.40)",
+          "oklch(83.57% 0.02994 134.40)",
+          "oklch(95.00% 0.02994 134.40)"
+        ]
+      },
+      "task-done-text": {
+        "displayName": "Task Done Text",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.06652 152.57)",
+          "oklch(26.43% 0.06652 152.57)",
+          "oklch(37.86% 0.06652 152.57)",
+          "oklch(49.29% 0.06652 152.57)",
+          "oklch(60.71% 0.06652 152.57)",
+          "oklch(72.14% 0.06652 152.57)",
+          "oklch(83.57% 0.06652 152.57)",
+          "oklch(95.00% 0.06652 152.57)"
+        ]
+      },
+      "task-todo-bg": {
+        "displayName": "Task Todo Bg",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.00665 106.53)",
+          "oklch(26.43% 0.00665 106.53)",
+          "oklch(37.86% 0.00665 106.53)",
+          "oklch(49.29% 0.00665 106.53)",
+          "oklch(60.71% 0.00665 106.53)",
+          "oklch(72.14% 0.00665 106.53)",
+          "oklch(83.57% 0.00665 106.53)",
+          "oklch(95.00% 0.00665 106.53)"
+        ]
+      },
+      "task-todo-text": {
+        "displayName": "Task Todo Text",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.01530 141.75)",
+          "oklch(26.43% 0.01530 141.75)",
+          "oklch(37.86% 0.01530 141.75)",
+          "oklch(49.29% 0.01530 141.75)",
+          "oklch(60.71% 0.01530 141.75)",
+          "oklch(72.14% 0.01530 141.75)",
+          "oklch(83.57% 0.01530 141.75)",
+          "oklch(95.00% 0.01530 141.75)"
+        ]
+      }
+    }
   },
   "narrative": {
+    "northStar": "Adaptive Ion",
+    "overview": "The production practice app (apps/web) uses adaptive Ion, approved on 2026-10-01: violet midnight surfaces, lilac links and amber actions, with a cream and deep-purple light alternative. Heavy Heebo headings lead into calm reading and working areas, thin dividers and restrained panels. The dimensional violet chip is the approved identity image.\n\nThe private founder task app (apps/tasks) retains its engineering working notebook / ledger system: sage surroundings, white surfaces, deep-green actions and compact Heebo text. Its original metaphor remains an implementation assumption for that app only. The task app is a separate scope, not an Ion light variant. Galleries and /site-preview remain references.",
+    "keyCharacteristics": [
+      "Hebrew-first text with logical alignment and technical LTR content.",
+      "Dark-first Ion with an optional persistent light preference.",
+      "Flat practice panels, fine dividers and labelled semantic states.",
+      "Separate task palette, compact navigation and soft card depth."
+    ],
     "rules": [
       {
-        "section": "colors",
+        "name": "The Theme Continuity Rule",
+        "body": "Apply Ion through root semantic variables, including portals, charts and editors; changing theme preserves mounted work.",
+        "section": "colors"
+      },
+      {
+        "name": "The Labelled State Rule",
         "body": "Status colors accompany written labels; keep the status meaning available in text.",
-        "name": "The Labelled State Rule"
+        "section": "colors"
       },
       {
-        "section": "typography",
+        "name": "The Direction-Aware Text Rule",
         "body": "Use logical alignment for interface text and preserve explicit LTR treatment for code and email fields.",
-        "name": "The Direction-Aware Text Rule"
+        "section": "typography"
       },
       {
-        "section": "elevation",
-        "body": "Use the observed subtle card shadows for interactive task cards; working sheets rely on borders and tonal separation.",
-        "name": "The Quiet Depth Rule"
+        "name": "The Quiet Depth Rule",
+        "body": "Ion working panels rely on borders and tonal separation; task cards retain their subtle interactive shadows.",
+        "section": "elevation"
       }
-    ],
-    "northStar": "Engineering working notebook / ledger",
-    "donts": [
-      "Don't remove labels when compact navigation hides its icons.",
-      "Don't use the code font for ordinary interface text.",
-      "Don't present this implementation assumption as a user-approved visual identity."
-    ],
-    "overview": "This is the implemented direction, chosen autonomously for the build; it is not a user-approved metaphor. Pale sage backgrounds, white working sheets, deep-green actions, and Heebo text support reading and writing in Hebrew and English. The visual system is shared by the practice and founder applications.\n\nThe interface concentrates detail inside question rows, task cards, and full-page work areas. Short labels, restrained borders, and visible keyboard focus organize routine actions without decorative imagery.",
-    "keyCharacteristics": [
-      "Hebrew-first typography with logical alignment for RTL and LTR.",
-      "Sage surroundings and white working surfaces.",
-      "Green primary actions and text-labelled status colors.",
-      "Compact controls and responsive working panes."
     ],
     "dos": [
       "Do preserve readable Hebrew and English through logical alignment and explicit code direction.",
       "Do pair semantic colors with written status labels.",
-      "Do retain visible focus and the reduced-motion override.",
-      "Do use the shared surface, spacing, and type roles across both applications."
+      "Do retain visible focus and reduced-motion behavior.",
+      "Do keep Ion and task tokens within their documented application scope.",
+      "Do preserve the approved chip asset and its embedded provenance."
+    ],
+    "donts": [
+      "Don't use the code font for ordinary interface text.",
+      "Don't reintroduce graph paper, handwriting, a navy header or sticky-note decoration into production Ion.",
+      "Don't promote gallery alternatives or dormant legacy selectors into production rules.",
+      "Don't remove written navigation labels on compact layouts."
     ]
   },
   "title": "Design System: JobRun",
-  "generatedAt": "2026-09-17T20:12:19.6827770Z"
+  "generatedAt": "2026-10-01T09:06:48.600704+00:00"
 }
