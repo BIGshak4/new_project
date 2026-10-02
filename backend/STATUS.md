@@ -556,6 +556,22 @@ touch the backend as well as the web app:
 - These 37 are in the loader's folder, so the next `seed_db.py` run loads them as `trial`, which the app serves. Whether
   to load them is Shaked's and Harel's call (the file is Harel's content work).
 
+## 5y. Pilot opened (2026-10-02)
+
+- Testers on the pilot list (`jr_members`): raztassa2000@gmail.com ("Raz"), oreyosef9@gmail.com ("Or"); they create their
+  own account at https://jobrun-practice.netlify.app with any password of 8+ characters.
+- Shaked rotated the database password and moved Render to the Transaction pooler and the judge to Opus 5.5. **A password
+  with `@` or `!` must be percent-encoded in `DATABASE_URL`** (`%40`, `%21`): raw, the URL parser takes the text after the
+  first `@` as the host and the API dies at startup with `gaierror: Name or service not known` (seen in Render's logs
+  on 2026-10-02 after a redeploy; the running instance had kept working with the old string). `app/main.py`'s startup
+  hint already says so; the local `.env` was fixed the same way.
+- The API was unreachable for about an hour this morning (no HTTP response at all, Render status clean); an empty push
+  redeployed it and it came back in five minutes with the right judge, pooler and a 3 ms round trip; smoke 26 routes OK,
+  CORS preflight from the site OK.
+- Question generator: `--batch 1`, 32k tokens, JSON-in-text (the draft schema exceeds the structured-output grammar
+  limit; `providers.py` now treats "grammar too large" as a schema rejection); a 15-minute stall watchdog (exit 3) with a
+  restart loop. 71 drafts saved at the time of writing, about $20.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -594,6 +610,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-02 | Pilot opened: two testers on the list; password percent-encoding lesson; Render outage and recovery; generator watchdog (§5y) |
 | 2026-10-01 | Ownership: the front end is Harel's; Claude stays on the backend, content, tools and docs (§5w) |
 | 2026-10-01 | The backend to-do list (§5v) and `docs/backend-roadmap.md`: how the backend works (one answer step by step, the other flows, folders, data, tools, deployment, guarantees) and the roadmap with owners |
 | 2026-10-01 | "This question is not clear": `question_report` table (migration approved, apply pending), repo/store/service/route, the flag and popover on the question sheet and in the interview room, the inbox script (§5u) |

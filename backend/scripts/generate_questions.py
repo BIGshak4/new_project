@@ -3,6 +3,8 @@
     uv run python scripts/generate_questions.py --dry-run                       # the plan: how many per skill, no calls
     uv run python scripts/generate_questions.py --skills boolean_algebra --per-skill 3   # a small real run
     uv run python scripts/generate_questions.py --per-skill 12 --verify         # the full bank: ~400 drafts, judged
+    # a long run that survives a stall (the script exits 3 after 15 quiet minutes; --append keeps what is saved):
+    #   until uv run python scripts/generate_questions.py --per-skill 12 --verify --append; [ $? -ne 3 ] && break; done
 
 What it does, per skill of the role (hardware) and of the software track:
   1. asks the drafting model for a batch of questions in the BankQuestion shape (both languages, rubric with
@@ -452,9 +454,22 @@ async def main() -> int:
             band_high = min(high, band_low + max(2, span // max(1, batches)))
             jobs.append(one_batch(skill, count, (band_low, band_high), b + 1))
     async def heartbeat():
+        """A progress line every five minutes; after fifteen minutes without any progress the run stops with exit code 3,
+        because open calls that never return (the laptop slept, the socket died) hold the semaphore forever. The wrapper
+        in the docstring restarts it with --append."""
+        flat = 0
+        last = (len(accepted), len(rejected))
         while True:
             await asyncio.sleep(300)
+            now = (len(accepted), len(rejected))
+            flat = flat + 1 if now == last else 0
+            last = now
             print(f"  … {time.strftime('%H:%M')} accepted {len(accepted) - len(previous)}, rejected {len(rejected)}, ${cost:.2f}", flush=True)
+            if flat >= 3:
+                save(accepted)
+                print("  !! no progress for 15 minutes: stopping so the wrapper can restart (exit 3)", flush=True)
+                import os
+                os._exit(3)
     beat = asyncio.create_task(heartbeat())
     try:
         await asyncio.gather(*jobs)
