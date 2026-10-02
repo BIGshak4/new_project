@@ -13,10 +13,10 @@ import pytest
 from app.api.errors import ApiError
 from app.engine import bank, evaluator
 from app.engine.catalog import load_catalog
-from app.repo.questions import LoadedQuestion, detail, summary
+from app.repo.questions import LoadedQuestion, summary
+from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
-from app.services import question_resources
 from tests.test_practice_hardening import GOOD, SEEDS, scripted
 
 ROOT = Path(__file__).resolve().parents[2]

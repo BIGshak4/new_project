@@ -5,9 +5,9 @@ Neither a question key nor another learner's attempt grants access to its soluti
 """
 from __future__ import annotations
 
-import re
 import asyncio
 import hashlib
+import re
 
 import httpx
 from pydantic import BaseModel, Field

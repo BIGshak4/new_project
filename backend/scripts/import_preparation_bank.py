@@ -18,10 +18,11 @@ import httpx
 from sqlalchemy import select
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from seed_db import REPORT, seed_questions  # noqa: E402
+
 from app import db  # noqa: E402
 from app.config import get_settings  # noqa: E402
 from app.engine.catalog import load_catalog  # noqa: E402
-from seed_db import REPORT, seed_questions  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 
