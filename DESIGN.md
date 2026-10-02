@@ -311,7 +311,7 @@ The private founder task app (apps/tasks) retains its engineering working notebo
 
 **Key Characteristics:**
 - Hebrew-first text with logical alignment and technical LTR content.
-- Dark-first Ion with an optional persistent light preference.
+- Light-first Ion with an optional persistent dark preference.
 - Flat practice panels, fine dividers and labelled semantic states.
 - Separate task palette, compact navigation and soft card depth.
 
@@ -393,7 +393,7 @@ Task cards retain 134px minimum height, 16px padding (12px mobile), subtle shado
 Ion fields use surface/ink, line border, control radius, 44px minimum height and 11px 14px padding. Labels have 6px gaps; textareas resize vertically with 1.75 line-height. Focus uses the documented outline and ring; errors retain messages and danger semantics. Task fields retain white surfaces, green caret/focus, original radius/padding, weight-500 labels and 1.8-line-height textareas.
 
 ### Navigation
-Ion desktop tabs are unboxed: muted at rest, ink on hover/active with a 2px action underline. Mobile tabs retain icons and labels with soft/link selection. Theme switching changes root variables in place and stores jobrun-theme when storage is available. First visits default dark regardless of OS preference; the pre-paint bootstrap restores light only when stored. Editors are not remounted.
+Ion desktop tabs are unboxed: muted at rest, ink on hover/active with a 2px action underline. Mobile tabs retain icons and labels with soft/link selection. Theme switching changes root variables in place and stores jobrun-theme when storage is available. First visits default light regardless of OS preference; the pre-paint bootstrap restores an explicitly stored dark preference. Editors are not remounted.
 
 The task rail stays sage with transparent resting items, selected fill and weight 700. Compact task navigation retains labels while hiding icons, with 8px 10px padding and 13px type.
 

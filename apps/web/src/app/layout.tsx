@@ -57,7 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <html
       lang="he"
       dir="rtl"
-      data-theme="dark"
+      data-theme="light"
       suppressHydrationWarning
       className={`${serif.variable} ${sans.variable} ${mono.variable} ${hand.variable} ${ion.variable}`}
     >

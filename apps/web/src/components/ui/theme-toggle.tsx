@@ -23,7 +23,7 @@ function subscribe(listener: () => void) {
 }
 const snapshot = () =>
   resolveTheme(document.documentElement.dataset.theme ?? null);
-const serverSnapshot = (): Theme => "dark";
+const serverSnapshot = (): Theme => "light";
 
 /** CSS changes in place; editors, API requests and unsent answers are never remounted. */
 export function ThemeToggle({ lang }: { lang: "he" | "en" }) {

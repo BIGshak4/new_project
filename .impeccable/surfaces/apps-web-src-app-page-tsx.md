@@ -8,7 +8,7 @@ related_targets: ["apps/web/src/components", "apps/web/src/app/ion.css"]
 # JobRun production Ion
 
 Mode: Operate for the authenticated app; Persuade for its public sign-in landing.
-On 2026-10-01 the user explicitly approved the adaptive Ion simulation and requested production integration, dark by default, with a light toggle and full verification. The working preview at `/site-preview?style=ion-adaptive` is the visual authority, superseding Workbench on the practice site. Tasks are outside this change.
+On 2026-10-01 the user explicitly approved the adaptive Ion simulation and requested production integration, dark by default, with a light toggle and full verification. The working preview at `/site-preview?style=ion-adaptive` is the visual authority, superseding Workbench on the practice site. Tasks are outside this change. On 2026-10-02 the user changed the first-visit default to light; explicit saved theme choices still persist.
 
 ## Direction contract
 THESIS: A confident engineering learning environment, with room to reason and a clear next step.
@@ -19,4 +19,4 @@ FORM: Inherited user-selected Ion direction (seed lineage 9e6466ae, docs/ten-ind
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
 ## Quality bar
-Readable Hebrew RTL and English LTR, keyboard focus and touch targets in both themes, durable optional theme storage with dark default and no first-paint flash. Theme changes must not remount editors or reset attempts. Questions, solutions, diagrams and metadata remain intact. Existing raster `/design-worlds/ion-chip.png` retains its embedded prompt and provenance.json. Backend and database permissions remain unchanged.
+Readable Hebrew RTL and English LTR, keyboard focus and touch targets in both themes, durable optional theme storage with light default and no first-paint flash. Theme changes must not remount editors or reset attempts. Questions, solutions, diagrams and metadata remain intact. Existing raster `/design-worlds/ion-chip.png` retains its embedded prompt and provenance.json. Backend and database permissions remain unchanged.

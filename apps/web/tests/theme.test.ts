@@ -3,10 +3,10 @@ import assert from "node:assert/strict";
 import vm from "node:vm";
 import { resolveTheme, themeBootstrap, THEME_KEY } from "../src/lib/theme";
 
-test("first visit and invalid preferences are dark; an explicit light preference wins", () => {
-  for (const value of [null, "", "system", "invalid", "dark"])
-    assert.equal(resolveTheme(value), "dark");
-  assert.equal(resolveTheme("light"), "light");
+test("first visit and invalid preferences are light; an explicit dark preference wins", () => {
+  for (const value of [null, "", "system", "invalid", "light"])
+    assert.equal(resolveTheme(value), "light");
+  assert.equal(resolveTheme("dark"), "dark");
 });
 
 test("the pre-paint script restores the saved preference before React renders", () => {
@@ -27,7 +27,7 @@ test("the pre-paint script restores the saved preference before React renders", 
   }
 });
 
-test("unavailable browser storage cannot break the page or its dark default", () => {
+test("unavailable browser storage cannot break the page or its light default", () => {
   const document = {
     documentElement: { dataset: {} as Record<string, string> },
   };
@@ -39,5 +39,5 @@ test("unavailable browser storage cannot break the page or its dark default", ()
       },
     },
   });
-  assert.equal(document.documentElement.dataset.theme, "dark");
+  assert.equal(document.documentElement.dataset.theme, "light");
 });
