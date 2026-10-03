@@ -11,8 +11,11 @@ from functools import lru_cache
 from pathlib import Path
 
 PROMPT_DIR = Path(__file__).parent / "prompts"
-# generator v2 (2026-10-03): follow-ups ask for understanding, never for the question's own examples; v1 kept
-PROMPT_VERSIONS = {"evaluator": "v1", "generator": "v2", "feedback": "v1", "tip": "v1", "report": "v1"}
+# generator v2 (2026-10-03): follow-ups ask for understanding, never for the question's own examples; v3 (2026-10-03,
+# Shaked): after a strong answer the follow-up is an edge case of the same problem; v1 and v2 kept.
+# evaluator v2 (2026-10-03, Shaked): worked examples are confirmation, not substance; a correct method is strong
+# without them; v1 kept.
+PROMPT_VERSIONS = {"evaluator": "v2", "generator": "v3", "feedback": "v1", "tip": "v1", "report": "v1"}
 LANGUAGE_NAMES = {"en": "English", "he": "Hebrew"}
 
 

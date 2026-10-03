@@ -702,6 +702,38 @@ decision and a content reload. A generated outline can prefer one valid approach
 values at once); generated follow-ups can occasionally state a technical point wrongly, as before. When the example
 check fires, the follow-up's words arrive about 13 s later.
 
+## 5zc. A correct answer is strong without the worked examples; after a strong answer the follow-up is an edge case (2026-10-03, Shaked: "if the answer is good we dont need an example and it can be a strong answer, and follow up should touch edge cases")
+
+**Grader instructions v2** (`app/engine/prompts/evaluator.v2.md`, v1 kept, `i18n` switched; the model, the thresholds,
+the controller and the level formulas are unchanged): worked examples (a truth table's rows, a trace, outputs on the
+listed inputs, an intermediate vector) are confirmation, not substance. A correct method that settles them earns their
+rubric criteria in full; a missing example is deducted only when the method is wrong or unclear, or the example would
+have exposed a mistake. Explanations the question asks for stay required. Depth measures the reasoning, not the volume
+of examples. The grader changes only on numbers (`docs/judge-opus-5-5-2026-10-01.md`, evening addendum):
+
+| Graded back to back on Opus 5.5 | v1 | v2 |
+|---|---|---|
+| Review set, bands matching the expected band | 13 of 13 | 13 of 13, identical bands |
+| Review set, depth on the correct answers | 0.6 to 0.75 | 0.7 to 0.8 |
+| Pilot photo answers, correctness | 0.35 to 0.85 | 0.45 to 0.85 (interrupt-priority 0.6 to 0.85, enabled-decoder 0.62 to 0.8) |
+| Pilot photo answers, band | 4 WEAK, 4 PARTIAL | 1 WEAK, 7 PARTIAL |
+| Pilot text answers, band | | 11 of 12 the same; one right fix WEAK to PARTIAL |
+
+None of the pilot's photo answers reached STRONG: they carried no written reasoning, and the questions ask for it
+("explain why valid is needed", "why XOR is not enough"). STRONG needs depth 0.55 as well as correctness 0.75; one
+sentence of that reasoning would carry the interrupt-priority answer (0.85 / 0.45) over. Moving the depth threshold is
+a separate decision.
+
+**Follow-up after a strong answer** (`generator.v3.md`, v1 and v2 kept): the escalation is an edge case of the same
+problem, one corner the answer did not cover, asked openly: a boundary input, empty or full, overflow, a tie, a reset
+or enable corner, a timing or glitch case, a changed assumption. Never "compute more examples", never a case the
+answer already handled. On the real models, the review set's five strong answers got: a fourth sensor on the majority
+vote, clock skew on the hold check, negative numbers for the bit count, a glitch-free terminal count on the counter,
+gate sharing on the NAND network. No follow-up named the question's examples.
+
+**Also:** the golden grade-first record is compared with the grader's prompt version made neutral, so a prompt version
+bump no longer stales it. 863 offline tests. Model spend on the checks: about $1.40.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -740,6 +772,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-03 | Grader v2: worked examples are confirmation, a correct method is strong without them (13/13 review set unchanged); generator v3: the follow-up after a strong answer is an edge case (§5zc) |
 | 2026-10-03 | Follow-ups ask for understanding (generator v2, the example check, flags stored), the skip route, malformed structured replies retried (§5zb); contract for Harel |
 | 2026-10-03 | Working ahead (§5za): later days' plan items open once today's are done; `ProgramView.ahead`; the rebuild keeps work done or opened ahead; contract for Harel |
 | 2026-10-03 | Full check and circuit-simulation check (§5z): all suites green, simulator correct on eight interview circuits, Opus 5.5 stricter on incomplete answers |

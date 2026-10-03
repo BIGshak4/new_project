@@ -249,12 +249,21 @@ class MeteredProvider:
 class TestFollowUpsAskForUnderstanding:
     """Shaked, 2026-10-03: a right answer must not get a follow-up that makes the user work every example."""
 
-    def test_generator_v2_is_active_and_v1_is_kept(self):
+    def test_generator_v3_is_active_and_earlier_versions_are_kept(self):
         from app.engine import i18n
-        assert i18n.prompt_version("generator") == "generator.v2"
-        assert (i18n.PROMPT_DIR / "generator.v1.md").exists() and (i18n.PROMPT_DIR / "generator.v2.md").exists()
+        assert i18n.prompt_version("generator") == "generator.v3"
+        assert all((i18n.PROMPT_DIR / f"generator.v{n}.md").exists() for n in (1, 2, 3))
         block = i18n.stable_system_block("generator", "he")
         assert "Ask for understanding, never for busywork" in block and "answer_covered" in block
+        assert "as an edge case of the same problem" in block                     # after a strong answer (Shaked)
+
+    def test_evaluator_v2_is_active_and_v1_is_kept(self):
+        from app.engine import i18n
+        assert i18n.prompt_version("evaluator") == "evaluator.v2"
+        assert (i18n.PROMPT_DIR / "evaluator.v1.md").exists() and (i18n.PROMPT_DIR / "evaluator.v2.md").exists()
+        block = i18n.stable_system_block("evaluator", "en")
+        assert "Worked examples are confirmation, not substance" in block
+        assert "Never penalize an answer for not matching the reference solution's method" in block   # v1's rules stay
 
     def test_example_values_are_whole_tokens_in_one_canonical_form(self):
         values = generator.example_values
