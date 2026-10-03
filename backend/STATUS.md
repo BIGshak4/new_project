@@ -574,6 +574,24 @@ touch the backend as well as the web app:
   limit; `providers.py` now treats "grammar too large" as a schema rejection); a 15-minute stall watchdog (exit 3) with a
   restart loop. 71 drafts saved at the time of writing, about $20.
 
+## 5z. Check of 2026-10-03 (Shaked: "check if everything works now, and verify the circuit simulation")
+
+- **Production**: Render healthy (Opus 5.5 judge, Transaction pooler, 2–4 ms database round trip, photos `assessed`),
+  smoke 26 routes OK, the site loads. ruff clean, **806 offline tests**, **18 of 18 live tests in one run** (29 min, the
+  report table test included), `e2e_live_trial.py` and `e2e_goal_and_visuals.py` pass on the real model (rolled back).
+- **Circuit simulation**: Harel's web tests 65/65 (typecheck clean, run only, nothing changed). An independent check
+  from the scratchpad on eight interview circuits (majority vote, XOR from four NANDs, a two-bit ripple adder over all
+  32 inputs, a 4:1 MUX, a toggle flip-flop, a three-bit counter, a rising-edge detector, a self-loop): 72 of 72 intended
+  behaviours correct. Observation for Harel, not a grading issue: feedback loops settle to "unknown" by design, so a
+  real oscillator (an enabled NAND feeding itself) shows "?" and the `unstable` flag never fires.
+- **Backend side of drawn circuits**: `circuit_text.boolean_functions` derives the same truth tables as the browser on
+  the majority, NAND-XOR and 2:1 MUX circuits; the real question's check passes a correctly drawn majority circuit on
+  8/8 rows and fails a broken one on 6/8. The drawn-circuit interview turn on the real judge is flagged `circuit_assessed`.
+- **Judge note**: the trial interview report now reads "not enough evidence" where it read 100 % on 1 October, because
+  Opus 5.5 grades incomplete single answers PARTIAL where Opus 5 gave STRONG (addendum in `docs/judge-opus-5-5-2026-10-01.md`).
+- **Pilot**: Or answered his first question (priority encoder, PARTIAL, photo and drawing assessed, follow-up offered and
+  not answered) and flagged it unclear before answering, without a note. Itay and Or H. are on the list without accounts.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -612,6 +630,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-03 | Full check and circuit-simulation check (§5z): all suites green, simulator correct on eight interview circuits, Opus 5.5 stricter on incomplete answers |
 | 2026-10-02 | Pilot opened: two testers on the list; password percent-encoding lesson; Render outage and recovery; generator watchdog (§5y) |
 | 2026-10-01 | Ownership: the front end is Harel's; Claude stays on the backend, content, tools and docs (§5w) |
 | 2026-10-01 | The backend to-do list (§5v) and `docs/backend-roadmap.md`: how the backend works (one answer step by step, the other flows, folders, data, tools, deployment, guarantees) and the roadmap with owners |
