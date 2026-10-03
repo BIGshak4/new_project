@@ -37,7 +37,6 @@ from pydantic import BaseModel, Field, ValidationError
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.config import get_settings  # noqa: E402
-from app.engine import catalog as catalog_module  # noqa: E402
 from app.engine import evaluator, scores
 from app.engine.catalog import load_catalog  # noqa: E402
 from app.engine.checks import run_check  # noqa: E402
@@ -293,7 +292,40 @@ def validate(question: dict, cat) -> list[str]:
             problems.append(f"{lang}: empty common-error explanation")
         if len(text.prompt) < 60:
             problems.append(f"{lang}: prompt too short to be self-contained")
-    problems.extend(catalog_module._self_test(model))
+    problems.extend(sandboxed_self_test(model))
+    return problems
+
+
+def sandboxed_self_test(question: BankQuestion) -> list[str]:
+    """The loader's self-test, but every code answer runs in the sandboxed subprocess with its timeout.
+
+    The loader runs seed self-tests in-process (`sandbox=False`) because seeds are our own code. Drafts are model-written:
+    a debugging question about code that hangs ships a "wrong answer" that really hangs, and in-process that froze the
+    whole run (2026-10-02, 21 hours at 100 % CPU). A timeout in the sandbox is a failed answer, not a frozen generator."""
+    if not question.deterministic_check:
+        return []
+    try:
+        if run_check(question.deterministic_check, "0", sandbox=True) is None:
+            return [f"question {question.key}: deterministic_check has no type"]
+    except Exception as exc:  # noqa: BLE001 - any spec the checker cannot read is a rejection
+        return [f"question {question.key}: deterministic_check spec is invalid: {exc}"]
+    tests = question.check_self_test or {}
+    problems = []
+    if not tests.get("pass"):
+        problems.append(f"question {question.key}: check_self_test needs at least one passing answer")
+    for expected, answers in ((True, tests.get("pass", [])), (False, tests.get("fail", []))):
+        for answer in answers:
+            try:
+                result = run_check(question.deterministic_check, answer, sandbox=True)
+            except Exception as exc:  # noqa: BLE001
+                problems.append(f"question {question.key}: self-test answer raised {type(exc).__name__}")
+                continue
+            got = result.passed if result else None
+            # a known-bad answer that times out or crashes counts as rejected, which is what a bad answer should be
+            if expected is False and got is None:
+                continue
+            if got is not expected:
+                problems.append(f"question {question.key}: self-test answer {answer[:60]!r} gave {got}, expected {expected}")
     return problems
 
 
@@ -453,28 +485,29 @@ async def main() -> int:
             band_low = low + (span * b) // max(1, batches)
             band_high = min(high, band_low + max(2, span // max(1, batches)))
             jobs.append(one_batch(skill, count, (band_low, band_high), b + 1))
-    async def heartbeat():
-        """A progress line every five minutes; after fifteen minutes without any progress the run stops with exit code 3,
-        because open calls that never return (the laptop slept, the socket died) hold the semaphore forever. The wrapper
-        in the docstring restarts it with --append."""
-        flat = 0
-        last = (len(accepted), len(rejected))
-        while True:
-            await asyncio.sleep(300)
+    def heartbeat() -> None:
+        """A progress line every five minutes; after fifteen minutes without progress the process exits with code 3 so the
+        wrapper loop restarts it with --append. A THREAD, not an asyncio task: when the event loop itself is blocked (a
+        hung check, a stuck socket) a task never runs, and that is exactly when the watchdog is needed."""
+        import os
+        flat, last = 0, (len(accepted), len(rejected))
+        while not stop_beat.wait(300):
             now = (len(accepted), len(rejected))
             flat = flat + 1 if now == last else 0
             last = now
             print(f"  … {time.strftime('%H:%M')} accepted {len(accepted) - len(previous)}, rejected {len(rejected)}, ${cost:.2f}", flush=True)
             if flat >= 3:
-                save(accepted)
-                print("  !! no progress for 15 minutes: stopping so the wrapper can restart (exit 3)", flush=True)
-                import os
+                print("  !! no progress for 15 minutes: exiting so the wrapper restarts (exit 3); saved drafts are kept", flush=True)
                 os._exit(3)
-    beat = asyncio.create_task(heartbeat())
+
+    import threading
+    stop_beat = threading.Event()
+    beat = threading.Thread(target=heartbeat, daemon=True)
+    beat.start()
     try:
         await asyncio.gather(*jobs)
     finally:
-        beat.cancel()
+        stop_beat.set()
     drafting_seconds = time.perf_counter() - started
 
     if args.verify:
