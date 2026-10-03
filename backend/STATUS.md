@@ -625,6 +625,83 @@ done and skipped items never reopened, the rebuild keeping work done ahead, and 
 rebuild); three mutants of the new code each caught by a test; the two live work-ahead tests pass against the real
 database in rolled-back transactions, including the attempt following its item into the rebuilt plan; the whole live service suite passes (16 of 16).
 
+## 5zb. Follow-ups ask for understanding; the user can skip a follow-up (2026-10-03, Shaked: "keep the follow up and make it a real question" and "go to the next suggested question without doing the follow up")
+
+**The problem, from the pilot (read-only check of production).** 13 practice follow-ups so far; 9 main answers were
+substantively right, and 6 of those got a follow-up that asked them to work through the question's own examples
+(all three of today's for the new tester). Cause: most bank questions end with "compute the output for X, Y, Z"; a
+right method without those outputs is PARTIAL; the grader lists "outputs not computed" first among the missed points;
+the follow-up writer was told to ask about the missed points directly.
+
+**What changed (the engine's grading of main answers did not):**
+- `app/engine/prompts/generator.v2.md` (v1 kept; `i18n` switches the generator to v2): a follow-up asks for
+  understanding, never for the question's own examples, rows, test values, intermediate values or traces; never quotes
+  an expected result; one point per probe; asks openly instead of stating the conclusion; a hint is one or two
+  sentences and never restates the question; the private outline covers only what the follow-up asks.
+- `generator.py`: the writer is told what the answer already covered (`answer_covered` = key points hit,
+  `check_passed`). A deterministic check asks once more when a probe, escalation or step-back names two or more of the
+  bank question's example values; a second listing is kept and flagged, never replaced by a template. The
+  restated-prompt guard also counts sentences (it missed a hint spliced into the middle of the restated question on
+  2 October) and now asks once more, with the short hint as the reserve. Every model call is metered, including one
+  asked for again. A template follow-up is graded against the decision's missed points instead of an empty outline.
+- `practice.py`: the missed points steer only a probe or a hint (as in the interview); the writer's flags are stored on
+  the follow-up turn (`flags`: `examples_listed_regenerated`, `examples_listed_kept`, `hint_restated_prompt`, ...), so
+  production can count them.
+- Found while verifying, fixed: when the model returned malformed structured JSON (a trailing comma, from Sonnet 5),
+  the SDK raised a validation error that escaped the retry; for the follow-up that meant the generic template, and for
+  a grading call it would have failed the request. `providers.AnthropicProvider` now turns it into a retryable model
+  error, like the text path already did. No grade changes.
+- Declared effect: follow-up answers are graded against the new, narrower outlines, so follow-up bands, skill evidence
+  from follow-ups and follow-up XP can move. Main answers, the controller, thresholds and level formulas are unchanged.
+
+**Skip (new route):** `POST /v1/practice/attempts/{id}/follow-ups/{turn}/skip`. The attempt becomes `done`; the
+follow-up shows `skipped: true`; `next_question` stays the suggestion made from the main answer. Nothing is scored: no
+evidence, metrics, XP or plan writes (the plan item was ticked by the main answer). Idempotent; allowed while the
+follow-up's words are still being written; a follow-up answer whose evaluation failed is retired with the skip
+(`superseded`, `follow_up_skipped`) so a retry can never score it; a skipped follow-up cannot be answered later.
+No migration (`skipped_at` lives in `attempt.follow_up_turns`).
+
+**For Harel (front end, his task):**
+- `practice-api.ts`: `skipFollowUp: (attemptId: string, turn: number) => call<Attempt>("POST", \`/v1/practice/attempts/${attemptId}/follow-ups/${turn}/skip\`)`
+  (this exact `call<...>("POST", ...)` form, so the contract test sees it) and `skipped?: boolean` on `FollowUp`.
+  Then remove the two pending entries in `tests/test_ts_client_contract.py` (`FollowUpView.skipped` and the route).
+- A secondary button next to "Send follow-up answer": "Skip to the next question" / "דילוג לשאלה הבאה" when
+  `attempt.next_question` exists (and not in demo), otherwise "Skip this follow-up" / "דילוג על שאלת ההמשך". Enabled
+  while `question_pending`; disabled while busy, while the attempt is `evaluating`, and while a follow-up answer may
+  already have been sent (`resend`). If the answer box has text, confirm before skipping.
+- After the skip the existing next-question card appears by itself (`status === "done"`). Show a skipped follow-up in
+  the list (`follow_ups.filter(f => f.submission || f.skipped)`) with a "Skipped" / "דילגתם" badge, no band, no XP.
+- `pendingResolved` in `practice-ui.ts` should also accept a turn that is now `skipped`; the existing
+  `no_pending_follow_up` message covers a skip that lost a race. Run the skip without refreshing progress (nothing
+  changes there).
+
+**Verified:**
+
+| Check | Result |
+|---|---|
+| Offline tests | 862 passed (the golden record unchanged); new tests for each behaviour, including a random-action stress test with skips; a fourth reviewer mutation-tested the new tests and nine gaps were closed (the lock on skip under an interleaving store, metering on every return path, the two-value boundary, every guarded action, the hint exclusion, the missed points per action, the check and the covered-points cap, the template outline after a writer crash, the restate threshold and reserve) |
+| Live database | the skip and a retired failed answer round-trip through `attempt` and `attempt_submission` (rolled back) |
+| Real models, the 13 pilot follow-ups, new writer, 2 samples each, 3 rounds | no follow-up asked for the examples; 0 template fallbacks; the check asked again 0, 2 and 1 times and the second wording was clean each time; about $0.26 a round |
+| Real models, the whole path on 8 pilot text answers (Opus 5.5 grades, the new writer words) | every follow-up a conceptual question; 3 conceptual answers to them graded STRONG, STRONG and PARTIAL (0.85), none marked down for missing examples |
+| Blind panel of three judges, production versus new, 13 cases | demands the examples 19 of 39 versus 1 of 78; outline demands examples 12 of 39 versus 0 of 78; points asked 2.5 versus 1.5; fair for this student 2.6 versus 3.9 of 5 |
+
+**Independent review (four lenses, findings verified):** fixed before the commit: a template follow-up's answer is now graded
+against an outline that matches what the template asks (a hint template: the missed points; a probe template: the
+candidate's own reasoning); the instructions' own good example no longer states the conclusion; the example check
+reads the prompt and requirements, not the shared code, also recognises runs of numbers, tuples and quoted strings,
+and weighs a one-bit condition (`en=0`) by half so two conditions describe a situation while a value plus two
+conditions is a worked case; a skip sent while the follow-up's answer is being graded answers 409 at once instead
+of waiting on the attempt's lock; the second ask is worded per action. After the verifier's pass: the example check also reads quoted bit strings as bits, hex as the bits it stands for, runs of numbers that end a
+sentence, and values with a Hebrew prefix letter; the interleaving test varies the store's timing over eight seeds and both orders, and
+removing the lock from the skip now fails it (checked by mutation). Accepted as is: a refusal that arrives with
+partial text is reported as a failed grading instead of a refusal (before this change it was a crash).
+
+**Open, not done here:** worked examples keep their weight in the grade, so a right design without them is still
+PARTIAL (or WEAK for the sensor-majority rows); changing that changes how the engine grades and needs Shaked's
+decision and a content reload. A generated outline can prefer one valid approach (a merge that inserts both equal
+values at once); generated follow-ups can occasionally state a technical point wrongly, as before. When the example
+check fires, the follow-up's words arrive about 13 s later.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -663,6 +740,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-03 | Follow-ups ask for understanding (generator v2, the example check, flags stored), the skip route, malformed structured replies retried (§5zb); contract for Harel |
 | 2026-10-03 | Working ahead (§5za): later days' plan items open once today's are done; `ProgramView.ahead`; the rebuild keeps work done or opened ahead; contract for Harel |
 | 2026-10-03 | Full check and circuit-simulation check (§5z): all suites green, simulator correct on eight interview circuits, Opus 5.5 stricter on incomplete answers |
 | 2026-10-02 | Pilot opened: two testers on the list; password percent-encoding lesson; Render outage and recovery; generator watchdog (§5y) |

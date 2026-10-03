@@ -404,6 +404,44 @@ class TestProgramAhead:
         assert ticked.status == "done" and ticked.completed_attempt_id == attempt_id
 
 
+class TestSkipFollowUp:
+    async def test_a_skip_and_a_retired_failed_answer_round_trip_through_the_real_tables(self, case):
+        """Skipping the follow-up (Shaked, 2026-10-03) on the real attempt and attempt_submission rows: the skip is
+        stored in follow_up_turns, a failed follow-up answer is retired on its row, and nothing is scored."""
+        replies = [WEAK, LLMError("provider down", retryable=False)]
+
+        def respond(request: LLMRequest):
+            if request.role == "evaluator":
+                reply = replies.pop(0)
+                if isinstance(reply, Exception):
+                    raise reply
+                return reply
+            return {"generator": FOLLOW_UP, "feedback": CARD, "tip": "Next time, try tracing one more input."}[request.role]
+        svc = service(case, ScriptedProvider(respond), daily_attempt_limit=1000, suggest_reviewed_only=False)
+        user, conn = case["user_id"], case["connection"]
+        view = await svc.start(user, question_key="example-sensor-majority", mode="deep", language="en")
+        aid = uuid.UUID(view.id)
+        _, view = await svc.submit(user, aid, "alarm = A ^ B ^ C", idempotency_key="skip-main")
+        assert view.pending_follow_up is not None
+        fsub, view = await svc.submit(user, aid, "an AND of each pair", idempotency_key="skip-f1", follow_up_turn=1)
+        assert fsub.status == "failed" and view.can_retry
+        metrics = await count(conn, "select count(*) from public.evaluation_metrics where attempt_id = :a", a=aid)
+
+        view = await svc.skip_follow_up(user, aid, 1)
+        assert view.status == "done" and not view.can_retry and view.follow_ups[0].skipped
+        turn = (await conn.execute(text("select follow_up_turns->0 from public.attempt where id = :a"), {"a": aid})).scalar_one()
+        assert turn["skipped_at"] and turn["submission_revision"] == fsub.revision
+        row = (await conn.execute(text("select status, flags from public.attempt_submission where attempt_id = :a "
+                                       "and revision = :r"), {"a": aid, "r": fsub.revision})).one()
+        assert str(row.status) == "failed" and {"superseded", "follow_up_skipped"} <= set(row.flags)
+        with pytest.raises(ApiError) as raised:
+            await svc.retry(user, aid)
+        assert raised.value.code == "nothing_to_retry"
+        again = await svc.get(user, aid)                                  # read back from the database
+        assert again.status == "done" and again.follow_ups[0].skipped and not again.can_retry
+        assert await count(conn, "select count(*) from public.evaluation_metrics where attempt_id = :a", a=aid) == metrics
+
+
 class TestOverHttp:
     async def test_the_http_flow_against_the_real_database(self, case):
         """The FastAPI app with DbStore, a token for the real pilot user, the real access resolver."""

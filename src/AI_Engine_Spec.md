@@ -637,7 +637,10 @@ JSON matching the output schema.
 
 - Questions are compared against every prior question in the session; near-duplicates are regenerated.
 - `expected_answer_outline` is generated with the question and stored privately for the Evaluator.
-- If generation fails schema validation twice, a templated fallback question for that skill and difficulty is used and flagged (`fallback_question`).
+- If generation fails schema validation twice, a templated fallback question for that skill and difficulty is used and flagged (`fallback_question`); its answer is scored against the decision's `probe_focus` as the outline.
+- (2026-10-03, generator v2) A probe, escalation or step-back that names two or more of the bank question's own example values (inputs, test values, arrays, bit patterns) is asked for once more with a note; a second listing is kept and flagged (`examples_listed_regenerated`, `examples_listed_kept`), never replaced by a template. Follow-ups ask for understanding, not for the original question's worked examples.
+- A hint that restates the original question (60 % of its opening, or 60 % of its sentences) is asked for once more; the reserve is the short hint template with the model's outline (`hint_restated_prompt`).
+- At most two model calls per follow-up; every call is metered. The generator's flags are stored on the follow-up turn.
 
 ---
 

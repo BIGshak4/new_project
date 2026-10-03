@@ -305,6 +305,53 @@ class TestGradeFirst:
         assert len(store.metrics) == metrics and copy_profiles(store) == profiles
         assert _calls(svc, "evaluator") == evaluator_calls                              # never re-scored
 
+    async def test_skipping_while_the_follow_up_is_still_being_written_keeps_the_skip_and_the_words(self, catalog):
+        import asyncio
+
+        gate = asyncio.Event()
+        replies = provider()
+
+        async def slow_prose(request):
+            if request.role != "evaluator":
+                await gate.wait()
+            return replies._responder(request)
+        svc, store = _svc(catalog, ScriptedProvider(slow_prose))
+        view = await svc.start(USER, question_key="example-sensor-majority", mode="deep", language="en")
+        aid = uuid.UUID(view.id)
+        await svc.submit(USER, aid, {"text": "alarm = A ^ B ^ C"}, idempotency_key="k")
+        metrics, profiles = len(store.metrics), copy_profiles(store)
+        view = await svc.skip_follow_up(USER, aid, 1)                    # allowed before the question has words
+        assert view.status == "done" and view.feedback_pending and view.follow_ups[0].skipped
+        assert view.follow_ups[0].question_pending and view.pending_follow_up is None
+        gate.set()
+        await svc.drain()
+        view = await svc.get(USER, aid)
+        assert not view.feedback_pending and view.status == "done" and view.submission.card is not None
+        turn = view.follow_ups[0]
+        assert turn.skipped and turn.question and not turn.question_pending          # the words arrived, still skipped
+        stored = store.attempts[aid]["row"]["follow_up_turns"][0]
+        assert stored["skipped_at"] and not ({"wording_pending", "asked_after", "decision"} & set(stored))
+        assert len(store.metrics) == metrics and copy_profiles(store) == profiles
+
+    async def test_skipping_after_a_crash_then_resuming_the_words_keeps_the_skip(self, catalog, monkeypatch):
+        from app.services import practice_service
+
+        svc, store = _svc(catalog)
+        monkeypatch.setattr(PracticeService, "_start_feedback", lambda *a, **k: None)   # the words are lost in a crash
+        view = await svc.start(USER, question_key="example-sensor-majority", mode="deep", language="en")
+        aid = uuid.UUID(view.id)
+        await svc.submit(USER, aid, {"text": "alarm = A ^ B ^ C"}, idempotency_key="k")
+        monkeypatch.undo()
+        evaluator_calls = _calls(svc, "evaluator")
+        restarted = PracticeService(store, catalog, svc.provider, svc.config)
+        await restarted.skip_follow_up(USER, aid, 1)
+        monkeypatch.setattr(practice_service, "FEEDBACK_STALE_SECONDS", 0)
+        await restarted.get(USER, aid)                                                  # abandoned words: resumed
+        await restarted.drain()
+        view = await restarted.get(USER, aid)
+        assert view.status == "done" and not view.feedback_pending and view.follow_ups[0].skipped
+        assert view.follow_ups[0].question and _calls(svc, "evaluator") == evaluator_calls
+
     async def test_retry_on_a_wordless_revision_writes_only_the_words_once(self, catalog, monkeypatch):
         svc, store = _svc(catalog)
         monkeypatch.setattr(PracticeService, "_start_feedback", lambda *a, **k: None)

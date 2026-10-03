@@ -29,7 +29,10 @@ MODELS = {"QuestionSummary": "QuestionSummary", "QuestionDetail": "QuestionDetai
           "PlanView": "Plan", "ProgramView": "Program", "ProgramStartView": "ProgramStart"}
 # New backend fields the web client has not typed yet: the screen part is Harel's. Once practice-api.ts has the
 # field it is compared like every other one again; then remove the entry.
-PENDING_IN_CLIENT = {"ProgramView": {"ahead"}}          # working ahead in the program (Shaked, 2026-10-03)
+PENDING_IN_CLIENT = {"ProgramView": {"ahead"},          # working ahead in the program (Shaked, 2026-10-03)
+                     "FollowUpView": {"skipped"}}          # skipping the follow-up (Shaked, 2026-10-03)
+# New routes the web client does not call yet, for the same reason; remove once practice-api.ts calls them.
+PENDING_ROUTES_IN_CLIENT = {("POST", "/v1/practice/attempts/{attempt_id}/follow-ups/{turn}/skip")}
 
 
 def ts_fields(source: str, type_name: str) -> set[str]:
@@ -73,6 +76,9 @@ def test_every_v1_route_is_called_by_the_client(spec, source):
     missing = []
     for method, path in routes:
         pattern = re.sub(r"\{[^}]+\}", "{}", path)
+        if (method, path) in PENDING_ROUTES_IN_CLIENT and not any(m == method and re.sub(r"\{[^}]+\}", "{}", c) == pattern
+                                                                  for m, c in called):
+            continue
         if not any(m == method and re.sub(r"\{[^}]+\}", "{}", c).rstrip("/") == pattern for m, c in called):
             missing.append(f"{method} {path}")
     assert not missing, f"routes without a client function: {missing}"

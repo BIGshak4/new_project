@@ -6,6 +6,7 @@
     POST /v1/practice/attempts/{id}/reference                       reveal the reference (recorded)
     POST /v1/practice/attempts/{id}/submissions                     the main answer
     POST /v1/practice/attempts/{id}/follow-ups/{turn}/submissions   a follow-up answer
+    POST /v1/practice/attempts/{id}/follow-ups/{turn}/skip          move on without answering the follow-up
     POST /v1/practice/attempts/{id}/submissions/{revision}/retry    re-evaluate a saved answer
 
 Submissions carry an Idempotency-Key header (or `idempotency_key` in the body). Without
@@ -158,6 +159,18 @@ async def submit_follow_up(attempt_id: AttemptId, turn: Annotated[int, Path(ge=1
     return await _submit(practice, access.user_id, attempt_id,
                          practice.submit(access.user_id, attempt_id, _answer(body), idempotency_key=_key(idempotency_key, body),
                                          latency_ms=body.latency_ms, follow_up_turn=turn), turn=turn)
+
+
+@router.post("/{attempt_id}/follow-ups/{turn}/skip", response_model=AttemptView,
+             summary="Skip the pending follow-up and move on to the next suggested question",
+             responses={409: {"description": "no_pending_follow_up: no such follow-up, or its answer is being evaluated"}})
+async def skip_follow_up(attempt_id: AttemptId, turn: Annotated[int, Path(ge=1, le=9)], access: CurrentAccess,
+                         practice: Practice) -> AttemptView:
+    """The attempt comes back `done`: `pending_follow_up` is null, that follow-up has `skipped: true`, and
+    `next_question` is the suggestion made when the main answer was graded (it may be null). A skipped follow-up earns
+    no grade, no XP and no evidence, and cannot be answered later. Skipping again, or after its answer was scored,
+    returns the attempt unchanged."""
+    return await practice.skip_follow_up(access.user_id, attempt_id, turn)
 
 
 @router.post("/{attempt_id}/submissions/{revision}/retry", response_model=SubmissionResponse,

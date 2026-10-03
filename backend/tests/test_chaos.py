@@ -23,7 +23,7 @@ from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
 from tests.test_practice_hardening import CARD, FOLLOW_UP, GOOD, SEEDS, WEAK
 
-ACTIONS = ("hint", "reveal", "submit", "submit_same_key", "follow_up", "retry", "get", "restart_get")
+ACTIONS = ("hint", "reveal", "submit", "submit_same_key", "follow_up", "skip", "retry", "get", "restart_get")
 
 
 class FlakyProvider(ScriptedProvider):
@@ -82,6 +82,8 @@ async def run_user(svc: PracticeService, store: InMemoryStore, catalog, rng: ran
                 turn = view.pending_follow_up.turn if view.pending_follow_up else 1
                 await svc.submit(user, attempt_id, f"follow-up {rng.randint(1, 5)}",
                                  idempotency_key=f"{attempt_id}-f{turn}-{rng.randint(1, 2)}", follow_up_turn=turn)
+            elif action == "skip":                              # move on without answering the follow-up
+                await svc.skip_follow_up(user, attempt_id, rng.choice([1, 1, 2]))
             elif action == "retry":
                 await svc.retry(user, attempt_id)
             elif action == "get":
@@ -108,7 +110,10 @@ def check_invariants(store: InMemoryStore, catalog):
             assert s["band"] and s["evaluation"], "done without a result"
         mains = [s for s in subs if s["turn"] == 0]
         main_done = any(s["status"] == "done" for s in mains)
-        pending = [t for t in row["follow_up_turns"] if t.get("submission_revision") is None]
+        pending = [t for t in row["follow_up_turns"] if t.get("submission_revision") is None and not t.get("skipped_at")]
+        for turn in row["follow_up_turns"]:
+            if turn.get("skipped_at"):                       # a skipped follow-up is never scored
+                assert not any(s["turn"] == turn["turn"] and s["status"] == "done" for s in subs), "a skipped turn was scored"
         if pending:
             assert main_done, "a pending follow-up without an evaluated main answer"
         assert len(pending) <= 1, "more than one pending follow-up"

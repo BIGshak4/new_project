@@ -496,6 +496,28 @@ class PracticeService:
                                           xp_earned=self._xp_for(attempt, outcome.submission)),
                     self._view(attempt, stored, loaded, stored.row["practice_language"]))
 
+    async def skip_follow_up(self, user_id: uuid.UUID, attempt_id: uuid.UUID, turn: int) -> AttemptView:
+        """Move on without answering the follow-up (Shaked, 2026-10-03). The attempt becomes done and the next
+        question, suggested when the main answer was graded, stays as it is. Nothing is scored: no profile, metrics,
+        usage, XP or plan writes. Idempotent: skipping again, or after the answer was scored, returns the view."""
+        peek = await self._load(user_id, attempt_id)                 # without the lock: a grading in flight holds it
+        try:
+            if (await peek[0].skip_follow_up(turn, dry_run=True)) == "evaluating":
+                raise ApiError("no_pending_follow_up", "this follow-up's answer is being evaluated")
+        except PracticeError as exc:
+            raise ApiError(exc.code, str(exc)) from exc
+        async with self._lock(attempt_id):
+            attempt, stored, loaded, _ = await self._load(user_id, attempt_id)
+            try:
+                changed = await attempt.skip_follow_up(turn)
+            except PracticeError as exc:
+                raise ApiError(exc.code, str(exc)) from exc
+            if changed is not None:
+                async with self.store.transaction() as tx:
+                    await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
+                                          revisions=changed, known_revisions=len(attempt.submissions))
+            return self._view(attempt, stored, loaded, stored.row["practice_language"])
+
     async def _persist_outcome(self, user_id: uuid.UUID, attempt: PracticeAttempt, stored: StoredAttempt,
                                loaded: LoadedQuestion, profile: LoadedProfile, outcome: PracticeOutcome
                                ) -> tuple[PracticeAttempt, StoredAttempt, LoadedQuestion, PracticeOutcome]:
@@ -1313,7 +1335,8 @@ class PracticeService:
             follow_ups.append(FollowUpView(turn=turn["turn"], question=turn["question"] or "", action=turn.get("action", ""),
                                            created_at=turn.get("created_at", ""),
                                            submission=self._submission_view(sub, xp_earned=self._xp_for(attempt, sub)) if sub else None,
-                                           question_pending=bool(turn.get("wording_pending"))))
+                                           question_pending=bool(turn.get("wording_pending")),
+                                           skipped=bool(turn.get("skipped_at"))))
         pending = attempt.pending_follow_up
         pending_view = next((f for f in follow_ups if f.turn == pending["turn"]), None) if pending else None
         latest_any = attempt.submissions[-1] if attempt.submissions else None
@@ -1335,7 +1358,7 @@ class PracticeService:
             submission=self._submission_view(main, xp_earned=self._xp_for(attempt, main)) if main else None,
             follow_ups=follow_ups, pending_follow_up=pending_view,
             can_submit=main is None or main.status == EvaluationStatus.FAILED,
-            can_retry=latest is not None and latest.status == EvaluationStatus.FAILED,
+            can_retry=latest is not None and latest.status == EvaluationStatus.FAILED and "superseded" not in latest.flags,
             next_question=self._next_view(attempt.next_question),
             feedback_pending=any(s.feedback_pending for s in attempt.submissions))
 

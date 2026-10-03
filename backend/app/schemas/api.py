@@ -82,6 +82,7 @@ class FollowUpView(BaseModel):
     created_at: str
     submission: SubmissionView | None = None
     question_pending: bool = False              # decided, but its words are still being written; answering waits
+    skipped: bool = False                       # the user moved on without answering; it cannot be answered later
 
 
 class AttemptView(BaseModel):

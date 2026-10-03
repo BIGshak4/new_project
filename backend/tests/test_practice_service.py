@@ -315,6 +315,147 @@ class TestFailuresAndRaces:
         assert all(m["evidence_weight"] == 0 for m in store.metrics)
 
 
+
+class TestSkippingTheFollowUp:
+    """Shaked, 2026-10-03: the user can go to the next suggested question without answering the follow-up."""
+
+    @staticmethod
+    def snapshot(store: InMemoryStore) -> str:
+        import json
+        return json.dumps({"metrics": store.metrics, "usage": store.usage, "tips": store.tips,
+                           "profiles": {str(k): v for k, v in store.profiles.items()}}, default=str, sort_keys=True)
+
+    async def answered_main(self, catalog, evaluations):
+        svc, store = service(catalog, scripted(evaluations), suggest_reviewed_only=False)
+        view = await svc.start(USER, question_key=Q, mode="deep", language="en")
+        attempt_id = uuid.UUID(view.id)
+        _, view = await svc.submit(USER, attempt_id, "alarm = A ^ B ^ C", idempotency_key="k1")
+        assert view.status == "in_progress" and view.pending_follow_up is not None
+        return svc, store, attempt_id, view
+
+    async def test_skipping_ends_the_attempt_with_nothing_scored(self, catalog):
+        svc, store, attempt_id, before = await self.answered_main(catalog, [WEAK])
+        progress_before, scored_before = await svc.progress(USER), self.snapshot(store)
+
+        view = await svc.skip_follow_up(USER, attempt_id, 1)
+        assert view.status == "done" and view.pending_follow_up is None and not view.can_submit and not view.can_retry
+        assert [f.skipped for f in view.follow_ups] == [True] and view.follow_ups[0].submission is None
+        assert view.next_question == before.next_question                   # suggested when the main answer was graded
+        assert self.snapshot(store) == scored_before                        # no evidence, metrics, usage or tips
+        progress = await svc.progress(USER)
+        assert progress.model_dump() == progress_before.model_dump()        # no XP, no level change
+
+        again = await svc.skip_follow_up(USER, attempt_id, 1)               # a second click changes nothing
+        assert again.model_dump() == view.model_dump()
+        assert (await svc.get(USER, attempt_id)).model_dump() == view.model_dump()     # a refresh shows the same
+        with pytest.raises(ApiError) as raised:                             # it cannot be answered later
+            await svc.submit(USER, attempt_id, "late answer", idempotency_key="k2", follow_up_turn=1)
+        assert raised.value.code == "no_pending_follow_up"
+        assert "skipped_at" in store.attempts[attempt_id]["row"]["follow_up_turns"][0]
+
+    async def test_skipping_after_the_follow_up_evaluation_failed_retires_that_answer(self, catalog):
+        svc, store, attempt_id, _ = await self.answered_main(catalog, [WEAK, LLMError("down", retryable=False)])
+        sub, view = await svc.submit(USER, attempt_id, "an AND of each pair", idempotency_key="k2", follow_up_turn=1)
+        assert sub.status == "failed" and view.can_retry and view.pending_follow_up is not None
+        scored_before = self.snapshot(store)
+
+        view = await svc.skip_follow_up(USER, attempt_id, 1)
+        assert view.status == "done" and not view.can_retry and view.follow_ups[0].skipped
+        svc.provider = scripted([GOOD])                                     # the model is back: a retry still scores nothing
+        for revision in (None, sub.revision):
+            with pytest.raises(ApiError) as raised:
+                await svc.retry(USER, attempt_id, revision)
+            assert raised.value.code == "nothing_to_retry"
+        stored = store.attempts[attempt_id]["row"]["submissions"][sub.revision - 1]
+        assert stored["status"] == "failed" and {"superseded", "follow_up_skipped"} <= set(stored["flags"])
+        assert self.snapshot(store) == scored_before
+
+    async def test_skipping_a_follow_up_that_was_already_answered_changes_nothing(self, catalog):
+        svc, store, attempt_id, _ = await self.answered_main(catalog, [WEAK, GOOD])
+        sub, view = await svc.submit(USER, attempt_id, "an AND of each pair", idempotency_key="k2", follow_up_turn=1)
+        assert sub.status == "done" and view.status == "done"
+        skipped = await svc.skip_follow_up(USER, attempt_id, 1)
+        assert skipped.status == "done" and not skipped.follow_ups[0].skipped and skipped.follow_ups[0].submission
+        assert "skipped_at" not in store.attempts[attempt_id]["row"]["follow_up_turns"][0]
+
+    async def test_a_follow_up_that_does_not_exist_cannot_be_skipped(self, catalog):
+        svc, _, attempt_id, _ = await self.answered_main(catalog, [WEAK, GOOD])
+        with pytest.raises(ApiError) as raised:
+            await svc.skip_follow_up(USER, attempt_id, 3)
+        assert raised.value.code == "no_pending_follow_up"
+        quick = await svc.start(USER, question_key=Q, mode="quick", language="en")          # quick mode asks none
+        await svc.submit(USER, uuid.UUID(quick.id), "alarm = AB + AC + BC", idempotency_key="q1")
+        with pytest.raises(ApiError) as raised:
+            await svc.skip_follow_up(USER, uuid.UUID(quick.id), 1)
+        assert raised.value.code == "no_pending_follow_up"
+        with pytest.raises(ApiError) as raised:                             # another user's attempt
+            await svc.skip_follow_up(OTHER, attempt_id, 1)
+        assert raised.value.code == "not_found"
+
+    async def test_a_skip_while_the_follow_up_answer_is_being_graded_is_refused_at_once(self, catalog):
+        from app.engine.providers import LLMRequest, ScriptedProvider
+        gate, replies = asyncio.Event(), scripted([WEAK, GOOD])
+
+        async def slow_second_grade(request: LLMRequest):
+            if request.role == "evaluator" and gate_armed[0]:
+                await gate.wait()                                  # the follow-up's grading is in flight
+            return replies._responder(request)
+        gate_armed = [False]
+        svc, store = service(catalog, ScriptedProvider(slow_second_grade), suggest_reviewed_only=False)
+        view = await svc.start(USER, question_key=Q, mode="deep", language="en")
+        attempt_id = uuid.UUID(view.id)
+        await svc.submit(USER, attempt_id, "alarm = A ^ B ^ C", idempotency_key="k1")
+        gate_armed[0] = True
+        grading = asyncio.create_task(svc.submit(USER, attempt_id, "an AND of each pair", idempotency_key="k2", follow_up_turn=1))
+        await asyncio.sleep(0.05)
+        with pytest.raises(ApiError) as raised:                    # answers now, without waiting for the grade
+            await asyncio.wait_for(svc.skip_follow_up(USER, attempt_id, 1), timeout=1)
+        assert raised.value.code == "no_pending_follow_up"
+        gate.set()
+        sub, view = await grading
+        assert sub.status == "done" and view.status == "done" and not view.follow_ups[0].skipped
+
+    @pytest.mark.parametrize("skip_first", [False, True])
+    async def test_a_send_and_a_skip_interleaved_on_a_slow_store_never_both_happen(self, catalog, monkeypatch, skip_first):
+        """With a real database every load and save yields, for a varying time; without the per-attempt lock a send
+        and a skip could both succeed (review finding, 2026-10-03). The store is made to yield a random number of
+        times around every load and save, over several seeds and both orders."""
+        import random
+        rng = random.Random()
+        for name in ("load_attempt", "save_attempt"):
+            real = getattr(memory_store._MemoryTx, name)
+
+            async def yielding(self, *args, _real=real, **kwargs):
+                for _ in range(rng.randint(0, 3)):
+                    await asyncio.sleep(0)
+                result = await _real(self, *args, **kwargs)
+                for _ in range(rng.randint(0, 3)):
+                    await asyncio.sleep(0)
+                return result
+            monkeypatch.setattr(memory_store._MemoryTx, name, yielding)
+        for seed in range(8):
+            rng.seed(seed)
+            svc, store, attempt_id, _ = await self.answered_main(catalog, [WEAK, GOOD])
+
+            def send(svc=svc, attempt_id=attempt_id):
+                return svc.submit(USER, attempt_id, "an AND of each pair", idempotency_key="k2", follow_up_turn=1)
+
+            def skip(svc=svc, attempt_id=attempt_id):
+                return svc.skip_follow_up(USER, attempt_id, 1)
+            order = (skip, send) if skip_first else (send, skip)
+            results = await asyncio.gather(*(step() for step in order), return_exceptions=True)
+            assert all(not isinstance(r, BaseException) or (isinstance(r, ApiError) and r.code == "no_pending_follow_up")
+                       for r in results), (seed, results)
+            row = store.attempts[attempt_id]["row"]
+            skipped = bool(row["follow_up_turns"][0].get("skipped_at"))
+            scored = any(s["turn"] == 1 and s["status"] == "done" for s in row["submissions"])
+            assert skipped != scored, f"seed {seed}: skipped={skipped} scored={scored}"   # exactly one of the two
+            skip_view = results[0] if skip_first else results[1]
+            if not isinstance(skip_view, BaseException):                    # the skip's own view never lies
+                assert skip_view.follow_ups[0].skipped == skipped
+            assert (await svc.get(USER, attempt_id)).status == "done"
+
+
 class TestHousekeeping:
     async def test_locks_do_not_accumulate(self, catalog):
         svc, _ = service(catalog, scripted([GOOD] * 20))

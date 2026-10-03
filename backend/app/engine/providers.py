@@ -320,6 +320,11 @@ class AnthropicProvider:
             raise LLMError(f"API error {exc.status_code}: {exc.message}", retryable=exc.status_code >= 500) from exc
         except anthropic.APIConnectionError as exc:
             raise LLMError(f"connection error: {exc}", retryable=True) from exc
+        except ValidationError as exc:
+            # the SDK parses the structured reply itself; malformed JSON (a trailing comma, seen from Sonnet 5 on
+            # 2026-10-03) is retried like any other bad reply instead of escaping as a crash (same rule as _parse)
+            raise LLMError(f"structured reply did not parse as {request.schema.__name__ if request.schema else 'JSON'}: "
+                           f"{exc.errors()[:2]}", retryable=True) from exc
 
         if message.stop_reason == "refusal":
             category = getattr(getattr(message, "stop_details", None), "category", None)

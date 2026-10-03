@@ -244,7 +244,7 @@ class PracticeAttempt:
 
         self.exposures: list[ExposureEvent] = []
         self.submissions: list[Submission] = []
-        self.follow_up_turns: list[dict] = []              # [{turn, question, generated, action, difficulty, expected_answer_outline, submission_revision?}]
+        self.follow_up_turns: list[dict] = []              # [{turn, question, generated, action, difficulty, expected_answer_outline, flags?, submission_revision?, skipped_at?}]
         self.next_question: dict | None = None             # the latest suggestion (key, skill, difficulty, why, reason)
         self.misconceptions_hit: list[str] = []
         self._outcomes: dict[int, PracticeOutcome] = {}    # revision -> outcome, for idempotent replay
@@ -350,8 +350,10 @@ class PracticeAttempt:
 
     @property
     def pending_follow_up(self) -> dict | None:
-        """The follow-up question that is waiting for an answer, if any."""
+        """The follow-up question that is waiting for an answer, if any. A skip ends the follow-up conversation."""
         for turn in reversed(self.follow_up_turns):
+            if turn.get("skipped_at"):
+                return None
             if turn.get("submission_revision") is None:
                 return turn
             revision = turn["submission_revision"]
@@ -429,6 +431,37 @@ class PracticeAttempt:
         if replay is not None:
             return replay
         return await self.evaluate(submission, latency_ms=latency_ms, revision_count=revision_count)
+
+    async def skip_follow_up(self, turn_number: int, *, dry_run: bool = False) -> set[int] | None | str:
+        """The user moves on without answering the follow-up (Shaked, 2026-10-03). Nothing is scored: no evidence, no
+        XP, no change to the skill states. Returns the revisions to save (a failed answer to the skipped turn is
+        retired, so a retry can never score it), or None when nothing changed: the turn was already skipped, or it
+        was answered and scored meanwhile (the user can move on anyway).
+        Raises no_pending_follow_up for a turn that does not exist, or whose answer is still being evaluated.
+        `dry_run` only looks: it returns "evaluating" when that answer is in flight, else None, and changes nothing."""
+        async with self._lock:
+            turn = next((t for t in self.follow_up_turns if t["turn"] == turn_number), None)
+            if turn is None:
+                raise PracticeError("no_pending_follow_up", "there is no such follow-up question")
+            if turn.get("skipped_at"):
+                return None
+            revision = turn.get("submission_revision")
+            submission = self.submissions[revision - 1] if revision else None
+            if submission is not None and submission.status == EvaluationStatus.DONE:
+                return None
+            if turn is not self.pending_follow_up:
+                if dry_run:
+                    return "evaluating"
+                raise PracticeError("no_pending_follow_up", "this follow-up's answer is being evaluated")
+            if dry_run:
+                return None
+            changed: set[int] = set()
+            if submission is not None:                       # its evaluation failed: retire it with the skip
+                submission.flags = [*submission.flags, *[f for f in ("superseded", "follow_up_skipped")
+                                                         if f not in submission.flags]]
+                changed.add(submission.revision)
+            turn["skipped_at"] = _now()
+            return changed
 
     async def submit_follow_up(self, answer, *, idempotency_key: str | None = None,
                                latency_ms: int | None = None) -> PracticeOutcome:
@@ -717,7 +750,8 @@ class PracticeAttempt:
                     action=action, reason_code=controller.reason_code, target_subject=question.subject,
                     target_skill=controller.target_skill or question.primary_skill,
                     target_difficulty=next_difficulty, target_archetype=question.archetype,
-                    probe_focus="; ".join(evaluation.key_points_missed[:2]) or None,
+                    probe_focus=("; ".join(evaluation.key_points_missed[:2]) or None)
+                    if action in (Action.HOLD, Action.HINT) else None,
                     deliver_hint=action == Action.HINT, hint_level=next_hint)
             else:
                 metrics[0]["decision_reason_code"] = controller.reason_code
@@ -796,7 +830,8 @@ class PracticeAttempt:
             generate_coro = generator.generate(
                 ctx.provider, decision, language=ctx.language, skill=ctx.skills.get(decision.target_skill),
                 question=question, last_question=previous[-1], last_answer_summary=evaluation.one_line_summary,
-                glossary=ctx.glossary, previous_questions=previous)
+                glossary=ctx.glossary, previous_questions=previous, answer_covered=evaluation.key_points_hit[:4],
+                check_passed=check.passed if check else None)
         if submission.turn == 0:            # the feedback card belongs to the main question
             card_coro = feedback.build_card(
                 ctx.provider, question=question, evaluation=evaluation, band=band, answer=submission.answer, check=check,
@@ -845,7 +880,8 @@ class PracticeAttempt:
         template = texts.get(decision.action, generator.FALLBACK_TEXT["en"][Action.HOLD])
         text = template.format(hint=hint_text or "", skill=skill.label if skill else decision.target_skill or "")
         return generator.GenerationResult(generator.GeneratedQuestion(question_text=text,
-                                                                      question_archetype=decision.target_archetype),
+                                                                      question_archetype=decision.target_archetype,
+                                                                      expected_answer_outline=generator.fallback_outline(decision, language)),
                                           source="fallback", flags=["fallback_question"])
 
     async def _tip(self, choice: tips.TipChoice, evaluation: Evaluation, usage: list[UsageEvent]) -> str:
@@ -872,7 +908,8 @@ class PracticeAttempt:
         if turn is not None and prose.follow_up is not None:
             generated = prose.follow_up
             turn.update(question=generated.question.question_text, source=generated.source,
-                        expected_answer_outline=generated.question.expected_answer_outline)
+                        expected_answer_outline=generated.question.expected_answer_outline,
+                        flags=list(generated.flags))
             for transient in ("wording_pending", "asked_after", "decision"):
                 turn.pop(transient, None)
             submission.follow_up = generated.question.question_text

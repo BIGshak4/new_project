@@ -194,6 +194,31 @@ class TestTheContract:
         assert response.json()["submission"]["evidence"] == "none"
 
 
+class TestSkippingTheFollowUp:
+    async def test_skip_over_http_shows_the_next_question_and_cannot_be_answered_later(self, client, user):
+        _, h = user
+        aid = (await start(client, h, mode="deep", language="en"))["id"]
+        response = await client.post(f"{BASE}/{aid}/submissions", json={"answer": {"text": "alarm = A ^ B ^ C"}},
+                                     headers={**h, "Idempotency-Key": "k1"})
+        assert response.status_code == 200, response.text
+        before = await words(client, h, aid)
+        assert before["status"] == "in_progress" and before["pending_follow_up"]["turn"] == 1
+
+        response = await client.post(f"{BASE}/{aid}/follow-ups/1/skip", headers=h)
+        assert response.status_code == 200, response.text
+        view = response.json()                                   # a bare attempt, like GET
+        assert view["status"] == "done" and view["pending_follow_up"] is None and not view["can_retry"]
+        assert view["follow_ups"][0]["skipped"] is True and view["follow_ups"][0]["submission"] is None
+        assert view["next_question"] == before["next_question"]
+        assert (await client.post(f"{BASE}/{aid}/follow-ups/1/skip", headers=h)).json() == view    # idempotent
+        late = await client.post(f"{BASE}/{aid}/follow-ups/1/submissions", json={"answer": "late"},
+                                 headers={**h, "Idempotency-Key": "k2"})
+        assert late.status_code == 409 and late.json()["error"]["code"] == "no_pending_follow_up"
+        missing = await client.post(f"{BASE}/{aid}/follow-ups/3/skip", headers=h)
+        assert missing.status_code == 409 and missing.json()["error"]["code"] == "no_pending_follow_up"
+        assert (await client.post(f"{BASE}/{aid}/follow-ups/0/skip", headers=h)).status_code == 422
+
+
 class TestErrors:
     async def test_model_outage_then_retry(self, client, user, catalog):
         app.state.runtime = runtime_with(catalog, scripted([LLMError("down", retryable=False), GOOD]))
@@ -298,7 +323,7 @@ def every_route():
         ("GET", f"/v1/questions/{Q}", None), ("GET", f"/v1/questions/{Q}/resources", None), ("POST", BASE, {"question_key": Q}), ("GET", f"{BASE}/{aid}", None),
         ("POST", f"{BASE}/{aid}/hints/next", None), ("POST", f"{BASE}/{aid}/reference", None),
         ("POST", f"{BASE}/{aid}/submissions", {"answer": "x"}), ("POST", f"{BASE}/{aid}/follow-ups/1/submissions", {"answer": "x"}),
-        ("POST", f"{BASE}/{aid}/submissions/1/retry", None),
+        ("POST", f"{BASE}/{aid}/follow-ups/1/skip", None), ("POST", f"{BASE}/{aid}/submissions/1/retry", None),
         # mock interviews
         ("POST", "/v1/interviews", {"duration_min": 20}), ("GET", "/v1/interviews", None),
         ("GET", f"/v1/interviews/{aid}", None), ("POST", f"/v1/interviews/{aid}/turns/0/answer", {"answer": "x"}),
@@ -347,6 +372,7 @@ class TestEveryRouteIsProtected:
         for method, path, body in [("GET", f"{BASE}/{aid}", None), ("POST", f"{BASE}/{aid}/hints/next", None),
                                    ("POST", f"{BASE}/{aid}/reference", None), ("POST", f"{BASE}/{aid}/submissions", {"answer": "x"}),
                                    ("POST", f"{BASE}/{aid}/follow-ups/1/submissions", {"answer": "x"}),
+                                   ("POST", f"{BASE}/{aid}/follow-ups/1/skip", None),
                                    ("POST", f"{BASE}/{aid}/submissions/1/retry", None)]:
             response = await client.request(method, path, json=body, headers=oh)
             assert response.status_code == 404, (path, response.text)
