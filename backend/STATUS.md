@@ -734,6 +734,38 @@ gate sharing on the NAND network. No follow-up named the question's examples.
 **Also:** the golden grade-first record is compared with the grader's prompt version made neutral, so a prompt version
 bump no longer stales it. 863 offline tests. Model spend on the checks: about $1.40.
 
+## 5zd. Night check of 2026-10-03 → 04 (Shaked: "do the night run check, the users used the system, check their data and see how we can rate them and which role fits each")
+
+| Check | Result |
+|---|---|
+| ruff, offline tests | clean, 863 passed |
+| Live service suite, alone | 17 of 17 in 20 min (the skip and both work-ahead tests included) |
+| `e2e_real_flow.py` (real models, in memory) | passed, 16 calls, $0.18 |
+| `e2e_goal_and_visuals.py` (real model and database, rolled back) | passed, drawn circuit assessed, 47 s |
+| Harel's web tests and typecheck, run only | 65 of 65, clean |
+| Production | healthy on the day's third build, smoke 28 routes OK |
+
+**The users** (`docs/pilot-users-and-role-fit-2026-10-03.md`, read-only pass, rolled back): Or answered three questions
+on 3 October, all PARTIAL under the morning's grader, skipped all three follow-ups (the "compute all the examples"
+kind, now gone), flagged one question unclear. Raz opened three questions in the evening and answered none (no
+submission, no model call). Harel's and Shaked's accounts hold test runs. Model spend by real users so far: $0.24.
+
+**Rating and role fit:** the per-skill levels and the level in words rate what the system has seen and no more
+(Or: "Foundational", 1 skill assessed of 25). The fit per job type already exists (`scorecards.target_fit`) but with
+one assessed skill it ties at 100 for all six job types on 6 % coverage; the engine's own 60 % coverage rule must gate
+it on screen. Eight shared skills carry about half of every job type's weight; two of the heaviest (latches and
+flip-flops, Moore and Mealy) have no live question, and the drafts hold 11 to 12 each.
+
+**Morning list for Shaked:**
+1. Ask Raz what stopped him on the three questions he opened and left.
+2. Decide on a "which role suits you" card: fit per job type shown above 60 % coverage, otherwise the next three
+   skills to answer (a small `GET /v1/me/fit` route, about 4 h; the card is Harel's).
+3. Decide on a ten-question diagnostic as day one of a new user's plan (about half a day).
+4. Decide whether to load two reviewed drafts for each of the four blind skills (a data write, needs approval).
+5. The TAU-address account (oryosef) is not on the pilot list: add it if it is Or's second address.
+6. The first real answers graded under grader v2 will show `evaluator.v2` on their metrics rows; I will read them
+   and the follow-ups they got.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -772,6 +804,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-04 | Night check (§5zd): all suites green; the pilot's users, how the system rates them and role fit (`docs/pilot-users-and-role-fit-2026-10-03.md`); morning list |
 | 2026-10-03 | Grader v2: worked examples are confirmation, a correct method is strong without them (13/13 review set unchanged); generator v3: the follow-up after a strong answer is an edge case (§5zc) |
 | 2026-10-03 | Follow-ups ask for understanding (generator v2, the example check, flags stored), the skip route, malformed structured replies retried (§5zb); contract for Harel |
 | 2026-10-03 | Working ahead (§5za): later days' plan items open once today's are done; `ProgramView.ahead`; the rebuild keeps work done or opened ahead; contract for Harel |
