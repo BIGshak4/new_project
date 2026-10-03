@@ -34,6 +34,7 @@ V1_ROUTES = {
     ("POST", "/v1/practice/attempts/{attempt_id}/hints/next"), ("POST", "/v1/practice/attempts/{attempt_id}/reference"),
     ("POST", "/v1/practice/attempts/{attempt_id}/submissions"),
     ("POST", "/v1/practice/attempts/{attempt_id}/follow-ups/{turn}/submissions"),
+    ("POST", "/v1/practice/attempts/{attempt_id}/follow-ups/{turn}/skip"),
     ("POST", "/v1/practice/attempts/{attempt_id}/submissions/{revision}/retry"),
     # mock interviews
     ("POST", "/v1/interviews"), ("GET", "/v1/interviews"), ("GET", "/v1/interviews/{interview_id}"),
