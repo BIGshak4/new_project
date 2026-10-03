@@ -519,8 +519,7 @@ divs, phone tap targets, a dead helper). Two loading states hold their room to s
 
 **Claude (code), in order**
 8. After item 1: smoke test and live suite; add the report route to `scripts/smoke_http.py`.
-9. The question drafts: finish the run, spot-check, validate with the loader, commit `seeds/question_drafts/` and the
-   coverage report. Not loaded (Shaked's decision).
+9. ~~The question drafts~~ done 2026-10-03: 242 drafts committed aside with `docs/question-bank-drafts.md`. Not loaded.
 10. Hide an attempt or an interview from the screen, data kept (`user_hidden_item`: dry run → approval → apply; route; hide
     with undo; "show hidden").
 11. Skip to the next item in today's program (`POST /v1/me/program/skip`; skipped, next opens, un-skip the same day; no XP).
@@ -568,6 +567,9 @@ touch the backend as well as the web app:
 - The API was unreachable for about an hour this morning (no HTTP response at all, Render status clean); an empty push
   redeployed it and it came back in five minutes with the right judge, pooler and a 3 ms round trip; smoke 26 routes OK,
   CORS preflight from the site OK.
+- **Question drafts complete** (2026-10-03): 242 in `seeds/question_drafts/generated_bank.json`, aside and not loaded;
+  `docs/question-bank-drafts.md` has the coverage, the checks and how to use them. Drafts' self-tests now run in the
+  sandbox (a model-written hanging answer froze one run for 21 h) and the watchdog is a thread.
 - Question generator: `--batch 1`, 32k tokens, JSON-in-text (the draft schema exceeds the structured-output grammar
   limit; `providers.py` now treats "grammar too large" as a schema rejection); a 15-minute stall watchdog (exit 3) with a
   restart loop. 71 drafts saved at the time of writing, about $20.
