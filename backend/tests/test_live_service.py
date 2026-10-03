@@ -296,6 +296,114 @@ class TestContentAndSpeed:
         assert one_seconds < 2.0
 
 
+class TestProgramAhead:
+    async def test_tomorrows_item_opens_once_today_is_done_and_stays_done_after_the_rebuild(self, case):
+        """Working ahead (Shaked, 2026-10-03) against the real plan_item table, in the rolled-back transaction: today's
+        items done, the item ahead started and answered, ticked; the next day's rebuild keeps it done on its new day."""
+        from datetime import date, timedelta
+
+        svc = service(case, provider_always(GOOD), daily_attempt_limit=1000, suggest_reviewed_only=False)
+        user, conn = case["user_id"], case["connection"]
+        await svc.save_goal(user, job_type="verification", interview_date=date.today() + timedelta(days=10),
+                            minutes_per_day=30, seniority="student")
+        view = await svc.program(user, language="en")
+        assert view.today and view.ahead is None
+        async with svc.store.transaction() as tx:                     # today's items done, through the store
+            for item in view.today:
+                await tx.update_plan_item(uuid.UUID(item.id), status="done")
+        done_today = (await svc.program(user, language="en")).done_today
+
+        started = None
+        for _ in range(10):
+            view = await svc.program(user, language="en")
+            assert view.today == [] and view.ahead is not None, "today is done: the next day's first item is ahead"
+            started = await svc.start_program_item(user, item_id=uuid.UUID(view.ahead.id), language="en")
+            if started.kind == "attempt":
+                break
+            if started.kind == "interview":                             # not this test's subject: set it aside
+                async with svc.store.transaction() as tx:
+                    await tx.update_plan_item(uuid.UUID(view.ahead.id), status="skipped")
+            # kind nothing: no question in the bank for that skill, the item was skipped; take the next one
+        assert started is not None and started.kind == "attempt", started
+        attempt_id, item_id, day_index = uuid.UUID(started.attempt.id), uuid.UUID(started.item.id), started.item.day_index
+        assert day_index >= 1
+
+        sub, _ = await svc.submit(user, attempt_id, "a careful, correct answer", idempotency_key="ahead-1")
+        assert sub.status == "done" and sub.band is not None, sub.flags
+        row = (await conn.execute(text("select status, completed_attempt_id from public.plan_item where id = :i"),
+                                  {"i": item_id})).one()
+        assert row.status == "done" and row.completed_attempt_id == attempt_id
+        assert (await svc.program(user, language="en")).done_today == done_today        # not today's count
+
+        # the next day: imitate that this plan was built yesterday (the offline tests move week_start back a day)
+        plan_id = (await conn.execute(text("select plan_id from public.plan_item where id = :i"), {"i": item_id})).scalar_one()
+        await conn.execute(text("update public.learning_plan set week_start = week_start - 1, "
+                                "generated_at = generated_at - interval '1 day' where id = :p"), {"p": plan_id})
+        await conn.execute(text("update public.plan_item set created_at = created_at - interval '1 day' where plan_id = :p"),
+                           {"p": plan_id})
+        rebuilt = await svc.program(user, language="en")
+        assert rebuilt.plan.generated_for == date.today().isoformat()
+        kept = (await conn.execute(text(
+            "select i.id, i.status, i.day_index from public.plan_item i join public.learning_plan p on p.id = i.plan_id "
+            "where p.user_id = :u and p.is_active and i.completed_attempt_id = :a"), {"u": user, "a": attempt_id})).all()
+        assert len(kept) == 1 and kept[0].status == "done" and kept[0].day_index == day_index - 1, kept
+        shown = next(i for i in rebuilt.plan.items if i.id == str(kept[0].id))
+        assert shown.done and not shown.carried
+        if day_index == 1:
+            assert rebuilt.done_today == 1                               # it landed on the new today
+
+    async def test_an_item_opened_ahead_and_answered_after_the_rebuild_ticks_its_copy(self, case):
+        """An item opened ahead and left unanswered overnight: the rebuild keeps it started on its new day and points
+        the real attempt row at the copy (plans.relink_attempts), so the late answer ticks that copy."""
+        from datetime import date, timedelta
+
+        svc = service(case, provider_always(GOOD), daily_attempt_limit=1000, suggest_reviewed_only=False)
+        user, conn = case["user_id"], case["connection"]
+        await svc.save_goal(user, job_type="verification", interview_date=date.today() + timedelta(days=10),
+                            minutes_per_day=30, seniority="student")
+        view = await svc.program(user, language="en")
+        async with svc.store.transaction() as tx:
+            for item in view.today:
+                await tx.update_plan_item(uuid.UUID(item.id), status="done")
+
+        started = None
+        for _ in range(10):
+            view = await svc.program(user, language="en")
+            assert view.ahead is not None
+            started = await svc.start_program_item(user, item_id=uuid.UUID(view.ahead.id), language="en")
+            if started.kind == "attempt":
+                break
+            if started.kind == "interview":
+                async with svc.store.transaction() as tx:
+                    await tx.update_plan_item(uuid.UUID(view.ahead.id), status="skipped")
+        assert started is not None and started.kind == "attempt", started
+        attempt_id, old_item_id = uuid.UUID(started.attempt.id), uuid.UUID(started.item.id)
+        day_index = started.item.day_index
+        assert day_index >= 1
+
+        plan_id = (await conn.execute(text("select plan_id from public.plan_item where id = :i"), {"i": old_item_id})).scalar_one()
+        await conn.execute(text("update public.learning_plan set week_start = week_start - 1, "
+                                "generated_at = generated_at - interval '1 day' where id = :p"), {"p": plan_id})
+        await conn.execute(text("update public.plan_item set created_at = created_at - interval '1 day' where plan_id = :p"),
+                           {"p": plan_id})
+        rebuilt = await svc.program(user, language="en")
+        assert rebuilt.plan.generated_for == date.today().isoformat()
+
+        new_item_id = (await conn.execute(text("select plan_item_id from public.attempt where id = :a"),
+                                          {"a": attempt_id})).scalar_one()
+        assert new_item_id is not None and new_item_id != old_item_id, "the attempt follows its item into the new plan"
+        row = (await conn.execute(text(
+            "select i.status, i.day_index, p.is_active from public.plan_item i join public.learning_plan p on p.id = i.plan_id "
+            "where i.id = :i"), {"i": new_item_id})).one()
+        assert row.is_active and row.status == "started" and row.day_index == day_index - 1, row
+
+        sub, _ = await svc.submit(user, attempt_id, "a careful, correct answer", idempotency_key="ahead-relink-1")
+        assert sub.status == "done" and sub.band is not None, sub.flags
+        ticked = (await conn.execute(text("select status, completed_attempt_id from public.plan_item where id = :i"),
+                                     {"i": new_item_id})).one()
+        assert ticked.status == "done" and ticked.completed_attempt_id == attempt_id
+
+
 class TestOverHttp:
     async def test_the_http_flow_against_the_real_database(self, case):
         """The FastAPI app with DbStore, a token for the real pilot user, the real access resolver."""

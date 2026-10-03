@@ -27,6 +27,9 @@ MODELS = {"QuestionSummary": "QuestionSummary", "QuestionDetail": "QuestionDetai
           "CompanyTag": "CompanyTag", "JobTypeView": "JobType", "CompanyView": "Company", "GoalView": "Goal",
           "ProgressOverview": "ProgressOverview", "TimelinePoint": "TimelinePoint", "PlanItemView": "PlanItem",
           "PlanView": "Plan", "ProgramView": "Program", "ProgramStartView": "ProgramStart"}
+# New backend fields the web client has not typed yet: the screen part is Harel's. Once practice-api.ts has the
+# field it is compared like every other one again; then remove the entry.
+PENDING_IN_CLIENT = {"ProgramView": {"ahead"}}          # working ahead in the program (Shaked, 2026-10-03)
 
 
 def ts_fields(source: str, type_name: str) -> set[str]:
@@ -56,6 +59,7 @@ def test_every_response_field_is_typed_both_ways(spec, source, schema_name, ts_n
     if schema_name == "QuestionDetail":                             # `QuestionSummary & {...}` in TS
         backend -= set(spec["components"]["schemas"]["QuestionSummary"]["properties"])
     client = ts_fields(source, ts_name)
+    backend -= PENDING_IN_CLIENT.get(schema_name, set()) - client
     assert client == backend, f"{ts_name}: missing in TS {backend - client}, extra in TS {client - backend}"
 
 

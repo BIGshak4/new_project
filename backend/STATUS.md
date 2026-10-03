@@ -592,6 +592,39 @@ touch the backend as well as the web app:
 - **Pilot**: Or answered his first question (priority encoder, PARTIAL, photo and drawing assessed, follow-up offered and
   not answered) and flagged it unclear before answering, without a note. Itay and Or H. are on the list without accounts.
 
+## 5za. Working ahead in the program (2026-10-03, Shaked: "i want to be able to start tomorrows plan after i finished todays plan")
+
+**Rule.** Items of later days open once today's items are all done (or none are due). While today still has an open
+item, a later item does not start.
+
+**What the backend does now** (`practice_service`; the engine is unchanged):
+- `GET /v1/me/program` has a new field **`ahead`**: once today has no open item, the first open item of the following
+  days (earliest day first, carried items first, interviews last). It is `null` while today has open items.
+- `POST /v1/me/program/start` with a later day's `item_id`:
+  - today still open: `kind: "nothing"` with the message "Finish today's plan first; tomorrow's items open once today
+    is done." (Hebrew too);
+  - today done: the item starts like a today item (an attempt, or the interview lobby).
+- `POST /v1/me/program/start` with no `item_id`: today's next item, else the `ahead` one.
+- An answer to an item opened ahead ticks that item, not today's count. An unplanned answer still only ticks items due
+  by today, so working ahead never happens by accident.
+- The next morning's rebuild keeps items done ahead as done on their new day, and that day is filled only up to the
+  minutes a day. An item opened ahead and not answered stays "started" on its new day, and its attempt follows it, so
+  the late answer still ticks it.
+
+**For Harel (front end, his task):**
+- The plan table's Start buttons already call `startProgram(item.id)`, so tomorrow's rows now start once today is done.
+  Before that, the button shows the "finish today first" message through the existing error line. Nothing to change,
+  unless he prefers to disable those buttons while `program.today` is not empty.
+- The Learn page shows no current node once today is done, because `program.next` is `null`. Add `ahead?: PlanItem |
+  null` to `Program` in `practice-api.ts`, and offer a "Continue with tomorrow" action when `program.next` is `null`
+  and `program.ahead` is set, for example by passing `program.next?.id ?? program.ahead?.id` to `pathNodes`.
+- Once `ahead` is typed, remove the `PENDING_IN_CLIENT` entry in `tests/test_ts_client_contract.py`.
+
+**Verified:** ruff clean, 824 offline tests (the program tests cover today open, today done, the earliest day first,
+done and skipped items never reopened, the rebuild keeping work done ahead, and an item opened ahead answered after the
+rebuild); three mutants of the new code each caught by a test; the two live work-ahead tests pass against the real
+database in rolled-back transactions, including the attempt following its item into the rebuilt plan; the whole live service suite passes (16 of 16).
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -630,6 +663,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-03 | Working ahead (§5za): later days' plan items open once today's are done; `ProgramView.ahead`; the rebuild keeps work done or opened ahead; contract for Harel |
 | 2026-10-03 | Full check and circuit-simulation check (§5z): all suites green, simulator correct on eight interview circuits, Opus 5.5 stricter on incomplete answers |
 | 2026-10-02 | Pilot opened: two testers on the list; password percent-encoding lesson; Render outage and recovery; generator watchdog (§5y) |
 | 2026-10-01 | Ownership: the front end is Harel's; Claude stays on the backend, content, tools and docs (§5w) |

@@ -78,7 +78,9 @@ async def deactivate(connection: AsyncConnection, user_id: uuid.UUID) -> None:
 
 async def create(connection: AsyncConnection, *, user_id: uuid.UUID, role_slug: str, seniority: str, week_start: date,
                  minutes_per_day: int, interview_date: date | None, items: list[dict]) -> StoredPlan:
-    """Replace the active plan. `items`: {day_index, mode, skills, reason, minutes, created_at?} in the order to keep."""
+    """Replace the active plan. `items`: {day_index, mode, skills, reason, minutes, created_at?, status?,
+    completed_attempt_id?, completed_session_id?} in the order to keep; status defaults to planned (an item done
+    ahead of its day keeps its status and what completed it when the plan is rebuilt)."""
     await deactivate(connection, user_id)
     plans, table = await db.table("learning_plan"), await db.table("plan_item")
     role_id, _ = await _versioned_id(connection, "role_template", role_slug)
@@ -93,10 +95,14 @@ async def create(connection: AsyncConnection, *, user_id: uuid.UUID, role_slug: 
         created = item.get("created_at") or now
         row = {"plan_id": plan_id, "day_index": int(item["day_index"]), "mode": item["mode"],
                "skill_ids": [skill_ids[k] for k in item["skills"] if k in skill_ids], "reason": item["reason"] or "-",
-               "estimated_minutes": max(1, min(120, int(item["minutes"] or 1))), "status": "planned", "created_at": created}
+               "estimated_minutes": max(1, min(120, int(item["minutes"] or 1))), "status": item.get("status") or "planned",
+               "completed_attempt_id": item.get("completed_attempt_id"),
+               "completed_session_id": item.get("completed_session_id"), "created_at": created}
         item_id = (await connection.execute(insert(table).values(**db.sql_values(row)).returning(table.c.id))).scalar_one()
         stored.append(PlanItemRow(id=item_id, day_index=row["day_index"], mode=row["mode"], skills=list(item["skills"]),
-                                  reason=row["reason"], minutes=row["estimated_minutes"], created_at=created))
+                                  reason=row["reason"], minutes=row["estimated_minutes"], status=row["status"],
+                                  completed_attempt_id=row["completed_attempt_id"],
+                                  completed_session_id=row["completed_session_id"], created_at=created))
     return StoredPlan(id=plan_id, user_id=user_id, week_start=week_start, minutes_per_day=minutes_per_day,
                       interview_date=interview_date, seniority=seniority, generated_at=now, items=stored)
 
@@ -109,6 +115,12 @@ async def update_item(connection: AsyncConnection, item_id: uuid.UUID, **fields)
 async def link_attempt(connection: AsyncConnection, attempt_id: uuid.UUID, item_id: uuid.UUID) -> None:
     attempt = await db.table("attempt")
     await connection.execute(update(attempt).where(attempt.c.id == attempt_id).values(plan_item_id=item_id))
+
+
+async def relink_attempts(connection: AsyncConnection, old_item_id: uuid.UUID, new_item_id: uuid.UUID) -> None:
+    """Point the attempts started from a plan item at its copy in the rebuilt plan (the item was opened ahead)."""
+    attempt = await db.table("attempt")
+    await connection.execute(update(attempt).where(attempt.c.plan_item_id == old_item_id).values(plan_item_id=new_item_id))
 
 
 async def attempt_item(connection: AsyncConnection, attempt_id: uuid.UUID) -> uuid.UUID | None:

@@ -44,6 +44,8 @@ class Tx(Protocol):
     # "this question is not clear": one row per (question, user, reason); the API returns the open count
     async def add_report(self, *, question_id: str, user_id: uuid.UUID, reason: str, note: str | None, language: str,
                          context: str) -> int: ...
+    # an item opened ahead survives the daily rebuild as a new row: its attempt follows it
+    async def relink_plan_item(self, old_item_id: uuid.UUID, new_item_id: uuid.UUID) -> None: ...
     async def question_ids_for_company(self, slug: str) -> set[str]: ...
     async def companies(self) -> list[dict]: ...
     async def load_goal(self, user_id: uuid.UUID) -> Goal: ...
@@ -166,6 +168,9 @@ class DbTx:
 
     async def link_attempt_to_plan_item(self, attempt_id, item_id):
         await plans.link_attempt(self.connection, attempt_id, item_id)
+
+    async def relink_plan_item(self, old_item_id, new_item_id):
+        await plans.relink_attempts(self.connection, old_item_id, new_item_id)
 
     async def attempt_plan_item(self, attempt_id):
         return await plans.attempt_item(self.connection, attempt_id)

@@ -233,6 +233,8 @@ class _MemoryTx:
         now = datetime.now(UTC)
         rows = [PlanItemRow(id=uuid.uuid4(), day_index=int(i["day_index"]), mode=i["mode"], skills=list(i["skills"]),
                             reason=i["reason"] or "-", minutes=max(1, min(120, int(i["minutes"] or 1))),
+                            status=i.get("status") or "planned", completed_attempt_id=i.get("completed_attempt_id"),
+                            completed_session_id=i.get("completed_session_id"),
                             created_at=i.get("created_at") or now) for i in items]
         plan = StoredPlan(id=uuid.uuid4(), user_id=user_id, week_start=week_start, minutes_per_day=minutes_per_day,
                           interview_date=interview_date, seniority=seniority, generated_at=now, items=rows)
@@ -255,6 +257,9 @@ class _MemoryTx:
 
     async def attempt_plan_item(self, attempt_id):
         return self.s.plan_links.get(attempt_id)
+
+    async def relink_plan_item(self, old_item_id, new_item_id):
+        self.s.plan_links = {a: (new_item_id if i == old_item_id else i) for a, i in self.s.plan_links.items()}
 
     async def load_attempt(self, attempt_id, *, user_id):
         stored = self.s.attempts.get(attempt_id)

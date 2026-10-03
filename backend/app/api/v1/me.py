@@ -55,12 +55,16 @@ async def save_goal(body: GoalRequest, access: CurrentAccess, practice: Practice
 
 
 class ProgramStartRequest(BaseModel):
-    item_id: uuid.UUID | None = Field(None, description="a plan item from GET /v1/me/program; the next due one when omitted")
+    item_id: uuid.UUID | None = Field(None, description="a plan item from GET /v1/me/program; the next due one when "
+                                                        "omitted, or the 'ahead' one once today's items are done. An item "
+                                                        "of a later day opens only once today's items are done")
     language: str | None = Field(None, pattern="^(en|he)$")
 
 
 @router.get("/program", response_model=ProgramView,
-            summary="My program: the saved plan rolled to today, what is due now, the item to start")
+            summary="My program: the saved plan rolled to today, what is due now, the item to start",
+            description="`next` is today's item to start. Once today's items are all done, `ahead` is the first open "
+                        "item of the following days, which POST /v1/me/program/start opens.")
 async def program(access: CurrentAccess, practice: Practice,
                   language: str | None = Query(None, pattern="^(en|he)$")) -> ProgramView:
     return await practice.program(access.user_id, language=language)

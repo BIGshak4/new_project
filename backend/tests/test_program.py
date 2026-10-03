@@ -10,13 +10,14 @@ import pytest
 from httpx import ASGITransport, AsyncClient
 
 from app.config import Settings, get_settings
+from app.engine import plan_router
 from app.engine.catalog import load_catalog
 from app.main import app
-from app.repo.plans import PlanItemRow
+from app.repo.plans import OPEN, PlanItemRow
 from app.runtime import build_runtime
 from app.services.interview_service import InterviewConfig, InterviewService
 from app.services.memory_store import InMemoryStore
-from app.services.practice_service import PracticeService, ServiceConfig
+from app.services.practice_service import PROGRAM_MESSAGES, PracticeService, ServiceConfig
 from tests.authtools import make_token, make_verifier, member_resolver
 from tests.test_interview_service import Clock, interviewer
 from tests.test_practice_hardening import GOOD, SEEDS, scripted
@@ -39,6 +40,33 @@ def practice(catalog, provider=None) -> tuple[PracticeService, InMemoryStore]:
 async def with_goal(svc, minutes=30, days=10):
     await svc.save_goal(USER, job_type="verification", interview_date=TODAY + timedelta(days=days), minutes_per_day=minutes,
                         seniority="student")
+
+
+async def finish_day(svc, store, day_index=0, user=USER) -> int:
+    """Mark every open item of one day (0 = today) done through the store, as finished answers would."""
+    view = await svc.program(user, language="en")
+    due = [i for i in view.plan.items if i.day_index == day_index and i.status in OPEN]
+    async with store.transaction() as tx:
+        for item in due:
+            await tx.update_plan_item(uuid.UUID(item.id), status="done")
+    return len(due)
+
+
+def stored_item(store, item_id, user=USER) -> PlanItemRow:
+    return next(i for i in store.plans[user].items if str(i.id) == str(item_id))
+
+
+async def interview_once(svc, store, catalog):
+    """A whole (short) mock interview, its end wired to the program the way the runtime wires it."""
+    async def finished(tx, user_id, session_id):
+        await svc._complete_program_item(tx, user_id, session_id=session_id)
+
+    interviews = InterviewService(store, catalog, interviewer([GOOD]), InterviewConfig(reviewed_only=False),
+                                  on_finished=finished)
+    interviews.clock = Clock()
+    iv = await interviews.start(USER, duration_min=20, language="en")
+    await interviews.end(USER, uuid.UUID(iv.id))
+    return iv
 
 
 class TestBuildingAndReusing:
@@ -184,6 +212,332 @@ class TestStartingAndTicking:
         assert next(i for i in store.plans[USER].items if i.id == orphan.id).status == "skipped"
 
 
+class TestWorkingAhead:
+    """'I want to be able to start tomorrow's plan after I finished today's plan' (Shaked, 2026-10-03)."""
+
+    async def test_a_later_days_item_waits_while_today_has_open_items(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        view = await svc.program(USER, language="en")
+        assert view.today and view.ahead is None
+        tomorrow = next(i for i in view.plan.items if i.day_index == 1)
+        for language in ("he", "en"):
+            refused = await svc.start_program_item(USER, item_id=uuid.UUID(tomorrow.id), language=language)
+            assert refused.kind == "nothing" and refused.attempt is None and refused.item.id == tomorrow.id
+            assert refused.message == PROGRAM_MESSAGES[language]["finish_today_first"]
+        assert "קודם מסיימים" in PROGRAM_MESSAGES["he"]["finish_today_first"]
+        assert not store.attempts and not store.plan_links                  # nothing was created
+        assert stored_item(store, tomorrow.id).status == "planned"
+
+    async def test_once_today_is_done_tomorrows_first_item_opens_and_its_answer_ticks_it(self, catalog):
+        svc, store = practice(catalog, scripted([GOOD, GOOD]))
+        await with_goal(svc)
+        due_today = await finish_day(svc, store)
+        view = await svc.program(USER, language="en")
+        tomorrow = [i for i in view.plan.items if i.day_index == 1]
+        assert view.today == [] and view.next is None and view.done_today == due_today
+        assert view.ahead is not None and view.ahead.id == tomorrow[0].id and view.ahead.day_index == 1
+
+        started = await svc.start_program_item(USER, item_id=uuid.UUID(view.ahead.id), language="en")
+        assert started.kind == "attempt" and started.attempt.mode == "deep" and started.item.status == "started"
+        assert store.plan_links[uuid.UUID(started.attempt.id)] == uuid.UUID(view.ahead.id)
+        question = catalog.questions[started.attempt.question.key]
+        assert {s.key for s in view.ahead.skills} & {link.skill for link in question.skills}
+
+        await svc.submit(USER, uuid.UUID(started.attempt.id), "alarm = AB + BC + AC", idempotency_key="k1")
+        after = await svc.program(USER, language="en")
+        ticked = next(i for i in after.plan.items if i.id == view.ahead.id)
+        assert ticked.status == "done" and ticked.day_index == 1
+        assert stored_item(store, view.ahead.id).completed_attempt_id == uuid.UUID(started.attempt.id)
+        assert after.done_today == view.done_today                          # tomorrow's work is not today's count
+        assert after.ahead is not None and after.ahead.id == tomorrow[1].id
+
+    async def test_after_tomorrow_is_done_too_the_day_after_opens(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        await finish_day(svc, store, 0)
+        await finish_day(svc, store, 1)
+        view = await svc.program(USER, language="en")
+        day_after = [i for i in view.plan.items if i.day_index == 2 and i.status in OPEN]
+        assert view.today == [] and day_after
+        assert view.ahead is not None and view.ahead.id == day_after[0].id and view.ahead.day_index == 2
+        started = await svc.start_program_item(USER, item_id=uuid.UUID(view.ahead.id), language="en")
+        assert started.kind == "attempt" and started.item.id == view.ahead.id
+
+    async def test_start_without_an_item_opens_the_ahead_item_once_today_is_done(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        await finish_day(svc, store)
+        view = await svc.program(USER, language="en")
+        started = await svc.start_program_item(USER, language="en")
+        assert started.kind == "attempt" and started.item.id == view.ahead.id
+        assert store.plan_links[uuid.UUID(started.attempt.id)] == uuid.UUID(view.ahead.id)
+        # an unknown item falls back the same way: today's next, else the ahead item
+        fallback = await svc.start_program_item(USER, item_id=uuid.uuid4(), language="en")
+        assert fallback.kind == "attempt" and fallback.item.id == view.ahead.id
+
+    async def test_an_unplanned_answer_never_ticks_a_later_day_even_when_today_is_done(self, catalog):
+        svc, store = practice(catalog, scripted([GOOD]))
+        await with_goal(svc)
+        await finish_day(svc, store)
+        tomorrow = PlanItemRow(id=uuid.uuid4(), day_index=1, mode="quick", skills=["boolean_algebra"], reason="tomorrow",
+                               minutes=5)
+        store.plans[USER].items.insert(0, tomorrow)
+        before = {i.id: i.status for i in store.plans[USER].items}
+        view = await svc.start(USER, question_key="example-sensor-majority", mode="quick", language="en")
+        await svc.submit(USER, uuid.UUID(view.id), "alarm = AB + BC + AC", idempotency_key="k1")
+        assert {i.id: i.status for i in store.plans[USER].items} == before        # nothing ticked
+        assert stored_item(store, tomorrow.id).status == "planned"
+
+    async def test_a_later_simulation_item_opens_the_lobby_and_the_finished_interview_ticks_it(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        await svc.program(USER, language="en")
+        # stamped like the plan's own items and listed first, so tomorrow's view order puts it first: only the
+        # "interviews last" rule keeps it from being the item ahead (no dependence on the clock)
+        sim = PlanItemRow(id=uuid.uuid4(), day_index=1, mode="simulation", skills=["boolean_algebra", "counters"],
+                          reason="sim", minutes=35, created_at=store.plans[USER].generated_at)
+        store.plans[USER].items.insert(0, sim)
+        assert [i.id for i in (await svc.program(USER, language="en")).plan.items if i.day_index == 1][0] == str(sim.id)
+        refused = await svc.start_program_item(USER, item_id=sim.id, language="en")
+        assert refused.kind == "nothing" and stored_item(store, sim.id).status == "planned"
+
+        await finish_day(svc, store)
+        view = await svc.program(USER, language="en")
+        assert view.ahead.day_index == 1 and view.ahead.mode != "simulation"   # interviews come last in the day
+        started = await svc.start_program_item(USER, item_id=sim.id, language="en")
+        assert started.kind == "interview" and started.interview_duration_min == 30 and started.item.status == "started"
+        assert stored_item(store, sim.id).status == "started"
+
+        iv = await interview_once(svc, store, catalog)
+        ticked = stored_item(store, sim.id)
+        assert ticked.status == "done" and ticked.completed_session_id == uuid.UUID(iv.id)
+
+    async def test_the_item_ahead_is_the_earliest_day_even_when_that_day_is_only_an_interview(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        await svc.program(USER, language="en")
+        plan = store.plans[USER]
+        sim = PlanItemRow(id=uuid.uuid4(), day_index=1, mode="simulation", skills=["boolean_algebra", "counters"],
+                          reason="sim", minutes=35, created_at=plan.generated_at)
+        plan.items = [sim, *(i for i in plan.items if i.day_index != 1)]          # tomorrow holds only an interview
+        await finish_day(svc, store)
+        view = await svc.program(USER, language="en")
+        assert [i.day_index for i in view.plan.items if i.status in OPEN and i.day_index > 1]     # the day after has work
+        assert view.ahead is not None and view.ahead.id == str(sim.id) and view.ahead.day_index == 1
+
+    async def test_with_two_later_interviews_opened_the_earliest_day_is_ticked(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        await finish_day(svc, store)
+        later, sooner = (PlanItemRow(id=uuid.uuid4(), day_index=day, mode="simulation", skills=["boolean_algebra", "counters"],
+                                     reason=f"sim on day {day}", minutes=35) for day in (3, 2))
+        store.plans[USER].items[:0] = [later, sooner]                           # the later day listed first
+        for sim in (later, sooner):
+            started = await svc.start_program_item(USER, item_id=sim.id, language="en")
+            assert started.kind == "interview" and stored_item(store, sim.id).status == "started"
+        iv = await interview_once(svc, store, catalog)
+        assert stored_item(store, sooner.id).status == "done"
+        assert stored_item(store, sooner.id).completed_session_id == uuid.UUID(iv.id)
+        assert stored_item(store, later.id).status == "started"
+
+    async def test_an_interview_not_opened_from_the_program_leaves_a_later_simulation_alone(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        await finish_day(svc, store)
+        sim = PlanItemRow(id=uuid.uuid4(), day_index=1, mode="simulation", skills=["boolean_algebra", "counters"],
+                          reason="sim", minutes=35)
+        store.plans[USER].items.insert(0, sim)
+        before = {i.id: i.status for i in store.plans[USER].items}
+        await interview_once(svc, store, catalog)                               # from the interview page, not the plan
+        assert {i.id: i.status for i in store.plans[USER].items} == before        # nothing ticked
+        assert stored_item(store, sim.id).status == "planned" and stored_item(store, sim.id).completed_session_id is None
+
+    async def test_a_done_or_skipped_later_days_item_is_never_reopened(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        view = await svc.program(USER, language="en")
+        tomorrow = [i for i in view.plan.items if i.day_index == 1]
+        assert len(tomorrow) >= 3
+        done_id, skipped_id = uuid.UUID(tomorrow[0].id), uuid.UUID(tomorrow[1].id)
+        async with store.transaction() as tx:
+            await tx.update_plan_item(done_id, status="done")
+            await tx.update_plan_item(skipped_id, status="skipped")
+        # while today is open, a finished item of tomorrow falls back to today's next item (not "finish today first")
+        started = await svc.start_program_item(USER, item_id=done_id, language="en")
+        assert started.kind == "attempt" and started.item.id == view.next.id and started.item.day_index == 0
+        # once today is done, it falls back to the item ahead
+        await finish_day(svc, store)
+        view = await svc.program(USER, language="en")
+        assert view.ahead is not None and view.ahead.id == tomorrow[2].id
+        for finished in (done_id, skipped_id):
+            again = await svc.start_program_item(USER, item_id=finished, language="en")
+            assert again.kind == "attempt" and again.item.id == view.ahead.id
+        assert stored_item(store, done_id).status == "done" and stored_item(store, skipped_id).status == "skipped"
+        assert done_id not in store.plan_links.values() and skipped_id not in store.plan_links.values()
+
+    async def test_the_next_days_rebuild_keeps_work_done_ahead(self, catalog, monkeypatch):
+        svc, store = practice(catalog, scripted([GOOD, GOOD]))
+        await with_goal(svc)
+        await finish_day(svc, store)
+        ahead = (await svc.program(USER, language="en")).ahead
+        started = await svc.start_program_item(USER, item_id=uuid.UUID(ahead.id), language="en")
+        await svc.submit(USER, uuid.UUID(started.attempt.id), "alarm = AB + BC + AC", idempotency_key="k1")
+        signature = (ahead.mode, [s.key for s in ahead.skills])
+
+        # the router plans the same activity for the new today (and, to show only that day is affected, on day 3)
+        real_router = svc._router_items
+
+        def router(*args, **kwargs):
+            routed = [p for p in real_router(*args, **kwargs) if (p.activity.mode, p.activity.skills) != signature]
+            same = [plan_router.PlannedItem(day, plan_router.Activity(signature[0], list(signature[1]), ahead.minutes,
+                                                                      reason_code="unassessed")) for day in (0, 3)]
+            return sorted([*same, *routed], key=lambda p: p.day_index)
+
+        monkeypatch.setattr(svc, "_router_items", router)
+        plan = store.plans[USER]                                    # imitate: this plan was built yesterday, so
+        plan.week_start = TODAY - timedelta(days=1)                 # the item done ahead is planned for today
+        for item in plan.items:
+            item.created_at = datetime.now(UTC) - timedelta(days=1)
+
+        rebuilt = await svc.program(USER, language="en")
+        assert rebuilt.plan.generated_for == TODAY.isoformat()
+        on_day = [i for i in rebuilt.plan.items if (i.mode, [s.key for s in i.skills]) == signature]
+        kept = [i for i in on_day if i.day_index == 0]
+        assert len(kept) == 1 and kept[0].status == "done" and kept[0].done and not kept[0].carried
+        assert stored_item(store, kept[0].id).completed_attempt_id == uuid.UUID(started.attempt.id)
+        assert kept[0].id not in [i.id for i in rebuilt.today]
+        assert rebuilt.done_today == 1                              # yesterday's done items are history
+        assert [i.status for i in on_day if i.day_index == 3] == ["planned"]   # other days keep the router's item
+
+    async def test_a_day_finished_ahead_is_not_refilled_the_next_morning(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc, minutes=30)
+        for day in (0, 1, 2):                                       # today, then two days ahead
+            await finish_day(svc, store, day)
+        plan = store.plans[USER]
+        done_minutes = {day: sum(i.minutes for i in plan.items if i.day_index == day) for day in (1, 2)}
+        assert all(done_minutes.values())
+        plan.week_start = TODAY - timedelta(days=1)                 # the next morning
+        for item in plan.items:
+            item.created_at = datetime.now(UTC) - timedelta(days=1)
+
+        rebuilt = await svc.program(USER, language="en")
+        assert rebuilt.plan.generated_for == TODAY.isoformat()
+        for new_day, old_day in ((0, 1), (1, 2)):
+            on_day = [i for i in rebuilt.plan.items if i.day_index == new_day]
+            done = sum(i.minutes for i in on_day if i.done)
+            due = sum(i.minutes for i in on_day if not i.done)
+            assert done == done_minutes[old_day] and not any(i.carried for i in on_day)
+            # the work done ahead is the day's work: the router fills only the minutes it left
+            assert done + due <= max(30, done), (new_day, [(i.mode, i.minutes, i.status) for i in on_day])
+        if done_minutes[1] > 30 - 4:                                # no room left for even a quick item
+            assert rebuilt.today == [] and rebuilt.ahead is not None and rebuilt.ahead.day_index >= 1
+        assert rebuilt.done_today == len([i for i in plan.items if i.day_index == 1])
+
+    async def test_an_item_done_ahead_for_today_is_not_also_carried_open(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        await svc.program(USER, language="en")
+        plan = store.plans[USER]
+        plan.week_start = TODAY - timedelta(days=1)                 # imitate: this plan was built yesterday
+        old = datetime.now(UTC) - timedelta(days=1)
+        for item in plan.items:
+            item.created_at = old
+        plan.items += [PlanItemRow(id=uuid.uuid4(), day_index=0, mode="quick", skills=["counters"], reason="left open",
+                                   minutes=4, created_at=old),
+                       PlanItemRow(id=uuid.uuid4(), day_index=1, mode="quick", skills=["counters"], reason="done ahead",
+                                   minutes=4, status="done", created_at=old)]
+        rebuilt = await svc.program(USER, language="en")
+        today = [i for i in rebuilt.plan.items if i.day_index == 0 and (i.mode, [s.key for s in i.skills]) == ("quick", ["counters"])]
+        assert [(i.status, i.reason) for i in today] == [("done", "done ahead")]
+
+    async def test_the_next_days_rebuild_keeps_an_interview_done_ahead(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        await svc.program(USER, language="en")
+        sim = PlanItemRow(id=uuid.uuid4(), day_index=1, mode="simulation", skills=["boolean_algebra", "counters"],
+                          reason="sim", minutes=35)
+        store.plans[USER].items.insert(0, sim)
+        await finish_day(svc, store)
+        assert (await svc.start_program_item(USER, item_id=sim.id, language="en")).kind == "interview"
+        iv = await interview_once(svc, store, catalog)
+        plan = store.plans[USER]
+        plan.week_start = TODAY - timedelta(days=1)                 # the next morning
+        for item in plan.items:
+            item.created_at = datetime.now(UTC) - timedelta(days=1)
+
+        rebuilt = await svc.program(USER, language="en")
+        kept = [i for i in store.plans[USER].items if i.completed_session_id == uuid.UUID(iv.id)]
+        assert len(kept) == 1 and kept[0].id != sim.id                # the rebuild issues new ids
+        assert (kept[0].day_index, kept[0].mode, kept[0].status) == (0, "simulation", "done")
+        shown = next(i for i in rebuilt.plan.items if i.id == str(kept[0].id))
+        assert shown.done and not shown.carried and rebuilt.done_today == 1
+
+    async def test_an_item_opened_ahead_and_answered_after_the_next_mornings_rebuild_ticks_that_item(self, catalog):
+        svc, store = practice(catalog, scripted([GOOD, GOOD]))
+        await with_goal(svc)
+        await finish_day(svc, store, 0)
+        await finish_day(svc, store, 1)
+        view = await svc.program(USER, language="en")
+        assert view.ahead is not None and view.ahead.day_index == 2
+        started = await svc.start_program_item(USER, item_id=uuid.UUID(view.ahead.id), language="en")
+        attempt = uuid.UUID(started.attempt.id)
+        signature = (view.ahead.mode, tuple(s.key for s in view.ahead.skills))
+
+        plan = store.plans[USER]
+        plan.week_start = TODAY - timedelta(days=1)                 # the next morning, before answering
+        for item in plan.items:
+            item.created_at = datetime.now(UTC) - timedelta(days=1)
+        rebuilt = await svc.program(USER, language="en")
+        kept = [i for i in rebuilt.plan.items if (i.mode, tuple(s.key for s in i.skills)) == signature and i.day_index == 1]
+        assert len(kept) == 1, [(i.day_index, i.mode, i.status) for i in rebuilt.plan.items]
+        copy = kept[0]
+        assert copy.status == "started" and not copy.carried and copy.id != view.ahead.id
+        assert store.plan_links[attempt] == uuid.UUID(copy.id)      # the open attempt follows its item
+        open_today_before = {i.id for i in rebuilt.today}
+
+        await svc.submit(USER, attempt, "alarm = AB + BC + AC", idempotency_key="k-ahead")
+        after = await svc.program(USER, language="en")
+        assert next(i for i in after.plan.items if i.id == copy.id).status == "done"
+        assert {i.id for i in after.today} == open_today_before      # no item of today was ticked instead
+
+    async def test_an_item_opened_ahead_that_rolls_into_today_stays_started_and_its_answer_ticks_it(self, catalog):
+        svc, store = practice(catalog, scripted([GOOD, GOOD]))
+        await with_goal(svc)
+        await finish_day(svc, store, 0)
+        view = await svc.program(USER, language="en")
+        assert view.ahead is not None and view.ahead.day_index == 1
+        started = await svc.start_program_item(USER, item_id=uuid.UUID(view.ahead.id), language="en")
+        attempt = uuid.UUID(started.attempt.id)
+        signature = (view.ahead.mode, tuple(s.key for s in view.ahead.skills))
+
+        plan = store.plans[USER]
+        plan.week_start = TODAY - timedelta(days=1)                 # the next morning: that item is now due today
+        for item in plan.items:
+            item.created_at = datetime.now(UTC) - timedelta(days=1)
+        rebuilt = await svc.program(USER, language="en")
+        copy = next(i for i in rebuilt.today if (i.mode, tuple(s.key for s in i.skills)) == signature)
+        assert copy.status == "started" and store.plan_links[attempt] == uuid.UUID(copy.id)
+
+        await svc.submit(USER, attempt, "alarm = AB + BC + AC", idempotency_key="k-roll")
+        after = await svc.program(USER, language="en")
+        assert next(i for i in after.plan.items if i.id == copy.id).status == "done"
+        assert sum(1 for i in after.plan.items if i.day_index == 0 and i.status == "done") == 1
+
+    async def test_a_rest_day_lets_the_following_days_start(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        await svc.program(USER, language="en")
+        store.plans[USER].items = [i for i in store.plans[USER].items if i.day_index != 0]     # nothing due today
+        view = await svc.program(USER, language="en")
+        assert view.today == [] and view.next is None and view.done_today == 0
+        assert view.ahead is not None and view.ahead.day_index == 1
+        later = next(i for i in view.plan.items if i.day_index == 2)
+        started = await svc.start_program_item(USER, item_id=uuid.UUID(later.id), language="en")
+        assert started.kind == "attempt" and started.item.id == later.id
+
+
 @pytest.fixture
 async def client(catalog, monkeypatch):
     settings = Settings(_env_file=None, llm_provider="scripted", allow_in_review_content=True,
@@ -210,6 +564,21 @@ async def test_over_http(client):
         assert body["attempt"]["language"] == "he" and body["item"]["status"] == "started"
     bad = await client.post("/v1/me/program/start", json={"item_id": "not-a-uuid"}, headers=headers)
     assert bad.status_code == 422
+
+
+async def test_over_http_the_program_names_the_item_ahead_once_today_is_done(client):
+    user, token = make_token(email=MEMBER)
+    headers = {"Authorization": f"Bearer {token}"}
+    assert (await client.post("/v1/me/goal", json={"job_type": "fpga", "minutes_per_day": 30}, headers=headers)).status_code == 200
+    program = (await client.get("/v1/me/program?language=en", headers=headers)).json()
+    assert "ahead" in program and program["ahead"] is None and program["today"]
+    runtime = app.state.runtime
+    await finish_day(runtime.practice, runtime.store, user=user)
+    program = (await client.get("/v1/me/program?language=en", headers=headers)).json()
+    assert program["today"] == [] and program["next"] is None
+    assert program["ahead"] is not None and program["ahead"]["day_index"] >= 1 and program["ahead"]["id"]
+    started = (await client.post("/v1/me/program/start", json={"item_id": program["ahead"]["id"]}, headers=headers)).json()
+    assert started["kind"] in ("attempt", "interview") and started["item"]["id"] == program["ahead"]["id"], started
 
 
 async def test_a_same_day_rebuild_does_not_mark_todays_items_carried(catalog):

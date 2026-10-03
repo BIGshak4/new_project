@@ -222,6 +222,9 @@ class ProgramView(BaseModel):
     plan: PlanView
     today: list[PlanItemView] = Field(default_factory=list)      # open items due today, carried-forward ones first
     next: PlanItemView | None = None                             # the one to start now
+    # once today's items are all done (or none are due), the first open item of the following days, earliest day
+    # first; start it with POST /v1/me/program/start
+    ahead: PlanItemView | None = None
     done_today: int = 0
     minutes_due_today: int = 0
     goal_complete: bool = False
@@ -232,7 +235,8 @@ class ProgramStartView(BaseModel):
     item: PlanItemView | None = None
     attempt: AttemptView | None = None          # kind attempt: the attempt that was opened for the item
     interview_duration_min: int | None = None   # kind interview: the duration to offer in the lobby
-    message: str | None = None                  # kind nothing: why (no goal, nothing due, no question in the bank)
+    message: str | None = None                  # kind nothing: why (no goal, nothing due, today not finished yet,
+                                                # no question in the bank)
 
 
 class ProgressView(BaseModel):
