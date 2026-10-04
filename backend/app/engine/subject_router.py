@@ -12,7 +12,7 @@ from dataclasses import dataclass
 
 from app.engine import skill_controller
 from app.engine.params import DEFAULT_PARAMS, EngineParams
-from app.engine.scores import clamp, momentum, round_half_up
+from app.engine.scores import clamp, min_difficulty_for_level, momentum, round_half_up
 from app.engine.skill_controller import ControllerResult
 from app.schemas.engine import (
     IMPORTANCE_RANK,
@@ -38,10 +38,13 @@ from app.schemas.engine import (
 def init_session_state(plan: list[PlanSkill], *, seniority: str, baseline_difficulty: int,
                        difficulty_ceiling: int, planned_duration_min: float,
                        priors: dict[str, tuple[float, float]] | None = None,
+                       levels: dict[str, int] | None = None,
                        params: EngineParams = DEFAULT_PARAMS) -> SessionState:
-    """Build the live state from the frozen session skill plan (§4.1)."""
+    """Build the live state from the frozen session skill plan (§4.1). `levels`: the profile's measured levels for
+    skills assessed and still fresh; such a skill enters at its level instead of the seniority baseline."""
     state = SessionState(seniority=seniority, baseline_difficulty=baseline_difficulty,
-                         difficulty_ceiling=difficulty_ceiling, planned_duration_min=planned_duration_min)
+                         difficulty_ceiling=difficulty_ceiling, planned_duration_min=planned_duration_min,
+                         entry_levels=dict(levels or {}))
     priors = priors or {}
     for skill in plan:
         if skill.assessment_mode == AssessmentMode.OBSERVED:
@@ -373,8 +376,12 @@ def entry_difficulty(state: SessionState, plan: list[PlanSkill], skill: PlanSkil
     adjust = int(clamp(subject_adjust + prerequisite_adjust + momentum_adjust,
                        -r.entry_max_below_baseline, r.entry_max_above_baseline))
     top = min(skill.max_difficulty, state.difficulty_ceiling)
-    entry = int(clamp(state.baseline_difficulty + adjust, min(skill.min_difficulty, top), top))
-    return entry, {"baseline": state.baseline_difficulty, "subject_adjust": subject_adjust,
+    # a skill the profile has measured (assessed, evidence still fresh) enters at the difficulty its level stands
+    # for, never below the seniority baseline (Shaked, 2026-10-04); the adjustments still apply on top
+    measured = state.entry_levels.get(skill.key)
+    base = max(state.baseline_difficulty, min_difficulty_for_level(measured)) if measured else state.baseline_difficulty
+    entry = int(clamp(base + adjust, min(skill.min_difficulty, top), top))
+    return entry, {"baseline": base, "subject_adjust": subject_adjust,
                    "prerequisite_adjust": prerequisite_adjust, "momentum_adjust": momentum_adjust}
 
 

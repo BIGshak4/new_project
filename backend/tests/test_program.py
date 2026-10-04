@@ -128,6 +128,72 @@ class TestCarryForward:
         assert "done yesterday" not in [i.reason for i in today_view.plan.items]        # done items are history, not carried
         assert all(i.status in ("planned", "started") for i in carried)
 
+    async def test_carried_items_fill_todays_minutes_first_and_the_rest_wait_for_tomorrow(self, catalog):
+        """Shaked, 2026-10-04: a skipped day no longer doubles today. Carried items count against today's minutes,
+        the router fills only what is left, and carried items that do not fit move to the next day."""
+        svc, store = practice(catalog)
+        await with_goal(svc, minutes=30)
+        await svc.program(USER, language="en")
+        plan = store.plans[USER]
+        old = datetime.now(UTC) - timedelta(days=1)
+        plan.week_start = TODAY - timedelta(days=1)
+        for item in plan.items:
+            item.created_at = old
+        for n, skill in enumerate(["counters", "truth_tables", "fsm_state_tables"]):            # a heavy day left undone
+            plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=[skill], reason=f"left {n}",
+                                          minutes=20, status="planned", created_at=old))
+        view = await svc.program(USER, language="en")
+        today = [i for i in view.plan.items if i.day_index == 0]
+        assert sum(i.minutes for i in today) <= 30, [(i.mode, i.minutes, i.carried) for i in today]
+        waiting = [i for i in view.plan.items if i.day_index >= 1 and i.carried]
+        assert waiting and all(i.status == "planned" for i in waiting)
+        left = {i.reason for i in view.plan.items if i.reason.startswith("left ")}
+        assert left == {"left 0", "left 1", "left 2"}                                           # nothing was lost
+        for day in sorted({i.day_index for i in waiting}):
+            assert sum(i.minutes for i in view.plan.items if i.day_index == day) <= 30 or \
+                len([i for i in view.plan.items if i.day_index == day]) == 1
+
+    async def test_an_opened_item_is_carried_into_today_even_when_today_is_full(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc, minutes=30)
+        await svc.program(USER, language="en")
+        plan = store.plans[USER]
+        old = datetime.now(UTC) - timedelta(days=1)
+        plan.week_start = TODAY - timedelta(days=1)
+        for item in plan.items:
+            item.created_at = old
+        for n, skill in enumerate(["counters", "truth_tables"]):
+            plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=[skill], reason=f"left {n}",
+                                          minutes=20, status="planned", created_at=old))
+        opened = PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=["fsm_state_tables"], reason="opened",
+                             minutes=20, status="started", created_at=old)
+        plan.items.append(opened)
+        view = await svc.program(USER, language="en")
+        today = [i for i in view.plan.items if i.day_index == 0]
+        assert any(i.reason == "opened" and i.status == "started" for i in today)
+
+    async def test_a_carried_item_whose_skill_was_answered_since_is_dropped(self, catalog):
+        svc, store = practice(catalog, scripted([GOOD, GOOD]))
+        await with_goal(svc, minutes=30)
+        view = await svc.start(USER, question_key="example-sensor-majority", mode="quick", language="en")
+        await svc.submit(USER, uuid.UUID(view.id), "alarm = AB + BC + AC", idempotency_key="k1")     # boolean_algebra has a profile row
+        await svc.program(USER, language="en")
+        plan = store.plans[USER]
+        old = datetime.now(UTC) - timedelta(days=1)
+        plan.week_start = TODAY - timedelta(days=1)
+        for item in plan.items:
+            item.created_at = old
+        plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=["boolean_algebra"], reason="stale plan",
+                                      minutes=20, status="planned", created_at=old))
+        plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=0, mode="quick", skills=["counters"], reason="still open",
+                                      minutes=4, status="planned", created_at=old))
+        for (uid, key), row in store.profiles.items():                       # an interview scored boolean_algebra since
+            if uid == USER and key == "boolean_algebra":
+                row["last_assessed_at"] = datetime.now(UTC)
+        view = await svc.program(USER, language="en")
+        reasons = {i.reason for i in view.plan.items if i.carried}
+        assert "still open" in reasons and "stale plan" not in reasons
+
     async def test_an_item_older_than_three_days_is_dropped(self, catalog):
         svc, store = practice(catalog)
         await with_goal(svc)
@@ -355,7 +421,7 @@ class TestWorkingAhead:
 
     async def test_a_done_or_skipped_later_days_item_is_never_reopened(self, catalog):
         svc, store = practice(catalog)
-        await with_goal(svc)
+        await with_goal(svc, minutes=60)                       # three or more items a day
         view = await svc.program(USER, language="en")
         tomorrow = [i for i in view.plan.items if i.day_index == 1]
         assert len(tomorrow) >= 3
@@ -589,6 +655,15 @@ async def test_a_same_day_rebuild_does_not_mark_todays_items_carried(catalog):
     view = await svc.program(USER, language="en")
     assert view.plan.minutes_per_day == 45
     assert not any(i.carried for i in view.plan.items), "today's own items must not show as carried after a same-day rebuild"
+
+
+async def test_the_skill_strength_card_never_shows_a_skill_no_question_examines(catalog):
+    svc, _ = practice(catalog)
+    await with_goal(svc)
+    progress = await svc.progress(USER, language="en")
+    askable = {link.skill for q in catalog.questions.values() for link in q.skills}
+    assert progress.focus_skills and all(s.key in askable for s in progress.focus_skills)
+    assert "latches_flip_flops" not in [s.key for s in progress.focus_skills]        # no live question yet
 
 
 async def test_the_skill_strength_card_shows_the_five_heaviest_skills_for_the_job(catalog):

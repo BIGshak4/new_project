@@ -123,6 +123,7 @@ class SkillProgress(BaseModel):
     retention_due_at: str | None
     loyalty: int | None = None                  # 1..10: how fresh the evidence behind the level is (None: never assessed)
     needs_refresh: bool = False                 # loyalty in the provisional band: re-check before trusting the level
+    expired: bool = False                       # 49+ days without evidence: the level is history, the skill counts as unassessed
     xp: int = 0                                 # XP earned on this skill (split of each answer's XP by the question's skill weights)
     level_progress: float = 0.0                 # 0..1 fill toward the next level, from the engine's own level score (xp.level_progress)
 
@@ -175,6 +176,8 @@ class ProgressOverview(BaseModel):
     strong: int
     partial: int
     weak: int
+    # the three counts below feed the interview report and the role fit; the overview card does not show them
+    # (Shaked, 2026-10-04: "assessed of 25" reads as no progress). Lead with answered, strong and the level in words.
     skills_assessed: int                        # assessed AND fresh enough to trust
     skills_to_refresh: int = 0                  # assessed once, but the evidence is old: a refresh is scheduled
     skills_total: int                           # skills in the plan for this user's goal

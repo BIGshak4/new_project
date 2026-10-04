@@ -71,7 +71,7 @@ from app.schemas.api import (
     TipView,
 )
 from app.schemas.bank import BankQuestion, JobType
-from app.schemas.engine import Archetype, Band, Evaluation, PlanSkill, SkillState
+from app.schemas.engine import Archetype, Band, Evaluation, EvidenceStatus, PlanSkill, SkillState
 from app.services.store import Store
 
 log = logging.getLogger("app.practice")
@@ -796,6 +796,8 @@ class PracticeService:
             retention = profile.retention.get(key, {})
             last = profile.last_assessed.get(key)
             value = scores.loyalty(last, now) if status.value != "not_assessed" else None
+            if scores.expired(value) and status.value == "assessed":
+                status = EvidenceStatus.INSUFFICIENT                 # 49+ days: the level is history until re-checked
             skills.append(SkillProgress(
                 key=key, label=catalog_skill.label, subject=catalog_skill.subject or "", level=level, status=status.value,
                 trend=trend, required_level=required.get(key, 2),
@@ -803,6 +805,7 @@ class PracticeService:
                 last_assessed_at=last.isoformat() if last else (history[-1]["at"] if history else None),
                 retention_due_at=retention.get("due").isoformat() if retention.get("due") else None,
                 loyalty=value, needs_refresh=level is not None and scores.needs_refresh(value),
+                expired=level is not None and scores.expired(value),
                 xp=experience.per_skill.get(key, 0), level_progress=xp.level_progress(level, level_score)))
         subjects = self._subjects(skills, required, weights, bands, servable)
         return ProgressView(skills=skills, subjects=subjects, recent=recent, attempts_today=started,
@@ -818,9 +821,12 @@ class PracticeService:
     def _focus_skills(self, skills: list[SkillProgress], plan_skills: list[PlanSkill],
                       required: dict[str, int]) -> list[SkillProgress]:
         """The skills that weigh most in the plan for the user's job type (the job type multiplies the role's weights),
-        heaviest first, whether assessed yet or not: what the "Skill strength" card shows."""
+        heaviest first, whether assessed yet or not: what the "Skill strength" card shows. A skill no bank question
+        examines is left out (it could never fill; Shaked, 2026-10-04)."""
         by_key = {s.key: s for s in skills}
-        questioned = [p for p in plan_skills if p.assessment_mode.value == "questioned" and p.key in self.catalog.skills]
+        askable = {link.skill for q in self.catalog.questions.values() for link in q.skills}
+        questioned = [p for p in plan_skills if p.assessment_mode.value == "questioned" and p.key in self.catalog.skills
+                      and p.key in askable]
         top = sorted(questioned, key=lambda p: (-p.combined_weight, p.key))[: self.FOCUS_SKILLS]
         out = []
         for p in top:
@@ -937,13 +943,33 @@ class PracticeService:
             pool.append(question)
         return pool
 
+    @staticmethod
+    def _answered_since(profile: LoadedProfile, item: PlanItemRow) -> bool:
+        """A scored answer on one of the item's skills landed after the item was planned."""
+        planned_at = item.created_at
+        if planned_at is None:
+            return False
+        if planned_at.tzinfo is None:
+            planned_at = planned_at.replace(tzinfo=UTC)
+        for key in item.skills:
+            last = profile.last_assessed.get(key)
+            if last is None:
+                continue
+            if last.tzinfo is None:
+                last = last.replace(tzinfo=UTC)
+            if last > planned_at:
+                return True
+        return False
+
     async def _ensure_program(self, tx, user_id: uuid.UUID, profile: LoadedProfile, plan_skills: list[PlanSkill],
                               required: dict[str, int], servable, history: list[dict], goal: Goal, seniority: str,
                               language: str, today: date) -> StoredPlan:
         """Today's plan. The program is rebuilt every day from the fresh profile (so a level that went stale or rose
         overnight changes the plan), and the open items of earlier days that are still fresh lead it (carried
         forward); an item more than PROGRAM_CARRY_DAYS past its day is dropped, the router re-adds the skill if it
-        still matters. Within one day the saved plan is reused, so a started item stays started.
+        still matters. Carried items count against today's minutes first; the ones that do not fit wait for the next
+        day, and the router fills only what is left. A carried item whose skill was answered since it was planned is
+        dropped. Within one day the saved plan is reused, so a started item stays started.
 
         Work done ahead (an item of a later day finished early) is kept: an item already done whose planned date is
         today or later is copied to its day in the new plan, done, and the router's item with the same mode and
@@ -975,15 +1001,26 @@ class PracticeService:
         items: list[dict] = []
         taken: set[tuple[str, tuple[str, ...]]] = set()
         done_for_today = {(item.mode, tuple(item.skills)) for day_index, item in done_ahead if day_index == 0}
-        for item in carried:
+        day_minutes: dict[int, int] = {}                        # minutes already filled on a day (carried, done or opened ahead)
+        # carried items fill today's minutes first, opened ones ahead of planned ones; what does not fit waits for the
+        # next day instead of piling onto today; a carried item whose skill was answered since it was planned is
+        # dropped, the router decides again from the fresh evidence (Shaked, 2026-10-04)
+        for item in sorted(carried, key=lambda i: i.status != "started"):
             signature = (item.mode, tuple(item.skills))
             if signature in taken or signature in done_for_today:
                 continue
+            if item.status != "started" and item.mode != "simulation" and self._answered_since(profile, item):
+                continue
             taken.add(signature)
+            day_index = 0
+            if item.status != "started":
+                while day_minutes.get(day_index, 0) and day_minutes[day_index] + item.minutes > minutes:
+                    day_index += 1
+            day_minutes[day_index] = day_minutes.get(day_index, 0) + item.minutes
             planned_for = plan.week_start + timedelta(days=item.day_index)
             # an item planned for an earlier day keeps its old stamp (that is what "carried" means); one planned for
             # today that survives a same-day rebuild (minutes or date changed) is today's item, stamped anew
-            carried_item = {"day_index": 0, "mode": item.mode, "skills": item.skills, "reason": item.reason,
+            carried_item = {"day_index": day_index, "mode": item.mode, "skills": item.skills, "reason": item.reason,
                             "minutes": item.minutes, "created_at": item.created_at if planned_for < today else None}
             if item.status == "started":                    # opened and not answered: stays started, its attempt follows it
                 carried_item.update(status="started", previous_id=item.id)
@@ -991,7 +1028,6 @@ class PracticeService:
         # done ahead: stamped anew (never shown as carried) and kept off `taken`, which would drop the skill from
         # the router's other days; only the same item on the same day is left out of the router's week below
         done_slots: set[tuple[int, str, tuple[str, ...]]] = set()
-        day_minutes: dict[int, int] = {}                        # minutes already filled on a day with work done ahead
         for day_index, item in done_ahead:
             done_slots.add((day_index, item.mode, tuple(item.skills)))
             day_minutes[day_index] = day_minutes.get(day_index, 0) + item.minutes
@@ -1012,7 +1048,7 @@ class PracticeService:
             if signature in taken or (planned.day_index, *signature) in done_slots:
                 continue
             if planned.day_index in day_minutes:
-                # a day with work done ahead: the router's items (its best first) fill only the minutes left
+                # a day with carried work or work done ahead: the router's items (its best first) fill only the minutes left
                 if day_minutes[planned.day_index] + planned.activity.estimated_minutes > minutes:
                     continue
                 day_minutes[planned.day_index] += planned.activity.estimated_minutes

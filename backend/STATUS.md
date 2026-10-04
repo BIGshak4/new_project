@@ -766,6 +766,44 @@ flip-flops, Moore and Mealy) have no live question, and the drafts hold 11 to 12
 6. The first real answers graded under grader v2 will show `evaluator.v2` on their metrics rows; I will read them
    and the follow-ups they got.
 
+## 5ze. The plan fits the day, the heaviest skills first, evidence freshness in weeks, the interview starts where you are (2026-10-04, Shaked's five fixes)
+
+Backend only, no database change, grading untouched.
+
+1. **The day's plan fits the minutes** (`_ensure_program`): carried items count against today's minutes first (an
+   item the user opened always stays on today); the router fills only what is left; carried items that do not fit
+   wait for the next day instead of piling onto today; a carried item whose skill got a scored answer after it was
+   planned is dropped (the router decides again). Items still expire three days past their day.
+2. **The heaviest skills first** (`plan_router.activity_value`): the gap and "never seen" terms are scaled to the
+   heaviest skill's weight, so in week one the strength card's skills come first and variety only breaks ties.
+   **The suggestion maps too** (`next_question.suggest`, reason `map`): while fewer than 70 % of the plan's skills have
+   evidence, a skill with two scored answers (the follow-up counts) gives way to the heaviest skill with none; a WEAK
+   answer still reinforces the same skill, and a single answer still consolidates it.
+3. **Evidence freshness in weeks** (`scores`, Shaked's numbers): one point every 7 days (was 3); a refresh is
+   scheduled from 3 weeks (loyalty 7); at 49 days (loyalty 3) the evidence has **expired**: the skill reads
+   `insufficient_evidence` with `expired: true`, it is not counted as assessed, its fit is unknown again, and the
+   planner asks it like a skill never seen (reason `expired`), not as a retention check.
+4. **The overview and the side card**: `skills_assessed`, `skills_to_refresh` and `skills_total` stay in the data
+   for the report and the role fit, and the overview card does not show them (schema comment). The strength card
+   skips skills no bank question examines, so nothing sits grey for ever.
+5. **The mock interview starts where the user is** (`SessionState.entry_levels`): a skill assessed with fresh evidence
+   enters at the difficulty its level stands for (level 4: difficulty 7), never below the seniority baseline; the
+   usual adjustments still apply; unknown skills start at the baseline as before.
+
+**For Harel:** `SkillProgress.expired` is new (typed in `PENDING_IN_CLIENT` until practice-api.ts has it); drop the
+"assessed of N" line from the overview card and lead with answers, strong answers and the level in words; the side
+card needs no change. Nothing else in the contract moved.
+
+**Verified:** ruff clean, 874 offline tests (new tests for every rule; the golden grade-first record was regenerated
+on purpose because the next-question suggestions in it legitimately changed, and both prose modes reproduce it);
+six mutants of the new rules (carried minutes not counted, answered-since never drops, the interview ignores the
+measured level, no early mapping, expiry never set, weights not scaled) each caught by a test; the live service suite
+17 of 17 against the real database, and the program and skip tests once more on the final tree.
+
+**A slip, recovered:** a scratch-copy cleanup line ran in the real `backend/` and deleted the uncommitted `app/`
+folder. It was restored from git and the round's patch scripts, the suite reproduced 874 passes and the same
+eight-file diff. Rule kept in memory: destructive commands take absolute scratch paths only.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -804,6 +842,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-04 | Shaked's five fixes (§5ze): the day fits the minutes, heaviest skills first, freshness in weeks with expiry at 49 days, counts off the card, the interview starts at the measured level |
 | 2026-10-04 | Night check (§5zd): all suites green; the pilot's users, how the system rates them and role fit (`docs/pilot-users-and-role-fit-2026-10-03.md`); morning list |
 | 2026-10-03 | Grader v2: worked examples are confirmation, a correct method is strong without them (13/13 review set unchanged); generator v3: the follow-up after a strong answer is an edge case (§5zc) |
 | 2026-10-03 | Follow-ups ask for understanding (generator v2, the example check, flags stored), the skip route, malformed structured replies retried (§5zb); contract for Harel |

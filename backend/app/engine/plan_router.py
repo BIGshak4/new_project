@@ -32,6 +32,12 @@ class ProfileSkill:
         from app.engine.scores import needs_refresh
         return self.level is not None and needs_refresh(self.loyalty)
 
+    @property
+    def expired(self) -> bool:
+        """The evidence is too old to count at all (scores.expired): planned like a skill never seen."""
+        from app.engine.scores import expired
+        return self.level is not None and expired(self.loyalty)
+
 
 @dataclass
 class RecentActivity:
@@ -85,14 +91,21 @@ def after_retention_check(*, passed: bool, today: date, checks_passed: int,
 
 def _gap(skill: PlanSkill, profile: dict[str, ProfileSkill]) -> int:
     entry = profile.get(skill.key)
-    if entry is None or entry.level is None or entry.status == EvidenceStatus.NOT_ASSESSED:
+    if entry is None or entry.level is None or entry.status == EvidenceStatus.NOT_ASSESSED or entry.expired:
         return 0
     return max(0, skill.required_level - entry.level)
 
 
 def _unassessed(skill: PlanSkill, profile: dict[str, ProfileSkill]) -> bool:
     entry = profile.get(skill.key)
-    return entry is None or entry.status == EvidenceStatus.NOT_ASSESSED
+    return entry is None or entry.status == EvidenceStatus.NOT_ASSESSED or entry.expired
+
+
+def _weight_scale(plan: list[PlanSkill]) -> float:
+    """The heaviest questioned skill's weight: the gap and unassessed terms are scaled to it, so the heaviest skill
+    with no evidence is worth the full w_unassessed and variety or timing only break ties (Shaked, 2026-10-04: the
+    skills on the strength card come first)."""
+    return max((s.combined_weight for s in plan if s.assessment_mode == AssessmentMode.QUESTIONED), default=1.0) or 1.0
 
 
 def coverage(plan: list[PlanSkill], profile: dict[str, ProfileSkill]) -> float:
@@ -110,14 +123,15 @@ def activity_value(activity: Activity, *, plan: list[PlanSkill], profile: dict[s
     skills = [by_key[k] for k in activity.skills if k in by_key]
     w_unassessed = p.w_unassessed_late if coverage(plan, profile) >= p.coverage_switch else p.w_unassessed_early
     due = [s for s in skills if (entry := profile.get(s.key))
-           and ((entry.retention_due_at and entry.retention_due_at <= today) or entry.stale)]
+           and ((entry.retention_due_at and entry.retention_due_at <= today) or (entry.stale and not entry.expired))]
     core_below = any(s.importance == Importance.CORE and _gap(s, profile) > 0 for s in skills)
     last_two = recent[-2:]
     variety = bool(last_two) and all(a.mode != activity.mode for a in last_two)
     fatigued = len(last_two) == 2 and all(a.band == "WEAK" for a in last_two) and activity.hard
+    scale = _weight_scale(plan)
     return round(
-        p.w_gap * sum(s.combined_weight * _gap(s, profile) for s in skills)
-        + w_unassessed * sum(s.combined_weight for s in skills if _unassessed(s, profile))
+        p.w_gap * sum(s.combined_weight / scale * _gap(s, profile) for s in skills)
+        + w_unassessed * sum(s.combined_weight / scale for s in skills if _unassessed(s, profile))
         + p.w_retention * len(due)
         + p.w_core * core_below
         + p.w_variety * variety
@@ -142,7 +156,7 @@ def candidate_activities(*, plan: list[PlanSkill], profile: dict[str, ProfileSki
             activities.append(Activity("retention_check", [skill.key], minutes["retention_check"],
                                        reason_code="retention_due",
                                        reason_facts={"skill": skill.key, "level": entry.level}))
-        elif entry and entry.stale:
+        elif entry and entry.stale and not entry.expired:
             # the level is old news (loyalty in the provisional band): re-check it before building on it
             activities.append(Activity("retention_check", [skill.key], minutes["retention_check"],
                                        reason_code="stale",
@@ -154,12 +168,13 @@ def candidate_activities(*, plan: list[PlanSkill], profile: dict[str, ProfileSki
             if gap > 0:
                 code = "core_gap" if skill.importance == Importance.CORE else "gap"
             elif unassessed:
-                code = "unassessed"
+                code = "expired" if entry is not None and entry.expired else "unassessed"
             else:
                 code = "keep_sharp"
             activities.append(Activity(mode, [skill.key], minutes[mode], reason_code=code, hard=gap > 0 and mode == "deep",
                                        reason_facts={"skill": skill.key, "level": entry.level if entry else None,
-                                                     "required": skill.required_level}))
+                                                     "required": skill.required_level,
+                                                     "days": entry.days_since_assessed if entry else None}))
 
     if week_index >= 1 or coverage(plan, profile) >= params.plan_router.coverage_switch:
         top = sorted(questioned, key=lambda s: -s.combined_weight)[:6]
@@ -276,6 +291,7 @@ REASONS = {
         "core_gap": "{skill} is a core skill for your target role, and you are at level {level} of the {required} it needs.",
         "gap": "You are at level {level} in {skill}; the role asks for {required}.",
         "unassessed": "We have no evidence on {skill} yet. One question tells us where to start.",
+        "expired": "It has been {days} days since {skill} was last checked. A fresh question shows where you stand now.",
         "keep_sharp": "{skill} is in good shape. A quick one keeps it that way.",
         "simulation": "A full interview simulation across your main skills, to practice under real conditions.",
     },
@@ -286,6 +302,7 @@ REASONS = {
         "core_gap": "{skill} היא מיומנות ליבה לתפקיד היעד, ואתם ברמה {level} מתוך {required} שנדרשת.",
         "gap": "אתם ברמה {level} ב-{skill}; התפקיד דורש {required}.",
         "unassessed": "עדיין אין לנו מידע על {skill}. שאלה אחת תראה מאיפה להתחיל.",
+        "expired": "עברו {days} ימים מאז שבדקנו את {skill}. שאלה טרייה תראה איפה אתם עומדים היום.",
         "keep_sharp": "{skill} במצב טוב. שאלה קצרה תשמור על זה.",
         "simulation": "סימולציית ראיון מלאה על המיומנויות המרכזיות, כדי לתרגל בתנאים אמיתיים.",
     },

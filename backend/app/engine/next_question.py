@@ -29,6 +29,7 @@ REASONS = {
         "reinforce": "Your answer showed a gap in {skill}; this question practises the same idea from a simpler angle.",
         "consolidate": "You were close on {skill}; one more question at this level will settle it.",
         "advance": "{skill} looks solid for now; {next_skill} is the next skill your role plan weights most.",
+        "map": "You have enough on {skill} for now; {next_skill} weighs most in your plan and has no evidence yet.",
         "explore": "Nothing is pending on {skill}; {next_skill} has not been practised yet.",
     },
     "he": {
@@ -36,6 +37,7 @@ REASONS = {
         "reinforce": "התשובה חשפה פער ב-{skill}; השאלה הזו מתרגלת את אותו רעיון מזווית פשוטה יותר.",
         "consolidate": "הייתם קרובים ב-{skill}; עוד שאלה ברמה הזו תייצב את זה.",
         "advance": "{skill} נראה יציב כרגע; {next_skill} היא המיומנות הבאה במשקל הגבוה ביותר בתוכנית התפקיד.",
+        "map": "יש מספיק על {skill} בינתיים; {next_skill} היא הכבדה ביותר בתוכנית ועדיין בלי עדות.",
         "explore": "אין דבר פתוח ב-{skill}; {next_skill} עדיין לא תורגלה.",
     },
 }
@@ -61,6 +63,9 @@ class Suggestion:
     why: str                                   # reinforce | consolidate | advance | explore
     reason: str
     focus: str | None = None                   # what was hard in this attempt, in the practice language
+
+
+EARLY_COVERAGE = 0.7             # below this share of plan skills with evidence, mapping comes before consolidating
 
 
 def _difficulty_now(state: SkillState | None, required_level: int) -> int:
@@ -109,8 +114,24 @@ def suggest(*, current: BankQuestion, band: Band | None, states: dict[str, Skill
             return Suggestion(pick.key, focus.skill, pick.difficulty, "reinforce", texts["struggle"].format(skill=label),
                               focus=_sentence(focus.text))
 
-    # 2. the band alone: reinforce or consolidate the main skill
     label = skill_labels.get(primary, primary)
+    # 1b. early in the plan (Shaked, 2026-10-04): once this skill has enough evidence (two scored answers, the
+    #     follow-up counts), the heaviest skill with no evidence comes next, so the strength card fills in the first
+    #     days; a WEAK answer still reinforces the same skill first
+    current_state = states.get(primary)
+    plan_keys = set(skill_weights) or set(states)
+    with_evidence = {k for k, s in states.items() if s.turns}
+    early = plan_keys and len(with_evidence & plan_keys) / len(plan_keys) < EARLY_COVERAGE
+    if early and weakest != Band.WEAK and current_state is not None and current_state.turns >= 2:
+        unseen = {q.primary_skill for q in candidates if q.key not in seen and q.key != current.key} - with_evidence - {primary}
+        for next_skill in sorted(unseen, key=lambda k: (-skill_weights.get(k, 0.05), k)):
+            pick = _pick(candidates, skill=next_skill, target=_difficulty_now(None, required_levels.get(next_skill, 2)),
+                         seen=seen, exclude=current.key, window=(1, 10))
+            if pick:
+                return Suggestion(pick.key, next_skill, pick.difficulty, "map",
+                                  texts["map"].format(skill=label, next_skill=skill_labels.get(next_skill, next_skill)))
+
+    # 2. the band alone: reinforce or consolidate the main skill
     if weakest == Band.WEAK:
         pick = _pick(candidates, skill=primary, target=max(1, here - 1), seen=seen, exclude=current.key, window=(1, here))
         if pick:

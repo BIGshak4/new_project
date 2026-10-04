@@ -351,14 +351,16 @@ def momentum(bands: list[Band], window: int) -> float:
 
 LOYALTY_MAX = 10                 # a skill scored today
 LOYALTY_MIN = 1                  # never lower, however long ago
-LOYALTY_DECAY_DAYS = 3           # -1 for every full 3 days without a scored answer on the skill
-LOYALTY_PROVISIONAL_AT = 6       # at 6 or lower (12+ days) the level counts as provisional: it needs a refresh
+LOYALTY_DECAY_DAYS = 7           # -1 for every full 7 days without a scored answer on the skill (Shaked, 2026-10-04; was 3)
+LOYALTY_PROVISIONAL_AT = 7       # at 7 or lower (21+ days) the level counts as provisional: a refresh is scheduled
+LOYALTY_EXPIRED_AT = 3           # at 3 or lower (49+ days) the evidence has expired: the skill no longer counts as
+#                                  assessed, its fit is unknown again, and the planner asks it like a skill never seen
 
 
 def loyalty(last_assessed_at, now) -> int | None:
     """How much a skill's level can still be trusted, 1..10 (Shaked, 2026-09-24).
 
-    10 on the day of the last scored answer, one less for every full three days since, never below 1. Any scored
+    10 on the day of the last scored answer, one less for every full seven days since, never below 1. Any scored
     answer on the skill, strong or weak, brings it back to 10 (the level itself says how good the answer was).
     None when the skill was never assessed: there is no level to trust."""
     if last_assessed_at is None:
@@ -370,3 +372,8 @@ def loyalty(last_assessed_at, now) -> int | None:
 def needs_refresh(value: int | None) -> bool:
     """A level whose loyalty dropped to the provisional band should be re-checked before it is trusted or built on."""
     return value is not None and value <= LOYALTY_PROVISIONAL_AT
+
+
+def expired(value: int | None) -> bool:
+    """The evidence behind a level is too old to count at all (49+ days): the skill is treated as not assessed."""
+    return value is not None and value <= LOYALTY_EXPIRED_AT

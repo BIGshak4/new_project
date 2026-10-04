@@ -614,6 +614,43 @@ class TestDeepPractice:
 # ----------------------------------------------------------------------------- report
 
 
+def test_an_interview_enters_a_measured_skill_at_its_level_and_an_unknown_one_at_the_baseline(catalog):
+    """Shaked, 2026-10-04: a skill assessed with fresh evidence starts where the profile puts it."""
+    role = catalog.roles["digital-hardware-engineer"]
+    plan = merge_skill_sets(role_rows=role.skill_set, company_rows=[], focus_skill_keys=[], company_weight_share=0,
+                            seniority="student", planned_duration_min=30, catalog=catalog.leaf_skills)
+    known = next(s for s in plan if s.key == "boolean_algebra")
+    unknown = next(s for s in plan if s.key == "counters")
+    state = sr.init_session_state(plan, seniority="student", baseline_difficulty=2, difficulty_ceiling=8,
+                                  planned_duration_min=30, levels={"boolean_algebra": 4})
+    at_level, facts = sr.entry_difficulty(state, plan, known)
+    at_baseline, _ = sr.entry_difficulty(state, plan, unknown)
+    assert facts["baseline"] == 7 and at_level >= 6 > at_baseline                 # level 4 stands for difficulty 7
+    low = sr.init_session_state(plan, seniority="student", baseline_difficulty=3, difficulty_ceiling=8,
+                                planned_duration_min=30, levels={"boolean_algebra": 1})
+    assert sr.entry_difficulty(low, plan, known)[1]["baseline"] == 3              # never below the seniority baseline
+
+
+def test_week_one_asks_the_heaviest_skills_first(catalog):
+    """The strength card's skills come first when nothing is known yet (Shaked, 2026-10-04)."""
+    from datetime import date
+
+    from app.engine import plan_router
+    role = catalog.roles["digital-hardware-engineer"]
+    plan = merge_skill_sets(role_rows=role.skill_set, company_rows=[], focus_skill_keys=[], company_weight_share=0,
+                            seniority="student", planned_duration_min=45, catalog=catalog.leaf_skills)
+    questioned = [s for s in plan if s.assessment_mode.value == "questioned"]
+    coverage = {s.key: {"quick": 1, "deep": 1} for s in questioned}
+    week = plan_router.weekly_plan(plan=plan, profile={}, week_start=date(2026, 10, 5), minutes_per_day=30,
+                                   bank_coverage=coverage)
+    first_skills = [item.activity.skills[0] for item in week if item.activity.mode in ("quick", "deep")][:5]
+    weight = {s.key: s.combined_weight for s in questioned}
+    top_weight = max(weight.values())
+    fifth = sorted(weight.values(), reverse=True)[4]
+    assert weight[first_skills[0]] == top_weight                                  # the heaviest (ties allowed) opens
+    assert all(weight[k] >= fifth for k in first_skills), first_skills             # the first five are among the heaviest
+
+
 async def test_report_from_a_full_simulated_session(catalog):
     role = catalog.roles["digital-hardware-engineer"]
     plan = merge_skill_sets(role_rows=role.skill_set, company_rows=[], focus_skill_keys=[], company_weight_share=0,

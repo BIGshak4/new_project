@@ -30,7 +30,8 @@ MODELS = {"QuestionSummary": "QuestionSummary", "QuestionDetail": "QuestionDetai
 # New backend fields the web client has not typed yet: the screen part is Harel's. Once practice-api.ts has the
 # field it is compared like every other one again; then remove the entry.
 PENDING_IN_CLIENT = {"ProgramView": {"ahead"},          # working ahead in the program (Shaked, 2026-10-03)
-                     "FollowUpView": {"skipped"}}          # skipping the follow-up (Shaked, 2026-10-03)
+                     "FollowUpView": {"skipped"},          # skipping the follow-up (Shaked, 2026-10-03)
+                     "SkillProgress": {"expired"}}         # evidence older than 49 days (Shaked, 2026-10-04)
 # New routes the web client does not call yet, for the same reason; remove once practice-api.ts calls them.
 PENDING_ROUTES_IN_CLIENT = {("POST", "/v1/practice/attempts/{attempt_id}/follow-ups/{turn}/skip")}
 

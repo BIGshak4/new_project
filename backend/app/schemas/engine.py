@@ -304,6 +304,8 @@ class SessionState(BaseModel):
     subject_state: dict[str, SubjectState] = Field(default_factory=dict)
     subjects_visited_order: list[str] = Field(default_factory=list)
     skill_turns_planned: dict[str, int] = Field(default_factory=dict)   # live allocation after rebalancing
+    entry_levels: dict[str, int] = Field(default_factory=dict)          # measured levels from the profile: a known skill
+    #                                                                      starts at its level, not at the seniority baseline
     recent_bands: list[Band] = Field(default_factory=list)
     recent_actions: list[Action] = Field(default_factory=list)
     turn_pool_released: int = 0

@@ -24,7 +24,17 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 
 from app.api.errors import ApiError
-from app.engine import bank, checks, evaluator, generator, reporter, subject_router, visual_evidence, xp
+from app.engine import (
+    bank,
+    checks,
+    evaluator,
+    generator,
+    reporter,
+    scores,
+    subject_router,
+    visual_evidence,
+    xp,
+)
 from app.engine.catalog import Catalog
 from app.engine.plan import merge_skill_sets
 from app.engine.practice import UsageEvent
@@ -51,6 +61,7 @@ from app.schemas.engine import (
     Action,
     AssessmentMode,
     Decision,
+    EvidenceStatus,
     PlanSkill,
     SessionState,
     SkillState,
@@ -115,10 +126,11 @@ class InterviewService:
         plan = self._covered(plan, pool, language)
         priors = {k: (s.k, s.c) for k, s in profile.states.items() if s.k is not None and s.c is not None}
         # the session starts from the profile's scores (k, c) but counts its own turns: the report is about
-        # this interview, the profile write-back after every turn is what carries the evidence forward
+        # this interview, the profile write-back after every turn is what carries the evidence forward; a skill
+        # assessed with fresh evidence also starts at its measured difficulty instead of the seniority baseline
         state = subject_router.init_session_state(plan, seniority=seniority, baseline_difficulty=baseline,
                                                   difficulty_ceiling=ceiling, planned_duration_min=duration_min,
-                                                  priors=priors)
+                                                  priors=priors, levels=self._measured_levels(profile, plan))
         engine = self._engine(plan, state)
         decision, question = self._open(engine, plan, state, engine.start(), pool, seen=set(), language=language)
         if question is None:
@@ -383,6 +395,23 @@ class InterviewService:
             self._plans[key] = (plan, ceiling, min(baseline, ceiling))
         plan, ceiling, baseline = self._plans[key]
         return [p.model_copy(deep=True) for p in plan], ceiling, baseline
+
+    @staticmethod
+    def _measured_levels(profile: LoadedProfile, plan: list[PlanSkill]) -> dict[str, int]:
+        """The profile's level for every plan skill that is assessed and whose evidence has not expired."""
+        now = datetime.now(UTC)
+        levels: dict[str, int] = {}
+        for skill in plan:
+            state = profile.states.get(skill.key)
+            if state is None:
+                continue
+            level, _ = scores.questioned_level(state)
+            if level is None or scores.evidence_status(state, skill.required_level) != EvidenceStatus.ASSESSED:
+                continue
+            if scores.expired(scores.loyalty(profile.last_assessed.get(skill.key), now)):
+                continue
+            levels[skill.key] = level
+        return levels
 
     def _pool(self, servable) -> list[BankQuestion]:
         """The questions this interview may ask: reviewed and published, unless configured for development."""
