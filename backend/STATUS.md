@@ -5,7 +5,29 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-09-24 (loyalty and the saved program §5l) · **Tests:** 742 offline + 17 live + `scripts/smoke_http.py` against Render (25 routes) · **Latest commit:** see changelog
+**Last updated:** 2026-10-05 (readiness for the job type §5zf) · **Tests:** 883 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
+
+---
+
+## Harel's front-end queue (updated 2026-10-05, in the order Shaked wants them)
+
+The backend side of every item below is live on Render. Each one is a screen change in `apps/web`; the backend is
+not touched again for them. When an item is done, remove its entry from `PENDING_IN_CLIENT` or
+`PENDING_ROUTES_IN_CLIENT` in `backend/tests/test_ts_client_contract.py`, so the contract test guards it again.
+
+| # | Item | What to add | Contract | Section |
+|---|---|---|---|---|
+| 1 | **Skip the follow-up** | A secondary button next to "Send follow-up answer": "Skip to the next question" / "דילוג לשאלה הבאה" when `attempt.next_question` exists (and not in demo), else "Skip this follow-up" / "דילוג על שאלת ההמשך". Disabled while busy, while `status === "evaluating"`, and while a follow-up answer may already have been sent (`resend`); enabled while `question_pending`. Confirm before skipping if the answer box has text. Show a skipped follow-up in the list with a "Skipped" / "דילגתם" badge, no band, no XP (`follow_ups.filter(f => f.submission \|\| f.skipped)`). After the skip the existing next-question card appears by itself (`status === "done"`). | `skipFollowUp: (attemptId, turn) => call<Attempt>("POST", \`/v1/practice/attempts/${attemptId}/follow-ups/${turn}/skip\`)`; `FollowUp.skipped?: boolean`; 409 `no_pending_follow_up` means answered or skipped in another tab (the existing "the follow-up changed" message fits); `pendingResolved` in `practice-ui.ts` also true when the turn is `skipped`. | §5zb |
+| 2 | **Readiness for your role** | A card on the progress page from `GET /v1/me/readiness`: when `ready_to_judge`, the `readiness_word` (never the score); otherwise `message`. Below it the skills list heaviest first: `label`, the required level, the user's level, `gap`, `freshness` (fresh / aging / expired / none), and a muted note on skills with `askable === false` ("no question yet"). Then `next_questions` as three buttons: `title`, `reason`, start with `startAttempt({question_key: key, language, mode: "deep"})`. | `readiness: (language) => call<Readiness>("GET", \`/v1/me/readiness${q({language})}\`)`; types `Readiness`, `ReadinessSkill`, `ReadinessQuestion` mirror `ReadinessView`, `ReadinessSkillView`, `ReadinessQuestionView` in the OpenAPI document. Reads only; a change of job type in the goal re-plans at once, so the card and the plan refresh together. | §5zf |
+| 3 | **"Assessed of N" off the overview card** | Stop rendering `skills_assessed` / `skills_total` on the overview. Lead with `answered`, `strong`, the `level` word and `message`. The side strength card needs no change (the backend already skips skills no question examines). | `SkillProgress.expired?: boolean` is new: an expired skill keeps its old `level` with `status: "insufficient_evidence"`; draw it as needing a fresh answer, not as a loss. | §5ze |
+| 4 | **Continue with tomorrow** | On the Learn page, when `program.next` is null and `program.ahead` is set, offer one action for `program.ahead` (for example pass `program.next?.id ?? program.ahead?.id` to `pathNodes`). The plan table's Start buttons already work for tomorrow's rows once today is done. | `Program.ahead?: PlanItem \| null`; `POST /v1/me/program/start` with a later day's `item_id` returns `kind: "nothing"` with the "finish today's plan first" message while today is open. | §5za |
+| 5 | **Truth table in the circuit editor** | A "Truth table" button that runs the browser simulator over every input combination (up to about six inputs, 64 rows) and shows the table; for circuits with flip-flops show a note that a table does not apply. The backend derives the same table after grading (`evaluation-panel` already shows "Truth table of your answer"), so the two can be compared. | No backend change. | §5z |
+| 6 | **Voice input, browser only** (if Shaked's dictation test is good) | A microphone button on the answer box using the browser's speech recognition in the practice language; the words land in the box and the user edits and sends as usual. Chrome and Edge only; nothing is recorded or stored. | No backend change. If accuracy on Hebrew technical terms is poor, the server-side option is a separate plan. | — |
+
+Not for the screens: a skipped follow-up earns no grade or XP; the follow-ups themselves now ask for understanding
+(never the question's own examples) and can be an edge case after a strong answer; the grader counts a correct method
+as complete without the worked examples; evidence freshness is counted in weeks (refresh from 3 weeks, expired at
+49 days); carried plan items fit the day's minutes. None of that needs front-end work.
 
 ---
 
