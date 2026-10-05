@@ -464,8 +464,13 @@ class TestOverHttp:
                 me = (await client.get("/v1/me", headers=h)).json()
                 assert me["pilot_member"] is True and me["id"] == str(case["user_id"])
                 assert len((await client.get("/v1/questions", headers=h)).json()) == len(case["catalog"].questions)
-                attempt = (await client.post(base, json={"question_key": "example-sensor-majority", "language": "he"}, headers=h)).json()
+                attempt = (await client.post(base, json={"question_key": "example-sensor-majority", "language": "he",
+                                                         "source": "readiness", "screen": "progress"},
+                                             headers={**h, "User-Agent": "Mozilla/5.0 (Android 14; Mobile) Chrome/130"})).json()
                 aid = attempt["id"]
+                entry = (await case["connection"].execute(text("select engine_state->'entry' from public.attempt where id = :a"),
+                                                          {"a": aid})).scalar_one()
+                assert entry == {"source": "readiness", "screen": "progress", "device": "phone"}   # kept on the row
                 hint = (await client.post(f"{base}/{aid}/hints/next", headers=h)).json()["hint"]
                 assert any("\u0590" <= ch <= "\u05ff" for ch in hint["text"])
                 response = await client.post(f"{base}/{aid}/submissions", json={"answer": "alarm = A ^ B ^ C"},

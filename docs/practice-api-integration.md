@@ -49,7 +49,8 @@ Every error body is `{"error": {"code": "...", "message": "..."}}`. Every respon
 ```
 GET  /v1/questions?language=he                → list (safe: no reference, no hints)
 GET  /v1/questions/{key}?language=he          → prompt, code, choices, hint_count
-POST /v1/practice/attempts                    {question_key, mode: "deep"|"quick", language, self_confidence?}   → 201 AttemptView
+POST /v1/practice/attempts                    {question_key, mode: "deep"|"quick", language, self_confidence?, source?, screen?}   → 201 AttemptView
+                                              source: plan | suggestion | readiness | library | search | retry | other (where the start came from; kept on the attempt with the device, 2026-10-05)
 POST /v1/practice/attempts/{id}/hints/next    → {hint: {level, text} | null, attempt}
 POST /v1/practice/attempts/{id}/reference     → {reference, attempt}          (recorded; answers after it earn no evidence)
 POST /v1/practice/attempts/{id}/submissions   {answer: "..." | {text}, latency_ms?, revision_count?}

@@ -22,7 +22,8 @@ not touched again for them. When an item is done, remove its entry from `PENDING
 | 3 | **"Assessed of N" off the overview card** | Stop rendering `skills_assessed` / `skills_total` on the overview. Lead with `answered`, `strong`, the `level` word and `message`. The side strength card needs no change (the backend already skips skills no question examines). | `SkillProgress.expired?: boolean` is new: an expired skill keeps its old `level` with `status: "insufficient_evidence"`; draw it as needing a fresh answer, not as a loss. | §5ze |
 | 4 | **Continue with tomorrow** | On the Learn page, when `program.next` is null and `program.ahead` is set, offer one action for `program.ahead` (for example pass `program.next?.id ?? program.ahead?.id` to `pathNodes`). The plan table's Start buttons already work for tomorrow's rows once today is done. | `Program.ahead?: PlanItem` or null; `POST /v1/me/program/start` with a later day's `item_id` returns `kind: "nothing"` with the "finish today's plan first" message while today is open. | §5za |
 | 5 | **Truth table in the circuit editor** | A "Truth table" button that runs the browser simulator over every input combination (up to about six inputs, 64 rows) and shows the table; for circuits with flip-flops show a note that a table does not apply. The backend derives the same table after grading (`evaluation-panel` already shows "Truth table of your answer"), so the two can be compared. | No backend change. | §5z |
-| 6 | **Voice input, browser only** (if Shaked's dictation test is good) | A microphone button on the answer box using the browser's speech recognition in the practice language; the words land in the box and the user edits and sends as usual. Chrome and Edge only; nothing is recorded or stored. | No backend change. If accuracy on Hebrew technical terms is poor, the server-side option is a separate plan. | — |
+| 6 | **Where a question was started from** (small, do it with 1 and 2) | Pass `source` on every `startAttempt`: `"plan"` from the program's item or Start button, `"suggestion"` from the next-question card, `"readiness"` from the readiness card, `"library"` from the library, `"search"` from a search result, `"retry"` from "practise this question again"; and `screen` ("learn", "progress", "library"). The backend adds the device (phone or desktop) from the request and keeps the three on the attempt, for the pilot's journey reports. | `StartAttemptRequest.source?: "plan" \| "suggestion" \| "readiness" \| "library" \| "search" \| "retry" \| "other"`, `screen?: string`. Unknown values are 422. | §5zh |
+| 7 | **Voice input, browser only** (if Shaked's dictation test is good) | A microphone button on the answer box using the browser's speech recognition in the practice language; the words land in the box and the user edits and sends as usual. Chrome and Edge only; nothing is recorded or stored. | No backend change. If accuracy on Hebrew technical terms is poor, the server-side option is a separate plan. | — |
 
 Not for the screens: a skipped follow-up earns no grade or XP; the follow-ups themselves now ask for understanding
 (never the question's own examples) and can be an edge case after a strong answer; the grader counts a correct method
@@ -876,6 +877,30 @@ reasoning probe and its payload, a failed check never lean; one old threshold ca
 purpose); Or's three photo answers through the whole path on the real models, photos fetched as in production,
 read-only ($0.18). No database change.
 
+## 5zh. Where each user enters questions from: a first "heat map" and the entry source on every start (2026-10-05, Shaked, while Or was in)
+
+**What the data already says** (read-only pass, `scratchpad` journey script; the per-user tables are not stored):
+
+| User | Opened | Answered | From | Form | Median minutes to answer | Follow-ups |
+|---|---:|---:|---|---|---:|---|
+| Or | 4 | 3 | the plan, every time | photos, every time | 17.5 (53, 17.5, 15.5) | 3 asked, 0 answered |
+| Raz | 3 | 0 | the plan, every time | | left within a minute each time | |
+| Shaked (testing) | 40 | 23 | 28 library, 10 plan, 2 suggestion | 17 text, 6 photos | 0.9 | 11 asked, 6 answered |
+
+Or works from the plan, in Hebrew, in the morning and around noon, draws his answers on paper and photographs
+them, takes a quarter of an hour to an hour per question, and has not answered a follow-up. This morning (08:25) he
+opened the full-adder question from the plan. Raz opened three plan items on Saturday afternoon and evening and left
+each within a minute. A live watch (read-only poll of the tables every minute) printed each event as it landed.
+
+**The entry source, from now on.** `POST /v1/practice/attempts` takes `source` (plan, suggestion, readiness, library,
+search, retry, other) and `screen`; the route adds `device` (phone or desktop, from the User-Agent, which is not
+stored) and the three are kept on the attempt (`engine_state.entry`, no schema change) and survive a reload. Until
+the site passes `source`, the journey report infers it: a plan item id means the plan, a key equal to the previous
+attempt's suggestion means the suggestion, else the library.
+
+**Verified:** 895 offline tests (the entry kept and reloaded, phone and desktop, an unknown source is 422); the live
+HTTP test checks the entry on the real attempt row.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -914,6 +939,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-05 | The entry source on every question start (plan, suggestion, readiness, library, search, retry) plus the device, kept on the attempt; a first per-user heat map from the existing data (§5zh) |
 | 2026-10-05 | Strong, lean: a correct design with thin reasoning is STRONG with lighter evidence and a reasoning follow-up (§5zg) |
 | 2026-10-05 | `GET /v1/me/readiness`: readiness for the goal's job type, skill by skill, with the next three questions; a goal change re-plans at once without losing the day (§5zf) |
 | 2026-10-04 | Shaked's five fixes (§5ze): the day fits the minutes, heaviest skills first, freshness in weeks with expiry at 49 days, counts off the card, the interview starts at the measured level |

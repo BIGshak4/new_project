@@ -45,6 +45,22 @@ class StartAttemptRequest(BaseModel):
     mode: str = Field("deep", pattern="^(quick|deep)$")
     language: str | None = Field(None, pattern="^(en|he)$")
     self_confidence: int | None = Field(None, ge=1, le=5, description="1-5, asked before the question is shown")
+    source: str | None = Field(None, pattern="^(plan|suggestion|readiness|library|search|retry|other)$",
+                               description="where the user started this question from: plan (the program's item or "
+                                           "Start button), suggestion (the next-question card), readiness (the readiness "
+                                           "card), library, search, retry (practise this question again), other")
+    screen: str | None = Field(None, max_length=40, description="the screen the start came from, free text (learn, progress, library)")
+
+
+ENTRY_DEVICES = (("phone", ("iphone", "android", "mobile", "ipad")),)
+
+
+def device_of(user_agent: str | None) -> str | None:
+    """phone or desktop from the User-Agent, nothing more (no fingerprinting; the header is not stored)."""
+    if not user_agent:
+        return None
+    lowered = user_agent.lower()
+    return "phone" if any(mark in lowered for mark in ENTRY_DEVICES[0][1]) else "desktop"
 
 
 class AnswerBody(BaseModel):
@@ -116,11 +132,13 @@ async def _submit(practice: PracticeService, user_id: uuid.UUID, attempt_id: uui
 
 @router.post("", response_model=AttemptView, status_code=status.HTTP_201_CREATED, summary="Start an attempt",
              responses={404: {"description": "question unavailable"}, 429: {"description": "daily limit reached"}})
-async def start(body: StartAttemptRequest, access: CurrentAccess, practice: Practice) -> AttemptView:
+async def start(body: StartAttemptRequest, access: CurrentAccess, practice: Practice,
+                user_agent: Annotated[str | None, Header()] = None) -> AttemptView:
     if body.question_key is None and body.question_id is None:
         raise ApiError("validation", "question_key or question_id is required")
+    entry = {"source": body.source or "other", "screen": body.screen, "device": device_of(user_agent)}
     return await practice.start(access.user_id, question_key=body.question_key, question_id=body.question_id,
-                                mode=body.mode, language=body.language, self_confidence=body.self_confidence)
+                                mode=body.mode, language=body.language, self_confidence=body.self_confidence, entry=entry)
 
 
 @router.get("/{attempt_id}", response_model=AttemptView, summary="The attempt as it is now (refresh-safe)")

@@ -220,9 +220,9 @@ def _now() -> str:
 class PracticeAttempt:
     def __init__(self, ctx: PracticeContext, question: BankQuestion, skill_states: dict[str, SkillState], *,
                  mode: str = "deep", evidence_mode: str | None = None, familiarity: str = "new",
-                 self_confidence: int | None = None, attempt_id: str | None = None):
+                 self_confidence: int | None = None, attempt_id: str | None = None, entry: dict | None = None):
         self._init_common(ctx, question, skill_states, mode=mode, evidence_mode=evidence_mode, familiarity=familiarity,
-                          self_confidence=self_confidence, attempt_id=attempt_id)
+                          self_confidence=self_confidence, attempt_id=attempt_id, entry=entry)
         state = self._state(question.primary_skill)
         skill_controller.enter_skill(state, question.difficulty, ctx.params)
         # the profile's state is long-lived; every attempt starts with a fresh struggle budget
@@ -230,9 +230,10 @@ class PracticeAttempt:
 
     def _init_common(self, ctx: PracticeContext, question: BankQuestion, skill_states: dict[str, SkillState], *,
                      mode: str, evidence_mode: str | None, familiarity: str, self_confidence: int | None,
-                     attempt_id: str | None) -> None:
+                     attempt_id: str | None, entry: dict | None = None) -> None:
         if self_confidence is not None and not 1 <= self_confidence <= 5:
             raise PracticeError("validation", "self_confidence must be between 1 and 5")
+        self.entry = dict(entry) if entry else None           # where the question was started from: source, screen, device
         self.ctx, self.question = ctx, question
         self.attempt_id = attempt_id or str(uuid.uuid4())
         self.skill_states = skill_states
@@ -281,6 +282,7 @@ class PracticeAttempt:
         self.misconceptions_hit = list(row.get("misconceptions_hit") or [])
         self._tip_turns = {k: int(v) for k, v in (row.get("tip_turns") or {}).items()}
         self.next_question = row.get("next_question") or None
+        self.entry = row.get("entry") or None
         self._escalated = any(t.get("action") == Action.ESCALATE.value for t in self.follow_up_turns)
         if self.follow_up_turns:
             self._follow_up_difficulty = self.follow_up_turns[-1].get("difficulty") or question.difficulty
@@ -947,7 +949,7 @@ class PracticeAttempt:
             "revealed_before_submit": self.revealed_before_submit,
             "follow_up_turns": self.follow_up_turns, "misconceptions_hit": self.misconceptions_hit,
             "familiarity": self.familiarity, "evidence_mode": self.evidence_mode, "duration_ms": duration_ms,
-            "tip_turns": dict(self._tip_turns), "next_question": self.next_question,
+            "tip_turns": dict(self._tip_turns), "next_question": self.next_question, "entry": self.entry,
             "submissions": [s.model_dump(mode="json") for s in self.submissions],
             "exposures": [e.model_dump(mode="json") for e in self.exposures],
         }

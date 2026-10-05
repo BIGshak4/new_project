@@ -194,6 +194,25 @@ class TestTheContract:
         assert response.json()["submission"]["evidence"] == "none"
 
 
+class TestWhereAQuestionWasStartedFrom:
+    """Shaked, 2026-10-05: a heat map of where each user enters questions from. The start carries a source and the
+    screen; the device comes from the request; all three are kept on the attempt, nothing else about the browser."""
+
+    async def test_the_entry_is_kept_on_the_attempt_and_survives_a_reload(self, client, user):
+        _, h = user
+        phone = {**h, "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) Mobile/15E148 Safari/604.1"}
+        attempt = await start(client, phone, mode="deep", language="he", source="plan", screen="learn")
+        store = app.state.runtime.practice.store
+        row = store.attempts[uuid.UUID(attempt["id"])]["row"]
+        assert row["entry"] == {"source": "plan", "screen": "learn", "device": "phone"}
+        again = (await client.get(f"{BASE}/{attempt['id']}", headers=h)).json()          # a reload keeps it
+        assert again["id"] == attempt["id"] and store.attempts[uuid.UUID(attempt["id"])]["row"]["entry"]["source"] == "plan"
+        plain = await start(client, {**h, "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130"}, mode="quick")
+        assert store.attempts[uuid.UUID(plain["id"])]["row"]["entry"] == {"source": "other", "screen": None, "device": "desktop"}
+        bad = await client.post(BASE, json={"question_key": Q, "source": "billboard"}, headers=h)
+        assert bad.status_code == 422
+
+
 class TestSkippingTheFollowUp:
     async def test_skip_over_http_shows_the_next_question_and_cannot_be_answered_later(self, client, user):
         _, h = user

@@ -96,7 +96,7 @@ async def save(connection: AsyncConnection, *, user_id: uuid.UUID, question_id: 
         "duration_ms": row.get("duration_ms"), "submitted_at": _dt(main["accepted_at"]) if main else None,
         "exposures": row.get("exposures") or [],
         "engine_state": {"evidence_mode": row.get("evidence_mode"), "tip_turns": row.get("tip_turns") or {},
-                         "next_question": row.get("next_question"),
+                         "next_question": row.get("next_question"), "entry": row.get("entry"),
                          # attempt_submission has no column for this; it lives here, keyed by revision
                          "evaluating_since": {str(s["revision"]): s["evaluating_since"] for s in row["submissions"]
                                               if s.get("evaluating_since")}},
@@ -170,6 +170,7 @@ async def load(connection: AsyncConnection, attempt_id: uuid.UUID, *, user_id: u
         "misconceptions_hit": list(row.misconceptions_hit or []), "familiarity": row.familiarity,
         "evidence_mode": state.get("evidence_mode"), "duration_ms": row.duration_ms,
         "tip_turns": state.get("tip_turns") or {}, "next_question": state.get("next_question"),
+        "entry": state.get("entry"),
         "submissions": [{**_submission_dict(s), "evaluating_since": (state.get("evaluating_since") or {}).get(str(s.revision))}
                         for s in subs],
         "exposures": list(row.exposures or []),

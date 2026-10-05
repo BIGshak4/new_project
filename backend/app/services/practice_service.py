@@ -305,7 +305,10 @@ class PracticeService:
     # ------------------------------------------------------------------ attempts
 
     async def start(self, user_id: uuid.UUID, *, question_key: str | None = None, question_id: uuid.UUID | None = None,
-                    mode: str = "deep", language: str | None = None, self_confidence: int | None = None) -> AttemptView:
+                    mode: str = "deep", language: str | None = None, self_confidence: int | None = None,
+                    entry: dict | None = None) -> AttemptView:
+        """`entry`: where the question was started from ({source, screen, device}), kept on the attempt so the pilot's
+        journeys can be read (Shaked, 2026-10-05: a heat map of where each user enters questions from)."""
         if mode not in MODES:
             raise ApiError("validation", f"mode must be one of {', '.join(MODES)}")
         language = self._language(language)
@@ -325,7 +328,7 @@ class PracticeService:
                     ctx = self._context(seniority, language, goal.job_type)
                     try:
                         attempt = PracticeAttempt(ctx, loaded.question, profile.states, mode=mode, familiarity="new",
-                                                  self_confidence=self_confidence)
+                                                  self_confidence=self_confidence, entry=entry)
                     except PracticeError as exc:
                         raise ApiError(exc.code, str(exc)) from exc
                     row = attempt.attempt_row()
