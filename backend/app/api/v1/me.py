@@ -9,7 +9,7 @@ from fastapi import APIRouter, Query
 from pydantic import BaseModel, Field
 
 from app.api.deps import CurrentAccess, Practice
-from app.schemas.api import GoalView, ProgramStartView, ProgramView, ProgressView
+from app.schemas.api import GoalView, ProgramStartView, ProgramView, ProgressView, ReadinessView
 
 router = APIRouter(prefix="/v1/me", tags=["me"])
 
@@ -46,6 +46,17 @@ class GoalRequest(BaseModel):
 async def get_goal(access: CurrentAccess, practice: Practice,
                    language: str | None = Query(None, pattern="^(en|he)$")) -> GoalView:
     return await practice.get_goal(access.user_id, language=language)
+
+
+@router.get("/readiness", response_model=ReadinessView,
+            summary="How ready I am for the job type in my goal: its skills, where I stand on each, and what to practise next",
+            description="`skills` are the job type's skills, heaviest first, each with the required level, the user's level, "
+                        "the gap and how fresh the evidence is. `readiness_word` (and the score behind it) is given only when "
+                        "`ready_to_judge` is true, which needs counted evidence on 60 % of the job type's weight; until then "
+                        "`next_questions` says what to answer first. A change of job type in the goal rebuilds the plan at once.")
+async def readiness(access: CurrentAccess, practice: Practice,
+                    language: str | None = Query(None, pattern="^(en|he)$")) -> ReadinessView:
+    return await practice.readiness(access.user_id, language=language)
 
 
 @router.post("/goal", response_model=GoalView, summary="Set or change my goal")

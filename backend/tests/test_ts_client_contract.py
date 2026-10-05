@@ -33,7 +33,8 @@ PENDING_IN_CLIENT = {"ProgramView": {"ahead"},          # working ahead in the p
                      "FollowUpView": {"skipped"},          # skipping the follow-up (Shaked, 2026-10-03)
                      "SkillProgress": {"expired"}}         # evidence older than 49 days (Shaked, 2026-10-04)
 # New routes the web client does not call yet, for the same reason; remove once practice-api.ts calls them.
-PENDING_ROUTES_IN_CLIENT = {("POST", "/v1/practice/attempts/{attempt_id}/follow-ups/{turn}/skip")}
+PENDING_ROUTES_IN_CLIENT = {("POST", "/v1/practice/attempts/{attempt_id}/follow-ups/{turn}/skip"),
+                            ("GET", "/v1/me/readiness")}                   # readiness for the job type (Shaked, 2026-10-05)
 
 
 def ts_fields(source: str, type_name: str) -> set[str]:

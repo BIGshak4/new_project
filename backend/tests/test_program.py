@@ -604,6 +604,110 @@ class TestWorkingAhead:
         assert started.kind == "attempt" and started.item.id == later.id
 
 
+class TestReadinessForTheJobType:
+    """Shaked, 2026-10-05: the user chooses a job type; this view says where they stand against its demands."""
+
+    async def test_without_a_goal_it_asks_for_one(self, catalog):
+        svc, _ = practice(catalog)
+        view = await svc.readiness(USER, language="en")
+        assert view.job_type is None and view.skills == [] and "Choose the job type" in view.message
+
+    async def test_a_new_user_sees_the_demands_heaviest_first_and_what_to_answer(self, catalog):
+        svc, _ = practice(catalog)
+        await with_goal(svc)
+        view = await svc.readiness(USER, language="en")
+        assert view.job_type == "verification" and view.job_type_label and not view.ready_to_judge
+        assert view.readiness_word is None and view.readiness_score is None and view.coverage == 0.0
+        shares = [s.weight_share for s in view.skills]
+        assert shares == sorted(shares, reverse=True) and abs(sum(shares) - 1) < 0.02
+        assert all(s.status == "not_assessed" and s.gap is None and s.freshness == "none" for s in view.skills)
+        assert any(not s.askable for s in view.skills)                                  # the blind skills are named
+        assert 1 <= len(view.next_questions) <= 3 and len({q.skill for q in view.next_questions}) == len(view.next_questions)
+        askable_heaviest = [s.key for s in view.skills if s.askable][:6]
+        assert all(q.skill in askable_heaviest and q.why == "unassessed" for q in view.next_questions)
+        assert "Not enough evidence yet" in view.message
+
+    async def test_an_answer_shows_up_with_its_level_and_freshness_and_expiry_drops_it(self, catalog):
+        svc, store = practice(catalog, scripted([GOOD, GOOD]))
+        await with_goal(svc)
+        view = await svc.start(USER, question_key="example-sensor-majority", mode="quick", language="en")
+        await svc.submit(USER, uuid.UUID(view.id), "alarm = AB + BC + AC", idempotency_key="k1")
+        ready = await svc.readiness(USER, language="en")
+        boolean = next(s for s in ready.skills if s.key == "boolean_algebra")
+        assert boolean.level is not None and boolean.freshness == "fresh"
+        assert boolean.status in ("assessed", "insufficient_evidence")
+        if boolean.status == "assessed":
+            assert boolean.gap is not None and ready.coverage > 0
+        # seven weeks later the evidence has expired: the level is shown as history, the skill counts as unknown again
+        for (uid, _key), row in store.profiles.items():
+            if uid == USER and row.get("last_assessed_at"):
+                row["last_assessed_at"] = row["last_assessed_at"] - timedelta(days=50)
+        store.plans.clear()
+        later = await svc.readiness(USER, language="en")
+        boolean = next(s for s in later.skills if s.key == "boolean_algebra")
+        assert boolean.freshness == "expired" and boolean.gap is None and boolean.level is not None
+        assert later.coverage == 0.0 and any(q.skill == "boolean_algebra" and q.why == "refresh" for q in later.next_questions)
+
+    async def test_the_word_appears_only_with_enough_evidence(self, catalog, monkeypatch):
+        svc, _ = practice(catalog, scripted([GOOD, GOOD, GOOD]))
+        await with_goal(svc)
+        view = await svc.start(USER, question_key="example-sensor-majority", mode="deep", language="en")
+        aid = uuid.UUID(view.id)
+        _, view = await svc.submit(USER, aid, "alarm = AB + BC + AC", idempotency_key="k1")
+        while view.pending_follow_up is not None:                                       # two scored answers: assessed
+            _, view = await svc.submit(USER, aid, "pairs", idempotency_key=f"f{view.pending_follow_up.turn}",
+                                       follow_up_turn=view.pending_follow_up.turn)
+        before = await svc.readiness(USER, language="en")
+        assert before.coverage > 0 and not before.ready_to_judge and before.readiness_word is None
+        monkeypatch.setattr(PracticeService, "READY_COVERAGE", 0.0)                   # the gate alone decides
+        after = await svc.readiness(USER, language="en")
+        assert after.ready_to_judge and after.readiness_word in ("Ready", "Nearly there", "On the way", "Early days")
+        assert after.readiness_score is not None and after.job_type_label in after.message
+        hebrew = await svc.readiness(USER, language="he")
+        assert hebrew.readiness_word in ("מוכנים", "כמעט שם", "בדרך", "בתחילת הדרך")
+
+    async def test_the_view_writes_nothing(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        await svc.program(USER, language="en")
+        snapshot = (len(store.metrics), len(store.usage), str(sorted(store.plans[USER].items, key=lambda i: str(i.id))))
+        await svc.readiness(USER, language="en")
+        assert (len(store.metrics), len(store.usage), str(sorted(store.plans[USER].items, key=lambda i: str(i.id)))) == snapshot
+
+
+class TestChangingTheJobType:
+    async def test_a_new_job_type_rebuilds_the_plan_at_once_and_keeps_what_was_done(self, catalog):
+        """Shaked, 2026-10-05: not the next morning."""
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        first = await svc.program(USER, language="en")
+        generated = store.plans[USER].generated_at
+        done = await finish_day(svc, store)                                             # today's work, done
+        assert done >= 1
+        await svc.program(USER, language="en")
+        assert store.plans[USER].generated_at == generated                              # a plain read reuses the plan
+        await svc.save_goal(USER, job_type="software", interview_date=TODAY + timedelta(days=10), minutes_per_day=30,
+                            seniority="student")
+        second = await svc.program(USER, language="en")
+        assert store.plans[USER].generated_at > generated                               # rebuilt now
+        assert second.plan.generated_for == first.plan.generated_for == TODAY.isoformat()
+        assert second.done_today == done                                                # nothing done was lost
+        assert not any(i.carried for i in second.plan.items)                            # a same-day rebuild carries nothing
+        rebuilt_at = store.plans[USER].generated_at
+        again = await svc.program(USER, language="en")
+        assert store.plans[USER].generated_at == rebuilt_at and again.done_today == done
+
+    async def test_saving_the_same_goal_twice_does_not_churn_the_plan_twice(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        await svc.program(USER, language="en")
+        await with_goal(svc)                                                           # saved again, unchanged
+        await svc.program(USER, language="en")
+        rebuilt_at = store.plans[USER].generated_at
+        await svc.program(USER, language="en")
+        assert store.plans[USER].generated_at == rebuilt_at                            # reused once rebuilt
+
+
 @pytest.fixture
 async def client(catalog, monkeypatch):
     settings = Settings(_env_file=None, llm_provider="scripted", allow_in_review_content=True,

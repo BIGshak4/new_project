@@ -804,6 +804,32 @@ measured level, no early mapping, expiry never set, weights not scaled) each cau
 folder. It was restored from git and the round's patch scripts, the suite reproduced 874 passes and the same
 eight-file diff. Rule kept in memory: destructive commands take absolute scratch paths only.
 
+## 5zf. Readiness for the chosen job type; a goal change re-plans without losing the day (2026-10-05, Shaked: "the user chooses a role and the questions follow its demands and the user's ability")
+
+**`GET /v1/me/readiness`** (new; `ReadinessView`): for the job type in the goal, its skills heaviest first, each with
+the required level, the user's level, the gap, the evidence's freshness (fresh, aging, expired, none) and whether a
+bank question can examine it at all; `coverage` is the share of the job type's weight backed by counted evidence
+(assessed, not expired); a **readiness word** (Ready, Nearly there, On the way, Early days, in the practice language)
+and the score behind it appear only once coverage reaches 60 %, the engine's own rule; until then the message says
+to answer the questions below first. `next_questions` are up to three unseen questions that close the biggest gaps
+(weight x gap), then the heaviest skills without evidence, each with a one-sentence reason (gap, unassessed, confirm,
+refresh). Nothing is written. On the real data (rolled back): Shaked's account 20 % coverage for software
+engineering with three next questions; Or 6 % for the student position.
+
+**A goal change re-plans at once and keeps the day.** Saving the goal used to throw the plan away ("a new goal means
+a new program"), which did rebuild at once but lost the day's done items. Now the goal remembers when it was saved
+(`background.goal_saved_at`, no schema change), a plan older than that is rebuilt on the next read, and the same-day
+rebuild keeps what was done and what is open (the work-ahead rules).
+
+**For Harel:** a "readiness for your role" card from `GET /v1/me/readiness`: the word when `ready_to_judge`, otherwise
+the message; the skills list heaviest first with the gap and freshness; the three next questions as buttons
+(`startAttempt(key)`). Show the word, not the score. The route is in `PENDING_ROUTES_IN_CLIENT` until the client
+calls it. The job-type picker needs no change: the plan now follows at once.
+
+**Verified:** ruff clean, 883 offline tests (readiness: no goal, a new user, an answer with its freshness and its
+expiry, the 60 % gate, writes nothing; the goal change keeps the day's done items; the route in every list); the live
+program, skip and HTTP tests against the real database (below).
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -842,6 +868,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-05 | `GET /v1/me/readiness`: readiness for the goal's job type, skill by skill, with the next three questions; a goal change re-plans at once without losing the day (§5zf) |
 | 2026-10-04 | Shaked's five fixes (§5ze): the day fits the minutes, heaviest skills first, freshness in weeks with expiry at 49 days, counts off the card, the interview starts at the measured level |
 | 2026-10-04 | Night check (§5zd): all suites green; the pilot's users, how the system rates them and role fit (`docs/pilot-users-and-role-fit-2026-10-03.md`); morning list |
 | 2026-10-03 | Grader v2: worked examples are confirmation, a correct method is strong without them (13/13 review set unchanged); generator v3: the follow-up after a strong answer is an edge case (§5zc) |

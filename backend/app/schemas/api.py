@@ -243,6 +243,49 @@ class ProgramStartView(BaseModel):
                                                 # no question in the bank)
 
 
+class ReadinessSkillView(BaseModel):
+    """One skill the chosen job type demands, and where the user stands on it."""
+
+    key: str
+    label: str
+    subject: str
+    weight_share: float                         # share of the job type's weight (0..1), heaviest first in the list
+    required_level: int
+    level: int | None = None                    # the user's level when there is evidence (expired evidence keeps the old level)
+    status: str                                 # assessed | insufficient_evidence | not_assessed
+    gap: int | None = None                      # required - level when the evidence counts; None when it does not
+    freshness: str                              # fresh | aging | expired | none
+    askable: bool = True                        # a bank question examines it; false means it cannot be practised yet
+
+
+class ReadinessQuestionView(BaseModel):
+    key: str
+    title: str
+    skill: str
+    skill_label: str
+    difficulty: int
+    why: str                                    # gap | unassessed | confirm | refresh
+    reason: str                                 # one sentence in the practice language
+
+
+class ReadinessView(BaseModel):
+    """How ready the user is for the job type in their goal, skill by skill, and what to practise next
+    (Shaked, 2026-10-05: the user chooses a role; the questions follow its demands and the user's ability)."""
+
+    job_type: str | None
+    job_type_label: str | None
+    skills: list[ReadinessSkillView] = Field(default_factory=list)      # heaviest first
+    coverage: float = 0.0                       # share of the job type's weight backed by counted evidence (0..1)
+    ready_to_judge: bool = False                # coverage at or above READY_COVERAGE: the readiness word means something
+    readiness_word: str | None = None           # Ready | Nearly there | On the way | Early days, in the practice language
+    readiness_score: float | None = None        # the fit score behind the word (0..100), for the report; show the word
+    skills_meeting_requirement: int = 0
+    skills_with_gap: int = 0
+    skills_without_evidence: int = 0
+    next_questions: list[ReadinessQuestionView] = Field(default_factory=list)   # up to three, biggest gaps first
+    message: str                                # one sentence: what the figures mean and what to do
+
+
 class ProgressView(BaseModel):
     skills: list[SkillProgress]
     subjects: list[SubjectProgress] = Field(default_factory=list)

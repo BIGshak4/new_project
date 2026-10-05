@@ -156,7 +156,7 @@ class _MemoryTx:
 
     async def save_goal(self, user_id, goal):
         kept = goal.seniority or self.s.seniority.get(user_id)          # None keeps the stored seniority, as the database does
-        self.s.goals[user_id] = Goal(**{**goal.__dict__, "seniority": kept})
+        self.s.goals[user_id] = Goal(**{**goal.__dict__, "seniority": kept, "saved_at": datetime.now(UTC)})
         if goal.seniority:
             self.s.seniority[user_id] = goal.seniority
         return self.s.goals[user_id]

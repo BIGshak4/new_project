@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import uuid
 from dataclasses import dataclass
-from datetime import date
+from datetime import UTC, date, datetime
 
 from sqlalchemy import func, select, update
 from sqlalchemy.dialects.postgresql import insert
@@ -68,6 +68,7 @@ class Goal:
     interview_date: date | None = None
     minutes_per_day: int | None = None
     seniority: str | None = None
+    saved_at: datetime | None = None              # when the goal was last saved: a plan older than that is rebuilt at once
 
     @property
     def complete(self) -> bool:
@@ -88,9 +89,17 @@ async def load_goal(connection: AsyncConnection, user_id: uuid.UUID) -> Goal:
         return Goal()
     background = row.background if isinstance(row.background, dict) else {}
     job_type = background.get("job_type")
+    saved_at = None
+    if background.get("goal_saved_at"):
+        try:
+            saved_at = datetime.fromisoformat(str(background["goal_saved_at"]))
+            if saved_at.tzinfo is None:
+                saved_at = saved_at.replace(tzinfo=UTC)
+        except ValueError:
+            saved_at = None
     return Goal(job_type=str(job_type) if job_type else None, interview_date=row.target_interview_date,
                 minutes_per_day=int(row.available_minutes_per_day) if row.available_minutes_per_day is not None else None,
-                seniority=str(row.seniority_self_assessed) if row.seniority_self_assessed else None)
+                seniority=str(row.seniority_self_assessed) if row.seniority_self_assessed else None, saved_at=saved_at)
 
 
 async def save_goal(connection: AsyncConnection, user_id: uuid.UUID, goal: Goal) -> Goal:
@@ -102,6 +111,8 @@ async def save_goal(connection: AsyncConnection, user_id: uuid.UUID, goal: Goal)
         background["job_type"] = goal.job_type
     else:
         background.pop("job_type", None)
+    goal.saved_at = datetime.now(UTC)
+    background["goal_saved_at"] = goal.saved_at.isoformat()
     values = {"background": background, "target_interview_date": goal.interview_date,
               "available_minutes_per_day": goal.minutes_per_day}
     if goal.seniority:                       # None keeps the profile's value: the column is also Harel's app's

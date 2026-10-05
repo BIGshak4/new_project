@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 
 from app.api.errors import ApiError
-from app.engine import bank, next_question, plan_router, scores, xp
+from app.engine import bank, next_question, plan_router, scorecards, scores, xp
 from app.engine.catalog import Catalog
 from app.engine.plan import merge_skill_sets
 from app.engine.practice import (
@@ -64,6 +64,9 @@ from app.schemas.api import (
     ProgramView,
     ProgressOverview,
     ProgressView,
+    ReadinessQuestionView,
+    ReadinessSkillView,
+    ReadinessView,
     SkillProgress,
     SubjectProgress,
     SubmissionView,
@@ -276,7 +279,8 @@ class PracticeService:
         goal = Goal(job_type=job_type, interview_date=interview_date, minutes_per_day=minutes_per_day, seniority=seniority)
         async with self.store.transaction() as tx:
             await tx.save_goal(user_id, goal)
-            await tx.deactivate_plan(user_id)                       # a new goal means a new program
+            # the plan is not thrown away: it is rebuilt on the next read because the goal is newer than the plan
+            # (_goal_changed_after), and the rebuild keeps what was done today (Shaked, 2026-10-05)
             stored = await tx.load_goal(user_id)                    # what the row says, not what the request said
         return self._goal_view(stored, self._language(language))
 
@@ -762,6 +766,114 @@ class PracticeService:
 
     # ------------------------------------------------------------------ progress
 
+    READY_COVERAGE = 0.6                  # the engine's own rule (ScorecardParams.partial_evaluation_coverage)
+    READINESS_WORDS = {
+        "en": {"ready": "Ready", "nearly": "Nearly there", "on_the_way": "On the way", "early": "Early days"},
+        "he": {"ready": "מוכנים", "nearly": "כמעט שם", "on_the_way": "בדרך", "early": "בתחילת הדרך"},
+    }
+    READINESS_MESSAGES = {
+        "en": {
+            "no_goal": "Choose the job type you are preparing for, and the plan, the questions and this picture follow it.",
+            "not_yet": "Not enough evidence yet for {job}: answer the questions below first; they cover the skills it weighs most.",
+            "judged": "{word} for {job}: {meets} of {total} skills at the level it needs, {gaps} below, {unknown} not seen yet.",
+        },
+        "he": {
+            "no_goal": "בחרו את סוג התפקיד שאליו אתם מתכוננים, והתוכנית, השאלות והתמונה הזו יעקבו אחריו.",
+            "not_yet": "עדיין אין מספיק עדות עבור {job}: ענו קודם על השאלות שלמטה; הן מכסות את המיומנויות הכבדות ביותר שלו.",
+            "judged": "{word} עבור {job}: {meets} מתוך {total} מיומנויות ברמה הנדרשת, {gaps} מתחתיה, {unknown} עוד לא נבדקו.",
+        },
+    }
+    READINESS_REASONS = {
+        "en": {"gap": "{skill} is below the level {job} needs; this question closes the biggest gap.",
+               "unassessed": "{job} weighs {skill} heavily and there is no evidence on it yet.",
+               "confirm": "One answer on {skill} so far; one more confirms where you stand.",
+               "refresh": "Your evidence on {skill} is old; one answer refreshes it."},
+        "he": {"gap": "{skill} מתחת לרמה ש-{job} דורש; השאלה הזו סוגרת את הפער הגדול ביותר.",
+               "unassessed": "{job} נותן משקל גבוה ל-{skill} ועדיין אין עליו עדות.",
+               "confirm": "תשובה אחת על {skill} עד כה; עוד אחת מאשרת איפה אתם עומדים.",
+               "refresh": "העדות על {skill} ישנה; תשובה אחת מרעננת אותה."},
+    }
+
+    async def readiness(self, user_id: uuid.UUID, *, language: str | None = None) -> ReadinessView:
+        """Where the user stands against the job type in their goal, skill by skill, and the three questions that
+        close the biggest gaps. Everything comes from the stored evidence; nothing is written."""
+        language = self._language(language)
+        words = self.READINESS_WORDS.get(language, self.READINESS_WORDS["en"])
+        texts = self.READINESS_MESSAGES.get(language, self.READINESS_MESSAGES["en"])
+        reasons = self.READINESS_REASONS.get(language, self.READINESS_REASONS["en"])
+        progress = await self.progress(user_id, language=language)
+        async with self.store.transaction() as tx:
+            goal = await tx.load_goal(user_id)
+            seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
+            servable = await tx.list_questions(language=language)
+            seen = await tx.seen_question_keys(user_id)
+        job = self.catalog.job_types.get(goal.job_type) if goal.job_type else None
+        job_label = job.text("label", language) if job else None
+        if job is None:
+            return ReadinessView(job_type=None, job_type_label=None, message=texts["no_goal"])
+        _, _, _, plan_skills = self._plan(seniority, job.key)
+        by_key = {s.key: s for s in progress.skills}
+        askable = {link.skill for q in self.catalog.questions.values() for link in q.skills}
+        questioned = [p for p in plan_skills if p.assessment_mode.value == "questioned" and p.key in self.catalog.skills]
+        total = sum(p.combined_weight for p in questioned) or 1.0
+        rows: list[ReadinessSkillView] = []
+        levels: dict[str, int] = {}
+        for p in sorted(questioned, key=lambda p: (-p.combined_weight, p.key)):
+            s = by_key.get(p.key)
+            skill = self.catalog.skills[p.key]
+            level = s.level if s else None
+            status = s.status if s else "not_assessed"
+            if s is not None and s.expired:
+                freshness = "expired"
+            elif s is not None and s.needs_refresh:
+                freshness = "aging"
+            elif level is not None and status != "not_assessed":
+                freshness = "fresh"
+            else:
+                freshness = "none"
+            counted = status == "assessed" and freshness != "expired" and level is not None
+            if counted:
+                levels[p.key] = level
+            rows.append(ReadinessSkillView(key=p.key, label=skill.label, subject=skill.subject or "",
+                                           weight_share=round(p.combined_weight / total, 3), required_level=p.required_level,
+                                           level=level, status=status, gap=max(0, p.required_level - level) if counted else None,
+                                           freshness=freshness, askable=p.key in askable))
+        fit = scorecards.target_fit(plan_skills, levels)
+        coverage = round(sum(p.combined_weight for p in questioned if p.key in levels) / total, 3)
+        ready = coverage >= self.READY_COVERAGE and fit.fit_score is not None
+        score = fit.fit_score if ready else None
+        word = None
+        if ready:
+            word = words["ready" if score >= 85 else "nearly" if score >= 70 else "on_the_way" if score >= 50 else "early"]
+        meets = sum(1 for r in rows if r.gap == 0)
+        gaps = sum(1 for r in rows if r.gap)
+        unknown = sum(1 for r in rows if r.gap is None)
+        # the next questions: the biggest gaps first (weight x gap), then the heaviest skills without counted evidence
+        candidates = [self.catalog.questions[s.key] for s in servable
+                      if s.key in self.catalog.questions and s.assessment_ready and (s.reviewed or not self.config.suggest_reviewed_only)]
+        order = sorted((r for r in rows if r.askable and r.gap != 0),
+                       key=lambda r: (-(r.gap or 0) * r.weight_share, r.gap is None and r.freshness == "none", -r.weight_share))
+        picked: list[ReadinessQuestionView] = []
+        exclude: set[str] = set(seen)
+        for r in order:
+            if len(picked) == 3:
+                break
+            target = scores.min_difficulty_for_level(max(1, (r.level or r.required_level) if r.gap else r.required_level))
+            question = next_question._pick(candidates, skill=r.key, target=target, seen=exclude, exclude="", window=(1, 10))
+            if question is None:
+                continue
+            exclude.add(question.key)
+            why = ("gap" if r.gap else "refresh" if r.freshness in ("aging", "expired")
+                   else "confirm" if r.status == "insufficient_evidence" else "unassessed")
+            picked.append(ReadinessQuestionView(key=question.key, title=question.text(language).title, skill=r.key,
+                                                skill_label=r.label, difficulty=question.difficulty, why=why,
+                                                reason=reasons[why].format(skill=r.label, job=job_label)))
+        message = (texts["judged"].format(word=word, job=job_label, meets=meets, total=len(rows), gaps=gaps, unknown=unknown)
+                   if ready else texts["not_yet"].format(job=job_label))
+        return ReadinessView(job_type=job.key, job_type_label=job_label, skills=rows, coverage=coverage, ready_to_judge=ready,
+                             readiness_word=word, readiness_score=score, skills_meeting_requirement=meets, skills_with_gap=gaps,
+                             skills_without_evidence=unknown, next_questions=picked, message=message)
+
     async def progress(self, user_id: uuid.UUID, *, language: str | None = None) -> ProgressView:
         language = self._language(language)
         today = date.today()
@@ -944,6 +1056,16 @@ class PracticeService:
         return pool
 
     @staticmethod
+    def _goal_changed_after(plan: StoredPlan, goal: Goal) -> bool:
+        """The goal (its job type, most of all) was saved after this plan was built: rebuild today, keeping what was
+        done (Shaked, 2026-10-05: changing the job type re-plans at once, not the next morning)."""
+        if goal.saved_at is None or plan.generated_at is None:
+            return False
+        generated = plan.generated_at if plan.generated_at.tzinfo else plan.generated_at.replace(tzinfo=UTC)
+        saved = goal.saved_at if goal.saved_at.tzinfo else goal.saved_at.replace(tzinfo=UTC)
+        return saved > generated
+
+    @staticmethod
     def _answered_since(profile: LoadedProfile, item: PlanItemRow) -> bool:
         """A scored answer on one of the item's skills landed after the item was planned."""
         planned_at = item.created_at
@@ -987,7 +1109,8 @@ class PracticeService:
         done_ahead: list[tuple[int, PlanItemRow]] = []          # (day index in the new plan, the done item)
         started_ahead: list[tuple[int, PlanItemRow]] = []       # (day index in the new plan, an item opened ahead)
         if plan is not None:
-            if plan.week_start == today and plan.minutes_per_day == minutes and plan.interview_date == goal.interview_date:
+            if (plan.week_start == today and plan.minutes_per_day == minutes and plan.interview_date == goal.interview_date
+                    and not self._goal_changed_after(plan, goal)):
                 return plan
             for item in plan.items:
                 planned_for = plan.week_start + timedelta(days=item.day_index)

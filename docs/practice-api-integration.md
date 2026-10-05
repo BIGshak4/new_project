@@ -59,6 +59,7 @@ POST /v1/practice/attempts/{id}/follow-ups/{turn}/skip          (no body)       
 POST /v1/practice/attempts/{id}/submissions/{revision}/retry    → {submission, attempt}     (after status "failed")
 GET  /v1/practice/attempts/{id}               → AttemptView (everything needed to redraw the page after a refresh)
 GET  /v1/me/progress                          → skills (level, status, trend), recent attempts, attempts_today
+GET  /v1/me/readiness?language=he             → readiness for the goal's job type: its skills heaviest first (required level, level, gap, freshness), coverage, a word once 60 % of the weight has evidence, the next three questions (2026-10-05)
 ```
 
 `AttemptView.status` is `in_progress` | `evaluating` | `done` | `failed` (`evaluating` = a revision is being scored right now, possibly on another server); `can_submit`, `can_retry`, `hints_remaining`, `pending_follow_up` tell the UI what to show. `SubmissionView.assessed_by` is `demo` while the server runs the scripted stand-in and `model` (with `model` = the model id) for a real assessment — only `model` results are real feedback or evidence. `SubmissionView` also has `band` (STRONG/PARTIAL/WEAK), `summary`, `key_points_hit/missed`, `check` (the automatic check, when the question has one), `card` (the four-part feedback), `tip`, `follow_up` (the next question, if any), `evidence` (`full` | `reduced` | `none`) and `flags`.
