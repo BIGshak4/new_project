@@ -75,12 +75,23 @@ def apply_company_modifiers(evaluation: Evaluation, emphasis: dict[str, float] |
 # ----------------------------------------------------------------------------- §3.1 band
 
 
+def lean_strong(evaluation: Evaluation, core_misconception: bool = False,
+                params: EngineParams = DEFAULT_PARAMS) -> bool:
+    """A correct answer whose written reasoning is thin: STRONG by band, lighter evidence, a reasoning follow-up
+    (Shaked, 2026-10-05). A failed check never gets here: it caps correctness at 0.4."""
+    p = params.scores
+    return (not core_misconception and evaluation.correctness >= p.lean_strong_correctness
+            and p.lean_strong_depth <= evaluation.depth < p.strong_depth)
+
+
 def classify_band(evaluation: Evaluation, core_misconception: bool = False,
                   params: EngineParams = DEFAULT_PARAMS) -> Band:
     p = params.scores
     if core_misconception or evaluation.correctness < p.partial_correctness:
         return Band.WEAK
     if evaluation.correctness >= p.strong_correctness and evaluation.depth >= p.strong_depth:
+        return Band.STRONG
+    if lean_strong(evaluation, core_misconception, params):
         return Band.STRONG
     return Band.PARTIAL
 
@@ -95,6 +106,8 @@ def classify_band_from_row(row: dict, params: EngineParams = DEFAULT_PARAMS) -> 
     if row["correctness"] < p.partial_correctness:
         return Band.WEAK.value
     if row["correctness"] >= p.strong_correctness and row["depth"] >= p.strong_depth:
+        return Band.STRONG.value
+    if row["correctness"] >= p.lean_strong_correctness and row["depth"] >= p.lean_strong_depth:
         return Band.STRONG.value
     return Band.PARTIAL.value
 

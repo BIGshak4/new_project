@@ -9,7 +9,7 @@ class TestBands:
     """AI_Engine_Spec §3.1"""
 
     @pytest.mark.parametrize("correctness,depth,expected", [
-        (0.75, 0.55, Band.STRONG), (0.90, 0.54, Band.PARTIAL), (0.74, 0.90, Band.PARTIAL),
+        (0.75, 0.55, Band.STRONG), (0.90, 0.54, Band.STRONG), (0.74, 0.90, Band.PARTIAL),
         (0.45, 0.10, Band.PARTIAL), (0.44, 0.90, Band.WEAK),
     ])
     def test_thresholds(self, correctness, depth, expected):

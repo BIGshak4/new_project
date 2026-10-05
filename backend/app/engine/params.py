@@ -37,6 +37,11 @@ class ScoreParams:
     strong_correctness: float = 0.75
     strong_depth: float = 0.55
     partial_correctness: float = 0.45
+    # a correct answer whose written reasoning is thin is STRONG, lean (Shaked, 2026-10-05): the band is STRONG, its
+    # evidence counts at 0.8 of a full strong answer, and the follow-up asks for the reasoning instead of escalating
+    lean_strong_correctness: float = 0.8
+    lean_strong_depth: float = 0.35
+    lean_strong_evidence: float = 0.8
 
     # §2.3 deterministic check authority
     check_fail_correctness_cap: float = 0.40

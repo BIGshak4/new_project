@@ -678,6 +678,7 @@ class PracticeAttempt:
         evaluation = scores.apply_check_result(result.evaluation, check, params)
         core = bool(set(evaluation.misconceptions) & question.core_misconception_keys)
         band = scores.classify_band(evaluation, core, params)
+        lean = scores.lean_strong(evaluation, core, params)       # correct, thin reasoning: STRONG with a lighter step
         self.misconceptions_hit = sorted(set(self.misconceptions_hit) | set(evaluation.misconceptions))
 
         primary_state = self._state(question.primary_skill)
@@ -691,6 +692,8 @@ class PracticeAttempt:
         study_only = question.assets.get("assessment_ready") is False
         if study_only:
             weight = 0.0
+        if lean:
+            weight = round(weight * params.scores.lean_strong_evidence, 3)
 
         # one metrics row per examined skill; secondary skills get evidence in proportion to their share
         links = [] if study_only else [link for link in question.skills if link.primary] if is_follow_up else question.skills
@@ -730,8 +733,9 @@ class PracticeAttempt:
         # what next: the skill controller, limited to MAX_FOLLOW_UPS follow-ups and one escalation
         decision = controller = action = next_difficulty = None
         if self.mode == "deep" and len(self.follow_up_turns) < MAX_FOLLOW_UPS and weight > 0:
+            # a lean strong answer is probed for its reasoning, like a partial one, instead of escalating
             controller = skill_controller.decide(
-                primary_state, band=band, confidence=primary_state.c, depth=evaluation.depth,
+                primary_state, band=Band.PARTIAL if lean else band, confidence=primary_state.c, depth=evaluation.depth,
                 plan_skill=self.plan_skill, difficulty_ceiling=ctx.difficulty_ceiling, params=params)
             wants_second_escalation = controller.action == Action.ESCALATE and self._escalated
             if not controller.resolved and not wants_second_escalation:
@@ -746,13 +750,16 @@ class PracticeAttempt:
                         next_hint = self.hints_used + 1
                         self._expose("hint", next_hint)
                     primary_state.hint_level = next_hint
+                focus = ("; ".join(evaluation.key_points_missed[:2]) or None) if action in (Action.HOLD, Action.HINT) else None
+                if lean and action == Action.HOLD:
+                    focus = ("the reasoning behind the correct design, in the candidate's own words: why it works and "
+                             "what would break without its key part" + (f"; {focus}" if focus else ""))
                 decision = Decision(
-                    action=action, reason_code=controller.reason_code, target_subject=question.subject,
+                    action=action, reason_code="reasoning_probe" if lean and action == Action.HOLD else controller.reason_code,
+                    target_subject=question.subject,
                     target_skill=controller.target_skill or question.primary_skill,
                     target_difficulty=next_difficulty, target_archetype=question.archetype,
-                    probe_focus=("; ".join(evaluation.key_points_missed[:2]) or None)
-                    if action in (Action.HOLD, Action.HINT) else None,
-                    deliver_hint=action == Action.HINT, hint_level=next_hint)
+                    probe_focus=focus, deliver_hint=action == Action.HINT, hint_level=next_hint)
             else:
                 metrics[0]["decision_reason_code"] = controller.reason_code
 
@@ -771,9 +778,11 @@ class PracticeAttempt:
                 # transient, removed once the words are in: what `write_prose` needs after a restart
                 "wording_pending": True, "asked_after": submission.revision, "decision": decision.model_dump(mode="json")})
             metrics[0]["decision_action"] = action.value
-            metrics[0]["decision_reason_code"] = controller.reason_code
+            metrics[0]["decision_reason_code"] = decision.reason_code
             metrics[0]["difficulty_next"] = next_difficulty
         flags: list[str] = []
+        if lean:
+            flags.append("reasoning_thin")
         if submission.reference_seen:
             flags.append("revealed_before_submit_no_evidence")
         if study_only:

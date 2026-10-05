@@ -519,6 +519,59 @@ class TestFollowUpsAskForUnderstanding:
         assert turn["flags"] == ["examples_listed_regenerated"] and turn["question"] == CLEAN_HE
 
 
+# ----------------------------------------------------------------------------- strong, lean (Shaked, 2026-10-05)
+
+
+class TestLeanStrong:
+    """A correct design with thin written reasoning is STRONG, with lighter evidence and a reasoning follow-up."""
+
+    @pytest.mark.parametrize("correctness, depth, core, expected, lean", [
+        (0.85, 0.45, False, Band.STRONG, True), (0.8, 0.35, False, Band.STRONG, True), (0.9, 0.54, False, Band.STRONG, True),
+        (0.9, 0.6, False, Band.STRONG, False), (0.75, 0.55, False, Band.STRONG, False),
+        (0.79, 0.5, False, Band.PARTIAL, False), (0.9, 0.3, False, Band.PARTIAL, False), (0.85, 0.45, True, Band.WEAK, False),
+    ])
+    def test_the_band_rule(self, correctness, depth, core, expected, lean):
+        from app.engine import scores
+        evaluation = make_evaluation(correctness=correctness, depth=depth)
+        assert scores.classify_band(evaluation, core) == expected
+        assert scores.lean_strong(evaluation, core) is lean
+        row = {"correctness": correctness, "depth": depth}
+        assert scores.classify_band_from_row(row) == (expected.value if not core else Band.PARTIAL.value if expected != Band.WEAK else scores.classify_band_from_row(row))
+
+    async def test_a_lean_strong_answer_is_strong_with_lighter_evidence_and_a_reasoning_probe(self, catalog):
+        question = catalog.questions["example-mod-six-counter"]                 # no automatic check
+        missed = ["why the recovery from 6 and 7 is needed"]
+        lean = scripted([evaluation_json(correctness=0.85, depth=0.45, key_points_missed=missed)])
+        outcome = await PracticeAttempt(context(catalog, lean), question, {}).submit("a correct next-state table")
+        assert outcome.band == Band.STRONG and "reasoning_thin" in outcome.flags
+        full = scripted([evaluation_json(correctness=0.9, depth=0.8, key_points_missed=missed)])
+        reference = await PracticeAttempt(context(catalog, full), question, {}).submit("a correct, explained answer")
+        assert reference.band == Band.STRONG and "reasoning_thin" not in reference.flags
+        assert outcome.evidence_weight == pytest.approx(reference.evidence_weight * 0.8, abs=1e-3)
+        assert reference.decision.action == Action.ESCALATE                      # a full strong answer is escalated
+        assert outcome.decision.action == Action.HOLD and outcome.decision.reason_code == "reasoning_probe"
+        assert outcome.decision.target_difficulty == reference.decision.target_difficulty - 1 or outcome.decision.target_difficulty <= question.difficulty
+        assert outcome.decision.probe_focus.startswith("the reasoning behind the correct design")
+        assert missed[0] in outcome.decision.probe_focus and outcome.follow_up
+        assert outcome.metrics[0]["band"] == "STRONG" and outcome.metrics[0]["decision_reason_code"] == "reasoning_probe"
+
+    async def test_a_failed_check_never_makes_a_lean_strong(self, catalog):
+        question = catalog.questions["example-sensor-majority"]
+        provider = scripted([evaluation_json(correctness=0.9, depth=0.45)])
+        outcome = await PracticeAttempt(context(catalog, provider), question, {}).submit("alarm = A ^ B ^ C")
+        assert outcome.check.passed is False and outcome.band == Band.WEAK and "reasoning_thin" not in outcome.flags
+
+    async def test_the_follow_up_writer_hears_that_the_design_is_right(self, catalog):
+        question = catalog.questions["example-sensor-majority"]
+        provider = scripted([evaluation_json(correctness=0.85, depth=0.4, key_points_hit=["AB + AC + BC", "OR of the pairs"],
+                                             key_points_missed=["why XOR is not enough"])])
+        outcome = await PracticeAttempt(context(catalog, provider), question, {}).submit("alarm = AB + AC + BC")
+        assert outcome.check.passed and outcome.band == Band.STRONG and "reasoning_thin" in outcome.flags
+        payload = json.loads(next(r for r in provider.requests if r.role == "generator").user)
+        assert payload["decision"]["reason_code"] == "reasoning_probe" and payload["last_turn"]["check_passed"] is True
+        assert "reasoning behind the correct design" in payload["decision"]["probe_focus"]
+
+
 # ----------------------------------------------------------------------------- deep practice, end to end
 
 

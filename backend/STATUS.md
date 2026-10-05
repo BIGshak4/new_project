@@ -852,6 +852,30 @@ calls it. The job-type picker needs no change: the plan now follows at once.
 expiry, the 60 % gate, writes nothing; the goal change keeps the day's done items; the route in every list); the live
 program, skip and HTTP tests against the real database (below).
 
+## 5zg. Strong, lean: a correct design with thin reasoning is strong, and the follow-up asks for the reasoning (2026-10-05, Shaked)
+
+**The rule** (`scores.lean_strong`, parameters in `ScoreParams`): correctness at least 0.8, depth at least 0.35 and
+below the full-strong 0.55, no core misconception; a failed automatic check never qualifies (it caps correctness at
+0.4). The band is STRONG; the evidence counts at 0.8 of a full strong answer, so the level moves up but less far
+("strong, not extra strong"); the submission carries the flag `reasoning_thin`; the controller is asked as for a
+partial answer, so the follow-up is a probe, not an escalation, with the decision reason `reasoning_probe` and a probe
+focus that names the reasoning behind the correct design plus the grader's missed points. The grader's instructions
+do not change; the follow-up writer (v3) already asks about the idea behind the focus.
+
+| Graded back to back | Before | After |
+|---|---|---|
+| Review set (13 answers, grader v2 numbers) | 13 of 13 expected bands | 13 of 13, identical |
+| Or's priority encoder (0.85 / 0.45) | PARTIAL | STRONG, lean; follow-up: why valid is needed |
+| Or's decoder with enable (0.8 / 0.4) | PARTIAL | STRONG, lean; follow-up: does one-hot hold while A changes |
+| Or's masked equality (0.8 / 0.45) | PARTIAL | STRONG, lean (on the replay it graded 0.85 / 0.55: full strong, escalated) |
+| Sensor circuits without the rows or the XOR point (0.45 to 0.75 / 0.2 to 0.3) | PARTIAL | PARTIAL, unchanged |
+| Review set, "code only, no explanation" (0.7 / 0.2) | PARTIAL | PARTIAL, unchanged |
+
+**Verified:** 894 offline tests (the band rule at the edges, the lighter evidence against a full strong answer, the
+reasoning probe and its payload, a failed check never lean; one old threshold case moved from PARTIAL to STRONG on
+purpose); Or's three photo answers through the whole path on the real models, photos fetched as in production,
+read-only ($0.18). No database change.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -890,6 +914,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-05 | Strong, lean: a correct design with thin reasoning is STRONG with lighter evidence and a reasoning follow-up (§5zg) |
 | 2026-10-05 | `GET /v1/me/readiness`: readiness for the goal's job type, skill by skill, with the next three questions; a goal change re-plans at once without losing the day (§5zf) |
 | 2026-10-04 | Shaked's five fixes (§5ze): the day fits the minutes, heaviest skills first, freshness in weeks with expiry at 49 days, counts off the card, the interview starts at the measured level |
 | 2026-10-04 | Night check (§5zd): all suites green; the pilot's users, how the system rates them and role fit (`docs/pilot-users-and-role-fit-2026-10-03.md`); morning list |
