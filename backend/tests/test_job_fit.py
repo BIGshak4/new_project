@@ -69,6 +69,34 @@ class TestTheRule:
         assert not embedded.fits(catalog.questions["example-nonblocking-pipeline-trace"])
 
 
+class TestTheSeedLoader:
+    """Review findings 2026-10-15: `false` or "0" must not become an exclusion; a job type must leave something."""
+
+    def test_emphasis_takes_numbers_only(self):
+        from pydantic import ValidationError
+
+        from app.schemas.bank import JobType
+        for bad in (False, True, "0", "1.5"):
+            with pytest.raises(ValidationError):
+                JobType(key="x", label={"en": "x"}, emphasis={"counters": bad})
+        assert JobType(key="x", label={"en": "x"}, emphasis={"counters": 0}).excludes("counters")
+        assert JobType(key="x", label={"en": "x"}, emphasis={"counters": 1.5}).weight("counters") == 1.5
+
+    def test_a_job_type_that_excludes_every_role_skill_is_refused(self, tmp_path, catalog):
+        import json
+        import shutil
+
+        from app.engine.catalog import CatalogError, load_catalog
+        seeds = tmp_path / "seeds"
+        shutil.copytree(SEEDS, seeds)
+        jobs = json.loads((seeds / "job_types.json").read_text(encoding="utf-8"))
+        role_skills = [r.skill for r in catalog.roles[ROLE].skill_set]
+        jobs.append({"key": "nothing_left", "label": {"en": "Nothing"}, "emphasis": {k: 0 for k in role_skills}})
+        (seeds / "job_types.json").write_text(json.dumps(jobs), encoding="utf-8")
+        with pytest.raises(CatalogError, match="excludes every skill"):
+            load_catalog(seeds)
+
+
 class TestTheLibrary:
     async def test_examples_both_ways(self, catalog):
         svc, _ = practice(catalog)

@@ -8,7 +8,7 @@ common errors, accepted approaches and an optional deterministic check.
 
 from __future__ import annotations
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from app.schemas.engine import Archetype
 
@@ -153,6 +153,16 @@ class JobType(BaseModel):
     label: dict[str, str]                      # language -> label
     description: dict[str, str] = Field(default_factory=dict)
     emphasis: dict[str, float] = Field(default_factory=dict)   # skill key -> multiplier (0.2 .. 2.5), or 0 = excluded
+
+    @field_validator("emphasis", mode="before")
+    @classmethod
+    def _numbers_only(cls, value):
+        """`false` or "0" would be coerced to 0.0 and silently exclude a skill (review finding, 2026-10-15)."""
+        if isinstance(value, dict):
+            for key, number in value.items():
+                if isinstance(number, bool) or not isinstance(number, (int, float)):
+                    raise ValueError(f"emphasis for {key!r} must be a number, got {number!r}")
+        return value
 
     def weight(self, skill: str) -> float:
         return self.emphasis.get(skill, 1.0)

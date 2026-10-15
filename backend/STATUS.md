@@ -5,7 +5,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-10-15 (the reasons are true to their rules §5zl) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
+**Last updated:** 2026-10-15 (evening full check §5zm) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
 
 ---
 
@@ -27,6 +27,9 @@ not touched again for them. When an item is done, remove its entry from `PENDING
 | 9 | **The library and the plan fit the job type** (task 8, backend done 2026-10-15) | Nothing to add for the filter itself: `GET /v1/questions?job=` now *hides* the questions of the skills that are not part of that job type (before it hid anything weighted under 1.0) and the `job_types` chips use the same rule, so pass the goal's job type as `job` when the user wants "my role only". Optional: `GET /v1/job-types` carries `excluded_skills`; in the goal setup or the library an explanatory line "not part of this job type: HDL coding, testbenches, ..." can be built from it with the skill labels the progress page already has. The plan, readiness and interview screens need no change: the backend never sends an excluded skill to them. | `JobType.excluded_skills?: string[]` | §5zj |
 | 10 | **Retire the "carried" badge** (task 9, backend done 2026-10-15) | Leftovers are no longer carried: every day is rebuilt within the goal's minutes and `PlanItemView.carried` is always false, so the "carried from yesterday" badge and the carried-first ordering can go. `minutes_due_today` is never above `minutes_per_day`; nothing new to show. An item in progress survives a same-day goal change. | `PlanItem.carried` stays in the type (always false) | §5zk |
 | 11 | **Labels for every `why` badge** (task 10, backend done 2026-10-15) | `whyLabel` in `lib/charts.ts` knows reinforce / consolidate / advance / explore; the server also sends `map` ("מיפוי" / "Map": the heaviest skill with no evidence yet, early in the plan) and `same_skill` ("אותה מיומנות" / "Same skill": nothing else pending, one more at this level). Add both to the `NextQuestion.why` union and the label table. The sentences themselves are already true to the band; the "Why" column header and its context are yours. | `NextQuestion.why: "reinforce" \| "consolidate" \| "advance" \| "explore" \| "map" \| "same_skill"` | §5zl |
+| 12 | **A search result starts with `source: "search"`** (review 2026-10-15) | `openQuestion` in `app/page.tsx` navigates without a source, so a question opened from a search result is reported as `library`. When the search box (or the company query) is non-empty at click time, navigate with `source: "search"` and widen `Route.source` and the URL parser. | `StartAttemptRequest.source` already accepts `search` | §5zm |
+| 13 | **The plan table's Start keeps the interview length** (review 2026-10-15) | `startPlanItem` in `app/page.tsx` does `navigate({ view: "interview" })` on `kind === "interview"`, dropping `result.interview_duration_min`; the Learn page passes it. Pass `duration: result.interview_duration_min ?? undefined` so the lobby opens at the length the plan fitted to the day. | No backend change | §5zm |
+| 14 | **Two typed fields** (review 2026-10-15) | Add `excluded_skills?: string[]` to `JobType` and `expired?: boolean` to `SkillProgress` in `practice-api.ts`, then remove both entries from `PENDING_IN_CLIENT` in `backend/tests/test_ts_client_contract.py` so the contract test guards them. An expired skill is drawn as "needs a refresh" today only because `needs_refresh` happens to be true as well. | — | §5zm |
 | 8 | **Voice input, browser only** (if Shaked's dictation test is good) | A microphone button on the answer box using the browser's speech recognition in the practice language; the words land in the box and the user edits and sends as usual. Chrome and Edge only; nothing is recorded or stored. | No backend change. If accuracy on Hebrew technical terms is poor, the server-side option is a separate plan. | — |
 
 Not for the screens: a skipped follow-up earns no grade or XP; the follow-ups themselves now ask for understanding
@@ -1017,6 +1020,24 @@ now `same_skill`, which show as raw words until labelled. The "Why" column heade
 never says "looks solid" (and a strong one never says "No other question"), a struggle on another skill never says
 "again", every code exists in both languages. The offline suite.
 
+## 5zm. Full check, evening of 2026-10-15 (Shaked: "do a full check", after tasks 8–10)
+
+Report: `docs/full-check-2026-10-15b.md`. Five read-only reviewers (correctness, concurrency, security, performance,
+and the web app's use of the contract) over everything since the morning's check; thirteen backend findings fixed,
+all reproduced by probe first and the concurrency probes re-run clean after the fixes. The main ones: the answer's
+persist transaction now runs under the per-user lock (a rebuild could copy a stale *started* status over an item the
+answer had just ticked); the by-skill tick prefers the primary skill, a planned item, and never another attempt's
+started item, and takes one fresh look if the plan moved; done items are relinked; the plan savepoint only swallows
+the one-active-plan conflict; the router applies the budget filter before the reserved-days preference (short weeks
+were empty) and places the forced deep practice where it fits, never after the interview; the seed loader accepts
+numbers only in `emphasis` and refuses a job type that excludes every role skill; the after-weak sentence says "fits"
+rather than "is available"; no second goal read per answer; the plan cache key is normalised. Accepted and written
+down: the one allowed overshoot (a started item kept across a same-day goal change), the one-item-per-(mode, skill)
+week, the per-process lock (one Render instance; a second instance needs `SELECT ... FOR UPDATE` on the active plan
+row in `load_active` and `tick_item`). Harel's items from the web review are queue items 10–14. Verification: see
+the report (offline suite, the live suite on the final code, both real-model scripts, 104 web tests, 56 harness
+shots, production smoke).
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1055,6 +1076,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-15 | Evening full check (§5zm, `docs/full-check-2026-10-15b.md`): five-lens review, thirteen fixes (persist under the user lock, the by-skill tick, relinked done items, the savepoint, the router's reserved days and forced deep, the seed loader, wording, one goal read less) |
 | 2026-10-15 | Task 10 (Shaked's part): every reason sentence checked against its rule; the coach's last resort gets its own code `same_skill`, after-weak wording for `advance`/`explore`, `advance` describes gap × weight, readiness and interview wording corrected (§5zl) |
 | 2026-10-15 | Task 9: the plan fits the user's minutes and never piles up: no carry-over of earlier days' items (opened or not), no item longer than the day, the interview takes the length that fits; `carried` always false (§5zk) |
 | 2026-10-15 | Task 8: a skill at emphasis 0 is not part of the job type; it leaves the plan and its questions are hidden from the job-filtered library, suggestions, program, readiness and interviews; `JobTypeView.excluded_skills`; `tests/test_job_fit.py` (§5zj) |

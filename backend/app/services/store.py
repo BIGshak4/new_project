@@ -170,7 +170,9 @@ class DbTx:
                 return await plans.create(self.connection, user_id=user_id, role_slug=role_slug, seniority=seniority,
                                           week_start=week_start, minutes_per_day=minutes_per_day,
                                           interview_date=interview_date, items=items, generated_at=generated_at)
-        except IntegrityError:
+        except IntegrityError as exc:
+            if "learning_plan_one_active_idx" not in str(exc.orig or exc):   # any other constraint is a real failure
+                raise
             current = await plans.load_active(self.connection, user_id)
             if current is None:
                 raise

@@ -188,6 +188,40 @@ class TestPlanRouter:
                                            recent=[RecentActivity("quick", "WEAK"), RecentActivity("quick", "WEAK")])
         assert tired == pytest.approx(base + 0.3 - 0.8)
 
+    def test_reserved_days_still_fill_a_short_budget_with_what_fits(self, plan):
+        """Review finding 2026-10-15: narrowing to rehearsal items before the budget filter emptied short weeks."""
+        profile = {"counters": ProfileSkill("counters", level=3, status=EvidenceStatus.ASSESSED,
+                                            retention_due_at=TODAY - timedelta(days=1))}
+        for minutes in (10, 15):
+            items = plan_router.weekly_plan(plan=plan, profile=profile, week_start=TODAY, minutes_per_day=minutes,
+                                            bank_coverage=self.coverage, days_to_interview=3)
+            assert items, minutes
+            for day in range(4):
+                assert sum(i.activity.estimated_minutes for i in items if i.day_index == day) <= minutes, (minutes, day)
+        with_room = plan_router.weekly_plan(plan=plan, profile=profile, week_start=TODAY, minutes_per_day=15,
+                                            bank_coverage=self.coverage, days_to_interview=3)
+        assert any(i.activity.mode == "retention_check" for i in with_room)        # the re-check still comes first
+
+    def test_no_day_exceeds_the_budget_even_when_every_skill_needs_a_recheck(self, plan):
+        """Review finding 2026-10-15: the forced deep practice landed on a day that was already full."""
+        due = {s.key: ProfileSkill(s.key, level=3, status=EvidenceStatus.ASSESSED, retention_due_at=TODAY - timedelta(days=1))
+               for s in plan}
+        for minutes in (20, 25, 30, 45):
+            for week_index in (0, 1):
+                items = plan_router.weekly_plan(plan=plan, profile=due, week_start=TODAY, minutes_per_day=minutes,
+                                                bank_coverage=self.coverage, days_to_interview=7, week_index=week_index)
+                for day in range(7):
+                    total = sum(i.activity.estimated_minutes for i in items if i.day_index == day)
+                    assert total <= minutes, (minutes, week_index, day, [(i.activity.mode, i.activity.estimated_minutes)
+                                                                        for i in items if i.day_index == day])
+
+    def test_nothing_is_planned_after_the_interview(self, plan):
+        assessed = {s.key: ProfileSkill(s.key, level=3, status=EvidenceStatus.ASSESSED) for s in plan}
+        for minutes in (20, 30):
+            items = plan_router.weekly_plan(plan=plan, profile=assessed, week_start=TODAY, minutes_per_day=minutes,
+                                            bank_coverage=self.coverage, days_to_interview=0, week_index=1)
+            assert items and all(i.day_index == 0 for i in items), [(i.day_index, i.activity.mode) for i in items]
+
     def test_final_days_are_reserved_for_simulation_and_retention(self, plan):
         profile = {s.key: ProfileSkill(s.key, level=3, status=EvidenceStatus.ASSESSED) for s in plan}
         assert self.next(plan, profile, days_to_interview=3, week_index=2).mode == "simulation"
@@ -210,7 +244,7 @@ class TestPlanRouter:
         20-minute interview, a 60-minute one the longest (45)."""
         assert plan_router.simulation_minutes(15) is None and plan_router.simulation_minutes(20) == 20
         assert plan_router.simulation_minutes(35) == 30 and plan_router.simulation_minutes(60) == 45
-        assert plan_router.simulation_minutes(None) == 40                                        # no budget: the estimate
+        assert plan_router.simulation_minutes(None) == 30                   # no budget: the longest length within the estimate
         for minutes in (10, 15, 20, 30, 60):
             items = plan_router.weekly_plan(plan=plan, profile={}, week_start=TODAY, minutes_per_day=minutes,
                                             bank_coverage=self.coverage, week_index=1)

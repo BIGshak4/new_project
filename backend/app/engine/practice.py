@@ -152,6 +152,7 @@ class PracticeContext:
     skills: dict[str, CatalogSkill]
     language: str = "en"
     seniority: str = "student"
+    job_type: str | None = None                     # the goal's job type: the coach hides what it excludes
     difficulty_ceiling: int = 5
     required_levels: dict[str, int] = field(default_factory=dict)
     skill_weights: dict[str, float] = field(default_factory=dict)

@@ -37,6 +37,7 @@ from app.engine import (
 )
 from app.engine.catalog import Catalog
 from app.engine.plan import merge_skill_sets
+from app.engine.plan_router import SIMULATION_DURATIONS
 from app.engine.practice import UsageEvent
 from app.engine.providers import Provider
 from app.engine.reporter import ReportData
@@ -73,7 +74,7 @@ from app.services.store import Store
 log = logging.getLogger("app.interview")
 
 LANGUAGES = ("en", "he")
-DURATIONS = (20, 30, 45)
+DURATIONS = SIMULATION_DURATIONS          # the lengths the lobby offers = the lengths the plan builds items with
 MAX_TURNS = 40
 EVALUATING_BUDGET_SECONDS = 300          # an evaluation older than this never finished: the process died
 _PLACEHOLDER = re.compile(r"\{\{\s*\w+\s*\}\}")

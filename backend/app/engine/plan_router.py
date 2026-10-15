@@ -142,16 +142,15 @@ def activity_value(activity: Activity, *, plan: list[PlanSkill], profile: dict[s
 # ----------------------------------------------------------------------------- candidates
 
 
-SIMULATION_DURATIONS = (20, 30, 45)     # the mock interview's lengths (InterviewService.DURATIONS); a plan item takes one of them
+SIMULATION_DURATIONS = (20, 30, 45)     # the mock interview's lengths (InterviewService.DURATIONS imports them); a plan item takes one
 
 
 def simulation_minutes(minutes_per_day: int | None, params: EngineParams = DEFAULT_PARAMS) -> int | None:
     """The interview length a day of `minutes_per_day` can hold: the longest that fits, None when none does (a goal
     under 20 minutes a day plans no interview; Shaked, 2026-10-15: the plan fits the user, nothing exceeds the day).
     Without a budget, the estimate from the parameters."""
-    if minutes_per_day is None:
-        return params.plan_router.estimated_minutes["simulation"]
-    fitting = [d for d in SIMULATION_DURATIONS if d <= minutes_per_day]
+    budget = params.plan_router.estimated_minutes["simulation"] if minutes_per_day is None else minutes_per_day
+    fitting = [d for d in SIMULATION_DURATIONS if d <= budget]            # always one of the lobby's lengths
     return max(fitting) if fitting else None
 
 
@@ -241,11 +240,13 @@ def weekly_plan(*, plan: list[PlanSkill], profile: dict[str, ProfileSkill], week
         while budget > 0:
             candidates = candidate_activities(plan=plan, profile=profile, today=today, bank_coverage=bank_coverage,
                                               week_index=week_index, params=params, minutes_per_day=minutes_per_day)
-            if remaining_days is not None and remaining_days <= params.plan_router.final_days_reserved:
-                reserved = [a for a in candidates if a.mode in ("simulation", "retention_check")]
-                candidates = reserved or candidates
             candidates = [a for a in candidates if (a.mode, tuple(a.skills)) not in used
                           and a.estimated_minutes <= budget]            # never above the day's minutes (Shaked, 2026-10-15)
+            if remaining_days is not None and remaining_days <= params.plan_router.final_days_reserved:
+                # the last days before the interview prefer rehearsal and re-checks, but only among what still fits
+                # the day; before the budget filter this emptied short-budget weeks (review finding, 2026-10-15)
+                reserved = [a for a in candidates if a.mode in ("simulation", "retention_check")]
+                candidates = reserved or candidates
             if not candidates:
                 break
             for activity in candidates:
@@ -267,9 +268,14 @@ def weekly_plan(*, plan: list[PlanSkill], profile: dict[str, ProfileSkill], week
     if not has_deep and minutes["deep"] <= minutes_per_day:
         deep = [a for a in candidate_activities(plan=plan, profile=profile, today=week_start, bank_coverage=bank_coverage,
                                                 week_index=week_index, params=params, minutes_per_day=minutes_per_day)
-                if a.mode == "deep"]
-        if deep:
-            items.append(PlannedItem(min(6, len({i.day_index for i in items})), deep[0]))
+                if a.mode == "deep" and (a.mode, tuple(a.skills)) not in used]
+        # on the day with the most room that can still hold it, never after the interview (review finding, 2026-10-15:
+        # it used to land on a full day, or on the day after an interview held today)
+        last_day = 6 if days_to_interview is None else max(0, min(6, days_to_interview))
+        filled = {day: sum(i.activity.estimated_minutes for i in items if i.day_index == day) for day in range(last_day + 1)}
+        room = [day for day in range(last_day + 1) if minutes_per_day - filled[day] >= minutes["deep"]]
+        if deep and room:
+            items.append(PlannedItem(max(room, key=lambda d: (minutes_per_day - filled[d], -d)), deep[0]))
     simulation = simulation_minutes(minutes_per_day, params)
     if not has_simulation and week_index >= 1 and simulation is not None:
         top = sorted((s for s in plan if s.assessment_mode == AssessmentMode.QUESTIONED),

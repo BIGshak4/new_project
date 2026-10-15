@@ -248,6 +248,67 @@ class TestTheDayFitsTheUser:
         assert started.kind == "interview" and started.interview_duration_min == 20
 
 
+class TestWhichItemAnAnswerTicks:
+    """Review findings of 2026-10-15 on the by-skill fallback, the path every "opened yesterday, answered today" attempt
+    takes now that leftovers are not carried."""
+
+    async def test_an_unlinked_answer_never_takes_an_item_another_attempt_has_open(self, catalog):
+        svc, store = practice(catalog, scripted([GOOD] * 4))
+        await with_goal(svc, minutes=60)
+        await svc.program(USER, language="en")
+        plan = store.plans[USER]
+        now = datetime.now(UTC)
+        plan.items = [i for i in plan.items if i.day_index != 0]
+        opened = PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=["boolean_algebra"], reason="x", minutes=20,
+                             status="planned", created_at=now - timedelta(minutes=2))
+        plan.items.append(opened)
+        started = await svc.start_program_item(USER, item_id=opened.id, language="en")      # attempt a2 owns `opened`
+        assert started.kind == "attempt" and stored_item(store, opened.id).status == "started"
+        spare = PlanItemRow(id=uuid.uuid4(), day_index=0, mode="quick", skills=["boolean_algebra"], reason="y", minutes=4,
+                            status="planned", created_at=now)                             # created later than `opened`
+        store.plans[USER].items.append(spare)
+        other_key = next(k for k, q in catalog.questions.items()
+                         if q.primary_skill == "boolean_algebra" and k != started.attempt.question.key)
+        a1 = await svc.start(USER, question_key=other_key, language="en")                  # from the library, unlinked
+        await svc.submit(USER, uuid.UUID(a1.id), "alarm = AB + BC + AC", idempotency_key="k1")
+        assert stored_item(store, spare.id).status == "done"                              # the planned one
+        assert stored_item(store, opened.id).status == "started"                          # a2's item is left alone
+        await svc.submit(USER, uuid.UUID(started.attempt.id), "alarm = AB + BC + AC", idempotency_key="k2")
+        assert stored_item(store, opened.id).status == "done"
+        assert stored_item(store, opened.id).completed_attempt_id == uuid.UUID(started.attempt.id)
+
+    async def test_the_primary_skills_item_is_ticked_before_a_secondary_links(self, catalog):
+        question = catalog.questions["example-rotate-versus-shift"]
+        primary = question.primary_skill
+        secondary = next(link.skill for link in question.skills if link.skill != primary)
+        svc, store = practice(catalog, scripted([GOOD]))
+        await with_goal(svc, minutes=60)
+        await svc.program(USER, language="en")
+        plan = store.plans[USER]
+        now = datetime.now(UTC)
+        plan.items = [i for i in plan.items if i.day_index != 0]
+        side = PlanItemRow(id=uuid.uuid4(), day_index=0, mode="quick", skills=[secondary], reason="side", minutes=4,
+                           status="planned", created_at=now - timedelta(minutes=5))        # earlier, on the side skill
+        main = PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=[primary], reason="main", minutes=20,
+                           status="planned", created_at=now)
+        plan.items += [side, main]
+        attempt = await svc.start(USER, question_key=question.key, language="en")
+        await svc.submit(USER, uuid.UUID(attempt.id), "rotate keeps the bits, shift drops them", idempotency_key="k1")
+        assert stored_item(store, main.id).status == "done" and stored_item(store, side.id).status == "planned"
+
+    async def test_a_done_item_keeps_its_attempt_link_across_a_rebuild(self, catalog):
+        svc, store = practice(catalog, scripted([GOOD] * 2))
+        await with_goal(svc, minutes=60)
+        started = await svc.start_program_item(USER, language="en")
+        await svc.submit(USER, uuid.UUID(started.attempt.id), "an answer", idempotency_key="k1")
+        assert stored_item(store, started.item.id).status == "done"
+        await with_goal(svc, minutes=30)                                                   # a same-day rebuild
+        view = await svc.program(USER, language="en")
+        copy = next(i for i in view.plan.items if i.done and i.skills[0].key == started.item.skills[0].key)
+        assert copy.id != started.item.id
+        assert store.plan_links[uuid.UUID(started.attempt.id)] == uuid.UUID(copy.id)       # relinked, not dangling
+
+
 class TestStartingAndTicking:
     async def test_start_opens_an_attempt_on_the_items_skill_and_the_answer_ticks_it(self, catalog):
         svc, store = practice(catalog, scripted([GOOD, GOOD]))

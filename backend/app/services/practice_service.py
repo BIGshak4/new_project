@@ -555,7 +555,11 @@ class PracticeService:
                    and attempt.question.assets.get("assessment_ready") is not False)
         for _try in range(2):
             try:
-                async with self.store.transaction() as tx:
+                # under the user lock, taken before the transaction opens: a rebuild of the program (also under the
+                # lock) could otherwise read the item as started while this answer ticks it, and copy the stale status
+                # into the new plan (review finding, 2026-10-15). Taking the lock first means neither side ever waits
+                # on a row the other holds.
+                async with self._user_lock(user_id), self.store.transaction() as tx:
                     if suggest:                                      # its reads ride in the same unit of work
                         await self._suggest_next(user_id, attempt, outcome, tx=tx)
                         suggest = False
@@ -574,8 +578,10 @@ class PracticeService:
                                           revisions=changed, known_revisions=len(attempt.submissions))
                     if (outcome.status == EvaluationStatus.DONE and outcome.band is not None and outcome.submission.turn == 0
                             and attempt.question.assets.get("assessment_ready") is not False):
+                        primary = attempt.question.primary_skill
                         await self._complete_program_item(tx, user_id, attempt_id=attempt.attempt_id_uuid,
-                                                          skills=[link.skill for link in attempt.question.skills])
+                                                          skills=[primary, *(link.skill for link in attempt.question.skills
+                                                                             if link.skill != primary)])
                 return attempt, stored, loaded, outcome
             except StaleProfile as exc:
                 log.warning("profile moved during attempt %s (%s): re-applying the scores", attempt.attempt_id, exc)
@@ -620,10 +626,10 @@ class PracticeService:
         servable = [s for s in servable if s.assessment_ready]
         if self.config.suggest_reviewed_only:
             servable = [s for s in servable if s.reviewed]
-        goal = await tx.load_goal(user_id)
         # never a question the job type excludes, even after a weak answer on one opened from the unfiltered library
+        # (the job type rides on the context: no second goal read per answer; review finding 2026-10-15)
         candidates = self._fitting([self.catalog.questions[s.key] for s in servable if s.key in self.catalog.questions],
-                                   goal.job_type)
+                                   attempt.ctx.job_type)
         question = attempt.question
         # what was hard: the bank's own explanation of each known mistake this attempt hit, and the skill it undermines
         text = question.translations.get(language) or question.translations.get("en")
@@ -1133,7 +1139,8 @@ class PracticeService:
 
         An item opened and not answered yet whose day is today or later (today's own item during a same-day
         rebuild, or one opened ahead) is kept on its day, still started, and the attempt opened for it is moved to
-        the new copy, so its answer ticks that item and not some other item of today."""
+        the new copy, so its answer ticks that item and not some other item of today. That kept item is the one
+        allowed overshoot: when the minutes are lowered mid-day under an open 20-minute item, today shows those 20."""
         plan = await tx.load_active_plan(user_id)
         minutes = goal.minutes_per_day or DEFAULT_MINUTES_PER_DAY
         done_ahead: list[tuple[int, PlanItemRow]] = []          # (day index in the new plan, the done item)
@@ -1159,7 +1166,7 @@ class PracticeService:
             day_minutes[day_index] = day_minutes.get(day_index, 0) + item.minutes
             items.append({"day_index": day_index, "mode": item.mode, "skills": item.skills, "reason": item.reason,
                           "minutes": item.minutes, "status": "done", "completed_attempt_id": item.completed_attempt_id,
-                          "completed_session_id": item.completed_session_id})
+                          "completed_session_id": item.completed_session_id, "previous_id": item.id})   # relinked below
         # opened and not answered (today's own item, or one opened ahead): kept on its day, still started; its attempt
         # is relinked to the copy below
         for day_index, item in started_ahead:
@@ -1206,39 +1213,63 @@ class PracticeService:
         it may have been opened ahead), else the earliest open item due by today on one of the same skills (a
         practice item) or a simulation item (an interview); an interview with none due by today ticks a simulation
         item of a later day that was opened ahead (status started). An unplanned answer never ticks a later day."""
-        plan = await tx.load_active_plan(user_id)
-        if plan is None:
-            return
-        today_index = plan.day_index_of(today or date.today())
-        linked = await tx.attempt_plan_item(attempt_id) if attempt_id is not None else None
-        open_items = [i for i in plan.items if i.status in OPEN and i.day_index <= max(today_index, 0)]
-        chosen = next((i for i in plan.items if linked is not None and i.id == linked and i.status in OPEN), None)
-        if chosen is None:
-            wanted = set(skills or [])
-            if session_id is not None:
-                fitting = [i for i in open_items if i.mode == "simulation"]
-                if not fitting:
-                    fitting = [i for i in plan.items if i.mode == "simulation" and i.status == "started"
-                               and i.day_index > max(today_index, 0)]
-            else:
-                fitting = [i for i in open_items if i.mode != "simulation" and wanted & set(i.skills)]
-            chosen = min(fitting, key=lambda i: (i.day_index, i.created_at), default=None)
-        if chosen is None:
-            return
         fields = {"status": "done"}
         if attempt_id is not None:
             fields["completed_attempt_id"] = attempt_id
         if session_id is not None:
             fields["completed_session_id"] = session_id
-        if await tx.tick_plan_item(chosen.id, **fields):
-            return
-        # the plan was replaced between the read and the write (a rebuild raced this answer): the attempt was relinked
-        # to the new copy, so tick that one; never a second search by skill, which could tick an unrelated item
-        if attempt_id is None:
-            return
-        relinked = await tx.attempt_plan_item(attempt_id)
-        if relinked is not None and relinked != chosen.id:
-            await tx.tick_plan_item(relinked, **fields)
+        for fresh_look in (False, True):
+            plan = await tx.load_active_plan(user_id)
+            if plan is None:
+                return
+            chosen = await self._item_to_tick(tx, plan, attempt_id=attempt_id, session_id=session_id, skills=skills or [],
+                                              today=today or date.today())
+            if chosen is None:
+                return
+            if await tx.tick_plan_item(chosen.id, **fields):
+                return
+            # the plan was replaced between the read and the write (a rebuild raced this answer, from another process:
+            # within one process the user lock prevents it): the attempt was relinked to the new copy, so tick that
+            # one; else look once more at the new plan (review finding, 2026-10-15: the dead id was retried instead)
+            if attempt_id is not None:
+                relinked = await tx.attempt_plan_item(attempt_id)
+                if relinked is not None and relinked != chosen.id and await tx.tick_plan_item(relinked, **fields):
+                    return
+            if fresh_look:
+                return
+
+    async def _item_to_tick(self, tx, plan: StoredPlan, *, attempt_id: uuid.UUID | None, session_id: uuid.UUID | None,
+                            skills: list[str], today: date) -> PlanItemRow | None:
+        """The item an answer fulfils: the one it was started from; else, by skill, the question's primary skill
+        first and its secondary links only when nothing matches the primary (review finding, 2026-10-15: the earliest
+        item on any link could tick a side skill and leave the real one open); a planned item before a started one,
+        and never a started item that another live attempt owns (its own answer must still tick it)."""
+        today_index = plan.day_index_of(today)
+        linked = await tx.attempt_plan_item(attempt_id) if attempt_id is not None else None
+        chosen = next((i for i in plan.items if linked is not None and i.id == linked and i.status in OPEN), None)
+        if chosen is not None:
+            return chosen
+        open_items = [i for i in plan.items if i.status in OPEN and i.day_index <= max(today_index, 0)]
+        if session_id is not None:
+            fitting = [i for i in open_items if i.mode == "simulation"]
+            if not fitting:
+                fitting = [i for i in plan.items if i.mode == "simulation" and i.status == "started"
+                           and i.day_index > max(today_index, 0)]
+            return min(fitting, key=lambda i: (i.day_index, i.created_at), default=None)
+        practice_items = [i for i in open_items if i.mode != "simulation"]
+        for wanted in ([skills[0]] if skills else [], skills[1:]):
+            fitting = []
+            for item in practice_items:
+                if not set(wanted) & set(item.skills):
+                    continue
+                if item.status == "started":
+                    owner = await tx.plan_item_attempt(item.id)
+                    if owner is not None and owner != attempt_id:
+                        continue
+                fitting.append(item)
+            if fitting:
+                return min(fitting, key=lambda i: (i.status == "started", i.day_index, i.created_at))
+        return None
 
     def _plan_view(self, plan: StoredPlan, goal: Goal, today: date) -> PlanView:
         labels = self.catalog.skill_labels()
@@ -1406,12 +1437,12 @@ class PracticeService:
         plan has no HDL coding, a software plan no flip-flops (Harel's task 8, 2026-10-15). An unknown job type is
         ignored, never an error here."""
         job = self.catalog.job_types.get(job_type) if job_type else None
+        role = self.catalog.roles[self.config.role]
+        if seniority not in role.seniority_profiles:                  # normalised before the key: one entry per real profile
+            seniority = next(iter(role.seniority_profiles))
         key = (seniority, job.key if job else None)
         if key not in self._plans:
-            role = self.catalog.roles[self.config.role]
             company = self.catalog.companies[self.config.company]
-            if seniority not in role.seniority_profiles:
-                seniority = next(iter(role.seniority_profiles))
             rows = role.skill_set
             if job is not None:
                 rows = [row.model_copy(update={"weight": row.weight * job.weight(row.skill)}) for row in rows
@@ -1428,7 +1459,7 @@ class PracticeService:
         required, weights, ceiling, _ = self._plan(seniority, job_type)
         role = self.catalog.roles[self.config.role]
         return PracticeContext(provider=self.provider, skills=self.catalog.leaf_skills, language=language,
-                               seniority=seniority, difficulty_ceiling=ceiling, required_levels=required,
+                               seniority=seniority, job_type=job_type, difficulty_ceiling=ceiling, required_levels=required,
                                skill_weights=weights, tips=list(self.catalog.tips.values()), glossary=self.catalog.glossary,
                                role_family=role.family, polish_tips=self.config.polish_tips,
                                image_fetcher=self.image_fetcher, question_image_fetcher=self.question_image_fetcher)

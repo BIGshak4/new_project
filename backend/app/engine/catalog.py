@@ -147,6 +147,9 @@ def load_catalog(seeds_dir: Path, *, strict: bool = True) -> Catalog:
                         problems.append(f"job_types.json:{job.key}: unknown skill {skill_key!r}")
                     if not (value == 0 or 0.2 <= value <= 2.5):     # 0 = not part of this job type
                         problems.append(f"job_types.json:{job.key}: emphasis for {skill_key} out of range ({value})")
+                for slug, role in catalog.roles.items():              # a job type that excludes every role skill plans nothing
+                    if role.skill_set and all(job.excludes(row.skill) for row in role.skill_set):
+                        problems.append(f"job_types.json:{job.key}: excludes every skill of role {slug!r}")
                 catalog.job_types[job.key] = job
 
     problems.extend(validate(catalog))
