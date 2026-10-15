@@ -100,7 +100,95 @@ class TestBuildingAndReusing:
         assert {i.id for i in second.plan.items}.isdisjoint({i.id for i in first.plan.items})
 
 
+class TestOneProgramActionAtATime:
+    """Review findings of 2026-10-15: nothing serialised one user's program writes."""
+
+    async def test_a_double_click_on_start_opens_one_attempt_and_the_second_click_continues_it(self, catalog):
+        import asyncio
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        first, second = await asyncio.gather(svc.start_program_item(USER, language="en"), svc.start_program_item(USER, language="en"))
+        assert first.kind == second.kind == "attempt" and first.attempt.id == second.attempt.id
+        assert len(store.attempts) == 1 and (await svc.progress(USER, language="en")).attempts_today == 1
+        again = await svc.start_program_item(USER, item_id=uuid.UUID(first.item.id), language="en")   # coming back
+        assert again.kind == "attempt" and again.attempt.id == first.attempt.id                      # continue, not reopen
+        assert stored_item(store, first.item.id).status == "started"
+
+    async def test_an_answered_items_second_start_is_not_resumed(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        started = await svc.start_program_item(USER, language="en")
+        await svc.submit(USER, uuid.UUID(started.attempt.id), "alarm = AB + BC + AC", idempotency_key="k1")
+        assert stored_item(store, started.item.id).status == "done"
+        view = await svc.program(USER, language="en")
+        following = await svc.start_program_item(USER, language="en")                 # the next item, a new attempt
+        assert following.kind in ("attempt", "interview", "nothing")
+        if following.kind == "attempt":
+            assert following.attempt.id != started.attempt.id and following.item.id == view.next.id
+
+    async def test_the_plan_is_linked_and_marked_in_the_attempts_own_transaction(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        started = await svc.start_program_item(USER, language="en")
+        assert store.plan_links[uuid.UUID(started.attempt.id)] == uuid.UUID(started.item.id)
+        assert stored_item(store, started.item.id).status == "started"
+
+    async def test_a_goal_stamped_by_a_clock_running_ahead_triggers_one_rebuild_not_one_per_read(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        await svc.program(USER, language="en")
+        store.goals[USER].saved_at = datetime.now(UTC) + timedelta(seconds=5)       # the saving machine's clock is ahead
+        first = await svc.program(USER, language="en")
+        rebuilt_at = store.plans[USER].generated_at
+        assert rebuilt_at > store.goals[USER].saved_at
+        again = await svc.program(USER, language="en")
+        assert store.plans[USER].generated_at == rebuilt_at and [i.id for i in again.plan.items] == [i.id for i in first.plan.items]
+
+
 class TestCarryForward:
+    async def test_work_done_ahead_is_counted_before_carried_items_are_placed(self, catalog):
+        """Review finding of 2026-10-15: carried items were placed first and today could exceed the budget."""
+        svc, store = practice(catalog)
+        await with_goal(svc, minutes=30)
+        await svc.program(USER, language="en")
+        plan = store.plans[USER]
+        old = datetime.now(UTC) - timedelta(days=1)
+        plan.week_start = TODAY - timedelta(days=1)
+        for item in plan.items:
+            item.created_at = old
+        plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=1, mode="deep", skills=["counters"], reason="done ahead",
+                                      minutes=20, status="done", created_at=old))                 # today's work, done yesterday
+        for n, skill in enumerate(["truth_tables", "fsm_state_tables"]):
+            plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=[skill], reason=f"left {n}",
+                                          minutes=15, status="planned", created_at=old))         # yesterday's leftovers
+        view = await svc.program(USER, language="en")
+        today = [i for i in view.plan.items if i.day_index == 0]
+        assert any(i.reason == "done ahead" and i.done for i in today)
+        assert sum(i.minutes for i in today) <= 30, [(i.reason, i.minutes, i.status) for i in today]
+        assert {"left 0", "left 1"} <= {i.reason for i in view.plan.items}                       # nothing was lost
+
+    async def test_an_opened_item_is_kept_even_when_the_same_work_was_done_ahead(self, catalog):
+        """Review finding of 2026-10-15: a started item with a live attempt was dropped by the de-duplication."""
+        svc, store = practice(catalog)
+        await with_goal(svc, minutes=60)
+        started = await svc.start_program_item(USER, language="en")
+        assert started.kind == "attempt"
+        plan = store.plans[USER]
+        old = datetime.now(UTC) - timedelta(days=1)
+        plan.week_start = TODAY - timedelta(days=1)
+        for item in plan.items:
+            item.created_at = old
+        opened = stored_item(store, started.item.id)
+        plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=1, mode=opened.mode, skills=list(opened.skills),
+                                      reason="same work, done ahead", minutes=opened.minutes, status="done", created_at=old))
+        view = await svc.program(USER, language="en")
+        kept = [i for i in view.plan.items if i.status == "started"]
+        assert len(kept) == 1 and kept[0].skills[0].key == opened.skills[0]
+        assert store.plan_links[uuid.UUID(started.attempt.id)] == uuid.UUID(kept[0].id)          # the attempt followed it
+        await svc.submit(USER, uuid.UUID(started.attempt.id), "an answer", idempotency_key="k1")
+        assert stored_item(store, kept[0].id).status == "done"
+
+
     async def test_yesterdays_open_item_leads_today_and_old_or_done_ones_do_not(self, catalog):
         svc, store = practice(catalog)
         await with_goal(svc)

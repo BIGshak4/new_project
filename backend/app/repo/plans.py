@@ -48,6 +48,7 @@ class StoredPlan:
     seniority: str
     generated_at: datetime
     items: list[PlanItemRow] = field(default_factory=list)
+    reused: bool = False                  # not persisted: another request built this plan a moment earlier (store.create_plan)
 
     def day_index_of(self, today: date) -> int:
         return (today - self.week_start).days
@@ -77,7 +78,8 @@ async def deactivate(connection: AsyncConnection, user_id: uuid.UUID) -> None:
 
 
 async def create(connection: AsyncConnection, *, user_id: uuid.UUID, role_slug: str, seniority: str, week_start: date,
-                 minutes_per_day: int, interview_date: date | None, items: list[dict]) -> StoredPlan:
+                 minutes_per_day: int, interview_date: date | None, items: list[dict],
+                 generated_at: datetime | None = None) -> StoredPlan:
     """Replace the active plan. `items`: {day_index, mode, skills, reason, minutes, created_at?, status?,
     completed_attempt_id?, completed_session_id?} in the order to keep; status defaults to planned (an item done
     ahead of its day keeps its status and what completed it when the plan is rebuilt)."""
@@ -85,7 +87,7 @@ async def create(connection: AsyncConnection, *, user_id: uuid.UUID, role_slug: 
     plans, table = await db.table("learning_plan"), await db.table("plan_item")
     role_id, _ = await _versioned_id(connection, "role_template", role_slug)
     skill_ids = await _skill_ids(connection)
-    now = datetime.now(UTC)
+    now = generated_at or datetime.now(UTC)
     plan_id = (await connection.execute(insert(plans).values(**db.sql_values({
         "user_id": user_id, "target_role_id": role_id, "seniority": seniority, "target_interview_date": interview_date,
         "week_start": week_start, "minutes_per_day": max(1, min(720, minutes_per_day)), "is_active": True,
@@ -121,6 +123,23 @@ async def relink_attempts(connection: AsyncConnection, old_item_id: uuid.UUID, n
     """Point the attempts started from a plan item at its copy in the rebuilt plan (the item was opened ahead)."""
     attempt = await db.table("attempt")
     await connection.execute(update(attempt).where(attempt.c.plan_item_id == old_item_id).values(plan_item_id=new_item_id))
+
+
+async def item_attempt(connection: AsyncConnection, item_id: uuid.UUID) -> uuid.UUID | None:
+    """The latest attempt opened from a plan item (a started item is resumed, not reopened)."""
+    attempt = await db.table("attempt")
+    return (await connection.execute(select(attempt.c.id).where(attempt.c.plan_item_id == item_id)
+                                     .order_by(attempt.c.started_at.desc()).limit(1))).scalar_one_or_none()
+
+
+async def tick_item(connection: AsyncConnection, item_id: uuid.UUID, **fields) -> bool:
+    """Update an item only while its plan is the active one. False means the plan was replaced meanwhile (a rebuild
+    raced this write; review finding 2026-10-15): the caller looks the item up again in the new plan."""
+    table, plans = await db.table("plan_item"), await db.table("learning_plan")
+    active_plans = select(plans.c.id).where(plans.c.is_active.is_(True))      # an item belongs to exactly one plan
+    result = await connection.execute(update(table).where(table.c.id == item_id, table.c.plan_id.in_(active_plans))
+                                      .values(**db.sql_values(fields)).returning(table.c.id))
+    return result.scalar_one_or_none() is not None
 
 
 async def attempt_item(connection: AsyncConnection, attempt_id: uuid.UUID) -> uuid.UUID | None:

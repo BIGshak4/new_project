@@ -49,7 +49,7 @@ class InterviewAnswerBody(BaseModel):
 class InterviewAnswerRequest(BaseModel):
     answer: InterviewAnswerBody | str = Field(..., description="the answer text, or {text, visual}")
     idempotency_key: str | None = Field(None, min_length=1, max_length=128)
-    latency_ms: int | None = Field(None, ge=0, description="time from question shown to submit, if measured")
+    latency_ms: int | None = Field(None, ge=0, le=86_400_000, description="time from question shown to submit, if measured")
 
 
 class InterviewAnswerResponse(BaseModel):

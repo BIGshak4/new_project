@@ -598,6 +598,9 @@ class PracticeAttempt:
         submission.attempts += 1
         if latency_ms is not None and latency_ms < 0:
             latency_ms = None
+        # the metrics columns are 32-bit integers: a wild client value must not fail the save after the model was paid
+        latency_ms = min(latency_ms, 2**31 - 1) if latency_ms is not None else None
+        revision_count = min(revision_count, 2**31 - 1) if revision_count is not None else None
 
         primary = ctx.skills[question.primary_skill]
         state = self._state(primary.key)
@@ -652,7 +655,10 @@ class PracticeAttempt:
         # 1. the grade: scores, the controller's decision, the tip's choice. Every result is final here.
         outcome = self._score_and_decide(submission, result, check, difficulty, latency_ms, revision_count,
                                          usage, is_follow_up=is_follow_up)
-        outcome.flags = list(dict.fromkeys([*flags, *outcome.flags, FEEDBACK_PENDING]))
+        # words are pending only when there is something to write: the main answer's card, a tip, or a follow-up
+        # question that was just decided; a bare follow-up answer is complete as scored (review finding, 2026-10-15)
+        words_due = submission.turn == 0 or outcome.tip_key is not None or outcome.decision is not None
+        outcome.flags = list(dict.fromkeys([*flags, *outcome.flags, *([FEEDBACK_PENDING] if words_due else [])]))
         submission.status = EvaluationStatus.DONE
         submission.evaluating_since = None
         submission.evaluated_at = _now()

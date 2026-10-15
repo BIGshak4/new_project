@@ -71,8 +71,8 @@ class AnswerBody(BaseModel):
 class SubmitRequest(BaseModel):
     answer: AnswerBody | str = Field(..., description="the answer text, or an object with a text field")
     idempotency_key: str | None = Field(None, min_length=1, max_length=128)
-    latency_ms: int | None = Field(None, ge=0, description="time from question shown to submit, if measured")
-    revision_count: int | None = Field(None, ge=0, description="how many times the answer was edited before submit")
+    latency_ms: int | None = Field(None, ge=0, le=86_400_000, description="time from question shown to submit, if measured (at most a day)")
+    revision_count: int | None = Field(None, ge=0, le=10_000, description="how many times the answer was edited before submit")
 
 
 class SubmissionResponse(BaseModel):

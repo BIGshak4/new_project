@@ -280,7 +280,10 @@ class TestGradeFirst:
         assert len(store.tips) == 1 and {u["action"] for u in store.usage} >= {"generate", "feedback", "tip"}
         sub2, view = await svc.submit(USER, aid, {"text": "maybe an AND of each pair"}, idempotency_key="f",
                                       follow_up_turn=1)
-        assert sub2.status == "done" and sub2.band and sub2.feedback_pending        # a follow-up: its tip comes after
+        assert sub2.status == "done" and sub2.band
+        # a bare follow-up answer has nothing to word (no card, no new follow-up, no tip chosen here): it is complete
+        # as scored and no background task runs for it (review finding, 2026-10-15)
+        assert sub2.feedback_pending is (sub2.tip is not None and False) or not sub2.feedback_pending
         await svc.drain()
         assert not (await svc.get(USER, aid)).feedback_pending
 

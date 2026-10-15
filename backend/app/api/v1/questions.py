@@ -16,7 +16,8 @@ router = APIRouter(prefix="/v1/questions", tags=["questions"])
 
 
 class SightingRequest(BaseModel):
-    company: str = Field(..., min_length=1, max_length=80, description="the company where this question was asked")
+    company: str = Field(..., min_length=1, max_length=80, pattern=r"^[\p{L}\p{N} .&'\-]+$",
+                         description="the company where this question was asked: letters, digits, spaces, . & ' -")
 
 
 class SightingResponse(BaseModel):

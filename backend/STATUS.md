@@ -23,7 +23,8 @@ not touched again for them. When an item is done, remove its entry from `PENDING
 | 4 | **Continue with tomorrow** | On the Learn page, when `program.next` is null and `program.ahead` is set, offer one action for `program.ahead` (for example pass `program.next?.id ?? program.ahead?.id` to `pathNodes`). The plan table's Start buttons already work for tomorrow's rows once today is done. | `Program.ahead?: PlanItem` or null; `POST /v1/me/program/start` with a later day's `item_id` returns `kind: "nothing"` with the "finish today's plan first" message while today is open. | §5za |
 | 5 | **Truth table in the circuit editor** | A "Truth table" button that runs the browser simulator over every input combination (up to about six inputs, 64 rows) and shows the table; for circuits with flip-flops show a note that a table does not apply. The backend derives the same table after grading (`evaluation-panel` already shows "Truth table of your answer"), so the two can be compared. | No backend change. | §5z |
 | 6 | **Where a question was started from** (small, do it with 1 and 2) | Pass `source` on every `startAttempt`: `"plan"` from the program's item or Start button, `"suggestion"` from the next-question card, `"readiness"` from the readiness card, `"library"` from the library, `"search"` from a search result, `"retry"` from "practise this question again"; and `screen` ("learn", "progress", "library"). The backend adds the device (phone or desktop) from the request and keeps the three on the attempt, for the pilot's journey reports. | `StartAttemptRequest.source?: "plan" \| "suggestion" \| "readiness" \| "library" \| "search" \| "retry" \| "other"`, `screen?: string`. Unknown values are 422. | §5zh |
-| 7 | **Voice input, browser only** (if Shaked's dictation test is good) | A microphone button on the answer box using the browser's speech recognition in the practice language; the words land in the box and the user edits and sends as usual. Chrome and Edge only; nothing is recorded or stored. | No backend change. If accuracy on Hebrew technical terms is poor, the server-side option is a separate plan. | — |
+| 7 | **The harness's sign-in entry** | `tools/screenshots/run.mjs` looks for `.landing` on `/`; the redesigned landing page has no such element, so the four sign-in shots are skipped. Point the entry at the new page's root element. | No backend change. | §5zi |
+| 8 | **Voice input, browser only** (if Shaked's dictation test is good) | A microphone button on the answer box using the browser's speech recognition in the practice language; the words land in the box and the user edits and sends as usual. Chrome and Edge only; nothing is recorded or stored. | No backend change. If accuracy on Hebrew technical terms is poor, the server-side option is a separate plan. | — |
 
 Not for the screens: a skipped follow-up earns no grade or XP; the follow-ups themselves now ask for understanding
 (never the question's own examples) and can be an edge case after a strong answer; the grader counts a correct method
@@ -901,6 +902,18 @@ attempt's suggestion means the suggestion, else the library.
 **Verified:** 895 offline tests (the entry kept and reloaded, phone and desktop, an unknown source is 422); the live
 HTTP test checks the entry on the real attempt row.
 
+## 5zi. Full check of 2026-10-15 (Shaked: "a full check on the system, a profiling check and code review and fix all bugs")
+
+Report: `docs/full-check-2026-10-15.md`. In short: 907 offline tests, the live suite 17 of 17, both real-model
+scripts, Harel's 65 web tests, the harness with no overflow, production healthy; the practice loop profiles at 26 ms
+(48 on 1 October), 50 concurrent users complete every flow; four independent reviewers (correctness, concurrency,
+security, performance) plus a verifier found twelve defects, all fixed in this pass, and six accepted items, listed
+in the report. The main fixes: one user's program writes are serialised (a per-user lock; a started item is resumed,
+not reopened; the tick follows a relinked attempt; a lost race on the one-active-plan index returns the winner's plan);
+the body-size guard works on the stream; the timing fields are bounded; company names are restricted and capped; the
+request id is validated; a per-caller request budget; a plan start in two transactions instead of four; readiness in
+one; no empty background task after a follow-up answer; question summaries cached.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -939,6 +952,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-15 | Full check (§5zi, `docs/full-check-2026-10-15.md`): all suites green, profiling, four-lens review, twelve fixes (program serialisation, stream body guard, bounded timing fields, sightings limits, request id, rate limit, fewer round trips) |
 | 2026-10-05 | The entry source on every question start (plan, suggestion, readiness, library, search, retry) plus the device, kept on the attempt; a first per-user heat map from the existing data (§5zh) |
 | 2026-10-05 | Strong, lean: a correct design with thin reasoning is STRONG with lighter evidence and a reasoning follow-up (§5zg) |
 | 2026-10-05 | `GET /v1/me/readiness`: readiness for the goal's job type, skill by skill, with the next three questions; a goal change re-plans at once without losing the day (§5zf) |

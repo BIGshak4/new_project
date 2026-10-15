@@ -11,7 +11,7 @@ import re
 import unicodedata
 import uuid
 
-from sqlalchemy import func, select
+from sqlalchemy import func, select, text
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncConnection
 
@@ -42,6 +42,13 @@ async def available() -> bool:
     return await db.has_table(TABLE)
 
 
+NEW_COMPANIES_PER_DAY = 5          # distinct new company names one user may add in a day (review finding, 2026-10-15)
+
+
+class SightingsLimit(Exception):
+    """The user added as many new company names today as one person plausibly can."""
+
+
 async def add(connection: AsyncConnection, *, question_id: uuid.UUID, user_id: uuid.UUID, company: str) -> str:
     """Record a sighting; returns the company slug. Idempotent per (question, user, company)."""
     if not await available():
@@ -50,6 +57,11 @@ async def add(connection: AsyncConnection, *, question_id: uuid.UUID, user_id: u
     if not name or not slug:
         raise ValueError("a company name is required")
     table = await db.table(TABLE)
+    today = (await connection.execute(
+        select(table.c.company_slug).where(table.c.user_id == user_id, table.c.created_at >= func.now() - text("interval '1 day'"))
+        .group_by(table.c.company_slug))).scalars().all()
+    if slug not in today and len(today) >= NEW_COMPANIES_PER_DAY:
+        raise SightingsLimit(f"up to {NEW_COMPANIES_PER_DAY} new companies a day")
     await connection.execute(insert(table).values(question_id=question_id, user_id=user_id, company_name=name,
                                                   company_slug=slug)
                              .on_conflict_do_nothing(index_elements=["question_id", "user_id", "company_slug"]))

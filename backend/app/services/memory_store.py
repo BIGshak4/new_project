@@ -229,8 +229,9 @@ class _MemoryTx:
         plan = self.s.plans.get(user_id)
         return copy.deepcopy(plan) if plan is not None else None
 
-    async def create_plan(self, *, user_id, role_slug, seniority, week_start, minutes_per_day, interview_date, items):
-        now = datetime.now(UTC)
+    async def create_plan(self, *, user_id, role_slug, seniority, week_start, minutes_per_day, interview_date, items,
+                          generated_at=None):
+        now = generated_at or datetime.now(UTC)
         rows = [PlanItemRow(id=uuid.uuid4(), day_index=int(i["day_index"]), mode=i["mode"], skills=list(i["skills"]),
                             reason=i["reason"] or "-", minutes=max(1, min(120, int(i["minutes"] or 1))),
                             status=i.get("status") or "planned", completed_attempt_id=i.get("completed_attempt_id"),
@@ -257,6 +258,21 @@ class _MemoryTx:
 
     async def attempt_plan_item(self, attempt_id):
         return self.s.plan_links.get(attempt_id)
+
+    async def plan_item_attempt(self, item_id):
+        linked = [a for a, i in self.s.plan_links.items() if i == item_id and a in self.s.attempts]
+        if not linked:
+            return None
+        return max(linked, key=lambda a: self.s.attempts[a]["started_at"])
+
+    async def tick_plan_item(self, item_id, **fields):
+        """Like update_plan_item, but says whether the item still belongs to a current plan."""
+        for user_id, plan in list(self.s.plans.items()):
+            if any(item.id == item_id for item in plan.items):
+                items = [dataclasses.replace(item, **fields) if item.id == item_id else item for item in plan.items]
+                self.s.plans[user_id] = dataclasses.replace(plan, items=items)
+                return True
+        return False
 
     async def relink_plan_item(self, old_item_id, new_item_id):
         self.s.plan_links = {a: (new_item_id if i == old_item_id else i) for a, i in self.s.plan_links.items()}

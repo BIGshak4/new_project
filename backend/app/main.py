@@ -15,7 +15,10 @@ The OpenAPI document at /docs is the contract the web app is written against.
 from __future__ import annotations
 
 import asyncio
+import hashlib
+import json
 import logging
+import re
 import time
 import uuid
 from contextlib import asynccontextmanager
@@ -35,6 +38,9 @@ from app.runtime import build_runtime
 
 log = logging.getLogger("app")
 access_log = logging.getLogger("app.access")
+if not logging.getLogger().handlers:                 # plain `uvicorn` leaves the root logger silent: the access line was never emitted
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
+logging.getLogger("app").setLevel(logging.INFO)
 
 
 @asynccontextmanager
@@ -84,27 +90,118 @@ app.include_router(meta.router)
 
 
 MAX_BODY_BYTES = 256 * 1024          # an answer is at most 20 000 characters; anything larger is not a request we serve
+REQUEST_ID_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
+RATE_LIMIT_PER_MINUTE = 600          # per caller (token, else address); /health is exempt; 0 disables (review, 2026-10-15)
+
+
+class BodyTooLarge(Exception):
+    """Raised from the wrapped receive once more than MAX_BODY_BYTES arrived on the stream."""
+
+
+def _too_large_response(request_id: str) -> JSONResponse:
+    return JSONResponse({"error": {"code": "payload_too_large", "message": f"the request body exceeds {MAX_BODY_BYTES} bytes"}},
+                        status_code=413, headers={"X-Request-Id": request_id})
+
+
+class StreamLimits:
+    """Pure ASGI middleware, outermost: counts the bytes that actually arrive (a chunked body has no Content-Length, so
+    the header check alone let a 32 MiB anonymous body be buffered and parsed; review finding 2026-10-15), and keeps
+    a small per-caller request budget so a single client cannot saturate the pool with rebuild-heavy reads."""
+
+    def __init__(self, app):
+        self.app = app
+        self._buckets: dict[str, list[float]] = {}
+
+    def _caller(self, scope) -> str:
+        headers = {k.decode("latin-1").lower(): v for k, v in scope.get("headers", [])}
+        token = headers.get(b"authorization".decode(), b"")
+        if token:
+            return "t:" + hashlib.sha256(token).hexdigest()[:16]
+        client = scope.get("client") or ("?", 0)
+        return "a:" + str(client[0])
+
+    def _over_limit(self, caller: str) -> bool:
+        if RATE_LIMIT_PER_MINUTE <= 0:
+            return False
+        now = time.monotonic()
+        stamps = self._buckets.setdefault(caller, [])
+        cutoff = now - 60
+        while stamps and stamps[0] < cutoff:
+            stamps.pop(0)
+        if len(stamps) >= RATE_LIMIT_PER_MINUTE:
+            return True
+        stamps.append(now)
+        if len(self._buckets) > 10_000:                                   # never grows without bound
+            for key in [k for k, v in self._buckets.items() if not v or v[-1] < cutoff][:1000]:
+                self._buckets.pop(key, None)
+        return False
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] != "http":
+            return await self.app(scope, receive, send)
+        if scope.get("path") != "/health" and self._over_limit(self._caller(scope)):
+            response = JSONResponse({"error": {"code": "usage_limit", "message": "too many requests; slow down for a minute"}},
+                                    status_code=429, headers={"Retry-After": "60"})
+            return await response(scope, receive, send)
+        state = {"received": 0, "too_large": False, "started": False}
+        body = json.dumps({"error": {"code": "payload_too_large",
+                                     "message": f"the request body exceeds {MAX_BODY_BYTES} bytes"}}).encode()
+
+        async def limited_receive():
+            message = await receive()
+            if message["type"] == "http.request":
+                state["received"] += len(message.get("body", b""))
+                if state["received"] > MAX_BODY_BYTES:
+                    state["too_large"] = True
+                    raise BodyTooLarge()                            # the framework turns this into its own 400 ...
+            return message
+
+        async def guarded_send(message):
+            if state["too_large"]:                                  # ... which is replaced by the 413 here
+                if message["type"] == "http.response.start":
+                    state["started"] = True
+                    await send({"type": "http.response.start", "status": 413,
+                                "headers": [(b"content-type", b"application/json"), (b"content-length", str(len(body)).encode())]})
+                elif message["type"] == "http.response.body" and not state.get("sent"):
+                    state["sent"] = True
+                    await send({"type": "http.response.body", "body": body, "more_body": False})
+                return
+            if message["type"] == "http.response.start":
+                state["started"] = True
+            await send(message)
+
+        try:
+            await self.app(scope, limited_receive, guarded_send)
+        except BodyTooLarge:
+            if not state["started"]:
+                await _too_large_response(uuid.uuid4().hex[:12])(scope, receive, send)
+
+
+app.add_middleware(StreamLimits)
 
 
 @app.middleware("http")
 async def request_log(request: Request, call_next):
     """One line per request: id, route, user, status, duration. Never the body, never a token."""
-    request_id = request.headers.get("X-Request-Id") or uuid.uuid4().hex[:12]
+    offered = request.headers.get("X-Request-Id") or ""
+    request_id = offered if REQUEST_ID_RE.match(offered) else uuid.uuid4().hex[:12]   # never reflected or logged raw
     request.state.request_id = request_id
     started = time.perf_counter()
     declared = request.headers.get("content-length")
     if declared and declared.isdigit() and int(declared) > MAX_BODY_BYTES:
-        return JSONResponse({"error": {"code": "payload_too_large", "message": f"the request body exceeds {MAX_BODY_BYTES} bytes"}},
-                            status_code=413, headers={"X-Request-Id": request_id})
+        return _too_large_response(request_id)
+    path = request.url.path.replace("\n", " ").replace("\r", " ")
     try:
         response = await call_next(request)
+    except BodyTooLarge:
+        raise                                                   # answered by StreamLimits with a 413
     except Exception:
-        access_log.exception("%s %s %s user=%s status=500 ms=%d", request_id, request.method, request.url.path,
+        access_log.exception("%s %s %s user=%s status=500 ms=%d", request_id, request.method, path,
                              getattr(request.state, "user_id", "-"), (time.perf_counter() - started) * 1000)
         return JSONResponse({"error": {"code": "internal", "message": "something went wrong on our side",
                                        "request_id": request_id}}, status_code=500, headers={"X-Request-Id": request_id})
     response.headers["X-Request-Id"] = request_id
-    access_log.info("%s %s %s user=%s status=%d ms=%d", request_id, request.method, request.url.path,
+    access_log.info("%s %s %s user=%s status=%d ms=%d", request_id, request.method, path,
                     getattr(request.state, "user_id", "-"), response.status_code, (time.perf_counter() - started) * 1000)
     return response
 

@@ -238,6 +238,60 @@ class TestSkippingTheFollowUp:
         assert (await client.post(f"{BASE}/{aid}/follow-ups/0/skip", headers=h)).status_code == 422
 
 
+class TestRequestLimits:
+    """Review findings of 2026-10-15: the body guard on the stream, bounded timing fields, a clean request id, a
+    per-caller request budget, a company name that is only letters, digits and a few marks."""
+
+    async def test_a_chunked_body_over_the_limit_is_refused_before_it_is_parsed(self, client, user):
+        _, h = user
+
+        async def chunks():
+            for _ in range(5):
+                yield b"x" * (100 * 1024)                              # 500 KiB, no Content-Length
+        response = await client.post("/v1/me/goal", content=chunks(), headers={**h, "Content-Type": "application/json"})
+        assert response.status_code == 413 and response.json()["error"]["code"] == "payload_too_large"
+        small = await client.post("/v1/me/goal", json={"job_type": "verification", "minutes_per_day": 30}, headers=h)
+        assert small.status_code == 200
+
+    async def test_timing_fields_are_bounded(self, client, user):
+        _, h = user
+        aid = (await start(client, h))["id"]
+        huge = await client.post(f"{BASE}/{aid}/submissions", json={"answer": "x", "latency_ms": 1_099_511_627_776},
+                                 headers={**h, "Idempotency-Key": "big"})
+        assert huge.status_code == 422
+        huge = await client.post(f"{BASE}/{aid}/submissions", json={"answer": "x", "revision_count": 10_000_000},
+                                 headers={**h, "Idempotency-Key": "big2"})
+        assert huge.status_code == 422
+
+    async def test_a_forged_request_id_is_replaced(self, client, user):
+        _, h = user
+        forged = "x" * 300 + " user=admin status=200"
+        response = await client.get("/v1/me", headers={**h, "X-Request-Id": forged})
+        assert response.status_code == 200 and response.headers["X-Request-Id"] != forged
+        assert len(response.headers["X-Request-Id"]) <= 64
+        clean = await client.get("/v1/me", headers={**h, "X-Request-Id": "req-42_a"})
+        assert clean.headers["X-Request-Id"] == "req-42_a"
+
+    async def test_a_company_name_is_letters_digits_and_a_few_marks(self, client, user):
+        _, h = user
+        bad = await client.post(f"/v1/questions/{Q}/sightings", json={"company": "!!!Intel <b>scam</b>"}, headers=h)
+        assert bad.status_code == 422
+        good = await client.post(f"/v1/questions/{Q}/sightings", json={"company": "Intel Corp."}, headers=h)
+        assert good.status_code in (200, 503)                        # 503 when the sightings table is absent (memory: present)
+        hebrew = await client.post(f"/v1/questions/{Q}/sightings", json={"company": "אינטל"}, headers=h)
+        assert hebrew.status_code in (200, 503)
+
+    async def test_too_many_requests_from_one_caller_are_slowed(self, client, user, monkeypatch):
+        from app import main as main_module
+        _, h = user
+        monkeypatch.setattr(main_module, "RATE_LIMIT_PER_MINUTE", 5)
+        codes = [(await client.get("/v1/me", headers=h)).status_code for _ in range(7)]
+        assert codes[:5] == [200] * 5 and codes[5:] == [429, 429]
+        assert (await client.get("/health")).status_code == 200                # the probe is never limited
+        other = make_token(email="second@example.com")[1]
+        assert (await client.get("/v1/me", headers={"Authorization": f"Bearer {other}"})).status_code in (200, 403)
+
+
 class TestErrors:
     async def test_model_outage_then_retry(self, client, user, catalog):
         app.state.runtime = runtime_with(catalog, scripted([LLMError("down", retryable=False), GOOD]))

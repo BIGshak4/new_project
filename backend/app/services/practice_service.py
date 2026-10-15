@@ -45,7 +45,7 @@ from app.repo.plans import OPEN, PlanItemRow, StoredPlan
 from app.repo.profiles import LoadedProfile, StaleProfile, as_profile_skills
 from app.repo.questions import CompanyTag, LoadedQuestion, QuestionDetail, QuestionSummary, detail
 from app.repo.reports import ReportsUnavailable
-from app.repo.sightings import SightingsUnavailable, slugify
+from app.repo.sightings import SightingsLimit, SightingsUnavailable, slugify
 from app.repo.users import SENIORITIES, Goal
 from app.schemas.api import (
     AttemptView,
@@ -147,6 +147,7 @@ class PracticeService:
         self.image_fetcher = image_fetcher                 # None: photos are stored but not shown to the evaluator
         self.question_image_fetcher = question_image_fetcher
         self._locks: dict[uuid.UUID, asyncio.Lock] = {}
+        self._user_locks: dict[uuid.UUID, asyncio.Lock] = {}     # one program action at a time per user (rebuild, start, goal)
         self._feedback_tasks: dict[tuple[uuid.UUID, int], asyncio.Task] = {}      # (attempt, revision) -> writing its words
         self._plans: dict[tuple[str, str | None], tuple[dict[str, int], dict[str, float], int, list[PlanSkill]]] = {}
 
@@ -218,6 +219,8 @@ class PracticeService:
                 raise ApiError("not_found", "this question does not exist or is not available")
             try:
                 await tx.add_sighting(question_id=str(loaded.id), user_id=user_id, company=company)
+            except SightingsLimit as exc:
+                raise ApiError("usage_limit", str(exc)) from exc
             except SightingsUnavailable as exc:
                 raise ApiError("temporarily_unavailable", str(exc), status=503) from exc
             except ValueError as exc:
@@ -277,7 +280,7 @@ class PracticeService:
         if seniority is not None and seniority not in SENIORITIES:
             raise ApiError("validation", f"seniority must be one of {', '.join(SENIORITIES)}")
         goal = Goal(job_type=job_type, interview_date=interview_date, minutes_per_day=minutes_per_day, seniority=seniority)
-        async with self.store.transaction() as tx:
+        async with self._user_lock(user_id), self.store.transaction() as tx:
             await tx.save_goal(user_id, goal)
             # the plan is not thrown away: it is rebuilt on the next read because the goal is newer than the plan
             # (_goal_changed_after), and the rebuild keeps what was done today (Shaked, 2026-10-05)
@@ -306,9 +309,11 @@ class PracticeService:
 
     async def start(self, user_id: uuid.UUID, *, question_key: str | None = None, question_id: uuid.UUID | None = None,
                     mode: str = "deep", language: str | None = None, self_confidence: int | None = None,
-                    entry: dict | None = None) -> AttemptView:
+                    entry: dict | None = None, plan_item_id: uuid.UUID | None = None) -> AttemptView:
         """`entry`: where the question was started from ({source, screen, device}), kept on the attempt so the pilot's
-        journeys can be read (Shaked, 2026-10-05: a heat map of where each user enters questions from)."""
+        journeys can be read (Shaked, 2026-10-05: a heat map of where each user enters questions from).
+        `plan_item_id`: the program item this attempt opens; it is linked and marked started in the same transaction
+        as the attempt, so a crash between the two cannot leave an attempt without its item."""
         if mode not in MODES:
             raise ApiError("validation", f"mode must be one of {', '.join(MODES)}")
         language = self._language(language)
@@ -335,6 +340,9 @@ class PracticeService:
                     await tx.save_attempt(user_id=user_id, question_id=loaded.id, row=row, revisions=set())
                     if loaded.question.assets.get("assessment_ready") is not False:
                         await tx.save_profile(profile, self._primary_state(attempt, profile), attempt_id=attempt.attempt_id_uuid)
+                    if plan_item_id is not None:
+                        await tx.link_attempt_to_plan_item(attempt.attempt_id_uuid, plan_item_id)
+                        await tx.update_plan_item(plan_item_id, status="started")
                 break
             except StaleProfile:
                 continue
@@ -804,8 +812,8 @@ class PracticeService:
         words = self.READINESS_WORDS.get(language, self.READINESS_WORDS["en"])
         texts = self.READINESS_MESSAGES.get(language, self.READINESS_MESSAGES["en"])
         reasons = self.READINESS_REASONS.get(language, self.READINESS_REASONS["en"])
-        progress = await self.progress(user_id, language=language)
-        async with self.store.transaction() as tx:
+        async with self.store.transaction() as tx:                  # one read-only unit of work; no plan rebuild here
+            profile = await tx.load_profile(user_id)
             goal = await tx.load_goal(user_id)
             seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
             servable = await tx.list_questions(language=language)
@@ -814,8 +822,8 @@ class PracticeService:
         job_label = job.text("label", language) if job else None
         if job is None:
             return ReadinessView(job_type=None, job_type_label=None, message=texts["no_goal"])
-        _, _, _, plan_skills = self._plan(seniority, job.key)
-        by_key = {s.key: s for s in progress.skills}
+        required, _, _, plan_skills = self._plan(seniority, job.key)
+        by_key = {s.key: s for s in self._skill_rows(profile, required, datetime.now(UTC), None)}
         askable = {link.skill for q in self.catalog.questions.values() for link in q.skills}
         questioned = [p for p in plan_skills if p.assessment_mode.value == "questioned" and p.key in self.catalog.skills]
         total = sum(p.combined_weight for p in questioned) or 1.0
@@ -880,7 +888,7 @@ class PracticeService:
     async def progress(self, user_id: uuid.UUID, *, language: str | None = None) -> ProgressView:
         language = self._language(language)
         today = date.today()
-        async with self.store.transaction() as tx:          # one unit of work: every read, then the saved program
+        async with self._user_lock(user_id), self.store.transaction() as tx:   # every read, then the saved program
             profile = await tx.load_profile(user_id)
             history = await tx.recent_attempts(user_id, limit=60)        # the plan's memory: scored answers, today included
             recent = history[:10]
@@ -897,6 +905,20 @@ class PracticeService:
                                                  seniority, language, today)
         now = datetime.now(UTC)
         experience = xp.summarise(xp.from_rows(scored_rows), now.date())
+        skills = self._skill_rows(profile, required, now, experience)
+        subjects = self._subjects(skills, required, weights, bands, servable)
+        return ProgressView(skills=skills, subjects=subjects, recent=recent, attempts_today=started,
+                            daily_limit=self.config.daily_attempt_limit,
+                            overview=self._overview(skills, plan_skills, bands, language, experience),
+                            timeline=self._timeline(daily, profile),
+                            plan=self._plan_view(program, goal, today),
+                            goal=self._goal_view(goal, language),
+                            focus_skills=self._focus_skills(skills, plan_skills, required))
+
+    def _skill_rows(self, profile: LoadedProfile, required: dict[str, int], now: datetime,
+                    experience: xp.XpSummary | None) -> list[SkillProgress]:
+        """One row per skill the profile knows: level, evidence status, trend, freshness (shared by progress and
+        readiness; XP per skill only when the caller computed it)."""
         skills = []
         for key, state in sorted(profile.states.items()):
             catalog_skill = self.catalog.skills.get(key)
@@ -921,15 +943,8 @@ class PracticeService:
                 retention_due_at=retention.get("due").isoformat() if retention.get("due") else None,
                 loyalty=value, needs_refresh=level is not None and scores.needs_refresh(value),
                 expired=level is not None and scores.expired(value),
-                xp=experience.per_skill.get(key, 0), level_progress=xp.level_progress(level, level_score)))
-        subjects = self._subjects(skills, required, weights, bands, servable)
-        return ProgressView(skills=skills, subjects=subjects, recent=recent, attempts_today=started,
-                            daily_limit=self.config.daily_attempt_limit,
-                            overview=self._overview(skills, plan_skills, bands, language, experience),
-                            timeline=self._timeline(daily, profile),
-                            plan=self._plan_view(program, goal, today),
-                            goal=self._goal_view(goal, language),
-                            focus_skills=self._focus_skills(skills, plan_skills, required))
+                xp=experience.per_skill.get(key, 0) if experience else 0, level_progress=xp.level_progress(level, level_score)))
+        return skills
 
     FOCUS_SKILLS = 5
 
@@ -958,7 +973,17 @@ class PracticeService:
     # ------------------------------------------------------------------ the saved program
 
     async def program(self, user_id: uuid.UUID, *, language: str | None = None) -> ProgramView:
+        async with self._user_lock(user_id):
+            return await self._program(user_id, language=language)
+
+    async def _program(self, user_id: uuid.UUID, *, language: str | None = None) -> ProgramView:
         """What is due today, carried-forward items first, and the one item to start now."""
+        view, *_ = await self._program_data(user_id, language=language)
+        return view
+
+    async def _program_data(self, user_id: uuid.UUID, *, language: str | None = None):
+        """The program view plus what was read to build it, so a plan start does not load it all again (one
+        transaction instead of two; review finding 2026-10-15)."""
         language = self._language(language)
         today = date.today()
         async with self.store.transaction() as tx:
@@ -970,7 +995,7 @@ class PracticeService:
             required, _, _, plan_skills = self._plan(seniority, goal.job_type)
             program = await self._ensure_program(tx, user_id, profile, plan_skills, required, servable, history, goal, seniority,
                                                  language, today)
-        return self._program_view(program, goal, today)
+        return self._program_view(program, goal, today), profile, goal, seniority, servable
 
     async def start_program_item(self, user_id: uuid.UUID, *, item_id: uuid.UUID | None = None,
                                  language: str | None = None, device: str | None = None) -> ProgramStartView:
@@ -980,9 +1005,14 @@ class PracticeService:
         Working ahead (Shaked, 2026-10-03): an item planned for a later day opens once today has no open item left
         (or nothing was due today); while today still has open items it is refused with a message and nothing is
         created. Without an item, Start opens today's next item, else the first open item of the following days."""
+        async with self._user_lock(user_id):
+            return await self._start_program_item(user_id, item_id=item_id, language=language, device=device)
+
+    async def _start_program_item(self, user_id: uuid.UUID, *, item_id: uuid.UUID | None, language: str | None,
+                                  device: str | None) -> ProgramStartView:
         language = self._language(language)
         today = date.today()
-        view = await self.program(user_id, language=language)
+        view, profile, goal, seniority, servable = await self._program_data(user_id, language=language)
         texts = PROGRAM_MESSAGES.get(language, PROGRAM_MESSAGES["en"])
         if not view.goal_complete:
             return ProgramStartView(kind="nothing", message=texts["no_goal"])
@@ -1011,11 +1041,14 @@ class PracticeService:
         # quick mode never asks a follow-up. The item's mode still sets its planned minutes.
         mode = "deep"
         async with self.store.transaction() as tx:
-            profile = await tx.load_profile(user_id)
-            goal = await tx.load_goal(user_id)
-            seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
-            servable = await tx.list_questions(language=language)
+            opened = await tx.plan_item_attempt(uuid.UUID(item.id)) if item.status == "started" else None
             seen = await tx.seen_question_keys(user_id)
+        if opened is not None:
+            # the item was opened before (a second click, another tab, or coming back): continue that attempt instead
+            # of opening another one on the same item (review finding, 2026-10-15)
+            existing = await self.get(user_id, opened)
+            if existing.status in ("in_progress", "evaluating", "failed") and existing.submission is None:
+                return ProgramStartView(kind="attempt", item=item, attempt=existing)
         required, _, ceiling, _ = self._plan(seniority, goal.job_type)
         question = self._question_for(item, profile, servable, seen, required, ceiling, mode, language)
         if question is None:
@@ -1023,10 +1056,8 @@ class PracticeService:
                 await tx.update_plan_item(uuid.UUID(item.id), status="skipped")
             return ProgramStartView(kind="nothing", item=item, message=texts["no_question"])
         attempt = await self.start(user_id, question_key=question.key, mode=mode, language=language,
-                                   entry={"source": "plan", "screen": "program", "device": device})
-        async with self.store.transaction() as tx:
-            await tx.link_attempt_to_plan_item(uuid.UUID(attempt.id), uuid.UUID(item.id))
-            await tx.update_plan_item(uuid.UUID(item.id), status="started")
+                                   entry={"source": "plan", "screen": "program", "device": device},
+                                   plan_item_id=uuid.UUID(item.id))
         del today
         return ProgramStartView(kind="attempt", item=item.model_copy(update={"status": "started"}), attempt=attempt)
 
@@ -1067,7 +1098,7 @@ class PracticeService:
             return False
         generated = plan.generated_at if plan.generated_at.tzinfo else plan.generated_at.replace(tzinfo=UTC)
         saved = goal.saved_at if goal.saved_at.tzinfo else goal.saved_at.replace(tzinfo=UTC)
-        return saved > generated
+        return saved >= generated          # equal stamps (a coarse clock) count as newer: one extra rebuild at most
 
     @staticmethod
     def _answered_since(profile: LoadedProfile, item: PlanItemRow) -> bool:
@@ -1129,12 +1160,29 @@ class PracticeService:
         taken: set[tuple[str, tuple[str, ...]]] = set()
         done_for_today = {(item.mode, tuple(item.skills)) for day_index, item in done_ahead if day_index == 0}
         day_minutes: dict[int, int] = {}                        # minutes already filled on a day (carried, done or opened ahead)
+        # work done or opened ahead keeps its day, so its minutes are counted first (review finding, 2026-10-15:
+        # carried items were placed before them and today could exceed the budget)
+        done_slots: set[tuple[int, str, tuple[str, ...]]] = set()
+        for day_index, item in done_ahead:
+            done_slots.add((day_index, item.mode, tuple(item.skills)))
+            day_minutes[day_index] = day_minutes.get(day_index, 0) + item.minutes
+            items.append({"day_index": day_index, "mode": item.mode, "skills": item.skills, "reason": item.reason,
+                          "minutes": item.minutes, "status": "done", "completed_attempt_id": item.completed_attempt_id,
+                          "completed_session_id": item.completed_session_id})
+        # opened ahead, not answered yet: kept on its day, still started, never dropped (it has a live attempt); its
+        # attempt is relinked to the copy below
+        for day_index, item in started_ahead:
+            done_slots.add((day_index, item.mode, tuple(item.skills)))
+            day_minutes[day_index] = day_minutes.get(day_index, 0) + item.minutes
+            items.append({"day_index": day_index, "mode": item.mode, "skills": item.skills, "reason": item.reason,
+                          "minutes": item.minutes, "status": "started", "previous_id": item.id})
         # carried items fill today's minutes first, opened ones ahead of planned ones; what does not fit waits for the
         # next day instead of piling onto today; a carried item whose skill was answered since it was planned is
-        # dropped, the router decides again from the fresh evidence (Shaked, 2026-10-04)
+        # dropped, the router decides again from the fresh evidence (Shaked, 2026-10-04). An opened item is never
+        # dropped: its attempt must keep an item to tick.
         for item in sorted(carried, key=lambda i: i.status != "started"):
             signature = (item.mode, tuple(item.skills))
-            if signature in taken or signature in done_for_today:
+            if item.status != "started" and (signature in taken or signature in done_for_today):
                 continue
             if item.status != "started" and item.mode != "simulation" and self._answered_since(profile, item):
                 continue
@@ -1152,23 +1200,6 @@ class PracticeService:
             if item.status == "started":                    # opened and not answered: stays started, its attempt follows it
                 carried_item.update(status="started", previous_id=item.id)
             items.append(carried_item)
-        # done ahead: stamped anew (never shown as carried) and kept off `taken`, which would drop the skill from
-        # the router's other days; only the same item on the same day is left out of the router's week below
-        done_slots: set[tuple[int, str, tuple[str, ...]]] = set()
-        for day_index, item in done_ahead:
-            done_slots.add((day_index, item.mode, tuple(item.skills)))
-            day_minutes[day_index] = day_minutes.get(day_index, 0) + item.minutes
-            items.append({"day_index": day_index, "mode": item.mode, "skills": item.skills, "reason": item.reason,
-                          "minutes": item.minutes, "status": "done", "completed_attempt_id": item.completed_attempt_id,
-                          "completed_session_id": item.completed_session_id})
-        # opened ahead, not answered yet: kept on its day, still started; its attempt is relinked to the copy below
-        for day_index, item in started_ahead:
-            if (day_index, item.mode, tuple(item.skills)) in done_slots:
-                continue
-            done_slots.add((day_index, item.mode, tuple(item.skills)))
-            day_minutes[day_index] = day_minutes.get(day_index, 0) + item.minutes
-            items.append({"day_index": day_index, "mode": item.mode, "skills": item.skills, "reason": item.reason,
-                          "minutes": item.minutes, "status": "started", "previous_id": item.id})
         labels = self.catalog.skill_labels()
         for planned in routed:
             signature = (planned.activity.mode, tuple(planned.activity.skills))
@@ -1184,8 +1215,17 @@ class PracticeService:
                           "reason": plan_router.reason_text(planned.activity, language, labels),
                           "minutes": planned.activity.estimated_minutes})
         items.sort(key=lambda i: i["day_index"])                # stable: a no-op unless a done item joined a later day
+        # the plan's stamp never trails the goal's, so a goal saved by a machine whose clock runs ahead triggers one
+        # rebuild, not one per read (review finding, 2026-10-15)
+        stamp = datetime.now(UTC)
+        if goal.saved_at is not None:
+            saved = goal.saved_at if goal.saved_at.tzinfo else goal.saved_at.replace(tzinfo=UTC)
+            stamp = max(stamp, saved + timedelta(microseconds=1))
         created = await tx.create_plan(user_id=user_id, role_slug=self.config.role, seniority=seniority, week_start=today,
-                                       minutes_per_day=minutes, interview_date=goal.interview_date, items=items)
+                                       minutes_per_day=minutes, interview_date=goal.interview_date, items=items,
+                                       generated_at=stamp)
+        if created.reused:                                      # another request built the same plan a moment ago
+            return created
         # create_plan keeps the order of `items`: move the attempts opened ahead to their items' new ids
         for spec, row in zip(items, created.items, strict=True):
             if spec.get("previous_id") is not None:
@@ -1223,7 +1263,15 @@ class PracticeService:
             fields["completed_attempt_id"] = attempt_id
         if session_id is not None:
             fields["completed_session_id"] = session_id
-        await tx.update_plan_item(chosen.id, **fields)
+        if await tx.tick_plan_item(chosen.id, **fields):
+            return
+        # the plan was replaced between the read and the write (a rebuild raced this answer): the attempt was relinked
+        # to the new copy, so tick that one; never a second search by skill, which could tick an unrelated item
+        if attempt_id is None:
+            return
+        relinked = await tx.attempt_plan_item(attempt_id)
+        if relinked is not None and relinked != chosen.id:
+            await tx.tick_plan_item(relinked, **fields)
 
     def _plan_view(self, plan: StoredPlan, goal: Goal, today: date) -> PlanView:
         labels = self.catalog.skill_labels()
@@ -1359,6 +1407,20 @@ class PracticeService:
         if language not in LANGUAGES:
             raise ApiError("validation", f"language must be one of {', '.join(LANGUAGES)}")
         return language
+
+    @asynccontextmanager
+    async def _user_lock(self, user_id: uuid.UUID):
+        """One program action at a time per user: the daily rebuild, a plan start, a goal save. Without it two
+        first-of-day reads both rebuild, a double click on Start opens two attempts on one item, and a goal saved
+        during a rebuild leaves the old job type's plan in place (review findings, 2026-10-15). Forgotten once idle,
+        like the attempt locks."""
+        lock = self._user_locks.setdefault(user_id, asyncio.Lock())
+        try:
+            async with lock:
+                yield
+        finally:
+            if not lock.locked() and not getattr(lock, "_waiters", None) and self._user_locks.get(user_id) is lock:
+                del self._user_locks[user_id]
 
     @asynccontextmanager
     async def _lock(self, attempt_id: uuid.UUID):

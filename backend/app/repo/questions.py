@@ -223,6 +223,11 @@ def _cached_servable(allow_in_review: bool) -> list[LoadedQuestion]:
 
 async def list_questions(connection: AsyncConnection, *, language: str, allow_in_review: bool = False,
                          subject: str | None = None) -> list[QuestionSummary]:
-    """Every servable, enriched question as a safe summary."""
-    loaded = await servable_questions(connection, allow_in_review=allow_in_review)
-    return [summary(q, language) for q in loaded if subject is None or q.question.subject == subject]
+    """Every servable, enriched question as a safe summary. The summaries are built once per language within the
+    servable cache's 60 s (67 pydantic objects per call otherwise; review finding 2026-10-15); callers copy before
+    they enrich."""
+    async def build():
+        loaded = await servable_questions(connection, allow_in_review=allow_in_review)
+        return [summary(q, language) for q in loaded]
+    summaries = await cache.QUESTIONS.get(("summaries", language, allow_in_review), build)
+    return [s for s in summaries if subject is None or s.subject == subject]
