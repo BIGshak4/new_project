@@ -4,8 +4,9 @@ from __future__ import annotations
 
 import uuid
 from datetime import date
+from typing import Annotated
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Header, Query
 from pydantic import BaseModel, Field
 
 from app.api.deps import CurrentAccess, Practice
@@ -83,5 +84,8 @@ async def program(access: CurrentAccess, practice: Practice,
 
 @router.post("/program/start", response_model=ProgramStartView,
              summary="Start a program item: opens a practice attempt on a fitting question, or points to the interview lobby")
-async def start_program(body: ProgramStartRequest, access: CurrentAccess, practice: Practice) -> ProgramStartView:
-    return await practice.start_program_item(access.user_id, item_id=body.item_id, language=body.language)
+async def start_program(body: ProgramStartRequest, access: CurrentAccess, practice: Practice,
+                        user_agent: Annotated[str | None, Header()] = None) -> ProgramStartView:
+    from app.api.v1.practice import device_of
+    return await practice.start_program_item(access.user_id, item_id=body.item_id, language=body.language,
+                                             device=device_of(user_agent))

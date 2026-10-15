@@ -973,7 +973,7 @@ class PracticeService:
         return self._program_view(program, goal, today)
 
     async def start_program_item(self, user_id: uuid.UUID, *, item_id: uuid.UUID | None = None,
-                                 language: str | None = None) -> ProgramStartView:
+                                 language: str | None = None, device: str | None = None) -> ProgramStartView:
         """Open the item (the next due one unless given): a practice attempt on a bank question chosen for the item's
         skill and the user's level, or the interview lobby for a simulation item.
 
@@ -1022,7 +1022,8 @@ class PracticeService:
             async with self.store.transaction() as tx:
                 await tx.update_plan_item(uuid.UUID(item.id), status="skipped")
             return ProgramStartView(kind="nothing", item=item, message=texts["no_question"])
-        attempt = await self.start(user_id, question_key=question.key, mode=mode, language=language)
+        attempt = await self.start(user_id, question_key=question.key, mode=mode, language=language,
+                                   entry={"source": "plan", "screen": "program", "device": device})
         async with self.store.transaction() as tx:
             await tx.link_attempt_to_plan_item(uuid.UUID(attempt.id), uuid.UUID(item.id))
             await tx.update_plan_item(uuid.UUID(item.id), status="started")

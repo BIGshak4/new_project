@@ -604,6 +604,18 @@ class TestWorkingAhead:
         assert started.kind == "attempt" and started.item.id == later.id
 
 
+class TestWhereAPlanStartComesFrom:
+    async def test_a_question_opened_from_the_plan_records_the_plan_as_its_entry(self, catalog):
+        """Plan starts bypass POST /v1/practice/attempts, so they record their own entry (found on 2026-10-15: every
+        plan start of the first ten days had no entry at all)."""
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        started = await svc.start_program_item(USER, language="en", device="phone")
+        assert started.kind == "attempt"
+        row = store.attempts[uuid.UUID(started.attempt.id)]["row"]
+        assert row["entry"] == {"source": "plan", "screen": "program", "device": "phone"}
+
+
 class TestReadinessForTheJobType:
     """Shaked, 2026-10-05: the user chooses a job type; this view says where they stand against its demands."""
 
