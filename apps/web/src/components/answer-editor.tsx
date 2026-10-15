@@ -2,6 +2,8 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import type { Lang } from "./auth";
+import { DictationControls } from "./dictation-controls";
+import { dictationExplanationLimit } from "../lib/speech-dictation";
 import {
   answerLanguages,
   defaultAnswerLanguage,
@@ -54,6 +56,13 @@ export function AnswerEditor({
           )}
         />
       </label>
+      <DictationControls
+        value={parts.explanation}
+        onChange={(explanation) => update(explanation, parts.code)}
+        lang={lang}
+        disabled={disabled}
+        maxLength={dictationExplanationLimit(value)}
+      />
       {!showCode && !parts.code ? (
         <button disabled={disabled} onClick={() => setShowCode(true)}>
           {t(

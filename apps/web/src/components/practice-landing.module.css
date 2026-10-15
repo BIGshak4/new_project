@@ -1,0 +1,211 @@
+.binaryArt {
+  min-width: 0;
+}
+
+.binaryArt .chip {
+  width: min(440px, 100%);
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.binaryControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-block-start: 24px;
+  padding-block: 8px;
+}
+
+.binaryControls button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 84px;
+  min-height: 52px;
+  padding: 9px 12px;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  font: 500 16px var(--font-mono);
+  touch-action: manipulation;
+}
+
+.binaryControls button[aria-pressed="true"] {
+  background: var(--soft);
+  border-color: var(--link);
+}
+
+.binaryControls button:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 4px;
+}
+
+.binaryControls button b {
+  display: grid;
+  place-items: center;
+  min-width: 28px;
+  height: 30px;
+  border-radius: 4px;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.binaryControls button b[data-bit="1"] {
+  background: var(--action);
+  color: var(--action-ink);
+}
+
+.binaryControls [data-xor-label] {
+  color: var(--muted);
+  font: 500 12px var(--font-mono);
+}
+
+.binaryControls output {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 82px;
+  min-height: 52px;
+  padding: 10px;
+  border-block: 1px solid var(--line);
+  color: var(--ink);
+  font: 500 19px var(--font-mono);
+  white-space: pre;
+}
+
+.binaryControls output[data-value="1"] {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+
+.companyReports {
+  margin-block-start: 28px;
+  max-width: 56ch;
+}
+
+.companyReports p {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.companyReports ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  list-style: none;
+  padding: 0;
+  margin-block: 10px;
+  color: var(--ink-2);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.companyReports p:last-child {
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.testimonials {
+  max-width: 1440px;
+  margin: auto;
+  padding: 56px 5%;
+  border-block-start: 1px solid var(--line);
+}
+
+.testimonials h2 {
+  max-width: 32ch;
+}
+
+.testimonials ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 28px;
+  list-style: none;
+  padding: 0;
+  margin-block: 28px 0;
+}
+
+.testimonials figure {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  border-block-start: 1px solid var(--line);
+  padding-block-start: 20px;
+}
+
+.testimonials blockquote {
+  margin: 0 0 20px;
+  color: var(--ink);
+  max-width: 65ch;
+  font-size: 18px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.testimonials blockquote p {
+  margin: 0;
+}
+
+.testimonials figcaption {
+  display: grid;
+  gap: 3px;
+  margin-block-start: auto;
+  color: var(--muted);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.testimonials figcaption strong {
+  color: var(--ink-2);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .binaryControls button:hover {
+    border-color: var(--link);
+    background: var(--soft);
+  }
+}
+
+@media (max-width: 780px) {
+  .binaryArt .chip {
+    width: min(340px, 100%);
+  }
+
+  .companyReports {
+    margin-block-start: 24px;
+  }
+
+  .testimonials {
+    padding-block: 40px;
+  }
+}
+
+@media (max-width: 370px) {
+  .binaryArt .chip {
+    width: min(295px, 100%);
+  }
+
+  .binaryControls {
+    gap: 6px;
+  }
+
+  .binaryControls button {
+    min-width: 76px;
+    gap: 8px;
+    padding-inline: 9px;
+  }
+
+  .binaryControls output {
+    min-width: 68px;
+    padding-inline: 6px;
+  }
+
+  .binaryControls [data-xor-label] {
+    font-size: 11px;
+  }
+}

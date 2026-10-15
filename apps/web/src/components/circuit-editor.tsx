@@ -42,6 +42,7 @@ import {
   type Signal,
 } from "../lib/circuit";
 import type { Lang } from "./auth";
+import { CircuitTruthTable } from "./circuit-truth-table";
 
 type GateNode = Node<{ part: Part; simulation: Simulation | null }, "gate">;
 const signalText = (v: Signal | undefined, bits = 1) =>
@@ -855,6 +856,7 @@ export default function CircuitEditor({
           )}
         </p>
       )}
+      <CircuitTruthTable circuit={value} lang={lang} />
       {notice && (
         <p className="circuit-notice" role="status">
           {notice}

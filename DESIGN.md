@@ -420,3 +420,14 @@ Task editing retains sticky save controls, written feedback and 180ms view trans
 - **Don't** remove written navigation labels on compact layouts.
 
 Not canonized or repaired: dormant Workbench selectors, incomplete incumbent task sidecar snippets and unsampled local drift remain outside this approved documentation change. Reviewed heading eyebrows and nested metric cards were resolved before this pass and are not reusable patterns.
+
+## Functional additions — 2026-10-16
+
+These additions reuse the Ion tokens above. Their code and production build were verified; the user deferred visual, phone and real-microphone validation until the next session. No new visual world or raster asset was introduced.
+
+- **Circuit truth table:** an inline section below simulation controls, with a native 44px action, a locally scrollable LTR binary table, sticky column headings and explicit unknown-value text. Invalid, sequential, clocked, feedback and over-limit circuits keep a visible explanation instead of a misleading result. Edits hide stale results.
+- **Dictation:** optional start/stop controls beside the answer explanation, an editable-language selector, separate interim text and live written status. Uses the existing field and button treatment. Capture requires an explicit action; navigation and disabled states stop it. Code stays separate from dictated explanation.
+- **Landing binary controls:** two native 52px A/B toggles, selected-state fill, visible keyboard focus and a live XOR output. Existing chip art remains the identity image. Reported-company copy distinguishes candidate reports from an official partnership.
+- **Testimonials:** a static semantic quotation row using the existing typography, dividers and responsive grid. No unsolicited scrolling motion. The client content module contains approved public copy only; drafts and private consent records stay outside its import graph. Empty public content omits the section entirely.
+
+Implementation and exact manual checks: [Harel frontend tasks](docs/harel-frontend-tasks-2026-10-16.md). The existing token sidecar remains applicable; these components introduce no additional token values.

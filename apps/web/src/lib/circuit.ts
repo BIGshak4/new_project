@@ -411,3 +411,133 @@ export function simulate(
     unsupportedClocks,
   };
 }
+
+export const MAX_TRUTH_TABLE_INPUT_BITS = 6;
+export type TruthTableIssue =
+  | "empty"
+  | "invalid"
+  | "sequential"
+  | "clock"
+  | "no-output"
+  | "too-many-inputs"
+  | "feedback";
+export type TruthTableColumn = { id: string; label: string; bits: number };
+export type TruthTablePlan =
+  | { ok: false; issue: TruthTableIssue; inputBits: number }
+  | {
+      ok: true;
+      inputs: TruthTableColumn[];
+      outputs: TruthTableColumn[];
+      inputBits: number;
+    };
+export type TruthTable = Extract<TruthTablePlan, { ok: true }> & {
+  rows: { inputs: number[]; outputs: Signal[] }[];
+  hasUnknown: boolean;
+};
+
+/** Check eligibility without running the simulator or changing the drawing. */
+export function truthTablePlan(c: Circuit): TruthTablePlan {
+  const inputBits = c.parts
+    .filter((p) => p.kind === "input")
+    .reduce((n, p) => n + p.bits, 0);
+  const issue = (reason: TruthTableIssue): TruthTablePlan => ({
+    ok: false,
+    issue: reason,
+    inputBits,
+  });
+  if (!c.parts.length) return issue("empty");
+  const seenParts = new Set<string>();
+  if (
+    c.version !== 1 ||
+    c.parts.length > 100 ||
+    c.wires.length > 200 ||
+    c.parts.some((p) => {
+      const repeated = seenParts.has(p.id);
+      seenParts.add(p.id);
+      return (
+        repeated ||
+        !KINDS.includes(p.kind) ||
+        !Number.isInteger(p.bits) ||
+        p.bits < 1 ||
+        p.bits > 16 ||
+        !Number.isInteger(p.value) ||
+        (hasCount(p.kind) &&
+          (!Number.isInteger(p.count) ||
+            p.count < 2 ||
+            p.count > 16 ||
+            (powerCount(p.kind) && ![2, 4, 8, 16].includes(p.count))))
+      );
+    })
+  )
+    return issue("invalid");
+  const connected: Circuit = { ...c, wires: [] };
+  const seenWires = new Set<string>();
+  for (const w of c.wires) {
+    if (seenWires.has(w.id) || connectionError(connected, w))
+      return issue("invalid");
+    seenWires.add(w.id);
+    connected.wires.push(w);
+  }
+  if (c.parts.some((p) => sequential(p.kind))) return issue("sequential");
+  if (c.parts.some((p) => p.kind === "clock")) return issue("clock");
+  if (!c.parts.some((p) => p.kind === "output")) return issue("no-output");
+  if (inputBits > MAX_TRUTH_TABLE_INPUT_BITS) return issue("too-many-inputs");
+
+  // A feedback loop can settle to ? and still look "stable" to a zero-delay
+  // simulator. Detect topology explicitly rather than treating that as logic.
+  const next = new Map(c.parts.map((p) => [p.id, [] as string[]]));
+  for (const w of c.wires) next.get(w.source)!.push(w.target);
+  const visiting = new Set<string>(),
+    visited = new Set<string>();
+  const cyclic = (id: string): boolean => {
+    if (visiting.has(id)) return true;
+    if (visited.has(id)) return false;
+    visiting.add(id);
+    if (next.get(id)!.some(cyclic)) return true;
+    visiting.delete(id);
+    visited.add(id);
+    return false;
+  };
+  if (c.parts.some((p) => cyclic(p.id))) return issue("feedback");
+  const column = (p: Part): TruthTableColumn => ({
+    id: p.id,
+    label: p.label,
+    bits: p.bits,
+  });
+  return {
+    ok: true,
+    inputBits,
+    inputs: c.parts.filter((p) => p.kind === "input").map(column),
+    outputs: c.parts.filter((p) => p.kind === "output").map(column),
+  };
+}
+
+/** Enumerate at most 64 combinations through the existing logic simulator. */
+export function truthTable(
+  c: Circuit,
+): TruthTable | Extract<TruthTablePlan, { ok: false }> {
+  const plan = truthTablePlan(c);
+  if (!plan.ok) return plan;
+  const rows: TruthTable["rows"] = [];
+  let hasUnknown = false;
+  for (let combination = 0; combination < 2 ** plan.inputBits; combination++) {
+    let remaining = plan.inputBits;
+    const inputs = plan.inputs.map((p) => {
+      remaining -= p.bits;
+      return (combination >> remaining) & mask(p.bits);
+    });
+    const values = new Map(plan.inputs.map((p, i) => [p.id, inputs[i]]));
+    const result = simulate({
+      ...c,
+      parts: c.parts.map((p) =>
+        p.kind === "input" ? { ...p, value: values.get(p.id)! } : p,
+      ),
+    });
+    const outputs = plan.outputs.map((p) =>
+      result.unstable ? null : (result.signals[signalKey(p.id, "display")] ?? null),
+    );
+    if (outputs.some((v) => v === null)) hasUnknown = true;
+    rows.push({ inputs, outputs });
+  }
+  return { ...plan, rows, hasUnknown };
+}

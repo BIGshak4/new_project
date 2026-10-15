@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, type ReactNode } from "react";
+import { useReducer, type ReactNode } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -10,6 +10,11 @@ import {
   MessagesSquare,
 } from "lucide-react";
 import { SignOff } from "./sign-off";
+import { LandingXorControls } from "./landing-xor-controls";
+import { LandingCompanyReports } from "./landing-company-reports";
+import { LandingTestimonials } from "./landing-testimonials";
+import { INITIAL_LANDING_BITS, landingXorOutput, toggleLandingBit } from "../lib/landing-xor";
+import styles from "./practice-landing.module.css";
 
 /** The approved Ion visual, with the production authentication form and actual product capabilities. */
 export function PracticeLanding({
@@ -21,8 +26,7 @@ export function PracticeLanding({
   controls?: ReactNode;
   children: ReactNode;
 }) {
-  const [a, setA] = useState(0),
-    [b, setB] = useState(1);
+  const [bits, toggleBit] = useReducer(toggleLandingBit, INITIAL_LANDING_BITS);
   const t = (hebrew: string, english: string) => (he ? hebrew : english);
   const Arrow = he ? ArrowLeft : ArrowRight;
   return (
@@ -65,12 +69,13 @@ export function PracticeLanding({
               <span dir="ltr">C / C++</span>
               <span>{t("חשיבה לוגית", "Problem solving")}</span>
             </div>
+            <LandingCompanyReports he={he} className={styles.companyReports} />
           </div>
-          <div className="ion-art">
+          <div className={`ion-art ${styles.binaryArt}`}>
             <div className="ion-chip-scene">
               <i className="ion-orbit" aria-hidden="true" />
               <i className="ion-orbit two" aria-hidden="true" />
-              <div className="ion-chip">
+              <div className={`ion-chip ${styles.chip}`}>
                 <Image
                   src="/design-worlds/ion-chip.png"
                   alt={t(
@@ -81,34 +86,10 @@ export function PracticeLanding({
                   sizes="(max-width:700px) 310px, 460px"
                   priority
                 />
-                <strong aria-hidden="true">{a ^ b}</strong>
+                <strong aria-hidden="true">{landingXorOutput(bits)}</strong>
               </div>
             </div>
-            <div className="ion-inputs" dir="ltr">
-              <button
-                onClick={() => setA(1 - a)}
-                aria-label={`A: ${a}`}
-                aria-pressed={a === 1}
-              >
-                A <b>{a}</b>
-              </button>
-              <button
-                onClick={() => setB(1 - b)}
-                aria-label={`B: ${b}`}
-                aria-pressed={b === 1}
-              >
-                B <b>{b}</b>
-              </button>
-              <span>
-                Y = <output aria-live="polite">{a ^ b}</output>
-              </span>
-            </div>
-            <p>
-              {t(
-                "שני קלטים. לחצו ושנו את התוצאה.",
-                "Two inputs. Tap to change the output.",
-              )}
-            </p>
+            <LandingXorControls bits={bits} he={he} onToggle={toggleBit} className={styles.binaryControls} />
           </div>
         </section>
         <section className="ion-home-flow" id="how-it-works">
@@ -168,6 +149,7 @@ export function PracticeLanding({
           </div>
           {children}
         </section>
+        <LandingTestimonials he={he} className={styles.testimonials} />
       </main>
       <SignOff lang={he ? "he" : "en"} />
     </div>

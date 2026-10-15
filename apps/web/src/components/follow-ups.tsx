@@ -7,6 +7,7 @@ import { Pop, Reveal } from "./ui/motion";
 import type { Attempt } from "../lib/practice-api";
 import { bandLabel } from "../lib/practice-ui";
 import { BidiText } from "./bidi-text";
+import { DictationControls } from "./dictation-controls";
 
 /**
  * The follow-up conversation of a deep-mode attempt: every follow-up the engine asked so far,
@@ -141,6 +142,14 @@ export function FollowUps({
               dir="auto"
               placeholder={t("התשובה שלכם לשאלת ההמשך…", "Your answer to the follow-up…")}
               aria-label={t("התשובה שלכם לשאלת ההמשך", "Your answer to the follow-up")}
+              maxLength={20000}
+            />
+            <DictationControls
+              key={pending.turn}
+              value={value}
+              onChange={onChange}
+              lang={lang}
+              disabled={disabled || busy || resend || !!pending.question_pending || confirmSkip}
             />
             <div className="row">
               <button
