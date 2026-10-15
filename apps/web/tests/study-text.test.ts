@@ -25,6 +25,14 @@ test("solution labels become sections while fenced source code remains verbatim"
   assert.match(html, /return n &gt; 0 and \(n &amp; \(n - 1\)\) == 0/);
 });
 
+test("mixed technical headings at every level isolate the whole expression", () => {
+  for (let level = 1; level <= 6; level++) {
+    const html = renderToStaticMarkup(createElement(StudyText, { text: `${"#".repeat(level)} בדיקה של A XOR B בשער` }));
+    assert.match(html, /<bdi dir="ltr">A XOR B<\/bdi>/);
+    assert.match(html, new RegExp(`<h${level}>`));
+  }
+});
+
 test("formatting retains the existing protections against author HTML, image requests and unsafe links", () => {
   const html = renderToStaticMarkup(createElement(StudyText, { text: '<script>alert(1)</script>\n\n![image](https://example.com/private.png)\n\n[link](javascript:alert(1))' }));
   assert.doesNotMatch(html, /<script|<img|javascript:|href=/);

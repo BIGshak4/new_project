@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   Amatic_SC,
   Assistant,
@@ -52,6 +52,7 @@ export const metadata: Metadata = {
   description: "סביבת תרגול לראיונות חומרה ותוכנה. פיילוט פרטי.",
   robots: { index: false, follow: false },
 };
+export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover", interactiveWidget: "resizes-content" };
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html

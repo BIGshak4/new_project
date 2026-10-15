@@ -1,6 +1,6 @@
 "use client";
 
-import { Children, useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Download, ExternalLink, RotateCcw } from "lucide-react";
@@ -8,13 +8,7 @@ import type { Lang } from "./auth";
 import type { PracticeApi, QuestionResources, ResourceMedia } from "../lib/practice-api";
 import { visibleQuestionMedia } from "../lib/question-media";
 import { solutionMarkdown } from "../lib/solution-markdown";
-
-/** Isolate Latin expressions from the surrounding RTL prose, without changing their text. */
-function BidiText({ children }: { children?: ReactNode }) {
-  return <>{Children.map(children, child => typeof child !== "string" ? child
-    : child.split(/([A-Za-z0-9][\x20-\x7E\u2190-\u2194\u2212]*[A-Za-z0-9)]|[A-Za-z0-9])/g)
-      .map((part, i) => i % 2 ? <bdi key={i} dir="ltr">{part}</bdi> : part))}</>;
-}
+import { BidiText } from "./bidi-text";
 
 export function StudyText({ text, solution = false }: { text: string; solution?: boolean }) {
   return <div className="study-text" dir="auto"><Markdown remarkPlugins={[remarkGfm]} skipHtml
@@ -23,7 +17,12 @@ export function StudyText({ text, solution = false }: { text: string; solution?:
       li: ({ children }) => <li><BidiText>{children}</BidiText></li>,
       strong: ({ children }) => <strong><BidiText>{children}</BidiText></strong>,
       em: ({ children }) => <em><BidiText>{children}</BidiText></em>,
+      h1: ({ children }) => <h1><BidiText>{children}</BidiText></h1>,
+      h2: ({ children }) => <h2><BidiText>{children}</BidiText></h2>,
       h3: ({ children }) => <h3><BidiText>{children}</BidiText></h3>,
+      h4: ({ children }) => <h4><BidiText>{children}</BidiText></h4>,
+      h5: ({ children }) => <h5><BidiText>{children}</BidiText></h5>,
+      h6: ({ children }) => <h6><BidiText>{children}</BidiText></h6>,
       td: ({ children }) => <td><BidiText>{children}</BidiText></td>,
       th: ({ children }) => <th><BidiText>{children}</BidiText></th>,
       code: ({ children, className }) => <code className={className} dir="ltr">{children}</code>,

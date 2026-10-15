@@ -112,6 +112,21 @@ def build_api(user_id: uuid.UUID, email: str):
         attempt["started_at"] = attempt["started_at"] - timedelta(days=int(body["days"]))
         return {"started_at": attempt["started_at"].isoformat()}
 
+    @app.post("/__harness/finish-today")
+    async def finish_today():
+        """Local QA fixture only: expose work-ahead without inventing graded answers.
+
+        The harness owns one synthetic account and an in-memory store. This route
+        completes today's plan rows, leaving profiles, submissions and XP alone.
+        It is registered only by this stand-alone fixture, never by app.main.
+        """
+        view = await app.state.runtime.practice.program(user_id, language="he")
+        due = [item for item in view.plan.items if item.day_index == 0 and item.status in ("planned", "started")]
+        async with store.transaction() as tx:
+            for item in due:
+                await tx.update_plan_item(uuid.UUID(item.id), status="done")
+        return {"finished": len(due), "program": await app.state.runtime.practice.program(user_id, language="he")}
+
     return app
 
 

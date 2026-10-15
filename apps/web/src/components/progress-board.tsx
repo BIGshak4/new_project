@@ -5,10 +5,10 @@ import type { Lang } from "./auth";
 import type { Goal, Plan, PlanItem, ProgressOverview, TimelinePoint } from "../lib/practice-api";
 import { dayLabel, levelSteps, modeLabel, planByDay } from "../lib/timeline";
 import { RoadChart } from "./road-chart";
+import { BidiText } from "./bidi-text";
 
 /**
- * The progress page is three things and nothing else (Shaked, 2026-09-23): a card that says how far the
- * user has come in words and counts, a graph of the road so far, and the plan from today until the interview.
+ * Overview, history chart and saved plan. The role-readiness card is composed beside these by the page.
  */
 
 export function OverviewCard({
@@ -51,7 +51,7 @@ export function OverviewCard({
           {overview.level}
         </h2>
         <p className="overview-message" dir="auto">
-          {overview.message}
+          <BidiText>{overview.message}</BidiText>
         </p>
         <ol className="level-meter" aria-label={t("סולם הרמות", "Level scale")}>
           {steps.map((step, i) => (
@@ -103,9 +103,9 @@ export function OverviewCard({
       <footer className="overview-goal">
         <Target size={16} aria-hidden="true" />
         <span dir="auto">
-          {goal?.job_type_label
+          <BidiText>{goal?.job_type_label
             ? goal.job_type_label
-            : t("עוד לא בחרתם סוג תפקיד", "No job type chosen yet")}
+            : t("עוד לא בחרתם סוג תפקיד", "No job type chosen yet")}</BidiText>
           {goal?.days_to_interview !== null && goal?.days_to_interview !== undefined && (
             <>
               {" · "}
@@ -266,13 +266,13 @@ export function PlanTable({
                     </span>
                   </td>
                   <td dir="auto" className="plan-skills">
-                    {item.skills.map((s) => s.label).join(", ")}
+                    <BidiText>{item.skills.map((s) => s.label).join(", ")}</BidiText>
                   </td>
                   <td className="plan-minutes">
                     {item.minutes} {t("דק׳", "min")}
                   </td>
                   <td className="plan-reason small" dir="auto">
-                    {item.reason}
+                    <BidiText>{item.reason}</BidiText>
                   </td>
                   {onStart && (
                     <td className="plan-start">

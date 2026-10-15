@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Clock3, Cpu, Lightbulb, Mic, Square } from "lucide-react";
+import { ArrowLeft, ArrowRight, Clock3, Cpu, Lightbulb, MessageSquareText, Square } from "lucide-react";
 import type { Lang } from "./auth";
 import { revealDelay, timerTone } from "../lib/ui";
 import { AnimatePresence, Pop, Reveal, motion, spring, useReducedMotion } from "./ui/motion";
@@ -25,24 +25,31 @@ type Props = {
   lang: Lang;
   userId: string;
   interviewId?: string;
+  /** A saved program item's suggested duration; the user can still choose another supported duration. */
+  initialDuration?: number | null;
   demo: boolean;
   onStarted: (id: string) => void;
   onBack: () => void;
 };
 
 const DURATIONS = [20, 30, 45] as const;
+function plannedDuration(value?: number | null): (typeof DURATIONS)[number] {
+  return value === 20 || value === 30 || value === 45 ? value : 30;
+}
 // Photos in the interview need the storage rule in supabase/migrations/*_interview_answer_images.sql (applied 2026-09-24).
 // Set to false again if that rule is ever rolled back: the bucket would refuse interview paths.
 const INTERVIEW_PHOTOS = true;
 
 /** The mock interview: a lobby to start one, then the timed room, then the report. */
 export function InterviewSession(props: Props) {
-  return props.interviewId ? <InterviewRoom {...props} interviewId={props.interviewId} /> : <InterviewLobby {...props} />;
+  return props.interviewId
+    ? <InterviewRoom {...props} interviewId={props.interviewId} />
+    : <InterviewLobby key={plannedDuration(props.initialDuration)} {...props} />;
 }
 
-function InterviewLobby({ api, lang, demo, onStarted }: Props) {
+function InterviewLobby({ api, lang, demo, onStarted, initialDuration }: Props) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
-  const [duration, setDuration] = useState<(typeof DURATIONS)[number]>(30);
+  const [duration, setDuration] = useState(() => plannedDuration(initialDuration));
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [past, setPast] = useState<InterviewListItem[]>([]);
@@ -96,8 +103,15 @@ function InterviewLobby({ api, lang, demo, onStarted }: Props) {
         </p>
       )}
       <div className="interview-setup">
+        <p className="notice interview-format">
+          <strong>{t("ראיון בכתב", "Written interview")}</strong>{" — "}
+          {t(
+            "מקלידים את התשובות בטקסט או בקוד, ואפשר לצרף שרטוטים ותמונות של הפתרון. אין שיחה קולית ואין צורך במיקרופון.",
+            "Type your answers as text or code, and add diagrams or photos of your work. There is no voice call and no microphone is needed.",
+          )}
+        </p>
         <h3>{t("כמה זמן יש לכם?", "How long do you have?")}</h3>
-        <div className="duration-picker" role="radiogroup">
+        <div className="duration-picker" role="radiogroup" aria-label={t("משך הראיון", "Interview duration")}>
           {DURATIONS.map((d) => (
             <button
               key={d}
@@ -117,7 +131,7 @@ function InterviewLobby({ api, lang, demo, onStarted }: Props) {
         </ul>
         {error && <p className="notice error" role="alert">{error}</p>}
         <button className="primary" disabled={busy} onClick={() => void start()}>
-          <Mic size={16} /> {busy ? t("פותחים את הראיון…", "Opening the interview…") : t("להתחיל ראיון", "Start the interview")}
+          <MessageSquareText size={16} aria-hidden="true" /> {busy ? t("פותחים את הראיון…", "Opening the interview…") : t("להתחיל ראיון בכתב", "Start written interview")}
         </button>
       </div>
       {past.length > 0 && (
@@ -126,7 +140,7 @@ function InterviewLobby({ api, lang, demo, onStarted }: Props) {
           <div className="question-table">
             {past.map((p) => (
               <button className="question-row history-row" key={p.id} onClick={() => onStarted(p.id)}>
-                <Mic size={18} />
+                <MessageSquareText size={18} aria-hidden="true" />
                 <div>
                   <h3>
                     {p.duration_min} {t("דקות", "min")} · {p.turn_count} {t("שאלות", "questions")}
@@ -353,6 +367,12 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
             </div>
           ) : (
             <>
+              <p className="small muted">
+                {t(
+                  "כתבו את התשובה כאן. אפשר להוסיף קוד, שרטוט או תמונה של הפתרון.",
+                  "Write your answer below. You can add code, a diagram, or a photo of your work.",
+                )}
+              </p>
               <AnswerEditor value={answer} onChange={setAnswer} lang={lang} disabled={busy} codeLanguage={null} starterCode={null} />
               <VisualAnswer
                 value={visual}

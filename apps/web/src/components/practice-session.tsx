@@ -1,6 +1,7 @@
 "use client";
 
 import { QuestionMetadata, ReportedCompanies } from "./question-metadata";
+import { BidiText } from "./bidi-text";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -39,6 +40,7 @@ import {
   type QuestionDetail,
   type QuestionSummary,
   type Submission,
+  type StartAttemptRequest,
 } from "../lib/practice-api";
 import {
   apiMessage,
@@ -63,10 +65,12 @@ type Props = {
   entries: Entry[];
   onSaved: (entry: Entry) => void;
   onStarted: (id: string) => void;
-  onNew: (key: string) => void;
+  onNew: (key: string, source?: "retry" | "suggestion") => void;
   onBack: () => void;
   onProgress: () => void;
   demo: boolean;
+  source?: StartAttemptRequest["source"];
+  screen?: string;
 };
 
 export function PracticeSession({
@@ -83,6 +87,8 @@ export function PracticeSession({
   onBack,
   onProgress,
   demo,
+  source = "library",
+  screen = "library",
 }: Props) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [attempt, setAttempt] = useState<Attempt | null>(null),
@@ -331,6 +337,8 @@ export function PracticeSession({
         // deep: the engine may ask one short follow-up after the main answer, then suggests the
         // next bank question; the answer counts as full evidence for the skill profile
         mode: "deep",
+        source,
+        screen,
       });
       const old = readLocal<{ answer?: string }>(
         `jr-draft-${user.id}-${question.id}`,
@@ -434,6 +442,19 @@ export function PracticeSession({
     }
   }
 
+  async function skipFollowUp() {
+    const turn = attempt?.pending_follow_up?.turn;
+    if (!attempt || turn === undefined || demo || guard.current || busy || pending ||
+      recoveryRequired || attempt.status === "evaluating") return;
+    // This is a state change only: a skipped follow-up has no grade, XP, or new skill evidence.
+    // mutate also reloads on a 409 when another tab has already answered or skipped this turn.
+    await mutate(async () => {
+      const next = await api.skipFollowUp(attempt.id, turn);
+      if (live.current) setFollowAnswer("");
+      return next;
+    }, false);
+  }
+
   function download() {
     if (!attempt) return;
     const content = JSON.stringify(
@@ -473,7 +494,7 @@ export function PracticeSession({
       </div>
       {error && (
         <div className="notice error" role="alert">
-          <span>{error}</span>
+          <span><BidiText>{error}</BidiText></span>
           <button
             onClick={
               attempt ? () => void checkSaved() : () => window.location.reload()
@@ -513,7 +534,7 @@ export function PracticeSession({
                     {question.estimated_minutes ?? "—"} {t("דקות", "minutes")}
                   </span>
                 </div>
-                <h1 dir="auto">{question.title}</h1>
+                <h1 dir="auto"><BidiText>{question.title}</BidiText></h1>
                 <QuestionMetadata question={question} lang={lang} showCompanies={false} />
                 {question.assessment_ready === false && <p className="notice study-review-note">
                   {t("שאלה בבדיקה מקצועית. המשוב הוא ראשוני; התרגול נשמר, אך אינו משנה את רמת השליטה או מעניק נקודות עד לאישור התוכן ורמת הקושי.",
@@ -615,7 +636,7 @@ export function PracticeSession({
                   <ol className="choices">
                     {question.choices.map((c, i) => (
                       <li key={i} dir="auto">
-                        {c}
+                        <BidiText>{c}</BidiText>
                       </li>
                     ))}
                   </ol>
@@ -654,7 +675,7 @@ export function PracticeSession({
                 {relatedQuestions.length > 0 && <details className="related-questions">
                   <summary>{t("נוסח נוסף של אותה שאלה", "Another version of this question")}</summary>
                   <p className="small muted">{t("במאגר מופיעה שאלה אחת לכל בעיה זהה. הנוסח הנוסף נשאר זמין, יחד עם השמירות והתרגולים הקודמים שלו.", "The library shows one entry for the same problem. The other version remains available with its saved records and previous attempts.")}</p>
-                  {relatedQuestions.map((q) => <button type="button" className="text-button" key={q.key} onClick={() => onNew(q.key)}>{q.title}{q.preparation_id ? ` · ${q.preparation_id}` : ""}</button>)}
+                  {relatedQuestions.map((q) => <button type="button" className="text-button" key={q.key} onClick={() => onNew(q.key)}><BidiText>{q.title}{q.preparation_id ? ` · ${q.preparation_id}` : ""}</BidiText></button>)}
                 </details>}
                 <PersonalNotes
                   key={question.id}
@@ -833,7 +854,7 @@ export function PracticeSession({
                           <button
                             onClick={() => {
                               removeLocal(key);
-                              onNew(question.key);
+                              onNew(question.key, "retry");
                             }}
                           >
                             {t(
@@ -884,16 +905,19 @@ export function PracticeSession({
                   value={followAnswer}
                   onChange={setFollowAnswer}
                   onSubmit={() => void submit()}
+                  onSkip={() => void skipFollowUp()}
                   disabled={disabled}
                   busy={busy}
                   resend={!!pending && pending.turn !== null}
+                  demo={demo}
+                  skipDisabled={!!pending}
                 />
                 {attempt.status === "done" && attempt.next_question && !demo && (
                   <Reveal delay={0.2}>
                     <NextUpCard
                       next={attempt.next_question}
                       lang={lang}
-                      onStart={(key) => onNew(key)}
+                      onStart={(key) => onNew(key, "suggestion")}
                     />
                   </Reveal>
                 )}
@@ -1125,7 +1149,7 @@ function PersonalNotes({
         </p>
       </details>
       <p className="small" role="status">
-        {message}
+        <BidiText>{message}</BidiText>
       </p>
     </div>
   );
@@ -1204,7 +1228,7 @@ function SawItAt({
       )}
       {message && (
         <p className="small" role="status">
-          {message}
+          <BidiText>{message}</BidiText>
         </p>
       )}
     </div>

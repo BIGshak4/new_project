@@ -26,15 +26,14 @@ MODELS = {"QuestionSummary": "QuestionSummary", "QuestionDetail": "QuestionDetai
           "LabelledSkill": "LabelledSkill", "InterviewReportView": "InterviewReport",
           "CompanyTag": "CompanyTag", "JobTypeView": "JobType", "CompanyView": "Company", "GoalView": "Goal",
           "ProgressOverview": "ProgressOverview", "TimelinePoint": "TimelinePoint", "PlanItemView": "PlanItem",
-          "PlanView": "Plan", "ProgramView": "Program", "ProgramStartView": "ProgramStart"}
+          "PlanView": "Plan", "ProgramView": "Program", "ProgramStartView": "ProgramStart",
+          "ReadinessView": "Readiness", "ReadinessSkillView": "ReadinessSkill",
+          "ReadinessQuestionView": "ReadinessQuestion"}
 # New backend fields the web client has not typed yet: the screen part is Harel's. Once practice-api.ts has the
 # field it is compared like every other one again; then remove the entry.
-PENDING_IN_CLIENT = {"ProgramView": {"ahead"},          # working ahead in the program (Shaked, 2026-10-03)
-                     "FollowUpView": {"skipped"},          # skipping the follow-up (Shaked, 2026-10-03)
-                     "SkillProgress": {"expired"}}         # evidence older than 49 days (Shaked, 2026-10-04)
+PENDING_IN_CLIENT = {"SkillProgress": {"expired"}}         # evidence older than 49 days (Shaked, 2026-10-04)
 # New routes the web client does not call yet, for the same reason; remove once practice-api.ts calls them.
-PENDING_ROUTES_IN_CLIENT = {("POST", "/v1/practice/attempts/{attempt_id}/follow-ups/{turn}/skip"),
-                            ("GET", "/v1/me/readiness")}                   # readiness for the job type (Shaked, 2026-10-05)
+PENDING_ROUTES_IN_CLIENT: set[tuple[str, str]] = set()
 
 
 def ts_fields(source: str, type_name: str) -> set[str]:

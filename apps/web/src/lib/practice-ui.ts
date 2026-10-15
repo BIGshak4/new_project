@@ -145,7 +145,9 @@ export function hasAccepted(a: Attempt, pending: PendingAnswer) {
 export function pendingResolved(a: Attempt, pending: PendingAnswer) {
   return (
     hasAccepted(a, pending) ||
-    allSubmissions(a).some((s) => s.turn === (pending.turn ?? 0))
+    allSubmissions(a).some((s) => s.turn === (pending.turn ?? 0)) ||
+    (pending.turn !== null &&
+      a.follow_ups.some((f) => f.turn === pending.turn && f.skipped === true))
   );
 }
 

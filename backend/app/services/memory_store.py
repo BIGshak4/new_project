@@ -156,7 +156,18 @@ class _MemoryTx:
 
     async def save_goal(self, user_id, goal):
         kept = goal.seniority or self.s.seniority.get(user_id)          # None keeps the stored seniority, as the database does
-        self.s.goals[user_id] = Goal(**{**goal.__dict__, "seniority": kept, "saved_at": datetime.now(UTC)})
+        previous_goal = self.s.goals.get(user_id)
+        previous_plan = self.s.plans.get(user_id)
+        saved_at = datetime.now(UTC)
+        # A coarse local clock may return the same tick for two goal saves. The
+        # program intentionally stamps itself just after the saved goal; a new
+        # save must follow that stamp or a changed role would reuse the old plan.
+        for previous in (previous_goal.saved_at if previous_goal else None,
+                         previous_plan.generated_at if previous_plan else None):
+            if previous is not None:
+                aware = previous if previous.tzinfo else previous.replace(tzinfo=UTC)
+                saved_at = max(saved_at, aware + timedelta(microseconds=1))
+        self.s.goals[user_id] = Goal(**{**goal.__dict__, "seniority": kept, "saved_at": saved_at})
         if goal.seniority:
             self.s.seniority[user_id] = goal.seniority
         return self.s.goals[user_id]

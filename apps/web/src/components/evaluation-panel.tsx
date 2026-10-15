@@ -16,6 +16,7 @@ import { bandLabel, subjectLabel } from "../lib/practice-ui";
 import { bandFraction, whyLabel } from "../lib/charts";
 import { GRADE_SEQUENCE as G } from "../lib/ui";
 import { Pop, Reveal, motion, useReducedMotion } from "./ui/motion";
+import { BidiText } from "./bidi-text";
 
 /**
  * The evaluation a candidate sees after a real assessment: band ring, summary, automatic
@@ -127,7 +128,7 @@ export function EvaluationPanel({
           </div>
           {s.summary && (
             <p className="evaluation-summary" dir="auto">
-              {s.summary}
+              <BidiText>{s.summary}</BidiText>
             </p>
           )}
         </div>
@@ -142,7 +143,7 @@ export function EvaluationPanel({
             <ul>
               {s.key_points_hit.map((p, i) => (
                 <li dir="auto" key={i}>
-                  {p}
+                  <BidiText>{p}</BidiText>
                 </li>
               ))}
             </ul>
@@ -158,7 +159,7 @@ export function EvaluationPanel({
             <ul>
               {missed.map((p, i) => (
                 <li dir="auto" key={i}>
-                  {p}
+                  <BidiText>{p}</BidiText>
                 </li>
               ))}
             </ul>
@@ -178,8 +179,8 @@ export function EvaluationPanel({
           <Lightbulb size={18} aria-hidden="true" />
           <div>
             <h4>{t("טיפ לפעם הבאה", "A tip for next time")}</h4>
-            {s.tip && <p>{s.tip.text}</p>}
-            {s.card?.next_step && s.card.next_step !== s.tip?.text && <p>{s.card.next_step}</p>}
+            {s.tip && <p><BidiText>{s.tip.text}</BidiText></p>}
+            {s.card?.next_step && s.card.next_step !== s.tip?.text && <p><BidiText>{s.card.next_step}</BidiText></p>}
           </div>
         </Reveal>
       )}
@@ -220,7 +221,7 @@ export function EvaluationPanel({
           </span>
           {s.assessed_by === "model" && s.model && (
             <span className="chip chip-quiet" title={s.model}>
-              {t("נבדק על ידי", "Judged by")} {modelName(s.model)}
+              {t("נבדק על ידי", "Judged by")} <bdi dir="ltr">{modelName(s.model)}</bdi>
             </span>
           )}
         </div>
@@ -232,7 +233,7 @@ export function EvaluationPanel({
               .map(([label, value]) => (
                 <section className="evaluation-tile" key={label}>
                   <h4>{label}</h4>
-                  <p dir="auto">{value}</p>
+                  <p dir="auto"><BidiText>{value}</BidiText></p>
                 </section>
               ))}
           </div>
@@ -267,19 +268,19 @@ export function NextUpCard({
       </div>
       {next.focus && (
         <p className="next-up-focus" dir="auto">
-          <strong>{t("מה היה קשה כאן:", "What was hard here:")}</strong> {next.focus}
+          <strong>{t("מה היה קשה כאן:", "What was hard here:")}</strong> <BidiText>{next.focus}</BidiText>
         </p>
       )}
-      <h4 dir="auto">{next.title}</h4>
+      <h4 dir="auto"><BidiText>{next.title}</BidiText></h4>
       <p className="small muted">
-        {subjectLabel(next.subject, lang)} · {t("רמת קושי", "Difficulty")} {next.difficulty}
+        <BidiText>{subjectLabel(next.subject, lang)}</BidiText> · {t("רמת קושי", "Difficulty")} {next.difficulty}
         <span className="difficulty-dots" aria-hidden="true">
           {Array.from({ length: 5 }, (_, i) => (
             <i key={i} className={i < Math.min(5, next.difficulty) ? "on" : ""} />
           ))}
         </span>
       </p>
-      <p dir="auto">{next.reason}</p>
+      <p dir="auto"><BidiText>{next.reason}</BidiText></p>
       <button type="button" onClick={() => onStart(next.key)}>
         {t("להתחיל את השאלה הבאה", "Start the next question")} <Arrow size={16} />
       </button>
@@ -308,7 +309,7 @@ function CheckBlock({ check, lang }: { check: CheckResult; lang: Lang }) {
             ? t("טבלת האמת של התשובה", "Truth table of your answer")
             : t("בדיקה אוטומטית", "Automatic check")}
       </strong>
-      <p dir="auto">{check.detail}</p>
+      <p dir="auto"><BidiText>{check.detail}</BidiText></p>
       {rows.length > 0 && (
         <table className="mismatch-table">
           <thead>
@@ -321,10 +322,10 @@ function CheckBlock({ check, lang }: { check: CheckResult; lang: Lang }) {
           <tbody>
             {rows.slice(0, 8).map((row, i) => (
               <tr key={i}>
-                <td>{formatInputs(row.inputs)}</td>
-                <td>{formatValue(row.expected)}</td>
-                <td className={"error" in row ? "error" : ""}>
-                  {"error" in row ? String(row.error) : formatValue(row.got)}
+                <td dir="ltr"><BidiText>{formatInputs(row.inputs)}</BidiText></td>
+                <td dir="ltr"><BidiText>{formatValue(row.expected)}</BidiText></td>
+                <td dir="ltr" className={"error" in row ? "error" : ""}>
+                  <BidiText>{"error" in row ? String(row.error) : formatValue(row.got)}</BidiText>
                 </td>
               </tr>
             ))}

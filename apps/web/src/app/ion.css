@@ -877,6 +877,59 @@ button.primary:active {
     animation: none;
   }
 }
+/* Goal-based readiness keeps the same document hierarchy as the progress board. */
+.readiness-card { min-width: 0; padding: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.readiness-card h3 { margin-block: 24px 8px; }
+.readiness-word { font-size: clamp(24px, 3vw, 34px); font-weight: 900; margin-block: 16px 8px; color: var(--link); }
+.readiness-message { max-width: 72ch; margin-block: 12px 20px; }
+.readiness-next ol, .readiness-skills { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 12px; }
+.readiness-question { width: 100%; text-align: start; display: flex; justify-content: space-between; gap: 20px; padding: 16px; white-space: normal; }
+.readiness-question-copy { min-width: 0; display: grid; gap: 6px; overflow-wrap: anywhere; }
+.readiness-question-copy > span, .readiness-question-copy small { font-size: 14px; font-weight: 400; color: var(--muted); }
+.readiness-question-action { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.readiness-breakdown { border-block-start: 1px solid var(--line); margin-block-start: 24px; }
+.readiness-skill { border-block-end: 1px solid var(--line); padding-block: 14px; min-width: 0; }
+.readiness-skill:last-child { border: 0; }
+.readiness-skill-head { display: flex; justify-content: space-between; gap: 8px 20px; flex-wrap: wrap; }
+.readiness-skill-head strong { min-width: 0; overflow-wrap: anywhere; }
+.readiness-levels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-block: 12px 0; font-size: 14px; }
+.readiness-levels dt { color: var(--muted); }
+.readiness-levels dd { margin: 4px 0 0; }
+.readiness-unavailable { margin-block-end: 0; }
+.readiness-more summary { cursor: pointer; padding-block: 14px; color: var(--link); font-weight: 700; }
+.work-ahead { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 24px; border-block-start: 1px solid var(--line); }
+.work-ahead-copy { min-width: 0; overflow-wrap: anywhere; }
+.work-ahead-copy h3 { margin-block: 0 8px; }
+.work-ahead-copy p { margin-block: 6px; }
+.company-more { white-space: nowrap; font-weight: 600; color: var(--muted); }
+.question-metadata.is-compact { font-size: 14px; gap: 4px; }
+.question-metadata.is-compact .question-companies { font-size: 14px; }
+.study-text bdi { unicode-bidi: isolate; }
+.study-text code, .study-text pre { unicode-bidi: isolate; }
+.interview-bar { top: 84px; }
+@media (max-width: 780px) {
+  /* Match Ion's shell breakpoint, including the 761–780px interval. */
+  .tabbar { position: fixed; inset: auto 0 0; z-index: 50; }
+  .tabbar .tab { display: flex; flex-direction: column; justify-content: center; }
+  .content { padding-bottom: calc(var(--tabbar-height) + 24px + env(safe-area-inset-bottom, 0px)); }
+  .topnav { padding-inline: max(5%, env(safe-area-inset-left)) max(5%, env(safe-area-inset-right)); }
+  .interview-bar { top: 73px; flex-wrap: wrap; }
+  input, textarea, select, .code-select, .report-popover textarea { font-size: 16px; }
+  .readiness-card { padding: 20px 18px; }
+  .readiness-question { flex-wrap: wrap; gap: 12px; }
+  .readiness-question-action { margin-inline-start: auto; }
+  .work-ahead { align-items: stretch; flex-direction: column; }
+  .work-ahead > button { width: 100%; }
+}
+@media (max-width: 600px) {
+  .readiness-levels { grid-template-columns: 1fr; gap: 8px; }
+  .readiness-levels > div { display: flex; justify-content: space-between; gap: 16px; }
+  .readiness-levels dd { margin: 0; text-align: end; }
+}
+@media (hover: none) {
+  button:active:not(:disabled), a:active { opacity: .8; }
+  button:hover:not(:active):not(.primary):not(.active) { background-color: var(--surface); }
+}
 /* Explicit destinations stay clear of the fixed header when opened by mouse or keyboard. */
 #goal-title,
 #reference-solution {

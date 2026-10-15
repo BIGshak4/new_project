@@ -203,3 +203,48 @@ test("retry chooses the newest saved revision, including a failed follow-up", ()
   assert.equal(ui.latestSubmission(a)?.revision, 3);
   assert.equal(ui.latestSubmission(a)?.status, "failed");
 });
+
+test("skipping a follow-up targets its turn without submitting an answer or retry identity", async () => {
+  signedIn();
+  const calls = capture(Response.json({ id: "a", status: "done", pending_follow_up: null }));
+  const result = await client.practiceApi("https://api.example").skipFollowUp("a", 2);
+  assert.equal(result.status, "done");
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].url, "https://api.example/v1/practice/attempts/a/follow-ups/2/skip");
+  assert.equal(calls[0].init.method, "POST");
+  assert.equal(calls[0].init.body, undefined);
+  assert.equal((calls[0].init.headers as Record<string, string>).Authorization, "Bearer test-access");
+  assert.equal((calls[0].init.headers as Record<string, string>)["Idempotency-Key"], undefined);
+});
+
+test("a follow-up changed in another tab preserves the stable conflict needed for recovery", async () => {
+  signedIn();
+  capture(Response.json({ error: { code: "no_pending_follow_up", message: "already resolved" } }, { status: 409 }));
+  await assert.rejects(client.practiceApi("https://api.example").skipFollowUp("a", 1), (e: unknown) =>
+    e instanceof client.PracticeApiError && e.status === 409 && e.code === "no_pending_follow_up");
+});
+
+test("recovery stops replaying a stale answer only when that exact follow-up was skipped", () => {
+  const a = { ...attempt({ turn: 0, key: "main" }), follow_ups: [{ turn: 2, skipped: true, submission: null }] } as Attempt;
+  const pending = { key: "lost-answer", turn: 2, text: "draft" };
+  assert.equal(ui.pendingResolved(a, pending), true);
+  assert.equal(ui.pendingResolved(a, { ...pending, turn: 1 }), false);
+  assert.equal(ui.allSubmissions(a).length, 1);
+});
+
+test("readiness sends the requested language and preserves its display gate", async () => {
+  signedIn();
+  const calls = capture(Response.json({ ready_to_judge: false, readiness_word: null, next_questions: [] }));
+  const result = await client.practiceApi("https://api.example").readiness("he");
+  assert.equal(calls[0].url, "https://api.example/v1/me/readiness?language=he");
+  assert.equal(calls[0].init.method, "GET");
+  assert.equal(result.ready_to_judge, false);
+  assert.equal(result.readiness_word, null);
+});
+
+test("starting a recommendation sends its source without altering question or language", async () => {
+  signedIn();
+  const calls = capture(Response.json({}));
+  await client.practiceApi("https://api.example").startAttempt({ question_key: "q", language: "he", mode: "deep", source: "readiness", screen: "progress" });
+  assert.deepEqual(JSON.parse(calls[0].init.body as string), { question_key: "q", language: "he", mode: "deep", source: "readiness", screen: "progress" });
+});

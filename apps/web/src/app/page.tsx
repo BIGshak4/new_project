@@ -9,7 +9,7 @@ import {
   Bookmark,
   LogOut,
   RotateCcw,
-  Mic,
+  MessageSquareText,
   Briefcase,
   Building2,
   Flame,
@@ -32,6 +32,7 @@ import { SignOff } from "../components/sign-off";
 import { LearnHome } from "../components/learn-home";
 import { OverviewCard, PlanTable, ProgressGraph } from "../components/progress-board";
 import { SkillStrength } from "../components/skill-strength";
+import { ReadinessCard } from "../components/readiness-card";
 import { InterviewSession } from "../components/interview-session";
 import { supabase } from "../lib/supabase";
 import {
@@ -50,7 +51,7 @@ import {
   type Entry,
 } from "../lib/practice-ui";
 
-type Route = { view: string; question?: string; attempt?: string; interview?: string };
+type Route = { view: string; question?: string; attempt?: string; interview?: string; source?: "retry" | "suggestion"; duration?: number };
 const DEFAULT_VIEW = "learn";
 /** the library tab owns three sub-views; old links to them keep working */
 const LIBRARY_VIEWS = new Set(["library", "bookmarks", "history"]);
@@ -68,6 +69,8 @@ function currentRoute(): Route {
     question: q.get("question") ?? undefined,
     attempt: q.get("attempt") ?? undefined,
     interview: q.get("interview") ?? undefined,
+    source: q.get("source") === "retry" ? "retry" : q.get("source") === "suggestion" ? "suggestion" : undefined,
+    duration: [20, 30, 45].includes(Number(q.get("duration"))) ? Number(q.get("duration")) : undefined,
   };
 }
 
@@ -164,6 +167,8 @@ function Workspace({
     if (next.attempt) q.set("attempt", next.attempt);
     else if (next.question) q.set("question", next.question);
     if (next.interview) q.set("interview", next.interview);
+    if (next.duration) q.set("duration", String(next.duration));
+    if (next.question && next.source) q.set("source", next.source);
     window.history[replace ? "replaceState" : "pushState"](
       {},
       "",
@@ -379,7 +384,7 @@ function Workspace({
   const tabs = [
     { id: "learn", icon: MapIcon, label: t("היום", "Today") },
     { id: "library", icon: BookOpen, label: t("מאגר", "Library") },
-    { id: "interview", icon: Mic, label: t("ראיון מדומה", "Mock interview") },
+    { id: "interview", icon: MessageSquareText, label: t("ראיון מדומה", "Mock interview") },
     { id: "progress", icon: BarChart3, label: t("התקדמות", "Progress") },
   ];
   const goTab = (id: string) => {
@@ -399,7 +404,7 @@ function Workspace({
       </button>
     ));
   const reducedMotion = useReducedMotion();
-  const refreshKey = `${progress.attempts_today}-${goal?.job_type ?? ""}-${goal?.minutes_per_day ?? ""}-${goal?.interview_date ?? ""}-${overview?.xp_total ?? 0}`;
+  const refreshKey = `${progress.attempts_today}-${goal?.job_type ?? ""}-${goal?.seniority ?? ""}-${goal?.minutes_per_day ?? ""}-${goal?.interview_date ?? ""}-${overview?.xp_total ?? 0}`;
 
   return (
     <div className="app-shell">
@@ -478,6 +483,7 @@ function Workspace({
             lang={lang}
             userId={user.id}
             interviewId={route.interview}
+            initialDuration={route.duration}
             demo={demo}
             onStarted={(id) => {
               navigate({ view: "interview", interview: id }, true);
@@ -502,13 +508,15 @@ function Workspace({
             onStarted={(id) =>
               navigate({ view: route.view, attempt: id }, true)
             }
-            onNew={(key) => navigate({ view: route.view, question: key })}
+            onNew={(key, source) => navigate({ view: route.view, question: key, source })}
             onBack={() => {
               navigate({ view: route.view });
               refreshProgress();
             }}
             onProgress={refreshProgress}
             demo={demo}
+            screen={route.view}
+            source={route.source ?? "library"}
           />
         ) : route.view === "learn" ? (
           <>
@@ -545,7 +553,7 @@ function Workspace({
                 navigate({ view: "learn", attempt: id });
                 refreshProgress();
               }}
-              onStartInterview={() => navigate({ view: "interview" })}
+              onStartInterview={(duration) => navigate({ view: "interview", duration: duration ?? undefined })}
               onOpenGoal={openGoal}
               onOpenProgress={() => goTab("progress")}
               onOpenLibrary={() => goTab("library")}
@@ -689,6 +697,8 @@ function Workspace({
                     onSkip={editingGoal ? () => setEditingGoal(false) : undefined}
                   />
                 )}
+                {!demo && <ReadinessCard api={api} lang={lang} refreshKey={refreshKey} onEditGoal={openGoal}
+                  onStartAttempt={(id) => { navigate({ view: "progress", attempt: id }); refreshProgress(); }} />}
                 {!demo && progress.overview?.answered !== 0 && (
                   <div className="progress-pair">
                     <ProgressGraph timeline={progress.timeline ?? []} lang={lang} />
@@ -726,7 +736,7 @@ function Workspace({
                           {questions.find((q) => q.key === a.question_key)
                             ?.title ?? a.question_key}
                         </h3>
-                        {questionsByKey.has(a.question_key) && <QuestionMetadata question={questionsByKey.get(a.question_key)!} lang={lang} />}
+                        {questionsByKey.has(a.question_key) && <QuestionMetadata question={questionsByKey.get(a.question_key)!} lang={lang} compact />}
                         <span className="topic">
                           {date(a.started_at)} ·{" "}
                           {a.language === "he"
@@ -775,7 +785,7 @@ function Workspace({
                           <BookOpen size={17} />
                           <div>
                             <h3>{q.title}</h3>
-                            <QuestionMetadata question={q} lang={lang} />
+                            <QuestionMetadata question={q} lang={lang} compact />
                             <span className="topic">
                               {t(
                                 "הדיווח העצמי נשמר · ללא הערכה אוטומטית",
@@ -873,7 +883,7 @@ function Workspace({
                             <span className="badge trial">{q.assessment_ready === false ? t("לבדיקה מקצועית", "Review pending") : t("בבדיקה חיה", "On trial")}</span>
                           )}
                         </h3>
-                        <QuestionMetadata question={q} lang={lang} />
+                        <QuestionMetadata question={q} lang={lang} compact />
                         {entries.some(e => e.question_id === q.id && e.bookmarked) && <span className="small muted">{t("שמורה", "Saved")}</span>}
                       </div>
                       <span className="q-category small muted">

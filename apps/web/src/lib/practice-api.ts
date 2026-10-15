@@ -182,6 +182,8 @@ export type FollowUp = {
   submission: Submission | null;
   /** decided, but its words are still being written; answering it is refused until they arrive */
   question_pending?: boolean;
+  /** The user moved on without answering; it earns no grade or XP. */
+  skipped?: boolean;
 };
 
 export type AttemptStatus = "in_progress" | "evaluating" | "done" | "failed";
@@ -312,9 +314,50 @@ export type Program = {
   plan: Plan;
   today: PlanItem[];
   next: PlanItem | null;
+  /** The next later-day item, available only after today's plan is complete. */
+  ahead?: PlanItem | null;
   done_today: number;
   minutes_due_today: number;
   goal_complete: boolean;
+};
+
+export type ReadinessSkill = {
+  key: string;
+  label: string;
+  subject: string;
+  weight_share: number;
+  required_level: number;
+  level: number | null;
+  status: string;
+  gap: number | null;
+  freshness: "fresh" | "aging" | "expired" | "none" | string;
+  askable: boolean;
+};
+
+export type ReadinessQuestion = {
+  key: string;
+  title: string;
+  skill: string;
+  skill_label: string;
+  difficulty: number;
+  why: string;
+  reason: string;
+};
+
+export type Readiness = {
+  job_type: string | null;
+  job_type_label: string | null;
+  skills: ReadinessSkill[];
+  coverage: number;
+  ready_to_judge: boolean;
+  readiness_word: string | null;
+  /** For reports only: the user-facing card shows readiness_word, never this score. */
+  readiness_score: number | null;
+  skills_meeting_requirement: number;
+  skills_with_gap: number;
+  skills_without_evidence: number;
+  next_questions: ReadinessQuestion[];
+  message: string;
 };
 
 export type ProgramStart = {
@@ -493,6 +536,8 @@ export type StartAttemptRequest = {
   mode?: "quick" | "deep";
   language?: ApiLang;
   self_confidence?: 1 | 2 | 3 | 4 | 5;
+  source?: "plan" | "suggestion" | "readiness" | "library" | "search" | "retry" | "other";
+  screen?: string;
 };
 
 export type SubmitRequest = {
@@ -617,6 +662,8 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
     me: () => call<Me>("GET", "/v1/me"),
     progress: (language?: ApiLang) =>
       call<Progress>("GET", `/v1/me/progress${q({ language })}`),
+    readiness: (language?: ApiLang) =>
+      call<Readiness>("GET", `/v1/me/readiness${q({ language })}`),
     getGoal: (language?: ApiLang) =>
       call<Goal>("GET", `/v1/me/goal${q({ language })}`),
     saveGoal: (body: GoalRequest) => call<Goal>("POST", "/v1/me/goal", body),
@@ -738,6 +785,9 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
         },
         { "Idempotency-Key": idempotencyKey },
       ),
+    /** End the pending follow-up without submitting an answer or earning XP. */
+    skipFollowUp: (attemptId: string, turn: number) =>
+      call<Attempt>("POST", `/v1/practice/attempts/${attemptId}/follow-ups/${turn}/skip`),
     /** After a submission with status "failed": evaluate the saved answer again. */
     retry: (attemptId: string, revision: number) =>
       call<SubmissionResponse>(

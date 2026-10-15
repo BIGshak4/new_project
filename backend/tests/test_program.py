@@ -776,6 +776,35 @@ class TestReadinessForTheJobType:
 
 
 class TestChangingTheJobType:
+    async def test_two_goal_saves_in_one_clock_tick_rebuild_once_and_keep_completed_work(self, catalog, monkeypatch):
+        """A local clock tick cannot hide a new role behind the plan's goal+1us stamp."""
+        tick = datetime.now(UTC) + timedelta(seconds=5)
+
+        class FixedClock(datetime):
+            @classmethod
+            def now(cls, tz=None):
+                return tick.astimezone(tz) if tz is not None else tick.replace(tzinfo=None)
+
+        monkeypatch.setattr("app.services.memory_store.datetime", FixedClock)
+        svc, store = practice(catalog)
+        await with_goal(svc)
+        first = await svc.program(USER, language="en")
+        first_id = store.plans[USER].id
+        generated = store.plans[USER].generated_at
+        done = await finish_day(svc, store)
+        assert done >= 1
+        await svc.save_goal(USER, job_type="software", interview_date=TODAY + timedelta(days=10), minutes_per_day=30,
+                            seniority="student")
+        assert store.goals[USER].saved_at > generated
+        second = await svc.program(USER, language="en")
+        rebuilt = store.plans[USER]
+        assert rebuilt.id != first_id and rebuilt.generated_at > generated
+        assert second.plan.generated_for == first.plan.generated_for == TODAY.isoformat()
+        assert second.done_today == done
+        again = await svc.program(USER, language="en")
+        assert store.plans[USER].id == rebuilt.id and store.plans[USER].generated_at == rebuilt.generated_at
+        assert again.done_today == done
+
     async def test_a_new_job_type_rebuilds_the_plan_at_once_and_keeps_what_was_done(self, catalog):
         """Shaked, 2026-10-05: not the next morning."""
         svc, store = practice(catalog)

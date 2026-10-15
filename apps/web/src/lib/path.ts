@@ -30,7 +30,7 @@ export function zigzagOffset(index: number): number {
 
 /**
  * The state of one plan item on the path. Only the program's own "start now" item (`nextId`) is current: when the
- * program names none (today is done), tomorrow's first item stays locked, because the server would refuse to start it.
+ * program names none (today is done), future items stay outside today's path. Working ahead is an explicit action.
  */
 export function nodeState(item: PlanItem, nextId: string | null | undefined): NodeState {
   if (item.done || item.status === "done") return "done";
@@ -91,6 +91,14 @@ export function todayProgress(program: Program | null): { done: number; total: n
   const done = program.done_today ?? 0;
   const total = done + program.today.length;
   return { done, total, fraction: total ? Math.min(1, done / total) : 0 };
+}
+
+/** A future item may be offered only after the server says today has no work left. Never infer one from the plan. */
+export function eligibleAhead(program: Program | null): PlanItem | null {
+  if (!program?.goal_complete || program.next || program.today.length > 0) return null;
+  const item = program.ahead;
+  if (!item?.id || item.day_index <= 0 || item.done || item.status === "done" || item.status === "skipped") return null;
+  return item.status === "planned" || item.status === "started" ? item : null;
 }
 
 export type StrengthTone = "green" | "yellow" | "blue" | "grey";

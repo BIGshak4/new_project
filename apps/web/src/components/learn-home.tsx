@@ -1,16 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Clock3, Mic, Play, RefreshCw, Target } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Clock3, MessageSquareText, Play, RefreshCw, Target } from "lucide-react";
 import type { Lang } from "./auth";
 import { SkillStrength, StreakCard } from "./skill-strength";
 import { SubjectSketch, sketchCaption } from "./sketches";
-import type { Goal, PracticeApi, Program, Progress } from "../lib/practice-api";
+import type { Goal, PlanItem, PracticeApi, Program, Progress } from "../lib/practice-api";
 import { apiMessage } from "../lib/practice-ui";
 import { dayLabel, modeLabel } from "../lib/timeline";
-import { daysToGoLabel, pathNodes, todayProgress, type PathNode } from "../lib/path";
+import { daysToGoLabel, eligibleAhead, pathNodes, todayProgress, type PathNode } from "../lib/path";
 import { revealDelay, shouldScrollToNode } from "../lib/ui";
 import { Breathe, Pop, motion, spring, useReducedMotion } from "./ui/motion";
+import { BidiText } from "./bidi-text";
 
 /** The real adaptive program, displayed in the approved Ion shell. */
 export function LearnHome({
@@ -48,23 +49,34 @@ export function LearnHome({
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState<string | null>(null);
   const [message, setMessage] = useState("");
+  const [loadError, setLoadError] = useState("");
+  const loadVersion = useRef(0);
+  const starting = useRef(false);
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    mounted.current = true;
+    return () => { mounted.current = false; };
+  }, []);
 
   const load = useCallback(() => {
-    let cancelled = false;
+    const version = ++loadVersion.current;
     setLoading(true);
+    setLoadError("");
     api
       .program(lang)
       .then((p) => {
-        if (!cancelled) setProgram(p);
+        if (mounted.current && loadVersion.current === version) setProgram(p);
       })
       .catch((e) => {
-        if (!cancelled) setMessage(apiMessage(e, lang));
+        if (mounted.current && loadVersion.current === version) setLoadError(apiMessage(e, lang));
       })
       .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (mounted.current && loadVersion.current === version) setLoading(false);
       });
     return () => {
-      cancelled = true;
+      // Invalidate manual reloads as well as this effect's original request.
+      ++loadVersion.current;
     };
   }, [api, lang]);
   useEffect(() => load(), [load, refreshKey]);
@@ -84,11 +96,15 @@ export function LearnHome({
 
   async function start(node: PathNode | null) {
     const id = node?.item.id ?? undefined;
-    if (busy) return;
+    if (!mounted.current || starting.current || loading || loadError) return;
+    starting.current = true;
     setBusy(id ?? "next");
     setMessage("");
+    const versionAtStart = loadVersion.current;
+    const isCurrent = () => mounted.current && loadVersion.current === versionAtStart;
     try {
       const result = await api.startProgram(id, lang);
+      if (!isCurrent()) return;
       if (result.kind === "attempt" && result.attempt) onStartAttempt(result.attempt.id);
       else if (result.kind === "interview") onStartInterview(result.interview_duration_min);
       else {
@@ -96,9 +112,10 @@ export function LearnHome({
         load();
       }
     } catch (e) {
-      setMessage(apiMessage(e, lang));
+      if (isCurrent()) setMessage(apiMessage(e, lang));
     } finally {
-      setBusy(null);
+      starting.current = false;
+      if (mounted.current) setBusy(null);
     }
   }
 
@@ -108,6 +125,8 @@ export function LearnHome({
   const todayNodes = nodes.filter((n) => n.dayIndex === 0);
   const laterNodes = nodes.filter((n) => n.dayIndex > 0);
   const current = todayNodes.find((n) => n.state === "current") ?? null;
+  const aheadItem = eligibleAhead(program);
+  const ahead = aheadItem ? pathNodes([aheadItem], aheadItem.id)[0] ?? null : null;
   const today = todayProgress(program);
   const overview = progress.overview ?? null;
   const firstPractice = !overview || overview.answered === 0;
@@ -150,12 +169,12 @@ export function LearnHome({
   // one sentence of attitude per mode
   const modeLine =
     current?.kind === "interview"
-      ? t(`ראיון של ${current.item.minutes} דקות. הציונים נחשפים בסוף, בדוח.`, `A ${current.item.minutes}-minute interview. Grades are revealed at the end, in the report.`)
+      ? t(`ראיון של ${current.item.minutes} דקות עם תשובות בכתב וכלים חזותיים. הציונים נחשפים בסוף, בדוח.`, `A ${current.item.minutes}-minute interview with written answers and visual tools. Grades are revealed at the end, in the report.`)
       : current?.item.mode === "quick"
         ? t("שאלה קצרה. משוב ושאלת המשך שנולדת מהתשובה שלכם. אין פה טריק, יש פה דיוק.", "A short question. Feedback and a follow-up born from your answer. No trick here, just precision.")
         : t("תרגול מעמיק: התשובה, שאלת המשך, ואז השאלה הבאה שנבחרת לפי מה שכתבתם.", "Deep practice: your answer, one follow-up, then the next question chosen by what you wrote.");
 
-  const tomorrow = laterNodes.find((n) => n.dayIndex === 1) ?? laterNodes[0] ?? null;
+  const tomorrow = laterNodes.find((n) => n.state !== "done" && n.state !== "skipped") ?? null;
 
   return (
     <div className="learn">
@@ -165,12 +184,12 @@ export function LearnHome({
             <h1 dir="auto">
               {daysLabel && goalComplete ? `${daysLabel}. ` : ""}
               {title}
-              {topic && current?.kind !== "interview" && <span className="mark"><bdi dir="auto">{topic}</bdi>.</span>}
+              {topic && current?.kind !== "interview" && <span className="mark"><bdi dir="auto"><BidiText>{topic}</BidiText></bdi>.</span>}
             </h1>
             <div className="learn-context" dir="auto">
-              {[userName, goal?.job_type_label ?? t("סוג התפקיד לא נבחר עדיין", "No job type chosen yet"), interviewDate ? `${t("ראיון ב", "interview on")}${lang === "he" ? "־" : " "}${interviewDate}` : null]
+              <BidiText>{[userName, goal?.job_type_label ?? t("סוג התפקיד לא נבחר עדיין", "No job type chosen yet"), interviewDate ? `${t("ראיון ב", "interview on")}${lang === "he" ? "־" : " "}${interviewDate}` : null]
                 .filter(Boolean)
-                .join(" · ")}
+                .join(" · ")}</BidiText>
             </div>
           </div>
           {goalComplete && (
@@ -186,10 +205,12 @@ export function LearnHome({
 
         {goalSlot}
 
-        {loading && !program ? (
+        {loading ? (
           <p className="loading loading-sheet" role="status">
             {t("טוענים את התוכנית…", "Loading your program…")}
           </p>
+        ) : loadError ? (
+          <section className="sheet path-empty"><p role="alert">{loadError}</p><button type="button" onClick={() => { load(); }}>{t("לטעון שוב את התוכנית", "Reload the program")}</button></section>
         ) : !goalComplete && !goalSlot ? (
           <section className="sheet path-empty">
             <Target size={28} aria-hidden="true" />
@@ -203,7 +224,7 @@ export function LearnHome({
               {t("להגדיר את היעד", "Set my goal")}
             </button>
           </section>
-        ) : !goalComplete ? null : nodes.length === 0 ? (
+        ) : !goalComplete ? null : nodes.length === 0 && !ahead ? (
           <section className="sheet path-empty">
             <h2>{t("עוד אין תוכנית לצייר.", "Nothing to draw yet.")}</h2>
             <p>
@@ -222,18 +243,18 @@ export function LearnHome({
               {current ? (
                 <>
                   <h2 className="sheet-title" dir="auto">
-                    {current.kind === "interview"
+                    <BidiText>{current.kind === "interview"
                       ? t(`ראיון מדומה, ${current.item.minutes} דקות, על ${currentSkills}.`, `A ${current.item.minutes}-minute mock interview on ${currentSkills}.`)
-                      : `${modeLabel(current.item.mode, lang)} ${t("על", "on")} ${currentSkills}.`}
+                      : `${modeLabel(current.item.mode, lang)} ${t("על", "on")} ${currentSkills}.`}</BidiText>
                   </h2>
                   <div className="sheet-row">
                     <span className="tag">
                       {t("עכשיו", "Now")} · {today.done + 1}/{today.total} · {current.item.minutes} {t("דק׳", "min")}
                     </span>
-                    <span className="sheet-skill" dir="auto">{currentSkills}</span>
+                    <span className="sheet-skill" dir="auto"><BidiText>{currentSkills}</BidiText></span>
                   </div>
                   <p className="sheet-why" dir="auto">
-                    {current.item.reason} {modeLine}
+                    <BidiText>{current.item.reason}</BidiText>{" "}<BidiText>{modeLine}</BidiText>
                   </p>
                   <div className="sheet-actions">
                     <button type="button" className="primary" disabled={!!busy} onClick={() => void start(current)}>
@@ -259,8 +280,10 @@ export function LearnHome({
                 <>
                   <h2 className="sheet-title">{today.total > 0 ? t("להיום סיימתם. כל הכבוד.", "Done for today. Well done.") : t("אין פריט מתוכנן להיום.", "Nothing planned for today.")}</h2>
                   <p className="sheet-why">
-                    {today.total > 0
-                      ? t("מחר מחכה הפריט הבא. בינתיים המאגר פתוח.", "Tomorrow’s item is waiting. The library is open meanwhile.")
+                    {ahead
+                      ? t("אפשר לעצור כאן, או לבחור להתחיל את הפריט הבא מראש. היעד היומי שלכם לא משתנה.", "You can stop here, or choose to start the next item early. Your daily target stays the same.")
+                      : today.total > 0
+                      ? t("אין כרגע פריט נוסף זמין בתוכנית. אפשר לנוח או לבחור שאלה מהמאגר.", "There is no further item available in the program right now. Rest or choose a question from the library.")
                       : t("אפשר לבחור שאלה מהמאגר.", "Pick a question from the library.")}
                   </p>
                   <div className="sheet-actions">
@@ -268,6 +291,7 @@ export function LearnHome({
                       {t("למאגר השאלות", "To the library")}
                     </button>
                   </div>
+                  {ahead && <WorkAheadCard item={ahead.item} lang={lang} busy={!!busy} starting={busy === ahead.item.id} onStart={() => void start(ahead)} />}
                 </>
               )}
 
@@ -292,7 +316,7 @@ export function LearnHome({
                               disabled={!!busy}
                               aria-label={`${t("להתחיל", "Start")}: ${modeLabel(node.item.mode, lang)} · ${node.item.skills.map((s) => s.label).join(", ")}`}
                             >
-                              {node.kind === "interview" ? <Mic size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" fill="currentColor" />}
+                              {node.kind === "interview" ? <MessageSquareText size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" fill="currentColor" />}
                             </button>
                           ) : (
                             <span className="probe-dot" aria-hidden="true">
@@ -301,14 +325,14 @@ export function LearnHome({
                                   <Check size={20} strokeWidth={3} />
                                 </Pop>
                               ) : node.kind === "interview" ? (
-                                <Mic size={18} />
+                                <MessageSquareText size={18} />
                               ) : (
                                 i + 1
                               )}
                             </span>
                           )}
                         </Breathe>
-                        <b dir="auto">{node.kind === "interview" ? t("ראיון מדומה", "Mock interview") : node.item.skills.map((s) => s.label).join(", ")}</b>
+                        <b dir="auto"><BidiText>{node.kind === "interview" ? t("ראיון מדומה", "Mock interview") : node.item.skills.map((s) => s.label).join(", ")}</BidiText></b>
                         <span>
                           {node.state === "done"
                             ? t("הושלם", "done")
@@ -335,7 +359,7 @@ export function LearnHome({
                       <li key={node.key} className={node.dayIndex !== previousDay ? "first" : ""}>
                         <span className="later-day">{node.dayIndex !== previousDay ? dayLabel(node.item.date, node.dayIndex, lang) : ""}</span>
                         <span className="later-what" dir="auto">
-                          {node.kind === "interview" ? t("ראיון מדומה", "Mock interview") : node.item.skills.map((s) => s.label).join(", ")}
+                          <BidiText>{node.kind === "interview" ? t("ראיון מדומה", "Mock interview") : node.item.skills.map((s) => s.label).join(", ")}</BidiText>
                         </span>
                         <span className="later-mode">
                           {modeLabel(node.item.mode, lang)} · {node.item.minutes} {t("דק׳", "min")}
@@ -380,7 +404,9 @@ export function LearnHome({
             {today.total === 0
               ? t("אין פריטים להיום עדיין.", "Nothing due today yet.")
               : today.done >= today.total
-                ? t("היום סגור. מחר בשעה הזאת שוב.", "Today is closed. Same time tomorrow.")
+                ? ahead
+                  ? t("היעד להיום הושלם. אפשר להמשיך מראש, לבחירתכם.", "Today's target is complete. Working ahead is optional.")
+                  : t("היעד להיום הושלם. אפשר לנוח או לבחור שאלה מהמאגר.", "Today's target is complete. Rest or choose a question from the library.")
                 : today.done === 0
                   ? today.total === 1
                     ? t(`פריט אחד, ${remainingMinutes} דקות. הראשון הוא הקשה.`, `One item, ${remainingMinutes} minutes. The first one is the hard one.`)
@@ -400,8 +426,8 @@ export function LearnHome({
         <StreakCard days={overview?.streak_days ?? 0} todayDone={(overview?.xp_today ?? 0) > 0} lang={lang} />
         {tomorrow && (
           <div className="sticky" dir="auto">
-            {t("מחר: ", "Tomorrow: ")}
-            {tomorrow.kind === "interview" ? t("ראיון מדומה", "a mock interview") : tomorrow.item.skills.map((s) => s.label).join(", ")}
+            {dayLabel(tomorrow.item.date, tomorrow.dayIndex, lang)}{": "}
+            <BidiText>{tomorrow.kind === "interview" ? t("ראיון מדומה", "a mock interview") : tomorrow.item.skills.map((s) => s.label).join(", ")}</BidiText>
             {" · "}
             {modeLabel(tomorrow.item.mode, lang)} · {tomorrow.item.minutes} {t("דק׳", "min")}
             <small>{t("פתק מהמאמן · מתעדכן כל בוקר", "A note from the coach · refreshed every morning")}</small>
@@ -415,6 +441,23 @@ export function LearnHome({
       </aside>
     </div>
   );
+}
+
+/** Future work is offered separately, without adding it to today's minutes or completed count. */
+export function WorkAheadCard({ item, lang, busy, starting, onStart }: {
+  item: PlanItem;
+  lang: Lang;
+  busy: boolean;
+  starting: boolean;
+  onStart: () => void;
+}) {
+  const t = (he: string, en: string) => lang === "he" ? he : en;
+  const Arrow = lang === "he" ? ArrowLeft : ArrowRight;
+  const isInterview = item.mode === "simulation";
+  return <section className="work-ahead" aria-labelledby="work-ahead-title">
+    <div className="work-ahead-copy"><span className="tag">{dayLabel(item.date, item.day_index, lang)} · {item.minutes} {t("דק׳", "min")}</span><h3 id="work-ahead-title">{item.status === "started" ? t("להמשיך את התרגול שהתחלתם מראש", "Continue the item you opened early") : t("רוצים להתקדם מעבר להיום?", "Want to work ahead?")}</h3><p dir="auto"><BidiText>{item.skills.map((skill) => skill.label).join(", ")}</BidiText> · {modeLabel(item.mode, lang)}</p><p className="small muted">{t("הפריט יישאר משויך ליום המקורי שלו. אם תשלימו אותו כעת, הוא יופיע שם כהושלם.", "This item stays assigned to its original day. If you complete it now, it will be marked done there.")}</p></div>
+    <button type="button" className="primary" disabled={busy} onClick={onStart}>{starting ? t("פותחים…", "Opening…") : isInterview ? t("לראיון המתוכנן הבא", "Open the next planned interview") : item.status === "started" ? t("להמשיך את הפריט הבא", "Continue the next item") : t("להתחיל את הפריט הבא מראש", "Start the next item early")}<Arrow size={16} aria-hidden="true" /></button>
+  </section>;
 }
 
 /** The signal trace: one pulse per item; the first `lit` pulses are drawn in the signal colour. Mirrored in RTL by CSS. */
