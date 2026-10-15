@@ -5,7 +5,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-10-05 (readiness for the job type §5zf) · **Tests:** 883 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
+**Last updated:** 2026-10-15 (the questions fit the job type §5zj) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
 
 ---
 
@@ -24,6 +24,7 @@ not touched again for them. When an item is done, remove its entry from `PENDING
 | 5 | **Truth table in the circuit editor** | A "Truth table" button that runs the browser simulator over every input combination (up to about six inputs, 64 rows) and shows the table; for circuits with flip-flops show a note that a table does not apply. The backend derives the same table after grading (`evaluation-panel` already shows "Truth table of your answer"), so the two can be compared. | No backend change. | §5z |
 | 6 | **Where a question was started from** (small, do it with 1 and 2) | Pass `source` on every `startAttempt`: `"plan"` from the program's item or Start button, `"suggestion"` from the next-question card, `"readiness"` from the readiness card, `"library"` from the library, `"search"` from a search result, `"retry"` from "practise this question again"; and `screen` ("learn", "progress", "library"). The backend adds the device (phone or desktop) from the request and keeps the three on the attempt, for the pilot's journey reports. | `StartAttemptRequest.source?: "plan" \| "suggestion" \| "readiness" \| "library" \| "search" \| "retry" \| "other"`, `screen?: string`. Unknown values are 422. | §5zh |
 | 7 | **The harness's sign-in entry** | `tools/screenshots/run.mjs` looks for `.landing` on `/`; the redesigned landing page has no such element, so the four sign-in shots are skipped. Point the entry at the new page's root element. | No backend change. | §5zi |
+| 9 | **The library and the plan fit the job type** (task 8, backend done 2026-10-15) | Nothing to add for the filter itself: `GET /v1/questions?job=` now *hides* the questions of the skills that are not part of that job type (before it hid anything weighted under 1.0) and the `job_types` chips use the same rule, so pass the goal's job type as `job` when the user wants "my role only". Optional: `GET /v1/job-types` carries `excluded_skills`; in the goal setup or the library an explanatory line "not part of this job type: HDL coding, testbenches, ..." can be built from it with the skill labels the progress page already has. The plan, readiness and interview screens need no change: the backend never sends an excluded skill to them. | `JobType.excluded_skills?: string[]` | §5zj |
 | 8 | **Voice input, browser only** (if Shaked's dictation test is good) | A microphone button on the answer box using the browser's speech recognition in the practice language; the words land in the box and the user edits and sends as usual. Chrome and Edge only; nothing is recorded or stored. | No backend change. If accuracy on Hebrew technical terms is poor, the server-side option is a separate plan. | — |
 
 Not for the screens: a skipped follow-up earns no grade or XP; the follow-ups themselves now ask for understanding
@@ -914,6 +915,44 @@ the body-size guard works on the stream; the timing fields are bounded; company 
 request id is validated; a per-caller request budget; a plan start in two transactions instead of four; readiness in
 one; no empty background task after a follow-up answer; question summaries cached.
 
+## 5zj. The questions fit the chosen job type: excluded skills are hidden, not played down (2026-10-15, Harel's task 8; Shaked: "start with 8 and it should be hidden")
+
+**What was wrong.** A job type only multiplied the role's 27 skill weights, so an embedded candidate's plan still
+carried the three HDL coding skills and testbenches at 0.5, a software candidate's plan all fourteen pure-hardware
+skills at 0.3, and the suggestion, readiness and the interview followed the same plan. The library used a different
+rule (`?job=` hid anything weighted under 1.0), so the library and the plan disagreed.
+
+**The rule now.** In `seeds/job_types.json` an emphasis of exactly `0` means *not part of this job type*
+(`JobType.excludes`, `JobType.fits`, `JobType.excluded_skills`; the loader accepts 0 beside 0.2–2.5). From that one
+number: the skill is dropped before the plan is built (`PracticeService._plan`, `InterviewService._plan`), so the
+plan router, the focus card, the subjects, readiness and the interview plan never see it; and every question whose
+**primary** skill is excluded is filtered out of the job-filtered library (`_job_types_for` is now "every job type
+that does not exclude the primary skill"; relevance order unchanged), the suggestion after an answer
+(`_suggest_next`, even after a weak answer on a question opened from the unfiltered library), the program's question
+choice (`_question_for`), the readiness questions and the interview pool (`_pool`, also mid-session). A secondary
+skill link never hides a question. Anything above 0 stays visible and is only weighted. Without a goal or job type
+nothing is hidden. Evidence already earned on an excluded skill stays in the profile and the progress list; it only
+stops counting for the plan until the job type changes back.
+
+**The zeros (content, Shaked's table, editable without code):** embedded & firmware: the three HDL coding skills,
+testbench basics, universal gates, setup/hold timing (5 of 67 questions hidden); software: the fourteen skills that
+were at 0.3 (flip-flops, counters, registers, resets, edge detection, timing, CDC, HDL×3, testbenches, combinational
+blocks, universal gates, state encoding; 20 hidden); digital design and FPGA: arrays & search, basic data structures
+(13 hidden each, the coding puzzles); verification and student general: nothing. CDC stays at 0.6 for embedded
+(synchronisers at the peripheral boundary), FSMs and boolean algebra stay for software.
+
+**Not in this step.** A job type still adds no skill: the 26 coding and estimation questions whose primary skill is
+outside the role's plan stay library-only for every job type. Adding a job type's own skills (arrays, data
+structures for embedded and software) needs a required level per skill and is a separate decision. Evidence age
+does not pull the suggestion either (readiness and the plan router handle freshness).
+
+**Verified.** `tests/test_job_fit.py` (13 tests): the rule, primary-not-secondary, examples both ways per track, the
+counts (filtered library = everything − excluded primaries, with the 2026-10-15 numbers), the plan's key set and
+normalisation, an embedded week and its readiness, a goal switch re-planning with the HDL skills back, a plan start
+opening a fitting question, the suggestion after a weak answer on a hidden question moving on, the interview plan and
+every asked question fitting; the HTTP test asserts the two filters and `excluded_skills`. 933 offline tests. No
+repository or SQL change, so no live suite; smoke after the deploy.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -952,6 +991,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-15 | Task 8: a skill at emphasis 0 is not part of the job type; it leaves the plan and its questions are hidden from the job-filtered library, suggestions, program, readiness and interviews; `JobTypeView.excluded_skills`; `tests/test_job_fit.py` (§5zj) |
 | 2026-10-15 | Full check (§5zi, `docs/full-check-2026-10-15.md`): all suites green, profiling, four-lens review, twelve fixes (program serialisation, stream body guard, bounded timing fields, sightings limits, request id, rate limit, fewer round trips) |
 | 2026-10-05 | The entry source on every question start (plan, suggestion, readiness, library, search, retry) plus the device, kept on the attempt; a first per-user heat map from the existing data (§5zh) |
 | 2026-10-05 | Strong, lean: a correct design with thin reasoning is STRONG with lighter evidence and a reasoning follow-up (§5zg) |

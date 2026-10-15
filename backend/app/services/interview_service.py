@@ -120,8 +120,8 @@ class InterviewService:
             goal = await tx.load_goal(user_id)
             seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
             servable = await tx.list_questions(language=language)
-        pool = self._pool(servable)
         job_type = goal.job_type if goal.job_type in self.catalog.job_types else None
+        pool = self._pool(servable, job_type)
         plan, ceiling, baseline = self._plan(seniority, duration_min, job_type)
         plan = self._covered(plan, pool, language)
         priors = {k: (s.k, s.c) for k, s in profile.states.items() if s.k is not None and s.c is not None}
@@ -264,7 +264,7 @@ class InterviewService:
             changed = [turn]
             decision = outcome.decision
             if decision.action != Action.END and len(turns) < MAX_TURNS:
-                pool = await self._pool_for(language)
+                pool = await self._pool_for(language, row["config"].get("job_type"))
                 decision, next_question = self._open(engine, plan, state, decision, pool,
                                                      seen={t["question_key"] for t in turns}, language=language)
                 if next_question is not None:
@@ -385,8 +385,9 @@ class InterviewService:
                 seniority = next(iter(role.seniority_profiles))
             profile = role.seniority_profiles[seniority]
             rows = role.skill_set
-            if job is not None:
-                rows = [row.model_copy(update={"weight": row.weight * job.weight(row.skill)}) for row in rows]
+            if job is not None:                                      # re-weighted; an excluded skill (0) is never asked
+                rows = [row.model_copy(update={"weight": row.weight * job.weight(row.skill)}) for row in rows
+                        if not job.excludes(row.skill)]
             plan = merge_skill_sets(role_rows=rows, company_rows=company.skill_set, focus_skill_keys=[],
                                     company_weight_share=company.company_weight_share, seniority=seniority,
                                     planned_duration_min=duration_min, catalog=self.catalog.leaf_skills)
@@ -413,24 +414,26 @@ class InterviewService:
             levels[skill.key] = level
         return levels
 
-    def _pool(self, servable) -> list[BankQuestion]:
-        """The questions this interview may ask: reviewed and published, unless configured for development."""
+    def _pool(self, servable, job_type: str | None = None) -> list[BankQuestion]:
+        """The questions this interview may ask: reviewed and published, unless configured for development; never
+        one whose primary skill the job type excludes (task 8, 2026-10-15)."""
         keep = [s for s in servable if s.reviewed or not self.config.reviewed_only]
+        job = self.catalog.job_types.get(job_type) if job_type else None
         pool = []
         for s in keep:
             self._question_ids[s.key] = s.id            # the database id the turn row points at
             question = self.catalog.questions.get(s.key)
-            if question is None:
+            if question is None or (job is not None and not job.fits(question)):
                 continue
             if question.status != s.status:             # the database decides the state (trial/published), not the seed file
                 question = question.model_copy(update={"status": s.status})
             pool.append(question)
         return pool
 
-    async def _pool_for(self, language: str) -> list[BankQuestion]:
+    async def _pool_for(self, language: str, job_type: str | None = None) -> list[BankQuestion]:
         async with self.store.transaction() as tx:
             servable = await tx.list_questions(language=language)
-        return self._pool(servable)
+        return self._pool(servable, job_type)
 
     def _covered(self, plan: list[PlanSkill], pool: list[BankQuestion], language: str) -> list[PlanSkill]:
         """Drop questioned skills the bank cannot ask about; refuse when nothing is left to ask."""

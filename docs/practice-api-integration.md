@@ -47,7 +47,8 @@ Every error body is `{"error": {"code": "...", "message": "..."}}`. Every respon
 ## 3. The flow
 
 ```
-GET  /v1/questions?language=he                → list (safe: no reference, no hints)
+GET  /v1/questions?language=he                → list (safe: no reference, no hints); `&job=<key>` hides the questions of skills that are not part of that job type and sorts the rest by relevance; `&subject=`, `&company=` (2026-10-15)
+GET  /v1/job-types?language=he                → the job types with `excluded_skills`: the skills never planned for that job type (2026-10-15)
 GET  /v1/questions/{key}?language=he          → prompt, code, choices, hint_count
 POST /v1/practice/attempts                    {question_key, mode: "deep"|"quick", language, self_confidence?, source?, screen?}   → 201 AttemptView
                                               source: plan | suggestion | readiness | library | search | retry | other (where the start came from; kept on the attempt with the device, 2026-10-05)

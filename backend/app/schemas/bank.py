@@ -142,15 +142,32 @@ class BankQuestion(BaseModel):
 class JobType(BaseModel):
     """A kind of job a candidate interviews for (verification, FPGA, embedded ...). It does not add skills:
     it re-weights the role's skills, so the plan, the next-question suggestion and the mock interview lean
-    toward what that job asks about. Skills not listed keep emphasis 1.0."""
+    toward what that job asks about. Skills not listed keep emphasis 1.0.
+
+    An emphasis of exactly 0 means the skill is **not part of this job type** (Harel's task 8, Shaked's
+    "hidden", 2026-10-15): the skill leaves the plan, and every question whose primary skill is 0 is hidden
+    from the job-filtered library, the suggestions, the program, readiness and the interview pool. Anything
+    above 0 stays visible and is only weighted."""
 
     key: str
     label: dict[str, str]                      # language -> label
     description: dict[str, str] = Field(default_factory=dict)
-    emphasis: dict[str, float] = Field(default_factory=dict)   # skill key -> multiplier (0.3 .. 2.0)
+    emphasis: dict[str, float] = Field(default_factory=dict)   # skill key -> multiplier (0.2 .. 2.5), or 0 = excluded
 
     def weight(self, skill: str) -> float:
         return self.emphasis.get(skill, 1.0)
+
+    def excludes(self, skill: str) -> bool:
+        return self.emphasis.get(skill, 1.0) == 0
+
+    def fits(self, question: BankQuestion) -> bool:
+        """A question belongs to this job type unless its primary skill is excluded (the primary skill is what
+        the question is about and what the grader scores; a secondary link never hides a question)."""
+        return not self.excludes(question.primary_skill)
+
+    @property
+    def excluded_skills(self) -> list[str]:
+        return sorted(k for k, v in self.emphasis.items() if v == 0)
 
     def text(self, field_name: str, language: str) -> str:
         values = getattr(self, field_name)

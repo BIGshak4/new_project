@@ -145,7 +145,7 @@ def load_catalog(seeds_dir: Path, *, strict: bool = True) -> Catalog:
                 for skill_key, value in job.emphasis.items():
                     if skill_key not in catalog.skills:
                         problems.append(f"job_types.json:{job.key}: unknown skill {skill_key!r}")
-                    if not 0.2 <= value <= 2.5:
+                    if not (value == 0 or 0.2 <= value <= 2.5):     # 0 = not part of this job type
                         problems.append(f"job_types.json:{job.key}: emphasis for {skill_key} out of range ({value})")
                 catalog.job_types[job.key] = job
 

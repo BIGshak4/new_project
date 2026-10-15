@@ -369,6 +369,11 @@ class TestOverHttp:
 
         listed = await client.get("/v1/questions?language=en&job=fpga", headers=headers)
         assert listed.status_code == 200 and listed.json() and all("fpga" in q["job_types"] for q in listed.json())
+        # task 8: a job type hides the questions of the skills it excludes, and says which skills those are
+        embedded = {q["key"] for q in (await client.get("/v1/questions?language=en&job=embedded_firmware", headers=headers)).json()}
+        design = {q["key"] for q in (await client.get("/v1/questions?language=en&job=digital_design", headers=headers)).json()}
+        assert "example-nonblocking-pipeline-trace" in design - embedded and "example-count-set-bits" in embedded
+        assert "hdl_sequential_coding" in next(j for j in jobs.json() if j["key"] == "embedded_firmware")["excluded_skills"]
         by_company = await client.get("/v1/questions?language=en&company=apple", headers=headers)
         assert [q["key"] for q in by_company.json()] == [Q] and by_company.json()[0]["companies"][0]["slug"] == "apple"
         assert (await client.get("/v1/questions?language=en&job=astronaut", headers=headers)).status_code == 422

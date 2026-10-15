@@ -160,6 +160,8 @@ class JobTypeView(BaseModel):
     key: str
     label: str
     description: str
+    excluded_skills: list[str] = Field(default_factory=list, description="skills not part of this job type: never planned, "
+                                       "their questions hidden from the job-filtered library, suggestions and interviews")
 
 
 class CompanyView(BaseModel):

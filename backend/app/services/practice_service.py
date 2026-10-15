@@ -176,8 +176,15 @@ class PracticeService:
         return job
 
     def _job_types_for(self, question: BankQuestion) -> list[str]:
-        """A question belongs to every job type that does not play down its primary skill."""
-        return [key for key, job in self.catalog.job_types.items() if job.weight(question.primary_skill) >= 1.0]
+        """A question belongs to every job type that does not exclude its primary skill: the same rule the plan,
+        the suggestions and the interview use, so switching the job type changes the library and the plan alike
+        (until 2026-10-15 the library hid anything weighted under 1.0 while the plan hid nothing)."""
+        return [key for key, job in self.catalog.job_types.items() if job.fits(question)]
+
+    def _fitting(self, questions: list[BankQuestion], job_type: str | None) -> list[BankQuestion]:
+        """The questions the goal's job type does not exclude; everything when there is no goal or job type."""
+        job = self.catalog.job_types.get(job_type) if job_type else None
+        return questions if job is None else [q for q in questions if job.fits(q)]
 
     @staticmethod
     def _relevance(question: BankQuestion, job: JobType) -> float:
@@ -203,7 +210,8 @@ class PracticeService:
 
     def job_types(self, *, language: str) -> list[JobTypeView]:
         language = self._language(language)
-        return [JobTypeView(key=j.key, label=j.text("label", language), description=j.text("description", language))
+        return [JobTypeView(key=j.key, label=j.text("label", language), description=j.text("description", language),
+                            excluded_skills=j.excluded_skills)
                 for j in self.catalog.job_types.values()]
 
     async def companies(self) -> list[CompanyView]:
@@ -613,7 +621,10 @@ class PracticeService:
         servable = [s for s in servable if s.assessment_ready]
         if self.config.suggest_reviewed_only:
             servable = [s for s in servable if s.reviewed]
-        candidates = [self.catalog.questions[s.key] for s in servable if s.key in self.catalog.questions]
+        goal = await tx.load_goal(user_id)
+        # never a question the job type excludes, even after a weak answer on one opened from the unfiltered library
+        candidates = self._fitting([self.catalog.questions[s.key] for s in servable if s.key in self.catalog.questions],
+                                   goal.job_type)
         question = attempt.question
         # what was hard: the bank's own explanation of each known mistake this attempt hit, and the skill it undermines
         text = question.translations.get(language) or question.translations.get("en")
@@ -860,8 +871,9 @@ class PracticeService:
         gaps = sum(1 for r in rows if r.gap)
         unknown = sum(1 for r in rows if r.gap is None)
         # the next questions: the biggest gaps first (weight x gap), then the heaviest skills without counted evidence
-        candidates = [self.catalog.questions[s.key] for s in servable
-                      if s.key in self.catalog.questions and s.assessment_ready and (s.reviewed or not self.config.suggest_reviewed_only)]
+        candidates = self._fitting([self.catalog.questions[s.key] for s in servable
+                                    if s.key in self.catalog.questions and s.assessment_ready
+                                    and (s.reviewed or not self.config.suggest_reviewed_only)], job.key)
         order = sorted((r for r in rows if r.askable and r.gap != 0),
                        key=lambda r: (-(r.gap or 0) * r.weight_share, r.gap is None and r.freshness == "none", -r.weight_share))
         picked: list[ReadinessQuestionView] = []
@@ -1050,7 +1062,7 @@ class PracticeService:
             if existing.status in ("in_progress", "evaluating", "failed") and existing.submission is None:
                 return ProgramStartView(kind="attempt", item=item, attempt=existing)
         required, _, ceiling, _ = self._plan(seniority, goal.job_type)
-        question = self._question_for(item, profile, servable, seen, required, ceiling, mode, language)
+        question = self._question_for(item, profile, servable, seen, required, ceiling, mode, language, goal.job_type)
         if question is None:
             async with self.store.transaction() as tx:
                 await tx.update_plan_item(uuid.UUID(item.id), status="skipped")
@@ -1062,9 +1074,10 @@ class PracticeService:
         return ProgramStartView(kind="attempt", item=item.model_copy(update={"status": "started"}), attempt=attempt)
 
     def _question_for(self, item: PlanItemView, profile: LoadedProfile, servable, seen: set[str], required: dict[str, int],
-                      ceiling: int, mode: str, language: str) -> BankQuestion | None:
-        """The same choice the coach makes after an answer: the item's skill, the user's level, unseen and reviewed first."""
-        pool = self._servable_pool(servable)
+                      ceiling: int, mode: str, language: str, job_type: str | None = None) -> BankQuestion | None:
+        """The same choice the coach makes after an answer: the item's skill, the user's level, unseen and reviewed first;
+        never a question the job type excludes (a secondary link could otherwise pull one in)."""
+        pool = self._fitting(self._servable_pool(servable), job_type)
         reviewed_only = self.config.suggest_reviewed_only
         for skill_key in [s.key for s in item.skills]:
             state = profile.states.get(skill_key)
@@ -1440,7 +1453,9 @@ class PracticeService:
 
         The job type does not add skills: it multiplies the role's skill weights (verification leans on testbenches
         and debugging, embedded on bit manipulation ...), so the plan, the next-question suggestion and the weekly
-        plan lean the same way. An unknown job type is ignored, never an error here."""
+        plan lean the same way. A skill the job type excludes (emphasis 0) leaves the plan altogether: an embedded
+        plan has no HDL coding, a software plan no flip-flops (Harel's task 8, 2026-10-15). An unknown job type is
+        ignored, never an error here."""
         job = self.catalog.job_types.get(job_type) if job_type else None
         key = (seniority, job.key if job else None)
         if key not in self._plans:
@@ -1450,7 +1465,8 @@ class PracticeService:
                 seniority = next(iter(role.seniority_profiles))
             rows = role.skill_set
             if job is not None:
-                rows = [row.model_copy(update={"weight": row.weight * job.weight(row.skill)}) for row in rows]
+                rows = [row.model_copy(update={"weight": row.weight * job.weight(row.skill)}) for row in rows
+                        if not job.excludes(row.skill)]
             plan = merge_skill_sets(role_rows=rows, company_rows=company.skill_set, focus_skill_keys=[],
                                     company_weight_share=company.company_weight_share, seniority=seniority,
                                     planned_duration_min=45, catalog=self.catalog.leaf_skills)

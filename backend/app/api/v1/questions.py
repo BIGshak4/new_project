@@ -40,7 +40,8 @@ class ReportResponse(BaseModel):
             summary="List the questions available to practise (filter by subject, job type, company)")
 async def list_questions(access: CurrentAccess, practice: Practice, language: str = Query("en", pattern="^(en|he)$"),
                          subject: str | None = Query(None, max_length=80),
-                         job: str | None = Query(None, max_length=40, description="a job type key; sorts by relevance"),
+                         job: str | None = Query(None, max_length=40, description="a job type key: hides the questions whose skill "
+                                                 "is not part of that job type and sorts the rest by relevance"),
                          company: str | None = Query(None, max_length=80, description="a company name or slug")
                          ) -> list[QuestionSummary]:
     return await practice.list_questions(language=language, subject=subject, job=job, company=company)
