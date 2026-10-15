@@ -309,7 +309,7 @@ REASONS = {
         "unassessed": "We have no evidence on {skill} yet. One question tells us where to start.",
         "expired": "It has been {days} days since {skill} was last checked. A fresh question shows where you stand now.",
         "keep_sharp": "{skill} is in good shape. A quick one keeps it that way.",
-        "simulation": "A full interview simulation across your main skills, to practice under real conditions.",
+        "simulation": "A mock interview across your main skills, to practise under real conditions.",
     },
     "he": {
         "diagnostic": "אבחון קצר על פני הנושאים שלכם, כדי שהתוכנית תתחיל ממה שאתם באמת יודעים.",
@@ -320,7 +320,7 @@ REASONS = {
         "unassessed": "עדיין אין לנו מידע על {skill}. שאלה אחת תראה מאיפה להתחיל.",
         "expired": "עברו {days} ימים מאז שבדקנו את {skill}. שאלה טרייה תראה איפה אתם עומדים היום.",
         "keep_sharp": "{skill} במצב טוב. שאלה קצרה תשמור על זה.",
-        "simulation": "סימולציית ראיון מלאה על המיומנויות המרכזיות, כדי לתרגל בתנאים אמיתיים.",
+        "simulation": "ראיון מדומה על המיומנויות המרכזיות, כדי לתרגל בתנאים אמיתיים.",
     },
 }
 

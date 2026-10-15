@@ -26,19 +26,27 @@ from app.schemas.engine import Band, SkillState
 REASONS = {
     "en": {
         "struggle": "The next question practises {skill} again, from a simpler angle, so this idea settles.",
+        "struggle_other": "That mistake comes from {skill}; the next question practises it from a simpler angle.",
         "reinforce": "Your answer showed a gap in {skill}; this question practises the same idea from a simpler angle.",
         "consolidate": "You were close on {skill}; one more question at this level will settle it.",
-        "advance": "{skill} looks solid for now; {next_skill} is the next skill your role plan weights most.",
+        "advance": "{skill} looks solid for now; {next_skill} is where your plan has the most to gain.",
+        "advance_after_weak": "No other question on {skill} is available right now; {next_skill} is next in your plan.",
         "map": "You have enough on {skill} for now; {next_skill} weighs most in your plan and has no evidence yet.",
         "explore": "Nothing is pending on {skill}; {next_skill} has not been practised yet.",
+        "explore_after_weak": "No other question on {skill} is available right now; {next_skill} has not been practised yet.",
+        "same_skill": "Nothing else is waiting in your plan right now; one more on {skill} at this level.",
     },
     "he": {
         "struggle": "השאלה הבאה מתרגלת שוב {skill}, מזווית פשוטה יותר, כדי שהרעיון הזה יתייצב.",
+        "struggle_other": "הטעות הזו נובעת מ-{skill}; השאלה הבאה מתרגלת אותה מזווית פשוטה יותר.",
         "reinforce": "התשובה חשפה פער ב-{skill}; השאלה הזו מתרגלת את אותו רעיון מזווית פשוטה יותר.",
         "consolidate": "הייתם קרובים ב-{skill}; עוד שאלה ברמה הזו תייצב את זה.",
-        "advance": "{skill} נראה יציב כרגע; {next_skill} היא המיומנות הבאה במשקל הגבוה ביותר בתוכנית התפקיד.",
+        "advance": "{skill} נראה יציב כרגע; ב-{next_skill} יש לתוכנית שלכם הכי הרבה מה להרוויח.",
+        "advance_after_weak": "אין כרגע שאלה נוספת על {skill}; {next_skill} היא הבאה בתוכנית שלכם.",
         "map": "יש מספיק על {skill} בינתיים; {next_skill} היא הכבדה ביותר בתוכנית ועדיין בלי עדות.",
         "explore": "אין דבר פתוח ב-{skill}; {next_skill} עדיין לא תורגלה.",
+        "explore_after_weak": "אין כרגע שאלה נוספת על {skill}; {next_skill} עדיין לא תורגלה.",
+        "same_skill": "שום דבר אחר לא מחכה בתוכנית כרגע; עוד אחת על {skill} ברמה הזו.",
     },
 }
 
@@ -60,7 +68,7 @@ class Suggestion:
     key: str
     skill: str
     difficulty: int
-    why: str                                   # reinforce | consolidate | advance | explore
+    why: str                                   # reinforce | consolidate | advance | explore | map | same_skill
     reason: str
     focus: str | None = None                   # what was hard in this attempt, in the practice language
 
@@ -111,7 +119,9 @@ def suggest(*, current: BankQuestion, band: Band | None, states: dict[str, Skill
         pick = (_pick(candidates, skill=focus.skill, target=max(1, here - 1), seen=seen, exclude=current.key, window=(1, here))
                 or _pick(candidates, skill=focus.skill, target=here, seen=seen, exclude=current.key, window=(1, here + 1)))
         if pick:
-            return Suggestion(pick.key, focus.skill, pick.difficulty, "reinforce", texts["struggle"].format(skill=label),
+            # "again" only when the undermined skill is the one just practised (task 10, 2026-10-15)
+            wording = texts["struggle" if focus.skill == primary else "struggle_other"]
+            return Suggestion(pick.key, focus.skill, pick.difficulty, "reinforce", wording.format(skill=label),
                               focus=_sentence(focus.text))
 
     label = skill_labels.get(primary, primary)
@@ -156,10 +166,13 @@ def suggest(*, current: BankQuestion, band: Band | None, states: dict[str, Skill
         pick = _pick(candidates, skill=next_skill, target=target, seen=seen, exclude=current.key, window=(1, 10))
         if pick:
             why = "advance" if states.get(next_skill) is not None and states[next_skill].turns else "explore"
+            # after a weak or partial answer the coach moved on only because the skill has no other question: say
+            # that, never "looks solid" (task 10, 2026-10-15)
+            wording = texts[why + "_after_weak"] if weakest in (Band.WEAK, Band.PARTIAL) else texts[why]
             return Suggestion(pick.key, next_skill, pick.difficulty, why,
-                              texts[why].format(skill=label, next_skill=skill_labels.get(next_skill, next_skill)))
-    # last resort: anything unseen on the same skill
+                              wording.format(skill=label, next_skill=skill_labels.get(next_skill, next_skill)))
+    # last resort: anything unseen on the same skill; its own words, "you were close" would be false after a strong answer
     pick = _pick(candidates, skill=primary, target=here, seen=seen, exclude=current.key, window=(1, 10))
     if pick:
-        return Suggestion(pick.key, primary, pick.difficulty, "consolidate", texts["consolidate"].format(skill=label))
+        return Suggestion(pick.key, primary, pick.difficulty, "same_skill", texts["same_skill"].format(skill=label))
     return None

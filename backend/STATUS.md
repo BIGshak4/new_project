@@ -5,7 +5,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-10-15 (the plan fits the user's minutes §5zk) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
+**Last updated:** 2026-10-15 (the reasons are true to their rules §5zl) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
 
 ---
 
@@ -26,6 +26,7 @@ not touched again for them. When an item is done, remove its entry from `PENDING
 | 7 | **The harness's sign-in entry** | `tools/screenshots/run.mjs` looks for `.landing` on `/`; the redesigned landing page has no such element, so the four sign-in shots are skipped. Point the entry at the new page's root element. | No backend change. | §5zi |
 | 9 | **The library and the plan fit the job type** (task 8, backend done 2026-10-15) | Nothing to add for the filter itself: `GET /v1/questions?job=` now *hides* the questions of the skills that are not part of that job type (before it hid anything weighted under 1.0) and the `job_types` chips use the same rule, so pass the goal's job type as `job` when the user wants "my role only". Optional: `GET /v1/job-types` carries `excluded_skills`; in the goal setup or the library an explanatory line "not part of this job type: HDL coding, testbenches, ..." can be built from it with the skill labels the progress page already has. The plan, readiness and interview screens need no change: the backend never sends an excluded skill to them. | `JobType.excluded_skills?: string[]` | §5zj |
 | 10 | **Retire the "carried" badge** (task 9, backend done 2026-10-15) | Leftovers are no longer carried: every day is rebuilt within the goal's minutes and `PlanItemView.carried` is always false, so the "carried from yesterday" badge and the carried-first ordering can go. `minutes_due_today` is never above `minutes_per_day`; nothing new to show. An item in progress survives a same-day goal change. | `PlanItem.carried` stays in the type (always false) | §5zk |
+| 11 | **Labels for every `why` badge** (task 10, backend done 2026-10-15) | `whyLabel` in `lib/charts.ts` knows reinforce / consolidate / advance / explore; the server also sends `map` ("מיפוי" / "Map": the heaviest skill with no evidence yet, early in the plan) and `same_skill` ("אותה מיומנות" / "Same skill": nothing else pending, one more at this level). Add both to the `NextQuestion.why` union and the label table. The sentences themselves are already true to the band; the "Why" column header and its context are yours. | `NextQuestion.why: "reinforce" \| "consolidate" \| "advance" \| "explore" \| "map" \| "same_skill"` | §5zl |
 | 8 | **Voice input, browser only** (if Shaked's dictation test is good) | A microphone button on the answer box using the browser's speech recognition in the practice language; the words land in the box and the user edits and sends as usual. Chrome and Edge only; nothing is recorded or stored. | No backend change. If accuracy on Hebrew technical terms is poor, the server-side option is a separate plan. | — |
 
 Not for the screens: a skipped follow-up earns no grade or XP; the follow-ups themselves now ask for understanding
@@ -985,6 +986,37 @@ counts; today's own opened item survives a same-day goal change with its attempt
 5 to 45 minutes a day; the lobby's length) and the router test for the interview length per budget. The live program
 tests against the real database (the relink path); the offline suite.
 
+## 5zl. The reasons the server gives are true to the decision that produced them (2026-10-15, Harel's task 10, Shaked's part)
+
+**What was checked.** Every reason sentence the server sends, traced to the rule that emits it: the plan's "Why"
+column (nine router codes: diagnostic, retention_due, stale, core_gap, gap, unassessed, expired, keep_sharp,
+simulation), the coach's next-question card (`why` + a sentence) and the readiness card's three questions. The plan's
+nine all matched their logic; a return to a practised subject is always one of retention_due / stale / expired /
+keep_sharp / gap, which is Harel's "planned return" case. A goal change needs no extra field: the plan is rebuilt and
+each item carries its own reason.
+
+**Fixed (wording, both languages; the decisions themselves did not move):**
+- The coach's last resort (nothing else pending, one more on the same skill) said "You were close on {skill}" even
+  after a STRONG answer → new code **`same_skill`**: "Nothing else is waiting in your plan right now; one more on
+  {skill} at this level."
+- After a WEAK or PARTIAL answer whose skill has no other question, the coach moves on but said "{skill} looks
+  solid for now" → the `advance`/`explore` codes keep their badge and get an after-weak sentence: "No other question
+  on {skill} is available right now; {next_skill} is next in your plan / has not been practised yet."
+- `advance` described the wrong rule ("the next skill your plan weights most"; the rule is gap × weight) → "{next_skill}
+  is where your plan has the most to gain."
+- A struggle whose undermined skill is not the one just practised no longer says "practises {skill} **again**".
+- Readiness: `gap` said "closes the biggest gap" for all three suggestions → "works on that gap"; `confirm` said "One
+  answer so far" where the status can come from thin evidence → "Not enough evidence on {skill} yet".
+- The plan's interview item said "a full interview simulation"; since §5zk it may be a 20-minute one → "a mock
+  interview across your main skills".
+
+**For Harel (queue item 11).** The `why` badge's type lists four codes; the server also sends `map` (since §5ze) and
+now `same_skill`, which show as raw words until labelled. The "Why" column header and its context are his.
+
+**Verified.** `tests/test_next_question.py`: the strong last resort never says "close", moving on after a weak answer
+never says "looks solid" (and a strong one never says "No other question"), a struggle on another skill never says
+"again", every code exists in both languages. The offline suite.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1023,6 +1055,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-15 | Task 10 (Shaked's part): every reason sentence checked against its rule; the coach's last resort gets its own code `same_skill`, after-weak wording for `advance`/`explore`, `advance` describes gap × weight, readiness and interview wording corrected (§5zl) |
 | 2026-10-15 | Task 9: the plan fits the user's minutes and never piles up: no carry-over of earlier days' items (opened or not), no item longer than the day, the interview takes the length that fits; `carried` always false (§5zk) |
 | 2026-10-15 | Task 8: a skill at emphasis 0 is not part of the job type; it leaves the plan and its questions are hidden from the job-filtered library, suggestions, program, readiness and interviews; `JobTypeView.excluded_skills`; `tests/test_job_fit.py` (§5zj) |
 | 2026-10-15 | Full check (§5zi, `docs/full-check-2026-10-15.md`): all suites green, profiling, four-lens review, twelve fixes (program serialisation, stream body guard, bounded timing fields, sightings limits, request id, rate limit, fewer round trips) |

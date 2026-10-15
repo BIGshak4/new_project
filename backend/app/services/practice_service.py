@@ -805,13 +805,13 @@ class PracticeService:
         },
     }
     READINESS_REASONS = {
-        "en": {"gap": "{skill} is below the level {job} needs; this question closes the biggest gap.",
+        "en": {"gap": "{skill} is below the level {job} needs; this question works on that gap.",
                "unassessed": "{job} weighs {skill} heavily and there is no evidence on it yet.",
-               "confirm": "One answer on {skill} so far; one more confirms where you stand.",
+               "confirm": "Not enough evidence on {skill} yet; one more answer confirms where you stand.",
                "refresh": "Your evidence on {skill} is old; one answer refreshes it."},
-        "he": {"gap": "{skill} מתחת לרמה ש-{job} דורש; השאלה הזו סוגרת את הפער הגדול ביותר.",
+        "he": {"gap": "{skill} מתחת לרמה ש-{job} דורש; השאלה הזו עובדת על הפער הזה.",
                "unassessed": "{job} נותן משקל גבוה ל-{skill} ועדיין אין עליו עדות.",
-               "confirm": "תשובה אחת על {skill} עד כה; עוד אחת מאשרת איפה אתם עומדים.",
+               "confirm": "עדיין אין מספיק עדות על {skill}; עוד תשובה אחת מאשרת איפה אתם עומדים.",
                "refresh": "העדות על {skill} ישנה; תשובה אחת מרעננת אותה."},
     }
 

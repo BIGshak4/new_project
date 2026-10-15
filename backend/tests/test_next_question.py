@@ -53,6 +53,37 @@ class TestSuggest:
         s = next_question.suggest(**_args(catalog, band=Band.STRONG, states=states))
         assert s is not None and s.why in ("advance", "explore") and s.skill != "boolean_algebra"
 
+    def test_the_last_resort_after_a_strong_answer_does_not_say_you_were_close(self, catalog):
+        """Task 10 (2026-10-15): nothing else pending, one more on the same skill, in its own words."""
+        args = _args(catalog, band=Band.STRONG)
+        args["candidates"] = [q for q in catalog.questions.values() if q.primary_skill == "boolean_algebra"]
+        s = next_question.suggest(**args)
+        assert s is not None and s.why == "same_skill" and s.skill == "boolean_algebra"
+        assert "close" not in s.reason and "Nothing else is waiting" in s.reason
+
+    def test_moving_on_after_a_weak_answer_does_not_say_the_skill_looks_solid(self, catalog):
+        """A weak answer whose skill has no other question: the coach moves on and says why."""
+        args = _args(catalog, band=Band.WEAK)
+        args["candidates"] = [q for q in catalog.questions.values()
+                              if q.key == MAJORITY or not any(link.skill == "boolean_algebra" for link in q.skills)]
+        s = next_question.suggest(**args)
+        assert s is not None and s.why in ("advance", "explore") and s.skill != "boolean_algebra"
+        assert "looks solid" not in s.reason and "No other question" in s.reason
+        strong = next_question.suggest(**{**args, "band": Band.STRONG})
+        assert strong is not None and "No other question" not in strong.reason
+
+    def test_a_struggle_on_another_skill_does_not_say_again(self, catalog):
+        struggles = [next_question.Struggle(key="x", skill="combinational_blocks", text="Treats a mux as a decoder.", core=True)]
+        s = next_question.suggest(**_args(catalog, band=Band.PARTIAL), struggles=struggles)
+        assert s is not None and s.skill == "combinational_blocks" and s.why == "reinforce"
+        assert "again" not in s.reason and "comes from" in s.reason
+        same = next_question.suggest(**_args(catalog, band=Band.PARTIAL),
+                                     struggles=[next_question.Struggle(key="y", skill="boolean_algebra", text="Mixes OR and AND.", core=True)])
+        assert same is not None and "again" in same.reason
+
+    def test_every_reason_exists_in_both_languages(self):
+        assert set(next_question.REASONS["he"]) == set(next_question.REASONS["en"])
+
     def test_seen_questions_are_skipped_and_none_when_exhausted(self, catalog):
         primary_only = [k for k, q in catalog.questions.items() if q.primary_skill == "boolean_algebra"]
         s = next_question.suggest(**_args(catalog, band=Band.WEAK, seen=primary_only))

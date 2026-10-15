@@ -39,8 +39,8 @@ class NextQuestionView(BaseModel):
     subject: str
     skill: str
     difficulty: int
-    why: str                                    # reinforce | consolidate | advance | explore
-    reason: str                                 # one sentence in the practice language
+    why: str                                    # reinforce | consolidate | advance | explore | map | same_skill
+    reason: str                                 # one sentence in the practice language, true to the band that produced it
     focus: str | None = None                    # what was hard in this attempt (a bank misconception's explanation)
 
 
