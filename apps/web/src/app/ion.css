@@ -877,3 +877,24 @@ button.primary:active {
     animation: none;
   }
 }
+/* Explicit destinations stay clear of the fixed header when opened by mouse or keyboard. */
+#goal-title,
+#reference-solution {
+  scroll-margin-block-start: 110px;
+}
+
+.progress-first-step .overview-main { max-inline-size: 65ch; }
+.progress-first-step .sheet-actions { margin-block-start: 24px; }
+.related-questions { margin-block: 20px; }
+.related-questions summary { cursor: pointer; color: var(--link); }
+.summary-strip > span:first-child { flex-wrap: wrap; }
+.summary-strip > span:first-child > span { font-weight: 400; }
+
+.solution .question-prompt,
+.solution .study-text p { white-space: normal; }
+.solution .study-text { max-inline-size: 72ch; }
+.solution .study-text h3 { margin-block: 1.5rem .6rem; font-size: 1.05rem; line-height: 1.5; }
+.study-text code { direction: ltr; unicode-bidi: isolate; }
+.solution .study-text pre { direction: ltr; unicode-bidi: isolate; line-height: 1.6; }
+#reference-solution:focus:not(:focus-visible) { outline: none; }
+#reference-solution:focus-visible { outline: 2px solid var(--link); outline-offset: 4px; }

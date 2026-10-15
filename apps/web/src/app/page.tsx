@@ -20,6 +20,7 @@ import type { User } from "@supabase/supabase-js";
 import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
 import { companyNames, companyReportNote, matchesCompany, matchesQuestion, questionCategory } from "../lib/question-discovery";
 import { QuestionMetadata } from "../components/question-metadata";
+import { relatedQuestionKeys, uniqueLibraryQuestions } from "../lib/question-families";
 import { Auth, type Lang } from "../components/auth";
 import { PracticeSession } from "../components/practice-session";
 import { GoalSetup } from "../components/goal-setup";
@@ -135,6 +136,7 @@ function Workspace({
   const [goal, setGoal] = useState<Goal | null>(null);
   const [goalSkipped, setGoalSkipped] = useState(true);
   const [editingGoal, setEditingGoal] = useState(false);
+  const [goalFocusRequest, setGoalFocusRequest] = useState(0);
   const [jobs, setJobs] = useState<JobType[]>([]);
   const [companies, setCompanies] = useState<Company[]>([]);
   const [jobFilter, setJobFilter] = useState(""),
@@ -279,6 +281,7 @@ function Workspace({
       return;
     }
     let cancelled = false;
+    setJobQuestions(null);
     api
       .listQuestions(lang, undefined, { job: jobFilter })
       .then((list) => {
@@ -326,6 +329,7 @@ function Workspace({
     }
   };
   const skipGoal = () => {
+    setEditingGoal(false);
     setGoalSkipped(true);
     try {
       localStorage.setItem(skipKey, "1");
@@ -334,6 +338,7 @@ function Workspace({
   const openGoal = () => {
     setGoalSkipped(false);
     setEditingGoal(true);
+    setGoalFocusRequest((value) => value + 1);
     try {
       localStorage.removeItem(skipKey);
     } catch {}
@@ -344,8 +349,9 @@ function Workspace({
   const active = !!(route.question || route.attempt);
   const topics = [...new Set(questions.map((q) => q.subject))];
   const questionsByKey = new Map(questions.map(q => [q.key, q]));
-  const shown = jobFilter && jobQuestions ? jobQuestions : questions;
-  const filtered = shown.filter(
+  const jobFiltering = !!jobFilter && jobQuestions === null;
+  const shown = jobFilter ? jobQuestions ?? [] : questions;
+  const matching = shown.filter(
     (q) =>
       (category === "all" || questionCategory(q) === category) &&
       (subject === "all" || q.subject === subject) &&
@@ -354,6 +360,9 @@ function Workspace({
       (route.view !== "bookmarks" ||
         entries.some((e) => e.question_id === q.id && e.bookmarked)),
   );
+  // Saved records keep their own IDs, even when two old records describe the same problem.
+  const filtered = route.view === "bookmarks" ? matching : uniqueLibraryQuestions(matching);
+  const libraryTotal = uniqueLibraryQuestions(questions).length;
   const goalIncomplete = goal !== null && !goal.complete;
   const showGoalSetup = route.view === "learn" && ((goalIncomplete && !goalSkipped) || editingGoal);
   const openQuestion = (q: QuestionSummary) =>
@@ -401,7 +410,7 @@ function Workspace({
         <nav className="tabs" aria-label={t("ניווט", "Navigation")}>
           {tabButtons(false)}
         </nav>
-        <div className="topnav-stats">
+        {overview && overview.answered > 0 && <div className="topnav-stats">
           <span
             className={`stat-chip streak ${(overview?.streak_days ?? 0) > 0 ? "lit" : ""}`}
             title={t("ימים ברצף עם תשובה", "Days in a row with an answer")}
@@ -421,7 +430,7 @@ function Workspace({
             <span className="xp-number" dir="ltr"><CountUp value={overview?.xp_total ?? 0} /> XP</span>
             {overview?.level && <span className="level-word" dir="auto">{overview.level}</span>}
           </span>
-        </div>
+        </div>}
         <div className="topnav-actions">
           {languageControl}
           <button
@@ -484,6 +493,7 @@ function Workspace({
             key={route.attempt ?? route.question}
             api={api}
             questionKey={route.question}
+            relatedQuestions={questions.filter((q) => relatedQuestionKeys(route.question ?? "").includes(q.key))}
             attemptId={route.attempt}
             lang={lang}
             user={user}
@@ -525,8 +535,9 @@ function Workspace({
                     lang={lang}
                     goal={goal}
                     compact={!!goal?.complete}
+                    focusRequest={goalFocusRequest}
                     onSaved={onGoalSaved}
-                    onSkip={editingGoal ? () => setEditingGoal(false) : skipGoal}
+                    onSkip={skipGoal}
                   />
                 ) : undefined
               }
@@ -588,8 +599,9 @@ function Workspace({
             {activeTab === "library" && (
               <div className="summary-strip">
                 <span>
-                  <strong>{loading ? "—" : questions.length}</strong>
-                  {t("שאלות במאגר", "questions")}
+                  <strong>{loading || jobFiltering ? "—" : filtered.length}</strong>
+                  {" "}{route.view === "bookmarks" ? t("שאלות שמורות בתצוגה", "saved questions shown") : t("שאלות בתצוגה", "questions shown")}
+                  {route.view !== "bookmarks" && <span>{" "}{t(`מתוך ${libraryTotal} שאלות במאגר`, `of ${libraryTotal} questions in the library`)}</span>}
                 </span>
                 <span>
                   <strong>
@@ -633,7 +645,7 @@ function Workspace({
                     )}
               </p>
             )}
-            {loading ||
+            {loading || (activeTab === "library" && route.view !== "history" && jobFiltering) ||
             ((route.view === "progress" || route.view === "history") &&
               progressLoading) ||
             (route.view === "bookmarks" && entriesLoading) ? (
@@ -661,7 +673,9 @@ function Workspace({
                       overview={progress.overview}
                       goal={progress.goal ?? goal}
                       lang={lang}
-                      onEditGoal={() => setEditingGoal((v) => !v)}
+                      onEditGoal={openGoal}
+                      onStartPractice={() => goTab("learn")}
+                      onOpenLibrary={() => goTab("library")}
                     />
                   )
                 )}
@@ -675,7 +689,7 @@ function Workspace({
                     onSkip={editingGoal ? () => setEditingGoal(false) : undefined}
                   />
                 )}
-                {!demo && (
+                {!demo && progress.overview?.answered !== 0 && (
                   <div className="progress-pair">
                     <ProgressGraph timeline={progress.timeline ?? []} lang={lang} />
                     <SkillStrength skills={progress.focus_skills ?? []} lang={lang} limit={5} ordered />
@@ -684,7 +698,7 @@ function Workspace({
                 <PlanTable
                   plan={progress.plan ?? null}
                   lang={lang}
-                  onEditGoal={() => setEditingGoal(true)}
+                  onEditGoal={openGoal}
                   onStart={(item) => void startPlanItem(item)}
                   startingId={startingItem}
                 />

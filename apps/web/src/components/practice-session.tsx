@@ -37,6 +37,7 @@ import {
   type PracticeApi,
   type PracticeApiError,
   type QuestionDetail,
+  type QuestionSummary,
   type Submission,
 } from "../lib/practice-api";
 import {
@@ -55,6 +56,7 @@ import {
 type Props = {
   api: PracticeApi;
   questionKey?: string;
+  relatedQuestions?: QuestionSummary[];
   attemptId?: string;
   lang: Lang;
   user: User;
@@ -70,6 +72,7 @@ type Props = {
 export function PracticeSession({
   api,
   questionKey,
+  relatedQuestions = [],
   attemptId,
   lang,
   user,
@@ -99,6 +102,16 @@ export function PracticeSession({
     live = useRef(true);
   const key = `jr-attempt-draft-v1-${user.id}-${attemptId}`;
   const entry = entries.find((e) => e.question_id === question?.id);
+
+  useEffect(() => {
+    if (loading || !attempt?.reference) return;
+    const frame = requestAnimationFrame(() => {
+      const solution = document.getElementById("reference-solution");
+      solution?.focus({ preventScroll: true });
+      solution?.scrollIntoView({ block: "start", behavior: "instant" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [attempt?.reference, loading]);
 
   useEffect(() => {
     live.current = true;
@@ -306,7 +319,7 @@ export function PracticeSession({
     }
   };
 
-  async function start() {
+  async function start(reveal = false) {
     if (!question || guard.current) return;
     guard.current = true;
     setBusy(true);
@@ -327,6 +340,14 @@ export function PracticeSession({
         followAnswer: "",
         pending: null,
       });
+      if (reveal) {
+        try {
+          await api.revealReference(a.id);
+        } catch (e) {
+          // Keep the created attempt reachable and retry reveal there; never create a second one on retry.
+          if (live.current) toast.error(apiMessage(e, lang));
+        }
+      }
       if (live.current) {
         onProgress();
         onStarted(a.id);
@@ -614,23 +635,27 @@ export function PracticeSession({
                         "Write your solution and explain your reasoning. If you get stuck, you can request a hint or reveal a suggested solution.",
                       )}
                     </p>
-                    <button
-                      className="primary"
-                      onClick={() => void start()}
-                      disabled={busy}
-                    >
-                      {busy
-                        ? t("פותחים מקום לפתרון…", "Opening your answer…")
-                        : t("כתיבת פתרון", "Write my answer")}
-                    </button>
+                    <div className="sheet-actions">
+                      <button className="primary" onClick={() => void start()} disabled={busy}>
+                        {busy ? t("פותחים תרגול…", "Opening practice…") : t("כתיבת פתרון", "Write my answer")}
+                      </button>
+                      {question.has_reference && <button onClick={() => void start(true)} disabled={busy}>
+                        {t("לצפות בפתרון המוצע", "View the suggested solution")}
+                      </button>}
+                    </div>
                     <p className="small muted">
                       {t(
-                        "הלחיצה מתחילה תרגול אחד מהמכסה היומית. אפשר לחזור אליו בהמשך דרך ׳התרגול שלי׳.",
-                        "This starts one attempt from your daily allowance. You can return to it later in My practice.",
+                        "כל אחת מהאפשרויות פותחת תרגול אחד מהמכסה היומית. צפייה בפתרון לפני שליחת תשובה מסמנת למידה בעזרת פתרון, ולא הערכה של פתרון עצמאי. התרגול נשמר ב׳התרגול שלי׳.",
+                        "Either option starts one attempt from your daily allowance. Viewing the solution before submitting marks it as learning with a reference, rather than an independent assessment. The attempt stays in My practice.",
                       )}
                     </p>
                   </section>
                 )}
+                {relatedQuestions.length > 0 && <details className="related-questions">
+                  <summary>{t("נוסח נוסף של אותה שאלה", "Another version of this question")}</summary>
+                  <p className="small muted">{t("במאגר מופיעה שאלה אחת לכל בעיה זהה. הנוסח הנוסף נשאר זמין, יחד עם השמירות והתרגולים הקודמים שלו.", "The library shows one entry for the same problem. The other version remains available with its saved records and previous attempts.")}</p>
+                  {relatedQuestions.map((q) => <button type="button" className="text-button" key={q.key} onClick={() => onNew(q.key)}>{q.title}{q.preparation_id ? ` · ${q.preparation_id}` : ""}</button>)}
+                </details>}
                 <PersonalNotes
                   key={question.id}
                   user={user}
@@ -891,6 +916,8 @@ function ReferenceSolution({ text, lang, resources, hasMedia }: {
   return (
     <div
       className="solution"
+      id="reference-solution"
+      tabIndex={-1}
       role="region"
       aria-label={lang === "he" ? "הפתרון המוצע" : "Reference solution"}
     >
@@ -899,7 +926,7 @@ function ReferenceSolution({ text, lang, resources, hasMedia }: {
           ? "פתרון מוצע · בביקורת מקצועית"
           : "Reference · under technical review"}
       </h3>
-      <RichText text={text} />
+      <div className="question-prompt"><StudyText text={text} solution /></div>
       {hasMedia && (!resources.data?.solution_revealed
         ? <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />
         : <>

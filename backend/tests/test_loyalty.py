@@ -6,6 +6,7 @@ import uuid
 from datetime import UTC, date, datetime, timedelta
 
 import pytest
+
 from app.engine import plan_router, scores
 from app.engine.catalog import load_catalog
 from app.engine.plan_router import ProfileSkill
@@ -13,7 +14,6 @@ from app.repo.profiles import LoadedProfile, as_profile_skills
 from app.schemas.engine import AssessmentMode, EvidenceStatus, Importance, PlanSkill, SkillSource
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
-
 from tests.test_practice_hardening import GOOD, SEEDS, scripted
 
 NOW = datetime(2026, 9, 24, 12, 0, tzinfo=UTC)

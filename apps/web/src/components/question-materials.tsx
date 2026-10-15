@@ -1,23 +1,39 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Children, useEffect, useState, type ReactNode } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Download, ExternalLink, RotateCcw } from "lucide-react";
 import type { Lang } from "./auth";
 import type { PracticeApi, QuestionResources, ResourceMedia } from "../lib/practice-api";
 import { visibleQuestionMedia } from "../lib/question-media";
+import { solutionMarkdown } from "../lib/solution-markdown";
 
-export function StudyText({ text }: { text: string }) {
+/** Isolate Latin expressions from the surrounding RTL prose, without changing their text. */
+function BidiText({ children }: { children?: ReactNode }) {
+  return <>{Children.map(children, child => typeof child !== "string" ? child
+    : child.split(/([A-Za-z0-9][\x20-\x7E\u2190-\u2194\u2212]*[A-Za-z0-9)]|[A-Za-z0-9])/g)
+      .map((part, i) => i % 2 ? <bdi key={i} dir="ltr">{part}</bdi> : part))}</>;
+}
+
+export function StudyText({ text, solution = false }: { text: string; solution?: boolean }) {
   return <div className="study-text" dir="auto"><Markdown remarkPlugins={[remarkGfm]} skipHtml
     components={{
+      p: ({ children }) => <p><BidiText>{children}</BidiText></p>,
+      li: ({ children }) => <li><BidiText>{children}</BidiText></li>,
+      strong: ({ children }) => <strong><BidiText>{children}</BidiText></strong>,
+      em: ({ children }) => <em><BidiText>{children}</BidiText></em>,
+      h3: ({ children }) => <h3><BidiText>{children}</BidiText></h3>,
+      td: ({ children }) => <td><BidiText>{children}</BidiText></td>,
+      th: ({ children }) => <th><BidiText>{children}</BidiText></th>,
+      code: ({ children, className }) => <code className={className} dir="ltr">{children}</code>,
       pre: ({ children }) => <pre className="code-block" dir="ltr">{children}</pre>,
       a: ({ href, children }) => href?.startsWith("https://")
-        ? <a href={href} target="_blank" rel="noreferrer">{children}</a> : <span>{children}</span>,
+        ? <a href={href} target="_blank" rel="noreferrer"><BidiText>{children}</BidiText></a> : <span><BidiText>{children}</BidiText></span>,
       // Author text cannot cause arbitrary image requests. Images come only from the signed manifest.
       img: ({ alt }) => <span>{alt}</span>,
       table: ({ children }) => <div className="study-table-scroll"><table>{children}</table></div>,
-    }}>{text}</Markdown></div>;
+    }}>{solution ? solutionMarkdown(text) : text}</Markdown></div>;
 }
 
 export function useQuestionResources(api: PracticeApi, key: string | undefined, enabled: boolean,

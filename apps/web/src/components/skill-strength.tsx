@@ -32,11 +32,13 @@ export function SkillStrength({
     <section className="side-card skill-strength" aria-labelledby="strength-title">
       <h2 id="strength-title">
         {title ?? t("חוזק", "Strength")}
-        <small>{t("המיומנויות שהתפקיד בודק", "the skills the job tests")}</small>
+        <small>{t("מיומנויות למיקוד בתפקיד שלכם", "skills to focus on for your role")}</small>
       </h2>
       {shown.length === 0 ? (
         <p className="muted small">{t("אחרי התשובה הראשונה המיומנויות מתחילות להתמלא כאן.", "After your first answer the skills start filling up here.")}</p>
       ) : (
+        <>
+        <p className="small muted">{t("מבחר מיומנויות למיקוד, לפי היעד שלכם. זו אינה הרשימה המלאה של המיומנויות בתפקיד.", "A selection of focus skills for your goal, rather than every skill in the role.")}</p>
         <ul className="strength-list">
           {shown.map((s) => {
             const tone = strengthTone(s);
@@ -78,6 +80,7 @@ export function SkillStrength({
             );
           })}
         </ul>
+        </>
       )}
     </section>
   );

@@ -3,7 +3,7 @@
 import { Select } from "./ui/select";
 import { toast } from "./toaster";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CalendarDays, Clock3, Sparkles, Target } from "lucide-react";
 import type { Lang } from "./auth";
 import type { Goal, JobType, PracticeApi, Seniority } from "../lib/practice-api";
@@ -23,6 +23,7 @@ export function GoalSetup({
   onSaved,
   onSkip,
   compact = false,
+  focusRequest = 0,
 }: {
   api: PracticeApi;
   lang: Lang;
@@ -30,6 +31,8 @@ export function GoalSetup({
   onSaved: (goal: Goal) => void;
   onSkip?: () => void;
   compact?: boolean;
+  /** Increment on each explicit open, including when this form is already mounted. */
+  focusRequest?: number;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [jobs, setJobs] = useState<JobType[]>([]);
@@ -39,6 +42,16 @@ export function GoalSetup({
   const [seniority, setSeniority] = useState<Seniority>(goal?.seniority ?? "student");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const heading = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (!focusRequest) return;
+    const frame = requestAnimationFrame(() => {
+      heading.current?.focus({ preventScroll: true });
+      heading.current?.scrollIntoView({ block: "start", behavior: "instant" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [focusRequest]);
 
   useEffect(() => {
     let cancelled = false;
@@ -96,7 +109,7 @@ export function GoalSetup({
       <header className="goal-head">
         <Target size={22} aria-hidden="true" />
         <div>
-          <h2 id="goal-title">
+          <h2 id="goal-title" ref={heading} tabIndex={-1}>
             {goal?.complete
               ? t("עדכון היעד שלכם", "Update your goal")
               : t("לאיזה ראיון אתם מתכוננים?", "What are you preparing for?")}

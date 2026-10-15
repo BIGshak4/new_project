@@ -53,6 +53,21 @@ def paths_in(value):
             yield from paths_in(v)
 
 
+def learner_text(edit, ident):
+    """Apply paired website copy without granting approval or editing archived source text."""
+    overrides = edit.get("learner_text", {})
+    if not isinstance(overrides, dict) or (overrides and set(overrides) != {"he", "en"}):
+        raise ValueError(f"{ident}: learner text edits must include Hebrew and English")
+    for replacement in overrides.values():
+        if not isinstance(replacement, dict) or set(replacement) - {"title", "prompt", "reference_solution"}:
+            raise ValueError(f"{ident}: unsupported learner text field")
+        if any(not isinstance(v, str) or not v.strip() for v in replacement.values()):
+            raise ValueError(f"{ident}: learner text must contain nonempty strings")
+    if overrides and set(overrides["he"]) != set(overrides["en"]):
+        raise ValueError(f"{ident}: edit the same learner text fields in both languages")
+    return overrides
+
+
 def load():
     source = json.loads((BANK / "questions.json").read_text(encoding="utf-8-sig"))
     additions = json.loads((SEEDS / "preparation_editorial.json").read_text(encoding="utf-8"))
@@ -65,9 +80,11 @@ def load():
         q = strip_personal(original)
         ident = q["id"]
         edit = additions[ident]
+        overrides = learner_text(edit, ident)
         texts = {}
         for lang in ("he", "en"):
-            text = q["translations"][lang]
+            replacement = overrides.get(lang, {})
+            text = {**q["translations"][lang], **replacement}
             hints = [h["content"] for h in q.get("prepared_hints", []) if h.get("language") == lang]
             if not hints:
                 hints = edit["hints"][lang]
@@ -105,10 +122,12 @@ def load():
             uploads[storage_path] = {"local_path": relative, "sha256": digest, "bytes": path.stat().st_size}
         # Keep ALL technical author data for the gated resource viewer/download, not public catalog output.
         q.pop("prepared_hints", None)
-        q["translations"] = {lang: {**q["translations"][lang], "reference_solution": texts[lang]["reference_solution"]}
+        q["translations"] = {lang: {**q["translations"][lang], **overrides.get(lang, {}),
+                                    "reference_solution": texts[lang]["reference_solution"]}
                              for lang in ("he", "en")}
         q["website_editorial"] = {"solution_added": bool(edit.get("reference_solution")),
-                                  "hints_translated": True, "human_review_pending": True}
+                                  "hints_translated": True, "human_review_pending": True,
+                                  "learner_text_edited": bool(overrides)}
         primary = PRIMARY[i]
         criteria = [
             ("correctness", .55, "Satisfies the specific question and constraints; compare against the proposed reference, accepting equivalent valid approaches.", "עונה נכון על השאלה והאילוצים; יש לקבל גם דרך תקפה אחרת מהפתרון המוצע."),

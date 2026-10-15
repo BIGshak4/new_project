@@ -29,6 +29,7 @@ def catalog():
 
 def test_compilation_preserves_every_question_and_all_original_images(catalog):
     source = json.loads((ROOT / "interview_preparation/questions.json").read_text(encoding="utf-8-sig"))
+    editorial = json.loads((SEEDS / "preparation_editorial.json").read_text(encoding="utf-8"))
     manifest = json.loads((SEEDS / "preparation_uploads.json").read_text(encoding="utf-8"))
     spec = importlib.util.spec_from_file_location("prep_builder", ROOT / "backend/scripts/build_preparation_bank.py")
     builder = importlib.util.module_from_spec(spec)
@@ -56,7 +57,10 @@ def test_compilation_preserves_every_question_and_all_original_images(catalog):
         resource = q.assets["preparation_resource"]
         assert not ({"hint_history", "discussion_summary", "solution_disclosure"} & resource.keys())
         for lang in ("en", "he"):
-            assert q.text(lang).prompt == original["translations"][lang]["prompt"]
+            overrides = editorial[original["id"]].get("learner_text", {}).get(lang, {})
+            assert q.text(lang).prompt == overrides.get("prompt", original["translations"][lang]["prompt"])
+            if "reference_solution" in overrides:
+                assert q.text(lang).reference_solution == overrides["reference_solution"]
             assert q.text(lang).reference_solution
             assert len(q.text(lang).hints) == 3
         s = summary(LoadedQuestion(uuid.uuid4(), q, q.version), "he")

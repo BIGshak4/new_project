@@ -16,20 +16,37 @@ export function OverviewCard({
   goal,
   lang,
   onEditGoal,
+  onStartPractice,
+  onOpenLibrary,
 }: {
   overview: ProgressOverview;
   goal: Goal | null;
   lang: Lang;
   onEditGoal: () => void;
+  onStartPractice: () => void;
+  onOpenLibrary: () => void;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const steps = levelSteps(lang);
+  if (overview.answered === 0) {
+    return (
+      <section className="overview-card progress-first-step" aria-labelledby="first-step-title">
+        <div className="overview-main">
+          <h2 id="first-step-title">{t("ההתקדמות מתחילה בשאלה אחת", "Your progress starts with one question")}</h2>
+          <p>{t("אחרי התשובה הראשונה יופיעו כאן המשוב, החוזקות והנושאים שכדאי לחזק. אין צורך לדעת הכול כדי להתחיל.", "After your first answer, you’ll see feedback, strengths and what to work on next. You don’t need to know everything to begin.")}</p>
+          <div className="sheet-actions">
+            <button type="button" className="primary" onClick={goal?.complete ? onStartPractice : onEditGoal}>
+              {goal?.complete ? t("לתרגול הראשון שלי", "Go to my first practice") : t("להגדיר יעד ולהתחיל", "Set a goal and begin")}
+            </button>
+            <button type="button" onClick={onOpenLibrary}>{t("לבחור שאלה מהמאגר", "Choose a question from the library")}</button>
+          </div>
+        </div>
+      </section>
+    );
+  }
   return (
     <section className="overview-card" aria-labelledby="overview-title">
       <div className="overview-main">
-        <span className="overview-kicker">
-          <Flame size={16} aria-hidden="true" /> {t("איפה אתם עומדים", "Where you stand")}
-        </span>
         <h2 id="overview-title" className="overview-level" dir="auto">
           {overview.level}
         </h2>
@@ -40,7 +57,7 @@ export function OverviewCard({
           {steps.map((step, i) => (
             <li key={step} className={`level-step ${i <= overview.level_rank ? "on" : ""} ${i === overview.level_rank ? "now" : ""}`}>
               <i aria-hidden="true" />
-              <span>{step}</span>
+              <span>{i === overview.level_rank ? t("הרמה שלכם", "Your level") : step}</span>
             </li>
           ))}
         </ol>
@@ -73,13 +90,6 @@ export function OverviewCard({
         <div className="stat stat-weak">
           <strong>{overview.weak}</strong>
           <span>{t("לחיזוק", "to strengthen")}</span>
-        </div>
-        <div className="stat">
-          <strong>
-            {overview.skills_assessed}
-            <small> / {overview.skills_total}</small>
-          </strong>
-          <span>{t("מיומנויות שהוערכו", "skills assessed")}</span>
         </div>
       </div>
       {(overview.skills_to_refresh ?? 0) > 0 && (

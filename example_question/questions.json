@@ -50,13 +50,13 @@
           "title": "Two-out-of-three sensor vote",
           "prompt": "Three one-bit sensors A, B, C are 1 when they detect a fault. Assert alarm if at least two sensors are 1. Give all eight truth-table rows and a simplified Boolean expression. Explain why XOR of the three inputs is not sufficient.",
           "hint": "List the three possible pairs of asserted sensors.",
-          "reference_solution": "alarm = (A & B) | (A & C) | (B & C). For ABC from 000 through 111 the outputs are 0,0,0,1,0,1,1,1. XOR detects odd parity, including a single asserted sensor, and rejects two asserted sensors."
+          "reference_solution": "alarm = (A & B) | (A & C) | (B & C). For ABC from 000 through 111 the outputs are 0,0,0,1,0,1,1,1. XOR detects odd parity, including a single asserted sensor, and rejects two asserted sensors.\n\n**Complete truth table:**\n\n| A | B | C | alarm |\n|---|---|---|---|\n| 0 | 0 | 0 | 0 |\n| 0 | 0 | 1 | 0 |\n| 0 | 1 | 0 | 0 |\n| 0 | 1 | 1 | 1 |\n| 1 | 0 | 0 | 0 |\n| 1 | 0 | 1 | 1 |\n| 1 | 1 | 0 | 1 |\n| 1 | 1 | 1 | 1 |"
         },
         "he": {
           "title": "הכרעת רוב בין שלושה חיישנים",
           "prompt": "שלושה חיישנים של ביט אחד, A, B, C, מחזירים 1 כאשר הם מזהים תקלה. יש להפעיל alarm כאשר לפחות שני חיישנים מחזירים 1. כתבו את כל שמונה שורות טבלת האמת וביטוי בוליאני מצומצם. הסבירו מדוע XOR של שלושת הקלטים אינו מספיק.",
           "hint": "רשמו את שלושת הזוגות האפשריים של חיישנים פעילים.",
-          "reference_solution": "הביטוי הוא alarm = (A & B) | (A & C) | (B & C). עבור ABC מ־000 עד 111 הפלטים הם 0,0,0,1,0,1,1,1. פעולת XOR מזהה זוגיות אי־זוגית, ולכן מפעילה אזעקה גם לחיישן יחיד ואינה מפעילה אותה לשני חיישנים."
+          "reference_solution": "הביטוי הוא alarm = (A & B) | (A & C) | (B & C). עבור ABC מ־000 עד 111 הפלטים הם 0,0,0,1,0,1,1,1. פעולת XOR מזהה זוגיות אי־זוגית, ולכן מפעילה אזעקה גם לחיישן יחיד ואינה מפעילה אותה לשני חיישנים.\n\n**טבלת האמת המלאה:**\n\n| A | B | C | alarm |\n|---|---|---|---|\n| 0 | 0 | 0 | 0 |\n| 0 | 0 | 1 | 0 |\n| 0 | 1 | 0 | 0 |\n| 0 | 1 | 1 | 1 |\n| 1 | 0 | 0 | 0 |\n| 1 | 0 | 1 | 1 |\n| 1 | 1 | 0 | 1 |\n| 1 | 1 | 1 | 1 |"
         }
       },
       "markdown_path": "hardware/boolean_logic/hw-001-sensor-majority.md"
@@ -254,13 +254,13 @@
           "title": "Interrupt priority with a valid flag",
           "prompt": "Four interrupt requests are req[3:0], with req[3] highest priority. Design a combinational encoder returning a two-bit index and valid. If no request is active, require valid=0 and index=0. Give logic or HDL, and outputs for req=0101, 1010, and 0000.",
           "hint": "An ordered if/else chain makes priority explicit.",
-          "reference_solution": "Check bits in order 3,2,1,0 and default both outputs to zero. The outputs (valid,index) are (1,2), (1,3), (0,0). valid distinguishes no request from a request on bit 0."
+          "reference_solution": "Check bits in order 3,2,1,0 and default both outputs to zero. The outputs (valid,index) are (1,2), (1,3), (0,0). valid distinguishes no request from a request on bit 0.\n\n**Implementation:**\n\n```text\nvalid = 0\nindex = 0\nif req[3] == 1:\n    valid = 1; index = 3\nelse if req[2] == 1:\n    valid = 1; index = 2\nelse if req[1] == 1:\n    valid = 1; index = 1\nelse if req[0] == 1:\n    valid = 1; index = 0\n```"
         },
         "he": {
           "title": "קידוד עדיפות לפסיקות",
           "prompt": "ארבע בקשות פסיקה מופיעות ב־req[3:0], כאשר req[3] בעלת העדיפות הגבוהה ביותר. תכננו מקודד קומבינטורי המחזיר index בן שני ביטים ואות valid. אם אין בקשה פעילה, נדרש valid=0 וגם index=0. כתבו לוגיקה או קוד תיאור חומרה וחשבו פלט עבור req=0101, 1010, 0000.",
           "hint": "שרשרת if/else מסודרת מגדירה את העדיפות במפורש.",
-          "reference_solution": "בודקים לפי הסדר 3,2,1,0 ומגדירים ברירת מחדל אפס לשני הפלטים. הזוגות (valid,index) הם (1,2), (1,3), (0,0). אות valid מבדיל בין היעדר בקשה לבין בקשה בביט 0."
+          "reference_solution": "בודקים לפי הסדר 3,2,1,0 ומגדירים ברירת מחדל אפס לשני הפלטים. הזוגות (valid,index) הם (1,2), (1,3), (0,0). אות valid מבדיל בין היעדר בקשה לבין בקשה בביט 0.\n\n**מימוש:**\n\n```text\nvalid = 0\nindex = 0\nif req[3] == 1:\n    valid = 1; index = 3\nelse if req[2] == 1:\n    valid = 1; index = 2\nelse if req[1] == 1:\n    valid = 1; index = 1\nelse if req[0] == 1:\n    valid = 1; index = 0\n```"
         }
       },
       "markdown_path": "hardware/combinational_circuits/hw-005-interrupt-priority.md"
@@ -562,13 +562,13 @@
           "title": "Enabled modulo-six counter",
           "prompt": "Design a positive-edge counter q that cycles 0,1,2,3,4,5,0 while enable=1 and holds while enable=0. Reset is synchronous, active high, and has priority. If q somehow equals 6 or 7, recover to 0 at the next edge even when enable=0. Give next-state logic and the trace from q=4 for enable samples 1,0,1,1 with reset=0.",
           "hint": "Treat invalid states separately from normal counting.",
-          "reference_solution": "Use three flip-flops. Priority: reset -> 0; q>=6 -> 0; enabled -> (q==5 ? 0 : q+1); otherwise hold. Values after the four edges are 5,5,0,1. Recovery is above enable in priority."
+          "reference_solution": "Use three flip-flops. Priority: reset -> 0; q>=6 -> 0; enabled -> (q==5 ? 0 : q+1); otherwise hold. Values after the four edges are 5,5,0,1. Recovery is above enable in priority.\n\n**Implementation:**\n\n```text\nif reset == 1:       q_next = 0\nelse if q >= 6:      q_next = 0\nelse if enable == 0: q_next = q\nelse if q == 5:      q_next = 0\nelse:               q_next = q + 1\n```"
         },
         "he": {
           "title": "מונה מודולו שש עם הפעלה",
           "prompt": "תכננו מונה q הפועל בחזית עולה ועובר בין 0,1,2,3,4,5,0 כאשר enable=1, ושומר ערך כאשר enable=0. האיפוס סינכרוני, פעיל בגבוה ובעל עדיפות. אם q מגיע ל־6 או 7, יש לחזור ל־0 בחזית הבאה גם אם enable=0. כתבו לוגיקת מצב הבא ואת העקבה החל מ־q=4 עבור ערכי enable של 1,0,1,1 כאשר reset=0.",
           "hint": "הפרידו טיפול במצבים לא חוקיים מהספירה הרגילה.",
-          "reference_solution": "נדרשים שלושה flip-flops. סדר העדיפויות: איפוס לאפס; התאוששות לאפס אם q>=6; אם מופעל, מעבר לאפס מ־5 או הגדלה באחד; אחרת שמירה. הערכים אחרי ארבע החזיתות הם 5,5,0,1. ההתאוששות קודמת להפעלה."
+          "reference_solution": "נדרשים שלושה flip-flops. סדר העדיפויות: איפוס לאפס; התאוששות לאפס אם q>=6; אם מופעל, מעבר לאפס מ־5 או הגדלה באחד; אחרת שמירה. הערכים אחרי ארבע החזיתות הם 5,5,0,1. ההתאוששות קודמת להפעלה.\n\n**מימוש:**\n\n```text\nif reset == 1:       q_next = 0\nelse if q >= 6:      q_next = 0\nelse if enable == 0: q_next = q\nelse if q == 5:      q_next = 0\nelse:               q_next = q + 1\n```"
         }
       },
       "markdown_path": "hardware/sequential_circuits/hw-011-mod-six-counter.md"
@@ -613,13 +613,13 @@
           "title": "Load and serial shift priorities",
           "prompt": "A four-bit register has synchronous active-high reset, parallel load, and shift-right enable. Priority is reset, then load, then shift, then hold. A shift inserts serial_in at bit 3. Write next-state logic. Starting from q=1010, apply a shift with serial_in=1, then load=1 and shift=1 with data=0110, then hold. Give the three resulting values.",
           "hint": "Write the priority chain before describing the shift.",
-          "reference_solution": "Use if/else priority and q_next={serial_in,q[3:1]} for a shift. The resulting values are 1101,0110,0110. Simultaneous load and shift performs only the load."
+          "reference_solution": "Use if/else priority and q_next={serial_in,q[3:1]} for a shift. The resulting values are 1101,0110,0110. Simultaneous load and shift performs only the load.\n\n**Implementation:**\n\n```text\nif reset == 1:      q_next = 0000\nelse if load == 1:  q_next = data\nelse if shift == 1: q_next = {serial_in, q[3:1]}\nelse:              q_next = q\n```"
         },
         "he": {
           "title": "עדיפויות בטעינה ובהזזה טורית",
           "prompt": "לאוגר בן ארבעה ביטים יש איפוס סינכרוני פעיל בגבוה, טעינה מקבילית והפעלת הזזה ימינה. סדר העדיפויות הוא איפוס, טעינה, הזזה, שמירה. בהזזה מוכנס serial_in לביט 3. כתבו לוגיקת מצב הבא. החל מ־q=1010 בצעו הזזה עם serial_in=1, אחר כך load=1 וגם shift=1 עם data=0110, ואז שמירה. תנו את שלושת הערכים; האיפוס אינו פעיל בעקבה.",
           "hint": "כתבו את שרשרת העדיפויות לפני מימוש ההזזה.",
-          "reference_solution": "משתמשים בסדר if/else ובהזזה q_next={serial_in,q[3:1]}. התוצאות הן 1101,0110,0110. כאשר טעינה והזזה פעילות יחד, מתבצעת טעינה בלבד."
+          "reference_solution": "משתמשים בסדר if/else ובהזזה q_next={serial_in,q[3:1]}. התוצאות הן 1101,0110,0110. כאשר טעינה והזזה פעילות יחד, מתבצעת טעינה בלבד.\n\n**מימוש:**\n\n```text\nif reset == 1:      q_next = 0000\nelse if load == 1:  q_next = data\nelse if shift == 1: q_next = {serial_in, q[3:1]}\nelse:              q_next = q\n```"
         }
       },
       "markdown_path": "hardware/sequential_circuits/hw-012-load-and-serial-shift.md"
@@ -715,13 +715,13 @@
           "title": "Overlapping 1011 detector",
           "prompt": "Design a Mealy FSM that consumes one input bit per cycle and detects the suffix 1011. Overlap is allowed. Give state meanings and the full transition/output table. For stream 1011011, identify detections using one-based bit positions. The output is evaluated from the current state and current input before the state update.",
           "hint": "Track the longest suffix that is also a prefix of the target.",
-          "reference_solution": "States S0,S1,S2,S3 represent matched prefixes empty,1,10,101. On inputs 0/1 respectively, next states are S0/S1, S2/S1, S0/S3, S2/S1. Only S3 with input 1 emits 1. Detections are at positions 4 and 7; keeping S1 after a detection preserves overlap."
+          "reference_solution": "States S0,S1,S2,S3 represent matched prefixes empty,1,10,101. On inputs 0/1 respectively, next states are S0/S1, S2/S1, S0/S3, S2/S1. Only S3 with input 1 emits 1. Detections are at positions 4 and 7; keeping S1 after a detection preserves overlap.\n\n**Transition/output table:**\n\n| State | x | Next | Output |\n|---|---|---|---|\n| S0 | 0 | S0 | 0 |\n| S0 | 1 | S1 | 0 |\n| S1 | 0 | S2 | 0 |\n| S1 | 1 | S1 | 0 |\n| S2 | 0 | S0 | 0 |\n| S2 | 1 | S3 | 0 |\n| S3 | 0 | S2 | 0 |\n| S3 | 1 | S1 | 1 |"
         },
         "he": {
           "title": "גלאי לרצף חופף 1011",
           "prompt": "תכננו Mealy FSM הקולט ביט אחד בכל מחזור ומזהה סיומת 1011, כולל חפיפה. הגדירו משמעות לכל מצב וכתבו טבלת מעברים ופלט מלאה. עבור הזרם 1011011 ציינו באילו מיקומי ביט מתרחשים זיהויים, כשהספירה מתחילה ב־1. הפלט מחושב מהמצב והקלט הנוכחיים לפני עדכון המצב.",
           "hint": "עקבו אחר הסיומת הארוכה ביותר שהיא גם קידומת של הרצף המבוקש.",
-          "reference_solution": "המצבים S0,S1,S2,S3 מייצגים קידומות ריקה,1,10,101. עבור הקלטים 0/1 המצבים הבאים הם בהתאמה S0/S1, S2/S1, S0/S3, S2/S1. רק במצב S3 עם קלט 1 הפלט הוא 1. הזיהויים במיקומים 4 ו־7; מעבר ל־S1 לאחר זיהוי שומר את החפיפה."
+          "reference_solution": "המצבים S0,S1,S2,S3 מייצגים קידומות ריקה,1,10,101. עבור הקלטים 0/1 המצבים הבאים הם בהתאמה S0/S1, S2/S1, S0/S3, S2/S1. רק במצב S3 עם קלט 1 הפלט הוא 1. הזיהויים במיקומים 4 ו־7; מעבר ל־S1 לאחר זיהוי שומר את החפיפה.\n\n**טבלת המעברים והפלט:**\n\n| State | x | Next | Output |\n|---|---|---|---|\n| S0 | 0 | S0 | 0 |\n| S0 | 1 | S1 | 0 |\n| S1 | 0 | S2 | 0 |\n| S1 | 1 | S1 | 0 |\n| S2 | 0 | S0 | 0 |\n| S2 | 1 | S3 | 0 |\n| S3 | 0 | S2 | 0 |\n| S3 | 1 | S1 | 1 |"
         }
       },
       "markdown_path": "hardware/finite_state_machines/hw-014-overlapping-sequence-1011.md"
@@ -766,13 +766,13 @@
           "title": "Credit dispenser state machine",
           "prompt": "A dispenser costs 3 credits. Each cycle accepts a coin worth 1 or 2, or no coin; these events are mutually exclusive. Track credit 0,1,2. When the current credit plus the coin reaches or exceeds 3, assert dispense for that event, return any excess as change, and return credit to 0. Define a Mealy transition table, including outputs, and trace coins 2,2,1,2 from reset.",
           "hint": "Define outputs on transitions that cross the price threshold.",
-          "reference_solution": "No coin holds credit and emits (dispense,change)=(0,0). For a coin v, total=c+v: if total<3, next=total and outputs zero; otherwise next=0, dispense=1, change=total-3. The trace of (next credit,dispense,change) is (2,0,0),(0,1,1),(1,0,0),(0,1,0)."
+          "reference_solution": "No coin holds credit and emits (dispense,change)=(0,0). For a coin v, total=c+v: if total<3, next=total and outputs zero; otherwise next=0, dispense=1, change=total-3. The trace of (next credit,dispense,change) is (2,0,0),(0,1,1),(1,0,0),(0,1,0).\n\n**Complete table:** Coin 0 means no coin.\n\n| Credit | Coin | Next credit | dispense | change |\n|---|---|---|---|---|\n| 0 | 0 | 0 | 0 | 0 |\n| 0 | 1 | 1 | 0 | 0 |\n| 0 | 2 | 2 | 0 | 0 |\n| 1 | 0 | 1 | 0 | 0 |\n| 1 | 1 | 2 | 0 | 0 |\n| 1 | 2 | 0 | 1 | 0 |\n| 2 | 0 | 2 | 0 | 0 |\n| 2 | 1 | 0 | 1 | 0 |\n| 2 | 2 | 0 | 1 | 1 |"
         },
         "he": {
           "title": "מכונת מצבים לצבירת קרדיט",
           "prompt": "מכונה דורשת 3 יחידות קרדיט. בכל מחזור מתקבל מטבע של 1, מטבע של 2 או שאין מטבע; האירועים זרים זה לזה. עקבו אחר קרדיט 0,1,2. כאשר הקרדיט ועוד המטבע מגיעים לפחות ל־3, הפעילו dispense באותו אירוע, החזירו את העודף ב־change ואפסו את הקרדיט. כתבו טבלת Mealy מלאה עם פלטים ועקבה למטבעות 2,2,1,2 אחרי איפוס.",
           "hint": "הגדירו את הפלטים במעברים שחוצים את מחיר המוצר.",
-          "reference_solution": "ללא מטבע שומרים קרדיט ומפיקים (dispense,change)=(0,0). עבור מטבע v מחשבים total=c+v: אם total<3 שומרים את הסכום והפלטים אפס; אחרת עוברים לאפס, מפעילים dispense ומחזירים total-3. העקבה (קרדיט הבא,dispense,change) היא (2,0,0),(0,1,1),(1,0,0),(0,1,0)."
+          "reference_solution": "ללא מטבע שומרים קרדיט ומפיקים (dispense,change)=(0,0). עבור מטבע v מחשבים total=c+v: אם total<3 שומרים את הסכום והפלטים אפס; אחרת עוברים לאפס, מפעילים dispense ומחזירים total-3. העקבה (קרדיט הבא,dispense,change) היא (2,0,0),(0,1,1),(1,0,0),(0,1,0).\n\n**הטבלה המלאה:** הערך 0 בעמודת Coin מציין שאין מטבע.\n\n| Credit | Coin | Next credit | dispense | change |\n|---|---|---|---|---|\n| 0 | 0 | 0 | 0 | 0 |\n| 0 | 1 | 1 | 0 | 0 |\n| 0 | 2 | 2 | 0 | 0 |\n| 1 | 0 | 1 | 0 | 0 |\n| 1 | 1 | 2 | 0 | 0 |\n| 1 | 2 | 0 | 1 | 0 |\n| 2 | 0 | 2 | 0 | 0 |\n| 2 | 1 | 0 | 1 | 0 |\n| 2 | 2 | 0 | 1 | 1 |"
         }
       },
       "markdown_path": "hardware/finite_state_machines/hw-015-credit-dispenser.md"
@@ -817,13 +817,13 @@
           "title": "Request and acknowledgement controller",
           "prompt": "Design a Moore FSM with states IDLE, WAIT_ACK, DONE. In IDLE, a sampled start=1 enters WAIT_ACK. In WAIT_ACK, req=1 until a sampled ack=1 enters DONE. DONE asserts done=1 for one full cycle then returns to IDLE unconditionally. start outside IDLE and ack outside WAIT_ACK are ignored. Reset enters IDLE. Give outputs, transitions, and behavior if start remains high continuously.",
           "hint": "Do not add an undocumented wait-for-start-to-fall state.",
-          "reference_solution": "Outputs (req,done): IDLE=(0,0), WAIT_ACK=(1,0), DONE=(0,1). Transitions follow the specified guards. A continuously high start launches another request at the next sampling edge in IDLE after DONE. This is a level-sensitive request interface, not a once-per-rising-edge interface."
+          "reference_solution": "Outputs (req,done): IDLE=(0,0), WAIT_ACK=(1,0), DONE=(0,1). Transitions follow the specified guards. A continuously high start launches another request at the next sampling edge in IDLE after DONE. This is a level-sensitive request interface, not a once-per-rising-edge interface.\n\n**Moore table:** Outputs describe the current state, before transition.\n\n| State | Condition | Next | req | done |\n|---|---|---|---|---|\n| IDLE | start=0 | IDLE | 0 | 0 |\n| IDLE | start=1 | WAIT_ACK | 0 | 0 |\n| WAIT_ACK | ack=0 | WAIT_ACK | 1 | 0 |\n| WAIT_ACK | ack=1 | DONE | 1 | 0 |\n| DONE | any | IDLE | 0 | 1 |"
         },
         "he": {
           "title": "בקר בקשה ואישור",
           "prompt": "תכננו Moore FSM עם המצבים IDLE, WAIT_ACK, DONE. ב־IDLE דגימת start=1 מעבירה ל־WAIT_ACK. ב־WAIT_ACK הפלט req=1 עד שדגימת ack=1 מעבירה ל־DONE. במצב DONE הפלט done=1 במשך מחזור שלם ואז חוזרים ל־IDLE ללא תנאי. מתעלמים מ־start מחוץ ל־IDLE ומ־ack מחוץ ל־WAIT_ACK. איפוס מעביר ל־IDLE. תנו פלטים, מעברים והתנהגות כאשר start נשאר גבוה ברציפות.",
           "hint": "אל תוסיפו מצב המתנה לירידת start שלא נדרש במפרט.",
-          "reference_solution": "הפלטים (req,done): במצב IDLE הם (0,0), ב־WAIT_ACK הם (1,0), וב־DONE הם (0,1). המעברים לפי התנאים שניתנו. start שנשאר גבוה מפעיל בקשה נוספת בחזית הדגימה הבאה ב־IDLE לאחר DONE. הממשק רגיש לרמה ואינו מבטיח בקשה יחידה לכל עלייה."
+          "reference_solution": "הפלטים (req,done): במצב IDLE הם (0,0), ב־WAIT_ACK הם (1,0), וב־DONE הם (0,1). המעברים לפי התנאים שניתנו. start שנשאר גבוה מפעיל בקשה נוספת בחזית הדגימה הבאה ב־IDLE לאחר DONE. הממשק רגיש לרמה ואינו מבטיח בקשה יחידה לכל עלייה.\n\n**טבלת Moore:** הפלטים מתייחסים למצב הנוכחי, לפני המעבר.\n\n| State | Condition | Next | req | done |\n|---|---|---|---|---|\n| IDLE | start=0 | IDLE | 0 | 0 |\n| IDLE | start=1 | WAIT_ACK | 0 | 0 |\n| WAIT_ACK | ack=0 | WAIT_ACK | 1 | 0 |\n| WAIT_ACK | ack=1 | DONE | 1 | 0 |\n| DONE | any | IDLE | 0 | 1 |"
         }
       },
       "markdown_path": "hardware/finite_state_machines/hw-016-request-acknowledge.md"
@@ -917,13 +917,13 @@
       "translations": {
         "en": {
           "title": "A pulse crossing into a slower clock",
-          "prompt": "A source clock is 100 MHz and a destination clock is 25 MHz with unrelated phase. A source event is high for one source cycle. Someone proposes two destination-clock flip-flops in series. Explain whether every event is guaranteed to arrive, distinguish pulse loss from metastability, and propose a handshake that guarantees delivery if the source waits for acknowledgement before sending another event.",
+          "prompt": "A source clock is 100 MHz and a destination clock is 25 MHz with unrelated phase. A source event is high for one source cycle. Someone proposes two destination-clock flip-flops in series. Explain whether every event is guaranteed to arrive, distinguish pulse loss from metastability, and propose a handshake that guarantees delivery if the source waits for acknowledgement before sending another event. Assume both clocks continue running and synchronizers eventually settle; the delivery guarantee concerns the logical protocol, not zero physical metastability risk.",
           "hint": "Compare pulse width with destination sampling interval.",
           "reference_solution": "A 10 ns pulse can fall entirely between 40 ns destination edges. Two flops reduce metastability propagation probability but do not guarantee pulse capture or eliminate metastability. Hold a request until a synchronized acknowledgement returns; synchronize each crossing and complete the return-to-zero handshake before reusing it."
         },
         "he": {
           "title": "העברת פולס לתחום שעון איטי",
-          "prompt": "שעון המקור הוא 100 מגה־הרץ ושעון היעד הוא 25 מגה־הרץ, עם מופע לא קשור. אירוע המקור גבוה במשך מחזור מקור יחיד. מוצע להעבירו דרך שני flip-flops בטור הפועלים בשעון היעד. האם כל אירוע מובטח להגיע? הבדילו בין אובדן פולס ל־metastability והציעו handshake המבטיח העברה אם המקור ממתין לאישור לפני האירוע הבא.",
+          "prompt": "שעון המקור הוא 100 מגה־הרץ ושעון היעד הוא 25 מגה־הרץ, עם מופע לא קשור. אירוע המקור גבוה במשך מחזור מקור יחיד. מוצע להעבירו דרך שני flip-flops בטור הפועלים בשעון היעד. האם כל אירוע מובטח להגיע? הבדילו בין אובדן פולס ל־metastability והציעו handshake המבטיח העברה אם המקור ממתין לאישור לפני האירוע הבא. הניחו ששני השעונים ממשיכים לפעול ושהמסנכרנים מתייצבים; הבטחת ההעברה מתייחסת לפרוטוקול הלוגי, ולא לאפס סיכון פיזי של metastability.",
           "hint": "השוו את רוחב הפולס למרווח בין דגימות היעד.",
           "reference_solution": "פולס של 10 ננו־שניות יכול להופיע כולו בין חזיתות יעד המרוחקות 40 ננו־שניות. שני אוגרים מקטינים את הסתברות התפשטות metastability, אך אינם מבטיחים קליטת פולס או מבטלים metastability. מחזיקים בקשה עד שחוזר אישור מסונכרן; מסנכרנים כל מעבר ומשלימים handshake של חזרה לאפס לפני אירוע חדש."
         }
@@ -1021,13 +1021,13 @@
           "title": "Find the unintended latch",
           "prompt": "The shared Verilog block is intended to implement y = en ? d : 0, with four-bit y and d. What happens when en=0 in the current code, and what hardware behavior is inferred? Fix it as combinational logic and explain why adding a clock would change the specification.",
           "hint": "Check whether every output receives a value on every path.",
-          "reference_solution": "When en=0, y is not assigned and retains its previous value: latch behavior. Add else y=4'b0000, or set a default y=0 before the if. A clocked register would update only on clock edges and would not implement the intended combinational function."
+          "reference_solution": "When en=0, y is not assigned and retains its previous value: latch behavior. Add else y=4'b0000, or set a default y=0 before the if. A clocked register would update only on clock edges and would not implement the intended combinational function.\n\n**Implementation:**\n\n```verilog\nalways @(*) begin\n    if (en)\n        y = d;\n    else\n        y = 4'b0000;\nend\n```"
         },
         "he": {
           "title": "איתור Latch לא מכוון",
           "prompt": "קטע Verilog המשותף אמור לממש y = en ? d : 0, כאשר y ו־d הם בני ארבעה ביטים. מה קורה בקוד הקיים כאשר en=0, ואיזו התנהגות חומרה מתקבלת? תקנו ללוגיקה קומבינטורית והסבירו מדוע הוספת שעון תשנה את המפרט.",
           "hint": "בדקו האם כל פלט מקבל ערך בכל מסלול ביצוע.",
-          "reference_solution": "כאשר en=0 אין השמה ל־y ולכן הוא שומר את ערכו הקודם: התנהגות של latch. מוסיפים else y=4'b0000, או ברירת מחדל y=0 לפני ה־if. אוגר עם שעון היה מתעדכן רק בחזיתות ולא היה מממש את הפונקציה הקומבינטורית שנדרשה."
+          "reference_solution": "כאשר en=0 אין השמה ל־y ולכן הוא שומר את ערכו הקודם: התנהגות של latch. מוסיפים else y=4'b0000, או ברירת מחדל y=0 לפני ה־if. אוגר עם שעון היה מתעדכן רק בחזיתות ולא היה מממש את הפונקציה הקומבינטורית שנדרשה.\n\n**מימוש:**\n\n```verilog\nalways @(*) begin\n    if (en)\n        y = d;\n    else\n        y = 4'b0000;\nend\n```"
         }
       },
       "markdown_path": "hardware/hdl_reasoning/hw-020-incomplete-combinational-assignment.md"
@@ -1072,13 +1072,13 @@
           "title": "Count asserted status bits",
           "prompt": "Given a nonnegative integer x with at most 32 bits, count its 1 bits without a built-in population-count function or converting it to a string. Give code or pseudocode, explain why it terminates, and analyze complexity. Test x=0, x=0b10110100, and x=0xFFFFFFFF.",
           "hint": "Inspect how subtracting one changes the lowest set bit.",
-          "reference_solution": "Repeatedly apply x = x & (x-1) while x!=0 and increment a counter. Each step clears the lowest set bit. Counts: 0,4,32. For word width W and k set bits, time O(k)<=O(W), extra space O(1); at fixed W=32 the worst case is bounded."
+          "reference_solution": "Repeatedly apply x = x & (x-1) while x!=0 and increment a counter. Each step clears the lowest set bit. Counts: 0,4,32. For word width W and k set bits, time O(k)<=O(W), extra space O(1); at fixed W=32 the worst case is bounded.\n\n**Implementation:**\n\n```python\ndef count_set_bits(x):\n    count = 0\n    while x != 0:\n        x &= x - 1\n        count += 1\n    return count\n```"
         },
         "he": {
           "title": "ספירת ביטים פעילים",
           "prompt": "נתון מספר שלם לא שלילי x המיוצג לכל היותר ב־32 ביטים. ספרו את ביטי ה־1 ללא פונקציית population count מובנית וללא המרה למחרוזת. כתבו קוד או פסאודו־קוד, הסבירו מדוע הוא מסתיים ונתחו סיבוכיות. בדקו x=0, x=0b10110100, x=0xFFFFFFFF.",
           "hint": "בדקו כיצד חיסור אחד משנה את ביט ה־1 הנמוך ביותר.",
-          "reference_solution": "כל עוד x שונה מאפס מבצעים x = x & (x-1) ומגדילים מונה. כל צעד מנקה את ביט ה־1 הנמוך ביותר. התוצאות: 0,4,32. עבור רוחב מילה W ו־k ביטים פעילים, הזמן O(k)<=O(W) והזיכרון הנוסף O(1); ברוחב קבוע 32 מספר הצעדים חסום."
+          "reference_solution": "כל עוד x שונה מאפס מבצעים x = x & (x-1) ומגדילים מונה. כל צעד מנקה את ביט ה־1 הנמוך ביותר. התוצאות: 0,4,32. עבור רוחב מילה W ו־k ביטים פעילים, הזמן O(k)<=O(W) והזיכרון הנוסף O(1); ברוחב קבוע 32 מספר הצעדים חסום.\n\n**מימוש:**\n\n```python\ndef count_set_bits(x):\n    count = 0\n    while x != 0:\n        x &= x - 1\n        count += 1\n    return count\n```"
         }
       },
       "markdown_path": "software/bit_manipulation/sw-001-count-set-bits.md"
@@ -1122,13 +1122,13 @@
           "title": "Recognize a power of two",
           "prompt": "Write a test for whether an unsigned 32-bit integer x is a power of two, using a constant number of bitwise/arithmetic operations and no loop. Define 1 as a power of two and 0 as not. Explain your expression and evaluate 0,1,12,16, and 0x80000000.",
           "hint": "A power of two has exactly one 1 bit.",
-          "reference_solution": "x!=0 && (x & (x-1))==0. A positive power of two has exactly one set bit. Results: false,true,false,true,true. The nonzero guard prevents accepting 0."
+          "reference_solution": "x!=0 && (x & (x-1))==0. A positive power of two has exactly one set bit. Results: false,true,false,true,true. The nonzero guard prevents accepting 0.\n\n**Implementation:**\n\n```c\n#include <stdbool.h>\n#include <stdint.h>\n\nbool is_power_of_two(uint32_t x) {\n    return x != 0 && (x & (x - UINT32_C(1))) == 0;\n}\n```\n\n```text\nx       = 00010000  (16)\nx - 1   = 00001111  (15)\nAND     = 00000000\n```"
         },
         "he": {
           "title": "זיהוי חזקה של שתיים",
           "prompt": "כתבו בדיקה האם מספר שלם x ללא סימן ברוחב 32 ביטים הוא חזקה של שתיים, באמצעות מספר קבוע של פעולות ביטיות או חשבוניות וללא לולאה. הגדירו 1 כחזקה של שתיים ו־0 כלא. הסבירו את הביטוי ובדקו 0,1,12,16, 0x80000000.",
           "hint": "לחזקה של שתיים יש בדיוק ביט 1 אחד.",
-          "reference_solution": "הביטוי הוא x!=0 && (x & (x-1))==0. לחזקה חיובית של שתיים יש בדיוק ביט 1 יחיד. התוצאות: false,true,false,true,true. התנאי השולל אפס מונע קבלה שגויה שלו."
+          "reference_solution": "הביטוי הוא x!=0 && (x & (x-1))==0. לחזקה חיובית של שתיים יש בדיוק ביט 1 יחיד. התוצאות: false,true,false,true,true. התנאי השולל אפס מונע קבלה שגויה שלו.\n\n**מימוש:**\n\n```c\n#include <stdbool.h>\n#include <stdint.h>\n\nbool is_power_of_two(uint32_t x) {\n    return x != 0 && (x & (x - UINT32_C(1))) == 0;\n}\n```\n\n```text\nx       = 00010000  (16)\nx - 1   = 00001111  (15)\nAND     = 00000000\n```"
         }
       },
       "markdown_path": "software/bit_manipulation/sw-002-power-of-two-check.md"
@@ -1173,13 +1173,13 @@
           "title": "Extract a register field",
           "prompt": "Write C code or precise pseudocode to extract width consecutive bits from uint32_t reg, starting at bit lsb (bit 0 is least significant), returning them right-aligned. Valid inputs satisfy 1<=width<=32, 0<=lsb<=31, and lsb+width<=32. Avoid any shift by 32. Evaluate reg=0xD6, lsb=2, width=3 and the full-width case.",
           "hint": "Handle the full-width boundary before constructing the mask.",
-          "reference_solution": "For width==32 return reg (validity implies lsb==0). Otherwise mask=(UINT32_C(1)<<width)-1 and return (reg>>lsb)&mask. The example returns 5 (101). A uint64_t intermediate mask is another valid approach. Full-width output equals reg."
+          "reference_solution": "For width==32 return reg (validity implies lsb==0). Otherwise mask=(UINT32_C(1)<<width)-1 and return (reg>>lsb)&mask. The example returns 5 (101). A uint64_t intermediate mask is another valid approach. Full-width output equals reg.\n\n**Implementation:**\n\n```c\n#include <stdint.h>\n\n/* Preconditions: 1 <= width <= 32; lsb + width <= 32. */\nuint32_t extract_field(uint32_t reg, unsigned lsb, unsigned width) {\n    if (width == 32) return reg;  /* Valid input implies lsb == 0. */\n    uint32_t mask = (UINT32_C(1) << width) - UINT32_C(1);\n    return (reg >> lsb) & mask;\n}\n```"
         },
         "he": {
           "title": "חילוץ שדה מתוך אוגר",
           "prompt": "כתבו קוד C או פסאודו־קוד מדויק לחילוץ width ביטים רצופים מתוך uint32_t reg, החל מביט lsb, כאשר ביט 0 הוא הנמוך ביותר. החזירו אותם מיושרים לימין. קלט חוקי מקיים 1<=width<=32, 0<=lsb<=31, lsb+width<=32. הימנעו מהזזה ב־32. חשבו עבור reg=0xD6, lsb=2, width=3, וכן במקרה של רוחב מלא.",
           "hint": "טפלו במקרה של רוחב מלא לפני יצירת המסכה.",
-          "reference_solution": "אם width==32 מחזירים reg; חוקיות הקלט מחייבת אז lsb==0. אחרת מחשבים mask=(UINT32_C(1)<<width)-1 ומחזירים (reg>>lsb)&mask. בדוגמה מתקבל 5, כלומר 101. גם מסכה המחושבת במשתנה uint64_t היא פתרון תקין. ברוחב מלא מוחזר reg."
+          "reference_solution": "אם width==32 מחזירים reg; חוקיות הקלט מחייבת אז lsb==0. אחרת מחשבים mask=(UINT32_C(1)<<width)-1 ומחזירים (reg>>lsb)&mask. בדוגמה מתקבל 5, כלומר 101. גם מסכה המחושבת במשתנה uint64_t היא פתרון תקין. ברוחב מלא מוחזר reg.\n\n**מימוש:**\n\n```c\n#include <stdint.h>\n\n/* Preconditions: 1 <= width <= 32; lsb + width <= 32. */\nuint32_t extract_field(uint32_t reg, unsigned lsb, unsigned width) {\n    if (width == 32) return reg;  /* Valid input implies lsb == 0. */\n    uint32_t mask = (UINT32_C(1) << width) - UINT32_C(1);\n    return (reg >> lsb) & mask;\n}\n```"
         }
       },
       "markdown_path": "software/bit_manipulation/sw-003-extract-register-field.md"
@@ -1224,13 +1224,13 @@
           "title": "First element at least a target",
           "prompt": "Given a nondecreasing integer array a of length n, return the first index i with a[i]>=target, or n if none exists. Implement it without a library search in O(log n) time and O(1) extra space. For a=[2,4,4,9], evaluate targets 4,8,10. Explain empty input and repeated values.",
           "hint": "On equality, keep looking to the left.",
-          "reference_solution": "Maintain half-open interval [lo,hi), initially [0,n). While lo<hi, mid=lo+(hi-lo)//2; if a[mid]<target set lo=mid+1, otherwise hi=mid. Return lo. Results: 1,3,4; empty input returns 0."
+          "reference_solution": "Maintain half-open interval [lo,hi), initially [0,n). While lo<hi, mid=lo+(hi-lo)//2; if a[mid]<target set lo=mid+1, otherwise hi=mid. Return lo. Results: 1,3,4; empty input returns 0.\n\n**Implementation:**\n\n```python\ndef lower_bound(a, target):\n    lo, hi = 0, len(a)\n    while lo < hi:\n        mid = lo + (hi - lo) // 2\n        if a[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n```"
         },
         "he": {
           "title": "האיבר הראשון שאינו קטן מהיעד",
           "prompt": "נתון מערך שלמים a באורך n, ממוין בסדר לא יורד. החזירו את האינדקס הראשון i שעבורו a[i]>=target, או n אם אין כזה. ממשו ללא חיפוש ספרייה בזמן O(log n) ובזיכרון נוסף O(1). עבור a=[2,4,4,9] בדקו יעדים 4,8,10. הסבירו טיפול במערך ריק ובערכים חוזרים.",
           "hint": "גם במציאת שוויון ממשיכים לחפש שמאלה.",
-          "reference_solution": "מחזיקים טווח חצי פתוח [lo,hi), המתחיל ב־[0,n). כל עוד lo<hi מחשבים mid=lo+(hi-lo)//2; אם a[mid]<target מעדכנים lo=mid+1, אחרת hi=mid. מחזירים lo. התוצאות: 1,3,4; במערך ריק מוחזר 0."
+          "reference_solution": "מחזיקים טווח חצי פתוח [lo,hi), המתחיל ב־[0,n). כל עוד lo<hi מחשבים mid=lo+(hi-lo)//2; אם a[mid]<target מעדכנים lo=mid+1, אחרת hi=mid. מחזירים lo. התוצאות: 1,3,4; במערך ריק מוחזר 0.\n\n**מימוש:**\n\n```python\ndef lower_bound(a, target):\n    lo, hi = 0, len(a)\n    while lo < hi:\n        mid = lo + (hi - lo) // 2\n        if a[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n```"
         }
       },
       "markdown_path": "software/arrays_and_search/sw-004-first-greater-or-equal.md"
@@ -1275,13 +1275,13 @@
           "title": "Merge sorted measurement lists",
           "prompt": "Two integer arrays of lengths n and m are sorted in nondecreasing order. Merge them into a new sorted array, preserving every occurrence, in O(n+m) time without calling sort. Explain auxiliary space separately from output storage. Show the result for [1,4,4] and [2,4,7], and handle an empty input.",
           "hint": "Use one cursor per array.",
-          "reference_solution": "Advance two indices, append the smaller current value, then append the remaining suffix. On equality either side may go first but neither occurrence is discarded. Result: [1,2,4,4,4,7]. Output uses O(n+m); auxiliary state beyond output is O(1)."
+          "reference_solution": "Advance two indices, append the smaller current value, then append the remaining suffix. On equality either side may go first but neither occurrence is discarded. Result: [1,2,4,4,4,7]. Output uses O(n+m); auxiliary state beyond output is O(1).\n\n**Implementation:**\n\n```text\nout = new array of length n + m\ni = 0; j = 0; k = 0\nwhile i < n and j < m:\n    if a[i] <= b[j]:\n        out[k] = a[i]; i = i + 1\n    else:\n        out[k] = b[j]; j = j + 1\n    k = k + 1\nwhile i < n:\n    out[k] = a[i]; i = i + 1; k = k + 1\nwhile j < m:\n    out[k] = b[j]; j = j + 1; k = k + 1\nreturn out\n```"
         },
         "he": {
           "title": "מיזוג רשימות מדידות ממוינות",
           "prompt": "שני מערכי שלמים באורכים n ו־m ממוינים בסדר לא יורד. מזגו אותם למערך חדש ממוין, תוך שמירת כל המופעים, בזמן O(n+m) וללא קריאה למיון. הפרידו בין זיכרון עזר לזיכרון הפלט. הציגו תוצאה עבור [1,4,4] ו־[2,4,7], וטפלו בקלט ריק.",
           "hint": "השתמשו בסמן נפרד לכל מערך.",
-          "reference_solution": "מקדמים שני אינדקסים, מוסיפים בכל צעד את הערך הנוכחי הקטן יותר ולבסוף את השארית. בשוויון אפשר לבחור כל צד תחילה אך אין להשמיט מופע. התוצאה: [1,2,4,4,4,7]. הפלט דורש O(n+m) והמצב הנוסף מעבר לפלט הוא O(1)."
+          "reference_solution": "מקדמים שני אינדקסים, מוסיפים בכל צעד את הערך הנוכחי הקטן יותר ולבסוף את השארית. בשוויון אפשר לבחור כל צד תחילה אך אין להשמיט מופע. התוצאה: [1,2,4,4,4,7]. הפלט דורש O(n+m) והמצב הנוסף מעבר לפלט הוא O(1).\n\n**מימוש:**\n\n```text\nout = new array of length n + m\ni = 0; j = 0; k = 0\nwhile i < n and j < m:\n    if a[i] <= b[j]:\n        out[k] = a[i]; i = i + 1\n    else:\n        out[k] = b[j]; j = j + 1\n    k = k + 1\nwhile i < n:\n    out[k] = a[i]; i = i + 1; k = k + 1\nwhile j < m:\n    out[k] = b[j]; j = j + 1; k = k + 1\nreturn out\n```"
         }
       },
       "markdown_path": "software/arrays_and_search/sw-005-merge-measurement-streams.md"
@@ -1326,13 +1326,13 @@
           "title": "Find two distinct matching indices",
           "prompt": "Given an unsorted integer array and target T, return any two distinct indices whose values sum to T, or indicate no solution. Assume arithmetic does not overflow. Aim for expected O(n) time using a hash map and state the space cost. Explain [6,6] with T=12 and [6] with T=12. Do not reuse the same element.",
           "hint": "Search for the complement before recording the current element.",
-          "reference_solution": "For each (i,x), look for T-x among earlier values before inserting x->i. Return its stored index and i on a match. [6,6] returns (0,1); [6] has no pair. Expected O(n) time under ordinary hash assumptions and O(n) space; worst-case hashing can be worse."
+          "reference_solution": "For each (i,x), look for T-x among earlier values before inserting x->i. Return its stored index and i on a match. [6,6] returns (0,1); [6] has no pair. Expected O(n) time under ordinary hash assumptions and O(n) space; worst-case hashing can be worse.\n\n**Implementation:**\n\n```python\ndef pair_sum_indices(a, target):\n    seen = {}\n    for i, x in enumerate(a):\n        other = target - x\n        if other in seen:\n            return seen[other], i\n        seen[x] = i\n    return None\n```"
         },
         "he": {
           "title": "מציאת שני אינדקסים שונים שסכומם נתון",
           "prompt": "נתונים מערך שלמים לא ממוין ויעד T. החזירו שני אינדקסים שונים כלשהם שערכיהם מסתכמים ל־T, או ציינו שאין פתרון. הניחו שאין גלישה חשבונית. שאפו לזמן צפוי O(n) באמצעות hash map וציינו עלות זיכרון. הסבירו את [6,6] עם T=12 ואת [6] עם T=12. אסור להשתמש באותו איבר פעמיים.",
           "hint": "חפשו את הערך המשלים לפני שמירת האיבר הנוכחי.",
-          "reference_solution": "לכל (i,x) מחפשים T-x בין הערכים הקודמים לפני הכנסת x->i. בהתאמה מחזירים את האינדקס שנשמר ואת i. עבור [6,6] מוחזר (0,1); עבור [6] אין זוג. הזמן הצפוי O(n) בהנחות הגיבוב הרגילות והזיכרון O(n); במקרה הגרוע גיבוב עשוי להיות איטי יותר."
+          "reference_solution": "לכל (i,x) מחפשים T-x בין הערכים הקודמים לפני הכנסת x->i. בהתאמה מחזירים את האינדקס שנשמר ואת i. עבור [6,6] מוחזר (0,1); עבור [6] אין זוג. הזמן הצפוי O(n) בהנחות הגיבוב הרגילות והזיכרון O(n); במקרה הגרוע גיבוב עשוי להיות איטי יותר.\n\n**מימוש:**\n\n```python\ndef pair_sum_indices(a, target):\n    seen = {}\n    for i, x in enumerate(a):\n        other = target - x\n        if other in seen:\n            return seen[other], i\n        seen[x] = i\n    return None\n```"
         }
       },
       "markdown_path": "software/arrays_and_search/sw-006-pair-sum-indices.md"
@@ -1377,13 +1377,13 @@
           "title": "Fixed-capacity circular queue",
           "prompt": "Implement a single-threaded FIFO queue of capacity 4 using an array, a head index, and a size counter. Enqueue on a full queue must fail without overwriting; dequeue on empty must fail. Define the insertion index and updates. Trace enqueue 10,20,30; dequeue twice; enqueue 40,50,60. Give logical contents, head, and size, starting from head=0,size=0.",
           "hint": "The count distinguishes full and empty even when indices wrap.",
-          "reference_solution": "Insert at (head+size)%4, then increment size if not full. Remove at head, set head=(head+1)%4 and decrement size if nonempty. Final logical contents [30,40,50,60], head=2,size=4; physical array [50,60,30,40]. Both operations are O(1)."
+          "reference_solution": "Insert at (head+size)%4, then increment size if not full. Remove at head, set head=(head+1)%4 and decrement size if nonempty. Final logical contents [30,40,50,60], head=2,size=4; physical array [50,60,30,40]. Both operations are O(1).\n\n**Implementation:**\n\n```text\nenqueue(value):\n    if size == 4: return FAILURE\n    a[(head + size) % 4] = value\n    size = size + 1\n    return SUCCESS\n\ndequeue():\n    if size == 0: return FAILURE\n    value = a[head]\n    head = (head + 1) % 4\n    size = size - 1\n    return SUCCESS, value\n```"
         },
         "he": {
           "title": "תור מעגלי בקיבולת קבועה",
           "prompt": "ממשו תור FIFO לתהליכון יחיד בקיבולת 4 באמצעות מערך, אינדקס head ומונה size. הכנסה לתור מלא נכשלת ללא דריסה; הוצאה מתור ריק נכשלת. הגדירו את אינדקס ההכנסה והעדכונים. עקבו אחרי הכנסת 10,20,30; שתי הוצאות; הכנסת 40,50,60. תנו תוכן לוגי, head ו־size, החל מ־head=0,size=0.",
           "hint": "המונה מבדיל בין מלא לריק גם כשהאינדקסים נכרכים.",
-          "reference_solution": "מכניסים ב־(head+size)%4 ומגדילים size אם התור אינו מלא. מוציאים מ־head, מעדכנים head=(head+1)%4 ומקטינים size אם אינו ריק. לבסוף התוכן הלוגי [30,40,50,60], עם head=2,size=4; המערך הפיזי [50,60,30,40]. שתי הפעולות O(1)."
+          "reference_solution": "מכניסים ב־(head+size)%4 ומגדילים size אם התור אינו מלא. מוציאים מ־head, מעדכנים head=(head+1)%4 ומקטינים size אם אינו ריק. לבסוף התוכן הלוגי [30,40,50,60], עם head=2,size=4; המערך הפיזי [50,60,30,40]. שתי הפעולות O(1).\n\n**מימוש:**\n\n```text\nenqueue(value):\n    if size == 4: return FAILURE\n    a[(head + size) % 4] = value\n    size = size + 1\n    return SUCCESS\n\ndequeue():\n    if size == 0: return FAILURE\n    value = a[head]\n    head = (head + 1) % 4\n    size = size - 1\n    return SUCCESS, value\n```"
         }
       },
       "markdown_path": "software/data_structures/sw-007-bounded-circular-queue.md"
@@ -1428,13 +1428,13 @@
           "title": "Validate nested brackets",
           "prompt": "A string contains only (), [], and {} characters. Determine whether it is correctly nested. The empty string is valid. Give an algorithm and time/space complexity. Evaluate \"([]{})\", \"([)]\", and \"]\". Explain why counting opening and closing brackets alone is insufficient.",
           "hint": "The most recent unmatched opener must close first.",
-          "reference_solution": "Push opening brackets onto a stack. A closing bracket must match the top; reject an empty stack or mismatch. Accept only if the stack is empty at the end. Results true,false,false. Time O(n), worst-case space O(n). Counts miss nesting order."
+          "reference_solution": "Push opening brackets onto a stack. A closing bracket must match the top; reject an empty stack or mismatch. Accept only if the stack is empty at the end. Results true,false,false. Time O(n), worst-case space O(n). Counts miss nesting order.\n\n**Implementation:**\n\n```python\ndef valid_brackets(text):\n    pairs = {')': '(', ']': '[', '}': '{'}\n    stack = []\n    for c in text:\n        if c in '([{':\n            stack.append(c)\n        elif not stack or stack.pop() != pairs[c]:\n            return False\n    return not stack\n```"
         },
         "he": {
           "title": "בדיקת תקינות סוגריים מקוננים",
           "prompt": "מחרוזת מכילה רק תווי סוגריים מסוג (), [], {}. קבעו אם הקינון תקין; מחרוזת ריקה תקינה. תנו אלגוריתם וסיבוכיות זמן וזיכרון. בדקו \"([]{})\", \"([)]\", \"]\". הסבירו מדוע ספירת סוגריים פותחים וסוגרים בלבד אינה מספיקה.",
           "hint": "הסוגר הפותח האחרון שעדיין לא נסגר צריך להיסגר ראשון.",
-          "reference_solution": "דוחפים סוגר פותח למחסנית. סוגר סוגר חייב להתאים לראש המחסנית; מחסנית ריקה או אי־התאמה גוררות דחייה. מקבלים רק אם המחסנית ריקה בסוף. התוצאות true,false,false. זמן O(n), זיכרון במקרה הגרוע O(n). ספירה אינה בודקת סדר קינון."
+          "reference_solution": "דוחפים סוגר פותח למחסנית. סוגר סוגר חייב להתאים לראש המחסנית; מחסנית ריקה או אי־התאמה גוררות דחייה. מקבלים רק אם המחסנית ריקה בסוף. התוצאות true,false,false. זמן O(n), זיכרון במקרה הגרוע O(n). ספירה אינה בודקת סדר קינון.\n\n**מימוש:**\n\n```python\ndef valid_brackets(text):\n    pairs = {')': '(', ']': '[', '}': '{'}\n    stack = []\n    for c in text:\n        if c in '([{':\n            stack.append(c)\n        elif not stack or stack.pop() != pairs[c]:\n            return False\n    return not stack\n```"
         }
       },
       "markdown_path": "software/data_structures/sw-008-balanced-brackets.md"
@@ -1479,13 +1479,13 @@
           "title": "Reverse a linked list in place",
           "prompt": "Given the head of a finite, acyclic singly linked list, reverse the links in place and return the new head. Use O(n) time and O(1) extra space without recursion or new nodes. Show pointer updates and explain empty and one-node lists. Preserve all nodes.",
           "hint": "Preserve access to the remaining list before reversing a link.",
-          "reference_solution": "Initialize prev=null,curr=head. Repeatedly save next=curr.next, assign curr.next=prev, then prev=curr and curr=next. Return prev. Saving next before overwriting the link preserves the unprocessed suffix. Empty returns null; one node returns that node with next=null."
+          "reference_solution": "Initialize prev=null,curr=head. Repeatedly save next=curr.next, assign curr.next=prev, then prev=curr and curr=next. Return prev. Saving next before overwriting the link preserves the unprocessed suffix. Empty returns null; one node returns that node with next=null.\n\n**Implementation:**\n\n```text\nprev = null\ncurr = head\nwhile curr != null:\n    next = curr.next\n    curr.next = prev\n    prev = curr\n    curr = next\nreturn prev\n```"
         },
         "he": {
           "title": "היפוך רשימה מקושרת במקום",
           "prompt": "נתון ראש של רשימה מקושרת חד־כיוונית, סופית וללא מעגלים. הפכו את הקישורים במקום והחזירו את הראש החדש. השתמשו בזמן O(n) ובזיכרון נוסף O(1), ללא רקורסיה או צמתים חדשים. הציגו עדכון מצביעים והסבירו רשימה ריקה ורשימה של צומת אחד. יש לשמר את כל הצמתים.",
           "hint": "שמרו גישה לשאר הרשימה לפני הפיכת הקישור.",
-          "reference_solution": "מאתחלים prev=null,curr=head. בכל צעד שומרים next=curr.next, מבצעים curr.next=prev ואז prev=curr ו־curr=next. מחזירים prev. שמירת next לפני דריסת הקישור שומרת גישה לשאר הרשימה. רשימה ריקה מחזירה null; צומת יחיד מוחזר עם next=null."
+          "reference_solution": "מאתחלים prev=null,curr=head. בכל צעד שומרים next=curr.next, מבצעים curr.next=prev ואז prev=curr ו־curr=next. מחזירים prev. שמירת next לפני דריסת הקישור שומרת גישה לשאר הרשימה. רשימה ריקה מחזירה null; צומת יחיד מוחזר עם next=null.\n\n**מימוש:**\n\n```text\nprev = null\ncurr = head\nwhile curr != null:\n    next = curr.next\n    curr.next = prev\n    prev = curr\n    curr = next\nreturn prev\n```"
         }
       },
       "markdown_path": "software/data_structures/sw-009-reverse-singly-linked-list.md"
@@ -1529,13 +1529,13 @@
           "title": "Find an array boundary error",
           "prompt": "The shared C function should sum exactly n int elements. For n>0, a points to at least n valid elements. For n=0, a may be NULL. Assume every partial sum fits in int. Identify and fix the error, explain n=0 and n=1, and state time and extra-space complexity.",
           "hint": "Count iterations, not just the starting index.",
-          "reference_solution": "Replace i<=n with i<n. Valid indices are 0 through n-1. The original reads a[n], and even dereferences a at n=0. Correct code returns 0 without access for n=0 and a[0] for n=1. Time O(n), extra space O(1)."
+          "reference_solution": "Replace i<=n with i<n. Valid indices are 0 through n-1. The original reads a[n], and even dereferences a at n=0. Correct code returns 0 without access for n=0 and a[0] for n=1. Time O(n), extra space O(1).\n\n**Implementation:**\n\n```c\n#include <stddef.h>\n\nint sum_samples(const int *a, size_t n) {\n    int total = 0;\n    for (size_t i = 0; i < n; ++i) {\n        total += a[i];\n    }\n    return total;\n}\n```"
         },
         "he": {
           "title": "איתור שגיאת גבול במערך",
           "prompt": "פונקציית C המשותפת אמורה לסכום בדיוק n איברים מסוג int. עבור n>0, המצביע a מצביע לפחות ל־n איברים חוקיים. עבור n=0 מותר ש־a יהיה NULL. הניחו שכל סכום ביניים נכנס ב־int. מצאו ותקנו את השגיאה, הסבירו n=0 ו־n=1 וציינו סיבוכיות זמן וזיכרון נוסף.",
           "hint": "ספרו את מספר האיטרציות, לא רק את אינדקס ההתחלה.",
-          "reference_solution": "מחליפים i<=n ב־i<n. האינדקסים החוקיים הם מ־0 עד n-1. הקוד המקורי קורא a[n] ואף ניגש דרך a כאשר n=0. הקוד המתוקן מחזיר 0 ללא גישה עבור n=0 ואת a[0] עבור n=1. זמן O(n), זיכרון נוסף O(1)."
+          "reference_solution": "מחליפים i<=n ב־i<n. האינדקסים החוקיים הם מ־0 עד n-1. הקוד המקורי קורא a[n] ואף ניגש דרך a כאשר n=0. הקוד המתוקן מחזיר 0 ללא גישה עבור n=0 ואת a[0] עבור n=1. זמן O(n), זיכרון נוסף O(1).\n\n**מימוש:**\n\n```c\n#include <stddef.h>\n\nint sum_samples(const int *a, size_t n) {\n    int total = 0;\n    for (size_t i = 0; i < n; ++i) {\n        total += a[i];\n    }\n    return total;\n}\n```"
         }
       },
       "markdown_path": "software/code_debugging/sw-010-array-bound-off-by-one.md"

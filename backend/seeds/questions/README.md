@@ -21,6 +21,21 @@ The loader upserts by key, so Harel's existing rows are enriched in place. His a
 keeps working: it reads the prompt, the hints and the reference, and `assets`
 keeps every field it and his access policy rely on.
 
+## Manually collected preparation questions
+
+The 37 `prep-*` questions are compiled separately by `scripts/build_preparation_bank.py`.
+Their original preparation archive stays under `interview_preparation/`.
+Website wording can be edited in `../preparation_editorial.json`, under each PREP's
+`learner_text.he` and `learner_text.en`. Both languages must edit the same fields;
+only `title`, `prompt` and `reference_solution` are accepted. This layer does not
+approve content, calibrate difficulty or enable assessment.
+
+After an edit, rebuild the preparation bank and run `scripts/seed_db.py --check`.
+A running screenshot backend loads its catalog at startup, so start a fresh test
+session to inspect new content. Updating JSON does not update the live database.
+See the [wording review](../../../docs/content-wording-review-2026-10-15.md) for
+the current copy decisions and remaining review limits.
+
 ## What a reviewer checks before a question is published
 
 A question is served to real candidates when `status` is `published` (`reuse_status`

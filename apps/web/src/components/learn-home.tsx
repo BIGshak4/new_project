@@ -73,14 +73,14 @@ export function LearnHome({
   const reduced = useReducedMotion();
   const scrolled = useRef(false);
   useEffect(() => {
-    if (scrolled.current || !program) return;
+    if (scrolled.current || !program || goalSlot || !program.goal_complete || !progress.overview?.answered) return;
     const el = document.querySelector<HTMLElement>(".today-sheet");
     if (!el) return;
     scrolled.current = true;
     if (shouldScrollToNode(el.getBoundingClientRect(), window.innerHeight)) {
       el.scrollIntoView({ block: "start", behavior: reduced ? "auto" : "smooth" });
     }
-  }, [program, reduced]);
+  }, [program, reduced, goalSlot, progress.overview?.answered]);
 
   async function start(node: PathNode | null) {
     const id = node?.item.id ?? undefined;
@@ -110,6 +110,7 @@ export function LearnHome({
   const current = todayNodes.find((n) => n.state === "current") ?? null;
   const today = todayProgress(program);
   const overview = progress.overview ?? null;
+  const firstPractice = !overview || overview.answered === 0;
   const daysLabel = daysToGoLabel(goal?.days_to_interview ?? program?.plan.days_to_interview, lang);
   const minutes = goal?.minutes_per_day ?? program?.plan.minutes_per_day ?? null;
   const Arrow = lang === "he" ? ArrowLeft : ArrowRight;
@@ -189,7 +190,7 @@ export function LearnHome({
           <p className="loading loading-sheet" role="status">
             {t("טוענים את התוכנית…", "Loading your program…")}
           </p>
-        ) : !goalComplete ? (
+        ) : !goalComplete && !goalSlot ? (
           <section className="sheet path-empty">
             <Target size={28} aria-hidden="true" />
             <p>
@@ -202,7 +203,7 @@ export function LearnHome({
               {t("להגדיר את היעד", "Set my goal")}
             </button>
           </section>
-        ) : nodes.length === 0 ? (
+        ) : !goalComplete ? null : nodes.length === 0 ? (
           <section className="sheet path-empty">
             <h2>{t("עוד אין תוכנית לצייר.", "Nothing to draw yet.")}</h2>
             <p>
@@ -240,6 +241,8 @@ export function LearnHome({
                         ? t("פותחים…", "Opening…")
                         : current.kind === "interview"
                           ? t("לראיון", "To the interview")
+                          : firstPractice
+                            ? t("להתחיל את התרגול הראשון", "Start my first practice")
                           : current.item.status === "started"
                             ? t("להמשיך מאיפה שעצרתם", "Continue where you stopped")
                             : t(`${minutesWord(current.item.minutes, lang)}. קדימה`, `${current.item.minutes} minutes. Go`)}{" "}
