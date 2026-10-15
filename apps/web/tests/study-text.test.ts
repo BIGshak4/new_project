@@ -33,6 +33,25 @@ test("mixed technical headings at every level isolate the whole expression", () 
   }
 });
 
+test("table columns follow their own header language instead of the surrounding prose", () => {
+  const text = "הטבלה הטכנית מופיעה כאן.\n\n| `A` | **B** | C | alarm |\n|---|---|---|---|\n| 0 | 1 | 0 | 1 |\n\nAn English introduction.\n\n| יום | עבודה |\n|---|---|\n| היום | Practice |";
+  const html = renderToStaticMarkup(createElement(StudyText, { text }));
+  assert.deepEqual([...html.matchAll(/<table dir="(ltr|rtl)">/g)].map((match) => match[1]), ["ltr", "rtl"]);
+  assert.match(html, /<code dir="ltr">A<\/code>/);
+  assert.ok(html.indexOf("A</code>") < html.indexOf("alarm</bdi>"));
+});
+
+test("table direction skips neutral digits and punctuation and keeps numeric tables LTR", () => {
+  for (const [text, direction] of [
+    ["| (1) קלט | פלט |\n|---|---|\n| A | B |", "rtl"],
+    ["| 0 | 1 |\n|---|---|\n| 1 | 0 |", "ltr"],
+    ["| מצב | next |\n|---|---|\n| S0 | S1 |", "rtl"],
+  ] as const) {
+    const html = renderToStaticMarkup(createElement(StudyText, { text }));
+    assert.match(html, new RegExp(`<table dir="${direction}">`));
+  }
+});
+
 test("formatting retains the existing protections against author HTML, image requests and unsafe links", () => {
   const html = renderToStaticMarkup(createElement(StudyText, { text: '<script>alert(1)</script>\n\n![image](https://example.com/private.png)\n\n[link](javascript:alert(1))' }));
   assert.doesNotMatch(html, /<script|<img|javascript:|href=/);

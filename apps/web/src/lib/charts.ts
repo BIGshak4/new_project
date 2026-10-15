@@ -66,6 +66,8 @@ export function whyLabel(why: NextQuestion["why"], lang: "he" | "en") {
     consolidate: ["ביסוס", "Consolidate"],
     advance: ["התקדמות", "Advance"],
     explore: ["נושא חדש", "Explore"],
+    map: ["מיומנות שטרם נבדקה", "Unassessed skill"],
+    same_skill: ["עוד באותה מיומנות", "More on this skill"],
   };
   return (labels[why] ?? [why, why])[lang === "he" ? 0 : 1];
 }

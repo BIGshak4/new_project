@@ -37,3 +37,22 @@ test("next-question titles, focus and reasons keep their expression order", asyn
   assert.equal((html.match(/<bdi dir="ltr">A XOR B<\/bdi>/g) ?? []).length, 3);
   assert.match(html.replace(/<[^>]*>/g, ""), /בדיקת A XOR B/);
 });
+
+test("new plan-based recommendation reasons render readable badges in both languages", async () => {
+  const { NextUpCard } = await import("../src/components/evaluation-panel");
+  const labels = {
+    map: { he: "מיומנות שטרם נבדקה", en: "Unassessed skill" },
+    same_skill: { he: "עוד באותה מיומנות", en: "More on this skill" },
+  } as const;
+  for (const why of ["map", "same_skill"] as const) {
+    for (const lang of ["he", "en"] as const) {
+      const next: NextQuestion = {
+        key: "q", title: "Question", subject: "digital_logic", skill: "gates", difficulty: 2,
+        why, reason: "The next planned skill to practise.",
+      };
+      const html = renderToStaticMarkup(createElement(NextUpCard, { next, lang, onStart: () => {} }));
+      assert.ok(html.includes(`<span class="badge why-${why}">${labels[why][lang]}</span>`));
+      assert.doesNotMatch(html, new RegExp(`>\\s*${why}\\s*<`));
+    }
+  }
+});

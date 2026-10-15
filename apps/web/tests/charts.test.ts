@@ -79,4 +79,8 @@ test("coverage is assessed skills over plan skills, rounded", () => {
 test("why labels exist in both languages", () => {
   assert.equal(whyLabel("reinforce", "en"), "Reinforce");
   assert.equal(whyLabel("explore", "he"), "נושא חדש");
+  assert.equal(whyLabel("map", "he"), "מיומנות שטרם נבדקה");
+  assert.equal(whyLabel("map", "en"), "Unassessed skill");
+  assert.equal(whyLabel("same_skill", "he"), "עוד באותה מיומנות");
+  assert.equal(whyLabel("same_skill", "en"), "More on this skill");
 });

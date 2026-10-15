@@ -167,7 +167,7 @@ export type NextQuestion = {
   subject: string;
   skill: string;
   difficulty: number;
-  why: "reinforce" | "consolidate" | "advance" | "explore";
+  why: "reinforce" | "consolidate" | "advance" | "explore" | "map" | "same_skill";
   reason: string;
   /** what was hard in this attempt, in the practice language, when a known mistake was recognised */
   focus?: string | null;

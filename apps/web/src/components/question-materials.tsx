@@ -3,12 +3,26 @@
 import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import type { Element, ElementContent } from "hast";
 import { Download, ExternalLink, RotateCcw } from "lucide-react";
 import type { Lang } from "./auth";
 import type { PracticeApi, QuestionResources, ResourceMedia } from "../lib/practice-api";
 import { visibleQuestionMedia } from "../lib/question-media";
 import { solutionMarkdown } from "../lib/solution-markdown";
 import { BidiText } from "./bidi-text";
+
+function tableDirection(node?: Element): "rtl" | "ltr" {
+  function textContent(part: Element | ElementContent | undefined): string {
+    if (!part) return "";
+    if (part.type === "text") return part.value;
+    return "children" in part ? part.children.map(textContent).join("") : "";
+  }
+  const header = node?.children.find((part) => part.type === "element" && part.tagName === "thead");
+  // Read the original Markdown node: rendered LTR <bdi> children are ignored by HTML dir="auto".
+  const strong = /[\p{L}\u200e\u200f]/u;
+  const first = textContent(header).match(strong)?.[0] ?? textContent(node).match(strong)?.[0];
+  return first && /[\p{Script=Hebrew}\p{Script=Arabic}\u200f]/u.test(first) ? "rtl" : "ltr";
+}
 
 export function StudyText({ text, solution = false }: { text: string; solution?: boolean }) {
   return <div className="study-text" dir="auto"><Markdown remarkPlugins={[remarkGfm]} skipHtml
@@ -31,7 +45,7 @@ export function StudyText({ text, solution = false }: { text: string; solution?:
         ? <a href={href} target="_blank" rel="noreferrer"><BidiText>{children}</BidiText></a> : <span><BidiText>{children}</BidiText></span>,
       // Author text cannot cause arbitrary image requests. Images come only from the signed manifest.
       img: ({ alt }) => <span>{alt}</span>,
-      table: ({ children }) => <div className="study-table-scroll"><table>{children}</table></div>,
+      table: ({ children, node }) => <div className="study-table-scroll"><table dir={tableDirection(node)}>{children}</table></div>,
     }}>{solution ? solutionMarkdown(text) : text}</Markdown></div>;
 }
 
