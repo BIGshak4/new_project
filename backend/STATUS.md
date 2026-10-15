@@ -944,7 +944,8 @@ blocks, universal gates, state encoding; 20 hidden); digital design and FPGA: ar
 **Not in this step.** A job type still adds no skill: the 26 coding and estimation questions whose primary skill is
 outside the role's plan stay library-only for every job type. Adding a job type's own skills (arrays, data
 structures for embedded and software) needs a required level per skill and is a separate decision. Evidence age
-does not pull the suggestion either (readiness and the plan router handle freshness).
+does not pull the suggestion either (readiness and the plan router handle freshness); Shaked decided on 2026-10-15
+that it stays so for now.
 
 **Verified.** `tests/test_job_fit.py` (13 tests): the rule, primary-not-secondary, examples both ways per track, the
 counts (filtered library = everything − excluded primaries, with the 2026-10-15 numbers), the plan's key set and
