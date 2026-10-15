@@ -879,6 +879,7 @@ button.primary:active {
 }
 /* Goal-based readiness keeps the same document hierarchy as the progress board. */
 .readiness-card { min-width: 0; padding: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.readiness-card .board-head h2 { display: flex; align-items: center; gap: 8px; margin: 0; }
 .readiness-card h3 { margin-block: 24px 8px; }
 .readiness-word { font-size: clamp(24px, 3vw, 34px); font-weight: 900; margin-block: 16px 8px; color: var(--link); }
 .readiness-message { max-width: 72ch; margin-block: 12px 20px; }
@@ -902,6 +903,9 @@ button.primary:active {
 .work-ahead-copy h3 { margin-block: 0 8px; }
 .work-ahead-copy p { margin-block: 6px; }
 .company-more { white-space: nowrap; font-weight: 600; color: var(--muted); }
+.question-companies { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.question-companies .company-name { margin-inline-end: 0; }
+.question-companies .company-report-note { flex-basis: 100%; }
 .question-metadata.is-compact { font-size: 14px; gap: 4px; }
 .question-metadata.is-compact .question-companies { font-size: 14px; }
 .study-text bdi { unicode-bidi: isolate; }

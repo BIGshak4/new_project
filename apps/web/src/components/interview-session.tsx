@@ -19,6 +19,7 @@ import {
   type PracticeApiError,
 } from "../lib/practice-api";
 import { apiMessage, bandLabel, readLocal, removeLocal, subjectLabel, writeLocal } from "../lib/practice-ui";
+import { BidiText } from "./bidi-text";
 
 type Props = {
   api: PracticeApi;
@@ -129,7 +130,7 @@ function InterviewLobby({ api, lang, demo, onStarted, initialDuration }: Props) 
           <li>{t("אפשר לבקש רמז, אבל זה נרשם ומקטין את הראיה לשליטה עצמאית.", "You may ask for a hint; it is recorded and lowers the evidence of independent mastery.")}</li>
           <li>{t("אפשר לסיים מוקדם; הדוח מכסה את מה שנענה.", "You can stop early; the report covers what you answered.")}</li>
         </ul>
-        {error && <p className="notice error" role="alert">{error}</p>}
+        {error && <p className="notice error" role="alert"><BidiText>{error}</BidiText></p>}
         <button className="primary" disabled={busy} onClick={() => void start()}>
           <MessageSquareText size={16} aria-hidden="true" /> {busy ? t("פותחים את הראיון…", "Opening the interview…") : t("להתחיל ראיון בכתב", "Start written interview")}
         </button>
@@ -290,7 +291,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
   if (!interview) {
     return (
       <div className="loading" role="status">
-        {error || t("טוענים את הראיון…", "Loading the interview…")}
+        <BidiText>{error || t("טוענים את הראיון…", "Loading the interview…")}</BidiText>
       </div>
     );
   }
@@ -319,7 +320,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
           {t("שאלה", "Question")} {interview.turn_count} · {interview.turns.length} {t("נענו", "answered")}
         </span>
         <span className="interview-plan small muted" title={interview.plan.map((p) => p.label).join(", ")}>
-          {[...new Set(interview.plan.map((p) => subjectLabel(p.subject, lang)))].join(" · ")}
+          <BidiText>{[...new Set(interview.plan.map((p) => subjectLabel(p.subject, lang)))].join(" · ")}</BidiText>
         </span>
         <button className="ghost" disabled={busy} onClick={() => void end()}>
           <Square size={14} /> {t("סיום מוקדם", "End early")}
@@ -338,7 +339,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
         >
           <div className="row spread">
             <span className="badge">
-              {turn.skill_label}
+              <BidiText>{turn.skill_label}</BidiText>
               {turn.trial && <span className="badge trial">{t("בבדיקה חיה", "On trial")}</span>}
             </span>
             <span className="row">
@@ -349,14 +350,12 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
               {turn.question_key && <QuestionReport api={api} questionKey={turn.question_key} lang={lang} context="interview" />}
             </span>
           </div>
-          <p className="interview-prompt" dir="auto">
-            {turn.question}
-          </p>
+          <InterviewQuestionText text={turn.question} />
           {turn.hints.length > 0 && (
             <div className="interview-hints">
               {turn.hints.map((h) => (
                 <p key={h.level} className="hint" dir="auto">
-                  <Lightbulb size={14} /> {h.text}
+                  <Lightbulb size={14} /> <BidiText>{h.text}</BidiText>
                 </p>
               ))}
             </div>
@@ -394,7 +393,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
                     : t("ההערכה לא הושלמה. אפשר לשלוח את התשובה שוב.", "The evaluation did not finish. You can send your answer again.")}
                 </p>
               )}
-              {error && <p className="notice error" role="alert">{error}</p>}
+              {error && <p className="notice error" role="alert"><BidiText>{error}</BidiText></p>}
               {secondsLeft === 0 && (
                 <p className="notice" role="status">
                   {t(
@@ -430,7 +429,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
           <ol>
             {interview.turns.map((x) => (
               <li key={x.index} dir="auto">
-                <span className="badge">{x.skill_label}</span> {x.question.slice(0, 120)}
+                <span className="badge"><BidiText>{x.skill_label}</BidiText></span>{" "}<BidiText>{x.question.slice(0, 120)}</BidiText>
                 {x.question.length > 120 ? "…" : ""}
               </li>
             ))}
@@ -470,7 +469,7 @@ function InterviewReportView({
         <button onClick={onBack}>{t("חזרה לראיונות", "Back to interviews")}</button>
       </div>
       {!report && !error && <div className="loading loading-report" role="status">{t("מכינים את הדוח…", "Preparing the report…")}</div>}
-      {error && <p className="notice error">{error}</p>}
+      {error && <p className="notice error"><BidiText>{error}</BidiText></p>}
       {report && (
         <>
           <div className="fit-cards">
@@ -493,7 +492,7 @@ function InterviewReportView({
           </div>
           {overall && overall.core_gaps.length > 0 && (
             <p className="notice">
-              {t("פערים במיומנויות ליבה:", "Core-skill gaps:")} {overall.core_gaps.join(", ")}
+              {t("פערים במיומנויות ליבה:", "Core-skill gaps:")} <BidiText>{overall.core_gaps.join(", ")}</BidiText>
             </p>
           )}
           <div className="report-columns">
@@ -513,7 +512,7 @@ function InterviewReportView({
                     .map((s) => (
                       <tr key={s.key} className={s.level_gap !== null && s.level_gap < 0 ? "gap" : ""}>
                         <td dir="auto">
-                          {s.label}
+                          <BidiText>{s.label}</BidiText>
                           {s.status === "insufficient_evidence" && (
                             <span className="small muted"> · {t("עדות חלקית", "partial evidence")}</span>
                           )}
@@ -526,7 +525,7 @@ function InterviewReportView({
               </table>
               {report.cover_next_time.length > 0 && (
                 <p className="small muted">
-                  {t("לא נבדקו הפעם:", "Not covered this time:")} {report.cover_next_time.map((s) => s.label).join(", ")}
+                  {t("לא נבדקו הפעם:", "Not covered this time:")} <BidiText>{report.cover_next_time.map((s) => s.label).join(", ")}</BidiText>
                 </p>
               )}
             </section>
@@ -534,7 +533,7 @@ function InterviewReportView({
               <h3>{t("מה לתרגל הלאה", "What to practise next")}</h3>
               <ul>
                 {report.recommended_next_skills.map((s) => (
-                  <li key={s.key} dir="auto">{s.label}</li>
+                  <li key={s.key} dir="auto"><BidiText>{s.label}</BidiText></li>
                 ))}
                 {report.recommended_next_skills.length === 0 &&
                   (report.skills.filter((s) => s.status === "assessed").length >= 3 ? (
@@ -553,7 +552,7 @@ function InterviewReportView({
                   <h3>{t("טיפים", "Tips")}</h3>
                   <ul>
                     {report.top_tips.map((tip, i) => (
-                      <li key={i} dir="auto">{tip}</li>
+                      <li key={i} dir="auto"><BidiText>{tip}</BidiText></li>
                     ))}
                   </ul>
                 </>
@@ -579,12 +578,17 @@ function InterviewReportView({
   );
 }
 
-function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang }) {
+/** Shared by the live question and the completed report so both keep formula direction intact. */
+function InterviewQuestionText({ text }: { text: string }) {
+  return <p className="interview-prompt" dir="auto"><BidiText>{text}</BidiText></p>;
+}
+
+export function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   return (
     <>
       <div className="row spread">
-        <span className="badge">{x.skill_label}</span>
+        <span className="badge"><BidiText>{x.skill_label}</BidiText></span>
         <span className="row">
           <span className={x.band ? `badge band-${x.band.toLowerCase()}` : "badge"}>
             {x.status === "skipped" ? t("לא נענתה", "Not answered") : bandLabel(x.band, lang)}
@@ -596,18 +600,18 @@ function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang }) {
           )}
         </span>
       </div>
-      <p className="interview-prompt" dir="auto">{x.question}</p>
-      {x.answer && <p className="report-answer" dir="auto">{x.answer}</p>}
+      <InterviewQuestionText text={x.question} />
+      {x.answer && <p className="report-answer" dir="auto"><BidiText>{x.answer}</BidiText></p>}
       {x.visual && hasVisual(x.visual) && <VisualAnswer value={x.visual} lang={lang} />}
       {x.flags?.includes("circuit_assessed") && (
         <span className="chip">
           <Cpu size={14} /> {t("המעגל שציירתם נבדק", "Your circuit was assessed")}
         </span>
       )}
-      {x.summary && <p dir="auto"><strong>{t("סיכום:", "Summary:")}</strong> {x.summary}</p>}
+      {x.summary && <p dir="auto"><strong>{t("סיכום:", "Summary:")}</strong> <BidiText>{x.summary}</BidiText></p>}
       {x.key_points_missed.length > 0 && (
         <p className="small" dir="auto">
-          {t("מה חסר:", "Missing:")} {x.key_points_missed.join(" · ")}
+          {t("מה חסר:", "Missing:")} <BidiText>{x.key_points_missed.join(" · ")}</BidiText>
         </p>
       )}
       {x.check && (
@@ -618,7 +622,7 @@ function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang }) {
               ? t("הבדיקה האוטומטית נכשלה", "Automatic check failed")
               : t("הבדיקה האוטומטית לא הכריעה", "Automatic check inconclusive")}
           {": "}
-          {x.check.detail}
+          <BidiText>{x.check.detail}</BidiText>
         </p>
       )}
     </>

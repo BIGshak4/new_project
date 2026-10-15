@@ -12,7 +12,7 @@ export function ReportedCompanies({ question, lang, note = false, compact = fals
     <span className="metadata-label">{lang === "he" ? "נשאלה ב:" : "Asked at:"}</span>{" "}
     {names.length ? shown.map(name => <bdi className="company-name" key={name}>{name}</bdi>)
       : <span className="metadata-empty">{lang === "he" ? "טרם נוסף דיווח על חברה" : "No company reported yet"}</span>}
-    {remaining > 0 && <span className="company-more">{lang === "he" ? `ועוד ${remaining}` : `+${remaining} more`}</span>}
+    {remaining > 0 && <bdi className="company-more" dir={lang === "he" ? "rtl" : "ltr"}>{lang === "he" ? `ועוד ${remaining}` : `+${remaining} more`}</bdi>}
     {note && <p className="company-report-note">{companyReportNote(lang)}</p>}
   </div>;
 }

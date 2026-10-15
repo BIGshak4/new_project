@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import type { PracticeApi } from "../src/lib/practice-api";
+import type { InterviewTurn, PracticeApi } from "../src/lib/practice-api";
 
 // VisualAnswer imports the shared Supabase client. Rendering the lobby needs no
 // network, and this local-only configuration makes the component import inert.
@@ -47,4 +47,25 @@ test("a planned interview opens with its supported duration, while absent or uns
     assert.equal(selectedRadio.length, 1);
     assert.match(selectedRadio[0], new RegExp(`<strong>${selected}</strong>`));
   }
+});
+
+test("live/report question prose and report feedback isolate formulas inside Hebrew", async () => {
+  const { TurnCard } = await import("../src/components/interview-session");
+  const turn: InterviewTurn = {
+    index: 0, skill: "logic", skill_label: "פעולת XOR ושימושיה", subject: "digital_logic",
+    difficulty: 2, archetype: "explain", question: "מתי A XOR B שווה לאפס?", question_key: "xor",
+    trial: false, status: "done", hints: [], answer: "אם A = B התוצאה אפס",
+    asked_at: "2026-10-15T10:00:00Z", answered_at: "2026-10-15T10:01:00Z",
+    band: "STRONG", summary: "הסבר נכון עבור A XOR B בשוויון", key_points_hit: [],
+    key_points_missed: ["בדיקה של A = 0 חסרה"],
+    check: { type: "truth_table", passed: true, detail: "בדיקת A XOR B עברה" },
+    action_after: null, subject_switch: false,
+  };
+  const html = renderToStaticMarkup(createElement(TurnCard, { turn, lang: "he" }));
+  assert.match(html, /מתי <bdi dir="ltr">A XOR B<\/bdi> שווה לאפס\?/);
+  assert.match(html, /אם <bdi dir="ltr">A = B<\/bdi> התוצאה אפס/);
+  assert.match(html, /פעולת <bdi dir="ltr">XOR<\/bdi> ושימושיה/);
+  assert.match(html, /הסבר נכון עבור <bdi dir="ltr">A XOR B<\/bdi> בשוויון/);
+  assert.match(html, /בדיקה של <bdi dir="ltr">A = 0<\/bdi> חסרה/);
+  assert.match(html, /בדיקת <bdi dir="ltr">A XOR B<\/bdi> עברה/);
 });
