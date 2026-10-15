@@ -197,13 +197,31 @@ class TestPlanRouter:
                                         bank_coverage=self.coverage)
         assert items and any(i.activity.mode == "deep" for i in items)
         for day in range(7):
-            assert sum(i.activity.estimated_minutes for i in items if i.day_index == day) <= 25 + 20
+            assert sum(i.activity.estimated_minutes for i in items if i.day_index == day) <= 25   # never above the budget
         assert len({(i.activity.mode, tuple(i.activity.skills)) for i in items}) == len(items)
 
     def test_week_two_adds_a_simulation_when_time_allows(self, plan):
         items = plan_router.weekly_plan(plan=plan, profile={}, week_start=TODAY, minutes_per_day=45,
                                         bank_coverage=self.coverage, week_index=1)
         assert any(i.activity.mode == "simulation" for i in items)
+
+    def test_no_item_is_longer_than_a_day_and_the_interview_takes_the_length_that_fits(self, plan):
+        """Shaked, 2026-10-15 (task 9): the plan fits the user; a 15-minute goal plans no interview, a 20-minute one a
+        20-minute interview, a 60-minute one the longest (45)."""
+        assert plan_router.simulation_minutes(15) is None and plan_router.simulation_minutes(20) == 20
+        assert plan_router.simulation_minutes(35) == 30 and plan_router.simulation_minutes(60) == 45
+        assert plan_router.simulation_minutes(None) == 40                                        # no budget: the estimate
+        for minutes in (10, 15, 20, 30, 60):
+            items = plan_router.weekly_plan(plan=plan, profile={}, week_start=TODAY, minutes_per_day=minutes,
+                                            bank_coverage=self.coverage, week_index=1)
+            assert items and all(i.activity.estimated_minutes <= minutes for i in items), minutes
+            for day in range(7):
+                assert sum(i.activity.estimated_minutes for i in items if i.day_index == day) <= minutes, (minutes, day)
+            simulations = [i for i in items if i.activity.mode == "simulation"]
+            if minutes < 20:
+                assert not simulations
+            else:
+                assert simulations and simulations[0].activity.estimated_minutes == plan_router.simulation_minutes(minutes)
 
     def test_retention_scheduling(self):
         assert plan_router.schedule_retention(level_before=2, level_after=3, today=TODAY) == TODAY + timedelta(days=4)

@@ -142,10 +142,24 @@ def activity_value(activity: Activity, *, plan: list[PlanSkill], profile: dict[s
 # ----------------------------------------------------------------------------- candidates
 
 
+SIMULATION_DURATIONS = (20, 30, 45)     # the mock interview's lengths (InterviewService.DURATIONS); a plan item takes one of them
+
+
+def simulation_minutes(minutes_per_day: int | None, params: EngineParams = DEFAULT_PARAMS) -> int | None:
+    """The interview length a day of `minutes_per_day` can hold: the longest that fits, None when none does (a goal
+    under 20 minutes a day plans no interview; Shaked, 2026-10-15: the plan fits the user, nothing exceeds the day).
+    Without a budget, the estimate from the parameters."""
+    if minutes_per_day is None:
+        return params.plan_router.estimated_minutes["simulation"]
+    fitting = [d for d in SIMULATION_DURATIONS if d <= minutes_per_day]
+    return max(fitting) if fitting else None
+
+
 def candidate_activities(*, plan: list[PlanSkill], profile: dict[str, ProfileSkill], today: date,
                          bank_coverage: dict[str, dict[str, int]], week_index: int = 0,
-                         params: EngineParams = DEFAULT_PARAMS) -> list[Activity]:
+                         params: EngineParams = DEFAULT_PARAMS, minutes_per_day: int | None = None) -> list[Activity]:
     minutes = params.plan_router.estimated_minutes
+    simulation = simulation_minutes(minutes_per_day, params)
     questioned = [s for s in plan if s.assessment_mode == AssessmentMode.QUESTIONED]
     activities: list[Activity] = []
 
@@ -176,9 +190,9 @@ def candidate_activities(*, plan: list[PlanSkill], profile: dict[str, ProfileSki
                                                      "required": skill.required_level,
                                                      "days": entry.days_since_assessed if entry else None}))
 
-    if week_index >= 1 or coverage(plan, profile) >= params.plan_router.coverage_switch:
+    if simulation is not None and (week_index >= 1 or coverage(plan, profile) >= params.plan_router.coverage_switch):
         top = sorted(questioned, key=lambda s: -s.combined_weight)[:6]
-        activities.append(Activity("simulation", [s.key for s in top], minutes["simulation"], reason_code="simulation",
+        activities.append(Activity("simulation", [s.key for s in top], simulation, reason_code="simulation",
                                    hard=True, reason_facts={}))
     return activities
 
@@ -226,12 +240,12 @@ def weekly_plan(*, plan: list[PlanSkill], profile: dict[str, ProfileSkill], week
         budget = minutes_per_day
         while budget > 0:
             candidates = candidate_activities(plan=plan, profile=profile, today=today, bank_coverage=bank_coverage,
-                                              week_index=week_index, params=params)
+                                              week_index=week_index, params=params, minutes_per_day=minutes_per_day)
             if remaining_days is not None and remaining_days <= params.plan_router.final_days_reserved:
                 reserved = [a for a in candidates if a.mode in ("simulation", "retention_check")]
                 candidates = reserved or candidates
             candidates = [a for a in candidates if (a.mode, tuple(a.skills)) not in used
-                          and a.estimated_minutes <= max(budget, 5)]
+                          and a.estimated_minutes <= budget]            # never above the day's minutes (Shaked, 2026-10-15)
             if not candidates:
                 break
             for activity in candidates:
@@ -247,18 +261,20 @@ def weekly_plan(*, plan: list[PlanSkill], profile: dict[str, ProfileSkill], week
             has_simulation |= best.mode == "simulation"
             budget -= best.estimated_minutes
 
-    # at least one deep practice per week; one simulation from week two when time allows
+    # at least one deep practice per week; one simulation from week two: both only when a day can hold them (Shaked,
+    # 2026-10-15: no item is ever longer than the daily budget)
     minutes = params.plan_router.estimated_minutes
-    if not has_deep:
-        deep = [a for a in candidate_activities(plan=plan, profile=profile, today=week_start,
-                                                bank_coverage=bank_coverage, week_index=week_index, params=params)
+    if not has_deep and minutes["deep"] <= minutes_per_day:
+        deep = [a for a in candidate_activities(plan=plan, profile=profile, today=week_start, bank_coverage=bank_coverage,
+                                                week_index=week_index, params=params, minutes_per_day=minutes_per_day)
                 if a.mode == "deep"]
         if deep:
             items.append(PlannedItem(min(6, len({i.day_index for i in items})), deep[0]))
-    if not has_simulation and week_index >= 1 and minutes_per_day * 7 >= minutes["simulation"]:
+    simulation = simulation_minutes(minutes_per_day, params)
+    if not has_simulation and week_index >= 1 and simulation is not None:
         top = sorted((s for s in plan if s.assessment_mode == AssessmentMode.QUESTIONED),
                      key=lambda s: -s.combined_weight)[:6]
-        items.append(PlannedItem(6, Activity("simulation", [s.key for s in top], minutes["simulation"],
+        items.append(PlannedItem(6, Activity("simulation", [s.key for s in top], simulation,
                                              reason_code="simulation", hard=True)))
     return sorted(items, key=lambda i: i.day_index)
 

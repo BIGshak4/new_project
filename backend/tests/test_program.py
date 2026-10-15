@@ -1,4 +1,4 @@
-"""The saved program: built daily from the profile, carried forward, ticked by attempts and interviews, started
+"""The saved program: built daily from the profile within the user's minutes, ticked by attempts and interviews, started
 from the library. In-memory store, scripted model."""
 
 from __future__ import annotations
@@ -145,156 +145,107 @@ class TestOneProgramActionAtATime:
         assert store.plans[USER].generated_at == rebuilt_at and [i.id for i in again.plan.items] == [i.id for i in first.plan.items]
 
 
-class TestCarryForward:
-    async def test_work_done_ahead_is_counted_before_carried_items_are_placed(self, catalog):
-        """Review finding of 2026-10-15: carried items were placed first and today could exceed the budget."""
+class TestTheDayFitsTheUser:
+    """Task 9 (Shaked, 2026-10-15): the plan fits the user's minutes and never piles up. Work left from earlier days,
+    opened or not, is not carried; the router plans what matters most today within the budget."""
+
+    @staticmethod
+    def age_plan(store, days=1):
+        """The day passes: the saved plan was built `days` ago."""
+        plan = store.plans[USER]
+        plan.week_start = plan.week_start - timedelta(days=days)
+        for item in plan.items:
+            item.created_at = item.created_at - timedelta(days=days)
+        return plan
+
+    async def test_leftovers_from_earlier_days_are_not_carried_and_today_fits_the_budget(self, catalog):
         svc, store = practice(catalog)
         await with_goal(svc, minutes=30)
         await svc.program(USER, language="en")
-        plan = store.plans[USER]
+        plan = self.age_plan(store)
         old = datetime.now(UTC) - timedelta(days=1)
-        plan.week_start = TODAY - timedelta(days=1)
-        for item in plan.items:
-            item.created_at = old
-        plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=1, mode="deep", skills=["counters"], reason="done ahead",
-                                      minutes=20, status="done", created_at=old))                 # today's work, done yesterday
-        for n, skill in enumerate(["truth_tables", "fsm_state_tables"]):
-            plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=[skill], reason=f"left {n}",
-                                          minutes=15, status="planned", created_at=old))         # yesterday's leftovers
-        view = await svc.program(USER, language="en")
-        today = [i for i in view.plan.items if i.day_index == 0]
-        assert any(i.reason == "done ahead" and i.done for i in today)
-        assert sum(i.minutes for i in today) <= 30, [(i.reason, i.minutes, i.status) for i in today]
-        assert {"left 0", "left 1"} <= {i.reason for i in view.plan.items}                       # nothing was lost
-
-    async def test_an_opened_item_is_kept_even_when_the_same_work_was_done_ahead(self, catalog):
-        """Review finding of 2026-10-15: a started item with a live attempt was dropped by the de-duplication."""
-        svc, store = practice(catalog)
-        await with_goal(svc, minutes=60)
-        started = await svc.start_program_item(USER, language="en")
-        assert started.kind == "attempt"
-        plan = store.plans[USER]
-        old = datetime.now(UTC) - timedelta(days=1)
-        plan.week_start = TODAY - timedelta(days=1)
-        for item in plan.items:
-            item.created_at = old
-        opened = stored_item(store, started.item.id)
-        plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=1, mode=opened.mode, skills=list(opened.skills),
-                                      reason="same work, done ahead", minutes=opened.minutes, status="done", created_at=old))
-        view = await svc.program(USER, language="en")
-        kept = [i for i in view.plan.items if i.status == "started"]
-        assert len(kept) == 1 and kept[0].skills[0].key == opened.skills[0]
-        assert store.plan_links[uuid.UUID(started.attempt.id)] == uuid.UUID(kept[0].id)          # the attempt followed it
-        await svc.submit(USER, uuid.UUID(started.attempt.id), "an answer", idempotency_key="k1")
-        assert stored_item(store, kept[0].id).status == "done"
-
-
-    async def test_yesterdays_open_item_leads_today_and_old_or_done_ones_do_not(self, catalog):
-        svc, store = practice(catalog)
-        await with_goal(svc)
-        await svc.program(USER, language="en")
-        plan = store.plans[USER]
-        plan.week_start = TODAY - timedelta(days=1)                  # imitate: this plan was built yesterday
-        old = datetime.now(UTC) - timedelta(days=1)
-        for item in plan.items:
-            item.created_at = old
-        yesterday_open = next(i for i in plan.items if i.day_index == 0)
-        done_item = PlanItemRow(id=uuid.uuid4(), day_index=0, mode="quick", skills=["counters"], reason="done yesterday",
-                                minutes=5, status="done", created_at=old)
-        stale_item = PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=["truth_tables"], reason="from long ago",
-                                 minutes=20, status="planned", created_at=old - timedelta(days=6))
-        plan.items += [done_item, stale_item]
-        plan.week_start = TODAY - timedelta(days=1)
-        # the stale item's planned date is week_start + 0 = yesterday: still within 3 days, so it IS carried;
-        # make it genuinely old by planning it for six days ago through an older plan date
-        store.plans[USER] = plan
-        today_view = await svc.program(USER, language="en")
-        assert today_view.plan.generated_for == TODAY.isoformat()
-        carried = [i for i in today_view.plan.items if i.carried]
-        assert carried and carried[0].day_index == 0 and today_view.today[0].carried
-        assert yesterday_open.reason in [i.reason for i in carried]
-        assert "done yesterday" not in [i.reason for i in today_view.plan.items]        # done items are history, not carried
-        assert all(i.status in ("planned", "started") for i in carried)
-
-    async def test_carried_items_fill_todays_minutes_first_and_the_rest_wait_for_tomorrow(self, catalog):
-        """Shaked, 2026-10-04: a skipped day no longer doubles today. Carried items count against today's minutes,
-        the router fills only what is left, and carried items that do not fit move to the next day."""
-        svc, store = practice(catalog)
-        await with_goal(svc, minutes=30)
-        await svc.program(USER, language="en")
-        plan = store.plans[USER]
-        old = datetime.now(UTC) - timedelta(days=1)
-        plan.week_start = TODAY - timedelta(days=1)
-        for item in plan.items:
-            item.created_at = old
         for n, skill in enumerate(["counters", "truth_tables", "fsm_state_tables"]):            # a heavy day left undone
             plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=[skill], reason=f"left {n}",
                                           minutes=20, status="planned", created_at=old))
         view = await svc.program(USER, language="en")
-        today = [i for i in view.plan.items if i.day_index == 0]
-        assert sum(i.minutes for i in today) <= 30, [(i.mode, i.minutes, i.carried) for i in today]
-        waiting = [i for i in view.plan.items if i.day_index >= 1 and i.carried]
-        assert waiting and all(i.status == "planned" for i in waiting)
-        left = {i.reason for i in view.plan.items if i.reason.startswith("left ")}
-        assert left == {"left 0", "left 1", "left 2"}                                           # nothing was lost
-        for day in sorted({i.day_index for i in waiting}):
-            assert sum(i.minutes for i in view.plan.items if i.day_index == day) <= 30 or \
-                len([i for i in view.plan.items if i.day_index == day]) == 1
+        assert view.plan.generated_for == TODAY.isoformat()
+        for day in {i.day_index for i in view.plan.items}:
+            assert sum(i.minutes for i in view.plan.items if i.day_index == day) <= 30, day
+        assert not any(i.reason.startswith("left ") for i in view.plan.items)                  # not carried as a debt
+        assert not any(i.carried for i in view.plan.items)
+        assert {s.key for i in view.plan.items for s in i.skills} & {"counters", "truth_tables", "fsm_state_tables"}, \
+            "the router brings the skills back on its own terms"
 
-    async def test_an_opened_item_is_carried_into_today_even_when_today_is_full(self, catalog):
+    async def test_an_opened_item_from_an_earlier_day_is_not_pinned_to_today(self, catalog):
         svc, store = practice(catalog)
         await with_goal(svc, minutes=30)
         await svc.program(USER, language="en")
-        plan = store.plans[USER]
+        plan = self.age_plan(store)
         old = datetime.now(UTC) - timedelta(days=1)
-        plan.week_start = TODAY - timedelta(days=1)
-        for item in plan.items:
-            item.created_at = old
-        for n, skill in enumerate(["counters", "truth_tables"]):
-            plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=[skill], reason=f"left {n}",
-                                          minutes=20, status="planned", created_at=old))
-        opened = PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=["fsm_state_tables"], reason="opened",
-                             minutes=20, status="started", created_at=old)
-        plan.items.append(opened)
+        plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=["fsm_state_tables"], reason="opened",
+                                      minutes=20, status="started", created_at=old))
+        view = await svc.program(USER, language="en")
+        assert not any(i.reason == "opened" for i in view.plan.items)
+        assert sum(i.minutes for i in view.plan.items if i.day_index == 0) <= 30
+
+    async def test_three_openings_on_three_days_do_not_pile_up_and_the_old_answer_still_counts(self, catalog):
+        """The pilot's pattern: open a question, leave; the next day another; and another."""
+        svc, store = practice(catalog, scripted([GOOD] * 6))
+        await with_goal(svc, minutes=30)
+        opened = []
+        for _ in range(3):
+            started = await svc.start_program_item(USER, language="en")
+            assert started.kind == "attempt"
+            opened.append((uuid.UUID(started.attempt.id), started.attempt.question.key))
+            self.age_plan(store)
         view = await svc.program(USER, language="en")
         today = [i for i in view.plan.items if i.day_index == 0]
-        assert any(i.reason == "opened" and i.status == "started" for i in today)
+        assert today and sum(i.minutes for i in today) <= 30
+        assert not any(i.status == "started" for i in view.plan.items)                        # nothing pinned
+        assert all(a in store.attempts for a, _ in opened)                                    # the attempts are history
+        first_attempt, first_key = opened[0]
+        _, answered = await svc.submit(USER, first_attempt, "alarm = AB + BC + AC", idempotency_key="late")
+        assert answered.submission is not None and answered.submission.band is not None       # still graded, still counts
+        skill = catalog.questions[first_key].primary_skill
+        on_skill = [i for i in today if skill in [s.key for s in i.skills] and i.mode != "simulation"]
+        if on_skill:                                                                          # ticks today's item on that skill
+            assert stored_item(store, on_skill[0].id).status == "done"
 
-    async def test_a_carried_item_whose_skill_was_answered_since_is_dropped(self, catalog):
-        svc, store = practice(catalog, scripted([GOOD, GOOD]))
-        await with_goal(svc, minutes=30)
-        view = await svc.start(USER, question_key="example-sensor-majority", mode="quick", language="en")
-        await svc.submit(USER, uuid.UUID(view.id), "alarm = AB + BC + AC", idempotency_key="k1")     # boolean_algebra has a profile row
-        await svc.program(USER, language="en")
-        plan = store.plans[USER]
-        old = datetime.now(UTC) - timedelta(days=1)
-        plan.week_start = TODAY - timedelta(days=1)
-        for item in plan.items:
-            item.created_at = old
-        plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=0, mode="deep", skills=["boolean_algebra"], reason="stale plan",
-                                      minutes=20, status="planned", created_at=old))
-        plan.items.append(PlanItemRow(id=uuid.uuid4(), day_index=0, mode="quick", skills=["counters"], reason="still open",
-                                      minutes=4, status="planned", created_at=old))
-        for (uid, key), row in store.profiles.items():                       # an interview scored boolean_algebra since
-            if uid == USER and key == "boolean_algebra":
-                row["last_assessed_at"] = datetime.now(UTC)
-        view = await svc.program(USER, language="en")
-        reasons = {i.reason for i in view.plan.items if i.carried}
-        assert "still open" in reasons and "stale plan" not in reasons
-
-    async def test_an_item_older_than_three_days_is_dropped(self, catalog):
+    async def test_todays_own_opened_item_survives_a_same_day_goal_change(self, catalog):
         svc, store = practice(catalog)
-        await with_goal(svc)
+        await with_goal(svc, minutes=60)
+        started = await svc.start_program_item(USER, language="en")
+        assert started.kind == "attempt"
+        await with_goal(svc, minutes=15)                                                      # the minutes change mid-day
+        view = await svc.program(USER, language="en")
+        kept = [i for i in view.plan.items if i.status == "started"]
+        assert len(kept) == 1 and kept[0].day_index == 0
+        assert store.plan_links[uuid.UUID(started.attempt.id)] == uuid.UUID(kept[0].id)       # the attempt followed it
+        assert sum(i.minutes for i in view.plan.items if i.day_index == 0 and i.status != "started") <= 15
+        await svc.submit(USER, uuid.UUID(started.attempt.id), "an answer", idempotency_key="k1")
+        assert stored_item(store, kept[0].id).status == "done"
+
+    async def test_no_item_is_longer_than_the_daily_budget(self, catalog):
+        for minutes in (5, 10, 15, 20, 30, 45):
+            svc, _ = practice(catalog)
+            await with_goal(svc, minutes=minutes)
+            view = await svc.program(USER, language="en")
+            assert view.plan.items, minutes
+            assert all(i.minutes <= minutes for i in view.plan.items), (minutes, [(i.mode, i.minutes) for i in view.plan.items])
+            for day in {i.day_index for i in view.plan.items}:
+                assert sum(i.minutes for i in view.plan.items if i.day_index == day) <= minutes, (minutes, day)
+
+    async def test_the_interview_lobby_offers_the_length_the_item_was_planned_with(self, catalog):
+        svc, store = practice(catalog)
+        await with_goal(svc, minutes=20)
         await svc.program(USER, language="en")
         plan = store.plans[USER]
-        plan.week_start = TODAY - timedelta(days=5)
-        for item in plan.items:
-            item.created_at = datetime.now(UTC) - timedelta(days=5)
-        keep = next(i for i in plan.items if i.day_index == 3)          # planned for two days ago: carried
-        drop = next(i for i in plan.items if i.day_index == 0)          # planned five days ago: dropped
-        view = await svc.program(USER, language="en")
-        carried = [(i.mode, [s.key for s in i.skills]) for i in view.plan.items if i.carried]   # ids are re-issued on rebuild
-        assert (keep.mode, keep.skills) in carried and (drop.mode, drop.skills) not in carried
+        plan.items = [i for i in plan.items if i.day_index != 0]
+        item = PlanItemRow(id=uuid.uuid4(), day_index=0, mode="simulation", skills=["counters"], reason="interview",
+                           minutes=20, status="planned", created_at=datetime.now(UTC))
+        plan.items.append(item)
+        started = await svc.start_program_item(USER, item_id=item.id, language="en")
+        assert started.kind == "interview" and started.interview_duration_min == 20
 
 
 class TestStartingAndTicking:

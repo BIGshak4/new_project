@@ -5,7 +5,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-10-15 (the questions fit the job type §5zj) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
+**Last updated:** 2026-10-15 (the plan fits the user's minutes §5zk) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
 
 ---
 
@@ -25,6 +25,7 @@ not touched again for them. When an item is done, remove its entry from `PENDING
 | 6 | **Where a question was started from** (small, do it with 1 and 2) | Pass `source` on every `startAttempt`: `"plan"` from the program's item or Start button, `"suggestion"` from the next-question card, `"readiness"` from the readiness card, `"library"` from the library, `"search"` from a search result, `"retry"` from "practise this question again"; and `screen` ("learn", "progress", "library"). The backend adds the device (phone or desktop) from the request and keeps the three on the attempt, for the pilot's journey reports. | `StartAttemptRequest.source?: "plan" \| "suggestion" \| "readiness" \| "library" \| "search" \| "retry" \| "other"`, `screen?: string`. Unknown values are 422. | §5zh |
 | 7 | **The harness's sign-in entry** | `tools/screenshots/run.mjs` looks for `.landing` on `/`; the redesigned landing page has no such element, so the four sign-in shots are skipped. Point the entry at the new page's root element. | No backend change. | §5zi |
 | 9 | **The library and the plan fit the job type** (task 8, backend done 2026-10-15) | Nothing to add for the filter itself: `GET /v1/questions?job=` now *hides* the questions of the skills that are not part of that job type (before it hid anything weighted under 1.0) and the `job_types` chips use the same rule, so pass the goal's job type as `job` when the user wants "my role only". Optional: `GET /v1/job-types` carries `excluded_skills`; in the goal setup or the library an explanatory line "not part of this job type: HDL coding, testbenches, ..." can be built from it with the skill labels the progress page already has. The plan, readiness and interview screens need no change: the backend never sends an excluded skill to them. | `JobType.excluded_skills?: string[]` | §5zj |
+| 10 | **Retire the "carried" badge** (task 9, backend done 2026-10-15) | Leftovers are no longer carried: every day is rebuilt within the goal's minutes and `PlanItemView.carried` is always false, so the "carried from yesterday" badge and the carried-first ordering can go. `minutes_due_today` is never above `minutes_per_day`; nothing new to show. An item in progress survives a same-day goal change. | `PlanItem.carried` stays in the type (always false) | §5zk |
 | 8 | **Voice input, browser only** (if Shaked's dictation test is good) | A microphone button on the answer box using the browser's speech recognition in the practice language; the words land in the box and the user edits and sends as usual. Chrome and Edge only; nothing is recorded or stored. | No backend change. If accuracy on Hebrew technical terms is poor, the server-side option is a separate plan. | — |
 
 Not for the screens: a skipped follow-up earns no grade or XP; the follow-ups themselves now ask for understanding
@@ -954,6 +955,36 @@ opening a fitting question, the suggestion after a weak answer on a hidden quest
 every asked question fitting; the HTTP test asserts the two filters and `excluded_skills`. 933 offline tests. No
 repository or SQL change, so no live suite; smoke after the deploy.
 
+## 5zk. The plan fits the user's minutes and never piles up (2026-10-15, Harel's task 9; Shaked: "the plan is supposed to fit the user and not piling up")
+
+**What was wrong.** Open items of earlier days were carried for three days and an *opened* item was pinned to today
+whatever the budget (so that its attempt always had an item to tick). Three of the four pilot users open a question
+and leave, so their today grew past the goal day after day, with nothing to explain it; and the router itself allowed
+a small overshoot (a 4-minute item in 2 remaining minutes) and appended a 20-minute deep item or a 40-minute interview
+to a week whose days could not hold them.
+
+**The rule now.** Every day is built fresh from the profile, to the goal's minutes and never above them. Work left
+from earlier days, opened or not, is not carried: the router plans what matters most today, and a skill without
+fresh evidence comes straight back on its own. Nothing is lost: work done ahead keeps its day; an item opened and not
+answered whose day is today or later (today's own item during a same-day goal change, or one opened ahead) keeps its
+place, still started, its attempt relinked; an attempt opened on a dropped item stays in history and, when answered,
+still updates the profile and ticks today's open item on that skill (the by-skill fallback in
+`_complete_program_item`). Start on a started item still resumes it. `PROGRAM_CARRY_DAYS`, the carried-items loop and
+`_answered_since` are gone; `PlanItemView.carried` stays in the contract and is always false.
+
+**No item longer than the day.** `plan_router.weekly_plan` fits items to the remaining minutes exactly; the deep
+fallback only when a day can hold 20 minutes; the mock interview is planned with the longest of its lengths (20, 30,
+45) that fits the day (`plan_router.simulation_minutes`), none under 20 minutes a day; the lobby offers that length.
+
+**Not done, on purpose.** No breakdown or explanation fields for the screens (Shaked: no sums on the screen, the plan
+simply fits); no "carried" notion. The web app's "carried" badge can be retired.
+
+**Verified.** `tests/test_program.py::TestTheDayFitsTheUser` (leftovers not carried and every day within budget; an
+opened item from an earlier day not pinned; three openings on three days do not pile up and the late answer still
+counts; today's own opened item survives a same-day goal change with its attempt; no item longer than the budget for
+5 to 45 minutes a day; the lobby's length) and the router test for the interview length per budget. The live program
+tests against the real database (the relink path); the offline suite.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -992,6 +1023,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-15 | Task 9: the plan fits the user's minutes and never piles up: no carry-over of earlier days' items (opened or not), no item longer than the day, the interview takes the length that fits; `carried` always false (§5zk) |
 | 2026-10-15 | Task 8: a skill at emphasis 0 is not part of the job type; it leaves the plan and its questions are hidden from the job-filtered library, suggestions, program, readiness and interviews; `JobTypeView.excluded_skills`; `tests/test_job_fit.py` (§5zj) |
 | 2026-10-15 | Full check (§5zi, `docs/full-check-2026-10-15.md`): all suites green, profiling, four-lens review, twelve fixes (program serialisation, stream body guard, bounded timing fields, sightings limits, request id, rate limit, fewer round trips) |
 | 2026-10-05 | The entry source on every question start (plan, suggestion, readiness, library, search, retry) plus the device, kept on the attempt; a first per-user heat map from the existing data (§5zh) |

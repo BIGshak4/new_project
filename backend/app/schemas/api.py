@@ -210,7 +210,7 @@ class PlanItemView(BaseModel):
     reason: str
     done: bool = False                          # status done: an attempt or interview fulfilled it
     status: str = "planned"                     # planned | started | done | skipped
-    carried: bool = False                       # planned for an earlier day and not done yet: carried forward
+    carried: bool = False                       # always false since 2026-10-15: leftovers are no longer carried (task 9)
 
 
 class PlanView(BaseModel):
