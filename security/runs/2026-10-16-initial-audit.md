@@ -35,9 +35,10 @@ The final advisor check reported one warning for disabled leaked-password protec
 
 | Check | Result | Scope |
 | --- | --- | --- |
-| Backend complete suite | **964 passed, 30 skipped, 2 warnings** | In-memory store, scripted provider, database/provider credentials explicitly blank; 11.79 seconds |
+| Backend complete suite | **967 passed, 30 skipped, 2 warnings** | In-memory store, scripted provider, database/provider credentials explicitly blank; includes actual Uvicorn proxy-chain regressions |
 | Web complete suite | **185 passed, 0 skipped** | Includes 28 new auth/header/rendering security cases |
 | Practice production build and typecheck | Passed | Next 16.3.8 |
+| Practice hermetic tests/build/typecheck | Passed; **185 tests passed** | Sibling task-app dependencies physically unavailable throughout; restored afterward |
 | Task-board production build and typecheck | Passed | Next 16.3.8 |
 | npm audit, each app | **0 reported vulnerabilities** | Installed lockfiles at review time |
 | OSV scan | **47 Python registry packages, 0 reported vulnerabilities after update** | Exact locked versions; not a source-code audit substitute |
@@ -51,6 +52,15 @@ The two backend warnings are a Starlette/AnyIO deprecation and an intentionally 
 The first integrated run found two strict historical-golden failures after automatic code execution was blocked. Only nine fixture values changed: four copies of the code check's result/explanation and one metric now record an unavailable check, not a pass. Grades, XP, evaluations, profiles, progress, and other feedback are unchanged; assertions were not weakened. The complete suite was then rerun successfully.
 
 A limited credential-pattern scan covered 783 tracked/unignored paths and found only a documented placeholder URL in an auth configuration test. No exposed real secret was confirmed by this scan. It does not certify all Git history or all provider dashboards.
+
+### Reviewed boundaries without a new demonstrated exploit
+
+- Local JWT regressions and ownership tests reject bad tokens and foreign-user practice/interview resource access without mutating another user's state or calling the model. Caller-controlled body user IDs do not replace the verified identity.
+- Database metadata checks cover client access to private engine/content fields and membership/promotion boundaries, not just the presence of RLS flags.
+- Markdown rendering disables raw HTML; reviewed rendering cases escape unsafe markup/links. Reviewed circuits use React attributes rather than evaluating submitted JavaScript. No new XSS or server-side arbitrary-URL fetch was demonstrated in these surfaces.
+- A malformed JWT `kid` candidate was rejected after reproduction showed the installed parser already rejects list/dict/integer/null/unknown values. It is deliberately absent from the finding register.
+
+Payments, legal compliance, external provider-internal controls, and a complete history/forensics review are outside this engineering run. A surface reviewed without a finding must not be described as proven secure.
 
 ## Safety and verification notes
 
@@ -70,6 +80,14 @@ Production database changes are applied and verified as recorded above. Applicat
 3. Enable/review leaked-password protection in Supabase Auth, including plan availability and signup UX. This dashboard setting is not changed by SQL migrations.
 4. Validate a legitimate raster upload through the real Storage HTTP service and parallel quota boundaries using a dedicated synthetic account. SQL coverage alone must not be described as that test.
 5. Per-process rate limits need a trustworthy hosting proxy identity and are not a distributed DDoS solution. Global/edge limits and model-spend monitoring remain operational follow-ups.
-6. Production browser authentication flows require an active signed-in session. The available practice tab was authenticated locally; the live task-board tab showed a login form. No password-manager or authentication dialog was automated.
+6. Production browser authentication flows require an active signed-in session. The available practice tab was authenticated locally; the live task-board tab showed a login form. Computer Use then stopped automatically because it could not confidently identify the active browser URL. No further UI input was attempted. No password-manager or authentication dialog was automated; production button-click validation remains incomplete.
+
+### Deployment correction discovered during verification
+
+The first practice deployment of `afe9d14` failed at 17:19 UTC. Its new cross-app header test statically imported the task app's typed Next configuration. Local builds had both dependency directories, masking the fact that Netlify installs only practice dependencies; TypeScript could not resolve `next` from the sibling app. The GitHub workflow continued waiting for a published revision after Netlify had already failed, so its running state was not proof of an active successful build.
+
+Read-only Netlify API/build-log access identified the exact failure. The test now reads fixed, trusted repository config paths and erases their type-only imports before executing the actual configs. All header/parity assertions remain. No production typecheck was skipped and no tests were excluded. A fresh full test/build/typecheck passed while task dependencies were physically unavailable, then those dependencies were restored. The failed deployment was not retried blindly; the corrected source is published by a new Git push.
+
+A final deployment-stack review also found Uvicorn's wildcard forwarding trust. The Docker command now trusts only loopback/private proxy ranges. Three real-Uvicorn middleware regressions verify that a caller-supplied prefix cannot reset the address budget in the modeled chain; hosting-specific proxy grouping remains an operational tuning consideration.
 
 This is a substantial engineering review and remediation, not a penetration-test certification or a guarantee that no vulnerabilities remain.

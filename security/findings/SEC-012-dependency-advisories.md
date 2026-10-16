@@ -1,4 +1,4 @@
-# SEC-012 — Locked frontend/Python dependencies matched published advisories
+# SEC-012 â€” Locked frontend/Python dependencies matched published advisories
 
 - **Severity:** Critical maximum advisory rating in the installed set; this is an advisory bundle, not a claim that every advisory was reachable in JobRun.
 - **Status:** Dependencies upgraded locally, post-update advisory scans clear and local integration checks passed; deployments pending.
@@ -29,7 +29,7 @@ Changed `apps/{web,tasks}/package.json` and `package-lock.json`, plus `backend/p
 
 ## Verification
 
-Post-update `npm audit` reported **zero vulnerabilities for each app**. A fresh OSV scan of 47 installed Python registry packages reported no advisories. The local PyJWT fixture returned `DecodeError` rather than an uncaught recursion exception, with zero network/production calls. Frozen uv export and Python dependency consistency checks passed. Root integration builds/tests and deployed revisions are recorded in the run report, not inferred from a successful install.
+Post-update `npm audit` reported **zero vulnerabilities for each app**. A fresh OSV scan of 47 locked Python registry packages reported no advisories. The local PyJWT fixture returned `DecodeError` rather than an uncaught recursion exception, with zero network/production calls. Frozen uv export and Python dependency consistency checks passed. Root integration builds/tests and deployed revisions are recorded in the run report, not inferred from a successful install.
 
 ## Remaining work
 

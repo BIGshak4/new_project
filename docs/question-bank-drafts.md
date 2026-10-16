@@ -17,7 +17,7 @@ and a rubric of three to five weighted criteria. Status `in_review`, origin `gen
 | Measure | Value |
 |---|---|
 | Drafts | 242 (0 invalid by the loader's rules, 0 key clashes with the live bank) |
-| With an automatic check | 151: 92 Python test cases, 43 truth tables, 16 numbers with units |
+| With a check definition | 151: 92 Python test cases, 43 truth tables, 16 numbers with units; see the execution restriction below |
 | Difficulty (1–10) | 2: 7 · 3: 48 · 4: 46 · 5: 68 · 6: 49 · 7: 16 · 8: 8 |
 | Formats | code 93 · HDL 42 · truth table 33 · construct 23 · short answer 20 · explain 16 · waveform 15 |
 | Flagged for a closer look | 3 (below) |
@@ -61,9 +61,13 @@ Moore and Mealy, number representation, reset strategies, sequential HDL, state 
 ## How the drafts were checked
 
 1. **The loader's rules** on every draft: the shape (rubric and skill weights sum to 1, three hints, one primary skill,
-   every named mistake explained in both languages), the skills and tips exist, and the automatic check accepts its
-   own correct answers and rejects its wrong ones. Code examples run in the sandbox with a time limit, since one draft's
-   deliberately broken code really did loop forever.
+   every named mistake explained in both languages), and the skills and tips exist. Truth-table and numeric checks
+   must accept their known-correct examples and reject their known-wrong ones. **Security update, 16 October 2026:**
+   the generator never executes model-written Python on the developer/API host. Its `code_tests` result is
+   unassessed (`passed: null`), so a code draft cannot pass automatic code self-validation and requires developer
+   review before promotion to trusted repository seeds. Historical automated checks of this draft batch do not
+   establish code isolation or authorize publication. The legacy fixture harness is not a sandbox; see
+   [SEC-001](../security/findings/SEC-001-untrusted-code-execution.md).
 2. **The judge** (Opus 5.5) graded each draft's own reference solution as if a student had written it. A reference
    that is not graded STRONG means the question or the reference is unclear; those are flagged, not dropped.
 3. About one draft in five was rejected by step 1 during drafting (mostly checks whose own examples disagreed with

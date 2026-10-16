@@ -1,7 +1,7 @@
 # SEC-004 — Unknown identifiers accumulated permanent process state
 
 - **Severity:** Medium. Authenticated identifier churn could retain unnecessary locks/cache entries and consume API memory.
-- **Status:** Fixed locally; API deployment pending.
+- **Status:** Fix deployed to the API; source revision `afe9d14` verified and local regression suite passed. No production attack/load test was performed.
 - **Discovered:** 2026-10-16
 - **Review:** [Initial audit](../runs/2026-10-16-initial-audit.md)
 - **Affected baseline:** `5098ded`; interview lock map and repository TTL caches.

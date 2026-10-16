@@ -1,7 +1,7 @@
 # SEC-003 — Replaying an evaluating interview answer could repeat model work
 
 - **Severity:** Medium. An authenticated caller could repeat charged evaluation work and replace the payload associated with an accepted retry identity.
-- **Status:** Fixed locally; API deployment pending.
+- **Status:** Fix deployed to the API; source revision `afe9d14` verified and local regression suite passed. No production attack/load test was performed.
 - **Discovered:** 2026-10-16
 - **Review:** [Initial audit](../runs/2026-10-16-initial-audit.md)
 - **Affected baseline:** `5098ded`; interview answers handled by independent service instances.
@@ -24,7 +24,7 @@ Block a scripted evaluator with a local event. Once the first instance has saved
 
 ## Remaining work
 
-Deploy the API. Preserve both idempotency checks and optimistic persistence when changing the background evaluation architecture. Retry identities do not authorize another user to access an interview; ownership remains independently enforced.
+Preserve both idempotency checks and optimistic persistence when changing the background evaluation architecture. Retry identities do not authorize another user to access an interview; ownership remains independently enforced.
 
 ## References
 

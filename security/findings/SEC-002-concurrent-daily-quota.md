@@ -1,7 +1,7 @@
 # SEC-002 — Concurrent starts could exceed daily allowances
 
 - **Severity:** Medium. An authenticated user could obtain additional practice attempts/interviews and subsequent model work beyond the configured daily allowance.
-- **Status:** Fixed locally; API deployment pending.
+- **Status:** Fix deployed to the API; source revision `afe9d14` verified and local regression suite passed. No production attack/load test was performed.
 - **Discovered:** 2026-10-16
 - **Review:** [Initial audit](../runs/2026-10-16-initial-audit.md)
 - **Affected baseline:** `5098ded`; practice/interview admission across independent service instances.
@@ -29,7 +29,7 @@ The lock spans admission, not model evaluation. Hash collisions can serialize un
 
 ## Remaining work
 
-Deploy and retain these regressions when changing transaction isolation, stores, worker topology or billing rules. A controlled PostgreSQL concurrency fixture is a useful additional check; local service-instance tests are not a production load test.
+Retain these regressions when changing transaction isolation, stores, worker topology or billing rules. A controlled PostgreSQL concurrency fixture is a useful additional check; local service-instance tests are not a production load test.
 
 ## References
 

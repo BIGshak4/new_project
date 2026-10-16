@@ -24,4 +24,7 @@ ENV PATH="/opt/venv/bin:$PATH" PYTHONUNBUFFERED=1 PYTHONIOENCODING=utf-8 PORT=80
 USER api
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD python -c "import urllib.request,os;urllib.request.urlopen(f'http://127.0.0.1:{os.environ.get(\"PORT\",\"8000\")}/health',timeout=4)"
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT} --proxy-headers --forwarded-allow-ips='*'"]
+# Trust only loopback/private proxy peers, not every address or every forwarding hop.
+# Tune these CIDRs only after verifying the host's actual proxy chain. An unknown
+# public edge remains one rate-limit identity rather than trusting an injected prefix.
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT} --proxy-headers --forwarded-allow-ips='127.0.0.1,::1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16'"]

@@ -1,5 +1,12 @@
 # System verification and improvement suggestions — 21 September 2026
 
+> **Security supersession — 16 October 2026:** This is a historical report; its test results and observations below
+> describe the September run. Its statements that the AST/restricted-builtins runner was sound or provided isolation
+> are superseded by [SEC-001](../security/findings/SEC-001-untrusted-code-execution.md), which demonstrated a host-file
+> read using a review-created canary. Network-submitted Python is now disabled (`code_tests.passed: null`), with source
+> reviewed by the model as written. A separately isolated executor is required before restoring execution. The original
+> historical evidence is preserved below, not restated as current security assurance.
+
 Written for Shaked and Harel. A full pass over the system after the overnight build and today's changes
 (one follow-up per attempt, the focused next question). What was checked, what was found and fixed, and what
 to do next, in priority order.

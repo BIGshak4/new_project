@@ -1,7 +1,7 @@
 # SEC-001 — Submitted Python could reach API-host capabilities
 
 - **Severity:** Critical. An authenticated user submitting a code-test answer could escape the intended execution boundary and read files accessible to the API process.
-- **Status:** Fixed locally by disabling host execution of network-submitted Python; API push/deployment pending.
+- **Status:** Mitigated: host execution disabled in the live API; source revision `afe9d14` verified. Isolated execution remains unavailable.
 - **Discovered:** 2026-10-16
 - **Review:** [Initial audit](../runs/2026-10-16-initial-audit.md)
 - **Affected baseline:** `5098ded`; backend deterministic code checks and the legacy Python runner.
@@ -37,7 +37,7 @@ Submitted source remains saved and available to the evaluator as text. A code an
 
 ## Remaining work
 
-Deploy the API and verify its revision. Restoring execution requires a separate executor with no application credentials or host filesystem access, restricted networking, independent resource controls and a new adversarial review. These changes do not assert that historical exploitation did or did not occur.
+The live API revision is recorded in the run report. Restoring execution requires a separate executor with no application credentials or host filesystem access, restricted networking, independent resource controls and a new adversarial review. These changes do not assert that historical exploitation did or did not occur.
 
 Review relevant execution/access logs and assess rotation of potentially reachable database, service and provider credentials through a controlled owner handoff. No real secret was read or rotated during this review. Blocking future execution is not evidence that historical credentials were never exposed.
 

@@ -34,9 +34,12 @@ Progress, XP, the daily program and the mock interview are all computed from tho
 2. **`POST /v1/practice/attempts/{id}/submissions`**: the answer arrives with an `Idempotency-Key` header, so a
    double click or a retry after a dropped connection can never grade twice (`app/repo/attempts.py`,
    `DuplicateSubmissionKey`).
-3. **Accept and save** the answer as a submission revision (status `evaluating`). If the question has a
-   deterministic check (a truth table, a number with a unit, Python test cases), it runs now in
-   `app/engine/checks.py` (code runs in a sandboxed runner, `app/engine/code_runner.py`, with a timeout).
+3. **Accept and save** the answer as a submission revision (status `evaluating`). Truth-table and numeric
+   deterministic checks run in `app/engine/checks.py`. **Security update, 16 October 2026:** submitted Python is
+   not executed; `code_tests` returns `passed: null`, and the model reviews the saved source as written. The
+   legacy runner is only a harness for explicitly trusted, developer-reviewed local fixtures, not a sandbox.
+   Restoring submitted-code execution requires a separately isolated executor; see
+   [SEC-001](../security/findings/SEC-001-untrusted-code-execution.md).
 4. **Grade first** (`app/engine/practice.py`, `PracticeAttempt._score_and_decide`): the evaluator prompt goes to the
    judge with the question, the rubric, the known misconception keys and the check result. The reply is a
    structured `Evaluation` (correctness, depth, clarity, structure, misconceptions found, key points hit and
