@@ -1,7 +1,7 @@
 # SEC-011 — Concurrent diagnostic health requests multiplied database probes
 
 - **Severity:** Medium. Public diagnostic requests could occupy database connections and repeat probe queries during a cache miss or outage.
-- **Status:** Fix deployed to the API; source revision `afe9d14` verified and local regression suite passed. No production attack/load test was performed.
+- **Status:** Fix deployed to the API; source revision `9a264cf` verified and single-flight/deadline/cache regressions passed locally.
 - **Discovered:** 2026-10-16
 - **Review:** [Initial audit](../runs/2026-10-16-initial-audit.md)
 - **Affected baseline:** `5098ded`; optional `/health?db_check=true` diagnostic path.
@@ -24,7 +24,7 @@ The same 16-caller fixture now opens **one connection / three queries** and retu
 
 ## Remaining work
 
-Deploy. Coordination is per API process, so independent workers may each make one probe. Review public diagnostic detail and monitoring needs when changing topology; this fix addresses probe amplification and does not certify the database under arbitrary load.
+Coordination is per API process, so independent workers may each make one probe. Review public diagnostic detail and monitoring needs when changing topology; this fix addresses probe amplification and does not certify the database under arbitrary load.
 
 ## References
 

@@ -1,7 +1,7 @@
 # SEC-007 — Sensitive application pages lacked frame protection
 
 - **Severity:** Medium. A malicious site could frame the UI and attempt clickjacking where the browser makes the user's authenticated context available inside that frame.
-- **Status:** Fixed locally; both Netlify deployments and live header verification pending.
+- **Status:** Deployed and HTTP verified: CSP, SAMEORIGIN and permissions policy present on both live homepages and health routes. Interactive embedding was not tested.
 - **Discovered:** 2026-10-16
 - **Review:** [Initial audit](../runs/2026-10-16-initial-audit.md)
 - **Affected baseline:** `5098ded`; practice and private task-board delivery configuration.
@@ -31,7 +31,7 @@ Permissions policy disables unused camera/location capabilities. Practice retain
 
 ## Remaining work
 
-Verify headers on actual deployed HTML/static responses and smoke-test same-origin previews and dictation. This bounded policy deliberately does not introduce `script-src`/`default-src`; it is not a complete XSS containment policy. A nonce-based script policy requires its own compatibility review.
+Homepage and health-route headers were verified on both live sites. Smoke-test same-origin previews, other static/fallback surfaces and dictation in an authorized browser session. This bounded policy deliberately does not introduce `script-src`/`default-src`; it is not a complete XSS containment policy. A nonce-based script policy requires its own compatibility review.
 
 ## References
 

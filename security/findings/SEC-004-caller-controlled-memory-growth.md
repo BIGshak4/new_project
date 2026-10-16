@@ -1,7 +1,7 @@
 # SEC-004 — Unknown identifiers accumulated permanent process state
 
 - **Severity:** Medium. Authenticated identifier churn could retain unnecessary locks/cache entries and consume API memory.
-- **Status:** Fix deployed to the API; source revision `afe9d14` verified and local regression suite passed. No production attack/load test was performed.
+- **Status:** Fix deployed to the API; source revision `9a264cf` verified and bounded-lifecycle regressions passed.
 - **Discovered:** 2026-10-16
 - **Review:** [Initial audit](../runs/2026-10-16-initial-audit.md)
 - **Affected baseline:** `5098ded`; interview lock map and repository TTL caches.
@@ -27,7 +27,7 @@ The lock map still holds active operations/waiters. This change removes indefini
 
 ## Remaining work
 
-Deploy. Monitor memory and preserve capacity/lifecycle tests when adding caches or changing asyncio/Python versions. Rate limits and infrastructure concurrency controls remain separate protections.
+Monitor memory and preserve capacity/lifecycle tests when adding caches or changing asyncio/Python versions. Rate limits and infrastructure concurrency controls remain separate protections.
 
 ## References
 

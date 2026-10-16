@@ -1,7 +1,7 @@
 # SEC-001 — Submitted Python could reach API-host capabilities
 
 - **Severity:** Critical. An authenticated user submitting a code-test answer could escape the intended execution boundary and read files accessible to the API process.
-- **Status:** Mitigated: host execution disabled in the live API; source revision `afe9d14` verified. Isolated execution remains unavailable.
+- **Status:** Mitigated in production: submitted-code execution is disabled. API source revision `9a264cf` verified; restoring execution requires a separate isolated executor.
 - **Discovered:** 2026-10-16
 - **Review:** [Initial audit](../runs/2026-10-16-initial-audit.md)
 - **Affected baseline:** `5098ded`; backend deterministic code checks and the legacy Python runner.

@@ -1,7 +1,7 @@
 # SEC-005 — Login forms retained a reusable password after authentication
 
 - **Severity:** Medium, requiring access to the same browser session. This concerns application form state, not extraction of Supabase password hashes.
-- **Status:** Fixed locally; both frontend deployments pending.
+- **Status:** Fix deployed to both frontends; source revisions and local guards verified. Actual production login/logout password-field validation remains pending.
 - **Discovered:** 2026-10-16
 - **Review:** [Initial audit](../runs/2026-10-16-initial-audit.md)
 - **Affected baseline:** `5098ded`; practice and task-board `Auth` components.
@@ -24,7 +24,7 @@ In a local mocked-auth browser fixture with password-manager autofill disabled, 
 
 ## Remaining work
 
-Deploy both sites. With a local mock or authorized test account, verify login → logout leaves the application field empty; repeat failed login and signup-confirmation flows. Saved passwords supplied by a browser password manager are outside this fix and must not be described as disabled.
+With a local mock or authorized test account, verify login → logout leaves the application field empty; repeat failed login and signup-confirmation flows. Saved passwords supplied by a browser password manager are outside this fix and must not be described as disabled.
 
 ## References
 

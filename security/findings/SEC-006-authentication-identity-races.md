@@ -1,7 +1,7 @@
 # SEC-006 — Delayed auth/access responses were not bound to the current identity
 
 - **Severity:** Low. A shared-browser/account-switch race could restore stale local identity/access context; no backend or RLS bypass was demonstrated.
-- **Status:** Fixed locally; both frontend deployments pending.
+- **Status:** Fix deployed to both frontends; lifecycle regressions and source revisions verified. Production account-switch smoke checks remain pending.
 - **Discovered:** 2026-10-16
 - **Review:** [Initial audit](../runs/2026-10-16-initial-audit.md)
 - **Affected baseline:** `5098ded`; both authentication gates and task-board state lifetime.
@@ -28,7 +28,7 @@ The small helper is present in each independently deployed app and both implemen
 
 ## Remaining work
 
-Deploy both apps and run authorized account-switch/logout smoke tests. Preserve server/RLS checks; this client fix does not replace them or promise immediate revocation of every previously issued token.
+Run authorized account-switch/logout smoke tests on the deployed apps. Preserve server/RLS checks; this client fix does not replace them or promise immediate revocation of every previously issued token.
 
 ## References
 

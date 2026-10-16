@@ -1,7 +1,7 @@
 # SEC-010 — Rotating unverified tokens bypassed request limits and grew limiter state
 
 - **Severity:** Medium. An unauthenticated caller could reset request accounting with arbitrary Authorization values and retain fresh per-token buckets, increasing API processing/memory use.
-- **Status:** Fix deployed to the API; source revision `afe9d14` verified and local regression suite passed. No production attack/load test was performed.
+- **Status:** Fix deployed, including restricted proxy trust; API source revision `9a264cf` verified. Actual Uvicorn proxy-chain regressions passed locally; no production spoof/load test was performed.
 - **Discovered:** 2026-10-16
 - **Review:** [Initial audit](../runs/2026-10-16-initial-audit.md)
 - **Affected baseline:** `5098ded`; `backend/app/main.py::StreamLimits`.

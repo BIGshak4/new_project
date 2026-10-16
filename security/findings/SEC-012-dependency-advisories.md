@@ -1,7 +1,7 @@
 # SEC-012 â€” Locked frontend/Python dependencies matched published advisories
 
 - **Severity:** Critical maximum advisory rating in the installed set; this is an advisory bundle, not a claim that every advisory was reachable in JobRun.
-- **Status:** Dependencies upgraded locally, post-update advisory scans clear and local integration checks passed; deployments pending.
+- **Status:** Updated dependencies deployed to all three applications; source revisions verified and dated npm/OSV scans clear. See the run report for each component revision.
 - **Discovered:** 2026-10-16
 - **Review:** [Initial audit](../runs/2026-10-16-initial-audit.md)
 - **Affected baseline:** `5098ded`; both npm lockfiles and the backend uv lockfile.
@@ -33,7 +33,7 @@ Post-update `npm audit` reported **zero vulnerabilities for each app**. A fresh 
 
 ## Remaining work
 
-Deploy all three applications and keep lockfiles in dependency-review automation. Clear scans are a dated advisory snapshot, not proof of absence of unknown vulnerabilities or application bugs.
+Keep lockfiles in dependency-review automation. Clear scans are a dated advisory snapshot, not proof of absence of unknown vulnerabilities or application bugs.
 
 ## References
 

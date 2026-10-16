@@ -1,7 +1,7 @@
 # SEC-003 — Replaying an evaluating interview answer could repeat model work
 
 - **Severity:** Medium. An authenticated caller could repeat charged evaluation work and replace the payload associated with an accepted retry identity.
-- **Status:** Fix deployed to the API; source revision `afe9d14` verified and local regression suite passed. No production attack/load test was performed.
+- **Status:** Fix deployed to the API; source revision `9a264cf` verified and local regression suite passed. No production replay attack was performed.
 - **Discovered:** 2026-10-16
 - **Review:** [Initial audit](../runs/2026-10-16-initial-audit.md)
 - **Affected baseline:** `5098ded`; interview answers handled by independent service instances.

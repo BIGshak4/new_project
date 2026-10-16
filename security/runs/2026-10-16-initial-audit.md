@@ -71,7 +71,18 @@ Payments, legal compliance, external provider-internal controls, and a complete 
 
 ## Final results and deployment
 
-Production database changes are applied and verified as recorded above. Application changes are tested locally; Git push and live application revision/header checks are recorded below after publication. The API now reports only a validated public Render Git SHA in `/health`, allowing a deployment to be tied to the reviewed source.
+Production database changes are applied and verified as recorded above. All application fixes were pushed to `origin/master` and published. The final ordinary HTTP verification completed at **17:32 UTC on 16 October 2026**:
+
+| Component | Published source | Evidence |
+| --- | --- | --- |
+| Practice site | `9a264cfe74bbb85dbd11042b094b12856f947649` | `/api/health` 200 and exact SHA; homepage and health route contain the new CSP, SAMEORIGIN and microphone-self policy |
+| Founder task board | `afe9d14c99ebdb3d86a9042938d83ec6e8773044` | `/api/health` 200 and exact SHA; homepage and health route contain the new CSP, SAMEORIGIN and disabled microphone policy |
+| Render API | `9a264cfe74bbb85dbd11042b094b12856f947649` | `/health` 200 and exact public `source_revision`; unauthenticated `/v1/me` returns 401 |
+| Supabase | Migration versions `20261016171103`, `20261016171110` | Successful migration API results, exact live SQL/trigger/ACL verification, 8 metadata contracts and 19 rolled-back assertions |
+
+The task board correctly remains on the first security commit: the second commit changed no task-board source. Both successful GitHub publication checks are available for [practice](https://github.com/BIGshak4/new_project/actions/runs/38940214655) and [tasks](https://github.com/BIGshak4/new_project/actions/runs/38938576507). Read-only Netlify metadata independently confirmed the corrected practice deployment ready at 17:31:31 UTC.
+
+All six final HTTP checks passed. No exploit or model submission was sent to production. The API's new revision field exposes only a validated public Render Git SHA; it lets this record distinguish tested source from an old live process. The later verification/documentation-only commit does not change these deployed application artifacts.
 
 ### Remaining work and limits
 
@@ -89,5 +100,17 @@ The first practice deployment of `afe9d14` failed at 17:19 UTC. Its new cross-ap
 Read-only Netlify API/build-log access identified the exact failure. The test now reads fixed, trusted repository config paths and erases their type-only imports before executing the actual configs. All header/parity assertions remain. No production typecheck was skipped and no tests were excluded. A fresh full test/build/typecheck passed while task dependencies were physically unavailable, then those dependencies were restored. The failed deployment was not retried blindly; the corrected source is published by a new Git push.
 
 A final deployment-stack review also found Uvicorn's wildcard forwarding trust. The Docker command now trusts only loopback/private proxy ranges. Three real-Uvicorn middleware regressions verify that a caller-supplied prefix cannot reset the address budget in the modeled chain; hosting-specific proxy grouping remains an operational tuning consideration.
+
+## Manual validation handoff
+
+Use an authorized test account and the real sites, rather than assuming an already-open local tab represents production.
+
+1. Open [practice](https://jobrun-practice.netlify.app/) in a fresh tab and sign in yourself. Click Today, Catalog and Progress (Hebrew: `היום`, `מאגר`, `התקדמות`); confirm navigation and your own data load. Do not change another user's account to test isolation.
+2. Sign out and inspect the login form. The application should not preserve the submitted password. A browser password manager may independently fill it; use a profile without saved credentials to distinguish that behavior. Test failed login/signup confirmation only with a designated test account.
+3. Open a normal Python/code question from Catalog, enter an ordinary answer and submit once as part of legitimate test practice. Its automatic Python check must be unassessed/unavailable; its text may still receive AI feedback. Truth-table/numeric questions retain their existing bounded checks. Do not submit the old host-read bypass to production.
+4. Before submitting an open practice answer, attach one small JPEG/PNG/WebP through the answer-image control; confirm upload and preview, then normal submission. Repeat an ordinary authorized interview attachment if that feature is in use. This HTTP path remains unverified by this run, even though the trigger's SQL assertions passed. Do not upload hundreds of files to test the quota on production.
+5. Open [tasks](https://jobrun-tasks.netlify.app/), sign in yourself and confirm the intended member's board loads. Auth-switch/recovery scenarios need deliberate test identities; do not infer cross-user isolation from one successful login.
+
+The open password-protection setting, credential/log review and isolated-executor work are owner/backend follow-ups. They are not marked complete by the frontend smoke checks above.
 
 This is a substantial engineering review and remediation, not a penetration-test certification or a guarantee that no vulnerabilities remain.
