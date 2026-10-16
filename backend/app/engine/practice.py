@@ -630,7 +630,7 @@ class PracticeAttempt:
             # a drawn circuit contributes its derived functions ("alarm = (A & B) | ...") to the check
             checked_answer = (submission.answer + "\n" + check_lines).strip() if check_lines else submission.answer
             check = (await checks.run_check_async(question.deterministic_check, checked_answer)
-                     if question.deterministic_check else None)        # code tests run a child process
+                     if question.deterministic_check else None)        # submitted code is reviewed without host execution
             result = await evaluator.evaluate(
                 ctx.provider, question_context=evaluator.question_block(question, ctx.language, primary),
                 known_error_keys={e.key for e in question.common_errors}, language=ctx.language,

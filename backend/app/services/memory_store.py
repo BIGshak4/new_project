@@ -4,6 +4,7 @@ optimistic versioning. Questions come from the seed catalog."""
 
 from __future__ import annotations
 
+import asyncio
 import copy
 import dataclasses
 import uuid
@@ -46,6 +47,7 @@ class InMemoryStore:
         self.failures: set[str] = set()                           # names of operations that should raise (tests)
         self.fail_once: set[str] = set()                          # ... only the next time
         self._commits = 0
+        self._usage_locks: dict[tuple[uuid.UUID, str], asyncio.Lock] = {}
 
     @asynccontextmanager
     async def transaction(self):
@@ -59,14 +61,18 @@ class InMemoryStore:
                     dict(self.sessions), dict(self.goals), list(self.sightings), dict(self.plans), dict(self.plan_links),
                     list(self.reports))
         commits_before = self._commits
+        tx = _MemoryTx(self)
         try:
-            yield _MemoryTx(self)
+            yield tx
         except BaseException:
             if self._commits == commits_before:
                 (self.attempts, self.profiles, self.metrics, self.usage, self.tips, self.sessions, self.goals,
                  self.sightings, self.plans, self.plan_links, self.reports) = snapshot
             raise
-        self._commits += 1
+        else:
+            self._commits += 1
+        finally:
+            tx.release_usage_locks()
 
     @staticmethod
     def question_id(key: str) -> uuid.UUID:
@@ -76,6 +82,22 @@ class InMemoryStore:
 class _MemoryTx:
     def __init__(self, store: InMemoryStore):
         self.s = store
+        self._held_usage_locks: dict[tuple[uuid.UUID, str], asyncio.Lock] = {}
+
+    async def lock_usage(self, user_id, scope):
+        key = (user_id, scope)
+        if key in self._held_usage_locks:
+            return
+        lock = self.s._usage_locks.setdefault(key, asyncio.Lock())
+        await lock.acquire()
+        self._held_usage_locks[key] = lock
+
+    def release_usage_locks(self):
+        for key, lock in self._held_usage_locks.items():
+            lock.release()
+            if not getattr(lock, "_waiters", None) and self.s._usage_locks.get(key) is lock:
+                del self.s._usage_locks[key]
+        self._held_usage_locks.clear()
 
     async def validate_answer_images(self, user_id, attempt_id, images):
         return all(i.path.startswith(f"{user_id}/{attempt_id}/") and

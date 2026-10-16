@@ -327,6 +327,7 @@ class PracticeService:
         for _try in range(2):                                        # a profile race (two tabs) is redone once
             try:
                 async with self.store.transaction() as tx:
+                    await tx.lock_usage(user_id, "practice")
                     started = await tx.started_today(user_id)
                     if started >= self.config.daily_attempt_limit:
                         raise ApiError("usage_limit", f"you have started {started} attempts today; the daily limit is "

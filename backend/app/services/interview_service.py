@@ -20,6 +20,7 @@ import copy
 import logging
 import re
 import uuid
+from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
 
@@ -149,6 +150,13 @@ class InterviewService:
                           "job_type": job_type, "plan": [p.model_dump(mode="json") for p in plan]}}
         turns = [self._new_turn(0, decision, question, language, now)]
         async with self.store.transaction() as tx:
+            # The early check is just a fast refusal. This locked check and INSERT
+            # share one transaction, so parallel workers cannot spend one slot twice.
+            await tx.lock_usage(user_id, "interview")
+            started = await tx.sessions_started_today(user_id)
+            if started >= self.config.daily_limit:
+                raise ApiError("usage_limit", f"you have started {started} interviews today; the limit is "
+                               f"{self.config.daily_limit}", headers={"Retry-After": "3600"})
             await tx.save_session(user_id=user_id, row=row, turns=turns, plan=row["config"]["plan"],
                                   role_slug=self.config.role, company_slug=self.config.company)
         return self._view(StoredSession(id=session_id, user_id=user_id, row=row, turns=turns), state)
@@ -176,8 +184,11 @@ class InterviewService:
                 if meta.get("idempotency_key") == idempotency_key:            # the same click again: same result
                     return self._turn_view(turn, language, revealed=row["status"] == "completed"), self._view(stored, state)
                 raise ApiError("already_submitted", "this question was already answered")
-            if meta.get("status") == "evaluating" and meta.get("idempotency_key") not in (None, idempotency_key) \
-                    and not self._stale(meta):
+            if meta.get("status") == "evaluating" and not self._stale(meta):
+                if meta.get("idempotency_key") == idempotency_key:
+                    # Another worker owns the accepted answer. Replay its current
+                    # state without replacing the text or starting another model call.
+                    return self._turn_view(turn, language, revealed=False), self._view(stored, state)
                 raise ApiError("conflict", "this answer is being evaluated")
             text = answer.get("text", "") if isinstance(answer, dict) else str(answer or "")
             text = (text or "").strip()
@@ -349,8 +360,20 @@ class InterviewService:
             raise ApiError("validation", f"language must be one of {', '.join(LANGUAGES)}")
         return language
 
-    def _lock(self, session_id: uuid.UUID) -> asyncio.Lock:
-        return self._locks.setdefault(session_id, asyncio.Lock())
+    @asynccontextmanager
+    async def _lock(self, session_id: uuid.UUID):
+        """Keep only locks with an owner or a waiter, including failed lookups.
+
+        IDs come from the caller: retaining every unknown ID forever lets an
+        authenticated caller grow this map without creating a single interview.
+        """
+        lock = self._locks.setdefault(session_id, asyncio.Lock())
+        try:
+            async with lock:
+                yield
+        finally:
+            if not lock.locked() and not getattr(lock, "_waiters", None) and self._locks.get(session_id) is lock:
+                del self._locks[session_id]
 
     def _stale(self, meta: dict) -> bool:
         """An evaluation that started long ago and never ended: the process died mid-call. The turn is
@@ -516,7 +539,6 @@ class InterviewService:
     def _finish(self, row: dict, state: SessionState, *, ended_early: bool) -> None:
         row["status"] = "completed"
         row["ended_at"] = self._stamp()
-        self._locks.pop(uuid.UUID(row["id"]), None)        # nothing more will be written to this interview
         row["state"]["ended_early"] = ended_early
         row["state"]["engine"] = state.model_dump(mode="json")
 

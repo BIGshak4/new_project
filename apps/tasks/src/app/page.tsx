@@ -95,7 +95,7 @@ function download(name: string, data: unknown) {
 export default function Page() {
   return (
     <Auth kind="tasks">
-      {(user, signOut) => <Board user={user} signOut={signOut} />}
+      {(user, signOut) => <Board key={user.id} user={user} signOut={signOut} />}
     </Auth>
   );
 }

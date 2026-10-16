@@ -1,14 +1,18 @@
 """Grade first, words after: the proof that moving the prose later in time changes no result.
 
 `tests/golden/grade_first_equivalence.json` was written by the code as it was BEFORE the split (2026-09-26, commit
-a9d8643), from the scenario below: four attempts (a weak answer with a hint and a follow-up, a Python answer run
-against its code tests, a Hebrew answer after the reference was revealed, a strong answer with a follow-up), then the
+a9d8643), from the scenario below: four attempts (a weak answer with a hint and a follow-up, a Python answer,
+a Hebrew answer after the reference was revealed, a strong answer with a follow-up), then the
 progress view. Every result is recorded: bands, evaluations, evidence, XP, the next-question suggestion, the card, the
 tip, the follow-up wording, the attempt rows, every skill profile's stored engine_state and level history, the
 metrics rows, the model-usage rows and the tips delivered. Timestamps and random ids are normalised.
 
 The same scenario then runs on today's code twice, with the prose inline and with the prose in the background, and
 both must reproduce the golden record exactly. Regenerate only on purpose: `GOLDEN=write uv run pytest tests/test_grade_first.py`.
+
+Security amendment (2026-10-16): submitted Python is reviewed as written, never executed on the API host.
+Only its four stored/public check copies and one check_passed metric were changed from passed=True to
+unassessed (plus the check explanation). All grades, evidence, XP, profiles and other results remain pinned.
 """
 
 from __future__ import annotations

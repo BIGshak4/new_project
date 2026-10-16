@@ -1,17 +1,17 @@
-"""Run a candidate's Python against a question's test cases.
+"""Developer-only harness for reviewed Python fixtures and seed self-tests.
 
 This module is self-contained on purpose: it is also the script a separate, isolated
 interpreter runs (`python -I -S code_runner.py`), so it must not import anything from `app`.
 
-Two layers keep a candidate's code from doing harm:
-  1. `audit()` walks the AST and refuses imports outside a small allow-list, dangerous
-     built-ins (open, exec, eval, __import__ ...) and introspection attributes
-     (__subclasses__, __globals__ ...) before anything runs;
-  2. the code runs in a child interpreter with isolated flags, a restricted set of
-     built-ins, a wall-clock timeout enforced by the parent, and, where the platform
-     allows, memory and CPU limits.
-The self-tests of our own seed answers run in-process (`run_cases`) through the very
-same harness, so what the loader validates is what candidates get.
+SECURITY: the AST filter, restricted built-ins, isolated interpreter flags and
+resource limits below are NOT a security isolation boundary. Allowed Python
+modules expose interpreter globals and may reach host capabilities. Never pass
+network input or unreviewed generated code to this module. HTTP check dispatch
+fails closed in checks.py; restoring automatic execution requires a separately
+isolated executor with no application credentials or host filesystem access.
+
+Reviewed seed self-tests run in-process (run_cases). Explicit local harness tests
+may use a child interpreter to test timeout behavior on controlled fixtures.
 """
 
 from __future__ import annotations
@@ -95,7 +95,7 @@ def extract_python(text: str) -> str | None:
 
 
 def audit(source: str) -> list[str]:
-    """Why the code must not run, or an empty list."""
+    """Best-effort fixture linting only; an empty list does NOT establish safety."""
     try:
         tree = ast.parse(source)
     except (SyntaxError, ValueError) as exc:
@@ -213,7 +213,7 @@ def _short(value) -> object:
 
 
 def run_cases(source: str, spec: dict) -> dict:
-    """Execute the source and call its entry point on every case. Never raises for candidate mistakes."""
+    """Execute TRUSTED source locally. This function provides no security sandbox."""
     cases = spec.get("cases") or []
     namespace = {"__builtins__": _safe_builtins(), "__name__": "candidate"}
     old_limit = sys.getrecursionlimit()
@@ -270,7 +270,7 @@ def child_environment() -> dict[str, str]:
 
 
 def run_in_subprocess(source: str, spec: dict, *, timeout_seconds: float) -> dict:
-    """Run the cases in an isolated child interpreter; the parent enforces the wall-clock timeout."""
+    """Execute a TRUSTED local fixture in a child with a deadline, not a security sandbox."""
     payload = json.dumps({"source": source, "spec": spec})
     command = [sys.executable, "-I", "-S", "-X", "utf8", str(Path(__file__).resolve())]
     try:

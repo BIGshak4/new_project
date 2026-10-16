@@ -4,21 +4,18 @@ A check result is an INPUT to the evaluator, not a replacement for it: a failed
 truth table caps correctness, a pass raises the floor, and the rubric still scores
 reasoning (AI_Engine_Spec §2.3).
 
-Nothing here uses eval(): Boolean expressions go through a small parser so a
-candidate's answer can never execute code in this process. Code tests are the one
-check that runs a candidate's code, and they do it in an audited, isolated child
-interpreter (see code_runner.py).
+Boolean expressions go through a small parser. Network-submitted Python is never
+executed: the former AST filter and child interpreter are not a security sandbox.
+Code answers remain available to the evaluator as written. Only explicitly trusted
+local seed self-tests may request in-process execution with sandbox=False.
 """
 
 from __future__ import annotations
 
 import asyncio
-import contextvars
-import functools
 import itertools
 import re
 import time
-from concurrent.futures import ThreadPoolExecutor
 
 from app.engine import code_runner
 from app.schemas.engine import CheckResult
@@ -449,17 +446,28 @@ def check_numeric(spec: dict, answer: str | float | int | dict) -> CheckResult:
 
 # ----------------------------------------------------------------------------- code tests
 
+CODE_EXECUTION_UNAVAILABLE = "Automatic code execution is unavailable; the answer is reviewed as written."
+
+
+def _code_execution_unavailable() -> CheckResult:
+    return CheckResult(type="code_tests", passed=None, detail=CODE_EXECUTION_UNAVAILABLE, runtime_ms=0)
+
+
 def check_code_tests(spec: dict, answer: dict | str, *, sandbox: bool = True) -> CheckResult:
-    """Run the Python in the answer against the question's cases.
+    """Reject untrusted execution, or check an explicitly trusted local seed.
 
     spec:   {"language": "python", "entry": ["count_set_bits", "popcount"], "timeout_ms": 5000,
              "cases": [{"args": [0], "expected": 0}, {"args": [[6, 6], 12], "accept": [[0, 1]], "unordered": true}]}
     answer: free text; the code is taken from fenced blocks (```python, or untagged blocks that parse).
 
-    passed is None when there is nothing to run (prose, C, pseudocode, or code the audit refused):
-    the evaluator still reads the answer. It is False when the code runs and disagrees, raises,
-    or never finishes. `sandbox=False` runs in-process and is only for our own seed self-tests.
+    The legacy sandbox=True default FAILS CLOSED before extraction, parsing or
+    execution. No environment variable enables it. A child Python interpreter
+    with an AST filter does not isolate filesystem, process or network access.
+    sandbox=False executes in-process and is exclusively for developer-reviewed
+    seed self-tests, never HTTP input or unreviewed model-generated code.
     """
+    if sandbox:
+        return _code_execution_unavailable()
     started = time.perf_counter()
     cases = spec.get("cases")
     if not isinstance(cases, list) or not cases:
@@ -478,12 +486,8 @@ def check_code_tests(spec: dict, answer: dict | str, *, sandbox: bool = True) ->
     refused = code_runner.audit(source)
     if refused:
         return done(None, "the code was not run: " + "; ".join(refused[:3]))
-    timeout = max(1.0, float(spec.get("timeout_ms", code_runner.DEFAULT_TIMEOUT_MS)) / 1000)
-    outcome = (code_runner.run_in_subprocess(source, spec, timeout_seconds=timeout) if sandbox
-               else code_runner.run_cases(source, spec))
+    outcome = code_runner.run_cases(source, spec)
     status = outcome.get("status")
-    if status == "timeout":
-        return done(False, f"the code did not finish within {timeout:g} s (an infinite loop?)")
     if status == "raised":
         return done(False, f"the code raised before any test ran: {outcome.get('error')}")
     if status == "no_entry":
@@ -500,29 +504,24 @@ def check_code_tests(spec: dict, answer: dict | str, *, sandbox: bool = True) ->
     return done(False, f"{entry}() fails {len(failed)} of {len(results)} test cases", mismatches)
 
 
-# Code tests run a child interpreter for up to their timeout (5 s). They get their own small pool: a burst of code
-# answers then waits for itself instead of holding the default thread pool that every request needs (token
-# verification, DNS for new database connections). The other checks are quick and run in the default pool as before.
-CODE_TEST_WORKERS = 4
-_code_pool: ThreadPoolExecutor | None = None
-
-
 async def run_check_async(deterministic_check: dict | None, answer) -> CheckResult | None:
-    """`run_check` off the event loop: the same function, the same result, in the right pool."""
-    global _code_pool
+    """The HTTP-facing check boundary: never execute submitted source code.
+
+    Truth-table and numeric checks keep their existing bounded parser behavior.
+    """
     if not deterministic_check:
         return None
-    if deterministic_check.get("type") != "code_tests":
-        return await asyncio.to_thread(run_check, deterministic_check, answer)
-    if _code_pool is None:
-        _code_pool = ThreadPoolExecutor(max_workers=CODE_TEST_WORKERS, thread_name_prefix="code-tests")
-    context = contextvars.copy_context()
-    return await asyncio.get_running_loop().run_in_executor(
-        _code_pool, functools.partial(context.run, run_check, deterministic_check, answer))
+    if deterministic_check.get("type") == "code_tests":
+        return _code_execution_unavailable()
+    return await asyncio.to_thread(run_check, deterministic_check, answer)
 
 
 def run_check(deterministic_check: dict | None, answer, *, sandbox: bool = True) -> CheckResult | None:
-    """Run the question's deterministic check, if it has one."""
+    """Run a bounded check; source execution is disabled by default.
+
+    sandbox=False is a trusted-local-seed escape hatch, not a runtime feature flag.
+    Network handlers must use run_check_async, which offers no such option.
+    """
     if not deterministic_check:
         return None
     kind = deterministic_check.get("type")

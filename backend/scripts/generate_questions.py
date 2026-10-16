@@ -297,11 +297,12 @@ def validate(question: dict, cat) -> list[str]:
 
 
 def sandboxed_self_test(question: BankQuestion) -> list[str]:
-    """The loader's self-test, but every code answer runs in the sandboxed subprocess with its timeout.
+    """Validate drafts without executing model-written Python on the developer's host.
 
-    The loader runs seed self-tests in-process (`sandbox=False`) because seeds are our own code. Drafts are model-written:
-    a debugging question about code that hangs ships a "wrong answer" that really hangs, and in-process that froze the
-    whole run (2026-10-02, 21 hours at 100 % CPU). A timeout in the sandbox is a failed answer, not a frozen generator."""
+    The legacy name is retained for callers. Code checks fail closed as unassessed,
+    so code drafts cannot pass automatic self-validation until a separate isolated
+    executor exists. Only reviewed repository seeds use sandbox=False in the loader.
+    """
     if not question.deterministic_check:
         return []
     try:
@@ -342,7 +343,7 @@ async def verify_reference(provider, question: BankQuestion, cat) -> tuple[str, 
     """The judge grades the draft's own English reference. Returns (band, summary)."""
     skill = cat.leaf_skills[question.primary_skill]
     answer = question.translations["en"].reference_solution
-    check = run_check(question.deterministic_check, answer, sandbox=False) if question.deterministic_check else None
+    check = run_check(question.deterministic_check, answer) if question.deterministic_check else None
     result = await evaluator.evaluate(provider, question_context=evaluator.question_block(question, "en", skill),
                                       known_error_keys={e.key for e in question.common_errors}, language="en",
                                       difficulty=question.difficulty, answer=answer, check=check, glossary=cat.glossary)

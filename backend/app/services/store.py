@@ -36,6 +36,7 @@ __all__ = ["DuplicateSubmissionKey", "StaleProfile", "Store", "Tx", "DbStore"]
 
 
 class Tx(Protocol):
+    async def lock_usage(self, user_id: uuid.UUID, scope: str) -> None: ...
     async def validate_answer_images(self, user_id: uuid.UUID, attempt_id: uuid.UUID, images: list) -> bool: ...
     async def load_question(self, *, key: str | None = None, question_id: uuid.UUID | None = None) -> LoadedQuestion | None: ...
     async def list_questions(self, *, language: str, subject: str | None = None) -> list[QuestionSummary]: ...
@@ -102,6 +103,16 @@ class DbTx:
         self.connection = connection
         self.allow_in_review = allow_in_review
         self._goals: dict[uuid.UUID, Goal] = {}        # load_goal already read user_profile.seniority_self_assessed
+
+    async def lock_usage(self, user_id: uuid.UUID, scope: str) -> None:
+        """Serialize allowance COUNT + INSERT across workers until this transaction ends.
+
+        A per-process lock cannot protect a PostgreSQL-backed quota. Hash collisions can
+        only serialize unrelated users, never grant an extra allowance. No model call
+        runs while this transaction-scoped lock is held.
+        """
+        await self.connection.execute(text("select pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+                                      {"key": f"jobrun:usage:{scope}:{user_id}"})
 
     async def validate_answer_images(self, user_id, attempt_id, images):
         prefix = f"{user_id}/{attempt_id}/"

@@ -18,9 +18,11 @@ import asyncio
 import hashlib
 import json
 import logging
+import os
 import re
 import time
 import uuid
+from collections import OrderedDict, deque
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
@@ -91,7 +93,9 @@ app.include_router(meta.router)
 
 MAX_BODY_BYTES = 256 * 1024          # an answer is at most 20 000 characters; anything larger is not a request we serve
 REQUEST_ID_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
-RATE_LIMIT_PER_MINUTE = 600          # per caller (token, else address); /health is exempt; 0 disables (review, 2026-10-15)
+RATE_LIMIT_PER_MINUTE = 600          # per offered token, else address; 0 disables this layer
+NETWORK_RATE_LIMIT_PER_MINUTE = 1800  # independent address budget: rotating unverified tokens cannot reset it
+MAX_RATE_LIMIT_BUCKETS = 10_000
 
 
 class BodyTooLarge(Exception):
@@ -110,36 +114,47 @@ class StreamLimits:
 
     def __init__(self, app):
         self.app = app
-        self._buckets: dict[str, list[float]] = {}
+        self._buckets: OrderedDict[str, deque[float]] = OrderedDict()
+
+    @staticmethod
+    def _network(scope) -> str:
+        # Use the ASGI server's resolved peer only. Never interpret caller-supplied
+        # X-Forwarded-For here; deployment proxy trust must be configured correctly.
+        client = scope.get("client") or ("?", 0)
+        return str(client[0])
 
     def _caller(self, scope) -> str:
         headers = {k.decode("latin-1").lower(): v for k, v in scope.get("headers", [])}
         token = headers.get(b"authorization".decode(), b"")
         if token:
             return "t:" + hashlib.sha256(token).hexdigest()[:16]
-        client = scope.get("client") or ("?", 0)
-        return "a:" + str(client[0])
+        return "a:" + self._network(scope)
 
-    def _over_limit(self, caller: str) -> bool:
-        if RATE_LIMIT_PER_MINUTE <= 0:
+    def _over_limit(self, caller: str, limit: int | None = None) -> bool:
+        limit = RATE_LIMIT_PER_MINUTE if limit is None else limit
+        if limit <= 0:
             return False
         now = time.monotonic()
-        stamps = self._buckets.setdefault(caller, [])
+        stamps = self._buckets.setdefault(caller, deque())
+        self._buckets.move_to_end(caller)
+        while len(self._buckets) > MAX_RATE_LIMIT_BUCKETS:
+            self._buckets.popitem(last=False)  # fresh entries are bounded too, not only expired entries
         cutoff = now - 60
         while stamps and stamps[0] < cutoff:
-            stamps.pop(0)
-        if len(stamps) >= RATE_LIMIT_PER_MINUTE:
+            stamps.popleft()
+        if len(stamps) >= limit:
             return True
         stamps.append(now)
-        if len(self._buckets) > 10_000:                                   # never grows without bound
-            for key in [k for k, v in self._buckets.items() if not v or v[-1] < cutoff][:1000]:
-                self._buckets.pop(key, None)
         return False
 
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http":
             return await self.app(scope, receive, send)
-        if scope.get("path") != "/health" and self._over_limit(self._caller(scope)):
+        cheap_health = (scope.get("path") == "/health" and scope.get("method") in ("GET", "HEAD")
+                        and not scope.get("query_string"))
+        if not cheap_health and (
+                self._over_limit("n:" + self._network(scope), NETWORK_RATE_LIMIT_PER_MINUTE)
+                or self._over_limit(self._caller(scope))):
             response = JSONResponse({"error": {"code": "usage_limit", "message": "too many requests; slow down for a minute"}},
                                     status_code=429, headers={"Retry-After": "60"})
             return await response(scope, receive, send)
@@ -207,28 +222,37 @@ async def request_log(request: Request, call_next):
 
 
 _db_probe: dict = {}
+_db_probe_lock = asyncio.Lock()
+DB_PROBE_TIMEOUT_SECONDS = 3.0
 
 
 async def _database_round_trip() -> dict:
-    """Median of three `select 1` round trips on a pooled connection, plus the pool's state. Kept for 10 s so an
-    unauthenticated caller cannot turn /health into database load."""
+    """One bounded probe shared by concurrent callers; success cached 10 s, failures 2 s."""
     now = time.monotonic()
-    if _db_probe.get("at", -1e9) > now - 10:
+    if _db_probe.get("at", -1e9) > now - _db_probe.get("ttl", 10):
         return _db_probe["value"]
-    from sqlalchemy import text
+    async with _db_probe_lock:
+        now = time.monotonic()
+        if _db_probe.get("at", -1e9) > now - _db_probe.get("ttl", 10):
+            return _db_probe["value"]
+        from sqlalchemy import text
 
-    engine = db.get_engine()
-    timings = []
-    async with engine.connect() as connection:
-        for _ in range(3):
-            started = time.perf_counter()
-            await connection.execute(text("select 1"))
-            timings.append((time.perf_counter() - started) * 1000)
-    pool = engine.pool
-    value = {"round_trip_ms": round(sorted(timings)[1], 2), "pool_size": pool.size(), "pool_checked_out": pool.checkedout(),
-             "pool_overflow": pool.overflow()}
-    _db_probe.update(at=now, value=value)
-    return value
+        try:
+            async with asyncio.timeout(DB_PROBE_TIMEOUT_SECONDS):
+                engine = db.get_engine()
+                timings = []
+                async with engine.connect() as connection:
+                    for _ in range(3):
+                        started = time.perf_counter()
+                        await connection.execute(text("select 1"))
+                        timings.append((time.perf_counter() - started) * 1000)
+                pool = engine.pool
+                value = {"round_trip_ms": round(sorted(timings)[1], 2), "pool_size": pool.size(),
+                         "pool_checked_out": pool.checkedout(), "pool_overflow": pool.overflow()}
+        except Exception as exc:  # noqa: BLE001 - brief negative cache prevents a failing-probe stampede
+            value = {"error": type(exc).__name__}
+        _db_probe.update(at=time.monotonic(), value=value, ttl=2 if "error" in value else 10)
+        return value
 
 
 @app.get("/health", tags=["ops"])
@@ -236,7 +260,12 @@ async def health(db_check: bool = False) -> dict:
     """`?db_check=true` also measures one database round trip (cached 10 s)."""
     settings = get_settings()
     runtime = getattr(app.state, "runtime", None)
-    body = {"status": "ok", "engine_version": ENGINE_VERSION, "env": settings.env, "llm_provider": settings.llm_provider,
+    # Render supplies the public Git revision. Restrict the shape so deployment
+    # verification cannot accidentally expose arbitrary environment content.
+    revision = os.environ.get("RENDER_GIT_COMMIT", "")
+    source_revision = revision if re.fullmatch(r"[0-9a-f]{40}", revision) else None
+    body = {"status": "ok", "engine_version": ENGINE_VERSION, "source_revision": source_revision,
+            "env": settings.env, "llm_provider": settings.llm_provider,
             "database_configured": bool(settings.database_url), "database_host": settings.database_host_kind,
             "database_pooler": settings.database_pooler_mode,
             "auth_configured": bool(settings.supabase_url),

@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowRight, LogOut, Mail, LockKeyhole } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
+import { AccessCheck, accessForUser, observeAuthUser, type AccessState } from "../lib/auth-access";
 export type Lang = "he" | "en";
 export function Auth({
   lang = "he",
@@ -16,9 +17,13 @@ export function Auth({
   const he = lang === "he";
   const [user, setUser] = useState<User | null>(null),
     [ready, setReady] = useState(false),
-    [member, setMember] = useState(false),
-    [checking, setChecking] = useState(false),
-    [accessError, setAccessError] = useState("");
+    [access, setAccess] = useState<AccessState | null>(null);
+  const currentUser = useRef<User | null>(null);
+  const accessCheck = useRef(new AccessCheck());
+  const { checking, allowed: member, failed } = accessForUser(user?.id, access);
+  const accessError = failed
+    ? he ? "לא הצלחנו לבדוק הרשאות. נסו שוב." : "Unable to check access. Try again."
+    : "";
   const [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
     [mode, setMode] = useState<"login" | "signup">("login"),
@@ -26,55 +31,39 @@ export function Auth({
     [message, setMessage] = useState(""),
     [error, setError] = useState("");
   useEffect(() => {
-    let live = true;
-    supabase.auth
-      .getUser()
-      .then(({ data }) => {
-        if (live) {
-          setUser(data.user);
-          setReady(true);
-        }
-      })
-      .catch(() => {
-        if (live) setReady(true);
-      });
-    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (live) {
-        setUser(session?.user ?? null);
-        setReady(true);
+    return observeAuthUser(supabase.auth, (next) => {
+      if (currentUser.current?.id !== next?.id) {
+        accessCheck.current.invalidate();
+        setAccess(null);
       }
+      currentUser.current = next;
+      setUser(next);
+      setPassword("");
+      setReady(true);
     });
-    return () => {
-      live = false;
-      data.subscription.unsubscribe();
-    };
   }, []);
   async function checkAccess() {
-    setChecking(true);
-    setAccessError("");
-    const { data, error } = await supabase
-      .from("jr_members")
-      .select("email,can_manage_tasks")
-      .limit(1);
-    setMember(
-      !error &&
-        !!data?.length &&
-        (kind !== "tasks" || data[0].can_manage_tasks),
+    if (!user) return;
+    await accessCheck.current.run(
+      user.id,
+      async () => {
+        const { data, error } = await supabase
+          .from("jr_members")
+          .select("email,can_manage_tasks")
+          .limit(1);
+        if (error) throw error;
+        return !!data?.length && (kind !== "tasks" || !!data[0].can_manage_tasks);
+      },
+      () => currentUser.current?.id ?? null,
+      setAccess,
     );
-    if (error)
-      setAccessError(
-        he
-          ? "לא הצלחנו לבדוק הרשאות. נסו שוב."
-          : "Unable to check access. Try again.",
-      );
-    setChecking(false);
   }
   useEffect(() => {
-    if (user) {
-      void checkAccess();
-    } else setMember(false);
+    if (user) void checkAccess();
+    return () => accessCheck.current.invalidate();
   }, [user?.id]); // RLS is the authorization boundary.
   const signOut = () => {
+    setPassword("");
     void supabase.auth.signOut();
   };
   async function submit(e: React.FormEvent) {
@@ -82,16 +71,15 @@ export function Auth({
     setBusy(true);
     setError("");
     setMessage("");
+    const credentials = { email: email.trim(), password };
+    // The Auth component remains mounted while signed in; do not retain a reusable password.
+    setPassword("");
     try {
       const result =
         mode === "login"
-          ? await supabase.auth.signInWithPassword({
-              email: email.trim(),
-              password,
-            })
+          ? await supabase.auth.signInWithPassword(credentials)
           : await supabase.auth.signUp({
-              email: email.trim(),
-              password,
+              ...credentials,
               options: { emailRedirectTo: window.location.origin },
             });
       if (result.error) throw result.error;
