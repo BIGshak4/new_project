@@ -4,7 +4,8 @@ import { parseTechnicalAnswer } from "./technical-answer";
 export type DictationPhase = "idle" | "starting" | "listening" | "stopping";
 export type DictationError =
   | "permission" | "microphone" | "network" | "no-speech"
-  | "language" | "unavailable" | "limit";
+  | "language" | "unavailable" | "limit" | "service" | "timeout";
+export const DICTATION_START_TIMEOUT_MS = 15000;
 export type DictationState = {
   phase: DictationPhase;
   interim: string;
@@ -64,8 +65,8 @@ export function dictationExplanationLimit(answer: string) {
 
 export function recognitionError(error: string): DictationError {
   switch (error) {
-    case "not-allowed":
-    case "service-not-allowed": return "permission";
+    case "not-allowed": return "permission";
+    case "service-not-allowed": return "service";
     case "audio-capture": return "microphone";
     case "network": return "network";
     case "no-speech": return "no-speech";
@@ -79,7 +80,8 @@ export class DictationController {
   private recognition: Recognition | null = null;
   private generation = 0;
   private disposed = false;
-  private timer: ReturnType<typeof setTimeout> | null = null;
+  private startupTimer: ReturnType<typeof setTimeout> | null = null;
+  private stopTimer: ReturnType<typeof setTimeout> | null = null;
   private state: DictationState = { phase: "idle", interim: "", error: null };
 
   constructor(private readonly options: {
@@ -97,9 +99,15 @@ export class DictationController {
     if (!this.disposed) this.options.onState(this.state);
   }
 
+  private clearStartupTimer() {
+    if (this.startupTimer !== null) clearTimeout(this.startupTimer);
+    this.startupTimer = null;
+  }
+
   private detach() {
-    if (this.timer) clearTimeout(this.timer);
-    this.timer = null;
+    this.clearStartupTimer();
+    if (this.stopTimer !== null) clearTimeout(this.stopTimer);
+    this.stopTimer = null;
     const recognition = this.recognition;
     this.recognition = null;
     this.generation += 1;
@@ -132,11 +140,15 @@ export class DictationController {
     recognition.onstart = () => {
       if (this.disposed || this.generation !== generation) return;
       if (!current()) { this.cancel(); return; }
+      this.clearStartupTimer();
       // A quick second click can stop capture before the browser emits its start event.
       if (this.state.phase !== "stopping") this.publish({ phase: "listening" });
     };
     recognition.onresult = (event) => {
       if (!current()) return;
+      this.clearStartupTimer();
+      // Some browser services deliver results without first dispatching start.
+      if (this.state.phase === "starting") this.publish({ phase: "listening" });
       const phrases: string[] = [];
       const interim: string[] = [];
       for (let index = 0; index < event.results.length; index += 1) {
@@ -167,6 +179,11 @@ export class DictationController {
       this.publish({ phase: "idle", interim: "", error: hasFinal ? null : "no-speech" });
     };
     this.publish({ phase: "starting", interim: "", error: null });
+    this.startupTimer = setTimeout(() => {
+      if (this.disposed || this.generation !== generation) return;
+      if (this.options.disabled()) this.cancel();
+      else this.fail("timeout");
+    }, DICTATION_START_TIMEOUT_MS);
     try { recognition.start(); } catch (error) {
       this.fail(error instanceof DOMException && error.name === "NotAllowedError" ? "permission" : "unavailable");
     }
@@ -174,11 +191,12 @@ export class DictationController {
 
   stop() {
     if (!this.recognition || this.state.phase === "stopping") return;
+    this.clearStartupTimer();
     this.publish({ phase: "stopping" });
     // stop(), unlike abort(), lets the browser finalize the phrase already captured.
     try { this.recognition.stop(); } catch { this.cancel(); return; }
     // Some browser services never emit end after disconnecting. Do not leave capture stuck.
-    if (this.recognition) this.timer = setTimeout(() => this.cancel(), 5000);
+    if (this.recognition) this.stopTimer = setTimeout(() => this.cancel(), 5000);
   }
 
   cancel() {

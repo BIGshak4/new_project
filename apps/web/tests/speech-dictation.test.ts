@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { DictationController, appendDictatedText, dictationExplanationLimit, recognitionError, recognitionFactory, type DictationState, type Recognition } from "../src/lib/speech-dictation";
+import { DICTATION_START_TIMEOUT_MS, DictationController, appendDictatedText, dictationExplanationLimit, recognitionError, recognitionFactory, type DictationState, type Recognition } from "../src/lib/speech-dictation";
 import { DictationControls, dictationErrorMessage, dictationHelpMessage } from "../src/components/dictation-controls";
 import { formatTechnicalAnswer, parseTechnicalAnswer } from "../src/lib/technical-answer";
 
@@ -167,7 +167,7 @@ test("new sessions have a fresh final index and duplicate start clicks create no
 
 test("recognition errors abort, preserve the existing draft and offer recoverable explanations", () => {
   for (const [browserError, expected] of [
-    ["not-allowed", "permission"], ["service-not-allowed", "permission"],
+    ["not-allowed", "permission"], ["service-not-allowed", "service"],
     ["audio-capture", "microphone"], ["network", "network"],
     ["no-speech", "no-speech"], ["language-not-supported", "language"], ["unknown", "unavailable"],
   ] as const) {
@@ -266,4 +266,158 @@ test("a browser start exception returns to an editable idle state", () => {
   assert.equal(state?.phase, "idle");
   assert.equal(state?.error, "unavailable");
   controller.dispose();
+});
+
+test("a browser that sends no startup event times out in 15 seconds, aborts and preserves the current draft", (t) => {
+  t.mock.timers.enable({ apis: ["setTimeout"] });
+  const context = setup();
+  context.controller.start();
+  context.edit("טיוטה שערכתי בזמן ההמתנה");
+  t.mock.timers.tick(DICTATION_START_TIMEOUT_MS - 1);
+  assert.equal(context.state().phase, "starting");
+  assert.equal(context.current().aborts, 0);
+  t.mock.timers.tick(1);
+  assert.equal(context.state().phase, "idle");
+  assert.equal(context.state().error, "timeout");
+  assert.equal(context.current().aborts, 1);
+  assert.equal(context.current().onstart, null);
+  assert.equal(context.text(), "טיוטה שערכתי בזמן ההמתנה");
+  assert.equal(context.updates.length, 0);
+  context.controller.dispose();
+});
+
+test("start and result progress clear the startup watchdog, including results delivered before start", (t) => {
+  t.mock.timers.enable({ apis: ["setTimeout"] });
+  for (const progress of ["start", "interim", "final"] as const) {
+    const context = setup();
+    context.controller.start();
+    t.mock.timers.tick(DICTATION_START_TIMEOUT_MS - 1);
+    if (progress === "start") context.current().onstart?.();
+    else context.current().results([["דיבור", progress === "final"]]);
+    assert.equal(context.state().phase, "listening");
+    t.mock.timers.tick(DICTATION_START_TIMEOUT_MS * 2);
+    assert.equal(context.state().phase, "listening");
+    assert.equal(context.state().error, null);
+    assert.equal(context.current().aborts, 0);
+    assert.equal(context.text(), progress === "final" ? "התחלה דיבור" : "התחלה");
+    context.controller.dispose();
+  }
+});
+
+test("stopping before startup completes clears its watchdog and uses only the bounded stop timer", (t) => {
+  t.mock.timers.enable({ apis: ["setTimeout"] });
+  const context = setup();
+  context.controller.start();
+  t.mock.timers.tick(DICTATION_START_TIMEOUT_MS - 1);
+  context.controller.stop();
+  assert.equal(context.state().phase, "stopping");
+  t.mock.timers.tick(1);
+  assert.equal(context.state().phase, "stopping");
+  assert.equal(context.state().error, null);
+  t.mock.timers.tick(4999);
+  assert.equal(context.state().phase, "idle");
+  assert.equal(context.state().error, null);
+  assert.equal(context.current().aborts, 1);
+  assert.equal(context.text(), "התחלה");
+  context.controller.dispose();
+});
+
+test("cancel, dispose, errors and end remove startup timeouts without later draft or status changes", (t) => {
+  t.mock.timers.enable({ apis: ["setTimeout"] });
+  for (const cleanup of ["cancel", "dispose", "error", "end"] as const) {
+    const context = setup();
+    context.controller.start();
+    if (cleanup === "error") context.current().onerror?.({ error: "service-not-allowed" });
+    else if (cleanup === "end") context.current().onend?.();
+    else context.controller[cleanup]();
+    const stateCount = context.states.length;
+    const abortCount = context.current().aborts;
+    const error = context.state().error;
+    t.mock.timers.tick(DICTATION_START_TIMEOUT_MS * 2);
+    assert.equal(context.states.length, stateCount);
+    assert.equal(context.current().aborts, abortCount);
+    assert.equal(context.state().error, error);
+    assert.equal(context.text(), "התחלה");
+    context.controller.dispose();
+  }
+});
+
+test("a timed-out session's late events cannot update a draft or disrupt a successful retry", (t) => {
+  t.mock.timers.enable({ apis: ["setTimeout"] });
+  const context = setup();
+  context.controller.start();
+  const old = context.current();
+  const late = { start: old.onstart, result: old.onresult, error: old.onerror, end: old.onend };
+  t.mock.timers.tick(DICTATION_START_TIMEOUT_MS);
+  assert.equal(context.state().error, "timeout");
+  context.controller.start();
+  assert.equal(context.sessions.length, 2);
+  assert.equal(context.state().error, null);
+  late.start?.();
+  late.result?.({ resultIndex: 0, results: [{ isFinal: true, 0: { transcript: "תוצאה ישנה" } }] });
+  late.error?.({ error: "not-allowed" });
+  late.end?.();
+  assert.equal(context.state().phase, "starting");
+  assert.equal(context.text(), "התחלה");
+  assert.equal(context.current().aborts, 0);
+  context.current().onstart?.();
+  context.current().results([["ניסיון מוצלח", true]]);
+  t.mock.timers.tick(DICTATION_START_TIMEOUT_MS * 2);
+  assert.equal(context.state().phase, "listening");
+  assert.equal(context.text(), "התחלה ניסיון מוצלח");
+  assert.equal(old.aborts, 1);
+  context.controller.dispose();
+});
+
+test("synchronous native start events also clear the startup watchdog without deferring the user gesture", (t) => {
+  t.mock.timers.enable({ apis: ["setTimeout"] });
+  const recognition = new MockRecognition();
+  recognition.start = () => { recognition.starts += 1; recognition.onstart?.(); };
+  let state: DictationState | undefined;
+  const controller = new DictationController({
+    create: () => recognition, language: "en-US", disabled: () => false,
+    getText: () => "draft", onText: () => assert.fail("must not write"), maxLength: () => 20000,
+    onState: (next) => { state = next; },
+  });
+  controller.start();
+  assert.equal(recognition.starts, 1);
+  assert.equal(state?.phase, "listening");
+  t.mock.timers.tick(DICTATION_START_TIMEOUT_MS * 2);
+  assert.equal(state?.phase, "listening");
+  assert.equal(recognition.aborts, 0);
+  controller.dispose();
+});
+
+test("service and startup-timeout copy offer conditional iPhone recovery and a keyboard fallback without blaming permission", () => {
+  assert.notEqual(recognitionError("service-not-allowed"), recognitionError("not-allowed"));
+  for (const error of ["service", "timeout"] as const) {
+    const he = dictationErrorMessage(error, "he");
+    const en = dictationErrorMessage(error, "en");
+    assert.match(he, /אם אתם באייפון/);
+    assert.match(he, /Siri והכתבה/);
+    assert.match(he, /מיקרופון שבמקלדת/);
+    assert.match(en, /[Ii]f you are on iPhone/);
+    assert.match(en, /Siri and Dictation/);
+    assert.match(en, /keyboard microphone/);
+    assert.doesNotMatch(en, /Microphone access was blocked/);
+  }
+  assert.match(dictationErrorMessage("timeout", "en"), /15 seconds/);
+  assert.match(dictationErrorMessage("timeout", "he"), /15 שניות/);
+});
+
+test("a permission refusal names app and site checks without assuming the iPhone's exact settings", () => {
+  const he = dictationErrorMessage("permission", "he");
+  const en = dictationErrorMessage("permission", "en");
+  assert.match(he, /לא התקבל אישור/);
+  assert.match(he, /אפליקציית Google/);
+  assert.match(he, /ישירות ב־Safari/);
+  assert.match(he, /אם הם מופיעים ברשימה/);
+  assert.match(he, /מיקרופון שבמקלדת/);
+  assert.match(en, /site or app/);
+  assert.match(en, /Google app/);
+  assert.match(en, /directly in Safari/);
+  assert.match(en, /Privacy & Security → Microphone/);
+  assert.match(en, /if it is listed/);
+  assert.match(en, /keyboard microphone/);
+  assert.doesNotMatch(en, /Siri.*disabled|Google app.*does not support|Microphone access was blocked/);
 });

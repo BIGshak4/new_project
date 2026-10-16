@@ -16,7 +16,9 @@ export function dictationHelpMessage(support: "checking" | "supported" | "unsupp
 
 export function dictationErrorMessage(error: DictationError, lang: Lang) {
   const messages: Record<DictationError, [string, string]> = {
-    permission: ["הגישה למיקרופון נחסמה. אפשר לאפשר מיקרופון בהגדרות האתר בדפדפן ולנסות שוב, או להמשיך להקליד.", "Microphone access was blocked. Allow the microphone in your browser's site settings and try again, or keep typing."],
+    permission: ["לא התקבל אישור להפעלת ההכתבה. בדקו את הרשאת המיקרופון באתר או באפליקציה. אם אתם באייפון ופתחתם את האתר מתוך אפליקציית Google או אפליקציה אחרת, נסו לפתוח את כתובת האתר ישירות ב־Safari. בהגדרות האייפון אפשר לבדוק: פרטיות ואבטחה ← מיקרופון ← האפליקציה או הדפדפן, אם הם מופיעים ברשימה. אפשר גם להשתמש במיקרופון שבמקלדת או להקליד.", "Dictation was not allowed to start. Check microphone permission for the site or app. If you are on iPhone and opened the site inside the Google app or another app, try opening the site address directly in Safari. In iPhone Settings, check Privacy & Security → Microphone → the app or browser, if it is listed. You can also use the keyboard microphone or type."],
+    service: ["שירות ההכתבה בדפדפן לא זמין כרגע. אם אתם באייפון, בדקו ש־Siri והכתבה מופעלות בהגדרות המכשיר ונסו שוב. אפשר גם ללחוץ על שדה התשובה ולהשתמש במיקרופון שבמקלדת, או להקליד.", "The browser's dictation service is unavailable. If you are on iPhone, check that Siri and Dictation are enabled in device settings and try again. You can also tap the answer field and use the keyboard microphone, or type."],
+    timeout: ["ההכתבה לא התחילה בתוך 15 שניות וההפעלה בוטלה. הטקסט שלכם לא השתנה. נסו שוב; אם אתם באייפון, בדקו ש־Siri והכתבה מופעלות בהגדרות המכשיר. אפשר גם ללחוץ על שדה התשובה ולהשתמש במיקרופון שבמקלדת, או להקליד.", "Dictation did not start within 15 seconds and was cancelled. Your text is unchanged. Try again; if you are on iPhone, check that Siri and Dictation are enabled in device settings. You can also tap the answer field and use the keyboard microphone, or type."],
     microphone: ["לא נמצא מיקרופון זמין. בדקו שהוא מחובר ושהוא אינו בשימוש באפליקציה אחרת, או המשיכו להקליד.", "No microphone is available. Check that it is connected and not in use by another app, or keep typing."],
     network: ["שירות ההכתבה לא הצליח להתחבר. בדקו את החיבור ונסו שוב. הטקסט שכבר נוסף נשמר בתשובה.", "The dictation service could not connect. Check your connection and try again. Text already added remains in your answer."],
     "no-speech": ["לא זוהה דיבור ברור. נסו שוב ודברו קרוב למיקרופון, או המשיכו להקליד.", "No clear speech was detected. Try again closer to the microphone, or keep typing."],
@@ -122,7 +124,7 @@ export function DictationControls({ value, onChange, lang, disabled, maxLength =
       </p>
       <p className="small" id={`${id}-status`} role="status" aria-live="polite" style={{ margin: 0 }}>
         {state.error ? dictationErrorMessage(state.error, lang)
-          : state.phase === "starting" ? t("ממתינים לאישור המיקרופון בדפדפן…", "Waiting for browser microphone permission…")
+          : state.phase === "starting" ? t("מפעילים את ההכתבה בדפדפן… אם תופיע בקשת גישה למיקרופון, אשרו אותה כדי להכתיב.", "Starting browser dictation… If a microphone access request appears, allow it to dictate.")
           : state.phase === "listening" ? t("מקשיבים… משפטים שזוהו נוספים לסוף ההסבר.", "Listening… Recognized phrases are added to the end of your explanation.")
           : state.phase === "stopping" ? t("מסיימים את המשפט האחרון…", "Finishing the last phrase…")
           : ""}
