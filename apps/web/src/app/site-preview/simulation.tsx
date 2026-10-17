@@ -1247,6 +1247,13 @@ function Practice({
                   value={draft.circuit}
                   onChange={(circuit) => update({ circuit, submitted: false })}
                   lang={lang}
+                  question={{
+                    title: t(...q.title),
+                    content: <>
+                      <p className={s.prompt}>{t(...q.prompt)}</p>
+                      {q.id === "xor" && <CircuitMoment t={t} />}
+                    </>,
+                  }}
                 />
               </div>
             ) : (

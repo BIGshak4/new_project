@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   ReactFlow,
   Background,
@@ -16,6 +16,11 @@ import {
 } from "@xyflow/react";
 import {
   Expand,
+  Maximize,
+  Minimize,
+  PanelRightOpen,
+  PanelRightClose,
+  X,
   Undo2,
   Redo2,
   Trash2,
@@ -43,6 +48,9 @@ import {
 } from "../lib/circuit";
 import type { Lang } from "./auth";
 import { CircuitTruthTable } from "./circuit-truth-table";
+import styles from "./circuit-workspace.module.css";
+
+export type CircuitQuestionReference = { title?: string; content: ReactNode };
 
 type GateNode = Node<{ part: Part; simulation: Simulation | null }, "gate">;
 const signalText = (v: Signal | undefined, bits = 1) =>
@@ -227,11 +235,13 @@ export default function CircuitEditor({
   onChange,
   lang,
   readOnly = false,
+  question,
 }: {
   value: Circuit;
   onChange?: (c: Circuit) => void;
   lang: Lang;
   readOnly?: boolean;
+  question?: CircuitQuestionReference;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [selected, setSelected] = useState<string | null>(null),
@@ -242,8 +252,12 @@ export default function CircuitEditor({
     [simulation, setSimulation] = useState<Simulation | null>(null);
   const [undo, setUndo] = useState<Circuit[]>([]),
     [redo, setRedo] = useState<Circuit[]>([]);
-  const [full, setFull] = useState(false),
-    [sourcePin, setSourcePin] = useState(""),
+  const [layout, setLayout] = useState<"inline" | "expanded" | "fullscreen">("inline");
+  const full = layout !== "inline";
+  const [showQuestion, setShowQuestion] = useState(true);
+  const questionId = useId();
+  const expandButton = useRef<HTMLButtonElement>(null);
+  const [sourcePin, setSourcePin] = useState(""),
     [targetPin, setTargetPin] = useState("");
   const dialog = useRef<HTMLDialogElement>(null),
     flow = useRef<ReactFlowInstance<GateNode, Edge> | null>(null);
@@ -252,7 +266,24 @@ export default function CircuitEditor({
     if (running) setSimulation((old) => simulate(value, old ?? undefined));
   }, [value, running]);
   useEffect(() => {
-    if (full) dialog.current?.showModal();
+    const element = dialog.current;
+    if (!element) return;
+    // Keep one editor tree mounted: promoting the same dialog to the top layer
+    // preserves its viewport, selection, simulation and undo history.
+    if (full) {
+      if (element.open) element.close();
+      element.showModal();
+      const previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = previousOverflow; };
+    }
+    if (element.matches(":modal")) {
+      element.close();
+      element.show();
+      expandButton.current?.focus({ preventScroll: true });
+    } else if (!element.open) {
+      element.show();
+    }
   }, [full]);
   function change(next: Circuit, record = true) {
     if (readOnly || !onChange) return;
@@ -406,10 +437,10 @@ export default function CircuitEditor({
     ports(p).inputs.map((port) => ({ p, port })),
   );
   const content = (
-    <div className="circuit-workbench" dir={lang === "he" ? "rtl" : "ltr"}>
-      <div className="circuit-toolbar">
+    <div className={`circuit-workbench ${full ? styles.workbench : ""}`} dir={lang === "he" ? "rtl" : "ltr"}>
+      <div className={`circuit-toolbar ${full ? styles.toolbar : ""}`}>
         <strong>{t("שרטוט מעגל", "Circuit drawing")}</strong>
-        <div className="row">
+        <div className={`row ${styles.actions}`}>
           {!readOnly && (
             <>
               <button
@@ -456,18 +487,40 @@ export default function CircuitEditor({
           >
             <Download size={16} />
           </button>
+          {full && question && (
+            <button
+              type="button"
+              className={styles.questionToggle}
+              aria-expanded={showQuestion}
+              aria-controls={questionId}
+              onClick={() => setShowQuestion((shown) => !shown)}
+            >
+              {showQuestion ? <PanelRightClose size={16} /> : <PanelRightOpen size={16} />}
+              {showQuestion ? t("הסתרת השאלה", "Hide question") : t("הצגת השאלה", "Show question")}
+            </button>
+          )}
           <button
             type="button"
-            onClick={() => {
-              if (full) dialog.current?.close();
-              setFull(!full);
-            }}
+            onClick={() => setLayout(layout === "fullscreen" ? "expanded" : "fullscreen")}
+            aria-pressed={layout === "fullscreen"}
+            title={layout === "fullscreen" ? t("מעבר לחלון מוגדל", "Use an expanded window") : t("מילוי שטח המסך", "Fill the screen")}
           >
-            <Expand size={16} />
-            {full ? t("חזרה לתשובה", "Back to answer") : t("הרחבה", "Expand")}
+            {layout === "fullscreen" ? <Minimize size={16} /> : <Maximize size={16} />}
+            {layout === "fullscreen" ? t("חלון מוגדל", "Expanded window") : t("מסך מלא", "Full screen")}
+          </button>
+          <button
+            ref={expandButton}
+            type="button"
+            className={full ? styles.close : undefined}
+            onClick={() => setLayout(full ? "inline" : "expanded")}
+          >
+            {full ? <X size={16} /> : <Expand size={16} />}
+            {full ? t("חזרה לתשובה", "Back to answer") : t("הרחבת הלוח", "Expand drawing")}
           </button>
         </div>
       </div>
+      <div className={full ? styles.body : undefined} data-question-open={full && !!question && showQuestion}>
+      <div className={full ? styles.editor : undefined}>
       {!readOnly && (
         <div className="component-library">
           <div
@@ -550,7 +603,6 @@ export default function CircuitEditor({
         aria-label={t("לוח שרטוט מעגל", "Circuit canvas")}
       >
         <ReactFlow<GateNode, Edge>
-          key={full ? "expanded" : "inline"}
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
@@ -862,19 +914,32 @@ export default function CircuitEditor({
           {notice}
         </p>
       )}
+      </div>
+      {full && question && showQuestion && (
+        <aside className={styles.question} id={questionId} aria-label={t("השאלה בזמן השרטוט", "Question reference")}>
+          <div className={styles.questionHeader}>
+            <h2 className={styles.questionTitle} dir="auto">{question.title || t("השאלה", "Question")}</h2>
+            <button className={styles.questionClose} type="button" onClick={() => setShowQuestion(false)}
+              aria-label={t("סגירת תצוגת השאלה", "Close question reference")}><X size={18} /></button>
+          </div>
+          <div className={styles.questionContent}>{question.content}</div>
+        </aside>
+      )}
+      </div>
     </div>
   );
-  return full ? (
+  return (
     <dialog
       ref={dialog}
-      className="circuit-dialog"
-      onCancel={() => setFull(false)}
-      onClose={() => setFull(false)}
-      aria-label={t("עורך מעגלים מורחב", "Expanded circuit editor")}
+      open
+      className={full ? styles.dialog : styles.inline}
+      data-layout={layout}
+      role={full ? "dialog" : "region"}
+      aria-modal={full ? true : undefined}
+      onCancel={(event) => { event.preventDefault(); setLayout("inline"); }}
+      aria-label={full ? t("סביבת שרטוט מורחבת", "Expanded drawing workspace") : t("עורך מעגלים", "Circuit editor")}
     >
       {content}
     </dialog>
-  ) : (
-    content
   );
 }

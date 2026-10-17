@@ -1,0 +1,370 @@
+.inline {
+  position: static;
+  inset: auto;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  overflow: visible;
+}
+
+.dialog {
+  position: fixed;
+  inset: 16px;
+  box-sizing: border-box;
+  width: min(1560px, calc(100dvw - 32px));
+  max-width: calc(100dvw - 32px);
+  height: calc(100dvh - 32px);
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  overflow: hidden;
+  box-shadow: 0 20px 64px color-mix(in srgb, var(--paper) 45%, transparent);
+}
+
+.dialog::backdrop {
+  background: color-mix(in srgb, var(--paper) 76%, transparent);
+}
+
+.dialog[data-layout="fullscreen"] {
+  inset: 0;
+  width: 100dvw;
+  max-width: 100dvw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.workbench {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.toolbar {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
+  gap: 12px;
+  background: var(--surface);
+}
+
+.toolbar > strong {
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.toolbar .actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  width: auto;
+  min-width: 0;
+}
+
+.toolbar button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 10px;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.toolbar button > svg {
+  flex-shrink: 0;
+}
+
+.questionToggle[aria-expanded="true"],
+.close {
+  background: var(--surface-2);
+}
+
+.questionToggle[aria-expanded="true"] {
+  border-color: var(--action);
+}
+
+.body,
+.editor {
+  min-width: 0;
+}
+
+.workbench .body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.workbench .body[data-question-open="true"] {
+  grid-template-columns: minmax(0, 1fr) clamp(320px, 26dvw, 380px);
+}
+
+.workbench .editor {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: var(--muted) var(--surface);
+  scrollbar-width: thin;
+}
+
+.workbench :global(.component-library) {
+  padding: 8px 12px;
+}
+
+.workbench :global(.component-groups) {
+  margin-bottom: 6px;
+}
+
+.workbench :global(.component-groups button) {
+  min-height: 44px;
+  padding: 6px 10px;
+}
+
+.workbench :global(.component-palette) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.workbench :global(.component-palette button) {
+  flex: 0 0 76px;
+  min-height: 60px;
+  padding: 6px 4px;
+  font-size: 11px;
+  border-radius: 7px;
+}
+
+.workbench :global(.circuit-guide) {
+  padding: 8px 12px;
+}
+
+.workbench :global(.circuit-viewport-tools) {
+  padding: 6px 12px;
+}
+
+.workbench :global(.circuit-viewport-tools button),
+.workbench :global(.simulation-bar button),
+.workbench :global(.part-properties input),
+.workbench :global(.part-properties select),
+.workbench :global(.component-picker select),
+.workbench :global(.circuit-connect select) {
+  min-height: 44px;
+}
+
+.workbench :global(.circuit-canvas) {
+  height: max(400px, calc(100dvh - 300px));
+  min-height: 400px;
+}
+
+.workbench :global(.circuit-canvas .react-flow__controls button) {
+  width: 44px;
+  min-height: 44px;
+  padding: 10px;
+}
+
+.question {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border-inline-start: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  overflow: hidden;
+}
+
+.questionTitle {
+  flex: 0 0 auto;
+  min-height: 68px;
+  margin: 0;
+  padding: 20px 20px 16px;
+  padding-inline-end: 76px;
+  border-bottom: 1px solid var(--line);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.questionClose {
+  position: absolute;
+  inset-block-start: 12px;
+  inset-inline-end: 12px;
+  width: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px;
+  background: transparent;
+}
+
+.questionHeader {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.questionHeader .questionTitle {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+}
+
+.questionHeader .questionClose {
+  position: static;
+  flex-shrink: 0;
+}
+
+.questionContent {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  padding: 16px 20px 24px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  overflow-wrap: anywhere;
+  scrollbar-color: var(--muted) var(--paper);
+  scrollbar-width: thin;
+}
+
+.questionContent > :first-child {
+  margin-top: 0;
+}
+
+.questionContent > :last-child {
+  margin-bottom: 0;
+}
+
+.questionContent :global(.question-prompt) {
+  margin-block: 0 16px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.85;
+}
+
+.questionContent img,
+.questionContent svg {
+  max-width: 100%;
+}
+
+@media (max-width: 1100px) {
+  .workbench .toolbar > strong {
+    flex: 1 1 100%;
+  }
+
+  .workbench .toolbar .actions {
+    justify-content: flex-start;
+    width: 100%;
+  }
+}
+
+@media (max-width: 800px) {
+  .dialog,
+  .dialog[data-layout="fullscreen"] {
+    inset: 0;
+    width: 100dvw;
+    max-width: 100dvw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .workbench .toolbar {
+    gap: 8px;
+    padding: max(10px, env(safe-area-inset-top)) 12px 10px;
+    padding-inline-start: max(12px, env(safe-area-inset-left));
+    padding-inline-end: max(12px, env(safe-area-inset-right));
+  }
+
+  .workbench .toolbar .actions {
+    gap: 6px;
+  }
+
+  .workbench .toolbar button {
+    margin-inline-start: 0;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .workbench .body[data-question-open="true"] {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .workbench .body[data-question-open="true"] .editor {
+    grid-row: 2;
+  }
+
+  .question {
+    grid-row: 1;
+    max-height: 38dvh;
+    border-inline-start: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .questionTitle {
+    min-height: 60px;
+    padding: 16px 12px 12px;
+    padding-inline-end: 68px;
+  }
+
+  .questionClose {
+    inset-block-start: 8px;
+    inset-inline-end: 8px;
+  }
+
+  .questionHeader {
+    padding: 8px 12px;
+  }
+
+  .questionContent {
+    padding: 12px 16px 16px;
+  }
+
+  .workbench :global(.component-palette) {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .workbench :global(.component-palette button) {
+    width: auto;
+  }
+
+  .workbench :global(.circuit-canvas) {
+    height: max(340px, calc(100dvh - 300px));
+    min-height: 340px;
+  }
+
+  .workbench :global(.simulation-bar) {
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}

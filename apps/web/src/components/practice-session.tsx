@@ -15,6 +15,7 @@ import {
 import type { User } from "@supabase/supabase-js";
 import type { Lang } from "./auth";
 import { VisualAnswer } from "./visual-answer";
+import type { CircuitQuestionReference } from "./circuit-editor";
 import {
   emptyVisual,
   hasVisual,
@@ -477,6 +478,22 @@ export function PracticeSession({
   }
   const disabled = busy || recoveryRequired || attempt?.status === "evaluating";
   const retryable = attempt ? latestSubmission(attempt) : undefined;
+  const drawingQuestion: CircuitQuestionReference | undefined = question ? {
+    title: question.title,
+    content: <>
+      <RichText text={question.prompt} />
+      {question.has_media && (resources.data
+        ? <QuestionFigures media={resources.data.media} lang={lang} role="prompt" onRefresh={resources.retry} />
+        : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />)}
+      {question.choices && (
+        <ol className="choices">
+          {question.choices.map((choice, index) => (
+            <li key={index} dir="auto"><BidiText>{choice}</BidiText></li>
+          ))}
+        </ol>
+      )}
+    </>,
+  } : undefined;
 
   return (
     <>
@@ -743,6 +760,7 @@ export function PracticeSession({
                           value={visual}
                           onChange={setVisual}
                           lang={lang}
+                          question={drawingQuestion}
                           attemptId={attempt.id}
                           userId={user.id}
                           disabled={disabled || !!pending}
@@ -760,6 +778,7 @@ export function PracticeSession({
                         submission={attempt.submission}
                         lang={lang}
                         demo={demo}
+                        question={drawingQuestion}
                       />
                     )}
                     {((attempt.can_submit && !attempt.submission) ||
@@ -965,10 +984,12 @@ function SavedAnswer({
   submission: s,
   lang,
   demo,
+  question,
 }: {
   submission: Submission;
   lang: Lang;
   demo: boolean;
+  question?: CircuitQuestionReference;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const parts = parseTechnicalAnswer(s.answer);
@@ -981,7 +1002,7 @@ function SavedAnswer({
           <code>{parts.code}</code>
         </pre>
       )}
-      {s.visual && <VisualAnswer value={s.visual} lang={lang} />}
+      {s.visual && <VisualAnswer value={s.visual} lang={lang} question={question} />}
       <p className="help-status">
         {t("רמזים שנראו לפני השליחה", "Hints seen before submission")}:{" "}
         {s.hints_seen ?? "—"}

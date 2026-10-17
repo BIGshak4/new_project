@@ -377,6 +377,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
                 value={visual}
                 onChange={setVisual}
                 lang={lang}
+                question={{ title: turn.skill_label, content: <InterviewQuestionText text={turn.question} /> }}
                 attemptId={interviewId}
                 userId={userId}
                 disabled={busy}
@@ -602,7 +603,8 @@ export function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang })
       </div>
       <InterviewQuestionText text={x.question} />
       {x.answer && <p className="report-answer" dir="auto"><BidiText>{x.answer}</BidiText></p>}
-      {x.visual && hasVisual(x.visual) && <VisualAnswer value={x.visual} lang={lang} />}
+      {x.visual && hasVisual(x.visual) && <VisualAnswer value={x.visual} lang={lang}
+        question={{ title: x.skill_label, content: <InterviewQuestionText text={x.question} /> }} />}
       {x.flags?.includes("circuit_assessed") && (
         <span className="chip">
           <Cpu size={14} /> {t("המעגל שציירתם נבדק", "Your circuit was assessed")}

@@ -10,6 +10,7 @@ import {
   type AnswerImage,
 } from "../lib/circuit";
 import type { Lang } from "./auth";
+import type { CircuitQuestionReference } from "./circuit-editor";
 
 const CircuitEditor = dynamic(() => import("./circuit-editor"), { ssr: false });
 export const ANSWER_BUCKET = "practice-answer-images";
@@ -134,6 +135,7 @@ export function VisualAnswer({
   disabled,
   onUploading,
   photos = true,
+  question,
 }: {
   value: Visual;
   onChange?: (v: Visual) => void;
@@ -144,6 +146,7 @@ export function VisualAnswer({
   onUploading?: (busy: boolean) => void;
   /** false hides the photo upload (a place where the storage bucket does not accept uploads yet) */
   photos?: boolean;
+  question?: CircuitQuestionReference;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [open, setOpen] = useState(!!value.circuit?.parts.length),
@@ -280,6 +283,7 @@ export function VisualAnswer({
         <CircuitEditor
           value={value.circuit}
           lang={lang}
+          question={question}
           readOnly={readonly || disabled}
           onChange={(circuit) => onChange?.({ ...current.current, circuit })}
         />
