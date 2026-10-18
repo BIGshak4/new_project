@@ -20,7 +20,7 @@ await fs.mkdir(out, { recursive: true });
 const catalog = await fs.readFile(path.join(appRoot, "src/lib/muxi-tour.ts"), "utf8");
 const fullIds = [...catalog.slice(catalog.indexOf("export const FULL_TOUR"), catalog.indexOf("const byId")).matchAll(/step\("([^"]+)"/g)].map(m => m[1]);
 const shortIds = [...catalog.slice(catalog.indexOf("export const SHORT_TOUR"), catalog.indexOf("export const tourSteps")).matchAll(/byId\("([^"]+)"/g)].map(m => m[1]);
-const report = { base, startedAt: new Date().toISOString(), fullCatalog: fullIds, shortCatalog: shortIds, checks: [], flows: [], consoleErrors: [], pageErrors: [], forbiddenRequests: [], screenshots: [] };
+const report = { base, startedAt: new Date().toISOString(), fullCatalog: fullIds, shortCatalog: shortIds, checks: [], flows: [], consoleErrors: [], pageErrors: [], forbiddenRequests: [], screenshots: [], pointerTargets: [], scrollEvidence: [] };
 let current = "startup";
 const check = (condition, message) => { assert.ok(condition, message); report.checks.push({ name: message, passed: true }); };
 const edge = process.env.EDGE_EXECUTABLE || "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe";
@@ -36,6 +36,23 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 async function context(options = {}, init) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 1000 }, acceptDownloads: true, reducedMotion: "reduce", ...options });
+  // Observe the real scrolling rather than treating Playwright's click/fill
+  // auto-scroll as evidence that the guide brought the control into view.
+  await ctx.addInitScript(() => {
+    window.__muxiGuideScrolls = [];
+    const scroll = Element.prototype.scrollIntoView;
+    Element.prototype.scrollIntoView = function (...args) {
+      const name = this.getAttribute("data-muxi-control");
+      const before = this.getBoundingClientRect();
+      const beforeWindow = window.scrollY;
+      const result = scroll.apply(this, args);
+      if (name) {
+        const after = this.getBoundingClientRect();
+        window.__muxiGuideScrolls.push({ name, beforeTop: before.top, afterTop: after.top, beforeWindow, afterWindow: window.scrollY, viewport: window.innerHeight });
+      }
+      return result;
+    };
+  });
   if (init) await ctx.addInitScript(init);
   const p = await ctx.newPage(); activePage = p; p.setDefaultTimeout(9000);
   p.on("console", message => { if (message.type() === "error") report.consoleErrors.push({ flow: current, text: message.text(), location: message.location() }); });
@@ -86,9 +103,51 @@ async function overflow(p, label) {
   });
   check(result.every(e => !e.overflow), `${label}: document and overlay widths contained (${JSON.stringify(result)})`);
 }
+async function guidance(p, name) {
+  // These checks run before any action on the control. They cannot pass merely
+  // because a Playwright click scrolls an off-screen control into view.
+  await p.waitForFunction(value => {
+    const pointer = document.querySelector(`[data-muxi-pointer][data-muxi-for="${value}"]`);
+    const control = document.querySelector(`[data-muxi-control="${value}"][data-muxi-spotlight]`);
+    if (!pointer || !control) return false;
+    const rect = control.getBoundingClientRect();
+    const below = pointer.getAttribute("data-below") === "true";
+    const expectedY = below ? rect.bottom + 9 : rect.top - 9;
+    return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.top < window.innerHeight - 70 &&
+      Math.abs(parseFloat(pointer.style.top) - expectedY) < 4;
+  }, name);
+  const evidence = await p.evaluate(value => {
+    const pointer = document.querySelector(`[data-muxi-pointer][data-muxi-for="${value}"]`);
+    const control = document.querySelector(`[data-muxi-control="${value}"][data-muxi-spotlight]`);
+    const rect = control.getBoundingClientRect();
+    return { name: value, label: pointer.textContent.trim(), top: rect.top, bottom: rect.bottom, viewport: window.innerHeight, dialog: !!control.closest("dialog:modal"), scrollY: window.scrollY };
+  }, name);
+  check(evidence.label.length > 0, `${current}: Muxi points to exact ${name} control with an instruction, already scrolled into view`);
+  report.pointerTargets.push({ flow: current, ...evidence });
+}
+async function settleGuide(p) {
+  await p.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+}
+async function noSimulationPointer(p, label) {
+  await settleGuide(p);
+  await p.waitForFunction(() => !document.querySelector('[data-muxi-pointer][data-muxi-for="circuit-simulate"]'));
+  check(await p.locator('[data-muxi-pointer][data-muxi-for="circuit-simulate"]').count() === 0, `${label}: completed simulation station has no stale start-simulation callout`);
+}
+async function verifyAutomaticScroll(p, label) {
+  const evidence = await p.evaluate(() => window.__muxiGuideScrolls || []);
+  report.scrollEvidence.push({ label, calls: evidence });
+  const moved = evidence.filter(e => Math.abs(e.beforeTop - e.afterTop) > 2 || Math.abs(e.beforeWindow - e.afterWindow) > 2);
+  check(moved.some(e => e.afterTop >= 0 && e.afterTop < e.viewport), `${label}: guide itself scrolled a real control into the viewport`);
+}
 async function codeExercise(p, completion = false) {
   const s = stage(p);
-  await button(s, "העתקת קוד השאלה לעורך", "Copy question code into editor").click();
+  check(await s.locator('[data-muxi-control="code-open"]').count() === 1, `${current}: code editor starts collapsed`);
+  check(await s.locator('[data-muxi-control="code-copy"]').count() === 0, `${current}: copy is not offered before opening the editor`);
+  await guidance(p, "code-open");
+  await s.locator('[data-muxi-control="code-open"]').click();
+  await guidance(p, "code-copy");
+  await s.locator('[data-muxi-control="code-copy"]').click();
+  await guidance(p, "code-input");
   const editor = s.getByRole("textbox", { name: /עורך קוד ותוכן טכני|Code and technical content editor/ });
   await editor.fill("int sum_samples(const int *a, size_t n) {\n  int total = 0;\n  for (size_t i = 0; i < n; ++i) total += a[i];\n  return total;\n}\n");
   check((await editor.textContent()).includes("i < n"), `${current}: actual code editor accepts a corrected C loop`);
@@ -103,12 +162,13 @@ async function codeExercise(p, completion = false) {
 async function ensureRunning(p) {
   await stage(p).locator(".simulation-bar").waitFor();
   const run = button(stage(p), "הרצת סימולציה", "Run simulation");
-  if (await run.count()) await run.click();
+  if (await run.count()) { await guidance(p, "circuit-simulate"); await run.click(); }
 }
 async function selectPart(p, value) {
+  await guidance(p, "circuit-component");
   await stage(p).getByLabel(/בחירת רכיב להגדרה|Select component to configure/).selectOption(value);
 }
-async function inputToggle(p) { await stage(p).getByRole("button", { name: /החלפת 0 \/ 1|Toggle 0 \/ 1/ }).click(); }
+async function inputToggle(p) { await guidance(p, "circuit-input-toggle"); await stage(p).getByRole("button", { name: /החלפת 0 \/ 1|Toggle 0 \/ 1/ }).click(); }
 async function circuitSnapshot(dialog) {
   return {
     nodes: await dialog.locator(".react-flow__node").allTextContents(),
@@ -133,6 +193,7 @@ async function guidancePreservesCircuit(p, dialog, mobile = false, suffix = "") 
     await button(dialog, "הרצת סימולציה", "Run simulation").click();
     check(await button(dialog, "עצירת סימולציה", "Stop simulation").isVisible(), "Circuit simulation can be restarted while mobile guidance is minimized");
     await dialog.locator(".circuit-canvas").scrollIntoViewIfNeeded();
+    await noSimulationPointer(p, `Mobile completed simulation after canvas scroll${suffix}`);
     await shot(p, `mobile-expanded-minimized${suffix}`);
     await button(panel, "פתיחת ההדרכה", "Open guidance").click();
   } else {
@@ -165,30 +226,43 @@ async function perform(p, id, full = false) {
     case "filter":
       await s.getByRole("searchbox").fill(""); await s.getByLabel(/סינון לפי נושא|Filter by topic/).selectOption("digital");
       check(await s.getByRole("button", { name: /דוגמת סינון|filter example/ }).count() === 1, "Topic filter narrows the library"); break;
-    case "digital": case "fsm": case "programming": case "algorithms": case "reasoning-topic": case "behavioral": case "design-topic": case "communication": case "analog": {
-      await s.getByRole("searchbox").fill(""); await s.getByLabel(/סינון לפי נושא|Filter by topic/).selectOption("all");
-      const names = { digital: /החלטת רוב משלושה חיישנים|Three-sensor majority/, fsm: /גילוי הרצף 101|Detect the sequence 101/, programming: /איפה נגמר המערך|Where does the array end/, algorithms: /שתי רשימות ממוינות|Two sorted lists/, "reasoning-topic": /הקופסה עם התווית הלא נכונה|The mislabeled box/, behavioral: /החלטה ששיניתם בפרויקט|A project decision you changed/, "design-topic": /בחירה בין שני מקורות|Select between two sources/, communication: /שולח מהיר ומקבל עסוק|A fast sender and a busy receiver/, analog: /מחלק מתח עם עומס|A loaded voltage divider/ };
-      await s.getByRole("button", { name: names[id] }).first().click();
-      if (id === "communication") { await s.getByRole("button", { name: /מחלק מתח עם עומס|A loaded voltage divider/ }).first().click(); check(await s.getByText(/נושא עתידי:|Future topic:/).count() > 0, "Analog example is explicitly marked as a future topic"); }
+    case "topics":
+      await guidance(p, "topics-hardware");
+      check(await s.locator('[data-muxi-control="topics-select"] button').count() === 5, "One overview shows all five subject areas without per-question stations");
+      for (const area of ["hardware", "software", "reasoning", "interview", "future"]) {
+        await s.locator(`[data-muxi-control="topics-${area}"]`).click();
+        check(await s.locator('[data-muxi-control="topics-detail"]').isVisible(), `${current}: ${area} overview explains practice tools and focus`);
+      }
+      check(await s.getByText(/כיוון עתידי|future direction/).count() > 0, "Analog overview remains explicitly a future direction");
       break;
-    }
     case "explanation":
       await s.getByRole("textbox", { name: /הסבר הפתרון|Solution explanation/ }).fill("אבחר בקופסה המסומנת מעורב: התווית שגויה ולכן הפריט הראשון קובע מה יש בה.");
       await s.getByText(/איך פועלת הכתבה קולית|How does voice dictation work/).click(); break;
     case "code": await codeExercise(p, full); break;
     case "languages":
+      await guidance(p, "code-language");
       await s.getByRole("combobox", { name: /שפת הקוד|Code language/ }).selectOption("python");
       check((await s.getByRole("textbox", { name: /עורך קוד ותוכן טכני|Code and technical content editor/ }).textContent()).includes("sum_samples"), "Changing code language preserves the code draft"); break;
     case "wire":
-      await s.locator(".circuit-connect > summary").click();
+      await guidance(p, "circuit-wire-source");
+      check(await s.locator(".circuit-connect").evaluate(e => e.open), "Wire controls are opened automatically by the guide");
       await s.locator(".circuit-connect").getByRole("combobox", { name: /^(יציאה|Output)/ }).selectOption("b:Q");
+      await guidance(p, "circuit-wire-target");
       await s.locator(".circuit-connect").getByRole("combobox", { name: /^(כניסה|Input)/ }).selectOption("and:A1");
+      await guidance(p, "circuit-wire-connect");
       await button(s.locator(".circuit-connect"), "חיבור", "Connect").click(); break;
     case "simulate":
-      if (!full) await button(s, "טעינת דוגמה מחוברת מראש במקום לחווט ידנית", "Load a prewired example instead of wiring manually").click();
-      await ensureRunning(p); break;
+      if (!full) {
+        await guidance(p, "circuit-prewired");
+        await button(s, "טעינת דוגמה מחוברת מראש במקום לחווט ידנית", "Load a prewired example instead of wiring manually").click();
+        await guidance(p, "circuit-simulate");
+      }
+      await ensureRunning(p);
+      await noSimulationPointer(p, `${current}: running simulation`);
+      break;
     case "inputs": await selectPart(p, "a"); await inputToggle(p); break;
     case "truth":
+      await guidance(p, "circuit-truth-table");
       await button(s, "יצירת טבלת אמת", "Generate truth table").click();
       check(await s.getByRole("table").count() === 1, "Real truth table is generated");
       check(await s.getByRole("table").locator("tbody tr").count() === 4, "Two-input AND truth table has four rows");
@@ -244,11 +318,55 @@ async function perform(p, id, full = false) {
       await s.getByRole("alert").waitFor(); check(await preview.isVisible(), "Invalid file is rejected without discarding the valid preview"); break;
     }
     case "remove-photo": await button(s, "הסרת התמונה", "Remove image").click(); check(await s.getByRole("img").count() === 0, "Photo removal clears the preview"); break;
-    case "feedback":
-      await s.getByRole("textbox", { name: /הסבירו את הגישה שלכם|Explain your approach/ }).fill("אבדוק את שלושת הזוגות ואת כל שמונת צירופי הכניסות."); await button(s, "קבלת משוב לדוגמה", "Get example feedback").click();
-      check(await s.getByText(/המשוב בסיור הוא דוגמה קבועה|Tour feedback is a fixed example/).count() > 0, "Feedback is honestly labeled fixed sample, not real AI assessment"); break;
-    case "feedback-details": await s.getByText(/פתיחת הדגשים והצעד הבא לדוגמה|Open example focus areas and next step/).click(); break;
-    case "followup": await s.getByRole("textbox", { name: /תשובה לשאלת ההמשך|Follow-up answer/ }).fill("כאשר C=1 נקבל Y=A+B ולכן חיישן נוסף יחיד כבר מספיק להכרעת רוב."); await button(s, "שמירת תשובת היכרות", "Save introduction answer").click(); break;
+    case "feedback": {
+      const arbitrary = "muxi-tour-ungraded-draft: banana spaceship 913";
+      await guidance(p, "feedback-answer");
+      await s.getByRole("textbox", { name: /הסבירו את הגישה שלכם|Explain your approach/ }).fill(arbitrary);
+      await guidance(p, "feedback-request");
+      await button(s, "קבלת משוב לדוגמה", "Get example feedback").click();
+      await guidance(p, "feedback-grade");
+      const receipt = s.locator('[data-muxi-control="feedback-receipt"]');
+      check(await receipt.locator("blockquote").count() === 1, "Submitted tour draft is shown separately from the scored sample");
+      check(await receipt.locator("blockquote").innerText() === arbitrary, "Arbitrary draft is preserved exactly without being replaced by a model answer");
+      check(/ללא בדיקה|ungraded/.test(await receipt.innerText()), "Draft receipt explicitly says ungraded");
+      check(/לא נבדקה|not been checked or scored/.test(await receipt.innerText()), "Draft receipt does not imply that arbitrary input was assessed");
+      const grade = s.locator('[data-muxi-control="feedback-grade"]');
+      check(await grade.isVisible() && /85\s*\/\s*100/.test(await grade.innerText()), "An actual numeric example score of 85 / 100 is visible");
+      check(/לתשובת ההדגמה בלבד|sample answer only/.test(await grade.innerText()), "Visible score belongs explicitly to the authored sample answer only");
+      check(!(await receipt.innerText()).includes("85"), "Arbitrary user draft receives no numeric score");
+      break;
+    }
+    case "feedback-details":
+      await guidance(p, "feedback-details");
+      await s.locator('[data-muxi-control="feedback-details"]').click();
+      check(await s.getByRole("table").isVisible(), "Opening score details reveals the actual example rubric");
+      check(await s.getByRole("table").locator("tbody tr").count() === 4, "Example score explains four grading criteria");
+      check(/40\s*\+\s*20\s*\+\s*10\s*\+\s*15\s*=\s*85/.test(await s.getByRole("table").innerText()), "Visible rubric explains how the illustrative score adds up to 85");
+      break;
+    case "followup": {
+      const arbitrary = "muxi-followup-not-a-solution: purple banana 731";
+      check(await s.locator('[data-muxi-control="followup-reference-content"]').count() === 0, "Follow-up reference starts hidden");
+      await guidance(p, "followup-answer");
+      await s.getByRole("textbox", { name: /תשובה לשאלת ההמשך|Follow-up answer/ }).fill(arbitrary);
+      await guidance(p, "followup-save");
+      await button(s, "שמירת תשובת היכרות", "Save introduction answer").click();
+      const receipt = s.locator('[data-muxi-control="followup-receipt"]');
+      await receipt.waitFor();
+      check(await receipt.locator("blockquote").innerText() === arbitrary, "Random follow-up input is saved exactly as typed");
+      check(/ללא בדיקה|ungraded/.test(await receipt.innerText()) && /לא נבדקה|not been checked or scored/.test(await receipt.innerText()), "Random follow-up response is explicitly saved without correctness checking or a score");
+      check(!/A\s*\+\s*B|85\s*\//.test(await receipt.innerText()), "Saving arbitrary follow-up text does not return a reference answer or score as feedback");
+      check(await s.locator('[data-muxi-control="followup-reference-content"]').count() === 0, "Submitting a follow-up never opens the reference automatically");
+      check(await next(p).isEnabled(), "An ungraded saved response still completes the tour interaction");
+      await guidance(p, "followup-reference");
+      await s.locator('[data-muxi-control="followup-reference"]').click();
+      const reference = s.locator('[data-muxi-control="followup-reference-content"]');
+      await reference.waitFor();
+      check(/A\s*\+\s*B/.test(await reference.innerText()), "Only an explicit reference click reveals the authored solution");
+      check(/אינו משוב או אישור נכונות|not feedback or confirmation/.test(await reference.innerText()), "The authored follow-up reference is clearly distinguished from grading the submitted text");
+      await s.locator('[data-muxi-control="followup-reference"]').click();
+      check(await s.locator('[data-muxi-control="followup-reference-content"]').count() === 0, "Follow-up reference can be hidden again without discarding the saved draft");
+      break;
+    }
     case "reports":
       await s.getByLabel(/כמה בטוחים בפתרון|How confident are you/).selectOption("4"); await button(s, "שמירת הערכה עצמית לדוגמה", "Save example self-assessment").click();
       await s.getByRole("textbox", { name: /מה כדאי לתקן בשאלה|What should be corrected/ }).fill("כדאי להגדיר אם האיפוס סינכרוני או אסינכרוני."); await button(s, "שמירת דיווח מקומי לדוגמה", "Save a local example report").click(); break;
@@ -272,6 +390,8 @@ async function perform(p, id, full = false) {
 async function fullTour() {
   const { ctx, p } = await context();
   try {
+    check(fullIds.length === 39 && new Set(fullIds).size === 39, "Full catalog contains 39 unique stations");
+    check(fullIds.includes("topics") && !fullIds.includes("digital") && !fullIds.includes("fsm"), "Shared topics overview replaces repetitive per-question stations");
     await shot(p, "desktop-chooser"); await shot(p, "muxi-mascot", p.getByRole("img", { name: "מוקסי מנופף לשלום" }));
     await button(p, "מתחילים בסיור המעמיק", "Start the full tour").click();
     let alreadyAt = null;
@@ -290,17 +410,20 @@ async function fullTour() {
     await p.getByRole("heading", { name: /עכשיו הכלים בידיים שלכם|The tools are yours to use/ }).waitFor();
     const saved = await p.evaluate(() => JSON.parse(localStorage.getItem("jobrun-muxi-tour-v1-visitor") || "null"));
     check(saved.status === "completed" && saved.completed.length === fullIds.length && saved.skipped.length === 0, `Full tour completed all ${fullIds.length} stations with zero skips`);
+    await verifyAutomaticScroll(p, "Full tour");
     await shot(p, "full-completion");
   } catch (error) { await captureFailure(p, error); throw error; } finally { await ctx.close(); }
 }
 async function shortTour() {
   const { ctx, p } = await context();
   try {
+    check(shortIds.length === 10 && new Set(shortIds).size === 10 && shortIds.includes("topics"), "Short catalog contains 10 unique stations including the shared topics overview");
     await button(p, "מתחילים בסיור הקצר", "Start the short tour").click();
     for (const id of shortIds) { current = `short:${id}`; await station(p, id); check(await next(p).isDisabled(), `Short ${id}: Continue gated before interaction`); await perform(p, id); await continueStation(p); }
     await p.getByRole("heading", { name: /עכשיו הכלים בידיים שלכם|The tools are yours to use/ }).waitFor();
     const saved = await p.evaluate(() => JSON.parse(localStorage.getItem("jobrun-muxi-tour-v1-visitor") || "null"));
     check(saved.completed.length === shortIds.length && saved.skipped.length === 0, `Short tour completed all ${shortIds.length} stations with zero skips`);
+    await verifyAutomaticScroll(p, "Short tour");
     await shot(p, "short-completion");
     await button(p, "ממשיכים לסיור המעמיק", "Explore the full tour").click(); await station(p, "goal"); check(await next(p).isDisabled(), "Short completion can launch a fresh full tour");
   } catch (error) { await captureFailure(p, error); throw error; } finally { await ctx.close(); }
@@ -342,6 +465,7 @@ async function mobile() {
     check(await coach(p).locator("svg[data-point-direction]").getAttribute("data-point-direction") === "down", "Mobile Muxi points down toward the exercise");
     await overflow(p, "Mobile goal"); await shot(p, "mobile-exercise-goal");
     await expandChapters(p, "בונים ובודקים מעגל"); await station(p, "wire"); await perform(p, "wire", true); await continueStation(p); await station(p, "simulate"); await ensureRunning(p);
+    await noSimulationPointer(p, "Mobile completed simulation before expanding");
     await overflow(p, "Mobile circuit"); await shot(p, "mobile-circuit-dark");
     await button(stage(p), "הרחבת הלוח", "Expand drawing").click(); await p.locator("dialog:modal").waitFor();
     await guidancePreservesCircuit(p, p.locator("dialog:modal"), true);
@@ -353,7 +477,32 @@ async function mobile() {
     await guidancePreservesCircuit(p, p.locator("dialog:modal"), true, "-en");
     await overflow(p, "Mobile expanded circuit English light"); await shot(p, "mobile-expanded-coach-en");
     const compact = p.locator("dialog:modal [data-muxi-expanded-guide]");
+    // A completed station must be quiet, but the next unfinished station must
+    // locate the actual controls inside the native dialog's top layer.
+    if (await compact.getAttribute("data-minimized") === "true") await button(compact, "פתיחת ההדרכה", "Open guidance").click();
+    await p.locator("dialog:modal [data-muxi-coach]").getByRole("button", { name: /^(ממשיכים|Continue)/ }).click();
+    await station(p, "inputs");
     if (await compact.getAttribute("data-minimized") !== "true") await button(compact, "מזעור ההדרכה", "Minimize guidance").click();
+    await guidance(p, "circuit-component");
+    const activeDialog = p.locator("dialog:modal");
+    check(await activeDialog.locator('[data-muxi-pointer][data-muxi-for="circuit-component"]').count() === 1, "Unfinished input station points to the component selector inside the actual native modal");
+    await activeDialog.locator('[data-muxi-control="circuit-component"]').selectOption("a");
+    await guidance(p, "circuit-input-toggle");
+    check(await activeDialog.locator('[data-muxi-pointer][data-muxi-for="circuit-input-toggle"]').count() === 1, "Native input-toggle guidance is portalled into the top-layer dialog");
+    await p.waitForFunction(() => {
+      const modal = document.querySelector("dialog:modal");
+      const control = modal?.querySelector('[data-muxi-control="circuit-input-toggle"][data-muxi-spotlight]');
+      if (!control) return false;
+      const rect = control.getBoundingClientRect();
+      const x = rect.left + rect.width / 2, y = rect.top + rect.height / 2;
+      return rect.top >= 0 && rect.bottom <= window.innerHeight && control.contains(document.elementFromPoint(x, y));
+    });
+    check(true, "Native input-toggle control is visible and hit-testable before any Playwright action scroll");
+    await shot(p, "mobile-native-input-guidance-en-light");
+    await activeDialog.locator('[data-muxi-control="circuit-input-toggle"]').click();
+    await button(compact, "פתיחת ההדרכה", "Open guidance").click();
+    check(await activeDialog.locator("[data-muxi-coach]").getByRole("button", { name: /^(ממשיכים|Continue)/ }).isEnabled(), "Toggling the actual native-modal input completes the unfinished station");
+    await button(compact, "מזעור ההדרכה", "Minimize guidance").click();
     await compact.getByRole("button", { name: /^(יציאה מהסיור|Exit tour)$/, exact: true }).click(); await p.waitForURL(`${base}/`, { waitUntil: "domcontentloaded" });
     check(true, "Always-visible compact guidance exit leaves the native drawing dialog and tour");
   } catch (error) { await captureFailure(p, error); throw error; } finally { await ctx.close(); }

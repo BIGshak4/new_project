@@ -54,6 +54,12 @@
 .coach > p { line-height: 1.8; }
 .task { display: flex; align-items: flex-start; gap: 9px; padding: 16px; background: var(--soft); color: var(--ink); border-radius: 9px; margin: 18px 0; }
 .task svg { flex-shrink: 0; color: var(--ok); margin-top: 3px; }
+.pointer { position: fixed; z-index: 12; display: flex; align-items: center; gap: 9px; width: 288px; padding: 9px 12px; border: 1px solid var(--link); border-radius: 9px; background: var(--paper); color: var(--ink); box-shadow: 0 5px 18px #0002; font-size: 13px; line-height: 1.5; pointer-events: none; transform: translate(-50%, -100%); }
+.pointer[data-below="true"] { transform: translateX(-50%); }
+.pointer > svg:first-child { position: absolute; bottom: -18px; left: calc(50% - 9px); color: var(--link); background: var(--paper); }
+.pointer[data-below="true"] > svg:first-child { top: -18px; bottom: auto; }
+.pointerMascot { width: 38px; flex-shrink: 0; }
+.mobileNav { display: none; }
 .task strong { font-size: 14px; }
 .task p { margin: 6px 0 0; line-height: 1.7; }
 .stepActions { display: flex; gap: 8px; }
@@ -96,6 +102,12 @@
   .resume { align-items: flex-start; flex-direction: column; }
   .tourBar { gap: 8px; flex-wrap: wrap; padding: 8px 14px; } .localNote { width: 100%; margin: 0; }
   .tourGrid { display: flex; flex-direction: column; gap: 18px; padding: 18px 14px 40px; }
+  .root:has([data-muxi-stage]) { padding-bottom: 86px; }
+  .root:has(dialog[open]) .mobileNav { display: none; }
+  .mobileNav { position: fixed; z-index: 10; inset-inline: 0; bottom: 0; display: flex; align-items: center; gap: 8px; padding: 8px 12px max(8px, env(safe-area-inset-bottom)); background: var(--paper); border-top: 1px solid var(--line); }
+  .mobileNav button { font-size: 12px; padding-inline: 8px; }
+  .mobileBack { display: flex; flex: 1; min-width: 0; flex-direction: column; align-items: flex-start; background: transparent; border: 0; color: var(--link); gap: 3px; }
+  .mobileBack span { overflow: hidden; max-width: 100%; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-size: 10px; }
   .coach { position: static; width: 100%; } .coachIdentity { margin-bottom: 6px; } .mascot { width: 70px; } .coachTitle { margin-top: 16px; font-size: 25px; }
   .task { margin-block: 12px; padding: 13px; } .coachFooter { justify-content: space-between; } .stage { width: 100%; padding: 18px 14px; }
   .outline { top: 0; position: relative; padding: 12px 14px; }

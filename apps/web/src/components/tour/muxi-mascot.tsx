@@ -7,7 +7,7 @@ export type MuxiMascotProps = {
   label?: string;
 };
 
-/** A two-input multiplexer who helps people choose their next learning step. */
+/** A four-input multiplexer who helps people choose their next learning step. */
 export function MuxiMascot({
   pose = "wave",
   pointDirection = "right",
@@ -20,7 +20,7 @@ export function MuxiMascot({
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 220 200"
+      viewBox="0 0 220 220"
       className={[styles.mascot, className].filter(Boolean).join(" ")}
       data-pose={pose}
       data-point-direction={pointDirection}
@@ -31,10 +31,10 @@ export function MuxiMascot({
     >
       <g className={styles.character}>
         {/* Short legs keep the silhouette unmistakably a circuit symbol. */}
-        <path className={styles.limb} d="M84 142v24m43-35 4 35" />
-        <path className={styles.shoe} d="M84 164c-9 0-15 4-15 9h22v-7m40-2c9 0 15 4 15 9h-22v-7" />
+        <path className={styles.limb} d="M88 167v31m49-46 6 29-6 17" />
+        <path className={styles.shoe} d="M88 196c-9 0-15 4-15 9h22v-7m42-2c9 0 15 4 15 9h-22v-7" />
 
-        <g className={styles.leftArm}>
+        <g className={styles.leftArm} transform="translate(12 2)">
           {pointingLeft ? (
             <>
               <path className={styles.limb} d="M65 105 47 94H27" />
@@ -42,48 +42,49 @@ export function MuxiMascot({
             </>
           ) : pose === "celebrate" ? (
             <>
-              <path className={styles.limb} d="m65 105-18-9-9-25" />
-              <path className={styles.hand} d="m34 75-7-9c-2-3 1-6 4-3l4 4-3-11c-1-4 4-5 5-1l3 10 3-6c2-3 6-1 4 3l-3 13-5 4-5-4Z" />
+              <path className={styles.limb} d="m65 105-42-9-9-25" />
+              <path className={styles.hand} transform="translate(-12 0)" d="m34 75-7-9c-2-3 1-6 4-3l4 4-3-11c-1-4 4-5 5-1l3 10 3-6c2-3 6-1 4 3l-3 13-5 4-5-4Z" />
             </>
           ) : (
             <>
-              <path className={styles.limb} d="m65 105-18 13 1 12" />
-              <path className={styles.hand} d="M44 127c-6 2-7 8-3 12l6 3c5 1 10-4 8-9l-3-7-8 1Z" />
+              <path className={styles.limb} d="m65 101-30-5-7 12" />
+              <path className={styles.hand} d="M23 105c-6 2-7 8-3 12l6 3c5 1 10-4 8-9l-3-7-8 1Z" />
             </>
           )}
         </g>
 
-        {/* Two data inputs, one selected output and a select line. */}
+        {/* A 4:1 MUX: four data inputs, two bottom select lines, one output. */}
         <g className={styles.pins}>
-          <path d="M44 68h19M44 119h19m88-27h20M108 48V28" />
-          <circle cx="42" cy="68" r="3" />
-          <circle cx="42" cy="119" r="3" />
-          <circle cx="173" cy="92" r="3" />
-          <circle cx="108" cy="25" r="3" />
+          <path data-mux-pin="input" d="M48 51h29" />
+          <path data-mux-pin="input" d="M48 84h29" />
+          <path data-mux-pin="input" d="M48 117h29" />
+          <path data-mux-pin="input" d="M48 150h29" />
+          <path data-mux-pin="select" d="M105 168v27" />
+          <path data-mux-pin="select" d="M121 162v33" />
+          <path data-mux-pin="output" d="M148 100h29" />
         </g>
 
-        <path className={styles.body} d="M66 36 151 60v66l-85 24a5 5 0 0 1-6-5V41a5 5 0 0 1 6-5Z" />
-        <path className={styles.edge} d="m68 44 75 21" />
+        <path className={styles.body} d="M77 22 148 48v104l-71 26Z" />
+        <path className={styles.edge} d="m84 31 57 21" />
         <g className={styles.face}>
           {pose === "celebrate" ? (
             <g className={styles.happyEyes}>
-              <path d="m80 84 6-5 6 5m21 0 6-5 6 5" />
+              <path d="m89 94 6-5 6 5m19 0 6-5 6 5" />
             </g>
           ) : (
             <>
-              <ellipse className={styles.eye} cx="86" cy="83" rx="5" ry="7" />
-              <ellipse className={styles.eye} cx="119" cy="83" rx="5" ry="7" />
-              <circle className={styles.eyeGlint} cx="87.5" cy="80.5" r="1.5" />
-              <circle className={styles.eyeGlint} cx="120.5" cy="80.5" r="1.5" />
+              <ellipse className={styles.eye} cx="95" cy="93" rx="5" ry="7" />
+              <ellipse className={styles.eye} cx="126" cy="93" rx="5" ry="7" />
+              <circle className={styles.eyeGlint} cx="96.5" cy="90.5" r="1.5" />
+              <circle className={styles.eyeGlint} cx="127.5" cy="90.5" r="1.5" />
             </>
           )}
-          <path className={styles.brow} d={pose === "think" ? "m78 69 12-4m23 4 11 1" : "m79 69 12-1m22 0 11 1"} />
-          <path className={styles.smile} d={pose === "think" ? "M97 107q9-3 16 0" : "M95 104q10 12 21-1"} />
-          <path className={styles.cheek} d="M76 99h7m42 0h7" />
+          <path className={styles.brow} d={pose === "think" ? "m88 79 12-4m21 4 11 1" : "m89 79 12-1m20 0 11 1"} />
+          <path className={styles.smile} d={pose === "think" ? "M103 121q9-3 16 0" : "M101 117q10 12 21-1"} />
+          <path className={styles.cheek} d="M85 110h7m39 0h7" />
         </g>
-        <text className={styles.marking} x="104" y="130" textAnchor="middle">MUX</text>
 
-        <g className={styles.rightArm}>
+        <g className={styles.rightArm} transform="translate(-3 12)">
           {pose === "point" ? (
             pointingLeft ? (
               <>

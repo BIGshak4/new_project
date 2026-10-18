@@ -67,6 +67,7 @@ export default function TechnicalCodeEditor(props: Props) {
           ]),
           c.label.of(
             EditorView.contentAttributes.of({
+              "data-muxi-control": "code-input",
               "aria-label": current.current.label,
               "aria-describedby": "code-keyboard-help",
               spellcheck: "false",
@@ -134,6 +135,7 @@ export default function TechnicalCodeEditor(props: Props) {
     view.current?.dispatch({
       effects: compartments.current.label.reconfigure(
         EditorView.contentAttributes.of({
+          "data-muxi-control": "code-input",
           "aria-label": props.label,
           "aria-describedby": "code-keyboard-help",
           spellcheck: "false",
@@ -142,5 +144,5 @@ export default function TechnicalCodeEditor(props: Props) {
       ),
     });
   }, [props.label]);
-  return <div className="technical-code-editor" dir="ltr" ref={host} />;
+  return <div className="technical-code-editor" data-muxi-control="code-editor" dir="ltr" ref={host} />;
 }

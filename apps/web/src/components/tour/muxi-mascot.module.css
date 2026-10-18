@@ -9,7 +9,7 @@
 }
 
 .character {
-  transform-origin: 110px 170px;
+  transform-origin: 110px 198px;
 }
 
 .limb,
@@ -40,7 +40,7 @@
 }
 
 .pins {
-  fill: var(--surface);
+  fill: none;
   stroke: var(--signal);
   stroke-width: 2.5;
 }
@@ -88,14 +88,6 @@
   fill: var(--signal-soft);
   stroke: var(--signal);
   stroke-width: 2;
-}
-
-.marking {
-  fill: var(--link);
-  font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 1.2px;
 }
 
 .sparks {

@@ -78,6 +78,32 @@
 .diagram figcaption { color: var(--muted); font-size: .9rem; }
 .instructions { margin: 0; padding-inline-start: 22px; }
 .instructions li { padding-block: 8px; padding-inline-start: 6px; }
+.topicChoices { border-block: 1px solid var(--line); }
+.root .topicChoices button { display: flex; flex-direction: column; align-items: flex-start; width: 100%; border: 0; border-block-end: 1px solid var(--line); border-radius: 0; background: transparent; padding: 16px 12px; text-align: start; gap: 5px; }
+.root .topicChoices button:last-child { border-block-end: 0; }
+.root .topicChoices button[aria-pressed="true"] { background: var(--soft); color: var(--ink); }
+.topicChoices button span { font-size: .9rem; line-height: 1.55; color: var(--muted); }
+.topicDetail { border-block-start: 1px solid var(--line); padding-block-start: 20px; }
+.topicDetail dl { display: grid; gap: 18px; margin: 18px 0; }
+.topicDetail dt { font-weight: 700; margin-block-end: 5px; }
+.topicDetail dd { margin: 0; max-width: 72ch; color: var(--ink-2); }
+.receipt { border: 1px solid var(--line); padding: 18px; border-radius: 7px; background: var(--surface-2); }
+.receipt p { font-size: .9rem; margin: 12px 0 0; color: var(--ink-2); }
+.receipt blockquote, .authoredAnswer { margin: 14px 0; padding-inline-start: 16px; border-inline-start: 1px solid var(--line); white-space: pre-wrap; }
+.sampleGrade { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; padding-block: 20px; border-block: 1px solid var(--line); margin-block: 24px 12px; }
+.sampleGrade > strong { flex: 0 0 auto; color: var(--link); font-size: 2.25rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.sampleGrade > strong span { font-size: 1rem; color: var(--muted); font-weight: 500; }
+.sampleGrade > div { flex: 1 1 210px; }
+.sampleGrade h4 { margin: 0 0 6px; font-size: 1rem; line-height: 1.4; }
+.sampleGrade p { margin: 0; color: var(--muted); font-size: .9rem; }
+.rubric { border-collapse: collapse; width: 100%; margin-block: 12px 18px; }
+.rubric caption { text-align: start; font-size: .9rem; color: var(--muted); margin-block-end: 12px; }
+.rubric th, .rubric td { text-align: start; vertical-align: top; border-block-end: 1px solid var(--line); padding: 12px 8px; }
+.rubric th:first-child, .rubric td:first-child { padding-inline-start: 0; }
+.rubric th:last-child, .rubric td:last-child { padding-inline-end: 0; white-space: nowrap; width: 75px; }
+.rubric th { color: var(--muted); font-size: .9rem; }
+.rubric td:last-child { font-variant-numeric: tabular-nums; }
+.rubric td p { margin: 6px 0 0; font-size: .9rem; line-height: 1.55; color: var(--muted); }
 @media (max-width: 620px) {
   .twoColumns { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .header { margin-block-end: 22px; }

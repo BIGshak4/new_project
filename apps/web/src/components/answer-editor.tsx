@@ -22,6 +22,7 @@ export function AnswerEditor({
   disabled,
   codeLanguage,
   starterCode,
+  initiallyShowCode,
 }: {
   value: string;
   onChange: (value: string) => void;
@@ -29,13 +30,14 @@ export function AnswerEditor({
   disabled: boolean;
   codeLanguage: string | null;
   starterCode: string | null;
+  initiallyShowCode?: boolean;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const parts = parseTechnicalAnswer(value);
   const [chosenLanguage, setLanguage] = useState<AnswerLanguage>(
     parts.language ?? defaultAnswerLanguage(codeLanguage),
   );
-  const [showCode, setShowCode] = useState(!!codeLanguage || !!parts.code);
+  const [showCode, setShowCode] = useState(initiallyShowCode ?? (!!codeLanguage || !!parts.code));
   const language = parts.language ?? chosenLanguage;
   const update = (explanation: string, code: string, nextLanguage = language) =>
     onChange(formatTechnicalAnswer(explanation, code, nextLanguage));
@@ -44,6 +46,7 @@ export function AnswerEditor({
       <label className="setup-label">
         {t("הסבר ודרך הפתרון", "Explanation and reasoning")}
         <textarea
+          data-muxi-control="answer-explanation"
           aria-label={t("הסבר הפתרון", "Solution explanation")}
           dir="auto"
           value={parts.explanation}
@@ -64,7 +67,7 @@ export function AnswerEditor({
         maxLength={dictationExplanationLimit(value)}
       />
       {!showCode && !parts.code ? (
-        <button disabled={disabled} onClick={() => setShowCode(true)}>
+        <button data-muxi-control="code-open" disabled={disabled} onClick={() => setShowCode(true)}>
           {t(
             "הוספת קוד, נוסחה או טבלת אמת",
             "Add code, a formula, or a truth table",
@@ -76,6 +79,7 @@ export function AnswerEditor({
             <label>
               {t("קוד / תוכן טכני", "Code / technical content")}
               <select
+                data-muxi-control="code-language"
                 dir="ltr"
                 aria-label={t("שפת הקוד", "Code language")}
                 value={language}
@@ -108,6 +112,7 @@ export function AnswerEditor({
             </label>
             {starterCode && !parts.code && (
               <button
+                data-muxi-control="code-copy"
                 disabled={disabled}
                 onClick={() =>
                   update(

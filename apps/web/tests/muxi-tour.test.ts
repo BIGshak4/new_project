@@ -49,10 +49,11 @@ test("both tours have unique, bilingual stations with a concrete action requirem
 test("the short route is substantially shorter and still hands-on across the main areas", () => {
   assert.equal(tourSteps("short"), SHORT_TOUR);
   assert.equal(tourSteps("full"), FULL_TOUR);
-  assert.ok(SHORT_TOUR.length <= 10, "The quick tour should fit into a short visit");
+  assert.equal(SHORT_TOUR.length, 10, "The quick route includes one consolidated topics overview");
+  assert.equal(FULL_TOUR.length, 39, "The full route keeps the tools without separate per-topic question stations");
   assert.ok(FULL_TOUR.length >= SHORT_TOUR.length * 3);
   const exercises = new Set(SHORT_TOUR.map((step) => step.exercise));
-  for (const exercise of ["goal", "library", "code", "circuit", "hints", "feedback", "interview", "progress", "settings"]) {
+  for (const exercise of ["goal", "library", "topics", "code", "circuit", "hints", "feedback", "interview", "progress", "settings"]) {
     assert.ok(exercises.has(exercise as TourStep["exercise"]), `Quick tour must include ${exercise}`);
   }
   for (const step of SHORT_TOUR) {
@@ -61,9 +62,15 @@ test("the short route is substantially shorter and still hands-on across the mai
   }
 });
 
-test("the comprehensive route covers the actual library topics and unique learning tools", () => {
-  for (const topic of ["digital", "fsm", "programming", "algorithms", "reasoning-topic", "behavioral", "design-topic", "communication"]) {
-    assert.equal(station(topic).exercise, "library");
+test("both routes share one interactive topics overview while the full route retains every learning tool", () => {
+  const overview = station("topics");
+  assert.equal(overview.exercise, "topics");
+  for (const steps of [FULL_TOUR, SHORT_TOUR]) {
+    assert.equal(steps.filter((step) => step.id === "topics").length, 1);
+    assert.deepEqual(steps.find((step) => step.id === "topics")?.actions, ["topics-explored"]);
+    for (const oldTopic of ["digital", "fsm", "programming", "algorithms", "reasoning-topic", "behavioral", "design-topic", "communication"]) {
+      assert.ok(!steps.some((step) => step.id === oldTopic), `The consolidated overview replaces the old ${oldTopic} station`);
+    }
   }
   for (const tool of ["code", "languages", "wire", "simulate", "inputs", "truth", "palette", "configure", "undo", "expand", "export-circuit", "mux", "clock-start", "clock", "reset", "hint", "solution", "materials", "photo", "remove-photo", "feedback", "feedback-details", "followup", "reports", "interview", "interview-answer", "interview-report", "saved", "history", "progress", "readiness", "plan", "theme", "language"]) {
     assert.ok(station(tool).actions.length > 0, `${tool} needs a hands-on requirement`);
@@ -118,6 +125,24 @@ test("storage accepts only station IDs belonging to the chosen tour and deduplic
   assert.equal(parsed.stepId, SHORT_TOUR[0].id);
   assert.deepEqual(parsed.completed, ["goal", "search"]);
   assert.deepEqual(parsed.skipped, ["hint"]);
+});
+
+test("an older per-topic checkpoint resumes at the topics overview without losing completed tool stations", () => {
+  const parsed = parseTourProgress(stored({
+    kind: "full",
+    stepId: "fsm",
+    completed: ["goal", "digital", "code", "truth", "languages", "code"],
+    skipped: ["programming", "photo", "clock"],
+    status: "paused",
+  }));
+  assert.equal(parsed.stepId, "topics");
+  assert.equal(parsed.kind, "full");
+  assert.equal(parsed.status, "paused");
+  assert.equal(parsed.offered, true);
+  assert.equal(parsed.updatedAt, 123);
+  assert.deepEqual(parsed.completed, ["goal", "code", "truth", "languages"]);
+  assert.deepEqual(parsed.skipped, ["photo", "clock"]);
+  assert.ok(!parsed.completed.includes("topics"), "Migrating a location must not pretend the new overview was completed");
 });
 
 test("storage normalizes optional scalar fields and malformed ID collections", () => {

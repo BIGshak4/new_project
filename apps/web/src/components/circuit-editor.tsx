@@ -124,6 +124,9 @@ function Gate({ data, selected, id }: NodeProps<GateNode>) {
   return (
     <div
       className={`logic-part ${selected ? "selected" : ""}`}
+      data-muxi-control="circuit-node"
+      data-muxi-part={p.id}
+      data-muxi-kind={p.kind}
       style={{ height }}
     >
       <span className="part-label" dir="auto">
@@ -181,6 +184,10 @@ function Gate({ data, selected, id }: NodeProps<GateNode>) {
           return (
             <div key={`${side}-${pin.id}`}>
               <Handle
+                data-muxi-control="circuit-pin"
+                data-muxi-part={p.id}
+                data-muxi-port={pin.id}
+                data-muxi-side={side}
                 id={pin.id}
                 type={side === "inputs" ? "target" : "source"}
                 position={side === "inputs" ? Position.Left : Position.Right}
@@ -498,6 +505,7 @@ export default function CircuitEditor({
             <>
               <button
                 type="button"
+                data-muxi-control="circuit-undo"
                 aria-label={t("ביטול שינוי במעגל", "Undo circuit change")}
                 disabled={!undo.length}
                 onClick={() => {
@@ -511,6 +519,7 @@ export default function CircuitEditor({
               </button>
               <button
                 type="button"
+                data-muxi-control="circuit-redo"
                 aria-label={t("ביצוע שינוי מחדש במעגל", "Redo circuit change")}
                 disabled={!redo.length}
                 onClick={() => {
@@ -524,6 +533,7 @@ export default function CircuitEditor({
               </button>
               <button
                 type="button"
+                data-muxi-control="circuit-delete"
                 disabled={!part && !selectedWire}
                 aria-label={t(
                   "מחיקת הרכיב או החוט המסומן",
@@ -537,6 +547,7 @@ export default function CircuitEditor({
           )}
           <button
             type="button"
+            data-muxi-control="circuit-download"
             onClick={download}
             aria-label={t("הורדת השרטוט", "Download circuit")}
           >
@@ -545,6 +556,7 @@ export default function CircuitEditor({
           {full && question && (
             <button
               type="button"
+              data-muxi-control="circuit-question-toggle"
               className={styles.questionToggle}
               aria-expanded={showQuestion}
               aria-controls={questionId}
@@ -556,6 +568,7 @@ export default function CircuitEditor({
           )}
           <button
             type="button"
+            data-muxi-control="circuit-fullscreen"
             onClick={() => { setLayout(layout === "fullscreen" ? "expanded" : "fullscreen"); onActivity?.("circuit-expanded"); }}
             aria-pressed={layout === "fullscreen"}
             title={layout === "fullscreen" ? t("מעבר לחלון מוגדל", "Use an expanded window") : t("מילוי שטח המסך", "Fill the screen")}
@@ -565,6 +578,7 @@ export default function CircuitEditor({
           </button>
           <button
             ref={expandButton}
+            data-muxi-control="circuit-expand"
             type="button"
             className={full ? styles.close : undefined}
             onClick={() => { setLayout(full ? "inline" : "expanded"); if (!full) onActivity?.("circuit-expanded"); }}
@@ -586,6 +600,8 @@ export default function CircuitEditor({
               <button
                 type="button"
                 key={g.en}
+                data-muxi-control="circuit-group"
+                data-muxi-group={i}
                 aria-pressed={i === group}
                 onClick={() => setGroup(i)}
               >
@@ -598,6 +614,8 @@ export default function CircuitEditor({
               <button
                 type="button"
                 key={kind}
+                data-muxi-control="circuit-add-part"
+                data-muxi-kind={kind}
                 onClick={() => add(kind)}
                 title={t("הוספת רכיב", "Add component")}
               >
@@ -635,6 +653,7 @@ export default function CircuitEditor({
         </span>
         <button
           type="button"
+          data-muxi-control="circuit-readable-view"
           onClick={() =>
             void flow.current?.fitView({
               padding: 0.2,
@@ -647,6 +666,7 @@ export default function CircuitEditor({
         </button>
         <button
           type="button"
+          data-muxi-control="circuit-fit-view"
           onClick={() =>
             void flow.current?.fitView({
               padding: 0.2,
@@ -751,6 +771,7 @@ export default function CircuitEditor({
         <label className="component-picker">
           {t("בחירת רכיב להגדרה", "Select component to configure")}
           <select
+            data-muxi-control="circuit-component"
             value={selected ?? ""}
             onChange={(e) => {
               setSelected(e.target.value || null);
@@ -771,6 +792,7 @@ export default function CircuitEditor({
           <label>
             {t("שם הרכיב", "Component label")}
             <input
+              data-muxi-control="circuit-label"
               value={part.label}
               maxLength={40}
               onChange={(e) => updatePart({ label: e.target.value })}
@@ -783,6 +805,7 @@ export default function CircuitEditor({
                 ? t("מספר יציאות", "Output count")
                 : t("מספר כניסות", "Input count")}
               <select
+                data-muxi-control="circuit-count"
                 value={part.count}
                 onChange={(e) => updatePart({ count: Number(e.target.value) })}
               >
@@ -805,6 +828,7 @@ export default function CircuitEditor({
             <label>
               {t("רוחב נתונים בביטים", "Data width in bits")}
               <select
+                data-muxi-control="circuit-width"
                 value={part.bits}
                 onChange={(e) => updatePart({ bits: Number(e.target.value) })}
               >
@@ -819,6 +843,7 @@ export default function CircuitEditor({
               {t("ערך כניסה", "Input value")}
               <input
                 type="number"
+                data-muxi-control="circuit-input-value"
                 min={0}
                 max={mask(part.bits)}
                 value={part.value}
@@ -837,6 +862,7 @@ export default function CircuitEditor({
               {part.bits === 1 && (
                 <button
                   type="button"
+                  data-muxi-control="circuit-input-toggle"
                   onClick={() => updatePart({ value: part.value ? 0 : 1 })}
                 >
                   {t("החלפת", "Toggle")} 0 / 1
@@ -861,8 +887,8 @@ export default function CircuitEditor({
         </div>
       )}
       {!readOnly && value.parts.length > 1 && (
-        <details className="circuit-connect">
-          <summary>
+        <details className="circuit-connect" data-muxi-control="circuit-wire-details">
+          <summary data-muxi-control="circuit-wire-open">
             {t(
               "חיבור באמצעות רשימה (גם למקלדת ולנייד)",
               "Connect using a list (keyboard & mobile)",
@@ -872,6 +898,7 @@ export default function CircuitEditor({
             <label>
               {t("יציאה", "Output")}
               <select
+                data-muxi-control="circuit-wire-source"
                 value={sourcePin}
                 onChange={(e) => setSourcePin(e.target.value)}
               >
@@ -889,6 +916,7 @@ export default function CircuitEditor({
             <label>
               {t("כניסה", "Input")}
               <select
+                data-muxi-control="circuit-wire-target"
                 value={targetPin}
                 onChange={(e) => setTargetPin(e.target.value)}
               >
@@ -905,6 +933,7 @@ export default function CircuitEditor({
             </label>
             <button
               type="button"
+              data-muxi-control="circuit-wire-connect"
               disabled={!sourcePin || !targetPin}
               onClick={() => {
                 const [source, sourceHandle] = sourcePin.split(":"),
@@ -920,6 +949,7 @@ export default function CircuitEditor({
       <div className="simulation-bar">
         <button
           type="button"
+          data-muxi-control="circuit-simulate"
           className={running ? "" : "primary"}
           disabled={!value.parts.length}
           aria-pressed={running}
@@ -937,6 +967,7 @@ export default function CircuitEditor({
           <>
             <button
               type="button"
+              data-muxi-control="circuit-clock-step"
               onClick={() => {
                 setSimulation((old) =>
                   simulate(value, old ?? undefined, old?.clock ? 0 : 1),
@@ -949,6 +980,7 @@ export default function CircuitEditor({
             </button>
             <button
               type="button"
+              data-muxi-control="circuit-reset"
               onClick={() => { setSimulation(simulate(value)); onActivity?.("simulation-reset"); }}
             >
               <RotateCcw size={16} />

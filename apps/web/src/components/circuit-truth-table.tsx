@@ -78,6 +78,7 @@ export function CircuitTruthTable({
           {t("טבלת אמת", "Truth table")}
         </strong>
         <button
+          data-muxi-control="circuit-truth-table"
           type="button"
           disabled={!plan.ok}
           aria-expanded={!!table}

@@ -3,8 +3,9 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { ArrowLeft, ArrowRight, Check, ChevronDown, Compass, Pause, Play, RotateCcw, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown, Compass, Pause, Play, RotateCcw, X } from "lucide-react";
 import { MuxiMascot } from "./muxi-mascot";
+import { MuxiGuidance } from "./muxi-guidance";
 import { lockBodyScroll } from "../../lib/body-scroll-lock";
 import { checkpoint, initialTourProgress, parseTourProgress, stationReady, tourKey, tourSteps, type TourKind, type TourProgress } from "../../lib/muxi-tour";
 import styles from "./muxi-tour.module.css";
@@ -102,40 +103,6 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
     const stage = root.current?.querySelector<HTMLElement>("[data-muxi-stage]");
     stage?.scrollTo({ top: 0 });
   }, [step.id, screen]);
-  useEffect(() => {
-    if (screen !== "tour") return;
-    const scope = root.current;
-    if (!scope) return;
-    let highlighted: Element | null = null;
-    const button = (pattern: RegExp) => [...scope.querySelectorAll<HTMLElement>("[data-muxi-stage] button, [data-muxi-stage] summary")].find((el) => pattern.test(`${el.textContent} ${el.getAttribute("aria-label") ?? ""}`));
-    const mark = () => {
-      const topicIds: Record<string, string> = { digital: "digital", fsm: "sequential", programming: "c", algorithms: "algorithms", "reasoning-topic": "reasoning", behavioral: "projects", "design-topic": "design", communication: "communication" };
-      let target: Element | null | undefined;
-      if (topicIds[step.id]) target = scope.querySelector(`[data-muxi-question="${topicIds[step.id]}"] button`);
-      else if (step.id === "search") target = scope.querySelector('input[type="search"]');
-      else if (step.id === "filter") target = scope.querySelector("[data-muxi-stage] select");
-      else if (step.id === "code") target = scope.querySelector('.cm-content') ?? button(/העתקת קוד|Copy question code/);
-      else if (step.id === "languages") target = scope.querySelector('[aria-label="שפת הקוד"], [aria-label="Code language"]');
-      else if (["simulate", "clock-start"].includes(step.id)) target = button(/הרצת סימולציה|Run simulation/);
-      else if (step.id === "truth") target = button(/יצירת טבלת אמת|Generate truth table/);
-      else if (step.id === "clock") target = button(/צעד שעון|Clock step/);
-      else if (step.id === "reset") target = button(/^איפוס|^Reset/);
-      else if (step.id === "expand") target = button(/הרחבת הלוח|Expand drawing/);
-      else if (step.id === "theme") target = scope.querySelector(".theme-toggle");
-      else if (step.id === "language") target = scope.querySelector(".language-switch");
-      else if (step.id === "photo") target = scope.querySelector('input[type="file"]');
-      else if (["explanation", "followup", "interview-answer"].includes(step.id)) target = scope.querySelector("[data-muxi-stage] textarea");
-      else target = scope.querySelector("[data-muxi-target]");
-      if (target === highlighted) return;
-      highlighted?.removeAttribute("data-muxi-spotlight");
-      highlighted = target ?? null;
-      highlighted?.setAttribute("data-muxi-spotlight", "");
-    };
-    mark();
-    const observer = new MutationObserver(mark);
-    observer.observe(scope, { childList: true, subtree: true });
-    return () => { observer.disconnect(); highlighted?.removeAttribute("data-muxi-spotlight"); };
-  }, [step.id, screen, lang]);
   const onAction = useCallback((action: string) => {
     setStationActions((old) => {
       const previous = old[step.id] ?? [];
@@ -193,8 +160,7 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
     <h2 ref={heading} tabIndex={-1} className={styles.coachTitle}>{step.title[lang]}</h2>
     <p>{step.body[lang]}</p>
     <div className={styles.task} role="status" aria-live="polite">
-      {ready && <Check size={19} aria-hidden="true" />}
-      <div><strong>{ready ? t("מעולה, התנסיתם!", "Nice, you tried it!") : t("עכשיו תורכם", "Your turn")}</strong><p>{step.task[lang]}</p></div>
+      <div><strong>{ready ? t("הפעולה הושלמה", "Action completed") : t("עכשיו תורכם", "Your turn")}</strong><p>{ready ? ["explanation", "code", "feedback", "feedback-details", "followup", "interview-answer"].includes(step.id) ? t("השלמתם את פעולת ההיכרות. זה אינו אישור לנכונות התשובה.", "You completed the introduction action. This does not confirm that an answer is correct.") : t("סיימתם את הפעולה. אפשר להמשיך לתחנה הבאה או להתנסות עוד.", "The action is complete. Continue to the next station or explore a little more.") : step.task[lang]}</p></div>
     </div>
     <div className={styles.stepActions}>
       <button type="button" onClick={() => index > 0 && jump(steps[index - 1].id)} disabled={index === 0} aria-label={t("התחנה הקודמת", "Previous station")}><BackArrow size={18} /></button>
@@ -224,13 +190,13 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
       <div className={styles.choices}>
         <section className={styles.fullChoice}>
           <div className={styles.choiceTitle}><h3>{t("נכנסים לעומק", "The full experience")}</h3><span>{t("מומלץ", "Recommended")}</span></div>
-          <p>{t("סיור מעמיק שמראה כמה אפשר לעשות כאן: שאלות מכל תחום, כתיבה וקוד, מעגלים וסימולציה, טבלאות אמת, רמזים, צילומים, משוב וראיון מדומה.", "Explore what makes practice different here: questions across topics, reasoning and code, circuits, simulation, truth tables, hints, images, feedback and mock interviews.")}</p>
+          <p>{t("סיור מעמיק שמראה כמה אפשר לעשות כאן: סקירת הנושאים, כתיבה וקוד, מעגלים וסימולציה, טבלאות אמת, רמזים, צילומים, משוב וראיון מדומה.", "Explore what makes practice different here: a subject overview, reasoning and code, circuits, simulation, truth tables, hints, images, feedback and mock interviews.")}</p>
           <p className={styles.choiceMeta}>{tourSteps("full").length} {t("תחנות · פרקים שאפשר לחזור אליהם · בקצב שלכם", "stations · replayable chapters · at your own pace")}</p>
           <button type="button" className="primary" onClick={() => start("full")}><Play size={17} />{t("מתחילים בסיור המעמיק", "Start the full tour")}</button>
         </section>
         <section className={styles.shortChoice}>
           <h3>{t("סיבוב קצר, ויוצאים לדרך", "A quick look around")}</h3>
-          <p>{t("מכירים את ארבעת אזורי האתר ומתנסים בעיקר: יעד, חיפוש, עורך קוד, סימולציה, רמז, משוב והתקדמות. אפשר להעמיק אחר כך.", "Meet the four areas and try the essentials: a goal, search, code editor, simulation, a hint, feedback and progress. Go deeper later.")}</p>
+          <p>{t("מכירים את ארבעת אזורי האתר ומתנסים בעיקר: יעד, חיפוש ונושאים, עורך קוד, סימולציה, רמז, משוב והתקדמות. אפשר להעמיק אחר כך.", "Meet the four areas and try the essentials: a goal, search and subjects, code editor, simulation, a hint, feedback and progress. Go deeper later.")}</p>
           <p className={styles.choiceMeta}>{tourSteps("short").length} {t("תחנות · היכרות מעשית וקצרה", "stations · a short hands-on introduction")}</p>
           <button type="button" onClick={() => start("short")}>{t("מתחילים בסיור הקצר", "Start the short tour")}<NextArrow size={17} /></button>
         </section>
@@ -250,6 +216,12 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
         {guide}
         <div className={styles.stage} data-muxi-stage data-muxi-exercise={step.exercise}><TourExercises exercise={step.exercise} stationId={step.id} lang={lang} onAction={onAction} guide={<ExpandedCoach lang={lang} onExit={close}>{guide}</ExpandedCoach>} /></div>
       </main>
+      <MuxiGuidance root={root} station={step.id} lang={lang} actions={actions} ready={ready} onAction={onAction} />
+      <div className={styles.mobileNav} data-muxi-mobile-nav>
+        <button type="button" className={styles.mobileBack} onClick={() => heading.current?.scrollIntoView({ block: "center" })}>{t("בחזרה להדרכה", "Back to guidance")}<span>{step.title[lang]}</span></button>
+        <button type="button" className="primary" disabled={!ready} onClick={() => advance()}>{t("הבא בסיור", "Next in tour")}<NextArrow size={16} /></button>
+        <button type="button" className={styles.quiet} onClick={() => advance(true)}>{t("דלגו", "Skip")}</button>
+      </div>
     </>}
   </div>;
 }
