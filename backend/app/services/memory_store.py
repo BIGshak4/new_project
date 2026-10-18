@@ -237,6 +237,39 @@ class _MemoryTx:
                             "skills": self._links(a["row"]["question_key"])})
         return out
 
+    async def soft_skill_evidence(self, user_id, *, days=180):
+        since = datetime.now(UTC) - timedelta(days=days)
+        out = []
+        for a in self.s.attempts.values():
+            if a["user_id"] != user_id:
+                continue
+            for s in a["row"]["submissions"]:
+                if s.get("status") != "done" or not s.get("band") or not s.get("evaluation"):
+                    continue
+                accepted = datetime.fromisoformat(s["accepted_at"])
+                if accepted.tzinfo is None:
+                    accepted = accepted.replace(tzinfo=UTC)
+                if accepted < since:
+                    continue
+                out.append({"at": accepted, "evaluation": s["evaluation"], "flags": list(s.get("flags") or []),
+                            "turn": int(s.get("turn") or 0), "question_key": a["row"]["question_key"], "source": "practice"})
+        for sess in self.s.sessions.values():
+            if sess["user_id"] != user_id or sess["row"].get("status") != "completed":
+                continue
+            for t in sess["turns"]:
+                meta = t.get("question_generation_meta") or {}
+                if meta.get("status") != "done" or not meta.get("band") or not meta.get("evaluation"):
+                    continue
+                when = t.get("answer_submitted_at") or t.get("created_at")
+                stamp = datetime.fromisoformat(when) if isinstance(when, str) else (when or sess["created_at"])
+                if stamp.tzinfo is None:
+                    stamp = stamp.replace(tzinfo=UTC)
+                if stamp < since:
+                    continue
+                out.append({"at": stamp, "evaluation": meta["evaluation"], "flags": list(meta.get("flags") or []),
+                            "question_key": t.get("question_key"), "source": "interview"})
+        return sorted(out, key=lambda r: r["at"])
+
     async def scored_interview_turns(self, user_id, *, days=None):
         since = datetime.now(UTC) - timedelta(days=days) if days is not None else datetime.min.replace(tzinfo=UTC)
         out = []

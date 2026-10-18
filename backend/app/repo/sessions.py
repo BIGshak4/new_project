@@ -216,3 +216,22 @@ async def scored_turns(connection: AsyncConnection, user_id: uuid.UUID, *, days:
                     "hints_seen": int(r.hint_level or 0), "reference_seen": False, "turn": 0, "interview": True,
                     "related": "off_topic" not in (r.flags or []), "skills": [[r.skill_key, 1.0]]})
     return out
+
+
+async def turn_evidence(connection: AsyncConnection, user_id: uuid.UUID, *, days: int = 180) -> list[dict]:
+    """Every scored turn of a finished interview with the judge's full evaluation, for the soft-skill reading
+    (backend-only, 2026-10-18): {at, evaluation, flags, question_key, source: "interview"}. Read-only."""
+    from datetime import timedelta
+
+    session, turn, question = await db.table("interview_session"), await db.table("session_turn"), await db.table("question")
+    meta = turn.c.question_generation_meta
+    rows = (await connection.execute(
+        select(meta["evaluation"].label("evaluation"), meta["flags"].label("flags"), meta["question_key"].astext.label("meta_key"),
+               question.c.key.label("question_key"), turn.c.answer_submitted_at, turn.c.created_at)
+        .join(session, session.c.id == turn.c.session_id).outerjoin(question, question.c.id == turn.c.question_id)
+        .where(session.c.user_id == user_id, session.c.status == "completed", meta["status"].astext == "done",
+               meta["band"].astext.is_not(None), turn.c.created_at >= datetime.now(UTC) - timedelta(days=days))
+        .order_by(turn.c.created_at))).all()
+    return [{"at": r.answer_submitted_at or r.created_at, "evaluation": r.evaluation or {}, "flags": list(r.flags or []),
+             "question_key": r.question_key or r.meta_key, "source": "interview"} for r in rows if r.evaluation]
+

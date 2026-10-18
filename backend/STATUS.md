@@ -1135,6 +1135,38 @@ The `answered` count on the overview still counts the answer.
 six cases, and a service flow: an off-topic evaluation → band WEAK kept, `related` false, `xp_earned` 0, progress
 XP 0 and no streak, a proper answer afterwards earns as before. Offline suite; production smoke after the deploy.
 
+## 5zp. Soft skills and the improvement gradient, backend-only (2026-10-18, Shaked: "seven soft skills for each candidate and the gradient of improvement; not on screen at all, backend data for later")
+
+**What it reads.** Every scored answer and interview turn already stores the judge's five soft dimensions (clarity,
+structure, trade-off reasoning, risk awareness, hedging) and its behaviour tags. `app/engine/soft_skills.py` turns
+them into seven soft skills, each with a per-answer score: analytical reasoning ((correctness + depth)/2 on
+puzzles, debugging and code-debugging questions), structured explanation (structure), trade-off reasoning (design
+questions), attention to edge cases (risk awareness ± the edge-case tags, design and debugging questions),
+problem-solving habits (stated assumptions / asked first / verified with an example = 1, jumped to implementation
+= 0, nothing shown = 0.5), clear communication (clarity), calibration (committed and right 1.0, hedged while right
+0.4, hedged while wrong 0.7, confident and wrong 0.3, "overconfident wrong" 0.1). Answers flagged `off_topic` or
+`empty_answer` say nothing.
+
+**Levels and the gradient.** A level after 5 relevant answers inside 49 days, a faded mean (half-life 21 days) mapped
+to five words on the interview's observed-skill thresholds (0.30 / 0.45 / 0.60 / 0.78). A slope per skill: least
+squares of the per-answer scores over up to 180 days, in points per week on a 0..100 scale; words after 8 answers
+spanning 7 days: improving quickly ≥ +4, improving ≥ +1.5, steady, slipping ≤ −1.5 (thresholds to tune on pilot
+data). The hard skills get the same slope from the profile's level history (levels → 20..100 points). One overall
+improvement word per candidate: the weighted mean slope of every judged skill (hard by plan weight, the seven soft
+sharing one plan's worth). This is Shaked's "ability to improve".
+
+**Where it lives.** `PracticeService.soft_skills(user_id)` (a dict; no pydantic view, no route, nothing on
+`GET /v1/me/progress`, so the web app cannot show it) and `scripts/soft_skills_report.py` for the founders. The
+store reads the evidence through `Tx.soft_skill_evidence` (`attempts.evidence_rows`, `sessions.turn_evidence`,
+the in-memory mirrors); nothing is written and no table was added. When Shaked decides to expose it, it is one
+field on the progress response and a queue line for Harel.
+
+**Verified.** `tests/test_soft_skills.py`: each per-answer score and which questions count, the tags' effect,
+calibration's four cases, unrelated answers ignored, too few answers → no level, a rising candidate → improving
+quickly, flat → steady, declining → slipping, old answers fall out of the level, the hard-skill gradient and the
+overall word, both languages, and a service flow that reads six stored answers and confirms the progress view has
+no such field. Offline suite.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1173,6 +1205,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-18 | Soft skills and the improvement gradient as backend-only data: `app/engine/soft_skills.py`, `PracticeService.soft_skills`, `scripts/soft_skills_report.py`; no route, no screen (§5zp) |
 | 2026-10-18 | An answer unrelated to the question earns no XP: `related` on each scored answer, read from the judge's own output, `× 0` with no floor in the formula; band, feedback and evidence unchanged (§5zo). Harel's pushes of 16–18 October checked (§5zn) |
 | 2026-10-15 | Evening full check (§5zm, `docs/full-check-2026-10-15b.md`): five-lens review, thirteen fixes (persist under the user lock, the by-skill tick, relinked done items, the savepoint, the router's reserved days and forced deep, the seed loader, wording, one goal read less) |
 | 2026-10-15 | Task 10 (Shaked's part): every reason sentence checked against its rule; the coach's last resort gets its own code `same_skill`, after-weak wording for `advance`/`explore`, `advance` describes gap × weight, readiness and interview wording corrected (§5zl) |

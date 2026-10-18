@@ -287,3 +287,19 @@ async def scored_submissions(connection: AsyncConnection, user_id: uuid.UUID, *,
              "hints_seen": int(r.hints_seen or 0), "reference_seen": bool(r.reference_seen), "turn": int(r.turn or 0),
              "interview": False, "related": "off_topic" not in (r.flags or []),
              "skills": links.get(r.question_id, [])} for r in rows]
+
+
+async def evidence_rows(connection: AsyncConnection, user_id: uuid.UUID, *, days: int = 180) -> list[dict]:
+    """Every scored answer revision with the judge's full evaluation, for the soft-skill reading (backend-only,
+    2026-10-18): {at, evaluation, flags, turn, question_key, source: "practice"}. Read-only."""
+    attempt, submission, question = await db.table("attempt"), await db.table("attempt_submission"), await db.table("question")
+    rows = (await connection.execute(
+        select(submission.c.accepted_at, submission.c.evaluation, submission.c.flags, submission.c.turn, question.c.key)
+        .join(attempt, attempt.c.id == submission.c.attempt_id).join(question, question.c.id == attempt.c.question_id)
+        .where(attempt.c.user_id == user_id, submission.c.status == "done", submission.c.band.is_not(None),
+               submission.c.evaluation.is_not(None),
+               submission.c.accepted_at >= datetime.now(UTC) - timedelta(days=days))
+        .order_by(submission.c.accepted_at))).all()
+    return [{"at": r.accepted_at, "evaluation": r.evaluation or {}, "flags": list(r.flags or []), "turn": int(r.turn or 0),
+             "question_key": r.key, "source": "practice"} for r in rows]
+

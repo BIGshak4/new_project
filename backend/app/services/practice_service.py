@@ -17,6 +17,7 @@ Rules the service enforces, independent of the HTTP layer:
 from __future__ import annotations
 
 import asyncio
+import dataclasses
 import logging
 import uuid
 from contextlib import asynccontextmanager
@@ -24,7 +25,7 @@ from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 
 from app.api.errors import ApiError
-from app.engine import bank, next_question, plan_router, scorecards, scores, xp
+from app.engine import bank, next_question, plan_router, scorecards, scores, soft_skills, xp
 from app.engine.catalog import Catalog
 from app.engine.plan import merge_skill_sets
 from app.engine.practice import (
@@ -915,6 +916,30 @@ class PracticeService:
         return ReadinessView(job_type=job.key, job_type_label=job_label, skills=rows, coverage=coverage, ready_to_judge=ready,
                              readiness_word=word, readiness_score=score, skills_meeting_requirement=meets, skills_with_gap=gaps,
                              skills_without_evidence=unknown, next_questions=picked, message=message)
+
+    async def soft_skills(self, user_id: uuid.UUID) -> dict:
+        """The seven soft skills and the improvement gradient for one candidate, read from the judge's stored output
+        (app.engine.soft_skills). Backend-only by Shaked's decision (2026-10-18): no route and no screen read this;
+        `scripts/soft_skills_report.py` prints it for the founders. Nothing is written."""
+        async with self.store.transaction() as tx:
+            rows = await tx.soft_skill_evidence(user_id)
+            profile = await tx.load_profile(user_id)
+            goal = await tx.load_goal(user_id)
+            seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
+        _, weights, _, _ = self._plan(seniority, goal.job_type)
+        evidence = []
+        for r in rows:
+            question = self.catalog.questions.get(r.get("question_key") or "")
+            evidence.append(soft_skills.Evidence(
+                at=r["at"], evaluation=r.get("evaluation") or {}, flags=list(r.get("flags") or []),
+                archetype=question.archetype.value if question else None,
+                primary_skill=question.primary_skill if question else None, source=r.get("source", "practice")))
+        now = datetime.now(UTC)
+        soft = soft_skills.assess(evidence, now)
+        hard = soft_skills.hard_skill_gradient(profile.level_history, now)
+        return {"user_id": str(user_id), "answers_read": len(evidence),
+                "soft_skills": [dataclasses.asdict(s) for s in soft], "hard_skills": hard,
+                "overall": soft_skills.overall_improvement(soft, hard, weights)}
 
     async def progress(self, user_id: uuid.UUID, *, language: str | None = None) -> ProgressView:
         language = self._language(language)

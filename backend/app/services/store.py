@@ -55,6 +55,7 @@ class Tx(Protocol):
     async def daily_bands(self, user_id: uuid.UUID) -> list[dict]: ...
     # XP reads (computed on read from stored results; see app.engine.xp)
     async def scored_submissions(self, user_id: uuid.UUID, *, days: int = 365) -> list[dict]: ...
+    async def soft_skill_evidence(self, user_id: uuid.UUID, *, days: int = 180) -> list[dict]: ...
     async def scored_interview_turns(self, user_id: uuid.UUID, *, days: int = 365) -> list[dict]: ...
     # the saved program
     async def load_active_plan(self, user_id: uuid.UUID) -> StoredPlan | None: ...
@@ -167,6 +168,12 @@ class DbTx:
 
     async def scored_interview_turns(self, user_id, *, days=365):
         return await sessions.scored_turns(self.connection, user_id, days=days)
+
+    async def soft_skill_evidence(self, user_id, *, days=180):
+        """Scored answers and interview turns with the judge's full evaluation (the soft-skill reading)."""
+        rows = await attempts.evidence_rows(self.connection, user_id, days=days)
+        rows += await sessions.turn_evidence(self.connection, user_id, days=days)
+        return sorted(rows, key=lambda r: r["at"])
 
     async def load_active_plan(self, user_id):
         return await plans.load_active(self.connection, user_id)
