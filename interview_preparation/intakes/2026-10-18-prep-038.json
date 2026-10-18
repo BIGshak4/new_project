@@ -33,5 +33,29 @@
   "render_health": "ok_at_runtime_revision",
   "site_health": "ok_at_runtime_revision",
   "deployment_run": "https://github.com/BIGshak4/new_project/actions/runs/39117339212",
-  "unauthenticated_live_requests": "question and resource endpoints returned 401 without solution content"
+  "unauthenticated_live_requests": "question and resource endpoints returned 401 without solution content",
+  "wording_updates": [
+    {
+      "date": "2026-10-18",
+      "requested_by": "Harel",
+      "changes": [
+        "Explicit overlapping adjacent digit pairs",
+        "MSD (Most Significant Digit) in the opening sentence",
+        "Removed obsolete ambiguity notice from learner prompt; preserved historical source discussion"
+      ],
+      "languages": [
+        "he",
+        "en"
+      ],
+      "implementation": "Bilingual editorial override; compiled seed; targeted transactional live prompt/assets update",
+      "live_readback_verified": true,
+      "source_archive_unchanged": true,
+      "hints_and_reference_unchanged": true,
+      "review_status_unchanged": true,
+      "backend_checks_passed": 11,
+      "local_browser_checks_passed": 15,
+      "browser_scope": "Real study renderer in an isolated fixture; desktop/mobile viewports; no authenticated live session",
+      "backup_outside_git": "../backups/before-prep-038-wording-20261018.json"
+    }
+  ]
 }

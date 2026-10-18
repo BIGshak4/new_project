@@ -12,15 +12,13 @@
 
 ## נוסח לאתר
 
-נתון מספר עשרוני חיובי בן 2,000 ספרות, שהספרה המשמעותית ביותר שלו היא `3`.
+נתון מספר עשרוני חיובי בן 2,000 ספרות. הספרה המשמעותית ביותר שלו, `MSD (Most Significant Digit)`, היא `3`.
 
-כל שתי ספרות **סמוכות**, לפי סדר הופעתן משמאל לימין, יוצרות מספר דו־ספרתי שמתחלק ב־`17` או ב־`23` ללא שארית. בודקים גם זוגות חופפים: הספרות במקומות 1–2, אחריהן 2–3, וכן הלאה.
+כל זוג ספרות סמוכות במספר, לפי סדר הופעתן משמאל לימין, יוצר מספר דו־ספרתי שמתחלק ב־`17` או ב־`23` ללא שארית. הזוגות חופפים: הספרות במקומות 1–2, אחריהן 2–3, וכן הלאה.
 
 א. אילו ערכים יכולה לקבל הספרה האחרונה?
 
 ב. כמה מספרים בני 2,000 ספרות מקיימים את התנאים? נמקו מדוע הרשימה מלאה.
-
-הבהרת עריכה: במקור נכתב ״כל זוג ספרות״ בלי המילה ״סמוכות״. הנוסח הזה מגדיר את הפירוש שעליו נשענת השאלה באתר. בפתרון נפרט גם מה משתנה אם הכוונה לכל זוג מקומות, או לחלוקה לזוגות נפרדים. `MSD` פירושו הספרה המשמעותית ביותר.
 
 ## רמזים
 
@@ -140,15 +138,13 @@ second = "34692" * 399 + "34685"
 
 ## English website copy
 
-A positive decimal integer has 2,000 digits, and its most significant digit is `3`.
+A positive decimal integer has 2,000 digits. Its `MSD (Most Significant Digit)` is `3`.
 
-Every pair of **adjacent** digits, read in their original left-to-right order, forms a two-digit number divisible by `17` or `23`. Pairs overlap: positions 1–2, then 2–3, and so on.
+Every pair of adjacent digits, read in their original left-to-right order, forms a two-digit number divisible by `17` or `23`. Pairs overlap: positions 1–2, then 2–3, and so on.
 
 a. Which values can the last digit take?
 
 b. How many 2,000-digit integers meet the conditions? Justify completeness.
-
-Editorial clarification: the source says “every pair of digits” without explicitly saying “adjacent.” This version defines the interpretation used on the website. The solution also considers all pairs of positions and disjoint two-digit blocks. `MSD` means most significant digit.
 
 ### Hints
 
@@ -269,3 +265,7 @@ Prepared follow-up: what changes for length n? Direction: the cycle ending is el
 - היקף בדיקת הדפדפן: רכיבי התצוגה האמיתיים בסביבה מקומית מבודדת. לא בוצעה בדיקת לחיצות בחשבון חי ולא נבדק טלפון פיזי.
 - לבדיקה ידנית: היכנסו לאתר, לחצו ״מאגר״, חפשו ״זוגות״ ופתחו את השאלה ״מספר בן 2,000 ספרות עם זוגות שמתחלקים ב־17 או ב־23״. בדקו את הבהרת הסמיכות, תגית NVIDIA ושלושת הרמזים. חשפו במפורש את הפתרון, פתחו את התרשים והקוד ואת סעיפי ההסבר. החליפו לאנגלית כאשר הסעיפים פתוחים ובדקו שכל התוכן מתחלף, ואז חזרו לעברית. פתרון מלא מוצג בשיחה רק לפי בקשה.
 - שאלת ההמשך הכללית לפי אורך n מוכנה בארכיון בשתי השפות, אך עדיין אינה מחוברת לתור ההמשך האינטראקטיבי.
+
+## הבהרת ניסוח שאושרה בשיחה
+
+ב־18 באוקטובר 2026 הראל אישר במפורש זוגות ספרות סמוכות וביקש להרחיב את הקיצור בנוסח השאלה ל־`MSD (Most Significant Digit)`. הנוסח ללומדים עודכן בעברית ובאנגלית באמצעות שכבת העריכה. ההבהרה ההיסטורית נשמרת בפתרון ובארכיון; צילום המקור ונוסח המקור לא שונו. מזהה השאלה, הפתרון, הרמזים, מצב הביקורת ונתוני התרגול נשמרים.

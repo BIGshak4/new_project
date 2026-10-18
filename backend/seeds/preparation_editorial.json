@@ -764,6 +764,15 @@
         "Find a repeating route and a route that eventually stops. Number positions from 1, and determine when an exit from the cycle can still reach exactly position 2,000."
       ]
     },
-    "note": "2026-10-18: explicit adjacency interpretation, full bilingual proposal and checks; human technical/parity/reuse review pending."
+    "note": "2026-10-18: explicit adjacency interpretation, full bilingual proposal and checks; human technical/parity/reuse review pending.",
+    "learner_text": {
+      "he": {
+        "prompt": "נתון מספר עשרוני חיובי בן 2,000 ספרות. הספרה המשמעותית ביותר שלו, `MSD (Most Significant Digit)`, היא `3`.\n\nכל זוג ספרות סמוכות במספר, לפי סדר הופעתן משמאל לימין, יוצר מספר דו־ספרתי שמתחלק ב־`17` או ב־`23` ללא שארית. הזוגות חופפים: הספרות במקומות 1–2, אחריהן 2–3, וכן הלאה.\n\nא. אילו ערכים יכולה לקבל הספרה האחרונה?\n\nב. כמה מספרים בני 2,000 ספרות מקיימים את התנאים? נמקו מדוע הרשימה מלאה."
+      },
+      "en": {
+        "prompt": "A positive decimal integer has 2,000 digits. Its `MSD (Most Significant Digit)` is `3`.\n\nEvery pair of adjacent digits, read in their original left-to-right order, forms a two-digit number divisible by `17` or `23`. Pairs overlap: positions 1–2, then 2–3, and so on.\n\na. Which values can the last digit take?\n\nb. How many 2,000-digit integers meet the conditions? Justify completeness."
+      }
+    },
+    "learner_copy_review": "2026-10-18: Harel explicitly confirmed overlapping adjacent digit pairs and requested MSD (Most Significant Digit) inline. Wording clarification only; technical review remains pending."
   }
 }
