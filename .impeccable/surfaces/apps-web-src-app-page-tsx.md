@@ -20,3 +20,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 ## Quality bar
 Readable Hebrew RTL and English LTR, keyboard focus and touch targets in both themes, durable optional theme storage with light default and no first-paint flash. Theme changes must not remount editors or reset attempts. Questions, solutions, diagrams and metadata remain intact. Existing raster `/design-worlds/ion-chip.png` retains its embedded prompt and provenance.json. Backend and database permissions remain unchanged.
+
+## Technical notation correction, 2026-10-18
+
+The user supplied a broken rendering of `example-enabled-decoder`: the source has correct `Y[3:0]` and `A[1:0]` but their closing brackets escaped the old LTR isolates. Preserve the approved Ion design and fix shared rendering across questions, references, hints, feedback, interview reports, metadata and tours in both languages. Keep complete technical units and their brackets together, including nested expressions, intervals and Markdown formatting boundaries. Derive each prose block's direction from its original content before isolation. Code and deliberately invalid bracket examples must retain their exact source characters and visual order; ordinary Hebrew parentheticals retain their RTL reading order. Do not rewrite the bank or affect editor drafts, account data or assessments. Verify the complete bilingual catalog and independent glyph-position cases at desktop and phone sizes in both themes, plus the real app decoder screen.

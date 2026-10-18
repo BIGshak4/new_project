@@ -20,7 +20,7 @@ test("solution labels become sections while fenced source code remains verbatim"
   assert.match(normalized, /# \*\*not a heading\*\*/);
   assert.match(normalized, /### למה זה עובד\?/);
   const html = renderToStaticMarkup(createElement(StudyText, { text: source, solution: true }));
-  assert.match(html, /<h3>הנחה<\/h3>/);
+  assert.match(html, /<h3 dir="rtl">הנחה<\/h3>/);
   assert.match(html, /<pre class="code-block" dir="ltr"><code class="language-python" dir="ltr">/);
   assert.match(html, /return n &gt; 0 and \(n &amp; \(n - 1\)\) == 0/);
 });
@@ -29,8 +29,47 @@ test("mixed technical headings at every level isolate the whole expression", () 
   for (let level = 1; level <= 6; level++) {
     const html = renderToStaticMarkup(createElement(StudyText, { text: `${"#".repeat(level)} בדיקה של A XOR B בשער` }));
     assert.match(html, /<bdi dir="ltr">A XOR B<\/bdi>/);
-    assert.match(html, new RegExp(`<h${level}>`));
+    assert.match(html, new RegExp(`<h${level} dir="rtl">`));
   }
+});
+
+test("the decoder prompt keeps both bus-range closing brackets inside its technical isolates", () => {
+  const questions = JSON.parse(readFileSync(new URL("../../../backend/seeds/questions/example_bank.json", import.meta.url), "utf8"));
+  const decoder = questions.find((q: { key: string }) => q.key === "example-enabled-decoder");
+  assert.ok(decoder);
+  for (const language of ["he", "en"] as const) {
+    const source = decoder.translations[language].prompt;
+    const html = renderToStaticMarkup(createElement(StudyText, { text: source }));
+    for (const expression of ["Y[3:0]", "A[1:0]"]) {
+      assert.ok(html.includes(expression), `${language}: ${expression} must be retained verbatim`);
+      assert.doesNotMatch(html, new RegExp(`${expression.slice(0, -1).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}<\\/bdi>\\]`), "The closing bracket cannot escape the isolate");
+    }
+    assert.match(html, new RegExp(`<p dir="${language === "he" ? "rtl" : "ltr"}">`));
+  }
+});
+
+test("Markdown emphasis, links and inline code cannot detach a technical closing bracket", () => {
+  for (const source of [
+    "בדקו Y**[3:0]** ואז המשיכו.",
+    "בדקו **Y**[3:0] ואז המשיכו.",
+    "בדקו [Y](https://example.com)[3:0] ואז המשיכו.",
+    "בדקו `Y`[3:0] ואז המשיכו.",
+    "בדקו (A **AND** B) ואז המשיכו.",
+  ]) {
+    const html = renderToStaticMarkup(createElement(StudyText, { text: source }));
+    assert.doesNotMatch(html, /<\/bdi>\]/, source);
+    assert.doesNotMatch(html, /<\/bdi>\)/, source);
+    assert.match(html, /<bdi dir="ltr">/);
+  }
+});
+
+test("each Markdown block gets direction from its own original text", () => {
+  const html = renderToStaticMarkup(createElement(StudyText, { text: "הסבר בעברית.\n\nUse Y[3:0] and A[1:0].\n\n### Heading (A AND B)\n\n- בדקו A[0].\n- Check A[0]." }));
+  assert.match(html, /<p dir="rtl">/);
+  assert.match(html, /<p dir="ltr">/);
+  assert.match(html, /<h3 dir="ltr">/);
+  assert.match(html, /<li dir="rtl">/);
+  assert.match(html, /<li dir="ltr">/);
 });
 
 test("table columns follow their own header language instead of the surrounding prose", () => {

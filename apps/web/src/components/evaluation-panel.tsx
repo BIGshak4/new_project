@@ -17,6 +17,7 @@ import { bandFraction, whyLabel } from "../lib/charts";
 import { GRADE_SEQUENCE as G } from "../lib/ui";
 import { Pop, Reveal, motion, useReducedMotion } from "./ui/motion";
 import { BidiText } from "./bidi-text";
+import { textDirection } from "../lib/bidi-segments";
 
 /**
  * The evaluation a candidate sees after a real assessment: band ring, summary, automatic
@@ -127,7 +128,7 @@ export function EvaluationPanel({
             )}
           </div>
           {s.summary && (
-            <p className="evaluation-summary" dir="auto">
+            <p className="evaluation-summary" dir={textDirection(s.summary)}>
               <BidiText>{s.summary}</BidiText>
             </p>
           )}
@@ -142,7 +143,7 @@ export function EvaluationPanel({
           {s.key_points_hit.length ? (
             <ul>
               {s.key_points_hit.map((p, i) => (
-                <li dir="auto" key={i}>
+                <li dir={textDirection(p)} key={i}>
                   <BidiText>{p}</BidiText>
                 </li>
               ))}
@@ -158,7 +159,7 @@ export function EvaluationPanel({
           {missed.length ? (
             <ul>
               {missed.map((p, i) => (
-                <li dir="auto" key={i}>
+                <li dir={textDirection(p)} key={i}>
                   <BidiText>{p}</BidiText>
                 </li>
               ))}
@@ -179,8 +180,8 @@ export function EvaluationPanel({
           <Lightbulb size={18} aria-hidden="true" />
           <div>
             <h4>{t("טיפ לפעם הבאה", "A tip for next time")}</h4>
-            {s.tip && <p><BidiText>{s.tip.text}</BidiText></p>}
-            {s.card?.next_step && s.card.next_step !== s.tip?.text && <p><BidiText>{s.card.next_step}</BidiText></p>}
+            {s.tip && <p dir={textDirection(s.tip.text)}><BidiText>{s.tip.text}</BidiText></p>}
+            {s.card?.next_step && s.card.next_step !== s.tip?.text && <p dir={textDirection(s.card.next_step)}><BidiText>{s.card.next_step}</BidiText></p>}
           </div>
         </Reveal>
       )}
@@ -233,7 +234,7 @@ export function EvaluationPanel({
               .map(([label, value]) => (
                 <section className="evaluation-tile" key={label}>
                   <h4>{label}</h4>
-                  <p dir="auto"><BidiText>{value}</BidiText></p>
+                  <p dir={textDirection(value)}><BidiText>{value}</BidiText></p>
                 </section>
               ))}
           </div>
@@ -267,11 +268,11 @@ export function NextUpCard({
         <span className={`badge why-${next.why}`}>{whyLabel(next.why, lang)}</span>
       </div>
       {next.focus && (
-        <p className="next-up-focus" dir="auto">
+        <p className="next-up-focus" dir={textDirection(`${t("מה היה קשה כאן:", "What was hard here:")} ${next.focus}`)}>
           <strong>{t("מה היה קשה כאן:", "What was hard here:")}</strong> <BidiText>{next.focus}</BidiText>
         </p>
       )}
-      <h4 dir="auto"><BidiText>{next.title}</BidiText></h4>
+      <h4 dir={textDirection(next.title)}><BidiText>{next.title}</BidiText></h4>
       <p className="small muted">
         <BidiText>{subjectLabel(next.subject, lang)}</BidiText> · {t("רמת קושי", "Difficulty")} {next.difficulty}
         <span className="difficulty-dots" aria-hidden="true">
@@ -280,7 +281,7 @@ export function NextUpCard({
           ))}
         </span>
       </p>
-      <p dir="auto"><BidiText>{next.reason}</BidiText></p>
+      <p dir={textDirection(next.reason)}><BidiText>{next.reason}</BidiText></p>
       <button type="button" onClick={() => onStart(next.key)}>
         {t("להתחיל את השאלה הבאה", "Start the next question")} <Arrow size={16} />
       </button>
@@ -309,7 +310,7 @@ function CheckBlock({ check, lang }: { check: CheckResult; lang: Lang }) {
             ? t("טבלת האמת של התשובה", "Truth table of your answer")
             : t("בדיקה אוטומטית", "Automatic check")}
       </strong>
-      <p dir="auto"><BidiText>{check.detail}</BidiText></p>
+      <p dir={textDirection(check.detail)}><BidiText>{check.detail}</BidiText></p>
       {rows.length > 0 && (
         <table className="mismatch-table">
           <thead>

@@ -2,6 +2,7 @@
 
 import { QuestionMetadata, ReportedCompanies } from "./question-metadata";
 import { BidiText } from "./bidi-text";
+import { textDirection } from "../lib/bidi-segments";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -489,7 +490,7 @@ export function PracticeSession({
       {question.choices && (
         <ol className="choices">
           {question.choices.map((choice, index) => (
-            <li key={index} dir="auto"><BidiText>{choice}</BidiText></li>
+            <li key={index} dir={textDirection(choice)}><BidiText>{choice}</BidiText></li>
           ))}
         </ol>
       )}
@@ -552,7 +553,7 @@ export function PracticeSession({
                     {question.estimated_minutes ?? "—"} {t("דקות", "minutes")}
                   </span>
                 </div>
-                <h1 dir="auto"><BidiText>{question.title}</BidiText></h1>
+                <h1 dir={textDirection(question.title)}><BidiText>{question.title}</BidiText></h1>
                 <QuestionMetadata question={question} lang={lang} showCompanies={false} />
                 {question.assessment_ready === false && <p className="notice study-review-note">
                   {t("שאלה בבדיקה מקצועית. המשוב הוא ראשוני; התרגול נשמר, אך אינו משנה את רמת השליטה או מעניק נקודות עד לאישור התוכן ורמת הקושי.",
@@ -654,7 +655,7 @@ export function PracticeSession({
                 {question.choices && (
                   <ol className="choices">
                     {question.choices.map((c, i) => (
-                      <li key={i} dir="auto">
+                      <li key={i} dir={textDirection(c)}>
                         <BidiText>{c}</BidiText>
                       </li>
                     ))}

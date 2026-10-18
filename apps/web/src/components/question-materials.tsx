@@ -12,39 +12,41 @@ import { solutionMarkdown } from "../lib/solution-markdown";
 import { materialInLanguage } from "../lib/material-locale";
 import { materialLabel, materialStatus } from "../lib/material-labels";
 import { BidiText } from "./bidi-text";
+import { textDirection } from "../lib/bidi-segments";
 
+function textContent(part: Element | ElementContent | undefined): string {
+  if (!part) return "";
+  if (part.type === "text") return part.value;
+  return "children" in part ? part.children.map(textContent).join("") : "";
+}
+function blockDirection(node?: Element): "rtl" | "ltr" {
+  return textDirection(textContent(node));
+}
 function tableDirection(node?: Element): "rtl" | "ltr" {
-  function textContent(part: Element | ElementContent | undefined): string {
-    if (!part) return "";
-    if (part.type === "text") return part.value;
-    return "children" in part ? part.children.map(textContent).join("") : "";
-  }
   const header = node?.children.find((part) => part.type === "element" && part.tagName === "thead");
   // Read the original Markdown node: rendered LTR <bdi> children are ignored by HTML dir="auto".
-  const strong = /[\p{L}\u200e\u200f]/u;
-  const first = textContent(header).match(strong)?.[0] ?? textContent(node).match(strong)?.[0];
-  return first && /[\p{Script=Hebrew}\p{Script=Arabic}\u200f]/u.test(first) ? "rtl" : "ltr";
+  return blockDirection(header?.type === "element" ? header : node);
 }
 
 export function StudyText({ text, solution = false }: { text: string; solution?: boolean }) {
-  return <div className="study-text" dir="auto"><Markdown remarkPlugins={[remarkGfm]} skipHtml
+  return <div className="study-text" dir={textDirection(text)}><Markdown remarkPlugins={[remarkGfm]} skipHtml
     components={{
-      p: ({ children }) => <p><BidiText>{children}</BidiText></p>,
-      li: ({ children }) => <li><BidiText>{children}</BidiText></li>,
-      strong: ({ children }) => <strong><BidiText>{children}</BidiText></strong>,
-      em: ({ children }) => <em><BidiText>{children}</BidiText></em>,
-      h1: ({ children }) => <h1><BidiText>{children}</BidiText></h1>,
-      h2: ({ children }) => <h2><BidiText>{children}</BidiText></h2>,
-      h3: ({ children }) => <h3><BidiText>{children}</BidiText></h3>,
-      h4: ({ children }) => <h4><BidiText>{children}</BidiText></h4>,
-      h5: ({ children }) => <h5><BidiText>{children}</BidiText></h5>,
-      h6: ({ children }) => <h6><BidiText>{children}</BidiText></h6>,
-      td: ({ children }) => <td><BidiText>{children}</BidiText></td>,
-      th: ({ children }) => <th><BidiText>{children}</BidiText></th>,
+      p: ({ children, node }) => <p dir={blockDirection(node)}><BidiText>{children}</BidiText></p>,
+      li: ({ children, node }) => <li dir={blockDirection(node)}><BidiText>{children}</BidiText></li>,
+      strong: ({ children }) => <strong>{children}</strong>,
+      em: ({ children }) => <em>{children}</em>,
+      h1: ({ children, node }) => <h1 dir={blockDirection(node)}><BidiText>{children}</BidiText></h1>,
+      h2: ({ children, node }) => <h2 dir={blockDirection(node)}><BidiText>{children}</BidiText></h2>,
+      h3: ({ children, node }) => <h3 dir={blockDirection(node)}><BidiText>{children}</BidiText></h3>,
+      h4: ({ children, node }) => <h4 dir={blockDirection(node)}><BidiText>{children}</BidiText></h4>,
+      h5: ({ children, node }) => <h5 dir={blockDirection(node)}><BidiText>{children}</BidiText></h5>,
+      h6: ({ children, node }) => <h6 dir={blockDirection(node)}><BidiText>{children}</BidiText></h6>,
+      td: ({ children, node }) => <td dir={blockDirection(node)}><BidiText>{children}</BidiText></td>,
+      th: ({ children, node }) => <th dir={blockDirection(node)}><BidiText>{children}</BidiText></th>,
       code: ({ children, className }) => <code className={className} dir="ltr">{children}</code>,
       pre: ({ children }) => <pre className="code-block" dir="ltr">{children}</pre>,
       a: ({ href, children }) => href?.startsWith("https://")
-        ? <a href={href} target="_blank" rel="noreferrer"><BidiText>{children}</BidiText></a> : <span><BidiText>{children}</BidiText></span>,
+        ? <a href={href} target="_blank" rel="noreferrer">{children}</a> : <span>{children}</span>,
       // Author text cannot cause arbitrary image requests. Images come only from the signed manifest.
       img: ({ alt }) => <span>{alt}</span>,
       table: ({ children, node }) => <div className="study-table-scroll"><table dir={tableDirection(node)}>{children}</table></div>,
@@ -102,7 +104,7 @@ export function QuestionFigures({ media, lang, role, onRefresh }: {
           onError={() => setFailed(old => old.includes(m.url) ? old : [...old, m.url])} />
       </a>
       {failed.includes(m.url) && <ResourceStatus error retry={onRefresh} lang={lang} />}
-      <figcaption><span dir="auto">{m.caption || m.filename}</span><ExternalLink size={14} aria-hidden="true" /></figcaption>
+      <figcaption><span dir={textDirection(m.caption || m.filename)}><BidiText>{m.caption || m.filename}</BidiText></span><ExternalLink size={14} aria-hidden="true" /></figcaption>
     </figure>)}</div>
     {files.some(m => m.kind === "file") && <ul className="resource-files">{files.filter(m => m.kind === "file").map(m => <li key={m.id}>
       <a href={m.url} target="_blank" rel="noreferrer"><Download size={16} /><bdi>{m.filename}</bdi></a>

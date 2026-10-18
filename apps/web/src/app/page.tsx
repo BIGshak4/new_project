@@ -20,6 +20,8 @@ import type { User } from "@supabase/supabase-js";
 import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
 import { companyNames, companyReportNote, matchesCompany, matchesQuestion, questionCategory } from "../lib/question-discovery";
 import { QuestionMetadata } from "../components/question-metadata";
+import { BidiText } from "../components/bidi-text";
+import { textDirection } from "../lib/bidi-segments";
 import { relatedQuestionKeys, uniqueLibraryQuestions } from "../lib/question-families";
 import { Auth, type Lang } from "../components/auth";
 import { PracticeSession } from "../components/practice-session";
@@ -734,9 +736,9 @@ function Workspace({
                     >
                       <History size={18} />
                       <div>
-                        <h3>
-                          {questions.find((q) => q.key === a.question_key)
-                            ?.title ?? a.question_key}
+                        <h3 dir={textDirection(questions.find((q) => q.key === a.question_key)?.title ?? a.question_key)}>
+                          <BidiText>{questions.find((q) => q.key === a.question_key)
+                            ?.title ?? a.question_key}</BidiText>
                         </h3>
                         {questionsByKey.has(a.question_key) && <QuestionMetadata question={questionsByKey.get(a.question_key)!} lang={lang} compact />}
                         <span className="topic">
@@ -786,7 +788,7 @@ function Workspace({
                         >
                           <BookOpen size={17} />
                           <div>
-                            <h3>{q.title}</h3>
+                            <h3 dir={textDirection(q.title)}><BidiText>{q.title}</BidiText></h3>
                             <QuestionMetadata question={q} lang={lang} compact />
                             <span className="topic">
                               {t(
@@ -879,8 +881,8 @@ function Workspace({
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <div>
-                        <h3>
-                          {q.title}
+                        <h3 dir={textDirection(q.title)}>
+                          <BidiText>{q.title}</BidiText>
                           {q.trial && (
                             <span className="badge trial">{q.assessment_ready === false ? t("לבדיקה מקצועית", "Review pending") : t("בבדיקה חיה", "On trial")}</span>
                           )}

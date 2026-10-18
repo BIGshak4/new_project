@@ -7,6 +7,7 @@ import { Pop, Reveal } from "./ui/motion";
 import type { Attempt } from "../lib/practice-api";
 import { bandLabel } from "../lib/practice-ui";
 import { BidiText } from "./bidi-text";
+import { textDirection } from "../lib/bidi-segments";
 import { DictationControls } from "./dictation-controls";
 
 /**
@@ -74,7 +75,7 @@ export function FollowUps({
           <li key={f.turn} className="follow-up done">
             <span className="follow-up-kind">{actionLabel(f.action)}</span>
             {f.question && (
-              <p className="follow-up-question" dir="auto"><BidiText>{f.question}</BidiText></p>
+              <p className="follow-up-question" dir={textDirection(f.question)}><BidiText>{f.question}</BidiText></p>
             )}
             {f.skipped ? (
               <p>
@@ -85,7 +86,7 @@ export function FollowUps({
               </p>
             ) : f.submission && (
               <>
-                <p className="follow-up-answer" dir="auto"><BidiText>{f.submission.answer}</BidiText></p>
+                <p className="follow-up-answer" dir={textDirection(f.submission.answer)}><BidiText>{f.submission.answer}</BidiText></p>
                 {f.submission.status === "evaluating" && (
                   <p className="small muted" role="status">
                     {t("התשובה נשמרה, המשוב בהכנה…", "Answer saved, preparing feedback…")}
@@ -114,7 +115,7 @@ export function FollowUps({
                       </Pop>
                     )}
                     {f.submission.summary && (
-                      <span className="small" dir="auto"><BidiText>{f.submission.summary}</BidiText></span>
+                      <span className="small" dir={textDirection(f.submission.summary)}><BidiText>{f.submission.summary}</BidiText></span>
                     )}
                   </div>
                 )}
@@ -130,7 +131,7 @@ export function FollowUps({
                 {t("כותבים את שאלת ההמשך…", "Writing your follow-up question…")}
               </p>
             ) : (
-              <p className="follow-up-question" dir="auto">
+              <p className="follow-up-question" dir={textDirection(pending.question)}>
                 <BidiText>{pending.question}</BidiText>
               </p>
             )}
