@@ -8,6 +8,7 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import re
+from typing import Literal
 
 import httpx
 from pydantic import BaseModel, Field
@@ -32,6 +33,8 @@ class QuestionResources(BaseModel):
     # Full technical material, only after an OWNED attempt records reference exposure.
     technical_material: dict | None = None
     solution_revealed: bool = False
+    reference: str | None = None
+    language: Literal["en", "he"]
 
 
 def learner_media(media: list[dict]) -> list[dict]:

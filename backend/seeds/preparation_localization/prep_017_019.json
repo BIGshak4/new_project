@@ -1,0 +1,274 @@
+{
+  "PREP-017": {
+    "assumptions": {
+      "he": [
+        "לוח שעון אנלוגי רגיל של 12 שעות עם תנועה אחידה ורציפה של מחוג השעות.",
+        "השעה היא בדיוק 6:30; מתעלמים ממחוג השניות.",
+        "לפי המוסכמה מתבקשת הזווית הקטנה הלא מכוונת; הזווית הנישאה מתועדת בנפרד."
+      ],
+      "en": [
+        "Standard 12-hour analog dial with uniform, continuous hour-hand motion.",
+        "Exactly 6:30; seconds hand is ignored.",
+        "Smaller undirected angle requested by convention; reflex angle documented separately."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "חישוב ישיר עבור ערך זמן יחיד",
+        "result": "15 מעלות; זמן ומקום O(1)",
+        "proof": "חצי מהמרווח של 30 מעלות בין סימוני שעות סמוכים; אין צורך בסימולציה."
+      },
+      "en": {
+        "criterion": "Direct calculation for one time value",
+        "result": "15 degrees; O(1) time and space",
+        "proof": "Half of the 30-degree interval between adjacent hour marks; no simulation required."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "יש להבחין בין מחוג שעות שנע ברציפות לבין מחוג שנשאר על הספרה.",
+        "הזווית הקטנה היא 15 מעלות לעומת הזווית הנישאה של 345 מעלות.",
+        "ב־06:30 וב־18:30 מיקומי המחוגים זהים."
+      ],
+      "en": [
+        "Distinguish continuously moving hour hand from a hand fixed at the numeral.",
+        "Smaller angle 15 degrees versus reflex angle 345 degrees.",
+        "06:30 and 18:30 have the same hand positions."
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-27",
+        "script_path": "checks/check_prep_017.py",
+        "method": "שברים מדויקים; מיקומי המחוגים שבמקור (195,180); שש דוגמאות; כל 720 מיקומי הדקות מול נוסחת התנועה היחסית; מחזוריות של 12 שעות."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-27",
+        "script_path": "checks/check_prep_017.py",
+        "method": "Exact fractions; source hand positions (195,180); six examples; all 720 minute positions vs relative-motion formula; 12-hour periodicity."
+      }
+    },
+    "interview_answer": {
+      "he": "ב־6:30 מחוג הדקות על 6, אבל מחוג השעות כבר באמצע הדרך ל־7. בין שתי ספרות יש 30 מעלות, ולכן חצי המרווח הוא 15 מעלות.",
+      "en": "At 6:30 the minute hand is on 6, but the hour hand is already halfway to 7. Adjacent numerals are 30 degrees apart, so half that interval is 15 degrees."
+    },
+    "common_mistakes": {
+      "he": [
+        "תשובה של אפס מתוך הנחה שמחוג השעות נשאר על 6.",
+        "התעלמות מכך שהמוסכמה לזווית לא מכוונת היא הזווית הקטנה."
+      ],
+      "en": [
+        "Answering zero by assuming the hour hand stays at 6.",
+        "Ignoring that an undirected angle conventionally means the smaller angle."
+      ]
+    }
+  },
+  "PREP-018": {
+    "assumptions": {
+      "he": [
+        "שני מספרים שלמים ברוחב שווה של N ביטים, כאשר N>=1; הרוחב והייצוג המספרי אינם מוגדרים במקור.",
+        "ההסבר העיקרי הוא עבור מספרים ללא סימן; נכללת גם חלופה עם סימן במשלים ל־2.",
+        "די במוצא קומבינטורי; היתר להשתמש בזיכרון אינו מחייב שימוש בו.",
+        "המוצא הוא המספר המקורי הגדול יותר; בשוויון בוחרים A.",
+        "אפשר לממש את פעולת ה־MUX מהשערים המותרים."
+      ],
+      "en": [
+        "Two equal-width N-bit integers, N>=1; width and numeric format are unspecified in the source.",
+        "Unsigned is the primary explanation; signed two's-complement alternative is included.",
+        "Combinational output is sufficient; permission to use memory does not require it.",
+        "Output is the larger original number; equality selects A.",
+        "MUX behavior can be implemented from permitted gates."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מימוש קומבינטורי פשוט ונכון של השוואה ובחירה",
+        "result": "מחסר מורחב להשוואה ומבחר ברוחב N ביטים; ללא מצב.",
+        "scope": "אי אפשר לקבוע מינימום מדויק של תאים/שטח/עומק ללא ספריית שערים ויעד מיטוב. מתועדים שיקולי הפשרה בין השוואה בשרשור לבין השוואה מאוזנת."
+      },
+      "en": {
+        "criterion": "Simple correct combinational compare-and-select construction",
+        "result": "Extended subtractor for comparison plus N-bit selector; no state.",
+        "scope": "No exact cell/area/depth minimum without a gate library and objective. Ripple and balanced comparison tradeoffs documented."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "A=B",
+        "A=0 או B=0 במצב ללא סימן",
+        "המקסימום ללא סימן לעומת אופרנד קטן",
+        "שני מספרים שליליים בייצוג עם סימן",
+        "סימנים מנוגדים בייצוג עם סימן",
+        "הערך המינימלי עם סימן לעומת הערך המקסימלי עם סימן",
+        "ביט הסימן של הפרש שנחתך אינו בדרך כלל דגל השוואה תקף"
+      ],
+      "en": [
+        "A=B",
+        "A=0 or B=0 in unsigned mode",
+        "Unsigned maximum versus a small operand",
+        "Both signed negative",
+        "Opposite signed signs",
+        "Minimum signed value versus maximum signed value",
+        "Truncated subtractor sign is not generally a valid comparison flag"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-27",
+        "script_path": "checks/check_prep_018.py",
+        "method": "174,760 זוגות: מיצוי עבור רוחבים 1..8 עם סימן/ללא סימן; נבדקו ההפרש המורחב המדויק, דגל ההשוואה והתוצאה.",
+        "scope": "חשבון וקטורי ביטים ברוחב קבוע ב־Python; ללא סימולציית HDL, סינתזה או תזמון פיזי."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-27",
+        "script_path": "checks/check_prep_018.py",
+        "method": "174,760 pairs: exhaustive widths 1..8, signed/unsigned; exact extended difference, comparison flag and result checked.",
+        "scope": "Python fixed-width bit-vector arithmetic; no HDL simulation, synthesis or physical timing."
+      }
+    },
+    "interview_answer": {
+      "he": "ארחיב את שני הקלטים בביט אחד ואחשב A−B. ביט הסימן של ההפרש יבחר ב־MUX את B אם ההפרש שלילי ואת A אחרת. ללא סימן מרחיבים באפס, ובמשלים ל־2 מרחיבים בסימן. ההרחבה מונעת גלישה; אין צורך בזיכרון.",
+      "en": "I extend both inputs by one bit and compute A−B. The difference sign bit controls a MUX, selecting B if the difference is negative and A otherwise. For unsigned inputs use zero extension; for two’s-complement inputs use sign extension. Extension prevents overflow; no memory is needed."
+    },
+    "common_mistakes": {
+      "he": [
+        "שימוש בביט הסימן של הפרש ללא סימן שנחתך",
+        "התעלמות מגלישה בחשבון עם סימן",
+        "הרחבה באפס של קלטים שליליים עם סימן",
+        "בחירת הקלט הקטן עקב היפוך חיבורי הנתונים של ה־MUX",
+        "החזרת דגל ההשוואה במקום המספר",
+        "הוספת מצב בלי דרישה לכך"
+      ],
+      "en": [
+        "Using the sign of a truncated unsigned difference",
+        "Ignoring signed overflow",
+        "Zero-extending negative signed inputs",
+        "Selecting the smaller input by reversing mux data wiring",
+        "Returning the comparison flag instead of the number",
+        "Adding state without a requirement"
+      ]
+    },
+    "recursive_two_bit_alternative": {
+      "he": {
+        "display_section": "הצעה לפתרון",
+        "verification_script": "checks/check_prep_018_recursive.py",
+        "verification_status": "passed",
+        "diagram_generator": "solutions/draw_prep_018_two_bit.py",
+        "diagram_path": "diagrams/prep-018-two-bit-maximum.png",
+        "text": "### חלופת הפרד ומשול: מעגל בסיסי עבור N=2\n\nהפתרון המקורי שהוכן משתמש במחסר מורחב וב־MUX. החלופה כאן משווה קודם את החלק העליון, ופונה לחלק התחתון רק במקרה של שוויון. זהו המבנה של משווה רקורסיבי; במקרה של שני ביטים כל חלק הוא ביט יחיד. נניח מספרים ללא סימן A=A1A0 ו־B=B1B0, שערכיהם 0..3. הפלט M=M1M0 הוא המספר הגדול בשלמותו.\n\nהביטים A1,B1 שווים במשקלם ל־2, ואילו A0,B0 שווים במשקלם ל־1. לכן אם B1=1 ו־A1=0, B בהכרח גדול יותר: הוא לפחות 2 ואילו A לכל היותר 1. אם A1=1 ו־B1=0, A בהכרח גדול יותר. רק כאשר הביטים העליונים שווים צריך להשוות את התחתונים.\n\nנגדיר E1=XNOR(A1,B1), שמחזיר 1 עבור 00 או 11 ו־0 עבור 01 או 10. אם משתמשים רק ב־AND/OR/NOT, אפשר לממש E1=(A1 AND B1) OR (NOT A1 AND NOT B1).\n\nנבנה אות בחירה S שמשמעותו A<B, כלומר צריך לבחור את B:\n\n```text\nT1 = NOT(A1) AND B1\nT0 = E1 AND NOT(A0) AND B0\nS  = T1 OR T0\n```\n\nT1 מזהה שהביט העליון של B גדול מזה של A. T0 מזהה שהביטים העליונים שווים, ובביט התחתון B גדול מ־A. ה־E1 חוסם הכרעה שגויה של הביט התחתון כאשר כבר יש הכרעה למעלה. למשל A=10,B=01: למטה B0=1 ו־A0=0, אבל E1=0 ולכן T0=0, וגם T1=0. מתקבל S=0 ונבחר A=10, כפי שנדרש. עבור A=10,B=11 הביטים העליונים שווים, E1=1, ולכן T0=1 ונבחר B=11. בשוויון מלא T1=T0=0 ולכן בוחרים A, שערכו זהה ל־B.\n\nנחבר שני MUX 2:1 של ביט אחד עם אותו S: בראשון D0=A1,D1=B1 והמוצא M1; בשני D0=A0,D1=B0 והמוצא M0. כך שני הביטים נלקחים יחד מאותו מספר. אין לבחור בנפרד את הביט הגדול מכל זוג: עבור A=10,B=01 בחירה כזאת תייצר 11, שאינו אף אחד מהקלטים.\n\n```text\nM1 = (A1 AND NOT S) OR (B1 AND S)\nM0 = (A0 AND NOT S) OR (B0 AND S)\n```\n\n![מעגל השוואה ובחירת מקסימום לשני מספרים בני שני ביטים](../diagrams/prep-018-two-bit-maximum.png)\n\nהשרטוט כולל XNOR, שני מהפכים, שני תנאי AND, OR ושני MUX עם אות בחירה משותף. AND בעל שלוש כניסות ניתן לפצל לשני AND בעלי שתי כניסות. שמות חוטים חוזרים מתייחסים לאותו חיבור. זהו מימוש ישיר לצורך ההסבר, ללא טענת מינימום שערים מדויק.\n\n**ממשק שימושי להמשך הרקורסיה:** יחידת ההשוואה צריכה להוציא LT=(A<B), שהוא S, וגם EQ=(A=B). כאן EQ=E1 AND XNOR(A0,B0). שרשור שני ערכי מקסימום מקומיים אינו מספיק; צריך מידע על תוצאת ההשוואה ועל השוויון. בחיבור חצי עליון H וחצי תחתון L, מחשבים LT=LT_H OR (EQ_H AND LT_L), ו־EQ=EQ_H AND EQ_L. מקרה הבסיס המתמטי הוא ביט אחד, שבו LT=NOT A AND B ו־EQ=XNOR(A,B). עץ מאוזן של יחידות השוואה נותן O(N) שערים ועומק O(log N) במודל שערים בעלי מספר כניסות חסום; בחירת שני המספרים המלאים נעשית לפי LT הסופי. אין צורך בשעון או בזיכרון.\n\nבדיקות: כל 16 זוגות הקלטים ב־N=2 נבדקו עבור המשוואות המדויקות בשרטוט, כולל השוואה, שוויון והפלט. נוסחת החיבור הרקורסיבית נבדקה באופן ממצה ב־87,380 זוגות ברוחבים 1 עד 8. מדובר בבדיקת מודל Python ולא בסימולציית HDL או סינתזה.\n\n[מחולל השרטוט](../solutions/draw_prep_018_two_bit.py) · [מודל ובדיקה רקורסיבית](../checks/check_prep_018_recursive.py).\n"
+      },
+      "en": {
+        "display_section": "Proposed solution",
+        "verification_script": "checks/check_prep_018_recursive.py",
+        "verification_status": "passed",
+        "diagram_generator": "solutions/draw_prep_018_two_bit.py",
+        "diagram_path": "diagrams/prep-018-two-bit-maximum.png",
+        "text": "### Divide-and-conquer alternative: a basic circuit for N=2\n\nThe original prepared solution uses an extended subtractor and a MUX. This alternative compares the upper part first and consults the lower part only if the upper parts are equal. This is the structure of a recursive comparator; with two bits each part is one bit. Assume unsigned numbers A=A1A0 and B=B1B0, with values 0..3. The output M=M1M0 is the entire larger number.\n\nBits A1,B1 have weight 2, while A0,B0 have weight 1. Thus if B1=1 and A1=0, B is necessarily larger: it is at least 2, while A is at most 1. If A1=1 and B1=0, A is necessarily larger. Only when the upper bits are equal must the lower bits be compared.\n\nDefine E1=XNOR(A1,B1), which returns 1 for 00 or 11 and 0 for 01 or 10. Using only AND/OR/NOT, E1 can be implemented as E1=(A1 AND B1) OR (NOT A1 AND NOT B1).\n\nConstruct a select signal S meaning A<B, so B must be selected:\n\n```text\nT1 = NOT(A1) AND B1\nT0 = E1 AND NOT(A0) AND B0\nS  = T1 OR T0\n```\n\nT1 detects that B's upper bit is greater than A's. T0 detects that the upper bits are equal and B's lower bit is greater than A's. E1 blocks an incorrect lower-bit decision when the upper bits have already decided the comparison. For example, A=10,B=01: in the lower position B0=1 and A0=0, but E1=0, so T0=0, and T1=0 too. Thus S=0 and A=10 is selected, as required. For A=10,B=11, the upper bits are equal, E1=1, so T0=1 and B=11 is selected. With complete equality T1=T0=0, so A is selected, with the same value as B.\n\nConnect two one-bit 2:1 MUXes with the same S: the first has D0=A1,D1=B1 and output M1; the second has D0=A0,D1=B0 and output M0. Both bits are thus taken together from the same number. Do not independently select the larger bit from each pair: for A=10,B=01 that would produce 11, which is neither input.\n\n```text\nM1 = (A1 AND NOT S) OR (B1 AND S)\nM0 = (A0 AND NOT S) OR (B0 AND S)\n```\n\n![Comparison and maximum-selection circuit for two two-bit numbers](../diagrams/prep-018-two-bit-maximum.png)\n\nThe diagram includes an XNOR, two inverters, two AND conditions, an OR and two MUXes with a shared select. A three-input AND can be split into two two-input AND gates. Repeated wire names refer to the same connection. This is a direct implementation for explanation, without a claim of an exact minimum gate count.\n\n**A useful interface for continuing the recursion:** The comparison unit should output LT=(A<B), which is S, and also EQ=(A=B). Here EQ=E1 AND XNOR(A0,B0). Concatenating two local maximum values is insufficient; information about the comparison result and equality is needed. When combining an upper half H and lower half L, compute LT=LT_H OR (EQ_H AND LT_L), and EQ=EQ_H AND EQ_L. The mathematical base case is one bit, where LT=NOT A AND B and EQ=XNOR(A,B). A balanced tree of comparison units gives O(N) gates and O(log N) depth in a bounded-fan-in gate model; selection of the entire input numbers uses the final LT. No clock or memory is needed.\n\nChecks: all 16 input pairs for N=2 were checked using the exact equations in the diagram, including comparison, equality and output. The recursive composition formula was exhaustively checked on 87,380 pairs at widths 1 through 8. This is a Python-model check, not HDL simulation or synthesis.\n\n[Diagram generator](../solutions/draw_prep_018_two_bit.py) · [Recursive model and check](../checks/check_prep_018_recursive.py).\n"
+      }
+    },
+    "n2_design_comparison": {
+      "he": {
+        "display_section": "הצעה לפתרון",
+        "diagram_generator": "solutions/draw_prep_018_comparison.py",
+        "verification": "כל 16 המקרים עבור N=2: המשווה הרקורסיבי, לוגיקת ההשאלה בלבד, ביט הסימן המורחב והמקסימום שקולים; השרטוטים נבדקו חזותית.",
+        "text": "### השוואת שני המעגלים עבור N=2: הפרד ומשול מול מחסר\n\nבשני השרטוטים מניחים A=A1A0,B=B1B0 ללא סימן, בטווח 0..3. אות הבחירה S הוא 1 כאשר A<B. אותו S מפעיל את שני ה־MUX של המוצא: כניסה 0 היא ביט מ־A וכניסה 1 היא הביט המקביל מ־B. לכן מתקבל מספר מקורי שלם; בשוויון נבחר A. אין שעון או FF.\n\n**המעגל בשיטת הפרד ומשול:** שני תתי־משווים מטפלים בזוגות הביטים. LT1=NOT(A1) AND B1 מציין שהביט העליון של A קטן יותר, EQ1=XNOR(A1,B1) מציין שוויון למעלה, ו־LT0=NOT(A0) AND B0 מציין שהביט התחתון של A קטן יותר. מחברים S=LT1 OR (EQ1 AND LT0). פירושו: B מנצח אם הוא גדול למעלה, או אם למעלה יש שוויון והוא גדול למטה. עבור המקסימום הסופי ברוחב 2 לא צריך EQ0 או EQ של המספר כולו, ולכן הם אינם ממומשים בשרטוט. כאשר היחידה משמשת כתת־משווה בתוך רקורסיה גדולה יותר, יש להחזיר גם EQ=EQ1 AND XNOR(A0,B0).\n\n![N=2: השוואה בהפרד ומשול ומבחר](../diagrams/prep-018-n2-recursive.png)\n\n**המעגל עם מחסר:** מוסיפים אפס משמאל לשני המספרים ומחסרים D[2:0]={0,A1,A0}−{0,B1,B0}. זה מחסר ברוחב שלושה ביטים, לא שניים. טווח ההפרש הוא −3..3, ולכן הוא נכנס בשלושה ביטים במשלים ל־2. S=D2, ושני ביטי ההפרש האחרים אינם משמשים לתוצאה. לדוגמה A=01,B=10 נותן 001−010=111, כלומר −1, ולכן S=1 ובוחרים B=10. הרחבת אפס מתאימה כאן כי המספרים ללא סימן.\n\n![N=2: מחסר מורחב ומבחר](../diagrams/prep-018-n2-subtractor.png)\n\n**איזה פתרון יעיל יותר?** הבחירה הסופית בשני הפתרונות זהה, לכן משווים בעיקר את חישוב S. תכנון משווה ייעודי מבטא ישירות את המידע הדרוש — מי גדול — ואינו מחייב לחשב את כל ביטי ההפרש. אם משתמשים במחסר מלא כמכלול קבוע שאינו מפושט, חלק מהיציאות והלוגיקה שלו מיותרות למשימה. אבל אין להסיק מכך שהגישה הרקורסיבית תמיד קטנה או מהירה יותר: כאשר כלי סינתזה יכול לפשט את המחסר לפי היציאה היחידה שנצרכת, הלוגיקה יכולה להיות זהה.\n\nאפשר לראות את השקילות במפורש. בחיסור A−B, ההשאלה מהביט התחתון היא borrow0=NOT(A0) AND B0, בדיוק LT0. ההשאלה מהביט העליון היא:\n\n```text\nborrow1 = (NOT(A1) AND B1) OR (XNOR(A1,B1) AND borrow0)\n```\n\nכאשר A1=0,B1=1 צריך השאלה בלי קשר לביט הקודם. כאשר A1=B1, השאלה שנכנסת ממשיכה הלאה. כאשר A1=1,B1=0 אין צורך בהשאלה יוצאת. לכן borrow1 הוא בדיוק LT1 OR (EQ1 AND LT0), כלומר S של המעגל הרקורסיבי. הביט D2 של המחסר המורחב שווה להשאלה הזאת. למשימה אין צורך לחשב D0,D1 כלל.\n\nבמימוש המפורש של המשווה בשרטוט, ובהנחה ש־XNOR הוא תא אחד, יש 2 NOT, 3 AND בעלי שתי כניסות, OR אחד ו־XNOR אחד לחישוב S — שבעה שערים — ועוד שני MUX של ביט אחד לבחירת המספר. זו ספירת המימוש המוצג, לא הוכחת מינימום ל־N=2 ולא השוואת שטח טרנזיסטורים. אפשר לפשט עוד או למפות אחרת לפי ספריית התאים. לדוגמה, בפונקציית max הלא מסומנת הביט העליון M1 שווה A1 OR B1, אך שני השרטוטים משאירים במכוון את אותה דרגת MUX כדי להשוות את שיטות ההכרעה בלי לשנות גם את צד הנתונים.\n\nברוחב כללי N, עץ השוואה מאוזן לפי LT/EQ נותן O(log N) עומק ו־O(N) גודל במודל שערים בעלי מספר כניסות חסום. מחסר ripple יכול לתת O(N) עומק, אך מחסר עם carry/borrow lookahead או חישוב prefix יכול גם הוא להשיג O(log N) עומק. לכן ההשוואה היא בין מבנים מסוימים, ולא בין המילים ״רקורסיה״ ו״חיסור״. קביעת שטח או השהיה בפועל דורשת ספריית תאים וסינתזה, שלא בוצעו כאן.\n\nשני השרטוטים נבדקו חזותית, וכל 16 צירופי שני המספרים נבדקו לשקילות של נוסחת ההשוואה, השאלה בחיסור, ביט הסימן המורחב והפלט. [מחולל השרטוטים](../solutions/draw_prep_018_comparison.py). בדיקת השקילות נמצאת בתחילת [סקריפט העדכון](../solutions/update_prep_018_comparison.py).\n"
+      },
+      "en": {
+        "display_section": "Proposed solution",
+        "diagram_generator": "solutions/draw_prep_018_comparison.py",
+        "verification": "All 16 N=2 cases: recursive comparator, borrow-only logic, extended sign and maximum equivalent; schematics visually reviewed.",
+        "text": "### Comparing the two circuits for N=2: divide and conquer versus subtraction\n\nBoth diagrams assume unsigned A=A1A0,B=B1B0, in the range 0..3. Select S is 1 when A<B. The same S controls both output MUXes: input 0 is a bit from A and input 1 is the corresponding bit from B. The result is therefore an entire original number; ties select A. There is no clock or FF.\n\n**The divide-and-conquer circuit:** Two sub-comparators handle the bit pairs. LT1=NOT(A1) AND B1 indicates that A's upper bit is smaller, EQ1=XNOR(A1,B1) indicates upper-bit equality, and LT0=NOT(A0) AND B0 indicates that A's lower bit is smaller. Combine them as S=LT1 OR (EQ1 AND LT0). This means B wins if it is greater in the upper position, or if the upper position is equal and it is greater in the lower one. For the final two-bit maximum, neither EQ0 nor whole-number EQ is needed, so they are not implemented in the diagram. When the unit serves as a sub-comparator within a larger recursion, it should also return EQ=EQ1 AND XNOR(A0,B0).\n\n![N=2: divide-and-conquer comparison and selection](../diagrams/prep-018-n2-recursive.png)\n\n**The subtractor circuit:** Add a zero to the left of both numbers and subtract D[2:0]={0,A1,A0}−{0,B1,B0}. This is a three-bit subtractor, not a two-bit one. The difference ranges from −3..3, so it fits in three-bit two's complement. S=D2, and the other two difference bits are not used for the result. For example, A=01,B=10 gives 001−010=111, or −1, so S=1 and B=10 is selected. Zero extension is appropriate here because the numbers are unsigned.\n\n![N=2: extended subtractor and selection](../diagrams/prep-018-n2-subtractor.png)\n\n**Which solution is more efficient?** The final selection is identical in both, so the main comparison concerns computation of S. A dedicated comparator directly expresses the needed information — which value is larger — without requiring every difference bit. If a full subtractor is used as a fixed unpruned block, some outputs and logic are unnecessary for this task. However, this does not imply that the recursive approach is always smaller or faster: when synthesis can simplify the subtractor for the only output consumed, the logic can be identical.\n\nThe equivalence can be seen explicitly. In A−B, the borrow from the lower bit is borrow0=NOT(A0) AND B0, exactly LT0. The borrow from the upper bit is:\n\n```text\nborrow1 = (NOT(A1) AND B1) OR (XNOR(A1,B1) AND borrow0)\n```\n\nWhen A1=0,B1=1, a borrow is required regardless of the preceding bit. When A1=B1, an incoming borrow propagates. When A1=1,B1=0, no outgoing borrow is needed. Thus borrow1 is exactly LT1 OR (EQ1 AND LT0), namely S from the recursive circuit. Bit D2 of the extended subtractor equals this borrow. Computing D0,D1 is entirely unnecessary for the task.\n\nIn the explicit comparator implementation shown, assuming XNOR is one cell, computing S uses 2 NOT gates, 3 two-input AND gates, one OR and one XNOR — seven gates — plus two one-bit MUXes to select the number. This counts the shown implementation; it is not a proof of a minimum for N=2 or a transistor-area comparison. Further simplification or different mapping is possible depending on the cell library. For example, in unsigned max, the upper bit M1 equals A1 OR B1, but both diagrams deliberately retain the same MUX stage to compare decision methods without also changing the data side.\n\nFor general width N, a balanced LT/EQ comparison tree gives O(log N) depth and O(N) size in a bounded-fan-in gate model. A ripple subtractor can have O(N) depth, but a subtractor with carry/borrow lookahead or prefix computation can also achieve O(log N) depth. Thus the comparison is between particular structures, rather than between the words “recursion” and “subtraction.” Determining physical area or delay requires a cell library and synthesis, neither of which was performed here.\n\nBoth diagrams were visually checked, and all 16 pairs of numbers were checked for equivalence of the comparison formula, subtraction borrow, extended sign bit and output. [Diagram generator](../solutions/draw_prep_018_comparison.py). The equivalence check is at the beginning of the [update script](../solutions/update_prep_018_comparison.py).\n"
+      }
+    }
+  },
+  "PREP-019": {
+    "assumptions": {
+      "he": [
+        "מערך עם גישה אקראית שניתן לשנות; זיהוי צבע והחלפות דורשים זמן O(1).",
+        "לכל פריט יש בדיוק אחד משלושת הצבעים B/G/R. יש לשמור את כל האובייקטים המקוריים.",
+        "אין דרישת יציבות; הסדר בתוך אותו צבע אינו משנה.",
+        "מפרשים מעבר יחיד כהקטנת אזור לא מסווג, ולא ככלל מילולי של גישה אחת בלבד לכל כתובת פיזית.",
+        "O(1) מילות מכונה בזיכרון עזר במודל RAM הרגיל."
+      ],
+      "en": [
+        "Mutable random-access array; color lookup and swaps take O(1) time.",
+        "Each item has exactly one of the three colors B/G/R. Preserve all original objects.",
+        "No stability requirement; order inside one color is irrelevant.",
+        "Interpret single pass as shrinking an unclassified region, not a literal one-access-per-physical-address rule.",
+        "O(1) auxiliary machine words in the standard RAM model."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "זמן ומקום עזר במקרה הגרוע לחלוקה במקום לשלוש קבוצות",
+        "result": "זמן Theta(n), זיכרון עזר של O(1) מילים, בדיוק n איטרציות סיווג",
+        "proof": "גודל האזור הלא ידוע קטן באחד בכל איטרציה; קלט שרירותי דורש עיבוד של Omega(n) במקרה הגרוע."
+      },
+      "en": {
+        "criterion": "Worst-case time and auxiliary space for in-place three-way partition",
+        "result": "Theta(n) time, O(1) auxiliary words, exactly n classification iterations",
+        "proof": "Unknown-region size drops by one each iteration; arbitrary input requires Omega(n) worst-case processing."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "מערך ריק",
+        "כדור יחיד",
+        "רק צבע אחד או שניים",
+        "כבר ממוין",
+        "קבוצות צבע בסדר הפוך",
+        "החלפות אדומים חוזרות באותו אינדקס סריקה",
+        "Low שווה ל־mid או mid שווה ל־high"
+      ],
+      "en": [
+        "Empty array",
+        "Single ball",
+        "One or two colors only",
+        "Already sorted",
+        "Reverse grouped order",
+        "Repeated red swaps at the same scan index",
+        "Low equals mid or mid equals high"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-27",
+        "script_path": "checks/check_prep_019.py",
+        "method": "כל 9,841 המערכים באורכים 0..8, הרצף שבמקור ומקרי קצה ארוכים; צבעים ממוינים, אותה רשימה, שימור זהויות האובייקטים ובדיוק סיווג אחד לכל פריט."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-27",
+        "script_path": "checks/check_prep_019.py",
+        "method": "All 9,841 arrays at lengths 0..8, source sequence, long edge cases; sorted colors, same list, preserved object identities and exactly one classification per item."
+      }
+    },
+    "interview_answer": {
+      "he": "אחזיק גבול לכחולים, גבול לאדומים ומצביע לאזור הלא מסווג. אעביר כחול שמאלה, אדום ימינה וירוק אשאיר באמצע. אחרי החלפה מימין לא אקדם את הסורק, כי הגיע כדור שטרם נבדק. בכל צעד האזור הלא מסווג קטן באחד, ולכן הזמן לינארי והזיכרון קבוע.",
+      "en": "I maintain a boundary for blue, a boundary for red, and a pointer into the unclassified region. Move blue left, red right, and leave green in the middle. After swapping from the right, do not advance the scan pointer because the incoming ball has not been checked. At every step the unclassified region shrinks by one, so time is linear and memory constant."
+    },
+    "common_mistakes": {
+      "he": [
+        "קידום mid אחרי החלפה עם high",
+        "התייחסות ל־O(n) כהוכחה לקריאה אחת בדיוק מכל תא פיזי",
+        "הקצאת שלוש רשימות למרות דרישת זיכרון O(1)",
+        "החזרת עותק ממוין",
+        "טענה לשמירת סדר יציבה",
+        "החלפת אובייקטים בצבעים ואובדן זהותם"
+      ],
+      "en": [
+        "Advancing mid after swapping with high",
+        "Treating O(n) as proof of exactly one physical-cell read",
+        "Allocating three lists despite O(1) memory",
+        "Returning a sorted copy",
+        "Claiming stable ordering",
+        "Replacing objects by colors and losing identity"
+      ]
+    }
+  }
+}

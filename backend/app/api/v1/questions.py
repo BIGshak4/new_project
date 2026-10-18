@@ -74,8 +74,9 @@ async def report_question(key_or_id: str, body: ReportRequest, access: CurrentAc
 
 @router.get("/{key}/resources", response_model=QuestionResources, summary="Question images and revealed solution material")
 async def question_resources(key: str, access: CurrentAccess, practice: Practice,
-                             attempt_id: uuid.UUID | None = None) -> QuestionResources:
-    return await practice.question_resources(access.user_id, key, attempt_id=attempt_id)
+                             attempt_id: uuid.UUID | None = None,
+                             language: str | None = Query(None, pattern="^(en|he)$")) -> QuestionResources:
+    return await practice.question_resources(access.user_id, key, attempt_id=attempt_id, language=language)
 
 
 @router.get("/{key_or_id}", response_model=QuestionDetail, summary="One question: prompt, code, choices",

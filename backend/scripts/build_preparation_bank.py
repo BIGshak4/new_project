@@ -15,6 +15,19 @@ ROOT = Path(__file__).resolve().parents[2]
 BANK = ROOT / "interview_preparation"
 SEEDS = ROOT / "backend/seeds"
 BUCKET = "question-bank-media"
+MATERIAL_FIELDS = frozenset({
+    "assumptions", "optimality", "verification", "edge_cases", "interview_answer", "common_mistakes",
+    "solution_extensions", "prompt_variants", "transition_tables", "truth_table", "waveform_observations",
+    "fsm", "strategy", "source_ambiguities", "ambiguities", "solution_networks", "area_optimization",
+    "technical_references", "component_truth_table", "circuit_interpretation", "network", "diagnostic_test",
+    "answer_branches", "netlist", "netlists", "component_delays_ns", "retiming_alternative", "course_terminology",
+    "terminology_clarification", "alternative_solution_notes", "descending_diagram_extension",
+    "diagram_description", "driver_explanation_he", "eight_cell_alternative", "formula_interpretation",
+    "group_logic_derivation_he", "group_logic_derivation_verification", "hierarchy_diagram_explanation_he",
+    "n2_design_comparison", "original_formula_latex", "parallel_products_explanation", "part_5_cost_model",
+    "part_6_two_level_explanation", "recursive_two_bit_alternative", "relationship_note", "solution_references",
+    "solution_schematic_verification", "solution_gate_schematic_verification", "editorial_notes",
+})
 
 PRIMARY = [
     "binary_arithmetic", "estimation_sanity_checks", "estimation_sanity_checks", "edge_detection",
@@ -68,9 +81,36 @@ def learner_text(edit, ident):
     return overrides
 
 
+def load_material_localizations():
+    result = {}
+    for path in sorted((SEEDS / "preparation_localization").glob("*.json")):
+        chunk = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(chunk, dict) or result.keys() & chunk.keys():
+            raise ValueError(f"Invalid or duplicate material localization in {path.name}")
+        result.update(chunk)
+    return result
+
+
+def learner_material(question, localizations):
+    ident = question["id"]
+    paired = localizations.get(ident)
+    expected = {key for key in MATERIAL_FIELDS if question.get(key) not in (None, "", [], {})}
+    if not isinstance(paired, dict) or set(paired) != expected:
+        raise ValueError(f"{ident}: technical translations must cover exactly {sorted(expected)}")
+    for key, values in paired.items():
+        if not isinstance(values, dict) or set(values) != {"he", "en"}:
+            raise ValueError(f"{ident}.{key}: both technical material languages are required")
+        if any(values[lang] in (None, "", [], {}) for lang in ("he", "en")):
+            raise ValueError(f"{ident}.{key}: technical translations must not be empty")
+    return paired
+
+
 def load():
     source = json.loads((BANK / "questions.json").read_text(encoding="utf-8-sig"))
     additions = json.loads((SEEDS / "preparation_editorial.json").read_text(encoding="utf-8"))
+    localizations = load_material_localizations()
+    if set(localizations) != {q["id"] for q in source["questions"]}:
+        raise ValueError("Technical translations must cover the complete preparation archive")
     skill_subject = {}
     for p in (SEEDS / "skills").glob("*.json"):
         for skill in json.loads(p.read_text(encoding="utf-8")):
@@ -125,6 +165,9 @@ def load():
         q["translations"] = {lang: {**q["translations"][lang], **overrides.get(lang, {}),
                                     "reference_solution": texts[lang]["reference_solution"]}
                              for lang in ("he", "en")}
+        # Keep the archive's author data intact. Only the learner-facing view is
+        # translated; source records, proofs, code and review status stay available.
+        q["learner_material"] = learner_material(q, localizations)
         q["website_editorial"] = {"solution_added": bool(edit.get("reference_solution")),
                                   "hints_translated": True, "human_review_pending": True,
                                   "learner_text_edited": bool(overrides)}

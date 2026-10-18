@@ -1,0 +1,2052 @@
+{
+  "PREP-020": {
+    "circuit_interpretation": {
+      "he": {
+        "registers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "black_box_inputs": [
+          "E",
+          "F"
+        ],
+        "black_box_output": "S",
+        "left_mux": {
+          "data0": "C",
+          "data1": "D",
+          "select": "S"
+        },
+        "right_mux": {
+          "data0": "A",
+          "data1": "B",
+          "select": "NOT S"
+        },
+        "output": "מכפלת שני מוצאי ה־MUX",
+        "note": "עיגול הבחירה הימני הקטן מפורש כהיפוך, בהתאם להשהיית המהפך הרשומה; גשר בחציית החוטים אינו צומת חיבור."
+      },
+      "en": {
+        "registers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "black_box_inputs": [
+          "E",
+          "F"
+        ],
+        "black_box_output": "S",
+        "left_mux": {
+          "data0": "C",
+          "data1": "D",
+          "select": "S"
+        },
+        "right_mux": {
+          "data0": "A",
+          "data1": "B",
+          "select": "NOT S"
+        },
+        "output": "product of the two mux outputs",
+        "note": "The small right-select bubble is interpreted as inversion, consistent with the listed inverter delay; crossover bridge is not a junction."
+      }
+    },
+    "component_delays_ns": {
+      "he": {
+        "black_box": 3,
+        "multiplier": 2.7,
+        "mux": 1.5,
+        "inverter": 0.1
+      },
+      "en": {
+        "black_box": 3,
+        "multiplier": 2.7,
+        "mux": 1.5,
+        "inverter": 0.1
+      }
+    },
+    "assumptions": {
+      "he": [
+        "עיגול הבחירה הימני הוא NOT בהשהיה של 0.1 ns; הפונקציה היא BC כאשר S=0 ו־AD כאשר S=1.",
+        "השהיית MUX חלה על מסלולי הנתונים והבחירה; השהיות חיווט/עומס ורגיסטרים אינן נתונות.",
+        "זהו ניתוח מבני של השהיה מרבית; אי אפשר לקבוע מסלולים כוזבים בקופסה השחורה.",
+        "לא מצויר רגיסטר קליטה במוצא; אי אפשר להסיק מסקנה מלאה לגבי fmax או setup/hold.",
+        "שמירה על אותו מלאי רכיבים והתרת אותם סוגי רכיבים הן שתי פרשנויות נפרדות.",
+        "החלופה עם שני מכפלים מניחה של־MUX ברוחב המוצא יש ההשהיה הנתונה; אין שינוי בהשהיה במספר מחזורי הצינור.",
+        "חלופת Retiming מתירה להעביר/למזג את E,F דרך BB קומבינטורי, תוך שמירה על תזמון הקלט, ההסתעפויות ותאימות reset/enable/clock; אין גידול הכרחי בלטנטיות."
+      ],
+      "en": [
+        "Right-select bubble is a NOT with 0.1 ns delay; function is BC if S=0, AD if S=1.",
+        "MUX delay applies to data and select paths; wire/load and register delays are unspecified.",
+        "Structural max-delay analysis; black-box false paths cannot be determined.",
+        "No output capture register drawn; no complete fmax/setup/hold conclusion.",
+        "Same component inventory and same allowed component types are separate interpretations.",
+        "Two-multiplier option assumes output-width mux has the given delay; no pipeline latency changes.",
+        "Retiming alternative permits moving/merging E,F across a combinational BB, with input timing, fanout and reset/enable/clock compatibility preserved; no forced latency increase."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "הקטנת ההשהיה הקומבינטורית המבנית המרבית תוך שמירה על הפונקציה תחת הנחות המשאבים שצוינו",
+        "result": "במקור 7.3 ns; החלפת כניסות עם רגיסטרים קבועים משפרת ל־7.2 ns; חלופה עם רגיסטרים קבועים ומכפל נוסף נותנת 4.5 ns; Retiming קדימה יכול לתת מקטע מרבי אידאלי של 4.2 ns עם מכפל אחד אם תנאי הגבול והמצב ההתחלתי מתירים זאת.",
+        "scope": "שיפורים מותנים תחת הנחות שונות לגבי גבולות הרגיסטרים והמשאבים; אין הוכחת מינימום כולל או זמן מחזור פיזי."
+      },
+      "en": {
+        "criterion": "Reduce structural combinational maximum delay while preserving functionality under stated resource assumptions",
+        "result": "Original 7.3 ns; fixed-register input-swap improvement 7.2 ns; fixed-register extra-multiplier alternative 4.5 ns; forward retiming can give ideal maximum segment 4.2 ns with one multiplier if boundary/initial-state conditions permit.",
+        "scope": "Conditional improvements under distinct register-boundary/resource assumptions; no global minimum or physical clock-period proof."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "מסלול הבחירה עשוי לשלוט בזמן ההגעה לעומת מסלולי הנתונים",
+        "ה־MUXים פועלים במקביל",
+        "היפוך אות הבחירה מחליף את זיווג האופרנדים",
+        "שינוי בקלט הקופסה השחורה עשוי להיות מסלול כוזב מבחינה פונקציונלית; הפונקציה אינה ידועה",
+        "לא נתון רגיסטר קולט",
+        "רוחב המכפלה עשוי להיות גדול מרוחב הקלט"
+      ],
+      "en": [
+        "Select path can dominate data paths",
+        "MUXes are parallel",
+        "Inverted select swaps operand pairing",
+        "A black-box input change may be a functional false path; function unknown",
+        "No receiver register given",
+        "Product width may exceed input width"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-27",
+        "script_path": "checks/check_prep_020.py",
+        "method": "השוואת 8,192 צירופי אופרנדים/בחירה בין הפונקציות המקורית, עם החלפת כניסות ה־MUX ועם שני מכפלים; בדיקות זמני הגעה בשיטת max-plus בחשבון רציונלי מדויק.",
+        "scope": "פונקציה סטטית מותנית ומודל ההשהיות הנתון; ללא STA, סימולציית HDL או ניתוח גליצ׳ים."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-27",
+        "script_path": "checks/check_prep_020.py",
+        "method": "8,192 operand/select tuples compare original, swapped-mux and two-multiplier functions; exact-rational max-plus arrival checks.",
+        "scope": "Conditional static function and given-delay model; no STA, HDL simulation or glitch analysis."
+      }
+    },
+    "interview_answer": {
+      "he": "המסלול הקריטי המקורי הוא 7.3 נ״ש. החלפת כניסות המוקס מסירה מהפך ונותנת 7.2. ברגיסטרים קבועים, מכפל נוסף מאפשר חישוב שתי התוצאות במקביל ו־4.5. אם מותר retiming, מעבירים את גבול הדגימה מ־E,F אל מוצא הקופסה השחורה, תוך התאמת הדגימות והממשק; מתקבלים מקטעים של 3 ו־4.2 נ״ש עם מכפל אחד, ללא הוספת מחזור בהכרח.",
+      "en": "The original critical path is 7.3 ns. Swapping the mux inputs removes an inverter and gives 7.2 ns. With fixed registers, an extra multiplier allows both results to be computed in parallel and gives 4.5 ns. If retiming is allowed, move the sampling boundary from E,F to the black-box output while aligning samples and the interface; the segments are 3 and 4.2 ns with one multiplier, without necessarily adding a cycle."
+    },
+    "common_mistakes": {
+      "he": [
+        "התעלמות מתזמון כניסת הבחירה של MUX",
+        "חיבור השהיות של MUXים מקבילים כאילו הם בטור",
+        "החמצת היפוך הבחירה הימנית",
+        "פירוש חוטים מצטלבים כצומת חיבור",
+        "שכפול המכפל תוך טענה שמלאי הרכיבים לא השתנה",
+        "חישוב AC/BD במקום BC/AD בפרשנות עם היפוך הבחירה",
+        "טענה לתדר שעון בלי אילוצי תזמון של רגיסטרים",
+        "הנחת זהויות היפוך של הקופסה השחורה בלי לדעת את הפונקציה שלה"
+      ],
+      "en": [
+        "Ignoring mux select timing",
+        "Adding parallel mux delays in series",
+        "Missing the right-select inversion",
+        "Treating crossed wires as a junction",
+        "Duplicating the multiplier while claiming unchanged inventory",
+        "Computing AC/BD instead of BC/AD under the inversion interpretation",
+        "Claiming a clock frequency without register timing constraints",
+        "Assuming black-box inversion identities without knowing its function"
+      ]
+    },
+    "parallel_products_explanation": {
+      "he": {
+        "display_section": "הצעה לפתרון",
+        "diagram_path": "diagrams/prep-020-parallel-products.png",
+        "diagram_generator": "solutions/draw_prep_020_parallel_products.py",
+        "verification": "נבדקו חזותית חיבורי רגיסטרי המקור, זיווג BC/AD, חיבורי 0/1/select של ה־MUX וציר הזמן 2.7/3/4.5 ns מול המודל שאומת קודם.",
+        "text": "### הסבר אינטואיטיבי לשיפור ל־4.5 ns ושרטוט מלא\n\nהחלופה דורשת שני מכפלים במקום אחד. הרעיון הוא לחשב מראש את שתי התוצאות האפשריות בזמן שהקופסה השחורה מחליטה איזו מהן צריך. אין ניחוש של S ואין שינוי בפונקציה; עושים עבודה כפולה בחומרה ובוחרים בסוף תוצאה אחת.\n\nראשית נגזור את שתי התוצאות מהמעגל המקורי. כאשר S=0, ה־MUX השמאלי בוחר C, והימני מקבל NOT S=1 ובוחר B. לכן המכפל מחזיר B×C. כאשר S=1, השמאלי בוחר D והימני מקבל NOT S=0 ובוחר A. לכן התוצאה A×D. אין במעגל המקורי אפשרות של A×C או B×D עבור אות בחירה משותף זה.\n\nנחבר B ו־C ישירות למכפל הראשון, ואת A ו־D ישירות למכפל שני. את מוצא הראשון P0=B×C נחבר לכניסה 0 של MUX במוצא, ואת מוצא השני P1=A×D לכניסה 1. אות S, שמגיע מאותה קופסה שחורה עם אותם קלטי E,F, מחובר ישירות לבחירת ה־MUX. S=0 מעביר P0; S=1 מעביר P1. שני ה־MUX שהיו לפני המכפל אינם נחוצים במבנה הזה, ואין צורך במהפך.\n\nדוגמה: A=2,B=3,C=4,D=5. שני המכפלים מחשבים במקביל 3×4=12 ו־2×5=10. עוד לא צריך לדעת מה S. כאשר הוא מתייצב, ה־MUX מעביר 12 אם S=0 או 10 אם S=1. אלו אותן תוצאות שהמעגל המקורי היה מחשב לאחר בחירת זוג הכניסות.\n\n**ציר הזמן במודל השאלה:** ברגע 0 קלטי הרגיסטרים זמינים ביציאותיהם; הקופסה השחורה ושני המכפלים מקבלים את קלטיהם במקביל. אחרי 2.7 ns שתי המכפלות מוכנות. אחרי 3 ns גם S מוכן, ובשלב הזה שתי כניסות הנתונים של ה־MUX כבר יציבות. מהמאוחר מבין זמני הנתונים והבחירה מוסיפים 1.5 ns של MUX. לכן המוצא יציב אחרי max(2.7,3)+1.5=4.5 ns.\n\nלא מחברים 3+2.7, כי המכפלים אינם ממתינים לקופסה השחורה. לעומת זאת במימוש 7.2 ns המכפל ממתין לפלטי ה־MUX, שממתינים ל־S: קופסה שחורה 3, בחירה 1.5, כפל 2.7. במימוש החדש הכפל כבר הסתיים בזמן ההמתנה ל־S, ונשאר רק להעביר את התוצאה הנכונה דרך MUX.\n\n![שני מכפלים במקביל ובחירה בסוף, כולל ציר זמן](../diagrams/prep-020-parallel-products.png)\n\nהפסים בציר הזמן ממחישים מתי האותות מובטחים כיציבים במודל ההשהיות; הם אינם מחזורי שעון או פקודות התחלה של פעולות. כל המעגל קומבינטורי. ההנחות הקודמות נשמרות: השהיית MUX של 1.5 ns חלה גם על רוחב המכפלה, השהיות חיווט ו־clock-to-Q אינן נתונות, והוספת מכפל מותרת רק אם אילוצי המשאבים מאפשרים אותה. המסלול הקריטי החדש הוא E/F → קופסה שחורה → בחירת MUX → מוצא, באורך 4.5 ns. מסלול דרך כל אחד מהמכפלים אל המוצא הוא 2.7+1.5=4.2 ns.\n\n[מחולל השרטוט](../solutions/draw_prep_020_parallel_products.py). השרטוט נבדק חזותית מול הפונקציה BC/AD ובדיקת ההשהיות הקיימת.\n\nהשרטוט כולל את כל ששת רגיסטרי המקור ואת שלושת המסלולים המקבילים.\n"
+      },
+      "en": {
+        "display_section": "Proposed solution",
+        "diagram_path": "diagrams/prep-020-parallel-products.png",
+        "diagram_generator": "solutions/draw_prep_020_parallel_products.py",
+        "verification": "Visually checked source-register wiring, BC/AD pairing, mux 0/1/select pins and 2.7/3/4.5 ns timeline against previously verified model.",
+        "text": "### Intuitive explanation of the 4.5 ns improvement and a complete diagram\n\nThis alternative requires two multipliers instead of one. The idea is to compute the two possible results in advance while the black box decides which one is needed. There is no guessing of S and no change in the function; the hardware performs twice the work and selects one result at the end.\n\nFirst derive the two results from the original circuit. When S=0, the left MUX selects C, and the right one receives NOT S=1 and selects B. The multiplier therefore returns B×C. When S=1, the left selects D and the right receives NOT S=0 and selects A. The result is therefore A×D. The original circuit cannot produce A×C or B×D for this shared select signal.\n\nConnect B and C directly to the first multiplier, and A and D directly to a second multiplier. Connect the first output P0=B×C to input 0 of an output MUX, and the second output P1=A×D to input 1. The signal S, from the same black box with the same E,F inputs, connects directly to the MUX select. S=0 passes P0; S=1 passes P1. The two MUXes that preceded the multiplier are unnecessary in this structure, and no inverter is needed.\n\nExample: A=2,B=3,C=4,D=5. The two multipliers compute 3×4=12 and 2×5=10 in parallel. S need not be known yet. When it settles, the MUX passes 12 if S=0 or 10 if S=1. These are the same results the original circuit would compute after selecting the input pair.\n\n**Timeline in the question's model:** At time 0 the register values are available at their outputs; the black box and both multipliers receive their inputs in parallel. After 2.7 ns both products are ready. After 3 ns S is also ready, at which point both MUX data inputs are already stable. Add the MUX's 1.5 ns to the later of the data and select arrival times. Thus the output is stable after max(2.7,3)+1.5=4.5 ns.\n\nWe do not add 3+2.7 because the multipliers do not wait for the black box. In the 7.2 ns implementation, in contrast, the multiplier waits for the MUX outputs, which wait for S: black box 3, selection 1.5, multiplication 2.7. In the new implementation, multiplication has already finished while waiting for S, leaving only the passage of the correct result through a MUX.\n\n![Two multipliers in parallel with final selection, including a timeline](../diagrams/prep-020-parallel-products.png)\n\nThe timeline bars show when signals are guaranteed stable in the delay model; they are not clock cycles or operation-start commands. The entire circuit is combinational. The preceding assumptions still apply: the 1.5 ns MUX delay also applies at product width, wiring and clock-to-Q delays are unspecified, and adding a multiplier is allowed only if the resource constraints permit it. The new critical path is E/F → black box → MUX select → output, with length 4.5 ns. A path through either multiplier to the output is 2.7+1.5=4.2 ns.\n\n[Diagram generator](../solutions/draw_prep_020_parallel_products.py). The diagram was visually checked against the BC/AD function and the existing delay check.\n\nThe diagram includes all six source registers and the three parallel paths.\n"
+      }
+    },
+    "retiming_alternative": {
+      "he": {
+        "origin": "user_proposed_retiming_in_chat",
+        "display_section": "הצעה לפתרון",
+        "verification_script": "checks/check_prep_020_retiming.py",
+        "verification_scope": "מודל מותנה של ערכים בחזית השעון, ולא הוכחת תזמון פיזי.",
+        "ideal_max_segment_ns": 4.2,
+        "multiplier_count": 1,
+        "logical_register_blocks_required": 5,
+        "text": "### חלופה שהציע הראל: Retiming והשהיה מרבית של 4.2 ns\n\nזהו כיוון תקין בתנאי שמותר להזיז את רגיסטרי הכניסה ולשנות את חלוקת תקציבי התזמון מול הסביבה. הפתרונות הקודמים של 7.2 ו־4.5 ns השאירו את גבול הרגיסטרים המקורי קבוע. הם אינם שוללים שיפור באמצעות retiming, שהיה חסר בדיון המקורי. אין צורך במכפל נוסף בחלופה הזאת.\n\nנבטל תחילה את המהפך באמצעות החלפת A,B בכניסות ה־MUX הימני, כפי שכבר הוצע. כעת נבצע forward retiming דרך הקופסה השחורה: נסיר את שני רגיסטרי הקלט E,F מהחיבור שלפניה, ונכניס רגיסטר RS אחד אחרי מוצאה. הכניסות שהזינו קודם את E,F יזינו כעת ישירות את הקופסה השחורה. אין להשאיר את E,F במקומם ורק להוסיף RS.\n\n```text\nלפני:\ne_in -> [E] --               Black Box -> S -> MUXים -> מכפל -> מוצא\nf_in -> [F] --/\na_in..d_in -> [A,B,C,D] -------> נתוני ה־MUXים\n\nאחרי:\ne_in -------             Black Box -> [RS] -> S -> MUXים -> מכפל -> מוצא\nf_in -------/\na_in..d_in -------> [A,B,C,D] -------> נתוני ה־MUXים\n```\n\nבכל חזית שעון A,B,C,D דוגמים את ארבעת ערכי הנתונים של אותה עסקה. RS דוגם את f(e_in,f_in) של אותה עסקה, שכבר חושב לפני החזית. לכן לאחר החזית, אות הבחירה והנתונים מתאימים זה לזה. פורמלית, במקור S[k]=f(E[k],F[k]); לאחר retiming RS[k]=f(e_in[k],f_in[k]), כאשר E[k],F[k] במקור הם בדיוק הדגימות e_in[k],f_in[k]. לכן הפונקציה הנצפית לאחר כל חזית נשמרת, בתנאי שהקלטים עומדים בתזמון החדש.\n\nאם במקום זאת משאירים E,F ומוסיפים אחריהם RS, הוא ידגום בחזית את f(E[k−1],F[k−1]) בעוד A..D כבר דגמו את עסקה k. אז יש ערבוב בין בחירה ישנה לנתונים חדשים. למשל עם A=2,B=3,C=4,D=5, מעבר S מ־0 ל־1 צריך לשנות את המוצא מ־12 ל־10; רגיסטר בחירה נוסף בלבד ישאיר בחירה 0 ויחזיר 12. אפשר לפתור pipeline כזה בעיכובים תואמים לנתונים, אבל זה כבר דורש משאבים/לטנטיות אחרים.\n\nאחרי ההזזה, המקטע שלפני RS מכיל רק את הקופסה השחורה: 3 ns. המקטע שמיציאות A..D ו־RS עד המוצא מכיל MUX ואז מכפל: 1.5+2.7=4.2 ns. לכן ההשהיה המרבית בין גבולות הדגימה/הממשק היא max(3,4.2)=**4.2 ns** במודל האידאלי, בהנחה שהסביבה מקצה מחזור למקטע הקלט ומחזור למקטע המוצא ושהגבולות ניתנים להזזה. יש לוודא שכל מסלולי המערכת, כולל הממשקים, עומדים בתקציב זה.\n\nהשרטוט המקורי אינו כולל רגיסטר קליטה במוצא ואינו נותן clock-to-Q, setup, hold, skew או זמני הגעת קלטים. לכן 4.2 ns הוא המקסימום הקומבינטורי של המקטעים, ולא זמן מחזור פיזי מובטח מהנתונים בלבד. בתכנון סינכרוני מלא מוסיפים clock-to-Q ו־setup ובודקים את האילוצים. התזמון החדש מחייב שהקלטים e_in,f_in יהיו זמינים מוקדם מספיק לפני דגימת RS: יש כעת קופסה של 3 ns לפניה. לא ניתן להזיז רגיסטרים המוגדרים כגבולות I/O קשיחים בלי להתאים את הממשק.\n\nאין צורך לתאר זאת אוטומטית כ״הוספת שני מחזורי שעון״. זו הזזה של גבול דגימה: בכל מסלול מהקלט החיצוני אל המוצא נשאר רגיסטר אחד, וניתן לשמור על מספר מחזורי ההשהיה הלוגי. מוסיפים לטנטיות רק אם מוסיפים שלב דגימה נוסף במקום להזיז ולמזג את הרגיסטרים הקיימים. ההשהיה הפיזית מרגע קלט נתון ועד פלט מושפעת גם ממיקומו ביחס לחזית השעון.\n\n**מספר הרגיסטרים:** לאחר מיזוג רגיסטרי E,F דרך פונקציה קומבינטורית בעלת מוצא בחירה יחיד, מספיקים ארבעת רגיסטרי הנתונים ורגיסטר RS: חמישה בלוקים לוגיים, לא בהכרח שישה בשימוש. מותר להותיר משאב עודף לא מחובר אם הדרישה היא לא להוסיף רכיבים. אין להסיק מכך ספירת FF פיזיים, משום שרוחבי E,F ורגיסטרי הנתונים אינם נתונים. אם רוצים להציב את הרגיסטר העודף במוצא, צריך לבדוק גם את רוחב המכפלה וגם את השינוי בלטנטיות/ממשק; אין להניח שרגיסטר קיים צר מתאים למכפלה רחבה.\n\nRetiming מחייב גם שהקופסה השחורה קומבינטורית, שרגיסטרי E,F ניתנים להזזה ושאין להם שימושים נוספים שלא טופלו, ושיש התאמה של clock, enable ו־reset. במקרה של אתחול ידוע, צריך לאתחל RS לערך f(E_reset,F_reset); איפוס אוטומטי של RS ל־0 אינו נכון לכל פונקציה שחורה. בפונקציה לא ידועה לא ניתן לקבוע את ערך האתחול הזה ללא מידע נוסף. זה אינו פוסל את הרעיון אלא מגדיר את תנאי שקילותו.\n\nהמסקנה: אם השאלה מתירה retiming של הרגיסטרים הנתונים, זו חלופה טובה יותר מבחינת המקטע הקריטי האידאלי מהחלופות שהוצגו קודם: **4.2 ns עם מכפל אחד**. היא משנה את מיקום הרגיסטרים ותקציב התזמון של הממשק, בעוד חלופת **4.5 ns עם שני מכפלים** משאירה את רגיסטרי המקור במקומם. לכן חשוב לציין מה מותר לשנות. אין כאן הוכחת מינימום מוחלט.\n\nמקורות טכניים: [Intel — שילוב רגיסטרי כניסה לרגיסטר אחרי לוגיקה באמצעות Retiming](https://www.intel.com/programmable/technical-pdfs/683230.pdf), ו־[Intel — מגבלות Retiming, אתחול וממשקים](https://www.intel.com/content/www/us/en/docs/programmable/683236/23-4/retiming-restrictions-and-workarounds.html). המקורות מתארים את הטכניקה והמגבלות הכלליות; תוצאת 4.2 ns נגזרת מנתוני השאלה.\n\nבדיקת מודל: כל 16 פונקציות בוליאניות אפשריות של קופסה שחורה עם שני קלטי ביט, וכל 16,384 צירופי עסקה עם A..D בני שני ביטים, נתנו אותה תוצאה לפני ואחרי retiming נכון. נוסף מקרה נגדי להוספת RS בלבד. מיפוי האתחול ותנאי יציבות הקלטים מתועדים; אין כאן אימות setup/hold, STA או בדיקת חומרה פיזית. [בדיקת המודל](../checks/check_prep_020_retiming.py).\n"
+      },
+      "en": {
+        "origin": "user_proposed_retiming_in_chat",
+        "display_section": "Proposed solution",
+        "verification_script": "checks/check_prep_020_retiming.py",
+        "verification_scope": "Conditional edge-value model, not physical timing proof.",
+        "ideal_max_segment_ns": 4.2,
+        "multiplier_count": 1,
+        "logical_register_blocks_required": 5,
+        "text": "### Harel's proposed alternative: Retiming and a maximum delay of 4.2 ns\n\nThis is a valid direction provided the input registers may be moved and the timing budgets at the surrounding interface may be redistributed. The earlier 7.2 and 4.5 ns solutions kept the original register boundary fixed. They do not rule out improvement through retiming, which was missing from the original discussion. No extra multiplier is needed in this alternative.\n\nFirst remove the inverter by swapping A,B at the right MUX inputs, as already proposed. Now perform forward retiming across the black box: remove the two input registers E,F from their connections before it, and insert a single register RS after its output. The inputs that previously fed E,F now feed the black box directly. Do not leave E,F in place and merely add RS.\n\n```text\nBefore:\ne_in -> [E] --               Black Box -> S -> MUXes -> multiplier -> output\nf_in -> [F] --/\na_in..d_in -> [A,B,C,D] -------> MUX data\n\nAfter:\ne_in -------             Black Box -> [RS] -> S -> MUXes -> multiplier -> output\nf_in -------/\na_in..d_in -------> [A,B,C,D] -------> MUX data\n```\n\nOn each clock edge A,B,C,D sample the four data values of the same transaction. RS samples f(e_in,f_in) for that transaction, which was already computed before the edge. After the edge, the select and data therefore correspond. Formally, originally S[k]=f(E[k],F[k]); after retiming RS[k]=f(e_in[k],f_in[k]), where the original E[k],F[k] are exactly the samples e_in[k],f_in[k]. Thus the function observed after each edge is preserved, provided the inputs meet the new timing requirements.\n\nIf E,F are instead retained and RS is added after them, it samples f(E[k−1],F[k−1]) at the edge while A..D have already sampled transaction k. This mixes old selection with new data. For example, with A=2,B=3,C=4,D=5, a change of S from 0 to 1 should change the output from 12 to 10; an additional select register alone keeps selection 0 and returns 12. Such a pipeline can be corrected with matching data delays, but that requires different resources/latency.\n\nAfter the move, the segment before RS contains only the black box: 3 ns. The segment from the A..D and RS outputs to the output contains a MUX followed by a multiplier: 1.5+2.7=4.2 ns. The maximum delay between the sampling/interface boundaries is therefore max(3,4.2)=**4.2 ns** in the ideal model, assuming the surrounding system allocates a cycle to the input segment and a cycle to the output segment and the boundaries may be moved. Every system path, including the interfaces, must be checked against this budget.\n\nThe original diagram has no output capture register and specifies no clock-to-Q, setup, hold, skew or input-arrival times. Thus 4.2 ns is the maximum combinational delay of the segments, not a physical clock period guaranteed by the data alone. A complete synchronous design adds clock-to-Q and setup and checks the constraints. The new timing requires e_in,f_in to be available sufficiently early before RS samples them: there is now a 3 ns box before it. Registers defined as fixed I/O boundaries cannot be moved without adapting the interface.\n\nThis need not automatically be described as “adding two clock cycles.” It moves a sampling boundary: each path from an external input to the output still contains one register, and the logical cycle latency can be preserved. Latency is added only if an extra sampling stage is inserted instead of moving and merging the existing registers. The physical delay from a particular input event to the output also depends on its position relative to the clock edge.\n\n**Register count:** After merging E,F across a combinational function with a single select output, four data registers and RS suffice: five logical blocks, with no requirement to use all six. An unused surplus resource may be left disconnected if the requirement is not to add components. This does not establish a count of physical FFs, because the widths of E,F and the data registers are unspecified. Placing the spare register at the output requires checking both product width and the latency/interface change; do not assume that an existing narrow register can hold a wide product.\n\nRetiming also requires the black box to be combinational, E,F to be movable with no unhandled additional uses, and compatible clock, enable and reset behavior. With a known initial state, RS must be initialized to f(E_reset,F_reset); automatically resetting RS to 0 is not correct for every black-box function. For an unknown function, this initial value cannot be determined without further information. This defines the conditions for equivalence rather than invalidating the idea.\n\nThe conclusion: if the question permits retiming of the given registers, this alternative improves the ideal critical segment relative to the previously presented options: **4.2 ns with one multiplier**. It changes register placement and the interface timing budget, whereas **4.5 ns with two multipliers** keeps the source registers in place. It is therefore important to state what may be changed. There is no proof of an absolute minimum here.\n\nTechnical references: [Intel — Combining input registers into a register after logic through Retiming](https://www.intel.com/programmable/technical-pdfs/683230.pdf), and [Intel — Retiming restrictions, initialization and interfaces](https://www.intel.com/content/www/us/en/docs/programmable/683236/23-4/retiming-restrictions-and-workarounds.html). These sources describe the general technique and restrictions; the 4.2 ns result is derived from the question's data.\n\nModel check: all 16 possible Boolean functions of a black box with two one-bit inputs, and all 16,384 transaction combinations with two-bit A..D, produced the same results before and after correct retiming. A counterexample was added for merely appending RS. Initialization mapping and input-stability conditions are documented; this is not setup/hold verification, STA or a physical hardware test. [Model check](../checks/check_prep_020_retiming.py).\n"
+      }
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "מדריך המשתמש של Intel Quartus Prime Standard Edition: מיטוב תכנון — שילוב רגיסטרים באמצעות Register Retiming",
+          "url": "https://www.intel.com/programmable/technical-pdfs/683230.pdf"
+        },
+        {
+          "title": "מדריך המשתמש של Intel Quartus Prime Pro Edition — מגבלות Retiming ודרכי התמודדות",
+          "url": "https://www.intel.com/content/www/us/en/docs/programmable/683236/23-4/retiming-restrictions-and-workarounds.html"
+        }
+      ],
+      "en": [
+        {
+          "title": "Intel Quartus Prime Standard Edition User Guide: Design Optimization — Combining Registers with Register Retiming",
+          "url": "https://www.intel.com/programmable/technical-pdfs/683230.pdf"
+        },
+        {
+          "title": "Intel Quartus Prime Pro Edition User Guide — Retiming Restrictions and Workarounds",
+          "url": "https://www.intel.com/content/www/us/en/docs/programmable/683236/23-4/retiming-restrictions-and-workarounds.html"
+        }
+      ]
+    }
+  },
+  "PREP-021": {
+    "assumptions": {
+      "he": [
+        "הנורות והצפרדעים ממוספרות מ־1 עד 100.",
+        "צפרדע k הופכת פעם אחת כל כפולה חיובית של k עד 100.",
+        "כל הנורות כבויות בתחילה; כל ביקור הופך את המצב ואינו רק מדליק.",
+        "הסדר אינו משנה את הזוגיות הסופית."
+      ],
+      "en": [
+        "Lamps and frogs are indexed from 1 through 100.",
+        "Frog k toggles each positive multiple of k up to 100 once.",
+        "All lamps initially off; every visit flips state, rather than merely turning on.",
+        "Order does not change final parity."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "זיהוי הנורות הדולקות בלי לדמות את הביקורים; גודל פלט מפורש בגרסה המוכללת.",
+        "result": "בדיוק הריבועים השלמים. יצירת הרשימה דורשת Θ(sqrt(N)) פעולות על מילות מכונה ו־O(1) זיכרון עזר בהפקה זורמת.",
+        "scope": "חסם התלוי בגודל הפלט עבור רשימת מספרי נורות; אין טענה לחשבון בדיוק שרירותי בזמן קבוע או לפלט של וקטור המצבים המלא."
+      },
+      "en": {
+        "criterion": "Identify lit lamps without simulating visits; explicit generalized output size.",
+        "result": "Exactly the perfect squares. Generating the list costs Θ(sqrt(N)) word operations and O(1) streamed auxiliary space.",
+        "scope": "Output-sensitive bound for a list of lamp numbers, not a claim about constant-time arbitrary-precision arithmetic or a full state-vector output."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "נורה 1",
+        "נורה 100",
+        "מחלק שהוא שורש ריבועי נספר פעם אחת",
+        "N=0 ו־N=1 בגרסה המוכללת",
+        "נורות דולקות בתחילה היו הופכות את התשובה"
+      ],
+      "en": [
+        "Lamp 1",
+        "Lamp 100",
+        "Perfect-square root divisor counted once",
+        "Generalized N=0 and N=1",
+        "Initially-on lamps would reverse the answer"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-27",
+        "script_path": "checks/check_prep_021.py",
+        "method": "206 סימולציות של התהליך מול יצירת ריבועים; בדיקה עצמאית של זוגיות מספר המחלקים עבור המספרים השלמים 1..1000."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-27",
+        "script_path": "checks/check_prep_021.py",
+        "method": "206 process simulations vs square generation; independent divisor-parity check for integers 1..1000."
+      }
+    },
+    "interview_answer": {
+      "he": "נורה n מתהפכת פעם לכל מחלק של n. מחלקים באים בזוגות, חוץ מהשורש כאשר n ריבוע שלם. לכן רק הריבועים 1,4,9,16,25,36,49,64,81,100 נשארים דלוקים.",
+      "en": "Lamp n is toggled once for every divisor of n. Divisors come in pairs, except for the square root when n is a perfect square. Therefore only 1,4,9,16,25,36,49,64,81,100 remain lit."
+    },
+    "common_mistakes": {
+      "he": [
+        "ספירת הביקורים במקום הזוגיות שלהם",
+        "פירוש הפיכה כהדלקה בלבד",
+        "ספירה כפולה של מחלק שהוא שורש ריבועי",
+        "החזרת מספר הנורות במקום מספריהן",
+        "השמטת 1 או 100"
+      ],
+      "en": [
+        "Counting visits instead of their parity",
+        "Treating toggle as set-on",
+        "Counting a square-root divisor twice",
+        "Returning lamp count instead of their numbers",
+        "Omitting 1 or 100"
+      ]
+    }
+  },
+  "PREP-022": {
+    "assumptions": {
+      "he": [
+        "N הוא מספר שלם אי־שלילי; הערכים הם 1..N כולל.",
+        "rand(m) מחזירה מספר שלם ב־1..m כולל.",
+        "להפקת תמורות אחידות נדרשות הגרלות מותנות אחידות; הדבר לא נאמר במפורש במקור.",
+        "ניתוח הסיבוכיות מניח RNG חסום ופעולות מערך על מילות מכונה בזמן O(1); סופרים פריטי פלט ולא תווים עשרוניים.",
+        "סעיף א מתיר שימוש במערך; הפתרונות אינם חייבים להשתמש במבנים שונים."
+      ],
+      "en": [
+        "N is a nonnegative integer; values are 1..N inclusive.",
+        "rand(m) returns an integer in 1..m inclusive.",
+        "Uniform conditional draws are required for uniform permutations; not stated explicitly in source.",
+        "Complexity assumes O(1) bounded RNG and word-array operations; counts output items, not decimal characters.",
+        "Part (a) includes permission to use an array; solutions need not use different structures."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "הזמן ליצירה ולהדפסה של תמורה מפורשת של N ערכים.",
+        "result": "זמן Θ(N), מקום כולל Θ(N) למערך, מקום נוסף O(1) לערבוב, ו־max(N-1,0) קריאות ל־RNG.",
+        "scope": "החסם התחתון הנובע מגודל הפלט מוכיח אופטימליות בזמן תחת מודל הפעולות על מילות מכונה שצוין; אין טענה לאופטימום כללי בזיכרון או במספר ביטי האקראיות."
+      },
+      "en": {
+        "criterion": "Time to generate and print an explicit permutation of N values.",
+        "result": "Θ(N) time, Θ(N) total array space, O(1) extra shuffle space, max(N-1,0) RNG calls.",
+        "scope": "Output-size lower bound establishes time optimality under stated word-operation model; no universal memory or randomness-bit optimum claim."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "N=0",
+        "N=1",
+        "יש לאפשר החלפה של תא עם עצמו",
+        "גבולות rand כוללים לעומת אינדקסים שמתחילים מאפס",
+        "מקור אקראי מוטה שומר על היעדר כפילויות אך אינו שומר על אחידות"
+      ],
+      "en": [
+        "N=0",
+        "N=1",
+        "Self swaps must be allowed",
+        "Inclusive rand bounds vs zero-based indexing",
+        "Biased random source preserves uniqueness but not uniformity"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-27",
+        "script_path": "checks/check_prep_022.py",
+        "method": "מיצוי כל 5914 מסלולי ההגרלה עבור N=0..7; אימות שמתקבלים בדיוק N! פלטים שונים, שערכי 1..N נשמרים ושמספר הקריאות עומד בחסם. שש הרצות גבול דטרמיניסטיות גדולות יותר ובדיקות קלט לא תקין וחוזה הפונקציה.",
+        "scope": "התאמה חד־חד־ערכית ועל בין מסלולי הגרלה שווי הסתברות לתמורות; אין זו בדיקת איכות של מחולל אקראי פיזי או פסאודו־אקראי.",
+        "additional_checks": [
+          {
+            "script_path": "checks/check_prep_022_structures.py",
+            "status": "passed",
+            "method": "5914 מסלולים ממצים לכל אלגוריתם, בדיוק N! פלטים, פלט מילון/מערך זהה בכל מסלול, גבולות RNG, 12 מקרי גבול גדולים יותר ובדיקת תקינות הקלט."
+          }
+        ]
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-27",
+        "script_path": "checks/check_prep_022.py",
+        "method": "Exhaust all 5914 draw paths for N=0..7; verify exactly N! different outputs, preservation of 1..N and call bounds. Six larger deterministic boundary runs and invalid-input/contract tests.",
+        "scope": "Bijection of equiprobable draw paths to permutations, not a quality test of a physical or pseudorandom generator.",
+        "additional_checks": [
+          {
+            "script_path": "checks/check_prep_022_structures.py",
+            "status": "passed",
+            "method": "5914 exhaustive paths per algorithm, exactly N! outputs, identical dictionary/array output for every path, RNG bounds, 12 larger boundary cases and input validation."
+          }
+        ]
+      }
+    },
+    "interview_answer": {
+      "he": "סעיף א מאפשר גם מערך, אך אם נדרש מבנה אחר אפשר מילון הממפה מיקום למספר שנותר: בוחרים מפתח ב־1..m, מוציאים את ערכו וממלאים את החור עם הערך של מפתח m. במערך עושים אותו דבר בהחלפה עם התא האחרון בחלק הפעיל. בשניהם אין חזרות וכל תמורה אחידה בהנחת rand אחידה. במערך הזמן Θ(N), במילון Θ(N) בתוחלת תחת פעולות hash בתוחלת קבועה, והמקום O(N). set עם הגרלה מחדש הוא אפשרות פשוטה אך איטית יותר בתוחלת.",
+      "en": "Part (a) also permits an array, but if a different structure is required, use a dictionary mapping positions to remaining numbers: choose a key in 1..m, emit its value, and fill the hole with the value at key m. An array does the same by swapping with the last cell of the active region. Both avoid repetitions and produce uniform permutations assuming uniform rand. Array time is Θ(N); dictionary time is expected Θ(N) assuming expected constant-time hash operations; space is O(N). A set with repeated draws is a simple option but slower in expectation."
+    },
+    "common_mistakes": {
+      "he": [
+        "דגימה עם דחייה בגלל כפילויות",
+        "החלפות מוטות על פני המערך המלא",
+        "שגיאה של אחד במיפוי RNG",
+        "קריאה ל־rand(0)",
+        "מחיקה בהזזת איברים בזמן O(N)",
+        "טענה למקום כולל O(1)",
+        "הנחה שאקראי פירושו אחיד ובלתי תלוי בלי לציין זאת"
+      ],
+      "en": [
+        "Rejection sampling with duplicates",
+        "Biased swaps across full array",
+        "Off-by-one RNG mapping",
+        "Calling rand(0)",
+        "O(N) shifting deletion",
+        "Claiming O(1) total memory",
+        "Assuming random means uniform and independent without stating it"
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "key": "dictionary-and-active-array",
+          "title": "סעיף א עם מילון וסעיף ב עם מערך",
+          "content": "### הרחבה: סעיף א עם מבנה שאינו מערך, וסעיף ב עם מערך\n\nהקלט הוא רק N. כל מבנה להלן נוצר על ידינו במהלך הפתרון. אין לדעת מהניסוח מה בדיוק ציפה המראיין; סעיף א מתיר מערך ולא מחייב פתרון אחר. להלן גם פתרון תקף ללא מערך.\n\n**אפשרות טבעית לסעיף א — set:** ניצור קבוצה ריקה של מספרים שהודפסו. נגריל rand(N); אם המספר חדש נדפיס ונכניס לקבוצה, ואם כבר קיים נגריל שוב. כך לא מדפיסים כפילויות. אבל כשהודפסו N−1 מספרים, הסיכוי לקבל את האחרון בכל ניסיון הוא 1/N. בהנחת הגרלות אחידות ועצמאיות ופעולות hash בתוחלת O(1), מספר ההגרלות הצפוי הוא N×(1/N+1/(N−1)+...+1)=Θ(N log N), והמקום O(N). אין חסם סופי למספר ההגרלות במקרה הגרוע. לכן זו אפשרות להסבר ראשוני, לא הבחירה הטובה ביותר לבקשת היעילות בזמן. שימוש ב־set אינו מספק כשלעצמו גישה בזמן קבוע לאיבר במיקום אקראי; המרתו לרשימה בכל צעד מוסיפה עבודה ומערך.\n\n**סעיף א — פתרון יעיל עם מילון (טבלת גיבוב):** המילון ממפה מיקום פעיל למספר שנותר: בהתחלה {1:1,2:2,...,N:N}. המפתחות הפעילים הם בדיוק 1..m. בוחרים r=rand(m), מדפיסים את remaining[r], מעתיקים למפתח r את הערך שבמפתח m, מוחקים את המפתח m ומקטינים את m. כך מוציאים את המספר שנבחר בלי להשאיר חור בטווח המפתחות. אם r=m, ההשמה היא לעצמו ואחריה מוחקים את אותו מפתח — גם זה תקין. בדוגמה N=5, אחרי בחירת מפתח 2 והדפסת 2, המילון הוא {1:1,2:5,3:3,4:4}. עכשיו rand(4) בוחרת רק בין ארבעת המספרים שנותרו.\n\nזמן כולל Θ(N) בתוחלת בהנחת פעולות טבלת גיבוב בתוחלת O(1) ו־rand בזמן קבוע; מקום O(N). זה אינו חסם גרוע־ביותר בלתי מותנה לטבלת גיבוב. המילון משמש כמערך לוגי צפוף של מיקומים, אך מבנה הנתונים בקוד הוא מילון. אין לו כאן יתרון על מערך; הוא מוצג כחלופה שאינה מערך, כפי שהתבקש. בחירת מבנה נתונים מתייחסת להפשטה ולממשק, לא לאופן שבו ספריית Python מממשת פנימית את המילון.\n\n**סעיף ב — מערך:** יוצרים [1,2,...,N]. רק m התאים הראשונים משתתפים בהגרלה. בוחרים j=rand(m)−1, מדפיסים arr[j], מחליפים את arr[j] עם arr[m−1] ומקטינים m. האיבר שנבחר נשאר בחלק הלא פעיל ולא ייבחר שוב. למשל [1,2,3,4,5] הופך אחרי בחירת 2 ל־[1,5,3,4 | 2], ובהמשך אחרי בחירת 3 ל־[1,5,4 | 3,2]. הפלט עד כאן 2,3. אין צורך למחוק פיזית או להזיז את כל האיברים.\n\nזו גרסת קיבוע הסוף של Fisher–Yates, שקולה ברעיון לגרסת קיבוע ההתחלה המקורית שבמאגר. כאן מדפיסים את הבחירות מיד; אין להדפיס שוב את המערך בסיום, כי זה יכפיל את הפלט. זמן Θ(N) ומקום O(N) למערך, עם O(1) זיכרון עזר. עבור אותו רצף מיקומים אקראיים, חלופות המילון והמערך מפיקות בדיוק אותו רצף מספרים.\n\nבשתיהן כל אחד מ־m המספרים שנותרו נבחר בהסתברות 1/m, ולכן כל פרמוטציה מתקבלת בהסתברות 1/N! בהנחת אחידות. N=0 נותן פלט ריק; N=1 דורש רק הדפסת 1. אפשר לחסוך את ההגרלה האחרונה כי נשאר מספר אחד בלבד.\n\n**מימושים בדוקים:** permutation_with_dict ו־permutation_with_array בקובץ הקוד הם מחוללים (yield): הם מפיקים ערך אחד בכל שלב בלי לבנות רשימת פלט נוספת. להדפסה: for value in permutation_with_dict(N, rand): print(value), ובאופן זהה עם פונקציית המערך. החלפת yield chosen ב־print(chosen) נותנת פונקציית הדפסה ישירה. נבדקו כל 5,914 מסלולי ההגרלה ל־N=0..7 עבור שני המימושים, כולל שוויון פלט לכל מסלול, בדיוק N! תמורות לכל גודל, גבולות rand, 12 תרחישי קצה גדולים וקלטים לא תקינים.",
+          "code_path": "solutions/prep_022_random_permutation.py",
+          "check_path": "checks/check_prep_022_structures.py"
+        }
+      ],
+      "en": [
+        {
+          "key": "dictionary-and-active-array",
+          "title": "Part (a) with a dictionary and part (b) with an array",
+          "content": "### Extension: part (a) with a non-array structure, and part (b) with an array\n\nThe input is only N. We create every structure below while solving the problem. The wording does not establish precisely what the interviewer expected; part (a) permits an array and does not require another solution. A valid non-array solution is also given below.\n\n**A natural option for part (a) — set:** Create an empty set of printed numbers. Draw rand(N); if the number is new, print it and add it to the set; otherwise draw again. This avoids printing duplicates. However, after N−1 numbers have been printed, the chance of obtaining the last one on each attempt is 1/N. Assuming independent uniform draws and expected O(1) hash operations, the expected number of draws is N×(1/N+1/(N−1)+...+1)=Θ(N log N), and space is O(N). There is no finite worst-case bound on the number of draws. This is therefore an option for an initial explanation, rather than the best choice for the time-efficiency requirement. A set does not by itself provide constant-time access to an element at a random position; converting it to a list at every step adds work and an array.\n\n**Part (a) — efficient solution with a dictionary (hash table):** The dictionary maps active positions to remaining numbers: initially {1:1,2:2,...,N:N}. The active keys are exactly 1..m. Choose r=rand(m), print remaining[r], copy the value at key m to key r, delete key m, and decrement m. This removes the selected number without leaving a hole in the key range. If r=m, the assignment is to itself and the same key is then deleted — also valid. For N=5, after choosing key 2 and printing 2, the dictionary is {1:1,2:5,3:3,4:4}. Now rand(4) chooses only among the four remaining numbers.\n\nTotal time is expected Θ(N), assuming expected O(1) hash-table operations and constant-time rand; space is O(N). This is not an unconditional worst-case hash-table bound. The dictionary acts as a logical dense array of positions, but the data structure in the code is a dictionary. It has no advantage over an array here; it is shown as a non-array alternative, as requested. The choice of data structure concerns the abstraction and interface, rather than how Python's library internally implements a dictionary.\n\n**Part (b) — array:** Create [1,2,...,N]. Only the first m cells participate in the draw. Choose j=rand(m)−1, print arr[j], swap arr[j] with arr[m−1], and decrement m. The chosen item remains in the inactive region and will not be chosen again. For example, [1,2,3,4,5] becomes [1,5,3,4 | 2] after choosing 2, and then [1,5,4 | 3,2] after choosing 3. The output so far is 2,3. There is no need to delete physically or shift all the items.\n\nThis is the version of Fisher–Yates that fixes the end, equivalent in idea to the original beginning-fixing version in the bank. Here the choices are printed immediately; do not print the array again at the end, because that would duplicate the output. Time is Θ(N), space for the array is O(N), and auxiliary space is O(1). Given the same sequence of random positions, the dictionary and array alternatives produce exactly the same sequence of numbers.\n\nIn both, each of the m remaining numbers is selected with probability 1/m, so every permutation has probability 1/N! assuming uniformity. N=0 gives empty output; N=1 requires only printing 1. The final draw can be skipped because only one number remains.\n\n**Verified implementations:** permutation_with_dict and permutation_with_array in the code file are generators (yield): they produce one value at each stage without constructing another output list. To print: for value in permutation_with_dict(N, rand): print(value), and likewise with the array function. Replacing yield chosen with print(chosen) gives a direct printing function. All 5,914 draw paths for N=0..7 were checked for both implementations, including equal output on each path, exactly N! permutations for each size, rand bounds, 12 larger boundary scenarios and invalid inputs.",
+          "code_path": "solutions/prep_022_random_permutation.py",
+          "check_path": "checks/check_prep_022_structures.py"
+        }
+      ]
+    }
+  },
+  "PREP-023": {
+    "assumptions": {
+      "he": [
+        "הקלט הוא מספר שלם; בודקים חזקות 2^k כאשר k>=0.",
+        "אחת נכללת; אפס וערכים שליליים אינם נכללים.",
+        "זמן O(1) מניח פעולות על מילה ברוחב קבוע; עלות הפעולות על מספרים שלמים בלתי מוגבלים ב־Python תלויה בגודלם.",
+        "לא מסיקים מהמקור הלא מפורט חוזה קלט של נקודה צפה או מספרים ממשיים שרירותיים."
+      ],
+      "en": [
+        "Input is an integer; test powers 2^k with k>=0.",
+        "One is included; zero and negative values excluded.",
+        "O(1) runtime assumes fixed-width word operations; unbounded Python ints have size-dependent costs.",
+        "No floating-point or arbitrary-real input contract inferred from the unspecified source."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר קבוע של פעולות חשבון/פעולות ביטיות במודל מילה ברוחב קבוע.",
+        "result": "n>0 and (n & (n-1))==0; זמן ומקום נוסף O(1) תחת מודל זה.",
+        "scope": "אין זו סיבוכיות ביטים קבועה למספרים שלמים באורך שרירותי, טענה למספר מינימלי של פקודות CPU או טענה לתזמון קריפטוגרפי."
+      },
+      "en": {
+        "criterion": "Constant number of arithmetic/bitwise operations under fixed-width word model.",
+        "result": "n>0 and (n & (n-1))==0; O(1) time/extra space under that model.",
+        "scope": "Not constant bit complexity for arbitrary-length integers, nor minimum CPU-instruction count or cryptographic timing claim."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "אפס",
+        "אחת",
+        "מספרים שלמים שליליים",
+        "הביט הגבוה ביותר הדלוק במילה ללא סימן",
+        "מספרים סמוכים לחזקות של שתיים",
+        "מספרים שלמים גדולים מאוד ב־Python"
+      ],
+      "en": [
+        "Zero",
+        "One",
+        "Negative integers",
+        "Highest set bit of an unsigned word",
+        "Neighbors of powers of two",
+        "Very large Python integers"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_023.py",
+        "method": "131073 מספרים שלמים רצופים מול חזקות שנוצרו; 32 מקרי גבול גדולים ודוגמאות מפורשות.",
+        "scope": "נכונות התוצאה המתמטית/ב־Python, ללא מדידת זמני ריצה."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_023.py",
+        "method": "131073 consecutive integers vs generated powers; 32 large boundary cases and explicit examples.",
+        "scope": "Mathematical/Python result correctness, no timing benchmark."
+      }
+    },
+    "interview_answer": {
+      "he": "לחזקה חיובית של 2 יש בדיוק ביט 1 אחד. הפעולה n & (n−1) מכבה את ה־1 הימני ביותר, ולכן אבדוק n>0 וגם תוצאה אפס. כך 1 מתקבל, ואפס ושליליים נדחים. זה O(1) למילה ברוחב קבוע; בפייתון עם מספרים בלתי מוגבלים עלות הפעולות תלויה באורך.",
+      "en": "A positive power of 2 has exactly one set bit. The operation n & (n−1) clears the rightmost 1, so I check n>0 and that the result is zero. This accepts 1 and rejects zero and negative integers. It is O(1) for a fixed-width word; with Python’s unbounded integers, operation cost depends on length."
+    },
+    "common_mistakes": {
+      "he": [
+        "השמטת בדיקת האפס",
+        "הוצאת 1=2^0 מהתשובות",
+        "שימוש ב־and בוליאני במקום & ביטי",
+        "טענה ש־BigInt ב־Python פועל בזמן קבוע לכל גודל",
+        "שימוש בלוגריתמים מקורבים",
+        "הנחת רוחב מספר שלא צוין במקור"
+      ],
+      "en": [
+        "Forgetting zero guard",
+        "Excluding 1=2^0",
+        "Using Boolean and instead of bitwise &",
+        "Claiming Python BigInt is constant-time for all magnitudes",
+        "Using approximate logarithms",
+        "Assuming a numeric width absent from source"
+      ]
+    }
+  },
+  "PREP-024": {
+    "assumptions": {
+      "he": [
+        "מתחילים בקרקע/בשלב אפס; מיקום ההתחלה אינו מצוין במקור.",
+        "n הוא מספר שלם אי־שלילי.",
+        "רצפים מסודרים של קפיצות 1/2 נחשבים מסלולים שונים; נעים רק כלפי מעלה ומגיעים בדיוק ליעד.",
+        "המסלול הריק נספר פעם אחת כאשר n=0.",
+        "סיבוכיות לפי מספר פעולות שונה מסיבוכיות ביטים עבור תוצאות מדויקות גדולות."
+      ],
+      "en": [
+        "Start at ground/rung zero; initial position unspecified in source.",
+        "n is a nonnegative integer.",
+        "Ordered 1/2-jump sequences count as different paths; upward motion only and exact arrival.",
+        "The empty path counts once at n=0.",
+        "Operation-count complexity differs from bit complexity for exact large results."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "ספירה מדויקת עם נוסחת נסיגה ברורה וחיסכון באחסון; אפשרות למספר קטן יותר של פעולות חשבון.",
+        "result": "W(n)=F(n+1). תכנון דינמי בסיסי: O(n) פעולות חיבור ושני ערכי ספירה; הכפלה מהירה: O(log n) פעולות חשבון.",
+        "scope": "אין טענה שהתכנון הדינמי הלינארי הוא המהיר ביותר בכלל; זמן ומקום למספרים שלמים גדולים תלויים באורך התוצאה, שהוא Θ(n) ביטים."
+      },
+      "en": {
+        "criterion": "Exact count with clear recurrence and reduced storage; optional faster arithmetic-operation count.",
+        "result": "W(n)=F(n+1). Basic DP: O(n) additions and two count values; fast doubling: O(log n) arithmetic operations.",
+        "scope": "Linear DP is not claimed globally fastest; big-integer time/space depends on result length, Θ(n) bits."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "המסלול הריק ב־n=0",
+        "n=1",
+        "n=2",
+        "סדר הקפיצות משנה",
+        "התחלה בשלב 1 במקום 0 מזיזה את האינדקס",
+        "n שלילי או שאינו שלם",
+        "תוצאות ספירה מדויקות גדולות"
+      ],
+      "en": [
+        "n=0 empty path",
+        "n=1",
+        "n=2",
+        "Order of jumps matters",
+        "Starting rung 1 instead of 0 shifts index",
+        "Negative or noninteger n",
+        "Large exact counts"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_024.py",
+        "method": "מניית כל המסלולים עבור n=0..16; השוואת שני המימושים לסכום הבינומי עבור n=0..300; הצלבה עבור n=1000/10000 ובדיקת קלט לא תקין."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_024.py",
+        "method": "Enumerate all paths for n=0..16; compare both implementations with binomial sum for n=0..300; cross-check n=1000/10000 and invalid input."
+      }
+    },
+    "interview_answer": {
+      "he": "בהנחה שמתחילים בשלב 0, הקפיצה האחרונה לשלב n מגיעה מ־n−1 או מ־n−2. לכן W(n)=W(n−1)+W(n−2), עם W(0)=W(1)=1. זו F(n+1). אפשר לחשב בלולאה עם שני משתנים בלי לחזור על תתי־בעיות.",
+      "en": "Assuming a start at level 0, the last jump to level n comes from n−1 or n−2. Thus W(n)=W(n−1)+W(n−2), with W(0)=W(1)=1. This is F(n+1). A loop with two variables computes it without repeating subproblems."
+    },
+    "common_mistakes": {
+      "he": [
+        "בלבול בין F(n) ל־F(n+1)",
+        "אי ציון מיקום ההתחלה",
+        "כפל במקום חיבור של מקרי הקפיצה האחרונה הזרים",
+        "התייחסות ל־(1,2) ול־(2,1) כאותו מסלול",
+        "קביעת W(0)=0 בתוך נוסחת הנסיגה",
+        "שימוש ברקורסיה נאיבית מעריכית",
+        "טענה לזיכרון ביטים קבוע עבור תוצאות ספירה גדולות"
+      ],
+      "en": [
+        "Confusing F(n) and F(n+1)",
+        "Not specifying starting position",
+        "Multiplying rather than adding disjoint last-jump cases",
+        "Treating (1,2) and (2,1) as identical",
+        "Setting W(0)=0 inside the recurrence",
+        "Using naive exponential recursion",
+        "Claiming constant bit memory for large counts"
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "key": "fibonacci-index-and-recursion-tree",
+          "content": "### מה פירוש W(n)=F(n+1), ומה עץ הרקורסיה סופר?\n\nבצילום ההסבר המצורף הנוסחה עלולה להיראות משובשת בגלל ערבוב עברית ומתמטיקה. הסימון המדויק משמאל לימין הוא `W(n) = F(n + 1)`. W(n) הוא מספר הדרכים לשלב n; F(k) הוא האיבר במקום k בסדרת פיבונאצ׳י עם F(0)=0,F(1)=1. אין הכוונה ל־F(n)+1 ואין הכוונה להוסיף שלב לסולם: זו רק התאמה בין שתי סדרות עם מספור שונה.\n\n| n | F(n) | W(n) |\n|---|---|---|\n| 0 | 0 | 1 |\n| 1 | 1 | 1 |\n| 2 | 1 | 2 |\n| 3 | 2 | 3 |\n| 4 | 3 | 5 |\n| 5 | 5 | 8 |\n\nלדוגמה, W(4)=5=F(5), ו־W(5)=8=F(6). שתי הסדרות מקיימות אותו חיבור שני קודמים, אך מקרי הבסיס של W הם 1,1 ולא 0,1.\n\n**התשובה הסופית הכללית:** W(0)=1, W(1)=1, W(n)=W(n−1)+W(n−2) עבור n≥2. שקול ל־W(n)=F(n+1). מאחר שלא ניתן n מספרי, אין תשובה מספרית אחת. לדוגמה, אם n=4 התשובה 5, ואם n=10 התשובה 89.\n\n**עץ רקורסיה לדוגמה n=4:**\n\n```text\nW(4) = 5\n├── W(3) = 3\n│   ├── W(2) = 2\n│   │   ├── W(1) = 1\n│   │   └── W(0) = 1\n│   └── W(1) = 1\n└── W(2) = 2\n    ├── W(1) = 1\n    └── W(0) = 1\n```\n\nכל צומת מתפצל לפי שתי האפשרויות לקפיצה האחרונה: קפיצה של 1 נותנת ילד W(n−1), וקפיצה של 2 נותנת ילד W(n−2). ערך האב הוא סכום ערכי הילדים. עוצרים ב־W(1)=1 או W(0)=1, ולכן בכל עלה נספרת דרך אחת. בעץ הזה יש חמישה עלים, ולכן W(4)=5. W(1) כעלה אומר שנותרה השלמה יחידה בקפיצה של 1; W(0) אומר שכבר הושלם המרחק וההמשך הריק אפשרי בדרך אחת. קריאת הענפים מהשורש מתארת קפיצות אחרונות לאחור; היא אינה רשימת צעדים כרונולוגית מהקרקע.\n\nחמש הדרכים הן (1,1,1,1), (1,1,2), (1,2,1), (2,1,1), (2,2). העץ מסביר את הספירה אבל מחשב W(2) פעמיים, ולכן בנייה נאיבית שלו אינה המימוש היעיל. לחישוב משתמשים בקוד הלולאה עם שני משתנים שכבר נשמר. עץ יכול לתת מספר מדויק לכל n נתון, אך גודלו גדל במהירות; הנסיגה מאפשרת לחשב בלי לבנות את העץ.\n",
+          "recursion_tree_text": "W(4) = 5\n├── W(3) = 3\n│   ├── W(2) = 2\n│   │   ├── W(1) = 1\n│   │   └── W(0) = 1\n│   └── W(1) = 1\n└── W(2) = 2\n    ├── W(1) = 1\n    └── W(0) = 1",
+          "verification": "הדוגמאות W(4)=5, W(5)=8, W(10)=89 וחמישה עלים נבדקו ב־update_prep_024_recursion_tree.py."
+        },
+        {
+          "key": "exact-binet-closed-form",
+          "content": "### ביטוי סגור כתלות ב־n\n\nכן. בהנחת התחלה בשלב 0, עבור n שלם אי־שלילי:\n\nW(n) = [((1+sqrt(5))/2)^(n+1) - ((1-sqrt(5))/2)^(n+1)] / sqrt(5).\n\nזוהי נוסחת בינה לפיבונאצ׳י עם היסט באינדקס. אם מסמנים phi=(1+sqrt(5))/2 ו־psi=(1−sqrt(5))/2, מקבלים W(n)=(phi^(n+1)−psi^(n+1))/sqrt(5). זהו שוויון מדויק, לא קירוב, וההפרש מבטל את החלק האי־רציונלי כך שמתקבל מספר שלם. למשל W(4)=5,W(5)=8,W(10)=89. גם n=0 נותן 1.\n\nמקור הנוסחה: מנסים פתרון r^n לנוסחת הנסיגה W(n)=W(n−1)+W(n−2). הצבה וחלוקה ב־r^(n−2) נותנות r²=r+1, ששורשיה phi ו־psi. שתי החזקות מקיימות את הנסיגה, ולכן גם הצירוף בנוסחה. עבור n=0 מתקבל (phi−psi)/sqrt(5)=1; עבור n=1 מתקבל (phi²−psi²)/sqrt(5)=(phi−psi)(phi+psi)/sqrt(5)=1. ההתאמה לשני מקרי הבסיס ולנסיגה מוכיחה שהיא W(n).\n\nאפשר גם לכתוב W(n)=round(phi^(n+1)/sqrt(5)) בחשבון ממשי מדויק: |psi|<1 ולכן גודל האיבר שהושמט קטן מ־1/2 לכל n≥0. זו זהות מתמטית עם עיגול לשלם הקרוב, לא הבטחת דיוק עבור float במחשב. עבור n גדול, חישוב בנקודה צפה יכול לעגל לא נכון או לגלוש; לחישוב קוד מדויק עדיפים חיבורי מספרים שלמים או הכפלה מהירה שכבר נשמרו. עצם קיום נוסחה סגורה אינו מוכיח זמן O(1) במחשב: גם חזקות וגודל התוצאה עולים עבודה.\n\nנוסחה מדויקת נוספת עם מספרים שלמים בלבד: W(n)=Σ C(n−k,k) עבור k=0..⌊n/2⌋. היא סוכמת לפי מספר הקפיצות הכפולות; נוסחת בינה היא הביטוי ללא סכום.\n\nבדיקת נוסחת בינה בוצעה בדיוק בחשבון a+b√5 באמצעות שברים רציונליים, ללא float, לכל n=0..100 מול קוד הספירה הקיים.\n",
+          "verification_script": "solutions/update_prep_024_closed_form.py",
+          "verification_status": "passed"
+        }
+      ],
+      "en": [
+        {
+          "key": "fibonacci-index-and-recursion-tree",
+          "content": "### What does W(n)=F(n+1) mean, and what does the recursion tree count?\n\nIn the attached explanation screenshot, the formula may look malformed because Hebrew and mathematics are mixed. The precise left-to-right notation is `W(n) = F(n + 1)`. W(n) is the number of ways to reach level n; F(k) is the term at position k in the Fibonacci sequence with F(0)=0,F(1)=1. It does not mean F(n)+1, nor does it add a rung to the ladder: it only relates two sequences with different indexing.\n\n| n | F(n) | W(n) |\n|---|---|---|\n| 0 | 0 | 1 |\n| 1 | 1 | 1 |\n| 2 | 1 | 2 |\n| 3 | 2 | 3 |\n| 4 | 3 | 5 |\n| 5 | 5 | 8 |\n\nFor example, W(4)=5=F(5), and W(5)=8=F(6). Both sequences add the two preceding terms, but W has base values 1,1 rather than 0,1.\n\n**The final general answer:** W(0)=1, W(1)=1, W(n)=W(n−1)+W(n−2) for n≥2. Equivalently, W(n)=F(n+1). Since no numeric n is given, there is no single numeric answer. For example, if n=4 the answer is 5, and if n=10 the answer is 89.\n\n**Example recursion tree for n=4:**\n\n```text\nW(4) = 5\n├── W(3) = 3\n│   ├── W(2) = 2\n│   │   ├── W(1) = 1\n│   │   └── W(0) = 1\n│   └── W(1) = 1\n└── W(2) = 2\n    ├── W(1) = 1\n    └── W(0) = 1\n```\n\nEach node splits according to the two possibilities for the last jump: a jump of 1 gives child W(n−1), and a jump of 2 gives child W(n−2). The parent value is the sum of its children's values. We stop at W(1)=1 or W(0)=1, so each leaf counts one path. This tree has five leaves, hence W(4)=5. W(1) as a leaf means a unique one-step completion remains; W(0) means the distance has already been completed and the empty continuation is possible in one way. Reading branches from the root describes last jumps backward; it is not a chronological list of steps from the ground.\n\nThe five paths are (1,1,1,1), (1,1,2), (1,2,1), (2,1,1), (2,2). The tree explains the count, but computes W(2) twice, so constructing it naively is not the efficient implementation. For computation, use the previously saved two-variable loop. A tree can provide an exact number for any given n, but its size grows rapidly; the recurrence lets us compute without building it.\n",
+          "recursion_tree_text": "W(4) = 5\n├── W(3) = 3\n│   ├── W(2) = 2\n│   │   ├── W(1) = 1\n│   │   └── W(0) = 1\n│   └── W(1) = 1\n└── W(2) = 2\n    ├── W(1) = 1\n    └── W(0) = 1",
+          "verification": "Examples W(4)=5, W(5)=8, W(10)=89 and five leaves checked in update_prep_024_recursion_tree.py."
+        },
+        {
+          "key": "exact-binet-closed-form",
+          "content": "### A closed-form expression in terms of n\n\nYes. Assuming a start at level 0, for nonnegative integer n:\n\nW(n) = [((1+sqrt(5))/2)^(n+1) - ((1-sqrt(5))/2)^(n+1)] / sqrt(5).\n\nThis is Binet's formula for Fibonacci numbers with an index shift. Writing phi=(1+sqrt(5))/2 and psi=(1−sqrt(5))/2 gives W(n)=(phi^(n+1)−psi^(n+1))/sqrt(5). This is an exact equality, not an approximation, and subtraction cancels the irrational part to produce an integer. For example, W(4)=5,W(5)=8,W(10)=89. Also, n=0 gives 1.\n\nDerivation: try a solution r^n to the recurrence W(n)=W(n−1)+W(n−2). Substitution and division by r^(n−2) give r²=r+1, whose roots are phi and psi. Both powers satisfy the recurrence, so their combination in the formula does too. At n=0 we obtain (phi−psi)/sqrt(5)=1; at n=1 we obtain (phi²−psi²)/sqrt(5)=(phi−psi)(phi+psi)/sqrt(5)=1. Agreement with the two base cases and the recurrence proves it is W(n).\n\nWe may also write W(n)=round(phi^(n+1)/sqrt(5)) in exact real arithmetic: |psi|<1, so the omitted term has magnitude less than 1/2 for every n≥0. This is a mathematical identity with rounding to the nearest integer, not an accuracy guarantee for a computer float. For large n, floating-point computation can round incorrectly or overflow; exact integer addition or the previously saved fast-doubling method is preferable in code. The mere existence of a closed form does not prove O(1) computer time: exponentiation and result size also require work.\n\nAnother exact formula using only integers is W(n)=Σ C(n−k,k) for k=0..⌊n/2⌋. It sums over the number of double jumps; Binet's formula is the expression without a sum.\n\nBinet's formula was verified exactly in arithmetic of the form a+b√5 with rational fractions, without float, for every n=0..100 against the existing counting code.\n",
+          "verification_script": "solutions/update_prep_024_closed_form.py",
+          "verification_status": "passed"
+        }
+      ]
+    }
+  },
+  "PREP-025": {
+    "assumptions": {
+      "he": [
+        "כדורים זהים עם סף שבירה דטרמיניסטי ומונוטוני.",
+        "אפשר להשתמש שוב בכדור שלא נשבר; אי אפשר להשתמש שוב בכדור שנשבר.",
+        "קומת הקרקע 0 בטוחה; הקומות הן 1..100.",
+        "המקור מרמז שקיימת קומה שוברת; הפתרון מטפל גם במקרה שאין קומה שוברת.",
+        "ממזערים את מספר הזריקות במקרה הגרוע, ולא את התוחלת."
+      ],
+      "en": [
+        "Identical balls with monotone deterministic break threshold.",
+        "An unbroken ball can be reused; a broken ball cannot.",
+        "Ground floor 0 safe; floors 1..100.",
+        "Source implies a breaking floor exists; solution also handles no breaking floor.",
+        "Optimize worst-case number of drops, not expected count."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר הזריקות הפיזיות במקרה הגרוע עם שני כדורים.",
+        "result": "14, מושג באמצעות מרווחים הולכים וקטנים; 13 אינן מספיקות להבחנה בין כל הספים האפשריים.",
+        "proof": "C(2,k)=k(k+1)/2 קומות לא ידועות, או C(2,k)+1 אפשרויות לסף; 91/92 אינן מספיקות, ו־105/106 מספיקות.",
+        "scope": "סף דטרמיניסטי מונוטוני וכדורים זהים שניתנים לשימוש חוזר; גם הגרסה שבה מובטחת שבירה דורשת 14 עבור 100 קומות."
+      },
+      "en": {
+        "criterion": "Worst-case physical drops with two balls.",
+        "result": "14, attained by shrinking gaps; 13 cannot distinguish all possible thresholds.",
+        "proof": "C(2,k)=k(k+1)/2 unknown floors or C(2,k)+1 threshold cases; 91/92 insufficient, 105/106 sufficient.",
+        "scope": "Deterministic monotone threshold and identical reusable balls; guaranteed-break variant also needs 14 for 100 floors."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "נשבר בקומה 1",
+        "נשבר בקומה 100",
+        "אין קומה שוברת",
+        "שבירה בדיוק בקומת בדיקה של הכדור הראשון",
+        "המרווח האחרון נחתך בקומה העליונה",
+        "אין לבדוק שוב קומה שכבר ידוע שהיא שוברת",
+        "עם הכדור האחרון חייבים לסרוק בצורה בטוחה"
+      ],
+      "en": [
+        "Breaks at floor 1",
+        "Breaks at floor 100",
+        "No breaking floor",
+        "Break exactly at a first-ball test",
+        "Final gap capped at top",
+        "Never retest known-breaking floor",
+        "Last remaining ball must scan safely"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_025.py",
+        "method": "כל הספים לכל N=0..200, תכנון דינמי minimax עצמאי, מחזור שימוש חוקי בכדורים ותזמון מדויק ל־100 קומות."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_025.py",
+        "method": "All thresholds for each N=0..200, independent minimax DP, legal ball lifecycle and exact 100-floor schedule."
+      }
+    },
+    "interview_answer": {
+      "he": "המינימום הוא 14. אבדוק עם הכדור הראשון בקפיצות 14,13,12,... קומות; אחרי שבירה אסרוק עם השני מהקומה הבטוחה האחרונה ומעלה. כך הזריקות שכבר נוצלו והסריקה שנותרה מסתכמות בעד 14. 13 זריקות מכסות רק 91 קומות, ו־14 מכסות 105, ולכן 14 מספיק וגם הכרחי.",
+      "en": "The minimum is 14. I test with the first ball using gaps of 14,13,12,... floors; after it breaks, I scan upward with the second ball from the last safe floor. Drops already used plus the remaining scan total at most 14. Thirteen drops cover only 91 floors, and fourteen cover 105, so 14 is both sufficient and necessary."
+    },
+    "common_mistakes": {
+      "he": [
+        "שימוש בחיפוש בינארי רגיל עם שני כדורים מתכלים",
+        "מרווחים קבועים בלי לספור זריקות קודמות",
+        "בלבול בין תוחלת לבין עלות במקרה הגרוע",
+        "בדיקה חוזרת של קומה שידוע שהיא שוברת",
+        "התעלמות ממונוטוניות או מהנחות ההתחלה",
+        "טענה ש־13 מספיקות על סמך שורש ריבועי מקורב",
+        "שגיאה של אחד במספר מצבי הסף האפשריים"
+      ],
+      "en": [
+        "Using ordinary binary search with two consumable balls",
+        "Fixed gaps without counting previous drops",
+        "Confusing expected and worst-case cost",
+        "Retesting a known-breaking floor",
+        "Ignoring monotonicity or starting assumptions",
+        "Claiming 13 suffices from approximate square root",
+        "Off-by-one in possible threshold states"
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "key": "arbitrary-number-of-balls",
+          "content": "### איך מספר הכדורים משנה את התשובה?\n\nעבור אותו בניין של 100 קומות, מספר הזריקות המינימלי במקרה הגרוע הוא:\n\n| מספר כדורים | מותר שלא תהיה קומה שוברת | מובטח שיש קומה שוברת ב־1..100 |\n|---|---|---|\n| 1 | 100 | 99 |\n| 2 | 14 | 14 |\n| 3 | 9 | 9 |\n| 4 | 8 | 8 |\n| 5 ומעלה | 7 | 7 |\n\nההבדל בכדור אחד: אם מובטח שיש קומה שוברת וקומות 1..99 שרדו, אפשר להסיק ש־100 היא הסף בלי לזרוק ממנה. אם ייתכן שאף קומה לא שוברת, חייבים לבדוק גם אותה כדי להבחין בין F=100 ל־F=101. תוצאות 2 כדורים ומעלה בטבלה אינן משתנות. האמירה ״מובטח שיש סף״ יחד עם מונוטוניות שקולה לידיעה שקומה 100 שוברת.\n\n**האינטואיציה:** עם שני כדורים, השבירה הראשונה משאירה כדור אחד ומחייבת סריקה קומה־קומה. עם שלושה כדורים, השבירה הראשונה משאירה שניים, ואפשר להשתמש באסטרטגיית שני הכדורים בטווח שמתחת. לכן מותר להעז ולקפוץ רחוק יותר בהתחלה. לדוגמה, עם שלושה כדורים ותקציב תשע זריקות, אפשר להתחיל בקומה 37: אם נשבר נשארו 36 קומות, שני כדורים ושמונה זריקות, המספיקות כי 8+7+...+1=36. אם שרד, נשארו 63 קומות, שלושה כדורים ושמונה זריקות — מספיק, כי הכיסוי שלהן הוא 8+28+56=92. זו אסטרטגיה תקפה, לא בחירה יחידה לקומה הראשונה. ככל שנשארים יותר כדורים אחרי שבירה, אפשר לבדוק טווח גדול יותר במשאבים שנותרו.\n\n**הכלל המדויק:** C(b,t) הוא מספר הקומות הלא־ידועות המרבי שאפשר לבדוק עם b כדורים ועד t זריקות, כולל יכולת להבחין במקרה שבו אין שבירה. בזריקה הבאה:\n* אם נשבר, נשארים b−1 כדורים ו־t−1 זריקות לטווח התחתון.\n* אם שרד, נשארים b כדורים ו־t−1 זריקות לטווח העליון.\n* הקומה שנבדקה תורמת עוד 1.\n\nלכן C(b,t)=C(b−1,t−1)+1+C(b,t−1), עם C(0,t)=C(b,0)=0. הפתרון הוא C(b,t)=Σ C(t,j), j=1..min(b,t), כאשר C(t,j) בסכום הוא המקדם הבינומי, לא אותה פונקציית כיסוי. כדי להימנע מערבוב סימונים, אפשר לכתוב את המקדם binom(t,j).\n\nבחירת t המינימלי שעבורו C(b,t)≥100 נותנת את הטבלה במודל שבו אין הבטחת שבירה. אם ידוע שקומה 100 שוברת, יש רק 99 קומות לא ידועות ומספיק C(b,t)≥99. לשלושה כדורים: C(3,8)=92 לעומת C(3,9)=129, ולכן תשע זריקות. לארבעה: C(4,7)=98 לעומת C(4,8)=162, לכן שמונה. לחמישה: C(5,6)=62 לעומת C(5,7)=119, לכן שבע.\n\nלא יורדים משבע גם עם הרבה כדורים: כל זריקה נותנת שתי תוצאות בלבד. שש זריקות מבחינות לכל היותר ב־2^6=64 אפשרויות, פחות מ־100 ערכי סף (או 101 כשמותר ללא שבירה). חשוב: ״חמישה כדורים מספיקים לשבע״ לא אומר שחיפוש בינארי רגיל שרירותי תמיד ישמור על תקציב חמישה כדורים. צריך לבחור קומות לפי כיסוי שני הענפים. עם מלאי כדורים מספיק גם חיפוש בינארי רגיל משיג את חסם שבע הזריקות.\n\nקוד כללי נשמר ב־solutions/prep_025_multiple_balls.py. הוא בוחר בכל מצב קומה מעל הקומה הבטוחה האחרונה לפי C(b−1,t−1)+1, תוך חיתוך לטווח הנוכחי. נבדקו כל 606 תרחישי הסף לבניין 100 קומות עם 1..6 כדורים, והאופטימום הושווה בנפרד לתכנון דינמי minimax לכל 0..150 קומות ו־1..6 כדורים. נבדקו גם נוסחת הכיסוי וההבדל בין קומה עליונה ידועה לשוברת לבין מקרה ללא הבטחה.\n",
+          "code_path": "solutions/prep_025_multiple_balls.py",
+          "check_path": "checks/check_prep_025_multiple.py",
+          "verification_status": "passed",
+          "hundred_floor_table": {
+            "no_break_possible": {
+              "1": 100,
+              "2": 14,
+              "3": 9,
+              "4": 8,
+              "5+": 7
+            },
+            "guaranteed_breaking_top": {
+              "1": 99,
+              "2": 14,
+              "3": 9,
+              "4": 8,
+              "5+": 7
+            }
+          }
+        }
+      ],
+      "en": [
+        {
+          "key": "arbitrary-number-of-balls",
+          "content": "### How does the number of balls change the answer?\n\nFor the same 100-floor building, the minimum worst-case number of drops is:\n\n| Number of balls | No breaking floor is possible | A breaking floor in 1..100 is guaranteed |\n|---|---|---|\n| 1 | 100 | 99 |\n| 2 | 14 | 14 |\n| 3 | 9 | 9 |\n| 4 | 8 | 8 |\n| 5 or more | 7 | 7 |\n\nThe one-ball difference: if a breaking floor is guaranteed and floors 1..99 have survived, floor 100 can be inferred to be the threshold without dropping from it. If no floor may break the ball, floor 100 must also be tested to distinguish F=100 from F=101. The results for two or more balls in the table do not change. The statement “a threshold is guaranteed” together with monotonicity is equivalent to knowing that floor 100 breaks the ball.\n\n**Intuition:** With two balls, the first break leaves one ball and requires a floor-by-floor scan. With three balls, the first break leaves two, allowing the two-ball strategy on the interval below. We can therefore risk a larger initial jump. For example, with three balls and a budget of nine drops, one may start at floor 37: if it breaks, 36 floors, two balls and eight drops remain, which suffice because 8+7+...+1=36. If it survives, 63 floors, three balls and eight drops remain — sufficient, since their coverage is 8+28+56=92. This is a valid strategy, not the unique choice of first floor. The more balls remain after a break, the larger the interval that the remaining resources can test.\n\n**The precise rule:** C(b,t) is the maximum number of unknown floors that can be tested with b balls and at most t drops, including the ability to distinguish the case where no break occurs. On the next drop:\n* If it breaks, b−1 balls and t−1 drops remain for the lower interval.\n* If it survives, b balls and t−1 drops remain for the upper interval.\n* The tested floor contributes another 1.\n\nThus C(b,t)=C(b−1,t−1)+1+C(b,t−1), with C(0,t)=C(b,0)=0. The solution is C(b,t)=Σ C(t,j), j=1..min(b,t), where C(t,j) in the sum is the binomial coefficient, not the same coverage function. To avoid mixing notation, the coefficient can be written binom(t,j).\n\nChoosing the minimum t such that C(b,t)≥100 gives the table for the model without guaranteed breakage. If floor 100 is known to break the ball, only 99 floors are unknown, so C(b,t)≥99 suffices. With three balls: C(3,8)=92 versus C(3,9)=129, hence nine drops. With four: C(4,7)=98 versus C(4,8)=162, hence eight. With five: C(5,6)=62 versus C(5,7)=119, hence seven.\n\nEven many balls cannot reduce the number below seven: each drop has only two outcomes. Six drops distinguish at most 2^6=64 possibilities, fewer than 100 threshold values (or 101 if a no-break case is allowed). Important: “five balls suffice for seven drops” does not mean arbitrary ordinary binary search always stays within a budget of five balls. Floors must be chosen according to the coverage of both branches. With a sufficient ball inventory, ordinary binary search also achieves the seven-drop bound.\n\nGeneral code is saved in solutions/prep_025_multiple_balls.py. At each state it chooses a floor above the last safe one according to C(b−1,t−1)+1, capped to the current interval. All 606 threshold scenarios for a 100-floor building with 1..6 balls were checked, and the optimum was compared independently with minimax dynamic programming for every 0..150 floors and 1..6 balls. The coverage formula and the difference between a top floor known to break the ball and a case without that guarantee were also checked.\n",
+          "code_path": "solutions/prep_025_multiple_balls.py",
+          "check_path": "checks/check_prep_025_multiple.py",
+          "verification_status": "passed",
+          "hundred_floor_table": {
+            "no_break_possible": {
+              "1": 100,
+              "2": 14,
+              "3": 9,
+              "4": 8,
+              "5+": 7
+            },
+            "guaranteed_breaking_top": {
+              "1": 99,
+              "2": 14,
+              "3": 9,
+              "4": 8,
+              "5+": 7
+            }
+          }
+        }
+      ]
+    }
+  },
+  "PREP-026": {
+    "assumptions": {
+      "he": [
+        "עץ בינארי תקין וסופי, ללא מעגלים או גרף עם צמתים משותפים.",
+        "ערכי int ניתנים להשוואה; עץ ריק מחזיר ערך optional חסר.",
+        "החלק השני אינו מבטיח סדר BST.",
+        "הגדרת BST משתמשת במפתחות ייחודיים; מדיניות כפילויות דורשת הגדרה.",
+        "אין מטא־נתונים נוספים של מקסימום לתת־עץ."
+      ],
+      "en": [
+        "Finite proper binary tree, no cycles or shared-node graph.",
+        "Comparable int values; empty tree returns an absent optional.",
+        "Part two does not guarantee BST ordering.",
+        "BST definition uses unique keys; duplicate policy would need specification.",
+        "No extra subtree-maximum metadata."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "זמן במקרה הגרוע למציאת מקסימום בעץ בינארי כללי ללא מידע עזר.",
+        "result": "זמן מעבר Θ(n), וחסם O(h) למחסנית DFS בזיכרון עזר.",
+        "scope": "במקרה הגרוע הכרחי לקרוא כל צומת; אין טענה לזיכרון עזר מינימלי בכלל. בגרסת BST בלבד הזמן הוא O(h), ולא בהכרח O(log n)."
+      },
+      "en": {
+        "criterion": "Worst-case time for maximum in a general unaugmented binary tree.",
+        "result": "Θ(n) traversal time, O(h) auxiliary DFS-stack bound.",
+        "scope": "Reading every node necessary in worst case; not globally minimum auxiliary space. BST-only variant is O(h), not necessarily O(log n)."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "עץ ריק",
+        "צומת יחיד",
+        "כל הערכים שליליים",
+        "INT_MIN / INT_MAX",
+        "המקסימום נמצא בתת־העץ השמאלי",
+        "כפילויות",
+        "עץ נטוי מאוד",
+        "סדר BST כולל לעומת בדיקה של הילדים בלבד"
+      ],
+      "en": [
+        "Empty tree",
+        "Single node",
+        "All negative values",
+        "INT_MIN / INT_MAX",
+        "Maximum in left subtree",
+        "Duplicates",
+        "Highly skewed tree",
+        "BST global ordering versus child-only checks"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "python_reference_passed_cpp_java_not_executed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_026.py",
+        "method": "11497 עצים קטנים עם ערכים ובדיקות מפורשות לעומק, שליליים, עצים שאינם BST וערכי גבול במימוש הייחוס ב־Python.",
+        "limitations": "קובצי C++ ו־Java לא הודרו או הורצו; לא נמצאו g++, clang++ או javac ב־PATH."
+      },
+      "en": {
+        "status": "python_reference_passed_cpp_java_not_executed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_026.py",
+        "method": "11497 small labelled-tree cases and explicit deep/negative/non-BST/boundary cases in Python reference.",
+        "limitations": "C++ and Java sources were not compiled or run; no g++, clang++ or javac found on PATH."
+      }
+    },
+    "interview_answer": {
+      "he": "בעץ בינארי לכל צומת עד שני ילדים, בלי סדר ערכים מחייב. BST מוסיף סדר על כל תתי־העצים. בסעיף 2 מדובר בעץ כללי, ולכן עוברים על כל הצמתים ושומרים מקסימום, בזמן Θ(n). אם מובטח BST, אפשר ללכת לצומת הימני ביותר בזמן O(h).",
+      "en": "In a binary tree each node has at most two children, without a required value order. A BST adds ordering over entire subtrees. Part 2 concerns a general tree, so traverse every node and maintain the maximum in Θ(n) time. If a BST is guaranteed, follow the rightmost path in O(h) time."
+    },
+    "common_mistakes": {
+      "he": [
+        "הנחה שעץ בינארי כללי הוא BST",
+        "בדיקת סדר רק מול הילדים הישירים",
+        "הנחה ש־BST מאוזן",
+        "אתחול המקסימום לאפס",
+        "שימוש במספר שלם תקין כסמן לעץ ריק",
+        "התעלמות מעומק הרקורסיה",
+        "טענה שהקוד המהודר נבדק על סמך בדיקות מודל Python"
+      ],
+      "en": [
+        "Assuming general binary tree is BST",
+        "Checking ordering only against direct children",
+        "Assuming BST is balanced",
+        "Starting maximum at zero",
+        "Using a valid integer as an empty-tree sentinel",
+        "Ignoring recursion depth",
+        "Claiming tested compiled code from Python model tests"
+      ]
+    }
+  },
+  "PREP-027": {
+    "assumptions": {
+      "he": [
+        "בדיוק לספרה אחת תדירות אי־זוגית; כל ערך הוא ב־0..9.",
+        "גישה רגילה למערך, ללא סיכום שחושב מראש או פעולה בסיסית ברוחב בלתי מוגבל.",
+        "מבדילים בין סימון big-O שסביר שהתכוונו אליו לבין little-o באות קטנה כפי שנכתב מילולית.",
+        "סעיף ב שואל על זמן; אין להחליף זאת בשקט בדרישת מקום."
+      ],
+      "en": [
+        "Exactly one digit has odd frequency; every value is in 0..9.",
+        "Ordinary array access, no precomputed aggregate or unbounded-width primitive.",
+        "Likely intended big-O notation distinguished from literal lowercase little-o.",
+        "Part (b) asks time; no silent replacement with space."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "העבודה במקרה הגרוע לזיהוי ספרה בתדירות אי־זוגית ממערך בסדר שרירותי שלא סוכם מראש.",
+        "result": "זמן Θ(n) ומצב עזר O(1) עם XOR; זמן O(1) אינו אפשרי.",
+        "proof": "מערך חוקי באורך אי־זוגי שכולו אפסים לעומת החלפת אפס אחד שלא נקרא באחת: התצפיות זהות, אך התשובות החוקיות שונות.",
+        "scope": "גישה לתא יחיד במודל RAM ונכונות מדויקת; הנחות של עיבוד מקדים או חומרה מקבילית ישנו את המודל."
+      },
+      "en": {
+        "criterion": "Worst-case work to identify odd-frequency digit from an unsummarized arbitrary-order array.",
+        "result": "Θ(n) time and O(1) auxiliary state with XOR; O(1) time impossible.",
+        "proof": "All-zero valid odd-length array versus one unread zero replaced by one: indistinguishable observations, distinct valid answers.",
+        "scope": "Single-cell RAM access and exact correctness; preprocessing/parallel-hardware assumptions would change the model."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "הספרה בעלת התדירות האי־זוגית היא אפס",
+        "איבר יחיד",
+        "מספר הופעות אי־זוגי שגדול מאחת",
+        "איברים לא ממוינים שמשולבים זה בזה",
+        "מערכים ריקים או באורך זוגי מפרים את ההבטחה",
+        "כמה ספרות בתדירות אי־זוגית",
+        "איברים שאינם בטווח או אינם שלמים"
+      ],
+      "en": [
+        "Odd digit is zero",
+        "Single element",
+        "Odd count greater than one",
+        "Unsorted interleaving",
+        "Empty/even-length arrays violate promise",
+        "Several odd-frequency digits",
+        "Out-of-range/noninteger elements"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_027.py",
+        "method": "כל האורכים האי־זוגיים 1..7 מעל האלפבית 0..3, כל השלשות של עשר הספרות, בדיקות ספרת יעד וקלט לא תקין ודוגמאות עדות של תא שלא נקרא."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_027.py",
+        "method": "All odd lengths 1..7 over alphabet 0..3, all ten-digit triples, target-digit and invalid-input checks, unread-cell witness examples."
+      }
+    },
+    "interview_answer": {
+      "he": "אעבור על המערך עם XOR מצטבר. זוגות מתבטלים והספרה בעלת מספר ההופעות האי־זוגי נשארת. זמן Θ(n) וזיכרון עזר O(1). סעיף ב כפי שנכתב, זמן O(1), אינו אפשרי בלי מידע נוסף: תא שלא נקרא יכול לשנות את התשובה גם תוך שמירה על ההבטחה.",
+      "en": "I scan the array with a running XOR. Pairs cancel, leaving the digit with an odd number of occurrences. Time is Θ(n) and auxiliary memory O(1). As written, part (b), O(1) time, is impossible without extra information: an unread cell can change the answer while preserving the promise."
+    },
+    "common_mistakes": {
+      "he": [
+        "בלבול בין זמן O(1) למקום O(1)",
+        "הנחה שאלפבית חסום מבטל את הצורך בסריקת הקלט",
+        "הנחה שערכים זהים חייבים להיות סמוכים",
+        "התייחסות לאפס כאילו לא נמצאה תוצאה",
+        "הנחה שתדירות אי־זוגית פירושה הופעה יחידה",
+        "שימוש ב־XOR כבדיקת תקינות הקלט",
+        "התעלמות מסימון o באות קטנה"
+      ],
+      "en": [
+        "Confusing O(1) time with O(1) space",
+        "Assuming bounded alphabet eliminates input scan",
+        "Assuming equal values must be adjacent",
+        "Treating zero as missing result",
+        "Assuming odd-frequency means singleton",
+        "Using XOR as an input validator",
+        "Ignoring the lowercase o notation"
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "key": "xor-tree-vs-serial-and-sum-counterexample",
+          "content": "### XOR TREE לעומת הלולאה, והאם סכום המערך מספיק?\n\nהקוד עם מצבר XOR הוא צבירה סדרתית, לא עץ מאוזן: result מתעדכן פעם אחת לכל איבר, ולכן זמן הריצה O(n). מאחר ש־XOR אסוציאטיבי, אפשר לארגן את החישוב כעץ מאוזן. לדוגמה, לשמונה איברים: ארבע פעולות XOR בזוגות בשכבה הראשונה, שתי פעולות בשנייה ואחת בשלישית. זה שלוש שכבות, אבל 4+2+1=7 פעולות בסך הכול. בחישוב סדרתי גם עץ כזה דורש Θ(n) עבודה/זמן. בחומרה עם מספיק יחידות מקבילות עומק העץ הוא ceil(log2 n) ושיעור החומרה הוא n−1 רכיבי XOR וקטוריים, או ארבעה שערים ביטיים לכל רכיב עבור ספרות המקודדות בארבעה ביטים; זו ספירת מימוש, לא הוכחת מינימום של כל הפונקציה תחת הבטחת הקלט. במודל מעבדים מקבילי עם מספיק משאבים אפשר לקבל O(log n) עומק חישוב, אך זה מודל שונה מהלולאה ומשאלת הזמן הסדרתית. טעינה סדרתית של הקלט עדיין דורשת O(n) קריאות. אין סתירה לחסם Ω(n) על סך התאים שצריך לקרוא; עומק מקבילי שונה מסך העבודה.\n\nסכום רגיל של הערכים אינו מספיק למציאת הספרה האי־זוגית. שני קלטים חוקיים באותו אורך נותנים אותו סכום ותשובות שונות:\n[1,2,2] — סכום 5, הספרה האי־זוגית 1;\n[3,1,1] — סכום 5, הספרה האי־זוגית 3.\nלכן שום חישוב שמקבל רק את הסכום (ואפילו גם את n) אינו יכול להבחין בין שני הקלטים. מבחינת הסיבוכיות, סריקת סכום היא O(n) זמן ו־O(1) משתנים במודל מילות מכונה, אבל האלגוריתם אינו נכון.\n\nאם ״שארית מחלוקה ב־2״ היא sum % 2, התוצאה היא רק 0 או 1 והכפלה ב־2 נותנת רק 0 או 2. אם הכוונה לחלק השברי של sum/2 ואז הכפלה ב־2, מתקבלת רק 0 או 1. אף פירוש אינו מחזיר ספרה כללית 0..9. הסכום מודולו 2 אכן מגלה אם הספרה המבוקשת זוגית או אי־זוגית: כל ספרה בתדירות זוגית תורמת סכום זוגי, והספרה בתדירות אי־זוגית קובעת את הזוגיות. אבל הוא אינו מגלה איזו ספרה זו. XOR מבטל כל זוג ערכים זהים כערכים ביטיים שלמים, ולכן שומר את כל ביטי הספרה הנותרת ולא רק את הזוגיות שלה.\n\nהזיכרון של מצבר יחיד נקרא O(1) זיכרון עזר, גם ללא מערך נוסף. עבור סכום בגודל בלתי מוגבל נדרשים יותר ביטים כש־n גדל; במודל המקובל מונים מילים/משתנים. הדוגמה הנגדית נבדקה מול המימוש שנשמר; סכומי הקלטים שווים ותשובות ה־XOR שונות.\n",
+          "verification_script": "solutions/update_prep_027_tree_and_sum.py",
+          "verification_status": "passed"
+        }
+      ],
+      "en": [
+        {
+          "key": "xor-tree-vs-serial-and-sum-counterexample",
+          "content": "### XOR TREE versus the loop, and is the array sum sufficient?\n\nThe XOR-accumulator code performs serial accumulation, not a balanced tree: result is updated once per item, so runtime is O(n). Since XOR is associative, the computation can be organized as a balanced tree. For example, for eight items: four pairwise XOR operations in the first layer, two in the second, and one in the third. There are three layers, but 4+2+1=7 operations in total. In a serial computation even this tree requires Θ(n) work/time. In hardware with enough parallel units, tree depth is ceil(log2 n) and hardware usage is n−1 vector XOR components, or four bitwise gates per component for digits encoded in four bits; this is an implementation count, not a proof of the minimum for the whole function under the input promise. A parallel-processor model with sufficient resources can achieve O(log n) computation depth, but this is a different model from the loop and the serial-time question. Serial input loading still requires O(n) reads. This does not contradict the Ω(n) bound on the total number of cells that must be read; parallel depth differs from total work.\n\nOrdinary summation of the values is insufficient to find the odd-frequency digit. Two legal inputs of the same length give the same sum and different answers:\n[1,2,2] — sum 5, odd-frequency digit 1;\n[3,1,1] — sum 5, odd-frequency digit 3.\nThus no computation receiving only the sum (even together with n) can distinguish these inputs. In complexity terms, a sum scan takes O(n) time and O(1) variables in the machine-word model, but the algorithm is incorrect.\n\nIf “remainder after division by 2” means sum % 2, the result is only 0 or 1 and multiplying by 2 gives only 0 or 2. If it means the fractional part of sum/2 followed by multiplication by 2, the result is only 0 or 1. Neither interpretation returns an arbitrary digit in 0..9. The sum modulo 2 does reveal whether the target digit is even or odd: each even-frequency digit contributes an even sum, and the odd-frequency digit determines the parity. However, it does not identify the digit. XOR cancels every pair of identical values as complete bitwise values, preserving all the bits of the remaining digit rather than only its parity.\n\nThe memory for one accumulator is called O(1) auxiliary memory, even without an additional array. An unbounded sum needs more bits as n grows; the usual model counts words/variables. The counterexample was checked against the saved implementation; the input sums are equal and the XOR answers differ.\n",
+          "verification_script": "solutions/update_prep_027_tree_and_sum.py",
+          "verification_status": "passed"
+        }
+      ]
+    }
+  },
+  "PREP-028": {
+    "assumptions": {
+      "he": [
+        "מותר להפעיל מתג שוב ושוב; מיקומי OFF ההתחלתיים ידועים.",
+        "מתג אמין יחיד שולט ישירות בהדלקה ובכיבוי של המנורה.",
+        "הצופה יכול לעקוב אחר היסטוריית המנורה, לספור/לרשום ולענות אמת.",
+        "תשובה יחידה ללא הגבלת תוכן יכולה להעביר מספר או רצף ביטים, ולא בהכרח ביט אחד.",
+        "אפשר להסכים על הוראות ומסגרת התצפית כחלק מפרוטוקול של שאלה אחת.",
+        "אין ראייה או קול ישירים בין החדרים מעבר לתקשורת המותרת.",
+        "החלופה של סבבים בינאריים דורשת חלונות תצפית יציבים ומתואמים."
+      ],
+      "en": [
+        "Repeated switch operation allowed; known OFF initial positions.",
+        "One reliable switch directly controls lamp ON/OFF.",
+        "Observer can watch lamp history, count/record and answer truthfully.",
+        "A single unrestricted reply can convey a number or bit sequence, not necessarily one bit.",
+        "Instructions and observation framing may be agreed within the single-question protocol.",
+        "No direct cross-room view/sound beyond permitted communication.",
+        "Binary-round alternative requires synchronized stable observation slots."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "זיהוי המתג באמצעות תשובה אחת של הצופה; לחלופין מזעור מספר סבבי התצפית הבינאריים.",
+        "result": "פרוטוקול הספירה מצליח עם תשובת מספר שלם אחת; שבעה סבבים בינאריים עם מסגרת מוסכמת מספיקים והם המינימום כאשר יש דגימה בינארית אחת בכל סבב.",
+        "scope": "פרוטוקול הספירה אינו ממזער הפעלות מתג או זמן; תשובת כן/לא יחידה אינה מספיקה; קודי תזמון שרירותיים שייכים למודל אחר."
+      },
+      "en": {
+        "criterion": "Identify switch with one observer reply; optional minimize binary observation rounds.",
+        "result": "Count protocol succeeds using one integer reply; seven framed binary rounds suffice and are minimal for one binary sample per round.",
+        "scope": "Count protocol is not minimum switching/time; one yes/no reply is impossible; arbitrary timing codes use a different model."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "מתג 1",
+        "מתג 100",
+        "מצב התחלתי ידוע",
+        "ספירת הדלקות לעומת מספר החלפות מצב",
+        "דגימות בינאריות זהות ברצף",
+        "מעברי מתגים בזמן המעבר בין חלונות",
+        "תשובת כן/לא בלבד",
+        "צופה שאינו יכול לצפות או לדווח"
+      ],
+      "en": [
+        "Switch 1",
+        "Switch 100",
+        "Known initial state",
+        "Counts vs toggles",
+        "Consecutive identical binary samples",
+        "Transient switching between slots",
+        "Yes/no-only reply",
+        "Observer unable to observe or report"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_028.py",
+        "method": "כל 100 זהויות המתג השולט בפרוטוקול ספירת פולסים ובדיווח סבבים של שבעה ביטים; בדיקת ייחודיות הקודים ומספר הפעולות.",
+        "scope": "מודל מופשט ואידאלי בלבד; תזמון פיזי ואמינות אנושית לא נבדקו."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_028.py",
+        "method": "All 100 controlling-switch identities for pulse count and seven-bit round reports; unique codes and action count checked.",
+        "scope": "Abstract ideal model only; physical timing and human reliability not tested."
+      }
+    },
+    "interview_answer": {
+      "he": "בהנחה שמותרת תשובה מספרית והאדם צופה בניסוי: מספר את המתגים, הפעל את מתג i ב־i מחזורי הדלקה־כיבוי ושאל פעם אחת כמה פעמים נדלקה המנורה. התשובה היא מספר המתג. אם מותרת רק תשובת כן/לא אחת, אי אפשר לזהות אחד ממאה. אפשר גם לקודד בשבע תצפיות בינאריות מתואמות ולמסור את כולן בתשובה אחת.",
+      "en": "Assuming a numeric reply is allowed and the person observes the experiment: number the switches, operate switch i through i on-off cycles, and ask once how many times the lamp lit. The answer is the switch number. If only one yes/no reply is allowed, identifying one of a hundred is impossible. Alternatively, encode the identity in seven synchronized binary observations and report all of them in one reply."
+    },
+    "common_mistakes": {
+      "he": [
+        "השוואת שאלה אחת לביט אחד",
+        "הנחה שפרוטוקול הספירה ממזער פעולות",
+        "בלבול בין מספר החלפות מצב למספר הדלקות",
+        "התעלמות ממצב המתג ההתחלתי",
+        "אי הגדרת מסגרת התחלה וסיום לצופים",
+        "הנחה ששבע תצפיות מחייבות שבע שאלות",
+        "שימוש בערוצי חום/גישה/תזמון שלא ניתנו"
+      ],
+      "en": [
+        "Equating one question with one bit",
+        "Assuming count protocol minimizes operations",
+        "Confusing toggle count with illuminations",
+        "Ignoring initial switch state",
+        "Leaving observers without start/end framing",
+        "Treating seven observations as necessarily seven questions",
+        "Using unsupplied heat/access/timing channels"
+      ]
+    }
+  },
+  "PREP-029": {
+    "assumptions": {
+      "he": [
+        "עשרה שיחים בשורה, ולא בטבעת.",
+        "לאחר כל החטאה יש תזוזת חובה של צעד אחד; הירייה קודמת לתזוזה.",
+        "אסור להישאר, לברוח או לקפוץ כמה צעדים; לכל קצה יש שכן אחד.",
+        "מיקום התחלתי לא ידוע ותנועה יריבית.",
+        "אין משוב מלבד פגיעה/החטאה; הירייה לשיח הנבחר מדויקת."
+      ],
+      "en": [
+        "Ten bushes in a line, not a ring.",
+        "Shot precedes a compulsory one-step move after every miss.",
+        "No staying, escaping or multi-step jumps; endpoints have one neighbor.",
+        "Unknown initial position and adversarial movement.",
+        "No feedback except hit/miss; accurate shot at a chosen bush."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "תפיסה מובטחת; בנוסף, מספר יריות מינימלי במקרה הגרוע תחת המודל הבדיד שצוין.",
+        "result": "סריקה של 16 יריות: 2..9 ואז 9..2.",
+        "proof": "הוכחת זוגיות להצלחה; BFS מדויק מגיע לראשונה לקבוצת אפשרויות ריקה בעומק 16.",
+        "scope": "מינימליות שאומתה במחשב עבור עשרה מיקומים בשורה ותזוזות חובה; אין זו תוצאה ללא תנאים עבור כללי תזמון או תנועה אחרים."
+      },
+      "en": {
+        "criterion": "Guaranteed capture; additionally minimum worst-case shots under the stated discrete model.",
+        "result": "16-shot sweep 2..9 then 9..2.",
+        "proof": "Parity proof for success; exact BFS first reaches empty belief at depth 16.",
+        "scope": "Computer-verified minimality for ten line positions and compulsory moves; not an unconditional result for other timing or motion rules."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "התחלה באחד הקצוות",
+        "היפוכי כיוון יריביים",
+        "חזרה על 9 בנקודת שינוי הכיוון",
+        "אסור להמתין במקום",
+        "מיקום התחלתי זוגי לעומת אי־זוגי",
+        "טופולוגיה של טבעת הייתה משנה את הבעיה"
+      ],
+      "en": [
+        "Starts at either endpoint",
+        "Adversarial reversals",
+        "Repeated 9 at turnaround",
+        "No waiting allowed",
+        "Even vs odd initial position",
+        "Ring topology would change problem"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_029.py",
+        "method": "השוואה עצמאית של 10240 מעברי קבוצת אפשרויות/פעולה, כל מיקומי ההתחלה, מקרה הזוגיות בסריקה הראשונה ומינימום 16 ב־BFS מדויק.",
+        "scope": "מודל בדיד מלא; אין זו דגימת מסלולים אקראיים או בדיקה פיזית."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_029.py",
+        "method": "10240 belief/action transitions independently compared, all starting positions, first-sweep parity case and exact BFS minimum 16.",
+        "scope": "Complete discrete model; not random path sampling or physical test."
+      }
+    },
+    "interview_answer": {
+      "he": "אניח שורה ותנועה מחויבת לשכן אחרי כל החטאה. אירה 2,3,...,9 ואז 9,8,...,2. כל קפיצה מחליפה זוגיות; הסריקה הראשונה מכסה התחלה זוגית, והחזרה על 9 מתאימה את הזוגיות לסריקה השנייה של ההתחלות האי־זוגיות. כך יש פגיעה מובטחת בעד 16 יריות.",
+      "en": "Assume a line and a compulsory move to a neighbor after every miss. I shoot 2,3,...,9 and then 9,8,...,2. Every jump changes parity; the first sweep covers even starting positions, and repeating 9 aligns the parity for the second sweep over odd starting positions. This guarantees a hit within 16 shots."
+    },
+    "common_mistakes": {
+      "he": [
+        "הנחה שכיוון הארנב קבוע",
+        "התעלמות מתזמון תזוזת החובה",
+        "השמטת הירייה החוזרת בנקודת שינוי הכיוון",
+        "טענה שאי אפשר לחצות את הסריקה בלי לבסס את הזוגיות",
+        "שימוש בניסויים אקראיים כהוכחת ודאות",
+        "הנחת מעגל או היתר להישאר במקום"
+      ],
+      "en": [
+        "Assuming fixed rabbit direction",
+        "Ignoring compulsory movement timing",
+        "Omitting repeated turnaround shot",
+        "Claiming it cannot cross sweep without establishing parity",
+        "Using random trials as certainty proof",
+        "Assuming circle or staying allowed"
+      ]
+    }
+  },
+  "PREP-030": {
+    "assumptions": {
+      "he": [
+        "ברכיב השוואה תקין המוצא העליון הוא max והתחתון min, בהתאם למקור.",
+        "רכיב תקול מעביר תמיד את הקלט התחתון שלו למעלה ואת הקלט העליון שלו למטה, ללא תלות בסדר הערכים.",
+        "לכל היותר תקלה קבועה אחת, או שאין תקלה.",
+        "כל ארבעת המוצאים החיצוניים ניתנים לצפייה; אין צורך במדידות פנימיות.",
+        "טופולוגיית רשת קבועה שנבחרה וארבעה ערכים ניתנים להשוואה, כאשר ערכי הבדיקה שונים זה מזה."
+      ],
+      "en": [
+        "Healthy comparator upper output max, lower min, matching source.",
+        "Faulty comparator always outputs its lower input above and upper input below, independently of ordering.",
+        "At most one permanent fault, or none.",
+        "All four external outputs observable; no internal probes needed.",
+        "Chosen fixed network topology and four comparable values, with distinct values for test."
+      ]
+    },
+    "network": {
+      "he": {
+        "order": "יורד",
+        "wires": "w1..w4 מלמעלה למטה",
+        "layers": [
+          [
+            {
+              "id": "C1",
+              "wires": [
+                1,
+                2
+              ]
+            },
+            {
+              "id": "C2",
+              "wires": [
+                3,
+                4
+              ]
+            }
+          ],
+          [
+            {
+              "id": "C3",
+              "wires": [
+                1,
+                3
+              ]
+            },
+            {
+              "id": "C4",
+              "wires": [
+                2,
+                4
+              ]
+            }
+          ],
+          [
+            {
+              "id": "C5",
+              "wires": [
+                2,
+                3
+              ]
+            }
+          ]
+        ]
+      },
+      "en": {
+        "order": "descending",
+        "wires": "w1..w4 top to bottom",
+        "layers": [
+          [
+            {
+              "id": "C1",
+              "wires": [
+                1,
+                2
+              ]
+            },
+            {
+              "id": "C2",
+              "wires": [
+                3,
+                4
+              ]
+            }
+          ],
+          [
+            {
+              "id": "C3",
+              "wires": [
+                1,
+                3
+              ]
+            },
+            {
+              "id": "C4",
+              "wires": [
+                2,
+                4
+              ]
+            }
+          ],
+          [
+            {
+              "id": "C5",
+              "wires": [
+                2,
+                3
+              ]
+            }
+          ]
+        ]
+      }
+    },
+    "diagnostic_test": {
+      "he": {
+        "input": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "outputs": {
+          "healthy": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "C1": [
+            3,
+            4,
+            2,
+            1
+          ],
+          "C2": [
+            4,
+            3,
+            1,
+            2
+          ],
+          "C3": [
+            2,
+            4,
+            3,
+            1
+          ],
+          "C4": [
+            4,
+            2,
+            1,
+            3
+          ],
+          "C5": [
+            4,
+            2,
+            3,
+            1
+          ]
+        }
+      },
+      "en": {
+        "input": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "outputs": {
+          "healthy": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "C1": [
+            3,
+            4,
+            2,
+            1
+          ],
+          "C2": [
+            4,
+            3,
+            1,
+            2
+          ],
+          "C3": [
+            2,
+            4,
+            3,
+            1
+          ],
+          "C4": [
+            4,
+            2,
+            1,
+            3
+          ],
+          "C5": [
+            4,
+            2,
+            3,
+            1
+          ]
+        }
+      }
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר רכיבי ההשוואה, עומק רשת המיון, ואז מספר וקטורי האבחון החיצוניים.",
+        "result": "חמישה רכיבי השוואה בשלוש שכבות; וקטור אבחון אחד לכל שש ההשערות.",
+        "proof": "24 סדרי קלט דורשים >=5 השוואות; שתי שכבות של זוגות זרים מאפשרות רק 4; וקטור אחד נותן שש חתימות שונות, ואפס תצפיות אינו יכול להבחין בין תקלות.",
+        "scope": "רשת ההשוואה המוגדרת ומודל של הצלבה קבועה וללא תנאי; אין טענה לכיסוי כל תקלה שרירותית או לאופטימום פיזי בשטח/תזמון."
+      },
+      "en": {
+        "criterion": "Comparator count, sorting-network depth, then external diagnostic-vector count.",
+        "result": "Five comparators in three layers; one diagnostic vector for all six hypotheses.",
+        "proof": "24 input orders need >=5 comparisons; two disjoint-pair layers allow only 4; six distinct signatures from one vector, and zero observations cannot distinguish faults.",
+        "scope": "Specified comparator-network and permanent unconditional-crossing model; not arbitrary fault coverage or physical area/timing optimum."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "אין תקלה",
+        "כל אחת מחמש התקלות",
+        "ערכים שווים מסתירים החלפה",
+        "כיוון הקלט הממוין משנה",
+        "כיוון חיבורי המקסימום/מינימום",
+        "תקלה יכולה להתפשט דרך רכיבי השוואה מאוחרים יותר",
+        "פלט לא צפוי או כמה תקלות"
+      ],
+      "en": [
+        "No fault",
+        "Each of five faults",
+        "Equal values mask swap",
+        "Sorted input direction matters",
+        "Maximum/minimum pin orientation",
+        "Fault can propagate through later comparators",
+        "Unexpected output or multiple faults"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_030.py",
+        "method": "256 צירופי ערכים עם סימן/חזרות ו־16 קלטים בינאריים, כל חתימות התקלה, 24 תמורות ושלוש דוגמאות כלליות בסדר יורד.",
+        "scope": "מודל פונקציונלי ב־Python; ללא HDL או סימולציית תזמון/תקלות פיזית."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-28",
+        "script_path": "checks/check_prep_030.py",
+        "method": "256 signed/repeated values and 16 binary inputs, all fault signatures, 24 permutations and three general descending examples.",
+        "scope": "Functional Python model; no HDL or physical timing/fault simulation."
+      }
+    },
+    "interview_answer": {
+      "he": "אבנה רשת בת חמישה רכיבים: השוואות 12,34; אחריהן 13,24; ולבסוף 23, כשהגדול עולה לחוט העליון. אז אזין 4,3,2,1 ואחשב חתימת פלט לכל רכיב שמצליב ולמערכת תקינה. מתקבלות שש חתימות שונות, ולכן בדיקה אחת מזהה גם האם יש תקלה וגם היכן.",
+      "en": "I build a network with five components: comparisons 12,34; then 13,24; and finally 23, sending the larger value to the upper wire. I then apply 4,3,2,1 and compute an output signature for each crossing component and for the healthy system. There are six distinct signatures, so one test identifies both whether there is a fault and where it is."
+    },
+    "common_mistakes": {
+      "he": [
+        "פירוש התקלה כהחלפת המוצאים הממוינים במקום הצלבת הקלטים",
+        "ערבוב מוסכמות חיווט של מיון עולה ויורד",
+        "שימוש בערכים כפולים בווקטור האבחון",
+        "הנחה שהפעלת תקלה לבדה מבטיחה אבחון ייחודי",
+        "התעלמות מהתפשטות בהמשך הרשת",
+        "צפייה במידת המיון בלבד",
+        "השמטת השערת המערכת התקינה"
+      ],
+      "en": [
+        "Interpreting fault as swapped sorted outputs instead of input crossing",
+        "Mixing ascending/descending wiring conventions",
+        "Using duplicate values in diagnostic vector",
+        "Assuming activation alone guarantees unique diagnosis",
+        "Ignoring downstream propagation",
+        "Observing only sortedness",
+        "Forgetting healthy hypothesis"
+      ]
+    }
+  },
+  "PREP-031": {
+    "assumptions": {
+      "he": [
+        "לפתרון העיקרי משמשים MUXים רגילים ולא מהפכים בגודל 2:1; הגודל אינו מוגדר במקור.",
+        "זמינים רק a,b המקוריים, אפס קבוע ומוצאי MUXים קודמים; החיווט קומבינטורי וללא מעגלים.",
+        "ערכי אמת בינאריים רגילים ו־fanout ללא הגבלה."
+      ],
+      "en": [
+        "Ordinary non-inverting 2:1 MUXes for primary solution; source size unspecified.",
+        "Only raw a,b, constant zero and earlier MUX outputs available; combinational acyclic wiring.",
+        "Standard binary truth values and unrestricted fanout."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר רכיבי ה־MUX המותרים",
+        "result": "שני MUXים מסוג 2:1; MUX אחד מסוג 4:1 אם הוא מותר.",
+        "proof": "חלוקה למקרים לפי כל אותות הבחירה האפשריים של MUX יחיד: 0,a,b; אף אחד מהם אינו מספק את קופקטור המשלים הנדרש באמצעות הנתונים המקוריים.",
+        "scope": "מספר רכיבים בגודל MUX מוגדר, ללא משלימים או קבועים נוספים; אין טענה לשטח/תזמון פיזי."
+      },
+      "en": {
+        "criterion": "Number of permitted MUX components",
+        "result": "Two 2:1 MUXes; one 4:1 MUX if allowed.",
+        "proof": "Case split on all possible one-MUX selects 0,a,b; none provides required complement cofactor with raw data.",
+        "scope": "Component count with specified MUX size, no complements or extra constants; not physical area/timing."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "00 חייב להחזיר 0",
+        "11 חייב להחזיר 0",
+        "01 ו־10 חייבים להחזיר 1",
+        "t אינו NOT b באופן גלובלי",
+        "אין מקור נסתר של קבוע אחת",
+        "העמימות בין 4:1 ל־2:1"
+      ],
+      "en": [
+        "00 must give 0",
+        "11 must give 0",
+        "01 and 10 must give 1",
+        "t is not globally NOT b",
+        "No hidden constant-one source",
+        "4:1 vs 2:1 ambiguity"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "checks/check_prep_031.py",
+        "method": "כל ארבעת מקרי הקלט וכל 27 חיבורי ה־MUX היחיד; טבלת אמת לחלופת 4:1.",
+        "scope": "מודל פונקציונלי ב־Python בלבד."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "checks/check_prep_031.py",
+        "method": "All four input cases and all 27 one-MUX wirings; alternative 4:1 truth table.",
+        "scope": "Functional Python model only."
+      }
+    },
+    "relationship_note": {
+      "he": "סינתזה עם MUX תחת הגבלת קבועים ויצירת XOR מאבני בניין אחרות; צירוף נפרד של פונקציה ואילוצים.",
+      "en": "MUX synthesis with restricted constants and XOR from other primitives; distinct function/constraint combination."
+    },
+    "common_mistakes": {
+      "he": [
+        "שימוש בקבוע 1 או בקלט מהופך שלא סופק",
+        "הנחה ש־t חייב להיות NOT b באופן גלובלי",
+        "טענה לאי אפשרות רק כי אי אפשר לבנות NOT עצמאי",
+        "מתן מינימום בלי לציין את גודל ה־MUX"
+      ],
+      "en": [
+        "Using constant 1 or an unprovided inverted input",
+        "Assuming t must equal NOT b globally",
+        "Claiming impossibility merely because standalone NOT cannot be built",
+        "Giving a minimum without specifying MUX size"
+      ]
+    }
+  },
+  "PREP-032": {
+    "assumptions": {
+      "he": [
+        "רשימות מקושרות חד־כיווניות סופיות וללא מעגלים, עם None בסופן.",
+        "חיתוך פירושו זהות של צומת משותף ולא שוויון ערכים.",
+        "גישה למצביעי הראש ולשדות next; ללא שינוי מקבילי.",
+        "סדר הערכים המאוחסנים אינו רלוונטי."
+      ],
+      "en": [
+        "Finite acyclic singly linked lists with None terminators.",
+        "Intersection means shared node identity, not equal values.",
+        "Access to head pointers and next fields; no concurrent mutation.",
+        "Ordering of stored values is irrelevant."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "זמן מעבר ומקום עזר במקרה הגרוע",
+        "result": "זמן O(n+m), ו־O(1) מילות מכונה.",
+        "scope": "רשימות מקושרות כלליות באמצעות מצביעים וללא מעגלים, אינדוקס או מטא־נתונים שחושבו מראש; מעגלים אינם נכללים."
+      },
+      "en": {
+        "criterion": "Worst-case traversal time and auxiliary space",
+        "result": "O(n+m) time, O(1) machine words.",
+        "scope": "General acyclic pointer-linked lists without indexing or precomputed metadata; cycles excluded."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "שני הראשים ריקים",
+        "ראש אחד ריק",
+        "רשימות נפרדות עם ערכים שווים",
+        "ראשים זהים",
+        "ראש אחד נמצא בתוך הרשימה האחרת",
+        "צומת זנב משותף יחיד",
+        "קידומות באורכים שונים",
+        "ערכי נתונים חוזרים"
+      ],
+      "en": [
+        "Both heads empty",
+        "One head empty",
+        "Disjoint equal-value lists",
+        "Identical heads",
+        "One head within the other list",
+        "Single shared tail node",
+        "Different prefix lengths",
+        "Repeated data values"
+      ]
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "checks/check_prep_032.py",
+        "method": "343 צירופי קידומת/קידומת/סיומת קטנים בשני הסדרים, שני מקרים ארוכים, ערכים שווים, ובדיקות זהות ואי שינוי הקלט."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "checks/check_prep_032.py",
+        "method": "343 small prefix/prefix/suffix combinations in both orders, two long cases, equal values, identity and immutability checks."
+      }
+    },
+    "common_mistakes": {
+      "he": [
+        "השוואת ערכי הצמתים במקום זהותם",
+        "קידום שני הראשים המקוריים מיד למרות קידומות באורכים שונים",
+        "הנחה שהרשימות חייבות להיות ממוינות",
+        "שינוי מצביעי next ללא צורך",
+        "שימוש באלגוריתם לרשימות ללא מעגלים על רשימות עם מעגלים"
+      ],
+      "en": [
+        "Comparing node values instead of identity",
+        "Advancing both original heads immediately despite unequal prefix lengths",
+        "Assuming the lists must be sorted",
+        "Mutating next pointers unnecessarily",
+        "Using the acyclic algorithm on lists with cycles"
+      ]
+    }
+  },
+  "PREP-033": {
+    "assumptions": {
+      "he": [
+        "שלושה כובעים לבנים ושניים שחורים; שלושה נחבשים ושניים מוסתרים.",
+        "האחורי רואה את הקדמי ואת האמצעי; האמצעי רואה את הקדמי; הקדמי אינו רואה אף אחד.",
+        "המשתתפים יכולים לראות לאחר הנחת הכובעים.",
+        "תשובות אמת לגבי ידיעה, היסק נכון, מלאי ידוע ותשובות קודמות שנשמעות לכולם.",
+        "אין הנחה ששתי התשובות הראשונות הן לא."
+      ],
+      "en": [
+        "Three white and two black hats; three worn, two hidden.",
+        "Rear sees front and middle; middle sees front; front sees none.",
+        "Participants can see after hats are placed.",
+        "Truthful knowledge answers, correct reasoning, known inventory and audible prior answers.",
+        "No assumption that initial answers are both no."
+      ]
+    },
+    "answer_branches": {
+      "he": [
+        {
+          "rear_knows": true,
+          "middle_knows": true,
+          "front_color": "שחור"
+        },
+        {
+          "rear_knows": false,
+          "middle_knows": true,
+          "front_color": "שחור"
+        },
+        {
+          "rear_knows": false,
+          "middle_knows": false,
+          "front_color": "לבן"
+        }
+      ],
+      "en": [
+        {
+          "rear_knows": true,
+          "middle_knows": true,
+          "front_color": "black"
+        },
+        {
+          "rear_knows": false,
+          "middle_knows": true,
+          "front_color": "black"
+        },
+        {
+          "rear_knows": false,
+          "middle_knows": false,
+          "front_color": "white"
+        }
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "יכולת זיהוי לוגית מובטחת",
+        "result": "צבע הכובע הקדמי נקבע בכל המקרים החוקיים לאחר רצף התשובות שהוכרז.",
+        "scope": "אין כאן מיטוב של מספרי כובעים או התקשורת; המסקנה מניחה היסק אידאלי ותשובות אמת."
+      },
+      "en": {
+        "criterion": "Guaranteed logical identifiability",
+        "result": "Front hat determined in all legal cases after the announced sequence.",
+        "scope": "Not an optimization of hat counts or communication; conclusion assumes ideal truthful reasoning."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "checks/check_prep_033.py",
+        "method": "כל 7 השמות הצבעים החוקיות; קבוצות ידיעה המוגבלות לפי הראייה ועדכונים בעקבות תשובות פומביות; 3 תמלילי תשובות."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "checks/check_prep_033.py",
+        "method": "All 7 legal color assignments; visibility-restricted knowledge sets and public-answer updates; 3 answer transcripts."
+      }
+    },
+    "common_mistakes": {
+      "he": [
+        "הנחה ששתי התשובות הראשונות הן לא בלי שנאמר כך",
+        "מסקנה שהקדמי תמיד לבן",
+        "שימוש בהסתברויות מנוחשות במקום ודאות לוגית",
+        "התעלמות ממה שהאמצעי לומד מהאחורי",
+        "בלבול בין צבע הכובע של האמצעי לצבע הכובע הקדמי",
+        "מתן אפשרות למשתתפים לראות את הכובעים שלא נחבשו"
+      ],
+      "en": [
+        "Assuming both first answers are no without being told",
+        "Concluding front is always white",
+        "Using guessed probabilities rather than logical certainty",
+        "Ignoring what the middle learns from the rear",
+        "Confusing the middle own color with front color",
+        "Letting agents see unused hats"
+      ]
+    }
+  },
+  "PREP-034": {
+    "assumptions": {
+      "he": [
+        "t,s מתארים FA חד־ביטי תחת מודל השהיה אחיד ופשוט.",
+        "נכללים 32 ביטי סכום וגם carry-out; Cin מסופק או מחובר לאפס.",
+        "השהיית MUX שסימונה d ושטחו שסימונו u הם נעלמים נוספים.",
+        "n בהצעה זו הוא מספר רמות הרקורסיה הבינארית של carry-select, בטווח 0..5.",
+        "בספירות שבמודל אין שיתוף לוגיקה ספקולטיבית, פישוט קבועים, עלויות חיווט/fanout או צינור עיבוד."
+      ],
+      "en": [
+        "t,s describe a one-bit FA under a simplified uniform delay model.",
+        "32 sum bits plus carry-out included; Cin provided or tied to zero.",
+        "MUX delay d and area u are additional unknowns.",
+        "n means binary carry-select recursion levels in this proposal, 0..5.",
+        "No speculative logic sharing, constant simplification, wire/fanout costs or pipelining in modeled counts."
+      ]
+    },
+    "ambiguities": {
+      "he": [
+        "המקור אינו מפרט את השהיית ה־MUX או את שטחו.",
+        "המקור אינו מגדיר את ארכיטקטורת השיפור או את מוסכמת החלוקה ל־n רמות.",
+        "n האופטימלי תלוי ביחס השהיות הרכיבים, בתקציב השטח ובארכיטקטורה הנבחרת."
+      ],
+      "en": [
+        "Source does not specify MUX delay or area.",
+        "Source does not define the improvement architecture or n-level partition convention.",
+        "Optimal n depends on component delay ratio, area budget and chosen architecture."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "השהיה קומבינטורית מרבית במודל עבור n=0..5; שטח כשיקול משני אפשרי בשוויון",
+        "result": "argmin מותנה של (32/2^n)t+n*d; כאשר d=t, הרמות n=4 ו־5 שוות בהשהיה, ו־4 דורשת פחות שטח.",
+        "scope": "רק עבור הארכיטקטורה הרקורסיבית המוגדרת ללא הסרת לוגיקה; אין טענה לשטח מינימלי בכלל או למחבר המהיר ביותר פיזית."
+      },
+      "en": {
+        "criterion": "Modeled worst-case combinational delay over n=0..5; area as optional tie-breaker",
+        "result": "Conditional argmin of (32/2^n)t+n*d; with d=t, n=4 or 5 tie, and 4 uses less area.",
+        "scope": "Specified recursive unpruned architecture only; no global minimal-area or physically fastest-adder claim."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "checks/check_prep_034.py",
+        "method": "8 שורות FA, מיצוי של 1608 מקרים ברוחבים קטנים, 6036 מקרי 32 ביט/עומק, ספירות מבניות ואופטימום השהיה מותנה.",
+        "scope": "מודל פונקציונלי ואלגברי, ללא סינתזה או מדידות פיזיות."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "checks/check_prep_034.py",
+        "method": "8 FA rows, 1608 exhaustive small-width cases, 6036 32-bit/depth cases, structural counts and conditional delay optima.",
+        "scope": "Functional and algebraic model, no synthesis/physical measurements."
+      }
+    },
+    "common_mistakes": {
+      "he": [
+        "ספירת שלבי ripple כמחזורי שעון",
+        "התעלמות מהשהיית MUX ומשטחו",
+        "ספירת MUX חד־ביטי אחד במקום אוטובוס של MUXים",
+        "השמטת carry-out בלי לשנות את המפרט",
+        "בלבול בין רמות רקורסיה לבלוקים בטור",
+        "טענה שעוד רמות תמיד משפרות את הזמן",
+        "הצגת נוסחאות שטח מותנות כמינימום בלתי תלוי בטכנולוגיה"
+      ],
+      "en": [
+        "Counting ripple stages as clock cycles",
+        "Ignoring MUX delay and area",
+        "Counting one bit-wide MUX instead of a bus of MUXes",
+        "Dropping carry-out without changing the specification",
+        "Confusing recursion levels with serial blocks",
+        "Claiming more levels always improve time",
+        "Presenting conditional area formulas as technology-independent minima"
+      ]
+    },
+    "terminology_clarification": {
+      "he": {
+        "source_url": "https://www-wjp.cs.uni-saarland.de/lehre/vorlesung/rechnerarchitektur/ws0304/uebungen/ueb2.pdf",
+        "checked_on": "2026-09-29",
+        "superseded_acronym_assumption": "CSA פורש באופן זמני כ־Carry-Select; חומר הקורס שסופק קובע שהמשמעות היא Conditional Sum. יש להשתמש ב־course_terminology.",
+        "text": "הבהרת מינוחים בעקבות הכיוון שהציע המשתמש: הרצף FA -> RCA -> Carry-Select -> Compound Adder הוא כיוון טבעי לשאלה, אם CSA פירושו Carry-Select Adder. CSA משמש גם ל־Carry-Save Adder, ולכן אין לפרש את הקיצור בלי הקשר. אם מחברים אלה נלמדו בקורס מערכות לוגיות ספרתיות, כל השאלה עשויה להיות יישום של חומר הקורס; הסעיפים המאוחרים עדיין דורשים מודל עלויות ברור. אין לדעת בוודאות שזהו הפתרון שהמחבר התכוון אליו מתוך הצילום בלבד.\n\nCompound Adder במינוח של מקור ההוראה המצורף מחשב במקביל A+B ו־A+B+1, ונבנה רקורסיבית ממחברים כאלה ומוקסים. זו מסגרת מתאימה להמשך ההסבר. השם לבדו אינו מבטיח יתרון מהירות; צריך לבדוק את המבנה והמסלול הקריטי.\n\nחשוב: ספירת 3^n תתי־מחברים בפתרון הראשוני מתארת שכפול לא משותף של שלושה תתי־מחברים בכל צעד. אין להעתיק ממנה את נוסחת השטח למימוש Compound שמשתף את שני החישובים ומרכיב שני תתי־בלוקים דו־מוצאיים. הפתרון הראשוני נשאר הצעה תקינה תחת הנחותיו, אך אינו טבלת עלות כללית של Compound. בדיון עתידי על המימוש של הקורס צריך לחשב מחדש עלות לפי החיווט המדויק. המקור הטכני מאמת את המינוח והמבנה בלבד, ולא את מקור שאלת הראיון או את הסילבוס של המשתמש.\nתזמון ושטח דורשים את הטופולוגיה בפועל ואת הנחות העלות של ה־MUX ושל תא הבסיס."
+      },
+      "en": {
+        "source_url": "https://www-wjp.cs.uni-saarland.de/lehre/vorlesung/rechnerarchitektur/ws0304/uebungen/ueb2.pdf",
+        "checked_on": "2026-09-29",
+        "superseded_acronym_assumption": "CSA was provisionally interpreted as Carry-Select; supplied course material establishes Conditional Sum. Use course_terminology.",
+        "text": "Terminology clarification following the user's proposed direction: the sequence FA -> RCA -> Carry-Select -> Compound Adder is a natural direction for the question, if CSA means Carry-Select Adder. CSA also means Carry-Save Adder, so the acronym must not be interpreted without context. If these adders were taught in the digital-logic systems course, the entire question may apply course material; the later parts still require a clear cost model. The screenshot alone does not establish with certainty that this is the solution the author intended.\n\nA Compound Adder in the terminology of the attached teaching source computes A+B and A+B+1 in parallel, and is built recursively from such adders and MUXes. This is an appropriate framework for the explanation that follows. The name alone does not guarantee a speed advantage; the structure and critical path must be examined.\n\nImportant: the 3^n sub-adder count in the initial solution describes unshared replication of three sub-adders at each step. Its area formula must not be copied to a Compound implementation that shares the two computations and combines two dual-output sub-blocks. The initial solution remains a valid proposal under its assumptions, but it is not a general cost table for Compound. Future discussion of the course implementation must recalculate cost from the exact wiring. The technical source verifies only the terminology and structure, not the interview question's provenance or the user's syllabus.\nTiming and area require the actual topology and the MUX/base-cell cost assumptions."
+      }
+    },
+    "course_terminology": {
+      "he": {
+        "CSA": "מחבר Conditional Sum",
+        "operand_width_symbol": "N",
+        "partition_level_symbol": "k",
+        "explanation": "הבהרה מחייבת לפי סיכום הקורס שסיפק המשתמש: CSA כאן פירושו Conditional Sum Adder, ולא Carry-Select Adder כפי שהונח בתשובה הקודמת. יש להשתמש מעתה במינוח המדויק של הקורס. שמות אלה קשורים ברעיון חישוב מראש ובחירה אך אין להחליף ביניהם בלי לציין את המימוש.\n\nכדי להפריד בין מספר הביטים לבין מספר הרמות, נסמן כאן N כרוחב המספר ו־k כמספר רמות החלוקה. בתמונת הקורס n הוא רוחב המספר; בשאלת הראיון n מתייחס למספר רמות. עבור 32 ביט N קבוע 32.\n\nתמלול סיכום הקורס:\n\n```text\nRipple Carry Adder (N)\nInputs: A[N-1:0], B[N-1:0], C[0]\nOutputs: S[N-1:0], C[N]\nFunction: concatenation(C[N],S) = A + B + C[0]\nDelay: Theta(N)\nCost:  Theta(N)\n\nConditional Sum Adder (N)\nInputs: A[N-1:0], B[N-1:0], C[0]\nOutputs: S[N-1:0], C[N]\nFunction: concatenation(C[N],S) = A + B + C[0]\nDelay: Theta(log2(N))\nCost:  Theta(N^(log2(3)))\n\nCompound Adder (N)\nInputs: A[N-1:0], B[N-1:0]\nOutputs: S[N:0], T[N:0]\nS = A + B\nT = A + B + 1\nDelay: Theta(log2(N))\nCost:  Theta(N*log2(N))\n```\n\nהסבר להתאמה: המבנה הלא־משותף שנותח בפתרון הראשוני, עם שלושה תתי־מחברים בכל חלוקה, תואם את חסם העלות של Conditional Sum שבסיכום: נסיגת השטח היא 3A(N/2)+Theta(N), והשהיה D(N/2)+Theta(1). ב־Compound הרקורסיבי כל תת־בלוק מחזיר מראש שתי אפשרויות, ולכן ניתן להרכיב את שתי התוצאות משני תתי־בלוקים דו־מוצאיים וממוקסים. נסיגת השטח 2A(N/2)+Theta(N) נותנת Theta(N log N), ואותה צורת נסיגת השהיה נותנת Theta(log N).\n\nהמעבר RCA -> Conditional Sum משפר את סדר הגודל של ההשהיה, במחיר שטח. המעבר Conditional Sum -> Compound משפר את סדר הגודל של השטח, ושומר על השהיה לוגריתמית. אין להסיק מהטבלה לבדה ש־Compound מהיר יותר בפועל או קבוע פעמים יותר מהיר, ובפרט לא שהוא עונה בהכרח לדרישת ״מהירה אף יותר״ בסעיף 6 בלי ניתוח מדויק.\n\nממשקי הרכיבים אינם זהים: Compound שבתמונה אינו מקבל נשא כניסה ומוציא את שתי התוצאות. אם צריך מחבר עם Cin משתנה, אפשר לבחור ביניהן באמצעות בנק מוקסים ברוחב N+1; יש לספור גם את השהיית ושטח הבחירה. כש־Cin קבוע 0 אפשר להשתמש ישירות ב־S. סימוני Theta אינם נותנים את הקבועים הדרושים לטבלת t,s ולבחירת מספר הרמות האופטימלי. לכן עדיין יש צורך בעלות מוקסים ובחירת מימוש מדויקת.\n\nמבחינת היכרות עם החומר, התמונה מראה שהרצף שהציע המשתמש מופיע בסיכום הלימוד שלו; אין צורך להציג אותו כחומר שחייב לדרוש קורס נוסף. לא נערכה בדיקת מימוש חדשה: זהו תיעוד הגדרות ותיקון מינוח, והבדיקות הפונקציונליות של המבנה הקודם נשארות בתוקף תחת ההנחות שלהן.",
+        "source_path": "sources/prep-034-course-adder-summary.png"
+      },
+      "en": {
+        "CSA": "Conditional Sum Adder",
+        "operand_width_symbol": "N",
+        "partition_level_symbol": "k",
+        "explanation": "Binding clarification based on the course summary supplied by the user: CSA here means Conditional Sum Adder, not Carry-Select Adder as assumed in the earlier answer. Use the course's precise terminology from now on. These names are related through precomputation and selection, but should not be interchanged without specifying the implementation.\n\nTo distinguish the number of bits from the number of levels, let N be the operand width here and k the number of partition levels. In the course image n is the operand width; in the interview question n refers to the number of levels. For 32 bits, N is fixed at 32.\n\nTranscription of the course summary:\n\n```text\nRipple Carry Adder (N)\nInputs: A[N-1:0], B[N-1:0], C[0]\nOutputs: S[N-1:0], C[N]\nFunction: concatenation(C[N],S) = A + B + C[0]\nDelay: Theta(N)\nCost:  Theta(N)\n\nConditional Sum Adder (N)\nInputs: A[N-1:0], B[N-1:0], C[0]\nOutputs: S[N-1:0], C[N]\nFunction: concatenation(C[N],S) = A + B + C[0]\nDelay: Theta(log2(N))\nCost:  Theta(N^(log2(3)))\n\nCompound Adder (N)\nInputs: A[N-1:0], B[N-1:0]\nOutputs: S[N:0], T[N:0]\nS = A + B\nT = A + B + 1\nDelay: Theta(log2(N))\nCost:  Theta(N*log2(N))\n```\n\nHow the structures correspond: the unshared structure analyzed in the initial solution, with three sub-adders per split, matches the Conditional Sum cost bound in the summary: area recurrence 3A(N/2)+Theta(N), and delay D(N/2)+Theta(1). In recursive Compound, every sub-block returns both possibilities in advance, so both results can be assembled from two dual-output sub-blocks and MUXes. The area recurrence 2A(N/2)+Theta(N) gives Theta(N log N), while the same form of delay recurrence gives Theta(log N).\n\nMoving from RCA -> Conditional Sum improves the asymptotic delay at the cost of area. Moving from Conditional Sum -> Compound improves asymptotic area while preserving logarithmic delay. The table alone does not imply Compound is faster in practice or faster by a constant factor, and in particular does not establish that it meets the “even faster” requirement in part 6 without detailed analysis.\n\nThe component interfaces differ: the pictured Compound does not receive a carry-in and returns both results. If an adder with variable Cin is required, a MUX bank of width N+1 can select between them; its selection delay and area must also be counted. With Cin fixed at 0, S can be used directly. Theta notation does not give the constants needed for the t,s table or for choosing the optimal number of levels. MUX costs and a precise implementation choice are therefore still required.\n\nRegarding familiarity with the material, the image shows that the sequence proposed by the user appears in their study summary; it need not be presented as material that necessarily requires an additional course. No new implementation check was performed: this documents definitions and corrects terminology, while the earlier structure's functional checks remain valid under their assumptions.",
+        "source_path": "sources/prep-034-course-adder-summary.png"
+      }
+    },
+    "part_5_cost_model": {
+      "he": {
+        "FA_count": 48,
+        "one_bit_mux_count": 17,
+        "delay": "16*t + d",
+        "area": "48*s + 17*u",
+        "symbols": {
+          "t": "השהיית FA חד־ביטי",
+          "s": "שטח FA חד־ביטי",
+          "d": "השהיית MUX חד־ביטי מסוג 2:1",
+          "u": "שטח MUX חד־ביטי מסוג 2:1"
+        },
+        "assumptions": "חישוב ספקולטיבי מקביל של החצי העליון; שלב MUX אחד; מוצא מלא של 33 ביט ללא סימן; מתעלמים מהשהיות חיווט/fanout. עלות MUX לא סופקה במקור."
+      },
+      "en": {
+        "FA_count": 48,
+        "one_bit_mux_count": 17,
+        "delay": "16*t + d",
+        "area": "48*s + 17*u",
+        "symbols": {
+          "t": "one-bit FA delay",
+          "s": "one-bit FA area",
+          "d": "one-bit 2:1 MUX delay",
+          "u": "one-bit 2:1 MUX area"
+        },
+        "assumptions": "Parallel upper speculation; one mux stage; 33-bit full unsigned output; ignore wire/fanout delay. MUX cost not provided by original source."
+      }
+    },
+    "part_6_two_level_explanation": {
+      "he": {
+        "assets": [
+          "diagrams/prep-034-two-level-top.png",
+          "diagrams/prep-034-fast16-inside.png"
+        ],
+        "FA_count": 72,
+        "one_bit_mux_count": 44,
+        "delay": "8*t+2*d",
+        "area": "72*s+44*u",
+        "text": "סעיף 6 — שתי רמות של Conditional Sum: מחליפים כל אחד משלושת ה־RCA16 מסעיף 4 בבלוק CS16 מהיר. בתוך כל בלוק כזה שלושה RCA8: אחד לחצי התחתון עם נשא הכניסה K של הבלוק, ושניים לחצי העליון עם נשאי כניסה 0 ו־1. הנשא c8 מהתחתון בוחר את תוצאת החצי העליון במוקס ברוחב 9 ביט. שמונת ביטי הסכום התחתונים יוצאים ישירות. בקופסה הכללית U,V הם 16 ביטי הקלט המקומיים; הם אינם בהכרח 16 הביטים התחתונים של המילה המקורית.\n\nבמעגל הגדול משתמשים בשלושה CS16: לתחתון K=0; לעליון הראשון K=0 ולעליון השני K=1. המוקס האחרון ברוחב 17 ביט נשאר ובוחר לפי C16. כל CS16 מכיל 24 FA ו־9 מוקסים חד־ביטיים, ופועל בזמן 8t+d. לכן המעגל הגדול מכיל 72 FA ו־44 מוקסים חד־ביטיים, שטחו 72s+44u והשהייתו 8t+2d. שלושת מוקסי ה־9 ביט נמצאים בשלושה ענפים מקבילים, ולכן במסלול קריטי עוברים מוקס פנימי אחד ואז המוקס הסופי — לא את כל 44 המוקסים בטור. תשעת מחברי RCA8 מחשבים במקביל עבור הנחות הנשיאה שלהם.\n\nהשיפור לעומת 16t+d מותנה ב־d<8t. זו התקדמות טבעית לניתוח n רמות שבסעיף 7. אין צורך לעבור ל־Compound כדי לבצע את הצעד הזה; בתמונת הקורס Compound משפר את סדר הגודל של השטח ביחס ל־Conditional Sum, וההשוואה המדויקת דורשת חיווט ועלויות משלה. נוסחאות העלות כאן מתייחסות למבנה המשוכפל שצויר, ללא פישוטים או שיתוף לוגיקה נוספים.\nאין טענה לשטח מינימלי בכלל או לתזמון פיזי מוכח."
+      },
+      "en": {
+        "assets": [
+          "diagrams/prep-034-two-level-top.png",
+          "diagrams/prep-034-fast16-inside.png"
+        ],
+        "FA_count": 72,
+        "one_bit_mux_count": 44,
+        "delay": "8*t+2*d",
+        "area": "72*s+44*u",
+        "text": "Part 6 — two levels of Conditional Sum: replace each of the three RCA16 blocks from part 4 with a fast CS16 block. Each such block contains three RCA8 blocks: one for the lower half with the block's carry-in K, and two for the upper half with carry-ins 0 and 1. Carry c8 from the lower half selects the upper-half result through a 9-bit MUX. The eight lower sum bits are output directly. In the general block, U,V are the 16 local input bits; they are not necessarily the lower 16 bits of the original word.\n\nThe full circuit uses three CS16 blocks: the lower receives K=0; the first upper receives K=0 and the second upper K=1. The final 17-bit MUX remains and selects according to C16. Each CS16 contains 24 FAs and 9 one-bit MUXes and has delay 8t+d. Thus the full circuit contains 72 FAs and 44 one-bit MUXes, with area 72s+44u and delay 8t+2d. The three 9-bit MUXes are in three parallel branches, so a critical path traverses one internal MUX and then the final MUX — not all 44 MUXes in series. The nine RCA8 adders compute in parallel under their carry assumptions.\n\nImprovement over 16t+d is conditional on d<8t. This is a natural progression to the n-level analysis in part 7. Moving to Compound is not required for this step; in the course image Compound improves asymptotic area relative to Conditional Sum, and the exact comparison needs its own wiring and costs. These cost formulas refer to the replicated structure that was drawn, without additional simplification or logic sharing.\nNo claim of globally minimal area or proven physical timing is made."
+      }
+    }
+  },
+  "PREP-035": {
+    "assumptions": {
+      "he": [
+        "מותרות קפיצות מותנות באפס/אי־אפס.",
+        "במקור הקלטים הם מספרים שלמים חיוביים; אפס נבדק כהרחבה.",
+        "אין גלישה; רוחבי הרגיסטרים מספיקים.",
+        "אין דרישה לשמור על r2."
+      ],
+      "en": [
+        "Zero/nonzero conditional jumps are allowed.",
+        "Positive integers in source; zero tested as extension.",
+        "No overflow; sufficient register widths.",
+        "No requirement to preserve r2."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "זמן ביצוע אסימפטוטי כאשר כל פקודה עולה יחידה",
+        "result": "Theta(ab), תואם לחסם התחתון של ab פעולות הגדלת הפלט בקלטים חיוביים.",
+        "scope": "אין טענה למספר פקודות מדויק מינימלי; מודל של מכונה עם ארבעה רגיסטרים."
+      },
+      "en": {
+        "criterion": "Asymptotic unit-instruction execution time",
+        "result": "Theta(ab), matching the ab output-increment lower bound for positive inputs.",
+        "scope": "Not minimum exact instruction count; four-register machine model."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "solutions/register_prep_035.py",
+        "method": "מפרש שמשתמש רק בהגדלה/הקטנה ובקפיצות אפס/אי־אפס: 965 זוגות קלט, ערכי רגיסטרים סופיים, ערכי ביניים אי־שליליים, מספר עדכונים ותקציב סיום."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "solutions/register_prep_035.py",
+        "method": "Interpreter using only increment/decrement and zero/nonzero branches: 965 input pairs, final register values, nonnegative intermediate values, update count and termination budget."
+      }
+    }
+  },
+  "PREP-036": {
+    "assumptions": {
+      "he": [
+        "ביטים מתווספים מימין: V_next=2V+x.",
+        "ביט תקף אחד לכל חזית פעילה; המוצא נקבע לאחר צריכת הביט.",
+        "עמימות לגבי אפס מתועדת בשתי פרשנויות נפרדות.",
+        "מכונת Moore עם reset מפורש."
+      ],
+      "en": [
+        "Bits append on the right: V_next=2V+x.",
+        "One valid bit per active edge; output after consuming bit.",
+        "Zero ambiguity documented as two separate interpretations.",
+        "Moore FSM with explicit reset."
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "פלט הדוגמה הראשונה אינו כולל אפס, אף שאפס מתחלק בשלוש מבחינה מתמטית."
+      ],
+      "en": [
+        "First example output excludes zero although zero is mathematically divisible by three."
+      ]
+    },
+    "transition_tables": {
+      "he": {
+        "ordinary": {
+          "R0": [
+            "R0",
+            "R1"
+          ],
+          "R1": [
+            "R2",
+            "R0"
+          ],
+          "R2": [
+            "R1",
+            "R2"
+          ]
+        },
+        "positive_only": {
+          "Z": [
+            "Z",
+            "R1"
+          ],
+          "R0": [
+            "R0",
+            "R1"
+          ],
+          "R1": [
+            "R2",
+            "R0"
+          ],
+          "R2": [
+            "R1",
+            "R2"
+          ]
+        }
+      },
+      "en": {
+        "ordinary": {
+          "R0": [
+            "R0",
+            "R1"
+          ],
+          "R1": [
+            "R2",
+            "R0"
+          ],
+          "R2": [
+            "R1",
+            "R2"
+          ]
+        },
+        "positive_only": {
+          "Z": [
+            "Z",
+            "R1"
+          ],
+          "R0": [
+            "R0",
+            "R1"
+          ],
+          "R1": [
+            "R2",
+            "R0"
+          ],
+          "R2": [
+            "R1",
+            "R2"
+          ]
+        }
+      }
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מצבי Moore נגישים וניתנים להבחנה",
+        "result": "3 מצבים להתחלקות רגילה ו־4 לכפולות חיוביות; 2 רכיבי DFF בכל אחד מהקידודים הבינאריים.",
+        "scope": "סמנטיקת reset ומוצא Moore מוגדרת; אין טענה למינימליות שערים או מכונת Mealy."
+      },
+      "en": {
+        "criterion": "Reachable distinguishable Moore states",
+        "result": "3 states for ordinary divisibility, 4 for positive multiples; 2 DFFs in either binary encoding.",
+        "scope": "Defined reset and Moore-output semantics; not gate or Mealy minimality."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "solutions/register_prep_036.py",
+        "method": "כל 8191 המילים הבינאריות באורכים 0..12, 90114 דגימות קידומת, שתי הפרשנויות מול חשבון של מספרים שלמים; סיומות המבחינות בין כל זוג מצבים ונגישות; הדוגמה המקורית המדויקת עבור הפרשנות החיובית."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "solutions/register_prep_036.py",
+        "method": "All 8191 binary words of length 0..12, 90114 prefix samples, both interpretations against integer arithmetic; pairwise state-distinguishing suffixes and reachability; exact supplied example for positive interpretation."
+      }
+    }
+  },
+  "PREP-037": {
+    "assumptions": {
+      "he": [
+        "רק (), [] ו־{} נחשבים סוגריים.",
+        "מתעלמים מתווים אחרים; אין כללי מחרוזות או הערות ייחודיים לשפת תכנות.",
+        "המחרוזת הריקה וטקסט ללא סוגריים תקינים."
+      ],
+      "en": [
+        "Only (), [] and {} are brackets.",
+        "Ignore other characters; no language-specific quote/comment rules.",
+        "Empty string and bracket-free text are valid."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "זמן מעבר במקרה הגרוע",
+        "result": "זמן Theta(n); מקום O(d) למחסנית, ולכל היותר O(n).",
+        "scope": "אין טענה למספר פעולות מדויק מינימלי או לזיכרון עזר אופטימלי בכל מודל."
+      },
+      "en": {
+        "criterion": "Worst-case traversal time",
+        "result": "Theta(n) time; O(d) stack space, at most O(n).",
+        "scope": "No claim of exact minimum operations or universally optimal auxiliary memory."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "solutions/register_prep_037.py",
+        "method": "57000 מקרים: כל מילות הסוגריים באורך 0..6 מול בודק עצמאי המבוסס על צמצום זוגות; 1000 מחרוזות מעורבות עם seed קבוע; 10 דוגמאות מפורשות; 3 מקרים של קינון עמוק עם 10000 סוגריים פותחים."
+      },
+      "en": {
+        "status": "passed",
+        "checked_on": "2026-09-29",
+        "script_path": "solutions/register_prep_037.py",
+        "method": "57000 cases: all bracket words of length 0..6 against independent pair-reduction oracle; 1000 seeded mixed strings; 10 explicit examples; 3 deeply nested cases with 10000 opening parentheses."
+      }
+    }
+  }
+}

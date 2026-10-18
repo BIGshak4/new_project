@@ -31,6 +31,7 @@ import { Reveal } from "./ui/motion";
 import { toast } from "./toaster";
 import { FollowUps } from "./follow-ups";
 import { parseTechnicalAnswer } from "../lib/technical-answer";
+import { referenceInLanguage } from "../lib/material-locale";
 import { supabase } from "../lib/supabase";
 import {
   newIdempotencyKey,
@@ -94,8 +95,8 @@ export function PracticeSession({
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [attempt, setAttempt] = useState<Attempt | null>(null),
     [question, setQuestion] = useState<QuestionDetail | null>(null);
-  const resources = useQuestionResources(api, question?.key, !!question?.has_media,
-    attempt?.id, !!attempt?.reference);
+  const resources = useQuestionResources(api, question?.key, !!question?.has_media || !!attempt?.reference,
+    attempt?.id, !!attempt?.reference, lang);
   const [loading, setLoading] = useState(true),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
@@ -643,6 +644,7 @@ export function PracticeSession({
                       attempt.submission?.status !== "done" && (
                         <ReferenceSolution
                           text={attempt.reference}
+                          sourceLanguage={attempt.language}
                           resources={resources} hasMedia={question.has_media}
                           lang={lang}
                         />
@@ -885,6 +887,7 @@ export function PracticeSession({
                         {attempt.reference && (
                           <ReferenceSolution
                             text={attempt.reference}
+                            sourceLanguage={attempt.language}
                             resources={resources} hasMedia={question.has_media}
                             lang={lang}
                           />
@@ -953,9 +956,10 @@ function RichText({ text }: { text: string }) {
   return <div className="question-prompt"><StudyText text={text} /></div>;
 }
 
-function ReferenceSolution({ text, lang, resources, hasMedia }: {
-  text: string; lang: Lang; resources: ReturnType<typeof useQuestionResources>; hasMedia?: boolean;
+function ReferenceSolution({ text, sourceLanguage, lang, resources, hasMedia }: {
+  text: string; sourceLanguage: Lang; lang: Lang; resources: ReturnType<typeof useQuestionResources>; hasMedia?: boolean;
 }) {
+  const reference = referenceInLanguage(resources.data, lang, text, sourceLanguage);
   return (
     <div
       className="solution"
@@ -969,9 +973,12 @@ function ReferenceSolution({ text, lang, resources, hasMedia }: {
           ? "פתרון מוצע · בביקורת מקצועית"
           : "Reference · under technical review"}
       </h3>
-      <div className="question-prompt"><StudyText text={text} solution /></div>
-      {hasMedia && (!resources.data?.solution_revealed
-        ? <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />
+      {reference === null
+        ? <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} solution />
+        : <div className="question-prompt"><StudyText text={reference} solution /></div>}
+      {(hasMedia || resources.data?.technical_material) && (!resources.data?.solution_revealed
+        ? reference === null ? null
+        : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />
         : <>
           <QuestionFigures media={resources.data.media} lang={lang} role="solution" onRefresh={resources.retry} />
           {resources.data.technical_material && <TechnicalMaterial material={resources.data.technical_material} lang={lang} />}

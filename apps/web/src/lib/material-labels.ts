@@ -1,0 +1,74 @@
+// Human-readable metadata labels. Circuit symbols, port names, formulas and paths
+// remain identifiers; they must not be translated or reordered.
+const hebrew: Record<string, string> = {
+  criterion: "מה נדרש להוכיח", result: "תוצאה", proof: "הוכחה", scope: "תחולת הטענה",
+  text: "הסבר", content: "תוכן", title: "כותרת", name: "שם", note: "הערה", notes: "הערות",
+  status: "מצב הבדיקה", verification_status: "מצב האימות", checked_on: "תאריך הבדיקה",
+  accessed_on: "תאריך העיון", created_on: "תאריך היצירה", received_on: "תאריך הקבלה",
+  method: "שיטת הבדיקה", expected: "התוצאה הצפויה", example: "דוגמה", interpretation: "פירוש",
+  explanation: "הסבר", clarification: "הבהרה", translation: "תרגום", solution: "פתרון",
+  limitations: "מגבלות", purpose: "מטרה", lower_bound: "חסם תחתון", upper_bound: "חסם עליון",
+  optimality_scope: "תחולת טענת האופטימליות", verification_scope: "תחולת הבדיקה",
+  additional_checks: "בדיקות נוספות", cases: "מקרים", case: "מקרה", inputs: "כניסות", input: "קלט",
+  outputs: "יציאות", output: "פלט", initial_state: "מצב התחלתי", next_state: "המצב הבא",
+  states: "מצבים", state_encoding: "קידוד המצבים", symbols: "סימונים", initialization: "אתחול",
+  type: "סוג", order: "סדר", layers: "רמות", component_count: "מספר הרכיבים", count: "מספר",
+  counts_by_type: "מספר הרכיבים מכל סוג", FA_count: "מספר המחברים המלאים",
+  one_bit_mux_count: "מספר הבוררים של ביט אחד", logical_register_blocks_required: "מספר בלוקי האוגרים הדרוש",
+  area: "שטח", delay: "השהיה", registers: "אוגרים", multiplier_count: "מספר המכפלים",
+  multiplier: "מכפל", block: "בלוק", ideal_max_segment_ns: "השהיה מרבית אידיאלית למקטע, בננו־שניות",
+  operand_width_symbol: "הסימון לרוחב האופרנד", partition_level_symbol: "הסימון למספר רמות החלוקה",
+  input_width: "רוחב הקלט", output_width: "רוחב הפלט", index_base: "בסיס מספור האינדקסים",
+  stop_rule: "תנאי העצירה", assumptions: "הנחות", positive_only: "מספרים חיוביים בלבד",
+  no_break_possible: "אפשרות שהכדור אינו נשבר", guaranteed_breaking_top: "הנחה שהכדור נשבר בקומה העליונה",
+  hundred_floor_table: "טבלה עבור מאה קומות", survivor: "השורד", participants: "משתתפים",
+  rear_knows: "מה יודע האחרון", middle_knows: "מה יודע האמצעי", front_color: "צבע הכובע של הראשון",
+  possible_types_after_failures: "הסוגים האפשריים לאחר התשובות הקודמות", healthy: "רכיב תקין",
+  ordinary: "מימוש רגיל", comparator_convention: "מוסכמת רכיב ההשוואה", mux_convention: "מוסכמת הבורר",
+  black_box: "קופסה שחורה", black_box_inputs: "כניסות הקופסה השחורה", black_box_output: "יציאת הקופסה השחורה",
+  left_mux: "הבורר השמאלי", right_mux: "הבורר הימני", inverter: "מהפך",
+  pairs: "זוגות", removed_comparisons: "השוואות שהוסרו", four_input_cases: "מקרים עבור ארבע כניסות",
+  six_input_cases: "מקרים עבור שש כניסות", sort4: "מיון ארבעה מספרים", sort6_blocks: "מיון שישה מספרים בבלוקים",
+  sort6_optimized: "מיון משופר של שישה מספרים", part_a: "סעיף א׳", part_b: "סעיף ב׳", part_c: "סעיף ג׳",
+  current_input_columns: "עמודות הקלט הנוכחי", input_at_rising_edge: "הקלט בעליית השעון",
+  output_after_rising_edge: "הפלט לאחר עליית השעון", rising_edge_indices: "מיקומי עליות השעון",
+  output_rows_by_previous_state: "שורות הפלט לפי המצב הקודם", duty_cycle_verification: "בדיקת יחס המחזור",
+  bit_positions_clockwise: "מיקומי הביטים עם כיוון השעון", cw_cycle: "מחזור עם כיוון השעון",
+  ccw_cycle: "מחזור נגד כיוון השעון", press_masks: "מסכות הלחיצה", press_shapes: "צורות הלחיצה",
+  recursion_tree_text: "מבנה עץ הרקורסיה", formula_interpretation: "פירוש הנוסחה",
+  and_or_not_explanation: "הסבר מימוש באמצעות שערים", and_or_not_explanation_he: "הסבר מימוש באמצעות שערים",
+  netlist: "חיבורי המעגל", wires: "חוטים", assets: "קבצים נלווים", id: "מזהה", key: "מזהה",
+  url: "קישור", source_url: "קישור למקור", source_path: "נתיב המקור", code_path: "קובץ המימוש",
+  script: "סקריפט הבדיקה", script_path: "נתיב סקריפט הבדיקה", check_path: "נתיב הבדיקה",
+  verification_script: "סקריפט האימות", model_path: "נתיב מודל הבדיקה", markdown_path: "מסמך השאלה",
+  diagram_path: "קובץ השרטוט", diagram_generator: "מחולל השרטוט", diagram_review: "בדיקת השרטוט",
+  source_image_path: "קובץ תמונת המקור", additional_source_paths: "מקורות נוספים",
+  solution_diagrams: "שרטוטי הפתרון", solution_reference: "הפניה לפתרון", verification: "אימות",
+  verification_reference: "הפניה לאימות", hint_reference: "הפניה לרמז", prepared_hint_ids: "מזהי הרמזים",
+  prepared_hints: "רמזים", prepared_hints_reference: "הפניה לרמזים", same_as_question_id: "זהה לשאלה",
+  source_tags: "תגיות המקור", source_topic_tags: "נושאי המקור", reported_companies: "חברות שדווחו",
+  source_company_badge: "תגית החברה במקור", company_attribution_status: "מצב שיוך החברה",
+  metadata_note: "הערה על פרטי השאלה", original_prompt: "הנוסח המקורי", origin: "מקור",
+  display_section: "סעיף התצוגה", solution_status: "מצב הפתרון", translation_parity_reviewed_by: "בודק התאמת התרגום",
+  superseded_acronym_assumption: "פירוש קודם של ראשי התיבות",
+};
+
+export function materialLabel(key: string, language: "he" | "en"): string {
+  const base = key.replace(/_(?:he|en)$/, "");
+  const displayKey = hebrew[base] ? base : key;
+  return language === "he" ? hebrew[key] ?? hebrew[displayKey] ?? key.replaceAll("_", " ") : displayKey.replaceAll("_", " ");
+}
+
+const statusLabels: Record<string, string> = {
+  passed: "עבר", not_performed: "לא בוצע", not_provided: "לא נמסר", in_review: "בבדיקה",
+  proposed: "פתרון מוצע", awaiting_request: "ממתין לבקשה", verified: "אומת", pending_review: "ממתין לבדיקה",
+  passed_all_256_inputs_for_all_three_netlists: "כל 256 הקלטים עברו בכל שלושת המימושים",
+  python_reference_passed_cpp_java_not_executed: "מימוש הייחוס בפייתון עבר; המימושים ב־C++ וב־Java לא הורצו",
+  reported_by_supplied_source_not_independently_verified: "דווח במקור שסופק; לא אומת באופן עצמאי",
+  no_company_attribution_visible_in_supplied_image: "אין שיוך חברה גלוי בתמונה שסופקה",
+  no_company_information_in_supplied_image: "אין מידע על חברה בתמונה שסופקה",
+};
+
+export function materialStatus(value: string, field: string | undefined, language: "he" | "en"): string {
+  return language === "he" && field?.endsWith("status") ? statusLabels[value] ?? value : value;
+}

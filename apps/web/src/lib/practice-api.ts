@@ -52,7 +52,13 @@ export type QuestionSummary = {
 };
 
 export type ResourceMedia = { id: string; filename: string; kind: "image" | "file"; role: "prompt" | "solution"; caption: string; url: string };
-export type QuestionResources = { media: ResourceMedia[]; technical_material: Record<string, unknown> | null; solution_revealed: boolean };
+export type QuestionResources = {
+  media: ResourceMedia[];
+  technical_material: Record<string, unknown> | null;
+  solution_revealed: boolean;
+  reference?: string | null;
+  language?: ApiLang;
+};
 
 /** "Seen at company X" by `count` candidates. Aggregated, never who. */
 export type CompanyTag = { slug: string; name: string; count: number };
@@ -703,8 +709,8 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
         "GET",
         `/v1/questions/${encodeURIComponent(keyOrId)}${q({ language })}`,
       ),
-    questionResources: (key: string, attemptId?: string) =>
-      call<QuestionResources>("GET", `/v1/questions/${encodeURIComponent(key)}/resources${q({ attempt_id: attemptId })}`),
+    questionResources: (key: string, attemptId?: string, language?: ApiLang) =>
+      call<QuestionResources>("GET", `/v1/questions/${encodeURIComponent(key)}/resources${q({ attempt_id: attemptId, language })}`),
 
     startAttempt: (body: StartAttemptRequest) =>
       call<Attempt>("POST", "/v1/practice/attempts", body),

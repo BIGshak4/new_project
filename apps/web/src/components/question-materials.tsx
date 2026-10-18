@@ -9,6 +9,8 @@ import type { Lang } from "./auth";
 import type { PracticeApi, QuestionResources, ResourceMedia } from "../lib/practice-api";
 import { visibleQuestionMedia } from "../lib/question-media";
 import { solutionMarkdown } from "../lib/solution-markdown";
+import { materialInLanguage } from "../lib/material-locale";
+import { materialLabel, materialStatus } from "../lib/material-labels";
 import { BidiText } from "./bidi-text";
 
 function tableDirection(node?: Element): "rtl" | "ltr" {
@@ -50,8 +52,8 @@ export function StudyText({ text, solution = false }: { text: string; solution?:
 }
 
 export function useQuestionResources(api: PracticeApi, key: string | undefined, enabled: boolean,
-  attemptId: string | undefined, revealed: boolean) {
-  const identity = `${key}:${attemptId}:${revealed}`;
+  attemptId: string | undefined, revealed: boolean, language: Lang) {
+  const identity = `${key}:${attemptId}:${revealed}:${language}`;
   const [loaded, setLoaded] = useState<{ identity: string; data: QuestionResources } | null>(null);
   const [error, setError] = useState(false);
   const [retry, setRetry] = useState(0);
@@ -59,18 +61,21 @@ export function useQuestionResources(api: PracticeApi, key: string | undefined, 
     let current = true;
     setLoaded(null); setError(false);
     if (!key || !enabled) return;
-    api.questionResources(key, attemptId).then(result => {
+    api.questionResources(key, attemptId, language).then(result => {
       if (current) setLoaded({ identity, data: result });
     }).catch(() => { if (current) setError(true); });
     return () => { current = false; };
-  }, [api, key, enabled, attemptId, revealed, identity, retry]);
+  }, [api, key, enabled, attemptId, revealed, language, identity, retry]);
   return { data: loaded?.identity === identity ? loaded.data : null, error, retry: () => setRetry(v => v + 1) };
 }
 
-export function ResourceStatus({ error, retry, lang }: { error: boolean; retry: () => void; lang: Lang }) {
+export function ResourceStatus({ error, retry, lang, solution = false }: { error: boolean; retry: () => void; lang: Lang; solution?: boolean }) {
   return <div className={error ? "notice error" : "resource-loading"} role="status">
-    {error ? <><span>{lang === "he" ? "לא הצלחנו לטעון את השרטוטים והקבצים." : "The diagrams and files could not be loaded."}</span>
+    {error ? <><span>{solution
+      ? lang === "he" ? "לא הצלחנו לטעון את הפתרון בשפה שבחרתם." : "The solution could not be loaded in your selected language."
+      : lang === "he" ? "לא הצלחנו לטעון את השרטוטים והקבצים." : "The diagrams and files could not be loaded."}</span>
       <button onClick={retry}><RotateCcw size={16} />{lang === "he" ? "ניסיון נוסף" : "Try again"}</button></>
+      : solution ? lang === "he" ? "טוענים את הפתרון בשפה שבחרתם…" : "Loading the solution in your selected language…"
       : lang === "he" ? "טוענים את השרטוטים…" : "Loading diagrams…"}
   </div>;
 }
@@ -123,12 +128,12 @@ const labels: Record<string, [string, string]> = {
   alternative_solution_notes: ["דרך פתרון נוספת", "Alternative solution"],
   descending_diagram_extension: ["הרחבת השרטוט", "Diagram extension"],
   diagram_description: ["הסבר השרטוט", "Diagram explanation"],
-  driver_explanation_he: ["הסבר ההפעלה", "Driver explanation (Hebrew)"],
+  driver_explanation_he: ["הסבר ההפעלה", "Driver explanation"],
   eight_cell_alternative: ["חלופה עם שמונה תאים", "Eight-cell alternative"],
   formula_interpretation: ["פירוש הנוסחה", "Formula interpretation"],
-  group_logic_derivation_he: ["פיתוח הלוגיקה", "Logic derivation (Hebrew)"],
+  group_logic_derivation_he: ["פיתוח הלוגיקה", "Logic derivation"],
   group_logic_derivation_verification: ["בדיקת פיתוח הלוגיקה", "Logic derivation verification"],
-  hierarchy_diagram_explanation_he: ["הסבר מבנה המעגל", "Circuit hierarchy (Hebrew)"],
+  hierarchy_diagram_explanation_he: ["הסבר מבנה המעגל", "Circuit hierarchy"],
   n2_design_comparison: ["השוואת מימושים", "Design comparison"],
   original_formula_latex: ["הנוסחה המקורית", "Original formula"],
   parallel_products_explanation: ["הסבר המכפלות במקביל", "Parallel products"],
@@ -142,15 +147,15 @@ const labels: Record<string, [string, string]> = {
   editorial_notes: ["הערות עריכה", "Editorial notes"],
 };
 
-function Value({ value, lang }: { value: unknown; lang: Lang }) {
+function Value({ value, lang, field }: { value: unknown; lang: Lang; field?: string }) {
   if (value === null || value === undefined) return null;
-  if (typeof value === "string") return <StudyText text={value} />;
-  if (typeof value !== "object") return <span>{String(value)}</span>;
+  if (typeof value === "string") return <StudyText text={materialStatus(value, field, lang)} />;
+  if (typeof value !== "object") return <span>{typeof value === "boolean" ? lang === "he" ? value ? "כן" : "לא" : value ? "Yes" : "No" : String(value)}</span>;
   if (Array.isArray(value)) return <ol>{value.map((v, i) => <li key={i}><Value value={v} lang={lang} /></li>)}</ol>;
   const object = value as Record<string, unknown>;
   if (lang in object && ("he" in object || "en" in object)) return <Value value={object[lang]} lang={lang} />;
   return <dl>{Object.entries(object).filter(([k]) => k !== (lang === "he" ? "en" : "he")).map(([k, v]) => <div key={k}>
-    <dt>{labels[k]?.[lang === "he" ? 0 : 1] ?? k.replaceAll("_", " ")}</dt><dd><Value value={v} lang={lang} /></dd>
+    <dt dir="auto">{labels[k]?.[lang === "he" ? 0 : 1] ?? materialLabel(k, lang)}</dt><dd><Value value={v} lang={lang} field={k} /></dd>
   </div>)}</dl>;
 }
 
@@ -164,7 +169,7 @@ export function TechnicalMaterial({ material, lang }: { material: Record<string,
   return <section className="technical-material">
     <h3>{lang === "he" ? "הסברים נוספים ובדיקות" : "Further explanations and verification"}</h3>
     {technicalKeys.filter(k => material[k] != null).map(key => <details key={key}>
-      <summary>{labels[key][lang === "he" ? 0 : 1]}</summary><Value value={material[key]} lang={lang} />
+      <summary>{labels[key][lang === "he" ? 0 : 1]}</summary><Value value={materialInLanguage(material, key, lang)} lang={lang} />
     </details>)}
     <button onClick={download}><Download size={16} />{lang === "he" ? "הורדת כל חומר השאלה" : "Download all question material"}</button>
   </section>;

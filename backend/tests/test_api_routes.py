@@ -105,6 +105,42 @@ class TestTheContract:
         restored = (await client.get(f"{BASE}/{attempt['id']}", headers=headers)).json()
         assert restored["question"]["requirements"] == ""
 
+    @pytest.mark.parametrize("language", ["he", "en"])
+    async def test_revealed_reference_can_be_read_in_display_language_without_changing_attempt(self, client, user, catalog, language):
+        _, headers = user
+        original_language = "en" if language == "he" else "he"
+        attempt = await start(client, headers, language=original_language)
+        resource_path = f"/v1/questions/{Q}/resources"
+        params = {"attempt_id": attempt["id"], "language": language}
+        hidden = await client.get(resource_path, params=params, headers=headers)
+        assert hidden.status_code == 200 and hidden.json()["reference"] is None
+        assert hidden.json()["language"] == language and not hidden.json()["solution_revealed"]
+        revealed = await client.post(f"{BASE}/{attempt['id']}/reference", headers=headers)
+        assert revealed.status_code == 200
+        before = (await client.get(f"{BASE}/{attempt['id']}", headers=headers)).json()
+        resource = await client.get(resource_path, params=params, headers=headers)
+        assert resource.status_code == 200
+        assert resource.json()["reference"] == catalog.questions[Q].text(language).reference_solution
+        assert resource.json()["language"] == language and resource.json()["solution_revealed"]
+        # This example question has no media: it still has a localized reference.
+        assert resource.json()["media"] == [] and resource.json()["technical_material"] is None
+        assert (await client.get(f"{BASE}/{attempt['id']}", headers=headers)).json() == before
+        assert before["language"] == original_language
+        _, other_token = make_token(email="second@example.com")
+        assert (await client.get(resource_path, params=params,
+                                 headers={"Authorization": f"Bearer {other_token}"})).status_code == 404
+        assert (await client.get(resource_path, params={**params, "language": "fr"}, headers=headers)).status_code == 422
+
+    async def test_submitting_alone_does_not_expose_localized_reference(self, client, user):
+        _, headers = user
+        attempt = await start(client, headers, mode="quick", language="he")
+        submitted = await client.post(f"{BASE}/{attempt['id']}/submissions", json={"answer": "alarm = A ^ B ^ C"}, headers=headers)
+        assert submitted.status_code == 200
+        resources = await client.get(f"/v1/questions/{Q}/resources",
+                                     params={"attempt_id": attempt["id"], "language": "en"}, headers=headers)
+        assert resources.status_code == 200
+        assert resources.json()["reference"] is None and not resources.json()["solution_revealed"]
+
     async def test_the_whole_flow_over_http(self, client, user, catalog):
         _, h = user
         listing = (await client.get("/v1/questions", params={"language": "he"}, headers=h)).json()

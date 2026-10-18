@@ -252,27 +252,40 @@ class PracticeService:
 
     # ------------------------------------------------------------------ the goal
 
-    async def question_resources(self, user_id: uuid.UUID, key: str, *, attempt_id: uuid.UUID | None = None):
+    async def question_resources(self, user_id: uuid.UUID, key: str, *, attempt_id: uuid.UUID | None = None,
+                                 language: str | None = None):
+        """Read revealed study material in the display language without changing the attempt or resuming feedback."""
         from app.config import get_settings
         from app.services.question_resources import QuestionResources, learner_media, sign_media
 
+        revealed = False
+        practice_language = None
         async with self.store.transaction() as tx:
             loaded = await tx.load_question(key=key)
-        if loaded is None:
-            raise ApiError("not_found", "this question does not exist or is not available")
-        revealed = False
-        if attempt_id is not None:
-            attempt = await self.get(user_id, attempt_id)  # enforces ownership before any signing
-            if attempt.question.key != key:
-                raise ApiError("not_found", "the attempt does not belong to this question")
-            revealed = attempt.reference is not None
-        assets = loaded.question.assets
+            if loaded is None:
+                raise ApiError("not_found", "this question does not exist or is not available")
+            if attempt_id is not None:
+                stored = await tx.load_attempt(attempt_id, user_id=user_id)
+                if stored is None:
+                    raise ApiError("not_found", "this attempt does not exist")
+                if stored.question_id != loaded.id:
+                    raise ApiError("not_found", "the attempt does not belong to this question")
+                # The same exposure boundary as PracticeAttempt.reference_revealed, without get()'s feedback resume.
+                revealed = any(event.get("kind") == "reference" for event in stored.row.get("exposures") or [])
+                practice_language = stored.row["practice_language"]
+        question = loaded.question
+        language = self._language(language or practice_language)
+        if language not in question.translations:
+            language = "en" if "en" in question.translations else next(iter(question.translations))
+        assets = question.assets
         media = [m for m in learner_media(assets.get("bank_media", [])) if m.get("role") == "prompt" or revealed]
         settings = get_settings()
         return QuestionResources(
             media=await sign_media(media, settings.supabase_url, settings.supabase_service_role_key),
             technical_material=assets.get("preparation_resource") if revealed else None,
-            solution_revealed=revealed)
+            solution_revealed=revealed,
+            reference=question.text(language).reference_solution if revealed else None,
+            language=language)
 
     async def get_goal(self, user_id: uuid.UUID, *, language: str | None = None) -> GoalView:
         async with self.store.transaction() as tx:
