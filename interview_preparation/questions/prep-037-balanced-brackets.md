@@ -87,3 +87,18 @@ Assume all nonbracket text is ignored; this is not a programming-language lexer,
 Interview answer: one pass, push openers, match/pop each closer, require final emptiness; linear time and depth-bounded stack space. Related existing SW-008 limits input to brackets; this source permits ordinary text and supplies unverified Amazon/NVIDIA/Rafael/Marvell tags. Do not transfer those tags to the independently authored original. Medium-high priority for a short basic coding/edge-case review, based on the supplied role rather than a prediction.
 
 Verification: 57000 test cases passed. AI-assisted proposal, no independent expert review.
+
+## קבלה חוזרת — 18 באוקטובר 2026
+
+נשלח צילום נוסף עם אותו נוסח, אותם אילוצים ואותן חברות. סדר התגיות והקובץ שונים, אך אין שינוי בבעיה. השאלה נקשרה ל־PREP-037 הקיימת, ללא יצירת כפילות, שינוי מזהה או כתיבה לרשומות משתמשים. נוסח המקור, הפתרון והצילום הקודם נשמרו.
+
+- [צילום המקור הנוסף](../sources/resubmissions/prep-037-2026-10-18.png)
+- [רישום הקליטה והבדיקות](../intakes/2026-10-18-prep-037.json)
+
+בדיקה חוזרת: 57,000 מקרי הנכונות עברו באמצעות `verify()` בלבד; פונקציית הרישום `main()` לא הופעלה. במסד החי אומתו אותה רשומה, ארבע החברות, שלושה רמזים בכל שפה ופתרונות בעברית ובאנגלית, בהשוואה מלאה לתוכן הקנוני. תוכן השאלה כבר קיים במסד, ולכן לא בוצע ייבוא חוזר או שינוי במצב הביקורת. בנוסף עברו 13 בדיקות דפדפן מקומיות של רכיבי התצוגה האמיתיים, כולל פתיחת הסעיפים, החלפת שפה ותצוגת מחשב וטלפון; נשמרו שמונה צילומים ללא שגיאות דפדפן. בדיקת לחיצות בחשבון באתר החי לא בוצעה בסבב זה.
+
+### שאלת המשך שהוכנה לארכיון
+
+אם יש רק סוגריים עגולים וטקסט רגיל, האם אפשר להסתפק בזיכרון קבוע? מדוע שלושה מונים אינם מספיקים במקרה הכללי של שלושה סוגי סוגריים?
+
+כיוון לתשובה: עבור סוג אחד שומרים מונה, דוחים קידומת שלילית ודורשים אפס בסיום. זוהי כמות קבועה של מילות מכונה; בספירת ביטים מונה עד n דורש O(log n) ביטים. עבור כמה סוגים יש לשמור גם על סדר הקינון, כפי שמדגים ([)]. אין כאן טענת חסם זיכרון אוניברסלי. נוסח מלא בשתי השפות וקריטריוני בדיקה נשמרו ברישום הקליטה. שאלת ההמשך הזו הוכנה כתוכן ארכיוני; היא לא חוברה בסבב זה לזרימת שאלות ההמשך באתר.

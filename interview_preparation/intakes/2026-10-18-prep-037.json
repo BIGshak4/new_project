@@ -1,0 +1,56 @@
+{
+  "received_on": "2026-10-18",
+  "question_id": "PREP-037",
+  "question_key": "prep-balanced-brackets-mixed-text",
+  "decision": "duplicate_existing_question",
+  "reason": "The new screenshot has the same bracket-validation problem, mixed-text allowance, examples and company tags as PREP-037. The tag order and image bytes differ; there is no new problem constraint.",
+  "canonical_record": "../questions.json#PREP-037",
+  "canonical_markdown": "../questions/prep-037-balanced-brackets.md",
+  "source": {
+    "type": "user_supplied_image",
+    "path": "../sources/resubmissions/prep-037-2026-10-18.png",
+    "sha256": "31fd02937042a2e1bc0bad27dfb9e291861cc6dc540c2bf02a3521256b8e7085",
+    "role": "internal_duplicate_submission_source",
+    "display_to_learners": false,
+    "original_image_preserved": true
+  },
+  "source_text_he": "בהינתן מחרוזת המכילה תווים וסוגריים מכל הסוגים: (), [], {} — בדוק שהמחרוזת תקינה מבחינת סוגריים. למשל aa)a(a לא תקין אבל aa()aa כן תקין.",
+  "transcription_note": "Bracket expressions are transcribed in logical left-to-right order. The exact supplied rendering is preserved in the screenshot.",
+  "source_tags": ["nvidia", "amazon", "software", "rafael", "marvell"],
+  "reported_companies": ["NVIDIA", "Amazon", "Rafael", "Marvell"],
+  "source_company_badge": "NVIDIA",
+  "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+  "website_action": "reuse_existing_question_without_catalog_insert",
+  "database_action": "read_only_verification_existing_content_already_present",
+  "learner_activity_action": "none",
+  "verification": {
+    "checked_on": "2026-10-18",
+    "source_copy_sha256_verified": true,
+    "existing_question_id": "72ced9a1-cd88-4749-a32e-d1e778da10b6",
+    "languages_verified": ["he", "en"],
+    "hints_per_language": 3,
+    "bilingual_technical_material_verified": true,
+    "algorithm_cases_passed": 57000,
+    "script": "../solutions/register_prep_037.py",
+    "entrypoint": "verify (read-only; main was not called)",
+    "canonical_prompts_references_hints_and_metadata_match_live_database": true,
+    "local_browser_checks_passed": 13,
+    "local_browser_errors": 0,
+    "local_browser_scope": "Actual study renderer in an isolated one-question fixture; Hebrew/English switching and desktop/mobile layouts, without application login.",
+    "local_browser_evidence": ".impeccable/review/prep-037-intake/report.json",
+    "live_authenticated_browser_clicks_performed": false
+  },
+  "prepared_follow_up": {
+    "publication_status": "prepared_in_archive_not_added_to_live_follow_up_flow",
+    "he": {
+      "question": "אם המחרוזת כוללת רק סוגריים עגולים וטקסט רגיל, האם אפשר להסתפק בזיכרון קבוע? מדוע שלושה מונים אינם פותרים באופן כללי את המקרה עם שלושה סוגי סוגריים?",
+      "answer_outline": "לסוג אחד מספיק מונה: להגדיל בפתיחה, להקטין בסגירה, לדחות אם הוא שלילי ולדרוש אפס בסיום. זהו מספר קבוע של מילות מכונה במודל הרגיל; מונה עד n דורש O(log n) ביטים. בשלושה סוגים, מונים נפרדים אינם שומרים את סדר הקינון: ([)] מאוזנת בספירות אך אינה תקינה. אין להסיק מכך הוכחת חסם זיכרון לכל מודל אפשרי.",
+      "checks": ["דחייה של )( גם כשהסכום הסופי אפס", "קבלה של טקסט ללא סוגריים", "זיהוי אי־התאמת הקינון ב־([)]"]
+    },
+    "en": {
+      "question": "If the string contains only round parentheses and ordinary text, can you use constant auxiliary space? Why do three separate counters not solve the general problem with three bracket types?",
+      "answer_outline": "For one type, increment on an opener, decrement on a closer, reject any negative prefix and require zero at the end. This uses a constant number of machine words in the usual model; a counter up to n requires O(log n) bits. Separate type counters lose nesting order: ([)] has balanced counts but is invalid. This does not establish a universal space lower bound for every computational model.",
+      "checks": ["Reject )( despite its final zero count", "Accept bracket-free text", "Recognize the nesting mismatch in ([)]"]
+    }
+  }
+}
