@@ -50,9 +50,11 @@ export const truthTableSignal = (value: Signal, bits: number) =>
 export function CircuitTruthTable({
   circuit,
   lang,
+  onGenerate,
 }: {
   circuit: Circuit;
   lang: Lang;
+  onGenerate?: () => void;
 }) {
   const he = lang === "he";
   const t = (heText: string, enText: string) => (he ? heText : enText);
@@ -85,7 +87,7 @@ export function CircuitTruthTable({
             if (table) setSnapshot(null);
             else {
               const result = truthTable(circuit);
-              if (result.ok) setSnapshot({ signature, table: result });
+              if (result.ok) { setSnapshot({ signature, table: result }); onGenerate?.(); }
             }
           }}
         >

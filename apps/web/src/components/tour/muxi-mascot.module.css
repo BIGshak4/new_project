@@ -1,0 +1,140 @@
+.mascot {
+  display: block;
+  width: 112px;
+  height: auto;
+  flex: 0 0 auto;
+  overflow: visible;
+  color: var(--link);
+  pointer-events: none;
+}
+
+.character {
+  transform-origin: 110px 170px;
+}
+
+.limb,
+.pins,
+.body,
+.edge,
+.brow,
+.smile,
+.happyEyes,
+.cheek,
+.hand,
+.shoe,
+.sparks {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.limb {
+  fill: none;
+  stroke: var(--link);
+  stroke-width: 5;
+}
+
+.shoe {
+  fill: var(--link);
+  stroke: var(--link);
+  stroke-width: 3;
+}
+
+.pins {
+  fill: var(--surface);
+  stroke: var(--signal);
+  stroke-width: 2.5;
+}
+
+.body {
+  fill: var(--soft);
+  stroke: var(--link);
+  stroke-width: 3;
+}
+
+.edge {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 4;
+}
+
+.eye {
+  fill: var(--ink);
+}
+
+.eyeGlint {
+  fill: var(--paper);
+}
+
+.brow,
+.smile,
+.happyEyes {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.5;
+}
+
+.brow {
+  stroke-width: 1.8;
+}
+
+.cheek {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 3;
+  opacity: 0.75;
+}
+
+.hand {
+  fill: var(--signal-soft);
+  stroke: var(--signal);
+  stroke-width: 2;
+}
+
+.marking {
+  fill: var(--link);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+}
+
+.sparks {
+  fill: var(--signal);
+  stroke: var(--signal);
+  stroke-width: 2.5;
+}
+
+.wavingHand {
+  transform-origin: 153px 108px;
+}
+
+.mascot[data-pose="wave"] .wavingHand {
+  animation: sayHello 900ms cubic-bezier(0.16, 1, 0.3, 1) 1;
+}
+
+.mascot[data-pose="celebrate"] .character {
+  animation: celebrate 650ms cubic-bezier(0.16, 1, 0.3, 1) 1;
+}
+
+@keyframes sayHello {
+  0%,
+  100% { transform: rotate(0); }
+  18%,
+  58% { transform: rotate(-12deg); }
+  38%,
+  78% { transform: rotate(9deg); }
+}
+
+@keyframes celebrate {
+  0%,
+  100% { transform: translateY(0) rotate(0); }
+  38% { transform: translateY(-5px) rotate(-3deg); }
+  70% { transform: translateY(-1px) rotate(2deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mascot[data-pose] .wavingHand,
+  .mascot[data-pose] .character {
+    animation: none;
+  }
+}

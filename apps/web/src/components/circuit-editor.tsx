@@ -51,9 +51,11 @@ import {
 } from "../lib/circuit";
 import type { Lang } from "./auth";
 import { CircuitTruthTable } from "./circuit-truth-table";
+import { lockBodyScroll } from "../lib/body-scroll-lock";
 import styles from "./circuit-workspace.module.css";
 
 export type CircuitQuestionReference = { title?: string; content: ReactNode };
+export type CircuitActivity = "circuit-connected" | "circuit-settings" | "input-toggled" | "component-added" | "circuit-deleted" | "circuit-undo" | "circuit-redo" | "circuit-downloaded" | "circuit-expanded" | "circuit-simulated" | "circuit-stopped" | "clock-stepped" | "simulation-reset" | "truth-table-generated";
 
 type GateNode = Node<{ part: Part; simulation: Simulation | null }, "gate">;
 const signalText = (v: Signal | undefined, bits = 1) =>
@@ -239,12 +241,18 @@ export default function CircuitEditor({
   lang,
   readOnly = false,
   question,
+  onActivity,
+  guide,
 }: {
   value: Circuit;
   onChange?: (c: Circuit) => void;
   lang: Lang;
   readOnly?: boolean;
   question?: CircuitQuestionReference;
+  /** Optional local interaction observer; never affects the saved circuit. */
+  onActivity?: (activity: CircuitActivity) => void;
+  /** Keeps an introduction coach in the browser's top layer when expanded. */
+  guide?: ReactNode;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [selected, setSelected] = useState<string | null>(null),
@@ -277,9 +285,7 @@ export default function CircuitEditor({
     if (full) {
       if (element.open) element.close();
       element.showModal();
-      const previousOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => { document.body.style.overflow = previousOverflow; };
+      return lockBodyScroll();
     }
     if (element.matches(":modal")) {
       element.close();
@@ -330,6 +336,7 @@ export default function CircuitEditor({
       wires: [...value.wires, { ...w, id: crypto.randomUUID() }],
     });
     setNotice("");
+    onActivity?.("circuit-connected");
   }
   function updatePart(patch: Partial<Part>) {
     if (!part) return;
@@ -344,6 +351,8 @@ export default function CircuitEditor({
         ),
       );
     change(next);
+    onActivity?.("circuit-settings");
+    if ("value" in patch && (part.kind === "input" || part.kind === "constant")) onActivity?.("input-toggled");
   }
   function remove() {
     if (
@@ -363,6 +372,7 @@ export default function CircuitEditor({
     });
     setSelected(null);
     setSelectedWire(null);
+    onActivity?.("circuit-deleted");
     return true;
   }
   function handleCanvasKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -407,6 +417,7 @@ export default function CircuitEditor({
     const number = value.parts.filter((n) => n.kind === kind).length + 1;
     if (number > 1) p.label += ` ${number}`;
     change({ ...value, parts: [...value.parts, p] });
+    onActivity?.("component-added");
     setSelected(p.id);
     setSelectedWire(null);
     setTimeout(
@@ -430,6 +441,7 @@ export default function CircuitEditor({
     a.download = "jobrun-circuit.json";
     a.click();
     URL.revokeObjectURL(url);
+    onActivity?.("circuit-downloaded");
   }
   const nodes: GateNode[] = useMemo(
     () =>
@@ -492,6 +504,7 @@ export default function CircuitEditor({
                   setRedo((r) => [...r, value]);
                   onChange?.(undo.at(-1)!);
                   setUndo((u) => u.slice(0, -1));
+                  onActivity?.("circuit-undo");
                 }}
               >
                 <Undo2 size={16} />
@@ -504,6 +517,7 @@ export default function CircuitEditor({
                   setUndo((u) => [...u, value]);
                   onChange?.(redo.at(-1)!);
                   setRedo((r) => r.slice(0, -1));
+                  onActivity?.("circuit-redo");
                 }}
               >
                 <Redo2 size={16} />
@@ -542,7 +556,7 @@ export default function CircuitEditor({
           )}
           <button
             type="button"
-            onClick={() => setLayout(layout === "fullscreen" ? "expanded" : "fullscreen")}
+            onClick={() => { setLayout(layout === "fullscreen" ? "expanded" : "fullscreen"); onActivity?.("circuit-expanded"); }}
             aria-pressed={layout === "fullscreen"}
             title={layout === "fullscreen" ? t("מעבר לחלון מוגדל", "Use an expanded window") : t("מילוי שטח המסך", "Fill the screen")}
           >
@@ -553,7 +567,7 @@ export default function CircuitEditor({
             ref={expandButton}
             type="button"
             className={full ? styles.close : undefined}
-            onClick={() => setLayout(full ? "inline" : "expanded")}
+            onClick={() => { setLayout(full ? "inline" : "expanded"); if (!full) onActivity?.("circuit-expanded"); }}
           >
             {full ? <X size={16} /> : <Expand size={16} />}
             {full ? t("חזרה לתשובה", "Back to answer") : t("הרחבת הלוח", "Expand drawing")}
@@ -912,6 +926,7 @@ export default function CircuitEditor({
           onClick={() => {
             setRunning(!running);
             setSimulation(simulate(value));
+            onActivity?.(running ? "circuit-stopped" : "circuit-simulated");
           }}
         >
           {running
@@ -922,18 +937,19 @@ export default function CircuitEditor({
           <>
             <button
               type="button"
-              onClick={() =>
+              onClick={() => {
                 setSimulation((old) =>
                   simulate(value, old ?? undefined, old?.clock ? 0 : 1),
-                )
-              }
+                );
+                onActivity?.("clock-stepped");
+              }}
             >
               <StepForward size={16} />
               {t("צעד שעון", "Clock step")} · {simulation?.clock ?? 0}
             </button>
             <button
               type="button"
-              onClick={() => setSimulation(simulate(value))}
+              onClick={() => { setSimulation(simulate(value)); onActivity?.("simulation-reset"); }}
             >
               <RotateCcw size={16} />
               {t("איפוס", "Reset")}
@@ -969,7 +985,7 @@ export default function CircuitEditor({
           )}
         </p>
       )}
-      <CircuitTruthTable circuit={value} lang={lang} />
+      <CircuitTruthTable circuit={value} lang={lang} onGenerate={() => onActivity?.("truth-table-generated")} />
       {notice && (
         <p className="circuit-notice" role="status">
           {notice}
@@ -1001,6 +1017,7 @@ export default function CircuitEditor({
       aria-label={full ? t("סביבת שרטוט מורחבת", "Expanded drawing workspace") : t("עורך מעגלים", "Circuit editor")}
     >
       {content}
+      {full && guide}
     </dialog>
   );
 }

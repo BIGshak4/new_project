@@ -1,0 +1,108 @@
+.root { position: fixed; inset: 0; z-index: 400; overflow: auto; background: var(--paper); color: var(--ink); font-family: var(--font); overscroll-behavior: contain; }
+.root button { min-height: 44px; }
+:global(body):has(.root) :global(.ui-menu) { z-index: 460; }
+.root :global([data-muxi-spotlight]) { outline: 2px solid var(--link); outline-offset: 4px; scroll-margin-block: 120px; }
+.header { position: sticky; top: 0; z-index: 8; display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 84px; padding: 14px clamp(16px, 3vw, 48px); background: var(--paper); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 16px; }
+.brand > span:first-child { font-size: 25px; font-weight: 900; letter-spacing: -.035em; }
+.brandDivider { width: 1px; height: 25px; background: var(--line); }
+.brand h1 { font-size: 17px; font-weight: 500; margin: 0; }
+.headerActions { display: flex; align-items: center; gap: 8px; }
+.exit { display: flex; align-items: center; gap: 7px; background: transparent; border-color: var(--line); padding-inline: 12px; font-size: 13px; }
+.welcome { max-width: 1060px; margin-inline: auto; padding: 46px 28px 60px; }
+.welcomeIntro { display: flex; align-items: center; gap: 30px; }
+.welcomeIntro h2, .finish h2 { font-size: clamp(29px, 3vw, 43px); line-height: 1.25; margin: 0 0 16px; }
+.welcomeIntro p { max-width: 56ch; font-size: 18px; color: var(--muted); margin: 0; }
+.welcomeMascot { width: 156px; flex-shrink: 0; }
+.welcomeLead { margin: 28px 0; font-size: 18px; }
+.choices { display: grid; grid-template-columns: 1.15fr 1fr; gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.choices section { padding: 28px; display: flex; flex-direction: column; align-items: flex-start; }
+.choices h3 { font-size: 24px; line-height: 1.3; margin: 0; }
+.choices p { color: var(--muted); margin: 18px 0; }
+.choices button { margin-top: auto; }
+.fullChoice { background: var(--surface); }
+.shortChoice { border-inline-start: 1px solid var(--line); }
+.choiceTitle { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.choiceTitle span { background: var(--soft); color: var(--link); font-size: 12px; font-weight: 700; border-radius: 5px; padding: 4px 9px; }
+.choices .choiceMeta { font-size: 13px; margin-top: auto; margin-bottom: 20px; padding-top: 16px; }
+.resume { margin-top: 24px; padding-block: 18px; border-block: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.resume p { margin: 3px 0 0; color: var(--muted); }
+.welcomeFoot { margin-top: 24px; text-align: center; }
+.welcomeFoot p { max-width: 76ch; margin-inline: auto; font-size: 13px; color: var(--muted); }
+.quiet { color: var(--link); background: transparent; border-color: transparent; text-decoration: underline; text-underline-offset: 4px; font-size: 14px; }
+.tourBar { display: flex; align-items: center; gap: 18px; max-width: 1580px; margin-inline: auto; padding: 10px 24px; border-bottom: 1px solid var(--line); font-size: 14px; }
+.tourBar > span:first-child { font-weight: 700; }
+.tourBar button { background: transparent; border-color: transparent; font-size: 13px; gap: 6px; padding: 4px 8px; }
+.localNote { margin-inline-start: auto; color: var(--muted); font-size: 12px; }
+.outline { position: sticky; top: 84px; z-index: 7; display: flex; flex-wrap: wrap; gap: 7px; padding: 12px 24px; border-bottom: 1px solid var(--line); background: var(--surface); }
+.outline button { font-size: 12px; padding: 6px 12px; }
+.outline [aria-current] { color: var(--link); background: var(--soft); }
+.tourGrid { display: grid; grid-template-columns: minmax(270px, 330px) minmax(0, 1fr); gap: 32px; align-items: start; max-width: 1580px; margin-inline: auto; padding: 28px 24px 70px; }
+.coach { position: sticky; top: 112px; align-self: start; background: var(--paper); font-size: 14px; }
+.coachIdentity { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.coachIdentity > div { display: grid; gap: 5px; }
+.coachIdentity span { color: var(--muted); font-size: 12px; }
+.mascot { width: 96px; flex-shrink: 0; }
+.stationCount { margin: 8px 0; color: var(--muted); font-size: 12px; }
+.stationCount bdi { margin-inline-start: 5px; font-variant-numeric: tabular-nums; }
+.progress { display: block; appearance: none; width: 100%; height: 4px; border: 0; overflow: hidden; border-radius: 2px; background: var(--line); accent-color: var(--link); }
+.progress::-webkit-progress-bar { background: var(--line); }
+.progress::-webkit-progress-value { background: var(--link); }
+.progress::-moz-progress-bar { background: var(--link); }
+.coachTitle { font-size: 25px; line-height: 1.3; margin: 24px 0 12px; }
+.coachTitle:focus, .welcome h2:focus, .finish h2:focus { outline: none; }
+.coach > p { line-height: 1.8; }
+.task { display: flex; align-items: flex-start; gap: 9px; padding: 16px; background: var(--soft); color: var(--ink); border-radius: 9px; margin: 18px 0; }
+.task svg { flex-shrink: 0; color: var(--ok); margin-top: 3px; }
+.task strong { font-size: 14px; }
+.task p { margin: 6px 0 0; line-height: 1.7; }
+.stepActions { display: flex; gap: 8px; }
+.stepActions .primary { flex: 1; justify-content: center; }
+.hint { color: var(--muted); font-size: 12px; margin: 10px 0 0; }
+.coach > .quiet { display: block; margin-inline: auto; margin-block: 5px; }
+.coachFooter { display: flex; flex-wrap: wrap; gap: 4px 12px; border-top: 1px solid var(--line); padding-top: 8px; margin-top: 8px; }
+.coachFooter button { border: 0; background: transparent; padding: 5px 0; min-height: 44px; color: var(--muted); font-size: 12px; gap: 5px; }
+.stage { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: clamp(18px, 2vw, 30px); }
+.stage [data-muxi-target] { scroll-margin-block: 140px; }
+.stage :global(.code-answer-editor) { min-width: 0; }
+.finish { max-width: 740px; margin-inline: auto; padding: 56px 24px; text-align: center; }
+.finish > svg { display: block; margin: 0 auto 26px; }
+.finish > p { color: var(--muted); line-height: 1.8; }
+.finishActions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+.launcher { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 3px 9px; font-size: 12px; white-space: nowrap; background: var(--surface); color: var(--ink); }
+.launcherMascot { width: 32px; height: 34px; }
+.expandedCoach { position: fixed; inset-block-end: 16px; inset-inline-end: 16px; width: min(340px, calc(100vw - 32px)); max-height: calc(100dvh - 24px); overflow: hidden; z-index: 5; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); box-shadow: 0 8px 32px #0003; }
+.expandedBar { display: flex; align-items: center; gap: 5px; padding: 6px; border-bottom: 1px solid var(--line); background: var(--paper); }
+.expandedBar button { font-size: 12px; gap: 5px; padding-inline: 8px; }
+.expandedBar button:first-of-type { flex: 1; }
+.compactMascot { width: 32px; flex-shrink: 0; }
+.expandedBody { max-height: 65vh; overflow: auto; padding: 16px; }
+.expandedBody[hidden] { display: none; }
+.expandedCoach .coach { position: static; }
+.expandedCoach .coachIdentity { display: none; }
+.expandedCoach .mascot { width: 58px; }
+.expandedCoach .coachTitle { margin-top: 16px; font-size: 20px; }
+.expandedCoach .coach > p:not(.stationCount) { display: none; }
+@media (max-width: 1050px) { .tourGrid { grid-template-columns: 270px minmax(0, 1fr); gap: 20px; padding-inline: 18px; } .brand h1 { font-size: 15px; } }
+@media (max-width: 760px) {
+  .header { min-height: 74px; padding: 10px 12px; gap: 8px; flex-wrap: wrap; }
+  .brand { gap: 9px; } .brand > span:first-child { font-size: 21px; } .brand h1 { font-size: 13px; } .brandDivider { height: 20px; }
+  .headerActions { gap: 5px; } .headerActions :global(.icon-button), .headerActions :global(.language-menu-trigger) { width: 38px; min-width: 38px; }
+  .exit { font-size: 11px; padding-inline: 7px; gap: 4px; }
+  .welcome { padding: 28px 18px 40px; } .welcomeIntro { gap: 16px; align-items: flex-start; } .welcomeMascot { width: 94px; }
+  .welcomeIntro h2 { font-size: 27px; } .welcomeIntro p { font-size: 15px; } .welcomeLead { font-size: 16px; }
+  .choices { grid-template-columns: 1fr; } .choices section { padding: 22px; } .shortChoice { border-inline-start: 0; border-top: 1px solid var(--line); }
+  .choices h3 { font-size: 22px; } .choices .choiceMeta { margin-top: 0; padding-top: 0; } .choices p { margin-block: 14px; }
+  .resume { align-items: flex-start; flex-direction: column; }
+  .tourBar { gap: 8px; flex-wrap: wrap; padding: 8px 14px; } .localNote { width: 100%; margin: 0; }
+  .tourGrid { display: flex; flex-direction: column; gap: 18px; padding: 18px 14px 40px; }
+  .coach { position: static; width: 100%; } .coachIdentity { margin-bottom: 6px; } .mascot { width: 70px; } .coachTitle { margin-top: 16px; font-size: 25px; }
+  .task { margin-block: 12px; padding: 13px; } .coachFooter { justify-content: space-between; } .stage { width: 100%; padding: 18px 14px; }
+  .outline { top: 0; position: relative; padding: 12px 14px; }
+  .expandedCoach { inset-block-end: 8px; inset-inline-end: 8px; }
+  .expandedBody { max-height: 45vh; padding: 12px; }
+  .expandedCoach .coachIdentity, .expandedCoach .stationCount, .expandedCoach .progress, .expandedCoach .hint { display: none; }
+  .expandedCoach .coachTitle { margin-top: 0; } .expandedCoach .task { padding: 10px; margin-block: 10px; }
+  .launcher { padding-inline: 5px; font-size: 11px; } .launcherMascot { width: 25px; }
+}
+@media (prefers-reduced-motion: reduce) { .root *, .root *::before, .root *::after { scroll-behavior: auto; } }

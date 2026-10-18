@@ -955,3 +955,7 @@ button.primary:active {
 .solution .study-text pre { direction: ltr; unicode-bidi: isolate; line-height: 1.6; }
 #reference-solution:focus:not(:focus-visible) { outline: none; }
 #reference-solution:focus-visible { outline: 2px solid var(--link); outline-offset: 4px; }
+
+/* The replayable introduction is available before sign-in, too. */
+.muxi-public-tour { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 10px; color: var(--link); font-size: 13px; white-space: nowrap; }
+@media (max-width: 480px) { .muxi-public-tour { font-size: 11px; padding-inline: 4px; } }
