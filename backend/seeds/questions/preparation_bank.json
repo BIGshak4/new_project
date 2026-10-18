@@ -18273,5 +18273,361 @@
       },
       "source_sha256": "6716182f2c8d7166021a4570752aea316421e158fc6b938d2b4d9f5902b02897"
     }
+  },
+  {
+    "key": "prep-two-thousand-digits-adjacent-multiples",
+    "version": 1,
+    "status": "trial",
+    "origin": "user_supplied",
+    "format": "explain",
+    "practice_modes": [
+      "quick",
+      "deep"
+    ],
+    "subject": "reasoning",
+    "difficulty": 5,
+    "estimated_minutes": null,
+    "archetype": "conceptual",
+    "skills": [
+      {
+        "skill": "estimation_sanity_checks",
+        "weight": 1,
+        "primary": true
+      }
+    ],
+    "rubric": [
+      {
+        "key": "correctness",
+        "weight": 0.55,
+        "description": {
+          "en": "Satisfies the specific question and constraints; compare against the proposed reference, accepting equivalent valid approaches.",
+          "he": "עונה נכון על השאלה והאילוצים; יש לקבל גם דרך תקפה אחרת מהפתרון המוצע."
+        }
+      },
+      {
+        "key": "reasoning",
+        "weight": 0.3,
+        "description": {
+          "en": "Explains the reasoning, assumptions and any efficiency claims with justification.",
+          "he": "מסביר את הדרך, ההנחות וטענות היעילות עם הצדקה."
+        }
+      },
+      {
+        "key": "verification",
+        "weight": 0.15,
+        "description": {
+          "en": "Checks relevant examples and edge cases; identifies ambiguity instead of silently inventing requirements.",
+          "he": "בודק דוגמאות ומקרי קצה ומציין עמימות בלי להמציא דרישות."
+        }
+      }
+    ],
+    "translations": {
+      "he": {
+        "title": "מספר בן 2,000 ספרות עם זוגות שמתחלקים ב־17 או ב־23",
+        "prompt": "נתון מספר עשרוני חיובי בן 2,000 ספרות, שהספרה המשמעותית ביותר שלו היא `3`.\n\nכל שתי ספרות **סמוכות**, לפי סדר הופעתן משמאל לימין, יוצרות מספר דו־ספרתי שמתחלק ב־`17` או ב־`23` ללא שארית. בודקים גם זוגות חופפים: הספרות במקומות 1–2, אחריהן 2–3, וכן הלאה.\n\nא. אילו ערכים יכולה לקבל הספרה האחרונה?\n\nב. כמה מספרים בני 2,000 ספרות מקיימים את התנאים? נמקו מדוע הרשימה מלאה.\n\nהבהרת עריכה: במקור נכתב ״כל זוג ספרות״ בלי המילה ״סמוכות״. הנוסח הזה מגדיר את הפירוש שעליו נשענת השאלה באתר. בפתרון נפרט גם מה משתנה אם הכוונה לכל זוג מקומות, או לחלוקה לזוגות נפרדים. `MSD` פירושו הספרה המשמעותית ביותר.",
+        "requirements": "נתון מספר עשרוני חיובי בן 2,000 ספרות, שהספרה המשמעותית ביותר שלו היא `3`.\n\nכל שתי ספרות **סמוכות**, לפי סדר הופעתן משמאל לימין, יוצרות מספר דו־ספרתי שמתחלק ב־`17` או ב־`23` ללא שארית. בודקים גם זוגות חופפים: הספרות במקומות 1–2, אחריהן 2–3, וכן הלאה.\n\nא. אילו ערכים יכולה לקבל הספרה האחרונה?\n\nב. כמה מספרים בני 2,000 ספרות מקיימים את התנאים? נמקו מדוע הרשימה מלאה.\n\nהבהרת עריכה: במקור נכתב ״כל זוג ספרות״ בלי המילה ״סמוכות״. הנוסח הזה מגדיר את הפירוש שעליו נשענת השאלה באתר. בפתרון נפרט גם מה משתנה אם הכוונה לכל זוג מקומות, או לחלוקה לזוגות נפרדים. `MSD` פירושו הספרה המשמעותית ביותר.",
+        "reference_solution": "### מבהירים את התנאי\n\nהפתרון הראשי מתייחס לזוגות סמוכים וחופפים, בסדר משמאל לימין. התנאי הוא על כל זוג בנפרד; אין דרישה שכל המספר בן 2,000 הספרות יתחלק ב־17 או ב־23.\n\n### 1. מקטינים את הבעיה לרשימה קצרה\n\nלא מחפשים מספר ענק. מספיק לדעת אילו זוגות ספרות מותרים:\n\n```text\n17: 17, 34, 51, 68, 85\n23: 23, 46, 69, 92\n```\n\nזוהי הרשימה המלאה של הכפולות החיוביות בעלות שתי ספרות. התנאי ״או״ אינו משנה כאן אם מפרשים אותו ככולל או כבלעדי: אין מספר דו־ספרתי שמתחלק בשניהם, כי הכפולה המשותפת הקטנה ביותר היא `391`.\n\n### 2. חופפים את הזוגות ומתקדמים ספרה אחת בכל פעם\n\nאם מתחילים ב־`3`, הזוג הראשון חייב להיות `34`. כעת הספרה האחרונה היא `4`, ולכן הזוג הבא חייב להתחיל בה: רק `46` מתאים. לכן ההתחלה מוכרחת להיות `346`.\n\nלפי אותו רעיון מתקבלות כל האפשרויות:\n\n| הספרה הנוכחית | הספרה הבאה המותרת |\n|---|---|\n| 3 | 4 |\n| 4 | 6 |\n| 6 | 9 או 8 |\n| 9 | 2 |\n| 2 | 3 |\n| 8 | 5 |\n| 5 | 1 |\n| 1 | 7 |\n| 7 | אין המשך |\n\nאין מעבר שמגיע ל־`0`, ולכן הוא אינו יכול להופיע במספר הזה. לא צריך לשער זאת מראש: זה נובע מהרשימה.\n\n```text\ncycle: 3 -> 4 -> 6 -> 9 -> 2 -> 3\nexit:            6 -> 8 -> 5 -> 1 -> 7 -> stop\n```\n\nההסתעפות היחידה היא אחרי `6`. אפשר להישאר במחזור, או לצאת למסלול שמסתיים אחרי ארבע ספרות נוספות. ברגע שיוצאים אי אפשר לחזור.\n\n### 3. נשארים במחזור עד סוף המספר\n\nהספרות במחזור חוזרות בקבוצות של חמש:\n\n```text\nposition: 1 2 3 4 5 | 6 7 8 9 10 | ...\ndigit:    3 4 6 9 2 | 3 4 6 9  2 | ...\n```\n\n`2000 = 5 * 400`, ולכן אם לא יוצאים מהמחזור, הספרה האחרונה היא `2`. המספר כולו נקבע: הבלוק `34692` חוזר 400 פעמים.\n\n### 4. האם אפשר לצאת מהמחזור לקראת הסוף?\n\nכאן קל לפספס אפשרות. למסלול היציאה מותר להסתיים בכל אחת מהספרות `8, 5, 1, 7`; אין חובה להגיע דווקא ל־`7`. אבל אם מגיעים אליה לפני המקום האחרון, המספר אינו יכול להימשך.\n\nהספרה `6` מופיעה במחזור במקומות `3 + 5k`, כאשר `k` הוא מספר שלם לא שלילי. אחרי יציאה ממקום כזה אפשר להוסיף לכל היותר ארבע ספרות. לכן, אם יוצאים במספר בן 2,000 ספרות, חייב להתקיים:\n\n```text\n1 <= 2000 - (3 + 5k) <= 4\n```\n\nההפרש חייב להיות בין 1 ל־4, ובו בזמן הוא שקול ל־2 מודולו 5. האפשרות היחידה היא `2`: יוצאים מה־`6` שבמקום `1998`, מוסיפים `8` במקום `1999` ואז `5` במקום `2000`.\n\nיציאה מוקדמת יותר אינה אפשרית: ה־`6` הקודמת נמצאת במקום `1993`, וממנה מגיעים ל־`7` כבר במקום `1997`, בלי דרך להוסיף שלוש ספרות נוספות. כל יציאה מוקדמת ממנה נתקעת אף מוקדם יותר.\n\n### התשובות לשני הסעיפים\n\n**א. הספרה האחרונה יכולה להיות `2` או `5`; היא אינה נקבעת באופן יחיד.**\n\n**ב. יש בדיוק שני מספרים שונים בני 2,000 ספרות, אחד לכל ספרה אחרונה:**\n\n```python\nfirst  = \"34692\" * 400\nsecond = \"34692\" * 399 + \"34685\"\n```\n\nהכוכבית כאן מציינת חזרה של מחרוזת, ולא כפל של הערך המספרי. בכל אחד מהמספרים יש בדיוק 2,000 ספרות. בזוגות שעל גבול בלוקים מופיע `23`, שגם הוא מותר. במקרה השני הסיום מכיל את הזוגות `34, 46, 68, 85`.\n\n### למה אלה כל הפתרונות?\n\nרשימת הזוגות ממצה, ולכן כל מספר תקין מתאים למסלול בתרשים. עד היציאה האפשרית, כל הצעדים מוכרחים מלבד הבחירה היחידה אחרי `6`. מסלול תקין באורך המבוקש או שאינו יוצא כלל, או שיוצא פעם אחת. הראינו שרק יציאה במקום `1998` מספיקה להגיע בדיוק לסוף. בכל אחת משתי האפשרויות כל הספרות נקבעות, ולכן אין מספרים נוספים, גם לא כאלה עם אותה ספרה אחרונה.\n\n### אימות וסיבוכיות\n\nאפשר לבדוק את התוצאה גם בלי ליצור מספר גדול: שומרים לכל ספרה את מספר הקידומות התקינות שמסתיימות בה, ומעבירים את הספירות לפי תשעת הזוגות המותרים. אחרי 1,999 מעברים מתקבלות שתי קידומות באורך 2,000, אחת שמסתיימת ב־2 ואחת ב־5. הקוד המצורף מממש זאת.\n\nלבעיה הזו הנימוק המחזורי דורש מספר קבוע של צעדים חשבוניים, במודל שבו חשבון על האורך הוא פעולה אחת; כתיבת מספר בן `n` ספרות דורשת לפחות `Omega(n)` תווים. מימוש הספירה המצורף משתמש ב־`O(n)` צעדי מעבר ובעשר ספירות בלבד. אין כאן טענה למינימום זיכרון או זמן תחת כל מודל חישוב; אם האורך עצמו אינו נכנס למילת מכונה, גם לחשבון עליו יש עלות ביטים.\n\n### אם המרצה התכוון לפירוש אחר\n\nאם ״כל זוג״ פירושו כל שני מקומות, גם לא סמוכים, בסדר הופעתם: **אין פתרון** אפילו באורך 3 שמתחיל ב־3. כל ספרה שאחרי ה־3 חייבת להיות 4, אבל שתי הספרות הבאות יוצרות `44`, שאינו מתחלק ב־17 או ב־23.\n\nאם מחלקים לזוגות נפרדים בלבד — מקומות 1–2, אחריהם 3–4 וכן הלאה — זו שאלה אחרת: הזוג הראשון הוא `34`, וכל אחד מ־999 הזוגות הנותרים יכול להיות אחד מתשעת הזוגות. יש `9**999` מספרים, והספרה האחרונה יכולה להיות כל אחת מהספרות 1–9. לכן חשוב לברר שהכוונה לזוגות **סמוכים וחופפים**.",
+        "hints": [
+          "אין צורך לכתוב מספר עם אלפי ספרות. התחילו ברשימה הקצרה של כל המספרים הדו־ספרתיים שמתחלקים ב־17 או ב־23.",
+          "שני זוגות סמוכים חולקים ספרה. אם זוג מסתיים בספרה מסוימת, הזוג הבא חייב להתחיל בה. שרטטו אילו ספרות יכולות להגיע אחרי כל ספרה, החל מ־3.",
+          "חפשו מסלול מחזורי ומסלול שאי אפשר להמשיך בו לעד. מספרו את המקומות החל מ־1 ובדקו מתי אפשר לצאת מהמחזור ועדיין להגיע בדיוק למקום 2,000."
+        ],
+        "common_errors": {},
+        "accepted_approaches": [],
+        "parity_checked": false
+      },
+      "en": {
+        "title": "A 2,000-digit number with adjacent multiples of 17 or 23",
+        "prompt": "A positive decimal integer has 2,000 digits, and its most significant digit is `3`.\n\nEvery pair of **adjacent** digits, read in their original left-to-right order, forms a two-digit number divisible by `17` or `23`. Pairs overlap: positions 1–2, then 2–3, and so on.\n\na. Which values can the last digit take?\n\nb. How many 2,000-digit integers meet the conditions? Justify completeness.\n\nEditorial clarification: the source says “every pair of digits” without explicitly saying “adjacent.” This version defines the interpretation used on the website. The solution also considers all pairs of positions and disjoint two-digit blocks. `MSD` means most significant digit.",
+        "requirements": "A positive decimal integer has 2,000 digits, and its most significant digit is `3`.\n\nEvery pair of **adjacent** digits, read in their original left-to-right order, forms a two-digit number divisible by `17` or `23`. Pairs overlap: positions 1–2, then 2–3, and so on.\n\na. Which values can the last digit take?\n\nb. How many 2,000-digit integers meet the conditions? Justify completeness.\n\nEditorial clarification: the source says “every pair of digits” without explicitly saying “adjacent.” This version defines the interpretation used on the website. The solution also considers all pairs of positions and disjoint two-digit blocks. `MSD` means most significant digit.",
+        "reference_solution": "### Clarify the rule\n\nThe main solution uses overlapping adjacent pairs in left-to-right order. Each pair must be divisible by 17 or 23; the whole 2,000-digit integer need not be divisible by either.\n\n### 1. Replace a huge integer with a short list\n\nAll positive two-digit multiples are:\n\n```text\n17: 17, 34, 51, 68, 85\n23: 23, 46, 69, 92\n```\n\nThe list is exhaustive. Inclusive versus exclusive “or” makes no difference here: the least common multiple is 391, so no two-digit number is divisible by both.\n\n### 2. Overlap consecutive pairs\n\nStarting at 3 forces pair 34. Its last digit is 4, so the next pair must start at 4: only 46 fits. The prefix is therefore 346. Applying the same rule gives:\n\n| Current digit | Allowed next digit |\n|---|---|\n| 3 | 4 |\n| 4 | 6 |\n| 6 | 9 or 8 |\n| 9 | 2 |\n| 2 | 3 |\n| 8 | 5 |\n| 5 | 1 |\n| 1 | 7 |\n| 7 | None |\n\nNo allowed pair reaches 0, so zero cannot occur in a number starting at 3.\n\n```text\ncycle: 3 -> 4 -> 6 -> 9 -> 2 -> 3\nexit:            6 -> 8 -> 5 -> 1 -> 7 -> stop\n```\n\nThe only choice occurs after 6. Staying in the cycle allows indefinite continuation; leaving it allows at most four additional digits and never returns to the cycle.\n\n### 3. Stay in the cycle\n\n```text\nposition: 1 2 3 4 5 | 6 7 8 9 10 | ...\ndigit:    3 4 6 9 2 | 3 4 6 9  2 | ...\n```\n\nSince `2000 = 5 * 400`, staying throughout ends at 2. Every digit is fixed: repeat block 34692 exactly 400 times.\n\n### 4. Can the route leave near the end?\n\nA valid finite number may stop at any digit of the exit route: 8, 5, 1 or 7. It need not reach 7, but reaching 7 before the last position makes further continuation impossible.\n\nOn the cycle, digit 6 occupies positions `3 + 5k` for nonnegative integers k. Leaving there must add between one and four digits to reach position 2,000:\n\n```text\n1 <= 2000 - (3 + 5k) <= 4\n```\n\nThe difference is congruent to 2 modulo 5, so the only possible difference is 2. Leave the 6 at position 1998, append 8 at position 1999, then 5 at position 2000.\n\nLeaving the preceding 6 at position 1993 already reaches 7 at position 1997, with no way to add the remaining three digits. Any earlier exit stops earlier still.\n\n### Answers and explicit witnesses\n\n**a. The last digit can be 2 or 5; it is not uniquely determined.**\n\n**b. Exactly two 2,000-digit integers satisfy the conditions, one per final digit:**\n\n```python\nfirst  = \"34692\" * 400\nsecond = \"34692\" * 399 + \"34685\"\n```\n\nHere `*` repeats a string rather than multiplying its numerical value. Both strings have length 2,000 and begin with 3. A block boundary produces pair 23, which is allowed. The second number ends with pairs 34, 46, 68, 85.\n\n### Completeness proof\n\nThe pair list is exhaustive, so every valid number traces a route in the digit graph. All moves before a possible exit are forced except the choice after 6. A route of the required length either never exits or exits once. Only an exit at position 1998 can reach exactly position 2000. In each case every digit is determined; therefore there are exactly two numbers, not merely two witnessed endings.\n\n### Verification and complexity\n\nAn independent implementation counts valid prefixes by their last digit, propagating ten counters along the nine legal pairs. After 1,999 transitions it gives one length-2,000 prefix ending at 2 and one ending at 5. The attached Python solution implements this without constructing a huge integer.\n\nFor this fixed graph, the cycle argument needs a constant number of arithmetic operations when the length fits a machine word. Writing an n-digit answer still requires Omega(n) output characters. The attached counting algorithm uses O(n) transition rounds and ten counters. This is not a universal minimum-time or minimum-memory claim; arithmetic on an arbitrarily large encoded length has a bit cost too.\n\n### Other possible readings of the source\n\nIf “every pair” means every pair of positions, including nonadjacent positions in original order, there is **no solution**, even of length three starting at 3. Every following digit would have to be 4 to make pair 34 with the first 3, but the next two digits would form forbidden pair 44.\n\nIf the integer is split into disjoint two-digit blocks only, the first block is 34 and each remaining block is any of the nine legal pairs. This different problem has `9**999` length-2,000 numbers, and the last digit can be any of 1 through 9. Clarify overlapping adjacency before solving.",
+        "hints": [
+          "Do not write thousands of digits. First list all two-digit multiples of 17 or 23.",
+          "Consecutive pairs share a digit: the next pair must start with the final digit of the previous pair. Draw the possible next digits, starting from 3.",
+          "Find a repeating route and a route that eventually stops. Number positions from 1, and determine when an exit from the cycle can still reach exactly position 2,000."
+        ],
+        "common_errors": {},
+        "accepted_approaches": [],
+        "parity_checked": false
+      }
+    },
+    "reuse_status": "pending_review",
+    "exposure_risk": "high",
+    "source_name": "Founder-supplied interview preparation archive",
+    "reviewed_by": null,
+    "review_notes": "Imported for founder pilot. Difficulty, technical review, rubric and reuse review pending. No mastery evidence or competitive XP.",
+    "assets": {
+      "titles": {
+        "he": "מספר בן 2,000 ספרות עם זוגות שמתחלקים ב־17 או ב־23",
+        "en": "A 2,000-digit number with adjacent multiples of 17 or 23"
+      },
+      "preparation_id": "PREP-038",
+      "collection": "interview_preparation",
+      "assessment_ready": false,
+      "difficulty_status": "unrated",
+      "source_difficulty": null,
+      "category": "logic",
+      "topics": [
+        "logic",
+        "modular_arithmetic",
+        "digit_constraints",
+        "cycles",
+        "graph_reasoning"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "related_question_ids": [],
+      "code_language": null,
+      "bank_media": [
+        {
+          "id": "asset-1",
+          "path": "prep-038/d008abf90f449d4c6948-prep-038-adjacent-digit-graph.png",
+          "filename": "prep-038-adjacent-digit-graph.png",
+          "kind": "image",
+          "role": "solution",
+          "caption": "17 / 23",
+          "source_path": "diagrams/prep-038-adjacent-digit-graph.png",
+          "sha256": "d008abf90f449d4c6948b80ec833491819d28aeae39d5414215a7327ea2082af"
+        },
+        {
+          "id": "asset-2",
+          "path": "prep-038/bdeec1ba3ee0005b14bb-prep_038_adjacent_digits.py",
+          "filename": "prep_038_adjacent_digits.py",
+          "kind": "file",
+          "role": "solution",
+          "caption": "",
+          "source_path": "solutions/prep_038_adjacent_digits.py",
+          "sha256": "bdeec1ba3ee0005b14bba06f24a6fb485736ba89776853e81ac5e7ddbd3859a8"
+        },
+        {
+          "id": "asset-3",
+          "path": "prep-038/6d85c7fd0a6ddcf83995-prep-038.png",
+          "filename": "prep-038.png",
+          "kind": "image",
+          "role": "prompt",
+          "caption": "",
+          "source_path": "sources/prep-038.png",
+          "sha256": "6d85c7fd0a6ddcf83995f08e3acd4125b939879ab5fd2e68fda8849ae25857db"
+        }
+      ],
+      "preparation_resource": {
+        "id": "PREP-038",
+        "key": "two-thousand-digits-adjacent-multiples",
+        "version": 1,
+        "created_on": "2026-10-18",
+        "category": "logical_reasoning",
+        "topic": "number_theory",
+        "topics": [
+          "logic",
+          "modular_arithmetic",
+          "digit_constraints",
+          "cycles",
+          "graph_reasoning"
+        ],
+        "source_topic_tags": [
+          "hardware",
+          "logic"
+        ],
+        "added_topic_tags": [
+          "modular_arithmetic",
+          "digit_constraints",
+          "cycles",
+          "graph_reasoning"
+        ],
+        "source_tags": [
+          "hardware",
+          "nvidia",
+          "logic"
+        ],
+        "reported_companies": [
+          "NVIDIA"
+        ],
+        "source_company_badge": "NVIDIA",
+        "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+        "difficulty": null,
+        "estimated_minutes": null,
+        "format": "explain",
+        "status": "in_review",
+        "solution_status": "proposed",
+        "solution_display_label": "הצעה לפתרון",
+        "origin": "user_supplied_screenshot",
+        "reviewed_by": null,
+        "ai_assisted": true,
+        "sources": [
+          {
+            "type": "user_supplied_image",
+            "path": "sources/prep-038.png",
+            "received_on": "2026-10-18"
+          }
+        ],
+        "original_prompt": "יש מספר עם 2000 ספרות. ידוע שכל זוג ספרות במספר הן יוצרות מספר שמתחלק ב 23 או 17 ללא שארית. ידוע שהMSD של המספר היא 3.\nא. מה הספרה האחרונה?\nב. האם יש כמה פתרונות \\ אפשרויות?",
+        "translations": {
+          "he": {
+            "title": "מספר בן 2,000 ספרות עם זוגות שמתחלקים ב־17 או ב־23",
+            "prompt": "נתון מספר עשרוני חיובי בן 2,000 ספרות, שהספרה המשמעותית ביותר שלו היא `3`.\n\nכל שתי ספרות **סמוכות**, לפי סדר הופעתן משמאל לימין, יוצרות מספר דו־ספרתי שמתחלק ב־`17` או ב־`23` ללא שארית. בודקים גם זוגות חופפים: הספרות במקומות 1–2, אחריהן 2–3, וכן הלאה.\n\nא. אילו ערכים יכולה לקבל הספרה האחרונה?\n\nב. כמה מספרים בני 2,000 ספרות מקיימים את התנאים? נמקו מדוע הרשימה מלאה.\n\nהבהרת עריכה: במקור נכתב ״כל זוג ספרות״ בלי המילה ״סמוכות״. הנוסח הזה מגדיר את הפירוש שעליו נשענת השאלה באתר. בפתרון נפרט גם מה משתנה אם הכוונה לכל זוג מקומות, או לחלוקה לזוגות נפרדים. `MSD` פירושו הספרה המשמעותית ביותר.",
+            "hint": "אין צורך לכתוב מספר עם אלפי ספרות. התחילו ברשימה הקצרה של כל המספרים הדו־ספרתיים שמתחלקים ב־17 או ב־23.",
+            "hints": [
+              "אין צורך לכתוב מספר עם אלפי ספרות. התחילו ברשימה הקצרה של כל המספרים הדו־ספרתיים שמתחלקים ב־17 או ב־23.",
+              "שני זוגות סמוכים חולקים ספרה. אם זוג מסתיים בספרה מסוימת, הזוג הבא חייב להתחיל בה. שרטטו אילו ספרות יכולות להגיע אחרי כל ספרה, החל מ־3.",
+              "חפשו מסלול מחזורי ומסלול שאי אפשר להמשיך בו לעד. מספרו את המקומות החל מ־1 ובדקו מתי אפשר לצאת מהמחזור ועדיין להגיע בדיוק למקום 2,000."
+            ],
+            "reference_solution": "### מבהירים את התנאי\n\nהפתרון הראשי מתייחס לזוגות סמוכים וחופפים, בסדר משמאל לימין. התנאי הוא על כל זוג בנפרד; אין דרישה שכל המספר בן 2,000 הספרות יתחלק ב־17 או ב־23.\n\n### 1. מקטינים את הבעיה לרשימה קצרה\n\nלא מחפשים מספר ענק. מספיק לדעת אילו זוגות ספרות מותרים:\n\n```text\n17: 17, 34, 51, 68, 85\n23: 23, 46, 69, 92\n```\n\nזוהי הרשימה המלאה של הכפולות החיוביות בעלות שתי ספרות. התנאי ״או״ אינו משנה כאן אם מפרשים אותו ככולל או כבלעדי: אין מספר דו־ספרתי שמתחלק בשניהם, כי הכפולה המשותפת הקטנה ביותר היא `391`.\n\n### 2. חופפים את הזוגות ומתקדמים ספרה אחת בכל פעם\n\nאם מתחילים ב־`3`, הזוג הראשון חייב להיות `34`. כעת הספרה האחרונה היא `4`, ולכן הזוג הבא חייב להתחיל בה: רק `46` מתאים. לכן ההתחלה מוכרחת להיות `346`.\n\nלפי אותו רעיון מתקבלות כל האפשרויות:\n\n| הספרה הנוכחית | הספרה הבאה המותרת |\n|---|---|\n| 3 | 4 |\n| 4 | 6 |\n| 6 | 9 או 8 |\n| 9 | 2 |\n| 2 | 3 |\n| 8 | 5 |\n| 5 | 1 |\n| 1 | 7 |\n| 7 | אין המשך |\n\nאין מעבר שמגיע ל־`0`, ולכן הוא אינו יכול להופיע במספר הזה. לא צריך לשער זאת מראש: זה נובע מהרשימה.\n\n```text\ncycle: 3 -> 4 -> 6 -> 9 -> 2 -> 3\nexit:            6 -> 8 -> 5 -> 1 -> 7 -> stop\n```\n\nההסתעפות היחידה היא אחרי `6`. אפשר להישאר במחזור, או לצאת למסלול שמסתיים אחרי ארבע ספרות נוספות. ברגע שיוצאים אי אפשר לחזור.\n\n### 3. נשארים במחזור עד סוף המספר\n\nהספרות במחזור חוזרות בקבוצות של חמש:\n\n```text\nposition: 1 2 3 4 5 | 6 7 8 9 10 | ...\ndigit:    3 4 6 9 2 | 3 4 6 9  2 | ...\n```\n\n`2000 = 5 * 400`, ולכן אם לא יוצאים מהמחזור, הספרה האחרונה היא `2`. המספר כולו נקבע: הבלוק `34692` חוזר 400 פעמים.\n\n### 4. האם אפשר לצאת מהמחזור לקראת הסוף?\n\nכאן קל לפספס אפשרות. למסלול היציאה מותר להסתיים בכל אחת מהספרות `8, 5, 1, 7`; אין חובה להגיע דווקא ל־`7`. אבל אם מגיעים אליה לפני המקום האחרון, המספר אינו יכול להימשך.\n\nהספרה `6` מופיעה במחזור במקומות `3 + 5k`, כאשר `k` הוא מספר שלם לא שלילי. אחרי יציאה ממקום כזה אפשר להוסיף לכל היותר ארבע ספרות. לכן, אם יוצאים במספר בן 2,000 ספרות, חייב להתקיים:\n\n```text\n1 <= 2000 - (3 + 5k) <= 4\n```\n\nההפרש חייב להיות בין 1 ל־4, ובו בזמן הוא שקול ל־2 מודולו 5. האפשרות היחידה היא `2`: יוצאים מה־`6` שבמקום `1998`, מוסיפים `8` במקום `1999` ואז `5` במקום `2000`.\n\nיציאה מוקדמת יותר אינה אפשרית: ה־`6` הקודמת נמצאת במקום `1993`, וממנה מגיעים ל־`7` כבר במקום `1997`, בלי דרך להוסיף שלוש ספרות נוספות. כל יציאה מוקדמת ממנה נתקעת אף מוקדם יותר.\n\n### התשובות לשני הסעיפים\n\n**א. הספרה האחרונה יכולה להיות `2` או `5`; היא אינה נקבעת באופן יחיד.**\n\n**ב. יש בדיוק שני מספרים שונים בני 2,000 ספרות, אחד לכל ספרה אחרונה:**\n\n```python\nfirst  = \"34692\" * 400\nsecond = \"34692\" * 399 + \"34685\"\n```\n\nהכוכבית כאן מציינת חזרה של מחרוזת, ולא כפל של הערך המספרי. בכל אחד מהמספרים יש בדיוק 2,000 ספרות. בזוגות שעל גבול בלוקים מופיע `23`, שגם הוא מותר. במקרה השני הסיום מכיל את הזוגות `34, 46, 68, 85`.\n\n### למה אלה כל הפתרונות?\n\nרשימת הזוגות ממצה, ולכן כל מספר תקין מתאים למסלול בתרשים. עד היציאה האפשרית, כל הצעדים מוכרחים מלבד הבחירה היחידה אחרי `6`. מסלול תקין באורך המבוקש או שאינו יוצא כלל, או שיוצא פעם אחת. הראינו שרק יציאה במקום `1998` מספיקה להגיע בדיוק לסוף. בכל אחת משתי האפשרויות כל הספרות נקבעות, ולכן אין מספרים נוספים, גם לא כאלה עם אותה ספרה אחרונה.\n\n### אימות וסיבוכיות\n\nאפשר לבדוק את התוצאה גם בלי ליצור מספר גדול: שומרים לכל ספרה את מספר הקידומות התקינות שמסתיימות בה, ומעבירים את הספירות לפי תשעת הזוגות המותרים. אחרי 1,999 מעברים מתקבלות שתי קידומות באורך 2,000, אחת שמסתיימת ב־2 ואחת ב־5. הקוד המצורף מממש זאת.\n\nלבעיה הזו הנימוק המחזורי דורש מספר קבוע של צעדים חשבוניים, במודל שבו חשבון על האורך הוא פעולה אחת; כתיבת מספר בן `n` ספרות דורשת לפחות `Omega(n)` תווים. מימוש הספירה המצורף משתמש ב־`O(n)` צעדי מעבר ובעשר ספירות בלבד. אין כאן טענה למינימום זיכרון או זמן תחת כל מודל חישוב; אם האורך עצמו אינו נכנס למילת מכונה, גם לחשבון עליו יש עלות ביטים.\n\n### אם המרצה התכוון לפירוש אחר\n\nאם ״כל זוג״ פירושו כל שני מקומות, גם לא סמוכים, בסדר הופעתם: **אין פתרון** אפילו באורך 3 שמתחיל ב־3. כל ספרה שאחרי ה־3 חייבת להיות 4, אבל שתי הספרות הבאות יוצרות `44`, שאינו מתחלק ב־17 או ב־23.\n\nאם מחלקים לזוגות נפרדים בלבד — מקומות 1–2, אחריהם 3–4 וכן הלאה — זו שאלה אחרת: הזוג הראשון הוא `34`, וכל אחד מ־999 הזוגות הנותרים יכול להיות אחד מתשעת הזוגות. יש `9**999` מספרים, והספרה האחרונה יכולה להיות כל אחת מהספרות 1–9. לכן חשוב לברר שהכוונה לזוגות **סמוכים וחופפים**."
+          },
+          "en": {
+            "title": "A 2,000-digit number with adjacent multiples of 17 or 23",
+            "prompt": "A positive decimal integer has 2,000 digits, and its most significant digit is `3`.\n\nEvery pair of **adjacent** digits, read in their original left-to-right order, forms a two-digit number divisible by `17` or `23`. Pairs overlap: positions 1–2, then 2–3, and so on.\n\na. Which values can the last digit take?\n\nb. How many 2,000-digit integers meet the conditions? Justify completeness.\n\nEditorial clarification: the source says “every pair of digits” without explicitly saying “adjacent.” This version defines the interpretation used on the website. The solution also considers all pairs of positions and disjoint two-digit blocks. `MSD` means most significant digit.",
+            "hint": "Do not write thousands of digits. First list all two-digit multiples of 17 or 23.",
+            "hints": [
+              "Do not write thousands of digits. First list all two-digit multiples of 17 or 23.",
+              "Consecutive pairs share a digit: the next pair must start with the final digit of the previous pair. Draw the possible next digits, starting from 3.",
+              "Find a repeating route and a route that eventually stops. Number positions from 1, and determine when an exit from the cycle can still reach exactly position 2,000."
+            ],
+            "reference_solution": "### Clarify the rule\n\nThe main solution uses overlapping adjacent pairs in left-to-right order. Each pair must be divisible by 17 or 23; the whole 2,000-digit integer need not be divisible by either.\n\n### 1. Replace a huge integer with a short list\n\nAll positive two-digit multiples are:\n\n```text\n17: 17, 34, 51, 68, 85\n23: 23, 46, 69, 92\n```\n\nThe list is exhaustive. Inclusive versus exclusive “or” makes no difference here: the least common multiple is 391, so no two-digit number is divisible by both.\n\n### 2. Overlap consecutive pairs\n\nStarting at 3 forces pair 34. Its last digit is 4, so the next pair must start at 4: only 46 fits. The prefix is therefore 346. Applying the same rule gives:\n\n| Current digit | Allowed next digit |\n|---|---|\n| 3 | 4 |\n| 4 | 6 |\n| 6 | 9 or 8 |\n| 9 | 2 |\n| 2 | 3 |\n| 8 | 5 |\n| 5 | 1 |\n| 1 | 7 |\n| 7 | None |\n\nNo allowed pair reaches 0, so zero cannot occur in a number starting at 3.\n\n```text\ncycle: 3 -> 4 -> 6 -> 9 -> 2 -> 3\nexit:            6 -> 8 -> 5 -> 1 -> 7 -> stop\n```\n\nThe only choice occurs after 6. Staying in the cycle allows indefinite continuation; leaving it allows at most four additional digits and never returns to the cycle.\n\n### 3. Stay in the cycle\n\n```text\nposition: 1 2 3 4 5 | 6 7 8 9 10 | ...\ndigit:    3 4 6 9 2 | 3 4 6 9  2 | ...\n```\n\nSince `2000 = 5 * 400`, staying throughout ends at 2. Every digit is fixed: repeat block 34692 exactly 400 times.\n\n### 4. Can the route leave near the end?\n\nA valid finite number may stop at any digit of the exit route: 8, 5, 1 or 7. It need not reach 7, but reaching 7 before the last position makes further continuation impossible.\n\nOn the cycle, digit 6 occupies positions `3 + 5k` for nonnegative integers k. Leaving there must add between one and four digits to reach position 2,000:\n\n```text\n1 <= 2000 - (3 + 5k) <= 4\n```\n\nThe difference is congruent to 2 modulo 5, so the only possible difference is 2. Leave the 6 at position 1998, append 8 at position 1999, then 5 at position 2000.\n\nLeaving the preceding 6 at position 1993 already reaches 7 at position 1997, with no way to add the remaining three digits. Any earlier exit stops earlier still.\n\n### Answers and explicit witnesses\n\n**a. The last digit can be 2 or 5; it is not uniquely determined.**\n\n**b. Exactly two 2,000-digit integers satisfy the conditions, one per final digit:**\n\n```python\nfirst  = \"34692\" * 400\nsecond = \"34692\" * 399 + \"34685\"\n```\n\nHere `*` repeats a string rather than multiplying its numerical value. Both strings have length 2,000 and begin with 3. A block boundary produces pair 23, which is allowed. The second number ends with pairs 34, 46, 68, 85.\n\n### Completeness proof\n\nThe pair list is exhaustive, so every valid number traces a route in the digit graph. All moves before a possible exit are forced except the choice after 6. A route of the required length either never exits or exits once. Only an exit at position 1998 can reach exactly position 2000. In each case every digit is determined; therefore there are exactly two numbers, not merely two witnessed endings.\n\n### Verification and complexity\n\nAn independent implementation counts valid prefixes by their last digit, propagating ten counters along the nine legal pairs. After 1,999 transitions it gives one length-2,000 prefix ending at 2 and one ending at 5. The attached Python solution implements this without constructing a huge integer.\n\nFor this fixed graph, the cycle argument needs a constant number of arithmetic operations when the length fits a machine word. Writing an n-digit answer still requires Omega(n) output characters. The attached counting algorithm uses O(n) transition rounds and ten counters. This is not a universal minimum-time or minimum-memory claim; arithmetic on an arbitrarily large encoded length has a bit cost too.\n\n### Other possible readings of the source\n\nIf “every pair” means every pair of positions, including nonadjacent positions in original order, there is **no solution**, even of length three starting at 3. Every following digit would have to be 4 to make pair 34 with the first 3, but the next two digits would form forbidden pair 44.\n\nIf the integer is split into disjoint two-digit blocks only, the first block is 34 and each remaining block is any of the nine legal pairs. This different problem has `9**999` length-2,000 numbers, and the last digit can be any of 1 through 9. Clarify overlapping adjacency before solving."
+          }
+        },
+        "assumptions": [
+          "Decimal notation, exactly 2,000 digits, first digit 3.",
+          "The main solution uses overlapping adjacent pairs in original order.",
+          "The final digit need not be a dead-end state; the number stops at the specified length."
+        ],
+        "source_ambiguities": [
+          "The source omits 'adjacent'; this is an explicit editorial clarification.",
+          "All pairs of positions, even nonadjacent: no length-three-or-longer solution starting at 3.",
+          "Disjoint pairs only: 9**999 integers and final digits 1–9.",
+          "Part b is answered both for possible endings and for complete integers."
+        ],
+        "optimality": "Exhaustive legal pairs and a cycle with one exit prove the exact count. Constant many length-arithmetic operations suffice for the mathematical argument; explicit output takes linear time. No universal operation-count or memory-minimum claim.",
+        "verification": "Local checks passed: all 111,111 strings starting at 3 of lengths 1–6; independent DP for every length 1–10,000; both explicit length-2,000 witnesses; alternate interpretations and boundary cases. Code and mathematical-model validation, not expert approval. Script: checks/check_prep_038.py; report: checks/prep-038-verification.json.",
+        "edge_cases": [
+          "Length 1: only 3. Length 2: only 34. Length 3: only 346.",
+          "Length 4: 3469 or 3468; stopping partway along the exit is valid.",
+          "7 can be a final digit, but no legal digit follows it.",
+          "Zero is unreachable from 3; whether 00 is allowed does not change this result.",
+          "The cycle block boundary creates pair 23 and must also be checked."
+        ],
+        "common_mistakes": [
+          "Assuming part a must have a unique last digit.",
+          "Finding the cycle but forgetting pair 68.",
+          "Rejecting the exit because it eventually stops at 7, although the number can end earlier.",
+          "Exiting too early without checking the required total length.",
+          "Counting 2,000 transitions instead of 1,999; the first digit already exists.",
+          "Confusing adjacent pairs, disjoint blocks and all position pairs.",
+          "Requiring the digit sum or the whole integer to be divisible by 17 or 23."
+        ],
+        "interview_answer": "List the nine legal two-digit multiples and overlap pairs. Starting at 3 gives cycle `3→4→6→9→2→3`, with a one-way exit from 6 through `8→5→1→7`. Staying for 2,000 digits ends at 2. The only feasible exit is from position 1998, appending 85 and ending at 5. All other moves are forced, so exactly two numbers exist. First clarify that pairs overlap and are adjacent.",
+        "solution_extensions": "Prepared follow-up: what changes for length n? Direction: the cycle ending is element `((n-1) mod 5)` of `[3,4,6,9,2]`. For `n>=4`, an additional exit ending exists when `(n-3) mod 5` is 1, 2, 3 or 4, giving 8, 5, 1 or 7 respectively. When `n mod 5 = 3` there is only one number. Lengths 1–3 are forced: 3, 34, 346. This tests indexing and periodicity. Prepared archive content only; not wired into the interactive follow-up queue.",
+        "verification_evidence_path": "checks/prep-038-verification.json",
+        "solution_code_path": "solutions/prep_038_adjacent_digits.py",
+        "media_assets": [
+          {
+            "type": "source_image",
+            "path": "sources/prep-038.png"
+          },
+          {
+            "type": "solution_diagram",
+            "path": "diagrams/prep-038-adjacent-digit-graph.png",
+            "description": "17 / 23"
+          }
+        ],
+        "interview_relevance": {
+          "priority": "medium",
+          "label_he": "תרגול היגיון ומידול מקומי",
+          "basis": "Useful for modeling constraints and checking boundaries; not a core chip-validation technical topic or a prediction of interview questions."
+        },
+        "related_question_ids": [],
+        "duplicate_check": "No matching adjacent-digit 17/23 problem in interview_preparation, example_question or verify_example_questions; PREP-036 uses a different binary remainder FSM.",
+        "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+        "markdown_path": "questions/prep-038-two-thousand-adjacent-digits.md",
+        "learner_material": {
+          "assumptions": {
+            "he": [
+              "בסיס עשרוני, 2,000 ספרות בדיוק, הספרה הראשונה 3.",
+              "הפתרון הראשי משתמש בזוגות סמוכים וחופפים לפי סדר הופעתם.",
+              "הסיום אינו חייב להיות ספרה שאין אחריה מעבר; המספר פשוט נעצר במקום המבוקש."
+            ],
+            "en": [
+              "Decimal notation, exactly 2,000 digits, first digit 3.",
+              "The main solution uses overlapping adjacent pairs in original order.",
+              "The final digit need not be a dead-end state; the number stops at the specified length."
+            ]
+          },
+          "source_ambiguities": {
+            "he": [
+              "המילה ׳סמוכות׳ חסרה במקור; זו הבהרת עריכה גלויה.",
+              "כל זוג מקומות, כולל לא סמוכים: אין פתרון באורך שלוש ומעלה שמתחיל ב־3.",
+              "חלוקה לזוגות נפרדים בלבד: 9**999 מספרים, וספרה אחרונה 1–9.",
+              "סעיף ב נענה הן כמספר הספרות האחרונות האפשריות והן כמספר המספרים המלאים."
+            ],
+            "en": [
+              "The source omits 'adjacent'; this is an explicit editorial clarification.",
+              "All pairs of positions, even nonadjacent: no length-three-or-longer solution starting at 3.",
+              "Disjoint pairs only: 9**999 integers and final digits 1–9.",
+              "Part b is answered both for possible endings and for complete integers."
+            ]
+          },
+          "optimality": {
+            "he": "הספירה והשלמות מוכחות באמצעות רשימת זוגות ממצה ומסלול יחיד עם הסתעפות אחת. נימוק מחזורי במספר קבוע של פעולות חשבון על האורך; פלט של מספר מפורש דורש זמן לינארי באורכו. אין טענת מינימום מוחלט לזמן או לזיכרון.",
+            "en": "Exhaustive legal pairs and a cycle with one exit prove the exact count. Constant many length-arithmetic operations suffice for the mathematical argument; explicit output takes linear time. No universal operation-count or memory-minimum claim."
+          },
+          "verification": {
+            "he": "עברו בדיקות מקומיות: כל 111,111 המחרוזות שמתחילות ב־3 באורכים 1–6; חישוב עצמאי לכל אורך 1–10,000; שני המספרים המפורשים באורך 2,000; בדיקת הפירושים החלופיים ומקרי קצה. זו בדיקת קוד ומודל מתמטי, לא אישור מומחה. קוד: checks/check_prep_038.py; תוצאות: checks/prep-038-verification.json.",
+            "en": "Local checks passed: all 111,111 strings starting at 3 of lengths 1–6; independent DP for every length 1–10,000; both explicit length-2,000 witnesses; alternate interpretations and boundary cases. Code and mathematical-model validation, not expert approval. Script: checks/check_prep_038.py; report: checks/prep-038-verification.json."
+          },
+          "edge_cases": {
+            "he": [
+              "אורך 1: רק 3. אורך 2: רק 34. אורך 3: רק 346.",
+              "אורך 4: 3469 או 3468 — אפשר לעצור באמצע מסלול היציאה.",
+              "7 יכולה להיות ספרה אחרונה, אבל אי אפשר להוסיף אחריה ספרה חוקית.",
+              "אין מספר שמתחיל ב־3 ומגיע ל־0; טיפול אפשרי ב־00 אינו משנה את התשובה.",
+              "זוג חוצה גבול של בלוק מחזורי הוא 23, ולכן גם הוא חייב להיבדק."
+            ],
+            "en": [
+              "Length 1: only 3. Length 2: only 34. Length 3: only 346.",
+              "Length 4: 3469 or 3468; stopping partway along the exit is valid.",
+              "7 can be a final digit, but no legal digit follows it.",
+              "Zero is unreachable from 3; whether 00 is allowed does not change this result.",
+              "The cycle block boundary creates pair 23 and must also be checked."
+            ]
+          },
+          "common_mistakes": {
+            "he": [
+              "להניח שסעיף א חייב לתת ספרה יחידה.",
+              "לזהות את המחזור ולשכוח את המעבר 68.",
+              "לפסול יציאה רק כי היא מגיעה בסוף ל־7, אף שמותר לעצור קודם.",
+              "לצאת מוקדם מדי ולא לבדוק שהמסלול מגיע לכל 2,000 הספרות.",
+              "לספור 2,000 מעברים במקום 1,999; הספרה הראשונה כבר קיימת.",
+              "להחליף בין ספרות סמוכות, זוגות נפרדים וכל זוג מקומות.",
+              "להסיק שסכום הספרות או כל המספר חייב להתחלק ב־17 או ב־23."
+            ],
+            "en": [
+              "Assuming part a must have a unique last digit.",
+              "Finding the cycle but forgetting pair 68.",
+              "Rejecting the exit because it eventually stops at 7, although the number can end earlier.",
+              "Exiting too early without checking the required total length.",
+              "Counting 2,000 transitions instead of 1,999; the first digit already exists.",
+              "Confusing adjacent pairs, disjoint blocks and all position pairs.",
+              "Requiring the digit sum or the whole integer to be divisible by 17 or 23."
+            ]
+          },
+          "interview_answer": {
+            "he": "ארשום את תשע הכפולות הדו־ספרתיות ואחפוף זוגות סמוכים. מ־3 מתקבל המחזור `3→4→6→9→2→3`, עם יציאה מ־6 למסלול `8→5→1→7` שאין ממנו חזרה. הישארות במחזור לאורך 2,000 ספרות נותנת סיום ב־2. אפשר לצאת רק מה־6 במקום 1998 ולהוסיף 85, ולכן יש גם סיום ב־5. כל יתר הבחירות מוכרחות: בדיוק שני מספרים. אבהיר מראש שהזוגות סמוכים וחופפים.",
+            "en": "List the nine legal two-digit multiples and overlap pairs. Starting at 3 gives cycle `3→4→6→9→2→3`, with a one-way exit from 6 through `8→5→1→7`. Staying for 2,000 digits ends at 2. The only feasible exit is from position 1998, appending 85 and ending at 5. All other moves are forced, so exactly two numbers exist. First clarify that pairs overlap and are adjacent."
+          },
+          "solution_extensions": {
+            "he": "שאלת המשך מוכנה: מה משתנה אם אורך המספר הוא `n` במקום 2,000? כיוון: הספרה במחזור היא האיבר במקום `((n-1) mod 5)` ברשימה `[3,4,6,9,2]`. עבור `n>=4` יש גם סיום אחד במסלול היציאה אם `(n-3) mod 5` הוא 1, 2, 3 או 4; הסיום הוא בהתאמה 8, 5, 1 או 7. כש־`n mod 5 = 3` יש רק מספר אחד. האורכים 1–3 מוכרחים: 3, 34, 346. ההמשך בודק ספירת מקומות ומחזוריות. זהו תוכן מוכן בארכיון, שטרם חובר לתור שאלות ההמשך האינטראקטיבי.",
+            "en": "Prepared follow-up: what changes for length n? Direction: the cycle ending is element `((n-1) mod 5)` of `[3,4,6,9,2]`. For `n>=4`, an additional exit ending exists when `(n-3) mod 5` is 1, 2, 3 or 4, giving 8, 5, 1 or 7 respectively. When `n mod 5 = 3` there is only one number. Lengths 1–3 are forced: 3, 34, 346. This tests indexing and periodicity. Prepared archive content only; not wired into the interactive follow-up queue."
+          }
+        },
+        "website_editorial": {
+          "solution_added": false,
+          "hints_translated": true,
+          "human_review_pending": true,
+          "learner_text_edited": false
+        }
+      },
+      "source_sha256": "1d750bf8ae7ef6cb43b52786a2d8fc6528311934350a2916d3d410b85d65ba73"
+    }
   }
 ]

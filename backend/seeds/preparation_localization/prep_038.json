@@ -1,0 +1,82 @@
+{
+  "PREP-038": {
+    "assumptions": {
+      "he": [
+        "בסיס עשרוני, 2,000 ספרות בדיוק, הספרה הראשונה 3.",
+        "הפתרון הראשי משתמש בזוגות סמוכים וחופפים לפי סדר הופעתם.",
+        "הסיום אינו חייב להיות ספרה שאין אחריה מעבר; המספר פשוט נעצר במקום המבוקש."
+      ],
+      "en": [
+        "Decimal notation, exactly 2,000 digits, first digit 3.",
+        "The main solution uses overlapping adjacent pairs in original order.",
+        "The final digit need not be a dead-end state; the number stops at the specified length."
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המילה ׳סמוכות׳ חסרה במקור; זו הבהרת עריכה גלויה.",
+        "כל זוג מקומות, כולל לא סמוכים: אין פתרון באורך שלוש ומעלה שמתחיל ב־3.",
+        "חלוקה לזוגות נפרדים בלבד: 9**999 מספרים, וספרה אחרונה 1–9.",
+        "סעיף ב נענה הן כמספר הספרות האחרונות האפשריות והן כמספר המספרים המלאים."
+      ],
+      "en": [
+        "The source omits 'adjacent'; this is an explicit editorial clarification.",
+        "All pairs of positions, even nonadjacent: no length-three-or-longer solution starting at 3.",
+        "Disjoint pairs only: 9**999 integers and final digits 1–9.",
+        "Part b is answered both for possible endings and for complete integers."
+      ]
+    },
+    "optimality": {
+      "he": "הספירה והשלמות מוכחות באמצעות רשימת זוגות ממצה ומסלול יחיד עם הסתעפות אחת. נימוק מחזורי במספר קבוע של פעולות חשבון על האורך; פלט של מספר מפורש דורש זמן לינארי באורכו. אין טענת מינימום מוחלט לזמן או לזיכרון.",
+      "en": "Exhaustive legal pairs and a cycle with one exit prove the exact count. Constant many length-arithmetic operations suffice for the mathematical argument; explicit output takes linear time. No universal operation-count or memory-minimum claim."
+    },
+    "verification": {
+      "he": "עברו בדיקות מקומיות: כל 111,111 המחרוזות שמתחילות ב־3 באורכים 1–6; חישוב עצמאי לכל אורך 1–10,000; שני המספרים המפורשים באורך 2,000; בדיקת הפירושים החלופיים ומקרי קצה. זו בדיקת קוד ומודל מתמטי, לא אישור מומחה. קוד: checks/check_prep_038.py; תוצאות: checks/prep-038-verification.json.",
+      "en": "Local checks passed: all 111,111 strings starting at 3 of lengths 1–6; independent DP for every length 1–10,000; both explicit length-2,000 witnesses; alternate interpretations and boundary cases. Code and mathematical-model validation, not expert approval. Script: checks/check_prep_038.py; report: checks/prep-038-verification.json."
+    },
+    "edge_cases": {
+      "he": [
+        "אורך 1: רק 3. אורך 2: רק 34. אורך 3: רק 346.",
+        "אורך 4: 3469 או 3468 — אפשר לעצור באמצע מסלול היציאה.",
+        "7 יכולה להיות ספרה אחרונה, אבל אי אפשר להוסיף אחריה ספרה חוקית.",
+        "אין מספר שמתחיל ב־3 ומגיע ל־0; טיפול אפשרי ב־00 אינו משנה את התשובה.",
+        "זוג חוצה גבול של בלוק מחזורי הוא 23, ולכן גם הוא חייב להיבדק."
+      ],
+      "en": [
+        "Length 1: only 3. Length 2: only 34. Length 3: only 346.",
+        "Length 4: 3469 or 3468; stopping partway along the exit is valid.",
+        "7 can be a final digit, but no legal digit follows it.",
+        "Zero is unreachable from 3; whether 00 is allowed does not change this result.",
+        "The cycle block boundary creates pair 23 and must also be checked."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להניח שסעיף א חייב לתת ספרה יחידה.",
+        "לזהות את המחזור ולשכוח את המעבר 68.",
+        "לפסול יציאה רק כי היא מגיעה בסוף ל־7, אף שמותר לעצור קודם.",
+        "לצאת מוקדם מדי ולא לבדוק שהמסלול מגיע לכל 2,000 הספרות.",
+        "לספור 2,000 מעברים במקום 1,999; הספרה הראשונה כבר קיימת.",
+        "להחליף בין ספרות סמוכות, זוגות נפרדים וכל זוג מקומות.",
+        "להסיק שסכום הספרות או כל המספר חייב להתחלק ב־17 או ב־23."
+      ],
+      "en": [
+        "Assuming part a must have a unique last digit.",
+        "Finding the cycle but forgetting pair 68.",
+        "Rejecting the exit because it eventually stops at 7, although the number can end earlier.",
+        "Exiting too early without checking the required total length.",
+        "Counting 2,000 transitions instead of 1,999; the first digit already exists.",
+        "Confusing adjacent pairs, disjoint blocks and all position pairs.",
+        "Requiring the digit sum or the whole integer to be divisible by 17 or 23."
+      ]
+    },
+    "interview_answer": {
+      "he": "ארשום את תשע הכפולות הדו־ספרתיות ואחפוף זוגות סמוכים. מ־3 מתקבל המחזור `3→4→6→9→2→3`, עם יציאה מ־6 למסלול `8→5→1→7` שאין ממנו חזרה. הישארות במחזור לאורך 2,000 ספרות נותנת סיום ב־2. אפשר לצאת רק מה־6 במקום 1998 ולהוסיף 85, ולכן יש גם סיום ב־5. כל יתר הבחירות מוכרחות: בדיוק שני מספרים. אבהיר מראש שהזוגות סמוכים וחופפים.",
+      "en": "List the nine legal two-digit multiples and overlap pairs. Starting at 3 gives cycle `3→4→6→9→2→3`, with a one-way exit from 6 through `8→5→1→7`. Staying for 2,000 digits ends at 2. The only feasible exit is from position 1998, appending 85 and ending at 5. All other moves are forced, so exactly two numbers exist. First clarify that pairs overlap and are adjacent."
+    },
+    "solution_extensions": {
+      "he": "שאלת המשך מוכנה: מה משתנה אם אורך המספר הוא `n` במקום 2,000? כיוון: הספרה במחזור היא האיבר במקום `((n-1) mod 5)` ברשימה `[3,4,6,9,2]`. עבור `n>=4` יש גם סיום אחד במסלול היציאה אם `(n-3) mod 5` הוא 1, 2, 3 או 4; הסיום הוא בהתאמה 8, 5, 1 או 7. כש־`n mod 5 = 3` יש רק מספר אחד. האורכים 1–3 מוכרחים: 3, 34, 346. ההמשך בודק ספירת מקומות ומחזוריות. זהו תוכן מוכן בארכיון, שטרם חובר לתור שאלות ההמשך האינטראקטיבי.",
+      "en": "Prepared follow-up: what changes for length n? Direction: the cycle ending is element `((n-1) mod 5)` of `[3,4,6,9,2]`. For `n>=4`, an additional exit ending exists when `(n-3) mod 5` is 1, 2, 3 or 4, giving 8, 5, 1 or 7 respectively. When `n mod 5 = 3` there is only one number. Lengths 1–3 are forced: 3, 34, 346. This tests indexing and periodicity. Prepared archive content only; not wired into the interactive follow-up queue."
+    }
+  }
+}

@@ -14,8 +14,8 @@ const outFlag = process.argv.indexOf("--out");
 const out = resolve(outFlag >= 0 ? process.argv[outFlag + 1] : join(web, "../../.impeccable/review/question-localization"));
 const edge = process.env.EDGE_PATH ?? "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
 const questions = JSON.parse(readFileSync(join(web, "../../backend/seeds/questions/preparation_bank.json"), "utf8"));
-if (questions.length !== 37 || questions.some(q => !q.assets.preparation_resource.learner_material)) {
-  throw new Error("Regenerate the 37 preparation resources with their paired learner_material before running.");
+if (questions.length !== 38 || questions.some(q => !q.assets.preparation_resource.learner_material)) {
+  throw new Error("Regenerate the 38 preparation resources with their paired learner_material before running.");
 }
 const checks = [], screenshots = [], errors = [];
 const started = Date.now();
@@ -129,7 +129,7 @@ function Fixture(){
  <button id='pending' onClick={()=>setStatus('pending')}>Pending resources</button><button id='loaded' onClick={()=>setStatus('loaded')}>Loaded resources</button>
  <button id='legacy' onClick={()=>setStatus('legacy')}>Legacy resources</button><button id='next' onClick={()=>{setIndex((index+1)%questions.length);setStatus('loaded');}}>Next question</button>
  </nav><main key={question.key} data-key={question.key} data-lang={lang} data-status={status} dir={lang==='he'?'rtl':'ltr'}>
- <p className='small muted'>{material.id} · {index+1}/37</p><h1>{question.translations[lang].title}</h1>
+ <p className='small muted'>{material.id} · {index+1}/{questions.length}</p><h1>{question.translations[lang].title}</h1>
  <section id='reference' className='reference-solution'>{reference?<StudyText text={reference} solution/>:<p>Loading reference…</p>}</section>
  {resources&&<TechnicalMaterial material={material} lang={lang}/>}</main></>;
 }createRoot(document.getElementById('root')).render(<Fixture/>);`;
@@ -194,7 +194,7 @@ function Fixture(){
     const restored = await facts();
     check(`${question.key}: switching back restores Hebrew reference`, restored.reference === hebrew.reference);
     await click("#next");
-    console.log(`CHECKED ${i + 1}/37 ${question.key}`);
+    console.log(`CHECKED ${i + 1}/${questions.length} ${question.key}`);
   }
   for (const [device, width, height] of [["desktop", 1440, 1000], ["mobile", 390, 844]]) {
     await send("Emulation.setDeviceMetricsOverride", { width, height, deviceScaleFactor: 1, mobile: device === "mobile" });

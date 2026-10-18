@@ -111,14 +111,14 @@ class TestTheLibrary:
         svc, _ = practice(catalog)
         everything = await svc.list_questions(language="en")
         expected_hidden = {"embedded_firmware": 5, "software": 20, "digital_design": 13, "fpga": 13, "verification": 0,
-                           "student_general": 0}                                 # the bank of 2026-10-15 (67 questions)
+                           "student_general": 0}                                 # the bank of 2026-10-18 (68 questions)
         for key, job in catalog.job_types.items():
             hidden = {r.key for r in everything if job.excludes(catalog.questions[r.key].primary_skill)}
             rows = await svc.list_questions(language="en", job=key)
             assert len(rows) == len(everything) - len(hidden), key
             assert not ({r.key for r in rows} & hidden), key
             assert all(key in r.job_types and r.relevance is not None for r in rows), key
-            if len(everything) == 67:
+            if len(everything) == 68:
                 assert len(hidden) == expected_hidden[key], key
 
     async def test_the_job_tags_on_a_question_use_the_same_rule(self, catalog):

@@ -39,7 +39,7 @@ PRIMARY = [
     "estimation_sanity_checks", "basic_data_structures", "bit_manipulation", "estimation_sanity_checks",
     "estimation_sanity_checks", "debugging_methodology", "combinational_blocks", "basic_data_structures",
     "estimation_sanity_checks", "binary_arithmetic", "arrays_and_search", "fsm_state_tables",
-    "basic_data_structures",
+    "basic_data_structures", "estimation_sanity_checks",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.
@@ -111,6 +111,8 @@ def load():
     localizations = load_material_localizations()
     if set(localizations) != {q["id"] for q in source["questions"]}:
         raise ValueError("Technical translations must cover the complete preparation archive")
+    if len(PRIMARY) != len(source["questions"]):
+        raise ValueError("Primary skill mapping must cover the complete preparation archive")
     skill_subject = {}
     for p in (SEEDS / "skills").glob("*.json"):
         for skill in json.loads(p.read_text(encoding="utf-8")):
