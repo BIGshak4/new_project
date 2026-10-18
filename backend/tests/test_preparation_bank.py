@@ -152,7 +152,7 @@ async def test_unsafe_storage_path_is_rejected_before_network():
 async def test_archive_screenshots_never_receive_learner_links(catalog):
     archive = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])
                if m.get("source_path", "").startswith("sources/")]
-    assert len(archive) == 51
+    assert len(archive) == 52
     # No credentials or network needed: the boundary applies before signing.
     assert await question_resources.sign_media(archive, "", "") == []
     all_media = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])]

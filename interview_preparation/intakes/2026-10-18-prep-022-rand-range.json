@@ -1,0 +1,52 @@
+{
+  "received_on": "2026-10-18",
+  "question_id": "PREP-022",
+  "question_key": "prep-random-permutation-fisher-yates",
+  "decision": "linked_source_and_api_variant_under_existing_question",
+  "variant_key": "hundred-array-rand-range",
+  "source": {
+    "path": "sources/prep-022-hundred-array-rand-range-2026-10-18.png",
+    "sha256": "f5c4f778197f0a53fa23fbaff53fef42fb9817dd0d61d1794739e7f919105252",
+    "display_to_learners": false
+  },
+  "source_tags": [
+    "nvidia",
+    "google",
+    "logic",
+    "apple",
+    "mellanox"
+  ],
+  "reported_companies": [
+    "NVIDIA",
+    "Google",
+    "Apple",
+    "Mellanox"
+  ],
+  "source_company_badge": "Mellanox",
+  "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+  "original_text": "נתון מערך ממוין מ 1 עד 100.\nנתונה הפונקציה rand_range(min,max)\nאשר מחזירה ערך שלם רנדומלי בין min ל max.\nצריך לכתוב תכנית אשר תפזר את המספרים באופן רנדומלי במערך. ללא חזרות (כפילויות) וללא איבוד מספרים.",
+  "prior_37_other_records_unchanged": true,
+  "canonical_original_text_and_translations_preserved": true,
+  "catalog_question_count": 68,
+  "database_status": "targeted_update_applied_and_read_back",
+  "local_algorithm_paths_checked": 5914,
+  "learner_activity_written": false,
+  "follow_up_status": "prepared_not_connected_to_interactive_queue",
+  "live_authenticated_browser_clicks_performed": false,
+  "database_project": "djpwvqpsqbkvprlncjjg",
+  "database_question_id": "5251ab26-03f1-490e-8472-d028fcc88f70",
+  "backend_tests_passed": 45,
+  "local_browser_checks_passed": 15,
+  "local_browser_errors": 0,
+  "local_browser_scope": "Actual study renderer in an isolated fixture; variant prompt, Hebrew/English switching, disclosure toggles and desktop/mobile widths; not an authenticated live session or physical phone.",
+  "local_browser_evidence": ".impeccable/review/prep-022-rand-range/browser",
+  "private_storage_new_files_hash_verified": 2,
+  "backup_outside_git": "../backups/before-prep-022-rand-range-20261018.json",
+  "stable_identity_and_skill_links_preserved": true,
+  "human_review_status": "AI-assisted proposal; technical/parity/reuse review pending; trial pilot only; no mastery evidence",
+  "website_lookup": {
+    "search_he": "פרמוטציה",
+    "title_he": "פרמוטציה אקראית ללא חזרות",
+    "variant_heading_he": "גרסה נוספת: מערך נתון מ־1 עד 100"
+  }
+}

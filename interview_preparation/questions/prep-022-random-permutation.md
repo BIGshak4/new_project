@@ -161,3 +161,8 @@ An efficient non-array alternative uses a hash dictionary mapping active positio
 For (b), create [1,...,N], maintain active prefix length m, pick j=rand(m)-1, emit arr[j], swap arr[j] and arr[m-1], and decrement m. The emitted value is excluded from future draws without shifting. This is the shrinking-prefix variant of Fisher–Yates and yields exactly the same emitted values as the dictionary variant given identical draw positions. Do not print the complete array again after already emitting choices. Time Θ(N), total array space O(N), extra shuffle space O(1). For either method skip the last draw when m=1; N=0 yields nothing. Uniform conditional draws give each permutation probability 1/N!.
 
 The code provides generators permutation_with_dict and permutation_with_array; iterate and print their yielded values to avoid accumulating another output list. Both were exhaustively checked on 5,914 draw paths for N=0..7, with N! unique outputs per size, identical per-path output, exact RNG bounds, 12 larger boundary cases and invalid-input tests.
+
+
+## צילום נוסף וגרסת מערך נתון — 18 באוקטובר 2026
+
+נשמרה [גרסה מלאה עם מערך קיים 1–100 וממשק rand_range](prep-022-hundred-array-rand-range-variant.md), כולל מקור, חברות לפי הצילום, שלושה רמזים בכל שפה, פתרון, קוד ואימות. הגרסה משולבת באותה שאלה באתר; היא שונה בממשק הקלט וההגרלה ואינה שאלה נוספת במונה המאגר. נוספו שיוכי Google ו־Mellanox לפי הצילום, ללא שינוי הייחוס למקורות קודמים.

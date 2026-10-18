@@ -1,0 +1,13 @@
+{
+  "question": "PREP-022",
+  "variant": "hundred-array-rand-range",
+  "status": "passed",
+  "exhaustive_paths_n_0_to_7": 5914,
+  "distinct_outputs_each_n": "exactly n!",
+  "in_place_and_rng_bounds_checked_on_every_path": true,
+  "deterministic_boundary_runs": 10,
+  "nonstandard_input_arrays_checked": 3,
+  "invalid_rng_values_rejected": 4,
+  "calls_for_n_100": 99,
+  "scope": "Exact path-to-permutation enumeration, not a statistical or cryptographic RNG quality test."
+}

@@ -4388,11 +4388,15 @@
         "permutations",
         "fisher_yates",
         "complexity",
-        "uniform_sampling"
+        "uniform_sampling",
+        "logic",
+        "in_place_shuffle",
+        "bounded_random_rng"
       ],
       "source_topic_tags": [
         "software",
-        "algorithms-software"
+        "algorithms-software",
+        "logic"
       ],
       "added_topic_tags": [
         "randomized_algorithms",
@@ -4400,7 +4404,9 @@
         "permutations",
         "fisher_yates",
         "complexity",
-        "uniform_sampling"
+        "uniform_sampling",
+        "in_place_shuffle",
+        "bounded_random_rng"
       ],
       "source_tags": [
         "software",
@@ -4413,7 +4419,10 @@
         "intel",
         "algorithms-software",
         "amazon",
-        "nvidia"
+        "nvidia",
+        "google",
+        "logic",
+        "mellanox"
       ],
       "reported_companies": [
         "Cisco",
@@ -4424,7 +4433,9 @@
         "Marvell",
         "Intel",
         "Amazon",
-        "NVIDIA"
+        "NVIDIA",
+        "Google",
+        "Mellanox"
       ],
       "source_company_badge": "מארוול",
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
@@ -4443,6 +4454,18 @@
           "type": "user_supplied_image",
           "path": "sources/prep-022.png",
           "received_on": "2026-09-27"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-022-hundred-array-rand-range-2026-10-18.png",
+          "received_on": "2026-10-18",
+          "role": "question_variant",
+          "reported_companies": [
+            "NVIDIA",
+            "Google",
+            "Apple",
+            "Mellanox"
+          ]
         }
       ],
       "original_prompt": "נתון מספר N אי שלילי כלשהו. יש להדפיס פרמוטציה אקראית (סידור כלשהו) של כל המספרים מ־1 עד N בלי לחזור על מספר פעמיים. ממש בצורה היעילה ביותר.\nלרשותך הפונקציה rand(m), המחזירה מספר שלם רנדומלי בין 1 ל־m.\nא. ניתן לממש זאת בעזרת כל מבנה נתונים.\nב. יש לממש זאת בעזרת מערך בלבד.",
@@ -4495,7 +4518,8 @@
         "rand(m) returns an integer in 1..m inclusive.",
         "Uniform conditional draws are required for uniform permutations; not stated explicitly in source.",
         "Complexity assumes O(1) bounded RNG and word-array operations; counts output items, not decimal characters.",
-        "Part (a) includes permission to use an array; solutions need not use different structures."
+        "Part (a) includes permission to use an array; solutions need not use different structures.",
+        "In the supplied-array variant, both endpoints of rand_range(min, max) are inclusive; reuse the existing array and do not require every cell to change."
       ],
       "optimality": {
         "criterion": "Time to generate and print an explicit permutation of N values.",
@@ -4520,6 +4544,12 @@
             "script_path": "checks/check_prep_022_structures.py",
             "status": "passed",
             "method": "5914 exhaustive paths per algorithm, exactly N! outputs, identical dictionary/array output for every path, RNG bounds, 12 larger boundary cases and input validation."
+          },
+          {
+            "script_path": "checks/check_prep_022_rand_range.py",
+            "status": "passed",
+            "checked_on": "2026-10-18",
+            "method": "5914 exhaustive choice paths for n=0..7, n! distinct outputs per n, original array identity, exact inclusive two-argument RNG bounds, 10 boundary runs including length 100, 3 arbitrary arrays and 4 invalid RNG outputs."
           }
         ]
       },
@@ -4528,6 +4558,10 @@
           "type": "source_image",
           "path": "sources/prep-022.png",
           "description": "Complete question and company/topic tags."
+        },
+        {
+          "type": "source_image",
+          "path": "sources/prep-022-hundred-array-rand-range-2026-10-18.png"
         }
       ],
       "solution_code_path": "solutions/prep_022_random_permutation.py",
@@ -4559,7 +4593,71 @@
           "content_en": "### Extension: non-array part (a), array part (b)\n\nOnly N is supplied; every container is constructed by the algorithm. The source does not mandate a non-array structure in (a), nor establish an interviewer expectation. A natural set-of-used-values rejection sampler prints only new rand(N) draws. It is correct under independent uniform draws but takes N H_N = Θ(N log N) expected draws, O(N) space and has no finite worst-case draw bound. A set alone offers no constant-time uniformly indexed element selection.\n\nAn efficient non-array alternative uses a hash dictionary mapping active positions to remaining values, initialized as {1:1,...,N:N}. With active keys 1..m, pick r=rand(m), emit remaining[r], assign remaining[r]=remaining[m], delete remaining[m], then decrement m. This keeps the keys dense even when r=m. Expected Θ(N) time assumes expected O(1) hashing and bounded RNG; total storage O(N). It is not an unconditional worst-case hash-table bound. It offers no practical advantage over the array here; it satisfies the requested distinct data-structure example.\n\nFor (b), create [1,...,N], maintain active prefix length m, pick j=rand(m)-1, emit arr[j], swap arr[j] and arr[m-1], and decrement m. The emitted value is excluded from future draws without shifting. This is the shrinking-prefix variant of Fisher–Yates and yields exactly the same emitted values as the dictionary variant given identical draw positions. Do not print the complete array again after already emitting choices. Time Θ(N), total array space O(N), extra shuffle space O(1). For either method skip the last draw when m=1; N=0 yields nothing. Uniform conditional draws give each permutation probability 1/N!.\n\nThe code provides generators permutation_with_dict and permutation_with_array; iterate and print their yielded values to avoid accumulating another output list. Both were exhaustively checked on 5,914 draw paths for N=0..7, with N! unique outputs per size, identical per-path output, exact RNG bounds, 12 larger boundary cases and invalid-input tests.",
           "code_path": "solutions/prep_022_random_permutation.py",
           "check_path": "checks/check_prep_022_structures.py"
+        },
+        {
+          "key": "hundred-array-rand-range",
+          "title_he": "ערבוב המערך הנתון עם rand_range",
+          "content_he": "### גרסת המערך הנתון והפונקציה עם שני הגבולות\n\nכאן לא צריך ליצור מערך חדש: `arr` כבר מכיל בדיוק את הערכים הנדרשים. החלפה בין שני תאים שומרת על כל הערכים ועל מספר ההופעות שלהם. לכן בוחרים סדר באמצעות החלפות, במקום להגריל ערכים חדשים.\n\nמתחילים בתא האחרון, אינדקס `99`. בוחרים באקראי אינדקס מתוך `0..99` ומחליפים את האיבר שנבחר עם התא האחרון. כעת קיבענו איבר אחד, ובשלבים הבאים לא נוגעים בו. עבור התא `98` מגרילים רק מתוך `0..98`, וכן הלאה עד התא `1`. התא הראשון נותר עם האיבר האחרון שלא קובע.\n\n```text\nfor i = 99 down to 1:\n    j = rand_range(0, i)\n    swap(arr[i], arr[j])\n```\n\nכך נראית דוגמה קטנה עם חמישה איברים. הקו מפריד בין החלק הפעיל לחלק שכבר קבוע:\n\n```text\n[1, 2, 3, 4, 5]\ni=4, j=1: [1, 5, 3, 4 | 2]\ni=3, j=0: [4, 5, 3 | 1, 2]\ni=2, j=2: [4, 5 | 3, 1, 2]\ni=1, j=0: [5 | 4, 3, 1, 2]\n```\n\nמותר ש־`j=i`: זו בחירה חוקית שמשאירה את התא במקומו. בדוגמה באיטרציה `i=2` התא הוחלף עם עצמו. אם אוסרים בחירה זו, לא מקבלים את כל התמורות באותה הסתברות; עצם העובדה שהסדר השתנה אינה הוכחה לערבוב אחיד.\n\n**נכונות:** החלפות משמרות את אוסף האיברים, ולכן לא נוצרות כפילויות ולא אובדים מספרים. בתחילת כל צעד, הסיומת שאחרי i כבר קבועה והקידומת `0..i` מכילה בדיוק את האיברים שנותרו לבחירה. החלפת איבר מהקידומת עם התא i מקבעת איבר נוסף ושומרת את הטענה לצעד הבא. בסוף כל התאים נקבעים.\n\n**אחידות:** בתנאי שמקור ההגרלה אחיד בהינתן ההיסטוריה, כל אחד מ־100 האיברים נבחר לתא האחרון בסיכוי `1/100`. אחרי הבחירה, לכל אחד מ־99 הנותרים יש סיכוי `1/99` לתא הבא, וכן הלאה. לכל תמורה מסוימת יש רצף בחירות יחיד והסתברות `1/100!`. אם מקור ההגרלה מוטה, שימור הערכים עדיין מובטח אך אחידות התמורות אינה מובטחת.\n\n**עלות:** עבור מערך כללי באורך n יש `n-1` הגרלות והחלפות: זמן `Theta(n)` ו־`O(1)` מילות זיכרון עזר מעבר למערך הקיים, בהנחת הגרלה וגישה לתא בזמן קבוע. עבור 100 איברים מבצעים בדיוק 99 הגרלות. זהו סדר גודל מיטבי בזמן כאשר נדרשת אפשרות לכל תמורה: גם תמורה שמשנה מספר לינארי של תאים חייבת להיות אפשרית, וכתיבתה דורשת מספר לינארי של פעולות. הקלט עצמו תופס `Theta(n)` מקום; זיכרון העזר הוא הקבוע. אין טענה למינימום מדויק של מספר ביטים אקראיים או של קריאות אקראיות בכל מודל אפשרי.\n\n**הבדל מהממשק הקודם:** כאן קוראים ישירות ל־`rand_range(0, i)`. הממשק הישן `rand(m)` החזיר ערך ב־`1..m`, ולכן המקבילה בו היא `rand(i+1)-1`. אין להפחית 1 מתוצאת הממשק החדש. אם ספרייה מסוימת אינה כוללת את הגבול העליון, צריך להתאים את הקריאה ל־`rand_range(0, i+1)`; הנחה זו חייבת להיות מפורשת.\n\n**מימוש:** הפונקציה משנה את המערך שסופק ומחזירה `None`. אין לאתחל בתוכה רשימה חלופית ואין צורך בקבוצה של מספרים שנבחרו. אחרי הגדרת הפונקציה, הקריאה היא `shuffle_in_place(arr, rand_range)`.\n\n```python\n\"\"\"Shuffle the supplied array in place using inclusive rand_range(min, max).\"\"\"\nfrom collections.abc import Callable, MutableSequence\n\n\ndef shuffle_in_place(values: MutableSequence[int], rand_range: Callable[[int, int], int]) -> None:\n    \"\"\"O(n) swaps and O(1) auxiliary words; uniform if bounded draws are conditionally uniform.\"\"\"\n    for i in range(len(values) - 1, 0, -1):\n        j = rand_range(0, i)\n        if not isinstance(j, int) or isinstance(j, bool) or not 0 <= j <= i:\n            raise ValueError(\"rand_range(min, max) must return an integer within both inclusive bounds\")\n        values[i], values[j] = values[j], values[i]\n```\n\n**מקרי קצה וטעויות:** מערך ריק או בן איבר אחד אינו דורש הגרלה. תוצאה ממיינת או תא שנשאר במקומו אינם שגיאה. הגרלת ערכים חדשים עלולה ליצור כפילויות. החלפת כל תא עם אינדקס מכל המערך בכל שלב משמרת ערכים אך בדרך כלל נותנת התפלגות מוטה. ערבוב במקום גם משמר כל מערך נתון אחר; המיון ההתחלתי אינו דרוש לאלגוריתם.\n\n**תשובה קצרה לראיון:** אערבב את המערך הקיים במקום: מהסוף להתחלה אבחר אינדקס אחיד בין 0 לאינדקס הנוכחי, אחליף ביניהם ואקבע את התא האחרון באזור הפעיל. החלפות שומרות על האיברים, וכל בחירה היא מתוך האיברים שנותרו. בהנחת מקור אחיד מתקבלת כל תמורה בהסתברות שווה, בזמן לינארי ובזיכרון עזר קבוע.",
+          "content_en": "### Existing-array variant with a two-bound random function\n\nThe supplied array already contains every required value exactly once. Swapping cells changes order while preserving the multiset, so reorder existing values instead of generating new ones.\n\nStart at index 99. Choose an index from inclusive range 0..99 and swap the chosen value into the final cell. That cell is now fixed. For index 98 choose only from 0..98, and continue down to index 1. The first cell is left with the final unchosen value.\n\n```text\nfor i = 99 down to 1:\n    j = rand_range(0, i)\n    swap(arr[i], arr[j])\n```\n\nA five-value trace, with the fixed suffix to the right of the divider:\n\n```text\n[1, 2, 3, 4, 5]\ni=4, j=1: [1, 5, 3, 4 | 2]\ni=3, j=0: [4, 5, 3 | 1, 2]\ni=2, j=2: [4, 5 | 3, 1, 2]\ni=1, j=0: [5 | 4, 3, 1, 2]\n```\n\nAllow `j=i`. Swapping a cell with itself is valid and is necessary for this algorithm to reach all permutations uniformly. Requiring the order to change is not a correct uniformity criterion.\n\n**Correctness:** swaps preserve every value and its multiplicity. Before each step, cells after i are fixed and prefix 0..i contains exactly the remaining values. Swapping a chosen prefix value into i fixes one additional cell while preserving the invariant. At termination the complete array is a permutation of the input.\n\n**Uniformity:** assuming each bounded draw is uniform conditional on prior draws, every value has probability 1/100 of filling the last cell, then each remaining value has probability 1/99 for the next, and so on. Every complete permutation corresponds to a unique choice path with probability `1/100!`. Biased draws still preserve values but need not produce uniform permutations.\n\n**Cost:** for general length n, there are n-1 draws/swaps: Theta(n) time and O(1) auxiliary machine words beyond the existing array, assuming constant-time bounded RNG and indexed access. Length 100 uses exactly 99 draws. Linear order of growth is necessary when all permutations must be possible: some change linearly many cells and require linearly many writes. The input array itself occupies Theta(n) storage. This does not establish a minimum number of random bits or RNG calls over all computational models.\n\n**Interface distinction:** use `rand_range(0, i)` directly. The older one-argument inclusive API would use `rand(i+1)-1`. Do not subtract one from the new API's result. If a library excludes its upper endpoint, adapt the call to `rand_range(0, i+1)` and state that different contract.\n\n**Implementation:** the function mutates the supplied array and returns None. It allocates no replacement array or used-values set. Call `shuffle_in_place(arr, rand_range)` after defining it.\n\n```python\n\"\"\"Shuffle the supplied array in place using inclusive rand_range(min, max).\"\"\"\nfrom collections.abc import Callable, MutableSequence\n\n\ndef shuffle_in_place(values: MutableSequence[int], rand_range: Callable[[int, int], int]) -> None:\n    \"\"\"O(n) swaps and O(1) auxiliary words; uniform if bounded draws are conditionally uniform.\"\"\"\n    for i in range(len(values) - 1, 0, -1):\n        j = rand_range(0, i)\n        if not isinstance(j, int) or isinstance(j, bool) or not 0 <= j <= i:\n            raise ValueError(\"rand_range(min, max) must return an integer within both inclusive bounds\")\n        values[i], values[j] = values[j], values[i]\n```\n\n**Edges and mistakes:** empty/singleton arrays need no draws. A sorted result or unchanged cell is valid. Generating new random values can duplicate or lose inputs. Swapping each position with a random index from the entire array at every step preserves values but is generally biased. Initial sorted order is not needed; the algorithm preserves any supplied input multiset.\n\n**Interview answer:** work backward, draw uniformly from the remaining prefix, swap the chosen value to its boundary and shrink the prefix. Swaps preserve values, and choosing uniformly among remaining values makes every permutation equally likely. Linear time and constant extra space.",
+          "code_path": "solutions/prep_022_rand_range_shuffle.py",
+          "check_path": "checks/check_prep_022_rand_range.py"
         }
+      ],
+      "source_variants": [
+        {
+          "key": "hundred-array-rand-range",
+          "received_on": "2026-10-18",
+          "source_path": "sources/prep-022-hundred-array-rand-range-2026-10-18.png",
+          "original_prompt": "נתון מערך ממוין מ 1 עד 100.\nנתונה הפונקציה rand_range(min,max)\nאשר מחזירה ערך שלם רנדומלי בין min ל max.\nצריך לכתוב תכנית אשר תפזר את המספרים באופן רנדומלי במערך. ללא חזרות (כפילויות) וללא איבוד מספרים.",
+          "source_tags": [
+            "nvidia",
+            "google",
+            "logic",
+            "apple",
+            "mellanox"
+          ],
+          "reported_companies": [
+            "NVIDIA",
+            "Google",
+            "Apple",
+            "Mellanox"
+          ],
+          "source_company_badge": "Mellanox",
+          "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+          "relationship": "Supplied sorted 1..100 array and two-argument RNG; linked variant, not an extra catalog question.",
+          "translations": {
+            "he": {
+              "prompt": "נתון מערך המכיל את המספרים `1` עד `100`, כל אחד פעם אחת, בסדר עולה. נתונה הפונקציה `rand_range(min, max)` שמחזירה מספר שלם אקראי בטווח המבוקש.\n\nכתבו תוכנית שמערבבת את האיברים **בתוך המערך הנתון**, ללא כפילויות וללא איבוד מספרים. נתחו זמן וזיכרון עזר והסבירו מתי כל סידור מתקבל באותה הסתברות.\n\nהבהרת ממשק לצורך המימוש: שני גבולות הטווח כלולים. אחידות של כל התמורות מניחה שההגרלות אחידות בהינתן תוצאות ההגרלות הקודמות; המקור אומר ״רנדומלי״ ואינו מבטיח זאת במפורש. הסדר הממוין המקורי הוא גם סידור אפשרי תקף; אין דרישה שכל תא ישנה את ערכו.",
+              "hints": [
+                "עדיף לבחור מחדש סדר לאיברים שכבר נמצאים במערך, במקום להגריל מאה ערכים ולטפל בכפילויות. איזו פעולה משנה סדר בלי ליצור או למחוק ערכים?",
+                "חלקו את המערך לאזור שעדיין משתתף בהגרלה ולאזור שכבר קבוע. בכל צעד בחרו איבר מהאזור הפעיל והעבירו אותו לקצה שלו.",
+                "עברו מהאינדקס האחרון לכיוון ההתחלה. עבור אינדקס i, הגרילו j בטווח הסגור 0..i והחליפו בין התאים i ו־j. לאחר מכן הקטינו את האזור הפעיל באחד."
+              ],
+              "reference_solution": "### גרסת המערך הנתון והפונקציה עם שני הגבולות\n\nכאן לא צריך ליצור מערך חדש: `arr` כבר מכיל בדיוק את הערכים הנדרשים. החלפה בין שני תאים שומרת על כל הערכים ועל מספר ההופעות שלהם. לכן בוחרים סדר באמצעות החלפות, במקום להגריל ערכים חדשים.\n\nמתחילים בתא האחרון, אינדקס `99`. בוחרים באקראי אינדקס מתוך `0..99` ומחליפים את האיבר שנבחר עם התא האחרון. כעת קיבענו איבר אחד, ובשלבים הבאים לא נוגעים בו. עבור התא `98` מגרילים רק מתוך `0..98`, וכן הלאה עד התא `1`. התא הראשון נותר עם האיבר האחרון שלא קובע.\n\n```text\nfor i = 99 down to 1:\n    j = rand_range(0, i)\n    swap(arr[i], arr[j])\n```\n\nכך נראית דוגמה קטנה עם חמישה איברים. הקו מפריד בין החלק הפעיל לחלק שכבר קבוע:\n\n```text\n[1, 2, 3, 4, 5]\ni=4, j=1: [1, 5, 3, 4 | 2]\ni=3, j=0: [4, 5, 3 | 1, 2]\ni=2, j=2: [4, 5 | 3, 1, 2]\ni=1, j=0: [5 | 4, 3, 1, 2]\n```\n\nמותר ש־`j=i`: זו בחירה חוקית שמשאירה את התא במקומו. בדוגמה באיטרציה `i=2` התא הוחלף עם עצמו. אם אוסרים בחירה זו, לא מקבלים את כל התמורות באותה הסתברות; עצם העובדה שהסדר השתנה אינה הוכחה לערבוב אחיד.\n\n**נכונות:** החלפות משמרות את אוסף האיברים, ולכן לא נוצרות כפילויות ולא אובדים מספרים. בתחילת כל צעד, הסיומת שאחרי i כבר קבועה והקידומת `0..i` מכילה בדיוק את האיברים שנותרו לבחירה. החלפת איבר מהקידומת עם התא i מקבעת איבר נוסף ושומרת את הטענה לצעד הבא. בסוף כל התאים נקבעים.\n\n**אחידות:** בתנאי שמקור ההגרלה אחיד בהינתן ההיסטוריה, כל אחד מ־100 האיברים נבחר לתא האחרון בסיכוי `1/100`. אחרי הבחירה, לכל אחד מ־99 הנותרים יש סיכוי `1/99` לתא הבא, וכן הלאה. לכל תמורה מסוימת יש רצף בחירות יחיד והסתברות `1/100!`. אם מקור ההגרלה מוטה, שימור הערכים עדיין מובטח אך אחידות התמורות אינה מובטחת.\n\n**עלות:** עבור מערך כללי באורך n יש `n-1` הגרלות והחלפות: זמן `Theta(n)` ו־`O(1)` מילות זיכרון עזר מעבר למערך הקיים, בהנחת הגרלה וגישה לתא בזמן קבוע. עבור 100 איברים מבצעים בדיוק 99 הגרלות. זהו סדר גודל מיטבי בזמן כאשר נדרשת אפשרות לכל תמורה: גם תמורה שמשנה מספר לינארי של תאים חייבת להיות אפשרית, וכתיבתה דורשת מספר לינארי של פעולות. הקלט עצמו תופס `Theta(n)` מקום; זיכרון העזר הוא הקבוע. אין טענה למינימום מדויק של מספר ביטים אקראיים או של קריאות אקראיות בכל מודל אפשרי.\n\n**הבדל מהממשק הקודם:** כאן קוראים ישירות ל־`rand_range(0, i)`. הממשק הישן `rand(m)` החזיר ערך ב־`1..m`, ולכן המקבילה בו היא `rand(i+1)-1`. אין להפחית 1 מתוצאת הממשק החדש. אם ספרייה מסוימת אינה כוללת את הגבול העליון, צריך להתאים את הקריאה ל־`rand_range(0, i+1)`; הנחה זו חייבת להיות מפורשת.\n\n**מימוש:** הפונקציה משנה את המערך שסופק ומחזירה `None`. אין לאתחל בתוכה רשימה חלופית ואין צורך בקבוצה של מספרים שנבחרו. אחרי הגדרת הפונקציה, הקריאה היא `shuffle_in_place(arr, rand_range)`.\n\n```python\n\"\"\"Shuffle the supplied array in place using inclusive rand_range(min, max).\"\"\"\nfrom collections.abc import Callable, MutableSequence\n\n\ndef shuffle_in_place(values: MutableSequence[int], rand_range: Callable[[int, int], int]) -> None:\n    \"\"\"O(n) swaps and O(1) auxiliary words; uniform if bounded draws are conditionally uniform.\"\"\"\n    for i in range(len(values) - 1, 0, -1):\n        j = rand_range(0, i)\n        if not isinstance(j, int) or isinstance(j, bool) or not 0 <= j <= i:\n            raise ValueError(\"rand_range(min, max) must return an integer within both inclusive bounds\")\n        values[i], values[j] = values[j], values[i]\n```\n\n**מקרי קצה וטעויות:** מערך ריק או בן איבר אחד אינו דורש הגרלה. תוצאה ממיינת או תא שנשאר במקומו אינם שגיאה. הגרלת ערכים חדשים עלולה ליצור כפילויות. החלפת כל תא עם אינדקס מכל המערך בכל שלב משמרת ערכים אך בדרך כלל נותנת התפלגות מוטה. ערבוב במקום גם משמר כל מערך נתון אחר; המיון ההתחלתי אינו דרוש לאלגוריתם.\n\n**תשובה קצרה לראיון:** אערבב את המערך הקיים במקום: מהסוף להתחלה אבחר אינדקס אחיד בין 0 לאינדקס הנוכחי, אחליף ביניהם ואקבע את התא האחרון באזור הפעיל. החלפות שומרות על האיברים, וכל בחירה היא מתוך האיברים שנותרו. בהנחת מקור אחיד מתקבלת כל תמורה בהסתברות שווה, בזמן לינארי ובזיכרון עזר קבוע.",
+              "follow_up": "שאלת המשך מוכנה: אם צריך לבחור רק 10 מספרים שונים מהמערך, האם חייבים לערבב את כולו? כיוון: מבצעים רק 10 צעדי קיבוע; עשרת התאים בסיומת הם בחירה ללא חזרות. בהנחת מקור אחיד זו דגימה אחידה ללא החזרה. זמן O(k) עבור k בחירות מתוך מערך קיים; לא כולל יצירת המערך. ההמשך טרם חובר לתור האינטראקטיבי."
+            },
+            "en": {
+              "prompt": "An existing array contains every integer from `1` through `100` exactly once, in ascending order. The function `rand_range(min, max)` returns a random integer in the requested range.\n\nShuffle the elements **within the supplied array**, without duplicates or lost values. Analyze running time and auxiliary space, and explain when every permutation has the same probability.\n\nInterface clarification for the implementation: both endpoints are inclusive, so `min <= result <= max`. Uniform permutations require draws to be uniform conditional on earlier draws; the source only says “random” and does not explicitly promise this. The original sorted order is a valid possible outcome; not every cell must change.",
+              "hints": [
+                "Reorder the values already present instead of drawing a hundred new values and handling duplicates. Which operation changes order without creating or deleting values?",
+                "Split the array into an active region and an already fixed region. At each step choose from the active region and move the chosen value to its boundary.",
+                "Work backward from the last index. For position i, draw j uniformly from inclusive range 0..i, swap positions i and j, then shrink the active region by one."
+              ],
+              "reference_solution": "### Existing-array variant with a two-bound random function\n\nThe supplied array already contains every required value exactly once. Swapping cells changes order while preserving the multiset, so reorder existing values instead of generating new ones.\n\nStart at index 99. Choose an index from inclusive range 0..99 and swap the chosen value into the final cell. That cell is now fixed. For index 98 choose only from 0..98, and continue down to index 1. The first cell is left with the final unchosen value.\n\n```text\nfor i = 99 down to 1:\n    j = rand_range(0, i)\n    swap(arr[i], arr[j])\n```\n\nA five-value trace, with the fixed suffix to the right of the divider:\n\n```text\n[1, 2, 3, 4, 5]\ni=4, j=1: [1, 5, 3, 4 | 2]\ni=3, j=0: [4, 5, 3 | 1, 2]\ni=2, j=2: [4, 5 | 3, 1, 2]\ni=1, j=0: [5 | 4, 3, 1, 2]\n```\n\nAllow `j=i`. Swapping a cell with itself is valid and is necessary for this algorithm to reach all permutations uniformly. Requiring the order to change is not a correct uniformity criterion.\n\n**Correctness:** swaps preserve every value and its multiplicity. Before each step, cells after i are fixed and prefix 0..i contains exactly the remaining values. Swapping a chosen prefix value into i fixes one additional cell while preserving the invariant. At termination the complete array is a permutation of the input.\n\n**Uniformity:** assuming each bounded draw is uniform conditional on prior draws, every value has probability 1/100 of filling the last cell, then each remaining value has probability 1/99 for the next, and so on. Every complete permutation corresponds to a unique choice path with probability `1/100!`. Biased draws still preserve values but need not produce uniform permutations.\n\n**Cost:** for general length n, there are n-1 draws/swaps: Theta(n) time and O(1) auxiliary machine words beyond the existing array, assuming constant-time bounded RNG and indexed access. Length 100 uses exactly 99 draws. Linear order of growth is necessary when all permutations must be possible: some change linearly many cells and require linearly many writes. The input array itself occupies Theta(n) storage. This does not establish a minimum number of random bits or RNG calls over all computational models.\n\n**Interface distinction:** use `rand_range(0, i)` directly. The older one-argument inclusive API would use `rand(i+1)-1`. Do not subtract one from the new API's result. If a library excludes its upper endpoint, adapt the call to `rand_range(0, i+1)` and state that different contract.\n\n**Implementation:** the function mutates the supplied array and returns None. It allocates no replacement array or used-values set. Call `shuffle_in_place(arr, rand_range)` after defining it.\n\n```python\n\"\"\"Shuffle the supplied array in place using inclusive rand_range(min, max).\"\"\"\nfrom collections.abc import Callable, MutableSequence\n\n\ndef shuffle_in_place(values: MutableSequence[int], rand_range: Callable[[int, int], int]) -> None:\n    \"\"\"O(n) swaps and O(1) auxiliary words; uniform if bounded draws are conditionally uniform.\"\"\"\n    for i in range(len(values) - 1, 0, -1):\n        j = rand_range(0, i)\n        if not isinstance(j, int) or isinstance(j, bool) or not 0 <= j <= i:\n            raise ValueError(\"rand_range(min, max) must return an integer within both inclusive bounds\")\n        values[i], values[j] = values[j], values[i]\n```\n\n**Edges and mistakes:** empty/singleton arrays need no draws. A sorted result or unchanged cell is valid. Generating new random values can duplicate or lose inputs. Swapping each position with a random index from the entire array at every step preserves values but is generally biased. Initial sorted order is not needed; the algorithm preserves any supplied input multiset.\n\n**Interview answer:** work backward, draw uniformly from the remaining prefix, swap the chosen value to its boundary and shrink the prefix. Swaps preserve values, and choosing uniformly among remaining values makes every permutation equally likely. Linear time and constant extra space.",
+              "follow_up": "Prepared follow-up: must the entire array be shuffled to choose only 10 distinct values? Direction: perform just 10 boundary-fixing steps; the suffix holds a sample without replacement. Uniform draws give a uniform sample. O(k) steps for k selections from an existing array, excluding its construction. Not yet wired into the interactive follow-up queue."
+            }
+          },
+          "code_path": "solutions/prep_022_rand_range_shuffle.py",
+          "check_path": "checks/check_prep_022_rand_range.py",
+          "markdown_path": "questions/prep-022-hundred-array-rand-range-variant.md",
+          "ai_assisted": true,
+          "review_status": "proposed_human_review_pending",
+          "follow_up_status": "prepared_not_connected_to_interactive_queue"
+        }
+      ],
+      "solution_code_paths": [
+        "solutions/prep_022_random_permutation.py",
+        "solutions/prep_022_rand_range_shuffle.py"
       ]
     },
     {
