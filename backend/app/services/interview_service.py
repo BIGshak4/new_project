@@ -263,6 +263,8 @@ class InterviewService:
             metrics = {**outcome.metrics, "evaluator_model": result.model, "evaluator_version": result.prompt_version,
                        "eval_latency_ms": result.latency_ms, "eval_flags": list(result.flags)}
             wrapper = row["state"]
+            if not scores.related_to_question(evaluation, flags=result.flags):
+                result.flags = [*result.flags, scores.OFF_TOPIC_FLAG]
             wrapper["metrics"].append(metrics)
             notes = wrapper["notes"].setdefault(question.primary_skill, {"hit": [], "missed": []})
             notes["hit"].extend(evaluation.key_points_hit[:3])
@@ -649,8 +651,9 @@ class InterviewService:
                             mismatches=list(check.get("mismatches") or [])[:8]) if revealed and check else None,
             action_after=meta.get("action_after") if revealed else None,
             subject_switch=bool(meta.get("subject_switch", False)),
+            related=scores.OFF_TOPIC_FLAG not in (meta.get("flags") or []),
             xp_earned=(xp.answer_xp(meta["band"], difficulty=turn["difficulty"], hints_seen=int(meta.get("hint_level") or 0),
-                                    interview=True)
+                                    interview=True, related=scores.OFF_TOPIC_FLAG not in (meta.get("flags") or []))
                        if revealed and meta.get("status") == "done" and meta.get("band") else None))
 
     def _view(self, stored: StoredSession, state: SessionState) -> InterviewView:

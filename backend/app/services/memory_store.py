@@ -233,6 +233,7 @@ class _MemoryTx:
                 out.append({"day": accepted.astimezone(UTC).date().isoformat(), "band": str(s["band"]),
                             "difficulty": int(question.difficulty if question else 1), "hints_seen": int(s.get("hints_seen") or 0),
                             "reference_seen": bool(s.get("reference_seen")), "turn": int(s.get("turn") or 0), "interview": False,
+                            "related": "off_topic" not in (s.get("flags") or []),
                             "skills": self._links(a["row"]["question_key"])})
         return out
 
@@ -253,7 +254,7 @@ class _MemoryTx:
                 out.append({"day": stamp.astimezone(UTC).date().isoformat(), "band": str(meta["band"]),
                             "difficulty": int(t.get("difficulty") or 1), "hints_seen": int(meta.get("hint_level") or 0),
                             "reference_seen": False, "turn": 0, "interview": True,
-                            "skills": [[t["skill_key"], 1.0]]})
+                            "related": "off_topic" not in (meta.get("flags") or []), "skills": [[t["skill_key"], 1.0]]})
         return out
 
     # ------------------------------------------------------------------ the saved program

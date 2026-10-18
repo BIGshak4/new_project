@@ -50,6 +50,17 @@ class TestTheArithmetic:
         assert xp.answer_xp("WEAK", difficulty=1, reference_seen=True) == 1                    # 4 * 0.25 = 1
         assert xp.answer_xp("WEAK", difficulty=1, hints_seen=3, reference_seen=True, follow_up=True) == 1   # 0.2 -> 1
 
+    def test_an_unrelated_answer_earns_nothing_whatever_the_band(self):
+        """Shaked, 2026-10-18: the formula multiplies by 0 and the floor of 1 does not apply."""
+        for band in ("STRONG", "PARTIAL", "WEAK"):
+            assert xp.answer_xp(band, difficulty=8, related=False) == 0
+            assert xp.answer_xp(band, difficulty=8, related=False, interview=True) == 0
+        assert xp.answer_xp("WEAK", difficulty=1, related=True) == 4
+        rows = [{"day": "2026-10-18", "band": "WEAK", "difficulty": 3, "related": False, "skills": [["counters", 1.0]]},
+                {"day": "2026-10-18", "band": "WEAK", "difficulty": 3, "skills": [["counters", 1.0]]}]
+        answers = xp.from_rows(rows)
+        assert [a.xp for a in answers] == [0, xp.answer_xp("WEAK", difficulty=3)]
+
     def test_unscored_answers_earn_nothing(self):
         assert xp.answer_xp(None, difficulty=5) == 0
         assert xp.answer_xp("", difficulty=5) == 0
@@ -141,6 +152,40 @@ class TestOnTheService:
             stored = await tx.scored_submissions(USER)
         assert len(stored) == 1 and stored[0]["band"] == submission.band and stored[0]["turn"] == 0
         assert stored[0]["skills"] and stored[0]["interview"] is False
+
+    async def test_an_answer_about_something_else_is_graded_but_earns_no_xp(self, catalog):
+        """Shaked, 2026-10-18: "if the answer is not related at all to the question, no XP". The judge's own signal
+        marks it; the band, the feedback and the skill evidence stay as the judge returned them."""
+        from tests.conftest import make_evaluation
+        off_topic = make_evaluation(correctness=0.05, depth=0.1, behavior_signals=["answered_different_question"],
+                                    key_points_hit=[], one_line_summary="Describes a traffic light, not the majority circuit.").model_dump()
+        store = InMemoryStore(catalog)
+        svc = PracticeService(store, catalog, scripted([off_topic, GOOD]), ServiceConfig(suggest_reviewed_only=False))
+        view = await svc.start(USER, question_key=Q, mode="quick", language="en")
+        submission, attempt = await svc.submit(USER, uuid.UUID(view.id), "A traffic light cycles red, green, amber.",
+                                               idempotency_key="k1")
+        assert submission.status == "done" and submission.band == "WEAK"            # still graded
+        assert submission.related is False and "off_topic" in submission.flags
+        assert submission.xp_earned == 0 and attempt.submission.xp_earned == 0
+        progress = await svc.progress(USER, language="en")
+        assert progress.overview.xp_total == 0 and progress.overview.xp_today == 0 and progress.overview.streak_days == 0
+        assert progress.overview.answered == 1                                       # the answer itself still counts
+        # the same question answered properly afterwards earns as before
+        again = await svc.start(USER, question_key="example-masked-equality", mode="quick", language="en")
+        second, _ = await svc.submit(USER, uuid.UUID(again.id), "mask the bits, then compare", idempotency_key="k2")
+        assert second.related is True and second.xp_earned > 0
+        assert (await svc.progress(USER, language="en")).overview.xp_total == second.xp_earned
+
+    def test_the_rule_reads_only_what_the_judge_returned(self):
+        from app.engine import scores
+        from tests.conftest import make_evaluation
+        assert scores.related_to_question(make_evaluation(correctness=0.2, depth=0.2)) is True       # weak, but on topic
+        assert scores.related_to_question(make_evaluation(correctness=0.05, key_points_hit=[])) is False
+        assert scores.related_to_question(make_evaluation(correctness=0.05, key_points_hit=["states the main idea"])) is True
+        assert scores.related_to_question(make_evaluation(correctness=0.2, behavior_signals=["answered_different_question"])) is False
+        assert scores.related_to_question(make_evaluation(correctness=0.6, behavior_signals=["answered_different_question"])) is True
+        assert scores.related_to_question(None, flags=["empty_answer"]) is False
+        assert scores.related_to_question(None) is True
 
     async def test_nothing_scored_means_zero_xp_and_no_streak(self, catalog):
         svc, _ = service(catalog)

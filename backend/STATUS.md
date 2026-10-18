@@ -5,7 +5,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-10-15 (evening full check §5zm) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
+**Last updated:** 2026-10-18 (no XP for an unrelated answer §5zo; Harel's pushes checked §5zn) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
 
 ---
 
@@ -30,6 +30,7 @@ not touched again for them. When an item is done, remove its entry from `PENDING
 | 12 | **A search result starts with `source: "search"`** (review 2026-10-15) | `openQuestion` in `app/page.tsx` navigates without a source, so a question opened from a search result is reported as `library`. When the search box (or the company query) is non-empty at click time, navigate with `source: "search"` and widen `Route.source` and the URL parser. | `StartAttemptRequest.source` already accepts `search` | §5zm |
 | 13 | **The plan table's Start keeps the interview length** (review 2026-10-15) | `startPlanItem` in `app/page.tsx` does `navigate({ view: "interview" })` on `kind === "interview"`, dropping `result.interview_duration_min`; the Learn page passes it. Pass `duration: result.interview_duration_min ?? undefined` so the lobby opens at the length the plan fitted to the day. | No backend change | §5zm |
 | 14 | **Two typed fields** (review 2026-10-15) | Add `excluded_skills?: string[]` to `JobType` and `expired?: boolean` to `SkillProgress` in `practice-api.ts`, then remove both entries from `PENDING_IN_CLIENT` in `backend/tests/test_ts_client_contract.py` so the contract test guards them. An expired skill is drawn as "needs a refresh" today only because `needs_refresh` happens to be true as well. | — | §5zm |
+| 15 | **"No XP: the answer doesn't address the question"** (2026-10-18) | When `submission.related === false`, show the sentence "The answer doesn't address the question, so it earns no XP" / "התשובה לא עוסקת בשאלה, ולכן אין עליה נקודות" where the XP chip would be, and no XP animation. The band and feedback render as usual. Same for `InterviewTurn.related` in the interview report. | `Submission.related?: boolean`, `InterviewTurn.related?: boolean` (default true); `flags` includes `"off_topic"` | §5zo |
 | 8 | **Voice input, browser only** (if Shaked's dictation test is good) | A microphone button on the answer box using the browser's speech recognition in the practice language; the words land in the box and the user edits and sends as usual. Chrome and Edge only; nothing is recorded or stored. | No backend change. If accuracy on Hebrew technical terms is poor, the server-side option is a separate plan. | — |
 
 Not for the screens: a skipped follow-up earns no grade or XP; the follow-ups themselves now ask for understanding
@@ -1038,6 +1039,101 @@ row in `load_active` and `tick_item`). Harel's items from the web review are que
 the report (offline suite, the live suite on the final code, both real-model scripts, 104 web tests, 56 harness
 shots, production smoke).
 
+## 5zn. Harel's push of 16–18 October, checked on 2026-10-18 (Shaked: "check what Harel uploaded")
+
+Thirteen commits since the evening check (`4cb6c70`): a security audit with fixes on both apps and the backend
+(`security/README.md`, thirteen findings SEC-001..013, the run record `security/runs/2026-10-16-initial-audit.md`),
+interface tasks 19 (truth table in the circuit editor), 20 (browser dictation), 22 (landing page), 23 (testimonials
+scaffold), a roomier circuit workspace with the question beside it and keyboard deletion, a legal-protection plan
+(`docs/legal-protection-execution-plan-2026-10-16.md`), and the shared documents updated (tasks 11–17 and 22 approved).
+
+**Backend changes he made (all live on Render since 16 October 17:32 UTC, `source_revision` now on `/health`):**
+- **Submitted Python is no longer executed** (SEC-001, critical: a harmless candidate escaped the AST filter and read
+  a host canary). `check_code_tests` fails closed: the 7 code-test questions return `passed: null` with "Automatic
+  code execution is unavailable; the answer is reviewed as written", and the evaluator grades the code as text. The
+  runner stays only for reviewed seed self-tests (`sandbox=False`). Restoring execution needs a separately isolated
+  executor. **This is a change to how code answers are judged and is Shaked's decision to keep or to rebuild.**
+- Daily allowances (attempts, interviews) are serialised with a transaction-scoped `pg_advisory_xact_lock`
+  (`Tx.lock_usage`), the in-memory store mirrors it; an in-flight interview answer replayed with the same key returns
+  its state instead of a second model call; interview locks are released when idle.
+- Request limits: an independent per-network-peer budget (1,800/min) beside the per-token 600/min, an LRU cap of
+  10,000 buckets, only query-free GET `/health` exempt; `TTLCache` bounded (1,024 entries, ACCESS 4,096); the
+  database health probe shared and bounded (3 s, failures cached 2 s). The Dockerfile trusts forwarded headers only
+  from loopback and private ranges instead of `*`. **To verify in Render's logs:** that the proxy peer is a private
+  address; if it is public, every user shares one 1,800/min bucket and the access log shows the proxy's address.
+- PyJWT ≥ 2.15.1; the golden grade-first file updated only in the code-check fields.
+- **Two migrations applied to production by Harel on 16 October** (`20261016171103` revokes TRUNCATE / REFERENCES /
+  TRIGGER / MAINTAIN from the browser roles on all public tables; `20261016171110` adds a storage trigger that
+  enforces canonical answer-image paths, an open owned parent and 24 images per attempt / 200 per interview).
+  Verified present in `supabase_migrations.schema_migrations`. They did not go through the dry-run-and-approval loop
+  this file prescribes; the run record shows careful verification (metadata contracts, rolled-back assertions).
+  Noted, not reverted.
+
+**Verified on the merged tree (2026-10-18):** ruff clean; offline suite **967 passed, 9 skipped** (his opt-in
+database checks, which need `SECURITY_DATABASE_CONTRACT_URL` / `SECURITY_STORAGE_FIXTURE_URL`); the live suite on
+the real database **did not complete on 18 October**: the first run lost the network mid-way (every connection
+ended in a DNS failure), the second hit a 300 s wait on the pooler; the machine held no stale connections. The last
+complete live run is the evening's 18 of 18 on `4cb6c70`; Harel's backend changes since then that touch the
+database are the advisory lock in `Tx.lock_usage` and the locked interview-start check, both exercised by
+`TestProgramAhead` / the interview live tests — **to rerun when the connection is stable** (`uv run pytest
+tests/test_live_service.py tests/test_live_interview.py -q --timeout=300`, nothing else live at the same time);
+his web suite **185 passed**, typecheck clean; the harness **56 shots, no overflow**
+(timings on a busy machine: LCP median 336 ms at 390 px with one 4 s outlier; re-measure quiet before reading
+anything into it; the sign-in shots still skipped, his item 7); production smoke on his build **all 29 routes
+pass**. No writes to the question bank since 15 October 11:17 UTC; two attempts started by pilot users since the
+evening check. Lesson for this file: the offline suite needs all **three** live files ignored
+(`test_live_service.py`, `test_live_interview.py`, `test_live_db.py`); a run with only two reached the pooler while
+the live suite was using it and failed on a statement timeout that had nothing to do with the code.
+
+**His noon push of 18 October (six commits, `e5a9f35..10ac9bd`), checked the same day:** revealed solutions and
+all preparation explanations localised (`GET /v1/questions/{key}/resources` takes `language` and returns the
+`reference` in the display language once the attempt revealed it; ownership and the exposure boundary kept; tests
+added), a question publication protocol (`docs/question-publication-protocol.md`, his standing procedure for new
+questions, which states that a task is done only when the content is loaded to the database), PREP-037 archived as a
+duplicate, PREP-038 added (`prep-two-thousand-digits-adjacent-multiples`, trial). **He wrote to the live question bank
+twice today**, at 08:14 UTC (the re-localised preparation questions) and 09:55 UTC (PREP-038): the bank is 68
+questions. Again outside the dry-run-and-approval loop; his protocol makes that his normal practice, so the two of
+you should settle whether content pushes need Shaked's approval or only code and schema do. He also adjusted the
+bank counts in `test_job_fit.py` and `test_practice_service.py` (67 → 68). Production runs `10ac9bd`: smoke all 29 routes pass; ruff clean;
+offline suite **978 passed, 9 skipped** on this tree.
+
+**Open for Shaked (from his audit's "remaining work" and from this check):**
+1. Code execution: keep it off (code questions graded as written), or build an isolated executor. A middle option
+   is running the test cases in the browser (Pyodide) as a self-check whose result the evaluator reads but cannot
+   trust.
+2. Supabase Auth: enable leaked-password protection (dashboard setting).
+3. Rotate the database password and review whether the old runner was ever abused (the audit shows the boundary
+   was unsafe, not that it was used); already on the list.
+4. Confirm the proxy peer in Render's logs (above).
+5. **Expansion A, assigned to Shaked by Harel:** a follow-up question after the main answer on *every* question,
+   including the ones still in professional review, in the practice language; no XP or skill change for unreviewed
+   questions; saved on the attempt with the existing send/skip contract. Today evidence weight zero also blocks the
+   follow-up's generation. Task `4cb18277-23f9-4d74-9387-6b330e08ed2b` on the board.
+
+## 5zo. An answer unrelated to the question earns no XP (2026-10-18, Shaked: "if the answer is not related at all to the question I want it to not get XP at all")
+
+**The rule.** Each scored answer carries a boolean `related`. It is false when the judge's evaluation shows the
+answer did not address the question: the judge's own `answered_different_question` signal with correctness ≤ 0.3,
+or correctness ≤ 0.1 with no key point hit, or an empty answer (`scores.related_to_question`). Nothing is
+re-judged and the judge's prompt is unchanged: the rule only reads what Opus already returns. The band, the
+feedback card, the follow-up, the skill evidence and the plan are untouched — this is a scoring-display change,
+not an engine change.
+
+**The formula.** `xp.answer_xp(..., related=False)` multiplies by 0 and skips the floor of 1 (Shaked's framing:
+"multiply by 0 and add 0"). Because XP is recomputed from the stored answers on every read, the saved answer
+remembers the verdict as the flag `off_topic` in the flags list it already has (no new column, no migration); the
+readers (`scored_submissions`, `scored_turns`, the in-memory store) hand `related` to the formula, so the progress
+total, today's XP and the streak all ignore such answers. Interview turns follow the same rule.
+
+**Contract (queue item 15).** `SubmissionView.related: boolean` (default true) beside `xp_earned`, and
+`InterviewTurnView.related`; when false, `xp_earned` is 0 and `flags` contains `"off_topic"`. One sentence for the
+card: "The answer doesn't address the question, so it earns no XP" / "התשובה לא עוסקת בשאלה, ולכן אין עליה נקודות".
+The `answered` count on the overview still counts the answer.
+
+**Verified.** `tests/test_xp.py`: the formula at every band (practice and interview), the store rows, the rule's
+six cases, and a service flow: an off-topic evaluation → band WEAK kept, `related` false, `xp_earned` 0, progress
+XP 0 and no streak, a proper answer afterwards earns as before. Offline suite; production smoke after the deploy.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1076,6 +1172,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-18 | An answer unrelated to the question earns no XP: `related` on each scored answer, read from the judge's own output, `× 0` with no floor in the formula; band, feedback and evidence unchanged (§5zo). Harel's pushes of 16–18 October checked (§5zn) |
 | 2026-10-15 | Evening full check (§5zm, `docs/full-check-2026-10-15b.md`): five-lens review, thirteen fixes (persist under the user lock, the by-skill tick, relinked done items, the savepoint, the router's reserved days and forced deep, the seed loader, wording, one goal read less) |
 | 2026-10-15 | Task 10 (Shaked's part): every reason sentence checked against its rule; the coach's last resort gets its own code `same_skill`, after-weak wording for `advance`/`explore`, `advance` describes gap × weight, readiness and interview wording corrected (§5zl) |
 | 2026-10-15 | Task 9: the plan fits the user's minutes and never piles up: no carry-over of earlier days' items (opened or not), no item longer than the day, the interview takes the length that fits; `carried` always false (§5zk) |

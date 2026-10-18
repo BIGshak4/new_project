@@ -32,7 +32,9 @@ MODELS = {"QuestionSummary": "QuestionSummary", "QuestionDetail": "QuestionDetai
 # New backend fields the web client has not typed yet: the screen part is Harel's. Once practice-api.ts has the
 # field it is compared like every other one again; then remove the entry.
 PENDING_IN_CLIENT = {"SkillProgress": {"expired"},         # evidence older than 49 days (Shaked, 2026-10-04)
-                     "JobTypeView": {"excluded_skills"}}   # skills not part of a job type (task 8, 2026-10-15)
+                     "JobTypeView": {"excluded_skills"},   # skills not part of a job type (task 8, 2026-10-15)
+                     "SubmissionView": {"related"},        # an unrelated answer earns no XP (Shaked, 2026-10-18)
+                     "InterviewTurnView": {"related"}}
 # New routes the web client does not call yet, for the same reason; remove once practice-api.ts calls them.
 PENDING_ROUTES_IN_CLIENT: set[tuple[str, str]] = set()
 

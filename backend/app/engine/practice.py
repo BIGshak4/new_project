@@ -639,6 +639,8 @@ class PracticeAttempt:
                 question_images=question_images)
         self._record_usage(usage, "evaluate", result)
         submission.evaluator_model = result.model or getattr(ctx.provider, "model", None) or None
+        if result.ok and not scores.related_to_question(result.evaluation, flags=result.flags):
+            result.flags = [*result.flags, scores.OFF_TOPIC_FLAG]       # the saved answer remembers it: XP is computed on read
 
         flags = [*result.flags, *visual_flags]
         if self.language_fallback:

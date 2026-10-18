@@ -390,3 +390,27 @@ def needs_refresh(value: int | None) -> bool:
 def expired(value: int | None) -> bool:
     """The evidence behind a level is too old to count at all (49+ days): the skill is treated as not assessed."""
     return value is not None and value <= LOYALTY_EXPIRED_AT
+
+
+# ----------------------------------------------------------------------------- related to the question?
+
+OFF_TOPIC_CORRECTNESS = 0.1          # at or below, with no key point hit, the answer did not address the question
+OFF_TOPIC_SIGNAL_CORRECTNESS = 0.3   # the judge's "answered a different question" signal counts when correctness is this low
+OFF_TOPIC_FLAG = "off_topic"
+
+
+def related_to_question(evaluation, *, flags=()) -> bool:
+    """False when the answer did not address the question at all (Shaked, 2026-10-18: such an answer earns no XP).
+    Read from what the judge already returns, nothing is re-judged: an empty answer; the judge's own
+    `answered_different_question` signal with a low correctness; or a near-zero correctness with no key point hit.
+    The band, the evidence and the feedback are untouched by this; only the XP formula multiplies by 0."""
+    if "empty_answer" in flags:
+        return False
+    if evaluation is None:
+        return True
+    signals = set(getattr(evaluation, "behavior_signals", []) or [])
+    correctness = float(getattr(evaluation, "correctness", 1.0) or 0.0)
+    if "answered_different_question" in signals and correctness <= OFF_TOPIC_SIGNAL_CORRECTNESS:
+        return False
+    return not (correctness <= OFF_TOPIC_CORRECTNESS and not getattr(evaluation, "key_points_hit", []))
+

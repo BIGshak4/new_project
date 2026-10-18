@@ -205,8 +205,8 @@ async def scored_turns(connection: AsyncConnection, user_id: uuid.UUID, *, days:
     if days is not None:
         conditions.append(turn.c.created_at >= datetime.now(UTC) - timedelta(days=days))
     rows = (await connection.execute(
-        select(meta["band"].astext.label("band"), meta["hint_level"].astext.label("hint_level"), turn.c.difficulty,
-               turn.c.answer_submitted_at, turn.c.created_at, skill.c.key.label("skill_key"))
+        select(meta["band"].astext.label("band"), meta["hint_level"].astext.label("hint_level"), meta["flags"].label("flags"),
+               turn.c.difficulty, turn.c.answer_submitted_at, turn.c.created_at, skill.c.key.label("skill_key"))
         .join(session, session.c.id == turn.c.session_id).join(skill, skill.c.id == turn.c.skill_id)
         .where(*conditions).order_by(turn.c.created_at))).all()
     out = []
@@ -214,5 +214,5 @@ async def scored_turns(connection: AsyncConnection, user_id: uuid.UUID, *, days:
         when = r.answer_submitted_at or r.created_at
         out.append({"day": when.astimezone(UTC).date().isoformat(), "band": str(r.band), "difficulty": int(r.difficulty or 1),
                     "hints_seen": int(r.hint_level or 0), "reference_seen": False, "turn": 0, "interview": True,
-                    "skills": [[r.skill_key, 1.0]]})
+                    "related": "off_topic" not in (r.flags or []), "skills": [[r.skill_key, 1.0]]})
     return out

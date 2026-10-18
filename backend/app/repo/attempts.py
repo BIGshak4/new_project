@@ -279,10 +279,11 @@ async def scored_submissions(connection: AsyncConnection, user_id: uuid.UUID, *,
         conditions.append(submission.c.accepted_at >= datetime.now(UTC) - timedelta(days=days))
     rows = (await connection.execute(
         select(submission.c.accepted_at, submission.c.band, submission.c.turn, submission.c.hints_seen,
-               submission.c.reference_seen, question.c.difficulty, attempt.c.question_id)
+               submission.c.reference_seen, submission.c.flags, question.c.difficulty, attempt.c.question_id)
         .join(attempt, attempt.c.id == submission.c.attempt_id).join(question, question.c.id == attempt.c.question_id)
         .where(*conditions).order_by(submission.c.accepted_at))).all()
     links = await skill_links(connection, {r.question_id for r in rows})
     return [{"day": r.accepted_at.astimezone(UTC).date().isoformat(), "band": str(r.band), "difficulty": int(r.difficulty or 1),
              "hints_seen": int(r.hints_seen or 0), "reference_seen": bool(r.reference_seen), "turn": int(r.turn or 0),
-             "interview": False, "skills": links.get(r.question_id, [])} for r in rows]
+             "interview": False, "related": "off_topic" not in (r.flags or []),
+             "skills": links.get(r.question_id, [])} for r in rows]

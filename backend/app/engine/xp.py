@@ -40,10 +40,12 @@ def hint_factor(hints_seen: int) -> float:
 
 
 def answer_xp(band: str | None, *, difficulty: int, hints_seen: int = 0, reference_seen: bool = False,
-              follow_up: bool = False, interview: bool = False) -> int:
-    """XP for one scored answer. 0 when there is no band (unscored, failed, still evaluating)."""
+              follow_up: bool = False, interview: bool = False, related: bool = True) -> int:
+    """XP for one scored answer. 0 when there is no band (unscored, failed, still evaluating), and 0 when the answer
+    did not address the question (`related` false: the formula multiplies by 0 and the floor does not apply;
+    Shaked, 2026-10-18). The grade itself is unchanged by this."""
     base = BAND_XP.get(str(band).upper()) if band else None
-    if base is None:
+    if base is None or not related:
         return 0
     value = base * difficulty_factor(difficulty) * hint_factor(hints_seen)
     if reference_seen:
@@ -112,11 +114,12 @@ class ScoredAnswer:
     reference_seen: bool = False
     follow_up: bool = False
     interview: bool = False
+    related: bool = True                           # false: the answer did not address the question; it earns nothing
     skills: list[tuple[str, float]] = field(default_factory=list)   # (skill key, link weight)
 
     @property
     def xp(self) -> int:
-        return answer_xp(self.band, difficulty=self.difficulty, hints_seen=self.hints_seen,
+        return answer_xp(self.band, difficulty=self.difficulty, hints_seen=self.hints_seen, related=self.related,
                          reference_seen=self.reference_seen, follow_up=self.follow_up, interview=self.interview)
 
 
@@ -158,5 +161,6 @@ def from_rows(rows: Iterable[dict]) -> list[ScoredAnswer]:
         out.append(ScoredAnswer(day=str(r["day"])[:10], band=r.get("band"), difficulty=int(r.get("difficulty") or 1),
                                 hints_seen=int(r.get("hints_seen") or 0), reference_seen=bool(r.get("reference_seen")),
                                 follow_up=follow_up, interview=bool(r.get("interview")),
+                                related=bool(r.get("related", True)),
                                 skills=[(str(k), float(w)) for k, w in (r.get("skills") or [])]))
     return out

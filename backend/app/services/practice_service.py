@@ -1530,7 +1530,8 @@ class PracticeService:
         if "content_review_pending" in submission.flags:
             return 0
         return xp.answer_xp(submission.band.value, difficulty=attempt.question.difficulty, hints_seen=submission.hints_seen,
-                            reference_seen=submission.reference_seen, follow_up=submission.turn > 0)
+                            reference_seen=submission.reference_seen, follow_up=submission.turn > 0,
+                            related=scores.OFF_TOPIC_FLAG not in submission.flags)
 
     @staticmethod
     def _submission_view(submission, outcome: PracticeOutcome | None = None, next_question: dict | None = None,
@@ -1559,6 +1560,7 @@ class PracticeService:
             evidence="none" if submission.status != EvaluationStatus.DONE or weight <= 0 else "full" if weight >= 1 else "reduced",
             flags=list(submission.flags), replayed=bool(outcome.replayed) if outcome is not None else False,
             next_question=PracticeService._next_view(next_question), xp_earned=xp_earned,
+            related=scores.OFF_TOPIC_FLAG not in submission.flags,
             feedback_pending=submission.feedback_pending)
 
     def _view(self, attempt: PracticeAttempt, stored: StoredAttempt, loaded: LoadedQuestion, language: str) -> AttemptView:
