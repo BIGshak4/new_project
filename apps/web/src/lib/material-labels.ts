@@ -12,6 +12,7 @@ const hebrew: Record<string, string> = {
   additional_checks: "בדיקות נוספות", cases: "מקרים", case: "מקרה", inputs: "כניסות", input: "קלט",
   outputs: "יציאות", output: "פלט", initial_state: "מצב התחלתי", next_state: "המצב הבא",
   states: "מצבים", state_encoding: "קידוד המצבים", symbols: "סימונים", initialization: "אתחול",
+  opening: "אופן הפתיחה", timing: "תזמון",
   type: "סוג", order: "סדר", layers: "רמות", component_count: "מספר הרכיבים", count: "מספר",
   counts_by_type: "מספר הרכיבים מכל סוג", FA_count: "מספר המחברים המלאים",
   one_bit_mux_count: "מספר הבוררים של ביט אחד", logical_register_blocks_required: "מספר בלוקי האוגרים הדרוש",

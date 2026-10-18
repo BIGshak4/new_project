@@ -1,0 +1,28 @@
+{
+  "question_id": "PREP-041",
+  "interpretation": "A permutation of 1..n has one or two distinct values removed and hidden",
+  "counts": {
+    "single_n100": 300,
+    "pair_n100": 14850,
+    "small_all_orders": 8869,
+    "size_guards": 4
+  },
+  "total_cases": 24023,
+  "original_n100_missing_sets": {
+    "singles": 100,
+    "pairs": 4950
+  },
+  "small_exhaustive_n": "1..7, all missing sets and all remaining permutations",
+  "input_orders_n100": [
+    "ascending",
+    "descending",
+    "deterministically shuffled"
+  ],
+  "oracle": "independent set difference, used only in verification",
+  "limitations": [
+    "No inference is claimed if the original input omits the removal/observation model",
+    "The algorithms assume uniqueness and the range 1..n; size checks are not full validation",
+    "No live website interactions or hardware measurements are performed here"
+  ],
+  "status": "passed"
+}

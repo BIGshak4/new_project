@@ -1,0 +1,147 @@
+{
+  "question": "PREP-039",
+  "status": "passed",
+  "model": "positive integer crossing times; one torch; capacity two; slower pair speed",
+  "state_count": 32,
+  "directed_legal_edges": 112,
+  "finite_certificate_edge_inequalities_checked": 112,
+  "minimum_hours": 12,
+  "battery_hours": 12,
+  "witness_crossings": 5,
+  "greedy_fastest_return_strategy_hours": 13,
+  "independent_bellman_ford_instances": 209,
+  "additional_classic_and_permuted_instances": 2,
+  "invalid_schedules_rejected": 9,
+  "invalid_inputs_rejected": 6,
+  "lower_bound_certificate": [
+    {
+      "right_bank_people": [],
+      "torch_left": 12,
+      "torch_right": null
+    },
+    {
+      "right_bank_people": [
+        "A"
+      ],
+      "torch_left": 8,
+      "torch_right": 13
+    },
+    {
+      "right_bank_people": [
+        "B"
+      ],
+      "torch_left": 9,
+      "torch_right": 14
+    },
+    {
+      "right_bank_people": [
+        "A",
+        "B"
+      ],
+      "torch_left": 5,
+      "torch_right": 10
+    },
+    {
+      "right_bank_people": [
+        "C"
+      ],
+      "torch_left": 8,
+      "torch_right": 16
+    },
+    {
+      "right_bank_people": [
+        "A",
+        "C"
+      ],
+      "torch_left": 5,
+      "torch_right": 9
+    },
+    {
+      "right_bank_people": [
+        "B",
+        "C"
+      ],
+      "torch_left": 5,
+      "torch_right": 10
+    },
+    {
+      "right_bank_people": [
+        "A",
+        "B",
+        "C"
+      ],
+      "torch_left": 5,
+      "torch_right": 6
+    },
+    {
+      "right_bank_people": [
+        "D"
+      ],
+      "torch_left": 7,
+      "torch_right": 17
+    },
+    {
+      "right_bank_people": [
+        "A",
+        "D"
+      ],
+      "torch_left": 4,
+      "torch_right": 8
+    },
+    {
+      "right_bank_people": [
+        "B",
+        "D"
+      ],
+      "torch_left": 4,
+      "torch_right": 9
+    },
+    {
+      "right_bank_people": [
+        "A",
+        "B",
+        "D"
+      ],
+      "torch_left": 4,
+      "torch_right": 5
+    },
+    {
+      "right_bank_people": [
+        "C",
+        "D"
+      ],
+      "torch_left": 2,
+      "torch_right": 11
+    },
+    {
+      "right_bank_people": [
+        "A",
+        "C",
+        "D"
+      ],
+      "torch_left": 2,
+      "torch_right": 3
+    },
+    {
+      "right_bank_people": [
+        "B",
+        "C",
+        "D"
+      ],
+      "torch_left": 1,
+      "torch_right": 4
+    },
+    {
+      "right_bank_people": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "torch_left": null,
+      "torch_right": 0
+    }
+  ],
+  "certificate_meaning": "h(goal)=0, h(start)=12 and h(s)<=cost(s,t)+h(t) on every legal edge. Summing along any complete schedule proves its total is at least 12. Null denotes an isolated impossible torch configuration.",
+  "scope": "Exact finite-state verification and checked lower-bound certificate, not random sampling or a human expert review. No physical torch experiment or live-site interaction."
+}

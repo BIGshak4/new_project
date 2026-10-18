@@ -57,10 +57,10 @@ test("formatting retains the existing protections against author HTML, image req
   assert.doesNotMatch(html, /<script|<img|javascript:|href=/);
 });
 
-test("all 67 bilingual catalog prompts and references render with the production study-text component", () => {
+test("all 73 bilingual catalog prompts and references render with the production study-text component", () => {
   const questions = ["example_bank", "preparation_bank"].flatMap(name =>
     JSON.parse(readFileSync(new URL(`../../../backend/seeds/questions/${name}.json`, import.meta.url), "utf8")));
-  assert.equal(questions.length, 67);
+  assert.equal(questions.length, 73);
   for (const question of questions) {
     for (const language of ["he", "en"]) {
       const text = question.translations[language];

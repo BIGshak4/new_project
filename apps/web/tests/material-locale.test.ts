@@ -20,8 +20,8 @@ const response = (overrides: Partial<QuestionResources> = {}): QuestionResources
   media: [], technical_material: null, solution_revealed: true, ...overrides,
 });
 
-test("all 67 canonical references follow display language while attempt language stays fixed", () => {
-  assert.equal(questions.length, 67);
+test("all 73 canonical references follow display language while attempt language stays fixed", () => {
+  assert.equal(questions.length, 73);
   for (const question of questions) {
     for (const originalLanguage of ["he", "en"] as const) {
       const original = question.translations[originalLanguage].reference_solution;
@@ -95,6 +95,8 @@ test("real technical material renderer changes section labels and contents toget
 test("technical metadata labels and status text translate without changing formulas or underlying status", () => {
   assert.equal(materialLabel("criterion", "he"), "מה נדרש להוכיח");
   assert.equal(materialLabel("verification_status", "he"), "מצב האימות");
+  assert.equal(materialLabel("opening", "he"), "אופן הפתיחה");
+  assert.equal(materialLabel("timing", "he"), "תזמון");
   assert.equal(materialStatus("passed", "status", "he"), "עבר");
   assert.equal(materialStatus("passed", "status", "en"), "passed");
   assert.equal(materialStatus("A XOR B", "formula", "he"), "A XOR B");
@@ -107,8 +109,8 @@ test("technical metadata labels and status text translate without changing formu
   assert.equal(material.verification.status, "passed");
 });
 
-test("all 37 preparation resources pair every visible technical field and render entirely in English", () => {
-  assert.equal(prepared.length, 37);
+test("all 43 preparation resources pair every visible technical field and render entirely in English", () => {
+  assert.equal(prepared.length, 43);
   for (const question of prepared) {
     const material = question.assets.preparation_resource!;
     const pairs = material.learner_material as Record<string, Record<ApiLang, unknown>> | undefined;

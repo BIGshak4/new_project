@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="740" viewBox="0 0 1100 740" role="img" aria-labelledby="title desc">
+<title id="title">Bridge and torch: five trips in twelve hours</title>
+<desc id="desc">A needs 1 hour, B 2, C 4, D 5. A and B cross, A returns, C and D cross, B returns, A and B cross. Trip costs 2,1,5,2,2 sum to 12 hours.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#62478a"/></marker></defs>
+<rect width="1100" height="740" rx="28" fill="#faf8f1"/>
+<g font-family="Arial, sans-serif" fill="#342348">
+<text x="60" y="58" font-size="30" font-weight="700">1 h · 2 h · 4 h · 5 h → 12 h</text>
+<text x="60" y="96" font-size="21">A = 1 h     B = 2 h     C = 4 h     D = 5 h</text>
+<text x="188" y="152" font-size="23" font-weight="700">L</text>
+<text x="708" y="152" font-size="23" font-weight="700">R</text>
+<text x="920" y="152" font-size="23" font-weight="700">Σt</text>
+<path d="M195,173 L195,635 M715,173 L715,635" stroke="#d7cbe2" stroke-width="3" stroke-dasharray="6 7"/>
+<circle cx="69" cy="212" r="19" fill="#e6dff0"/><text x="69" y="219" text-anchor="middle" font-size="20" font-weight="700">1</text>
+<path d="M222,212 L687,212" stroke="#62478a" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="350" y="184" width="210" height="56" rx="13" fill="#fffdfa" stroke="#cdbbdf" stroke-width="2"/>
+<text x="455" y="219" text-anchor="middle" font-size="22" font-weight="700">A + B · 2 h</text>
+<text x="944" y="220" text-anchor="middle" font-size="25" font-weight="700">2 h</text>
+<circle cx="69" cy="303" r="19" fill="#e6dff0"/><text x="69" y="310" text-anchor="middle" font-size="20" font-weight="700">2</text>
+<path d="M687,303 L222,303" stroke="#62478a" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="350" y="275" width="210" height="56" rx="13" fill="#fffdfa" stroke="#cdbbdf" stroke-width="2"/>
+<text x="455" y="310" text-anchor="middle" font-size="22" font-weight="700">A · 1 h</text>
+<text x="944" y="311" text-anchor="middle" font-size="25" font-weight="700">3 h</text>
+<circle cx="69" cy="394" r="19" fill="#e6dff0"/><text x="69" y="401" text-anchor="middle" font-size="20" font-weight="700">3</text>
+<path d="M222,394 L687,394" stroke="#62478a" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="350" y="366" width="210" height="56" rx="13" fill="#fffdfa" stroke="#cdbbdf" stroke-width="2"/>
+<text x="455" y="401" text-anchor="middle" font-size="22" font-weight="700">C + D · 5 h</text>
+<text x="944" y="402" text-anchor="middle" font-size="25" font-weight="700">8 h</text>
+<circle cx="69" cy="485" r="19" fill="#e6dff0"/><text x="69" y="492" text-anchor="middle" font-size="20" font-weight="700">4</text>
+<path d="M687,485 L222,485" stroke="#62478a" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="350" y="457" width="210" height="56" rx="13" fill="#fffdfa" stroke="#cdbbdf" stroke-width="2"/>
+<text x="455" y="492" text-anchor="middle" font-size="22" font-weight="700">B · 2 h</text>
+<text x="944" y="493" text-anchor="middle" font-size="25" font-weight="700">10 h</text>
+<circle cx="69" cy="576" r="19" fill="#e6dff0"/><text x="69" y="583" text-anchor="middle" font-size="20" font-weight="700">5</text>
+<path d="M222,576 L687,576" stroke="#62478a" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="350" y="548" width="210" height="56" rx="13" fill="#fffdfa" stroke="#cdbbdf" stroke-width="2"/>
+<text x="455" y="583" text-anchor="middle" font-size="22" font-weight="700">A + B · 2 h</text>
+<text x="944" y="584" text-anchor="middle" font-size="25" font-weight="700">12 h</text>
+<rect x="60" y="652" width="980" height="56" rx="13" fill="#e7efe8"/>
+<text x="550" y="688" text-anchor="middle" font-size="24" font-weight="700">2 + 1 + 5 + 2 + 2 = 12 h</text>
+</g></svg>

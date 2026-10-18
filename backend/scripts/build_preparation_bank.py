@@ -40,6 +40,7 @@ PRIMARY = [
     "estimation_sanity_checks", "debugging_methodology", "combinational_blocks", "basic_data_structures",
     "estimation_sanity_checks", "binary_arithmetic", "arrays_and_search", "fsm_state_tables",
     "basic_data_structures", "estimation_sanity_checks",
+    "estimation_sanity_checks", "arrays_and_search", "arrays_and_search", "edge_detection", "fsm_state_tables",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

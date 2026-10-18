@@ -1,0 +1,202 @@
+{
+  "received_on": "2026-10-18",
+  "batch_size": 5,
+  "decision": "five_new_founder_source_questions_with_related_examples_linked",
+  "previous_38_questions_unchanged": true,
+  "questions": [
+    {
+      "question_id": "PREP-039",
+      "question_key": "prep-bridge-torch-twelve-hours",
+      "source": "sources/prep-039.png",
+      "source_sha256": "1f5fbae0eff618876221c199f49350c4a03ddcdf48314cbb39d72ea05d59f77c",
+      "reported_companies": [
+        "Elta",
+        "Mellanox"
+      ],
+      "related_question_ids": [],
+      "primary_skill": "estimation_sanity_checks",
+      "title_he": "ארבעה אנשים, מנהרה ופנס ל־12 שעות",
+      "code": [
+        "solutions/prep_039_bridge_torch.py"
+      ],
+      "diagrams": [
+        "diagrams/prep-039-bridge-timeline.png"
+      ],
+      "verification_report": "checks/prep-039-verification.json",
+      "review": "AI-assisted proposal; professional review pending"
+    },
+    {
+      "question_id": "PREP-040",
+      "question_key": "prep-pair-sum-existence-and-optimization",
+      "source": "sources/prep-040.png",
+      "source_sha256": "a8af70239a0533f31388e2f5094e4659f24af464883f0197acb05135d1f3713c",
+      "reported_companies": [
+        "NVIDIA",
+        "Vayyar",
+        "Microsoft",
+        "Apple",
+        "Rafael"
+      ],
+      "related_question_ids": [
+        "SW-006"
+      ],
+      "primary_skill": "arrays_and_search",
+      "title_he": "האם קיים במערך זוג שסכומו נתון?",
+      "code": [
+        "solutions/prep_040_two_sum.py"
+      ],
+      "diagrams": [],
+      "verification_report": "checks/prep-040-verification.json",
+      "review": "AI-assisted proposal; professional review pending"
+    },
+    {
+      "question_id": "PREP-041",
+      "question_key": "prep-one-two-missing-values",
+      "source": "sources/prep-041.png",
+      "source_sha256": "1bc55c63f5a6b6b873b33e62ec60de25aa8f981432396aa27abdcdf34efb5928",
+      "reported_companies": [],
+      "related_question_ids": [
+        "PREP-027"
+      ],
+      "primary_skill": "arrays_and_search",
+      "title_he": "מציאת ערך אחד או שני ערכים שהוצאו ממערך",
+      "code": [
+        "solutions/prep_041_missing_values.py"
+      ],
+      "diagrams": [],
+      "verification_report": "checks/prep-041-verification.json",
+      "review": "AI-assisted proposal; professional review pending"
+    },
+    {
+      "question_id": "PREP-042",
+      "question_key": "prep-rising-edge-single-clock-pulse",
+      "source": "sources/prep-042.png",
+      "source_sha256": "e865f4d5723dd9421636a76e45b3cb05c10dc3cdb4e74cae659834ac8480d40d",
+      "reported_companies": [],
+      "related_question_ids": [
+        "PREP-004",
+        "HW-013"
+      ],
+      "primary_skill": "edge_detection",
+      "title_he": "גלאי עלייה עם פולס של מחזור שעון אחד",
+      "code": [
+        "solutions/prep_042_rising_edge.py",
+        "solutions/prep_042_rising_edge.sv"
+      ],
+      "diagrams": [
+        "diagrams/prep-042-rising-edge-registered.png"
+      ],
+      "verification_report": "checks/prep-042-verification.json",
+      "review": "AI-assisted proposal; professional review pending"
+    },
+    {
+      "question_id": "PREP-043",
+      "question_key": "prep-serial-safe-abcd-sequence-detector",
+      "source": "sources/prep-043.png",
+      "source_sha256": "e3fb19768ce3e477eebf5ba46bad19aff0bec25723067f62df4dbb16759af100",
+      "reported_companies": [
+        "Intel"
+      ],
+      "related_question_ids": [
+        "HW-014",
+        "VHW-006"
+      ],
+      "primary_skill": "fsm_state_tables",
+      "title_he": "גלאי רצף ABCD למנעול כספת סדרתי",
+      "code": [
+        "solutions/prep_043_serial_lock.py",
+        "solutions/prep_043_serial_lock.sv"
+      ],
+      "diagrams": [
+        "diagrams/prep-043-abcd-mealy.png"
+      ],
+      "verification_report": "checks/prep-043-verification.json",
+      "review": "AI-assisted proposal; professional review pending"
+    }
+  ],
+  "editorial_decisions": [
+    "PREP-041 explicitly removes and hides one/two unique original values; alternatives explained, authorized by Harel.",
+    "PREP-042 defines sampled synchronous input and registered pulse timing; original ambiguity preserved.",
+    "PREP-043 defines pulse detection and separately supplies persistent OPEN behavior; registered output distinguished from abstract Mealy graph."
+  ],
+  "database_status": "inserted_and_exact_readback_verified",
+  "learner_activity_written": false,
+  "live_authenticated_browser_clicks_performed": false,
+  "follow_ups_connected": false,
+  "database_verification": {
+    "date": "2026-10-18",
+    "project": "djpwvqpsqbkvprlncjjg",
+    "question_count_before": 68,
+    "question_count_after": 73,
+    "inserted_questions": [
+      {
+        "id": "ae8c9f2c-2350-4d61-8dd7-e8f7e9223493",
+        "key": "prep-bridge-torch-twelve-hours",
+        "preparation_id": "PREP-039",
+        "base_exact": true,
+        "translations_exact": true,
+        "skill_exact": true,
+        "private_assets": 3
+      },
+      {
+        "id": "3d6bbd9c-61b3-44c6-98ea-88867cc33a2b",
+        "key": "prep-pair-sum-existence-and-optimization",
+        "preparation_id": "PREP-040",
+        "base_exact": true,
+        "translations_exact": true,
+        "skill_exact": true,
+        "private_assets": 2
+      },
+      {
+        "id": "3bf4f96e-f1ca-4b3f-949b-943751c7e66c",
+        "key": "prep-one-two-missing-values",
+        "preparation_id": "PREP-041",
+        "base_exact": true,
+        "translations_exact": true,
+        "skill_exact": true,
+        "private_assets": 2
+      },
+      {
+        "id": "785f8bc2-c050-46cb-9332-8773c385ffb7",
+        "key": "prep-rising-edge-single-clock-pulse",
+        "preparation_id": "PREP-042",
+        "base_exact": true,
+        "translations_exact": true,
+        "skill_exact": true,
+        "private_assets": 4
+      },
+      {
+        "id": "0f5358f6-cccd-4358-888e-0e59888152d9",
+        "key": "prep-serial-safe-abcd-sequence-detector",
+        "preparation_id": "PREP-043",
+        "base_exact": true,
+        "translations_exact": true,
+        "skill_exact": true,
+        "private_assets": 4
+      }
+    ],
+    "translations_added": 10,
+    "primary_skill_links_added": 5,
+    "private_assets_hash_verified": 15,
+    "old_question_translation_skill_content_unchanged": true,
+    "learner_activity_written": false,
+    "live_authenticated_browser_clicks_performed": false
+  },
+  "qa": {
+    "backend_pytest_passed": 94,
+    "all_question_renderer_checks_passed": 391,
+    "focused_renderer_checks_passed": 75,
+    "focused_renderer_captures": 40,
+    "offline_service_assertions": 1662,
+    "offline_service_flows": 10,
+    "fenced_python_blocks_ast_checked": 14,
+    "screenshot_visual_review_count": 15,
+    "live_authenticated_browser_clicks_performed": false,
+    "physical_phone_validation_performed": false,
+    "hdl_simulation_performed": false,
+    "web_tests_passed": 195,
+    "typescript_check": "passed",
+    "archive_source_media_compatibility_regression_fixed": "SEC-014"
+  },
+  "publication_status": "database_complete_git_and_deployment_pending"
+}

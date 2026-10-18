@@ -1,0 +1,470 @@
+{
+  "PREP-039": {
+    "assumptions": {
+      "he": [
+        "כל הארבעה והפנס מתחילים באותו צד; כולם צריכים לסיים בצד השני.",
+        "הפנס חייב ללוות כל מעבר במנהרה, כולל חזרות; אין זריקה או מסירה בין הצדדים.",
+        "במנהרה נמצאים לכל היותר שני אנשים בו־זמנית, וזוג מתקדם בזמן האיטי מביניהם. אין מעברי ביניים או החלפות בתוך המנהרה.",
+        "זמן כל מעבר קבוע ודטרמיניסטי. הסוללה מספיקה ל־12 שעות פעילות, ללא החלפה או טעינה. אין זמן הכנה; לא ממתינים בין מעברים. לכן סכום זמני המעברים שווה לזמן שחלף גם אם הסוללה דולקת ברציפות.",
+        "אפשר לסיים בדיוק ברגע שבו נגמרות 12 השעות. הבהרות אלה הן הנחות עריכה, ואינן כולן מופיעות במפורש בצילום המקור."
+      ],
+      "en": [
+        "All four people and the torch start on the same side; everyone must finish on the other side.",
+        "The torch accompanies every trip through the tunnel, including returns; it cannot be thrown or passed between banks.",
+        "At most two people occupy the tunnel at once, and a pair takes the slower person's time. No intermediate handoffs or changes inside the tunnel are allowed.",
+        "Crossing times are fixed and deterministic. The battery supplies 12 hours of use, without replacement or recharging. Preparation takes no time and the schedule never waits. Thus summed trip time also equals wall-clock time if the torch stays on continuously.",
+        "Finishing exactly at 12 hours is allowed. These are editorial assumptions; the source screenshot does not state all of them explicitly."
+      ]
+    },
+    "optimality": {
+      "he": "המדד הוא זמן מצטבר עד שכל הארבעה הגיעו ליעד. התוכנית משיגה 12 שעות. ההוכחה בפתרון מחלקת את כל התוכניות לפי חזרה של אחד האיטיים ולפי מעבר האיטיים יחד או בנפרד, ומקבלת חסם תחתון 12. בנוסף נבדק חסם תחתון ממוחשב: לכל מצב ניתן ערך h, עם h(התחלה)=12 ו־h(סיום)=0; בכל אחד מ־112 המעברים מתקיים h(s)≤עלות(s,t)+h(t). חיבור האי־שוויונות לאורך כל תוכנית מוכיח שעלותה לפחות 12, בלי להגביל מראש את מספר המעברים.",
+      "en": "The objective is elapsed time until everyone reaches the destination. The witness achieves 12 hours. The solution's proof partitions schedules by whether a slow person returns and whether the slow people cross together, establishing a lower bound of 12. An additional exact certificate assigns h to every reachable state, with h(start)=12 and h(goal)=0, and checks h(s)≤cost(s,t)+h(t) on all 112 legal transitions. Summing these inequalities along any complete schedule proves a cost of at least 12 without assuming a fixed number of crossings."
+    },
+    "verification": {
+      "he": [
+        "הורצו בפועל פותר דייקסטרה, שחזור נפרד של המעברים ומודל בלמן–פורד עצמאי הבונה את כל קשתות המצב.",
+        "במקרה המקור נבדקו כל 32 המצבים וכל 112 המעברים המכוונים החוקיים; תעודת החסם התחתון והמסלול בן חמשת המעברים מאשרים מינימום 12.",
+        "נבדקו כל 209 וקטורי הזמנים הלא־יורדים באורך 1 עד 4 עם זמני מעבר 1 עד 6, ועוד שתי דוגמאות: 1,2,5,10 ושינוי סדר האנשים. בכל מקרה תוצאת דייקסטרה תאמה למודל הנפרד והמסלול הוחזר ונבדק.",
+        "נדחו תשע תוכניות לא תקינות ושישה קלטי זמן לא חוקיים. אומת שהאסטרטגיה שבה האדם המהיר מלווה כל אחד בנפרד עולה 13. אלה בדיקות מודל מדויקות; לא בוצעו ניסוי פיזי או בדיקת חשבון באתר כחלק מהבדיקה הזאת."
+      ],
+      "en": [
+        "Executed Dijkstra, a separate schedule replay, and an independent Bellman–Ford model that constructs every legal state transition.",
+        "For the supplied instance, checked all 32 states and all 112 legal directed transitions. The lower-bound certificate and five-trip witness establish an optimum of 12.",
+        "Checked all 209 nondecreasing crossing-time vectors of length 1 through 4 with values 1 through 6, plus two cases: 1,2,5,10 and a permutation of the supplied times. Every Dijkstra result matched the independent model and its returned schedule replayed successfully.",
+        "Rejected nine invalid schedules and six invalid time inputs. Confirmed that the fastest-person shuttle strategy takes 13. These are exact model checks, not a physical experiment or an authenticated website test."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "תקציב של 11 שעות אינו מספיק לפי אותו מודל; 12 מספיק בדיוק.",
+        "אם דורשים מרווח ביטחון חיובי לפני תום הסוללה, התוכנית אינה עומדת בדרישה הזאת.",
+        "המתנה או כיבוי הפנס בין מעברים אינם מקצרים את 12 שעות ההליכה ההכרחיות. אם יש זמן הכנה חיובי או זמני מעבר לא ודאיים, צריך לתקצב אותם בנפרד.",
+        "שינוי בקיבולת, זמן זוג שאינו זמן האיטי, פנס נוסף, מסירה בתוך המנהרה או מצב התחלתי אחר יוצרים בעיה אחרת; אין להחיל עליה אוטומטית את תשובת 12 השעות."
+      ],
+      "en": [
+        "An 11-hour budget is insufficient under the same model; 12 is exactly sufficient.",
+        "If a strictly positive safety margin before battery exhaustion is required, this schedule does not satisfy it.",
+        "Waiting or switching the torch off between trips cannot reduce the required 12 hours of crossing. Positive preparation times or uncertain crossing times require separate budgeting.",
+        "Changing capacity, pair speed, the number of torches, intermediate handoffs, or the initial distribution changes the problem; the 12-hour answer does not automatically apply."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לשכוח את חזרת הפנס או להניח שפנס יכול לחזור לבדו.",
+        "לדרוש שתמיד האדם המהיר ביותר יחזיר את הפנס; במקרה הזה ההחלטה הזאת עלולה לגרור 13 שעות.",
+        "לחבר את זמני שני האנשים שעוברים יחד; זוג משלם את זמן האיטי, לא את הסכום.",
+        "להציג תוכנית של 12 שעות כהוכחת מינימום בלי לשלול תוכניות מהירות יותר.",
+        "לטעון שיש מרווח ביטחון: התוכנית צורכת את מלוא 12 השעות."
+      ],
+      "en": [
+        "Forgetting a torch return or allowing it to return without a person.",
+        "Insisting that the fastest person must return every time; here that choice can produce 13 hours.",
+        "Adding the times of people crossing together; a pair takes the slower time, not their sum.",
+        "Treating a 12-hour witness alone as proof of optimality without ruling out faster schedules.",
+        "Claiming a safety margin: the schedule uses all 12 hours."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשלח את בעלי זמני המעבר 1 ו־2 יחד, אחזיר את 1, אשלח את 4 ו־5 יחד, אחזיר את 2, ולבסוף אשלח את 1 ו־2 יחד. העלות היא 2+1+5+2+2=12 שעות. שני האיטיים חולקים מעבר אחד, והמהיר השני ממתין ביעד כדי להחזיר את הפנס. זה מינימלי: חזרה של איטי יקרה מדי, ובשני המקרים האחרים — האיטיים יחד או בנפרד — מתקבל חסם תחתון 12.",
+      "en": "Send 1 and 2 across, return 1, send 4 and 5 across together, return 2, then send 1 and 2 across. The cost is 2+1+5+2+2=12 hours. The slow people share one trip, while the second-fastest waits at the destination to return the torch. This is minimal: returning a slow person is already too expensive, and both remaining cases—slow people together or separately—give a lower bound of 12."
+    },
+    "solution_extensions": {
+      "he": "שאלת המשך מוכנה, אך לא חוברה למנגנון שאלות ההמשך באתר: מה משתנה אם הזמנים הם 1,2,5,10 והתקציב הוא 17? כיוון לתשובה: אותו רעיון נותן 2+1+10+2+2=17, בעוד ליווי נפרד עם האדם המהיר עולה 19. הרחבה נוספת: למספר משתנה של אנשים, הגדירו מצב של צדדי האנשים והפנס והציעו חיפוש בעל עלויות חיוביות; הסבירו שמספר המצבים גדל מעריכית. ההרחבה בודקת העברת רעיון ומידול, ואינה חובה בפתרון המקורי.",
+      "en": "Prepared follow-up, not connected to the website's interactive follow-up flow: what changes if the times are 1,2,5,10 and the budget is 17? Answer direction: the same structure costs 2+1+10+2+2=17, whereas escorting each person separately with the fastest costs 19. Further extension: for a varying number of people, define a state containing everyone's bank and the torch's bank, and propose a positive-weight shortest-path search; explain that the state count grows exponentially. This tests transfer and modelling and is not required for the original puzzle."
+    }
+  },
+  "PREP-040": {
+    "assumptions": {
+      "he": [
+        "הנחות עריכה: מערך לא ממוין של מספרים שלמים; קלט חסר איברים או בעל איבר יחיד מחזיר שקר.",
+        "שני מקומות שונים נדרשים; ערכים זהים בשני מקומות שונים מותרים.",
+        "נדרשת תשובת קיום בלבד. אין צורך להחזיר את כל הזוגות או לבחור זוג מסוים.",
+        "זיכרון עזר מותר לשיפור זמן צפוי. המימושים שסופקו משאירים את הקלט המקורי ללא שינוי.",
+        "חסמי הסיבוכיות מניחים פעולות על שלמים בגודל מילה. שלמים בלתי מוגבלים בפייתון אינם גולשים, אך לפעולות עליהם עלות התלויה באורך הייצוג."
+      ],
+      "en": [
+        "Editorial assumptions: an unsorted integer array; empty and one-element inputs return false.",
+        "Two distinct positions are required; equal values at different positions are allowed.",
+        "Only existence is required, not all pairs or a prescribed pair.",
+        "Auxiliary storage is allowed to improve expected time. Supplied implementations preserve the input.",
+        "Complexity uses word-sized integer operations. Python arbitrary-precision integers avoid overflow but incur bit-length-dependent arithmetic and hashing costs."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "פשרה בין זמן ריצה לזיכרון עזר במערך כללי לא ממוין.",
+        "result": "בדיקת כל הזוגות: זמן ריבועי במקרה הגרוע וזיכרון קבוע. קבוצת גיבוב: זמן לינארי צפוי וזיכרון לינארי. מיון ושני מצביעים: זמן O(n log n) במקרה הגרוע; הקוד משתמש בעותק ולכן בזיכרון לינארי.",
+        "proof": "בחיפוש עם קבוצה נשמרים רק ערכים ממקומות קודמים; זוג במקומות p<q מתגלה כשהמקום המאוחר נבדק. בשני מצביעים המיון מאפשר לפסול ערך קטן מדי או גדול מדי בלי לאבד זוג אפשרי.",
+        "scope": "אין הבטחת זמן לינארי במקרה הגרוע לטבלת גיבוב. אין טענה למינימום זיכרון מוחלט. אם המערך כבר ממוין, שני מצביעים לבדם נותנים זמן לינארי וזיכרון קבוע."
+      },
+      "en": {
+        "criterion": "Runtime versus auxiliary storage for a general unsorted array.",
+        "result": "All pairs: quadratic worst-case time and constant extra words. Hash set: expected linear time and linear space. Sorting and two pointers: O(n log n) worst-case time; the supplied copy-preserving code uses linear storage.",
+        "proof": "The set contains only earlier positions; any pair p<q is discovered when q is checked. Sorted two-pointer elimination safely discards a value too small or too large to participate in any remaining solution.",
+        "scope": "No linear worst-case hashing guarantee or universal minimum-space claim. For already-sorted input, two pointers alone take linear time and constant extra words."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "עברו בדיקות תוכנה; סקירה מקצועית עצמאית ממתינה.",
+        "method": "215,863 מקרי מערך ויעד מול אורקל עצמאי של צירופי שני אינדקסים. בכל מקרה נבדקו שלושה פתרונות קיום ופתרון המחזיר אינדקסים, כולל תקינות האינדקסים ושמירת הקלט.",
+        "coverage": "214,841 מקרים ממצים: 19,531 מערכים באורכים 0–6 מעל חמישה ערכים, כפול 11 יעדים. בנוסף 16 מקרי גבול מפורשים, שני מקרי התנגשות גיבוב, 1,000 דגימות עם seed קבוע וארבעה מקרי קלט בלתי ניתן לשינוי.",
+        "script_path": "checks/check_prep_040.py",
+        "scope": "אימות פונקציונלי סופי ונדגם; נימוק הסיבוכיות נפרד. לא נערך מבחן ביצועים שמוכיח זמן ריצה ולא נרשם אישור מומחה."
+      },
+      "en": {
+        "status": "Software checks passed; independent expert review remains pending.",
+        "method": "215,863 array/target cases against an independent index-combination oracle. Each case checks three Boolean solvers and the index-returning extension, including index validity and input preservation.",
+        "coverage": "214,841 exhaustive cases: 19,531 arrays of lengths 0–6 over five values, each with 11 targets. Also 16 explicit boundaries, two hash-collision cases, 1,000 seeded samples and four immutable-sequence cases.",
+        "script_path": "checks/check_prep_040.py",
+        "scope": "Finite exhaustive and sampled functional checks; complexity is justified separately. No benchmark-based runtime proof or expert sign-off."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "מערך ריק או בעל איבר יחיד: אין שני אינדקסים שונים.",
+        "`[6]`, יעד `12`: שקר; `[6, 6]`, יעד `12`: אמת.",
+        "`[0]`, יעד `0`: שקר; `[0, 0]`, יעד `0`: אמת.",
+        "מספרים שליליים ויעד שלילי מותרים: `[-8, -2, 4]` עם יעד `-10` מחזיר אמת.",
+        "ייתכנו כמה זוגות חוקיים; מחזירים אמת עם הראשון שנמצא.",
+        "יעד שלא ניתן להגיע אליו מחייב חזרה תקינה של שקר בסוף הסריקה.",
+        "בפייתון שלמים גדולים אינם גולשים. במימוש בעל רוחב קבוע יש למנוע גלישה בחישוב סכום או משלים."
+      ],
+      "en": [
+        "Empty and one-element arrays have no two distinct indices.",
+        "`[6]`, target `12`: false; `[6, 6]`, target `12`: true.",
+        "`[0]`, target `0`: false; `[0, 0]`, target `0`: true.",
+        "Negative values and targets are allowed: `[-8, -2, 4]` with target `-10` returns true.",
+        "Several valid pairs may exist; return true on the first match.",
+        "An unreachable target must return false after a completed scan.",
+        "Python integers do not overflow. Fixed-width implementations must prevent overflow in sums and complements."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "הכנסת הערך לקבוצה לפני החיפוש, שמאפשרת להשתמש במופע יחיד פעמיים.",
+        "דחיית `[6, 6]` בטענה שקבוצה אינה שומרת כפילויות; חיפוש לפני הוספה כבר מבטיח מופע קודם נפרד.",
+        "טענה שפעולת חיפוש ברשימה היא קבועה; שימוש ברשימה במקום בקבוצת גיבוב יכול להחזיר זמן ריבועי.",
+        "הבטחת זמן לינארי במקרה הגרוע בלי הנחת גיבוב מתאימה.",
+        "שימוש בשני מצביעים על מערך לא ממוין, או שכחת התנאי `left < right`.",
+        "ייחוס זיכרון קבוע לקוד שיוצר עותק באמצעות `sorted`, או התעלמות מזיכרון העבודה של מיון פייתון.",
+        "מיון ואז החזרת המקומות הממוינים כאילו היו האינדקסים המקוריים."
+      ],
+      "en": [
+        "Inserting before lookup, which lets a single occurrence pair with itself.",
+        "Rejecting `[6, 6]` because a set does not retain duplicate counts; lookup-before-insert already guarantees a separate earlier occurrence.",
+        "Treating list membership as constant-time; a list of seen values can retain quadratic runtime.",
+        "Promising worst-case linear time without suitable hash assumptions.",
+        "Using two pointers on unsorted input or forgetting `left < right`.",
+        "Claiming constant storage for code using `sorted`, or ignoring Python sorting workspace.",
+        "Returning sorted positions as if they were original indices."
+      ]
+    },
+    "interview_answer": {
+      "he": "אתחיל בשתי לולאות על i<j, בזמן ריבועי ובזיכרון קבוע. כדי לשפר, אעבור פעם אחת עם קבוצה של ערכים קודמים. לכל ערך אחפש את המשלים ליעד לפני שאוסיף אותו, כך שאי אפשר להשתמש באותו מופע פעמיים. הזמן צפוי להיות לינארי והזיכרון לינארי בהנחות גיבוב רגילות; מיון ושני מצביעים הם חלופה בזמן O(n log n). אם מבקשים אינדקסים, אשמור מילון מערך לאינדקס קודם.",
+      "en": "Start with nested loops over i<j: quadratic time and constant extra words. Improve with one pass and a set of earlier values. Look up the complement before inserting the current value so the same occurrence cannot be reused. This gives expected linear time and linear storage under ordinary hash assumptions. Sorting and two pointers give an O(n log n) alternative. To return indices, store a value-to-earlier-index dictionary."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "אם נדרשים האינדקסים המקוריים של זוג חוקי במקום תשובת קיום, מה משנים? ומה אם המערך כבר ממוין ואסור זיכרון עזר לינארי?",
+        "answer_outline": "למקומות המקוריים שומרים מילון מערך לאינדקס קודם ומחזירים את ההתאמה לפני הכנסת האיבר הנוכחי. במערך שכבר ממוין משתמשים בשני מצביעים בזמן לינארי ובזיכרון עזר קבוע, בתנאי שמבקשים זוג או קיום ולא את כל הזוגות.",
+        "integration_status": "שאלת המשך מוכנה בתוכן הארכיון; חיבור לתהליך שאלות ההמשך החי טרם בוצע."
+      },
+      "en": {
+        "question": "How would you return original indices rather than just existence? What if the input is already sorted and linear auxiliary storage is forbidden?",
+        "answer_outline": "For original indices, store a value-to-earlier-index map and return a match before insertion. For already-sorted input use two pointers in linear time and constant extra words when only existence or one pair is required.",
+        "integration_status": "Follow-up prepared in archived content; not connected to the live follow-up workflow."
+      }
+    }
+  },
+  "PREP-041": {
+    "assumptions": {
+      "he": [
+        "התחלה מתמורה של כל המספרים מ־1 עד n, כל מספר פעם אחת; n=100 במקרה הנתון.",
+        "אחד או שני ערכים שונים הוצאו והוסתרו; נותרו n-1 או n-2 ערכים נגישים. כל סעיף עצמאי.",
+        "אפשר לקרוא את המערך שנותר יותר מפעם אחת, ולא נדרש לשנות אותו.",
+        "המקור אינו מנסח את מודל השליפה באופן חד־משמעי. הנחות ההוצאה וההסתרה נוספו בעריכה באישור הראל; חלופות הניסוח מוסברות בפתרון.",
+        "הקוד מניח קלט העומד בהבטחה. בדיקת האורך בקובץ הקוד אינה בדיקה מלאה של ייחודיות או תחום."
+      ],
+      "en": [
+        "The initial contents are a permutation of 1 through n, each value once; n=100 in the given instance.",
+        "One or two distinct values are removed and hidden; n-1 or n-2 accessible entries remain. The parts are independent.",
+        "The remaining array may be read more than once and need not be modified.",
+        "The source does not specify an unambiguous draw model. Removal and concealment are user-authorized editorial assumptions; alternatives are explained in the solution.",
+        "The code assumes the promised input contract. The file's length checks do not fully validate uniqueness or range."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "זמן חישוב כפונקציה של n עבור מערך שנותר נגיש ואינו ממוין, תחת ההבטחה שהקלט תקין.",
+        "result": "O(n) זמן בשני הסעיפים; O(1) מילות עזר, שהן O(log n) ביטים במודל של מספרים לא חסומים.",
+        "proof": "חיסור סכומים מזהה חסר אחד. XOR מבטל כל ערך קיים; ביט שבו החסרים שונים מפריד אותם לשתי קבוצות שבהן הביטול משאיר חסר יחיד. מספר הסריקות קבוע. במקרה הגרוע, תאים שלא נקראו יכולים להחליף איזה ערך חסר בלי לשנות את התאים שנצפו, ולכן נדרשות סדר גודל של n קריאות במודל זה.",
+        "scope": "אין כאן טענה לזיכרון קבוע בביטים לכל n, או צורך בזמן ליניארי כאשר הערך שנשלף כבר גלוי. זמן פעולות על מספרים מעבר למילת מכונה תלוי ברוחב שלהם."
+      },
+      "en": {
+        "criterion": "Time as a function of n for an accessible unsorted remaining array under the valid-input promise.",
+        "result": "O(n) time in both parts; O(1) auxiliary words, corresponding to O(log n) bits for an unbounded range.",
+        "proof": "Subtracting sums finds one missing value. XOR cancels every present value; a differing bit partitions the two missing values into groups in which cancellation leaves one value each. There are constantly many scans. In the worst case, unread entries can change which value is absent without changing the observed entries, requiring order n reads in this model.",
+        "scope": "This does not claim constant bit space for all n or a linear-time requirement when drawn values are already visible. Arithmetic beyond one machine word depends on operand width."
+      }
+    },
+    "verification": {
+      "he": "24,023 בדיקות פייתון עברו מול אורקל בלתי תלוי של הפרש קבוצות: כל 100 החסרים היחידים וכל 4,950 זוגות החסרים עבור n=100, בכל אחד משלושה סדרי קלט; בנוסף כל סדר אפשרי של השארית לכל חסר או זוג חסרים עבור n מ־1 עד 7, וארבע בדיקות תנאי אורך. בדיקות אלה מאמתות את הקוד במסגרת ההנחות, ואינן סקירה מקצועית או בדיקת לחיצות באתר.",
+      "en": "24,023 Python checks passed against an independent set-difference oracle: all 100 single omissions and all 4,950 missing pairs for n=100, in three input orders each; all remaining permutations for each one- or two-value omission with n from 1 through 7; and four size-guard checks. This verifies the code under its assumptions, not professional review or live website interaction."
+    },
+    "edge_cases": {
+      "he": [
+        "חסר 1 או n: נוסחת הסכום וה־XOR אינם תלויים בכך שהחסר פנימי.",
+        "שני חסרים בעלי אותה זוגיות, למשל 2 ו־4: יש לבחור ביט מתוך תוצאת ה־XOR, ולא לקבע את ביט הזוגיות.",
+        "n=1 בסעיף א: מערך ריק מחזיר 1. n=2 בסעיף ב: מערך ריק מחזיר את 1 ו־2.",
+        "סדר אקראי, הפוך או ממוין: התוצאה זהה; סדר הפעולות אינו משנה סכום או XOR.",
+        "זרם חד־פעמי שאי אפשר לסרוק שוב אינו הקלט המובטח של מימוש ה־XOR בשני מעברים."
+      ],
+      "en": [
+        "Missing 1 or n: neither the sum formula nor XOR depends on an interior omission.",
+        "Two missing values with the same parity, such as 2 and 4: select a bit from their XOR rather than always using parity.",
+        "n=1 in Part A: an empty array yields 1. n=2 in Part B: an empty array yields 1 and 2.",
+        "Random, reversed, or sorted order gives the same answer; sum and XOR do not depend on entry order.",
+        "A one-use stream that cannot be read again is outside the two-pass XOR implementation's input contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "הנחה שמספרי התאים מבטיחים גם את תוכנם: נדרשת הבטחה על הערכים, לא רק על הכתובות.",
+        "שימוש רק בסכום למציאת שני חסרים: כמה זוגות שונים עשויים לתת אותו סכום.",
+        "החזרת XOR של שני חסרים כאילו הוא זוג הערכים: נדרש שלב החלוקה לפי ביט מבדיל.",
+        "חלוקה קבועה לזוגיים ואי־זוגיים: שני החסרים עלולים להיות באותה קבוצה.",
+        "טענה שזיכרון העזר קבוע בביטים לכל n, או שבדיקת אורך בלבד מאמתת את הבטחת הקלט.",
+        "ניסיון להסיק את הערכים כאשר גם הם מוסתרים וגם המערך שנותר אינו נגיש: אין מספיק מידע."
+      ],
+      "en": [
+        "Treating numbered cells as a guarantee about their contents: the values, not just the addresses, need a contract.",
+        "Using only a sum for two omissions: several different pairs may have the same sum.",
+        "Returning the XOR of the missing values as though it identifies both: the distinguishing-bit partition is still required.",
+        "Always splitting odd from even: both missing values may lie in the same group.",
+        "Claiming constant auxiliary bits for every n, or that a length check fully verifies the input promise.",
+        "Inferring hidden drawn values without access to the remaining array: the available information is insufficient."
+      ]
+    },
+    "interview_answer": {
+      "he": "קודם אבהיר שהמערך היה תמורה של 1 עד n, שהערכים שהוצאו מוסתרים ושאפשר לסרוק את השארית. לחסר יחיד אחסיר את הסכום שנותר מהסכום n*(n+1)/2. לשני חסרים אבצע XOR של הטווח והשארית לקבלת a XOR b, אבחר ביט דלוק בו ואחזור על הביטול בנפרד בשתי הקבוצות לפי הביט. החסרים מופרדים, וכל ערך קיים מתבטל. הזמן O(n) וזיכרון העזר מספר קבוע של מילים. אם השליפה עצמה גלויה, אין צורך באלגוריתם הזה.",
+      "en": "I first clarify that the array was a permutation of 1 through n, the removed values are hidden, and the remainder can be scanned. For one omission, subtract the remaining sum from n*(n+1)/2. For two, XOR the range and remainder to obtain a XOR b, choose one set bit, and repeat cancellation separately in the two bit groups. The missing values are separated and every present value cancels. Time is O(n), with constantly many auxiliary words. If the drawn values themselves are visible, this algorithm is unnecessary."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם השארית מגיעה כזרם שאי אפשר לקרוא שוב, ועדיין חסרים שני ערכים?",
+        "direction": "אפשר לשמור במהלך מעבר אחד סכום וסכום ריבועים. הפרשי הסכומים נותנים s=a+b ו־q=a²+b². אז 2q-s²=(a-b)²; שורש ריבועי שלם מאפשר לחלץ את a ו־b. צריך חשבון שלם מדויק וטיפוס רחב מספיק, ואין להשתמש בשורש נקודה צפה ללא בקרה.",
+        "status": "שאלת המשך מוכנה בארכיון; לא חוברה אוטומטית למנגנון ההמשך באתר."
+      },
+      "en": {
+        "question": "What changes if the remaining entries arrive as a stream that cannot be read again, while two values are missing?",
+        "direction": "In one pass, accumulate a sum and a sum of squares. Subtract from the complete-range totals to get s=a+b and q=a²+b². Then 2q-s²=(a-b)²; an exact integer square root recovers a and b. Exact arithmetic and sufficient integer width are required; do not use an unchecked floating-point square root.",
+        "status": "Follow-up prepared in the archive; not automatically connected to the website's follow-up flow."
+      }
+    }
+  },
+  "PREP-042": {
+    "assumptions": {
+      "he": [
+        "הקלט סינכרוני ועומד בזמני הכנה והחזקה; מזהים שינויים בין דגימות בחזיתות העולות, לא כל שינוי פיזי בין החזיתות.",
+        "הפלט רשום ונשמר עד החזית הבאה. הדגימה הקודמת מאותחלת ל־0 ולכן דגימה ראשונה גבוהה יוצרת פולס.",
+        "איפוס סינכרוני פעיל בגבוה מאפס את שני האוגרים בחזית; זהו פרט מימוש שהוספנו למקור.",
+        "קלט גבוה רצוף יוצר פולס אחד בלבד. ירידה אינה יוצרת פולס. ערכי קלט לא ידועים ב־HDL אינם חלק מהמודל הבינארי שנבדק."
+      ],
+      "en": [
+        "Input is synchronous and meets setup/hold requirements; detection concerns samples at rising clock edges rather than every physical transition between edges.",
+        "Output is registered and holds until the next edge. The previous sample initializes to zero, so a first high sample creates a pulse.",
+        "Synchronous active-high reset clears both registers at an edge; this is an implementation clarification added to the source.",
+        "A held-high input creates one pulse; a fall creates none. HDL unknown-valued inputs are outside the tested binary model."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מימוש סינכרוני ברור של פולס רשום למחזור אחד לאחר זיהוי עלייה בין דגימות.",
+        "result": "הבנייה משתמשת בשני אוגרים חד־ביטיים, AND והיפוך, בנוסף למימוש האיפוס. כמות המצב והפעולות בכל חזית קבועה.",
+        "proof": "האוגר previous שומר את הדגימה הקודמת; רק x=1 ו־previous=0 מפעילים pulse_next. אחרי הפעלה previous נעשה 1 ולכן בחזית הבאה הפולס יורד, בין שהקלט נשאר גבוה ובין שירד.",
+        "scope": "אין טענה למינימום שערים, שטח, מספר אוגרים בכל מודל או השהיה פיזית. חלופת אוגר אחד עם AND צירופי היא בעלת חוזה תזמון אחר ואינה מוצגת כפלט רשום למחזור מלא אחרי הדגימה."
+      },
+      "en": {
+        "criterion": "A clear synchronous construction producing a registered one-cycle pulse after a sampled rise.",
+        "result": "Two one-bit registers, an AND condition and inversion, plus reset implementation. Per-edge operations and state size are constant.",
+        "proof": "The previous register holds the preceding sample. Only x=1 with previous=0 asserts pulse_next. That edge stores previous=1, forcing pulse low at the next edge whether input stays high or falls.",
+        "scope": "No universal minimum gate count, area, register count or physical-delay claim. The one-register combinational alternative has a different timing contract and is not presented as a registered full-cycle output after sampling."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "בדיקות מודל פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
+        "method": "השוואה לאורקל עצמאי שמזהה עלייה לפי הפרש חיובי של 1 בין שתי דגימות.",
+        "coverage": "16,382 רצפים בינאריים באורכים 0–12 עם שתי אפשרויות לדגימה הקודמת; 2,048 עקבות איפוס באמצע; דוגמה מפורשת וקלט גבוה במשך 100 מחזורים.",
+        "script_path": "checks/check_prep_042.py",
+        "scope": "הקוד ב־SystemVerilog צורף אך לא קומפל או הורץ בסימולטור HDL. לא נעשו סינתזה, בדיקת זמני הכנה/החזקה או מדידת מטא־יציבות ותזמון בחומרה."
+      },
+      "en": {
+        "status": "Python-model checks passed; independent expert review remains pending.",
+        "method": "Comparison with an independent oracle identifying a rise from a sample difference of positive one.",
+        "coverage": "16,382 binary streams of lengths 0–12 across both initial previous states; 2,048 midstream-reset traces; one explicit example and a 100-cycle held-high trace.",
+        "script_path": "checks/check_prep_042.py",
+        "scope": "SystemVerilog is supplied but has not been compiled or HDL-simulated. No synthesis, setup/hold verification, metastability measurement or physical timing checks."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "מצב התחלה: previous=0, pulse=0. דגימה ראשונה של 1 מייצרת פולס לפי ההגדרה שנבחרה.",
+        "רצף של אפסים אינו מייצר פולסים; רצף ארוך של אחדות מייצר פולס אחד בלבד בתחילתו.",
+        "רצף 0,1,1,0,1 נותן פלט 0,1,0,0,1.",
+        "איפוס בחזית כופה pulse=0 וגם previous=0. אם הקלט נשאר גבוה לאחר השחרור, הדגימה הראשונה ללא איפוס יוצרת פולס.",
+        "פולס כניסה קצר שמופיע ונעלם בין דגימות עלול לא להיקלט; המימוש אינו מבטיח ללכוד אותו.",
+        "כל מעבר מזוהה דורש סדר דגימות 0 ואז 1. לא מייצרים פולס לירידה בלבד."
+      ],
+      "en": [
+        "Initial state previous=0 and pulse=0; a first high sample generates a pulse under the stated contract.",
+        "All-zero input creates none; a long high run creates one pulse at its start.",
+        "Samples 0,1,1,0,1 produce 0,1,0,0,1.",
+        "Reset at an edge forces pulse=0 and previous=0. If input remains high after reset is released, its first nonreset sample generates a pulse.",
+        "A short input pulse entirely between samples may be missed; capture is not guaranteed.",
+        "A detected event requires low then high samples. A fall alone does not create a pulse."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שימוש ב־XOR, שמזהה גם עליות וגם ירידות.",
+        "עדכון previous לפני חישוב הפלט באמצעות השמות חוסמות ב־HDL, כך שהתנאי משתמש בערך החדש ועלול להתאפס תמיד.",
+        "הפקת שעון מתוך x או כתיבת posedge x בלי לפתור את היחס לשעון המערכת.",
+        "טענה שקלט גבוה מתמשך צריך להשאיר את pulse גבוה או ליצור פולס בכל מחזור.",
+        "השמטת מצב ההתחלה והנחה לא מוצהרת האם הדגימה הראשונה הגבוהה היא עלייה.",
+        "הצגת AND עם קלט חי ואוגר אחד כאילו הוא בהכרח פולס רשום מלא למחזור שאחרי הדגימה.",
+        "הנחה שסנכרון מבטל מטא־יציבות לחלוטין או מבטיח לכידת כל פולס אסינכרוני קצר."
+      ],
+      "en": [
+        "Using XOR, which detects falling as well as rising transitions.",
+        "Updating previous first using blocking HDL assignments, then evaluating the condition from the new value, potentially forcing output always low.",
+        "Using x as a generated clock or writing posedge x without defining the system-clock relationship.",
+        "Keeping pulse high or repeating pulses throughout a held-high input.",
+        "Leaving initialization and first-high behavior unspecified.",
+        "Presenting live-input AND with one register as necessarily giving a registered full-cycle pulse after sampling.",
+        "Claiming synchronization eliminates metastability or guarantees capture of every short asynchronous pulse."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור את הדגימה הקודמת באוגר. בכל חזית עולה אחשב pulse_next=x AND NOT(previous), ובמקביל previous_next=x. אשתמש בשני אוגרים ובהשמות לא חוסמות לפלט רשום. רק דגימות 0 ואז 1 יוצרות פולס; בחזית הבאה הוא יורד גם אם הקלט נשאר גבוה. אבהיר שהקלט סינכרוני ושהמצב הקודם מאותחל לאפס.",
+      "en": "Store the preceding input sample. At each rising clock edge compute pulse_next=x AND NOT(previous), while saving previous_next=x. Use two registers and nonblocking assignments for a registered output. Only sampled 0 then 1 produces a pulse; it falls at the next edge even if input stays high. State the synchronous-input and zero-initialization assumptions."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך נזהה גם עלייה וגם ירידה? ומה משתנה אם הקלט אינו סינכרוני לשעון?",
+        "answer_outline": "לשינוי בשני הכיוונים אפשר לרשום x XOR previous, באותו מודל דגימה ואתחול. לקלט אסינכרוני מוסיפים אסטרטגיית סנכרון והעברת אירועים מתאימה; יש לנתח הסתברות למטא־יציבות ואפשרות להחמצת פולסים קצרים, ולא להבטיח זיהוי מיידי של כל אירוע.",
+        "integration_status": "שאלת המשך מוכנה בתוכן הארכיון; חיבור לתהליך ההמשך החי טרם בוצע."
+      },
+      "en": {
+        "question": "How would you detect both rising and falling changes? What changes if the input is asynchronous to the clock?",
+        "answer_outline": "Register x XOR previous to detect either sampled transition, under the same sampling and initialization contract. An asynchronous input needs an appropriate synchronization and event-transfer strategy; analyze metastability probability and missed short pulses rather than promise immediate capture of every event.",
+        "integration_status": "Follow-up prepared in archived content; not connected to the live follow-up workflow."
+      }
+    }
+  },
+  "PREP-043": {
+    "assumptions": {
+      "he": [
+        "הקלט הוא זרם של תווים, תו אחד בכל חזית שעון עולה, ולא ארבעה ביטים המייצגים את אותן אותיות.",
+        "ההשוואה היא לרצף הרציף ABCD באותיות גדולות. כל תו אחר משתייך למחלקת אחר.",
+        "מצב ההתחלה S0 ללא התאמה חלקית. reset בקוד החומרה סינכרוני ומקבל עדיפות על קליטת התו באותה חזית.",
+        "המקור אינו מכריע בין פעימת זיהוי לבין כספת שנותרת פתוחה; שתי החלופות מוגדרות בנפרד ומקבלות פתרון.",
+        "קלט בן שמונה סיביות בקידוד ASCII הוא בחירת מימוש בקוד, לא דרישה למכונת המצבים המופשטת."
+      ],
+      "en": [
+        "The input is a symbol stream with one symbol sampled per rising clock edge, not four binary input bits standing for the letters.",
+        "Match contiguous uppercase ABCD. Every other symbol belongs to the Other class.",
+        "Start in S0 with no partial match. Hardware reset is synchronous and takes priority over sampling on the same edge.",
+        "The source does not choose between a detection pulse and a safe remaining open; both alternatives are separately specified and solved.",
+        "An eight-bit ASCII input is a code-level implementation choice, not a requirement of the abstract state machine."
+      ]
+    },
+    "source_ambiguities": {
+      "he": {
+        "opening": "לא הוגדר אם הכספת נשארת פתוחה. הפתרון כולל גלאי פעימה וגם מצב OPEN מתמיד.",
+        "timing": "לא נמסרו שעון, מועד דגימה או איפוס. דגימת תו בכל חזית עולה ואיפוס סינכרוני מסומנים כהבהרות מימוש.",
+        "symbols": "המקור מציין ארבעה תווים שונים. פתרון זה משתמש בתווים הסמליים A/B/C/D ומאפשר תווים אחרים כאי־התאמות."
+      },
+      "en": {
+        "opening": "The source does not specify whether unlock is held. The solution includes both a pulse detector and a persistent OPEN state.",
+        "timing": "Clocking, sampling instant, and reset are unspecified. One symbol per rising edge and synchronous reset are labeled implementation clarifications.",
+        "symbols": "The source states four distinct symbols. This solution uses A/B/C/D symbolically and treats other symbols as mismatches."
+      }
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר מצבים במכונת Mealy מופשטת לזיהוי הרצף הקבוע, וזיכרון ועבודה לכל תו. אין מדד פיזי של שטח שערים או השהיה.",
+        "result": "ארבעה מצבי התקדמות מופשטים. הקוד שפלטו רשום דורש שתי סיביות מצב ועוד דלגלג פעימה. לחלופה ששומרת פתיחה יש חמישה מצבים לוגיים. זמן O(1) לכל תו ו־O(m) לזרם בן m תווים.",
+        "proof": "מצב ההתקדמות הוא הסיומת הארוכה ביותר שהיא תחילית ממש של ABCD. המצבים נבדלים על ידי המשכים D, CD, BCD או ABCD: המשך שמשלים זיהוי ממצב מתקדם יותר לא מספיק ממצב פחות מתקדם. בכך מוצדקים ארבעת מצבי ה־Mealy, אך לא נובע שדי בשני דלגלגים למימוש שפלטו נשמר אחרי החזית.",
+        "scope": "ארבעה מצבי זיהוי מופשטים אינם אותה ספירה כמו מצב חומרה הכולל אוגר פלט. הקידוד הבינרי, ההשוואות והשהיות תלויים בטכנולוגיה ובמימוש; לא הוכחה אופטימליות של מספר שערים."
+      },
+      "en": {
+        "criterion": "State count for an abstract Mealy detector of the fixed pattern, plus storage and work per symbol. No physical gate-area or delay metric is optimized.",
+        "result": "Four abstract prefix states. The registered-output code uses two state bits and one pulse flip-flop. Persistent unlock has five logical states. O(1) work per symbol and O(m) time for m symbols.",
+        "proof": "Progress is the longest suffix that is a proper prefix of ABCD. States are distinguishable by continuations D, CD, BCD, or ABCD: a suffix completing a match from a more advanced state is insufficient from a less advanced state. This justifies four abstract Mealy states, but does not imply that two flip-flops suffice for an output held after the edge.",
+        "scope": "Four abstract recognition states are not the same count as hardware state including an output register. Binary encoding, comparisons, and delays depend on technology and implementation; no minimum gate count is proved."
+      }
+    },
+    "verification": {
+      "he": "אומתו 488,281 זרמים מעל A/B/C/D/X בכל האורכים מ־0 עד 8 מול אורקל עצמאי של סיומת ABCD. בכל צעד נבדקו פלט הפעימה, פתיחה מתמידה ואינווריאנט התחילית. נוספו שמונה עקבות מפורשות ואיפוס באמצע הזרם, לרבות איפוס במקום D שהיה משלים זיהוי. הבדיקות הן של מודל פייתון; קוד SystemVerilog לא הורץ בסימולטור חומרה ולא נבדק במעגל פיזי.",
+      "en": "All 488,281 streams over A/B/C/D/X of lengths 0 through 8 were checked against an independent ABCD suffix oracle. Each step checks pulse output, persistent unlock, and the prefix invariant. Eight explicit traces and midstream resets were added, including reset on a D that would otherwise complete a match. These are Python model checks; SystemVerilog was not HDL-simulated or tested on physical hardware."
+    },
+    "edge_cases": {
+      "he": [
+        "ABCD: זיהוי אחרי התו הרביעי. ABC: אין זיהוי מוקדם.",
+        "AABCD: זיהוי אחרי התו החמישי. ABABCD: אחרי השישי. ABCABCD: אחרי השביעי.",
+        "ABCDABCD: שתי פעימות, אחרי התווים הרביעי והשמיני; בחלופה המתמידה הפלט נשאר גבוה לאחר הראשון.",
+        "ABXCD או ABDC: אין זיהוי; התבנית חייבת להופיע ברצף ובסדר הנכון.",
+        "כל תו שאינו A/B/C/D מאפס את ההתקדמות; A במצב חלקי מתחיל התאמה חדשה.",
+        "איפוס במצב ABC מבטל התאמה גם אם D נוכח באותה חזית. איפוס גם סוגר את חלופת OPEN.",
+        "קלט ריק אינו מזהה רצף. אותיות קטנות אינן שקולות לגדולות בהנחת ההשוואה שנבחרה."
+      ],
+      "en": [
+        "ABCD detects after symbol four. ABC must not detect early.",
+        "AABCD detects after symbol five; ABABCD after six; ABCABCD after seven.",
+        "ABCDABCD yields pulses after symbols four and eight; persistent unlock remains high after the first match.",
+        "ABXCD and ABDC do not detect: the pattern must be contiguous and ordered.",
+        "Any symbol outside A/B/C/D clears partial progress; A during a partial match starts a fresh attempt.",
+        "Reset in the ABC state suppresses a match even if D is present on that edge. Reset also closes the OPEN variant.",
+        "An empty input does not detect. Lowercase letters do not match uppercase under the stated comparison."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חזרה ל־S0 על כל אי־התאמה: מפספסת רצף חדש שמתחיל ב־A, כגון ABCABCD.",
+        "הפקת פלט 1 מיד לאחר ABC: חסר התו D.",
+        "הגדרה עמומה של פתיחת הכספת: פעימה של מחזור אחד ופתיחה עד איפוס הן התנהגויות שונות.",
+        "הכרזה שארבעה מצבים מבטיחים שני דלגלגים לכל המימוש: הקוד מוסיף אוגר פלט פעימה.",
+        "התעלמות מתווים שאינם בתבנית במקום לאפס התקדמות: כך ABXCD עלול להיחשב בטעות כהתאמה.",
+        "הנחה שחזרה ל־S0 אחרי כל תבנית נכונה לכל גלאי: כאן היא נכונה בגלל התווים השונים; לתבנית כמו ABAB יש חפיפה.",
+        "דיווח שסימולציית פייתון מאשרת סינתזה, גליצ'ים או עמידה בתזמון של קוד SystemVerilog: נדרש אימות חומרה נפרד."
+      ],
+      "en": [
+        "Returning to S0 on every mismatch misses a fresh A starting another match, such as ABCABCD.",
+        "Raising output after ABC detects before the required D.",
+        "Leaving unlock semantics implicit: a one-cycle pulse and opening until reset are different behaviors.",
+        "Claiming four states means two flip-flops for the entire realization: the code adds a pulse output register.",
+        "Ignoring non-pattern symbols instead of clearing progress can incorrectly accept ABXCD.",
+        "Assuming every pattern should return to S0 after a full match: distinct symbols justify that here; ABAB has overlap.",
+        "Claiming Python simulation confirms synthesis, glitch behavior, or SystemVerilog timing: separate hardware verification is required."
+      ]
+    },
+    "interview_answer": {
+      "he": "אזכור את הסיומת הארוכה ביותר שמתאימה לתחילת ABCD: ארבעה מצבים עבור ריק, A, AB ו־ABC. התו הבא הצפוי מקדם מצב, כל A מתחיל מחדש ב־A, ושאר אי־ההתאמות מחזירות לריק. רק D אחרי ABC מפיק זיהוי. בגלל שכל התווים שונים אפשר לחזור לריק אחרי התאמה מלאה. אבהיר אם רוצים פעימה או פתיחה מתמידה; לפעימה רשומה אשתמש בשתי סיביות מצב ועוד אוגר פלט, ולפתיחה מתמידה אוסיף OPEN שנשמר עד איפוס.",
+      "en": "I remember the longest suffix matching the start of ABCD: four states for empty, A, AB, and ABC. The expected next symbol advances; any A restarts at A; other mismatches clear progress. Only D after ABC detects. Because all symbols are distinct, a full match falls back to empty. I clarify whether output is a pulse or persistent unlock. A registered pulse uses two state bits plus an output register; persistent unlock adds OPEN held until reset."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך משתנה הגלאי אם התבנית היא ABAB, ומבקשים לזהות גם התאמות חופפות בקלט ABABAB?",
+        "direction": "אחרי השלמת ABAB נשארת סיומת AB שהיא גם תחילת התבנית. לכן יש לחזור למצב AB ולא למצב הריק, כדי לזהות סיומות שמסתיימות בתו הרביעי ובתו השישי. גם במעברי אי־התאמה צריך לשמור את הסיומת הארוכה ביותר שהיא תחילית של התבנית החדשה.",
+        "status": "שאלת המשך הוכנה בארכיון; לא נטען שנוספה אוטומטית למנגנון שאלות ההמשך באתר."
+      },
+      "en": {
+        "question": "How does the detector change for ABAB when overlapping matches must be recognized in ABABAB?",
+        "direction": "After a complete ABAB, suffix AB is also a prefix of the pattern. Fall back to the AB state rather than empty so matches ending at symbols four and six are both detected. Mismatch transitions must likewise retain the longest suffix that is a prefix of the new pattern.",
+        "status": "Follow-up prepared in the archive; not claimed to be automatically connected to the website's follow-up flow."
+      }
+    }
+  }
+}

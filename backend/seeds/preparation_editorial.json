@@ -774,5 +774,80 @@
       }
     },
     "learner_copy_review": "2026-10-18: Harel explicitly confirmed overlapping adjacent digit pairs and requested MSD (Most Significant Digit) inline. Wording clarification only; technical review remains pending."
+  },
+  "PREP-039": {
+    "hints": {
+      "he": [
+        "אל תספרו רק את המעברים אל היעד: מי מחזיר את הפנס כדי לאפשר את המעבר הבא? בדקו קודם את הרעיון שבו האדם המהיר ביותר מלווה כל אחד.",
+        "כשהאנשים האיטיים עוברים בנפרד משלמים על שניהם. מה נחסך אם הם עוברים יחד, ומי יצטרך להמתין להם בצד היעד?",
+        "שלחו תחילה את שני המהירים. החזירו את המהיר ביותר והשאירו את השני ביעד. עכשיו בדקו מי חוצה עם מי ומי מחזיר את הפנס אחרי מעבר האיטיים."
+      ],
+      "en": [
+        "Count the return trips as well: who brings the torch back for the next crossing? First examine the idea of letting the fastest person accompany each of the others.",
+        "Sending the slow people separately makes you pay for each of their crossing times. What can you save by sending them together, and who should be waiting at the destination?",
+        "Send the two fast people first. Bring the fastest back and leave the other at the destination. Now work out who crosses together and who returns the torch after the slow pair."
+      ]
+    },
+    "note": "2026-10-18 batch: original screenshot preserved; all assumptions explicit; AI-assisted proposal, technical/parity/reuse review pending."
+  },
+  "PREP-040": {
+    "hints": {
+      "he": [
+        "התחילו בפתרון שבודק כל זוג מקומות שונים. איזו עבודה הוא חוזר לבצע עבור כל איבר?",
+        "אם האיבר הנוכחי ידוע, איזה ערך מדויק צריך בן הזוג שלו לקבל? האם תוכלו לזכור אילו ערכים כבר הופיעו?",
+        "שמרו קבוצה של ערכים קודמים. חפשו בה את המשלים ליעד לפני הוספת האיבר הנוכחי. למה הסדר הזה נחוץ עבור `[6]` לעומת `[6, 6]` עם יעד `12`?"
+      ],
+      "en": [
+        "Start by checking every pair of different positions. Which work is repeated for each element?",
+        "Given the current value, what exact value must its partner have? Could you remember which values have already appeared?",
+        "Keep a set of earlier values. Look for the complement before inserting the current value. Why does that order matter for `[6]` versus `[6, 6]` with target `12`?"
+      ]
+    },
+    "note": "2026-10-18 batch: original screenshot preserved; all assumptions explicit; AI-assisted proposal, technical/parity/reuse review pending."
+  },
+  "PREP-041": {
+    "hints": {
+      "he": [
+        "אין צורך לשחזר את הסדר האקראי. איזה מידע אפשר לחשב מראש על כל המספרים בטווח, ואז להשוות למה שנותר?",
+        "ערך חסר אחד אפשר למצוא מהפרש הסכומים. כשחסרים שניים, הסכום נותן רק את החיבור שלהם. איזו פעולה מבטלת ערך שמופיע פעמיים?",
+        "בצעו XOR על הטווח המלא ועל המערך שנותר. התוצאה היא XOR של שני החסרים. מצאו בתוצאה ביט שערכו 1, חלקו לפי הביט הזה את שתי קבוצות הקלט, ובצעו XOR נפרד בכל צד."
+      ],
+      "en": [
+        "You do not need to reconstruct the random order. What aggregate can you compute for the complete range and compare with the remaining entries?",
+        "A difference of sums finds one missing value. For two, it gives only their sum. Which operation cancels a value appearing twice?",
+        "XOR the complete range and the remaining entries. The result is the XOR of the two missing values. Choose a set bit in that result, partition both inputs by it, and XOR each group separately."
+      ]
+    },
+    "note": "2026-10-18 batch: original screenshot preserved; all assumptions explicit; AI-assisted proposal, technical/parity/reuse review pending."
+  },
+  "PREP-042": {
+    "hints": {
+      "he": [
+        "אם הקלט כרגע `1`, איך מבדילים בין עלייה חדשה לבין מצב שבו הוא גבוה כבר כמה מחזורים?",
+        "שמרו את דגימת הקלט הקודמת. איזה שילוב של הערך הקודם והנוכחי מתאר דווקא עלייה ולא ירידה?",
+        "רשמו בכל חזית את `x AND NOT(previous)` כפלט, ובמקביל שמרו את `x` לפעם הבאה. החישוב חייב להשתמש בערך הישן של `previous`."
+      ],
+      "en": [
+        "When the input is high, how do you distinguish a fresh rise from a level held high for several cycles?",
+        "Store the preceding input sample. Which combination of previous and current samples describes a rise rather than a fall?",
+        "At each edge register `x AND NOT(previous)` as the output, while saving `x` for next time. The expression must use the old value of `previous`."
+      ]
+    },
+    "note": "2026-10-18 batch: original screenshot preserved; all assumptions explicit; AI-assisted proposal, technical/parity/reuse review pending."
+  },
+  "PREP-043": {
+    "hints": {
+      "he": [
+        "חשבו איזה חלק מסוף הקלט שכבר הגיע עדיין יכול להיות התחלה של ABCD. האם צריך לזכור את כל התווים, או רק את מידת ההתקדמות ברצף?",
+        "נסו מצבים עבור אין התאמה, A, AB ו־ABC. תכננו גם מה קורה כשמגיע A במקום התו הבא שציפיתם לו; בדקו את ABCABCD.",
+        "רק D במצב שמייצג ABC משלים זיהוי. תו A מעביר תמיד למצב של A; שאר אי־ההתאמות מאפסות את ההתקדמות. לאחר מכן החליטו אם פלט הזיהוי הוא פעימה או מעבר למצב OPEN שנשמר עד איפוס."
+      ],
+      "en": [
+        "Which suffix of the input already consumed could still be the beginning of ABCD? Do you need the full history or only the progress through the target pattern?",
+        "Try states for no match, A, AB, and ABC. Work out what happens when A arrives instead of the expected next symbol; test ABCABCD.",
+        "Only D from the state representing ABC completes a match. A always leads to the A state, while other mismatches clear progress. Then choose between a detection pulse and an OPEN state held until reset."
+      ]
+    },
+    "note": "2026-10-18 batch: original screenshot preserved; all assumptions explicit; AI-assisted proposal, technical/parity/reuse review pending."
   }
 }

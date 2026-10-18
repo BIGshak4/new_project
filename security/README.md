@@ -34,6 +34,8 @@ Every record separates observed evidence, the exact change, verification and res
 
 ## Rules for every review
 
+Subsequent focused review: [2026-10-18 question-batch media compatibility](runs/2026-10-18-question-batch-media.md), with [SEC-014](findings/SEC-014-source-screenshot-compatibility-filter.md). This is a browser defense-in-depth finding; the server source-provenance boundary was already effective. Deployment status is tracked in that run report.
+
 1. Record the tested revision, environment, and authorized scope before testing.
 2. Reproduce suspected issues with synthetic accounts, files, and data. Do not probe other users' records, send real campaigns, incur AI charges, or stress production.
 3. Distinguish a demonstrated exploit, an installed dependency advisory, excessive permissions, and a hardening recommendation. Do not inflate the finding count.

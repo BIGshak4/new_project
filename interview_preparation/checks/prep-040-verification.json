@@ -1,0 +1,34 @@
+{
+  "question": "PREP-040",
+  "status": "passed",
+  "checked_on": "2026-10-18",
+  "exhaustive_array_alphabet": [
+    -2,
+    -1,
+    0,
+    1,
+    2
+  ],
+  "exhaustive_array_lengths": [
+    0,
+    6
+  ],
+  "exhaustive_arrays": 19531,
+  "targets_per_array": 11,
+  "exhaustive_array_target_cases": 214841,
+  "explicit_boundary_cases": 16,
+  "python_hash_collision_cases": 2,
+  "seeded_random_cases": 1000,
+  "immutable_sequence_cases": 4,
+  "total_cases": 215863,
+  "implementations_checked_per_case": 4,
+  "oracle": "Independent enumeration of all distinct index combinations",
+  "properties": [
+    "Boolean solvers match oracle",
+    "Optional returned indices are in range, different, and sum to target",
+    "Original input remains unchanged after every solver",
+    "Single occurrence cannot be reused; duplicate values at different indices can",
+    "Python arbitrary-precision integer boundaries remain correct"
+  ],
+  "scope": "Finite exhaustive tests, boundary/hash-collision cases and seeded sampling; complexity is justified separately under an explicit operation model. No human technical review or benchmark claim."
+}
