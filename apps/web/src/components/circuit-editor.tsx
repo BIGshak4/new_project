@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect, useId, useMemo, useRef, useState,
+  type KeyboardEvent, type ReactNode,
+} from "react";
 import {
   ReactFlow,
   Background,
@@ -257,6 +260,7 @@ export default function CircuitEditor({
   const [showQuestion, setShowQuestion] = useState(true);
   const questionId = useId();
   const expandButton = useRef<HTMLButtonElement>(null);
+  const canvas = useRef<HTMLDivElement>(null);
   const [sourcePin, setSourcePin] = useState(""),
     [targetPin, setTargetPin] = useState("");
   const dialog = useRef<HTMLDialogElement>(null),
@@ -342,6 +346,11 @@ export default function CircuitEditor({
     change(next);
   }
   function remove() {
+    if (
+      readOnly || !onChange ||
+      (!part && !value.wires.some((w) => w.id === selectedWire))
+    )
+      return false;
     change({
       ...value,
       parts: value.parts.filter((p) => p.id !== selected),
@@ -354,6 +363,38 @@ export default function CircuitEditor({
     });
     setSelected(null);
     setSelectedWire(null);
+    return true;
+  }
+  function handleCanvasKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (
+      (event.key !== "Backspace" && event.key !== "Delete") ||
+      event.defaultPrevented || event.nativeEvent.isComposing ||
+      event.ctrlKey || event.metaKey || event.altKey || event.shiftKey
+    ) return;
+    const target = event.target;
+    if (
+      target instanceof Element && (
+        target.closest("input, textarea, select, [role='textbox']") ||
+        (target instanceof HTMLElement && target.isContentEditable)
+      )
+    ) return;
+    // Use the same controlled update as the toolbar, including wire cleanup
+    // and undo history. ReactFlow's own deletion remains disabled.
+    if (remove()) {
+      event.preventDefault();
+      event.stopPropagation();
+      canvas.current?.focus({ preventScroll: true });
+    }
+  }
+  function syncSelection(changes: { id: string; selected: boolean }[], kind: "part" | "wire") {
+    const setCurrent = kind === "part" ? setSelected : setSelectedWire;
+    const next = changes.findLast((c) => c.selected);
+    if (next) {
+      setCurrent(next.id);
+      (kind === "part" ? setSelectedWire : setSelected)(null);
+    } else if (changes.length) {
+      setCurrent((current) => changes.some((c) => c.id === current) ? null : current);
+    }
   }
   function add(kind: Kind) {
     if (value.parts.length >= 100) {
@@ -564,6 +605,12 @@ export default function CircuitEditor({
               "בחרו רכיב להוספה. גררו אותו למקום, ואז חברו נקודת יציאה מימין לנקודת כניסה משמאל. לחיצה על רכיב פותחת את ההגדרות שלו.",
               "Add a component, drag it into place, then connect a right output pin to a left input pin. Select a component to configure it.",
             )}
+        {!readOnly && (
+          <>
+            {" "}{t("למחיקה: לחצו על הרכיב ואז על", "To delete: click a component, then press")}{" "}
+            <kbd dir="ltr">Backspace</kbd> {t("או", "or")} <kbd dir="ltr">Delete</kbd>.
+          </>
+        )}
       </p>
       <div className="circuit-viewport-tools">
         <span>
@@ -598,9 +645,14 @@ export default function CircuitEditor({
         </button>
       </div>
       <div
+        ref={canvas}
         className="circuit-canvas"
         dir="ltr"
+        role="group"
+        tabIndex={0}
         aria-label={t("לוח שרטוט מעגל", "Circuit canvas")}
+        aria-keyshortcuts={!readOnly && onChange ? "Backspace Delete" : undefined}
+        onKeyDownCapture={handleCanvasKeyDown}
       >
         <ReactFlow<GateNode, Edge>
           nodes={nodes}
@@ -620,23 +672,29 @@ export default function CircuitEditor({
           nodesConnectable={!readOnly}
           deleteKeyCode={null}
           onConnect={connect}
-          onNodeClick={(_, n) => {
+          onNodeClick={(event, n) => {
             setSelected(n.id);
             setSelectedWire(null);
+            if (event.currentTarget instanceof HTMLElement)
+              event.currentTarget.focus({ preventScroll: true });
           }}
-          onEdgeClick={(_, e) => {
+          onEdgeClick={(event, e) => {
             setSelectedWire(e.id);
             setSelected(null);
+            if (event.currentTarget instanceof SVGElement)
+              event.currentTarget.focus({ preventScroll: true });
           }}
           onPaneClick={() => {
             setSelected(null);
             setSelectedWire(null);
+            canvas.current?.focus({ preventScroll: true });
           }}
           onNodeDragStart={() => {
             setUndo((u) => [...u.slice(-39), value]);
             setRedo([]);
           }}
           onNodesChange={(changes) => {
+            syncSelection(changes.filter((c) => c.type === "select"), "part");
             const positions = changes.filter((c) => c.type === "position");
             if (!readOnly && positions.length)
               change(
@@ -655,6 +713,9 @@ export default function CircuitEditor({
                 },
                 false,
               );
+          }}
+          onEdgesChange={(changes) => {
+            syncSelection(changes.filter((c) => c.type === "select"), "wire");
           }}
         >
           <Background gap={20} size={1} color="var(--line)" />

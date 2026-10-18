@@ -93,10 +93,49 @@ async function click(expression) {
     if (hit !== e && !e.contains(hit)) throw new Error('Click target obscured: ' + e.outerHTML);
     return {x,y};
   })()`);
+  await clickPoint(point);
+}
+async function clickPoint(point) {
   for (const type of ["mouseMoved", "mousePressed", "mouseReleased"]) {
     await send("Input.dispatchMouseEvent", { type, ...point, button: "left", clickCount: 1, pointerType: "mouse" });
   }
   await delay(120);
+}
+async function press(key) {
+  const codes = { Backspace: 8, Delete: 46, Home: 36, ArrowDown: 40, ArrowRight: 39, ArrowLeft: 37, Enter: 13, Tab: 9 };
+  if (!codes[key]) throw new Error(`Unsupported regression key: ${key}`);
+  for (const type of ["keyDown", "keyUp"]) {
+    await send("Input.dispatchKeyEvent", { type, key, code: key, windowsVirtualKeyCode: codes[key] });
+  }
+  await delay(120);
+}
+async function selectOption(expression, value) {
+  const index = await evaluate(`(() => {
+    const select=${expression};
+    const index=Array.from(select.options).findIndex(option=>option.value===${JSON.stringify(value)});
+    if(index<0) throw new Error('Select option absent');
+    select.scrollIntoView({block:'center',behavior:'instant'});
+    select.focus();
+    return index;
+  })()`);
+  // Use native keyboard selection, so React receives the browser's change event.
+  await press("Home");
+  for (let i = 0; i < index; i++) await press("ArrowDown");
+  await press("Enter");
+  if (!await evaluate(`(${expression}).value===${JSON.stringify(value)}`)) throw new Error("Native select did not choose the requested option");
+}
+async function clickCanvasBackground() {
+  const point = await evaluate(`(() => {
+    const canvas=document.querySelector('dialog .circuit-canvas');
+    canvas.scrollIntoView({block:'center',behavior:'instant'});
+    const rect=canvas.getBoundingClientRect();
+    for(const [dx,dy] of [[12,12],[-12,12],[12,-12],[-12,-12]]) {
+      const x=dx>0?rect.left+dx:rect.right+dx, y=dy>0?rect.top+dy:rect.bottom+dy;
+      if(document.elementFromPoint(x,y)?.classList.contains('react-flow__pane')) return {x,y};
+    }
+    throw new Error('No visible canvas background click target');
+  })()`);
+  await clickPoint(point);
 }
 const button = (text, scope = "document") => `Array.from(${scope}.querySelectorAll('button')).find(e => e.textContent.trim() === ${JSON.stringify(text)})`;
 const named = (label) => `document.querySelector('button[aria-label=' + ${JSON.stringify(JSON.stringify(label))} + ']')`;
@@ -167,6 +206,95 @@ function assertCommon(state, label) {
   check(`${label}: gate retained`, state.nodes === 1, state.nodes);
   check(`${label}: selection retained`, state.selected === selectedId && state.selectedNode, { selected: state.selected, selectedNode: state.selectedNode });
   check(`${label}: simulation retained`, state.simulationRunning && /1$/.test(state.clock ?? ""), state.clock);
+}
+async function deletionInMode(t, layout, key) {
+  const node = `document.querySelector('.react-flow__node[data-id=' + ${JSON.stringify(JSON.stringify(selectedId))} + '] .logic-part')`;
+  await click(node);
+  await press(key);
+  check(`${layout}: ${key} deletes component and focuses canvas in modal`, await evaluate(`document.querySelector('dialog').matches(':modal') && document.querySelector('dialog').dataset.layout===${JSON.stringify(layout)} && !document.querySelector('dialog .react-flow__node') && document.activeElement===document.querySelector('dialog .circuit-canvas')`));
+  await click(named(t("ביטול שינוי במעגל", "Undo circuit change")));
+  await click(node);
+  const restored = await facts();
+  check(`${layout}: undo restores component and active simulation`, restored.modal && restored.layout === layout && restored.nodes === 1 && restored.selected === selectedId && restored.selectedNode && restored.simulationRunning && /1$/.test(restored.clock ?? ""));
+}
+async function deletionChecks(t, scenario) {
+  const node = (id) => `document.querySelector('.react-flow__node[data-id=' + ${JSON.stringify(JSON.stringify(id))} + '] .logic-part')`;
+  const undo = named(t("ביטול שינוי במעגל", "Undo circuit change"));
+  const redo = named(t("ביצוע שינוי מחדש במעגל", "Redo circuit change"));
+  const snapshot = () => evaluate(`(() => ({
+    nodes:Array.from(document.querySelectorAll('dialog .react-flow__node')).map(e=>({id:e.dataset.id,label:e.querySelector('.part-label').textContent})).sort((a,b)=>a.id.localeCompare(b.id)),
+    wires:Array.from(document.querySelectorAll('dialog .react-flow__edge')).map(e=>e.dataset.id).sort(),
+    undoDisabled:(${undo}).disabled,redoDisabled:(${redo}).disabled
+  }))()`);
+  await click(button("OR", "document.querySelector('.component-palette')"));
+  await waitFor("document.querySelectorAll('dialog .react-flow__node').length===2", "second gate for deletion regression");
+  const secondId = await evaluate("document.querySelector('.component-picker select').value");
+  await click("document.querySelector('.circuit-connect summary')");
+  await selectOption("document.querySelector('.circuit-connect select')", `${selectedId}:Y`);
+  for (const port of ["A0", "A1"]) {
+    await selectOption("document.querySelectorAll('.circuit-connect select')[1]", `${secondId}:${port}`);
+    await click(button(t("חיבור", "Connect"), "document.querySelector('.circuit-connect')"));
+  }
+  await waitFor("document.querySelectorAll('dialog .react-flow__edge').length===2", "two connected wires");
+  await click(button(t("כל המעגל", "Whole circuit")));
+  await settleViewport();
+  await click(node(selectedId));
+  const focusedNode = (id) => `document.activeElement===(${node(id)}).closest('.react-flow__node') && document.querySelector('dialog .circuit-canvas').contains(document.activeElement)`;
+  check("gate click selects and focuses component within canvas", await evaluate(`document.querySelector('.component-picker select').value===${JSON.stringify(selectedId)} && (${focusedNode(selectedId)})`));
+  const originalPosition = await evaluate(`(() => {const r=(${node(selectedId)}).getBoundingClientRect();return {x:r.x,y:r.y};})()`);
+  await press("ArrowRight");
+  const movedPosition = await evaluate(`(() => {const r=(${node(selectedId)}).getBoundingClientRect();return {x:r.x,y:r.y};})()`);
+  check("clicked component retains native arrow-key movement", movedPosition.x > originalPosition.x + 1 && Math.abs(movedPosition.y - originalPosition.y) < 1, { before: originalPosition, after: movedPosition });
+  await press("ArrowLeft");
+
+  const input = "document.querySelector('.part-properties input')";
+  for (const key of ["Backspace", "Delete"]) {
+    await click(input);
+    const before = await evaluate(`(() => {const e=${input};const at=${key === "Backspace" ? "e.value.length" : "0"};e.setSelectionRange(at,at);return e.value;})()`);
+    await press(key);
+    const expected = key === "Backspace" ? before.slice(0, -1) : before.slice(1);
+    check(`${key} edits property text without deleting component`, await evaluate(`document.querySelectorAll('dialog .react-flow__node').length===2 && document.querySelectorAll('dialog .react-flow__edge').length===2 && (${input}).value===${JSON.stringify(expected)} && document.activeElement===(${input})`));
+  }
+  const connected = await snapshot();
+  scenario.states.beforeKeyboardDeletion = connected;
+  for (const key of ["Backspace", "Delete"]) {
+    // Undo restores the graph; explicitly select again to reopen its properties.
+    await click(node(selectedId));
+    await click(input);
+    await click(node(selectedId));
+    check(`${key}: gate click leaves property input and focuses component`, await evaluate(focusedNode(selectedId)));
+    await press(key);
+    const removed = await snapshot();
+    check(`${key} removes clicked component and its connected wires`, removed.nodes.length === 1 && removed.nodes[0].id === secondId && removed.wires.length === 0, removed);
+    check(`${key}: deletion returns focus to canvas`, await evaluate("document.activeElement===document.querySelector('dialog .circuit-canvas')"));
+    await click(undo);
+    const restored = await snapshot();
+    check(`${key}: undo restores component, labels and both wire IDs`, JSON.stringify(restored.nodes) === JSON.stringify(connected.nodes) && JSON.stringify(restored.wires) === JSON.stringify(connected.wires), restored);
+  }
+  await click(node(selectedId));
+  await press("Tab");
+  check("Tab focuses the next component", await evaluate(focusedNode(secondId)));
+  await press("Enter");
+  check("Enter selects the focused component", await evaluate(`document.querySelector('.component-picker select').value===${JSON.stringify(secondId)} && (${node(secondId)}).closest('.react-flow__node').classList.contains('selected')`));
+  await press("Delete");
+  const keyboardRemoved = await snapshot();
+  check("Delete follows native keyboard selection rather than previous click", keyboardRemoved.nodes.length === 1 && keyboardRemoved.nodes[0].id === selectedId && keyboardRemoved.wires.length === 0, keyboardRemoved);
+  check("keyboard-selected deletion returns focus to canvas", await evaluate("document.activeElement===document.querySelector('dialog .circuit-canvas')"));
+  await click(undo);
+  const keyboardRestored = await snapshot();
+  check("undo restores keyboard-selected component and both wire IDs", JSON.stringify(keyboardRestored.nodes) === JSON.stringify(connected.nodes) && JSON.stringify(keyboardRestored.wires) === JSON.stringify(connected.wires), keyboardRestored);
+  await clickCanvasBackground();
+  check(
+    "background click clears component and wire selection",
+    await evaluate("!document.querySelector('dialog .react-flow__node.selected, dialog .react-flow__edge.selected') && document.querySelector('.component-picker select').value===''")
+  );
+  const unselected = await snapshot();
+  for (const key of ["Backspace", "Delete"]) {
+    await press(key);
+    check(`${key} with no selection preserves circuit and undo/redo availability`, JSON.stringify(await snapshot()) === JSON.stringify(unselected));
+  }
+  scenario.states.afterKeyboardDeletion = await snapshot();
+  await screenshot(`keyboard-deletion-${current}`);
 }
 let selectedId, baselineTransform;
 
@@ -254,6 +382,7 @@ try {
         check("mobile question and canvas visible together", questionCanvas.canvasVisiblePixels >= 200 && questionCanvas.question?.textVisiblePixels >= 20, { canvasPixels: questionCanvas.canvasVisiblePixels, questionTextPixels: questionCanvas.question?.textVisiblePixels });
         await screenshot(`mobile-question-canvas-${config.lang}-${config.dark ? "dark" : "light"}`);
       }
+      await deletionInMode(t, "expanded", "Backspace");
       await click(named(t("סגירת תצוגת השאלה", "Close question reference")));
       check("question close hides reference", await evaluate("!document.querySelector('dialog aside')"));
       await click(button(t("הצגת השאלה", "Show question")));
@@ -269,6 +398,7 @@ try {
         await evaluate("document.querySelector('.circuit-canvas').scrollIntoView({block:'center',behavior:'instant'})");
       }
       await screenshot(`${config.name === "mobile" ? "mobile-canvas" : "desktop-fullscreen"}-${config.lang}-${config.dark ? "dark" : "light"}`);
+      await deletionInMode(t, "fullscreen", "Delete");
       await click(button(t("חלון מוגדל", "Expanded window")));
       state = await facts();
       scenario.states.reexpanded = state;
@@ -293,6 +423,7 @@ try {
       check("undo history survives modes", await evaluate("document.querySelectorAll('.react-flow__node').length===0"));
       await click(named(t("ביצוע שינוי מחדש במעגל", "Redo circuit change")));
       check("redo history survives modes", await evaluate("document.querySelectorAll('.react-flow__node').length===1"));
+      await deletionChecks(t, scenario);
       const scenarioChecks = checks.filter((c) => c.scenario === current);
       console.log(`${scenarioChecks.every((c) => c.pass) ? "PASS" : "FAIL"} ${current}: ${scenarioChecks.filter((c) => c.pass).length}/${scenarioChecks.length} checks`);
     } catch (error) {

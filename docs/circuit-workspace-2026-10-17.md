@@ -7,6 +7,7 @@ The circuit editor now offers a roomier expanded window and a viewport-filling m
 - `apps/web/src/components/circuit-editor.tsx` keeps one native `<dialog>` and one ReactFlow tree mounted. Inline mode exposes a nonmodal region; expanded and full-screen modes promote that same element with `showModal()`. Changing modes preserves the drawing, selection, viewport, simulation state and undo/redo history.
 - **הרחבת הלוח / Expand drawing** opens the expanded workspace. **מסך מלא / Full screen** fills the browser viewport; **חלון מוגדל / Expanded window** returns to the expanded layout. This is a CSS viewport layout, not an operating-system or browser Fullscreen API request.
 - **חזרה לתשובה / Back to answer** and Escape return to the inline editor. Modal mode locks background body scrolling, then restores the previous overflow value and returns focus to the expand control. Native dialog modality provides keyboard containment.
+- **Keyboard deletion (2026-10-18):** click a component or wire to select it and focus its canvas, then press Backspace or Delete. The existing controlled delete action removes the selected component and its incident wires, records one undo step and clears the selection. Undo restores the component and connections. Shortcuts are scoped to that canvas; text editing, modified shortcuts, IME composition, read-only drawings and absent selections do not trigger deletion. The toolbar trash button remains available, including on touch screens.
 - An optional `CircuitQuestionReference` supplies a title and read-only reference content. **הסתרת השאלה / Hide question**, **הצגת השאלה / Show question**, and the reference close button control its visibility without resetting the circuit.
 - `visual-answer.tsx` passes the reference through to the editor. `practice-session.tsx` provides the actual prompt, prompt figures or resource status, and choices. `interview-session.tsx` provides the interview question text. `site-preview/simulation.tsx` supplies equivalent sample context for preview verification. Reference content excludes solutions and evaluation feedback.
 - `circuit-workspace.module.css` scopes the workspace layout. Desktop expanded mode has a 16px inset, a maximum width of 1560px and a question column from 320px to 380px. At widths of 800px and below, both expanded modes occupy the viewport and place the independently scrollable question above the editor, capped at 38dvh. The editor scrolls independently; controls wrap and account for safe areas.
@@ -44,6 +45,10 @@ Local evidence (ignored output; not committed):
 
 The incumbent visual comparison is `.impeccable/review/ion-production/circuit-light-desktop.png`.
 
+### Keyboard deletion follow-up — 2026-10-18
+
+The follow-up passed all 185 unit tests, the production build and TypeScript checks. The extended isolated browser runner passed **327/327 checks**, with 14 captures and no console errors, across the same four language/theme/viewport combinations. It exercises both deletion keys, removal and undo restoration of two incident wires and component labels/IDs, property-input editing, focus transfer after editing, empty selection without history changes, expanded/full-screen deletion, arrow-key movement, and Tab/Enter selection of another component before deletion. Native ReactFlow selection changes synchronize with the editor's selection without creating undo entries. After keyboard deletion, focus returns to the canvas. Read-only protection is enforced by the common delete guard and was reviewed in code; these editable preview scenarios do not exercise a submitted read-only circuit. Evidence is in `.impeccable/review/circuit-workspace-deletion/results.json` and the adjacent screenshots. These remain local browser tests, not physical-device or authenticated live-account checks.
+
 To reproduce, keep the local preview server running on port 3212 and run from the repository root:
 
 ```powershell
@@ -56,6 +61,8 @@ The runner uses an isolated temporary headless Edge profile and an existing loca
 
 1. היכנסו לאתר החי עם החשבון הרגיל. פתחו את **היום** ובחרו פריט תרגול, או לחצו על **מאגר** ואז על שורת שאלה לפי הכותרת שלה (בשורה מופיע **לתרגול** או **תרגלתם בעבר**). באזור התשובה פתחו **שרטוט מעגל לוגי**.
 2. הוסיפו שער **AND**, גררו אותו למיקום שקל לזהות ובחרו אותו. בצעו ביטול שינוי ואז ביצוע מחדש כדי לוודא שהשער חוזר.
+
+   לבדיקת מחיקה במקלדת: חברו את השער לרכיב נוסף, לחצו על גוף השער ואז על **Backspace**. ודאו שגם החוט המחובר אליו נעלם. לחצו על כפתור **ביטול שינוי במעגל** בסרגל כדי להחזיר את השער והחיבור. חזרו על הבדיקה עם **Delete**, גם בחלון המוגדל ובמסך מלא. כשעורכים את שם הרכיב בשדה ההגדרות, המקשים צריכים למחוק אותיות בלבד. לחצו שוב על גוף השער כדי שהמקשים ימחקו את הרכיב.
 3. לחצו על **הרחבת הלוח**. ודאו שהלוח גדל ושנוסח השאלה מופיע לצד אזור השרטוט במחשב. בשאלה עם תמונה או אפשרויות תשובה, ודאו שגם הן מופיעות ושפתרון השאלה אינו מוצג בחלונית.
 4. גללו את חלונית השאלה ואת אזור העריכה בנפרד. ודאו שאפשר להגיע לכל התוכן ולכפתור **חזרה לתשובה**, בלי גלילה אופקית של העמוד.
 5. לחצו על **הסתרת השאלה**, ואז על **הצגת השאלה**. ודאו שהשער, המיקום והבחירה נשמרו. בדקו גם את כפתור סגירת חלונית השאלה ופתיחתה מחדש.
