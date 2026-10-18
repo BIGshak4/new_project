@@ -9,7 +9,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 ---
 
-## Harel's front-end queue (updated 2026-10-05, in the order Shaked wants them)
+## Harel's front-end queue (updated 2026-10-18, in the order Shaked wants them; the short list with the bracket fix spelled out is `docs/harel-todo-2026-10-18.md`)
 
 The backend side of every item below is live on Render. Each one is a screen change in `apps/web`; the backend is
 not touched again for them. When an item is done, remove its entry from `PENDING_IN_CLIENT` or
