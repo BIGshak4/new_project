@@ -1,7 +1,7 @@
 # SEC-014 — New archive filenames bypassed the browser compatibility filter
 
 - **Severity:** Low, defense-in-depth regression. The current API already excludes archive sources; no production disclosure was demonstrated.
-- **Status:** Fixed locally; deployment verification pending.
+- **Status:** Deployed; source/test and public HTTP revision checks verified. Authenticated live compatibility rendering not performed.
 - **Discovered:** 2026-10-18
 - **Review:** [Question-batch review](../runs/2026-10-18-question-batch-media.md).
 - **Affected revision and components:** Browser compatibility filter at `fb7a7f2`, exercised against the expanded question archive. The server provenance filter remains authoritative.
@@ -25,7 +25,7 @@ No database authorization or storage policy was relaxed. The private question-me
 
 ## Verification
 
-The prior filter failed the expanded full-bank regression. After remediation, all five focused media tests and all 195 web tests passed. TypeScript checking passed. Deployment status and revision are recorded in the run report after publishing.
+The prior filter failed the expanded full-bank regression. After remediation, all five focused media tests and all 195 web tests passed. TypeScript checking passed. Netlify deployed revision `b9ffe0204f72d742b9e4e79033fac04099037a5c`; the public health endpoint returned HTTP 200 with that revision. The current API rejected unauthenticated question/resource requests with HTTP 401 and no solution content. See the run report for scope.
 
 ## Remaining work
 

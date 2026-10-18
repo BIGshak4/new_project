@@ -180,7 +180,8 @@
     "private_assets_hash_verified": 15,
     "old_question_translation_skill_content_unchanged": true,
     "learner_activity_written": false,
-    "live_authenticated_browser_clicks_performed": false
+    "live_authenticated_browser_clicks_performed": false,
+    "final_all_five_exact_readback_after_grammar_correction": true
   },
   "qa": {
     "backend_pytest_passed": 94,
@@ -198,5 +199,17 @@
     "typescript_check": "passed",
     "archive_source_media_compatibility_regression_fixed": "SEC-014"
   },
-  "publication_status": "database_complete_git_and_deployment_pending"
+  "publication_status": "database_git_and_runtime_deployments_verified",
+  "deployment_verification": {
+    "checked_at_utc": "2026-10-18T11:19:00Z",
+    "revision": "b9ffe0204f72d742b9e4e79033fac04099037a5c",
+    "netlify_health_http": 200,
+    "netlify_revision_match": true,
+    "render_health_http": 200,
+    "render_revision_match": true,
+    "practice_workflow": "success",
+    "unauthenticated_question_http": 401,
+    "unauthenticated_resources_http": 401,
+    "authenticated_live_clicks": false
+  }
 }
