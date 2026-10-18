@@ -40,9 +40,9 @@ async def users_with_answers() -> list[tuple[uuid.UUID, str]]:
 
 def line(s: dict) -> str:
     level = (s["level"] or {}).get("en", "too early") if s["level"] else "too early"
-    # the slope is shown only once the word is meaningful (8 answers over 7 days); before that it misleads
-    slope = "—" if s["slope_per_week"] is None or s["improvement"] == "too_early" else f"{s['slope_per_week']:+.1f}/wk"
-    return f"  {s['label']['en']:26} {level:16} {s['improvement']:18} answers={s['answers']:<3} {slope}"
+    # the gradient is shown only once the word is meaningful (10 relevant answers); before that it misleads
+    gradient = "—" if s["gradient"] is None or s["improvement"] == "too_early" else f"{s['gradient']:+.1f}/10 answers"
+    return f"  {s['label']['en']:26} {level:16} {s['improvement']:18} answers={s['answers']:<3} {gradient}"
 
 
 async def main() -> None:
@@ -59,15 +59,15 @@ async def main() -> None:
             result = await practice.soft_skills(user_id)
             result["name"] = name
             results.append(result)
+            overall = result["overall"]
+            figure = "—" if overall["gradient"] is None else f"{overall['gradient']:+.1f}/10 answers"
             print(f"\n== {name} ({str(user_id)[:8]}) — {result['answers_read']} answers read, "
-                  f"overall: {result['overall']['improvement']} "
-                  f"({'—' if result['overall']['slope_per_week'] is None else f'{result['overall']['slope_per_week']:+.1f}/wk'}, "
-                  f"{result['overall']['skills_judged']} skills judged)")
+                  f"overall: {overall['improvement']} ({figure}, {overall['skills_judged']} skills judged)")
             for s in result["soft_skills"]:
                 print(line(s))
             judged = {k: g for k, g in result["hard_skills"].items() if g["improvement"] != "too_early"}
             if judged:
-                print("  hard skills with a gradient: " + ", ".join(f"{k} {g['slope_per_week']:+.1f}/wk ({g['improvement']})"
+                print("  hard skills with a gradient: " + ", ".join(f"{k} {g['gradient']:+.1f}/10 ({g['improvement']})"
                                                                     for k, g in sorted(judged.items())))
         if args.json:
             args.json.write_text(json.dumps(results, ensure_ascii=False, indent=2, default=str), encoding="utf-8")

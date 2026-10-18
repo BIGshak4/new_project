@@ -76,16 +76,28 @@ class TestLevelsAndGradient:
         assert structured.answers == 4 and structured.level is None and structured.improvement == "too_early"
 
     def test_a_rising_candidate_reads_improving_and_a_flat_one_steady(self):
-        rising = [ev(28 - d, structure=0.3 + d * 0.02) for d in range(0, 28, 2)]            # 0.3 -> 0.82 over four weeks
+        rising = [ev(28 - d, structure=0.3 + d * 0.02) for d in range(0, 28, 2)]            # 0.3 -> 0.82 over 14 answers
         flat = [ev(28 - d, structure=0.6) for d in range(0, 28, 2)]
         r = next(x for x in ss.assess(rising, NOW) if x.key == "structured_explanation")
         f = next(x for x in ss.assess(flat, NOW) if x.key == "structured_explanation")
-        assert r.improvement == "improving_quickly" and r.slope_per_week > ss.SLOPE_QUICK
-        assert f.improvement == "steady" and f.slope_per_week == 0
+        assert r.improvement == "improving_quickly" and r.gradient > ss.GRADIENT_QUICK      # ~+40 points per 10 answers
+        assert r.improvement_per_week == "improving_quickly" and r.slope_per_week > ss.SLOPE_QUICK
+        assert f.improvement == "steady" and f.gradient == 0 and f.slope_per_week == 0
         assert r.level_rank == 4 and f.level_rank == 4 and r.mean > f.mean               # recent answers weigh more
         slipping = [ev(28 - d, clarity=0.9 - d * 0.02) for d in range(0, 28, 2)]
         s = next(x for x in ss.assess(slipping, NOW) if x.key == "clear_communication")
         assert s.improvement == "slipping"
+
+    def test_one_sitting_of_ten_answers_is_enough_for_a_gradient(self):
+        """Shaked, 2026-10-18: no weeks of data; the gradient runs over the answer sequence, ten relevant answers."""
+        hours = [ev(days_ago=(10 - i) / 24, clarity=0.4 + i * 0.04) for i in range(10)]    # 0.40 -> 0.76 within ten hours
+        c = next(x for x in ss.assess(hours, NOW) if x.key == "clear_communication")
+        assert c.answers == 10 and c.improvement == "improving_quickly" and c.gradient == pytest.approx(40, abs=1)
+        assert c.improvement_per_week == "too_early"                                        # the time axis says nothing yet
+        nine = ss.assess(hours[:9], NOW)
+        assert next(x for x in nine if x.key == "clear_communication").improvement == "too_early"
+        noisy = [ev(days_ago=(10 - i) / 24, clarity=0.6 + (0.03 if i % 2 else -0.03)) for i in range(10)]
+        assert next(x for x in ss.assess(noisy, NOW) if x.key == "clear_communication").improvement == "steady"
 
     def test_recent_answers_weigh_more_and_old_ones_fall_out_of_the_level(self):
         old_good = [ev(60 + d, structure=0.9) for d in range(6)]                              # beyond the 49-day window
@@ -97,7 +109,8 @@ class TestLevelsAndGradient:
         history = {"counters": [{"level": 1 + i // 2, "at": (NOW - timedelta(days=30 - 3 * i)).isoformat()} for i in range(10)],
                    "truth_tables": [{"level": 3, "at": (NOW - timedelta(days=1)).isoformat()}]}
         hard = ss.hard_skill_gradient(history, NOW)
-        assert hard["counters"]["improvement"] in ("improving", "improving_quickly") and hard["counters"]["slope_per_week"] > 0
+        assert hard["counters"]["improvement"] in ("improving", "improving_quickly") and hard["counters"]["gradient"] > 0
+        assert hard["counters"]["slope_per_week"] > 0 and hard["counters"]["improvement_per_week"] != "too_early"
         assert hard["truth_tables"]["improvement"] == "too_early"
         soft = ss.assess([ev(28 - d, structure=0.3 + d * 0.02) for d in range(0, 28, 2)], NOW)
         overall = ss.overall_improvement(soft, hard, {"counters": 0.05, "truth_tables": 0.03})

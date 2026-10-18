@@ -1148,12 +1148,16 @@ problem-solving habits (stated assumptions / asked first / verified with an exam
 `empty_answer` say nothing.
 
 **Levels and the gradient.** A level after 5 relevant answers inside 49 days, a faded mean (half-life 21 days) mapped
-to five words on the interview's observed-skill thresholds (0.30 / 0.45 / 0.60 / 0.78). A slope per skill: least
-squares of the per-answer scores over up to 180 days, in points per week on a 0..100 scale; words after 8 answers
-spanning 7 days: improving quickly ≥ +4, improving ≥ +1.5, steady, slipping ≤ −1.5 (thresholds to tune on pilot
-data). The hard skills get the same slope from the profile's level history (levels → 20..100 points). One overall
-improvement word per candidate: the weighted mean slope of every judged skill (hard by plan weight, the seven soft
-sharing one plan's worth). This is Shaked's "ability to improve".
+to five words on the interview's observed-skill thresholds (0.30 / 0.45 / 0.60 / 0.78). The gradient runs over the
+**answer sequence**, not the calendar (Shaked, 2026-10-18: "we don't have several weeks"): least squares of the
+per-answer scores over their order, in points per 10 answers on a 0..100 scale, judged from **10 relevant answers**
+(the judge's per-answer scores wobble by about 0.1, so ten answers make a 15-point move real and one long sitting is
+enough); words: improving quickly ≥ +10, improving ≥ +4, steady, slipping ≤ −4. A secondary per-week slope is kept
+beside it for when months of data exist (8 answers over 7 days; ±1.5 / ±4 per week). The hard skills get the same
+gradient from the profile's level history (levels → 20..100 points, one entry per assessment). One overall
+improvement word per candidate: the weighted mean gradient of every judged skill (hard by plan weight, the seven
+soft sharing one plan's worth). This is Shaked's "ability to improve". All thresholds are provisional until the
+pilot has answered enough to tune them.
 
 **Where it lives.** `PracticeService.soft_skills(user_id)` (a dict; no pydantic view, no route, nothing on
 `GET /v1/me/progress`, so the web app cannot show it) and `scripts/soft_skills_report.py` for the founders. The
