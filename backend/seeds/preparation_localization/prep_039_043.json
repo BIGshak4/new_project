@@ -184,33 +184,35 @@
         "אחד או שני ערכים שונים הוצאו והוסתרו; נותרו n-1 או n-2 ערכים נגישים. כל סעיף עצמאי.",
         "אפשר לקרוא את המערך שנותר יותר מפעם אחת, ולא נדרש לשנות אותו.",
         "המקור אינו מנסח את מודל השליפה באופן חד־משמעי. הנחות ההוצאה וההסתרה נוספו בעריכה באישור הראל; חלופות הניסוח מוסברות בפתרון.",
-        "הקוד מניח קלט העומד בהבטחה. בדיקת האורך בקובץ הקוד אינה בדיקה מלאה של ייחודיות או תחום."
+        "הקוד מניח קלט העומד בהבטחה. בדיקת האורך בקובץ הקוד אינה בדיקה מלאה של ייחודיות או תחום.",
+        "חלופת הדגלים מותנית בכך שמותר O(n) זיכרון נוסף. היא משתמשת בערך המספר כאינדקס, משאירה את התא 0 ללא שימוש ומניחה את אותה הבטחת קלט."
       ],
       "en": [
         "The initial contents are a permutation of 1 through n, each value once; n=100 in the given instance.",
         "One or two distinct values are removed and hidden; n-1 or n-2 accessible entries remain. The parts are independent.",
         "The remaining array may be read more than once and need not be modified.",
         "The source does not specify an unambiguous draw model. Removal and concealment are user-authorized editorial assumptions; alternatives are explained in the solution.",
-        "The code assumes the promised input contract. The file's length checks do not fully validate uniqueness or range."
+        "The code assumes the promised input contract. The file's length checks do not fully validate uniqueness or range.",
+        "The flag-array alternative requires permission to use O(n) additional storage. It indexes by value, leaves index zero unused, and assumes the same valid-input promise."
       ]
     },
     "optimality": {
       "he": {
         "criterion": "זמן חישוב כפונקציה של n עבור מערך שנותר נגיש ואינו ממוין, תחת ההבטחה שהקלט תקין.",
-        "result": "O(n) זמן בשני הסעיפים; O(1) מילות עזר, שהן O(log n) ביטים במודל של מספרים לא חסומים.",
-        "proof": "חיסור סכומים מזהה חסר אחד. XOR מבטל כל ערך קיים; ביט שבו החסרים שונים מפריד אותם לשתי קבוצות שבהן הביטול משאיר חסר יחיד. מספר הסריקות קבוע. במקרה הגרוע, תאים שלא נקראו יכולים להחליף איזה ערך חסר בלי לשנות את התאים שנצפו, ולכן נדרשות סדר גודל של n קריאות במודל זה.",
+        "result": "כל החלופות פותרות את שני הסעיפים בזמן O(n). מערך דגלים משתמש ב־O(n) תאי זיכרון נוספים. פתרונות הסכום וה־XOR משתמשים ב־O(1) מילות עזר, שהן O(log n) ביטים במודל של מספרים לא חסומים.",
+        "proof": "במערך דגלים, אחרי כל קלט בדיוק הערכים שנראו מסומנים True; לכן בסיום הדגלים שנותרו False בטווח 1 עד n מזהים בדיוק את החסרים. חיסור סכומים מזהה חסר אחד. XOR מבטל כל ערך קיים; ביט שבו החסרים שונים מפריד אותם לשתי קבוצות שבהן הביטול משאיר חסר יחיד. מספר הסריקות קבוע. במקרה הגרוע, תאים שלא נקראו יכולים להחליף איזה ערך חסר בלי לשנות את התאים שנצפו, ולכן נדרשות סדר גודל של n קריאות במודל זה.",
         "scope": "אין כאן טענה לזיכרון קבוע בביטים לכל n, או צורך בזמן ליניארי כאשר הערך שנשלף כבר גלוי. זמן פעולות על מספרים מעבר למילת מכונה תלוי ברוחב שלהם."
       },
       "en": {
         "criterion": "Time as a function of n for an accessible unsorted remaining array under the valid-input promise.",
-        "result": "O(n) time in both parts; O(1) auxiliary words, corresponding to O(log n) bits for an unbounded range.",
-        "proof": "Subtracting sums finds one missing value. XOR cancels every present value; a differing bit partitions the two missing values into groups in which cancellation leaves one value each. There are constantly many scans. In the worst case, unread entries can change which value is absent without changing the observed entries, requiring order n reads in this model.",
+        "result": "Both parts can be solved in O(n) time. The flag-array alternative uses O(n) extra storage entries. The sum and XOR alternatives use O(1) auxiliary words, corresponding to O(log n) bits for an unbounded range.",
+        "proof": "For the flag array, after each input entry exactly the values seen so far are marked True; consequently the final False flags in 1 through n identify exactly the omissions. Subtracting sums finds one missing value. XOR cancels every present value; a differing bit partitions the two missing values into groups in which cancellation leaves one value each. There are constantly many scans. In the worst case, unread entries can change which value is absent without changing the observed entries, requiring order n reads in this model.",
         "scope": "This does not claim constant bit space for all n or a linear-time requirement when drawn values are already visible. Arithmetic beyond one machine word depends on operand width."
       }
     },
     "verification": {
-      "he": "24,023 בדיקות פייתון עברו מול אורקל בלתי תלוי של הפרש קבוצות: כל 100 החסרים היחידים וכל 4,950 זוגות החסרים עבור n=100, בכל אחד משלושה סדרי קלט; בנוסף כל סדר אפשרי של השארית לכל חסר או זוג חסרים עבור n מ־1 עד 7, וארבע בדיקות תנאי אורך. בדיקות אלה מאמתות את הקוד במסגרת ההנחות, ואינן סקירה מקצועית או בדיקת לחיצות באתר.",
-      "en": "24,023 Python checks passed against an independent set-difference oracle: all 100 single omissions and all 4,950 missing pairs for n=100, in three input orders each; all remaining permutations for each one- or two-value omission with n from 1 through 7; and four size-guard checks. This verifies the code under its assumptions, not professional review or live website interaction."
+      "he": "48,214 בדיקות פייתון עברו מול אורקל בלתי תלוי של הפרש קבוצות: 24,023 בדיקות של פתרונות הסכום וה־XOR ו־24,191 בדיקות של מערך הדגלים. נבדקו כל 100 החסרים היחידים וכל 4,950 זוגות החסרים עבור n=100, בשלושה סדרי קלט; כל סדרי השארית בגדלים 1 עד 7; תנאי התחלה, קלט ריק, שמירת הקלט ואי־החזרת אינדקס 0. בדיקות נוספות מאמתות את פונקציית הדגלים גם ללא חסרים ועם יותר משניים, בלי לשנות את סעיפי השאלה. זהו אימות תוכנה במסגרת ההנחות, ולא סקירה מקצועית או בדיקת לחיצות באתר חי.",
+      "en": "48,214 Python checks passed against an independent set-difference oracle: 24,023 checks of the sum/XOR alternatives and 24,191 of the flag array. Coverage includes all 100 single omissions and all 4,950 missing pairs for n=100 in three input orders, every remaining permutation for sizes 1 through 7, initialization, empty inputs, input preservation and exclusion of unused index zero. Additional generic flags cases cover no omissions and more than two without changing the question's subparts. This is software verification under the stated assumptions, not professional review or authenticated live-site clicking."
     },
     "edge_cases": {
       "he": [
@@ -218,14 +220,16 @@
         "שני חסרים בעלי אותה זוגיות, למשל 2 ו־4: יש לבחור ביט מתוך תוצאת ה־XOR, ולא לקבע את ביט הזוגיות.",
         "n=1 בסעיף א: מערך ריק מחזיר 1. n=2 בסעיף ב: מערך ריק מחזיר את 1 ו־2.",
         "סדר אקראי, הפוך או ממוין: התוצאה זהה; סדר הפעולות אינו משנה סכום או XOR.",
-        "זרם חד־פעמי שאי אפשר לסרוק שוב אינו הקלט המובטח של מימוש ה־XOR בשני מעברים."
+        "זרם חד־פעמי שאי אפשר לסרוק שוב אינו הקלט המובטח של מימוש ה־XOR בשני מעברים.",
+        "בדגלים: מתחילים ב־False, מסמנים את ערך האיבר ולא את מיקומו, וסורקים רק את 1 עד n. מערך ריק עם n=1 או n=2 מחזיר את כל הערכים החסרים המתאימים."
       ],
       "en": [
         "Missing 1 or n: neither the sum formula nor XOR depends on an interior omission.",
         "Two missing values with the same parity, such as 2 and 4: select a bit from their XOR rather than always using parity.",
         "n=1 in Part A: an empty array yields 1. n=2 in Part B: an empty array yields 1 and 2.",
         "Random, reversed, or sorted order gives the same answer; sum and XOR do not depend on entry order.",
-        "A one-use stream that cannot be read again is outside the two-pass XOR implementation's input contract."
+        "A one-use stream that cannot be read again is outside the two-pass XOR implementation's input contract.",
+        "For flags, initialize False, mark the entry's value rather than its position, and scan only 1 through n. An empty remainder with n=1 or n=2 returns all the appropriate missing values."
       ]
     },
     "common_mistakes": {
@@ -235,7 +239,10 @@
         "החזרת XOR של שני חסרים כאילו הוא זוג הערכים: נדרש שלב החלוקה לפי ביט מבדיל.",
         "חלוקה קבועה לזוגיים ואי־זוגיים: שני החסרים עלולים להיות באותה קבוצה.",
         "טענה שזיכרון העזר קבוע בביטים לכל n, או שבדיקת אורך בלבד מאמתת את הבטחת הקלט.",
-        "ניסיון להסיק את הערכים כאשר גם הם מוסתרים וגם המערך שנותר אינו נגיש: אין מספיק מידע."
+        "ניסיון להסיק את הערכים כאשר גם הם מוסתרים וגם המערך שנותר אינו נגיש: אין מספיק מידע.",
+        "סימון הדגל לפי מיקום האיבר במערך שנותר במקום לפי ערכו.",
+        "החזרת 0 כחסר או הקצאת n תאים ואז ניסיון לגשת לאינדקס n; מקצים n+1 וסורקים מ־1.",
+        "טענה שחלופת הדגלים משתמשת בזיכרון קבוע או שרשימת בוליאנים בפייתון היא מערך ביטים דחוס."
       ],
       "en": [
         "Treating numbered cells as a guarantee about their contents: the values, not just the addresses, need a contract.",
@@ -243,22 +250,25 @@
         "Returning the XOR of the missing values as though it identifies both: the distinguishing-bit partition is still required.",
         "Always splitting odd from even: both missing values may lie in the same group.",
         "Claiming constant auxiliary bits for every n, or that a length check fully verifies the input promise.",
-        "Inferring hidden drawn values without access to the remaining array: the available information is insufficient."
+        "Inferring hidden drawn values without access to the remaining array: the available information is insufficient.",
+        "Marking the input position instead of the observed value.",
+        "Returning zero as missing, or allocating n entries and then accessing index n; allocate n+1 and scan from 1.",
+        "Claiming constant auxiliary space for the flags or treating a Python Boolean list as a packed bit array."
       ]
     },
     "interview_answer": {
-      "he": "קודם אבהיר שהמערך היה תמורה של 1 עד n, שהערכים שהוצאו מוסתרים ושאפשר לסרוק את השארית. לחסר יחיד אחסיר את הסכום שנותר מהסכום n*(n+1)/2. לשני חסרים אבצע XOR של הטווח והשארית לקבלת a XOR b, אבחר ביט דלוק בו ואחזור על הביטול בנפרד בשתי הקבוצות לפי הביט. החסרים מופרדים, וכל ערך קיים מתבטל. הזמן O(n) וזיכרון העזר מספר קבוע של מילים. אם השליפה עצמה גלויה, אין צורך באלגוריתם הזה.",
-      "en": "I first clarify that the array was a permutation of 1 through n, the removed values are hidden, and the remainder can be scanned. For one omission, subtract the remaining sum from n*(n+1)/2. For two, XOR the range and remainder to obtain a XOR b, choose one set bit, and repeat cancellation separately in the two bit groups. The missing values are separated and every present value cancels. Time is O(n), with constantly many auxiliary words. If the drawn values themselves are visible, this algorithm is unnecessary."
+      "he": "אבהיר שהקלט היה תמורה של 1 עד n ושאפשר לקרוא את השארית. כשמותר זיכרון נוסף, אאתחל n+1 דגלים ל־False, אסמן True עבור כל ערך שקראתי, ואחזיר את האינדקסים מ־1 עד n שהדגל שלהם נשאר False. אותה פונקציה מוצאת חסר אחד או שניים בזמן O(n) ובזיכרון נוסף O(n), ללא נוסחאות. אם נדרש זיכרון עזר קבוע במילים, לחסר אחד אשתמש בהפרש סכומים ולשניים ב־XOR וחלוקה לפי ביט מבדיל.",
+      "en": "First clarify that the original input was a permutation of 1 through n and that the remainder is accessible. If extra memory is allowed, initialize n+1 False flags, mark True for every value read, and return the indices 1 through n whose flags remain False. One function finds one or two omissions in O(n) time and O(n) extra storage, without formulas. If constant auxiliary words are required, use a sum difference for one omission and XOR with a distinguishing-bit partition for two."
     },
     "solution_extensions": {
       "he": {
         "question": "מה משתנה אם השארית מגיעה כזרם שאי אפשר לקרוא שוב, ועדיין חסרים שני ערכים?",
-        "direction": "אפשר לשמור במהלך מעבר אחד סכום וסכום ריבועים. הפרשי הסכומים נותנים s=a+b ו־q=a²+b². אז 2q-s²=(a-b)²; שורש ריבועי שלם מאפשר לחלץ את a ו־b. צריך חשבון שלם מדויק וטיפוס רחב מספיק, ואין להשתמש בשורש נקודה צפה ללא בקרה.",
+        "direction": "אם מותר זיכרון ליניארי, גם מערך הדגלים מתאים לזרם חד־פעמי: מסמנים בזמן קריאת הזרם, ואז סורקים את הדגלים שבזיכרון. אם רוצים להימנע ממערך הדגלים, אפשר לשמור במהלך מעבר אחד סכום וסכום ריבועים. הפרשי הסכומים נותנים s=a+b ו־q=a²+b². אז 2q-s²=(a-b)²; שורש ריבועי שלם מאפשר לחלץ את a ו־b. צריך חשבון שלם מדויק וטיפוס רחב מספיק, ואין להשתמש בשורש נקודה צפה ללא בקרה.",
         "status": "שאלת המשך מוכנה בארכיון; לא חוברה אוטומטית למנגנון ההמשך באתר."
       },
       "en": {
         "question": "What changes if the remaining entries arrive as a stream that cannot be read again, while two values are missing?",
-        "direction": "In one pass, accumulate a sum and a sum of squares. Subtract from the complete-range totals to get s=a+b and q=a²+b². Then 2q-s²=(a-b)²; an exact integer square root recovers a and b. Exact arithmetic and sufficient integer width are required; do not use an unchecked floating-point square root.",
+        "direction": "If linear auxiliary storage is allowed, flags also handle a one-use stream: mark while reading the stream, then scan the in-memory flags. To avoid the flag array, in one pass, accumulate a sum and a sum of squares. Subtract from the complete-range totals to get s=a+b and q=a²+b². Then 2q-s²=(a-b)²; an exact integer square root recovers a and b. Exact arithmetic and sufficient integer width are required; do not use an unchecked floating-point square root.",
         "status": "Follow-up prepared in the archive; not automatically connected to the website's follow-up flow."
       }
     }

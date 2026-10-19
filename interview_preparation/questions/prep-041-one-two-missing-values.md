@@ -1,6 +1,6 @@
 # PREP-041 — מציאת ערך אחד או שני ערכים שהוצאו ממערך
 
-נקלטה ב־18 באוקטובר 2026. פתרון מוצע בסיוע AI, ממתין לסקירה מקצועית. קושי אינו מכויל. חברות לפי צילום המקור בלבד, ללא אימות עצמאי: לא מופיעות חברות בצילום.
+נקלטה ב־18 באוקטובר 2026. עודכנה ב־19 באוקטובר 2026 עם חלופת מערך דגלים לבקשת הראל. פתרון מוצע בסיוע AI; סקירה מקצועית, תרגומית ושימוש חוזר עדיין ממתינות. רמת הקושי אינה מכוילת. לא מופיעות חברות בצילום המקור.
 
 ## מקור ללא שינוי
 
@@ -32,6 +32,56 @@
 ### קודם מבהירים מה אפשר לראות
 
 הנוסח המקורי אינו אומר במפורש שהערכים שנשלפו מוסתרים ושהמערך המקורי מכיל כל מספר פעם אחת. כאן נפתור את הפרשנות שהוגדרה במפורש בנוסח הערוך: בתחילה קיימת תמורה של המספרים מ־1 עד 100; ערך אחד או שני ערכים שונים הוצאו והוסתרו, ואפשר לקרוא את כל הערכים שנותרו. זהו מידע חיוני לפתרון, ולא מסקנה מהסדר האקראי. נסמן את גבול הטווח הכללי ב־n; בשאלה הנתונה n=100.
+
+### פתרון משותף לשני הסעיפים — מערך דגלים כשמותר זיכרון נוסף
+
+אם מותר להשתמש בזיכרון נוסף, אפשר לפתור את שני הסעיפים באותה פונקציה, בלי נוסחת סכום, סכום ריבועים, גיבוב או XOR. מכינים רשימת דגלים בשם seen, שבה האינדקס מייצג את המספר עצמו. למשל, seen[37] אומר אם המספר 37 הופיע בשארית; הוא אינו מתייחס לתא מספר 37 במערך הקלט.
+
+1. מאתחלים n+1 דגלים ל־False. התא באינדקס 0 אינו בשימוש, כך שאפשר להשתמש ישירות באינדקסים מ־1 עד n. עבור n=100 יש 101 תאים, מהם 100 תאים שימושיים.
+2. עוברים פעם אחת על המספרים שנותרו. עבור כל value מסמנים seen[value] = True.
+3. עוברים על האינדקסים מ־1 עד n. כל אינדקס שהדגל שלו נשאר False הוא מספר שלא הופיע, ולכן מוסיפים אותו לתשובה.
+
+```python
+def missing_with_flags(remaining, n=100):
+    seen = [False] * (n + 1)
+
+    for value in remaining:
+        seen[value] = True
+
+    missing = []
+    for value in range(1, n + 1):
+        if not seen[value]:
+            missing.append(value)
+
+    return missing
+```
+
+הפונקציה מחזירה רשימה: בסעיף א יש בה מספר אחד, ובסעיף ב שני מספרים. סריקת האינדקסים מחזירה אותם בסדר עולה. כמו הפתרונות האחרים, גם כאן מניחים שהקלט עומד בהבטחה: ערכים שונים בטווח 1 עד n, שמתוכם הוצאו המספרים המוסתרים.
+
+לדוגמה, עבור n=7 והשארית [6, 1, 4, 7, 3], מסמנים את הדגלים 6, 1, 4, 7, 3. בסיום:
+
+| המספר | הדגל |
+| --- | --- |
+| 1 | `True` |
+| 2 | `False` |
+| 3 | `True` |
+| 4 | `True` |
+| 5 | `False` |
+| 6 | `True` |
+| 7 | `True` |
+
+לכן מתקבלת הרשימה [2, 5]. התא 0 נשאר False אך אינו נסרק ואינו חלק מהתשובה.
+
+```python
+missing_with_flags([6, 1, 4, 7, 3], n=7)  # [2, 5]
+missing_with_flags([3, 1, 4], n=4)        # [2]
+```
+
+למה זה נכון? בתחילה שום מספר לא סומן. אחרי כל איבר שקראנו, בדיוק המספרים שכבר הופיעו מסומנים True. לכן אחרי המעבר, דגל True מציין מספר שנשאר, ודגל False בטווח 1 עד n מציין בדיוק מספר שהוצא.
+
+האתחול, סימון השארית וסריקת הדגלים עולים יחד O(n) זמן. מערך הדגלים דורש O(n) תאי זיכרון נוספים; הוא אינו פתרון בזיכרון קבוע. הפלט עצמו מכיל איבר אחד או שניים בשאלה הזו. בפייתון רשימת בוליאנים אינה מערך ביטים דחוס. אין שינוי למערך הקלט.
+
+זהו פתרון פשוט וישיר כשמותר זיכרון נוסף. בהמשך מופיעים הפתרונות החסכוניים בזיכרון, למקרה שמבקשים מספר קבוע של מילות עזר.
 
 ### סעיף א — משווים את מה שאמור להיות למה שנותר
 
@@ -90,7 +140,7 @@ def missing_two(remaining, n=100):
 
 בסעיף א, הפרש הסכומים מבטל כל ערך שנותר בדיוק פעם אחת. בסעיף ב, שלב ה־XOR הראשון משאיר רק a XOR b. הביט שנבחר מוכרח להיות שונה אצל שני החסרים, ולכן מפריד ביניהם. כל ערך קיים נשלח לאותה קבוצה בשתי הופעותיו ומתבטל, ובכל קבוצה נשאר חסר אחד.
 
-לשני הסעיפים זמן O(n). מספר קבוע של סריקות עדיין נותן זמן ליניארי. נשמר מספר קבוע של משתנים: O(1) מילות מכונה במודל שבו מספרים בגודל הזה נכנסים למילה. בספירת ביטים זהו O(log n) זיכרון עזר; אין כאן טענה לזיכרון קבוע בביטים כשהטווח גדל ללא גבול. בפייתון המספרים מדויקים; בשפה בעלת טיפוסים ברוחב קבוע צריך למנוע גלישה בחישוב הסכום בסעיף א. עבור מערך שרירותי ולא ממוין צריך במקרה הגרוע לקרוא סדר גודל של n איברים, ולכן הזמן הליניארי מיטבי במודל הזה.
+לפתרונות הסכום וה־XOR זמן O(n) בשני הסעיפים. מספר קבוע של סריקות עדיין נותן זמן ליניארי. נשמר מספר קבוע של משתנים: O(1) מילות מכונה במודל שבו מספרים בגודל הזה נכנסים למילה. בספירת ביטים זהו O(log n) זיכרון עזר; אין כאן טענה לזיכרון קבוע בביטים כשהטווח גדל ללא גבול. בפייתון המספרים מדויקים; בשפה בעלת טיפוסים ברוחב קבוע צריך למנוע גלישה בחישוב הסכום בסעיף א. עבור מערך שרירותי ולא ממוין צריך במקרה הגרוע לקרוא סדר גודל של n איברים, ולכן הזמן הליניארי מיטבי במודל הזה.
 
 ### מה קורה בקריאות אחרות של המקור?
 
@@ -109,20 +159,22 @@ def missing_two(remaining, n=100):
 
 - הקוד מניח קלט העומד בהבטחה. בדיקת האורך בקובץ הקוד אינה בדיקה מלאה של ייחודיות או תחום.
 
+- חלופת הדגלים מותנית בכך שמותר O(n) זיכרון נוסף. היא משתמשת בערך המספר כאינדקס, משאירה את התא 0 ללא שימוש ומניחה את אותה הבטחת קלט.
+
 ### נכונות ויעילות
 
 ```json
 {
   "criterion": "זמן חישוב כפונקציה של n עבור מערך שנותר נגיש ואינו ממוין, תחת ההבטחה שהקלט תקין.",
-  "result": "O(n) זמן בשני הסעיפים; O(1) מילות עזר, שהן O(log n) ביטים במודל של מספרים לא חסומים.",
-  "proof": "חיסור סכומים מזהה חסר אחד. XOR מבטל כל ערך קיים; ביט שבו החסרים שונים מפריד אותם לשתי קבוצות שבהן הביטול משאיר חסר יחיד. מספר הסריקות קבוע. במקרה הגרוע, תאים שלא נקראו יכולים להחליף איזה ערך חסר בלי לשנות את התאים שנצפו, ולכן נדרשות סדר גודל של n קריאות במודל זה.",
+  "result": "כל החלופות פותרות את שני הסעיפים בזמן O(n). מערך דגלים משתמש ב־O(n) תאי זיכרון נוספים. פתרונות הסכום וה־XOR משתמשים ב־O(1) מילות עזר, שהן O(log n) ביטים במודל של מספרים לא חסומים.",
+  "proof": "במערך דגלים, אחרי כל קלט בדיוק הערכים שנראו מסומנים True; לכן בסיום הדגלים שנותרו False בטווח 1 עד n מזהים בדיוק את החסרים. חיסור סכומים מזהה חסר אחד. XOR מבטל כל ערך קיים; ביט שבו החסרים שונים מפריד אותם לשתי קבוצות שבהן הביטול משאיר חסר יחיד. מספר הסריקות קבוע. במקרה הגרוע, תאים שלא נקראו יכולים להחליף איזה ערך חסר בלי לשנות את התאים שנצפו, ולכן נדרשות סדר גודל של n קריאות במודל זה.",
   "scope": "אין כאן טענה לזיכרון קבוע בביטים לכל n, או צורך בזמן ליניארי כאשר הערך שנשלף כבר גלוי. זמן פעולות על מספרים מעבר למילת מכונה תלוי ברוחב שלהם."
 }
 ```
 
 ### בדיקות שבוצעו
 
-24,023 בדיקות פייתון עברו מול אורקל בלתי תלוי של הפרש קבוצות: כל 100 החסרים היחידים וכל 4,950 זוגות החסרים עבור n=100, בכל אחד משלושה סדרי קלט; בנוסף כל סדר אפשרי של השארית לכל חסר או זוג חסרים עבור n מ־1 עד 7, וארבע בדיקות תנאי אורך. בדיקות אלה מאמתות את הקוד במסגרת ההנחות, ואינן סקירה מקצועית או בדיקת לחיצות באתר.
+48,214 בדיקות פייתון עברו מול אורקל בלתי תלוי של הפרש קבוצות: 24,023 בדיקות של פתרונות הסכום וה־XOR ו־24,191 בדיקות של מערך הדגלים. נבדקו כל 100 החסרים היחידים וכל 4,950 זוגות החסרים עבור n=100, בשלושה סדרי קלט; כל סדרי השארית בגדלים 1 עד 7; תנאי התחלה, קלט ריק, שמירת הקלט ואי־החזרת אינדקס 0. בדיקות נוספות מאמתות את פונקציית הדגלים גם ללא חסרים ועם יותר משניים, בלי לשנות את סעיפי השאלה. זהו אימות תוכנה במסגרת ההנחות, ולא סקירה מקצועית או בדיקת לחיצות באתר חי.
 
 ### מקרי קצה
 
@@ -135,6 +187,8 @@ def missing_two(remaining, n=100):
 - סדר אקראי, הפוך או ממוין: התוצאה זהה; סדר הפעולות אינו משנה סכום או XOR.
 
 - זרם חד־פעמי שאי אפשר לסרוק שוב אינו הקלט המובטח של מימוש ה־XOR בשני מעברים.
+
+- בדגלים: מתחילים ב־False, מסמנים את ערך האיבר ולא את מיקומו, וסורקים רק את 1 עד n. מערך ריק עם n=1 או n=2 מחזיר את כל הערכים החסרים המתאימים.
 
 ### טעויות נפוצות
 
@@ -150,16 +204,22 @@ def missing_two(remaining, n=100):
 
 - ניסיון להסיק את הערכים כאשר גם הם מוסתרים וגם המערך שנותר אינו נגיש: אין מספיק מידע.
 
+- סימון הדגל לפי מיקום האיבר במערך שנותר במקום לפי ערכו.
+
+- החזרת 0 כחסר או הקצאת n תאים ואז ניסיון לגשת לאינדקס n; מקצים n+1 וסורקים מ־1.
+
+- טענה שחלופת הדגלים משתמשת בזיכרון קבוע או שרשימת בוליאנים בפייתון היא מערך ביטים דחוס.
+
 ### תשובה קצרה לראיון
 
-קודם אבהיר שהמערך היה תמורה של 1 עד n, שהערכים שהוצאו מוסתרים ושאפשר לסרוק את השארית. לחסר יחיד אחסיר את הסכום שנותר מהסכום n*(n+1)/2. לשני חסרים אבצע XOR של הטווח והשארית לקבלת a XOR b, אבחר ביט דלוק בו ואחזור על הביטול בנפרד בשתי הקבוצות לפי הביט. החסרים מופרדים, וכל ערך קיים מתבטל. הזמן O(n) וזיכרון העזר מספר קבוע של מילים. אם השליפה עצמה גלויה, אין צורך באלגוריתם הזה.
+אבהיר שהקלט היה תמורה של 1 עד n ושאפשר לקרוא את השארית. כשמותר זיכרון נוסף, אאתחל n+1 דגלים ל־False, אסמן True עבור כל ערך שקראתי, ואחזיר את האינדקסים מ־1 עד n שהדגל שלהם נשאר False. אותה פונקציה מוצאת חסר אחד או שניים בזמן O(n) ובזיכרון נוסף O(n), ללא נוסחאות. אם נדרש זיכרון עזר קבוע במילים, לחסר אחד אשתמש בהפרש סכומים ולשניים ב־XOR וחלוקה לפי ביט מבדיל.
 
 ### הרחבות ושאלת המשך
 
 ```json
 {
   "question": "מה משתנה אם השארית מגיעה כזרם שאי אפשר לקרוא שוב, ועדיין חסרים שני ערכים?",
-  "direction": "אפשר לשמור במהלך מעבר אחד סכום וסכום ריבועים. הפרשי הסכומים נותנים s=a+b ו־q=a²+b². אז 2q-s²=(a-b)²; שורש ריבועי שלם מאפשר לחלץ את a ו־b. צריך חשבון שלם מדויק וטיפוס רחב מספיק, ואין להשתמש בשורש נקודה צפה ללא בקרה.",
+  "direction": "אם מותר זיכרון ליניארי, גם מערך הדגלים מתאים לזרם חד־פעמי: מסמנים בזמן קריאת הזרם, ואז סורקים את הדגלים שבזיכרון. אם רוצים להימנע ממערך הדגלים, אפשר לשמור במהלך מעבר אחד סכום וסכום ריבועים. הפרשי הסכומים נותנים s=a+b ו־q=a²+b². אז 2q-s²=(a-b)²; שורש ריבועי שלם מאפשר לחלץ את a ו־b. צריך חשבון שלם מדויק וטיפוס רחב מספיק, ואין להשתמש בשורש נקודה צפה ללא בקרה.",
   "status": "שאלת המשך מוכנה בארכיון; לא חוברה אוטומטית למנגנון ההמשך באתר."
 }
 ```
@@ -186,6 +246,56 @@ Here n=100; also analyze the general range 1 through n. The output may be in eit
 ### First clarify what is observable
 
 The original wording does not explicitly say that the drawn values are hidden or that every number occurs exactly once. We solve the interpretation stated in the edited prompt: the initial array is a permutation of 1 through 100; one or two distinct values are removed and hidden, and all remaining entries can be inspected. These are essential assumptions, not consequences of random ordering. Let n denote the general upper limit; here n=100.
+
+### One solution for both parts — a flag array when extra memory is allowed
+
+When extra memory is allowed, the same function solves both parts without a sum formula, a sum of squares, hashing, or XOR. Prepare a flag list named seen, whose index represents the value itself. For example, seen[37] records whether value 37 appeared in the remainder; it does not refer to position 37 in the input array.
+
+1. Initialize n+1 flags to False. Index zero is unused, so values 1 through n can be used directly as indices. For n=100 there are 101 entries, of which 100 are useful flags.
+2. Read the remaining values once. For every value, set seen[value] = True.
+3. Scan indices 1 through n. Every index whose flag is still False represents an absent value; append it to the answer.
+
+```python
+def missing_with_flags(remaining, n=100):
+    seen = [False] * (n + 1)
+
+    for value in remaining:
+        seen[value] = True
+
+    missing = []
+    for value in range(1, n + 1):
+        if not seen[value]:
+            missing.append(value)
+
+    return missing
+```
+
+The function returns a list containing one value for Part A or two for Part B. Scanning indices returns them in ascending order. As with the other solutions, the input promise is required: distinct values from 1 through n, with the hidden values removed.
+
+For example, let n=7 and let the remaining array be [6, 1, 4, 7, 3]. Mark flags 6, 1, 4, 7, 3. The final flags are:
+
+| Value | Flag |
+| --- | --- |
+| 1 | `True` |
+| 2 | `False` |
+| 3 | `True` |
+| 4 | `True` |
+| 5 | `False` |
+| 6 | `True` |
+| 7 | `True` |
+
+The answer is [2, 5]. Index zero remains False but is not scanned or returned.
+
+```python
+missing_with_flags([6, 1, 4, 7, 3], n=7)  # [2, 5]
+missing_with_flags([3, 1, 4], n=4)        # [2]
+```
+
+Why is it correct? Initially no value is marked. After each input entry, precisely the values read so far are marked True. At the end, True represents a remaining value, while False at an index from 1 through n represents exactly a removed value.
+
+Initialization, marking the remainder, and scanning the flags take O(n) time altogether. The flag array uses O(n) additional storage entries; this is not a constant-space solution. The output contains only one or two values in this question. A Python Boolean list is not a packed bit array. The input array is not modified.
+
+This is a direct starting solution when extra memory is permitted. The following alternatives reduce auxiliary storage when a constant number of extra words is required.
 
 ### Part A — compare what should be present with what remains
 
@@ -244,7 +354,7 @@ The code reads the remaining entries twice and does not modify the array. It ass
 
 In Part A, subtracting the observed sum cancels every remaining value once. In Part B, the first XOR leaves a XOR b. The selected set bit must differ between the two missing values, so it separates them. Each present value is assigned to the same group on both appearances and cancels, leaving one missing value per group.
 
-Both parts take O(n) time. A constant number of scans is still linear. A constant number of integer variables gives O(1) machine words when these values fit the word model. Counting bits gives O(log n) auxiliary storage; this is not constant bit space for an unbounded range. Python arithmetic is exact; fixed-width languages must avoid overflow in Part A's sum. For an arbitrary unsorted array, inspecting order n entries is necessary in the worst case, so linear time is optimal in this access model.
+The sum and XOR alternatives take O(n) time in both parts. A constant number of scans is still linear. A constant number of integer variables gives O(1) machine words when these values fit the word model. Counting bits gives O(log n) auxiliary storage; this is not constant bit space for an unbounded range. Python arithmetic is exact; fixed-width languages must avoid overflow in Part A's sum. For an arbitrary unsorted array, inspecting order n entries is necessary in the worst case, so linear time is optimal in this access model.
 
 ### Other readings of the original
 
@@ -263,20 +373,22 @@ If the drawn values are visible, simply read them: one or two values take O(1) t
 
 - The code assumes the promised input contract. The file's length checks do not fully validate uniqueness or range.
 
+- The flag-array alternative requires permission to use O(n) additional storage. It indexes by value, leaves index zero unused, and assumes the same valid-input promise.
+
 ### Correctness and efficiency
 
 ```json
 {
   "criterion": "Time as a function of n for an accessible unsorted remaining array under the valid-input promise.",
-  "result": "O(n) time in both parts; O(1) auxiliary words, corresponding to O(log n) bits for an unbounded range.",
-  "proof": "Subtracting sums finds one missing value. XOR cancels every present value; a differing bit partitions the two missing values into groups in which cancellation leaves one value each. There are constantly many scans. In the worst case, unread entries can change which value is absent without changing the observed entries, requiring order n reads in this model.",
+  "result": "Both parts can be solved in O(n) time. The flag-array alternative uses O(n) extra storage entries. The sum and XOR alternatives use O(1) auxiliary words, corresponding to O(log n) bits for an unbounded range.",
+  "proof": "For the flag array, after each input entry exactly the values seen so far are marked True; consequently the final False flags in 1 through n identify exactly the omissions. Subtracting sums finds one missing value. XOR cancels every present value; a differing bit partitions the two missing values into groups in which cancellation leaves one value each. There are constantly many scans. In the worst case, unread entries can change which value is absent without changing the observed entries, requiring order n reads in this model.",
   "scope": "This does not claim constant bit space for all n or a linear-time requirement when drawn values are already visible. Arithmetic beyond one machine word depends on operand width."
 }
 ```
 
 ### Verification performed
 
-24,023 Python checks passed against an independent set-difference oracle: all 100 single omissions and all 4,950 missing pairs for n=100, in three input orders each; all remaining permutations for each one- or two-value omission with n from 1 through 7; and four size-guard checks. This verifies the code under its assumptions, not professional review or live website interaction.
+48,214 Python checks passed against an independent set-difference oracle: 24,023 checks of the sum/XOR alternatives and 24,191 of the flag array. Coverage includes all 100 single omissions and all 4,950 missing pairs for n=100 in three input orders, every remaining permutation for sizes 1 through 7, initialization, empty inputs, input preservation and exclusion of unused index zero. Additional generic flags cases cover no omissions and more than two without changing the question's subparts. This is software verification under the stated assumptions, not professional review or authenticated live-site clicking.
 
 ### Edge cases
 
@@ -289,6 +401,8 @@ If the drawn values are visible, simply read them: one or two values take O(1) t
 - Random, reversed, or sorted order gives the same answer; sum and XOR do not depend on entry order.
 
 - A one-use stream that cannot be read again is outside the two-pass XOR implementation's input contract.
+
+- For flags, initialize False, mark the entry's value rather than its position, and scan only 1 through n. An empty remainder with n=1 or n=2 returns all the appropriate missing values.
 
 ### Common mistakes
 
@@ -304,16 +418,22 @@ If the drawn values are visible, simply read them: one or two values take O(1) t
 
 - Inferring hidden drawn values without access to the remaining array: the available information is insufficient.
 
+- Marking the input position instead of the observed value.
+
+- Returning zero as missing, or allocating n entries and then accessing index n; allocate n+1 and scan from 1.
+
+- Claiming constant auxiliary space for the flags or treating a Python Boolean list as a packed bit array.
+
 ### Interview answer
 
-I first clarify that the array was a permutation of 1 through n, the removed values are hidden, and the remainder can be scanned. For one omission, subtract the remaining sum from n*(n+1)/2. For two, XOR the range and remainder to obtain a XOR b, choose one set bit, and repeat cancellation separately in the two bit groups. The missing values are separated and every present value cancels. Time is O(n), with constantly many auxiliary words. If the drawn values themselves are visible, this algorithm is unnecessary.
+First clarify that the original input was a permutation of 1 through n and that the remainder is accessible. If extra memory is allowed, initialize n+1 False flags, mark True for every value read, and return the indices 1 through n whose flags remain False. One function finds one or two omissions in O(n) time and O(n) extra storage, without formulas. If constant auxiliary words are required, use a sum difference for one omission and XOR with a distinguishing-bit partition for two.
 
 ### Extensions and follow-up
 
 ```json
 {
   "question": "What changes if the remaining entries arrive as a stream that cannot be read again, while two values are missing?",
-  "direction": "In one pass, accumulate a sum and a sum of squares. Subtract from the complete-range totals to get s=a+b and q=a²+b². Then 2q-s²=(a-b)²; an exact integer square root recovers a and b. Exact arithmetic and sufficient integer width are required; do not use an unchecked floating-point square root.",
+  "direction": "If linear auxiliary storage is allowed, flags also handle a one-use stream: mark while reading the stream, then scan the in-memory flags. To avoid the flag array, in one pass, accumulate a sum and a sum of squares. Subtract from the complete-range totals to get s=a+b and q=a²+b². Then 2q-s²=(a-b)²; an exact integer square root recovers a and b. Exact arithmetic and sufficient integer width are required; do not use an unchecked floating-point square root.",
   "status": "Follow-up prepared in the archive; not automatically connected to the website's follow-up flow."
 }
 ```
@@ -322,4 +442,4 @@ I first clarify that the array was a permutation of 1 through n, the removed val
 
 [prep_041_missing_values.py](../solutions/prep_041_missing_values.py) · [check_prep_041.py](../checks/check_prep_041.py) · [prep-041-verification.json](../checks/prep-041-verification.json)
 
-שאלת ההמשך מוכנה בשתי השפות אך טרם חוברה לתור האינטראקטיבי. ההערכה המקצועית ורמת הקושי עדיין בביקורת; אין להעניק לשאלה זו ראיות שליטה או ניקוד תחרותי. שאלות חומרה אומתו במודל Python בלבד; אין בכך טענה לסימולציית HDL או לבדיקה פיזית.
+שאלת ההמשך מוכנה בשתי השפות אך טרם חוברה לתור האינטראקטיבי. אין להעניק לשאלה זו ראיות שליטה או ניקוד תחרותי לפני השלמת הביקורת המתאימה.

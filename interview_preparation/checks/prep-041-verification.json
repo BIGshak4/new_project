@@ -7,7 +7,18 @@
     "small_all_orders": 8869,
     "size_guards": 4
   },
-  "total_cases": 24023,
+  "flag_counts": {
+    "single_n100": 300,
+    "pair_n100": 14850,
+    "small_all_orders": 8869,
+    "extra_missing_counts": 170,
+    "negative_n_guards": 2
+  },
+  "total_cases": 48214,
+  "sum_xor_cases": 24023,
+  "flag_cases": 24191,
+  "flag_input_preservation_checked": true,
+  "flag_index_zero_ignored_checked": true,
   "original_n100_missing_sets": {
     "singles": 100,
     "pairs": 4950

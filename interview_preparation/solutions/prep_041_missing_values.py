@@ -8,6 +8,30 @@ preconditions; this module does not validate arbitrary malformed input.
 from collections.abc import Sequence
 
 
+def missing_with_flags(remaining: Sequence[int], n: int = 100) -> list[int]:
+    """Return every absent value using O(n) auxiliary flag entries.
+
+    This works for both one and two removals, without sum formulas or XOR.
+    Preconditions: n >= 1; remaining contains distinct integers from 1..n.
+    Index zero is unused. Python's Boolean list is not a packed bit array.
+    The original input is read once and is not modified.
+    """
+    if n < 1:
+        raise ValueError("Expected n >= 1")
+
+    seen = [False] * (n + 1)
+
+    for value in remaining:
+        seen[value] = True
+
+    missing = []
+    for value in range(1, n + 1):
+        if not seen[value]:
+            missing.append(value)
+
+    return missing
+
+
 def missing_one(remaining: Sequence[int], n: int = 100) -> int:
     """Return the one missing value in O(n) time and O(1) machine words.
 
@@ -66,3 +90,5 @@ if __name__ == "__main__":
     two_removed = [value for value in range(1, 101) if value not in (37, 82)]
     print("One missing:", missing_one(one_removed))
     print("Two missing:", missing_two(two_removed))
+    print("One missing, flags:", missing_with_flags(one_removed))
+    print("Two missing, flags:", missing_with_flags(two_removed))
