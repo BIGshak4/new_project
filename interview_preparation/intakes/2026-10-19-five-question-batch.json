@@ -134,9 +134,37 @@
     "PREP-041"
   ],
   "untouched_original_records": 41,
-  "database_status": "pending_scoped_insert_and_two_updates",
+  "database_status": "verified_scoped_insert_and_two_updates",
   "learner_activity_written": false,
   "authenticated_live_clicks_performed": false,
   "hdl_simulation_performed": false,
-  "follow_up_workflow_connected": false
+  "follow_up_workflow_connected": false,
+  "database_question_count": 78,
+  "new_translations": 10,
+  "new_primary_skill_links": 5,
+  "new_private_assets_verified": 22,
+  "unrelated_database_questions_unchanged": 71,
+  "qa": {
+    "backend_tests_passed": 94,
+    "web_tests_passed": 234,
+    "typecheck": "passed",
+    "all_preparation_browser_checks_passed": 436,
+    "focused_ten_question_browser_checks_passed": 310,
+    "focused_browser_screenshots": 160,
+    "offline_service_assertions_passed": 2351,
+    "offline_service_flows": 14,
+    "python_reference_blocks_compiled": 20,
+    "physical_phone_tested": false
+  },
+  "publication_code_commit": "3a5a69106a3b6f1cfddc69954637fbedb5c8d98f",
+  "deployment": {
+    "web_host": "Netlify",
+    "api_host": "Render",
+    "revision": "3a5a69106a3b6f1cfddc69954637fbedb5c8d98f",
+    "web_health": "ok",
+    "api_health": "ok",
+    "workflow": "success",
+    "workflow_url": "https://github.com/BIGshak4/new_project/actions/runs/39225939897"
+  },
+  "live_browser_limitation": "No connected Chrome surface or signed-in tab available; isolated fixture UI checks only."
 }
