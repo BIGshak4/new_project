@@ -42,5 +42,17 @@
     "ruff": "passed",
     "mobile_fixture_table_visual_review": "two-column table checked after fixing dense layout"
   },
-  "git_and_deployment_status": "pending"
+  "git_and_deployment_status": "pushed_and_backend_runtime_verified",
+  "deployment_verification": {
+    "checked_at_utc": "2026-10-19T07:57:44Z",
+    "code_revision": "6739672d8ecbaf38f36bb60a761bd80b9fb6b3c2",
+    "render_health_http": 200,
+    "render_status": "ok",
+    "render_revision_match": true,
+    "netlify_health_http": 200,
+    "netlify_revision": "0dc6c79ddce8c3c7e2ea914c9a86b2745760cffd",
+    "web_source_changed": false,
+    "content_served_from_database": true,
+    "authenticated_live_browser_clicks": false
+  }
 }
