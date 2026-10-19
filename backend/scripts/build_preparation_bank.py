@@ -151,6 +151,9 @@ def load():
                  for folder in ("sources", "diagrams") for p in (BANK / folder).glob(ident.lower() + "*")
                  if p.suffix == ".png"}
         descriptions = {m["path"]: m.get("description", "") for m in q.get("media_assets", []) if m.get("path")}
+        media_languages = {m["path"]: m["language"] for m in q.get("media_assets", []) if m.get("language")}
+        if any(language not in ("he", "en") for language in media_languages.values()):
+            raise ValueError(f"{ident}: unsupported illustration language")
         for n, relative in enumerate(sorted(refs)):
             path = (BANK / relative).resolve()
             if not path.is_relative_to(BANK.resolve()) or not path.is_file():
@@ -163,6 +166,8 @@ def load():
                           "role": "prompt" if is_prompt else "solution",
                           "caption": descriptions.get(relative, ""), "source_path": relative,
                           "sha256": digest})
+            if relative in media_languages:
+                media[-1]["language"] = media_languages[relative]
             uploads[storage_path] = {"local_path": relative, "sha256": digest, "bytes": path.stat().st_size}
         # Keep ALL technical author data for the gated resource viewer/download, not public catalog output.
         q.pop("prepared_hints", None)

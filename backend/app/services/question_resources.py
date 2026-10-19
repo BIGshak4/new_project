@@ -37,13 +37,15 @@ class QuestionResources(BaseModel):
     language: Literal["en", "he"]
 
 
-def learner_media(media: list[dict]) -> list[dict]:
+def learner_media(media: list[dict], language: Literal["en", "he"] | None = None) -> list[dict]:
     """Archive screenshots are internal source records, not learner-facing illustrations.
 
     Preserve their provenance and the authored diagrams/code. This also applies to
     existing database manifests, without reseeding or changing learner attempts.
     """
-    return [m for m in media if not str(m.get("source_path", "")).replace("\\", "/").startswith("sources/")]
+    return [m for m in media
+            if not str(m.get("source_path", "")).replace("\\", "/").startswith("sources/")
+            and (language is None or m.get("language") in (None, language))]
 
 
 async def sign_media(media: list[dict], base_url: str, service_key: str) -> list[ResourceMedia]:

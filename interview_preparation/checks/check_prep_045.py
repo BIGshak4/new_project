@@ -27,7 +27,9 @@ def gate_equations(winner, pulses, reset):
     high = (1 - p1) & (p2 | p3)
     low = p1 | ((1 - p2) & p3)
     candidate = 2 * high + low
-    return 0 if reset else candidate if winner == 0 else winner
+    q1, q0 = (winner >> 1) & 1, winner & 1
+    enable = 1 - (q1 | q0)
+    return 0 if reset else candidate if enable else winner
 
 
 def check_trace(events):
@@ -47,6 +49,8 @@ def check_trace(events):
 
 
 def verify():
+    for winner, expected_enable in enumerate((1, 0, 0, 0)):
+        assert 1 - (((winner >> 1) & 1) | (winner & 1)) == expected_enable
     transition_cases = 0
     for old, pulses, reset in itertools.product(range(4), PULSES, (False, True)):
         expected = (0 if reset else old if old else
@@ -78,6 +82,7 @@ def verify():
     return {
         "question": "PREP-045", "status": "passed",
         "state_input_reset_combinations": transition_cases,
+        "nor_enable_truth_rows": 4,
         "all_pulse_streams_lengths_0_to_6": no_reset_streams,
         "all_pulse_reset_streams_lengths_0_to_4": reset_streams,
         "locked_hold_cycles": 100,

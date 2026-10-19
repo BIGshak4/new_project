@@ -36,7 +36,7 @@
 
 המקור מתאר פולס באורך מחזור שעון מכל לחצן, אבל אינו מגדיר מה עושים אם כמה פולסים נדגמים באותה חזית. נבחר ונצהיר: מסלול 1 קודם ל־2, ומסלול 2 קודם ל־3 במקרה כזה בלבד. זו מדיניות שבירת תיקו שהוספנו, ולא נתון מהמקור. אם כמה אנשים מגיעים בין אותן שתי חזיתות, המערכת אינה יודעת מתוך שלושת הביטים מי הגיע קודם בזמן רציף.
 
-נניח שהכניסות `p1,p2,p3` כבר סינכרוניות לשעון ועומדות בזמני הכנה והחזקה. נדגום אותן בחזית עולה. נסמן `rst` כאיפוס פעיל בגבוה וסינכרוני, עם עדיפות על כל לחיצה. במקור נכתב `rest`; פירשנו זאת ככניסת איפוס. נשתמש בקידוד `00` כשאין זוכה, `01` למסלול 1, `10` למסלול 2 ו־`11` למסלול 3.
+נניח שהכניסות `p1,p2,p3` כבר סינכרוניות לשעון ועומדות בזמני הכנה והחזקה. נדגום אותן בחזית עולה. נסמן `REST` כאיפוס פעיל בגבוה וסינכרוני, עם עדיפות על כל לחיצה. במקור נכתב `rest`; פירשנו זאת ככניסת איפוס. סימון `rst` בנוסח השאלה וסימון `REST` בשרטוט ובקוד מציינים אותה כניסה. נשתמש בקידוד `00` כשאין זוכה, `01` למסלול 1, `10` למסלול 2 ו־`11` למסלול 3.
 
 ### 1. למה צריך זיכרון?
 
@@ -75,28 +75,49 @@ candidate[1] = NOT(p1) AND (p2 OR p3)
 candidate[0] = p1 OR (NOT(p2) AND p3)
 ```
 
-### 3. מעדכנים את האוגר רק כשמותר
+### 3. שער NOR מפיק ביט אפשור אחד
+
+נסמן את שני ביטי הזוכה השמור `Q1=winner[1]` ו־`Q0=winner[0]`. שער NOR עם שתי כניסות מחבר אותם ב־OR ואז הופך את התוצאה:
 
 ```text
-if rst:
+EN = NOT(Q1 OR Q0)
+```
+
+זו בדיקת אפס של הקוד כולו. השער אינו מעביר את `winner` כפי שהוא ואינו הופך כל ביט בנפרד. הקלט מכיל שני ביטים, והמוצא `EN` מכיל ביט יחיד. העיגול הקטן ביציאת סמל השער מציין את ההיפוך.
+
+| Q1 | Q0 | EN | משמעות |
+| --- | --- | --- | --- |
+| 0 | 0 | 1 | עדיין אין זוכה; מותר לקלוט מועמד |
+| 0 | 1 | 0 | מסלול 1 כבר זכה; שומרים אותו |
+| 1 | 0 | 0 | מסלול 2 כבר זכה; שומרים אותו |
+| 1 | 1 | 0 | מסלול 3 כבר זכה; שומרים אותו |
+
+### 4. קריאת המעגל והעדיפות של האיפוס
+
+המקודד הכחול בוחר מסלול מהפולסים הנוכחיים ומחבר את קוד המועמד בן שני הביטים לכניסת הנתונים `D` של האוגר. הפלט הירוק `Q` הוא הזוכה השמור. ענף ממנו מתפצל לשני החוטים `Q1,Q0` ונכנס לשער NOR. פיצול זה הוא חיווט בלבד, ללא זיכרון או חישוב נוסף. מוצא השער הכתום מחובר לכניסת האפשור `EN` של האוגר.
+
+כאשר `EN=1`, בחזית השעון הבאה האוגר טוען את הקוד שבכניסת `D`. כאשר `EN=0`, הוא מחזיק את ערכו הקודם. האוגר עם האפשור מממש את אותה בחירה בין טעינת מועמד לבין החזקה באמצעות משוב; אין צורך בביט נעילה נוסף.
+
+כניסת האיפוס האדומה `REST` מחוברת ישירות לאיפוס הסינכרוני של האוגר. היא גוברת על `EN`, ולכן גם לאחר זכייה, כאשר `EN=0`, אפשר לאפס. סדר הפעולות בכל חזית עולה הוא:
+
+```text
+if REST:
     winner_next = 00
-else if winner == 00:
+else if EN:
     winner_next = candidate
 else:
     winner_next = winner
 ```
 
-אם אין פולס ואין זוכה, המועמד הוא `00` ונשארים בהמתנה. כשיש פולס ראשון, נשמר קוד שונה מאפס. מרגע זה התנאי `winner == 00` שקרי, ולכן האוגר מחזיק את הקוד הישן עד איפוס.
+| REST | EN | פעולה בחזית שעון עולה |
+| --- | --- | --- |
+| 1 | לא משנה | איפוס הזוכה השמור ל־00 |
+| 0 | 1 | טעינת קוד המועמד |
+| 0 | 0 | החזקת הזוכה הקיים |
 
-לא חייבים ביט נפרד בשם `locked`: שלושת קודי המסלולים שונים מאפס, ולכן `winner != 00` כבר אומר שהמערכת נעולה. בבנייה הזו האוגר בן שני הביטים ממלא גם את תפקיד הזיכרון וגם את תפקיד פלט הזוכה.
+למשל, אחרי זכייה של מסלול 3 נשמר `11`, ולכן שער NOR מוציא אפס והאוגר נעול. אם מפעילים `REST`, בחזית הבאה מתקבל `00` גם שהאפשור היה אפס. בעקבות האיפוס שער NOR מוציא אחד. כל עוד האיפוס פעיל, כל חזית ממשיכה לאפס; אחרי שחרורו אפשר לקלוט מועמד במירוץ חדש. האיפוס אינו מיידי בין חזיתות במימוש הסינכרוני הזה.
 
-### 4. המעגל ומכונת המצבים
-
-בשרטוט המעגל, שלושת הפולסים נכנסים למקודד. מוצא המקודד מחובר לכניסה 1 של בורר דו־ביטי. כניסה 0 של הבורר מקבלת בחזרה את `winner`. אות הבחירה הוא `unlocked = (winner == 00)`. מוצא הבורר מזין את האוגר. האיפוס מאפס את האוגר בחזית הפעילה, לפני כל עדכון אחר. אפשר לממש את אותה החזקה גם באמצעות enable של האוגר.
-
-נקודה על חוט מסמנת חיבור; חוטים שנחתכים ללא נקודה אינם מחוברים. האיפוס מסומן בהערת האוגר ובמשוואת המצב הבא, ואינו כניסת נתונים רגילה של המקודד.
-
-מכונת מור שקולה כוללת ארבעה מצבים: `WAIT/00`, `W1/01`, `W2/10`, `W3/11`. למצבי הזכייה יש לולאות עצמיות עבור כל קלט כאשר האיפוס אינו פעיל. האיפוס מחזיר כל מצב ל־`WAIT`.
+מכונת מור השקולה נשארת בעלת ארבעה מצבים: `WAIT/00`, `W1/01`, `W2/10`, `W3/11`. בכל מצב זכייה שומרים את הקוד עבור כל קלט כאשר האיפוס אינו פעיל. איפוס מחזיר כל מצב ל־`WAIT`.
 
 | מצב נוכחי | תנאי בחזית, כשאין איפוס | מצב הבא | פלט לאחר החזית |
 | --- | --- | --- | --- |
@@ -107,13 +128,13 @@ else:
 | W1 | כל צירוף לחיצות | W1 | 01 |
 | W2 | כל צירוף לחיצות | W2 | 10 |
 | W3 | כל צירוף לחיצות | W3 | 11 |
-| כל מצב | איפוס פעיל בחזית | WAIT | 00 |
+| כל מצב | REST=1 בחזית | WAIT | 00 |
 
 ### 5. דוגמת ריצה
 
 כל שורה מתארת דגימה בחזית שעון ואת הפלט שנשמר אחריה:
 
-| חזית | rst | p1,p2,p3 | הפלט לפני החזית | הפלט אחרי החזית | הסבר |
+| חזית | REST | p1,p2,p3 | הפלט לפני החזית | הפלט אחרי החזית | הסבר |
 | --- | --- | --- | --- | --- | --- |
 | 1 | 1 | 000 | לא משנה | 00 | הכנת המערכת למירוץ |
 | 2 | 0 | 000 | 00 | 00 | עדיין אין מסיים |
@@ -132,13 +153,17 @@ else:
 // Simultaneous sampled pulses use explicit editorial priority: lane 1 > 2 > 3.
 module first_finisher (
     input  logic       clk,
-    input  logic       rst,
+    input  logic       REST,
     input  logic       p1,
     input  logic       p2,
     input  logic       p3,
     output logic [1:0] winner
 );
     logic [1:0] candidate;
+    logic       en;
+
+    // One-bit NOR result, not a bitwise inversion of the two-bit winner.
+    assign en = ~(winner[1] | winner[0]);
 
     always_comb begin
         if      (p1) candidate = 2'b01;
@@ -148,16 +173,17 @@ module first_finisher (
     end
 
     always_ff @(posedge clk) begin
-        if (rst)
+        if (REST)
             winner <= 2'b00;
-        else if (winner == 2'b00)
+        else if (en)
             winner <= candidate;
+        // Reset overrides enable, including when en=0 after a win.
         // Otherwise hold winner; later pulses cannot replace it.
     end
 endmodule
 ```
 
-יש להחזיק את `rst` פעיל לפחות בחזית אחת כדי לאתחל את החומרה. מודל פייתון הבא מייצג חזיתות שעון ולא לחצנים פיזיים; המתודה מחזירה את הפלט אחרי החזית:
+יש להחזיק את `REST` פעיל לפחות בחזית אחת כדי לאתחל את החומרה. מודל פייתון הבא מייצג חזיתות שעון ולא לחצנים פיזיים; המתודה מחזירה את הפלט אחרי החזית:
 
 ```python
 """Clock-edge model of a first-finisher register with lane-1-first tie priority.
@@ -218,7 +244,7 @@ class FirstFinisher:
 
 - בהגעה שנדגמת באותה חזית בוחרים מסלול 1 לפני 2 לפני 3; זו מדיניות שהוספנו ולא נתון במקור.
 
-- 00 מסמן שאין זוכה; 01,10,11 הם מסלולים 1,2,3. הכיתוב rest במקור מפורש כאיפוס rst.
+- 00 מסמן שאין זוכה; 01,10,11 הם מסלולים 1,2,3. rest במקור, rst בנוסח ו־REST בשרטוט מציינים אותה כניסת איפוס.
 
 - אין אפשרות להסיק משלושת הפולסים את סדרם הכרונולוגי של אירועים שונים בין אותן שתי חזיתות.
 
@@ -239,7 +265,7 @@ class FirstFinisher:
 {
   "status": "בדיקות מודל פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
   "method": "אורקל עצמאי סורק את היסטוריית הדגימות מאז האיפוס האחרון ובוחר את זוג החזית והמסלול המינימלי. נבדקו גם משוואות בוליאניות ואינווריאנטים.",
-  "coverage": "64 מעברי מצב/קלט/איפוס; 299,593 רצפי פולסים באורכים 0–6; 69,905 רצפי פולסים ואיפוס באורכים 0–4; החזקת זוכה 100 מחזורים.",
+  "coverage": "64 מעברי מצב/קלט/איפוס; 299,593 רצפי פולסים באורכים 0–6; 69,905 רצפי פולסים ואיפוס באורכים 0–4; החזקת זוכה 100 מחזורים. ארבע שורות האמת של אפשור NOR ועדיפות איפוס גם כשהאפשור אפס.",
   "script_path": "checks/check_prep_045.py",
   "scope": "אין סימולציית HDL, סינתזה, בדיקת CDC או מדידת חומרה; קוד SystemVerilog צורף כמימוש מוצע."
 }
@@ -259,6 +285,8 @@ class FirstFinisher:
 
 - איפוס אחרי זכייה מאפשר למירוץ הבא לבחור זוכה אחר; בלי חזית איפוס אין הבטחת מצב התחלה בחומרה.
 
+- גם כשהזוכה השמור שונה מאפס ו־EN=0, REST=1 מאפס בחזית; לאחר האיפוס EN חוזר ל־1.
+
 ### טעויות נפוצות
 
 - מקודד צירופי בלבד: מאבד את התוצאה בסיום הפולס ומאפשר ללחיצות מאוחרות לשנות אותה.
@@ -273,9 +301,11 @@ class FirstFinisher:
 
 - הנחה שלחצן פיזי מסונכרן, נקי מרטט או בטוח ממטא־יציבות בלי טיפול מתאים.
 
+- בלבול בין NOR על שני ביטי הזוכה לבין העברת הקוד או היפוך כל ביט בנפרד; חסימת האיפוס כשהאפשור אפס.
+
 ### תשובה קצרה לראיון
 
-אשמור קוד זוכה באוגר בן שני ביטים: 00 פירושו שאין זוכה. מקודד עדיפות מציע את מסלול הפולס הנוכחי, ורק כשקוד הזוכה אפס אטען אותו לאוגר. אחרי שנשמר קוד שונה מאפס אחזיק אותו עד איפוס. אגדיר מראש מה עושים בלחיצות באותה חזית; כאן 1 קודם ל־2 ול־3. איפוס סינכרוני גובר על הלחצנים. זה בוחר את ההגעה הראשונה שנדגמה ואינו משחזר סדר בתוך מחזור.
+מקודד עדיפות מפיק קוד מועמד בן שני ביטים. אשמור אותו באוגר שהאפשור שלו הוא NOR של שני ביטי הזוכה: EN=NOT(Q1 OR Q0). רק כשהזוכה 00 האוגר טוען מועמד בחזית; אחרי זכייה האפשור אפס והאוגר מחזיק. איפוס סינכרוני REST גובר גם על EN=0 ומחזיר ל־00. נגדיר תיקו באותה דגימה במפורש; כאן מסלול 1 קודם ל־2 ול־3. אין הכרעה בסדר הגעה בתוך מחזור.
 
 ### הרחבות ושאלת המשך
 
@@ -315,7 +345,7 @@ Provide the candidate truth table, circuit and state machine, and explain why la
 
 The source provides one-clock finish-button pulses, but does not specify simultaneous sampled arrivals. Explicitly choose lane 1 over lane 2 over lane 3 only when pulses are sampled at the same edge. This tie policy is an editorial clarification, not a source requirement. If several people arrive between the same two clock edges, these three sampled bits do not reveal their continuous-time ordering.
 
-Assume p1, p2 and p3 are already synchronous and meet setup/hold requirements. Sample them on rising clock edges. Use synchronous active-high rst with priority over every finish input. The source spells the reset input rest; the implementation normalizes that name to rst. Encode no winner as 00, lane 1 as 01, lane 2 as 10 and lane 3 as 11.
+Assume p1, p2 and p3 are already synchronous and meet setup/hold requirements. Sample them on rising clock edges. Use synchronous active-high REST with priority over every finish input. The source spells the reset input rest; the diagram and code use REST. The name rst in the question refers to that same reset input. Encode no winner as 00, lane 1 as 01, lane 2 as 10 and lane 3 as 11.
 
 ### 1. Why memory is necessary
 
@@ -354,45 +384,66 @@ candidate[1] = NOT(p1) AND (p2 OR p3)
 candidate[0] = p1 OR (NOT(p2) AND p3)
 ```
 
-### 3. Update the register only while unlocked
+### 3. A NOR gate produces a one-bit enable
+
+Name the two stored winner bits `Q1=winner[1]` and `Q0=winner[0]`. A two-input NOR first ORs these bits and then inverts the result:
 
 ```text
-if rst:
+EN = NOT(Q1 OR Q0)
+```
+
+This tests whether the entire stored code is zero. It neither passes `winner` through nor inverts each bit separately. Its input comprises two bits; its output `EN` is a single bit. The small output bubble on the gate symbol denotes inversion.
+
+| Q1 | Q0 | EN | Meaning |
+| --- | --- | --- | --- |
+| 0 | 0 | 1 | No winner yet; the register may accept a candidate |
+| 0 | 1 | 0 | Lane 1 already won; keep it |
+| 1 | 0 | 0 | Lane 2 already won; keep it |
+| 1 | 1 | 0 | Lane 3 already won; keep it |
+
+### 4. Read the circuit and give reset priority
+
+The blue encoder chooses a lane from the current pulses and sends its two-bit candidate code to register input `D`. Green output `Q` is the stored winner. A branch splits into wires `Q1,Q0` feeding the NOR gate. This split is wiring only, with no extra memory or computation. The orange gate output drives register enable `EN`.
+
+When `EN=1`, the next rising edge loads the code at `D`. When `EN=0`, the register holds its previous value. A register with enable implements the same load-or-feedback-hold selection; no separate lock bit is needed.
+
+Red input `REST` directly drives the register's synchronous reset. Reset overrides `EN`, so it still clears a winner when `EN=0`. Every rising edge follows this order:
+
+```text
+if REST:
     winner_next = 00
-else if winner == 00:
+else if EN:
     winner_next = candidate
 else:
     winner_next = winner
 ```
 
-With no pulse and no winner, candidate is 00 and the circuit waits. The first sampled arrival stores a nonzero lane code. From then on winner == 00 is false, so the stored value holds until reset.
+| REST | EN | Rising-edge action |
+| --- | --- | --- |
+| 1 | Either value | Clear the stored winner to 00 |
+| 0 | 1 | Load the candidate code |
+| 0 | 0 | Hold the existing winner |
 
-A separate locked bit is unnecessary: all three winner codes are nonzero, so winner != 00 already expresses that condition. The two-bit register acts as both the memory and winner output.
+For example, after lane 3 wins the stored code is `11`; NOR outputs zero and the register holds. Asserting `REST` clears it to `00` at the next edge even though enable was zero. NOR then outputs one. Each edge while reset remains asserted clears again; after reset is released a new race can accept a candidate. This synchronous reset does not change the register immediately between edges.
 
-### 4. Circuit and state machine
+The equivalent Moore machine still has four states: `WAIT/00`, `W1/01`, `W2/10`, `W3/11`. Winning states hold for every input combination unless reset is asserted. Reset takes every state to `WAIT`.
 
-In the circuit diagram, the three pulses feed the encoder. Its result feeds input 1 of a two-bit multiplexer; input 0 receives feedback from winner. Its select signal is unlocked = (winner == 00). The multiplexer feeds the register. Reset clears the register at the active edge before any other update. A register enable can implement the same hold behavior.
-
-A junction dot denotes a connection; crossing wires without a dot are not connected. Register reset is specified by the annotation and next-state equation, rather than being an ordinary encoder data input.
-
-An equivalent Moore machine has four states: WAIT/00, W1/01, W2/10 and W3/11. Every winner state has a self-loop for every input when reset is inactive. Reset sends every state to WAIT.
-
-| Current state | Condition at edge, unless reset | Next state | Output after edge |
+| Current state | Edge condition without reset | Next state | Output after edge |
 | --- | --- | --- | --- |
-| WAIT | No finish pulse | WAIT | 00 |
+| WAIT | No pulse | WAIT | 00 |
 | WAIT | p1=1 | W1 | 01 |
 | WAIT | p1=0 and p2=1 | W2 | 10 |
 | WAIT | p1=0 and p2=0 and p3=1 | W3 | 11 |
 | W1 | Any pulse combination | W1 | 01 |
 | W2 | Any pulse combination | W2 | 10 |
 | W3 | Any pulse combination | W3 | 11 |
-| Any | Reset asserted at edge | WAIT | 00 |
+| Any | REST=1 at edge | WAIT | 00 |
 
 ### 5. Clock-by-clock example
 
 Each row shows inputs sampled at an edge and the registered result after that edge:
 
-| Edge | rst | p1,p2,p3 | Before edge | After edge | Meaning |
+| Edge | REST | p1,p2,p3 | Before edge | After edge | Meaning |
 | --- | --- | --- | --- | --- | --- |
 | 1 | 1 | 000 | Any | 00 | Initialize the race |
 | 2 | 0 | 000 | 00 | 00 | No finisher yet |
@@ -411,13 +462,17 @@ In SystemVerilog the register changes only at posedge clk, using nonblocking ass
 // Simultaneous sampled pulses use explicit editorial priority: lane 1 > 2 > 3.
 module first_finisher (
     input  logic       clk,
-    input  logic       rst,
+    input  logic       REST,
     input  logic       p1,
     input  logic       p2,
     input  logic       p3,
     output logic [1:0] winner
 );
     logic [1:0] candidate;
+    logic       en;
+
+    // One-bit NOR result, not a bitwise inversion of the two-bit winner.
+    assign en = ~(winner[1] | winner[0]);
 
     always_comb begin
         if      (p1) candidate = 2'b01;
@@ -427,16 +482,17 @@ module first_finisher (
     end
 
     always_ff @(posedge clk) begin
-        if (rst)
+        if (REST)
             winner <= 2'b00;
-        else if (winner == 2'b00)
+        else if (en)
             winner <= candidate;
+        // Reset overrides enable, including when en=0 after a win.
         // Otherwise hold winner; later pulses cannot replace it.
     end
 endmodule
 ```
 
-Assert rst across at least one rising edge to establish the hardware initial state. The following Python model represents clock edges, not physical switches, and step returns the output after that edge:
+Assert REST across at least one rising edge to establish the hardware initial state. The following Python model represents clock edges, not physical switches, and step returns the output after that edge:
 
 ```python
 """Clock-edge model of a first-finisher register with lane-1-first tie priority.
@@ -497,7 +553,7 @@ Verification covered all 64 state/input/reset combinations, all 299,593 no-reset
 
 - Same-edge ties use lane 1 before 2 before 3; this is an added policy, not a source fact.
 
-- 00 means no winner; 01,10,11 identify lanes 1,2,3. Source spelling rest is interpreted as reset rst.
+- 00 means no winner; 01,10,11 identify lanes 1,2,3. Source rest, question rst and diagram REST name the same reset input.
 
 - The three sampled pulses cannot reveal the continuous-time order of arrivals between the same two edges.
 
@@ -518,7 +574,7 @@ Verification covered all 64 state/input/reset combinations, all 299,593 no-reset
 {
   "status": "Python-model checks passed; independent expert review remains pending.",
   "method": "Independent oracle scans sampled history since the latest reset and selects the smallest arrival-edge/lane pair. Boolean equations and invariants were also checked.",
-  "coverage": "64 state/input/reset transitions; 299,593 pulse streams of lengths 0–6; 69,905 pulse/reset streams of lengths 0–4; a 100-cycle locked hold.",
+  "coverage": "64 state/input/reset transitions; 299,593 pulse streams of lengths 0–6; 69,905 pulse/reset streams of lengths 0–4; a 100-cycle locked hold. Four NOR-enable truth rows and reset overriding disabled loading.",
   "script_path": "checks/check_prep_045.py",
   "scope": "No HDL simulation, synthesis, CDC verification or physical measurements; SystemVerilog is supplied as a proposed implementation."
 }
@@ -538,6 +594,8 @@ Verification covered all 64 state/input/reset combinations, all 299,593 no-reset
 
 - Reset after a win allows another race to choose a different lane; hardware initialization requires a reset edge.
 
+- Even with a nonzero stored winner and EN=0, REST=1 clears at an edge; enable becomes one after reset.
+
 ### Common mistakes
 
 - Using only a combinational encoder, losing output when the pulse ends and allowing later changes.
@@ -552,9 +610,11 @@ Verification covered all 64 state/input/reset combinations, all 299,593 no-reset
 
 - Assuming a physical switch is synchronized, debounced or metastability-free without suitable conditioning.
 
+- Confusing the one-bit NOR of the two winner bits with pass-through or bitwise inversion; blocking reset when enable is zero.
+
 ### Interview answer
 
-Store a two-bit winner code with 00 meaning none. A priority encoder proposes the current lane, and the register accepts it only while its stored code is zero. Once nonzero, hold until reset. Define same-edge tie behavior explicitly; here lane 1 precedes 2 and 3. Synchronous reset overrides finish pulses. This selects the first sampled arrival, not subcycle chronological order.
+A priority encoder produces a two-bit candidate. Store it in a register enabled by the NOR of the stored winner bits: EN=NOT(Q1 OR Q0). A zero winner permits loading at an edge; a winner disables loading and holds. Synchronous REST overrides even EN=0 and clears to 00. Define same-edge ties explicitly; here lane 1 precedes 2 and 3. Subcycle ordering is not resolved.
 
 ### Extensions and follow-up
 
@@ -566,7 +626,7 @@ Store a two-bit winner code with 00 meaning none. A priority encoder proposes th
 }
 ```
 
-![PREP-045](../diagrams/prep-045-first-finisher-circuit.png)
+![PREP-045](../diagrams/prep-045-first-finisher-circuit-en.png)
 
 ![PREP-045](../diagrams/prep-045-first-finisher-fsm.png)
 

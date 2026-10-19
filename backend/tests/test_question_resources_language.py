@@ -101,3 +101,38 @@ async def test_resource_language_rejects_unsupported_language(resources_service)
     with pytest.raises(ApiError) as invalid:
         await service.question_resources(uuid.uuid4(), "example-sensor-majority", language="fr")
     assert invalid.value.code == "validation"
+
+
+async def test_localized_circuit_is_selected_before_signing_and_stays_reveal_gated(resources_service):
+    service, store, provider, signed = resources_service
+    key = "prep-first-finisher-latched-winner"
+    user = uuid.uuid4()
+    for language in ("he", "en"):
+        hidden = await service.question_resources(user, key, language=language)
+        assert not hidden.solution_revealed and not signed[-1]
+    attempt = await service.start(user, question_key=key, language="he")
+    attempt_id = uuid.UUID(attempt.id)
+    await service.reveal_reference(user, attempt_id)
+    before = copy.deepcopy(store.attempts[attempt_id])
+    for language, filename in (("he", "prep-045-first-finisher-circuit.png"),
+                               ("en", "prep-045-first-finisher-circuit-en.png"),
+                               ("he", "prep-045-first-finisher-circuit.png")):
+        result = await service.question_resources(user, key, attempt_id=attempt_id, language=language)
+        circuits = [m for m in signed[-1] if "first-finisher-circuit" in m["filename"]]
+        assert len(circuits) == 1 and circuits[0]["filename"] == filename
+        assert circuits[0]["language"] == result.language == language
+        assert any(m["filename"] == "prep-045-first-finisher-fsm.png" for m in signed[-1])
+        assert all(m.get("language") in (None, language) for m in signed[-1])
+        assert all(not m.get("source_path", "").startswith("sources/") for m in signed[-1])
+    assert store.attempts[attempt_id] == before
+    assert not provider.requests and not store.metrics and not store.usage
+
+
+def test_neutral_media_remains_available_and_source_screenshots_stay_internal():
+    media = [{"source_path": "diagrams/shared.png"},
+             {"source_path": "diagrams/he.png", "language": "he"},
+             {"source_path": "diagrams/en.png", "language": "en"},
+             {"source_path": "sources/private.png", "language": "he"}]
+    assert question_resources.learner_media(media, "he") == media[:2]
+    assert question_resources.learner_media(media, "en") == [media[0], media[2]]
+    assert question_resources.learner_media(media) == media[:3]

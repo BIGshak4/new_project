@@ -101,14 +101,14 @@
         "הקלטים הם פולסים בינאריים שכבר סונכרנו ועומדים בזמני הכנה והחזקה; המערכת אינה מטפלת כאן ברטט של לחצנים פיזיים.",
         "דוגמים בחזית עולה; הפלט הוא האוגר לאחר החזית. איפוס סינכרוני פעיל בגבוה גובר על כל לחיצה ומחזיר ל־00.",
         "בהגעה שנדגמת באותה חזית בוחרים מסלול 1 לפני 2 לפני 3; זו מדיניות שהוספנו ולא נתון במקור.",
-        "00 מסמן שאין זוכה; 01,10,11 הם מסלולים 1,2,3. הכיתוב rest במקור מפורש כאיפוס rst.",
+        "00 מסמן שאין זוכה; 01,10,11 הם מסלולים 1,2,3. rest במקור, rst בנוסח ו־REST בשרטוט מציינים אותה כניסת איפוס.",
         "אין אפשרות להסיק משלושת הפולסים את סדרם הכרונולוגי של אירועים שונים בין אותן שתי חזיתות."
       ],
       "en": [
         "Inputs are binary pulses already synchronized and meeting setup/hold requirements; physical button debouncing is outside this circuit.",
         "Sample at rising edges; output is the stored value after the edge. Synchronous active-high reset overrides every finish pulse and establishes 00.",
         "Same-edge ties use lane 1 before 2 before 3; this is an added policy, not a source fact.",
-        "00 means no winner; 01,10,11 identify lanes 1,2,3. Source spelling rest is interpreted as reset rst.",
+        "00 means no winner; 01,10,11 identify lanes 1,2,3. Source rest, question rst and diagram REST name the same reset input.",
         "The three sampled pulses cannot reveal the continuous-time order of arrivals between the same two edges."
       ]
     },
@@ -130,14 +130,14 @@
       "he": {
         "status": "בדיקות מודל פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
         "method": "אורקל עצמאי סורק את היסטוריית הדגימות מאז האיפוס האחרון ובוחר את זוג החזית והמסלול המינימלי. נבדקו גם משוואות בוליאניות ואינווריאנטים.",
-        "coverage": "64 מעברי מצב/קלט/איפוס; 299,593 רצפי פולסים באורכים 0–6; 69,905 רצפי פולסים ואיפוס באורכים 0–4; החזקת זוכה 100 מחזורים.",
+        "coverage": "64 מעברי מצב/קלט/איפוס; 299,593 רצפי פולסים באורכים 0–6; 69,905 רצפי פולסים ואיפוס באורכים 0–4; החזקת זוכה 100 מחזורים. ארבע שורות האמת של אפשור NOR ועדיפות איפוס גם כשהאפשור אפס.",
         "script_path": "checks/check_prep_045.py",
         "scope": "אין סימולציית HDL, סינתזה, בדיקת CDC או מדידת חומרה; קוד SystemVerilog צורף כמימוש מוצע."
       },
       "en": {
         "status": "Python-model checks passed; independent expert review remains pending.",
         "method": "Independent oracle scans sampled history since the latest reset and selects the smallest arrival-edge/lane pair. Boolean equations and invariants were also checked.",
-        "coverage": "64 state/input/reset transitions; 299,593 pulse streams of lengths 0–6; 69,905 pulse/reset streams of lengths 0–4; a 100-cycle locked hold.",
+        "coverage": "64 state/input/reset transitions; 299,593 pulse streams of lengths 0–6; 69,905 pulse/reset streams of lengths 0–4; a 100-cycle locked hold. Four NOR-enable truth rows and reset overriding disabled loading.",
         "script_path": "checks/check_prep_045.py",
         "scope": "No HDL simulation, synthesis, CDC verification or physical measurements; SystemVerilog is supplied as a proposed implementation."
       }
@@ -149,7 +149,8 @@
         "לחיצה מאוחרת במסלול בעל עדיפות גבוהה אינה מחליפה זוכה שכבר נשמר.",
         "כל שמונת צירופי הלחצנים מוגדרים; לחיצות באותה חזית נפתרות בעדיפות 1 ואז 2 ואז 3.",
         "איפוס בחזית עם לחיצות מאפס במקום לבחור זוכה. אם פולס נשאר פעיל בחזית הבאה ללא איפוס, הוא יכול להיבחר אז.",
-        "איפוס אחרי זכייה מאפשר למירוץ הבא לבחור זוכה אחר; בלי חזית איפוס אין הבטחת מצב התחלה בחומרה."
+        "איפוס אחרי זכייה מאפשר למירוץ הבא לבחור זוכה אחר; בלי חזית איפוס אין הבטחת מצב התחלה בחומרה.",
+        "גם כשהזוכה השמור שונה מאפס ו־EN=0, REST=1 מאפס בחזית; לאחר האיפוס EN חוזר ל־1."
       ],
       "en": [
         "After reset, no pulses keep output 00.",
@@ -157,7 +158,8 @@
         "A later higher-priority pulse cannot replace an already stored winner.",
         "All eight pulse combinations are defined; same-edge ties resolve as 1 then 2 then 3.",
         "Reset at an edge with pulses clears instead of selecting. A pulse still active at a later nonreset edge can then be selected.",
-        "Reset after a win allows another race to choose a different lane; hardware initialization requires a reset edge."
+        "Reset after a win allows another race to choose a different lane; hardware initialization requires a reset edge.",
+        "Even with a nonzero stored winner and EN=0, REST=1 clears at an edge; enable becomes one after reset."
       ]
     },
     "common_mistakes": {
@@ -167,7 +169,8 @@
         "שימוש ב־OR של קודי מסלולים בלי להגדיר תיקו: למשל מסלולים 1 ו־2 עלולים להיראות בטעות כמסלול 3.",
         "סימון 00 כמסלול 1 ואז שימוש באפס כדי לזהות שאין זוכה.",
         "השמטת עדיפות האיפוס או טענה שסדר if משחזר את זמן ההגעה האמיתי בתוך מחזור.",
-        "הנחה שלחצן פיזי מסונכרן, נקי מרטט או בטוח ממטא־יציבות בלי טיפול מתאים."
+        "הנחה שלחצן פיזי מסונכרן, נקי מרטט או בטוח ממטא־יציבות בלי טיפול מתאים.",
+        "בלבול בין NOR על שני ביטי הזוכה לבין העברת הקוד או היפוך כל ביט בנפרד; חסימת האיפוס כשהאפשור אפס."
       ],
       "en": [
         "Using only a combinational encoder, losing output when the pulse ends and allowing later changes.",
@@ -175,12 +178,13 @@
         "OR-ing lane codes without a tie policy: lanes 1 and 2 can incorrectly look like lane 3.",
         "Encoding lane 1 as 00 while also using zero to mean no winner.",
         "Omitting reset priority or claiming if-order reconstructs physical arrival time within a cycle.",
-        "Assuming a physical switch is synchronized, debounced or metastability-free without suitable conditioning."
+        "Assuming a physical switch is synchronized, debounced or metastability-free without suitable conditioning.",
+        "Confusing the one-bit NOR of the two winner bits with pass-through or bitwise inversion; blocking reset when enable is zero."
       ]
     },
     "interview_answer": {
-      "he": "אשמור קוד זוכה באוגר בן שני ביטים: 00 פירושו שאין זוכה. מקודד עדיפות מציע את מסלול הפולס הנוכחי, ורק כשקוד הזוכה אפס אטען אותו לאוגר. אחרי שנשמר קוד שונה מאפס אחזיק אותו עד איפוס. אגדיר מראש מה עושים בלחיצות באותה חזית; כאן 1 קודם ל־2 ול־3. איפוס סינכרוני גובר על הלחצנים. זה בוחר את ההגעה הראשונה שנדגמה ואינו משחזר סדר בתוך מחזור.",
-      "en": "Store a two-bit winner code with 00 meaning none. A priority encoder proposes the current lane, and the register accepts it only while its stored code is zero. Once nonzero, hold until reset. Define same-edge tie behavior explicitly; here lane 1 precedes 2 and 3. Synchronous reset overrides finish pulses. This selects the first sampled arrival, not subcycle chronological order."
+      "he": "מקודד עדיפות מפיק קוד מועמד בן שני ביטים. אשמור אותו באוגר שהאפשור שלו הוא NOR של שני ביטי הזוכה: EN=NOT(Q1 OR Q0). רק כשהזוכה 00 האוגר טוען מועמד בחזית; אחרי זכייה האפשור אפס והאוגר מחזיק. איפוס סינכרוני REST גובר גם על EN=0 ומחזיר ל־00. נגדיר תיקו באותה דגימה במפורש; כאן מסלול 1 קודם ל־2 ול־3. אין הכרעה בסדר הגעה בתוך מחזור.",
+      "en": "A priority encoder produces a two-bit candidate. Store it in a register enabled by the NOR of the stored winner bits: EN=NOT(Q1 OR Q0). A zero winner permits loading at an edge; a winner disables loading and holds. Synchronous REST overrides even EN=0 and clears to 00. Define same-edge ties explicitly; here lane 1 precedes 2 and 3. Subcycle ordering is not resolved."
     },
     "solution_extensions": {
       "he": {

@@ -279,7 +279,8 @@ class PracticeService:
         if language not in question.translations:
             language = "en" if "en" in question.translations else next(iter(question.translations))
         assets = question.assets
-        media = [m for m in learner_media(assets.get("bank_media", [])) if m.get("role") == "prompt" or revealed]
+        media = [m for m in learner_media(assets.get("bank_media", []), language)
+                 if m.get("role") == "prompt" or revealed]
         settings = get_settings()
         return QuestionResources(
             media=await sign_media(media, settings.supabase_url, settings.supabase_service_role_key),

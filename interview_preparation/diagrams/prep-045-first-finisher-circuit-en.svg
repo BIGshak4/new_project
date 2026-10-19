@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2050 1280"><rect width="100%" height="100%" fill="white"/>
+<text x="1025" y="60" font-family="Arial,sans-serif" font-size="46" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="700">First-finisher storage: explicit NOR and reset</text>
+<text x="1025" y="120" font-family="Arial,sans-serif" font-size="29" fill="#708095" text-anchor="middle" dominant-baseline="central" font-weight="400">Data has two bits. The enable signal has one bit.</text>
+<rect x="300" y="310" width="385" height="370" rx="20" fill="#f0f6ff" stroke="#2563b8" stroke-width="3"/>
+<rect x="1190" y="310" width="380" height="370" rx="20" fill="#eff9f4" stroke="#16806b" stroke-width="3"/>
+<text x="492" y="370" font-family="Arial,sans-serif" font-size="36" fill="#2563b8" text-anchor="middle" dominant-baseline="central" font-weight="700">Select lane</text>
+<text x="492" y="452" font-family="Arial,sans-serif" font-size="32" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">Priority encoder</text>
+<text x="492" y="520" font-family="Arial,sans-serif" font-size="33" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">1 &gt; 2 &gt; 3</text>
+<text x="492" y="594" font-family="Arial,sans-serif" font-size="26" fill="#708095" text-anchor="middle" dominant-baseline="central" font-weight="400">1: 01     2: 10     3: 11</text>
+<text x="124" y="410" font-family="Arial,sans-serif" font-size="35" fill="#2563b8" text-anchor="middle" dominant-baseline="central" font-weight="700">p1</text>
+<polyline points="183,410 300,410" fill="none" stroke="#2563b8" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="300,410 282.7296507561772,417.92054524615503 282.7296507561772,402.07945475384497" fill="#2563b8"/>
+<text x="124" y="500" font-family="Arial,sans-serif" font-size="35" fill="#2563b8" text-anchor="middle" dominant-baseline="central" font-weight="700">p2</text>
+<polyline points="183,500 300,500" fill="none" stroke="#2563b8" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="300,500 282.7296507561772,507.92054524615503 282.7296507561772,492.07945475384497" fill="#2563b8"/>
+<text x="124" y="590" font-family="Arial,sans-serif" font-size="35" fill="#2563b8" text-anchor="middle" dominant-baseline="central" font-weight="700">p3</text>
+<polyline points="183,590 300,590" fill="none" stroke="#2563b8" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="300,590 282.7296507561772,597.920545246155 282.7296507561772,582.079454753845" fill="#2563b8"/>
+<polyline points="685,410 1190,410" fill="none" stroke="#2563b8" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1190,410 1172.729650756177,417.92054524615503 1172.729650756177,402.07945475384497" fill="#2563b8"/>
+<text x="937" y="365" font-family="Arial,sans-serif" font-size="32" fill="#2563b8" text-anchor="middle" dominant-baseline="central" font-weight="400">candidate[1:0]</text>
+<text x="937" y="455" font-family="Arial,sans-serif" font-size="29" fill="#708095" text-anchor="middle" dominant-baseline="central" font-weight="400">Current candidate code</text>
+<text x="1380" y="365" font-family="Arial,sans-serif" font-size="35" fill="#16806b" text-anchor="middle" dominant-baseline="central" font-weight="700">Store winner</text>
+<text x="1220" y="410" font-family="Arial,sans-serif" font-size="29" fill="#16806b" text-anchor="middle" dominant-baseline="central" font-weight="400">D</text>
+<text x="1380" y="470" font-family="Arial,sans-serif" font-size="31" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">Two-bit register</text>
+<text x="1380" y="520" font-family="Arial,sans-serif" font-size="27" fill="#708095" text-anchor="middle" dominant-baseline="central" font-weight="400">REGISTER</text>
+<text x="1230" y="590" font-family="Arial,sans-serif" font-size="29" fill="#be6b13" text-anchor="middle" dominant-baseline="central" font-weight="700">EN</text>
+<text x="1537" y="410" font-family="Arial,sans-serif" font-size="29" fill="#16806b" text-anchor="middle" dominant-baseline="central" font-weight="400">Q</text>
+<text x="1380" y="635" font-family="Arial,sans-serif" font-size="25" fill="#b64b50" text-anchor="middle" dominant-baseline="central" font-weight="400">REST=1: Q_next=00</text>
+<polyline points="1570,410 1910,410" fill="none" stroke="#16806b" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1910,410 1892.729650756177,417.92054524615503 1892.729650756177,402.07945475384497" fill="#16806b"/>
+<text x="1760" y="355" font-family="Arial,sans-serif" font-size="33" fill="#16806b" text-anchor="middle" dominant-baseline="central" font-weight="700">winner[1:0]</text>
+<polyline points="1290,220 1290,310" fill="none" stroke="#708095" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="1290,310 1282.079454753845,292.7296507561772 1297.920545246155,292.7296507561772" fill="#708095"/>
+<text x="1290" y="186" font-family="Arial,sans-serif" font-size="31" fill="#708095" text-anchor="middle" dominant-baseline="central" font-weight="400">clk</text>
+<polyline points="1470,220 1470,310" fill="none" stroke="#b64b50" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="1470,310 1462.079454753845,292.7296507561772 1477.920545246155,292.7296507561772" fill="#b64b50"/>
+<text x="1470" y="186" font-family="Arial,sans-serif" font-size="33" fill="#b64b50" text-anchor="middle" dominant-baseline="central" font-weight="700">REST</text>
+<circle cx="1720" cy="410" r="7" fill="#16806b"/>
+<polyline points="1720,410 1720,830 1490,830" fill="none" stroke="#16806b" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1490,830 1507.270349243823,822.079454753845 1507.270349243823,837.920545246155" fill="#16806b"/>
+<text x="1855" y="675" font-family="Arial,sans-serif" font-size="29" fill="#16806b" text-anchor="middle" dominant-baseline="central" font-weight="400">Stored winner</text>
+<rect x="1400" y="740" width="90" height="180" rx="20" fill="#fafbfd" stroke="#708095" stroke-width="3"/>
+<text x="1445" y="705" font-family="Arial,sans-serif" font-size="25" fill="#708095" text-anchor="middle" dominant-baseline="central" font-weight="400">Split into bits</text>
+<text x="1425" y="780" font-family="Arial,sans-serif" font-size="23" fill="#16806b" text-anchor="middle" dominant-baseline="central" font-weight="400">1</text>
+<text x="1425" y="880" font-family="Arial,sans-serif" font-size="23" fill="#16806b" text-anchor="middle" dominant-baseline="central" font-weight="400">0</text>
+<text x="1305" y="745" font-family="Arial,sans-serif" font-size="29" fill="#16806b" text-anchor="middle" dominant-baseline="central" font-weight="700">Q1</text>
+<text x="1305" y="920" font-family="Arial,sans-serif" font-size="29" fill="#16806b" text-anchor="middle" dominant-baseline="central" font-weight="700">Q0</text>
+<path d="M1220 745 C1120 745 1025 760 980 830 C1025 900 1120 915 1220 915 Q1160 830 1220 745 Z" fill="#fff8ec" stroke="#be6b13" stroke-width="4"/>
+<circle cx="968" cy="830" r="12" fill="white" stroke="#be6b13" stroke-width="4"/>
+<text x="1103" y="830" font-family="Arial,sans-serif" font-size="31" fill="#be6b13" text-anchor="middle" dominant-baseline="central" font-weight="700">NOR</text>
+<polyline points="1400,780 1200.4,780" fill="none" stroke="#16806b" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="1200.4,780 1217.670349243823,772.079454753845 1217.670349243823,787.920545246155" fill="#16806b"/>
+<polyline points="1400,880 1200.4,880" fill="none" stroke="#16806b" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="1200.4,880 1217.670349243823,872.079454753845 1217.670349243823,887.920545246155" fill="#16806b"/>
+<polyline points="956,830 820,830 820,590 1190,590" fill="none" stroke="#be6b13" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1190,590 1172.729650756177,597.920545246155 1172.729650756177,582.079454753845" fill="#be6b13"/>
+<text x="1050" y="548" font-family="Arial,sans-serif" font-size="31" fill="#be6b13" text-anchor="middle" dominant-baseline="central" font-weight="700">EN</text>
+<text x="922" y="878" font-family="Arial,sans-serif" font-size="24" fill="#be6b13" text-anchor="middle" dominant-baseline="central" font-weight="400">One bit</text>
+<rect x="280" y="760" width="410" height="290" rx="20" fill="#fafbfd" stroke="#708095" stroke-width="3"/>
+<text x="485" y="805" font-family="Arial,sans-serif" font-size="27" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="700">Enable truth table</text>
+<text x="365" y="855" font-family="Arial,sans-serif" font-size="26" fill="#16806b" text-anchor="middle" dominant-baseline="central" font-weight="700">Q1</text>
+<text x="485" y="855" font-family="Arial,sans-serif" font-size="26" fill="#16806b" text-anchor="middle" dominant-baseline="central" font-weight="700">Q0</text>
+<text x="605" y="855" font-family="Arial,sans-serif" font-size="26" fill="#be6b13" text-anchor="middle" dominant-baseline="central" font-weight="700">EN</text>
+<text x="365" y="900" font-family="Arial,sans-serif" font-size="28" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">0</text>
+<text x="485" y="900" font-family="Arial,sans-serif" font-size="28" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">0</text>
+<text x="605" y="900" font-family="Arial,sans-serif" font-size="28" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">1</text>
+<text x="365" y="945" font-family="Arial,sans-serif" font-size="28" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">0</text>
+<text x="485" y="945" font-family="Arial,sans-serif" font-size="28" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">1</text>
+<text x="605" y="945" font-family="Arial,sans-serif" font-size="28" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">0</text>
+<text x="365" y="990" font-family="Arial,sans-serif" font-size="28" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">1</text>
+<text x="485" y="990" font-family="Arial,sans-serif" font-size="28" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">0</text>
+<text x="605" y="990" font-family="Arial,sans-serif" font-size="28" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">0</text>
+<text x="365" y="1035" font-family="Arial,sans-serif" font-size="28" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">1</text>
+<text x="485" y="1035" font-family="Arial,sans-serif" font-size="28" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">1</text>
+<text x="605" y="1035" font-family="Arial,sans-serif" font-size="28" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">0</text>
+<text x="1260" y="1004" font-family="Arial,sans-serif" font-size="32" fill="#be6b13" text-anchor="middle" dominant-baseline="central" font-weight="700">EN = NOT(Q1 OR Q0)</text>
+<text x="1260" y="1054" font-family="Arial,sans-serif" font-size="27" fill="#16806b" text-anchor="middle" dominant-baseline="central" font-weight="400">Q1 = winner[1]     Q0 = winner[0]</text>
+<text x="1025" y="1142" font-family="Arial,sans-serif" font-size="32" fill="#b64b50" text-anchor="middle" dominant-baseline="central" font-weight="700">REST = 1  =&gt;  Q_next = 00</text>
+<text x="1025" y="1205" font-family="Arial,sans-serif" font-size="29" fill="#24334b" text-anchor="middle" dominant-baseline="central" font-weight="400">Reset overrides enable, including EN=0. Update on a rising clock edge.</text>
+</svg>

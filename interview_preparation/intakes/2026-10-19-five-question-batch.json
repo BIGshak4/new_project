@@ -166,5 +166,24 @@
     "workflow": "success",
     "workflow_url": "https://github.com/BIGshak4/new_project/actions/runs/39225939897"
   },
-  "live_browser_limitation": "No connected Chrome surface or signed-in tab available; isolated fixture UI checks only."
+  "live_browser_limitation": "No connected Chrome surface or signed-in tab available; isolated fixture UI checks only.",
+  "revisions": [
+    {
+      "question_id": "PREP-045",
+      "change": "Approved explicit NOR, one-bit enable and reset-priority schematic; bilingual explanation and localized media.",
+      "diagram_he": "diagrams/prep-045-first-finisher-circuit.png",
+      "diagram_en": "diagrams/prep-045-first-finisher-circuit-en.png",
+      "prompts_and_hints_unchanged": true,
+      "other_archive_records_unchanged": 47,
+      "qa": {
+        "backend_tests_passed": 96,
+        "web_tests_passed": 234,
+        "browser_checks_passed": 35,
+        "browser_screenshots": 16
+      },
+      "database_status": "pending_scoped_update",
+      "authenticated_live_clicks_performed": false,
+      "hdl_simulation_performed": false
+    }
+  ]
 }
