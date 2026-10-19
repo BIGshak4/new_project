@@ -123,9 +123,20 @@ class StreamLimits:
         client = scope.get("client") or ("?", 0)
         return str(client[0])
 
+    @staticmethod
+    def _credential(scope) -> bytes:
+        """The first Authorization header, normalised: surrounding space dropped, the scheme lower-cased. Keying on
+        the raw bytes let one token count as several buckets ("Bearer x", "bearer x", "Bearer x ") and a duplicated
+        header be read differently from the authenticator (review finding, 2026-10-19)."""
+        for name, value in scope.get("headers", []):
+            if name.lower() == b"authorization":
+                value = value.strip()
+                scheme, _, credential = value.partition(b" ")
+                return scheme.lower() + b" " + credential.strip() if credential else value.lower()
+        return b""
+
     def _caller(self, scope) -> str:
-        headers = {k.decode("latin-1").lower(): v for k, v in scope.get("headers", [])}
-        token = headers.get(b"authorization".decode(), b"")
+        token = self._credential(scope)
         if token:
             return "t:" + hashlib.sha256(token).hexdigest()[:16]
         return "a:" + self._network(scope)
@@ -135,11 +146,21 @@ class StreamLimits:
         if limit <= 0:
             return False
         now = time.monotonic()
+        cutoff = now - 60
         stamps = self._buckets.setdefault(caller, deque())
         self._buckets.move_to_end(caller)
-        while len(self._buckets) > MAX_RATE_LIMIT_BUCKETS:
-            self._buckets.popitem(last=False)  # fresh entries are bounded too, not only expired entries
-        cutoff = now - 60
+        if len(self._buckets) > MAX_RATE_LIMIT_BUCKETS:
+            # Pure LRU let a caller rotating identities flush every other caller's count and restart their windows
+            # (review finding, 2026-10-19). Eviction order: expired buckets, then the least recently seen one-request
+            # bucket (a churner's identities are exactly that), and only then the least recently seen live one.
+            for key in [k for k, v in self._buckets.items() if k != caller and (not v or v[-1] < cutoff)][:1000]:
+                del self._buckets[key]
+            while len(self._buckets) > MAX_RATE_LIMIT_BUCKETS:
+                victim = next((k for k, v in self._buckets.items() if k != caller and len(v) <= 1), None)
+                if victim is None:
+                    self._buckets.popitem(last=False)
+                else:
+                    del self._buckets[victim]
         while stamps and stamps[0] < cutoff:
             stamps.popleft()
         if len(stamps) >= limit:
@@ -155,6 +176,10 @@ class StreamLimits:
         if not cheap_health and (
                 self._over_limit("n:" + self._network(scope), NETWORK_RATE_LIMIT_PER_MINUTE)
                 or self._over_limit(self._caller(scope))):
+            # the peer address is logged on a refusal only: it is what tells whether the hosting proxy hands us real
+            # client addresses or one shared one (every user in one 1,800/min bucket), which no other line records
+            logging.getLogger("app").warning("rate limit: peer=%s caller=%s path=%s", self._network(scope),
+                                             self._caller(scope)[:2], str(scope.get("path", ""))[:80].replace("\n", " "))
             response = JSONResponse({"error": {"code": "usage_limit", "message": "too many requests; slow down for a minute"}},
                                     status_code=429, headers={"Retry-After": "60"})
             return await response(scope, receive, send)
@@ -255,11 +280,18 @@ async def _database_round_trip() -> dict:
         return value
 
 
+def health_detail_allowed(settings, header_value: str | None) -> bool:
+    """Without a configured key everyone sees the detail (as before); with one, only a caller who sends it."""
+    return not settings.health_key or header_value == settings.health_key
+
+
 @app.get("/health", tags=["ops"])
-async def health(db_check: bool = False) -> dict:
-    """`?db_check=true` also measures one database round trip (cached 10 s)."""
+async def health(request: Request, db_check: bool = False) -> dict:
+    """`?db_check=true` also measures one database round trip (cached 10 s). With HEALTH_KEY set, the environment,
+    model and pool detail need the `X-Health-Key` header; anonymous callers get status, build and provider."""
     settings = get_settings()
     runtime = getattr(app.state, "runtime", None)
+    detailed = health_detail_allowed(settings, request.headers.get("X-Health-Key"))
     # Render supplies the public Git revision. Restrict the shape so deployment
     # verification cannot accidentally expose arbitrary environment content.
     revision = os.environ.get("RENDER_GIT_COMMIT", "")
@@ -272,6 +304,8 @@ async def health(db_check: bool = False) -> dict:
             "allowed_origins": len(settings.allowed_origins), "store": runtime.store_kind if runtime else None,
             "models": {"evaluator": settings.anthropic_model, **settings.role_models} if settings.llm_provider == "anthropic" else None,
             "answer_images": "assessed" if settings.supabase_service_role_key and settings.supabase_url else "stored_only"}
+    if not detailed:
+        body = {k: body[k] for k in ("status", "engine_version", "source_revision", "llm_provider") if k in body}
     if db_check and runtime is not None and runtime.store_kind == "database":
         try:
             body["database"] = await _database_round_trip()

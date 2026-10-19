@@ -42,13 +42,15 @@ def line(s: dict) -> str:
     level = (s["level"] or {}).get("en", "too early") if s["level"] else "too early"
     # the gradient is shown only once the word is meaningful (10 relevant answers); before that it misleads
     gradient = "—" if s["gradient"] is None or s["improvement"] == "too_early" else f"{s['gradient']:+.1f}/10 answers"
-    return f"  {s['label']['en']:26} {level:16} {s['improvement']:18} answers={s['answers']:<3} {gradient}"
+    counts = f"answers={s['answers']:<3} (gradient on {s.get('gradient_answers', 0)})"
+    return f"  {s['label']['en']:26} {level:16} {s['improvement']:18} {counts} {gradient}"
 
 
 async def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--user", type=uuid.UUID, help="one user id; default: every user with scored answers")
-    parser.add_argument("--json", type=Path, help="also write the full result here")
+    parser.add_argument("--json", type=Path, help="also write the full result here (a bare file name lands in backend/workdir/, "
+                                                   "which git ignores: the file holds user ids)")
     args = parser.parse_args()
     runtime = build_runtime(get_settings())            # the API's own wiring: database store, read through the same service
     practice = runtime.practice
@@ -70,8 +72,10 @@ async def main() -> None:
                 print("  hard skills with a gradient: " + ", ".join(f"{k} {g['gradient']:+.1f}/10 ({g['improvement']})"
                                                                     for k, g in sorted(judged.items())))
         if args.json:
-            args.json.write_text(json.dumps(results, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
-            print(f"\nwritten: {args.json}")
+            target = args.json if args.json.parent != Path(".") else Path(__file__).resolve().parent.parent / "workdir" / args.json
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(json.dumps(results, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
+            print(f"\nwritten: {target}")
     finally:
         await runtime.aclose()
         await dispose()

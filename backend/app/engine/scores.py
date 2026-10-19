@@ -404,7 +404,7 @@ def related_to_question(evaluation, *, flags=()) -> bool:
     Read from what the judge already returns, nothing is re-judged: an empty answer; the judge's own
     `answered_different_question` signal with a low correctness; or a near-zero correctness with no key point hit.
     The band, the evidence and the feedback are untouched by this; only the XP formula multiplies by 0."""
-    if "empty_answer" in flags:
+    if "empty_answer" in (flags or ()):
         return False
     if evaluation is None:
         return True

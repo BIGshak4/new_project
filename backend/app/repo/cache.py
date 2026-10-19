@@ -21,6 +21,7 @@ class TTLCache[T]:
         self.seconds = seconds
         self.max_entries = max_entries
         self._entries: OrderedDict[object, tuple[float, T]] = OrderedDict()
+        self._generation = 0                 # bumped by invalidate(): a load that started before it must not store
 
     async def get(self, key: object, load: Callable[[], Awaitable[T]]) -> T:
         entry = self._entries.get(key)
@@ -28,7 +29,10 @@ class TTLCache[T]:
         if entry is not None and now - entry[0] < self.seconds:
             self._entries.move_to_end(key)
             return entry[1]
+        generation = self._generation
         value = await load()
+        if generation != self._generation:   # invalidated while loading (a member added, a question reloaded): serve, don't keep
+            return value
         # A question ID is caller-controlled, including IDs that do not exist.
         # Expiry alone did not remove those entries: bound fresh misses as well
         # as discarding expired ones, so UUID churn cannot grow memory forever.
@@ -52,6 +56,7 @@ class TTLCache[T]:
         return None
 
     def invalidate(self, key: object | None = None) -> None:
+        self._generation += 1
         if key is None:
             self._entries.clear()
         else:

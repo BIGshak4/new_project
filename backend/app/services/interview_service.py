@@ -260,11 +260,13 @@ class InterviewService:
                     log.exception("could not record the failed evaluation of interview %s", row["id"])
                 raise
             evaluation = outcome.evaluation
+            # the judge's own output decides relatedness (as in practice), not the check-adjusted scores; and it is
+            # decided before the metrics row copies the flags, so the row and the turn agree (review, 2026-10-19)
+            if not scores.related_to_question(result.evaluation, flags=result.flags):
+                result.flags = [*result.flags, scores.OFF_TOPIC_FLAG]
             metrics = {**outcome.metrics, "evaluator_model": result.model, "evaluator_version": result.prompt_version,
                        "eval_latency_ms": result.latency_ms, "eval_flags": list(result.flags)}
             wrapper = row["state"]
-            if not scores.related_to_question(evaluation, flags=result.flags):
-                result.flags = [*result.flags, scores.OFF_TOPIC_FLAG]
             wrapper["metrics"].append(metrics)
             notes = wrapper["notes"].setdefault(question.primary_skill, {"hit": [], "missed": []})
             notes["hit"].extend(evaluation.key_points_hit[:3])
@@ -642,7 +644,8 @@ class InterviewService:
             status=self._effective_status(meta), hints=[HintView(**h) for h in meta.get("hints", [])],
             answer=turn.get("answer_text"), asked_at=turn.get("asked_at") or turn.get("created_at"),
             visual=VisualAnswer.model_validate(meta["answer_visual"]) if meta.get("answer_visual") else None,
-            flags=[f for f in meta.get("flags", []) if isinstance(f, str)],
+            # the "did not address the question" verdict is a result: hidden with the band until the results are revealed
+            flags=[f for f in meta.get("flags", []) if isinstance(f, str) and (revealed or f != scores.OFF_TOPIC_FLAG)],
             answered_at=turn.get("answer_submitted_at"),
             band=meta.get("band") if revealed else None, summary=meta.get("summary") if revealed else None,
             key_points_hit=meta.get("key_points_hit", []) if revealed else [],
@@ -651,7 +654,7 @@ class InterviewService:
                             mismatches=list(check.get("mismatches") or [])[:8]) if revealed and check else None,
             action_after=meta.get("action_after") if revealed else None,
             subject_switch=bool(meta.get("subject_switch", False)),
-            related=scores.OFF_TOPIC_FLAG not in (meta.get("flags") or []),
+            related=(scores.OFF_TOPIC_FLAG not in (meta.get("flags") or [])) if revealed else True,
             xp_earned=(xp.answer_xp(meta["band"], difficulty=turn["difficulty"], hints_seen=int(meta.get("hint_level") or 0),
                                     interview=True, related=scores.OFF_TOPIC_FLAG not in (meta.get("flags") or []))
                        if revealed and meta.get("status") == "done" and meta.get("band") else None))

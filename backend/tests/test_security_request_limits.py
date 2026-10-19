@@ -13,10 +13,11 @@ from app import main
 
 
 async def test_health_exposes_only_a_valid_public_deployment_revision(monkeypatch):
+    anonymous = SimpleNamespace(headers={})                      # no X-Health-Key (the route takes the request since 2026-10-19)
     monkeypatch.setenv("RENDER_GIT_COMMIT", "a" * 40)
-    assert (await main.health())["source_revision"] == "a" * 40
+    assert (await main.health(anonymous))["source_revision"] == "a" * 40
     monkeypatch.setenv("RENDER_GIT_COMMIT", "not-a-public-commit")
-    assert (await main.health())["source_revision"] is None
+    assert (await main.health(anonymous))["source_revision"] is None
 
 
 async def respond_ok(scope, receive, send):

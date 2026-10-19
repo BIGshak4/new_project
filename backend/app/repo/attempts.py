@@ -274,7 +274,7 @@ async def scored_submissions(connection: AsyncConnection, user_id: uuid.UUID, *,
     here that the engine does not already store."""
     attempt, submission, question = await db.table("attempt"), await db.table("attempt_submission"), await db.table("question")
     conditions = [attempt.c.user_id == user_id, submission.c.status == "done", submission.c.band.is_not(None),
-                  ~submission.c.flags.contains(["content_review_pending"])]
+                  ~submission.c.flags.contains(["content_review_pending"]), ~submission.c.flags.contains(["superseded"])]
     if days is not None:
         conditions.append(submission.c.accepted_at >= datetime.now(UTC) - timedelta(days=days))
     rows = (await connection.execute(
@@ -297,7 +297,7 @@ async def evidence_rows(connection: AsyncConnection, user_id: uuid.UUID, *, days
         select(submission.c.accepted_at, submission.c.evaluation, submission.c.flags, submission.c.turn, question.c.key)
         .join(attempt, attempt.c.id == submission.c.attempt_id).join(question, question.c.id == attempt.c.question_id)
         .where(attempt.c.user_id == user_id, submission.c.status == "done", submission.c.band.is_not(None),
-               submission.c.evaluation.is_not(None),
+               submission.c.evaluation.is_not(None), ~submission.c.flags.contains(["superseded"]),
                submission.c.accepted_at >= datetime.now(UTC) - timedelta(days=days))
         .order_by(submission.c.accepted_at))).all()
     return [{"at": r.accepted_at, "evaluation": r.evaluation or {}, "flags": list(r.flags or []), "turn": int(r.turn or 0),

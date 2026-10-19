@@ -11,7 +11,7 @@ service hands in the evidence, nothing is written. The hard skills' gradient com
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 SOFT_SKILLS: dict[str, dict[str, str]] = {
     "analytical_reasoning": {"en": "Analytical reasoning", "he": "חשיבה אנליטית"},
@@ -71,6 +71,7 @@ class SoftSkillAssessment:
     improvement_per_week: str              # the same words from the per-week slope (needs 8 answers over 7 days)
     span_days: int
     latest_at: datetime | None
+    gradient_answers: int = 0              # relevant answers inside the gradient window (the count the word rests on)
 
 
 def _f(value) -> float | None:
@@ -203,8 +204,8 @@ def assess(evidence: list[Evidence], now: datetime | None = None) -> list[SoftSk
             if value is not None:
                 scored.append((_aware(ev.at), value))
         scored.sort(key=lambda p: p[0])
-        in_slope = [(at, v) for at, v in scored if (now - at).days <= SLOPE_WINDOW_DAYS]
-        in_level = [(at, v) for at, v in in_slope if (now - at).days <= LEVEL_WINDOW_DAYS]
+        in_slope = [(at, v) for at, v in scored if now - at < timedelta(days=SLOPE_WINDOW_DAYS)]     # strict, like "expired"
+        in_level = [(at, v) for at, v in in_slope if now - at < timedelta(days=LEVEL_WINDOW_DAYS)]
         mean = rank = level = None
         if len(in_level) >= MIN_ANSWERS_FOR_LEVEL:
             weights = [fade((now - at).total_seconds() / 86400) for at, _ in in_level]
@@ -221,7 +222,7 @@ def assess(evidence: list[Evidence], now: datetime | None = None) -> list[SoftSk
                                        improvement=gradient_key(gradient, len(in_slope)),
                                        slope_per_week=None if slope is None else round(slope, 2),
                                        improvement_per_week=improvement_key(slope, len(in_slope), span), span_days=span,
-                                       latest_at=in_slope[-1][0] if in_slope else None))
+                                       latest_at=in_slope[-1][0] if in_slope else None, gradient_answers=len(in_slope)))
     return out
 
 
@@ -238,7 +239,7 @@ def hard_skill_gradient(level_history: dict[str, list[dict]], now: datetime | No
             if at is None or level is None:
                 continue
             stamp = _aware(datetime.fromisoformat(at) if isinstance(at, str) else at)
-            if (now - stamp).days <= SLOPE_WINDOW_DAYS:
+            if now - stamp < timedelta(days=SLOPE_WINDOW_DAYS):
                 points.append((stamp, float(level) / 5))
         points.sort(key=lambda p: p[0])
         span = (points[-1][0] - points[0][0]).days if len(points) >= 2 else 0
@@ -257,10 +258,12 @@ def overall_improvement(soft: list[SoftSkillAssessment], hard: dict[str, dict], 
     (hard skills by their plan weight, the seven soft skills sharing the same total as one plan). None of it reaches
     a screen."""
     pairs: list[tuple[float, float]] = []
-    total_hard = sum(weights.get(k, 0.0) for k, g in hard.items() if g["improvement"] != "too_early") or 1.0
-    for key, g in hard.items():
-        if g["improvement"] != "too_early":
-            pairs.append((weights.get(key, 0.0) / total_hard, g["gradient"]))
+    # a skill outside the current plan (a job type changed since) has weight 0 and does not count; without this a
+    # judged ghost skill made the weights sum to zero (review finding, 2026-10-19)
+    judged_hard = {k: g for k, g in hard.items() if g["improvement"] != "too_early" and weights.get(k, 0.0) > 0}
+    total_hard = sum(weights[k] for k in judged_hard)
+    for key, g in judged_hard.items():
+        pairs.append((weights[key] / total_hard, g["gradient"]))
     judged_soft = [s for s in soft if s.improvement != "too_early"]
     for s in judged_soft:
         pairs.append((1.0 / len(judged_soft), s.gradient))

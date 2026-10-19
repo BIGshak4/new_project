@@ -37,6 +37,9 @@ class Settings(BaseSettings):
     # Server-only key that lets the evaluator read the photos a candidate attached (private bucket
     # practice-answer-images). Without it, answers with photos are stored but the photos are not judged.
     supabase_service_role_key: str | None = None
+    # when set, /health shows the environment, model ids and pool detail only to a caller sending X-Health-Key;
+    # anonymous callers get status, build and provider (review finding, 2026-10-19). Unset: the full body, as before.
+    health_key: str | None = None
     # Only e-mails listed in Harel's jr_members table may use the practice API during the pilot.
     require_pilot_membership: bool = True
 

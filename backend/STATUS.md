@@ -5,7 +5,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-10-18 (no XP for an unrelated answer §5zo; Harel's pushes checked §5zn) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
+**Last updated:** 2026-10-19 (night full check §5zq) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
 
 ---
 
@@ -1171,6 +1171,28 @@ quickly, flat → steady, declining → slipping, old answers fall out of the le
 overall word, both languages, and a service flow that reads six stored answers and confirms the progress view has
 no such field. Offline suite.
 
+## 5zq. Full check, night of 18–19 October (Shaked: "run a full verification and do code review and profiling")
+
+Report: `docs/full-check-2026-10-19.md`. Everything since the evening check of the 15th (33 commits: Harel's
+security pass and interface tasks, no XP for unrelated answers, the soft skills and the gradient). Verification all
+green (992 offline + 9 skipped, 21 live, both real-model database scripts, the in-memory flow, 234 web tests, 56
+harness shots, 50-user load clean, production smoke). Five reviewers; eleven backend fixes with regression tests:
+the rate limiter's eviction (expired first, then one-request buckets, so a churner cannot flush live callers) and
+its key (the first `Authorization` header, normalised), a cache invalidation lost during an in-flight load, the
+overall gradient's division by zero for a skill outside the plan, strict 49/180-day windows and the gradient's own
+count, superseded revisions out of the XP and evidence readers, the interview's relatedness judged on the raw
+evaluation before the metrics row and hidden until the results are revealed, a None flags list, 202 for a replayed
+in-flight interview answer, and `/health` detail behind `HEALTH_KEY` when set (anonymous: status, build, provider).
+A refused request now logs the peer address so the Render proxy question can be answered from the log. Accepted:
+the shared NAT budget, the storage trigger's lock order (a migration, Shaked's approval), the cache's missing single
+flight. For Harel: `docs/harel-todo-2026-10-18.md` updated with done / not done and three new items (numbers shown
+as percentages in the interview report, an English-only solution that would spin, the password cleared on the
+first auth event).
+
+**For Shaked, two switches on Render when convenient:** `HEALTH_KEY=<a long random string>` to hide the health
+detail from anonymous callers (then `curl -H "X-Health-Key: …" …/health` for the full body); and after the first
+429 appears in the log, read its `peer=` to confirm the proxy hands over real client addresses.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1209,6 +1231,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-19 | Night full check (§5zq, `docs/full-check-2026-10-19.md`): five-lens review, eleven fixes (limiter eviction and key, cache invalidation during a load, the gradient's zero weights and strict windows, superseded revisions, the interview's relatedness and 202 replay, `/health` detail behind `HEALTH_KEY`) |
 | 2026-10-18 | Soft skills and the improvement gradient as backend-only data: `app/engine/soft_skills.py`, `PracticeService.soft_skills`, `scripts/soft_skills_report.py`; no route, no screen (§5zp) |
 | 2026-10-18 | An answer unrelated to the question earns no XP: `related` on each scored answer, read from the judge's own output, `× 0` with no floor in the formula; band, feedback and evidence unchanged (§5zo). Harel's pushes of 16–18 October checked (§5zn) |
 | 2026-10-15 | Evening full check (§5zm, `docs/full-check-2026-10-15b.md`): five-lens review, thirteen fixes (persist under the user lock, the by-skill tick, relinked done items, the savepoint, the router's reserved days and forced deep, the seed loader, wording, one goal read less) |

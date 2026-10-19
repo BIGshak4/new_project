@@ -113,6 +113,9 @@ async def answer(interview_id: InterviewId, turn_index: Annotated[int, Path(ge=0
                            status=503) from None
         body_out = InterviewAnswerResponse(turn=pending, interview=interview)
         return JSONResponse(body_out.model_dump(mode="json"), status_code=status.HTTP_202_ACCEPTED)
+    if turn.status == "evaluating":                      # the same key replayed while another worker evaluates: poll
+        return JSONResponse(InterviewAnswerResponse(turn=turn, interview=interview).model_dump(mode="json"),
+                            status_code=status.HTTP_202_ACCEPTED)
     return InterviewAnswerResponse(turn=turn, interview=interview)
 
 
