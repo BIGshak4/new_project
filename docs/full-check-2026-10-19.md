@@ -16,7 +16,7 @@ checks of his pushes.
 | Real model and database | `scripts/e2e_goal_and_visuals.py`, `scripts/e2e_live_trial.py` | both pass, rolled back (46 s and 82 s) |
 | Web app (run only, Harel's) | `npm test`, `tsc` | **234 of 234**, clean |
 | Every screen | the harness, both languages, 1280 and 390 px | **56 shots, no overflow**; LCP median 176 ms at 1280, 144 ms at 390; the four sign-in shots still skipped (his item 7) |
-| Production | `/health`, `scripts/smoke_http.py` (29 routes) | healthy on `091b7d4`, all routes pass before the fixes PENDING_SMOKE_AFTER |
+| Production | `/health`, `scripts/smoke_http.py` (29 routes) | healthy on `091b7d4` before the fixes and on `f9f450b` after them, all routes pass both times; the health body is still the full one until `HEALTH_KEY` is set on Render |
 
 ## 2. Profiling
 
