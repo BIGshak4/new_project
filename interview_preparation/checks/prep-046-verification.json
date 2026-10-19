@@ -1,0 +1,21 @@
+{
+  "question_id": "PREP-046",
+  "status": "passed",
+  "counts": {
+    "candidate_subsets": 1024,
+    "shuffled_orders": 200,
+    "month_relabellings": 24,
+    "day_relabellings": 720,
+    "duplicate_guard": 1
+  },
+  "total_cases": 1969,
+  "stage_sizes": [
+    10,
+    5,
+    3,
+    1
+  ],
+  "final_date_day_month": "16/07",
+  "oracle": "Explicit indistinguishable possible-world sets for each public statement",
+  "scope": "Finite-model verification under truthful/common-knowledge assumptions; not professional review or live-site clicking"
+}

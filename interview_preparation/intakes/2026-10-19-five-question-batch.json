@@ -1,0 +1,142 @@
+{
+  "received_on": "2026-10-19",
+  "questions": [
+    {
+      "question_id": "PREP-044",
+      "question_key": "prep-hardware-fibonacci-register-adder",
+      "title_he": "מימוש סדרת פיבונצ׳י באמצעות חומרה",
+      "source": "sources/prep-044.png",
+      "source_sha256": "b80c724dafbca9dacabd6c4a75238b8afa7693b8e6cc72f7aae618793a8d28c5",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "primary_skill": "registers_shifters",
+      "related_question_ids": [
+        "PREP-024"
+      ],
+      "code": [
+        "solutions/prep_044_hardware_fibonacci.py",
+        "solutions/prep_044_hardware_fibonacci.sv"
+      ],
+      "diagrams": [
+        "diagrams/prep-044-fibonacci-datapath.png"
+      ],
+      "verification_report": "checks/prep-044-verification.json"
+    },
+    {
+      "question_id": "PREP-045",
+      "question_key": "prep-first-finisher-latched-winner",
+      "title_he": "שמירת הזוכה הראשון במירוץ של שלושה מסלולים",
+      "source": "sources/prep-045.png",
+      "source_sha256": "6c4ae64934d097cf54aa75dedbb2b84e5c65654ce2be39054b0f78f0b839cc54",
+      "reported_companies": [
+        "NVIDIA",
+        "Mellanox"
+      ],
+      "primary_skill": "fsm_state_tables",
+      "related_question_ids": [
+        "PREP-016",
+        "HW-005",
+        "VHW-003"
+      ],
+      "code": [
+        "solutions/prep_045_first_finisher.py",
+        "solutions/prep_045_first_finisher.sv"
+      ],
+      "diagrams": [
+        "diagrams/prep-045-first-finisher-circuit.png",
+        "diagrams/prep-045-first-finisher-fsm.png"
+      ],
+      "verification_report": "checks/prep-045-verification.json"
+    },
+    {
+      "question_id": "PREP-046",
+      "question_key": "prep-birthday-public-announcement-reasoning",
+      "title_he": "יום ההולדת של דני — הסקה מתוך מה שאחרים יודעים",
+      "source": "sources/prep-046.png",
+      "source_sha256": "93ab013c6672b7024041b0b4256b779b08b343f2dba252a9e27ccf4607326c99",
+      "reported_companies": [
+        "NVIDIA",
+        "Mellanox"
+      ],
+      "primary_skill": "estimation_sanity_checks",
+      "related_question_ids": [
+        "PREP-033"
+      ],
+      "code": [
+        "solutions/prep_046_birthday_knowledge.py"
+      ],
+      "diagrams": [
+        "diagrams/prep-046-public-announcement-stages.png"
+      ],
+      "verification_report": "checks/prep-046-verification.json"
+    },
+    {
+      "question_id": "PREP-047",
+      "question_key": "prep-three-of-four-from-two-of-four-boxes",
+      "title_he": "מימוש סף של שלוש מתוך ארבע באמצעות קופסאות סף",
+      "source": "sources/prep-047.png",
+      "source_sha256": "545889c445de882b067aeab26bce4390c54c8620ca00b7197f776d81d99f70ec",
+      "reported_companies": [
+        "NVIDIA",
+        "Apple"
+      ],
+      "primary_skill": "boolean_algebra",
+      "related_question_ids": [
+        "PREP-013",
+        "HW-001"
+      ],
+      "code": [
+        "solutions/prep_047_threshold_three_of_four.py",
+        "solutions/prep_047_threshold_three_of_four.sv"
+      ],
+      "diagrams": [
+        "diagrams/prep-047-four-threshold-boxes.png"
+      ],
+      "verification_report": "checks/prep-047-verification.json"
+    },
+    {
+      "question_id": "PREP-048",
+      "question_key": "prep-every-third-clock-pulse",
+      "title_he": "פולס של מחזור שעון אחד בכל מחזור שלישי",
+      "source": "sources/prep-048.png",
+      "source_sha256": "37790fac29b2d68fcb6d9ee4fc05cad2d2b85aa2b455aeb3b39a6187f70c12cb",
+      "reported_companies": [
+        "Cisco",
+        "Mellanox"
+      ],
+      "primary_skill": "counters",
+      "related_question_ids": [
+        "PREP-010",
+        "VHW-004",
+        "HW-011"
+      ],
+      "code": [
+        "solutions/prep_048_every_third_clock.py",
+        "solutions/prep_048_every_third_clock.sv"
+      ],
+      "diagrams": [
+        "diagrams/prep-048-third-clock-fsm-timing.png"
+      ],
+      "verification_report": "checks/prep-048-verification.json"
+    }
+  ],
+  "new_questions": 5,
+  "previous_batch_audited": [
+    "PREP-039",
+    "PREP-040",
+    "PREP-041",
+    "PREP-042",
+    "PREP-043"
+  ],
+  "existing_questions_enhanced": [
+    "PREP-040",
+    "PREP-041"
+  ],
+  "untouched_original_records": 41,
+  "database_status": "pending_scoped_insert_and_two_updates",
+  "learner_activity_written": false,
+  "authenticated_live_clicks_performed": false,
+  "hdl_simulation_performed": false,
+  "follow_up_workflow_connected": false
+}

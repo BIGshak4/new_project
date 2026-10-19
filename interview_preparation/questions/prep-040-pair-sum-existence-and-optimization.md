@@ -398,3 +398,11 @@ Start with nested loops over i<j: quadratic time and constant extra words. Impro
 [prep_040_two_sum.py](../solutions/prep_040_two_sum.py) · [check_prep_040.py](../checks/check_prep_040.py) · [prep-040-verification.json](../checks/prep-040-verification.json)
 
 שאלת ההמשך מוכנה בשתי השפות אך טרם חוברה לתור האינטראקטיבי. ההערכה המקצועית ורמת הקושי עדיין בביקורת; אין להעניק לשאלה זו ראיות שליטה או ניקוד תחרותי. שאלות חומרה אומתו במודל Python בלבד; אין בכך טענה לסימולציית HDL או לבדיקה פיזית.
+
+## המחשה נוספת — 19 באוקטובר 2026
+
+בתרשים ההמחשה A=[4,1,6] והיעד 10. עמודת seen היא הקבוצה לפני בדיקת האיבר הנוכחי; העמודה האחרונה בודקת אם המשלים נמצא בה. רק לאחר כישלון מוסיפים את הערך. בשורה השלישית המשלים 4 כבר הופיע, ולכן הזוג הוא באינדקסים 0 ו־2.
+
+The trace uses A=[4,1,6] and target 10. The seen column is the set before testing the current entry; the final column tests membership of the complement. Insert only after an unsuccessful check. On the third row complement 4 is already present, identifying distinct indices 0 and 2.
+
+![PREP-040](../diagrams/prep-040-complement-trace.png)

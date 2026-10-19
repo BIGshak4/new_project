@@ -1,0 +1,155 @@
+{
+  "question": "PREP-047",
+  "status": "passed",
+  "primitive_truth_rows": 16,
+  "construction_truth_rows": 16,
+  "free_inversion_alternative_rows": 16,
+  "invalid_input_cases": 4,
+  "truth_rows": [
+    {
+      "abcd": "0000",
+      "p": 0,
+      "q": 0,
+      "r": 0,
+      "y": 0
+    },
+    {
+      "abcd": "0001",
+      "p": 0,
+      "q": 1,
+      "r": 0,
+      "y": 0
+    },
+    {
+      "abcd": "0010",
+      "p": 0,
+      "q": 1,
+      "r": 0,
+      "y": 0
+    },
+    {
+      "abcd": "0011",
+      "p": 1,
+      "q": 1,
+      "r": 0,
+      "y": 0
+    },
+    {
+      "abcd": "0100",
+      "p": 0,
+      "q": 0,
+      "r": 0,
+      "y": 0
+    },
+    {
+      "abcd": "0101",
+      "p": 0,
+      "q": 1,
+      "r": 0,
+      "y": 0
+    },
+    {
+      "abcd": "0110",
+      "p": 0,
+      "q": 1,
+      "r": 0,
+      "y": 0
+    },
+    {
+      "abcd": "0111",
+      "p": 1,
+      "q": 1,
+      "r": 1,
+      "y": 1
+    },
+    {
+      "abcd": "1000",
+      "p": 0,
+      "q": 0,
+      "r": 0,
+      "y": 0
+    },
+    {
+      "abcd": "1001",
+      "p": 0,
+      "q": 1,
+      "r": 0,
+      "y": 0
+    },
+    {
+      "abcd": "1010",
+      "p": 0,
+      "q": 1,
+      "r": 0,
+      "y": 0
+    },
+    {
+      "abcd": "1011",
+      "p": 1,
+      "q": 1,
+      "r": 1,
+      "y": 1
+    },
+    {
+      "abcd": "1100",
+      "p": 0,
+      "q": 0,
+      "r": 1,
+      "y": 0
+    },
+    {
+      "abcd": "1101",
+      "p": 0,
+      "q": 1,
+      "r": 1,
+      "y": 1
+    },
+    {
+      "abcd": "1110",
+      "p": 0,
+      "q": 1,
+      "r": 1,
+      "y": 1
+    },
+    {
+      "abcd": "1111",
+      "p": 1,
+      "q": 1,
+      "r": 1,
+      "y": 1
+    }
+  ],
+  "truth_rows_sha256": "1342c717dff70877f35b169091b0ef23f16d90d9eef400cafd8b68bc5dc48a78",
+  "synthesis": {
+    "zero_gate_source_functions_checked": 6,
+    "target_signature_hex": "0xe880",
+    "pin_multisets_tested_total": 319896,
+    "layers": [
+      {
+        "final_gate_number": 1,
+        "available_signal_sets_before_final_gate": 1,
+        "pin_multisets_tested": 126,
+        "distinct_final_functions": 39,
+        "target_found": false
+      },
+      {
+        "final_gate_number": 2,
+        "available_signal_sets_before_final_gate": 33,
+        "pin_multisets_tested": 6930,
+        "distinct_final_functions": 133,
+        "target_found": false
+      },
+      {
+        "final_gate_number": 3,
+        "available_signal_sets_before_final_gate": 948,
+        "pin_multisets_tested": 312840,
+        "distinct_final_functions": 167,
+        "target_found": false
+      }
+    ],
+    "minimum_a_gates": 4,
+    "completeness_argument": "Topologically order an acyclic candidate. Retain all previous gate truth functions, allowing arbitrary fanout. Skip only gates whose complete truth function is already available, since they can be replaced by that wire. Merge states with identical available function sets; later gates depend only on those functions, not on the order of their creation. Symmetry of A makes pin multisets exhaustive, including repeated signals and constants. Thus every candidate with at most three A gates has a representative."
+  },
+  "cost_model": "Only A gates plus free 0/1 constants, direct wires, fanout and repeated pins; no inversion or other gates; acyclic combinational circuits.",
+  "scope": "Exact Boolean function and gate-count verification under this grammar. No HDL simulation, synthesis, transistor area, physical delay or glitch-freedom claim. Minimum changes if free inversion is permitted; constants were not explicit in the source."
+}

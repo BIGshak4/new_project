@@ -443,3 +443,11 @@ First clarify that the original input was a permutation of 1 through n and that 
 [prep_041_missing_values.py](../solutions/prep_041_missing_values.py) · [check_prep_041.py](../checks/check_prep_041.py) · [prep-041-verification.json](../checks/prep-041-verification.json)
 
 שאלת ההמשך מוכנה בשתי השפות אך טרם חוברה לתור האינטראקטיבי. אין להעניק לשאלה זו ראיות שליטה או ניקוד תחרותי לפני השלמת הביקורת המתאימה.
+
+## המחשה נוספת — 19 באוקטובר 2026
+
+השרטוט מציג n=7 ואת השארית [6,1,4,7,3]. T פירושו True ו־F פירושו False; אינדקס 0 מחוק כי אינו נסרק. הדגלים הכתומים באינדקסים 2 ו־5 נשארו False ומזהים את שני החסרים. זו אותה חלופת זיכרון נוסף שהוצגה בתחילת הפתרון.
+
+The diagram uses n=7 and remainder [6,1,4,7,3]. T means True and F means False; index zero is crossed out because it is not scanned. Orange flags at indices 2 and 5 remain False, identifying both omissions. This illustrates the extra-memory alternative at the start of the reference.
+
+![PREP-041](../diagrams/prep-041-presence-flags.png)

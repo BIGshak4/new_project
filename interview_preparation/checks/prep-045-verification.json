@@ -1,0 +1,11 @@
+{
+  "question": "PREP-045",
+  "status": "passed",
+  "state_input_reset_combinations": 64,
+  "all_pulse_streams_lengths_0_to_6": 299593,
+  "all_pulse_reset_streams_lengths_0_to_4": 69905,
+  "locked_hold_cycles": 100,
+  "oracle": "Independent history scan selects lexicographically earliest (edge, lane) after the latest reset.",
+  "invariants": "Winner 0..3; reset dominates; any nonzero winner holds until reset; encoder Boolean equations agree.",
+  "scope": "Python edge model and complete binary transition table, not HDL simulation, synthesis, CDC verification or physical button testing."
+}

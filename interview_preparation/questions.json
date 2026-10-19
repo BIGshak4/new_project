@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "created_on": "2026-09-24",
-  "question_count": 43,
+  "question_count": 48,
   "audience": "Electrical engineering students preparing for system chip validation interviews",
   "status": "review_seed_not_production_import",
   "notes": [
@@ -7686,7 +7686,7 @@
             "אם האיבר הנוכחי ידוע, איזה ערך מדויק צריך בן הזוג שלו לקבל? האם תוכלו לזכור אילו ערכים כבר הופיעו?",
             "שמרו קבוצה של ערכים קודמים. חפשו בה את המשלים ליעד לפני הוספת האיבר הנוכחי. למה הסדר הזה נחוץ עבור `[6]` לעומת `[6, 6]` עם יעד `12`?"
           ],
-          "reference_solution": "**הצעה לפתרון**\n\nנניח שהמערך אינו ממוין, שערכיו שלמים ושמותר להשתמש בזיכרון עזר. זוג פירושו שני מקומות שונים במערך: ערכים שווים מותרים אם הם מופיעים פעמיים. מבקשים תשובת אמת או שקר; אין צורך להחזיר את הזוג עצמו. נסמן את מספר האיברים ב־`n`.\n\n**1. מתחילים מפתרון פשוט שקל לבדוק**\n\nעבור כל איבר, בודקים אותו עם כל האיברים שאחריו. אם מצאנו זוג שסכומו היעד, מחזירים אמת. אם סיימנו את כל הזוגות בלי הצלחה, מחזירים שקר. התנאי `j > i` מבטיח שאין שימוש באותו מקום פעמיים, וגם אינו בודק כל זוג פעמיים.\n\n```python\ndef has_pair_quadratic(values, target):\n    for i in range(len(values)):\n        for j in range(i + 1, len(values)):\n            if values[i] + values[j] == target:\n                return True\n    return False\n```\n\nבמקרה הגרוע נבדקים `n(n-1)/2` זוגות, ולכן הזמן ריבועי, `O(n²)`, וזיכרון העזר קבוע, `O(1)` מילים. חזרה מוקדמת יכולה לחסוך עבודה במקרה מסוים; היא אינה משנה את החסם במקרה הגרוע.\n\n**2. מזהים איזו עבודה מיותרת**\n\nאם האיבר הנוכחי הוא `value`, בן הזוג הדרוש ידוע בדיוק: `target - value`. במקום להשוות אותו שוב לכל האיברים הקודמים, נרצה לשאול במהירות: האם הערך המשלים כבר הופיע?\n\nנשמור קבוצה של הערכים שכבר עברנו עליהם. בכל צעד נבדוק קודם אם הערך המשלים בקבוצה. אם כן, נמצא זוג. רק אם לא נמצא זוג, נוסיף את האיבר הנוכחי לקבוצה ונמשיך.\n\n```python\ndef has_pair_sum(values, target):\n    seen = set()\n    for value in values:\n        if target - value in seen:\n            return True\n        seen.add(value)\n    return False\n```\n\nלדוגמה, עבור `[4, 1, 7, 3]` והיעד `8`: מתחילים מקבוצה ריקה. עבור `4`, המשלים `4` עדיין לא נשמר, ולכן מוסיפים `4`. עבור `1`, המשלים `7` עדיין לא נשמר, ולכן מוסיפים `1`. עבור `7`, המשלים `1` כבר נמצא בקבוצה, ולכן מחזירים אמת.\n\n**למה בודקים לפני שמוסיפים?** עבור `[6]` ויעד `12`, אסור לחבר את האיבר היחיד לעצמו. כשהוא נבדק, הקבוצה עדיין ריקה ולכן התוצאה שקר. עבור `[6, 6]`, ה־`6` השני מוצא את הראשון שכבר נשמר, ולכן התוצאה אמת. קבוצה מספיקה לשאלת הקיום: אין צורך לשמור ספירה, כי סדר הבדיקה מבדיל בין המופע הנוכחי למופע הקודם.\n\n**3. נימוק נכונות**\n\nלפני בדיקת המקום `i`, הקבוצה מכילה בדיוק את הערכים במקומות שלפניו. אם נמצא בה `target - values[i]`, הוא שייך למקום מוקדם יותר, ולכן מדובר בשני מקומות שונים שסכומם היעד. בכיוון ההפוך, אם קיים זוג במקומות `p < q`, בזמן בדיקת `q` הערך שבמקום `p` כבר נשמר, ולכן יימצא זוג לכל המאוחר אז. אם הסריקה מסתיימת ללא התאמה, אין זוג חוקי.\n\n**4. זמן וזיכרון**\n\nלכל היותר קוראים `n` איברים. בהנחה שפעולות חיפוש והוספה בטבלת גיבוב אורכות זמן קבוע צפוי וממוצע על פני הפעולות, הזמן הכולל צפוי להיות `O(n)`. זיכרון העזר הוא `O(n)`, או באופן מדויק יותר לפי מספר הערכים השונים שנשמרו לפני העצירה. אין להבטיח זמן לינארי במקרה הגרוע: התנגשויות גיבוב רבות עלולות להביא לזמן ריבועי.\n\nהניתוח סופר פעולות על מספרים בגודל מילה כפעולות קבועות. בפייתון אין גלישה של שלמים, אבל חיסור, חיבור וגיבוב של מספרים בעלי מספר ביטים בלתי מוגבל אינם בעלי עלות קבועה. קריאת קלט כללי עשויה לדרוש מספר לינארי של גישות לאיברים; זו הצדקה לסדר גודל לינארי בזמן צפוי במודל הרגיל, ולא טענה לזיכרון מינימלי או לזמן לינארי מובטח לכל גיבוב.\n\n**5. חלופה בלי טבלת גיבוב: מיון ושני מצביעים**\n\nממיינים עותק של המערך. מצביע אחד מתחיל בערך הקטן ביותר והשני בגדול ביותר. אם סכומם קטן מהיעד, מזיזים את השמאלי ימינה: אין ערך שנותר בצד ימין שיכול להשלים את הערך השמאלי הנוכחי, כי אפילו הגדול ביותר אינו מספיק. אם הסכום גדול מהיעד, מזיזים את הימני שמאלה, מהסיבה הסימטרית. אם הסכום מתאים, מחזירים אמת. תנאי הלולאה הוא `left < right` כדי לשמור על שני מקומות שונים.\n\n```python\ndef has_pair_sum_sorted(values, target):\n    ordered = sorted(values)  # Copy; original input stays unchanged.\n    left, right = 0, len(ordered) - 1\n    while left < right:\n        total = ordered[left] + ordered[right]\n        if total == target:\n            return True\n        if total < target:\n            left += 1\n        else:\n            right -= 1\n    return False\n```\n\nהמיון נותן זמן `O(n log n)` במקרה הגרוע והסריקה אחריו זמן `O(n)`. הקוד משתמש ב־`sorted`, שיוצר רשימה חדשה, ולכן זיכרון העזר בו `O(n)` והקלט המקורי נשמר. גם למיון של פייתון יכול להיות זיכרון עבודה לינארי; החלפה ב־`list.sort()` אינה מצדיקה טענה אוטומטית לזיכרון קבוע. אם מותר לשנות את הקלט, אפשר לבחור מיון במקום בעל זיכרון עזר קבוע, כמו מיון ערימה, ואחריו שני מצביעים. אם המערך כבר ממוין מראש, שני מצביעים נותנים `O(n)` זמן ו־`O(1)` זיכרון עזר, ללא מיון נוסף.\n\n**הרחבה: אם מבקשים גם את המקומות המקוריים**\n\nבמקום קבוצה שומרים מילון מערך למקום קודם שבו הופיע. החיפוש עדיין מתבצע לפני ההכנסה.\n\n```python\ndef pair_sum_indices(values, target):\n    seen = {}\n    for i, value in enumerate(values):\n        complement = target - value\n        if complement in seen:\n            return seen[complement], i\n        seen[value] = i\n    return None\n```\n\nכל זוג חוקי מתקבל; אין דרישה לזוג מסוים או לכל הזוגות. כל הפונקציות המצורפות משאירות את הקלט המקורי ללא שינוי.\n\n**תשובה קצרה לראיון:** אתחיל בשתי לולאות שבודקות כל זוג, בזמן ריבועי ובזיכרון קבוע. כדי לשפר, אעבור פעם אחת ואשמור ערכים שכבר ראיתי בקבוצת גיבוב. לכל איבר אחפש קודם את המשלים שלו ליעד, ורק אחר כך אוסיף אותו. כך אין שימוש באותו מופע פעמיים. הזמן צפוי להיות לינארי והזיכרון לינארי; מיון ושני מצביעים הם חלופה עם זמן `O(n log n)` שאינו תלוי בהנחת גיבוב.\n\nאימות: ארבעת המימושים נבדקו ב־215,863 מקרי קלט ויעד מול אורקל עצמאי של זוגות אינדקסים, כולל בדיקה ממצה עבור כל המערכים באורכים 0–6 מעל הערכים `-2` עד `2` וכל יעד מ־`-5` עד `5`. נבדקו גם שליליים, כפילויות, מספרי פייתון גדולים, התנגשויות גיבוב ושמירת הקלט. זהו אימות תוכנה והצעת פתרון בסיוע AI; סקירה מקצועית עצמאית עדיין ממתינה.",
+          "reference_solution": "**הצעה לפתרון**\n\nנניח שהמערך אינו ממוין, שערכיו שלמים ושמותר להשתמש בזיכרון עזר. זוג פירושו שני מקומות שונים במערך: ערכים שווים מותרים אם הם מופיעים פעמיים. מבקשים תשובת אמת או שקר; אין צורך להחזיר את הזוג עצמו. נסמן את מספר האיברים ב־`n`.\n\n**1. מתחילים מפתרון פשוט שקל לבדוק**\n\nעבור כל איבר, בודקים אותו עם כל האיברים שאחריו. אם מצאנו זוג שסכומו היעד, מחזירים אמת. אם סיימנו את כל הזוגות בלי הצלחה, מחזירים שקר. התנאי `j > i` מבטיח שאין שימוש באותו מקום פעמיים, וגם אינו בודק כל זוג פעמיים.\n\n```python\ndef has_pair_quadratic(values, target):\n    for i in range(len(values)):\n        for j in range(i + 1, len(values)):\n            if values[i] + values[j] == target:\n                return True\n    return False\n```\n\nבמקרה הגרוע נבדקים `n(n-1)/2` זוגות, ולכן הזמן ריבועי, `O(n²)`, וזיכרון העזר קבוע, `O(1)` מילים. חזרה מוקדמת יכולה לחסוך עבודה במקרה מסוים; היא אינה משנה את החסם במקרה הגרוע.\n\n**2. מזהים איזו עבודה מיותרת**\n\nאם האיבר הנוכחי הוא `value`, בן הזוג הדרוש ידוע בדיוק: `target - value`. במקום להשוות אותו שוב לכל האיברים הקודמים, נרצה לשאול במהירות: האם הערך המשלים כבר הופיע?\n\nנשמור קבוצה של הערכים שכבר עברנו עליהם. בכל צעד נבדוק קודם אם הערך המשלים בקבוצה. אם כן, נמצא זוג. רק אם לא נמצא זוג, נוסיף את האיבר הנוכחי לקבוצה ונמשיך.\n\n```python\ndef has_pair_sum(values, target):\n    seen = set()\n    for value in values:\n        if target - value in seen:\n            return True\n        seen.add(value)\n    return False\n```\n\nלדוגמה, עבור `[4, 1, 7, 3]` והיעד `8`: מתחילים מקבוצה ריקה. עבור `4`, המשלים `4` עדיין לא נשמר, ולכן מוסיפים `4`. עבור `1`, המשלים `7` עדיין לא נשמר, ולכן מוסיפים `1`. עבור `7`, המשלים `1` כבר נמצא בקבוצה, ולכן מחזירים אמת.\n\n**למה בודקים לפני שמוסיפים?** עבור `[6]` ויעד `12`, אסור לחבר את האיבר היחיד לעצמו. כשהוא נבדק, הקבוצה עדיין ריקה ולכן התוצאה שקר. עבור `[6, 6]`, ה־`6` השני מוצא את הראשון שכבר נשמר, ולכן התוצאה אמת. קבוצה מספיקה לשאלת הקיום: אין צורך לשמור ספירה, כי סדר הבדיקה מבדיל בין המופע הנוכחי למופע הקודם.\n\n**3. נימוק נכונות**\n\nלפני בדיקת המקום `i`, הקבוצה מכילה בדיוק את הערכים במקומות שלפניו. אם נמצא בה `target - values[i]`, הוא שייך למקום מוקדם יותר, ולכן מדובר בשני מקומות שונים שסכומם היעד. בכיוון ההפוך, אם קיים זוג במקומות `p < q`, בזמן בדיקת `q` הערך שבמקום `p` כבר נשמר, ולכן יימצא זוג לכל המאוחר אז. אם הסריקה מסתיימת ללא התאמה, אין זוג חוקי.\n\n**4. זמן וזיכרון**\n\nלכל היותר קוראים `n` איברים. בהנחה שפעולות חיפוש והוספה בטבלת גיבוב אורכות זמן קבוע צפוי וממוצע על פני הפעולות, הזמן הכולל צפוי להיות `O(n)`. זיכרון העזר הוא `O(n)`, או באופן מדויק יותר לפי מספר הערכים השונים שנשמרו לפני העצירה. אין להבטיח זמן לינארי במקרה הגרוע: התנגשויות גיבוב רבות עלולות להביא לזמן ריבועי.\n\nהניתוח סופר פעולות על מספרים בגודל מילה כפעולות קבועות. בפייתון אין גלישה של שלמים, אבל חיסור, חיבור וגיבוב של מספרים בעלי מספר ביטים בלתי מוגבל אינם בעלי עלות קבועה. קריאת קלט כללי עשויה לדרוש מספר לינארי של גישות לאיברים; זו הצדקה לסדר גודל לינארי בזמן צפוי במודל הרגיל, ולא טענה לזיכרון מינימלי או לזמן לינארי מובטח לכל גיבוב.\n\n**5. חלופה בלי טבלת גיבוב: מיון ושני מצביעים**\n\nממיינים עותק של המערך. מצביע אחד מתחיל בערך הקטן ביותר והשני בגדול ביותר. אם סכומם קטן מהיעד, מזיזים את השמאלי ימינה: אין ערך שנותר בצד ימין שיכול להשלים את הערך השמאלי הנוכחי, כי אפילו הגדול ביותר אינו מספיק. אם הסכום גדול מהיעד, מזיזים את הימני שמאלה, מהסיבה הסימטרית. אם הסכום מתאים, מחזירים אמת. תנאי הלולאה הוא `left < right` כדי לשמור על שני מקומות שונים.\n\n```python\ndef has_pair_sum_sorted(values, target):\n    ordered = sorted(values)  # Copy; original input stays unchanged.\n    left, right = 0, len(ordered) - 1\n    while left < right:\n        total = ordered[left] + ordered[right]\n        if total == target:\n            return True\n        if total < target:\n            left += 1\n        else:\n            right -= 1\n    return False\n```\n\nהמיון נותן זמן `O(n log n)` במקרה הגרוע והסריקה אחריו זמן `O(n)`. הקוד משתמש ב־`sorted`, שיוצר רשימה חדשה, ולכן זיכרון העזר בו `O(n)` והקלט המקורי נשמר. גם למיון של פייתון יכול להיות זיכרון עבודה לינארי; החלפה ב־`list.sort()` אינה מצדיקה טענה אוטומטית לזיכרון קבוע. אם מותר לשנות את הקלט, אפשר לבחור מיון במקום בעל זיכרון עזר קבוע, כמו מיון ערימה, ואחריו שני מצביעים. אם המערך כבר ממוין מראש, שני מצביעים נותנים `O(n)` זמן ו־`O(1)` זיכרון עזר, ללא מיון נוסף.\n\n**הרחבה: אם מבקשים גם את המקומות המקוריים**\n\nבמקום קבוצה שומרים מילון מערך למקום קודם שבו הופיע. החיפוש עדיין מתבצע לפני ההכנסה.\n\n```python\ndef pair_sum_indices(values, target):\n    seen = {}\n    for i, value in enumerate(values):\n        complement = target - value\n        if complement in seen:\n            return seen[complement], i\n        seen[value] = i\n    return None\n```\n\nכל זוג חוקי מתקבל; אין דרישה לזוג מסוים או לכל הזוגות. כל הפונקציות המצורפות משאירות את הקלט המקורי ללא שינוי.\n\n**תשובה קצרה לראיון:** אתחיל בשתי לולאות שבודקות כל זוג, בזמן ריבועי ובזיכרון קבוע. כדי לשפר, אעבור פעם אחת ואשמור ערכים שכבר ראיתי בקבוצת גיבוב. לכל איבר אחפש קודם את המשלים שלו ליעד, ורק אחר כך אוסיף אותו. כך אין שימוש באותו מופע פעמיים. הזמן צפוי להיות לינארי והזיכרון לינארי; מיון ושני מצביעים הם חלופה עם זמן `O(n log n)` שאינו תלוי בהנחת גיבוב.\n\nאימות: ארבעת המימושים נבדקו ב־215,863 מקרי קלט ויעד מול אורקל עצמאי של זוגות אינדקסים, כולל בדיקה ממצה עבור כל המערכים באורכים 0–6 מעל הערכים `-2` עד `2` וכל יעד מ־`-5` עד `5`. נבדקו גם שליליים, כפילויות, מספרי פייתון גדולים, התנגשויות גיבוב ושמירת הקלט. זהו אימות תוכנה והצעת פתרון בסיוע AI; סקירה מקצועית עצמאית עדיין ממתינה.\n\nבתרשים ההמחשה A=[4,1,6] והיעד 10. עמודת seen היא הקבוצה לפני בדיקת האיבר הנוכחי; העמודה האחרונה בודקת אם המשלים נמצא בה. רק לאחר כישלון מוסיפים את הערך. בשורה השלישית המשלים 4 כבר הופיע, ולכן הזוג הוא באינדקסים 0 ו־2.\n",
           "hint": "התחילו בפתרון שבודק כל זוג מקומות שונים. איזו עבודה הוא חוזר לבצע עבור כל איבר?"
         },
         "en": {
@@ -7697,7 +7697,7 @@
             "Given the current value, what exact value must its partner have? Could you remember which values have already appeared?",
             "Keep a set of earlier values. Look for the complement before inserting the current value. Why does that order matter for `[6]` versus `[6, 6]` with target `12`?"
           ],
-          "reference_solution": "**Proposed solution**\n\nAssume an unsorted integer array and allow auxiliary storage. A pair uses two distinct array positions; equal values are allowed when they occur at different positions. The requested output is a Boolean, not the actual pair. Let `n` be the number of elements.\n\n**1. Start with a simple, checkable solution**\n\nFor each element, try every later element. Return true as soon as their sum equals the target; otherwise return false after checking all pairs. Requiring `j > i` avoids both reusing an occurrence and testing each pair twice.\n\n```python\ndef has_pair_quadratic(values, target):\n    for i in range(len(values)):\n        for j in range(i + 1, len(values)):\n            if values[i] + values[j] == target:\n                return True\n    return False\n```\n\nThere are `n(n-1)/2` candidate pairs, giving `O(n²)` worst-case time and `O(1)` auxiliary words. Early return can help an individual input but does not improve the worst-case bound.\n\n**2. Identify the repeated work**\n\nFor the current `value`, the required partner is already determined: `target - value`. Instead of comparing against every earlier item again, ask whether that exact complement has appeared before.\n\nKeep a set of previously seen values. First check for the complement; if found, return true. Only after an unsuccessful lookup, insert the current value and continue.\n\n```python\ndef has_pair_sum(values, target):\n    seen = set()\n    for value in values:\n        if target - value in seen:\n            return True\n        seen.add(value)\n    return False\n```\n\nFor `[4, 1, 7, 3]` and target `8`, the set starts empty. Value `4` needs `4`, which is absent, so insert `4`. Value `1` needs `7`, which is absent, so insert `1`. Value `7` needs `1`, which is present, so return true.\n\n**Why lookup before insertion?** For `[6]` and target `12`, the only element cannot pair with itself. Its lookup sees an empty set and the answer is false. For `[6, 6]`, the second occurrence finds the first and the answer is true. A set is enough for existence: storing counts is unnecessary because the lookup order separates the current occurrence from earlier ones.\n\n**3. Correctness**\n\nBefore checking position `i`, the set contains exactly the values at earlier positions. Finding `target - values[i]` therefore identifies a different, earlier position with the required sum. Conversely, if a valid pair exists at positions `p < q`, the value at `p` has already been inserted when `q` is checked. The algorithm must find a valid pair no later than that step. Finishing the scan without a match means that no pair exists.\n\n**4. Time and memory**\n\nAt most `n` elements are read. Assuming expected, amortized constant-time hash lookup and insertion, the total expected time is `O(n)`. Auxiliary storage is `O(n)`, more precisely proportional to the distinct values stored before stopping. This is not a linear worst-case guarantee: heavy hash collisions can cause quadratic time.\n\nThese bounds use a word-operation model. Python integers do not overflow, but arithmetic and hashing on integers with unbounded bit length are not constant-cost operations. General input inspection can require a linear number of element accesses, supporting the expected-linear order under the stated model. This does not claim globally minimal space or unconditional worst-case linear hashing.\n\n**5. An alternative without hashing: sort and use two pointers**\n\nSort a copy, then place one pointer at the smallest value and the other at the largest. If their sum is too small, move the left pointer right: even the largest remaining partner is too small for the current left value, so that value cannot participate in a solution. If the sum is too large, discard the current right value by the symmetric argument. If equal, return true. Continue only while `left < right` so the two positions differ.\n\n```python\ndef has_pair_sum_sorted(values, target):\n    ordered = sorted(values)  # Copy; original input stays unchanged.\n    left, right = 0, len(ordered) - 1\n    while left < right:\n        total = ordered[left] + ordered[right]\n        if total == target:\n            return True\n        if total < target:\n            left += 1\n        else:\n            right -= 1\n    return False\n```\n\nSorting costs `O(n log n)` worst-case time, followed by an `O(n)` scan. This implementation uses `sorted`, which creates a new list, so its auxiliary storage is `O(n)` and the original input remains unchanged. Python sorting can also use linear working memory; replacing `sorted` with `list.sort()` does not automatically give constant auxiliary space. If input mutation is allowed, a genuinely constant-auxiliary-space in-place sort such as heapsort followed by two pointers is another tradeoff. If the input is already sorted, two pointers alone take `O(n)` time and `O(1)` auxiliary words.\n\n**Extension: return the original positions too**\n\nReplace the set with a dictionary mapping a seen value to an earlier index. Still look up before insertion.\n\n```python\ndef pair_sum_indices(values, target):\n    seen = {}\n    for i, value in enumerate(values):\n        complement = target - value\n        if complement in seen:\n            return seen[complement], i\n        seen[value] = i\n    return None\n```\n\nAny valid pair is accepted; the problem does not require a particular pair or all pairs. Every supplied implementation preserves the original input.\n\n**Interview answer:** Begin with two nested loops, giving quadratic time and constant extra words. Improve by scanning once with a hash set of earlier values. For each value, look up its complement before inserting it, preventing reuse of the same occurrence. This gives expected linear time and linear auxiliary storage. Sorting and two pointers give an `O(n log n)` alternative independent of hash assumptions.\n\nVerification: the four implementations passed 215,863 array/target cases against an independent index-pair oracle. This includes exhaustive arrays of lengths 0–6 over `-2` through `2`, with targets `-5` through `5`, plus negatives, duplicates, large Python integers, hash collisions and input-preservation checks. This is software verification of an AI-assisted proposal; independent expert review remains pending.",
+          "reference_solution": "**Proposed solution**\n\nAssume an unsorted integer array and allow auxiliary storage. A pair uses two distinct array positions; equal values are allowed when they occur at different positions. The requested output is a Boolean, not the actual pair. Let `n` be the number of elements.\n\n**1. Start with a simple, checkable solution**\n\nFor each element, try every later element. Return true as soon as their sum equals the target; otherwise return false after checking all pairs. Requiring `j > i` avoids both reusing an occurrence and testing each pair twice.\n\n```python\ndef has_pair_quadratic(values, target):\n    for i in range(len(values)):\n        for j in range(i + 1, len(values)):\n            if values[i] + values[j] == target:\n                return True\n    return False\n```\n\nThere are `n(n-1)/2` candidate pairs, giving `O(n²)` worst-case time and `O(1)` auxiliary words. Early return can help an individual input but does not improve the worst-case bound.\n\n**2. Identify the repeated work**\n\nFor the current `value`, the required partner is already determined: `target - value`. Instead of comparing against every earlier item again, ask whether that exact complement has appeared before.\n\nKeep a set of previously seen values. First check for the complement; if found, return true. Only after an unsuccessful lookup, insert the current value and continue.\n\n```python\ndef has_pair_sum(values, target):\n    seen = set()\n    for value in values:\n        if target - value in seen:\n            return True\n        seen.add(value)\n    return False\n```\n\nFor `[4, 1, 7, 3]` and target `8`, the set starts empty. Value `4` needs `4`, which is absent, so insert `4`. Value `1` needs `7`, which is absent, so insert `1`. Value `7` needs `1`, which is present, so return true.\n\n**Why lookup before insertion?** For `[6]` and target `12`, the only element cannot pair with itself. Its lookup sees an empty set and the answer is false. For `[6, 6]`, the second occurrence finds the first and the answer is true. A set is enough for existence: storing counts is unnecessary because the lookup order separates the current occurrence from earlier ones.\n\n**3. Correctness**\n\nBefore checking position `i`, the set contains exactly the values at earlier positions. Finding `target - values[i]` therefore identifies a different, earlier position with the required sum. Conversely, if a valid pair exists at positions `p < q`, the value at `p` has already been inserted when `q` is checked. The algorithm must find a valid pair no later than that step. Finishing the scan without a match means that no pair exists.\n\n**4. Time and memory**\n\nAt most `n` elements are read. Assuming expected, amortized constant-time hash lookup and insertion, the total expected time is `O(n)`. Auxiliary storage is `O(n)`, more precisely proportional to the distinct values stored before stopping. This is not a linear worst-case guarantee: heavy hash collisions can cause quadratic time.\n\nThese bounds use a word-operation model. Python integers do not overflow, but arithmetic and hashing on integers with unbounded bit length are not constant-cost operations. General input inspection can require a linear number of element accesses, supporting the expected-linear order under the stated model. This does not claim globally minimal space or unconditional worst-case linear hashing.\n\n**5. An alternative without hashing: sort and use two pointers**\n\nSort a copy, then place one pointer at the smallest value and the other at the largest. If their sum is too small, move the left pointer right: even the largest remaining partner is too small for the current left value, so that value cannot participate in a solution. If the sum is too large, discard the current right value by the symmetric argument. If equal, return true. Continue only while `left < right` so the two positions differ.\n\n```python\ndef has_pair_sum_sorted(values, target):\n    ordered = sorted(values)  # Copy; original input stays unchanged.\n    left, right = 0, len(ordered) - 1\n    while left < right:\n        total = ordered[left] + ordered[right]\n        if total == target:\n            return True\n        if total < target:\n            left += 1\n        else:\n            right -= 1\n    return False\n```\n\nSorting costs `O(n log n)` worst-case time, followed by an `O(n)` scan. This implementation uses `sorted`, which creates a new list, so its auxiliary storage is `O(n)` and the original input remains unchanged. Python sorting can also use linear working memory; replacing `sorted` with `list.sort()` does not automatically give constant auxiliary space. If input mutation is allowed, a genuinely constant-auxiliary-space in-place sort such as heapsort followed by two pointers is another tradeoff. If the input is already sorted, two pointers alone take `O(n)` time and `O(1)` auxiliary words.\n\n**Extension: return the original positions too**\n\nReplace the set with a dictionary mapping a seen value to an earlier index. Still look up before insertion.\n\n```python\ndef pair_sum_indices(values, target):\n    seen = {}\n    for i, value in enumerate(values):\n        complement = target - value\n        if complement in seen:\n            return seen[complement], i\n        seen[value] = i\n    return None\n```\n\nAny valid pair is accepted; the problem does not require a particular pair or all pairs. Every supplied implementation preserves the original input.\n\n**Interview answer:** Begin with two nested loops, giving quadratic time and constant extra words. Improve by scanning once with a hash set of earlier values. For each value, look up its complement before inserting it, preventing reuse of the same occurrence. This gives expected linear time and linear auxiliary storage. Sorting and two pointers give an `O(n log n)` alternative independent of hash assumptions.\n\nVerification: the four implementations passed 215,863 array/target cases against an independent index-pair oracle. This includes exhaustive arrays of lengths 0–6 over `-2` through `2`, with targets `-5` through `5`, plus negatives, duplicates, large Python integers, hash collisions and input-preservation checks. This is software verification of an AI-assisted proposal; independent expert review remains pending.\n\nThe trace uses A=[4,1,6] and target 10. The seen column is the set before testing the current entry; the final column tests membership of the complement. Insert only after an unsuccessful check. On the third row complement 4 is already present, identifying distinct indices 0 and 2.\n",
           "hint": "Start by checking every pair of different positions. Which work is repeated for each element?"
         }
       },
@@ -7793,6 +7793,11 @@
         {
           "type": "source_image",
           "path": "sources/prep-040.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-040-complement-trace.png",
+          "description": "PREP-040"
         }
       ],
       "related_question_ids": [
@@ -7859,7 +7864,7 @@
             "ערך חסר אחד אפשר למצוא מהפרש הסכומים. כשחסרים שניים, הסכום נותן רק את החיבור שלהם. איזו פעולה מבטלת ערך שמופיע פעמיים?",
             "בצעו XOR על הטווח המלא ועל המערך שנותר. התוצאה היא XOR של שני החסרים. מצאו בתוצאה ביט שערכו 1, חלקו לפי הביט הזה את שתי קבוצות הקלט, ובצעו XOR נפרד בכל צד."
           ],
-          "reference_solution": "### קודם מבהירים מה אפשר לראות\n\nהנוסח המקורי אינו אומר במפורש שהערכים שנשלפו מוסתרים ושהמערך המקורי מכיל כל מספר פעם אחת. כאן נפתור את הפרשנות שהוגדרה במפורש בנוסח הערוך: בתחילה קיימת תמורה של המספרים מ־1 עד 100; ערך אחד או שני ערכים שונים הוצאו והוסתרו, ואפשר לקרוא את כל הערכים שנותרו. זהו מידע חיוני לפתרון, ולא מסקנה מהסדר האקראי. נסמן את גבול הטווח הכללי ב־n; בשאלה הנתונה n=100.\n\n### פתרון משותף לשני הסעיפים — מערך דגלים כשמותר זיכרון נוסף\n\nאם מותר להשתמש בזיכרון נוסף, אפשר לפתור את שני הסעיפים באותה פונקציה, בלי נוסחת סכום, סכום ריבועים, גיבוב או XOR. מכינים רשימת דגלים בשם seen, שבה האינדקס מייצג את המספר עצמו. למשל, seen[37] אומר אם המספר 37 הופיע בשארית; הוא אינו מתייחס לתא מספר 37 במערך הקלט.\n\n1. מאתחלים n+1 דגלים ל־False. התא באינדקס 0 אינו בשימוש, כך שאפשר להשתמש ישירות באינדקסים מ־1 עד n. עבור n=100 יש 101 תאים, מהם 100 תאים שימושיים.\n2. עוברים פעם אחת על המספרים שנותרו. עבור כל value מסמנים seen[value] = True.\n3. עוברים על האינדקסים מ־1 עד n. כל אינדקס שהדגל שלו נשאר False הוא מספר שלא הופיע, ולכן מוסיפים אותו לתשובה.\n\n```python\ndef missing_with_flags(remaining, n=100):\n    seen = [False] * (n + 1)\n\n    for value in remaining:\n        seen[value] = True\n\n    missing = []\n    for value in range(1, n + 1):\n        if not seen[value]:\n            missing.append(value)\n\n    return missing\n```\n\nהפונקציה מחזירה רשימה: בסעיף א יש בה מספר אחד, ובסעיף ב שני מספרים. סריקת האינדקסים מחזירה אותם בסדר עולה. כמו הפתרונות האחרים, גם כאן מניחים שהקלט עומד בהבטחה: ערכים שונים בטווח 1 עד n, שמתוכם הוצאו המספרים המוסתרים.\n\nלדוגמה, עבור n=7 והשארית [6, 1, 4, 7, 3], מסמנים את הדגלים 6, 1, 4, 7, 3. בסיום:\n\n| המספר | הדגל |\n| --- | --- |\n| 1 | `True` |\n| 2 | `False` |\n| 3 | `True` |\n| 4 | `True` |\n| 5 | `False` |\n| 6 | `True` |\n| 7 | `True` |\n\nלכן מתקבלת הרשימה [2, 5]. התא 0 נשאר False אך אינו נסרק ואינו חלק מהתשובה.\n\n```python\nmissing_with_flags([6, 1, 4, 7, 3], n=7)  # [2, 5]\nmissing_with_flags([3, 1, 4], n=4)        # [2]\n```\n\nלמה זה נכון? בתחילה שום מספר לא סומן. אחרי כל איבר שקראנו, בדיוק המספרים שכבר הופיעו מסומנים True. לכן אחרי המעבר, דגל True מציין מספר שנשאר, ודגל False בטווח 1 עד n מציין בדיוק מספר שהוצא.\n\nהאתחול, סימון השארית וסריקת הדגלים עולים יחד O(n) זמן. מערך הדגלים דורש O(n) תאי זיכרון נוספים; הוא אינו פתרון בזיכרון קבוע. הפלט עצמו מכיל איבר אחד או שניים בשאלה הזו. בפייתון רשימת בוליאנים אינה מערך ביטים דחוס. אין שינוי למערך הקלט.\n\nזהו פתרון פשוט וישיר כשמותר זיכרון נוסף. בהמשך מופיעים הפתרונות החסכוניים בזיכרון, למקרה שמבקשים מספר קבוע של מילות עזר.\n\n### סעיף א — משווים את מה שאמור להיות למה שנותר\n\nאילו כל המספרים היו במערך, היינו יודעים את הסכום בלי לדעת את הסדר שלהם: n*(n+1)/2. סכימת כל הערכים שנותרו נותנת אותו סכום פחות הערך שהוצא. לכן החיסור מחזיר בדיוק את הערך החסר.\n\nלמשל, סכום המספרים מ־1 עד 100 הוא 5050. אם סכום 99 הערכים שנותרו הוא 5013, הערך שהוצא הוא 37.\n\n```python\ndef missing_one(remaining, n=100):\n    return n * (n + 1) // 2 - sum(remaining)\n```\n\nהפונקציה מניחה שהקלט תקין: כל הערכים הנותרים שונים, נמצאים בטווח, ורק ערך אחד חסר.\n\n### סעיף ב — למה סכום בלבד אינו מספיק?\n\nכעת הפרש הסכומים נותן את סכום שני החסרים, ולא את כל אחד מהם בנפרד. למשל, הסכום 119 מתאים גם ל־37 ו־82 וגם ל־36 ו־83. צריך מידע שמפריד בין שני הערכים.\n\nפעולת XOR מתאימה לביטול כפילויות: לכל ערך מתקיים x XOR x = 0 וגם x XOR 0 = x. נפעיל XOR על כל המספרים בטווח, ואז על כל הערכים שנותרו במערך. כל ערך שנמצא במערך מופיע פעמיים ומתבטל. רק שני החסרים נשארים, ולכן התוצאה היא a XOR b.\n\nאבל התוצאה הזו עדיין אינה שני המספרים עצמם. מכיוון שהחסרים שונים, יש לפחות ביט אחד שבו הם שונים; באותו מקום בתוצאת ה־XOR נמצא 1. הביט הימני ביותר שערכו 1 מבודד באמצעות combined & -combined.\n\nמחלקים לפי הביט הזה את כל המספרים בטווח ואת כל הערכים שנותרו: קבוצה אחת לביט 1 וקבוצה שנייה לביט 0. בתוך כל קבוצה מבצעים XOR נפרד. כל ערך קיים שוב מתבטל עם העותק שלו באותה קבוצה, ושני החסרים נמצאים בקבוצות שונות. לכן בכל קבוצה נשאר בדיוק חסר אחד.\n\nאם החסרים הם 37 ו־82, תוצאת ה־XOR היא 119 והביט המבדיל שבחרנו הוא ביט היחידות: 37 אי־זוגי ו־82 זוגי. אחרי הביטול בקבוצת האי־זוגיים נשאר 37, ובקבוצת הזוגיים נשאר 82. במקרים אחרים הביט המבדיל יכול להיות ביט אחר; אין להסתמך תמיד על זוגיות.\n\n```python\ndef missing_two(remaining, n=100):\n    combined = 0\n    for value in range(1, n + 1):\n        combined ^= value\n    for value in remaining:\n        combined ^= value\n\n    distinguishing_bit = combined & -combined\n    a = 0\n    b = 0\n\n    for value in range(1, n + 1):\n        if value & distinguishing_bit:\n            a ^= value\n        else:\n            b ^= value\n    for value in remaining:\n        if value & distinguishing_bit:\n            a ^= value\n        else:\n            b ^= value\n\n    return (a, b) if a < b else (b, a)\n```\n\nהקוד קורא את הערכים הנותרים פעמיים ואינו משנה את המערך. הוא מניח ששני חסרים שונים הוסרו מתמורה תקינה; הוא אינו בודק קלט שרירותי פגום.\n\n### למה זה נכון ומה העלות?\n\nבסעיף א, הפרש הסכומים מבטל כל ערך שנותר בדיוק פעם אחת. בסעיף ב, שלב ה־XOR הראשון משאיר רק a XOR b. הביט שנבחר מוכרח להיות שונה אצל שני החסרים, ולכן מפריד ביניהם. כל ערך קיים נשלח לאותה קבוצה בשתי הופעותיו ומתבטל, ובכל קבוצה נשאר חסר אחד.\n\nלפתרונות הסכום וה־XOR זמן O(n) בשני הסעיפים. מספר קבוע של סריקות עדיין נותן זמן ליניארי. נשמר מספר קבוע של משתנים: O(1) מילות מכונה במודל שבו מספרים בגודל הזה נכנסים למילה. בספירת ביטים זהו O(log n) זיכרון עזר; אין כאן טענה לזיכרון קבוע בביטים כשהטווח גדל ללא גבול. בפייתון המספרים מדויקים; בשפה בעלת טיפוסים ברוחב קבוע צריך למנוע גלישה בחישוב הסכום בסעיף א. עבור מערך שרירותי ולא ממוין צריך במקרה הגרוע לקרוא סדר גודל של n איברים, ולכן הזמן הליניארי מיטבי במודל הזה.\n\n### מה קורה בקריאות אחרות של המקור?\n\nאם הערכים שנשלפו גלויים לנו, פשוט קוראים אותם: עבור אחד או שניים זהו זמן O(1). אם הערכים מוסתרים ואי אפשר לבדוק את המערך שנותר, אין די מידע לזהות אותם בוודאות; כמה בחירות שונות מתיישבות עם אותו מידע. אם רק מספרי התאים ידועים ולא נאמר אילו ערכים היו בהם, אין הצדקה להשתמש בסכום של 1 עד 100. לכן תנאי ההתחלה והגישה לשאר המערך מופיעים במפורש בנוסח הערוך.\n",
+          "reference_solution": "### קודם מבהירים מה אפשר לראות\n\nהנוסח המקורי אינו אומר במפורש שהערכים שנשלפו מוסתרים ושהמערך המקורי מכיל כל מספר פעם אחת. כאן נפתור את הפרשנות שהוגדרה במפורש בנוסח הערוך: בתחילה קיימת תמורה של המספרים מ־1 עד 100; ערך אחד או שני ערכים שונים הוצאו והוסתרו, ואפשר לקרוא את כל הערכים שנותרו. זהו מידע חיוני לפתרון, ולא מסקנה מהסדר האקראי. נסמן את גבול הטווח הכללי ב־n; בשאלה הנתונה n=100.\n\n### פתרון משותף לשני הסעיפים — מערך דגלים כשמותר זיכרון נוסף\n\nאם מותר להשתמש בזיכרון נוסף, אפשר לפתור את שני הסעיפים באותה פונקציה, בלי נוסחת סכום, סכום ריבועים, גיבוב או XOR. מכינים רשימת דגלים בשם seen, שבה האינדקס מייצג את המספר עצמו. למשל, seen[37] אומר אם המספר 37 הופיע בשארית; הוא אינו מתייחס לתא מספר 37 במערך הקלט.\n\n1. מאתחלים n+1 דגלים ל־False. התא באינדקס 0 אינו בשימוש, כך שאפשר להשתמש ישירות באינדקסים מ־1 עד n. עבור n=100 יש 101 תאים, מהם 100 תאים שימושיים.\n2. עוברים פעם אחת על המספרים שנותרו. עבור כל value מסמנים seen[value] = True.\n3. עוברים על האינדקסים מ־1 עד n. כל אינדקס שהדגל שלו נשאר False הוא מספר שלא הופיע, ולכן מוסיפים אותו לתשובה.\n\n```python\ndef missing_with_flags(remaining, n=100):\n    seen = [False] * (n + 1)\n\n    for value in remaining:\n        seen[value] = True\n\n    missing = []\n    for value in range(1, n + 1):\n        if not seen[value]:\n            missing.append(value)\n\n    return missing\n```\n\nהפונקציה מחזירה רשימה: בסעיף א יש בה מספר אחד, ובסעיף ב שני מספרים. סריקת האינדקסים מחזירה אותם בסדר עולה. כמו הפתרונות האחרים, גם כאן מניחים שהקלט עומד בהבטחה: ערכים שונים בטווח 1 עד n, שמתוכם הוצאו המספרים המוסתרים.\n\nלדוגמה, עבור n=7 והשארית [6, 1, 4, 7, 3], מסמנים את הדגלים 6, 1, 4, 7, 3. בסיום:\n\n| המספר | הדגל |\n| --- | --- |\n| 1 | `True` |\n| 2 | `False` |\n| 3 | `True` |\n| 4 | `True` |\n| 5 | `False` |\n| 6 | `True` |\n| 7 | `True` |\n\nלכן מתקבלת הרשימה [2, 5]. התא 0 נשאר False אך אינו נסרק ואינו חלק מהתשובה.\n\n```python\nmissing_with_flags([6, 1, 4, 7, 3], n=7)  # [2, 5]\nmissing_with_flags([3, 1, 4], n=4)        # [2]\n```\n\nלמה זה נכון? בתחילה שום מספר לא סומן. אחרי כל איבר שקראנו, בדיוק המספרים שכבר הופיעו מסומנים True. לכן אחרי המעבר, דגל True מציין מספר שנשאר, ודגל False בטווח 1 עד n מציין בדיוק מספר שהוצא.\n\nהאתחול, סימון השארית וסריקת הדגלים עולים יחד O(n) זמן. מערך הדגלים דורש O(n) תאי זיכרון נוספים; הוא אינו פתרון בזיכרון קבוע. הפלט עצמו מכיל איבר אחד או שניים בשאלה הזו. בפייתון רשימת בוליאנים אינה מערך ביטים דחוס. אין שינוי למערך הקלט.\n\nזהו פתרון פשוט וישיר כשמותר זיכרון נוסף. בהמשך מופיעים הפתרונות החסכוניים בזיכרון, למקרה שמבקשים מספר קבוע של מילות עזר.\n\n### סעיף א — משווים את מה שאמור להיות למה שנותר\n\nאילו כל המספרים היו במערך, היינו יודעים את הסכום בלי לדעת את הסדר שלהם: n*(n+1)/2. סכימת כל הערכים שנותרו נותנת אותו סכום פחות הערך שהוצא. לכן החיסור מחזיר בדיוק את הערך החסר.\n\nלמשל, סכום המספרים מ־1 עד 100 הוא 5050. אם סכום 99 הערכים שנותרו הוא 5013, הערך שהוצא הוא 37.\n\n```python\ndef missing_one(remaining, n=100):\n    return n * (n + 1) // 2 - sum(remaining)\n```\n\nהפונקציה מניחה שהקלט תקין: כל הערכים הנותרים שונים, נמצאים בטווח, ורק ערך אחד חסר.\n\n### סעיף ב — למה סכום בלבד אינו מספיק?\n\nכעת הפרש הסכומים נותן את סכום שני החסרים, ולא את כל אחד מהם בנפרד. למשל, הסכום 119 מתאים גם ל־37 ו־82 וגם ל־36 ו־83. צריך מידע שמפריד בין שני הערכים.\n\nפעולת XOR מתאימה לביטול כפילויות: לכל ערך מתקיים x XOR x = 0 וגם x XOR 0 = x. נפעיל XOR על כל המספרים בטווח, ואז על כל הערכים שנותרו במערך. כל ערך שנמצא במערך מופיע פעמיים ומתבטל. רק שני החסרים נשארים, ולכן התוצאה היא a XOR b.\n\nאבל התוצאה הזו עדיין אינה שני המספרים עצמם. מכיוון שהחסרים שונים, יש לפחות ביט אחד שבו הם שונים; באותו מקום בתוצאת ה־XOR נמצא 1. הביט הימני ביותר שערכו 1 מבודד באמצעות combined & -combined.\n\nמחלקים לפי הביט הזה את כל המספרים בטווח ואת כל הערכים שנותרו: קבוצה אחת לביט 1 וקבוצה שנייה לביט 0. בתוך כל קבוצה מבצעים XOR נפרד. כל ערך קיים שוב מתבטל עם העותק שלו באותה קבוצה, ושני החסרים נמצאים בקבוצות שונות. לכן בכל קבוצה נשאר בדיוק חסר אחד.\n\nאם החסרים הם 37 ו־82, תוצאת ה־XOR היא 119 והביט המבדיל שבחרנו הוא ביט היחידות: 37 אי־זוגי ו־82 זוגי. אחרי הביטול בקבוצת האי־זוגיים נשאר 37, ובקבוצת הזוגיים נשאר 82. במקרים אחרים הביט המבדיל יכול להיות ביט אחר; אין להסתמך תמיד על זוגיות.\n\n```python\ndef missing_two(remaining, n=100):\n    combined = 0\n    for value in range(1, n + 1):\n        combined ^= value\n    for value in remaining:\n        combined ^= value\n\n    distinguishing_bit = combined & -combined\n    a = 0\n    b = 0\n\n    for value in range(1, n + 1):\n        if value & distinguishing_bit:\n            a ^= value\n        else:\n            b ^= value\n    for value in remaining:\n        if value & distinguishing_bit:\n            a ^= value\n        else:\n            b ^= value\n\n    return (a, b) if a < b else (b, a)\n```\n\nהקוד קורא את הערכים הנותרים פעמיים ואינו משנה את המערך. הוא מניח ששני חסרים שונים הוסרו מתמורה תקינה; הוא אינו בודק קלט שרירותי פגום.\n\n### למה זה נכון ומה העלות?\n\nבסעיף א, הפרש הסכומים מבטל כל ערך שנותר בדיוק פעם אחת. בסעיף ב, שלב ה־XOR הראשון משאיר רק a XOR b. הביט שנבחר מוכרח להיות שונה אצל שני החסרים, ולכן מפריד ביניהם. כל ערך קיים נשלח לאותה קבוצה בשתי הופעותיו ומתבטל, ובכל קבוצה נשאר חסר אחד.\n\nלפתרונות הסכום וה־XOR זמן O(n) בשני הסעיפים. מספר קבוע של סריקות עדיין נותן זמן ליניארי. נשמר מספר קבוע של משתנים: O(1) מילות מכונה במודל שבו מספרים בגודל הזה נכנסים למילה. בספירת ביטים זהו O(log n) זיכרון עזר; אין כאן טענה לזיכרון קבוע בביטים כשהטווח גדל ללא גבול. בפייתון המספרים מדויקים; בשפה בעלת טיפוסים ברוחב קבוע צריך למנוע גלישה בחישוב הסכום בסעיף א. עבור מערך שרירותי ולא ממוין צריך במקרה הגרוע לקרוא סדר גודל של n איברים, ולכן הזמן הליניארי מיטבי במודל הזה.\n\n### מה קורה בקריאות אחרות של המקור?\n\nאם הערכים שנשלפו גלויים לנו, פשוט קוראים אותם: עבור אחד או שניים זהו זמן O(1). אם הערכים מוסתרים ואי אפשר לבדוק את המערך שנותר, אין די מידע לזהות אותם בוודאות; כמה בחירות שונות מתיישבות עם אותו מידע. אם רק מספרי התאים ידועים ולא נאמר אילו ערכים היו בהם, אין הצדקה להשתמש בסכום של 1 עד 100. לכן תנאי ההתחלה והגישה לשאר המערך מופיעים במפורש בנוסח הערוך.\n\n\nהשרטוט מציג n=7 ואת השארית [6,1,4,7,3]. T פירושו True ו־F פירושו False; אינדקס 0 מחוק כי אינו נסרק. הדגלים הכתומים באינדקסים 2 ו־5 נשארו False ומזהים את שני החסרים. זו אותה חלופת זיכרון נוסף שהוצגה בתחילת הפתרון.\n",
           "hint": "אין צורך לשחזר את הסדר האקראי. איזה מידע אפשר לחשב מראש על כל המספרים בטווח, ואז להשוות למה שנותר?"
         },
         "en": {
@@ -7870,7 +7875,7 @@
             "A difference of sums finds one missing value. For two, it gives only their sum. Which operation cancels a value appearing twice?",
             "XOR the complete range and the remaining entries. The result is the XOR of the two missing values. Choose a set bit in that result, partition both inputs by it, and XOR each group separately."
           ],
-          "reference_solution": "### First clarify what is observable\n\nThe original wording does not explicitly say that the drawn values are hidden or that every number occurs exactly once. We solve the interpretation stated in the edited prompt: the initial array is a permutation of 1 through 100; one or two distinct values are removed and hidden, and all remaining entries can be inspected. These are essential assumptions, not consequences of random ordering. Let n denote the general upper limit; here n=100.\n\n### One solution for both parts — a flag array when extra memory is allowed\n\nWhen extra memory is allowed, the same function solves both parts without a sum formula, a sum of squares, hashing, or XOR. Prepare a flag list named seen, whose index represents the value itself. For example, seen[37] records whether value 37 appeared in the remainder; it does not refer to position 37 in the input array.\n\n1. Initialize n+1 flags to False. Index zero is unused, so values 1 through n can be used directly as indices. For n=100 there are 101 entries, of which 100 are useful flags.\n2. Read the remaining values once. For every value, set seen[value] = True.\n3. Scan indices 1 through n. Every index whose flag is still False represents an absent value; append it to the answer.\n\n```python\ndef missing_with_flags(remaining, n=100):\n    seen = [False] * (n + 1)\n\n    for value in remaining:\n        seen[value] = True\n\n    missing = []\n    for value in range(1, n + 1):\n        if not seen[value]:\n            missing.append(value)\n\n    return missing\n```\n\nThe function returns a list containing one value for Part A or two for Part B. Scanning indices returns them in ascending order. As with the other solutions, the input promise is required: distinct values from 1 through n, with the hidden values removed.\n\nFor example, let n=7 and let the remaining array be [6, 1, 4, 7, 3]. Mark flags 6, 1, 4, 7, 3. The final flags are:\n\n| Value | Flag |\n| --- | --- |\n| 1 | `True` |\n| 2 | `False` |\n| 3 | `True` |\n| 4 | `True` |\n| 5 | `False` |\n| 6 | `True` |\n| 7 | `True` |\n\nThe answer is [2, 5]. Index zero remains False but is not scanned or returned.\n\n```python\nmissing_with_flags([6, 1, 4, 7, 3], n=7)  # [2, 5]\nmissing_with_flags([3, 1, 4], n=4)        # [2]\n```\n\nWhy is it correct? Initially no value is marked. After each input entry, precisely the values read so far are marked True. At the end, True represents a remaining value, while False at an index from 1 through n represents exactly a removed value.\n\nInitialization, marking the remainder, and scanning the flags take O(n) time altogether. The flag array uses O(n) additional storage entries; this is not a constant-space solution. The output contains only one or two values in this question. A Python Boolean list is not a packed bit array. The input array is not modified.\n\nThis is a direct starting solution when extra memory is permitted. The following alternatives reduce auxiliary storage when a constant number of extra words is required.\n\n### Part A — compare what should be present with what remains\n\nIf all values were present, their sum would be n*(n+1)/2 regardless of their order. The sum of the remaining values is that total minus the removed value. Subtracting therefore gives exactly the missing value.\n\nFor example, 1 through 100 sum to 5050. If the remaining 99 entries sum to 5013, the removed value is 37.\n\n```python\ndef missing_one(remaining, n=100):\n    return n * (n + 1) // 2 - sum(remaining)\n```\n\nThis function assumes valid input: the remaining values are distinct, are in range, and exactly one value is absent.\n\n### Part B — why is a sum alone insufficient?\n\nThe difference of sums now gives the sum of two missing values, not each value separately. For example, 119 could be 37+82 or 36+83. We need information that separates the two missing values.\n\nXOR cancels duplicate values: x XOR x = 0 and x XOR 0 = x. XOR every value in the full range, then every remaining array entry. Every present value occurs twice and cancels. Only the two missing values survive, so the result is a XOR b.\n\nThis still does not identify both values. Because the missing values are distinct, at least one bit differs between them; that bit is 1 in their XOR. The expression combined & -combined isolates the rightmost set bit.\n\nPartition both the full range and the remaining entries by that bit: one group has bit 1 and the other has bit 0. XOR the values independently within each group. Every present value cancels with its copy in the same group, while the two missing values lie in different groups. Exactly one missing value remains in each group.\n\nIf the missing values are 37 and 82, their XOR is 119, and the chosen distinguishing bit is the least significant bit: 37 is odd and 82 is even. Cancellation leaves 37 in the odd group and 82 in the even group. In other inputs, another bit may be required; a fixed odd/even split does not always work.\n\n```python\ndef missing_two(remaining, n=100):\n    combined = 0\n    for value in range(1, n + 1):\n        combined ^= value\n    for value in remaining:\n        combined ^= value\n\n    distinguishing_bit = combined & -combined\n    a = 0\n    b = 0\n\n    for value in range(1, n + 1):\n        if value & distinguishing_bit:\n            a ^= value\n        else:\n            b ^= value\n    for value in remaining:\n        if value & distinguishing_bit:\n            a ^= value\n        else:\n            b ^= value\n\n    return (a, b) if a < b else (b, a)\n```\n\nThe code reads the remaining entries twice and does not modify the array. It assumes two distinct missing values from a valid permutation; it does not validate arbitrary malformed input.\n\n### Correctness and cost\n\nIn Part A, subtracting the observed sum cancels every remaining value once. In Part B, the first XOR leaves a XOR b. The selected set bit must differ between the two missing values, so it separates them. Each present value is assigned to the same group on both appearances and cancels, leaving one missing value per group.\n\nThe sum and XOR alternatives take O(n) time in both parts. A constant number of scans is still linear. A constant number of integer variables gives O(1) machine words when these values fit the word model. Counting bits gives O(log n) auxiliary storage; this is not constant bit space for an unbounded range. Python arithmetic is exact; fixed-width languages must avoid overflow in Part A's sum. For an arbitrary unsorted array, inspecting order n entries is necessary in the worst case, so linear time is optimal in this access model.\n\n### Other readings of the original\n\nIf the drawn values are visible, simply read them: one or two values take O(1) time. If they are hidden and the remaining array cannot be inspected, there is insufficient information to identify them with certainty; different removed values fit the same observation. If only cell indices are known, without a guarantee on the original values, the sum of 1 through 100 is unjustified. The edited prompt therefore states the initial contents and observation model explicitly.\n",
+          "reference_solution": "### First clarify what is observable\n\nThe original wording does not explicitly say that the drawn values are hidden or that every number occurs exactly once. We solve the interpretation stated in the edited prompt: the initial array is a permutation of 1 through 100; one or two distinct values are removed and hidden, and all remaining entries can be inspected. These are essential assumptions, not consequences of random ordering. Let n denote the general upper limit; here n=100.\n\n### One solution for both parts — a flag array when extra memory is allowed\n\nWhen extra memory is allowed, the same function solves both parts without a sum formula, a sum of squares, hashing, or XOR. Prepare a flag list named seen, whose index represents the value itself. For example, seen[37] records whether value 37 appeared in the remainder; it does not refer to position 37 in the input array.\n\n1. Initialize n+1 flags to False. Index zero is unused, so values 1 through n can be used directly as indices. For n=100 there are 101 entries, of which 100 are useful flags.\n2. Read the remaining values once. For every value, set seen[value] = True.\n3. Scan indices 1 through n. Every index whose flag is still False represents an absent value; append it to the answer.\n\n```python\ndef missing_with_flags(remaining, n=100):\n    seen = [False] * (n + 1)\n\n    for value in remaining:\n        seen[value] = True\n\n    missing = []\n    for value in range(1, n + 1):\n        if not seen[value]:\n            missing.append(value)\n\n    return missing\n```\n\nThe function returns a list containing one value for Part A or two for Part B. Scanning indices returns them in ascending order. As with the other solutions, the input promise is required: distinct values from 1 through n, with the hidden values removed.\n\nFor example, let n=7 and let the remaining array be [6, 1, 4, 7, 3]. Mark flags 6, 1, 4, 7, 3. The final flags are:\n\n| Value | Flag |\n| --- | --- |\n| 1 | `True` |\n| 2 | `False` |\n| 3 | `True` |\n| 4 | `True` |\n| 5 | `False` |\n| 6 | `True` |\n| 7 | `True` |\n\nThe answer is [2, 5]. Index zero remains False but is not scanned or returned.\n\n```python\nmissing_with_flags([6, 1, 4, 7, 3], n=7)  # [2, 5]\nmissing_with_flags([3, 1, 4], n=4)        # [2]\n```\n\nWhy is it correct? Initially no value is marked. After each input entry, precisely the values read so far are marked True. At the end, True represents a remaining value, while False at an index from 1 through n represents exactly a removed value.\n\nInitialization, marking the remainder, and scanning the flags take O(n) time altogether. The flag array uses O(n) additional storage entries; this is not a constant-space solution. The output contains only one or two values in this question. A Python Boolean list is not a packed bit array. The input array is not modified.\n\nThis is a direct starting solution when extra memory is permitted. The following alternatives reduce auxiliary storage when a constant number of extra words is required.\n\n### Part A — compare what should be present with what remains\n\nIf all values were present, their sum would be n*(n+1)/2 regardless of their order. The sum of the remaining values is that total minus the removed value. Subtracting therefore gives exactly the missing value.\n\nFor example, 1 through 100 sum to 5050. If the remaining 99 entries sum to 5013, the removed value is 37.\n\n```python\ndef missing_one(remaining, n=100):\n    return n * (n + 1) // 2 - sum(remaining)\n```\n\nThis function assumes valid input: the remaining values are distinct, are in range, and exactly one value is absent.\n\n### Part B — why is a sum alone insufficient?\n\nThe difference of sums now gives the sum of two missing values, not each value separately. For example, 119 could be 37+82 or 36+83. We need information that separates the two missing values.\n\nXOR cancels duplicate values: x XOR x = 0 and x XOR 0 = x. XOR every value in the full range, then every remaining array entry. Every present value occurs twice and cancels. Only the two missing values survive, so the result is a XOR b.\n\nThis still does not identify both values. Because the missing values are distinct, at least one bit differs between them; that bit is 1 in their XOR. The expression combined & -combined isolates the rightmost set bit.\n\nPartition both the full range and the remaining entries by that bit: one group has bit 1 and the other has bit 0. XOR the values independently within each group. Every present value cancels with its copy in the same group, while the two missing values lie in different groups. Exactly one missing value remains in each group.\n\nIf the missing values are 37 and 82, their XOR is 119, and the chosen distinguishing bit is the least significant bit: 37 is odd and 82 is even. Cancellation leaves 37 in the odd group and 82 in the even group. In other inputs, another bit may be required; a fixed odd/even split does not always work.\n\n```python\ndef missing_two(remaining, n=100):\n    combined = 0\n    for value in range(1, n + 1):\n        combined ^= value\n    for value in remaining:\n        combined ^= value\n\n    distinguishing_bit = combined & -combined\n    a = 0\n    b = 0\n\n    for value in range(1, n + 1):\n        if value & distinguishing_bit:\n            a ^= value\n        else:\n            b ^= value\n    for value in remaining:\n        if value & distinguishing_bit:\n            a ^= value\n        else:\n            b ^= value\n\n    return (a, b) if a < b else (b, a)\n```\n\nThe code reads the remaining entries twice and does not modify the array. It assumes two distinct missing values from a valid permutation; it does not validate arbitrary malformed input.\n\n### Correctness and cost\n\nIn Part A, subtracting the observed sum cancels every remaining value once. In Part B, the first XOR leaves a XOR b. The selected set bit must differ between the two missing values, so it separates them. Each present value is assigned to the same group on both appearances and cancels, leaving one missing value per group.\n\nThe sum and XOR alternatives take O(n) time in both parts. A constant number of scans is still linear. A constant number of integer variables gives O(1) machine words when these values fit the word model. Counting bits gives O(log n) auxiliary storage; this is not constant bit space for an unbounded range. Python arithmetic is exact; fixed-width languages must avoid overflow in Part A's sum. For an arbitrary unsorted array, inspecting order n entries is necessary in the worst case, so linear time is optimal in this access model.\n\n### Other readings of the original\n\nIf the drawn values are visible, simply read them: one or two values take O(1) time. If they are hidden and the remaining array cannot be inspected, there is insufficient information to identify them with certainty; different removed values fit the same observation. If only cell indices are known, without a guarantee on the original values, the sum of 1 through 100 is unjustified. The edited prompt therefore states the initial contents and observation model explicitly.\n\n\nThe diagram uses n=7 and remainder [6,1,4,7,3]. T means True and F means False; index zero is crossed out because it is not scanned. Orange flags at indices 2 and 5 remain False, identifying both omissions. This illustrates the extra-memory alternative at the start of the reference.\n",
           "hint": "You do not need to reconstruct the random order. What aggregate can you compute for the complete range and compare with the remaining entries?"
         }
       },
@@ -7962,6 +7967,11 @@
         {
           "type": "source_image",
           "path": "sources/prep-041.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-041-presence-flags.png",
+          "description": "PREP-041"
         }
       ],
       "related_question_ids": [
@@ -8346,6 +8356,936 @@
       },
       "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
       "markdown_path": "questions/prep-043-serial-safe-abcd-sequence-detector.md"
+    },
+    {
+      "id": "PREP-044",
+      "key": "hardware-fibonacci-register-adder",
+      "version": 1,
+      "created_on": "2026-10-19",
+      "category": "hardware",
+      "topic": "sequential_circuits",
+      "topics": [
+        "fibonacci",
+        "registers",
+        "adders",
+        "parallel_updates",
+        "finite_width",
+        "overflow"
+      ],
+      "source_topic_tags": [
+        "hardware"
+      ],
+      "added_topic_tags": [
+        "fibonacci",
+        "registers",
+        "adders",
+        "parallel_updates",
+        "finite_width",
+        "overflow"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "construct",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied source; AI-assisted bilingual proposed solution and verification; professional, parity and reuse review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-044.png",
+          "received_on": "2026-10-19"
+        }
+      ],
+      "original_prompt": "ממשי את סדרת פיבונצ׳י באמצעות חומרה",
+      "translations": {
+        "he": {
+          "title": "מימוש סדרת פיבונצ׳י באמצעות חומרה",
+          "prompt": "ממשו באמצעות חומרה רכיב שמפיק את סדרת פיבונצ׳י: `F_0=0`, `F_1=1`, וכל איבר נוסף הוא סכום שני קודמיו. הציגו את מבנה המעגל, ערכי האתחול, העדכון בכל חזית שעון ודוגמת ריצה.\n\nלצורך מימוש מוגדר, נניח שעון סינכרוני, שני אוגרים ללא סימן ברוחב `W` ביטים (`W>=1`) ואיפוס סינכרוני שמתחיל את הפלט ב־0. בכל חזית עולה ללא איפוס יתקבל האיבר הבא. יש להסביר את התנהגות המימוש כאשר התוצאה אינה נכנסת ברוחב האוגרים.\n\nהבהרת עריכה: המקור מבקש רק לממש פיבונצ׳י בחומרה ואינו מגדיר אינדוקס, רוחב, תזמון או איפוס. אלו הנחות מפורשות לפתרון, וניתן להציע ממשק תקף אחר אם מגדירים אותו בעקביות.",
+          "hints": [
+            "כדי לחשב את האיבר הבא, איזה חלק מהסדרה הקודמת באמת צריך לזכור?",
+            "שמרו שני איברים סמוכים בשני אוגרים. מה צריך להיות תוכנו של כל אוגר במחזור הבא?",
+            "אתחלו את האוגרים ל־0 ול־1. בכל חזית עדכנו במקביל a_next=b ו־b_next=a+b מתוך הערכים הישנים; הפלט הוא a. הגדירו גם רוחב וגלישה."
+          ],
+          "reference_solution": "**פתרון מוצע — שני אוגרים ומחבר**\n\n**מה צריך לזכור?** בסדרת פיבונצ׳י כל איבר הוא סכום שני קודמיו. לכן אין צורך לשמור את כל הסדרה: מספיק לזכור שני איברים סמוכים. נבחר `F_0=0, F_1=1`, כך שהפלט מתחיל `0,1,1,2,3,5,...`. המקור אינו מגדיר אינדוקס, רוחב, שעון או איפוס; אלו הבהרות למימוש שלנו, ולא נתונים מקוריים.\n\n**1. נשמור שני איברים סמוכים.** האוגר `a` מחזיק את האיבר שמוצג כעת, והאוגר `b` מחזיק את הבא אחריו. מיד לאחר איפוס: `a=0, b=1`, והפלט הוא `a`. שני האוגרים ברוחב `W` ביטים ללא סימן, עם `W>=1`.\n\n**2. נתקדם צעד אחד בכל חזית שעון עולה.** האיבר הבא להצגה הוא `b`, והאיבר שאחריו הוא הסכום של `a` ו־`b`. לכן:\n\n```text\na_next = b\nb_next = (a + b) mod 2^W\nvalue  = a\n```\n\nשני האוגרים מתעדכנים **במקביל מתוך הערכים הישנים**. למשל, מ־`a=2,b=3` עוברים ל־`a=3,b=5`. אם היינו משנים קודם את `a` ואחר כך מחשבים `a+b` מהערך החדש, היינו מקבלים בטעות `b=6`.\n\n**3. החומרה.** נחבר את יציאת `b` לכניסת הנתונים של `a`. יציאות שני האוגרים נכנסות למחבר ברוחב `W`, ו־`W` הביטים הנמוכים של הסכום מחוברים לכניסת `b`. שני האוגרים מקבלים אותו שעון. הפלט הוא יציאת `a`. בשרטוט, חוטים בעלי אותו שם (`a`, `b`, `sum`) מחוברים זה לזה; השמות מאפשרים להציג את המעגל בלי הצטלבויות מבלבלות.\n\n**4. דוגמת ריצה ללא גלישה.** השורה הראשונה היא מצב האתחול, לפני החזית הראשונה ללא איפוס:\n\n```text\nk       a=value    b\n0          0      1\n1          1      1\n2          1      2\n3          2      3\n4          3      5\n5          5      8\n6          8     13\n7         13     21\n8         21     34\n9         34     55\n10        55     89\n```\n\n**5. מימוש SystemVerilog.** איפוס סינכרוני פעיל בגבוה קובע את מצב ההתחלה בחזית שעון. יש להחזיק אותו פעיל לפחות בחזית אחת; לא מניחים שאתחול אובייקט במודל פייתון מאתחל מעגל פיזי.\n\n```systemverilog\n// W >= 1. Synchronous reset; output after k nonreset edges is F_k mod 2**W.\nmodule hardware_fibonacci #(\n    parameter int unsigned W = 16\n) (\n    input  logic         clk,\n    input  logic         rst,\n    output logic [W-1:0] value\n);\n    logic [W-1:0] a, b;\n\n    assign value = a;\n\n    always_ff @(posedge clk) begin\n        if (rst) begin\n            a <= '0;\n            b <= 1;\n        end else begin\n            a <= b;\n            b <= a + b;\n        end\n    end\nendmodule\n```\n\nההשמות הלא חוסמות `<=` מחשבות את שני אגפי ימין מהמצב הישן ורק אז מעדכנות יחד. הפלט בחזית מספר `k` לאחר העדכון הוא `F_k mod 2^W`, כאשר סופרים רק חזיתות מאז האיפוס שאינן מאפסות.\n\n**6. למה זה נכון?** באתחול הזוג הוא `(F_0,F_1)`. אם לפני עדכון הוא `(F_k,F_(k+1))`, לאחריו הוא `(F_(k+1),F_k+F_(k+1))`, כלומר `(F_(k+1),F_(k+2))`. אותו נימוק תקף מודולו `2^W`, ולכן האינווריאנט נשמר בכל מחזור.\n\n**7. רוחב סופי וגלישה.** אין חומרה בעלת מספר ביטים סופי שמפיקה לעד את כל המספרים המדויקים, כי הסדרה גדלה ללא גבול. במימוש הזה הסכום נקטע ל־`W` ביטים, ולכן הפלט הוא פיבונצ׳י מודולו `2^W`. למשל, עבור `W=4` יוצג `0,1,1,2,3,5,8,13,5,2,...`: הערך 21 מיוצג כ־5. אם צריך רק מספר ידוע של איברים מדויקים, בוחרים רוחב שמספיק לערך הגדול ביותר שיש לאחסן, כולל האוגר `b`, או מוסיפים מדיניות גלישה מפורשת. גלישת `b` עשויה להתרחש חזית אחת לפני הופעת האיבר הגולש ב־`a`.\n\n**עלות ותזמון.** הבנייה משתמשת בשני אוגרים בני `W` ביטים ובמחבר אחד ברוחב `W`, בתוספת לוגיקת האיפוס. מתקבל איבר חדש בכל מחזור ללא איפוס. זהו תיאור מימוש, לא הוכחה למינימום שטח או השהיה. תקופת השעון צריכה לאפשר את מסלול האוגר–מחבר–אוגר, כולל זמני הכנה, שעון וניתוב; השהיית המחבר תלויה בארכיטקטורה ובטכנולוגיה.\n\n**תשובה קצרה לראיון:** אשמור שני איברים סמוכים באוגרים מאותחלים ל־0 ול־1. בכל חזית אעביר את השני לראשון ואת סכומם לשני, במקביל, ואוציא את הראשון. אגדיר את רוחב האוגרים ואת התנהגות הגלישה, כי בחומרה סופית אי אפשר לייצר לעד סדרה מדויקת ללא הגבלה.\n\n**אימות:** מודל פייתון נבדק מול אורקל עצמאי שמחשב פיבונצ׳י מדויק בשיטת הכפלה מהירה: 10,260 מצבים ברוחבים 1–17, 32, 64 ו־128, ועוד כל 8,192 עקבות האיפוס באורך 10 ברוחבים 1–8. שש אפשרויות רוחב לא תקינות נדחו. קוד SystemVerilog צורף, אך לא קומפל או הורץ בסימולטור HDL ולא עבר סינתזה או בדיקת תזמון פיזית. זהו פתרון מוצע בסיוע AI, שממתין לסקירה מקצועית עצמאית.\n",
+          "hint": "כדי לחשב את האיבר הבא, איזה חלק מהסדרה הקודמת באמת צריך לזכור?"
+        },
+        "en": {
+          "title": "Implementing Fibonacci with hardware",
+          "prompt": "Implement a hardware component that generates Fibonacci numbers: `F_0=0`, `F_1=1`, and each later term equals the sum of its two predecessors. Show the datapath, initial values, per-edge update and a trace.\n\nFor a defined implementation, assume a common synchronous clock, two unsigned `W`-bit registers (`W>=1`) and synchronous reset starting output at zero. Each nonreset rising edge produces the next term. Explain behavior when a result no longer fits the register width.\n\nEditorial clarification: the source asks only for hardware Fibonacci and does not specify indexing, width, timing or reset. These are explicit solution assumptions; another valid interface is acceptable if defined consistently.",
+          "hints": [
+            "Which part of the previous sequence must actually be remembered to calculate the next term?",
+            "Store two consecutive terms in two registers. What should each register contain next cycle?",
+            "Initialize to zero and one. On each edge update a_next=b and b_next=a+b in parallel from old values; expose a. Also define width and overflow."
+          ],
+          "reference_solution": "**Proposed solution — two registers and an adder**\n\n**What must be remembered?** Each Fibonacci number is the sum of the preceding two. We need not store the entire sequence: two consecutive terms suffice. Choose `F_0=0, F_1=1`, producing `0,1,1,2,3,5,...`. The source leaves indexing, width, clock and reset unspecified; these are explicit implementation clarifications, not original data.\n\n**1. Store two adjacent terms.** Register `a` holds the term currently displayed, and `b` holds the following term. Immediately after reset, `a=0,b=1`, with output `value=a`. Both registers are unsigned and `W` bits wide, where `W>=1`.\n\n**2. Advance on each rising clock edge.** The next displayed term is `b`; the term after it is the sum of old `a` and old `b`:\n\n```text\na_next = b\nb_next = (a + b) mod 2^W\nvalue  = a\n```\n\nBoth registers update **simultaneously from their old values**. For example, `(a,b)=(2,3)` becomes `(3,5)`. Updating `a` first and then using the new value in the sum would incorrectly make `b=6`.\n\n**3. Hardware connections.** Connect output `b` to the data input of `a`. Feed both register outputs into a `W`-bit adder, and connect its low `W` result bits to the data input of `b`. Both registers share the clock. Expose `a` as output. In the schematic, matching net names (`a`, `b`, `sum`) denote connected wires; named nets avoid ambiguous wire crossings.\n\n**4. Trace before overflow.** Row zero is initialization, before the first nonreset edge:\n\n```text\nk       a=value    b\n0          0      1\n1          1      1\n2          1      2\n3          2      3\n4          3      5\n5          5      8\n6          8     13\n7         13     21\n8         21     34\n9         34     55\n10        55     89\n```\n\n**5. SystemVerilog implementation.** A synchronous active-high reset establishes the initial state at a clock edge. Assert it across at least one active edge; Python object initialization does not initialize physical registers.\n\n```systemverilog\n// W >= 1. Synchronous reset; output after k nonreset edges is F_k mod 2**W.\nmodule hardware_fibonacci #(\n    parameter int unsigned W = 16\n) (\n    input  logic         clk,\n    input  logic         rst,\n    output logic [W-1:0] value\n);\n    logic [W-1:0] a, b;\n\n    assign value = a;\n\n    always_ff @(posedge clk) begin\n        if (rst) begin\n            a <= '0;\n            b <= 1;\n        end else begin\n            a <= b;\n            b <= a + b;\n        end\n    end\nendmodule\n```\n\nNonblocking assignments `<=` evaluate both right-hand sides from the old state before updating together. After nonreset edge `k` since initialization, output is `F_k mod 2^W`.\n\n**6. Correctness.** Initialization gives `(F_0,F_1)`. If the stored pair is `(F_k,F_(k+1))`, the next pair is `(F_(k+1),F_k+F_(k+1))=(F_(k+1),F_(k+2))`. The same identity holds modulo `2^W`, preserving the invariant at every edge.\n\n**7. Finite width and overflow.** No fixed finite number of bits can represent all exact Fibonacci terms forever: their values grow without bound. This implementation truncates the sum to `W` bits, giving Fibonacci modulo `2^W`. For `W=4`, for example, output is `0,1,1,2,3,5,8,13,5,2,...`, because 21 is represented as 5. For a bounded number of exact terms, choose a width covering the largest stored value, including register `b`, or specify an overflow policy. Register `b` can overflow one edge before the overflowing term reaches output `a`.\n\n**Cost and timing.** This construction uses two `W`-bit registers and one `W`-bit adder, plus reset logic, and produces one new term per nonreset cycle. This is not an area or delay minimality proof. The clock period must accommodate the register–adder–register path, including setup, clock and routing effects; adder delay depends on architecture and technology.\n\n**Interview answer:** Store two adjacent terms in registers initialized to zero and one. At every rising edge copy the second term into the first register and their old-value sum into the second, in parallel, and expose the first. Define register width and overflow because finite hardware cannot generate an unbounded exact sequence forever.\n\n**Verification:** A Python clock-edge model matched an independent exact fast-doubling Fibonacci oracle at 10,260 states across widths 1–17, 32, 64 and 128, plus all 8,192 length-ten reset traces at widths 1–8. Six invalid widths were rejected. SystemVerilog is supplied but has not been compiled, HDL-simulated, synthesized or physically timed. This is an AI-assisted proposal with independent expert review pending.\n",
+          "hint": "Which part of the previous sequence must actually be remembered to calculate the next term?"
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-044-he-H01",
+          "level": 1,
+          "language": "he",
+          "content": "כדי לחשב את האיבר הבא, איזה חלק מהסדרה הקודמת באמת צריך לזכור?"
+        },
+        {
+          "id": "PREP-044-he-H02",
+          "level": 2,
+          "language": "he",
+          "content": "שמרו שני איברים סמוכים בשני אוגרים. מה צריך להיות תוכנו של כל אוגר במחזור הבא?"
+        },
+        {
+          "id": "PREP-044-he-H03",
+          "level": 3,
+          "language": "he",
+          "content": "אתחלו את האוגרים ל־0 ול־1. בכל חזית עדכנו במקביל a_next=b ו־b_next=a+b מתוך הערכים הישנים; הפלט הוא a. הגדירו גם רוחב וגלישה."
+        },
+        {
+          "id": "PREP-044-en-H01",
+          "level": 1,
+          "language": "en",
+          "content": "Which part of the previous sequence must actually be remembered to calculate the next term?"
+        },
+        {
+          "id": "PREP-044-en-H02",
+          "level": 2,
+          "language": "en",
+          "content": "Store two consecutive terms in two registers. What should each register contain next cycle?"
+        },
+        {
+          "id": "PREP-044-en-H03",
+          "level": 3,
+          "language": "en",
+          "content": "Initialize to zero and one. On each edge update a_next=b and b_next=a+b in parallel from old values; expose a. Also define width and overflow."
+        }
+      ],
+      "assumptions": [
+        "Sequence convention is F_0=0,F_1=1. Output is register a, including zero before the first nonreset edge.",
+        "Two unsigned W-bit registers, W>=1, common clock and synchronous active-high reset; these clarify the terse source.",
+        "Finite-width addition wraps modulo 2^W; an unbounded exact sequence is not promised.",
+        "Reset must be asserted at an edge, and clock period must accommodate the datapath. No enable or handshake is required."
+      ],
+      "optimality": {
+        "criterion": "An explicit synchronous implementation producing one term per cycle.",
+        "result": "Two W-bit registers and one W-bit adder, plus reset logic.",
+        "proof": "State (F_k,F_(k+1)) updates in parallel to (b,a+b)=(F_(k+1),F_(k+2)); this also holds modulo 2^W.",
+        "scope": "No area or delay minimum is proved. Finite-width hardware cannot represent the entire exact sequence forever, and adder timing depends on implementation."
+      },
+      "verification": {
+        "status": "Python-model checks passed; independent expert review pending.",
+        "method": "Comparison to independent exact fast-doubling Fibonacci followed by modular reduction.",
+        "coverage": "10,260 sampled states across 20 widths, 8,192 length-ten reset traces and six invalid-width cases.",
+        "script_path": "checks/check_prep_044.py",
+        "scope": "SystemVerilog supplied but not compiled or HDL-simulated; no synthesis or physical timing."
+      },
+      "edge_cases": [
+        "W=1 is valid and produces Fibonacci modulo two.",
+        "A midstream reset returns the pair to zero and one, with output zero, after the edge.",
+        "Without clock edges state does not advance; physical initialization must be established.",
+        "For W=4, 21 appears as 5. Register b can overflow before the overflowing term reaches a.",
+        "A bounded exact sequence needs sufficient width for the next term stored in b as well as the output."
+      ],
+      "common_mistakes": [
+        "Updating a before evaluating the sum from its new value rather than updating in parallel from old state.",
+        "Initializing both registers to zero, trapping the sequence at zero.",
+        "Starting output at one without defining a different indexing convention.",
+        "Claiming finite width represents all exact terms forever.",
+        "Omitting reset or assuming physical state initializes itself.",
+        "Claiming adder delay is independent of width and architecture."
+      ],
+      "interview_answer": "Store adjacent terms in registers initialized to zero and one. At each edge simultaneously copy the second to the first and their old-value sum to the second; expose the first. State width and overflow: a W-bit implementation produces the sequence modulo 2^W.",
+      "solution_extensions": {
+        "question": "How would you add an enable, and what changes if overflow is forbidden?",
+        "answer_outline": "Hold both registers when enable is low, with reset taking priority. For a bounded exact sequence choose sufficient width, or compute a W+1-bit sum and flag/stop on overflow. Saturation changes the sequence; finite width cannot provide exact unbounded terms forever.",
+        "integration_status": "Follow-up prepared in content; not connected to the live follow-up workflow."
+      },
+      "solution_code_path": "solutions/prep_044_hardware_fibonacci.py",
+      "solution_code_paths": [
+        "solutions/prep_044_hardware_fibonacci.py",
+        "solutions/prep_044_hardware_fibonacci.sv"
+      ],
+      "verification_evidence_path": "checks/prep-044-verification.json",
+      "verification_script_path": "checks/check_prep_044.py",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-044.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-044-fibonacci-datapath.png",
+          "description": "PREP-044"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-024"
+      ],
+      "duplicate_check": "New founder-source constraints; related tasks remain independent and retain their attribution/history.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Role-relevant hardware/state reasoning or public-knowledge logic; not verified company evidence."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "markdown_path": "questions/prep-044-hardware-fibonacci-register-adder.md"
+    },
+    {
+      "id": "PREP-045",
+      "key": "first-finisher-latched-winner",
+      "version": 1,
+      "created_on": "2026-10-19",
+      "category": "hardware",
+      "topic": "sequential_circuits",
+      "topics": [
+        "finite state machines",
+        "priority encoders",
+        "registers",
+        "synchronous reset",
+        "winner arbitration"
+      ],
+      "source_topic_tags": [
+        "hardware"
+      ],
+      "added_topic_tags": [
+        "finite state machines",
+        "priority encoders",
+        "registers",
+        "synchronous reset",
+        "winner arbitration"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "construct",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied source; AI-assisted bilingual proposed solution and verification; professional, parity and reuse review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-045.png",
+          "received_on": "2026-10-19"
+        }
+      ],
+      "original_prompt": "שלושה אנשים משתתפים במירוץ, בסוף כל מסלול ריצה יש כפתור שלחיצה עליו מוציאה '1' לוגי למשך מחזור שעון.\nעליך לממש מערכת שמקבלת את מוצאי הלחצנים ובנוסף כניסה rest כך שהמערכת מחזירה את מספר הזוכה בתחרות.\nכלומר אם הרץ על מסלול 3 זכה אז המוצא יהיה 11.\nבמידה ואחד הלחצנים נלחץ לאחר שהמנצח לחץ על הלחצן, מוצא המערכת צריכה להישאר עדיין על מוצא המנצח בתחרות.\nהכניסה rest מאפסת את כל המוצאים.",
+      "translations": {
+        "he": {
+          "title": "שמירת הזוכה הראשון במירוץ של שלושה מסלולים",
+          "prompt": "שלושה רצים משתתפים במירוץ, אחד בכל מסלול. לחצן הסיום במסלול i מספק אות pi ששווה 1 למשך מחזור שעון אחד. ממשו מערכת שמציגה את מספר המסלול של הזוכה ושומרת אותו גם לאחר שהפולס מסתיים וגם אם רצים אחרים לוחצים אחר כך.\n\nקידוד הפלט: 00 — עדיין אין זוכה, 01 — מסלול 1, 10 — מסלול 2, 11 — מסלול 3. כניסת איפוס rst מחזירה את הפלט ל־00 ומאפשרת להתחיל מירוץ חדש.\n\nהנחות המימוש המפורשות: הפולסים כבר סינכרוניים ויציבים לדגימה בחזית עולה; האיפוס סינכרוני, פעיל בגבוה ובעל עדיפות על לחיצות. אם כמה מסלולים נדגמים פעילים באותה חזית, נבחר במסלול בעל המספר הנמוך ביותר. אין דרישה להסיק סדר הגעה בתוך מחזור.\n\nהציגו טבלת אמת לבחירת מועמד, מעגל ומכונת מצבים, והסבירו כיצד מונעים מלחיצה מאוחרת להחליף זוכה. המקור אינו מגדיר שבירת תיקו או תזמון איפוס; אלה הבהרות העריכה שלנו. במקור כניסת האיפוס נכתבת rest.",
+          "hints": [
+            "הפולס של הזוכה נעלם אחרי מחזור, אבל התוצאה צריכה להישאר. איזה מידע צריך לשמור, וכמה תוצאות שונות יש?",
+            "הפרידו בין מקודד שמציע מספר מסלול לפי הפולסים הנוכחיים לבין זיכרון שמחליט האם לקבל את ההצעה. מה מסמן שעדיין אין זוכה?",
+            "השתמשו באוגר בן שני ביטים: איפוס כופה 00; אם האוגר עדיין 00, טענו את קוד המועמד; אחרת החזיקו את ערכו. הגדירו במפורש סדר עדיפות ללחיצות באותה דגימה."
+          ],
+          "reference_solution": "**פתרון מוצע — מקודד עדיפות ואוגר ששומר את הזוכה הראשון**\n\n### קודם מבהירים מה נחשב ראשון\n\nהמקור מתאר פולס באורך מחזור שעון מכל לחצן, אבל אינו מגדיר מה עושים אם כמה פולסים נדגמים באותה חזית. נבחר ונצהיר: מסלול 1 קודם ל־2, ומסלול 2 קודם ל־3 במקרה כזה בלבד. זו מדיניות שבירת תיקו שהוספנו, ולא נתון מהמקור. אם כמה אנשים מגיעים בין אותן שתי חזיתות, המערכת אינה יודעת מתוך שלושת הביטים מי הגיע קודם בזמן רציף.\n\nנניח שהכניסות `p1,p2,p3` כבר סינכרוניות לשעון ועומדות בזמני הכנה והחזקה. נדגום אותן בחזית עולה. נסמן `rst` כאיפוס פעיל בגבוה וסינכרוני, עם עדיפות על כל לחיצה. במקור נכתב `rest`; פירשנו זאת ככניסת איפוס. נשתמש בקידוד `00` כשאין זוכה, `01` למסלול 1, `10` למסלול 2 ו־`11` למסלול 3.\n\n### 1. למה צריך זיכרון?\n\nמקודד צירופי בלבד אינו מספיק. אם מסלול 3 זכה והפולס שלו כבר נגמר, עדיין צריך להציג `11`. גם לחיצה מאוחרת במסלול 1 אינה רשאית להחליף אותו. לכן שומרים את הקוד באוגר `winner` בן שני ביטים, ולא מפיקים פלט רק מהלחצנים הנוכחיים.\n\n### 2. מפרידים בין בחירת מועמד לבין שמירת תוצאה\n\nהמקודד בוחר את המועמד מתוך הפולסים הנוכחיים, לפי סדר העדיפות שהוגדר:\n\n```text\nif p1:      candidate = 01\nelse if p2: candidate = 10\nelse if p3: candidate = 11\nelse:       candidate = 00\n```\n\nטבלת האמת המלאה של המקודד:\n\n| p1 | p2 | p3 | קוד המועמד |\n| --- | --- | --- | --- |\n| 0 | 0 | 0 | 00 |\n| 0 | 0 | 1 | 11 |\n| 0 | 1 | 0 | 10 |\n| 0 | 1 | 1 | 10 |\n| 1 | 0 | 0 | 01 |\n| 1 | 0 | 1 | 01 |\n| 1 | 1 | 0 | 01 |\n| 1 | 1 | 1 | 01 |\n\nהטבלה אינה אומרת שמסלול 1 תמיד מנצח. היא משמשת רק כל עוד **עדיין אין זוכה**. אם מסלול 3 נרשם קודם, אפילו צירוף `111` מאוחר יותר לא ישנה את התוצאה.\n\nאפשר גם לכתוב את שני ביטי קוד המועמד כך:\n\n```text\ncandidate[1] = NOT(p1) AND (p2 OR p3)\ncandidate[0] = p1 OR (NOT(p2) AND p3)\n```\n\n### 3. מעדכנים את האוגר רק כשמותר\n\n```text\nif rst:\n    winner_next = 00\nelse if winner == 00:\n    winner_next = candidate\nelse:\n    winner_next = winner\n```\n\nאם אין פולס ואין זוכה, המועמד הוא `00` ונשארים בהמתנה. כשיש פולס ראשון, נשמר קוד שונה מאפס. מרגע זה התנאי `winner == 00` שקרי, ולכן האוגר מחזיק את הקוד הישן עד איפוס.\n\nלא חייבים ביט נפרד בשם `locked`: שלושת קודי המסלולים שונים מאפס, ולכן `winner != 00` כבר אומר שהמערכת נעולה. בבנייה הזו האוגר בן שני הביטים ממלא גם את תפקיד הזיכרון וגם את תפקיד פלט הזוכה.\n\n### 4. המעגל ומכונת המצבים\n\nבשרטוט המעגל, שלושת הפולסים נכנסים למקודד. מוצא המקודד מחובר לכניסה 1 של בורר דו־ביטי. כניסה 0 של הבורר מקבלת בחזרה את `winner`. אות הבחירה הוא `unlocked = (winner == 00)`. מוצא הבורר מזין את האוגר. האיפוס מאפס את האוגר בחזית הפעילה, לפני כל עדכון אחר. אפשר לממש את אותה החזקה גם באמצעות enable של האוגר.\n\nנקודה על חוט מסמנת חיבור; חוטים שנחתכים ללא נקודה אינם מחוברים. האיפוס מסומן בהערת האוגר ובמשוואת המצב הבא, ואינו כניסת נתונים רגילה של המקודד.\n\nמכונת מור שקולה כוללת ארבעה מצבים: `WAIT/00`, `W1/01`, `W2/10`, `W3/11`. למצבי הזכייה יש לולאות עצמיות עבור כל קלט כאשר האיפוס אינו פעיל. האיפוס מחזיר כל מצב ל־`WAIT`.\n\n| מצב נוכחי | תנאי בחזית, כשאין איפוס | מצב הבא | פלט לאחר החזית |\n| --- | --- | --- | --- |\n| WAIT | אין לחיצה | WAIT | 00 |\n| WAIT | p1=1 | W1 | 01 |\n| WAIT | p1=0 וגם p2=1 | W2 | 10 |\n| WAIT | p1=0 וגם p2=0 וגם p3=1 | W3 | 11 |\n| W1 | כל צירוף לחיצות | W1 | 01 |\n| W2 | כל צירוף לחיצות | W2 | 10 |\n| W3 | כל צירוף לחיצות | W3 | 11 |\n| כל מצב | איפוס פעיל בחזית | WAIT | 00 |\n\n### 5. דוגמת ריצה\n\nכל שורה מתארת דגימה בחזית שעון ואת הפלט שנשמר אחריה:\n\n| חזית | rst | p1,p2,p3 | הפלט לפני החזית | הפלט אחרי החזית | הסבר |\n| --- | --- | --- | --- | --- | --- |\n| 1 | 1 | 000 | לא משנה | 00 | הכנת המערכת למירוץ |\n| 2 | 0 | 000 | 00 | 00 | עדיין אין מסיים |\n| 3 | 0 | 001 | 00 | 11 | מסלול 3 זוכה |\n| 4 | 0 | 100 | 11 | 11 | לחיצה מאוחרת אינה מחליפה זוכה |\n| 5 | 0 | 010 | 11 | 11 | גם מסלול 2 אינו משנה את הפלט |\n| 6 | 1 | 111 | 11 | 00 | האיפוס גובר גם על שלוש לחיצות |\n| 7 | 0 | 011 | 00 | 10 | מירוץ חדש: באותה דגימה מסלול 2 קודם ל־3 |\n\n### 6. קוד חומרה ומודל לבדיקות\n\nב־SystemVerilog האוגר מתעדכן רק ב־`posedge clk`; השמה לא חוסמת שומרת על התנהגות סינכרונית. היעדר השמה בענף הנעול של בלוק `always_ff` אומר להחזיק את הערך — הוא אינו יוצר latch צירופי. המקודד מקבל ערך בכל מסלול ולכן אינו יוצר latch.\n\n```systemverilog\n// Finish pulses must already meet this clock domain's setup/hold requirements.\n// Simultaneous sampled pulses use explicit editorial priority: lane 1 > 2 > 3.\nmodule first_finisher (\n    input  logic       clk,\n    input  logic       rst,\n    input  logic       p1,\n    input  logic       p2,\n    input  logic       p3,\n    output logic [1:0] winner\n);\n    logic [1:0] candidate;\n\n    always_comb begin\n        if      (p1) candidate = 2'b01;\n        else if (p2) candidate = 2'b10;\n        else if (p3) candidate = 2'b11;\n        else         candidate = 2'b00;\n    end\n\n    always_ff @(posedge clk) begin\n        if (rst)\n            winner <= 2'b00;\n        else if (winner == 2'b00)\n            winner <= candidate;\n        // Otherwise hold winner; later pulses cannot replace it.\n    end\nendmodule\n```\n\nיש להחזיק את `rst` פעיל לפחות בחזית אחת כדי לאתחל את החומרה. מודל פייתון הבא מייצג חזיתות שעון ולא לחצנים פיזיים; המתודה מחזירה את הפלט אחרי החזית:\n\n```python\n\"\"\"Clock-edge model of a first-finisher register with lane-1-first tie priority.\n\nInput pulses are already synchronous and stable at each clock edge. This model\ndoes not debounce physical switches or recover subcycle event ordering.\n\"\"\"\n\n\ndef next_winner(winner: int, p1: int, p2: int, p3: int, reset: bool = False) -> int:\n    \"\"\"Return 0 for no winner, or the latched lane number 1, 2, or 3.\"\"\"\n    if winner not in (0, 1, 2, 3) or any(p not in (0, 1) for p in (p1, p2, p3)):\n        raise ValueError(\"Require winner 0..3 and binary finish pulses\")\n    if reset:\n        return 0\n    if winner != 0:\n        return winner\n    if p1:\n        return 1\n    if p2:\n        return 2\n    if p3:\n        return 3\n    return 0\n\n\nclass FirstFinisher:\n    \"\"\"Output changes only on a modeled rising clock edge.\"\"\"\n\n    def __init__(self):\n        self.winner = 0\n\n    def step(self, p1: int, p2: int, p3: int, reset: bool = False) -> int:\n        self.winner = next_winner(self.winner, p1, p2, p3, reset)\n        return self.winner\n```\n\n### 7. למה המימוש נכון ומה עלותו?\n\nאחרי איפוס הפלט אפס. כל עוד לא נדגם פולס, המקודד נותן אפס ולכן המצב נשאר אפס. בחזית הראשונה שבה יש פולס נשמר המסלול היחיד, או המסלול בעל העדיפות מתוך הצירוף שנדגם. מכאן ואילך הפלט שונה מאפס, וכל חזית ללא איפוס מחזיקה אותו. איפוס מחזיר לאפס ללא תלות בלחצנים. זה מוכיח בחירה, שימור ויכולת להתחיל מירוץ חדש.\n\nארבעה מצבים בעלי ארבעה פלטים שונים מחייבים לפחות ארבע אפשרויות זיכרון. בקידוד בינארי רגיל נדרשים לפחות שני ביטים, והבנייה משתמשת בדיוק בשניים. זו טענת מינימום לביטי המצב במודל הסינכרוני הנתון; אין כאן הוכחת מינימום שערים, שטח או השהיה פיזית. הלוגיקה היא מקודד קטן, בדיקת אפס ובחירת החזקה; מספר הפעולות בכל חזית קבוע.\n\n### 8. מה אינו מוגדר באמצעות המעגל הזה?\n\nאם רוצים להכריז תיקו, צריך להוסיף קוד/דגל מתאים ולבדוק ריבוי לחיצות באותה דגימה; לא נשאר קוד פנוי בשני ביטי הפלט הנוכחיים. אפשר גם להבטיח מראש שלא יהיו לחיצות בו־זמניות, ואז אין חשיבות לסדר העדיפות. אין להסיק שבירת תיקו מתוך החיווט בלי להצהיר עליה.\n\nלחצנים אמיתיים עשויים להיות אסינכרוניים ולקפוץ מכנית. לפני הכניסות שניתנו בשאלה דרושה לפי הצורך שרשרת סנכרון, הסרת רטט והפקת פולס, עם ניתוח דרישות לכידת אירועים. סנכרון אינו מבטיח למנוע כל מטא־יציבות, ללכוד כל פולס קצר או לשמר את סדרם של שני אירועים קרובים. הדרישה כאן היא הזוכה הראשון **לפי הדגימות והמדיניות המוצהרת**.\n\nאימות: נבדקו כל 64 שילובי המצב, שלוש הכניסות והאיפוס; כל 299,593 רצפי הפולסים באורכים 0–6 ללא איפוס; וכל 69,905 רצפי הפולסים והאיפוס באורכים 0–4. אורקל עצמאי סורק את ההיסטוריה מאז האיפוס האחרון ובוחר את חזית ההגעה הראשונה ואת מספר המסלול הקטן בה. נבדקו גם משוואות המקודד ושימור זוכה במשך 100 מחזורים. אלה בדיקות מודל פייתון, לא סימולציית HDL, סינתזה או מדידת חומרה. הפתרון מוצע בסיוע AI וסקירה מקצועית עצמאית עדיין ממתינה.\n",
+          "hint": "הפולס של הזוכה נעלם אחרי מחזור, אבל התוצאה צריכה להישאר. איזה מידע צריך לשמור, וכמה תוצאות שונות יש?"
+        },
+        "en": {
+          "title": "Latch the first winner in a three-lane race",
+          "prompt": "Three runners race in three lanes. Lane i has a finish button that produces a one-clock-cycle pulse pi. Design a system that outputs the winning lane and retains it after its pulse ends and when other runners press later.\n\nEncode no winner as 00, lane 1 as 01, lane 2 as 10 and lane 3 as 11. Reset input rst clears the result to 00 and permits a new race.\n\nExplicit implementation assumptions: pulses are already synchronous and stable at the rising sampling edge; reset is synchronous, active high and takes priority over finish inputs. If several lanes are sampled active at the same edge, choose the smallest lane number. Reconstructing arrival order within a clock cycle is not required.\n\nProvide the candidate truth table, circuit and state machine, and explain why later arrivals cannot replace a winner. Tie policy and reset timing are editorial clarifications absent from the source, which spells the reset input rest.",
+          "hints": [
+            "The winner pulse disappears after a cycle, but its result must remain. What information must be stored, and how many possible results exist?",
+            "Separate an encoder proposing a lane from memory deciding whether to accept it. What code can indicate that no winner has been accepted?",
+            "Use a two-bit register: reset forces 00; while it is 00, load the candidate code; otherwise hold its old value. Explicitly define priority for pulses sampled at the same edge."
+          ],
+          "reference_solution": "**Proposed solution — a priority encoder and a register that keeps the first winner**\n\n### First define what first means\n\nThe source provides one-clock finish-button pulses, but does not specify simultaneous sampled arrivals. Explicitly choose lane 1 over lane 2 over lane 3 only when pulses are sampled at the same edge. This tie policy is an editorial clarification, not a source requirement. If several people arrive between the same two clock edges, these three sampled bits do not reveal their continuous-time ordering.\n\nAssume p1, p2 and p3 are already synchronous and meet setup/hold requirements. Sample them on rising clock edges. Use synchronous active-high rst with priority over every finish input. The source spells the reset input rest; the implementation normalizes that name to rst. Encode no winner as 00, lane 1 as 01, lane 2 as 10 and lane 3 as 11.\n\n### 1. Why memory is necessary\n\nA combinational encoder alone loses the result when a finish pulse ends. If lane 3 wins, output must keep 11 after its pulse disappears and after lane 1 presses later. Store the winner code in a two-bit register rather than derive output only from current button levels.\n\n### 2. Separate choosing a candidate from storing the result\n\nThe encoder considers the current pulses, with the declared tie priority:\n\n```text\nif p1:      candidate = 01\nelse if p2: candidate = 10\nelse if p3: candidate = 11\nelse:       candidate = 00\n```\n\nThe complete encoder truth table is:\n\n| p1 | p2 | p3 | Candidate code |\n| --- | --- | --- | --- |\n| 0 | 0 | 0 | 00 |\n| 0 | 0 | 1 | 11 |\n| 0 | 1 | 0 | 10 |\n| 0 | 1 | 1 | 10 |\n| 1 | 0 | 0 | 01 |\n| 1 | 0 | 1 | 01 |\n| 1 | 1 | 0 | 01 |\n| 1 | 1 | 1 | 01 |\n\nThis does not make lane 1 the winner regardless of history. The table is used to update the result only while there is no winner. Once lane 3 has been stored, even a later 111 combination cannot change it.\n\nEquivalent candidate-bit equations are:\n\n```text\ncandidate[1] = NOT(p1) AND (p2 OR p3)\ncandidate[0] = p1 OR (NOT(p2) AND p3)\n```\n\n### 3. Update the register only while unlocked\n\n```text\nif rst:\n    winner_next = 00\nelse if winner == 00:\n    winner_next = candidate\nelse:\n    winner_next = winner\n```\n\nWith no pulse and no winner, candidate is 00 and the circuit waits. The first sampled arrival stores a nonzero lane code. From then on winner == 00 is false, so the stored value holds until reset.\n\nA separate locked bit is unnecessary: all three winner codes are nonzero, so winner != 00 already expresses that condition. The two-bit register acts as both the memory and winner output.\n\n### 4. Circuit and state machine\n\nIn the circuit diagram, the three pulses feed the encoder. Its result feeds input 1 of a two-bit multiplexer; input 0 receives feedback from winner. Its select signal is unlocked = (winner == 00). The multiplexer feeds the register. Reset clears the register at the active edge before any other update. A register enable can implement the same hold behavior.\n\nA junction dot denotes a connection; crossing wires without a dot are not connected. Register reset is specified by the annotation and next-state equation, rather than being an ordinary encoder data input.\n\nAn equivalent Moore machine has four states: WAIT/00, W1/01, W2/10 and W3/11. Every winner state has a self-loop for every input when reset is inactive. Reset sends every state to WAIT.\n\n| Current state | Condition at edge, unless reset | Next state | Output after edge |\n| --- | --- | --- | --- |\n| WAIT | No finish pulse | WAIT | 00 |\n| WAIT | p1=1 | W1 | 01 |\n| WAIT | p1=0 and p2=1 | W2 | 10 |\n| WAIT | p1=0 and p2=0 and p3=1 | W3 | 11 |\n| W1 | Any pulse combination | W1 | 01 |\n| W2 | Any pulse combination | W2 | 10 |\n| W3 | Any pulse combination | W3 | 11 |\n| Any | Reset asserted at edge | WAIT | 00 |\n\n### 5. Clock-by-clock example\n\nEach row shows inputs sampled at an edge and the registered result after that edge:\n\n| Edge | rst | p1,p2,p3 | Before edge | After edge | Meaning |\n| --- | --- | --- | --- | --- | --- |\n| 1 | 1 | 000 | Any | 00 | Initialize the race |\n| 2 | 0 | 000 | 00 | 00 | No finisher yet |\n| 3 | 0 | 001 | 00 | 11 | Lane 3 wins |\n| 4 | 0 | 100 | 11 | 11 | Later lane 1 cannot replace it |\n| 5 | 0 | 010 | 11 | 11 | Lane 2 cannot replace it either |\n| 6 | 1 | 111 | 11 | 00 | Reset overrides all three pulses |\n| 7 | 0 | 011 | 00 | 10 | New race: lane 2 wins this sampled tie with lane 3 |\n\n### 6. Hardware source and test model\n\nIn SystemVerilog the register changes only at posedge clk, using nonblocking assignment. No assignment in the locked branch of always_ff means retain the register value; it does not infer a combinational latch. The encoder assigns a value on every path, so it also does not infer a latch.\n\n```systemverilog\n// Finish pulses must already meet this clock domain's setup/hold requirements.\n// Simultaneous sampled pulses use explicit editorial priority: lane 1 > 2 > 3.\nmodule first_finisher (\n    input  logic       clk,\n    input  logic       rst,\n    input  logic       p1,\n    input  logic       p2,\n    input  logic       p3,\n    output logic [1:0] winner\n);\n    logic [1:0] candidate;\n\n    always_comb begin\n        if      (p1) candidate = 2'b01;\n        else if (p2) candidate = 2'b10;\n        else if (p3) candidate = 2'b11;\n        else         candidate = 2'b00;\n    end\n\n    always_ff @(posedge clk) begin\n        if (rst)\n            winner <= 2'b00;\n        else if (winner == 2'b00)\n            winner <= candidate;\n        // Otherwise hold winner; later pulses cannot replace it.\n    end\nendmodule\n```\n\nAssert rst across at least one rising edge to establish the hardware initial state. The following Python model represents clock edges, not physical switches, and step returns the output after that edge:\n\n```python\n\"\"\"Clock-edge model of a first-finisher register with lane-1-first tie priority.\n\nInput pulses are already synchronous and stable at each clock edge. This model\ndoes not debounce physical switches or recover subcycle event ordering.\n\"\"\"\n\n\ndef next_winner(winner: int, p1: int, p2: int, p3: int, reset: bool = False) -> int:\n    \"\"\"Return 0 for no winner, or the latched lane number 1, 2, or 3.\"\"\"\n    if winner not in (0, 1, 2, 3) or any(p not in (0, 1) for p in (p1, p2, p3)):\n        raise ValueError(\"Require winner 0..3 and binary finish pulses\")\n    if reset:\n        return 0\n    if winner != 0:\n        return winner\n    if p1:\n        return 1\n    if p2:\n        return 2\n    if p3:\n        return 3\n    return 0\n\n\nclass FirstFinisher:\n    \"\"\"Output changes only on a modeled rising clock edge.\"\"\"\n\n    def __init__(self):\n        self.winner = 0\n\n    def step(self, p1: int, p2: int, p3: int, reset: bool = False) -> int:\n        self.winner = next_winner(self.winner, p1, p2, p3, reset)\n        return self.winner\n```\n\n### 7. Correctness and cost\n\nReset establishes zero. Before any sampled arrival, the encoder gives zero and the state stays zero. At the first edge with an arrival, it stores the sole finishing lane or the highest-priority lane among that edge's pulses. The result is then nonzero; every later edge without reset holds it. Reset returns it to zero independently of finish inputs. This proves first-sampled selection, retention and restart behavior.\n\nFour states with distinct outputs need at least four distinguishable memory configurations. Conventional binary encoding therefore needs at least two state bits, achieved here. This is a state-bit minimum for this synchronous contract, not a minimum gate count, area or physical delay proof. A small encoder, zero test and hold selection provide constant work per edge.\n\n### 8. Scope and alternative tie policies\n\nReporting a tie would need an additional output code or flag and a multiple-input test; the present two-bit output has no unused code. Alternatively, guarantee at most one finish pulse per edge, in which case priority is irrelevant. Do not leave tie behavior as an unstated wiring accident.\n\nReal pushbuttons can be asynchronous and bounce. As appropriate, place synchronization, debouncing and pulse generation before the inputs specified by this question, and analyze event-capture requirements. Synchronization does not guarantee elimination of metastability, capture of every short pulse or preservation of close-event ordering. This design selects the first winner according to the sampled inputs and declared policy.\n\nVerification covered all 64 state/input/reset combinations, all 299,593 no-reset pulse streams of lengths 0 through 6 and all 69,905 pulse-and-reset streams of lengths 0 through 4. An independent oracle scans history since the most recent reset and selects the earliest arrival edge and then its smallest lane number. Encoder equations and a 100-cycle locked hold were also checked. These are Python model checks, not HDL simulation, synthesis or physical measurements. This is an AI-assisted proposed solution with independent expert review pending.\n",
+          "hint": "The winner pulse disappears after a cycle, but its result must remain. What information must be stored, and how many possible results exist?"
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-045-he-H01",
+          "level": 1,
+          "language": "he",
+          "content": "הפולס של הזוכה נעלם אחרי מחזור, אבל התוצאה צריכה להישאר. איזה מידע צריך לשמור, וכמה תוצאות שונות יש?"
+        },
+        {
+          "id": "PREP-045-he-H02",
+          "level": 2,
+          "language": "he",
+          "content": "הפרידו בין מקודד שמציע מספר מסלול לפי הפולסים הנוכחיים לבין זיכרון שמחליט האם לקבל את ההצעה. מה מסמן שעדיין אין זוכה?"
+        },
+        {
+          "id": "PREP-045-he-H03",
+          "level": 3,
+          "language": "he",
+          "content": "השתמשו באוגר בן שני ביטים: איפוס כופה 00; אם האוגר עדיין 00, טענו את קוד המועמד; אחרת החזיקו את ערכו. הגדירו במפורש סדר עדיפות ללחיצות באותה דגימה."
+        },
+        {
+          "id": "PREP-045-en-H01",
+          "level": 1,
+          "language": "en",
+          "content": "The winner pulse disappears after a cycle, but its result must remain. What information must be stored, and how many possible results exist?"
+        },
+        {
+          "id": "PREP-045-en-H02",
+          "level": 2,
+          "language": "en",
+          "content": "Separate an encoder proposing a lane from memory deciding whether to accept it. What code can indicate that no winner has been accepted?"
+        },
+        {
+          "id": "PREP-045-en-H03",
+          "level": 3,
+          "language": "en",
+          "content": "Use a two-bit register: reset forces 00; while it is 00, load the candidate code; otherwise hold its old value. Explicitly define priority for pulses sampled at the same edge."
+        }
+      ],
+      "assumptions": [
+        "Inputs are binary pulses already synchronized and meeting setup/hold requirements; physical button debouncing is outside this circuit.",
+        "Sample at rising edges; output is the stored value after the edge. Synchronous active-high reset overrides every finish pulse and establishes 00.",
+        "Same-edge ties use lane 1 before 2 before 3; this is an added policy, not a source fact.",
+        "00 means no winner; 01,10,11 identify lanes 1,2,3. Source spelling rest is interpreted as reset rst.",
+        "The three sampled pulses cannot reveal the continuous-time order of arrivals between the same two edges."
+      ],
+      "optimality": {
+        "criterion": "State-bit count in the synchronous model with four stable results.",
+        "result": "Two state bits are sufficient and necessary; an encoder, zero test and hold selection complete the construction.",
+        "proof": "No winner and three winners have distinct outputs and require four distinguishable states. One bit represents only two states; two bits represent four. The winner code stores the state itself.",
+        "scope": "No gate-count, area or physical-delay minimum is claimed. The contract selects the first sampled arrival rather than resolving analog ordering of close events."
+      },
+      "verification": {
+        "status": "Python-model checks passed; independent expert review remains pending.",
+        "method": "Independent oracle scans sampled history since the latest reset and selects the smallest arrival-edge/lane pair. Boolean equations and invariants were also checked.",
+        "coverage": "64 state/input/reset transitions; 299,593 pulse streams of lengths 0–6; 69,905 pulse/reset streams of lengths 0–4; a 100-cycle locked hold.",
+        "script_path": "checks/check_prep_045.py",
+        "scope": "No HDL simulation, synthesis, CDC verification or physical measurements; SystemVerilog is supplied as a proposed implementation."
+      },
+      "edge_cases": [
+        "After reset, no pulses keep output 00.",
+        "Each individual lane yields its code, including lane 3 producing 11.",
+        "A later higher-priority pulse cannot replace an already stored winner.",
+        "All eight pulse combinations are defined; same-edge ties resolve as 1 then 2 then 3.",
+        "Reset at an edge with pulses clears instead of selecting. A pulse still active at a later nonreset edge can then be selected.",
+        "Reset after a win allows another race to choose a different lane; hardware initialization requires a reset edge."
+      ],
+      "common_mistakes": [
+        "Using only a combinational encoder, losing output when the pulse ends and allowing later changes.",
+        "Updating on every press instead of only while no winner has been stored.",
+        "OR-ing lane codes without a tie policy: lanes 1 and 2 can incorrectly look like lane 3.",
+        "Encoding lane 1 as 00 while also using zero to mean no winner.",
+        "Omitting reset priority or claiming if-order reconstructs physical arrival time within a cycle.",
+        "Assuming a physical switch is synchronized, debounced or metastability-free without suitable conditioning."
+      ],
+      "interview_answer": "Store a two-bit winner code with 00 meaning none. A priority encoder proposes the current lane, and the register accepts it only while its stored code is zero. Once nonzero, hold until reset. Define same-edge tie behavior explicitly; here lane 1 precedes 2 and 3. Synchronous reset overrides finish pulses. This selects the first sampled arrival, not subcycle chronological order.",
+      "solution_extensions": {
+        "question": "How would the system report a tie when more than one runner finishes at the same sampled edge?",
+        "answer_outline": "Detect at least two active inputs with (p1 AND p2) OR (p1 AND p3) OR (p2 AND p3), and capture a tie flag only at the first arrival edge. All four two-bit codes already mean waiting or a winner, so use another flag or widen the interface. Subcycle ordering remains unknown.",
+        "integration_status": "Follow-up prepared in the archive; not yet connected to the live follow-up workflow."
+      },
+      "solution_code_path": "solutions/prep_045_first_finisher.py",
+      "solution_code_paths": [
+        "solutions/prep_045_first_finisher.py",
+        "solutions/prep_045_first_finisher.sv"
+      ],
+      "verification_evidence_path": "checks/prep-045-verification.json",
+      "verification_script_path": "checks/check_prep_045.py",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-045.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-045-first-finisher-circuit.png",
+          "description": "PREP-045"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-045-first-finisher-fsm.png",
+          "description": "PREP-045"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-016",
+        "HW-005",
+        "VHW-003"
+      ],
+      "duplicate_check": "New founder-source constraints; related tasks remain independent and retain their attribution/history.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Role-relevant hardware/state reasoning or public-knowledge logic; not verified company evidence."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "markdown_path": "questions/prep-045-first-finisher-latched-winner.md"
+    },
+    {
+      "id": "PREP-046",
+      "key": "birthday-public-announcement-reasoning",
+      "version": 1,
+      "created_on": "2026-10-19",
+      "category": "logical_reasoning",
+      "topic": "epistemic_reasoning",
+      "topics": [
+        "logic",
+        "public announcements",
+        "knowledge",
+        "elimination"
+      ],
+      "source_topic_tags": [
+        "logic"
+      ],
+      "added_topic_tags": [
+        "public announcements",
+        "knowledge",
+        "elimination"
+      ],
+      "source_tags": [
+        "nvidia",
+        "logic",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "explain",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied source; AI-assisted bilingual proposed solution and verification; professional, parity and reuse review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-046.png",
+          "received_on": "2026-10-19"
+        }
+      ],
+      "original_prompt": "לדני יש יום הולדת באחד מהתאריכים הנ״ל:\n15/5, 16/5, 19/5\n17/6, 18/6\n14/7, 16/7\n14/8, 15/8, 17/8\nהוא מראה את התאריכים לחיים ויוני כך שלחיים הוא אומר את החודש של היום הולדת שלו וליוני את היום.\nהערה: שניהם רואים את המבנה (כלומר שניהם רואים כמה אופציות של תאריכים יש בכל חודש אך אחד יודע את החודש והשני את היום).\nחיים ויוני מדברים אחד עם השני את השיחה הבאה:\nחיים — \"אינני יודע מתי יש לדני יום הולדת אבל אני בטוח שיוני לא יודע\".\nיוני: \"נכון, לא ידעתי, אבל עכשיו אני יודע\".\nחיים: \"אז עכשיו גם אני יודע\".\nמה תאריך יום ההולדת של דני?",
+      "translations": {
+        "he": {
+          "title": "יום ההולדת של דני — הסקה מתוך מה שאחרים יודעים",
+          "prompt": "יום ההולדת של דני הוא אחד מעשרת התאריכים הבאים. הפורמט הוא יום/חודש:\n\n| חודש | הימים האפשריים |\n| --- | --- |\n| מאי | 15, 16, 19 |\n| יוני | 17, 18 |\n| יולי | 14, 16 |\n| אוגוסט | 14, 15, 17 |\n\nשניהם מכירים את הרשימה המלאה: דני אומר לחיים בפרטיות רק את החודש, וליוני בפרטיות רק את מספר היום בחודש. לאחר מכן הם אומרים בפומבי:\n\nחיים: ״אני לא יודע מתי יום ההולדת, אבל אני בטוח שגם יוני לא יודע.״\nיוני: ״נכון, בהתחלה לא ידעתי, אבל עכשיו אני יודע.״\nחיים: ״אז עכשיו גם אני יודע.״\n\nמה תאריך יום ההולדת? הסבירו מה כל משפט מאפשר לפסול, ומדוע הידיעה של חיים על מה שיוני יודע מתייחסת לכל האפשרויות בחודש שלו.\n\nהבהרת הנחות: כולם דוברים אמת ומסיקים נכון; הרשימה, חלוקת המידע וההצהרות הפומביות ידועות לכולם, וכך גם העובדה שכולם יודעים זאת. המועמדים מתעדכנים לפי סדר המשפטים. אלו הנחות המודל הלוגי, ולא מידע נוסף על התאריך.",
+          "hints": [
+            "חיים אינו רואה את היום. כדי להיות בטוח שיוני אינו יודע, ההצהרה שלו צריכה להיות נכונה לכל יום אפשרי בחודש שחיים קיבל.",
+            "אילו מספרי יום מופיעים ברשימה רק פעם אחת? אם החודש של חיים מכיל יום כזה, האם הוא יכול להיות בטוח שיוני אינו יודע?",
+            "אחרי סינון החודשים, יוני יכול לדעת רק אם מספר היום שלו מופיע בתאריך אחד ברשימה המצומצמת. אחר כך חיים צריך חודש שנשאר בו תאריך אחד בלבד."
+          ],
+          "reference_solution": "### מתרגמים את המשפטים למידע\n\nחיים יודע חודש, ולכן בתחילה מבחינתו כל תאריך באותו חודש אפשרי. יוני יודע יום בחודש, ולכן מבחינתו כל תאריך בעל אותו מספר יום אפשרי. המטרה היא לצמצם את רשימת המועמדים באמצעות המשפטים, בלי לנחש תאריך ולבדוק אם הוא נשמע סביר.\n\n### המשפט הראשון — חיים בטוח שיוני לא יודע\n\nברשימה המקורית, 19 מופיע רק ב־19/05 ו־18 מופיע רק ב־18/06. אילו יוני היה מקבל 19 או 18, הוא היה יודע מיד את התאריך.\n\nלכן החודש שחיים קיבל אינו יכול להיות מאי: אילו קיבל מאי, היה צריך להביא בחשבון גם את 19/05, ולא היה יכול להיות בטוח שיוני אינו יודע. מאותה סיבה החודש אינו יוני, המכיל את 18/06.\n\nשימו לב: פוסלים את כל מאי ואת כל יוני. לא מספיק להוציא רק את שני התאריכים החריגים, משום שחיים יודע חודש ולא יום. חלק המשפט ״אני לא יודע״ אינו מוסיף כאן סינון, כי בכל חודש מקורי יש יותר מתאריך אחד.\n\nנותרו חמישה מועמדים: 14/07, 16/07, 14/08, 15/08, 17/08.\n\n### המשפט השני — יוני יודע עכשיו\n\nיוני שמע את חיים, ולכן גם הוא יודע שנשארו רק חמש האפשרויות האלה. אילו היום שלו היה 14, עדיין היו מבחינתו שתי אפשרויות: 14/07 ו־14/08. הוא לא היה יכול לומר שהוא יודע.\n\nלעומת זאת, 16 מופיע עכשיו רק ב־16/07, 15 רק ב־15/08, ו־17 רק ב־17/08. לכן אחרי דבריו של יוני נותרו: 16/07, 15/08, 17/08. התנאי שגם בתחילה לא ידע מתקיים בשלוש האפשרויות: כל אחד ממספרי היום האלה הופיע ביותר מתאריך אחד ברשימה המקורית.\n\n### המשפט השלישי — גם חיים יודע עכשיו\n\nאם חיים קיבל אוגוסט, הוא עדיין מתלבט בין 15/08 ל־17/08, ולכן אינו יודע. אם קיבל יולי, נשארה לו רק אפשרות אחת: 16/07.\n\nלכן יום ההולדת הוא **16 ביולי**.\n\n| אחרי איזה מידע? | המועמדים שנותרו |\n| --- | --- |\n| הרשימה המקורית | עשרת התאריכים שניתנו |\n| חיים בטוח שיוני אינו יודע | 14/07, 16/07, 14/08, 15/08, 17/08 |\n| יוני יודע עכשיו | 16/07, 15/08, 17/08 |\n| חיים יודע עכשיו | 16/07 |\n\n### למה התשובה ודאית?\n\nכל סינון מבטא בדיוק משפט שנאמר. בשלב הראשון פוסלים חודש אם יש בו אפשרות שבה יוני כבר היה יודע. בשלב השני שומרים רק יום שמזהה תאריך יחיד אחרי הסינון הראשון, אבל לא לפניו. בשלב השלישי שומרים רק חודש שמזהה תאריך יחיד אחרי הסינון השני. נשאר תאריך אחד, והוא מתאים לכל שלושת המשפטים.\n\nבשרטוט, C0 היא הרשימה המקורית, C1 אחרי המשפט הראשון, C2 אחרי השני ו־C3 אחרי השלישי. כל התאריכים בשרטוט כתובים יום/חודש. קובץ הפייתון המצורף מממש את הסינונים; המצב שם נשמר כזוג חודש,יום כדי שהקיבוץ יהיה מפורש. הפתרון הלוגי אינו דורש כתיבת קוד.\n\n### תחולת הפתרון\n\nהטענה נשענת על הרשימה המדויקת ועל ידיעה משותפת של העובדות וההיגיון. שינוי מועמד, שקר או הבנה שונה של המידע הפרטי יכולים לשנות את המסקנה. זו הסקה בתוך מודל מפורש, לא הוכחה שאנשים אמיתיים בהכרח פועלים כך.",
+          "hint": "חיים אינו רואה את היום. כדי להיות בטוח שיוני אינו יודע, ההצהרה שלו צריכה להיות נכונה לכל יום אפשרי בחודש שחיים קיבל."
+        },
+        "en": {
+          "title": "Dani's birthday — reasoning about what others know",
+          "prompt": "Dani's birthday is one of the following ten dates, written day/month:\n\n| Month | Possible days |\n| --- | --- |\n| May | 15, 16, 19 |\n| June | 17, 18 |\n| July | 14, 16 |\n| August | 14, 15, 17 |\n\nBoth people know the entire candidate list. Dani privately tells Chaim only the month and Yoni only the day of the month. They then make these public statements:\n\nChaim: \"I do not know the birthday, but I am certain Yoni does not know either.\"\nYoni: \"Correct, I did not know initially, but now I know.\"\nChaim: \"Then now I also know.\"\n\nWhat is the birthday? Explain each elimination, including why Chaim's certainty about Yoni concerns every possible day in Chaim's month.\n\nModel clarification: everyone is truthful and reasons correctly. The candidate list, allocation of private information, and public statements are common knowledge. Update the candidates in statement order. These are assumptions of the logical model, not additional information about the date.",
+          "hints": [
+            "Chaim cannot see the day. To be certain that Yoni does not know, his claim must hold for every possible day in the month Chaim was told.",
+            "Which day numbers occur only once initially? If Chaim's month includes one of them, can he be certain that Yoni does not know?",
+            "After eliminating months, Yoni can know only if his day occurs in one remaining date. Chaim's last statement then requires a month with only one remaining date."
+          ],
+          "reference_solution": "### Turn the statements into information\n\nChaim knows the month, so initially every listed date in that month is possible for him. Yoni knows the day, so initially every listed date with that day number is possible for him. Eliminate candidates using the statements rather than guessing a date that seems plausible.\n\n### First statement — Chaim is certain Yoni does not know\n\nInitially, day 19 occurs only on 19/05, and day 18 only on 18/06. If Yoni had either day, he would know the exact date immediately.\n\nChaim therefore cannot have May: he would have to consider 19/05, in which case Yoni would know, contradicting Chaim's certainty. The same reasoning excludes June because it includes 18/06.\n\nEliminate all of May and June, not just the two exceptional dates. Chaim knows a month, not a day. His own statement that he does not know adds no further restriction here because every original month contains multiple candidates.\n\nFive dates remain: 14/07, 16/07, 14/08, 15/08, 17/08.\n\n### Second statement — Yoni now knows\n\nYoni heard Chaim, so he also knows that only these five dates remain. If his day were 14, both 14/07 and 14/08 would still be possible, so he could not claim to know.\n\nIn contrast, day 16 now occurs only on 16/07, day 15 only on 15/08, and day 17 only on 17/08. Thus the surviving dates are 16/07, 15/08, 17/08. Each also satisfies Yoni's initial ignorance: its day originally occurred more than once.\n\n### Third statement — Chaim now knows too\n\nWith August, Chaim would still be unable to distinguish 15/08 from 17/08. With July, only 16/07 remains. Therefore the birthday is **16 July**.\n\n| Information available | Remaining candidates |\n| --- | --- |\n| Initial list | All ten supplied dates |\n| Chaim is certain Yoni does not know | 14/07, 16/07, 14/08, 15/08, 17/08 |\n| Yoni now knows | 16/07, 15/08, 17/08 |\n| Chaim now knows | 16/07 |\n\n### Why is the conclusion certain?\n\nEach elimination is exactly a stated knowledge condition. First reject any month containing a world in which Yoni would already know. Next retain a day identifying one date after the first announcement but not initially. Finally retain a month identifying one date after the second announcement. Exactly one date survives and satisfies every statement.\n\nIn the diagram C0 is the initial candidate set, C1 follows the first statement, C2 the second, and C3 the third. Every displayed date is day/month. The attached Python file implements these updates, internally storing dates as month,day pairs to make the grouping explicit. Coding is not required for the logical interview solution.\n\n### Scope\n\nThe conclusion depends on this exact list and the common-knowledge/truthfulness assumptions. Changing a candidate, allowing a lie, or changing private information can alter the answer. This proves a conclusion inside the stated model, not that real people necessarily reason that way.",
+          "hint": "Chaim cannot see the day. To be certain that Yoni does not know, his claim must hold for every possible day in the month Chaim was told."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-046-he-H01",
+          "level": 1,
+          "language": "he",
+          "content": "חיים אינו רואה את היום. כדי להיות בטוח שיוני אינו יודע, ההצהרה שלו צריכה להיות נכונה לכל יום אפשרי בחודש שחיים קיבל."
+        },
+        {
+          "id": "PREP-046-he-H02",
+          "level": 2,
+          "language": "he",
+          "content": "אילו מספרי יום מופיעים ברשימה רק פעם אחת? אם החודש של חיים מכיל יום כזה, האם הוא יכול להיות בטוח שיוני אינו יודע?"
+        },
+        {
+          "id": "PREP-046-he-H03",
+          "level": 3,
+          "language": "he",
+          "content": "אחרי סינון החודשים, יוני יכול לדעת רק אם מספר היום שלו מופיע בתאריך אחד ברשימה המצומצמת. אחר כך חיים צריך חודש שנשאר בו תאריך אחד בלבד."
+        },
+        {
+          "id": "PREP-046-en-H01",
+          "level": 1,
+          "language": "en",
+          "content": "Chaim cannot see the day. To be certain that Yoni does not know, his claim must hold for every possible day in the month Chaim was told."
+        },
+        {
+          "id": "PREP-046-en-H02",
+          "level": 2,
+          "language": "en",
+          "content": "Which day numbers occur only once initially? If Chaim's month includes one of them, can he be certain that Yoni does not know?"
+        },
+        {
+          "id": "PREP-046-en-H03",
+          "level": 3,
+          "language": "en",
+          "content": "After eliminating months, Yoni can know only if his day occurs in one remaining date. Chaim's last statement then requires a month with only one remaining date."
+        }
+      ],
+      "assumptions": [
+        "The candidates are exactly the ten supplied dates, using day/month notation.",
+        "Chaim knows only the month and Yoni only the day; both know the complete list and information assignment.",
+        "Statements are truthful, reasoning is correct, and the public sequence and reasoning assumptions are common knowledge.",
+        "No additional year/date information or probabilistic guess is used."
+      ],
+      "optimality": {
+        "criterion": "Whether the three announcements identify one date in the supplied list.",
+        "result": "Candidate counts shrink from 10 to 5 to 3 to 1; the sole date is 16/07.",
+        "proof": "Filter knowledge classes: months whose possible days are all initially nonunique, then days unique after that restriction, then months unique among the survivors.",
+        "scope": "No minimum-question, universal minimum-statement, or software-time optimality claim. The attached direct implementation performs O(k²) worst-case work and uses O(k) storage for k candidates."
+      },
+      "verification": "1,969 Python model checks passed against an independent possible-world oracle: all 1,024 candidate subsets, 200 input shuffles, 24 month relabellings, 720 day relabellings and duplicate rejection. Exact intermediate sets and sizes 10,5,3,1 were asserted. Relabelling checks logical symmetry only; these are not new published date lists. No professional human approval or authenticated live-site clicking is implied.",
+      "edge_cases": [
+        "Chaim must reject entire months containing an initially unique day, not just 18/06 and 19/05 themselves.",
+        "Day 14 still leaves Yoni uncertain after the first statement because it occurs in both July and August.",
+        "August retains two candidates after the second statement and cannot satisfy the last one.",
+        "Changing the candidate list or statement order may leave no date or several; the code returns sets rather than forcing a unique answer.",
+        "The names do not matter; which person knows month versus day does."
+      ],
+      "common_mistakes": [
+        "Evaluating Chaim's certainty only at the actual date, which he does not yet know.",
+        "Removing only unique dates instead of every month containing one.",
+        "Assuming Yoni can identify a month while his day still occurs in two months.",
+        "Accidentally giving Chaim the day and Yoni the month.",
+        "Recalling an answer from a similar puzzle without checking this candidate list."
+      ],
+      "interview_answer": "Days 18 and 19 are initially unique. Chaim's certainty that Yoni does not know excludes May and June, which contain those days. Only July and August remain. Day 14 is still duplicated, so Yoni's new knowledge excludes it. The survivors are 16/07,15/08,17/08. Chaim can now know only with July because August still has two candidates. Therefore the date is 16 July.",
+      "solution_extensions": {
+        "question": "What changes if Chaim only says that he does not know, without claiming certainty about Yoni's ignorance?",
+        "direction": "Initially every month has multiple candidates, so that statement alone excludes no month. Do not reuse the May/June elimination; recompute subsequent announcements and check whether any date remains.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up workflow."
+      },
+      "solution_code_path": "solutions/prep_046_birthday_knowledge.py",
+      "solution_code_paths": [
+        "solutions/prep_046_birthday_knowledge.py"
+      ],
+      "verification_evidence_path": "checks/prep-046-verification.json",
+      "verification_script_path": "checks/check_prep_046.py",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-046.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-046-public-announcement-stages.png",
+          "description": "PREP-046"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-033"
+      ],
+      "duplicate_check": "New founder-source constraints; related tasks remain independent and retain their attribution/history.",
+      "interview_relevance": {
+        "priority": "medium",
+        "basis": "Role-relevant hardware/state reasoning or public-knowledge logic; not verified company evidence."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "markdown_path": "questions/prep-046-birthday-public-announcement-reasoning.md"
+    },
+    {
+      "id": "PREP-047",
+      "key": "three-of-four-from-two-of-four-boxes",
+      "version": 1,
+      "created_on": "2026-10-19",
+      "category": "hardware",
+      "topic": "boolean_logic",
+      "topics": [
+        "threshold_logic",
+        "combinational_circuits",
+        "logic_composition",
+        "truth_tables",
+        "exact_synthesis",
+        "cost_models"
+      ],
+      "source_topic_tags": [
+        "hardware"
+      ],
+      "added_topic_tags": [
+        "threshold_logic",
+        "combinational_circuits",
+        "logic_composition",
+        "truth_tables",
+        "exact_synthesis",
+        "cost_models"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "apple"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "construct",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied source; AI-assisted bilingual proposed solution and verification; professional, parity and reuse review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-047.png",
+          "received_on": "2026-10-19"
+        }
+      ],
+      "original_prompt": "נתון רכיב A עם 4 כניסות ויציאה 1. הרכיב מחזיר 1 אם 2 או יותר מהכניסות דולקות.\nעליך לממש רכיב עם 4 כניסות המחזיר 1 אם שלוש או יותר מהכניסות דולקות באמצעות רכיב A ובמספר מינימלי.",
+      "translations": {
+        "he": {
+          "title": "מימוש סף של שלוש מתוך ארבע באמצעות קופסאות סף",
+          "prompt": "נתונה קופסה `A` עם ארבע כניסות בינאריות ומוצא יחיד. היא מוציאה `1` אם לפחות שתיים מהכניסות הן `1`, ואחרת `0`.\n\nממשו רכיב בעל ארבע כניסות `a,b,c,d` שמוציא `1` אם לפחות שלוש מהן הן `1`. השתמשו במספר מינימלי של קופסאות `A`, הציגו חיבורים, טבלת אמת והסבר לנכונות ולמינימליות.\n\nלצורך גרסה חד־משמעית זו מותר להשתמש בקבועים `0,1`, בחוטים, בפיצול אות לכמה כניסות ובחיבור חוזר של אותו אות. אין שערי NOT או שערים אחרים בחינם, ואין משוב או זיכרון. סופרים רק קופסאות `A`.\n\nהבהרת עריכה: המקור לא הגדיר אילו קבועים ושערים נוספים מותרים. ההיתרים האלה נוספו במפורש; יש להסביר בנפרד מה משתנה אם היפוכים חופשיים מותרים.",
+          "hints": [
+            "חלקו את ארבע הכניסות לשני זוגות. אם בזוג הראשון יש אפס, אחת או שתי אחדות, כמה אחדות צריך מהזוג השני?",
+            "אפשר לחבר קבועים לקופסה: מה מפיקים A(c,d,0,0) ו־A(c,d,1,0)? אלה שני סוגים שונים של מידע על הזוג.",
+            "הפיקו p שאומר ששניהם c,d דולקים ו־q שאומר שלפחות אחד דולק. בדקו A(a,b,p,0), ואז חסמו בעזרת q את המקרה a=b=1,c=d=0."
+          ],
+          "reference_solution": "**הצעה לפתרון — ארבע קופסאות, תחת מודל רכיבים מפורש**\n\nלפני שסופרים רכיבים צריך להבהיר מה מותר. נניח שמותר להשתמש רק בעותקים של `A`, בקבועים `0,1`, בחוטים ובפיצול אות לכמה כניסות. מותר גם לחבר אותו אות לכמה פינים. אין שערי NOT או שערים אחרים בחינם, ואין משוב. הקבועים והחוטים אינם נספרים; המטרה היא למזער את מספר קופסאות `A`. המקור לא הגדיר את ההיתרים האלה, ולכן המינימום להלן מותנה בהם.\n\n**1. מפרקים את הבעיה לשני זוגות**\n\nנסמן את ארבע הכניסות `a,b,c,d`. נסתכל על הזוג `c,d`:\n\n- אם שניהם `0`, אי אפשר להגיע לשלוש אחדות בסך הכול, גם אם `a=b=1`.\n- אם יש בהם `1` יחיד, צריך ששניהם `a,b` יהיו `1`.\n- אם שניהם `1`, מספיק שאחד מבין `a,b` יהיה `1`.\n\nלכן כדאי להפיק שני דגלים מהזוג: `p` שאומר ששניהם דולקים, ו־`q` שאומר שלפחות אחד דולק. אלה משמעויות של אותות שנפיק עם קופסאות `A`, ולא שערים נוספים שמותר להוסיף.\n\n**2. שתי הקופסאות הראשונות מפיקות את הדגלים**\n\n```text\np = A(c,d,0,0) = c AND d\nq = A(c,d,1,0) = c OR d\n```\n\nבקופסה הראשונה שני הקבועים הם אפס, ולכן רק `c=d=1` מספקים את שתי האחדות הדרושות. בשנייה הקבוע `1` מספק אחת משתי האחדות, ולכן מספיק ש־`c` או `d` יהיה `1`.\n\n**3. קופסה שלישית בודקת את a,b בעזרת הדגל p**\n\n```text\nr = A(a,b,p,0)\n```\n\nאם `p=0`, הקופסה דורשת `a=b=1`. אם `p=1`, די באחד מביניהם. זה מתאים לשני המקרים שבהם יש בזוג `c,d` אחת או שתי אחדות.\n\nאבל יש מלכודת: אם `c=d=0` וגם `a=b=1`, נקבל `r=1` למרות שיש בסך הכול שתי אחדות. לכן עדיין אסור להוציא את `r` ישירות.\n\n**4. הקופסה הרביעית חוסמת את המקרה הבעייתי**\n\n```text\ny = A(r,q,0,0) = r AND q\n```\n\nהדגל `q` מחייב שלפחות אחד מבין `c,d` יהיה `1`. כך המקרה `1100` נחסם. אם יש בדיוק אחד בזוג, `p=0` וצריך `a=b=1`; אם יש שניים בזוג, `p=1` וצריך לפחות אחד ב־`a,b`. אלה בדיוק כל המקרים שבהם הסכום הכולל לפחות שלוש.\n\nרשימת החיבורים המלאה:\n\n| קופסה | פין 1 | פין 2 | פין 3 | פין 4 | מוצא |\n| --- | --- | --- | --- | --- | --- |\n| G1 | c | d | 0 | 0 | p |\n| G2 | c | d | 1 | 0 | q |\n| G3 | a | b | p | 0 | r |\n| G4 | r | q | 0 | 0 | y |\n\nבשרטוט כל קופסה היא רכיב `A` אחד, וכל ארבעת פיני הכניסה שלה מחוברים. התוויות `c,d` החוזרות מייצגות את אותם קלטים. הכיתובים `p=c&d` ו־`q=c|d` מתארים את האותות שנוצרים בתוך הקופסאות; לא הוספנו שערי AND או OR חיצוניים. אין שעון, אוגרים או מצב.\n\n**5. טבלת אמת מלאה**\n\n```text\na b c d | p q r | y\n--------+-------+--\n0 0 0 0 | 0 0 0 | 0\n0 0 0 1 | 0 1 0 | 0\n0 0 1 0 | 0 1 0 | 0\n0 0 1 1 | 1 1 0 | 0\n0 1 0 0 | 0 0 0 | 0\n0 1 0 1 | 0 1 0 | 0\n0 1 1 0 | 0 1 0 | 0\n0 1 1 1 | 1 1 1 | 1\n1 0 0 0 | 0 0 0 | 0\n1 0 0 1 | 0 1 0 | 0\n1 0 1 0 | 0 1 0 | 0\n1 0 1 1 | 1 1 1 | 1\n1 1 0 0 | 0 0 1 | 0\n1 1 0 1 | 0 1 1 | 1\n1 1 1 0 | 0 1 1 | 1\n1 1 1 1 | 1 1 1 | 1\n```\n\nרק ארבע השורות שיש בהן בדיוק שלוש אחדות, והשורה `1111`, מחזירות `1`. בפרט `1100` נותן `r=1` אבל `q=0`, ולכן `y=0` כפי שנדרש.\n\n**6. מדוע ארבע הוא גם מינימום במודל הזה?**\n\nהבנייה מוכיחה שארבע מספיקות. כדי להוכיח שאין מימוש בשלוש או פחות, צורפה בדיקת סינתזה ממצה של כל המעגלים הצירופיים המותרים, ולא רק ניסיון של כמה חיבורים ידניים.\n\nמייצגים כל אות בטבלת האמת המלאה שלו, כלומר בחתימה של 16 ביטים. מתחילים בששת האותות `a,b,c,d,0,1`. בכל שלב מחברים ארבע כניסות של קופסה לאותות שכבר קיימים, כולל חזרות. הקופסה סימטרית, ולכן אין צורך לבדוק שוב סדרי פינים שונים של אותה רביעייה. שומרים את כל אותות הביניים, וכך החיפוש מאפשר פיצול ושיתוף בין קופסאות, ולא רק עצי ביטויים.\n\nהחיפוש בדק 126 רביעיות לקופסה הראשונה; 6,930 אפשרויות לקופסה השנייה על פני 33 קבוצות אותות ביניים; ו־312,840 אפשרויות לקופסה השלישית על פני 948 קבוצות. בסך הכול נבדקו 319,896 רביעיות פינים, ואף אחת לא הפיקה את הפונקציה המבוקשת. גם ששת האותות הישירים ללא קופסה אינם הפתרון.\n\nלמה הצמצום הזה של החיפוש שלם? כל מעגל ללא משוב ניתן לסדר כך שכל קופסה משתמשת רק בקלטים ובמוצאי קופסאות קודמות. קופסה שמפיקה פונקציה שכבר קיימת אפשר להחליף בחוט, ולכן אין צורך לכלול אותה במימוש מינימלי. שתי היסטוריות שיוצרות בדיוק את אותה קבוצת פונקציות מאפשרות בדיוק אותם חיבורים בהמשך. השוויון נבדק על כל 16 הקלטים. לכן אין כאן השמטה של מעגל קטן אפשרי.\n\nמכאן, יחד עם הבנייה התקינה: **המינימום הוא ארבע קופסאות A תחת ההיתרים שהוגדרו**. המסלול הארוך בבנייה עובר בשלוש קופסאות; זו ספירת רמות לוגיות, לא מדידת השהיה פיזית.\n\n**7. מדוע חשוב לברר אם היפוכים מותרים?**\n\nאם מותר להפוך בחינם את ארבע הכניסות ואת המוצא, אפשר להשתמש בקופסת `A` אחת בלבד:\n\n```text\ny = NOT A(NOT a, NOT b, NOT c, NOT d)\n```\n\nאם בקלט המקורי יש `k` אחדות, בקלטים המהופכים יש `4-k`. לכן הקופסה המהופכת נותנת `1` בדיוק כש־`4-k<2`, כלומר `k>=3`. זוהי חלופה עם קופסת `A` אחת ועם חמישה היפוכים; היא אינה מותרת במודל הראשי ללא NOT, ואין להציג אותה כאותו מחיר כולל כשמהפכים עולים רכיבים. אם קבוע `1` אינו מותר, הבנייה המוצגת אינה עומדת בהגבלה ונדרשת בדיקה חדשה; איננו טוענים כאן מינימום למודל הזה.\n\n**8. מודל פייתון וקוד חומרה**\n\n```python\ndef A(a, b, c, d):\n    return int(a + b + c + d >= 2)\n\n\ndef three_of_four(a, b, c, d):\n    p = A(c, d, 0, 0)\n    q = A(c, d, 1, 0)\n    r = A(a, b, p, 0)\n    return A(r, q, 0, 0)\n```\n\nהפונקציה `A` היא מודל ההתנהגות של הרכיב הנתון. ארבע הקריאות בפונקציה השנייה הן ארבע הקופסאות. אין כאן דרישה לממש את החיבור המספרי כשער חיצוני ברשת.\n\n```systemverilog\n// Behavioral definition of the supplied A primitive, not a physical-cell claim.\nmodule threshold_a (\n    input  logic a, b, c, d,\n    output logic y\n);\n    assign y = (a & b) | (a & c) | (a & d)\n             | (b & c) | (b & d) | (c & d);\nendmodule\n\n// Four A instances. Only direct wires and free binary constants are added.\nmodule threshold_three_of_four (\n    input  logic a, b, c, d,\n    output logic y\n);\n    logic p, q, r;\n    threshold_a g1 (.a(c), .b(d), .c(1'b0), .d(1'b0), .y(p));\n    threshold_a g2 (.a(c), .b(d), .c(1'b1), .d(1'b0), .y(q));\n    threshold_a g3 (.a(a), .b(b), .c(p), .d(1'b0), .y(r));\n    threshold_a g4 (.a(r), .b(q), .c(1'b0), .d(1'b0), .y(y));\nendmodule\n```\n\nמודול `threshold_a` מתאר את התנהגות הקופסה לצורך הצגת RTL. מודול המערכת מכיל ארבעה מופעים שלה. גוף המודל אינו קביעה לגבי מספר הטרנזיסטורים או השערים הפיזיים בתוך הקופסה הנתונה.\n\n**תשובה קצרה לראיון:** אברר קודם שמותר להשתמש בקבועים אבל לא במהפכים חופשיים. אפיק מ־`c,d` דגל ששניהם `1` ודגל שלפחות אחד `1`. אבחן את `a,b` יחד עם הדגל הראשון באמצעות קופסה שלישית, ואחייב גם את הדגל השני בקופסה רביעית. כך מתקבלים בדיוק שלושה אחדים או ארבעה. ארבע הוא מינימום במודל הזה לפי חיפוש ממצה; אם היפוכים חופשיים מותרים, אפשר קופסה אחת באמצעות היפוך כל הכניסות והמוצא.\n\nאימות: נבדקו כל 16 קלטי הרכיב, כל 16 קלטי הבנייה כולל אותות הביניים, כל 16 קלטי חלופת ההיפוך וארבעה מקרי קלט לא תקין במודל פייתון. החיפוש הממצה של מעגלי עד שלוש קופסאות עבר. השרטוט נבדק חזותית מול רשימת הפינים. קוד SystemVerilog צורף אך לא הורץ בסימולטור HDL; לא בוצעו סינתזה, בדיקת הפרעות מעבר או מדידת תזמון פיזי. זהו פתרון מוצע בסיוע AI, הממתין לסקירה מקצועית עצמאית.\n",
+          "hint": "חלקו את ארבע הכניסות לשני זוגות. אם בזוג הראשון יש אפס, אחת או שתי אחדות, כמה אחדות צריך מהזוג השני?"
+        },
+        "en": {
+          "title": "Three-of-four threshold from two-of-four boxes",
+          "prompt": "A primitive `A` has four binary inputs and one output. It returns `1` iff at least two inputs are `1`, and otherwise returns `0`.\n\nImplement a four-input component on `a,b,c,d` that returns `1` iff at least three inputs are `1`. Minimize the number of `A` boxes; provide pin connections, a truth table, correctness and minimality reasoning.\n\nFor this explicit version, free constants `0,1`, direct wires, fanout and repeated signals on pins are allowed. No free NOT or other gates, feedback or storage are allowed. Count only `A` instances.\n\nEditorial clarification: the source did not define allowed constants or extra gates. These permissions are stated explicitly; separately discuss how free inversion changes the answer.",
+          "hints": [
+            "Split the four inputs into two pairs. If one pair contains zero, one or two ones, how many are required from the other pair?",
+            "Tie constants to the primitive. What do A(c,d,0,0) and A(c,d,1,0) produce? They encode different information about the pair.",
+            "Let p mean both c,d are high and q mean either is high. Test A(a,b,p,0), then use q to block a=b=1,c=d=0."
+          ],
+          "reference_solution": "**Proposed solution — four boxes under an explicit component model**\n\nClarify the allowed resources before counting components. Assume only copies of `A`, free constants `0,1`, direct wires and fanout; repeated signals on multiple pins are allowed. No free NOT or other gates, feedback or storage are allowed. Minimize the number of `A` boxes, not constants or wires. The source did not specify these permissions, so the minimum below is conditional on them.\n\n**1. Group the inputs into pairs**\n\nCall the four inputs `a,b,c,d` and inspect pair `c,d`:\n\n- If both are zero, a total of three ones is impossible even when `a=b=1`.\n- If exactly one is high, both `a,b` must be high.\n- If both are high, at least one of `a,b` must be high.\n\nGenerate two flags: `p` says both pair inputs are high, and `q` says at least one is high. These are wire meanings produced by `A` boxes, not permission to add external AND/OR gates.\n\n**2. Generate those flags with two boxes**\n\n```text\np = A(c,d,0,0) = c AND d\nq = A(c,d,1,0) = c OR d\n```\n\nTwo fixed zeros in the first box require both variable inputs to meet the threshold. The fixed one in the second box supplies one of the two needed ones, so either variable input suffices.\n\n**3. Test a,b with flag p**\n\n```text\nr = A(a,b,p,0)\n```\n\nWhen `p=0`, this requires `a=b=1`. When `p=1`, either `a` or `b` suffices. This matches the cases with one or two ones in `c,d`.\n\nThere is still a trap: `a=b=1,c=d=0` makes `r=1` although the original total is only two. Do not output `r` directly.\n\n**4. Block that trap with the fourth box**\n\n```text\ny = A(r,q,0,0) = r AND q\n```\n\nFlag `q` requires at least one high input in `c,d`, blocking `1100`. With exactly one high in that pair, `p=0` requires both `a,b`; with both high, `p=1` requires at least one of `a,b`. These are precisely the cases with at least three original ones.\n\nComplete pin list:\n\n| Box | Pin 1 | Pin 2 | Pin 3 | Pin 4 | Output |\n| --- | --- | --- | --- | --- | --- |\n| G1 | c | d | 0 | 0 | p |\n| G2 | c | d | 1 | 0 | q |\n| G3 | a | b | p | 0 | r |\n| G4 | r | q | 0 | 0 | y |\n\nEach drawn box is one `A` primitive and all four input pins are connected. Repeated `c,d` labels denote the same primary inputs. Labels `p=c&d` and `q=c|d` describe the wires produced by the boxes; there are no extra external AND or OR gates. No clock or state is involved.\n\n**5. Complete truth table**\n\n```text\na b c d | p q r | y\n--------+-------+--\n0 0 0 0 | 0 0 0 | 0\n0 0 0 1 | 0 1 0 | 0\n0 0 1 0 | 0 1 0 | 0\n0 0 1 1 | 1 1 0 | 0\n0 1 0 0 | 0 0 0 | 0\n0 1 0 1 | 0 1 0 | 0\n0 1 1 0 | 0 1 0 | 0\n0 1 1 1 | 1 1 1 | 1\n1 0 0 0 | 0 0 0 | 0\n1 0 0 1 | 0 1 0 | 0\n1 0 1 0 | 0 1 0 | 0\n1 0 1 1 | 1 1 1 | 1\n1 1 0 0 | 0 0 1 | 0\n1 1 0 1 | 0 1 1 | 1\n1 1 1 0 | 0 1 1 | 1\n1 1 1 1 | 1 1 1 | 1\n```\n\nExactly the four weight-three rows and `1111` produce one. In particular `1100` gives `r=1` but `q=0`, hence the required `y=0`.\n\n**6. Why is four minimal in this model?**\n\nThe construction proves an upper bound of four. An accompanying exact synthesis check excludes every permitted acyclic circuit of at most three `A` gates, rather than merely trying a few hand-drawn candidates.\n\nRepresent a signal by its complete 16-bit truth signature. Start from `a,b,c,d,0,1`. At each stage choose four pins from every available signal, with repetition. The primitive is symmetric, so pin permutations with identical multisets need not be repeated. Retain all earlier outputs to allow arbitrary sharing and fanout, not just expression trees.\n\nThe search tested 126 pin multisets for the first gate; 6,930 for the second across 33 intermediate signal sets; and 312,840 for the third across 948 signal sets. None of these 319,896 final-gate choices produced the target. None of the six direct zero-gate sources is the target either.\n\nThis reduction is complete: topologically order any acyclic candidate so every gate uses primary inputs and earlier outputs. A gate whose complete truth function is already available can be replaced by that wire, so no minimum candidate needs it. Histories that produce the same available function set permit exactly the same future connections. Equality is evaluated on all 16 rows. Thus no smaller allowed circuit is lost by these reductions.\n\nTogether with the correct construction, this proves **a minimum of four A boxes under the stated grammar**. The longest path in this construction passes through three boxes; this counts logical stages, not measured physical delay.\n\n**7. Why ask about inversion?**\n\nIf inversion of all four inputs and the output is free, a single `A` box suffices:\n\n```text\ny = NOT A(NOT a, NOT b, NOT c, NOT d)\n```\n\nFor an original input with `k` ones, the inverted inputs have `4-k`. The inverted box output is one exactly when `4-k<2`, or `k>=3`. This alternative uses one `A` plus five inversions. It is forbidden in the main no-NOT grammar and is not the same total component cost if inverters are charged. If constant one is forbidden, the presented construction does not satisfy that restriction and requires a new analysis; no minimum is asserted for that model.\n\n**8. Python model and hardware code**\n\n```python\ndef A(a, b, c, d):\n    return int(a + b + c + d >= 2)\n\n\ndef three_of_four(a, b, c, d):\n    p = A(c, d, 0, 0)\n    q = A(c, d, 1, 0)\n    r = A(a, b, p, 0)\n    return A(r, q, 0, 0)\n```\n\nFunction `A` models the supplied primitive; the second function calls it exactly four times. Numeric addition in the behavioral primitive model is not an added external gate in the A-only netlist.\n\n```systemverilog\n// Behavioral definition of the supplied A primitive, not a physical-cell claim.\nmodule threshold_a (\n    input  logic a, b, c, d,\n    output logic y\n);\n    assign y = (a & b) | (a & c) | (a & d)\n             | (b & c) | (b & d) | (c & d);\nendmodule\n\n// Four A instances. Only direct wires and free binary constants are added.\nmodule threshold_three_of_four (\n    input  logic a, b, c, d,\n    output logic y\n);\n    logic p, q, r;\n    threshold_a g1 (.a(c), .b(d), .c(1'b0), .d(1'b0), .y(p));\n    threshold_a g2 (.a(c), .b(d), .c(1'b1), .d(1'b0), .y(q));\n    threshold_a g3 (.a(a), .b(b), .c(p), .d(1'b0), .y(r));\n    threshold_a g4 (.a(r), .b(q), .c(1'b0), .d(1'b0), .y(y));\nendmodule\n```\n\nModule `threshold_a` describes the primitive's behavior for RTL presentation. The system module instantiates it four times. The primitive model's body does not assert a physical transistor or internal gate count for the supplied box.\n\n**Interview answer:** First clarify that constants are allowed and free inversion is not. Derive from `c,d` a both-high flag and an any-high flag. Use a third box to test `a,b` together with the both-high flag, then a fourth to require the any-high flag too. This accepts exactly three or four ones. An exact search establishes four as the minimum under that grammar; free input and output inversions would instead allow one box.\n\nVerification covered all 16 primitive input rows, all 16 construction rows with intermediate signals, all 16 inversion-alternative rows, four invalid Python inputs, and exhaustive synthesis exclusion through three gates. The schematic was visually checked against its pin list. The supplied SystemVerilog has not been HDL-simulated; no synthesis, glitch-freedom or physical timing claim is made. This is an AI-assisted proposal pending independent expert review.\n",
+          "hint": "Split the four inputs into two pairs. If one pair contains zero, one or two ones, how many are required from the other pair?"
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-047-he-H01",
+          "level": 1,
+          "language": "he",
+          "content": "חלקו את ארבע הכניסות לשני זוגות. אם בזוג הראשון יש אפס, אחת או שתי אחדות, כמה אחדות צריך מהזוג השני?"
+        },
+        {
+          "id": "PREP-047-he-H02",
+          "level": 2,
+          "language": "he",
+          "content": "אפשר לחבר קבועים לקופסה: מה מפיקים A(c,d,0,0) ו־A(c,d,1,0)? אלה שני סוגים שונים של מידע על הזוג."
+        },
+        {
+          "id": "PREP-047-he-H03",
+          "level": 3,
+          "language": "he",
+          "content": "הפיקו p שאומר ששניהם c,d דולקים ו־q שאומר שלפחות אחד דולק. בדקו A(a,b,p,0), ואז חסמו בעזרת q את המקרה a=b=1,c=d=0."
+        },
+        {
+          "id": "PREP-047-en-H01",
+          "level": 1,
+          "language": "en",
+          "content": "Split the four inputs into two pairs. If one pair contains zero, one or two ones, how many are required from the other pair?"
+        },
+        {
+          "id": "PREP-047-en-H02",
+          "level": 2,
+          "language": "en",
+          "content": "Tie constants to the primitive. What do A(c,d,0,0) and A(c,d,1,0) produce? They encode different information about the pair."
+        },
+        {
+          "id": "PREP-047-en-H03",
+          "level": 3,
+          "language": "en",
+          "content": "Let p mean both c,d are high and q mean either is high. Test A(a,b,p,0), then use q to block a=b=1,c=d=0."
+        }
+      ],
+      "assumptions": [
+        "Binary inputs and an acyclic combinational circuit; multiple A instances are permitted.",
+        "Free constants 0,1, wires, fanout and repeated pins; no free NOT or other gates.",
+        "Minimize A-instance count under this grammar. Permissions were not specified in the source and are editorial clarifications.",
+        "AND/OR wire labels describe primitive outputs, not additional external gates."
+      ],
+      "optimality": {
+        "criterion": "A-instance count with free 0/1 constants and wires, but no inversion or other gates.",
+        "result": "Four A instances are minimal. The shown network has a longest path of three A stages.",
+        "proof": "All 16 rows verify the construction. Complete 0–3-gate synthesis checked six direct sources and 319,896 pin multisets over reachable signal sets without finding the target. Arbitrary sharing and repeated pins were included.",
+        "scope": "Conditional on the grammar. Free inversions allow one A plus inversions of all inputs and output. No minimum is asserted without constant one, nor for transistor area or physical delay."
+      },
+      "verification": {
+        "status": "Boolean and minimality checks passed; independent expert review pending.",
+        "method": "Independent population-count truth oracle, intermediate-wire checks and exhaustive synthesis using complete 16-bit truth signatures.",
+        "coverage": "16 primitive rows, 16 construction rows, 16 inversion-alternative rows and 4 invalid inputs; 126+6,930+312,840 pin multisets across 1,33,948 available-signal sets respectively.",
+        "script_path": "checks/check_prep_047.py",
+        "scope": "SystemVerilog is supplied but not HDL-simulated. No synthesis, physical timing measurement or glitch-freedom check."
+      },
+      "edge_cases": [
+        "0000 and every input of weight one or two must output zero.",
+        "1100 is a key trap: r=1 but q=0, so y=0.",
+        "0011 has only two ones: p=q=1 but a=b=0 gives r=0.",
+        "0111,1011,1101,1110 and 1111 output one.",
+        "Changing permissions for constants or inversion changes the minimization problem; the proof does not automatically transfer."
+      ],
+      "common_mistakes": [
+        "Assuming one A driven by a,b,c,d changes its own threshold from two to three.",
+        "Outputting r directly and missing the false-positive row 1100.",
+        "Adding free AND/OR or NOT gates while claiming a minimum under a different component model.",
+        "A correct four-box construction alone is an upper bound, not a minimality proof.",
+        "Searching only expression trees and overlooking shared earlier outputs.",
+        "Claiming an unconditional four-box minimum despite unspecified constants and inversion in the source."
+      ],
+      "interview_answer": "Clarify that constants 0,1 are free but inversion is not. Form p=A(c,d,0,0), q=A(c,d,1,0), r=A(a,b,p,0), then y=A(r,q,0,0). One high in c,d requires both a,b; two highs require either; zero is blocked by q. Four is minimal in that grammar by exhaustive search. Free inversion instead permits one A.",
+      "solution_extensions": {
+        "question": "What changes if inversion is free and only A boxes are counted?",
+        "answer_outline": "Use NOT A(NOT a,NOT b,NOT c,NOT d). Inverted inputs have 4-k ones, making inverted output one exactly for k>=3. This uses one A and five inversions; charging inverters requires a new cost analysis.",
+        "integration_status": "Follow-up prepared in archived content; not connected to the live follow-up workflow."
+      },
+      "source_ambiguities": [
+        "The source asks for minimum A count without explicitly specifying constants, inversion or other gates.",
+        "The primary model uses A and constants 0,1 without NOT; the free-inversion model is explicitly distinguished."
+      ],
+      "solution_code_path": "solutions/prep_047_threshold_three_of_four.py",
+      "solution_code_paths": [
+        "solutions/prep_047_threshold_three_of_four.py",
+        "solutions/prep_047_threshold_three_of_four.sv"
+      ],
+      "verification_evidence_path": "checks/prep-047-verification.json",
+      "verification_script_path": "checks/check_prep_047.py",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-047.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-047-four-threshold-boxes.png",
+          "description": "PREP-047"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-013",
+        "HW-001"
+      ],
+      "duplicate_check": "New founder-source constraints; related tasks remain independent and retain their attribution/history.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Role-relevant hardware/state reasoning or public-knowledge logic; not verified company evidence."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "markdown_path": "questions/prep-047-three-of-four-from-two-of-four-boxes.md"
+    },
+    {
+      "id": "PREP-048",
+      "key": "every-third-clock-pulse",
+      "version": 1,
+      "created_on": "2026-10-19",
+      "category": "hardware",
+      "topic": "sequential_circuits",
+      "topics": [
+        "counters",
+        "modulo_three",
+        "registered_outputs",
+        "clock_enable",
+        "finite_state_machines",
+        "timing"
+      ],
+      "source_topic_tags": [
+        "hardware"
+      ],
+      "added_topic_tags": [
+        "counters",
+        "modulo_three",
+        "registered_outputs",
+        "clock_enable",
+        "finite_state_machines",
+        "timing"
+      ],
+      "source_tags": [
+        "hardware",
+        "cisco",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Cisco",
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "construct",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied source; AI-assisted bilingual proposed solution and verification; professional, parity and reuse review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-048.png",
+          "received_on": "2026-10-19"
+        }
+      ],
+      "original_prompt": "יש לממש רכיב אשר מקבל אות שעון בתדר מסוים ומוציא '1' כל מחזור שלישי",
+      "translations": {
+        "he": {
+          "title": "פולס של מחזור שעון אחד בכל מחזור שלישי",
+          "prompt": "ממשו רכיב שמקבל שעון ומוציא 1 בכל מחזור שלישי. הציגו מכונת מצבים או מונה, טבלת מעברים, תרשים תזמון ומימוש חומרה.\n\nכדי להגדיר במדויק את התזמון, נבחר פלט רשום שאורכו מחזור שעון מלא: לאחר איפוס הפלט הוא 0, והוא עולה לאחר החזית העולה השלישית, השישית, התשיעית וכן הלאה. בשאר המחזורים הוא 0. איפוס סינכרוני פעיל בגבוה מאפס את המונה ואת הפלט ומתחיל מחדש את הספירה.\n\nהבהרת עריכה: המקור אינו מגדיר רוחב פולס, מופע התחלתי או סוג איפוס. אלו הנחות המימוש שלנו. אין דרישה ליחס גבוה של 50%; יש להבחין בין פולס חוזר בכל שלושה מחזורים לבין מחלק שעון בעל יחס גבוה של חצי.",
+          "hints": [
+            "איזה מידע צריך לשמור כדי לדעת אם החזית הנוכחית היא הראשונה, השנייה או השלישית בקבוצה?",
+            "בנו מונה עם שלושת הערכים 0,1,2, החוזר ל־0 במקום להמשיך ל־3.",
+            "התחילו ב־count=0 ו־pulse=0. כאשר המונה הישן הוא 2, רשמו pulse=1 ו־count=0; אחרת רשמו pulse=0 והגדילו את המונה. בדקו את שלוש החזיתות הראשונות."
+          ],
+          "reference_solution": "**פתרון מוצע — מונה מודולו 3 ופולס רשום**\n\n**קודם מגדירים מה פירוש כל מחזור שלישי.** המקור אינו קובע מופע התחלתי, רוחב פולס או איפוס. כאן נבחר שהפלט יהיה 0 באיפוס, ואז יהיה 1 במשך מחזור מלא אחרי החזיתות העולות 3,6,9 וכן הלאה מאז השחרור מאיפוס. אחרי החזיתות 1 ו־2 הוא נשאר 0. זהו פולס חוזר עם יחס גבוה של שליש, ולא גל בעל יחס גבוה של חצי.\n\n**1. צריך לזכור כמה מחזורים עברו בקבוצה הנוכחית.** מספיקים שלושה ערכי ספירה: `0,1,2`. נשתמש במונה בן שתי סיביות. המונה מאותחל ל־0, ובכל חזית עולה ללא איפוס:\n\n```text\n0 -> 1 -> 2 -> 0 -> 1 -> 2 -> ...\n```\n\n**2. החזית השלישית היא החזרה מ־2 ל־0.** לכן אם ערך המונה הישן הוא 2, נרשום בפלט 1 ונחזיר את המונה ל־0. בשני המצבים האחרים נרשום 0 ונגדיל את המונה. את הפלט שומרים באוגר כדי שיישאר יציב לאורך המחזור:\n\n```text\ncount_next = 0,       if count == 2\ncount_next = count+1, otherwise\npulse_next = (count == 2)\n```\n\n**3. טבלת מעברים.** כל שורה מתארת חזית אחת ללא איפוס. הפולס בטבלה הוא הפלט הרשום **אחרי** החזית, ומחושב מהמונה **לפניה**:\n\n```text\nold count   next count   pulse after edge\n   0            1               0\n   1            2               0\n   2            0               1\n```\n\nכאשר האיפוס פעיל בחזית, המונה והפלט נעשים 0 ללא תלות במצב הקודם. בשרטוט המצבים, המספר על כל חץ הוא `pulse_next`; כל מעבר מתרחש בחזית עולה אחת. הוא מתאר את שלושת מצבי המונה ואת פלט המעבר, ולא טוען שהפלט הרשום הוא פונקציה של המונה הנוכחי בלבד: `count=0` מיד באיפוס מלווה ב־`pulse=0`, ואחרי החזית השלישית מלווה ב־`pulse=1`.\n\n**4. דוגמת תזמון.** כל עמודה היא המצב והפלט לאחר החזית המתאימה:\n\n```text\nedge:    1  2  3  4  5  6  7  8  9 10 11 12\ncount:   1  2  0  1  2  0  1  2  0  1  2  0\npulse:   0  0  1  0  0  1  0  0  1  0  0  1\n```\n\nלאחר חזית 3 הפלט עולה, ולאחר חזית 4 הוא יורד. הוא שוב עולה אחרי חזית 6. לכן רוחב כל פולס הוא `T_clk`, והמרחק בין תחילות פולסים הוא `3*T_clk`.\n\n**5. מימוש SystemVerilog.**\n\n```systemverilog\n// Pulse high after input edges 3, 6, 9, ... since the last reset edge.\nmodule every_third_clock (\n    input  logic clk,\n    input  logic rst,\n    output logic pulse\n);\n    logic [1:0] count;\n\n    always_ff @(posedge clk) begin\n        if (rst) begin\n            count <= 2'd0;\n            pulse <= 1'b0;\n        end else if (count == 2'd2) begin\n            count <= 2'd0;\n            pulse <= 1'b1;\n        end else begin\n            count <= count + 2'd1;\n            pulse <= 1'b0;\n        end\n    end\nendmodule\n```\n\nההשמות הלא חוסמות מבטיחות ששני העדכונים משתמשים בספירה הישנה. אין לשכוח את `pulse <= 0` בענף הרגיל: אחרת הפלט עלול להישאר גבוה לאחר הפולס הראשון. יש להפעיל את האיפוס הסינכרוני לפחות לאורך חזית עולה אחת. מצב הקידוד `11` אינו נגיש מהאיפוס התקין; הקוד אינו מבטיח התאוששות מפגיעה במצב או פעולה עם ערכי X ב־HDL.\n\n**6. למה זה נכון?** אחרי `k` חזיתות ללא איפוס מאז האיפוס האחרון, המונה הוא `k mod 3`. לפני חזית שמספרה מתחלק ב־3 המונה הוא 2, ולכן הפלט הרשום נעשה 1 בדיוק בחזיתות אלו. בחזית הבאה המונה הישן הוא 0, ולכן הפלט חוזר ל־0. איפוס מחדש מתחיל קבוצה חדשה של שלוש חזיתות.\n\n**7. תדר, יחס גבוה ועלות.** תדר החזרה הוא `f_clk/3`, ויחס הזמן הגבוה הוא `1/3`. הבנייה משתמשת בשני ביטים למונה וביט נוסף לפלט הרשום, עם לוגיקת מעבר/פענוח ואיפוס. אין כאן הוכחה למספר הרכיבים המזערי; אפשר לבחור קידודים ומימושים אחרים. לצריכת פעולה כל מחזור שלישי עדיף לרוב להשתמש בפולס כאות אפשור תחת השעון המקורי, ולא להפוך אותו לשעון חדש בלי תכנון שעונים מתאים.\n\n**חשוב להבדיל:** פלט צירופי `count==2` עם אתחול המונה ל־0 יהיה גבוה אחרי החזיתות 2,5,8, ולכן אינו בעל אותו מופע כמו הפלט הרשום שבחרנו. אפשר לשנות את הקידוד או את האתחול כדי לקבל מופע אחר, אבל צריך לציין זאת. דרישה למחלק ב־3 עם יחס גבוה 50% היא בעיה אחרת; הפתרון כאן אינו מבטיח זאת.\n\n**תשובה קצרה לראיון:** אשתמש במונה מודולו 3 שמתחיל ב־0. בכל חזית שבה ערכו הישן הוא 2 אאפס את המונה וארשום 1 בפלט; בשאר החזיתות אגדיל אותו וארשום 0. כך מתקבל פולס למחזור מלא אחרי כל חזית שלישית, בתדר חזרה של שליש מהשעון ויחס גבוה של שליש.\n\n**אימות:** מודל פייתון הושווה לאורקל עצמאי שסופר חזיתות מאז האיפוס האחרון: כל 65,535 עקבות האיפוס באורכים 0–15, הכוללים 917,506 חזיתות, ועוד 3,000 מחזורים רציפים עם 1,000 פולסים. נבדקו מופע, איפוס באמצע והיעדר שני מחזורים גבוהים רצופים. קוד SystemVerilog צורף, אך לא קומפל או הורץ בסימולטור HDL ולא עבר סינתזה או תזמון פיזי. הפתרון מוצע בסיוע AI וממתין לסקירה מקצועית עצמאית.\n",
+          "hint": "איזה מידע צריך לשמור כדי לדעת אם החזית הנוכחית היא הראשונה, השנייה או השלישית בקבוצה?"
+        },
+        "en": {
+          "title": "A one-clock-period pulse every third cycle",
+          "prompt": "Implement a component receiving a clock and outputting one every third cycle. Provide a state machine or counter, transition table, timing trace and hardware implementation.\n\nFor precise timing, choose a registered pulse lasting one complete clock period: output is zero at reset and rises after the third, sixth, ninth and subsequent third rising edges. It is zero during other cycles. Synchronous active-high reset clears count and output, restarting the phase.\n\nEditorial clarification: the source does not specify pulse width, initial phase or reset type. These are implementation assumptions. Fifty-percent duty cycle is not required; distinguish a pulse every three cycles from a half-duty divided clock.",
+          "hints": [
+            "What information must be stored to tell whether the current edge is first, second or third in its group?",
+            "Build a counter using values zero, one and two, returning to zero instead of advancing to three.",
+            "Start count and pulse at zero. If old count is two, register pulse=1 and count=0; otherwise register pulse=0 and increment count. Trace the first three edges."
+          ],
+          "reference_solution": "**Proposed solution — modulo-three counter and a registered pulse**\n\n**First define every third cycle.** The source leaves initial phase, pulse width and reset unspecified. Here output is zero at reset, then high for one complete clock period after rising edges 3,6,9 and so on since reset release. It remains zero after edges one and two. This is a periodic pulse with one-third duty cycle, not a half-duty square wave.\n\n**1. Remember progress within a three-cycle group.** Three count values, `0,1,2`, suffice. Use a two-bit counter initialized to zero. At each nonreset rising edge it follows:\n\n```text\n0 -> 1 -> 2 -> 0 -> 1 -> 2 -> ...\n```\n\n**2. The third edge is the transition from two back to zero.** If old count is two, register output one and return count to zero. Otherwise register output zero and increment count. Registering the output keeps it stable across the cycle:\n\n```text\ncount_next = 0,       if count == 2\ncount_next = count+1, otherwise\npulse_next = (count == 2)\n```\n\n**3. Transition table.** Each row describes a nonreset edge. The pulse is the registered output **after** the edge and is computed from the count **before** it:\n\n```text\nold count   next count   pulse after edge\n   0            1               0\n   1            2               0\n   2            0               1\n```\n\nReset at an edge sets count and output to zero, regardless of old state. In the state diagram each arrow label is `pulse_next`; one rising edge triggers each transition. It shows three counter states with transition output, not a claim that the registered output is solely a function of present count: `count=0` accompanies `pulse=0` immediately at reset, but `pulse=1` after edge three.\n\n**4. Timing example.** Each column shows count and registered output after its edge:\n\n```text\nedge:    1  2  3  4  5  6  7  8  9 10 11 12\ncount:   1  2  0  1  2  0  1  2  0  1  2  0\npulse:   0  0  1  0  0  1  0  0  1  0  0  1\n```\n\nOutput rises after edge three and falls after edge four, then rises again after edge six. Each pulse is `T_clk` wide; pulse starts are `3*T_clk` apart.\n\n**5. SystemVerilog implementation.**\n\n```systemverilog\n// Pulse high after input edges 3, 6, 9, ... since the last reset edge.\nmodule every_third_clock (\n    input  logic clk,\n    input  logic rst,\n    output logic pulse\n);\n    logic [1:0] count;\n\n    always_ff @(posedge clk) begin\n        if (rst) begin\n            count <= 2'd0;\n            pulse <= 1'b0;\n        end else if (count == 2'd2) begin\n            count <= 2'd0;\n            pulse <= 1'b1;\n        end else begin\n            count <= count + 2'd1;\n            pulse <= 1'b0;\n        end\n    end\nendmodule\n```\n\nNonblocking assignments make both updates depend on old count. Do not omit `pulse <= 0` in the ordinary branch, or output can stay high after its first pulse. Assert synchronous reset across at least one rising edge. Encoding `11` is unreachable after proper reset; this code does not promise recovery from state corruption or operation with HDL X values.\n\n**6. Correctness.** After `k` nonreset edges since the latest reset, count equals `k mod 3`. Before every edge numbered a positive multiple of three, old count is two, so registered output becomes one exactly at those edges. At the following edge old count is zero, forcing output back low. A new reset restarts the three-edge grouping.\n\n**7. Frequency, duty cycle and cost.** Repetition frequency is `f_clk/3` and high-time duty cycle is `1/3`. This construction uses two counter bits and one registered-output bit, with transition/decode and reset logic. It is not a minimum-component proof; other encodings and architectures are possible. When enabling work every third cycle, it is usually preferable to use this pulse as a clock enable under the original clock rather than create a new clock without appropriate clock design.\n\n**Distinguish timing contracts:** combinational `count==2` with count initialized to zero is high after edges 2,5,8, so its phase differs from the chosen registered output. Encoding or initialization can be changed for a different phase, but must be stated. Divide-by-three with 50% duty cycle is a different requirement and is not supplied by this solution.\n\n**Interview answer:** Use a modulo-three counter starting at zero. At an edge with old count two, reset the counter and register output one; at other edges increment it and register zero. This produces a full-period pulse after every third edge, with one-third repetition frequency and one-third duty cycle.\n\n**Verification:** A Python model matched an independent elapsed-edge-since-reset oracle for all 65,535 reset traces of lengths zero through fifteen, covering 917,506 sampled edges, plus 3,000 continuous cycles with 1,000 pulses. Checks cover phase, midstream reset and absence of adjacent high cycles. SystemVerilog is supplied but has not been compiled, HDL-simulated, synthesized or physically timed. This is an AI-assisted proposal with independent expert review pending.\n",
+          "hint": "What information must be stored to tell whether the current edge is first, second or third in its group?"
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-048-he-H01",
+          "level": 1,
+          "language": "he",
+          "content": "איזה מידע צריך לשמור כדי לדעת אם החזית הנוכחית היא הראשונה, השנייה או השלישית בקבוצה?"
+        },
+        {
+          "id": "PREP-048-he-H02",
+          "level": 2,
+          "language": "he",
+          "content": "בנו מונה עם שלושת הערכים 0,1,2, החוזר ל־0 במקום להמשיך ל־3."
+        },
+        {
+          "id": "PREP-048-he-H03",
+          "level": 3,
+          "language": "he",
+          "content": "התחילו ב־count=0 ו־pulse=0. כאשר המונה הישן הוא 2, רשמו pulse=1 ו־count=0; אחרת רשמו pulse=0 והגדילו את המונה. בדקו את שלוש החזיתות הראשונות."
+        },
+        {
+          "id": "PREP-048-en-H01",
+          "level": 1,
+          "language": "en",
+          "content": "What information must be stored to tell whether the current edge is first, second or third in its group?"
+        },
+        {
+          "id": "PREP-048-en-H02",
+          "level": 2,
+          "language": "en",
+          "content": "Build a counter using values zero, one and two, returning to zero instead of advancing to three."
+        },
+        {
+          "id": "PREP-048-en-H03",
+          "level": 3,
+          "language": "en",
+          "content": "Start count and pulse at zero. If old count is two, register pulse=1 and count=0; otherwise register pulse=0 and increment count. Trace the first three edges."
+        }
+      ],
+      "assumptions": [
+        "Registered output is high for one complete input period after edges 3,6,9 since reset, and low after the first two edges.",
+        "Synchronous active-high reset sets count=0,pulse=0; pulse width and phase clarify the terse source.",
+        "Requirement is a one-third-duty pulse, not a fifty-percent-duty divide-by-three clock.",
+        "A two-bit counter operates in legal states zero, one and two after reset; no X-state or corruption-recovery promise is made."
+      ],
+      "optimality": {
+        "criterion": "A registered one-cycle pulse on each third edge at the specified phase.",
+        "result": "Two-bit modulo-three counter and a separate output register, with transition/reset logic; repetition f_clk/3 and duty 1/3.",
+        "proof": "After k edges count is k mod 3. Old count equals two precisely before each third edge, so pulse_next asserts only then and falls at the next edge.",
+        "scope": "No minimum-area or minimum-register proof. Combinational count==2 with zero initialization has a different phase. Fifty-percent-duty divide-by-three is a different problem."
+      },
+      "verification": {
+        "status": "Python-model checks passed; independent expert review pending.",
+        "method": "Comparison to an independent oracle tracking edges since reset and checking positive multiples of three.",
+        "coverage": "65,535 reset traces of lengths zero through fifteen, 917,506 sampled edges, plus 3,000 continuous cycles with 1,000 pulses.",
+        "script_path": "checks/check_prep_048.py",
+        "scope": "SystemVerilog supplied but not compiled or HDL-simulated; no synthesis or physical timing."
+      },
+      "edge_cases": [
+        "Reset forces output low even when old count is two.",
+        "Three nonreset edges are needed after reset release before the first pulse.",
+        "Midstream reset restarts the three-edge group.",
+        "Output never stays high or asserts during adjacent cycles.",
+        "Counter encoding 11 is unreachable from initialization; illegal-state recovery is a separate extension.",
+        "Repetition frequency alone does not specify duty: pulse width here is T_clk rather than 1.5*T_clk."
+      ],
+      "common_mistakes": [
+        "Using an ordinary two-bit binary counter including three, giving period four instead of three.",
+        "Comparing the updated count without checking phase relative to edge three.",
+        "Omitting output-zero assignment on other cycles, leaving output high.",
+        "Presenting combinational count==2 as identical to the registered pulse after edge three.",
+        "Confusing one-third duty with fifty percent.",
+        "Using the pulse as a new clock without clock-design analysis; a clock enable needs no new clock."
+      ],
+      "interview_answer": "Use a modulo-three counter starting at zero. At an edge with old count two, return it to zero and register pulse one; otherwise increment and register zero. Output is a full-period pulse after edges 3,6,9, with one-third repetition frequency and one-third duty.",
+      "solution_extensions": {
+        "question": "How would you generalize to every Nth cycle and recover from illegal counter encodings?",
+        "answer_outline": "For N>=2, count zero through N-1 using ceil(log2 N) bits and register a pulse when old count is N-1, preserving reset and phase semantics. Recovery can detect an illegal value and return to zero with pulse low; define phase after the fault. N=1 is separate, with output high every nonreset cycle.",
+        "integration_status": "Follow-up prepared in content; not connected to the live follow-up workflow."
+      },
+      "solution_code_path": "solutions/prep_048_every_third_clock.py",
+      "solution_code_paths": [
+        "solutions/prep_048_every_third_clock.py",
+        "solutions/prep_048_every_third_clock.sv"
+      ],
+      "verification_evidence_path": "checks/prep-048-verification.json",
+      "verification_script_path": "checks/check_prep_048.py",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-048.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-048-third-clock-fsm-timing.png",
+          "description": "PREP-048"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-010",
+        "VHW-004",
+        "HW-011"
+      ],
+      "duplicate_check": "New founder-source constraints; related tasks remain independent and retain their attribution/history.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Role-relevant hardware/state reasoning or public-knowledge logic; not verified company evidence."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "markdown_path": "questions/prep-048-every-third-clock-pulse.md"
     }
   ]
 }

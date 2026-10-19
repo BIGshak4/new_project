@@ -14,8 +14,8 @@ const outFlag = process.argv.indexOf("--out");
 const out = resolve(outFlag >= 0 ? process.argv[outFlag + 1] : join(web, "../../.impeccable/review/question-localization"));
 const edge = process.env.EDGE_PATH ?? "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
 const questions = JSON.parse(readFileSync(join(web, "../../backend/seeds/questions/preparation_bank.json"), "utf8"));
-if (questions.length !== 43 || questions.some(q => !q.assets.preparation_resource.learner_material)) {
-  throw new Error("Regenerate the 43 preparation resources with their paired learner_material before running.");
+if (questions.length !== 48 || questions.some(q => !q.assets.preparation_resource.learner_material)) {
+  throw new Error("Regenerate the 48 preparation resources with their paired learner_material before running.");
 }
 const checks = [], screenshots = [], errors = [];
 const started = Date.now();

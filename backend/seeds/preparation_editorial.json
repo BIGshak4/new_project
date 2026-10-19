@@ -849,5 +849,80 @@
       ]
     },
     "note": "2026-10-18 batch: original screenshot preserved; all assumptions explicit; AI-assisted proposal, technical/parity/reuse review pending."
+  },
+  "PREP-044": {
+    "hints": {
+      "he": [
+        "כדי לחשב את האיבר הבא, איזה חלק מהסדרה הקודמת באמת צריך לזכור?",
+        "שמרו שני איברים סמוכים בשני אוגרים. מה צריך להיות תוכנו של כל אוגר במחזור הבא?",
+        "אתחלו את האוגרים ל־0 ול־1. בכל חזית עדכנו במקביל a_next=b ו־b_next=a+b מתוך הערכים הישנים; הפלט הוא a. הגדירו גם רוחב וגלישה."
+      ],
+      "en": [
+        "Which part of the previous sequence must actually be remembered to calculate the next term?",
+        "Store two consecutive terms in two registers. What should each register contain next cycle?",
+        "Initialize to zero and one. On each edge update a_next=b and b_next=a+b in parallel from old values; expose a. Also define width and overflow."
+      ]
+    },
+    "note": "2026-10-19: founder source preserved; bilingual AI-assisted proposal with explicit assumptions, media and checks; professional review pending."
+  },
+  "PREP-045": {
+    "hints": {
+      "he": [
+        "הפולס של הזוכה נעלם אחרי מחזור, אבל התוצאה צריכה להישאר. איזה מידע צריך לשמור, וכמה תוצאות שונות יש?",
+        "הפרידו בין מקודד שמציע מספר מסלול לפי הפולסים הנוכחיים לבין זיכרון שמחליט האם לקבל את ההצעה. מה מסמן שעדיין אין זוכה?",
+        "השתמשו באוגר בן שני ביטים: איפוס כופה 00; אם האוגר עדיין 00, טענו את קוד המועמד; אחרת החזיקו את ערכו. הגדירו במפורש סדר עדיפות ללחיצות באותה דגימה."
+      ],
+      "en": [
+        "The winner pulse disappears after a cycle, but its result must remain. What information must be stored, and how many possible results exist?",
+        "Separate an encoder proposing a lane from memory deciding whether to accept it. What code can indicate that no winner has been accepted?",
+        "Use a two-bit register: reset forces 00; while it is 00, load the candidate code; otherwise hold its old value. Explicitly define priority for pulses sampled at the same edge."
+      ]
+    },
+    "note": "2026-10-19: founder source preserved; bilingual AI-assisted proposal with explicit assumptions, media and checks; professional review pending."
+  },
+  "PREP-046": {
+    "hints": {
+      "he": [
+        "חיים אינו רואה את היום. כדי להיות בטוח שיוני אינו יודע, ההצהרה שלו צריכה להיות נכונה לכל יום אפשרי בחודש שחיים קיבל.",
+        "אילו מספרי יום מופיעים ברשימה רק פעם אחת? אם החודש של חיים מכיל יום כזה, האם הוא יכול להיות בטוח שיוני אינו יודע?",
+        "אחרי סינון החודשים, יוני יכול לדעת רק אם מספר היום שלו מופיע בתאריך אחד ברשימה המצומצמת. אחר כך חיים צריך חודש שנשאר בו תאריך אחד בלבד."
+      ],
+      "en": [
+        "Chaim cannot see the day. To be certain that Yoni does not know, his claim must hold for every possible day in the month Chaim was told.",
+        "Which day numbers occur only once initially? If Chaim's month includes one of them, can he be certain that Yoni does not know?",
+        "After eliminating months, Yoni can know only if his day occurs in one remaining date. Chaim's last statement then requires a month with only one remaining date."
+      ]
+    },
+    "note": "2026-10-19: founder source preserved; bilingual AI-assisted proposal with explicit assumptions, media and checks; professional review pending."
+  },
+  "PREP-047": {
+    "hints": {
+      "he": [
+        "חלקו את ארבע הכניסות לשני זוגות. אם בזוג הראשון יש אפס, אחת או שתי אחדות, כמה אחדות צריך מהזוג השני?",
+        "אפשר לחבר קבועים לקופסה: מה מפיקים A(c,d,0,0) ו־A(c,d,1,0)? אלה שני סוגים שונים של מידע על הזוג.",
+        "הפיקו p שאומר ששניהם c,d דולקים ו־q שאומר שלפחות אחד דולק. בדקו A(a,b,p,0), ואז חסמו בעזרת q את המקרה a=b=1,c=d=0."
+      ],
+      "en": [
+        "Split the four inputs into two pairs. If one pair contains zero, one or two ones, how many are required from the other pair?",
+        "Tie constants to the primitive. What do A(c,d,0,0) and A(c,d,1,0) produce? They encode different information about the pair.",
+        "Let p mean both c,d are high and q mean either is high. Test A(a,b,p,0), then use q to block a=b=1,c=d=0."
+      ]
+    },
+    "note": "2026-10-19: founder source preserved; bilingual AI-assisted proposal with explicit assumptions, media and checks; professional review pending."
+  },
+  "PREP-048": {
+    "hints": {
+      "he": [
+        "איזה מידע צריך לשמור כדי לדעת אם החזית הנוכחית היא הראשונה, השנייה או השלישית בקבוצה?",
+        "בנו מונה עם שלושת הערכים 0,1,2, החוזר ל־0 במקום להמשיך ל־3.",
+        "התחילו ב־count=0 ו־pulse=0. כאשר המונה הישן הוא 2, רשמו pulse=1 ו־count=0; אחרת רשמו pulse=0 והגדילו את המונה. בדקו את שלוש החזיתות הראשונות."
+      ],
+      "en": [
+        "What information must be stored to tell whether the current edge is first, second or third in its group?",
+        "Build a counter using values zero, one and two, returning to zero instead of advancing to three.",
+        "Start count and pulse at zero. If old count is two, register pulse=1 and count=0; otherwise register pulse=0 and increment count. Trace the first three edges."
+      ]
+    },
+    "note": "2026-10-19: founder source preserved; bilingual AI-assisted proposal with explicit assumptions, media and checks; professional review pending."
   }
 }

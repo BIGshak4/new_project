@@ -1,0 +1,484 @@
+{
+  "PREP-044": {
+    "assumptions": {
+      "he": [
+        "הגדרת הסדרה היא F_0=0,F_1=1. הפלט הוא האוגר a, כולל הערך 0 לפני החזית הראשונה ללא איפוס.",
+        "שני אוגרים ללא סימן ברוחב W>=1, שעון משותף ואיפוס סינכרוני פעיל בגבוה. ההנחות נוספו למקור הקצר.",
+        "חיבור ברוחב סופי נקטע מודולו 2^W; אין הבטחה לסדרה מדויקת בלתי מוגבלת.",
+        "יש להפעיל איפוס בחזית ולהתאים את תקופת השעון למסלול הנתונים. אין דרישה לאפשור או לממשק לחיצת יד."
+      ],
+      "en": [
+        "Sequence convention is F_0=0,F_1=1. Output is register a, including zero before the first nonreset edge.",
+        "Two unsigned W-bit registers, W>=1, common clock and synchronous active-high reset; these clarify the terse source.",
+        "Finite-width addition wraps modulo 2^W; an unbounded exact sequence is not promised.",
+        "Reset must be asserted at an edge, and clock period must accommodate the datapath. No enable or handshake is required."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מימוש סינכרוני מפורש שמפיק איבר חדש בכל מחזור.",
+        "result": "שני אוגרים בני W ביטים ומחבר W ביטים, בנוסף ללוגיקת האיפוס.",
+        "proof": "אם המצב הוא (F_k,F_(k+1)), עדכון מקביל ל־(b,a+b) נותן (F_(k+1),F_(k+2)); הדבר נכון גם מודולו 2^W.",
+        "scope": "לא הוכח מינימום שטח או השהיה. חומרה ברוחב סופי אינה מייצגת את כל הסדרה המדויקת לעד; תזמון המחבר תלוי במימוש."
+      },
+      "en": {
+        "criterion": "An explicit synchronous implementation producing one term per cycle.",
+        "result": "Two W-bit registers and one W-bit adder, plus reset logic.",
+        "proof": "State (F_k,F_(k+1)) updates in parallel to (b,a+b)=(F_(k+1),F_(k+2)); this also holds modulo 2^W.",
+        "scope": "No area or delay minimum is proved. Finite-width hardware cannot represent the entire exact sequence forever, and adder timing depends on implementation."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "בדיקות מודל פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
+        "method": "השוואה לאורקל הכפלה מהירה שמחשב פיבונצ׳י במספרים שלמים מדויקים ולאחר מכן מצמצם מודולו.",
+        "coverage": "10,260 מצבי דגימה ב־20 רוחבים, 8,192 עקבות איפוס באורך 10 ושש בדיקות קלט רוחב לא תקין.",
+        "script_path": "checks/check_prep_044.py",
+        "scope": "SystemVerilog צורף אך לא קומפל או הורץ בסימולטור HDL; לא בוצעו סינתזה או תזמון פיזי."
+      },
+      "en": {
+        "status": "Python-model checks passed; independent expert review pending.",
+        "method": "Comparison to independent exact fast-doubling Fibonacci followed by modular reduction.",
+        "coverage": "10,260 sampled states across 20 widths, 8,192 length-ten reset traces and six invalid-width cases.",
+        "script_path": "checks/check_prep_044.py",
+        "scope": "SystemVerilog supplied but not compiled or HDL-simulated; no synthesis or physical timing."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "W=1 תקין ומפיק פיבונצ׳י מודולו 2.",
+        "איפוס באמצע מחזיר מיד לאחר החזית את הזוג ל־0,1 והפלט ל־0.",
+        "ללא חזיתות שעון המצב אינו מתקדם; אי אפשר להניח מצב אתחול פיזי בלי לאתחל אותו.",
+        "עבור W=4, הערך 21 יופיע כ־5. האוגר b עשוי לגלוש לפני שהאיבר הגולש מופיע בפלט a.",
+        "אם נדרש מספר מוגבל של איברים מדויקים, רוחב האוגרים צריך לכסות גם את האיבר הבא המאוחסן ב־b."
+      ],
+      "en": [
+        "W=1 is valid and produces Fibonacci modulo two.",
+        "A midstream reset returns the pair to zero and one, with output zero, after the edge.",
+        "Without clock edges state does not advance; physical initialization must be established.",
+        "For W=4, 21 appears as 5. Register b can overflow before the overflowing term reaches a.",
+        "A bounded exact sequence needs sufficient width for the next term stored in b as well as the output."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "עדכון a לפני חישוב הסכום באמצעות ערכו החדש, במקום עדכון מקביל מהמצב הישן.",
+        "אתחול שני האוגרים ל־0, שינעל את הסדרה על אפס.",
+        "הצגת פלט שמתחיל ב־1 בלי להגדיר מוסכמת אינדוקס שונה.",
+        "טענה שרוחב סופי מספיק לכל איברי הסדרה המדויקת.",
+        "השמטת איפוס או הנחה שהמצב ידוע פיזית מעצמו.",
+        "טענה להשהיית חיבור קבועה שאינה תלויה ברוחב ובארכיטקטורת המחבר."
+      ],
+      "en": [
+        "Updating a before evaluating the sum from its new value rather than updating in parallel from old state.",
+        "Initializing both registers to zero, trapping the sequence at zero.",
+        "Starting output at one without defining a different indexing convention.",
+        "Claiming finite width represents all exact terms forever.",
+        "Omitting reset or assuming physical state initializes itself.",
+        "Claiming adder delay is independent of width and architecture."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור שני איברים סמוכים באוגרים מאותחלים ל־0 ול־1. בכל חזית אעביר את השני לראשון ואת סכומם לשני במקביל, ואציג את הראשון. אציין רוחב ואת התנהגות הגלישה: המימוש ברוחב W מפיק את הסדרה מודולו 2^W.",
+      "en": "Store adjacent terms in registers initialized to zero and one. At each edge simultaneously copy the second to the first and their old-value sum to the second; expose the first. State width and overflow: a W-bit implementation produces the sequence modulo 2^W."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך נוסיף אות אפשור, ומה צריך להשתנות אם אסור לגלוש?",
+        "answer_outline": "כשאין אפשור שני האוגרים נשארים ללא שינוי; איפוס מקבל קדימות. עבור מספר מוגבל של איברים בוחרים רוחב מספיק או מחשבים סכום W+1 ביטים ומדווחים/עוצרים בגלישה. בחירה ברוויה משנה את הסדרה; לא ניתן לייצר לעד ערכים מדויקים ברוחב סופי.",
+        "integration_status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתהליך ההמשך החי."
+      },
+      "en": {
+        "question": "How would you add an enable, and what changes if overflow is forbidden?",
+        "answer_outline": "Hold both registers when enable is low, with reset taking priority. For a bounded exact sequence choose sufficient width, or compute a W+1-bit sum and flag/stop on overflow. Saturation changes the sequence; finite width cannot provide exact unbounded terms forever.",
+        "integration_status": "Follow-up prepared in content; not connected to the live follow-up workflow."
+      }
+    }
+  },
+  "PREP-045": {
+    "assumptions": {
+      "he": [
+        "הקלטים הם פולסים בינאריים שכבר סונכרנו ועומדים בזמני הכנה והחזקה; המערכת אינה מטפלת כאן ברטט של לחצנים פיזיים.",
+        "דוגמים בחזית עולה; הפלט הוא האוגר לאחר החזית. איפוס סינכרוני פעיל בגבוה גובר על כל לחיצה ומחזיר ל־00.",
+        "בהגעה שנדגמת באותה חזית בוחרים מסלול 1 לפני 2 לפני 3; זו מדיניות שהוספנו ולא נתון במקור.",
+        "00 מסמן שאין זוכה; 01,10,11 הם מסלולים 1,2,3. הכיתוב rest במקור מפורש כאיפוס rst.",
+        "אין אפשרות להסיק משלושת הפולסים את סדרם הכרונולוגי של אירועים שונים בין אותן שתי חזיתות."
+      ],
+      "en": [
+        "Inputs are binary pulses already synchronized and meeting setup/hold requirements; physical button debouncing is outside this circuit.",
+        "Sample at rising edges; output is the stored value after the edge. Synchronous active-high reset overrides every finish pulse and establishes 00.",
+        "Same-edge ties use lane 1 before 2 before 3; this is an added policy, not a source fact.",
+        "00 means no winner; 01,10,11 identify lanes 1,2,3. Source spelling rest is interpreted as reset rst.",
+        "The three sampled pulses cannot reveal the continuous-time order of arrivals between the same two edges."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר ביטי הזיכרון במודל סינכרוני עם ארבע תוצאות יציבות.",
+        "result": "שני ביטי מצב מספיקים ונדרשים; מקודד, בדיקת אפס ובחירת החזקה משלימים את הבנייה.",
+        "proof": "אין זוכה ושלושת הזוכים דורשים ארבעה מצבים נבדלים בפלט. ביט אחד מייצג רק שני מצבים; שני ביטים מייצגים ארבעה. קוד הזוכה עצמו שומר את המצב.",
+        "scope": "אין טענה למינימום שערים, שטח או השהיה. הדרישה היא הגעה ראשונה לפי דגימות ולא הכרעה אנלוגית בין אירועים קרובים."
+      },
+      "en": {
+        "criterion": "State-bit count in the synchronous model with four stable results.",
+        "result": "Two state bits are sufficient and necessary; an encoder, zero test and hold selection complete the construction.",
+        "proof": "No winner and three winners have distinct outputs and require four distinguishable states. One bit represents only two states; two bits represent four. The winner code stores the state itself.",
+        "scope": "No gate-count, area or physical-delay minimum is claimed. The contract selects the first sampled arrival rather than resolving analog ordering of close events."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "בדיקות מודל פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
+        "method": "אורקל עצמאי סורק את היסטוריית הדגימות מאז האיפוס האחרון ובוחר את זוג החזית והמסלול המינימלי. נבדקו גם משוואות בוליאניות ואינווריאנטים.",
+        "coverage": "64 מעברי מצב/קלט/איפוס; 299,593 רצפי פולסים באורכים 0–6; 69,905 רצפי פולסים ואיפוס באורכים 0–4; החזקת זוכה 100 מחזורים.",
+        "script_path": "checks/check_prep_045.py",
+        "scope": "אין סימולציית HDL, סינתזה, בדיקת CDC או מדידת חומרה; קוד SystemVerilog צורף כמימוש מוצע."
+      },
+      "en": {
+        "status": "Python-model checks passed; independent expert review remains pending.",
+        "method": "Independent oracle scans sampled history since the latest reset and selects the smallest arrival-edge/lane pair. Boolean equations and invariants were also checked.",
+        "coverage": "64 state/input/reset transitions; 299,593 pulse streams of lengths 0–6; 69,905 pulse/reset streams of lengths 0–4; a 100-cycle locked hold.",
+        "script_path": "checks/check_prep_045.py",
+        "scope": "No HDL simulation, synthesis, CDC verification or physical measurements; SystemVerilog is supplied as a proposed implementation."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "בלי לחיצות אחרי איפוס נשארים ב־00.",
+        "כל לחצן לבדו מתקבל בקוד המתאים, לרבות מסלול 3 שמקבל 11.",
+        "לחיצה מאוחרת במסלול בעל עדיפות גבוהה אינה מחליפה זוכה שכבר נשמר.",
+        "כל שמונת צירופי הלחצנים מוגדרים; לחיצות באותה חזית נפתרות בעדיפות 1 ואז 2 ואז 3.",
+        "איפוס בחזית עם לחיצות מאפס במקום לבחור זוכה. אם פולס נשאר פעיל בחזית הבאה ללא איפוס, הוא יכול להיבחר אז.",
+        "איפוס אחרי זכייה מאפשר למירוץ הבא לבחור זוכה אחר; בלי חזית איפוס אין הבטחת מצב התחלה בחומרה."
+      ],
+      "en": [
+        "After reset, no pulses keep output 00.",
+        "Each individual lane yields its code, including lane 3 producing 11.",
+        "A later higher-priority pulse cannot replace an already stored winner.",
+        "All eight pulse combinations are defined; same-edge ties resolve as 1 then 2 then 3.",
+        "Reset at an edge with pulses clears instead of selecting. A pulse still active at a later nonreset edge can then be selected.",
+        "Reset after a win allows another race to choose a different lane; hardware initialization requires a reset edge."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "מקודד צירופי בלבד: מאבד את התוצאה בסיום הפולס ומאפשר ללחיצות מאוחרות לשנות אותה.",
+        "עדכון הקוד בכל לחיצה במקום רק במצב שעדיין אין זוכה.",
+        "שימוש ב־OR של קודי מסלולים בלי להגדיר תיקו: למשל מסלולים 1 ו־2 עלולים להיראות בטעות כמסלול 3.",
+        "סימון 00 כמסלול 1 ואז שימוש באפס כדי לזהות שאין זוכה.",
+        "השמטת עדיפות האיפוס או טענה שסדר if משחזר את זמן ההגעה האמיתי בתוך מחזור.",
+        "הנחה שלחצן פיזי מסונכרן, נקי מרטט או בטוח ממטא־יציבות בלי טיפול מתאים."
+      ],
+      "en": [
+        "Using only a combinational encoder, losing output when the pulse ends and allowing later changes.",
+        "Updating on every press instead of only while no winner has been stored.",
+        "OR-ing lane codes without a tie policy: lanes 1 and 2 can incorrectly look like lane 3.",
+        "Encoding lane 1 as 00 while also using zero to mean no winner.",
+        "Omitting reset priority or claiming if-order reconstructs physical arrival time within a cycle.",
+        "Assuming a physical switch is synchronized, debounced or metastability-free without suitable conditioning."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור קוד זוכה באוגר בן שני ביטים: 00 פירושו שאין זוכה. מקודד עדיפות מציע את מסלול הפולס הנוכחי, ורק כשקוד הזוכה אפס אטען אותו לאוגר. אחרי שנשמר קוד שונה מאפס אחזיק אותו עד איפוס. אגדיר מראש מה עושים בלחיצות באותה חזית; כאן 1 קודם ל־2 ול־3. איפוס סינכרוני גובר על הלחצנים. זה בוחר את ההגעה הראשונה שנדגמה ואינו משחזר סדר בתוך מחזור.",
+      "en": "Store a two-bit winner code with 00 meaning none. A priority encoder proposes the current lane, and the register accepts it only while its stored code is zero. Once nonzero, hold until reset. Define same-edge tie behavior explicitly; here lane 1 precedes 2 and 3. Synchronous reset overrides finish pulses. This selects the first sampled arrival, not subcycle chronological order."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך תשנו את המערכת כדי להציג תיקו כשיותר מרץ אחד מסיים באותה דגימה?",
+        "answer_outline": "מזהים לפחות שתי כניסות פעילות בעזרת (p1 AND p2) OR (p1 AND p3) OR (p2 AND p3), ורושמים דגל תיקו רק בחזית ההגעה הראשונה. ארבעת קודי שני הביטים כבר משמשים לשלושה זוכים ולהמתנה, ולכן נדרש דגל נוסף או ממשק רחב יותר. עדיין לא יודעים מי הגיע ראשון בתוך מחזור.",
+        "integration_status": "שאלת המשך מוכנה בארכיון; טרם חוברה לתהליך שאלות ההמשך החי."
+      },
+      "en": {
+        "question": "How would the system report a tie when more than one runner finishes at the same sampled edge?",
+        "answer_outline": "Detect at least two active inputs with (p1 AND p2) OR (p1 AND p3) OR (p2 AND p3), and capture a tie flag only at the first arrival edge. All four two-bit codes already mean waiting or a winner, so use another flag or widen the interface. Subcycle ordering remains unknown.",
+        "integration_status": "Follow-up prepared in the archive; not yet connected to the live follow-up workflow."
+      }
+    }
+  },
+  "PREP-046": {
+    "assumptions": {
+      "he": [
+        "התאריכים הם בדיוק עשרת המועמדים שבתמונה, בפורמט יום/חודש.",
+        "חיים יודע רק חודש ויוני רק מספר יום. שניהם יודעים את כל רשימת המועמדים ואת חלוקת המידע.",
+        "כל המשפטים אמיתיים, ההסקה נכונה וסדר ההצהרות פומבי. הנחות אלה הן ידיעה משותפת במודל.",
+        "אין מידע נוסף על השנה או על התאריך, ואין ניחוש הסתברותי."
+      ],
+      "en": [
+        "The candidates are exactly the ten supplied dates, using day/month notation.",
+        "Chaim knows only the month and Yoni only the day; both know the complete list and information assignment.",
+        "Statements are truthful, reasoning is correct, and the public sequence and reasoning assumptions are common knowledge.",
+        "No additional year/date information or probabilistic guess is used."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "האם שלוש ההצהרות מבודדות תאריך יחיד ברשימה הנתונה.",
+        "result": "מספר המועמדים מצטמצם מ־10 ל־5, ל־3 ול־1; התאריך היחיד הוא 16/07.",
+        "proof": "סינון לפי מחלקות ידע: חודשים שכל ימיהם אינם יחידאיים בתחילה; לאחר מכן ימים יחידאיים ברשימה המצומצמת; לבסוף חודשים יחידאיים במועמדים שנותרו.",
+        "scope": "אין טענה למינימום שאלות, מינימום משפטים לכל רשימה או אופטימליות בזמן תוכנה. הקוד הישיר המצורף מבצע O(k²) עבודה במקרה הגרוע עבור k מועמדים, ומשתמש ב־O(k) זיכרון."
+      },
+      "en": {
+        "criterion": "Whether the three announcements identify one date in the supplied list.",
+        "result": "Candidate counts shrink from 10 to 5 to 3 to 1; the sole date is 16/07.",
+        "proof": "Filter knowledge classes: months whose possible days are all initially nonunique, then days unique after that restriction, then months unique among the survivors.",
+        "scope": "No minimum-question, universal minimum-statement, or software-time optimality claim. The attached direct implementation performs O(k²) worst-case work and uses O(k) storage for k candidates."
+      }
+    },
+    "verification": {
+      "he": "עברו 1,969 בדיקות של מודל Python מול אורקל עצמאי של עולמות אפשריים: כל 1,024 תתי־הקבוצות של הרשימה, 200 ערבובים, 24 שינויי שמות חודשים, 720 שינויי שמות ימים ודחיית מועמד כפול. נבדקו במפורש קבוצות הביניים וגדליהן 10,5,3,1. שינוי שמות הוא בדיקת סימטריה לוגית בלבד; אינו רשימת תאריכים חדשה לפרסום. לא בוצעה ביקורת אנושית מקצועית או בדיקת לחיצות באתר חי.",
+      "en": "1,969 Python model checks passed against an independent possible-world oracle: all 1,024 candidate subsets, 200 input shuffles, 24 month relabellings, 720 day relabellings and duplicate rejection. Exact intermediate sets and sizes 10,5,3,1 were asserted. Relabelling checks logical symmetry only; these are not new published date lists. No professional human approval or authenticated live-site clicking is implied."
+    },
+    "edge_cases": {
+      "he": [
+        "חיים אינו פוסל רק את 18/06 ואת 19/05: עליו לפסול כל חודש שמכיל יום שבו יוני עשוי לדעת.",
+        "יוני עם יום 14 עדיין לא יודע אחרי המשפט הראשון, משום ש־14 מופיע ביולי ובאוגוסט.",
+        "אוגוסט עדיין מכיל שני תאריכים אחרי המשפט השני ולכן אינו מתאים להצהרה האחרונה.",
+        "שינוי הרשימה או סדר המשפטים יכול להשאיר אפס מועמדים או כמה מועמדים; הקוד מחזיר את הקבוצות ולא מכריח תשובה יחידה.",
+        "שמות חיים ויוני אינם חשובים; מי יודע חודש ומי יודע יום חשובים."
+      ],
+      "en": [
+        "Chaim must reject entire months containing an initially unique day, not just 18/06 and 19/05 themselves.",
+        "Day 14 still leaves Yoni uncertain after the first statement because it occurs in both July and August.",
+        "August retains two candidates after the second statement and cannot satisfy the last one.",
+        "Changing the candidate list or statement order may leave no date or several; the code returns sets rather than forcing a unique answer.",
+        "The names do not matter; which person knows month versus day does."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לפרש ׳אני בטוח שיוני לא יודע׳ כאמירה רק על התאריך האמיתי, שחיים כלל אינו יודע.",
+        "להסיר רק ימים ייחודיים בלי להסיר את החודשים שמכילים אותם.",
+        "להסיק שיוני יודע את החודש לאחר המשפט הראשון, גם אם היום שלו עדיין מופיע בשני חודשים.",
+        "לתת לחיים את היום וליוני את החודש בטעות.",
+        "להכריז על תאריך לפי זיכרון של חידה דומה בלי לבדוק את הרשימה הנתונה."
+      ],
+      "en": [
+        "Evaluating Chaim's certainty only at the actual date, which he does not yet know.",
+        "Removing only unique dates instead of every month containing one.",
+        "Assuming Yoni can identify a month while his day still occurs in two months.",
+        "Accidentally giving Chaim the day and Yoni the month.",
+        "Recalling an answer from a similar puzzle without checking this candidate list."
+      ]
+    },
+    "interview_answer": {
+      "he": "הימים 18 ו־19 מופיעים כל אחד פעם אחת. חיים בטוח שיוני אינו יודע, ולכן החודש אינו מאי או יוני, שמכילים ימים כאלה. נשארים יולי ואוגוסט. כעת 14 מופיע פעמיים ולכן יוני, שאומר שהוא יודע, אינו עם 14. נותרו 16/07,15/08,17/08. חיים יכול לדעת רק עם יולי, כי באוגוסט נשארו שניים. לכן התאריך הוא 16 ביולי.",
+      "en": "Days 18 and 19 are initially unique. Chaim's certainty that Yoni does not know excludes May and June, which contain those days. Only July and August remain. Day 14 is still duplicated, so Yoni's new knowledge excludes it. The survivors are 16/07,15/08,17/08. Chaim can now know only with July because August still has two candidates. Therefore the date is 16 July."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם חיים אומר רק ׳אני לא יודע׳, בלי לומר שהוא בטוח שיוני אינו יודע?",
+        "direction": "בתחילה בכל חודש יש כמה תאריכים, ולכן המשפט הזה לבדו אינו מסיר שום חודש. אין להשתמש בסינון מאי ויוני של הפתרון המקורי; יש לחשב מחדש את כל ההצהרות ולבדוק אם בכלל נשאר פתרון.",
+        "status": "שאלת המשך מוכנה בתוכן; טרם חוברה לתהליך ההמשך החי."
+      },
+      "en": {
+        "question": "What changes if Chaim only says that he does not know, without claiming certainty about Yoni's ignorance?",
+        "direction": "Initially every month has multiple candidates, so that statement alone excludes no month. Do not reuse the May/June elimination; recompute subsequent announcements and check whether any date remains.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up workflow."
+      }
+    }
+  },
+  "PREP-047": {
+    "assumptions": {
+      "he": [
+        "קלטים בינאריים ומעגל צירופי ללא משוב; כמה עותקים של A מותרים.",
+        "קבועים 0,1, חוטים, פיצול אות וחיבור חוזר לפינים מותרים ללא ספירת עלות; אין NOT או שערים אחרים בחינם.",
+        "קריטריון המינימום הוא מספר קופסאות A במודל הזה. ההיתרים אינם מפורשים במקור והתווספו כהבהרת עריכה.",
+        "כל משמעות AND/OR על חוט מתארת את התוצאה של קופסה, ולא רכיב חיצוני נוסף."
+      ],
+      "en": [
+        "Binary inputs and an acyclic combinational circuit; multiple A instances are permitted.",
+        "Free constants 0,1, wires, fanout and repeated pins; no free NOT or other gates.",
+        "Minimize A-instance count under this grammar. Permissions were not specified in the source and are editorial clarifications.",
+        "AND/OR wire labels describe primitive outputs, not additional external gates."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר קופסאות A, כאשר קבועי 0,1 וחוטים חופשיים והיפוכים ושערים אחרים אסורים.",
+        "result": "ארבע קופסאות הן מינימום. בבנייה המוצגת המסלול הארוך עובר בשלוש קופסאות.",
+        "proof": "בדיקת 16 שורות האמת מאשרת את הבנייה. חיפוש שלם של מעגלי 0–3 קופסאות בדק שישה חוטים ישירים ו־319,896 רביעיות פינים על קבוצות האותות הנגישות, ולא מצא את פונקציית הסף המבוקשת. שיתוף אותות וחזרות בפינים נכללו.",
+        "scope": "מינימום מותנה במודל. עם היפוכים חופשיים מספיק A אחד והיפוך ארבע הכניסות והמוצא. אין טענה למינימום במודל ללא קבוע 1, לשטח טרנזיסטורים או להשהיה פיזית."
+      },
+      "en": {
+        "criterion": "A-instance count with free 0/1 constants and wires, but no inversion or other gates.",
+        "result": "Four A instances are minimal. The shown network has a longest path of three A stages.",
+        "proof": "All 16 rows verify the construction. Complete 0–3-gate synthesis checked six direct sources and 319,896 pin multisets over reachable signal sets without finding the target. Arbitrary sharing and repeated pins were included.",
+        "scope": "Conditional on the grammar. Free inversions allow one A plus inversions of all inputs and output. No minimum is asserted without constant one, nor for transistor area or physical delay."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "בדיקות לוגיקה ומינימליות עברו; סקירה מקצועית עצמאית ממתינה.",
+        "method": "טבלת אמת עצמאית המבוססת על ספירת אחדות, בדיקת אותות הביניים וחיפוש סינתזה ממצה של חתימות אמת בנות 16 ביטים.",
+        "coverage": "16 שורות לרכיב, 16 לבנייה, 16 לחלופת ההיפוך ו־4 קלטים לא תקינים; 126+6,930+312,840 רביעיות פינים, על 1,33,948 קבוצות אותות בהתאמה.",
+        "script_path": "checks/check_prep_047.py",
+        "scope": "קוד SystemVerilog צורף אך לא הורץ בסימולטור HDL. לא בוצעו סינתזה, מדידת תזמון פיזי או בדיקת הפרעות מעבר."
+      },
+      "en": {
+        "status": "Boolean and minimality checks passed; independent expert review pending.",
+        "method": "Independent population-count truth oracle, intermediate-wire checks and exhaustive synthesis using complete 16-bit truth signatures.",
+        "coverage": "16 primitive rows, 16 construction rows, 16 inversion-alternative rows and 4 invalid inputs; 126+6,930+312,840 pin multisets across 1,33,948 available-signal sets respectively.",
+        "script_path": "checks/check_prep_047.py",
+        "scope": "SystemVerilog is supplied but not HDL-simulated. No synthesis, physical timing measurement or glitch-freedom check."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "0000 וכל קלט עם אחת או שתי אחדות חייבים להחזיר 0.",
+        "1100 הוא מבחן חשוב: r=1 אבל q=0, ולכן y=0.",
+        "0011 כולל שתיים בלבד, ולכן p=q=1 אבל a=b=0 ו־r=0.",
+        "0111,1011,1101,1110 וגם 1111 מחזירים 1.",
+        "החלפת ההיתר לגבי קבועים או היפוכים משנה את בעיית המינימום; אי אפשר להעביר את ההוכחה למודל אחר אוטומטית."
+      ],
+      "en": [
+        "0000 and every input of weight one or two must output zero.",
+        "1100 is a key trap: r=1 but q=0, so y=0.",
+        "0011 has only two ones: p=q=1 but a=b=0 gives r=0.",
+        "0111,1011,1101,1110 and 1111 output one.",
+        "Changing permissions for constants or inversion changes the minimization problem; the proof does not automatically transfer."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "הנחה שקופסה אחת עם a,b,c,d משנה מעצמה את הסף משתיים לשלוש.",
+        "הוצאת r ישירות ושכחת קלט 1100 שנותן חיובי שגוי.",
+        "הוספת שערי AND/OR או NOT חופשיים בזמן שטוענים למספר מינימלי של רכיבים לפי מודל אחר.",
+        "מימוש נכון בארבע קופסאות אינו לבדו הוכחת מינימום; צריך גם לשלול מספר קטן יותר.",
+        "בדיקת עצי ביטויים בלבד והחמצת אפשרות לשיתוף מוצא בין קופסאות בחיפוש המינימום.",
+        "טענה לא מותנית שארבע הוא המינימום למרות שהמקור אינו מפרט קבועים ומהפכים."
+      ],
+      "en": [
+        "Assuming one A driven by a,b,c,d changes its own threshold from two to three.",
+        "Outputting r directly and missing the false-positive row 1100.",
+        "Adding free AND/OR or NOT gates while claiming a minimum under a different component model.",
+        "A correct four-box construction alone is an upper bound, not a minimality proof.",
+        "Searching only expression trees and overlooking shared earlier outputs.",
+        "Claiming an unconditional four-box minimum despite unspecified constants and inversion in the source."
+      ]
+    },
+    "interview_answer": {
+      "he": "אברר שמותר קבועי 0,1 אבל לא מהפכים חופשיים. אפיק p=A(c,d,0,0) ו־q=A(c,d,1,0), ואז r=A(a,b,p,0) ולבסוף y=A(r,q,0,0). אם בזוג c,d יש אחת, צריך ששניהם a,b יהיו אחד; אם יש שתיים, מספיק אחד; אם אין, q חוסם. ארבע קופסאות הן מינימום במודל הזה לפי חיפוש ממצה. עם היפוכים חופשיים יש פתרון עם קופסת A אחת.",
+      "en": "Clarify that constants 0,1 are free but inversion is not. Form p=A(c,d,0,0), q=A(c,d,1,0), r=A(a,b,p,0), then y=A(r,q,0,0). One high in c,d requires both a,b; two highs require either; zero is blocked by q. Four is minimal in that grammar by exhaustive search. Free inversion instead permits one A."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם מותר להשתמש במהפכים בחינם, וסופרים רק קופסאות A?",
+        "answer_outline": "יוצרים NOT A(NOT a,NOT b,NOT c,NOT d). מספר האחדות המהופכות הוא 4-k, ולכן המוצא 1 בדיוק כש־k>=3. זו קופסת A אחת וחמישה היפוכים; עם מחיר שונה למהפכים צריך להגדיר ולנתח מחדש את פונקציית העלות.",
+        "integration_status": "שאלת המשך מוכנה בתוכן הארכיון; אינה מחוברת לתהליך ההמשך החי."
+      },
+      "en": {
+        "question": "What changes if inversion is free and only A boxes are counted?",
+        "answer_outline": "Use NOT A(NOT a,NOT b,NOT c,NOT d). Inverted inputs have 4-k ones, making inverted output one exactly for k>=3. This uses one A and five inversions; charging inverters requires a new cost analysis.",
+        "integration_status": "Follow-up prepared in archived content; not connected to the live follow-up workflow."
+      }
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור דורש מינימום רכיבי A אך אינו קובע במפורש אילו קבועים, היפוכים או רכיבים אחרים מותרים.",
+        "בחרנו מודל עיקרי של A וקבועי 0,1 ללא NOT, וכתבנו במפורש את ההבדל מול מודל היפוכים חופשיים."
+      ],
+      "en": [
+        "The source asks for minimum A count without explicitly specifying constants, inversion or other gates.",
+        "The primary model uses A and constants 0,1 without NOT; the free-inversion model is explicitly distinguished."
+      ]
+    }
+  },
+  "PREP-048": {
+    "assumptions": {
+      "he": [
+        "הפלט רשום וגבוה למחזור קלט מלא אחרי חזיתות 3,6,9 מאז האיפוס; אחרי שתי החזיתות הראשונות הוא נמוך.",
+        "איפוס סינכרוני פעיל בגבוה קובע count=0,pulse=0; זמן הפולס והמופע הם הבהרות שנוספו למקור.",
+        "הדרישה היא פולס ביחס גבוה 1/3, לא מחלק ב־3 עם יחס גבוה 50%.",
+        "מונה בן שני ביטים מופעל רק מהמצבים התקינים 0,1,2 לאחר איפוס; אין הבטחת התאוששות מערכי X או פגיעה במצב."
+      ],
+      "en": [
+        "Registered output is high for one complete input period after edges 3,6,9 since reset, and low after the first two edges.",
+        "Synchronous active-high reset sets count=0,pulse=0; pulse width and phase clarify the terse source.",
+        "Requirement is a one-third-duty pulse, not a fifty-percent-duty divide-by-three clock.",
+        "A two-bit counter operates in legal states zero, one and two after reset; no X-state or corruption-recovery promise is made."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "פולס רשום חד־מחזורי בכל חזית שלישית במופע המוגדר.",
+        "result": "מונה מודולו 3 בשני ביטים ואוגר פלט נוסף, עם לוגיקת מעבר ואיפוס; תדר החזרה f_clk/3 ויחס גבוה 1/3.",
+        "proof": "אחרי k חזיתות המונה הוא k mod 3. המונה הישן הוא 2 בדיוק לפני כל חזית שלישית, ולכן pulse_next נדלק אז בלבד ויורד בחזית הבאה.",
+        "scope": "אין הוכחת מינימום שטח או מספר אוגרים. פענוח צירופי count==2 עם אתחול 0 נותן מופע אחר. מחלק ב־3 עם יחס 50% הוא שאלה שונה."
+      },
+      "en": {
+        "criterion": "A registered one-cycle pulse on each third edge at the specified phase.",
+        "result": "Two-bit modulo-three counter and a separate output register, with transition/reset logic; repetition f_clk/3 and duty 1/3.",
+        "proof": "After k edges count is k mod 3. Old count equals two precisely before each third edge, so pulse_next asserts only then and falls at the next edge.",
+        "scope": "No minimum-area or minimum-register proof. Combinational count==2 with zero initialization has a different phase. Fifty-percent-duty divide-by-three is a different problem."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "בדיקות מודל פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
+        "method": "השוואה לאורקל עצמאי המחזיק את מספר החזיתות מאז האיפוס ומחשב מתי הוא כפולה חיובית של 3.",
+        "coverage": "65,535 עקבות איפוס באורכים 0–15, 917,506 חזיתות ועוד 3,000 מחזורים רציפים עם 1,000 פולסים.",
+        "script_path": "checks/check_prep_048.py",
+        "scope": "SystemVerilog צורף אך לא קומפל או הורץ בסימולטור HDL; לא בוצעו סינתזה או בדיקת תזמון פיזית."
+      },
+      "en": {
+        "status": "Python-model checks passed; independent expert review pending.",
+        "method": "Comparison to an independent oracle tracking edges since reset and checking positive multiples of three.",
+        "coverage": "65,535 reset traces of lengths zero through fifteen, 917,506 sampled edges, plus 3,000 continuous cycles with 1,000 pulses.",
+        "script_path": "checks/check_prep_048.py",
+        "scope": "SystemVerilog supplied but not compiled or HDL-simulated; no synthesis or physical timing."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "האיפוס מחזיק את הפלט נמוך גם אם המונה היה 2 לפני החזית.",
+        "לאחר שחרור מאיפוס נדרשות שלוש חזיתות ללא איפוס לפני הפולס הראשון.",
+        "איפוס באמצע הספירה מתחיל את שלישיית החזיתות מחדש.",
+        "הפלט אינו נשאר גבוה ואינו נדלק בשני מחזורים רצופים.",
+        "קידוד המונה 11 אינו נגיש מהאתחול; התאוששות ממצב לא חוקי היא הרחבה נפרדת.",
+        "תדר החזרה אינו מגדיר לבדו יחס גבוה: כאן רוחב הפולס הוא T_clk ולא 1.5*T_clk."
+      ],
+      "en": [
+        "Reset forces output low even when old count is two.",
+        "Three nonreset edges are needed after reset release before the first pulse.",
+        "Midstream reset restarts the three-edge group.",
+        "Output never stays high or asserts during adjacent cycles.",
+        "Counter encoding 11 is unreachable from initialization; illegal-state recovery is a separate extension.",
+        "Repetition frequency alone does not specify duty: pulse width here is T_clk rather than 1.5*T_clk."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "מונה בינארי רגיל בן שני ביטים שמגיע גם ל־3 ומייצר מחזור של ארבעה במקום שלושה.",
+        "השוואה לערך החדש של המונה בלי לבדוק את המופע ביחס לחזית השלישית.",
+        "השמטת השמה ל־0 בפלט בשאר המחזורים, כך שהוא נשאר גבוה.",
+        "הצגת count==2 כפלט צירופי כאילו הוא זהה לפולס הרשום אחרי החזית השלישית.",
+        "בלבול בין יחס גבוה של שליש לבין 50%.",
+        "שימוש בפולס כשעון חדש בלי להתייחס לתכנון שעונים; לאות אפשור אין צורך בשעון חדש."
+      ],
+      "en": [
+        "Using an ordinary two-bit binary counter including three, giving period four instead of three.",
+        "Comparing the updated count without checking phase relative to edge three.",
+        "Omitting output-zero assignment on other cycles, leaving output high.",
+        "Presenting combinational count==2 as identical to the registered pulse after edge three.",
+        "Confusing one-third duty with fifty percent.",
+        "Using the pulse as a new clock without clock-design analysis; a clock enable needs no new clock."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור מונה מודולו 3 שמתחיל באפס. בכל חזית שבה ערכו הישן 2 אחזיר אותו לאפס וארשום פולס 1; אחרת אגדיל אותו וארשום 0. הפלט רשום למחזור מלא אחרי חזיתות 3,6,9, בתדר חזרה של שליש מהשעון ויחס גבוה של שליש.",
+      "en": "Use a modulo-three counter starting at zero. At an edge with old count two, return it to zero and register pulse one; otherwise increment and register zero. Output is a full-period pulse after edges 3,6,9, with one-third repetition frequency and one-third duty."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך נכליל לפולס בכל מחזור N, ואיך נתאושש מקידוד מונה לא חוקי?",
+        "answer_outline": "ל־N>=2 נשתמש במונה 0 עד N-1 ברוחב ceil(log2 N), ונרשום פולס כשהמונה הישן הוא N-1. לאתחול ולמופע נשמור את אותו חוזה. התאוששות יכולה לזהות ערך לא חוקי ולהחזיר לאפס עם פלט 0; צריך להגדיר מה קורה למופע לאחר תקלה. N=1 הוא מקרה נפרד שבו הפלט גבוה בכל מחזור ללא איפוס.",
+        "integration_status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתהליך ההמשך החי."
+      },
+      "en": {
+        "question": "How would you generalize to every Nth cycle and recover from illegal counter encodings?",
+        "answer_outline": "For N>=2, count zero through N-1 using ceil(log2 N) bits and register a pulse when old count is N-1, preserving reset and phase semantics. Recovery can detect an illegal value and return to zero with pulse low; define phase after the fault. N=1 is separate, with output high every nonreset cycle.",
+        "integration_status": "Follow-up prepared in content; not connected to the live follow-up workflow."
+      }
+    }
+  }
+}

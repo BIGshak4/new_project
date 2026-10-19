@@ -1,0 +1,30 @@
+{
+  "question": "PREP-044",
+  "status": "passed",
+  "exact_fast_doubling_comparison_samples": 10260,
+  "widths": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    32,
+    64,
+    128
+  ],
+  "all_length_10_reset_traces_widths_1_to_8": 8192,
+  "invalid_widths_rejected": 6,
+  "scope": "Python clock-edge model and independent exact-number oracle. SystemVerilog supplied but not HDL-simulated, synthesized or physically timed."
+}
