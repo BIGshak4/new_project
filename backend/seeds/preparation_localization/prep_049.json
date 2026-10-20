@@ -1,0 +1,86 @@
+{
+  "PREP-049": {
+    "assumptions": {
+      "he": [
+        "בדיוק מטבע אחד מתוך 12 שונה במשקלו; כל 11 האחרים שווים.",
+        "כיוון וגודל הסטייה אינם ידועים; המשקלים קבועים והמאזניים מדויקים.",
+        "אין משקולות או מטבע חיצוני שידוע מראש כאמיתי. כל השוואה משתמשת במספר מטבעות שווה בכל כף.",
+        "מותר לבחור שקילה לפי תוצאות קודמות. התוכנית משתמשת בשלוש שקילות בדיוק, כולל בירור קל או כבד."
+      ],
+      "en": [
+        "Exactly one of twelve coins has a different weight; the other eleven have equal weight.",
+        "Direction and magnitude are unknown; weights are fixed and the balance is exact.",
+        "No external weights or initially known genuine coin are available. Each comparison uses equal numbers of coins per pan.",
+        "Weighings may depend on earlier results. The plan uses exactly three, determining light versus heavy as well as identity."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מינימום שקילות במקרה הגרוע לזיהוי המטבע והכיוון בוודאות.",
+        "result": "שלוש שקילות מספיקות ונחוצות; התוכנית משתמשת בשלוש בכל 24 המצבים.",
+        "proof": "יש 24 השערות. שתי שקילות מבחינות לכל היותר בין 9 רצפים, ולכן אינן מספיקות. עץ ההחלטה המפורש מפריד את כל 24 המצבים בשלוש שקילות.",
+        "scope": "זהו מינימום במודל מאזניים מדויק ויחידת עלות של שקילה. ספירת 27 רצפים אינה לבדה הוכחת קיום; אין טענה למינימום מספר ההנחות על הכפות או לכלליות לכל מספר מטבעות."
+      },
+      "en": {
+        "criterion": "Minimum worst-case weighings to determine both identity and direction with certainty.",
+        "result": "Three weighings are necessary and sufficient; the plan uses three in all 24 states.",
+        "proof": "There are 24 hypotheses. Two weighings distinguish at most nine outcome sequences, so cannot suffice. The explicit tree distinguishes all 24 within three weighings.",
+        "scope": "The minimum concerns an exact balance with one weighing as the cost unit. Counting 27 sequences alone is not a construction proof. No claim minimizes coin placements or generalizes to arbitrary coin counts."
+      }
+    },
+    "verification": {
+      "he": "עברו 72 הדמיות משקל מדויקות: כל 24 מצבי המטבע והכיוון, כל אחד בשלושה גדלי סטייה חיוביים או שליליים באמצעות שברים מדויקים. בכל מקרה בוצעו שלוש שקילות וזוהו המטבע והכיוון. אורקל עצמאי סינן עולמות אפשריים בכל 27 רצפי התוצאות: 24 עלים יחידאיים ושלושה בלתי אפשריים שנדחו. נבדקו מספר מטבעות שווה בכפות, היעדר שימוש כפול במטבע והסתמכות על מטבע אמיתי רק לאחר שהוכח כאמיתי. זו בדיקת Python, לא ניסוי במאזניים פיזיים או אישור מומחה.",
+      "en": "72 exact-weight simulations passed: all 24 coin-and-direction states, each at three positive or negative deviation magnitudes using exact rational arithmetic. Every case used three weighings and identified both coin and direction. An independent possible-world oracle filtered all 27 outcome sequences: 24 singleton leaves and three rejected impossible sequences. Checks cover equal pan counts, no coin appearing twice, and genuine references only after their status is established. This is Python verification, not a physical balance experiment or expert approval."
+    },
+    "edge_cases": {
+      "he": [
+        "מטבע 12 אינו נשקל בשתי השקילות הראשונות בענף המאוזן; השלישית משווה אותו למטבע 1 האמיתי וקובעת כיוון.",
+        "איזון בשקילה השלישית יכול לזהות חשוד שלא נמצא בכפות, למשל 6 קל אחרי שתי תוצאות שמאל כבדה.",
+        "מטבע קל בימין גורם לשמאל להיות כבדה, ולא להפך.",
+        "שלוש תוצאות מאוזנות לאורך התוכנית סותרות את ההנחה שיש בדיוק מזויף אחד.",
+        "מטבע ששימש כייחוס הוכח אמיתי מתוצאת השקילה הראשונה, לא מהנחה נוספת."
+      ],
+      "en": [
+        "Coin 12 remains unweighed in the first two comparisons of the balanced branch; weighing three against genuine coin 1 determines its direction.",
+        "A balanced third result can identify an unweighed suspect, such as light 6 after two LEFT-heavier results.",
+        "A light coin on the right makes the LEFT heavier.",
+        "Three balanced results along this plan contradict exactly one counterfeit.",
+        "Every reference coin is established genuine by the first result, not assumed from outside information."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לספור 12 אפשרויות בלבד ולהתעלם מכבד או קל.",
+        "להכריז שהמזויף נמצא רק בכף הכבדה; ייתכן מטבע קל בכף האחרת.",
+        "לחלק 6 מול 6 ולהשאיר 12 השערות בכל תוצאת חוסר איזון, יותר מתשע ששתי השקילות הבאות יכולות להפריד.",
+        "להסתפק בזיהוי 12 אחרי שתי שקילות מאוזנות בלי לברר כיוון.",
+        "להשתמש במטבע אמיתי שלא הוכח כאמיתי או להשמיט ענף של השקילה הראשונה.",
+        "להסיק ששלוש שקילות מספיקות רק מכך ש־27 גדול מ־24, בלי להציג תכנון תקף."
+      ],
+      "en": [
+        "Counting twelve possibilities while ignoring heavy versus light.",
+        "Assuming the counterfeit must be on the heavier pan; it may be light on the other.",
+        "Starting six against six: either imbalance leaves twelve hypotheses, exceeding the remaining two-weighing capacity of nine.",
+        "Identifying coin 12 after two balances without determining its direction.",
+        "Using an unproved genuine reference or omitting a first-result branch.",
+        "Claiming sufficiency just because 27 exceeds 24 without a feasible weighing plan."
+      ]
+    },
+    "interview_answer": {
+      "he": "יש 24 אפשרויות ולכן שתי שקילות אינן מספיקות. אתחיל ב־1,2,3,4 מול 5,6,7,8. באיזון החשודים הם 9 עד 12, ואשקול 9,10,11 מול שלושה אמיתיים. בחוסר איזון החשודים הם כבדים בצד הכבד וקלים בצד הקל; אשקול 1,2,5 מול 3,6,9. כל תוצאת שקילה שנייה משאירה לכל היותר שלוש השערות, וההשוואה השלישית שבטבלה מבדילה ביניהן. העץ מכסה את כל 24 המצבים ומזהה גם את הכיוון.",
+      "en": "There are 24 possibilities, so two weighings cannot suffice. Start 1,2,3,4 against 5,6,7,8. On balance the suspects are 9 through 12; weigh 9,10,11 against three genuine coins. On imbalance the candidates are heavy coins on the heavy side or light coins on the light side; weigh 1,2,5 against 3,6,9. Every second outcome leaves at most three hypotheses, distinguished by the third comparisons in the table. The tree covers all 24 states and determines direction too."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "האם ספירת 26 אפשרויות מוכיחה שגם 13 מטבעות ניתנים לפתרון בשלוש שקילות, בלי מטבע אמיתי נוסף?",
+        "direction": "לא. עבור שקילה ראשונה של k מול k, חוסר איזון משאיר 2k השערות ולכן נחוץ k לכל היותר 4. איזון משאיר 2(13-2k) השערות ולכן נחוץ k לפחות 5. הדרישות סותרות זו את זו. זה מדגים שחסם המידע לבדו אינו מבטיח תוכנית פיזית. הניתוח מתייחס להשוואות עם מספר מטבעות שווה בכל כף וללא מטבע אמיתי חיצוני.",
+        "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+      },
+      "en": {
+        "question": "Does counting 26 states prove that thirteen coins can also be solved in three weighings without an extra genuine coin?",
+        "direction": "No. If the first weighing uses k coins per pan, imbalance leaves 2k hypotheses, requiring k at most four. Balance leaves 2(13-2k) hypotheses, requiring k at least five. These constraints conflict. The information bound alone does not guarantee a feasible physical plan. This argument concerns equal-count pan comparisons without an external genuine coin.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    }
+  }
+}

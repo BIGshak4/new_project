@@ -56,8 +56,8 @@ async def main():
     if not database_belongs_to_project(settings.database_url, args.project_ref):
         raise ValueError("Configured database does not match the requested Supabase project")
     compiled = json.loads((ROOT / "backend/seeds/questions/preparation_bank.json").read_text(encoding="utf-8"))
-    if len(compiled) != 48 or len({q["key"] for q in compiled}) != 48:
-        raise ValueError("Expected the complete 48-question preparation archive")
+    if len(compiled) != 49 or len({q["key"] for q in compiled}) != 49:
+        raise ValueError("Expected the complete 49-question preparation archive")
     expected = {q["key"]: q for q in compiled}
     table = await db.table("question")
     try:

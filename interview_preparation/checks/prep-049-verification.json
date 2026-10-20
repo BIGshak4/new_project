@@ -1,0 +1,39 @@
+{
+  "question": "PREP-049",
+  "status": "passed",
+  "physical_mass_cases": 72,
+  "unique_hypotheses": 24,
+  "exact_weighings_per_case": 3,
+  "all_outcome_sequences": 27,
+  "impossible_sequences_rejected": [
+    [
+      "left",
+      "right",
+      "right"
+    ],
+    [
+      "balance",
+      "balance",
+      "balance"
+    ],
+    [
+      "right",
+      "left",
+      "left"
+    ]
+  ],
+  "hypotheses_after_second": {
+    "left/left": 3,
+    "left/balance": 3,
+    "left/right": 2,
+    "balance/left": 3,
+    "balance/balance": 2,
+    "balance/right": 3,
+    "right/left": 2,
+    "right/balance": 3,
+    "right/right": 3
+  },
+  "two_weighing_capacity": 9,
+  "three_weighing_capacity": 27,
+  "scope": "Exact rational-weight simulation and independent possible-world filtering. No physical balance or professional human review."
+}

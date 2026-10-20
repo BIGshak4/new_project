@@ -136,3 +136,30 @@ def test_neutral_media_remains_available_and_source_screenshots_stay_internal():
     assert question_resources.learner_media(media, "he") == media[:2]
     assert question_resources.learner_media(media, "en") == [media[0], media[2]]
     assert question_resources.learner_media(media) == media[:3]
+
+
+async def test_twelve_coin_diagrams_follow_language_after_three_gated_hints(resources_service):
+    service, store, provider, signed = resources_service
+    key = "prep-twelve-coins-three-weighings"
+    user = uuid.uuid4()
+    attempt = await service.start(user, question_key=key, language="he")
+    attempt_id = uuid.UUID(attempt.id)
+    for _ in range(3):
+        await service.next_hint(user, attempt_id)
+        hidden = await service.question_resources(user, key, attempt_id=attempt_id, language="he")
+        assert not hidden.solution_revealed and hidden.reference is None
+        assert hidden.technical_material is None and not signed[-1]
+    await service.reveal_reference(user, attempt_id)
+    before = copy.deepcopy(store.attempts[attempt_id])
+    for language in ("he", "en", "he"):
+        result = await service.question_resources(user, key, attempt_id=attempt_id, language=language)
+        assert result.reference == service.catalog.questions[key].text(language).reference_solution
+        images = [m for m in signed[-1] if m["kind"] == "image"]
+        assert {m["filename"] for m in images} == {
+            f"prep-049-first-{first}-{language}.png" for first in ("left", "balance", "right")
+        }
+        assert all(m.get("language") == language and m["role"] == "solution" for m in images)
+        assert [m["filename"] for m in signed[-1] if m["kind"] == "file"] == ["prep_049_twelve_coins.py"]
+        assert all(not m["source_path"].startswith("sources/") for m in signed[-1])
+    assert store.attempts[attempt_id] == before
+    assert not provider.requests and not store.metrics
