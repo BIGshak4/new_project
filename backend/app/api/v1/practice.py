@@ -24,7 +24,8 @@ from fastapi import APIRouter, Header, Path, status
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
-from app.api.deps import CurrentAccess, Practice
+from app.api.deps import PaidAccess as CurrentAccess
+from app.api.deps import Practice
 from app.api.errors import ApiError
 from app.engine.practice import MAX_ANSWER_CHARS
 from app.schemas.api import AttemptView, HintView, SubmissionView

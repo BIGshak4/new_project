@@ -43,6 +43,16 @@ class Settings(BaseSettings):
     # Only e-mails listed in Harel's jr_members table may use the practice API during the pilot.
     require_pilot_membership: bool = True
 
+    # Paying for the site (Shaked, 2026-10-20). Stripe Checkout; card data never reaches us. REQUIRE_PAYMENT off =
+    # everyone practises and the payment screen offers "continue for free for now"; on = unpaid users get 402.
+    stripe_secret_key: str | None = None
+    stripe_webhook_secret: str | None = None
+    stripe_price_monthly: str | None = None            # the Stripe price id behind seeds/billing_plans.json "monthly"
+    stripe_price_package: str | None = None            # ... and "package"
+    require_payment: bool = False
+    billing_free_option_visible: bool = True
+    site_url: str = "https://jobrun-practice.netlify.app"   # where Stripe sends the user back
+
     # Browser origins allowed to call the API directly (the Netlify sites). Comma-separated.
     allowed_origins: Annotated[list[str], NoDecode] = []      # plain comma-separated, not JSON
     # Attempts a user may start per UTC day. Fails gracefully with 429, never silently.
@@ -79,6 +89,7 @@ class Settings(BaseSettings):
     default_company: str = "generic"
 
     @field_validator("database_url", "supabase_url", "supabase_jwt_secret", "supabase_service_role_key", "anthropic_api_key",
+                     "stripe_secret_key", "stripe_webhook_secret", "stripe_price_monthly", "stripe_price_package",
                      "anthropic_model", "anthropic_role_models", "llm_provider", "env", "default_language", mode="before")
     @classmethod
     def _strip(cls, value):

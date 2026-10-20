@@ -23,8 +23,20 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine
 
 from app import db
-from app.repo import attempts, events, plans, profiles, questions, reports, sessions, sightings, users
+from app.repo import (
+    attempts,
+    billing,
+    events,
+    plans,
+    profiles,
+    questions,
+    reports,
+    sessions,
+    sightings,
+    users,
+)
 from app.repo.attempts import DuplicateSubmissionKey, StoredAttempt
+from app.repo.billing import Subscription
 from app.repo.plans import StoredPlan
 from app.repo.profiles import LoadedProfile, StaleProfile
 from app.repo.questions import LoadedQuestion, QuestionSummary
@@ -56,6 +68,10 @@ class Tx(Protocol):
     # XP reads (computed on read from stored results; see app.engine.xp)
     async def scored_submissions(self, user_id: uuid.UUID, *, days: int = 365) -> list[dict]: ...
     async def soft_skill_evidence(self, user_id: uuid.UUID, *, days: int = 180) -> list[dict]: ...
+    async def load_subscription(self, user_id: uuid.UUID) -> Subscription: ...
+    async def subscription_by_customer(self, customer_id: str) -> Subscription | None: ...
+    async def save_subscription(self, subscription: Subscription) -> None: ...
+    async def record_billing_event(self, *, event_id: str, kind: str, user_id: uuid.UUID | None, summary: dict) -> bool: ...
     async def scored_interview_turns(self, user_id: uuid.UUID, *, days: int = 365) -> list[dict]: ...
     # the saved program
     async def load_active_plan(self, user_id: uuid.UUID) -> StoredPlan | None: ...
@@ -168,6 +184,18 @@ class DbTx:
 
     async def scored_interview_turns(self, user_id, *, days=365):
         return await sessions.scored_turns(self.connection, user_id, days=days)
+
+    async def load_subscription(self, user_id):
+        return await billing.load(self.connection, user_id)
+
+    async def subscription_by_customer(self, customer_id):
+        return await billing.by_customer(self.connection, customer_id)
+
+    async def save_subscription(self, subscription):
+        await billing.save(self.connection, subscription)
+
+    async def record_billing_event(self, *, event_id, kind, user_id, summary):
+        return await billing.record_event(self.connection, event_id=event_id, kind=kind, user_id=user_id, summary=summary)
 
     async def soft_skill_evidence(self, user_id, *, days=180):
         """Scored answers and interview turns with the judge's full evaluation (the soft-skill reading)."""

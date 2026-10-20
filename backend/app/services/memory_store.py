@@ -13,6 +13,7 @@ from datetime import UTC, datetime, timedelta
 
 from app.engine.catalog import Catalog
 from app.repo.attempts import AlreadyEvaluated, DuplicateSubmissionKey, StoredAttempt
+from app.repo.billing import Subscription
 from app.repo.plans import PlanItemRow, StoredPlan
 from app.repo.profiles import LoadedProfile, StaleProfile, derived_columns
 from app.repo.questions import LoadedQuestion, QuestionSummary, summary
@@ -44,6 +45,8 @@ class InMemoryStore:
         self.reports: list[dict] = []                              # {question_id, user_id, reason, note, language, context}
         self.reports_enabled = True
         self.answer_images: dict[str, dict] = {}                 # storage fixture metadata
+        self.subscriptions: dict[uuid.UUID, Subscription] = {}     # paid access per user (billing)
+        self.billing_events: dict[str, dict] = {}                  # Stripe event id -> summary
         self.failures: set[str] = set()                           # names of operations that should raise (tests)
         self.fail_once: set[str] = set()                          # ... only the next time
         self._commits = 0
@@ -236,6 +239,22 @@ class _MemoryTx:
                             "related": "off_topic" not in (s.get("flags") or []),
                             "skills": self._links(a["row"]["question_key"])})
         return out
+
+    async def load_subscription(self, user_id):
+        found = self.s.subscriptions.get(user_id)
+        return dataclasses.replace(found) if found else Subscription(user_id=user_id)
+
+    async def subscription_by_customer(self, customer_id):
+        return next((dataclasses.replace(s) for s in self.s.subscriptions.values() if s.customer_id == customer_id), None)
+
+    async def save_subscription(self, subscription):
+        self.s.subscriptions[subscription.user_id] = dataclasses.replace(subscription)
+
+    async def record_billing_event(self, *, event_id, kind, user_id, summary):
+        if event_id in self.s.billing_events:
+            return False
+        self.s.billing_events[event_id] = {"kind": kind, "user_id": user_id, "summary": summary}
+        return True
 
     async def soft_skill_evidence(self, user_id, *, days=180):
         since = datetime.now(UTC) - timedelta(days=days)

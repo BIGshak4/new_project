@@ -36,7 +36,8 @@ PENDING_IN_CLIENT = {"SkillProgress": {"expired"},         # evidence older than
                      "SubmissionView": {"related"},        # an unrelated answer earns no XP (Shaked, 2026-10-18)
                      "InterviewTurnView": {"related"}}
 # New routes the web client does not call yet, for the same reason; remove once practice-api.ts calls them.
-PENDING_ROUTES_IN_CLIENT: set[tuple[str, str]] = set()
+PENDING_ROUTES_IN_CLIENT: set[tuple[str, str]] = {        # the payment screen is Harel's next item (2026-10-20)
+    ("GET", "/v1/me/billing"), ("POST", "/v1/me/billing/checkout"), ("POST", "/v1/me/billing/portal")}
 
 
 def ts_fields(source: str, type_name: str) -> set[str]:
@@ -91,7 +92,8 @@ def test_every_v1_route_is_called_by_the_client(spec, source):
 def test_error_codes_are_typed(spec, source):
     from app.api.errors import STATUS_FOR_CODE
     typed = set(re.findall(r'\|\s*"(\w+)"', source.split("export type ApiErrorCode")[1].split(";")[0]))
-    assert set(STATUS_FOR_CODE) - {"stale_version"} <= typed, set(STATUS_FOR_CODE) - typed
+    pending = {"stale_version", "payment_required"}            # payment_required: the payment screen is Harel's next item (2026-10-20)
+    assert set(STATUS_FOR_CODE) - pending <= typed, set(STATUS_FOR_CODE) - typed
 
 
 def test_enum_literals_match_the_engine(source):

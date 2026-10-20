@@ -49,6 +49,10 @@ Every error body is `{"error": {"code": "...", "message": "..."}}`. Every respon
 ```
 GET  /v1/questions?language=he                → list (safe: no reference, no hints); `&job=<key>` hides the questions of skills that are not part of that job type and sorts the rest by relevance; `&subject=`, `&company=` (2026-10-15)
 GET  /v1/job-types?language=he                → the job types with `excluded_skills`: the skills never planned for that job type (2026-10-15)
+GET  /v1/me/billing?language=he               → paid status, the switch (`required`, off for now), `free_option_visible`, `configured`, the plans with amounts in agorot (2026-10-20)
+POST /v1/me/billing/checkout {plan, language} → `{url}` of Stripe's hosted payment page (503 until Stripe keys are set) (2026-10-20)
+POST /v1/me/billing/portal                    → `{url}` of Stripe's customer portal: cancel, change card, invoices (404 before any payment) (2026-10-20)
+                                                 402 `payment_required` on practice/interview routes only once REQUIRE_PAYMENT is on
 GET  /v1/questions/{key}?language=he          → prompt, code, choices, hint_count
 GET  /v1/questions/{key}/resources?attempt_id=<id>&language=he → signed media, resolved language, and gated reference/material
 POST /v1/practice/attempts                    {question_key, mode: "deep"|"quick", language, self_confidence?, source?, screen?}   → 201 AttemptView

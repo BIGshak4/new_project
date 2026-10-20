@@ -25,7 +25,7 @@ STATUS_FOR_CODE = {
     "nothing_to_retry": 409,
     "stale_version": 409,
     "no_reviewed_questions": 409,              # the bank has no reviewed question for this role/plan yet
-    "usage_limit": 429,
+    "usage_limit": 429, "payment_required": 402,
     "evaluation_unavailable": 503,
     "temporarily_unavailable": 503,
 }

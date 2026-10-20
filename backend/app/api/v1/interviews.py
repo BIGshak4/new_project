@@ -24,7 +24,8 @@ from fastapi import APIRouter, Header, Path, status
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
-from app.api.deps import CurrentAccess, Interview
+from app.api.deps import Interview
+from app.api.deps import PaidAccess as CurrentAccess
 from app.api.errors import ApiError
 from app.schemas.api import HintView, InterviewListItem, InterviewReportView, InterviewTurnView, InterviewView
 from app.schemas.visual_answer import VisualAnswer

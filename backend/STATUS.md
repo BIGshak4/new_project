@@ -5,7 +5,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-10-19 (night full check §5zq) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
+**Last updated:** 2026-10-20 (paying for the site, not mandatory yet §5zr) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
 
 ---
 
@@ -32,6 +32,7 @@ not touched again for them. When an item is done, remove its entry from `PENDING
 | 14 | **Two typed fields** (review 2026-10-15) | Add `excluded_skills?: string[]` to `JobType` and `expired?: boolean` to `SkillProgress` in `practice-api.ts`, then remove both entries from `PENDING_IN_CLIENT` in `backend/tests/test_ts_client_contract.py` so the contract test guards them. An expired skill is drawn as "needs a refresh" today only because `needs_refresh` happens to be true as well. | — | §5zm |
 | 15 | **"No XP: the answer doesn't address the question"** (2026-10-18) | When `submission.related === false`, show the sentence "The answer doesn't address the question, so it earns no XP" / "התשובה לא עוסקת בשאלה, ולכן אין עליה נקודות" where the XP chip would be, and no XP animation. The band and feedback render as usual. Same for `InterviewTurn.related` in the interview report. | `Submission.related?: boolean`, `InterviewTurn.related?: boolean` (default true); `flags` includes `"off_topic"` | §5zo |
 | 16 | **Brackets around Latin terms in Hebrew text** (Shaked saw it on the live questions, 2026-10-18) | `components/bidi-text.tsx` splits each Latin run into a `<bdi dir="ltr">` island, but the regex starts the island at the first letter and lets it end on `)`. So `בלי סימן (unsigned) של` becomes `(` in the Hebrew run + `unsigned)` in the island: the two brackets sit in different directional runs and one of them is drawn mirrored on the wrong side. Same for `[7:0]`, `(A OR B)`, `(0..255)`, `(X) ו-(Y)`. Fix (keep the regex, balance the edges after the split): for each island, (1) while it ends with `)` or `]` whose opener is not inside the island, move that closer back to the following text; (2) if the character just before the island is `(` or `[` and the matching closer is inside the island, pull the opener into the island. Tested on: `(unsigned)`, `[7:0]`, `(A OR B)`, `f(x) = 1`, `(0..255)`, `(X) ו-(Y)`, `רמה 3 (מתוך 5)`, `NAND(A, B)`, `a, b ו-c`, `A→B`, `(ראו סעיף 2)`, `Y = (A & B) \| C`, `[3:0] ו-[7:4] (שני ניבלים)` — an enclosing pair stays together in the Hebrew run, a function's own brackets stay inside the island. The worked script with these samples is with Shaked (`bidi_test2.mjs`). Affects every `BidiText` use: titles, prompts, choices, messages, plan reasons. | No backend change; the texts in the bank are correct (balanced brackets throughout) | — |
+| 17 | **The payment screen, at the start of the flow** (Shaked, 2026-10-20; backend done, not mandatory yet) | After sign-in and before Today, when `billing.status === "free"`: the plans from `GET /v1/me/billing?language=` as cards (`label`, `description`, the amount formatted from `amount_agorot` with `Intl` — ₪49.00 — and `interval`/`days`), a "Pay" button per plan that calls `POST /v1/me/billing/checkout {plan, language}` and navigates to the returned `url`, and, while `free_option_visible`, a visible **"Continue for free for now" / "להמשיך בחינם בינתיים"** that goes to Today. Remember the choice in `localStorage` so the screen shows once per device, not on every visit; show it again only if `required` becomes true. When `configured === false` (no Stripe keys yet), the Pay buttons are disabled with "Payment is not set up yet". Coming back from Stripe (`?billing=success` / `?billing=cancel` on the site): show a one-line confirmation and reload `GET /v1/me/billing`. In the profile: one line with `status` in words (free / active / past due / cancelled), `period_end`, and a "Manage payment" button → `POST /v1/me/billing/portal` → `url`, shown only when `status !== "free"`. Handle **402 `payment_required`** on any practice/interview call by opening the payment screen (only happens once Shaked flips the switch). | `billing: (language) => call<Billing>("GET", "/v1/me/billing" + q({language}))`, `checkout: (plan, language) => call<{url: string}>("POST", "/v1/me/billing/checkout", {plan, language})`, `portal: () => call<{url: string}>("POST", "/v1/me/billing/portal")`; types `Billing`, `BillingPlan` from the OpenAPI document; add `"payment_required"` to `ApiErrorCode`; then remove the three routes from `PENDING_ROUTES_IN_CLIENT` and the code from the contract test's pending set | §5zr |
 | 8 | **Voice input, browser only** (if Shaked's dictation test is good) | A microphone button on the answer box using the browser's speech recognition in the practice language; the words land in the box and the user edits and sends as usual. Chrome and Edge only; nothing is recorded or stored. | No backend change. If accuracy on Hebrew technical terms is poor, the server-side option is a separate plan. | — |
 
 Not for the screens: a skipped follow-up earns no grade or XP; the follow-ups themselves now ask for understanding
@@ -1193,6 +1194,50 @@ first auth event).
 detail from anonymous callers (then `curl -H "X-Health-Key: …" …/health` for the full body); and after the first
 429 appears in the log, read its `peer=` to confirm the proxy hands over real client addresses.
 
+## 5zr. Paying for the site, not mandatory yet (2026-10-20, Shaked: "build the paying website so every user can pay, put it in the beginning, but for now I don't want it to be mandatory")
+
+**What exists.** Stripe Checkout (card data never reaches us), two plans from `seeds/billing_plans.json` (monthly
+₪49, a 90-day package ₪149; placeholders until Shaked prices them, editable without a deploy), the customer portal
+for cancelling and changing a card, and Stripe's webhook, signature-verified and idempotent by event id.
+`app/services/billing.py` (`BillingService`, `HttpStripe` over httpx, `FakeStripe` for tests and for a server
+without keys, `verify_signature`), `app/repo/billing.py` (one `billing_subscription` row per user, one
+`billing_event` row per handled event), `app/api/v1/billing.py`.
+
+**The switch.** `REQUIRE_PAYMENT=false` (the default): every member practises as before and `GET /v1/me/billing`
+says `required: false`, `free_option_visible: true`, so the payment screen offers "continue for free for now".
+Flipping it to `true` on Render makes the practice and interview routes answer **402 `payment_required`** to a
+member without an active plan (the profile, goal, library, progress and billing routes stay open); nothing else
+changes and no deploy is needed. Entitlement = status active or trialing, and the paid-through date not passed;
+cached a minute per user, cleared on every webhook event.
+
+**Routes.** `GET /v1/me/billing?language=` (status, plan, paid-through, the switch, whether Stripe is configured,
+the plans with amounts in agorot, labels and descriptions in both languages, `available` per plan);
+`POST /v1/me/billing/checkout {plan, language}` → `{url}` of Stripe's page (503 while no keys);
+`POST /v1/me/billing/portal` → `{url}` (404 before any payment); `POST /v1/billing/webhook` (Stripe only, not in
+the OpenAPI document, 422 without a valid `Stripe-Signature`). Events applied: checkout completed (a package opens
+its days, a subscription is marked active), subscription created/updated/deleted (status, period end, cancel at
+period end), invoice paid / payment failed (past_due and back). Unknown events are acknowledged; a repeat delivery
+is a no-op; an event that matches no user is kept with `unmatched`.
+
+**What Shaked does before a real charge** (none of it needed for test mode): open the Stripe account; create the
+two prices in the Stripe dashboard and set on Render `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (from the webhook
+endpoint `https://jobrun-api.onrender.com/v1/billing/webhook`, events: `checkout.session.completed`,
+`customer.subscription.*`, `invoice.paid`, `invoice.payment_failed`), `STRIPE_PRICE_MONTHLY`, `STRIPE_PRICE_PACKAGE`,
+and `SITE_URL` if the site moves; **apply the migration** `supabase/migrations/20261020090000_billing.sql` (dry run
+on 2026-10-20: 2 tables, 2 indexes, 1 policy, rolled back OK — awaiting approval); terms of service, a cancellation
+policy and Israeli invoicing (the legal plan's stage 2). Test mode first: Stripe's test keys and card 4242.
+Without keys the server runs with `FakeStripe`: the billing routes answer, checkout says payment is not set up.
+
+**For Harel (queue item 17).** The payment screen at the start of the flow and a billing line in the profile; the
+contract is in the queue row and in `app/api/v1/billing.py`'s docstrings. The TS client does not call the three
+routes yet (`PENDING_ROUTES_IN_CLIENT`) and does not type `payment_required`.
+
+**Verified.** `tests/test_billing.py`: the plans and their words, free and entitled while optional, the switch on
+(paid / expired package / past due), checkout and its refusals, the portal, signatures (valid, malformed, tampered,
+stale), a package payment and its repeat delivery, a subscription through six events, unknown and unmatched events,
+the three routes and the webhook over HTTP, a free member practising while optional and 402 with the switch on. The
+route-protection tests cover the three user routes; offline suite; migration dry run.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1231,6 +1276,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-20 | Paying for the site, not mandatory yet: Stripe Checkout, two plans, the customer portal, the signature-verified idempotent webhook, `REQUIRE_PAYMENT` switch (off), migration written and dry-run (§5zr) |
 | 2026-10-19 | Night full check (§5zq, `docs/full-check-2026-10-19.md`): five-lens review, eleven fixes (limiter eviction and key, cache invalidation during a load, the gradient's zero weights and strict windows, superseded revisions, the interview's relatedness and 202 replay, `/health` detail behind `HEALTH_KEY`) |
 | 2026-10-18 | Soft skills and the improvement gradient as backend-only data: `app/engine/soft_skills.py`, `PracticeService.soft_skills`, `scripts/soft_skills_report.py`; no route, no screen (§5zp) |
 | 2026-10-18 | An answer unrelated to the question earns no XP: `related` on each scored answer, read from the judge's own output, `× 0` with no floor in the formula; band, feedback and evidence unchanged (§5zo). Harel's pushes of 16–18 October checked (§5zn) |

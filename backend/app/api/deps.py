@@ -12,6 +12,7 @@ from app.auth import AuthenticatedUser, current_user
 from app.config import get_settings
 from app.repo import cache
 from app.repo.users import Access, resolve_access
+from app.services.billing import BillingService
 from app.services.interview_service import InterviewService
 from app.services.practice_service import PracticeService
 
@@ -41,6 +42,24 @@ async def current_access(request: Request, user: Annotated[AuthenticatedUser, De
     return access
 
 
+async def paid_access(request: Request, access: Annotated[Access, Depends(current_access)]) -> Access:
+    """The access record of a caller who may practise under the payment rule. While REQUIRE_PAYMENT is off (Shaked,
+    2026-10-20: not mandatory for now) this is every member; on, an unpaid member gets 402 `payment_required` and
+    the billing routes stay open to them."""
+    runtime = getattr(request.app.state, "runtime", None)
+    billing = getattr(runtime, "billing", None)
+    if billing is not None and not await billing.is_entitled(access.user_id):
+        raise ApiError("payment_required", "this account has no active plan; choose one on the payment page", status=402)
+    return access
+
+
+def billing_service(request: Request) -> BillingService:
+    runtime = getattr(request.app.state, "runtime", None)
+    if runtime is None or getattr(runtime, "billing", None) is None:
+        raise ApiError("evaluation_unavailable", "billing is not started", status=503)
+    return runtime.billing
+
+
 def practice_service(request: Request) -> PracticeService:
     runtime = getattr(request.app.state, "runtime", None)
     if runtime is None:
@@ -56,5 +75,7 @@ def interview_service(request: Request) -> InterviewService:
 
 
 CurrentAccess = Annotated[Access, Depends(current_access)]
+PaidAccess = Annotated[Access, Depends(paid_access)]
+Billing = Annotated[BillingService, Depends(billing_service)]
 Practice = Annotated[PracticeService, Depends(practice_service)]
 Interview = Annotated[InterviewService, Depends(interview_service)]

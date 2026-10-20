@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from app.config import Settings
 from app.engine.catalog import Catalog, load_catalog
 from app.engine.providers import Provider, build_provider
+from app.services.billing import BillingConfig, BillingService, FakeStripe, HttpStripe, load_plans
 from app.services.demo_provider import DemoProvider
 from app.services.interview_service import InterviewConfig, InterviewService
 from app.services.memory_store import InMemoryStore
@@ -26,6 +27,7 @@ class Runtime:
     store: Store
     practice: PracticeService
     store_kind: str                                  # database | memory
+    billing: BillingService | None = None
     image_fetcher: StorageImageFetcher | None = None  # set when answer photos can be read for the evaluator
     interview: InterviewService | None = None        # mock interviews
 
@@ -75,8 +77,15 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
     async def interview_finished(tx, user_id, session_id):
         await practice._complete_program_item(tx, user_id, session_id=session_id)
 
+    plans = load_plans(settings.seeds_dir / "billing_plans.json",
+                       {"stripe_price_monthly": settings.stripe_price_monthly, "stripe_price_package": settings.stripe_price_package})
+    configured = bool(settings.stripe_secret_key)
+    gateway = HttpStripe(settings.stripe_secret_key, settings.stripe_webhook_secret) if configured else FakeStripe()
+    billing = BillingService(store, gateway, BillingConfig(plans=plans, require_payment=settings.require_payment,
+                                                           free_option_visible=settings.billing_free_option_visible,
+                                                           site_url=settings.site_url, configured=configured))
     return Runtime(catalog=catalog, provider=provider, store=store, practice=practice, store_kind=kind,
-                   image_fetcher=fetcher,
+                   image_fetcher=fetcher, billing=billing,
                    interview=InterviewService(store, catalog, provider, interview_config, image_fetcher=fetcher,
                                               on_finished=interview_finished))
 

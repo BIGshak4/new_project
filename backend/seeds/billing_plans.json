@@ -1,0 +1,24 @@
+[
+  {
+    "key": "monthly",
+    "label": {"en": "Monthly", "he": "חודשי"},
+    "description": {"en": "Full practice and mock interviews, renewed every month. Cancel any time.",
+                    "he": "תרגול מלא וראיונות מדומים, מתחדש כל חודש. אפשר לבטל בכל רגע."},
+    "amount_agorot": 4900,
+    "currency": "ils",
+    "mode": "subscription",
+    "interval": "month",
+    "stripe_price_setting": "stripe_price_monthly"
+  },
+  {
+    "key": "package",
+    "label": {"en": "Three months", "he": "שלושה חודשים"},
+    "description": {"en": "One payment for 90 days of full practice and mock interviews.",
+                    "he": "תשלום אחד ל־90 ימים של תרגול מלא וראיונות מדומים."},
+    "amount_agorot": 14900,
+    "currency": "ils",
+    "mode": "payment",
+    "days": 90,
+    "stripe_price_setting": "stripe_price_package"
+  }
+]
