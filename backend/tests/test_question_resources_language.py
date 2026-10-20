@@ -163,3 +163,29 @@ async def test_twelve_coin_diagrams_follow_language_after_three_gated_hints(reso
         assert all(not m["source_path"].startswith("sources/") for m in signed[-1])
     assert store.attempts[attempt_id] == before
     assert not provider.requests and not store.metrics
+
+
+async def test_clean_doorway_geometry_is_visible_before_solution_but_fsm_is_gated(resources_service):
+    service, store, provider, signed = resources_service
+    key = "prep-doorway-occupancy-two-sensors"
+    user = uuid.uuid4()
+    for language in ("he", "en"):
+        hidden = await service.question_resources(user, key, language=language)
+        assert not hidden.solution_revealed and hidden.reference is None and hidden.technical_material is None
+        assert [m["filename"] for m in signed[-1]] == [f"prep-053-doorway-prompt-{language}.png"]
+        assert signed[-1][0]["role"] == "prompt"
+    assert not store.attempts
+    attempt = await service.start(user, question_key=key, language="he")
+    attempt_id = uuid.UUID(attempt.id)
+    await service.reveal_reference(user, attempt_id)
+    before = copy.deepcopy(store.attempts[attempt_id])
+    for language in ("he", "en"):
+        shown = await service.question_resources(user, key, attempt_id=attempt_id, language=language)
+        assert shown.solution_revealed and shown.reference and shown.technical_material
+        images = [m for m in signed[-1] if m["kind"] == "image"]
+        assert {m["filename"] for m in images} == {
+            f"prep-053-doorway-{kind}-{language}.png" for kind in ("prompt", "fsm", "circuit")
+        }
+        assert all(not m["source_path"].startswith("sources/") for m in signed[-1])
+    assert store.attempts[attempt_id] == before
+    assert not provider.requests and not store.metrics

@@ -43,6 +43,7 @@ PRIMARY = [
     "estimation_sanity_checks", "arrays_and_search", "arrays_and_search", "edge_detection", "fsm_state_tables",
     "registers_shifters", "fsm_state_tables", "estimation_sanity_checks", "boolean_algebra", "counters",
     "estimation_sanity_checks",
+    "fsm_state_tables", "combinational_blocks", "combinational_blocks", "fsm_state_tables", "estimation_sanity_checks", "latches_flip_flops", "estimation_sanity_checks", "binary_arithmetic", "estimation_sanity_checks",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.
@@ -144,6 +145,12 @@ def load():
         # Only explicit question sources belong before the reveal boundary.
         source_paths = {s["path"] for s in q["sources"] if s.get("path") and s.get("type") == "user_supplied_image"
                         and not any(word in s.get("role", "") for word in ("answer", "clarification", "reference"))}
+        # Authored question geometry may be needed before solving. This explicit
+        # marker never makes a raw source screenshot available to learners.
+        prompt_diagrams = {m["path"] for m in q.get("media_assets", [])
+                           if m.get("type") == "prompt_diagram" and m.get("path")}
+        if any(not p.startswith("diagrams/") or not p.endswith(".png") for p in prompt_diagrams):
+            raise ValueError(f"{ident}: prompt diagrams must be authored PNGs in diagrams/")
         refs = {p for p in paths_in(q) if p.endswith('.png')}
         for field in ("solution_code_path", "solution_code_paths", "alternative_solution_code_path", "solution_model_path"):
             refs.update(paths_in(q.get(field)))
@@ -161,7 +168,7 @@ def load():
                 raise ValueError(f"{ident}: missing/unsafe asset {relative}")
             digest = hashlib.sha256(path.read_bytes()).hexdigest()
             storage_path = f"{ident.lower()}/{digest[:20]}-{path.name}"
-            is_prompt = relative in source_paths
+            is_prompt = relative in source_paths or relative in prompt_diagrams
             media.append({"id": f"asset-{n + 1}", "path": storage_path, "filename": path.name,
                           "kind": "image" if path.suffix == ".png" else "file",
                           "role": "prompt" if is_prompt else "solution",

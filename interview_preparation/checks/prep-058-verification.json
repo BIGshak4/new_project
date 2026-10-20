@@ -1,0 +1,19 @@
+{
+  "question_id": "PREP-058",
+  "checked_on": "2026-10-20",
+  "status": "passed_python_model",
+  "valid_pairs": 2026,
+  "width_counts": {
+    "2": 2,
+    "3": 6,
+    "4": 14,
+    "5": 30,
+    "6": 62,
+    "7": 126,
+    "8": 254,
+    "9": 510,
+    "10": 1022
+  },
+  "invalid_cases": 6,
+  "coverage": "Exhaustive every valid unsigned pair for widths 2..10; independent arithmetic oracle; invalid relation, negative input, wrapped pair and invalid width rejection. No HDL compilation/simulation/synthesis."
+}

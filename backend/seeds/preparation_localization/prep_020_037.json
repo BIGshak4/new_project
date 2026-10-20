@@ -1522,10 +1522,9 @@
   "PREP-032": {
     "assumptions": {
       "he": [
-        "רשימות מקושרות חד־כיווניות סופיות וללא מעגלים, עם None בסופן.",
-        "חיתוך פירושו זהות של צומת משותף ולא שוויון ערכים.",
-        "גישה למצביעי הראש ולשדות next; ללא שינוי מקבילי.",
-        "סדר הערכים המאוחסנים אינו רלוונטי."
+        "רשימות חד־כיווניות סופיות וללא מעגלים; הקישורים אינם משתנים במקביל.",
+        "איחוד פירושו אותו אובייקט בזיכרון, לא שוויון ערכים.",
+        "צומת משותף גורר זנב משותף כי לכל צומת קישור המשך יחיד."
       ],
       "en": [
         "Finite acyclic singly linked lists with None terminators.",
@@ -1536,26 +1535,40 @@
     },
     "optimality": {
       "he": {
-        "criterion": "זמן מעבר ומקום עזר במקרה הגרוע",
-        "result": "זמן O(n+m), ו־O(1) מילות מכונה.",
-        "scope": "רשימות מקושרות כלליות באמצעות מצביעים וללא מעגלים, אינדוקס או מטא־נתונים שחושבו מראש; מעגלים אינם נכללים."
+        "criterion": "זמן מעבר וזיכרון עזר במקרה הגרוע.",
+        "result": "שתי החלופות פועלות בזמן O(m+n) ובמספר קבוע של מילות עזר.",
+        "proof": "יישור אורכים משווה מרחקים; החלפת ראשים נותנת לשני המצביעים מסלול כולל באותו אורך ומבטלת את ההפרש. ייתכן שצריך לעבור קטעים פרטיים ארוכים לפני שניתן לשלול חיבור.",
+        "scope": "רשימות כלליות ללא מידע מוקדם או אינדקס; מעגלים אינם מכוסים."
       },
       "en": {
-        "criterion": "Worst-case traversal time and auxiliary space",
-        "result": "O(n+m) time, O(1) machine words.",
-        "scope": "General acyclic pointer-linked lists without indexing or precomputed metadata; cycles excluded."
+        "criterion": "Worst-case traversal time and auxiliary storage.",
+        "result": "Both alternatives use O(m+n) time and constant auxiliary words.",
+        "proof": "Length alignment equalizes remaining distance; head switching equalizes total traversals. Long private prefixes may need traversal before intersection can be ruled out.",
+        "scope": "General lists without indexing or precomputed metadata; cycles excluded."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "בדיקות מודל פייתון עברו; ביקורת מקצועית עצמאית ממתינה.",
+        "method": "השוואת התוצאה לזהות הצומת המשותף שנבנה; אובייקטים האוסרים שוויון, ערכים זהים ובדיקת אי־שינוי.",
+        "coverage": "729 שלשות אורכי קטעים 0–8 בשני סדרים: 1,458 קריאות; שני מקרים ארוכים. הבדיקות המקוריות נשמרו בנפרד.",
+        "script_path": "checks/check_prep_056_058_059_and_032_update.py",
+        "scope": "בדיקות קוד ואלגוריתם בלבד; אין בכך אישור מקצועי אנושי או בדיקה בחשבון חי."
+      },
+      "en": {
+        "status": "Python-model checks passed; independent professional review pending.",
+        "method": "Compare identity to the constructed shared node; hostile equality, identical data values and immutability checks.",
+        "coverage": "729 length triples 0..8 in both argument orders: 1,458 calls, plus two long cases. Existing original-method checks are retained separately.",
+        "script_path": "checks/check_prep_056_058_059_and_032_update.py",
+        "scope": "Code/algorithm verification only; not human expert approval or authenticated live-account validation."
       }
     },
     "edge_cases": {
       "he": [
-        "שני הראשים ריקים",
-        "ראש אחד ריק",
-        "רשימות נפרדות עם ערכים שווים",
-        "ראשים זהים",
-        "ראש אחד נמצא בתוך הרשימה האחרת",
-        "צומת זנב משותף יחיד",
-        "קידומות באורכים שונים",
-        "ערכי נתונים חוזרים"
+        "שני ראשים ריקים או רק אחד ריק.",
+        "ראשים זהים או ראש שנמצא בתוך הרשימה האחרת.",
+        "צמתים שונים עם אותם ערכים אינם חיבור.",
+        "זנב משותף של צומת אחד או אורכי קטעים פרטיים שונים מאוד."
       ],
       "en": [
         "Both heads empty",
@@ -1568,27 +1581,12 @@
         "Repeated data values"
       ]
     },
-    "verification": {
-      "he": {
-        "status": "passed",
-        "checked_on": "2026-09-29",
-        "script_path": "checks/check_prep_032.py",
-        "method": "343 צירופי קידומת/קידומת/סיומת קטנים בשני הסדרים, שני מקרים ארוכים, ערכים שווים, ובדיקות זהות ואי שינוי הקלט."
-      },
-      "en": {
-        "status": "passed",
-        "checked_on": "2026-09-29",
-        "script_path": "checks/check_prep_032.py",
-        "method": "343 small prefix/prefix/suffix combinations in both orders, two long cases, equal values, identity and immutability checks."
-      }
-    },
     "common_mistakes": {
       "he": [
-        "השוואת ערכי הצמתים במקום זהותם",
-        "קידום שני הראשים המקוריים מיד למרות קידומות באורכים שונים",
-        "הנחה שהרשימות חייבות להיות ממוינות",
-        "שינוי מצביעי next ללא צורך",
-        "שימוש באלגוריתם לרשימות ללא מעגלים על רשימות עם מעגלים"
+        "השוואת ערכים במקום זהות צמתים.",
+        "התקדמות משני הראשים בלי ליישר את הפרש האורכים.",
+        "שינוי קישורים כדי למצוא חיבור בלי צורך.",
+        "הפעלת הפתרון ללא מעגלים על רשימות עם מעגלים."
       ],
       "en": [
         "Comparing node values instead of identity",
@@ -1597,6 +1595,22 @@
         "Mutating next pointers unnecessarily",
         "Using the acyclic algorithm on lists with cycles"
       ]
+    },
+    "interview_answer": {
+      "he": "אשווה זהות צמתים, כי מהחיבור ואילך הזנב משותף. אפשר לספור אורכים, לדלג על ההפרש ולהתקדם יחד; או להעביר כל מצביע לראש הרשימה האחרת כשהוא מגיע לסוף. כך מתבטל הפרש האורכים. נעצור בצומת הזהה הראשון או כששניהם None. הזמן ליניארי והזיכרון קבוע.",
+      "en": "Compare node identity because sharing a node implies a shared suffix. Either align lengths and advance together or redirect each exhausted pointer to the other head. Both cancel the prefix-length difference. Stop at the first identical node, or both None; linear time and constant auxiliary storage."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם אחת הרשימות מכילה מעגל?",
+        "answer_outline": "אי אפשר להשתמש אוטומטית בשיטות הסופיות; יש לזהות מעגלים וכניסות אליהם ולהגדיר מהו צומת משותף ראשון במקרה של מעגל משותף.",
+        "integration_status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתהליך ההמשך החי."
+      },
+      "en": {
+        "question": "What changes if a list contains a cycle?",
+        "answer_outline": "Finite-list methods no longer apply automatically. Detect cycles and entries, and define what “first shared” means for a shared cycle.",
+        "integration_status": "Follow-up prepared in content; not connected to the live follow-up workflow."
+      }
     }
   },
   "PREP-033": {

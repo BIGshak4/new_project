@@ -187,3 +187,19 @@ System Chip Validation Intern ב־Marvell. תיאור התפקיד נמסר בת
 - [PREP-049 — 12 מטבעות: זיהוי המזויף וכיוון הסטייה בשלוש שקילות](questions/prep-049-twelve-coins-three-weighings.md) — מקור שמור, שלושה רמזים בכל שפה, פתרון דו־לשוני מלא, טבלאות החלטה, שישה תרשימים בשתי שפות וקוד עם בדיקה ממצה של כל 24 המצבים. ביקורת מקצועית ממתינה; ייחוס NVIDIA לפי צילום המקור בלבד.
 
 דוח קליטה ובדיקות: [20 באוקטובר 2026](../docs/question-intake-2026-10-20-prep-049.md).
+
+## מקבץ לילה — עשרה צילומים, 20 באוקטובר 2026
+
+- [PREP-050 — התחלקות ב־5 עם קלט מה־LSB](questions/prep-050-lsb-first-divisibility-by-five-fsm.md).
+- [PREP-051 — XOR של שלוש כניסות באמצעות MUX וקבוע 0](questions/prep-051-three-input-xor-mux-zero-only.md).
+- [PREP-052 — מחבר מלא באמצעות MUX 2:1](questions/prep-052-full-adder-from-two-to-one-muxes.md).
+- [PREP-053 — מונה כניסות ויציאות עם שני חיישנים](questions/prep-053-doorway-occupancy-two-sensors.md).
+- [PREP-054 — 17 אסירים ושני מתגים עם החלפה חובה](questions/prep-054-seventeen-prisoners-two-mandatory-switches.md).
+- [PREP-056 — הוספת Enable ל־DFF באמצעות MUX ומשוב](questions/prep-056-dff-enable-feedback-mux.md).
+- [PREP-057 — 21 אסירים ונורה שמצבה ההתחלתי לא ידוע](questions/prep-057-twenty-one-prisoners-one-light.md).
+- [PREP-058 — ממוצע מספרים שהפרשם 2 באמצעות שערים](questions/prep-058-average-difference-two-logic-gates.md).
+- [PREP-059 — מטבעות בחושך ושתי קבוצות עם מספר פלי שווה](questions/prep-059-dark-room-ten-tails-equal-groups.md).
+
+צילום הרשימות המקושרות אוחד עם [PREP-032](questions/prep-032-linked-list-intersection.md). נוספו מקור, שיוך Mellanox, חלופת החלפת ראשים, קוד ושרטוטים בשתי שפות. המזהה, הנוסח הערוך, הרמזים וההיסטוריה נשמרו. PREP-055 אינה שאלה נפרדת. PREP-051 מקושרת ל־031 כווריאציה בעלת שלוש כניסות.
+
+כל התשע כוללות מקור, שלושה רמזים ופתרון מלא בשתי שפות, קוד, המחשות ובדיקות. סך הכול 58 שאלות הכנה; ביקורת מקצועית אנושית ממתינה. [דוח הקליטה, הבדיקות והפרסום](../docs/question-batch-2026-10-20-night.md) ו[רשומה מובנית](intakes/2026-10-20-night-batch.json) מפרטים את ההנחות ואת מגבלות הבדיקות, כולל היעדר סימולציית HDL ובדיקת לחיצות בחשבון חי.

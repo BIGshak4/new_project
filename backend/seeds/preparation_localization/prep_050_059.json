@@ -1,0 +1,834 @@
+{
+  "PREP-050": {
+    "assumptions": {
+      "he": [
+        "הקלט הוא מספר בינארי ללא סימן, מהביט הפחות משמעותי תחילה, באורך לא מוגבל.",
+        "כל חזית עולה עם bit_valid=1 מקבלת ביט אחד; מחזור לא תקף שומר מצב. איפוס סינכרוני פעיל בגבוה גובר על תקפות ומפריד בין מילים.",
+        "אפס מתחלק ב־5. המילה הריקה מוגדרת מתמטית כאפס ולכן הפלט לאחר איפוס הוא 1; תקפות של מילה לא ריקה היא אות ממשק נפרד.",
+        "קוראים את הפלט המעודכן אחרי חזית הביט האחרון. אות סוף מילה מגיע מבחוץ ואינו משנה את חישוב השארית."
+      ],
+      "en": [
+        "Unsigned binary input, least-significant bit first, without a fixed maximum word length.",
+        "A rising edge with bit_valid accepts one bit; invalid cycles hold. Synchronous active-high reset overrides validity and separates words.",
+        "Zero is divisible by five. Empty input mathematically denotes zero, so reset output is one; nonempty-word validity is a separate interface signal.",
+        "Read the updated output after the last accepted edge. An external end-of-word indication does not alter the residue computation."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר מצבים לוגיים לזיהוי חלוקה ב־5 בכל אורך מילה בסדר קליטה זה.",
+        "result": "חמישה מצבים מספיקים ונחוצים; שלושה דלגלגים בקידוד בינארי. פתרון ישיר של שארית ומשקל עם עד 20 מצבים תקף גם הוא.",
+        "proof": "השארית המנורמלת מתעדכנת לפי s_next=3(s+b) mod5. כל המצבים נגישים וכל זוג מובחן בעזרת המשך בן שלושה ביטים שערכו (-s) mod5.",
+        "scope": "אין טענה למינימום שערים, שטח, השהיה או מספר מצבים כשמוסיפים למפרט דגל פנימי של מילה לא ריקה."
+      },
+      "en": {
+        "criterion": "Logical state count for arbitrary-length divisibility-by-five recognition in this bit order.",
+        "result": "Five states are necessary and sufficient; three binary-encoded flip-flops. A direct residue/weight design with up to twenty states is also valid.",
+        "proof": "Normalized residue updates as s_next=3(s+b) mod5. All states are reachable and each pair is distinguished by a three-bit suffix valued (-s) mod5.",
+        "scope": "No minimum physical gates, area or delay claim, nor a state-count claim for a different specification requiring an internal nonempty-word flag."
+      }
+    },
+    "verification": {
+      "he": "עברו כל 131,071 המילים באורכים 0–16, עם 1,966,082 בדיקות קידומת מול סכום מספרי מדויק והאינווריאנט המנורמל. עברו כל 16,384 עקבות הבקרה באורך 7, עם 114,688 חזיתות, עשרת מעברי מצב/ביט, נגישות חמשת המצבים והבחנה בכל עשרת זוגות המצבים. אלו בדיקות מודל פייתון; קוד HDL לא קומפל או הורץ, ולא בוצעו סינתזה או מדידות חומרה.",
+      "en": "All 131,071 words of lengths zero through sixteen passed, with 1,966,082 prefix checks against exact integer accumulation and the normalized invariant. All 16,384 length-seven control traces passed across 114,688 edges, plus all ten state/input transitions, five-state reachability and all ten state-pair distinctions. Python models only; HDL not compiled or simulated, no synthesis or physical measurements."
+    },
+    "edge_cases": {
+      "he": [
+        "המילה הריקה, ביט אפס יחיד וכל רצף אפסים מפיקים 1 לפי ההגדרה המתמטית.",
+        "הוספת אפסים בקצה המשמעותי אחרי קליטת המספר אינה משנה את הערך; מצב מנורמל לא אפס עשוי בכל זאת להשתנות.",
+        "איפוס ותקפות יחד מאפסים ואינם קולטים ביט באותה חזית.",
+        "אין לקשר מילים עצמאיות בלי לאפס ביניהן; 25 בסדר 1,0,0,1,1 מבדיל מסדר MSB.",
+        "קודי מצב בינאריים 5–7 אינם מצבי המכונה; ענף ברירת המחדל בקוד הוא התאוששות הגנתית, לא מודל לתקלת חומרה."
+      ],
+      "en": [
+        "Empty input, a single zero and all-zero streams output one under the mathematical convention.",
+        "Appending high-order zeros preserves the integer, although a nonzero normalized state can still change.",
+        "Reset and validity together reset without accepting a bit at that edge.",
+        "Independent words require reset between them; twenty-five in order 1,0,0,1,1 distinguishes MSB from LSB reception.",
+        "Binary codes five through seven are outside the FSM; default recovery is defensive code, not a hardware fault model."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשתמש בעדכון 2*r+b של קליטה מהביט המשמעותי תחילה.",
+        "לכנות את s השארית הרגילה; למשל אחרי ביט 1 ראשון המצב S3, אבל השארית המספרית היא 1.",
+        "לשמור שארית בלבד בעדכון r+b בלי משקל מיקום.",
+        "לאפס את המכונה בכל ביט או לקרוא פלט לפני חזית הקליטה האחרונה.",
+        "להכריז שאפס אינו מתחלק ב־5 או שמוצא החלוקה לבדו מציין מילה תקפה ולא ריקה."
+      ],
+      "en": [
+        "Using the MSB-first update 2*r+b unchanged.",
+        "Calling s the ordinary remainder: after first bit one, state is S3 while the numeric remainder is one.",
+        "Updating r+b without retaining the positional weight or normalizing.",
+        "Resetting before every bit or sampling output before the last acceptance edge.",
+        "Treating zero as nondivisible or interpreting divisibility alone as nonempty-word validity."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור מצב מנורמל: אחרי k ביטים s=N*2^(-k) מודולו 5. כיוון שההופכי של 2 הוא 3, כל ביט b מעדכן s ל־3(s+b) מודולו 5. הפלט 1 רק במצב אפס. כך מספיקים חמישה מצבים בלי מונה מיקום, עם איפוס בין מילים וקליטה מהביט הפחות משמעותי.",
+      "en": "Store normalized state s=N*2^(-k) modulo five after k bits. Since the inverse of two is three, input b updates s to 3(s+b) modulo five. Output one only in state zero. This needs five states and no position counter, with reset between LSB-first words."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך תתכננו פתרון ישיר ללא שימוש בהופכי מודולרי, ומה משתנה במחלק זוגי כמו 6?",
+        "direction": "שומרים שארית r ואת משקל הביט הבא w, ומעדכנים r+b*w ו־2*w מודולו המחלק. זה תקף גם ל־6, אך 2 אינו הפיך מודולו 6 ולכן אסור להעתיק את נוסחת הנרמול. נתחו נגישות וצמצום מחדש.",
+        "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+      },
+      "en": {
+        "question": "How can you solve this without modular inverses, and what changes for an even divisor such as six?",
+        "direction": "Track residue r and next weight w, updating r+b*w and 2*w modulo the divisor. This works for six too, but two is not invertible modulo six, so the normalized recurrence cannot be copied. Reanalyse reachable states and minimization.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-051": {
+    "assumptions": {
+      "he": [
+        "שלוש כניסות עצמאיות בנות ביט אחד; הפלט הוא הזוגיות האי־זוגית שלהן.",
+        "רק מרבבי 2:1 לא מהופכים וקבוע 0. אין קבוע 1, שערים נוספים או אותות משלימים מוכנים.",
+        "אות קלט או מוצא מרבב קודם רשאי להניע גם פין נתונים וגם פין בחירה. מותר פיצול חוטים; אין משוב.",
+        "סימן MUX(S,D0,D1) בוחר D0 ב־S=0 ו־D1 ב־S=1. גודל המרבב הובהר בעריכה."
+      ],
+      "en": [
+        "Three independent one-bit inputs; output is their odd parity.",
+        "Only ordinary noninverting 2:1 MUXes and constant zero, with no constant one, extra gates or precomputed complements.",
+        "Raw inputs and previous MUX outputs may drive both data and select pins. Fanout is allowed, feedback is not.",
+        "MUX(S,D0,D1) selects D0 at S=0 and D1 at S=1. The source did not specify MUX size; the edited model does."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "בניית רשת צירופית תקפה תחת מגבלת מרבבים ואפס בלבד.",
+        "result": "ארבעה מרבבי 2:1, בשני בלוקים של שני מרבבים.",
+        "proof": "כל בלוק מממש XOR לפי פיצול למקרים X=0 ו־X=1; הרכבה נותנת XOR של שלוש כניסות.",
+        "scope": "זהו חסם עליון ומימוש מפורש; לא הוכח מינימום מספר מרבבים או שטח, עומק והשהיה."
+      },
+      "en": {
+        "criterion": "A valid combinational construction under the MUX-and-zero-only constraint.",
+        "result": "Four 2:1 MUX cells, arranged as two two-cell XOR blocks.",
+        "proof": "A case split on X proves each block is two-input XOR; composition gives three-input XOR.",
+        "scope": "This is constructive sufficiency and an upper bound; no global minimum MUX count, area, depth or delay is proved."
+      }
+    },
+    "verification": {
+      "he": "עברו כל שמונה שורות האמת מול זוגיות סכום שלם. נבדקה רשימת חיבורים טופולוגית בת ארבעה מרבבים, בלי קבוע 1, שער חיצוני או אות שטרם נוצר. נבדק גם בלוק שני מרבבים בנפרד. בדיקת מודל פייתון בלבד; ללא קומפילציית HDL, סימולציית חומרה או תזמון.",
+      "en": "All eight truth rows passed against integer-sum parity. Topological validation checks four MUX instances with no constant one, external gate or unavailable wire; the two-cell block is also checked independently. Python functional model only; no HDL compilation, hardware simulation or timing."
+    },
+    "edge_cases": {
+      "he": [
+        "000 חייב להוציא 0, ו־111 חייב להוציא 1.",
+        "בדיוק שני אחדים נותנים 0; זה אינו שער OR או הצבעת רוב.",
+        "אות הביניים t אינו השלילה של B בכל מצב; הוא משמש רק בענף שבו A=1.",
+        "המספר 1 המופיע ליד פין D1 הוא שם הפין, לא מקור קבוע נוסף."
+      ],
+      "en": [
+        "000 must output zero and 111 must output one.",
+        "Exactly two ones give zero; this is neither OR nor majority.",
+        "Intermediate t is not globally NOT B; it is used only in the branch A=1.",
+        "A one next to pin D1 is a pin label, not an added constant-one source."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לבנות היפוך רגיל על ידי חיבור 1 שאינו מותר.",
+        "להשתמש בשערי XOR/OR/NOT בתור רכיבי מימוש במקום רק לתאר פונקציות.",
+        "להניח שהמשימה בלתי אפשרית כי אי אפשר לייצר NOT כללי עם אפס בלבד.",
+        "למזג את השאלה עם PREP-031 תוך מחיקת השוני בין שתי כניסות לשלוש.",
+        "להחליף את סדר פיני D0,D1 בלי לעדכן את הסלקטור."
+      ],
+      "en": [
+        "Adding an unavailable constant one to build an ordinary inverter.",
+        "Using XOR/OR/NOT gates as physical components rather than explanatory function names.",
+        "Calling the task impossible because a standalone NOT cannot be built with only zero.",
+        "Merging with PREP-031 while erasing its two-input versus three-input difference.",
+        "Swapping D0/D1 without adjusting select interpretation."
+      ]
+    },
+    "interview_answer": {
+      "he": "אבנה XOR של שני ביטים בשני מרבבים: t=MUX(Y,X,0), ואחריו Z=MUX(X,Y,t). אם X=0 מעבירים Y; אם X=1, האות t מתפקד כשלילת Y בלי מקור 1 נוסף. אשתמש בבלוק פעם ל־A,B ופעם לתוצאה ול־C. סך הכול ארבעה מרבבים וקבוע אפס בלבד.",
+      "en": "Use a two-MUX XOR block: t=MUX(Y,X,0), then Z=MUX(X,Y,t). At X=0 pass Y; at X=1, t behaves as NOT Y without an extra one source. Apply it first to A,B and then to that result and C: four MUXes with only constant zero."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "למה אפשר לממש XOR, אבל אי אפשר לממש NOT של כניסה אחת באמצעות מרבבים וקבוע 0 בלבד?",
+        "direction": "כל רשת מותרת שומרת אפס: אם כל הקלטים אפס, כל מרבב בוחר אפס. NOT דורש פלט 1 במצב זה ולכן בלתי אפשרי. XOR שומר אפס; ההיפוך שבפתרון הוא מותנה בענף שבו קלט אחר כבר שווה 1.",
+        "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+      },
+      "en": {
+        "question": "Why is XOR possible while a standalone NOT is impossible with MUXes and only constant zero?",
+        "direction": "Every permitted network preserves all-zero input: every cell selects zero. NOT would have to output one there and is impossible. XOR preserves zero; the construction only inverts conditionally when another input is already one.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-052": {
+    "assumptions": {
+      "he": [
+        "מחבר מלא של ביט אחד: A+B+Cin=S+2*Cout, כאשר Cout הוא הביט המשמעותי.",
+        "המקור אינו מפרט קבועים. בגרסה הראשית מותרים 0 ו־1; חלופה של חמישה מרבבים עם אפס בלבד מפורטת בנפרד.",
+        "רק מרבבי 2:1 רגילים, חוטים ופיצול; אין היפוכים מוכנים או שערי NOT חיצוניים. כל מרבב היפוך נספר.",
+        "אין שעון או זיכרון. סדר הפינים הוא MUX(S,D0,D1)."
+      ],
+      "en": [
+        "One-bit full adder: A+B+Cin=S+2*Cout, with Cout the more-significant output.",
+        "Constants are unspecified in the source. Main construction permits zero and one; a separate five-MUX zero-only alternative is explained.",
+        "Only ordinary 2:1 MUXes, wires and fanout. No free complements or external NOT gates; every inverter MUX is counted.",
+        "No clock or state; pin order is MUX(S,D0,D1)."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מימוש שני פלטי מחבר מלא באמצעות מרבבי 2:1.",
+        "result": "חמישה מרבבים עם 0 ו־1, כולל שני מרבבי היפוך. קיימת גם חלופה בת חמישה מרבבים עם 0 בלבד.",
+        "proof": "P=A XOR B קובע את הנשא: ב־P=0 בוחרים A, וב־P=1 בוחרים Cin; הסכום הוא P XOR Cin.",
+        "scope": "חסם עליון קונסטרוקטיבי, לא הוכחת מינימום שערים, רכיבים, שטח או השהיה. התגית 2312313 נשמרה מהמקור ללא פרשנות."
+      },
+      "en": {
+        "criterion": "Implement both full-adder outputs using 2:1 MUX cells.",
+        "result": "Five MUXes with constants zero/one, including two inverter MUXes; a five-MUX zero-only alternative also exists.",
+        "proof": "P=A XOR B selects carry: A at P=0, Cin at P=1; sum is P XOR Cin.",
+        "scope": "Constructive upper bound, not a global minimum gate, cell, area or delay proof. The odd source tag 2312313 is preserved without interpretation."
+      }
+    },
+    "verification": {
+      "he": "עברו כל שמונה שורות האמת ברשימת חיבורים של חמישה מרבבים מול חיבור שלם, כולל זהות שימור הסכום. נבדק שאין חיבור קדימה, וששתי השלילות מיוצרות במרבבים נספרים. חלופת אפס בלבד נבדקה גם היא לכל שמונת הקלטים. זו בדיקת מודל פייתון; קוד SystemVerilog לא קומפל או הורץ ולא בוצעה סינתזה.",
+      "en": "All eight truth rows of the five-MUX netlist passed against integer addition, including value conservation. Structural checks reject forward references and ensure both complements come from counted MUXes. The zero-only alternative also passed all eight inputs. Python models only; SystemVerilog not compiled/simulated or synthesized."
+    },
+    "edge_cases": {
+      "he": [
+        "000 מפיק S=0,Cout=0; 111 מפיק S=1,Cout=1.",
+        "כש־A=B=0 הנשא תמיד 0; כש־A=B=1 הנשא תמיד 1, בלי תלות ב־Cin.",
+        "כש־A ו־B שונים, הנשא שווה ל־Cin.",
+        "הסכום הבינארי המלא נקרא Cout ואז S.",
+        "אם אוסרים קבוע 1 יש להשתמש בחלופה, לא לטעון שהמימוש הראשי עומד באיסור."
+      ],
+      "en": [
+        "000 gives S=0,Cout=0; 111 gives S=1,Cout=1.",
+        "At A=B=0 carry is always zero; at A=B=1 it is always one, independent of Cin.",
+        "When A and B differ, carry equals Cin.",
+        "Read the full binary total as Cout followed by S.",
+        "If constant one is forbidden, use the alternative rather than claiming the main netlist satisfies that restriction."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להציג רק S בלי Cout ולהכריז שמומש מחבר מלא.",
+        "לא לספור את המרבבים שמייצרים nB ו־nCin.",
+        "להחליף את A ואת Cin בפיני הנתונים של מרבב הנשא בלי להחליף את הבחירה.",
+        "לחבר P כנתון במקום לסלקטור של מרבב הנשא.",
+        "לפרש את התגית 2312313 כחברה או להוסיף חברות שלא נראות במקור."
+      ],
+      "en": [
+        "Providing only S while omitting Cout.",
+        "Not counting the MUXes that generate nB and nCin.",
+        "Swapping A and Cin on carry data pins without changing select interpretation.",
+        "Driving carry data rather than its select with P.",
+        "Interpreting 2312313 as a company or importing companies absent from the screenshot."
+      ]
+    },
+    "interview_answer": {
+      "he": "אחשב P=A XOR B בעזרת מרבב היפוך ל־B ומרבב שבוחר B או שלילתו לפי A. בדומה אחשב S=P XOR Cin בעזרת שני מרבבים. לנשא אשתמש במרבב שבוחר A אם P=0 ו־Cin אם P=1. סך הכול חמישה מרבבים, כולל ההיפוכים, ובלי שערים חיצוניים.",
+      "en": "Compute P=A XOR B with a counted B-inverting MUX and a MUX selecting B or its complement by A. Repeat for S=P XOR Cin using two cells. Carry uses one MUX selecting A at P=0 and Cin at P=1: five MUXes including the inversions, no external gates."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד תממשו את אותו מחבר אם מותר רק קבוע אפס, והאם מספר המרבבים חייב לגדול?",
+        "direction": "לא חייב לגדול: שני בלוקי XOR של שני מרבבים כל אחד במימוש המותנה עם אפס בלבד, ואחריהם מרבב הנשא, נותנים שוב חמישה. הציגו את כל הפינים; אין צורך לייצר שלילה גלובלית.",
+        "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+      },
+      "en": {
+        "question": "How would you implement the adder with only constant zero, and must the MUX count increase?",
+        "direction": "It need not increase: use two conditional zero-only two-MUX XOR blocks plus the carry MUX, again five cells. Specify every pin; no standalone complement is required.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-053": {
+    "assumptions": {
+      "he": [
+        "גלאי A חיצוני וגלאי B פנימי; A הוא הביט הראשון בזוג.",
+        "אדם יחיד עובר בכל פעם, כולל מצב חפיפה 11 בכל מעבר מלא; אפשר להיעצר ולחזור אחורה.",
+        "כל שינוי ביניים נצפה לאחר סנכרון וסינון ריצוד; הוספת מסנכרנים לבדה אינה הוכחת שימור סדר.",
+        "איפוס רק עם פתח פנוי וספירה ידועה. בחומרה המצורפת הספירה ההתחלתית אפס.",
+        "מונה חסום ללא גלישה; שגיאה או חריגה מהגבול מורידות דגל תקפות עד איפוס מפוקח."
+      ],
+      "en": [
+        "A is outside and B inside; A is the first bit of the pair.",
+        "One person at a time, with 11 overlap on every full crossing; pausing and reversal are allowed.",
+        "Every intermediate transition is observed after synchronization and debounce; ordinary synchronizers alone are not an event-order proof.",
+        "Reset only with a clear doorway and known occupancy; supplied HDL assumes initial zero.",
+        "Bounded nonwrapping count; a sequence or bound fault invalidates it until supervised reset."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "נכונות זיהוי מעבר מלא תחת הנחות הגאומטריה והדגימה.",
+        "result": "שבעה מצבי התקדמות ומצב התאוששות, עם מונה ותקפות.",
+        "proof": "מסלולי התקדמות ונסיגה שומרים את צד ההתחלה; רק חזרה ל־00 מהשלב האחרון משלימה מעבר.",
+        "scope": "לא נטען למינימום מצבים, שערים, זמן השהיה או משאבי חומרה; נכונות במודל אינה הבטחת מוצר פיזי."
+      },
+      "en": {
+        "criterion": "Correct recognition of complete crossings under the stated sensing model.",
+        "result": "Seven progress states plus one recovery state, with occupancy and validity.",
+        "proof": "Advance/retreat paths retain the starting side; only final-stage return to 00 completes a crossing.",
+        "scope": "No claim of minimum states, gates, delay or physical resources; model correctness is not a physical product guarantee."
+      }
+    },
+    "verification": {
+      "he": "עברו 88,572 דגימות באורקל תנועה גאומטרי עצמאי לעומק 10, כל 32 צירופי מצב וקלט ובדיקות נסיגה, השהיה, דילוג, התאוששות, תקפות דביקה, גלישה ותת־גלישה. זו בדיקת מודל פייתון; לא בוצעו קומפילציה או סימולציית חומרה, ניסוי בחיישנים או ניתוח תזמונים ומעבר תחומי שעון.",
+      "en": "Passed 88,572 samples in an independent geometric movement oracle to depth 10, all 32 state/input pairs, and retreat/pause/skip/recovery/sticky-validity/overflow/underflow tests. This verifies a Python model, not HDL compilation/simulation, sensors, timing or CDC."
+    },
+    "edge_cases": {
+      "he": [
+        "השהיה חוזרת בכל שלב אינה יוצרת אנשים נוספים.",
+        "נסיגה גם אחרי 11 או 01 מבטלת ניסיון אם חוזרים לצד המקורי.",
+        "10 אל 01 הוא דילוג חשוד; אין להמציא ביניהם את 11.",
+        "מעבר שגוי מוריד תקפות; חזרה לפתח פנוי אינה מתקנת את המספר שכבר אינו ידוע.",
+        "יציאה מאפס וכניסה בערך המרבי אינן עוטפות את המונה.",
+        "אדם נוסף בפתח או אזורי חישה ללא חפיפה נמצאים מחוץ להנחות."
+      ],
+      "en": [
+        "Repeated pauses at any stage do not count extra people.",
+        "Retreat even after 11 or 01 cancels if the person returns to the starting side.",
+        "10 to 01 is a suspicious skip; do not invent an observed 11.",
+        "A sequence fault invalidates occupancy; a clear doorway does not repair an unknown count.",
+        "Exit at zero and entry at maximum never wrap the counter.",
+        "Multiple people or non-overlapping regions are outside the assumptions."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לספור מיד בהפעלת הגלאי הראשון.",
+        "לשמור רק את AB ולשכוח כיוון התקדמות.",
+        "לספור אדם שסב לאחור כאילו השלים כניסה או יציאה.",
+        "להניח ששני גלאים בכל מיקום מבטיחים כיוון, גם ללא חפיפה.",
+        "להחזיר תקפות אוטומטית אחרי איבוד מידע.",
+        "להציג מודל פייתון כאילו עבר סימולציית חומרה."
+      ],
+      "en": [
+        "Counting as soon as the first sensor activates.",
+        "Remembering only AB while losing direction/progress.",
+        "Counting a turnaround as a completed entry or exit.",
+        "Assuming any two sensor positions guarantee direction even without overlap.",
+        "Automatically restoring validity after losing information.",
+        "Presenting Python checks as HDL simulation."
+      ]
+    },
+    "interview_answer": {
+      "he": "אציב את A בחוץ ו־B בפנים עם חפיפה. אשמור מסלול כניסה 00,10,11,01,00 ומסלול יציאה הפוך, ואאפשר נסיגה והשהיה. רק השלב האחרון שחוזר ל־00 יוצר שינוי יחיד במונה. דילוג מפנה להתאוששות ומוריד תקפות עד כיול מחדש; המונה לא גולש ולא יורד מתחת לאפס. הנחות אדם יחיד, דגימה מלאה וסנכרון הן חלק מהמפרט.",
+      "en": "Place A outside and B inside with overlap. Track entry 00,10,11,01,00 and reverse exit, allowing pauses and retracing. Only final-stage return to 00 updates occupancy once. A skipped transition enters recovery and invalidates the count until recalibration; never overflow or go below zero. One person, complete sampling and synchronization are explicit assumptions."
+    },
+    "source_ambiguities": {
+      "he": {
+        "sensor_order": "המקור אינו מגדיר סדר חד־משמעי; בעריכה A בחוץ ו־B בפנים.",
+        "overlap": "נוספה חובת חפיפה. בלעדיה קריאות יכולות להיות בלתי ניתנות להבחנה.",
+        "faults": "המקור אינו קובע טיפול בנסיגה, איפוס, דילוגים וגבולות; המדיניות כאן מפורשת ומוצעת."
+      },
+      "en": {
+        "sensor_order": "The source does not fix an unambiguous order; the edited model sets A outside and B inside.",
+        "overlap": "Required overlap was added explicitly; without it observations can be ambiguous.",
+        "faults": "Retreat/reset/skip/bounds behavior is unspecified in the source; this proposed policy is explicit."
+      }
+    },
+    "transition_tables": {
+      "he": "עמודת מצב מציינת את המצב הקיים; AB הוא הקלט שנדגם. תא ללא אירוע משאיר מונה. כל מעבר חשוד מוריד תקפות.\n\n| מצב | AB=00 | AB=01 | AB=10 | AB=11 |\n| --- | --- | --- | --- | --- |\n| IDLE | IDLE | X1 | E1 | WAIT_CLEAR |\n| E1 | IDLE | WAIT_CLEAR | E1 | E2 |\n| E2 | WAIT_CLEAR | E3 | E1 | E2 |\n| E3 | IDLE / +1 | E3 | WAIT_CLEAR | E2 |\n| X1 | IDLE | X1 | WAIT_CLEAR | X2 |\n| X2 | WAIT_CLEAR | X1 | X3 | X2 |\n| X3 | IDLE / -1 | WAIT_CLEAR | X3 | X2 |\n| WAIT_CLEAR | IDLE | WAIT_CLEAR | WAIT_CLEAR | WAIT_CLEAR |",
+      "en": "State is current state; AB is sampled input. Cells without an event hold occupancy. Every suspicious transition invalidates the count.\n\n| State | AB=00 | AB=01 | AB=10 | AB=11 |\n| --- | --- | --- | --- | --- |\n| IDLE | IDLE | X1 | E1 | WAIT_CLEAR |\n| E1 | IDLE | WAIT_CLEAR | E1 | E2 |\n| E2 | WAIT_CLEAR | E3 | E1 | E2 |\n| E3 | IDLE / +1 | E3 | WAIT_CLEAR | E2 |\n| X1 | IDLE | X1 | WAIT_CLEAR | X2 |\n| X2 | WAIT_CLEAR | X1 | X3 | X2 |\n| X3 | IDLE / -1 | WAIT_CLEAR | X3 | X2 |\n| WAIT_CLEAR | IDLE | WAIT_CLEAR | WAIT_CLEAR | WAIT_CLEAR |"
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה קורה אם הגלאים רחוקים ואין ביניהם חפיפה, או אם צריך לספור כמה אנשים במקביל?",
+        "direction": "הציגו עקבות זהות שנובעות מתנועות שונות, והסבירו שלא ניתן להבטיח פתרון מאותו מידע בלבד. נדרשים חיישנים נוספים, שינוי גאומטריה, מעקב זהות או אילוץ תנועה מתאים. הגבלת זמן מעבר היא הנחה חדשה ואינה פותרת כל עצירה ונסיגה.",
+        "status": "המשך מוכן בתוכן; אינו מחובר לתור ההמשך החי."
+      },
+      "en": {
+        "question": "What if the sensor regions do not overlap or several people pass at once?",
+        "direction": "Construct identical traces from different motions to show the information is insufficient. Add sensing, change geometry, track identities or impose a suitable movement constraint. A timeout is a new assumption and cannot resolve arbitrary pauses and reversals.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-054": {
+    "assumptions": {
+      "he": [
+        "17 אסירים, אחד בחדר בכל פעם, עם הסכמה מוקדמת וזיכרון אישי.",
+        "מצב מתג האות אינו ידוע בהתחלה; נדרש להיות בטוחים גם אם הוא דלוק.",
+        "בכל ביקור הופכים בדיוק מתג אחד; מתג דמה מאפשר לקיים זאת בלי לשבש אותות.",
+        "רק המתגים משמשים לתקשורת לאחר הבידוד; אין תזמון, סימנים או שמיעת אחרים.",
+        "סיום מותנה בביקורים חוזרים והוגנים של כל אסיר; בטיחות אינה תלויה בהוגנות.",
+        "אין דרישה למינימום ביקורים ואין חסם זמן קבוע."
+      ],
+      "en": [
+        "17 prisoners, one visitor at a time, with prior agreement and private memory.",
+        "The signal's initial state is unknown; initially ON must be safe too.",
+        "Every visit toggles exactly one switch; a dummy satisfies this without disturbing tokens.",
+        "Only switches communicate after isolation; no timing, marks or overhearing.",
+        "Termination assumes fair repeated visits by every prisoner; safety does not require fairness.",
+        "Minimum visits and a fixed time bound are not required."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "הכרזה בטוחה עם מצב התחלתי לא ידוע וסיום תחת הוגנות.",
+        "result": "סופר אחד, 16 מדווחים עם עד שני אותות כל אחד, וסף 32.",
+        "proof": "אם מדווח אחד לא ביקר ניתן לספור לכל היותר 31, כולל אות התחלתי שגוי. לכן 32 מבטיח שכולם ביקרו.",
+        "scope": "זו הוכחת בטיחות של הבנייה; אין טענה למינימום ביקורים, תוחלת זמן, זיכרון או מספר שינויים. ללא הוגנות אין הבטחת סיום."
+      },
+      "en": {
+        "criterion": "Safe declaration from unknown initial state, terminating under fairness.",
+        "result": "One counter, 16 contributors sending at most twice each, threshold 32.",
+        "proof": "With one contributor absent at most 31 collections are possible, including one phantom initial token; 32 therefore certifies all visited.",
+        "scope": "This proves construction safety, not minimum visits, expected time, memory or toggles. Without fairness termination is not guaranteed."
+      }
+    },
+    "verification": {
+      "he": "חיפוש ממצה עם צמצום סימטריה בדק 2,436 מצבים נגישים ו־8,932 מעברים בכל מצבי ההתחלה המותרים. נבדקו שימור אסימונים, היעדר הכרזה כשמדווח טרם שלח, מכסת שתי שליחות ופעולה חוקית בכל ביקור. נוספו 400 ריצות אקראיות עם זיכרון אישי. זהו מודל פייתון; סימולציות סופיות אינן הוכחת סיום בכל סדר ואין ניסוי פיזי או אישור מומחה. הוכחת סיום משתמשת בנפרד בהנחת הוגנות.",
+      "en": "Exhaustive symmetry-reduced search covered 2,436 reachable states and 8,932 transitions across all allowed initial switch settings. It checked token conservation, no declaration with an unsignaled contributor, two-token allowance and legal action on every visit. Added 400 seeded individual-memory simulations. These are Python models, not physical trials or expert approval; finite simulations are not universal termination proof. The written liveness proof separately assumes fairness."
+    },
+    "edge_cases": {
+      "he": [
+        "מתג אות דלוק בהתחלה מוסיף לכל היותר אות שגוי אחד; סף כפול מגן מפניו.",
+        "ביקורים חוזרים של אותו מדווח אינם מאפשרים יותר משתי שליחות.",
+        "סופר שמגיע שוב בלי הדלקה חדשה אינו סופר אותו אות פעמיים.",
+        "מדווח שאינו יכול לשלוח אינו מכבה אות שממתין לסופר.",
+        "בכל ביקור הופכים בדיוק מתג אחד; מתג דמה מאפשר לקיים זאת בלי לשבש אותות.",
+        "סדר לא הוגן עשוי לא להסתיים אך אינו גורם להכרזה שגויה.",
+        "ידיעה שכל האסירים רשאים לבקר אינה מוכיחה שאכן יבחרו את כולם."
+      ],
+      "en": [
+        "Initially ON contributes at most one phantom token; the doubled threshold covers it.",
+        "Repeated visits by one contributor cannot create more than two tokens.",
+        "A counter returning without a new ON event cannot recount a token.",
+        "A contributor unable to send never erases a pending token.",
+        "Every visit toggles exactly one switch; a dummy satisfies this without disturbing tokens.",
+        "An unfair order may not terminate but cannot cause a false declaration.",
+        "Permission for everyone to visit does not guarantee they will be selected."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשתמש באות אחד מכל מדווח ובסף 16 כאשר המצב ההתחלתי לא ידוע.",
+        "לספור ביקורים במקום הדלקות חדשות שנאספו.",
+        "לאפשר למדווח לכבות מתג אות דלוק ולאבד דיווח של אחר.",
+        "להתיר מספר לא מוגבל של אותות מכל מדווח.",
+        "להבטיח סיום תוך מספר ביקורים קבוע או בלי הוגנות.",
+        "לחשוב שהסופר צריך לדעת את זהות שולח האות.",
+        "לשכוח להפוך מתג בביקור חסר תועלת, או להפוך את שני המתגים."
+      ],
+      "en": [
+        "Using one token each and threshold 16 from an unknown initial state.",
+        "Counting visits instead of newly collected ON signals.",
+        "Letting contributors turn OFF a pending signal and erase somebody else's token.",
+        "Allowing unlimited signals from one contributor.",
+        "Promising fixed-time termination or termination without fairness.",
+        "Assuming the counter must know the sender's identity.",
+        "Forgetting the mandatory toggle on an unproductive visit or toggling both switches."
+      ]
+    },
+    "interview_answer": {
+      "he": "נמנה סופר. כל אחד מ־16 האחרים ידליק את מתג האות כשהוא כבוי, לכל היותר פעמיים. רק הסופר יכבה ויספור. בכל ביקור בלי שינוי אות הופכים את מתג הדמה כדי לשנות בדיוק מתג אחד. הסופר מכריז ב־32: אם אחד לא ביקר, יש לכל היותר 31 אותות כולל אות התחלתי שגוי. תחת הוגנות התהליך מסתיים; אין חסם זמן קבוע. אם מתחילים בכבוי ידוע, די באות אחד לכל מדווח ובסף 16.",
+      "en": "Choose one counter. Each of the other 16 turns the signal ON while it is OFF at most twice. Only the counter turns it OFF and counts. On every visit without a signal change, toggle the dummy to satisfy exactly one toggle. Declare at 32: one absent contributor permits at most 31 tokens including a phantom initial ON. Fairness ensures eventual termination without a fixed bound. Known initial OFF permits one token each and threshold 16."
+    },
+    "source_ambiguities": {
+      "he": {
+        "agreement": "אפשרות להסכמה מוקדמת וזיכרון אישי לא נאמרת במלואה במקור ונדרשת לפרוטוקול המוצע.",
+        "initial_state": "המקור אינו קובע את מצב ההתחלה; הפתרון הראשי עובד גם במצב לא ידוע ומפריד את חלופת הכבוי הידוע.",
+        "fairness": "אינסוף הזדמנויות או בחירה אקראית לא מפורטת אינם חסם זמן; ההנחה הנוספת היא שכל אסיר חוזר שוב ושוב.",
+        "variant": "שני מתגים עם פעולת חובה אינם זהים לנורה אחת שאפשר להשאיר ללא שינוי."
+      },
+      "en": {
+        "agreement": "Prior agreement and private memory are not fully specified in the source and are required by this strategy.",
+        "initial_state": "The source does not fix the initial state; the main solution handles unknown state and separates the known-OFF variant.",
+        "fairness": "Unlimited opportunities or unspecified randomness do not create a time bound; repeated visitation of every prisoner is the added assumption.",
+        "variant": "Two switches with a mandatory toggle are not the same as one optional light."
+      }
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מדוע אי אפשר להבטיח שההכרזה תגיע אחרי מספר ביקורים קבוע, גם עם התוכנית הנכונה?",
+        "direction": "אפשר לבחור שוב ושוב את אותו אסיר לפני שמגיעים לאחר. לכל חסם סופי אפשר לבנות קידומת ביקורים ארוכה יותר שחסרים בה אסירים. הוגנות מבטיחה סיום עתידי, לא חסם אחיד. בבחירה אקראית גם רצף ארוך כזה בעל הסתברות חיובית.",
+        "status": "המשך מוכן בתוכן; אינו מחובר לתור ההמשך החי."
+      },
+      "en": {
+        "question": "Why can no fixed visit bound guarantee a declaration even with the correct protocol?",
+        "direction": "The same prisoner can be selected repeatedly before another arrives. For any finite bound construct a longer prefix missing someone. Fairness guarantees eventual progress, not a uniform bound. Random selection assigns positive probability even to a long delaying prefix.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-057": {
+    "assumptions": {
+      "he": [
+        "21 אסירים, אחד בחדר בכל פעם, עם הסכמה מוקדמת וזיכרון אישי.",
+        "מצב מתג האות אינו ידוע בהתחלה; נדרש להיות בטוחים גם אם הוא דלוק.",
+        "מותר להשאיר את הנורה ללא שינוי; אין חובת לחיצה ואין מתג דמה.",
+        "רק המתגים משמשים לתקשורת לאחר הבידוד; אין תזמון, סימנים או שמיעת אחרים.",
+        "סיום מותנה בביקורים חוזרים והוגנים של כל אסיר; בטיחות אינה תלויה בהוגנות.",
+        "אין דרישה למינימום ביקורים ואין חסם זמן קבוע."
+      ],
+      "en": [
+        "21 prisoners, one visitor at a time, with prior agreement and private memory.",
+        "The signal's initial state is unknown; initially ON must be safe too.",
+        "Visitors may leave the light unchanged; there is no mandatory toggle or dummy switch.",
+        "Only switches communicate after isolation; no timing, marks or overhearing.",
+        "Termination assumes fair repeated visits by every prisoner; safety does not require fairness.",
+        "Minimum visits and a fixed time bound are not required."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "הכרזה בטוחה עם מצב התחלתי לא ידוע וסיום תחת הוגנות.",
+        "result": "סופר אחד, 20 מדווחים עם עד שני אותות כל אחד, וסף 40.",
+        "proof": "אם מדווח אחד לא ביקר ניתן לספור לכל היותר 39, כולל אות התחלתי שגוי. לכן 40 מבטיח שכולם ביקרו.",
+        "scope": "זו הוכחת בטיחות של הבנייה; אין טענה למינימום ביקורים, תוחלת זמן, זיכרון או מספר שינויים. ללא הוגנות אין הבטחת סיום."
+      },
+      "en": {
+        "criterion": "Safe declaration from unknown initial state, terminating under fairness.",
+        "result": "One counter, 20 contributors sending at most twice each, threshold 40.",
+        "proof": "With one contributor absent at most 39 collections are possible, including one phantom initial token; 40 therefore certifies all visited.",
+        "scope": "This proves construction safety, not minimum visits, expected time, memory or toggles. Without fairness termination is not guaranteed."
+      }
+    },
+    "verification": {
+      "he": "חיפוש ממצה עם צמצום סימטריה בדק 921 מצבים נגישים ו־3,433 מעברים בכל מצבי ההתחלה המותרים. נבדקו שימור אסימונים, היעדר הכרזה כשמדווח טרם שלח, מכסת שתי שליחות ופעולה חוקית בכל ביקור. נוספו 200 ריצות אקראיות עם זיכרון אישי. זהו מודל פייתון; סימולציות סופיות אינן הוכחת סיום בכל סדר ואין ניסוי פיזי או אישור מומחה. הוכחת סיום משתמשת בנפרד בהנחת הוגנות.",
+      "en": "Exhaustive symmetry-reduced search covered 921 reachable states and 3,433 transitions across all allowed initial switch settings. It checked token conservation, no declaration with an unsignaled contributor, two-token allowance and legal action on every visit. Added 200 seeded individual-memory simulations. These are Python models, not physical trials or expert approval; finite simulations are not universal termination proof. The written liveness proof separately assumes fairness."
+    },
+    "edge_cases": {
+      "he": [
+        "מתג אות דלוק בהתחלה מוסיף לכל היותר אות שגוי אחד; סף כפול מגן מפניו.",
+        "ביקורים חוזרים של אותו מדווח אינם מאפשרים יותר משתי שליחות.",
+        "סופר שמגיע שוב בלי הדלקה חדשה אינו סופר אותו אות פעמיים.",
+        "מדווח שאינו יכול לשלוח אינו מכבה אות שממתין לסופר.",
+        "מותר להשאיר את הנורה ללא שינוי; אין חובת לחיצה ואין מתג דמה.",
+        "סדר לא הוגן עשוי לא להסתיים אך אינו גורם להכרזה שגויה.",
+        "ידיעה שכל האסירים רשאים לבקר אינה מוכיחה שאכן יבחרו את כולם."
+      ],
+      "en": [
+        "Initially ON contributes at most one phantom token; the doubled threshold covers it.",
+        "Repeated visits by one contributor cannot create more than two tokens.",
+        "A counter returning without a new ON event cannot recount a token.",
+        "A contributor unable to send never erases a pending token.",
+        "Visitors may leave the light unchanged; there is no mandatory toggle or dummy switch.",
+        "An unfair order may not terminate but cannot cause a false declaration.",
+        "Permission for everyone to visit does not guarantee they will be selected."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשתמש באות אחד מכל מדווח ובסף 20 כאשר המצב ההתחלתי לא ידוע.",
+        "לספור ביקורים במקום הדלקות חדשות שנאספו.",
+        "לאפשר למדווח לכבות מתג אות דלוק ולאבד דיווח של אחר.",
+        "להתיר מספר לא מוגבל של אותות מכל מדווח.",
+        "להבטיח סיום תוך מספר ביקורים קבוע או בלי הוגנות.",
+        "לחשוב שהסופר צריך לדעת את זהות שולח האות.",
+        "לכפות שינוי נורה בכל ביקור למרות שהשאלה מאפשרת להשאיר אותה ללא שינוי."
+      ],
+      "en": [
+        "Using one token each and threshold 20 from an unknown initial state.",
+        "Counting visits instead of newly collected ON signals.",
+        "Letting contributors turn OFF a pending signal and erase somebody else's token.",
+        "Allowing unlimited signals from one contributor.",
+        "Promising fixed-time termination or termination without fairness.",
+        "Assuming the counter must know the sender's identity.",
+        "Imposing a mandatory toggle even though leaving the light unchanged is allowed."
+      ]
+    },
+    "interview_answer": {
+      "he": "נמנה סופר. כל אחד מ־20 האחרים ידליק את מתג האות כשהוא כבוי, לכל היותר פעמיים. רק הסופר יכבה ויספור. אחרת משאירים את הנורה ללא שינוי. הסופר מכריז ב־40: אם אחד לא ביקר, יש לכל היותר 39 אותות כולל אות התחלתי שגוי. תחת הוגנות התהליך מסתיים; אין חסם זמן קבוע. אם מתחילים בכבוי ידוע, די באות אחד לכל מדווח ובסף 20.",
+      "en": "Choose one counter. Each of the other 20 turns the signal ON while it is OFF at most twice. Only the counter turns it OFF and counts. Otherwise leave the light unchanged. Declare at 40: one absent contributor permits at most 39 tokens including a phantom initial ON. Fairness ensures eventual termination without a fixed bound. Known initial OFF permits one token each and threshold 20."
+    },
+    "source_ambiguities": {
+      "he": {
+        "agreement": "אפשרות להסכמה מוקדמת וזיכרון אישי לא נאמרת במלואה במקור ונדרשת לפרוטוקול המוצע.",
+        "initial_state": "המקור אינו קובע את מצב ההתחלה; הפתרון הראשי עובד גם במצב לא ידוע ומפריד את חלופת הכבוי הידוע.",
+        "fairness": "אינסוף הזדמנויות או בחירה אקראית לא מפורטת אינם חסם זמן; ההנחה הנוספת היא שכל אסיר חוזר שוב ושוב.",
+        "variant": "שני מתגים עם פעולת חובה אינם זהים לנורה אחת שאפשר להשאיר ללא שינוי."
+      },
+      "en": {
+        "agreement": "Prior agreement and private memory are not fully specified in the source and are required by this strategy.",
+        "initial_state": "The source does not fix the initial state; the main solution handles unknown state and separates the known-OFF variant.",
+        "fairness": "Unlimited opportunities or unspecified randomness do not create a time bound; repeated visitation of every prisoner is the added assumption.",
+        "variant": "Two switches with a mandatory toggle are not the same as one optional light."
+      }
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מדוע אי אפשר להבטיח שההכרזה תגיע אחרי מספר ביקורים קבוע, גם עם התוכנית הנכונה?",
+        "direction": "אפשר לבחור שוב ושוב את אותו אסיר לפני שמגיעים לאחר. לכל חסם סופי אפשר לבנות קידומת ביקורים ארוכה יותר שחסרים בה אסירים. הוגנות מבטיחה סיום עתידי, לא חסם אחיד. בבחירה אקראית גם רצף ארוך כזה בעל הסתברות חיובית.",
+        "status": "המשך מוכן בתוכן; אינו מחובר לתור ההמשך החי."
+      },
+      "en": {
+        "question": "Why can no fixed visit bound guarantee a declaration even with the correct protocol?",
+        "direction": "The same prisoner can be selected repeatedly before another arrives. For any finite bound construct a longer prefix missing someone. Fairness guarantees eventual progress, not a uniform bound. Random selection assigns positive probability even to a long delaying prefix.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-056": {
+    "assumptions": {
+      "he": [
+        "דלגלג D דוגם בחזית עולה; האפשור והנתון עומדים בזמני הכנה והחזקה.",
+        "המוצא הוא ביט אחד. אין דרישה לאיפוס או לערך הפעלה ידוע.",
+        "השינוי הוא בנתיב הנתונים; השעון נשאר אותו שעון."
+      ],
+      "en": [
+        "One-bit rising-edge DFF; enable and data meet setup/hold.",
+        "No reset or guaranteed power-up value is requested.",
+        "Only the data path changes; the input clock is unchanged."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר רכיבי הזיכרון הדרושים לשמירת ביט עם אפשור.",
+        "result": "דלגלג אחד ובורר צירופי 2:1 מספיקים.",
+        "proof": "כשאין טעינה צריך להבחין בין ערך שמור 0 לערך שמור 1; לכן נדרש זיכרון של ביט. משוב דרך הבורר מממש החזקה.",
+        "scope": "אין טענה למינימום שערים, שטח, הספק או השהיה בספרייה פיזית."
+      },
+      "en": {
+        "criterion": "Storage elements required to retain one enabled bit.",
+        "result": "One DFF plus a combinational 2:1 mux suffices.",
+        "proof": "Disabled operation must distinguish stored zero and one, requiring one bit of state; mux feedback implements retention.",
+        "scope": "No physical gate-count, area, power or delay optimum is claimed."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "בדיקות מודל פייתון עברו; ביקורת מקצועית עצמאית ממתינה.",
+        "method": "השוואת משוואת השערים לאורקל שטוען רק כאשר האפשור פעיל.",
+        "coverage": "כל 8 מעברי מצב/נתון/אפשור וכל 10,922 הרצפים באורכים 0–6 משני מצבי התחלה.",
+        "script_path": "checks/check_prep_056_058_059_and_032_update.py",
+        "scope": "לא בוצעו קומפילציה או סימולציית HDL, סינתזה או בדיקת תזמון פיזית."
+      },
+      "en": {
+        "status": "Python-model checks passed; independent professional review pending.",
+        "method": "Compare the Boolean gate equation with an independent load-only-when-enabled oracle.",
+        "coverage": "All 8 transitions and all 10,922 streams of lengths 0..6 from both initial states.",
+        "script_path": "checks/check_prep_056_058_059_and_032_update.py",
+        "scope": "No HDL compilation/simulation, synthesis or physical timing verification."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "אפשור 0 מחזיק גם כשהנתון מתחלף.",
+        "אפשור 1 בכל חזית משחזר דלגלג D רגיל.",
+        "ללא איפוס מצב ההתחלה הפיזי אינו מובטח.",
+        "שינוי בין חזיתות אינו אמור לשנות Q; עדיין חייבים לכבד הכנה והחזקה."
+      ],
+      "en": [
+        "Enable zero holds even while data changes.",
+        "Enable one on every edge behaves as a normal DFF.",
+        "Without reset the hardware initial state is not guaranteed.",
+        "Between-edge changes do not update Q; setup/hold still applies."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חסימת שעון באמצעות AND פשוט.",
+        "חיבור המשוב לכניסה 1 והנתון לכניסה 0, שהופך את משמעות האפשור.",
+        "הנחת ערך התחלה אפס בלי איפוס.",
+        "הוספת דלגלג לאפשור ויצירת עיכוב של מחזור שלא נדרש."
+      ],
+      "en": [
+        "Gating clock with a plain AND.",
+        "Swapping mux data pins and inverting enable semantics.",
+        "Assuming power-up zero without reset.",
+        "Registering enable and introducing an unrequested extra cycle."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשים בורר לפני D. האפשור יבחר בנתון החדש כשערכו 1 ובמשוב מהמוצא כשערכו 0. כך אותו שעון ממשיך להגיע לדלגלג ובחזית מתקבלת טעינה או החזקה. אין צורך בדלגלג נוסף או בשער על השעון.",
+      "en": "Place a mux before D: enable selects new data when one and feedback Q when zero. The original clock still reaches the DFF, and each edge loads or retains the value. No extra flip-flop or clock gate is needed."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך מוסיפים איפוס סינכרוני בעל קדימות לאפשור?",
+        "answer_outline": "בחזית, אם האיפוס פעיל טוענים 0; אחרת טוענים לפי הבורר. אפשר להוסיף בחירת איפוס לנתיב D בלי לחסום שעון.",
+        "integration_status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתהליך ההמשך החי."
+      },
+      "en": {
+        "question": "How do you add synchronous reset with priority over enable?",
+        "answer_outline": "At the edge reset loads zero; otherwise use the enable mux. Add reset selection to D without gating the clock.",
+        "integration_status": "Follow-up prepared in content; not connected to the live follow-up workflow."
+      }
+    }
+  },
+  "PREP-058": {
+    "assumptions": {
+      "he": [
+        "שני קלטים ללא סימן באותו רוחב N>=2.",
+        "הקשר b=a+2 מתקיים בשלמים ללא גלישה.",
+        "המוצא הוא הממוצע המדויק ולא ממוצע מודולרי או עם סימן.",
+        "הבוררים הם קיצור ציורי למימוש AND/OR/NOT, לא יחידות חשבון."
+      ],
+      "en": [
+        "Equal-width unsigned inputs, N>=2.",
+        "Exact integer relation b=a+2 with no overflow.",
+        "Output is the exact arithmetic mean, not a signed or modular average.",
+        "Mux blocks abbreviate AND/OR/NOT gate networks, not arithmetic units."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מימוש צירופי ללא יחידות חשבון.",
+        "result": "מהפך משותף ובורר שערים לכל אחד מ־N−1 הביטים העליונים.",
+        "proof": "אם a זוגי, הממוצע הוא a עם ביט נמוך 1; אם אי־זוגי, הוא b עם ביט נמוך 0.",
+        "scope": "O(N) שערים וחיווט; עומק לוגי אידאלי קבוע לכל ביט. לא הוכח מינימום שערים, ותזמון פיזי תלוי גם בעומסים ובהפצת האות."
+      },
+      "en": {
+        "criterion": "Combinational implementation with no arithmetic units.",
+        "result": "One shared inversion and one gate-built selector per upper bit.",
+        "proof": "For even a, mean is a with low bit one; for odd a, mean is b with low bit zero.",
+        "scope": "O(N) gates/wiring and bounded ideal per-bit depth. No gate-count minimum; physical timing depends on fanout, loads and buffering."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "בדיקות מודל פייתון עברו; ביקורת מקצועית עצמאית ממתינה.",
+        "method": "השוואת הרכבת הביטים לאורקל עצמאי שמחשב ממוצע בשלמים.",
+        "coverage": "כל 2,026 זוגות הקלט התקינים ברוחבים 2–10 ועוד 6 בדיקות דחיית קלט.",
+        "script_path": "checks/check_prep_056_058_059_and_032_update.py",
+        "scope": "לא בוצעו קומפילציה או סימולציית HDL, סינתזה או בדיקת תזמון פיזית."
+      },
+      "en": {
+        "status": "Python-model checks passed; independent professional review pending.",
+        "method": "Compare gate-equivalent bit assembly against an independent integer-average oracle.",
+        "coverage": "All 2,026 valid pairs at widths 2..10 plus six invalid-contract checks.",
+        "script_path": "checks/check_prep_056_058_059_and_032_update.py",
+        "scope": "No HDL compilation/simulation, synthesis or physical timing verification."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "ברוחב 2 הקלטים התקינים הם 0,2 ו־1,3.",
+        "זוגי ואי־זוגי מטופלים במסלולי בחירה שונים.",
+        "שרשרת אחדים בקלט a אינה דורשת חישוב נשא כי b נתון.",
+        "זוג שנוצר רק אחרי גלישה אינו מקיים את ההנחות."
+      ],
+      "en": [
+        "At width two valid pairs are 0,2 and 1,3.",
+        "Even and odd a use different upper-bit sources.",
+        "A run of ones in a requires no computed carry because b is supplied.",
+        "Wrapped pairs violate the integer-relation contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "אמירה להוסיף אחד בלי להראות איך, למרות האיסור על מחבר.",
+        "בחירת הביטים העליונים מ־a גם כאשר a אי־זוגי.",
+        "היפוך כל ביטי המספר במקום רק הביט הנמוך ובחירת העליונים.",
+        "הנחת טיפול בגלישה או בסימן בלי לנסח חוזה מתאים."
+      ],
+      "en": [
+        "Saying “add one” without implementing it despite the adder prohibition.",
+        "Copying upper a bits when a is odd.",
+        "Complementing the entire number rather than the low bit and selecting the uppers.",
+        "Silently assuming signed or overflow handling."
+      ]
+    },
+    "interview_answer": {
+      "he": "הקלטים באותה זוגיות. אהפוך את הביט הנמוך של הראשון. אם הוא היה 0, אקח את הביטים העליונים מהראשון; אם היה 1, אקח אותם מהשני. בורר לכל ביט שממומש בשערים נותן את הממוצע בלי מחבר, בהנחת קלטים ללא סימן והפרש שתיים ללא גלישה.",
+      "en": "Both inputs have equal parity. Invert the low bit of a. If it was zero copy upper bits from a; otherwise copy them from b. Gate-built per-bit selectors produce the mean without an adder, assuming unsigned inputs differing by exactly two without overflow."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה אפשר לעשות אם רק a נתון ולא b?",
+        "answer_outline": "צריך לממש הגדלה באחד ברמת שערים, כולל שרשרת נשא או מבנה מקבילי שקול. כבר אי אפשר להשתמש בביטים העליונים של b כמידע חיצוני.",
+        "integration_status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתהליך ההמשך החי."
+      },
+      "en": {
+        "question": "What if only a is supplied, with no b?",
+        "answer_outline": "Implement an incrementer at gate level, including carry propagation or an equivalent parallel structure. The upper bits of b are no longer available as external information.",
+        "integration_status": "Follow-up prepared in content; not connected to the live follow-up workflow."
+      }
+    }
+  },
+  "PREP-059": {
+    "assumptions": {
+      "he": [
+        "k גדול מעשרה ובדיוק עשרה מטבעות פלי בתחילה.",
+        "אין אפשרות להבחין בצדדים בראייה, במישוש או בסימון.",
+        "מותר לבחור, להפריד ולהפוך; היפוך מחליף בין הצדדים.",
+        "כל המטבעות מתחלקים לשתי קבוצות שיכולות להיות בגדלים שונים."
+      ],
+      "en": [
+        "k>10 and initially exactly ten tails.",
+        "No seeing, feeling or marks reveal orientations.",
+        "Selection, separation and flipping are allowed; a flip exchanges faces.",
+        "All coins are partitioned; group sizes may differ."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "הצלחה מובטחת ללא מידע על כיוונים.",
+        "result": "בחירת כל עשרה והיפוך שלהם נותנים אותו מספר פלי בשתי הקבוצות.",
+        "proof": "אם x פלי נבחרו, בחוץ 10−x פלי ובקבוצה הנבחרת 10−x עץ, שהופכים לפלי.",
+        "scope": "לא הוכח מינימום פעולות. רשימות אינדקסים מפורשות בקוד דורשות O(k) זמן וזיכרון; האסטרטגיה הפיזית הופכת רק עשרה."
+      },
+      "en": {
+        "criterion": "Guaranteed success without orientation observations.",
+        "result": "Choose any ten and flip them to equalize both tails counts.",
+        "proof": "If x selected coins are tails, outside tails and selected heads both number 10−x; flipping converts the latter to tails.",
+        "scope": "No minimum action count is proved. Materialized index groups cost O(k) time/space; only ten physical coins need flipping."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "בדיקות מודל פייתון עברו; ביקורת מקצועית עצמאית ממתינה.",
+        "method": "התוכנית אינה מקבלת כיוונים. אורקל עצמאי הופך את קבוצת האינדקסים באמצעות הפרש סימטרי וסופר פלי בשתי הקבוצות.",
+        "coverage": "כל 12,375 סידורי עשרה פלי עבור k=11..16; עוד 500 מדגמים משוחזרים לגדלים גדולים; 2,026 מקרי הכללה.",
+        "script_path": "checks/check_prep_056_058_059_and_032_update.py",
+        "scope": "בדיקות קוד ואלגוריתם בלבד; אין בכך אישור מקצועי אנושי או בדיקה בחשבון חי."
+      },
+      "en": {
+        "status": "Python-model checks passed; independent professional review pending.",
+        "method": "The planner receives no orientations. An independent oracle flips the planned indices using symmetric difference and counts tails in each group.",
+        "coverage": "All 12,375 placements of ten tails for k=11..16; 500 reproducible larger samples; 2,026 generalized cases.",
+        "script_path": "checks/check_prep_056_058_059_and_032_update.py",
+        "scope": "Code/algorithm verification only; not human expert approval or authenticated live-account validation."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "k=11 נותן קבוצות בגדלים עשר ואחת; אין צורך בשוויון גדלים.",
+        "אם כל הפלי נבחרו, שתי הקבוצות מסיימות עם אפס פלי.",
+        "אם אין פלי בקבוצה הנבחרת, שתי הקבוצות מסיימות עם עשרה פלי, כאשר המצב אפשרי.",
+        "אין צורך לדעת את x; הוא משתנה הוכחה בלבד."
+      ],
+      "en": [
+        "k=11 gives groups of ten and one; equal sizes are unnecessary.",
+        "If all tails are selected both groups end with zero tails.",
+        "If no tails are selected both end with ten tails, when that arrangement is feasible.",
+        "x is a proof variable, never information required by the strategy."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חלוקה לשתי קבוצות שוות בגודל בלי הצדקה לספירת הפלי.",
+        "בחירת עשרה פלי במקום כל עשרה מטבעות, מה שמצריך מידע אסור.",
+        "היפוך שתי הקבוצות במקום רק זו שנבחרה.",
+        "ניסיון לנחש או לחוש צד במקום לנצל את הספירה הידועה."
+      ],
+      "en": [
+        "Splitting into equal-size piles without justifying equal tails counts.",
+        "Selecting ten tails rather than any ten coins, requiring forbidden information.",
+        "Flipping both piles rather than just the selected ten.",
+        "Guessing or feeling orientations instead of using the known total."
+      ]
+    },
+    "interview_answer": {
+      "he": "אקח כל עשרה מטבעות ואהפוך רק אותם. אם היו בהם x פלי, בחוץ נשארו 10−x פלי ובקבוצה שלקחתי היו 10−x עץ. אחרי ההיפוך גם בה יהיו 10−x פלי. לא צריך לראות אף מטבע ולא צריך קבוצות שוות בגודל.",
+      "en": "Take any ten coins and flip only those. If x selected coins were tails, 10−x tails remain outside and 10−x selected coins were heads. Flipping gives the selection 10−x tails too. No face observation or equal pile sizes are needed."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם נתון שיש בדיוק t מטבעות פלי, כאשר 0<t<k?",
+        "answer_outline": "בוחרים כל t מטבעות והופכים רק אותם. אם x מהם פלי, בשתי הקבוצות יהיו t−x פלי אחרי ההיפוך.",
+        "integration_status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתהליך ההמשך החי."
+      },
+      "en": {
+        "question": "What if the known initial tails count is t with 0<t<k?",
+        "answer_outline": "Choose any t coins and flip only them. If x selected coins were tails, both groups contain t−x tails afterward.",
+        "integration_status": "Follow-up prepared in content; not connected to the live follow-up workflow."
+      }
+    }
+  }
+}

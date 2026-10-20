@@ -1,0 +1,21 @@
+{
+  "question_id": "PREP-053",
+  "status": "passed",
+  "physical_walk_depth": 10,
+  "physical_oracle_samples": 88572,
+  "complete_state_input_pairs": 32,
+  "covered": [
+    "entry",
+    "exit",
+    "pause",
+    "all bounded reversals",
+    "retreat without counting",
+    "skipped transition",
+    "wait for clear",
+    "sticky invalid count",
+    "underflow",
+    "overflow",
+    "binary validation"
+  ],
+  "limits": "Python finite-state model and bounded independent geometric walks; not HDL compilation, synthesis, CDC analysis or physical sensor testing. Correctness relies on one passage, observed overlap and known initial occupancy."
+}

@@ -1,0 +1,14 @@
+{
+  "question_id": "PREP-050",
+  "status": "passed",
+  "checked_on": "2026-10-20",
+  "all_words_lengths_0_through_16": 131071,
+  "checked_prefix_steps": 1966082,
+  "length_7_control_traces": 16384,
+  "checked_control_steps": 114688,
+  "state_input_transitions": 10,
+  "reachable_states": 5,
+  "distinguished_state_pairs": 10,
+  "oracle": "Independent exact integer sum of bits times powers of two; normalized state invariant also asserted.",
+  "limitations": "Python functional models only. SystemVerilog not compiled/simulated; no synthesis, hardware timing or expert approval."
+}

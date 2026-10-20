@@ -1,0 +1,32 @@
+{
+  "question_id": "PREP-054",
+  "status": "passed",
+  "contributors": 16,
+  "threshold": 32,
+  "exhaustive_symmetric_reachable_states": 2436,
+  "exhaustive_transitions": 8932,
+  "safe_terminal_states": 8,
+  "seeded_individual_simulations": 400,
+  "largest_test_visit_count": 955,
+  "checked": [
+    "all permitted initial switch states",
+    "token conservation",
+    "no unsafe declaration",
+    "at most two emissions per contributor",
+    "mandatory exactly-one toggle",
+    "productive transition enabled in every nonterminal aggregate state"
+  ],
+  "unsafe_naive_strategy_counterexample": {
+    "n": 3,
+    "initial_on": true,
+    "visits": [
+      0,
+      1,
+      0
+    ],
+    "unvisited": [
+      2
+    ]
+  },
+  "limits": "Aggregate safety search is exhaustive under contributor symmetry. Random simulations are finite examples, not a universal termination or time-bound proof. Fair infinite visitation is the separate assumption used in the written liveness proof. No physical experiment or human expert review."
+}

@@ -635,15 +635,15 @@
         "Compute both lengths. Advance the longer list's pointer by their difference, then advance both pointers together and compare node identity."
       ]
     },
-    "note": "Website editorial supplement; human parity review pending.",
+    "note": "Website editorial supplement; human parity review pending. 2026-10-20: additional source deduplicated; canonical published question and hints preserved; head-switch code and localized diagrams added.",
     "learner_text": {
       "he": {
         "prompt": "נתונים הראשים של שתי רשימות מקושרות חד־כיווניות, סופיות וללא מעגלים. ייתכן שמנקודה מסוימת הן חולקות את אותם צמתים בזיכרון, ולכן את אותו זנב. ערכים שווים בשני צמתים שונים אינם נחשבים חיבור.\n\nמצאו את הצומת המשותף הראשון, או החזירו שאין כזה. אין לשנות את הרשימות. נתחו זמן וזיכרון עזר.",
-        "reference_solution": "הנחות: שתי רשימות חד־כיווניות, סופיות וללא מעגלים, כמתואר בציור המסתיים ב־NULL. יש גישה לשני הראשים ולשדה next של כל צומת, ואין שינוי מקביל ברשימות. אין צורך שהערכים יהיו ממוינים, למרות האזכור של טעות הנדסית. האיחוד הוא אותו צומת פיזי בזיכרון, שממנו ואילך יש זנב משותף: לצומת יחיד יש שדה next יחיד. שני צמתים שערכם שווה אינם בהכרח אותו צומת. אם בצומת המשותף רואים שתי רשימות, גם ערכו הוא אותו ערך משום שזה אותו אובייקט, אבל הערכים לפניו יכולים להיות שונים או שווים.\n\nהצעה לפתרון — יישור לפי האורכים:\n1. עוברים על כל רשימה וסופרים את אורכה, n ו־m.\n2. מתחילים מצביע בראש כל רשימה. מקדמים רק את הארוכה בהפרש האורכים.\n3. כעת לשני המצביעים נותר אותו מספר צמתים עד הסוף. כל עוד אינם מצביעים לאותו אובייקט, מתקדמים צעד בכל רשימה.\n4. הצומת הזהה הראשון הוא נקודת האיחוד. אם שניהם מגיעים ל־None, אין איחוד. הקוד מטפל גם ברשימות ריקות ובאיחוד כבר בראש. הרשימות אינן משתנות.\n\nהיגיון: כל ההפרש באורכי הרשימות מגיע מהקטעים שלפני נקודת החיבור; הזנב המשותף מוסיף לשתיהן בדיוק אותו אורך. נסמן אורכי קטעים פרטיים p,q ואורך זנב משותף c. אורכי הרשימות הם p+c ו־q+c, ולכן הפרשם p−q. כשמדלגים על ההפרש בקטע הפרטי הארוך, לשני המצביעים נותר מרחק זהה עד החיבור. הליכה משותפת תביא אותם לצומת המשותף הראשון באותו צעד. לפניו אינם יכולים להיות זהים, לפי הגדרת הקטעים הפרטיים.\n\n```text\nA: A1 -> A2 -> A3 -> C1 -> C2 -> None   (length 5)\nB:             B1 -> C1 -> C2 -> None   (length 3)\n\nAdvance A by 2:  p=A3, q=B1\nOne step each:   p=C1, q=C1  => first shared node\n```\n\nC1 ו־C2 בשתי השורות הם אותם צמתים ממש. זו אינה העתקה של שני צמתים בעלי אותו שם או ערך. בפייתון משווים באמצעות is; אין להשוות value או להסתמך על == שעשוי להיות מוגדר להשוואת תוכן.\n\nסיבוכיות: O(n+m) זמן ו־O(1) זיכרון עזר במודל מצביעים/מילות מכונה. אלה כמה מעברים ליניאריים, לא לולאה מקוננת. זהו זמן מיטבי במקרה הגרוע ברשימות כלליות ללא מטא־דאטה או מבני עזר; ייתכן שהחיבור יתגלה רק בסוף קטעים פרטיים ארוכים. קוד נתון ב־solutions/prep_032_list_intersection.py. אפשרות פשוטה יותר משתמשת בקבוצת כתובות הצמתים של הרשימה הראשונה ובודקת שייכות תוך מעבר בשנייה, אך דורשת O(n) זיכרון ובדרך כלל O(n+m) זמן צפוי במימוש hash. אין צורך בה לצורך המימוש בזיכרון קבוע.\n\nבדיקות: כל 343 שילובי האורכים 0..6 של שני קטעים פרטיים וזנב משותף, בשני סדרי הארגומנטים; שני מקרים ארוכים נוספים עם קטע פרטי באורך 10000. כל הערכים בכוונה זהים (7), כדי לוודא שימוש בזהות ולא בשוויון ערכים. נבדק שאין שינוי בשדות next או בערכים. מעגלים ומוטציות מקבילות אינם מכוסים ואינם חלק מהמודל שבתמונה."
+        "reference_solution": "הנחות: שתי רשימות חד־כיווניות, סופיות וללא מעגלים, כמתואר בציור המסתיים ב־NULL. יש גישה לשני הראשים ולשדה next של כל צומת, ואין שינוי מקביל ברשימות. אין צורך שהערכים יהיו ממוינים, למרות האזכור של טעות הנדסית. האיחוד הוא אותו צומת פיזי בזיכרון, שממנו ואילך יש זנב משותף: לצומת יחיד יש שדה next יחיד. שני צמתים שערכם שווה אינם בהכרח אותו צומת. אם בצומת המשותף רואים שתי רשימות, גם ערכו הוא אותו ערך משום שזה אותו אובייקט, אבל הערכים לפניו יכולים להיות שונים או שווים.\n\nהצעה לפתרון — יישור לפי האורכים:\n1. עוברים על כל רשימה וסופרים את אורכה, n ו־m.\n2. מתחילים מצביע בראש כל רשימה. מקדמים רק את הארוכה בהפרש האורכים.\n3. כעת לשני המצביעים נותר אותו מספר צמתים עד הסוף. כל עוד אינם מצביעים לאותו אובייקט, מתקדמים צעד בכל רשימה.\n4. הצומת הזהה הראשון הוא נקודת האיחוד. אם שניהם מגיעים ל־None, אין איחוד. הקוד מטפל גם ברשימות ריקות ובאיחוד כבר בראש. הרשימות אינן משתנות.\n\nהיגיון: כל ההפרש באורכי הרשימות מגיע מהקטעים שלפני נקודת החיבור; הזנב המשותף מוסיף לשתיהן בדיוק אותו אורך. נסמן אורכי קטעים פרטיים p,q ואורך זנב משותף c. אורכי הרשימות הם p+c ו־q+c, ולכן הפרשם p−q. כשמדלגים על ההפרש בקטע הפרטי הארוך, לשני המצביעים נותר מרחק זהה עד החיבור. הליכה משותפת תביא אותם לצומת המשותף הראשון באותו צעד. לפניו אינם יכולים להיות זהים, לפי הגדרת הקטעים הפרטיים.\n\n```text\nA: A1 -> A2 -> A3 -> C1 -> C2 -> None   (length 5)\nB:             B1 -> C1 -> C2 -> None   (length 3)\n\nAdvance A by 2:  p=A3, q=B1\nOne step each:   p=C1, q=C1  => first shared node\n```\n\nC1 ו־C2 בשתי השורות הם אותם צמתים ממש. זו אינה העתקה של שני צמתים בעלי אותו שם או ערך. בפייתון משווים באמצעות is; אין להשוות value או להסתמך על == שעשוי להיות מוגדר להשוואת תוכן.\n\nסיבוכיות: O(n+m) זמן ו־O(1) זיכרון עזר במודל מצביעים/מילות מכונה. אלה כמה מעברים ליניאריים, לא לולאה מקוננת. זהו זמן מיטבי במקרה הגרוע ברשימות כלליות ללא מטא־דאטה או מבני עזר; ייתכן שהחיבור יתגלה רק בסוף קטעים פרטיים ארוכים. קוד נתון ב־solutions/prep_032_list_intersection.py. אפשרות פשוטה יותר משתמשת בקבוצת כתובות הצמתים של הרשימה הראשונה ובודקת שייכות תוך מעבר בשנייה, אך דורשת O(n) זיכרון ובדרך כלל O(n+m) זמן צפוי במימוש hash. אין צורך בה לצורך המימוש בזיכרון קבוע.\n\nבדיקות: כל 343 שילובי האורכים 0..6 של שני קטעים פרטיים וזנב משותף, בשני סדרי הארגומנטים; שני מקרים ארוכים נוספים עם קטע פרטי באורך 10000. כל הערכים בכוונה זהים (7), כדי לוודא שימוש בזהות ולא בשוויון ערכים. נבדק שאין שינוי בשדות next או בערכים. מעגלים ומוטציות מקבילות אינם מכוסים ואינם חלק מהמודל שבתמונה.\n\n### חלופה נוספת — החלפת ראשים ללא ספירת אורכים\n\nאפשר גם להתחיל מצביע בכל ראש. בכל סבב מקדמים כל מצביע צעד אחד; אם הוא כבר None, מחזירים אותו לראש הרשימה האחרת. עוצרים כשהמצביעים הם אותו אובייקט:\n\n```python\ndef first_shared_node(head_a, head_b):\n    p, q = head_a, head_b\n    while p is not q:\n        p = head_b if p is None else p.next\n        q = head_a if q is None else q.next\n    return p\n```\n\nנניח אורכי קטעים פרטיים u,v וזנב משותף באורך c. כל מצביע עובר את הרשימה הראשונה שלו ואחר כך את הקטע הפרטי של האחרת. עד נקודת החיבור בסיבוב השני שניהם עברו u+v+c צמתים, ובשניהם יש אותה פעולת מעבר דרך None. לכן ההפרש הראשוני מתבטל והם נפגשים בתחילת הזנב, אם לא נפגשו קודם. אם אין חיבור, שניהם מגיעים ל־None אחרי מסלולים באורך כולל שווה. יש גם עצירה מיידית אם שני הראשים זהים. זמן O(m+n) וזיכרון עזר קבוע, בלי לשנות שום קישור. קובץ הפייתון הנוסף מדגים את החלופה; שתי השיטות מתקבלות.\n\nהמקור הנוסף מ־20 באוקטובר 2026 מתאר אותה שאלה, ולכן צורף לרשומה הקיימת בלי ליצור כפילות או לשנות היסטוריית משתמשים. לחלופה נוספו בדיקות של 729 שלשות אורכי קטעים בכל שני סדרי הארגומנטים, 1,458 קריאות בסך הכול, ושני מקרים ארוכים. אובייקטי הבדיקה זורקים שגיאה אם משתמשים ב־==; כל הערכים זהים והקישורים נשארים ללא שינוי.\n"
       },
       "en": {
         "prompt": "Given the heads of two finite, acyclic singly linked lists, find their first shared node, or report no intersection. Sharing means the identical node in memory and therefore a common tail; equal values in different nodes do not count. Do not modify either list. Analyze time and auxiliary space.",
-        "reference_solution": "Assume finite acyclic singly linked lists, as the source's NULL-terminated drawing indicates, with two head pointers, readable next links and no concurrent mutation. Lists need not be sorted. Intersection means the identical physical node, not equal data values. Once a node is shared, the suffix is shared because that node has one next pointer.\nCount lengths n,m. Advance the longer list's pointer by abs(n-m). Both pointers now have the same remaining length. Move them together until they are identical; return that node, or None if both reach the end. Empty lists and sharing at either head are supported without mutation. In Python use is, not value equality or an overloaded ==.\nProof: with private prefixes p,q and common suffix c, lengths are p+c,q+c. Their difference p-q is entirely due to the private prefixes. Removing the excess prefix aligns distances to the first shared node, which is reached simultaneously. Example: A1->A2->A3->C1->C2 and B1->C1->C2 have lengths 5 and 3; advance A twice, then A3/B1 step together to C1.\nO(n+m) time and O(1) auxiliary machine words; worst-case optimal for general pointer-access lists without metadata/indexing. A hash set of node identities is a simpler expected-linear alternative but uses O(n) space. The saved Python code is tested on all 343 prefix/prefix/suffix length triples in 0..6, in both argument orders, plus two long cases. Every node deliberately contains the same value to catch identity mistakes; all links and values are checked for immutability. Cycles/concurrent mutation are outside scope."
+        "reference_solution": "Assume finite acyclic singly linked lists, as the source's NULL-terminated drawing indicates, with two head pointers, readable next links and no concurrent mutation. Lists need not be sorted. Intersection means the identical physical node, not equal data values. Once a node is shared, the suffix is shared because that node has one next pointer.\nCount lengths n,m. Advance the longer list's pointer by abs(n-m). Both pointers now have the same remaining length. Move them together until they are identical; return that node, or None if both reach the end. Empty lists and sharing at either head are supported without mutation. In Python use is, not value equality or an overloaded ==.\nProof: with private prefixes p,q and common suffix c, lengths are p+c,q+c. Their difference p-q is entirely due to the private prefixes. Removing the excess prefix aligns distances to the first shared node, which is reached simultaneously. Example: A1->A2->A3->C1->C2 and B1->C1->C2 have lengths 5 and 3; advance A twice, then A3/B1 step together to C1.\nO(n+m) time and O(1) auxiliary machine words; worst-case optimal for general pointer-access lists without metadata/indexing. A hash set of node identities is a simpler expected-linear alternative but uses O(n) space. The saved Python code is tested on all 343 prefix/prefix/suffix length triples in 0..6, in both argument orders, plus two long cases. Every node deliberately contains the same value to catch identity mistakes; all links and values are checked for immutability. Cycles/concurrent mutation are outside scope.\n\n### Additional alternative — switch heads without counting lengths\n\nStart one pointer at each head. At each iteration advance each by one node; if it is already None, redirect it to the other list's head. Stop on object identity:\n\n```python\ndef first_shared_node(head_a, head_b):\n    p, q = head_a, head_b\n    while p is not q:\n        p = head_b if p is None else p.next\n        q = head_a if q is None else q.next\n    return p\n```\n\nLet private-prefix lengths be u,v and shared-tail length c. Each pointer traverses its first list followed by the other's private prefix. At the second-pass merge each has traversed u+v+c nodes and the same None-to-head transition, cancelling the original offset. Thus they meet at the first shared node unless they have met earlier. Without an intersection, both reach None after equal total traversals. Identical heads return immediately. Time O(m+n), constant auxiliary words, and no link mutation. Both this method and the original length-alignment solution are accepted.\n\nThe additional source received 20 October 2026 states the same task, so it is attached to this existing record without a duplicate item or any learner-history change. The alternative was checked on all 729 prefix/prefix/suffix length triples in both orders (1,458 calls), plus two long cases. Test nodes deliberately raise on ==, all stored values are equal, and links remain unchanged.\n"
       }
     },
     "learner_copy_review": "2026-10-15: wording/assumptions clarified for the website; archive unchanged; technical human approval pending."
@@ -939,5 +939,140 @@
       ]
     },
     "note": "2026-10-20: source preserved; bilingual AI-assisted proposed decision tree, six localized diagrams and exhaustive physical-hypothesis checks. Professional, parity and reuse review pending."
+  },
+  "PREP-050": {
+    "hints": {
+      "he": [
+        "כאן הביט החדש מקבל משקל גדול יותר מהקודמים. האם הנוסחה הרגילה להכנסת ביט מימין עדיין מתאימה?",
+        "פתרון ישיר שומר שארית וגם את המשקל הבא מודולו 5. המשקל עובר במחזור 1,2,4,3. האם אפשר לנרמל את השארית כדי להסיר את מונה המיקום?",
+        "המספר 3 הוא ההופכי של 2 מודולו 5. נסו להגדיר מצב ששווה לערך שנקלט כפול ההופכי של משקל הביט הבא. לאחר הוספת הביט החדש מחלקים את המצב המנורמל ב־2 מודולו 5."
+      ],
+      "en": [
+        "The new bit has a higher weight than earlier bits. Does the ordinary append-on-the-right recurrence apply?",
+        "A direct design tracks both the residue and next positional weight modulo five. Weights cycle 1,2,4,3. Could normalizing the residue remove the position counter?",
+        "Three is the inverse of two modulo five. Define state as the received value times the inverse of the next bit weight. After adding a bit, divide that normalized value by two modulo five."
+      ]
+    },
+    "note": "2026-10-20: source preserved; complete bilingual AI-assisted proposed solution, diagram, executable Python model, SystemVerilog and exhaustive functional checks. Professional, parity and reuse review pending."
+  },
+  "PREP-051": {
+    "hints": {
+      "he": [
+        "אפשר לבנות תחילה XOR של שני ביטים, ואז לשלב את התוצאה עם הביט השלישי. היזהרו לא להוסיף קבוע 1.",
+        "אות ביניים לא חייב להיות שלילה נכונה בכל מצבי הקלט, אלא רק כאשר המרבב הבא באמת בוחר בו.",
+        "לזוג X,Y נסו t=MUX(Y,X,0), ואז תנו ל־X לבחור בין Y לבין t. כש־X=1, מה הערך שהמרבב הראשון מעביר כאשר Y=0?"
+      ],
+      "en": [
+        "First implement XOR of two bits, then combine it with the third. Do not introduce a hidden constant one.",
+        "An intermediate signal need not be a correct complement in every case, only when the following MUX selects it.",
+        "For X,Y try t=MUX(Y,X,0), then let X select between Y and t. When X=1, what does the first MUX pass at Y=0?"
+      ]
+    },
+    "note": "2026-10-20: source preserved; complete bilingual AI-assisted proposed solution, diagram, executable Python model, SystemVerilog and exhaustive functional checks. Professional, parity and reuse review pending."
+  },
+  "PREP-052": {
+    "hints": {
+      "he": [
+        "חשבו תחילה מה קורה לנשא כש־A ו־B שווים, ומה קורה כשהם שונים.",
+        "אם P=A XOR B, הנשא הוא A כש־P=0, ו־Cin כש־P=1. לכן P יכול לשמש סלקטור של מרבב הנשא.",
+        "מרבב עם נתונים 1 ואז 0 הופך את הסלקטור. בעזרת שני היפוכים כאלה אפשר לבנות P וגם S באמצעות בחירה בין אות לבין שלילתו."
+      ],
+      "en": [
+        "Consider the carry when A and B are equal and when they differ.",
+        "With P=A XOR B, carry is A when P=0 and Cin when P=1. P can therefore select a carry MUX.",
+        "A MUX with data one then zero inverts its selector. Two counted inversions let you form P and S by selecting between a bit and its complement."
+      ]
+    },
+    "note": "2026-10-20: source preserved; complete bilingual AI-assisted proposed solution, diagram, executable Python model, SystemVerilog and exhaustive functional checks. Professional, parity and reuse review pending."
+  },
+  "PREP-053": {
+    "hints": {
+      "he": [
+        "קריאה בודדת אינה מספרת מאיזה צד הגיע האדם. עקבו אחר סדר ההפעלה של שני הגלאים, וחישבו מתי באמת הושלם מעבר ולא רק התחיל.",
+        "שמרו גם מאיזה צד התחיל הניסיון וגם עד לאיזה שלב הגיע. אותה קריאה של שני גלאים פעילים יכולה להופיע בכניסה או ביציאה, ולכן אינה מצב מספיק בפני עצמה.",
+        "בנו מסלול כניסה ומסלול יציאה, אפשרו חזרה לשלב הקודם כשאדם נסוג, ושנו את המונה רק בחזרה ל־00 מהשלב האחרון במסלול. קלט זהה משאיר מצב; דילוג חשוד מבטל את אמינות הספירה."
+      ],
+      "en": [
+        "One reading cannot reveal which side a person came from. Track the order in which the sensors activate and decide when a crossing is complete rather than merely started.",
+        "Remember both the attempted direction and progress. The same both-active reading occurs during entry and exit, so that reading alone is not enough state.",
+        "Build entry and exit paths, allow retracing when the person reverses, and change the count only when the final path state returns to 00. Repeated readings hold; a suspicious skipped transition invalidates confidence in the count."
+      ]
+    },
+    "note": "2026-10-20: original screenshot preserved; bilingual AI-assisted proposed solution, paired diagrams and model checks. Expert, human parity and reuse review pending; no learner activity created."
+  },
+  "PREP-054": {
+    "hints": {
+      "he": [
+        "אין צורך שכל אסיר ידע מי כבר ביקר. אפשר למנות אסיר אחד שיאסוף סימנים מהאחרים, ולתת לכל אסיר מספר מוגבל של סימנים.",
+        "מתג האות יכול לייצג סימן אחד שממתין לאיסוף. רק הסופר יכבה אותו, והאחרים ידליקו רק כשהוא כבוי. חישבו איך מצב התחלתי דלוק יכול להיראות כמו סימן שלא נשלח.",
+        "אפשרו לכל אחד מ־16 האסירים האחרים לשלוח לכל היותר שני סימנים. כמה סימנים לכל היותר יוכל הסופר לאסוף אם אחד מהם עוד לא ביקר, כולל סימן התחלתי שגוי? השתמשו במתג השני לפעולת חובה שאינה נוגעת למתג האות."
+      ],
+      "en": [
+        "Not everyone needs to know who has visited. Designate one prisoner to collect signals and give every other prisoner a bounded allowance of signals.",
+        "The signal switch can store one pending token. Only the counter turns it OFF; contributors turn it ON only while it is OFF. How can an initially ON state masquerade as a token nobody sent?",
+        "Let each of the 16 contributors send at most two tokens. How many can the counter collect if one contributor has never visited, including one possible phantom initial token? Use the second switch for mandatory actions that must not alter the signal switch."
+      ]
+    },
+    "note": "2026-10-20: original screenshot preserved; bilingual AI-assisted proposed solution, paired diagrams and model checks. Expert, human parity and reuse review pending; no learner activity created."
+  },
+  "PREP-057": {
+    "hints": {
+      "he": [
+        "אין צורך שכל אסיר ידע מי כבר ביקר. אפשר למנות אסיר אחד שיאסוף סימנים מהאחרים, ולתת לכל אסיר מספר מוגבל של סימנים.",
+        "מתג האות יכול לייצג סימן אחד שממתין לאיסוף. רק הסופר יכבה אותו, והאחרים ידליקו רק כשהוא כבוי. חישבו איך מצב התחלתי דלוק יכול להיראות כמו סימן שלא נשלח.",
+        "אפשרו לכל אחד מ־20 האסירים האחרים לשלוח לכל היותר שני סימנים. כמה סימנים לכל היותר יוכל הסופר לאסוף אם אחד מהם עוד לא ביקר, כולל סימן התחלתי שגוי? בביקור שאין בו פעולת אות אפשר להשאיר את הנורה כפי שהיא."
+      ],
+      "en": [
+        "Not everyone needs to know who has visited. Designate one prisoner to collect signals and give every other prisoner a bounded allowance of signals.",
+        "The signal switch can store one pending token. Only the counter turns it OFF; contributors turn it ON only while it is OFF. How can an initially ON state masquerade as a token nobody sent?",
+        "Let each of the 20 contributors send at most two tokens. How many can the counter collect if one contributor has never visited, including one possible phantom initial token? A visit without a signal action may leave the light unchanged."
+      ]
+    },
+    "note": "2026-10-20: original screenshot preserved; bilingual AI-assisted proposed solution, paired diagrams and model checks. Expert, human parity and reuse review pending; no learner activity created."
+  },
+  "PREP-056": {
+    "hints": {
+      "he": [
+        "מה צריך להופיע בכניסת D כדי שהדלגלג ישמור בדיוק את הערך שכבר קיים במוצא?",
+        "בכל חזית צריך לבחור בין שני מקורות נתונים: הנתון החדש והמוצא השמור. איזה רכיב מבצע בחירה כזאת?",
+        "הכניסו בורר לפני D: חברו את Q לכניסה 0, את הנתון לכניסה 1, ואת האפשור לבחירה."
+      ],
+      "en": [
+        "What should D receive to make the flip-flop store exactly the value it already holds?",
+        "At each edge select between two data sources: new data and stored Q. Which combinational component selects between them?",
+        "Put a 2:1 mux before D: connect Q to input 0, data to input 1 and enable to select."
+      ]
+    },
+    "note": "2026-10-20: source archived, bilingual AI-assisted proposed content, diagrams, code and independent finite checks. Expert, parity and reuse review pending."
+  },
+  "PREP-058": {
+    "hints": {
+      "he": [
+        "כאשר ההפרש בין המספרים הוא שתיים, מהו המספר שנמצא בדיוק באמצע? איזו בעיה נשארת אם אסור להשתמש במחבר?",
+        "שני הקלטים בעלי אותה זוגיות. בדקו בנפרד מה קורה לביט הנמוך ולשאר הביטים כשהמספר הראשון זוגי או אי־זוגי.",
+        "הביט הנמוך של הממוצע הוא היפוך הביט הנמוך של הקלט הראשון. אם הקלט הראשון זוגי, העתיקו ממנו את הביטים העליונים; אם הוא אי־זוגי, העתיקו אותם מהקלט השני."
+      ],
+      "en": [
+        "With a difference of two, which integer lies exactly midway? What remains to implement if an adder is forbidden?",
+        "Both inputs have the same parity. Separately examine the low output bit and the upper bits for even versus odd a.",
+        "Invert the low bit of a. If a is even, copy its upper bits; if a is odd, copy the upper bits of b."
+      ]
+    },
+    "note": "2026-10-20: source archived, bilingual AI-assisted proposed content, diagrams, code and independent finite checks. Expert, parity and reuse review pending."
+  },
+  "PREP-059": {
+    "hints": {
+      "he": [
+        "אין צורך לדעת אילו מטבעות הם פלי. נסו לבחור קבוצה בגודל שקשור למספר הפלי הכולל הידוע.",
+        "אם בחרתם 10 מטבעות ומתוכם x הם פלי, כמה פלי נשארו בקבוצה האחרת וכמה עץ יש בקבוצה שנבחרה?",
+        "הפכו את כל 10 המטבעות בקבוצה שנבחרה בלבד. מספר הפלי החדש בה שווה למספר העץ שהיה בה קודם."
+      ],
+      "en": [
+        "You need not identify the tails. Choose a group whose size is related to the known total tails count.",
+        "If you select ten coins and x of them are tails, how many tails remain outside, and how many heads are in the selected group?",
+        "Flip every selected coin and none of the rest. The selected group’s new tails count equals its previous heads count."
+      ]
+    },
+    "note": "2026-10-20: source archived, bilingual AI-assisted proposed content, diagrams, code and independent finite checks. Expert, parity and reuse review pending."
   }
 }

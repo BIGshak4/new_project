@@ -1,0 +1,77 @@
+{
+  "question_id": "PREP-052",
+  "status": "passed",
+  "checked_on": "2026-10-20",
+  "exhaustive_truth_rows": 8,
+  "mux_instances": 5,
+  "zero_only_alternative_truth_rows": 8,
+  "zero_only_mux_instances": 5,
+  "topological_netlist_valid": true,
+  "external_constants": [
+    0,
+    1
+  ],
+  "complements_generated_by_mux": [
+    "nB",
+    "nCin"
+  ],
+  "truth_rows_A_B_Cin_S_Cout": [
+    [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      0,
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      1,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
+  "limitations": "Five-MUX sufficiency with constants 0/1, no global minimum claim. Python model only, not HDL compilation/simulation or timing."
+}

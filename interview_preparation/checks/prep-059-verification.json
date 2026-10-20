@@ -1,0 +1,9 @@
+{
+  "question_id": "PREP-059",
+  "checked_on": "2026-10-20",
+  "status": "passed_python_model",
+  "exhaustive_original_cases": 12375,
+  "random_cases": 500,
+  "generalization_cases": 2026,
+  "coverage": "Every placement of ten tails for k=11..16; 500 reproducible larger examples; all 0<t<k<=10 generalizations. Planner receives no orientations."
+}
