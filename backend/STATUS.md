@@ -1259,15 +1259,16 @@ not in the code:
    needs the new value) or it was revoked (then Render's copy is dead too and **production cannot grade** — check by
    answering one question on the site in the morning; the feedback card says "Judged by Opus 5.5" when the model
    answered). Every real-model script tonight failed on it; the offline and live suites do not use the model.
-2. **The live bank drifted from git.** The database holds **88 questions**, the repository's seeds **79**. Harel
-   loaded nine questions to production on the evening of the 20th (`prep-average-difference-two-logic-gates`,
-   `prep-dark-room-ten-tails-equal-groups`, `prep-dff-enable-feedback-mux`, `prep-doorway-occupancy-two-sensors`,
-   `prep-full-adder-from-two-to-one-muxes`, `prep-linked-lists-first-shared-node` and three more) that are in no
-   commit on `master`. The three live tests that compare the bank with the seeds fail on exactly that (88 ≠ 79,
-   108 ≠ 99 skill links); the API serves only questions it knows from the seeds, so those nine are invisible to
-   users until the seeds catch up. Either Harel pushes the commit that holds them or they are a content push that
-   skipped git. The 18 live tests that passed cover the program, interviews, durability, access boundaries and
-   the billing-free paths; the billing tables are not applied yet, so every user reads as "free" there.
+2. **The live bank was ahead of git for half an hour.** Harel loaded nine questions to production at 20:37 and
+   pushed the commit that holds them at 23:47 (`4ffc7cf`, "night question batch"); the live run started between
+   the two, with seeds at 79 against 88 in the database, and the three tests that compare the bank with the seeds
+   failed on exactly that. After the pull the seeds are 88 = the bank; the rerun of the three tests at 00:30 hit a 300-second wait on
+   the pooler (the same connection trouble as on the 18th), so they are **to be rerun in the morning**:
+   `uv run pytest tests/test_live_db.py tests/test_live_service.py -q --timeout=300` from `backend/`, nothing
+   else live at the same time. The order "database
+   first, git later" is his protocol's; it is why those tests exist. The 18 live tests that passed cover the
+   program, interviews, durability, access boundaries and the billing-free paths; the billing tables are not
+   applied yet, so every user reads as "free" there.
 
 **Harel's push of the 20th, seen tonight:** a founder admin workspace and private support reporting (three
 migrations applied to production the same evening: support reports and files, admin events, announcements and a
@@ -1280,8 +1281,7 @@ manual grant that the entitlement check also accepts).
 **Morning list for Shaked**
 1. The Anthropic key: tell me whether you rotated it; if so, paste nothing in chat — put the new value in
    `backend/.env` yourself; if not, revoke-and-replace on the Anthropic console and on Render.
-2. The nine questions: ask Harel to push the commit, or decide that content pushes bypass git (then the live
-   tests need a different oracle).
+2. (Closed overnight: the nine questions are in git since 23:47; the seeds equal the bank.)
 3. Approve the billing migration (`20261020090000_billing.sql`, dry run OK) and open the Stripe account (§5zr).
 4. Confirm the prices ₪59 / ₪119 and the usage assumptions behind them (`scripts/pricing.py`).
 5. The `plan_tier` vs billing decision above.
