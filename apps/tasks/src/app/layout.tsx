@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 export const metadata: Metadata = {
-  title: "JobRun — סביבת העבודה",
-  description: "לוח העבודה הפרטי של הראל ושקד.",
+  title: "JobRun Admin — ניהול האתר",
+  description: "סביבת הניהול הפרטית של הראל ושקד: משתמשים, דיווחי תקלות ומשימות.",
   robots: { index: false, follow: false },
 };
 export default function Layout({ children }: { children: React.ReactNode }) {

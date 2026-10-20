@@ -19,9 +19,13 @@ import {
   Link as LinkIcon,
   History,
   CalendarDays,
+  Users,
+  LifeBuoy,
 } from "lucide-react";
 import { Auth } from "../components/auth";
 import { TaskFiles } from "../components/task-files";
+import { AdminUsers } from "../components/admin-users";
+import { AdminSupport } from "../components/admin-support";
 import { supabase } from "../lib/supabase";
 type Subtask = { id: string; text: string; done: boolean };
 type TaskLink = { id: string; label: string; url: string };
@@ -100,6 +104,7 @@ export default function Page() {
   );
 }
 function Board({ user, signOut }: { user: User; signOut: () => void }) {
+  const [section, setSection] = useState<"tasks" | "users" | "support">("tasks");
   const [tasks, setTasks] = useState<Task[]>([]),
     [loading, setLoading] = useState(true),
     [error, setError] = useState(""),
@@ -170,25 +175,29 @@ function Board({ user, signOut }: { user: User; signOut: () => void }) {
     <div className="app-shell">
       <aside className="sidebar">
         <a className="wordmark" href="/" dir="ltr">
-          JobRun
+          JobRun <span className="admin-wordmark-label">Admin</span>
           <span className="logo-dot" />
         </a>
-        <nav>
+        <nav aria-label="ניהול האתר">
           <button
-            className={`nav-item ${!archive ? "active" : ""}`}
+            className={`nav-item ${section === "tasks" && !archive ? "active" : ""}`}
+            aria-current={section === "tasks" && !archive ? "page" : undefined}
             onClick={() => {
+              setSection("tasks");
               setArchive(false);
-              setSelected(null);
             }}
           >
             <LayoutDashboard size={18} />
-            לוח העבודה<span className="count">{active.length}</span>
+            לוח משימות<span className="count">{active.length}</span>
           </button>
+          <button type="button" className={`nav-item ${section === "users" ? "active" : ""}`} aria-current={section === "users" ? "page" : undefined} onClick={() => setSection("users")}><Users size={18} />משתמשים</button>
+          <button type="button" className={`nav-item ${section === "support" ? "active" : ""}`} aria-current={section === "support" ? "page" : undefined} onClick={() => setSection("support")}><LifeBuoy size={18} />דיווחי תקלות</button>
           <button
-            className={`nav-item ${archive ? "active" : ""}`}
+            className={`nav-item ${section === "tasks" && archive ? "active" : ""}`}
+            aria-current={section === "tasks" && archive ? "page" : undefined}
             onClick={() => {
+              setSection("tasks");
               setArchive(true);
-              setSelected(null);
             }}
           >
             <Archive size={18} />
@@ -216,7 +225,7 @@ function Board({ user, signOut }: { user: User; signOut: () => void }) {
       </aside>
       <div className="shell-main">
         <header className="topbar">
-          <span className="topbar-label">סביבת העבודה של המייסדים</span>
+          <span className="topbar-label">ניהול האתר · הראל ושקד</span>
           <div className="row">
             <span className="small muted">
               {new Intl.DateTimeFormat("he-IL", {
@@ -235,7 +244,9 @@ function Board({ user, signOut }: { user: User; signOut: () => void }) {
           </div>
         </header>
         <main className="content">
-          {selected ? (
+          <div hidden={section !== "tasks"}>
+          <div hidden={!selected || selected.archived !== archive}>
+          {selected && (
             <TaskEditor
               key={selected.id}
               initial={selected}
@@ -256,7 +267,9 @@ function Board({ user, signOut }: { user: User; signOut: () => void }) {
                 setNotice("השינויים נשמרו.");
               }}
             />
-          ) : (
+          )}
+          </div>
+          <div hidden={!!selected && selected.archived === archive}>
             <>
               <div className="page-heading">
                 <div>
@@ -491,7 +504,10 @@ function Board({ user, signOut }: { user: User; signOut: () => void }) {
                 </div>
               )}
             </>
-          )}
+          </div>
+          </div>
+          <div hidden={section !== "users"}><AdminUsers active={section === "users"} /></div>
+          <div hidden={section !== "support"}><AdminSupport active={section === "support"} /></div>
         </main>
       </div>
     </div>

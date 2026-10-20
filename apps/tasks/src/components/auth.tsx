@@ -119,20 +119,20 @@ export function Auth({
     <main className="auth-layout" dir={he ? "rtl" : "ltr"}>
       <section className="auth-story">
         <a href="/" className="wordmark" dir="ltr">
-          JobRun
+          {kind === "tasks" ? "JobRun Admin" : "JobRun"}
           <span className="logo-dot" />
         </a>
         <div>
           <h1>
             {kind === "tasks"
-              ? "רעיון טוב.\nעכשיו לעבודה."
+              ? "כל מה שצריך,\nכדי להמשיך לבנות."
               : he
                 ? "הראיון הבא מתחיל\nבתרגול של היום."
                 : "Your next interview\nstarts with today’s practice."}
           </h1>
           <p>
             {kind === "tasks"
-              ? "המשימות, ההחלטות והצעדים הבאים של הראל ושקד. מקום אחד להמשיך ממנו."
+              ? "משתמשים, דיווחי תקלות והמשימות של הראל ושקד. סביבת ניהול אחת, פרטית ומסודרת."
               : he
                 ? "שאלות חומרה ותוכנה, מרחב לחשוב בקול ובכתב, והתקדמות שנשמרת איתכם."
                 : "Hardware and software questions, room to reason, and a practice history that stays with you."}
@@ -140,7 +140,7 @@ export function Auth({
         </div>
         <div className="auth-foot">
           {kind === "tasks"
-            ? "סביבת העבודה של המייסדים"
+            ? "סביבת הניהול של המייסדים"
             : he
               ? "גרסת פיילוט · השאלות בתהליך ביקורת מקצועית"
               : "Private pilot · Questions under technical review"}

@@ -1,0 +1,97 @@
+.launcher {
+  position: fixed;
+  inset-inline-start: 18px;
+  bottom: 18px;
+  z-index: 500;
+  min-height: 44px;
+  padding: 10px 15px;
+  border: 1px solid var(--link);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 3px 12px #160b2420;
+  font-size: 13px;
+  font-weight: 700;
+}
+.launcher:hover { background: var(--soft); }
+:global(body):has(:global([data-muxi-station])) .launcher { display: none; }
+.dialog {
+  position: fixed;
+  inset: 0;
+  width: min(650px, calc(100vw - 32px));
+  max-height: calc(100dvh - 48px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 16px 48px #10091d45;
+  scrollbar-color: var(--line) var(--paper);
+}
+.dialog::backdrop { background: #10091d99; }
+.header { display: flex; align-items: flex-start; gap: 20px; padding: 26px 28px 22px; border-bottom: 1px solid var(--line); }
+.header h2 { font-size: 25px; line-height: 1.4; letter-spacing: -.025em; }
+.header h2:focus { outline: 0; }
+.header p { color: var(--muted); font-size: 14px; margin-top: 8px; max-width: 54ch; }
+.close { min-width: 44px; width: 44px; padding: 8px; flex-shrink: 0; margin-inline-start: auto; }
+.form { padding: 22px 28px 26px; }
+.account { font-size: 12px; color: var(--muted); margin-bottom: 22px; overflow-wrap: anywhere; }
+.fields { display: grid; gap: 19px; border: 0; margin: 0; padding: 0; min-width: 0; }
+.fields label { font-size: 14px; font-weight: 700; gap: 7px; }
+.fields input, .fields textarea, .fields select { font-size: 16px; font-weight: 400; }
+.fields :disabled { opacity: .7; cursor: default; }
+.attachments { margin-top: 27px; padding-top: 22px; border-top: 1px solid var(--line); }
+.attachments h3 { display: flex; align-items: center; gap: 7px; font-size: 16px; }
+.attachments h3 span { color: var(--muted); font-size: 12px; font-weight: 400; }
+.attachments > p { font-size: 12px; color: var(--muted); margin-top: 8px; max-width: 65ch; }
+.filePicker { position: relative; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; margin-top: 14px; padding: 10px 14px; border: 1px dashed var(--link); border-radius: 7px; font-size: 14px; background: var(--surface); cursor: pointer; }
+.filePicker:has(input:focus-visible) { outline: 2px solid var(--link); outline-offset: 4px; }
+.filePicker:hover { background: var(--soft); }
+.filePicker:has(input:disabled) { opacity: .6; cursor: wait; }
+.filePicker input { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; }
+.fileList { display: grid; gap: 0; padding: 0; margin: 14px 0 0; list-style: none; }
+.fileList li { display: flex; align-items: center; gap: 9px; padding-block: 9px; border-bottom: 1px solid var(--line); }
+.fileList li > svg { flex-shrink: 0; color: var(--muted); }
+.fileName { flex: 1; min-width: 0; overflow-wrap: anywhere; font-size: 13px; }
+.fileName small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
+.remove { min-width: 44px; padding: 9px; background: transparent; }
+.fileList li > .uploaded { color: var(--ok); }
+.total { font-variant-numeric: tabular-nums; }
+.privacy { margin-top: 22px; padding: 14px; border-radius: 7px; background: var(--soft); color: var(--ink-2); font-size: 12px; line-height: 1.7; }
+.context { color: var(--muted); margin-top: 10px; font-size: 11px; overflow-wrap: anywhere; }
+.error { padding: 12px 14px; margin-top: 18px; background: var(--danger-soft); color: var(--danger); border-radius: 7px; font-size: 14px; }
+.saved { display: flex; align-items: flex-start; gap: 8px; padding: 12px; margin-bottom: 18px; background: var(--ok-soft); color: var(--ok); border-radius: 7px; font-size: 13px; }
+.saved svg { flex-shrink: 0; margin-top: 2px; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 24px; }
+.actions button { font-size: 13px; }
+.primary { background: var(--action); color: var(--action-ink); border-color: var(--action); font-weight: 700; }
+.primary:hover { background: var(--action); color: var(--action-ink); filter: brightness(.95); }
+.draft { margin-top: 12px; color: var(--muted); font-size: 11px; }
+.recovery { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 10px; }
+.recovery p { width: 100%; font-size: 13px; overflow-wrap: anywhere; }
+.recovery button { font-size: 12px; }
+.auth, .receipt { padding: 32px 28px; }
+.auth > svg, .receipt > svg { color: var(--link); margin-bottom: 14px; }
+.receipt > svg { color: var(--ok); }
+.auth h3, .receipt h3 { margin-bottom: 10px; font-size: 23px; }
+.auth p, .receipt p { font-size: 14px; max-width: 59ch; }
+.auth button { margin-top: 22px; }
+.reference { display: grid; gap: 5px; padding-block: 18px; color: var(--muted); }
+.reference bdi { color: var(--ink); overflow-wrap: anywhere; font-family: var(--font-mono); font-size: 12px; }
+.spinner { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+@media (max-width: 780px) {
+  .launcher { inset-inline-start: 12px; bottom: calc(var(--tabbar-height, 72px) + 12px + env(safe-area-inset-bottom, 0px)); padding: 9px 12px; font-size: 12px; }
+  .dialog { width: calc(100vw - 20px); max-height: calc(100dvh - 20px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); }
+  .header { padding: 20px 18px 17px; gap: 10px; }
+  .header h2 { font-size: 23px; }
+  .header p { font-size: 13px; }
+  .form { padding: 18px; }
+  .auth, .receipt { padding: 26px 18px; }
+  .actions { align-items: stretch; flex-direction: column; }
+  .actions button { width: 100%; }
+}
