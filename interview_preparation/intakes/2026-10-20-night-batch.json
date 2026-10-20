@@ -249,7 +249,9 @@
     "independent_agent_final_resource_tests_passed": 16,
     "browser_scope": "Isolated real-component Edge fixture, desktop/mobile emulation. Public production page requires login; authenticated question clicks and physical phone test not performed.",
     "systemverilog_compilation_simulation": "not performed; no HDL simulator available",
-    "source_image_hashes": "all ten exact"
+    "source_image_hashes": "all ten exact",
+    "post_rebase_backend_integration_tests_passed": 228,
+    "post_rebase_scope": "Content, practice, job-fit, media/localization, billing, API routes and TypeScript client contract; includes concurrent billing commit preserved by rebase."
   },
   "review": {
     "professional": "pending",
@@ -262,6 +264,17 @@
   "learner_activity_written": false,
   "publication": {
     "previous_049_deployed_backend_revision": "f6e2b7e97db7d3bb5ac8eae7213a49d9f4717445",
-    "night_batch_deployment": "verification recorded after content commit"
+    "content_commit": "4ffc7cf71dbba481135a46a3f2a75b487d5259d2",
+    "branch": "master",
+    "pushed": true,
+    "verified_at_utc": "2026-10-20T20:49:15.734339+00:00",
+    "frontend_live_revision": "4ffc7cf71dbba481135a46a3f2a75b487d5259d2",
+    "backend_live_revision": "4ffc7cf71dbba481135a46a3f2a75b487d5259d2",
+    "frontend_health": "ok",
+    "backend_health": "ok",
+    "backend_database_roundtrip": "passed",
+    "runtime_deployment_verified": true,
+    "authenticated_live_clicks": false,
+    "completion_documentation": "Recorded in a follow-up documentation commit; deployed runtime revision refers to the content commit."
   }
 }
