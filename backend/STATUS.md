@@ -1247,6 +1247,47 @@ stale), a package payment and its repeat delivery, a subscription through six ev
 the three routes and the webhook over HTTP, a free member practising while optional and 402 with the switch on. The
 route-protection tests cover the three user routes; offline suite; migration dry run.
 
+## 5zs. Night of 20–21 October: the verification after the billing work, and the morning list
+
+**Verification on the final tree.** ruff clean; offline **1,030 passed, 9 skipped**; Harel's web suite **258
+passed**, typecheck clean; the harness **56 shots, no overflow** (LCP median 164 / 140 ms); the real-model flow and
+the two database-backed scripts **could not run**, and the live suite was **18 of 21**, for two reasons that are
+not in the code:
+
+1. **The local Anthropic key is invalid** (`401 invalid x-api-key`) since some time after the start of the night;
+   it worked at 23:00 (the night check's flow: 15 calls, $0.18). Either Shaked rotated it (then only `backend/.env`
+   needs the new value) or it was revoked (then Render's copy is dead too and **production cannot grade** — check by
+   answering one question on the site in the morning; the feedback card says "Judged by Opus 5.5" when the model
+   answered). Every real-model script tonight failed on it; the offline and live suites do not use the model.
+2. **The live bank drifted from git.** The database holds **88 questions**, the repository's seeds **79**. Harel
+   loaded nine questions to production on the evening of the 20th (`prep-average-difference-two-logic-gates`,
+   `prep-dark-room-ten-tails-equal-groups`, `prep-dff-enable-feedback-mux`, `prep-doorway-occupancy-two-sensors`,
+   `prep-full-adder-from-two-to-one-muxes`, `prep-linked-lists-first-shared-node` and three more) that are in no
+   commit on `master`. The three live tests that compare the bank with the seeds fail on exactly that (88 ≠ 79,
+   108 ≠ 99 skill links); the API serves only questions it knows from the seeds, so those nine are invisible to
+   users until the seeds catch up. Either Harel pushes the commit that holds them or they are a content push that
+   skipped git. The 18 live tests that passed cover the program, interviews, durability, access boundaries and
+   the billing-free paths; the billing tables are not applied yet, so every user reads as "free" there.
+
+**Harel's push of the 20th, seen tonight:** a founder admin workspace and private support reporting (three
+migrations applied to production the same evening: support reports and files, admin events, announcements and a
+user inbox; security-definer functions gated on `jr_members.can_manage_tasks`), plus a new question and
+"private decision diagrams". No backend code changed; the API is untouched. One design point for Shaked: his
+admin screen can set `user_profile.plan_tier`, which now overlaps with the billing table as a second source of
+"who is paid" — decide which one the API honours (my recommendation: billing, with `plan_tier` as a founders'
+manual grant that the entitlement check also accepts).
+
+**Morning list for Shaked**
+1. The Anthropic key: tell me whether you rotated it; if so, paste nothing in chat — put the new value in
+   `backend/.env` yourself; if not, revoke-and-replace on the Anthropic console and on Render.
+2. The nine questions: ask Harel to push the commit, or decide that content pushes bypass git (then the live
+   tests need a different oracle).
+3. Approve the billing migration (`20261020090000_billing.sql`, dry run OK) and open the Stripe account (§5zr).
+4. Confirm the prices ₪59 / ₪119 and the usage assumptions behind them (`scripts/pricing.py`).
+5. The `plan_tier` vs billing decision above.
+6. Still open from before: `HEALTH_KEY` on Render, the proxy peer in the log, the dashboard actions (DB password,
+   2FA, leaked-password protection), Harel's queue items 7–17.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
