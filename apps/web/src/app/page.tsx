@@ -29,6 +29,7 @@ import { GoalSetup } from "../components/goal-setup";
 import { LanguageMenu } from "../components/ui/language-menu";
 import { ThemeToggle } from "../components/ui/theme-toggle";
 import { MuxiTourLauncher } from "../components/tour/muxi-tour";
+import { UserInboxButton } from "../components/user-inbox";
 import { Select } from "../components/ui/select";
 import { AnimatePresence, CountUp, motion, useReducedMotion } from "../components/ui/motion";
 import { SignOff } from "../components/sign-off";
@@ -93,7 +94,7 @@ export default function Page() {
   }, [lang]);
   const languageControl = <><ThemeToggle lang={lang} /><LanguageMenu lang={lang} onChange={setLang} /></>;
   return (
-    <Auth lang={lang} kind="practice" controls={<><a className="muxi-public-tour" href="/tour">{lang === "he" ? "סיור עם מוקסי" : "Tour with Muxi"}</a>{languageControl}</>}>
+    <Auth lang={lang} kind="practice" controls={<><a className="muxi-public-tour" href="/tour">{lang === "he" ? "סיור עם מוקסי" : "Tour with Muxi"}</a><UserInboxButton lang={lang} />{languageControl}</>}>
       {(user, signOut) => (
         <Workspace
           key={user.id}
@@ -440,6 +441,7 @@ function Workspace({
           </span>
         </div>}
         <div className="topnav-actions">
+          <UserInboxButton lang={lang} />
           <MuxiTourLauncher userId={user.id} lang={lang} controls={languageControl} ready={!loading} />
           {languageControl}
           <button

@@ -12,6 +12,7 @@ import { themeBootstrap } from "../lib/theme";
 import { Toaster } from "../components/toaster";
 import { MotionProvider } from "../components/ui/motion";
 import { SupportReporter } from "../components/support-reporter";
+import { UserInboxProvider } from "../components/user-inbox";
 
 // Ion is the production face. Older gallery faces remain available without preloading them.
 const serif = Frank_Ruhl_Libre({
@@ -67,9 +68,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
       </head>
       <body>
-        <MotionProvider>{children}</MotionProvider>
-        <Toaster />
-        <SupportReporter />
+        <UserInboxProvider>
+          <MotionProvider>{children}</MotionProvider>
+          <Toaster />
+          <SupportReporter />
+        </UserInboxProvider>
       </body>
     </html>
   );

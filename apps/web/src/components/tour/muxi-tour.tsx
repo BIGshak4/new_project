@@ -8,6 +8,7 @@ import { MuxiMascot } from "./muxi-mascot";
 import { MuxiGuidance } from "./muxi-guidance";
 import { lockBodyScroll } from "../../lib/body-scroll-lock";
 import { SUPPORT_OPEN_EVENT } from "../../lib/support-report";
+import { UserInboxButton } from "../user-inbox";
 import { checkpoint, initialTourProgress, parseTourProgress, stationReady, tourKey, tourSteps, type TourKind, type TourProgress } from "../../lib/muxi-tour";
 import styles from "./muxi-tour.module.css";
 
@@ -89,7 +90,7 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
     previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const unlockScroll = lockBodyScroll();
     // A portal leaves existing drafts and component state alive, but makes the covered UI inert.
-    const covered = [...document.body.children].filter((el): el is HTMLElement => el instanceof HTMLElement && !el.contains(root.current) && !el.matches("[data-jobrun-support-dialog]"));
+    const covered = [...document.body.children].filter((el): el is HTMLElement => el instanceof HTMLElement && !el.contains(root.current) && !el.matches("[data-jobrun-support-dialog], [data-jobrun-inbox-dialog]"));
     const previous = covered.map((el) => [el, el.inert] as const);
     previous.forEach(([el]) => { el.inert = true; });
     return () => {
@@ -183,7 +184,7 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
     }}>
     <header className={styles.header}>
       <div className={styles.brand}><span dir="ltr">jobrun</span><span className={styles.brandDivider} /><h1 id={titleId}>{t("הסיורים של מוקסי", "Muxi's guided tours")}</h1></div>
-      <div className={styles.headerActions}>{controls}<button type="button" className={styles.reportHelp} aria-label={t("נתקלתם בבעיה?", "Report a problem")} onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={17} aria-hidden="true" />{t("דיווח", "Report")}</button><button type="button" className={styles.exit} onClick={close}><X size={17} />{t("דילוג ויציאה מהסיור", "Skip and exit tour")}</button></div>
+      <div className={styles.headerActions}><UserInboxButton lang={lang} />{controls}<button type="button" className={styles.reportHelp} aria-label={t("נתקלתם בבעיה?", "Report a problem")} onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={17} aria-hidden="true" />{t("דיווח", "Report")}</button><button type="button" className={styles.exit} onClick={close}><X size={17} />{t("דילוג ויציאה מהסיור", "Skip and exit tour")}</button></div>
     </header>
     {screen === "choose" ? <main className={styles.welcome}>
       <div className={styles.welcomeIntro}><MuxiMascot pose="wave" label={t("מוקסי מנופף לשלום", "Muxi waves hello")} className={styles.welcomeMascot} /><div><h2 ref={heading} tabIndex={-1}>{t("נעים להכיר, אני מוקסי.", "Hi, I'm Muxi.")}</h2><p>{t("אני מוקס קטן עם משימה גדולה: לעזור לכם להפוך את כל הכלים כאן ללמידה שעובדת בשבילכם.", "A little multiplexer with a big job: helping you make these tools work for your learning.")}</p></div></div>

@@ -12,6 +12,7 @@ import {
   type SupportSubmission, type SupportTransport,
 } from "../lib/support-report";
 import { BidiText } from "./bidi-text";
+import { INBOX_REFRESH_EVENT, openUserInbox } from "../lib/user-inbox";
 import styles from "./support-reporter.module.css";
 
 function uuid() { return crypto.randomUUID(); }
@@ -178,7 +179,7 @@ export function SupportReporter() {
       setSaved(result.reportSaved); setFiles(result.files);
       if (result.error) setError(supportErrorMessage(result.error, he));
       else if (result.failedFiles) setError(he ? "הדיווח נשמר, אבל חלק מהקבצים לא עלו. נסו שוב להעלות אותם; לא יישלח דיווח כפול." : "Your report was saved, but some files were not uploaded. Retry those files; no duplicate report will be created.");
-      else setSubmitted(true);
+      else { setSubmitted(true); window.dispatchEvent(new Event(INBOX_REFRESH_EVENT)); }
     } catch (failure) { if (isCurrent()) setError(supportErrorMessage(failure, he)); }
     finally { if (isCurrent()) { working.current = false; setBusy(false); } }
   }
@@ -217,7 +218,7 @@ export function SupportReporter() {
           <p>{he ? "תודה שעזרתם לנו לשפר את חוויית התרגול. הפנייה מופיעה כעת במרכז הניהול של הצוות." : "Thank you for helping us improve practice. Your report is now in the team's support inbox."}</p>
           <p className={styles.reference}>{he ? "מספר פנייה" : "Report reference"}<bdi dir="ltr">{reportId}</bdi></p>
           {files.length > 0 && <p>{he ? `צורפו ${files.length} קבצים.` : `${files.length} attachments received.`}</p>}
-          <div className={styles.actions}><button type="button" className={styles.primary} onClick={close}>{he ? "בחזרה לתרגול" : "Back to practice"}</button><button type="button" onClick={reset}>{he ? "דיווח נוסף" : "Report another issue"}</button></div>
+          <div className={styles.actions}><button type="button" className={styles.primary} onClick={close}>{he ? "בחזרה לתרגול" : "Back to practice"}</button><button type="button" onClick={() => { dialog.current?.close(); close(); openUserInbox(reportId); }}>{he ? "מעקב אחרי הפנייה שלי" : "View my request"}</button><button type="button" onClick={reset}>{he ? "דיווח נוסף" : "Report another issue"}</button></div>
         </div> : <form className={styles.form} onSubmit={submit}>
           <p className={styles.account}>{he ? "שולחים מהחשבון" : "Reporting as"} <bdi dir="ltr">{user.email}</bdi></p>
           {saved && <p className={styles.saved} role="status"><CheckCircle2 size={18} aria-hidden="true" />{pending ? he ? "הדיווח כבר נשמר. נותר להעלות את הקבצים המסומנים, או לוותר עליהם." : "The report is saved. Retry the marked attachments or omit them." : he ? "הדיווח נשמר. אפשר לסיים." : "The report is saved. You can finish now."}</p>}

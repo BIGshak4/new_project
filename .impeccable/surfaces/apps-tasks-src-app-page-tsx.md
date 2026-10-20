@@ -21,3 +21,9 @@ FIRST VIEWPORT: Keep the existing header and labelled navigation. The users sect
 FORM: Incumbent local extension; no ranked concept list or generated seed applies. Impeccable reference/new-work.md section 3 instructs: "Inherit its world and composition" and "Never run the script for a local extension or a precisely specified narrow request; shape those directly." This records the inherited direction, not a retrospective seed exercise.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+## Updates and user-facing support
+
+Extend the same working navigation with an announcement publishing section. Keep drafts separate from published updates; publication is explicit, bilingual wording is visible before publishing, and published content is immutable. Archiving removes an announcement from the learner inbox without pretending it was never published. Stale saves preserve the founder's draft.
+
+Support detail distinguishes “תשובה למשתמש” and the public resolution from private team notes. Closing or resolving a report requires an explanation visible to its reporter. Show the public reply history separately from the internal audit. No email or push delivery is implied. Preserve the existing colours, component density and mobile structure; this is an extension of the incumbent workspace.

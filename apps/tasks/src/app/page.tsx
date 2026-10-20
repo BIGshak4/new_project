@@ -21,11 +21,13 @@ import {
   CalendarDays,
   Users,
   LifeBuoy,
+  Megaphone,
 } from "lucide-react";
 import { Auth } from "../components/auth";
 import { TaskFiles } from "../components/task-files";
 import { AdminUsers } from "../components/admin-users";
 import { AdminSupport } from "../components/admin-support";
+import { AdminAnnouncements } from "../components/admin-announcements";
 import { supabase } from "../lib/supabase";
 type Subtask = { id: string; text: string; done: boolean };
 type TaskLink = { id: string; label: string; url: string };
@@ -104,7 +106,7 @@ export default function Page() {
   );
 }
 function Board({ user, signOut }: { user: User; signOut: () => void }) {
-  const [section, setSection] = useState<"tasks" | "users" | "support">("tasks");
+  const [section, setSection] = useState<"tasks" | "users" | "support" | "announcements">("tasks");
   const [tasks, setTasks] = useState<Task[]>([]),
     [loading, setLoading] = useState(true),
     [error, setError] = useState(""),
@@ -192,6 +194,7 @@ function Board({ user, signOut }: { user: User; signOut: () => void }) {
           </button>
           <button type="button" className={`nav-item ${section === "users" ? "active" : ""}`} aria-current={section === "users" ? "page" : undefined} onClick={() => setSection("users")}><Users size={18} />משתמשים</button>
           <button type="button" className={`nav-item ${section === "support" ? "active" : ""}`} aria-current={section === "support" ? "page" : undefined} onClick={() => setSection("support")}><LifeBuoy size={18} />דיווחי תקלות</button>
+          <button type="button" className={`nav-item ${section === "announcements" ? "active" : ""}`} aria-current={section === "announcements" ? "page" : undefined} onClick={() => setSection("announcements")}><Megaphone size={18} />עדכונים למשתמשים</button>
           <button
             className={`nav-item ${section === "tasks" && archive ? "active" : ""}`}
             aria-current={section === "tasks" && archive ? "page" : undefined}
@@ -507,7 +510,8 @@ function Board({ user, signOut }: { user: User; signOut: () => void }) {
           </div>
           </div>
           <div hidden={section !== "users"}><AdminUsers active={section === "users"} /></div>
-          <div hidden={section !== "support"}><AdminSupport active={section === "support"} /></div>
+          <div hidden={section !== "support"}><AdminSupport active={section === "support"} userId={user.id} /></div>
+          <div hidden={section !== "announcements"}><AdminAnnouncements active={section === "announcements"} /></div>
         </main>
       </div>
     </div>

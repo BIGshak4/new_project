@@ -55,6 +55,34 @@ export type SupportDetail = {
   files: SupportFile[];
   events: SupportEvent[];
   assignees: Assignee[];
+  updates?: PublicSupportUpdate[];
+};
+export type PublicSupportUpdate = {
+  id: string;
+  kind: "support";
+  title: string;
+  body: string;
+  language: string;
+  report_id: string;
+  status: SupportStatus;
+  created_at: string;
+  read_at: string | null;
+};
+export type AnnouncementStatus = "draft" | "published" | "archived";
+export type Announcement = {
+  id: string;
+  title_he: string;
+  body_he: string;
+  title_en: string | null;
+  body_en: string | null;
+  status: AnnouncementStatus;
+  version: number;
+  created_at: string;
+  updated_at: string;
+  published_at: string | null;
+};
+export const announcementStatuses: Record<AnnouncementStatus, string> = {
+  draft: "טיוטה", published: "פורסם למשתמשים", archived: "בארכיון",
 };
 export type QuestionReport = {
   id: string;
@@ -97,7 +125,7 @@ export async function adminRpc<T>(name: string, args: Record<string, unknown> = 
 
 export function isConflict(error: unknown) {
   const value = error as { code?: string; message?: string };
-  return value?.code === "40001" || value?.message?.includes("conflict_reload") === true;
+  return value?.code === "40001" || value?.code === "PT409" || value?.message?.includes("conflict_reload") === true;
 }
 
 export function adminError(error: unknown, fallback = "הפעולה לא הושלמה. בדקו את החיבור ונסו שוב.") {
@@ -106,6 +134,8 @@ export function adminError(error: unknown, fallback = "הפעולה לא הוש�
   if (value?.code === "42501") return "אין הרשאת ניהול לפעולה הזאת. נסו להתחבר מחדש עם חשבון מייסד.";
   if (value?.message?.includes("founder_access_protected")) return "אי אפשר להסיר גישת מייסד דרך המסך הזה.";
   if (value?.message?.includes("report_unavailable")) return "הדיווח אינו זמין. חזרו לרשימה ורעננו אותה.";
+  if (value?.message?.includes("announcement_immutable")) return "אי אפשר לשנות ניסוח שכבר פורסם. אפשר להעביר אותו לארכיון וליצור עדכון חדש.";
+  if (value?.code === "22023") return "הפרטים לא תקינים. בדקו את שדות החובה, אורכי הטקסט והתרגום ונסו שוב.";
   return fallback;
 }
 

@@ -890,8 +890,34 @@ h3 {
 .admin-legacy-report h2 { font-size: 19px; }
 .admin-legacy-report .admin-report-meta { margin-top: 0; }
 
+.admin-public-note { color: var(--green); font-size: 13px; background: var(--light); padding: 13px 15px; border-radius: 7px; }
+.admin-public-updates, .admin-public-reply { padding-top: 23px; margin-top: 23px; border-top: 1px solid var(--line); }
+.admin-public-updates > p { margin-top: 8px; }
+.admin-public-updates ol { list-style: none; padding: 0; margin: 15px 0 0; }
+.admin-public-updates li { padding-block: 15px; border-bottom: 1px solid var(--line); }
+.admin-public-updates li:last-child { border-bottom: 0; }
+.admin-public-updates li p { margin-block: 8px; font-size: 14px; }
+.admin-public-reply { display: grid; gap: 14px; }
+.admin-public-reply > button { justify-self: start; }
+.admin-public-reply select { max-width: 220px; }
+.admin-announcement-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; align-items: start; }
+.admin-announcement-layout.has-editor { grid-template-columns: minmax(260px, .75fr) minmax(0, 1.25fr); }
+.admin-announcement-editor { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; display: grid; gap: 18px; min-width: 0; }
+.admin-announcement-editor h2 { font-size: 23px; }
+.admin-announcement-form { display: grid; gap: 18px; }
+.admin-announcement-form input, .admin-announcement-form textarea { min-width: 0; }
+.admin-announcement-form [readonly] { background: var(--paper); border-color: var(--line); }
+.admin-announcement-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.admin-translation { border-block: 1px solid var(--line); padding-block: 17px; }
+.admin-translation summary { color: var(--green); cursor: pointer; font-weight: 500; }
+.admin-translation > p, .admin-translation > label { margin-top: 15px; }
+.badge.announcement-draft { color: #6a5030; background: var(--warm); }
+.badge.announcement-published { color: var(--green); background: var(--light); }
+.badge.announcement-archived { color: var(--muted); background: var(--paper); }
+
 @media (max-width: 1150px) {
   .admin-support-layout.has-detail { grid-template-columns: 1fr; }
+  .admin-announcement-layout.has-editor { grid-template-columns: 1fr; }
   .admin-report-detail { scroll-margin-top: 20px; }
 }
 @media (max-width: 760px) {
@@ -899,6 +925,9 @@ h3 {
   .admin-section h1 { font-size: 27px; }
   .admin-user-fields { grid-template-columns: 1fr; gap: 13px; }
   .admin-user-editor, .admin-report-detail { padding: 19px; }
+  .admin-announcement-editor { padding: 19px; }
+  .admin-announcement-editor > .row, .admin-public-updates .row { flex-wrap: wrap; }
+  .admin-announcement-actions > button { width: 100%; }
   .admin-facts { grid-template-columns: 1fr; gap: 12px; }
   .admin-pagination { align-items: start; }
   .admin-pagination > .row { width: 100%; justify-content: space-between; gap: 6px; }
