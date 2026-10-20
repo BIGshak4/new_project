@@ -16,7 +16,6 @@ import pytest
 
 from app.config import get_settings
 
-
 MIGRATION = Path(__file__).resolve().parents[2] / "supabase/migrations/20261020191024_founder_admin_and_support.sql"
 CONFLICT_MIGRATION = MIGRATION.with_name("20261020192330_admin_conflict_http_status.sql")
 

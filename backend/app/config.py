@@ -47,8 +47,8 @@ class Settings(BaseSettings):
     # everyone practises and the payment screen offers "continue for free for now"; on = unpaid users get 402.
     stripe_secret_key: str | None = None
     stripe_webhook_secret: str | None = None
-    stripe_price_monthly: str | None = None            # the Stripe price id behind seeds/billing_plans.json "monthly"
-    stripe_price_package: str | None = None            # ... and "package"
+    stripe_price_regular: str | None = None            # the Stripe price id behind seeds/billing_plans.json "regular" (30 a day)
+    stripe_price_premium: str | None = None            # ... and "premium" (50 a day)
     require_payment: bool = False
     billing_free_option_visible: bool = True
     site_url: str = "https://jobrun-practice.netlify.app"   # where Stripe sends the user back
@@ -89,7 +89,7 @@ class Settings(BaseSettings):
     default_company: str = "generic"
 
     @field_validator("database_url", "supabase_url", "supabase_jwt_secret", "supabase_service_role_key", "anthropic_api_key",
-                     "stripe_secret_key", "stripe_webhook_secret", "stripe_price_monthly", "stripe_price_package",
+                     "stripe_secret_key", "stripe_webhook_secret", "stripe_price_regular", "stripe_price_premium",
                      "anthropic_model", "anthropic_role_models", "llm_provider", "env", "default_language", mode="before")
     @classmethod
     def _strip(cls, value):

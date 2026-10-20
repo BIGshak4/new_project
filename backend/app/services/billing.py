@@ -43,7 +43,8 @@ class Plan:
     currency: str
     mode: str                                 # subscription | payment
     interval: str | None = None               # month, for a subscription
-    days: int | None = None                   # the package's length
+    days: int | None = None                   # a package's length (none of the current plans)
+    daily_questions: int | None = None        # the plan's cap on questions a day (regular 30, premium 50)
     stripe_price: str | None = None           # the Stripe price id, from the settings
 
     def text(self, field_name: str, language: str) -> str:
@@ -58,6 +59,7 @@ def load_plans(path: Path, prices: dict[str, str | None]) -> list[Plan]:
         plans.append(Plan(key=item["key"], label=item["label"], description=item.get("description", {}),
                           amount_agorot=int(item["amount_agorot"]), currency=item.get("currency", "ils"),
                           mode=item["mode"], interval=item.get("interval"), days=item.get("days"),
+                          daily_questions=item.get("daily_questions"),
                           stripe_price=prices.get(item.get("stripe_price_setting", ""))))
     return plans
 
@@ -177,7 +179,7 @@ class BillingStatus:
 class BillingService:
     def __init__(self, store, gateway: StripeGateway, config: BillingConfig):
         self.store, self.gateway, self.config = store, gateway, config
-        self._entitled_cache: dict[uuid.UUID, tuple[float, bool]] = {}
+        self._entitled_cache: dict[uuid.UUID, tuple[float, Subscription]] = {}
 
     def plan(self, key: str) -> Plan:
         for plan in self.config.plans:
@@ -193,19 +195,32 @@ class BillingService:
                              required=self.config.require_payment, free_option_visible=self.config.free_option_visible,
                              configured=self.config.configured, plans=list(self.config.plans))
 
-    async def is_entitled(self, user_id: uuid.UUID) -> bool:
-        """What the practice routes ask when payment is required; cached a minute per user, cleared on any change."""
-        if not self.config.require_payment:
-            return True
+    async def _current(self, user_id: uuid.UUID) -> Subscription:
+        """The user's subscription, cached a minute (cleared on every webhook event)."""
         cached = self._entitled_cache.get(user_id)
         if cached and cached[0] > time.monotonic():
             return cached[1]
         async with self.store.transaction() as tx:
-            entitled = (await tx.load_subscription(user_id)).entitled()
-        self._entitled_cache[user_id] = (time.monotonic() + 60, entitled)
+            subscription = await tx.load_subscription(user_id)
+        self._entitled_cache[user_id] = (time.monotonic() + 60, subscription)
         if len(self._entitled_cache) > 10_000:
             self._entitled_cache.clear()
-        return entitled
+        return subscription
+
+    async def is_entitled(self, user_id: uuid.UUID) -> bool:
+        """What the practice routes ask when payment is required."""
+        if not self.config.require_payment:
+            return True
+        return (await self._current(user_id)).entitled()
+
+    async def daily_limit(self, user_id: uuid.UUID, *, default: int) -> int:
+        """How many questions this user may start today: the plan's cap while the plan is live, else the default
+        (which is what a free user gets while payment is optional)."""
+        subscription = await self._current(user_id)
+        if not subscription.entitled() or not subscription.plan:
+            return default
+        plan = next((p for p in self.config.plans if p.key == subscription.plan), None)
+        return plan.daily_questions if plan and plan.daily_questions else default
 
     async def checkout(self, user_id: uuid.UUID, *, plan_key: str, email: str | None, language: str = "he") -> str:
         """The URL of Stripe's payment page for this plan. The user comes back to the site either way."""

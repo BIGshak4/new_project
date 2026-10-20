@@ -445,7 +445,7 @@ def every_route():
         ("POST", f"/v1/questions/{Q}/reports", {"reason": "unclear", "note": "x"}),
         ("GET", "/v1/me/program", None), ("POST", "/v1/me/program/start", {}), ("GET", "/v1/me/readiness", None),
         # paying for the site (2026-10-20); the Stripe webhook is not a user route and is covered in test_billing.py
-        ("GET", "/v1/me/billing", None), ("POST", "/v1/me/billing/checkout", {"plan": "monthly"}),
+        ("GET", "/v1/me/billing", None), ("POST", "/v1/me/billing/checkout", {"plan": "regular"}),
         ("POST", "/v1/me/billing/portal", None),
     ]
 

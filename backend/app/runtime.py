@@ -70,20 +70,23 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                                        daily_limit=settings.interview_daily_limit,
                                        reviewed_only=settings.interview_reviewed_only,
                                        narrative=settings.llm_provider == "anthropic")
-    from app.services.question_resources import fetch_question_images
-    practice = PracticeService(store, catalog, provider, config, image_fetcher=fetcher,
-                               question_image_fetcher=fetch_question_images)
-
-    async def interview_finished(tx, user_id, session_id):
-        await practice._complete_program_item(tx, user_id, session_id=session_id)
-
     plans = load_plans(settings.seeds_dir / "billing_plans.json",
-                       {"stripe_price_monthly": settings.stripe_price_monthly, "stripe_price_package": settings.stripe_price_package})
+                       {"stripe_price_regular": settings.stripe_price_regular, "stripe_price_premium": settings.stripe_price_premium})
     configured = bool(settings.stripe_secret_key)
     gateway = HttpStripe(settings.stripe_secret_key, settings.stripe_webhook_secret) if configured else FakeStripe()
     billing = BillingService(store, gateway, BillingConfig(plans=plans, require_payment=settings.require_payment,
                                                            free_option_visible=settings.billing_free_option_visible,
                                                            site_url=settings.site_url, configured=configured))
+    from app.services.question_resources import fetch_question_images
+    practice = PracticeService(store, catalog, provider, config, image_fetcher=fetcher,
+                               question_image_fetcher=fetch_question_images)
+    # the plan decides how many questions a day (regular 30, premium 50; a free user keeps the default while
+    # payment is optional; Shaked, 2026-10-20)
+    practice.daily_limit_for = lambda user_id: billing.daily_limit(user_id, default=settings.daily_attempt_limit)
+
+    async def interview_finished(tx, user_id, session_id):
+        await practice._complete_program_item(tx, user_id, session_id=session_id)
+
     return Runtime(catalog=catalog, provider=provider, store=store, practice=practice, store_kind=kind,
                    image_fetcher=fetcher, billing=billing,
                    interview=InterviewService(store, catalog, provider, interview_config, image_fetcher=fetcher,

@@ -26,7 +26,8 @@ class BillingPlanView(BaseModel):
     currency: str
     mode: str                                   # subscription | payment
     interval: str | None = None                 # month, for a subscription
-    days: int | None = None                     # a package's length
+    days: int | None = None                     # a package's length (none today)
+    daily_questions: int | None = None          # the plan's cap: regular 30, premium 50
     available: bool                             # a Stripe price exists for it on this server
 
 
@@ -61,7 +62,8 @@ def _view(status, language: str) -> BillingView:
                        free_option_visible=status.free_option_visible, configured=status.configured,
                        plans=[BillingPlanView(key=p.key, label=p.text("label", language), description=p.text("description", language),
                                        amount_agorot=p.amount_agorot, currency=p.currency, mode=p.mode, interval=p.interval,
-                                       days=p.days, available=bool(p.stripe_price and status.configured)) for p in status.plans])
+                                       days=p.days, daily_questions=p.daily_questions,
+                                       available=bool(p.stripe_price and status.configured)) for p in status.plans])
 
 
 @router.get("/me/billing", response_model=BillingView, summary="The caller's paid status and the plans on offer")

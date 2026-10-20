@@ -31,8 +31,8 @@ def catalog():
 
 
 def plans(configured=True):
-    prices = {"stripe_price_monthly": "price_monthly_test", "stripe_price_package": "price_package_test"} if configured \
-        else {"stripe_price_monthly": None, "stripe_price_package": None}
+    prices = {"stripe_price_regular": "price_regular_test", "stripe_price_premium": "price_premium_test"} if configured \
+        else {"stripe_price_regular": None, "stripe_price_premium": None}
     return load_plans(SEEDS / "billing_plans.json", prices)
 
 
@@ -49,15 +49,27 @@ def event(kind: str, data: dict, event_id: str | None = None) -> bytes:
 
 
 class TestPlans:
-    def test_the_two_plans_load_with_their_prices_and_words(self):
+    def test_the_two_plans_load_with_their_prices_caps_and_words(self):
         loaded = plans()
-        assert [p.key for p in loaded] == ["monthly", "package"]
-        monthly, package = loaded
-        assert monthly.mode == "subscription" and monthly.interval == "month" and monthly.amount_agorot == 4900
-        assert package.mode == "payment" and package.days == 90 and package.amount_agorot == 14900
-        assert monthly.text("label", "he") == "חודשי" and package.text("label", "en") == "Three months"
-        assert monthly.stripe_price == "price_monthly_test"
+        assert [p.key for p in loaded] == ["regular", "premium"]
+        regular, premium = loaded
+        assert regular.mode == premium.mode == "subscription" and regular.interval == "month"
+        assert (regular.amount_agorot, premium.amount_agorot) == (5900, 11900)      # scripts/pricing.py, 35 % profit
+        assert (regular.daily_questions, premium.daily_questions) == (30, 50)
+        assert regular.text("label", "he") == "רגיל" and premium.text("label", "en") == "Premium"
+        assert regular.stripe_price == "price_regular_test"
         assert all(p.stripe_price is None for p in plans(configured=False))
+
+    def test_the_prices_carry_the_target_profit(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("pricing", SEEDS.parent / "scripts" / "pricing.py")
+        pricing = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(pricing)
+        regular = pricing.price_ils(110, paying_users=50, profit=0.35)
+        premium = pricing.price_ils(240, paying_users=50, profit=0.35)
+        assert regular["suggested_ils"] == 59 and premium["suggested_ils"] == 119
+        assert pricing.answers_for_profit(59, paying_users=50, profit=0.35) >= 105
+        assert pricing.answers_for_profit(119, paying_users=50, profit=0.35) >= 235
 
 
 class TestTheStatusAndTheSwitch:
@@ -71,23 +83,46 @@ class TestTheStatusAndTheSwitch:
     async def test_with_the_switch_on_only_a_paid_user_is_entitled(self, catalog):
         svc, store, _ = service(catalog, require_payment=True)
         assert await svc.is_entitled(USER) is False
-        store.subscriptions[USER] = Subscription(user_id=USER, status="active", plan="monthly", customer_id="cus_1")
+        store.subscriptions[USER] = Subscription(user_id=USER, status="active", plan="regular", customer_id="cus_1")
         svc._entitled_cache.clear()
         assert await svc.is_entitled(USER) is True
-        store.subscriptions[USER] = Subscription(user_id=USER, status="active", plan="package",
+        store.subscriptions[USER] = Subscription(user_id=USER, status="active", plan="premium",
                                                  period_end=datetime.now(UTC) - timedelta(days=1))
         svc._entitled_cache.clear()
-        assert await svc.is_entitled(USER) is False                        # a package that ran out
-        store.subscriptions[USER] = Subscription(user_id=USER, status="past_due", plan="monthly")
+        assert await svc.is_entitled(USER) is False                        # paid through a date that passed
+        store.subscriptions[USER] = Subscription(user_id=USER, status="past_due", plan="regular")
         svc._entitled_cache.clear()
         assert await svc.is_entitled(USER) is False
+
+    async def test_the_plan_decides_the_daily_cap(self, catalog):
+        """Regular 30, premium 50; a free user keeps the default while payment is optional (Shaked, 2026-10-20)."""
+        svc, store, _ = service(catalog)
+        assert await svc.daily_limit(USER, default=30) == 30
+        store.subscriptions[USER] = Subscription(user_id=USER, status="active", plan="premium", customer_id="cus_p")
+        svc._entitled_cache.clear()
+        assert await svc.daily_limit(USER, default=30) == 50
+        store.subscriptions[USER] = Subscription(user_id=USER, status="canceled", plan="premium")
+        svc._entitled_cache.clear()
+        assert await svc.daily_limit(USER, default=30) == 30                  # a lapsed premium is a free user again
+        # wired into the practice service: the progress view says 50 and the 31st start is allowed
+        from app.services.practice_service import PracticeService, ServiceConfig
+        from tests.test_practice_hardening import GOOD, scripted
+        practice = PracticeService(store, catalog, scripted([GOOD]), ServiceConfig(suggest_reviewed_only=False))
+        practice.daily_limit_for = lambda user_id: svc.daily_limit(user_id, default=30)
+        store.subscriptions[USER] = Subscription(user_id=USER, status="active", plan="premium", customer_id="cus_p")
+        svc._entitled_cache.clear()
+        assert (await practice.progress(USER, language="en")).daily_limit == 50
+        keys = [k for k in catalog.questions][:31]
+        for key in keys:
+            await practice.start(USER, question_key=key, language="en")
+        assert (await practice.progress(USER, language="en")).attempts_today == 31
 
 
 class TestCheckoutAndPortal:
     async def test_checkout_returns_stripes_page_and_remembers_nothing_sensitive(self, catalog):
         svc, _, gateway = service(catalog)
-        url = await svc.checkout(USER, plan_key="monthly", email="u@example.com", language="en")
-        assert url.startswith("https://checkout.stripe.test/monthly/")
+        url = await svc.checkout(USER, plan_key="regular", email="u@example.com", language="en")
+        assert url.startswith("https://checkout.stripe.test/regular/")
         assert gateway.sessions[-1]["mode"] == "subscription" and gateway.sessions[-1]["metadata"]["user_id"] == str(USER)
         with pytest.raises(ApiError) as refused:
             await svc.checkout(USER, plan_key="gold", email=None)
@@ -96,7 +131,7 @@ class TestCheckoutAndPortal:
     async def test_without_stripe_keys_checkout_says_payment_is_not_set_up(self, catalog):
         svc, _, _ = service(catalog, configured=False)
         with pytest.raises(ApiError) as refused:
-            await svc.checkout(USER, plan_key="monthly", email=None)
+            await svc.checkout(USER, plan_key="regular", email=None)
         assert refused.value.code == "evaluation_unavailable" and refused.value.status == 503
         status = await svc.status(USER)
         assert status.configured is False
@@ -106,7 +141,7 @@ class TestCheckoutAndPortal:
         with pytest.raises(ApiError) as refused:
             await svc.portal(USER)
         assert refused.value.code == "not_found"
-        store.subscriptions[USER] = Subscription(user_id=USER, status="active", plan="monthly", customer_id="cus_9")
+        store.subscriptions[USER] = Subscription(user_id=USER, status="active", plan="regular", customer_id="cus_9")
         assert (await svc.portal(USER)).endswith("/portal/cus_9")
 
 
@@ -125,12 +160,12 @@ class TestTheWebhook:
         svc, store, gateway = service(catalog)
         payload = event("checkout.session.completed", {"id": "cs_1", "mode": "payment", "payment_status": "paid",
                                                        "customer": "cus_p", "client_reference_id": str(USER),
-                                                       "metadata": {"user_id": str(USER), "plan": "package"}}, event_id="evt_pkg")
+                                                       "metadata": {"user_id": str(USER), "plan": "premium"}}, event_id="evt_pkg")
         result = await svc.handle_webhook(payload, gateway.sign(payload))
         assert result["applied"] is True
         sub = store.subscriptions[USER]
-        assert sub.status == "active" and sub.plan == "package" and sub.customer_id == "cus_p"
-        assert sub.period_end is not None and 89 <= (sub.period_end - datetime.now(UTC)).days <= 90
+        assert sub.status == "active" and sub.plan == "premium" and sub.customer_id == "cus_p"
+        assert sub.period_end is not None and 89 <= (sub.period_end - datetime.now(UTC)).days <= 90   # a one-time payment: 90 days
         again = await svc.handle_webhook(payload, gateway.sign(payload))
         assert again["duplicate"] is True and store.subscriptions[USER].period_end == sub.period_end
 
@@ -139,9 +174,9 @@ class TestTheWebhook:
         end = int((datetime.now(UTC) + timedelta(days=30)).timestamp())
         steps = [
             ("checkout.session.completed", {"id": "cs_2", "mode": "subscription", "payment_status": "paid", "customer": "cus_s",
-                                            "subscription": "sub_1", "client_reference_id": str(USER), "metadata": {"user_id": str(USER), "plan": "monthly"}}),
+                                            "subscription": "sub_1", "client_reference_id": str(USER), "metadata": {"user_id": str(USER), "plan": "regular"}}),
             ("customer.subscription.updated", {"id": "sub_1", "status": "active", "customer": "cus_s", "current_period_end": end,
-                                               "cancel_at_period_end": False, "metadata": {"plan": "monthly"}}),
+                                               "cancel_at_period_end": False, "metadata": {"plan": "regular"}}),
             ("invoice.payment_failed", {"id": "in_2", "customer": "cus_s"}),
             ("invoice.paid", {"id": "in_3", "customer": "cus_s"}),
             ("customer.subscription.updated", {"id": "sub_1", "status": "active", "customer": "cus_s", "current_period_end": end,
@@ -155,7 +190,7 @@ class TestTheWebhook:
             statuses.append(store.subscriptions[USER].status)
         assert statuses == ["active", "active", "past_due", "active", "active", "canceled"]
         sub = store.subscriptions[USER]
-        assert sub.subscription_id == "sub_1" and sub.period_end is not None and sub.plan == "monthly"
+        assert sub.subscription_id == "sub_1" and sub.period_end is not None and sub.plan == "regular"
         # the customer id matched the later events to the user even without metadata
         assert all(e["user_id"] == USER for e in store.billing_events.values())
 
@@ -191,10 +226,11 @@ class TestOverHttp:
         headers = {"Authorization": f"Bearer {token}"}
         body = (await client.get("/v1/me/billing?language=he", headers=headers)).json()
         assert body["status"] == "free" and body["required"] is False and body["entitled"] is False
-        assert body["free_option_visible"] is True and [p["key"] for p in body["plans"]] == ["monthly", "package"]
-        assert body["plans"][0]["label"] == "חודשי" and body["plans"][0]["available"] is False     # no keys on the test server
+        assert body["free_option_visible"] is True and [p["key"] for p in body["plans"]] == ["regular", "premium"]
+        assert body["plans"][0]["label"] == "רגיל" and body["plans"][0]["available"] is False     # no keys on the test server
+        assert [p["daily_questions"] for p in body["plans"]] == [30, 50]
         assert body["configured"] is False
-        refused = await client.post("/v1/me/billing/checkout", json={"plan": "monthly"}, headers=headers)
+        refused = await client.post("/v1/me/billing/checkout", json={"plan": "regular"}, headers=headers)
         assert refused.status_code == 503 and refused.json()["error"]["code"] == "evaluation_unavailable"
         assert (await client.post("/v1/me/billing/checkout", json={"plan": "x" * 41}, headers=headers)).status_code == 422
         assert (await client.post("/v1/me/billing/portal", headers=headers)).status_code == 404

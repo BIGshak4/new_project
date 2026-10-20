@@ -20,6 +20,7 @@ import asyncio
 import dataclasses
 import logging
 import uuid
+from collections.abc import Awaitable, Callable
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
@@ -148,6 +149,8 @@ class PracticeService:
         self.question_image_fetcher = question_image_fetcher
         self._locks: dict[uuid.UUID, asyncio.Lock] = {}
         self._user_locks: dict[uuid.UUID, asyncio.Lock] = {}     # one program action at a time per user (rebuild, start, goal)
+        # the plan's cap on questions a day, when billing is wired (runtime); else the config's default
+        self.daily_limit_for: Callable[[uuid.UUID], Awaitable[int]] | None = None
         self._feedback_tasks: dict[tuple[uuid.UUID, int], asyncio.Task] = {}      # (attempt, revision) -> writing its words
         self._plans: dict[tuple[str, str | None], tuple[dict[str, int], dict[str, float], int, list[PlanSkill]]] = {}
 
@@ -344,9 +347,10 @@ class PracticeService:
                 async with self.store.transaction() as tx:
                     await tx.lock_usage(user_id, "practice")
                     started = await tx.started_today(user_id)
-                    if started >= self.config.daily_attempt_limit:
+                    limit = await self._daily_limit(user_id)
+                    if started >= limit:
                         raise ApiError("usage_limit", f"you have started {started} attempts today; the daily limit is "
-                                                      f"{self.config.daily_attempt_limit}. Come back tomorrow.")
+                                                      f"{limit}. Come back tomorrow.")
                     loaded = await tx.load_question(key=question_key, question_id=question_id)
                     if loaded is None:
                         raise ApiError("not_found", "this question does not exist or is not available")
@@ -965,7 +969,7 @@ class PracticeService:
         skills = self._skill_rows(profile, required, now, experience)
         subjects = self._subjects(skills, required, weights, bands, servable)
         return ProgressView(skills=skills, subjects=subjects, recent=recent, attempts_today=started,
-                            daily_limit=self.config.daily_attempt_limit,
+                            daily_limit=await self._daily_limit(user_id),
                             overview=self._overview(skills, plan_skills, bands, language, experience),
                             timeline=self._timeline(daily, profile),
                             plan=self._plan_view(program, goal, today),
@@ -1440,6 +1444,11 @@ class PracticeService:
         if language not in LANGUAGES:
             raise ApiError("validation", f"language must be one of {', '.join(LANGUAGES)}")
         return language
+
+    async def _daily_limit(self, user_id: uuid.UUID) -> int:
+        if self.daily_limit_for is None:
+            return self.config.daily_attempt_limit
+        return await self.daily_limit_for(user_id)
 
     @asynccontextmanager
     async def _user_lock(self, user_id: uuid.UUID):

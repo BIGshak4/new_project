@@ -1,24 +1,28 @@
 [
   {
-    "key": "monthly",
-    "label": {"en": "Monthly", "he": "חודשי"},
-    "description": {"en": "Full practice and mock interviews, renewed every month. Cancel any time.",
-                    "he": "תרגול מלא וראיונות מדומים, מתחדש כל חודש. אפשר לבטל בכל רגע."},
-    "amount_agorot": 4900,
+    "key": "regular",
+    "label": {"en": "Regular", "he": "רגיל"},
+    "description": {"en": "Up to 30 questions a day, full feedback and mock interviews. Renewed monthly, cancel any time.",
+                    "he": "עד 30 שאלות ביום, משוב מלא וראיונות מדומים. מתחדש כל חודש, אפשר לבטל בכל רגע."},
+    "amount_agorot": 5900,
     "currency": "ils",
     "mode": "subscription",
     "interval": "month",
-    "stripe_price_setting": "stripe_price_monthly"
+    "daily_questions": 30,
+    "stripe_price_setting": "stripe_price_regular",
+    "pricing_note": "35% profit after model cost, Stripe fee, fixed-cost share and VAT at 110 answers a month; see scripts/pricing.py"
   },
   {
-    "key": "package",
-    "label": {"en": "Three months", "he": "שלושה חודשים"},
-    "description": {"en": "One payment for 90 days of full practice and mock interviews.",
-                    "he": "תשלום אחד ל־90 ימים של תרגול מלא וראיונות מדומים."},
-    "amount_agorot": 14900,
+    "key": "premium",
+    "label": {"en": "Premium", "he": "פרימיום"},
+    "description": {"en": "Up to 50 questions a day, full feedback and mock interviews. Renewed monthly, cancel any time.",
+                    "he": "עד 50 שאלות ביום, משוב מלא וראיונות מדומים. מתחדש כל חודש, אפשר לבטל בכל רגע."},
+    "amount_agorot": 11900,
     "currency": "ils",
-    "mode": "payment",
-    "days": 90,
-    "stripe_price_setting": "stripe_price_package"
+    "mode": "subscription",
+    "interval": "month",
+    "daily_questions": 50,
+    "stripe_price_setting": "stripe_price_premium",
+    "pricing_note": "35% profit at 240 answers a month; see scripts/pricing.py"
   }
 ]
