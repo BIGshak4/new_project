@@ -293,6 +293,26 @@
   "learner_activity_written": false,
   "publication": {
     "database_readback_exact": true,
-    "git_and_runtime_deployment": "to be recorded after code push"
+    "content_commit": "1d049d994b7650aa3b1e26b1617e4d682965e976",
+    "branch": "master",
+    "pushed": true,
+    "verified_at_utc": "2026-10-21T07:51:27.991653+00:00",
+    "frontend_live_revision": "1d049d994b7650aa3b1e26b1617e4d682965e976",
+    "backend_live_revision": "1d049d994b7650aa3b1e26b1617e4d682965e976",
+    "frontend_health": "ok",
+    "backend_health": "ok",
+    "backend_database_roundtrip": "passed",
+    "anonymous_auth_gates": [
+      {
+        "path": "/v1/questions?language=he",
+        "http_status": 401
+      },
+      {
+        "path": "/v1/questions/prep-three-bit-up-down-counter-gates/resources?language=he",
+        "http_status": 401
+      }
+    ],
+    "authenticated_live_clicks": false,
+    "completion_documentation": "Deployment evidence recorded in a separate documentation commit; runtime SHA refers to the verified content commit."
   }
 }
