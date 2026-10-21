@@ -1,0 +1,24 @@
+{
+  "question_id": "PREP-061",
+  "checked_on": "2026-10-21",
+  "status": "passed_python_model",
+  "oracle_cases": {
+    "fibonacci_recursive": 25,
+    "fibonacci_memoized": 201,
+    "fibonacci_iterative": 1001
+  },
+  "naive_call_count_cases": 25,
+  "large_exact_cases": [
+    {
+      "n": 2000,
+      "result_bits": 1388
+    },
+    {
+      "n": 10000,
+      "result_bits": 6942
+    }
+  ],
+  "rejected_inputs": 21,
+  "method": "Compare three implementations against an independent fast-doubling oracle; check exact naive call count 2*F(n+1)-1.",
+  "limits": "No wall-clock asymptotic benchmark; recursion limited to modest n. Complexity distinguishes arithmetic counts from arbitrary-precision bit cost. No human expert approval."
+}

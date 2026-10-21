@@ -35,3 +35,7 @@ Client filename rules cannot infer provenance for arbitrarily named files. Keep 
 
 - [Server-side resource provenance tests](../../backend/tests/test_question_resources_language.py)
 - [Browser compatibility regression tests](../../apps/web/tests/question-media.test.ts)
+
+## 2026-10-21 intake extension
+
+The full-bank test reproduced the same defense-in-depth gap for a dated source name with a numeric ordinal after the date. The expression now permits that ordinal, the compatibility list covers all 86 current source filenames, and a future ordinal case is included in the regression. All 259 web tests, type checking and production build pass. Server provenance filtering stayed authoritative; no production source disclosure was demonstrated. See [the focused run](../runs/2026-10-21-question-intake-media.md) for storage checks and deployment scope.

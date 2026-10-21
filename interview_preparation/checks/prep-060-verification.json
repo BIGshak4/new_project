@@ -1,0 +1,17 @@
+{
+  "question_id": "PREP-060",
+  "checked_on": "2026-10-21",
+  "status": "passed_python_model",
+  "dp_positions": 22,
+  "complete_adversarial_sequences": 243,
+  "invalid_inputs": 13,
+  "losing_totals": [
+    1,
+    5,
+    9,
+    13,
+    17
+  ],
+  "method": "Independent minimax DP over all legal positions, plus all 3^5 opponent response sequences against the complement strategy.",
+  "limits": "Finite exact-game verification, not human professional approval or live learner activity."
+}

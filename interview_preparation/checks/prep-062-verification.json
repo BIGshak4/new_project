@@ -1,0 +1,12 @@
+{
+  "question_id": "PREP-062",
+  "status": "passed",
+  "integer_interpreter_runs": 1536,
+  "tested_distances": "1..256, both agent orders, three translations",
+  "independent_time_formula": "6*abs(D)-1 ticks; marker test at3*abs(D)-1",
+  "zero_distance": "already met",
+  "noninteger_marker_miss_counterexamples": 4,
+  "opposite_forward_direction_counterexample": true,
+  "primitive_cost_model": "Every executed MF, ifP test and GOTO costs one tick. A false ifP skips its guarded GOTO. Collision is checked continuously inside each move interval, not only at the end.",
+  "limits": "Finite interpreter tests support a separate all-positive-integer proof; not hardware, asynchronous-start or arbitrary-orientation verification. The CPU only receives a local marker bit and stores its program counter."
+}

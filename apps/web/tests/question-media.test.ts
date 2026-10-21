@@ -40,6 +40,7 @@ test("withholds future source filenames without depending on the stale filename 
     "prep-1000.webp",
     "prep-999-new-variant-2027-01-01.jpeg",
     "prep-999-2027-01-01.png",
+    "prep-999-additional-2027-01-01-3.png",
   ]) {
     for (const role of ["prompt", "solution"] as const) {
       const screenshot: ResourceMedia = {

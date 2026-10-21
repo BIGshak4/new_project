@@ -5,7 +5,7 @@ const withheld = new Set<string>(sourceScreenshots.map(filename => filename.toLo
 
 // Bare IDs and dated intake filenames are reserved for archived source images.
 // Authored illustrations use descriptive names without an intake date.
-const archivedImageName = /^prep-\d{3,}(?:-(?:.+-)?\d{4}-\d{2}-\d{2})?\.[^.]+$/i;
+const archivedImageName = /^prep-\d{3,}(?:-(?:.+-)?\d{4}-\d{2}-\d{2}(?:-\d+)?)?\.[^.]+$/i;
 const archivedSourcePath = /(?:^|\/)sources(?:\/|$)/i;
 
 function isArchivedSource(item: ResourceMedia): boolean {

@@ -451,3 +451,20 @@ First clarify that the original input was a permutation of 1 through n and that 
 The diagram uses n=7 and remainder [6,1,4,7,3]. T means True and F means False; index zero is crossed out because it is not scanned. Orange flags at indices 2 and 5 remain False, identifying both omissions. This illustrates the extra-memory alternative at the start of the reference.
 
 ![PREP-041](../diagrams/prep-041-presence-flags.png)
+
+
+## Additional supplied source — 2026-10-21
+
+יש מערך של 100, לא לפי סדר, חסר מספר אחד. איך ניתן למצוא מה ערכו?
+
+[Preserved source](../sources/prep-041-additional-2026-10-21.png)
+
+Reported companies: NVIDIA.
+
+### Hebrew clarification
+
+המקור אינו קובע במפורש טווח ערכים ואינו מבהיר אם מאה הוא גודל הטווח המקורי או מספר התאים אחרי ההוצאה. לשילוב בסעיף א הקיים מניחים שמקור הנתונים היה תמורה של 1 עד 100 ומספר אחד הוסר, כך שנותרו 99 ערכים נגישים. זו הבהרה ולא טענה שנאמרה בצילום. ללא תחום ידוע ומספרי הופעות אין אפשרות לזהות חסר יחיד בוודאות.
+
+### English clarification
+
+Source does not explicitly specify the value domain or whether one hundred means original range or remaining length. Integrate as existing Part A under the added assumption: original permutation 1..100, one removed, ninety-nine accessible entries. This is an editorial clarification, not source text. Without a known domain/multiplicity contract no unique missing value is inferable.

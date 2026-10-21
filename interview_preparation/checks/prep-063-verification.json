@@ -1,0 +1,14 @@
+{
+  "question_id": "PREP-063",
+  "status": "passed",
+  "scale_checks": 16,
+  "independent_opposite_endpoint_coordinate_checks": 720,
+  "constant_velocity_alignment_checks": 8241,
+  "piecewise_bounded_adversary_samples": 200,
+  "orbit_fraction": "6/25",
+  "normalized_angular_advantage": "1/6",
+  "normalized_sprint_time": "19/25 =0.76",
+  "fox_best_endpoint_time": "pi/4 \u22480.785398",
+  "strict_margin": 0.02539816339744827,
+  "limits": "Numerical samples check formulas and geometry; universal correctness follows from the written speed inequalities, not finite simulation. Fox restricted to shore, continuous observation, ideal point agents, arbitrary turns and immediate escape at shore are assumptions. No physical trial or optimality claim."
+}

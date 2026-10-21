@@ -1,0 +1,474 @@
+{
+  "PREP-064": {
+    "assumptions": {
+      "he": [
+        "פלט ללא סימן בן שלושה ביטים; ספירה מודולו 8, לא רוויה.",
+        "כל הדלגלגים משתמשים באותה חזית עולה; הבקרות עומדות בזמני ההכנה וההחזקה.",
+        "איפוס סינכרוני פעיל בגבוה מחזיר 000 וגובר על inc,dec. אות האיפוס נוסף כהבהרת תכנון.",
+        "שתי בקרות שוות, כולל שתיהן 1, גורמות להחזקה. שערי XOR מותרים; רכיבי FA/HA וסוכם או מחסר מוכנים אסורים."
+      ],
+      "en": [
+        "Unsigned three-bit output wraps modulo eight rather than saturating.",
+        "All flip-flops share one rising clock edge; controls meet setup/hold.",
+        "Synchronous active-high reset loads 000 and overrides inc/dec; reset was added as an explicit engineering convention.",
+        "Equal controls, including both one, hold. XOR gates are allowed; FA/HA and prebuilt arithmetic blocks are forbidden."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "זיכרון הדרוש לייצוג כל שמונת ערכי המונה.",
+        "result": "שלושה דלגלגים מספיקים ונחוצים; לוגיקה צירופית של אותות היפוך ושערי XOR.",
+        "proof": "מונה העובר בין שמונה ערכי פלט שונים חייב להבחין בשמונה מצבים, ולכן נדרשים לפחות שלושה ביטי זיכרון. המימוש משתמש בדיוק בשלושה.",
+        "scope": "אין הוכחה למינימום שערים, שטח, הספק או השהיה; האיפוס ולוגיקת הספרייה משפיעים על המימוש הפיזי."
+      },
+      "en": {
+        "criterion": "Storage required to represent all eight counter values.",
+        "result": "Three flip-flops are necessary and sufficient, with combinational toggle logic and XOR gates.",
+        "proof": "Eight distinguishable output values require at least three state bits; this construction uses exactly three.",
+        "scope": "No minimum gate-count, area, power or delay proof; reset and cell-library choices affect physical implementation."
+      }
+    },
+    "verification": {
+      "he": "עברו 32 מעברי מצב ובקרה ועוד 32 מקרי עדיפות איפוס. נבדקו כל 43,688 רצפי הבקרה באורכים 0–6 מכל שמונת המצבים, הכוללים 247,584 חזיתות, וכל 32,768 רצפי הבקרה והאיפוס באורך 4, הכוללים 131,072 חזיתות. משוואות השערים הושוו לאורקל אריתמטי עצמאי. מודל פייתון בלבד; ללא קומפילציית HDL, סימולציה, סינתזה או תזמון פיזי.",
+      "en": "Passed 32 state/control transitions and 32 reset-priority cases. Checked all 43,688 control streams of lengths zero through six from eight starting states, covering 247,584 edges, and all 32,768 length-four control/reset streams covering 131,072 edges. Gate equations were compared with an independent arithmetic oracle. Python models only; no HDL compilation/simulation, synthesis or physical timing."
+    },
+    "edge_cases": {
+      "he": [
+        "111 בעלייה עובר ל־000; 000 בירידה עובר ל־111.",
+        "inc=dec=1 מחזיק בדיוק כמו inc=dec=0.",
+        "איפוס פעיל יחד עם פקודת ספירה מחזיר אפס.",
+        "בהיעדר חזית שעון הפלט אינו משתנה; ללא איפוס או אתחול ידוע אין להניח מצב התחלתי פיזי.",
+        "011 בעלייה ו־100 בירידה הופכים שלושה ביטים יחד לפי המצב הישן."
+      ],
+      "en": [
+        "111 increment wraps to 000; 000 decrement wraps to 111.",
+        "Both controls one hold exactly as both zero do.",
+        "Reset together with a count command returns zero.",
+        "No clock edge means no output update; without reset or known initialization, hardware starting state is not guaranteed.",
+        "011 up and 100 down toggle all three bits using the old state."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לתת עדיפות ל־inc כאשר שתי הבקרות 1; המקור דורש החזקה.",
+        "להשתמש בבלוק סוכם או מחסר למרות איסור FA/HA.",
+        "להשתמש בביט שכבר התעדכן בחישוב הביט הבא באותה חזית.",
+        "לחבר q0 לשעון של הדלגלג הבא או לחסום שעון בשער פשוט.",
+        "לדרוש רוויה ב־0 וב־7 בלי לציין שזה שינוי מן ההנחה של מודולו 8."
+      ],
+      "en": [
+        "Prioritizing inc when both controls are one; the source requires hold.",
+        "Using an adder/subtractor block despite the FA/HA restriction.",
+        "Using already-updated low bits to compute higher bits at the same edge.",
+        "Clocking a later flip-flop from q0 or gating the clock with a plain gate.",
+        "Silently saturating at zero/seven instead of the declared modulo-eight convention."
+      ]
+    },
+    "interview_answer": {
+      "he": "אצור פקודות עלייה וירידה בלעדיות. הביט הנמוך מתהפך בכל ספירה. ביט 1 מתהפך בעלייה אם q0=1 ובירידה אם q0=0; ביט 2 מתהפך בעלייה אם q1q0=11 ובירידה אם הם 00. לכל דלגלג D אחבר q XOR T. כך שלושה דלגלגים באותו שעון מממשים ספירה מעגלית, ושתי בקרות שוות מחזיקות.",
+      "en": "Decode exclusive up/down requests. The low bit toggles on every count; bit one toggles up at q0=1 or down at q0=0; bit two toggles up at low pair 11 or down at 00. Feed each DFF with q XOR T. Three same-clock flip-flops implement the wrapping counter, while equal controls hold."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד תשנו את המעגל למונה רווי שאינו עובר מ־7 ל־0 או מ־0 ל־7?",
+        "direction": "זהו מפרט אחר. חסמו את U כאשר כל שלושת q הם 1 ואת D כאשר כולם 0, ואז השתמשו באותה לוגיקת היפוך. בדקו במפורש את שני הגבולות ואת מצב שתי הבקרות יחד.",
+        "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+      },
+      "en": {
+        "question": "How would you change this to a saturating counter that does not wrap at zero/seven?",
+        "direction": "This changes the contract. Block U when all three q bits are one and D when all are zero, then reuse the toggle logic. Explicitly test both boundaries and simultaneous controls.",
+        "status": "Follow-up prepared in content; not connected to the interactive follow-up queue."
+      }
+    }
+  },
+  "PREP-060": {
+    "assumptions": {
+      "he": [
+        "מתחילים ב־0 ובכל תור מוסיפים בדיוק 1,2 או 3 לסכום המשותף.",
+        "ניצחון בהגעה מדויקת ל־21; אין דילוג או חריגה מהיעד.",
+        "שני השחקנים רואים את הסכום, והאסטרטגיה צריכה לעבוד מול כל בחירה חוקית."
+      ],
+      "en": [
+        "Start at zero; each alternating turn adds exactly one, two or three to a shared total.",
+        "Win on exactly twenty-one; no passing or overshooting.",
+        "The total is public and the strategy must withstand every legal response."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "ניצחון מובטח לשחקן הראשון.",
+        "result": "פתיחה ב־1 ותגובה של 4 פחות מהלך היריב.",
+        "proof": "אחרי כל תור שלנו הסכום 1 מודולו 4, ולכן נגיע ל־21; היריב יכול להגיע לכל היותר ל־20 אחרי 17.",
+        "scope": "אין טענה למינימום תורות. קבלת החלטה O(1) במודל מספרים בגודל מילה; יעד 21 קבוע."
+      },
+      "en": {
+        "criterion": "Forced first-player victory.",
+        "result": "Open with one, then respond with four minus the opponent move.",
+        "proof": "Our end-of-turn total stays one modulo four through twenty-one; after seventeen the opponent reaches at most twenty.",
+        "scope": "No minimum-turn claim. Move selection is O(1) in a word-operation model; this target is fixed."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "בדיקות מודל פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
+        "method": "אורקל תכנון דינמי עצמאי של מצבים מנצחים ומפסידים, ובדיקה מול כל בחירות היריב.",
+        "coverage": "22 סכומים, 243 רצפי תגובות שלמים ו־13 קלטים לא תקינים.",
+        "script_path": "checks/check_prep_060.py",
+        "scope": "בדיקת משחק סופי מדויק; אין בכך אישור מקצועי אנושי או פעילות לומד באתר."
+      },
+      "en": {
+        "status": "Python-model checks passed; independent expert review pending.",
+        "method": "Independent winning/losing-state DP and every opponent response sequence.",
+        "coverage": "Twenty-two totals, 243 full reply sequences, thirteen invalid inputs.",
+        "script_path": "checks/check_prep_060.py",
+        "scope": "Exact finite-game verification, not human expert approval or learner activity."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "בסכומים 18,19,20 אפשר לנצח מיד.",
+        "17 הוא מצב מפסיד למי שתורו, לא למי שהשאיר אותו ליריב.",
+        "ב־21 כבר אין מהלך.",
+        "השלמה ל־4 תמיד בין 1 ל־3 ואינה חורגת מ־21 במסלול האסטרטגיה."
+      ],
+      "en": [
+        "Totals eighteen through twenty allow an immediate win.",
+        "Seventeen loses for the player to move, not for the player who left it.",
+        "At twenty-one play is over.",
+        "The complement lies in one through three and never overshoots on the strategy path."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "פתיחה ב־3 בגלל בלבול עם גרסה שבה מי שאומר 21 מפסיד.",
+        "ניסיון להשלים ל־3 במקום ל־4.",
+        "החלפת משמעות מצב מנצח ומפסיד בלי לציין תור של מי.",
+        "בדיקה רק נגד מהלכים אקראיים במקום הוכחה לכל תגובה."
+      ],
+      "en": [
+        "Opening with three by recalling a version where saying twenty-one loses.",
+        "Complementing to three instead of four.",
+        "Calling states winning or losing without specifying whose turn it is.",
+        "Testing only random opposition instead of proving every reply."
+      ]
+    },
+    "interview_answer": {
+      "he": "אפתח ב־1. בכל תור הבא אוסיף 4 פחות מה שהיריב הוסיף. כך אחרי התורות שלי נקבל 1,5,9,13,17,21. אחרי 17 היריב יכול להגיע רק עד 20 ולכן אני מגיע ל־21. זו אסטרטגיה מובטחת לכל תגובה חוקית.",
+      "en": "Open with one and thereafter add four minus the opponent’s addition. Our turn-end totals are one, five, nine, thirteen, seventeen and twenty-one. After seventeen the opponent reaches at most twenty, so we reach twenty-one first against every legal reply."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם היעד הוא T ומותר להוסיף 1 עד m?",
+        "answer_outline": "כשניצחון הוא בהגעה מדויקת, משאירים ליריב סכומים שהמרחק שלהם מהיעד מתחלק ב־m+1. אם המרחק ההתחלתי אינו מתחלק, מוסיפים את השארית ואז משלימים ל־m+1. אם מתחלק, לשחקן השני יש אסטרטגיה מול יריב מושלם. יש לשמר את אותם כללי חריגה ותור.",
+        "integration_status": "המשך מוכן בתוכן; אינו מחובר לתור ההמשך החי."
+      },
+      "en": {
+        "question": "What changes for target T with additions one through m?",
+        "answer_outline": "For exact-target wins, leave positions whose remaining distance is divisible by m+1. If the initial remainder is nonzero, open with it and then complement to m+1. If zero, the second player can force the win under perfect play. Keep the same overshoot and turn rules.",
+        "integration_status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-061": {
+    "assumptions": {
+      "he": [
+        "מוסכמת האינדוקס היא F(0)=0 ו־F(1)=1.",
+        "קלט int אי־שלילי בלבד, לא bool; הפלט מספר שלם מדויק.",
+        "ניתוח פעולות בעלות יחידה מופרד מעלויות מספרים גדולים.",
+        "המימושים הרקורסיביים כפופים לעומק המחסנית; המטמון מקומי לקריאה אחת."
+      ],
+      "en": [
+        "Convention F(0)=0, F(1)=1.",
+        "Accept nonnegative exact int indices, excluding bool; return exact integers.",
+        "Unit-cost operation counts are distinguished from big-integer costs.",
+        "Recursive versions obey stack limits; memoization is local to one call."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "ביטול חישובים חוזרים והפחתת זיכרון כשנדרש איבר יחיד.",
+        "result": "נאיבי Theta(phi^n) פעולות ו־O(n) מסגרות; מטמון O(n) פעולות וערכים; איטרציה O(n) פעולות ומספר קבוע של ערכים.",
+        "proof": "מספר הקריאות הנאיבי הוא 2F(n+1)−1. מטמון מחשב כל אינדקס פעם אחת, והאינווריאנט האיטרטיבי שומר שני איברים סמוכים.",
+        "scope": "אין טענה לאלגוריתם המהיר ביותר. באיטרציה מדויקת יש O(n) ביטי ערכים ו־O(n^2) זמן ביטים עם חיבור ליניארי; מטמון הערכים דורש O(n^2) ביטים."
+      },
+      "en": {
+        "criterion": "Eliminate repeated work and reduce storage when only one term is required.",
+        "result": "Naive: Theta(phi^n) operations and O(n) frames; memoized: O(n) operations/values; iterative: O(n) operations and constant value count.",
+        "proof": "Naive calls equal 2F(n+1)−1. Memoization computes each index once; iteration maintains adjacent Fibonacci values.",
+        "scope": "No fastest-method claim. Exact iteration stores O(n) value bits and takes O(n^2) bit time with linear addition; cached term values require O(n^2) bits."
+      }
+    },
+    "verification": {
+      "he": {
+        "status": "בדיקות קוד פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
+        "method": "השוואה לאורקל הכפלה מהירה עצמאי ומדידת מספר הקריאות בפועל.",
+        "coverage": "25 אינדקסים ברקורסיה נאיבית, 201 עם מטמון, 1,001 באיטרציה; 25 בדיקות ספירת קריאות; אינדקסים 2,000 ו־10,000; 21 בדיקות קלט לא תקין.",
+        "script_path": "checks/check_prep_061.py",
+        "scope": "אין ניסוי שמוכיח סיבוכיות מתזמון; הגבולות מנומקים בנפרד. רקורסיה נבדקה באינדקסים מתונים, ואין בכך אישור אנושי."
+      },
+      "en": {
+        "status": "Python-code checks passed; independent professional review pending.",
+        "method": "Independent fast-doubling oracle and profiling of actual naive call counts.",
+        "coverage": "Twenty-five naive indices, 201 memoized, 1,001 iterative; twenty-five call-count checks; indices 2,000 and 10,000; twenty-one invalid inputs.",
+        "script_path": "checks/check_prep_061.py",
+        "scope": "No timing-based asymptotic proof; complexity is reasoned separately. Recursion checked at modest indices; no human expert approval."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "n=0 מחזיר 0 ו־n=1 מחזיר 1.",
+        "שלילי, שבר, מחרוזת ו־bool נדחים.",
+        "שני איברים שווים בערכם עדיין צריכים להשתתף נכון בעדכון הזוג.",
+        "באינדקסים גדולים גם מטמון רקורסיבי עלול להיתקל במגבלת מחסנית.",
+        "מספר משתנים קבוע אינו מספר ביטים קבוע."
+      ],
+      "en": [
+        "n=0 returns zero; n=1 returns one.",
+        "Negative, fractional, string and bool inputs are rejected.",
+        "Equal adjacent values still participate correctly in pair updates.",
+        "Even memoized recursion may hit the stack limit at large n.",
+        "Constant variable count is not constant bit storage."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "רק תנאי עצירה n=1, שגורם לבעיה בקלט 0.",
+        "טענה שזמן הרקורסיה הנאיבית ליניארי בגלל עומק המחסנית.",
+        "החלפת a ואז חישוב b מהערך החדש במקום עדכון מקביל.",
+        "הצהרה שמטמון מעלים את עומק הרקורסיה.",
+        "טענה למקום O(1) ביטים או לפעולות Python בזמן קבוע ללא תלות באורך המספר."
+      ],
+      "en": [
+        "Using only an n=1 base case and mishandling zero.",
+        "Calling naive running time linear because stack depth is linear.",
+        "Updating a before calculating b from old values.",
+        "Claiming caching removes recursive depth.",
+        "Claiming O(1) bits or size-independent Python arithmetic."
+      ]
+    },
+    "interview_answer": {
+      "he": "הרקורסיה הישירה מחברת את שני האיברים הקודמים אך מחשבת שוב תתי־בעיות: הזמן Theta(phi^n), ועומק המחסנית O(n). מטמון מוריד את מספר החישובים ל־O(n) עם O(n) ערכים ומחסנית. אם נדרש רק F(n), שני איברים מתעדכנים במקביל בלולאה: O(n) פעולות ומספר משתנים קבוע. במספרים מדויקים העלות תלויה גם במספר הביטים.",
+      "en": "Direct recursion sums the previous two values but repeats subproblems, taking Theta(phi^n) operations and O(n) stack depth. Memoization reduces this to O(n) computed values and stack. For only F(n), loop with two simultaneously updated terms: O(n) operations and constant variable count. Exact-integer costs also depend on bit length."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך אפשר להקטין את מספר פעולות החשבון מעבר למעבר על כל האינדקסים?",
+        "answer_outline": "אפשר להשתמש בזהויות הכפלה מהירה שמחשבות זוג F(k),F(k+1) ומשלבות אותו לאינדקס כפול. כך יש O(log n) רמות ומספר פעולות חשבון מסדר זה, אך הכפל והמספרים הגדולים אינם בעלי עלות ביטים קבועה. זה שיפור נוסף, לא נדרש כדי להבין את המטמון והאיטרציה.",
+        "integration_status": "המשך מוכן בתוכן; אינו מחובר לתור ההמשך החי."
+      },
+      "en": {
+        "question": "How can the arithmetic-operation count improve beyond visiting every index?",
+        "answer_outline": "Fast-doubling identities compute the pair F(k),F(k+1) and combine to a doubled index in O(log n) levels/arithmetic operations. Multiplications and large integers are not constant bit cost. This is an additional extension, not required for memoization and iteration.",
+        "integration_status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-062": {
+    "assumptions": {
+      "he": [
+        "כיוון קדימה משותף, התחלה מסונכרנת ושעונים שווים.",
+        "מרחק הסימנים הוא מספר שלם חיובי של צעדי יחידה; זו הנחת עריכה ולא נתון מפורש במקור.",
+        "מצנחים הם סימני נקודה קבועים; החיישן נבדק במקום הנוכחי בלבד ואינו מזהה את בעל הסימן.",
+        "כל הוראה מבוצעת עולה יחידת זמן, כולל בדיקה וקפיצה; קפיצה מותנית שלא מבוצעת אינה צורכת זמן.",
+        "שני הסוכנים נעים ברציפות בזמן צעד. מפגש הוא מקום משותף, לא דרישת גילוי או עצירה אוטומטית.",
+        "למעבד המקומי רק מונה פקודות וקריאת סימן; נתוני הסביבה מוסתרים ממנו."
+      ],
+      "en": [
+        "Common forward orientation, synchronized start and equal clocks.",
+        "Positive integer marker separation in unit steps is an explicit editorial assumption, not a stated source fact.",
+        "Parachutes are fixed point markers; the sensor tests only the current location and cannot identify ownership.",
+        "Every executed primitive costs one tick, including test and jump; a skipped guarded jump consumes no execution tick.",
+        "Movement is continuous during its tick. Meeting means shared location, not automatic detection or stopping.",
+        "The local CPU has only a program counter and marker bit; environment data is hidden from it."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "הבטחת מפגש בכל מרחק שלם במודל ההוראות שנבחר.",
+        "result": "פגישה בזמן 6D−1; זיכרון מקומי קבוע וזמן ליניארי במרחק.",
+        "proof": "לפני הסימן הפער D; אחרי המעבר ללולאה המהירה הוא קטן באחת בכל שלוש הוראות.",
+        "scope": "אין טענה למינימום זמן או הוראות; לא מכסה מרחק ממשי שרירותי, כיוונים בלתי תלויים, שעונים שונים או בקרה חינמית."
+      },
+      "en": {
+        "criterion": "Guaranteed meeting for every integer separation in the declared instruction model.",
+        "result": "Meeting at 6D−1; constant local memory and linear time in separation.",
+        "proof": "The gap is D before marker discovery; afterward it decreases by one per three-instruction cycle.",
+        "scope": "No minimum-time or minimum-program claim; does not cover arbitrary real separation, independent orientations, unequal clocks or free control."
+      }
+    },
+    "verification": {
+      "he": "עברו 1,536 הרצות מפרש: מרחקים 1 עד 256, שני סדרי סוכנים ושלוש הזזות צירים. זמן המפגש וזמן בדיקת הסימן הושוו לנוסחאות עצמאיות. נבדקו מרחק אפס וארבע דוגמאות חצי־שלמות שבהן הסימן מוחמץ, וכן כיווני קדימה הפוכים. החיישן המקומי אינו מקבל מיקומים. זו בדיקת מודל סופית ולא ניסוי פיזי או הוכחה למודלים אחרים.",
+      "en": "Passed 1,536 interpreter runs: distances 1..256, both agent orders and three translations. Meeting and marker-test times matched independent formulas. Checked initial coincidence, four noninteger marker misses and opposite forward directions. The local sensor never receives positions. Finite model checks are not physical experiments or proof for other execution models."
+    },
+    "edge_cases": {
+      "he": [
+        "לבדוק סימן לפני הצעד הראשון יזהה אצל שניהם את המצנח העצמי ולא ישבור סימטריה.",
+        "מרחק של יחידה אחת מוביל למפגש בזמן 5 ולא בזמן 3 במודל שמחשב בנפרד בדיקה וקפיצה.",
+        "אין צורך לשנות קוד כשהסוכן השני מתחיל משמאל; התפקידים מתחלפים מאליהם.",
+        "סימן במרחק חצי יחידה עלול שלא להידגם לעולם.",
+        "התחלה באותה נקודה היא מפגש בזמן אפס.",
+        "המודל אינו דורש זיהוי מפגש מתוך התוכנית עצמה."
+      ],
+      "en": [
+        "Testing before the first step sees each agent’s own marker and does not break symmetry.",
+        "Unit separation meets at 5, not 3, when test and jump each consume their own tick.",
+        "If the other agent starts on the left, roles swap automatically without a code change.",
+        "A marker half a unit away may never be sampled.",
+        "Coincident starts are a meeting at time zero.",
+        "The program itself need not detect that a meeting has happened."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להניח ששתי תוכניות זהות עם מהירות זהה ייפגשו בלי אירוע השובר סימטריה.",
+        "לזהות את המצנח העצמי בתחילת העבודה ולעבור אצל שניהם למהירות גבוהה.",
+        "לספור בדיקה וקפיצה פעם כזמן אפס ופעם כיחידה.",
+        "להשתמש בפקודת המתנה או סעיף אחר שלא הותרו.",
+        "לקרוא בקוד למרחק או למיקום האחר שהסוכן אינו יודע.",
+        "להרחיב את ההוכחה למרחקים לא שלמים או לכיוונים שונים בלי פתרון נוסף."
+      ],
+      "en": [
+        "Expecting identical programs with identical motion to meet without a symmetry-breaking observation.",
+        "Detecting the initial own marker and making both agents fast.",
+        "Counting tests and jumps as free in one part and costly in another.",
+        "Introducing an unauthorized WAIT or ELSE.",
+        "Reading hidden separation or the other position from inside agent code.",
+        "Generalizing the proof to noninteger separation or different orientations without another solution."
+      ]
+    },
+    "interview_answer": {
+      "he": "שניהם נעים באותו כיוון בלולאה איטית: צעד, בדיקת מצנח וקפיצה. רק האחורי יגיע למצנח שהקדמי השאיר. הוא יעבור ללולאה של שני צעדים וקפיצה, ולכן יתקדם בממוצע פי שניים ויסגור פער. במודל של הוראה אחת ליחידת זמן ומרחק שלם הפגישה בזמן 6D−1. אותם תנאי כיוון ותזמון חייבים להיות מפורשים.",
+      "en": "Both advance in the same direction using a slow step/test/jump loop. Only the trailer reaches the leader’s fixed marker, then switches to two steps and a jump. Its average speed doubles and closes the gap. With one tick per executed primitive and integer separation, meeting occurs at 6D−1. Direction and timing assumptions must be explicit."
+    },
+    "source_ambiguities": {
+      "he": {
+        "distance": "X במקור לא צוין כשלם. הפתרון הדיסקרטי נבדק רק לסריג של צעדי יחידה; לחצי־יחידה קיימת דוגמה נגדית.",
+        "timing": "הצילומים אינם קובעים מחיר לבדיקה ולקפיצה; המודל כאן מעניק יחידה לכל הוראה מבוצעת.",
+        "orientation": "כיוון קדימה משותף והתחלה מסונכרנת נאמרים במפורש בעריכה.",
+        "operation_count": "מקור הרכבות אומר שלוש פעולות אך מונה MF,MB,ifP,GOTO; נשמר הטקסט המקורי ומובהר שבעריכה יש ארבע צורות.",
+        "static": "המילה סטטי במקור הרובוטים מתארת את המצנח, לא את הרובוט."
+      },
+      "en": {
+        "distance": "Source X is not explicitly integer. The discrete solution assumes a unit lattice; half-unit separation provides a counterexample.",
+        "timing": "The screenshots do not assign costs to tests/jumps; this model charges one tick to every executed primitive.",
+        "orientation": "Common forward direction and synchronized start are explicit editorial additions.",
+        "operation_count": "The train source says three operations but listsMF,MB,ifP,GOTO; the literal source is retained and four forms are clarified.",
+        "static": "Static in the robot source refers to the parachute marker, not the moving robot."
+      }
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם בדיקה וקפיצה הן חינמיות או שהמרחק הוא חצי יחידה?",
+        "direction": "הסבירו מדוע יחס המהירויות או זיהוי הסימן כבר אינם מובטחים בתוכנית הנתונה. צריך לבחור במפורש מודל תנועה וחישה אחר או אלגוריתם שמייצר האטה ממשית; אין להסיק שהמודל החדש נפתר מאותו חישוב.",
+        "status": "המשך מוכן בתוכן; אינו מחובר לתור ההמשך החי."
+      },
+      "en": {
+        "question": "What changes if test/jump are free or the markers are half a unit apart?",
+        "direction": "Explain why this program no longer guarantees the speed ratio or marker observation. Specify another movement/sensing model or a genuinely slowing algorithm; do not reuse the old proof unchanged.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-063": {
+    "assumptions": {
+      "he": [
+        "אגם עגול ברדיוס חיובי R; מהירות ברווז מרבית v חיובית ושועל עד 4v.",
+        "השועל נע רק לאורך הגדה, בלי לקצר דרך המים.",
+        "הברווז מתחיל בנקודה פנימית בטוחה ויכול לשחות תחילה למרכז; ההוכחה מתחילה אחרי הכנה זו.",
+        "התבוננות ותנועה רציפות, שינוי כיוון אידאלי וסוכנים נקודתיים.",
+        "בריחה היא הגעה לגדה לפני השועל באותה נקודה, עם יתרון זמן ממש."
+      ],
+      "en": [
+        "Circular pond with positive radius R, positive duck speed v and fox speed at most 4v.",
+        "Fox motion is restricted to the shore, without water shortcuts.",
+        "A safe interior duck may first swim to the center; the proof begins after this preparation.",
+        "Continuous observation/motion, ideal direction changes and point agents.",
+        "Escape means arriving at a shore endpoint strictly before the fox reaches that same point."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "בנייה שמבטיחה בריחה מול כל תגובת שועל מותרת ביחס מהירויות ארבע.",
+        "result": "רדיוס 6R/25, יישור זוויתי לניגוד, וספרינט בזמן 19R/(25v).",
+        "proof": "v/r גדול מ־4v/R; במצב נגדי השועל צריך לפחות חצי היקף, וזמנו גדול ממש מזמן השחייה הנותר.",
+        "scope": "אין טענה לזמן מינימלי או ליחס מהירויות קריטי מיטבי; מדובר באסטרטגיה מספיקה תחת ההנחות האידאליות."
+      },
+      "en": {
+        "criterion": "A strategy guaranteeing escape against every allowed fox response at speed ratio 4.",
+        "result": "Radius 6R/25, angular alignment to opposition, then radial sprint in 19R/(25v).",
+        "proof": "v/r exceeds 4v/R; at opposition the fox needs at least half the shoreline, taking strictly longer than the remaining swim.",
+        "scope": "No minimum-time or optimal critical-speed-ratio claim; this is a sufficient ideal-model construction."
+      }
+    },
+    "verification": {
+      "he": "עברו 16 בדיקות קנה מידה, 720 בדיקות יעד נגדי בקואורדינטות עצמאיות, 8,241 מקרי יישור לשועל במהירות זוויתית קבועה ו־200 דוגמאות לשועל עם מהירות משתנה במקטעים. יתרון הזמן המנורמל כ־0.025398. ההוכחה לכל מדיניות היא חסמי המהירות ואורך הקשת; הדוגמאות אינן מחליפות אותה ואין ניסוי פיזי.",
+      "en": "Passed 16 scale checks,720 independent opposite-endpoint coordinate checks,8,241 constant-angular-velocity alignment cases and 200 piecewise-varying fox samples. Normalized strict margin is about 0.025398. The all-policy proof is the speed/arc inequalities; samples do not replace it and are not a physical experiment."
+    },
+    "edge_cases": {
+      "he": [
+        "מ־R/4 בדיוק אין יתרון זוויתי ממש.",
+        "רדיוס קטן מדי כמו R/5 אינו מספיק לספרינט רדיאלי בטוח בשיטה הזאת.",
+        "אם כבר נמצאים במצב נגדי אפשר לדלג על ההקפה.",
+        "השועל רשאי לשנות כיוון כרצונו ועדיין כפוף לחסם מהירות זוויתית.",
+        "בחירה של יעד קבוע בספרינט היא חלק מההוכחה.",
+        "מצב התחלתי של תפיסה על הגדה אינו ניתן לתיקון על ידי התוכנית."
+      ],
+      "en": [
+        "ExactlyR/4 supplies no strict angular advantage.",
+        "Too small a radius such asR/5 does not guarantee this strategy’s radial finish.",
+        "Already opposite means the orbiting phase can be skipped.",
+        "The fox may change direction freely but still obeys the angular-speed bound.",
+        "A fixed endpoint during the sprint is part of the proof.",
+        "An initial capture at the shore cannot be undone by the strategy."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשוות רק מהירות קווית ולהסיק שאי אפשר לברוח.",
+        "לרוץ ישר מהמרכז ולשכוח שהשועל מגיע בחצי היקף מהר יותר.",
+        "לבחור כל r קטן מ־R/4 בלי לבדוק את זמן הספרינט.",
+        "להניח שהשועל מחויב למדיניות נוחה או שיישאר במקום.",
+        "להרשות לשועל לשחות או לקצר בקוטר בניגוד למודל.",
+        "לטעון ליחס מהירויות מרבי על סמך הבנייה המספיקה בלבד."
+      ],
+      "en": [
+        "Comparing only linear speed and declaring escape impossible.",
+        "Sprinting from the center while forgetting the fox covers half a circumference sooner.",
+        "Choosing anyr<R/4 without checking final sprint time.",
+        "Assuming a cooperative fox policy or a stationary fox.",
+        "Letting the fox swim or cut across a diameter contrary to the model.",
+        "Claiming an optimal critical speed ratio from this sufficient construction alone."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשחה למעגל ברדיוס 0.24R, שבו המהירות הזוויתית שלי גדולה מזו של שועל המהיר פי ארבע על הגדה. אקיף עד שאהיה מולו ואז אשחה ישר החוצה ליעד קבוע. לי נותר 0.76R/v זמן; לו לפחות πR/(4v), בערך 0.7854R/v. לכן אגיע לפניו. הבחירה ברדיוס חייבת לאפשר גם יתרון זוויתי וגם זמן ספרינט קצר יותר.",
+      "en": "Swim to radius 0.24R, where the duck’s angular speed exceeds the four-times-faster shore fox’s. Orbit until opposite, then sprint radially to a fixed endpoint. The duck needs 0.76R/v while the fox needs at leastpiR/(4v), about 0.7854R/v, so the duck arrives first. The chosen radius must satisfy both angular and sprint inequalities."
+    },
+    "source_ambiguities": {
+      "he": {
+        "start": "המקור אינו קובע נקודת התחלה. מכל נקודה פנימית בטוחה אפשר לשחות למרכז, ולכן השימוש במרכז בהוכחה אינו מצמצם את השאלה.",
+        "fox_region": "השועל מוגבל לגדה במודל הערוך; מתן אפשרות שחייה משנה את הבעיה.",
+        "geometry": "מודל נקודתי עם תנועה רציפה, ללא זמני תגובה או תאוצה, נאמר במפורש.",
+        "numeric_tag": "התגית 2312313 נשמרת כמקור לא מסווג ואינה חברת השמה או קושי מקצועי."
+      },
+      "en": {
+        "start": "The source does not specify start position. Any safe interior point can first reach the center, so centering the proof does not restrict the original interior start.",
+        "fox_region": "The edited fox is shore-only; swimming would change the problem.",
+        "geometry": "Point agents, continuous motion and no reaction/acceleration delay are explicit.",
+        "numeric_tag": "Source tag 2312313 is retained as an unclassified tag, not a company or calibrated difficulty."
+      }
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איזה תנאי מספיק על יחס מהירויות כללי k מתקבל מאותה שיטה של מעגל פנימי ואחריו קו רדיאלי?",
+        "direction": "צריך r/R<1/k ליתרון זוויתי וגם r/R>1−π/k לספרינט. קיים רדיוס כזה כאשר k<π+1. זהו תנאי מספיק לשיטה הזאת בלבד; אין להסיק שזה היחס הקריטי המיטבי לכל אסטרטגיה.",
+        "status": "המשך מוכן בתוכן; אינו מחובר לתור ההמשך החי."
+      },
+      "en": {
+        "question": "What sufficient condition on a general speed ratiok follows from this inner-circle-then-radial strategy?",
+        "direction": "Require r/R<1/k for angular advantage and r/R>1−pi/k for the sprint. Such a radius exists fork<pi+1. This is sufficient for this strategy, not a claim of the optimal critical ratio over all strategies.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    }
+  }
+}

@@ -307,3 +307,97 @@ The attached code is a protocol test model. Real prisoners access only their own
 - [Verification evidence](../checks/prep-054-verification.json)
 
 No chat hint/solution request is recorded as learner activity. Publication is a pilot content action, not professional approval. The authored follow-up remains unconnected to the interactive queue.
+
+## תוספת מקור מ־21 באוקטובר 2026 — וריאציית מאה ואחד אסירים
+
+נוספה וריאציה בלבד. השאלה, הרמזים והפתרון המקוריים של 17 האסירים נשמרים לעיל. הפתרון החדש מוצע בסיוע AI וביקורת מקצועית, בדיקת תרגום אנושית וזכויות שימוש ממתינות.
+
+![מקור הווריאציה](../sources/prep-054-101-prisoners.png)
+
+אתה יחד עם עוד 100 אסירים, אתם נקראים להיכנס לחדר עם שתי מנורות (אינסוף פעמים לצורך העניין). כשאתה נקרא לחדר אתה חייב לשנות את המצב של המנורות בחדר (להדליק או לכבות 1 או 2 נורות).
+מנהל בית הכלא אומר לכם שהוא נותן לכם אפשרות לומר לו מתי הנקודה שבה כל האסירים היו בחדר. אם תצדקו כולם תצאו לחופשי, אם לא יהרוג את כולכם.
+
+מותר לכם לדבר לפני פעם אחת, ובמשך הקוראה לחדר אף אחד לא יודע כשקוראים למישהו אחר ומתי.
+
+א. מה האלגוריתם שלך לפיתרון (ההנחה היא שהמנורות מכובות בהתחלה)?
+ב. אם אתה לא יודע את תנאי ההתחלה, כלומר אתה לא יודע מה המצב בחדר לפני שהראשון נכנס אליו, איך היית פותר?
+
+### וריאציה נוספת — אתם ועוד מאה אסירים, מאה ואחד בסך הכול
+
+זו וריאציה נפרדת של אותו מנגנון תקשורת, ואינה מחליפה את שאלת 17 האסירים שלמעלה. אתם ועוד 100 אסירים נכנסים בתורם לחדר עם שתי נורות שמצבן גלוי. מותר להסכים על תוכנית פעם אחת מראש; אחר כך כל אסיר יודע רק על ביקוריו שלו ועל הנורות בביקורו. בכל ביקור חייבים לשנות מצב של **נורה אחת או שתי נורות**. מותר לכן לשנות בדיוק אחת, אך אסור להשאיר את שתיהן כפי שהיו.
+
+א. שתי הנורות כבויות בהתחלה, והדבר ידוע לכולם. מתי אפשר להכריז בבטחה שכל 101 האסירים ביקרו?
+
+ב. המצב ההתחלתי של שתי הנורות אינו ידוע. תנו תוכנית בטוחה גם למצב זה.
+
+הסבירו מדוע אין הכרזה מוקדמת שגויה ומדוע יהיה סיום תחת ביקורים חוזרים והוגנים של כל אסיר. אינסוף הזדמנויות אינו לבדו תנאי הוגנות ואין חסם ביקורים קבוע. זהו שינוי גם במספר האסירים וגם בהיתר לשנות אחת או שתיים, לעומת חובת שינוי של בדיוק מתג אחד בגרסה הראשית. אין תקשורת נוספת, סימנים או תזמון משותף לאחר ההסכמה.
+
+1. מנו נכון את המשתתפים: אתם ועוד מאה הם מאה ואחד. אפשר להשתמש בנורה אחת לאות ובשנייה לפעולות חובה שאינן נושאות מידע.
+2. במצב התחלתי כבוי ידוע, אות אחד מכל מדווח מספיק. חשבו כמה מדווחים יש אחרי שממנים סופר אחד.
+3. במצב התחלתי לא ידוע, נורה דלוקה יכולה להוסיף אות מדומה אחד. אפשרו שתי שליחות מכל מדווח והוכיחו שסף 200 אינו אפשרי אם אחד מתוך המאה לא ביקר.
+
+### פתרון מוצע לווריאציית 101 האסירים ושתי הנורות
+
+אתם ועוד 100 הם **101**, ולא 100. אפשר למנות אתכם לסופר, ואת מאה האחרים למדווחים. נורה אחת S תשמור אות שממתין לסופר, והנורה השנייה D תהיה נורת דמה.
+
+בשני הסעיפים משתמשים רק בפעולות שמשנות נורה אחת. הדבר חוקי גם כאשר מותר לשנות אחת או שתיים; אין חובה לנצל את האפשרות לשנות שתיים. בכל ביקור שבו לא מדליקים או מכבים את S לפי הכללים, הופכים את D. כך לעולם לא נשארות שתי הנורות ללא שינוי, ולעולם לא מוחקים אות בטעות באמצעות שינוי שתיהן.
+
+**א. שתיהן כבויות בהתחלה:** כל אחד ממאה המדווחים רשאי להדליק את S פעם אחת בלבד, ורק אם היא כבויה. אם היא דלוקה, או שכבר שלח, הוא הופך את D במקום. הסופר מכבה S דלוקה וסופר איסוף אחד; אם היא כבויה הוא הופך את D. כשהסופר מגיע ל־100 איסופים הוא מכריז. רק מדווח יכול ליצור הדלקה, כל מדווח עושה זאת לכל היותר פעם, ולכן 100 איסופים מוכיחים ביקור של כל מאה המדווחים. גם הסופר עצמו ביקר.
+
+**ב. מצב התחלתי לא ידוע:** כל מדווח רשאי להדליק S כבויה לכל היותר פעמיים בסך הכול, בביקורים נפרדים. הסופר מכבה וסופר כמקודם, אבל מכריז רק ב־200. נורת דמה שמתחילה דלוקה אינה משנה דבר; מצב התחלתי דלוק של S יכול להוסיף לכל היותר איסוף שגוי אחד.
+
+אם מדווח אחד מתוך המאה לא ביקר, 99 האחרים יכולים לספק לכל היותר 198 אותות. גם עם אות התחלתי שגוי מגיעים לכל היותר ל־199, ולכן אי אפשר להגיע ל־200 בלי שכולם ביקרו:
+
+```text
+missing one contributor: C <= 2*99 + 1 = 199 < 200
+```
+
+לא נדרש שכל מדווח יסיים את שתי שליחותיו לפני ההכרזה; צריך רק להוכיח שביקר. הסופר עצמו בהכרח ביקר כי ההכרזה נעשית במהלך ביקורו.
+
+**סיום והוגנות:** אם יש אות דלוק, ביקור עתידי של הסופר יכבה אותו ויספור. אם האות כבוי ועוד לא נאספו מספיק, יש מדווח עם מכסה שלא נוצלה, ותחת הוגנות יגיע ביקור מועיל. כל שליחה או איסוף מקדמים מכסה סופית. סדר הוגן מסתיים; סדר שאינו בוחר אסיר מסוים יכול להתעכב לעד, אך לא להפיק הכרזה שגויה. אין מספר ביקורים קבוע שמבטיח סיום, ואין שימוש בלוח זמנים או בידיעת ביקורים של אחרים.
+
+בדיקת המצבים הממצה של הסעיף הידוע בדקה 402 מצבים ו־1,196 מעברים; הסעיף הלא ידוע בדק 82,404 מצבים ו־324,772 מעברים בכל ארבע התחלות הנורות. נוספו 100 ו־400 ריצות פרטניות בהתאמה. נבדקו שימור אותות, סף בטוח, מכסה מקומית ושינוי של בדיוק נורה אחת בכל ביקור. זו בדיקת בטיחות של מודל, לא ניסוי עם אסירים או הוכחת סיום ללא הוגנות. קוד ותרשים נפרדים מצורפים לווריאציה; התוכן הראשי של 17 האסירים נשמר.
+
+![סיכום הסעיפים](../diagrams/prep-054-101-prisoners-he.png)
+
+### Additional variant — you plus one hundred others,101 prisoners total
+
+This is a separate variant of the same communication mechanism, not a replacement for the 17-prisoner question above. You and 100 others take turns in a room with two visible lights. One prior planning conversation is allowed; afterward each knows only their own visits and the lights observed on those visits. Every visit MUST change **one OR both lights**. Exactly one change is therefore permitted, but leaving both unchanged is forbidden.
+
+A. Both lights are initially OFF and everyone knows it. When can you safely declare that all 101 prisoners have visited?
+
+B. Neither light's initial state is known. Give a strategy safe for that case too.
+
+Prove no false early declaration and eventual termination under fair repeated visits by every prisoner. Unlimited opportunities alone do not supply fairness, and there is no fixed visit bound. This changes both prisoner count and permitted one-or-both actions, compared with the main version’s exactly-one toggle. No other communication, marks or shared timing is available after planning.
+
+1. Count carefully: you plus one hundred means 101. One light may carry tokens and the other satisfy mandatory actions without carrying information.
+2. Known initial OFF needs one token per contributor. How many contributors remain after choosing one counter?
+3. Unknown initial ON may add one phantom token. Allow two sends per contributor and show threshold 200 cannot occur if any of the hundred has not visited.
+
+### Proposed solution for the 101-prisoner, two-light variant
+
+You plus 100 others means 101, not 100. Designate yourself the counter and the other hundred as contributors. Light S stores a pending token; light D is a dummy.
+
+Both parts use exactly one light change per visit. This is legal when one OR both changes are permitted; using both is optional. Whenever no S action below applies, toggle D. Thus neither both-unchanged nor accidental token erasure by toggling both occurs.
+
+**A. Both initially OFF:** each of the hundred contributors turns S ON at most ONCE, only while it is OFF. If it is ON or that contributor has already sent, toggle D instead. The counter turns ON S OFF and counts a collection; when S is OFF, toggle D. Declare at 100 collections. Only contributors create ON events, each at most once, so 100 collections certify all hundred contributors. The counter has also visited.
+
+**B. Unknown initial lights:** each contributor may turn OFF S ON at most TWICE in total, on separate visits. The counter clears and counts as before but declares only at 200. Initial dummy state is irrelevant; initially ON S can contribute at most one phantom collection.
+
+If one of the hundred contributors has not visited, the other 99 can supply at most 198 tokens. Even one phantom initial token yields at most 199, so 200 is impossible unless all have visited:
+
+```text
+missing one contributor: C <= 2*99 + 1 = 199 < 200
+```
+
+The declaration does not require every contributor to have exhausted both signals; it certifies visiting. The counter has necessarily visited because the declaration happens on their visit.
+
+**Termination and fairness:** an ON token is eventually cleared and counted by a future counter visit. If S is OFF and the target has not been reached, some contributor has unused allowance and fairness eventually supplies a productive visit. Every send/collect advances a finite token budget. Fair schedules terminate; a schedule forever excluding somebody can stall, but cannot yield a false declaration. There is no fixed visit bound and no use of a timetable or knowledge of others’ visits.
+
+The known-state exhaustive search checked 402 states and 1,196 transitions; unknown state checked 82,404 states and 324,772 transitions across all four initial light settings. Added 100 and 400 individual-memory simulations respectively. Checked token conservation, safe threshold, local allowance and exactly one changed light on every visit. This is model safety verification, not a prisoner experiment or termination proof without fairness. Separate code and a figure accompany the variant; the original 17-prisoner content is preserved.
+
+![Variant summary](../diagrams/prep-054-101-prisoners-en.png)
+
+- [Variant code](../solutions/prep_054_101_prisoners_variant.py)
+- [Variant checks](../checks/check_prep_054_101.py)
+- [Variant evidence](../checks/prep-054-101-verification.json)

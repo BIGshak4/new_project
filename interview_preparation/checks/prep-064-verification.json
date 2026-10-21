@@ -1,0 +1,78 @@
+{
+  "question_id": "PREP-064",
+  "checked_on": "2026-10-21",
+  "status": "passed_python_model",
+  "state_control_transitions": 32,
+  "reset_priority_transitions": 32,
+  "all_streams_lengths_0_through_6_from_eight_states": 43688,
+  "stream_edges": 247584,
+  "all_length_four_control_reset_streams_from_eight_states": 32768,
+  "reset_stream_edges": 131072,
+  "table_columns": [
+    "q",
+    "inc=0 dec=0",
+    "inc=0 dec=1",
+    "inc=1 dec=0",
+    "inc=1 dec=1"
+  ],
+  "transition_table": [
+    [
+      0,
+      0,
+      7,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      0,
+      2,
+      1
+    ],
+    [
+      2,
+      2,
+      1,
+      3,
+      2
+    ],
+    [
+      3,
+      3,
+      2,
+      4,
+      3
+    ],
+    [
+      4,
+      4,
+      3,
+      5,
+      4
+    ],
+    [
+      5,
+      5,
+      4,
+      6,
+      5
+    ],
+    [
+      6,
+      6,
+      5,
+      7,
+      6
+    ],
+    [
+      7,
+      7,
+      6,
+      0,
+      7
+    ]
+  ],
+  "oracle": "Independent integer +1/-1/hold modulo eight; reset oracle always zero.",
+  "scope": "Python functional model only; no HDL compilation/simulation, synthesis, physical timing or independent professional approval."
+}

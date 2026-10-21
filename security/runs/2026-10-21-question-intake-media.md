@@ -1,0 +1,11 @@
+# Question-intake media compatibility review — 2026-10-21
+
+Scope: the thirteen-source intake, the existing browser compatibility filter and synthetic media responses. Starting revision: `71cfdce`. This is a focused extension of [SEC-014](../findings/SEC-014-source-screenshot-compatibility-filter.md), not a new full security audit or a new distinct vulnerability count.
+
+The full-bank browser test reproduced a compatibility-filter gap for `prep-016-additional-2026-10-21-1.png`: the reserved dated-source expression did not permit a numeric source ordinal after the date. Descriptive robot/train source filenames also require explicit provenance coverage. The current server already filters `sources/` paths before signing, so this does not demonstrate that production issued or exposed source-image URLs.
+
+The remediation permits a numeric ordinal after an intake date, updates the legacy filename list from 50 to all 86 current source filenames, and adds a future dated-ordinal regression case. The existing full-bank test removes private provenance from synthetic responses to match the public API shape; it checks every source image is withheld and every authored diagram/code asset remains available. All 259 frontend tests, TypeScript checking and production build pass. Server tests: 1,028 passed and nine skipped in the offline suite; five live-DB test groups were deliberately excluded because the local direct connection previously failed authentication. The publication uses a separately verified Supabase MCP connection.
+
+The bucket remains private. All 41 new objects were downloaded and hash-verified; 54 localized learner-resource signed downloads across ten changed questions were hash-verified, and direct anonymous access was denied. Original screenshots remain excluded from learner signing. Those download checks use private storage credentials only in the local process; no keys or signed URLs are recorded here.
+
+No learner activity, account permissions, storage policies or database grants were changed. Authenticated production browser compatibility rendering and physical-phone checks remain unperformed. Deployment revision verification is recorded in [the batch publication report](../../docs/question-batch-2026-10-21.md) after the code push.

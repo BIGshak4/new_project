@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "created_on": "2026-09-24",
-  "question_count": 58,
+  "question_count": 63,
   "audience": "Electrical engineering students preparing for system chip validation interviews",
   "status": "review_seed_not_production_import",
   "notes": [
@@ -3284,7 +3284,13 @@
         "logic-design",
         "state-machines",
         "amazon",
-        "maxlinear"
+        "maxlinear",
+        "cisco",
+        "elta",
+        "logic",
+        "mellanox",
+        "orbotech",
+        "applied-materials"
       ],
       "reported_companies": [
         "NVIDIA",
@@ -3294,7 +3300,12 @@
         "Marvell",
         "Intel",
         "Amazon",
-        "MaxLinear"
+        "MaxLinear",
+        "Cisco",
+        "Elta",
+        "Mellanox",
+        "Orbotech",
+        "Applied Materials"
       ],
       "source_company_badge": "מארוול",
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
@@ -3313,6 +3324,78 @@
           "type": "user_supplied_image",
           "path": "sources/prep-016.png",
           "received_on": "2026-09-27"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-016-additional-2026-10-21-1.png",
+          "received_on": "2026-10-21",
+          "original_prompt": "נתון לנו priority encoder שמקבל 4 ביטים ומוציא 2 ביטים. בנוסף יציאת valid ששווה 0 אם אין אחדות בכניסה ו־1 אם יש לפחות 1 אחד. ממשו priority encoder שמקבל 16 ביטים ומוציא 4 ביטים ויציאת valid באמצעות הרכיב 4:2 הנתון.",
+          "source_tags": [
+            "hardware",
+            "nvidia",
+            "amazon",
+            "intel",
+            "cisco",
+            "qualcomm",
+            "elta",
+            "marvell"
+          ],
+          "reported_companies": [
+            "NVIDIA",
+            "Amazon",
+            "Intel",
+            "Cisco",
+            "Qualcomm",
+            "Elta",
+            "Marvell"
+          ],
+          "source_company_badge": "CISCO",
+          "duplicate_of": "PREP-016",
+          "note": "Same sixteen-input highest-index encoder. Image 7 explicitly discusses undefined zero-input code and the validity extension; preserved as a source variant without replacing the canonical prompt."
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-016-additional-2026-10-21-5.png",
+          "received_on": "2026-10-21",
+          "original_prompt": "נתונה קופסא בעלת 4 כניסות היודעת לזהות מה אינדקס הכניסה הגבוהה ביותר שדולק, ומוציאה את הייצוג הבינארי של האינדקס. ממש קופסא כזו כאשר ישנן 16 כניסות.",
+          "source_tags": [
+            "nvidia",
+            "logic",
+            "mellanox"
+          ],
+          "reported_companies": [
+            "NVIDIA",
+            "Mellanox"
+          ],
+          "source_company_badge": "מלאנוקס",
+          "duplicate_of": "PREP-016",
+          "note": "Same sixteen-input highest-index encoder. Image 7 explicitly discusses undefined zero-input code and the validity extension; preserved as a source variant without replacing the canonical prompt."
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-016-additional-2026-10-21-7.png",
+          "received_on": "2026-10-21",
+          "original_prompt": "1. יש לך רכיב עם 4 כניסות ו־2 יציאות כך שביציאה נותנת לך את הביט הכי חשוב (MSB) שדולק, למשל כניסה של 1111 תביא יציאה של 11 (3), או למשל כניסה של 0101 תקבל יציאה של 10 (2).\nא. האם הרכיב מוגדר היטב? (תשובה: לא, פעם שיש כניסה של 0000 אז לא מוגדר מה יוצא) ולכן מגדירים לך יציאת valid שאומרת לך אם היציאות נכונות או לא.\nב. בעזרת הרכיב (כולל יציאת valid) ממש רכיב שעושה אותו דבר רק עם 16 כניסות ו־4 יציאות וגם יציאת valid.",
+          "source_tags": [
+            "hardware",
+            "nvidia",
+            "amazon",
+            "intel",
+            "orbotech",
+            "applied-materials",
+            "marvell"
+          ],
+          "reported_companies": [
+            "NVIDIA",
+            "Amazon",
+            "Intel",
+            "Orbotech",
+            "Applied Materials",
+            "Marvell"
+          ],
+          "source_company_badge": "Applied Materials",
+          "duplicate_of": "PREP-016",
+          "note": "Same sixteen-input highest-index encoder. Image 7 explicitly discusses undefined zero-input code and the validity extension; preserved as a source variant without replacing the canonical prompt."
         }
       ],
       "original_prompt": "נתון רכיב בקרת פסיקות.\nIn0–In3 הינם קווי פסיקות של 1 ביט כל אחד.\nY מבצע את פונקציית OR על כל הכניסות, כלומר מאותת שהתבצעה פסיקה.\nZ1 ו־Z0 הינם קווי Priority, כלומר מראים מה הפסיקה הכי גבוהה ביותר שהתקבלה.\nבנה בקר פסיקות בעל 16 כניסות ע״י שימוש במינימום רכיבי בקר פסיקות של 4 כניסות ובעזרת רכיבים לוגיים אחרים (מסכמים, מחסרים, MUX, FF, וכמובן שערים לוגיים).\nבתרשים: ארבע כניסות In0, In1, In2, In3 לרכיב Interrupt Controller, ושלוש יציאות Y, Z0, Z1.",
@@ -3326,7 +3409,7 @@
             "אחרי שכל קבוצה נותנת אות Y משלה, אותות אלה יכולים לעזור לבחור את הקבוצה המנצחת. לא מספיק לקודד את הקבוצה: צריך להעביר גם את קוד הפסיקה המקומי של אותה קבוצה בלבד.",
             "מספר בין 0 ל־15 דורש ארבעה ביטים: שניים למספר הקבוצה ושניים למיקום בתוכה. בחר ב־MUX את הקוד המקומי לפי הקבוצה המנצחת. את בחירת הקבוצה אפשר לבצע בבקר נוסף או בשערים — וזה משנה את ספירת הבקרים."
           ],
-          "reference_solution": "**פירוש הרכיב:** Y הוא אות תקפות, ו־Z הוא מספר הכניסה הפעילה בעלת העדיפות הגבוהה ביותר, לא וקטור one-hot. נניח ש־In3 בעדיפות הגבוהה ביותר ברכיב, ובהרחבה In15 היא הגבוהה ביותר. נסמן Z1 כביט המשמעותי ו־Z0 כביט הנמוך. סדר העדיפויות ומשמעות שמות הביטים אינם מוגדרים במפורש בצילום, ולכן זו הנחת עבודה. במקרה שאין פסיקות נדרוש Y=0 ונבחר קוד פלט 0000; המקור אינו מחייב קוד מסוים במצב זה. מדובר במעגל קומבינטורי, ללא צורך ב־FF או שעון.\n\n**הבנייה ההיררכית:** נחלק את הכניסות לארבע קבוצות, ונחבר כל קבוצה לבקר בן ארבע כניסות:\n\n| קבוצה g | הכניסות המקוריות | פלט הבקר |\n|---|---|---|\n| 0 | In0..In3 | V0, L0[1:0] |\n| 1 | In4..In7 | V1, L1[1:0] |\n| 2 | In8..In11 | V2, L2[1:0] |\n| 3 | In12..In15 | V3, L3[1:0] |\n\nVg הוא פלט Y של הבקר המקומי: האם יש פסיקה בקבוצה g. Lg הוא הקוד המקומי 0..3. בתוך כל קבוצה מחברים את In(4g+j) לכניסה המקומית j, כדי לשמור על סדר העדיפויות.\n\nכעת בוחרים את הקבוצה הגבוהה ביותר שעבורה Vg=1. לדוגמה, אם קבוצות 1 ו־3 פעילות, קבוצה 3 זוכה ללא קשר למיקום הפסיקה בתוך קבוצה 1: כל מספר בקבוצה 3 גבוה מכל מספר בקבוצה 1.\n\n**בחירת הקבוצה באמצעות שערים — ארבעה בקרים מקומיים:** נסמן את קוד הקבוצה G1,G0. אז:\n\n```text\nY  = V3 OR V2 OR V1 OR V0\nG1 = V3 OR V2\nG0 = V3 OR (V1 AND NOT(V2))\n```\n\nהסבר: אם V3=1 בוחרים 11; אחרת אם V2=1 בוחרים 10; אחרת אם V1=1 בוחרים 01; אחרת בוחרים 00. G1 דולק כאשר נבחרת אחת משתי הקבוצות העליונות. G0 דולק בקבוצה 3, או בקבוצה 1 בתנאי שקבוצה 2 אינה פעילה; אם קבוצה 3 פעילה האיבר V3 כבר מכריע לטובת 11.\n\nנחבר MUX 4:1 ברוחב שני ביטים. כניסות הנתונים שלו הן L0,L1,L2,L3, וקווי הבחירה שלו הם G1,G0. פלטו L הוא הקוד המקומי של הקבוצה שנבחרה. אפשר לממשו גם כשני MUX של ביט אחד, בעלי אותם קווי בחירה.\n\n```text\nL = MUX(G, L0, L1, L2, L3)\nאם Y=1: P[3:0] = {G1,G0,L1,L0}\nאם Y=0: P[3:0] = 0000\n```\n\nכאן L1,L0 בשורת השרשור הם שני הביטים של מוצא ה־MUX, ולא הקודים המקומיים של קבוצות 1 ו־0. בכתיב חד־משמעי: P={G[1:0], L[1:0]}. זהו שרשור חוטים. אין צורך במחבר: האינדקס הוא 4g+l, והכפלה ב־4 מזיזה את g בשני ביטים למעלה; l ממלא את שני הביטים הנמוכים ללא נשא. אם רוצים קוד אפס כש־Y=0, אפשר לחסום את ארבעת ביטי P עם Y. אסור לעשות OR פשוט בין הקודים המקומיים במקום בחירה ב־MUX.\n\n**דוגמה:** נניח In2, In6 ו־In13 פעילים. אז קבוצה 0 מדווחת קוד מקומי 2, קבוצה 1 קוד 2, קבוצה 2 אינה פעילה, וקבוצה 3 קוד 1. הקבוצה המנצחת היא 3, כלומר G=11; ה־MUX מעביר את הקוד המקומי 01 שלה; הפלט 1101 הוא 13. Y=1. עבור In0 בלבד נקבל Y=1,P=0000; כאשר כל הכניסות אפס נקבל Y=0,P=0000. לכן Y חיוני להבחנה בין שני המצבים.\n\n**החלופה המקובלת עם חמישה בקרים:** במקום משוואות G ו־Y, מחברים V0..V3 לארבע כניסותיו של בקר חמישי, לפי אותו סדר. ה־Y שלו הוא Y הכללי, וה־Z שלו הוא G. שאר המעגל זהה: MUX בוחר את הקוד המקומי, ואז משרשרים. זה פתרון מודולרי תקין ופשוט, אך אינו מינימום מספר הבקרים כאשר מותר להחליף את הבקר החמישי בשערים.\n\n**דיוק בנוגע למינימום — יש עמימות בשאלה:**\n\n- בארכיטקטורה של בקר אחד לכל קבוצת ארבע כניסות משתמשים בארבעה בקרים ובשערים לבחירת הקבוצה. זה המינימום תחת ההגבלה שכל 16 הכניסות הגולמיות יכוסו ישירות בבקרים המקומיים: לכל בקר רק ארבע כניסות. זו אינה הגבלה שמופיעה במפורש במקור.\n- אם דורשים שכל שלבי הכרעת העדיפות יתבצעו רק באמצעות בקרים במבנה עץ, הפתרון הוא חמישה: ארבעה מקומיים ואחד מעליהם. לעץ בעל לכל היותר ארבעה ילדים לכל צומת פנימי, B צמתים פנימיים מכסים לכל היותר 1+3B עלים. עבור 16 עלים נדרש B>=5. הטיעון חל על ארכיטקטורת עץ זו בלבד.\n- אם שערים אחרים באמת מותרים ללא הגבלה, וממזערים רק את מספר רכיבי הבקר הנתונים, אפשר לבנות את כל המקודד בשערים בלבד: לכן המינימום במודל זה הוא **אפס בקרים**. אם מפרשים ״שימוש ברכיבי בקר״ כחובה להשתמש בלפחות אחד, אפשר להשתמש באחד ולממש את השאר בשערים. אין לטעון ש־4 או 5 הם מינימום מוחלט מהנוסח הנתון.\n\nמימוש מפורש ללא בקרים: נגדיר לכל ביט Wi=Ini AND NOT(OR של כל הכניסות הגבוהות ממנו). W15=In15. לכל היותר Wi אחד הוא 1. Y הוא OR של כל הקלטים. לכל ביט קוד k, הפלט Pk הוא OR של כל Wi שעבורם ביט k במספר i הוא 1. למשל P3=OR(W8..W15), P0=OR(W1,W3,W5,W7,W9,W11,W13,W15). זה מממש את אותה פונקציה עם שערים בלבד ומוכיח שאפס בקרים אפשרי כאשר שערים אינם מוגבלים. לא נטען שמימוש זה ממזער שטח או השהיה.\n\nבראיון כדאי להציג את החלוקה לקבוצות וה־MUX, ולהסביר במפורש מה נספר ומה מותר להחליף בשערים. הפתרון של ארבעה בקרים הוא הצעה הנדסית ישירה לשימוש בבקרים המקומיים; חמשת הבקרים הם חלופה היררכית, והמינימום המילולי תלוי בפרשנות האילוץ.\n\n**בדיקה:** נבדקו כל 65,536 וקטורי הקלט מול האינדקס הפעיל הגבוה ביותר, בשלוש חלופות: ארבעה בקרים עם משוואות הקבוצה, חמישה בקרים, ושערים בלבד. בשתי החלופות ההיררכיות נבדקו גם כל ארבע אפשרויות הקוד המוחזר מבקר לא פעיל. רק קוד מקבוצה פעילה נבחר כאשר Y=1, ובמצב ללא בקשות הפלט מאופס במפורש. בדיקת Python עברה; לא בוצעה סימולציית HDL או סינתזה."
+          "reference_solution": "**פירוש הרכיב:** Y הוא אות תקפות, ו־Z הוא מספר הכניסה הפעילה בעלת העדיפות הגבוהה ביותר, לא וקטור one-hot. נניח ש־In3 בעדיפות הגבוהה ביותר ברכיב, ובהרחבה In15 היא הגבוהה ביותר. נסמן Z1 כביט המשמעותי ו־Z0 כביט הנמוך. סדר העדיפויות ומשמעות שמות הביטים אינם מוגדרים במפורש בצילום, ולכן זו הנחת עבודה. במקרה שאין פסיקות נדרוש Y=0 ונבחר קוד פלט 0000; המקור אינו מחייב קוד מסוים במצב זה. מדובר במעגל קומבינטורי, ללא צורך ב־FF או שעון.\n\n**הבנייה ההיררכית:** נחלק את הכניסות לארבע קבוצות, ונחבר כל קבוצה לבקר בן ארבע כניסות:\n\n| קבוצה g | הכניסות המקוריות | פלט הבקר |\n|---|---|---|\n| 0 | In0..In3 | V0, L0[1:0] |\n| 1 | In4..In7 | V1, L1[1:0] |\n| 2 | In8..In11 | V2, L2[1:0] |\n| 3 | In12..In15 | V3, L3[1:0] |\n\nVg הוא פלט Y של הבקר המקומי: האם יש פסיקה בקבוצה g. Lg הוא הקוד המקומי 0..3. בתוך כל קבוצה מחברים את In(4g+j) לכניסה המקומית j, כדי לשמור על סדר העדיפויות.\n\nכעת בוחרים את הקבוצה הגבוהה ביותר שעבורה Vg=1. לדוגמה, אם קבוצות 1 ו־3 פעילות, קבוצה 3 זוכה ללא קשר למיקום הפסיקה בתוך קבוצה 1: כל מספר בקבוצה 3 גבוה מכל מספר בקבוצה 1.\n\n**בחירת הקבוצה באמצעות שערים — ארבעה בקרים מקומיים:** נסמן את קוד הקבוצה G1,G0. אז:\n\n```text\nY  = V3 OR V2 OR V1 OR V0\nG1 = V3 OR V2\nG0 = V3 OR (V1 AND NOT(V2))\n```\n\nהסבר: אם V3=1 בוחרים 11; אחרת אם V2=1 בוחרים 10; אחרת אם V1=1 בוחרים 01; אחרת בוחרים 00. G1 דולק כאשר נבחרת אחת משתי הקבוצות העליונות. G0 דולק בקבוצה 3, או בקבוצה 1 בתנאי שקבוצה 2 אינה פעילה; אם קבוצה 3 פעילה האיבר V3 כבר מכריע לטובת 11.\n\nנחבר MUX 4:1 ברוחב שני ביטים. כניסות הנתונים שלו הן L0,L1,L2,L3, וקווי הבחירה שלו הם G1,G0. פלטו L הוא הקוד המקומי של הקבוצה שנבחרה. אפשר לממשו גם כשני MUX של ביט אחד, בעלי אותם קווי בחירה.\n\n```text\nL = MUX(G, L0, L1, L2, L3)\nאם Y=1: P[3:0] = {G1,G0,L1,L0}\nאם Y=0: P[3:0] = 0000\n```\n\nכאן L1,L0 בשורת השרשור הם שני הביטים של מוצא ה־MUX, ולא הקודים המקומיים של קבוצות 1 ו־0. בכתיב חד־משמעי: P={G[1:0], L[1:0]}. זהו שרשור חוטים. אין צורך במחבר: האינדקס הוא 4g+l, והכפלה ב־4 מזיזה את g בשני ביטים למעלה; l ממלא את שני הביטים הנמוכים ללא נשא. אם רוצים קוד אפס כש־Y=0, אפשר לחסום את ארבעת ביטי P עם Y. אסור לעשות OR פשוט בין הקודים המקומיים במקום בחירה ב־MUX.\n\n**דוגמה:** נניח In2, In6 ו־In13 פעילים. אז קבוצה 0 מדווחת קוד מקומי 2, קבוצה 1 קוד 2, קבוצה 2 אינה פעילה, וקבוצה 3 קוד 1. הקבוצה המנצחת היא 3, כלומר G=11; ה־MUX מעביר את הקוד המקומי 01 שלה; הפלט 1101 הוא 13. Y=1. עבור In0 בלבד נקבל Y=1,P=0000; כאשר כל הכניסות אפס נקבל Y=0,P=0000. לכן Y חיוני להבחנה בין שני המצבים.\n\n**החלופה המקובלת עם חמישה בקרים:** במקום משוואות G ו־Y, מחברים V0..V3 לארבע כניסותיו של בקר חמישי, לפי אותו סדר. ה־Y שלו הוא Y הכללי, וה־Z שלו הוא G. שאר המעגל זהה: MUX בוחר את הקוד המקומי, ואז משרשרים. זה פתרון מודולרי תקין ופשוט, אך אינו מינימום מספר הבקרים כאשר מותר להחליף את הבקר החמישי בשערים.\n\n**דיוק בנוגע למינימום — יש עמימות בשאלה:**\n\n- בארכיטקטורה של בקר אחד לכל קבוצת ארבע כניסות משתמשים בארבעה בקרים ובשערים לבחירת הקבוצה. זה המינימום תחת ההגבלה שכל 16 הכניסות הגולמיות יכוסו ישירות בבקרים המקומיים: לכל בקר רק ארבע כניסות. זו אינה הגבלה שמופיעה במפורש במקור.\n- אם דורשים שכל שלבי הכרעת העדיפות יתבצעו רק באמצעות בקרים במבנה עץ, הפתרון הוא חמישה: ארבעה מקומיים ואחד מעליהם. לעץ בעל לכל היותר ארבעה ילדים לכל צומת פנימי, B צמתים פנימיים מכסים לכל היותר 1+3B עלים. עבור 16 עלים נדרש B>=5. הטיעון חל על ארכיטקטורת עץ זו בלבד.\n- אם שערים אחרים באמת מותרים ללא הגבלה, וממזערים רק את מספר רכיבי הבקר הנתונים, אפשר לבנות את כל המקודד בשערים בלבד: לכן המינימום במודל זה הוא **אפס בקרים**. אם מפרשים ״שימוש ברכיבי בקר״ כחובה להשתמש בלפחות אחד, אפשר להשתמש באחד ולממש את השאר בשערים. אין לטעון ש־4 או 5 הם מינימום מוחלט מהנוסח הנתון.\n\nמימוש מפורש ללא בקרים: נגדיר לכל ביט Wi=Ini AND NOT(OR של כל הכניסות הגבוהות ממנו). W15=In15. לכל היותר Wi אחד הוא 1. Y הוא OR של כל הקלטים. לכל ביט קוד k, הפלט Pk הוא OR של כל Wi שעבורם ביט k במספר i הוא 1. למשל P3=OR(W8..W15), P0=OR(W1,W3,W5,W7,W9,W11,W13,W15). זה מממש את אותה פונקציה עם שערים בלבד ומוכיח שאפס בקרים אפשרי כאשר שערים אינם מוגבלים. לא נטען שמימוש זה ממזער שטח או השהיה.\n\nבראיון כדאי להציג את החלוקה לקבוצות וה־MUX, ולהסביר במפורש מה נספר ומה מותר להחליף בשערים. הפתרון של ארבעה בקרים הוא הצעה הנדסית ישירה לשימוש בבקרים המקומיים; חמשת הבקרים הם חלופה היררכית, והמינימום המילולי תלוי בפרשנות האילוץ.\n\n**בדיקה:** נבדקו כל 65,536 וקטורי הקלט מול האינדקס הפעיל הגבוה ביותר, בשלוש חלופות: ארבעה בקרים עם משוואות הקבוצה, חמישה בקרים, ושערים בלבד. בשתי החלופות ההיררכיות נבדקו גם כל ארבע אפשרויות הקוד המוחזר מבקר לא פעיל. רק קוד מקבוצה פעילה נבחר כאשר Y=1, ובמצב ללא בקשות הפלט מאופס במפורש. בדיקת Python עברה; לא בוצעה סימולציית HDL או סינתזה.\n\n### מקור נוסף — אפס אינו בקשה מספר אפס\n\nשלוש גרסאות נוספות שנמסרו ב־21 באוקטובר 2026 אוחדו כאן עם אותה שאלה, בלי לשנות את המזהה, השאלה הראשית, הרמזים או מצב הביקורת. הגרסה השלישית שואלת תחילה מה חסר ברכיב בן ארבע כניסות שאין לו valid. בקלט 0000 אין כניסה דלוקה ולכן אין אינדקס זוכה. שני ביטי אינדקס בלבד אינם מאפשרים להבדיל בין מצב זה לבין כניסה 0 בלבד, שמחזירה גם היא 00. valid פותר את החסר: עבור 0000 נקבל valid=0, ועבור 0001 נקבל valid=1,index=00. הוספת valid אינה מחייבת להמציא משמעות זוכה לקוד כשהוא לא תקף. בדוגמת המקור 0101, הכניסה הגבוהה הדלוקה היא 2 ולכן index=10; עבור 1111 האינדקס 3.\n\nבכל קבוצה מצטרפים Vg ו־Kg. אותות V בוחרים את הקבוצה, ורק הקוד המקומי של הקבוצה הזוכה עובר דרך ה־MUX. השמות החוזרים בשרטוטים החדשים מסמנים את אותם חוטים פיזיים, וקווי /2 ו־/4 הם אוטובוסים של שניים וארבעה ביטים. שרשור G,L הוא חיווט ולא חיבור אריתמטי. אפשר להשתמש בארבעה בקרים מקומיים ובשערים לבחירת הקבוצה, או בחמישה בקרים אם מכריעים גם בין הקבוצות באמצעות רכיב נתון. טענות המינימום נשארות מוגבלות למודלים שהוגדרו לעיל.\n\nלרכיב לא פעיל מותר להוציא כל אחד מארבעת הקודים המקומיים. אף קוד כזה אינו נבחר כש־valid הכללי הוא 1; כשהוא 0 אנו חוסמים את האינדקס הגלובלי לאפס. האימות הנוסף כיסה את כל 65,536 הכניסות ואת כל הצירופים העצמאיים של קודים מקומיים לא תקפים: 130,321 מקרי ארבעה בקרים ו־131,089 מקרי חמישה, כולל הקוד הלא תקף של הבקר העליון. זו בדיקת מודל פייתון; לא בוצעו סימולציית HDL, סינתזה או אישור מקצועי. נוספו שרטוטים מקומיים בעברית ובאנגלית; השרטוטים ההיסטוריים נשמרו כאנגלית."
         },
         "en": {
           "title": "Sixteen-input interrupt controller from four-input controllers",
@@ -3337,7 +3420,7 @@
             "Use the groups' Y outputs to choose the winning group. Also route only that group's local priority code to the output.",
             "A 0..15 index has four bits: two for the group and two for the position within it. Use a mux to select the local code. Group priority can use another controller or logic gates, changing the controller count."
           ],
-          "reference_solution": "Assume the highest numbered input has highest priority and Z1 is the MSB of the two-bit local index. The source leaves these conventions and the invalid index unspecified. Return a four-bit index P and valid Y; choose P=0 when Y=0. No sequential behavior or flip-flops are needed.\n\nSplit requests into four consecutive groups, each using one four-input controller. Group g receives In(4g)..In(4g+3), with preserved local ordering, and produces valid Vg and local index Lg. Choose the highest active group using G1=V3 OR V2, G0=V3 OR (V1 AND NOT V2), Y=V3 OR V2 OR V1 OR V0. A two-bit-wide 4:1 mux selected by G routes Lg to L. When valid, concatenate P={G,L}; otherwise force P=0. This encodes 4g+l without an adder. Example requests 2,6,13 select group 3 and local position 1, producing P=1101 (13).\n\nAn alternative uses a fifth controller on V0..V3 to produce G and Y; the same mux and concatenation follow. This is a valid modular hierarchy but not a minimum controller count with unrestricted auxiliary gates.\n\nThe minimum is ambiguous in the source. Four controllers are minimal only under the additional architecture constraint that every raw request be covered directly by a local four-input controller. Five are minimal in a tree where all priority decisions use these controller nodes: B nodes with fan-in at most four cover at most 1+3B leaves, so 16 leaves need B>=5. With unrestricted ordinary gates and an objective counting only the given controller components, zero controllers suffice. Explicitly form winner Wi=Ini AND NOT(any higher request), then each binary index bit is the OR of winners whose index contains that bit; valid is the OR of requests. If at least one controller must be used, one plus gates is possible. No universal four-/five-controller or minimum-area claim is justified by the source wording.\n\nAll 65,536 inputs were checked for the four-controller, five-controller and gates-only constructions against a highest-set-bit-index specification. All four possible invalid local output codes were covered; invalid final index is explicitly forced to zero. Python verification passed; no HDL simulation or synthesis was performed."
+          "reference_solution": "Assume the highest numbered input has highest priority and Z1 is the MSB of the two-bit local index. The source leaves these conventions and the invalid index unspecified. Return a four-bit index P and valid Y; choose P=0 when Y=0. No sequential behavior or flip-flops are needed.\n\nSplit requests into four consecutive groups, each using one four-input controller. Group g receives In(4g)..In(4g+3), with preserved local ordering, and produces valid Vg and local index Lg. Choose the highest active group using G1=V3 OR V2, G0=V3 OR (V1 AND NOT V2), Y=V3 OR V2 OR V1 OR V0. A two-bit-wide 4:1 mux selected by G routes Lg to L. When valid, concatenate P={G,L}; otherwise force P=0. This encodes 4g+l without an adder. Example requests 2,6,13 select group 3 and local position 1, producing P=1101 (13).\n\nAn alternative uses a fifth controller on V0..V3 to produce G and Y; the same mux and concatenation follow. This is a valid modular hierarchy but not a minimum controller count with unrestricted auxiliary gates.\n\nThe minimum is ambiguous in the source. Four controllers are minimal only under the additional architecture constraint that every raw request be covered directly by a local four-input controller. Five are minimal in a tree where all priority decisions use these controller nodes: B nodes with fan-in at most four cover at most 1+3B leaves, so 16 leaves need B>=5. With unrestricted ordinary gates and an objective counting only the given controller components, zero controllers suffice. Explicitly form winner Wi=Ini AND NOT(any higher request), then each binary index bit is the OR of winners whose index contains that bit; valid is the OR of requests. If at least one controller must be used, one plus gates is possible. No universal four-/five-controller or minimum-area claim is justified by the source wording.\n\nAll 65,536 inputs were checked for the four-controller, five-controller and gates-only constructions against a highest-set-bit-index specification. All four possible invalid local output codes were covered; invalid final index is explicitly forced to zero. Python verification passed; no HDL simulation or synthesis was performed.\n\n### Additional source — no request is not request zero\n\nThree further versions received on 21 October 2026 were merged into this same question without changing its identifier, main question, hints or review status. The third first asks what is missing in a four-input encoder without valid. Input 0000 has no active request and hence no winning index. Two index bits alone cannot distinguish this from only input zero active, which also returns 00. Validity supplies the missing distinction: 0000 gives valid=0; 0001 gives valid=1,index=00. Adding validity does not require pretending an invalid code names a winner. For source example 0101 the highest set input is two, so index=10; for 1111 it is three.\n\nEach local group produces Vg and Kg. The V signals choose the winning group and a MUX forwards only its local code. Matching net names in the new diagrams denote the same physical wires; /2 and /4 denote two- and four-bit buses. Concatenating G,L is wiring, not arithmetic. Four local controllers plus gates select the group, or a fifth given controller performs group priority. Minimum-count claims retain their explicitly stated architecture/library scopes above.\n\nAn inactive controller may return any two-bit local code. None can be selected while global valid is one; when global valid is zero the final index is explicitly masked to zero. Additional checks cover all 65,536 inputs and every independent assignment of invalid local codes: 130,321 four-controller cases and 131,089 five-controller cases including the upper invalid code. This is Python-model verification, not HDL simulation, synthesis or professional approval. Localized Hebrew/English diagrams were added; historical diagrams remain archived as English."
         }
       },
       "prepared_hints": [
@@ -3405,18 +3488,59 @@
           "type": "solution_schematic",
           "path": "diagrams/prep-016-five-controllers.png",
           "description": "Five controllers: four local groups, fifth for group selection, two-bit mux and concatenation.",
-          "display_section": "הצעה לפתרון"
+          "display_section": "הצעה לפתרון",
+          "language": "en"
         },
         {
           "type": "solution_schematic",
           "path": "diagrams/prep-016-four-controllers.png",
           "description": "Four local controllers plus explicit group-selection equations; same mux and concatenation.",
-          "display_section": "הצעה לפתרון"
+          "display_section": "הצעה לפתרון",
+          "language": "en"
         },
         {
           "type": "user_supplied_clarification_image",
           "path": "sources/prep-016-group-logic-clarification.png",
           "description": "Existing group-selection equations supplied for explanation; not a new question."
+        },
+        {
+          "type": "source_image",
+          "path": "sources/prep-016-additional-2026-10-21-1.png",
+          "description": "Additional source 1, received 2026-10-21; internal provenance, not learner media."
+        },
+        {
+          "type": "source_image",
+          "path": "sources/prep-016-additional-2026-10-21-5.png",
+          "description": "Additional source 5, received 2026-10-21; internal provenance, not learner media."
+        },
+        {
+          "type": "source_image",
+          "path": "sources/prep-016-additional-2026-10-21-7.png",
+          "description": "Additional source 7, received 2026-10-21; internal provenance, not learner media."
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-016-hierarchy-four-he.png",
+          "language": "he",
+          "description": "מקודד היררכי עם חיבורי תקפות ובחירת קוד מקומי"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-016-hierarchy-five-he.png",
+          "language": "he",
+          "description": "מקודד היררכי עם חיבורי תקפות ובחירת קוד מקומי"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-016-hierarchy-four-en.png",
+          "language": "en",
+          "description": "Localized four-controller hierarchy; matching net labels denote connections."
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-016-hierarchy-five-en.png",
+          "language": "en",
+          "description": "Localized five-controller hierarchy; matching net labels denote connections."
         }
       ],
       "interview_answer": "אחלק לארבע קבוצות ואשתמש בבקר מקומי לכל אחת. אבחר את הקבוצה הפעילה הגבוהה לפי אותות Y, ואשתמש בקוד הקבוצה לבחירת הקוד המקומי ב־MUX. אשרשר את שני קודי שני הביטים לקבלת אינדקס בן ארבעה ביטים. בחירת הקבוצה דורשת בקר חמישי או שערים. מאחר ששערים אחרים מותרים, אין מינימום מוחלט של ארבעה או חמישה בקרים ללא אילוץ נוסף על הארכיטקטורה.",
@@ -3456,7 +3580,27 @@
       "solution_diagram_generator": "solutions/draw_prep_016_hierarchy.py",
       "solution_diagram_path": "diagrams/prep-016-five-controllers.png",
       "group_logic_derivation_he": "### איך מגיעים למשוואות שמחליפות את הבקר החמישי?\n\nכל Vg הוא ביט יחיד שאומר אם יש בקשה כלשהי בקבוצה g. הוא אינו מספר הפסיקה ולא מספר הקבוצה. רוצים לחשב שני ביטים G1,G0 שמייצגים את מספר הקבוצה הפעילה בעלת העדיפות הגבוהה ביותר. G1 הוא הביט השמאלי בקוד ו־G0 הימני. נניח שקבוצה 3 בעדיפות הגבוהה ביותר ואחריה 2,1,0.\n\n| הקבוצה שנבחרת | G1 | G0 |\n|---|---|---|\n| 0 | 0 | 0 |\n| 1 | 0 | 1 |\n| 2 | 1 | 0 |\n| 3 | 1 | 1 |\n\nהבקר החמישי מקבל בדיוק את V0..V3 ומחשב את הטבלה הזאת עם עדיפות. לכן אפשר להחליפו במעגל קומבינטורי שמחשב את אותן יציאות.\n\n**Y:** אנחנו רוצים לדעת אם לפחות קבוצה אחת פעילה. זו הגדרת OR: Y=V0 OR V1 OR V2 OR V3. כאשר כולן 0 נקבל Y=0; אחרת Y=1.\n\n**G1:** מסתכלים על הביט השמאלי בקודים. הוא 1 רק לקבוצות 2 או 3. אם V3=1, קבוצה 3 מנצחת ולכן G1=1. אם V2=1, הזוכה היא קבוצה 2 או קבוצה 3 אם גם היא פעילה; בשני המקרים G1=1. אם שתיהן לא פעילות, אפשר לבחור רק קבוצה 0 או 1, שהביט השמאלי שלהן 0. לכן G1=V3 OR V2.\n\n**G0:** הביט הימני הוא 1 לקבוצות 1 או 3, אבל 0 לקבוצות 0 או 2. אסור לכתוב רק V3 OR V1: אם קבוצות 1 ו־2 פעילות וקבוצה 3 אינה פעילה, הזוכה היא 2 והקוד חייב להיות 10, לא 11.\n\nנכתוב קודם תנאים מלאים: קבוצה 3 מנצחת אם V3=1; קבוצה 1 מנצחת אם V1=1, V2=0 וגם V3=0. לכן:\n\n```text\nG0 = V3 OR (V1 AND NOT(V2) AND NOT(V3))\n```\n\nאפשר להשמיט את NOT(V3) מהסוגריים, אבל צריך להסביר למה. כאשר V3=1, האיבר הראשון של ה־OR כבר קובע G0=1, כך שערך הסוגריים לא משנה. כאשר V3=0, מתקיים NOT(V3)=1, ו־AND עם 1 אינו משנה את שאר הביטוי. לכן בשני המקרים נקבל אותה תוצאה אם נכתוב:\n\n```text\nG0 = V3 OR (V1 AND NOT(V2))\n```\n\nבמילים: קבוצה 3 מדליקה את הביט הימני תמיד; קבוצה 1 יכולה להדליק אותו כשקבוצה 2 אינה פעילה. אם קבוצה 3 פעילה היא ממילא מנצחת ומדליקה את הביט הזה, ולכן אין צורך לחסום את האיבר של V1 בעזרתה.\n\n**בדיקה מוחשית:** V3=0,V2=1,V1=1,V0=0. G1=0 OR 1=1. G0=0 OR (1 AND NOT(1))=0 OR (1 AND 0)=0. מתקבל G=10, כלומר קבוצה 2; זו הקבוצה הנכונה למרות שגם קבוצה 1 פעילה.\n\n**למה V0 לא מופיע במשוואות של G?** קבוצה 0 מקודדת כ־00, ולכן אינה דורשת להדליק אף ביט בקוד. אם קבוצות 1,2,3 לא פעילות, G יוצא 00 בכל מקרה. אם V0=1 זו קבוצה 0 פעילה ו־Y=1; אם V0=0 אין בקשות בכלל ו־Y=0. אות Y הוא שמבדיל בין שני המצבים.\n\nבחומרה: עבור G1 מחברים V3,V2 ל־OR. עבור G0 מעבירים V2 דרך NOT, את התוצאה עם V1 דרך AND, ואת תוצאת ה־AND עם V3 דרך OR. עבור Y עושים OR של ארבעת V. הפלט G ממשיך להפעיל את קווי הבחירה של ה־MUX וגם ליצור את שני הביטים העליונים של האינדקס; שאר המעגל אינו משתנה.\n\n[צילום המשוואות שסופק לצורך ההסבר](../sources/prep-016-group-logic-clarification.png).\n",
-      "group_logic_derivation_verification": "All 16 group-valid patterns checked; full and simplified G0 equations equivalent, group index and valid correct."
+      "group_logic_derivation_verification": "All 16 group-valid patterns checked; full and simplified G0 equations equivalent, group index and valid correct.",
+      "solution_code_paths": [
+        "solutions/prep_016_interrupt_controller.py",
+        "solutions/prep_016_priority_variants.py"
+      ],
+      "verification_script_path": "checks/check_prep_016_source_variants.py",
+      "verification_evidence_path": "checks/prep-016-source-variants-verification.json",
+      "ai_assisted": true,
+      "prompt_variants": [
+        {
+          "title": "Additional-source variant — why validity is necessary",
+          "prompt": "A four-input priority encoder has two outputs giving the highest active input index: 1111 produces 11 and 0101 produces 10. (a) What is missing for input 0000? Define valid to distinguish no request from a request at input zero. (b) Use the extended component to build a sixteen-input encoder with a four-bit index and validity.",
+          "clarification": "The two outputs are a binary index, not the bit value and not a one-hot vector. valid is one exactly when at least one input is active. When valid is zero, the index does not name a request; choosing zero is permitted but must not be interpreted as request zero. The exact source wording and all three screenshots are archived separately from this edit."
+        }
+      ],
+      "solution_schematic_verification": "All 65,536 inputs; 130,321 independently varied inactive-code combinations in the four-local/gates design and 131,089 cases in the five-controller hierarchy. Python models passed; no HDL simulation, synthesis or professional approval.",
+      "solution_extensions": {
+        "question": "What changes if a local encoder has no valid output and no guaranteed code for all-zero input?",
+        "direction": "The index alone cannot reveal validity: all four codes can name real requests. If raw group inputs are accessible, OR them to create valid; otherwise the interface or assumptions must change. Comparing index with zero is not a substitute.",
+        "status": "Follow-up prepared in content; not connected to the interactive follow-up queue."
+      }
     },
     {
       "id": "PREP-017",
@@ -4466,6 +4610,32 @@
             "Apple",
             "Mellanox"
           ]
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-022-additional-2026-10-21.png",
+          "received_on": "2026-10-21",
+          "role": "question_variant",
+          "original_prompt": "יש לך מערך של מספרים. כתוב פונקציה שתסדר אותם בסדר אקראי. אתה יכול להיעזר בפונקציה Rand, שמחזירה מספר אקראי",
+          "reported_companies": [
+            "Apple",
+            "NVIDIA",
+            "Intel",
+            "Amazon"
+          ],
+          "source_tags": [
+            "nvidia",
+            "intel",
+            "amazon",
+            "software",
+            "apple"
+          ],
+          "source_company_badge": "אפל",
+          "duplicate_of": "PREP-022",
+          "editorial_interpretation": {
+            "he": "זו גרסת מערך נתון כללי; סדר והופעות של הערכים נשמרים באמצעות החלפות. הממשק והאחידות של Rand אינם מפורטים במקור ויש להגדיר חוזה הגרלה חסום ואחיד.",
+            "en": "General supplied-array variant. Swaps preserve values and multiplicities. Source Rand lacks a bound/distribution contract; uniform bounded draws must be explicitly specified."
+          }
         }
       ],
       "original_prompt": "נתון מספר N אי שלילי כלשהו. יש להדפיס פרמוטציה אקראית (סידור כלשהו) של כל המספרים מ־1 עד N בלי לחזור על מספר פעמיים. ממש בצורה היעילה ביותר.\nלרשותך הפונקציה rand(m), המחזירה מספר שלם רנדומלי בין 1 ל־m.\nא. ניתן לממש זאת בעזרת כל מבנה נתונים.\nב. יש לממש זאת בעזרת מערך בלבד.",
@@ -4550,6 +4720,12 @@
             "status": "passed",
             "checked_on": "2026-10-18",
             "method": "5914 exhaustive choice paths for n=0..7, n! distinct outputs per n, original array identity, exact inclusive two-argument RNG bounds, 10 boundary runs including length 100, 3 arbitrary arrays and 4 invalid RNG outputs."
+          },
+          {
+            "script_path": "checks/check_prep_022_generic_array.py",
+            "status": "passed",
+            "checked_on": "2026-10-21",
+            "method": "5914 indexed paths; six duplicated-value paths; ten object boundary cases. Existing shuffle implementation unchanged."
           }
         ]
       },
@@ -4562,6 +4738,11 @@
         {
           "type": "source_image",
           "path": "sources/prep-022-hundred-array-rand-range-2026-10-18.png"
+        },
+        {
+          "type": "source_image",
+          "path": "sources/prep-022-additional-2026-10-21.png",
+          "description": "Additional source received 2026-10-21; deduplicated into existing record."
         }
       ],
       "solution_code_path": "solutions/prep_022_random_permutation.py",
@@ -4725,6 +4906,28 @@
           "type": "user_supplied_image",
           "path": "sources/prep-023.png",
           "received_on": "2026-09-28"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-023-additional-2026-10-21.png",
+          "received_on": "2026-10-21",
+          "role": "question_variant",
+          "original_prompt": "ממש פונקציה שמקבלת מספר ובודקת האם הוא חזקה של 2.",
+          "reported_companies": [
+            "NVIDIA",
+            "Apple"
+          ],
+          "source_tags": [
+            "apple",
+            "software",
+            "nvidia"
+          ],
+          "source_company_badge": "Nvidia",
+          "duplicate_of": "PREP-023",
+          "editorial_interpretation": {
+            "he": "אותה בדיקת חזקה של שתיים; נשמר החוזה הערוך של מספר שלם עם מעריך אי־שלילי, כולל 1 וללא אפס או שליליים. אין שינוי בנוסח או בפתרון הקיימים.",
+            "en": "Same power-of-two predicate; retain the existing edited integer/nonnegative-exponent contract, including one and excluding zero/negatives. Existing learner copy is unchanged."
+          }
         }
       ],
       "original_prompt": "בהינתן מספר, איך אפשר לדעת אם הוא חזקה שלמה של 2 תוך שימוש ב־O(1) פעולות חישוב.",
@@ -4803,6 +5006,11 @@
           "type": "source_image",
           "path": "sources/prep-023.png",
           "description": "Complete source prompt and tags; ambiguous tags preserved without inventing attribution."
+        },
+        {
+          "type": "source_image",
+          "path": "sources/prep-023-additional-2026-10-21.png",
+          "description": "Additional source received 2026-10-21; deduplicated into existing record."
         }
       ],
       "solution_code_path": "solutions/prep_023_power_of_two.py",
@@ -7885,7 +8093,9 @@
         "invariants",
         "linear-time algorithms"
       ],
-      "source_topic_tags": [],
+      "source_topic_tags": [
+        "hardware"
+      ],
       "added_topic_tags": [
         "arrays",
         "missing numbers",
@@ -7893,10 +8103,15 @@
         "invariants",
         "linear-time algorithms"
       ],
-      "source_tags": [],
-      "reported_companies": [],
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
       "source_company_badge": null,
-      "company_attribution_status": "no_company_visible_in_supplied_source",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
       "difficulty": null,
       "estimated_minutes": null,
       "format": "code",
@@ -7912,6 +8127,26 @@
           "type": "user_supplied_image",
           "path": "sources/prep-041.png",
           "received_on": "2026-10-18"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-041-additional-2026-10-21.png",
+          "received_on": "2026-10-21",
+          "role": "question_variant",
+          "original_prompt": "יש מערך של 100, לא לפי סדר, חסר מספר אחד. איך ניתן למצוא מה ערכו?",
+          "reported_companies": [
+            "NVIDIA"
+          ],
+          "source_tags": [
+            "hardware",
+            "nvidia"
+          ],
+          "source_company_badge": null,
+          "duplicate_of": "PREP-041",
+          "editorial_interpretation": {
+            "he": "המקור אינו קובע במפורש טווח ערכים ואינו מבהיר אם מאה הוא גודל הטווח המקורי או מספר התאים אחרי ההוצאה. לשילוב בסעיף א הקיים מניחים שמקור הנתונים היה תמורה של 1 עד 100 ומספר אחד הוסר, כך שנותרו 99 ערכים נגישים. זו הבהרה ולא טענה שנאמרה בצילום. ללא תחום ידוע ומספרי הופעות אין אפשרות לזהות חסר יחיד בוודאות.",
+            "en": "Source does not explicitly specify the value domain or whether one hundred means original range or remaining length. Integrate as existing Part A under the added assumption: original permutation 1..100, one removed, ninety-nine accessible entries. This is an editorial clarification, not source text. Without a known domain/multiplicity contract no unique missing value is inferable."
+          }
         }
       ],
       "original_prompt": "יש מערך עם 100 תאים, ממוספרים מ-1 עד 100, ומסודרים בצורה אקראית.\nסעיף א: שולפים בצורה אקראית ערך. כיצד ניתן לדעת מה הערך. (זמן ריצה בסדר גודל של n).\nסעיף ב: שולפים 2 ערכים אקראיים, כיצד ניתן לדעת מהם הערכים הללו (זמן ריצה בסדר גודל של n).",
@@ -8032,6 +8267,11 @@
           "type": "solution_diagram",
           "path": "diagrams/prep-041-presence-flags.png",
           "description": "PREP-041"
+        },
+        {
+          "type": "source_image",
+          "path": "sources/prep-041-additional-2026-10-21.png",
+          "description": "Additional source received 2026-10-21; deduplicated into existing record."
         }
       ],
       "related_question_ids": [
@@ -10325,7 +10565,9 @@
         "fairness",
         "unknown initial state"
       ],
-      "source_topic_tags": [],
+      "source_topic_tags": [
+        "logic"
+      ],
       "added_topic_tags": [
         "logic",
         "distributed protocols",
@@ -10336,7 +10578,8 @@
       "source_tags": [
         "nvidia",
         "elbit",
-        "mellanox"
+        "mellanox",
+        "logic"
       ],
       "reported_companies": [
         "NVIDIA",
@@ -10360,6 +10603,12 @@
           "type": "user_supplied_image",
           "path": "sources/prep-054.png",
           "received_on": "2026-10-20"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-054-101-prisoners.png",
+          "received_on": "2026-10-21",
+          "variant": "one-plus-one-hundred-prisoners"
         }
       ],
       "original_prompt": "יש 17 אסירים, כל פעם לוקחים אסיר באקראיות והוא נכנס לחדר (אסירים לא יודעים מי נכנס בכל פעם לחדר והם גם לא מדברים ביניהם), בחדר יש 2 מתגים. האסיר חייב ללחוץ על אחד מהמתגים ולצאת — איך נדע שכל האסירים היו בחדר? (אין צורך ביעילות אלא רק להביא פתרון שמצליח)",
@@ -10373,7 +10622,7 @@
             "אפשרו לכל אחד מ־16 האסירים האחרים לשלוח לכל היותר שני סימנים. כמה סימנים לכל היותר יוכל הסופר לאסוף אם אחד מהם עוד לא ביקר, כולל סימן התחלתי שגוי? השתמשו במתג השני לפעולת חובה שאינה נוגעת למתג האות."
           ],
           "hint": "אין צורך שכל אסיר ידע מי כבר ביקר. אפשר למנות אסיר אחד שיאסוף סימנים מהאחרים, ולתת לכל אסיר מספר מוגבל של סימנים.",
-          "reference_solution": "**פתרון מוצע — סופר אחד, אות שממתין לאיסוף ושתי הזדמנויות דיווח לכל אסיר אחר.**\n\n### קודם מפרידים שתי דרישות\n\nבטיחות פירושה שאף הכרזה לא תהיה שגויה, בלי קשר לסדר הביקורים. סיום פירושו שהכרזה אכן תקרה; לכך צריך שכל האסירים יחזרו לבקר. לא ניתן להכריח אסיר שמעולם לא נבחר להגיע באמצעות מתג. מותר לקבוע תוכנית לפני הבידוד; בלי אפשרות כזאת המקור אינו מתאר את חידת הפרוטוקול הרגילה.\n\n### למה צריך את המתג השני?\n\nנסמן את המתג הראשון S והוא נושא אותות. המתג השני D הוא מתג דמה: לא מפיקים ממנו שום מידע. בכל ביקור שבו הכללים שלמטה אינם משנים את S, הופכים את D במקום זאת. כך כל ביקור משנה **בדיוק מתג אחד**, גם אם אין שום דבר מועיל לדווח. אם משנים את S, לא נוגעים ב־D. מצבו ההתחלתי של D אינו חשוב.\n\n### חלוקת תפקידים וכללי פעולה\n\nממנים אסיר אחד לסופר. 16 האחרים הם מדווחים. כל מדווח זוכר כמה פעמים שלח אות, ומתחיל מאפס; מותר לו לשלוח לכל היותר פעמיים. הסופר שומר מונה פרטי C, שמתחיל מאפס. רק הסופר מכבה את מתג האות, ורק מדווח רשאי להדליק אותו.\n\n**ביקור של מדווח:** אם S כבוי והוא שלח פחות משני אותות, הוא מדליק את S ומגדיל את מונה השליחות הפרטי שלו באחד. הוא אינו שולח פעמיים באותו ביקור. אם S דלוק, או שכבר שלח פעמיים, הופכים רק את מתג הדמה D.\n\n**ביקור של הסופר:** אם S דלוק, הוא מכבה אותו ומגדיל את C באחד. אם S כבוי, הופכים רק את מתג הדמה D. ברגע ש־C מגיע ל־32, הוא מכריז שכל 17 האסירים ביקרו. הסופר אינו שולח אות לעצמו ואינו סופר ביקורים רגילים או שינויים במתג הדמה.\n\n### אינטואיציה — המתג שומר אסימון אחד\n\nכשמדווח מדליק, הוא משאיר אסימון לסופר. כל עוד האור דלוק, מדווחים אחרים אינם נוגעים בו ולכן אינם מוחקים את האסימון. הסופר מכבה בעת האיסוף, וכך אותו אסימון לא נספר שוב בביקור הבא שלו. הנורה אינה יכולה לצבור כמה אסימונים; מדווח נוסף מחכה לביקור מתאים שבו ימצא אותה כבויה.\n\nהסופר לא צריך לזהות מי שלח כל אסימון. ההגבלה המקומית של שתי שליחות לכל מדווח היא שמאפשרת להסיק בסוף שכולם השתתפו.\n\n### למה דווקא 32, ומה עושים במצב התחלתי דלוק?\n\nאור שדלק עוד לפני הביקור הראשון עשוי להיספר כאסימון אחד שאיש לא שלח. זהו **לכל היותר אסימון עודף אחד**, משום שהסופר מכבה אותו כשסופר. אחר כך כל הדלקה מגיעה ממדווח לפי הכללים.\n\nנניח לשם סתירה שאחד מ־16 המדווחים עדיין לא ביקר כשהסופר מכריז. לכל היותר 15 מדווחים יכלו לשלוח, וכל אחד שולח לכל היותר שניים. יחד עם האסימון ההתחלתי:\n\n```text\nC <= 2*15 + 1 = 31 < 32\n```\n\nלכן אי אפשר להגיע ל־32 אם מדווח כלשהו לא ביקר. גם הסופר עצמו ביקר, מפני שהוא מבצע את ההכרזה במהלך ביקור שלו. מכאן שכל 17 האסירים ביקרו בוודאות.\n\nהטענה אינה שכולם בהכרח שלחו פעמיים בזמן ההכרזה. אם התחילו באור דלוק, ייתכן שאחד שלח רק פעם אחת. ההכרזה דורשת ביקור, לא ניצול מלא של כל מכסת האותות.\n\n### למה זה מסתיים?\n\nאם S דלוק, ביקור עתידי של הסופר יאסוף אות ויכבה אותו. אם S כבוי ועדיין חסרים אותות, יש מדווח שטרם ניצל את שתי שליחותיו; תחת הוגנות הוא יבקר שוב וידליק. אחרי כל פעולה מועילה קטן מספר האותות שעוד צריך לשלוח או לאסוף. יש בסך הכול מכסה סופית של 32 אותות אמיתיים ואולי אות התחלתי, ולכן תחת ביקורים הוגנים הסופר יגיע לסף. אין חסם קבוע למספר הביקורים חסרי התועלת בין הפעולות.\n\nבבחירה עצמאית ואחידה, חזרה אינסופית של כל אסיר מתרחשת בהסתברות 1, ולכן גם סיום הוא כמעט ודאי. הבטיחות עצמה אינה הסתברותית: גם סדר ביקורים חריג לא יפיק הכרזה שגויה. סדר לא הוגן עלול פשוט לא להסתיים.\n\n### אם ידוע שהאות מתחיל כבוי\n\nאפשר לקצר: כל אחד מ־16 המדווחים מדליק פעם אחת בלבד, והסופר מכריז אחרי 16 איסופים. אין אות התחלתי שגוי, וכל איסוף מוכיח מדווח אחר. כללי מתג הדמה נשארים כדי לקיים שינוי של מתג אחד בכל ביקור. זו חלופה רק כשמצב התחלתי כבוי ידוע; אסור להעביר אליה בשקט את הפתרון למצב לא ידוע.\n\nדוגמה נגדית לשיטה המקוצרת כאשר המצב אינו ידוע: בשלושה אסירים, אור התחלתי דלוק נספר, מדווח אחד שולח עוד אות, והסופר מגיע לשניים למרות שהמדווח השני כלל לא ביקר. לכן מכסה של אות אחד וסף 16 אינם בטוחים בנוסח הנוכחי.\n\n### זיכרון ואימות\n\nכל מדווח שומר ערך מקומי 0,1,2; הסופר שומר מונה עד 32. הפעולה בכל ביקור היא בזמן קבוע; סך הזיכרון המקומי לכל האסירים הוא ליניארי במספרם, אך אין חסם דטרמיניסטי לאורך סדרת הביקורים. לא נטען שזהו הפרוטוקול המהיר או הקצר ביותר.\n\nהקוד המצורף הוא מודל פרוטוקול לבדיקה. במציאות לכל אסיר יש רק זיכרונו שלו ומצב המתג הנראה; אין מחשב מרכזי שקורא את המונים הפרטיים. הבדיקות הממצות משתמשות בסימטריה בין מדווחים כדי לבדוק את כל המצבים הנגישים לפי מספר האותות שכל אחד שלח. בדיקות אקראיות הן דוגמאות נוספות בלבד; הוכחת הסיום נשענת בנפרד על ההוגנות."
+          "reference_solution": "**פתרון מוצע — סופר אחד, אות שממתין לאיסוף ושתי הזדמנויות דיווח לכל אסיר אחר.**\n\n### קודם מפרידים שתי דרישות\n\nבטיחות פירושה שאף הכרזה לא תהיה שגויה, בלי קשר לסדר הביקורים. סיום פירושו שהכרזה אכן תקרה; לכך צריך שכל האסירים יחזרו לבקר. לא ניתן להכריח אסיר שמעולם לא נבחר להגיע באמצעות מתג. מותר לקבוע תוכנית לפני הבידוד; בלי אפשרות כזאת המקור אינו מתאר את חידת הפרוטוקול הרגילה.\n\n### למה צריך את המתג השני?\n\nנסמן את המתג הראשון S והוא נושא אותות. המתג השני D הוא מתג דמה: לא מפיקים ממנו שום מידע. בכל ביקור שבו הכללים שלמטה אינם משנים את S, הופכים את D במקום זאת. כך כל ביקור משנה **בדיוק מתג אחד**, גם אם אין שום דבר מועיל לדווח. אם משנים את S, לא נוגעים ב־D. מצבו ההתחלתי של D אינו חשוב.\n\n### חלוקת תפקידים וכללי פעולה\n\nממנים אסיר אחד לסופר. 16 האחרים הם מדווחים. כל מדווח זוכר כמה פעמים שלח אות, ומתחיל מאפס; מותר לו לשלוח לכל היותר פעמיים. הסופר שומר מונה פרטי C, שמתחיל מאפס. רק הסופר מכבה את מתג האות, ורק מדווח רשאי להדליק אותו.\n\n**ביקור של מדווח:** אם S כבוי והוא שלח פחות משני אותות, הוא מדליק את S ומגדיל את מונה השליחות הפרטי שלו באחד. הוא אינו שולח פעמיים באותו ביקור. אם S דלוק, או שכבר שלח פעמיים, הופכים רק את מתג הדמה D.\n\n**ביקור של הסופר:** אם S דלוק, הוא מכבה אותו ומגדיל את C באחד. אם S כבוי, הופכים רק את מתג הדמה D. ברגע ש־C מגיע ל־32, הוא מכריז שכל 17 האסירים ביקרו. הסופר אינו שולח אות לעצמו ואינו סופר ביקורים רגילים או שינויים במתג הדמה.\n\n### אינטואיציה — המתג שומר אסימון אחד\n\nכשמדווח מדליק, הוא משאיר אסימון לסופר. כל עוד האור דלוק, מדווחים אחרים אינם נוגעים בו ולכן אינם מוחקים את האסימון. הסופר מכבה בעת האיסוף, וכך אותו אסימון לא נספר שוב בביקור הבא שלו. הנורה אינה יכולה לצבור כמה אסימונים; מדווח נוסף מחכה לביקור מתאים שבו ימצא אותה כבויה.\n\nהסופר לא צריך לזהות מי שלח כל אסימון. ההגבלה המקומית של שתי שליחות לכל מדווח היא שמאפשרת להסיק בסוף שכולם השתתפו.\n\n### למה דווקא 32, ומה עושים במצב התחלתי דלוק?\n\nאור שדלק עוד לפני הביקור הראשון עשוי להיספר כאסימון אחד שאיש לא שלח. זהו **לכל היותר אסימון עודף אחד**, משום שהסופר מכבה אותו כשסופר. אחר כך כל הדלקה מגיעה ממדווח לפי הכללים.\n\nנניח לשם סתירה שאחד מ־16 המדווחים עדיין לא ביקר כשהסופר מכריז. לכל היותר 15 מדווחים יכלו לשלוח, וכל אחד שולח לכל היותר שניים. יחד עם האסימון ההתחלתי:\n\n```text\nC <= 2*15 + 1 = 31 < 32\n```\n\nלכן אי אפשר להגיע ל־32 אם מדווח כלשהו לא ביקר. גם הסופר עצמו ביקר, מפני שהוא מבצע את ההכרזה במהלך ביקור שלו. מכאן שכל 17 האסירים ביקרו בוודאות.\n\nהטענה אינה שכולם בהכרח שלחו פעמיים בזמן ההכרזה. אם התחילו באור דלוק, ייתכן שאחד שלח רק פעם אחת. ההכרזה דורשת ביקור, לא ניצול מלא של כל מכסת האותות.\n\n### למה זה מסתיים?\n\nאם S דלוק, ביקור עתידי של הסופר יאסוף אות ויכבה אותו. אם S כבוי ועדיין חסרים אותות, יש מדווח שטרם ניצל את שתי שליחותיו; תחת הוגנות הוא יבקר שוב וידליק. אחרי כל פעולה מועילה קטן מספר האותות שעוד צריך לשלוח או לאסוף. יש בסך הכול מכסה סופית של 32 אותות אמיתיים ואולי אות התחלתי, ולכן תחת ביקורים הוגנים הסופר יגיע לסף. אין חסם קבוע למספר הביקורים חסרי התועלת בין הפעולות.\n\nבבחירה עצמאית ואחידה, חזרה אינסופית של כל אסיר מתרחשת בהסתברות 1, ולכן גם סיום הוא כמעט ודאי. הבטיחות עצמה אינה הסתברותית: גם סדר ביקורים חריג לא יפיק הכרזה שגויה. סדר לא הוגן עלול פשוט לא להסתיים.\n\n### אם ידוע שהאות מתחיל כבוי\n\nאפשר לקצר: כל אחד מ־16 המדווחים מדליק פעם אחת בלבד, והסופר מכריז אחרי 16 איסופים. אין אות התחלתי שגוי, וכל איסוף מוכיח מדווח אחר. כללי מתג הדמה נשארים כדי לקיים שינוי של מתג אחד בכל ביקור. זו חלופה רק כשמצב התחלתי כבוי ידוע; אסור להעביר אליה בשקט את הפתרון למצב לא ידוע.\n\nדוגמה נגדית לשיטה המקוצרת כאשר המצב אינו ידוע: בשלושה אסירים, אור התחלתי דלוק נספר, מדווח אחד שולח עוד אות, והסופר מגיע לשניים למרות שהמדווח השני כלל לא ביקר. לכן מכסה של אות אחד וסף 16 אינם בטוחים בנוסח הנוכחי.\n\n### זיכרון ואימות\n\nכל מדווח שומר ערך מקומי 0,1,2; הסופר שומר מונה עד 32. הפעולה בכל ביקור היא בזמן קבוע; סך הזיכרון המקומי לכל האסירים הוא ליניארי במספרם, אך אין חסם דטרמיניסטי לאורך סדרת הביקורים. לא נטען שזהו הפרוטוקול המהיר או הקצר ביותר.\n\nהקוד המצורף הוא מודל פרוטוקול לבדיקה. במציאות לכל אסיר יש רק זיכרונו שלו ומצב המתג הנראה; אין מחשב מרכזי שקורא את המונים הפרטיים. הבדיקות הממצות משתמשות בסימטריה בין מדווחים כדי לבדוק את כל המצבים הנגישים לפי מספר האותות שכל אחד שלח. בדיקות אקראיות הן דוגמאות נוספות בלבד; הוכחת הסיום נשענת בנפרד על ההוגנות.\n\n### פתרון מוצע לווריאציית 101 האסירים ושתי הנורות\n\nאתם ועוד 100 הם **101**, ולא 100. אפשר למנות אתכם לסופר, ואת מאה האחרים למדווחים. נורה אחת S תשמור אות שממתין לסופר, והנורה השנייה D תהיה נורת דמה.\n\nבשני הסעיפים משתמשים רק בפעולות שמשנות נורה אחת. הדבר חוקי גם כאשר מותר לשנות אחת או שתיים; אין חובה לנצל את האפשרות לשנות שתיים. בכל ביקור שבו לא מדליקים או מכבים את S לפי הכללים, הופכים את D. כך לעולם לא נשארות שתי הנורות ללא שינוי, ולעולם לא מוחקים אות בטעות באמצעות שינוי שתיהן.\n\n**א. שתיהן כבויות בהתחלה:** כל אחד ממאה המדווחים רשאי להדליק את S פעם אחת בלבד, ורק אם היא כבויה. אם היא דלוקה, או שכבר שלח, הוא הופך את D במקום. הסופר מכבה S דלוקה וסופר איסוף אחד; אם היא כבויה הוא הופך את D. כשהסופר מגיע ל־100 איסופים הוא מכריז. רק מדווח יכול ליצור הדלקה, כל מדווח עושה זאת לכל היותר פעם, ולכן 100 איסופים מוכיחים ביקור של כל מאה המדווחים. גם הסופר עצמו ביקר.\n\n**ב. מצב התחלתי לא ידוע:** כל מדווח רשאי להדליק S כבויה לכל היותר פעמיים בסך הכול, בביקורים נפרדים. הסופר מכבה וסופר כמקודם, אבל מכריז רק ב־200. נורת דמה שמתחילה דלוקה אינה משנה דבר; מצב התחלתי דלוק של S יכול להוסיף לכל היותר איסוף שגוי אחד.\n\nאם מדווח אחד מתוך המאה לא ביקר, 99 האחרים יכולים לספק לכל היותר 198 אותות. גם עם אות התחלתי שגוי מגיעים לכל היותר ל־199, ולכן אי אפשר להגיע ל־200 בלי שכולם ביקרו:\n\n```text\nmissing one contributor: C <= 2*99 + 1 = 199 < 200\n```\n\nלא נדרש שכל מדווח יסיים את שתי שליחותיו לפני ההכרזה; צריך רק להוכיח שביקר. הסופר עצמו בהכרח ביקר כי ההכרזה נעשית במהלך ביקורו.\n\n**סיום והוגנות:** אם יש אות דלוק, ביקור עתידי של הסופר יכבה אותו ויספור. אם האות כבוי ועוד לא נאספו מספיק, יש מדווח עם מכסה שלא נוצלה, ותחת הוגנות יגיע ביקור מועיל. כל שליחה או איסוף מקדמים מכסה סופית. סדר הוגן מסתיים; סדר שאינו בוחר אסיר מסוים יכול להתעכב לעד, אך לא להפיק הכרזה שגויה. אין מספר ביקורים קבוע שמבטיח סיום, ואין שימוש בלוח זמנים או בידיעת ביקורים של אחרים.\n\nבדיקת המצבים הממצה של הסעיף הידוע בדקה 402 מצבים ו־1,196 מעברים; הסעיף הלא ידוע בדק 82,404 מצבים ו־324,772 מעברים בכל ארבע התחלות הנורות. נוספו 100 ו־400 ריצות פרטניות בהתאמה. נבדקו שימור אותות, סף בטוח, מכסה מקומית ושינוי של בדיוק נורה אחת בכל ביקור. זו בדיקת בטיחות של מודל, לא ניסוי עם אסירים או הוכחת סיום ללא הוגנות. קוד ותרשים נפרדים מצורפים לווריאציה; התוכן הראשי של 17 האסירים נשמר."
         },
         "en": {
           "title": "17 prisoners — two switches and one mandatory toggle per visit",
@@ -10384,7 +10633,7 @@
             "Let each of the 16 contributors send at most two tokens. How many can the counter collect if one contributor has never visited, including one possible phantom initial token? Use the second switch for mandatory actions that must not alter the signal switch."
           ],
           "hint": "Not everyone needs to know who has visited. Designate one prisoner to collect signals and give every other prisoner a bounded allowance of signals.",
-          "reference_solution": "**Proposed solution — one counter, one pending token and two reporting opportunities per contributor.**\n\n### Separate safety from termination\n\nSafety means every declaration is correct under any visit order. Termination means a declaration eventually happens; that requires every prisoner to return. A switch cannot force an unselected prisoner to visit. The strategy is agreed before isolation; without pre-agreement, the source is not the usual coordinated-protocol puzzle.\n\n### Why use the second switch?\n\nCall the signal switch S. The other switch D is a dummy: nobody extracts information from it. On any visit where the rules below do not change S, toggle D instead. Thus EVERY visit toggles exactly ONE switch, even without useful information to send. A visit changing S must not change D. The dummy's initial state is irrelevant.\n\n### Roles and visit rules\n\nDesignate one counter. The other 16 prisoners are contributors. Each remembers how many tokens they have sent, initially zero, with a lifetime allowance of TWO. The counter privately stores C, initially zero. Only the counter turns the signal OFF; only contributors turn it ON.\n\n**Contributor visit:** if S is OFF and fewer than two tokens have been sent, turn S ON and increment the private sent count. Send only once on this visit. If S is ON or the allowance is exhausted, toggle ONLY dummy D.\n\n**Counter visit:** if S is ON, turn it OFF and increment C. If S is OFF, toggle ONLY dummy D. When C reaches 32, declare that all 17 have visited. The counter never contributes a token to themself and does not count ordinary visits or dummy changes.\n\n### Intuition: one stored token\n\nA contributor's OFF-to-ON action leaves a token. While it is ON, other contributors do not change S, so they cannot erase it. The counter turns it OFF when collecting, preventing recounting on the next visit. The signal cannot store several tokens at once; the next contributor must wait for a suitable visit while it is OFF.\n\nThe counter never learns who sent each token. The private per-contributor allowance provides enough information to conclude that everybody participated.\n\n### Why 32, including an initially ON signal?\n\nAn initially ON signal can be counted as one token nobody sent. It contributes at most ONE phantom token because the counter clears it on collection. Every later ON event is a genuine contributor action.\n\nSuppose one of the 16 contributors had not visited when the counter declares. At most 15 contributors could have sent, at most twice each. Including the initial phantom:\n\n```text\nC <= 2*15 + 1 = 31 < 32\n```\n\nThus C cannot reach 32 while any contributor is missing. The counter has also visited, because the declaration is made on their own visit. Therefore all 17 have certainly visited.\n\nThis does not claim everyone necessarily sent twice before the declaration. With an initially ON signal, one may have sent only once. The required fact is visiting, not exhausting all allowances.\n\n### Why it eventually finishes\n\nIf S is ON, a future counter visit collects and clears it. If S is OFF and more tokens are needed, at least one contributor still has unused allowance; fairness guarantees a future visit when productive progress can occur. Each productive step reduces the remaining number of tokens to emit or collect. At most 32 genuine tokens and one initial token exist, so under fair repeated visitation the counter eventually reaches the threshold. No fixed bound limits the unproductive visits between those steps.\n\nIndependent uniform selection visits everyone infinitely often with probability one, so termination is almost sure in that model. Safety is not probabilistic: even an unusual order cannot produce a false declaration. An unfair order can simply fail to terminate.\n\n### If the signal is initially known OFF\n\nUse one token per contributor and declare after 16 collections. With no phantom token, every collection proves a distinct contributor. Keep the dummy-switch rule to satisfy the mandatory one-toggle action on every visit. This is only the known-OFF variant; do not silently apply it to an unknown initial state.\n\nCounterexample for the shortened strategy with unknown initial state: with three prisoners, the initially ON signal is counted, one contributor sends another token, and the counter reaches two although the other contributor has never visited. Thus a one-token allowance and threshold 16 are unsafe for the present unknown-state question.\n\n### Memory and verification\n\nEach contributor stores 0,1,2 locally; the counter stores a count through 32. Each visit takes constant work. Total private memory is linear in prisoner count, but no deterministic visit-sequence length bound exists. This is not a claim of optimal speed or minimum state.\n\nThe attached code is a protocol test model. Real prisoners access only their own memory and the visible switch, not everybody's private counters. Exhaustive checks exploit contributor symmetry to explore every reachable aggregate state by tokens emitted. Random executions are additional examples only; the termination proof separately uses fairness."
+          "reference_solution": "**Proposed solution — one counter, one pending token and two reporting opportunities per contributor.**\n\n### Separate safety from termination\n\nSafety means every declaration is correct under any visit order. Termination means a declaration eventually happens; that requires every prisoner to return. A switch cannot force an unselected prisoner to visit. The strategy is agreed before isolation; without pre-agreement, the source is not the usual coordinated-protocol puzzle.\n\n### Why use the second switch?\n\nCall the signal switch S. The other switch D is a dummy: nobody extracts information from it. On any visit where the rules below do not change S, toggle D instead. Thus EVERY visit toggles exactly ONE switch, even without useful information to send. A visit changing S must not change D. The dummy's initial state is irrelevant.\n\n### Roles and visit rules\n\nDesignate one counter. The other 16 prisoners are contributors. Each remembers how many tokens they have sent, initially zero, with a lifetime allowance of TWO. The counter privately stores C, initially zero. Only the counter turns the signal OFF; only contributors turn it ON.\n\n**Contributor visit:** if S is OFF and fewer than two tokens have been sent, turn S ON and increment the private sent count. Send only once on this visit. If S is ON or the allowance is exhausted, toggle ONLY dummy D.\n\n**Counter visit:** if S is ON, turn it OFF and increment C. If S is OFF, toggle ONLY dummy D. When C reaches 32, declare that all 17 have visited. The counter never contributes a token to themself and does not count ordinary visits or dummy changes.\n\n### Intuition: one stored token\n\nA contributor's OFF-to-ON action leaves a token. While it is ON, other contributors do not change S, so they cannot erase it. The counter turns it OFF when collecting, preventing recounting on the next visit. The signal cannot store several tokens at once; the next contributor must wait for a suitable visit while it is OFF.\n\nThe counter never learns who sent each token. The private per-contributor allowance provides enough information to conclude that everybody participated.\n\n### Why 32, including an initially ON signal?\n\nAn initially ON signal can be counted as one token nobody sent. It contributes at most ONE phantom token because the counter clears it on collection. Every later ON event is a genuine contributor action.\n\nSuppose one of the 16 contributors had not visited when the counter declares. At most 15 contributors could have sent, at most twice each. Including the initial phantom:\n\n```text\nC <= 2*15 + 1 = 31 < 32\n```\n\nThus C cannot reach 32 while any contributor is missing. The counter has also visited, because the declaration is made on their own visit. Therefore all 17 have certainly visited.\n\nThis does not claim everyone necessarily sent twice before the declaration. With an initially ON signal, one may have sent only once. The required fact is visiting, not exhausting all allowances.\n\n### Why it eventually finishes\n\nIf S is ON, a future counter visit collects and clears it. If S is OFF and more tokens are needed, at least one contributor still has unused allowance; fairness guarantees a future visit when productive progress can occur. Each productive step reduces the remaining number of tokens to emit or collect. At most 32 genuine tokens and one initial token exist, so under fair repeated visitation the counter eventually reaches the threshold. No fixed bound limits the unproductive visits between those steps.\n\nIndependent uniform selection visits everyone infinitely often with probability one, so termination is almost sure in that model. Safety is not probabilistic: even an unusual order cannot produce a false declaration. An unfair order can simply fail to terminate.\n\n### If the signal is initially known OFF\n\nUse one token per contributor and declare after 16 collections. With no phantom token, every collection proves a distinct contributor. Keep the dummy-switch rule to satisfy the mandatory one-toggle action on every visit. This is only the known-OFF variant; do not silently apply it to an unknown initial state.\n\nCounterexample for the shortened strategy with unknown initial state: with three prisoners, the initially ON signal is counted, one contributor sends another token, and the counter reaches two although the other contributor has never visited. Thus a one-token allowance and threshold 16 are unsafe for the present unknown-state question.\n\n### Memory and verification\n\nEach contributor stores 0,1,2 locally; the counter stores a count through 32. Each visit takes constant work. Total private memory is linear in prisoner count, but no deterministic visit-sequence length bound exists. This is not a claim of optimal speed or minimum state.\n\nThe attached code is a protocol test model. Real prisoners access only their own memory and the visible switch, not everybody's private counters. Exhaustive checks exploit contributor symmetry to explore every reachable aggregate state by tokens emitted. Random executions are additional examples only; the termination proof separately uses fairness.\n\n### Proposed solution for the 101-prisoner, two-light variant\n\nYou plus 100 others means 101, not 100. Designate yourself the counter and the other hundred as contributors. Light S stores a pending token; light D is a dummy.\n\nBoth parts use exactly one light change per visit. This is legal when one OR both changes are permitted; using both is optional. Whenever no S action below applies, toggle D. Thus neither both-unchanged nor accidental token erasure by toggling both occurs.\n\n**A. Both initially OFF:** each of the hundred contributors turns S ON at most ONCE, only while it is OFF. If it is ON or that contributor has already sent, toggle D instead. The counter turns ON S OFF and counts a collection; when S is OFF, toggle D. Declare at 100 collections. Only contributors create ON events, each at most once, so 100 collections certify all hundred contributors. The counter has also visited.\n\n**B. Unknown initial lights:** each contributor may turn OFF S ON at most TWICE in total, on separate visits. The counter clears and counts as before but declares only at 200. Initial dummy state is irrelevant; initially ON S can contribute at most one phantom collection.\n\nIf one of the hundred contributors has not visited, the other 99 can supply at most 198 tokens. Even one phantom initial token yields at most 199, so 200 is impossible unless all have visited:\n\n```text\nmissing one contributor: C <= 2*99 + 1 = 199 < 200\n```\n\nThe declaration does not require every contributor to have exhausted both signals; it certifies visiting. The counter has necessarily visited because the declaration happens on their visit.\n\n**Termination and fairness:** an ON token is eventually cleared and counted by a future counter visit. If S is OFF and the target has not been reached, some contributor has unused allowance and fairness eventually supplies a productive visit. Every send/collect advances a finite token budget. Fair schedules terminate; a schedule forever excluding somebody can stall, but cannot yield a false declaration. There is no fixed visit bound and no use of a timetable or knowledge of others’ visits.\n\nThe known-state exhaustive search checked 402 states and 1,196 transitions; unknown state checked 82,404 states and 324,772 transitions across all four initial light settings. Added 100 and 400 individual-memory simulations respectively. Checked token conservation, safe threshold, local allowance and exactly one changed light on every visit. This is model safety verification, not a prisoner experiment or termination proof without fairness. Separate code and a figure accompany the variant; the original 17-prisoner content is preserved."
         }
       },
       "prepared_hints": [
@@ -10441,16 +10690,33 @@
           "path": "diagrams/prep-054-signal-protocol-en.png",
           "language": "en",
           "description": "Protocol rules and safe declaration bound"
+        },
+        {
+          "type": "source_image",
+          "path": "sources/prep-054-101-prisoners.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-054-101-prisoners-he.png",
+          "language": "he",
+          "description": "שני הסעיפים לווריאציית מאה ואחד האסירים"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-054-101-prisoners-en.png",
+          "language": "en",
+          "description": "Both cases of the101-prisoner variant"
         }
       ],
       "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
       "related_question_ids": [
         "PREP-057"
       ],
-      "duplicate_check": "Compared original prompts and titles in the preparation archive and seed catalog; no existing prisoner token-count puzzle found. Related PREP-057 differs in prisoner count, physical channel and mandatory-vs-optional toggle constraints; preserve both as related variants, not duplicates.",
+      "duplicate_check": "Compared original prompts and titles in the preparation archive and seed catalog; no existing prisoner token-count puzzle found. Related PREP-057 differs in prisoner count, physical channel and mandatory-vs-optional toggle constraints; preserve both as related variants, not duplicates. Added the101-prisoner two-light source as a labeled parameter/allowed-action variant, retaining the existing17-prisoner identity, prompt and hint set. Exactly-one strategy is a valid subset of the new one-or-both permission; do not merge with PREP-057 optional one-light semantics.",
       "solution_code_path": "solutions/prep_054_two_switches.py",
       "solution_code_paths": [
-        "solutions/prep_054_two_switches.py"
+        "solutions/prep_054_two_switches.py",
+        "solutions/prep_054_101_prisoners_variant.py"
       ],
       "verification_script_path": "checks/check_prep_054_057.py",
       "verification_evidence_path": "checks/prep-054-verification.json",
@@ -10468,7 +10734,7 @@
         "proof": "With one contributor absent at most 31 collections are possible, including one phantom initial token; 32 therefore certifies all visited.",
         "scope": "This proves construction safety, not minimum visits, expected time, memory or toggles. Without fairness termination is not guaranteed."
       },
-      "verification": "Exhaustive symmetry-reduced search covered 2,436 reachable states and 8,932 transitions across all allowed initial switch settings. It checked token conservation, no declaration with an unsignaled contributor, two-token allowance and legal action on every visit. Added 400 seeded individual-memory simulations. These are Python models, not physical trials or expert approval; finite simulations are not universal termination proof. The written liveness proof separately assumes fairness.",
+      "verification": "Exhaustive symmetry-reduced search covered 2,436 reachable states and 8,932 transitions across all allowed initial switch settings. It checked token conservation, no declaration with an unsignaled contributor, two-token allowance and legal action on every visit. Added 400 seeded individual-memory simulations. These are Python models, not physical trials or expert approval; finite simulations are not universal termination proof. The written liveness proof separately assumes fairness.\n\n101-prisoner variant:402 known-state and82,404 unknown-state aggregate states;1,196 and324,772 transitions;500 individual runs. Fairness is required for termination; no physical trial.",
       "edge_cases": [
         "Initially ON contributes at most one phantom token; the doubled threshold covers it.",
         "Repeated visits by one contributor cannot create more than two tokens.",
@@ -10499,7 +10765,45 @@
         "direction": "The same prisoner can be selected repeatedly before another arrives. For any finite bound construct a longer prefix missing someone. Fairness guarantees eventual progress, not a uniform bound. Random selection assigns positive probability even to a long delaying prefix.",
         "status": "Follow-up prepared in content; not connected to the live follow-up queue."
       },
-      "markdown_path": "questions/prep-054-seventeen-prisoners-two-mandatory-switches.md"
+      "markdown_path": "questions/prep-054-seventeen-prisoners-two-mandatory-switches.md",
+      "original_source_variants": [
+        {
+          "id": "one-plus-one-hundred-prisoners",
+          "source_path": "sources/prep-054-101-prisoners.png",
+          "original_prompt": "אתה יחד עם עוד 100 אסירים, אתם נקראים להיכנס לחדר עם שתי מנורות (אינסוף פעמים לצורך העניין). כשאתה נקרא לחדר אתה חייב לשנות את המצב של המנורות בחדר (להדליק או לכבות 1 או 2 נורות).\nמנהל בית הכלא אומר לכם שהוא נותן לכם אפשרות לומר לו מתי הנקודה שבה כל האסירים היו בחדר. אם תצדקו כולם תצאו לחופשי, אם לא יהרוג את כולכם.\n\nמותר לכם לדבר לפני פעם אחת, ובמשך הקוראה לחדר אף אחד לא יודע כשקוראים למישהו אחר ומתי.\n\nא. מה האלגוריתם שלך לפיתרון (ההנחה היא שהמנורות מכובות בהתחלה)?\nב. אם אתה לא יודע את תנאי ההתחלה, כלומר אתה לא יודע מה המצב בחדר לפני שהראשון נכנס אליו, איך היית פותר?",
+          "reported_companies": [
+            "NVIDIA"
+          ],
+          "source_tags": [
+            "nvidia",
+            "logic"
+          ],
+          "source_company_badge": "Nvidia"
+        }
+      ],
+      "prompt_variants": [
+        {
+          "id": "one-plus-one-hundred-prisoners",
+          "source_path": "sources/prep-054-101-prisoners.png",
+          "title": "101 prisoners and two lights",
+          "prompt": "### Additional variant — you plus one hundred others,101 prisoners total\n\nThis is a separate variant of the same communication mechanism, not a replacement for the 17-prisoner question above. You and 100 others take turns in a room with two visible lights. One prior planning conversation is allowed; afterward each knows only their own visits and the lights observed on those visits. Every visit MUST change **one OR both lights**. Exactly one change is therefore permitted, but leaving both unchanged is forbidden.\n\nA. Both lights are initially OFF and everyone knows it. When can you safely declare that all 101 prisoners have visited?\n\nB. Neither light's initial state is known. Give a strategy safe for that case too.\n\nProve no false early declaration and eventual termination under fair repeated visits by every prisoner. Unlimited opportunities alone do not supply fairness, and there is no fixed visit bound. This changes both prisoner count and permitted one-or-both actions, compared with the main version’s exactly-one toggle. No other communication, marks or shared timing is available after planning.",
+          "hints": [
+            "Count carefully: you plus one hundred means 101. One light may carry tokens and the other satisfy mandatory actions without carrying information.",
+            "Known initial OFF needs one token per contributor. How many contributors remain after choosing one counter?",
+            "Unknown initial ON may add one phantom token. Allow two sends per contributor and show threshold 200 cannot occur if any of the hundred has not visited."
+          ],
+          "reference_solution": "### Proposed solution for the 101-prisoner, two-light variant\n\nYou plus 100 others means 101, not 100. Designate yourself the counter and the other hundred as contributors. Light S stores a pending token; light D is a dummy.\n\nBoth parts use exactly one light change per visit. This is legal when one OR both changes are permitted; using both is optional. Whenever no S action below applies, toggle D. Thus neither both-unchanged nor accidental token erasure by toggling both occurs.\n\n**A. Both initially OFF:** each of the hundred contributors turns S ON at most ONCE, only while it is OFF. If it is ON or that contributor has already sent, toggle D instead. The counter turns ON S OFF and counts a collection; when S is OFF, toggle D. Declare at 100 collections. Only contributors create ON events, each at most once, so 100 collections certify all hundred contributors. The counter has also visited.\n\n**B. Unknown initial lights:** each contributor may turn OFF S ON at most TWICE in total, on separate visits. The counter clears and counts as before but declares only at 200. Initial dummy state is irrelevant; initially ON S can contribute at most one phantom collection.\n\nIf one of the hundred contributors has not visited, the other 99 can supply at most 198 tokens. Even one phantom initial token yields at most 199, so 200 is impossible unless all have visited:\n\n```text\nmissing one contributor: C <= 2*99 + 1 = 199 < 200\n```\n\nThe declaration does not require every contributor to have exhausted both signals; it certifies visiting. The counter has necessarily visited because the declaration happens on their visit.\n\n**Termination and fairness:** an ON token is eventually cleared and counted by a future counter visit. If S is OFF and the target has not been reached, some contributor has unused allowance and fairness eventually supplies a productive visit. Every send/collect advances a finite token budget. Fair schedules terminate; a schedule forever excluding somebody can stall, but cannot yield a false declaration. There is no fixed visit bound and no use of a timetable or knowledge of others’ visits.\n\nThe known-state exhaustive search checked 402 states and 1,196 transitions; unknown state checked 82,404 states and 324,772 transitions across all four initial light settings. Added 100 and 400 individual-memory simulations respectively. Checked token conservation, safe threshold, local allowance and exactly one changed light on every visit. This is model safety verification, not a prisoner experiment or termination proof without fairness. Separate code and a figure accompany the variant; the original 17-prisoner content is preserved.",
+          "review_status": "AI proposed; expert, human parity and reuse review pending."
+        }
+      ],
+      "verification_evidence_paths": [
+        "checks/prep-054-verification.json",
+        "checks/prep-054-101-verification.json"
+      ],
+      "additional_verification_script_paths": [
+        "checks/check_prep_054_101.py"
+      ],
+      "updated_on": "2026-10-21"
     },
     {
       "id": "PREP-056",
@@ -11251,6 +11555,1038 @@
         "direction": "Choose any t coins and flip only them. If x selected coins were tails, both groups contain t−x tails afterward.",
         "status": "Follow-up prepared in content; not connected to the live follow-up workflow."
       }
+    },
+    {
+      "id": "PREP-060",
+      "key": "game-twenty-one-complement-strategy",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "logical_reasoning",
+      "topic": "winning_strategies",
+      "topics": [
+        "logic",
+        "game strategy",
+        "invariants",
+        "backward induction"
+      ],
+      "source_topic_tags": [
+        "logic"
+      ],
+      "added_topic_tags": [
+        "logic",
+        "game strategy",
+        "invariants",
+        "backward induction"
+      ],
+      "source_tags": [
+        "vayyar",
+        "logic",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel",
+        "Vayyar"
+      ],
+      "source_company_badge": "אינטל",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "explain",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder source; AI-assisted bilingual proposed solution, diagrams and independent Python checks; professional, parity and reuse review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-060.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "נתון משחק שני שחקנים הבא: מתחילים מ-0 ואז כל שחקן בתורו מוסיף 1, 2 או 3.\nהראשון שמגיע ל-21 מנצח. האם לשחקן הראשון יש אסטרטגיה מנצחת? אם כן, מהי?",
+      "translations": {
+        "he": {
+          "title": "משחק הגעה ל־21 — אסטרטגיה מנצחת לשחקן הראשון",
+          "prompt": "שני שחקנים מתחילים בסכום 0 ומשחקים בתורות. בכל תור מוסיפים לסכום 1, 2 או 3. השחקן שמביא את הסכום בדיוק ל־21 מנצח. האם לשחקן הראשון יש אסטרטגיה שמבטיחה ניצחון גם מול יריב שבוחר כל מהלך חוקי? תארו אותה והוכיחו מדוע היא עובדת.\n\nהבהרת כללים: הסכום משותף וגלוי, אין דילוג על תור, ואין מהלך שמעלה אותו מעל 21. המשחק מסתיים מיד בהגעה ליעד. אין אקראיות או מידע מוסתר. אין צורך לכתוב קוד, אך אפשר להיעזר בבדיקת מצבים.",
+          "hints": [
+            "חשבו מהסוף: מאילו סכומים אפשר לנצח מיד, ואיזה סכום הייתם רוצים להשאיר ליריב לפני התור שלו?",
+            "אחרי שהיריב מוסיף 1, 2 או 3, האם אפשר להגיב כך שסכום שני המהלכים יהיה תמיד אותו מספר?",
+            "מצאו סדרה של סכומים בהפרשים של 4 שמסתיימת ב־21. האם אפשר להגיע לאיבר הראשון כבר במהלך הפתיחה ואז לשמור על הסדרה?"
+          ],
+          "reference_solution": "**פתרון מוצע — מתחילים ב־1, ואז משלימים כל מהלך של היריב ל־4.**\n\nבמהלך הראשון נוסיף 1. אחר כך נפעל לפי הטבלה:\n\n| היריב מוסיף | אנחנו מוסיפים | תוספת בשני התורות יחד |\n| --- | --- | --- |\n| 1 | 3 | 4 |\n| 2 | 2 | 4 |\n| 3 | 1 | 4 |\n\nלכן בסיום כל תור שלנו הסכום יהיה:\n\n```text\n1 -> 5 -> 9 -> 13 -> 17 -> 21\n```\n\nאין צורך לנחש מה היריב יעשה: כל בחירה שלו מאפשרת תגובה חוקית. לדוגמה, אם פתחנו ב־1 והוא מוסיף 3, הסכום 4 ונוסיף 1 כדי להגיע ל־5. אם אחר כך הוא מוסיף 1, נוסיף 3 כדי להגיע ל־9.\n\n**למה היריב לא מנצח לפנינו?** אחרי שהשארנו 17, היריב יכול להגיע רק ל־18, 19 או 20. אנחנו משלימים בהתאמה ל־21 ומנצחים. באותה דרך, לפני כל יעד מוקדם יותר, היריב אינו יכול לקפוץ מעבר ליעד הבא שלנו משום שהוא מוסיף לכל היותר 3 ואנחנו מעלים כל זוג תורות ב־4.\n\n**איך מוצאים את הרעיון?** עובדים לאחור. בסכומים 18,19,20 מי שתורו יכול להגיע מיד ל־21. לכן 17 הוא מצב מפסיד לשחקן שעומד לשחק: כל מהלך שלו נותן ליריב ניצחון מידי. גם 13 הוא מצב מפסיד, כי כל תוספת משאירה 14,15 או 16, והיריב יכול להגיע ל־17. כך מקבלים 9,5,1. הסכום ההתחלתי 0 מאפשר לנו להגיע ל־1 מיד.\n\nחשוב להבחין: 1,5,9,13,17 הם מצבים מפסידים **למי שתורו לשחק מהם**. לכן טוב לנו להשאיר אותם ליריב בסיום התור שלנו. ב־21 המשחק כבר הסתיים; אין תור נוסף.\n\nבמונחי אינווריאנט, אחרי כל תור שלנו הסכום שקול ל־1 מודולו 4. הפתיחה מקיימת זאת, והשלמה ל־4 משמרת זאת עד ליעד. זו הוכחת ניצחון מול כל יריב חוקי, לא רק מול משחק אקראי. הקוד המצורף בוחר את השארית של המרחק ליעד בחלוקה ל־4; שארית אפס מציינת מצב שאין ממנו ניצחון מובטח, בהנחת יריב מושלם.\n\nעלות בחירת מהלך היא זמן וזיכרון קבועים במודל שבו הסכום נכנס במילה; כאן המשחק עצמו בעל יעד קבוע. אין כאן טענה למינימום מספר התורות: נדרשת אסטרטגיה שמבטיחה ניצחון. הבדיקה העצמאית פתרה את כל 22 הסכומים כולל המצב הסופי, ובדקה את כל 243 רצפי חמש הבחירות של היריב נגד האסטרטגיה.",
+          "hint": "חשבו מהסוף: מאילו סכומים אפשר לנצח מיד, ואיזה סכום הייתם רוצים להשאיר ליריב לפני התור שלו?"
+        },
+        "en": {
+          "title": "Reach 21 — a forced win for the first player",
+          "prompt": "Two players start from a shared total of zero and alternate turns. Each turn adds 1, 2 or 3. Whoever brings the total to exactly 21 wins. Does the first player have a strategy that guarantees victory against every legal opponent response? Describe it and prove it works.\n\nRules clarified: the total is public and shared, passing is forbidden and moves past 21 are illegal. Play stops immediately at 21. There is no randomness or hidden information. Code is optional; a state analysis may help.",
+          "hints": [
+            "Work backward: from which totals can the player to move win immediately, and which total would you want to leave before the opponent’s turn?",
+            "After the opponent adds 1, 2 or 3, can you respond so the two moves always add the same amount?",
+            "Find a sequence spaced four apart ending at 21. Can your opening reach its first term and then maintain it?"
+          ],
+          "reference_solution": "**Proposed solution — open with one, then complement each opponent move to four.**\n\nAdd one first. On subsequent turns:\n\n| Opponent adds | We add | Combined addition |\n| --- | --- | --- |\n| 1 | 3 | 4 |\n| 2 | 2 | 4 |\n| 3 | 1 | 4 |\n\nThe totals at the end of our turns are therefore:\n\n```text\n1 -> 5 -> 9 -> 13 -> 17 -> 21\n```\n\nNo prediction is necessary: every opponent choice allows a legal complement. For example, after opening at one, an opponent adding three reaches four; add one to reach five. If the next opponent move is one, add three to reach nine.\n\n**Why can the opponent not win first?** After we leave seventeen, they can reach only eighteen, nineteen or twenty. We then complete to twenty-one. The same spacing keeps earlier responses below our next target: they add at most three, while each paired round advances four.\n\n**How to discover the strategy:** work backward. Totals eighteen through twenty permit an immediate win. Thus seventeen loses for the player about to move: every choice gives the other player an immediate win. Thirteen also loses because any move leaves fourteen, fifteen or sixteen, from which the opponent reaches seventeen. Continue backward to nine, five and one. Starting at zero lets us choose one immediately.\n\nBe precise: one, five, nine, thirteen and seventeen lose **for the player whose turn begins at that total**. We therefore want to leave those totals to our opponent. At twenty-one the game has ended; there is no next turn.\n\nThe invariant is total congruent to one modulo four at the end of every one of our turns. The opening establishes it and complementing to four preserves it until the target. This proves a forced win, not merely success against random play. The attached code selects the remaining distance modulo four; remainder zero indicates no forced winning move against perfect opposition.\n\nChoosing a move costs constant time and auxiliary words when the total fits a machine word; this instance has a fixed target. No minimum-turn count is claimed. An independent checker solved all twenty-two totals including the terminal state and checked all 243 sequences of five opponent replies.",
+          "hint": "Work backward: from which totals can the player to move win immediately, and which total would you want to leave before the opponent’s turn?"
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-060-he-H01",
+          "level": 1,
+          "language": "he",
+          "content": "חשבו מהסוף: מאילו סכומים אפשר לנצח מיד, ואיזה סכום הייתם רוצים להשאיר ליריב לפני התור שלו?"
+        },
+        {
+          "id": "PREP-060-he-H02",
+          "level": 2,
+          "language": "he",
+          "content": "אחרי שהיריב מוסיף 1, 2 או 3, האם אפשר להגיב כך שסכום שני המהלכים יהיה תמיד אותו מספר?"
+        },
+        {
+          "id": "PREP-060-he-H03",
+          "level": 3,
+          "language": "he",
+          "content": "מצאו סדרה של סכומים בהפרשים של 4 שמסתיימת ב־21. האם אפשר להגיע לאיבר הראשון כבר במהלך הפתיחה ואז לשמור על הסדרה?"
+        },
+        {
+          "id": "PREP-060-en-H01",
+          "level": 1,
+          "language": "en",
+          "content": "Work backward: from which totals can the player to move win immediately, and which total would you want to leave before the opponent’s turn?"
+        },
+        {
+          "id": "PREP-060-en-H02",
+          "level": 2,
+          "language": "en",
+          "content": "After the opponent adds 1, 2 or 3, can you respond so the two moves always add the same amount?"
+        },
+        {
+          "id": "PREP-060-en-H03",
+          "level": 3,
+          "language": "en",
+          "content": "Find a sequence spaced four apart ending at 21. Can your opening reach its first term and then maintain it?"
+        }
+      ],
+      "solution_code_path": "solutions/prep_060_game_twenty_one.py",
+      "solution_code_paths": [
+        "solutions/prep_060_game_twenty_one.py"
+      ],
+      "verification_evidence_path": "checks/prep-060-verification.json",
+      "verification_script_path": "checks/check_prep_060.py",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-060.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-060-game-twenty-one-strategy-he.png",
+          "language": "he",
+          "description": "PREP-060"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-060-game-twenty-one-strategy-en.png",
+          "language": "en",
+          "description": "PREP-060"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-012"
+      ],
+      "duplicate_check": "Compared with preparation, example and verification question prompts and seed titles. Related tasks have distinct requirements; source attribution is retained separately.",
+      "interview_relevance": {
+        "priority": "medium",
+        "basis": "Practice in invariants, recursive analysis and exact implementation; not a prediction or independently verified company attribution."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "markdown_path": "questions/prep-060-game-twenty-one-complement-strategy.md",
+      "assumptions": [
+        "Start at zero; each alternating turn adds exactly one, two or three to a shared total.",
+        "Win on exactly twenty-one; no passing or overshooting.",
+        "The total is public and the strategy must withstand every legal response."
+      ],
+      "optimality": {
+        "criterion": "Forced first-player victory.",
+        "result": "Open with one, then respond with four minus the opponent move.",
+        "proof": "Our end-of-turn total stays one modulo four through twenty-one; after seventeen the opponent reaches at most twenty.",
+        "scope": "No minimum-turn claim. Move selection is O(1) in a word-operation model; this target is fixed."
+      },
+      "verification": {
+        "status": "Python-model checks passed; independent expert review pending.",
+        "method": "Independent winning/losing-state DP and every opponent response sequence.",
+        "coverage": "Twenty-two totals, 243 full reply sequences, thirteen invalid inputs.",
+        "script_path": "checks/check_prep_060.py",
+        "scope": "Exact finite-game verification, not human expert approval or learner activity."
+      },
+      "edge_cases": [
+        "Totals eighteen through twenty allow an immediate win.",
+        "Seventeen loses for the player to move, not for the player who left it.",
+        "At twenty-one play is over.",
+        "The complement lies in one through three and never overshoots on the strategy path."
+      ],
+      "common_mistakes": [
+        "Opening with three by recalling a version where saying twenty-one loses.",
+        "Complementing to three instead of four.",
+        "Calling states winning or losing without specifying whose turn it is.",
+        "Testing only random opposition instead of proving every reply."
+      ],
+      "interview_answer": "Open with one and thereafter add four minus the opponent’s addition. Our turn-end totals are one, five, nine, thirteen, seventeen and twenty-one. After seventeen the opponent reaches at most twenty, so we reach twenty-one first against every legal reply.",
+      "solution_extensions": {
+        "question": "What changes for target T with additions one through m?",
+        "direction": "For exact-target wins, leave positions whose remaining distance is divisible by m+1. If the initial remainder is nonzero, open with it and then complement to m+1. If zero, the second player can force the win under perfect play. Keep the same overshoot and turn rules.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    },
+    {
+      "id": "PREP-061",
+      "key": "software-fibonacci-recursion-improvement",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "software",
+      "topic": "recursion_dynamic_programming",
+      "topics": [
+        "software",
+        "recursion",
+        "Fibonacci",
+        "memoization",
+        "iteration",
+        "complexity"
+      ],
+      "source_topic_tags": [
+        "algorithms-software",
+        "software"
+      ],
+      "added_topic_tags": [
+        "software",
+        "recursion",
+        "Fibonacci",
+        "memoization",
+        "iteration",
+        "complexity"
+      ],
+      "source_tags": [
+        "ibm",
+        "algorithms-software",
+        "software",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel",
+        "IBM"
+      ],
+      "source_company_badge": "אינטל",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "code",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder source; AI-assisted bilingual proposed solution, diagrams and independent Python checks; professional, parity and reuse review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-061.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "ממש באופן רקורסיבי את אלגוריתם פיבונצ׳י. מהי סיבוכיות האלגוריתם? כיצד ניתן לשפר את הסיבוכיות?",
+      "translations": {
+        "he": {
+          "title": "פיבונצ׳י בתוכנה — רקורסיה, סיבוכיות ושיפור",
+          "prompt": "ממשו בפייתון פונקציה רקורסיבית שמחזירה את איבר פיבונצ׳י באינדקס n. נתחו את זמן הריצה ואת זיכרון העזר. הסבירו מה גורם לחוסר היעילות והציגו שיפור ששומר תוצאות ביניים ושיפור איטרטיבי. השוו את הסיבוכיות של החלופות.\n\nהבהרות: F(0)=0 ו־F(1)=1, ולכל n>=2 מתקיים F(n)=F(n−1)+F(n−2). הקלט הוא מספר שלם אי־שלילי, ללא ערכי בוליאן; ערכים אחרים נדחים. נדרש ערך מדויק, לא חישוב מודולרי. בניתוח הראשוני ספרו פעולות חשבון במודל עלות יחידה, ואז ציינו מה משתנה במספרים השלמים הבלתי מוגבלים של Python. מגבלת עומק הרקורסיה של הסביבה עדיין חלה. זו שאלת תוכנה, בנפרד ממימוש סדרה בחומרה.",
+          "hints": [
+            "כתבו את שני תנאי העצירה ואת קריאות הרקורסיה. ציירו את הקריאות עבור n=4: האם אותו אינדקס מחושב יותר מפעם אחת?",
+            "עץ הקריאות חוזר על תתי־בעיות. כמה אינדקסים שונים בין 0 ל־n קיימים, ומה יקרה אם נשמור את התוצאה של כל אחד?",
+            "לשיפור איטרטיבי, כדי לחשב איבר חדש דרושים רק שני הקודמים. עדכנו אותם במקביל מהערכים הישנים, והבחינו בין מספר משתנים קבוע למספר ביטים קבוע."
+          ],
+          "reference_solution": "**פתרון מוצע — קודם מבינים את עץ הרקורסיה, ואז מבטלים חישובים חוזרים.**\n\nלפי ההגדרה, שני איברי הבסיס ידועים. עבור אינדקס גדול יותר מחשבים רקורסיבית את שני הקודמים ומחזירים את סכומם. בדיקת הקלט מתבצעת פעם אחת בכניסה החיצונית; הפונקציה הפנימית מקבלת רק אינדקסים תקינים.\n\n### הרקורסיה הישירה\n\nבקריאה F(4) מחשבים F(3) ו־F(2). אבל F(3) בעצמה מחשבת שוב את F(2). בכל ענף החישוב מתחיל מחדש, ולכן אותו אינדקס עשוי להופיע פעמים רבות. השרטוט העליון מציג את עץ הקריאות המלא של F(4); שני הצמתים הכתומים הם שתי קריאות נפרדות לאותה תת־בעיה.\n\n```text\nT(n) = T(n-1) + T(n-2) + Theta(1)\nC(n) = 2*F(n+1) - 1\n```\n\nהנוסחה השנייה סופרת את מספר הקריאות, כולל הקריאה הראשית והבסיסים. היא נובעת מאותם תנאי בסיס ומכך שבכל קריאה לא בסיסית יש שתי קריאות ילדים. לכן הזמן הוא Theta(phi^n), כאשר phi הוא יחס הזהב, בערך 1.618. החסם O(2^n) נכון אך פחות הדוק. עומק הקריאות המרבי ליניארי ב־n, ולכן יש O(n) מסגרות במחסנית, ולא מחסנית מעריכית: הענפים אינם כולם פעילים יחד.\n\n### שיפור עם זיכרון תוצאות\n\nנשמור כל תוצאה לפי האינדקס שלה. בפעם הראשונה מחשבים אותה, ובביקור הבא באותו אינדקס מחזירים את הערך השמור. בתרשים התחתון כל תת־בעיה מופיעה פעם אחת; החצים מציינים תלות של חישוב באחר, ולא כיוון החזרת הערך.\n\nיש לכל היותר n+1 אינדקסים שונים, ולכל אחד תוספת אחת לכל היותר. במודל פעולות חשבון בעלות יחידה מתקבלים O(n) זמן, O(n) ערכים שמורים ו־O(n) עומק מחסנית. כאן המטמון מוגדר בתוך הפונקציה ולכן אינו שומר תוצאות בין קריאות נפרדות אליה. שמירת תוצאות אינה מבטלת את מגבלת עומק הרקורסיה של Python.\n\n### שיפור איטרטיבי\n\nאם נדרש רק האיבר האחרון, אין צורך לשמור את כל הקודמים. מתחילים בזוג 0,1. בכל איטרציה הזוג החדש הוא האיבר השני והסכום של שני האיברים הישנים:\n\n```text\nbefore iteration k: (a,b) = (F(k),F(k+1))\nafter iteration:     (a,b) = (F(k+1),F(k+2))\n```\n\nאחרי n איטרציות a הוא F(n). ההשמה המקבילית בפייתון חשובה: צד ימין מחושב מהערכים הישנים לפני ששני השמות מתעדכנים.\n\nדוגמה עבור n=5:\n\n```text\nk:       0      1      2      3      4      5\n(a,b): (0,1)  (1,1)  (1,2)  (2,3)  (3,5)  (5,8)\nreturn a = 5\n```\n\nבמודל עלות יחידה זה O(n) זמן ו־O(1) משתנים מספריים נוספים, ללא מחסנית רקורסיה. אין טענה שזה האלגוריתם המהיר ביותר בכל מודל; יש שיטות נוספות כגון הכפלה מהירה.\n\n### מה משתנה במספרים מדויקים של Python?\n\nהאיבר F(n) דורש Theta(n) ביטים, ולכן שני משתנים אינם O(1) ביטים. בגרסה האיטרטיבית עלות החיבורים גדלה עם האינדקס; בהנחת חיבור ליניארי במספר הביטים, סכום העלויות הוא O(n^2) פעולות ביטים וזיכרון O(n) ביטים. מטמון של כל האיברים דורש O(n^2) ביטים לערכים, בנוסף למחסנית ולתקורה. גבולות O(n) זמן ו־O(1) מקום שנאמרים בראיון מתייחסים לספירת פעולות ומספר ערכים, לא לביטים מדויקים בלתי מוגבלים.\n\nהקוד הבא כולל את שלוש החלופות. לרקורסיה הישירה משתמשים רק ב־n קטן; לגרסה ללא מגבלת מחסנית בוחרים באיטרציה. אין צורך להגדיל את מגבלת הרקורסיה כדי לפתור את השאלה.\n\n```python\n\"\"\"PREP-061: recursive Fibonacci, local memoization and iterative improvement.\n\nConvention F(0)=0, F(1)=1; exact nonnegative integer indices, bool excluded.\nUnit-cost arithmetic complexity differs from Python arbitrary-precision cost.\nRecursive variants are for explanation/small n and depend on recursion limits.\n\"\"\"\nfrom functools import cache\n\n\ndef validate_index(n: int) -> None:\n    if type(n) is not int or n < 0:\n        raise ValueError(\"n must be a nonnegative integer, not bool\")\n\n\ndef fibonacci_recursive(n: int) -> int:\n    validate_index(n)\n\n    def fib(k: int) -> int:\n        if k < 2:\n            return k\n        return fib(k - 1) + fib(k - 2)\n\n    return fib(n)\n\n\ndef fibonacci_memoized(n: int) -> int:\n    validate_index(n)\n\n    @cache\n    def fib(k: int) -> int:\n        if k < 2:\n            return k\n        return fib(k - 1) + fib(k - 2)\n\n    return fib(n)\n\n\ndef fibonacci_iterative(n: int) -> int:\n    validate_index(n)\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```\n\nבדיקות משוות לאורקל עצמאי של הכפלה מהירה. נבדקו ערכי הבסיס, רצפי אינדקסים, מקרים גדולים באיטרציה ודחיית קלטים. ספירת הקריאות נמדדה על המימוש הרקורסיבי עצמו מול הנוסחה, ולא הוסקה רק ממדידת זמן.",
+          "hint": "כתבו את שני תנאי העצירה ואת קריאות הרקורסיה. ציירו את הקריאות עבור n=4: האם אותו אינדקס מחושב יותר מפעם אחת?"
+        },
+        "en": {
+          "title": "Software Fibonacci — recursion, complexity and improvements",
+          "prompt": "Implement a recursive Python function returning Fibonacci number F(n). Analyze running time and auxiliary storage. Explain the inefficiency, then provide a memoized improvement and an iterative improvement, comparing their complexity.\n\nClarifications: F(0)=0, F(1)=1 and F(n)=F(n−1)+F(n−2) for n>=2. Accept an exact nonnegative integer index, excluding bool, and reject other inputs. Return an exact value, not a modular result. First count unit-cost arithmetic operations, then explain Python arbitrary-precision costs. Recursive variants remain subject to the environment’s recursion limit. This is a software task, separate from hardware generation of the sequence.",
+          "hints": [
+            "Write the two base cases and recursive calls. Draw F(4): does the same index get computed more than once?",
+            "The call tree repeats subproblems. How many distinct indices from zero through n exist, and what if each result were stored?",
+            "An iterative version needs only the previous two terms. Update them simultaneously from their old values, distinguishing a constant number of variables from a constant number of bits."
+          ],
+          "reference_solution": "**Proposed solution — understand the call tree, then eliminate repeated work.**\n\nThe two base values are known. A larger index recursively obtains the preceding two terms and returns their sum. Validate input once in the outer function; the helper then receives only valid indices.\n\n### Direct recursion\n\nF(4) calls F(3) and F(2), but F(3) calls F(2) again. Each branch starts its work afresh, so the same index appears repeatedly. The upper diagram is the full F(4) call tree; the orange nodes are separate calls for the same subproblem.\n\n```text\nT(n) = T(n-1) + T(n-2) + Theta(1)\nC(n) = 2*F(n+1) - 1\n```\n\nThe second formula counts all calls, including the root and base cases. It follows from the base counts and two child calls per nonbase invocation. Running time is Theta(phi^n), where the golden ratio phi is about 1.618. O(2^n) is a valid but looser upper bound. Maximum active depth is linear, giving O(n) stack frames rather than exponential stack space: the entire tree is not active simultaneously.\n\n### Memoization\n\nStore each result by index. Compute it on the first visit and retrieve it on later visits. The lower diagram has one node per distinct subproblem; arrows show computational dependencies, not the direction of returned values.\n\nThere are at most n+1 indices and at most one addition per nonbase index. Under unit-cost arithmetic this gives O(n) time, O(n) cached values and O(n) stack depth. The supplied cache is local to one outer call, so separate calls do not share it. Memoization does not remove Python’s recursion-depth limit.\n\n### Iteration\n\nWhen only the final term is required, store only two adjacent terms. Start with zero and one and simultaneously replace the pair by the second term and the old-value sum:\n\n```text\nbefore iteration k: (a,b) = (F(k),F(k+1))\nafter iteration:     (a,b) = (F(k+1),F(k+2))\n```\n\nAfter n iterations, a equals F(n). Python’s parallel assignment evaluates the right side using old values before updating either name.\n\nFor n=5:\n\n```text\nk:       0      1      2      3      4      5\n(a,b): (0,1)  (1,1)  (1,2)  (2,3)  (3,5)  (5,8)\nreturn a = 5\n```\n\nIn the unit-cost model iteration takes O(n) time and O(1) additional numeric variables, with no recursion stack. This is not a fastest-algorithm claim across all models; other methods such as fast doubling exist.\n\n### Python exact-integer costs\n\nF(n) needs Theta(n) bits, so two variables do not mean O(1) bits. Iterative addition costs grow with index; with linear-time bit addition, the summed cost is O(n^2) bit operations and O(n) stored bits. Caching all terms uses O(n^2) value bits, in addition to stack and object overhead. Interview bounds of O(n) time and O(1) storage refer to operation counts and a number of values, not unbounded exact bit complexity.\n\nThe code below provides all three methods. Use direct recursion only for small n and iteration when a recursion-free implementation is needed; increasing the recursion limit is unnecessary.\n\n```python\n\"\"\"PREP-061: recursive Fibonacci, local memoization and iterative improvement.\n\nConvention F(0)=0, F(1)=1; exact nonnegative integer indices, bool excluded.\nUnit-cost arithmetic complexity differs from Python arbitrary-precision cost.\nRecursive variants are for explanation/small n and depend on recursion limits.\n\"\"\"\nfrom functools import cache\n\n\ndef validate_index(n: int) -> None:\n    if type(n) is not int or n < 0:\n        raise ValueError(\"n must be a nonnegative integer, not bool\")\n\n\ndef fibonacci_recursive(n: int) -> int:\n    validate_index(n)\n\n    def fib(k: int) -> int:\n        if k < 2:\n            return k\n        return fib(k - 1) + fib(k - 2)\n\n    return fib(n)\n\n\ndef fibonacci_memoized(n: int) -> int:\n    validate_index(n)\n\n    @cache\n    def fib(k: int) -> int:\n        if k < 2:\n            return k\n        return fib(k - 1) + fib(k - 2)\n\n    return fib(n)\n\n\ndef fibonacci_iterative(n: int) -> int:\n    validate_index(n)\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```\n\nChecks compare against an independent fast-doubling oracle, covering base cases, ranges of indices, larger iterative cases and invalid inputs. The actual recursive implementation’s call counts were profiled against the exact formula rather than inferred only from elapsed time.",
+          "hint": "Write the two base cases and recursive calls. Draw F(4): does the same index get computed more than once?"
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-061-he-H01",
+          "level": 1,
+          "language": "he",
+          "content": "כתבו את שני תנאי העצירה ואת קריאות הרקורסיה. ציירו את הקריאות עבור n=4: האם אותו אינדקס מחושב יותר מפעם אחת?"
+        },
+        {
+          "id": "PREP-061-he-H02",
+          "level": 2,
+          "language": "he",
+          "content": "עץ הקריאות חוזר על תתי־בעיות. כמה אינדקסים שונים בין 0 ל־n קיימים, ומה יקרה אם נשמור את התוצאה של כל אחד?"
+        },
+        {
+          "id": "PREP-061-he-H03",
+          "level": 3,
+          "language": "he",
+          "content": "לשיפור איטרטיבי, כדי לחשב איבר חדש דרושים רק שני הקודמים. עדכנו אותם במקביל מהערכים הישנים, והבחינו בין מספר משתנים קבוע למספר ביטים קבוע."
+        },
+        {
+          "id": "PREP-061-en-H01",
+          "level": 1,
+          "language": "en",
+          "content": "Write the two base cases and recursive calls. Draw F(4): does the same index get computed more than once?"
+        },
+        {
+          "id": "PREP-061-en-H02",
+          "level": 2,
+          "language": "en",
+          "content": "The call tree repeats subproblems. How many distinct indices from zero through n exist, and what if each result were stored?"
+        },
+        {
+          "id": "PREP-061-en-H03",
+          "level": 3,
+          "language": "en",
+          "content": "An iterative version needs only the previous two terms. Update them simultaneously from their old values, distinguishing a constant number of variables from a constant number of bits."
+        }
+      ],
+      "solution_code_path": "solutions/prep_061_fibonacci_software.py",
+      "solution_code_paths": [
+        "solutions/prep_061_fibonacci_software.py"
+      ],
+      "verification_evidence_path": "checks/prep-061-verification.json",
+      "verification_script_path": "checks/check_prep_061.py",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-061.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-061-recursion-memoization-he.png",
+          "language": "he",
+          "description": "PREP-061"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-061-recursion-memoization-en.png",
+          "language": "en",
+          "description": "PREP-061"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-044",
+        "PREP-024"
+      ],
+      "duplicate_check": "PREP-044 generates a clocked finite-width sequence in hardware; PREP-024 counts ladder paths. This source asks recursive software Fibonacci, time/space analysis and improvements, so neither is an exact duplicate.",
+      "interview_relevance": {
+        "priority": "medium",
+        "basis": "Practice in invariants, recursive analysis and exact implementation; not a prediction or independently verified company attribution."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "markdown_path": "questions/prep-061-software-fibonacci-recursion-improvement.md",
+      "assumptions": [
+        "Convention F(0)=0, F(1)=1.",
+        "Accept nonnegative exact int indices, excluding bool; return exact integers.",
+        "Unit-cost operation counts are distinguished from big-integer costs.",
+        "Recursive versions obey stack limits; memoization is local to one call."
+      ],
+      "optimality": {
+        "criterion": "Eliminate repeated work and reduce storage when only one term is required.",
+        "result": "Naive: Theta(phi^n) operations and O(n) frames; memoized: O(n) operations/values; iterative: O(n) operations and constant value count.",
+        "proof": "Naive calls equal 2F(n+1)−1. Memoization computes each index once; iteration maintains adjacent Fibonacci values.",
+        "scope": "No fastest-method claim. Exact iteration stores O(n) value bits and takes O(n^2) bit time with linear addition; cached term values require O(n^2) bits."
+      },
+      "verification": {
+        "status": "Python-code checks passed; independent professional review pending.",
+        "method": "Independent fast-doubling oracle and profiling of actual naive call counts.",
+        "coverage": "Twenty-five naive indices, 201 memoized, 1,001 iterative; twenty-five call-count checks; indices 2,000 and 10,000; twenty-one invalid inputs.",
+        "script_path": "checks/check_prep_061.py",
+        "scope": "No timing-based asymptotic proof; complexity is reasoned separately. Recursion checked at modest indices; no human expert approval."
+      },
+      "edge_cases": [
+        "n=0 returns zero; n=1 returns one.",
+        "Negative, fractional, string and bool inputs are rejected.",
+        "Equal adjacent values still participate correctly in pair updates.",
+        "Even memoized recursion may hit the stack limit at large n.",
+        "Constant variable count is not constant bit storage."
+      ],
+      "common_mistakes": [
+        "Using only an n=1 base case and mishandling zero.",
+        "Calling naive running time linear because stack depth is linear.",
+        "Updating a before calculating b from old values.",
+        "Claiming caching removes recursive depth.",
+        "Claiming O(1) bits or size-independent Python arithmetic."
+      ],
+      "interview_answer": "Direct recursion sums the previous two values but repeats subproblems, taking Theta(phi^n) operations and O(n) stack depth. Memoization reduces this to O(n) computed values and stack. For only F(n), loop with two simultaneously updated terms: O(n) operations and constant variable count. Exact-integer costs also depend on bit length.",
+      "solution_extensions": {
+        "question": "How can the arithmetic-operation count improve beyond visiting every index?",
+        "direction": "Fast-doubling identities compute the pair F(k),F(k+1) and combine to a doubled index in O(log n) levels/arithmetic operations. Multiplications and large integers are not constant bit cost. This is an additional extension, not required for memoization and iteration.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    },
+    {
+      "id": "PREP-062",
+      "key": "identical-robots-trains-static-marker-rendezvous",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "logical_reasoning",
+      "topic": "rendezvous",
+      "topics": [
+        "rendezvous",
+        "symmetry breaking",
+        "local finite-state programs",
+        "instruction timing"
+      ],
+      "source_topic_tags": [
+        "hardware",
+        "logic"
+      ],
+      "added_topic_tags": [
+        "rendezvous",
+        "symmetry breaking",
+        "local finite-state programs",
+        "instruction timing"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "arm",
+        "intel",
+        "apple",
+        "logic",
+        "elbit"
+      ],
+      "reported_companies": [
+        "Intel",
+        "NVIDIA",
+        "Arm",
+        "Apple",
+        "Elbit"
+      ],
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "explain",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied sources; AI-assisted bilingual proposed solution and verification. Professional, human parity and reuse review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-062-robots.png",
+          "received_on": "2026-10-21",
+          "variant": "robots"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-062-trains.png",
+          "received_on": "2026-10-21",
+          "variant": "trains"
+        }
+      ],
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-062-robots.png"
+        },
+        {
+          "type": "source_image",
+          "path": "sources/prep-062-trains.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-062-trajectories-he.png",
+          "language": "he",
+          "description": "עקבות תנועה עם זמני בקרה"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-062-trajectories-en.png",
+          "language": "en",
+          "description": "Trajectories including control ticks"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-062-local-program-he.png",
+          "language": "he",
+          "description": "התוכנית המקומית והסתעפות ללא סעיף אחר"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-062-local-program-en.png",
+          "language": "en",
+          "description": "Local program and branch without ELSE"
+        }
+      ],
+      "translations": {
+        "he": {
+          "title": "מפגש רובוטים ורכבות זהים בעזרת סימני נחיתה קבועים",
+          "prompt": "שני מקורות מתארים את אותה בעיית מפגש עם שני ניסוחים. תנו תוכנית מקומית אחת המותקנת בשני הסוכנים הזהים, כך שייפגשו בלי שאף אחד יודע את המרחק או את מיקום האחר.\n\n**א. רובוטים:** שני רובוטים מונחים על ישר אינסופי במרחק לא ידוע X. מתחת לכל אחד נשאר מצנח קבוע בקרקע. מותר לנוע יחידה ימינה או שמאלה, לבדוק אם נמצאים על מצנח ולקפוץ לתווית בתוכנית. שניהם מתחילים יחד באותה תוכנית. המצנחים הם הסימנים הקבועים; הרובוטים עצמם נעים.\n\n**ב. רכבות:** שני קרונות עם אותו שבב נוחתים על מסילה אינסופית. סימני המצנחים נשארים במקומות הנחיתה. הפקודות הרשומות הן MF לצעד קדימה, MB לצעד אחורה, בדיקת if P וקפיצת GOTO. אין סעיף ELSE. המקור אומר ״שלוש פעולות״ אך מונה ארבע צורות פקודה; בנוסח הערוך משתמשים בארבע הרשומות, בלי להמציא מגבלה נוספת.\n\n**מודל התזמון שנבחר במפורש:** המרחק בין הסימנים הוא מספר שלם חיובי D של צעדי יחידה; X במקור לא הוגדר כשלם. לשניהם אותה משמעות לכיוון קדימה, או ימינה ברובוטים, אותה יחידת זמן והתחלה מסונכרנת. כל הוראה שבוצעה — תנועה, בדיקה או קפיצה — אורכת יחידת זמן אחת. הבדיקה מותנית רק בהוראה הבאה: אם P אמת מבצעים את ה־GOTO המותנה במחזור הבא; אם לא, מדלגים עליו בלי לבצעו. זו אינה פקודת בדיקה וקפיצה חינמית. תנועה נמשכת ברציפות לאורך יחידת הזמן; פגישה היא הימצאות באותה נקודה גם באמצע צעד.\n\nאין גישה לקואורדינטות, למרחק, לזהות הסוכן או למצב האחר. אפשר לזהות רק שהמקום הנוכחי מסומן, לא איזה מצנח זה. הציגו תוכנית ללא ELSE, הסבירו כיצד הסימנים שוברים את הסימטריה והוכיחו שהיא מסתיימת במודל הזה. ציינו אילו מסקנות אינן מובטחות אם הכיוונים, השעונים או המרחקים אינם מקיימים את ההנחות. הנחות התזמון והסריג נוספו בעריכה משום שהצילומים אינם קובעים אותן.",
+          "hints": [
+            "אם שניהם מבצעים תמיד אותן פקודות באותה סביבה מקומית, המרחק נשמר. איזה אירוע יקרה רק לאחד מהם כאשר שניהם מתקדמים לאותו כיוון?",
+            "הסוכן שמתחיל מאחור יגיע לסימן ההתחלה של הקדמי. אחרי שכבר עזבו את סימניהם שלהם, מפגש עם סימן יכול לשנות את אופן ההתקדמות של האחורי בלבד.",
+            "צרו לולאה עם צעד אחד ושלוש הוראות מבוצעות בסך הכול, ולולאה אחרת עם שני צעדים בשלוש הוראות. מעבר לולאה אחרי זיהוי הסימן נותן לאחורי מהירות ממוצעת גדולה יותר, בלי לשנות את מהירות הצעד הבודד."
+          ],
+          "hint": "אם שניהם מבצעים תמיד אותן פקודות באותה סביבה מקומית, המרחק נשמר. איזה אירוע יקרה רק לאחד מהם כאשר שניהם מתקדמים לאותו כיוון?",
+          "reference_solution": "**פתרון מוצע — אותו קוד, אבל המצנח של הסוכן הקדמי מעביר רק את האחורי ללולאה מהירה יותר.**\n\n### איך שוברים את הסימטריה?\n\nנקרא לצורך ההוכחה בלבד לסוכן שמשמאל ״אחורי״ ולסוכן שמימין ״קדמי״. הסוכנים אינם מקבלים שמות אלה ואין הבדל בקוד שלהם. שניהם מתקדמים ימינה. הקדמי מתרחק משני המצנחים, והאחורי יגיע בסופו של דבר למצנח שהקדמי השאיר. לכן הסביבה המקומית שלהם תפסיק להיות זהה.\n\nאין צורך לדעת איזה מצנח רואים: לא בודקים לפני הצעד הראשון, כך שכבר עזבנו את המצנח שלנו. מאחר שנעים רק קדימה, הסימן הבא שנמצא שייך לנקודת ההתחלה של האחר. המצנח נשאר במקומו גם כשהסוכן שלו כבר רחוק.\n\n### התוכנית לשניהם\n\n```text\nSLOW:\n    MF\n    if P:\n        GOTO FAST\n    GOTO SLOW\nFAST:\n    MF\n    MF\n    GOTO FAST\n```\n\nבגרסת הרובוטים מחליפים כל MF בפקודת צעד ימינה. אין צורך ב־MB או בפקודת המתנה חדשה. ההזחה אומרת שה־GOTO ל־FAST הוא ההוראה היחידה המוגנת על ידי if P; ה־GOTO ל־SLOW אחריו אינו חלק מתנאי ואינו ELSE.\n\n### תזמון בלי להחביא הוראות חינמיות\n\nכאשר אין סימן, מחזור איטי מבצע שלוש הוראות: MF, בדיקת P, וקפיצה ל־SLOW. רק הראשונה נעה. ה־GOTO המותנה לא מבוצע ולכן אינו גוזל זמן במקרה השקרי. מתקבל צעד אחד בכל שלוש יחידות זמן.\n\nכאשר יש סימן, מבוצעים MF, בדיקה מוצלחת ו־GOTO ל־FAST, כל אחד במחזור נפרד. משם המחזור המהיר מבצע MF, MF, GOTO ל־FAST — שני צעדים בשלוש יחידות. מהירות ההליכה של צעד נשארת אחת; ההבדל הוא כמה מהזמן מוקדש לתנועה וכמה לבקרה.\n\n```text\nSLOW: MF, ifP(false), GOTO SLOW  -> 1 step / 3 ticks\nFAST: MF, MF, GOTO FAST         -> 2 steps / 3 ticks\n```\n\n### הוכחת מפגש לכל מרחק שלם חיובי\n\nנמקם בהוכחה את האחורי ב־0 ואת הקדמי ב־D. לפני זיהוי הסימן שניהם באותו מופע של הלולאה האיטית, ולכן מרחקם נשאר D. אחרי הצעד ה־D האחורי נמצא במצנח הקדמי. הצעד מסתיים בזמן ‎3D−2, הבדיקה מתבצעת בזמן ‎3D−1 והקפיצה ל־FAST בזמן ‎3D. באותו זמן האחורי ב־D והקדמי ב־2D, ושניהם עומדים להתחיל מחזור בן שלוש הוראות.\n\nבכל מחזור כזה שני הסוכנים זזים בצעד הראשון; בצעד השני רק האחורי זז; בשלישי שניהם מבצעים קפיצה. לכן הפער קטן באחת בכל מחזור. אחרי D מחזורים הוא מתאפס, והפגישה הראשונה מתרחשת בצעד השני של המחזור האחרון:\n\n```text\nt_meet = 3D + 3(D-1) + 2 = 6D-1\n```\n\nהמרחק אינו נדרש לתוכנית; הוא מופיע רק בהוכחה. זמן הריצה ליניארי במרחק במודל הזה, והתוכנית שומרת רק מונה פקודות ממספר קבוע של מצבים. אין טענה לזמן מפגש מיטבי או למינימום הוראות.\n\n### דוגמה וגבולות המודל\n\nעבור D=4, האחורי מגיע לסימן בזמן 10, בודק אותו בזמן 11, מסיים את הקפיצה בזמן 12, ופוגש את הקדמי בזמן 23 במיקום 12. הגרף מציג בנפרד תנועה והשהיית בקרה; החלקים האופקיים אינם צעדים נוספים.\n\nאם D אינו שלם, בדיקת נקודה רק בין צעדי יחידה יכולה להחמיץ אותו לעד: בסימנים 0 ו־0.5 שתי התוכניות לעולם לא יראו את הסימן של האחר, ושתיהן נשארות באותה מהירות. אם שני כיווני הקדימה הפוכים ומופנים החוצה, תוכנית זו גם אינה מפגישה. אין להציג את ההוכחה כאילו כיסתה מרחק ממשי שרירותי, כיוונים בלתי תלויים או התחלה אסינכרונית. נדרש אז מודל חישה או אלגוריתם אחר.\n\nגם מודל שבו כל פקודות הבקרה אורכות אפס זמן שונה: שתי הלולאות עלולות לנוע באותה מהירות פיזית, ולכן ההסבר של יחס המהירויות לא תקף אוטומטית. כאן כל הוראה מבוצעת מקבלת זמן אחד במפורש.\n\nהמטרה היא עצם המפגש הפיזי, לא זיהוי האחר באמצעות חיישן שלא הותר. אם דורשים להפסיק אוטומטית לפני התנגשות, צריך להוסיף יכולת גילוי מתאימה; הקוד אינו קורא את מיקום האחר. מודל הפייתון מפריד בין המעבד המקומי שרואה רק P לבין הסביבה שמחזיקה מיקומים ומאתרת מפגש לצורכי בדיקה.\n\nעברו 1,536 הרצות מפרש במרחקים 1 עד 256, בשני סדרי הסוכנים ובשלוש הזזות של מערכת הצירים. הזמן הושווה לנוסחה עצמאית. נבדקו גם מפגש התחלתי, ארבע דוגמאות נגדיות של חצי־יחידה וכיוון קדימה שונה. זו בדיקה סופית של המודל, לצד הוכחה לכל D שלם; לא ניסוי ברובוטים או ברכבות."
+        },
+        "en": {
+          "title": "Identical robots and trains rendezvous using fixed landing markers",
+          "prompt": "Two sources describe the same marker-assisted rendezvous problem. Give one local program installed in both identical agents so they meet without either knowing the distance or the other agent's position.\n\n**A. Robots:** two robots land on an infinite line at unknown separation X. Each leaves a stationary parachute on the ground. They may move one unit right or left, test whether their current position has a parachute, and jump to a label. They start the same program simultaneously. The markers stay fixed; the robots move.\n\n**B. Trains:** two identical-chip carriages land on an infinite track, leaving markers at the landing sites. The listed forms are MF for one step forward, MB for one step backward, if P, and GOTO. There is no ELSE. The source says “three operations” but lists four forms; the edited question permits those four rather than inventing an additional three-form limit.\n\n**Explicit chosen timing model:** marker separation is a positive integer D of unit movement steps; the source's X was not specified as integer. Both agents share the same forward direction, or right direction for robots, equal time units and a synchronized start. EVERY executed primitive—movement, test or jump—takes one time unit. A test guards only the next instruction: if P is true, its guarded GOTO executes on the next tick; otherwise that GOTO is skipped without execution. Testing and jumping are not free or fused. Movement is continuous within its unit interval; meeting means occupying the same point, including inside a step.\n\nAgents cannot read coordinates, separation, identity or the other's state. They see only a marker underfoot, not which marker it is. Provide a program without ELSE, explain how the fixed markers break symmetry, and prove termination in this model. State the limits when direction, clock or lattice assumptions fail. Timing and lattice assumptions were added explicitly because the screenshots do not fix them.",
+          "hints": [
+            "If both always execute identical instructions in identical local surroundings, their separation stays fixed. Which event happens to only one agent when both move in the same direction?",
+            "The initially trailing agent reaches the leading agent’s starting marker. Once they have left their own markers, seeing a marker can change only the trailing agent’s behavior.",
+            "Build one loop with one movement among three executed primitives and another with two movements among three. Switching loops after the marker gives the trailer a higher average speed without changing the speed of an individual step."
+          ],
+          "hint": "If both always execute identical instructions in identical local surroundings, their separation stays fixed. Which event happens to only one agent when both move in the same direction?",
+          "reference_solution": "**Proposed solution — identical code, but only the trailer encounters the leader’s fixed marker and switches to a faster loop.**\n\n### Breaking symmetry\n\nFor the proof only, call the left agent the trailer and the right agent the leader. Neither receives that identity and both run identical code. Both move right. The leader moves away from both markers; the trailer eventually reaches the leader’s abandoned starting marker. Their local observations therefore become different.\n\nNo marker identity is needed: do not test before the first movement, so the agent has already left its own marker. With forward-only movement, the next marker is the other starting site. The marker stays there even while its former owner moves far away.\n\n### Program installed in both agents\n\n```text\nSLOW:\n    MF\n    if P:\n        GOTO FAST\n    GOTO SLOW\nFAST:\n    MF\n    MF\n    GOTO FAST\n```\n\nFor robots replace every MF by one unit right. Neither MB nor a new WAIT instruction is needed. Indentation means if P guards only GOTO FAST. The following GOTO SLOW is unconditional, not an ELSE.\n\n### Timing every executed instruction\n\nWithout a marker, SLOW executes MF, the P test, and GOTO SLOW: three ticks with one movement. The guarded GOTO is skipped, not executed, on a false test. Thus average progress is one step per three ticks.\n\nOn a marker, MF, the successful test and GOTO FAST each take separate ticks. FAST then repeats MF, MF, GOTO FAST: two movements in three ticks. Individual movement speed is unchanged; only the fraction of time spent moving changes.\n\n```text\nSLOW: MF, ifP(false), GOTO SLOW  -> 1 step / 3 ticks\nFAST: MF, MF, GOTO FAST         -> 2 steps / 3 ticks\n```\n\n### Meeting proof for every positive integer separation\n\nFor analysis put the trailer at 0 and leader at D. Until the marker event, both remain in the same phase of SLOW, so their gap stays D. The trailer’s D-th movement reaches the leader’s marker at time 3D-2. Its test runs at 3D-1 and its separate GOTO FAST at 3D. At time 3D the trailer is at D, the leader at 2D, and both are ready to begin a three-instruction cycle.\n\nWithin each such cycle both move on the first tick, only the trailer on the second, and both jump on the third. The gap therefore decreases by one per cycle. On the second tick of the D-th cycle they meet for the first time:\n\n```text\nt_meet = 3D + 3(D-1) + 2 = 6D-1\n```\n\nThe program never knows D; only the proof uses it. Time is linear in separation in this model, and local memory is a constant-size program counter. No optimal meeting-time or minimum-instruction claim is made.\n\n### Example and model limits\n\nWith D=4 the trailer reaches the marker at time 10, tests at 11, completes its jump at 12 and meets the leader at time 23 at position 12. The trajectory plot separates movement from stationary control ticks; horizontal pieces are not extra movement steps.\n\nA noninteger D can be missed forever by point tests between unit steps. With markers at 0 and 0.5, neither program ever observes the other marker, so both keep equal average speed. If their forward directions point away from each other, this program also fails. The proof therefore does not cover arbitrary real separations, independent orientations or asynchronous starts. Those require another sensing model or algorithm.\n\nFree control instructions are also a different model: both loops may then have the same physical speed, so the average-speed argument does not transfer automatically. Here every executed primitive explicitly costs one tick.\n\nThe target is physical rendezvous, not recognizing the other agent using a forbidden sensor. Automatic stopping before collision would need an added detection capability; the program never reads the other position. The Python model separates the local CPU, which sees only P, from an environment that stores hidden positions and detects meetings for testing.\n\nPassed 1,536 interpreter runs for separations 1 through 256, both initial agent orders and three coordinate translations, checked against the independent meeting-time formula. Also checked initial coincidence, four half-unit counterexamples and an incompatible-forward-direction example. Finite model tests accompany the all-integer proof; they are not robot or train experiments."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-062-he-H01",
+          "level": 1,
+          "language": "he",
+          "content": "אם שניהם מבצעים תמיד אותן פקודות באותה סביבה מקומית, המרחק נשמר. איזה אירוע יקרה רק לאחד מהם כאשר שניהם מתקדמים לאותו כיוון?"
+        },
+        {
+          "id": "PREP-062-he-H02",
+          "level": 2,
+          "language": "he",
+          "content": "הסוכן שמתחיל מאחור יגיע לסימן ההתחלה של הקדמי. אחרי שכבר עזבו את סימניהם שלהם, מפגש עם סימן יכול לשנות את אופן ההתקדמות של האחורי בלבד."
+        },
+        {
+          "id": "PREP-062-he-H03",
+          "level": 3,
+          "language": "he",
+          "content": "צרו לולאה עם צעד אחד ושלוש הוראות מבוצעות בסך הכול, ולולאה אחרת עם שני צעדים בשלוש הוראות. מעבר לולאה אחרי זיהוי הסימן נותן לאחורי מהירות ממוצעת גדולה יותר, בלי לשנות את מהירות הצעד הבודד."
+        },
+        {
+          "id": "PREP-062-en-H01",
+          "level": 1,
+          "language": "en",
+          "content": "If both always execute identical instructions in identical local surroundings, their separation stays fixed. Which event happens to only one agent when both move in the same direction?"
+        },
+        {
+          "id": "PREP-062-en-H02",
+          "level": 2,
+          "language": "en",
+          "content": "The initially trailing agent reaches the leading agent’s starting marker. Once they have left their own markers, seeing a marker can change only the trailing agent’s behavior."
+        },
+        {
+          "id": "PREP-062-en-H03",
+          "level": 3,
+          "language": "en",
+          "content": "Build one loop with one movement among three executed primitives and another with two movements among three. Switching loops after the marker gives the trailer a higher average speed without changing the speed of an individual step."
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "original_source_variants": [
+        {
+          "id": "robots",
+          "source_path": "sources/prep-062-robots.png",
+          "original_prompt": "1. חידת הגיון - מנחיתים שני רובוטים זהים.\nהם נמצאים במרחק איקס יחידות אחד מהשני ותחת כל רובוט מונח על הקרקע המצנח שלו. בהנחה שהמצנח סטטי והרובוטים דינאמיים ויכולים לבצע את הפעולות הבאות:\nלנוע שמאלה, לנוע ימינה, לבדוק האם על מצנח, ולקפוץ ללייבל אחר בתוכנית. המטרה היא לגרום להם מתישהו להיפגש.\nצריך לכתוב אלגוריתם שיפגיש ביניהם, האלג׳ יוזן לשני הרובוטים במקביל.",
+          "reported_companies": [
+            "Intel",
+            "NVIDIA",
+            "Arm",
+            "Apple"
+          ],
+          "source_tags": [
+            "hardware",
+            "nvidia",
+            "arm",
+            "intel",
+            "apple"
+          ],
+          "source_company_badge": "אינטל"
+        },
+        {
+          "id": "trains",
+          "source_path": "sources/prep-062-trains.png",
+          "original_prompt": "ישנו מסוק שמנחית שתי רכבות על מסילת רכבת אינסופית. כל רכבת מונחת בעזרת מצנח וכאשר היא נוגעת ברצפה המצנח נשאר מונח ליד מקום הנפילה. תכנן צ׳יפ שיהיה אחראי לתנועת הרכבת כך ששתי הרכבות יפגשו. אותו הצ׳יפ יותקן בשני הקרונות, ישנן שלוש פעולות מותרות:\n\nMF - תנועה של צעד אחד קדימה\nMB - תנועה של צעד אחד אחורה\nif P - מקבל ערך אמת כאשר הקרון עובר ליד מצנח. אין סעיף ELSE.\nGOTO - קפיצה ללייבל אחר.\n\nתכננו כך ששתי הרכבות ייפגשו.",
+          "reported_companies": [
+            "Elbit",
+            "NVIDIA",
+            "Intel"
+          ],
+          "source_tags": [
+            "nvidia",
+            "intel",
+            "logic",
+            "elbit"
+          ],
+          "source_company_badge": "Elbit"
+        }
+      ],
+      "original_prompt": "1. חידת הגיון - מנחיתים שני רובוטים זהים.\nהם נמצאים במרחק איקס יחידות אחד מהשני ותחת כל רובוט מונח על הקרקע המצנח שלו. בהנחה שהמצנח סטטי והרובוטים דינאמיים ויכולים לבצע את הפעולות הבאות:\nלנוע שמאלה, לנוע ימינה, לבדוק האם על מצנח, ולקפוץ ללייבל אחר בתוכנית. המטרה היא לגרום להם מתישהו להיפגש.\nצריך לכתוב אלגוריתם שיפגיש ביניהם, האלג׳ יוזן לשני הרובוטים במקביל.",
+      "source_company_badge": "אינטל",
+      "related_question_ids": [],
+      "duplicate_check": "No robot/train/parachute rendezvous found in archive original prompts or seed titles. The two supplied sources are merged as explicit robot and constrained-instruction train variants with separate raw sources; no second question identity is created.",
+      "solution_code_path": "solutions/prep_062_identical_agents.py",
+      "solution_code_paths": [
+        "solutions/prep_062_identical_agents.py"
+      ],
+      "verification_script_path": "checks/check_prep_062.py",
+      "verification_evidence_path": "checks/prep-062-verification.json",
+      "assumptions": [
+        "Common forward orientation, synchronized start and equal clocks.",
+        "Positive integer marker separation in unit steps is an explicit editorial assumption, not a stated source fact.",
+        "Parachutes are fixed point markers; the sensor tests only the current location and cannot identify ownership.",
+        "Every executed primitive costs one tick, including test and jump; a skipped guarded jump consumes no execution tick.",
+        "Movement is continuous during its tick. Meeting means shared location, not automatic detection or stopping.",
+        "The local CPU has only a program counter and marker bit; environment data is hidden from it."
+      ],
+      "optimality": {
+        "criterion": "Guaranteed meeting for every integer separation in the declared instruction model.",
+        "result": "Meeting at 6D−1; constant local memory and linear time in separation.",
+        "proof": "The gap is D before marker discovery; afterward it decreases by one per three-instruction cycle.",
+        "scope": "No minimum-time or minimum-program claim; does not cover arbitrary real separation, independent orientations, unequal clocks or free control."
+      },
+      "verification": "Passed 1,536 interpreter runs: distances 1..256, both agent orders and three translations. Meeting and marker-test times matched independent formulas. Checked initial coincidence, four noninteger marker misses and opposite forward directions. The local sensor never receives positions. Finite model checks are not physical experiments or proof for other execution models.",
+      "edge_cases": [
+        "Testing before the first step sees each agent’s own marker and does not break symmetry.",
+        "Unit separation meets at 5, not 3, when test and jump each consume their own tick.",
+        "If the other agent starts on the left, roles swap automatically without a code change.",
+        "A marker half a unit away may never be sampled.",
+        "Coincident starts are a meeting at time zero.",
+        "The program itself need not detect that a meeting has happened."
+      ],
+      "common_mistakes": [
+        "Expecting identical programs with identical motion to meet without a symmetry-breaking observation.",
+        "Detecting the initial own marker and making both agents fast.",
+        "Counting tests and jumps as free in one part and costly in another.",
+        "Introducing an unauthorized WAIT or ELSE.",
+        "Reading hidden separation or the other position from inside agent code.",
+        "Generalizing the proof to noninteger separation or different orientations without another solution."
+      ],
+      "interview_answer": "Both advance in the same direction using a slow step/test/jump loop. Only the trailer reaches the leader’s fixed marker, then switches to two steps and a jump. Its average speed doubles and closes the gap. With one tick per executed primitive and integer separation, meeting occurs at 6D−1. Direction and timing assumptions must be explicit.",
+      "source_ambiguities": {
+        "distance": "Source X is not explicitly integer. The discrete solution assumes a unit lattice; half-unit separation provides a counterexample.",
+        "timing": "The screenshots do not assign costs to tests/jumps; this model charges one tick to every executed primitive.",
+        "orientation": "Common forward direction and synchronized start are explicit editorial additions.",
+        "operation_count": "The train source says three operations but listsMF,MB,ifP,GOTO; the literal source is retained and four forms are clarified.",
+        "static": "Static in the robot source refers to the parachute marker, not the moving robot."
+      },
+      "solution_extensions": {
+        "question": "What changes if test/jump are free or the markers are half a unit apart?",
+        "direction": "Explain why this program no longer guarantees the speed ratio or marker observation. Specify another movement/sensing model or a genuinely slowing algorithm; do not reuse the old proof unchanged.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      },
+      "markdown_path": "questions/prep-062-identical-robots-trains-static-marker-rendezvous.md"
+    },
+    {
+      "id": "PREP-063",
+      "key": "duck-fox-circular-pond-escape",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "logical_reasoning",
+      "topic": "angular speed",
+      "topics": [
+        "angular speed",
+        "adversarial motion",
+        "geometry",
+        "continuous strategies"
+      ],
+      "source_topic_tags": [
+        "logic"
+      ],
+      "added_topic_tags": [
+        "angular speed",
+        "adversarial motion",
+        "geometry",
+        "continuous strategies"
+      ],
+      "source_tags": [
+        "nvidia",
+        "2312313",
+        "logic",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox",
+        "NVIDIA"
+      ],
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "explain",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied sources; AI-assisted bilingual proposed solution and verification. Professional, human parity and reuse review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-063.png",
+          "received_on": "2026-10-21",
+          "variant": "duck-fox"
+        }
+      ],
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-063.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-063-duck-fox-escape-he.png",
+          "language": "he",
+          "description": "מעגל פנימי ונתיבי הבריחה בתחילת הספרינט"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-063-duck-fox-escape-en.png",
+          "language": "en",
+          "description": "Inner circle and escape paths at sprint departure"
+        }
+      ],
+      "translations": {
+        "he": {
+          "title": "ברווז ושועל סביב אגם מעגלי — בריחה למרות יתרון מהירות",
+          "prompt": "ברווז שוחה בנקודה פנימית של אגם עגול ברדיוס R. מהירות השחייה המרבית שלו היא v. שועל חכם יכול לנוע רק לאורך הגדה המעגלית, במהירות מרבית 4v. שניהם רואים זה את זה ויכולים לבחור כיוון בכל רגע. השועל אינו יכול להיכנס למים או לחצות דרך האגם.\n\nתנו אסטרטגיה שמאפשרת לברווז להגיע לנקודה כלשהי על הגדה לפני השועל, גם אם השועל בוחר תגובה מיטבית. בריחה נחשבת מוצלחת ברגע שהברווז מגיע לגדה והשועל אינו באותה נקודה. הסבירו מדוע ריצה רדיאלית פשוטה מהמרכז אינה מספיקה, כיצד אפשר להשיג מצב נגדי לשועל ומדוע שלב הבריחה מהיר מספיק.\n\nהבהרות שנוספו למקור: התנועה רציפה ואידאלית, הכיוון ניתן לשינוי ללא זמן תגובה, ו״לפני השועל״ הוא אי־שוויון ממש ולא הגעה יחד. לצורך הפתרון מותר לברווז לשחות תחילה למרכז מכל נקודה פנימית, משום שהשועל נשאר על הגדה; התחלה במרכז אינה מגבלה נוספת על הנקודה הפנימית המקורית. מצב התחלה שבו שניהם כבר באותה נקודת גדה אינו נכלל בהבטחת הבריחה. לא נדרשת אסטרטגיה בעלת זמן מינימלי או יחס מהירויות מרבי.",
+          "hints": [
+            "השועל מהיר יותר לאורך דרך, אבל כדי להישאר מול הברווז צריך להשוות מהירות זוויתית סביב מרכז האגם. איך היא תלויה ברדיוס שבו הברווז שוחה?",
+            "במעגל פנימי שרדיוסו קטן מרבע רדיוס האגם, הברווז יכול לשנות זווית מהר יותר מהשועל. השתמשו בכך כדי להגיע לנקודה שמולו, ואז חישבו את שני זמני ההגעה לגדה.",
+            "הרדיוס הפנימי חייב לעמוד בשני תנאים יחד: להיות קטן מ־R/4 לצורך יתרון זוויתי, אבל גדול מספיק כדי שהקטע שנותר לשחייה יהיה קצר מחצי היקף הגדה חלקי ארבע. נסו r=0.24R."
+          ],
+          "hint": "השועל מהיר יותר לאורך דרך, אבל כדי להישאר מול הברווז צריך להשוות מהירות זוויתית סביב מרכז האגם. איך היא תלויה ברדיוס שבו הברווז שוחה?",
+          "reference_solution": "**פתרון מוצע — מתקרבים מספיק לגדה כדי לקצר את הבריחה, אבל נשארים מספיק קרובים למרכז כדי להרוויח בזווית.**\n\n### למה לא פשוט לשחות ישר החוצה?\n\nמהמרכז, אפילו אם בוחרים את נקודת הגדה הרחוקה ביותר מהשועל, לברווז יש מרחק R וזמן R/v. לשועל יש לכל היותר חצי היקף, כלומר מרחק πR וזמן πR/(4v), שהוא בערך ‎0.7854R/v. השועל יכול להגיע קודם. לכן יתרון מרחק לבדו מהמרכז אינו מספיק.\n\n### הרעיון: מהירות זוויתית ולא רק מהירות לאורך מסלול\n\nזווית ברדיאנים מוכפלת ברדיוס נותנת מרחק לאורך מעגל. לכן מהירות זוויתית היא מהירות התנועה חלקי הרדיוס. לשועל יש לכל היותר ‎4v/R. לברווז ששוחה במעגל פנימי ברדיוס r יש ‎v/r. אם r קטן מ־R/4, הברווז משנה את זוויתו מהר יותר גם משועל מהיר פי ארבע.\n\nנבחר רדיוס קבוע ומפורש:\n\n```text\nr = 6R/25 = 0.24R\nduck angular speed = v/r = 25v/(6R)\nfox angular speed <= 4v/R = 24v/(6R)\nangular advantage >= v/(6R) > 0\n```\n\n### שלב ראשון — להגיע למעגל הפנימי\n\nמהמרכז שוחים בכל כיוון עד מרחק r. השועל יכול לנוע בגדה כרצונו, אך אינו יכול לגעת בברווז שנשאר בתוך המים. אין צורך שהשועל יישאר במקום או יבחר כיוון נוח.\n\n### שלב שני — להגיע למצב נגדי לשועל\n\nמסתכלים על הזווית בין כיוון הברווז מהמרכז לבין כיוון השועל. בוחרים כיוון הקפה שמגדיל את ההפרש הזוויתי הקצר עד 180 מעלות, ושוחים על המעגל הפנימי בכיוון זה.\n\nגם אם השועל רודף באותו כיוון ובמהירותו המרבית, הברווז מגדיל את ההפרש לפחות בקצב ‎v/(6R). אם השועל מסתובב לכיוון אחר, הוא אינו יכול להקטין את קצב ההתקדמות מתחת לחסם הזה. עוצרים את ההקפה ברגע שהזוויות נגדיות. נדרשת השלמה של לכל היותר π רדיאנים של הפרש, ולכן זמן שלב זה חסום על ידי ‎6πR/v. זהו חסם מספיק לשיטה, לא טענה לזמן מיטבי.\n\nההפרש נמדד לאורך הכיוון שנבחר עד לפגיעה הראשונה בזווית הנגדית; אין צורך להמשיך להסתובב או להניח שהשועל משתף פעולה. רדיוס שווה בדיוק ל־R/4 לא נותן יתרון זוויתי ממש, ולכן אינו כשלעצמו מבטיח שנוכל ליצור מצב נגדי מכל זווית התחלה.\n\n### שלב שלישי — בריחה רדיאלית לנקודה קבועה\n\nברגע שהברווז והשועל נגדיים, הברווז מפסיק להקיף ושוחה בקו ישר החוצה לנקודת הגדה שבאותו כיוון. כעת היעד קבוע; אין צורך להמשיך לעקוב אחרי השועל או לשנות את נקודת היציאה.\n\nלברווז נותר מרחק ‎R−r=0.76R. השועל נמצא בדיוק בצד הנגדי של אותה נקודת יעד, ולכן כל מסלול שלו לאורך הגדה אליה הוא לפחות חצי היקף, πR. גם בבחירת כיוון מיטבית:\n\n```text\nT_duck = (R-r)/v = 19R/(25v) = 0.76R/v\nT_fox  >= pi*R/(4v)          ≈ 0.785398R/v\nT_fox - T_duck >= (pi/4 - 19/25)*R/v > 0\n```\n\nלכן הברווז מגיע קודם, עם יתרון ממש של כ־‎0.025398R/v. השועל יכול להבין מיד את התוכנית ולרוץ לכיוון הנכון; גם אז אינו יכול לעבור את חצי ההיקף מהר יותר מהחסם. התרשים מציג את הברווז על המעגל הפנימי מול השועל בדיוק בתחילת הספרינט, לא את רגע ההתחלה במרכז.\n\n### למה חשוב לבחור את הרדיוס נכון?\n\nלא כל מעגל קטן מרבע מספיק. מעגל קטן מדי נותן יתרון זוויתי אבל משאיר יותר מדי מרחק לגדה. צריך את שני התנאים יחד:\n\n```text\n(1-pi/4)*R < r < R/4\n0.214602...*R < r < 0.25R\n```\n\nהבחירה ‎0.24R נמצאת בפנים. למשל ‎r=R/5 משאיר זמן שחייה ‎0.8R/v, גדול מזמן השועל ‎πR/(4v), ולכן השלב הרדיאלי של שיטה זו אינו מובטח בבחירה הזאת.\n\n### הנחות ואימות\n\nההוכחה משתמשת בכך שהשועל מוגבל לגדה, שהברווז יכול לשנות כיוון ולהתבונן ברציפות, וששניהם מיוצגים כנקודות. היא אינה מתירה לשועל לקצר דרך המים ואינה מוכיחה הצלחה עם זמני תגובה או תאוצה מוגבלת. מצד שני, אין צורך להניח שהשועל תמיד רודף בצורה מסוימת: חסם המהירות הזוויתית וחסם אורך הקשת תקפים לכל תגובה מותרת.\n\nעברו 16 בדיקות קנה מידה, 720 בדיקות קואורדינטות עצמאיות של יעד נגדי, 8,241 חישובי יישור במהירות שועל קבועה ו־200 דוגמאות של מדיניות שועל המשתנה במקטעים. הבדיקות המספריות בודקות את הנוסחאות; ההוכחה לכל תנועה מותרת היא אי־השוויונים שלמעלה, לא רשימת הדוגמאות. אין טענה לאסטרטגיה מהירה ביותר או ליחס המהירויות המרבי האפשרי."
+        },
+        "en": {
+          "title": "Duck and fox at a circular pond — escape despite a faster pursuer",
+          "prompt": "A duck is strictly inside a circular pond of radius R and can swim at speed at most v. A clever fox can move only along the circular shore at speed at most 4v. Both observe each other continuously and may choose direction at any time. The fox cannot enter the water or cut across the pond.\n\nGive a strategy that gets the duck to some point on the shore before the fox, even against the fox's best response. Escape succeeds upon reaching the shore while the fox is not at the same point. Explain why a simple radial sprint from the center is insufficient, how the duck can become opposite the fox, and why the final sprint is fast enough.\n\nExplicit additions to the source: ideal continuous motion, instantaneous turns without reaction delay, and a STRICT time advantage rather than a tie. The duck may first swim from any safe interior point to the center because the fox stays on the shore; using the center is therefore without loss of generality after a preparatory swim. A start with both already at the same shore point is excluded. Minimum escape time and the largest beatable speed ratio are not required.",
+          "hints": [
+            "The fox is faster along a path, but staying opposite the duck depends on angular speed about the center. How does the duck’s angular speed depend on its swimming radius?",
+            "On an inner circle of radius less than one quarter of the pond radius, the duck can change angle faster than the fox. Use this to become opposite, then compare both remaining arrival times.",
+            "The inner radius must satisfy two conditions: below R/4 for angular advantage, but large enough that the remaining radial swim takes less than half the shoreline divided by four. Try r=0.24R."
+          ],
+          "hint": "The fox is faster along a path, but staying opposite the duck depends on angular speed about the center. How does the duck’s angular speed depend on its swimming radius?",
+          "reference_solution": "**Proposed solution — stay close enough to the center to win angularly, but far enough outward to shorten the final escape.**\n\n### Why not sprint straight from the center?\n\nEven the shore point farthest from the fox is distance R from the center, taking the duck R/v. The fox has at most half the circumference to cover, distance piR, taking piR/(4v), about 0.7854R/v. It can arrive first. A distance advantage from the center alone is insufficient.\n\n### Angular speed is the key\n\nArc length is radius times angle in radians, so angular speed equals linear speed divided by radius. The fox has angular speed at most 4v/R. A duck on an inner circle of radius r has angular speed v/r. If r<R/4, the duck changes its angle faster despite being four times slower along its path.\n\nChoose a definite radius:\n\n```text\nr = 6R/25 = 0.24R\nduck angular speed = v/r = 25v/(6R)\nfox angular speed <= 4v/R = 24v/(6R)\nangular advantage >= v/(6R) > 0\n```\n\n### Phase 1: reach the inner circle\n\nSwim in any direction from the center until radius r. The fox may move anywhere on the shore, but cannot touch a duck remaining inside the pond. It need not stand still or choose a convenient direction.\n\n### Phase 2: become opposite the fox\n\nObserve the angular difference between the duck's radius direction and the fox's. Choose the orbit direction that increases the shorter angular separation toward 180 degrees, then swim around the inner circle in that direction.\n\nEven a fox pursuing in the same direction at full speed cannot stop the separation increasing at rate at least v/(6R). Changing fox direction cannot reduce progress below that bound. Stop orbiting at the first instant their angles are opposite. At most pi radians of relative separation are needed, so this phase takes at most 6 piR/v. This is a sufficient bound, not an optimal-time claim.\n\nMeasure the unwrapped relative angle in the chosen direction until its first opposite hit; do not continue orbiting or assume cooperation. Radius exactly R/4 gives no strict angular advantage, so by itself it cannot force opposition from every initial angular gap.\n\n### Phase 3: sprint radially to a fixed endpoint\n\nAt opposition the duck stops orbiting and swims straight outward to the shore point on its current radius. The endpoint is now fixed; it need not track the fox or keep changing targets.\n\nThe duck has R-r=0.76R left. The fox is diametrically opposite that SAME endpoint, so every shore path to it is at least half a circumference, piR. Even its best directional choice gives:\n\n```text\nT_duck = (R-r)/v = 19R/(25v) = 0.76R/v\nT_fox  >= pi*R/(4v)          ≈ 0.785398R/v\nT_fox - T_duck >= (pi/4 - 19/25)*R/v > 0\n```\n\nThe duck therefore arrives strictly earlier, by at least about 0.025398R/v. The fox can understand the sprint instantly and choose the better way around; it still cannot cover the half-circumference sooner. The diagram depicts opposition at the start of the final sprint, not the initial center position.\n\n### The radius must satisfy BOTH requirements\n\nNot every radius below a quarter works. Too small a circle wins angularly but leaves too long a final radial swim. Require both:\n\n```text\n(1-pi/4)*R < r < R/4\n0.214602...*R < r < 0.25R\n```\n\nThe choice 0.24R lies strictly inside. For example r=R/5 leaves swim time 0.8R/v, exceeding the fox's piR/(4v), so this strategy's radial finish would not be guaranteed at that radius.\n\n### Assumptions and checks\n\nThe proof uses a shore-only fox, continuous observation and direction changes, and point-agent geometry. It does not allow the fox to cut through the water and does not cover reaction delays or acceleration limits. It does not require any particular fox pursuit policy: the angular-speed and shortest-arc bounds hold for every allowed response.\n\nPassed 16 scale checks,720 independent coordinate checks of opposite endpoints,8,241 constant-fox-velocity alignment cases and 200 piecewise-changing fox-policy samples. Numerical checks validate the formulas; the universal proof is the inequalities above, not the finite sample list. No fastest-strategy or largest-beatable-speed-ratio claim is made."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-063-he-H01",
+          "level": 1,
+          "language": "he",
+          "content": "השועל מהיר יותר לאורך דרך, אבל כדי להישאר מול הברווז צריך להשוות מהירות זוויתית סביב מרכז האגם. איך היא תלויה ברדיוס שבו הברווז שוחה?"
+        },
+        {
+          "id": "PREP-063-he-H02",
+          "level": 2,
+          "language": "he",
+          "content": "במעגל פנימי שרדיוסו קטן מרבע רדיוס האגם, הברווז יכול לשנות זווית מהר יותר מהשועל. השתמשו בכך כדי להגיע לנקודה שמולו, ואז חישבו את שני זמני ההגעה לגדה."
+        },
+        {
+          "id": "PREP-063-he-H03",
+          "level": 3,
+          "language": "he",
+          "content": "הרדיוס הפנימי חייב לעמוד בשני תנאים יחד: להיות קטן מ־R/4 לצורך יתרון זוויתי, אבל גדול מספיק כדי שהקטע שנותר לשחייה יהיה קצר מחצי היקף הגדה חלקי ארבע. נסו r=0.24R."
+        },
+        {
+          "id": "PREP-063-en-H01",
+          "level": 1,
+          "language": "en",
+          "content": "The fox is faster along a path, but staying opposite the duck depends on angular speed about the center. How does the duck’s angular speed depend on its swimming radius?"
+        },
+        {
+          "id": "PREP-063-en-H02",
+          "level": 2,
+          "language": "en",
+          "content": "On an inner circle of radius less than one quarter of the pond radius, the duck can change angle faster than the fox. Use this to become opposite, then compare both remaining arrival times."
+        },
+        {
+          "id": "PREP-063-en-H03",
+          "level": 3,
+          "language": "en",
+          "content": "The inner radius must satisfy two conditions: below R/4 for angular advantage, but large enough that the remaining radial swim takes less than half the shoreline divided by four. Try r=0.24R."
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "original_source_variants": [
+        {
+          "id": "duck-fox",
+          "source_path": "sources/prep-063.png",
+          "original_prompt": "ישנו אגם מעגלי, ובו שוחה ברווז. על הברווז להגיע לשפת האגם ע״מ לאכול, אך שם אורב לו שועל חכם ומהיר פי 4 מהברווז. לכל מקום אליו יזוז הברווז יזוז השועל וינסה לטרוף אותו.\nכיצד על הברווז לנהוג ע״מ להצליח להגיע לשפת האגם לפני השועל?",
+          "reported_companies": [
+            "Mellanox",
+            "NVIDIA"
+          ],
+          "source_tags": [
+            "nvidia",
+            "2312313",
+            "logic",
+            "mellanox"
+          ],
+          "source_company_badge": "מלאנוקס"
+        }
+      ],
+      "original_prompt": "ישנו אגם מעגלי, ובו שוחה ברווז. על הברווז להגיע לשפת האגם ע״מ לאכול, אך שם אורב לו שועל חכם ומהיר פי 4 מהברווז. לכל מקום אליו יזוז הברווז יזוז השועל וינסה לטרוף אותו.\nכיצד על הברווז לנהוג ע״מ להצליח להגיע לשפת האגם לפני השועל?",
+      "source_company_badge": "מלאנוקס",
+      "related_question_ids": [],
+      "duplicate_check": "Compared archive original prompts and seed titles for duck/fox/circular-pond variants; none found. This continuous geometry pursuit problem is distinct from the moving-rabbit line puzzle and from marker rendezvous.",
+      "solution_code_path": "solutions/prep_063_duck_fox.py",
+      "solution_code_paths": [
+        "solutions/prep_063_duck_fox.py"
+      ],
+      "verification_script_path": "checks/check_prep_063.py",
+      "verification_evidence_path": "checks/prep-063-verification.json",
+      "assumptions": [
+        "Circular pond with positive radius R, positive duck speed v and fox speed at most 4v.",
+        "Fox motion is restricted to the shore, without water shortcuts.",
+        "A safe interior duck may first swim to the center; the proof begins after this preparation.",
+        "Continuous observation/motion, ideal direction changes and point agents.",
+        "Escape means arriving at a shore endpoint strictly before the fox reaches that same point."
+      ],
+      "optimality": {
+        "criterion": "A strategy guaranteeing escape against every allowed fox response at speed ratio 4.",
+        "result": "Radius 6R/25, angular alignment to opposition, then radial sprint in 19R/(25v).",
+        "proof": "v/r exceeds 4v/R; at opposition the fox needs at least half the shoreline, taking strictly longer than the remaining swim.",
+        "scope": "No minimum-time or optimal critical-speed-ratio claim; this is a sufficient ideal-model construction."
+      },
+      "verification": "Passed 16 scale checks,720 independent opposite-endpoint coordinate checks,8,241 constant-angular-velocity alignment cases and 200 piecewise-varying fox samples. Normalized strict margin is about 0.025398. The all-policy proof is the speed/arc inequalities; samples do not replace it and are not a physical experiment.",
+      "edge_cases": [
+        "ExactlyR/4 supplies no strict angular advantage.",
+        "Too small a radius such asR/5 does not guarantee this strategy’s radial finish.",
+        "Already opposite means the orbiting phase can be skipped.",
+        "The fox may change direction freely but still obeys the angular-speed bound.",
+        "A fixed endpoint during the sprint is part of the proof.",
+        "An initial capture at the shore cannot be undone by the strategy."
+      ],
+      "common_mistakes": [
+        "Comparing only linear speed and declaring escape impossible.",
+        "Sprinting from the center while forgetting the fox covers half a circumference sooner.",
+        "Choosing anyr<R/4 without checking final sprint time.",
+        "Assuming a cooperative fox policy or a stationary fox.",
+        "Letting the fox swim or cut across a diameter contrary to the model.",
+        "Claiming an optimal critical speed ratio from this sufficient construction alone."
+      ],
+      "interview_answer": "Swim to radius 0.24R, where the duck’s angular speed exceeds the four-times-faster shore fox’s. Orbit until opposite, then sprint radially to a fixed endpoint. The duck needs 0.76R/v while the fox needs at leastpiR/(4v), about 0.7854R/v, so the duck arrives first. The chosen radius must satisfy both angular and sprint inequalities.",
+      "source_ambiguities": {
+        "start": "The source does not specify start position. Any safe interior point can first reach the center, so centering the proof does not restrict the original interior start.",
+        "fox_region": "The edited fox is shore-only; swimming would change the problem.",
+        "geometry": "Point agents, continuous motion and no reaction/acceleration delay are explicit.",
+        "numeric_tag": "Source tag 2312313 is retained as an unclassified tag, not a company or calibrated difficulty."
+      },
+      "solution_extensions": {
+        "question": "What sufficient condition on a general speed ratiok follows from this inner-circle-then-radial strategy?",
+        "direction": "Require r/R<1/k for angular advantage and r/R>1−pi/k for the sprint. Such a radius exists fork<pi+1. This is sufficient for this strategy, not a claim of the optimal critical ratio over all strategies.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      },
+      "markdown_path": "questions/prep-063-duck-fox-circular-pond-escape.md"
+    },
+    {
+      "id": "PREP-064",
+      "key": "three-bit-up-down-counter-gates",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "hardware",
+      "topic": "counters",
+      "topics": [
+        "hardware",
+        "counters",
+        "flip_flops",
+        "toggle_logic",
+        "synchronous_design"
+      ],
+      "source_topic_tags": [
+        "hardware"
+      ],
+      "added_topic_tags": [
+        "counters",
+        "flip_flops",
+        "toggle_logic",
+        "synchronous_design"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "circuit_design",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied source; AI-assisted bilingual proposed solution, diagrams and exhaustive model checks. Professional, parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-064.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "צריך לממש קופסא בעלת שתי כניסות inc ו־dec, ויציאה בעלת 3 ביטים. אם inc=1 ו־dec=0 מוסיפים ליציאה אחד, אם inc=0 ו־dec=1 מחסירים אחד, אחרת לא משנים המספר ביציאה. לא ניתן להשתמש ב־F.A או H.A, רק שערים לוגיים ופליפלופים.",
+      "translations": {
+        "he": {
+          "title": "מונה עולה ויורד בן שלושה ביטים — שערים ודלגלגים בלבד",
+          "prompt": "תכננו רכיב בעל שתי כניסות בקרה inc,dec ופלט בינארי בן שלושה ביטים. בכל חזית שעון, אם inc=1 ו־dec=0 מוסיפים 1 למספר שבפלט; אם inc=0 ו־dec=1 מפחיתים 1; אם שני אותות הבקרה שווים הפלט נשמר. מותר להשתמש רק בשערים לוגיים ובדלגלגים. אין להשתמש ברכיבי מחבר מלא או מחבר למחצה, או בבלוק סוכם או מחסר מוכן.\n\nהבהרות שנוספו למקור: שלושת הדלגלגים משתמשים באותה חזית עולה. אותות הבקרה סינכרוניים ועומדים בזמני ההכנה וההחזקה. הפלט הוא מספר ללא סימן בטווח 0–7 והספירה מעגלית מודולו 8: הגדלת 7 נותנת 0 והקטנת 0 נותנת 7. איפוס סינכרוני פעיל בגבוה קובע 000 וגובר על שתי הבקרות. התוצאה מתעדכנת יחד אחרי החזית; אין להשתמש במוצא דלגלג כשעון של דלגלג אחר. הציגו משוואות, מעגל וטבלת מעברים.",
+          "hint": "במקום לחשב סכום, בדקו אילו ביטים מתהפכים בכל הוספה או חיסור של אחד. מתי הביט הנמוך מתהפך?",
+          "hints": [
+            "במקום לחשב סכום, בדקו אילו ביטים מתהפכים בכל הוספה או חיסור של אחד. מתי הביט הנמוך מתהפך?",
+            "בספירה למעלה ביט גבוה מתהפך כאשר כל הביטים שמתחתיו הם 1; בספירה למטה הוא מתהפך כשכולם 0. הפרידו בין פקודת עלייה בלבד לפקודת ירידה בלבד.",
+            "צרו U=inc AND NOT dec ו־D=dec AND NOT inc. הגדירו לכל ביט אות T שאומר אם להפוך אותו. כניסת דלגלג D יכולה להיות q XOR T; אות T הגבוה צריך לבדוק גם את q1 וגם את q0."
+          ],
+          "reference_solution": "### חושבים על היפוך ביטים, לא על רכיב מחבר\n\nנחזיק את המצב בשלושה דלגלגי D. נסמן q2 כביט המשמעותי ו־q0 כביט הנמוך. תחילה ניצור שתי פקודות שאינן יכולות להיות פעילות יחד:\n\n```text\nU = inc AND NOT dec\nD = dec AND NOT inc\n```\n\nU מסמן עלייה בלבד, ו־D מסמן ירידה בלבד. כאן D הוא שם פקודת הירידה; D0,D1,D2 בהמשך הם כניסות הנתונים לדלגלגים. כאשר הבקרות 00 או 11, שתי הפקודות אפס ולכן נחזיק את המצב.\n\n### מתי כל ביט מתהפך?\n\nהביט q0 מתהפך בכל ספירה, למעלה או למטה. הביט q1 מתהפך בעלייה אם q0 הישן הוא 1, משום שהוספת אחד מאפסת את הביט הנמוך ומעבירה נשא. בירידה הוא מתהפך אם q0 הישן הוא 0, משום שנדרשת השאלה מן הביט הבא. אלה הסברים מתמטיים לדפוס הביטים, לא רכיבי נשא או מחסר שהוספנו.\n\nq2 מתהפך בעלייה רק אם הזוג הנמוך הוא 11; בירידה רק אם הוא 00. במקרים האחרים הזוג הנמוך סופג את השינוי בלי להפוך את q2. לכן אותות ההיפוך הם:\n\n```text\nT0 = U OR D\nT1 = (U AND q0) OR (D AND NOT q0)\nT2 = (U AND q1 AND q0) OR (D AND NOT q1 AND NOT q0)\n```\n\n### מחברים לשלושה דלגלגים\n\nשער XOR מעביר את q ללא שינוי אם T=0, והופך אותו אם T=1. לכן:\n\n```text\nD0 = q0 XOR T0\nD1 = q1 XOR T1\nD2 = q2 XOR T2\n```\n\nמחברים כל Di לכניסת הנתונים של הדלגלג המתאים. כל שלושת הדלגלגים מקבלים את אותו clk ואת אותו rst הסינכרוני. באיפוס שומרים 000; אחרת כל דלגלג שומר את Di שלו. אפשר להשתמש גם בדלגלגי T עם אותות T האלה, בתנאי שמגדירים אותה התנהגות שעון ואיפוס. אין כאן מחבר מלא או מחבר למחצה: הפונקציות מורכבות משערי AND,OR,NOT,XOR. אין צורך לחסום את השעון.\n\nבשרטוט, החוט הסגול החוזר מכל Q לשער XOR הוא משוב נתונים. הוא אינו שעון. כניסות U,D ושמות q החוזרים בשרטוט הם אותות מאותו מעגל. בקופסאות חישוב T מופיעות משוואות שערים מפורשות. הספירה סינכרונית; תנאי היפוך של ביט גבוה תלוי בביטים הישנים של אותה חזית, ולא בביטים לאחר שכבר התעדכנו.\n\n### טבלת מעברים מלאה\n\n| q לפני החזית | inc=0,dec=0 | inc=0,dec=1 | inc=1,dec=0 | inc=1,dec=1 |\n| --- | --- | --- | --- | --- |\n| 000 | 000 | 111 | 001 | 000 |\n| 001 | 001 | 000 | 010 | 001 |\n| 010 | 010 | 001 | 011 | 010 |\n| 011 | 011 | 010 | 100 | 011 |\n| 100 | 100 | 011 | 101 | 100 |\n| 101 | 101 | 100 | 110 | 101 |\n| 110 | 110 | 101 | 111 | 110 |\n| 111 | 111 | 110 | 000 | 111 |\n\nאיפוס פעיל גובר על כל תא בטבלה ומחזיר 000.\n\n### שתי דוגמאות שמסבירות את הביט הגבוה\n\nבספירה מ־011 למעלה: U=1,D=0, ושלושת אותות T הם 1 כי q0=1 ו־q1=1. שלושת הביטים מתהפכים יחד ומקבלים 100.\n\nבספירה מ־100 למטה: U=0,D=1. הביט q0 מתהפך, q1 מתהפך כי q0 הישן אפס, ו־q2 מתהפך כי שני הביטים הנמוכים הישנים אפס. מתקבל 011. אם משתמשים בטעות ב־q0 החדש בחישוב q1, תתקבל תוצאה שגויה.\n\n### נכונות, עלות וגבולות\n\nבעלייה, כל רצף האחדים הנמוכים הופך לאפס והאפס הראשון מעליו הופך לאחד; בדיוק אלה הביטים שהמשוואות הופכות. בירידה מתרחש הדפוס הסימטרי עבור רצף אפסים. כשאין פקודה בלעדית כל T אפס. מכאן שהמימוש מקיים את ארבעת מקרי הבקרה, כולל המעברים 111 ל־000 ו־000 ל־111 מודולו 8.\n\nנדרשים שלושה ביטי זיכרון כדי לייצג שמונה מצבים שונים, ושלושה דלגלגים מספיקים. זו טענת מינימום לזיכרון בלבד, לא למספר השערים, לשטח או להשהיה. יש להתאים את תקופת השעון למסלול הלוגי ולפיצול החוטים.\n\nהאימות בפייתון השווה משוואות שערים לאורקל אריתמטי נפרד: כל 32 מעברי מצב ובקרה, כל 32 מקרי עדיפות איפוס, כל 43,688 רצפי הבקרה באורכים 0–6 מכל מצב התחלתי, ו־32,768 רצפי בקרה ואיפוס באורך 4. קוד SystemVerilog צורף אך לא קומפל או הורץ בסימולטור HDL. זו הצעה בסיוע AI הממתינה לביקורת מקצועית."
+        },
+        "en": {
+          "title": "Three-bit up/down counter — gates and flip-flops only",
+          "prompt": "Design a component with controls inc,dec and a three-bit binary output. At each clock edge, inc=1,dec=0 increments the output by one; inc=0,dec=1 decrements it by one; equal controls hold the output. Use logic gates and flip-flops only, with no full-adder, half-adder or prebuilt adder/subtractor blocks.\n\nClarifications added to the source: all three flip-flops share the same rising edge; synchronous controls meet setup/hold. Output is unsigned 0..7 and wraps modulo eight: incrementing seven gives zero, decrementing zero gives seven. Synchronous active-high reset loads 000 and overrides both controls. Bits update together after the edge; do not clock one flip-flop from another output. Give equations, a circuit and a transition table.",
+          "hint": "Instead of calculating a sum, ask which bits toggle when adding or subtracting one. When does the lowest bit toggle?",
+          "hints": [
+            "Instead of calculating a sum, ask which bits toggle when adding or subtracting one. When does the lowest bit toggle?",
+            "Counting up toggles a higher bit when all lower bits are one; counting down toggles it when all lower bits are zero. Separate up-only from down-only commands.",
+            "Create U=inc AND NOT dec and D=dec AND NOT inc. Let each T signal indicate a bit toggle. A DFF input can be q XOR T; the highest toggle must test both q1 and q0."
+          ],
+          "reference_solution": "### Think in toggles rather than adder blocks\n\nStore state in three D flip-flops, with q2 the MSB and q0 the LSB. First decode two mutually exclusive commands:\n\n```text\nU = inc AND NOT dec\nD = dec AND NOT inc\n```\n\nU means up only and D means down only. Here D names the down command; D0,D1,D2 below name the flip-flop data inputs. For controls 00 or 11 both commands are zero, so hold state.\n\n### When does each bit toggle?\n\nq0 toggles on every count. Counting up toggles q1 when old q0=1 because the low bit wraps; counting down toggles q1 when old q0=0 because the low bit borrows. These are explanations of bit patterns, not added carry or subtractor components.\n\nq2 toggles upward only when the old low pair is 11, or downward only when it is 00. Otherwise the low pair absorbs the step. Thus:\n\n```text\nT0 = U OR D\nT1 = (U AND q0) OR (D AND NOT q0)\nT2 = (U AND q1 AND q0) OR (D AND NOT q1 AND NOT q0)\n```\n\n### Connect three flip-flops\n\nXOR retains q at T=0 and inverts it at T=1, so:\n\n```text\nD0 = q0 XOR T0\nD1 = q1 XOR T1\nD2 = q2 XOR T2\n```\n\nConnect each Di to its DFF. All three receive the same clock and synchronous reset. Reset stores 000; otherwise each stores its Di. T flip-flops with these toggle inputs are also valid under the same edge/reset contract. There are no full/half adders: AND,OR,NOT,XOR gates implement the specified Boolean functions. Clock gating is unnecessary.\n\nIn the diagram purple feedback runs from Q to XOR as DATA, never as a clock. Repeated U,D and q net names denote the same circuit signals. Each toggle box states its actual gate equations. All decisions use the pre-edge bits simultaneously, not bits already updated during that edge.\n\n### Complete transition table\n\n| Pre-edge q | inc=0,dec=0 | inc=0,dec=1 | inc=1,dec=0 | inc=1,dec=1 |\n| --- | --- | --- | --- | --- |\n| 000 | 000 | 111 | 001 | 000 |\n| 001 | 001 | 000 | 010 | 001 |\n| 010 | 010 | 001 | 011 | 010 |\n| 011 | 011 | 010 | 100 | 011 |\n| 100 | 100 | 011 | 101 | 100 |\n| 101 | 101 | 100 | 110 | 101 |\n| 110 | 110 | 101 | 111 | 110 |\n| 111 | 111 | 110 | 000 | 111 |\n\nActive reset overrides every table entry and returns 000.\n\n### Examples exposing the high-bit behavior\n\nIncrementing 011: U=1,D=0, and all toggles are one because q0=q1=1. The three bits invert together to 100.\n\nDecrementing 100: U=0,D=1. q0 toggles, q1 toggles because old q0 is zero, and q2 toggles because both old low bits are zero. Result is 011. Using the newly computed q0 in q1 logic would be incorrect.\n\n### Correctness, cost and limits\n\nIncrementing inverts the trailing ones and the first zero above them; the equations toggle exactly those positions. Decrementing is symmetric for trailing zeros. Without an exclusive command every toggle is zero. Thus all four control cases are correct, including 111-to-000 and 000-to-111 modulo eight.\n\nEight distinguishable output states require three memory bits, and three flip-flops suffice. This proves minimum logical storage only, not minimum gates, area or delay. Clock period must accommodate logic and fanout.\n\nPython gate equations were compared with an independent arithmetic oracle: all 32 state/control transitions, 32 reset-priority cases, all 43,688 control streams of lengths zero through six from every initial state, and 32,768 length-four control/reset streams. SystemVerilog is supplied but not compiled or HDL-simulated. AI-assisted proposed solution; independent professional review pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-064-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "במקום לחשב סכום, בדקו אילו ביטים מתהפכים בכל הוספה או חיסור של אחד. מתי הביט הנמוך מתהפך?"
+        },
+        {
+          "id": "PREP-064-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "בספירה למעלה ביט גבוה מתהפך כאשר כל הביטים שמתחתיו הם 1; בספירה למטה הוא מתהפך כשכולם 0. הפרידו בין פקודת עלייה בלבד לפקודת ירידה בלבד."
+        },
+        {
+          "id": "PREP-064-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "צרו U=inc AND NOT dec ו־D=dec AND NOT inc. הגדירו לכל ביט אות T שאומר אם להפוך אותו. כניסת דלגלג D יכולה להיות q XOR T; אות T הגבוה צריך לבדוק גם את q1 וגם את q0."
+        },
+        {
+          "id": "PREP-064-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Instead of calculating a sum, ask which bits toggle when adding or subtracting one. When does the lowest bit toggle?"
+        },
+        {
+          "id": "PREP-064-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Counting up toggles a higher bit when all lower bits are one; counting down toggles it when all lower bits are zero. Separate up-only from down-only commands."
+        },
+        {
+          "id": "PREP-064-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Create U=inc AND NOT dec and D=dec AND NOT inc. Let each T signal indicate a bit toggle. A DFF input can be q XOR T; the highest toggle must test both q1 and q0."
+        }
+      ],
+      "assumptions": [
+        "Unsigned three-bit output wraps modulo eight rather than saturating.",
+        "All flip-flops share one rising clock edge; controls meet setup/hold.",
+        "Synchronous active-high reset loads 000 and overrides inc/dec; reset was added as an explicit engineering convention.",
+        "Equal controls, including both one, hold. XOR gates are allowed; FA/HA and prebuilt arithmetic blocks are forbidden."
+      ],
+      "optimality": {
+        "criterion": "Storage required to represent all eight counter values.",
+        "result": "Three flip-flops are necessary and sufficient, with combinational toggle logic and XOR gates.",
+        "proof": "Eight distinguishable output values require at least three state bits; this construction uses exactly three.",
+        "scope": "No minimum gate-count, area, power or delay proof; reset and cell-library choices affect physical implementation."
+      },
+      "verification": "Passed 32 state/control transitions and 32 reset-priority cases. Checked all 43,688 control streams of lengths zero through six from eight starting states, covering 247,584 edges, and all 32,768 length-four control/reset streams covering 131,072 edges. Gate equations were compared with an independent arithmetic oracle. Python models only; no HDL compilation/simulation, synthesis or physical timing.",
+      "edge_cases": [
+        "111 increment wraps to 000; 000 decrement wraps to 111.",
+        "Both controls one hold exactly as both zero do.",
+        "Reset together with a count command returns zero.",
+        "No clock edge means no output update; without reset or known initialization, hardware starting state is not guaranteed.",
+        "011 up and 100 down toggle all three bits using the old state."
+      ],
+      "common_mistakes": [
+        "Prioritizing inc when both controls are one; the source requires hold.",
+        "Using an adder/subtractor block despite the FA/HA restriction.",
+        "Using already-updated low bits to compute higher bits at the same edge.",
+        "Clocking a later flip-flop from q0 or gating the clock with a plain gate.",
+        "Silently saturating at zero/seven instead of the declared modulo-eight convention."
+      ],
+      "interview_answer": "Decode exclusive up/down requests. The low bit toggles on every count; bit one toggles up at q0=1 or down at q0=0; bit two toggles up at low pair 11 or down at 00. Feed each DFF with q XOR T. Three same-clock flip-flops implement the wrapping counter, while equal controls hold.",
+      "solution_extensions": {
+        "question": "How would you change this to a saturating counter that does not wrap at zero/seven?",
+        "direction": "This changes the contract. Block U when all three q bits are one and D when all are zero, then reuse the toggle logic. Explicitly test both boundaries and simultaneous controls.",
+        "status": "Follow-up prepared in content; not connected to the interactive follow-up queue."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_064_three_bit_up_down.py",
+      "solution_code_paths": [
+        "solutions/prep_064_three_bit_up_down.py",
+        "solutions/prep_064_three_bit_up_down.sv"
+      ],
+      "verification_script_path": "checks/check_prep_064.py",
+      "verification_evidence_path": "checks/prep-064-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-064.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-064-gate-counter-he.png",
+          "language": "he",
+          "description": "מעגל שערים ודלגלגים"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-064-transition-table-he.png",
+          "language": "he",
+          "description": "טבלת מעברים מלאה"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-064-gate-counter-en.png",
+          "language": "en",
+          "description": "PREP-064 gate-counter / en"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-064-transition-table-en.png",
+          "language": "en",
+          "description": "PREP-064 transition-table / en"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-010",
+        "PREP-048",
+        "PREP-056"
+      ],
+      "duplicate_check": "Compared preparation and example/verification catalogs. Existing modulo-three/divider counters and DFF-enable exercises lack this three-bit, two-exclusive-controls, equal-controls-hold, gate-only increment/decrement contract. This is a distinct linked variation.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Synchronous next-state logic, carry/borrow bit-pattern reasoning and exhaustive transition verification. NVIDIA attribution comes only from the supplied screenshot."
+      },
+      "markdown_path": "questions/prep-064-three-bit-up-down-counter-gates.md"
     }
   ]
 }

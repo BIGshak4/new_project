@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import type { QuestionSummary } from "../src/lib/practice-api";
 import { questionFamily, relatedQuestionKeys, uniqueLibraryQuestions } from "../src/lib/question-families";
 import { matchesQuestion } from "../src/lib/question-discovery";
@@ -38,4 +39,21 @@ test("legacy and canonical URLs remain discoverable in both directions", () => {
   assert.deepEqual(relatedQuestionKeys(generic.key), [manual.key]);
   assert.deepEqual(relatedQuestionKeys(manual.key), [generic.key]);
   assert.deepEqual(relatedQuestionKeys("unrelated-question"), []);
+});
+
+test("the thirteen-source intake yields 93 records and 92 unique questions without dropping new exercises", () => {
+  const rows = ["example_bank", "preparation_bank"].flatMap(name => {
+    const seed = JSON.parse(readFileSync(new URL(`../../../backend/seeds/questions/${name}.json`, import.meta.url), "utf8"));
+    return seed.map((q: { key: string; assets: { preparation_id?: string } }) => ({
+      key: q.key, id: q.key, preparation_id: q.assets.preparation_id,
+    } as QuestionSummary));
+  });
+  assert.equal(rows.length, 93);
+  const unique = uniqueLibraryQuestions(rows);
+  assert.equal(unique.length, 92);
+  for (const id of ["PREP-060", "PREP-061", "PREP-062", "PREP-063", "PREP-064"]) {
+    assert.equal(unique.filter(q => q.preparation_id === id).length, 1, id);
+  }
+  assert.equal(unique.filter(q => q.preparation_id === "PREP-023").length, 1);
+  assert.ok(!unique.some(q => q.key === "example-power-of-two-check"));
 });

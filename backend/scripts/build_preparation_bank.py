@@ -44,6 +44,7 @@ PRIMARY = [
     "registers_shifters", "fsm_state_tables", "estimation_sanity_checks", "boolean_algebra", "counters",
     "estimation_sanity_checks",
     "fsm_state_tables", "combinational_blocks", "combinational_blocks", "fsm_state_tables", "estimation_sanity_checks", "latches_flip_flops", "estimation_sanity_checks", "binary_arithmetic", "estimation_sanity_checks",
+    "estimation_sanity_checks", "basic_data_structures", "estimation_sanity_checks", "estimation_sanity_checks", "counters",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

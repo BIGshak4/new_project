@@ -84,3 +84,20 @@ There is a constant number of word-level operations and O(1) extra space for fix
 Checked all 131073 integers in [-65536,65536] against an independently generated powers set, plus 32 large boundary cases around powers with exponents 31,32,63,64,127,128,1024,4096. This verifies results, not BigInt timing.
 
 התוכן נוצר בסיוע AI וממתין לסקירה; טרם פורסם באתר.
+
+
+## Additional supplied source — 2026-10-21
+
+ממש פונקציה שמקבלת מספר ובודקת האם הוא חזקה של 2.
+
+[Preserved source](../sources/prep-023-additional-2026-10-21.png)
+
+Reported companies: NVIDIA, Apple.
+
+### Hebrew clarification
+
+אותה בדיקת חזקה של שתיים; נשמר החוזה הערוך של מספר שלם עם מעריך אי־שלילי, כולל 1 וללא אפס או שליליים. אין שינוי בנוסח או בפתרון הקיימים.
+
+### English clarification
+
+Same power-of-two predicate; retain the existing edited integer/nonnegative-exponent contract, including one and excluding zero/negatives. Existing learner copy is unchanged.

@@ -166,3 +166,59 @@ The code provides generators permutation_with_dict and permutation_with_array; i
 ## צילום נוסף וגרסת מערך נתון — 18 באוקטובר 2026
 
 נשמרה [גרסה מלאה עם מערך קיים 1–100 וממשק rand_range](prep-022-hundred-array-rand-range-variant.md), כולל מקור, חברות לפי הצילום, שלושה רמזים בכל שפה, פתרון, קוד ואימות. הגרסה משולבת באותה שאלה באתר; היא שונה בממשק הקלט וההגרלה ואינה שאלה נוספת במונה המאגר. נוספו שיוכי Google ו־Mellanox לפי הצילום, ללא שינוי הייחוס למקורות קודמים.
+
+
+## Additional supplied source — 2026-10-21
+
+יש לך מערך של מספרים. כתוב פונקציה שתסדר אותם בסדר אקראי. אתה יכול להיעזר בפונקציה Rand, שמחזירה מספר אקראי
+
+[Preserved source](../sources/prep-022-additional-2026-10-21.png)
+
+Reported companies: Apple, NVIDIA, Intel, Amazon.
+
+### Hebrew clarification
+
+זו גרסת מערך נתון כללי; סדר והופעות של הערכים נשמרים באמצעות החלפות. הממשק והאחידות של Rand אינם מפורטים במקור ויש להגדיר חוזה הגרלה חסום ואחיד.
+
+### English clarification
+
+General supplied-array variant. Swaps preserve values and multiplicities. Source Rand lacks a bound/distribution contract; uniform bounded draws must be explicitly specified.
+
+### Additional learner prompt and proposed solution
+
+
+
+### גרסה נוספת: ערבוב מערך נתון
+
+נתון מערך כללי של ערכים, לאו דווקא ממוינים או שונים זה מזה. כתבו פונקציה שמערבבת את המערך הקיים במקום, בלי לאבד איברים ובלי לשנות את מספר ההופעות של אף ערך. נתונה רק פונקציה בשם `Rand` המחזירה מספר אקראי; הגדירו איזה ממשק טווח ואיזו הבטחת התפלגות נחוצים כדי לקבל ערבוב אחיד. נתחו זמן וזיכרון עזר וטפלו במערך ריק או בן איבר אחד. הבהירו את משמעות האחידות כשיש ערכים חוזרים.
+
+
+### הרחבת המערך הכללי והופעות חוזרות
+
+אותו Fisher–Yates פועל על מערך נתון מכל סוג ובכל סדר. אין צורך ליצור את 1 עד N, למיין או לייצר ערכים חדשים: רק מחליפים בין תאים. בכל החלפה נשמרים אותם איברים ואותן הופעות. המימוש הקיים `shuffle_in_place` עובד גם על ערכים חוזרים ואף על אובייקטים שאינם ניתנים לגיבוב, משום שאינו מבצע חיפוש או מכניס אותם ל־set.
+
+המילה Rand לבדה אינה מספקת חוזה. לצורך המימוש נדרש מתאם `rand_range(low, high)` המחזיר מספר שלם בכל טווח סגור מבוקש, אחיד בהינתן ההיסטוריה. אם הממשק בפועל הוא `Rand(m)` בטווח `0..m-1`, משתמשים ב־`Rand(i+1)`; אם בטווח `1..m`, משתמשים ב־`Rand(i+1)-1`. מתאם כזה תקף רק אם מקור ההגרלה אכן מקיים את החוזה. אין להניח שניתן להפוך כל מקור מוטה למקור אחיד בהמרה פשוטה, או להשתמש בשארית מודולו בלי לבדוק הטיה. בלי אחידות, החלפות עדיין משמרות איברים אבל אינן מבטיחות התפלגות אחידה.
+
+האחידות הראשונית היא על כל N! התמורות של **זהויות המיקומים המקוריים**. כשערכים חוזרים, כמה תמורות כאלה נראות אותו סדר ערכים. לכל סדר ערכים מובחן יש אותו מספר תמורות אינדקסים: מכפלת העצרת של מספר ההופעות של כל ערך. לכן גם סדרי הערכים המובחנים אחידים בהגרלה אחידה, אך ההסתברות של כל סדר כזה אינה בהכרח 1/N!. לדוגמה, עבור `[A,A,B]` יש שש תמורות אינדקסים ורק שלושה סדרי ערכים; כל סדר מתקבל בשתיים מהתמורות ולכן בהסתברות 1/3, לא 1/6. האיברים המוחזקים אינם משוכפלים או אובדים.
+
+העלות היא Theta(N) פעולות והחלפות ו־O(1) מילות עזר מעבר למערך הקיים, בהנחת גישה והגרלה חסומה בזמן קבוע. מערך ריק או יחיד אינו דורש הגרלה. הבדיקות הנוספות עברו על כל 5,914 מסלולי הבחירה לאורכים 0–7, באמצעות זהויות אובייקטים; שש התמורות של `[A,A,B]` ועשרה מקרי קצה של אובייקטים, כולל ערכים שאינם ניתנים לגיבוב. זו בדיקת האלגוריתם, לא בדיקת איכות סטטיסטית של מחולל אקראי.
+
+
+
+### Additional variant: shuffle a supplied array
+
+Given an arbitrary array whose values need not be sorted or distinct, shuffle the existing array in place without losing elements or changing any value’s multiplicity. Only a function named `Rand` returning a random number is supplied; specify the bounded interface and distribution guarantee needed for a uniform shuffle. Analyze time and auxiliary storage and cover empty/singleton arrays. Clarify what uniformity means when values repeat.
+
+
+### General supplied arrays and repeated values
+
+The same Fisher–Yates method works on an existing array of any values and any initial order. Do not create 1..N, sort or generate replacement values: only swap cells. Every swap preserves the elements and their multiplicities. Existing `shuffle_in_place` also handles repeated values and unhashable objects because it performs no membership lookup or set insertion.
+
+The name Rand alone is not an interface contract. The implementation requires an adapter `rand_range(low, high)` giving a conditionally uniform integer in the requested inclusive interval. If the actual interface is `Rand(m)` over `0..m-1`, use `Rand(i+1)`; if it is over `1..m`, use `Rand(i+1)-1`. Such adapters are valid only if the source satisfies their contract. Do not assume a simple conversion makes an arbitrary biased source uniform, or use modulo reduction without checking bias. Without uniformity, swaps preserve elements but do not promise uniform orders.
+
+Uniformity initially concerns the N! permutations of **original indexed element identities**. With duplicate values, multiple index permutations display the same value order. Every distinct value order has the same number of index permutations: the product of factorials of value multiplicities. Thus distinct observable value orders are also uniform, but each need not have probability 1/N!. For `[A,A,B]`, six index permutations yield three value orders, each represented twice and hence having probability 1/3 rather than 1/6. No held element is duplicated or lost.
+
+Cost is Theta(N) operations/swaps and O(1) auxiliary words beyond the supplied array, assuming constant-time access and bounded draws. Empty/singleton arrays require no draws. Additional checks cover all 5,914 choice paths for lengths 0..7 using object identities, all six index permutations of `[A,A,B]`, and ten boundary cases including unhashable objects. These check the algorithm, not statistical generator quality.
+
+[Additional check](../checks/check_prep_022_generic_array.py)
+[Verification evidence](../checks/prep-022-generic-array-verification.json)

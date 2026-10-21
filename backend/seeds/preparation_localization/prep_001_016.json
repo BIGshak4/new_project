@@ -3111,6 +3111,38 @@
     "group_logic_derivation_verification": {
       "he": "נבדקו כל 16 תבניות תקפות הקבוצות; משוואות G0 המלאה והמפושטת שקולות, ואינדקס הקבוצה וחיווי התקפות נכונים.",
       "en": "All 16 group-valid patterns checked; full and simplified G0 equations equivalent, group index and valid correct."
+    },
+    "prompt_variants": {
+      "he": [
+        {
+          "title": "וריאציה מהמקור הנוסף — למה נחוץ אות תקפות?",
+          "prompt": "למקודד עדיפות בן ארבע כניסות יש שתי יציאות שמחזירות את מספר הכניסה הגבוהה ביותר שדולקת: 1111 מחזיר 11, ו־0101 מחזיר 10. א. מה חסר בהגדרה כאשר הקלט 0000? הגדירו חיווי valid שמפריד בין היעדר בקשה לבין בקשה בכניסה 0. ב. בעזרת הרכיב המורחב, תכננו מקודד של 16 כניסות, אינדקס בן ארבעה ביטים וחיווי תקפות.",
+          "clarification": "שתי היציאות הן אינדקס בינארי, לא ערך הביט הדלוק ולא וקטור one-hot. valid=1 בדיוק כשקיימת כניסה דלוקה. כאשר valid=0, האינדקס אינו מייצג בקשה; אפשר לבחור עבורו אפס, אבל אסור להסיק שיש בקשה 0. הנוסח המקורי המפורש של השאלה ושלוש תמונות המקור נשמרו בנפרד מהעריכה."
+        }
+      ],
+      "en": [
+        {
+          "title": "Additional-source variant — why validity is necessary",
+          "prompt": "A four-input priority encoder has two outputs giving the highest active input index: 1111 produces 11 and 0101 produces 10. (a) What is missing for input 0000? Define valid to distinguish no request from a request at input zero. (b) Use the extended component to build a sixteen-input encoder with a four-bit index and validity.",
+          "clarification": "The two outputs are a binary index, not the bit value and not a one-hot vector. valid is one exactly when at least one input is active. When valid is zero, the index does not name a request; choosing zero is permitted but must not be interpreted as request zero. The exact source wording and all three screenshots are archived separately from this edit."
+        }
+      ]
+    },
+    "solution_schematic_verification": {
+      "he": "עברו כל 65,536 הקלטים; 130,321 צירופים של קודים מקומיים לא תקפים במימוש ארבעה בקרים ו־131,089 במימוש חמישה. אלו מודלים בפייתון בלבד, ללא סימולציית HDL, סינתזה או אישור מקצועי.",
+      "en": "All 65,536 inputs; 130,321 independently varied inactive-code combinations in the four-local/gates design and 131,089 cases in the five-controller hierarchy. Python models passed; no HDL simulation, synthesis or professional approval."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם המקודד המקומי אינו מספק valid, וגם אינו מבטיח קוד מסוים בקלט אפס?",
+        "direction": "אי אפשר להסיק תקפות מקוד האינדקס לבדו, כי כל ארבעת הקודים יכולים לציין בקשה חוקית. אם כניסות הקבוצה זמינות, צרו valid באמצעות OR שלהן; אחרת דרוש שינוי בממשק או הנחה נוספת. אין להשתמש בהשוואת index לאפס כתחליף.",
+        "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+      },
+      "en": {
+        "question": "What changes if a local encoder has no valid output and no guaranteed code for all-zero input?",
+        "direction": "The index alone cannot reveal validity: all four codes can name real requests. If raw group inputs are accessible, OR them to create valid; otherwise the interface or assumptions must change. Comparing index with zero is not a substitute.",
+        "status": "Follow-up prepared in content; not connected to the interactive follow-up queue."
+      }
     }
   }
 }

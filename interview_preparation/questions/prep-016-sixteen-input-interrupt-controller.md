@@ -182,3 +182,61 @@ All 65,536 inputs were checked for the four-controller, five-controller and gate
 HW-005 ו־VHW-003 עוסקות במקודד ארבע כניסות; PREP-014 עוסקת בבחירת הביט המשמעותי אך מחזירה one-hot. זו שאלת הרחבה ולא כפילות זהה.
 
 התוכן נוצר בסיוע AI וממתין לסקירה; טרם פורסם באתר.
+
+
+## קליטת מקורות נוספים — 21 באוקטובר 2026
+
+
+
+### מקור נוסף — אפס אינו בקשה מספר אפס
+
+שלוש גרסאות נוספות שנמסרו ב־21 באוקטובר 2026 אוחדו כאן עם אותה שאלה, בלי לשנות את המזהה, השאלה הראשית, הרמזים או מצב הביקורת. הגרסה השלישית שואלת תחילה מה חסר ברכיב בן ארבע כניסות שאין לו valid. בקלט 0000 אין כניסה דלוקה ולכן אין אינדקס זוכה. שני ביטי אינדקס בלבד אינם מאפשרים להבדיל בין מצב זה לבין כניסה 0 בלבד, שמחזירה גם היא 00. valid פותר את החסר: עבור 0000 נקבל valid=0, ועבור 0001 נקבל valid=1,index=00. הוספת valid אינה מחייבת להמציא משמעות זוכה לקוד כשהוא לא תקף. בדוגמת המקור 0101, הכניסה הגבוהה הדלוקה היא 2 ולכן index=10; עבור 1111 האינדקס 3.
+
+בכל קבוצה מצטרפים Vg ו־Kg. אותות V בוחרים את הקבוצה, ורק הקוד המקומי של הקבוצה הזוכה עובר דרך ה־MUX. השמות החוזרים בשרטוטים החדשים מסמנים את אותם חוטים פיזיים, וקווי /2 ו־/4 הם אוטובוסים של שניים וארבעה ביטים. שרשור G,L הוא חיווט ולא חיבור אריתמטי. אפשר להשתמש בארבעה בקרים מקומיים ובשערים לבחירת הקבוצה, או בחמישה בקרים אם מכריעים גם בין הקבוצות באמצעות רכיב נתון. טענות המינימום נשארות מוגבלות למודלים שהוגדרו לעיל.
+
+לרכיב לא פעיל מותר להוציא כל אחד מארבעת הקודים המקומיים. אף קוד כזה אינו נבחר כש־valid הכללי הוא 1; כשהוא 0 אנו חוסמים את האינדקס הגלובלי לאפס. האימות הנוסף כיסה את כל 65,536 הכניסות ואת כל הצירופים העצמאיים של קודים מקומיים לא תקפים: 130,321 מקרי ארבעה בקרים ו־131,089 מקרי חמישה, כולל הקוד הלא תקף של הבקר העליון. זו בדיקת מודל פייתון; לא בוצעו סימולציית HDL, סינתזה או אישור מקצועי. נוספו שרטוטים מקומיים בעברית ובאנגלית; השרטוטים ההיסטוריים נשמרו כאנגלית.
+
+
+
+### Additional source — no request is not request zero
+
+Three further versions received on 21 October 2026 were merged into this same question without changing its identifier, main question, hints or review status. The third first asks what is missing in a four-input encoder without valid. Input 0000 has no active request and hence no winning index. Two index bits alone cannot distinguish this from only input zero active, which also returns 00. Validity supplies the missing distinction: 0000 gives valid=0; 0001 gives valid=1,index=00. Adding validity does not require pretending an invalid code names a winner. For source example 0101 the highest set input is two, so index=10; for 1111 it is three.
+
+Each local group produces Vg and Kg. The V signals choose the winning group and a MUX forwards only its local code. Matching net names in the new diagrams denote the same physical wires; /2 and /4 denote two- and four-bit buses. Concatenating G,L is wiring, not arithmetic. Four local controllers plus gates select the group, or a fifth given controller performs group priority. Minimum-count claims retain their explicitly stated architecture/library scopes above.
+
+An inactive controller may return any two-bit local code. None can be selected while global valid is one; when global valid is zero the final index is explicitly masked to zero. Additional checks cover all 65,536 inputs and every independent assignment of invalid local codes: 130,321 four-controller cases and 131,089 five-controller cases including the upper invalid code. This is Python-model verification, not HDL simulation, synthesis or professional approval. Localized Hebrew/English diagrams were added; historical diagrams remain archived as English.
+
+- [מקור נוסף 1](../sources/prep-016-additional-2026-10-21-1.png)
+- [מקור נוסף 5](../sources/prep-016-additional-2026-10-21-5.png)
+- [מקור נוסף 7](../sources/prep-016-additional-2026-10-21-7.png)
+
+![four / he](../diagrams/prep-016-hierarchy-four-he.png)
+
+![five / he](../diagrams/prep-016-hierarchy-five-he.png)
+
+![four / en](../diagrams/prep-016-hierarchy-four-en.png)
+
+![five / en](../diagrams/prep-016-hierarchy-five-en.png)
+
+[בדיקת וריאציות ומודל](../checks/check_prep_016_source_variants.py) · [תוצאות](../checks/prep-016-source-variants-verification.json) · [מודל נוסף](../solutions/prep_016_priority_variants.py)
+
+
+## נוסח נוסף לשאלה באתר — נשאל לפני חשיפת הפתרון
+
+
+### גרסה נוספת: השלמת המפרט של מקודד עדיפות
+
+נתון רכיב בעל ארבע כניסות ושתי יציאות אינדקס, המחזיר את מיקום הכניסה הפעילה בעלת המספר הגבוה ביותר. בשלב הראשון לא נתונה יציאת תקפות. למשל, הקלט `1111` מחזיר `11`, והקלט `0101` מחזיר `10`.
+
+א. האם המפרט מגדיר באופן מספק גם את המקרה שבו אין כניסה פעילה? הסבירו מה חסר בממשק.
+ב. לאחר שמוסיפים יציאת `valid`, שערכה 1 אם יש לפחות כניסה פעילה אחת ו־0 אחרת, הרחיבו ל־16 כניסות, ארבע יציאות אינדקס ויציאת תקפות, באמצעות הרכיב המשלים. הגדירו את משמעות האינדקס כאשר הוא אינו תקף.
+
+## Additional learner question — visible before solution disclosure
+
+
+### Additional variant: complete the priority-encoder specification
+
+A component has four inputs and two index output bits, returning the highest-numbered active input. Initially no validity output is supplied. For example, input `1111` returns `11`, and `0101` returns `10`.
+
+(a) Does this sufficiently specify the case with no active input? Explain what is missing from the interface.
+(b) After adding a `valid` output that is one when any input is active and zero otherwise, extend the completed component to sixteen inputs, four index output bits and one validity output. Specify what the index means when it is invalid.

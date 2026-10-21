@@ -38,8 +38,8 @@ async def main():
     settings = get_settings()
     catalog = load_catalog(settings.seeds_dir)
     catalog.questions = {k: q for k, q in catalog.questions.items() if q.assets.get("preparation_id")}
-    if len(catalog.questions) != 58:
-        raise ValueError("Expected the audited 58-question archive; review the import before changing this guard.")
+    if len(catalog.questions) != 63:
+        raise ValueError("Expected the audited 63-question archive; review the import before changing this guard.")
     manifest = json.loads((settings.seeds_dir / "preparation_uploads.json").read_text(encoding="utf-8"))
     for spec in manifest["files"].values():
         path = (ROOT / "interview_preparation" / spec["local_path"]).resolve()

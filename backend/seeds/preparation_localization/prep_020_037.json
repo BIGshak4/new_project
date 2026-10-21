@@ -364,7 +364,8 @@
             }
           ]
         },
-        "בדיקת גרסת המערך הנתון: עברו 5,914 מסלולי הגרלה ממצים באורכים 0–7, שימור המערך המקורי, גבולות הטווח, 10 תרחישי קצה ו־99 הגרלות באורך 100. אין זו בדיקת איכות המקור האקראי."
+        "בדיקת גרסת המערך הנתון: עברו 5,914 מסלולי הגרלה ממצים באורכים 0–7, שימור המערך המקורי, גבולות הטווח, 10 תרחישי קצה ו־99 הגרלות באורך 100. אין זו בדיקת איכות המקור האקראי.",
+        "בדיקה נוספת ב־21 באוקטובר 2026: כל 5,914 מסלולי הבחירה לאורכים 0–7 עם זהויות אובייקטים, שש תמורות אינדקסים לשלושה ערכים כולל חזרה, ועשרה מקרי אובייקטים. שימור זהות המערך, הופעות וזהויות איברים נבדק. אין בדיקת איכות RNG."
       ],
       "en": [
         {
@@ -381,7 +382,8 @@
             }
           ]
         },
-        "Existing-array variant: 5,914 exhaustive paths for lengths 0–7, in-place identity, exact bounds, 10 boundary runs and 99 draws at length 100 passed. This does not test RNG quality."
+        "Existing-array variant: 5,914 exhaustive paths for lengths 0–7, in-place identity, exact bounds, 10 boundary runs and 99 draws at length 100 passed. This does not test RNG quality.",
+        "Additional 2026-10-21 checks: all 5,914 indexed choice paths for lengths 0..7 using object identity, six paths for three values including a duplicate, and ten object boundary cases. Array identity, element identities and multiplicities preserved. No RNG-quality test."
       ]
     },
     "interview_answer": {

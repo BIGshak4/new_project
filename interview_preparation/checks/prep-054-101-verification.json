@@ -1,0 +1,22 @@
+{
+  "question_id": "PREP-054",
+  "variant": "101 prisoners, one-or-both lights must change",
+  "status": "passed",
+  "known_both_off": {
+    "threshold": 100,
+    "reachable_states": 402,
+    "transitions": 1196,
+    "safe_terminal_states": 2,
+    "runs": 100,
+    "largest_test_visit_count": 13342
+  },
+  "unknown_initial": {
+    "threshold": 200,
+    "reachable_states": 82404,
+    "transitions": 324772,
+    "safe_terminal_states": 8,
+    "runs": 400,
+    "largest_test_visit_count": 25266
+  },
+  "limits": "Exhaustive reachable aggregate safety search is exact under contributor symmetry. Finite individual simulations do not establish termination for every schedule. The written termination proof separately assumes fair repeated visitation. No physical experiment or human expert approval."
+}

@@ -1,0 +1,17 @@
+{
+  "question_id": "PREP-016",
+  "checked_on": "2026-10-21",
+  "status": "passed_python_model",
+  "sixteen_bit_input_vectors": 65536,
+  "independently_varied_inactive_code_combinations": 130321,
+  "four_local_plus_gate_model_cases": 130321,
+  "five_encoder_model_cases_including_upper_invalid_codes": 131089,
+  "source_variant_examples_checked": [
+    "1111 -> valid=1,index=3",
+    "0101 -> valid=1,index=2",
+    "all-zero -> valid=0,index=0",
+    "only bit zero -> valid=1,index=0"
+  ],
+  "method": "Every input word, every independent two-bit code for each inactive local encoder; independently varied upper invalid code when globally inactive; highest-set-bit integer oracle.",
+  "scope": "Python functional model only, not HDL simulation/synthesis, physical timing or professional approval. Existing identity, prompts, hints and review states are preserved."
+}
