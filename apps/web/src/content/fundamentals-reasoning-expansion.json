@@ -1,0 +1,226 @@
+[
+  {
+    "id": "quick-sw-61",
+    "topic": "reasoning",
+    "title": {"he": "אמצע של נקודות שלמות", "en": "Midpoints of integer points"},
+    "prompt": {"he": "מתי אמצע הקטע בין שתי נקודות עם קואורדינטות שלמות הוא גם נקודה שלמה? בדקו את (2,5) ו־(8,1). האם צריך לבדוק רק את סכום כל הקואורדינטות?", "en": "When is the midpoint of two integer-coordinate points also an integer-coordinate point? Check (2,5) and (8,1). Is checking the sum of all coordinates enough?"},
+    "answer": {"he": "בכל קואורדינטה בנפרד, שני הערכים צריכים להיות באותה זוגיות. כאן האמצע הוא (5,3). סכום כולל זוגי אינו מספיק: ל־(1,2) ול־(2,1) סכום כולל 6, אבל האמצע הוא (1.5,1.5).", "en": "The two values must have the same parity in every coordinate separately. Here the midpoint is (5,3). An even total sum is insufficient: (1,2) and (2,1) total 6, but their midpoint is (1.5,1.5)."},
+    "takeaway": {"he": "דרישה וקטורית חייבת להתקיים בכל קואורדינטה, ולא רק בסכום הכולל.", "en": "A coordinate-wise requirement must hold in every coordinate, not merely in the total."}
+  },
+  {
+    "id": "quick-sw-62",
+    "topic": "reasoning",
+    "title": {"he": "שתי בדיקות במקביל", "en": "Two tests in parallel"},
+    "prompt": {"he": "בדיוק בקבוק אחד מבין A,B,C,D מזוהם. בדיקת תערובת חיובית בדיוק כשיש בה מהבקבוק המזוהם. מותר לערבב דגימות. כיצד שתי בדיקות במקביל יזהו את הבקבוק?", "en": "Exactly one of bottles A,B,C,D is contaminated. A pooled test is positive exactly when it contains a sample from the contaminated bottle. Mixing is allowed. How can two simultaneous tests identify the bottle?"},
+    "answer": {"he": "בודקים תערובת B+D ותערובת C+D. לפי הסדר הזה, התוצאות שלילית־שלילית מצביעות על A, חיובית־שלילית על B, שלילית־חיובית על C, וחיובית־חיובית על D. גם A, שאינו נבדק ישירות, מקבל חתימה ייחודית.", "en": "Test pools B+D and C+D. In that order, negative-negative identifies A, positive-negative identifies B, negative-positive identifies C, and positive-positive identifies D. Even A, which is not sampled directly, has a unique signature."},
+    "takeaway": {"he": "תכננו חתימת תוצאות שונה לכל אפשרות, כולל חתימה שכולה שלילית.", "en": "Give every possibility a distinct outcome signature, including the all-negative signature."}
+  },
+  {
+    "id": "quick-sw-63",
+    "topic": "reasoning",
+    "title": {"he": "למה רובוטים זהים לא נפגשים?", "en": "Why identical robots never meet"},
+    "prompt": {"he": "שני רובוטים נמצאים בנקודות שונות על ישר אינסופי ללא סימנים וחיישנים. הם מתחילים יחד ומריצים אותה תוכנית דטרמיניסטית, באותו קצב ובאותה אוריינטציה. האם תוכנית כזאת יכולה לגרום להם להיפגש?", "en": "Two robots start at different points on an infinite line without markers or sensors. They start together and execute the same deterministic program at the same rate, with the same orientation. Can such a program make them meet?"},
+    "answer": {"he": "לא. בכל זמן הם מבצעים אותה תנועה יחסית לנקודת ההתחלה שלהם, ולכן המרחק ביניהם נשאר קבוע. צריך מקור לשבירת הסימטריה, למשל סימן קבוע שאחד הרובוטים פוגש לפני האחר.", "en": "No. At every time they have made the same displacement from their respective starting points, so their separation stays constant. Some source of symmetry breaking is needed, such as a fixed marker encountered by one robot before the other."},
+    "takeaway": {"he": "לפני חיפוש תוכנית, בדקו אם למשתתפים יש בכלל מידע שמאפשר התנהגות שונה.", "en": "Before seeking a program, check whether participants have any information that permits different behavior."}
+  },
+  {
+    "id": "quick-sw-64",
+    "topic": "reasoning",
+    "title": {"he": "הוגנות אינה תאריך יעד", "en": "Fairness is not a deadline"},
+    "prompt": {"he": "שלושה אנשים נבחרים לביקורים, ומובטח שכל אחד ייבחר אינסוף פעמים בהמשך. האם קיים מספר ביקורים קבוע שמבטיח שכולם כבר ביקרו לפחות פעם אחת?", "en": "Three people are selected for visits, and each is guaranteed to be selected infinitely often eventually. Is there a fixed number of visits after which everyone must already have visited at least once?"},
+    "answer": {"he": "לא. לכל מספר שתציעו, אפשר לבחור רק באדם הראשון במשך אותו מספר ביקורים, ואז לעבור לסבב הוגן בין כולם. כולם יגיעו בסופו של דבר, אך ההבטחה אינה מגבילה את ההמתנה במספר אחיד.", "en": "No. For any proposed number, select only the first person that many times, then start a fair cycle through everyone. Everyone eventually visits, but the guarantee places no uniform bound on the waiting time."},
+    "takeaway": {"he": "הבחינו בין ״בסופו של דבר״ לבין ״תוך מספר צעדים חסום מראש״.", "en": "Distinguish “eventually” from “within a fixed number of steps.”"}
+  },
+  {
+    "id": "quick-sw-65",
+    "topic": "reasoning",
+    "title": {"he": "מחלקים מטבעות בלי לראות", "en": "Split coins without seeing"},
+    "prompt": {"he": "יש 12 מטבעות, בדיוק שלושה מהם עם ראש למעלה. אי אפשר לזהות את הצדדים בראייה או במישוש. מותר להפריד ולהפוך מטבעות. איך תחלקו את כולם לשתי קבוצות עם אותו מספר ראשים?", "en": "Twelve coins contain exactly three heads-up coins. You cannot identify faces by sight or touch. You may separate and flip coins. How can you split all coins into two groups with equal heads counts?"},
+    "answer": {"he": "בוחרים שלושה מטבעות כלשהם והופכים את שלושתם. אם היו ביניהם h ראשים, היו בקבוצה האחרת 3−h ראשים. לאחר ההיפוך גם בשלישייה יש 3−h ראשים, ולכן המספרים שווים.", "en": "Choose any three coins and flip all three. If they initially contained h heads, the other group contained 3−h heads. Flipping changes the chosen group’s heads count to 3−h too, making the counts equal."},
+    "takeaway": {"he": "מספר לא ידוע יכול להיעלם מהבעיה כשאותו ביטוי מתקבל בשני הצדדים.", "en": "An unknown quantity can cancel out when both sides become the same expression."}
+  },
+  {
+    "id": "quick-sw-66",
+    "topic": "reasoning",
+    "title": {"he": "ביקורים אינם אנשים שונים", "en": "Visits are not distinct people"},
+    "prompt": {"he": "אסיר סופר שלושה אותות מאור משותף ומכריז ששלושה אסירים אחרים ביקרו. כל אחד מהאחרים רשאי לשלוח אות בכל ביקור. מדוע ההכרזה אינה בטוחה, ואיזה כלל פותר את בעיית הספירה?", "en": "A prisoner counts three signals from a shared light and declares that three other prisoners visited. Each other prisoner may signal on every visit. Why is the declaration unsafe, and what rule fixes the counting problem?"},
+    "answer": {"he": "אותו אדם יכול לשלוח את כל שלושת האותות. מגבילים כל אדם לאות אחד בכל התהליך, וסופרים כל אות פעם אחת בלבד לפני שהאור מתפנה לאות הבא. כך שלושה אותות מעידים על שלושה שולחים שונים. נדרש גם מצב התחלתי ידוע לאות.", "en": "One person could send all three signals. Allow each person to signal only once in the entire process, and count each signal once before clearing the light for another. Three signals then certify three distinct senders. The signal also needs a known initial state."},
+    "takeaway": {"he": "כדי לספור משתתפים שונים, צריך למנוע מכל משתתף להיספר שוב.", "en": "To count distinct participants, prevent each participant from being counted again."}
+  },
+  {
+    "id": "quick-sw-67",
+    "topic": "reasoning",
+    "title": {"he": "זוגות חוקיים שמסתיימים במבוי סתום", "en": "Legal pairs can reach a dead end"},
+    "prompt": {"he": "במחרוזת ספרות מותרות רק הזוגות הסמוכים 12 ו־23. המחרוזת חייבת להתחיל ב־1. האם אפשר לבנות מחרוזת באורך ארבע? מותר לחזור על ספרות אם הכללים מאפשרים.", "en": "A digit string may contain only adjacent pairs 12 and 23. It must start with 1. Can a length-four string be built? Repeating digits is allowed whenever the rules permit it."},
+    "answer": {"he": "לא. אחרי 1 מוכרחים לכתוב 2, ואחריו 3. אין זוג מותר שמתחיל ב־3, ולכן אי אפשר להוסיף ספרה רביעית. נוח לצייר חצים 1→2→3 ולחפש המשך.", "en": "No. After 1 you must write 2, then 3. No allowed pair starts with 3, so no fourth digit can follow. Draw arrows 1→2→3 and look for a continuation."},
+    "takeaway": {"he": "חוק מקומי מתורגם לחצים; בנייה ארוכה דורשת מסלול ארוך מספיק.", "en": "Translate a local rule into arrows; a long construction needs a sufficiently long path."}
+  },
+  {
+    "id": "quick-sw-68",
+    "topic": "reasoning",
+    "title": {"he": "למה שמונה הוא מצב מפסיד?", "en": "Why eight is a losing position"},
+    "prompt": {"he": "במשחק מתחילים כעת מסכום 8. כל שחקן בתורו מוסיף 1,2 או 3. מי שמגיע בדיוק ל־12 מנצח, ואסור לעבור אותו. האם מי שתורו כעת יכול להבטיח ניצחון?", "en": "A game currently has total 8. Players alternate adding 1,2, or 3. Reaching exactly 12 wins; overshooting is forbidden. Can the player whose turn it is now force a win?"},
+    "answer": {"he": "לא. אם יוסיף x, היריב יוסיף 4−x ויגיע ל־12. לכל מהלך חוקי יש ליריב תשובה מנצחת. לכן בחינת מהלך נוח אחד אינה מספיקה כדי להוכיח אסטרטגיה מנצחת.", "en": "No. If the player adds x, the opponent adds 4−x and reaches 12. Every legal first move has a winning reply. Finding one convenient sequence is therefore insufficient to prove a winning strategy."},
+    "takeaway": {"he": "אסטרטגיה מבטיחה תוצאה רק אם היא עובדת מול כל תגובה חוקית של היריב.", "en": "A strategy guarantees an outcome only if it works against every legal opponent response."}
+  },
+  {
+    "id": "quick-sw-69",
+    "topic": "reasoning",
+    "title": {"he": "מהירות של זוג במנהרה", "en": "A pair's tunnel time"},
+    "prompt": {"he": "אדם א׳ חוצה מנהרה ב־2 דקות, ואדם ב׳ ב־7 דקות. הם חוצים יחד בקצב האיטי, ואחר כך א׳ חוזר לבד עם הפנס. כמה זמן עבר עד סוף החזרה?", "en": "Person A crosses a tunnel in 2 minutes and B in 7. They cross together at the slower pace, then A returns alone with the torch. How much time has elapsed when the return ends?"},
+    "answer": {"he": "9 דקות: החצייה המשותפת אורכת max(2,7)=7 דקות, והחזרה עוד 2. לא מחברים 2+7 עבור החצייה יחד, כי שני האנשים נעים במקביל.", "en": "9 minutes: the shared crossing takes max(2,7)=7 minutes, and the return takes another 2. Do not add 2+7 for the shared crossing, because both people move simultaneously."},
+    "takeaway": {"he": "הגדירו את העלות של פעולה משותפת לפני שמחברים עלויות לאורך תוכנית.", "en": "Define the cost of a joint action before adding costs across a schedule."}
+  },
+  {
+    "id": "quick-sw-70",
+    "topic": "reasoning",
+    "title": {"he": "למי כדאי לתת להתחיל?", "en": "Which job should start first?"},
+    "prompt": {"he": "מכונה אחת מבצעת שתי עבודות באורך 1 ו־4 דקות, ללא הפסקה ובסדר לבחירתכם. שתיהן זמינות בזמן 0. איזה סדר ממזער את סכום זמני הסיום, הנמדדים מזמן 0?", "en": "One machine runs two jobs lasting 1 and 4 minutes, without interruption, in either order. Both are available at time 0. Which order minimizes the sum of their completion times measured from time 0?"},
+    "answer": {"he": "הקצרה תחילה: זמני הסיום הם 1 ו־5, והסכום 6. בסדר ההפוך הם 4 ו־5, והסכום 9. העבודה האחרונה מסתיימת ב־5 בכל מקרה, אבל מועד הסיום הראשון משתנה.", "en": "Short first: completion times are 1 and 5, totaling 6. In reverse order they are 4 and 5, totaling 9. The last job finishes at 5 either way, but the first completion time changes."},
+    "takeaway": {"he": "אותו זמן סיום כולל אינו מבטיח אותו סכום זמני המתנה או סיום.", "en": "The same overall finish time need not mean the same total waiting or completion time."}
+  },
+  {
+    "id": "quick-sw-71",
+    "topic": "reasoning",
+    "title": {"he": "לפחות ראש אחד", "en": "At least one head"},
+    "prompt": {"he": "מטילים מטבע הוגן שלוש פעמים באופן בלתי תלוי. מה ההסתברות לקבל לפחות ראש אחד? נסו לחשב דרך המקרה המשלים.", "en": "Toss a fair coin three independent times. What is the probability of at least one head? Try using the complementary event."},
+    "answer": {"he": "7/8. המקרה המשלים הוא שלוש פעמים זנב, והסתברותו 1/8. לכן ההסתברות המבוקשת היא 1−1/8. כך נמנעים מחיבור נפרד של המקרים עם ראש אחד, שניים או שלושה.", "en": "7/8. The complement is three tails, with probability 1/8. Subtract from one: 1−1/8. This avoids separately adding the cases with one, two, and three heads."},
+    "takeaway": {"he": "כשמבקשים ״לפחות אחד״, לעיתים קל יותר לחשב ״אף אחד״ ולחסר מאחד.", "en": "For “at least one,” calculating “none” and subtracting from one is often simpler."}
+  },
+  {
+    "id": "quick-sw-72",
+    "topic": "reasoning",
+    "title": {"he": "הוגנות ממטבע מוטה", "en": "Fairness from a biased coin"},
+    "prompt": {"he": "מטבע נותן ראש בהסתברות קבועה ולא ידועה p, כאשר 0<p<1. ההטלות בלתי תלויות. איך תייצרו שתי תוצאות שוות הסתברות באמצעות זוגות הטלות? מותר לזרוק זוג ולנסות מחדש.", "en": "A coin has a fixed unknown heads probability p, with 0<p<1. Tosses are independent. How can pairs of tosses generate two equally likely outcomes? Discarding a pair and retrying is allowed."},
+    "answer": {"he": "מטילים בזוגות עד שמתקבל ראש־זנב או זנב־ראש. לראש־זנב קוראים 0 ולזנב־ראש 1. לשני הרצפים הסתברות p(1−p), ולכן התוצאה הוגנת. זוגות שווים נזרקים. מסיימים בהסתברות 1, אך אין מספר ניסיונות קבוע שמבטיח סיום.", "en": "Toss in pairs until heads-tails or tails-heads occurs. Call heads-tails 0 and tails-heads 1. Both sequences have probability p(1−p), so the result is fair. Discard equal pairs. Termination has probability one, but no fixed number of attempts guarantees it."},
+    "takeaway": {"he": "אפשר לנטרל הטיה על ידי שמירת שני מקרים בעלי אותה הסתברות.", "en": "Bias can be removed by retaining two cases with equal probability."}
+  },
+  {
+    "id": "quick-sw-73",
+    "topic": "reasoning",
+    "title": {"he": "מה לומדים מחוסר ידיעה?", "en": "Learning from not knowing"},
+    "prompt": {"he": "שני אנשים חובשים כל אחד כובע לבן או שחור. ידוע לשניהם שיש לכל היותר כובע שחור אחד. האחורי רואה את כובע הקדמי ואומר באמת שאינו יודע את צבע כובעו שלו. מה יודע הקדמי כעת?", "en": "Two people each wear a white or black hat. Both know there is at most one black hat. The rear person sees the front hat and truthfully says they cannot determine their own color. What can the front person now know?"},
+    "answer": {"he": "הכובע של הקדמי לבן. אילו היה שחור, האחורי היה יודע מיד שכובעו שלו לבן. מכיוון שהאחורי לא ידע, האפשרות הזאת נשללת. אין צורך שהקדמי יראה כובע כלשהו.", "en": "The front hat is white. If it were black, the rear person would immediately know their own hat was white. Their ignorance rules that possibility out. The front person need not see any hat."},
+    "takeaway": {"he": "אמירה אמינה על מה שמישהו אינו יודע יכולה לשלול מצבים אפשריים.", "en": "A truthful statement about someone’s ignorance can eliminate possible worlds."}
+  },
+  {
+    "id": "quick-sw-74",
+    "topic": "reasoning",
+    "title": {"he": "תצפית שלא מבדילה בין מצבים", "en": "An observation that cannot distinguish states"},
+    "prompt": {"he": "שני ביטים סודיים הם A ו־B. אפשר לראות רק את A XOR B, ללא מידע נוסף. אם ראינו 0, האם אפשר לדעת את שני הביטים? האם מדידה חוזרת של אותה תוצאה עוזרת?", "en": "Two hidden bits are A and B. You can observe only A XOR B, with no other information. If the result is 0, can you identify both bits? Does repeating the same observation help?"},
+    "answer": {"he": "לא. גם 00 וגם 11 נותנים 0, ולכן התצפית אינה מבדילה ביניהם. חזרה על אותה מדידה ללא שינוי אינה מוסיפה מידע. צריך תצפית אחרת, למשל על A עצמו.", "en": "No. Both 00 and 11 produce 0, so the observation does not distinguish them. Repeating the unchanged measurement adds no information. A different observation, such as A itself, is needed."},
+    "takeaway": {"he": "אם שני מצבים אפשריים נותנים תמיד אותה תצפית, אי אפשר לזהות איזה מהם התרחש.", "en": "If two possible states always give the same observation, their identities cannot be recovered."}
+  },
+  {
+    "id": "quick-sw-75",
+    "topic": "reasoning",
+    "title": {"he": "מעבירים בלי לשנות את הסכום", "en": "Transfers preserve the total"},
+    "prompt": {"he": "בשתי קערות יש 2 ו־5 גולות. בכל פעולה מעבירים גולה אחת מקערה לא ריקה לשנייה. אסור להוסיף או להוציא גולות. האם אפשר להגיע לאותו מספר גולות בשתי הקערות?", "en": "Two bowls contain 2 and 5 marbles. Each move transfers one marble from a nonempty bowl to the other. No marbles may be added or removed. Can the bowls end with equal counts?"},
+    "answer": {"he": "לא. הסכום נשאר 7 בכל פעולה. שתי קערות עם אותו מספר גולות מכילות יחד מספר זוגי, ולכן אף רצף העברות אינו יכול להשיג את היעד.", "en": "No. Every move preserves the total of 7. Two equal integer counts have an even total, so no sequence of transfers can reach the goal."},
+    "takeaway": {"he": "בדקו אילו גדלים נשמרים לפני שמחפשים רצף פעולות ארוך.", "en": "Check conserved quantities before searching for a long sequence of moves."}
+  },
+  {
+    "id": "quick-sw-76",
+    "topic": "reasoning",
+    "title": {"he": "יורדים בלי להגיע לאפס", "en": "Decreasing without reaching zero"},
+    "prompt": {"he": "מתחילים במספר הממשי 1, ובכל צעד מחלקים אותו ב־2 בחשבון מדויק. המספר קטן תמיד ונשאר לא שלילי. האם מובטח שיגיע לאפס אחרי מספר סופי של צעדים?", "en": "Start at the real number 1 and halve it at each step using exact arithmetic. The value always decreases and remains nonnegative. Must it reach zero after finitely many steps?"},
+    "answer": {"he": "לא. אחרי k צעדים הערך הוא 1/2^k, והוא חיובי לכל k סופי. הוא מתקרב לאפס בלי להגיע אליו. ירידה ממשית בלבד אינה מוכיחה סיום; לעומת זאת, מספר שלם לא שלילי שיורד ממש בכל צעד אינו יכול לרדת לנצח.", "en": "No. After k steps the value is 1/2^k, which is positive for every finite k. It approaches zero without reaching it. Strict real-valued decrease alone does not prove termination; a strictly decreasing nonnegative integer, by contrast, cannot decrease forever."},
+    "takeaway": {"he": "בהוכחת סיום בדקו גם באיזה תחום נמצא מדד ההתקדמות, ולא רק שהוא קטן.", "en": "For termination, check the domain of the progress measure, not only that it decreases."}
+  },
+  {
+    "id": "quick-sw-77",
+    "topic": "reasoning",
+    "title": {"he": "סופרים את החפיפה פעם אחת", "en": "Count the overlap once"},
+    "prompt": {"he": "בקבוצה של עשרה אנשים כולם מכירים לפחות אחת מהשפות Python ו־C. שישה מכירים Python וחמישה מכירים C. כמה מכירים את שתיהן?", "en": "In a group of ten people, everyone knows at least one of Python and C. Six know Python and five know C. How many know both?"},
+    "answer": {"he": "אדם אחד. בחיבור 6+5 ספרנו את מי שמכיר את שתי השפות פעמיים. מכיוון שיש עשרה אנשים שונים, העודף 11−10=1 הוא בדיוק גודל החפיפה.", "en": "One person. Adding 6+5 counts anyone who knows both languages twice. Since there are ten distinct people, the excess 11−10=1 is exactly the overlap."},
+    "takeaway": {"he": "בחיבור גדלי קבוצות, הפחיתו חפיפות שנספרו יותר מפעם אחת.", "en": "When adding group sizes, subtract overlaps that were counted more than once."}
+  },
+  {
+    "id": "quick-sw-78",
+    "topic": "reasoning",
+    "title": {"he": "בדיקה שמכלה את הכלי", "en": "A test that consumes its tool"},
+    "prompt": {"he": "יש כדור זכוכית אחד ובניין בן ארבע קומות. קיימת קומת שבירה: ממנה ומעלה הכדור נשבר, ומתחתיה לא. ייתכן שאינו נשבר כלל. אחרי שבירה אין כדור נוסף. איך מזהים את המקרה בוודאות, וכמה הפלות נדרשות במקרה הגרוע?", "en": "You have one glass ball and four floors. A threshold floor breaks it from that floor upward; lower floors do not. It may never break. No replacement follows breakage. How can you identify the case with certainty, and how many drops are needed in the worst case?"},
+    "answer": {"he": "בודקים מלמטה למעלה: 1,2,3,4, עד שבירה או עד הסוף. במקרה הגרוע נדרשות 4 הפלות. דילוג על קומה לא בדוקה מסוכן: אם הכדור יישבר מעליה, לא יישאר כלי שיבדיל בין קומות השבירה האפשריות.", "en": "Test upward: 1,2,3,4, stopping on breakage or after the last floor. The worst case takes 4 drops. Skipping an untested floor is unsafe: if the ball breaks above it, no tool remains to distinguish the possible threshold floors."},
+    "takeaway": {"he": "בחירת בדיקה צריכה להתחשב גם במידע שתקבלו וגם במשאבים שיישארו אחריה.", "en": "Choose a test by both the information gained and the resources left afterward."}
+  },
+  {
+    "id": "quick-sw-79",
+    "topic": "reasoning",
+    "title": {"he": "למה סכום ספרות מזהה חלוקה בשלוש?", "en": "Why digit sums detect divisibility by three"},
+    "prompt": {"he": "מדוע מספר עשרוני מתחלק ב־3 בדיוק כאשר סכום הספרות שלו מתחלק ב־3? הסבירו באמצעות משקלי הספרות, ובדקו את 123.", "en": "Why is a decimal number divisible by 3 exactly when its digit sum is divisible by 3? Explain using place values, and check 123."},
+    "answer": {"he": "כל חזקה של 10 משאירה שארית 1 בחלוקה ב־3. לכן להחלפת כל משקל ספרה ב־1 אין השפעה על השארית, ונשאר סכום הספרות. ב־123 הסכום הוא 6, ולכן המספר מתחלק ב־3.", "en": "Every power of 10 has remainder 1 modulo 3. Replacing each digit’s place-value weight with 1 therefore preserves the remainder, leaving the digit sum. For 123 the sum is 6, so the number is divisible by 3."},
+    "takeaway": {"he": "עבודה עם שאריות יכולה להחליף חישוב גדול בחישוב קטן ששומר את התכונה הדרושה.", "en": "Remainders can replace a large calculation with a smaller one that preserves the required property."}
+  },
+  {
+    "id": "quick-sw-80",
+    "topic": "reasoning",
+    "title": {"he": "משחזרים מהסוף", "en": "Reconstruct backward"},
+    "prompt": {"he": "בחרתי מספר, הכפלתי אותו ב־2 ואז הוספתי 3. התוצאה היא 17. איך משחזרים את המספר בעזרת פעולות הפוכות, ובאיזה סדר?", "en": "I chose a number, doubled it, then added 3. The result is 17. How can the starting number be reconstructed using inverse operations, and in what order?"},
+    "answer": {"he": "קודם מחסרים 3 ומקבלים 14, ואז מחלקים ב־2 ומקבלים 7. מבטלים קודם את הפעולה האחרונה. חלוקה ב־2 לפני החיסור אינה מבטלת את סדר הפעולות המקורי.", "en": "First subtract 3 to obtain 14, then divide by 2 to obtain 7. Undo the last operation first. Dividing before subtracting would not reverse the original operation sequence."},
+    "takeaway": {"he": "כדי לבטל רצף של פעולות הפיכות, מבצעים את ההופכיות בסדר הפוך.", "en": "To undo a sequence of invertible operations, apply their inverses in reverse order."}
+  },
+  {
+    "id": "quick-sw-81",
+    "topic": "reasoning",
+    "title": {"he": "פורסים את הגליל", "en": "Unroll the cylinder"},
+    "prompt": {"he": "חוט צמוד לגליל בעל היקף 3 ס״מ וגובה 4 ס״מ עושה סיבוב מלא אחד מלמטה למעלה. העלייה בגובה פרופורציונית לזווית הסיבוב בכל חלקי הדרך. מה אורכו? התעלמו מעובי החוט.", "en": "A wire on a cylinder of circumference 3 cm and height 4 cm makes one full turn from bottom to top. Its height increases proportionally to rotation angle throughout the path. What is its length? Ignore wire thickness."},
+    "answer": {"he": "5 ס״מ. פורסים את מעטפת הגליל למלבן: החוט נהיה קטע ישר שמתקדם 3 ס״מ לרוחב ו־4 לגובה. לפי פיתגורס אורכו הוא √(3²+4²)=5. הפריסה אינה מותחת את החוט.", "en": "5 cm. Unroll the cylindrical surface into a rectangle: the wire becomes a straight segment spanning 3 cm horizontally and 4 vertically. Pythagoras gives √(3²+4²)=5. Unrolling does not stretch the wire."},
+    "takeaway": {"he": "שינוי הייצוג הגאומטרי יכול להפוך מסלול על משטח לשאלה על קטע ישר.", "en": "Changing the geometric representation can turn a surface path into a straight-segment problem."}
+  },
+  {
+    "id": "quick-sw-82",
+    "topic": "reasoning",
+    "title": {"he": "המחלק שנשאר בלי בן זוג", "en": "The divisor without a partner"},
+    "prompt": {"he": "נתון מספר שלם חיובי n. מחלק חיובי שלו מתחבר לזוג עם n חלקי אותו מחלק. מתי יש ל־n מספר אי־זוגי של מחלקים חיוביים? הסבירו בלי לרשום מחלקים של מספר גדול.", "en": "Let n be a positive integer. A positive divisor d pairs with n/d. When does n have an odd number of positive divisors? Explain without listing the divisors of a large number."},
+    "answer": {"he": "בדיוק כאשר n הוא ריבוע מושלם. בדרך כלל שני המחלקים בזוג שונים. בריבוע מושלם השורש מתחבר לעצמו ונספר פעם אחת בלבד, בעוד כל היתר מתחלקים לזוגות. גם 1 מתאים: המחלק היחיד שלו הוא 1.", "en": "Exactly when n is a perfect square. Usually the two paired divisors differ. For a perfect square, its square root pairs with itself and is counted only once, while all other divisors form pairs. This includes 1, whose only divisor is 1."},
+    "takeaway": {"he": "כשכמעט הכול מופיע בזוגות, חפשו את המקרים שמתחברים לעצמם.", "en": "When almost everything comes in pairs, look for the self-paired cases."}
+  },
+  {
+    "id": "quick-sw-83",
+    "topic": "reasoning",
+    "title": {"he": "נקודת מפגש שמקטינה מרחקים", "en": "A meeting point minimizing distance"},
+    "prompt": {"he": "שלושה בתים נמצאים על ישר בנקודות 0,4,10. בוחרים נקודת מפגש על אותו ישר. היכן סכום מרחקי ההליכה של שלושתם יהיה הקטן ביותר?", "en": "Three houses lie on a line at 0,4,10. Choose a meeting point on the same line. Where is the sum of all three walking distances smallest?"},
+    "answer": {"he": "ב־4. בין 0 ל־10, סכום המרחקים משני הקצוות תמיד 10; נשאר למזער את המרחק מהבית האמצעי, והוא אפס ב־4. מחוץ לקטע גם סכום מרחקי הקצוות גדל. הסכום המינימלי הוא 10.", "en": "At 4. Between 0 and 10, distances from the two endpoints always sum to 10; the middle house adds least at 4, where its distance is zero. Outside the interval even the endpoint sum grows. The minimum total is 10."},
+    "takeaway": {"he": "במזעור סכום מרחקים על ישר, החציון שונה לעיתים מהממוצע.", "en": "For minimizing total distance on a line, the median can differ from the mean."}
+  },
+  {
+    "id": "quick-sw-84",
+    "topic": "reasoning",
+    "title": {"he": "פוסלים מועמד בלי למדוד זמן", "en": "Eliminate a candidate without timing"},
+    "prompt": {"he": "מהירויות של חמישה סוסים קבועות ושונות. ידוע ש־A מהיר מ־B, וש־B מהיר מ־C. על D ו־E אין מידע. האם C עדיין יכול להיות בין שני המהירים ביותר?", "en": "Five horses have fixed, distinct speeds. A is known to be faster than B, and B faster than C. Nothing is known about D and E. Could C still be among the two fastest overall?"},
+    "answer": {"he": "לא. כבר ידועים שני סוסים שונים, A ו־B, שמהירים מ־C. גם אם D ו־E איטיים ממנו, C לכל היותר שלישי. אין צורך לדעת את סדר כל הסוסים כדי לפסול אותו מהשניים הראשונים.", "en": "No. Two distinct horses, A and B, are already known to be faster than C. Even if D and E are slower, C is at best third. Ranking every horse is unnecessary to eliminate C from the top two."},
+    "takeaway": {"he": "לחיפוש k הטובים, מועמד עם k מתחרים ידועים שטובים ממנו כבר אינו נחוץ.", "en": "When finding the top k, discard a candidate with k known better competitors."}
+  },
+  {
+    "id": "quick-sw-85",
+    "topic": "reasoning",
+    "title": {"he": "תוחלת שאינה תוצאה אפשרית", "en": "An expectation that cannot occur"},
+    "prompt": {"he": "מטילים קובייה הוגנת שממוספרת 1 עד 6. מה התוחלת של המספר שמתקבל? האם העובדה שהתוחלת היא מספר שאינו מופיע על הקובייה יוצרת סתירה?", "en": "Roll a fair die numbered 1 through 6. What is the expected result? Is it contradictory for the expectation to be a number that never appears on the die?"},
+    "answer": {"he": "התוחלת היא 3.5: סכום שש התוצאות הוא 21, ולכל אחת הסתברות 1/6. אין סתירה: תוחלת היא ממוצע משוקלל של התוצאות האפשריות, ולא הבטחה לתוצאה מסוימת בהטלה אחת.", "en": "The expectation is 3.5: the six outcomes sum to 21, each with probability 1/6. There is no contradiction: expectation is a probability-weighted average of possible outcomes, not a promise of a particular result on one roll."},
+    "takeaway": {"he": "תוחלת אינה חייבת להיות תוצאה אפשרית, וגם אינה הבטחה למה שיקרה בניסיון הבא.", "en": "An expectation need not be a possible outcome or a guarantee about the next trial."}
+  },
+  {
+    "id": "quick-sw-86",
+    "topic": "reasoning",
+    "title": {"he": "המטבע לא חייב לפצות", "en": "The coin owes no compensation"},
+    "prompt": {"he": "מטבע הוגן הוטל באופן בלתי תלוי ארבע פעמים, ובכולן יצא ראש. מה ההסתברות לזנב בהטלה הבאה, בהנחה שהמטבע אכן הוגן גם עכשיו?", "en": "A fair coin was tossed independently four times and showed heads every time. What is the probability of tails on the next toss, assuming the coin remains fair?"},
+    "answer": {"he": "1/2. חוסר איזון בעבר אינו משנה את הסתברות ההטלה הבאה כשיש אי־תלות. אין כוח שמכריח את המטבע ״לפצות״ כדי להשיג מספרים שווים בטווח הקצר.", "en": "1/2. A past imbalance does not change the next toss’s probability under independence. Nothing forces the coin to compensate by producing equal counts over a short period."},
+    "takeaway": {"he": "אי־תלות פירושה שמידע על תוצאות קודמות אינו משנה את הסתברות התוצאה הבאה.", "en": "Independence means previous outcomes do not change the probability of the next outcome."}
+  },
+  {
+    "id": "quick-sw-87",
+    "topic": "reasoning",
+    "title": {"he": "הבחירה הגדולה אינה תמיד הטובה", "en": "The largest choice is not always best"},
+    "prompt": {"he": "צריך לשלם בדיוק 6 בעזרת מטבעות בערכים 1,3,4, עם מלאי בלתי מוגבל. המטרה היא להשתמש בכמה שפחות מטבעות. האם בחירת המטבע הגדול ביותר שאינו עובר את הסכום שנותר תמיד נותנת פתרון מיטבי?", "en": "Pay exactly 6 using unlimited coins of values 1,3,4. Minimize the number of coins. Does repeatedly choosing the largest coin that fits the remaining amount always give an optimal solution?"},
+    "answer": {"he": "לא. השיטה בוחרת 4 ואז 1 ואז 1: שלושה מטבעות. אבל 3+3 משלם בשני מטבעות בלבד. מטבע יחיד אינו מספיק כי אין מטבע בערך 6, ולכן שניים הוא המינימום.", "en": "No. The rule chooses 4, then 1, then 1: three coins. But 3+3 pays with just two coins. One coin cannot suffice because no coin has value 6, so two is optimal."},
+    "takeaway": {"he": "בחירה שנראית הכי טובה עכשיו דורשת הוכחה לפני שמכריזים שהיא טובה לכל התהליך.", "en": "A locally attractive choice needs a proof before it can be called globally optimal."}
+  },
+  {
+    "id": "quick-sw-88",
+    "topic": "reasoning",
+    "title": {"he": "העדפות במעגל", "en": "Preferences in a cycle"},
+    "prompt": {"he": "במשחק, אדום מנצח ירוק, ירוק מנצח כחול וכחול מנצח אדום. האם אפשר לסדר את שלושתם בשורה כך שכל צבע ינצח כל צבע שמופיע אחריו?", "en": "In a game, red beats green, green beats blue, and blue beats red. Can all three be ordered in a line so that every color beats every color appearing later?"},
+    "answer": {"he": "לא. כל צבע שתשימו ראשון מפסיד לאחד משני הצבעים האחרים, שיהיה חייב להופיע אחריו. היחס יוצר מעגל ואינו יחס סדר מהסוג שמהירויות שונות של סוסים מגדירות.", "en": "No. Whichever color goes first loses to one of the other colors, which must appear later. The relation forms a cycle and is not an ordering relation like distinct fixed horse speeds."},
+    "takeaway": {"he": "לפני מיון לפי ״מנצח״ או ״עדיף״, ודאו שהיחס עקבי ואינו מעגלי.", "en": "Before sorting by “beats” or “preferred,” check that the relation is consistent and acyclic."}
+  }
+]

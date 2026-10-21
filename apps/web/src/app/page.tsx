@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import {
   BookOpen,
@@ -26,6 +26,7 @@ import { QuestionMetadata } from "../components/question-metadata";
 import { BidiText } from "../components/bidi-text";
 import { textDirection } from "../lib/bidi-segments";
 import { relatedQuestionKeys, uniqueLibraryQuestions } from "../lib/question-families";
+import { shuffleQuestions, useQuestionOrderSeed } from "../lib/question-order";
 import { Auth, type Lang } from "../components/auth";
 import { PracticeSession } from "../components/practice-session";
 import { GoalSetup } from "../components/goal-setup";
@@ -127,6 +128,8 @@ function Workspace({
   const [api] = useState(() => practiceApi());
   const [route, setRoute] = useState<Route>({ view: DEFAULT_VIEW });
   const [questions, setQuestions] = useState<QuestionSummary[]>([]);
+  const orderSeed = useQuestionOrderSeed();
+  const orderedQuestions = useMemo(() => shuffleQuestions(questions, orderSeed, q => q.key), [questions, orderSeed]);
   const [entries, setEntries] = useState<Entry[]>([]);
   const [progress, setProgress] = useState<Progress>(emptyProgress);
   const [loading, setLoading] = useState(true),
@@ -287,7 +290,7 @@ function Workspace({
       .then(setProgress)
       .catch(() => {});
   }, [api, lang]);
-  // a job filter asks the server for the relevance order; without one the plain (cached) list is shown
+  // Job matching comes from the server; presentation keeps this visit's shuffled catalog order.
   useEffect(() => {
     if (!jobFilter) {
       setJobQuestions(null);
@@ -363,7 +366,8 @@ function Workspace({
   const topics = [...new Set(questions.map((q) => q.subject))];
   const questionsByKey = new Map(questions.map(q => [q.key, q]));
   const jobFiltering = !!jobFilter && jobQuestions === null;
-  const shown = jobFilter ? jobQuestions ?? [] : questions;
+  const jobKeys = jobFilter ? new Set((jobQuestions ?? []).map(q => q.key)) : null;
+  const shown = jobKeys ? orderedQuestions.filter(q => jobKeys.has(q.key)) : orderedQuestions;
   const matching = shown.filter(
     (q) =>
       (category === "all" || questionCategory(q) === category) &&
@@ -876,8 +880,8 @@ function Workspace({
                 {jobFilter && jobQuestions && (
                   <p className="small muted filter-note" role="status">
                     {t(
-                      "השאלות מסודרות לפי הרלוונטיות לתפקיד שבחרתם. השאלה הראשונה היא הכי חשובה לכם עכשיו.",
-                      "Questions are ordered by relevance to the job you chose. The first one matters most to you right now.",
+                      "מוצגות שאלות שמתאימות לתפקיד שבחרתם, בסדר מעורבב.",
+                      "Questions matching your chosen job are shown in shuffled order.",
                     )}
                   </p>
                 )}

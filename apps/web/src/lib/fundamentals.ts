@@ -1,5 +1,8 @@
 import hardware from "../content/fundamentals-hardware.json";
 import software from "../content/fundamentals-code-logic.json";
+import moreHardware from "../content/fundamentals-hardware-expansion.json";
+import moreReasoning from "../content/fundamentals-reasoning-expansion.json";
+import moreCode from "../content/fundamentals-code-expansion.json";
 
 export type QuickTopic = "gates" | "bits" | "sequential" | "states" | "python" | "algorithms" | "reasoning";
 type Localized = { he: string; en: string };
@@ -21,23 +24,12 @@ export const quickTopics: { id: QuickTopic; label: Localized }[] = [
 ];
 // Original study cards, deliberately separate from the interview assessment bank.
 // These newly authored answers have not received the founders' human-review attestation.
-// Every full group of 20 keeps the requested 50% hardware /35% reasoning /15% software mix.
-const lanes = {
-  hardware: [...hardware] as QuickQuestion[],
-  reasoning: software.filter(q => q.topic === "reasoning") as QuickQuestion[],
-  software: software.filter(q => q.topic !== "reasoning") as QuickQuestion[],
-};
-const pattern: (keyof typeof lanes)[] = [
-  "hardware", "reasoning", "hardware", "software", "reasoning", "hardware", "reasoning", "hardware", "software", "hardware",
-  "reasoning", "hardware", "reasoning", "hardware", "software", "hardware", "reasoning", "hardware", "reasoning", "hardware",
-];
-export const quickQuestions: QuickQuestion[] = [];
-while (Object.values(lanes).some(lane => lane.length)) {
-  for (const name of pattern) { const question = lanes[name].shift(); if (question) quickQuestions.push(question); }
-}
+// The overall catalog keeps the requested 50% hardware /35% reasoning /15% software mix.
+// Presentation order belongs to each visit; IDs and revisions never depend on it.
+export const quickQuestions = [...hardware, ...software, ...moreHardware, ...moreReasoning, ...moreCode] as QuickQuestion[];
 
-export function filterQuickQuestions(topic: QuickTopic | "all", query: string, lang: "he" | "en") {
+export function filterQuickQuestions(topic: QuickTopic | "all", query: string, lang: "he" | "en", questions: readonly QuickQuestion[] = quickQuestions) {
   const needle = query.trim().toLocaleLowerCase();
-  return quickQuestions.filter(q => (topic === "all" || q.topic === topic) &&
+  return questions.filter(q => (topic === "all" || q.topic === topic) &&
     (!needle || `${q.title[lang]} ${q.prompt[lang]}`.toLocaleLowerCase().includes(needle)));
 }

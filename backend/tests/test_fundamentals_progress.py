@@ -130,6 +130,20 @@ async def test_completion_changes_no_attempts_grades_metrics_profiles_or_xp(clie
     assert (runtime.store.attempts, runtime.store.profiles, runtime.store.metrics, runtime.store.usage) == before
 
 
+@pytest.mark.parametrize("key", ["quick-hw-61", "quick-hw-100", "quick-sw-61", "quick-sw-88", "quick-sw-89", "quick-sw-100"])
+async def test_expansion_cards_use_the_same_authenticated_completion_flow(client, key):
+    http, runtime = client
+    _, token = make_token()
+    revision = runtime.fundamentals.revisions[key]
+    url = f"/v1/fundamentals/progress/{key}"
+    response = await http.put(url, headers=headers(token), json={"content_revision": revision})
+    assert response.status_code == 200
+    record = response.json()
+    assert record["question_key"] == key and record["content_revision"] == revision
+    assert (await http.get("/v1/fundamentals/progress", headers=headers(token))).json() == {"completed": [record]}
+    assert (await http.delete(url, headers=headers(token))).json() == {"removed": True}
+
+
 async def test_concurrent_repeat_completion_has_one_unchanged_record():
     repository = MemoryFundamentalsRepository()
     service = FundamentalsService(repository, {KEY: "a" * 64})

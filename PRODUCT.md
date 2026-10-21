@@ -28,5 +28,7 @@ example_question/questions.json contains 30 AI-assisted original questions marke
 ## Product Principles
 Keep real progress distinct from self-assessment. Preserve unsaved text and prevent concurrent overwrites. Make current capabilities explicit. Keep internal work private.
 
+As of 2026-10-21, the library also offers 200 bilingual short fundamentals: 100 hardware, 70 reasoning and 30 code/algorithm exercises, separate from interview assessments. Unfinished cards exclude personal completion records; finished cards remain identifiable and revisitable. Interview-library and short-study presentation orders shuffle per visit and remain stable while filtering or switching languages. New teaching content remains pending human review until explicitly attested.
+
 ## Open Decisions and Assumptions
 The original daylight/green visual assumption is superseded by the explicit adaptive Ion choice above. No general workflow preference is inferred. Earlier infrastructure and content inventories in this file describe the initial delivery; consult current deployment and handoff documents before using them as operational facts.

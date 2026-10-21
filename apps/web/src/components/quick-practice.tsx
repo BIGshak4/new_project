@@ -1,18 +1,21 @@
 "use client";
 
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, RotateCcw, Search, Shuffle } from "lucide-react";
 import { BidiText } from "./bidi-text";
 import { StudyText } from "./question-materials";
 import { filterQuickQuestions, quickQuestions, quickTopics, type QuickDiagram, type QuickTopic } from "../lib/fundamentals";
 import { confirmQuickCompletion, filterQuickHistory, quickCompletionState, quickRevision, readQuickProgress, type QuickHistoryView, type QuickProgressApi } from "../lib/fundamentals-progress";
 import type { FundamentalCompletion } from "../lib/practice-api";
+import { shuffleQuestions, useQuestionOrderSeed } from "../lib/question-order";
 
 export function QuickPractice({ lang, api, userId }: { lang: "he" | "en"; api: QuickProgressApi; userId: string }) {
   const [topic, setTopic] = useState<QuickTopic | "all">("all");
   const [query, setQuery] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [selected, setSelected] = useState(quickQuestions[0].id);
+  const [selected, setSelected] = useState<string | null>(null);
+  const orderSeed = useQuestionOrderSeed();
+  const orderedQuestions = useMemo(() => shuffleQuestions(quickQuestions, orderSeed, q => q.id), [orderSeed]);
   const [revealedId, setRevealedId] = useState<string | null>(null);
   const [historyView, setHistoryView] = useState<QuickHistoryView>("unanswered");
   const [records, setRecords] = useState<Record<string, FundamentalCompletion>>({});
@@ -28,7 +31,7 @@ export function QuickPractice({ lang, api, userId }: { lang: "he" | "en"; api: Q
   const filterToggle = useRef<HTMLButtonElement>(null);
   const focusQuestion = useRef(false);
   const t = (he: string, en: string) => lang === "he" ? he : en;
-  const matchingQuestions = filterQuickQuestions(topic, query, lang);
+  const matchingQuestions = filterQuickQuestions(topic, query, lang, orderedQuestions);
   const questions = loadState === "ready" ? filterQuickHistory(matchingQuestions, records, historyView) : [];
   const index = Math.max(0, questions.findIndex(q => q.id === selected));
   const question = questions[index];
@@ -204,7 +207,7 @@ export function QuickDiagramView({ diagram, lang }: { diagram: QuickDiagram; lan
   if (diagram.kind === "gate") {
     const dataInputs = diagram.gate === "MUX" ? diagram.inputs.slice(0, 2) : diagram.inputs;
     return <figure className="quick-diagram"><svg viewBox="0 0 380 170" role="img" aria-label={`${label}: ${diagram.gate}`} direction="ltr">
-      <title>{label}: {diagram.gate}</title>{defs}
+      <title>{`${label}: ${diagram.gate}`}</title>{defs}
       <rect x="140" y="35" width="110" height="85" rx="7" className="quick-svg-node" />
       <text x="195" y="82" textAnchor="middle" className="quick-svg-gate">{diagram.gate}</text>
       {dataInputs.map((input, i) => { const y = dataInputs.length === 1 ? 77 : 58 + i * 38;
@@ -228,5 +231,5 @@ export function QuickDiagramView({ diagram, lang }: { diagram: QuickDiagram; lan
         <text x={(from + to) / 2} y={132 + direction * (bend + 10)} textAnchor="middle" className="quick-svg-small">{edge.label}</text></g>;
     })}
     {diagram.states.map(state => <g key={state}><circle cx={positions.get(state)} cy="132" r="25" className="quick-svg-node" /><text x={positions.get(state)} y="137" textAnchor="middle">{state}</text></g>)}
-  </svg><figcaption>{lang === "he" ? "חץ ללא מקור מסמן את מצב ההתחלה. כיתובי החצים מתארים קלט." : "The incoming arrow marks the initial state. Transition labels describe inputs."}</figcaption></figure>;
+  </svg><figcaption>{lang === "he" ? "חץ ללא מקור מסמן את מצב ההתחלה. כיתובי החצים מתארים קלט, ולעיתים גם פלט, לפי השאלה." : "The incoming arrow marks the initial state. Transition labels describe inputs and, where specified, outputs."}</figcaption></figure>;
 }

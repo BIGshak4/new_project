@@ -1,0 +1,188 @@
+[
+  {
+    "id": "quick-sw-89",
+    "topic": "algorithms",
+    "title": {"he": "קנייה לפני המכירה", "en": "Buy before selling"},
+    "prompt": {
+      "he": "נתונה רשימת מחירים יומיים, כולם שלמים לא שליליים. החזירו את הרווח המרבי מקנייה ואז מכירה ביום מאוחר יותר. מותר לוותר על העסקה ולקבל 0; גם רשימה ריקה מחזירה 0.",
+      "en": "Given daily prices as nonnegative integers, return the largest profit from buying and selling on a later day. Skipping the transaction earns 0; an empty list also returns 0."
+    },
+    "answer": {
+      "he": "שומרים את המחיר הנמוך ביותר שנראה ואת הרווח הטוב ביותר. לכל יום בודקים מכירה מול המינימום הקודם, ואז מעדכנים את המינימום. השמה מקבילה קוראת את הערכים הישנים; ביום הראשון ההפרש 0. כך נשמר סדר הימים, בלי למיין.",
+      "en": "Keep the lowest price seen and the best profit. For each day, compare selling against the previous minimum, then update that minimum. Parallel assignment reads the old values; the first day's difference is 0. This preserves day order without sorting."
+    },
+    "takeaway": {"he": "כשיש סדר בזמן, שמרו סיכום של העבר שמותר להשתמש בו.", "en": "When time order matters, summarize only the past that a decision may use."},
+    "code": {
+      "language": "python",
+      "text": "def best_profit(prices):\n    low, best = prices[0] if prices else 0, 0\n    for price in prices:\n        low, best = min(low, price), max(best, price - low)\n    return best"
+    }
+  },
+  {
+    "id": "quick-sw-90",
+    "topic": "algorithms",
+    "title": {"he": "להמשיך רצף או להתחיל מחדש?", "en": "Extend or restart?"},
+    "prompt": {
+      "he": "מחפשים רצף סמוך לא ריק שסכומו מרבי. הסכום הטוב ביותר של רצף שמסתיים באיבר הקודם הוא ‎-3. האיבר הבא הוא 4. האם להמשיך את הרצף או להתחיל ב־4?",
+      "en": "Find a nonempty contiguous subarray with maximum sum. The best sum ending at the previous item is -3. The next item is 4. Should you extend that subarray or start at 4?"
+    },
+    "answer": {
+      "he": "מתחילים מחדש: 4 גדול מ־‎-3+4=1. זהו הצעד של Kadane: בוחרים בין האיבר לבדו לבין המשך הרצף הקודם. בנפרד שומרים את הסכום הטוב ביותר מכל נקודות הסיום. בקלט שכולו שלילי, התשובה היא האיבר הגדול ביותר, ולא רצף ריק שסכומו 0.",
+      "en": "Restart: 4 exceeds -3+4=1. Kadane's step chooses between the item alone and extending the previous subarray. Separately retain the best sum across all ending positions. For all-negative input, the answer is the largest item, rather than an empty subarray with sum 0."
+    },
+    "takeaway": {"he": "הפתרון שמסתיים כאן והפתרון הטוב ביותר בכלל הם שני דברים שונים.", "en": "The best solution ending here differs from the best solution anywhere."}
+  },
+  {
+    "id": "quick-sw-91",
+    "topic": "algorithms",
+    "title": {"he": "תיקו במיון", "en": "A tie during sorting"},
+    "prompt": {
+      "he": "הרשומות הן [('A',2),('B',1),('C',2)]. מיינו לפי המספר בסדר עולה, כך שרשומות עם מספר שווה ישמרו על סדרן המקורי. כתבו פונקציה שמחזירה רשימה חדשה.",
+      "en": "Records are [('A',2),('B',1),('C',2)]. Sort by number in ascending order, preserving original order among equal numbers. Write a function returning a new list."
+    },
+    "answer": {
+      "he": "התוצאה היא [('B',1),('A',2),('C',2)]. מיון יציב שומר ש־A יישאר לפני C, כי המספרים שלהם שווים. sorted של פייתון יציב; key בוחר את המספר בלי להוסיף את השם כשובר שוויון.",
+      "en": "The result is [('B',1),('A',2),('C',2)]. A stable sort keeps A before C because their numbers match. Python's sorted is stable; key selects the number without adding the name as a tie-breaker."
+    },
+    "takeaway": {"he": "לפני מיון, הגדירו גם מה קורה כשמפתחות שווים.", "en": "Before sorting, define what should happen when keys are equal."},
+    "code": {"language": "python", "text": "def stable_by_number(records):\n    return sorted(records, key=lambda record: record[1])"}
+  },
+  {
+    "id": "quick-sw-92",
+    "topic": "algorithms",
+    "title": {"he": "מותר להחליף איבר עם עצמו", "en": "Allow an item to swap with itself"},
+    "prompt": {
+      "he": "בערבוב Fisher–Yates של [A,B,C], מתחילים באינדקס 2 ומחליפים אותו עם אינדקס אקראי. האם לבחור מבין 0,1 בלבד, או מבין 0,1,2? בהמשך מטפלים רק באינדקסים 0 ו־1.",
+      "en": "In Fisher–Yates shuffling of [A,B,C], first swap index 2 with a random index. Should the choices be just 0,1 or all of 0,1,2? Later steps touch only indices 0 and 1."
+    },
+    "answer": {
+      "he": "בוחרים באופן אחיד מבין 0,1,2, כולל החלפה עצמית. בלי האפשרות 2, האיבר C מוכרח לעזוב את המקום האחרון ולא יוכל לחזור אליו; לכן חלק מהסידורים אינם אפשריים. בכל שלב i בוחרים באופן אחיד ועצמאי מתוך 0 עד i, כולל i.",
+      "en": "Choose uniformly from 0,1,2, including a self-swap. Excluding 2 forces C out of the final position, with no later chance to return, making some permutations impossible. At each step i, choose uniformly and independently from 0 through i inclusive."
+    },
+    "takeaway": {"he": "בערבוב אקראי, גם האפשרות להשאיר איבר במקומו חייבת לקבל סיכוי.", "en": "A random shuffle must also allow an item to stay in place."}
+  },
+  {
+    "id": "quick-sw-93",
+    "topic": "algorithms",
+    "title": {"he": "אותו ערך אינו אותו צומת", "en": "Equal values are not the same node"},
+    "prompt": {
+      "he": "שתי רשימות מקושרות מתחילות בצמתים שונים A ו־B, שבשניהם הערך 7. שני הצמתים מצביעים לאותו צומת C. מהו הצומת המשותף הראשון? האם השוואת ערכים מספיקה?",
+      "en": "Two linked lists start at distinct nodes A and B, both containing 7. Both nodes point to the same node C. Which is the first shared node? Is comparing stored values sufficient?"
+    },
+    "answer": {
+      "he": "הצומת המשותף הראשון הוא C. הצמתים A ו־B שונים גם אם הערכים שלהם שווים. מפגש של רשימות פירושו זהות של הצומת בזיכרון; בפייתון בודקים אותה באמצעות is, ולא רק בהשוואת שדה הערך.",
+      "en": "C is the first shared node. A and B are distinct despite equal stored values. An intersection means node identity in memory; in Python use is for identity, rather than comparing only the value field."
+    },
+    "takeaway": {"he": "הגדירו אם ״שווה״ פירושו אותו תוכן או אותו אובייקט.", "en": "Define whether “equal” means identical contents or the very same object."}
+  },
+  {
+    "id": "quick-sw-94",
+    "topic": "algorithms",
+    "title": {"he": "כתיבה כללית בלי לעבור על התאים", "en": "A global write without visiting every cell"},
+    "prompt": {
+      "he": "כל כתיבה מקבלת חותמת זמן גדולה מקודמותיה. לתא נשמרו ערך 2 וזמן 3; פקודת SetAll שמרה ערך 9 בזמן 5. מה מחזיר Get לתא? ומה אחרי כתיבה מקומית של 4 בזמן 7?",
+      "en": "Every write receives a timestamp greater than previous writes. A cell stores value 2 at time 3; SetAll stores value 9 at time 5. What does Get return? What changes after a local write of 4 at time 7?"
+    },
+    "answer": {
+      "he": "קודם 9, ואחרי הכתיבה המקומית 4. Get בוחר את הערך שחותמת הזמן שלו מאוחרת יותר: המקומית או הכללית. SetAll מעדכן זוג גלובלי אחד במקום את כל התאים; מניחים שחותמות הזמן נשארות מסודרות ואינן גולשות.",
+      "en": "First 9, then 4 after the local write. Get chooses whichever value has the later timestamp: local or global. SetAll updates one global pair instead of every cell; assume timestamps remain ordered and do not overflow."
+    },
+    "takeaway": {"he": "אפשר לדחות עדכון פיזי ולשחזר את הערך בעזרת גרסה בזמן הקריאה.", "en": "A version can defer physical updates until the value is read."}
+  },
+  {
+    "id": "quick-sw-95",
+    "topic": "algorithms",
+    "title": {"he": "לא מחשבים אותה תת־בעיה שוב", "en": "Do not solve the same subproblem twice"},
+    "prompt": {
+      "he": "מחשבים F(4) לפי F(n)=F(n−1)+F(n−2), ושומרים כל תוצאה במטמון. F(0)=0 ו־F(1)=1 כבר במטמון. אילו ערכי F חדשים צריך לחשב, וכמה פעמים כל אחד?",
+      "en": "Compute F(4) using F(n)=F(n−1)+F(n−2), caching every result. F(0)=0 and F(1)=1 are already cached. Which new F values must be calculated, and how often is each calculated?"
+    },
+    "answer": {
+      "he": "מחשבים את F(2), F(3), F(4), כל אחד פעם אחת. הקריאה החוזרת ל־F(2) משתמשת בתוצאה שכבר נשמרה. אלה שלוש תת־בעיות חדשות, גם אם יש יותר משלוש קריאות לפונקציה בגלל חיפושים במטמון.",
+      "en": "Calculate F(2), F(3), and F(4), each once. A repeated request for F(2) reuses its cached result. These are three new subproblems, even though cache lookups can cause more than three function calls."
+    },
+    "takeaway": {"he": "במטמון סופרים תת־בעיות שונות, ומבדילים בינן לבין מספר הקריאות.", "en": "With caching, distinguish the number of distinct subproblems from the number of calls."}
+  },
+  {
+    "id": "quick-sw-96",
+    "topic": "algorithms",
+    "title": {"he": "חלון זז, שני איברים משתנים", "en": "A moving window changes two items"},
+    "prompt": {
+      "he": "כתבו פונקציה שמחזירה את סכומי כל החלונות הסמוכים באורך k ברשימת שלמים. מובטח 1≤k≤אורך הרשימה. איך מעדכנים את הסכום כשהחלון זז מקום אחד, בלי לסכום שוב k איברים?",
+      "en": "Return the sums of all contiguous length-k windows in an integer list. Assume 1≤k≤the list length. How can each one-position move update the sum without adding all k items again?"
+    },
+    "answer": {
+      "he": "מחשבים פעם אחת את סכום החלון הראשון. בכל הזזה מחסרים את האיבר שיצא ומוסיפים את האיבר שנכנס. למשל, ברשימה [2,5,1] וב־k=2 מתקבלים 7 ואז 7−2+1=6. גם ערכים שליליים מותרים.",
+      "en": "Sum the first window once. Each move subtracts the departing item and adds the arriving item. For [2,5,1] with k=2, the sums are 7 and then 7−2+1=6. Negative values also work."
+    },
+    "takeaway": {"he": "כשרוב הנתונים נשארים זהים, עדכנו רק את ההבדל בין שתי הבעיות.", "en": "When most data stays unchanged, update only the difference between consecutive problems."},
+    "code": {
+      "language": "python",
+      "text": "def window_sums(values, k):\n    totals = [sum(values[:k])]\n    for end in range(k, len(values)):\n        totals.append(totals[-1] - values[end - k] + values[end])\n    return totals"
+    }
+  },
+  {
+    "id": "quick-sw-97",
+    "topic": "python",
+    "title": {"he": "אפס הוא תשובה תקינה", "en": "Zero is a valid answer"},
+    "prompt": {
+      "he": "פונקציית חיפוש מחזירה אינדקס שמתחיל מ־0, או None כשאין התאמה. אחרי result=0, האם התנאי if result מזהה שנמצאה התאמה? איזה תנאי מתאים?",
+      "en": "A search returns a zero-based index, or None when no match exists. With result=0, does if result detect a match? Which condition should be used?"
+    },
+    "answer": {
+      "he": "לא: בפייתון 0 נחשב שקרי בתנאי, אף שהוא אינדקס תקין. בודקים `result is not None`. כך 0 מזוהה כהצלחה, ורק None מסמן שאין התאמה.",
+      "en": "No: Python treats 0 as false in a condition, although it is a valid index. Test `result is not None`. This recognizes 0 as success and reserves None for no match."
+    },
+    "takeaway": {"he": "בדקו את סמן ההיעדר המדויק במקום להניח שכל ערך שקרי פירושו כישלון.", "en": "Test the explicit absence marker instead of treating every false value as failure."}
+  },
+  {
+    "id": "quick-sw-98",
+    "topic": "python",
+    "title": {"he": "שני תנאים יכולים להיות נכונים", "en": "Two conditions can both be true"},
+    "prompt": {
+      "he": "כתבו פונקציה שמחזירה תווית positive אם מספר שלם גדול מ־0, ותווית even אם הוא זוגי, בסדר הזה. למשל, עבור 2 צריך את שתיהן. האם מתאים להשתמש ב־if ואז elif?",
+      "en": "Return label positive when an integer exceeds 0 and label even when it is even, in that order. For example, 2 needs both labels. Is an if followed by elif appropriate?"
+    },
+    "answer": {
+      "he": "לא. elif בודק את התנאי השני רק כשהראשון נכשל, ולכן עבור 2 ידלג על even. משתמשים בשני משפטי if נפרדים. עבור 0 נקבל רק even; עבור מספר שלילי אי־זוגי נקבל רשימה ריקה.",
+      "en": "No. elif checks its condition only when the first condition fails, so 2 would miss even. Use two separate if statements. Zero receives only even; a negative odd integer receives an empty list."
+    },
+    "takeaway": {"he": "תנאים עצמאיים נבדקים בנפרד; elif מתאים לבחירה בין ענפים חלופיים.", "en": "Check independent conditions separately; use elif for alternative branches."},
+    "code": {
+      "language": "python",
+      "text": "def labels(number):\n    result = []\n    if number > 0: result.append('positive')\n    if number % 2 == 0: result.append('even')\n    return result"
+    }
+  },
+  {
+    "id": "quick-sw-99",
+    "topic": "python",
+    "title": {"he": "רשימה חדשה בכל קריאה", "en": "A fresh list for each call"},
+    "prompt": {
+      "he": "כתבו add_item(item, items=None). בלי רשימה מפורשת, כל קריאה צריכה ליצור רשימה חדשה עם האיבר. אם הועברה רשימה, הוסיפו אליה במקום. למה לא להשתמש בברירת המחדל items=[]?",
+      "en": "Write add_item(item, items=None). Without an explicit list, each call must create a fresh one-item list. If a list is supplied, append to it in place. Why avoid the default items=[]?"
+    },
+    "answer": {
+      "he": "ערך ברירת מחדל נוצר בזמן הגדרת הפונקציה. לכן [] בברירת המחדל תהיה משותפת לקריאות שונות ותצבור איברים. עם None יוצרים [] בתוך כל קריאה שצריכה רשימה חדשה. רשימה מפורשת, גם ריקה, נשארת אותה רשימה ומשתנה כנדרש.",
+      "en": "A default value is created when the function is defined. A default [] would therefore be shared across calls and accumulate items. With None, create [] inside each call needing a fresh list. An explicitly supplied list, including an empty one, retains its identity and is modified as requested."
+    },
+    "takeaway": {"he": "מצב שאמור להיות חדש לכל קריאה צריך להיווצר בתוך הקריאה.", "en": "State intended to be fresh for each call must be created inside that call."},
+    "code": {
+      "language": "python",
+      "text": "def add_item(item, items=None):\n    if items is None: items = []\n    items.append(item)\n    return items"
+    }
+  },
+  {
+    "id": "quick-sw-100",
+    "topic": "python",
+    "title": {"he": "הגבול האחרון אינו נכלל", "en": "The stopping boundary is excluded"},
+    "prompt": {
+      "he": "כתבו פונקציה שמסכמת את השלמים מ־1 עד n כולל n, עבור n שלם לא שלילי. עבור n=0 התוצאה 0. האם range(1,n) כולל את כל האיברים הדרושים?",
+      "en": "Sum the integers from 1 through n inclusive, where n is a nonnegative integer. For n=0 return 0. Does range(1,n) include every required item?"
+    },
+    "answer": {
+      "he": "לא: range אינו כולל את גבול העצירה. משתמשים ב־range(1,n+1), כך שהאיבר האחרון הוא n. כש־n=0 מתקבל טווח ריק, ו־sum שלו מחזיר 0.",
+      "en": "No: range excludes its stopping boundary. Use range(1,n+1), making n the last item. When n=0, the range is empty and sum returns 0."
+    },
+    "takeaway": {"he": "בכל לולאה הגדירו אם הגבול האחרון כלול, ובדקו גם טווח ריק.", "en": "For every loop, define whether the stopping boundary is included and check an empty range."},
+    "code": {"language": "python", "text": "def sum_through(n):\n    return sum(range(1, n + 1))"}
+  }
+]

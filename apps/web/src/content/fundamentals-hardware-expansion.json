@@ -1,0 +1,289 @@
+[
+  {
+    "id": "quick-hw-61", "topic": "gates",
+    "title": {"he": "שוויון של מילים שלמות", "en": "Equality of whole words"},
+    "prompt": {"he": "A ו־B הם וקטורים בני 4 ביטים. כיצד נבדוק שהם שווים בעזרת XOR, OR ו־NOT, בלי להשוות כל ערך מספרי בנפרד?", "en": "A and B are 4-bit vectors. How can XOR, OR and NOT test equality without comparing each possible numeric value separately?"},
+    "answer": {"he": "מחשבים XOR לכל זוג ביטים מתאים, מאחדים את ארבע התוצאות ב־OR, והופכים. לכן `eq=NOT ((A0 XOR B0) OR (A1 XOR B1) OR (A2 XOR B2) OR (A3 XOR B3))`. שוויון מתקבל רק כשאין אף ביט שונה.", "en": "XOR each corresponding bit pair, OR the four results, then invert. Thus `eq=NOT ((A0 XOR B0) OR (A1 XOR B1) OR (A2 XOR B2) OR (A3 XOR B3))`. Equality holds only when no bit differs."},
+    "takeaway": {"he": "בדיקת מילים רחבות יכולה להתחיל בזיהוי הבדלים מקומיים ולאחד אותם.", "en": "A wide-word check can detect local differences and combine them."},
+    "code": {"language": "verilog", "text": "assign eq = ~(|(A ^ B));"}
+  },
+  {
+    "id": "quick-hw-62", "topic": "gates",
+    "title": {"he": "סכום בלי נשא נכנס", "en": "Adding without a carry-in"},
+    "prompt": {"he": "מחברים שני ביטים A ו־B, ללא נשא נכנס. כתבו את ביט הסכום S ואת ביט הנשא C באמצעות שערים.", "en": "Add two bits A and B, with no carry-in. Express the sum bit S and carry bit C using gates."},
+    "answer": {"he": "`S=A XOR B` ו־`C=A AND B`. הסכומים האפשריים הם 0,1,2: ביט הסכום הוא הזוגיות, ונשא נוצר רק ב־1+1. זהו מחבר למחצה, Half Adder.", "en": "`S=A XOR B` and `C=A AND B`. Possible sums are 0,1,2: the sum bit is parity, while carry occurs only for 1+1. This is a half adder."},
+    "takeaway": {"he": "גוזרים כל ביט של תוצאה לפי תפקידו, ולא מנחשים שער אחד לכל החישוב.", "en": "Derive each result bit from its role, rather than guessing one gate for the whole calculation."},
+    "code": {"language": "verilog", "text": "assign S = A ^ B;\nassign C = A & B;"}
+  },
+  {
+    "id": "quick-hw-63", "topic": "gates",
+    "title": {"he": "אינדקס אפס אינו אומר ריק", "en": "Index zero does not mean empty"},
+    "prompt": {"he": "מקודד עדיפויות מחזיר את אינדקס הביט הדלוק הגבוה ביותר ב־x[3:0]. למה שני ביטי האינדקס לבדם אינם מספיקים כשמותר x=0000?", "en": "A priority encoder returns the index of the highest set bit in x[3:0]. Why are its two index bits insufficient when x=0000 is allowed?"},
+    "answer": {"he": "האינדקס `00` יכול לציין שביט 0 דולק, אך אין ביט נבחר עבור `0000`. מוסיפים `valid=x0 OR x1 OR x2 OR x3`. קוראים את האינדקס רק כש־valid=1; כשהוא 0 ערך האינדקס אינו בעל משמעות.", "en": "Index `00` can identify set bit 0, but `0000` selects no bit. Add `valid=x0 OR x1 OR x2 OR x3`. Interpret the index only when valid=1; when valid=0 its value has no meaning."},
+    "takeaway": {"he": "מפרידים בין ערך תוצאה לבין השאלה אם קיימת תוצאה תקפה.", "en": "Separate a result’s value from whether a valid result exists."}
+  },
+  {
+    "id": "quick-hw-64", "topic": "gates",
+    "title": {"he": "עדיפות בין קבוצות", "en": "Priority between groups"},
+    "prompt": {"he": "מחלקים מקודד עדיפויות של 16 כניסות לארבע קבוצות רצופות של 4. לכל קבוצה אינדקס מקומי ו־valid. איך מרכיבים את האינדקס של הביט הדלוק הגבוה ביותר?", "en": "Split a 16-input priority encoder into four consecutive groups of four. Each group supplies a local index and valid. How is the global highest-set-bit index assembled?"},
+    "answer": {"he": "מקודדים בעדיפות את ארבעת אותות valid ובוחרים את הקבוצה הגבוהה התקפה. שני הביטים הגבוהים הם מספר הקבוצה; שני הנמוכים הם האינדקס המקומי שלה. למשל קבוצה 2 ואינדקס 1 נותנים `1001`, כלומר 9. לא עושים OR לכל האינדקסים המקומיים.", "en": "Priority-encode the four valid signals and select the highest valid group. Its group number supplies the upper two bits; its local index supplies the lower two. Group 2 and local index 1 give `1001`, or 9. Do not OR all local indices together."},
+    "takeaway": {"he": "בהרכבה היררכית בוחרים תחילה קבוצה, ואז משתמשים בתוצאה של הקבוצה שנבחרה.", "en": "In a hierarchy, select a group first, then use that group’s result."}
+  },
+  {
+    "id": "quick-hw-65", "topic": "gates",
+    "title": {"he": "להפעיל תקלה לפני שמגלים אותה", "en": "Activate a fault before detecting it"},
+    "prompt": {"he": "ענף פנימי אמור לקבל את x, אך ייתכן שהוא תקוע ב־0. איזה ערך חייב x לקבל כדי שיהיה בכלל הבדל בין המעגל התקין לתקול?", "en": "An internal branch should carry x, but it might be stuck at 0. What value must x take for the healthy and faulty circuits to differ at that branch?"},
+    "answer": {"he": "צריך `x=1`. אז בענף התקין יש 1 ובתקול 0. אם x=0, שני המעגלים נראים זהים בענף ולכן אי אפשר לגלות כך את התקלה. בהמשך צריך גם להעביר את ההבדל למוצא.", "en": "Use `x=1`. The healthy branch then carries 1 and the faulty branch 0. With x=0 both branches look identical, so that test cannot detect the fault. The difference must also propagate to an observable output."},
+    "takeaway": {"he": "בדיקת stuck-at מתחילה בניסיון להציב את הערך ההפוך מהערך התקוע.", "en": "A stuck-at test starts by trying to drive the opposite of the stuck value."}
+  },
+  {
+    "id": "quick-hw-66", "topic": "gates",
+    "title": {"he": "לא לחסום את ההבדל", "en": "Do not block the difference"},
+    "prompt": {"he": "Y=X AND B. רוצים לראות במוצא אם X תקין או תקוע ב־0. איזה זוג ערכים נבחר ל־X התקין ול־B?", "en": "Y=X AND B. We want the output to reveal whether X is healthy or stuck at 0. What values should the healthy X and B have?"},
+    "answer": {"he": "נבחר `X=1, B=1`. אז Y תקין הוא 1 ו־Y תקול הוא 0. B=0 היה כופה Y=0 בשני המקרים ומסתיר את התקלה, גם אם הצלחנו להפעיל אותה ב־X.", "en": "Choose `X=1, B=1`. Healthy Y is then 1 and faulty Y is 0. B=0 would force Y=0 in both cases and hide the fault, even after activating it at X."},
+    "takeaway": {"he": "להפצת תקלה דרך AND, יתר הכניסות במסלול צריכות להיות 1.", "en": "To propagate a fault through AND, the other path inputs must be 1."},
+    "diagram": {"kind": "gate", "gate": "AND", "inputs": ["X", "B=1"], "output": "Y"}
+  },
+  {
+    "id": "quick-hw-67", "topic": "gates",
+    "title": {"he": "תקלה שלא רואים ביציאה", "en": "A fault invisible at the output"},
+    "prompt": {"he": "נתון Y=A AND NOT(B OR X) AND NOT C, ובמעגל התקין X=C. רק הענף אל X עלול להיתקע ב־0; הענף אל NOT C תקין. האם אפשר לזהות stuck-at-0 דרך Y?", "en": "Y=A AND NOT(B OR X) AND NOT C, with X=C when healthy. Only the branch into X may be stuck at 0; the branch into NOT C is healthy. Can stuck-at-0 be detected through Y?"},
+    "answer": {"he": "לא. כש־C=0, גם X התקין הוא 0 ואין הבדל. כש־C=1, הגורם NOT C כופה Y=0 גם בתקין וגם בתקול. לכן אין צירוף A,B,C שמבדיל דרך Y; מדובר בתקלה שאינה נצפית במוצא הזה.", "en": "No. When C=0, healthy X is already 0. When C=1, the NOT C factor forces Y=0 in both circuits. No A,B,C combination distinguishes them through Y; this fault is unobservable at that output."},
+    "takeaway": {"he": "לא לכל תקלה פיזית קיים וקטור בדיקה במוצאים הנתונים.", "en": "Not every physical fault has a distinguishing test at the available outputs."}
+  },
+  {
+    "id": "quick-hw-68", "topic": "gates",
+    "title": {"he": "אפס לוגי עם פולס רגעי", "en": "A logical zero with a transient pulse"},
+    "prompt": {"he": "Y=A AND NOT A הוא תמיד 0 אחרי התייצבות. אם המסלול הישיר מהיר מהמסלול דרך המהפך, מה עלול לקרות כש־A עולה מ־0 ל־1?", "en": "Y=A AND NOT A settles to 0. If the direct path is faster than the inverter path, what may happen when A rises from 0 to 1?"},
+    "answer": {"he": "ייתכן פולס 1 קצר: A הישיר כבר עלה, בעוד פלט המהפך עדיין 1. אחרי שהמהפך מתעדכן חוזרים ל־0. טבלת אמת מתארת ערכים יציבים; היא לבדה אינה מבטיחה היעדר גליצ׳ים או רוחב פולס מסוים.", "en": "A brief 1 pulse may occur: direct A has risen while the inverter output is still 1. Once inversion catches up, Y returns to 0. A truth table describes settled values; it alone guarantees neither glitch freedom nor a particular pulse width."},
+    "takeaway": {"he": "שקילות בוליאנית אינה אומרת שהתנהגות המעברים הפיזית זהה.", "en": "Boolean equivalence does not imply identical physical transition behavior."}
+  },
+  {
+    "id": "quick-hw-69", "topic": "gates",
+    "title": {"he": "לא מניע אינו אפס", "en": "Not driving is not zero"},
+    "prompt": {"he": "שני דרייברים תלת־מצביים חולקים קו. שניהם מושבתים, ואין נגד משיכה או דרייבר נוסף. האם ערך הקו מובטח להיות 0?", "en": "Two tri-state drivers share a wire. Both are disabled, with no pull resistor or other driver. Is the wire guaranteed to be 0?"},
+    "answer": {"he": "לא. כל דרייבר מציג `Z`, כלומר עכבה גבוהה ואינו כופה 0 או 1. בלי גורם שמגדיר את הקו אין ערך לוגי מובטח. Z אינו ביט נתונים שלישי ואינו הוראה לכתוב אפס.", "en": "No. Each driver presents `Z`, meaning high impedance: it forces neither 0 nor 1. Without something defining the wire, no logic value is guaranteed. Z is not a third data bit or an instruction to write zero."},
+    "takeaway": {"he": "בקו משותף שואלים מי מניע אותו, ולא רק איזה ערך יש בכניסות.", "en": "On a shared wire, ask who drives it, not just what the input values are."}
+  },
+  {
+    "id": "quick-hw-70", "topic": "bits",
+    "title": {"he": "גלישה מסומנת בלי נשא", "en": "Signed overflow without a carry"},
+    "prompt": {"he": "ב־4 ביטים במשלים ל־2 מחברים 0111 ו־0001 ושומרים 4 ביטים. מה התוצאה, והאם נשא החוצה מספיק לזיהוי גלישה מסומנת?", "en": "Add 0111 and 0001 as 4-bit two’s-complement numbers, retaining four bits. What is stored, and is carry-out enough to detect signed overflow?"},
+    "answer": {"he": "נשמר `1000`, שפירושו ‎-8. הסכום המתמטי 8 אינו בטווח ‎-8..7, ולכן יש גלישה מסומנת אף שהנשא החוצה הוא 0. בחיבור מסומן, שני מספרים באותו סימן שנותנים סימן הפוך מצביעים על גלישה.", "en": "The stored word is `1000`, meaning -8. The mathematical sum 8 is outside -8..7, so signed overflow occurs although carry-out is 0. Adding two same-sign numbers and obtaining the opposite sign indicates signed overflow."},
+    "takeaway": {"he": "נשא וגלישה מסומנת עונים על שאלות שונות.", "en": "Carry-out and signed overflow answer different questions."}
+  },
+  {
+    "id": "quick-hw-71", "topic": "bits",
+    "title": {"he": "מרחיבים לפני שמאבדים ביט", "en": "Widen before losing a bit"},
+    "prompt": {"he": "A ו־B הם מספרים לא מסומנים בני 4 ביטים. רוצים סכום מדויק. למה לא מספיק לשמור קודם סכום בן 4 ביטים ורק אז להוסיף אפס משמאל?", "en": "A and B are unsigned 4-bit numbers. We want their exact sum. Why is storing a 4-bit sum and only then adding a leading zero insufficient?"},
+    "answer": {"he": "הסכום המרבי הוא 30, ולכן צריך 5 ביטים. אם כבר חתכנו ל־4, הנשא אבד. למשל `1111+0001=10000`; חיתוך ואז הרחבה נותן `00000`. מרחיבים את שני הקלטים ל־5 ביטים לפני החיבור ושומרים 5 ביטים.", "en": "The maximum sum is 30, requiring 5 bits. Once truncated to four, carry is lost. For example, `1111+0001=10000`; truncation followed by widening gives `00000`. Widen both inputs to five bits before addition and retain five bits."},
+    "takeaway": {"he": "הרחבה אחרי חיתוך אינה משחזרת מידע שכבר נזרק.", "en": "Widening after truncation cannot recover discarded information."}
+  },
+  {
+    "id": "quick-hw-72", "topic": "bits",
+    "title": {"he": "ממוצע בעזרת הקשר בין הקלטים", "en": "Use the relation between inputs"},
+    "prompt": {"he": "ידוע מראש שמספרים שלמים לא מסומנים מקיימים b=a+2, ושניהם נכנסים ברוחב הנתון. איך נחשב ממוצע בלי לחבר a+b?", "en": "Unsigned integers are guaranteed to satisfy b=a+2, and both fit the given width. How can their average be computed without adding a+b?"},
+    "answer": {"he": "`(a+b)/2=(a+a+2)/2=a+1`. מספיק להוסיף 1 ל־a. התוצאה נמצאת בין a ל־b ונכנסת באותו רוחב. ההבטחה b=a+2 היא שמאפשרת לפשט; היא אינה נכונה לכל שני קלטים.", "en": "`(a+b)/2=(a+a+2)/2=a+1`. Increment a. The result lies between a and b and fits the same width. The guarantee b=a+2 enables this simplification; it does not apply to arbitrary inputs."},
+    "takeaway": {"he": "בודקים אילו הבטחות על הקלט מאפשרות להחליף חישוב כללי בחישוב פשוט.", "en": "Look for input guarantees that replace a general calculation with a simpler one."}
+  },
+  {
+    "id": "quick-hw-73", "topic": "bits",
+    "title": {"he": "השלילה שלא נכנסת", "en": "The negation that does not fit"},
+    "prompt": {"he": "מנסים לשלול את המספר המסומן 1000, כלומר ‎-8, במשלים ל־2 ברוחב 4 ביטים. מה נותנת הפעולה NOT ואחריה הוספת 1 באותו רוחב?", "en": "Negate signed 1000, meaning -8, in four-bit two’s complement. What does bitwise NOT followed by adding 1 produce at the same width?"},
+    "answer": {"he": "`NOT 1000 = 0111`, ואז `0111+1=1000`. מתקבל שוב ‎-8 בגלל גלישה: ‎+8 אינו ניתן לייצוג ב־4 ביטים מסומנים. אם צריך שלילה מתמטית מדויקת, מרחיבים קודם ל־5 ביטים.", "en": "`NOT 1000 = 0111`, then `0111+1=1000`. It becomes -8 again because of overflow: +8 is unrepresentable in signed four-bit form. Widen to five bits first if exact mathematical negation is required."},
+    "takeaway": {"he": "למספר השלילי המזערי אין בן זוג חיובי באותו רוחב במשלים ל־2.", "en": "The minimum two’s-complement value has no positive counterpart at the same width."}
+  },
+  {
+    "id": "quick-hw-74", "topic": "bits",
+    "title": {"he": "שארית מתוך הביטים הנמוכים", "en": "Remainder from low bits"},
+    "prompt": {"he": "x הוא מספר לא מסומן. איך מחשבים x modulo 8 בלי מחלק, ומה התוצאה עבור x=110101?", "en": "x is unsigned. How can x modulo 8 be computed without a divider, and what is the result for x=110101?"},
+    "answer": {"he": "לוקחים את שלושת הביטים הנמוכים: `110101 → 101`, כלומר 5. יתר הביטים הם כפולות של 8. שקול לחשב `x AND 000111` ברוחב שישה ביטים. זה עובד ישירות כי 8 הוא חזקה של 2.", "en": "Take the lowest three bits: `110101 → 101`, or 5. All higher bits contribute multiples of 8. In six bits this is `x AND 000111`. This works directly because 8 is a power of two."},
+    "takeaway": {"he": "שארית בחזקה של 2 נמצאת בביטים הנמוכים של מספר לא מסומן.", "en": "For unsigned numbers, a power-of-two remainder is carried by the low bits."}
+  },
+  {
+    "id": "quick-hw-75", "topic": "bits",
+    "title": {"he": "לשנות ביט אחד בכל צעד", "en": "Change one bit per step"},
+    "prompt": {"he": "בקידוד Gray מחשבים g=b XOR (b>>1) עבור מספר בינארי לא מסומן. מה קודי Gray של 3 ושל 4 בשלושה ביטים, וכמה ביטים משתנים ביניהם?", "en": "Gray code is g=b XOR (b>>1) for an unsigned binary number. What are the three-bit Gray codes for 3 and 4, and how many bits change between them?"},
+    "answer": {"he": "עבור 3: `011 XOR 001 = 010`. עבור 4: `100 XOR 010 = 110`. משתנה ביט אחד בלבד, בעוד ב־011→100 הבינארי משתנים שלושה. הקידוד מפחית שינויים בו־זמניים; הוא לבדו אינו פותר סנכרון בין שעונים.", "en": "For 3: `011 XOR 001 = 010`. For 4: `100 XOR 010 = 110`. Only one bit changes, whereas binary 011→100 changes three. The code reduces simultaneous transitions; coding alone does not solve clock-domain synchronization."},
+    "takeaway": {"he": "קידוד יכול לשנות את התנהגות המעברים גם כשהערכים המיוצגים זהים.", "en": "Encoding can change transition behavior while representing the same values."}
+  },
+  {
+    "id": "quick-hw-76", "topic": "bits",
+    "title": {"he": "כתובת ותפוסה אינן אותו טווח", "en": "Address and occupancy have different ranges"},
+    "prompt": {"he": "ל־FIFO יש שמונה תאים. כמה ביטים נדרשים לכתובת תא, וכמה למונה תפוסה שמייצג גם ריק וגם מלא?", "en": "A FIFO has eight cells. How many bits are needed for a cell address, and how many for an occupancy count representing both empty and full?"},
+    "answer": {"he": "כתובת היא בטווח 0..7 ולכן דורשת `3` ביטים. תפוסה היא בטווח 0..8, תשעה ערכים, ולכן דורשת `4` ביטים. שוויון בין מצביעי הקריאה והכתיבה לבדו יכול להופיע גם בריק וגם במלא.", "en": "An address ranges over 0..7 and needs `3` bits. Occupancy ranges over 0..8, nine values, and needs `4` bits. Equal read and write pointers alone can occur when either empty or full."},
+    "takeaway": {"he": "מחשבים רוחב לפי כל הערכים שהאוגר חייב לייצג, כולל מצבי הגבול.", "en": "Choose register width from every required value, including boundary states."}
+  },
+  {
+    "id": "quick-hw-77", "topic": "bits",
+    "title": {"he": "כמה ביטים למכפלה?", "en": "How wide is a product?"},
+    "prompt": {"he": "שני קלטים לא מסומנים הם בני 4 ביטים כל אחד. מה רוחב המוצא המזערי שמספיק לכל המכפלות המדויקות שלהם?", "en": "Two unsigned inputs each have four bits. What minimum output width can represent every exact product?"},
+    "answer": {"he": "המכפלה המרבית היא `15×15=225`. שבעה ביטים מגיעים רק עד 127, ושמונה עד 255, לכן נדרשים `8` ביטים. ארבעה ביטי מוצא היו שומרים רק את המכפלה מודולו 16.", "en": "The maximum product is `15×15=225`. Seven bits reach only 127; eight reach 255, so `8` bits are needed. A four-bit output would retain only the product modulo 16."},
+    "takeaway": {"he": "טווח תוצאות הכפל עשוי לדרוש את סכום רוחבי שני הקלטים.", "en": "An exact product may require the sum of the two input widths."}
+  },
+  {
+    "id": "quick-hw-78", "topic": "states",
+    "title": {"he": "שארית שקוראים ביט אחר ביט", "en": "A remainder read one bit at a time"},
+    "prompt": {"he": "קוראים מספר בינארי מהביט הגבוה לנמוך. r הוא שארית הקידומת שכבר נקראה בחלוקה ל־3. אחרי קריאת ביט x נוסף, איך מעדכנים r בלי לשמור את כל המספר?", "en": "Read a binary number most significant bit first. r is the remainder modulo 3 of the prefix already read. After reading bit x, how is r updated without storing the whole number?"},
+    "answer": {"he": "`r_next=(2r+x) modulo 3`, כי הוספת ביט מימין מכפילה את הקידומת ב־2 ומוסיפה x. מתחילים ב־r=0. בקריאת 110 מקבלים שאריות `1, 0, 0`; המספר 6 אכן מתחלק ב־3. מספיקים שלושה מצבי שארית.", "en": "`r_next=(2r+x) modulo 3`: appending a bit doubles the prefix and adds x. Start with r=0. Reading 110 gives remainders `1, 0, 0`; the number 6 is divisible by 3. Three remainder states suffice."},
+    "takeaway": {"he": "מצב יכול לשמור תכונה מספיקה של הקידומת במקום את ערכה המלא.", "en": "State can retain a sufficient property of a prefix instead of its full value."}
+  },
+  {
+    "id": "quick-hw-79", "topic": "sequential",
+    "title": {"he": "מנתון לפקודות קביעה ואיפוס", "en": "From data to set and reset"},
+    "prompt": {"he": "נתון דלגלג SR בחזית עולה, עם כניסות סינכרוניות פעילות ב־1: 00 שומר, 01 מאפס, 10 קובע, 11 אסור. איך נחבר D כדי לקבל דלגלג D? מניחים עמידה בתזמון.", "en": "A rising-edge SR flip-flop has synchronous active-high inputs: 00 holds, 01 resets, 10 sets, 11 is forbidden. How should D be connected to obtain a D flip-flop? Assume timing requirements are met."},
+    "answer": {"he": "נחבר `S=D, R=NOT D` ונשתמש באותו שעון. D=0 יוצר 01 ו־Q הבא 0; D=1 יוצר 10 ו־Q הבא 1. זו הנחה על SR בחזית עם כניסות סינכרוניות; חיבור כזה לנועל או ל־Set/Reset אסינכרוניים אינו מבטיח DFF.", "en": "Connect `S=D, R=NOT D` and use the same clock. D=0 gives 01 and next Q=0; D=1 gives 10 and next Q=1. This assumes an edge-triggered SR with synchronous controls; wiring a latch or asynchronous set/reset this way does not guarantee a DFF."},
+    "takeaway": {"he": "לפני החלפת רכיב זיכרון, מוודאים מתי כניסות הבקרה שלו משפיעות.", "en": "Before replacing a memory primitive, establish when its controls take effect."}
+  },
+  {
+    "id": "quick-hw-80", "topic": "sequential",
+    "title": {"he": "שקיפות לעומת דגימה בחזית", "en": "Transparency versus edge sampling"},
+    "prompt": {"he": "נועל D שקוף כש־EN=1, ולצדו דלגלג D בחזית עולה. EN נשאר 1 ו־D משתנה בין חזיתות השעון. מי רשאי לעקוב אחרי השינוי מיד?", "en": "A D latch is transparent while EN=1, alongside a rising-edge D flip-flop. EN stays 1 and D changes between clock edges. Which may follow the change immediately?"},
+    "answer": {"he": "הנועל עוקב אחרי D בזמן ש־EN=1, לאחר השהיית הרכיב. הדלגלג שומר את הדגימה עד החזית הבאה, בהיעדר בקרה אסינכרונית. אפשור ברמה וחזית שעון אינם אותו חוזה התנהגות.", "en": "The latch follows D while EN=1, after its propagation delay. The flip-flop holds its sample until the next edge, assuming no asynchronous control. Level enable and a clock edge specify different behavior."},
+    "takeaway": {"he": "מזהים אם רכיב הזיכרון רגיש לרמה או לחזית לפני שעוקבים אחרי אותות.", "en": "Identify level sensitivity versus edge sensitivity before tracing signals."}
+  },
+  {
+    "id": "quick-hw-81", "topic": "sequential",
+    "title": {"he": "להגיע לפני רגע הדגימה", "en": "Arrive before sampling"},
+    "prompt": {"he": "חזית קליטה מגיעה ב־10ns, וזמן setup נדרש הוא 2ns. עד מתי לכל המאוחר הנתון חייב להתייצב לפני החזית, בהנחה שאין אי־ודאות נוספת?", "en": "The capture edge arrives at 10ns and required setup time is 2ns. By what latest time must the data settle before the edge, assuming no additional uncertainty?"},
+    "answer": {"he": "עד `8ns`, כי 10−2=8. עליו להישאר יציב גם בזמן ההחזקה הנדרש אחרי החזית. שינוי ב־9ns מפר setup, גם אם הנתון כבר נכון בדיוק ב־10ns; הדגימה אינה נקודת זמן אידאלית ללא חלון יציבות.", "en": "By `8ns`, since 10−2=8. It must also remain stable for the required hold time after the edge. A change at 9ns violates setup even if data is correct at 10ns; sampling is not an ideal instant with no stability window."},
+    "takeaway": {"he": "setup מגביל את זמן ההגעה המאוחר ביותר לפני חזית הקליטה.", "en": "Setup constrains the latest data arrival before the capture edge."}
+  },
+  {
+    "id": "quick-hw-82", "topic": "sequential",
+    "title": {"he": "מסלול יכול להיות מהיר מדי", "en": "A path can be too fast"},
+    "prompt": {"he": "חזית קליטה היא ב־10ns ו־hold נדרש הוא 1ns. נתון חדש מגיע לכניסת הקולט ב־10.4ns. האם הקטנת תדר השעון לבדה מתקנת את הפרת ההחזקה, כשיחס החזיתות אינו משתנה?", "en": "The capture edge is at 10ns and required hold is 1ns. New data reaches the receiver at 10.4ns. Does reducing clock frequency alone fix this hold violation if the relative clock-edge timing is unchanged?"},
+    "answer": {"he": "לא. הנתון הישן חייב להישאר עד `11ns`, אך הוחלף מוקדם מדי. הארכת המחזור הבא אינה מזיזה את חלון ההחזקה סביב החזית הנוכחית. בודקים את המסלול המזערי ותזמון השעונים; עיכוב נתונים מתאים עשוי להיות חלק מהתיקון.", "en": "No. Old data must remain until `11ns`, but it changed too early. Extending the next period does not move the hold window around the current edge. Check the minimum data path and clock timing; suitable data delay may be part of the fix."},
+    "takeaway": {"he": "הפרת hold נוגעת להגעה מוקדמת מדי, ולכן אינה נפתרת אוטומטית בשעון איטי יותר.", "en": "Hold concerns data arriving too early, so a slower clock does not automatically fix it."}
+  },
+  {
+    "id": "quick-hw-83", "topic": "sequential",
+    "title": {"he": "ממתינים למסלול המאוחר", "en": "Wait for the later path"},
+    "prompt": {"he": "שני מסלולים מקבילים מגיעים לכניסות שער: הראשון אחרי 3ns והשני אחרי 5ns. השהיית השער 2ns. במודל ללא חיווט, מהו זמן ההתייצבות המאוחר במוצא?", "en": "Two parallel paths reach a gate’s inputs after 3ns and 5ns. The gate delay is 2ns. Ignoring wiring, what is the latest output settling time?"},
+    "answer": {"he": "`max(3,5)+2=7ns`. המסלולים המקבילים אינם מתבצעים בזה אחר זה. מחכים למאוחר שבהם ורק אז מוסיפים את השהיית השער המשותף. חיבור 3+5+2 היה סופר עבודה מקבילית כאילו היא טורית.", "en": "`max(3,5)+2=7ns`. Parallel paths do not execute one after another. Wait for the later input, then add the shared gate’s delay. Adding 3+5+2 would incorrectly treat parallel work as serial."},
+    "takeaway": {"he": "מחברים השהיות בטור ולוקחים מקסימום בין מסלולים מקבילים.", "en": "Add delays in series and take the maximum across parallel paths."}
+  },
+  {
+    "id": "quick-hw-84", "topic": "sequential",
+    "title": {"he": "שני מחזורים, תוצאה בכל מחזור", "en": "Two cycles, one result each cycle"},
+    "prompt": {"he": "צינור עיבוד ללא עצירות כולל שני שלבים. כל שלב מקבל פריט חדש בכל מחזור, וכל פריט דורש שני מחזורים בסך הכול. האם חייבים להמתין שני מחזורים בין תוצאות?", "en": "A stall-free pipeline has two stages. Each stage accepts a new item every cycle, and each item needs two cycles overall. Must consecutive results be two cycles apart?"},
+    "answer": {"he": "לא. אחרי מילוי הצינור יכולה לצאת תוצאה בכל מחזור, כי שלבים שונים מטפלים בפריטים שונים במקביל. ההשהיה לפריט היא שני מחזורים, אך קצב התוצאות הוא פריט אחד למחזור, בהנחות הנתונות.", "en": "No. Once filled, the pipeline can produce one result per cycle because different stages process different items concurrently. Per-item latency is two cycles, while throughput is one item per cycle under the stated assumptions."},
+    "takeaway": {"he": "מפרידים בין זמן ההמתנה לפריט יחיד לבין קצב העבודה הרציף.", "en": "Separate the wait for one item from the sustained processing rate."}
+  },
+  {
+    "id": "quick-hw-85", "topic": "sequential",
+    "title": {"he": "שני שלבים לא מבטיחים אפס סיכון", "en": "Two stages do not guarantee zero risk"},
+    "prompt": {"he": "אות בקרה בודד עובר לתחום שעון אחר דרך שני דלגלגים בטור בשעון היעד. המקור שומר כל רמה מספיק זמן. האם המבנה מבטיח שלעולם לא תהיה בעיית מטא־יציבות?", "en": "A single control bit crosses into another clock domain through two flip-flops clocked by the destination. The source holds each level long enough. Does this guarantee that metastability can never cause a problem?"},
+    "answer": {"he": "לא. השלב הראשון עלול להיכנס למטא־יציבות; הזמן עד לדגימת השלב השני מפחית את הסיכוי שהיא תגיע ללוגיקה בהמשך. זהו צמצום הסתברות כשל, לא הבטחת אפס. אין להחיל את הרעיון באופן עצמאי על כל ביט של מילת נתונים ולצפות לתמונה עקבית.", "en": "No. The first stage may become metastable; time before the second sample reduces the probability of metastability reaching downstream logic. This reduces failure probability rather than guaranteeing zero. Independently synchronizing every bit of a data word also does not guarantee a coherent word."},
+    "takeaway": {"he": "מסנכרן לביט בקרה מפחית סיכון, אך אינו פרוטוקול להעברת כל סוג מידע.", "en": "A control-bit synchronizer reduces risk; it is not a protocol for every kind of information."}
+  },
+  {
+    "id": "quick-hw-86", "topic": "sequential",
+    "title": {"he": "פולס שנופל בין הדגימות", "en": "A pulse between samples"},
+    "prompt": {"he": "פולס מהמקור קצר ממחזור שעון היעד ונכנס למסנכרן בן שני דלגלגים. האם מובטח שהיעד יראה אותו?", "en": "A source pulse is shorter than one destination clock period and enters a two-flip-flop synchronizer. Is the destination guaranteed to see it?"},
+    "answer": {"he": "לא. הפולס יכול לעלות ולרדת בין שתי חזיתות יעד, כך שאפילו השלב הראשון לא ידגום 1. משתמשים בפרוטוקול מתאים, למשל בקשה שנשמרת עד אישור. שני דלגלגים מטפלים בסיכון מטא־יציבות; הם אינם שומרים אוטומטית אירוע שלא נדגם.", "en": "No. The pulse can rise and fall between destination edges, so even the first stage may never sample 1. Use a suitable protocol, such as holding a request until acknowledged. Two flip-flops address metastability risk; they do not automatically retain an unsampled event."},
+    "takeaway": {"he": "בהעברת אירוע בין שעונים צריך להבטיח גם שהאירוע נלכד.", "en": "A cross-clock event transfer must also ensure the event is captured."}
+  },
+  {
+    "id": "quick-hw-87", "topic": "sequential",
+    "title": {"he": "בקשות אינן פעולות שהתקבלו", "en": "Requests are not accepted operations"},
+    "prompt": {"he": "מונה תפוסת FIFO הוא c. push ו־pop הם ביטים המציינים כתיבה וקריאה שהתקבלו בחזית, אחרי בדיקות מלא וריק. מה משוואת העדכון, ומה קורה כששניהם 1?", "en": "A FIFO occupancy register is c. push and pop indicate writes and reads accepted at the edge, after full/empty checks. What is its update equation, and what happens when both are 1?"},
+    "answer": {"he": "`c_next=c+push-pop`. כששניהם 1, התפוסה נשארת c, אף ששני המצביעים עשויים להתקדם והנתונים משתנים. משתמשים בפעולות שהתקבלו, לא בבקשות גולמיות: קריאה שנדחתה מריק אינה מקטינה את המונה.", "en": "`c_next=c+push-pop`. When both are 1, occupancy stays c although both pointers may advance and contents change. Use accepted operations, not raw requests: a rejected read from empty must not decrement the count."},
+    "takeaway": {"he": "עדכון מצב מתבסס על אירועים שבוצעו בפועל לפי חוזה הממשק.", "en": "Update state from events actually accepted under the interface contract."}
+  },
+  {
+    "id": "quick-hw-88", "topic": "sequential",
+    "title": {"he": "מלא, אבל קוראים וכותבים יחד", "en": "Full, with a simultaneous read and write"},
+    "prompt": {"he": "FIFO מלא מכיל A,B,C לפי סדר היציאה. החוזה מאפשר קריאה וכתיבה יחד במלא, וקורא את הנתון הישן לפני דריסה. באותה חזית קוראים וכותבים X. מה יוצא ומה נשאר?", "en": "A full FIFO contains A,B,C in output order. Its contract accepts simultaneous read/write when full and reads old data before overwrite. One edge reads and writes X. What is returned, and what remains?"},
+    "answer": {"he": "יוצא `A`, ונשאר התור `B,C,X`. התפוסה נשארת 3. התנהגות הזיכרון באותה כתובת חייבת להתאים לחוזה קריאת־הישן; אין להניח שכל בלוק RAM יקרא לפני כתיבה ללא בדיקה או טיפול מפורש.", "en": "It returns `A`, leaving `B,C,X`. Occupancy remains 3. Same-address memory behavior must satisfy the old-data-read contract; do not assume every RAM block reads before writing without checking or handling it explicitly."},
+    "takeaway": {"he": "בקשות בו־זמניות דורשות חוזה מפורש גם לגבי סדר הנתונים בזיכרון.", "en": "Simultaneous requests need an explicit contract for memory data ordering too."}
+  },
+  {
+    "id": "quick-hw-89", "topic": "sequential",
+    "title": {"he": "ריק אינו עוקף את הזיכרון", "en": "Empty does not imply bypass"},
+    "prompt": {"he": "FIFO ריק דוחה קריאה מריק ואינו כולל bypass. באותה חזית מגיעות בקשת קריאה וכתיבת X. אילו פעולות מתקבלות ומהי התפוסה אחריה?", "en": "An empty FIFO rejects reads from empty and has no bypass. A read request and a write of X arrive at the same edge. Which operations are accepted, and what is occupancy afterward?"},
+    "answer": {"he": "רק הכתיבה מתקבלת, והתפוסה הופכת ל־`1`. X נשמר לקריאה עתידית; בקשת הקריאה הנוכחית אינה מחזירה אותו. התנאים נבדקים לפי המצב שלפני החזית. FIFO עם bypass יכול להגדיר חוזה אחר, אך זה אינו החוזה כאן.", "en": "Only the write is accepted, giving occupancy `1`. X is stored for a later read; the current read request does not return it. Conditions use pre-edge state. A bypass FIFO may specify different behavior, but that is not this contract."},
+    "takeaway": {"he": "מבהירים אם יש העברה ישירה בטרם מסיקים שכתיבה וקריאה מבטלות זו את זו.", "en": "Establish bypass behavior before assuming a write and read cancel each other."}
+  },
+  {
+    "id": "quick-hw-90", "topic": "sequential",
+    "title": {"he": "נתון שממתין להסכמה", "en": "Data waiting for agreement"},
+    "prompt": {"he": "בממשק ready/valid, העברה מתרחשת בחזית שבה שניהם 1. השולח מציג valid=1 ונתון A, אך ready=0. מה עליו להציג במחזור הבא אם עדיין אין איפוס או העברה?", "en": "In a ready/valid interface, transfer occurs at an edge where both are 1. The sender presents valid=1 with data A, but ready=0. What must it present next cycle if there is still no reset or transfer?"},
+    "answer": {"he": "לשמור `valid=1` ואת הנתון `A` ללא שינוי עד שהעברה מתקבלת. לא מתקדמים לנתון הבא רק כי עבר מחזור. אחרת הקולט עלול לקבל נתון אחר מזה שהשולח הציע בזמן ההמתנה.", "en": "Keep `valid=1` and data `A` unchanged until a transfer is accepted. Do not advance merely because a cycle elapsed. Otherwise the receiver may obtain a different item from the one offered during the stall."},
+    "takeaway": {"he": "בזמן backpressure השולח שומר את העסקה הממתינה יציבה.", "en": "Under backpressure, the sender holds the pending transaction stable."}
+  },
+  {
+    "id": "quick-hw-91", "topic": "sequential",
+    "title": {"he": "מונה שעוצר בקצה", "en": "A counter that stops at the limit"},
+    "prompt": {"he": "מונה רווי לא מסומן בן 3 ביטים מוסיף 1 כשהוא קטן מ־7, וב־7 נשאר 7. מתחילים ב־6. מה הערכים אחרי שלוש חזיתות עם בקשת הגדלה?", "en": "An unsigned 3-bit saturating counter increments below 7 and stays at 7 when already there. Starting at 6, what values follow three increment-request edges?"},
+    "answer": {"he": "`7, 7, 7`. הרוויה חוסמת את ההגדלה בקצה העליון. מונה מחזורי רגיל היה נותן 7,0,1; עצם הרוחב בן 3 ביטים אינו מגדיר אם החוזה הוא גלישה או רוויה.", "en": "`7, 7, 7`. Saturation blocks increments at the upper limit. A wrapping counter would give 7,0,1; having three bits alone does not specify whether the contract is wraparound or saturation."},
+    "takeaway": {"he": "מגדירים את התנהגות הקצה בנפרד מרוחב האוגר.", "en": "Specify boundary behavior separately from register width."}
+  },
+  {
+    "id": "quick-hw-92", "topic": "sequential",
+    "title": {"he": "שתי פקודות מתבטלות", "en": "Two commands cancel"},
+    "prompt": {"he": "מונה בינארי בן 3 ביטים עולה כשהכניסות inc,dec הן 10, יורד ב־01 ושומר ב־00 או 11. מתי ביט Q1, שמשקלו 2, צריך להתהפך? Q0 הוא הביט הנמוך.", "en": "A 3-bit binary counter increments for inc,dec=10, decrements for 01, and holds for 00 or 11. When should Q1, the weight-2 bit, toggle? Q0 is the low bit."},
+    "answer": {"he": "בהגדלה, Q1 מתהפך כש־Q0 הישן הוא 1 ונוצר נשא; בהקטנה, כש־Q0 הישן הוא 0 ונדרשת השאלה. לכן `toggle1=(inc AND NOT dec AND Q0) OR (dec AND NOT inc AND NOT Q0)`. ב־00 וב־11 לא מתהפכים.", "en": "On increment, Q1 toggles when old Q0=1 generates carry; on decrement, when old Q0=0 requires borrowing. Thus `toggle1=(inc AND NOT dec AND Q0) OR (dec AND NOT inc AND NOT Q0)`. Neither 00 nor 11 toggles it."},
+    "takeaway": {"he": "לבניית מונה בשערים, גוזרים מתי כל ביט מתהפך לפי הביטים הישנים.", "en": "For a gate-level counter, derive when each bit toggles from the old bits."}
+  },
+  {
+    "id": "quick-hw-93", "topic": "states",
+    "title": {"he": "ברירת מחדל שמונעת נועל", "en": "A default that prevents a latch"},
+    "prompt": {"he": "בבלוק צירופי לחישוב מצב הבא כתוב רק: אם go=1, קבע next=DONE. רוצים שב־go=0 יתקבל next=state, בלי נועל נוסף. איזו השמה חסרה? אוגר state מתעדכן בנפרד בחזית שעון.", "en": "A combinational next-state block only says: if go=1, assign next=DONE. We want next=state when go=0, without an extra latch. What assignment is missing? The state register updates separately on a clock edge."},
+    "answer": {"he": "נותנים ברירת מחדל `next=state` לפני התנאי. כך next מקבל ערך בכל מסלול. בלי השמה ב־go=0, נדרש לשמור את next הקודם ועלול להיווצר נועל. ברירת המחדל מחשבת את המצב הבא הנכון; אוגר state הוא הזיכרון הרצוי והנפרד.", "en": "Assign default `next=state` before the condition, so next receives a value on every path. With no assignment for go=0, next must retain its previous value and a latch can be inferred. The default computes the intended next state; the separate state register provides the intended memory."},
+    "takeaway": {"he": "בלוגיקה צירופית מגדירים כל מוצא בכל מסלול ביצוע.", "en": "In combinational logic, assign every output on every execution path."},
+    "code": {"language": "verilog", "text": "always @* begin\n  next = state;\n  if (go) next = DONE;\nend"}
+  },
+  {
+    "id": "quick-hw-94", "topic": "states",
+    "title": {"he": "שני שמות, אותה התנהגות", "en": "Two names, the same behavior"},
+    "prompt": {"he": "במכונת Moore שבתרשים, מוצא W0 ו־W1 הוא 0 ומוצא DONE הוא 1. שני מצבי W מתחלפים בקלט 0 ועוברים ל־DONE בקלט 1. האם אפשר למזג את W0 ו־W1?", "en": "In the Moore machine shown, W0 and W1 output 0; DONE outputs 1. The W states exchange on input 0 and both enter DONE on input 1. Can W0 and W1 be merged?"},
+    "answer": {"he": "כן. בכל אחד מהם מקבלים 0 עד שמגיע 1, ואז עוברים ל־DONE ונשארים עם מוצא 1. אין רצף קלטים עתידי שמבדיל ביניהם לפי המוצא. אפשר להחליפם במצב WAIT יחיד עם לולאת 0 ומעבר 1 ל־DONE.", "en": "Yes. Either state outputs 0 until a 1 arrives, then enters DONE and stays at output 1. No future input sequence distinguishes them by output. Replace them with one WAIT state, looping on 0 and entering DONE on 1."},
+    "takeaway": {"he": "שוויון מוצא רגעי אינו מספיק למיזוג; צריך גם התנהגות עתידית שקולה.", "en": "Equal current outputs are insufficient for merging; future behavior must also be equivalent."},
+    "diagram": {"kind": "fsm", "states": ["W0", "W1", "DONE"], "initial": "W0", "transitions": [{"from": "W0", "to": "W1", "label": "x=0"}, {"from": "W0", "to": "DONE", "label": "x=1"}, {"from": "W1", "to": "W0", "label": "x=0"}, {"from": "W1", "to": "DONE", "label": "x=1"}, {"from": "DONE", "to": "DONE", "label": "any x"}]}
+  },
+  {
+    "id": "quick-hw-95", "topic": "states",
+    "title": {"he": "בקשה ארוכה, פעולה אחת", "en": "A long request, one operation"},
+    "prompt": {"he": "READY מתחיל פעולה כש־s=1 ועובר ל־RUN. לאחר סיום d=1 עוברים ל־WAIT, ורק s=0 מחזיר ל־READY. למה צריך WAIT אם רוצים פעולה אחת לכל לחיצה ארוכה?", "en": "READY starts work for s=1 and enters RUN. Completion d=1 enters WAIT; only s=0 returns to READY. Why is WAIT needed for one operation per long button press?"},
+    "answer": {"he": "אם חוזרים מיד ל־READY בזמן ש־s עדיין 1, תתחיל פעולה נוספת מאותה לחיצה. WAIT מחכה לשחרור לפני שמרשים התחלה חדשה. גם אם s ירד בזמן RUN, במכונה הנתונה נדרשת דגימת s=0 ב־WAIT כדי להיערך מחדש.", "en": "Returning directly to READY while s remains 1 would start another operation from the same press. WAIT waits for release before rearming. Even if s fell during RUN, this particular machine requires sampling s=0 in WAIT to rearm."},
+    "takeaway": {"he": "מצב היערכות מחדש מונע הפיכת רמה מתמשכת לכמה אירועים.", "en": "A rearming state prevents a persistent level from becoming repeated events."},
+    "diagram": {"kind": "fsm", "states": ["READY", "RUN", "WAIT"], "initial": "READY", "transitions": [{"from": "READY", "to": "READY", "label": "s=0"}, {"from": "READY", "to": "RUN", "label": "s=1"}, {"from": "RUN", "to": "RUN", "label": "d=0"}, {"from": "RUN", "to": "WAIT", "label": "d=1"}, {"from": "WAIT", "to": "WAIT", "label": "s=1"}, {"from": "WAIT", "to": "READY", "label": "s=0"}]}
+  },
+  {
+    "id": "quick-hw-96", "topic": "states",
+    "title": {"he": "סדר הביטים משנה את העדכון", "en": "Bit order changes the update"},
+    "prompt": {"he": "קוראים ביטים מהנמוך לגבוה, LSB first, ורוצים לשמור ב־r את השארית המתמטית בחלוקה ל־3 של הערך שכבר נקרא. למה r_next=(2r+x) modulo 3, המתאימה ל־MSB first, אינה מתאימה ישירות לייצוג הזה?", "en": "Read bits least significant first, retaining in r the actual numerical remainder modulo 3 of the value read so far. Why does r_next=(2r+x) modulo 3, suitable for most significant first, not apply directly to this representation?"},
+    "answer": {"he": "לייצוג השארית המתמטית נשתמש ב־`r_next=(r+x×w) modulo 3`. המשקל w מתחיל ב־1 ומתעדכן ל־2w modulo 3, ולכן מתחלף 1,2,1,2. במימוש הישיר הזה שומרים גם את שלב המשקל. קידוד מצב אחר יכול לבדוק התחלקות בלי לשמור את השלב במפורש.", "en": "For the actual numerical remainder, use `r_next=(r+x×w) modulo 3`. Start w=1 and update w to 2w modulo 3, alternating weights 1,2,1,2. This direct representation also retains weight phase. A different state encoding can test divisibility without explicitly retaining that phase."},
+    "takeaway": {"he": "מגדירים את סדר קבלת הקלט לפני שבוחרים משמעות למצב.", "en": "Define input arrival order before choosing what the state represents."}
+  },
+  {
+    "id": "quick-hw-97", "topic": "states",
+    "title": {"he": "כיוון מתוך שתי דגימות", "en": "Direction from two samples"},
+    "prompt": {"he": "חיישן סיבוב מתקדם בכיוון קדימה ברצף 00→01→11→10→00, ובכיוון אחורה בסדר ההפוך. הדגימה הקודמת היא 01 והחדשה 00. מה הכיוון? מה אומר מעבר 00→11?", "en": "A rotary sensor moves forward as 00→01→11→10→00 and backward in reverse order. The previous sample is 01 and the new sample is 00. What direction is this? What does 00→11 indicate?"},
+    "answer": {"he": "`01→00` הוא צעד אחורה. `00→11` אינו צעד חוקי יחיד ברצף: שני ביטים השתנו, ולכן ייתכן שפספסנו דגימה או שיש רעש. אין להסיק ממנו כיוון יחיד בלי הנחות נוספות. צריך לשמור את הדגימה הקודמת, לא רק את הנוכחית.", "en": "`01→00` is a backward step. `00→11` is not one legal step: two bits changed, possibly from a missed sample or noise. It does not establish a unique direction without further assumptions. Retain the previous sample, not just the current one."},
+    "takeaway": {"he": "זיהוי כיוון מבוסס על מעבר בין דגימות חוקיות, ולא על ערך בודד.", "en": "Direction follows transitions between legal samples, not one isolated value."}
+  },
+  {
+    "id": "quick-hw-98", "topic": "states",
+    "title": {"he": "פולס ברוחב שני מחזורים", "en": "A two-cycle pulse"},
+    "prompt": {"he": "מכונת Moore מתחילה ב־IDLE. בחזית שבה t=1 היא עוברת ל־P1, בחזית הבאה ל־P2 ואז ל־IDLE. המוצא 1 ב־P1 וב־P2 בלבד. מתעלמים מ־t במצבי P. מה רוחב הפולס?", "en": "A Moore machine starts in IDLE. An edge with t=1 enters P1, the next edge enters P2, then IDLE. Output is 1 only in P1 and P2. Ignore t in P states. How wide is the pulse?"},
+    "answer": {"he": "שני מחזורי שעון מלאים: מחזית הכניסה ל־P1 עד חזית החזרה ל־IDLE, בהזנחת השהיות. P1 ו־P2 בעלי אותו מוצא אך אינם שקולים: מ־P1 נשארים עוד שני מקטעים גבוהים, ומ־P2 רק אחד. t במצבי P אינו מאריך את הפולס.", "en": "Two full clock periods, from entry into P1 until return to IDLE, ignoring propagation delay. P1 and P2 have equal outputs but are not equivalent: P1 has two high intervals remaining; P2 has one. A trigger in a P state does not extend the pulse."},
+    "takeaway": {"he": "מצבים עם אותו מוצא יכולים לזכור כמה זמן נותר עד לשינויו.", "en": "States with equal outputs can remember different remaining times until an output changes."},
+    "diagram": {"kind": "fsm", "states": ["IDLE", "P1", "P2"], "initial": "IDLE", "transitions": [{"from": "IDLE", "to": "IDLE", "label": "t=0"}, {"from": "IDLE", "to": "P1", "label": "t=1"}, {"from": "P1", "to": "P2", "label": "any t"}, {"from": "P2", "to": "IDLE", "label": "any t"}]}
+  },
+  {
+    "id": "quick-hw-99", "topic": "sequential",
+    "title": {"he": "לתייג את אותו פריט", "en": "Tag the same item"},
+    "prompt": {"he": "צינור ללא עצירות מעכב נתונים בשני דלגלגים טוריים. לכל קלט יש valid שמציין אם הוא פריט אמיתי. בכמה מחזורים צריך לעכב את valid כדי שישייך נכון את נתוני המוצא?", "en": "A stall-free pipeline delays data through two serial flip-flops. Each input has valid marking whether it is a real item. How many cycles must valid be delayed to correctly label output data?"},
+    "answer": {"he": "באותם `2` מחזורים, עם אותם תנאי עדכון ואיפוס תקף ל־valid. עיכוב הנתונים בלבד היה מצמיד את valid של פריט חדש לנתון ישן. ערך נתונים בזמן valid=0 אינו הופך לפריט רק כי הוא מספר הגיוני.", "en": "The same `2` cycles, with matching update conditions and a defined valid reset. Delaying only data would pair a new item’s valid with old data. A plausible-looking data value while valid=0 does not make it a real item."},
+    "takeaway": {"he": "אותות בקרה והנתונים שהם מתארים צריכים לעבור השהיות תואמות.", "en": "Control signals and the data they describe need matching delays."}
+  },
+  {
+    "id": "quick-hw-100", "topic": "states",
+    "title": {"he": "שתי עובדות שצריך לזכור", "en": "Two facts to remember"},
+    "prompt": {"he": "מכונה קוראת ביטים וצריכה לשמור גם את זוגיות מספר האחדות שנקראו וגם את הביט האחרון. מתחילים בזוגיות זוגית וביט קודם 0. האם ביט מצב אחד יכול לשמור את שני הדברים תמיד?", "en": "A machine reads bits and must retain both parity of the number of 1s read and the last bit. Initially parity is even and the previous bit is 0. Can one state bit always retain both facts?"},
+    "answer": {"he": "לא. ארבעת הזוגות נגישים: EVEN/0 בהתחלה, ODD/1 אחרי 1, ODD/0 אחרי 10, ו־EVEN/1 אחרי 11. צריך לפחות ארבעה קודים, כלומר `2` ביטים. מעדכנים parity ב־XOR עם הקלט, ושומרים את הקלט כביט האחרון.", "en": "No. All four pairs are reachable: EVEN/0 initially, ODD/1 after 1, ODD/0 after 10, and EVEN/1 after 11. Four codes require at least `2` bits. Update parity by XOR with the input, and store that input as the last bit."},
+    "takeaway": {"he": "כשצריך לזכור כמה תכונות יחד, סופרים את צירופי הערכים הנגישים שלהן.", "en": "When retaining several properties, count their reachable value combinations."}
+  }
+]

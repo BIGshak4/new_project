@@ -15,7 +15,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CONTENT = ROOT / "apps/web/src/content"
-SOURCES = (CONTENT / "fundamentals-hardware.json", CONTENT / "fundamentals-code-logic.json")
+SOURCES = tuple(CONTENT / name for name in (
+    "fundamentals-hardware.json", "fundamentals-code-logic.json",
+    "fundamentals-hardware-expansion.json", "fundamentals-reasoning-expansion.json",
+    "fundamentals-code-expansion.json",
+))
 BACKEND_OUTPUT = ROOT / "backend/seeds/fundamentals_catalog.json"
 WEB_OUTPUT = CONTENT / "fundamentals-revisions.json"
 
