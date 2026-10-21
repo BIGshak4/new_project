@@ -15,7 +15,7 @@ export const quickTopics: { id: QuickTopic; label: Localized }[] = [
   { id: "bits", label: { he: "ביטים", en: "Bits" } },
   { id: "sequential", label: { he: "פליפ־פלופים", en: "Flip-flops" } },
   { id: "states", label: { he: "מכונות מצבים", en: "State machines" } },
-  { id: "python", label: { he: "פייתון", en: "Python" } },
+  { id: "python", label: { he: "קוד", en: "Code" } },
   { id: "algorithms", label: { he: "אלגוריתמים", en: "Algorithms" } },
   { id: "reasoning", label: { he: "חשיבה והיגיון", en: "Reasoning" } },
 ];

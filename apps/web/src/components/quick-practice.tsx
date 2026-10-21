@@ -159,6 +159,7 @@ export function QuickPractice({ lang, api, userId }: { lang: "he" | "en"; api: Q
           ? t("כבר סיימתם; השאלה עודכנה מאז", "Previously finished; updated since then")
           : t("כבר סיימתם את השאלה הזאת", "You already finished this question")}{" · "}<time dateTime={record.completed_at}>{new Date(record.completed_at).toLocaleDateString(lang === "he" ? "he-IL" : "en-GB")}</time></p>}
         <StudyText text={question.prompt[lang]} />
+        {question.code?.language === "python" && <p className="small muted">{t("המימוש המוצע כתוב בפייתון. דרך הפתרון מוסברת בקצרה בהמשך.", "The proposed implementation uses Python. A short explanation of the approach appears below.")}</p>}
         <p className="quick-think">{t("נסו לענות בראש לפני פתיחת הפתרון.", "Try answering in your head before opening the solution.")}</p>
         <button className={revealed ? "text-button quick-reveal" : "primary quick-reveal"} onClick={() => revealed ? setRevealedId(null) : reveal()} aria-expanded={!!revealed} aria-controls="quick-answer">
           {revealed ? t("הסתרת הפתרון", "Hide solution") : t("הצגת פתרון קצר", "Show short solution")}</button>
