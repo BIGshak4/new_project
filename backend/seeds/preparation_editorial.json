@@ -1296,5 +1296,140 @@
       ]
     },
     "note": "2026-10-21: source retained; full bilingual proposed solution, explicit assumptions, paired clean diagrams and independent Python evidence. Human professional review pending; no learner history or assessment eligibility changed."
+  },
+  "PREP-074": {
+    "hints": {
+      "he": [
+        "כתבו מה הדלגלג דוגם בחזית אחת, לפני שמנסים להסיק צורת גל שלמה.",
+        "הציבו A=0 ואז A=1 בשער XOR. האם אתם מקבלים את המצב הישן או את היפוכו?",
+        "השתמשו ב־Q(next)=Q XOR A. כל שינוי ביציאה מגיע אחרי החזית והשהיית clock-to-Q; השינוי החוזר אל D אינו חזית שעון נוספת."
+      ],
+      "en": [
+        "Write the value sampled at one edge before deriving the complete waveform.",
+        "Substitute A=0 and A=1 into XOR. Does D equal old Q or its complement?",
+        "Use Q(next)=Q XOR A. An output transition follows the edge plus clock-to-Q; feedback changing D is not another clock edge."
+      ]
+    },
+    "note": "2026-10-21: source retained, bilingual AI-assisted proposed content, localized authored diagrams and executed finite Python checks. HDL not compiled/simulated; professional, human parity and reuse reviews pending."
+  },
+  "PREP-075": {
+    "hints": {
+      "he": [
+        "הגדירו קודם שתי כתובות לוגיות ותוצאת קריאה כאשר שתיהן זהות. מה בדיוק גורם להתנגשות בפורט יחיד?",
+        "אין מגבלת מספר רכיבים. האם אפשר לשלם בשטח כך ששתי כתובות לוגיות שונות לעולם לא יפנו לאותו רכיב פיזי?",
+        "הקדישו לכל מילה לוגית רכיב נפרד והשתמשו רק בתא אפס שלו. בקריאה וכתיבה לאותה מילה, כתבו לרכיב והחזירו את הנתון החדש במעקף. התאימו את בחירת הפלט לתזמון הקריאה."
+      ],
+      "en": [
+        "First define independent logical addresses and the required same-address read value. What exactly creates a single-port conflict?",
+        "There is no primitive-count limit. Can extra hardware ensure that different logical addresses never access the same physical component?",
+        "Dedicate one primitive to each logical word, using only its physical address zero. On a same-word collision write the bank and bypass new data. Align output selection with synchronous read timing."
+      ]
+    },
+    "note": "2026-10-21: source retained, bilingual AI-assisted proposed content, localized authored diagrams and executed finite Python checks. HDL not compiled/simulated; professional, human parity and reuse reviews pending."
+  },
+  "PREP-076": {
+    "hints": {
+      "he": [
+        "כתיבה לכתובת ומיד קריאה ממנה יכולה להצליח גם כשהכתובת שגויה. איזה מידע עלול להימחק כשכותבים גם לכתובות אחרות?",
+        "כתבו לכל הכתובות לפני שקוראים בחזרה. אם שתי כתובות חולקות תא, הן אינן יכולות לשמור במקביל שני ערכים שונים.",
+        "לכל זוג כתובות שונות יש ביט כתובת שבו הן נבדלות. בכל סבב כתבו את אותו ביט לכל מילת הנתונים, קראו את כל הכתובות, ואז בדקו גם את התבנית המשלימה."
+      ],
+      "en": [
+        "Writing and immediately reading one address can succeed through a faulty decoder. What may be overwritten when other addresses are written too?",
+        "Write all addresses before reading back. Two aliases cannot simultaneously retain different expected values.",
+        "Every distinct address pair differs in some address bit. In each pass replicate that bit across the data word, read all addresses, and repeat with the complementary pattern."
+      ]
+    },
+    "note": "2026-10-21: source archived, bilingual proposed solution and clean diagrams prepared. Python model checks passed; no physical or human professional approval claimed."
+  },
+  "PREP-077": {
+    "hints": {
+      "he": [
+        "אפשר לשנות את שני התאים כמה פעמים. איזה מידע על הזוג מאפשר לשחזר כל אחד מן הערכים?",
+        "בחשבון מדויק אפשר לשמור סכום באחד התאים. בפעולות ביטים חפשו פעולה שבה x עם עצמו מתבטל.",
+        "עבור XOR השתמשו בזהות (x XOR y) XOR y=x. אחרי כל השמה כתבו את ערך התא בסימנים x,y המקוריים; בדקו בנפרד הפניות לאותו תא."
+      ],
+      "en": [
+        "You may overwrite both locations repeatedly. What information about the pair allows either original value to be recovered?",
+        "With exact arithmetic one location can hold the sum. For bitwise operations, look for an operation under which a value cancels itself.",
+        "For XOR use (x XOR y) XOR y=x. After every assignment express both locations in terms of the original x,y; handle same-location references separately."
+      ]
+    },
+    "note": "2026-10-21: original source retained separately; complete paired proposed solution and independent checks. New content remains pending professional, parity and reuse review; no human-review attestation inherited."
+  },
+  "PREP-078": {
+    "hints": {
+      "he": [
+        "איך תבדילו בין עלייה חדשה לבין קלט שכבר היה גבוה גם במחזור הקודם?",
+        "שמרו דגימה קודמת ב־FF, ועדכנו את המונה רק כשיש 0→1 בין הדגימות.",
+        "ספרו אירועים במצבים 0–4. אם מגיע אירוע כשהמצב הישן הוא 4, אפסו רק את המונה והוציאו פולס רשום; זיכרון הדגימה הקודמת ממשיך לקבל x בכל מחזור."
+      ],
+      "en": [
+        "How can you distinguish a new rise from an input that was already high last cycle?",
+        "Store the previous sample in a flip-flop; enable counting only on a sampled zero-to-one transition.",
+        "Count events in states zero through four. An event from old count four resets the counter and registers a pulse; the previous-sample flip-flop still updates with x every clock."
+      ]
+    },
+    "note": "2026-10-21: source archived, bilingual proposed solution and clean diagrams prepared. Python model checks passed; no physical or human professional approval claimed."
+  },
+  "PREP-079": {
+    "hints": {
+      "he": [
+        "הוצאה של יריב אינה בהכרח שיפור: מי יקבל את התור הבא ומה יישאר ממנו לעשות?",
+        "תחילה חשבו סיכוי ניצחון במשחק של שניים, כאשר השחקן החלש מתחיל לעומת כשהוא שני.",
+        "השוו שלוש אפשרויות של A: ניסיון נגד B, ניסיון נגד C, והחטאה. אם A נמנע, בדקו את תוצאת המאבק בין B,C ואת זהות המתחיל במשחק הזוגי שנוצר."
+      ],
+      "en": [
+        "Eliminating an opponent need not help: who acts next, and whom will they face?",
+        "First calculate two-player winning probabilities when the weaker player starts versus when they act second.",
+        "Compare A's three choices: attempt B, attempt C, or miss. If A abstains, analyze B versus C and identify who starts the resulting duel."
+      ]
+    },
+    "note": "2026-10-21: original source retained separately; complete paired proposed solution and independent checks. New content remains pending professional, parity and reuse review; no human-review attestation inherited."
+  },
+  "PREP-080": {
+    "hints": {
+      "he": [
+        "במקום לבדוק כל מספר מחדש, אפשר לזכור אילו מספרים כבר ידוע שאינם ראשוניים.",
+        "כאשר p טרם נפסל, סמנו את כל הכפולות שלו. איזו כפולה ראשונה עדיין יכולה להיות חדשה?",
+        "לכל פריק יש מחלק ראשוני שאינו גדול מהשורש שלו. סמנו p*p,p*p+p,... ורק עבור p שעדיין מסומן כראשוני."
+      ],
+      "en": [
+        "Rather than rechecking every number from scratch, remember numbers already known to be composite.",
+        "When p has not been ruled out, mark its multiples. Which is the first multiple that can still be new?",
+        "Every composite has a prime divisor no larger than its square root. Mark p*p,p*p+p,... only for p still flagged prime."
+      ]
+    },
+    "note": "2026-10-21: original source retained separately; complete paired proposed solution and independent checks. New content remains pending professional, parity and reuse review; no human-review attestation inherited."
+  },
+  "PREP-081": {
+    "hints": {
+      "he": [
+        "אילו שני דברים צריך לספור בנפרד: כמה זמן עבר וכמה דגימות היו 1?",
+        "המחזור ה־100,000 עדיין שייך למקטע הנוכחי. עדכנו את ספירת השגיאות לפני ההשוואה ל־10.",
+        "למקטעים קבועים מספיקים שני מונים. בחלון זז, שגיאה ישנה צריכה לצאת מהחלון; אפשר לשמור רק את זמני 11 השגיאות האחרונות עד שהחריגה מתגלה."
+      ],
+      "en": [
+        "Which two quantities must be counted separately: elapsed samples and high samples?",
+        "The 100,000th sample belongs to the current block. Include it before comparing the error count with ten.",
+        "Two counters suffice for fixed blocks. A sliding window must expire old errors; retaining up to eleven error timestamps is enough until a failure is found."
+      ]
+    },
+    "note": "2026-10-21: source archived, bilingual proposed solution and clean diagrams prepared. Python model checks passed; no physical or human professional approval claimed."
+  },
+  "PREP-082": {
+    "hints": {
+      "he": [
+        "התחילו ממה שקובע את המהירות בגובה נתון כאשר אין אובדן אנרגיה. האם שוויון מהירות בסוף קובע גם זמן הגעה?",
+        "התאימו כל קטע קטן בקשת הגבעה לקטע באותו אורך בקשת הבור. השוו את הגבהים ואת המהירויות בזוג הזה.",
+        "שימור אנרגיה נותן v=√(2g(H−y)). בגבעה y=h ובבור y=−h. השוו את הזמן ds/v בכל זוג קטעים."
+      ],
+      "en": [
+        "With no energy loss, what sets speed at a particular height? Does equal final speed imply equal arrival time?",
+        "Pair each small hill-arc segment with an equal-length dip segment. Compare their heights and speeds.",
+        "Energy gives v=√(2g(H−y)). The hill has y=h and the dip y=−h. Compare the time ds/v in each paired segment."
+      ]
+    },
+    "note": "2026-10-21: full paired solution, explicit ideal guided-track model; source ambiguity retained. New solution pending human review."
   }
 }

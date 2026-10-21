@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "parameter_combinations": 54,
+  "interior_speed_comparisons": 5346,
+  "invalid_geometry_rejections": 4,
+  "example_H3_R1_g9_81_seconds": {
+    "hill": 0.46419194995119945,
+    "dip": 0.37296659900336
+  },
+  "independent_oracle": "Monotone half-arc Riemann bounds, separate from Simpson quadrature",
+  "proof": "At paired arc lengths the dip has lower altitude, greater speed and strictly smaller time integrand.",
+  "scope": "Ideal guided point masses with H>R2 and mirrored equal-length features; not real rolling/contact validation."
+}

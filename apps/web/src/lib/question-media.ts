@@ -3,9 +3,9 @@ import type { ResourceMedia } from "./practice-api";
 
 const withheld = new Set<string>(sourceScreenshots.map(filename => filename.toLowerCase()));
 
-// Bare IDs and dated intake filenames are reserved for archived source images.
+// Bare IDs, explicit source markers and dated intake names are reserved for sources.
 // Authored illustrations use descriptive names without an intake date.
-const archivedImageName = /^prep-\d{3,}(?:-(?:.+-)?\d{4}-\d{2}-\d{2}(?:-\d+)?)?\.[^.]+$/i;
+const archivedImageName = /^prep-\d{3,}(?:-(?:source|\d{3,}-full-context)|-(?:.+-)?\d{4}-\d{2}-\d{2}(?:-[\w-]+)?)?\.[^.]+$/i;
 const archivedSourcePath = /(?:^|\/)sources(?:\/|$)/i;
 
 function isArchivedSource(item: ResourceMedia): boolean {

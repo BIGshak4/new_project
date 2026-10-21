@@ -276,3 +276,8 @@ The attached SystemVerilog datapath uses only inversion, AND, OR, replication an
 - [checks/prep-058-verification.json](../checks/prep-058-verification.json)
 
 Follow-ups are authored but not connected to the live queue. No HDL compilation/simulation or physical-device test is implied.
+
+
+## מקור נוסף — 21.10.2026
+
+נשמר [צילום דיווח נוסף](../sources/prep-058-additional-2026-10-21-third.png). זהו מקור נוסף לשאלה הקיימת, ללא שינוי בנוסח הלימודי, ברמזים או בפתרון. שיוכי החברות הם דיווח מהמקור ולא אימות עצמאי.

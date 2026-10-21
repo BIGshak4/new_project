@@ -1,0 +1,16 @@
+{
+  "question_id": "PREP-080",
+  "checked_on": "2026-10-21",
+  "status": "passed_python_code",
+  "inclusive_endpoints_against_trial_division": 2001,
+  "checkpoints": {
+    "10": 4,
+    "100": 25,
+    "1000": 168,
+    "10000": 1229,
+    "100000": 9592
+  },
+  "invalid_input_rejections": 5,
+  "method": "Independent divisibility oracle for every upper endpoint 0..2000, plus five standard prime-count checkpoints through 100000. Includes prime squares, 0,1,2 and inclusive endpoint handling.",
+  "limits": "Finite deterministic tests, not a performance benchmark or a proof of global fastest prime-counting algorithm. No giant allocation tests or human professional review."
+}

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "created_on": "2026-09-24",
-  "question_count": 72,
+  "question_count": 81,
   "audience": "Electrical engineering students preparing for system chip validation interviews",
   "status": "review_seed_not_production_import",
   "notes": [
@@ -1553,6 +1553,21 @@
           "type": "user_supplied_image",
           "path": "sources/prep-010.png",
           "received_on": "2026-09-26"
+        },
+        {
+          "type": "user_supplied_image",
+          "received_on": "2026-10-21",
+          "role": "question_resubmission",
+          "path": "sources/prep-010-additional-2026-10-21-third.png",
+          "original_prompt": "תכנן מונה מודולו 3 (סופר 0,1,2) ומוציא 1 לאחר כל סיום ספירה — דיאגרמת מצבים, טבלת מצבים ומימוש. הוסף רכיבים כדי לקבל duty cycle של 50%.",
+          "source_tags": [
+            "hardware",
+            "apple"
+          ],
+          "reported_companies": [
+            "Apple"
+          ],
+          "transcription_note": "This is the same two-stage modulo-3 / 50% divider exercise already covered by the existing state table, equations and diagrams. Existing learner text and verified solution are retained."
         }
       ],
       "original_prompt": "ממש מחלק תדר 1:3 עם DC של 50%",
@@ -11229,10 +11244,13 @@
       "source_tags": [
         "hardware",
         "nvidia",
-        "verification"
+        "verification",
+        "maxlinear",
+        "logic"
       ],
       "reported_companies": [
-        "NVIDIA"
+        "NVIDIA",
+        "MaxLinear"
       ],
       "source_company_badge": "Nvidia",
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
@@ -11251,6 +11269,23 @@
           "type": "user_supplied_image",
           "path": "sources/prep-058.png",
           "received_on": "2026-10-20"
+        },
+        {
+          "type": "user_supplied_image",
+          "received_on": "2026-10-21",
+          "role": "question_resubmission",
+          "path": "sources/prep-058-additional-2026-10-21-third.png",
+          "original_prompt": "תכנן מערכת המקבלת בכניסה את X ואת X+2, ומוציאה את X+1.",
+          "source_tags": [
+            "maxlinear",
+            "logic",
+            "nvidia"
+          ],
+          "reported_companies": [
+            "NVIDIA",
+            "MaxLinear"
+          ],
+          "transcription_note": "Additional report of the existing average-of-two-values-differing-by-two question. The existing gate-based construction covers this notation without changing the solution."
         }
       ],
       "original_prompt": "בנה מערכת המחשבת את הממוצע של a,b כאשר ידוע כי b=a+2. מותר להשתמש בשערים לוגיים. אסור להשתמש בסוכם, מחסר מכפל וכדומה.",
@@ -14295,6 +14330,1752 @@
         "basis": "Parallel encoding and a matching information lower bound."
       },
       "markdown_path": "questions/prep-073-thousand-bottles-ten-tasters.md"
+    },
+    {
+      "id": "PREP-074",
+      "key": "xor-feedback-dff-hold-toggle-timing",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "hardware",
+      "topic": "setup_hold_timing",
+      "topics": [
+        "hardware",
+        "latches_flip_flops",
+        "setup_hold_timing",
+        "synchronous_design",
+        "verification"
+      ],
+      "source_topic_tags": [
+        "hardware",
+        "verification"
+      ],
+      "added_topic_tags": [
+        "latches_flip_flops",
+        "setup_hold_timing",
+        "synchronous_design"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "amazon",
+        "dspg",
+        "apple",
+        "marvell",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Amazon",
+        "DSP Group",
+        "Apple",
+        "Marvell"
+      ],
+      "source_company_badge": "מארוול",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "circuit_design",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted explicit editorial contracts, bilingual proposed solution, authored diagrams and executed Python model checks. Independent professional, translation-parity and reuse review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-074-source.png",
+          "received_on": "2026-10-21",
+          "role": "original_question_screenshot_part_1"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-074-075-full-context.png",
+          "received_on": "2026-10-21",
+          "role": "earlier_full_question_context",
+          "transcription_note": "Earlier uncropped report provides the company tags missing from the latest crop. This new intake authorizes the previously deferred two questions. Reported affiliation is not independently verified."
+        }
+      ],
+      "original_prompt": "שאלות טכניות: 1: מעגל הכולל d-ff עם שער xor בכניסה שלו עם המוצא.. כלומר לוקחים חוט מהמוצא ומכניסים אותו לשער xor עם כניסה שנייה A ואת זה מכניסים לכניסה של ה FF. ואז שואלים כל מיני שאלות על מה עושה המעגל במידה והכניסה A תקועה על \"1\" ועל \"0\". מה קורה כאשר יש DELAY במוצא ? לצייר את ה OUTPUT גם.",
+      "translations": {
+        "he": {
+          "title": "משוב XOR לדלגלג D: שמירה, היפוך ותזמון",
+          "prompt": "נתון דלגלג D שמוצאו Q חוזר לאחת מכניסות שער XOR; הכניסה השנייה היא A, ומוצא השער מחובר ל־D. נתחו את ההתנהגות עבור A=0, עבור A=1, ועבור רצף ערכי A. ציירו את clk ואת Q והסבירו את השפעת ההשהיות.\n\nהבהרות שנוספו למקור: הדלגלג דוגם רק בחזית עולה, בעל זמן מחזור T, ואינו נועל שקוף. נניח Q=0 בתחילת דוגמת התזמון; ללא אתחול ידוע הפאזה אינה ידועה. A וכל המסלול אל D עומדים בזמני setup/hold. הפרידו בין השהיית clock-to-Q, השהיית XOR/חיווט במסלול המשוב, והשהיה נוספת ביציאה חיצונית אחרי נקודת פיצול המשוב. הניחו אפס skew/uncertainty לצורך נוסחאות התזמון הפשוטות. אין ערכי השהיה מספריים בצילום; כל מספר בדוגמה הוא הנחה מסומנת. האם המשוב גורם לתנודה בין חזיתות?",
+          "hint": "כתבו מה הדלגלג דוגם בחזית אחת, לפני שמנסים להסיק צורת גל שלמה.",
+          "hints": [
+            "כתבו מה הדלגלג דוגם בחזית אחת, לפני שמנסים להסיק צורת גל שלמה.",
+            "הציבו A=0 ואז A=1 בשער XOR. האם אתם מקבלים את המצב הישן או את היפוכו?",
+            "השתמשו ב־Q(next)=Q XOR A. כל שינוי ביציאה מגיע אחרי החזית והשהיית clock-to-Q; השינוי החוזר אל D אינו חזית שעון נוספת."
+          ],
+          "reference_solution": "### מתחילים ממשוואת המצב\n\nדלגלג זוכר; שער XOR רק מחשב מה יישמר בחזית הבאה. אם Q[k] הוא המצב אחרי החזית הקודמת ו־A[k] יציב לקראת החזית הבאה, אז:\n\n```text\nD = Q XOR A\nQ[k+1] = Q[k] XOR A[k]\n```\n\n| Q לפני החזית | A שנדגם | Q אחרי החזית |\n| --- | --- | --- |\n| 0 | 0 | 0 |\n| 1 | 0 | 1 |\n| 0 | 1 | 1 |\n| 1 | 1 | 0 |\n\nA=0 נותן D=Q, ולכן שומרים את המצב; הוא אינו מתאפס אוטומטית. A=1 נותן D=NOT Q, ולכן מתהפכים פעם בכל חזית עולה. חזרה לאותו מצב דורשת שתי חזיתות, ומתקבל fQ=fclk/2. במודל אידאלי עם אותה השהיה לשתי קצוות זמן הגבוה והנמוך הם T, ולכן duty cycle הוא 50%. זמני clock-to-Q שונים לעלייה ולירידה יכולים ליצור סטייה קטנה ב־duty cycle הפיזי.\n\nלרצף A כללי: Q אחרי k חזיתות שווה Q(initial) XOR הזוגיות של k הביטים שנדגמו. למשל מ־Q=0, עבור A=1,0,1,1 מתקבלים Q=1,1,0,1. זה דלגלג T עם T=A, או צובר זוגיות; אין כאן SRFF ואין מצב S=R אסור. אם Q ההתחלתי אינו ידוע, A=0 אינו פותר זאת וגם רצף של היפוכים אינו מבטיח ערך מוחלט ידוע.\n\n### מה משנה ההשהיה?\n\nבדוגמת השרטוט בלבד T=10ns ו־tCQ=1ns. בחזיתות t=10,20,30,...ns דוגמים את D הישן. כאשר A=1, Q משתנה ב־11,21,31,...ns. השינוי עובר שוב ב־XOR ומכין D הפוך לקראת החזית הבאה; הוא אינו משנה שוב את Q מיד. זה אינו מתנד קומבינטורי, כל עוד הרכיב אכן דלגלג בחזית ולא נועל שקוף.\n\nכדי שהמשוב יספיק לחזית הבאה, תחת ההנחות הפשוטות שנקבעו:\n\n```text\nT >= tCQ(max) + tXOR/wire(max) + tsetup\ntCQ(min) + tXOR/wire(min) >= thold\n```\n\nהשהיה נוספת בתוך המשוב נכללת ב־tXOR/wire: היא עלולה להפר setup במחזור הבא; מסלול קצר מדי עלול להפר hold באותה חזית. הגדלת T לבדה אינה מתקנת הפרת hold. ל־A יש מסלול setup/hold משלו אל D, וגם הוא חייב להיבדק. במערכת אמיתית מוסיפים skew, jitter, uncertainty, שינויי עומס ופינות תהליך לפי כלי STA וספריית התאים. הפרת תזמון אינה מאפשרת לנבא צורת גל דטרמיניסטית במודל הבוליאני.\n\nאם מוסיפים delay רק לעותק של Q שנשלח החוצה, אחרי נקודת המשוב, המצב הפנימי ומשוואתו נשארים ללא שינוי: היציאה החיצונית היא עותק מאוחר. לעומת זאת delay בענף שחוזר ל־XOR משפיע על אילוצי המשוב. זו הבחנה שצריך לברר לפני ציור צורת הגל.\n\n### אימות והיקף הטענה\n\nבמודל Python נבדקו כל ארבע שורות האמת וכל רצפי A באורכים 0–10 משני המצבים ההתחלתיים: 4,094 רצפים ו־36,868 חזיתות מול חישוב זוגיות נפרד. נבדקו גם אירועי השהיה קבועה, שמירה ב־A=0, וחלוקה בשתיים ב־A=1. צורף תיאור SystemVerilog התנהגותי, אך לא בוצעו קומפילציית HDL, סינתזה, STA או בדיקת חומרה. ההצעה ממתינה לביקורת מקצועית."
+        },
+        "en": {
+          "title": "XOR feedback around a D flip-flop: hold, toggle and timing",
+          "prompt": "A D flip-flop feeds its Q output into one input of an XOR gate. A is the other input, and the XOR output drives D. Analyze A=0, A=1 and an arbitrary sampled A sequence. Draw clk and Q and explain the effect of propagation delays.\n\nExplicit editorial clarifications: the DFF samples only on rising edges with period T; it is not a transparent latch. Use Q=0 initially for the waveform example; without known initialization its phase is unknown. A and the complete D input path meet setup/hold. Distinguish clock-to-Q, XOR/wiring delay in the feedback path, and extra external-output delay after the feedback branch point. Assume zero clock skew/uncertainty for the simplified timing equations. The source gives no numerical delays; any example numbers are labelled additions. Can feedback cause toggling between clock edges?",
+          "hint": "Write the value sampled at one edge before deriving the complete waveform.",
+          "hints": [
+            "Write the value sampled at one edge before deriving the complete waveform.",
+            "Substitute A=0 and A=1 into XOR. Does D equal old Q or its complement?",
+            "Use Q(next)=Q XOR A. An output transition follows the edge plus clock-to-Q; feedback changing D is not another clock edge."
+          ],
+          "reference_solution": "### Start with the state equation\n\nThe flip-flop stores state; XOR only computes the value to store at the next rising edge. If Q[k] is the old stored state and A[k] is stable for the next edge:\n\n```text\nD = Q XOR A\nQ[k+1] = Q[k] XOR A[k]\n```\n\n| Q before edge | Sampled A | Q after edge |\n| --- | --- | --- |\n| 0 | 0 | 0 |\n| 1 | 0 | 1 |\n| 0 | 1 | 1 |\n| 1 | 1 | 0 |\n\nA=0 makes D=Q, so the state holds; it does not automatically reset. A=1 makes D=NOT Q, so Q toggles at each rising edge. Returning to the same value takes two edges, giving fQ=fclk/2. With ideal equal rise/fall propagation delays, high and low each last T and duty cycle is 50%. Unequal rising/falling clock-to-Q delays can slightly alter the physical duty cycle.\n\nFor arbitrary A, Q after k edges is initial Q XOR the parity of the k sampled bits. From Q=0 with A=1,0,1,1 the successive Q values are 1,1,0,1. This is a T flip-flop with T=A, or a parity accumulator; it is not an SRFF and has no forbidden S=R input pair. Unknown initial Q remains unknown under holding or toggling unless initialized by some specified mechanism.\n\n### What does propagation delay change?\n\nOnly the illustrative diagram assumes T=10ns and tCQ=1ns. At sampling edges t=10,20,30,...ns the DFF samples old D. For A=1, Q changes at 11,21,31,...ns. That change passes through XOR and prepares the opposite D for the next edge; it cannot cause another immediate Q transition. This is not a combinational oscillator, provided the component really is edge triggered rather than transparent.\n\nFor the simplified zero-skew model, feedback must satisfy:\n\n```text\nT >= tCQ(max) + tXOR/wire(max) + tsetup\ntCQ(min) + tXOR/wire(min) >= thold\n```\n\nAdded delay inside feedback belongs in tXOR/wire: too much can violate next-edge setup; too little minimum delay can violate same-edge hold. Increasing T alone does not repair a hold violation. A has its own input-to-D timing path and must also meet setup/hold. Real static timing analysis includes skew, jitter, uncertainty, loading and process corners. A Boolean model cannot predict a deterministic waveform after a timing violation.\n\nIf added delay affects only an external copy of Q after the feedback branch, internal state evolution is unchanged; the external output is simply later. A delay in the branch returning to XOR instead changes feedback timing constraints. Clarify the location before drawing waveforms.\n\n### Verification and scope\n\nPython checked four truth rows and all A sequences of lengths zero through ten from both initial states: 4,094 streams and 36,868 sampling edges against a separate parity calculation. Constant-delay events, holding for A=0 and divide-by-two for A=1 were also checked. Behavioral SystemVerilog is supplied but was not compiled, synthesized, HDL-simulated, statically timed or tested in hardware. Professional review is pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-074-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "כתבו מה הדלגלג דוגם בחזית אחת, לפני שמנסים להסיק צורת גל שלמה."
+        },
+        {
+          "id": "PREP-074-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "הציבו A=0 ואז A=1 בשער XOR. האם אתם מקבלים את המצב הישן או את היפוכו?"
+        },
+        {
+          "id": "PREP-074-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "השתמשו ב־Q(next)=Q XOR A. כל שינוי ביציאה מגיע אחרי החזית והשהיית clock-to-Q; השינוי החוזר אל D אינו חזית שעון נוספת."
+        },
+        {
+          "id": "PREP-074-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Write the value sampled at one edge before deriving the complete waveform."
+        },
+        {
+          "id": "PREP-074-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Substitute A=0 and A=1 into XOR. Does D equal old Q or its complement?"
+        },
+        {
+          "id": "PREP-074-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Use Q(next)=Q XOR A. An output transition follows the edge plus clock-to-Q; feedback changing D is not another clock edge."
+        }
+      ],
+      "assumptions": [
+        "Rising-edge DFF; A and feedback meet setup/hold. A transparent latch is a different model.",
+        "Q=0 only for the example; unknown initialization means unknown phase. T=10ns,tCQ=1ns are illustrative only.",
+        "Simplified inequalities assume zero skew/uncertainty; delay location relative to the feedback branch is explicit."
+      ],
+      "truth_table": [
+        {
+          "Q_before": 0,
+          "A": 0,
+          "Q_after": 0
+        },
+        {
+          "Q_before": 0,
+          "A": 1,
+          "Q_after": 1
+        },
+        {
+          "Q_before": 1,
+          "A": 0,
+          "Q_after": 1
+        },
+        {
+          "Q_before": 1,
+          "A": 1,
+          "Q_after": 0
+        }
+      ],
+      "waveform_observations": [
+        "A=0 holds Q rather than resetting it.",
+        "A=1 gives one transition after each rising edge and half frequency in steady state.",
+        "An external delay after the feedback branch delays only that copy; feedback-path delay changes timing constraints."
+      ],
+      "verification": "Passed four truth rows, 4,094 streams, 36,868 edges, delay-event and min/max-constraint examples in Python. No HDL, STA or physical verification.",
+      "edge_cases": [
+        "XOR alone does not resolve an unknown initial Q.",
+        "A changing near the edge can violate timing.",
+        "Excessive or insufficient feedback delay can violate setup or hold respectively.",
+        "Without a new edge Q does not resample even when D changes."
+      ],
+      "common_mistakes": [
+        "Calling the feedback a free-running oscillator.",
+        "Claiming A=0 clears the state.",
+        "Accumulating tCQ across cycles rather than associating each transition with its sampling edge.",
+        "Checking setup alone or expecting a slower clock to fix hold."
+      ],
+      "interview_answer": "Q(next)=Q XOR A: zero holds, one toggles, and an arbitrary sequence accumulates parity. A=1 divides frequency by two. Q changes only after an edge plus tCQ; feedback prepares the next D. Check next-edge setup and same-edge hold, and clarify exactly where added delay is located.",
+      "solution_extensions": {
+        "question": "How would synchronous reset-to-zero change the circuit?",
+        "direction": "Select Q(next)=0 when reset is one, otherwise Q XOR A. Reset establishes state and phase but does not replace timing checks.",
+        "status": "Prepared in content, not connected to the live follow-up queue."
+      },
+      "technical_references": [
+        {
+          "title": "AMD UG1388 — setup and hold requirements",
+          "url": "https://docs.amd.com/r/2021.1-English/ug1388-acap-system-integration-validation-methodology/Understanding-Timing-Reports",
+          "note": "Manufacturer documentation supports the before/after-edge stability requirements. Feedback equations are independently derived for this circuit."
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_074_xor_feedback_dff.py",
+      "solution_code_paths": [
+        "solutions/prep_074_xor_feedback_dff.py",
+        "solutions/prep_074_xor_feedback_dff.sv"
+      ],
+      "verification_script_path": "checks/check_prep_074.py",
+      "verification_evidence_path": "checks/prep-074-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-074-source.png"
+        },
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-074-feedback-prompt-he.png",
+          "language": "he",
+          "description": "דלגלג, שער XOR, שעון וענף משוב"
+        },
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-074-feedback-prompt-en.png",
+          "language": "en",
+          "description": "DFF, XOR, clock and feedback branch"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-074-waveform-he.png",
+          "language": "he",
+          "description": "Q בשמירה ובהיפוך עם השהיית clock-to-Q"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-074-waveform-en.png",
+          "language": "en",
+          "description": "Hold and toggle Q waveforms with clock-to-Q delay"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-056",
+        "PREP-065",
+        "PREP-042"
+      ],
+      "duplicate_check": "Related FF conversion and edge-detector questions use different next-state logic. This question specifically analyzes XOR feedback, toggle/parity behavior, and maximum/minimum feedback delay; distinct full interview problem.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Foundational synchronous hardware reasoning and source ambiguity clarification; reported companies are source claims only."
+      },
+      "markdown_path": "questions/prep-074-xor-feedback-dff-hold-toggle-timing.md"
+    },
+    {
+      "id": "PREP-075",
+      "key": "concurrent-read-write-from-single-port-memories",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "hardware",
+      "topic": "registers_shifters",
+      "topics": [
+        "hardware",
+        "registers_shifters",
+        "synchronous_design",
+        "verification"
+      ],
+      "source_topic_tags": [
+        "hardware",
+        "verification"
+      ],
+      "added_topic_tags": [
+        "registers_shifters",
+        "synchronous_design"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "amazon",
+        "dspg",
+        "apple",
+        "marvell",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Amazon",
+        "DSP Group",
+        "Apple",
+        "Marvell"
+      ],
+      "source_company_badge": "מארוול",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "circuit_design",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted explicit editorial contracts, bilingual proposed solution, authored diagrams and executed Python model checks. Independent professional, translation-parity and reuse review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-075-source.png",
+          "received_on": "2026-10-21",
+          "role": "original_question_screenshot_part_2"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-074-075-full-context.png",
+          "received_on": "2026-10-21",
+          "role": "earlier_full_question_context",
+          "transcription_note": "Earlier uncropped report provides the company tags missing from the latest crop. This new intake authorizes the previously deferred two questions. Reported affiliation is not independently verified."
+        }
+      ],
+      "original_prompt": "שאלה 2 : רכיב שמקבל 4 כניסות\n1) READ-ENABLE\n2) WRITE-ENABLE\n3) ADDRESS\n4) ADDRES_DATA\nומוצא אחד שהוא READ-DATA\nהרכיב הזה לא יכול לכתוב ולקרוא באותו זמן..\nיש לך כמה שאתה רוצה מן הרכיב הזה ושערים לוגים..\nתעשה רכיב חדש שיודע לקרוא ולכתוב באותו זמן.",
+      "translations": {
+        "he": {
+          "title": "קריאה וכתיבה במקביל מזיכרונות בעלי פורט יחיד",
+          "prompt": "נתון רכיב זיכרון עם read_en, write_en, address ו־write_data, ומוצא read_data. הוא יכול לקרוא או לכתוב בכל חזית, אך אינו יכול לבצע את שתיהן באותה חזית. מותר להשתמש בכל מספר של רכיבים כאלה ובלוגיקת בקרה. בנו זיכרון לוגי שמקבל קריאה אחת וכתיבה אחת במקביל, גם לאורך רצף בלתי מוגבל של מחזורים. הציגו חיבורים, משמעות הכתובות, התנגשות באותה כתובת ועלות.\n\nהבהרות שנוספו למקור: הזיכרון הלוגי מכיל N מילים של W ביטים, N,W חיוביים. לכל primitive לפחות N מילים, קריאה סינכרונית עם פלט רשום וכתיבה באותו שעון עולה; בכל חזית לכל רכיב לכל היותר פעולה אחת. לממשק הלוגי יש כתובות נפרדות rd_addr,wr_addr; פורט הכתובת היחיד של primitive אינו שתי כתובות עצמאיות. אחרי חזית עם rd_en=1 מופיעים הנתון ו־rd_valid=1 למחזור התגובה, ללא מחזור המתנה נוסף. כתיבה וקריאה לאותה כתובת מחזירות את הנתון החדש, write-first. ללא קריאה rd_valid=0 והנתון אינו מחייב. אין הבטחת תוכן בתחילת העבודה: קריאה מוגדרת רק לאחר כתיבה לאותה מילה, או במעקף כתיבה באותה חזית. איפוס הבקרה מדכא בקשות ומאפס rd_valid אך אינו מאפס את הזיכרון. מותרות לוגיקה צירופית ורשומות בקרה, לרבות רשומת מעקף של W ביטים; אין צורך לממש את כל מערך הנתונים מחדש בדלגלגים. אין רשות אוטומטית לשעון כפול, ואין דרישה למספר מינימלי של רכיבים.",
+          "hint": "הגדירו קודם שתי כתובות לוגיות ותוצאת קריאה כאשר שתיהן זהות. מה בדיוק גורם להתנגשות בפורט יחיד?",
+          "hints": [
+            "הגדירו קודם שתי כתובות לוגיות ותוצאת קריאה כאשר שתיהן זהות. מה בדיוק גורם להתנגשות בפורט יחיד?",
+            "אין מגבלת מספר רכיבים. האם אפשר לשלם בשטח כך ששתי כתובות לוגיות שונות לעולם לא יפנו לאותו רכיב פיזי?",
+            "הקדישו לכל מילה לוגית רכיב נפרד והשתמשו רק בתא אפס שלו. בקריאה וכתיבה לאותה מילה, כתבו לרכיב והחזירו את הנתון החדש במעקף. התאימו את בחירת הפלט לתזמון הקריאה."
+          ],
+          "reference_solution": "### מחליפים צפיפות זיכרון בהפרדת פורטים\n\nהמפתח הוא שמותרות הרבה קופסאות ואין דרישת מינימום. נקדיש למילה לוגית i את bank[i], ונשמור אותה רק בכתובת הפיזית 0 של אותו רכיב. נקבל N בנקים. יתר התאים בכל רכיב אינם בשימוש; זו בחירה מכוונת כדי לתת בנייה פשוטה ותקפה בלי להמציא שעון נוסף. כל address פיזי מחובר לקבוע 0. write_data מגיע לכל הבנקים, אבל רק בנק הכתיבה מקבל write_en.\n\nאם rd_addr שונה מ־wr_addr, פונים לשני בנקים שונים: אחד קורא ואחד כותב באותה חזית. אם הכתובות שוות, אי אפשר לבצע את שתי הפעולות באותו בנק; לפי חוזה write-first, אין צורך לקרוא אותו: כותבים ושומרים את write_data למעקף הפלט.\n\n```text\ncollision = rd_en AND wr_en AND (rd_addr == wr_addr)\nWE[i] = wr_en AND (wr_addr == i)\nRE[i] = rd_en AND (rd_addr == i) AND NOT collision\nphysical_address[i] = 0\n```\n\nלכל i, האותות RE[i],WE[i] אינם פעילים יחד. במקרה של שתי כתובות שונות האחד יכול לקרוא בזמן שהאחר כותב; במקרה של התנגשות קריאת הבנק מדוכאת. זה נכון לכל מחזור בנפרד, ולכן אין תור כתיבות שעלול להתמלא אחרי רצף ארוך.\n\n### התאמת הפלט לזמן הקריאה\n\nprimitive שקיבל RE קורא את תא אפס ומעדכן את פלטו הרשום אחרי החזית. באותה חזית הבקרה שומרת rd_addr_q ואת collision_q; בעת התנגשות היא שומרת גם bypass_data_q=write_data. אחרי החזית:\n\n```text\nread_data = collision_q ? bypass_data_q : bank[rd_addr_q].read_data\nrd_valid  = rd_en שנדגם בחזית האחרונה\n```\n\nבחירת הבנק חייבת להיות רשומה: שימוש ב־rd_addr החי עלול להעביר פלט של בקשת קריאה אחרת כאשר הכתובת כבר השתנתה. כאשר אין קריאה rd_valid=0 ואין הבטחת נתון בממשק. איפוס חוסם את RE/WE ומאפס את rd_valid; אינו טוען לאיפוס של תוכן כל הזיכרונות. גם כש־N אינו חזקה של שתיים יש להבטיח כתובות 0..N−1 ולדחות כתובות לא חוקיות בממשק. הבקרה, המפענחים, ה־MUX והנתונים חייבים לעמוד בתזמון השעון; צירופיות אינה הבטחה לאפס השהיה.\n\n### דוגמה ונכונות\n\nבזיכרון של ארבע מילים: תחילה נכתוב 7 לכתובת 1. בחזית הבאה נבקש לקרוא מ־1 ולכתוב 9 ל־3. bank[1] קורא 7 ו־bank[3] כותב 9; נקבל 7 עם rd_valid=1. בחזית שלאחר מכן קריאה וכתיבה של 5 לאותה כתובת 1 כותבות ל־bank[1], מדכאות בו RE ומחזירות 5 דרך המעקף. קריאה עתידית מ־1 תחזיר גם היא 5.\n\nהאינווריאנט: תא אפס בבנק i מכיל את הכתיבה האחרונה למילה לוגית i, אם הייתה כזו. בתחילה אין טענה על מילה שלא נכתבה. כל כתיבה משנה רק את הבנק הנכון. קריאה ללא התנגשות מחזירה את אותה מילה; קריאה עם התנגשות מחזירה את הכתיבה החדשה. מכאן החוזה מתקיים לכל רצף בקשות תקין.\n\n### עלות ומה לא מספיק\n\nמשתמשים ב־N רכיבי RAM. אם כל אחד בעל N מילים של W ביטים, הקיבולת הפיזית היא N²W ביטים ורק NW מנוצלים. יש גם מפענחים, MUX של N כניסות ברוחב W, כתובת רשומה, דגלים ורשומת מעקף של W ביטים. אין כאן טענת מינימום שטח או מספר רכיבים; זה מחיר גבוה שמותר על פי נוסח הבעיה.\n\nשני עותקים זהים עם כתיבה לשניהם אינם פותרים זרם מלא של קריאות וכתיבות: בכל חזית כתיבה שני הפורטים עסוקים, ולכן אין עותק פנוי לקריאה מכתובת אחרת. תור עדכונים סופי אינו פותר רצף בלתי מוגבל של כתיבות בלי להוכיח קצב ניקוז מתאים. גם פיצול רגיל לזוג בנקים לפי ביט כתובת אינו מספיק: שתי כתובות שונות יכולות להתנגש באותו בנק. חלופה תקפה היא multipumping: אם מותר שעון פנימי של 2f ושני חלונות פעולה שעומדים בתזמון, primitive אחד יכול לבצע שתי גישות במחזור לוגי; זו הנחה נוספת, לא תוצאה של חיבור שערים בלבד.\n\n### אימות\n\nמודל Python מייצג כל primitive בנפרד ואוסר RE ו־WE יחד. עברו כל בקשות הקריאה/כתיבה/כתובות/נתון לכל תוכן התחלתי של ביט אחד בעומקים 1–4, ועוד 50,000 חזיתות אקראיות בעומקים 1,2,3,8,17 מול מפרט מערך נפרד עם write-first. נכללו איפוס, מילים שטרם נכתבו והתנגשויות. לא בוצעו סימולציית HDL, סינתזה או בדיקת תזמון פיזי. ההצעה ממתינה לביקורת מקצועית."
+        },
+        "en": {
+          "title": "Concurrent read and write using single-port memories",
+          "prompt": "A memory primitive has read_en, write_en, address and write_data inputs and a read_data output. It can read OR write at a clock edge, never both. Any number of these primitives and control logic are available. Build a logical memory accepting one read and one write concurrently for an unbounded sequence of cycles. Give connections, address semantics, same-address behavior and cost.\n\nExplicit editorial clarifications: logical capacity is N words of W bits, with positive N,W. Each primitive has at least N words, synchronous registered reads and writes on the same rising-edge clock; each primitive performs at most one operation per edge. The logical interface has separate rd_addr and wr_addr; one primitive address port is not two independent addresses. After an edge with rd_en=1, data and rd_valid=1 are available for its response cycle, without an extra wait cycle. Same-address simultaneous requests return new write data (write-first). Without a read rd_valid=0 and data is unspecified. Initial memory contents are not guaranteed; a defined read follows a write to that word or a same-edge write bypass. Control reset suppresses requests and clears rd_valid, without clearing memory. Combinational logic and control registers, including a W-bit bypass register, are allowed; implementing the entire data array in flip-flops is unnecessary. A double-frequency clock is not automatically available. Minimum primitive count is not required.",
+          "hint": "First define independent logical addresses and the required same-address read value. What exactly creates a single-port conflict?",
+          "hints": [
+            "First define independent logical addresses and the required same-address read value. What exactly creates a single-port conflict?",
+            "There is no primitive-count limit. Can extra hardware ensure that different logical addresses never access the same physical component?",
+            "Dedicate one primitive to each logical word, using only its physical address zero. On a same-word collision write the bank and bypass new data. Align output selection with synchronous read timing."
+          ],
+          "reference_solution": "### Trade memory density for conflict separation\n\nUnlimited primitives and no minimum-count requirement permit a simple valid construction. Dedicate bank[i] to logical word i, storing that word only at physical address zero. There are N banks. All remaining words in each primitive are deliberately unused. This buys a correct design without inventing a faster clock. Tie every physical address to zero; broadcast write_data but enable only the selected write bank.\n\nDifferent logical read and write addresses select different primitives, so one reads while the other writes at the same edge. If the addresses match, that bank cannot do both. The write-first contract lets us suppress its read, perform the write and return registered write data through bypass.\n\n```text\ncollision = rd_en AND wr_en AND (rd_addr == wr_addr)\nWE[i] = wr_en AND (wr_addr == i)\nRE[i] = rd_en AND (rd_addr == i) AND NOT collision\nphysical_address[i] = 0\n```\n\nRE[i] and WE[i] are never simultaneously active. Distinct addresses use different banks; a same-address collision disables the bank read. This property holds on every edge, so no deferred-write queue can overflow after a long sequence.\n\n### Align output selection with the read response\n\nA bank with RE samples physical word zero and updates its registered read output after the edge. At that same edge control stores rd_addr_q and collision_q; a collision also captures bypass_data_q=write_data. After the edge:\n\n```text\nread_data = collision_q ? bypass_data_q : bank[rd_addr_q].read_data\nrd_valid  = rd_en sampled at the most recent edge\n```\n\nThe bank selector must be registered: a live rd_addr could select another bank as soon as the next request changes address. Without a read, rd_valid=0 and output data is not specified by the interface. Reset suppresses RE/WE and clears rd_valid; it does not imply clearing every memory word. Even for a non-power-of-two N, addresses must lie in 0..N−1 and invalid encodings must be rejected. Control, decoding, muxing and data paths must all meet the clock period; combinational logic does not mean zero delay.\n\n### Example and correctness\n\nFor four logical words, first write 7 at address1. Next request a read from1 and a write of9 at3. Bank1 reads7 while bank3 writes9, yielding7 with rd_valid=1. Then simultaneously reading and writing5 at address1 writes bank1, disables its RE and returns5 through bypass. A later ordinary read from1 also returns5.\n\nInvariant: physical word zero of bank i contains the most recent write to logical word i, if one exists. Nothing is claimed for an unwritten word. Each write updates only its proper bank. A noncolliding read returns that bank's word; a colliding read returns new write data. Therefore the contract holds for every valid request sequence.\n\n### Cost and tempting invalid shortcuts\n\nThe construction uses N RAM primitives. If each contains N words of W bits, physical capacity is N²W bits while only NW are used. Additional hardware includes decoders, an N-input W-bit mux, a registered address, flags and a W-bit bypass register. No minimum-area or minimum-component-count claim is made; this intentionally expensive construction is allowed.\n\nTwo identical replicas with writes broadcast to both do not support an unrestricted read/write stream: both ports are occupied on a write edge, leaving neither free to read another address. A finite update queue does not solve unbounded writes without a proven drain rate. Ordinary two-way banking by one address bit also fails when two different addresses map to the same bank. Multipumping is a valid alternative only if a 2f internal clock and two correctly timed operation slots are explicitly permitted; gates alone do not establish that timing resource.\n\n### Verification\n\nThe Python model represents each physical primitive separately and asserts mutual exclusion of RE/WE. Every read/write/address/data request from every one-bit initialized memory of depths1..4 passed, plus50,000 random edges at depths1,2,3,8,17 against an independent write-first array specification. Checks included reset, unwritten values and same-address collisions. No HDL simulation, synthesis or physical timing verification was performed. Professional review is pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-075-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "הגדירו קודם שתי כתובות לוגיות ותוצאת קריאה כאשר שתיהן זהות. מה בדיוק גורם להתנגשות בפורט יחיד?"
+        },
+        {
+          "id": "PREP-075-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "אין מגבלת מספר רכיבים. האם אפשר לשלם בשטח כך ששתי כתובות לוגיות שונות לעולם לא יפנו לאותו רכיב פיזי?"
+        },
+        {
+          "id": "PREP-075-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "הקדישו לכל מילה לוגית רכיב נפרד והשתמשו רק בתא אפס שלו. בקריאה וכתיבה לאותה מילה, כתבו לרכיב והחזירו את הנתון החדש במעקף. התאימו את בחירת הפלט לתזמון הקריאה."
+        },
+        {
+          "id": "PREP-075-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "First define independent logical addresses and the required same-address read value. What exactly creates a single-port conflict?"
+        },
+        {
+          "id": "PREP-075-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "There is no primitive-count limit. Can extra hardware ensure that different logical addresses never access the same physical component?"
+        },
+        {
+          "id": "PREP-075-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Dedicate one primitive to each logical word, using only its physical address zero. On a same-word collision write the bank and bypass new data. Align output selection with synchronous read timing."
+        }
+      ],
+      "assumptions": [
+        "Logical N×W memory, independent read/write addresses, common rising-edge clock and response after the sampling edge.",
+        "Each single-port primitive has registered reads and at most one operation per edge, with at least N physical words.",
+        "Write-first collisions; unwritten words are unspecified. Control reset does not clear memory contents.",
+        "Unlimited primitives, logic and control registers including a W-bit bypass are allowed; no double-frequency clock is supplied and minimum area is not required."
+      ],
+      "optimality": {
+        "criterion": "Logical access throughput with single-port physical primitives.",
+        "result": "One read and one write per cycle without stalls, using N banks and bypass.",
+        "proof": "Different addresses occupy different banks; a same-address request needs only one physical write plus bypass.",
+        "scope": "Valid construction, not a minimum claim. N macros and N²W physical capacity when each macro is N×W."
+      },
+      "verification": "Exhaustive one-edge requests from every one-bit memory of depths1..4 plus50,000 random edges against a separate specification. Primitive read/write mutual exclusion asserted; no HDL or physical timing verification.",
+      "edge_cases": [
+        "N=1 makes every simultaneous request a collision handled by bypass.",
+        "Different addresses, same address and uninterrupted request streams.",
+        "No read means rd_valid=0. A never-written word has no guaranteed content.",
+        "Reset overrides requests while preserving memory contents; invalid addresses are rejected."
+      ],
+      "common_mistakes": [
+        "Broadcasting writes to two replicas while assuming one remains free to read.",
+        "Adding a 2f clock without identifying the additional assumption.",
+        "Selecting a synchronous RAM response with the next cycle's live address.",
+        "Leaving same-address behavior undefined or claiming minimum primitive count without proof."
+      ],
+      "interview_answer": "With unlimited primitives I dedicate one macro to each logical address and use only its word zero. Different-address read/write requests hit different macros. A same-address request writes the macro and returns registered new data through bypass. I also register the bank selector to align the synchronous response. It wastes area but handles full-rate streams without a faster clock.",
+      "solution_extensions": {
+        "question": "What changes if same-address reads must return old data (read-first)?",
+        "direction": "New-data bypass is insufficient. One nonminimal construction uses two macros per logical word and a per-word current-copy bit. A write updates the other copy and flips the bit; a colliding read reads the previously current copy while the other is written. The next request selects the newly written copy. Initialization/validity and timing need explicit treatment. This extension was not executed by the supplied checks.",
+        "status": "Prepared in content, not connected to the live follow-up queue; extension not code-verified."
+      },
+      "source_ambiguities": [
+        "The source omits depth, width, read timing, latency, independent logical addresses, initialization and collision behavior. The edited prompt declares them explicitly.",
+        "The source's ADDRES_DATA was interpreted as write_data, not as another address. It does not establish whether time multiplexing or a minimum component count was intended."
+      ],
+      "technical_references": [
+        {
+          "title": "AMD — Single Port RAM",
+          "url": "https://docs.amd.com/r/en-US/ug958-vivado-sysgen-ref/Single-Port-RAM",
+          "note": "Read-during-write behavior depends on the primitive contract. This construction explicitly assumes no dual operation per primitive; banking is independently derived, not attributed to the manufacturer."
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_075_banked_single_port.py",
+      "solution_code_paths": [
+        "solutions/prep_075_banked_single_port.py"
+      ],
+      "verification_script_path": "checks/check_prep_075.py",
+      "verification_evidence_path": "checks/prep-075-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-075-source.png"
+        },
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-075-primitive-prompt-he.png",
+          "language": "he",
+          "description": "פורט זיכרון יחיד עם אותות בקרה ונתונים"
+        },
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-075-primitive-prompt-en.png",
+          "language": "en",
+          "description": "Single memory port with control and data signals"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-075-word-banks-he.png",
+          "language": "he",
+          "description": "בנק לכל מילה, בחירת פלט ומעקף רשום"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-075-word-banks-en.png",
+          "language": "en",
+          "description": "One bank per word, read-output selection and registered bypass"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-067",
+        "PREP-006"
+      ],
+      "duplicate_check": "The FIFO question concerns queue acceptance/order, not constructing independent logical memory ports from exclusive-operation RAM primitives. Set/Get/SetAll is a different data-structure contract. No equivalent full interview question found; short fundamentals are linked concepts, not duplicates.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Foundational synchronous hardware reasoning and source ambiguity clarification; reported companies are source claims only."
+      },
+      "markdown_path": "questions/prep-075-concurrent-read-write-from-single-port-memories.md"
+    },
+    {
+      "id": "PREP-076",
+      "key": "memory-address-alias-detection",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "hardware",
+      "topic": "memory_testing",
+      "topics": [
+        "hardware",
+        "memory_testing",
+        "address_decoding",
+        "fault_detection",
+        "debugging_methodology"
+      ],
+      "source_topic_tags": [
+        "hardware"
+      ],
+      "added_topic_tags": [
+        "memory_testing",
+        "address_decoding",
+        "fault_detection",
+        "debugging_methodology"
+      ],
+      "source_tags": [
+        "proteantecs",
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "proteanTecs",
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "verification_design",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted bilingual proposed solution, authored diagrams and independent Python model checks. Professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-076-source.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "צריך לבדוק רכיב זכרון שלא ידוע אם הגישה לכתובות נכונה. כיצד תוכל לוודא שמה שקראת הוא נכון?",
+      "translations": {
+        "he": {
+          "title": "בדיקת זיכרון: האם שתי כתובות פונות לאותו תא?",
+          "prompt": "נתון זיכרון בעל N כתובות לוגיות 0 עד N−1 ומילים ברוחב W ביטים, N,W≥1. אפשר לקרוא ולכתוב בכל כתובת, אך לא ידוע אם פענוח הכתובות תקין. כיצד תבדקו שהקריאה מחזירה את הנתון של הכתובת המבוקשת ולא של כתובת אחרת? הציעו בדיקה שמזהה alias — שתי כתובות המופנות לאותו תא — גם כאשר W קטן ממספר ביטי הכתובת. הסבירו מה אי אפשר להוכיח רק בעזרת ממשק הזיכרון.\n\nהבהרות שנוספו: זו בדיקה הרסנית; אין צורך לשמר נתונים. גישה בודדת מושלמת לפני הגישה הבאה, והנתונים נשמרים בהיעדר תקלה. במודל התקלה הראשי אותה מפת כתובות קבועה משמשת לקריאה ולכתיבה, ואין מנגנון cache שמסתיר גישה להתקן. אין גישה לכתובות הפיזיות, oracle חיצוני או תקלות משתנות בזמן. אין צורך לזהות כל סוג אפשרי של תקלה בזיכרון.",
+          "hint": "כתיבה לכתובת ומיד קריאה ממנה יכולה להצליח גם כשהכתובת שגויה. איזה מידע עלול להימחק כשכותבים גם לכתובות אחרות?",
+          "hints": [
+            "כתיבה לכתובת ומיד קריאה ממנה יכולה להצליח גם כשהכתובת שגויה. איזה מידע עלול להימחק כשכותבים גם לכתובות אחרות?",
+            "כתבו לכל הכתובות לפני שקוראים בחזרה. אם שתי כתובות חולקות תא, הן אינן יכולות לשמור במקביל שני ערכים שונים.",
+            "לכל זוג כתובות שונות יש ביט כתובת שבו הן נבדלות. בכל סבב כתבו את אותו ביט לכל מילת הנתונים, קראו את כל הכתובות, ואז בדקו גם את התבנית המשלימה."
+          ],
+          "reference_solution": "### קודם מגדירים מה ניתן לבדוק\n\nלא ניתן להוכיח מאיזה תא פיזי הגיע מידע אם אין נקודת ייחוס חיצונית. אם כל הכתובות עוברות אותה תמורה חד־חד־ערכית בקריאה ובכתיבה, הזיכרון מתנהג בדיוק כזיכרון תקין: כל כתובת לוגית עדיין שומרת מילה עצמאית. שום רצף פעולות דרך הממשק הזה לא יחשוף רק שינוי שמות פיזיים כזה. לעומת זאת, alias בין שתי כתובות מפר את העצמאות, וניתן לזהותו במודל הקבוע שנבחר.\n\n### מדוע כתיבה וקריאה מיידית אינן מספיקות?\n\nאם 0 ו־2 פונות לאותו תא, הפעולה write(0,0),read(0) יכולה להצליח, וגם write(2,1),read(2) יכולה להצליח. לא בדקנו אם הכתיבה השנייה דרסה את המידע של כתובת 0. לכן מפרידים את כל שלב הכתיבה מכל שלב הקריאה. אם W גדול דיו אפשר לכתוב לכל כתובת את מספרה ואז לקרוא את כולן; אבל W=1 לא מסוגל להחזיק חתימה ייחודית לכל כתובת בבת אחת.\n\n### בדיקה לפי ביטי כתובת\n\nנסמן K=max(1,ceil(log2 N)) ו־MASK=2^W−1. לכל ביט כתובת b מ־0 עד K−1, מבצעים שני סבבים: תבנית רגילה והמשלימה. בסבב רגיל כותבים MASK לכתובת שהביט b שלה הוא 1, ואפס לאחרת. כותבים קודם לכל N הכתובות, ורק אז קוראים את כולן ומשווים לערך הצפוי. בסבב המשלים מחליפים אפס ו־MASK. אי התאמה מסמנת כשל; אם כל הסבבים עברו, לא נמצאה תקלה במודל שנבדק.\n\n```text\nfor each address bit b:\n    for invert in {0, 1}:\n        write EVERY address using bit_b(address) XOR invert\n        read EVERY address and compare with its expected word\n```\n\nN=4,W=1: בסבב b=0 כותבים לכתובות 0,1,2,3 את 0,1,0,1; בסבב b=1 כותבים 0,0,1,1. alias בין 0 ל־2 אינו מתגלה מהתבנית הראשונה לבדה, אך בתבנית השנייה התא המשותף נדרש להכיל גם 0 וגם 1. לפחות אחת מהקריאות תיכשל. ההשלמות בודקות גם ששני ערכי הנתון ניתנים להופעה בכל תא; הן מועילות למשל לתקיעת ביט נתון, אך אינן הוכחה לכיסוי כל תקלות הזיכרון. עבור N=1 עדיין כותבים וקוראים אפס וכל האחדות.\n\n### נימוק נכונות ומגבלות\n\nיהיו a≠c שתי כתובות המופנות לאותו תא. יש ביט b שבו הן נבדלות. אחרי כתיבת כל התבנית, התא הפיזי מכיל ערך יחיד, בעוד שהציפיות לשתי הכתובות שונות. לכן לא תיתכן הצלחה של שתי ההשוואות, גם אם לתא יש יותר משתי כתובות לוגיות. לזיכרון תקין כל כתובת מקבלת את הערך המצופה ונשמרת עד הקריאה, ולכן הוא עובר. מספר הגישות בהצלחה הוא 4NK, כלומר O(N log N) עבור N≥2 ו־O(N) למקרה N=1, עם מספר קבוע של משתני עזר מעבר לזיכרון הנבדק. מוני כתובת משתמשים ב־O(log N) ביטים, ולכן אין כאן טענת זיכרון עזר קבוע בביטים.\n\nהבדיקה הרסנית ואינה מחליפה בדיקות March, צימוד, retention, תזמון, cache או bus. היא גם אינה מאתרת בהכרח איזה תא פיזי פגום. אם הכתיבה עצמה אינה אמינה, mismatch אינו מספיק לבדו כדי להאשים רק את מסלול הקריאה. אימות Python בדק 6,826 מקרי מפות כתובת ורוחבי מילה באופן ממצה עד N=5, עוד 640 מקרי מפה מדגמיים, 153 תמורות עקביות שעברו כמצופה, 153 מקרי מסלול קריאה ו־300 תקלות ביט נתון. לא בוצעה בדיקת התקן פיזי. הפתרון מוצע וממתין לביקורת מקצועית."
+        },
+        "en": {
+          "title": "Memory verification: do two addresses alias?",
+          "prompt": "A memory has N logical addresses 0 through N−1 and W-bit words, N,W≥1. You can read and write each address, but do not know whether address decoding is correct. How would you test that a read returns the requested address's data rather than another address's data? Detect address aliasing — two addresses sharing a cell — even when W is smaller than the address bit count. Explain what the memory interface alone cannot prove.\n\nEditorial clarifications: testing may destroy all data. Each access completes before the next; data otherwise persists. In the primary fault model one stable map serves both reads and writes, and no cache hides device accesses. Physical addresses and an independent oracle are unavailable; time-varying faults are outside this model. This is not a request to detect every possible memory fault.",
+          "hint": "Writing and immediately reading one address can succeed through a faulty decoder. What may be overwritten when other addresses are written too?",
+          "hints": [
+            "Writing and immediately reading one address can succeed through a faulty decoder. What may be overwritten when other addresses are written too?",
+            "Write all addresses before reading back. Two aliases cannot simultaneously retain different expected values.",
+            "Every distinct address pair differs in some address bit. In each pass replicate that bit across the data word, read all addresses, and repeat with the complementary pattern."
+          ],
+          "reference_solution": "### First establish what is observable\n\nWithout an external reference, the interface cannot prove which physical cell supplied a value. If reads and writes use the same bijective permutation of physical cells, behavior is exactly that of healthy memory: each logical address still owns independent storage. No sequence through this interface distinguishes that renaming. Address aliasing does destroy independence and is detectable under the chosen stable-map model.\n\n### Why immediate write/read is insufficient\n\nIf addresses 0 and 2 share a cell, write(0,0),read(0) may succeed, and write(2,1),read(2) may also succeed. The test never checks whether the second write destroyed address 0's value. Separate the full writing phase from the full reading phase. With enough data width we could store a unique address signature in each word, but W=1 cannot encode every address simultaneously.\n\n### Address-bit-plane test\n\nLet K=max(1,ceil(log2 N)) and MASK=2^W−1. For each address bit b from zero through K−1, perform a normal pass and its complement. In a normal pass write MASK where address bit b is one and zero elsewhere. Write all N addresses first, then read every address and compare with its expected value. In the complementary pass swap zero and MASK. Return failure on a mismatch; completing all passes means no fault was found within the tested model.\n\n```text\nfor each address bit b:\n    for invert in {0, 1}:\n        write EVERY address using bit_b(address) XOR invert\n        read EVERY address and compare with its expected word\n```\n\nFor N=4,W=1, bit-zero pass writes 0,1,0,1 to addresses 0,1,2,3; bit-one pass writes 0,0,1,1. An alias between 0 and 2 escapes the first pattern alone but cannot satisfy both expected values in the second. At least one read mismatches. Complements also exercise both data values per cell, helping detect stuck-data bits, but do not establish complete memory fault coverage. For N=1 still test zero and all ones.\n\n### Correctness and limits\n\nLet distinct addresses a,c share one cell. Some address bit b differs. After the whole pattern is written, that physical cell has a single value, yet the two logical addresses expect different words. Both comparisons cannot pass, even if more addresses share that cell. Healthy memory passes because each independent location retains its expected value until checked. A successful run performs 4NK accesses: O(N log N) for N≥2, with the N=1 special case still tested. There are a constant number of auxiliary variables; address counters require O(log N) bits, so auxiliary storage is not constant in bits.\n\nThis destructive test is not a replacement for March, coupling, retention, timing, cache or bus testing, nor does it necessarily locate a faulty physical cell. If writes may also fail, a mismatch alone does not isolate the read path. Python checks exhausted 6,826 map/width cases through N=5, plus 640 sampled maps, 153 consistent permutations that correctly passed, 153 read-path permutation cases and 300 stuck-data cases. No physical device was tested. The proposed solution awaits professional review."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-076-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "כתיבה לכתובת ומיד קריאה ממנה יכולה להצליח גם כשהכתובת שגויה. איזה מידע עלול להימחק כשכותבים גם לכתובות אחרות?"
+        },
+        {
+          "id": "PREP-076-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "כתבו לכל הכתובות לפני שקוראים בחזרה. אם שתי כתובות חולקות תא, הן אינן יכולות לשמור במקביל שני ערכים שונים."
+        },
+        {
+          "id": "PREP-076-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "לכל זוג כתובות שונות יש ביט כתובת שבו הן נבדלות. בכל סבב כתבו את אותו ביט לכל מילת הנתונים, קראו את כל הכתובות, ואז בדקו גם את התבנית המשלימה."
+        },
+        {
+          "id": "PREP-076-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Writing and immediately reading one address can succeed through a faulty decoder. What may be overwritten when other addresses are written too?"
+        },
+        {
+          "id": "PREP-076-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Write all addresses before reading back. Two aliases cannot simultaneously retain different expected values."
+        },
+        {
+          "id": "PREP-076-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Every distinct address pair differs in some address bit. In each pass replicate that bit across the data word, read all addresses, and repeat with the complementary pattern."
+        }
+      ],
+      "assumptions": [
+        "N logical addresses and W-bit words, both positive; destructive testing allowed.",
+        "Accesses complete in order and storage retains data; no cache hides the device.",
+        "Primary model: one stable mapping for reads and writes; no physical-address oracle.",
+        "No complete fault coverage or detection of consistent bijective physical renaming is claimed."
+      ],
+      "optimality": {
+        "criterion": "Access count of this bit-plane test for arbitrary positive W.",
+        "result": "4N·max(1,ceil(log2 N)) accesses on success; constant variable count, typically O(log N+W) auxiliary bits.",
+        "proof": "K bits, two polarities, each with N writes and N reads.",
+        "scope": "Not a minimum-access or complete-memory-fault-coverage claim."
+      },
+      "verification": "Passed 6,826 exhaustive map/width cases through N=5, 640 sampled maps, 153 consistent permutations, 153 read-path permutations, 300 stuck-data cases and six invalid-parameter cases. Also checked an alias counterexample missed by immediate write/read. Python model only.",
+      "edge_cases": [
+        "N=1 has no inter-address alias but still tests zero and all ones.",
+        "W=1 suffices with multiple passes; truncating an address signature loses uniqueness.",
+        "For non-power-of-two N test only addresses 0..N−1.",
+        "Addresses equal in one tested bit may differ in another pass.",
+        "A consistent read/write permutation is interface-equivalent to healthy memory."
+      ],
+      "common_mistakes": [
+        "Writing and immediately reading each address misses later alias overwrites.",
+        "Using only one identical pattern for all addresses.",
+        "Storing address mod 2^W without considering signature collisions.",
+        "Claiming physical-cell identity without an independent observation point.",
+        "Destructively testing data that must be retained."
+      ],
+      "interview_answer": "Write all addresses before reading any back. If words cannot hold unique address signatures, test one address-bit plane and its complement per pass. Every aliased pair differs in some bit and cannot both pass that pattern. A consistent bijective physical renaming is unobservable through this interface alone.",
+      "solution_extensions": {
+        "question": "What changes if memory contents must survive testing?",
+        "direction": "Use independent backup or a genuinely non-destructive strategy for a specified fault model. Saving and immediately restoring one word may not protect another logical alias of that cell.",
+        "status": "Prepared in content, not connected to the live follow-up queue."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_076_address_alias.py",
+      "solution_code_paths": [
+        "solutions/prep_076_address_alias.py"
+      ],
+      "verification_script_path": "checks/check_prep_076.py",
+      "verification_evidence_path": "checks/prep-076-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-076-source.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-076-bit-plane-test-he.png",
+          "language": "he",
+          "description": "בדיקת כתובות בתבניות ביט ובמשלימות"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-076-bit-plane-test-en.png",
+          "language": "en",
+          "description": "Address-bit patterns and complementary passes"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-006",
+        "PREP-067",
+        "PREP-069"
+      ],
+      "duplicate_check": "FIFO storage and gate stuck-at questions do not test whole-memory address aliasing or its observability limits; no equivalent full question found.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Foundational verification contracts and synchronous reasoning; company associations are source-reported only."
+      },
+      "markdown_path": "questions/prep-076-memory-address-alias-detection.md"
+    },
+    {
+      "id": "PREP-077",
+      "key": "swap-without-temp-fixed-width",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "software",
+      "topic": "bit_manipulation",
+      "topics": [
+        "software",
+        "bit_manipulation",
+        "xor",
+        "fixed_width_arithmetic",
+        "aliasing"
+      ],
+      "source_topic_tags": [
+        "hardware",
+        "logic-design",
+        "algorithms-software",
+        "algorithms-hardware"
+      ],
+      "added_topic_tags": [
+        "software",
+        "bit_manipulation",
+        "xor",
+        "fixed_width_arithmetic",
+        "aliasing"
+      ],
+      "source_tags": [
+        "hardware",
+        "logic-design",
+        "altair",
+        "csr",
+        "marvell",
+        "algorithms-software",
+        "algorithms-hardware"
+      ],
+      "reported_companies": [
+        "Zoran",
+        "Altair",
+        "CSR",
+        "Marvell"
+      ],
+      "source_company_badge": "צורן",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "coding",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted complete bilingual proposed solution and executed independent checks. Professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-077-source.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "א.נתונים 2 מספרים a, b. כתוב תוכנית המחליפה בין ערכיהם ללא שימוש במשתנה עזר.\nב. כעת ידוע כי גודל שני המספרים הוא 8 ביט כל אחד, לכן פעולת חיבור או חיסור יכולות לגרום לגלישה. ממש כעת את ההחלפה של ערכם.",
+      "translations": {
+        "he": {
+          "title": "החלפת שני מספרים ללא משתנה עזר — גם ב־8 ביט",
+          "prompt": "א. נתונים שני משתני מספר שלם a ו־b. החליפו את ערכיהם בלי משתנה עזר המחזיק אחד מערכי הקלט. התחילו בחשבון שלמים מדויק ללא מגבלת רוחב.\n\nב. כעת a ו־b הם שני תאי אחסון נפרדים של 8 ביט ללא סימן, 0–255. מותרות פעולות ביטים; פעולות חשבון מחזירות ערך מודולו 256 בעת ההשמה לתא. הציגו פתרון שאינו תלוי בנשיאה, והסבירו האם גלישה מונעת בהכרח פתרון של חיבור וחיסור.\n\nהבהרות שנוספו בעריכה: יש לשמור בדיוק את שתי תבניות הביטים המקוריות בהחלפה. אם הממשק משתמש בהפניות שעלולות להצביע לאותו תא, ההחלפה עם עצמו צריכה להשאירו ללא שינוי. אין להשתמש בטריק החלפה מובנה המסתיר משתנה עזר. הבדילו בין שלמים מדויקים, גלישה מודולרית מוגדרת וגלישת מספר signed בשפה שבה היא אינה מוגדרת.",
+          "hints": [
+            "אפשר לשנות את שני התאים כמה פעמים. איזה מידע על הזוג מאפשר לשחזר כל אחד מן הערכים?",
+            "בחשבון מדויק אפשר לשמור סכום באחד התאים. בפעולות ביטים חפשו פעולה שבה x עם עצמו מתבטל.",
+            "עבור XOR השתמשו בזהות (x XOR y) XOR y=x. אחרי כל השמה כתבו את ערך התא בסימנים x,y המקוריים; בדקו בנפרד הפניות לאותו תא."
+          ],
+          "reference_solution": "### קודם מגדירים מה פירוש ״ללא משתנה עזר״\n\nהכוונה היא שאין תא שלישי לשמירת אחד מערכי הקלט. המעבד עדיין עשוי להשתמש ברגיסטרים זמניים למימוש פקודה; זו אינה דרישה לארכיטקטורת מעבד ללא משאבים פנימיים. a ו־b הם משתנים נפרדים, או שהממשק בודק שזהות כתובתם שונה. בקוד אמיתי החלפה רגילה באמצעות משתנה זמני בדרך כלל ברורה יותר.\n\n### סעיף א: חיבור וחיסור בחשבון מדויק\n\n```text\na = a + b\nb = a - b\na = a - b\n```\n\nנסמן את הערכים המקוריים x,y. אחרי השורה הראשונה (a,b)=(x+y,y). אחרי השנייה (x+y,x), ואחרי השלישית (y,x). למשל 7,12 נעשים 19,12 ואז 19,7 ואז 12,7. בפייתון השלמים מדויקים, ולכן אותה הוכחה תקפה גם לערכים שליליים או גדולים מאוד. אין להסיק מכך שהביטוי a+b בטוח עבור signed int ב־C++.\n\n### סעיף ב: שלוש פעולות XOR\n\n```text\na = a XOR b\nb = a XOR b\na = a XOR b\n```\n\nאחרי הצעד הראשון a=x XOR y. אחר כך b=(x XOR y) XOR y=x. לבסוף a=(x XOR y) XOR x=y. זהות x XOR x=0 יחד עם x XOR 0=x מוכיחה את התוצאה בכל ביט בנפרד. אין נשיאה או הרחבת רוחב. ערכים שווים הם מקרה חוקי: התא הראשון זמנית 0, אך הערכים משוחזרים כל עוד אלה שני תאים שונים.\n\n### גם חיבור וחיסור מודולריים תקפים\n\nהמקור מזכיר גלישה אך אינו מגדיר טיפוס. ברכיבי 8 ביט ללא סימן עם wrap מודולו 256, החיבור/חיסור עדיין עובדים: a=(x+y) mod 256, אחר כך b=(a−y) mod 256=x, ולבסוף a=(a−x) mod 256=y. למשל 250,10 נעשים 4,10 ואז 4,250 ואז 10,250. לכן הטענה ״ב־8 ביט רק XOR עובד״ שגויה.\n\nלהלן C++ עם uint8_t כאשר הטיפוס זמין. בהמרות החשבון ל־int הסכום לכל היותר 510 וההפרש לפחות ‎-255, ולכן הביניים נכנסים גם לטווח int המינימלי התקני. המרה מפורשת חזרה ל־uint8_t מגדירה את השארית מודולו 256. אין כאן הרצת signed overflow. המימוש סופק ולא קומפל בסביבת הבדיקה.\n\n```cpp\n#include <cstdint>\n#include <memory>\n\n// Distinct references or a same-location no-op. No auxiliary value variable.\nvoid xor_swap(std::uint8_t& a, std::uint8_t& b) {\n    if (std::addressof(a) == std::addressof(b)) return;\n    a ^= b;\n    b ^= a;\n    a ^= b;\n}\n\n// Integral promotions precede arithmetic; conversion back to uint8_t is modulo\n// 256. Promoted addition is at most 510 and subtraction at least -255, so these\n// intermediates fit even the minimum standard range of int.\nvoid modular_swap(std::uint8_t& a, std::uint8_t& b) {\n    if (std::addressof(a) == std::addressof(b)) return;\n    a = static_cast<std::uint8_t>(a + b);\n    b = static_cast<std::uint8_t>(a - b);\n    a = static_cast<std::uint8_t>(a - b);\n}\n\n```\n\n### למה צריך בדיקת זהות כתובות?\n\nאם a ו־b הן שתי הפניות לאותו תא, כבר a^=b מבצע x XOR x ומאפס את הערך המקורי. שוויון ערכים אינו זהות כתובת: שני תאים שונים שערכם 9 מותרים. בדיקת הכתובת הופכת החלפה עם עצמו לפעולת זהות, בלי לשמור משתנה עזר של ערך. אין לכתוב את שלוש ההשמות בביטוי משורשר שהסדר שלו תלוי בשפה.\n\n### עלות ואימות\n\nשלוש פעולות והשמות למילים ברוחב קבוע: O(1) זמן ומספר קבוע של תאים; אין טענת מינימום מוחלט של פקודות או מהירות מעבד. על מספרים בלתי חסומים עלות פעולה תלויה באורך הביטים. רצף XOR תוכנתי הוא שלוש השמות סדרתיות; אין לחבר משוב קומבינטורי כאילו כל שלוש המשוואות פועלות בו־זמנית.\n\nנבדקו בפייתון כל 65,536 זוגות הבתים בכל ארבעת המודלים: XOR, חשבון מודולרי, חשבון מדויק ועדכון תאים נפרדים. כל 256 ההחלפות עם עצמו נבדקו עם guard, לצד דוגמת הכשל ללא guard. נבדקו גם ארבעה זוגות שלמים שליליים/גדולים. אלו מודלי קוד ובדיקה ממצה לתחום הבתים, לא קומפילציה של C++, בדיקת חומרה או אישור אנושי.\n",
+          "hint": "אפשר לשנות את שני התאים כמה פעמים. איזה מידע על הזוג מאפשר לשחזר כל אחד מן הערכים?"
+        },
+        "en": {
+          "title": "Swap two numbers without a temporary — including 8-bit values",
+          "prompt": "(a) Swap two integer variables a,b without an auxiliary variable holding an input value. Begin with exact unbounded integer arithmetic.\n\n(b) Now a,b occupy distinct unsigned 8-bit storage locations, holding 0..255. Bitwise operations are allowed; arithmetic converts modulo 256 on assignment. Give a solution independent of carry, and explain whether overflow necessarily invalidates addition/subtraction swapping.\n\nEditorial clarifications: preserve and exchange the exact original bit patterns. If references may alias one storage location, swapping a location with itself must leave it unchanged. Do not use a built-in swap hiding a temporary value. Distinguish exact arithmetic, defined modular wrap and signed overflow in languages where it is undefined.",
+          "hints": [
+            "You may overwrite both locations repeatedly. What information about the pair allows either original value to be recovered?",
+            "With exact arithmetic one location can hold the sum. For bitwise operations, look for an operation under which a value cancels itself.",
+            "For XOR use (x XOR y) XOR y=x. After every assignment express both locations in terms of the original x,y; handle same-location references separately."
+          ],
+          "reference_solution": "### Define the no-temporary constraint\n\nThe restriction forbids a third location holding an input value. A processor may still use internal registers to implement an operation; the question does not prohibit such architectural resources. a,b are separate variables, or an interface checks address identity. An ordinary temporary-based swap is generally clearer in production code.\n\n### Part (a): exact arithmetic\n\n```text\na = a + b\nb = a - b\na = a - b\n```\n\nLet x,y be the original values. The pairs after successive lines are (x+y,y), (x+y,x), (y,x). For example 7,12 become 19,12 then 19,7 then 12,7. Python's exact integers make the argument valid for negative or arbitrarily large values too. This does not imply that a+b is safe for signed int in C++.\n\n### Part (b): three XOR updates\n\n```text\na = a XOR b\nb = a XOR b\na = a XOR b\n```\n\nAfter the first update a=x XOR y. Then b=(x XOR y) XOR y=x. Finally a=(x XOR y) XOR x=y. The identities x XOR x=0 and x XOR 0=x prove the result independently at every bit; no carry or widening is required. Equal values are valid: the first location temporarily becomes zero, but both originals are recovered if the locations are distinct.\n\n### Modular addition/subtraction works as well\n\nThe source mentions overflow without naming a type. For unsigned 8-bit arithmetic wrapping modulo 256, add/subtract swapping remains valid: a=(x+y) mod 256, then b=(a−y) mod 256=x, then a=(a−x) mod 256=y. For 250,10 the pairs become 4,10 then 4,250 then 10,250. Thus claiming that only XOR can work at eight bits is incorrect.\n\nThe following C++ uses uint8_t where available. Integral promotions produce an int sum of at most 510 and a difference of at least -255, which fit even the standard minimum int range. Explicit conversion back to uint8_t defines modulo-256 reduction. No signed overflow is executed. The supplied C++ was not compiled in this environment.\n\n```cpp\n#include <cstdint>\n#include <memory>\n\n// Distinct references or a same-location no-op. No auxiliary value variable.\nvoid xor_swap(std::uint8_t& a, std::uint8_t& b) {\n    if (std::addressof(a) == std::addressof(b)) return;\n    a ^= b;\n    b ^= a;\n    a ^= b;\n}\n\n// Integral promotions precede arithmetic; conversion back to uint8_t is modulo\n// 256. Promoted addition is at most 510 and subtraction at least -255, so these\n// intermediates fit even the minimum standard range of int.\nvoid modular_swap(std::uint8_t& a, std::uint8_t& b) {\n    if (std::addressof(a) == std::addressof(b)) return;\n    a = static_cast<std::uint8_t>(a + b);\n    b = static_cast<std::uint8_t>(a - b);\n    a = static_cast<std::uint8_t>(a - b);\n}\n\n```\n\n### Why address identity matters\n\nIf both references denote one location, the first a^=b computes x XOR x and destroys the original value. Equal values are different from identical storage: two separate locations holding nine are valid. An address guard makes a self-swap a no-op without storing an auxiliary input value. Do not compress the three updates into a chained expression with language-dependent evaluation order.\n\n### Cost and verification\n\nThree fixed-width operations and assignments take O(1) time with a constant number of locations. This is not a proof of minimum instruction count or processor speed. Arbitrary-size integer operations also depend on bit length. These are sequential software assignments, not simultaneous combinational feedback equations.\n\nPython checks covered every one of 65,536 byte pairs across four models: XOR, modular arithmetic, exact arithmetic and distinct-location updates. All 256 self-swaps were verified with the guard, and the unguarded destruction was exhibited. Four signed/large exact-integer pairs were checked too. These are executed models and exhaustive byte-domain tests, not C++ compilation, hardware verification or human approval.\n",
+          "hint": "You may overwrite both locations repeatedly. What information about the pair allows either original value to be recovered?"
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-077-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "אפשר לשנות את שני התאים כמה פעמים. איזה מידע על הזוג מאפשר לשחזר כל אחד מן הערכים?"
+        },
+        {
+          "id": "PREP-077-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "בחשבון מדויק אפשר לשמור סכום באחד התאים. בפעולות ביטים חפשו פעולה שבה x עם עצמו מתבטל."
+        },
+        {
+          "id": "PREP-077-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "עבור XOR השתמשו בזהות (x XOR y) XOR y=x. אחרי כל השמה כתבו את ערך התא בסימנים x,y המקוריים; בדקו בנפרד הפניות לאותו תא."
+        },
+        {
+          "id": "PREP-077-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "You may overwrite both locations repeatedly. What information about the pair allows either original value to be recovered?"
+        },
+        {
+          "id": "PREP-077-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "With exact arithmetic one location can hold the sum. For bitwise operations, look for an operation under which a value cancels itself."
+        },
+        {
+          "id": "PREP-077-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "For XOR use (x XOR y) XOR y=x. After every assignment express both locations in terms of the original x,y; handle same-location references separately."
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_077_swap_without_temp.py",
+      "solution_code_paths": [
+        "solutions/prep_077_swap_without_temp.py",
+        "solutions/prep_077_swap_without_temp.cpp"
+      ],
+      "verification_script_path": "checks/check_prep_077.py",
+      "verification_evidence_path": "checks/prep-077-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-077-source.png"
+        }
+      ],
+      "markdown_path": "questions/prep-077-swap-without-temp-fixed-width.md",
+      "related_question_ids": [],
+      "duplicate_check": "Reviewed preparation and example/verification title+prompt contracts for swap/no-temporary equivalents. Array sorting/shuffling uses exchanges but does not ask for this fixed-width, overflow and aliasing contract. No duplicate found.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Contract clarification, invariant/probability reasoning and explicit cost/verification scope; company attribution is a source report only."
+      },
+      "assumptions": [
+        "Part (a) uses exact integers; part (b) uses two distinct unsigned 8-bit locations with bitwise operations.",
+        "The modular variant reduces modulo 256 on assignment; it does not rely on undefined signed overflow.",
+        "No auxiliary input-value variable; address identity may be checked to make a self-swap a no-op."
+      ],
+      "optimality": {
+        "criterion": "Fixed-word cost without an auxiliary input-value location.",
+        "result": "Three operations and assignments: O(1) time and constant storage.",
+        "proof": "XOR cancellation or modular cancellation recovers x,y in exchanged order after three updates.",
+        "scope": "No minimum-instruction or performance claim; unbounded integers incur bit-length costs."
+      },
+      "verification": "All 65,536 byte pairs passed across four models, plus 256 guarded alias cases and four large/signed exact-integer pairs. Python executed; C++ supplied but not compiled. No hardware or human approval.",
+      "edge_cases": [
+        "Zero versus 255; sums above 255; equal values in distinct locations.",
+        "Two aliases to one location require a no-op before the XOR sequence.",
+        "Signed int may encounter undefined overflow; Python exact integers are not limited to eight bits."
+      ],
+      "common_mistakes": [
+        "Claiming modular wrap invalidates add/subtract cancellation.",
+        "Confusing equal values with aliases to one location.",
+        "Using tuple swap when the contract forbids a hidden temporary value.",
+        "Treating the sequential updates as simultaneous combinational feedback equations."
+      ],
+      "interview_answer": "Exact arithmetic permits three add/subtract assignments. At eight bits use a^=b; b^=a; a^=b, cancelling each bit twice. Properly defined modular add/subtract also works. Clarify types and overflow, and guard aliases to one location.",
+      "solution_extensions": {
+        "question": "Is XOR swap necessarily faster than an ordinary temporary-based swap?",
+        "direction": "No. Its three updates are serially dependent, and a compiler may optimize an ordinary swap. Measure on the target architecture; prefer clarity when no artificial restriction applies.",
+        "status": "Prepared as content; not connected to the interactive follow-up queue."
+      }
+    },
+    {
+      "id": "PREP-078",
+      "key": "every-fifth-input-rising-edge-counter",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "hardware",
+      "topic": "edge_detection",
+      "topics": [
+        "hardware",
+        "edge_detection",
+        "counters",
+        "fsm_state_tables",
+        "synchronous_design"
+      ],
+      "source_topic_tags": [
+        "hardware",
+        "state-machines",
+        "logic-design"
+      ],
+      "added_topic_tags": [
+        "edge_detection",
+        "counters",
+        "fsm_state_tables",
+        "synchronous_design"
+      ],
+      "source_tags": [
+        "hardware",
+        "amazon",
+        "arm",
+        "asocs",
+        "logic-design",
+        "ibm",
+        "marvell",
+        "state-machines"
+      ],
+      "reported_companies": [
+        "Amazon",
+        "ARM",
+        "ASOCS",
+        "IBM",
+        "Marvell"
+      ],
+      "source_company_badge": "מארוול",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "circuit_design",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted bilingual proposed solution, authored diagrams and independent Python model checks. Professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-078-source.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "בעזרת מונה ממש מערכת המזהה 5 עליות של אות הכניסה. כלומר, כל עלייה חמישית של אות הכניסה מוצא המערכת עולה ל־1 למחזור שעון אחד. המונה נראה כך: EN, clk, RST, Q2, Q1, Q0.",
+      "translations": {
+        "he": {
+          "title": "פולס בכל עלייה חמישית של אות קלט",
+          "prompt": "בעזרת מונה בן שלושה ביטים בעל EN,clk,RST ויציאות Q2,Q1,Q0, ומעט לוגיקה נוספת, תכננו מערכת שמוציאה pulse=1 למשך מחזור שעון יחיד על כל עלייה חמישית של אות קלט x. עלייה פירושה מעבר מדגימה 0 לדגימה 1, ולא חמישה מחזורים שבהם x נשאר גבוה. הציגו מעגל, טבלת עדכון ועקבת מחזורים.\n\nהבהרות שנוספו: x סינכרוני ל־clk ומקיים setup/hold. כל המצב מתעדכן בחזית העולה של clk; אין להשתמש ב־x כשעון. RST חיצוני פעיל בגבוה, סינכרוני ובעל עדיפות, ומאפס את זיכרון הדגימה הקודמת, המונה והפולס. המונה הנתון מגדיל את Q כשה־EN=1 וניתן לאפסו סינכרונית; אפשר להוסיף FF ושערים. pulse רשום וגבוה במחזור שמתחיל מיד אחרי החזית שבה נדגמה העלייה החמישית. נדרשת חזית איפוס לפני שימוש; x=1 בדגימה הראשונה לאחר האיפוס ייחשב לעלייה משום שהדגימה הקודמת אופסה ל־0.",
+          "hint": "איך תבדילו בין עלייה חדשה לבין קלט שכבר היה גבוה גם במחזור הקודם?",
+          "hints": [
+            "איך תבדילו בין עלייה חדשה לבין קלט שכבר היה גבוה גם במחזור הקודם?",
+            "שמרו דגימה קודמת ב־FF, ועדכנו את המונה רק כשיש 0→1 בין הדגימות.",
+            "ספרו אירועים במצבים 0–4. אם מגיע אירוע כשהמצב הישן הוא 4, אפסו רק את המונה והוציאו פולס רשום; זיכרון הדגימה הקודמת ממשיך לקבל x בכל מחזור."
+          ],
+          "reference_solution": "### מפרידים גילוי אירוע מספירתו\n\nנשמור previous, דגימת x מהחזית הקודמת. לפני החזית מחשבים e=x AND NOT previous. כל עוד x נשאר 1, אחרי החזית הראשונה previous=1 ולכן אין אירועים נוספים. נשמור count בטווח 0–4 כמספר העליות מאז הפולס האחרון, מודולו 5.\n\n```text\ne = x AND NOT previous\npulse_next = e AND (count == 4)\ncount_next = 0 if pulse_next else count + e\nprevious_next = x\n```\n\nכל צד ימין מחושב מהמצב הישן. ב־RST חיצוני מציבים previous=count=pulse=0. בכל חזית אחרת FF הפולס מקבל pulse_next, FF הדגימה מקבל x והמונה מתעדכן. למונה הנתון מחברים EN=e ו־RST_counter=RST_external OR (e AND count==4), בהנחה המפורשת של איפוס סינכרוני שגובר על EN. איפוס סיום הספירה אינו מאפס את previous ואינו מאפס את FF הפולס: ה־FF הזה צריך דווקא לקלוט 1 בחזית החמישית. למימוש עם איפוס אסינכרוני נדרש תכנון אחר; אין להעתיק אליו את החיבור הזה באופן עיוור.\n\n### טבלת עדכון מלאה למצב חוקי\n\n| count לפני | e=0: count אחרי / pulse | e=1: count אחרי / pulse |\n| --- | --- | --- |\n| 0 | 0 / 0 | 1 / 0 |\n| 1 | 1 / 0 | 2 / 0 |\n| 2 | 2 / 0 | 3 / 0 |\n| 3 | 3 / 0 | 4 / 0 |\n| 4 | 4 / 0 | 0 / 1 |\n\nבכל שורה previous מקבל x. RST=1 גובר על כל שורה ומאפס את שלושת משתני המצב. המצבים 5–7 אינם מגיעים אחרי איפוס במודל התקין; לא הוגדרה התאוששות מהזרקת תקלה למונה.\n\n### עקבה ודוגמה\n\n| דגימה | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| x | 0 | 1 | 1 | 0 | 1 | 0 | 1 | 0 | 1 | 0 | 1 | 1 | 0 |\n| e | 0 | 1 | 0 | 0 | 1 | 0 | 1 | 0 | 1 | 0 | 1 | 0 | 0 |\n| count אחרי | 0 | 1 | 1 | 1 | 2 | 2 | 3 | 3 | 4 | 4 | 0 | 0 | 0 |\n| pulse אחרי | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |\n\nבדגימה 10 מתקבלת העלייה החמישית. pulse=1 עד החזית הבאה, גם אם x נשאר גבוה בדגימה 11; אז previous כבר 1 והפולס חוזר ל־0. השארת x=1 למאה מחזורים יוצרת אירוע אחד בלבד.\n\n### נכונות ועלות\n\nבאינדוקציה, previous הוא הדגימה הקודמת, ו־count הוא מספר אירועי 0→1 שנדגמו מאז איפוס, מודולו 5. לכן count=4 ואירוע חדש הם בדיוק כל אירוע חמישי. FF הפולס מקבל 0 בכל חזית שאינה כזאת, ולכן משכו מחזור אחד. העלות במימוש היא 3 ביטי מונה, FF לדגימה קודמת ו־FF לפולס, יחד 5 ביטי מצב ולוגיקה לגילוי חזית ופענוח 4. זו עלות המימוש, לא הוכחת מינימום שטח.\n\nאימות Python מול אורקל של רשימת אירועים עבר על כל 8,191 רצפי הקלט באורכים 0–12, על 16,384 רצפי קלט/איפוס באורך 7 ועל 200 רצפים מדגמיים בני 1,000 מחזורים. SystemVerilog צורף אך לא קומפל ולא סומלץ. אין כאן הוכחה ללכידת פולס אסינכרוני קצר או בדיקת מטסטביליות. הפתרון מוצע וממתין לביקורת מקצועית."
+        },
+        "en": {
+          "title": "One pulse for every fifth input rising edge",
+          "prompt": "Using a three-bit counter with EN,clk,RST and outputs Q2,Q1,Q0 plus additional logic, design a system that asserts pulse for exactly one clock cycle on every fifth rising edge of input x. An input rise is a sampled zero-to-one transition, not five cycles spent high. Show a circuit, update table and clock trace.\n\nEditorial clarifications: x is synchronous to clk and meets setup/hold. All state updates on rising clk; do not use x as a clock. External RST is synchronous, active high and has priority, clearing the previous sample, counter and pulse. The given counter increments when EN=1 and supports synchronous reset; extra flip-flops and gates are allowed. pulse is registered and high during the cycle immediately following the edge that samples the fifth rise. A reset edge is required before use; a high first post-reset sample counts as a rise because the previous sample was cleared to zero.",
+          "hint": "How can you distinguish a new rise from an input that was already high last cycle?",
+          "hints": [
+            "How can you distinguish a new rise from an input that was already high last cycle?",
+            "Store the previous sample in a flip-flop; enable counting only on a sampled zero-to-one transition.",
+            "Count events in states zero through four. An event from old count four resets the counter and registers a pulse; the previous-sample flip-flop still updates with x every clock."
+          ],
+          "reference_solution": "### Separate event detection from counting\n\nStore previous, the input sampled on the prior clock edge. Before the edge compute e=x AND NOT previous. If x stays high, previous becomes one after the first sample and no additional events occur. Keep count in zero through four as the sampled-rise count modulo five.\n\n```text\ne = x AND NOT previous\npulse_next = e AND (count == 4)\ncount_next = 0 if pulse_next else count + e\nprevious_next = x\n```\n\nAll right-hand sides use old state. External reset sets previous=count=pulse=0. Otherwise the pulse flip-flop captures pulse_next, the history flip-flop captures x, and the counter updates. For the supplied macro connect EN=e and RST_counter=RST_external OR (e AND count==4), under the explicit synchronous-reset-over-enable assumption. The terminal-count reset must not clear previous or reset the pulse flip-flop: that flip-flop must capture one on the fifth event. An asynchronous-reset macro requires a different design; do not copy this connection blindly.\n\n### Complete legal-state update table\n\n| Old count | e=0: new count / pulse | e=1: new count / pulse |\n| --- | --- | --- |\n| 0 | 0 / 0 | 1 / 0 |\n| 1 | 1 / 0 | 2 / 0 |\n| 2 | 2 / 0 | 3 / 0 |\n| 3 | 3 / 0 | 4 / 0 |\n| 4 | 4 / 0 | 0 / 1 |\n\nEvery row updates previous to x. RST=1 overrides the table and clears all three state variables. Counter encodings five through seven are unreachable after reset in the healthy model; injected-invalid-state recovery is not specified.\n\n### Complete example trace\n\n| Sample | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| x | 0 | 1 | 1 | 0 | 1 | 0 | 1 | 0 | 1 | 0 | 1 | 1 | 0 |\n| e | 0 | 1 | 0 | 0 | 1 | 0 | 1 | 0 | 1 | 0 | 1 | 0 | 0 |\n| New count | 0 | 1 | 1 | 1 | 2 | 2 | 3 | 3 | 4 | 4 | 0 | 0 | 0 |\n| New pulse | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |\n\nThe fifth rise is sampled at index ten. pulse stays high until the next edge even though x remains high at sample eleven; previous is already one and the pulse returns to zero. Holding x high for one hundred cycles produces just one event.\n\n### Correctness and cost\n\nInductively, previous equals the prior sample and count is the number of sampled zero-to-one events since reset modulo five. Thus old count four plus a new event identifies exactly every fifth event. The pulse register captures zero on every other edge, giving one-clock duration. This construction uses three counter bits, one history bit and one pulse bit: five state bits plus edge-detection and count-four decode logic. This is a construction cost, not a minimum-area proof.\n\nPython comparison against an independent event-list oracle passed all 8,191 input sequences of lengths zero through twelve, all 16,384 input/reset sequences of length seven, and 200 sampled one-thousand-cycle traces. Supplied SystemVerilog was not compiled or HDL-simulated. This does not verify capture of narrow asynchronous pulses or metastability. Professional review remains pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-078-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "איך תבדילו בין עלייה חדשה לבין קלט שכבר היה גבוה גם במחזור הקודם?"
+        },
+        {
+          "id": "PREP-078-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "שמרו דגימה קודמת ב־FF, ועדכנו את המונה רק כשיש 0→1 בין הדגימות."
+        },
+        {
+          "id": "PREP-078-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "ספרו אירועים במצבים 0–4. אם מגיע אירוע כשהמצב הישן הוא 4, אפסו רק את המונה והוציאו פולס רשום; זיכרון הדגימה הקודמת ממשיך לקבל x בכל מחזור."
+        },
+        {
+          "id": "PREP-078-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "How can you distinguish a new rise from an input that was already high last cycle?"
+        },
+        {
+          "id": "PREP-078-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Store the previous sample in a flip-flop; enable counting only on a sampled zero-to-one transition."
+        },
+        {
+          "id": "PREP-078-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Count events in states zero through four. An event from old count four resets the counter and registers a pulse; the previous-sample flip-flop still updates with x every clock."
+        }
+      ],
+      "assumptions": [
+        "x is synchronous to clk and meets setup/hold; count sampled zero-to-one transitions, not high duration.",
+        "External reset is synchronous active high with priority; reset edge required before use.",
+        "previous resets to zero, so a first high post-reset sample counts as a rise.",
+        "Three-bit enable counter supports synchronous reset; extra gates and flip-flops allowed.",
+        "Registered pulse lasts the cycle following each sampled fifth rise."
+      ],
+      "optimality": {
+        "criterion": "State bits in this particular construction.",
+        "result": "Three counter bits plus previous and pulse: five bits, with O(1) edge update.",
+        "proof": "Five count values use three bits; history and registered output are stored separately.",
+        "scope": "No minimum gate-count, area or delay claim."
+      },
+      "verification": "Passed all 8,191 binary input sequences of lengths zero through twelve, 16,384 input/reset sequences of length seven and 200 one-thousand-cycle traces against an event-list oracle. Held-high input checked. Python model only; SystemVerilog uncompiled and not HDL-simulated.",
+      "edge_cases": [
+        "Five consecutive high cycles are one event.",
+        "The fifth-event pulse clears on the next edge even if x stays high.",
+        "External reset overrides a fifth event and an existing high pulse.",
+        "Modulo-five rollover does not reset previous.",
+        "A rise and fall between sampling edges is not guaranteed to be captured."
+      ],
+      "common_mistakes": [
+        "Driving EN directly with x counts high cycles instead of rises.",
+        "Resetting previous on every fifth event recounts a held-high signal.",
+        "Decoding count four from updated state without defining edge semantics.",
+        "Using x as a derived clock without a timing contract.",
+        "Assuming two synchronizer flip-flops capture every narrow pulse."
+      ],
+      "interview_answer": "Store the previous sample and compute e=x AND NOT previous. Enable the counter only on e. An event from old count four resets the counter and loads one into the pulse register; other cycles load zero. Always update previous, so a held-high input is never counted again.",
+      "solution_extensions": {
+        "question": "What if x is asynchronous or a narrow pulse?",
+        "direction": "A two-flop level synchronizer reduces metastability risk but may miss narrow pulses. Use stretching, toggle encoding or a handshake according to rate/loss requirements, with CDC analysis. This circuit alone does not guarantee event capture.",
+        "status": "Prepared in content, not connected to the live follow-up queue."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_078_fifth_rise.py",
+      "solution_code_paths": [
+        "solutions/prep_078_fifth_rise.py",
+        "solutions/prep_078_fifth_rise.sv"
+      ],
+      "verification_script_path": "checks/check_prep_078.py",
+      "verification_evidence_path": "checks/prep-078-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-078-source.png"
+        },
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-078-counter-prompt-he.png",
+          "language": "he",
+          "description": "ממשק המונה הנתון, שרטוט נקי"
+        },
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-078-counter-prompt-en.png",
+          "language": "en",
+          "description": "Redrawn given counter interface"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-078-fifth-edge-solution-he.png",
+          "language": "he",
+          "description": "גילוי עלייה וספירה מודולו חמש"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-078-fifth-edge-solution-en.png",
+          "language": "en",
+          "description": "Rise detection and modulo-five counting"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-078-cycle-trace-he.png",
+          "language": "he",
+          "description": "עקבת דגימות מלאה עד הפולס החמישי"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-078-cycle-trace-en.png",
+          "language": "en",
+          "description": "Complete sampled trace through the fifth rise"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-042",
+        "PREP-048",
+        "PREP-064"
+      ],
+      "duplicate_check": "PREP-042 detects every rise; PREP-048 counts pulses modulo three. This variation counts every fifth sampled input rise, retains input history through rollover and registers an exact one-clock pulse.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Foundational verification contracts and synchronous reasoning; company associations are source-reported only."
+      },
+      "markdown_path": "questions/prep-078-every-fifth-input-rising-edge-counter.md"
+    },
+    {
+      "id": "PREP-079",
+      "key": "cyclic-three-player-probability-game",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "logic",
+      "topic": "probability",
+      "topics": [
+        "logic",
+        "probability",
+        "conditional_probability",
+        "geometric_series",
+        "game_theory"
+      ],
+      "source_topic_tags": [
+        "logic"
+      ],
+      "added_topic_tags": [
+        "probability",
+        "conditional_probability",
+        "geometric_series",
+        "game_theory"
+      ],
+      "source_tags": [
+        "intel",
+        "logic"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "logic_puzzle",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted complete bilingual proposed solution and executed independent checks. Professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-079-source.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "אתה עומד במעגל עם עוד שני אקדוחנים, לכל אחד אקדח. אתה פוגע ב10% מהמקרים, אקדוחן א פוגע ב50% מהמקרים ואקדוחן ב פוגע ב90% מהמקרים.\nהמטרה היא להישאר בחיים אחרון.\nלצורך הוגנות, הוחלט שסדר הירי הוא לפי אחוזי הדיוק, כך שאתה יורה ראשון, אקדוחן א אחריך ואקדוחן ב אחריו - כך עד שנשאר רק אחד מכם.\nמה הטקטיקה שלך? לאן אתה מכוון את היריות?",
+      "translations": {
+        "he": {
+          "title": "משחק שלושה שחקנים — מתי כדאי להחטיא בכוונה?",
+          "prompt": "במשחק הסתברותי שלושה שחקנים A,B,C. בתורו כל שחקן בוחר יריב ומנסה להוציאו מהמשחק, או בוחר להחטיא בכוונה. הסתברות ההצלחה בניסיון נגד יריב היא 10% עבור A, 50% עבור B ו־90% עבור C, קבועה ובלתי תלויה בניסיונות אחרים וביריב שנבחר. המטרה של כל שחקן היא להיות השורד היחיד.\n\nסדר התורות מחזורי A→B→C, מדלגים על שחקן שיצא, ו־A מתחיל. ממשיכים עד שנשאר שחקן אחד. מה כדאי ל־A לעשות בתור הראשון ובהמשך כאשר שלושתם עדיין במשחק? נמקו גם את בחירות B,C הרציונליים וחשבו את סיכוי A לזכות.\n\nהבהרות שנוספו בעריכה: תור אחד הוא ניסיון אחד; כישלון או החטאה מכוונת מעבירים תור; מותר להחטיא בכוונה גם בהמשך; אין שיתוף פעולה או שינוי אחוזי הצלחה. בוחנים מדיניות קבועה התלויה במשתתפים שנותרו ובתור הנוכחי. זהו מודל מופשט של חידת המקור, לא הנחיות לאירוע אמיתי.",
+          "hints": [
+            "הוצאה של יריב אינה בהכרח שיפור: מי יקבל את התור הבא ומה יישאר ממנו לעשות?",
+            "תחילה חשבו סיכוי ניצחון במשחק של שניים, כאשר השחקן החלש מתחיל לעומת כשהוא שני.",
+            "השוו שלוש אפשרויות של A: ניסיון נגד B, ניסיון נגד C, והחטאה. אם A נמנע, בדקו את תוצאת המאבק בין B,C ואת זהות המתחיל במשחק הזוגי שנוצר."
+          ],
+          "reference_solution": "### מתחילים ממשחק של שניים\n\nשחקן בעל הצלחה p מול שחקן q, כאשר הראשון מקבל תור, מנצח בהסתברות U=p+(1−p)(1−q)U. לכן U=p/(p+q−pq). אם היריב מתחיל, ההסתברות היא (1−q)p/(p+q−pq). אלו סכומים של מספר בלתי חסום של סבבים; לא מספיק לחשב רק ניסיון אחד לכל שחקן. כשהיריב יחיד, ניסיון אמיתי עדיף מהחטאה מכוונת: החטאה מוותרת על הסיכוי המיידי ומוסרת תור.\n\nל־A יש מול B סיכוי 2/11 אם A מתחיל ו־1/11 אם B מתחיל. מול C הסיכויים הם 10/91 אם A מתחיל ו־1/91 אם C מתחיל. ההבדל בסדר התור מהותי.\n\n### המדיניות המוצעת ובדיקת היריבים\n\nכל עוד שלושתם במשחק: A מחטיא בכוונה, B מנסה להוציא את C, ו־C מנסה להוציא את B. כשנותרים שניים, כל אחד מנסה להוציא את היריב. אין להניח אוטומטית שתמיד מוציאים את החזק: צריך לבדוק שזו אכן בחירה רציונלית תחת סדר התורות וההסתברויות.\n\nהטבלה הבאה נותנת לכל שחקן, בתורו כאשר שלושתם קיימים, את סיכוי הניצחון לאחר פעולה אחת ואז חזרה למדיניות המוצעת. כל השברים חושבו ממשוואות המעבר, לא מסימולציית מדגם.\n\n| בתורו של | החטאה מכוונת | נגד A | נגד B | נגד C |\n| --- | --- | --- | --- | --- |\n| A | 2810/19019 | — | 25499/190190 | 27019/190190 |\n| B | 9/209 | 10/209 | — | 90/209 |\n| C | 729/1729 | 810/1729 | 1458/1729 | — |\n\nבכל שורה הפעולה המוצעת נותנת את הערך הגדול ביותר. הבדיקה כוללת את בחירות B,C ולא רק את A. פתרון משוואות לכל 26 המדיניות הדטרמיניסטיות הקבועות שבהן לא כולם מחטיאים מצא מדיניות יחידה במחלקה זו ללא שיפור חד־צעד בכל מצב. מדיניות שבה כולם מחטיאים אינה מסתיימת ואינה יכולה להיות מאוזנת: כל שחקן יכול לנסות ולהשיג סיכוי חיובי לניצחון. אין בכך טענה שכל אסטרטגיה מעורבת או תלויה בהיסטוריה הוכחה כיחידה.\n\n### חישוב הסיכוי של A כשהוא מחטיא\n\nאחרי החטאת A מגיע B. במחזור B,C, ההסתברות ש־B יוציא את C לפני ש־C יוציא את B היא\n\n```text\nw_B = 0.5 + (0.5*0.1)*w_B = 10/19\nw_C = 1-w_B = 9/19\n```\n\nה־0.5*0.1 הוא מצב שבו שניהם לא הצליחו והמצב חוזר אחרי החטאה נוספת של A. בכל יציאה ראשונה של אחד מהם A מקבל את התור הראשון מול השורד: אם B הצליח, C מדולג; אם C הצליח, A הוא הבא ממילא. לכן\n\n```text\nV = (10/19)*(2/11) + (9/19)*(10/91)\n  = 2810/19019 ≈ 0.14774699 = 14.7747%\n```\n\n### השוואה לניסיון אמיתי בתור הראשון\n\nאם A מנסה נגד C ומצליח, B מתחיל את המשחק הזוגי נגד A, שנותר עם סיכוי 1/11. אם A נכשל, התור עובר ל־B ואותה מדיניות נמשכת; זה בדיוק המצב שאליו מגיעים אחרי החטאה מכוונת. לכן ערך הפעולה הוא (1/10)*(1/11)+(9/10)*V=27019/190190≈14.2063%.\n\nאם A מנסה נגד B ומצליח, C מתחיל את המשחק הזוגי וסיכוי A הוא 1/91. הערך הוא (1/10)*(1/91)+(9/10)*V=25499/190190≈13.4071%. שתי האפשרויות קטנות מ־V. התוצאה המפתיעה אינה ״החטאה טובה תמיד״: היא תלויה בשלושה שחקנים, בתורות ובהסתברויות הנתונים. לאחר היציאה הראשונה A כבר צריך לנסות נגד היריב היחיד.\n\n### איך אומת המודל ומה לא נטען\n\nבקוד הפתרון חושבו משוואות מחזוריות בחשבון Fraction מדויק. בדיקה נפרדת בנתה שרשרת מרקוב בתשעה מצבים חולפים — שלושה תורות עם שלושתם ושישה תורות בזוגות — ופתרה משוואות ספיגה באלימינציה גאוסית. הושוו כל שלושת סיכויי הזוכים בכל תור עבור כל 26 המדיניות המסתיימות. נבדקו כל תשע הפעולות האפשריות כסטייה חד־צעד במדיניות המוצעת וששת מצבי התור בזוגות. ההצלחה חיובית וקבועה, ולכן במדיניות זו ההסתברות להמשיך ללא סוף היא 0.\n\nאין מדובר באימות של מצב אמיתי או באישור אנושי. לא נטען אופטימום עבור הסתברויות אחרות, בריתות, ירי בו־זמני, מספר סופי של ניסיונות או תגובות לא רציונליות. הפתרון המוצע שייך רק למשחק המופשט שהוגדר.\n",
+          "hint": "הוצאה של יריב אינה בהכרח שיפור: מי יקבל את התור הבא ומה יישאר ממנו לעשות?"
+        },
+        "en": {
+          "title": "Three-player probability game — when is a deliberate miss better?",
+          "prompt": "An abstract probability game has players A,B,C. On a turn, a player either selects an opponent and attempts to eliminate them or deliberately misses. Success probabilities against an opponent are 10% for A, 50% for B and 90% for C, fixed and independent across attempts and targets. Each player's goal is to be the sole survivor.\n\nTurns cycle A→B→C, skipping eliminated players, and A starts. Continue until one player remains. What should A do initially and whenever all three remain? Justify the rational choices of B,C as well and compute A's winning probability.\n\nEditorial clarifications: one attempt per turn; failure or deliberate miss passes the turn; deliberate misses remain available later; there is no cooperation or changing accuracy. Analyze stationary policies depending on surviving players and the current turn. This is an abstract model of the source puzzle, not instructions for a real event.",
+          "hints": [
+            "Eliminating an opponent need not help: who acts next, and whom will they face?",
+            "First calculate two-player winning probabilities when the weaker player starts versus when they act second.",
+            "Compare A's three choices: attempt B, attempt C, or miss. If A abstains, analyze B versus C and identify who starts the resulting duel."
+          ],
+          "reference_solution": "### Start with two players\n\nA player with success p against q, acting first, wins with U=p+(1−p)(1−q)U. Thus U=p/(p+q−pq). If the opponent acts first, the probability is (1−q)p/(p+q−pq). These sum an unbounded number of rounds; considering one attempt per player is insufficient. With only one opponent, attempting is better than deliberately missing, which forfeits the immediate success chance and passes the turn.\n\nA's chance against B is 2/11 if A starts and 1/11 if B starts. Against C it is 10/91 if A starts and 1/91 if C starts. Turn order matters substantially.\n\n### Proposed policy and checking the other players\n\nWhile all three remain, A deliberately misses, B attempts C and C attempts B. Once only two remain, both attempt the other. Do not assume everyone always targets the strongest: rationality must be checked for the actual turn order and probabilities.\n\nThis table gives each player's winning probability at their all-alive turn after taking one action, then returning to the proposed continuation policy. Fractions come from first-step equations rather than sampled simulation.\n\n| Current actor | Deliberate miss | Target A | Target B | Target C |\n| --- | --- | --- | --- | --- |\n| A | 2810/19019 | — | 25499/190190 | 27019/190190 |\n| B | 9/209 | 10/209 | — | 90/209 |\n| C | 729/1729 | 810/1729 | 1458/1729 | — |\n\nThe proposed action is strictly best in every row. This checks B and C as well as A. Evaluating all 26 terminating deterministic stationary policies finds one policy in that class with no profitable one-step action deviation in any state. All-miss never terminates and cannot be an equilibrium: a player can attempt and gain a positive winning chance. This does not prove uniqueness over all mixed or history-dependent strategies.\n\n### A's probability after deliberately missing\n\nB acts after A's miss. In the B,C cycle, the probability that B eliminates C before C eliminates B is\n\n```text\nw_B = 0.5 + (0.5*0.1)*w_B = 10/19\nw_C = 1-w_B = 9/19\n```\n\nThe 0.5*0.1 term means both failed, after which another A miss restores the same state. Whichever player is first eliminated, A acts first against the survivor: C is skipped if B succeeded; A is already next if C succeeded. Hence\n\n```text\nV = (10/19)*(2/11) + (9/19)*(10/91)\n  = 2810/19019 ≈ 0.14774699 = 14.7747%\n```\n\n### Compare a real attempt on the first turn\n\nIf A attempts C and succeeds, B starts the duel against A, leaving A a chance of 1/11. If A fails, B acts with all three alive, exactly the continuation after A deliberately misses. The action value is (1/10)*(1/11)+(9/10)*V=27019/190190≈14.2063%.\n\nIf A attempts B and succeeds, C starts the duel, leaving A a chance of 1/91. The value is (1/10)*(1/91)+(9/10)*V=25499/190190≈13.4071%. Both are below V. The lesson is not that missing is always good: it relies on these three players, cyclic turns and probabilities. After the first elimination A should attempt the sole remaining opponent.\n\n### Verification and limits\n\nThe solution evaluates cyclic recurrences using exact Fraction arithmetic. An independent check builds a nine-transient-state absorbing Markov chain: three all-alive turn states and six two-player turn states. It solves the absorption equations with Gaussian elimination and compares all three winner probabilities from every all-alive turn for all 26 terminating policies. All nine one-step choices at the proposed policy and all six duel turn states were checked. Positive fixed success rates imply that this policy continues forever with probability zero.\n\nThis is not a model validated for a real event or a human professional approval. No optimum is claimed for different probabilities, alliances, simultaneous actions, a finite attempt budget or irrational responses. The proposed solution applies only to the specified abstract game.\n",
+          "hint": "Eliminating an opponent need not help: who acts next, and whom will they face?"
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-079-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "הוצאה של יריב אינה בהכרח שיפור: מי יקבל את התור הבא ומה יישאר ממנו לעשות?"
+        },
+        {
+          "id": "PREP-079-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "תחילה חשבו סיכוי ניצחון במשחק של שניים, כאשר השחקן החלש מתחיל לעומת כשהוא שני."
+        },
+        {
+          "id": "PREP-079-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "השוו שלוש אפשרויות של A: ניסיון נגד B, ניסיון נגד C, והחטאה. אם A נמנע, בדקו את תוצאת המאבק בין B,C ואת זהות המתחיל במשחק הזוגי שנוצר."
+        },
+        {
+          "id": "PREP-079-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Eliminating an opponent need not help: who acts next, and whom will they face?"
+        },
+        {
+          "id": "PREP-079-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "First calculate two-player winning probabilities when the weaker player starts versus when they act second."
+        },
+        {
+          "id": "PREP-079-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Compare A's three choices: attempt B, attempt C, or miss. If A abstains, analyze B versus C and identify who starts the resulting duel."
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_079_cyclic_probability_game.py",
+      "solution_code_paths": [
+        "solutions/prep_079_cyclic_probability_game.py"
+      ],
+      "verification_script_path": "checks/check_prep_079.py",
+      "verification_evidence_path": "checks/prep-079-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-079-source.png"
+        }
+      ],
+      "markdown_path": "questions/prep-079-cyclic-three-player-probability-game.md",
+      "related_question_ids": [],
+      "duplicate_check": "Reviewed preparation and example/verification title+prompt contracts for cyclic three-player probability/truel equivalents. Existing logic games have different deterministic objectives; no duplicate found. Source terminology retained privately; learner copy defines an abstract elimination game.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Contract clarification, invariant/probability reasoning and explicit cost/verification scope; company attribution is a source report only."
+      },
+      "assumptions": [
+        "Cyclic A,B,C turns skip eliminated players; A starts and one attempt occurs per turn.",
+        "Independent successes have fixed probabilities 1/10,1/2,9/10 independent of the chosen target.",
+        "Deliberate miss is allowed; maximize sole-survivor probability with no alliances or finite attempt budget.",
+        "Analyze deterministic stationary policies by survivors and turn; no uniqueness claim over every possible strategy."
+      ],
+      "optimality": {
+        "criterion": "A's winning probability in the specified abstract game with the checked rational continuation.",
+        "result": "A misses while all three remain; B targets C and C targets B. A wins with 2810/19019≈14.7747%.",
+        "proof": "Duel and cyclic recurrences give continuation values; all nine one-step comparisons favor the policy. All 26 terminating deterministic stationary policies were evaluated.",
+        "scope": "No uniqueness claim for all mixed/history-dependent equilibria or optimum under changed game rules."
+      },
+      "verification": "All 26 terminating policies matched an independent nine-state exact-Fraction Markov linear system; nine action values at the proposed policy and six duel turn states passed. No random sampling, real-world verification or human professional approval.",
+      "edge_cases": [
+        "Once a sole opponent remains, A should attempt rather than continue missing.",
+        "Failed attempts repeat cycles, requiring geometric sums rather than one-round calculations.",
+        "All-miss is nonabsorbing and awards no sole-survivor win.",
+        "Forbidding misses or changing turn order creates a different problem."
+      ],
+      "common_mistakes": [
+        "Ignoring who acts first after the first elimination.",
+        "Assuming rational B,C targets without comparing their alternatives.",
+        "Summing only the first round.",
+        "Generalizing that missing is always better or the weakest always has the highest winning chance."
+      ],
+      "interview_answer": "Miss while all three remain under the specified rational continuation. B and C prefer to eliminate each other; after either succeeds I act first against the survivor. Duel/cycle equations give 2810/19019≈14.77%, above attempting C≈14.21% or B≈13.41%. With one opponent left, attempt them.",
+      "solution_extensions": {
+        "question": "How would you check whether a deliberate miss remains better for three different success probabilities?",
+        "direction": "Recompute duel probabilities and post-success turn order, solve cyclic equations for candidate policies and compare every player's actions. Do not reuse the same targets or 14.77% result without checking.",
+        "status": "Prepared as content; not connected to the interactive follow-up queue."
+      }
+    },
+    {
+      "id": "PREP-080",
+      "key": "count-primes-sieve",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "software",
+      "topic": "arrays_and_search",
+      "topics": [
+        "software",
+        "number_theory",
+        "sieve",
+        "arrays",
+        "complexity"
+      ],
+      "source_topic_tags": [
+        "software"
+      ],
+      "added_topic_tags": [
+        "number_theory",
+        "sieve",
+        "arrays",
+        "complexity"
+      ],
+      "source_tags": [
+        "apple",
+        "vayyar",
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Apple",
+        "Vayyar"
+      ],
+      "source_company_badge": "Nvidia",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "coding",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted complete bilingual proposed solution and executed independent checks. Professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-080-source.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "כתוב קוד כמה שיותר יעיל, שמקבל מספר שלם וקובע כמה מספרים ראשוניים קיימים מ1 עד n.",
+      "translations": {
+        "he": {
+          "title": "ספירת ראשוניים עד n בעזרת נפת ארטוסתנס",
+          "prompt": "כתבו פונקציה יעילה שמקבלת מספר שלם אי־שלילי n ומחזירה כמה מספרים ראשוניים יש בתחום 1..n, כולל n. מספר ראשוני הוא שלם גדול מ־1 שמתחלק רק ב־1 ובעצמו. עבור n<2 מחזירים 0.\n\nהסבירו איך נמנעים מבדיקת כל מחלק לכל מספר, מדוע מותר להתחיל לסמן מכפולות ב־p², ומה סיבוכיות הזמן והמקום. הבהרות שנוספו בעריכה: מבוקשת ספירה, לא בדיקת ראשוניות של n בלבד; מותר מערך עזר כאשר הוא נכנס בזיכרון. אין דרישה לאלגוריתם המהיר ביותר לכל גודל n או לחשבון מקורב.",
+          "hints": [
+            "במקום לבדוק כל מספר מחדש, אפשר לזכור אילו מספרים כבר ידוע שאינם ראשוניים.",
+            "כאשר p טרם נפסל, סמנו את כל הכפולות שלו. איזו כפולה ראשונה עדיין יכולה להיות חדשה?",
+            "לכל פריק יש מחלק ראשוני שאינו גדול מהשורש שלו. סמנו p*p,p*p+p,... ורק עבור p שעדיין מסומן כראשוני."
+          ],
+          "reference_solution": "### עוברים מבדיקות חוזרות לסימון משותף\n\nבדיקת כל מספר k באמצעות מחלקים עד √k היא התחלה נכונה, אבל חוזרת שוב ושוב על אותה עבודה. בנפה שומרים byte לכל מספר: בהתחלה 2..n הם מועמדים. 0 ו־1 אינם ראשוניים, ולכן מאפסים אותם. כשמגיעים למועמד p שעדיין מסומן, הוא ראשוני; מסמנים את מכפלותיו כפריקות.\n\n### למה מתחילים ב־p² ועוצרים ב־√n?\n\nמכפלה p*k שבה 2≤k<p כבר נפסלה בגלל מחלק ראשוני של k, שהוא קטן מ־p. לכן המכפלה הראשונה שיכולה להוסיף מידע היא p*p. אם m פריק, אפשר לכתוב m=u*v עם 2≤u≤v, ולכן u≤√m. ל־u יש מחלק ראשוני שאינו גדול ממנו. מכאן שכל פריק עד n ייפסל עד שמסיימים לטפל ב־p≤√n. שימוש ב־isqrt נותן שורש שלם מדויק בלי עיגול של float.\n\n### מימוש פייתון\n\n```python\n\"\"\"Count primes in the inclusive interval [1,n] with Eratosthenes' sieve.\"\"\"\n\nfrom math import isqrt\n\n\ndef count_primes(n: int) -> int:\n    if type(n) is not int or n < 0:\n        raise ValueError(\"n must be a nonnegative integer\")\n    if n < 2:\n        return 0\n    prime = bytearray(b\"\\x01\") * (n + 1)\n    prime[0] = prime[1] = 0\n    for p in range(2, isqrt(n) + 1):\n        if prime[p]:\n            for multiple in range(p * p, n + 1, p):\n                prime[multiple] = 0\n    return sum(prime)\n\n```\n\nבדוגמה n=10 מאפסים 0,1. עבור p=2 מסמנים 4,6,8,10; עבור p=3 מסמנים 9. נותרו 2,3,5,7 ולכן התוצאה 4. כאשר n=2 מוחזר 1; כאשר n=1 מוחזר 0. זהו תחום כולל: n ראשוני עצמו נספר.\n\n### נכונות\n\nלא נמחק ראשוני: כל מספר שסומן הוא מכפלה p*k כאשר k≥p≥2, ולכן פריק. כל פריק נמחק: בחרו את המחלק הראשוני הקטן ביותר p שלו. מתקיים p≤√m≤√n ו־m≥p²; כשהנפה מטפלת ב־p היא מגיעה ל־m. לכן בסיום מסומנים בדיוק הראשוניים, וסכום הבתים הוא מספרם.\n\n### עלות והיקף המילה ״יעיל״\n\nאתחול וספירה עולים O(n). סימון הכפולות עולה O(n log log n) פעולות במודל גישה למערך וחשבון בגודל מילה; סיבוכיות הנפה הכוללת היא O(n log log n), עם O(n) בתים לאחסון bytearray. כל תא כאן הוא בית, לא ביט אחד. בנפה דחוסה אפשר להגיע לכ־n ביטים, אך זה אינו המימוש שסופק. אינדקסים ולולאות מוסיפים רק מספר קבוע של משתני עבודה; אין מערך נוסף באורך n, וגם אין השמת slice שמייצרת זמנית רצף גדול.\n\nאין לטעון שהנפה היא תמיד האלגוריתם המהיר ביותר לספירת ראשוניים: עבור n עצום יש שיטות ספירה מתקדמות, ועבור מגבלת זיכרון יש נפה במקטעים. כאן זהו פתרון מדויק, מקובל וברור לתחום שמערך בגודלו נכנס בזיכרון. הקצאה עלולה להיכשל אם n גדול מדי.\n\nהקוד הושווה לאורקל עצמאי המבצע חילוק בניסיון לכל n מ־0 עד 2000, כולל גבולות וריבועי ראשוניים. נוספו נקודות בדיקה π(10)=4, π(100)=25, π(1000)=168, π(10000)=1229, π(100000)=9592, וחמש דחיות קלט לא תקין. אלו בדיקות דטרמיניסטיות סופיות; לא מבחן ביצועים או אישור אנושי.\n",
+          "hint": "במקום לבדוק כל מספר מחדש, אפשר לזכור אילו מספרים כבר ידוע שאינם ראשוניים."
+        },
+        "en": {
+          "title": "Count primes up to n with the Sieve of Eratosthenes",
+          "prompt": "Write an efficient function taking a nonnegative integer n and returning the number of primes in the inclusive interval 1..n. A prime is an integer greater than one divisible only by one and itself. Return zero for n<2.\n\nExplain how to avoid testing every divisor for every number, why marking may start at p², and the time/space costs. Editorial clarifications: count all primes through n, rather than only testing n; an auxiliary array is allowed when it fits memory. No claim of the globally fastest algorithm for every n or an approximate answer is required.",
+          "hints": [
+            "Rather than rechecking every number from scratch, remember numbers already known to be composite.",
+            "When p has not been ruled out, mark its multiples. Which is the first multiple that can still be new?",
+            "Every composite has a prime divisor no larger than its square root. Mark p*p,p*p+p,... only for p still flagged prime."
+          ],
+          "reference_solution": "### Share work by marking composites\n\nTesting each k by trial divisors through √k is a valid starting point, but repeats work. A sieve keeps one byte per number. Initially 2..n are candidates; clear zero and one because neither is prime. When a candidate p remains flagged, it is prime, so clear its composite multiples.\n\n### Why start at p² and stop at √n?\n\nA multiple p*k with 2≤k<p has already been cleared by a prime divisor of k smaller than p. Thus p*p is the first multiple that may add information. A composite m=u*v with 2≤u≤v has u≤√m; u has a prime divisor no larger than u. Therefore every composite through n is cleared after processing p≤√n. isqrt computes an exact integer square root without floating-point rounding.\n\n### Python implementation\n\n```python\n\"\"\"Count primes in the inclusive interval [1,n] with Eratosthenes' sieve.\"\"\"\n\nfrom math import isqrt\n\n\ndef count_primes(n: int) -> int:\n    if type(n) is not int or n < 0:\n        raise ValueError(\"n must be a nonnegative integer\")\n    if n < 2:\n        return 0\n    prime = bytearray(b\"\\x01\") * (n + 1)\n    prime[0] = prime[1] = 0\n    for p in range(2, isqrt(n) + 1):\n        if prime[p]:\n            for multiple in range(p * p, n + 1, p):\n                prime[multiple] = 0\n    return sum(prime)\n\n```\n\nFor n=10, clear zero and one. At p=2 mark 4,6,8,10; at p=3 mark nine. Flags remain for 2,3,5,7, so return four. n=2 returns one; n=1 returns zero. The upper endpoint is inclusive, so prime n itself counts.\n\n### Correctness\n\nNo prime is removed: every cleared number is p*k with k≥p≥2 and is composite. Every composite is removed: take its smallest prime divisor p. Then p≤√m≤√n and m≥p², so the marking loop for p visits m. Exactly the primes remain; summing the bytes counts them.\n\n### Cost and the scope of efficiency\n\nInitialization and counting cost O(n). Marking multiples takes O(n log log n) operations in a word-size arithmetic and random-access array model, giving O(n log log n) total time and O(n) bytes for this bytearray. A flag here uses one byte, not one bit. A packed implementation can approach n bits, but that is not this code. Loop/index variables are constant in number; there is no second length-n array or large temporary slice-assignment buffer.\n\nDo not claim the sieve is always the fastest way to count primes. Very large n admits more advanced counting algorithms; memory constraints can motivate a segmented sieve. This is an exact standard solution for a range whose array fits memory. Allocation may fail when n is too large.\n\nExecuted checks compare every endpoint 0..2000 with independent trial division, including boundaries and prime squares. Additional checkpoints are π(10)=4, π(100)=25, π(1000)=168, π(10000)=1229, π(100000)=9592, plus five invalid-input rejections. These are finite deterministic correctness tests, not a performance benchmark or human approval.\n",
+          "hint": "Rather than rechecking every number from scratch, remember numbers already known to be composite."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-080-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "במקום לבדוק כל מספר מחדש, אפשר לזכור אילו מספרים כבר ידוע שאינם ראשוניים."
+        },
+        {
+          "id": "PREP-080-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "כאשר p טרם נפסל, סמנו את כל הכפולות שלו. איזו כפולה ראשונה עדיין יכולה להיות חדשה?"
+        },
+        {
+          "id": "PREP-080-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "לכל פריק יש מחלק ראשוני שאינו גדול מהשורש שלו. סמנו p*p,p*p+p,... ורק עבור p שעדיין מסומן כראשוני."
+        },
+        {
+          "id": "PREP-080-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Rather than rechecking every number from scratch, remember numbers already known to be composite."
+        },
+        {
+          "id": "PREP-080-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "When p has not been ruled out, mark its multiples. Which is the first multiple that can still be new?"
+        },
+        {
+          "id": "PREP-080-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Every composite has a prime divisor no larger than its square root. Mark p*p,p*p+p,... only for p still flagged prime."
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_080_count_primes_sieve.py",
+      "solution_code_paths": [
+        "solutions/prep_080_count_primes_sieve.py"
+      ],
+      "verification_script_path": "checks/check_prep_080.py",
+      "verification_evidence_path": "checks/prep-080-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-080-source.png"
+        }
+      ],
+      "markdown_path": "questions/prep-080-count-primes-sieve.md",
+      "related_question_ids": [],
+      "duplicate_check": "Reviewed preparation and example/verification title+prompt contracts for prime counting/sieve equivalents. Divisor and parity puzzles are different contracts; no matching count-primes-through-n question found.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Contract clarification, invariant/probability reasoning and explicit cost/verification scope; company attribution is a source report only."
+      },
+      "assumptions": [
+        "n is an exact nonnegative integer; bool is rejected; count the inclusive interval 1..n.",
+        "A byte array of n+1 entries is allowed when it fits memory; input is not mutated.",
+        "Time analysis uses word-sized index arithmetic and constant-time array access."
+      ],
+      "optimality": {
+        "criterion": "Time and storage of the supplied Eratosthenes implementation.",
+        "result": "O(n log log n) operations and O(n) bytes.",
+        "proof": "Linear initialization/counting plus marking multiples of primes starting at their squares. Each composite is cleared by a prime divisor through its square root.",
+        "scope": "Not a global lower-bound/fastest-prime-counting claim or a practical runtime promise for every n."
+      },
+      "verification": "All 2001 endpoints 0..2000 matched independent trial division, plus five prime-count checkpoints through 100000 and five invalid-input rejections. Python executed; no performance benchmark or human review.",
+      "edge_cases": [
+        "n=0 or 1 returns zero; n=2 returns one.",
+        "A prime endpoint is counted; a prime square is marked composite.",
+        "Negative/noninteger n is rejected; a huge n may exceed available memory."
+      ],
+      "common_mistakes": [
+        "Counting one as prime or excluding endpoint n.",
+        "Starting at p itself and deleting a prime.",
+        "Repeating marking for already-composite p.",
+        "Claiming bytearray stores one bit per entry or that this sieve is always fastest."
+      ],
+      "interview_answer": "Flag 0..n, clear zero and one, and for each still-prime p through √n clear multiples starting at p². Every composite has a prime divisor through its square root, and no prime is removed. Sum flags: O(n log log n) time and O(n) bytes in this implementation.",
+      "solution_extensions": {
+        "question": "How can primes through n be counted when an n-sized array does not fit memory?",
+        "direction": "Generate base primes through √n, then sieve segments [L,R]. For each p mark from max(p²,ceil(L/p)*p). Accumulate counts without retaining all primes; choose a bounded segment and handle zero/one correctly.",
+        "status": "Prepared as content; not connected to the interactive follow-up queue."
+      }
+    },
+    {
+      "id": "PREP-081",
+      "key": "error-bit-window-monitor",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "hardware",
+      "topic": "debugging_methodology",
+      "topics": [
+        "hardware",
+        "debugging_methodology",
+        "counters",
+        "sliding_windows",
+        "verification"
+      ],
+      "source_topic_tags": [
+        "hardware"
+      ],
+      "added_topic_tags": [
+        "debugging_methodology",
+        "counters",
+        "sliding_windows",
+        "verification"
+      ],
+      "source_tags": [
+        "amazon",
+        "google",
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "Amazon",
+        "Google",
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "verification_design",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted bilingual proposed solution, authored diagrams and independent Python model checks. Professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-081-source.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "יש לך רכיב שיוצא ממנו ביט בדיקה שמוציא ERROR כאשר הוא מזהה בעיה. אתה צריך לכתוב פסאודו קוד כך שיבדוק האם במהלך 100K מחזורי שעון יש יותר מ־10 errors, אם כן להוציא הודעת Failed.",
+      "translations": {
+        "he": {
+          "title": "ניטור ERROR: יותר מעשר שגיאות ב־100,000 מחזורים",
+          "prompt": "מרכיב יוצא ביט ERROR, שערכו 1 בכל מחזור שבו מזוהה תקלה. כתבו פסאודו־קוד שדוגם אותו פעם אחת בכל מחזור שעון ובודק מקטעים עוקבים שאינם חופפים, כל אחד באורך בדיוק 100,000 מחזורים. בסיום כל מקטע, אם יותר מעשרה מהמחזורים שנדגמו בו היו ERROR=1, הפיקו הודעה Failed; אחרת Passed. הציגו טיפול נכון במחזור האחרון ובמקטע הבא.\n\nהבהרות שנוספו: סופרים מחזורים שבהם הביט גבוה, לא רק עליות של הביט; בדיוק עשר שגיאות מותרות. הספירה מתאפסת בתחילת כל מקטע. כל הדגימות בינאריות ומסונכרנות לשעון; קטע קלט אחרון שאורכו קטן מ־100,000 אינו תוצאה מלאה. כהרחבה, הסבירו כיצד תזהו חריגה בכל חלון זז של 100,000 מחזורים, והאם שתי הדרישות שקולות.",
+          "hint": "אילו שני דברים צריך לספור בנפרד: כמה זמן עבר וכמה דגימות היו 1?",
+          "hints": [
+            "אילו שני דברים צריך לספור בנפרד: כמה זמן עבר וכמה דגימות היו 1?",
+            "המחזור ה־100,000 עדיין שייך למקטע הנוכחי. עדכנו את ספירת השגיאות לפני ההשוואה ל־10.",
+            "למקטעים קבועים מספיקים שני מונים. בחלון זז, שגיאה ישנה צריכה לצאת מהחלון; אפשר לשמור רק את זמני 11 השגיאות האחרונות עד שהחריגה מתגלה."
+          ],
+          "reference_solution": "### קודם קובעים את משמעות החלון\n\nהמקור לא הבחין בין מקטעים קבועים לחלון זז. בנוסח הראשי בחרנו במפורש מקטעים של 100,000 דגימות: 0..99,999, ואז 100,000..199,999 וכן הלאה. אלה תנאים שונים מחלון שמסתיים בכל מחזור, ולכן ההרחבה מטופלת בנפרד. כמו כן, ERROR שנשאר 1 שלושה מחזורים מוסיף שלוש לספירה, לא אחת.\n\n### פתרון למקטעים קבועים\n\n```text\ncycles = 0; errors = 0\nforever:\n    wait for next rising clock edge\n    e = sample(ERROR)\n    cycles = cycles + 1\n    errors = min(11, errors + e)\n    if cycles == 100000:\n        report('Failed' if errors > 10 else 'Passed')\n        cycles = 0; errors = 0\n```\n\nזו סמנטיקה רציפה של פסאודו־קוד: ההשוואה רואה את הספירות המעודכנות, כולל הדגימה האחרונה. ב־HDL עם השמות לא חוסמות יש לחשב ערכי next מפורשים או להשוות תוך הוספת e; שימוש במונה הישן עלול לפספס שגיאה אחת במחזור האחרון. מאחר שאכפת לנו רק מהסף, ניתן לרוות את errors ב־11; מידע על הכמות המדויקת מעבר ל־11 אינו נחוץ.\n\nאחרי 99,999 דגימות עם עשרה מחזורי שגיאה, אם הדגימה ה־100,000 היא 1, נקבל 11 ו־Failed. אם יש עשר בלבד — Passed. איפוס המונים נעשה לאחר הדיווח, ולכן אותה דגימה אינה נספרת שוב במקטע הבא. בקוד Python המצורף מוחזרות תוצאות רק עבור מקטעים שלמים. אפשר לדווח כשל מוקדם בשגיאה ה־11 כי שגיאות במקטע אינן יורדות, אבל אין לדווח Passed לפני הסוף. המימוש שנבחר מדווח רק בסוף המקטע, כבחוזה השאלה.\n\n### מדוע זה נכון וכמה זיכרון צריך?\n\nאחרי k דגימות במקטע, cycles=k ו־errors=min(11,מספר האחדות באותן k דגימות). זה נכון בתחילת המקטע, ונשמר בהוספת כל דגימה. ב־k=100,000 ההשוואה errors>10 שקולה ליותר מעשר שגיאות אמיתיות, גם עם רוויה. לאחר הדיווח האיפוס משחזר את האינווריאנט למקטע הבא. יש O(1) עבודה בכל דגימה ושני מונים בעלי רוחב קבוע לנתונים בשאלה: למשל 17 ביטים למספר מחזורים עד 100,000 ו־4 ביטים למספר שגיאות עד 11. זה אינו דירוג שטח אופטימלי.\n\n### הרחבה: כל חלון זז\n\nשש שגיאות בסוף מקטע וחמש בתחילת המקטע הבא עוברות בשני המקטעים, אך חלון שחוצה את הגבול מכיל 11 ונכשל. לכן מונה שמתאפס כל 100,000 מחזורים אינו פתרון לדרישת חלון זז.\n\nנסמן זמן דגימה t החל מ־0. נשמור תור של זמני מחזורים שבהם ERROR=1. לפני הכנסת הדגימה t מסירים מהראש כל זמן s שעבורו t−s≥100,000: חלון נוכחי מכיל בדיוק את הזמנים t−99,999 עד t. אם ERROR=1 מוסיפים t, ואם אורך התור הפך ל־11 מדווחים כשל ועוצרים. עד אותו רגע נשמרים לכל היותר 11 זמנים. לפני שהושלם חלון ראשון נבדק רק הקידומת שנצפתה; 11 שגיאות בה כבר מבטיחות כשל בחלון הראשון אם הדגימה תימשך. אם החוזה מתיר דיווח רק לאחר חלון מלא, יש לדחות את ההודעה בהתאם.\n\nכל זמן מוכנס ומוסר לכל היותר פעם אחת, ולכן העלות O(1) בממוצע אמורטי לדגימה. בקוד זה קיים גם חסם קטן של עד 11 הסרות לפעולה. יש לכל היותר 11 רשומות זמן, אך זמן t אינו חסום במודל Python, ולכן אין טענה למספר קבוע של ביטים בריצה שאינה מוגבלת. בחומרה יש לתכנן רוחב זמן וטיפול בגלישה, או להשתמש בהיסטוריית 100,000 ביטים ומונה בחלון.\n\nהאימות השווה למודל עצמאי של סכומי פרוסות: 49,128 שילובי רצף/חלון/סף ממצים, 2,000 מקרים מדגמיים וחמישה מקרי גבול באורך 200,000 מחזורים. נבדקה במפורש פקיעת שגיאה בגיל 100,000 בדיוק. לא נבדקו דגימה פיזית או חיבור לסימולטור. הפתרון מוצע וממתין לביקורת מקצועית."
+        },
+        "en": {
+          "title": "ERROR monitor: more than ten errors in 100,000 cycles",
+          "prompt": "A component exposes ERROR, high in every cycle where a fault is detected. Write pseudocode that samples it once each clock cycle and checks consecutive non-overlapping blocks of exactly 100,000 cycles. At each block end report Failed if more than ten sampled cycles in that block had ERROR=1; otherwise report Passed. Handle the final sample and the next block correctly.\n\nEditorial clarifications: count high cycles, not just rising edges; exactly ten errors are allowed. Reset counts for each block. Samples are binary and synchronous; a final input tail shorter than 100,000 cycles is not a complete result. Extension: detect a violation in every sliding 100,000-cycle window, and explain whether that is equivalent.",
+          "hint": "Which two quantities must be counted separately: elapsed samples and high samples?",
+          "hints": [
+            "Which two quantities must be counted separately: elapsed samples and high samples?",
+            "The 100,000th sample belongs to the current block. Include it before comparing the error count with ten.",
+            "Two counters suffice for fixed blocks. A sliding window must expire old errors; retaining up to eleven error timestamps is enough until a failure is found."
+          ],
+          "reference_solution": "### Define the window first\n\nThe source does not distinguish fixed blocks from sliding windows. The main question explicitly chooses samples 0..99,999, then 100,000..199,999, and so on. This differs from checking a window ending every cycle, so the extension is separate. Also, ERROR high for three cycles contributes three errors, not one.\n\n### Fixed-block solution\n\n```text\ncycles = 0; errors = 0\nforever:\n    wait for next rising clock edge\n    e = sample(ERROR)\n    cycles = cycles + 1\n    errors = min(11, errors + e)\n    if cycles == 100000:\n        report('Failed' if errors > 10 else 'Passed')\n        cycles = 0; errors = 0\n```\n\nThis is sequential pseudocode: the comparison sees updated counts, including the last sample. HDL nonblocking assignments require explicit next values or adding e to the old count; testing the old error count alone can miss an eleventh error on the final cycle. Since only the threshold matters, errors may saturate at eleven; its exact larger value is unnecessary.\n\nAfter 99,999 samples containing ten highs, a high 100,000th sample makes eleven and reports Failed. Exactly ten reports Passed. Reset after reporting so the same sample is not counted again in the next block. The supplied Python implementation returns results only for complete blocks. Early failure on the eleventh high is logically valid because errors in a block never decrease, but early Passed is not. The chosen implementation reports at block end as required.\n\n### Correctness and memory\n\nAfter k block samples, cycles=k and errors=min(11,the number of highs among those samples). The invariant holds initially and is preserved by including each new sample. At k=100,000 the test errors>10 exactly matches more than ten actual errors, despite saturation. Reset restores the invariant for the next block. Each sample costs O(1) work. The specified constants permit fixed-width counters, for example seventeen bits through 100,000 cycles and four bits through eleven errors. This is not a minimum-area result.\n\n### Extension: every sliding window\n\nSix errors at one block's end and five at the next block's beginning pass both fixed blocks, yet a crossing window contains eleven and fails. A counter resetting every 100,000 clocks therefore does not solve sliding-window monitoring.\n\nLet sample time t start at zero. Maintain a queue of times when ERROR was high. Before inserting sample t, expire every oldest timestamp s with t−s≥100,000: the current window contains exactly t−99,999 through t. Append t when ERROR=1. If queue length becomes eleven, report failure and stop. At most eleven timestamps exist before termination. Before a first full window exists, only the observed prefix is checked; eleven highs already guarantee that the first complete window will fail if sampling continues. If reporting must wait for a full window, defer the message accordingly.\n\nEach timestamp is inserted and removed at most once, giving amortized O(1) work per sample. This implementation also bounds any one expiration loop by eleven entries. There are at most eleven records, but Python time is unbounded, so a constant bit count is not claimed for an indefinitely running monitor. Hardware needs a timestamp width and wraparound policy, or a 100,000-bit history ring and a running count.\n\nIndependent slice-sum oracles verified 49,128 exhaustive sequence/window/threshold combinations, 2,000 sampled cases and five 200,000-cycle boundary cases. Expiration at age exactly 100,000 was checked explicitly. Physical sampling and simulator integration were not tested. The proposed solution awaits professional review."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-081-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "אילו שני דברים צריך לספור בנפרד: כמה זמן עבר וכמה דגימות היו 1?"
+        },
+        {
+          "id": "PREP-081-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "המחזור ה־100,000 עדיין שייך למקטע הנוכחי. עדכנו את ספירת השגיאות לפני ההשוואה ל־10."
+        },
+        {
+          "id": "PREP-081-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "למקטעים קבועים מספיקים שני מונים. בחלון זז, שגיאה ישנה צריכה לצאת מהחלון; אפשר לשמור רק את זמני 11 השגיאות האחרונות עד שהחריגה מתגלה."
+        },
+        {
+          "id": "PREP-081-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Which two quantities must be counted separately: elapsed samples and high samples?"
+        },
+        {
+          "id": "PREP-081-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "The 100,000th sample belongs to the current block. Include it before comparing the error count with ten."
+        },
+        {
+          "id": "PREP-081-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Two counters suffice for fixed blocks. A sliding window must expire old errors; retaining up to eleven error timestamps is enough until a failure is found."
+        }
+      ],
+      "assumptions": [
+        "ERROR is a synchronous binary sample taken once per clock edge; count high samples.",
+        "The primary contract uses non-overlapping blocks of exactly 100,000 samples, reporting at block end.",
+        "More than ten means eleven or more; exactly ten is not failure.",
+        "A final short tail is incomplete; sliding windows are a different extension.",
+        "The sliding implementation uses unbounded Python timestamps and stops at first failure."
+      ],
+      "optimality": {
+        "criterion": "Processing and storage cost of these constructions.",
+        "result": "Fixed blocks: O(1) per sample and two counters. Sliding: amortized O(1) per sample and up to eleven timestamp records before termination.",
+        "proof": "Counters update once per sample; each timestamp is inserted and removed at most once.",
+        "scope": "No minimum-bit claim; unbounded run times do not fit a constant number of bits."
+      },
+      "verification": "Slice-sum oracle comparison passed 49,128 exhaustive combinations, 2,000 sampled cases and five full 200,000-cycle boundary cases. Checked ten versus eleven, crossing-block windows and expiration at exactly 100,000 cycles. Python only.",
+      "edge_cases": [
+        "The eleventh error on the final sample must fail that same block.",
+        "Exactly ten high samples pass.",
+        "Eleven consecutive high cycles count as eleven without additional rising edges.",
+        "A new block starts with both counters cleared.",
+        "In a sliding window, age 100,000 is expired; age 99,999 remains.",
+        "Individually passing blocks can contain a failing crossing window."
+      ],
+      "common_mistakes": [
+        "Using >=10 instead of >10.",
+        "Counting ERROR transitions instead of high cycles.",
+        "Testing the old count and missing the last sample.",
+        "Resetting the block on its eleventh error changes block boundaries.",
+        "Confusing fixed blocks with every sliding window.",
+        "Claiming eleven unbounded timestamps always use a constant number of bits."
+      ],
+      "interview_answer": "Sample ERROR each cycle and update a cycle count plus an error count saturated at eleven. After including sample 100,000 report Failed only if errors exceed ten, then reset for the next block. For sliding windows, retain error timestamps, expire ages at least 100,000 and fail when eleven active timestamps coexist.",
+      "solution_extensions": {
+        "question": "How would monitoring continue after failures with a fixed storage bit budget?",
+        "direction": "Keep a ring of 100,000 sampled bits and a running sum: subtract the departing bit and add the new one each cycle. Specify startup before a full window, counter widths, reset and wraparound. This offers an explicit bounded-storage alternative.",
+        "status": "Prepared in content, not connected to the live follow-up queue."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_081_error_monitor.py",
+      "solution_code_paths": [
+        "solutions/prep_081_error_monitor.py"
+      ],
+      "verification_script_path": "checks/check_prep_081.py",
+      "verification_evidence_path": "checks/prep-081-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-081-source.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-081-fixed-block-monitor-he.png",
+          "language": "he",
+          "description": "תהליך דגימה ודיווח בסוף מקטע קבוע"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-081-fixed-block-monitor-en.png",
+          "language": "en",
+          "description": "Sampling and reporting at a fixed block end"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-042",
+        "PREP-069",
+        "PREP-072"
+      ],
+      "duplicate_check": "No full catalog question combines sampled ERROR counts with an exact 100000-cycle block and a strictly-greater-than-ten threshold; separate from edge detection and contiguous-subarray optimization.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Foundational verification contracts and synchronous reasoning; company associations are source-reported only."
+      },
+      "markdown_path": "questions/prep-081-error-bit-window-monitor.md"
+    },
+    {
+      "id": "PREP-082",
+      "key": "mirrored-hill-dip-arrival-time",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "logic",
+      "topic": "physics_reasoning",
+      "topics": [
+        "logic",
+        "physics_reasoning",
+        "conservation_of_energy",
+        "time_vs_speed",
+        "modeling_assumptions"
+      ],
+      "source_topic_tags": [
+        "logic"
+      ],
+      "added_topic_tags": [
+        "physics_reasoning",
+        "conservation_of_energy",
+        "time_vs_speed",
+        "modeling_assumptions"
+      ],
+      "source_tags": [
+        "logic",
+        "nvidia",
+        "actelis-networks"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Actelis Networks"
+      ],
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "logic_puzzle",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied source; AI-assisted explicit modeling, bilingual proposed solution, authored diagrams and independent numerical bounds. Human professional review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-082-source.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "שאלת היגיון. שני כדורים נופלים ... בצורה של רבע מעגל ברדיוס R1, הכדורים זהים (בעלי אותה מסה וגודל), אין חיכוך. לכדור הראשון יש גבעה ברדיוס R2 ולכדור השני יש בור ברדיוס R2. מי יגיע ראשון לסוף? [המילים בתחילת תיאור הנפילה אינן קריאות במלואן; הצילום הוא המקור המחייב.]",
+      "translations": {
+        "he": {
+          "title": "גבעה מול בור — מי מגיע ראשון?",
+          "prompt": "שני כדורים זהים משתחררים יחד ממנוחה בשני מסלולים. תחילת כל מסלול היא אותה ירידה בצורת רבע מעגל ברדיוס R1. אחריה קטע אופקי; באחד המסלולים גבעה ובשני בור, שניהם קשתות חצי־מעגל ברדיוס R2 ותמונות מראה ביחס למפלס האופקי. סוף שני המסלולים באותו מרחק אופקי. מי מגיע ראשון, והאם מהירותם בסוף זהה? נמקו באמצעות מהירות לאורך המסלול, לא רק באמצעות המהירות הסופית.\n\nהבהרות שנוספו כדי לקבל מודל חד־משמעי: מתייחסים לגופים נקודתיים המונחים במסילה אידאלית המחייבת אותם להישאר עליה, ללא חיכוך, אובדן אנרגיה, גלגול או ניתוק. גובה ההתחלה מעל המישור הוא H=R1, ומניחים R1>R2>0 כדי ששני המסלולים עבירים. הקטעים לפני ואחרי המכשול זהים; שתי הקשתות באותו אורך, והחיבורים הם אידאליזציה ללא אובדן אנרגיה. השרטוט סכמטי. אם כדור רשאי להתנתק ממשטח רגיל, הסבירו מדוע נדרש ניתוח נוסף.",
+          "hint": "התחילו ממה שקובע את המהירות בגובה נתון כאשר אין אובדן אנרגיה. האם שוויון מהירות בסוף קובע גם זמן הגעה?",
+          "reference_solution": "### המודל קודם לתשובה\nבמודל המפורש של מסילות מונחות וסימטריות, **הכדור במסלול הבור מגיע ראשון**, אבל לשניהם אותה מהירות בסוף. האמירה תלויה במודל: צילום של שני מסלולים, ללא מידע על מגע ויכולת מעבר, אינו מפרט לבדו כל היבט של תנועה פיזית.\n\n### מהירות נקבעת לפי הגובה\nבוחרים y=0 במישור האופקי. לשני הגופים אותה אנרגיה התחלתית mgH. שימור אנרגיה נותן:\n\n```text\nmgH = (1/2)mv^2 + mgy\nv(y) = sqrt(2g(H-y))\n```\n\nהמסה מצטמצמת. בגובה האופקי המהירות היא v0=√(2gH). הירידה הראשונית זהה, ולכן שני הכדורים מגיעים לתחילת המכשול יחד ובאותה מהירות.\n\n### משווים קטע לקטע, לא רק התחלה וסוף\nנסמן ב־s מרחק לאורך כל קשת וב־h(s) את הגובה הלא־שלילי של הגבעה. בקשת המראה של הבור הגובה הוא ‎−h(s). לכל זוג קטעים אותו אורך ds, אבל:\n\n```text\nv_hill(s) = sqrt(2g(H-h(s)))\nv_dip(s)  = sqrt(2g(H+h(s)))\n```\n\nבכל קטע פנימי שבו h(s)>0, הכדור בבור מהיר יותר. הזמן לעבור קטע קצר הוא ds/v. לכן הזמן בכל זוג קטעים קטן יותר בבור, וגם סכום הזמנים — או האינטגרל לאורך הקשת — קטן יותר. אין צורך לחשב אינטגרל כדי להכריע.\n\n### למה היתרון לא נעלם ביציאה?\nבסיום המכשול שני הכדורים חוזרים ל־y=0, ולכן שוב נעים במהירות v0. לבור כבר יש יתרון בזמן, והקטע האופקי הנותר זהה ונעשה באותה מהירות. לכן היתרון נשמר עד הסוף. אנרגיה קובעת מהירות לפי גובה; היא אינה קובעת לבדה כמה זמן לקחה הדרך.\n\n### דוגמה מספרית ובדיקת הנחות\nעבור H=3m, R2=1m ו־g=9.81m/s², מודל חצי־מעגל נותן בקירוב 0.464192 שניות בגבעה מול 0.372967 שניות בבור, עבור המכשול בלבד. הדוגמה היא המחשה, לא ההוכחה. נבדקו גם חסמי סכומי רימן עצמאיים מול החישוב הנומרי.\n\nאם הגבעה גבוהה מכפי שהאנרגיה ההתחלתית מאפשרת, ייתכן שהכדור לא יחצה אותה כלל. אם אין הנחיה המחייבת מגע, על הגבעה הכדור עלול להתנתק ולנוע בבליסטיקה; צריך את גאומטריית המשטח ותנאי המגע. אם אורכי המסלולים אינם תמונות מראה, מהירות גדולה יותר בחלק מהדרך לבדה אינה מבטיחה הגעה מוקדמת. אין כאן סימולציה של כדור מתגלגל או ניסוי פיזי."
+        },
+        "en": {
+          "title": "Mirrored hill and dip tracks — who arrives first?",
+          "prompt": "Two identical balls are released together from rest on two tracks. Both begin with the same quarter-circle descent of radius R1 and then a horizontal section. One track has a hill and the other a dip: semicircular arcs of radius R2, mirrored about the horizontal level. Both tracks end at the same horizontal position. Which ball arrives first, and are their final speeds equal? Compare speeds along the paths, rather than only at the finish.\n\nAdded modeling assumptions: ideal guided point masses remain on their prescribed tracks, with no friction, energy loss, rolling or detachment. Initial height is H=R1, and R1>R2>0 makes both routes traversable. Sections before and after the features are identical; paired arcs have equal length, with ideal energy-preserving joins. The diagram is schematic. If a ball may detach from an ordinary surface, explain why additional analysis is needed.",
+          "hint": "With no energy loss, what sets speed at a particular height? Does equal final speed imply equal arrival time?",
+          "reference_solution": "### State the model before the answer\nUnder the stated guided, mirrored-track model, **the dip ball arrives first**, although both have the same final speed. This conclusion is conditional: a rough drawing without contact and traversability information does not specify every aspect of a physical trajectory.\n\n### Height determines speed\nChoose y=0 at the horizontal level. Both bodies initially have energy mgH. Conservation gives:\n\n```text\nmgH = (1/2)mv^2 + mgy\nv(y) = sqrt(2g(H-y))\n```\n\nMass cancels. At the horizontal level both have speed v0=√(2gH). Their initial descents are identical, so they reach the features together with equal speeds.\n\n### Compare paired segments, not just endpoints\nLet s measure distance along each arc, and h(s) be the nonnegative hill height. Its mirrored dip point has height −h(s). Each paired segment has the same length ds, but:\n\n```text\nv_hill(s) = sqrt(2g(H-h(s)))\nv_dip(s)  = sqrt(2g(H+h(s)))\n```\n\nWherever h(s)>0, the dip ball is faster. A small segment takes ds/v time, so every such pair takes less time in the dip. Summing, or integrating over the arcs, gives a strictly smaller dip traversal time. Evaluating the integral is unnecessary for the comparison.\n\n### Why does the advantage survive the exit?\nBoth return to y=0 after the features and therefore recover speed v0. The dip ball has already gained time; the identical remaining horizontal sections take equal times at the same speed. Thus the lead persists to the finish. Energy determines speed at a height, not the time spent reaching it.\n\n### Numerical illustration and limits\nFor H=3m, R2=1m and g=9.81m/s², the semicircle model gives approximately 0.464192 seconds over the hill and 0.372967 seconds through the dip, for the features alone. These numbers illustrate the argument rather than prove it. Independent monotone Riemann bounds also checked the numerical calculation.\n\nAn energetically inaccessible hill may not be crossed at all. Without a guide that enforces contact, a ball can detach from the hill and follow a projectile trajectory; surface geometry and contact forces then require analysis. If path lengths are not mirrored, a higher speed on part of the route alone does not establish an earlier finish. This is neither a rolling-ball simulation nor a physical experiment."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-082-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "התחילו ממה שקובע את המהירות בגובה נתון כאשר אין אובדן אנרגיה. האם שוויון מהירות בסוף קובע גם זמן הגעה?"
+        },
+        {
+          "id": "PREP-082-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "התאימו כל קטע קטן בקשת הגבעה לקטע באותו אורך בקשת הבור. השוו את הגבהים ואת המהירויות בזוג הזה."
+        },
+        {
+          "id": "PREP-082-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "שימור אנרגיה נותן v=√(2g(H−y)). בגבעה y=h ובבור y=−h. השוו את הזמן ds/v בכל זוג קטעים."
+        },
+        {
+          "id": "PREP-082-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "With no energy loss, what sets speed at a particular height? Does equal final speed imply equal arrival time?"
+        },
+        {
+          "id": "PREP-082-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Pair each small hill-arc segment with an equal-length dip segment. Compare their heights and speeds."
+        },
+        {
+          "id": "PREP-082-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Energy gives v=√(2g(H−y)). The hill has y=h and the dip y=−h. Compare the time ds/v in each paired segment."
+        }
+      ],
+      "assumptions": [
+        "Simultaneous rest release, uniform gravity and no energy loss; guided point masses without rolling or detachment.",
+        "H=R1>R2>0; semicircular features are mirrored, with identical entrance and exit sections.",
+        "Tracks and joins are ideal geometric constraints; the sketch alone does not establish open-surface contact."
+      ],
+      "optimality": {
+        "criterion": "Arrival-time comparison under one explicit track model.",
+        "result": "The dip route is faster than its mirrored hill route.",
+        "proof": "Each equal-length paired segment is lower in the dip, so ds/v is smaller, strictly so in the interior.",
+        "scope": "Not a globally fastest-track claim or a solution to the brachistochrone problem."
+      },
+      "edge_cases": [
+        "An energetically inaccessible hill may prevent arrival.",
+        "Zero feature height removes the difference; it is a limiting case outside R2>0.",
+        "Equal final speed does not imply equal arrival time.",
+        "Without enforced guidance, check detachment; without mirror geometry, analyze actual route lengths."
+      ],
+      "common_mistakes": [
+        "Inferring simultaneous arrival from equal final energy or speed.",
+        "Using horizontal distance instead of arc length ds.",
+        "Assuming hill contact without a guide or contact analysis.",
+        "Silently changing to rolling with friction or claiming global track optimality."
+      ],
+      "interview_answer": "For guided mirrored routes, the dip wins. Paired segments have equal arc length, but the dip is lower and therefore faster, taking less ds/v time. Exit speeds match, so the time advantage already gained persists.",
+      "solution_extensions": {
+        "question": "Does the conclusion persist for a much longer lower route that is not mirrored?",
+        "direction": "Not necessarily. Compare each complete ds/v integral; extra length can outweigh higher speed.",
+        "status": "Prepared in the archive; not connected to the interactive follow-up queue."
+      },
+      "source_ambiguities": [
+        "The opening description of the descent is not fully legible; the original screenshot is retained.",
+        "The source does not specify rest release, R1/R2 ratio, contact guarantees or rolling; edited assumptions are explicit.",
+        "A radius label alone does not fully define joins and physical kinematics."
+      ],
+      "technical_references": [
+        {
+          "title": "OpenStax — conservation of mechanical energy",
+          "url": "https://openstax.org/books/university-physics-volume-1/pages/8-3-conservation-of-energy",
+          "scope": "Energy conservation when nonconservative forces do no work. The track-time comparison is derived separately here."
+        }
+      ],
+      "verification": "Passed 54 height/radius/gravity combinations, 5,346 interior speed comparisons and four geometry rejections. Simpson quadrature was checked against independent monotone Riemann bounds and doubled resolution. Guided point-mass model only; no rolling, detachment, impacts or physical-track test.",
+      "solution_code_path": "solutions/prep_082_mirrored_tracks.py",
+      "solution_code_paths": [
+        "solutions/prep_082_mirrored_tracks.py"
+      ],
+      "code_language": "python",
+      "verification_script_path": "checks/check_prep_082.py",
+      "verification_evidence_path": "checks/prep-082-verification.json",
+      "solution_diagram_generator": "solutions/draw_prep_082_tracks.py",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-082-source.png"
+        },
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-082-tracks-he.png",
+          "language": "he",
+          "description": "גבעה מול בור — מי מגיע ראשון?"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-082-comparison-he.png",
+          "language": "he",
+          "description": "גבעה מול בור — מי מגיע ראשון?"
+        },
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-082-tracks-en.png",
+          "language": "en",
+          "description": "Mirrored hill and dip tracks — who arrives first?"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-082-comparison-en.png",
+          "language": "en",
+          "description": "Mirrored hill and dip tracks — who arrives first?"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-003"
+      ],
+      "duplicate_check": "No existing preparation, example or verification question compares mirrored hill/dip traversal times. PREP-003 concerns geometry on a cylinder, not this energy/time reasoning.",
+      "interview_relevance": {
+        "priority": "medium",
+        "reason": "Tests explicit assumptions, invariant reasoning and distinguishing an endpoint condition from a time-dependent quantity; indirect relevance to chip validation."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "markdown_path": "questions/prep-082-mirrored-hill-dip-arrival-time.md"
     }
   ]
 }

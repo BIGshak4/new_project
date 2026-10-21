@@ -1,0 +1,12 @@
+{
+  "question_id": "PREP-076",
+  "status": "passed",
+  "exhaustive_map_width_cases": 6826,
+  "consistent_physical_permutations_passed": 153,
+  "read_path_permutations_checked": 153,
+  "stuck_data_cases": 300,
+  "seeded_random_map_width_cases": 640,
+  "invalid_parameters": 6,
+  "write_then_immediate_read_counterexample": "alias [0,0] passes naive check, fails bit-plane test",
+  "scope": "Stable pure logical address mappings and sampled stuck-data faults; no physical, retention or timing verification."
+}

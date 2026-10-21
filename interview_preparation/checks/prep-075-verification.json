@@ -1,0 +1,17 @@
+{
+  "question_id": "PREP-075",
+  "status": "passed",
+  "exhaustive_one_step_cases": 2768,
+  "random_trace_edges": 50000,
+  "random_seed": 75021,
+  "depths_in_trace": [
+    1,
+    2,
+    3,
+    8,
+    17
+  ],
+  "coverage": "All rd/wr/ra/wa/data cases for every 1-bit initialized memory depth1..4; 50,000 mixed/reset/collision edges vs separate array specification; unwritten values retained as None",
+  "scope": "Python synchronous functional model, primitive read/write mutual exclusion asserted; no HDL simulation, synthesis or physical timing verification",
+  "professional_review": "pending"
+}

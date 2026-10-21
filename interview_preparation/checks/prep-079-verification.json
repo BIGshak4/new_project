@@ -1,0 +1,42 @@
+{
+  "question_id": "PREP-079",
+  "checked_on": "2026-10-21",
+  "status": "passed_exact_probability_models",
+  "absorbing_stationary_policies": 26,
+  "transient_states_per_policy": 9,
+  "equilibrium_one_step_actions": 9,
+  "duel_turn_states": 6,
+  "deterministic_stationary_equilibria": [
+    {
+      "A": null,
+      "B": "C",
+      "C": "B"
+    }
+  ],
+  "first_A_actions": {
+    "miss": "2810/19019",
+    "B": "25499/190190",
+    "C": "27019/190190"
+  },
+  "all_equilibrium_action_values": {
+    "A": {
+      "miss": "2810/19019",
+      "B": "25499/190190",
+      "C": "27019/190190"
+    },
+    "B": {
+      "miss": "9/209",
+      "A": "10/209",
+      "C": "90/209"
+    },
+    "C": {
+      "miss": "729/1729",
+      "A": "810/1729",
+      "B": "1458/1729"
+    }
+  },
+  "weak_player_survival_fraction": "2810/19019",
+  "weak_player_survival_probability": 0.147746989852253,
+  "method": "Independent nine-transient-state exact Fraction absorbing-chain linear system solved by Gaussian elimination for all 26 terminating deterministic stationary policies. Compared every player's values from each all-alive turn with the separate cyclic-recurrence implementation. Checked all nine one-step action choices at the proposed policy and six duel turn states.",
+  "limits": "Abstract game with fixed cyclic turns, independent constant success rates, intentional miss and specified payoff. Enumeration covers deterministic stationary policies; no unsupported claim about all mixed/history-dependent equilibria or real-world behavior. Professional review pending."
+}

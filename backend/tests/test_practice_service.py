@@ -141,7 +141,7 @@ class TestBoundaries:
         store = InMemoryStore(catalog, allow_in_review=False)
         svc = PracticeService(store, catalog, scripted([]))
         listed = await svc.list_questions(language="en")
-        assert len(listed) == 72 and all(q.preparation_id for q in listed)  # original 30 remain in_review
+        assert len(listed) == 81 and all(q.preparation_id for q in listed)  # original 30 remain in_review
         with pytest.raises(ApiError) as raised:
             await svc.start(USER, question_key=Q)
         assert raised.value.code == "not_found"

@@ -1,0 +1,41 @@
+{
+  "question_id": "PREP-078",
+  "status": "passed",
+  "exhaustive_input_sequences": 8191,
+  "input_sequence_cycles": 90114,
+  "exhaustive_reset_sequences_length_7": 16384,
+  "seeded_random_traces": 200,
+  "cycles_per_random_trace": 1000,
+  "long_high_counts_once": true,
+  "example_samples": [
+    0,
+    1,
+    1,
+    0,
+    1,
+    0,
+    1,
+    0,
+    1,
+    0,
+    1,
+    1,
+    0
+  ],
+  "example_pulses": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0
+  ],
+  "scope": "Python discrete clock-edge model only; supplied SystemVerilog not compiled or HDL-simulated; no CDC or physical timing verification."
+}
