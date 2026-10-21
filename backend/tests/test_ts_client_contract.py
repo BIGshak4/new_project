@@ -9,7 +9,6 @@ import re
 from pathlib import Path
 
 import pytest
-from fastapi.testclient import TestClient
 
 from app.main import app
 
@@ -28,7 +27,8 @@ MODELS = {"QuestionSummary": "QuestionSummary", "QuestionDetail": "QuestionDetai
           "ProgressOverview": "ProgressOverview", "TimelinePoint": "TimelinePoint", "PlanItemView": "PlanItem",
           "PlanView": "Plan", "ProgramView": "Program", "ProgramStartView": "ProgramStart",
           "ReadinessView": "Readiness", "ReadinessSkillView": "ReadinessSkill",
-          "ReadinessQuestionView": "ReadinessQuestion"}
+          "ReadinessQuestionView": "ReadinessQuestion",
+          "FundamentalsCompletion": "FundamentalCompletion", "FundamentalsProgress": "FundamentalsProgress"}
 # New backend fields the web client has not typed yet: the screen part is Harel's. Once practice-api.ts has the
 # field it is compared like every other one again; then remove the entry.
 PENDING_IN_CLIENT = {"SkillProgress": {"expired"},         # evidence older than 49 days (Shaked, 2026-10-04)
@@ -51,8 +51,9 @@ def ts_fields(source: str, type_name: str) -> set[str]:
 
 @pytest.fixture(scope="module")
 def spec():
-    with TestClient(app) as client:
-        return client.get("/openapi.json").json()
+    # The OpenAPI contract is static; do not start providers or a configured live
+    # database just to inspect it when this module is run on its own.
+    return app.openapi()
 
 
 @pytest.fixture(scope="module")
@@ -74,7 +75,7 @@ def test_every_response_field_is_typed_both_ways(spec, source, schema_name, ts_n
 def test_every_v1_route_is_called_by_the_client(spec, source):
     routes = {(m.upper(), p) for p, ops in spec["paths"].items() if p.startswith("/v1") for m in ops}
     called = set()
-    for method, path in re.findall(r'call<[^>]+>\(\s*"(GET|POST)",\s*["`]([^"`]+)["`]', source):
+    for method, path in re.findall(r'call<[^>]+>\(\s*"(GET|POST|PUT|DELETE)",\s*["`]([^"`]+)["`]', source):
         normalized = re.sub(r"\$\{q\([^)]*\)\}", "", path)          # drop the query-string helper
         normalized = re.sub(r"\$\{[^}]+\}", "{}", normalized)
         called.add((method, normalized))
@@ -92,7 +93,7 @@ def test_every_v1_route_is_called_by_the_client(spec, source):
 def test_error_codes_are_typed(spec, source):
     from app.api.errors import STATUS_FOR_CODE
     typed = set(re.findall(r'\|\s*"(\w+)"', source.split("export type ApiErrorCode")[1].split(";")[0]))
-    pending = {"stale_version", "payment_required"}            # payment_required: the payment screen is Harel's next item (2026-10-20)
+    pending = {"payment_required"}            # the payment screen is Harel's next item (2026-10-20)
     assert set(STATUS_FOR_CODE) - pending <= typed, set(STATUS_FOR_CODE) - typed
 
 

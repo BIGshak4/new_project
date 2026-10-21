@@ -1,258 +1,1242 @@
 [
   {
     "id": "quick-sw-01",
-    "topic": "python",
-    "title": {"he": "האם הערך נמצא?", "en": "Is the value present?"},
-    "prompt": {"he": "כתבו פונקציה שמקבלת רשימת מספרים וערך לחיפוש, ומחזירה האם הערך נמצא ברשימה. מותר להשתמש בפעולות המובנות של Python.", "en": "Write a function that takes a list of numbers and a target, and returns whether the target occurs in the list. Python built-ins are allowed."},
-    "answer": {"he": "הביטוי target in values מחזיר True אם נמצא ערך שווה ליעד, ואחרת False. ברשימה ריקה התשובה היא False.", "en": "The expression target in values returns True when an equal value is present, and False otherwise. An empty list returns False."},
-    "takeaway": {"he": "בדקו אם השפה כבר מספקת פעולה שמבטאת בדיוק את הבקשה.", "en": "Check whether the language already provides an operation that matches the request."},
-    "code": {"language": "python", "text": "def contains(values, target):\n    return target in values"}
+    "topic": "reasoning",
+    "title": {
+      "he": "רק משפט אחד נכון",
+      "en": "Only one statement is true"
+    },
+    "prompt": {
+      "he": "מטבע נמצא בדיוק באחת הקופסאות A, B, C. על A כתוב ״לא ב־A״, על B כתוב ״ב־A״, ועל C כתוב ״לא ב־B״. בדיוק משפט אחד נכון. איפה המטבע?",
+      "en": "A coin is in exactly one of boxes A, B, C. A says “not in A,” B says “in A,” and C says “not in B.” Exactly one statement is true. Where is the coin?"
+    },
+    "answer": {
+      "he": "ב־B. אם המטבע ב־A, שני משפטים נכונים; אם הוא ב־C, גם אז שניים נכונים. רק כשהמטבע ב־B המשפט שעל A נכון ושני האחרים שגויים.",
+      "en": "In B. With the coin in A, two statements are true; with it in C, two are also true. Only when it is in B is A’s statement true and the other two false."
+    },
+    "takeaway": {
+      "he": "בדקו כל מצב אפשרי מול כל התנאים, ולא מול תנאי אחד בלבד.",
+      "en": "Check each possible state against every condition, not just one."
+    }
   },
   {
     "id": "quick-sw-02",
-    "topic": "python",
-    "title": {"he": "סופרים הופעות", "en": "Count occurrences"},
-    "prompt": {"he": "כתבו פונקציה שמקבלת רשימת מספרים וערך, ומחזירה כמה פעמים הערך מופיע. לדוגמה, עבור [2, 5, 2] והערך 2 נחזיר 2.", "en": "Write a function that takes a list of numbers and a target, and returns its number of occurrences. For [2, 5, 2] and target 2, return 2."},
-    "answer": {"he": "הפעולה count סופרת את כל ההופעות של הערך ברשימה. אם הוא אינו מופיע, היא מחזירה 0.", "en": "The count method counts every occurrence of the target in the list. It returns 0 when the target is absent."},
-    "takeaway": {"he": "מציאת הופעה אחת וספירת כל ההופעות הן בקשות שונות.", "en": "Finding one occurrence and counting every occurrence are different tasks."},
-    "code": {"language": "python", "text": "def occurrences(values, target):\n    return values.count(target)"}
+    "topic": "reasoning",
+    "title": {
+      "he": "עבודה במקביל",
+      "en": "Working in parallel"
+    },
+    "prompt": {
+      "he": "שתי מכונות זהות מתחילות פנויות. כל מכונה מייצרת חלק אחד ב־4 דקות, ואינה יכולה לעבוד על שני חלקים יחד. אי אפשר לפצל חלק בין מכונות. מה הזמן המזערי לייצור 5 חלקים?",
+      "en": "Two identical machines start idle. Each makes one part in 4 minutes and cannot process two parts together. A part cannot be split between machines. What is the minimum time to produce 5 parts?"
+    },
+    "answer": {
+      "he": "12 דקות: אחרי 4 דקות יש שני חלקים, אחרי 8 יש ארבעה, והחמישי מוכן אחרי 12. עשר דקות אינן מספיקות, כי כל מכונה תספיק לסיים בהן רק שני חלקים שלמים.",
+      "en": "12 minutes: two parts finish after 4 minutes, four after 8, and the fifth after 12. Ten minutes are insufficient because each machine can finish only two whole parts in that time."
+    },
+    "takeaway": {
+      "he": "בעבודה במקביל, בדקו גם כמה משימות שלמות נכנסות בזמן הנתון.",
+      "en": "For parallel work, count how many complete tasks fit into the available time."
+    }
   },
   {
     "id": "quick-sw-03",
     "topic": "python",
-    "title": {"he": "הזוגי הראשון", "en": "The first even number"},
-    "prompt": {"he": "כתבו פונקציה שמחזירה את המספר הזוגי הראשון ברשימת שלמים. אם אין מספר זוגי, החזירו None. הסדר ברשימה קובע.", "en": "Write a function that returns the first even integer in a list. Return None if there is no even integer. Use the list's original order."},
-    "answer": {"he": "עוברים משמאל לימין ומחזירים מיד כשמוצאים שארית 0 בחלוקה ב־2. אם סיימנו את הלולאה בלי למצוא, מחזירים None.", "en": "Scan from left to right and return as soon as a number has remainder 0 when divided by 2. If the loop finishes without a match, return None."},
-    "takeaway": {"he": "כשמבקשים את ההתאמה הראשונה, אפשר לעצור ברגע שמוצאים אותה.", "en": "When the task asks for the first match, stop as soon as you find it."},
-    "code": {"language": "python", "text": "def first_even(values):\n    for value in values:\n        if value % 2 == 0:\n            return value\n    return None"}
+    "title": {
+      "he": "הזוגי הראשון",
+      "en": "The first even number"
+    },
+    "prompt": {
+      "he": "כתבו פונקציה שמחזירה את המספר הזוגי הראשון ברשימת שלמים. אם אין מספר זוגי, החזירו None. הסדר ברשימה קובע.",
+      "en": "Write a function that returns the first even integer in a list. Return None if there is no even integer. Use the list's original order."
+    },
+    "answer": {
+      "he": "עוברים משמאל לימין ומחזירים מיד כשמוצאים שארית 0 בחלוקה ב־2. אם סיימנו את הלולאה בלי למצוא, מחזירים None.",
+      "en": "Scan from left to right and return as soon as a number has remainder 0 when divided by 2. If the loop finishes without a match, return None."
+    },
+    "takeaway": {
+      "he": "כשמבקשים את ההתאמה הראשונה, אפשר לעצור ברגע שמוצאים אותה.",
+      "en": "When the task asks for the first match, stop as soon as you find it."
+    },
+    "code": {
+      "language": "python",
+      "text": "def first_even(values):\n    for value in values:\n        if value % 2 == 0:\n            return value\n    return None"
+    }
   },
   {
     "id": "quick-sw-04",
-    "topic": "python",
-    "title": {"he": "בלי כפילויות, באותו סדר", "en": "Remove repeats, keep order"},
-    "prompt": {"he": "כתבו פונקציה שמקבלת רשימת מספרים ומחזירה רשימה חדשה בלי כפילויות, לפי סדר ההופעה הראשון. אין להשתמש ב־set. לדוגמה, [3, 1, 3, 2] תהפוך ל־[3, 1, 2].", "en": "Write a function that returns a new list of numbers without repeats, preserving first-occurrence order. Do not use a set. For example, [3, 1, 3, 2] becomes [3, 1, 2]."},
-    "answer": {"he": "שומרים רשימת תוצאות ומוסיפים ערך רק אם עדיין אינו בתוכה. זה פתרון פשוט להבנה; ברשימות גדולות החיפוש החוזר בתוצאה עלול להיות איטי.", "en": "Keep a result list and append a value only when it is not already there. This is easy to follow, although repeatedly searching the result can be slow for large lists."},
-    "takeaway": {"he": "קודם בנו פתרון ברור ונכון; אחר כך בדקו אם גודל הקלט מצריך שיפור.", "en": "Start with a clear, correct solution, then consider whether the input size requires an improvement."},
-    "code": {"language": "python", "text": "def unique_in_order(values):\n    result = []\n    for value in values:\n        if value not in result: result.append(value)\n    return result"}
+    "topic": "reasoning",
+    "title": {
+      "he": "מסדרים לפי אילוצים",
+      "en": "Order from constraints"
+    },
+    "prompt": {
+      "he": "ארבעה אנשים עומדים בטור: A, B, C, D. ידוע ש־D ראשון, A לפני B, ו־B לפני C. מה סדר העמידה?",
+      "en": "Four people A, B, C, D stand in a line. D is first, A is before B, and B is before C. What is their order?"
+    },
+    "answer": {
+      "he": "הסדר הוא D, A, B, C. אחרי שקובעים את D במקום הראשון, השרשרת A לפני B לפני C קובעת את שלושת המקומות הנותרים.",
+      "en": "The order is D, A, B, C. Once D occupies the first position, the chain A before B before C fixes the remaining three positions."
+    },
+    "takeaway": {
+      "he": "חברו תנאי סדר נפרדים לשרשרת אחת.",
+      "en": "Join separate ordering constraints into one chain."
+    }
   },
   {
     "id": "quick-sw-05",
     "topic": "python",
-    "title": {"he": "עותק שאפשר לשנות", "en": "A copy you can change"},
-    "prompt": {"he": "כתבו פונקציה שמחזירה עותק חדש של רשימת שלמים. הוספת איבר לעותק אחר כך לא צריכה לשנות את הרשימה המקורית.", "en": "Write a function that returns a new copy of a list of integers. Appending an item to the copy later must not change the original list."},
-    "answer": {"he": "החיתוך [:] יוצר רשימה חדשה עם אותם איברים. לעומת זאת, השמה כמו copy = values נותנת שם נוסף לאותה רשימה.", "en": "The slice [:] creates a new list containing the same items. An assignment such as copy = values instead gives the same list another name."},
-    "takeaway": {"he": "שם חדש לאובייקט קיים אינו בהכרח עותק חדש שלו.", "en": "A new name for an existing object does not necessarily create a new copy."},
-    "code": {"language": "python", "text": "def copy_numbers(values):\n    return values[:]"}
+    "title": {
+      "he": "עותק שאפשר לשנות",
+      "en": "A copy you can change"
+    },
+    "prompt": {
+      "he": "כתבו פונקציה שמחזירה עותק חדש של רשימת שלמים. הוספת איבר לעותק אחר כך לא צריכה לשנות את הרשימה המקורית.",
+      "en": "Write a function that returns a new copy of a list of integers. Appending an item to the copy later must not change the original list."
+    },
+    "answer": {
+      "he": "החיתוך [:] יוצר רשימה חדשה עם אותם איברים. לעומת זאת, השמה כמו copy = values נותנת שם נוסף לאותה רשימה.",
+      "en": "The slice [:] creates a new list containing the same items. An assignment such as copy = values instead gives the same list another name."
+    },
+    "takeaway": {
+      "he": "שם חדש לאובייקט קיים אינו בהכרח עותק חדש שלו.",
+      "en": "A new name for an existing object does not necessarily create a new copy."
+    },
+    "code": {
+      "language": "python",
+      "text": "def copy_numbers(values):\n    return values[:]"
+    }
   },
   {
     "id": "quick-sw-06",
-    "topic": "python",
-    "title": {"he": "חלוקה עם מקרה קצה", "en": "Division with an edge case"},
-    "prompt": {"he": "כתבו פונקציה שמקבלת שני מספרים ומחזירה את הראשון חלקי השני. אם המחלק הוא 0, החזירו None במקום לחלק.", "en": "Write a function that divides its first number by its second number. If the divisor is 0, return None instead of dividing."},
-    "answer": {"he": "בודקים את המחלק לפני ביצוע החלוקה. המקרה החריג מקבל תשובה מפורשת, ובכל מקרה אחר מחזירים את המנה.", "en": "Check the divisor before performing the division. Handle the exceptional case explicitly, and return the quotient otherwise."},
-    "takeaway": {"he": "בדקו מראש קלט שהופך את הפעולה ללא מוגדרת.", "en": "Check for input that makes the operation undefined before performing it."},
-    "code": {"language": "python", "text": "def safe_divide(a, b):\n    if b == 0:\n        return None\n    return a / b"}
+    "topic": "reasoning",
+    "title": {
+      "he": "מהירות ממוצעת",
+      "en": "Average speed"
+    },
+    "prompt": {
+      "he": "נוסעים 60 ק״מ במהירות קבועה של 30 קמ״ש, ואז חוזרים 60 ק״מ במהירות 60 קמ״ש. אין עצירות. מה המהירות הממוצעת בכל הנסיעה?",
+      "en": "Travel 60 km at a constant 30 km/h, then return 60 km at 60 km/h, with no stops. What is the average speed for the whole trip?"
+    },
+    "answer": {
+      "he": "40 קמ״ש. הדרך הכוללת היא 120 ק״מ, והזמן הכולל הוא שעתיים בהלוך ועוד שעה בחזור. מחלקים דרך כוללת בזמן כולל: 120 חלקי 3.",
+      "en": "40 km/h. Total distance is 120 km, and total time is two hours outbound plus one hour returning. Divide total distance by total time: 120 divided by 3."
+    },
+    "takeaway": {
+      "he": "מחשבים ממוצע לפי הגדרתו; ממוצע פשוט של המהירויות לא תמיד מתאים.",
+      "en": "Use the definition of an average; simply averaging speeds does not always work."
+    }
   },
   {
     "id": "quick-sw-07",
-    "topic": "python",
-    "title": {"he": "ריבוע לכל מספר", "en": "Square every number"},
-    "prompt": {"he": "כתבו פונקציה שמחזירה רשימה חדשה של ריבועי המספרים ברשימה נתונה. הרשימה המקורית צריכה להישאר ללא שינוי.", "en": "Write a function that returns a new list containing the square of each number in an input list. Leave the original list unchanged."},
-    "answer": {"he": "הביטוי מחשב value * value לכל איבר ובונה מהתוצאות רשימה חדשה. גם ברשימה ריקה נקבל תוצאה תקינה: רשימה ריקה.", "en": "The expression calculates value * value for each item and builds a new list from the results. An empty input correctly produces an empty list."},
-    "takeaway": {"he": "אפשר לעבד כל איבר בנפרד ולבנות תוצאה חדשה בלי לשנות את הקלט.", "en": "Process each item separately and build a new result without changing the input."},
-    "code": {"language": "python", "text": "def squares(values):\n    return [value * value for value in values]"}
+    "topic": "reasoning",
+    "title": {
+      "he": "מתי נפגשים שוב?",
+      "en": "When do they coincide again?"
+    },
+    "prompt": {
+      "he": "נורה A מהבהבת כל 6 שניות ונורה B כל 10 שניות. שתיהן מהבהבות בזמן 0. אחרי כמה שניות יהבהבו שוב יחד בפעם הראשונה?",
+      "en": "Light A flashes every 6 seconds and light B every 10 seconds. Both flash at time 0. After how many seconds will they first flash together again?"
+    },
+    "answer": {
+      "he": "אחרי 30 שניות. הזמנים של A הם 6, 12, 18, 24, 30 ושל B הם 10, 20, 30. זה הזמן החיובי הראשון שמופיע בשתי הרשימות.",
+      "en": "After 30 seconds. A’s times are 6, 12, 18, 24, 30, and B’s are 10, 20, 30. This is the first positive time appearing in both lists."
+    },
+    "takeaway": {
+      "he": "באירועים מחזוריים, חפשו זמן שמתאים לשני המחזורים.",
+      "en": "For periodic events, find a time that fits both periods."
+    }
   },
   {
     "id": "quick-sw-08",
-    "topic": "python",
-    "title": {"he": "הגבולות כלולים?", "en": "Are the boundaries included?"},
-    "prompt": {"he": "ציון תקין הוא מספר שלם בין 0 ל־100, כולל שני הגבולות. כתבו פונקציה שמקבלת מספר שלם ומחזירה האם הוא ציון תקין.", "en": "A valid score is an integer between 0 and 100, including both boundaries. Write a function that takes an integer and returns whether it is a valid score."},
-    "answer": {"he": "שתי הבדיקות חייבות להתקיים: הציון לפחות 0 ולכל היותר 100. לכן 0 ו־100 תקינים, אבל ‎-1 ו־101 אינם תקינים.", "en": "Both conditions must hold: the score is at least 0 and at most 100. Thus 0 and 100 are valid, while -1 and 101 are invalid."},
-    "takeaway": {"he": "הבחינו בין גבול כלול לגבול שאינו כלול, ובדקו ערכים ממש לידו.", "en": "Distinguish inclusive from exclusive boundaries, and test values immediately beside them."},
-    "code": {"language": "python", "text": "def valid_score(score):\n    return 0 <= score <= 100"}
+    "topic": "reasoning",
+    "title": {
+      "he": "שלוש מדרגות",
+      "en": "Three stairs"
+    },
+    "prompt": {
+      "he": "צריך לעלות בדיוק 3 מדרגות. בכל צעד עולים מדרגה אחת או שתיים, בלי לרדת ובלי לעבור את הסוף. בכמה רצפי צעדים שונים אפשר להגיע? סדר הצעדים נחשב.",
+      "en": "Climb exactly 3 stairs. Each move climbs either one or two stairs, without going down or passing the top. How many different move sequences reach the top? The move order matters."
+    },
+    "answer": {
+      "he": "שלושה רצפים: 1+1+1, 1+2, 2+1. הרצפים 1+2 ו־2+1 שונים כי סדר הצעדים שונה.",
+      "en": "Three sequences: 1+1+1, 1+2, and 2+1. The sequences 1+2 and 2+1 differ because their move order differs."
+    },
+    "takeaway": {
+      "he": "לפני הספירה, הגדירו מתי שתי דרכים נחשבות שונות.",
+      "en": "Before counting, define when two ways count as different."
+    }
   },
   {
     "id": "quick-sw-09",
     "topic": "python",
-    "title": {"he": "סופרים תווים במילון", "en": "Count characters with a dictionary"},
-    "prompt": {"he": "כתבו פונקציה שמחזירה מילון ובו מספר ההופעות של כל תו במחרוזת. למשל, עבור 'aba' נקבל {'a': 2, 'b': 1}. גם רווח נחשב תו.", "en": "Write a function that returns a dictionary containing each character's occurrence count in a string. For 'aba', return {'a': 2, 'b': 1}. Spaces count as characters too."},
-    "answer": {"he": "לכל תו מגדילים את המונה שלו ב־1. הפעולה get(char, 0) מחזירה את המונה הקיים, או 0 אם התו טרם הופיע.", "en": "For each character, increase its count by 1. The call get(char, 0) returns the existing count, or 0 when the character has not appeared yet."},
-    "takeaway": {"he": "כאשר לכל ערך יש מידע משלו, מילון יכול לקשר ביניהם בצורה ברורה.", "en": "When each value has its own associated information, a dictionary can express that relationship clearly."},
-    "code": {"language": "python", "text": "def character_counts(text):\n    counts = {}\n    for char in text:\n        counts[char] = counts.get(char, 0) + 1\n    return counts"}
+    "title": {
+      "he": "סופרים תווים במילון",
+      "en": "Count characters with a dictionary"
+    },
+    "prompt": {
+      "he": "כתבו פונקציה שמחזירה מילון ובו מספר ההופעות של כל תו במחרוזת. למשל, עבור 'aba' נקבל {'a': 2, 'b': 1}. גם רווח נחשב תו.",
+      "en": "Write a function that returns a dictionary containing each character's occurrence count in a string. For 'aba', return {'a': 2, 'b': 1}. Spaces count as characters too."
+    },
+    "answer": {
+      "he": "לכל תו מגדילים את המונה שלו ב־1. הפעולה get(char, 0) מחזירה את המונה הקיים, או 0 אם התו טרם הופיע.",
+      "en": "For each character, increase its count by 1. The call get(char, 0) returns the existing count, or 0 when the character has not appeared yet."
+    },
+    "takeaway": {
+      "he": "כאשר לכל ערך יש מידע משלו, מילון יכול לקשר ביניהם בצורה ברורה.",
+      "en": "When each value has its own associated information, a dictionary can express that relationship clearly."
+    },
+    "code": {
+      "language": "python",
+      "text": "def character_counts(text):\n    counts = {}\n    for char in text:\n        counts[char] = counts.get(char, 0) + 1\n    return counts"
+    }
   },
   {
     "id": "quick-sw-10",
-    "topic": "python",
-    "title": {"he": "פסיקים בין מילים", "en": "Commas between words"},
-    "prompt": {"he": "כתבו פונקציה שמקבלת רשימה של מחרוזות ומחברת אותן למחרוזת אחת עם פסיק בין כל שתיים. אין להוסיף פסיק בסוף. עבור רשימה ריקה החזירו מחרוזת ריקה.", "en": "Write a function that joins a list of strings with a comma between neighboring strings. Do not add a trailing comma. An empty list should produce an empty string."},
-    "answer": {"he": "הפעולה join מכניסה את המפריד רק בין איברים. כך לא צריך לטפל בנפרד בפסיק האחרון.", "en": "The join method inserts the separator only between items. This avoids having to handle the final comma separately."},
-    "takeaway": {"he": "פעולה מובנית מתאימה יכולה לפשט גם את הטיפול במקרי קצה.", "en": "A suitable built-in operation can also simplify edge-case handling."},
-    "code": {"language": "python", "text": "def comma_join(words):\n    return ','.join(words)"}
+    "topic": "reasoning",
+    "title": {
+      "he": "הפרש הגילים נשמר",
+      "en": "The age gap stays fixed"
+    },
+    "prompt": {
+      "he": "שני אחים בני 8 ו־13 היום. מה יהיה הפרש הגילים ביניהם בעוד 5 שנים?",
+      "en": "Two siblings are 8 and 13 today. What will their age difference be in 5 years?"
+    },
+    "answer": {
+      "he": "5 שנים. בעוד חמש שנים הם יהיו בני 13 ו־18; לשניהם נוסף אותו מספר, ולכן ההפרש אינו משתנה.",
+      "en": "5 years. They will be 13 and 18; adding the same amount to both ages leaves their difference unchanged."
+    },
+    "takeaway": {
+      "he": "כשאותו שינוי חל על שני ערכים, בדקו מה נשאר קבוע.",
+      "en": "When both values undergo the same change, check what stays fixed."
+    }
   },
   {
     "id": "quick-sw-11",
     "topic": "algorithms",
-    "title": {"he": "הגדול ביותר עד עכשיו", "en": "The largest value so far"},
-    "prompt": {"he": "כתבו פונקציה שמחזירה את המספר הגדול ביותר ברשימת שלמים, בלי להשתמש ב־max. עבור רשימה ריקה החזירו None. המספרים יכולים להיות שליליים.", "en": "Write a function that returns the largest integer in a list without using max. Return None for an empty list. The numbers may be negative."},
-    "answer": {"he": "שומרים את הגדול ביותר שנראה עד כה ומעדכנים כשמגיע ערך גדול יותר. מתחילים ב־None כדי לא להניח בטעות שהתשובה לפחות 0.", "en": "Keep the largest value seen so far, updating it whenever a larger value appears. Start with None so you do not incorrectly assume the answer is at least 0."},
-    "takeaway": {"he": "בחרו ערך התחלתי שמתאים גם לקלטים שליליים ולרשימה ריקה.", "en": "Choose an initial value that also works for negative inputs and an empty list."},
-    "code": {"language": "python", "text": "def largest(values):\n    best = None\n    for value in values:\n        if best is None or value > best: best = value\n    return best"}
+    "title": {
+      "he": "הגדול ביותר עד עכשיו",
+      "en": "The largest value so far"
+    },
+    "prompt": {
+      "he": "כתבו פונקציה שמחזירה את המספר הגדול ביותר ברשימת שלמים, בלי להשתמש ב־max. עבור רשימה ריקה החזירו None. המספרים יכולים להיות שליליים.",
+      "en": "Write a function that returns the largest integer in a list without using max. Return None for an empty list. The numbers may be negative."
+    },
+    "answer": {
+      "he": "שומרים את הגדול ביותר שנראה עד כה ומעדכנים כשמגיע ערך גדול יותר. מתחילים ב־None כדי לא להניח בטעות שהתשובה לפחות 0.",
+      "en": "Keep the largest value seen so far, updating it whenever a larger value appears. Start with None so you do not incorrectly assume the answer is at least 0."
+    },
+    "takeaway": {
+      "he": "בחרו ערך התחלתי שמתאים גם לקלטים שליליים ולרשימה ריקה.",
+      "en": "Choose an initial value that also works for negative inputs and an empty list."
+    },
+    "code": {
+      "language": "python",
+      "text": "def largest(values):\n    best = None\n    for value in values:\n        if best is None or value > best: best = value\n    return best"
+    }
   },
   {
     "id": "quick-sw-12",
     "topic": "algorithms",
-    "title": {"he": "איזה חצי אפשר למחוק?", "en": "Which half can you discard?"},
-    "prompt": {"he": "מחפשים 20 ברשימה הממוינת [2, 5, 9, 12, 16, 20, 25]. בדקנו את האיבר האמצעי 12. באיזה צד ממשיכים, ולמה?", "en": "You are searching for 20 in the sorted list [2, 5, 9, 12, 16, 20, 25]. You checked the middle value, 12. Which side should you search next, and why?"},
-    "answer": {"he": "ממשיכים בצד הימני: [16, 20, 25]. מכיוון שהרשימה ממוינת ו־20 גדול מ־12, הוא אינו יכול להיות באף מקום משמאל ל־12.", "en": "Continue in the right half: [16, 20, 25]. Since the list is sorted and 20 is greater than 12, it cannot appear anywhere to the left of 12."},
-    "takeaway": {"he": "הסדר בקלט מאפשר לפסול קבוצה שלמה של אפשרויות בבת אחת.", "en": "Order in the input lets you eliminate a whole group of possibilities at once."}
+    "title": {
+      "he": "איזה חצי אפשר למחוק?",
+      "en": "Which half can you discard?"
+    },
+    "prompt": {
+      "he": "מחפשים 20 ברשימה הממוינת [2, 5, 9, 12, 16, 20, 25]. בדקנו את האיבר האמצעי 12. באיזה צד ממשיכים, ולמה?",
+      "en": "You are searching for 20 in the sorted list [2, 5, 9, 12, 16, 20, 25]. You checked the middle value, 12. Which side should you search next, and why?"
+    },
+    "answer": {
+      "he": "ממשיכים בצד הימני: [16, 20, 25]. מכיוון שהרשימה ממוינת ו־20 גדול מ־12, הוא אינו יכול להיות באף מקום משמאל ל־12.",
+      "en": "Continue in the right half: [16, 20, 25]. Since the list is sorted and 20 is greater than 12, it cannot appear anywhere to the left of 12."
+    },
+    "takeaway": {
+      "he": "הסדר בקלט מאפשר לפסול קבוצה שלמה של אפשרויות בבת אחת.",
+      "en": "Order in the input lets you eliminate a whole group of possibilities at once."
+    }
   },
   {
     "id": "quick-sw-13",
-    "topic": "algorithms",
-    "title": {"he": "כמה פעמים הגוף רץ?", "en": "How many times does the body run?"},
-    "prompt": {"he": "לולאה חיצונית רצה 4 פעמים. בכל פעם, לולאה פנימית רצה 3 פעמים ומדפיסה כוכבית אחת. כמה כוכביות יודפסו בסך הכול?", "en": "An outer loop runs 4 times. On every iteration, an inner loop runs 3 times and prints one star each time. How many stars are printed in total?"},
-    "answer": {"he": "יודפסו 12 כוכביות: 3 בכל אחת מ־4 האיטרציות. מכפילים כי הלולאה הפנימית מתחילה מחדש בכל סיבוב של החיצונית.", "en": "There will be 12 stars: 3 on each of the 4 outer iterations. Multiply because the inner loop starts over on every outer iteration."},
-    "takeaway": {"he": "בלולאות מקוננות ספרו כמה פעמים הפנימית רצה בכל סיבוב של החיצונית.", "en": "For nested loops, count how often the inner loop runs during each outer iteration."}
+    "topic": "reasoning",
+    "title": {
+      "he": "מידע שמצמצם אפשרויות",
+      "en": "Information removes possibilities"
+    },
+    "prompt": {
+      "he": "מטילים שני מטבעות הוגנים ועצמאיים, ושומרים רק ניסויים שבהם לפחות אחד על עץ. מתוך הניסויים שנשמרו, מה ההסתברות ששניהם על עץ?",
+      "en": "Toss two fair, independent coins and keep only trials with at least one head. Among the retained trials, what is the probability that both coins show heads?"
+    },
+    "answer": {
+      "he": "1/3. מבין ארבע התוצאות השוות בסיכוייהן, פלי־פלי נפסלת. נשארות עץ־עץ, עץ־פלי ופלי־עץ, ורק אחת משלוש מתאימה.",
+      "en": "1/3. Of four equally likely outcomes, tails–tails is removed. Heads–heads, heads–tails, and tails–heads remain, and only one of these three qualifies."
+    },
+    "takeaway": {
+      "he": "אחרי קבלת מידע חדש, סופרים רק את האפשרויות שעדיין אפשריות.",
+      "en": "After receiving new information, count only the possibilities that remain possible."
+    }
   },
   {
     "id": "quick-sw-14",
     "topic": "algorithms",
-    "title": {"he": "מוצאים חסר בעזרת דגלים", "en": "Find a missing value with flags"},
-    "prompt": {"he": "ברשימה נמצאים כל המספרים מ־1 עד n מלבד מספר אחד, ללא כפילויות; n הוא שלם חיובי קטן. כתבו פונקציה שמחזירה רשימה ובה המספר החסר. מותר מערך דגלים נוסף.", "en": "A list contains every integer from 1 through n except one, without duplicates; n is a small positive integer. Write a function returning a list containing the missing number. An additional flag array is allowed."},
-    "answer": {"he": "מאתחלים דגל False לכל מספר ומסמנים True עבור המספרים שפגשנו. בסוף מחזירים את המספר שהדגל שלו נשאר False; מתעלמים מתא 0.", "en": "Initialize a False flag for each number and mark every encountered number True. Return the number whose flag remains False, ignoring index 0."},
-    "takeaway": {"he": "כשהתחום קטן וידוע, אפשר להשתמש במספר עצמו כאינדקס של דגל.", "en": "When the value range is small and known, the number itself can index a flag."},
-    "code": {"language": "python", "text": "def missing_number(values, n):\n    seen = [False] * (n + 1)\n    for value in values: seen[value] = True\n    return [value for value in range(1, n + 1) if not seen[value]]"}
+    "title": {
+      "he": "מוצאים חסר בעזרת דגלים",
+      "en": "Find a missing value with flags"
+    },
+    "prompt": {
+      "he": "ברשימה נמצאים כל המספרים מ־1 עד n מלבד מספר אחד, ללא כפילויות; n הוא שלם חיובי קטן. כתבו פונקציה שמחזירה רשימה ובה המספר החסר. מותר מערך דגלים נוסף.",
+      "en": "A list contains every integer from 1 through n except one, without duplicates; n is a small positive integer. Write a function returning a list containing the missing number. An additional flag array is allowed."
+    },
+    "answer": {
+      "he": "מאתחלים דגל False לכל מספר ומסמנים True עבור המספרים שפגשנו. בסוף מחזירים את המספר שהדגל שלו נשאר False; מתעלמים מתא 0.",
+      "en": "Initialize a False flag for each number and mark every encountered number True. Return the number whose flag remains False, ignoring index 0."
+    },
+    "takeaway": {
+      "he": "כשהתחום קטן וידוע, אפשר להשתמש במספר עצמו כאינדקס של דגל.",
+      "en": "When the value range is small and known, the number itself can index a flag."
+    },
+    "code": {
+      "language": "python",
+      "text": "def missing_number(values, n):\n    seen = [False] * (n + 1)\n    for value in values: seen[value] = True\n    return [value for value in range(1, n + 1) if not seen[value]]"
+    }
   },
   {
     "id": "quick-sw-15",
     "topic": "algorithms",
-    "title": {"he": "שני איברים שונים", "en": "Two different items"},
-    "prompt": {"he": "כתבו פונקציה שבודקת האם יש שני איברים באינדקסים שונים שסכומם target. הערכים יכולים להיות שווים: [3, 3] מתאימה ליעד 6, אבל [3] אינה מתאימה. מספיק פתרון פשוט לרשימות קצרות.", "en": "Write a function checking whether two items at different indices sum to target. Their values may match: [3, 3] works for target 6, but [3] does not. A simple solution for short lists is sufficient."},
-    "answer": {"he": "לכל אינדקס i בודקים רק אינדקסים j שגדולים ממנו. כך כל זוג נבדק פעם אחת, ולעולם לא משתמשים באותו איבר פעמיים.", "en": "For each index i, check only indices j greater than i. This checks each pair once and never uses the same item twice."},
-    "takeaway": {"he": "הבדילו בין שני ערכים שווים לבין שימוש כפול באותו תא.", "en": "Distinguish two equal values from using the same array item twice."},
-    "code": {"language": "python", "text": "def has_pair(values, target):\n    for i in range(len(values)):\n        for j in range(i + 1, len(values)):\n            if values[i] + values[j] == target: return True\n    return False"}
+    "title": {
+      "he": "שני איברים שונים",
+      "en": "Two different items"
+    },
+    "prompt": {
+      "he": "כתבו פונקציה שבודקת האם יש שני איברים באינדקסים שונים שסכומם target. הערכים יכולים להיות שווים: [3, 3] מתאימה ליעד 6, אבל [3] אינה מתאימה. מספיק פתרון פשוט לרשימות קצרות.",
+      "en": "Write a function checking whether two items at different indices sum to target. Their values may match: [3, 3] works for target 6, but [3] does not. A simple solution for short lists is sufficient."
+    },
+    "answer": {
+      "he": "לכל אינדקס i בודקים רק אינדקסים j שגדולים ממנו. כך כל זוג נבדק פעם אחת, ולעולם לא משתמשים באותו איבר פעמיים.",
+      "en": "For each index i, check only indices j greater than i. This checks each pair once and never uses the same item twice."
+    },
+    "takeaway": {
+      "he": "הבדילו בין שני ערכים שווים לבין שימוש כפול באותו תא.",
+      "en": "Distinguish two equal values from using the same array item twice."
+    },
+    "code": {
+      "language": "python",
+      "text": "def has_pair(values, target):\n    for i in range(len(values)):\n        for j in range(i + 1, len(values)):\n            if values[i] + values[j] == target: return True\n    return False"
+    }
   },
   {
     "id": "quick-sw-16",
-    "topic": "algorithms",
-    "title": {"he": "אותו דבר מהסוף להתחלה", "en": "The same backward and forward"},
-    "prompt": {"he": "כתבו פונקציה שבודקת האם רשימת שלמים נקראת אותו דבר משני הכיוונים. לדוגמה, [1, 2, 1] מתאימה ו־[1, 2] לא. רשימה ריקה ורשימה באורך 1 נחשבות מתאימות.", "en": "Write a function checking whether a list of integers reads the same backward and forward. For example, [1, 2, 1] qualifies and [1, 2] does not. Empty lists and one-item lists qualify."},
-    "answer": {"he": "משווים את הרשימה לעותק שלה בסדר הפוך. החיתוך [::-1] יוצר את העותק ההפוך בלי לשנות את הקלט.", "en": "Compare the list with a reversed copy of itself. The slice [::-1] creates that reversed copy without changing the input."},
-    "takeaway": {"he": "סימטריה פירושה שהחלפת כיוון הקריאה אינה משנה את הסדרה.", "en": "Symmetry means reversing the reading direction does not change the sequence."},
-    "code": {"language": "python", "text": "def is_palindrome(values):\n    return values == values[::-1]"}
+    "topic": "reasoning",
+    "title": {
+      "he": "הפער שנסגר",
+      "en": "Closing the gap"
+    },
+    "prompt": {
+      "he": "שני רובוטים נעים ימינה בקו ישר במהירויות קבועות. הקדמי נע מטר בשנייה, והאחורי 3 מטר בשנייה. הפער ההתחלתי הוא 4 מטר. אחרי כמה שניות האחורי ישיג את הקדמי?",
+      "en": "Two robots move right along a straight line at constant speeds. The front robot moves at 1 meter per second and the rear robot at 3. Their initial gap is 4 meters. After how many seconds does the rear robot catch up?"
+    },
+    "answer": {
+      "he": "אחרי 2 שניות. בכל שנייה האחורי מצמצם את הפער ב־2 מטר, שהם הפרש המהירויות. אחרי שתי שניות שניהם נמצאים 6 מטר ממיקום ההתחלה של האחורי.",
+      "en": "After 2 seconds. Every second the rear robot closes the gap by 2 meters, the difference in their speeds. After two seconds both are 6 meters from the rear robot’s starting point."
+    },
+    "takeaway": {
+      "he": "במרדף באותו כיוון, עקבו אחרי קצב השינוי של הפער.",
+      "en": "For pursuit in the same direction, track how quickly the gap changes."
+    }
   },
   {
     "id": "quick-sw-17",
     "topic": "algorithms",
-    "title": {"he": "הצעד הבא במיזוג", "en": "The next step in a merge"},
-    "prompt": {"he": "ממזגים שתי רשימות ממוינות: [1, 7] ו־[3, 4]. מותר בכל צעד לקחת את האיבר הראשון מאחת הרשימות. איזה איבר ניקח ראשון כדי שהתוצאה תהיה ממוינת?", "en": "You are merging two sorted lists: [1, 7] and [3, 4]. Each step may take the first remaining item from either list. Which item should you take first to keep the result sorted?"},
-    "answer": {"he": "ניקח 1 מהרשימה הראשונה, כי הוא קטן מ־3. בכל צעד משווים את שני האיברים הראשונים שנותרו ולוקחים את הקטן מביניהם.", "en": "Take 1 from the first list because it is smaller than 3. At each step, compare the two first remaining items and take the smaller one."},
-    "takeaway": {"he": "ברשימה ממוינת האיבר הקטן ביותר שנותר נמצא בתחילתה.", "en": "In a sorted list, the smallest remaining item is at its front."}
+    "title": {
+      "he": "הצעד הבא במיזוג",
+      "en": "The next step in a merge"
+    },
+    "prompt": {
+      "he": "ממזגים שתי רשימות ממוינות: [1, 7] ו־[3, 4]. מותר בכל צעד לקחת את האיבר הראשון מאחת הרשימות. איזה איבר ניקח ראשון כדי שהתוצאה תהיה ממוינת?",
+      "en": "You are merging two sorted lists: [1, 7] and [3, 4]. Each step may take the first remaining item from either list. Which item should you take first to keep the result sorted?"
+    },
+    "answer": {
+      "he": "ניקח 1 מהרשימה הראשונה, כי הוא קטן מ־3. בכל צעד משווים את שני האיברים הראשונים שנותרו ולוקחים את הקטן מביניהם.",
+      "en": "Take 1 from the first list because it is smaller than 3. At each step, compare the two first remaining items and take the smaller one."
+    },
+    "takeaway": {
+      "he": "ברשימה ממוינת האיבר הקטן ביותר שנותר נמצא בתחילתה.",
+      "en": "In a sorted list, the smallest remaining item is at its front."
+    }
   },
   {
     "id": "quick-sw-18",
     "topic": "algorithms",
-    "title": {"he": "בודקים סדר בלי למיין", "en": "Check order without sorting"},
-    "prompt": {"he": "כתבו פונקציה שבודקת האם רשימת שלמים ממוינת בסדר לא יורד. ערכים שווים מותרים. רשימה ריקה ורשימה באורך 1 נחשבות ממוינות; אין לשנות את הקלט.", "en": "Write a function checking whether a list of integers is in nondecreasing order. Equal values are allowed. Empty lists and one-item lists count as sorted; leave the input unchanged."},
-    "answer": {"he": "בודקים שכל איבר קטן מהבא אחריו או שווה לו. הפעולה all מחזירה True רק אם כל ההשוואות נכונות, וגם כשאין זוגות שצריך לבדוק.", "en": "Check that every item is less than or equal to its successor. The all function returns True when every comparison succeeds, including when there are no pairs to check."},
-    "takeaway": {"he": "כדי לוודא סדר בכל הרשימה, מספיק לבדוק כל זוג שכנים.", "en": "To verify the whole list's order, check every adjacent pair."},
-    "code": {"language": "python", "text": "def is_sorted(values):\n    return all(values[i] <= values[i + 1] for i in range(len(values) - 1))"}
+    "title": {
+      "he": "בודקים סדר בלי למיין",
+      "en": "Check order without sorting"
+    },
+    "prompt": {
+      "he": "כתבו פונקציה שבודקת האם רשימת שלמים ממוינת בסדר לא יורד. ערכים שווים מותרים. רשימה ריקה ורשימה באורך 1 נחשבות ממוינות; אין לשנות את הקלט.",
+      "en": "Write a function checking whether a list of integers is in nondecreasing order. Equal values are allowed. Empty lists and one-item lists count as sorted; leave the input unchanged."
+    },
+    "answer": {
+      "he": "בודקים שכל איבר קטן מהבא אחריו או שווה לו. הפעולה all מחזירה True רק אם כל ההשוואות נכונות, וגם כשאין זוגות שצריך לבדוק.",
+      "en": "Check that every item is less than or equal to its successor. The all function returns True when every comparison succeeds, including when there are no pairs to check."
+    },
+    "takeaway": {
+      "he": "כדי לוודא סדר בכל הרשימה, מספיק לבדוק כל זוג שכנים.",
+      "en": "To verify the whole list's order, check every adjacent pair."
+    },
+    "code": {
+      "language": "python",
+      "text": "def is_sorted(values):\n    return all(values[i] <= values[i + 1] for i in range(len(values) - 1))"
+    }
   },
   {
     "id": "quick-sw-19",
-    "topic": "algorithms",
-    "title": {"he": "סיבוב של צעד אחד", "en": "Rotate by one position"},
-    "prompt": {"he": "כתבו פונקציה שמחזירה רשימה חדשה שבה האיבר הראשון עבר לסוף, וכל היתר זזו צעד שמאלה. למשל, [1, 2, 3] תהפוך ל־[2, 3, 1]. קלט ריק יחזיר רשימה ריקה.", "en": "Write a function returning a new list with the first item moved to the end and every other item shifted left. For example, [1, 2, 3] becomes [2, 3, 1]. Empty input returns an empty list."},
-    "answer": {"he": "מחברים את כל האיברים שאחרי הראשון עם רשימה שמכילה רק את הראשון. החיתוכים בטוחים גם לרשימה ריקה.", "en": "Concatenate the items after the first with a list containing only the first item. Both slices also work safely on an empty list."},
-    "takeaway": {"he": "אפשר לתאר שינוי בסדר האיברים כחיבור של חלקי הרשימה.", "en": "A reordering can be expressed as concatenating pieces of the list."},
-    "code": {"language": "python", "text": "def rotate_left(values):\n    return values[1:] + values[:1]"}
+    "topic": "reasoning",
+    "title": {
+      "he": "לוח עם שתי פינות חסרות",
+      "en": "A board with two missing corners"
+    },
+    "prompt": {
+      "he": "מלוח משבצות שחמט בגודל 4×4 מסירים את הפינה השמאלית העליונה ואת הימנית התחתונה. האם אפשר לכסות את 14 המשבצות הנותרות באבני דומינו, כשכל אבן מכסה שתי משבצות שכנות בצלע?",
+      "en": "Remove the top-left and bottom-right squares of a 4×4 checkerboard. Can dominoes cover the remaining 14 squares if each domino covers two squares sharing an edge?"
+    },
+    "answer": {
+      "he": "לא. שתי הפינות שהוסרו באותו צבע, ולכן נשארות 6 משבצות מצבע אחד ו־8 מהאחר. כל דומינו מכסה אחת מכל צבע, ולכן כיסוי מלא מחייב מספרים שווים.",
+      "en": "No. The removed corners share a color, leaving 6 squares of one color and 8 of the other. Each domino covers one square of each color, so complete coverage requires equal counts."
+    },
+    "takeaway": {
+      "he": "צביעה יכולה לחשוף מגבלה שאינה ברורה מספירת המשבצות הכוללת.",
+      "en": "Coloring can reveal a constraint hidden by the total square count."
+    }
   },
   {
     "id": "quick-sw-20",
-    "topic": "algorithms",
-    "title": {"he": "איזה מצביע מזיזים?", "en": "Which pointer should move?"},
-    "prompt": {"he": "מחפשים זוג שסכומו 11 ברשימה הממוינת [1, 2, 4, 7, 9]. מתחילים ב־1 וב־9 והסכום הוא 10. האם נזיז את המצביע השמאלי ימינה או את הימני שמאלה?", "en": "You seek a pair summing to 11 in the sorted list [1, 2, 4, 7, 9]. Starting at 1 and 9 gives 10. Should you move the left pointer right or the right pointer left?"},
-    "answer": {"he": "מזיזים את השמאלי ימינה, מ־1 ל־2, כדי להגדיל את הסכום. הזזת הימני שמאלה רק תקטין את הסכום ולכן לא תפתור את המחסור הנוכחי.", "en": "Move the left pointer right, from 1 to 2, to increase the sum. Moving the right pointer left would only reduce the sum and cannot fix the current shortfall."},
-    "takeaway": {"he": "בחרו צעד לפי הכיוון שבו הוא יכול לקרב את התוצאה ליעד.", "en": "Choose a step based on the direction in which it can move the result toward the target."}
+    "topic": "reasoning",
+    "title": {
+      "he": "מפתח בארבע קופסאות",
+      "en": "A key in four boxes"
+    },
+    "prompt": {
+      "he": "מפתח נמצא באחת מארבע קופסאות A, B, C, D. מותר לשאול שאלות כן/לא אמיתיות על מיקומו, למשל אם הוא באחת משתי קופסאות מסוימות. מה מספר השאלות המזערי שמבטיח לזהות את הקופסה?",
+      "en": "A key is in one of four boxes A, B, C, D. You may ask truthful yes/no questions about its location, such as whether it is in either of two chosen boxes. What minimum number of questions guarantees identifying the box?"
+    },
+    "answer": {
+      "he": "2 שאלות. שואלים אם המפתח ב־A או B, ואז מבדילים בין שתי הקופסאות שנותרו. שאלה אחת אינה מספיקה: יש לה רק שתי תשובות, אבל צריך להבחין בין ארבע אפשרויות.",
+      "en": "2 questions. Ask whether it is in A or B, then distinguish the two remaining boxes. One question is insufficient: it has only two answers but must distinguish four possibilities."
+    },
+    "takeaway": {
+      "he": "בדיקה טובה מחלקת את האפשרויות לקבוצות קטנות ככל האפשר.",
+      "en": "A useful test divides the possibilities into groups as small as possible."
+    }
   },
   {
     "id": "quick-sw-21",
     "topic": "reasoning",
-    "title": {"he": "הופכים שני מטבעות", "en": "Flip two coins"},
-    "prompt": {"he": "עשרה מטבעות מונחים כולם על צד פלי. בכל צעד חייבים להפוך בדיוק שני מטבעות שונים. האם אפשר להגיע למצב שבו בדיוק תשעה מטבעות על עץ?", "en": "Ten coins all show tails. Every move must flip exactly two different coins. Can you reach a state with exactly nine heads?"},
-    "answer": {"he": "לא. מספר המטבעות על עץ משתנה בכל צעד ב־2, ב־‎-2 או ב־0, ולכן הוא נשאר זוגי. תשעה הוא מספר אי־זוגי.", "en": "No. Each move changes the number of heads by 2, -2, or 0, so that number remains even. Nine is odd."},
-    "takeaway": {"he": "חפשו תכונה שנשמרת בכל פעולה, כמו זוגיות.", "en": "Look for a property preserved by every move, such as parity."}
+    "title": {
+      "he": "הופכים שני מטבעות",
+      "en": "Flip two coins"
+    },
+    "prompt": {
+      "he": "עשרה מטבעות מונחים כולם על צד פלי. בכל צעד חייבים להפוך בדיוק שני מטבעות שונים. האם אפשר להגיע למצב שבו בדיוק תשעה מטבעות על עץ?",
+      "en": "Ten coins all show tails. Every move must flip exactly two different coins. Can you reach a state with exactly nine heads?"
+    },
+    "answer": {
+      "he": "לא. מספר המטבעות על עץ משתנה בכל צעד ב־2, ב־‎-2 או ב־0, ולכן הוא נשאר זוגי. תשעה הוא מספר אי־זוגי.",
+      "en": "No. Each move changes the number of heads by 2, -2, or 0, so that number remains even. Nine is odd."
+    },
+    "takeaway": {
+      "he": "חפשו תכונה שנשמרת בכל פעולה, כמו זוגיות.",
+      "en": "Look for a property preserved by every move, such as parity."
+    }
   },
   {
     "id": "quick-sw-22",
     "topic": "reasoning",
-    "title": {"he": "גרביים בחושך", "en": "Socks in the dark"},
-    "prompt": {"he": "במגירה יש גרביים בשלושה צבעים, לפחות ארבעה מכל צבע. שולפים בלי לראות. כמה גרביים צריך לשלוף כדי להבטיח ששניים מהם באותו צבע?", "en": "A drawer contains socks in three colors, at least four of each color. You draw without looking. How many socks guarantee that two have the same color?"},
-    "answer": {"he": "ארבעה. בשלוש שליפות עדיין ייתכן שקיבלנו אחד מכל צבע; הרביעי חייב להתאים לאחד הצבעים שכבר נשלפו.", "en": "Four. The first three could all have different colors; the fourth must match one of the colors already drawn."},
-    "takeaway": {"he": "כדי להבטיח תוצאה, בדקו את המקרה הגרוע ביותר ולא רק מקרה נוח.", "en": "To guarantee an outcome, consider the worst case rather than a convenient example."}
+    "title": {
+      "he": "גרביים בחושך",
+      "en": "Socks in the dark"
+    },
+    "prompt": {
+      "he": "במגירה יש גרביים בשלושה צבעים, לפחות ארבעה מכל צבע. שולפים בלי לראות. כמה גרביים צריך לשלוף כדי להבטיח ששניים מהם באותו צבע?",
+      "en": "A drawer contains socks in three colors, at least four of each color. You draw without looking. How many socks guarantee that two have the same color?"
+    },
+    "answer": {
+      "he": "ארבעה. בשלוש שליפות עדיין ייתכן שקיבלנו אחד מכל צבע; הרביעי חייב להתאים לאחד הצבעים שכבר נשלפו.",
+      "en": "Four. The first three could all have different colors; the fourth must match one of the colors already drawn."
+    },
+    "takeaway": {
+      "he": "כדי להבטיח תוצאה, בדקו את המקרה הגרוע ביותר ולא רק מקרה נוח.",
+      "en": "To guarantee an outcome, consider the worst case rather than a convenient example."
+    }
   },
   {
     "id": "quick-sw-23",
     "topic": "reasoning",
-    "title": {"he": "שלוש דקות בשני שעונים", "en": "Three minutes with two timers"},
-    "prompt": {"he": "יש שעוני חול של 4 ושל 7 דקות. מותר להתחיל את מדידת שלוש הדקות אחרי הכנה מוקדמת. איך מודדים קטע רצוף של 3 דקות בלי שעון נוסף?", "en": "You have 4-minute and 7-minute hourglasses. The three-minute measurement may begin after preparation. How can you measure a continuous 3-minute interval without another clock?"},
-    "answer": {"he": "הופכים את שניהם יחד. מתחילים את המדידה כשהשעון של 4 דקות נגמר, ומסיימים כשהשעון של 7 דקות נגמר: עברו בדיוק 3 דקות.", "en": "Start both together. Begin the measurement when the 4-minute glass empties and end it when the 7-minute glass empties: exactly 3 minutes have elapsed."},
-    "takeaway": {"he": "לפעמים מודדים את ההפרש בין שני אירועים ידועים.", "en": "Sometimes the desired interval is the difference between two known events."}
+    "title": {
+      "he": "שלוש דקות בשני שעונים",
+      "en": "Three minutes with two timers"
+    },
+    "prompt": {
+      "he": "יש שעוני חול של 4 ושל 7 דקות. מותר להתחיל את מדידת שלוש הדקות אחרי הכנה מוקדמת. איך מודדים קטע רצוף של 3 דקות בלי שעון נוסף?",
+      "en": "You have 4-minute and 7-minute hourglasses. The three-minute measurement may begin after preparation. How can you measure a continuous 3-minute interval without another clock?"
+    },
+    "answer": {
+      "he": "הופכים את שניהם יחד. מתחילים את המדידה כשהשעון של 4 דקות נגמר, ומסיימים כשהשעון של 7 דקות נגמר: עברו בדיוק 3 דקות.",
+      "en": "Start both together. Begin the measurement when the 4-minute glass empties and end it when the 7-minute glass empties: exactly 3 minutes have elapsed."
+    },
+    "takeaway": {
+      "he": "לפעמים מודדים את ההפרש בין שני אירועים ידועים.",
+      "en": "Sometimes the desired interval is the difference between two known events."
+    }
   },
   {
     "id": "quick-sw-24",
     "topic": "reasoning",
-    "title": {"he": "עקפת את המקום השני", "en": "You passed the runner in second"},
-    "prompt": {"he": "במרוץ רגיל, ללא הקפות, עקפת כרגע את הרץ שהיה במקום השני. מה המיקום שלך מיד לאחר העקיפה?", "en": "In a race with no lapping, you have just passed the runner who was in second place. What is your position immediately afterward?"},
-    "answer": {"he": "המקום השני. תפסת את מקומו של הרץ שעקפת; הרץ שהיה ראשון עדיין לפניך.", "en": "Second place. You took the position of the runner you passed; the runner who was first is still ahead of you."},
-    "takeaway": {"he": "תרגמו את הניסוח לשינוי המדויק במצב לפני שמחשבים תשובה.", "en": "Translate the wording into the exact state change before choosing an answer."}
+    "title": {
+      "he": "עקפת את המקום השני",
+      "en": "You passed the runner in second"
+    },
+    "prompt": {
+      "he": "במרוץ רגיל, ללא הקפות, עקפת כרגע את הרץ שהיה במקום השני. מה המיקום שלך מיד לאחר העקיפה?",
+      "en": "In a race with no lapping, you have just passed the runner who was in second place. What is your position immediately afterward?"
+    },
+    "answer": {
+      "he": "המקום השני. תפסת את מקומו של הרץ שעקפת; הרץ שהיה ראשון עדיין לפניך.",
+      "en": "Second place. You took the position of the runner you passed; the runner who was first is still ahead of you."
+    },
+    "takeaway": {
+      "he": "תרגמו את הניסוח לשינוי המדויק במצב לפני שמחשבים תשובה.",
+      "en": "Translate the wording into the exact state change before choosing an answer."
+    }
   },
   {
     "id": "quick-sw-25",
     "topic": "reasoning",
-    "title": {"he": "שלוש תוויות שגויות", "en": "Three wrong labels"},
-    "prompt": {"he": "יש שלוש קופסאות: אחת מכילה רק תפוחים, אחת רק תפוזים ואחת תערובת של שניהם. כל שלוש התוויות שגויות. מאיזו קופסה נוציא פרי אחד, בלי לראות את היתר, כדי להסיק את תכולת כל הקופסאות?", "en": "Of three boxes, one contains only apples, one only oranges, and one a mixture of both. All three labels are wrong. From which box should you draw one fruit, without looking inside, to infer all three contents?"},
-    "answer": {"he": "מהקופסה המסומנת תערובת: היא אינה מעורבת, ולכן הפרי מגלה את סוגה. הקופסה המסומנת בשם הסוג השני חייבת להיות המעורבת, והקופסה הנותרת מכילה רק את הסוג השני.", "en": "Draw from the box labeled mixed: it cannot be mixed, so the fruit reveals its type. The box labeled with the other fruit must be mixed, and the remaining box contains only that other fruit."},
-    "takeaway": {"he": "גם מידע שמשהו אינו נכון יכול לפסול אפשרויות ולהכריע בין מצבים.", "en": "Knowing that something is false can eliminate possibilities and distinguish states."}
+    "title": {
+      "he": "שלוש תוויות שגויות",
+      "en": "Three wrong labels"
+    },
+    "prompt": {
+      "he": "יש שלוש קופסאות: אחת מכילה רק תפוחים, אחת רק תפוזים ואחת תערובת של שניהם. כל שלוש התוויות שגויות. מאיזו קופסה נוציא פרי אחד, בלי לראות את היתר, כדי להסיק את תכולת כל הקופסאות?",
+      "en": "Of three boxes, one contains only apples, one only oranges, and one a mixture of both. All three labels are wrong. From which box should you draw one fruit, without looking inside, to infer all three contents?"
+    },
+    "answer": {
+      "he": "מהקופסה המסומנת תערובת: היא אינה מעורבת, ולכן הפרי מגלה את סוגה. הקופסה המסומנת בשם הסוג השני חייבת להיות המעורבת, והקופסה הנותרת מכילה רק את הסוג השני.",
+      "en": "Draw from the box labeled mixed: it cannot be mixed, so the fruit reveals its type. The box labeled with the other fruit must be mixed, and the remaining box contains only that other fruit."
+    },
+    "takeaway": {
+      "he": "גם מידע שמשהו אינו נכון יכול לפסול אפשרויות ולהכריע בין מצבים.",
+      "en": "Knowing that something is false can eliminate possibilities and distinguish states."
+    }
   },
   {
     "id": "quick-sw-26",
     "topic": "reasoning",
-    "title": {"he": "מטבע כבד משלושה", "en": "One heavy coin among three"},
-    "prompt": {"he": "יש שלושה מטבעות A, B, C. בדיוק אחד כבד יותר, והשניים האחרים שווים במשקלם. איך מזהים את הכבד בשקילה אחת במאזני כפות?", "en": "You have three coins A, B, and C. Exactly one is heavier, and the other two weigh the same. How can one balance-scale weighing identify the heavy coin?"},
-    "answer": {"he": "שוקלים A מול B. אם המאזניים מאוזנים, C כבד; אחרת המטבע שבכף הכבדה הוא הכבד.", "en": "Weigh A against B. If they balance, C is heavy; otherwise, the coin on the heavier pan is the heavy one."},
-    "takeaway": {"he": "תכננו בדיקה כך שלכל תוצאה אפשרית תהיה משמעות ברורה.", "en": "Design a test so every possible outcome has a clear meaning."}
+    "title": {
+      "he": "מטבע כבד משלושה",
+      "en": "One heavy coin among three"
+    },
+    "prompt": {
+      "he": "יש שלושה מטבעות A, B, C. בדיוק אחד כבד יותר, והשניים האחרים שווים במשקלם. איך מזהים את הכבד בשקילה אחת במאזני כפות?",
+      "en": "You have three coins A, B, and C. Exactly one is heavier, and the other two weigh the same. How can one balance-scale weighing identify the heavy coin?"
+    },
+    "answer": {
+      "he": "שוקלים A מול B. אם המאזניים מאוזנים, C כבד; אחרת המטבע שבכף הכבדה הוא הכבד.",
+      "en": "Weigh A against B. If they balance, C is heavy; otherwise, the coin on the heavier pan is the heavy one."
+    },
+    "takeaway": {
+      "he": "תכננו בדיקה כך שלכל תוצאה אפשרית תהיה משמעות ברורה.",
+      "en": "Design a test so every possible outcome has a clear meaning."
+    }
   },
   {
     "id": "quick-sw-27",
     "topic": "reasoning",
-    "title": {"he": "שני ליטרים בלי סימון", "en": "Two liters without markings"},
-    "prompt": {"he": "יש שני כלים ריקים ללא סימוני ביניים בנפח 3 ו־5 ליטרים, וברז מים. מותר למלא כלי או למזוג עד שהכלי המקבל מלא. איך משאירים בדיוק 2 ליטרים באחד הכלים?", "en": "You have empty, unmarked 3-liter and 5-liter containers and a water tap. You may fill a container or pour until the receiving container is full. How can you leave exactly 2 liters in one container?"},
-    "answer": {"he": "ממלאים את כלי ה־5 ליטרים ומוזגים ממנו לכלי ה־3 ליטרים הריק עד שהוא מלא. בכלי הגדול נשארים בדיוק 2 ליטרים.", "en": "Fill the 5-liter container, then pour from it into the empty 3-liter container until that container is full. Exactly 2 liters remain in the larger container."},
-    "takeaway": {"he": "קיבולת מלאה של כלי יכולה לשמש למדידה גם בלי סימוני ביניים.", "en": "A container's full capacity can provide a measurement even without intermediate markings."}
+    "title": {
+      "he": "שני ליטרים בלי סימון",
+      "en": "Two liters without markings"
+    },
+    "prompt": {
+      "he": "יש שני כלים ריקים ללא סימוני ביניים בנפח 3 ו־5 ליטרים, וברז מים. מותר למלא כלי או למזוג עד שהכלי המקבל מלא. איך משאירים בדיוק 2 ליטרים באחד הכלים?",
+      "en": "You have empty, unmarked 3-liter and 5-liter containers and a water tap. You may fill a container or pour until the receiving container is full. How can you leave exactly 2 liters in one container?"
+    },
+    "answer": {
+      "he": "ממלאים את כלי ה־5 ליטרים ומוזגים ממנו לכלי ה־3 ליטרים הריק עד שהוא מלא. בכלי הגדול נשארים בדיוק 2 ליטרים.",
+      "en": "Fill the 5-liter container, then pour from it into the empty 3-liter container until that container is full. Exactly 2 liters remain in the larger container."
+    },
+    "takeaway": {
+      "he": "קיבולת מלאה של כלי יכולה לשמש למדידה גם בלי סימוני ביניים.",
+      "en": "A container's full capacity can provide a measurement even without intermediate markings."
+    }
   },
   {
     "id": "quick-sw-28",
     "topic": "reasoning",
-    "title": {"he": "כמה משחקים עד אלוף?", "en": "How many games produce a champion?"},
-    "prompt": {"he": "שמונה שחקנים משתתפים בטורניר נוקאאוט. בכל משחק יש מנצח אחד ומפסיד אחד, והמפסיד מודח. כמה משחקים נדרשים כדי שיישאר אלוף יחיד?", "en": "Eight players enter a knockout tournament. Every game has one winner and one loser, and the loser is eliminated. How many games are needed to leave one champion?"},
-    "answer": {"he": "שבעה משחקים. צריך להדיח שבעה שחקנים כדי להישאר עם אחד, וכל משחק מדיח בדיוק שחקן אחד.", "en": "Seven games. Seven players must be eliminated to leave one, and each game eliminates exactly one player."},
-    "takeaway": {"he": "ספרו מה כל פעולה משנה במקום להסתבך בכל סדר האירועים האפשרי.", "en": "Count what each operation changes instead of tracking every possible event order."}
+    "title": {
+      "he": "כמה משחקים עד אלוף?",
+      "en": "How many games produce a champion?"
+    },
+    "prompt": {
+      "he": "שמונה שחקנים משתתפים בטורניר נוקאאוט. בכל משחק יש מנצח אחד ומפסיד אחד, והמפסיד מודח. כמה משחקים נדרשים כדי שיישאר אלוף יחיד?",
+      "en": "Eight players enter a knockout tournament. Every game has one winner and one loser, and the loser is eliminated. How many games are needed to leave one champion?"
+    },
+    "answer": {
+      "he": "שבעה משחקים. צריך להדיח שבעה שחקנים כדי להישאר עם אחד, וכל משחק מדיח בדיוק שחקן אחד.",
+      "en": "Seven games. Seven players must be eliminated to leave one, and each game eliminates exactly one player."
+    },
+    "takeaway": {
+      "he": "ספרו מה כל פעולה משנה במקום להסתבך בכל סדר האירועים האפשרי.",
+      "en": "Count what each operation changes instead of tracking every possible event order."
+    }
   },
   {
     "id": "quick-sw-29",
     "topic": "reasoning",
-    "title": {"he": "לחיצות יד בלי ספירה כפולה", "en": "Handshakes without double counting"},
-    "prompt": {"he": "ארבעה אנשים נפגשים, וכל זוג לוחץ יד בדיוק פעם אחת. כמה לחיצות יד יש בסך הכול?", "en": "Four people meet, and every pair shakes hands exactly once. How many handshakes occur in total?"},
-    "answer": {"he": "שש: הראשון לוחץ יד לשלושה, השני לשניים שעדיין לא נספרו, והשלישי לאחד. לכן 3 + 2 + 1 = 6.", "en": "Six: the first person shakes three hands, the second has two uncounted partners, and the third has one. Thus 3 + 2 + 1 = 6."},
-    "takeaway": {"he": "כשסופרים זוגות, ודאו שאותו זוג לא נספר משני הכיוונים.", "en": "When counting pairs, make sure the same pair is not counted in both directions."}
+    "title": {
+      "he": "לחיצות יד בלי ספירה כפולה",
+      "en": "Handshakes without double counting"
+    },
+    "prompt": {
+      "he": "ארבעה אנשים נפגשים, וכל זוג לוחץ יד בדיוק פעם אחת. כמה לחיצות יד יש בסך הכול?",
+      "en": "Four people meet, and every pair shakes hands exactly once. How many handshakes occur in total?"
+    },
+    "answer": {
+      "he": "שש: הראשון לוחץ יד לשלושה, השני לשניים שעדיין לא נספרו, והשלישי לאחד. לכן 3 + 2 + 1 = 6.",
+      "en": "Six: the first person shakes three hands, the second has two uncounted partners, and the third has one. Thus 3 + 2 + 1 = 6."
+    },
+    "takeaway": {
+      "he": "כשסופרים זוגות, ודאו שאותו זוג לא נספר משני הכיוונים.",
+      "en": "When counting pairs, make sure the same pair is not counted in both directions."
+    }
   },
   {
     "id": "quick-sw-30",
     "topic": "reasoning",
-    "title": {"he": "האם המסקנה מתחייבת?", "en": "Does the conclusion follow?"},
-    "prompt": {"he": "בקבוצה מסוימת כל המתכנתים לובשים חולצה כחולה. דני חבר בקבוצה ולובש חולצה כחולה. האם בהכרח דני מתכנת?", "en": "In a certain group, every programmer wears a blue shirt. Danny belongs to the group and wears a blue shirt. Must Danny be a programmer?"},
-    "answer": {"he": "לא. הכלל אומר שמתכנת גורר חולצה כחולה, אבל אינו אומר שרק מתכנתים לובשים כחול. גם אדם שאינו מתכנת יכול ללבוש כחול בלי להפר את הכלל.", "en": "No. The rule says being a programmer implies wearing blue, but it does not say only programmers wear blue. A nonprogrammer can also wear blue without breaking the rule."},
-    "takeaway": {"he": "אם א גורר ב, לא בהכרח ב גורר א.", "en": "If A implies B, B does not necessarily imply A."}
+    "title": {
+      "he": "האם המסקנה מתחייבת?",
+      "en": "Does the conclusion follow?"
+    },
+    "prompt": {
+      "he": "בקבוצה מסוימת כל המתכנתים לובשים חולצה כחולה. דני חבר בקבוצה ולובש חולצה כחולה. האם בהכרח דני מתכנת?",
+      "en": "In a certain group, every programmer wears a blue shirt. Danny belongs to the group and wears a blue shirt. Must Danny be a programmer?"
+    },
+    "answer": {
+      "he": "לא. הכלל אומר שמתכנת גורר חולצה כחולה, אבל אינו אומר שרק מתכנתים לובשים כחול. גם אדם שאינו מתכנת יכול ללבוש כחול בלי להפר את הכלל.",
+      "en": "No. The rule says being a programmer implies wearing blue, but it does not say only programmers wear blue. A nonprogrammer can also wear blue without breaking the rule."
+    },
+    "takeaway": {
+      "he": "אם א גורר ב, לא בהכרח ב גורר א.",
+      "en": "If A implies B, B does not necessarily imply A."
+    }
+  },
+  {
+    "id": "quick-sw-31",
+    "topic": "python",
+    "title": {
+      "he": "הסכום של החיוביים בלבד",
+      "en": "Sum only the positive numbers"
+    },
+    "prompt": {
+      "he": "כתבו פונקציה שמחזירה את סכום המספרים החיוביים ברשימת שלמים. אפס ושליליים אינם נכללים, ורשימה ריקה תחזיר 0.",
+      "en": "Write a function returning the sum of the positive numbers in a list of integers. Exclude zero and negative numbers; an empty list returns 0."
+    },
+    "answer": {
+      "he": "מסננים את האיברים לפי value > 0, ומעבירים ל־sum רק את אלה שעברו את התנאי. סכום של סדרה ריקה הוא 0.",
+      "en": "Filter items using value > 0 and pass only the matching values to sum. The sum of an empty sequence is 0."
+    },
+    "takeaway": {
+      "he": "הפרידו בין התנאי לבחירת איבר לבין הפעולה שמבצעים עליו.",
+      "en": "Separate the rule for selecting an item from the operation performed on it."
+    },
+    "code": {
+      "language": "python",
+      "text": "def positive_sum(values):\n    return sum(value for value in values if value > 0)"
+    }
+  },
+  {
+    "id": "quick-sw-32",
+    "topic": "python",
+    "title": {
+      "he": "הופכים מחרוזת",
+      "en": "Reverse a string"
+    },
+    "prompt": {
+      "he": "כתבו פונקציה שמקבלת מחרוזת של אותיות אנגליות ומחזירה אותה בסדר הפוך. למשל, code תהפוך ל־edoc. גם מחרוזת ריקה צריכה לעבוד.",
+      "en": "Write a function that reverses a string of English letters. For example, code becomes edoc. An empty string must also work."
+    },
+    "answer": {
+      "he": "חיתוך בצעד ‎-1 קורא את התווים מהסוף להתחלה. הוא מחזיר מחרוזת חדשה ועובד גם כשהקלט ריק.",
+      "en": "A slice with step -1 reads characters from the end to the beginning. It returns a new string and also works with empty input."
+    },
+    "takeaway": {
+      "he": "בחיתוך, צעד שלילי משנה את כיוון הקריאה.",
+      "en": "In a slice, a negative step changes the reading direction."
+    },
+    "code": {
+      "language": "python",
+      "text": "def reverse_text(text):\n    return text[::-1]"
+    }
+  },
+  {
+    "id": "quick-sw-33",
+    "topic": "python",
+    "title": {
+      "he": "מחליפים שני ערכים",
+      "en": "Swap two values"
+    },
+    "prompt": {
+      "he": "משתנים a ו־b מכילים שני מספרים. כתבו פונקציה שמחזירה זוג שבו ערכיהם הוחלפו, בלי לשנות את המספרים עצמם.",
+      "en": "Variables a and b hold two numbers. Write a function returning a pair with their values swapped, without altering the numbers themselves."
+    },
+    "answer": {
+      "he": "ההשמה המקבילה מחשבת תחילה את שני הערכים שבימין, ואז משייכת אותם בסדר ההפוך. כך הערך הישן של a אינו אובד כשמעדכנים אותו.",
+      "en": "Parallel assignment evaluates both right-hand values first, then assigns them in reverse order. This avoids losing the old value of a when updating it."
+    },
+    "takeaway": {
+      "he": "לפני דריסה של ערך, בדקו אם עדיין תצטרכו אותו.",
+      "en": "Before overwriting a value, check whether you still need it."
+    },
+    "code": {
+      "language": "python",
+      "text": "def swapped(a, b):\n    a, b = b, a\n    return a, b"
+    }
+  },
+  {
+    "id": "quick-sw-34",
+    "topic": "algorithms",
+    "title": {
+      "he": "מי יוצא ממחסנית?",
+      "en": "Which item leaves the stack?"
+    },
+    "prompt": {
+      "he": "מחסנית מוציאה את האיבר האחרון שנכנס: LIFO. הכנסנו A, אחר כך B, הוצאנו איבר, ואז הכנסנו C. איזה איבר יצא בהוצאה הבאה?",
+      "en": "A stack removes the last item inserted: LIFO. Insert A, then B, remove one item, then insert C. Which item leaves on the next removal?"
+    },
+    "answer": {
+      "he": "C. בהוצאה הראשונה B יוצא, A נשאר, ו־C נכנס מעליו. לכן C הוא האחרון שנכנס וגם הבא שיצא.",
+      "en": "C. The first removal takes B, leaving A; C is then placed above A. C was inserted last and is therefore removed next."
+    },
+    "takeaway": {
+      "he": "במחסנית, עוקבים אחרי הקצה שאליו מכניסים וממנו מוציאים.",
+      "en": "For a stack, track the end used for both insertion and removal."
+    }
+  },
+  {
+    "id": "quick-sw-35",
+    "topic": "algorithms",
+    "title": {
+      "he": "מי יוצא מתור?",
+      "en": "Which item leaves the queue?"
+    },
+    "prompt": {
+      "he": "תור מוציא את האיבר הראשון שנכנס: FIFO. הכנסנו A, אחר כך B, הוצאנו איבר, ואז הכנסנו C. איזה איבר יצא בהוצאה הבאה?",
+      "en": "A queue removes the first item inserted: FIFO. Insert A, then B, remove one item, then insert C. Which item leaves on the next removal?"
+    },
+    "answer": {
+      "he": "B. בהוצאה הראשונה A יוצא. התור שנותר הוא B ואז C, ולכן B ממתין זמן רב יותר ויצא קודם.",
+      "en": "B. The first removal takes A. The remaining queue contains B followed by C, so B has waited longer and leaves first."
+    },
+    "takeaway": {
+      "he": "בתור, הכנסה חדשה אינה עוקפת את מי שכבר ממתין.",
+      "en": "In a queue, a new arrival does not overtake items already waiting."
+    }
+  },
+  {
+    "id": "quick-sw-36",
+    "topic": "algorithms",
+    "title": {
+      "he": "קבוצה אינה מונה",
+      "en": "A set is not a counter"
+    },
+    "prompt": {
+      "he": "קבוצה, set, שומרת ערכים שונים בלבד. מתחילים בקבוצה ריקה ומוסיפים לפי הסדר 4, 2, 4. כמה איברים יש בה, ואילו ערכים נשמרו? אין צורך לדעת גיבוב.",
+      "en": "A set stores distinct values only. Start empty and add 4, 2, 4 in that order. How many elements does it contain, and which values remain? No knowledge of hashing is needed."
+    },
+    "answer": {
+      "he": "שני איברים: 2 ו־4. ההוספה השנייה של 4 אינה יוצרת עותק נוסף; קבוצה מתארת שייכות, ולא מספר הופעות או סדר מובטח.",
+      "en": "Two elements: 2 and 4. Adding 4 again does not create another copy; a set records membership, not occurrence counts or a guaranteed order."
+    },
+    "takeaway": {
+      "he": "בחרו מבנה לפי המידע שצריך לשמור: שייכות, כמות או סדר.",
+      "en": "Choose a structure according to what must be preserved: membership, count, or order."
+    }
+  },
+  {
+    "id": "quick-sw-37",
+    "topic": "algorithms",
+    "title": {
+      "he": "ממשיכים לפי המצביע",
+      "en": "Follow the next pointer"
+    },
+    "prompt": {
+      "he": "ברשימה מקושרת הראש הוא הצומת A. המצביע next של A פונה ל־C, ושל C פונה ל־B; אחרי B מגיע None. באיזה סדר מבקרים בצמתים כשעוקבים אחרי next?",
+      "en": "A linked list starts at node A. A’s next pointer refers to C, and C’s next refers to B; B’s next is None. In what order do you visit the nodes by following next?"
+    },
+    "answer": {
+      "he": "A, C, B ואז עוצרים. הסדר נקבע על ידי הקישורים, ולא על ידי שמות הצמתים או המקום שבו צוירו.",
+      "en": "A, C, B, then stop. The links determine the order, rather than node names or where the nodes are drawn."
+    },
+    "takeaway": {
+      "he": "ברשימה מקושרת קוראים את הקישור הבא בכל צעד.",
+      "en": "In a linked list, read the next link at each step."
+    }
+  },
+  {
+    "id": "quick-sw-38",
+    "topic": "algorithms",
+    "title": {
+      "he": "מחפשים בקלט לא ממוין",
+      "en": "Searching unsorted input"
+    },
+    "prompt": {
+      "he": "מחפשים ערך ברשימה לא ממוינת של 10 איברים, מההתחלה לסוף, ועוצרים בהתאמה הראשונה. כמה השוואות יידרשו במקרה הגרוע ביותר? אין מבנה עזר או מידע נוסף.",
+      "en": "Search an unsorted list of 10 items from start to end, stopping at the first match. How many comparisons are needed in the worst case? There is no auxiliary structure or additional information."
+    },
+    "answer": {
+      "he": "10 השוואות, אם הערך אינו נמצא או מופיע רק באיבר האחרון. באופן כללי, עבור n איברים ייתכן שצריך לבדוק את כולם, ולכן זה חיפוש בזמן O(n).",
+      "en": "10 comparisons, if the value is absent or appears only at the last item. In general, all n items may need checking, so this search takes O(n) time."
+    },
+    "takeaway": {
+      "he": "ללא סדר או מידע נוסף, איבר שלא נבדק עדיין עשוי להיות התשובה.",
+      "en": "Without order or extra information, any unchecked item may still be the answer."
+    }
+  },
+  {
+    "id": "quick-sw-39",
+    "topic": "algorithms",
+    "title": {
+      "he": "סכום טווח משני סכומים",
+      "en": "A range sum from two sums"
+    },
+    "prompt": {
+      "he": "ברשימה [2,3,1,4] נתון מערך P=[0,2,5,6,10], שבו P[k] הוא סכום k האיברים הראשונים. מה סכום האיברים באינדקסים 1 עד 2 כולל, ואילו שני תאי P מספיקים? האינדקסים מתחילים ב־0.",
+      "en": "For [2,3,1,4], P=[0,2,5,6,10] stores P[k], the sum of the first k items. What is the sum at indices 1 through 2 inclusive, and which two P entries suffice? Indices start at 0."
+    },
+    "answer": {
+      "he": "הסכום הוא 4: מחשבים P[3]−P[1]=6−2. הסכום עד סוף הטווח כולל גם את מה שלפניו, ולכן מחסירים את הסכום שלפני תחילת הטווח.",
+      "en": "The sum is 4: compute P[3]−P[1]=6−2. The sum through the range’s end also includes everything before it, so subtract the sum before its start."
+    },
+    "takeaway": {
+      "he": "חישוב מוקדם של סכומי תחיליות יכול לחסוך מעבר חוזר על טווחים.",
+      "en": "Precomputed prefix sums can avoid repeatedly scanning ranges."
+    }
+  },
+  {
+    "id": "quick-sw-40",
+    "topic": "reasoning",
+    "title": {
+      "he": "דרך קצרה על רשת",
+      "en": "A short grid route"
+    },
+    "prompt": {
+      "he": "צריך להגיע לנקודה שנמצאת שני צעדים ימינה וצעד אחד למעלה. מותר לנוע רק ימינה או למעלה, צעד אחד בכל פעם. כמה דרכים שונות יש, אם סדר הצעדים נחשב?",
+      "en": "Reach a point two steps right and one step up. Move only right or up, one step at a time. How many different routes are possible if step order matters?"
+    },
+    "answer": {
+      "he": "3 דרכים: ימינה־ימינה־למעלה, ימינה־למעלה־ימינה, למעלה־ימינה־ימינה. מספיק לבחור באיזה משלושת המקומות יופיע צעד העלייה היחיד.",
+      "en": "3 routes: right–right–up, right–up–right, and up–right–right. Choose which of the three positions contains the only upward step."
+    },
+    "takeaway": {
+      "he": "אם פעולה אחת מיוחדת, אפשר לספור את המיקומים האפשריים שלה.",
+      "en": "When one action is special, count its possible positions."
+    }
+  },
+  {
+    "id": "quick-sw-41",
+    "topic": "reasoning",
+    "title": {
+      "he": "בוחרים תלבושת",
+      "en": "Choose an outfit"
+    },
+    "prompt": {
+      "he": "יש שתי חולצות שונות ושלושה זוגות מכנסיים שונים. כל חולצה מתאימה לכל מכנסיים. כמה תלבושות שונות אפשר ליצור מחולצה אחת ומזוג מכנסיים אחד?",
+      "en": "You have two different shirts and three different pairs of trousers. Every shirt works with every pair. How many outfits can be made using one shirt and one pair of trousers?"
+    },
+    "answer": {
+      "he": "6 תלבושות. לכל אחת משתי החולצות יש שלוש בחירות של מכנסיים, ולכן סופרים 3+3.",
+      "en": "6 outfits. Each of the two shirts has three choices of trousers, giving 3+3."
+    },
+    "takeaway": {
+      "he": "בבחירות בלתי תלויות, ספרו את האפשרויות לכל בחירה ראשונה.",
+      "en": "For independent choices, count the options available after each first choice."
+    }
+  },
+  {
+    "id": "quick-sw-42",
+    "topic": "reasoning",
+    "title": {
+      "he": "מי בתמונה?",
+      "en": "Who is in the photograph?"
+    },
+    "prompt": {
+      "he": "גבר אומר: ״אני הבן היחיד של אבי. אביו של הילד שבתמונה הוא הבן של אבי״. מה הקשר בין הדובר לילד?",
+      "en": "A man says: “I am my father’s only son. The father of the boy in this photograph is my father’s son.” How is the speaker related to the boy?"
+    },
+    "answer": {
+      "he": "הדובר הוא אביו של הילד. ״הבן של אבי״ הוא הדובר עצמו, ולכן המשפט אומר שאבי הילד הוא הדובר.",
+      "en": "The speaker is the boy’s father. “My father’s son” is the speaker himself, so the statement says that the boy’s father is the speaker."
+    },
+    "takeaway": {
+      "he": "החליפו תיאור עקיף בזהות המדויקת שהוא מציין.",
+      "en": "Replace an indirect description with the exact identity it denotes."
+    }
+  },
+  {
+    "id": "quick-sw-43",
+    "topic": "reasoning",
+    "title": {
+      "he": "שומר אמת ושומר שקר",
+      "en": "An honest guard and a lying guard"
+    },
+    "prompt": {
+      "he": "אחת משתי דלתות היא יציאה והשנייה מלכודת. שני שומרים יודעים איזו היא איזו; אחד תמיד דובר אמת והשני תמיד משקר. אינכם יודעים מי מהם מי. איזו שאלה אחת תשאלו שומר אחד כדי לבחור ביציאה?",
+      "en": "One of two doors is an exit, the other a trap. Both guards know which is which; one always tells the truth and the other always lies. You do not know their identities. What single question to either guard lets you choose the exit?"
+    },
+    "answer": {
+      "he": "שואלים: ״על איזו דלת השומר השני היה מצביע כיציאה?״ ובוחרים בדלת האחרת. דובר האמת מדווח על השקר של השני, והשקרן משקר על תשובתו הנכונה של השני; שניהם מצביעים על המלכודת.",
+      "en": "Ask: “Which door would the other guard point to as the exit?” Choose the opposite door. The honest guard reports the other’s lie; the liar lies about the other’s truthful answer. Both indicate the trap."
+    },
+    "takeaway": {
+      "he": "בדקו שהשאלה פועלת בכל אחד מסוגי המשיבים האפשריים.",
+      "en": "Check that the question works for every possible kind of respondent."
+    }
+  },
+  {
+    "id": "quick-sw-44",
+    "topic": "reasoning",
+    "title": {
+      "he": "סכום והפרש",
+      "en": "A sum and a difference"
+    },
+    "prompt": {
+      "he": "לשני ילדים יש יחד 10 גולות. לילד הראשון יש 2 יותר מלשני. כמה גולות יש לכל ילד?",
+      "en": "Two children have 10 marbles in total. The first has 2 more than the second. How many does each child have?"
+    },
+    "answer": {
+      "he": "לראשון 6 ולשני 4. אם מסירים זמנית את שתי הגולות העודפות, נשארות 8 בחלוקה שווה: 4 לכל אחד. מחזירים לראשון את השתיים שהוסרו.",
+      "en": "The first has 6 and the second 4. Temporarily remove the two extra marbles, leaving 8 to split equally: 4 each. Return the two removed marbles to the first child."
+    },
+    "takeaway": {
+      "he": "אפשר להפוך חלוקה לא שווה לחלוקה שווה על ידי הפרדת ההפרש.",
+      "en": "Turn an unequal split into an equal split by separating out the difference."
+    }
+  },
+  {
+    "id": "quick-sw-45",
+    "topic": "reasoning",
+    "title": {
+      "he": "שוברים שוקולד",
+      "en": "Breaking chocolate"
+    },
+    "prompt": {
+      "he": "טבלת שוקולד היא רשת של 2×3 קוביות. בכל פעולה שוברים חתיכה אחת לאורך קו רשת לשתי חתיכות; אין ערימה של חתיכות זו על זו. כמה שבירות נדרשות כדי לקבל שש קוביות נפרדות?",
+      "en": "A chocolate bar is a 2×3 grid of squares. Each move breaks one piece into two along a grid line; pieces cannot be stacked. How many breaks are needed to obtain six separate squares?"
+    },
+    "answer": {
+      "he": "5 שבירות. מתחילים בחתיכה אחת וכל שבירה מוסיפה בדיוק חתיכה אחת, ולכן כדי להגיע לשש צריך להוסיף חמש. סדר השבירות אינו משנה את המספר.",
+      "en": "5 breaks. Start with one piece, and each break adds exactly one piece, so reaching six requires five additions. The order of the breaks does not change the count."
+    },
+    "takeaway": {
+      "he": "חפשו בכמה כל פעולה משנה את הכמות שאותה סופרים.",
+      "en": "Look at how much each operation changes the quantity being counted."
+    }
+  },
+  {
+    "id": "quick-sw-46",
+    "topic": "reasoning",
+    "title": {
+      "he": "גבול לפני חישוב מלא",
+      "en": "A bound before a full calculation"
+    },
+    "prompt": {
+      "he": "בעשר קופסאות יש בין 2 ל־3 כדורים בכל קופסה, כולל הגבולות. מישהו טוען שיש בהן יחד 31 כדורים. האם צריך לפתוח את הקופסאות כדי להפריך אותו?",
+      "en": "Ten boxes each contain between 2 and 3 balls, inclusive. Someone claims they contain 31 balls altogether. Must you open the boxes to disprove the claim?"
+    },
+    "answer": {
+      "he": "לא. אפילו אם בכל קופסה יש 3 כדורים, הסכום הוא לכל היותר 30. לכן 31 אינו אפשרי בלי לדעת את התכולה המדויקת של כל קופסה.",
+      "en": "No. Even with 3 balls in every box, the total is at most 30. Thus 31 is impossible without knowing each box’s exact contents."
+    },
+    "takeaway": {
+      "he": "גבול עליון או תחתון יכול להספיק כדי לפסול תשובה.",
+      "en": "An upper or lower bound can be enough to rule out an answer."
+    }
+  },
+  {
+    "id": "quick-sw-47",
+    "topic": "reasoning",
+    "title": {
+      "he": "זמן משותף לפגישה",
+      "en": "A shared meeting time"
+    },
+    "prompt": {
+      "he": "נועה פנויה מ־09:00 עד 12:00, ודנה מ־11:00 עד 14:00. שתיהן צריכות להיות פנויות במשך כל הפגישה. מה חלון הזמן המשותף, ומה האורך המרבי לפגישה?",
+      "en": "Noa is free from 09:00 to 12:00, and Dana from 11:00 to 14:00. Both must be free throughout the meeting. What is their shared time window and the longest possible meeting?"
+    },
+    "answer": {
+      "he": "מ־11:00 עד 12:00: שעה אחת. מתחילים רק אחרי ששתיהן פנויות, ומסיימים לפני שאחת מהן מפסיקה להיות פנויה.",
+      "en": "From 11:00 to 12:00: one hour. Start only when both are free, and finish before either one becomes unavailable."
+    },
+    "takeaway": {
+      "he": "בחפיפה של טווחים, בוחרים התחלה מאוחרת וסיום מוקדם.",
+      "en": "For overlapping intervals, take the later start and the earlier end."
+    }
+  },
+  {
+    "id": "quick-sw-48",
+    "topic": "reasoning",
+    "title": {
+      "he": "עשרה ימים קדימה",
+      "en": "Ten days ahead"
+    },
+    "prompt": {
+      "he": "היום יום שני. איזה יום בשבוע יהיה בעוד 10 ימים? מחר נחשב יום אחד קדימה.",
+      "en": "Today is Monday. What day of the week will it be in 10 days? Tomorrow counts as one day ahead."
+    },
+    "answer": {
+      "he": "יום חמישי. שבעה ימים מחזירים ליום שני, ונשאר להתקדם עוד שלושה: שלישי, רביעי, חמישי.",
+      "en": "Thursday. Seven days return to Monday, leaving three more steps: Tuesday, Wednesday, Thursday."
+    },
+    "takeaway": {
+      "he": "בסדרה מחזורית, הסירו מחזורים שלמים ואז ספרו את השארית.",
+      "en": "For a repeating sequence, remove complete cycles and count the remainder."
+    }
+  },
+  {
+    "id": "quick-sw-49",
+    "topic": "reasoning",
+    "title": {
+      "he": "תנאי שלא מספיק",
+      "en": "A condition that is insufficient"
+    },
+    "prompt": {
+      "he": "מספר שלם חיובי מסתיים בספרה 2. האם הוא בהכרח מתחלק ב־4 ללא שארית? הסבירו בעזרת דוגמה אחת.",
+      "en": "A positive integer ends in the digit 2. Must it be divisible by 4 without a remainder? Explain using one example."
+    },
+    "answer": {
+      "he": "לא: 22 מסתיים ב־2, אבל 22 חלקי 4 משאיר שארית 2. הספרה האחרונה מספיקה כדי לדעת שהמספר זוגי, אך אינה מספיקה לחלוקה ב־4.",
+      "en": "No: 22 ends in 2, but division by 4 leaves remainder 2. The final digit shows that the number is even, but does not establish divisibility by 4."
+    },
+    "takeaway": {
+      "he": "תנאי שמתאים לחלק מהמקרים אינו בהכרח מבטיח את המסקנה.",
+      "en": "A condition that fits some cases does not necessarily guarantee the conclusion."
+    }
+  },
+  {
+    "id": "quick-sw-50",
+    "topic": "reasoning",
+    "title": {
+      "he": "מכפילים צלע",
+      "en": "Double the side"
+    },
+    "prompt": {
+      "he": "לריבוע צלע באורך 2 ס״מ. מגדילים כל צלע ל־4 ס״מ. פי כמה גדל השטח?",
+      "en": "A square has a side length of 2 cm. Increase each side to 4 cm. By what factor does its area increase?"
+    },
+    "answer": {
+      "he": "פי 4. השטח המקורי הוא 2×2=4 סמ״ר, והחדש 4×4=16 סמ״ר. שני ממדי השטח הוכפלו, ולכן השטח לא גדל רק פי 2.",
+      "en": "By a factor of 4. The original area is 2×2=4 square cm, and the new area is 4×4=16. Both dimensions doubled, so the area does not merely double."
+    },
+    "takeaway": {
+      "he": "כשגודל תלוי בשני ממדים, בדקו את השינוי בשניהם.",
+      "en": "When a quantity depends on two dimensions, account for the change in both."
+    }
+  },
+  {
+    "id": "quick-sw-51",
+    "topic": "reasoning",
+    "title": {
+      "he": "שני אבות ושני בנים",
+      "en": "Two fathers and two sons"
+    },
+    "prompt": {
+      "he": "שני אבות ושני בנים יוצאים יחד. כל אדם מקבל תפוח אחד, ומספיקים בדיוק שלושה תפוחים. איך זה אפשרי בלי לחלק תפוח ובלי שמישהו יוותר?",
+      "en": "Two fathers and two sons go out together. Each person receives one apple, and exactly three apples suffice. How is this possible without splitting an apple or anyone going without?"
+    },
+    "answer": {
+      "he": "אלה סבא, בנו ונכדו. הבן האמצעי הוא גם בן של הסבא וגם אב של הנכד, ולכן ארבעת התפקידים מתארים רק שלושה אנשים.",
+      "en": "They are a grandfather, his son, and his grandson. The middle person is both the grandfather’s son and the grandson’s father, so four roles describe only three people."
+    },
+    "takeaway": {
+      "he": "מספר התפקידים בתיאור אינו בהכרח מספר האנשים השונים.",
+      "en": "The number of roles in a description is not necessarily the number of distinct people."
+    }
+  },
+  {
+    "id": "quick-sw-52",
+    "topic": "reasoning",
+    "title": {
+      "he": "שלושה מאותו צבע",
+      "en": "Three of the same color"
+    },
+    "prompt": {
+      "he": "חמישה אנשים חובשים כל אחד כובע אדום או כחול. בלי לדעת את הצבעים, האם אפשר להבטיח שלפחות שלושה חובשים אותו צבע?",
+      "en": "Five people each wear either a red or a blue hat. Without seeing the colors, can you guarantee that at least three wear the same color?"
+    },
+    "answer": {
+      "he": "כן. אילו היו לכל היותר שניים מכל צבע, היו לכל היותר ארבעה אנשים. האדם החמישי מחייב שלפחות באחד הצבעים יהיו שלושה.",
+      "en": "Yes. At most two of each color would allow at most four people. The fifth person forces at least one color to have three wearers."
+    },
+    "takeaway": {
+      "he": "פיזור בין קבוצות יכול להבטיח גודל מינימלי לאחת מהן.",
+      "en": "Distributing items among groups can guarantee a minimum size for one group."
+    }
+  },
+  {
+    "id": "quick-sw-53",
+    "topic": "reasoning",
+    "title": {
+      "he": "לדעת בלי לנסות שוב",
+      "en": "Know without another attempt"
+    },
+    "prompt": {
+      "he": "יש שלושה מפתחות, וידוע שבדיוק אחד פותח מנעול. ניסיון מפתח אומר בוודאות אם הוא מתאים. כמה ניסיונות נדרשים במקרה הגרוע כדי לזהות את המפתח הנכון, אם אין חובה לפתוח בפועל?",
+      "en": "You have three keys, exactly one of which opens a lock. Trying a key tells you definitively whether it fits. In the worst case, how many trials identify the correct key if actually opening the lock is not required?"
+    },
+    "answer": {
+      "he": "2 ניסיונות. אם הראשון או השני מצליחים, יודעים מיד; אם שניהם נכשלו, השלישי הוא הנכון בלי לנסות אותו. ניסיון אחד שנכשל עדיין משאיר שני מועמדים.",
+      "en": "2 trials. A successful first or second trial identifies the key; if both fail, the third is correct without being tried. One failed trial would still leave two candidates."
+    },
+    "takeaway": {
+      "he": "הבחינו בין זיהוי התשובה לבין ביצוע הפעולה עצמה.",
+      "en": "Distinguish identifying the answer from actually performing the action."
+    }
+  },
+  {
+    "id": "quick-sw-54",
+    "topic": "reasoning",
+    "title": {
+      "he": "אילו סכומים אפשר לבנות?",
+      "en": "Which totals can you build?"
+    },
+    "prompt": {
+      "he": "מתחילים ב־0. בכל פעולה מותר להוסיף 3 או 5 בלבד, בלי חיסור. האם אפשר להגיע ל־7? ול־8?",
+      "en": "Start at 0. Each move may add only 3 or 5, with no subtraction. Can you reach 7? What about 8?"
+    },
+    "answer": {
+      "he": "ל־7 אי אפשר: בלי 5 נקבל רק 0,3,6 לפני שעוברים אותו; עם 5 נותר להוסיף 2, שאינו אפשרי. ל־8 אפשר להגיע באמצעות 3+5.",
+      "en": "7 is impossible: without a 5, the only totals before passing it are 0,3,6; with a 5, the remaining 2 cannot be added. Reach 8 using 3+5."
+    },
+    "takeaway": {
+      "he": "בדקו אם צעדים מותרים יכולים להרכיב את היעד, לא רק להתקרב אליו.",
+      "en": "Check whether allowed steps can compose the target, rather than merely approach it."
+    }
+  },
+  {
+    "id": "quick-sw-55",
+    "topic": "reasoning",
+    "title": {
+      "he": "חצי שעה מחבל אחד",
+      "en": "Half an hour with one rope"
+    },
+    "prompt": {
+      "he": "חבל נשרף לחלוטין בשעה כשמדליקים קצה אחד, אבל אינו נשרף בקצב אחיד לאורך אורכו. אפשר להדליק שני קצוות בו־זמנית. איך מודדים 30 דקות בלי שעון?",
+      "en": "A rope burns completely in one hour when lit at one end, but it does not burn uniformly along its length. You can light both ends simultaneously. How can you measure 30 minutes without a clock?"
+    },
+    "answer": {
+      "he": "מדליקים את שני הקצוות יחד וממתינים עד שהחבל נגמר: 30 דקות. שתי חזיתות השריפה מחלקות ביניהן את זמן השריפה הכולל; הן אינן חייבות להיפגש באמצע האורך.",
+      "en": "Light both ends together and wait until the rope finishes burning: 30 minutes. The two burning fronts share the total burning time; they need not meet halfway along its length."
+    },
+    "takeaway": {
+      "he": "בחבל שאינו אחיד, אמצע האורך אינו בהכרח אמצע זמן השריפה.",
+      "en": "For a nonuniform rope, half the length need not represent half the burning time."
+    }
+  },
+  {
+    "id": "quick-sw-56",
+    "topic": "reasoning",
+    "title": {
+      "he": "תוצאות רצויות בקובייה",
+      "en": "Favorable die outcomes"
+    },
+    "prompt": {
+      "he": "מטילים קובייה הוגנת בעלת המספרים 1 עד 6. מה ההסתברות לקבל מספר זוגי?",
+      "en": "Roll a fair die numbered 1 through 6. What is the probability of an even result?"
+    },
+    "answer": {
+      "he": "1/2. התוצאות הזוגיות הן 2,4,6: שלוש מתוך שש תוצאות שוות הסתברות.",
+      "en": "1/2. The even results are 2,4,6: three of six equally likely outcomes."
+    },
+    "takeaway": {
+      "he": "כשכל התוצאות שוות בסיכוייהן, סופרים תוצאות רצויות מתוך כלל התוצאות.",
+      "en": "For equally likely outcomes, count favorable results out of all possible results."
+    }
+  },
+  {
+    "id": "quick-sw-57",
+    "topic": "reasoning",
+    "title": {
+      "he": "מודדים בעזרת הפרש משקולות",
+      "en": "Measure with a weight difference"
+    },
+    "prompt": {
+      "he": "יש מאזני כפות ומשקולות של 1 ו־3 ק״ג. מותר להניח משקולות בשתי הכפות. איך מודדים בדיוק 2 ק״ג של חומר שניתן להוסיף בהדרגה?",
+      "en": "You have a balance scale and weights of 1 kg and 3 kg. Weights may be placed on either pan. How can you measure exactly 2 kg of a material that can be added gradually?"
+    },
+    "answer": {
+      "he": "מניחים 3 ק״ג בכף אחת, ו־1 ק״ג עם החומר בכף האחרת. מוסיפים חומר עד לאיזון; אז משקל החומר הוא 3−1=2 ק״ג.",
+      "en": "Place 3 kg on one pan and 1 kg plus the material on the other. Add material until balanced; the material then weighs 3−1=2 kg."
+    },
+    "takeaway": {
+      "he": "כשמותר להשתמש בשני הצדדים, גם הפרש בין ערכים יכול לשמש למדידה.",
+      "en": "When both sides are available, a difference between values can provide a measurement."
+    }
+  },
+  {
+    "id": "quick-sw-58",
+    "topic": "reasoning",
+    "title": {
+      "he": "כמה רצפי שקילות?",
+      "en": "How many weighing sequences?"
+    },
+    "prompt": {
+      "he": "לכל שקילה במאזני כפות שלוש תוצאות: שמאל כבד, איזון, ימין כבד. מבצעים שתי שקילות ורושמים את התוצאות לפי סדר. כמה רצפי תוצאות שונים ייתכנו לכל היותר?",
+      "en": "A balance weighing has three outcomes: left heavier, balanced, or right heavier. Perform two weighings and record their outcomes in order. At most how many distinct outcome sequences are possible?"
+    },
+    "answer": {
+      "he": "9 רצפים. לכל אחת משלוש התוצאות של השקילה הראשונה יכולות להצטרף שלוש תוצאות בשנייה: 3×3. זהו גבול למספר הרצפים, לא הבטחה שכל חידת מטבעות נפתרת בשתי שקילות.",
+      "en": "9 sequences. Each of the first weighing’s three outcomes can be followed by three second outcomes: 3×3. This bounds the number of sequences; it does not guarantee every coin puzzle is solvable in two weighings."
+    },
+    "takeaway": {
+      "he": "ספירת תוצאות הבדיקה נותנת גבול לכמות המידע שאפשר להפיק.",
+      "en": "Counting test outcomes bounds how much information the tests can provide."
+    }
+  },
+  {
+    "id": "quick-sw-59",
+    "topic": "reasoning",
+    "title": {
+      "he": "דוגמה נגדית אחת",
+      "en": "One counterexample"
+    },
+    "prompt": {
+      "he": "מישהו בדק את המספרים הראשוניים 3,5,7,11 והסיק שכל מספר ראשוני הוא אי־זוגי. איך מפריכים את הטענה בעזרת מספר אחד?",
+      "en": "Someone checks the primes 3,5,7,11 and concludes that every prime is odd. How can one number disprove the claim?"
+    },
+    "answer": {
+      "he": "המספר 2 ראשוני וזוגי. דוגמה נגדית אחת מספיקה כדי להפריך טענה על כל המספרים, גם אם כמה דוגמאות קודמות התאימו לה.",
+      "en": "2 is both prime and even. One counterexample disproves a claim about every number, even when several earlier examples supported it."
+    },
+    "takeaway": {
+      "he": "בדיקת דוגמאות אינה הוכחה כללית; חפשו גם מקרה קצה שסותר את הטענה.",
+      "en": "Examples are not a general proof; also look for an edge case that contradicts the claim."
+    }
+  },
+  {
+    "id": "quick-sw-60",
+    "topic": "reasoning",
+    "title": {
+      "he": "האם יש מספיק מידע?",
+      "en": "Is there enough information?"
+    },
+    "prompt": {
+      "he": "בשק יש כדורים אדומים וכחולים בלבד, לפחות אחד מכל צבע. שולפים כדור אחד באקראי, ולכל כדור אותו סיכוי. האם ההסתברות לאדום בהכרח 1/2? כמויות הצבעים לא נמסרו.",
+      "en": "A bag contains only red and blue balls, with at least one of each. Draw one ball at random, with every ball equally likely. Must the probability of red be 1/2? The color counts are unspecified."
+    },
+    "answer": {
+      "he": "לא. עם כדור אחד מכל צבע ההסתברות היא 1/2, אבל עם אדום אחד ושלושה כחולים היא 1/4. בלי לדעת את הכמויות אי אפשר לקבוע הסתברות מספרית אחת.",
+      "en": "No. One ball of each color gives probability 1/2, but one red and three blue balls give 1/4. Without the counts, no single numerical probability can be determined."
+    },
+    "takeaway": {
+      "he": "מספר האפשרויות המילוליות אינו קובע שהן שוות הסתברות.",
+      "en": "The number of named alternatives does not make them equally likely."
+    }
   }
 ]

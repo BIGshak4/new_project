@@ -11,8 +11,10 @@ from dataclasses import dataclass
 from app.config import Settings
 from app.engine.catalog import Catalog, load_catalog
 from app.engine.providers import Provider, build_provider
+from app.repo.fundamentals import DbFundamentalsRepository, MemoryFundamentalsRepository
 from app.services.billing import BillingConfig, BillingService, FakeStripe, HttpStripe, load_plans
 from app.services.demo_provider import DemoProvider
+from app.services.fundamentals import FundamentalsService, load_fundamentals_catalog
 from app.services.interview_service import InterviewConfig, InterviewService
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
@@ -30,6 +32,7 @@ class Runtime:
     billing: BillingService | None = None
     image_fetcher: StorageImageFetcher | None = None  # set when answer photos can be read for the evaluator
     interview: InterviewService | None = None        # mock interviews
+    fundamentals: FundamentalsService | None = None  # self-reported short-card history, no grading
 
     async def aclose(self) -> None:
         # a redeploy waits a little for feedback being written; anything unfinished is resumed on the next read
@@ -89,6 +92,9 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
 
     return Runtime(catalog=catalog, provider=provider, store=store, practice=practice, store_kind=kind,
                    image_fetcher=fetcher, billing=billing,
+                   fundamentals=FundamentalsService(
+                       DbFundamentalsRepository() if kind == "database" else MemoryFundamentalsRepository(),
+                       load_fundamentals_catalog(settings.seeds_dir / "fundamentals_catalog.json")),
                    interview=InterviewService(store, catalog, provider, interview_config, image_fetcher=fetcher,
                                               on_finished=interview_finished))
 

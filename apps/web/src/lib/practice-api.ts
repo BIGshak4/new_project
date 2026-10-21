@@ -18,6 +18,8 @@ import { supabase } from "./supabase";
 
 export type ApiLang = "en" | "he";
 export type SolutionReview = { status: "human_reviewed" | "pending_review"; reviewed_on: string | null };
+export type FundamentalCompletion = { question_key: string; content_revision: string; completed_at: string };
+export type FundamentalsProgress = { completed: FundamentalCompletion[] };
 
 export type QuestionSummary = {
   id: string;
@@ -566,6 +568,7 @@ export type ApiErrorCode =
   | "not_found"
   | "validation"
   | "conflict"
+  | "stale_version"
   | "already_submitted"
   | "no_pending_follow_up"
   | "nothing_to_retry"
@@ -602,22 +605,25 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
   if (!baseUrl) throw new Error("NEXT_PUBLIC_API_BASE_URL is not set");
   const base = baseUrl.replace(/\/+$/, "");
 
-  async function token(): Promise<string> {
+  async function token(expectedUserId?: string): Promise<string> {
     const { data } = await supabase.auth.getSession();
     const access = data.session?.access_token;
     if (!access)
       throw new PracticeApiError("unauthenticated", "not signed in", 401);
+    if (expectedUserId && data.session?.user?.id !== expectedUserId)
+      throw new PracticeApiError("unauthenticated", "the signed-in account changed", 401);
     return access;
   }
 
   async function call<T>(
-    method: "GET" | "POST",
+    method: "GET" | "POST" | "PUT" | "DELETE",
     path: string,
     body?: unknown,
     extraHeaders: Record<string, string> = {},
+    expectedUserId?: string,
   ): Promise<T> {
     const headers: Record<string, string> = {
-      Authorization: `Bearer ${await token()}`,
+      Authorization: `Bearer ${await token(expectedUserId)}`,
       ...extraHeaders,
     };
     if (body !== undefined) headers["Content-Type"] = "application/json";
@@ -670,6 +676,12 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
         "/health",
       ),
     me: () => call<Me>("GET", "/v1/me"),
+    fundamentalsProgress: (userId: string) =>
+      call<FundamentalsProgress>("GET", "/v1/fundamentals/progress", undefined, {}, userId),
+    completeFundamental: (userId: string, key: string, revision: string) =>
+      call<FundamentalCompletion>("PUT", `/v1/fundamentals/progress/${encodeURIComponent(key)}`, { content_revision: revision }, {}, userId),
+    resetFundamental: (userId: string, key: string) =>
+      call<{ removed: boolean }>("DELETE", `/v1/fundamentals/progress/${encodeURIComponent(key)}`, undefined, {}, userId),
     progress: (language?: ApiLang) =>
       call<Progress>("GET", `/v1/me/progress${q({ language })}`),
     readiness: (language?: ApiLang) =>

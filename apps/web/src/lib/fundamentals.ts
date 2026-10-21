@@ -21,7 +21,20 @@ export const quickTopics: { id: QuickTopic; label: Localized }[] = [
 ];
 // Original study cards, deliberately separate from the interview assessment bank.
 // These newly authored answers have not received the founders' human-review attestation.
-export const quickQuestions = [...hardware, ...software] as QuickQuestion[];
+// Every full group of 20 keeps the requested 50% hardware /35% reasoning /15% software mix.
+const lanes = {
+  hardware: [...hardware] as QuickQuestion[],
+  reasoning: software.filter(q => q.topic === "reasoning") as QuickQuestion[],
+  software: software.filter(q => q.topic !== "reasoning") as QuickQuestion[],
+};
+const pattern: (keyof typeof lanes)[] = [
+  "hardware", "reasoning", "hardware", "software", "reasoning", "hardware", "reasoning", "hardware", "software", "hardware",
+  "reasoning", "hardware", "reasoning", "hardware", "software", "hardware", "reasoning", "hardware", "reasoning", "hardware",
+];
+export const quickQuestions: QuickQuestion[] = [];
+while (Object.values(lanes).some(lane => lane.length)) {
+  for (const name of pattern) { const question = lanes[name].shift(); if (question) quickQuestions.push(question); }
+}
 
 export function filterQuickQuestions(topic: QuickTopic | "all", query: string, lang: "he" | "en") {
   const needle = query.trim().toLocaleLowerCase();

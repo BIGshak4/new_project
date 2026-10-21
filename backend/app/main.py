@@ -31,7 +31,7 @@ from fastapi.responses import JSONResponse
 
 from app import db
 from app.api import errors
-from app.api.v1 import billing, interviews, me, meta, practice, questions
+from app.api.v1 import billing, fundamentals, interviews, me, meta, practice, questions
 from app.auth import TokenVerifier
 from app.config import get_settings
 from app.engine import ENGINE_VERSION
@@ -82,7 +82,7 @@ app = FastAPI(title="JobRun practice API", version=ENGINE_VERSION, lifespan=life
 errors.install(app)
 app.add_middleware(
     CORSMiddleware, allow_origins=get_settings().allowed_origins, allow_credentials=False,
-    allow_methods=["GET", "POST"], allow_headers=["Authorization", "Content-Type", "Idempotency-Key", "X-Request-Id"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"], allow_headers=["Authorization", "Content-Type", "Idempotency-Key", "X-Request-Id"],
     expose_headers=["X-Request-Id"])
 app.include_router(me.router)
 app.include_router(questions.router)
@@ -90,6 +90,7 @@ app.include_router(practice.router)
 app.include_router(interviews.router)
 app.include_router(meta.router)
 app.include_router(billing.router)
+app.include_router(fundamentals.router)
 
 
 MAX_BODY_BYTES = 256 * 1024          # an answer is at most 20 000 characters; anything larger is not a request we serve

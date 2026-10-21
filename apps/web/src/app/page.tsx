@@ -499,7 +499,7 @@ function Workspace({
           >
         {route.view === "fundamentals" && !active ? <>
           {libraryViews}
-          <QuickPractice lang={lang} />
+          <QuickPractice key={user.id} lang={lang} api={api} userId={user.id} />
         </> : route.view === "interview" ? (
           <InterviewSession
             key={route.interview ?? "lobby"}

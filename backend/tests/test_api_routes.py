@@ -447,6 +447,10 @@ def every_route():
         # paying for the site (2026-10-20); the Stripe webhook is not a user route and is covered in test_billing.py
         ("GET", "/v1/me/billing", None), ("POST", "/v1/me/billing/checkout", {"plan": "regular"}),
         ("POST", "/v1/me/billing/portal", None),
+        # self-reported short-card completion (2026-10-21)
+        ("GET", "/v1/fundamentals/progress", None),
+        ("PUT", "/v1/fundamentals/progress/quick-sw-01", {"content_revision": "a" * 64}),
+        ("DELETE", "/v1/fundamentals/progress/quick-sw-01", None),
     ]
 
 
@@ -473,7 +477,9 @@ class TestEveryRouteIsProtected:
         normalized = {(m, p.replace(f"/{Q}", "/{key_or_id}").replace("/follow-ups/1/", "/follow-ups/{turn}/")
                        .replace("/submissions/1/retry", "/submissions/{revision}/retry").replace("/{key_or_id}/resources", "/{key}/resources")) for m, p in normalized}
         normalized = {(m, p.replace("/v1/interviews/{attempt_id}", "/v1/interviews/{interview_id}")
-                       .replace("/turns/0/answer", "/turns/{turn_index}/answer")) for m, p in normalized}
+                       .replace("/turns/0/answer", "/turns/{turn_index}/answer")
+                       .replace("/v1/fundamentals/progress/quick-sw-01", "/v1/fundamentals/progress/{question_key}"))
+                      for m, p in normalized}
         assert v1 == normalized, f"routes without a protection test: {v1 - normalized}"
 
     async def test_another_users_attempt_is_404_on_every_route(self, client, user):

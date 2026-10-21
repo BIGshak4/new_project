@@ -75,7 +75,7 @@ def fsm_table(number):
     result = {}
     for transition in diagram["transitions"]:
         label = transition["label"]
-        if label == "any p":
+        if label in ("any p", "any x"):
             inputs = ["0", "1"]
             output = None
         elif "=" in label:
@@ -105,11 +105,11 @@ def run_fsm(number, inputs):
 
 
 def test_scope_bilingual_shortness_and_diagram_contract():
-    assert [item["id"] for item in CARDS] == [f"quick-hw-{n:02d}" for n in range(1, 31)]
+    assert [item["id"] for item in CARDS] == [f"quick-hw-{n:02d}" for n in range(1, 61)]
     assert Counter(item["topic"] for item in CARDS) == {
-        "gates": 8, "bits": 6, "sequential": 8, "states": 8,
+        "gates": 16, "bits": 14, "sequential": 15, "states": 15,
     }
-    assert sum("diagram" in item for item in CARDS) == 10
+    assert sum("diagram" in item for item in CARDS) == 18
     for item in CARDS:
         assert set(item) <= {
             "id", "topic", "title", "prompt", "answer", "takeaway", "code", "diagram",
@@ -421,3 +421,309 @@ def test_three_state_cycle_diagram_and_edge_count():
     assert answer_sequence(30) == observed[:5]
     assert backticks(30)[0] == observed[4]
     assert backticks(30, "he") == backticks(30)
+
+
+def mux_connections(number):
+    return dict(assignment.split("=") for assignment in backticks(number)[0].split(", "))
+
+
+def run_authored_mux(number, values):
+    values = {**values, "0": 0, "1": 1}
+    connections = mux_connections(number)
+    selector = values[connections["S"]]
+    selected_data = connections[f"D{selector}"]
+    return values[selected_data]
+
+
+def assert_same_backticks(number):
+    assert backticks(number, "he") == backticks(number)
+
+
+def test_nand_nor_and_xnor_tables_and_formulas():
+    oracles = {
+        31: lambda a, b: int(a + b != 2),
+        32: lambda a, b: int(a + b == 0),
+        33: lambda a, b: int(a == b),
+    }
+    for number, oracle in oracles.items():
+        expected = [(a, b, oracle(a, b)) for a, b in itertools.product((0, 1), repeat=2)]
+        assert truth_rows(number) == truth_rows(number, "he") == expected
+        if number in (32, 33):
+            formula = backticks(number)[0].removeprefix("Y=")
+            for a, b in itertools.product((0, 1), repeat=2):
+                assert boolean_expression(formula, {"A": a, "B": b}) == oracle(a, b)
+            assert_same_backticks(number)
+
+
+def test_mux_realizations_for_not_and_and_or():
+    for a, b in itertools.product((0, 1), repeat=2):
+        values = {"A": a, "B": b}
+        assert run_authored_mux(34, values) == int(a == 0)
+        assert run_authored_mux(35, values) == int(a + b == 2)
+        assert run_authored_mux(36, values) == int(a + b >= 1)
+    for number in (34, 35, 36):
+        connections = mux_connections(number)
+        assert card(number)["diagram"] == {
+            "kind": "gate", "gate": "MUX",
+            "inputs": [f"{pin}={connections[pin]}" for pin in ("D0", "D1", "S")], "output": "Y",
+        }
+        assert_same_backticks(number)
+
+
+def test_two_and_three_inversions():
+    left, right = backticks(37)[0].split(" = ")
+    third = backticks(37)[1]
+    for a in (0, 1):
+        assert boolean_expression(left, {"A": a}) == boolean_expression(right, {"A": a}) == a
+        assert boolean_expression(third, {"A": a}) == 1 - a
+    assert_same_backticks(37)
+
+
+def test_distributive_factorization_for_all_eight_inputs():
+    left, right = backticks(38)[0].split(" = ")
+    for bits in itertools.product((0, 1), repeat=3):
+        values = dict(zip("ABC", bits, strict=True))
+        expected = int(bits[0] == 1 and sum(bits[1:]) >= 1)
+        assert boolean_expression(left, values) == boolean_expression(right, values) == expected
+    assert_same_backticks(38)
+
+
+def test_evenness_is_determined_by_low_bit():
+    for value in range(256):
+        assert (value & 1) == value % 2
+    example = int(backticks(39)[0], 2)
+    assert example % 2 == 1
+    assert "odd" in card(39)["answer"]["en"]
+    assert "אי־זוגי" in card(39)["answer"]["he"]
+    assert_same_backticks(39)
+
+
+def test_binary_to_decimal_uses_the_set_bit_weights():
+    expression, result = backticks(40)[0].split("=")
+    original = re.search(r"\b[01]{5}\b", card(40)["prompt"]["en"])[0]
+    weights = [2**index for index, bit in enumerate(reversed(original)) if bit == "1"]
+    assert sorted(map(int, expression.split("+"))) == sorted(weights)
+    assert int(result) == sum(weights) == int(original, 2)
+    assert_same_backticks(40)
+
+
+def test_decimal_to_binary_has_the_requested_width_and_value():
+    expression, binary = backticks(41)
+    original, expansion = expression.split("=")
+    assert int(original) == sum(map(int, expansion.split("+"))) == int(binary, 2)
+    assert int(original) == 37 and len(binary) == 6
+    assert_same_backticks(41)
+
+
+def test_twos_complement_interpretation_changes_the_top_weight():
+    original = int("1110", 2)
+    unsigned, signed = backticks(42)
+    for expression, expected in ((unsigned, original), (signed, original - 2**4)):
+        weights, result = expression.split("=")
+        assert sum(map(int, weights.split("+"))) == int(result) == expected
+    assert_same_backticks(42)
+
+
+def test_sign_extension_preserves_signed_value():
+    before, after = backticks(43)[0].split(" → ")
+
+    def signed_value(bits):
+        value = int(bits, 2)
+        return value - 2 ** len(bits) if bits[0] == "1" else value
+
+    assert len(before) == 4 and len(after) == 6
+    assert after == before[0] * 2 + before
+    assert signed_value(before) == signed_value(after) == -6
+    expression, result = backticks(43)[1].split("=")
+    assert sum(map(int, expression.split("+"))) == int(result) == signed_value(after)
+    assert_same_backticks(43)
+
+
+def test_one_hot_example_requires_exactly_one_set_bit():
+    examples = backticks(44)
+    assert [word.count("1") for word in examples] == [1, 0, 2]
+    assert "Only" in card(44)["answer"]["en"]
+    assert_same_backticks(44)
+
+
+def test_full_adder_carry_and_sum_are_distinct_result_bits():
+    inputs = dict(re.findall(r"\b(A|B|Cin)=([01])", card(45)["prompt"]["en"]))
+    total = sum(map(int, inputs.values()))
+    expected_carry, expected_sum = divmod(total, 2)
+    assert_in_answers(45, f"`{total:b}`")
+    assert_in_answers(45, f"`Cout={expected_carry}, S={expected_sum}`")
+    assert_same_backticks(45)
+
+
+def test_logical_and_arithmetic_right_shift_insert_different_bits():
+    original = int(re.search(r"\b[01]{8}\b", card(46)["prompt"]["en"])[0], 2)
+    logical = original // 2
+    arithmetic = (original // 2) | (original & 128)
+    assert backticks(46) == [f"{logical:08b}", f"{arithmetic:08b}"]
+    assert_same_backticks(46)
+
+
+def test_mux_enable_holds_or_loads_for_all_input_cases():
+    for en, q, data in itertools.product((0, 1), repeat=3):
+        assert run_authored_mux(47, {"EN": en, "Q": q, "data": data}) == (data if en else q)
+    connections = mux_connections(47)
+    assert card(47)["diagram"] == {
+        "kind": "gate", "gate": "MUX",
+        "inputs": [f"{pin}={connections[pin]}" for pin in ("D0", "D1", "S")], "output": "Y",
+    }
+    assert_same_backticks(47)
+
+
+def test_enabled_counter_sequence():
+    current = int("011", 2)
+    observed = []
+    for enabled in (1, 0, 1, 1):
+        if enabled:
+            current = (current + 1) % 8
+        observed.append(f"{current:03b}")
+    assert answer_sequence(48) == observed
+    assert_same_backticks(48)
+
+
+def test_unsigned_decrement_wraps_from_zero():
+    expected = (0 - 1) % 2**3
+    assert backticks(49) == [f"{expected:03b}", str(expected)]
+    assert_same_backticks(49)
+
+
+def test_active_low_synchronous_reset_overrides_enabled_data():
+    values = {
+        key: int(value)
+        for key, value in re.findall(r"\b(Q|data|EN|rst_n)=([01])", card(50)["prompt"]["en"])
+    }
+    result = 0 if not values["rst_n"] else (values["data"] if values["EN"] else values["Q"])
+    assert values["EN"] == values["data"] == values["Q"] == 1
+    assert_in_answers(50, f"`Q={result}`")
+
+
+def test_uninitialized_d_flip_flop_becomes_known_after_valid_sampling():
+    possible_before = {0, 1}
+    possible_after = {1 for _previous in possible_before}
+    assert len(possible_before) > 1 and possible_after == {1}
+    assert backticks(51) == [f"Q={next(iter(possible_after))}"]
+    assert "guarantees no particular Q value" in card(51)["answer"]["en"]
+    assert_same_backticks(51)
+
+
+def test_counter_bit_traces_and_division_ratios():
+    for expression, bit in zip(backticks(52), (0, 1), strict=True):
+        label, values = expression.split(": ")
+        assert label == f"Q{bit}"
+        assert list(map(int, values.split(","))) == [(count >> bit) & 1 for count in range(1, 5)]
+        cycle = [((count % 8) >> bit) & 1 for count in range(8)]
+        period = 2 ** (bit + 1)
+        assert cycle[:period] == cycle[period:2 * period]
+    assert_same_backticks(52)
+
+
+def test_single_sample_pulse_advances_one_pipeline_stage_per_edge():
+    q1 = q2 = q3 = 0
+    observed = []
+    for value in (1, 0, 0, 0):
+        q1, q2, q3 = value, q1, q2
+        observed.append(f"{q1}{q2}{q3}")
+    assert answer_sequence(53) == observed
+    assert_same_backticks(53)
+
+
+def test_ready_busy_diagram_uses_only_the_input_relevant_to_each_state():
+    diagram = card(54)["diagram"]
+    table = {}
+    for transition in diagram["transitions"]:
+        signal, value = transition["label"].split("=")
+        assert signal == ("r" if transition["from"] == "READY" else "d")
+        table[(transition["from"], int(value))] = transition["to"]
+    assert set(table) == set(itertools.product(diagram["states"], (0, 1)))
+    pairs = list(itertools.product((0, 1), repeat=2))
+    for inputs in itertools.product(pairs, repeat=4):
+        state = expected = "READY"
+        for request, done in inputs:
+            relevant_input = request if state == "READY" else done
+            state = table[(state, relevant_input)]
+            if expected == "READY" and request:
+                expected = "BUSY"
+            elif expected == "BUSY" and done:
+                expected = "READY"
+            assert state == expected
+    state = "READY"
+    observed = []
+    for request, done in ((1, 0), (1, 0), (0, 1)):
+        state = table[(state, request if state == "READY" else done)]
+        observed.append(state)
+    assert answer_sequence(54) == observed
+    assert_same_backticks(54)
+
+
+def test_two_coin_dispenser_diagram_matches_cumulative_coin_count():
+    for inputs in itertools.product((0, 1), repeat=5):
+        states, outputs = run_fsm(55, inputs)
+        expected_states = ["ONE" if sum(inputs[:i]) % 2 else "EMPTY" for i in range(1, 6)]
+        expected_outputs = [
+            int(sum(inputs[:i]) // 2 > sum(inputs[:i - 1]) // 2) for i in range(1, 6)
+        ]
+        assert states == expected_states
+        assert outputs == expected_outputs
+    assert list(map(int, answer_sequence(55))) == run_fsm(55, [1, 0, 1, 1])[1]
+    assert_same_backticks(55)
+
+
+def test_error_state_is_unreachable_by_graph_search():
+    table = fsm_table(56)
+    reached = {card(56)["diagram"]["initial"]}
+    pending = list(reached)
+    while pending:
+        state = pending.pop()
+        for value in (0, 1):
+            target, _ = table[(state, value)]
+            if target not in reached:
+                reached.add(target)
+                pending.append(target)
+    assert reached == {"IDLE", "RUN"}
+    assert "ERROR" not in reached
+    assert "unreachable" in card(56)["answer"]["en"]
+    assert "לא נגיש" in card(56)["answer"]["he"]
+
+
+def test_one_hot_state_encoding_has_one_flip_flop_per_state():
+    count, codes = backticks(57)
+    words = codes.split(", ")
+    assert int(count) == len(words) == 3
+    assert len(set(words)) == 3
+    assert all(len(word) == 3 and word.count("1") == 1 for word in words)
+    assert_same_backticks(57)
+
+
+def test_priority_transitions_are_complete_exclusive_and_prioritize_a():
+    expressions = dict(item.split("=", 1) for item in backticks(58))
+    for a, b in itertools.product((0, 1), repeat=2):
+        values = {"a": a, "b": b}
+        actual = {name: boolean_expression(formula, values) for name, formula in expressions.items()}
+        assert sum(actual.values()) == 1
+        expected_name = "to_A" if a else ("to_B" if b else "stay")
+        assert actual[expected_name] == 1
+    assert_same_backticks(58)
+
+
+def test_overlapping_eleven_detector_diagram_retains_latest_one():
+    for inputs in itertools.product((0, 1), repeat=5):
+        states, outputs = run_fsm(59, inputs)
+        expected = [int(previous == current == 1) for previous, current in zip((0, *inputs), inputs, strict=False)]
+        assert outputs == expected
+        assert states == ["ONE" if value else "ZERO" for value in inputs]
+    assert list(map(int, answer_sequence(59))) == run_fsm(59, [1, 1, 1, 0, 1])[1]
+    assert_same_backticks(59)
+
+
+def test_unused_counter_code_recovers_to_a_valid_state():
+    source, target = backticks(60)[0].split(" → ")
+    next_state = {"00": "01", "01": "10", "10": "00", source: target}
+    assert set(next_state) == {"00", "01", "10", "11"}
+    assert target == "00"
+    valid_states = {"00", "01", "10"}
+    assert all(next_state[state] in valid_states for state in next_state)
+    assert_same_backticks(60)
