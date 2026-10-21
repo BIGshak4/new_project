@@ -50,6 +50,8 @@ PRIMARY = [
     "estimation_sanity_checks",
     "fsm_state_tables", "combinational_blocks", "combinational_blocks", "fsm_state_tables", "estimation_sanity_checks", "latches_flip_flops", "estimation_sanity_checks", "binary_arithmetic", "estimation_sanity_checks",
     "estimation_sanity_checks", "basic_data_structures", "estimation_sanity_checks", "estimation_sanity_checks", "counters",
+    "latches_flip_flops", "arrays_and_search", "registers_shifters", "bit_manipulation",
+    "debugging_methodology", "combinational_blocks", "estimation_sanity_checks", "arrays_and_search", "estimation_sanity_checks",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

@@ -1,0 +1,12 @@
+{
+  "question_id": "PREP-073",
+  "checked_on": "2026-10-21",
+  "status": "passed_python_model",
+  "unique_poisoned_bottles_decoded": 1000,
+  "total_endpoint_patterns": 1024,
+  "unused_patterns_rejected": 24,
+  "malformed_inputs_rejected": 5,
+  "all_survive_case": "Bottle 1 has internal label zero and is deliberately absent from all pools.",
+  "method": "Constructed ten pooling groups; simulated every possible poisoned bottle using membership; checked independent repeated-division code oracle, injectivity and all unused ten-bit patterns.",
+  "limits": "Abstract deterministic one-batch puzzle only; no real tasting, chemical validation or human professional approval. Information lower bound is proved separately."
+}

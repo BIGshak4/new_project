@@ -25,6 +25,10 @@ def test_frozen_attestation_covers_only_existing_snapshot(catalog):
     registry = json.loads((BACKEND / "seeds/solution_review_attestations.json").read_text(encoding="utf-8"))
     assert len(registry["questions"]) == 93
     for question in catalog.questions.values():
+        if question.key not in registry["questions"]:
+            assert solution_review(question).status == "pending_review"
+            assert solution_review(question).reviewed_on is None
+            continue
         assert solution_review(question).model_dump() == {
             "status": "human_reviewed", "reviewed_on": "2026-10-21"}
         assert not question.reviewed_by and question.reuse_status == "pending_review"

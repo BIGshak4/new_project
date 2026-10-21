@@ -1,0 +1,10 @@
+{
+  "question_id": "PREP-067",
+  "status": "passed",
+  "exhaustive_one_bit_transition_cases": 65408,
+  "reset_priority_cases": 16352,
+  "sampled_sixteen_bit_edges": 100000,
+  "random_seed": 67021,
+  "coverage": "All logical one-bit queue contents of length 0..8, every read-pointer rotation, controls, input data and previous dout. Independent deque oracle; sampled wide-data long run includes reset and wrap.",
+  "scope": "Python model only. Supplied SystemVerilog was not compiled/simulated; RAM read-during-write and timing require technology-specific verification."
+}

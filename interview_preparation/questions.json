@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "created_on": "2026-09-24",
-  "question_count": 63,
+  "question_count": 72,
   "audience": "Electrical engineering students preparing for system chip validation interviews",
   "status": "review_seed_not_production_import",
   "notes": [
@@ -7575,10 +7575,12 @@
       "source_tags": [
         "hardware",
         "nvidia",
-        "logic"
+        "logic",
+        "actelis-networks"
       ],
       "reported_companies": [
-        "NVIDIA"
+        "NVIDIA",
+        "Actelis Networks"
       ],
       "source_company_badge": "NVIDIA",
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
@@ -7596,6 +7598,23 @@
           "type": "user_supplied_image",
           "path": "sources/prep-038.png",
           "received_on": "2026-10-18"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-038-additional-2026-10-21-1.png",
+          "received_on": "2026-10-21",
+          "role": "question_resubmission",
+          "original_prompt": "נתון מספר בן 2000 ספרות. כל צמד ספרות במספר מתחלק ללא שארית או ב־23 או ב־17. למשל 1234: 12 לא מתחלק, 23 מתחלק ו־34 מתחלק. בהינתן שהספרה הכי שמאלית (MSB like) היא 3, מה היא ספרת האחדות?",
+          "source_tags": [
+            "logic",
+            "nvidia",
+            "actelis-networks"
+          ],
+          "reported_companies": [
+            "NVIDIA",
+            "Actelis Networks"
+          ],
+          "transcription_note": "The screenshot is cropped slightly on the left; it is an additional report of the same adjacent-pair question. No original learner text or solution is replaced."
         }
       ],
       "original_prompt": "יש מספר עם 2000 ספרות. ידוע שכל זוג ספרות במספר הן יוצרות מספר שמתחלק ב 23 או 17 ללא שארית. ידוע שהMSD של המספר היא 3.\nא. מה הספרה האחרונה?\nב. האם יש כמה פתרונות \\ אפשרויות?",
@@ -12587,6 +12606,1695 @@
         "basis": "Synchronous next-state logic, carry/borrow bit-pattern reasoning and exhaustive transition verification. NVIDIA attribution comes only from the supplied screenshot."
       },
       "markdown_path": "questions/prep-064-three-bit-up-down-counter-gates.md"
+    },
+    {
+      "id": "PREP-065",
+      "key": "dff-from-edge-triggered-srff",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "hardware",
+      "topic": "latches_flip_flops",
+      "topics": [
+        "hardware",
+        "latches_flip_flops",
+        "synchronous_design",
+        "truth_tables"
+      ],
+      "source_topic_tags": [
+        "hardware"
+      ],
+      "added_topic_tags": [
+        "latches_flip_flops",
+        "synchronous_design",
+        "truth_tables"
+      ],
+      "source_tags": [
+        "nvidia",
+        "hardware",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "circuit_design",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted bilingual proposed solution, authored diagrams and Python model checks. Independent professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-065.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "ממש DFF בעזרת SRFF",
+      "translations": {
+        "he": {
+          "title": "מימוש דלגלג D בעזרת דלגלג SR",
+          "prompt": "ממשו דלגלג D באמצעות דלגלג SR ושערים לוגיים. הציגו חיבורים וטבלת פעולת הרכיב.\n\nהנחה מפורשת שנוספה למקור: הרכיב הנתון הוא דלגלג SR בחזית עולה, עם כניסות S,R סינכרוניות פעילות בגבוה: 00 שומר, 01 מאפס, 10 קובע 1, ו־11 אסור. אין זו הנחה על נועל שקוף או על כניסות preset/clear אסינכרוניות. הקלט D יציב סביב חזית השעון בהתאם לזמני ההכנה וההחזקה, לרבות המסלול דרך המהפך. אין דרישת איפוס נוספת. הסבירו מה משתנה אם הרכיב הנתון הוא דווקא נועל SR.",
+          "hint": "מה צריכה להיות היציאה מיד אחרי חזית כאשר D=0, ומה כאשר D=1?",
+          "hints": [
+            "מה צריכה להיות היציאה מיד אחרי חזית כאשר D=0, ומה כאשר D=1?",
+            "כניסת Set יכולה לבקש לשמור 1, וכניסת Reset יכולה לבקש לשמור 0. צריך שהבקשות לא יהיו פעילות יחד בזמן הדגימה.",
+            "בחרו S כך שיעלה בדיוק כאשר D=1 ואת R כהיפוכו. בדקו את שני ערכי D ואת המצב האסור 11."
+          ],
+          "reference_solution": "### הרעיון: לתרגם נתון לפקודת קביעה או איפוס\n\nדלגלג D צריך לשמור אחרי כל חזית את הערך שהיה על D בזמן הדגימה. אין צורך לחשב משוב מ־Q: אם D=1 נבקש Set, ואם D=0 נבקש Reset. לכן נחבר:\n\n```text\nS = D\nR = NOT D\nclk של דלגלג SR = clk של המערכת\nQ של דלגלג SR = Q של דלגלג D\n```\n\nבשרטוט יש נקודת פיצול על D: הענף הישיר מגיע ל־S, והענף השני עובר במהפך ומגיע ל־R. חץ clk נכנס לכניסת השעון, ולא לאחת מכניסות הנתונים.\n\n### בדיקה בטבלה\n\n| D | S | R | Q אחרי חזית עולה |\n| --- | --- | --- | --- |\n| 0 | 0 | 1 | 0 |\n| 1 | 1 | 0 | 1 |\n\nלשם השוואה, טבלת דלגלג SR היא 00: שמירת Q הישן, 01: 0, 10: 1, 11: מצב אסור. החיבורים שלנו משתמשים רק ב־01 וב־10. לכן Q(next)=D לכל ערך קודם של Q. בהיעדר חזית, Q נשמר גם אם D משתנה. במעגל אמיתי השינוי ביציאה מגיע אחרי השהיית clock-to-Q.\n\n### מדוע סוג הרכיב חשוב?\n\nאם SR הוא נועל שקוף או רכיב עם S,R אסינכרוניים, אותו חיבור יכול לגרום ל־Q לעקוב אחרי D בין חזיתות. זה אינו דלגלג D בחזית. נועל SR עם אפשור ובקשות S=EN AND D, R=EN AND NOT D נותן נועל D; כדי לקבל פעולה בחזית אפשר להשתמש במבנה master–slave תקין עם שלבי שעון משלימים ומגבלות תזמון. זה פתרון אחר, עם רכיבים והנחות נוספות, ולא מה שהשרטוט הזה טוען לממש.\n\n### עלות והנחות תזמון\n\nבמודל הנבחר מספיקים דלגלג SR אחד ומהפך אחד. מבחינת ביטי מצב נדרש ביט אחד ואנו משתמשים בביט אחד; אין כאן הוכחת מינימום לשטח או להשהיה. במציאות המסלול הישיר והמסלול המהופך אינם באותה השהיה: מעבר D עלול ליצור לזמן קצר S=R=1. במודל סינכרוני אידאלי אין לכך השפעה אם לא דוגמים את החפיפה, אבל יש לבחור primitive מתאים ולעמוד בזמני setup/hold ולמנוע הפרת המצב האסור סמוך לחזית. הניסוח S=~R אינו הבטחה לאפס גליצ'ים פיזיים.\n\nבדיקות פייתון עברו על כל ארבעת שילובי Q,D, שמונת שילובי Q,S,R, ועל 4,094 רצפי נתונים באורכים 0–10 משני מצבים התחלתיים, עם 36,868 חזיתות. הן בדקו גם שמירה בלי חזית ודחיית 11 בחזית. מצורף קוד SystemVerilog תיאורי, שלא קומפל או הורץ בסימולטור HDL. ההצעה ממתינה לביקורת מקצועית."
+        },
+        "en": {
+          "title": "Implementing a D flip-flop using an SR flip-flop",
+          "prompt": "Implement a D flip-flop using an SR flip-flop and logic gates. Give the connections and operation table.\n\nExplicit editorial assumption: the supplied SR primitive is rising-edge triggered, with synchronous active-high S,R: 00 holds, 01 resets, 10 sets, and 11 is forbidden. It is not a transparent latch or asynchronous preset/clear input pair. D meets setup and hold on both paths, including the inverter path. No additional reset is required. Explain why a transparent SR latch would change the answer.",
+          "hint": "What should Q become after an edge for D=0, and for D=1?",
+          "hints": [
+            "What should Q become after an edge for D=0, and for D=1?",
+            "Set requests a stored one; reset requests zero. The requests must not both be active when sampled.",
+            "Let S be high exactly when D=1, and make R its complement. Check both D values and the forbidden 11 input."
+          ],
+          "reference_solution": "### Translate data into a set or reset request\n\nA D flip-flop stores the value sampled on D at each edge. No Q feedback is needed: request set when D=1 and reset when D=0. Connect:\n\n```text\nS = D\nR = NOT D\nSR clock = system clock\nSR Q = D-flip-flop Q\n```\n\nThe diagram branches D: one wire goes directly to S and the other passes through an inverter to R. The clock arrow enters the clock port, never a data port.\n\n### Operation table\n\n| D | S | R | Q after the rising edge |\n| --- | --- | --- | --- |\n| 0 | 0 | 1 | 0 |\n| 1 | 1 | 0 | 1 |\n\nFor comparison, the SR primitive holds old Q on 00, resets on 01, sets on 10, and forbids 11. This wiring uses only 01 and 10, proving Q(next)=D for either previous Q. Without a rising edge Q holds even if D changes. Physical Q changes after clock-to-Q propagation delay.\n\n### Why the primitive type matters\n\nIf SR is a transparent latch or the named S,R ports are asynchronous controls, this wiring can make Q follow D between edges. That is not an edge-triggered DFF. Gating an SR latch with S=EN AND D and R=EN AND NOT D produces a D latch; a valid master–slave design with complementary phases and timing constraints can create edge behavior. That is a different construction with additional primitives and assumptions, not what this schematic claims.\n\n### Cost and timing assumptions\n\nOne SR state bit plus one inverter suffices in the declared model. One state bit is necessary and used; no minimum area or propagation-delay claim is made. Physical direct and inverted paths differ in delay, so a D transition can briefly produce S=R=1. An ideal synchronous primitive ignores an overlap away from its sampling aperture, but real primitive behavior, setup/hold and forbidden-state timing must be checked. Complementary Boolean equations do not guarantee glitch-free physical signals.\n\nPython checks covered all four Q,D combinations, eight Q,S,R rows, and 4,094 data streams of lengths zero through ten from both starting states, totaling 36,868 rising edges. They also verified holding without an edge and rejecting 11 at an edge. Behavioral SystemVerilog is supplied but was not compiled or HDL-simulated. Independent professional review is pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-065-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "מה צריכה להיות היציאה מיד אחרי חזית כאשר D=0, ומה כאשר D=1?"
+        },
+        {
+          "id": "PREP-065-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "כניסת Set יכולה לבקש לשמור 1, וכניסת Reset יכולה לבקש לשמור 0. צריך שהבקשות לא יהיו פעילות יחד בזמן הדגימה."
+        },
+        {
+          "id": "PREP-065-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "בחרו S כך שיעלה בדיוק כאשר D=1 ואת R כהיפוכו. בדקו את שני ערכי D ואת המצב האסור 11."
+        },
+        {
+          "id": "PREP-065-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "What should Q become after an edge for D=0, and for D=1?"
+        },
+        {
+          "id": "PREP-065-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Set requests a stored one; reset requests zero. The requests must not both be active when sampled."
+        },
+        {
+          "id": "PREP-065-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Let S be high exactly when D=1, and make R its complement. Check both D values and the forbidden 11 input."
+        }
+      ],
+      "assumptions": [
+        "Rising-edge synchronous active-high SR primitive; 11 forbidden.",
+        "D meets timing on both paths, including inversion; no additional reset.",
+        "Transparent-latch interpretation is distinguished explicitly."
+      ],
+      "optimality": {
+        "criterion": "State-bit count.",
+        "result": "One state bit plus one inverter suffices.",
+        "proof": "Two stored values require at least one state bit.",
+        "scope": "No minimum gate/area/delay claim; primitive semantics matter."
+      },
+      "verification": "Passed four Q,D combinations, eight SR rows, 4,094 streams and 36,868 edges in Python. HDL uncompiled/unsimulated; physical timing and glitches untested.",
+      "edge_cases": [
+        "Initial Q may be unknown; the first valid edge establishes D.",
+        "No edge means hold.",
+        "D changes near the edge may violate timing.",
+        "Asynchronous S,R or transparent latches have a different contract."
+      ],
+      "common_mistakes": [
+        "Driving both S and R from D, reaching 11.",
+        "Calling a transparent latch a DFF.",
+        "Assuming inversion removes every transient overlap.",
+        "Treating asynchronous clear as a synchronous data input."
+      ],
+      "interview_answer": "For an edge-triggered synchronous SR primitive, wire S=D and R=NOT D on the same clock. D=0 resets and D=1 sets, so Q after the edge equals D. A transparent latch or asynchronous controls need a different clocked construction.",
+      "solution_extensions": {
+        "question": "How would you add an enable EN that holds Q when zero?",
+        "direction": "For synchronous SR use S=EN AND D and R=EN AND NOT D. Disabled gives 00 and hold; EN also has timing constraints.",
+        "status": "Prepared in content, not connected to the live follow-up queue."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_065_dff_from_sr.py",
+      "solution_code_paths": [
+        "solutions/prep_065_dff_from_sr.py",
+        "solutions/prep_065_dff_from_sr.sv"
+      ],
+      "verification_script_path": "checks/check_prep_065.py",
+      "verification_evidence_path": "checks/prep-065-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-065.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-065-sr-dff-he.png",
+          "language": "he",
+          "description": "חיבורי D, מהפך, SR ושעון"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-065-sr-dff-en.png",
+          "language": "en",
+          "description": "D, inverter, SR and clock wiring"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-055",
+        "PREP-010"
+      ],
+      "duplicate_check": "Related flip-flop/enable exercises do not ask conversion from a synchronous active-high SR primitive; retained as a distinct primitive-conversion question.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Foundational digital design and explicit behavioral contracts; company associations are reported only by the supplied screenshot."
+      },
+      "markdown_path": "questions/prep-065-dff-from-edge-triggered-srff.md"
+    },
+    {
+      "id": "PREP-066",
+      "key": "stock-one-transaction-best-days",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "software",
+      "topic": "arrays_and_search",
+      "topics": [
+        "software",
+        "arrays",
+        "prefix_minimum",
+        "loop_invariant",
+        "one_pass"
+      ],
+      "source_topic_tags": [
+        "software"
+      ],
+      "added_topic_tags": [
+        "arrays",
+        "prefix_minimum",
+        "loop_invariant",
+        "one_pass"
+      ],
+      "source_tags": [
+        "google",
+        "intel",
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "Google",
+        "Intel",
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "coding",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted bilingual proposed solution, code, diagrams and independent-oracle checks. Professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-066.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "יש לנו מערך עם N תאים, בכל תא מצוין המחיר של המניה ביום הספציפי הזה (כל אינדקס של תא מייצג יום). רשום פונקציה שמקבלת מערך כזה ומחזירה 2 ימים כך שהרווח יהיה מקסימלי. כלומר יום רכישה ויום מכירה.",
+      "translations": {
+        "he": {
+          "title": "הימים הטובים ביותר לקנייה ומכירה של מניה",
+          "prompt": "נתון מערך prices של מחירי מניה במשך N ימים. כל אינדקס הוא יום, החל מ־0. כתבו פונקציה המוצאת עסקה אחת עם יום קנייה buy ויום מכירה sell, כך ש־buy<sell והרווח prices[sell]−prices[buy] מרבי. החזירו את שני האינדקסים ואת הרווח, לא רק את המחירים.\n\nהבהרות שנוספו למקור: המחירים שלמים מדויקים ואי־שליליים; אין עמלות או מכירה בחסר. בגרסה הראשית מותר לא לבצע עסקה: אם אין רווח חיובי, או שיש פחות משני ימים, מחזירים None. בשוויון רווחים מעדיפים יום קנייה מוקדם יותר ואז יום מכירה מוקדם יותר. הציגו גם את השינוי כאשר חייבים לבצע עסקה חוקית אחת, אפילו בהפסד. אין למיין את הקלט או לשנות את סדר הימים.",
+          "hint": "אם יום המכירה היה ידוע, איזה מידע על הימים שלפניו היה מספיק כדי לבחור יום קנייה?",
+          "hints": [
+            "אם יום המכירה היה ידוע, איזה מידע על הימים שלפניו היה מספיק כדי לבחור יום קנייה?",
+            "לכל יום מכירה מספיק לשמור את המחיר הנמוך ביותר שנראה לפניו ואת האינדקס הראשון שלו.",
+            "עברו משמאל לימין: קודם חשבו רווח מול המינימום הקודם, אחר כך הכניסו את היום הנוכחי למינימום. עדכנו שיא רק ברווח גדול יותר כדי לשמר שוויונות."
+          ],
+          "reference_solution": "### הרעיון: מתייחסים לכל יום כמועמד למכירה\n\nאי אפשר לבחור סתם את המינימום והמקסימום במערך: ייתכן שהמקסימום הגיע לפני המינימום. במקום זאת, כשמגיעים ליום sell, שומרים רק את מחיר הקנייה הנמוך ביותר בימים שקדמו לו. כל קנייה יקרה יותר באותו קטע תיתן רווח קטן יותר לאותה מכירה, ולכן אינה יכולה לשפר את המועמד.\n\nנשמור low_day, ושיא best המכיל קנייה, מכירה ורווח. מתחילים עם יום 0 כמינימום וסורקים מיום 1. לכל יום מחשבים את הרווח מול המינימום הקודם, מעדכנים שיא אם הרווח גדול יותר, ורק אז בודקים אם היום הנוכחי הוא מינימום חדש. הסדר מבטיח שקנייה ומכירה אינן באותו יום. מקבלים את שני הימים בפועל; המשתנה best אינו רק מספר הרווח.\n\n### קוד פייתון והבחנה בין שתי הגרסאות\n\n```python\n\"\"\"One optional or mandatory trade; zero-based days and stable earliest ties.\n\nInput contract: a sequence of nonnegative exact integer prices. Validation is\noutside this algorithm. Return (buy_day, sell_day, profit), or None.\n\"\"\"\n\n\ndef best_trade(prices, *, mandatory=False):\n    if len(prices) < 2:\n        return None\n    low_day = 0\n    best = None\n    for sell in range(1, len(prices)):\n        profit = prices[sell] - prices[low_day]\n        if (mandatory or profit > 0) and (best is None or profit > best[2]):\n            best = (low_day, sell, profit)\n        # Strictly smaller preserves the earliest day at equal prices.\n        if prices[sell] < prices[low_day]:\n            low_day = sell\n    return best\n\n```\n\nברירת המחדל היא עסקה אפשרית בלבד. כאשר הרווח אינו חיובי best נשאר None. הדגל mandatory=True מאפשר גם רווח אפס או הפסד; עדיין בוחרים את העסקה בעלת הרווח המרבי. אין זוג ימים חוקי אם N<2, ולכן גם בגרסה זו חוזר None. בדוגמה prices=[9,8,7], ברירת המחדל מחזירה None, והגרסה המחייבת מחזירה (0,1,-1).\n\n### דוגמת ריצה\n\nעבור prices=[7,1,5,3,6,4], המועמדים מיום מכירה 1 עד 5 נותנים רווחים ‎-6,4,2,5,3. ביום 1 המחיר 1 הופך למינימום לקראת הימים הבאים. השיא הוא (buy=1,sell=4,profit=5). התרשים מציג את המינימום הקודם בכל שלב. ב־[3,1,1,5,5] מחזירים (1,3,4): שומרים את היום הראשון בכל מינימום שווה, ואת העסקה הראשונה באותו רווח.\n\n### למה זה נכון?\n\nלפני בדיקת sell, האינווריאנט הוא ש־low_day מצביע על המינימום הראשון ב־prices[0:sell]. באתחול זה נכון, והעדכון בסוף הצעד משמר זאת ליום הבא. לכן המועמד הוא העסקה הטובה ביותר שמוכרת באותו יום. כל עסקה חוקית מסתיימת באחד הימים שנסרקים, ושמירת המועמד הטוב ביותר נותנת מקסימום גלובלי. יום המינימום אינו יכול לנוע אחורה; יחד עם עדכונים מחמירים בלבד נשמרים כללי השוויון. בגרסה האפשרית מתעלמים מעסקאות שאינן עדיפות על רווח האפס של הימנעות מעסקה.\n\n### עלות ואימות\n\nמעבר אחד: O(N) פעולות ומספר קבוע של אינדקסים וערכים, כלומר O(1) מקום עזר במודל מילים. כדי להבטיח פתרון לקלט כללי צריך לבדוק מספר ליניארי של מחירים במקרה הגרוע, משום שמחיר שלא נקרא עשוי לשנות את העסקה הטובה. אם מספרים מדויקים גדולים מילה, זמן החשבון והאחסון תלוי גם באורך הביטים. אין הקצאת מערך עזר ואין מיון.\n\nהקוד נבדק מול אורקל המונה באופן עצמאי את כל זוגות buy<sell: כל 21,845 המערכים באורכים 0–7 עם מחירים 0–3, בשתי הגרסאות, ועוד 500 מערכי מספרים גדולים בשתיהן. אלה בדיקות קוד ולא אישור מקצועי אנושי; הפתרון מוצע וממתין לסקירה."
+        },
+        "en": {
+          "title": "Best buy and sell days for one stock transaction",
+          "prompt": "Given N daily stock prices, with days indexed from zero, find one transaction with buy<sell maximizing prices[sell]−prices[buy]. Return the buy index, sell index and profit, not just the price values.\n\nEditorial clarifications: prices are exact nonnegative integers, with no fees or short selling. The primary contract permits no transaction: return None if no strictly positive profit exists, or fewer than two days exist. Ties prefer the earliest buy day, then the earliest sell day. Also explain the variant requiring one legal transaction even at a loss. Do not sort the input or change temporal order.",
+          "hint": "If the selling day were fixed, what information about earlier days would determine the best purchase?",
+          "hints": [
+            "If the selling day were fixed, what information about earlier days would determine the best purchase?",
+            "For each sale, retain the smallest earlier price and its first index.",
+            "Scan left to right: evaluate against the earlier minimum before admitting today's price. Replace the best trade only on strictly greater profit to preserve ties."
+          ],
+          "reference_solution": "### Fix the selling day first\n\nChoosing the global minimum and maximum can sell before buying. Instead, when visiting sell, retain the lowest price strictly before it. A more expensive earlier purchase cannot improve the profit for that sale, so only the earliest minimum index matters.\n\nStore low_day and best=(buy,sell,profit). Initialize the minimum to day zero and scan from day one. First evaluate today's sale against the earlier minimum, update the best trade if its profit is strictly larger, then admit today's price into the minimum. This ordering guarantees buy<sell. Store actual indices as well as profit.\n\n### Python and the two contracts\n\n```python\n\"\"\"One optional or mandatory trade; zero-based days and stable earliest ties.\n\nInput contract: a sequence of nonnegative exact integer prices. Validation is\noutside this algorithm. Return (buy_day, sell_day, profit), or None.\n\"\"\"\n\n\ndef best_trade(prices, *, mandatory=False):\n    if len(prices) < 2:\n        return None\n    low_day = 0\n    best = None\n    for sell in range(1, len(prices)):\n        profit = prices[sell] - prices[low_day]\n        if (mandatory or profit > 0) and (best is None or profit > best[2]):\n            best = (low_day, sell, profit)\n        # Strictly smaller preserves the earliest day at equal prices.\n        if prices[sell] < prices[low_day]:\n            low_day = sell\n    return best\n\n```\n\nThe default permits no trade: nonpositive profits never replace None. With mandatory=True, zero-profit or losing trades are considered, and the least loss wins if necessary. Fewer than two days provide no legal pair in either contract, so return None. For [9,8,7], the default returns None; the mandatory variant returns (0,1,-1).\n\n### Trace\n\nFor prices=[7,1,5,3,6,4], sales on days one through five yield candidates -6,4,2,5,3. Day one's price becomes the minimum for later sales. The result is (buy=1,sell=4,profit=5); the diagram records the earlier minimum at each step. For [3,1,1,5,5], return (1,3,4): preserve the first equal-price minimum and first equal-profit trade.\n\n### Correctness\n\nBefore evaluating sell, low_day is the first minimum in prices[0:sell]. This holds initially and is preserved by the end-of-step update. The candidate is therefore the best trade selling on that day. Every legal trade ends on a scanned day, so retaining the best candidate finds the global optimum. The minimum index never moves backward; strict updates preserve earliest-buy then earliest-sell ties. The optional contract discards trades no better than the zero profit of abstaining.\n\n### Cost and checks\n\nOne scan takes O(N) operations and O(1) auxiliary machine words. A general exact algorithm must inspect a linear number of prices in the worst case: an unread price can change the optimum. With arbitrary-size integers, arithmetic and storage also depend on bit length. There is no sorting or auxiliary array.\n\nThe executed code matched an independent all-buy/sell-pairs oracle on every one of 21,845 arrays of lengths zero through seven over prices zero through three, under both contracts, plus 500 large-integer arrays under both contracts. This is code verification, not independent human expert approval; the solution remains proposed."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-066-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "אם יום המכירה היה ידוע, איזה מידע על הימים שלפניו היה מספיק כדי לבחור יום קנייה?"
+        },
+        {
+          "id": "PREP-066-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "לכל יום מכירה מספיק לשמור את המחיר הנמוך ביותר שנראה לפניו ואת האינדקס הראשון שלו."
+        },
+        {
+          "id": "PREP-066-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "עברו משמאל לימין: קודם חשבו רווח מול המינימום הקודם, אחר כך הכניסו את היום הנוכחי למינימום. עדכנו שיא רק ברווח גדול יותר כדי לשמר שוויונות."
+        },
+        {
+          "id": "PREP-066-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "If the selling day were fixed, what information about earlier days would determine the best purchase?"
+        },
+        {
+          "id": "PREP-066-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "For each sale, retain the smallest earlier price and its first index."
+        },
+        {
+          "id": "PREP-066-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Scan left to right: evaluate against the earlier minimum before admitting today's price. Replace the best trade only on strictly greater profit to preserve ties."
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_066_best_stock_trade.py",
+      "solution_code_paths": [
+        "solutions/prep_066_best_stock_trade.py"
+      ],
+      "verification_script_path": "checks/check_prep_066.py",
+      "verification_evidence_path": "checks/prep-066-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-066.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-066-prefix-min-trace-he.png",
+          "language": "he",
+          "description": "תרשים הסבר לפתרון המוצע"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-066-prefix-min-trace-en.png",
+          "language": "en",
+          "description": "Proposed-solution explanation diagram"
+        }
+      ],
+      "markdown_path": "questions/prep-066-stock-one-transaction-best-days.md",
+      "assumptions": [
+        "Zero-based days; purchase must precede sale and input order is unchanged.",
+        "Exact nonnegative integer prices; no fees, short selling or multiple trades.",
+        "Primary contract abstains without positive profit; mandatory variant accepts a loss. N<2 returns None in both.",
+        "Ties prefer earliest buy, then earliest sell."
+      ],
+      "optimality": {
+        "criterion": "Worst-case time and auxiliary-variable count in the word model.",
+        "result": "O(N) time and O(1) auxiliary words; asymptotically optimal time.",
+        "proof": "Each sale uses its earlier minimum. An unread price can create a new minimum or maximum changing the optimum, giving a linear worst-case input-read bound.",
+        "scope": "Arbitrary-size integer costs also depend on bit length; no physical timing guarantee."
+      },
+      "verification": "Passed 43,690 independent-oracle checks: 21,845 arrays of lengths 0..7 over 0..3 under both contracts, plus 1,000 checks on 500 large-integer arrays. Assertions cover indices, profit, tie order and abstention, not profit alone. Python executed; independent professional review pending.",
+      "edge_cases": [
+        "Empty or one-day input returns None.",
+        "Descending prices: abstain or take the smallest loss, according to contract.",
+        "Equal prices: no optional trade; mandatory returns (0,1,0).",
+        "Repeated minima/profits preserve earliest days.",
+        "A maximum before the minimum is not a legal buy/sell pair."
+      ],
+      "common_mistakes": [
+        "Sorting destroys temporal order.",
+        "Global min/max may sell before purchasing.",
+        "Admitting the current minimum before evaluation can accidentally allow same-day trades.",
+        "Returning prices or profit alone fails to return the requested days.",
+        "Initializing mandatory profit to zero can hide the best legal loss."
+      ],
+      "interview_answer": "Scan by selling day, retaining the lowest earlier price and its first index. Evaluate profit and update the best pair before updating the minimum. This gives O(N) time and O(1) auxiliary words. First clarify whether abstention is allowed and what to return with fewer than two days.",
+      "solution_extensions": {
+        "question": "What if multiple transactions are allowed while holding at most one share?",
+        "direction": "Without fees or further constraints, sum positive consecutive-day rises. This is a different contract; a single prefix minimum/best trade does not solve it. Fees or cooldown introduce dynamic-programming states.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      },
+      "related_question_ids": [
+        "PREP-072"
+      ],
+      "duplicate_check": "Reviewed preparation archive and example/verification text for stock, buy/sell and prefix-minimum equivalents. Existing array exercises do not specify this one-temporal-transaction and actual-day return contract. Maximum subarray PREP-072 is a related but distinct scan invariant.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Temporal constraints, prefix-minimum invariant and contract clarification; company names are screenshot reports only."
+      }
+    },
+    {
+      "id": "PREP-067",
+      "key": "eight-cell-synchronous-hardware-fifo",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "hardware",
+      "topic": "fifo",
+      "topics": [
+        "hardware",
+        "fifo",
+        "registers_shifters",
+        "synchronous_design"
+      ],
+      "source_topic_tags": [
+        "hardware"
+      ],
+      "added_topic_tags": [
+        "fifo",
+        "registers_shifters",
+        "synchronous_design"
+      ],
+      "source_tags": [
+        "nvidia",
+        "amazon",
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Amazon",
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "circuit_design",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted bilingual proposed solution, authored diagrams and Python model checks. Independent professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-067.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "יש לממש FIFO בחומרה בגודל של 8 \"תאי זיכרון\".",
+      "translations": {
+        "he": {
+          "title": "FIFO סינכרוני בחומרה עם שמונה תאים",
+          "prompt": "ממשו FIFO בחומרה בעומק שמונה תאים. הציגו זיכרון, מצביעי קריאה וכתיבה, דגלי full/empty ומימוש התנהגותי.\n\nהבהרות שנוספו למקור: בכל תא W ביטים, כאשר W מספר שלם חיובי. שעון עולה משותף לקריאה ולכתיבה ואיפוס סינכרוני פעיל בגבוה. קריאה מריק נדחית, ללא העברה מיידית של כתיבה ליציאה. כתיבה למלא נדחית אלא אם מתקבלת באותה חזית קריאה, ואז שניהם מתקבלים והפריט הישן נקרא לפני דריסתו. בכל מצב ביניים שתי בקשות מתקבלות יחד. dout הוא פלט רשום: אחרי קריאה שהתקבלה הוא מכיל את הפריט שנקרא ו־rd_valid=1 למחזור הבא; בלי קריאה הוא שומר ערך ו־rd_valid=0. איפוס גובר על הבקשות, מרוקן ומאפס את פלט הקריאה. אין דרישה לשני תחומי שעון.",
+          "hint": "איזה מידע צריך לשמור כדי לדעת מאיזה תא לקרוא, לאיזה תא לכתוב וכמה תאים תפוסים?",
+          "hints": [
+            "איזה מידע צריך לשמור כדי לדעת מאיזה תא לקרוא, לאיזה תא לכתוב וכמה תאים תפוסים?",
+            "המצביעים חוזרים אחרי תא 7 לתא 0. מדוע שוויון בין המצביעים לבדו אינו מבדיל בין מלא לריק?",
+            "הוסיפו מונה תפוסה 0–8. קבעו קודם pop לפי המצב הישן, ואז push שיכול להתקבל במלא רק אם pop התקבל. עדכנו count בתוספת push פחות pop."
+          ],
+          "reference_solution": "### מפרידים נתונים מסדר התור\n\nלא מזיזים את כל הפריטים. נשמור מערך mem עם שמונה מילים ברוחב W, מצביע קריאה rp ומצביע כתיבה wp בני שלושה ביטים, ומונה count בן ארבעה ביטים כדי לייצג גם 8. rp מצביע לפריט הוותיק ביותר כאשר התור אינו ריק; wp הוא התא הבא שאליו תבוצע כתיבה שהתקבלה. המצביעים מתקדמים מעגלית, ולכן אחרי 7 מגיע 0.\n\n```text\nempty = (count == 0)\nfull  = (count == 8)\npop   = rd_en AND NOT empty\npush  = wr_en AND (NOT full OR pop)\n```\n\nאת כל התנאים מחשבים מהמצב שלפני החזית. אותות wr_accepted ו־rd_accepted בקוד הם אותות קבלה צירופיים המתארים מה יתקבל בחזית הבאה, ונחסמים בזמן rst. הם שונים מ־rd_valid, שמתאר את נתוני הקריאה הרשומים לאחר החזית.\n\n### מה עושים בחזית?\n\nאם rst=1: מאפסים rp,wp,count,dout,rd_valid. אין צורך לאפס את כל תאי mem: count=0 מונע קריאת ערך ישן. בלי איפוס: rd_valid מקבל pop. אם pop=1, שומרים ב־dout את mem[rp] הישן ומקדמים rp. אם push=1, כותבים din ל־mem[wp] ומקדמים wp. לבסוף count מקבל count+push−pop.\n\n| תפוסה לפני החזית | wr_en | rd_en | push | pop | תפוסה אחרי החזית |\n| --- | --- | --- | --- | --- | --- |\n| 0 | 0 | 1 | 0 | 0 | 0 |\n| 0 | 1 | 1 | 1 | 0 | 1 |\n| 1–7 | 1 | 1 | 1 | 1 | ללא שינוי |\n| 8 | 1 | 0 | 0 | 0 | 8 |\n| 8 | 1 | 1 | 1 | 1 | 8 |\n\nיתר המקרים נובעים מהמשוואות: רק כתיבה חוקית מגדילה את count, רק קריאה חוקית מקטינה, וללא בקשות נשמר המצב. ב־count=1 וקריאה וכתיבה יחד נקרא הפריט היחיד הישן, והפריט החדש נשאר בתור. בריק שתי בקשות אינן קוראות את din מיד: רק הכתיבה מתקבלת, כפי שהוגדר.\n\n### המקרה העדין: תור מלא ושתי בקשות\n\nבמלא rp=wp. נניח שהתור מכיל A עד H ושניהם מצביעים לתא A. קריאה וכתיבת X יחד מחזירות A ומחליפות את התא ב־X, מקדמות את שני המצביעים ושומרות count=8. הסדר הלוגי החדש הוא B,C,D,E,F,G,H,X. בקוד SystemVerilog עם מערך אוגרים והשמות לא חוסמות, צד ימין של dout <= mem[rp] נקרא מהערך הישן, לפני עדכון mem. אם מחליפים את המערך בבלוק RAM, חייבים לבחור התנהגות read-first מתאימה או להוסיף טיפול מפורש; אין להניח שכל RAM יתנהג כך.\n\n### למה זה נכון וכמה זה עולה?\n\nהאינווריאנט: 0≤count≤8 והפריטים החיים נמצאים במיקומים rp עד rp+count−1 מודולו 8, לפי סדר הכניסה. הוספה כותבת בקצה הזה, וקריאה מוציאה מראשו. התנאים חוסמים גלישה וחסר, ושתי פעולות חוקיות מקיימות את שני הקצוות יחד. מכאן נשמר סדר FIFO.\n\nהנתונים דורשים 8W ביטים. במימוש הזה יש עוד 6 ביטי מצביעים, 4 ביטי מונה, W ביטי פלט וביט rd_valid: סך לוגי 9W+11 ביטים, לפני תקורות המימוש הפיזי. הבקרה דורשת מספר קבוע של פעולות למחזור, ועד פריט אחד נקרא ואחד נכתב בכל חזית. אין כאן טענת שטח מינימלי; למשל אפשר להבדיל בין מלא וריק גם בעזרת ביטי גלישה במקום count. עיכוב ושעון מרבי תלויים במימוש הזיכרון ובספריית התאים.\n\nבדיקת מודל בפייתון מול deque עצמאי עברה על 65,408 מעברים ממצבים בעלי נתונים בני ביט אחד: כל תוכני התור באורכים 0–8, כל סיבובי rp, הבקרות, din והפלט הקודם. עוד 16,352 מקרי איפוס ו־100,000 חזיתות מדגמיות עם נתונים בני 16 ביט נבדקו. קוד SystemVerilog צורף אך לא קומפל ולא סומלץ. אין בכך בדיקת RAM פיזית, CDC או תזמון. הפתרון מוצע וממתין לביקורת מקצועית."
+        },
+        "en": {
+          "title": "Eight-cell synchronous hardware FIFO",
+          "prompt": "Implement a hardware FIFO of depth eight. Show memory, read/write pointers, full/empty flags and behavioral code.\n\nEditorial clarifications: each cell has W bits for positive integer W. Read and write share one rising-edge clock; reset is synchronous active high. Empty reads are rejected with no write-to-read bypass. Full writes are rejected unless a read is accepted at that same edge; then both are accepted and the old item is read before overwrite. Both requests are accepted at intermediate occupancy. dout is registered: after an accepted read it holds that item and rd_valid=1 for the following cycle; otherwise it holds its old value with rd_valid=0. Reset overrides requests, empties the FIFO and clears read outputs. This is not a dual-clock FIFO.",
+          "hint": "What state tells us where to read, where to write and how many cells are occupied?",
+          "hints": [
+            "What state tells us where to read, where to write and how many cells are occupied?",
+            "Pointers wrap from cell seven to zero. Why can pointer equality mean either full or empty?",
+            "Add occupancy 0..8. Determine pop from old state, then allow push at full only if pop is accepted. Update count by push minus pop."
+          ],
+          "reference_solution": "### Separate stored data from queue order\n\nDo not shift every item. Use mem[0:7] of W-bit words, three-bit read/write pointers rp,wp, and a four-bit occupancy count that can represent eight. rp identifies the oldest item when nonempty; wp is the next accepted-write location. Both pointers wrap from seven to zero.\n\n```text\nempty = (count == 0)\nfull  = (count == 8)\npop   = rd_en AND NOT empty\npush  = wr_en AND (NOT full OR pop)\n```\n\nAll decisions use the pre-edge state. The combinational wr_accepted and rd_accepted outputs describe what will be accepted at the next edge and are blocked during reset. They differ from rd_valid, which describes the registered read result after the edge.\n\n### Edge updates\n\nWith rst=1 clear rp,wp,count,dout,rd_valid. Memory cells need not be reset because zero occupancy blocks stale-data reads. Otherwise assign rd_valid=pop. If pop, capture old mem[rp] in dout and advance rp. If push, write din to mem[wp] and advance wp. Set count to count+push−pop.\n\n| Pre-edge occupancy | wr_en | rd_en | push | pop | Post-edge occupancy |\n| --- | --- | --- | --- | --- | --- |\n| 0 | 0 | 1 | 0 | 0 | 0 |\n| 0 | 1 | 1 | 1 | 0 | 1 |\n| 1–7 | 1 | 1 | 1 | 1 | unchanged |\n| 8 | 1 | 0 | 0 | 0 | 8 |\n| 8 | 1 | 1 | 1 | 1 | 8 |\n\nOther cases follow directly: a legal write alone increments occupancy, a legal read alone decrements it, and no requests hold it. At occupancy one, simultaneous operations return the old sole item and retain the new one. At empty, simultaneous requests accept only the write; there is no immediate din bypass by contract.\n\n### The subtle full case\n\nAt full, rp=wp. Suppose items A through H fill the FIFO and both pointers address A. Reading while writing X returns A, replaces that cell with X, advances both pointers and keeps occupancy eight. Logical order becomes B,C,D,E,F,G,H,X. In the supplied register-array SystemVerilog, nonblocking assignments read old mem[rp] before updating memory. A replacement RAM block needs documented read-first behavior or explicit collision handling; not every RAM has this behavior.\n\n### Correctness and cost\n\nInvariant: occupancy stays in zero through eight, and live items occupy rp through rp+count−1 modulo eight in insertion order. Push appends at the end, pop removes the front, boundary guards prevent overflow/underflow, and legal simultaneous operations update both ends. Thus FIFO order is preserved.\n\nStorage uses 8W data bits. This construction also has six pointer bits, four count bits, W output bits and one valid bit, totaling 9W+11 logical state bits before physical implementation overhead. Control uses a constant number of operations per cycle and supports up to one read and one write per edge. No minimum-area claim is made; wrap bits can replace the occupancy scheme. Delay and maximum clock rate depend on memory/cell technology.\n\nPython comparison against an independent deque passed 65,408 transitions over every one-bit live queue content of lengths zero through eight, all rp rotations, controls, din and previous dout. A further 16,352 reset cases and 100,000 sampled sixteen-bit edges passed. Supplied SystemVerilog was not compiled or HDL-simulated. These are not physical RAM, CDC or timing checks. Independent professional review is pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-067-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "איזה מידע צריך לשמור כדי לדעת מאיזה תא לקרוא, לאיזה תא לכתוב וכמה תאים תפוסים?"
+        },
+        {
+          "id": "PREP-067-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "המצביעים חוזרים אחרי תא 7 לתא 0. מדוע שוויון בין המצביעים לבדו אינו מבדיל בין מלא לריק?"
+        },
+        {
+          "id": "PREP-067-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "הוסיפו מונה תפוסה 0–8. קבעו קודם pop לפי המצב הישן, ואז push שיכול להתקבל במלא רק אם pop התקבל. עדכנו count בתוספת push פחות pop."
+        },
+        {
+          "id": "PREP-067-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "What state tells us where to read, where to write and how many cells are occupied?"
+        },
+        {
+          "id": "PREP-067-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Pointers wrap from cell seven to zero. Why can pointer equality mean either full or empty?"
+        },
+        {
+          "id": "PREP-067-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Add occupancy 0..8. Determine pop from old state, then allow push at full only if pop is accepted. Update count by push minus pop."
+        }
+      ],
+      "assumptions": [
+        "Depth eight, W≥1; one rising-edge clock and synchronous active-high reset.",
+        "No bypass at empty; full permits simultaneous read/write with old-data return.",
+        "Registered dout; rd_valid marks the cycle after an accepted read. No read holds dout.",
+        "Reset clears control/output state, not memory; reset edge required before use.",
+        "Register array provides old-data simultaneous read/write; replacement RAM requires a matching contract."
+      ],
+      "optimality": {
+        "criterion": "Throughput and operation count for this construction.",
+        "result": "Up to one read and one write per edge; O(1) control operations/cycle; 9W+11 logical state bits.",
+        "proof": "No shifting: indexed access, at most two pointer advances and occupancy update.",
+        "scope": "No minimum area/FF/delay claim; physical cost depends on storage mapping."
+      },
+      "verification": "Passed 65,408 one-bit-state transitions, 16,352 reset-priority cases and 100,000 sampled sixteen-bit edges against independent deque. SystemVerilog uncompiled/unsimulated.",
+      "edge_cases": [
+        "Equal pointers mean empty or full; count distinguishes them.",
+        "Empty with both requests accepts only push and no read-valid.",
+        "Full with both requests accepts both and must return old data.",
+        "At count one both requests replace the item without changing occupancy.",
+        "Reset with both requests rejects both and clears read outputs.",
+        "Wrap preserves order; occupancy prevents stale reads without resetting memory."
+      ],
+      "common_mistakes": [
+        "Using a three-bit count that cannot represent eight.",
+        "Pointer equality alone for both full and empty.",
+        "Changing occupancy on rejected requests.",
+        "Silently changing boundary policy.",
+        "Overwriting before reading in a software model.",
+        "Claiming single-clock control safely handles unrelated clocks."
+      ],
+      "interview_answer": "Use eight W-bit cells, two three-bit pointers and four-bit occupancy. Pop only when nonempty; push when not full or with a same-edge valid pop. Read old front, write at tail, advance only accepted-operation pointers and update count by push minus pop. Read output is registered with rd_valid.",
+      "solution_extensions": {
+        "question": "What changes when readers and writers use unrelated clocks?",
+        "direction": "An asynchronous FIFO needs wrap-aware pointers, Gray encoding, cross-domain synchronizers, local flags and CDC analysis. Do not pass a multi-bit binary occupancy count directly between clocks.",
+        "status": "Prepared in content, not connected to the live follow-up queue."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_067_fifo8.py",
+      "solution_code_paths": [
+        "solutions/prep_067_fifo8.py",
+        "solutions/prep_067_fifo8.sv"
+      ],
+      "verification_script_path": "checks/check_prep_067.py",
+      "verification_evidence_path": "checks/prep-067-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-067.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-067-fifo8-he.png",
+          "language": "he",
+          "description": "זיכרון מעגלי, פלט רשום ובקרת FIFO"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-067-fifo8-en.png",
+          "language": "en",
+          "description": "Circular memory, registered output and FIFO control"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-006",
+        "PREP-044"
+      ],
+      "duplicate_check": "Existing queue/data-structure or register questions do not specify eight physical cells, acceptance at full/empty, registered read outputs and one-clock hardware control; distinct hardware construction.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Foundational digital design and explicit behavioral contracts; company associations are reported only by the supplied screenshot."
+      },
+      "markdown_path": "questions/prep-067-eight-cell-synchronous-hardware-fifo.md"
+    },
+    {
+      "id": "PREP-068",
+      "key": "maximum-two-integers-without-comparisons",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "software",
+      "topic": "bit_manipulation",
+      "topics": [
+        "software",
+        "integer_arithmetic",
+        "bit_manipulation",
+        "signed_overflow"
+      ],
+      "source_topic_tags": [
+        "software"
+      ],
+      "added_topic_tags": [
+        "integer_arithmetic",
+        "bit_manipulation",
+        "signed_overflow"
+      ],
+      "source_tags": [
+        "software",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "coding",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted bilingual proposed solution, code, diagrams and independent-oracle checks. Professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-068.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "כתוב פונקציה המקבלת שני משתנים ומחזירה את המקסימום ללא השוואות",
+      "translations": {
+        "he": {
+          "title": "מקסימום של שני שלמים ללא השוואות",
+          "prompt": "כתבו פונקציה המקבלת שני מספרים שלמים a,b ומחזירה את הגדול מביניהם, בלי שימוש באופרטורי השוואה, min/max מובנים או תנאי שבודק מי גדול יותר.\n\nהמקור אינו מגדיר טיפוסים ופעולות מותרות. לכן פתרו שתי גרסאות מפורשות: א. שלמים מדויקים בפייתון כאשר abs מותר. ב. אם גם abs אסור: קלטים עם סימן ברוחב 32 ביטים, ופעולות ביטים ואריתמטיקה ללא סימן מותרות. יש להימנע מגלישה בחשבון עם סימן ומהזזה של מספר שלילי. אין דרישה לזמן ביצוע קבוע מבחינת אבטחת מידע; קוד ללא if אינו מוכיח זאת.",
+          "hint": "לפני חיפוש טריק, בררו אם מותר ערך מוחלט והאם המספרים מוגבלים ברוחב.",
+          "hints": [
+            "לפני חיפוש טריק, בררו אם מותר ערך מוחלט והאם המספרים מוגבלים ברוחב.",
+            "כשערך מוחלט מותר, בדקו מה קורה ל־a+b+abs(a-b) בכל אחד משני סדרי המספרים.",
+            "ברוחב קבוע: אם הסימנים שונים בוחרים את הלא־שלילי. רק כששניהם באותו סימן אפשר ללמוד מסימן ההפרש בלי גלישה מתמטית; בנו מסכה לבחירה."
+          ],
+          "reference_solution": "### קודם מגדירים מה בדיוק אסור\n\nהביטוי ״ללא השוואות״ אינו אוסר אוטומטית abs, ואינו קובע אם חשבון מדויק או גולש. אי אפשר להעביר טריק משפה לשפה בלי לברר זאת. הפתרונות כאן אינם משתמשים באופרטור השוואה, ב־min/max או בתנאי סדר בתוך הפונקציה. בדיקות האורקל רשאיות כמובן להשוות כדי לאמת תוצאות.\n\n### גרסה א: ערך מוחלט ושלמים מדויקים\n\nהזהות היא max(a,b)=(a+b+abs(a-b))//2. אם a הוא הגדול, הערך המוחלט הוא a-b והמונה שווה 2a. אחרת הוא b-a והמונה 2b. כאשר a=b מקבלים אותו ערך. המונה תמיד זוגי, ולכן החלוקה בשלמים מדויקת גם לערכים שליליים. למשל a=-4,b=7 נותנים (-4+7+11)//2=7.\n\n```python\ndef max_without_comparisons(a, b):\n    return (a + b + abs(a - b)) // 2\n```\n\nבפייתון int תומך בחשבון מדויק. עבור מספרים שאורכם עד B ביטים, הפעולות כאן עולות O(B) זמן ו־O(B) ביטי ערכי ביניים, ולא O(1) זמן בלתי תלוי בגודל. הזהות אינה פתרון כללי בטוח לטיפוסים עם סימן ברוחב קבוע: a+b או a-b עלולים לגלוש, וערך מוחלט של המספר השלילי הקיצוני אינו תמיד ניתן לייצוג. היא גם אינה מתחייבת ל־float עם NaN, אינסוף או עיגול; אלה מחוץ לחוזה.\n\n### גרסה ב: בחירה בטוחה בשני שלמים עם סימן בני 32 ביטים\n\nנייצג את הביטים כ־uint32_t. נסמן sa,sb כביטי הסימן. אם הסימנים שונים, a שלילי אומר שבוחרים b; a לא־שלילי אומר שבוחרים a. אם הסימנים שווים, ההפרש המתמטי נמצא בטווח עם סימן, ולכן הביט הגבוה של ההפרש בחשבון ללא סימן נותן את סימנו. אסור להסתמך על סימן הפרש כרוך כאשר הסימנים שונים: INT32_MAX−INT32_MIN נותן 4294967295, שהביט הגבוה שלו 1 למרות שהראשון גדול יותר.\n\nנבנה choose_b בגודל ביט אחד: 1 בוחר b, ו־0 בוחר a. המסכה 0−choose_b היא או 32 אפסים או 32 אחדים בחשבון ללא סימן. שערי הביטים בוחרים את הייצוג המתאים. לבסוף ממירים חזרה לערך עם סימן דרך int64_t, כשהתוצאה מוכחת בתוך הטווח, בלי המרה מחוץ לטווח ובלי גלישה עם סימן.\n\n```cpp\n// C++11 or later; requires exact-width int32_t/uint32_t and int64_t.\n// Materialize modulo-2^32 subtraction before shifting. Integer promotions are\n// safe even when int is wider than 32 bits: no signed overflow, negative signed\n// right shift, or out-of-range unsigned-to-signed conversion is required.\n// This artifact is supplied, but was not compiled in the current environment.\n#include <cstdint>\n\nstd::int32_t max_i32(std::int32_t a, std::int32_t b) {\n    const std::uint32_t ua = static_cast<std::uint32_t>(a);\n    const std::uint32_t ub = static_cast<std::uint32_t>(b);\n    const std::uint32_t sa = ua >> 31;\n    const std::uint32_t sb = ub >> 31;\n    const std::uint32_t different = sa ^ sb;\n    // Store first: integer promotion may otherwise perform subtraction in a\n    // wider signed int. Conversion here restores modulo-2^32 before shifting.\n    const std::uint32_t difference = ua - ub;\n    const std::uint32_t difference_sign = difference >> 31;\n    const std::uint32_t choose_b =\n        (different & sa) | ((different ^ 1u) & difference_sign);\n    const std::uint32_t mask = 0u - choose_b;\n    // XOR avoids applying ~ to a value that might promote to signed int.\n    const std::uint32_t keep_a = mask ^ UINT32_C(0xffffffff);\n    const std::uint32_t bits = (ua & keep_a) | (ub & mask);\n    const std::int64_t signed_value =\n        static_cast<std::int64_t>(bits & UINT32_C(0x7fffffff)) -\n        static_cast<std::int64_t>(bits >> 31) * INT64_C(2147483648);\n    return static_cast<std::int32_t>(signed_value);\n}\n\n```\n\nשימו לב למשתנה difference: שומרים את ההפרש ב־uint32_t לפני ההזזה. במערכת שבה int רחב מ־32 ביטים, קידום טיפוסים עשוי לחשב את ההפרש בטיפוס עם סימן רחב יותר; ההשמה מחזירה אותו למודולו 2^32 לפני בדיקת הביט הגבוה. המסכה המשלימה משתמשת ב־XOR עם 32 אחדים, בלי להחיל NOT על מספר שעשוי להתקדם לטיפוס עם סימן.\n\nקיים גם מודל פייתון מפורש לאריתמטיקה ללא סימן בקובץ המצורף. הוא אינו מחליף קומפילציה של C++. ברוחב קבוע זה מספר קבוע של פעולות ומילות עזר; אין כאן הוכחת מינימום הוראות, הבטחה שלקוד המכונה אין קפיצות, או הבטחת זמן קבוע לצורכי אבטחה.\n\n### אימות והקשר\n\nשתי דרכי פייתון נבדקו על כל 65,536 הזוגות בטווח ‎-128..127 ועל 81 זוגות קצה בני 32 ביטים. מודל רוחב קבוע עבר עוד 10,000 זוגות אקראיים מתועדים; נוסחת abs עברה עוד 500 זוגות בני עד 2048 ביטים. בדיקת AST מאמתת שאין בקוד פייתון השוואות, תנאים או לולאות, ושהקריאה היחידה היא abs בגרסה שמתירה אותו. אורקל הבדיקה הוא max המובנה, מחוץ לפתרון.\n\nקוד C++ צורף אך לא קומפל או הורץ בסביבה הנוכחית. זו וריאציית תוכנה מקושרת ל־PREP-018 העוסק בהשוואה בחומרה; אין להציג את שניהם כאותה משימת מימוש. זו הצעה בסיוע AI הממתינה לביקורת מקצועית."
+        },
+        "en": {
+          "title": "Maximum of two integers without comparisons",
+          "prompt": "Write a function returning the larger of two integers a,b without comparison operators, builtin min/max, or a conditional that tests which value is larger.\n\nThe source leaves types and allowed operations unspecified. Solve two explicit variants: A. Exact Python integers, with abs allowed. B. If abs is forbidden too: signed 32-bit inputs, allowing bit operations and unsigned arithmetic. Avoid signed overflow and shifting a negative signed value. No security constant-time requirement is implied; source without if does not prove one.",
+          "hint": "Before choosing a trick, clarify whether absolute value is allowed and whether integers have fixed width.",
+          "hints": [
+            "Before choosing a trick, clarify whether absolute value is allowed and whether integers have fixed width.",
+            "With absolute value allowed, inspect a+b+abs(a-b) under either ordering of the inputs.",
+            "For fixed width, opposite signs select the nonnegative input. Only same-sign inputs allow the difference sign to determine order safely; build a selection mask."
+          ],
+          "reference_solution": "### Clarify the forbidden operations first\n\n“Without comparisons” does not automatically forbid abs or define overflow behavior. A language-specific trick is not portable without those choices. These functions contain no comparison operator, builtin min/max or conditional testing order. The independent checker may compare results.\n\n### A. Exact integers with absolute value\n\nUse max(a,b)=(a+b+abs(a-b))//2. When a is larger, the absolute value is a-b and the numerator becomes 2a; otherwise it becomes 2b. Equal inputs give their common value. The numerator is always even, so integer division is exact even with negative inputs. For a=-4,b=7, (-4+7+11)//2 gives seven.\n\n```python\ndef max_without_comparisons(a, b):\n    return (a + b + abs(a - b)) // 2\n```\n\nPython int arithmetic is exact. For inputs of up to B bits, these operations take O(B) time and O(B) intermediate-value bits, not size-independent O(1) time. The formula is not generally safe for fixed-width signed types: a+b or a-b may overflow, and the most-negative absolute value may be unrepresentable. Floating-point NaNs, infinities and rounding are outside the contract.\n\n### B. Overflow-safe signed 32-bit selection\n\nWork on uint32_t bit representations and extract signs sa,sb. For opposite signs, choose b exactly when a is negative. For matching signs, the mathematical difference fits the signed range, so the high bit of unsigned modular subtraction indicates its sign correctly. Do not blindly use a wrapped difference's sign for opposite-sign inputs: INT32_MAX−INT32_MIN is 4294967295, with high bit one despite a being larger.\n\nBuild a one-bit choose_b: one selects b, zero selects a. Unsigned 0−choose_b creates either all-zero or all-one bits. Bitwise selection chooses an input representation. Convert it back through int64_t, with a result proven in range, avoiding out-of-range conversion and signed overflow.\n\n```cpp\n// C++11 or later; requires exact-width int32_t/uint32_t and int64_t.\n// Materialize modulo-2^32 subtraction before shifting. Integer promotions are\n// safe even when int is wider than 32 bits: no signed overflow, negative signed\n// right shift, or out-of-range unsigned-to-signed conversion is required.\n// This artifact is supplied, but was not compiled in the current environment.\n#include <cstdint>\n\nstd::int32_t max_i32(std::int32_t a, std::int32_t b) {\n    const std::uint32_t ua = static_cast<std::uint32_t>(a);\n    const std::uint32_t ub = static_cast<std::uint32_t>(b);\n    const std::uint32_t sa = ua >> 31;\n    const std::uint32_t sb = ub >> 31;\n    const std::uint32_t different = sa ^ sb;\n    // Store first: integer promotion may otherwise perform subtraction in a\n    // wider signed int. Conversion here restores modulo-2^32 before shifting.\n    const std::uint32_t difference = ua - ub;\n    const std::uint32_t difference_sign = difference >> 31;\n    const std::uint32_t choose_b =\n        (different & sa) | ((different ^ 1u) & difference_sign);\n    const std::uint32_t mask = 0u - choose_b;\n    // XOR avoids applying ~ to a value that might promote to signed int.\n    const std::uint32_t keep_a = mask ^ UINT32_C(0xffffffff);\n    const std::uint32_t bits = (ua & keep_a) | (ub & mask);\n    const std::int64_t signed_value =\n        static_cast<std::int64_t>(bits & UINT32_C(0x7fffffff)) -\n        static_cast<std::int64_t>(bits >> 31) * INT64_C(2147483648);\n    return static_cast<std::int32_t>(signed_value);\n}\n\n```\n\nNotice the intermediate difference: store the subtraction into uint32_t before shifting. Where int is wider than 32 bits, integer promotion can compute the subtraction in a wider signed type; the assignment restores modulo 2^32 before extracting its high bit. The complementary mask uses XOR with 32 one-bits rather than applying NOT to a value that might promote to signed int.\n\nThe attached Python model explicitly masks unsigned operations; it is not a substitute for compiling C++. At fixed width this uses a constant number of operations and words. It proves neither minimum instruction count, branch-free machine code nor security constant-time execution.\n\n### Verification and relationship\n\nBoth Python methods matched the independent builtin-max oracle for all 65,536 pairs in -128..127 and 81 signed32 boundary pairs. The fixed-width model passed 10,000 seeded signed32 pairs; the abs formula also passed 500 pairs of up to 2048 bits. An AST check confirms no Python comparisons, conditionals or loops, and only one function call: abs in the variant explicitly permitting it. The oracle is outside the proposed functions.\n\nC++ source is supplied but was not compiled or run in this environment. This software exercise is linked to PREP-018, a hardware-comparison exercise with different implementation constraints. AI-assisted proposed solution; independent professional review pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-068-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "לפני חיפוש טריק, בררו אם מותר ערך מוחלט והאם המספרים מוגבלים ברוחב."
+        },
+        {
+          "id": "PREP-068-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "כשערך מוחלט מותר, בדקו מה קורה ל־a+b+abs(a-b) בכל אחד משני סדרי המספרים."
+        },
+        {
+          "id": "PREP-068-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "ברוחב קבוע: אם הסימנים שונים בוחרים את הלא־שלילי. רק כששניהם באותו סימן אפשר ללמוד מסימן ההפרש בלי גלישה מתמטית; בנו מסכה לבחירה."
+        },
+        {
+          "id": "PREP-068-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Before choosing a trick, clarify whether absolute value is allowed and whether integers have fixed width."
+        },
+        {
+          "id": "PREP-068-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "With absolute value allowed, inspect a+b+abs(a-b) under either ordering of the inputs."
+        },
+        {
+          "id": "PREP-068-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "For fixed width, opposite signs select the nonnegative input. Only same-sign inputs allow the difference sign to determine order safely; build a selection mask."
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_068_max_without_comparisons.py",
+      "solution_code_paths": [
+        "solutions/prep_068_max_without_comparisons.py",
+        "solutions/prep_068_max_without_comparisons.cpp"
+      ],
+      "verification_script_path": "checks/check_prep_068.py",
+      "verification_evidence_path": "checks/prep-068-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-068.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-068-exact-integer-identity-he.png",
+          "language": "he",
+          "description": "תרשים הסבר לפתרון המוצע"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-068-exact-integer-identity-en.png",
+          "language": "en",
+          "description": "Proposed-solution explanation diagram"
+        }
+      ],
+      "markdown_path": "questions/prep-068-maximum-two-integers-without-comparisons.md",
+      "assumptions": [
+        "Variant A uses exact Python int inputs, permits abs, forbids comparisons and builtin min/max.",
+        "Variant B has valid int32_t inputs and available uint32_t/int64_t; abs forbidden, unsigned arithmetic and bit operations allowed.",
+        "No ordering conditional inside the function; no security constant-time or branch-free-machine-code guarantee.",
+        "Floats, NaN, infinity and custom comparison types are excluded."
+      ],
+      "source_ambiguities": {
+        "operations": "Source does not say whether abs is allowed; both variants declare the choice explicitly.",
+        "types": "Source does not specify width/overflow. Exact integers and signed32 inputs are treated separately."
+      },
+      "optimality": {
+        "criterion": "Costs of two correct constructions under their integer models.",
+        "result": "Up to B-bit integers: O(B) time/intermediate bits; fixed32: O(1) word operations/storage.",
+        "proof": "A fixed number of additions, subtraction, absolute value and division by two touches up to B bits; the mask construction has a fixed word-operation count.",
+        "scope": "No minimum-operation, branch-free machine-code or security constant-time claim; C++ not compiled."
+      },
+      "verification": "Passed 65,536 small pairs in both Python methods, 81 signed32 boundary pairs, 10,000 additional fixed-width random pairs and 500 large exact-integer pairs. AST excludes comparisons, conditionals and loops inside the functions; builtin max appears only in the checker. C++ was not compiled/run; professional review pending.",
+      "edge_cases": [
+        "Equal inputs return their shared value.",
+        "Of two negative inputs, the value nearer zero is larger.",
+        "INT32_MIN versus INT32_MAX requires opposite-sign handling before interpreting difference sign.",
+        "abs(INT32_MIN) or a+b may overflow fixed-width types.",
+        "Huge Python integers work, but arithmetic is not constant bit cost."
+      ],
+      "common_mistakes": [
+        "Hiding the forbidden comparison in max or a conditional.",
+        "Using the sign of a-b without overflow/opposite-sign handling.",
+        "Using the absolute-value formula when abs is forbidden.",
+        "Shifting a negative signed value or subtracting signed inputs without declaring language/width semantics.",
+        "Claiming that no if guarantees security constant-time execution."
+      ],
+      "interview_answer": "Clarify types and whether abs is allowed. Exact integers permit (a+b+abs(a-b))//2 because the numerator is twice the maximum. Fixed-width overflow needs sign handling: choose the nonnegative input for opposite signs; for equal signs use difference sign and unsigned masks. Large Python integers do not have constant bit cost.",
+      "solution_extensions": {
+        "question": "Does source code without conditionals prevent timing leakage?",
+        "direction": "Not necessarily. Compiler output, abs implementation, integer size and memory behavior matter. A threat model, dedicated constant-time implementation and machine-code verification are additional security requirements, not consequences of forbidding comparisons.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      },
+      "technical_references": [
+        {
+          "title": "Python documentation — abs",
+          "url": "https://docs.python.org/3/library/functions.html#abs",
+          "use": "Defines the operation allowed in variant A; not the identity or complexity proof."
+        },
+        {
+          "title": "C++ draft — integral conversions",
+          "url": "https://eel.is/c++draft/conv.integral",
+          "use": "Integral-representation conversions modulo destination width."
+        },
+        {
+          "title": "C++ draft — shifts",
+          "url": "https://eel.is/c++draft/expr.shift",
+          "use": "Shift-width rules; supplied selection uses unsigned values and valid counts."
+        }
+      ],
+      "relationship_note": "Linked software variation of PREP-018: this asks for an operation/type-constrained function rather than a gate-level numeric comparator. Retained as a separate exercise.",
+      "related_question_ids": [
+        "PREP-018"
+      ],
+      "duplicate_check": "Compared existing comparator/maximum preparation records and example/verification catalogs. PREP-018 is a hardware relation with distinct constraints; no earlier identical software no-comparison contract found. Linked explicitly rather than replacing IDs.",
+      "interview_relevance": {
+        "priority": "medium",
+        "basis": "Operation constraints, exact versus fixed-width arithmetic and overflow reasoning; Intel attribution is source-reported only."
+      }
+    },
+    {
+      "id": "PREP-069",
+      "key": "nor-branch-stuck-at-fault-observability",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "hardware",
+      "topic": "fault_detection",
+      "topics": [
+        "hardware",
+        "fault_detection",
+        "boolean_algebra",
+        "truth_tables"
+      ],
+      "source_topic_tags": [
+        "hardware"
+      ],
+      "added_topic_tags": [
+        "fault_detection",
+        "boolean_algebra",
+        "truth_tables"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "amazon",
+        "intel",
+        "apple"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Amazon",
+        "Intel",
+        "Apple"
+      ],
+      "source_company_badge": "אינטל",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "circuit_design",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted bilingual proposed solution, authored diagrams and Python model checks. Independent professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-069.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "נתון המעגל שבתמונה אשר בנקודה המסומנת X בכחול תיתכן תקלה. התקלות האפשריות הן שהנקודה תהיה מקוצרת ל־0 לוגי (stuck@0) או שהנקודה תהיה מקוצרת ל־1 לוגי (stuck@1). אילו קלטים נכניס למעגל בכדי לבדוק מה התקלה שקיימת בנקודה?",
+      "translations": {
+        "he": {
+          "title": "תקלה תקועה בענף NOR — מה אפשר לזהות?",
+          "prompt": "במעגל הנתון A מגיע ישירות לשער AND בעל שלוש כניסות. B וענף של C נכנסים ל־NOR שמוצאו מגיע לכניסה השנייה של ה־AND. ענף נפרד של C עובר במהפך, ומוצא המהפך מגיע לכניסה השלישית של ה־AND. נקודת X נמצאת רק על ענף C שנכנס ל־NOR, אחרי הפיצול; ענף המהפך נשאר תקין.\n\nידוע שב־X קיימת אחת משתי תקלות: stuck-at-0 או stuck-at-1. אפשר לשלוט ב־A,B,C ולמדוד רק את Y במוצא. איזה וקטור בדיקה יאפשר להבחין בין שתי התקלות? הרחבה להבהרת מגבלת האבחון: אם גם מעגל תקין הוא אפשרות, האם ניתן להפריד בין כל שלושת המצבים? עבדו במודל בינארי צירופי ללא תזמון או תקלות נוספות.",
+          "hint": "כדי שהבדל בנקודה פנימית יגיע ליציאה, צריך גם ליצור את ההבדל וגם לא לחסום אותו בשער הבא.",
+          "hints": [
+            "כדי שהבדל בנקודה פנימית יגיע ליציאה, צריך גם ליצור את ההבדל וגם לא לחסום אותו בשער הבא.",
+            "לצורך הפצת שינוי דרך AND, שאר כניסותיו צריכות להיות 1. מה זה מחייב לגבי A ו־C?",
+            "אם C=0 ו־B=0, מוצא ה־NOR התקין הוא 1. בדקו מה קורה כאשר X=1. נסו גם ליצור הבדל לתקלה X=0 באמצעות C=1, ובדקו את ענף המהפך."
+          ],
+          "reference_solution": "### כותבים קודם את מיקום התקלה במדויק\n\nנסמן x כערך שבאמת נכנס לכניסה התחתונה של ה־NOR. תקין: x=C; תקלה תקועה באפס: x=0; תקלה תקועה באחת: x=1. ענף המהפך עדיין מקבל את C המקורי. לכן:\n\n```text\nY = A AND NOT(B OR x) AND NOT C\nY(clean) = A AND NOT B AND NOT C\nY(sa0)   = A AND NOT B AND NOT C\nY(sa1)   = 0\n```\n\nשימו לב לתוצאה: תקלה תקועה באפס אינה משנה את פונקציית המוצא כלל. זו אינה טעות בחישוב; במעגל קיימת יתירות מבחינת התקלה המסוימת הזאת.\n\n### מזהים stuck-at-1\n\nנרצה שבמעגל תקין x יהיה 0 כדי שתהיה הבחנה מ־x התקוע ב־1. לכן בוחרים C=0. כדי שה־NOR יגיב ל־x בוחרים B=0. כדי ש־AND לא יחסום בוחרים A=1; המהפך ממילא נותן 1 כי C=0. נקבל וקטור בדיקה יחיד:\n\n```text\nA=1, B=0, C=0\nY(clean)=1, Y(sa0)=1, Y(sa1)=0\n```\n\nאם יודעים בוודאות שיש אחת משתי התקלות, Y=0 מזהה sa1 ו־Y=1 מזהה sa0 בתהליך אלימינציה. אם גם מצב תקין אפשרי, Y=1 אינו מוכיח שיש תקלה באפס: הוא תואם גם מעגל תקין. זה ההבדל בין זיהוי תקלה לבין אבחון תחת הנחה שקיימת תקלה.\n\n### מדוע אי אפשר לזהות stuck-at-0 מול תקין?\n\nכדי שהערך התקוע x=0 יהיה שונה מהערך התקין צריך C=1. אבל אז ענף המהפך נותן NOT C=0, ו־AND מוציא 0 ללא תלות ב־NOR. אם C=0, x=0 זהה לערך התקין מלכתחילה. אלה כל האפשרויות ל־C, ולכן אין אף וקטור ב־A,B,C שמבדיל sa0 מתקין. מספר בלתי מוגבל של בדיקות באותה נקודת מדידה לא יעזור.\n\n### כל טבלת האמת\n\n| A | B | C | Y תקין | Y תקוע באפס | Y תקוע באחת |\n| --- | --- | --- | --- | --- | --- |\n| 0 | 0 | 0 | 0 | 0 | 0 |\n| 0 | 0 | 1 | 0 | 0 | 0 |\n| 0 | 1 | 0 | 0 | 0 | 0 |\n| 0 | 1 | 1 | 0 | 0 | 0 |\n| 1 | 0 | 0 | 1 | 1 | 0 |\n| 1 | 0 | 1 | 0 | 0 | 0 |\n| 1 | 1 | 0 | 0 | 0 | 0 |\n| 1 | 1 | 1 | 0 | 0 | 0 |\n\nהטבלה מוכיחה גם ש־100 הוא הווקטור היחיד שמזהה sa1 מול תקין במודל הזה. בדיקה אחת מספיקה להפריד בין שני סוגי התקלה כאשר ידוע שאחת קיימת; אפס בדיקות לא יכולות להפריד ביניהם. אין כאן פתרון לזיהוי כל שלושת המצבים, משום שתקין ו־sa0 שקולים ביציאה.\n\nהשרטוט שבשאלה הוא שרטוט נקי של הנתון בלבד. השרטוט בפתרון מוסיף משוואה ותוצאת בדיקה, וה־X נמצא אחרי נקודת הפיצול בענף NOR. אילו התקלה הייתה על הגזע לפני הפיצול, גם המהפך היה מקבל את הערך התקוע והבעיה הייתה אחרת. האימות עבר על כל 8 קלטי A,B,C ושלוש גרסאות המעגל, 24 חישובים. זו בדיקה בינארית מלאה; לא בוצעה הזרקת תקלות לחומרה או בדיקת תזמון. ביקורת מקצועית ממתינה."
+        },
+        "en": {
+          "title": "Stuck-at fault on a NOR branch — what is observable?",
+          "prompt": "A feeds a three-input AND directly. B and one branch of C feed a NOR whose output is the second AND input. A separate C branch passes through an inverter into the third AND input. X lies only on the C-to-NOR branch after fanout; the inverter branch remains healthy.\n\nExactly one fault is known to exist at X: stuck-at-0 or stuck-at-1. You may control A,B,C and observe Y only. Which test vector distinguishes the two faults? Diagnostic-limit extension: if a healthy circuit is also possible, can all three states be distinguished? Use an ideal combinational binary model with no delays or other faults.",
+          "hint": "An internal fault must first create a difference and then propagate it through the remaining gates.",
+          "hints": [
+            "An internal fault must first create a difference and then propagate it through the remaining gates.",
+            "To propagate through AND, its other inputs must be one. What does that require for A and C?",
+            "With C=0 and B=0 the healthy NOR outputs one. Check X=1. To activate X stuck at zero, try C=1 and examine the inverter branch."
+          ],
+          "reference_solution": "### Model the fault location exactly\n\nLet x be the actual NOR branch input. Healthy x=C; stuck-at-0 x=0; stuck-at-1 x=1. The inverter still receives original C. Therefore:\n\n```text\nY = A AND NOT(B OR x) AND NOT C\nY(clean) = A AND NOT B AND NOT C\nY(sa0)   = A AND NOT B AND NOT C\nY(sa1)   = 0\n```\n\nStuck-at-0 does not alter the output function. This is real redundancy for this fault, not a calculation error.\n\n### Detect stuck-at-1\n\nTo differ from x stuck at one, choose healthy x=0, hence C=0. Set B=0 so the NOR responds to x. Set A=1 so AND does not block propagation; the inverter also outputs one because C=0. The test is:\n\n```text\nA=1, B=0, C=0\nY(clean)=1, Y(sa0)=1, Y(sa1)=0\n```\n\nIf exactly one of the two faults is known to exist, Y=0 identifies sa1 and Y=1 identifies sa0 by elimination. If healthy operation is possible, Y=1 cannot prove a stuck-at-zero fault because a healthy circuit gives the same result. This separates detection from diagnosis under a prior fault guarantee.\n\n### Why no test distinguishes sa0 from healthy\n\nActivating a difference between x stuck at zero and healthy x requires C=1. Then the healthy inverter produces NOT C=0, forcing the final AND to zero regardless of the NOR result. At C=0, x=0 already equals the healthy value. These exhaust C, so no A,B,C vector distinguishes sa0 from healthy. Unlimited repetitions at the same output cannot help.\n\n### Complete truth table\n\n| A | B | C | Healthy Y | Stuck-at-0 Y | Stuck-at-1 Y |\n| --- | --- | --- | --- | --- | --- |\n| 0 | 0 | 0 | 0 | 0 | 0 |\n| 0 | 0 | 1 | 0 | 0 | 0 |\n| 0 | 1 | 0 | 0 | 0 | 0 |\n| 0 | 1 | 1 | 0 | 0 | 0 |\n| 1 | 0 | 0 | 1 | 1 | 0 |\n| 1 | 0 | 1 | 0 | 0 | 0 |\n| 1 | 1 | 0 | 0 | 0 | 0 |\n| 1 | 1 | 1 | 0 | 0 | 0 |\n\nThe table also proves that 100 is the only vector detecting sa1 versus healthy in this model. One test suffices to distinguish the two fault types if exactly one is guaranteed present; zero observations cannot separate them. Distinguishing all three states is impossible because healthy and sa0 are output-equivalent.\n\nThe question uses a clean data-only schematic; the solution schematic adds equations and a test result. X remains after fanout on the NOR branch. A stem fault before fanout would also alter the inverter and create a different problem. All eight input combinations and three circuit versions were checked, totaling twenty-four evaluations. This is exhaustive binary-model verification, not hardware fault injection or timing testing. Independent professional review is pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-069-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "כדי שהבדל בנקודה פנימית יגיע ליציאה, צריך גם ליצור את ההבדל וגם לא לחסום אותו בשער הבא."
+        },
+        {
+          "id": "PREP-069-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "לצורך הפצת שינוי דרך AND, שאר כניסותיו צריכות להיות 1. מה זה מחייב לגבי A ו־C?"
+        },
+        {
+          "id": "PREP-069-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "אם C=0 ו־B=0, מוצא ה־NOR התקין הוא 1. בדקו מה קורה כאשר X=1. נסו גם ליצור הבדל לתקלה X=0 באמצעות C=1, ובדקו את ענף המהפך."
+        },
+        {
+          "id": "PREP-069-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "An internal fault must first create a difference and then propagate it through the remaining gates."
+        },
+        {
+          "id": "PREP-069-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "To propagate through AND, its other inputs must be one. What does that require for A and C?"
+        },
+        {
+          "id": "PREP-069-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "With C=0 and B=0 the healthy NOR outputs one. Check X=1. To activate X stuck at zero, try C=1 and examine the inverter branch."
+        }
+      ],
+      "assumptions": [
+        "Single C-to-NOR branch fault after fanout; inverter branch healthy.",
+        "Control A,B,C, observe Y only; ideal binary combinational logic.",
+        "Guaranteed-fault diagnosis is distinguished from a possible healthy circuit."
+      ],
+      "optimality": {
+        "criterion": "Tests separating the two guaranteed fault hypotheses.",
+        "result": "One test, 100, suffices; no test separates healthy from sa0.",
+        "proof": "100 gives one for sa0 and zero for sa1. Healthy and sa0 functions are identical over the full domain.",
+        "scope": "Without the guaranteed-fault assumption, three-way diagnosis from Y alone is impossible."
+      },
+      "verification": "All eight inputs across three circuit versions passed, twenty-four evaluations. 100 is the only sa1-detecting vector; healthy and sa0 agree everywhere, matching the algebraic proof. No physical hardware checks.",
+      "edge_cases": [
+        "A=0 or B=1 blocks useful propagation.",
+        "C=1 activates sa0 but also blocks the AND.",
+        "Y=1 at 100 cannot distinguish healthy from sa0.",
+        "A C-stem fault before fanout is a different problem."
+      ],
+      "common_mistakes": [
+        "Changing the inverter input when injecting only a branch fault.",
+        "Activating a fault without checking output propagation.",
+        "Promising sa0 detection despite functional redundancy.",
+        "Confusing guaranteed-fault diagnosis with detecting whether a fault exists."
+      ],
+      "interview_answer": "Write Y=A·NOT(B OR x)·NOT C. At 100, healthy and sa0 give one, while sa1 gives zero. sa0 cannot be detected versus healthy: activating it requires C=1, whose inverter output blocks AND. If one of the two faults is guaranteed, that one test distinguishes them.",
+      "solution_extensions": {
+        "question": "How could sa0 become observable too?",
+        "direction": "Add an observation point at the NOR output. With C=1,B=0 it is zero when healthy and one under sa0, without inverter-path masking. This changes test access, not the original circuit answer.",
+        "status": "Prepared in content, not connected to the live follow-up queue."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_069_branch_fault.py",
+      "solution_code_paths": [
+        "solutions/prep_069_branch_fault.py"
+      ],
+      "verification_script_path": "checks/check_prep_069.py",
+      "verification_evidence_path": "checks/prep-069-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-069.png"
+        },
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-069-prompt-he.png",
+          "language": "he",
+          "description": "המעגל הנתון ומיקום תקלת הענף"
+        },
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-069-prompt-en.png",
+          "language": "en",
+          "description": "Given circuit and branch fault location"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-069-solution-he.png",
+          "language": "he",
+          "description": "הפצת התקלה והבדיקה המבחינה"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-069-solution-en.png",
+          "language": "en",
+          "description": "Fault propagation and distinguishing test"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-069-truth-table-he.png",
+          "language": "he",
+          "description": "טבלת אמת מלאה לשלוש גרסאות המעגל"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-069-truth-table-en.png",
+          "language": "en",
+          "description": "Full truth table for three circuit versions"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-013",
+        "PREP-030"
+      ],
+      "duplicate_check": "No existing catalog exercise has this branch-specific NOR/inverter reconvergence and redundant sa0 fault; related gate/debugging questions are retained separately.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Foundational digital design and explicit behavioral contracts; company associations are reported only by the supplied screenshot."
+      },
+      "markdown_path": "questions/prep-069-nor-branch-stuck-at-fault-observability.md"
+    },
+    {
+      "id": "PREP-070",
+      "key": "and-gate-with-one-two-to-one-mux",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "hardware",
+      "topic": "combinational_blocks",
+      "topics": [
+        "hardware",
+        "combinational_blocks",
+        "multiplexers",
+        "boolean_algebra"
+      ],
+      "source_topic_tags": [
+        "hardware"
+      ],
+      "added_topic_tags": [
+        "combinational_blocks",
+        "multiplexers",
+        "boolean_algebra"
+      ],
+      "source_tags": [
+        "apple",
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "Apple",
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "circuit_design",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted bilingual proposed solution, authored diagrams and Python model checks. Independent professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-070.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "ממש שער AND מ MUX2:1",
+      "translations": {
+        "he": {
+          "title": "מימוש שער AND באמצעות MUX 2:1 יחיד",
+          "prompt": "ממשו Y=A AND B בעזרת מרבב MUX 2:1 יחיד. ציינו את חיבורי D0,D1,S ושרטטו את המעגל.\n\nהבהרות: הכניסות בינאריות, המרבב בוחר D0 כאשר S=0 ו־D1 כאשר S=1. מותר לחבר קבוע לוגי 0 וחוטים, אך אין להשתמש בשער לוגי נוסף. זהו מעגל צירופי ללא שעון.",
+          "hint": "בחרו אחת הכניסות כבוררת ובדקו מה הפלט צריך להיות בכל אחד משני ערכיה.",
+          "hints": [
+            "בחרו אחת הכניסות כבוררת ובדקו מה הפלט צריך להיות בכל אחד משני ערכיה.",
+            "כאשר A=0 הפלט תמיד 0; כאשר A=1 הפלט שווה ל־B.",
+            "חברו A לבחירה S. קבעו איזה אות צריך להופיע ב־D0 ואיזה ב־D1 לפי שתי השורות האלה."
+          ],
+          "reference_solution": "### חושבים לפי הבחירה של המרבב\n\nמרבב אינו דורש ששתי כניסות הנתונים יהיו קבועות. אפשר לחבר אחת מהן לאות B. נבחר את A כבורר:\n\n```text\nS  = A\nD0 = 0\nD1 = B\nY  = MUX(S,D0,D1)\n```\n\nבשרטוט החץ של A נכנס ל־S בתחתית. הקבוע 0 נכנס ל־D0 העליון, ו־B נכנס ל־D1 התחתון. המספרים 0 ו־1 הם מספרי פורטי הנתונים הנבחרים לפי S; אין הכוונה לחבר קבוע 1 ל־D1.\n\n### למה החיבור הזה עובד?\n\nכאשר A=0 המרבב בוחר D0=0, בדיוק כמו AND עם אחת הכניסות אפס. כאשר A=1 הוא בוחר D1=B, בדיוק כמו AND עם כניסה אחת 1. בנוסחת המרבב:\n\n```text\nY = (NOT S AND D0) OR (S AND D1)\n  = (NOT A AND 0) OR (A AND B)\n  = A AND B\n```\n\n| A | B | פורט נבחר | Y |\n| --- | --- | --- | --- |\n| 0 | 0 | D0 | 0 |\n| 0 | 1 | D0 | 0 |\n| 1 | 0 | D1 | 0 |\n| 1 | 1 | D1 | 1 |\n\nגם החיבור הסימטרי S=B,D0=0,D1=A תקף. אין צורך במהפך, דלגלג או שעון. מספר הרכיבים הוא MUX אחד וקבוע אפס. תחת מודל שמותר בו רק חוטים וקבועים בלי שום רכיב פונקציונלי, אי אפשר להפיק AND באמצעות אפס מרבבים: חוט יחיד נותן A,B או קבוע, ואף אחד מהם אינו פונקציית AND לכל הקלטים. לכן אחד הוא המינימום במודל הזה; אין בכך הוכחה לשטח מינימלי בספריית תאים אחרת.\n\nנבדקו כל 8 שורות פונקציית המרבב, 4 שורות AND ו־4 שורות החיבור הסימטרי. אלה בדיקות לוגיות מלאות של המודל, ללא סינתזה או מדידת השהיה. הפתרון מוצע וממתין לביקורת מקצועית."
+        },
+        "en": {
+          "title": "Implement AND with one 2:1 MUX",
+          "prompt": "Implement Y=A AND B with one 2:1 multiplexer. Specify D0,D1,S and draw the circuit.\n\nClarifications: binary signals; the MUX chooses D0 for S=0 and D1 for S=1. Constant logic zero and wires are allowed, but no additional logic gate. This is combinational, with no clock.",
+          "hint": "Choose one input as select and ask what the output must be for each select value.",
+          "hints": [
+            "Choose one input as select and ask what the output must be for each select value.",
+            "When A=0 the output is always zero; when A=1 it equals B.",
+            "Wire A to S. Choose D0 and D1 from those two cases."
+          ],
+          "reference_solution": "### Reason by the select cases\n\nMUX data inputs need not both be constants: one can carry B. Choose A as select:\n\n```text\nS  = A\nD0 = 0\nD1 = B\nY  = MUX(S,D0,D1)\n```\n\nIn the diagram A enters the bottom S port. Constant zero enters upper D0 and B enters lower D1. The digits in D0/D1 identify selected data ports; D1 is not tied to constant one.\n\n### Why it works\n\nAt A=0 the MUX selects constant zero, matching AND with one zero input. At A=1 it selects B, matching AND with one input held high. Algebraically:\n\n```text\nY = (NOT S AND D0) OR (S AND D1)\n  = (NOT A AND 0) OR (A AND B)\n  = A AND B\n```\n\n| A | B | Selected port | Y |\n| --- | --- | --- | --- |\n| 0 | 0 | D0 | 0 |\n| 0 | 1 | D0 | 0 |\n| 1 | 0 | D1 | 0 |\n| 1 | 1 | D1 | 1 |\n\nThe symmetric S=B,D0=0,D1=A also works. No inverter, storage or clock is needed: one MUX and a zero constant suffice. With only wires and constants and no functional component, zero MUXes can output only A,B or a constant, none equal to AND on every input. Therefore one is minimal in this restricted component model, not a minimum physical-area result for other cell libraries.\n\nChecks covered all eight MUX rows, four AND rows and four symmetric-wiring rows. These are exhaustive logical-model checks, not synthesis or propagation-delay measurements. Independent professional review is pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-070-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "בחרו אחת הכניסות כבוררת ובדקו מה הפלט צריך להיות בכל אחד משני ערכיה."
+        },
+        {
+          "id": "PREP-070-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "כאשר A=0 הפלט תמיד 0; כאשר A=1 הפלט שווה ל־B."
+        },
+        {
+          "id": "PREP-070-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "חברו A לבחירה S. קבעו איזה אות צריך להופיע ב־D0 ואיזה ב־D1 לפי שתי השורות האלה."
+        },
+        {
+          "id": "PREP-070-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Choose one input as select and ask what the output must be for each select value."
+        },
+        {
+          "id": "PREP-070-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "When A=0 the output is always zero; when A=1 it equals B."
+        },
+        {
+          "id": "PREP-070-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Wire A to S. Choose D0 and D1 from those two cases."
+        }
+      ],
+      "assumptions": [
+        "Ideal MUX chooses D0 at S=0 and D1 at S=1.",
+        "Zero constant and wires allowed; no additional gate or clock."
+      ],
+      "optimality": {
+        "criterion": "MUX count with only wires and constants otherwise.",
+        "result": "One MUX is necessary and sufficient.",
+        "proof": "With no functional component only a primary input or constant is possible, not AND; construction uses one.",
+        "scope": "No minimum physical area/delay claim for a general cell library."
+      },
+      "verification": "Passed all eight MUX rows, four AND rows and four symmetric-implementation rows in Python. No synthesis or hardware tests.",
+      "edge_cases": [
+        "A=0 forces zero independently of B.",
+        "A=1 forwards B, including B=0.",
+        "A library with reversed select convention needs corresponding port mapping.",
+        "Swapping D0 and D1 without changing selection gives a different function."
+      ],
+      "common_mistakes": [
+        "Tying D1 high instead of B, which outputs only A.",
+        "Confusing select and data ports.",
+        "Adding an AND gate and bypassing the constraint.",
+        "Omitting port numbers so select behavior remains ambiguous."
+      ],
+      "interview_answer": "Use S=A,D0=0,D1=B. Select zero returns zero; select one returns B, exactly A AND B. One MUX suffices with no clock or extra gate.",
+      "solution_extensions": {
+        "question": "How would you implement OR with one such MUX?",
+        "direction": "Use S=A,D0=B,D1=1: when A=0 return B; when A=1 return one. This follow-up explicitly permits a high constant.",
+        "status": "Prepared in content, not connected to the live follow-up queue."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_070_and_mux.py",
+      "solution_code_paths": [
+        "solutions/prep_070_and_mux.py"
+      ],
+      "verification_script_path": "checks/check_prep_070.py",
+      "verification_evidence_path": "checks/prep-070-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-070.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-070-and-mux-he.png",
+          "language": "he",
+          "description": "מרבב יחיד עם שמות פורטים וכיוון אותות"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-070-and-mux-en.png",
+          "language": "en",
+          "description": "One MUX with numbered ports and signal arrows"
+        }
+      ],
+      "related_question_ids": [
+        "PREP-011",
+        "PREP-031"
+      ],
+      "duplicate_check": "Existing MUX implementations cover other Boolean/arithmetic functions; this is the elementary one-MUX AND construction, retained as a linked constraint-specific question.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Foundational digital design and explicit behavioral contracts; company associations are reported only by the supplied screenshot."
+      },
+      "markdown_path": "questions/prep-070-and-gate-with-one-two-to-one-mux.md"
+    },
+    {
+      "id": "PREP-071",
+      "key": "integer-midpoint-pigeonhole",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "logic",
+      "topic": "pigeonhole_principle",
+      "topics": [
+        "logic",
+        "pigeonhole_principle",
+        "parity",
+        "integer_lattice"
+      ],
+      "source_topic_tags": [
+        "hardware",
+        "software",
+        "verification"
+      ],
+      "added_topic_tags": [
+        "parity",
+        "integer_lattice",
+        "pigeonhole_principle"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel",
+        "software",
+        "verification"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "logic_puzzle",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied source; AI-assisted bilingual proposed solution, clean diagrams and independent exact-arithmetic checks. Professional, parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-071.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "קבוצת אמצע מוגדרת כך: שני מספרים חיוביים ושלמים אשר קיים עבורם מספר שלם שהוא האמצע שלהם. לדוגמא (1,3) זו קבוצת אמצע, (2,10) זו קבוצת אמצע.\nקיימת לך מכונה המוציאה באופן רנדומלי מספרים שלמים חיוביים השונים זה מזה. בכל איטרציה יוצא מספר בודד. מהו מספר האיטרציות המינימאלי הדרוש על מנת לקבל בוודאות שני מספרים המרכיבים קבוצת אמצע.\nכעת המכונה מוציאה וקטור בשני מימדים, תוך כמה איטרציות נקבל בוודאות שני וקטורים אשר יגדירו קבוצת אמצע.\nכעת המכונה מוציאה וקטור ב־b מימדים תוך כמה איטרציות נקבל בוודאות שני וקטורים אשר יגדירו קבוצת אמצע.",
+      "translations": {
+        "he": {
+          "title": "זוג בעל אמצע שלם — מספרים ווקטורים",
+          "prompt": "מכונה מוציאה בכל איטרציה מספר שלם חיובי חדש השונה מקודמיו. זוג הוא קבוצת אמצע אם הממוצע שלו שלם, למשל (1,3) ו־(2,10). מהו מספר האיטרציות המינימלי שמבטיח זוג לכל סדר תוצאות? הוכיחו גם שמספר קטן יותר אינו מבטיח זאת.\n\nהכלילו לשני ממדים ואחר כך ל־b ממדים: כל פלט הוא וקטור חדש של קואורדינטות שלמות חיוביות, ומחפשים זוג וקטורים שונים שהממוצע שלהם שלם בכל קואורדינטה. b שלם חיובי. הווקטורים שונים, אך קואורדינטות בודדות רשאיות לחזור. האמצע אינו חייב להופיע בפלט. הבהרות הווקטורים והאמצע נוספו בעריכה להסרת עמימות.",
+          "hint": "התעלמו מהגודל המדויק: איזו תכונה קובעת אם סכום שני שלמים מתחלק בשתיים?",
+          "hints": [
+            "התעלמו מהגודל המדויק: איזו תכונה קובעת אם סכום שני שלמים מתחלק בשתיים?",
+            "שני מספרים בעלי אותה זוגיות נותנים ממוצע שלם. בווקטורים התנאי צריך להתקיים בכל קואורדינטה.",
+            "קבצו וקטורים לפי שאריות הקואורדינטות בחלוקה לשתיים. כמה תבניות קיימות? למינימום, נסו נציג אחד מכל תבנית."
+          ],
+          "reference_solution": "**פתרון מוצע — התשובות הן 3 בממד אחד, 5 בשני ממדים ו־2^b+1 בממד b.**\n\n### ממד אחד: שתי קבוצות זוגיות\n\nלשני שלמים x,y יש אמצע שלם בדיוק כאשר x+y זוגי, כלומר שניהם זוגיים או שניהם אי־זוגיים. יש רק שתי קבוצות. אחרי שלושה מספרים שונים, לפחות שניים באותה קבוצה, לפי עקרון שובך היונים. למשל 1,2,5 מכיל את הזוג 1,5 שאמצעו 3; אין צורך שה־3 עצמו יהיה פלט של המכונה.\n\nשלוש הוא המינימום המבטיח, כי 1,2 הם שתי תוצאות ללא אמצע שלם. לפעמים מספיקות שתי תוצאות, כמו 1,3; מבקשים הבטחה לכל סדר, לא מתי הזוג מופיע בריצה מסוימת.\n\n### שני ממדים: ארבע תבניות\n\nאמצע של (x1,y1),(x2,y2) הוא ((x1+x2)/2,(y1+y2)/2). הוא שלם בדיוק כאשר זוגיות ה־x תואמת וגם זוגיות ה־y תואמת. ארבע התבניות הן 00,01,10,11, כאשר 0 פירושו זוגי ו־1 אי־זוגי. חמש נקודות שונות מכריחות שתי נקודות באותה תבנית, למשל (1,1),(3,5) שאמצען (2,3).\n\nארבע אינן מספיקות: (1,1),(1,2),(2,1),(2,2) משתמשות בכל תבנית פעם אחת. בכל זוג יש קואורדינטה אחת של 1 מול 2, שהממוצע שלה 1.5. לכן חמש הוא מינימום ההבטחה.\n\n### b ממדים: הוכחת הגבול הכללי\n\nלכל קואורדינטה שתי אפשרויות זוגיות, ולכן יש 2^b תבניות. אחרי 2^b+1 תוצאות יש חזרה על תבנית, וכל סכום קואורדינטות בזוג זה זוגי. ממוצע הזוג שלם בכל הממדים יחד.\n\nלמינימום, קחו את כל הווקטורים שקואורדינטותיהם הן 1 או 2. יש בדיוק 2^b וקטורים חיוביים שונים, נציג לכל תבנית. כל שניים נבדלים בקואורדינטה אחת לפחות, ובה הממוצע הוא 1.5. זו דוגמה של 2^b תוצאות ללא זוג תקף, ולכן הגבול הדוק.\n\n| ממד | תבניות זוגיות | הגרלות להבטחה |\n| --- | --- | --- |\n| 1 | 2 | 3 |\n| 2 | 4 | 5 |\n| b | 2^b | 2^b+1 |\n\n### מוצאים את הזוג, ולא רק סופרים\n\nשומרים במפה את הווקטור הראשון מכל תבנית. לכל תוצאה חדשה מחשבים את שאריות הקואורדינטות בחלוקה לשתיים. אם התבנית קיימת, מחזירים את הנציג, את החדשה ואת אמצען; אחרת שומרים נציג. אין צורך לחשב מרחקים או לבדוק את כל הזוגות. הקוד משתמש ב־tuple גם בממד אחד, למשל (5,).\n\nל־n תוצאות נדרשות O(nb) פעולות אריתמטיות וזמן צפוי במפת גיבוב, ועד O(b·2^b) ערכי קואורדינטות בזיכרון במודל מילים. זה אינו חסם זמן גרוע־ביותר לגיבוב או ניתוח ביטים למספרים בלתי חסומים. הוכחת מספר ההגרלות אינה תלויה במימוש המפה.\n\n### הנחות שמונעות בלבול\n\nהווקטורים עצמם שונים; קואורדינטות רשאיות לחזור בין נקודות. b שלם חיובי. האמצע אינו חייב להיות פלט. אם דורשים שגם האמצע יופיע, זו שאלה שונה: אפשר להוציא חזקות שונות של שלוש ללא שלוש תוצאות שהאחת ממוצע האחרות. לכן אין אז חסם סופי ללא הגבלת תחום.\n\nאם מתירים חזרות אך דורשים שני ערכים שונים, אין חסם סופי: ערך אחד יכול לחזור לנצח. אם שתי הופעות זהות נחשבות זוג, הן כבר נותנות אמצע שלם. המילה ״רנדומלי״ אינה נדרשת להוכחה: היא מכסה כל סדר אפשרי ואינה מחשבת תוחלת.\n\nהאימות השווה למודל זוגות עצמאי בחשבון שברים מדויק: 157 רצפים סקלריים באורכים 0–3 מתוך 1–6, 6,885 תתי־קבוצות בגדלים 0–5 מתוך סריג 4×4, ודוגמאות מינימום בממדים 1–6. בדיקה סופית לצד הוכחה כללית, ללא סקירה מקצועית אנושית. ההצעה בסיוע AI."
+        },
+        "en": {
+          "title": "Integer-midpoint pairs — numbers and vectors",
+          "prompt": "Each iteration outputs a new positive integer, distinct from previous outputs. A pair is a midpoint pair if its average is integral, such as (1,3) or (2,10). What is the minimum number of draws guaranteeing a pair for every output order? Prove minimality too.\n\nGeneralize to two dimensions and then b dimensions: outputs are distinct vectors of positive integer coordinates, and seek two whose average is integral in every coordinate. Here b is a positive integer. Whole vectors are distinct, but coordinate values may repeat. The midpoint need not itself be output. Vector/midpoint clarifications were added to resolve source ambiguity.",
+          "hint": "Ignore magnitudes: what property decides whether the sum of two integers is divisible by two?",
+          "hints": [
+            "Ignore magnitudes: what property decides whether the sum of two integers is divisible by two?",
+            "Two integers of the same parity have an integer average. For vectors this must hold in every coordinate.",
+            "Group vectors by coordinate remainders modulo two. How many signatures exist? For minimality, try one representative per signature."
+          ],
+          "reference_solution": "**Proposed solution — the guarantees are three in one dimension, five in two dimensions and 2^b+1 in dimension b.**\n\n### One dimension: two parity classes\n\nIntegers x,y have an integer midpoint exactly when x+y is even: both even or both odd. There are two classes. Three distinct outputs force two into one class by the pigeonhole principle. For example, 1,2,5 contains pair 1,5 with midpoint three. The midpoint need not itself be generated.\n\nThree is minimal for a guarantee: outputs 1,2 do not form a valid pair. Some runs succeed after two, such as 1,3; the question asks for all orders, not the first success time of one run.\n\n### Two dimensions: four signatures\n\nThe midpoint of (x1,y1),(x2,y2) is ((x1+x2)/2,(y1+y2)/2). It is integral exactly when the x parities match AND the y parities match. Signatures are 00,01,10,11, with zero meaning even and one odd. Five distinct points force a repeated signature. For example, (1,1),(3,5) have midpoint (2,3).\n\nFour do not suffice: (1,1),(1,2),(2,1),(2,2) use one of each signature. Every pair differs in a coordinate with one versus two, whose average is 1.5. Thus five is the minimum guarantee.\n\n### b dimensions: proving the general bound\n\nEvery coordinate has two parity choices, so there are 2^b signatures. Among 2^b+1 outputs two have the same signature. Every corresponding coordinate sum is even, giving an integer midpoint vector.\n\nFor minimality, use all vectors whose coordinates are one or two. There are exactly 2^b distinct positive vectors, one representative per signature. Every two differ in a coordinate containing one versus two, whose average is 1.5. This is a set of 2^b outputs with no valid pair. The bound is therefore tight.\n\n| Dimension | Parity signatures | Draws for a guarantee |\n| --- | --- | --- |\n| 1 | 2 | 3 |\n| 2 | 4 | 5 |\n| b | 2^b | 2^b+1 |\n\n### Finding the pair\n\nStore the first vector for every observed signature in a map. For a new vector compute coordinate remainders modulo two. If its signature exists, return the stored vector, new vector and their midpoint; otherwise save the first representative. No distance calculations or pair enumeration are needed. Code uses tuples even in one dimension, such as (5,).\n\nFor n draws this takes O(nb) arithmetic operations and expected hash-map time, and at most O(b·2^b) stored coordinate values in a word model. This is not a worst-case hashing guarantee or bit-complexity bound for unbounded integers. The draw-count proof does not depend on the map implementation.\n\n### Contract clarifications\n\nWhole vectors are distinct, but coordinates may repeat between points. Dimension b is a positive integer. The midpoint need not be an output. Requiring it to be generated changes the problem: distinct powers of three can be generated without any three-term arithmetic progression, so there is no finite guarantee without a bounded domain.\n\nIf repetitions are allowed but a pair needs different values, there is no finite bound: one value can repeat forever. If identical occurrences count, such a repetition already gives an integer midpoint. Randomness is not needed by the proof: it handles every order and does not compute an expectation.\n\nIndependent exact-Fraction pair checks covered 157 scalar streams of lengths zero through three from 1..6, 6,885 subsets of sizes zero through five of a positive 4x4 lattice, and tight lower-bound witnesses in dimensions one through six. These are finite model checks accompanying the general proof, not human professional review. AI-assisted proposal."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-071-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "התעלמו מהגודל המדויק: איזו תכונה קובעת אם סכום שני שלמים מתחלק בשתיים?"
+        },
+        {
+          "id": "PREP-071-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "שני מספרים בעלי אותה זוגיות נותנים ממוצע שלם. בווקטורים התנאי צריך להתקיים בכל קואורדינטה."
+        },
+        {
+          "id": "PREP-071-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "קבצו וקטורים לפי שאריות הקואורדינטות בחלוקה לשתיים. כמה תבניות קיימות? למינימום, נסו נציג אחד מכל תבנית."
+        },
+        {
+          "id": "PREP-071-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Ignore magnitudes: what property decides whether the sum of two integers is divisible by two?"
+        },
+        {
+          "id": "PREP-071-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Two integers of the same parity have an integer average. For vectors this must hold in every coordinate."
+        },
+        {
+          "id": "PREP-071-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Group vectors by coordinate remainders modulo two. How many signatures exist? For minimality, try one representative per signature."
+        }
+      ],
+      "assumptions": [
+        "Distinct positive integers; generalized whole vectors are distinct, not necessarily coordinatewise.",
+        "b is a positive integer. A pair must have an integral coordinatewise average; that midpoint need not be generated.",
+        "The guarantee covers every output order independently of a random distribution."
+      ],
+      "optimality": {
+        "criterion": "Worst-case number of draws guaranteeing a pair.",
+        "result": "3,5,2^b+1 in dimensions 1,2,b.",
+        "proof": "There are 2^b parity signatures; one more draw repeats one. All vectors in {1,2}^b form a matching no-pair witness.",
+        "scope": "Minimum guaranteed draws, not expected waiting time or an implementation time/space lower bound."
+      },
+      "verification": "Passed 157 scalar streams, 6,885 subsets of a 4x4 lattice, tight witnesses in dimensions 1..6 and five invalid-input rejections. Independent Fraction oracle. Finite Python checks accompany a general proof; professional review pending.",
+      "edge_cases": [
+        "Two draws can suffice in a favorable run.",
+        "b=1 gives three. Distinct points may share coordinates.",
+        "The midpoint need not be output. Repeated vectors change the contract."
+      ],
+      "common_mistakes": [
+        "Matching parity in only one coordinate.",
+        "Counting 2b classes instead of 2^b.",
+        "An upper bound without a tightness witness.",
+        "Confusing an integral midpoint with a generated midpoint, or a guarantee with an expectation."
+      ],
+      "interview_answer": "An integer average requires matching parity in every coordinate. There are 2^b signatures, so 2^b+1 draws force a pair. Vectors {1,2}^b show minimality. The answers are 3,5,2^b+1.",
+      "solution_extensions": {
+        "question": "What if the midpoint must also appear among the outputs?",
+        "direction": "This is a different contract. Distinct powers of three contain no three-term arithmetic progression, so without a bounded domain there is no finite guarantee.",
+        "status": "Prepared in the archive; not connected to the interactive follow-up queue."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_071_integer_midpoint.py",
+      "solution_code_paths": [
+        "solutions/prep_071_integer_midpoint.py"
+      ],
+      "verification_script_path": "checks/check_prep_071.py",
+      "verification_evidence_path": "checks/prep-071-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-071.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-071-midpoint-parity-he.png",
+          "language": "he",
+          "description": "זוג בעל אמצע שלם — מספרים ווקטורים"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-071-midpoint-parity-en.png",
+          "language": "en",
+          "description": "Integer-midpoint pairs — numbers and vectors"
+        }
+      ],
+      "related_question_ids": [],
+      "duplicate_check": "No matching scalar/2D/bD integer-midpoint guarantee or 1000-bottle/ten-taster one-day parallel pooling question found in preparation archive and example/verification catalog. Shared general techniques are not identical problem contracts.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Pigeonhole reasoning and a tight worst-case guarantee."
+      },
+      "markdown_path": "questions/prep-071-integer-midpoint-pigeonhole.md"
+    },
+    {
+      "id": "PREP-072",
+      "key": "maximum-sum-contiguous-subarray",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "software",
+      "topic": "arrays_and_search",
+      "topics": [
+        "software",
+        "arrays",
+        "dynamic_programming",
+        "loop_invariant",
+        "contiguous_subarray"
+      ],
+      "source_topic_tags": [
+        "hardware",
+        "software"
+      ],
+      "added_topic_tags": [
+        "arrays",
+        "dynamic_programming",
+        "loop_invariant",
+        "contiguous_subarray"
+      ],
+      "source_tags": [
+        "hardware",
+        "amazon",
+        "intel",
+        "software",
+        "cisco",
+        "google",
+        "apple",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Amazon",
+        "Intel",
+        "Cisco",
+        "Google",
+        "Apple",
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "coding",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted bilingual proposed solution, code, diagrams and independent-oracle checks. Professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-072.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "יש מערך של מספרים חיוביים ושליליים, שלמים. כתוב פונ׳ שתחזיר את הרצף מספרים שסכומם הגבוה ביותר. לדוגמא עם המערך [1,4-,2-,5,1,0,5-,4,1,3-,3-] הפונ׳ תחזיר 7 כי 7=(1-)+(2-)+1+0+5 וזה המקסימום. הערת תעתיק: סדר הסימנים והמספרים בצילום דו־כיווני; הנוסח נשמר כפי שנראה, והדוגמה אינה חד־משמעית.",
+      "translations": {
+        "he": {
+          "title": "תת־המערך הרציף בעל הסכום המרבי",
+          "prompt": "נתון מערך של מספרים שלמים, חיוביים, שליליים או אפס. מצאו תת־מערך רציף שאינו ריק שסכום איבריו הוא הגבוה ביותר. החזירו (sum,start,end), כאשר start,end הם גבולות כוללים באינדקסים המתחילים ב־0. אפשר להחזיר גם את הפרוסה עצמה, אך יש להבחין בעלות העתקתה. לקלט ריק החזירו None. בשוויון סכומים בחרו התחלה מוקדמת ואז סוף מוקדם.\n\nהבהרת מקור: התמונה מציגה מספרים בסביבת RTL וטוענת לתוצאה 7; סדר הסימנים אינו ברור, ובתעתיק האפשרי [1,-4,-2,5,1,0,-5,4,1,-3,-3] התוצאה הנכונה היא 6, לא 7. אין להסתמך על הדוגמה המצולמת כהוכחה. הדוגמה הערוכה והחד־משמעית שלנו היא [-2,1,-3,4,-1,2,1,-5,4], שעבורה מחזירים (6,3,6) ואת הרצף [4,-1,2,1]. משתמשים בחשבון שלם מדויק; רצף חייב להיות רציף.",
+          "hint": "אם יודעים שהרצף חייב להסתיים בתא הנוכחי, האם צריך לבדוק מחדש את כל נקודות ההתחלה?",
+          "hints": [
+            "אם יודעים שהרצף חייב להסתיים בתא הנוכחי, האם צריך לבדוק מחדש את כל נקודות ההתחלה?",
+            "כדי להסתיים כאן יש רק שתי אפשרויות מועילות: להתחיל כאן, או להמשיך את הרצף הטוב ביותר שהסתיים בתא הקודם.",
+            "שמרו סכום נוכחי ושיא גלובלי. סכום קודם שלילי נזרק; אחרת ממשיכים. אתחלו מהאיבר הראשון ולא מאפס, ושמרו גם את נקודות ההתחלה והסוף."
+          ],
+          "reference_solution": "### מפרידים שיא שמסתיים כאן משיא בכלל המערך\n\nנסמן current כסכום הגבוה ביותר של רצף לא־ריק שמסתיים בדיוק בתא הנוכחי. כשמגיע איבר חדש x, כל רצף שמסתיים בו הוא או [x], או רצף שמסתיים בתא הקודם שאליו צורף x. מבין הרצפים הקודמים מספיק לשמור את הטוב ביותר: הוספת אותו x משמרת את סדר הסכומים.\n\nאם current הקודם שלילי, הוא רק מפחית את x ולכן מתחילים כאן. אם הוא חיובי, כדאי להמשיך. אם הוא אפס, שתי האפשרויות שוות בסכום, והמשך שומר התחלה מוקדמת יותר לפי כלל השוויון. במקביל שומרים best, שהוא השיא בכל נקודות הסיום שכבר נסרקו.\n\n### מימוש ששומר גם את הרצף\n\n```python\n\"\"\"Nonempty maximum contiguous subarray; inclusive zero-based boundaries.\n\nExact integers. Empty input returns None. Ties choose earliest start and then\nearliest end. Returns (sum, start, end), without allocating the output slice.\n\"\"\"\n\n\ndef maximum_subarray(values):\n    if not values:\n        return None\n    current = best = values[0]\n    start = best_start = best_end = 0\n    for end in range(1, len(values)):\n        # Equality extends: an earlier start wins tied sums.\n        if current < 0:\n            current, start = values[end], end\n        else:\n            current += values[end]\n        if current > best or (current == best and start < best_start):\n            best, best_start, best_end = current, start, end\n    return best, best_start, best_end\n\n```\n\nהפונקציה מחזירה סכום וגבולות ולא מעתיקה את הרשימה. כדי לקבל את האיברים אפשר לקחת values[start:end+1]. אם אורכה k, העתקת פרוסה דורשת O(k) זמן ומקום לפלט. אם מבקשים רק את הסכום, מחזירים את השדה הראשון בתוצאה; זו משמעות הדוגמה במקור, שטוענת לפלט מספרי.\n\n### דוגמה חד־משמעית עם מעקב\n\nעבור [-2,1,-3,4,-1,2,1,-5,4], סכומי הרצפים הטובים המסתיימים בכל תא הם ‎[-2,1,-2,4,3,5,6,1,5]. השיאים עד כל תא הם ‎[-2,1,1,4,4,5,6,6,6]. לכן מחזירים (6,3,6), כלומר [4,-1,2,1]. התרשים מציג בדיוק את שתי השורות האלה. אין כאן בחירה של איברים מפוזרים: רצף חייב לכלול כל תא בין גבולותיו.\n\n### אי־ההתאמה בדוגמת המקור\n\nצילום המקור נשמר ללא שינוי. סימני המינוס וסדר הביטויים מופיעים בסביבה דו־כיוונית, ולכן תעתיק המספרים אינו ודאי. אם מפרשים את המערך כ־[1,-4,-2,5,1,0,-5,4,1,-3,-3], אורקל המונה את כל הרצפים נותן מקסימום 6, ובכלל השוויון שלנו מחזיר (6,3,4), כלומר [5,1]. גם [5,1,0] מגיע ל־6 אך מסתיים מאוחר יותר. המקור טוען ל־7; לא שינינו בשקט איברים כדי להתאים לטענה. זו עמימות או שגיאת דוגמה שדורשת בירור של הנוסח המקורי, ואינה משפיעה על הבעיה הכללית או המימוש שנבדק.\n\n### למה זה נכון ולמה לא מאתחלים באפס?\n\nבאינדוקציה, current הוא המקסימום על כל הרצפים הלא־ריקים שמסתיימים בתא הנוכחי: שתי האפשרויות, להתחיל כאן או להמשיך את הטוב הקודם, מכסות את כולן. best שומר את המקסימום על כל נקודות הסיום שנבדקו, ולכן בסוף הוא המקסימום הכללי. שמירת התחלה מוקדמת בשוויון current, ועדכון best רק בסכום טוב יותר או התחלה מוקדמת יותר, מקיימים את כלל השוויון; הסריקה לפי סוף עולה משמרת את הסוף המוקדם.\n\nמאתחלים current=best=values[0] כדי לייצג רצף לא־ריק. ב־[-5,-2,-9] התשובה היא (-2,1,1), ולא 0 שאינו סכום של רצף מותר. אפס הוא תשובה חוקית רק אם באמת קיים רצף שסכומו אפס.\n\n### עלות ואימות\n\nO(N) פעולות ו־O(1) מילות עזר, ללא הפרוסה האפשרית בפלט. קריאה ליניארית דרושה במקרה הגרוע: איבר שלא נקרא יכול להיות חיובי גדול ולשנות את השיא. במספרים מדויקים גדולים יש גם עלות ביטים של חיבור והשוואה. לא טוענים שזיכרון בביטים בלתי תלוי בגודל המספרים.\n\nעברו כל 97,656 המערכים באורכים 0–7 עם איברים ‎-2..2 ועוד 500 מערכי מספרים גדולים מול אורקל עצמאי המונה כל זוג גבולות ומחשב את סכומו ישירות. הבדיקה משווה גם גבולות ושוויונות. הפתרון מוצע, בסיוע AI, וממתין לסקירה מקצועית עצמאית."
+        },
+        "en": {
+          "title": "Maximum-sum contiguous subarray",
+          "prompt": "Given an integer array containing positive, negative or zero values, find a nonempty contiguous subarray with maximum sum. Return (sum,start,end) using inclusive zero-based boundaries. Returning the slice is optional, but account separately for copying it. Empty input returns None. Ties prefer earliest start, then earliest end.\n\nSource clarification: the RTL screenshot claims seven, but sign/order rendering is ambiguous. The possible ASCII transcription [1,-4,-2,5,1,0,-5,4,1,-3,-3] actually has maximum six, not seven. Do not treat that photographed example as proof. Our separate, unambiguous example is [-2,1,-3,4,-1,2,1,-5,4], returning (6,3,6) and interval [4,-1,2,1]. Use exact integer arithmetic; the interval must be contiguous.",
+          "hint": "If the interval must end at the current position, must every possible starting point be reconsidered?",
+          "hints": [
+            "If the interval must end at the current position, must every possible starting point be reconsidered?",
+            "Only two useful choices remain: start here, or extend the best interval ending at the previous position.",
+            "Keep a current ending sum and a global best. Drop a negative previous sum; otherwise extend. Initialize from the first element, not zero, and track boundaries."
+          ],
+          "reference_solution": "### Separate the best ending here from the global best\n\nLet current be the largest sum of a nonempty interval ending exactly at this position. After a new value x, an interval ending here either starts with [x] or extends an interval ending at the previous position. Only the best previous ending sum matters because adding the same x preserves the ordering of candidates.\n\nIf the previous current is negative, discard it and start here. If positive, extend. If zero, extending and restarting tie in sum; extend to preserve the earlier start. Separately keep best across every ending position already scanned.\n\n### Implementation with boundaries\n\n```python\n\"\"\"Nonempty maximum contiguous subarray; inclusive zero-based boundaries.\n\nExact integers. Empty input returns None. Ties choose earliest start and then\nearliest end. Returns (sum, start, end), without allocating the output slice.\n\"\"\"\n\n\ndef maximum_subarray(values):\n    if not values:\n        return None\n    current = best = values[0]\n    start = best_start = best_end = 0\n    for end in range(1, len(values)):\n        # Equality extends: an earlier start wins tied sums.\n        if current < 0:\n            current, start = values[end], end\n        else:\n            current += values[end]\n        if current > best or (current == best and start < best_start):\n            best, best_start, best_end = current, start, end\n    return best, best_start, best_end\n\n```\n\nThe function returns sum and boundaries without copying the interval. To return its values, use values[start:end+1]; a length-k slice costs O(k) output time/storage. If the caller requests only the sum, use the first result field. This also covers the source's numeric-output interpretation.\n\n### An explicit trace\n\nFor [-2,1,-3,4,-1,2,1,-5,4], best-ending-here sums are [-2,1,-2,4,3,5,6,1,5]. Global bests are [-2,1,1,4,4,5,6,6,6]. Return (6,3,6), representing [4,-1,2,1]. The diagram shows these two sequences. This is contiguous selection: every position between the boundaries belongs to the interval.\n\n### Source-example discrepancy\n\nThe original screenshot is preserved. Its signs/order are bidirectional, so the numeric transcription is uncertain. If interpreted as [1,-4,-2,5,1,0,-5,4,1,-3,-3], independent all-interval enumeration finds six, with our tie rule returning (6,3,4), namely [5,1]. [5,1,0] also sums to six but ends later. The screenshot claims seven. We have not silently changed elements to match that claim. This remains an ambiguous or incorrect source example needing original-wording clarification; the general task and verified algorithm are unaffected.\n\n### Correctness and initialization\n\nInductively, current is optimal among all nonempty intervals ending here: starting here and extending the best previous interval cover every possibility. best takes the maximum across all visited ending positions, so it is globally optimal at termination. Retaining earlier starts on equal current sums, and replacing best only for higher sum or earlier start, implements the tie rule; increasing end order preserves earliest end.\n\nInitialize both sums from values[0], representing a real nonempty interval. For [-5,-2,-9], the result is (-2,1,1), not zero, which no legal interval attains. Zero is valid only when an actual interval attains it.\n\n### Cost and verification\n\nO(N) operations and O(1) auxiliary words, excluding an optional output slice. A linear worst-case read bound is necessary because an unread element can be sufficiently positive to change the optimum. Exact large integers add bit-dependent addition/comparison costs; bit storage is not size-independent.\n\nThe executed code matched a separate direct-sum all-boundary-pairs oracle on all 97,656 arrays of lengths zero through seven over -2..2, plus 500 large-integer arrays. Assertions include boundaries and ties. AI-assisted proposed solution; independent professional review pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-072-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "אם יודעים שהרצף חייב להסתיים בתא הנוכחי, האם צריך לבדוק מחדש את כל נקודות ההתחלה?"
+        },
+        {
+          "id": "PREP-072-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "כדי להסתיים כאן יש רק שתי אפשרויות מועילות: להתחיל כאן, או להמשיך את הרצף הטוב ביותר שהסתיים בתא הקודם."
+        },
+        {
+          "id": "PREP-072-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "שמרו סכום נוכחי ושיא גלובלי. סכום קודם שלילי נזרק; אחרת ממשיכים. אתחלו מהאיבר הראשון ולא מאפס, ושמרו גם את נקודות ההתחלה והסוף."
+        },
+        {
+          "id": "PREP-072-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "If the interval must end at the current position, must every possible starting point be reconsidered?"
+        },
+        {
+          "id": "PREP-072-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Only two useful choices remain: start here, or extend the best interval ending at the previous position."
+        },
+        {
+          "id": "PREP-072-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Keep a current ending sum and a global best. Drop a negative previous sum; otherwise extend. Initialize from the first element, not zero, and track boundaries."
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_072_maximum_subarray.py",
+      "solution_code_paths": [
+        "solutions/prep_072_maximum_subarray.py"
+      ],
+      "verification_script_path": "checks/check_prep_072.py",
+      "verification_evidence_path": "checks/prep-072-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-072.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-072-kadane-trace-he.png",
+          "language": "he",
+          "description": "תרשים הסבר לפתרון המוצע"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-072-kadane-trace-en.png",
+          "language": "en",
+          "description": "Proposed-solution explanation diagram"
+        }
+      ],
+      "markdown_path": "questions/prep-072-maximum-sum-contiguous-subarray.md",
+      "assumptions": [
+        "Intervals are contiguous and nonempty; return sum plus inclusive zero-based boundaries.",
+        "Empty input returns None. Exact integer sums do not overflow.",
+        "Equal sums prefer earliest start and then earliest end.",
+        "Optional output-slice copying is costed separately from auxiliary variables.",
+        "A separate unambiguous teaching example is used; original screenshot and its seven claim remain preserved and flagged against the possible transcription."
+      ],
+      "source_ambiguities": {
+        "requested_output": "Source asks for an interval but its example returns a sum. Return sum plus boundaries, supporting either output form.",
+        "example": "Possible ASCII transcription: [1,-4,-2,5,1,0,-5,4,1,-3,-3]. Its maximum is six, not seven. RTL sign/order is uncertain; no fabricated seven match.",
+        "edited_example": "Separate example: [-2,1,-3,4,-1,2,1,-5,4] returns (6,3,6)."
+      },
+      "optimality": {
+        "criterion": "Scan time and auxiliary words, excluding output copying.",
+        "result": "O(N) time and O(1) auxiliary words; worst-case linear time is optimal.",
+        "proof": "Each endpoint needs only the previous optimal ending sum; unread input could change the maximum, giving a linear read bound.",
+        "scope": "Copying a length-k result requires O(k) output time/storage. Exact arithmetic also depends on bit length."
+      },
+      "verification": "Passed all 97,656 arrays of lengths 0..7 over -2..2 plus 500 large-integer arrays. Independent oracle enumerates every nonempty interval and sums directly; checks include sum, both boundaries and ties. Also verified the seven-versus-six discrepancy for the possible source transcription. Python executed; independent human professional review pending.",
+      "edge_cases": [
+        "All-negative input returns its largest element, not zero.",
+        "One element is the sole interval.",
+        "Empty input returns None.",
+        "Zeros/ties prefer earliest start and then earliest end.",
+        "The optimum may be one element or the entire array.",
+        "An empty interval is forbidden and cannot beat a negative optimum."
+      ],
+      "common_mistakes": [
+        "Initializing best to zero admits an empty result for all-negative input.",
+        "Summing only positives need not be contiguous.",
+        "Keeping current without a global best returns only the last-ending interval.",
+        "Losing boundaries or inconsistent tie handling.",
+        "Copying a slice at every step can introduce quadratic cost.",
+        "Silently changing source values to fabricate its claimed seven."
+      ],
+      "interview_answer": "Keep the best nonempty interval sum ending here and the global best. Restart after a negative previous sum; otherwise extend. Initialize from the first element to handle all-negative inputs and retain boundaries. This takes O(N) time and O(1) auxiliary words, with output copying accounted separately.",
+      "solution_extensions": {
+        "question": "What changes if the array is circular and an interval may wrap?",
+        "direction": "Consider the ordinary maximum or total sum minus a minimum-sum interval. Prevent an empty complement when that minimum covers the whole array, especially for all-negative inputs, and define wraparound boundaries.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      },
+      "related_question_ids": [
+        "PREP-066"
+      ],
+      "duplicate_check": "Checked preparation archive and example/verification catalogs for contiguous/maximum-subarray equivalents. No earlier identical exercise found. PREP-066 shares a one-pass invariant but requires temporal price differences, not an interval sum.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "One-dimensional dynamic programming, loop invariants, all-negative input, boundaries and oracle testing; employers are screenshot-reported only."
+      }
+    },
+    {
+      "id": "PREP-073",
+      "key": "thousand-bottles-ten-tasters",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "logic",
+      "topic": "information_theory",
+      "topics": [
+        "logic",
+        "information_theory",
+        "binary_encoding",
+        "parallel_testing"
+      ],
+      "source_topic_tags": [
+        "logic"
+      ],
+      "added_topic_tags": [
+        "binary_encoding",
+        "parallel_testing",
+        "information_theory"
+      ],
+      "source_tags": [
+        "mellanox",
+        "amazon",
+        "logic",
+        "ceva"
+      ],
+      "reported_companies": [
+        "Mellanox",
+        "Amazon",
+        "CEVA"
+      ],
+      "source_company_badge": "Ceva",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "logic_puzzle",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied source; AI-assisted bilingual proposed solution, clean diagrams and independent exact-arithmetic checks. Professional, parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-073.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "מלך קיבל 1000 בקבוקי יין. אחד מהבקבוקים מורעל, ועליו לגלות איזה מהם מורעל. בבקבוק ישנו רעל שמי ששותה מהבקבוק, בסוף היום מת. לרשות המלך עשרה משרתים. עליו לגלות תוך יום אחד איזה מן הבקבוקים מורעל.",
+      "translations": {
+        "he": {
+          "title": "בקבוק מורעל אחד מתוך אלף — עשרה טועמים",
+          "prompt": "מלך קיבל 1000 בקבוקי יין ובדיוק אחד מהם מורעל. מי ששותה מנה מספקת ממנו ימות עד סוף היום. לרשותו עשרה טועמים, ועליו לזהות בוודאות את הבקבוק בתוך יום אחד. כיצד יחלק טעימות וכיצד יפענח? הוכיחו גם מינימום טועמים במודל הזה.\n\nהבהרות שנוספו: מותר לקחת מנות ולערבב; רעל במנה מספקת הורג בוודאות עד סוף היום, ותערובת ללא רעל אינה הורגת. הערבוב אינו מבטל רעל ואין מגבלת נפח שמונעת הכנה. כל הטעימות במקביל בתחילת היום, והמידע הוא רק חי/מת בסופו; לא מסתמכים על זמן מוות מדויק ולא מאפשרים סבב שני.",
+          "hint": "כל טועם נותן בסוף היום אחת משתי תוצאות. כמה דפוסים יכולים עשרה טועמים לייצג יחד?",
+          "hints": [
+            "כל טועם נותן בסוף היום אחת משתי תוצאות. כמה דפוסים יכולים עשרה טועמים לייצג יחד?",
+            "אותו בקבוק יכול להשתתף בתערובות של כמה טועמים; הדפוס המשותף יזהה אותו.",
+            "מספרו תוויות מ־0 עד 999 בעשרה ביטים. כל טועם מקבל בדיוק את הבקבוקים שהביט שלו הוא 1."
+          ],
+          "reference_solution": "**פתרון מוצע — עשרה טועמים, עשרה ביטים, עשר תערובות שנבדקות במקביל.**\n\n### סופרים את המידע\n\nבסוף היום כל טועם חי או מת, כלומר מספק ביט אחד. עשרה טועמים יכולים לייצר 2^10=1024 דפוסים, די להבחנה בין 1000 אפשרויות. תשעה נותנים רק 512, ולכן אינם מספיקים במודל הזה. זהו חסם מידע; כעת נבנה תערובות שמממשות אותו.\n\n### בניית הקוד והתערובות\n\nמספרי הבקבוקים הגלויים הם 1–1000. לבקבוק k ניתן תווית פנימית k−1, כלומר 0–999. נכתוב אותה בעשרה ביטים. הטועם T1 מתאים לביט הנמוך במשקל 1, T2 למשקל 2, ועד T10 במשקל 512. במחרוזת בינארית משמאל לימין הסדר הוא T10 עד T1.\n\n| בקבוק גלוי | תווית פנימית | קוד T10...T1 | טועמים שמקבלים ממנו |\n| --- | --- | --- | --- |\n| 1 | 0 | 0000000000 | אף אחד |\n| 2 | 1 | 0000000001 | T1 |\n| 3 | 2 | 0000000010 | T2 |\n| 4 | 3 | 0000000011 | T1,T2 |\n| 14 | 13 | 0000001101 | T1,T3,T4 |\n| 1000 | 999 | 1111100111 | T1,T2,T3,T6,T7,T8,T9,T10 |\n\nלכל טועם מכינים תערובת נפרדת המכילה מנה מכל בקבוק שהביט שלו 1. כל עשרת הטועמים טועמים בתחילת היום. אין המתנה לתוצאת טועם אחד לפני הכנת הבדיקה הבאה — זהו סבב מקביל יחיד.\n\n### הפענוח\n\nבסוף היום נכתוב 1 לכל טועם שמת ו־0 לכל טועם שחי. הדפוס הוא התווית של הבקבוק המורעל; מוסיפים 1 לקבלת מספרו הגלוי. למשל, אם רק T1,T3,T4 מתו, הדפוס T10...T1 הוא 0000001101, שערכו 13, ולכן הבקבוק הוא 14.\n\nאם כולם חיים, התווית 0 והבקבוק הוא 1, שממנו אף אחד לא טעם. זה תקין בזכות הנתון שיש בדיוק בקבוק אחד מורעל: כל אחת מ־999 האפשרויות האחרות הייתה הורגת לפחות טועם אחד. אפשר לחלופין להשתמש בקודים 1–1000 כדי שכל בקבוק ייבדק, אך אז משנים גם את הפענוח ודפוסי השגיאה. אין לערבב את שיטות המספור.\n\n### נכונות ומינימום\n\nאם הבקבוק k מורעל, טועם i מת בדיוק כאשר התערובת שלו מכילה את k, וזה קורה בדיוק כאשר ביט i−1 של k−1 הוא 1. לכן דפוס המוות שווה לקוד שהוקצה לבקבוק. כל הקודים שונים, ולכן מזהים יחיד. הבנייה משיגה את ההבחנה שהחסם ספר.\n\nעבור N בקבוקים באותו מודל נדרשים ומספיקים ceil(log2(N)) טועמים. עבור 1000 התוצאה 10. זו אופטימליות במספר טועמים לסבב אחד של תוצאות בינאריות, לא במספר מנות או נפח. בניית התערובות הישירה צורכת O(N·log N) בדיקות ביט, ופענוח O(log N). טועם מקבל מנות מהרבה בקבוקים, ולא קבוצה נפרדת שאין לה חפיפה עם האחרות.\n\n### הנחות חשובות\n\nזוהי חידה מופשטת: בדיוק בקבוק אחד מורעל; מותר לקחת מנות ולערבב; מנה מספקת של רעל בתערובת הורגת בוודאות עד סוף היום, ותערובת ללא רעל אינה הורגת. הערבוב אינו מבטל את הרעל ואין מגבלת נפח שמונעת הכנה בתחילת היום. אין משתמשים בשעת מוות מדויקת: המקור נותן תוצאת סוף יום, לא חלונות זמן מובחנים. השפעה לא ודאית, דילול שאינו עומד בהנחה או עיכוב מעבר למועד מבטלים את ההבטחה.\n\nהקוד בונה עשר קבוצות בקבוקים. הפענוח מקבל עשרה ערכי אמת בסדר T1 עד T10. דפוסים שתוויתם 1000–1023 אינם משויכים לשום בקבוק ולכן מדווחים כשגיאה.\n\nהבדיקה בנתה את קבוצות התערובות ודימתה כל אחד מ־1000 הבקבוקים כאפשרות היחידה המורעלת. כולם פוענחו נכון והדפוסים ייחודיים. נבדקו גם כולם חיים, כל 24 הדפוסים הבלתי מנוצלים וחמישה קלטים פגומים. זו בדיקת מודל וקוד, לא ניסוי בטועמים או אימות כימי. הצעה בסיוע AI, ממתינה לביקורת מקצועית."
+        },
+        "en": {
+          "title": "One poisoned bottle among one thousand — ten tasters",
+          "prompt": "A king has 1000 wine bottles, exactly one poisoned. An adequate dose causes death by the end of the day. He has ten tasters and must identify the bottle with certainty within one day. Specify the tasting assignment and decoding, and prove the minimum taster count under this model.\n\nAdded clarifications: taking portions and mixing are allowed. An adequate poison dose deterministically kills by the deadline; poison-free pools do not. Mixing does not neutralize poison, and volume limits do not prevent preparation. All taste in parallel at the start; only alive/dead is read at the endpoint. Do not rely on exact death times or a second testing round.",
+          "hint": "Each taster has two endpoint outcomes. How many joint patterns can ten tasters represent?",
+          "hints": [
+            "Each taster has two endpoint outcomes. How many joint patterns can ten tasters represent?",
+            "A bottle can appear in several tasters' pools; the combined pattern can identify it.",
+            "Use labels 0..999 in ten bits. Each taster samples exactly bottles whose code has one in its assigned bit."
+          ],
+          "reference_solution": "**Proposed solution — ten tasters, ten bits and ten pools tested in parallel.**\n\n### Count the information\n\nAt the deadline each taster is alive or dead, providing one bit. Ten tasters can produce 2^10=1024 joint patterns, enough for 1000 possibilities. Nine provide only 512 and cannot suffice in this model. This is an information lower bound; a pooling construction must attain it.\n\n### Codes and pools\n\nPublic bottles are numbered 1..1000. Assign bottle k internal label k−1, ranging 0..999, written in ten binary bits. T1 represents the least-significant bit of weight one, T2 weight two, through T10 weight 512. A written binary string from left to right is T10 through T1.\n\n| Public bottle | Internal label | Code T10...T1 | Tasters receiving a portion |\n| --- | --- | --- | --- |\n| 1 | 0 | 0000000000 | None |\n| 2 | 1 | 0000000001 | T1 |\n| 3 | 2 | 0000000010 | T2 |\n| 4 | 3 | 0000000011 | T1,T2 |\n| 14 | 13 | 0000001101 | T1,T3,T4 |\n| 1000 | 999 | 1111100111 | T1,T2,T3,T6,T7,T8,T9,T10 |\n\nPrepare a separate pool for each taster containing a portion from each bottle whose code has one in that taster's bit. All ten taste at the start. Nothing waits for an earlier outcome; this is one parallel batch.\n\n### Decode\n\nAt the deadline write one for a dead taster and zero for a survivor. This pattern is the poisoned bottle's internal label; add one for its public number. If only T1,T3,T4 die, the T10...T1 pattern is 0000001101, value thirteen, identifying public bottle fourteen.\n\nAll alive means label zero, hence bottle one, which was deliberately not sampled. This is valid because exactly one poisoned bottle is guaranteed: every other one of the 999 possibilities kills at least one taster. Alternatively use codes 1..1000 so every bottle is sampled, but then decoding and invalid patterns must change consistently. Do not mix numbering schemes.\n\n### Correctness and minimum\n\nIf k is poisoned, taster i dies exactly when its pool contains k, which happens exactly when bit i−1 of k−1 is one. Thus the death pattern equals k's assigned code. Distinct codes uniquely identify every bottle. The construction achieves the distinguishability counted by the lower bound.\n\nFor N bottles under the same model, ceil(log2(N)) tasters are necessary and sufficient; for 1000 the answer is ten. This minimizes tasters for one batch of binary endpoint results, not portions or volume. Direct construction takes O(N·log N) bit inspections; decoding takes O(log N). Tasters receive overlapping pools of many bottles, not disjoint groups that identify only one group.\n\n### Assumptions\n\nThis is an abstract puzzle: exactly one bottle is poisoned; portions and mixing are permitted; an adequate poison portion in a pool deterministically kills by the deadline, and poison-free pools do not kill. Mixing does not neutralize poison, volume limits do not prevent preparation at the start, and precise death time is not used. The source provides end-of-day outcomes, not distinguishable timing windows. Uncertain effects, inadequate dilution or delay beyond the deadline remove the guarantee.\n\nCode constructs ten groups and decodes ten Booleans ordered T1 through T10. Labels 1000..1023 are unused and rejected rather than assigned to nonexistent bottles.\n\nChecks constructed the actual pools and simulated every one of the 1000 possible single poisoned bottles. All decoded correctly with unique patterns. All-alive, all 24 unused patterns and five malformed inputs were checked too. This is a code/model check, not real tasting or chemical validation. AI-assisted proposal; professional review pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-073-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "כל טועם נותן בסוף היום אחת משתי תוצאות. כמה דפוסים יכולים עשרה טועמים לייצג יחד?"
+        },
+        {
+          "id": "PREP-073-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "אותו בקבוק יכול להשתתף בתערובות של כמה טועמים; הדפוס המשותף יזהה אותו."
+        },
+        {
+          "id": "PREP-073-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "מספרו תוויות מ־0 עד 999 בעשרה ביטים. כל טועם מקבל בדיוק את הבקבוקים שהביט שלו הוא 1."
+        },
+        {
+          "id": "PREP-073-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Each taster has two endpoint outcomes. How many joint patterns can ten tasters represent?"
+        },
+        {
+          "id": "PREP-073-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "A bottle can appear in several tasters' pools; the combined pattern can identify it."
+        },
+        {
+          "id": "PREP-073-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Use labels 0..999 in ten bits. Each taster samples exactly bottles whose code has one in its assigned bit."
+        }
+      ],
+      "assumptions": [
+        "Exactly one of 1000 bottles is poisoned.",
+        "Mixing and portions are allowed; any pool with an adequate poison dose deterministically kills by the deadline; poison-free pools do not.",
+        "All taste in parallel at the start and give one binary endpoint outcome, with no second round or death-time encoding.",
+        "Public numbers 1..1000 use internal labels 0..999; T1 is the low bit. All-alive identifies public bottle one."
+      ],
+      "optimality": {
+        "criterion": "Taster count in one batch of deterministic binary endpoint results.",
+        "result": "Ten are necessary and sufficient.",
+        "proof": "2^9=512 is less than 1000, while 2^10=1024 suffice with the binary-pooling construction.",
+        "scope": "No dose or volume minimum; excludes multiple poisons, uncertainty and death-time information."
+      },
+      "verification": "All 1000 poisoned-bottle cases passed pool-membership simulation, uniqueness and decoding against an independent division/remainder oracle. All-survive, 24 unused patterns and five malformed inputs passed. Python model only, no real human or chemical experiment; professional review pending.",
+      "edge_cases": [
+        "All alive identifies unsampled bottle one.",
+        "Bottle 1000 has label 999; patterns 1000..1023 are invalid.",
+        "Multiple poisoned bottles can produce a misleading union of bits.",
+        "No time remains for a second result-dependent round."
+      ],
+      "common_mistakes": [
+        "Ten disjoint groups identify only a group.",
+        "Sequential binary search despite no time for several outcome rounds.",
+        "Confusing public bottle numbers with labels or reversing the bit/taster order.",
+        "Rejecting all-alive despite the exactly-one-poison guarantee.",
+        "Relying on exact death times not provided by the source."
+      ],
+      "interview_answer": "Assign labels 0..999 in ten bits. Each taster receives all bottles whose code has one in its bit, and all taste in parallel. The endpoint death pattern is the label; add one for the public bottle. All-alive means bottle one. Ten is minimal because nine give only 512 patterns.",
+      "solution_extensions": {
+        "question": "How many tasters are needed for 1025 bottles under the same rules?",
+        "direction": "Ten give only 1024 patterns. Eleven are required and eleven-bit pooling suffices.",
+        "status": "Prepared in the archive; not connected to the interactive follow-up queue."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_073_binary_bottles.py",
+      "solution_code_paths": [
+        "solutions/prep_073_binary_bottles.py"
+      ],
+      "verification_script_path": "checks/check_prep_073.py",
+      "verification_evidence_path": "checks/prep-073-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-073.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-073-binary-pooling-he.png",
+          "language": "he",
+          "description": "בקבוק מורעל אחד מתוך אלף — עשרה טועמים"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-073-binary-pooling-en.png",
+          "language": "en",
+          "description": "One poisoned bottle among one thousand — ten tasters"
+        }
+      ],
+      "related_question_ids": [],
+      "duplicate_check": "No matching scalar/2D/bD integer-midpoint guarantee or 1000-bottle/ten-taster one-day parallel pooling question found in preparation archive and example/verification catalog. Shared general techniques are not identical problem contracts.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Parallel encoding and a matching information lower bound."
+      },
+      "markdown_path": "questions/prep-073-thousand-bottles-ten-tasters.md"
     }
   ]
 }

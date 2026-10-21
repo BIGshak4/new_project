@@ -1,0 +1,952 @@
+{
+  "questions": [
+    {
+      "id": "PREP-066",
+      "key": "stock-one-transaction-best-days",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "software",
+      "topic": "arrays_and_search",
+      "topics": [
+        "software",
+        "arrays",
+        "prefix_minimum",
+        "loop_invariant",
+        "one_pass"
+      ],
+      "source_topic_tags": [
+        "software"
+      ],
+      "added_topic_tags": [
+        "arrays",
+        "prefix_minimum",
+        "loop_invariant",
+        "one_pass"
+      ],
+      "source_tags": [
+        "google",
+        "intel",
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "Google",
+        "Intel",
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "coding",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted bilingual proposed solution, code, diagrams and independent-oracle checks. Professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-066.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "יש לנו מערך עם N תאים, בכל תא מצוין המחיר של המניה ביום הספציפי הזה (כל אינדקס של תא מייצג יום). רשום פונקציה שמקבלת מערך כזה ומחזירה 2 ימים כך שהרווח יהיה מקסימלי. כלומר יום רכישה ויום מכירה.",
+      "translations": {
+        "he": {
+          "title": "הימים הטובים ביותר לקנייה ומכירה של מניה",
+          "prompt": "נתון מערך prices של מחירי מניה במשך N ימים. כל אינדקס הוא יום, החל מ־0. כתבו פונקציה המוצאת עסקה אחת עם יום קנייה buy ויום מכירה sell, כך ש־buy<sell והרווח prices[sell]−prices[buy] מרבי. החזירו את שני האינדקסים ואת הרווח, לא רק את המחירים.\n\nהבהרות שנוספו למקור: המחירים שלמים מדויקים ואי־שליליים; אין עמלות או מכירה בחסר. בגרסה הראשית מותר לא לבצע עסקה: אם אין רווח חיובי, או שיש פחות משני ימים, מחזירים None. בשוויון רווחים מעדיפים יום קנייה מוקדם יותר ואז יום מכירה מוקדם יותר. הציגו גם את השינוי כאשר חייבים לבצע עסקה חוקית אחת, אפילו בהפסד. אין למיין את הקלט או לשנות את סדר הימים.",
+          "hint": "אם יום המכירה היה ידוע, איזה מידע על הימים שלפניו היה מספיק כדי לבחור יום קנייה?",
+          "hints": [
+            "אם יום המכירה היה ידוע, איזה מידע על הימים שלפניו היה מספיק כדי לבחור יום קנייה?",
+            "לכל יום מכירה מספיק לשמור את המחיר הנמוך ביותר שנראה לפניו ואת האינדקס הראשון שלו.",
+            "עברו משמאל לימין: קודם חשבו רווח מול המינימום הקודם, אחר כך הכניסו את היום הנוכחי למינימום. עדכנו שיא רק ברווח גדול יותר כדי לשמר שוויונות."
+          ],
+          "reference_solution": "### הרעיון: מתייחסים לכל יום כמועמד למכירה\n\nאי אפשר לבחור סתם את המינימום והמקסימום במערך: ייתכן שהמקסימום הגיע לפני המינימום. במקום זאת, כשמגיעים ליום sell, שומרים רק את מחיר הקנייה הנמוך ביותר בימים שקדמו לו. כל קנייה יקרה יותר באותו קטע תיתן רווח קטן יותר לאותה מכירה, ולכן אינה יכולה לשפר את המועמד.\n\nנשמור low_day, ושיא best המכיל קנייה, מכירה ורווח. מתחילים עם יום 0 כמינימום וסורקים מיום 1. לכל יום מחשבים את הרווח מול המינימום הקודם, מעדכנים שיא אם הרווח גדול יותר, ורק אז בודקים אם היום הנוכחי הוא מינימום חדש. הסדר מבטיח שקנייה ומכירה אינן באותו יום. מקבלים את שני הימים בפועל; המשתנה best אינו רק מספר הרווח.\n\n### קוד פייתון והבחנה בין שתי הגרסאות\n\n```python\n\"\"\"One optional or mandatory trade; zero-based days and stable earliest ties.\n\nInput contract: a sequence of nonnegative exact integer prices. Validation is\noutside this algorithm. Return (buy_day, sell_day, profit), or None.\n\"\"\"\n\n\ndef best_trade(prices, *, mandatory=False):\n    if len(prices) < 2:\n        return None\n    low_day = 0\n    best = None\n    for sell in range(1, len(prices)):\n        profit = prices[sell] - prices[low_day]\n        if (mandatory or profit > 0) and (best is None or profit > best[2]):\n            best = (low_day, sell, profit)\n        # Strictly smaller preserves the earliest day at equal prices.\n        if prices[sell] < prices[low_day]:\n            low_day = sell\n    return best\n\n```\n\nברירת המחדל היא עסקה אפשרית בלבד. כאשר הרווח אינו חיובי best נשאר None. הדגל mandatory=True מאפשר גם רווח אפס או הפסד; עדיין בוחרים את העסקה בעלת הרווח המרבי. אין זוג ימים חוקי אם N<2, ולכן גם בגרסה זו חוזר None. בדוגמה prices=[9,8,7], ברירת המחדל מחזירה None, והגרסה המחייבת מחזירה (0,1,-1).\n\n### דוגמת ריצה\n\nעבור prices=[7,1,5,3,6,4], המועמדים מיום מכירה 1 עד 5 נותנים רווחים ‎-6,4,2,5,3. ביום 1 המחיר 1 הופך למינימום לקראת הימים הבאים. השיא הוא (buy=1,sell=4,profit=5). התרשים מציג את המינימום הקודם בכל שלב. ב־[3,1,1,5,5] מחזירים (1,3,4): שומרים את היום הראשון בכל מינימום שווה, ואת העסקה הראשונה באותו רווח.\n\n### למה זה נכון?\n\nלפני בדיקת sell, האינווריאנט הוא ש־low_day מצביע על המינימום הראשון ב־prices[0:sell]. באתחול זה נכון, והעדכון בסוף הצעד משמר זאת ליום הבא. לכן המועמד הוא העסקה הטובה ביותר שמוכרת באותו יום. כל עסקה חוקית מסתיימת באחד הימים שנסרקים, ושמירת המועמד הטוב ביותר נותנת מקסימום גלובלי. יום המינימום אינו יכול לנוע אחורה; יחד עם עדכונים מחמירים בלבד נשמרים כללי השוויון. בגרסה האפשרית מתעלמים מעסקאות שאינן עדיפות על רווח האפס של הימנעות מעסקה.\n\n### עלות ואימות\n\nמעבר אחד: O(N) פעולות ומספר קבוע של אינדקסים וערכים, כלומר O(1) מקום עזר במודל מילים. כדי להבטיח פתרון לקלט כללי צריך לבדוק מספר ליניארי של מחירים במקרה הגרוע, משום שמחיר שלא נקרא עשוי לשנות את העסקה הטובה. אם מספרים מדויקים גדולים מילה, זמן החשבון והאחסון תלוי גם באורך הביטים. אין הקצאת מערך עזר ואין מיון.\n\nהקוד נבדק מול אורקל המונה באופן עצמאי את כל זוגות buy<sell: כל 21,845 המערכים באורכים 0–7 עם מחירים 0–3, בשתי הגרסאות, ועוד 500 מערכי מספרים גדולים בשתיהן. אלה בדיקות קוד ולא אישור מקצועי אנושי; הפתרון מוצע וממתין לסקירה."
+        },
+        "en": {
+          "title": "Best buy and sell days for one stock transaction",
+          "prompt": "Given N daily stock prices, with days indexed from zero, find one transaction with buy<sell maximizing prices[sell]−prices[buy]. Return the buy index, sell index and profit, not just the price values.\n\nEditorial clarifications: prices are exact nonnegative integers, with no fees or short selling. The primary contract permits no transaction: return None if no strictly positive profit exists, or fewer than two days exist. Ties prefer the earliest buy day, then the earliest sell day. Also explain the variant requiring one legal transaction even at a loss. Do not sort the input or change temporal order.",
+          "hint": "If the selling day were fixed, what information about earlier days would determine the best purchase?",
+          "hints": [
+            "If the selling day were fixed, what information about earlier days would determine the best purchase?",
+            "For each sale, retain the smallest earlier price and its first index.",
+            "Scan left to right: evaluate against the earlier minimum before admitting today's price. Replace the best trade only on strictly greater profit to preserve ties."
+          ],
+          "reference_solution": "### Fix the selling day first\n\nChoosing the global minimum and maximum can sell before buying. Instead, when visiting sell, retain the lowest price strictly before it. A more expensive earlier purchase cannot improve the profit for that sale, so only the earliest minimum index matters.\n\nStore low_day and best=(buy,sell,profit). Initialize the minimum to day zero and scan from day one. First evaluate today's sale against the earlier minimum, update the best trade if its profit is strictly larger, then admit today's price into the minimum. This ordering guarantees buy<sell. Store actual indices as well as profit.\n\n### Python and the two contracts\n\n```python\n\"\"\"One optional or mandatory trade; zero-based days and stable earliest ties.\n\nInput contract: a sequence of nonnegative exact integer prices. Validation is\noutside this algorithm. Return (buy_day, sell_day, profit), or None.\n\"\"\"\n\n\ndef best_trade(prices, *, mandatory=False):\n    if len(prices) < 2:\n        return None\n    low_day = 0\n    best = None\n    for sell in range(1, len(prices)):\n        profit = prices[sell] - prices[low_day]\n        if (mandatory or profit > 0) and (best is None or profit > best[2]):\n            best = (low_day, sell, profit)\n        # Strictly smaller preserves the earliest day at equal prices.\n        if prices[sell] < prices[low_day]:\n            low_day = sell\n    return best\n\n```\n\nThe default permits no trade: nonpositive profits never replace None. With mandatory=True, zero-profit or losing trades are considered, and the least loss wins if necessary. Fewer than two days provide no legal pair in either contract, so return None. For [9,8,7], the default returns None; the mandatory variant returns (0,1,-1).\n\n### Trace\n\nFor prices=[7,1,5,3,6,4], sales on days one through five yield candidates -6,4,2,5,3. Day one's price becomes the minimum for later sales. The result is (buy=1,sell=4,profit=5); the diagram records the earlier minimum at each step. For [3,1,1,5,5], return (1,3,4): preserve the first equal-price minimum and first equal-profit trade.\n\n### Correctness\n\nBefore evaluating sell, low_day is the first minimum in prices[0:sell]. This holds initially and is preserved by the end-of-step update. The candidate is therefore the best trade selling on that day. Every legal trade ends on a scanned day, so retaining the best candidate finds the global optimum. The minimum index never moves backward; strict updates preserve earliest-buy then earliest-sell ties. The optional contract discards trades no better than the zero profit of abstaining.\n\n### Cost and checks\n\nOne scan takes O(N) operations and O(1) auxiliary machine words. A general exact algorithm must inspect a linear number of prices in the worst case: an unread price can change the optimum. With arbitrary-size integers, arithmetic and storage also depend on bit length. There is no sorting or auxiliary array.\n\nThe executed code matched an independent all-buy/sell-pairs oracle on every one of 21,845 arrays of lengths zero through seven over prices zero through three, under both contracts, plus 500 large-integer arrays under both contracts. This is code verification, not independent human expert approval; the solution remains proposed."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-066-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "אם יום המכירה היה ידוע, איזה מידע על הימים שלפניו היה מספיק כדי לבחור יום קנייה?"
+        },
+        {
+          "id": "PREP-066-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "לכל יום מכירה מספיק לשמור את המחיר הנמוך ביותר שנראה לפניו ואת האינדקס הראשון שלו."
+        },
+        {
+          "id": "PREP-066-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "עברו משמאל לימין: קודם חשבו רווח מול המינימום הקודם, אחר כך הכניסו את היום הנוכחי למינימום. עדכנו שיא רק ברווח גדול יותר כדי לשמר שוויונות."
+        },
+        {
+          "id": "PREP-066-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "If the selling day were fixed, what information about earlier days would determine the best purchase?"
+        },
+        {
+          "id": "PREP-066-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "For each sale, retain the smallest earlier price and its first index."
+        },
+        {
+          "id": "PREP-066-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Scan left to right: evaluate against the earlier minimum before admitting today's price. Replace the best trade only on strictly greater profit to preserve ties."
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_066_best_stock_trade.py",
+      "solution_code_paths": [
+        "solutions/prep_066_best_stock_trade.py"
+      ],
+      "verification_script_path": "checks/check_prep_066.py",
+      "verification_evidence_path": "checks/prep-066-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-066.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-066-prefix-min-trace-he.png",
+          "language": "he",
+          "description": "תרשים הסבר לפתרון המוצע"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-066-prefix-min-trace-en.png",
+          "language": "en",
+          "description": "Proposed-solution explanation diagram"
+        }
+      ],
+      "markdown_path": "questions/prep-066-stock-one-transaction-best-days.md",
+      "assumptions": [
+        "Zero-based days; purchase must precede sale and input order is unchanged.",
+        "Exact nonnegative integer prices; no fees, short selling or multiple trades.",
+        "Primary contract abstains without positive profit; mandatory variant accepts a loss. N<2 returns None in both.",
+        "Ties prefer earliest buy, then earliest sell."
+      ],
+      "optimality": {
+        "criterion": "Worst-case time and auxiliary-variable count in the word model.",
+        "result": "O(N) time and O(1) auxiliary words; asymptotically optimal time.",
+        "proof": "Each sale uses its earlier minimum. An unread price can create a new minimum or maximum changing the optimum, giving a linear worst-case input-read bound.",
+        "scope": "Arbitrary-size integer costs also depend on bit length; no physical timing guarantee."
+      },
+      "verification": "Passed 43,690 independent-oracle checks: 21,845 arrays of lengths 0..7 over 0..3 under both contracts, plus 1,000 checks on 500 large-integer arrays. Assertions cover indices, profit, tie order and abstention, not profit alone. Python executed; independent professional review pending.",
+      "edge_cases": [
+        "Empty or one-day input returns None.",
+        "Descending prices: abstain or take the smallest loss, according to contract.",
+        "Equal prices: no optional trade; mandatory returns (0,1,0).",
+        "Repeated minima/profits preserve earliest days.",
+        "A maximum before the minimum is not a legal buy/sell pair."
+      ],
+      "common_mistakes": [
+        "Sorting destroys temporal order.",
+        "Global min/max may sell before purchasing.",
+        "Admitting the current minimum before evaluation can accidentally allow same-day trades.",
+        "Returning prices or profit alone fails to return the requested days.",
+        "Initializing mandatory profit to zero can hide the best legal loss."
+      ],
+      "interview_answer": "Scan by selling day, retaining the lowest earlier price and its first index. Evaluate profit and update the best pair before updating the minimum. This gives O(N) time and O(1) auxiliary words. First clarify whether abstention is allowed and what to return with fewer than two days.",
+      "solution_extensions": {
+        "question": "What if multiple transactions are allowed while holding at most one share?",
+        "direction": "Without fees or further constraints, sum positive consecutive-day rises. This is a different contract; a single prefix minimum/best trade does not solve it. Fees or cooldown introduce dynamic-programming states.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      },
+      "related_question_ids": [
+        "PREP-072"
+      ],
+      "duplicate_check": "Reviewed preparation archive and example/verification text for stock, buy/sell and prefix-minimum equivalents. Existing array exercises do not specify this one-temporal-transaction and actual-day return contract. Maximum subarray PREP-072 is a related but distinct scan invariant.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Temporal constraints, prefix-minimum invariant and contract clarification; company names are screenshot reports only."
+      }
+    },
+    {
+      "id": "PREP-068",
+      "key": "maximum-two-integers-without-comparisons",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "software",
+      "topic": "bit_manipulation",
+      "topics": [
+        "software",
+        "integer_arithmetic",
+        "bit_manipulation",
+        "signed_overflow"
+      ],
+      "source_topic_tags": [
+        "software"
+      ],
+      "added_topic_tags": [
+        "integer_arithmetic",
+        "bit_manipulation",
+        "signed_overflow"
+      ],
+      "source_tags": [
+        "software",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "coding",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted bilingual proposed solution, code, diagrams and independent-oracle checks. Professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-068.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "כתוב פונקציה המקבלת שני משתנים ומחזירה את המקסימום ללא השוואות",
+      "translations": {
+        "he": {
+          "title": "מקסימום של שני שלמים ללא השוואות",
+          "prompt": "כתבו פונקציה המקבלת שני מספרים שלמים a,b ומחזירה את הגדול מביניהם, בלי שימוש באופרטורי השוואה, min/max מובנים או תנאי שבודק מי גדול יותר.\n\nהמקור אינו מגדיר טיפוסים ופעולות מותרות. לכן פתרו שתי גרסאות מפורשות: א. שלמים מדויקים בפייתון כאשר abs מותר. ב. אם גם abs אסור: קלטים עם סימן ברוחב 32 ביטים, ופעולות ביטים ואריתמטיקה ללא סימן מותרות. יש להימנע מגלישה בחשבון עם סימן ומהזזה של מספר שלילי. אין דרישה לזמן ביצוע קבוע מבחינת אבטחת מידע; קוד ללא if אינו מוכיח זאת.",
+          "hint": "לפני חיפוש טריק, בררו אם מותר ערך מוחלט והאם המספרים מוגבלים ברוחב.",
+          "hints": [
+            "לפני חיפוש טריק, בררו אם מותר ערך מוחלט והאם המספרים מוגבלים ברוחב.",
+            "כשערך מוחלט מותר, בדקו מה קורה ל־a+b+abs(a-b) בכל אחד משני סדרי המספרים.",
+            "ברוחב קבוע: אם הסימנים שונים בוחרים את הלא־שלילי. רק כששניהם באותו סימן אפשר ללמוד מסימן ההפרש בלי גלישה מתמטית; בנו מסכה לבחירה."
+          ],
+          "reference_solution": "### קודם מגדירים מה בדיוק אסור\n\nהביטוי ״ללא השוואות״ אינו אוסר אוטומטית abs, ואינו קובע אם חשבון מדויק או גולש. אי אפשר להעביר טריק משפה לשפה בלי לברר זאת. הפתרונות כאן אינם משתמשים באופרטור השוואה, ב־min/max או בתנאי סדר בתוך הפונקציה. בדיקות האורקל רשאיות כמובן להשוות כדי לאמת תוצאות.\n\n### גרסה א: ערך מוחלט ושלמים מדויקים\n\nהזהות היא max(a,b)=(a+b+abs(a-b))//2. אם a הוא הגדול, הערך המוחלט הוא a-b והמונה שווה 2a. אחרת הוא b-a והמונה 2b. כאשר a=b מקבלים אותו ערך. המונה תמיד זוגי, ולכן החלוקה בשלמים מדויקת גם לערכים שליליים. למשל a=-4,b=7 נותנים (-4+7+11)//2=7.\n\n```python\ndef max_without_comparisons(a, b):\n    return (a + b + abs(a - b)) // 2\n```\n\nבפייתון int תומך בחשבון מדויק. עבור מספרים שאורכם עד B ביטים, הפעולות כאן עולות O(B) זמן ו־O(B) ביטי ערכי ביניים, ולא O(1) זמן בלתי תלוי בגודל. הזהות אינה פתרון כללי בטוח לטיפוסים עם סימן ברוחב קבוע: a+b או a-b עלולים לגלוש, וערך מוחלט של המספר השלילי הקיצוני אינו תמיד ניתן לייצוג. היא גם אינה מתחייבת ל־float עם NaN, אינסוף או עיגול; אלה מחוץ לחוזה.\n\n### גרסה ב: בחירה בטוחה בשני שלמים עם סימן בני 32 ביטים\n\nנייצג את הביטים כ־uint32_t. נסמן sa,sb כביטי הסימן. אם הסימנים שונים, a שלילי אומר שבוחרים b; a לא־שלילי אומר שבוחרים a. אם הסימנים שווים, ההפרש המתמטי נמצא בטווח עם סימן, ולכן הביט הגבוה של ההפרש בחשבון ללא סימן נותן את סימנו. אסור להסתמך על סימן הפרש כרוך כאשר הסימנים שונים: INT32_MAX−INT32_MIN נותן 4294967295, שהביט הגבוה שלו 1 למרות שהראשון גדול יותר.\n\nנבנה choose_b בגודל ביט אחד: 1 בוחר b, ו־0 בוחר a. המסכה 0−choose_b היא או 32 אפסים או 32 אחדים בחשבון ללא סימן. שערי הביטים בוחרים את הייצוג המתאים. לבסוף ממירים חזרה לערך עם סימן דרך int64_t, כשהתוצאה מוכחת בתוך הטווח, בלי המרה מחוץ לטווח ובלי גלישה עם סימן.\n\n```cpp\n// C++11 or later; requires exact-width int32_t/uint32_t and int64_t.\n// Materialize modulo-2^32 subtraction before shifting. Integer promotions are\n// safe even when int is wider than 32 bits: no signed overflow, negative signed\n// right shift, or out-of-range unsigned-to-signed conversion is required.\n// This artifact is supplied, but was not compiled in the current environment.\n#include <cstdint>\n\nstd::int32_t max_i32(std::int32_t a, std::int32_t b) {\n    const std::uint32_t ua = static_cast<std::uint32_t>(a);\n    const std::uint32_t ub = static_cast<std::uint32_t>(b);\n    const std::uint32_t sa = ua >> 31;\n    const std::uint32_t sb = ub >> 31;\n    const std::uint32_t different = sa ^ sb;\n    // Store first: integer promotion may otherwise perform subtraction in a\n    // wider signed int. Conversion here restores modulo-2^32 before shifting.\n    const std::uint32_t difference = ua - ub;\n    const std::uint32_t difference_sign = difference >> 31;\n    const std::uint32_t choose_b =\n        (different & sa) | ((different ^ 1u) & difference_sign);\n    const std::uint32_t mask = 0u - choose_b;\n    // XOR avoids applying ~ to a value that might promote to signed int.\n    const std::uint32_t keep_a = mask ^ UINT32_C(0xffffffff);\n    const std::uint32_t bits = (ua & keep_a) | (ub & mask);\n    const std::int64_t signed_value =\n        static_cast<std::int64_t>(bits & UINT32_C(0x7fffffff)) -\n        static_cast<std::int64_t>(bits >> 31) * INT64_C(2147483648);\n    return static_cast<std::int32_t>(signed_value);\n}\n\n```\n\nשימו לב למשתנה difference: שומרים את ההפרש ב־uint32_t לפני ההזזה. במערכת שבה int רחב מ־32 ביטים, קידום טיפוסים עשוי לחשב את ההפרש בטיפוס עם סימן רחב יותר; ההשמה מחזירה אותו למודולו 2^32 לפני בדיקת הביט הגבוה. המסכה המשלימה משתמשת ב־XOR עם 32 אחדים, בלי להחיל NOT על מספר שעשוי להתקדם לטיפוס עם סימן.\n\nקיים גם מודל פייתון מפורש לאריתמטיקה ללא סימן בקובץ המצורף. הוא אינו מחליף קומפילציה של C++. ברוחב קבוע זה מספר קבוע של פעולות ומילות עזר; אין כאן הוכחת מינימום הוראות, הבטחה שלקוד המכונה אין קפיצות, או הבטחת זמן קבוע לצורכי אבטחה.\n\n### אימות והקשר\n\nשתי דרכי פייתון נבדקו על כל 65,536 הזוגות בטווח ‎-128..127 ועל 81 זוגות קצה בני 32 ביטים. מודל רוחב קבוע עבר עוד 10,000 זוגות אקראיים מתועדים; נוסחת abs עברה עוד 500 זוגות בני עד 2048 ביטים. בדיקת AST מאמתת שאין בקוד פייתון השוואות, תנאים או לולאות, ושהקריאה היחידה היא abs בגרסה שמתירה אותו. אורקל הבדיקה הוא max המובנה, מחוץ לפתרון.\n\nקוד C++ צורף אך לא קומפל או הורץ בסביבה הנוכחית. זו וריאציית תוכנה מקושרת ל־PREP-018 העוסק בהשוואה בחומרה; אין להציג את שניהם כאותה משימת מימוש. זו הצעה בסיוע AI הממתינה לביקורת מקצועית."
+        },
+        "en": {
+          "title": "Maximum of two integers without comparisons",
+          "prompt": "Write a function returning the larger of two integers a,b without comparison operators, builtin min/max, or a conditional that tests which value is larger.\n\nThe source leaves types and allowed operations unspecified. Solve two explicit variants: A. Exact Python integers, with abs allowed. B. If abs is forbidden too: signed 32-bit inputs, allowing bit operations and unsigned arithmetic. Avoid signed overflow and shifting a negative signed value. No security constant-time requirement is implied; source without if does not prove one.",
+          "hint": "Before choosing a trick, clarify whether absolute value is allowed and whether integers have fixed width.",
+          "hints": [
+            "Before choosing a trick, clarify whether absolute value is allowed and whether integers have fixed width.",
+            "With absolute value allowed, inspect a+b+abs(a-b) under either ordering of the inputs.",
+            "For fixed width, opposite signs select the nonnegative input. Only same-sign inputs allow the difference sign to determine order safely; build a selection mask."
+          ],
+          "reference_solution": "### Clarify the forbidden operations first\n\n“Without comparisons” does not automatically forbid abs or define overflow behavior. A language-specific trick is not portable without those choices. These functions contain no comparison operator, builtin min/max or conditional testing order. The independent checker may compare results.\n\n### A. Exact integers with absolute value\n\nUse max(a,b)=(a+b+abs(a-b))//2. When a is larger, the absolute value is a-b and the numerator becomes 2a; otherwise it becomes 2b. Equal inputs give their common value. The numerator is always even, so integer division is exact even with negative inputs. For a=-4,b=7, (-4+7+11)//2 gives seven.\n\n```python\ndef max_without_comparisons(a, b):\n    return (a + b + abs(a - b)) // 2\n```\n\nPython int arithmetic is exact. For inputs of up to B bits, these operations take O(B) time and O(B) intermediate-value bits, not size-independent O(1) time. The formula is not generally safe for fixed-width signed types: a+b or a-b may overflow, and the most-negative absolute value may be unrepresentable. Floating-point NaNs, infinities and rounding are outside the contract.\n\n### B. Overflow-safe signed 32-bit selection\n\nWork on uint32_t bit representations and extract signs sa,sb. For opposite signs, choose b exactly when a is negative. For matching signs, the mathematical difference fits the signed range, so the high bit of unsigned modular subtraction indicates its sign correctly. Do not blindly use a wrapped difference's sign for opposite-sign inputs: INT32_MAX−INT32_MIN is 4294967295, with high bit one despite a being larger.\n\nBuild a one-bit choose_b: one selects b, zero selects a. Unsigned 0−choose_b creates either all-zero or all-one bits. Bitwise selection chooses an input representation. Convert it back through int64_t, with a result proven in range, avoiding out-of-range conversion and signed overflow.\n\n```cpp\n// C++11 or later; requires exact-width int32_t/uint32_t and int64_t.\n// Materialize modulo-2^32 subtraction before shifting. Integer promotions are\n// safe even when int is wider than 32 bits: no signed overflow, negative signed\n// right shift, or out-of-range unsigned-to-signed conversion is required.\n// This artifact is supplied, but was not compiled in the current environment.\n#include <cstdint>\n\nstd::int32_t max_i32(std::int32_t a, std::int32_t b) {\n    const std::uint32_t ua = static_cast<std::uint32_t>(a);\n    const std::uint32_t ub = static_cast<std::uint32_t>(b);\n    const std::uint32_t sa = ua >> 31;\n    const std::uint32_t sb = ub >> 31;\n    const std::uint32_t different = sa ^ sb;\n    // Store first: integer promotion may otherwise perform subtraction in a\n    // wider signed int. Conversion here restores modulo-2^32 before shifting.\n    const std::uint32_t difference = ua - ub;\n    const std::uint32_t difference_sign = difference >> 31;\n    const std::uint32_t choose_b =\n        (different & sa) | ((different ^ 1u) & difference_sign);\n    const std::uint32_t mask = 0u - choose_b;\n    // XOR avoids applying ~ to a value that might promote to signed int.\n    const std::uint32_t keep_a = mask ^ UINT32_C(0xffffffff);\n    const std::uint32_t bits = (ua & keep_a) | (ub & mask);\n    const std::int64_t signed_value =\n        static_cast<std::int64_t>(bits & UINT32_C(0x7fffffff)) -\n        static_cast<std::int64_t>(bits >> 31) * INT64_C(2147483648);\n    return static_cast<std::int32_t>(signed_value);\n}\n\n```\n\nNotice the intermediate difference: store the subtraction into uint32_t before shifting. Where int is wider than 32 bits, integer promotion can compute the subtraction in a wider signed type; the assignment restores modulo 2^32 before extracting its high bit. The complementary mask uses XOR with 32 one-bits rather than applying NOT to a value that might promote to signed int.\n\nThe attached Python model explicitly masks unsigned operations; it is not a substitute for compiling C++. At fixed width this uses a constant number of operations and words. It proves neither minimum instruction count, branch-free machine code nor security constant-time execution.\n\n### Verification and relationship\n\nBoth Python methods matched the independent builtin-max oracle for all 65,536 pairs in -128..127 and 81 signed32 boundary pairs. The fixed-width model passed 10,000 seeded signed32 pairs; the abs formula also passed 500 pairs of up to 2048 bits. An AST check confirms no Python comparisons, conditionals or loops, and only one function call: abs in the variant explicitly permitting it. The oracle is outside the proposed functions.\n\nC++ source is supplied but was not compiled or run in this environment. This software exercise is linked to PREP-018, a hardware-comparison exercise with different implementation constraints. AI-assisted proposed solution; independent professional review pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-068-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "לפני חיפוש טריק, בררו אם מותר ערך מוחלט והאם המספרים מוגבלים ברוחב."
+        },
+        {
+          "id": "PREP-068-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "כשערך מוחלט מותר, בדקו מה קורה ל־a+b+abs(a-b) בכל אחד משני סדרי המספרים."
+        },
+        {
+          "id": "PREP-068-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "ברוחב קבוע: אם הסימנים שונים בוחרים את הלא־שלילי. רק כששניהם באותו סימן אפשר ללמוד מסימן ההפרש בלי גלישה מתמטית; בנו מסכה לבחירה."
+        },
+        {
+          "id": "PREP-068-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Before choosing a trick, clarify whether absolute value is allowed and whether integers have fixed width."
+        },
+        {
+          "id": "PREP-068-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "With absolute value allowed, inspect a+b+abs(a-b) under either ordering of the inputs."
+        },
+        {
+          "id": "PREP-068-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "For fixed width, opposite signs select the nonnegative input. Only same-sign inputs allow the difference sign to determine order safely; build a selection mask."
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_068_max_without_comparisons.py",
+      "solution_code_paths": [
+        "solutions/prep_068_max_without_comparisons.py",
+        "solutions/prep_068_max_without_comparisons.cpp"
+      ],
+      "verification_script_path": "checks/check_prep_068.py",
+      "verification_evidence_path": "checks/prep-068-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-068.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-068-exact-integer-identity-he.png",
+          "language": "he",
+          "description": "תרשים הסבר לפתרון המוצע"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-068-exact-integer-identity-en.png",
+          "language": "en",
+          "description": "Proposed-solution explanation diagram"
+        }
+      ],
+      "markdown_path": "questions/prep-068-maximum-two-integers-without-comparisons.md",
+      "assumptions": [
+        "Variant A uses exact Python int inputs, permits abs, forbids comparisons and builtin min/max.",
+        "Variant B has valid int32_t inputs and available uint32_t/int64_t; abs forbidden, unsigned arithmetic and bit operations allowed.",
+        "No ordering conditional inside the function; no security constant-time or branch-free-machine-code guarantee.",
+        "Floats, NaN, infinity and custom comparison types are excluded."
+      ],
+      "source_ambiguities": {
+        "operations": "Source does not say whether abs is allowed; both variants declare the choice explicitly.",
+        "types": "Source does not specify width/overflow. Exact integers and signed32 inputs are treated separately."
+      },
+      "optimality": {
+        "criterion": "Costs of two correct constructions under their integer models.",
+        "result": "Up to B-bit integers: O(B) time/intermediate bits; fixed32: O(1) word operations/storage.",
+        "proof": "A fixed number of additions, subtraction, absolute value and division by two touches up to B bits; the mask construction has a fixed word-operation count.",
+        "scope": "No minimum-operation, branch-free machine-code or security constant-time claim; C++ not compiled."
+      },
+      "verification": "Passed 65,536 small pairs in both Python methods, 81 signed32 boundary pairs, 10,000 additional fixed-width random pairs and 500 large exact-integer pairs. AST excludes comparisons, conditionals and loops inside the functions; builtin max appears only in the checker. C++ was not compiled/run; professional review pending.",
+      "edge_cases": [
+        "Equal inputs return their shared value.",
+        "Of two negative inputs, the value nearer zero is larger.",
+        "INT32_MIN versus INT32_MAX requires opposite-sign handling before interpreting difference sign.",
+        "abs(INT32_MIN) or a+b may overflow fixed-width types.",
+        "Huge Python integers work, but arithmetic is not constant bit cost."
+      ],
+      "common_mistakes": [
+        "Hiding the forbidden comparison in max or a conditional.",
+        "Using the sign of a-b without overflow/opposite-sign handling.",
+        "Using the absolute-value formula when abs is forbidden.",
+        "Shifting a negative signed value or subtracting signed inputs without declaring language/width semantics.",
+        "Claiming that no if guarantees security constant-time execution."
+      ],
+      "interview_answer": "Clarify types and whether abs is allowed. Exact integers permit (a+b+abs(a-b))//2 because the numerator is twice the maximum. Fixed-width overflow needs sign handling: choose the nonnegative input for opposite signs; for equal signs use difference sign and unsigned masks. Large Python integers do not have constant bit cost.",
+      "solution_extensions": {
+        "question": "Does source code without conditionals prevent timing leakage?",
+        "direction": "Not necessarily. Compiler output, abs implementation, integer size and memory behavior matter. A threat model, dedicated constant-time implementation and machine-code verification are additional security requirements, not consequences of forbidding comparisons.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      },
+      "technical_references": [
+        {
+          "title": "Python documentation — abs",
+          "url": "https://docs.python.org/3/library/functions.html#abs",
+          "use": "Defines the operation allowed in variant A; not the identity or complexity proof."
+        },
+        {
+          "title": "C++ draft — integral conversions",
+          "url": "https://eel.is/c++draft/conv.integral",
+          "use": "Integral-representation conversions modulo destination width."
+        },
+        {
+          "title": "C++ draft — shifts",
+          "url": "https://eel.is/c++draft/expr.shift",
+          "use": "Shift-width rules; supplied selection uses unsigned values and valid counts."
+        }
+      ],
+      "relationship_note": "Linked software variation of PREP-018: this asks for an operation/type-constrained function rather than a gate-level numeric comparator. Retained as a separate exercise.",
+      "related_question_ids": [
+        "PREP-018"
+      ],
+      "duplicate_check": "Compared existing comparator/maximum preparation records and example/verification catalogs. PREP-018 is a hardware relation with distinct constraints; no earlier identical software no-comparison contract found. Linked explicitly rather than replacing IDs.",
+      "interview_relevance": {
+        "priority": "medium",
+        "basis": "Operation constraints, exact versus fixed-width arithmetic and overflow reasoning; Intel attribution is source-reported only."
+      }
+    },
+    {
+      "id": "PREP-072",
+      "key": "maximum-sum-contiguous-subarray",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "software",
+      "topic": "arrays_and_search",
+      "topics": [
+        "software",
+        "arrays",
+        "dynamic_programming",
+        "loop_invariant",
+        "contiguous_subarray"
+      ],
+      "source_topic_tags": [
+        "hardware",
+        "software"
+      ],
+      "added_topic_tags": [
+        "arrays",
+        "dynamic_programming",
+        "loop_invariant",
+        "contiguous_subarray"
+      ],
+      "source_tags": [
+        "hardware",
+        "amazon",
+        "intel",
+        "software",
+        "cisco",
+        "google",
+        "apple",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Amazon",
+        "Intel",
+        "Cisco",
+        "Google",
+        "Apple",
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "coding",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied screenshot; AI-assisted bilingual proposed solution, code, diagrams and independent-oracle checks. Professional, translation-parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-072.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "יש מערך של מספרים חיוביים ושליליים, שלמים. כתוב פונ׳ שתחזיר את הרצף מספרים שסכומם הגבוה ביותר. לדוגמא עם המערך [1,4-,2-,5,1,0,5-,4,1,3-,3-] הפונ׳ תחזיר 7 כי 7=(1-)+(2-)+1+0+5 וזה המקסימום. הערת תעתיק: סדר הסימנים והמספרים בצילום דו־כיווני; הנוסח נשמר כפי שנראה, והדוגמה אינה חד־משמעית.",
+      "translations": {
+        "he": {
+          "title": "תת־המערך הרציף בעל הסכום המרבי",
+          "prompt": "נתון מערך של מספרים שלמים, חיוביים, שליליים או אפס. מצאו תת־מערך רציף שאינו ריק שסכום איבריו הוא הגבוה ביותר. החזירו (sum,start,end), כאשר start,end הם גבולות כוללים באינדקסים המתחילים ב־0. אפשר להחזיר גם את הפרוסה עצמה, אך יש להבחין בעלות העתקתה. לקלט ריק החזירו None. בשוויון סכומים בחרו התחלה מוקדמת ואז סוף מוקדם.\n\nהבהרת מקור: התמונה מציגה מספרים בסביבת RTL וטוענת לתוצאה 7; סדר הסימנים אינו ברור, ובתעתיק האפשרי [1,-4,-2,5,1,0,-5,4,1,-3,-3] התוצאה הנכונה היא 6, לא 7. אין להסתמך על הדוגמה המצולמת כהוכחה. הדוגמה הערוכה והחד־משמעית שלנו היא [-2,1,-3,4,-1,2,1,-5,4], שעבורה מחזירים (6,3,6) ואת הרצף [4,-1,2,1]. משתמשים בחשבון שלם מדויק; רצף חייב להיות רציף.",
+          "hint": "אם יודעים שהרצף חייב להסתיים בתא הנוכחי, האם צריך לבדוק מחדש את כל נקודות ההתחלה?",
+          "hints": [
+            "אם יודעים שהרצף חייב להסתיים בתא הנוכחי, האם צריך לבדוק מחדש את כל נקודות ההתחלה?",
+            "כדי להסתיים כאן יש רק שתי אפשרויות מועילות: להתחיל כאן, או להמשיך את הרצף הטוב ביותר שהסתיים בתא הקודם.",
+            "שמרו סכום נוכחי ושיא גלובלי. סכום קודם שלילי נזרק; אחרת ממשיכים. אתחלו מהאיבר הראשון ולא מאפס, ושמרו גם את נקודות ההתחלה והסוף."
+          ],
+          "reference_solution": "### מפרידים שיא שמסתיים כאן משיא בכלל המערך\n\nנסמן current כסכום הגבוה ביותר של רצף לא־ריק שמסתיים בדיוק בתא הנוכחי. כשמגיע איבר חדש x, כל רצף שמסתיים בו הוא או [x], או רצף שמסתיים בתא הקודם שאליו צורף x. מבין הרצפים הקודמים מספיק לשמור את הטוב ביותר: הוספת אותו x משמרת את סדר הסכומים.\n\nאם current הקודם שלילי, הוא רק מפחית את x ולכן מתחילים כאן. אם הוא חיובי, כדאי להמשיך. אם הוא אפס, שתי האפשרויות שוות בסכום, והמשך שומר התחלה מוקדמת יותר לפי כלל השוויון. במקביל שומרים best, שהוא השיא בכל נקודות הסיום שכבר נסרקו.\n\n### מימוש ששומר גם את הרצף\n\n```python\n\"\"\"Nonempty maximum contiguous subarray; inclusive zero-based boundaries.\n\nExact integers. Empty input returns None. Ties choose earliest start and then\nearliest end. Returns (sum, start, end), without allocating the output slice.\n\"\"\"\n\n\ndef maximum_subarray(values):\n    if not values:\n        return None\n    current = best = values[0]\n    start = best_start = best_end = 0\n    for end in range(1, len(values)):\n        # Equality extends: an earlier start wins tied sums.\n        if current < 0:\n            current, start = values[end], end\n        else:\n            current += values[end]\n        if current > best or (current == best and start < best_start):\n            best, best_start, best_end = current, start, end\n    return best, best_start, best_end\n\n```\n\nהפונקציה מחזירה סכום וגבולות ולא מעתיקה את הרשימה. כדי לקבל את האיברים אפשר לקחת values[start:end+1]. אם אורכה k, העתקת פרוסה דורשת O(k) זמן ומקום לפלט. אם מבקשים רק את הסכום, מחזירים את השדה הראשון בתוצאה; זו משמעות הדוגמה במקור, שטוענת לפלט מספרי.\n\n### דוגמה חד־משמעית עם מעקב\n\nעבור [-2,1,-3,4,-1,2,1,-5,4], סכומי הרצפים הטובים המסתיימים בכל תא הם ‎[-2,1,-2,4,3,5,6,1,5]. השיאים עד כל תא הם ‎[-2,1,1,4,4,5,6,6,6]. לכן מחזירים (6,3,6), כלומר [4,-1,2,1]. התרשים מציג בדיוק את שתי השורות האלה. אין כאן בחירה של איברים מפוזרים: רצף חייב לכלול כל תא בין גבולותיו.\n\n### אי־ההתאמה בדוגמת המקור\n\nצילום המקור נשמר ללא שינוי. סימני המינוס וסדר הביטויים מופיעים בסביבה דו־כיוונית, ולכן תעתיק המספרים אינו ודאי. אם מפרשים את המערך כ־[1,-4,-2,5,1,0,-5,4,1,-3,-3], אורקל המונה את כל הרצפים נותן מקסימום 6, ובכלל השוויון שלנו מחזיר (6,3,4), כלומר [5,1]. גם [5,1,0] מגיע ל־6 אך מסתיים מאוחר יותר. המקור טוען ל־7; לא שינינו בשקט איברים כדי להתאים לטענה. זו עמימות או שגיאת דוגמה שדורשת בירור של הנוסח המקורי, ואינה משפיעה על הבעיה הכללית או המימוש שנבדק.\n\n### למה זה נכון ולמה לא מאתחלים באפס?\n\nבאינדוקציה, current הוא המקסימום על כל הרצפים הלא־ריקים שמסתיימים בתא הנוכחי: שתי האפשרויות, להתחיל כאן או להמשיך את הטוב הקודם, מכסות את כולן. best שומר את המקסימום על כל נקודות הסיום שנבדקו, ולכן בסוף הוא המקסימום הכללי. שמירת התחלה מוקדמת בשוויון current, ועדכון best רק בסכום טוב יותר או התחלה מוקדמת יותר, מקיימים את כלל השוויון; הסריקה לפי סוף עולה משמרת את הסוף המוקדם.\n\nמאתחלים current=best=values[0] כדי לייצג רצף לא־ריק. ב־[-5,-2,-9] התשובה היא (-2,1,1), ולא 0 שאינו סכום של רצף מותר. אפס הוא תשובה חוקית רק אם באמת קיים רצף שסכומו אפס.\n\n### עלות ואימות\n\nO(N) פעולות ו־O(1) מילות עזר, ללא הפרוסה האפשרית בפלט. קריאה ליניארית דרושה במקרה הגרוע: איבר שלא נקרא יכול להיות חיובי גדול ולשנות את השיא. במספרים מדויקים גדולים יש גם עלות ביטים של חיבור והשוואה. לא טוענים שזיכרון בביטים בלתי תלוי בגודל המספרים.\n\nעברו כל 97,656 המערכים באורכים 0–7 עם איברים ‎-2..2 ועוד 500 מערכי מספרים גדולים מול אורקל עצמאי המונה כל זוג גבולות ומחשב את סכומו ישירות. הבדיקה משווה גם גבולות ושוויונות. הפתרון מוצע, בסיוע AI, וממתין לסקירה מקצועית עצמאית."
+        },
+        "en": {
+          "title": "Maximum-sum contiguous subarray",
+          "prompt": "Given an integer array containing positive, negative or zero values, find a nonempty contiguous subarray with maximum sum. Return (sum,start,end) using inclusive zero-based boundaries. Returning the slice is optional, but account separately for copying it. Empty input returns None. Ties prefer earliest start, then earliest end.\n\nSource clarification: the RTL screenshot claims seven, but sign/order rendering is ambiguous. The possible ASCII transcription [1,-4,-2,5,1,0,-5,4,1,-3,-3] actually has maximum six, not seven. Do not treat that photographed example as proof. Our separate, unambiguous example is [-2,1,-3,4,-1,2,1,-5,4], returning (6,3,6) and interval [4,-1,2,1]. Use exact integer arithmetic; the interval must be contiguous.",
+          "hint": "If the interval must end at the current position, must every possible starting point be reconsidered?",
+          "hints": [
+            "If the interval must end at the current position, must every possible starting point be reconsidered?",
+            "Only two useful choices remain: start here, or extend the best interval ending at the previous position.",
+            "Keep a current ending sum and a global best. Drop a negative previous sum; otherwise extend. Initialize from the first element, not zero, and track boundaries."
+          ],
+          "reference_solution": "### Separate the best ending here from the global best\n\nLet current be the largest sum of a nonempty interval ending exactly at this position. After a new value x, an interval ending here either starts with [x] or extends an interval ending at the previous position. Only the best previous ending sum matters because adding the same x preserves the ordering of candidates.\n\nIf the previous current is negative, discard it and start here. If positive, extend. If zero, extending and restarting tie in sum; extend to preserve the earlier start. Separately keep best across every ending position already scanned.\n\n### Implementation with boundaries\n\n```python\n\"\"\"Nonempty maximum contiguous subarray; inclusive zero-based boundaries.\n\nExact integers. Empty input returns None. Ties choose earliest start and then\nearliest end. Returns (sum, start, end), without allocating the output slice.\n\"\"\"\n\n\ndef maximum_subarray(values):\n    if not values:\n        return None\n    current = best = values[0]\n    start = best_start = best_end = 0\n    for end in range(1, len(values)):\n        # Equality extends: an earlier start wins tied sums.\n        if current < 0:\n            current, start = values[end], end\n        else:\n            current += values[end]\n        if current > best or (current == best and start < best_start):\n            best, best_start, best_end = current, start, end\n    return best, best_start, best_end\n\n```\n\nThe function returns sum and boundaries without copying the interval. To return its values, use values[start:end+1]; a length-k slice costs O(k) output time/storage. If the caller requests only the sum, use the first result field. This also covers the source's numeric-output interpretation.\n\n### An explicit trace\n\nFor [-2,1,-3,4,-1,2,1,-5,4], best-ending-here sums are [-2,1,-2,4,3,5,6,1,5]. Global bests are [-2,1,1,4,4,5,6,6,6]. Return (6,3,6), representing [4,-1,2,1]. The diagram shows these two sequences. This is contiguous selection: every position between the boundaries belongs to the interval.\n\n### Source-example discrepancy\n\nThe original screenshot is preserved. Its signs/order are bidirectional, so the numeric transcription is uncertain. If interpreted as [1,-4,-2,5,1,0,-5,4,1,-3,-3], independent all-interval enumeration finds six, with our tie rule returning (6,3,4), namely [5,1]. [5,1,0] also sums to six but ends later. The screenshot claims seven. We have not silently changed elements to match that claim. This remains an ambiguous or incorrect source example needing original-wording clarification; the general task and verified algorithm are unaffected.\n\n### Correctness and initialization\n\nInductively, current is optimal among all nonempty intervals ending here: starting here and extending the best previous interval cover every possibility. best takes the maximum across all visited ending positions, so it is globally optimal at termination. Retaining earlier starts on equal current sums, and replacing best only for higher sum or earlier start, implements the tie rule; increasing end order preserves earliest end.\n\nInitialize both sums from values[0], representing a real nonempty interval. For [-5,-2,-9], the result is (-2,1,1), not zero, which no legal interval attains. Zero is valid only when an actual interval attains it.\n\n### Cost and verification\n\nO(N) operations and O(1) auxiliary words, excluding an optional output slice. A linear worst-case read bound is necessary because an unread element can be sufficiently positive to change the optimum. Exact large integers add bit-dependent addition/comparison costs; bit storage is not size-independent.\n\nThe executed code matched a separate direct-sum all-boundary-pairs oracle on all 97,656 arrays of lengths zero through seven over -2..2, plus 500 large-integer arrays. Assertions include boundaries and ties. AI-assisted proposed solution; independent professional review pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-072-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "אם יודעים שהרצף חייב להסתיים בתא הנוכחי, האם צריך לבדוק מחדש את כל נקודות ההתחלה?"
+        },
+        {
+          "id": "PREP-072-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "כדי להסתיים כאן יש רק שתי אפשרויות מועילות: להתחיל כאן, או להמשיך את הרצף הטוב ביותר שהסתיים בתא הקודם."
+        },
+        {
+          "id": "PREP-072-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "שמרו סכום נוכחי ושיא גלובלי. סכום קודם שלילי נזרק; אחרת ממשיכים. אתחלו מהאיבר הראשון ולא מאפס, ושמרו גם את נקודות ההתחלה והסוף."
+        },
+        {
+          "id": "PREP-072-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "If the interval must end at the current position, must every possible starting point be reconsidered?"
+        },
+        {
+          "id": "PREP-072-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Only two useful choices remain: start here, or extend the best interval ending at the previous position."
+        },
+        {
+          "id": "PREP-072-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Keep a current ending sum and a global best. Drop a negative previous sum; otherwise extend. Initialize from the first element, not zero, and track boundaries."
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_072_maximum_subarray.py",
+      "solution_code_paths": [
+        "solutions/prep_072_maximum_subarray.py"
+      ],
+      "verification_script_path": "checks/check_prep_072.py",
+      "verification_evidence_path": "checks/prep-072-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-072.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-072-kadane-trace-he.png",
+          "language": "he",
+          "description": "תרשים הסבר לפתרון המוצע"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-072-kadane-trace-en.png",
+          "language": "en",
+          "description": "Proposed-solution explanation diagram"
+        }
+      ],
+      "markdown_path": "questions/prep-072-maximum-sum-contiguous-subarray.md",
+      "assumptions": [
+        "Intervals are contiguous and nonempty; return sum plus inclusive zero-based boundaries.",
+        "Empty input returns None. Exact integer sums do not overflow.",
+        "Equal sums prefer earliest start and then earliest end.",
+        "Optional output-slice copying is costed separately from auxiliary variables.",
+        "A separate unambiguous teaching example is used; original screenshot and its seven claim remain preserved and flagged against the possible transcription."
+      ],
+      "source_ambiguities": {
+        "requested_output": "Source asks for an interval but its example returns a sum. Return sum plus boundaries, supporting either output form.",
+        "example": "Possible ASCII transcription: [1,-4,-2,5,1,0,-5,4,1,-3,-3]. Its maximum is six, not seven. RTL sign/order is uncertain; no fabricated seven match.",
+        "edited_example": "Separate example: [-2,1,-3,4,-1,2,1,-5,4] returns (6,3,6)."
+      },
+      "optimality": {
+        "criterion": "Scan time and auxiliary words, excluding output copying.",
+        "result": "O(N) time and O(1) auxiliary words; worst-case linear time is optimal.",
+        "proof": "Each endpoint needs only the previous optimal ending sum; unread input could change the maximum, giving a linear read bound.",
+        "scope": "Copying a length-k result requires O(k) output time/storage. Exact arithmetic also depends on bit length."
+      },
+      "verification": "Passed all 97,656 arrays of lengths 0..7 over -2..2 plus 500 large-integer arrays. Independent oracle enumerates every nonempty interval and sums directly; checks include sum, both boundaries and ties. Also verified the seven-versus-six discrepancy for the possible source transcription. Python executed; independent human professional review pending.",
+      "edge_cases": [
+        "All-negative input returns its largest element, not zero.",
+        "One element is the sole interval.",
+        "Empty input returns None.",
+        "Zeros/ties prefer earliest start and then earliest end.",
+        "The optimum may be one element or the entire array.",
+        "An empty interval is forbidden and cannot beat a negative optimum."
+      ],
+      "common_mistakes": [
+        "Initializing best to zero admits an empty result for all-negative input.",
+        "Summing only positives need not be contiguous.",
+        "Keeping current without a global best returns only the last-ending interval.",
+        "Losing boundaries or inconsistent tie handling.",
+        "Copying a slice at every step can introduce quadratic cost.",
+        "Silently changing source values to fabricate its claimed seven."
+      ],
+      "interview_answer": "Keep the best nonempty interval sum ending here and the global best. Restart after a negative previous sum; otherwise extend. Initialize from the first element to handle all-negative inputs and retain boundaries. This takes O(N) time and O(1) auxiliary words, with output copying accounted separately.",
+      "solution_extensions": {
+        "question": "What changes if the array is circular and an interval may wrap?",
+        "direction": "Consider the ordinary maximum or total sum minus a minimum-sum interval. Prevent an empty complement when that minimum covers the whole array, especially for all-negative inputs, and define wraparound boundaries.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      },
+      "related_question_ids": [
+        "PREP-066"
+      ],
+      "duplicate_check": "Checked preparation archive and example/verification catalogs for contiguous/maximum-subarray equivalents. No earlier identical exercise found. PREP-066 shares a one-pass invariant but requires temporal price differences, not an interval sum.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "One-dimensional dynamic programming, loop invariants, all-negative input, boundaries and oracle testing; employers are screenshot-reported only."
+      }
+    }
+  ],
+  "editorial": {
+    "PREP-066": {
+      "hints": {
+        "he": [
+          "אם יום המכירה היה ידוע, איזה מידע על הימים שלפניו היה מספיק כדי לבחור יום קנייה?",
+          "לכל יום מכירה מספיק לשמור את המחיר הנמוך ביותר שנראה לפניו ואת האינדקס הראשון שלו.",
+          "עברו משמאל לימין: קודם חשבו רווח מול המינימום הקודם, אחר כך הכניסו את היום הנוכחי למינימום. עדכנו שיא רק ברווח גדול יותר כדי לשמר שוויונות."
+        ],
+        "en": [
+          "If the selling day were fixed, what information about earlier days would determine the best purchase?",
+          "For each sale, retain the smallest earlier price and its first index.",
+          "Scan left to right: evaluate against the earlier minimum before admitting today's price. Replace the best trade only on strictly greater profit to preserve ties."
+        ]
+      },
+      "note": "2026-10-21: original screenshot preserved; explicit contracts, paired bilingual proposed solution, illustrative diagrams and executed independent-oracle checks. Professional, parity and reuse reviews pending; no existing human-review attestation inherited."
+    },
+    "PREP-068": {
+      "hints": {
+        "he": [
+          "לפני חיפוש טריק, בררו אם מותר ערך מוחלט והאם המספרים מוגבלים ברוחב.",
+          "כשערך מוחלט מותר, בדקו מה קורה ל־a+b+abs(a-b) בכל אחד משני סדרי המספרים.",
+          "ברוחב קבוע: אם הסימנים שונים בוחרים את הלא־שלילי. רק כששניהם באותו סימן אפשר ללמוד מסימן ההפרש בלי גלישה מתמטית; בנו מסכה לבחירה."
+        ],
+        "en": [
+          "Before choosing a trick, clarify whether absolute value is allowed and whether integers have fixed width.",
+          "With absolute value allowed, inspect a+b+abs(a-b) under either ordering of the inputs.",
+          "For fixed width, opposite signs select the nonnegative input. Only same-sign inputs allow the difference sign to determine order safely; build a selection mask."
+        ]
+      },
+      "note": "2026-10-21: original screenshot preserved; explicit contracts, paired bilingual proposed solution, illustrative diagrams and executed independent-oracle checks. Professional, parity and reuse reviews pending; no existing human-review attestation inherited."
+    },
+    "PREP-072": {
+      "hints": {
+        "he": [
+          "אם יודעים שהרצף חייב להסתיים בתא הנוכחי, האם צריך לבדוק מחדש את כל נקודות ההתחלה?",
+          "כדי להסתיים כאן יש רק שתי אפשרויות מועילות: להתחיל כאן, או להמשיך את הרצף הטוב ביותר שהסתיים בתא הקודם.",
+          "שמרו סכום נוכחי ושיא גלובלי. סכום קודם שלילי נזרק; אחרת ממשיכים. אתחלו מהאיבר הראשון ולא מאפס, ושמרו גם את נקודות ההתחלה והסוף."
+        ],
+        "en": [
+          "If the interval must end at the current position, must every possible starting point be reconsidered?",
+          "Only two useful choices remain: start here, or extend the best interval ending at the previous position.",
+          "Keep a current ending sum and a global best. Drop a negative previous sum; otherwise extend. Initialize from the first element, not zero, and track boundaries."
+        ]
+      },
+      "note": "2026-10-21: original screenshot preserved; explicit contracts, paired bilingual proposed solution, illustrative diagrams and executed independent-oracle checks. Professional, parity and reuse reviews pending; no existing human-review attestation inherited."
+    }
+  },
+  "localization": {
+    "PREP-066": {
+      "assumptions": {
+        "he": [
+          "אינדקסי ימים מתחילים ב־0; חייבים לקנות לפני שמוכרים, בלי שינוי סדר הקלט.",
+          "מחירים שלמים מדויקים אי־שליליים; אין עמלות, מכירה בחסר או יותר מעסקה אחת.",
+          "בגרסה הראשית אין עסקה אם אין רווח חיובי; בגרסה המחייבת מותר הפסד. N<2 מחזיר None בשתיהן.",
+          "בשוויון מעדיפים יום קנייה מוקדם ואז יום מכירה מוקדם."
+        ],
+        "en": [
+          "Zero-based days; purchase must precede sale and input order is unchanged.",
+          "Exact nonnegative integer prices; no fees, short selling or multiple trades.",
+          "Primary contract abstains without positive profit; mandatory variant accepts a loss. N<2 returns None in both.",
+          "Ties prefer earliest buy, then earliest sell."
+        ]
+      },
+      "optimality": {
+        "he": {
+          "criterion": "זמן במקרה הגרוע ומספר משתני עזר במודל מילים.",
+          "result": "O(N) זמן ו־O(1) מילות עזר; הזמן אופטימלי אסימפטוטית.",
+          "proof": "כל מכירה משתמשת במינימום הקודם. במקרה הגרוע מחיר שלא נקרא יכול ליצור מינימום או מקסימום המשנים את העסקה, ולכן נדרשת קריאה ליניארית.",
+          "scope": "שלמים בגודל שרירותי מחייבים עלות ביטים נוספת; זו אינה הבטחת תזמון פיזי."
+        },
+        "en": {
+          "criterion": "Worst-case time and auxiliary-variable count in the word model.",
+          "result": "O(N) time and O(1) auxiliary words; asymptotically optimal time.",
+          "proof": "Each sale uses its earlier minimum. An unread price can create a new minimum or maximum changing the optimum, giving a linear worst-case input-read bound.",
+          "scope": "Arbitrary-size integer costs also depend on bit length; no physical timing guarantee."
+        }
+      },
+      "verification": {
+        "he": "עברו 43,690 השוואות לאורקל עצמאי: 21,845 מערכים באורכים 0–7 מעל 0–3, כל אחד בשתי גרסאות. עוד 1,000 בדיקות על 500 מערכי מספרים גדולים. נבדקו זוג האינדקסים, הרווח, שוויונות והימנעות מעסקה, ולא רק הרווח. קוד פייתון רץ בפועל; סקירה מקצועית עצמאית ממתינה.",
+        "en": "Passed 43,690 independent-oracle checks: 21,845 arrays of lengths 0..7 over 0..3 under both contracts, plus 1,000 checks on 500 large-integer arrays. Assertions cover indices, profit, tie order and abstention, not profit alone. Python executed; independent professional review pending."
+      },
+      "edge_cases": {
+        "he": [
+          "מערך ריק או יום אחד: None.",
+          "מחירים יורדים: הימנעות או העסקה המפסידה הכי מעט, לפי החוזה.",
+          "כל המחירים שווים: אין עסקה בגרסה הראשית; (0,1,0) בגרסה המחייבת.",
+          "מינימום או רווח חוזר: שומרים את הימים המוקדמים.",
+          "המקסימום לפני המינימום אינו עסקה חוקית."
+        ],
+        "en": [
+          "Empty or one-day input returns None.",
+          "Descending prices: abstain or take the smallest loss, according to contract.",
+          "Equal prices: no optional trade; mandatory returns (0,1,0).",
+          "Repeated minima/profits preserve earliest days.",
+          "A maximum before the minimum is not a legal buy/sell pair."
+        ]
+      },
+      "common_mistakes": {
+        "he": [
+          "מיון המחירים מוחק את סדר הימים.",
+          "בחירת מינימום ומקסימום גלובליים עלולה למכור לפני הקנייה.",
+          "עדכון המינימום לפני חישוב המועמד מאפשר בטעות אותו יום בשני התפקידים.",
+          "החזרת המחירים או הרווח בלבד אינה מחזירה את הימים שנדרשו.",
+          "אתחול רווח 0 בלי בחינת הגרסה המחייבת מסתיר הפסד שהוא עדיין העסקה החוקית הטובה ביותר."
+        ],
+        "en": [
+          "Sorting destroys temporal order.",
+          "Global min/max may sell before purchasing.",
+          "Admitting the current minimum before evaluation can accidentally allow same-day trades.",
+          "Returning prices or profit alone fails to return the requested days.",
+          "Initializing mandatory profit to zero can hide the best legal loss."
+        ]
+      },
+      "interview_answer": {
+        "he": "אסרוק לפי יום המכירה ואשמור את המחיר הנמוך ביותר שהיה לפניו ואת היום הראשון שלו. בכל תא אחשב רווח ואעדכן את זוג הימים הטוב ביותר, ורק אחר כך אעדכן מינימום. כך מתקבל O(N) זמן ו־O(1) מילות עזר. מראש אברר אם מותר להימנע מעסקה ומה מחזירים כשאין שני ימים.",
+        "en": "Scan by selling day, retaining the lowest earlier price and its first index. Evaluate profit and update the best pair before updating the minimum. This gives O(N) time and O(1) auxiliary words. First clarify whether abstention is allowed and what to return with fewer than two days."
+      },
+      "solution_extensions": {
+        "he": {
+          "question": "מה משתנה אם מותר לבצע כמה עסקאות אך להחזיק לכל היותר מניה אחת?",
+          "direction": "בלי עמלות או מגבלות נוספות אפשר לצבור כל עלייה חיובית בין ימים סמוכים. זו בעיה אחרת: המינימום והשיא של עסקה יחידה אינם הפתרון לה. הוספת עמלה או יום מנוחה כבר מצריכה מצבי תכנון דינמי.",
+          "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+        },
+        "en": {
+          "question": "What if multiple transactions are allowed while holding at most one share?",
+          "direction": "Without fees or further constraints, sum positive consecutive-day rises. This is a different contract; a single prefix minimum/best trade does not solve it. Fees or cooldown introduce dynamic-programming states.",
+          "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+        }
+      }
+    },
+    "PREP-068": {
+      "assumptions": {
+        "he": [
+          "גרסה א: שני int מדויקים בפייתון, abs מותר, השוואות ו־min/max אסורים.",
+          "גרסה ב: קלטי int32_t תקינים וקיום uint32_t,int64_t; abs אסור, אריתמטיקה ללא סימן ופעולות ביטים מותרות.",
+          "אין תנאי הבודק סדר בפונקציה; אין הבטחה אבטחתית לזמן קבוע או לקוד מכונה ללא קפיצות.",
+          "float, NaN, אינסוף וטיפוסים בעלי השוואה מותאמת אינם בתחום."
+        ],
+        "en": [
+          "Variant A uses exact Python int inputs, permits abs, forbids comparisons and builtin min/max.",
+          "Variant B has valid int32_t inputs and available uint32_t/int64_t; abs forbidden, unsigned arithmetic and bit operations allowed.",
+          "No ordering conditional inside the function; no security constant-time or branch-free-machine-code guarantee.",
+          "Floats, NaN, infinity and custom comparison types are excluded."
+        ]
+      },
+      "source_ambiguities": {
+        "he": {
+          "operations": "המקור לא מגדיר אם abs מותר; שתי הגרסאות מצהירות במפורש על הבחירה.",
+          "types": "המקור אינו קובע רוחב או גלישה. הפתרון מפריד שלמים מדויקים וקלט 32 ביטים עם סימן."
+        },
+        "en": {
+          "operations": "Source does not say whether abs is allowed; both variants declare the choice explicitly.",
+          "types": "Source does not specify width/overflow. Exact integers and signed32 inputs are treated separately."
+        }
+      },
+      "optimality": {
+        "he": {
+          "criterion": "עלות שתי בניות תקינות לפי מודל המספרים.",
+          "result": "שלמים עד B ביטים: O(B) זמן וביטי ביניים; רוחב 32 קבוע: O(1) פעולות ומילות עזר.",
+          "proof": "לזהות מספר קבוע של חיבורים, חיסור, ערך מוחלט וחלוקה בשתיים על עד B ביטים; שיטת המסכה מפעילה מספר קבוע של פעולות על מילים.",
+          "scope": "לא נטען למינימום פעולות, ללא קפיצות בקוד מכונה או זמן קבוע אבטחתי; C++ לא קומפל."
+        },
+        "en": {
+          "criterion": "Costs of two correct constructions under their integer models.",
+          "result": "Up to B-bit integers: O(B) time/intermediate bits; fixed32: O(1) word operations/storage.",
+          "proof": "A fixed number of additions, subtraction, absolute value and division by two touches up to B bits; the mask construction has a fixed word-operation count.",
+          "scope": "No minimum-operation, branch-free machine-code or security constant-time claim; C++ not compiled."
+        }
+      },
+      "verification": {
+        "he": "עברו 65,536 זוגות קטנים בשתי שיטות פייתון, 81 זוגות גבול בני 32 ביטים, עוד 10,000 זוגות אקראיים במודל רוחב קבוע ועוד 500 זוגות גדולים בנוסחה המדויקת. בדיקת AST שוללת השוואות, תנאים ולולאות בפונקציות. אורקל max נמצא בבדיקה בלבד. C++ לא קומפל ולא הורץ; סקירה מקצועית ממתינה.",
+        "en": "Passed 65,536 small pairs in both Python methods, 81 signed32 boundary pairs, 10,000 additional fixed-width random pairs and 500 large exact-integer pairs. AST excludes comparisons, conditionals and loops inside the functions; builtin max appears only in the checker. C++ was not compiled/run; professional review pending."
+      },
+      "edge_cases": {
+        "he": [
+          "a=b מחזיר את הערך עצמו.",
+          "שני מספרים שליליים: הגדול הוא הקרוב יותר לאפס.",
+          "INT32_MIN מול INT32_MAX דורש טיפול בסימנים שונים לפני שימוש בסימן ההפרש.",
+          "abs(INT32_MIN) או a+b יכולים לגלוש בשפה בעלת רוחב קבוע.",
+          "מספרי Python ענקיים עדיין תקינים אך פעולותיהם אינן בזמן קבוע."
+        ],
+        "en": [
+          "Equal inputs return their shared value.",
+          "Of two negative inputs, the value nearer zero is larger.",
+          "INT32_MIN versus INT32_MAX requires opposite-sign handling before interpreting difference sign.",
+          "abs(INT32_MIN) or a+b may overflow fixed-width types.",
+          "Huge Python integers work, but arithmetic is not constant bit cost."
+        ]
+      },
+      "common_mistakes": {
+        "he": [
+          "הסתרת ההשוואה בתוך max או תנאי, בניגוד להגדרה.",
+          "שימוש בסימן a-b בלי לטפל בגלישה ובסימנים שונים.",
+          "שימוש בנוסחת ערך מוחלט כש־abs אינו פעולה מותרת.",
+          "הזזה של מספר שלילי או חיסור עם סימן בלי להגדיר שפה ורוחב.",
+          "טענה שקוד ללא if מבטיח זמן קבוע לצורכי אבטחה."
+        ],
+        "en": [
+          "Hiding the forbidden comparison in max or a conditional.",
+          "Using the sign of a-b without overflow/opposite-sign handling.",
+          "Using the absolute-value formula when abs is forbidden.",
+          "Shifting a negative signed value or subtracting signed inputs without declaring language/width semantics.",
+          "Claiming that no if guarantees security constant-time execution."
+        ]
+      },
+      "interview_answer": {
+        "he": "קודם אברר טיפוסים והאם abs מותר. בשלמים מדויקים אפשר להחזיר (a+b+abs(a-b))//2, כי המונה הוא פעמיים הגדול. ברוחב קבוע הנוסחה עלולה לגלוש; אחלץ סימנים ואבחר את הלא־שלילי בסימנים שונים, ובאותו סימן אשתמש בסימן ההפרש ובמסכה על מספרים ללא סימן. לא אטען שאלה פעולות בזמן קבוע במספרי Python גדולים.",
+        "en": "Clarify types and whether abs is allowed. Exact integers permit (a+b+abs(a-b))//2 because the numerator is twice the maximum. Fixed-width overflow needs sign handling: choose the nonnegative input for opposite signs; for equal signs use difference sign and unsigned masks. Large Python integers do not have constant bit cost."
+      },
+      "solution_extensions": {
+        "he": {
+          "question": "האם פתרון ללא תנאים בקוד המקור בטוח נגד דליפות תזמון?",
+          "direction": "לא בהכרח. המהדר, מימוש abs, רוחב מספרים וזיכרון משפיעים על התזמון. נדרשים מודל איום ומימוש קבוע־זמן ייעודי ואימות קוד המכונה. זו דרישת אבטחה נוספת ולא תוצאה של האיסור על השוואות.",
+          "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+        },
+        "en": {
+          "question": "Does source code without conditionals prevent timing leakage?",
+          "direction": "Not necessarily. Compiler output, abs implementation, integer size and memory behavior matter. A threat model, dedicated constant-time implementation and machine-code verification are additional security requirements, not consequences of forbidding comparisons.",
+          "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+        }
+      },
+      "technical_references": {
+        "he": [
+          {
+            "title": "תיעוד Python — ערך מוחלט",
+            "url": "https://docs.python.org/3/library/functions.html#abs",
+            "use": "הגדרת הפעולה המותרת בגרסה א; אינה הוכחה לזהות או לזמן הריצה."
+          },
+          {
+            "title": "טיוטת C++ — המרות שלמים",
+            "url": "https://eel.is/c++draft/conv.integral",
+            "use": "המרה בין ייצוגי שלמים לפי מודולו רוחב היעד."
+          },
+          {
+            "title": "טיוטת C++ — פעולות הזזה",
+            "url": "https://eel.is/c++draft/expr.shift",
+            "use": "כללי רוחב והזזה; הקוד משתמש בערכים ללא סימן ובכמות הזזה תקינה."
+          }
+        ],
+        "en": [
+          {
+            "title": "Python documentation — abs",
+            "url": "https://docs.python.org/3/library/functions.html#abs",
+            "use": "Defines the operation allowed in variant A; not the identity or complexity proof."
+          },
+          {
+            "title": "C++ draft — integral conversions",
+            "url": "https://eel.is/c++draft/conv.integral",
+            "use": "Integral-representation conversions modulo destination width."
+          },
+          {
+            "title": "C++ draft — shifts",
+            "url": "https://eel.is/c++draft/expr.shift",
+            "use": "Shift-width rules; supplied selection uses unsigned values and valid counts."
+          }
+        ]
+      },
+      "relationship_note": {
+        "he": "וריאציית תוכנה מקושרת ל־PREP-018: כאן מתכננים פונקציה לפי אילוצי פעולות וטיפוסים, ולא משווים בין שני מספרים באמצעות מימוש שערים. נשמרת כשאלה נפרדת.",
+        "en": "Linked software variation of PREP-018: this asks for an operation/type-constrained function rather than a gate-level numeric comparator. Retained as a separate exercise."
+      }
+    },
+    "PREP-072": {
+      "assumptions": {
+        "he": [
+          "רצף רציף ולא־ריק; הסכום והגבולות הכוללים מוחזרים באינדקסים המתחילים ב־0.",
+          "קלט ריק מחזיר None. כל האיברים שלמים מדויקים; אין גלישת סכום.",
+          "בשוויון סכומים בוחרים התחלה מוקדמת ואחריה סוף מוקדם.",
+          "עלות העתקת רצף הפלט נספרת בנפרד ממספר משתני העזר.",
+          "דוגמה חדשה וחד־משמעית מחליפה רק את ההדגמה ללומד; צילום המקור וטענת 7 נשמרים ומסומנים כלא תואמים לתעתיק האפשרי."
+        ],
+        "en": [
+          "Intervals are contiguous and nonempty; return sum plus inclusive zero-based boundaries.",
+          "Empty input returns None. Exact integer sums do not overflow.",
+          "Equal sums prefer earliest start and then earliest end.",
+          "Optional output-slice copying is costed separately from auxiliary variables.",
+          "A separate unambiguous teaching example is used; original screenshot and its seven claim remain preserved and flagged against the possible transcription."
+        ]
+      },
+      "source_ambiguities": {
+        "he": {
+          "requested_output": "המקור מבקש רצף אך הדוגמה מחזירה סכום. הפתרון מחזיר סכום וגבולות, ומהם אפשר להפיק את שתי צורות הפלט.",
+          "example": "תעתיק ASCII אפשרי: [1,-4,-2,5,1,0,-5,4,1,-3,-3]. בו המקסימום 6, לא 7. סימנים וסדר בצילום RTL אינם ודאיים; אין התאמה מומצאת ל־7.",
+          "edited_example": "דוגמה נפרדת: [-2,1,-3,4,-1,2,1,-5,4] מחזירה (6,3,6)."
+        },
+        "en": {
+          "requested_output": "Source asks for an interval but its example returns a sum. Return sum plus boundaries, supporting either output form.",
+          "example": "Possible ASCII transcription: [1,-4,-2,5,1,0,-5,4,1,-3,-3]. Its maximum is six, not seven. RTL sign/order is uncertain; no fabricated seven match.",
+          "edited_example": "Separate example: [-2,1,-3,4,-1,2,1,-5,4] returns (6,3,6)."
+        }
+      },
+      "optimality": {
+        "he": {
+          "criterion": "זמן מעבר ומילות זיכרון עזר, ללא העתקת הפלט.",
+          "result": "O(N) זמן ו־O(1) מילות עזר; זמן ליניארי אופטימלי במקרה הגרוע.",
+          "proof": "לכל נקודת סיום מספיק השיא שהסתיים בנקודה הקודמת; יש לבדוק ליניארית את הקלט כי איבר שלא נקרא עשוי לשנות את המקסימום.",
+          "scope": "העתקת רצף באורך k עולה O(k) זמן ומקום לפלט. אריתמטיקה מדויקת תלויה גם באורך הביטים."
+        },
+        "en": {
+          "criterion": "Scan time and auxiliary words, excluding output copying.",
+          "result": "O(N) time and O(1) auxiliary words; worst-case linear time is optimal.",
+          "proof": "Each endpoint needs only the previous optimal ending sum; unread input could change the maximum, giving a linear read bound.",
+          "scope": "Copying a length-k result requires O(k) output time/storage. Exact arithmetic also depends on bit length."
+        }
+      },
+      "verification": {
+        "he": "עברו כל 97,656 המערכים באורכים 0–7 מעל ‎-2..2 ועוד 500 מערכי מספרים גדולים. אורקל עצמאי מונה כל רצף לא־ריק ומחשב את סכומו ישירות; משווה סכום, שני גבולות ושוויונות. נבדקה גם אי־התאמה בין טענת 7 לבין התעתיק האפשרי שמחזיר 6. קוד פייתון רץ בפועל; אין עדיין סקירה מקצועית אנושית עצמאית.",
+        "en": "Passed all 97,656 arrays of lengths 0..7 over -2..2 plus 500 large-integer arrays. Independent oracle enumerates every nonempty interval and sums directly; checks include sum, both boundaries and ties. Also verified the seven-versus-six discrepancy for the possible source transcription. Python executed; independent human professional review pending."
+      },
+      "edge_cases": {
+        "he": [
+          "כל האיברים שליליים: מחזירים את הגדול ביותר, לא אפס.",
+          "איבר יחיד: הוא הרצף היחיד.",
+          "מערך ריק: None.",
+          "אפסים ושוויונות: התחלה מוקדמת ואז סוף מוקדם.",
+          "המקסימום עשוי להיות איבר יחיד או כל המערך.",
+          "רצף ריק אינו מותר ולכן אינו מתחרה בשיא שלילי."
+        ],
+        "en": [
+          "All-negative input returns its largest element, not zero.",
+          "One element is the sole interval.",
+          "Empty input returns None.",
+          "Zeros/ties prefer earliest start and then earliest end.",
+          "The optimum may be one element or the entire array.",
+          "An empty interval is forbidden and cannot beat a negative optimum."
+        ]
+      },
+      "common_mistakes": {
+        "he": [
+          "אתחול best לאפס מחזיר רצף ריק כשהכול שלילי.",
+          "חיבור רק החיוביים בוחר איברים שאינם בהכרח רציפים.",
+          "שמירת current בלי שיא גלובלי מחזירה רק את הרצף המסתיים בסוף.",
+          "איבוד גבולות הרצף או שוויון לא עקבי.",
+          "העתקת פרוסה בכל צעד עלולה להוסיף עלות ריבועית.",
+          "שינוי שקט של הדוגמה כדי שתיתן את 7 שבצילום."
+        ],
+        "en": [
+          "Initializing best to zero admits an empty result for all-negative input.",
+          "Summing only positives need not be contiguous.",
+          "Keeping current without a global best returns only the last-ending interval.",
+          "Losing boundaries or inconsistent tie handling.",
+          "Copying a slice at every step can introduce quadratic cost.",
+          "Silently changing source values to fabricate its claimed seven."
+        ]
+      },
+      "interview_answer": {
+        "he": "אשמור את הסכום הטוב ביותר של רצף שמסתיים בתא הנוכחי ואת השיא הכללי. אם הסכום הקודם שלילי אתחיל מחדש, אחרת אמשיך. אאתחל מהאיבר הראשון כדי לטפל גם בקלט שכולו שלילי, ואשמור גבולות. זה מעבר O(N) עם O(1) מילות עזר; העתקת הרצף עצמו נספרת בנפרד.",
+        "en": "Keep the best nonempty interval sum ending here and the global best. Restart after a negative previous sum; otherwise extend. Initialize from the first element to handle all-negative inputs and retain boundaries. This takes O(N) time and O(1) auxiliary words, with output copying accounted separately."
+      },
+      "solution_extensions": {
+        "he": {
+          "question": "מה משתנה אם המערך מעגלי והרצף יכול לחצות מהסוף להתחלה?",
+          "direction": "מועמד הוא המקסימום הרגיל או סכום כל האיברים פחות סכום תת־המערך המינימלי. צריך למנוע בחירת משלים ריק כשהמינימום הוא כל המערך, ובמיוחד לטפל בכל האיברים השליליים. הגדירו גם ייצוג גבולות לרצף עוטף.",
+          "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+        },
+        "en": {
+          "question": "What changes if the array is circular and an interval may wrap?",
+          "direction": "Consider the ordinary maximum or total sum minus a minimum-sum interval. Prevent an empty complement when that minimum covers the whole array, especially for all-negative inputs, and define wraparound boundaries.",
+          "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+        }
+      }
+    }
+  }
+}

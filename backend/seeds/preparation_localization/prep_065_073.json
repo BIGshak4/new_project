@@ -1,0 +1,784 @@
+{
+  "PREP-065": {
+    "assumptions": {
+      "he": [
+        "דלגלג SR בחזית עולה עם S,R סינכרוניים פעילים בגבוה; 11 אסור.",
+        "D עומד בתזמון בשני הנתיבים, כולל המהפך; אין איפוס נוסף.",
+        "הקשר בין DFF לנועל מוסבר בנפרד ואינו משנה בשקט את הרכיב הנתון."
+      ],
+      "en": [
+        "Rising-edge synchronous active-high SR primitive; 11 forbidden.",
+        "D meets timing on both paths, including inversion; no additional reset.",
+        "Transparent-latch interpretation is distinguished explicitly."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר ביטי מצב.",
+        "result": "ביט מצב אחד ומהפך אחד מספיקים במודל.",
+        "proof": "יש לשמר שני מצבים, ולכן נדרש לפחות ביט אחד.",
+        "scope": "אין הוכחת מינימום שערים, שטח או השהיה; סוג ה־primitive מהותי."
+      },
+      "en": {
+        "criterion": "State-bit count.",
+        "result": "One state bit plus one inverter suffices.",
+        "proof": "Two stored values require at least one state bit.",
+        "scope": "No minimum gate/area/delay claim; primitive semantics matter."
+      }
+    },
+    "verification": {
+      "he": "עברו 4 שילובי Q,D, שמונת שילובי SR, 4,094 רצפים ו־36,868 חזיתות במודל פייתון. קוד HDL לא קומפל ולא סומלץ; תזמון וגליצ׳ים פיזיים לא נבדקו.",
+      "en": "Passed four Q,D combinations, eight SR rows, 4,094 streams and 36,868 edges in Python. HDL uncompiled/unsimulated; physical timing and glitches untested."
+    },
+    "edge_cases": {
+      "he": [
+        "Q ראשוני אינו חייב להיות ידוע; החזית החוקית הראשונה קובעת D.",
+        "אין חזית: Q נשמר.",
+        "שינוי D סמוך לחזית עלול להפר תזמון.",
+        "S,R אסינכרוניים או נועל שקוף אינם מממשים את אותו חוזה."
+      ],
+      "en": [
+        "Initial Q may be unknown; the first valid edge establishes D.",
+        "No edge means hold.",
+        "D changes near the edge may violate timing.",
+        "Asynchronous S,R or transparent latches have a different contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לחבר S=D וגם R=D, וכך להגיע ל־11.",
+        "להשתמש בנועל שקוף ולקרוא לו DFF.",
+        "להניח שהמהפך מוחק כל חפיפה רגעית.",
+        "להציג איפוס אסינכרוני כקלט נתונים סינכרוני."
+      ],
+      "en": [
+        "Driving both S and R from D, reaching 11.",
+        "Calling a transparent latch a DFF.",
+        "Assuming inversion removes every transient overlap.",
+        "Treating asynchronous clear as a synchronous data input."
+      ]
+    },
+    "interview_answer": {
+      "he": "בהנחה שזה דלגלג SR סינכרוני בחזית, אחבר S=D ו־R=NOT D ואשתמש באותו clk. D=0 בוחר איפוס ו־D=1 בוחר קביעה, לכן אחרי החזית Q=D. אם נתון נועל או S,R אסינכרוניים, זה אינו אותו מימוש וצריך לדון במבנה שעון מתאים.",
+      "en": "For an edge-triggered synchronous SR primitive, wire S=D and R=NOT D on the same clock. D=0 resets and D=1 sets, so Q after the edge equals D. A transparent latch or asynchronous controls need a different clocked construction."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד תוסיפו אפשור EN כך שב־EN=0 נשמור Q?",
+        "direction": "ל־SR סינכרוני אפשר לבחור S=EN AND D ו־R=EN AND NOT D. ב־EN=0 מתקבל 00 ושמירה. בדקו גם תזמון של EN.",
+        "status": "מוכן בתוכן; לא מחובר לתור המשך חי."
+      },
+      "en": {
+        "question": "How would you add an enable EN that holds Q when zero?",
+        "direction": "For synchronous SR use S=EN AND D and R=EN AND NOT D. Disabled gives 00 and hold; EN also has timing constraints.",
+        "status": "Prepared in content, not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-067": {
+    "assumptions": {
+      "he": [
+        "עומק 8, רוחב W≥1; שעון יחיד ואיפוס סינכרוני פעיל בגבוה.",
+        "אין bypass בריק; במלא אפשר לקרוא ולכתוב יחד ולהחזיר את הפריט הישן.",
+        "dout רשום; rd_valid תקף אחרי חזית קריאה שהתקבלה. בלי קריאה dout נשמר.",
+        "איפוס מנקה את מצב הבקרה והפלט, אך לא את הזיכרון; נדרשת חזית איפוס לפני שימוש.",
+        "מערך אוגרים תומך בקריאת ערך ישן וכתיבה יחד; מימוש RAM חלופי מחייב חוזה תואם."
+      ],
+      "en": [
+        "Depth eight, W≥1; one rising-edge clock and synchronous active-high reset.",
+        "No bypass at empty; full permits simultaneous read/write with old-data return.",
+        "Registered dout; rd_valid marks the cycle after an accepted read. No read holds dout.",
+        "Reset clears control/output state, not memory; reset edge required before use.",
+        "Register array provides old-data simultaneous read/write; replacement RAM requires a matching contract."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "קצב וסיבוכיות למימוש שנבחר.",
+        "result": "עד קריאה וכתיבה אחת בחזית; O(1) פעולות בקרה למחזור. מצב לוגי 9W+11 ביטים.",
+        "proof": "אין הזזת התור; רק גישה ממוספרת, קידום שני מצביעים ועדכון תפוסה.",
+        "scope": "אין מינימום שטח/מספר FF/השהיה; העלות הפיזית תלויה במיפוי זיכרון."
+      },
+      "en": {
+        "criterion": "Throughput and operation count for this construction.",
+        "result": "Up to one read and one write per edge; O(1) control operations/cycle; 9W+11 logical state bits.",
+        "proof": "No shifting: indexed access, at most two pointer advances and occupancy update.",
+        "scope": "No minimum area/FF/delay claim; physical cost depends on storage mapping."
+      }
+    },
+    "verification": {
+      "he": "עברו 65,408 מעברים ממצבי תור בני ביט אחד, 16,352 מקרי עדיפות איפוס ו־100,000 חזיתות מדגמיות עם נתוני 16 ביט מול deque עצמאי. קוד SystemVerilog לא קומפל ולא סומלץ.",
+      "en": "Passed 65,408 one-bit-state transitions, 16,352 reset-priority cases and 100,000 sampled sixteen-bit edges against independent deque. SystemVerilog uncompiled/unsimulated."
+    },
+    "edge_cases": {
+      "he": [
+        "שוויון rp=wp יכול להיות ריק או מלא; count מכריע.",
+        "בריק שתי בקשות מקבלות רק כתיבה, ללא rd_valid.",
+        "במלא שתי בקשות מתקבלות יחד; יש להחזיר את הערך הישן.",
+        "ב־count=1 שתי בקשות מחליפות את הפריט בלי שינוי תפוסה.",
+        "איפוס בעת שתי בקשות דוחה אותן ומאפס פלט.",
+        "כמה סיבובים אינם משנים סדר; אין לאפס את הזיכרון כדי למנוע קריאת זבל."
+      ],
+      "en": [
+        "Equal pointers mean empty or full; count distinguishes them.",
+        "Empty with both requests accepts only push and no read-valid.",
+        "Full with both requests accepts both and must return old data.",
+        "At count one both requests replace the item without changing occupancy.",
+        "Reset with both requests rejects both and clears read outputs.",
+        "Wrap preserves order; occupancy prevents stale reads without resetting memory."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "מונה בן שלושה ביטים שאינו מסוגל לייצג 8.",
+        "שוויון המצביעים משמש גם כמלא וגם כריק בלי ביט נוסף.",
+        "הגדלת count על בקשה שנדחתה.",
+        "שינוי מדיניות גבול בלי לתעד אותה.",
+        "לקרוא mem לאחר שדרסנו את התא במודל תוכנה.",
+        "להציג FIFO חד־שעוני כפתרון בטוח לשני שעונים בלתי תלויים."
+      ],
+      "en": [
+        "Using a three-bit count that cannot represent eight.",
+        "Pointer equality alone for both full and empty.",
+        "Changing occupancy on rejected requests.",
+        "Silently changing boundary policy.",
+        "Overwriting before reading in a software model.",
+        "Claiming single-clock control safely handles unrelated clocks."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשתמש במערך 8×W, שני מצביעים בני שלושה ביטים ומונה תפוסה בן ארבעה. pop חוקי רק כשהתור אינו ריק; push חוקי כשאינו מלא או כשיש pop באותה חזית. אקרא את הפריט הישן, אכתוב בקצה, אקדם רק מצביעים של פעולות שהתקבלו ואעדכן count ב־push פחות pop. הפלט רשום עם rd_valid.",
+      "en": "Use eight W-bit cells, two three-bit pointers and four-bit occupancy. Pop only when nonempty; push when not full or with a same-edge valid pop. Read old front, write at tail, advance only accepted-operation pointers and update count by push minus pop. Read output is registered with rd_valid."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה נדרש אם צד הקריאה והכתיבה פועלים בשעונים שונים?",
+        "direction": "זה FIFO אסינכרוני: נדרשים מצביעים וביטי גלישה, קידוד Gray וסנכרון לכל תחום שעון, חישוב דגלים מקומי וניתוח CDC. אין להעביר count בינארי רב־ביטי ישירות.",
+        "status": "מוכן בתוכן; לא מחובר לתור המשך חי."
+      },
+      "en": {
+        "question": "What changes when readers and writers use unrelated clocks?",
+        "direction": "An asynchronous FIFO needs wrap-aware pointers, Gray encoding, cross-domain synchronizers, local flags and CDC analysis. Do not pass a multi-bit binary occupancy count directly between clocks.",
+        "status": "Prepared in content, not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-069": {
+    "assumptions": {
+      "he": [
+        "תקלה יחידה בענף C אל NOR אחרי הפיצול; ענף המהפך תקין.",
+        "שליטה רק ב־A,B,C ותצפית רק ב־Y; לוגיקה צירופית בינארית.",
+        "מפרידים בין הנחת תקלה ודאית לבין אפשרות שהמעגל תקין."
+      ],
+      "en": [
+        "Single C-to-NOR branch fault after fanout; inverter branch healthy.",
+        "Control A,B,C, observe Y only; ideal binary combinational logic.",
+        "Guaranteed-fault diagnosis is distinguished from a possible healthy circuit."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר בדיקות להפרדה בין שתי תקלות ודאיות.",
+        "result": "בדיקת 100 אחת מספיקה; אין בדיקה שמפרידה תקין מ־sa0.",
+        "proof": "100 נותן 1 ב־sa0 ו־0 ב־sa1. שתי פונקציות תקין ו־sa0 זהות בכל התחום.",
+        "scope": "בלי הנחת תקלה ודאית לא ניתן לאבחן את שלושת המצבים במוצא Y בלבד."
+      },
+      "en": {
+        "criterion": "Tests separating the two guaranteed fault hypotheses.",
+        "result": "One test, 100, suffices; no test separates healthy from sa0.",
+        "proof": "100 gives one for sa0 and zero for sa1. Healthy and sa0 functions are identical over the full domain.",
+        "scope": "Without the guaranteed-fault assumption, three-way diagnosis from Y alone is impossible."
+      }
+    },
+    "verification": {
+      "he": "כל שמונת הקלטים בשלוש גרסאות המעגל עברו, 24 חישובים. זוהה 100 כווקטור היחיד ל־sa1; לא נמצא הבדל יחיד בין sa0 לתקין, בהתאמה להוכחה האלגברית. אין בדיקת חומרה פיזית.",
+      "en": "All eight inputs across three circuit versions passed, twenty-four evaluations. 100 is the only sa1-detecting vector; healthy and sa0 agree everywhere, matching the algebraic proof. No physical hardware checks."
+    },
+    "edge_cases": {
+      "he": [
+        "A=0 או B=1 חוסמים כל תצפית שימושית.",
+        "C=1 מפעיל את תקלה באפס אך גם חוסם את AND.",
+        "Y=1 ב־100 אינו מפריד תקין מתקלה באפס.",
+        "תקלה על C לפני הפיצול היא בעיה שונה."
+      ],
+      "en": [
+        "A=0 or B=1 blocks useful propagation.",
+        "C=1 activates sa0 but also blocks the AND.",
+        "Y=1 at 100 cannot distinguish healthy from sa0.",
+        "A C-stem fault before fanout is a different problem."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להחליף את C גם בכניסת המהפך כשמזריקים תקלה לענף בלבד.",
+        "להפעיל תקלה פנימית בלי לבדוק שהיא מגיעה למוצא.",
+        "להבטיח זיהוי sa0 מתקין למרות יתירות לוגית.",
+        "לבלבל אבחון בהנחת תקלה ודאית עם זיהוי עצם התקלה."
+      ],
+      "en": [
+        "Changing the inverter input when injecting only a branch fault.",
+        "Activating a fault without checking output propagation.",
+        "Promising sa0 detection despite functional redundancy.",
+        "Confusing guaranteed-fault diagnosis with detecting whether a fault exists."
+      ]
+    },
+    "interview_answer": {
+      "he": "אכתוב Y=A·NOT(B OR x)·NOT C. ב־100 תקין ו־sa0 נותנים 1 ו־sa1 נותן 0. sa0 אינו ניתן לזיהוי מול תקין: כדי ליצור הבדל צריך C=1, ואז המהפך מאפס את AND. אם ידוע מראש שיש אחת משתי התקלות, אותה בדיקה יחידה מבדילה ביניהן.",
+      "en": "Write Y=A·NOT(B OR x)·NOT C. At 100, healthy and sa0 give one, while sa1 gives zero. sa0 cannot be detected versus healthy: activating it requires C=1, whose inverter output blocks AND. If one of the two faults is guaranteed, that one test distinguishes them."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך נוכל להפוך גם את sa0 לנצפית?",
+        "direction": "אפשר להוסיף נקודת תצפית למוצא ה־NOR. שם C=1,B=0 ייתן 0 בתקין ו־1 ב־sa0, בלי חסימת ענף המהפך. זה משנה את נגישות הבדיקה, לא את תשובת המעגל המקורי.",
+        "status": "מוכן בתוכן; לא מחובר לתור המשך חי."
+      },
+      "en": {
+        "question": "How could sa0 become observable too?",
+        "direction": "Add an observation point at the NOR output. With C=1,B=0 it is zero when healthy and one under sa0, without inverter-path masking. This changes test access, not the original circuit answer.",
+        "status": "Prepared in content, not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-070": {
+    "assumptions": {
+      "he": [
+        "מרבב אידאלי בוחר D0 ב־S=0 ו־D1 ב־S=1.",
+        "קבוע אפס וחוטים מותרים; אין שער נוסף או שעון."
+      ],
+      "en": [
+        "Ideal MUX chooses D0 at S=0 and D1 at S=1.",
+        "Zero constant and wires allowed; no additional gate or clock."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר מרבבים כשמותר רק חיווט וקבועים לצדם.",
+        "result": "מרבב אחד נחוץ ומספיק.",
+        "proof": "בלי רכיב פונקציונלי אפשר לקבל רק כניסה או קבוע, ולא AND; המימוש משתמש באחד.",
+        "scope": "אין טענת שטח או השהיה מינימליים בספריית שערים כללית."
+      },
+      "en": {
+        "criterion": "MUX count with only wires and constants otherwise.",
+        "result": "One MUX is necessary and sufficient.",
+        "proof": "With no functional component only a primary input or constant is possible, not AND; construction uses one.",
+        "scope": "No minimum physical area/delay claim for a general cell library."
+      }
+    },
+    "verification": {
+      "he": "עברו כל 8 שורות המרבב, כל 4 שורות AND ו־4 שורות המימוש הסימטרי בפייתון. לא בוצעה סינתזה או בדיקת חומרה.",
+      "en": "Passed all eight MUX rows, four AND rows and four symmetric-implementation rows in Python. No synthesis or hardware tests."
+    },
+    "edge_cases": {
+      "he": [
+        "A=0 קובע אפס בלי תלות ב־B.",
+        "A=1 מעביר B, כולל B=0.",
+        "אם ספריית הרכיבים משתמשת במוסכמת בחירה הפוכה יש להתאים את שמות הפורטים.",
+        "החלפת D0,D1 בלי להחליף תנאי בחירה נותנת פונקציה אחרת."
+      ],
+      "en": [
+        "A=0 forces zero independently of B.",
+        "A=1 forwards B, including B=0.",
+        "A library with reversed select convention needs corresponding port mapping.",
+        "Swapping D0 and D1 without changing selection gives a different function."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לחבר D1 לקבוע 1 במקום ל־B, וכך להחזיר רק A.",
+        "להחליף בין פורט הבחירה לפורט נתונים.",
+        "להוסיף שער AND וכך לעקוף את השאלה.",
+        "לצייר חוטים ללא מספרי הפורטים ולכן לא להגדיר מה נבחר."
+      ],
+      "en": [
+        "Tying D1 high instead of B, which outputs only A.",
+        "Confusing select and data ports.",
+        "Adding an AND gate and bypassing the constraint.",
+        "Omitting port numbers so select behavior remains ambiguous."
+      ]
+    },
+    "interview_answer": {
+      "he": "אבחר A כ־S, אחבר D0=0 ו־D1=B. כאשר A=0 נקבל 0 וכאשר A=1 נקבל B, ולכן בדיוק A AND B. מספיק מרבב אחד, ללא שעון או שער נוסף.",
+      "en": "Use S=A,D0=0,D1=B. Select zero returns zero; select one returns B, exactly A AND B. One MUX suffices with no clock or extra gate."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד תממשו OR בעזרת אותו סוג מרבב יחיד?",
+        "direction": "בחרו S=A,D0=B,D1=1: כאשר A=0 צריך B וכאשר A=1 צריך תמיד 1. נדרש קבוע 1 מותר בגרסת ההמשך.",
+        "status": "מוכן בתוכן; לא מחובר לתור המשך חי."
+      },
+      "en": {
+        "question": "How would you implement OR with one such MUX?",
+        "direction": "Use S=A,D0=B,D1=1: when A=0 return B; when A=1 return one. This follow-up explicitly permits a high constant.",
+        "status": "Prepared in content, not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-066": {
+    "assumptions": {
+      "he": [
+        "אינדקסי ימים מתחילים ב־0; חייבים לקנות לפני שמוכרים, בלי שינוי סדר הקלט.",
+        "מחירים שלמים מדויקים אי־שליליים; אין עמלות, מכירה בחסר או יותר מעסקה אחת.",
+        "בגרסה הראשית אין עסקה אם אין רווח חיובי; בגרסה המחייבת מותר הפסד. N<2 מחזיר None בשתיהן.",
+        "בשוויון מעדיפים יום קנייה מוקדם ואז יום מכירה מוקדם."
+      ],
+      "en": [
+        "Zero-based days; purchase must precede sale and input order is unchanged.",
+        "Exact nonnegative integer prices; no fees, short selling or multiple trades.",
+        "Primary contract abstains without positive profit; mandatory variant accepts a loss. N<2 returns None in both.",
+        "Ties prefer earliest buy, then earliest sell."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "זמן במקרה הגרוע ומספר משתני עזר במודל מילים.",
+        "result": "O(N) זמן ו־O(1) מילות עזר; הזמן אופטימלי אסימפטוטית.",
+        "proof": "כל מכירה משתמשת במינימום הקודם. במקרה הגרוע מחיר שלא נקרא יכול ליצור מינימום או מקסימום המשנים את העסקה, ולכן נדרשת קריאה ליניארית.",
+        "scope": "שלמים בגודל שרירותי מחייבים עלות ביטים נוספת; זו אינה הבטחת תזמון פיזי."
+      },
+      "en": {
+        "criterion": "Worst-case time and auxiliary-variable count in the word model.",
+        "result": "O(N) time and O(1) auxiliary words; asymptotically optimal time.",
+        "proof": "Each sale uses its earlier minimum. An unread price can create a new minimum or maximum changing the optimum, giving a linear worst-case input-read bound.",
+        "scope": "Arbitrary-size integer costs also depend on bit length; no physical timing guarantee."
+      }
+    },
+    "verification": {
+      "he": "עברו 43,690 השוואות לאורקל עצמאי: 21,845 מערכים באורכים 0–7 מעל 0–3, כל אחד בשתי גרסאות. עוד 1,000 בדיקות על 500 מערכי מספרים גדולים. נבדקו זוג האינדקסים, הרווח, שוויונות והימנעות מעסקה, ולא רק הרווח. קוד פייתון רץ בפועל; סקירה מקצועית עצמאית ממתינה.",
+      "en": "Passed 43,690 independent-oracle checks: 21,845 arrays of lengths 0..7 over 0..3 under both contracts, plus 1,000 checks on 500 large-integer arrays. Assertions cover indices, profit, tie order and abstention, not profit alone. Python executed; independent professional review pending."
+    },
+    "edge_cases": {
+      "he": [
+        "מערך ריק או יום אחד: None.",
+        "מחירים יורדים: הימנעות או העסקה המפסידה הכי מעט, לפי החוזה.",
+        "כל המחירים שווים: אין עסקה בגרסה הראשית; (0,1,0) בגרסה המחייבת.",
+        "מינימום או רווח חוזר: שומרים את הימים המוקדמים.",
+        "המקסימום לפני המינימום אינו עסקה חוקית."
+      ],
+      "en": [
+        "Empty or one-day input returns None.",
+        "Descending prices: abstain or take the smallest loss, according to contract.",
+        "Equal prices: no optional trade; mandatory returns (0,1,0).",
+        "Repeated minima/profits preserve earliest days.",
+        "A maximum before the minimum is not a legal buy/sell pair."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "מיון המחירים מוחק את סדר הימים.",
+        "בחירת מינימום ומקסימום גלובליים עלולה למכור לפני הקנייה.",
+        "עדכון המינימום לפני חישוב המועמד מאפשר בטעות אותו יום בשני התפקידים.",
+        "החזרת המחירים או הרווח בלבד אינה מחזירה את הימים שנדרשו.",
+        "אתחול רווח 0 בלי בחינת הגרסה המחייבת מסתיר הפסד שהוא עדיין העסקה החוקית הטובה ביותר."
+      ],
+      "en": [
+        "Sorting destroys temporal order.",
+        "Global min/max may sell before purchasing.",
+        "Admitting the current minimum before evaluation can accidentally allow same-day trades.",
+        "Returning prices or profit alone fails to return the requested days.",
+        "Initializing mandatory profit to zero can hide the best legal loss."
+      ]
+    },
+    "interview_answer": {
+      "he": "אסרוק לפי יום המכירה ואשמור את המחיר הנמוך ביותר שהיה לפניו ואת היום הראשון שלו. בכל תא אחשב רווח ואעדכן את זוג הימים הטוב ביותר, ורק אחר כך אעדכן מינימום. כך מתקבל O(N) זמן ו־O(1) מילות עזר. מראש אברר אם מותר להימנע מעסקה ומה מחזירים כשאין שני ימים.",
+      "en": "Scan by selling day, retaining the lowest earlier price and its first index. Evaluate profit and update the best pair before updating the minimum. This gives O(N) time and O(1) auxiliary words. First clarify whether abstention is allowed and what to return with fewer than two days."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם מותר לבצע כמה עסקאות אך להחזיק לכל היותר מניה אחת?",
+        "direction": "בלי עמלות או מגבלות נוספות אפשר לצבור כל עלייה חיובית בין ימים סמוכים. זו בעיה אחרת: המינימום והשיא של עסקה יחידה אינם הפתרון לה. הוספת עמלה או יום מנוחה כבר מצריכה מצבי תכנון דינמי.",
+        "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+      },
+      "en": {
+        "question": "What if multiple transactions are allowed while holding at most one share?",
+        "direction": "Without fees or further constraints, sum positive consecutive-day rises. This is a different contract; a single prefix minimum/best trade does not solve it. Fees or cooldown introduce dynamic-programming states.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-068": {
+    "assumptions": {
+      "he": [
+        "גרסה א: שני int מדויקים בפייתון, abs מותר, השוואות ו־min/max אסורים.",
+        "גרסה ב: קלטי int32_t תקינים וקיום uint32_t,int64_t; abs אסור, אריתמטיקה ללא סימן ופעולות ביטים מותרות.",
+        "אין תנאי הבודק סדר בפונקציה; אין הבטחה אבטחתית לזמן קבוע או לקוד מכונה ללא קפיצות.",
+        "float, NaN, אינסוף וטיפוסים בעלי השוואה מותאמת אינם בתחום."
+      ],
+      "en": [
+        "Variant A uses exact Python int inputs, permits abs, forbids comparisons and builtin min/max.",
+        "Variant B has valid int32_t inputs and available uint32_t/int64_t; abs forbidden, unsigned arithmetic and bit operations allowed.",
+        "No ordering conditional inside the function; no security constant-time or branch-free-machine-code guarantee.",
+        "Floats, NaN, infinity and custom comparison types are excluded."
+      ]
+    },
+    "source_ambiguities": {
+      "he": {
+        "operations": "המקור לא מגדיר אם abs מותר; שתי הגרסאות מצהירות במפורש על הבחירה.",
+        "types": "המקור אינו קובע רוחב או גלישה. הפתרון מפריד שלמים מדויקים וקלט 32 ביטים עם סימן."
+      },
+      "en": {
+        "operations": "Source does not say whether abs is allowed; both variants declare the choice explicitly.",
+        "types": "Source does not specify width/overflow. Exact integers and signed32 inputs are treated separately."
+      }
+    },
+    "optimality": {
+      "he": {
+        "criterion": "עלות שתי בניות תקינות לפי מודל המספרים.",
+        "result": "שלמים עד B ביטים: O(B) זמן וביטי ביניים; רוחב 32 קבוע: O(1) פעולות ומילות עזר.",
+        "proof": "לזהות מספר קבוע של חיבורים, חיסור, ערך מוחלט וחלוקה בשתיים על עד B ביטים; שיטת המסכה מפעילה מספר קבוע של פעולות על מילים.",
+        "scope": "לא נטען למינימום פעולות, ללא קפיצות בקוד מכונה או זמן קבוע אבטחתי; C++ לא קומפל."
+      },
+      "en": {
+        "criterion": "Costs of two correct constructions under their integer models.",
+        "result": "Up to B-bit integers: O(B) time/intermediate bits; fixed32: O(1) word operations/storage.",
+        "proof": "A fixed number of additions, subtraction, absolute value and division by two touches up to B bits; the mask construction has a fixed word-operation count.",
+        "scope": "No minimum-operation, branch-free machine-code or security constant-time claim; C++ not compiled."
+      }
+    },
+    "verification": {
+      "he": "עברו 65,536 זוגות קטנים בשתי שיטות פייתון, 81 זוגות גבול בני 32 ביטים, עוד 10,000 זוגות אקראיים במודל רוחב קבוע ועוד 500 זוגות גדולים בנוסחה המדויקת. בדיקת AST שוללת השוואות, תנאים ולולאות בפונקציות. אורקל max נמצא בבדיקה בלבד. C++ לא קומפל ולא הורץ; סקירה מקצועית ממתינה.",
+      "en": "Passed 65,536 small pairs in both Python methods, 81 signed32 boundary pairs, 10,000 additional fixed-width random pairs and 500 large exact-integer pairs. AST excludes comparisons, conditionals and loops inside the functions; builtin max appears only in the checker. C++ was not compiled/run; professional review pending."
+    },
+    "edge_cases": {
+      "he": [
+        "a=b מחזיר את הערך עצמו.",
+        "שני מספרים שליליים: הגדול הוא הקרוב יותר לאפס.",
+        "INT32_MIN מול INT32_MAX דורש טיפול בסימנים שונים לפני שימוש בסימן ההפרש.",
+        "abs(INT32_MIN) או a+b יכולים לגלוש בשפה בעלת רוחב קבוע.",
+        "מספרי Python ענקיים עדיין תקינים אך פעולותיהם אינן בזמן קבוע."
+      ],
+      "en": [
+        "Equal inputs return their shared value.",
+        "Of two negative inputs, the value nearer zero is larger.",
+        "INT32_MIN versus INT32_MAX requires opposite-sign handling before interpreting difference sign.",
+        "abs(INT32_MIN) or a+b may overflow fixed-width types.",
+        "Huge Python integers work, but arithmetic is not constant bit cost."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "הסתרת ההשוואה בתוך max או תנאי, בניגוד להגדרה.",
+        "שימוש בסימן a-b בלי לטפל בגלישה ובסימנים שונים.",
+        "שימוש בנוסחת ערך מוחלט כש־abs אינו פעולה מותרת.",
+        "הזזה של מספר שלילי או חיסור עם סימן בלי להגדיר שפה ורוחב.",
+        "טענה שקוד ללא if מבטיח זמן קבוע לצורכי אבטחה."
+      ],
+      "en": [
+        "Hiding the forbidden comparison in max or a conditional.",
+        "Using the sign of a-b without overflow/opposite-sign handling.",
+        "Using the absolute-value formula when abs is forbidden.",
+        "Shifting a negative signed value or subtracting signed inputs without declaring language/width semantics.",
+        "Claiming that no if guarantees security constant-time execution."
+      ]
+    },
+    "interview_answer": {
+      "he": "קודם אברר טיפוסים והאם abs מותר. בשלמים מדויקים אפשר להחזיר (a+b+abs(a-b))//2, כי המונה הוא פעמיים הגדול. ברוחב קבוע הנוסחה עלולה לגלוש; אחלץ סימנים ואבחר את הלא־שלילי בסימנים שונים, ובאותו סימן אשתמש בסימן ההפרש ובמסכה על מספרים ללא סימן. לא אטען שאלה פעולות בזמן קבוע במספרי Python גדולים.",
+      "en": "Clarify types and whether abs is allowed. Exact integers permit (a+b+abs(a-b))//2 because the numerator is twice the maximum. Fixed-width overflow needs sign handling: choose the nonnegative input for opposite signs; for equal signs use difference sign and unsigned masks. Large Python integers do not have constant bit cost."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "האם פתרון ללא תנאים בקוד המקור בטוח נגד דליפות תזמון?",
+        "direction": "לא בהכרח. המהדר, מימוש abs, רוחב מספרים וזיכרון משפיעים על התזמון. נדרשים מודל איום ומימוש קבוע־זמן ייעודי ואימות קוד המכונה. זו דרישת אבטחה נוספת ולא תוצאה של האיסור על השוואות.",
+        "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+      },
+      "en": {
+        "question": "Does source code without conditionals prevent timing leakage?",
+        "direction": "Not necessarily. Compiler output, abs implementation, integer size and memory behavior matter. A threat model, dedicated constant-time implementation and machine-code verification are additional security requirements, not consequences of forbidding comparisons.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "תיעוד Python — ערך מוחלט",
+          "url": "https://docs.python.org/3/library/functions.html#abs",
+          "use": "הגדרת הפעולה המותרת בגרסה א; אינה הוכחה לזהות או לזמן הריצה."
+        },
+        {
+          "title": "טיוטת C++ — המרות שלמים",
+          "url": "https://eel.is/c++draft/conv.integral",
+          "use": "המרה בין ייצוגי שלמים לפי מודולו רוחב היעד."
+        },
+        {
+          "title": "טיוטת C++ — פעולות הזזה",
+          "url": "https://eel.is/c++draft/expr.shift",
+          "use": "כללי רוחב והזזה; הקוד משתמש בערכים ללא סימן ובכמות הזזה תקינה."
+        }
+      ],
+      "en": [
+        {
+          "title": "Python documentation — abs",
+          "url": "https://docs.python.org/3/library/functions.html#abs",
+          "use": "Defines the operation allowed in variant A; not the identity or complexity proof."
+        },
+        {
+          "title": "C++ draft — integral conversions",
+          "url": "https://eel.is/c++draft/conv.integral",
+          "use": "Integral-representation conversions modulo destination width."
+        },
+        {
+          "title": "C++ draft — shifts",
+          "url": "https://eel.is/c++draft/expr.shift",
+          "use": "Shift-width rules; supplied selection uses unsigned values and valid counts."
+        }
+      ]
+    },
+    "relationship_note": {
+      "he": "וריאציית תוכנה מקושרת ל־PREP-018: כאן מתכננים פונקציה לפי אילוצי פעולות וטיפוסים, ולא משווים בין שני מספרים באמצעות מימוש שערים. נשמרת כשאלה נפרדת.",
+      "en": "Linked software variation of PREP-018: this asks for an operation/type-constrained function rather than a gate-level numeric comparator. Retained as a separate exercise."
+    }
+  },
+  "PREP-072": {
+    "assumptions": {
+      "he": [
+        "רצף רציף ולא־ריק; הסכום והגבולות הכוללים מוחזרים באינדקסים המתחילים ב־0.",
+        "קלט ריק מחזיר None. כל האיברים שלמים מדויקים; אין גלישת סכום.",
+        "בשוויון סכומים בוחרים התחלה מוקדמת ואחריה סוף מוקדם.",
+        "עלות העתקת רצף הפלט נספרת בנפרד ממספר משתני העזר.",
+        "דוגמה חדשה וחד־משמעית מחליפה רק את ההדגמה ללומד; צילום המקור וטענת 7 נשמרים ומסומנים כלא תואמים לתעתיק האפשרי."
+      ],
+      "en": [
+        "Intervals are contiguous and nonempty; return sum plus inclusive zero-based boundaries.",
+        "Empty input returns None. Exact integer sums do not overflow.",
+        "Equal sums prefer earliest start and then earliest end.",
+        "Optional output-slice copying is costed separately from auxiliary variables.",
+        "A separate unambiguous teaching example is used; original screenshot and its seven claim remain preserved and flagged against the possible transcription."
+      ]
+    },
+    "source_ambiguities": {
+      "he": {
+        "requested_output": "המקור מבקש רצף אך הדוגמה מחזירה סכום. הפתרון מחזיר סכום וגבולות, ומהם אפשר להפיק את שתי צורות הפלט.",
+        "example": "תעתיק ASCII אפשרי: [1,-4,-2,5,1,0,-5,4,1,-3,-3]. בו המקסימום 6, לא 7. סימנים וסדר בצילום RTL אינם ודאיים; אין התאמה מומצאת ל־7.",
+        "edited_example": "דוגמה נפרדת: [-2,1,-3,4,-1,2,1,-5,4] מחזירה (6,3,6)."
+      },
+      "en": {
+        "requested_output": "Source asks for an interval but its example returns a sum. Return sum plus boundaries, supporting either output form.",
+        "example": "Possible ASCII transcription: [1,-4,-2,5,1,0,-5,4,1,-3,-3]. Its maximum is six, not seven. RTL sign/order is uncertain; no fabricated seven match.",
+        "edited_example": "Separate example: [-2,1,-3,4,-1,2,1,-5,4] returns (6,3,6)."
+      }
+    },
+    "optimality": {
+      "he": {
+        "criterion": "זמן מעבר ומילות זיכרון עזר, ללא העתקת הפלט.",
+        "result": "O(N) זמן ו־O(1) מילות עזר; זמן ליניארי אופטימלי במקרה הגרוע.",
+        "proof": "לכל נקודת סיום מספיק השיא שהסתיים בנקודה הקודמת; יש לבדוק ליניארית את הקלט כי איבר שלא נקרא עשוי לשנות את המקסימום.",
+        "scope": "העתקת רצף באורך k עולה O(k) זמן ומקום לפלט. אריתמטיקה מדויקת תלויה גם באורך הביטים."
+      },
+      "en": {
+        "criterion": "Scan time and auxiliary words, excluding output copying.",
+        "result": "O(N) time and O(1) auxiliary words; worst-case linear time is optimal.",
+        "proof": "Each endpoint needs only the previous optimal ending sum; unread input could change the maximum, giving a linear read bound.",
+        "scope": "Copying a length-k result requires O(k) output time/storage. Exact arithmetic also depends on bit length."
+      }
+    },
+    "verification": {
+      "he": "עברו כל 97,656 המערכים באורכים 0–7 מעל ‎-2..2 ועוד 500 מערכי מספרים גדולים. אורקל עצמאי מונה כל רצף לא־ריק ומחשב את סכומו ישירות; משווה סכום, שני גבולות ושוויונות. נבדקה גם אי־התאמה בין טענת 7 לבין התעתיק האפשרי שמחזיר 6. קוד פייתון רץ בפועל; אין עדיין סקירה מקצועית אנושית עצמאית.",
+      "en": "Passed all 97,656 arrays of lengths 0..7 over -2..2 plus 500 large-integer arrays. Independent oracle enumerates every nonempty interval and sums directly; checks include sum, both boundaries and ties. Also verified the seven-versus-six discrepancy for the possible source transcription. Python executed; independent human professional review pending."
+    },
+    "edge_cases": {
+      "he": [
+        "כל האיברים שליליים: מחזירים את הגדול ביותר, לא אפס.",
+        "איבר יחיד: הוא הרצף היחיד.",
+        "מערך ריק: None.",
+        "אפסים ושוויונות: התחלה מוקדמת ואז סוף מוקדם.",
+        "המקסימום עשוי להיות איבר יחיד או כל המערך.",
+        "רצף ריק אינו מותר ולכן אינו מתחרה בשיא שלילי."
+      ],
+      "en": [
+        "All-negative input returns its largest element, not zero.",
+        "One element is the sole interval.",
+        "Empty input returns None.",
+        "Zeros/ties prefer earliest start and then earliest end.",
+        "The optimum may be one element or the entire array.",
+        "An empty interval is forbidden and cannot beat a negative optimum."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "אתחול best לאפס מחזיר רצף ריק כשהכול שלילי.",
+        "חיבור רק החיוביים בוחר איברים שאינם בהכרח רציפים.",
+        "שמירת current בלי שיא גלובלי מחזירה רק את הרצף המסתיים בסוף.",
+        "איבוד גבולות הרצף או שוויון לא עקבי.",
+        "העתקת פרוסה בכל צעד עלולה להוסיף עלות ריבועית.",
+        "שינוי שקט של הדוגמה כדי שתיתן את 7 שבצילום."
+      ],
+      "en": [
+        "Initializing best to zero admits an empty result for all-negative input.",
+        "Summing only positives need not be contiguous.",
+        "Keeping current without a global best returns only the last-ending interval.",
+        "Losing boundaries or inconsistent tie handling.",
+        "Copying a slice at every step can introduce quadratic cost.",
+        "Silently changing source values to fabricate its claimed seven."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור את הסכום הטוב ביותר של רצף שמסתיים בתא הנוכחי ואת השיא הכללי. אם הסכום הקודם שלילי אתחיל מחדש, אחרת אמשיך. אאתחל מהאיבר הראשון כדי לטפל גם בקלט שכולו שלילי, ואשמור גבולות. זה מעבר O(N) עם O(1) מילות עזר; העתקת הרצף עצמו נספרת בנפרד.",
+      "en": "Keep the best nonempty interval sum ending here and the global best. Restart after a negative previous sum; otherwise extend. Initialize from the first element to handle all-negative inputs and retain boundaries. This takes O(N) time and O(1) auxiliary words, with output copying accounted separately."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם המערך מעגלי והרצף יכול לחצות מהסוף להתחלה?",
+        "direction": "מועמד הוא המקסימום הרגיל או סכום כל האיברים פחות סכום תת־המערך המינימלי. צריך למנוע בחירת משלים ריק כשהמינימום הוא כל המערך, ובמיוחד לטפל בכל האיברים השליליים. הגדירו גם ייצוג גבולות לרצף עוטף.",
+        "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+      },
+      "en": {
+        "question": "What changes if the array is circular and an interval may wrap?",
+        "direction": "Consider the ordinary maximum or total sum minus a minimum-sum interval. Prevent an empty complement when that minimum covers the whole array, especially for all-negative inputs, and define wraparound boundaries.",
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    }
+  },
+  "PREP-071": {
+    "assumptions": {
+      "he": [
+        "שלמים חיוביים שונים; בגרסה הכללית הווקטורים שונים, לא בהכרח כל ערך קואורדינטה.",
+        "b שלם חיובי. האמצע של הזוג שלם בכל קואורדינטה ואינו חייב להופיע בפלט.",
+        "נדרשת הבטחה לכל סדר תוצאות, ללא תלות בהתפלגות."
+      ],
+      "en": [
+        "Distinct positive integers; generalized whole vectors are distinct, not necessarily coordinatewise.",
+        "b is a positive integer. A pair must have an integral coordinatewise average; that midpoint need not be generated.",
+        "The guarantee covers every output order independently of a random distribution."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר הגרלות להבטחה גרועה־ביותר.",
+        "result": "3,5,2^b+1 בממדים 1,2,b.",
+        "proof": "יש 2^b תבניות זוגיות; עוד וקטור מכריח חזרה. כל וקטורי {1,2}^b הם דוגמה ללא זוג.",
+        "scope": "מינימום להבטחת זוג בלבד, לא תוחלת ולא חסם מימוש זמן או זיכרון."
+      },
+      "en": {
+        "criterion": "Worst-case number of draws guaranteeing a pair.",
+        "result": "3,5,2^b+1 in dimensions 1,2,b.",
+        "proof": "There are 2^b parity signatures; one more draw repeats one. All vectors in {1,2}^b form a matching no-pair witness.",
+        "scope": "Minimum guaranteed draws, not expected waiting time or an implementation time/space lower bound."
+      }
+    },
+    "verification": {
+      "he": "עברו 157 רצפים סקלריים, 6,885 תתי־קבוצות של סריג 4×4, דוגמאות מינימום בממדים 1–6 וחמש דחיות קלט. אורקל עצמאי בחשבון Fraction. מודל פייתון סופי לצד הוכחה כללית; ביקורת מקצועית ממתינה.",
+      "en": "Passed 157 scalar streams, 6,885 subsets of a 4x4 lattice, tight witnesses in dimensions 1..6 and five invalid-input rejections. Independent Fraction oracle. Finite Python checks accompany a general proof; professional review pending."
+    },
+    "edge_cases": {
+      "he": [
+        "שתי תוצאות עשויות להספיק בריצה מסוימת.",
+        "b=1 נותן 3. נקודות שונות רשאיות לחלוק קואורדינטה.",
+        "האמצע אינו חייב להיות פלט. חזרות על אותו וקטור משנות את המודל."
+      ],
+      "en": [
+        "Two draws can suffice in a favorable run.",
+        "b=1 gives three. Distinct points may share coordinates.",
+        "The midpoint need not be output. Repeated vectors change the contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בדיקת זוגיות רק בקואורדינטה אחת.",
+        "ספירת 2b במקום 2^b קבוצות.",
+        "חסם עליון ללא דוגמת מינימום.",
+        "בלבול בין אמצע שלם לבין אמצע שמופיע בפלט, או בין הבטחה לתוחלת."
+      ],
+      "en": [
+        "Matching parity in only one coordinate.",
+        "Counting 2b classes instead of 2^b.",
+        "An upper bound without a tightness witness.",
+        "Confusing an integral midpoint with a generated midpoint, or a guarantee with an expectation."
+      ]
+    },
+    "interview_answer": {
+      "he": "הממוצע של שני שלמים שלם בדיוק כשזוגיותם שווה. בווקטורים זה נדרש בכל קואורדינטה. יש 2^b תבניות, ולכן 2^b+1 מכריח זוג. וקטורי {1,2}^b מוכיחים מינימום. התשובות 3,5,2^b+1.",
+      "en": "An integer average requires matching parity in every coordinate. There are 2^b signatures, so 2^b+1 draws force a pair. Vectors {1,2}^b show minimality. The answers are 3,5,2^b+1."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה אם דורשים שגם האמצע יופיע בתוצאות?",
+        "direction": "זוהי דרישה אחרת. רצף חזקות שונות של שלוש אינו כולל שלשה שהאחת אמצע האחרות, לכן ללא חסימת תחום אין הבטחה סופית.",
+        "status": "מוכן בארכיון; אינו מחובר לתור האינטראקטיבי."
+      },
+      "en": {
+        "question": "What if the midpoint must also appear among the outputs?",
+        "direction": "This is a different contract. Distinct powers of three contain no three-term arithmetic progression, so without a bounded domain there is no finite guarantee.",
+        "status": "Prepared in the archive; not connected to the interactive follow-up queue."
+      }
+    }
+  },
+  "PREP-073": {
+    "assumptions": {
+      "he": [
+        "בדיוק בקבוק אחד מתוך 1000 מורעל.",
+        "מותר לערבב ולחלק מנות; כל תערובת עם מנה מספקת של הרעל הורגת בוודאות עד המועד. ללא רעל שורדים.",
+        "טעימה מקבילה בתחילת היום ותוצאה בינארית בסופו, ללא סבב שני או קידוד בשעת המוות.",
+        "מספרים גלויים 1–1000, תוויות פנימיות 0–999; T1 הוא הביט הנמוך. כולם חיים מזהה את בקבוק 1."
+      ],
+      "en": [
+        "Exactly one of 1000 bottles is poisoned.",
+        "Mixing and portions are allowed; any pool with an adequate poison dose deterministically kills by the deadline; poison-free pools do not.",
+        "All taste in parallel at the start and give one binary endpoint outcome, with no second round or death-time encoding.",
+        "Public numbers 1..1000 use internal labels 0..999; T1 is the low bit. All-alive identifies public bottle one."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר טועמים בסבב אחד של תוצאות בינאריות ודאיות.",
+        "result": "עשרה נחוצים ומספיקים.",
+        "proof": "2^9=512 קטן מאלף, ו־2^10=1024 מספיק עם בניית הקידוד הבינארי.",
+        "scope": "לא מינימום מנות או נפח, לא כמה בקבוקים מורעלים או תוצאות לא ודאיות, ולא מידע על שעת המוות."
+      },
+      "en": {
+        "criterion": "Taster count in one batch of deterministic binary endpoint results.",
+        "result": "Ten are necessary and sufficient.",
+        "proof": "2^9=512 is less than 1000, while 2^10=1024 suffice with the binary-pooling construction.",
+        "scope": "No dose or volume minimum; excludes multiple poisons, uncertainty and death-time information."
+      }
+    },
+    "verification": {
+      "he": "נבדקו כל 1000 אפשרויות הבקבוק המורעל לפי חברות בתערובות, ייחודיות ופענוח; הושוו לאורקל חלוקות ושאריות עצמאי. נבדקו כולם חיים, 24 דפוסים בלתי מנוצלים וחמישה קלטים פגומים. מודל פייתון בלבד; ללא ניסוי אנושי או כימי; ביקורת מקצועית ממתינה.",
+      "en": "All 1000 poisoned-bottle cases passed pool-membership simulation, uniqueness and decoding against an independent division/remainder oracle. All-survive, 24 unused patterns and five malformed inputs passed. Python model only, no real human or chemical experiment; professional review pending."
+    },
+    "edge_cases": {
+      "he": [
+        "כולם חיים מזהה את בקבוק 1 שלא נבדק.",
+        "בקבוק 1000 נותן תווית 999; דפוסים 1000–1023 אינם תקפים.",
+        "כמה בקבוקים מורעלים יוצרים איחוד ביטים ועלולים להטעות.",
+        "אין זמן להמתין לסבב שני."
+      ],
+      "en": [
+        "All alive identifies unsampled bottle one.",
+        "Bottle 1000 has label 999; patterns 1000..1023 are invalid.",
+        "Multiple poisoned bottles can produce a misleading union of bits.",
+        "No time remains for a second result-dependent round."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "עשר קבוצות נפרדות שמזהות רק קבוצה.",
+        "חיפוש בינארי סדרתי שאין זמן להמתין לתוצאותיו.",
+        "בלבול בין מספר בקבוק לתווית או בין סדר הביטים לסדר הטועמים.",
+        "דחיית כולם חיים למרות שיש בדיוק בקבוק מורעל אחד.",
+        "הסתמכות על שעת מוות מדויקת שלא ניתנה."
+      ],
+      "en": [
+        "Ten disjoint groups identify only a group.",
+        "Sequential binary search despite no time for several outcome rounds.",
+        "Confusing public bottle numbers with labels or reversing the bit/taster order.",
+        "Rejecting all-alive despite the exactly-one-poison guarantee.",
+        "Relying on exact death times not provided by the source."
+      ]
+    },
+    "interview_answer": {
+      "he": "אסמן בקבוקים בתוויות 0–999 בעשרה ביטים. כל טועם מקבל תערובת מכל בקבוק שהביט שלו 1, וכולם טועמים יחד. דפוס המתים בסוף היום הוא התווית; מוסיפים אחת למספר הגלוי. כולם חיים מזהה בקבוק 1. עשרה מינימליים כי תשעה נותנים רק 512 דפוסים.",
+      "en": "Assign labels 0..999 in ten bits. Each taster receives all bottles whose code has one in its bit, and all taste in parallel. The endpoint death pattern is the label; add one for the public bottle. All-alive means bottle one. Ten is minimal because nine give only 512 patterns."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כמה טועמים נחוצים ל־1025 בקבוקים באותם כללים?",
+        "direction": "עשרה נותנים 1024 דפוסים בלבד. נדרשים 11, וקידוד של 11 ביטים מספיק.",
+        "status": "מוכן בארכיון; אינו מחובר לתור האינטראקטיבי."
+      },
+      "en": {
+        "question": "How many tasters are needed for 1025 bottles under the same rules?",
+        "direction": "Ten give only 1024 patterns. Eleven are required and eleven-bit pooling suffices.",
+        "status": "Prepared in the archive; not connected to the interactive follow-up queue."
+      }
+    }
+  }
+}

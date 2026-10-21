@@ -1,0 +1,547 @@
+{
+  "questions": [
+    {
+      "id": "PREP-071",
+      "key": "integer-midpoint-pigeonhole",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "logic",
+      "topic": "pigeonhole_principle",
+      "topics": [
+        "logic",
+        "pigeonhole_principle",
+        "parity",
+        "integer_lattice"
+      ],
+      "source_topic_tags": [
+        "hardware",
+        "software",
+        "verification"
+      ],
+      "added_topic_tags": [
+        "parity",
+        "integer_lattice",
+        "pigeonhole_principle"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel",
+        "software",
+        "verification"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "logic_puzzle",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied source; AI-assisted bilingual proposed solution, clean diagrams and independent exact-arithmetic checks. Professional, parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-071.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "קבוצת אמצע מוגדרת כך: שני מספרים חיוביים ושלמים אשר קיים עבורם מספר שלם שהוא האמצע שלהם. לדוגמא (1,3) זו קבוצת אמצע, (2,10) זו קבוצת אמצע.\nקיימת לך מכונה המוציאה באופן רנדומלי מספרים שלמים חיוביים השונים זה מזה. בכל איטרציה יוצא מספר בודד. מהו מספר האיטרציות המינימאלי הדרוש על מנת לקבל בוודאות שני מספרים המרכיבים קבוצת אמצע.\nכעת המכונה מוציאה וקטור בשני מימדים, תוך כמה איטרציות נקבל בוודאות שני וקטורים אשר יגדירו קבוצת אמצע.\nכעת המכונה מוציאה וקטור ב־b מימדים תוך כמה איטרציות נקבל בוודאות שני וקטורים אשר יגדירו קבוצת אמצע.",
+      "translations": {
+        "he": {
+          "title": "זוג בעל אמצע שלם — מספרים ווקטורים",
+          "prompt": "מכונה מוציאה בכל איטרציה מספר שלם חיובי חדש השונה מקודמיו. זוג הוא קבוצת אמצע אם הממוצע שלו שלם, למשל (1,3) ו־(2,10). מהו מספר האיטרציות המינימלי שמבטיח זוג לכל סדר תוצאות? הוכיחו גם שמספר קטן יותר אינו מבטיח זאת.\n\nהכלילו לשני ממדים ואחר כך ל־b ממדים: כל פלט הוא וקטור חדש של קואורדינטות שלמות חיוביות, ומחפשים זוג וקטורים שונים שהממוצע שלהם שלם בכל קואורדינטה. b שלם חיובי. הווקטורים שונים, אך קואורדינטות בודדות רשאיות לחזור. האמצע אינו חייב להופיע בפלט. הבהרות הווקטורים והאמצע נוספו בעריכה להסרת עמימות.",
+          "hint": "התעלמו מהגודל המדויק: איזו תכונה קובעת אם סכום שני שלמים מתחלק בשתיים?",
+          "hints": [
+            "התעלמו מהגודל המדויק: איזו תכונה קובעת אם סכום שני שלמים מתחלק בשתיים?",
+            "שני מספרים בעלי אותה זוגיות נותנים ממוצע שלם. בווקטורים התנאי צריך להתקיים בכל קואורדינטה.",
+            "קבצו וקטורים לפי שאריות הקואורדינטות בחלוקה לשתיים. כמה תבניות קיימות? למינימום, נסו נציג אחד מכל תבנית."
+          ],
+          "reference_solution": "**פתרון מוצע — התשובות הן 3 בממד אחד, 5 בשני ממדים ו־2^b+1 בממד b.**\n\n### ממד אחד: שתי קבוצות זוגיות\n\nלשני שלמים x,y יש אמצע שלם בדיוק כאשר x+y זוגי, כלומר שניהם זוגיים או שניהם אי־זוגיים. יש רק שתי קבוצות. אחרי שלושה מספרים שונים, לפחות שניים באותה קבוצה, לפי עקרון שובך היונים. למשל 1,2,5 מכיל את הזוג 1,5 שאמצעו 3; אין צורך שה־3 עצמו יהיה פלט של המכונה.\n\nשלוש הוא המינימום המבטיח, כי 1,2 הם שתי תוצאות ללא אמצע שלם. לפעמים מספיקות שתי תוצאות, כמו 1,3; מבקשים הבטחה לכל סדר, לא מתי הזוג מופיע בריצה מסוימת.\n\n### שני ממדים: ארבע תבניות\n\nאמצע של (x1,y1),(x2,y2) הוא ((x1+x2)/2,(y1+y2)/2). הוא שלם בדיוק כאשר זוגיות ה־x תואמת וגם זוגיות ה־y תואמת. ארבע התבניות הן 00,01,10,11, כאשר 0 פירושו זוגי ו־1 אי־זוגי. חמש נקודות שונות מכריחות שתי נקודות באותה תבנית, למשל (1,1),(3,5) שאמצען (2,3).\n\nארבע אינן מספיקות: (1,1),(1,2),(2,1),(2,2) משתמשות בכל תבנית פעם אחת. בכל זוג יש קואורדינטה אחת של 1 מול 2, שהממוצע שלה 1.5. לכן חמש הוא מינימום ההבטחה.\n\n### b ממדים: הוכחת הגבול הכללי\n\nלכל קואורדינטה שתי אפשרויות זוגיות, ולכן יש 2^b תבניות. אחרי 2^b+1 תוצאות יש חזרה על תבנית, וכל סכום קואורדינטות בזוג זה זוגי. ממוצע הזוג שלם בכל הממדים יחד.\n\nלמינימום, קחו את כל הווקטורים שקואורדינטותיהם הן 1 או 2. יש בדיוק 2^b וקטורים חיוביים שונים, נציג לכל תבנית. כל שניים נבדלים בקואורדינטה אחת לפחות, ובה הממוצע הוא 1.5. זו דוגמה של 2^b תוצאות ללא זוג תקף, ולכן הגבול הדוק.\n\n| ממד | תבניות זוגיות | הגרלות להבטחה |\n| --- | --- | --- |\n| 1 | 2 | 3 |\n| 2 | 4 | 5 |\n| b | 2^b | 2^b+1 |\n\n### מוצאים את הזוג, ולא רק סופרים\n\nשומרים במפה את הווקטור הראשון מכל תבנית. לכל תוצאה חדשה מחשבים את שאריות הקואורדינטות בחלוקה לשתיים. אם התבנית קיימת, מחזירים את הנציג, את החדשה ואת אמצען; אחרת שומרים נציג. אין צורך לחשב מרחקים או לבדוק את כל הזוגות. הקוד משתמש ב־tuple גם בממד אחד, למשל (5,).\n\nל־n תוצאות נדרשות O(nb) פעולות אריתמטיות וזמן צפוי במפת גיבוב, ועד O(b·2^b) ערכי קואורדינטות בזיכרון במודל מילים. זה אינו חסם זמן גרוע־ביותר לגיבוב או ניתוח ביטים למספרים בלתי חסומים. הוכחת מספר ההגרלות אינה תלויה במימוש המפה.\n\n### הנחות שמונעות בלבול\n\nהווקטורים עצמם שונים; קואורדינטות רשאיות לחזור בין נקודות. b שלם חיובי. האמצע אינו חייב להיות פלט. אם דורשים שגם האמצע יופיע, זו שאלה שונה: אפשר להוציא חזקות שונות של שלוש ללא שלוש תוצאות שהאחת ממוצע האחרות. לכן אין אז חסם סופי ללא הגבלת תחום.\n\nאם מתירים חזרות אך דורשים שני ערכים שונים, אין חסם סופי: ערך אחד יכול לחזור לנצח. אם שתי הופעות זהות נחשבות זוג, הן כבר נותנות אמצע שלם. המילה ״רנדומלי״ אינה נדרשת להוכחה: היא מכסה כל סדר אפשרי ואינה מחשבת תוחלת.\n\nהאימות השווה למודל זוגות עצמאי בחשבון שברים מדויק: 157 רצפים סקלריים באורכים 0–3 מתוך 1–6, 6,885 תתי־קבוצות בגדלים 0–5 מתוך סריג 4×4, ודוגמאות מינימום בממדים 1–6. בדיקה סופית לצד הוכחה כללית, ללא סקירה מקצועית אנושית. ההצעה בסיוע AI."
+        },
+        "en": {
+          "title": "Integer-midpoint pairs — numbers and vectors",
+          "prompt": "Each iteration outputs a new positive integer, distinct from previous outputs. A pair is a midpoint pair if its average is integral, such as (1,3) or (2,10). What is the minimum number of draws guaranteeing a pair for every output order? Prove minimality too.\n\nGeneralize to two dimensions and then b dimensions: outputs are distinct vectors of positive integer coordinates, and seek two whose average is integral in every coordinate. Here b is a positive integer. Whole vectors are distinct, but coordinate values may repeat. The midpoint need not itself be output. Vector/midpoint clarifications were added to resolve source ambiguity.",
+          "hint": "Ignore magnitudes: what property decides whether the sum of two integers is divisible by two?",
+          "hints": [
+            "Ignore magnitudes: what property decides whether the sum of two integers is divisible by two?",
+            "Two integers of the same parity have an integer average. For vectors this must hold in every coordinate.",
+            "Group vectors by coordinate remainders modulo two. How many signatures exist? For minimality, try one representative per signature."
+          ],
+          "reference_solution": "**Proposed solution — the guarantees are three in one dimension, five in two dimensions and 2^b+1 in dimension b.**\n\n### One dimension: two parity classes\n\nIntegers x,y have an integer midpoint exactly when x+y is even: both even or both odd. There are two classes. Three distinct outputs force two into one class by the pigeonhole principle. For example, 1,2,5 contains pair 1,5 with midpoint three. The midpoint need not itself be generated.\n\nThree is minimal for a guarantee: outputs 1,2 do not form a valid pair. Some runs succeed after two, such as 1,3; the question asks for all orders, not the first success time of one run.\n\n### Two dimensions: four signatures\n\nThe midpoint of (x1,y1),(x2,y2) is ((x1+x2)/2,(y1+y2)/2). It is integral exactly when the x parities match AND the y parities match. Signatures are 00,01,10,11, with zero meaning even and one odd. Five distinct points force a repeated signature. For example, (1,1),(3,5) have midpoint (2,3).\n\nFour do not suffice: (1,1),(1,2),(2,1),(2,2) use one of each signature. Every pair differs in a coordinate with one versus two, whose average is 1.5. Thus five is the minimum guarantee.\n\n### b dimensions: proving the general bound\n\nEvery coordinate has two parity choices, so there are 2^b signatures. Among 2^b+1 outputs two have the same signature. Every corresponding coordinate sum is even, giving an integer midpoint vector.\n\nFor minimality, use all vectors whose coordinates are one or two. There are exactly 2^b distinct positive vectors, one representative per signature. Every two differ in a coordinate containing one versus two, whose average is 1.5. This is a set of 2^b outputs with no valid pair. The bound is therefore tight.\n\n| Dimension | Parity signatures | Draws for a guarantee |\n| --- | --- | --- |\n| 1 | 2 | 3 |\n| 2 | 4 | 5 |\n| b | 2^b | 2^b+1 |\n\n### Finding the pair\n\nStore the first vector for every observed signature in a map. For a new vector compute coordinate remainders modulo two. If its signature exists, return the stored vector, new vector and their midpoint; otherwise save the first representative. No distance calculations or pair enumeration are needed. Code uses tuples even in one dimension, such as (5,).\n\nFor n draws this takes O(nb) arithmetic operations and expected hash-map time, and at most O(b·2^b) stored coordinate values in a word model. This is not a worst-case hashing guarantee or bit-complexity bound for unbounded integers. The draw-count proof does not depend on the map implementation.\n\n### Contract clarifications\n\nWhole vectors are distinct, but coordinates may repeat between points. Dimension b is a positive integer. The midpoint need not be an output. Requiring it to be generated changes the problem: distinct powers of three can be generated without any three-term arithmetic progression, so there is no finite guarantee without a bounded domain.\n\nIf repetitions are allowed but a pair needs different values, there is no finite bound: one value can repeat forever. If identical occurrences count, such a repetition already gives an integer midpoint. Randomness is not needed by the proof: it handles every order and does not compute an expectation.\n\nIndependent exact-Fraction pair checks covered 157 scalar streams of lengths zero through three from 1..6, 6,885 subsets of sizes zero through five of a positive 4x4 lattice, and tight lower-bound witnesses in dimensions one through six. These are finite model checks accompanying the general proof, not human professional review. AI-assisted proposal."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-071-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "התעלמו מהגודל המדויק: איזו תכונה קובעת אם סכום שני שלמים מתחלק בשתיים?"
+        },
+        {
+          "id": "PREP-071-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "שני מספרים בעלי אותה זוגיות נותנים ממוצע שלם. בווקטורים התנאי צריך להתקיים בכל קואורדינטה."
+        },
+        {
+          "id": "PREP-071-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "קבצו וקטורים לפי שאריות הקואורדינטות בחלוקה לשתיים. כמה תבניות קיימות? למינימום, נסו נציג אחד מכל תבנית."
+        },
+        {
+          "id": "PREP-071-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Ignore magnitudes: what property decides whether the sum of two integers is divisible by two?"
+        },
+        {
+          "id": "PREP-071-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Two integers of the same parity have an integer average. For vectors this must hold in every coordinate."
+        },
+        {
+          "id": "PREP-071-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Group vectors by coordinate remainders modulo two. How many signatures exist? For minimality, try one representative per signature."
+        }
+      ],
+      "assumptions": [
+        "Distinct positive integers; generalized whole vectors are distinct, not necessarily coordinatewise.",
+        "b is a positive integer. A pair must have an integral coordinatewise average; that midpoint need not be generated.",
+        "The guarantee covers every output order independently of a random distribution."
+      ],
+      "optimality": {
+        "criterion": "Worst-case number of draws guaranteeing a pair.",
+        "result": "3,5,2^b+1 in dimensions 1,2,b.",
+        "proof": "There are 2^b parity signatures; one more draw repeats one. All vectors in {1,2}^b form a matching no-pair witness.",
+        "scope": "Minimum guaranteed draws, not expected waiting time or an implementation time/space lower bound."
+      },
+      "verification": "Passed 157 scalar streams, 6,885 subsets of a 4x4 lattice, tight witnesses in dimensions 1..6 and five invalid-input rejections. Independent Fraction oracle. Finite Python checks accompany a general proof; professional review pending.",
+      "edge_cases": [
+        "Two draws can suffice in a favorable run.",
+        "b=1 gives three. Distinct points may share coordinates.",
+        "The midpoint need not be output. Repeated vectors change the contract."
+      ],
+      "common_mistakes": [
+        "Matching parity in only one coordinate.",
+        "Counting 2b classes instead of 2^b.",
+        "An upper bound without a tightness witness.",
+        "Confusing an integral midpoint with a generated midpoint, or a guarantee with an expectation."
+      ],
+      "interview_answer": "An integer average requires matching parity in every coordinate. There are 2^b signatures, so 2^b+1 draws force a pair. Vectors {1,2}^b show minimality. The answers are 3,5,2^b+1.",
+      "solution_extensions": {
+        "question": "What if the midpoint must also appear among the outputs?",
+        "direction": "This is a different contract. Distinct powers of three contain no three-term arithmetic progression, so without a bounded domain there is no finite guarantee.",
+        "status": "Prepared in the archive; not connected to the interactive follow-up queue."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_071_integer_midpoint.py",
+      "solution_code_paths": [
+        "solutions/prep_071_integer_midpoint.py"
+      ],
+      "verification_script_path": "checks/check_prep_071.py",
+      "verification_evidence_path": "checks/prep-071-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-071.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-071-midpoint-parity-he.png",
+          "language": "he",
+          "description": "זוג בעל אמצע שלם — מספרים ווקטורים"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-071-midpoint-parity-en.png",
+          "language": "en",
+          "description": "Integer-midpoint pairs — numbers and vectors"
+        }
+      ],
+      "related_question_ids": [],
+      "duplicate_check": "No matching scalar/2D/bD integer-midpoint guarantee or 1000-bottle/ten-taster one-day parallel pooling question found in preparation archive and example/verification catalog. Shared general techniques are not identical problem contracts.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Pigeonhole reasoning and a tight worst-case guarantee."
+      },
+      "markdown_path": "questions/prep-071-integer-midpoint-pigeonhole.md"
+    },
+    {
+      "id": "PREP-073",
+      "key": "thousand-bottles-ten-tasters",
+      "version": 1,
+      "created_on": "2026-10-21",
+      "category": "logic",
+      "topic": "information_theory",
+      "topics": [
+        "logic",
+        "information_theory",
+        "binary_encoding",
+        "parallel_testing"
+      ],
+      "source_topic_tags": [
+        "logic"
+      ],
+      "added_topic_tags": [
+        "binary_encoding",
+        "parallel_testing",
+        "information_theory"
+      ],
+      "source_tags": [
+        "mellanox",
+        "amazon",
+        "logic",
+        "ceva"
+      ],
+      "reported_companies": [
+        "Mellanox",
+        "Amazon",
+        "CEVA"
+      ],
+      "source_company_badge": "Ceva",
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "logic_puzzle",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Founder-supplied source; AI-assisted bilingual proposed solution, clean diagrams and independent exact-arithmetic checks. Professional, parity and reuse reviews pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/prep-073.png",
+          "received_on": "2026-10-21"
+        }
+      ],
+      "original_prompt": "מלך קיבל 1000 בקבוקי יין. אחד מהבקבוקים מורעל, ועליו לגלות איזה מהם מורעל. בבקבוק ישנו רעל שמי ששותה מהבקבוק, בסוף היום מת. לרשות המלך עשרה משרתים. עליו לגלות תוך יום אחד איזה מן הבקבוקים מורעל.",
+      "translations": {
+        "he": {
+          "title": "בקבוק מורעל אחד מתוך אלף — עשרה טועמים",
+          "prompt": "מלך קיבל 1000 בקבוקי יין ובדיוק אחד מהם מורעל. מי ששותה מנה מספקת ממנו ימות עד סוף היום. לרשותו עשרה טועמים, ועליו לזהות בוודאות את הבקבוק בתוך יום אחד. כיצד יחלק טעימות וכיצד יפענח? הוכיחו גם מינימום טועמים במודל הזה.\n\nהבהרות שנוספו: מותר לקחת מנות ולערבב; רעל במנה מספקת הורג בוודאות עד סוף היום, ותערובת ללא רעל אינה הורגת. הערבוב אינו מבטל רעל ואין מגבלת נפח שמונעת הכנה. כל הטעימות במקביל בתחילת היום, והמידע הוא רק חי/מת בסופו; לא מסתמכים על זמן מוות מדויק ולא מאפשרים סבב שני.",
+          "hint": "כל טועם נותן בסוף היום אחת משתי תוצאות. כמה דפוסים יכולים עשרה טועמים לייצג יחד?",
+          "hints": [
+            "כל טועם נותן בסוף היום אחת משתי תוצאות. כמה דפוסים יכולים עשרה טועמים לייצג יחד?",
+            "אותו בקבוק יכול להשתתף בתערובות של כמה טועמים; הדפוס המשותף יזהה אותו.",
+            "מספרו תוויות מ־0 עד 999 בעשרה ביטים. כל טועם מקבל בדיוק את הבקבוקים שהביט שלו הוא 1."
+          ],
+          "reference_solution": "**פתרון מוצע — עשרה טועמים, עשרה ביטים, עשר תערובות שנבדקות במקביל.**\n\n### סופרים את המידע\n\nבסוף היום כל טועם חי או מת, כלומר מספק ביט אחד. עשרה טועמים יכולים לייצר 2^10=1024 דפוסים, די להבחנה בין 1000 אפשרויות. תשעה נותנים רק 512, ולכן אינם מספיקים במודל הזה. זהו חסם מידע; כעת נבנה תערובות שמממשות אותו.\n\n### בניית הקוד והתערובות\n\nמספרי הבקבוקים הגלויים הם 1–1000. לבקבוק k ניתן תווית פנימית k−1, כלומר 0–999. נכתוב אותה בעשרה ביטים. הטועם T1 מתאים לביט הנמוך במשקל 1, T2 למשקל 2, ועד T10 במשקל 512. במחרוזת בינארית משמאל לימין הסדר הוא T10 עד T1.\n\n| בקבוק גלוי | תווית פנימית | קוד T10...T1 | טועמים שמקבלים ממנו |\n| --- | --- | --- | --- |\n| 1 | 0 | 0000000000 | אף אחד |\n| 2 | 1 | 0000000001 | T1 |\n| 3 | 2 | 0000000010 | T2 |\n| 4 | 3 | 0000000011 | T1,T2 |\n| 14 | 13 | 0000001101 | T1,T3,T4 |\n| 1000 | 999 | 1111100111 | T1,T2,T3,T6,T7,T8,T9,T10 |\n\nלכל טועם מכינים תערובת נפרדת המכילה מנה מכל בקבוק שהביט שלו 1. כל עשרת הטועמים טועמים בתחילת היום. אין המתנה לתוצאת טועם אחד לפני הכנת הבדיקה הבאה — זהו סבב מקביל יחיד.\n\n### הפענוח\n\nבסוף היום נכתוב 1 לכל טועם שמת ו־0 לכל טועם שחי. הדפוס הוא התווית של הבקבוק המורעל; מוסיפים 1 לקבלת מספרו הגלוי. למשל, אם רק T1,T3,T4 מתו, הדפוס T10...T1 הוא 0000001101, שערכו 13, ולכן הבקבוק הוא 14.\n\nאם כולם חיים, התווית 0 והבקבוק הוא 1, שממנו אף אחד לא טעם. זה תקין בזכות הנתון שיש בדיוק בקבוק אחד מורעל: כל אחת מ־999 האפשרויות האחרות הייתה הורגת לפחות טועם אחד. אפשר לחלופין להשתמש בקודים 1–1000 כדי שכל בקבוק ייבדק, אך אז משנים גם את הפענוח ודפוסי השגיאה. אין לערבב את שיטות המספור.\n\n### נכונות ומינימום\n\nאם הבקבוק k מורעל, טועם i מת בדיוק כאשר התערובת שלו מכילה את k, וזה קורה בדיוק כאשר ביט i−1 של k−1 הוא 1. לכן דפוס המוות שווה לקוד שהוקצה לבקבוק. כל הקודים שונים, ולכן מזהים יחיד. הבנייה משיגה את ההבחנה שהחסם ספר.\n\nעבור N בקבוקים באותו מודל נדרשים ומספיקים ceil(log2(N)) טועמים. עבור 1000 התוצאה 10. זו אופטימליות במספר טועמים לסבב אחד של תוצאות בינאריות, לא במספר מנות או נפח. בניית התערובות הישירה צורכת O(N·log N) בדיקות ביט, ופענוח O(log N). טועם מקבל מנות מהרבה בקבוקים, ולא קבוצה נפרדת שאין לה חפיפה עם האחרות.\n\n### הנחות חשובות\n\nזוהי חידה מופשטת: בדיוק בקבוק אחד מורעל; מותר לקחת מנות ולערבב; מנה מספקת של רעל בתערובת הורגת בוודאות עד סוף היום, ותערובת ללא רעל אינה הורגת. הערבוב אינו מבטל את הרעל ואין מגבלת נפח שמונעת הכנה בתחילת היום. אין משתמשים בשעת מוות מדויקת: המקור נותן תוצאת סוף יום, לא חלונות זמן מובחנים. השפעה לא ודאית, דילול שאינו עומד בהנחה או עיכוב מעבר למועד מבטלים את ההבטחה.\n\nהקוד בונה עשר קבוצות בקבוקים. הפענוח מקבל עשרה ערכי אמת בסדר T1 עד T10. דפוסים שתוויתם 1000–1023 אינם משויכים לשום בקבוק ולכן מדווחים כשגיאה.\n\nהבדיקה בנתה את קבוצות התערובות ודימתה כל אחד מ־1000 הבקבוקים כאפשרות היחידה המורעלת. כולם פוענחו נכון והדפוסים ייחודיים. נבדקו גם כולם חיים, כל 24 הדפוסים הבלתי מנוצלים וחמישה קלטים פגומים. זו בדיקת מודל וקוד, לא ניסוי בטועמים או אימות כימי. הצעה בסיוע AI, ממתינה לביקורת מקצועית."
+        },
+        "en": {
+          "title": "One poisoned bottle among one thousand — ten tasters",
+          "prompt": "A king has 1000 wine bottles, exactly one poisoned. An adequate dose causes death by the end of the day. He has ten tasters and must identify the bottle with certainty within one day. Specify the tasting assignment and decoding, and prove the minimum taster count under this model.\n\nAdded clarifications: taking portions and mixing are allowed. An adequate poison dose deterministically kills by the deadline; poison-free pools do not. Mixing does not neutralize poison, and volume limits do not prevent preparation. All taste in parallel at the start; only alive/dead is read at the endpoint. Do not rely on exact death times or a second testing round.",
+          "hint": "Each taster has two endpoint outcomes. How many joint patterns can ten tasters represent?",
+          "hints": [
+            "Each taster has two endpoint outcomes. How many joint patterns can ten tasters represent?",
+            "A bottle can appear in several tasters' pools; the combined pattern can identify it.",
+            "Use labels 0..999 in ten bits. Each taster samples exactly bottles whose code has one in its assigned bit."
+          ],
+          "reference_solution": "**Proposed solution — ten tasters, ten bits and ten pools tested in parallel.**\n\n### Count the information\n\nAt the deadline each taster is alive or dead, providing one bit. Ten tasters can produce 2^10=1024 joint patterns, enough for 1000 possibilities. Nine provide only 512 and cannot suffice in this model. This is an information lower bound; a pooling construction must attain it.\n\n### Codes and pools\n\nPublic bottles are numbered 1..1000. Assign bottle k internal label k−1, ranging 0..999, written in ten binary bits. T1 represents the least-significant bit of weight one, T2 weight two, through T10 weight 512. A written binary string from left to right is T10 through T1.\n\n| Public bottle | Internal label | Code T10...T1 | Tasters receiving a portion |\n| --- | --- | --- | --- |\n| 1 | 0 | 0000000000 | None |\n| 2 | 1 | 0000000001 | T1 |\n| 3 | 2 | 0000000010 | T2 |\n| 4 | 3 | 0000000011 | T1,T2 |\n| 14 | 13 | 0000001101 | T1,T3,T4 |\n| 1000 | 999 | 1111100111 | T1,T2,T3,T6,T7,T8,T9,T10 |\n\nPrepare a separate pool for each taster containing a portion from each bottle whose code has one in that taster's bit. All ten taste at the start. Nothing waits for an earlier outcome; this is one parallel batch.\n\n### Decode\n\nAt the deadline write one for a dead taster and zero for a survivor. This pattern is the poisoned bottle's internal label; add one for its public number. If only T1,T3,T4 die, the T10...T1 pattern is 0000001101, value thirteen, identifying public bottle fourteen.\n\nAll alive means label zero, hence bottle one, which was deliberately not sampled. This is valid because exactly one poisoned bottle is guaranteed: every other one of the 999 possibilities kills at least one taster. Alternatively use codes 1..1000 so every bottle is sampled, but then decoding and invalid patterns must change consistently. Do not mix numbering schemes.\n\n### Correctness and minimum\n\nIf k is poisoned, taster i dies exactly when its pool contains k, which happens exactly when bit i−1 of k−1 is one. Thus the death pattern equals k's assigned code. Distinct codes uniquely identify every bottle. The construction achieves the distinguishability counted by the lower bound.\n\nFor N bottles under the same model, ceil(log2(N)) tasters are necessary and sufficient; for 1000 the answer is ten. This minimizes tasters for one batch of binary endpoint results, not portions or volume. Direct construction takes O(N·log N) bit inspections; decoding takes O(log N). Tasters receive overlapping pools of many bottles, not disjoint groups that identify only one group.\n\n### Assumptions\n\nThis is an abstract puzzle: exactly one bottle is poisoned; portions and mixing are permitted; an adequate poison portion in a pool deterministically kills by the deadline, and poison-free pools do not kill. Mixing does not neutralize poison, volume limits do not prevent preparation at the start, and precise death time is not used. The source provides end-of-day outcomes, not distinguishable timing windows. Uncertain effects, inadequate dilution or delay beyond the deadline remove the guarantee.\n\nCode constructs ten groups and decodes ten Booleans ordered T1 through T10. Labels 1000..1023 are unused and rejected rather than assigned to nonexistent bottles.\n\nChecks constructed the actual pools and simulated every one of the 1000 possible single poisoned bottles. All decoded correctly with unique patterns. All-alive, all 24 unused patterns and five malformed inputs were checked too. This is a code/model check, not real tasting or chemical validation. AI-assisted proposal; professional review pending."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-073-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "כל טועם נותן בסוף היום אחת משתי תוצאות. כמה דפוסים יכולים עשרה טועמים לייצג יחד?"
+        },
+        {
+          "id": "PREP-073-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "אותו בקבוק יכול להשתתף בתערובות של כמה טועמים; הדפוס המשותף יזהה אותו."
+        },
+        {
+          "id": "PREP-073-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "מספרו תוויות מ־0 עד 999 בעשרה ביטים. כל טועם מקבל בדיוק את הבקבוקים שהביט שלו הוא 1."
+        },
+        {
+          "id": "PREP-073-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Each taster has two endpoint outcomes. How many joint patterns can ten tasters represent?"
+        },
+        {
+          "id": "PREP-073-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "A bottle can appear in several tasters' pools; the combined pattern can identify it."
+        },
+        {
+          "id": "PREP-073-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Use labels 0..999 in ten bits. Each taster samples exactly bottles whose code has one in its assigned bit."
+        }
+      ],
+      "assumptions": [
+        "Exactly one of 1000 bottles is poisoned.",
+        "Mixing and portions are allowed; any pool with an adequate poison dose deterministically kills by the deadline; poison-free pools do not.",
+        "All taste in parallel at the start and give one binary endpoint outcome, with no second round or death-time encoding.",
+        "Public numbers 1..1000 use internal labels 0..999; T1 is the low bit. All-alive identifies public bottle one."
+      ],
+      "optimality": {
+        "criterion": "Taster count in one batch of deterministic binary endpoint results.",
+        "result": "Ten are necessary and sufficient.",
+        "proof": "2^9=512 is less than 1000, while 2^10=1024 suffice with the binary-pooling construction.",
+        "scope": "No dose or volume minimum; excludes multiple poisons, uncertainty and death-time information."
+      },
+      "verification": "All 1000 poisoned-bottle cases passed pool-membership simulation, uniqueness and decoding against an independent division/remainder oracle. All-survive, 24 unused patterns and five malformed inputs passed. Python model only, no real human or chemical experiment; professional review pending.",
+      "edge_cases": [
+        "All alive identifies unsampled bottle one.",
+        "Bottle 1000 has label 999; patterns 1000..1023 are invalid.",
+        "Multiple poisoned bottles can produce a misleading union of bits.",
+        "No time remains for a second result-dependent round."
+      ],
+      "common_mistakes": [
+        "Ten disjoint groups identify only a group.",
+        "Sequential binary search despite no time for several outcome rounds.",
+        "Confusing public bottle numbers with labels or reversing the bit/taster order.",
+        "Rejecting all-alive despite the exactly-one-poison guarantee.",
+        "Relying on exact death times not provided by the source."
+      ],
+      "interview_answer": "Assign labels 0..999 in ten bits. Each taster receives all bottles whose code has one in its bit, and all taste in parallel. The endpoint death pattern is the label; add one for the public bottle. All-alive means bottle one. Ten is minimal because nine give only 512 patterns.",
+      "solution_extensions": {
+        "question": "How many tasters are needed for 1025 bottles under the same rules?",
+        "direction": "Ten give only 1024 patterns. Eleven are required and eleven-bit pooling suffices.",
+        "status": "Prepared in the archive; not connected to the interactive follow-up queue."
+      },
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "solution_code_path": "solutions/prep_073_binary_bottles.py",
+      "solution_code_paths": [
+        "solutions/prep_073_binary_bottles.py"
+      ],
+      "verification_script_path": "checks/check_prep_073.py",
+      "verification_evidence_path": "checks/prep-073-verification.json",
+      "media_assets": [
+        {
+          "type": "source_image",
+          "path": "sources/prep-073.png"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-073-binary-pooling-he.png",
+          "language": "he",
+          "description": "בקבוק מורעל אחד מתוך אלף — עשרה טועמים"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-073-binary-pooling-en.png",
+          "language": "en",
+          "description": "One poisoned bottle among one thousand — ten tasters"
+        }
+      ],
+      "related_question_ids": [],
+      "duplicate_check": "No matching scalar/2D/bD integer-midpoint guarantee or 1000-bottle/ten-taster one-day parallel pooling question found in preparation archive and example/verification catalog. Shared general techniques are not identical problem contracts.",
+      "interview_relevance": {
+        "priority": "high",
+        "basis": "Parallel encoding and a matching information lower bound."
+      },
+      "markdown_path": "questions/prep-073-thousand-bottles-ten-tasters.md"
+    }
+  ],
+  "editorial": {
+    "PREP-071": {
+      "hints": {
+        "he": [
+          "התעלמו מהגודל המדויק: איזו תכונה קובעת אם סכום שני שלמים מתחלק בשתיים?",
+          "שני מספרים בעלי אותה זוגיות נותנים ממוצע שלם. בווקטורים התנאי צריך להתקיים בכל קואורדינטה.",
+          "קבצו וקטורים לפי שאריות הקואורדינטות בחלוקה לשתיים. כמה תבניות קיימות? למינימום, נסו נציג אחד מכל תבנית."
+        ],
+        "en": [
+          "Ignore magnitudes: what property decides whether the sum of two integers is divisible by two?",
+          "Two integers of the same parity have an integer average. For vectors this must hold in every coordinate.",
+          "Group vectors by coordinate remainders modulo two. How many signatures exist? For minimality, try one representative per signature."
+        ]
+      },
+      "note": "2026-10-21: source retained; full bilingual proposed solution, explicit assumptions, paired clean diagrams and independent Python evidence. Human professional review pending; no learner history or assessment eligibility changed."
+    },
+    "PREP-073": {
+      "hints": {
+        "he": [
+          "כל טועם נותן בסוף היום אחת משתי תוצאות. כמה דפוסים יכולים עשרה טועמים לייצג יחד?",
+          "אותו בקבוק יכול להשתתף בתערובות של כמה טועמים; הדפוס המשותף יזהה אותו.",
+          "מספרו תוויות מ־0 עד 999 בעשרה ביטים. כל טועם מקבל בדיוק את הבקבוקים שהביט שלו הוא 1."
+        ],
+        "en": [
+          "Each taster has two endpoint outcomes. How many joint patterns can ten tasters represent?",
+          "A bottle can appear in several tasters' pools; the combined pattern can identify it.",
+          "Use labels 0..999 in ten bits. Each taster samples exactly bottles whose code has one in its assigned bit."
+        ]
+      },
+      "note": "2026-10-21: source retained; full bilingual proposed solution, explicit assumptions, paired clean diagrams and independent Python evidence. Human professional review pending; no learner history or assessment eligibility changed."
+    }
+  },
+  "localization": {
+    "PREP-071": {
+      "assumptions": {
+        "he": [
+          "שלמים חיוביים שונים; בגרסה הכללית הווקטורים שונים, לא בהכרח כל ערך קואורדינטה.",
+          "b שלם חיובי. האמצע של הזוג שלם בכל קואורדינטה ואינו חייב להופיע בפלט.",
+          "נדרשת הבטחה לכל סדר תוצאות, ללא תלות בהתפלגות."
+        ],
+        "en": [
+          "Distinct positive integers; generalized whole vectors are distinct, not necessarily coordinatewise.",
+          "b is a positive integer. A pair must have an integral coordinatewise average; that midpoint need not be generated.",
+          "The guarantee covers every output order independently of a random distribution."
+        ]
+      },
+      "optimality": {
+        "he": {
+          "criterion": "מספר הגרלות להבטחה גרועה־ביותר.",
+          "result": "3,5,2^b+1 בממדים 1,2,b.",
+          "proof": "יש 2^b תבניות זוגיות; עוד וקטור מכריח חזרה. כל וקטורי {1,2}^b הם דוגמה ללא זוג.",
+          "scope": "מינימום להבטחת זוג בלבד, לא תוחלת ולא חסם מימוש זמן או זיכרון."
+        },
+        "en": {
+          "criterion": "Worst-case number of draws guaranteeing a pair.",
+          "result": "3,5,2^b+1 in dimensions 1,2,b.",
+          "proof": "There are 2^b parity signatures; one more draw repeats one. All vectors in {1,2}^b form a matching no-pair witness.",
+          "scope": "Minimum guaranteed draws, not expected waiting time or an implementation time/space lower bound."
+        }
+      },
+      "verification": {
+        "he": "עברו 157 רצפים סקלריים, 6,885 תתי־קבוצות של סריג 4×4, דוגמאות מינימום בממדים 1–6 וחמש דחיות קלט. אורקל עצמאי בחשבון Fraction. מודל פייתון סופי לצד הוכחה כללית; ביקורת מקצועית ממתינה.",
+        "en": "Passed 157 scalar streams, 6,885 subsets of a 4x4 lattice, tight witnesses in dimensions 1..6 and five invalid-input rejections. Independent Fraction oracle. Finite Python checks accompany a general proof; professional review pending."
+      },
+      "edge_cases": {
+        "he": [
+          "שתי תוצאות עשויות להספיק בריצה מסוימת.",
+          "b=1 נותן 3. נקודות שונות רשאיות לחלוק קואורדינטה.",
+          "האמצע אינו חייב להיות פלט. חזרות על אותו וקטור משנות את המודל."
+        ],
+        "en": [
+          "Two draws can suffice in a favorable run.",
+          "b=1 gives three. Distinct points may share coordinates.",
+          "The midpoint need not be output. Repeated vectors change the contract."
+        ]
+      },
+      "common_mistakes": {
+        "he": [
+          "בדיקת זוגיות רק בקואורדינטה אחת.",
+          "ספירת 2b במקום 2^b קבוצות.",
+          "חסם עליון ללא דוגמת מינימום.",
+          "בלבול בין אמצע שלם לבין אמצע שמופיע בפלט, או בין הבטחה לתוחלת."
+        ],
+        "en": [
+          "Matching parity in only one coordinate.",
+          "Counting 2b classes instead of 2^b.",
+          "An upper bound without a tightness witness.",
+          "Confusing an integral midpoint with a generated midpoint, or a guarantee with an expectation."
+        ]
+      },
+      "interview_answer": {
+        "he": "הממוצע של שני שלמים שלם בדיוק כשזוגיותם שווה. בווקטורים זה נדרש בכל קואורדינטה. יש 2^b תבניות, ולכן 2^b+1 מכריח זוג. וקטורי {1,2}^b מוכיחים מינימום. התשובות 3,5,2^b+1.",
+        "en": "An integer average requires matching parity in every coordinate. There are 2^b signatures, so 2^b+1 draws force a pair. Vectors {1,2}^b show minimality. The answers are 3,5,2^b+1."
+      },
+      "solution_extensions": {
+        "he": {
+          "question": "מה אם דורשים שגם האמצע יופיע בתוצאות?",
+          "direction": "זוהי דרישה אחרת. רצף חזקות שונות של שלוש אינו כולל שלשה שהאחת אמצע האחרות, לכן ללא חסימת תחום אין הבטחה סופית.",
+          "status": "מוכן בארכיון; אינו מחובר לתור האינטראקטיבי."
+        },
+        "en": {
+          "question": "What if the midpoint must also appear among the outputs?",
+          "direction": "This is a different contract. Distinct powers of three contain no three-term arithmetic progression, so without a bounded domain there is no finite guarantee.",
+          "status": "Prepared in the archive; not connected to the interactive follow-up queue."
+        }
+      }
+    },
+    "PREP-073": {
+      "assumptions": {
+        "he": [
+          "בדיוק בקבוק אחד מתוך 1000 מורעל.",
+          "מותר לערבב ולחלק מנות; כל תערובת עם מנה מספקת של הרעל הורגת בוודאות עד המועד. ללא רעל שורדים.",
+          "טעימה מקבילה בתחילת היום ותוצאה בינארית בסופו, ללא סבב שני או קידוד בשעת המוות.",
+          "מספרים גלויים 1–1000, תוויות פנימיות 0–999; T1 הוא הביט הנמוך. כולם חיים מזהה את בקבוק 1."
+        ],
+        "en": [
+          "Exactly one of 1000 bottles is poisoned.",
+          "Mixing and portions are allowed; any pool with an adequate poison dose deterministically kills by the deadline; poison-free pools do not.",
+          "All taste in parallel at the start and give one binary endpoint outcome, with no second round or death-time encoding.",
+          "Public numbers 1..1000 use internal labels 0..999; T1 is the low bit. All-alive identifies public bottle one."
+        ]
+      },
+      "optimality": {
+        "he": {
+          "criterion": "מספר טועמים בסבב אחד של תוצאות בינאריות ודאיות.",
+          "result": "עשרה נחוצים ומספיקים.",
+          "proof": "2^9=512 קטן מאלף, ו־2^10=1024 מספיק עם בניית הקידוד הבינארי.",
+          "scope": "לא מינימום מנות או נפח, לא כמה בקבוקים מורעלים או תוצאות לא ודאיות, ולא מידע על שעת המוות."
+        },
+        "en": {
+          "criterion": "Taster count in one batch of deterministic binary endpoint results.",
+          "result": "Ten are necessary and sufficient.",
+          "proof": "2^9=512 is less than 1000, while 2^10=1024 suffice with the binary-pooling construction.",
+          "scope": "No dose or volume minimum; excludes multiple poisons, uncertainty and death-time information."
+        }
+      },
+      "verification": {
+        "he": "נבדקו כל 1000 אפשרויות הבקבוק המורעל לפי חברות בתערובות, ייחודיות ופענוח; הושוו לאורקל חלוקות ושאריות עצמאי. נבדקו כולם חיים, 24 דפוסים בלתי מנוצלים וחמישה קלטים פגומים. מודל פייתון בלבד; ללא ניסוי אנושי או כימי; ביקורת מקצועית ממתינה.",
+        "en": "All 1000 poisoned-bottle cases passed pool-membership simulation, uniqueness and decoding against an independent division/remainder oracle. All-survive, 24 unused patterns and five malformed inputs passed. Python model only, no real human or chemical experiment; professional review pending."
+      },
+      "edge_cases": {
+        "he": [
+          "כולם חיים מזהה את בקבוק 1 שלא נבדק.",
+          "בקבוק 1000 נותן תווית 999; דפוסים 1000–1023 אינם תקפים.",
+          "כמה בקבוקים מורעלים יוצרים איחוד ביטים ועלולים להטעות.",
+          "אין זמן להמתין לסבב שני."
+        ],
+        "en": [
+          "All alive identifies unsampled bottle one.",
+          "Bottle 1000 has label 999; patterns 1000..1023 are invalid.",
+          "Multiple poisoned bottles can produce a misleading union of bits.",
+          "No time remains for a second result-dependent round."
+        ]
+      },
+      "common_mistakes": {
+        "he": [
+          "עשר קבוצות נפרדות שמזהות רק קבוצה.",
+          "חיפוש בינארי סדרתי שאין זמן להמתין לתוצאותיו.",
+          "בלבול בין מספר בקבוק לתווית או בין סדר הביטים לסדר הטועמים.",
+          "דחיית כולם חיים למרות שיש בדיוק בקבוק מורעל אחד.",
+          "הסתמכות על שעת מוות מדויקת שלא ניתנה."
+        ],
+        "en": [
+          "Ten disjoint groups identify only a group.",
+          "Sequential binary search despite no time for several outcome rounds.",
+          "Confusing public bottle numbers with labels or reversing the bit/taster order.",
+          "Rejecting all-alive despite the exactly-one-poison guarantee.",
+          "Relying on exact death times not provided by the source."
+        ]
+      },
+      "interview_answer": {
+        "he": "אסמן בקבוקים בתוויות 0–999 בעשרה ביטים. כל טועם מקבל תערובת מכל בקבוק שהביט שלו 1, וכולם טועמים יחד. דפוס המתים בסוף היום הוא התווית; מוסיפים אחת למספר הגלוי. כולם חיים מזהה בקבוק 1. עשרה מינימליים כי תשעה נותנים רק 512 דפוסים.",
+        "en": "Assign labels 0..999 in ten bits. Each taster receives all bottles whose code has one in its bit, and all taste in parallel. The endpoint death pattern is the label; add one for the public bottle. All-alive means bottle one. Ten is minimal because nine give only 512 patterns."
+      },
+      "solution_extensions": {
+        "he": {
+          "question": "כמה טועמים נחוצים ל־1025 בקבוקים באותם כללים?",
+          "direction": "עשרה נותנים 1024 דפוסים בלבד. נדרשים 11, וקידוד של 11 ביטים מספיק.",
+          "status": "מוכן בארכיון; אינו מחובר לתור האינטראקטיבי."
+        },
+        "en": {
+          "question": "How many tasters are needed for 1025 bottles under the same rules?",
+          "direction": "Ten give only 1024 patterns. Eleven are required and eleven-bit pooling suffices.",
+          "status": "Prepared in the archive; not connected to the interactive follow-up queue."
+        }
+      }
+    }
+  }
+}

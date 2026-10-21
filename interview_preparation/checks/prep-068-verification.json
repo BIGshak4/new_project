@@ -1,0 +1,18 @@
+{
+  "question_id": "PREP-068",
+  "checked_on": "2026-10-21",
+  "status": "passed_python_implementation_and_fixedwidth_model",
+  "exhaustive_signed8_pairs_in_both_methods": 65536,
+  "signed32_boundary_pairs": 81,
+  "signed32_seeded_random_pairs": 10000,
+  "exact_2048_bit_pairs": 500,
+  "source_constraint_check": "Python AST contains no comparisons, conditionals or loops; the only function call is abs in the declared abs-permitted method.",
+  "overflow_counterexample": {
+    "a": 2147483647,
+    "b": -2147483648,
+    "wrapped_difference_sign": 1,
+    "correct_max": 2147483647
+  },
+  "oracle": "Independent Python builtin max in checks only.",
+  "scope": "Python code and uint32 arithmetic model executed. Supplied C++ source was NOT compiled or run; no machine-code branch, timing or constant-time-security claim. Independent human expert review pending."
+}

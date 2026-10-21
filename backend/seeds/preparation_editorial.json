@@ -1161,5 +1161,140 @@
       ]
     },
     "note": "2026-10-21: supplied sources archived, bilingual AI-proposed solution with explicit added assumptions, localized diagrams and checks. Expert, human parity and reuse review pending. No learner activity."
+  },
+  "PREP-065": {
+    "hints": {
+      "he": [
+        "מה צריכה להיות היציאה מיד אחרי חזית כאשר D=0, ומה כאשר D=1?",
+        "כניסת Set יכולה לבקש לשמור 1, וכניסת Reset יכולה לבקש לשמור 0. צריך שהבקשות לא יהיו פעילות יחד בזמן הדגימה.",
+        "בחרו S כך שיעלה בדיוק כאשר D=1 ואת R כהיפוכו. בדקו את שני ערכי D ואת המצב האסור 11."
+      ],
+      "en": [
+        "What should Q become after an edge for D=0, and for D=1?",
+        "Set requests a stored one; reset requests zero. The requests must not both be active when sampled.",
+        "Let S be high exactly when D=1, and make R its complement. Check both D values and the forbidden 11 input."
+      ]
+    },
+    "note": "2026-10-21: original screenshot archived; authored bilingual proposed solution and localized diagrams; Python checks passed, no HDL simulation or human professional approval claimed."
+  },
+  "PREP-067": {
+    "hints": {
+      "he": [
+        "איזה מידע צריך לשמור כדי לדעת מאיזה תא לקרוא, לאיזה תא לכתוב וכמה תאים תפוסים?",
+        "המצביעים חוזרים אחרי תא 7 לתא 0. מדוע שוויון בין המצביעים לבדו אינו מבדיל בין מלא לריק?",
+        "הוסיפו מונה תפוסה 0–8. קבעו קודם pop לפי המצב הישן, ואז push שיכול להתקבל במלא רק אם pop התקבל. עדכנו count בתוספת push פחות pop."
+      ],
+      "en": [
+        "What state tells us where to read, where to write and how many cells are occupied?",
+        "Pointers wrap from cell seven to zero. Why can pointer equality mean either full or empty?",
+        "Add occupancy 0..8. Determine pop from old state, then allow push at full only if pop is accepted. Update count by push minus pop."
+      ]
+    },
+    "note": "2026-10-21: original screenshot archived; authored bilingual proposed solution and localized diagrams; Python checks passed, no HDL simulation or human professional approval claimed."
+  },
+  "PREP-069": {
+    "hints": {
+      "he": [
+        "כדי שהבדל בנקודה פנימית יגיע ליציאה, צריך גם ליצור את ההבדל וגם לא לחסום אותו בשער הבא.",
+        "לצורך הפצת שינוי דרך AND, שאר כניסותיו צריכות להיות 1. מה זה מחייב לגבי A ו־C?",
+        "אם C=0 ו־B=0, מוצא ה־NOR התקין הוא 1. בדקו מה קורה כאשר X=1. נסו גם ליצור הבדל לתקלה X=0 באמצעות C=1, ובדקו את ענף המהפך."
+      ],
+      "en": [
+        "An internal fault must first create a difference and then propagate it through the remaining gates.",
+        "To propagate through AND, its other inputs must be one. What does that require for A and C?",
+        "With C=0 and B=0 the healthy NOR outputs one. Check X=1. To activate X stuck at zero, try C=1 and examine the inverter branch."
+      ]
+    },
+    "note": "2026-10-21: original screenshot archived; authored bilingual proposed solution and localized diagrams; Python checks passed, no HDL simulation or human professional approval claimed."
+  },
+  "PREP-070": {
+    "hints": {
+      "he": [
+        "בחרו אחת הכניסות כבוררת ובדקו מה הפלט צריך להיות בכל אחד משני ערכיה.",
+        "כאשר A=0 הפלט תמיד 0; כאשר A=1 הפלט שווה ל־B.",
+        "חברו A לבחירה S. קבעו איזה אות צריך להופיע ב־D0 ואיזה ב־D1 לפי שתי השורות האלה."
+      ],
+      "en": [
+        "Choose one input as select and ask what the output must be for each select value.",
+        "When A=0 the output is always zero; when A=1 it equals B.",
+        "Wire A to S. Choose D0 and D1 from those two cases."
+      ]
+    },
+    "note": "2026-10-21: original screenshot archived; authored bilingual proposed solution and localized diagrams; Python checks passed, no HDL simulation or human professional approval claimed."
+  },
+  "PREP-066": {
+    "hints": {
+      "he": [
+        "אם יום המכירה היה ידוע, איזה מידע על הימים שלפניו היה מספיק כדי לבחור יום קנייה?",
+        "לכל יום מכירה מספיק לשמור את המחיר הנמוך ביותר שנראה לפניו ואת האינדקס הראשון שלו.",
+        "עברו משמאל לימין: קודם חשבו רווח מול המינימום הקודם, אחר כך הכניסו את היום הנוכחי למינימום. עדכנו שיא רק ברווח גדול יותר כדי לשמר שוויונות."
+      ],
+      "en": [
+        "If the selling day were fixed, what information about earlier days would determine the best purchase?",
+        "For each sale, retain the smallest earlier price and its first index.",
+        "Scan left to right: evaluate against the earlier minimum before admitting today's price. Replace the best trade only on strictly greater profit to preserve ties."
+      ]
+    },
+    "note": "2026-10-21: original screenshot preserved; explicit contracts, paired bilingual proposed solution, illustrative diagrams and executed independent-oracle checks. Professional, parity and reuse reviews pending; no existing human-review attestation inherited."
+  },
+  "PREP-068": {
+    "hints": {
+      "he": [
+        "לפני חיפוש טריק, בררו אם מותר ערך מוחלט והאם המספרים מוגבלים ברוחב.",
+        "כשערך מוחלט מותר, בדקו מה קורה ל־a+b+abs(a-b) בכל אחד משני סדרי המספרים.",
+        "ברוחב קבוע: אם הסימנים שונים בוחרים את הלא־שלילי. רק כששניהם באותו סימן אפשר ללמוד מסימן ההפרש בלי גלישה מתמטית; בנו מסכה לבחירה."
+      ],
+      "en": [
+        "Before choosing a trick, clarify whether absolute value is allowed and whether integers have fixed width.",
+        "With absolute value allowed, inspect a+b+abs(a-b) under either ordering of the inputs.",
+        "For fixed width, opposite signs select the nonnegative input. Only same-sign inputs allow the difference sign to determine order safely; build a selection mask."
+      ]
+    },
+    "note": "2026-10-21: original screenshot preserved; explicit contracts, paired bilingual proposed solution, illustrative diagrams and executed independent-oracle checks. Professional, parity and reuse reviews pending; no existing human-review attestation inherited."
+  },
+  "PREP-072": {
+    "hints": {
+      "he": [
+        "אם יודעים שהרצף חייב להסתיים בתא הנוכחי, האם צריך לבדוק מחדש את כל נקודות ההתחלה?",
+        "כדי להסתיים כאן יש רק שתי אפשרויות מועילות: להתחיל כאן, או להמשיך את הרצף הטוב ביותר שהסתיים בתא הקודם.",
+        "שמרו סכום נוכחי ושיא גלובלי. סכום קודם שלילי נזרק; אחרת ממשיכים. אתחלו מהאיבר הראשון ולא מאפס, ושמרו גם את נקודות ההתחלה והסוף."
+      ],
+      "en": [
+        "If the interval must end at the current position, must every possible starting point be reconsidered?",
+        "Only two useful choices remain: start here, or extend the best interval ending at the previous position.",
+        "Keep a current ending sum and a global best. Drop a negative previous sum; otherwise extend. Initialize from the first element, not zero, and track boundaries."
+      ]
+    },
+    "note": "2026-10-21: original screenshot preserved; explicit contracts, paired bilingual proposed solution, illustrative diagrams and executed independent-oracle checks. Professional, parity and reuse reviews pending; no existing human-review attestation inherited."
+  },
+  "PREP-071": {
+    "hints": {
+      "he": [
+        "התעלמו מהגודל המדויק: איזו תכונה קובעת אם סכום שני שלמים מתחלק בשתיים?",
+        "שני מספרים בעלי אותה זוגיות נותנים ממוצע שלם. בווקטורים התנאי צריך להתקיים בכל קואורדינטה.",
+        "קבצו וקטורים לפי שאריות הקואורדינטות בחלוקה לשתיים. כמה תבניות קיימות? למינימום, נסו נציג אחד מכל תבנית."
+      ],
+      "en": [
+        "Ignore magnitudes: what property decides whether the sum of two integers is divisible by two?",
+        "Two integers of the same parity have an integer average. For vectors this must hold in every coordinate.",
+        "Group vectors by coordinate remainders modulo two. How many signatures exist? For minimality, try one representative per signature."
+      ]
+    },
+    "note": "2026-10-21: source retained; full bilingual proposed solution, explicit assumptions, paired clean diagrams and independent Python evidence. Human professional review pending; no learner history or assessment eligibility changed."
+  },
+  "PREP-073": {
+    "hints": {
+      "he": [
+        "כל טועם נותן בסוף היום אחת משתי תוצאות. כמה דפוסים יכולים עשרה טועמים לייצג יחד?",
+        "אותו בקבוק יכול להשתתף בתערובות של כמה טועמים; הדפוס המשותף יזהה אותו.",
+        "מספרו תוויות מ־0 עד 999 בעשרה ביטים. כל טועם מקבל בדיוק את הבקבוקים שהביט שלו הוא 1."
+      ],
+      "en": [
+        "Each taster has two endpoint outcomes. How many joint patterns can ten tasters represent?",
+        "A bottle can appear in several tasters' pools; the combined pattern can identify it.",
+        "Use labels 0..999 in ten bits. Each taster samples exactly bottles whose code has one in its assigned bit."
+      ]
+    },
+    "note": "2026-10-21: source retained; full bilingual proposed solution, explicit assumptions, paired clean diagrams and independent Python evidence. Human professional review pending; no learner history or assessment eligibility changed."
   }
 }

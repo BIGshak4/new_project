@@ -1,0 +1,11 @@
+{
+  "question_id": "PREP-071",
+  "checked_on": "2026-10-21",
+  "status": "passed_python_model",
+  "scalar_ordered_streams": 157,
+  "two_dimensional_subsets": 6885,
+  "tight_bound_witness_dimensions": 6,
+  "rejected_inputs": 5,
+  "method": "Independent Fraction-valued pairwise midpoint oracle; all ordered scalar streams of lengths zero through three from 1..6; all subsets of sizes zero through five of the positive 4x4 lattice; lower-bound parity representatives in dimensions 1..6.",
+  "limits": "Finite exact arithmetic checks support the general pigeonhole proof; no random sampling, HDL, physical tests or human professional approval."
+}
