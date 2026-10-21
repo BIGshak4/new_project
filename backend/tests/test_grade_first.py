@@ -186,7 +186,7 @@ async def scenario(catalog, background: bool | None) -> dict:
 
 
 def _strip_new_fields(value, golden):
-    """Fields added by the split (feedback_pending, question_pending) must be at rest; everything else must match."""
+    """Pending fields must be at rest; explicitly validated advisory catalog metadata does not affect grades."""
     if isinstance(value, dict) and isinstance(golden, dict):
         extra = set(value) - set(golden)
         for key in extra:
@@ -194,6 +194,14 @@ def _strip_new_fields(value, golden):
                 assert value[key] is True
             elif key == "category":
                 assert value[key] in ("hardware", "software", "logic")
+            elif key == "solution_review":
+                # This dated content attestation was added after the golden
+                # record; it changes no grade, evidence, profile or XP field.
+                assert value[key] == {"status": "human_reviewed", "reviewed_on": "2026-10-21"}
+                snapshot = json.loads((SEEDS / "solution_review_attestations.json").read_text(encoding="utf-8"))
+                attestation = snapshot["questions"][value["key"]]
+                assert attestation["schema_version"] == 1 and attestation["basis"] == "user_attestation"
+                assert {field: attestation[field] for field in ("status", "reviewed_on")} == value[key]
             else:
                 assert value[key] in (False, None, [], {}), f"new field {key} not at rest: {value[key]!r}"
         return {k: _strip_new_fields(value[k], golden[k]) for k in golden if k in value} | \

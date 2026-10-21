@@ -2,7 +2,7 @@ import type { ApiLang, QuestionSummary } from "./practice-api";
 
 const TTL = 12 * 60 * 60 * 1000;
 const key = (userId: string, lang: ApiLang) =>
-  `jobrun:question-list:v1:${userId}:${lang}`;
+  `jobrun:question-list:v2:${userId}:${lang}`;
 
 // Store only catalog metadata, never full questions, answers, hints, or assessments.
 export function writeQuestionCache(
@@ -33,6 +33,7 @@ export function writeQuestionCache(
       topics: q.topics,
       reported_companies: q.reported_companies,
       assessment_ready: q.assessment_ready,
+      solution_review: q.solution_review,
       has_media: q.has_media,
       companies: q.companies,
       job_types: q.job_types,

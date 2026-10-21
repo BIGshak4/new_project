@@ -1,0 +1,788 @@
+[
+  {
+    "id": "quick-hw-01",
+    "topic": "gates",
+    "title": {
+      "he": "שתי הרשאות יחד",
+      "en": "Two permissions together"
+    },
+    "prompt": {
+      "he": "מכשיר פועל אם ורק אם גם A וגם B הם 1. איזה שער מתאים, ומה טבלת האמת שלו?",
+      "en": "A device runs if and only if both A and B are 1. Which gate fits, and what is its truth table?"
+    },
+    "answer": {
+      "he": "שער AND: המוצא 1 רק כששתי הכניסות 1.\n\n| A | B | Y |\n|---|---|---|\n| 0 | 0 | 0 |\n| 0 | 1 | 0 |\n| 1 | 0 | 0 |\n| 1 | 1 | 1 |",
+      "en": "An AND gate: the output is 1 only when both inputs are 1.\n\n| A | B | Y |\n|---|---|---|\n| 0 | 0 | 0 |\n| 0 | 1 | 0 |\n| 1 | 0 | 0 |\n| 1 | 1 | 1 |"
+    },
+    "takeaway": {
+      "he": "המילה ״וגם״ מכוונת לשער AND.",
+      "en": "The word “both” points to AND."
+    },
+    "diagram": {
+      "kind": "gate",
+      "gate": "AND",
+      "inputs": [
+        "A",
+        "B"
+      ],
+      "output": "Y"
+    }
+  },
+  {
+    "id": "quick-hw-02",
+    "topic": "gates",
+    "title": {
+      "he": "לפחות חיישן אחד",
+      "en": "At least one sensor"
+    },
+    "prompt": {
+      "he": "נורה נדלקת כשחיישן A או חיישן B פעיל, כולל כששניהם פעילים. איזה שער מתאים?",
+      "en": "A light turns on when sensor A or sensor B is active, including when both are active. Which gate fits?"
+    },
+    "answer": {
+      "he": "שער OR: די בכניסה אחת שערכה 1.\n\n| A | B | Y |\n|---|---|---|\n| 0 | 0 | 0 |\n| 0 | 1 | 1 |\n| 1 | 0 | 1 |\n| 1 | 1 | 1 |",
+      "en": "An OR gate: one input equal to 1 is enough.\n\n| A | B | Y |\n|---|---|---|\n| 0 | 0 | 0 |\n| 0 | 1 | 1 |\n| 1 | 0 | 1 |\n| 1 | 1 | 1 |"
+    },
+    "takeaway": {
+      "he": "״לפחות אחד״ כולל גם את המקרה ששניהם 1.",
+      "en": "“At least one” includes the case where both are 1."
+    },
+    "diagram": {
+      "kind": "gate",
+      "gate": "OR",
+      "inputs": [
+        "A",
+        "B"
+      ],
+      "output": "Y"
+    }
+  },
+  {
+    "id": "quick-hw-03",
+    "topic": "gates",
+    "title": {
+      "he": "בדיוק אחת",
+      "en": "Exactly one"
+    },
+    "prompt": {
+      "he": "רוצים מוצא 1 כשבדיוק אחת משתי הכניסות A ו־B היא 1. האם OR מתאים?",
+      "en": "The output should be 1 when exactly one of A and B is 1. Does OR fit?"
+    },
+    "answer": {
+      "he": "נשתמש ב־XOR. בניגוד ל־OR, כשהכניסות שתיהן 1 נקבל 0.\n\n| A | B | Y |\n|---|---|---|\n| 0 | 0 | 0 |\n| 0 | 1 | 1 |\n| 1 | 0 | 1 |\n| 1 | 1 | 0 |",
+      "en": "Use XOR. Unlike OR, it outputs 0 when both inputs are 1.\n\n| A | B | Y |\n|---|---|---|\n| 0 | 0 | 0 |\n| 0 | 1 | 1 |\n| 1 | 0 | 1 |\n| 1 | 1 | 0 |"
+    },
+    "takeaway": {
+      "he": "XOR של שני ביטים בודק אם הם שונים.",
+      "en": "XOR of two bits checks whether they differ."
+    },
+    "diagram": {
+      "kind": "gate",
+      "gate": "XOR",
+      "inputs": [
+        "A",
+        "B"
+      ],
+      "output": "Y"
+    }
+  },
+  {
+    "id": "quick-hw-04",
+    "topic": "gates",
+    "title": {
+      "he": "הופכים ביט אחד",
+      "en": "Invert one bit"
+    },
+    "prompt": {
+      "he": "אות A הוא ביט יחיד. רוצים Y=1 כש־A=0, ו־Y=0 כש־A=1. איזה רכיב צריך?",
+      "en": "A is a single bit. We want Y=1 when A=0, and Y=0 when A=1. Which component is needed?"
+    },
+    "answer": {
+      "he": "שער NOT, המכונה גם מהפך. הוא מחליף 0 ב־1 ו־1 ב־0.\n\n| A | Y |\n|---|---|\n| 0 | 1 |\n| 1 | 0 |",
+      "en": "A NOT gate, also called an inverter. It changes 0 to 1 and 1 to 0.\n\n| A | Y |\n|---|---|\n| 0 | 1 |\n| 1 | 0 |"
+    },
+    "takeaway": {
+      "he": "מהפך פועל על הערך הנוכחי ואינו שומר זיכרון.",
+      "en": "An inverter acts on the current input and stores no memory."
+    },
+    "diagram": {
+      "kind": "gate",
+      "gate": "NOT",
+      "inputs": [
+        "A"
+      ],
+      "output": "Y"
+    }
+  },
+  {
+    "id": "quick-hw-05",
+    "topic": "gates",
+    "title": {
+      "he": "מה בורר באמת בוחר?",
+      "en": "What does a selector select?"
+    },
+    "prompt": {
+      "he": "בורר MUX בוחר D0 כש־S=0 ואת D1 כש־S=1. נתון D0=1, D1=0, S=1. מה יהיה Y?",
+      "en": "A multiplexer (MUX) selects D0 when S=0 and D1 when S=1. Given D0=1, D1=0, S=1, what is Y?"
+    },
+    "answer": {
+      "he": "Y=D1=0. כניסת הבחירה S קובעת איזו כניסת נתונים עוברת למוצא; הערך של S עצמו אינו מועתק למוצא.",
+      "en": "Y=D1=0. The select input S chooses which data input reaches the output; S itself is not copied to the output."
+    },
+    "takeaway": {
+      "he": "קודם מזהים איזו כניסה נבחרה, ורק אז קוראים את הערך שלה.",
+      "en": "Identify the selected input first, then read its value."
+    },
+    "diagram": {
+      "kind": "gate",
+      "gate": "MUX",
+      "inputs": [
+        "D0",
+        "D1",
+        "S"
+      ],
+      "output": "Y"
+    }
+  },
+  {
+    "id": "quick-hw-06",
+    "topic": "gates",
+    "title": {
+      "he": "שלילה של ״וגם״",
+      "en": "Negating “both”"
+    },
+    "prompt": {
+      "he": "המוצא הוא NOT של A AND B. באילו מקרים הוא 1, ואיך נכתוב אותו בעזרת OR ומהפכים?",
+      "en": "The output is NOT of A AND B. When is it 1, and how can we write it using OR and inverters?"
+    },
+    "answer": {
+      "he": "הוא 1 כשיש לפחות כניסה אחת שערכה 0. לפי חוק דה־מורגן: `NOT (A AND B) = (NOT A) OR (NOT B)`. רק כששתי הכניסות 1 נקבל 0.",
+      "en": "It is 1 when at least one input is 0. De Morgan’s law gives `NOT (A AND B) = (NOT A) OR (NOT B)`. Only two inputs equal to 1 produce 0."
+    },
+    "takeaway": {
+      "he": "בהעברת שלילה פנימה, AND מתחלף ב־OR וכל כניסה מתהפכת.",
+      "en": "Moving a negation inward changes AND to OR and inverts each input."
+    }
+  },
+  {
+    "id": "quick-hw-07",
+    "topic": "gates",
+    "title": {
+      "he": "רוב של שלושה",
+      "en": "A majority of three"
+    },
+    "prompt": {
+      "he": "שלוש כניסות A, B, C מייצגות הצבעות. כתבו ביטוי שנותן 1 כשיש לפחות שתי הצבעות 1.",
+      "en": "Three inputs A, B, C represent votes. Write an expression that outputs 1 when at least two votes are 1."
+    },
+    "answer": {
+      "he": "`Y=(A AND B) OR (A AND C) OR (B AND C)`. בודקים כל זוג: אם לפחות שניים הם 1, לפחות אחד הזוגות כולו 1. גם שלושה ערכי 1 נותנים 1.",
+      "en": "`Y=(A AND B) OR (A AND C) OR (B AND C)`. Check every pair: with at least two 1s, at least one pair contains two 1s. Three 1s also produce 1."
+    },
+    "takeaway": {
+      "he": "״לפחות שניים״ אפשר לתאר באמצעות כל הזוגות האפשריים.",
+      "en": "“At least two” can be expressed through all possible pairs."
+    }
+  },
+  {
+    "id": "quick-hw-08",
+    "topic": "gates",
+    "title": {
+      "he": "ענף שלא משנה דבר",
+      "en": "A redundant branch"
+    },
+    "prompt": {
+      "he": "פשטו את הביטוי A OR (A AND B). האם שינוי B יכול לשנות את המוצא?",
+      "en": "Simplify A OR (A AND B). Can changing B change the output?"
+    },
+    "answer": {
+      "he": "`A OR (A AND B) = A`. אם A=0, שני הענפים 0; אם A=1, ענף ה־OR הראשון כבר מבטיח 1. לכן B אינו משפיע.",
+      "en": "`A OR (A AND B) = A`. If A=0, both branches are 0; if A=1, the first OR input already guarantees 1. B therefore has no effect."
+    },
+    "takeaway": {
+      "he": "לפני בניית מעגל, בדקו אם חלק מהלוגיקה מיותר.",
+      "en": "Before building a circuit, check whether any logic is redundant."
+    }
+  },
+  {
+    "id": "quick-hw-09",
+    "topic": "bits",
+    "title": {
+      "he": "כמה מספרים בארבעה ביטים?",
+      "en": "How many numbers fit in four bits?"
+    },
+    "prompt": {
+      "he": "מה הטווח של מספר לא מסומן בן 4 ביטים, וכמה ערכים שונים אפשר לייצג?",
+      "en": "What is the range of an unsigned 4-bit number, and how many distinct values can it represent?"
+    },
+    "answer": {
+      "he": "הטווח הוא `0..15`, ובסך הכול `16` ערכים. לכל ביט שתי אפשרויות, ולכן ארבעה ביטים נותנים 2 בחזקת 4 אפשרויות; האפס הוא אחת מהן.",
+      "en": "The range is `0..15`, giving `16` values. Each bit has two possibilities, so four bits give 2 to the power of 4 possibilities; zero is one of them."
+    },
+    "takeaway": {
+      "he": "ב־n ביטים לא מסומנים יש 2 בחזקת n ערכים, כולל אפס.",
+      "en": "There are 2 to the power of n unsigned n-bit values, including zero."
+    }
+  },
+  {
+    "id": "quick-hw-10",
+    "topic": "bits",
+    "title": {
+      "he": "כשהתוצאה לא נכנסת",
+      "en": "When the result does not fit"
+    },
+    "prompt": {
+      "he": "מחברים 0001 למספר הלא מסומן 1111, ושומרים רק 4 ביטים נמוכים. מה נשמר, ומה קרה לנשא?",
+      "en": "Add 0001 to unsigned 1111, keeping only the lowest 4 bits. What is stored, and what happened to the carry?"
+    },
+    "answer": {
+      "he": "נשמר `0000`. התוצאה המלאה היא `10000`, אבל ביט הנשא העליון, שערכו 1, נזרק כששומרים ארבעה ביטים בלבד.",
+      "en": "The stored value is `0000`. The full result is `10000`, but its top carry bit, equal to 1, is discarded when only four bits are stored."
+    },
+    "takeaway": {
+      "he": "רוחב המוצא קובע אילו ביטים נשמרים כשיש גלישה.",
+      "en": "The output width determines which bits survive overflow."
+    }
+  },
+  {
+    "id": "quick-hw-11",
+    "topic": "bits",
+    "title": {
+      "he": "הזזה שמאלה",
+      "en": "A left shift"
+    },
+    "prompt": {
+      "he": "הזיזו את המספר הלא מסומן 00110100 ביט אחד שמאלה, ברוחב 8 ביטים ועם הכנסת 0 מימין. מה מתקבל?",
+      "en": "Shift unsigned 00110100 one bit left in an 8-bit word, inserting 0 on the right. What is the result?"
+    },
+    "answer": {
+      "he": "מתקבל `01101000`: המספר 52 הפך ל־104. כאן אין אובדן של ביט 1 משמאל, ולכן ההזזה שקולה להכפלה ב־2.",
+      "en": "The result is `01101000`: 52 becomes 104. No 1 bit is lost on the left here, so this shift is equivalent to multiplying by 2."
+    },
+    "takeaway": {
+      "he": "הזזה שמאלה מכפילה ב־2 רק כשהתוצאה נכנסת ברוחב שנשמר.",
+      "en": "A left shift doubles an unsigned value when the result fits the retained width."
+    }
+  },
+  {
+    "id": "quick-hw-12",
+    "topic": "bits",
+    "title": {
+      "he": "מציצים בביט אחד",
+      "en": "Inspect one bit"
+    },
+    "prompt": {
+      "he": "במספר 01101010, האם ביט 2 הוא 1? סופרים מ־0 בצד ימין. איך בודקים בעזרת מסכה ו־AND?",
+      "en": "In 01101010, is bit 2 equal to 1? Count from 0 on the right. How can a mask and AND check it?"
+    },
+    "answer": {
+      "he": "המסכה היא `00000100`. מקבלים `01101010 AND 00000100 = 00000000`, ולכן ביט 2 הוא 0. AND עם מסכה משאיר רק את הביט שרוצים לבדוק.",
+      "en": "Use the mask `00000100`. Since `01101010 AND 00000100 = 00000000`, bit 2 is 0. AND with this mask keeps only the bit being inspected."
+    },
+    "takeaway": {
+      "he": "מסכת בדיקה מכילה 1 רק במיקום של הביט המבוקש.",
+      "en": "A test mask has a 1 only at the target bit position."
+    }
+  },
+  {
+    "id": "quick-hw-13",
+    "topic": "bits",
+    "title": {
+      "he": "קובעים ומאפסים ביט",
+      "en": "Set and clear a bit"
+    },
+    "prompt": {
+      "he": "מתחילים מ־01010000 בכל סעיף בנפרד. איך נקבע את ביט 3 ל־1, ואיך נאפס את ביט 4? סופרים מ־0 מימין.",
+      "en": "Start from 01010000 independently for each operation. How do we set bit 3 to 1, and how do we clear bit 4? Count from 0 on the right."
+    },
+    "answer": {
+      "he": "קביעה: `01010000 OR 00001000 = 01011000`. איפוס: `01010000 AND 11101111 = 01000000`. כל פעולה מתחילה מהמספר המקורי ומשאירה את שאר הביטים כפי שהיו.",
+      "en": "Set: `01010000 OR 00001000 = 01011000`. Clear: `01010000 AND 11101111 = 01000000`. Each operation starts from the original number and leaves the other bits unchanged."
+    },
+    "takeaway": {
+      "he": "OR עם 1 קובע ביט; AND עם 0 מאפס ביט.",
+      "en": "OR with 1 sets a bit; AND with 0 clears a bit."
+    }
+  },
+  {
+    "id": "quick-hw-14",
+    "topic": "bits",
+    "title": {
+      "he": "זוגיות של ביטים",
+      "en": "Bit parity"
+    },
+    "prompt": {
+      "he": "איך נקבל ביט 1 כשמספר ערכי ה־1 בשלושה ביטים A, B, C הוא אי־זוגי? מה התוצאה עבור 111 ועבור 110?",
+      "en": "How can one output bit indicate an odd number of 1s among A, B, C? What are the results for 111 and 110?"
+    },
+    "answer": {
+      "he": "נחשב `Y=A XOR B XOR C`. כל 1 הופך את הזוגיות: עבור `111 → 1`, ועבור `110 → 0`.",
+      "en": "Compute `Y=A XOR B XOR C`. Each 1 flips the parity: `111 → 1`, while `110 → 0`."
+    },
+    "takeaway": {
+      "he": "XOR של כמה ביטים מזהה מספר אי־זוגי של ערכי 1.",
+      "en": "XOR of several bits detects an odd number of 1s."
+    }
+  },
+  {
+    "id": "quick-hw-15",
+    "topic": "sequential",
+    "title": {
+      "he": "הקלט השתנה, האם המוצא משתנה?",
+      "en": "Input changed: does output follow?"
+    },
+    "prompt": {
+      "he": "דלגלג D מעדכן את Q רק בחזית עולה של השעון. כעת Q=0, ו־D משתנה מ־0 ל־1 בין חזיתות. אין איפוס. מה קורה ל־Q?",
+      "en": "A D flip-flop updates Q only on a rising clock edge. Q is currently 0, and D changes from 0 to 1 between edges. There is no reset. What happens to Q?"
+    },
+    "answer": {
+      "he": "עד החזית הבאה `Q=0`. בחזית העולה הבאה יישמר `Q=1`, בהנחה ש־D נשאר יציב מספיק לפני החזית ואחריה. דלגלג אינו מעביר את D ברציפות.",
+      "en": "Until the next edge, `Q=0`. At the next rising edge it stores `Q=1`, assuming D remains stable sufficiently before and after that edge. A flip-flop does not continuously pass D through."
+    },
+    "takeaway": {
+      "he": "בדלגלג D שואלים מהו הקלט ברגע הדגימה.",
+      "en": "For a D flip-flop, ask what the input is at the sampling edge."
+    }
+  },
+  {
+    "id": "quick-hw-16",
+    "topic": "sequential",
+    "title": {
+      "he": "שני דלגלגים באותו שעון",
+      "en": "Two flip-flops, one clock"
+    },
+    "prompt": {
+      "he": "שני דלגלגי D משתמשים באותה חזית עולה: D1=1 ו־D2=Q1. מתחילים ב־Q1Q2=00, ללא איפוס בהמשך. מה הערכים אחרי שתי חזיתות?",
+      "en": "Two D flip-flops share the same rising edge: D1=1 and D2=Q1. Start at Q1Q2=00, with no later reset. What are the values after each of two edges?"
+    },
+    "answer": {
+      "he": "הרצף הוא `00 → 10 → 11`. בחזית הראשונה Q2 מקבל את Q1 הישן, שהיה 0. בחזית השנייה הוא מקבל את ה־1 שנשמר ב־Q1 קודם.",
+      "en": "The sequence is `00 → 10 → 11`. At the first edge, Q2 samples the old Q1, which was 0. At the second edge it samples the 1 stored in Q1 earlier."
+    },
+    "takeaway": {
+      "he": "דלגלגים באותה חזית דוגמים את הערכים שלפני החזית.",
+      "en": "Flip-flops sharing an edge sample values from before that edge."
+    }
+  },
+  {
+    "id": "quick-hw-17",
+    "topic": "sequential",
+    "title": {
+      "he": "T קבוע על 1",
+      "en": "T held at 1"
+    },
+    "prompt": {
+      "he": "דלגלג T הופך את Q בחזית עולה כשהכניסה T=1. מתחילים ב־Q=0 ומשאירים T=1. מה ערכי Q אחרי ארבע חזיתות, ללא איפוס?",
+      "en": "A T flip-flop toggles Q on a rising edge when T=1. Start at Q=0 and hold T=1. What are the Q values after four edges, with no reset?"
+    },
+    "answer": {
+      "he": "אחרי החזיתות: `1, 0, 1, 0`. כל חזית הופכת את הערך. מחזור מלא של Q דורש שתי חזיתות עולות של שעון הכניסה.",
+      "en": "After the edges: `1, 0, 1, 0`. Each edge flips the value. One full Q period takes two rising edges of the input clock."
+    },
+    "takeaway": {
+      "he": "דלגלג T עם T=1 מחלק את תדר השעון ב־2.",
+      "en": "A T flip-flop with T=1 divides the clock frequency by 2."
+    }
+  },
+  {
+    "id": "quick-hw-18",
+    "topic": "sequential",
+    "title": {
+      "he": "T קבוע על 0",
+      "en": "T held at 0"
+    },
+    "prompt": {
+      "he": "בדלגלג T, הערך הנוכחי הוא Q=1. כעת T=0 ואין איפוס. מה יקרה ל־Q בשלוש החזיתות העולות הבאות?",
+      "en": "A T flip-flop currently has Q=1. T is now 0 and reset is inactive. What happens to Q at the next three rising edges?"
+    },
+    "answer": {
+      "he": "הרצף הוא `1, 1, 1`. כש־T=0 הדלגלג שומר את הערך שהיה בו; הוא אינו כותב 0 ל־Q.",
+      "en": "The sequence is `1, 1, 1`. When T=0 the flip-flop holds its stored value; it does not write 0 to Q."
+    },
+    "takeaway": {
+      "he": "בכניסת T, אפס פירושו שמירה ולא איפוס.",
+      "en": "At a T input, zero means hold, not reset."
+    }
+  },
+  {
+    "id": "quick-hw-19",
+    "topic": "sequential",
+    "title": {
+      "he": "איפוס מול אישור כתיבה",
+      "en": "Reset versus write enable"
+    },
+    "prompt": {
+      "he": "אוגר בן 2 ביטים מתעדכן בחזית עולה. rst=1 מאפס ל־00 בעדיפות על EN; אחרת EN=1 טוען D. לפני החזית Q=11, D=10, EN=0, rst=1. מה יהיה Q אחריה?",
+      "en": "A 2-bit register updates on rising edges. rst=1 resets it to 00 with priority over EN; otherwise EN=1 loads D. Before an edge: Q=11, D=10, EN=0, rst=1. What is Q afterward?"
+    },
+    "answer": {
+      "he": "אחרי החזית `Q=00`. זהו איפוס סינכרוני: הוא פועל בחזית השעון, והעדיפות שניתנה לו גוברת על EN=0.",
+      "en": "After the edge, `Q=00`. This is synchronous reset: it acts at the clock edge, and its stated priority overrides EN=0."
+    },
+    "takeaway": {
+      "he": "מגדירים במפורש מי קודם: איפוס, טעינה או שמירה.",
+      "en": "Explicitly define the priority of reset, load, and hold."
+    }
+  },
+  {
+    "id": "quick-hw-20",
+    "topic": "sequential",
+    "title": {
+      "he": "איפוס בין חזיתות",
+      "en": "Reset between clock edges"
+    },
+    "prompt": {
+      "he": "שני אוגרים מכילים 1. בראשון איפוס סינכרוני, ובשני איפוס אסינכרוני; שניהם פעילים ב־1 ומאפסים ל־0. rst עולה בין חזיתות. מי מתאפס לפני החזית הבאה?",
+      "en": "Two registers store 1. One has synchronous reset, the other asynchronous reset; both resets are active high and clear to 0. rst rises between edges. Which clears before the next edge?"
+    },
+    "answer": {
+      "he": "האסינכרוני מתאפס בלי להמתין לשעון, לאחר השהיית הרכיב. הסינכרוני נשאר 1 עד לחזית הפעילה הבאה, ורק אז מתאפס אם rst עדיין 1.",
+      "en": "The asynchronous register clears without waiting for the clock, after the component’s propagation delay. The synchronous register stays at 1 until the next active edge, then clears if rst is still 1."
+    },
+    "takeaway": {
+      "he": "סינכרוני פירושו תלוי בחזית שעון; אסינכרוני יכול לפעול גם בלעדיה.",
+      "en": "Synchronous means clock-edge dependent; asynchronous reset can act without an edge."
+    }
+  },
+  {
+    "id": "quick-hw-21",
+    "topic": "sequential",
+    "title": {
+      "he": "מונה קטן שחוזר להתחלה",
+      "en": "A small counter wraps around"
+    },
+    "prompt": {
+      "he": "מונה לא מסומן בן 2 ביטים מתחיל ב־00 ומוסיף 1 בכל חזית עולה, תוך שמירת 2 ביטים בלבד. מה הרצף בחמש החזיתות הראשונות?",
+      "en": "An unsigned 2-bit counter starts at 00 and increments on each rising edge, keeping only 2 bits. What is its sequence after the first five edges?"
+    },
+    "answer": {
+      "he": "אחרי החזיתות: `01, 10, 11, 00, 01`. אחרי 3 חוזרים ל־0 כי ברוחב זה יש ארבעה ערכים אפשריים בלבד.",
+      "en": "After the edges: `01, 10, 11, 00, 01`. After 3 it returns to 0 because this width has only four possible values."
+    },
+    "takeaway": {
+      "he": "מונה ברוחב n ביטים שמוסיף 1 חוזר להתחלה אחרי 2 בחזקת n צעדים.",
+      "en": "An n-bit incrementing counter wraps after 2 to the power of n steps."
+    }
+  },
+  {
+    "id": "quick-hw-22",
+    "topic": "sequential",
+    "title": {
+      "he": "מהפך במשוב",
+      "en": "An inverter in feedback"
+    },
+    "prompt": {
+      "he": "מחברים D=NOT Q בדלגלג D הפועל בחזית עולה. מתחילים ב־Q=0, ללא איפוס בהמשך. מה קורה בכל חזית, והאם זה מתנהג כמו T=1?",
+      "en": "Connect D=NOT Q on a rising-edge D flip-flop. Start at Q=0, with no later reset. What happens at each edge, and does it behave like T=1?"
+    },
+    "answer": {
+      "he": "כן. בכל חזית נשמר ההפך של Q הישן, ולכן מתקבל `0 → 1 → 0 → 1`. המהפך מחשב את הערך הבא, והדלגלג משנה את הערך השמור רק בחזית.",
+      "en": "Yes. Each edge stores the inverse of the old Q, giving `0 → 1 → 0 → 1`. The inverter computes the next value; the flip-flop changes its stored value only at an edge."
+    },
+    "takeaway": {
+      "he": "משוב דרך דלגלג מתאר את המצב הבא על בסיס המצב הנוכחי.",
+      "en": "Feedback through a flip-flop defines the next state from the current state."
+    }
+  },
+  {
+    "id": "quick-hw-23",
+    "topic": "states",
+    "title": {
+      "he": "נורה שמחליפה מצב",
+      "en": "A light that toggles"
+    },
+    "prompt": {
+      "he": "מכונה מתחילה ב־OFF. בכל חזית שעון, t=1 מחליף מצב ו־t=0 משאיר אותו. הנורה דולקת רק ב־ON. מה המצב אחרי הקלטים 1,0,1?",
+      "en": "A machine starts in OFF. At each clock edge, t=1 toggles the state and t=0 holds it. The light is on only in ON. What are the states after inputs 1,0,1?"
+    },
+    "answer": {
+      "he": "אחרי כל חזית: `ON, ON, OFF`. מעבר עצמי בתרשים פירושו שהמצב נשאר כפי שהיה. מוצא הנורה הוא 0 ב־OFF ו־1 ב־ON.",
+      "en": "After each edge: `ON, ON, OFF`. A self-loop means the state stays unchanged. The light output is 0 in OFF and 1 in ON."
+    },
+    "takeaway": {
+      "he": "עקבו אחרי הקלטים אחד־אחד, כשהמצב נשמר בין חזיתות.",
+      "en": "Follow inputs one at a time, keeping the state between clock edges."
+    },
+    "diagram": {
+      "kind": "fsm",
+      "states": [
+        "OFF",
+        "ON"
+      ],
+      "initial": "OFF",
+      "transitions": [
+        {
+          "from": "OFF",
+          "to": "OFF",
+          "label": "t=0"
+        },
+        {
+          "from": "OFF",
+          "to": "ON",
+          "label": "t=1"
+        },
+        {
+          "from": "ON",
+          "to": "ON",
+          "label": "t=0"
+        },
+        {
+          "from": "ON",
+          "to": "OFF",
+          "label": "t=1"
+        }
+      ]
+    }
+  },
+  {
+    "id": "quick-hw-24",
+    "topic": "states",
+    "title": {
+      "he": "זיהוי מעבר מ־0 ל־1",
+      "en": "Detect a 0-to-1 transition"
+    },
+    "prompt": {
+      "he": "המצב LOW או HIGH שומר את x הקודם, ומתחילים ב־LOW. רוצים y=1 רק כש־x הנוכחי הוא 1 והקודם היה 0. בתרשים התווית היא x/y. מהם המוצאים עבור 1,1,0,1?",
+      "en": "LOW or HIGH stores the previous x, starting in LOW. We want y=1 only when current x is 1 and previous x was 0. Diagram labels are x/y. What outputs correspond to 1,1,0,1?"
+    },
+    "answer": {
+      "he": "המוצאים הם `1, 0, 0, 1`. מחשבים `y=x AND (previous_x==0)` לפני עדכון המצב. לאחר כל דגימה המצב שומר את x שזה עתה נקרא.",
+      "en": "The outputs are `1, 0, 0, 1`. Compute `y=x AND (previous_x==0)` before updating the state. After each sample, the state stores the x just read."
+    },
+    "takeaway": {
+      "he": "כדי לזהות שינוי, צריך לזכור את הערך הקודם.",
+      "en": "Detecting a change requires remembering the previous value."
+    },
+    "diagram": {
+      "kind": "fsm",
+      "states": [
+        "LOW",
+        "HIGH"
+      ],
+      "initial": "LOW",
+      "transitions": [
+        {
+          "from": "LOW",
+          "to": "LOW",
+          "label": "0/0"
+        },
+        {
+          "from": "LOW",
+          "to": "HIGH",
+          "label": "1/1"
+        },
+        {
+          "from": "HIGH",
+          "to": "LOW",
+          "label": "0/0"
+        },
+        {
+          "from": "HIGH",
+          "to": "HIGH",
+          "label": "1/0"
+        }
+      ]
+    }
+  },
+  {
+    "id": "quick-hw-25",
+    "topic": "states",
+    "title": {
+      "he": "זוגיות לאורך זרם",
+      "en": "Parity across a stream"
+    },
+    "prompt": {
+      "he": "קוראים ביט x בכל חזית שעון. מתחילים ב־EVEN: מספר ערכי ה־1 שנקראו הוא זוגי. ODD מציין מספר אי־זוגי. מה המצבים אחרי הקלטים 1,0,1,1?",
+      "en": "Read bit x at each clock edge. Start in EVEN: the number of 1s read is even. ODD means the count is odd. What states follow inputs 1,0,1,1?"
+    },
+    "answer": {
+      "he": "המצבים הם `ODD, ODD, EVEN, ODD`. קלט 0 אינו משנה את מספר האחדות; קלט 1 מחליף זוגיות. אם רוצים מוצא לזוגיות אי־זוגית, הוא 1 בדיוק במצב ODD.",
+      "en": "The states are `ODD, ODD, EVEN, ODD`. Input 0 leaves the count of 1s unchanged; input 1 flips parity. An odd-parity output is 1 exactly in state ODD."
+    },
+    "takeaway": {
+      "he": "המצב צריך לזכור רק מידע הדרוש להמשך, ולא את כל הקלטים.",
+      "en": "State needs to remember only what future behavior requires, not the whole input history."
+    },
+    "diagram": {
+      "kind": "fsm",
+      "states": [
+        "EVEN",
+        "ODD"
+      ],
+      "initial": "EVEN",
+      "transitions": [
+        {
+          "from": "EVEN",
+          "to": "EVEN",
+          "label": "x=0"
+        },
+        {
+          "from": "EVEN",
+          "to": "ODD",
+          "label": "x=1"
+        },
+        {
+          "from": "ODD",
+          "to": "ODD",
+          "label": "x=0"
+        },
+        {
+          "from": "ODD",
+          "to": "EVEN",
+          "label": "x=1"
+        }
+      ]
+    }
+  },
+  {
+    "id": "quick-hw-26",
+    "topic": "states",
+    "title": {
+      "he": "שתי אחדות רצופות",
+      "en": "Two consecutive 1s"
+    },
+    "prompt": {
+      "he": "דוגמים x בחזית עולה. ZERO: אין 1 בסוף הרצף; ONE: יש 1 אחד בסוף; TWO: לפחות שניים רצופים בסוף. מתחילים ב־ZERO. המוצא 1 רק ב־TWO. מה המוצא אחרי כל קלט ב־1,0,1,1,0?",
+      "en": "Sample x on rising edges. ZERO means no trailing 1; ONE means one trailing 1; TWO means at least two trailing 1s. Start in ZERO. Output is 1 only in TWO. What is the output after each input in 1,0,1,1,0?"
+    },
+    "answer": {
+      "he": "המוצאים אחרי הדגימות הם `0, 0, 0, 1, 0`. שני ערכי 1 רצופים מביאים ל־TWO; קלט 0 מחזיר תמיד ל־ZERO. קלט 1 נוסף ב־TWO משאיר את המוצא 1.",
+      "en": "The outputs after sampling are `0, 0, 0, 1, 0`. Two consecutive 1s reach TWO; any 0 returns to ZERO. Another 1 in TWO keeps the output at 1."
+    },
+    "takeaway": {
+      "he": "מגדירים מצב לפי משמעות הזיכרון שהוא שומר.",
+      "en": "Define each state by the meaning of the memory it holds."
+    }
+  },
+  {
+    "id": "quick-hw-27",
+    "topic": "states",
+    "title": {
+      "he": "אירוע שנשמר",
+      "en": "Remember an event"
+    },
+    "prompt": {
+      "he": "מכונה מתחילה ב־WAIT, עם מוצא 0. בחזית עולה שבה p=1 עוברים ל־SET, עם מוצא 1, ונשארים שם עד איפוס. אין איפוס ברצף 0,1,0. מהם המוצאים אחרי החזיתות?",
+      "en": "A machine starts in WAIT, with output 0. A rising edge with p=1 moves it to SET, with output 1, where it stays until reset. With no reset during 0,1,0, what are the outputs after the edges?"
+    },
+    "answer": {
+      "he": "המוצאים הם `0, 1, 1`. החזרה של p ל־0 אינה מוחקת את האירוע שכבר נשמר. איפוס מחזיר ל־WAIT; בתרשים מוצגים המעברים כשאין איפוס. התווית any p פירושה p=0 או p=1.",
+      "en": "The outputs are `0, 1, 1`. Returning p to 0 does not erase the stored event. Reset returns to WAIT; the diagram shows transitions while reset is inactive. The label any p means p=0 or p=1."
+    },
+    "takeaway": {
+      "he": "מוצא ששומר אירוע דורש זיכרון ולא רק שער המחובר לקלט.",
+      "en": "An output that remembers an event requires memory, not just a gate on the input."
+    },
+    "diagram": {
+      "kind": "fsm",
+      "states": [
+        "WAIT",
+        "SET"
+      ],
+      "initial": "WAIT",
+      "transitions": [
+        {
+          "from": "WAIT",
+          "to": "WAIT",
+          "label": "p=0"
+        },
+        {
+          "from": "WAIT",
+          "to": "SET",
+          "label": "p=1"
+        },
+        {
+          "from": "SET",
+          "to": "SET",
+          "label": "any p"
+        }
+      ]
+    }
+  },
+  {
+    "id": "quick-hw-28",
+    "topic": "states",
+    "title": {
+      "he": "המצב לבדו לא מספיק",
+      "en": "State alone is not enough"
+    },
+    "prompt": {
+      "he": "מוצא מוגדר y=(state==READY) AND x. האם הוא תלוי רק במצב, כמו במכונת Moore, או גם בקלט הנוכחי, כמו במכונת Mealy?",
+      "en": "An output is defined as y=(state==READY) AND x. Does it depend only on state, as in a Moore machine, or also on current input, as in a Mealy machine?"
+    },
+    "answer": {
+      "he": "זהו מוצא בסגנון Mealy: הוא תלוי גם במצב וגם ב־x. במצב READY, שינוי x יכול לשנות את y גם בלי מעבר מצב. במוצא Moore המצב לבדו קובע את הערך.",
+      "en": "This is a Mealy-style output: it depends on both state and x. While in READY, changing x can change y without a state transition. A Moore output is determined by state alone."
+    },
+    "takeaway": {
+      "he": "כדי לסווג מוצא, בודקים באילו ערכים הוא תלוי.",
+      "en": "To classify an output, inspect which values it depends on."
+    }
+  },
+  {
+    "id": "quick-hw-29",
+    "topic": "states",
+    "title": {
+      "he": "שלושה מצבים, כמה ביטים?",
+      "en": "Three states: how many bits?"
+    },
+    "prompt": {
+      "he": "למכונה שלושה מצבים. בקידוד בינארי צפוף, מה המספר המזערי של ביטי מצב, וכמה קודים יישארו ללא מצב חוקי?",
+      "en": "A machine has three states. With compact binary encoding, what is the minimum number of state bits, and how many codes remain unused?"
+    },
+    "answer": {
+      "he": "נדרשים `2` ביטים: ביט אחד נותן רק שני קודים, ושני ביטים נותנים ארבעה. משתמשים בשלושה קודים ונשאר `1` קוד לא מנוצל; כדאי להגדיר ממנו מעבר למצב התחלתי.",
+      "en": "It needs `2` bits: one bit gives only two codes, while two give four. Three codes are used and `1` is unused; defining a recovery transition from it to the initial state is useful."
+    },
+    "takeaway": {
+      "he": "בוחרים מספיק ביטים לכל המצבים ומגדירים גם מה קורה בקודים שלא נוצלו.",
+      "en": "Choose enough bits for all states, and define behavior for unused codes too."
+    }
+  },
+  {
+    "id": "quick-hw-30",
+    "topic": "states",
+    "title": {
+      "he": "מעקב אחרי מחזור של שלושה",
+      "en": "Trace a three-state cycle"
+    },
+    "prompt": {
+      "he": "מכונה מתחילה ב־S0, ובכל חזית עולה מתקדמת S0→S1→S2→S0. תווית tick מציינת חזית עולה. באיזה מצב נהיה אחרי חמש חזיתות, ללא איפוס נוסף?",
+      "en": "A machine starts in S0 and advances S0→S1→S2→S0 on each rising edge. A tick label means a rising edge. Which state follows five edges, with no further reset?"
+    },
+    "answer": {
+      "he": "אחרי חמש חזיתות נהיה ב־`S2`. הרצף לאחר החזיתות הוא `S1, S2, S0, S1, S2`. כל שלוש חזיתות מחזירות אותנו למצב ההתחלתי.",
+      "en": "After five edges it is in `S2`. The states after the edges are `S1, S2, S0, S1, S2`. Every three edges return it to the initial state."
+    },
+    "takeaway": {
+      "he": "בספירת צעדים, המצב ההתחלתי הוא לפני החזית הראשונה.",
+      "en": "When counting steps, the initial state is before the first edge."
+    },
+    "diagram": {
+      "kind": "fsm",
+      "states": [
+        "S0",
+        "S1",
+        "S2"
+      ],
+      "initial": "S0",
+      "transitions": [
+        {
+          "from": "S0",
+          "to": "S1",
+          "label": "tick"
+        },
+        {
+          "from": "S1",
+          "to": "S2",
+          "label": "tick"
+        },
+        {
+          "from": "S2",
+          "to": "S0",
+          "label": "tick"
+        }
+      ]
+    }
+  }
+]

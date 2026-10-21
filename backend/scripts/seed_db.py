@@ -46,7 +46,8 @@ def content_hash(question) -> str:
                          for lang, t in sorted(question.translations.items())},
     }
     if question.assets.get("preparation_id"):
-        payload["prepared_content"] = {k: v for k, v in question.assets.items() if k != "content_hash"}
+        payload["prepared_content"] = {k: v for k, v in question.assets.items()
+                                       if k not in {"content_hash", "solution_review"}}
     return hashlib.sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()[:16]
 
 

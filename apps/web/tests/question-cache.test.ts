@@ -33,6 +33,7 @@ test("catalog cache isolates users/languages, expires and excludes hidden answer
     preparation_id: "PREP-001",
     category: "hardware",
     assessment_ready: false,
+    solution_review: { status: "human_reviewed", reviewed_on: "2026-10-21" },
     reported_companies: ["Example"],
     preparation_resource: "SECRET",
     requirements: "SECRET",
@@ -43,6 +44,7 @@ test("catalog cache isolates users/languages, expires and excludes hidden answer
   assert.equal(readQuestionCache("alice", "he")?.[0].title, "Question");
   assert.equal(readQuestionCache("alice", "he")?.[0].preparation_id, "PREP-001");
   assert.equal(readQuestionCache("alice", "he")?.[0].assessment_ready, false);
+  assert.equal(readQuestionCache("alice", "he")?.[0].solution_review?.status, "human_reviewed");
   assert.equal(readQuestionCache("bob", "he"), null);
   assert.equal(readQuestionCache("alice", "en"), null);
   const [key, raw] = [...values.entries()][0];

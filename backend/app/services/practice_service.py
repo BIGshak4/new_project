@@ -260,6 +260,7 @@ class PracticeService:
                                  language: str | None = None):
         """Read revealed study material in the display language without changing the attempt or resuming feedback."""
         from app.config import get_settings
+        from app.engine.solution_review import solution_review
         from app.services.question_resources import QuestionResources, learner_media, sign_media
 
         revealed = False
@@ -289,6 +290,7 @@ class PracticeService:
             media=await sign_media(media, settings.supabase_url, settings.supabase_service_role_key),
             technical_material=assets.get("preparation_resource") if revealed else None,
             solution_revealed=revealed,
+            solution_review=solution_review(question),
             reference=question.text(language).reference_solution if revealed else None,
             language=language)
 

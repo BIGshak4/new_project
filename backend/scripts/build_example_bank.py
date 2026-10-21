@@ -23,6 +23,10 @@ import sys
 from pathlib import Path
 
 BACKEND = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BACKEND))
+
+from app.engine.solution_review import attach_registered_reviews  # noqa: E402
+
 REPO = BACKEND.parent
 SOURCE = REPO / "example_question" / "questions.json"
 ENRICHMENT_DIR = BACKEND / "seeds" / "questions" / "enrichment"
@@ -115,6 +119,8 @@ def build(source: dict, enrichment: dict[str, dict]) -> list[dict]:
             "review_notes": REVIEW_NOTE, "exposure_risk": extra.get("exposure_risk", "low"),
             "translations": translations,
         })
+    registry = json.loads((BACKEND / "seeds/solution_review_attestations.json").read_text(encoding="utf-8"))
+    attach_registered_reviews(questions, registry)
     return questions
 
 

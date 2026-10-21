@@ -17,6 +17,7 @@ import type { VisualAnswer } from "./circuit";
 import { supabase } from "./supabase";
 
 export type ApiLang = "en" | "he";
+export type SolutionReview = { status: "human_reviewed" | "pending_review"; reviewed_on: string | null };
 
 export type QuestionSummary = {
   id: string;
@@ -48,11 +49,14 @@ export type QuestionSummary = {
   topics?: string[];
   reported_companies?: string[];
   assessment_ready?: boolean;
+  /** Human correctness review of this content version; independent of assessment calibration. */
+  solution_review?: SolutionReview;
   has_media?: boolean;
 };
 
 export type ResourceMedia = { id: string; filename: string; kind: "image" | "file"; role: "prompt" | "solution"; caption: string; url: string };
 export type QuestionResources = {
+  solution_review?: SolutionReview;
   media: ResourceMedia[];
   technical_material: Record<string, unknown> | null;
   solution_revealed: boolean;

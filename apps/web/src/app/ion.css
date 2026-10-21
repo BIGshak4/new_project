@@ -1,5 +1,61 @@
 /* Production Ion. Same palette, typography and imagery as the approved adaptive preview.
    Shared semantic tokens also reach body portals, charts, CodeMirror and React Flow. */
+.solution-review-note { color: var(--ink-2); max-width: 75ch; line-height: 1.7; }
+.badge.solution-reviewed { color: var(--ok); background: var(--ok-soft); border: 1px solid var(--ok-line); }
+.quick-home-link { display: flex; align-items: center; gap: 14px; width: 100%; text-align: start; padding: 18px 20px; margin-block: 24px 0; }
+.quick-home-link > span { display: grid; gap: 4px; }
+.quick-home-link > span > span { color: var(--muted); font-size: 14px; }
+.library-views { flex-wrap: wrap; }
+.quick-practice { max-width: 860px; margin-inline: auto; padding-block: 28px 20px; }
+.quick-intro { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
+.quick-intro h1 { font-size: clamp(28px, 4vw, 39px); margin: 0 0 8px; }
+.quick-intro p { color: var(--muted); margin: 0; max-width: 52ch; }
+.quick-intro .quick-total { white-space: nowrap; color: var(--ink-2); font-weight: 700; }
+.quick-controls { display: grid; gap: 16px; padding-block: 26px 20px; }
+.quick-filter-toggle { display: none; }
+.quick-topics { display: flex; flex-wrap: wrap; gap: 8px; }
+.quick-topics button { min-height: 44px; padding: 8px 13px; background: transparent; border: 1px solid var(--line); }
+.quick-topics button.active { background: var(--soft); color: var(--link); border-color: var(--link); }
+.quick-search { display: flex; align-items: center; gap: 10px; max-width: 360px; color: var(--muted); }
+.quick-search input { width: 100%; min-width: 0; font-size: 16px; }
+.quick-position { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 20px; color: var(--muted); font-size: 14px; padding-block: 0 12px; }
+.quick-sheet { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 28px; }
+.quick-sheet h2 { margin-block: 0 18px; font-size: clamp(23px, 3vw, 29px); line-height: 1.4; }
+.quick-sheet h2:focus { outline-offset: 5px; }
+.quick-sheet .study-text { max-width: 65ch; font-size: 18px; line-height: 1.8; overflow-wrap: anywhere; }
+.quick-think { color: var(--muted); font-size: 14px; margin-block: 22px 12px; }
+.quick-reveal { width: min(100%, 260px); }
+.quick-answer { border-block-start: 1px solid var(--line); margin-block-start: 22px; padding-block-start: 22px; }
+.quick-answer h3 { font-size: 20px; margin-block: 0 12px; }
+.quick-answer .code-block { max-width: 100%; overflow-x: auto; font-size: 14px; line-height: 1.8; padding: 16px; }
+.quick-takeaway { color: var(--ink-2); margin-block: 22px 8px; line-height: 1.8; }
+.quick-takeaway strong { display: block; }
+.quick-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-block-start: 26px; padding-block-start: 20px; border-block-start: 1px solid var(--line); }
+.quick-actions button { min-height: 44px; }
+.quick-actions > p { flex-basis: 100%; margin: 8px 0 0; color: var(--muted); }
+.quick-editorial-note { max-width: 75ch; color: var(--muted); font-size: 13px; line-height: 1.7; margin-block: 18px 0; }
+.quick-empty { padding-block: 32px; }
+.quick-diagram { width: min(100%, 410px); margin: 20px 0; color: var(--link); }
+.quick-diagram svg { display: block; width: 100%; height: auto; overflow: visible; }
+.quick-diagram svg path:not(marker path) { fill: none; stroke: currentColor; stroke-width: 1.8; }
+.quick-diagram text { font-family: var(--mono), Consolas, monospace; font-size: 15px; fill: var(--ink); }
+.quick-diagram .quick-svg-small { font-size: 12px; }
+.quick-diagram .quick-svg-gate { font-size: 19px; font-weight: 700; }
+.quick-svg-node { fill: var(--soft); stroke: currentColor; stroke-width: 1.8; }
+.quick-diagram figcaption { color: var(--muted); font-size: 13px; line-height: 1.6; margin-block-start: 8px; }
+@media (max-width: 600px) {
+  .quick-practice { padding-block-start: 24px; }
+  .quick-intro { display: block; }
+  .quick-intro .quick-total { margin-block-start: 12px; font-size: 14px; }
+  .quick-controls { padding-block-start: 20px; }
+  .quick-controls:not(.is-open) { display: none; }
+  .quick-filter-toggle { display: flex; width: 100%; justify-content: center; margin-block: 18px 16px; }
+  .quick-sheet { padding: 21px 18px; }
+  .quick-sheet .study-text { font-size: 17px; }
+  .quick-actions > button:not(.text-button) { flex: 1 1 130px; justify-content: center; }
+  .library-views { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .library-views button { min-height: 44px; white-space: normal; justify-content: center; }
+}
 :root {
   color-scheme: dark;
   --paper: #171024;

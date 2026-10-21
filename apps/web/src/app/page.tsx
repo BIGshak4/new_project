@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import {
   BookOpen,
   BarChart3,
@@ -15,9 +16,11 @@ import {
   Flame,
   Map as MapIcon,
   Star,
+  Zap,
 } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
+import { hasHumanReviewedSolution, solutionReviewLabel } from "../lib/solution-review";
 import { companyNames, companyReportNote, matchesCompany, matchesQuestion, questionCategory } from "../lib/question-discovery";
 import { QuestionMetadata } from "../components/question-metadata";
 import { BidiText } from "../components/bidi-text";
@@ -57,8 +60,9 @@ import {
 
 type Route = { view: string; question?: string; attempt?: string; interview?: string; source?: "retry" | "suggestion"; duration?: number };
 const DEFAULT_VIEW = "learn";
-/** the library tab owns three sub-views; old links to them keep working */
-const LIBRARY_VIEWS = new Set(["library", "bookmarks", "history"]);
+/** The library owns its interview, quick-study, saved and history views; old links keep working. */
+const LIBRARY_VIEWS = new Set(["library", "fundamentals", "bookmarks", "history"]);
+const QuickPractice = dynamic(() => import("../components/quick-practice").then(module => module.QuickPractice));
 const emptyProgress: Progress = {
   skills: [],
   subjects: [],
@@ -407,6 +411,17 @@ function Workspace({
         <span>{label}</span>
       </button>
     ));
+  const libraryViews = <div className="segmented library-views" role="group" aria-label={t("תצוגות המאגר", "Library views")}>
+    {[
+      { id: "library", icon: BookOpen, label: t("שאלות ראיון", "Interview questions") },
+      { id: "fundamentals", icon: Zap, label: t("יסודות בקטנה", "A little practice") },
+      { id: "bookmarks", icon: Bookmark, label: t("שמורות", "Saved") },
+      { id: "history", icon: History, label: t("התרגול שלי", "My practice") },
+    ].map(({ id, icon: Icon, label }) => <button key={id} aria-pressed={route.view === id}
+      className={route.view === id ? "active" : ""} onClick={() => navigate({ view: id })}>
+      <Icon size={15} aria-hidden="true" /> {label}
+    </button>)}
+  </div>;
   const reducedMotion = useReducedMotion();
   const refreshKey = `${progress.attempts_today}-${goal?.job_type ?? ""}-${goal?.seniority ?? ""}-${goal?.minutes_per_day ?? ""}-${goal?.interview_date ?? ""}-${overview?.xp_total ?? 0}`;
 
@@ -465,8 +480,8 @@ function Workspace({
               )
             : demo
               ? t(
-                  "פיילוט · עוזר התרגול עדיין אינו מחובר. אפשר לפתור שאלות ולהיעזר ברמזים. הפתרונות נשמרים; השאלות בביקורת מקצועית.",
-                  "Pilot · The practice assistant is not connected yet. Solve questions and use hints; your answers are saved. Questions are under review.",
+                  "פיילוט · עוזר התרגול עדיין אינו מחובר. אפשר לפתור שאלות ולהיעזר ברמזים. התשובות שלכם נשמרות.",
+                  "Pilot · The practice assistant is not connected yet. Solve questions and use hints; your answers are saved.",
                 )
               : t(
                   "פיילוט פרטי · משוב אוטומטי עשוי לטעות. השוו לפתרון ובדקו עם איש מקצוע.",
@@ -482,7 +497,10 @@ function Workspace({
             exit={reducedMotion ? undefined : { opacity: 0, y: -4 }}
             transition={{ duration: 0.16, ease: "easeOut" }}
           >
-        {route.view === "interview" ? (
+        {route.view === "fundamentals" && !active ? <>
+          {libraryViews}
+          <QuickPractice lang={lang} />
+        </> : route.view === "interview" ? (
           <InterviewSession
             key={route.interview ?? "lobby"}
             api={api}
@@ -564,6 +582,10 @@ function Workspace({
               onOpenProgress={() => goTab("progress")}
               onOpenLibrary={() => goTab("library")}
             />
+            <button className="quick-home-link" onClick={() => navigate({ view: "fundamentals" })}>
+              <Zap size={20} aria-hidden="true" /><span><strong>{t("יש לכם רגע? יסודות בקטנה", "Have a moment? A little practice")}</strong>
+              <span>{t("שאלות קצרות לחיזוק הבסיס, גם מהטלפון.", "Short questions to strengthen the basics, from your phone too.")}</span></span>
+            </button>
           </>
         ) : (
           <>
@@ -592,24 +614,11 @@ function Workspace({
                 </p>
               </div>
             </div>
-            {activeTab === "library" && (
-              <div className="segmented library-views" role="group" aria-label={t("תצוגות המאגר", "Library views")}>
-                {[
-                  { id: "library", icon: BookOpen, label: t("כל השאלות", "All questions") },
-                  { id: "bookmarks", icon: Bookmark, label: t("שמורות", "Saved") },
-                  { id: "history", icon: History, label: t("התרגול שלי", "My practice") },
-                ].map(({ id, icon: Icon, label }) => (
-                  <button
-                    key={id}
-                    aria-pressed={route.view === id}
-                    className={route.view === id ? "active" : ""}
-                    onClick={() => navigate({ view: id })}
-                  >
-                    <Icon size={15} aria-hidden="true" /> {label}
-                  </button>
-                ))}
-              </div>
-            )}
+            {activeTab === "library" && libraryViews}
+            {activeTab === "library" && questions.some(hasHumanReviewedSolution) && <p className="solution-review-note">
+              {t("הפתרונות המסומנים ״נבדק בידי אנשים״ נבדקו ואושרו כפתרונות טובים, לפי דיווח מפעילי האתר. הסימון מתייחס לפתרון, בנפרד מכיול הקושי והמשוב האוטומטי.",
+                "Solutions marked ‘Human reviewed’ were checked and approved as good solutions, as reported by the site operators. This reviews the solution separately from difficulty calibration and automated feedback.")}
+            </p>}
             {activeTab === "library" && (
               <div className="summary-strip">
                 <span>
@@ -885,9 +894,8 @@ function Workspace({
                       <div>
                         <h3 dir={textDirection(q.title)}>
                           <BidiText>{q.title}</BidiText>
-                          {q.trial && (
-                            <span className="badge trial">{q.assessment_ready === false ? t("לבדיקה מקצועית", "Review pending") : t("בבדיקה חיה", "On trial")}</span>
-                          )}
+                          {hasHumanReviewedSolution(q) ? <span className="badge solution-reviewed">{solutionReviewLabel(q, lang)}</span>
+                            : q.trial && <span className="badge trial">{solutionReviewLabel(q, lang)}</span>}
                         </h3>
                         <QuestionMetadata question={q} lang={lang} compact />
                         {entries.some(e => e.question_id === q.id && e.bookmarked) && <span className="small muted">{t("שמורה", "Saved")}</span>}

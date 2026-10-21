@@ -404,6 +404,16 @@ The approved /design-worlds/ion-chip.png retains embedded provenance and its exi
 
 Task editing retains sticky save controls, written feedback and 180ms view transitions with reduced-motion overrides.
 
+### Quick self-study extension (2026-10-21)
+
+The library's fundamentals subview reuses Ion's existing surface, line, link, action and semantic review colors. A centered reading column (860px maximum) presents one question at a time in the existing flat sheet treatment. Prompts use 18px type with 1.8 line-height, reducing to 17px on phones; the title stays separate from supporting counts. Answers appear only after an explicit reveal, below a divider in the same sheet. The reveal control stays in place when expanded. Next-question navigation moves focus to the new heading after React commits the change.
+
+Topic controls wrap above a labelled search field on wider screens. At 600px and below, an explicit topic/search toggle collapses them to keep the question near the start; the library subnavigation forms two columns. Controls retain 44px minimum targets, and the sheet uses the incumbent compact padding. Next and surprise actions wrap rather than shrinking their labels.
+
+Small gate and state-machine drawings are native SVG, with link-colored wires, ink labels, soft node fills and explicit arrowheads. Their technical notation stays LTR within either interface language; captions explain initial-state and transition notation. No new raster imagery or palette was introduced. Human-reviewed solutions use the existing written success badge; new short exercises carry a separate pending-human-review notice. These labels do not imply calibrated difficulty or reviewed automated feedback.
+
+Evidence: `apps/web/src/components/quick-practice.tsx`, the opening extension in `apps/web/src/app/ion.css`, and the library/Today integration in `apps/web/src/app/page.tsx`. Local component captures: `.impeccable/review/quick-20261021/desktop.png`, `mobile-final.png`, and `mobile-dark-fsm-final.png`; these establish local rendering, not authenticated production navigation.
+
 ## Do's and Don'ts
 
 ### Do:

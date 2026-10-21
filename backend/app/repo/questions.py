@@ -22,6 +22,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app import db
+from app.engine.solution_review import SolutionReview, solution_review
 from app.repo import cache
 from app.schemas.bank import BankQuestion, CommonError, QuestionSkillLink, QuestionText, RubricCriterion
 from app.schemas.engine import Archetype
@@ -64,6 +65,7 @@ class QuestionSummary(BaseModel):
     reported_companies: list[str] = Field(default_factory=list)  # source claims, NOT candidate sighting counts
     assessment_ready: bool = True
     has_media: bool = False
+    solution_review: SolutionReview = Field(default_factory=SolutionReview)
 
 
 class QuestionDetail(QuestionSummary):
@@ -204,6 +206,7 @@ def summary(loaded: LoadedQuestion, language: str) -> QuestionSummary:
         category=q.assets.get("category"), topics=list(q.assets.get("topics") or []),
         reported_companies=list(q.assets.get("reported_companies") or []),
         assessment_ready=q.assets.get("assessment_ready", True),
+        solution_review=solution_review(q),
         has_media=bool(q.assets.get("bank_media") or q.assets.get("preparation_resource")))
 
 

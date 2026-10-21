@@ -14,6 +14,7 @@ import httpx
 from pydantic import BaseModel, Field
 
 from app.api.errors import ApiError
+from app.engine.solution_review import SolutionReview
 
 BUCKET = "question-bank-media"
 PATH = re.compile(r"^prep-\d{3}/[a-f0-9]{20}-[\w.-]+$")
@@ -34,6 +35,7 @@ class QuestionResources(BaseModel):
     technical_material: dict | None = None
     solution_revealed: bool = False
     reference: str | None = None
+    solution_review: SolutionReview = Field(default_factory=SolutionReview)
     language: Literal["en", "he"]
 
 

@@ -9,9 +9,14 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "backend"))
+
+from app.engine.solution_review import attach_registered_reviews  # noqa: E402
+
 BANK = ROOT / "interview_preparation"
 SEEDS = ROOT / "backend/seeds"
 BUCKET = "question-bank-media"
@@ -220,6 +225,8 @@ def load():
                 "source_sha256": hashlib.sha256(json.dumps(original, ensure_ascii=False, sort_keys=True).encode()).hexdigest(),
             },
         })
+    registry = json.loads((SEEDS / "solution_review_attestations.json").read_text(encoding="utf-8"))
+    attach_registered_reviews(result, registry)
     return result, uploads
 
 
