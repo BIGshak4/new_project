@@ -32,3 +32,11 @@
 - רכיב התרגול האמיתי נבדק במסגרת 390px, כולל פתיחת וסגירת מסננים, נוסח עברי, פתרון ושרטוט מכונת מצבים ופעולות שנשברות לשורות בלי גלילה אופקית נראית. שם המצב WAIT קוצר כדי שיתאים לעיגול בשרטוט. אלה בדיקות מקומיות, ללא התחברות לחשבון ייצור וללא מכשיר טלפון פיזי.
 
 ראיות מקומיות מחוץ לגיט: `.impeccable/review/quick-200-20261021/desktop-200.png`, `mobile-200-fsm.png` ו־`mobile-fsm-solution.png`. מסמכי העיצוב משמרים את Adaptive Ion הקיים; לא נוספו רכיבי מותג, צבעים או נכסי raster.
+
+## פרסום מאומת
+
+גרסת הקוד **bbca8a238d971125bc40b28ffaef6cbe1584258f** פורסמה ב־21.10.2026. [תהליך הפרסום של האתר](https://github.com/BIGshak4/new_project/actions/runs/39628139901) הסתיים בהצלחה. בשרת Render הופעל Deploy latest commit של השירות הקיים, ללא שינוי תוכנית, הרשאות או הגדרות, והוא הסתיים במצב Deploy succeeded | Live.
+
+`/api/health?expected=bbca8a238d971125bc40b28ffaef6cbe1584258f` באתר ו־`/health?db_check=true` בשרת אישרו status=ok ואת אותה גרסה; החיבור למסד הצליח. בקובץ התוכן שנשלח בפועל מ־Netlify נספרו **200 מזהי כרטיסים ייחודיים**, כולל quick-hw-100 ו־quick-sw-100. ראיות: `deployment-verified.json`, `published-catalog.json` ו־`netlify-workflow.json` באותה תיקיית בדיקה מקומית.
+
+כתובת התרגול: [יסודות בקטנה](https://jobrun-practice.netlify.app/?view=fundamentals). ההתחברות לחשבון ייצור לא נבדקה בסבב זה; בדיקות השמירה האינטראקטיביות בוצעו עם חשבונות סינתטיים בלבד.
