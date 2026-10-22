@@ -20,8 +20,8 @@ const response = (overrides: Partial<QuestionResources> = {}): QuestionResources
   media: [], technical_material: null, solution_revealed: true, ...overrides,
 });
 
-test("all 111 canonical references follow display language while attempt language stays fixed", () => {
-  assert.equal(questions.length, 111);
+test("all 117 canonical references follow display language while attempt language stays fixed", () => {
+  assert.equal(questions.length, 117);
   for (const question of questions) {
     for (const originalLanguage of ["he", "en"] as const) {
       const original = question.translations[originalLanguage].reference_solution;
@@ -137,8 +137,8 @@ test("technical metadata labels and status text translate without changing formu
   assert.equal(material.verification.status, "passed");
 });
 
-test("all 81 preparation resources pair every visible technical field and render entirely in English", () => {
-  assert.equal(prepared.length, 81);
+test("all 87 preparation resources pair every visible technical field and render entirely in English", () => {
+  assert.equal(prepared.length, 87);
   for (const question of prepared) {
     const material = question.assets.preparation_resource!;
     const pairs = material.learner_material as Record<string, Record<ApiLang, unknown>> | undefined;

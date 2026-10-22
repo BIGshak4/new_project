@@ -635,3 +635,10 @@ A priority encoder produces a two-bit candidate. Store it in a register enabled 
 [prep_045_first_finisher.py](../solutions/prep_045_first_finisher.py) · [prep_045_first_finisher.sv](../solutions/prep_045_first_finisher.sv) · [check_prep_045.py](../checks/check_prep_045.py) · [prep-045-verification.json](../checks/prep-045-verification.json)
 
 צילום המקור פנימי ואינו מדיה ללומדים. שאלת ההמשך הוכנה אך לא חוברה לתור החי. אין אישור מקצועי, כיול קושי או זכאות לראיות שליטה ולניקוד תחרותי. בדיקות Python אינן קומפילציית HDL, בדיקת חומרה או לחיצות בחשבון חי.
+
+
+## מקורות נוספים — 22.10.2026
+
+- [דיווח נוסף](../sources/prep-045-additional-2026-10-22.png): Same first-winner latch exercise already solved in PREP-045. Sampling, reset and tie-policy editorial clarifications are retained rather than attributed to the source.
+
+הנוסח, הרמזים, הפתרון ומצב הביקורת הקיימים נשמרו. שיוכי חברות מדווחים מהמקור ולא אומתו עצמאית.

@@ -22,6 +22,7 @@ from tests.test_practice_hardening import GOOD, SEEDS, scripted
 
 ROOT = Path(__file__).resolve().parents[2]
 THIRD_INTAKE_IDS = {f"PREP-{number:03d}" for number in range(74, 83)}
+FOURTH_INTAKE_IDS = {f"PREP-{number:03d}" for number in range(83, 89)}
 
 
 @pytest.fixture
@@ -39,12 +40,12 @@ def test_compilation_preserves_every_question_and_all_original_images(catalog):
     built, uploads = builder.load()
     assert built == json.loads((SEEDS / "questions/preparation_bank.json").read_text(encoding="utf-8"))
     assert uploads == manifest["files"]
-    assert len(source["questions"]) == len(built) == 81
+    assert len(source["questions"]) == len(built) == 87
     for q in built:
         for media in q["assets"]["bank_media"]:
             if any(word in media["filename"] for word in ("external-answer", "clarification", "style-reference", "course-adder-summary")):
                 assert media["role"] == "solution", "An explanation screenshot must never leak before reference reveal"
-    assert len(catalog.questions) == 111
+    assert len(catalog.questions) == 117
     archived_images = {p.relative_to(ROOT / "interview_preparation").as_posix()
                        for folder in ("sources", "diagrams")
                        for p in (ROOT / "interview_preparation" / folder).glob("*.png")}
@@ -154,7 +155,7 @@ async def test_unsafe_storage_path_is_rejected_before_network():
 async def test_archive_screenshots_never_receive_learner_links(catalog):
     archive = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])
                if m.get("source_path", "").startswith("sources/")]
-    assert len(archive) == 109
+    assert len(archive) == 120
     # No credentials or network needed: the boundary applies before signing.
     assert await question_resources.sign_media(archive, "", "") == []
     all_media = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])]
@@ -251,5 +252,64 @@ async def test_third_intake_resource_reveal_keeps_sources_private_and_prompt_geo
             assert all(not m["source_path"].startswith("sources/") for m in signed[-1])
             assert all(m.get("language") in (None, language) for m in signed[-1])
         # Viewing English study resources does not alter the original practice language or create scored evidence.
+        assert store.attempts[attempt_id]["row"]["practice_language"] == "he"
+    assert not store.metrics
+
+
+async def test_fourth_intake_has_six_bilingual_pending_questions_and_gates_all_solutions(catalog, monkeypatch):
+    additions = [q for q in catalog.questions.values() if q.assets.get("preparation_id") in FOURTH_INTAKE_IDS]
+    assert len(additions) == 6
+    assert {q.assets["preparation_id"] for q in additions} == FOURTH_INTAKE_IDS
+    mandatory_material = {"assumptions", "optimality", "verification", "edge_cases", "common_mistakes",
+                          "interview_answer", "solution_extensions", "source_ambiguities"}
+    prompt_geometry = {"PREP-085": "clock", "PREP-087": "polygon"}
+    signed = []
+
+    async def fake_sign(media, *_):
+        signed.append(media)
+        return []
+
+    monkeypatch.setattr(question_resources, "sign_media", fake_sign)
+    store = InMemoryStore(catalog)
+    svc = PracticeService(store, catalog, scripted([]), ServiceConfig())
+    user = uuid.uuid4()
+    for question in additions:
+        ident = question.assets["preparation_id"]
+        assert question.status == "trial" and question.reuse_status == "pending_review", ident
+        assert not question.reviewed_by and not question.assets["assessment_ready"], ident
+        assert question.assets["difficulty_status"] == "unrated", ident
+        assert solution_review(question).status == "pending_review", ident
+        resource = question.assets["preparation_resource"]
+        assert resource["solution_status"] == "proposed" and resource["ai_assisted"], ident
+        material = resource["learner_material"]
+        assert mandatory_material <= material.keys(), ident
+        for field, values in material.items():
+            assert set(values) == {"he", "en"}, (ident, field)
+            assert all(values[language] not in (None, "", [], {}) for language in ("he", "en")), (ident, field)
+            assert not any("\u05d0" <= char <= "\u05ea" for char in json.dumps(values["en"], ensure_ascii=False)), (ident, field)
+        assert any(m["source_path"].startswith("sources/") for m in question.assets["bank_media"]), ident
+        started = await svc.start(user, question_key=question.key, mode="deep", language="he")
+        attempt_id = uuid.UUID(started.id)
+        for language in ("he", "en"):
+            text = question.text(language)
+            assert text.prompt and text.reference_solution and len(text.hints) == len(set(text.hints)) == 3
+            assert not text.parity_checked, "A new bilingual solution has no inherited human attestation"
+            if language == "en":
+                assert not any("\u05d0" <= char <= "\u05ea" for char in text.prompt + text.reference_solution + "".join(text.hints))
+            hidden = await svc.question_resources(user, question.key, attempt_id=attempt_id, language=language)
+            assert hidden.reference is None and hidden.technical_material is None and not hidden.solution_revealed
+            assert all(m["role"] == "prompt" and m["source_path"].startswith("diagrams/") for m in signed[-1])
+            assert all(m.get("language") == language for m in signed[-1])
+            if ident in prompt_geometry:
+                filename = f"{ident.lower()}-{prompt_geometry[ident]}-{language}.png"
+                assert any(m["filename"] == filename for m in signed[-1]), (ident, language)
+        await svc.reveal_reference(user, attempt_id)
+        for language in ("he", "en"):
+            shown = await svc.question_resources(user, question.key, attempt_id=attempt_id, language=language)
+            assert shown.solution_revealed and shown.reference == question.text(language).reference_solution
+            assert shown.technical_material["id"] == ident and shown.solution_review.status == "pending_review"
+            assert any(m["role"] == "solution" for m in signed[-1]), ident
+            assert signed[-1] == question_resources.learner_media(question.assets["bank_media"], language)
+            assert all(not m["source_path"].startswith("sources/") for m in signed[-1])
         assert store.attempts[attempt_id]["row"]["practice_language"] == "he"
     assert not store.metrics

@@ -1,0 +1,16 @@
+{
+  "question_id": "PREP-087",
+  "passed": true,
+  "seed": 87022,
+  "checks": {
+    "winding_comparisons": 38576,
+    "source_promise_comparisons": 16650,
+    "boundary_comparisons": 155,
+    "analytic_histogram_comparisons": 10010,
+    "metamorphic_comparisons": 3528,
+    "invalid_input_rejections": 5
+  },
+  "fixed_fixtures": 6,
+  "random_simple_histograms": 120,
+  "scope": "Exact integer simple polygons; independent signed-winding and analytic histogram oracles. Reversed orientation, reflection, translation and huge integers. Boundary helper tested separately. No simplicity validator or self-intersection fill-rule claim."
+}

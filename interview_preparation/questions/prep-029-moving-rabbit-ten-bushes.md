@@ -67,3 +67,11 @@ Every rabbit move flips parity. During the first sweep 2..9, an initially even r
 An exact belief-state model removes the shot position from the current possible set, then takes all legal neighbors of survivors. Empty belief after the sequence proves no evasion path remains. BFS over these possible-position sets with all ten shot actions first reaches empty at depth 16 (73 states discovered up to the first goal), establishing optimal worst-case shot count under this model. Since every nonterminal observation is only a miss, every deterministic adaptive strategy has one all-miss path; this search covers it. The source asks only certainty, not minimality. All 10240 state/action transitions checked independently, all ten starts covered, and initial-even states eliminated by the first sweep. Simple 1..10 sweeps repeated twice were verified not sufficient.
 
 התוכן נוצר בסיוע AI וממתין לסקירה; טרם פורסם באתר.
+
+
+## מקורות נוספים — 22.10.2026
+
+- [דיווח נוסף](../sources/prep-029-gorilla-2026-10-22.png): The same ten-position mandatory-adjacent-move search as PREP-029. A worst-case guarantee covers every legal random outcome as well as an adversarial target; the existing16-shot strategy and optimality proof are unchanged.
+- [דיווח נוסף](../sources/prep-029-apple-2026-10-22.png): Apple metaphor for the same mandatory-move line search, not a new algorithm. The existing explicit no-staying/no-wrapping model remains necessary; source wording does not independently specify every timing detail.
+
+הנוסח, הרמזים, הפתרון ומצב הביקורת הקיימים נשמרו. שיוכי חברות מדווחים מהמקור ולא אומתו עצמאית.

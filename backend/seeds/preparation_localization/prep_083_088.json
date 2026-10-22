@@ -1,0 +1,904 @@
+{
+  "PREP-083": {
+    "assumptions": {
+      "he": [
+        "REGISTER מוגדר כאן כרגיסטר בחזית עולה; נועל ברמה גבוהה אינו אותו רכיב.",
+        "מותר משוב וקבועים 0/1; נתון יציב סביב חזית ומודל שלבים אידאלי אחרי התייצבות.",
+        "אין איפוס במקור ואין ערך התחלתי מובטח. clock ו־NOT clock אינם כשלעצמם אישור לתזמון פיזי."
+      ],
+      "en": [
+        "REGISTER is defined here as rising-edge storage; an active-high latch has a different contract.",
+        "Feedback and zero/one constants are allowed; data is stable around sampling edges in an ideal settled-phase model.",
+        "No reset or guaranteed initial value is specified. Complementary clock logic alone does not certify physical timing."
+      ]
+    },
+    "truth_table": {
+      "he": [
+        {
+          "EN": 0,
+          "D": 0,
+          "Q_before": 0,
+          "Q_after_settling": 0
+        },
+        {
+          "EN": 0,
+          "D": 0,
+          "Q_before": 1,
+          "Q_after_settling": 1
+        },
+        {
+          "EN": 0,
+          "D": 1,
+          "Q_before": 0,
+          "Q_after_settling": 0
+        },
+        {
+          "EN": 0,
+          "D": 1,
+          "Q_before": 1,
+          "Q_after_settling": 1
+        },
+        {
+          "EN": 1,
+          "D": 0,
+          "Q_before": 0,
+          "Q_after_settling": 0
+        },
+        {
+          "EN": 1,
+          "D": 0,
+          "Q_before": 1,
+          "Q_after_settling": 0
+        },
+        {
+          "EN": 1,
+          "D": 1,
+          "Q_before": 0,
+          "Q_after_settling": 1
+        },
+        {
+          "EN": 1,
+          "D": 1,
+          "Q_before": 1,
+          "Q_after_settling": 1
+        }
+      ],
+      "en": [
+        {
+          "EN": 0,
+          "D": 0,
+          "Q_before": 0,
+          "Q_after_settling": 0
+        },
+        {
+          "EN": 0,
+          "D": 0,
+          "Q_before": 1,
+          "Q_after_settling": 1
+        },
+        {
+          "EN": 0,
+          "D": 1,
+          "Q_before": 0,
+          "Q_after_settling": 0
+        },
+        {
+          "EN": 0,
+          "D": 1,
+          "Q_before": 1,
+          "Q_after_settling": 1
+        },
+        {
+          "EN": 1,
+          "D": 0,
+          "Q_before": 0,
+          "Q_after_settling": 0
+        },
+        {
+          "EN": 1,
+          "D": 0,
+          "Q_before": 1,
+          "Q_after_settling": 0
+        },
+        {
+          "EN": 1,
+          "D": 1,
+          "Q_before": 0,
+          "Q_after_settling": 1
+        },
+        {
+          "EN": 1,
+          "D": 1,
+          "Q_before": 1,
+          "Q_after_settling": 1
+        }
+      ]
+    },
+    "waveform_observations": {
+      "he": [
+        "clk=0: הראשון עוקב אחרי D והשני שומר Q.",
+        "0→1: הראשון נסגר והשני מעביר את הדגימה השמורה.",
+        "clk=1: שינוי D חסום בראשון; 1→0: השני נסגר לפני חזרת השקיפות לראשון לפי תזמון תקין."
+      ],
+      "en": [
+        "clk=0: master follows D and slave holds Q.",
+        "0→1: master closes and slave transfers the retained sample.",
+        "clk=1: master blocks D changes; 1→0: slave closes as master regains transparency, subject to valid timing."
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המונח REGISTER לא הוגדר בצילום; הוגדר במפורש כרגיסטר בחזית עולה.",
+        "המקור אינו מציין קוטביות, איפוס או רכיבים מעבר ל־MUX; אלו הוגדרו כהנחות עריכה.",
+        "הצילום אינו כולל תגיות חברות; לא שויך לחברה."
+      ],
+      "en": [
+        "The screenshot does not define REGISTER; the edited problem explicitly uses rising-edge storage.",
+        "Polarity, reset and auxiliary components are unspecified; the editorial contract states them.",
+        "No company tags are visible in this screenshot, so none are attributed."
+      ]
+    },
+    "optimality": {
+      "he": "ספירת שני בוררי משוב לביט ועוד יצירת שעון משלים היא תיאור המבנה המסוים, לא הוכחת שטח מזערי בספריית תאים. רגיסטר W ביטים דורש W ביטי מצב; עלות שעון וחיווט אינה מיוצגת במודל.",
+      "en": "Two feedback MUXes per bit plus complement generation describe this topology, not minimum physical area in a cell library. W-bit storage requires W state bits; clock and wire costs are outside this model."
+    },
+    "verification": {
+      "he": "עברו 8 שורות אמת, 10,922 רצפי נועל/61,896 צעדים, 8,192 עקבות דלגלג/131,072 שלבים יציבים ו־512 מקרי enable ל־4 ביטים. Python אידאלי בלבד; HDL לא קומפל ואין STA או אימות פיזי.",
+      "en": "Passed eight truth rows, 10,922 latch streams/61,896 steps, 8,192 flip-flop traces/131,072 settled phases and 512 four-bit enable cases. Ideal Python only; HDL not compiled, no STA or physical verification."
+    },
+    "edge_cases": {
+      "he": [
+        "EN=0 אינו מאפס נועל; הוא שומר גם ערך התחלתי לא ידוע.",
+        "נועל שקוף יכול להעביר כמה שינויי D באותו מחזור.",
+        "שני נועלים באותה קוטביות עלולים להיות שקופים יחד ואינם דלגלג בחזית.",
+        "W=1 הוא דלגלג יחיד; W>1 משתף שעון אך שומר ביטים נפרדים.",
+        "שינוי D סביב חזית או חפיפת שקיפות אינו מכוסה במודל הבוליאני."
+      ],
+      "en": [
+        "EN=0 holds a latch, including unknown initialization; it does not reset it.",
+        "Several D transitions may pass during a transparent phase.",
+        "Two same-polarity latches may be open together and do not form the stated edge-triggered bit.",
+        "W=1 is one storage bit; W>1 shares a clock while retaining independent bits.",
+        "Data changes near an edge and overlap races are outside the Boolean model."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להחליף בין רגישות לרמה לרגישות לחזית.",
+        "לצייר MUX ללא משוב ולקרוא לו זיכרון.",
+        "להרכיב שני נועלים עם אותה בקרת enable.",
+        "להציג clk והיפוכו כהבטחת אי־חפיפה פיזית, או להשתמש ב־EN כשעון לא מבוקר.",
+        "לטעון שהקוד המושגי עבר סינתזה או STA בלי בדיקה כזאת."
+      ],
+      "en": [
+        "Confusing level sensitivity with edge sensitivity.",
+        "Drawing a feed-forward MUX and calling it storage.",
+        "Driving both latches with the same enable phase.",
+        "Treating complemented clocks as guaranteed physical non-overlap, or using EN as an uncontrolled clock.",
+        "Claiming conceptual code was synthesized or statically timed without doing so."
+      ]
+    },
+    "interview_answer": {
+      "he": "נועל שקוף בזמן enable, ודלגלג דוגם בחזית. MUX בוחר בין D לבין Q במשוב. כדי לקבל חזית עולה מחברים נועל ששקוף בנמוך לנועל ששקוף בגבוה; השני מעביר רק דגימה שהראשון סגר. מרחיבים לביטים במקביל, ומוסיפים enable באמצעות MUX נתונים. את המרוץ והתזמון הפיזיים צריך לבדוק בנפרד.",
+      "en": "A latch is transparent during enable; a DFF samples at an edge. A feedback MUX selects D or retained Q. A low-open master followed by a high-open slave transfers only the sample closed by the master at a rising edge. Replicate bits for a register and use a data MUX for enable; separately validate physical race and timing constraints."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם מחליפים את קוטביות שני הנועלים?",
+        "direction": "ראשון שקוף בגבוה ושני בנמוך נותנים דגימה בחזית יורדת, תחת אותם אילוצי תזמון. אין צורך לשנות את רעיון המשוב.",
+        "status": "מוכן בתוכן; אינו מחובר לתור המשך חי."
+      },
+      "en": {
+        "question": "What changes if both latch polarities are reversed?",
+        "direction": "A high-open master followed by a low-open slave gives falling-edge sampling under the same timing discipline. Feedback storage itself is unchanged.",
+        "status": "Prepared in content; not connected to the live follow-up queue."
+      }
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "MIT 6.111 — נועלים ודלגלגים",
+          "url": "https://web.mit.edu/6.111/www/f2017/handouts/TheDigitalWorld.pdf",
+          "note": "פרקי Latch ו־Flip Flop תומכים בהגדרות ובמבנה משני נועלים. ההסבר, המודל והשרטוטים כאן נכתבו מחדש באופן עצמאי."
+        }
+      ],
+      "en": [
+        {
+          "title": "MIT 6.111 — latches and flip-flops",
+          "url": "https://web.mit.edu/6.111/www/f2017/handouts/TheDigitalWorld.pdf",
+          "note": "The Latch and Flip Flop sections support the definitions and two-latch structure. Explanations, models and diagrams here were independently authored."
+        }
+      ]
+    }
+  },
+  "PREP-084": {
+    "assumptions": {
+      "he": [
+        "צלחת קשיחה שכבר מאוזנת במצב אופקי סביב נקודת תמיכה מרכזית; התמיכה מאזנת את הכוח הכולל ואינה מספקת זוג מומנטים.",
+        "כל המשקולות שוות וחיוביות; כבידה אחידה וכוחות אנכיים. נבדק מומנט סטטי במצב האופקי, לא יציבות להפרעות.",
+        "בגרסת הווים הקבועים משתמשים בקואורדינטות הנתונות ובמשקולת אחת לכל וו שנבחר, אלא אם הותר במפורש אחרת.",
+        "הבחירה החופשית של מקומות על היקף מעגל היא וריאציה שהוספנו; אינה פרט שניתן להסיק מן המקור."
+      ],
+      "en": [
+        "A rigid plate is already balanced horizontally about a central point support, which balances total force without providing a torque couple.",
+        "All added weights have the same positive mass; uniform gravity acts vertically. The target is zero static moment in the horizontal configuration, not perturbation stability.",
+        "For fixed hooks, use their supplied coordinates and one weight per chosen hook unless stacking is explicitly allowed.",
+        "Arbitrary choice of positions on a circle is an added variant, not information recoverable from the source."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "קיום סידור בעל מומנט נוסף אפס, תחת קבוצת המקומות המותרת.",
+        "result": "בווים לא ידועים אין תשובת כן/לא לפי מספר המשקולות בלבד. בבחירה חופשית על מעגל כל k שלם מ־2 עד 20 אפשרי.",
+        "proof": "בגרסה החופשית קודקודי מצולע משוכלל מבטלים את סכום וקטורי המקום. בגרסה הקבועה התנאי הוא סכום קואורדינטות אפס.",
+        "scope": "חיפוש כל תתי־הקבוצות במודל הוא אמצעי בדיקה, לא אלגוריתם אופטימלי לבעיית בחירה כללית."
+      },
+      "en": {
+        "criterion": "Existence of a placement with zero added moment under specified allowed positions.",
+        "result": "Unknown fixed hooks cannot be answered from count alone. With free circular placement, every integer k from 2 through 20 is feasible.",
+        "proof": "A regular k-gon cancels position vectors in the free variant. Fixed hooks instead require a zero coordinate sum.",
+        "scope": "The model's subset enumeration is a verification aid, not an optimal general subset-selection algorithm."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "משקולת יחידה ברדיוס חיובי אינה מתאזנת; מקום במרכז היה משנה את הבעיה.",
+        "אם כל הווים נמצאים באותו חצי־מישור פתוח, אף קבוצה לא ריקה של משקולות חיוביות עליהם לא תתאזן.",
+        "מספר ווים קטן ממספר המשקולות פוסל סידור ללא ערימה; המקור אינו מתיר ערימה במפורש.",
+        "מסות או רדיוסים שונים מחייבים סכום משוקלל; איזון סטטי אינו מבטיח שהצלחת תחזור לאחר הטיה."
+      ],
+      "en": [
+        "One mass at positive radius cannot balance; an allowed central position would change the problem.",
+        "If all hooks lie in one open half-plane, no nonempty positive-weight selection can balance.",
+        "Fewer hooks than weights rules out a placement without stacking; the source does not explicitly permit stacking.",
+        "Unequal masses or radii require a weighted sum; static balance does not establish recovery after a tilt."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להמציא מספר ווים, למשל 12, או להניח שהם במרווחים שווים בלי שנאמר כך.",
+        "לענות שכל מספר זוגי אפשרי ואי־זוגי לא: שלוש נקודות במרווחי שליש סיבוב מתאזנות.",
+        "להוכיח שקיים מצולע משוכלל ולהתעלם מכך שאולי אין ווים בקודקודיו.",
+        "לבדוק סכום זוויות במקום סכום וקטורים, או לבלבל אפס מומנט עם יציבות פיזית."
+      ],
+      "en": [
+        "Inventing a hook count, such as twelve, or assuming equal spacing without source support.",
+        "Claiming only even counts work: three equal one-third-turn positions already balance.",
+        "Showing a regular polygon exists while ignoring whether actual hooks occupy its vertices.",
+        "Summing angles rather than position vectors, or confusing zero torque with physical stability."
+      ]
+    },
+    "interview_answer": {
+      "he": "קודם אבקש את מיקומי הווים: מספר המשקולות לבדו אינו מספיק. למשקולות שוות נדרש שסכום וקטורי המקום מהמרכז יהיה אפס. אם מותר לבחור בחופשיות מקומות על מעגל, כל מספר מ־2 עד 20 אפשרי בעזרת מצולע משוכלל. זו וריאציה מפורשת, לא הנחה סמויה על צילום המקור.",
+      "en": "I would first ask for the hook positions: count alone is insufficient. Equal masses balance when their position vectors from the center sum to zero. If positions on a circle may be chosen freely, every count from 2 through 20 works as a regular polygon. That is an explicit variant, not a hidden assumption about the source."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך משתנה התנאי אם המשקולות אינן שוות?",
+        "direction": "מחליפים סכום וקטורים בסכום משוקלל: סכום m_i כפול r_i צריך להיות אפס. אין די בסימטריה גאומטרית לבדה.",
+        "status": "מוכן בארכיון; אינו מחובר לתור המשך אינטראקטיבי."
+      },
+      "en": {
+        "question": "How does the condition change for unequal masses?",
+        "direction": "Use a weighted vector sum: sum(m_i r_i)=0. Geometric symmetry alone is no longer sufficient.",
+        "status": "Prepared in the archive; not connected to the interactive follow-up queue."
+      }
+    },
+    "source_ambiguities": {
+      "he": [
+        "הצילום מזכיר צלחת עם ווי תלייה אך אינו מספק מספר ווים, מיקומים או שרטוט גאומטרי.",
+        "ההמשך 3,4,5...20 מפורש כמספרי משקולות שוות; נדרש לאשר את קבוצת מקומות התלייה ואת היתר הערימה.",
+        "אופן התמיכה, מרכז המסה ויציבות לאחר הפרעה אינם מוגדרים; נוסח האתר מצהיר על מודל סטטי אידאלי."
+      ],
+      "en": [
+        "The screenshot mentions a plate with hooks but provides no hook count, positions or geometric diagram.",
+        "The continuation 3,4,5...20 is interpreted as counts of equal weights; allowed locations and stacking permission still need specification.",
+        "Support mechanics, original center of mass and perturbation stability are unspecified; the edited question declares an ideal static model."
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "OpenStax — תנאי שיווי משקל סטטי",
+          "url": "https://openstax.org/books/university-physics-volume-1/pages/12-1-conditions-for-static-equilibrium",
+          "scope": "תנאי אפס כוח ואפס מומנט; הבניות הגאומטריות ובדיקת הווים נגזרו כאן בנפרד."
+        }
+      ],
+      "en": [
+        {
+          "title": "OpenStax — conditions for static equilibrium",
+          "url": "https://openstax.org/books/university-physics-volume-1/pages/12-1-conditions-for-static-equilibrium",
+          "scope": "Zero force and torque conditions; the geometric constructions and fixed-hook checks are derived separately here."
+        }
+      ]
+    },
+    "verification": {
+      "he": "עברו כל 256 תתי־הקבוצות של שמונה ווים מוגדרים מול חישוב מומנט עצמאי במכפלה וקטורית, ארבע דוגמאות כושלות בחצי־מישור, זהות פולינומית מדויקת לכל k=2..20 ו־57 בדיקות נומריות של מספר/רדיוס. ארבעה קלטים פסולים נדחו. נבדק מודל מומנט אידאלי, ללא ניסוי פיזי או בדיקת יציבות.",
+      "en": "Passed all 256 subsets of eight specified hooks against an independent cross-product torque calculation, four infeasible half-plane count cases, an exact polynomial identity for each k=2..20 and 57 numeric count/radius cases. Four invalid inputs were rejected. Ideal static-moment model only; no physical experiment or stability test."
+    }
+  },
+  "PREP-085": {
+    "assumptions": {
+      "he": [
+        "השעון הוא לוח קשיח אופקי שכבר מאוזן על תמיכה נקודתית במרכזו; תגובת התמיכה מאזנת משקל ואינה מוסיפה מומנט.",
+        "חמש האבנים שוות מסה וחיוביות ומיוצגות כמסות נקודתיות; 12 השנתות במרווחי 30 מעלות ועל רדיוס אחד.",
+        "מותר להניח כמה אבנים על אותה שנתה, כפי שמצוין במקור; הדוגמה שלנו אינה דורשת ערימה.",
+        "נבדק אפס מומנט כבידה במצב האופקי בלבד. גובה וערימת אבנים אמיתיות, חיכוך ויציבות לאחר הטיה אינם ממודלים."
+      ],
+      "en": [
+        "The clock is a rigid horizontal plate already balanced on a central point support; its reaction balances weight without adding torque.",
+        "Five equal positive-mass stones are ideal point masses; twelve hour marks are separated by 30 degrees at one radius.",
+        "Multiple stones on a mark are allowed by the source; the supplied construction does not require stacking.",
+        "Only zero gravitational moment in the horizontal configuration is checked. Real stacking height, friction and perturbation stability are outside the model."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מציאת סידור חוקי לחמש אבנים על 12 שנתות קבועות עם מומנט נוסף אפס.",
+        "result": "סידור אחד הוא 12,4,8 יחד עם 3,9; כל חמש השנתות שונות.",
+        "proof": "וקטורי משולש שווה־צלעות מתבטלים ושל זוג מנוגד מתבטלים; סכום שתי קבוצות מאוזנות הוא אפס.",
+        "scope": "זו בניית קיום בזמן קבוע, לא טענה שהסידור יחיד או יציב פיזית. חיפוש ממצה משמש אימות בלבד."
+      },
+      "en": {
+        "criterion": "Find one legal zero-added-moment placement of five stones at twelve fixed marks.",
+        "result": "One placement is 12,4,8 together with 3,9; all five marks are distinct.",
+        "proof": "The equilateral triangle's vectors cancel, as do the opposite pair's; the two zero sums add to zero.",
+        "scope": "A constant-time existence construction, not a uniqueness or physical stability claim. Exhaustive search is verification only."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "מותרת ערימה אך אינה הכרחית; הוכחה צריכה לספור חמש אבנים, לא רק חמש כמויות שרירותיות.",
+        "אבנים במסות שונות עשויות להפר את ביטול הווקטורים גם באותם מקומות.",
+        "אם השנתות אינן במרחק זהה מהמרכז או התמיכה אינה במרכז, יש לחשב מחדש.",
+        "סיבוב כל חמשת המקומות במספר שלם של שנתות שומר על האיזון.",
+        "אפס מומנט אופקי אינו מבטיח שהשעון לא ייפול עקב הטיה או הפרעה."
+      ],
+      "en": [
+        "Stacking is allowed but unnecessary; count exactly five stones rather than arbitrary masses.",
+        "Unequal masses can destroy cancellation at the same locations.",
+        "Unequal mark radii or an off-center support require recomputation.",
+        "Rotating all five locations by an integer number of marks preserves balance.",
+        "Zero horizontal moment does not guarantee the clock cannot topple after a tilt or disturbance."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לנסות לחלק חמש רק לזוגות ולסיים שמשום שהמספר אי־זוגי אין פתרון.",
+        "לסכום את מספרי השעות במקום את וקטורי המקום.",
+        "לבחור נקודות במרווחי 72 מעלות: הן אינן כולן שנתות של שעון בן 12 מקומות.",
+        "להסתמך על אפס בקירוב נקודה צפה במקום הוכחה או חישוב מדויק.",
+        "להשתמש בשרטוט סכמטי כהוכחת יציבות של שעון ואבנים אמיתיים."
+      ],
+      "en": [
+        "Trying only opposite pairs and concluding an odd number is impossible.",
+        "Summing hour numbers instead of position vectors.",
+        "Using 72-degree spacing: those positions are not all marks on a twelve-position clock.",
+        "Treating an approximately zero floating-point sum as an exact proof.",
+        "Taking a schematic as proof of real clock-and-stone stability."
+      ]
+    },
+    "interview_answer": {
+      "he": "אחלק את חמש האבנים לשלישייה מאוזנת וזוג מאוזן. אשים שלוש אבנים ב־12,4,8, שיוצרות משולש שווה־צלעות, ושתיים ב־3,9, שהן מנוגדות. בכל קבוצה סכום וקטורי המקום אפס, ולכן גם בכל החמש. זהו איזון מומנטים במודל האידאלי, ללא צורך בערימה.",
+      "en": "Split five into a balanced triple and pair. Put three stones at 12,4,8, forming an equilateral triangle, and two at the opposite marks 3,9. Each group's position vectors sum to zero, so all five do too. This is ideal static moment balance and requires no stacking."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "אם מותר לערום, האם כל מספר של אבנים החל משתי אבנים ניתן לאיזון על 12 השנתות?",
+        "direction": "כן: כל מספר זוגי הוא סכום של זוגות מנוגדים; כל מספר אי־זוגי החל מ־3 הוא שלישייה מאוזנת ועוד זוגות. אבן אחת אינה מתאזנת ברדיוס חיובי.",
+        "status": "הרחבה עם הוכחת קיום; מוכנה בארכיון ואינה מחוברת לתור המשך אינטראקטיבי."
+      },
+      "en": {
+        "question": "With stacking allowed, can every stone count of at least two balance on twelve marks?",
+        "direction": "Yes: every even count consists of opposite pairs; every odd count of at least three is a balanced triple plus pairs. One stone cannot balance at positive radius.",
+        "status": "Existence argument prepared in the archive; not connected to the interactive follow-up queue."
+      }
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו אומר במפורש שהאבנים שוות מסה; זו הנחה הכרחית להצעה הגאומטרית ונוספה לנוסח האתר.",
+        "השעון מתפרש כלוח אופקי עם 12 שנתות רגילות; אופן התמיכה, גודל האבנים וגובהן אינם מוגדרים.",
+        "המונח שיווי משקל מתפרש כאפס מומנט סטטי, ללא הבטחת יציבות להפרעות."
+      ],
+      "en": [
+        "Equal stone mass is not explicit in the source; it is required by this geometric construction and was added openly.",
+        "The clock is interpreted as a horizontal plate with twelve standard marks; support details and stone dimensions/heights are unspecified.",
+        "Balance is interpreted as zero static moment, without a perturbation-stability guarantee."
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "OpenStax — תנאי שיווי משקל סטטי",
+          "url": "https://openstax.org/books/university-physics-volume-1/pages/12-1-conditions-for-static-equilibrium",
+          "scope": "תנאי הכוח והמומנט בלבד; סידור האבנים והאימות המדויק נגזרו כאן בנפרד."
+        }
+      ],
+      "en": [
+        {
+          "title": "OpenStax — conditions for static equilibrium",
+          "url": "https://openstax.org/books/university-physics-volume-1/pages/12-1-conditions-for-static-equilibrium",
+          "scope": "Force and torque conditions only; the stone construction and exact verification are derived separately here."
+        }
+      ]
+    },
+    "verification": {
+      "he": "עברו כל 4,368 הסידורים הלא־מסודרים של חמש אבנים כולל ערימות; נמצאו 24 סידורים מאוזנים בחישוב מדויק. אורקל עצמאי מצמצם פולינומים לפי Phi_12(z)=z^4-z^2+1. נבדקו גם 12 סיבובי הדוגמה, 12 קואורדינטות השעות, אפס סידורים לאבן אחת ושישה זוגות מאוזנים, ונדחו שלושה קלטים פסולים. אין ניסוי פיזי או בדיקת יציבות.",
+      "en": "Passed all 4,368 unordered five-stone placements including stacks; exact arithmetic found 24 balanced placements. An independent oracle reduces polynomials modulo Phi_12(z)=z^4-z^2+1. Also checked twelve rotations of the construction, twelve hour coordinates, no one-stone solution and six balanced pairs; rejected three invalid inputs. No physical experiment or stability test."
+    }
+  },
+  "PREP-086": {
+    "assumptions": {
+      "he": [
+        "n≥1, אינדקס גבוה עדיף, פלט n ביטים one-hot, אפס קלט מחזיר אפס.",
+        "קומבינטורי אחרי התייצבות; אין שעון ואין דרישת פלט נטול גליצ'ים.",
+        "AND/OR בשתי כניסות ו־NOT, השהיה יחידתית, חוטים חופשיים; ניתוח עומק אינו תזמון פיזי.",
+        "ריפוד לפאואר־אוף־טו נעשה בבקשות אפס בעלות אינדקס גבוה."
+      ],
+      "en": [
+        "n≥1, higher index wins, n-bit one-hot output, all-zero input returns zero.",
+        "Settled combinational behavior; no clock or glitch-free output requirement.",
+        "Two-input AND/OR and NOT, unit gate delays, free wires; depth is not physical timing.",
+        "Power-of-two padding inserts zero requests at higher indices."
+      ]
+    },
+    "truth_table": {
+      "he": [
+        {
+          "B": 0,
+          "x1": 0,
+          "x0": 0,
+          "V": 0,
+          "y1": 0,
+          "y0": 0
+        },
+        {
+          "B": 0,
+          "x1": 0,
+          "x0": 1,
+          "V": 1,
+          "y1": 0,
+          "y0": 1
+        },
+        {
+          "B": 0,
+          "x1": 1,
+          "x0": 0,
+          "V": 1,
+          "y1": 1,
+          "y0": 0
+        },
+        {
+          "B": 0,
+          "x1": 1,
+          "x0": 1,
+          "V": 1,
+          "y1": 1,
+          "y0": 0
+        },
+        {
+          "B": 1,
+          "x1": 0,
+          "x0": 0,
+          "V": 0,
+          "y1": 0,
+          "y0": 0
+        },
+        {
+          "B": 1,
+          "x1": 0,
+          "x0": 1,
+          "V": 1,
+          "y1": 0,
+          "y0": 0
+        },
+        {
+          "B": 1,
+          "x1": 1,
+          "x0": 0,
+          "V": 1,
+          "y1": 0,
+          "y0": 0
+        },
+        {
+          "B": 1,
+          "x1": 1,
+          "x0": 1,
+          "V": 1,
+          "y1": 0,
+          "y0": 0
+        }
+      ],
+      "en": [
+        {
+          "B": 0,
+          "x1": 0,
+          "x0": 0,
+          "V": 0,
+          "y1": 0,
+          "y0": 0
+        },
+        {
+          "B": 0,
+          "x1": 0,
+          "x0": 1,
+          "V": 1,
+          "y1": 0,
+          "y0": 1
+        },
+        {
+          "B": 0,
+          "x1": 1,
+          "x0": 0,
+          "V": 1,
+          "y1": 1,
+          "y0": 0
+        },
+        {
+          "B": 0,
+          "x1": 1,
+          "x0": 1,
+          "V": 1,
+          "y1": 1,
+          "y0": 0
+        },
+        {
+          "B": 1,
+          "x1": 0,
+          "x0": 0,
+          "V": 0,
+          "y1": 0,
+          "y0": 0
+        },
+        {
+          "B": 1,
+          "x1": 0,
+          "x0": 1,
+          "V": 1,
+          "y1": 0,
+          "y0": 0
+        },
+        {
+          "B": 1,
+          "x1": 1,
+          "x0": 0,
+          "V": 1,
+          "y1": 0,
+          "y0": 0
+        },
+        {
+          "B": 1,
+          "x1": 1,
+          "x0": 1,
+          "V": 1,
+          "y1": 0,
+          "y0": 0
+        }
+      ]
+    },
+    "netlist": {
+      "he": {
+        "תא_ביט": [
+          "y=x AND NOT H",
+          "H_out=H OR x"
+        ],
+        "תא_זוג": [
+          "V=x1 OR x0",
+          "y1=x1 AND NOT B",
+          "y0=x0 AND NOT(B OR x1)"
+        ],
+        "צומת_עץ": [
+          "V=V_high OR V_low",
+          "B_high=B",
+          "B_low=B OR V_high"
+        ]
+      },
+      "en": {
+        "one_bit_cell": [
+          "y=x AND NOT H",
+          "H_out=H OR x"
+        ],
+        "two_request_cell": [
+          "V=x1 OR x0",
+          "y1=x1 AND NOT B",
+          "y0=x0 AND NOT(B OR x1)"
+        ],
+        "tree_node": [
+          "V=V_high OR V_low",
+          "B_high=B",
+          "B_low=B OR V_high"
+        ]
+      }
+    },
+    "optimality": {
+      "he": "שרשרת: O(n) שטח ועומק. עץ תקפות/חסימה: O(n) שערים ועומק O(log n) במודל fan-in=2, לעומת חסם תחתון Ω(log n) הנובע מתלות יציאה נמוכה בכל n הקלטים. זו אופטימליות בסדר גודל של עומק במודל בלבד, לא הבטחת מינימום שערים או ns פיזי.",
+      "en": "Cascade: O(n) size and depth. Valid/block tree: O(n) gates and O(log n) depth for fan-in two, matching an Ω(log n) depth lower bound from one low output depending on all n inputs. This is asymptotic depth optimality in that model only, not minimum gate count or physical nanoseconds."
+    },
+    "verification": {
+      "he": "עברו 8 שורות אמת, 16,382 וקטורים ממצים ברוחבים 1–13, 1,700 וקטורים אקראיים עד 257 ביטים ומקרי one-hot בכל רוחב מדגם; 37,610 השוואות מול אורקל bit_length. נבדקו 6 דחיות קלט לא תקין וחסמי ריפוד/גודל לרוחבים 1–257. Python וחישוב טופולוגי בלבד; אין HDL/סינתזה/STA/מדידת חומרה.",
+      "en": "Passed eight truth rows, 16,382 exhaustive vectors at widths 1–13, 1,700 random vectors up to 257 bits and all one-hot cases at sampled widths; 37,610 comparisons against a bit_length oracle. Six invalid inputs and padding/size bounds for widths 1–257 were checked. Python and topology calculations only; no HDL, synthesis, STA or hardware measurement."
+    },
+    "edge_cases": {
+      "he": [
+        "n=1: y0=x0; אין טעם לחייב עץ או שערים מיותרים.",
+        "x=0: כל היציאות אפס; אין אינדקס זוכה משתמע.",
+        "כמה כניסות 1: רק הגבוהה עוברת.",
+        "V חייב להישאר חיווי בקשות גולמי גם כש־B=1.",
+        "n שאינו חזקה של שתיים: מוסיפים אפסים בלבד ומשמרים אינדקסים.",
+        "קלטים משתנים יכולים לגרום לגליצ'ים; אם הפלט נדגם יש לתת לו להתייצב ולעמוד בתזמון המקבל."
+      ],
+      "en": [
+        "n=1 gives y0=x0; no unnecessary tree is required.",
+        "x=0 gives zero outputs, with no implied winning index.",
+        "Multiple active inputs select only the highest.",
+        "V must remain raw request-valid even when B=1.",
+        "Non-power-of-two widths pad only with zero requests and preserve indices.",
+        "Changing inputs can glitch; a sampling receiver must allow settling and meet its own timing requirements."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להחזיר אינדקס בינארי במקום n קווי one-hot.",
+        "למסך לפי ביט גבוה שכן יחיד ולא לפי כל הגבוהים.",
+        "לחשב V מהיציאות שכבר נחסמו ולשבור את ההיררכיה.",
+        "לצייר OR בעל n כניסות ולייחס לו השהיה של שער קטן בלי להצהיר על מודל.",
+        "להוסיף דלגלגים ולקרוא לכך אותו פתרון קומבינטורי.",
+        "לקרוא למעברי העץ שני מחזורי שעון למרות שאין שעון."
+      ],
+      "en": [
+        "Returning a binary index instead of n one-hot lines.",
+        "Masking only the immediate higher neighbor instead of every higher request.",
+        "Computing V from already-blocked grants, breaking composition.",
+        "Assigning an n-input OR the delay of a small gate without stating that model.",
+        "Adding pipeline registers while claiming an unchanged combinational contract.",
+        "Calling the two tree dependency passes two clock cycles despite having no clock."
+      ]
+    },
+    "interview_answer": {
+      "he": "כל יציאה היא הקלט שלה AND עם השלילה של OR כל הקלטים הגבוהים. בשרשרת מעבירים חיווי seen ולכן ההשהיה ליניארית. לקיצור בונים עץ OR לתקפות קבוצות, מפיצים חסימת higher-present למטה ומסכים כל עלה. מתקבל וקטור one-hot בעומק לוגריתמי ובשטח ליניארי במודל שערים בעלי שתי כניסות, עם ריפוד אפסים אם צריך.",
+      "en": "Each output is its request AND the inverse OR of all higher requests. A serial seen chain has linear depth. For lower delay, build a group-valid OR tree, propagate higher-present blocking downward, and qualify each leaf. This gives one-hot output with logarithmic depth and linear size in a two-input-gate model, padding with zeros when necessary."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד תוסיפו חיווי valid ואינדקס בינארי בלי לשנות את סדר העדיפות?",
+        "direction": "valid הוא V של השורש. אפשר לקודד את וקטור ה־one-hot או לשרשר ביט החלטה בכל רמת עץ. כשהקלט אפס האינדקס אינו תקף ויש למסך או לסמן זאת; אלה יציאות חדשות ולא תחליף לפלט שנדרש.",
+        "status": "מוכן בתוכן; אינו מחובר לתור המשך חי."
+      },
+      "en": {
+        "question": "How can valid and a binary index be added without changing priority?",
+        "direction": "Valid is the root V. Encode the one-hot result or append a group-selection bit at each tree level. An all-zero input has no valid index, so qualify or mark it. These are additional outputs, not replacements for the required vector.",
+        "status": "Prepared in content; not connected to the live follow-up queue."
+      }
+    },
+    "source_ambiguities": {
+      "he": [
+        "הצילום אינו נותן fan-in, ספריית תאים או השהיות מספריות; הוצהר מודל שערים יחידתי.",
+        "יחידת בסיס יכולה להיות תא ביט או זוג. שתי האפשרויות הוצגו עם ממשקי תקפות וחסימה מפורשים.",
+        "שמות החברות הם תגיות בצילום ולא אימות בלתי תלוי של ראיון."
+      ],
+      "en": [
+        "No fan-in, cell library or numerical delays are supplied; unit gate assumptions are explicit.",
+        "Base unit may mean one bit or a pair; both are shown with explicit valid/block interfaces.",
+        "Company names come from screenshot tags and are not independently verified interview reports."
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "גזירה עצמאית של מסכת עדיפות",
+          "note": "הנוסחה, האינדוקציה וחסם עומק העץ נגזרו במפורש בפתרון; אימות ממצה ואקראי מתועד בקוד. השאלה קשורה ל־PREP-014 ול־PREP-016 אך אינה מחזירה רק אינדקס."
+        }
+      ],
+      "en": [
+        {
+          "title": "Independent derivation of priority masking",
+          "note": "The formula, induction and tree-depth bound are explicitly derived in the solution; exhaustive/random checks are documented in code. Related PREP-014/PREP-016 do not replace this generic one-hot interface and timing exercise."
+        }
+      ]
+    }
+  },
+  "PREP-087": {
+    "assumptions": {
+      "he": [
+        "N≥3 קודקודים של מצולע פשוט בעל פנים לא ריק, לפי סדר ההיקף; ללא חיתוך עצמי או צלעות אפס. הסגירה משתמעת ולא חוזרים על הקודקוד הראשון בסוף.",
+        "הפתרון אינו מניח קמירות; כיוון הרשימה יכול להיות עם כיוון השעון או נגדו.",
+        "קואורדינטות שלמות מדויקות. במקור P אינה על שום ישר תומך של צלע; המימוש הכללי כולל החזרת שפה."
+      ],
+      "en": [
+        "N≥3 ordered vertices of a simple polygon with nonempty interior, without self-intersections or zero-length edges. Closure is implicit; do not repeat the first vertex at the end.",
+        "Convexity is not assumed; clockwise and counterclockwise order both work.",
+        "Exact integer coordinates. The source excludes P from every edge supporting line; the general helper additionally returns boundary."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "עלות שאילתת נקודה אחת במצולע כללי הנתון כרשימת קודקודים, ללא עיבוד מקדים.",
+        "result": "O(N) פעולות אריתמטיות ו־O(1) משתנים נוספים; אין צורך במיון, שורשים, זוויות או חילוק.",
+        "proof": "כל צלע נסרקת פעם אחת, וכל בדיקת צלע כוללת מספר קבוע של חישובים. להפיכת שפה לא נצפית עשויה להיות השפעה על התשובה, ולכן במקרה הגרוע אין לדלג מראש על צלעות שרירותיות.",
+        "scope": "הבטחת מצולע פשוט מתקבלת כקלט; אימות פשטות ועיבוד מוקדם לשאילתות רבות אינם כלולים. עלות הביטים של מספרים גדולים אינה קבועה."
+      },
+      "en": {
+        "criterion": "One point query on a general vertex-list polygon, without preprocessing.",
+        "result": "O(N) arithmetic operations and O(1) extra variables; no sorting, roots, angles or division.",
+        "proof": "Each edge is visited once and performs a fixed number of calculations. An unseen boundary change can alter the answer, so arbitrary edges cannot in general be skipped in advance.",
+        "scope": "Simplicity is a supplied precondition; simplicity validation and preprocessing for many queries are excluded. Large-integer bit costs are not constant."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "מצולע קעור ונקודה במגרעת, מחוץ למצולע אך בתוך תיבת התוחמת שלו.",
+        "קרן דרך קודקוד, צלעות אופקיות וקודקודים עוקבים קולינריים: תנאי y חצי־פתוח ובדיקת שפה.",
+        "נקודה על צלע, על קודקוד או על המשך ישר הצלע; רק שני הראשונים הם שפה.",
+        "סדר קודקודים הפוך, קואורדינטות שליליות או גדולות מאוד והצלע האחרונה הסוגרת.",
+        "קלט מצטלב אינו עומד בחוזה העיקרי; הקוד אינו בודק פשטות או בוחר עבורו כלל מילוי חדש."
+      ],
+      "en": [
+        "Concavity and a point in a notch: outside the polygon but inside its bounding box.",
+        "A ray through a vertex, horizontal edges and consecutive collinear vertices: half-open y intervals and boundary checks.",
+        "A point on an edge, on a vertex or on an edge extension; only the first two are boundary.",
+        "Reversed vertex order, negative or huge coordinates, and the closing last-to-first edge.",
+        "A self-crossing input violates the main contract; the code does not validate simplicity or choose a new fill rule for it."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לבדוק רק תיבה תוחמת, או להשתמש באותו צד של כל צלע בלי שהובטחה קמירות.",
+        "לספור קודקוד פעמיים או לספור צלע אופקית כחצייה.",
+        "לשכוח את הסימן של By−Ay כשמשווים חיתוך בלי חילוק.",
+        "לבדוק נקודה על ישר במקום על קטע, או לשכוח את הצלע האחרונה.",
+        "להשתמש בשיפועים ובמספרים עשרוניים ללא צורך, או להתעלם מגלישת מכפלות.",
+        "לטעון לאימות מצולע פשוט אף שהקוד רק מסתמך על החוזה."
+      ],
+      "en": [
+        "Using only a bounding box, or same-side tests without a convexity guarantee.",
+        "Double-counting a vertex or treating a horizontal edge as a crossing.",
+        "Forgetting the sign of By−Ay in the division-free comparison.",
+        "Testing the infinite line rather than the segment, or omitting the closing edge.",
+        "Using slopes and floating point unnecessarily, or allowing product overflow.",
+        "Claiming to validate simplicity when the code merely trusts the precondition."
+      ]
+    },
+    "interview_answer": {
+      "he": "למצולע פשוט אשלח קרן ימינה מ־P ואהפוך ביט בכל חציית שפה מימין. אי־זוגי הוא בפנים וזוגי בחוץ. לכל צלע אשתמש בטווח y חצי־פתוח ובסימן מכפלה וקטורית יחד עם סימן Δy, בלי חילוק. כך אין ספירה שגויה של קודקודים, והעלות היא O(N) פעולות ו־O(1) משתנים נוספים. אבהיר קודם פשטות ודיוק קואורדינטות; אם יש חיתוך עצמי צריך כלל מילוי.",
+      "en": "For a simple polygon, send a rightward ray from P and toggle a bit at every rightward boundary crossing. Odd is inside and even outside. Use a half-open y interval and determinant sign together with the sign of Δy, without division, to handle vertices correctly. Cost is O(N) operations and O(1) extra variables. First clarify simplicity and coordinate precision; self-crossing shapes need a fill rule."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם מותר חיתוך עצמי, או אם יש אלפי נקודות שאילתה לאותו מצולע?",
+        "direction": "בחיתוך עצמי מגדירים במפורש זוגיות מול ליפוף. בשאילתות רבות אפשר לחקור עיבוד מקדים של חלוקת המישור; הסריקה הנוכחית עדיין עולה O(N) לכל נקודה.",
+        "status": "הכיוון מוכן בארכיון; אינו מחובר לתור המשך אינטראקטיבי."
+      },
+      "en": {
+        "question": "What changes with self-intersections, or with thousands of point queries on the same polygon?",
+        "direction": "For intersections, explicitly choose parity versus winding. Many queries can motivate planar point-location preprocessing; the current scan still costs O(N) per query.",
+        "status": "Prepared in the archive; not connected to the interactive follow-up queue."
+      }
+    },
+    "source_ambiguities": {
+      "he": [
+        "שני הצילומים מציגים אותה שאלה; נשמרו שניהם כמקורות לשאלה אחת.",
+        "המקור מתאר צורה סגורה כלשהי, אך אינו מתחייב שלא תהיה חותכת את עצמה. הנחת מצולע פשוט נוספה במפורש; אין הנחת קמירות.",
+        "סדר החיבורים וסגירת ההיקף משתמעים; נוספו VN→V1 והיעדר חזרה של V1 ברשימה.",
+        "לא הוגדרו טיפוס הקואורדינטות, דיוקן או מדיניות נקודות שפה. נבחר מודל שלם מדויק עם הרחבת שפה אופציונלית.",
+        "תגי החברות בצילום השני הם דיווח מקור, לא אימות עצמאי של חברה או של פתרון."
+      ],
+      "en": [
+        "The two screenshots contain the same question; both are retained as sources for one entry.",
+        "The source describes an arbitrary closed shape without excluding self-intersection. Simplicity is an explicit added assumption; convexity is not assumed.",
+        "Perimeter closure is implied; VN→V1 and the absence of a repeated first vertex were made explicit.",
+        "Coordinate type, precision and boundary policy were unspecified. We selected exact integers and an optional boundary extension.",
+        "Company tags in the second screenshot are reported provenance, not independent company or solution verification."
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "CGAL — בדיקת נקודה ביחס למצולע",
+          "url": "https://doc.cgal.org/latest/Polygon/group__PkgPolygon2Functions.html",
+          "scope": "תיעוד bounded_side_2 מתאר כלל זוגיות, קרן אופקית וזמן לינארי עם טיפול בקודקודים. הקוד, גזירת הסימנים והבדיקות כאן נכתבו בנפרד."
+        }
+      ],
+      "en": [
+        {
+          "title": "CGAL — point classification for polygons",
+          "url": "https://doc.cgal.org/latest/Polygon/group__PkgPolygon2Functions.html",
+          "scope": "The bounded_side_2 documentation describes parity, a horizontal ray and linear time with vertex handling. Our implementation, sign derivation and tests were written independently."
+        }
+      ]
+    },
+    "verification": {
+      "he": "עברו 38,576 השוואות למימוש עצמאי של מספר ליפופים, מהן 16,650 עומדות גם בהבטחת המקור שאין קולינריות עם שום ישר צלע. נבדקו שש צורות קבועות, 120 מצולעי מדרגות פשוטים אקראיים, 10,010 השוואות אנליטיות, 3,528 שינויי כיוון/שיקוף/הזזה/קנה מידה עם שלמים ענקיים, 155 מקרי שפה בצורות הקבועות וחמש דחיות קלט בסיסיות. זהו מימוש שלם מדויק; אין מאמת פשטות או בדיקה של מדיניות מילוי לצורות מצטלבות.",
+      "en": "Passed 38,576 comparisons with an independent signed-winding implementation, including 16,650 satisfying the source promise of no collinearity with any edge line. Checked six fixed shapes, 120 random simple histogram polygons, 10,010 analytic classifications, 3,528 orientation/reflection/translation/scaling cases with huge integers, 155 fixed-fixture boundary cases and five basic input rejections. Exact integer implementation; no simplicity validator or self-crossing fill-rule test."
+    }
+  },
+  "PREP-088": {
+    "assumptions": {
+      "he": [
+        "n ערכים שונים בטווח הכולל 0..n+1; בדיוק שני חסרים. n≥0 וקלט תקין מובטח.",
+        "המערך ניתן לקריאה חוזרת ואינו משתנה; אין מערך עזר, set או מיון.",
+        "O(1) מילים נוספות במודל המילה; שני ערכי פלט מותרים."
+      ],
+      "en": [
+        "n distinct values in inclusive 0..n+1; exactly two omissions. n≥0 and validity is promised.",
+        "Input is repeatable and read-only; no auxiliary array, set or sorting.",
+        "O(1) auxiliary words in the word model; two output values are allowed."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "time": "O(n) פעולות מילה; מספר קבוע של סריקות.",
+        "space": "O(1) מילים נוספות, O(log(n+2)) ביטים לסקלרים.",
+        "scope": "זמן לינארי מיטבי במקרה הגרוע במודל קריאה של מערך לא ממוין; אין טענת קבועי זמן או מינימום מעברים."
+      },
+      "en": {
+        "time": "O(n) word operations, with a constant number of scans.",
+        "space": "O(1) auxiliary words, O(log(n+2)) bits for scalars.",
+        "scope": "Worst-case linear time is optimal for reading arbitrary unsorted arrays; no constant-factor or minimum-pass claim."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "n=0: הפלט 0,1.",
+        "אפס, n+1 או שניהם חסרים.",
+        "שני החסרים באותה זוגיות: סיבית ההפרדה אינה בהכרח הסיבית הנמוכה במספרים עצמם.",
+        "רצף חד־פעמי או קלט עם כפילויות אינם מקיימים את החוזה."
+      ],
+      "en": [
+        "n=0 returns0,1.",
+        "Zero, n+1 or both may be missing.",
+        "Same-parity omissions require a distinguishing bit that need not be the low bit of the numbers themselves.",
+        "A one-shot iterator or duplicate input does not satisfy the contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להחזיר רק a XOR b במקום שני הערכים.",
+        "לחלק תמיד לזוגי ולאי־זוגי בלי לבדוק את combined.",
+        "להשתמש במערך סימונים או set למרות האיסור.",
+        "לסמן אפס כ״חסר לא ידוע״ או לשכוח את n+1.",
+        "לקרוא איטרטור שנגמר פעמיים ולצפות לאותן דגימות."
+      ],
+      "en": [
+        "Returning only a XOR b rather than both values.",
+        "Always splitting by parity instead of a set bit of combined.",
+        "Using a marking array or set despite the constraint.",
+        "Using zero as an unknown-answer marker or omitting n+1.",
+        "Scanning an exhausted one-shot iterator twice."
+      ]
+    },
+    "interview_answer": {
+      "he": "אבצע XOR של הטווח ושל המערך כדי לקבל a XOR b. אבחר בו סיבית דלוקה ואחשב XOR בנפרד לשתי הקבוצות לפי אותה סיבית. הקיימים יתבטלו והחסרים ייפרדו; O(n) זמן ו־O(1) מילים, ללא שינוי המערך.",
+      "en": "XOR the domain and array to get a XOR b. Choose a set bit and accumulate XOR separately in its two groups. Present values cancel and omissions separate, giving O(n) time and O(1) auxiliary words without mutation."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם הקלט הוא זרם שאפשר לקרוא פעם אחת בלבד?",
+        "direction": "הקוד הדו־מעברי אינו מתאים כמו שהוא. אפשר לבחון סכום וסכום ריבועים בשלמים מדויקים ולפתור עבור שני החסרים; יש לנתח רוחב מספרים וגלישה.",
+        "status": "מוכן בתוכן; אינו מחובר לתור המשך אינטראקטיבי."
+      },
+      "en": {
+        "question": "What changes for an input stream that can be read only once?",
+        "direction": "The supplied two-pass input method no longer applies unchanged. Exact sums and sums of squares can recover both omissions, with explicit arithmetic width and overflow analysis.",
+        "status": "Prepared in content; not connected to the interactive follow-up queue."
+      }
+    },
+    "source_ambiguities": {
+      "he": [
+        "האיסור על מערך עזר מפורש במקור. קריאה חוזרת, אי־שינוי הקלט ומודל מילת הזיכרון הובהרו בעריכה.",
+        "זו וריאציה מקושרת ל־PREP-041; פתרון הדגלים שם אינו עומד באילוץ החדש, אך עקרון ה־XOR מתאים."
+      ],
+      "en": [
+        "The source explicitly forbids an auxiliary array. Repeatability, read-only input and the word-space model are editorial clarifications.",
+        "This is a linked variant of PREP-041. Its marking-array alternative violates the new constraint, while the XOR principle applies."
+      ]
+    },
+    "verification": {
+      "he": "עברו 2,907 מקרי זוג חסרים וסדר קלט, 2,956 תמורות ממצות באורכים קטנים ו־300 מקרים מדגמיים עד אורך 5,000. הושווה לאורקל נפרד המבוסס על סכומים, סכומי ריבועים ושורש שלם; נבדק שהקלט נשאר זהה. מודל Python בלבד, קלט תקין מובטח; לא benchmark או קומפילציה ברוחב קבוע.",
+      "en": "Passed 2,907 missing-pair/order cases, 2,956 exhaustive small permutations and 300 seeded cases up to length 5,000. Compared with an independent exact sum/sum-of-squares integer-root oracle and checked input immutability. Python on promised inputs only; no benchmark or fixed-width compilation."
+    },
+    "relationship_note": {
+      "he": "וריאציה מחמירה מקושרת ל־PREP-041: טווח שמתחיל באפס ואיסור מפורש על מערך עזר, תוך שימור השאלה הקודמת והחלופות שכבר נבדקו בה.",
+      "en": "Linked stricter variant of PREP-041: a zero-based domain and explicit no-auxiliary-array constraint, while retaining the older question and its reviewed alternatives."
+    }
+  }
+}

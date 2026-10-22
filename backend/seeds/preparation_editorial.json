@@ -1431,5 +1431,98 @@
       ]
     },
     "note": "2026-10-21: full paired solution, explicit ideal guided-track model; source ambiguity retained. New solution pending human review."
+  },
+  "PREP-083": {
+    "hints": {
+      "he": [
+        "הפרידו בין חלון שבו מותר למוצא לעקוב אחרי הקלט לבין רגע דגימה יחיד.",
+        "בורר יכול לבחור בין נתון חדש לבין ערך שמוחזר מהמוצא. כיצד שתי רמות שקיפות משלימות מפרידות את הקלט מהמוצא?",
+        "לנועל השתמשו ב־Q(next)=EN?D:Q. לדלגלג בחזית עולה חברו נועל ראשון ששקוף כש־clk=0 לנועל שני ששקוף כש־clk=1; נתחו כל חצי מחזור."
+      ],
+      "en": [
+        "Distinguish a window during which output may follow input from a single sampling edge.",
+        "A MUX can choose fresh data or its own fed-back output. How can complementary transparency levels isolate input from output?",
+        "Use Q(next)=EN?D:Q for the latch. For a rising-edge flip-flop, connect a master open at clk=0 to a slave open at clk=1, and analyze both half cycles."
+      ]
+    },
+    "note": "2026-10-22: source retained, explicit bilingual proposed solution, authored localized diagrams and executed finite Python model checks. No physical/STA/HDL validation; professional, human parity and reuse reviews pending."
+  },
+  "PREP-084": {
+    "hints": {
+      "he": [
+        "לפני שמחשבים, אילו נתונים גאומטריים על הווים חסרים? מה פירוש איזון סביב נקודת מרכז?",
+        "ייצגו כל משקולת באמצעות וקטור אופקי מהמרכז אל מקום תלייתה. איזה סכום צריך להתאפס?",
+        "ווים קבועים מחייבים בדיקת סכום הווקטורים הזמינים. בווריאציה שבה מותר לבחור כל זווית על מעגל, נסו מרווחים זוויתיים שווים."
+      ],
+      "en": [
+        "Before calculating, which hook-geometry information is missing? What does balance about a central point mean?",
+        "Represent each equal weight by its horizontal position vector from the center. Which sum must vanish?",
+        "Fixed hooks require checking sums of their actual vectors. In the added variant with arbitrary positions on a circle, try equal angular spacing."
+      ]
+    },
+    "note": "2026-10-22: explicit static-moment model, full paired materials and authored diagrams. Source limitations preserved. Proposed solution pending human review."
+  },
+  "PREP-085": {
+    "hints": {
+      "he": [
+        "השעון כבר מאוזן לפני הוספת האבנים. מה צריך לקרות למרכז המסה של האבנים בלבד?",
+        "אפשר לפרק את חמש האבנים לשתי קבוצות שכל אחת מתאזנת בפני עצמה. חפשו חלוקה למספרים קטנים המתאימים לשנתות השעון.",
+        "זוג נקודות מנוגדות מתבטל. איזו שלישיית שנתות בעלת מרווחים זוויתיים שווים מתבטלת גם היא?"
+      ],
+      "en": [
+        "The clock is already balanced before stones are added. Where must the stones' own horizontal center of mass be?",
+        "Split the five stones into two groups that each balance independently. Look for small group sizes compatible with clock marks.",
+        "A diametrically opposite pair cancels. Which three equally spaced hour marks also cancel?"
+      ]
+    },
+    "note": "2026-10-22: explicit static-moment model, full paired materials and authored diagrams. Source limitations preserved. Proposed solution pending human review."
+  },
+  "PREP-086": {
+    "hints": {
+      "he": [
+        "מה צריך כל ביט לדעת על כל הביטים שמעליו כדי להחליט אם הוא רשאי לעבור?",
+        "העבירו בין קבוצות חיווי שקיימת בהן לפחות בקשה אחת. האם שרשרת חייבת להמתין לכל קודמותיה?",
+        "חשבו V=OR של כל קבוצה. מלמעלה למטה העבירו חסימה B: לקבוצה גבוהה B נשאר, ולקבוצה נמוכה העבירו B OR V_high. בעלה קבלו y=x AND NOT B."
+      ],
+      "en": [
+        "What must each input know about higher-index inputs before it can pass?",
+        "Pass whether a group contains any request. Must each lower group wait through every preceding unit?",
+        "Compute each group valid V by OR. Propagate higher-present blocking downward: B_high=B and B_low=B OR V_high. At a leaf use y=x AND NOT B."
+      ]
+    },
+    "note": "2026-10-22: source retained, explicit bilingual proposed solution, authored localized diagrams and executed finite Python model checks. No physical/STA/HDL validation; professional, human parity and reuse reviews pending."
+  },
+  "PREP-087": {
+    "hints": {
+      "he": [
+        "דמיינו מסלול ישר מ־P עד נקודה רחוקה בוודאות מחוץ לצורה. מה משתנה בכל חצייה אמיתית של השפה?",
+        "בחרו קרן אופקית ימינה וספרו רק צלעות החותכות אותה מימין ל־P. שימו לב לקרן שעוברת בדיוק דרך קודקוד.",
+        "צלע A→B מועמדת רק כש־(Ay>Py)!=(By>Py). בעזרת cross=(Bx−Ax)(Py−Ay)−(By−Ay)(Px−Ax), החיתוך מימין כאשר ל־cross ול־By−Ay אותו סימן. הפכו ביט בכל חיתוך."
+      ],
+      "en": [
+        "Imagine a straight route from P to a point far enough away to be outside. What changes at each genuine boundary crossing?",
+        "Take a horizontal ray to the right and count only edges crossing it to the right of P. Handle a ray that passes exactly through a vertex.",
+        "An edge A→B is eligible only when (Ay>Py)!=(By>Py). For cross=(Bx−Ax)(Py−Ay)−(By−Ay)(Px−Ax), its intersection lies right of P when cross and By−Ay have the same sign. Toggle one bit per crossing."
+      ]
+    },
+    "note": "2026-10-22: paired exact-integer solution and diagrams; simple-polygon contract and source omissions explicit. Proposed; human review pending."
+  },
+  "PREP-088": {
+    "hints": {
+      "he": [
+        "חפשו פעולה שמבטלת ערך שמופיע פעמיים, בלי לסמן אילו ערכים ראיתם במערך עזר.",
+        "XOR של כל הטווח ושל כל איברי המערך משאיר a XOR b. איזו סיבית מוכרחה להיות שונה בשני החסרים?",
+        "בחרו סיבית דלוקה של a XOR b וחלקו לפיה גם את הטווח וגם את המערך. ביטול ה־XOR בכל קבוצה משאיר חסר אחד, גם אם השני הוא אפס."
+      ],
+      "en": [
+        "Look for an operation that cancels a value appearing twice without recording visited values in an auxiliary array.",
+        "XOR the whole domain and all array entries to obtain a XOR b. Which bit must differ between the two missing values?",
+        "Choose a set bit of a XOR b and partition both domain and input by it. XOR cancellation leaves one omission in each group, even when one omission is zero."
+      ]
+    },
+    "reference_solution": {
+      "he": "### מבטלים את מה שכבר מופיע\nנסמן את שני החסרים a,b. מבצעים XOR של כל המספרים בטווח 0..n+1 ושל כל איברי הקלט. כל ערך קיים מופיע בדיוק פעמיים ומתבטל; נשאר combined=a XOR b. זו אינה תשובה מספקת בפני עצמה: היא מקשרת בין שני הערכים אך לא מפרידה אותם.\n\n### מפרידים באמצעות סיבית שונה\nמכיוון ש־a ו־b שונים, combined אינו אפס. בוחרים את הסיבית הדלוקה הנמוכה ביותר באמצעות combined & -combined. באותה סיבית אחד מהחסרים מכיל 1 והשני 0. עוברים שוב על הטווח ועל הקלט, ובכל אחד משני הצדדים מחשבים XOR רק לערכים השייכים לקבוצה המתאימה. כל ערך קיים מגיע פעמיים לאותה קבוצה ומתבטל. כל חסר שייך לקבוצה אחרת, ולכן בכל קבוצה נשאר בדיוק חסר אחד.\n\nאין צורך ליצור את הקבוצות: תנאי על הסיבית מנתב את הערך לאחד משני משתנים בלבד. אין מערך סימונים, קבוצה, מילון או מיון. הטווח כולל גם אפס; אסור להעתיק בטעות לולאה שמתחילה ב־1.\n\n### דוגמה ואפס כחסר\nעבור n=5 והמערך [6,0,3,1,4], הטווח הוא 0..6 והחסרים 2,5. ה־XOR הכולל הוא 7; הסיבית הנמוכה היא 1. ביטול בקבוצת הזוגיים משאיר 2 ובקבוצת האי־זוגיים 5. חלוקה לזוגי ואי־זוגי היא רק דוגמה: באופן כללי בוחרים סיבית לפי combined, כי שני החסרים יכולים להיות שניהם זוגיים.\n\nאפס הוא ערך חוקי ולא סימון ל״לא נמצא״. למשל [3,1,2] משאיר את 0 ואת 4; בחירת הסיבית 4 מפרידה גם אותם. עבור מערך ריק הטווח הוא 0..1, והתשובה (0,1).\n\n### נכונות ועלות\nה־XOR הראשון מבטל את כל הערכים הקיימים, והסיבית הנבחרת מפרידה בוודאות בין החסרים. אותו ביט משייך כל הופעה של ערך קיים לאותה קבוצה, כך שהביטול נשמר גם במעבר השני. שתי הקבוצות ממצות את הטווח, ולכן שני המשתנים הסופיים הם בדיוק שני החסרים.\n\nמספר קבוע של מעברים נותן O(n) פעולות במודל word-RAM, ו־O(1) מילים נוספות כשהערכים נכנסים למילה. במונחי ביטים נדרשים O(log(n+2)) ביטים למשתנים; ב־Python רוחב הפעולות גדל עם n ואין הבטחת זמן קבוע לכל שלם שרירותי. מספר קבוע של משתנים אינו מספר קבוע של ביטים. לא ניתן להבטיח פתרון על קלט כללי לא ממוין בלי לבדוק לינארית את הנתונים במודל הגישה הזה. הפתרון אינו משנה את הקלט.\n\nהקוד מניח קלט תקין ואינו מוסיף בדיקת ייחודיות בעזרת set, שתפר את מגבלת הזיכרון. לולאות על הטווח אינן מערך עזר. בטיפוסים ברוחב קבוע כדאי להשתמש בטיפוס לא־מסומן ולהגדיר במפורש את פעולת חילוץ הסיבית; אין להסתמך על גלישה מסומנת.\n\n```python\n\"\"\"PREP-088: two omitted values, no auxiliary array, no input mutation.\n\nPromise: values is a repeatable sequence of n distinct integers in 0..n+1.\nExactly two domain values are absent. Validation of that promise is not included.\nCost: O(n) word operations and O(1) auxiliary machine words, not constant bits.\n\"\"\"\nfrom collections.abc import Sequence\n\n\ndef missing_two_zero_based(values: Sequence[int]) -> tuple[int, int]:\n    combined = 0\n    for value in range(len(values) + 2):\n        combined ^= value\n    for value in values:\n        combined ^= value\n    split_bit = combined & -combined\n    first = second = 0\n    for value in range(len(values) + 2):\n        if value & split_bit:\n            first ^= value\n        else:\n            second ^= value\n    for value in values:\n        if value & split_bit:\n            first ^= value\n        else:\n            second ^= value\n    return (first, second) if first < second else (second, first)\n```\n",
+      "en": "### Cancel values already present\nLet a,b be the omissions. XOR every value in 0..n+1 and every array entry. Each present value appears exactly twice and cancels, leaving combined=a XOR b. That alone relates the two unknown values without separating them.\n\n### Separate them by a differing bit\nBecause a and b differ, combined is nonzero. Select its lowest set bit with combined & -combined. One omission has that bit set and the other does not. Scan both domain and input again, accumulating XOR separately for the two bit groups. Every present value enters the same group twice and cancels; each group contains exactly one omission, so its final XOR is that omission.\n\nDo not materialize the groups. A bit test routes each value into one of two scalar accumulators. No marking array, set, dictionary or sorting is used. Include zero in the domain loops rather than copying a loop beginning at one.\n\n### Example and a missing zero\nFor n=5 and [6,0,3,1,4], the domain is 0..6 and the omissions are 2,5. Combined XOR is 7 and its lowest set bit is 1. Cancellation in the even group leaves 2 and in the odd group leaves 5. This particular example uses parity; in general choose the bit from combined, since both omissions can be even.\n\nZero is a valid answer, not a not-found marker. For [3,1,2], omissions 0 and 4 are separated by bit 4. An empty input has domain 0..1 and answer (0,1).\n\n### Correctness and cost\nThe first XOR removes all present values and the selected bit necessarily separates the omissions. The same bit assigns both occurrences of every present value to the same group, preserving cancellation in the second pass. The groups partition the domain, so the final scalars are exactly the two omissions.\n\nA constant number of scans costs O(n) word-RAM operations and O(1) auxiliary words when values fit a word. In bits, scalars require O(log(n+2)) storage; Python integer-operation costs grow with width. Constant many variables do not mean constant many bits. Reading linearly many entries is necessary in the worst case for arbitrary unsorted promised inputs in this access model. The input is unchanged.\n\nThe code assumes valid input and does not add a uniqueness set that would violate the space constraint. Iterating a range does not allocate an auxiliary array. In a fixed-width implementation, prefer an unsigned type and explicitly defined low-bit extraction rather than signed-overflow assumptions.\n\n```python\n\"\"\"PREP-088: two omitted values, no auxiliary array, no input mutation.\n\nPromise: values is a repeatable sequence of n distinct integers in 0..n+1.\nExactly two domain values are absent. Validation of that promise is not included.\nCost: O(n) word operations and O(1) auxiliary machine words, not constant bits.\n\"\"\"\nfrom collections.abc import Sequence\n\n\ndef missing_two_zero_based(values: Sequence[int]) -> tuple[int, int]:\n    combined = 0\n    for value in range(len(values) + 2):\n        combined ^= value\n    for value in values:\n        combined ^= value\n    split_bit = combined & -combined\n    first = second = 0\n    for value in range(len(values) + 2):\n        if value & split_bit:\n            first ^= value\n        else:\n            second ^= value\n    for value in values:\n        if value & split_bit:\n            first ^= value\n        else:\n            second ^= value\n    return (first, second) if first < second else (second, first)\n```\n"
+    }
   }
 }

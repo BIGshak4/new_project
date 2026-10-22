@@ -298,3 +298,10 @@ Q(next)=Q XOR A: zero holds, one toggles, and an arbitrary sequence accumulates 
 - [Code](../solutions/prep_074_xor_feedback_dff.sv)
 - [Verification](../checks/check_prep_074.py)
 - [Evidence](../checks/prep-074-verification.json)
+
+
+## מקורות נוספים — 22.10.2026
+
+- [דיווח נוסף](../sources/prep-074-divider-2026-10-22.png): This is exactly the A=1 toggle case already explicitly solved and illustrated in PREP-074, including fQ=fclk/2 and timing assumptions. No new divide-by-two question or change to the pending review state is introduced.
+
+הנוסח, הרמזים, הפתרון ומצב הביקורת הקיימים נשמרו. שיוכי חברות מדווחים מהמקור ולא אומתו עצמאית.
