@@ -9,7 +9,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 ---
 
-## Harel's front-end queue (updated 2026-10-18, in the order Shaked wants them; the short list with the bracket fix spelled out is `docs/harel-todo-2026-10-18.md`)
+## Harel's front-end queue (updated 2026-10-22, in the order Shaked wants them; the short list with the bracket fix spelled out is `docs/harel-todo-2026-10-18.md`)
 
 The backend side of every item below is live on Render. Each one is a screen change in `apps/web`; the backend is
 not touched again for them. When an item is done, remove its entry from `PENDING_IN_CLIENT` or
@@ -33,6 +33,8 @@ not touched again for them. When an item is done, remove its entry from `PENDING
 | 15 | **"No XP: the answer doesn't address the question"** (2026-10-18) | When `submission.related === false`, show the sentence "The answer doesn't address the question, so it earns no XP" / "התשובה לא עוסקת בשאלה, ולכן אין עליה נקודות" where the XP chip would be, and no XP animation. The band and feedback render as usual. Same for `InterviewTurn.related` in the interview report. | `Submission.related?: boolean`, `InterviewTurn.related?: boolean` (default true); `flags` includes `"off_topic"` | §5zo |
 | 16 | **Brackets around Latin terms in Hebrew text** (Shaked saw it on the live questions, 2026-10-18) | `components/bidi-text.tsx` splits each Latin run into a `<bdi dir="ltr">` island, but the regex starts the island at the first letter and lets it end on `)`. So `בלי סימן (unsigned) של` becomes `(` in the Hebrew run + `unsigned)` in the island: the two brackets sit in different directional runs and one of them is drawn mirrored on the wrong side. Same for `[7:0]`, `(A OR B)`, `(0..255)`, `(X) ו-(Y)`. Fix (keep the regex, balance the edges after the split): for each island, (1) while it ends with `)` or `]` whose opener is not inside the island, move that closer back to the following text; (2) if the character just before the island is `(` or `[` and the matching closer is inside the island, pull the opener into the island. Tested on: `(unsigned)`, `[7:0]`, `(A OR B)`, `f(x) = 1`, `(0..255)`, `(X) ו-(Y)`, `רמה 3 (מתוך 5)`, `NAND(A, B)`, `a, b ו-c`, `A→B`, `(ראו סעיף 2)`, `Y = (A & B) \| C`, `[3:0] ו-[7:4] (שני ניבלים)` — an enclosing pair stays together in the Hebrew run, a function's own brackets stay inside the island. The worked script with these samples is with Shaked (`bidi_test2.mjs`). Affects every `BidiText` use: titles, prompts, choices, messages, plan reasons. | No backend change; the texts in the bank are correct (balanced brackets throughout) | — |
 | 17 | **The payment screen, at the start of the flow** (Shaked, 2026-10-20; backend done, not mandatory yet) | After sign-in and before Today, when `billing.status === "free"`: the plans from `GET /v1/me/billing?language=` as cards (`label`, `description`, the amount formatted from `amount_agorot` with `Intl` — ₪59.00 / ₪119.00 — `interval`, and `daily_questions` as "up to 30 / 50 questions a day"), a "Pay" button per plan that calls `POST /v1/me/billing/checkout {plan, language}` and navigates to the returned `url`, and, while `free_option_visible`, a visible **"Continue for free for now" / "להמשיך בחינם בינתיים"** that goes to Today. Remember the choice in `localStorage` so the screen shows once per device, not on every visit; show it again only if `required` becomes true. When `configured === false` (no Stripe keys yet), the Pay buttons are disabled with "Payment is not set up yet". Coming back from Stripe (`?billing=success` / `?billing=cancel` on the site): show a one-line confirmation and reload `GET /v1/me/billing`. In the profile: one line with `status` in words (free / active / past due / cancelled), `period_end`, and a "Manage payment" button → `POST /v1/me/billing/portal` → `url`, shown only when `status !== "free"`. Handle **402 `payment_required`** on any practice/interview call by opening the payment screen (only happens once Shaked flips the switch). | `billing: (language) => call<Billing>("GET", "/v1/me/billing" + q({language}))`, `checkout: (plan, language) => call<{url: string}>("POST", "/v1/me/billing/checkout", {plan, language})`, `portal: () => call<{url: string}>("POST", "/v1/me/billing/portal")`; types `Billing`, `BillingPlan` from the OpenAPI document; add `"payment_required"` to `ApiErrorCode`; then remove the three routes from `PENDING_ROUTES_IN_CLIENT` and the code from the contract test's pending set | §5zr |
+| 18 | **Coins next to XP, and the shop** (Shaked, 2026-10-22; backend done, ledger migration awaiting approval) | A coin count next to the XP wherever XP shows (Today header, progress), from `GET /v1/me/coins?language=` → `balance`; on the feedback card, "+10 coins" / "+20 coins" from `submission.coins_earned` next to the XP line (null = say nothing; 0 = say nothing); in the interview results, `coins_earned` per turn the same way. A small **shop** sheet from the coin count: each `shop[]` item as a row (`label`, `description`, `price`, greyed when `affordable` is false) with a "Buy" button → `POST /v1/me/coins/buy {item}`; on 402 `usage_limit` show the message (it says how many are missing); after a buy, the new `daily_limit` is the day's cap (the Today counter should use it). Under the balance, the rule in one line from `rules` ("A strong answer earns 10 coins, 20 on a hard question; you started with 50") and, always visible, **"Coins have no money value and cannot be bought or cashed out"** (`no_monetary_value`). While `enabled` is false, hide the shop and show the count as "—" (the ledger is not on yet). | `coins: (language) => call<Wallet>("GET", "/v1/me/coins" + q({language}))`, `buyItem: (item, language) => call<Wallet>("POST", "/v1/me/coins/buy" + q({language}), {item})`; types `Wallet`, `ShopItem`, `CoinMovement`, `CoinRules` from the OpenAPI document; `coins_earned?: number \| null` on `SubmissionView` and `InterviewTurnView`; then remove the two routes and the two fields from the contract test's pending sets | §5zt |
+| 19 | **Duels: invite by link, three minutes, five coins each** (Shaked, 2026-10-22; backend done, duel migration awaiting approval) | A "Duel" entry (from the coin count or Today): `GET /v1/duels` lists mine (`status`, `role`, `outcome`, `won`, `coins_delta`, `rules`). "Challenge a friend" → `POST /v1/duels {language}` → an invite card with the `share_url` to copy / share (the backend builds `/duel/<code>` from `SITE_URL`; **Harel chooses the real route and tells me if it should differ**) and a "Cancel" → `POST /v1/duels/{id}/cancel`. Opening `/duel/<code>` signed in → "Accept for 5 coins" → `POST /v1/duels/accept {code}`; the answer is the running duel: show `question.prompt` (markdown, code block inside), a countdown from `seconds_left` (recompute from `deadline` locally), one answer box → `POST /v1/duels/{id}/answer {text}`; after sending, "Judged: STRONG" from `me.band` and "waiting for your opponent" while `opponent.answered` is false; poll `GET /v1/duels/{id}` every few seconds until `status === "settled"`, then the result: `won` true / false / null (draw), both bands and `summary` lines, `coins_delta`. Words for `outcome`: challenger / opponent → "you won" / "you lost"; draw → "a draw, both stakes returned"; forfeit_* → "the other side never answered" / "you never answered"; no_show → "nobody answered, stakes returned"; expired / cancelled → "invite withdrawn, stake returned". Errors: 402 `usage_limit` (not enough coins), 429 `usage_limit` (cooldown or today's winnings; show the message), 409 (own invite, duel not open, already answered, clock ran out), 404 (bad code). The challenger's own open invite should poll `GET /v1/duels/{id}` so it switches to the running duel when someone accepts. No XP, no profile change: say so under the result. | `duels: () => call<DuelList>("GET", "/v1/duels")`, `createDuel: (language) => call<Duel>("POST", "/v1/duels", {language})`, `acceptDuel: (code) => call<Duel>("POST", "/v1/duels/accept", {code})`, `duel: (id) => call<Duel>("GET", \`/v1/duels/${id}\`)`, `answerDuel: (id, text) => call<Duel>("POST", \`/v1/duels/${id}/answer\`, {text})`, `cancelDuel: (id) => call<Duel>("POST", \`/v1/duels/${id}/cancel\`)`; types `DuelView`→`Duel`, `DuelListView`, `DuelSideView`, `DuelQuestionView` from the OpenAPI document; then remove the six routes from `PENDING_ROUTES_IN_CLIENT` | §5zt |
 | 8 | **Voice input, browser only** (if Shaked's dictation test is good) | A microphone button on the answer box using the browser's speech recognition in the practice language; the words land in the box and the user edits and sends as usual. Chrome and Edge only; nothing is recorded or stored. | No backend change. If accuracy on Hebrew technical terms is poor, the server-side option is a separate plan. | — |
 
 Not for the screens: a skipped follow-up earns no grade or XP; the follow-ups themselves now ask for understanding
@@ -1288,6 +1290,98 @@ manual grant that the entitlement check also accepts).
 6. Still open from before: `HEALTH_KEY` on Render, the proxy peer in the log, the dashboard actions (DB password,
    2FA, leaked-password protection), Harel's queue items 7–17.
 
+## 5zt. Coins and duels, backend only (2026-10-22, Shaked: "not just XP but coins that the user can get by performing a strong answer … play against each other on those coins, 5 each time")
+
+**What was decided (Shaked, the night of 21–22 October).** Coins are a second currency next to XP, and XP stays
+exactly as it is ("I don't want to take the XP off yet"). Coins are worth less than a shekel each ("you can give
+more but they won't be worth 1 shekel"): a STRONG main answer earns **10**, a STRONG answer at difficulty 5 earns
+**20**, a STRONG interview turn earns **10**; follow-ups, a revealed reference, two or more hints and an unrelated
+answer earn nothing (the same lines the XP rule draws). Every user starts with a **gift of 50** ("each user starts
+with a specific amount of coins as a gift"), written once on the first read of the wallet. The shop's first item is
+**ten more questions today for 100 coins**, a top-up on the plan's daily cap that is gone tomorrow. A **duel** costs
+**5 coins** from each player; the winner takes the ten. There is **no daily duel cap yet** ("not sure about the daily
+cap yet"): instead a ten-minute cooldown per pair of players and a ceiling of 100 coins of duel winnings a day; the
+count cap exists as a switch (`duel.daily_cap`, null). **Coins have no monetary value, cannot be bought and cannot
+be cashed out** — that line is in the API (`no_monetary_value: true` on every wallet) and is what keeps a duel a
+game rather than gambling; it must stay on the screen too. Every number lives in `seeds/coins.json`.
+
+**The ledger** (`app/repo/coins.py`, migration `20261022090000_coins.sql`, **dry run OK, not applied**). One row
+per movement: `gift`, `earn`, `spend`, `stake`, `payout`, `refund`, `forfeit`; the balance is the sum. Each row
+carries a `reference` unique per user (`answer:<attempt>:<revision>`, `turn:<session>:<index>`, `gift`,
+`duel:<id>:stake:<user>`, `duel:<id>:payout`), so a replayed submission, a re-saved interview, or two reads of an
+overdue duel never pay twice. Until the migration is applied the table is absent: the wallet reads zero with
+`enabled: false`, buying answers 503, no practice answer promises coins (`coins_earned` is null, not 10), and
+nothing else in the API changes. The browser may read its own rows (RLS); only the API writes.
+
+**Earning** is wired where the program ticks: `PracticeService._persist_outcome` awards inside the same transaction
+as the attempt save (`CoinsService.award_for_answer`), and `InterviewService._persist` awards every turn it saves
+with a band (`award_for_turn`), idempotent either way. `SubmissionView.coins_earned` and
+`InterviewTurnView.coins_earned` are the pure rule (`coins_for_answer`, `coins_for_turn`) applied to what the
+submission already records, like `xp_earned`; the interview's is revealed with the results. The daily limit is now
+the plan's limit **plus the shop's top-ups of today** (`runtime.daily_limit`), and `GET /v1/me/coins` returns that
+sum as `daily_limit`.
+
+**Duels** (`app/repo/duels.py`, `app/services/duels.py`, `app/api/v1/duels.py`, migration
+`20261022100000_duels.sql`, **dry run OK, not applied**). The challenger opens a duel (`POST /v1/duels`): 5 coins
+leave the wallet as a stake and the answer carries an invite `code` and a `share_path` (`/duel/<code>`; the route
+in the web app is Harel's to choose, the backend only builds the link from `SITE_URL`). The opponent accepts by
+code (`POST /v1/duels/accept`): 5 more coins are staked, **a question neither player has met in practice (last 30
+days) or in a duel** is chosen, and a **three-minute clock** starts. Each player answers once
+(`POST /v1/duels/{id}/answer`); the answer is judged by the same evaluator and band classifier as practice (one
+model call, outside any transaction; a judge failure resets the player to try again while the clock runs), and
+nothing reaches the skill profile, the metrics or XP. When both answers are in: the better band wins (STRONG >
+PARTIAL > WEAK; an unrelated answer counts as WEAK), the same band goes to the faster answer, the same second is a
+draw and both stakes come back. A player who never answers forfeits (`forfeit_challenger` / `forfeit_opponent`);
+when nobody answers both are refunded (`no_show`); an invite nobody takes for a day is cancelled and refunded
+(`expired`); the challenger can withdraw an open invite (`POST /v1/duels/{id}/cancel`). Overdue duels are settled
+by the next read of either player (`GET /v1/duels`, `GET /v1/duels/{id}`), under a per-duel advisory lock and an
+optimistic `version`, so two answers landing together cannot both settle. Each player sees the question only while
+the duel runs, their own band as soon as it is judged, and the opponent's band only when the duel is settled.
+Guards: not your own invite (409), not enough coins (402 `usage_limit`), the pair cooldown and the daily winnings
+ceiling (429 `usage_limit`, the message says why), at most three open invites per user (409).
+
+**What "short" means today, and a decision for Shaked.** The live bank has no question that estimates itself under
+three minutes and **every live question is difficulty 5**, so a pool of "difficulty three or less" would be empty
+in production. The pool is therefore a *format*: `explain`, `short_answer`, `truth_table` (no code, HDL, waveform or
+construct) — seventeen live questions tonight, more as Harel's short questions reach the bank (his `prep-*` puzzles
+such as the twelve coins or the twenty-five horses are exactly the duel kind; the ones in the backend bank are in
+the pool already). The three-minute clock is a seed value (`duel.clock_seconds`); Shaked may want five for an
+`explain` question. Duels accept study-only questions (`assessment_ready: false`) because the judge scores them the
+same and a duel never touches the profile, which is what that flag protects.
+
+**A second decision for Shaked, found on the way.** Today every live question is study-only, so a live practice
+answer carries `content_review_pending` and earns **zero XP** under the rule from 2026-10-18 — and, since coins
+follow the same rule, **zero coins**. Until Harel's batch is marked assessment-ready, the only coins a live user can
+earn are the gift and duel winnings. If Shaked wants coins (or XP) from study-only questions anyway, it is one line
+in `coins_for_answer` / `_xp_for`; it was not changed tonight because it is a decision about what counts.
+
+**Verification.** ruff clean; `tests/test_coins.py` 14 and `tests/test_duels.py` 17 new tests (rules, gift once
+across two servers, buying and the top-up, yesterday's top-up not counting, the table absent, practice pays once and
+the replay does not, weak and follow-up earn nothing, interview turn pays once through the end's re-save, a whole
+duel over HTTP with two members, tie-break and dead heat, unseen-question choice, no-show, nobody shows, expired
+invite, cancel, every guard, the judge failing, an unrelated answer); route protection and the OpenAPI coverage
+test include the eight new routes; the contract test lists them and the two new fields as pending in the client.
+Full offline suite on the merged tree: **1,434 collected, 1,425 passed, 9 skipped, none failed** (exit 0; the summary line was
+cut by the tail, the counts are from the collection and the skip markers). Both migrations dry-run in a rolled-back transaction against
+production; **neither is applied** — approval needed (both can go in one sitting with the billing one).
+
+**Merged with Harel's night.** Harel's fourteen commits (quick fundamentals to 200 cards with a backend
+`fundamentals` service and three routes, nine more interview questions, solution review attestations) were pulled
+under this work; `main.py`, `runtime.py` and the route list merged by hand, both sides kept. Note for Shaked: these
+commits add Python under `backend/app` (`app/api/v1/fundamentals.py`, `app/services/fundamentals.py`,
+`app/repo/fundamentals.py`) — the first backend code from Harel's side; it is self-contained and its tests pass.
+
+**For Harel (queue items 18 and 19).** The coins line and the shop, then the duel screens — the rows in the queue
+table at the top carry the fields and the calls.
+
+**Morning list for Shaked (2026-10-22).**
+1. Approve the three migrations: billing (`20261020090000_billing.sql`), coins (`20261022090000_coins.sql`),
+   duels (`20261022100000_duels.sql`). All three dry-run OK; nothing works for real until they are applied.
+2. Decide the two questions above: the duel clock (3 or 5 minutes) and whether study-only questions earn XP/coins.
+3. The Anthropic key (§5zs item 1) — still unverified from here.
+4. Still open: Stripe account and keys, confirm ₪59 / ₪119, `plan_tier` vs billing, `HEALTH_KEY`, the dashboard
+   actions, Harel's queue 7–19.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1326,6 +1420,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-22 | Coins next to XP and duels, backend only (§5zt): ledger `coin_ledger` (gift 50, STRONG answer 10 / 20 at difficulty 5, STRONG interview turn 10, idempotent by reference), `GET /v1/me/coins` + `POST /v1/me/coins/buy` (ten more questions today for 100, added to the plan's daily cap), `coins_earned` on submissions and interview turns; duels (`duel` table, six routes: open an invite, accept by code, answer on a three-minute clock judged by the same evaluator, cancel, list, read; better band wins the ten, tie → faster, dead heat → refund, no-show forfeits, overdue duels settled on read; pair cooldown 10 min, winnings ceiling 100/day, `daily_cap` switch off). Coins have no monetary value. Migrations `20261022090000_coins.sql` and `20261022100000_duels.sql` dry-run OK, not applied. 31 new tests; offline 1,425 passed / 9 skipped on the tree merged with Harel's fourteen commits (fundamentals service, nine questions). Queue items 18–19 for Harel. |
 | 2026-10-20 | Paying for the site, not mandatory yet: Stripe Checkout, Regular ₪59 (30 a day) and Premium ₪119 (50 a day) priced at 35 % profit by `scripts/pricing.py`, the plan sets the daily cap, the customer portal, the signature-verified idempotent webhook, `REQUIRE_PAYMENT` switch (off), migration written and dry-run (§5zr) |
 | 2026-10-19 | Night full check (§5zq, `docs/full-check-2026-10-19.md`): five-lens review, eleven fixes (limiter eviction and key, cache invalidation during a load, the gradient's zero weights and strict windows, superseded revisions, the interview's relatedness and 202 replay, `/health` detail behind `HEALTH_KEY`) |
 | 2026-10-18 | Soft skills and the improvement gradient as backend-only data: `app/engine/soft_skills.py`, `PracticeService.soft_skills`, `scripts/soft_skills_report.py`; no route, no screen (§5zp) |

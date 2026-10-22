@@ -70,6 +70,8 @@ class SubmissionView(BaseModel):
     replayed: bool = False
     next_question: NextQuestionView | None = None   # what to practise next, decided from this evaluation
     xp_earned: int | None = None                # XP this scored answer earned (app.engine.xp); None until it is scored
+    coins_earned: int | None = None             # coins this answer earned (STRONG main answer: 10, 20 at difficulty 5;
+                                                # app.services.coins); None until scored or while coins are off
     related: bool = True                        # false: the answer did not address the question at all; it earns no XP
                                                 # (the band and feedback still stand; flag "off_topic"; 2026-10-18)
     # Grade first: the band, summary, key points, check, evidence and XP are final; the card, the tip and the
@@ -343,6 +345,7 @@ class InterviewTurnView(BaseModel):
     action_after: str | None = None             # what the interviewer decided next: ESCALATE, HOLD, HINT, STEP_BACK, ENTER_SKILL, END
     subject_switch: bool = False
     xp_earned: int | None = None                # XP for this turn, revealed with the results (interview turns count x1.5)
+    coins_earned: int | None = None             # coins for this turn (STRONG: 10), revealed with the results
     related: bool = True                        # false: the answer did not address the question; the turn earns no XP
 
 

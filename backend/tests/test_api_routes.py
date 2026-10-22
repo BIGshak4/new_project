@@ -451,6 +451,12 @@ def every_route():
         ("GET", "/v1/fundamentals/progress", None),
         ("PUT", "/v1/fundamentals/progress/quick-sw-01", {"content_revision": "a" * 64}),
         ("DELETE", "/v1/fundamentals/progress/quick-sw-01", None),
+        # coins and the shop (2026-10-22)
+        ("GET", "/v1/me/coins", None), ("POST", "/v1/me/coins/buy", {"item": "extra_questions_10"}),
+        # duels (2026-10-22)
+        ("GET", "/v1/duels", None), ("POST", "/v1/duels", {"language": "he"}), ("POST", "/v1/duels/accept", {"code": "abcd2345"}),
+        ("GET", f"/v1/duels/{aid}", None), ("POST", f"/v1/duels/{aid}/answer", {"text": "x"}),
+        ("POST", f"/v1/duels/{aid}/cancel", None),
     ]
 
 
@@ -480,6 +486,7 @@ class TestEveryRouteIsProtected:
                        .replace("/turns/0/answer", "/turns/{turn_index}/answer")
                        .replace("/v1/fundamentals/progress/quick-sw-01", "/v1/fundamentals/progress/{question_key}"))
                       for m, p in normalized}
+        normalized = {(m, p.replace("/v1/duels/{attempt_id}", "/v1/duels/{duel_id}")) for m, p in normalized}
         assert v1 == normalized, f"routes without a protection test: {v1 - normalized}"
 
     async def test_another_users_attempt_is_404_on_every_route(self, client, user):

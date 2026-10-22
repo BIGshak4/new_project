@@ -77,6 +77,7 @@ from app.schemas.api import (
 )
 from app.schemas.bank import BankQuestion, JobType
 from app.schemas.engine import Archetype, Band, Evaluation, EvidenceStatus, PlanSkill, SkillState
+from app.services.coins import coins_for_answer
 from app.services.store import Store
 
 log = logging.getLogger("app.practice")
@@ -151,6 +152,7 @@ class PracticeService:
         self._user_locks: dict[uuid.UUID, asyncio.Lock] = {}     # one program action at a time per user (rebuild, start, goal)
         # the plan's cap on questions a day, when billing is wired (runtime); else the config's default
         self.daily_limit_for: Callable[[uuid.UUID], Awaitable[int]] | None = None
+        self.coins = None                       # CoinsService: a strong main answer earns coins (Shaked, 2026-10-22)
         self._feedback_tasks: dict[tuple[uuid.UUID, int], asyncio.Task] = {}      # (attempt, revision) -> writing its words
         self._plans: dict[tuple[str, str | None], tuple[dict[str, int], dict[str, float], int, list[PlanSkill]]] = {}
 
@@ -434,7 +436,8 @@ class PracticeService:
             except PracticeError as exc:
                 raise ApiError(exc.code, str(exc)) from exc
             if replay is not None:
-                return (self._submission_view(replay.submission, replay, xp_earned=self._xp_for(attempt, replay.submission)),
+                return (self._submission_view(replay.submission, replay, xp_earned=self._xp_for(attempt, replay.submission),
+                                                                         coins_earned=self._coins_for(attempt, replay.submission)),
                         self._view(attempt, stored, loaded, language))
 
             if submission.visual and submission.visual.images:
@@ -460,7 +463,8 @@ class PracticeService:
                                                             follow_up=follow_up_turn is not None)
                 except PracticeError as exc:
                     raise ApiError(exc.code, str(exc)) from exc
-                return (self._submission_view(existing, replay, xp_earned=self._xp_for(attempt, existing)),
+                return (self._submission_view(existing, replay, xp_earned=self._xp_for(attempt, existing),
+                                                                coins_earned=self._coins_for(attempt, existing)),
                         self._view(attempt, stored, loaded, language))
 
             # 2. evaluate: model calls happen here, with no transaction open
@@ -482,7 +486,8 @@ class PracticeService:
                 words = None                              # belong to its evaluation, not to ours
             self._start_feedback(user_id, attempt_id, outcome.submission, words)
             return (self._submission_view(outcome.submission, outcome, attempt.next_question,
-                                          xp_earned=self._xp_for(attempt, outcome.submission)),
+                                          xp_earned=self._xp_for(attempt, outcome.submission),
+                                          coins_earned=self._coins_for(attempt, outcome.submission)),
                     self._view(attempt, stored, loaded, language))
 
     @staticmethod
@@ -516,7 +521,8 @@ class PracticeService:
                 await self.finish_feedback(user_id, attempt_id, wordless.revision)
             attempt, stored, loaded, _ = await self._load(user_id, attempt_id)
             sub = next(s for s in attempt.submissions if s.revision == wordless.revision)
-            return (self._submission_view(sub, None, attempt.next_question, xp_earned=self._xp_for(attempt, sub)),
+            return (self._submission_view(sub, None, attempt.next_question, xp_earned=self._xp_for(attempt, sub),
+                                                                            coins_earned=self._coins_for(attempt, sub)),
                     self._view(attempt, stored, loaded, stored.row["practice_language"]))
         async with self._lock(attempt_id):
             attempt, stored, loaded, profile = await self._load(user_id, attempt_id)
@@ -537,7 +543,8 @@ class PracticeService:
                 words = None                              # belong to its evaluation, not to ours
             self._start_feedback(user_id, attempt_id, outcome.submission, words)
             return (self._submission_view(outcome.submission, outcome, attempt.next_question,
-                                          xp_earned=self._xp_for(attempt, outcome.submission)),
+                                          xp_earned=self._xp_for(attempt, outcome.submission),
+                                          coins_earned=self._coins_for(attempt, outcome.submission)),
                     self._view(attempt, stored, loaded, stored.row["practice_language"]))
 
     async def skip_follow_up(self, user_id: uuid.UUID, attempt_id: uuid.UUID, turn: int) -> AttemptView:
@@ -604,6 +611,13 @@ class PracticeService:
                         await self._complete_program_item(tx, user_id, attempt_id=attempt.attempt_id_uuid,
                                                           skills=[primary, *(link.skill for link in attempt.question.skills
                                                                              if link.skill != primary)])
+                    if self.coins is not None and (self._coins_for(attempt, outcome.submission) or 0) > 0:
+                        sub = outcome.submission            # idempotent by (attempt, revision): a replay never pays twice
+                        await self.coins.award_for_answer(tx, user_id=user_id, attempt_id=attempt.attempt_id_uuid,
+                                                          revision=sub.revision, band=sub.band.value,
+                                                          difficulty=attempt.question.difficulty, hints_seen=sub.hints_seen,
+                                                          reference_seen=sub.reference_seen,
+                                                          related=scores.OFF_TOPIC_FLAG not in sub.flags, turn=sub.turn)
                 return attempt, stored, loaded, outcome
             except StaleProfile as exc:
                 log.warning("profile moved during attempt %s (%s): re-applying the scores", attempt.attempt_id, exc)
@@ -1570,9 +1584,22 @@ class PracticeService:
                             reference_seen=submission.reference_seen, follow_up=submission.turn > 0,
                             related=scores.OFF_TOPIC_FLAG not in submission.flags)
 
+    def _coins_for(self, attempt: PracticeAttempt, submission) -> int | None:
+        """The coins a scored main answer earned, by the pure rule (app.services.coins). None until scored, or when
+        this server has no ledger (the migration is pending: nothing is credited, so nothing is promised)."""
+        if self.coins is None or self.coins.known_enabled is False:
+            return None
+        if submission.status != EvaluationStatus.DONE or submission.band is None:
+            return None
+        if "content_review_pending" in submission.flags:
+            return 0
+        return coins_for_answer(self.coins.rules, band=submission.band.value, difficulty=attempt.question.difficulty,
+                                hints_seen=submission.hints_seen, reference_seen=submission.reference_seen,
+                                related=scores.OFF_TOPIC_FLAG not in submission.flags, turn=submission.turn)
+
     @staticmethod
     def _submission_view(submission, outcome: PracticeOutcome | None = None, next_question: dict | None = None,
-                         *, xp_earned: int | None = None) -> SubmissionView:
+                         *, xp_earned: int | None = None, coins_earned: int | None = None) -> SubmissionView:
         evaluation = Evaluation.model_validate(submission.evaluation) if submission.evaluation else None
         weight = outcome.evidence_weight if outcome is not None else submission.evidence_weight
         check = None
@@ -1596,7 +1623,7 @@ class PracticeService:
             hints_seen=submission.hints_seen, reference_seen=submission.reference_seen,
             evidence="none" if submission.status != EvaluationStatus.DONE or weight <= 0 else "full" if weight >= 1 else "reduced",
             flags=list(submission.flags), replayed=bool(outcome.replayed) if outcome is not None else False,
-            next_question=PracticeService._next_view(next_question), xp_earned=xp_earned,
+            next_question=PracticeService._next_view(next_question), xp_earned=xp_earned, coins_earned=coins_earned,
             related=scores.OFF_TOPIC_FLAG not in submission.flags,
             feedback_pending=submission.feedback_pending)
 
@@ -1608,7 +1635,8 @@ class PracticeService:
             sub = by_revision.get(turn.get("submission_revision")) if turn.get("submission_revision") else None
             follow_ups.append(FollowUpView(turn=turn["turn"], question=turn["question"] or "", action=turn.get("action", ""),
                                            created_at=turn.get("created_at", ""),
-                                           submission=self._submission_view(sub, xp_earned=self._xp_for(attempt, sub)) if sub else None,
+                                           submission=self._submission_view(sub, xp_earned=self._xp_for(attempt, sub),
+                                                                                 coins_earned=self._coins_for(attempt, sub)) if sub else None,
                                            question_pending=bool(turn.get("wording_pending")),
                                            skipped=bool(turn.get("skipped_at"))))
         pending = attempt.pending_follow_up
@@ -1629,7 +1657,8 @@ class PracticeService:
             hints=[HintView(level=level, text=attempt.hint_at(level)) for level in range(1, attempt.hints_used + 1)],
             hints_remaining=max(0, min(3, len(loaded.question.text(language).hints)) - attempt.hints_used) if main is None else 0,
             reference=attempt.question.text(language).reference_solution if attempt.reference_revealed else None,
-            submission=self._submission_view(main, xp_earned=self._xp_for(attempt, main)) if main else None,
+            submission=self._submission_view(main, xp_earned=self._xp_for(attempt, main),
+                                                   coins_earned=self._coins_for(attempt, main)) if main else None,
             follow_ups=follow_ups, pending_follow_up=pending_view,
             can_submit=main is None or main.status == EvaluationStatus.FAILED,
             can_retry=latest is not None and latest.status == EvaluationStatus.FAILED and "superseded" not in latest.flags,

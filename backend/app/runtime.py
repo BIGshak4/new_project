@@ -13,7 +13,10 @@ from app.engine.catalog import Catalog, load_catalog
 from app.engine.providers import Provider, build_provider
 from app.repo.fundamentals import DbFundamentalsRepository, MemoryFundamentalsRepository
 from app.services.billing import BillingConfig, BillingService, FakeStripe, HttpStripe, load_plans
+from app.services.coins import CoinsService
+from app.services.coins import load_rules as load_coin_rules
 from app.services.demo_provider import DemoProvider
+from app.services.duels import DuelService
 from app.services.fundamentals import FundamentalsService, load_fundamentals_catalog
 from app.services.interview_service import InterviewConfig, InterviewService
 from app.services.memory_store import InMemoryStore
@@ -30,6 +33,8 @@ class Runtime:
     practice: PracticeService
     store_kind: str                                  # database | memory
     billing: BillingService | None = None
+    coins: CoinsService | None = None                # the coin ledger, the shop (and the duels' escrow)
+    duels: DuelService | None = None                 # coin duels between two users
     image_fetcher: StorageImageFetcher | None = None  # set when answer photos can be read for the evaluator
     interview: InterviewService | None = None        # mock interviews
     fundamentals: FundamentalsService | None = None  # self-reported short-card history, no grading
@@ -85,18 +90,27 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                                question_image_fetcher=fetch_question_images)
     # the plan decides how many questions a day (regular 30, premium 50; a free user keeps the default while
     # payment is optional; Shaked, 2026-10-20)
-    practice.daily_limit_for = lambda user_id: billing.daily_limit(user_id, default=settings.daily_attempt_limit)
+    coins = CoinsService(store, load_coin_rules(settings.seeds_dir / "coins.json"))
+    practice.coins = coins
+
+    async def daily_limit(user_id):
+        base = await billing.daily_limit(user_id, default=settings.daily_attempt_limit)
+        return base + await coins.extra_questions_today(user_id)      # the shop's top-up (Shaked, 2026-10-22)
+
+    practice.daily_limit_for = daily_limit
 
     async def interview_finished(tx, user_id, session_id):
         await practice._complete_program_item(tx, user_id, session_id=session_id)
 
     return Runtime(catalog=catalog, provider=provider, store=store, practice=practice, store_kind=kind,
-                   image_fetcher=fetcher, billing=billing,
+                   image_fetcher=fetcher, billing=billing, coins=coins,
+                   duels=DuelService(store, catalog, provider, coins, reviewed_only=settings.suggest_reviewed_only,
+                                     site_url=settings.site_url),
                    fundamentals=FundamentalsService(
                        DbFundamentalsRepository() if kind == "database" else MemoryFundamentalsRepository(),
                        load_fundamentals_catalog(settings.seeds_dir / "fundamentals_catalog.json")),
                    interview=InterviewService(store, catalog, provider, interview_config, image_fetcher=fetcher,
-                                              on_finished=interview_finished))
+                                              on_finished=interview_finished, coins=coins))
 
 
 def make_image_fetcher(settings: Settings) -> StorageImageFetcher | None:

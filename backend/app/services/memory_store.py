@@ -47,6 +47,10 @@ class InMemoryStore:
         self.answer_images: dict[str, dict] = {}                 # storage fixture metadata
         self.subscriptions: dict[uuid.UUID, Subscription] = {}     # paid access per user (billing)
         self.billing_events: dict[str, dict] = {}                  # Stripe event id -> summary
+        self.coin_ledger: list[dict] = []                          # {user_id, delta, kind, reference, item, duel_id, meta, created_at}
+        self.coins_enabled = True                                  # False imitates a database without the table
+        self.duels: dict[uuid.UUID, dict] = {}                     # duel id -> the row as a dict (app.repo.duels.Duel)
+        self.duels_enabled = True
         self.failures: set[str] = set()                           # names of operations that should raise (tests)
         self.fail_once: set[str] = set()                          # ... only the next time
         self._commits = 0
@@ -62,7 +66,7 @@ class InMemoryStore:
         # made every action slower as the store grew)
         snapshot = (dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips),
                     dict(self.sessions), dict(self.goals), list(self.sightings), dict(self.plans), dict(self.plan_links),
-                    list(self.reports))
+                    list(self.reports), list(self.coin_ledger), dict(self.duels))
         commits_before = self._commits
         tx = _MemoryTx(self)
         try:
@@ -70,7 +74,7 @@ class InMemoryStore:
         except BaseException:
             if self._commits == commits_before:
                 (self.attempts, self.profiles, self.metrics, self.usage, self.tips, self.sessions, self.goals,
-                 self.sightings, self.plans, self.plan_links, self.reports) = snapshot
+                 self.sightings, self.plans, self.plan_links, self.reports, self.coin_ledger, self.duels) = snapshot
             raise
         else:
             self._commits += 1
@@ -255,6 +259,89 @@ class _MemoryTx:
             return False
         self.s.billing_events[event_id] = {"kind": kind, "user_id": user_id, "summary": summary}
         return True
+
+    async def coins_available(self):
+        return self.s.coins_enabled
+
+    async def coin_balance(self, user_id):
+        return sum(r["delta"] for r in self.s.coin_ledger if r["user_id"] == user_id)
+
+    async def coin_movements(self, user_id, *, limit=20):
+        from app.repo.coins import Movement
+        rows = [r for r in self.s.coin_ledger if r["user_id"] == user_id][-limit:]
+        return [Movement(delta=r["delta"], kind=r["kind"], reference=r["reference"], item=r["item"], duel_id=r["duel_id"],
+                         meta=dict(r["meta"]), created_at=r["created_at"]) for r in reversed(rows)]
+
+    async def coin_add(self, *, user_id, delta, kind, reference, item=None, duel_id=None, meta=None):
+        from app.repo.coins import CoinsUnavailable
+        if not self.s.coins_enabled:
+            raise CoinsUnavailable("coins are not enabled on this database yet")
+        if "coin_add" in self.s.failures or "coin_add" in self.s.fail_once:
+            self.s.fail_once.discard("coin_add")
+            raise RuntimeError("injected coin_add failure")
+        if reference is not None and any(r["user_id"] == user_id and r["reference"] == reference for r in self.s.coin_ledger):
+            return False
+        self.s.coin_ledger.append({"user_id": user_id, "delta": int(delta), "kind": kind, "reference": reference, "item": item,
+                                   "duel_id": duel_id, "meta": dict(meta or {}), "created_at": datetime.now(UTC)})
+        return True
+
+    async def coin_sum_since(self, user_id, *, kinds, since, meta_key=None):
+        total = 0
+        for r in self.s.coin_ledger:
+            if r["user_id"] != user_id or r["kind"] not in kinds or r["created_at"] < since:
+                continue
+            total += int(r["meta"].get(meta_key) or 0) if meta_key else r["delta"]
+        return total
+
+    async def duels_available(self):
+        return self.s.duels_enabled
+
+    def _duel(self, row):
+        from app.repo.duels import Duel
+        return Duel(**{**row, "players": copy.deepcopy(row["players"]), "meta": dict(row["meta"])})
+
+    async def create_duel(self, duel):
+        from app.repo.duels import DuelsUnavailable
+        if not self.s.duels_enabled:
+            raise DuelsUnavailable("duels are not enabled on this database yet")
+        if any(d["code"] == duel.code for d in self.s.duels.values()):
+            raise ValueError("duplicate duel code")
+        self.s.duels[duel.id] = copy.deepcopy(duel.as_row())
+
+    async def load_duel(self, duel_id):
+        row = self.s.duels.get(duel_id)
+        return self._duel(row) if row else None
+
+    async def duel_by_code(self, code):
+        return next((self._duel(d) for d in self.s.duels.values() if d["code"] == code), None)
+
+    async def save_duel(self, duel):
+        from app.repo.duels import StaleDuel
+        current = self.s.duels.get(duel.id)
+        if current is None or current["version"] != duel.version:
+            raise StaleDuel(f"duel {duel.id} changed meanwhile")
+        duel.version += 1
+        self.s.duels[duel.id] = copy.deepcopy(duel.as_row())
+
+    async def list_duels(self, user_id, *, limit=20):
+        rows = [d for d in self.s.duels.values() if user_id in (d["challenger_id"], d["opponent_id"])]
+        rows.sort(key=lambda d: d["created_at"], reverse=True)
+        return [self._duel(d) for d in rows[:limit]]
+
+    async def last_duel_between(self, a, b):
+        stamps = [d["accepted_at"] for d in self.s.duels.values() if d["accepted_at"] is not None
+                  and {d["challenger_id"], d["opponent_id"]} == {a, b}]
+        return max(stamps) if stamps else None
+
+    async def duels_accepted_today(self, user_id):
+        now = datetime.now(UTC)
+        start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        return sum(1 for d in self.s.duels.values() if user_id in (d["challenger_id"], d["opponent_id"])
+                   and d["accepted_at"] is not None and d["accepted_at"] >= start)
+
+    async def duel_question_keys(self, user_id):
+        return {d["question_key"] for d in self.s.duels.values()
+                if user_id in (d["challenger_id"], d["opponent_id"]) and d["question_key"]}
 
     async def soft_skill_evidence(self, user_id, *, days=180):
         since = datetime.now(UTC) - timedelta(days=days)

@@ -26,6 +26,8 @@ from app import db
 from app.repo import (
     attempts,
     billing,
+    coins,
+    duels,
     events,
     plans,
     profiles,
@@ -37,6 +39,8 @@ from app.repo import (
 )
 from app.repo.attempts import DuplicateSubmissionKey, StoredAttempt
 from app.repo.billing import Subscription
+from app.repo.coins import Movement
+from app.repo.duels import Duel
 from app.repo.plans import StoredPlan
 from app.repo.profiles import LoadedProfile, StaleProfile
 from app.repo.questions import LoadedQuestion, QuestionSummary
@@ -72,6 +76,24 @@ class Tx(Protocol):
     async def subscription_by_customer(self, customer_id: str) -> Subscription | None: ...
     async def save_subscription(self, subscription: Subscription) -> None: ...
     async def record_billing_event(self, *, event_id: str, kind: str, user_id: uuid.UUID | None, summary: dict) -> bool: ...
+    # coins: a ledger (app.repo.coins); absent table -> available() is False, reads are 0, writes refuse
+    async def coins_available(self) -> bool: ...
+    async def coin_balance(self, user_id: uuid.UUID) -> int: ...
+    async def coin_movements(self, user_id: uuid.UUID, *, limit: int = 20) -> list[Movement]: ...
+    async def coin_add(self, *, user_id: uuid.UUID, delta: int, kind: str, reference: str | None, item: str | None = None,
+                       duel_id: uuid.UUID | None = None, meta: dict | None = None) -> bool: ...
+    async def coin_sum_since(self, user_id: uuid.UUID, *, kinds: tuple[str, ...], since: datetime,
+                             meta_key: str | None = None) -> int: ...
+    # duels (app.repo.duels): one row per duel, optimistic version
+    async def duels_available(self) -> bool: ...
+    async def create_duel(self, duel: Duel) -> None: ...
+    async def load_duel(self, duel_id: uuid.UUID) -> Duel | None: ...
+    async def duel_by_code(self, code: str) -> Duel | None: ...
+    async def save_duel(self, duel: Duel) -> None: ...
+    async def list_duels(self, user_id: uuid.UUID, *, limit: int = 20) -> list[Duel]: ...
+    async def last_duel_between(self, a: uuid.UUID, b: uuid.UUID) -> datetime | None: ...
+    async def duels_accepted_today(self, user_id: uuid.UUID) -> int: ...
+    async def duel_question_keys(self, user_id: uuid.UUID) -> set[str]: ...
     async def scored_interview_turns(self, user_id: uuid.UUID, *, days: int = 365) -> list[dict]: ...
     # the saved program
     async def load_active_plan(self, user_id: uuid.UUID) -> StoredPlan | None: ...
@@ -196,6 +218,49 @@ class DbTx:
 
     async def record_billing_event(self, *, event_id, kind, user_id, summary):
         return await billing.record_event(self.connection, event_id=event_id, kind=kind, user_id=user_id, summary=summary)
+
+    async def coins_available(self):
+        return await coins.available()
+
+    async def coin_balance(self, user_id):
+        return await coins.balance(self.connection, user_id)
+
+    async def coin_movements(self, user_id, *, limit=20):
+        return await coins.movements(self.connection, user_id, limit=limit)
+
+    async def coin_add(self, *, user_id, delta, kind, reference, item=None, duel_id=None, meta=None):
+        return await coins.add(self.connection, user_id=user_id, delta=delta, kind=kind, reference=reference, item=item,
+                               duel_id=duel_id, meta=meta)
+
+    async def coin_sum_since(self, user_id, *, kinds, since, meta_key=None):
+        return await coins.sum_since(self.connection, user_id, kinds=kinds, since=since, meta_key=meta_key)
+
+    async def duels_available(self):
+        return await duels.available()
+
+    async def create_duel(self, duel):
+        await duels.create(self.connection, duel)
+
+    async def load_duel(self, duel_id):
+        return await duels.load(self.connection, duel_id)
+
+    async def duel_by_code(self, code):
+        return await duels.by_code(self.connection, code)
+
+    async def save_duel(self, duel):
+        await duels.save(self.connection, duel)
+
+    async def list_duels(self, user_id, *, limit=20):
+        return await duels.list_for(self.connection, user_id, limit=limit)
+
+    async def last_duel_between(self, a, b):
+        return await duels.last_between(self.connection, a, b)
+
+    async def duels_accepted_today(self, user_id):
+        return await duels.accepted_today(self.connection, user_id)
+
+    async def duel_question_keys(self, user_id):
+        return await duels.question_keys_played(self.connection, user_id)
 
     async def soft_skill_evidence(self, user_id, *, days=180):
         """Scored answers and interview turns with the judge's full evaluation (the soft-skill reading)."""

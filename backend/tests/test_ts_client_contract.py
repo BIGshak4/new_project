@@ -33,11 +33,14 @@ MODELS = {"QuestionSummary": "QuestionSummary", "QuestionDetail": "QuestionDetai
 # field it is compared like every other one again; then remove the entry.
 PENDING_IN_CLIENT = {"SkillProgress": {"expired"},         # evidence older than 49 days (Shaked, 2026-10-04)
                      "JobTypeView": {"excluded_skills"},   # skills not part of a job type (task 8, 2026-10-15)
-                     "SubmissionView": {"related"},        # an unrelated answer earns no XP (Shaked, 2026-10-18)
-                     "InterviewTurnView": {"related"}}
+                     "SubmissionView": {"related", "coins_earned"},   # unrelated: no XP (2026-10-18); coins (2026-10-22)
+                     "InterviewTurnView": {"related", "coins_earned"}}
 # New routes the web client does not call yet, for the same reason; remove once practice-api.ts calls them.
 PENDING_ROUTES_IN_CLIENT: set[tuple[str, str]] = {        # the payment screen is Harel's next item (2026-10-20)
-    ("GET", "/v1/me/billing"), ("POST", "/v1/me/billing/checkout"), ("POST", "/v1/me/billing/portal")}
+    ("GET", "/v1/me/billing"), ("POST", "/v1/me/billing/checkout"), ("POST", "/v1/me/billing/portal"),
+    ("GET", "/v1/me/coins"), ("POST", "/v1/me/coins/buy"),                     # the coins screen (2026-10-22)
+    ("GET", "/v1/duels"), ("POST", "/v1/duels"), ("POST", "/v1/duels/accept"), ("GET", "/v1/duels/{duel_id}"),
+    ("POST", "/v1/duels/{duel_id}/answer"), ("POST", "/v1/duels/{duel_id}/cancel")}
 
 
 def ts_fields(source: str, type_name: str) -> set[str]:

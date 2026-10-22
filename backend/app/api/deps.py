@@ -13,6 +13,8 @@ from app.config import get_settings
 from app.repo import cache
 from app.repo.users import Access, resolve_access
 from app.services.billing import BillingService
+from app.services.coins import CoinsService
+from app.services.duels import DuelService
 from app.services.interview_service import InterviewService
 from app.services.practice_service import PracticeService
 
@@ -60,6 +62,20 @@ def billing_service(request: Request) -> BillingService:
     return runtime.billing
 
 
+def coins_service(request: Request) -> CoinsService:
+    runtime = getattr(request.app.state, "runtime", None)
+    if runtime is None or getattr(runtime, "coins", None) is None:
+        raise ApiError("evaluation_unavailable", "coins are not started", status=503)
+    return runtime.coins
+
+
+def duel_service(request: Request) -> DuelService:
+    runtime = getattr(request.app.state, "runtime", None)
+    if runtime is None or getattr(runtime, "duels", None) is None:
+        raise ApiError("evaluation_unavailable", "duels are not started", status=503)
+    return runtime.duels
+
+
 def practice_service(request: Request) -> PracticeService:
     runtime = getattr(request.app.state, "runtime", None)
     if runtime is None:
@@ -77,5 +93,7 @@ def interview_service(request: Request) -> InterviewService:
 CurrentAccess = Annotated[Access, Depends(current_access)]
 PaidAccess = Annotated[Access, Depends(paid_access)]
 Billing = Annotated[BillingService, Depends(billing_service)]
+Coins = Annotated[CoinsService, Depends(coins_service)]
+Duels = Annotated[DuelService, Depends(duel_service)]
 Practice = Annotated[PracticeService, Depends(practice_service)]
 Interview = Annotated[InterviewService, Depends(interview_service)]

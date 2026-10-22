@@ -1,0 +1,29 @@
+{
+  "_about": "Coins (Shaked, 2026-10-22): earned by strong answers, spent in the shop and in duels. No monetary value, never bought, never cashed out. Every number here is a decision of Shaked's; change the file, not the code.",
+  "starting_gift": 50,
+  "strong_answer": 10,
+  "strong_hard_answer": 20,
+  "hard_difficulty_from": 5,
+  "strong_interview_turn": 10,
+  "max_hints_for_coins": 1,
+  "duel": {
+    "stake": 5,
+    "clock_seconds": 180,
+    "cooldown_minutes": 10,
+    "daily_earning_cap": 100,
+    "daily_cap": null,
+    "pool": {"_about": "what counts as a short question: the live bank has no question under three minutes by its own estimate and every live question is difficulty 5, so 'short' is a format a person answers in a few sentences. Grows as Harel's short questions reach the bank.",
+             "max_difficulty": 10, "subjects": [], "formats": ["explain", "short_answer", "truth_table"],
+             "exclude_formats": ["code", "hdl", "waveform", "construct"]}
+  },
+  "shop": [
+    {
+      "key": "extra_questions_10",
+      "label": {"en": "10 more questions today", "he": "עוד 10 שאלות להיום"},
+      "description": {"en": "Raises today's question limit by ten. Tomorrow the plan's limit is back.",
+                      "he": "מעלה את מכסת השאלות של היום בעשר. מחר המכסה של התוכנית חוזרת."},
+      "price": 100,
+      "effect": {"extra_questions_today": 10}
+    }
+  ]
+}

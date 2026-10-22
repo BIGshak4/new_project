@@ -70,6 +70,7 @@ from app.schemas.engine import (
     SkillStatus,
 )
 from app.schemas.visual_answer import VisualAnswer
+from app.services.coins import coins_for_turn
 from app.services.store import Store
 
 log = logging.getLogger("app.interview")
@@ -94,8 +95,9 @@ class InterviewConfig:
 
 class InterviewService:
     def __init__(self, store: Store, catalog: Catalog, provider: Provider, config: InterviewConfig | None = None, *,
-                 image_fetcher: ImageFetcher | None = None, on_finished=None):
+                 image_fetcher: ImageFetcher | None = None, on_finished=None, coins=None):
         self.store, self.catalog, self.provider = store, catalog, provider
+        self.coins = coins                               # CoinsService: a strong turn earns coins (Shaked, 2026-10-22)
         self.on_finished = on_finished                   # async (tx, user_id, session_id) -> None: the program ticks its item
         self.config = config or InterviewConfig()
         self.image_fetcher = image_fetcher               # None: photos are kept but not shown to the evaluator
@@ -590,6 +592,14 @@ class InterviewService:
                                                     company_slug=self.config.company)
                 if usage_rows:
                     await tx.record_session_usage(user_id=user_id, session_id=session_id, usage_rows=usage_rows)
+                if self.coins is not None:
+                    for t in turns:                     # idempotent by (session, turn): a re-save never pays twice
+                        m = t.get("question_generation_meta") or {}
+                        if m.get("status") == "done" and m.get("band"):
+                            await self.coins.award_for_turn(tx, user_id=user_id, session_id=session_id,
+                                                            turn_index=int(t["turn_index"]), band=m["band"],
+                                                            hints_seen=int(m.get("hint_level") or 0),
+                                                            related=scores.OFF_TOPIC_FLAG not in (m.get("flags") or []))
         except StaleSession:
             row["state"]["revision"] = expected
             raise ApiError("conflict", "another request changed this interview at the same time; reload it") from None
@@ -657,7 +667,11 @@ class InterviewService:
             related=(scores.OFF_TOPIC_FLAG not in (meta.get("flags") or [])) if revealed else True,
             xp_earned=(xp.answer_xp(meta["band"], difficulty=turn["difficulty"], hints_seen=int(meta.get("hint_level") or 0),
                                     interview=True, related=scores.OFF_TOPIC_FLAG not in (meta.get("flags") or []))
-                       if revealed and meta.get("status") == "done" and meta.get("band") else None))
+                       if revealed and meta.get("status") == "done" and meta.get("band") else None),
+            coins_earned=(coins_for_turn(self.coins.rules, band=meta["band"], hints_seen=int(meta.get("hint_level") or 0),
+                                         related=scores.OFF_TOPIC_FLAG not in (meta.get("flags") or []))
+                          if revealed and meta.get("status") == "done" and meta.get("band") and self.coins is not None
+                          and self.coins.known_enabled is not False else None))
 
     def _view(self, stored: StoredSession, state: SessionState) -> InterviewView:
         row, turns, language = stored.row, stored.turns, stored.row["config"]["language"]
