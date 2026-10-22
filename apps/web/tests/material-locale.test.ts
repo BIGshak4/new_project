@@ -92,6 +92,31 @@ test("real technical material renderer changes section labels and contents toget
   assert.equal(render("en"), english);
 });
 
+test("controlled disclosure flags restore selected sections after bilingual resource remounts", () => {
+  const material = { id: "FIRST", assumptions: ["הנחות מקור"], verification: "בדיקה מקורית",
+    interview_answer: "תשובה מקורית", learner_material: {
+      assumptions: { he: ["הנחה בעברית"], en: ["English assumption"] },
+      verification: { he: "אימות בעברית", en: "English verification" },
+      interview_answer: { he: "תשובה בעברית", en: "English answer" },
+    } };
+  const openSections = Object.freeze({ assumptions: true, verification: false, interview_answer: true });
+  const render = (lang: ApiLang, selected: Readonly<Record<string, boolean>>, id = "FIRST") =>
+    renderToStaticMarkup(createElement(TechnicalMaterial, {
+      material: { ...material, id }, lang, openSections: selected, onSectionToggle: () => {},
+    }));
+  const openLabels = (html: string) => [...html.matchAll(/<details open=""><summary>(.*?)<\/summary>/g)]
+    .map(match => match[1]);
+  // Each call is a new mount, as when protected resources leave the DOM while loading.
+  assert.deepEqual(openLabels(render("he", openSections)), ["הנחות", "תשובה קצרה לראיון"]);
+  const english = render("en", openSections);
+  assert.deepEqual(openLabels(english), ["Assumptions", "Interview answer"]);
+  assert.doesNotMatch(english, /\p{Script=Hebrew}/u);
+  assert.deepEqual(openLabels(render("he", openSections)), ["הנחות", "תשובה קצרה לראיון"]);
+  // A new question/attempt gets fresh parent flags, never another scope's open state.
+  assert.deepEqual(openLabels(render("en", {}, "SECOND")), []);
+  assert.deepEqual(openSections, { assumptions: true, verification: false, interview_answer: true });
+});
+
 test("technical metadata labels and status text translate without changing formulas or underlying status", () => {
   assert.equal(materialLabel("criterion", "he"), "מה נדרש להוכיח");
   assert.equal(materialLabel("verification_status", "he"), "מצב האימות");

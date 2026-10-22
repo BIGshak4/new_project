@@ -161,7 +161,11 @@ function Value({ value, lang, field }: { value: unknown; lang: Lang; field?: str
   </div>)}</dl>;
 }
 
-export function TechnicalMaterial({ material, lang }: { material: Record<string, unknown>; lang: Lang }) {
+export function TechnicalMaterial({ material, lang, openSections, onSectionToggle }: {
+  material: Record<string, unknown>; lang: Lang;
+  openSections?: Readonly<Record<string, boolean>>;
+  onSectionToggle?: (section: string, open: boolean) => void;
+}) {
   const technicalKeys = Object.keys(material).filter(k => labels[k]);
   function download() {
     const url = URL.createObjectURL(new Blob([JSON.stringify(material, null, 2)], { type: "application/json" }));
@@ -170,7 +174,9 @@ export function TechnicalMaterial({ material, lang }: { material: Record<string,
   }
   return <section className="technical-material">
     <h3>{lang === "he" ? "הסברים נוספים ובדיקות" : "Further explanations and verification"}</h3>
-    {technicalKeys.filter(k => material[k] != null).map(key => <details key={key}>
+    {technicalKeys.filter(k => material[k] != null).map(key => <details key={key}
+      open={openSections ? !!openSections[key] : undefined}
+      onToggle={onSectionToggle ? event => onSectionToggle(key, event.currentTarget.open) : undefined}>
       <summary>{labels[key][lang === "he" ? 0 : 1]}</summary><Value value={materialInLanguage(material, key, lang)} lang={lang} />
     </details>)}
     <button onClick={download}><Download size={16} />{lang === "he" ? "הורדת כל חומר השאלה" : "Download all question material"}</button>

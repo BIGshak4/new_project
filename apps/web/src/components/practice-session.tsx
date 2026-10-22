@@ -648,6 +648,7 @@ export function PracticeSession({
                     {attempt.reference &&
                       attempt.submission?.status !== "done" && (
                         <ReferenceSolution
+                          key={`${question.key}:${attempt.id}`}
                           text={attempt.reference}
                           sourceLanguage={attempt.language}
                           resources={resources} hasMedia={question.has_media}
@@ -891,6 +892,7 @@ export function PracticeSession({
                         </div>
                         {attempt.reference && (
                           <ReferenceSolution
+                            key={`${question.key}:${attempt.id}`}
                             text={attempt.reference}
                             sourceLanguage={attempt.language}
                             resources={resources} hasMedia={question.has_media}
@@ -964,6 +966,12 @@ function RichText({ text }: { text: string }) {
 function ReferenceSolution({ text, sourceLanguage, lang, resources, hasMedia }: {
   text: string; sourceLanguage: Lang; lang: Lang; resources: ReturnType<typeof useQuestionResources>; hasMedia?: boolean;
 }) {
+  // Translation/file refresh temporarily unmounts the protected material below.
+  // Keep only disclosure flags here; ReferenceSolution is keyed by question/attempt.
+  const [openMaterialSections, setOpenMaterialSections] = useState<Record<string, boolean>>({});
+  function setMaterialSectionOpen(section: string, open: boolean) {
+    setOpenMaterialSections(current => current[section] === open ? current : { ...current, [section]: open });
+  }
   const reference = referenceInLanguage(resources.data, lang, text, sourceLanguage);
   const review = resources.data?.solution_revealed && resources.data.reference === reference
     ? resources.data : {};
@@ -987,7 +995,8 @@ function ReferenceSolution({ text, sourceLanguage, lang, resources, hasMedia }: 
         : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />
         : <>
           <QuestionFigures media={resources.data.media} lang={lang} role="solution" onRefresh={resources.retry} />
-          {resources.data.technical_material && <TechnicalMaterial material={resources.data.technical_material} lang={lang} />}
+          {resources.data.technical_material && <TechnicalMaterial material={resources.data.technical_material} lang={lang}
+            openSections={openMaterialSections} onSectionToggle={setMaterialSectionOpen} />}
         </>)}
     </div>
   );
