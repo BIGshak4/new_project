@@ -340,8 +340,14 @@ class _MemoryTx:
                    and d["accepted_at"] is not None and d["accepted_at"] >= start)
 
     async def duel_question_keys(self, user_id):
-        return {d["question_key"] for d in self.s.duels.values()
-                if user_id in (d["challenger_id"], d["opponent_id"]) and d["question_key"]}
+        keys = set()
+        for d in self.s.duels.values():
+            if user_id not in (d["challenger_id"], d["opponent_id"]):
+                continue
+            if d["question_key"]:
+                keys.add(d["question_key"])
+            keys |= {i["key"] for i in d.get("items") or [] if i.get("key")}
+        return keys
 
     async def soft_skill_evidence(self, user_id, *, days=180):
         since = datetime.now(UTC) - timedelta(days=days)

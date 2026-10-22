@@ -1,5 +1,6 @@
--- Duels (Shaked, 2026-10-22): two players stake five coins each on one short question neither has seen; the same
--- judge scores both; the better band wins the pot, a tie goes to the faster answer, a tie again refunds both.
+-- Duels (Shaked, 2026-10-22): two players stake five coins each. Quiz mode (default): five American questions, a
+-- minute each at most, more correct answers win, then the lower total time. Judged mode: one short question neither
+-- has seen, the same judge scores both, the better band wins, a tie goes to the faster answer. A tie again refunds both.
 -- A no-show forfeits. Backend-only writes; no browser read: the API shows each player their own view and hides the
 -- opponent's answer until the duel is settled. Coins have no monetary value (see 20261022090000_coins.sql).
 
@@ -12,7 +13,9 @@ create table public.duel (
   language       varchar(2) not null default 'he',
   stake          integer not null check (stake > 0),
   clock_seconds  integer not null check (clock_seconds > 0),
-  question_key   text,                                   -- chosen when the opponent accepts: unseen by both
+  mode           varchar(8) not null default 'quiz' check (mode in ('quiz', 'judged')),
+  question_key   text,                                   -- judged: chosen when the opponent accepts, unseen by both
+  items          jsonb not null default '[]'::jsonb,     -- quiz: [{key}] in the order both players get them
   created_at     timestamptz not null default now(),
   accepted_at    timestamptz,
   deadline       timestamptz,

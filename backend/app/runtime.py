@@ -16,7 +16,7 @@ from app.services.billing import BillingConfig, BillingService, FakeStripe, Http
 from app.services.coins import CoinsService
 from app.services.coins import load_rules as load_coin_rules
 from app.services.demo_provider import DemoProvider
-from app.services.duels import DuelService
+from app.services.duels import DuelService, load_quiz
 from app.services.fundamentals import FundamentalsService, load_fundamentals_catalog
 from app.services.interview_service import InterviewConfig, InterviewService
 from app.services.memory_store import InMemoryStore
@@ -105,7 +105,7 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
     return Runtime(catalog=catalog, provider=provider, store=store, practice=practice, store_kind=kind,
                    image_fetcher=fetcher, billing=billing, coins=coins,
                    duels=DuelService(store, catalog, provider, coins, reviewed_only=settings.suggest_reviewed_only,
-                                     site_url=settings.site_url),
+                                     site_url=settings.site_url, quiz=load_quiz(settings.seeds_dir / "duel_quiz.json")),
                    fundamentals=FundamentalsService(
                        DbFundamentalsRepository() if kind == "database" else MemoryFundamentalsRepository(),
                        load_fundamentals_catalog(settings.seeds_dir / "fundamentals_catalog.json")),

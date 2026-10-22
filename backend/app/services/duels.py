@@ -1,11 +1,19 @@
-"""Duels (Shaked, 2026-10-22): two players, five coins each, one short question neither has seen.
+"""Duels (Shaked, 2026-10-22): two players, five coins each, decided on the clock.
 
-The challenger opens a duel and gets an invite code (a link, in Harel's screen). The opponent accepts: both stakes
-leave their wallets into the duel (ledger rows of kind "stake"), a question is chosen that neither player has met in
-practice or in a duel, and the clock starts (three minutes). Each player answers once; the same judge that scores
-practice scores both answers; the better band wins the pot, a tie goes to the faster answer, a tie again refunds both.
-A player who never answers forfeits; when nobody answers both are refunded. A duel changes nothing in the skill
-profile and earns no XP: it is a game on coins, and coins have no monetary value.
+Two modes on the same routes:
+
+* **quiz** (the default; Shaked: "American questions with specific answers, a minute each max"): five
+  multiple-choice questions from `seeds/duel_quiz.json`, the same five in the same order for both players, one
+  minute per question at most. One point per correct answer; more points wins the ten coins, the same points goes to
+  the lower total answering time, the same second is a draw. No model call: a quiz duel costs nothing to run and
+  the result is never a judgement. The correct option is sent to nobody until the duel is settled.
+* **judged**: one short bank question neither player has met, three minutes, both answers scored by the same judge
+  as practice; the better band wins, a tie goes to the faster answer.
+
+In both: the challenger opens a duel and gets an invite code (a link, in Harel's screen); the opponent accepts and
+both stakes leave the wallets into the duel (ledger rows of kind "stake"). A player who never answers forfeits;
+when nobody answers both are refunded. A duel changes nothing in the skill profile and earns no XP: it is a game on
+coins, and coins have no monetary value.
 
 Guards: a ten-minute cooldown per pair of players, a daily ceiling on duel winnings (net), an optional daily duel
 count (off until Shaked decides), and never more than a few open invites per user. The numbers are in
@@ -15,11 +23,14 @@ seeds/coins.json.
 from __future__ import annotations
 
 import dataclasses
+import json
 import logging
 import random
 import secrets
 import uuid
+from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 
 from app.api.errors import ApiError
 from app.engine import checks, evaluator, scores
@@ -33,6 +44,7 @@ from app.services.coins import CoinsService
 
 log = logging.getLogger("app.duels")
 
+MODES = ("quiz", "judged")
 BAND_RANK = {"STRONG": 3, "PARTIAL": 2, "WEAK": 1}
 MAX_OPEN_INVITES = 3
 INVITE_TTL = timedelta(hours=24)                 # an invite nobody accepted is cancelled and refunded on the next read
@@ -43,22 +55,66 @@ def new_code() -> str:
     return "".join(secrets.choice(CODE_ALPHABET) for _ in range(8))
 
 
+# ---------------------------------------------------------------------- the quiz content
+
+
+@dataclass(frozen=True)
+class QuizQuestion:
+    key: str
+    topic: str
+    status: str                                  # draft | approved: only approved ones enter the pool
+    prompt: dict[str, str]
+    choices: list[dict[str, str]]
+    correct: int
+    explanation: dict[str, str]
+
+    @staticmethod
+    def text(values: dict[str, str], language: str) -> str:
+        return values.get(language) or values.get("en") or next(iter(values.values()), "")
+
+
+def load_quiz(path: Path) -> list[QuizQuestion]:
+    """The American questions, validated: four options, one correct index, both languages, unique keys."""
+    data = json.loads(path.read_text(encoding="utf-8"))
+    out, keys = [], set()
+    for raw in data.get("questions", []):
+        choices = list(raw.get("choices") or [])
+        if len(choices) != 4 or not (0 <= int(raw["correct"]) < 4):
+            raise ValueError(f"quiz question {raw.get('key')!r} needs four choices and a correct index 0-3")
+        for field_name in ("prompt", "explanation"):
+            if not raw.get(field_name, {}).get("he") or not raw.get(field_name, {}).get("en"):
+                raise ValueError(f"quiz question {raw.get('key')!r} needs {field_name} in both languages")
+        if any(not c.get("he") or not c.get("en") for c in choices):
+            raise ValueError(f"quiz question {raw.get('key')!r} needs every choice in both languages")
+        if raw["key"] in keys:
+            raise ValueError(f"duplicate quiz key {raw['key']!r}")
+        keys.add(raw["key"])
+        out.append(QuizQuestion(key=raw["key"], topic=raw.get("topic", ""), status=raw.get("status", "draft"),
+                                prompt=dict(raw["prompt"]), choices=[dict(c) for c in choices], correct=int(raw["correct"]),
+                                explanation=dict(raw["explanation"])))
+    return out
+
+
 class DuelService:
     def __init__(self, store, catalog: Catalog, provider: Provider, coins: CoinsService, *, reviewed_only: bool = True,
-                 site_url: str = ""):
+                 site_url: str = "", quiz: list[QuizQuestion] | None = None, approved_only: bool = True):
         self.store, self.catalog, self.provider, self.coins = store, catalog, provider, coins
         self.rules = coins.rules
         self.reviewed_only = reviewed_only
+        self.approved_only = approved_only       # quiz questions still in draft stay out of production duels
+        self.quiz = {q.key: q for q in (quiz or [])}
         self.site_url = site_url.rstrip("/")
         self.clock = lambda: datetime.now(UTC)   # tests move it
 
-    # ------------------------------------------------------------------ the pool
+    # ------------------------------------------------------------------ the pools
+
+    def quiz_pool(self) -> list[QuizQuestion]:
+        return [q for q in self.quiz.values() if q.status == "approved" or not self.approved_only]
 
     def pool(self, language: str) -> list[BankQuestion]:
-        """Short questions a duel may ask: by the seed's pool rule (difficulty, formats, subjects), in this language.
-        Nothing in the bank takes under three minutes by its own estimate and every live question is difficulty 5, so
-        "short" is a format answered in a few sentences: explain, short answer, truth table (seeds/coins.json; the pool
-        grows as Harel's short questions reach the bank)."""
+        """Short bank questions a judged duel may ask: by the seed's pool rule (difficulty, formats, subjects), in this
+        language. Nothing in the bank takes under three minutes by its own estimate and every live question is
+        difficulty 5, so "short" is a format answered in a few sentences: explain, short answer, truth table."""
         rule = self.rules.duel_pool
         max_difficulty = int(rule.get("max_difficulty", 3))
         formats = set(rule.get("formats") or [])
@@ -91,6 +147,24 @@ class DuelService:
             raise ApiError("no_reviewed_questions", "no short question is left that neither of you has seen")
         return random.choice(candidates)
 
+    async def _choose_quiz(self, tx, players: list[uuid.UUID]) -> list[QuizQuestion]:
+        """Five questions, unseen by both players when there are enough, filled up with seen ones otherwise."""
+        wanted = self.rules.duel_quiz_questions
+        pool = self.quiz_pool()
+        if len(pool) < wanted:
+            raise ApiError("no_reviewed_questions", "not enough approved quiz questions yet; ask the founders to approve some")
+        seen: set[str] = set()
+        for user_id in players:
+            seen |= await tx.duel_question_keys(user_id)
+        fresh = [q for q in pool if q.key not in seen]
+        random.shuffle(fresh)
+        chosen = fresh[:wanted]
+        if len(chosen) < wanted:
+            rest = [q for q in pool if q.key in seen]
+            random.shuffle(rest)
+            chosen += rest[:wanted - len(chosen)]
+        return chosen
+
     # ------------------------------------------------------------------ guards
 
     async def _guard_player(self, tx, user_id: uuid.UUID, *, other: uuid.UUID | None = None) -> None:
@@ -116,7 +190,12 @@ class DuelService:
 
     # ------------------------------------------------------------------ actions
 
-    async def create(self, user_id: uuid.UUID, *, language: str) -> Duel:
+    async def create(self, user_id: uuid.UUID, *, language: str, mode: str | None = None) -> Duel:
+        mode = mode or self.rules.duel_mode_default
+        if mode not in MODES:
+            raise ApiError("validation", f"unknown duel mode {mode!r}")
+        if mode == "quiz" and len(self.quiz_pool()) < self.rules.duel_quiz_questions:
+            raise ApiError("no_reviewed_questions", "not enough approved quiz questions yet; ask the founders to approve some")
         async with self.store.transaction() as tx:
             if not await tx.duels_available():
                 raise ApiError("evaluation_unavailable", "duels are not enabled on this server yet", status=503)
@@ -124,16 +203,18 @@ class DuelService:
             mine = await tx.list_duels(user_id, limit=50)
             if sum(1 for d in mine if d.status == "open" and d.challenger_id == user_id) >= MAX_OPEN_INVITES:
                 raise ApiError("conflict", f"you already have {MAX_OPEN_INVITES} open invites; cancel one first")
+            clock = (self.rules.duel_quiz_questions * self.rules.duel_quiz_seconds if mode == "quiz"
+                     else self.rules.duel_clock_seconds)
             duel = Duel(id=uuid.uuid4(), code=new_code(), status="open", challenger_id=user_id, opponent_id=None,
-                        language=language, stake=self.rules.duel_stake, clock_seconds=self.rules.duel_clock_seconds,
+                        language=language, stake=self.rules.duel_stake, clock_seconds=clock, mode=mode,
                         created_at=self.clock())
             try:
                 await tx.create_duel(duel)
             except DuelsUnavailable as exc:
                 raise ApiError("evaluation_unavailable", str(exc), status=503) from exc
             await tx.coin_add(user_id=user_id, delta=-duel.stake, kind="stake", reference=f"duel:{duel.id}:stake:{user_id}",
-                              duel_id=duel.id, meta={"role": "challenger"})
-        log.info("duel %s opened by %s", duel.id, user_id)
+                              duel_id=duel.id, meta={"role": "challenger", "mode": mode})
+        log.info("duel %s (%s) opened by %s", duel.id, mode, user_id)
         return duel
 
     async def accept(self, user_id: uuid.UUID, code: str) -> Duel:
@@ -149,14 +230,22 @@ class DuelService:
             if duel.challenger_id == user_id:
                 raise ApiError("conflict", "you cannot accept your own duel; send the link to someone else")
             await self._guard_player(tx, user_id, other=duel.challenger_id)
-            question = await self._choose(tx, duel.language, [duel.challenger_id, user_id])
             now = self.clock()
-            duel.opponent_id, duel.question_key, duel.status = user_id, question.key, "active"
+            if duel.mode == "quiz":
+                questions = await self._choose_quiz(tx, [duel.challenger_id, user_id])
+                duel.items = [{"key": q.key} for q in questions]
+                for p in (duel.challenger_id, user_id):
+                    duel.players[str(p)] = {"opened_at": now.isoformat(), "answers": []}
+            else:
+                question = await self._choose(tx, duel.language, [duel.challenger_id, user_id])
+                duel.question_key = question.key
+            duel.opponent_id, duel.status = user_id, "active"
             duel.accepted_at, duel.deadline = now, now + timedelta(seconds=duel.clock_seconds)
             await tx.coin_add(user_id=user_id, delta=-duel.stake, kind="stake", reference=f"duel:{duel.id}:stake:{user_id}",
-                              duel_id=duel.id, meta={"role": "opponent"})
+                              duel_id=duel.id, meta={"role": "opponent", "mode": duel.mode})
             await self._save(tx, duel)
-        log.info("duel %s accepted by %s: question %s", duel.id, user_id, duel.question_key)
+        log.info("duel %s accepted by %s: %s", duel.id, user_id,
+                 duel.question_key or ",".join(i["key"] for i in duel.items))
         return duel
 
     async def cancel(self, user_id: uuid.UUID, duel_id: uuid.UUID) -> Duel:
@@ -170,26 +259,121 @@ class DuelService:
     async def get(self, user_id: uuid.UUID, duel_id: uuid.UUID) -> Duel:
         async with self.store.transaction() as tx:
             duel = await self._own(tx, user_id, duel_id, lock=False)
-            if self._due(duel):
+            if self._due(duel) or self._quiz_moves(duel):
                 await tx.lock_usage(duel.id, "duel")
                 duel = await tx.load_duel(duel.id)
-                if self._due(duel):
-                    await self._settle_overdue(tx, duel)
+                await self._catch_up(tx, duel)
         return duel
 
     async def list(self, user_id: uuid.UUID, *, limit: int = 20) -> list[Duel]:
         async with self.store.transaction() as tx:
             duels = await tx.list_duels(user_id, limit=limit)
             for duel in duels:
-                if self._due(duel):
+                if self._due(duel) or self._quiz_moves(duel):
                     await tx.lock_usage(duel.id, "duel")
                     fresh = await tx.load_duel(duel.id)
-                    if self._due(fresh):
-                        await self._settle_overdue(tx, fresh)
+                    await self._catch_up(tx, fresh)
                     duel.__dict__.update(fresh.__dict__)
         return duels
 
-    async def answer(self, user_id: uuid.UUID, duel_id: uuid.UUID, text: str) -> Duel:
+    async def _catch_up(self, tx, duel: Duel) -> None:
+        """What the clock did since the last write: quiz questions that timed out, a duel past its deadline."""
+        if duel.status == "active" and duel.mode == "quiz":
+            changed = [self._advance_quiz(duel, p) for p in (duel.challenger_id, duel.opponent_id)]
+            if any(changed) and self._quiz_finished(duel):
+                await self._settle(tx, duel)
+                return
+            if any(changed):
+                await self._save(tx, duel)
+        if self._due(duel):
+            await self._settle_overdue(tx, duel)
+
+    # ------------------------------------------------------------------ answering
+
+    async def answer(self, user_id: uuid.UUID, duel_id: uuid.UUID, text: str | None = None, *,
+                     choice: int | None = None, item: int | None = None) -> Duel:
+        async with self.store.transaction() as tx:
+            duel = await self._own(tx, user_id, duel_id, lock=True)
+            if duel.mode == "quiz":
+                return await self._answer_quiz(tx, duel, user_id, choice=choice, item=item)
+        return await self._answer_judged(user_id, duel_id, text)
+
+    async def _answer_quiz(self, tx, duel: Duel, user_id: uuid.UUID, *, choice: int | None, item: int | None) -> Duel:
+        """One option for the question in front of this player, timed server side; settles when both have finished."""
+        if choice is None or not (0 <= int(choice) < 4):
+            raise ApiError("validation", "a quiz answer is the index of one of the four options")
+        if duel.status != "active":
+            raise ApiError("conflict", "this duel is not running")
+        now = self.clock()
+        self._advance_quiz(duel, user_id)                            # questions that ran out while the screen was idle
+        me = duel.player(user_id)
+        index = len(me.get("answers", []))
+        if index >= len(duel.items):
+            raise ApiError("already_submitted", "you answered every question of this duel")
+        if item is not None and int(item) != index:
+            raise ApiError("conflict", f"question {index + 1} is the one in front of you now")
+        opened = datetime.fromisoformat(me["opened_at"])
+        seconds = round((now - opened).total_seconds(), 3)
+        question = self.quiz[duel.items[index]["key"]]
+        me["answers"].append({"choice": int(choice), "correct": int(choice) == question.correct, "seconds": seconds,
+                              "timed_out": False})
+        me["opened_at"] = now.isoformat()
+        self._finish_quiz_player(duel, me)
+        if self._quiz_finished(duel):
+            await self._settle(tx, duel)
+        else:
+            await self._save(tx, duel)
+        return duel
+
+    def _advance_quiz(self, duel: Duel, user_id: uuid.UUID) -> bool:
+        """Mark the questions this player let run out (one minute each). True when anything changed."""
+        me = duel.player(user_id)
+        if me.get("status") in ("done", "absent") or "opened_at" not in me:
+            return False
+        limit = self.rules.duel_quiz_seconds
+        now = self.clock()
+        changed = False
+        while len(me["answers"]) < len(duel.items):
+            opened = datetime.fromisoformat(me["opened_at"])
+            if now <= opened + timedelta(seconds=limit):
+                break
+            me["answers"].append({"choice": None, "correct": False, "seconds": limit, "timed_out": True})
+            me["opened_at"] = (opened + timedelta(seconds=limit)).isoformat()
+            changed = True
+        if self._finish_quiz_player(duel, me):
+            changed = True
+        return changed
+
+    @staticmethod
+    def _finish_quiz_player(duel: Duel, me: dict) -> bool:
+        if len(me.get("answers", [])) < len(duel.items) or me.get("status") in ("done", "absent"):
+            return False
+        answered = [a for a in me["answers"] if not a["timed_out"]]
+        me["score"] = sum(1 for a in me["answers"] if a["correct"])
+        me["seconds"] = round(sum(a["seconds"] for a in me["answers"]), 3)
+        me["status"] = "done" if answered else "absent"               # absent: never pressed anything = a no-show
+        return True
+
+    @staticmethod
+    def _quiz_finished(duel: Duel) -> bool:
+        return all(duel.players.get(str(p), {}).get("status") in ("done", "absent")
+                   for p in (duel.challenger_id, duel.opponent_id))
+
+    def _quiz_moves(self, duel: Duel) -> bool:
+        """Whether the clock has moved a quiz duel since its last write (so a read must catch up under the lock)."""
+        if duel.status != "active" or duel.mode != "quiz":
+            return False
+        limit = timedelta(seconds=self.rules.duel_quiz_seconds)
+        now = self.clock()
+        for p in (duel.challenger_id, duel.opponent_id):
+            me = duel.players.get(str(p), {})
+            if me.get("status") in ("done", "absent") or "opened_at" not in me:
+                continue
+            if now > datetime.fromisoformat(me["opened_at"]) + limit:
+                return True
+        return False
+
+    async def _answer_judged(self, user_id: uuid.UUID, duel_id: uuid.UUID, text: str | None) -> Duel:
         """Judge this player's answer (one model call, outside any transaction) and settle when both are in."""
         text = (text or "").strip()
         if not text:
@@ -264,6 +448,11 @@ class DuelService:
         if duel.status == "open":
             await self._close(tx, duel, outcome="expired")
             return
+        if duel.status != "active":
+            return
+        if duel.mode == "quiz":
+            for p in (duel.challenger_id, duel.opponent_id):
+                self._advance_quiz(duel, p)
         done = {p for p in (duel.challenger_id, duel.opponent_id) if duel.players.get(str(p), {}).get("status") == "done"}
         if not done:
             await self._close(tx, duel, outcome="no_show")
@@ -277,16 +466,36 @@ class DuelService:
     async def _settle(self, tx, duel: Duel) -> None:
         a, b = duel.challenger_id, duel.opponent_id
         pa, pb = duel.players[str(a)], duel.players[str(b)]
-        ra, rb = BAND_RANK.get(pa.get("band"), 0), BAND_RANK.get(pb.get("band"), 0)
-        if ra != rb:
-            winner = a if ra > rb else b
+        if duel.mode == "quiz":
+            if pa.get("status") == "absent" or pb.get("status") == "absent":
+                await self._settle_absent_quiz(tx, duel, pa, pb)
+                return
+            sa, sb = int(pa.get("score", 0)), int(pb.get("score", 0))
+            if sa != sb:
+                winner = a if sa > sb else b
+            else:
+                ta, tb = int(pa.get("seconds", 0)), int(pb.get("seconds", 0))     # whole seconds: a dead heat is a draw
+                winner = None if ta == tb else (a if ta < tb else b)
         else:
-            ta, tb = pa.get("submitted_at"), pb.get("submitted_at")
-            winner = None if ta == tb else (a if ta < tb else b)
+            ra, rb = BAND_RANK.get(pa.get("band"), 0), BAND_RANK.get(pb.get("band"), 0)
+            if ra != rb:
+                winner = a if ra > rb else b
+            else:
+                ta, tb = pa.get("submitted_at"), pb.get("submitted_at")
+                winner = None if ta == tb else (a if ta < tb else b)
         if winner is None:
             await self._close(tx, duel, outcome="draw")
         else:
             await self._close(tx, duel, outcome="challenger" if winner == a else "opponent", winner=winner)
+
+    async def _settle_absent_quiz(self, tx, duel: Duel, pa: dict, pb: dict) -> None:
+        """A quiz where somebody never pressed anything: the one who played wins; nobody played, both refunded."""
+        if pa.get("status") == "absent" and pb.get("status") == "absent":
+            await self._close(tx, duel, outcome="no_show")
+        elif pa.get("status") == "absent":
+            await self._close(tx, duel, outcome="forfeit_challenger", winner=duel.opponent_id)
+        else:
+            await self._close(tx, duel, outcome="forfeit_opponent", winner=duel.challenger_id)
 
     async def _close(self, tx, duel: Duel, *, outcome: str, winner: uuid.UUID | None = None) -> None:
         """The money moves exactly once per duel: every row carries the duel's reference."""
@@ -296,11 +505,11 @@ class DuelService:
         if winner is not None:
             pot = duel.stake * len(players)
             await tx.coin_add(user_id=winner, delta=pot, kind="payout", reference=f"duel:{duel.id}:payout", duel_id=duel.id,
-                              meta={"net": pot - duel.stake, "outcome": outcome})
+                              meta={"net": pot - duel.stake, "outcome": outcome, "mode": duel.mode})
         else:
             for p in players:
                 await tx.coin_add(user_id=p, delta=duel.stake, kind="refund", reference=f"duel:{duel.id}:refund:{p}",
-                                  duel_id=duel.id, meta={"outcome": outcome})
+                                  duel_id=duel.id, meta={"outcome": outcome, "mode": duel.mode})
         await self._save(tx, duel)
         log.info("duel %s closed: %s", duel.id, outcome)
 

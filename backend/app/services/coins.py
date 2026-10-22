@@ -43,7 +43,10 @@ class CoinRules:
     strong_interview_turn: int = 10
     max_hints_for_coins: int = 1
     duel_stake: int = 5
-    duel_clock_seconds: int = 180
+    duel_mode_default: str = "quiz"             # quiz (American questions) | judged (one bank question)
+    duel_quiz_questions: int = 5
+    duel_quiz_seconds: int = 60                 # per question, at most
+    duel_clock_seconds: int = 180               # the judged mode's clock
     duel_cooldown_minutes: int = 10
     duel_daily_earning_cap: int | None = 100
     duel_daily_cap: int | None = None
@@ -60,6 +63,9 @@ def load_rules(path: Path) -> CoinRules:
                      strong_interview_turn=int(data.get("strong_interview_turn", 10)),
                      max_hints_for_coins=int(data.get("max_hints_for_coins", 1)),
                      duel_stake=int(duel.get("stake", 5)), duel_clock_seconds=int(duel.get("clock_seconds", 180)),
+                     duel_mode_default=str(duel.get("mode_default", "quiz")),
+                     duel_quiz_questions=int((duel.get("quiz") or {}).get("questions", 5)),
+                     duel_quiz_seconds=int((duel.get("quiz") or {}).get("seconds_per_question", 60)),
                      duel_cooldown_minutes=int(duel.get("cooldown_minutes", 10)),
                      duel_daily_earning_cap=duel.get("daily_earning_cap"), duel_daily_cap=duel.get("daily_cap"),
                      duel_pool=dict(duel.get("pool") or {}),

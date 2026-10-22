@@ -8,11 +8,14 @@
   "max_hints_for_coins": 1,
   "duel": {
     "stake": 5,
+    "mode_default": "quiz",
+    "quiz": {"_about": "American questions from seeds/duel_quiz.json: five a duel, a minute each at most (Shaked, 2026-10-22)",
+             "questions": 5, "seconds_per_question": 60},
     "clock_seconds": 180,
     "cooldown_minutes": 10,
     "daily_earning_cap": 100,
     "daily_cap": null,
-    "pool": {"_about": "what counts as a short question: the live bank has no question under three minutes by its own estimate and every live question is difficulty 5, so 'short' is a format a person answers in a few sentences. Grows as Harel's short questions reach the bank.",
+    "pool": {"_about": "the judged mode only. What counts as a short question: the live bank has no question under three minutes by its own estimate and every live question is difficulty 5, so 'short' is a format a person answers in a few sentences. Grows as Harel's short questions reach the bank.",
              "max_difficulty": 10, "subjects": [], "formats": ["explain", "short_answer", "truth_table"],
              "exclude_formats": ["code", "hdl", "waveform", "construct"]}
   },

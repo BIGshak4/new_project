@@ -19,6 +19,7 @@ from app import db
 
 TABLE = "duel"
 STATUSES = ("open", "active", "settled", "cancelled")
+MODES = ("quiz", "judged")
 OUTCOMES = ("challenger", "opponent", "draw", "forfeit_challenger", "forfeit_opponent", "no_show", "cancelled", "expired")
 
 
@@ -40,7 +41,9 @@ class Duel:
     language: str
     stake: int
     clock_seconds: int
-    question_key: str | None = None              # chosen when the opponent accepts: unseen by both
+    mode: str = "quiz"                           # quiz (five American questions) | judged (one bank question)
+    question_key: str | None = None              # judged: chosen when the opponent accepts, unseen by both
+    items: list = field(default_factory=list)   # quiz: [{key}] in the order both players get them
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
     accepted_at: datetime | None = None
     deadline: datetime | None = None
@@ -66,7 +69,7 @@ class Duel:
                 "clock_seconds": self.clock_seconds, "question_key": self.question_key, "created_at": self.created_at,
                 "accepted_at": self.accepted_at, "deadline": self.deadline, "settled_at": self.settled_at,
                 "outcome": self.outcome, "winner_id": self.winner_id, "players": self.players, "meta": self.meta,
-                "version": self.version}
+                "version": self.version, "mode": self.mode, "items": self.items}
 
 
 def _from_row(row) -> Duel:
@@ -74,7 +77,8 @@ def _from_row(row) -> Duel:
                 language=row.language, stake=int(row.stake), clock_seconds=int(row.clock_seconds),
                 question_key=row.question_key, created_at=row.created_at, accepted_at=row.accepted_at,
                 deadline=row.deadline, settled_at=row.settled_at, outcome=row.outcome, winner_id=row.winner_id,
-                players=dict(row.players or {}), meta=dict(row.meta or {}), version=int(row.version or 0))
+                players=dict(row.players or {}), meta=dict(row.meta or {}), version=int(row.version or 0),
+                mode=row.mode or "quiz", items=list(row.items or []))
 
 
 async def available() -> bool:
@@ -150,11 +154,17 @@ async def accepted_today(connection: AsyncConnection, user_id: uuid.UUID) -> int
 
 
 async def question_keys_played(connection: AsyncConnection, user_id: uuid.UUID) -> set[str]:
-    """Questions this user already met in a duel: never asked again in one."""
+    """Questions this user already met in a duel (the judged question and the quiz items): asked again only when
+    nothing else is left."""
     if not await available():
         return set()
     table = await db.table(TABLE)
     rows = (await connection.execute(
-        select(table.c.question_key).where((table.c.challenger_id == user_id) | (table.c.opponent_id == user_id),
-                                           table.c.question_key.is_not(None)))).all()
-    return {r.question_key for r in rows}
+        select(table.c.question_key, table.c.items)
+        .where((table.c.challenger_id == user_id) | (table.c.opponent_id == user_id)))).all()
+    keys: set[str] = set()
+    for r in rows:
+        if r.question_key:
+            keys.add(r.question_key)
+        keys |= {i.get("key") for i in (r.items or []) if isinstance(i, dict) and i.get("key")}
+    return keys
