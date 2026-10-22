@@ -263,6 +263,15 @@ class _MemoryTx:
     async def coins_available(self):
         return self.s.coins_enabled
 
+    @asynccontextmanager
+    async def savepoint(self):
+        before = list(self.s.coin_ledger)
+        try:
+            yield
+        except BaseException:
+            self.s.coin_ledger = before
+            raise
+
     async def coin_balance(self, user_id):
         return sum(r["delta"] for r in self.s.coin_ledger if r["user_id"] == user_id)
 

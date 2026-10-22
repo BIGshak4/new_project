@@ -160,7 +160,7 @@ async def question_keys_played(connection: AsyncConnection, user_id: uuid.UUID) 
         return set()
     table = await db.table(TABLE)
     rows = (await connection.execute(
-        select(table.c.question_key, table.c.items)
+        select(table.c.question_key, table.c["items"])           # .c.items is the collection's method, not the column
         .where((table.c.challenger_id == user_id) | (table.c.opponent_id == user_id)))).all()
     keys: set[str] = set()
     for r in rows:

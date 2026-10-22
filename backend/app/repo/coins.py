@@ -67,7 +67,9 @@ async def add(connection: AsyncConnection, *, user_id: uuid.UUID, delta: int, ki
     statement = insert(table).values(id=uuid.uuid4(), user_id=user_id, delta=delta, kind=kind, reference=reference,
                                      item=item, duel_id=duel_id, meta=meta or {}, created_at=datetime.now(UTC))
     if reference is not None:
-        statement = statement.on_conflict_do_nothing(index_elements=[table.c.user_id, table.c.reference])
+        # the unique index is partial (where reference is not null): Postgres only infers it when the predicate is named
+        statement = statement.on_conflict_do_nothing(index_elements=[table.c.user_id, table.c.reference],
+                                                     index_where=table.c.reference.isnot(None))
     result = await connection.execute(statement.returning(table.c.id))
     return result.scalar_one_or_none() is not None
 

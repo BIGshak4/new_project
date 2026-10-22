@@ -48,6 +48,7 @@ MODES = ("quiz", "judged")
 BAND_RANK = {"STRONG": 3, "PARTIAL": 2, "WEAK": 1}
 MAX_OPEN_INVITES = 3
 INVITE_TTL = timedelta(hours=24)                 # an invite nobody accepted is cancelled and refunded on the next read
+JUDGE_GRACE = timedelta(seconds=120)             # judged: an answer sent in time may still be with the judge past the deadline
 CODE_ALPHABET = "abcdefghjkmnpqrstuvwxyz23456789"   # no 0/o, 1/l/i
 
 
@@ -309,13 +310,14 @@ class DuelService:
         me = duel.player(user_id)
         index = len(me.get("answers", []))
         if index >= len(duel.items):
-            raise ApiError("already_submitted", "you answered every question of this duel")
+            raise ApiError("already_submitted", "this duel has no question left for you: answered or timed out")
         if item is not None and int(item) != index:
             raise ApiError("conflict", f"question {index + 1} is the one in front of you now")
         opened = datetime.fromisoformat(me["opened_at"])
         seconds = round((now - opened).total_seconds(), 3)
-        question = self.quiz[duel.items[index]["key"]]
-        me["answers"].append({"choice": int(choice), "correct": int(choice) == question.correct, "seconds": seconds,
+        question = self.quiz.get(duel.items[index]["key"])
+        correct = question is not None and int(choice) == question.correct
+        me["answers"].append({"choice": int(choice), "correct": correct, "seconds": seconds,
                               "timed_out": False})
         me["opened_at"] = now.isoformat()
         self._finish_quiz_player(duel, me)
@@ -378,18 +380,23 @@ class DuelService:
         text = (text or "").strip()
         if not text:
             raise ApiError("validation", "an answer is needed")
+        late = False
         async with self.store.transaction() as tx:
             duel = await self._own(tx, user_id, duel_id, lock=True)
             if duel.status != "active":
                 raise ApiError("conflict", "this duel is not running")
             if self.clock() > duel.deadline:
-                await self._settle_overdue(tx, duel)
-                raise ApiError("conflict", "the clock ran out before your answer arrived")
-            me = duel.player(user_id)
-            if me.get("submitted_at"):
-                raise ApiError("already_submitted", "you already answered this duel")
-            me.update(answer=text, submitted_at=self.clock().isoformat(), status="evaluating")
-            await self._save(tx, duel)
+                late = True                       # settled here, raised after the commit (a raise would roll it back)
+                if self._due(duel):
+                    await self._settle_overdue(tx, duel)
+            else:
+                me = duel.player(user_id)
+                if me.get("submitted_at"):
+                    raise ApiError("already_submitted", "you already answered this duel")
+                me.update(answer=text, submitted_at=self.clock().isoformat(), status="evaluating")
+                await self._save(tx, duel)
+        if late:
+            raise ApiError("conflict", "the clock ran out before your answer arrived")
         question = self.catalog.questions[duel.question_key]
         try:
             check = (await checks.run_check_async(question.deterministic_check, text) if question.deterministic_check else None)
@@ -430,6 +437,9 @@ class DuelService:
         if duel.status == "active" and all(duel.players.get(str(p), {}).get("status") == "done"
                                            for p in (duel.challenger_id, duel.opponent_id)):
             await self._settle(tx, duel)
+        elif duel.status == "active" and self.clock() > duel.deadline and not any(
+                p.get("status") == "evaluating" for p in duel.players.values()):
+            await self._settle_overdue(tx, duel)        # the clock ran out while the judge worked: forfeit or settle
         else:
             await self._save(tx, duel)
 
@@ -437,8 +447,14 @@ class DuelService:
 
     def _due(self, duel: Duel) -> bool:
         now = self.clock()
-        return ((duel.status == "active" and duel.deadline is not None and now > duel.deadline)
-                or (duel.status == "open" and now - duel.created_at > INVITE_TTL))
+        if duel.status == "open":
+            return now - duel.created_at > INVITE_TTL
+        if duel.status != "active" or duel.deadline is None or now <= duel.deadline:
+            return False
+        # judged: an answer sent in time may still be with the judge; not a no-show yet (review, 2026-10-22)
+        with_judge = duel.mode == "judged" and now <= duel.deadline + JUDGE_GRACE and any(
+            p.get("status") == "evaluating" for p in duel.players.values())
+        return not with_judge
 
     def _expire(self, duel: Duel) -> None:
         if duel.status == "open" and self.clock() - duel.created_at > INVITE_TTL:

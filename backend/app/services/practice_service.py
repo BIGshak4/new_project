@@ -611,8 +611,10 @@ class PracticeService:
                         await self._complete_program_item(tx, user_id, attempt_id=attempt.attempt_id_uuid,
                                                           skills=[primary, *(link.skill for link in attempt.question.skills
                                                                              if link.skill != primary)])
-                    if self.coins is not None and (self._coins_for(attempt, outcome.submission) or 0) > 0:
-                        sub = outcome.submission            # idempotent by (attempt, revision): a replay never pays twice
+                    sub = outcome.submission
+                    if (self.coins is not None and sub.status == EvaluationStatus.DONE and sub.band is not None
+                            and "content_review_pending" not in sub.flags):
+                        # idempotent by (attempt, revision): a replay never pays twice; the service decides the amount
                         await self.coins.award_for_answer(tx, user_id=user_id, attempt_id=attempt.attempt_id_uuid,
                                                           revision=sub.revision, band=sub.band.value,
                                                           difficulty=attempt.question.difficulty, hints_seen=sub.hints_seen,
@@ -1587,7 +1589,7 @@ class PracticeService:
     def _coins_for(self, attempt: PracticeAttempt, submission) -> int | None:
         """The coins a scored main answer earned, by the pure rule (app.services.coins). None until scored, or when
         this server has no ledger (the migration is pending: nothing is credited, so nothing is promised)."""
-        if self.coins is None or self.coins.known_enabled is False:
+        if self.coins is None or not self.coins.known_enabled:   # None: nobody looked yet, so nothing is promised
             return None
         if submission.status != EvaluationStatus.DONE or submission.band is None:
             return None

@@ -141,15 +141,18 @@ def _quiz_view(svc, duel: Duel, user_id: uuid.UUID, settled: bool) -> QuizView |
     limit = svc.rules.duel_quiz_seconds
     current, seconds_left = None, None
     if duel.status == "active" and index < len(duel.items) and me.get("opened_at"):
-        q = svc.quiz[duel.items[index]["key"]]
-        current = QuizItemView(index=index, prompt=q.text(q.prompt, language), choices=[q.text(c, language) for c in q.choices])
+        q = svc.quiz.get(duel.items[index]["key"])
+        current = (QuizItemView(index=index, prompt=q.text(q.prompt, language), choices=[q.text(c, language) for c in q.choices])
+                   if q else QuizItemView(index=index, prompt="(this question was removed)", choices=["", "", "", ""]))
         opened = datetime.fromisoformat(me["opened_at"])
         seconds_left = max(0, int((opened + timedelta(seconds=limit) - svc.clock()).total_seconds()))
     review = []
     if settled:
         theirs = list(other.get("answers", []))
         for i, item in enumerate(duel.items):
-            q = svc.quiz[item["key"]]
+            q = svc.quiz.get(item["key"])
+            if q is None:
+                continue
             mine = answers[i] if i < len(answers) else {}
             his = theirs[i] if i < len(theirs) else {}
             review.append(QuizReviewView(index=i, prompt=q.text(q.prompt, language), choices=[q.text(c, language) for c in q.choices],
@@ -182,8 +185,8 @@ def _view(svc, duel: Duel, user_id: uuid.UUID) -> DuelView:
                             submitted_at=datetime.fromisoformat(p["submitted_at"]) if p.get("submitted_at") and reveal else None)
 
     question = None
-    if duel.mode == "judged" and duel.status == "active" and duel.question_key:
-        q = svc.catalog.questions[duel.question_key]
+    q = svc.catalog.questions.get(duel.question_key) if duel.mode == "judged" and duel.status == "active" else None
+    if q is not None:
         question = DuelQuestionView(key=q.key, title=q.text(duel.language).title, prompt=q.prompt_with_code(duel.language),
                                     format=q.format, difficulty=q.difficulty)
     seconds_left = None

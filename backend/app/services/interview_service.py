@@ -671,7 +671,7 @@ class InterviewService:
             coins_earned=(coins_for_turn(self.coins.rules, band=meta["band"], hints_seen=int(meta.get("hint_level") or 0),
                                          related=scores.OFF_TOPIC_FLAG not in (meta.get("flags") or []))
                           if revealed and meta.get("status") == "done" and meta.get("band") and self.coins is not None
-                          and self.coins.known_enabled is not False else None))
+                          and self.coins.known_enabled else None))
 
     def _view(self, stored: StoredSession, state: SessionState) -> InterviewView:
         row, turns, language = stored.row, stored.turns, stored.row["config"]["language"]

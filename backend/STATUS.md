@@ -1407,6 +1407,73 @@ table at the top carry the fields and the calls.
 5. Still open: Stripe account and keys, confirm ₪59 / ₪119, `plan_tier` vs billing, `HEALTH_KEY`, the dashboard
    actions, Harel's queue 7–19.
 
+## 5zu. Full verification of the coins and the game (2026-10-22, Shaked: "do a full verification on the coins and the game")
+
+**What ran.** (1) An independent adversarial code review of the ledger, the duels, the wiring and the hooks (a fresh
+agent, told to find defects, not to summarise). (2) A fact-check of all forty quiz questions by a second agent (answer,
+uniqueness, explanation, Hebrew = English, answerable in a minute). (3) **The real database**: a new script,
+`scripts/verify_coins_duels_db.py`, applies both migrations inside one transaction on one connection, reflects the two
+tables on that connection, drives the real `CoinsService` and `DuelService` through the live tests' `RollbackStore`
+(savepoints, so every unique index, check, jsonb cast and RLS policy runs as in production), and rolls everything back;
+it then proves no table is left behind. 32 checks. (4) Race tests on the in-memory store
+(`tests/test_coins_duels_concurrency.py`: the last two quiz answers landing together, both players reading an overdue
+duel together, two accepts of one invite, cancel against accept, two buys with coins for one, two awards for one
+answer, the gift under three first reads). (5) Judged-mode clock tests with a judge that outlives the deadline
+(`tests/test_duels_judged_clock.py`). (6) The full offline suite and the three live suites. (7) Deploy and smoke.
+
+**What it found and what changed.**
+1. **The ledger could not be written on Postgres at all** (review finding 1, and the database script's first run):
+   the idempotency insert said `ON CONFLICT (user_id, reference)` against a *partial* unique index
+   (`where reference is not null`), which Postgres refuses to infer without the predicate. Every gift, earn, stake and
+   payout would have been a 500 the moment the migration was applied; no in-memory test can see it. Fixed with
+   `index_where`; the database script now proves the second write of the same reference returns nothing.
+2. **A column named `items`** made `table.c.items` return SQLAlchemy's collection method instead of the column (the
+   database script's second run). Fixed with `table.c["items"]`.
+3. **A ledger error could take a saved answer down**: the award ran last in the same transaction as the attempt or
+   interview save, and any error there rolled the whole unit back — a paid model call lost and a retry paid again.
+   Now the award runs in a savepoint (`Tx.savepoint`, nested transaction on the database) and any failure is logged
+   and swallowed; the reference keeps a later retry from paying twice.
+4. **Judged mode at the deadline**: an answer sent in time but still with the judge when the clock ran out was
+   counted a no-show by the opponent's read, and the pot went to the wrong player. A player in `evaluating` now
+   holds the duel open for a two-minute grace; when the verdict lands after the deadline it settles the duel itself
+   (forfeit of the side that never answered); after the grace with no verdict the duel is a no-show. Also the
+   settle-then-raise on a late answer was rolled back by its own raise; the settlement now commits first.
+5. **Nothing is promised before a transaction has looked at the ledger**: `coins_earned` is null until the first
+   award or wallet read of the process (it was the rule's number, even on a server whose table is missing).
+6. Smaller: `load_rules` defaults agree with the dataclass (a missing `daily_earning_cap` meant *no* cap, not 100);
+   `mode_default` is validated at load; a quiz or bank question removed from the seed no longer 500s the duel list;
+   a clearer message when the remaining quiz questions timed out.
+7. **The quiz content**: every one of the forty answers is right and unique, with one wording tightened (the 0–99
+   counter now says *binary* counter, since a BCD counter would take eight). The real finding was **bidi**: a formula
+   or a spaced binary number inside a Hebrew sentence renders token-reversed ("32 = 5^2", "0001 0000", "2 // 7"),
+   which in the hex-to-binary question makes *no* option look right. Fixed with an invisible left-to-right mark
+   before every such run (and before bare-formula options); Harel's `bidi-segments` may handle some of this on the
+   screen, the marks are harmless either way. "נוהג" became "דרייבר".
+
+**Checked and sound (the review's list).** Every duel writer takes the per-duel advisory lock and reloads before
+writing, lock order is duel → user, the optimistic `version` is a second fence; stake + row, stake + accept and
+payout + settle each sit in one transaction with references that make `_close` idempotent, and both settle paths
+check `status == "active"`, so a refund and a payout cannot both happen; balance checks run under the user lock, so
+no negative balance from the service paths; the correct option and the opponent's score, band and time are hidden
+until settlement; `_own` enforces membership; the quiz clock's per-question chain never outruns the five-minute
+deadline and a player who answered some questions and let the last run out is "done", never "absent".
+
+**Not changed, noted.** The "daily winnings ceiling" counts the net gain of wins (5 per win, 100 a day) and ignores
+losses — that is the intended reading ("you reached today's duel winnings"); the wording in the code now says so.
+`db.has_table` reads the schema reflected at startup, so **after the migrations are applied the service must be
+restarted** (a Render redeploy does it); until then the ledger stays "not enabled" on a running process.
+
+**Results.** ruff clean. Offline suite on the fixed tree: **1,446 passed, 9 skipped, none failed** (11 new race and
+deadline tests in it). The database scenario: **32 of 32 checks** on the real database, twice (before and after the
+fixes), nothing left behind. The three live suites **did not complete**: two runs (180 s, then 300 s per test) sat
+in the seeding fixture waiting on the pooler until the per-test timeout, no test body reached — the same
+environment failure as the night of 21 October (§5zs), unrelated to coins; the database scenario on the same
+database ran clean on a single connection minutes before and after. Deployed and smoke-checked: see the changelog
+line for the build.
+
+**The migrations themselves are unchanged by this** (the coins one dry-runs OK; the duels one dry-runs OK) and are
+still **not applied**; the quiz questions are still all `draft`.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1445,6 +1512,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-22 | Full verification of coins and duels (§5zu): independent review + quiz fact-check + a real-database scenario in a rolled-back transaction (`scripts/verify_coins_duels_db.py`, 32 checks) + race and deadline tests. Fixed: the ledger insert could not match the partial unique index on Postgres (every coin write would have been a 500), `table.c.items` was the collection's method, a ledger error could roll back a saved answer (now a savepoint), a judged answer still with the judge at the deadline was forfeited (two-minute grace), promises before the ledger was looked at, seed defaults, removed-question 500s; forty quiz answers verified right, Hebrew formulas given left-to-right marks. Offline 1,446 passed / 9 skipped; live suites did not complete (pooler timeout in the seeding fixture, as on 21 Oct). |
 | 2026-10-22 | Quiz duels, the default mode (§5zt): five American questions from `seeds/duel_quiz.json`, a minute each at most, more correct answers win then the lower total time, no judge; forty questions drafted in both languages, all `draft` until approved; `mode`/`items` on the duel row (migration edited in place, dry run OK, not applied); nine more tests; offline 1,435 passed / 9 skipped. |
 | 2026-10-22 | Coins next to XP and duels, backend only (§5zt): ledger `coin_ledger` (gift 50, STRONG answer 10 / 20 at difficulty 5, STRONG interview turn 10, idempotent by reference), `GET /v1/me/coins` + `POST /v1/me/coins/buy` (ten more questions today for 100, added to the plan's daily cap), `coins_earned` on submissions and interview turns; duels (`duel` table, six routes: open an invite, accept by code, answer on a three-minute clock judged by the same evaluator, cancel, list, read; better band wins the ten, tie → faster, dead heat → refund, no-show forfeits, overdue duels settled on read; pair cooldown 10 min, winnings ceiling 100/day, `daily_cap` switch off). Coins have no monetary value. Migrations `20261022090000_coins.sql` and `20261022100000_duels.sql` dry-run OK, not applied. 31 new tests; offline 1,425 passed / 9 skipped on the tree merged with Harel's fourteen commits (fundamentals service, nine questions). Queue items 18–19 for Harel. |
 | 2026-10-20 | Paying for the site, not mandatory yet: Stripe Checkout, Regular ₪59 (30 a day) and Premium ₪119 (50 a day) priced at 35 % profit by `scripts/pricing.py`, the plan sets the daily cap, the customer portal, the signature-verified idempotent webhook, `REQUIRE_PAYMENT` switch (off), migration written and dry-run (§5zr) |

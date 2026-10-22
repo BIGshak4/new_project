@@ -78,6 +78,7 @@ class Tx(Protocol):
     async def record_billing_event(self, *, event_id: str, kind: str, user_id: uuid.UUID | None, summary: dict) -> bool: ...
     # coins: a ledger (app.repo.coins); absent table -> available() is False, reads are 0, writes refuse
     async def coins_available(self) -> bool: ...
+    def savepoint(self): ...                                   # async context manager: a nested transaction
     async def coin_balance(self, user_id: uuid.UUID) -> int: ...
     async def coin_movements(self, user_id: uuid.UUID, *, limit: int = 20) -> list[Movement]: ...
     async def coin_add(self, *, user_id: uuid.UUID, delta: int, kind: str, reference: str | None, item: str | None = None,
@@ -221,6 +222,13 @@ class DbTx:
 
     async def coins_available(self):
         return await coins.available()
+
+    @asynccontextmanager
+    async def savepoint(self):
+        """A nested transaction: a failure inside is rolled back to here and the outer unit of work goes on
+        (Postgres otherwise aborts the whole transaction on the first error)."""
+        async with self.connection.begin_nested():
+            yield
 
     async def coin_balance(self, user_id):
         return await coins.balance(self.connection, user_id)

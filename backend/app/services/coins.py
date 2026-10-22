@@ -48,7 +48,7 @@ class CoinRules:
     duel_quiz_seconds: int = 60                 # per question, at most
     duel_clock_seconds: int = 180               # the judged mode's clock
     duel_cooldown_minutes: int = 10
-    duel_daily_earning_cap: int | None = 100
+    duel_daily_earning_cap: int | None = 100    # coins WON in duels per day (each win counts its net gain, 5)
     duel_daily_cap: int | None = None
     duel_pool: dict = field(default_factory=dict)
     shop: list[ShopItem] = field(default_factory=list)
@@ -57,6 +57,8 @@ class CoinRules:
 def load_rules(path: Path) -> CoinRules:
     data = json.loads(path.read_text(encoding="utf-8"))
     duel = data.get("duel") or {}
+    if duel.get("mode_default", "quiz") not in ("quiz", "judged"):
+        raise ValueError(f"coins.json: duel.mode_default must be quiz or judged, not {duel.get('mode_default')!r}")
     return CoinRules(starting_gift=int(data.get("starting_gift", 50)), strong_answer=int(data.get("strong_answer", 10)),
                      strong_hard_answer=int(data.get("strong_hard_answer", 20)),
                      hard_difficulty_from=int(data.get("hard_difficulty_from", 5)),
@@ -67,7 +69,7 @@ def load_rules(path: Path) -> CoinRules:
                      duel_quiz_questions=int((duel.get("quiz") or {}).get("questions", 5)),
                      duel_quiz_seconds=int((duel.get("quiz") or {}).get("seconds_per_question", 60)),
                      duel_cooldown_minutes=int(duel.get("cooldown_minutes", 10)),
-                     duel_daily_earning_cap=duel.get("daily_earning_cap"), duel_daily_cap=duel.get("daily_cap"),
+                     duel_daily_earning_cap=duel.get("daily_earning_cap", 100), duel_daily_cap=duel.get("daily_cap"),
                      duel_pool=dict(duel.get("pool") or {}),
                      shop=[ShopItem(key=i["key"], label=i["label"], description=i.get("description", {}), price=int(i["price"]),
                                     effect=dict(i.get("effect") or {})) for i in data.get("shop", [])])
@@ -128,7 +130,7 @@ class CoinsService:
                 await self.ensure_gift(tx, user_id)
             balance = await tx.coin_balance(user_id)
             movements = await tx.coin_movements(user_id, limit=20)
-            earned_today = await tx.coin_sum_since(user_id, kinds=("earn", "payout", "gift"), since=start_of_today())
+            earned_today = await tx.coin_sum_since(user_id, kinds=("earn", "payout", "gift"), since=start_of_today())  # received today
             extra = await tx.coin_sum_since(user_id, kinds=("spend",), since=start_of_today(), meta_key="extra_questions_today")
         return Wallet(balance=balance, earned_today=earned_today, movements=movements, extra_questions_today=extra,
                       rules=self.rules, enabled=enabled)
@@ -146,22 +148,30 @@ class CoinsService:
                                difficulty: int, hints_seen: int, reference_seen: bool, related: bool, turn: int) -> int:
         amount = coins_for_answer(self.rules, band=band, difficulty=difficulty, hints_seen=hints_seen,
                                   reference_seen=reference_seen, related=related, turn=turn)
-        if amount <= 0 or not await self.enabled(tx):
+        if not await self.enabled(tx) or amount <= 0:        # look at the ledger first: the views promise only after
             return 0
-        await self.ensure_gift(tx, user_id)
-        written = await tx.coin_add(user_id=user_id, delta=amount, kind="earn", reference=f"answer:{attempt_id}:{revision}",
-                                    meta={"band": band, "difficulty": difficulty})
+        return await self._award(tx, user_id, amount, reference=f"answer:{attempt_id}:{revision}",
+                                 meta={"band": band, "difficulty": difficulty})
+
+    async def _award(self, tx, user_id: uuid.UUID, amount: int, *, reference: str, meta: dict) -> int:
+        """The earn row in a savepoint: a ledger error is logged and the caller's transaction (the answer, the
+        interview turn) commits regardless (review finding, 2026-10-22). The reference keeps a retry from paying twice."""
+        try:
+            async with tx.savepoint():
+                await self.ensure_gift(tx, user_id)
+                written = await tx.coin_add(user_id=user_id, delta=amount, kind="earn", reference=reference, meta=meta)
+        except Exception:                                   # noqa: BLE001 - coins must never cost an answer
+            log.exception("coins: awarding %s for %s failed; the answer is saved without it", reference, user_id)
+            return 0
         return amount if written else 0
 
     async def award_for_turn(self, tx, *, user_id: uuid.UUID, session_id: uuid.UUID, turn_index: int, band: str | None,
                              hints_seen: int = 0, related: bool = True) -> int:
         amount = coins_for_turn(self.rules, band=band, hints_seen=hints_seen, related=related)
-        if amount <= 0 or not await self.enabled(tx):
+        if not await self.enabled(tx) or amount <= 0:        # look at the ledger first: the views promise only after
             return 0
-        await self.ensure_gift(tx, user_id)
-        written = await tx.coin_add(user_id=user_id, delta=amount, kind="earn", reference=f"turn:{session_id}:{turn_index}",
-                                    meta={"band": band, "interview": True})
-        return amount if written else 0
+        return await self._award(tx, user_id, amount, reference=f"turn:{session_id}:{turn_index}",
+                                 meta={"band": band, "interview": True})
 
     # ------------------------------------------------------------------ spending
 

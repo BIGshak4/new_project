@@ -323,7 +323,7 @@ class TestOverHttp:
         assert accepted.status_code == 200, accepted.text
         body = accepted.json()
         assert body["status"] == "active" and body["role"] == "opponent" and body["question"]["prompt"]
-        assert body["seconds_left"] == 180 and body["pot"] == 10 and body["opponent"]["answered"] is False
+        assert 178 <= body["seconds_left"] <= 180 and body["pot"] == 10 and body["opponent"]["answered"] is False   # real clock
         did = body["id"]
         # the challenger sees the same question; a stranger to the duel does not exist here
         mine = (await client.get(f"/v1/duels/{did}", headers=ha)).json()
