@@ -130,7 +130,8 @@ async def test_completion_changes_no_attempts_grades_metrics_profiles_or_xp(clie
     assert (runtime.store.attempts, runtime.store.profiles, runtime.store.metrics, runtime.store.usage) == before
 
 
-@pytest.mark.parametrize("key", ["quick-hw-61", "quick-hw-100", "quick-sw-61", "quick-sw-88", "quick-sw-89", "quick-sw-100"])
+@pytest.mark.parametrize("key", ["quick-hw-61", "quick-hw-100", "quick-sw-61", "quick-sw-88", "quick-sw-89", "quick-sw-100",
+                                 "quick-hw-101", "quick-hw-125", "quick-sw-101", "quick-sw-118", "quick-sw-119", "quick-sw-125"])
 async def test_expansion_cards_use_the_same_authenticated_completion_flow(client, key):
     http, runtime = client
     _, token = make_token()

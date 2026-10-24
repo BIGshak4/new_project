@@ -1,0 +1,164 @@
+[
+  {
+    "id": "quick-sw-101",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-054"],
+    "title": {"he": "ספירה אחת שאיש לא שלח", "en": "One count nobody sent"},
+    "prompt": {"he": "שלושה מדווחים רשאים לשלוח עד שני אותות כל אחד. הסופר אוסף כל אות פעם אחת. המצב ההתחלתי עלול להוסיף ספירה אחת ללא שולח. למה ספירה של 6 מוכיחה שכל שלושת המדווחים כבר השתתפו?", "en": "Three reporters may each send at most two signals. The counter collects each signal once. The initial state may add one count without a sender. Why does reaching 6 prove that all three reporters participated?"},
+    "answer": {"he": "אם אחד עדיין לא השתתף, רק שני האחרים יכלו לשלוח: לכל היותר 2×2=4 אותות אמיתיים. גם עם הספירה ההתחלתית הנוספת אפשר להגיע רק ל־5. לכן 6 מחייב השתתפות של כולם. הסופר אינו צריך לדעת מי שלח כל אות.", "en": "If one reporter has not participated, only the other two could have sent signals: at most 2×2=4 genuine signals. Even with the extra initial count, the total is at most 5. Therefore 6 requires everyone to have participated. The counter need not identify each signal's sender."},
+    "takeaway": {"he": "חוסמים את תרומת המשתתפים האחרים ואת שגיאת ההתחלה, ואז בוחרים סף גדול מהחסם.", "en": "Bound everyone else's contribution and the initial error, then choose a threshold above that bound."}
+  },
+  {
+    "id": "quick-sw-102",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-054"],
+    "title": {"he": "פעולת חובה בלי למחוק הודעה", "en": "A mandatory action without erasing a message"},
+    "prompt": {"he": "בכל ביקור חייבים להפוך בדיוק מתג אחד משניים. מתג א׳ דלוק פירושו שיש הודעה שטרם נאספה; רק הסופר רשאי למחוק אותה. מה יעשה מבקר שאינו הסופר כשמתג א׳ כבר דלוק?", "en": "Every visit must toggle exactly one of two switches. Switch A being ON means a message remains unread; only the counter may clear it. What should a visitor other than the counter do when A is already ON?"},
+    "answer": {"he": "יהפוך את מתג ב׳ בלבד. כך הוא מבצע את פעולת החובה, אבל משאיר את ההודעה במתג א׳ עד שהסופר יאסוף אותה. למצבו של ב׳ אין משמעות בתקשורת הזאת: הוא סופג פעולות שלא אמורות לשנות את המידע.", "en": "Toggle only switch B. This satisfies the mandatory action while preserving A's message until the counter collects it. B's state carries no meaning in this protocol: it absorbs actions that should not change the information."},
+    "takeaway": {"he": "הפרידו בין פעולה שהכללים מחייבים לבין שינוי המידע שעליו מבוססת ההוכחה.", "en": "Separate the action required by the rules from changes to the information used by the proof."}
+  },
+  {
+    "id": "quick-sw-103",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-079"],
+    "title": {"he": "דיוק שווה, יתרון למתחיל", "en": "Equal accuracy, an advantage to starting"},
+    "prompt": {"he": "א׳ וב׳ מנסים לזכות בפרס בתורות, א׳ ראשון. כל ניסיון מצליח בהסתברות 1/2, באופן עצמאי; הצלחה מסיימת את המשחק וכישלון מעביר תור. האם סיכויי א׳ וב׳ שווים?", "en": "A and B alternate attempts to win a prize, with A first. Each attempt independently succeeds with probability 1/2. Success ends the game; failure passes the turn. Do A and B have equal winning probabilities?"},
+    "answer": {"he": "לא. נסמן את סיכוי א׳ ב־p. הוא זוכה מיד בהסתברות 1/2. אם שניהם נכשלים, בהסתברות 1/4, חוזרים בדיוק למצב ההתחלתי. לכן p=1/2+p/4, ומתקבל p=2/3. לב׳ נשאר סיכוי 1/3.", "en": "No. Let A's winning probability be p. A wins immediately with probability 1/2. If both fail, with probability 1/4, the original situation repeats. Thus p=1/2+p/4, giving p=2/3. B's winning probability is 1/3."},
+    "takeaway": {"he": "סיכוי הצלחה זהה בניסיון בודד אינו מבטל יתרון שנוצר מסדר התורות.", "en": "Equal success per attempt does not remove an advantage created by turn order."}
+  },
+  {
+    "id": "quick-sw-104",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-079"],
+    "title": {"he": "הסיכוי אחרי שהגעת אינו הסיכוי הכולל", "en": "A later chance is not the overall chance"},
+    "prompt": {"he": "שחקן מגיע לשלב גמר בהסתברות 3/5. בתנאי שהגיע, סיכוי הזכייה שלו הוא 1/2. אם לא הגיע, אינו יכול לזכות. מה סיכוי הזכייה הכולל? האם חייבים להניח שההגעה והזכייה עצמאיות?", "en": "A player reaches the final with probability 3/5. Conditional on reaching it, their winning probability is 1/2. They cannot win without reaching it. What is their overall winning probability? Must reaching and winning be independent?"},
+    "answer": {"he": "הסיכוי הוא (3/5)×(1/2)=3/10. מתוך כל חמש אפשרויות שוות־משקל, שלוש מגיעות לגמר, ובממוצע חצי מהן מובילות לזכייה. אין צורך בעצמאות: 1/2 כבר נתון כסיכוי מותנה בהגעה לגמר.", "en": "The probability is (3/5)×(1/2)=3/10. Of every five equal units of probability, three reach the final, and half of that probability leads to winning. Independence is unnecessary: 1/2 was already specified conditional on reaching the final."},
+    "takeaway": {"he": "כופלים הסתברות להגיע לענף בהסתברות התוצאה בתוכו; לא מחליפים סיכוי מותנה בסיכוי כולל.", "en": "Multiply the probability of reaching a branch by the conditional probability within it."}
+  },
+  {
+    "id": "quick-sw-105",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-082"],
+    "title": {"he": "אותה מהירות בסוף, זמן שונה", "en": "Same final speed, different time"},
+    "prompt": {"he": "שתי נסיעות צעצוע נמשכות לאורך 2 מטרים. א׳ עובר מטר ראשון במהירות 1 מטר לשנייה ושני במהירות 2. ב׳ עובר את כל הדרך במהירות 2. מתעלמים מזמן שינוי המהירות. לשניהם אותה מהירות בסוף; האם יגיעו יחד?", "en": "Two toy trips each cover 2 metres. A covers the first metre at 1 metre per second and the second at 2. B covers both metres at 2. Ignore speed-change time. Both finish at the same speed; do they arrive together?"},
+    "answer": {"he": "לא. א׳ זקוק ל־1/1+1/2=1.5 שניות, וב׳ ל־2/2=1 שנייה. מהירות הסיום אינה מגלה כמה זמן בילו בחלקים האיטיים של המסלול. צריך לסכום את זמני הקטעים, לא להשוות רק את המהירות בנקודת הסיום.", "en": "No. A takes 1/1+1/2=1.5 seconds, while B takes 2/2=1 second. Final speed does not reveal how long each spent in slower parts of the route. Add segment times instead of comparing only the speed at the finish."},
+    "takeaway": {"he": "זמן ההגעה תלוי במהירויות לאורך כל הדרך, ולא רק במהירות הסיום.", "en": "Arrival time depends on speeds throughout the route, not just the final speed."}
+  },
+  {
+    "id": "quick-sw-106",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-082"],
+    "title": {"he": "מה קובע את המהירות בגובה נתון?", "en": "What sets speed at a given height?"},
+    "prompt": {"he": "שתי מסות נקודתיות שונות מתחילות ממנוחה ויורדות 5 מטרים במסלולים אידאליים. אין חיכוך, גלגול או אובדן אנרגיה; כוחות המסילה אינם מבצעים עבודה. עם g=10 מטר לשנייה בריבוע, מה מהירותן לאחר הירידה? האם המסה משנה?", "en": "Two different point masses start at rest and descend 5 metres along ideal tracks. There is no friction, rolling or energy loss, and track forces do no work. With g=10 metres per second squared, what speeds do they reach? Does mass matter?"},
+    "answer": {"he": "שתיהן מגיעות ל־10 מטר לשנייה. איבוד אנרגיית הגובה הוא m×10×5, והוא שווה ל־mv²/2. המסה m מצטמצמת, ולכן v²=100. באותן הנחות, הפרש הגובה קובע את המהירות; אורך המסלול לבדו אינו קובע אותה.", "en": "Both reach 10 metres per second. Lost gravitational energy is m×10×5, equal to mv²/2. Mass m cancels, giving v²=100. Under these assumptions, height loss sets speed; path length alone does not."},
+    "takeaway": {"he": "בחרו חוק שימור מתאים ובדקו אילו נתונים באמת נשארים אחרי הצמצום.", "en": "Use the appropriate conservation law and check which quantities remain after cancellation."}
+  },
+  {
+    "id": "quick-sw-107",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-084", "PREP-085"],
+    "title": {"he": "משקל כפול, זרוע קצרה", "en": "Double the weight, half the arm"},
+    "prompt": {"he": "מוט אופקי חסר משקל נשען על ציר שאינו מספק מומנט. תולים 2 ק״ג במרחק מטר משמאל, וקילוגרם אחד במרחק שני מטרים מימין. האם המוט מאוזן סטטית בשדה כבידה אחיד?", "en": "A weightless horizontal bar rests on a pivot supplying no torque. Hang 2 kg one metre to the left and 1 kg two metres to the right. Is the bar statically balanced in uniform gravity?"},
+    "answer": {"he": "כן. המומנטים מנוגדים ושווים: משמאל 2×g×1 ומימין 1×g×2. לא צריך מסות שוות, אלא מכפלות שוות של כוח בזרוע. התמיכה מספקת את הכוח האנכי שמאזן את המשקל הכולל.", "en": "Yes. Opposing torques are equal: 2×g×1 on the left and 1×g×2 on the right. Equal masses are unnecessary; force times lever arm must match. The support supplies the vertical force balancing the total weight."},
+    "takeaway": {"he": "איזון סביב ציר תלוי גם בכמות המשקל וגם במרחקו מהציר.", "en": "Balance about a pivot depends on both the weight and its distance from the pivot."}
+  },
+  {
+    "id": "quick-sw-108",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-084"],
+    "title": {"he": "ימין ושמאל מתבטלים, אבל מה עם קדימה?", "en": "Left and right cancel, but what about forward?"},
+    "prompt": {"he": "צלחת אופקית מאוזנת נתמכת בנקודה (0,0) ללא מומנט מהתמיכה. מניחים שתי מסות שוות ב־(−1,1) וב־(1,1). האם ביטול קואורדינטות x מבטיח שהצלחת תישאר מאוזנת סטטית?", "en": "A balanced horizontal plate has a point support at (0,0) supplying no torque. Place equal masses at (−1,1) and (1,1). Does cancellation of the x coordinates guarantee continued static balance?"},
+    "answer": {"he": "לא. סכום ה־x הוא 0, אבל סכום ה־y הוא 2. שתי המסות נמצאות באותו צד בכיוון y, ולכן מרכז המסה הנוסף אינו מעל התמיכה. עבור מסות שוות צריך שסכום שני רכיבי המיקום יהיה (0,0), ולא רק רכיב אחד.", "en": "No. The x sum is 0, but the y sum is 2. Both masses lie on the same side in the y direction, so their combined centre of mass is not above the support. For equal masses, both position components must sum to (0,0), not just one."},
+    "takeaway": {"he": "בדיקה במישור דורשת את שני הרכיבים; סימטריה בציר אחד אינה מספיקה.", "en": "A planar condition needs both components; symmetry along one axis is insufficient."}
+  },
+  {
+    "id": "quick-sw-109",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-085"],
+    "title": {"he": "מחברים קבוצות שכבר מאוזנות", "en": "Combine groups that are already balanced"},
+    "prompt": {"he": "במודל אידאלי, שלוש אבנים יוצרות יחד מומנט אפס סביב תמיכה. בנפרד, זוג אבנים נוסף יוצר מומנט אפס סביב אותה תמיכה. האם אפשר להניח את כל חמש האבנים במיקומים האלה ועדיין לקבל מומנט אפס?", "en": "In an ideal model, three stones together produce zero torque about a support. Separately, another pair produces zero torque about the same support. Can all five be placed at those positions while retaining zero torque?"},
+    "answer": {"he": "כן, אם המיקומים והכוחות נשארים כפי שהוגדרו. מומנטים מתחברים, ולכן המומנט הכולל הוא 0+0=0. לא חייבים למצוא לכל אבן אבן נגדית: קבוצה שלמה יכולה לאזן את עצמה, ואז אפשר לצרף לה קבוצה מאוזנת נוספת.", "en": "Yes, provided positions and forces remain as specified. Torques add, so the combined torque is 0+0=0. Each stone need not have an opposite partner: a whole group can balance itself, then combine with another balanced group."},
+    "takeaway": {"he": "כשגודל מתחבר באופן ליניארי, אפשר לבנות פתרון מקבוצות שכל אחת כבר מבטלת אותו.", "en": "For an additive quantity, build a solution from groups that each cancel it independently."}
+  },
+  {
+    "id": "quick-sw-110",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-084", "PREP-085"],
+    "title": {"he": "מאוזן ברגע זה אינו בהכרח יציב", "en": "Balanced now does not necessarily mean stable"},
+    "prompt": {"he": "גוף קשיח יכול להסתובב בחופשיות סביב ציר קבוע. מרכז המסה שלו נמצא בדיוק מעל הציר, ולכן מומנט הכבידה כרגע אפס. האם מכך נובע שהגוף יחזור למצבו אחרי הטיה קטנה?", "en": "A rigid body rotates freely about a fixed pivot. Its centre of mass is directly above the pivot, so gravitational torque is currently zero. Does this imply that it returns after a small tilt?"},
+    "answer": {"he": "לא. בהטיה קטנה מרכז המסה יורד, והכבידה ממשיכה להפיל אותו מהמצב העליון: זהו שיווי משקל לא יציב. מומנט אפס בודק את המצב המדויק; יציבות שואלת מה קורה אחרי הפרעה קטנה. אין להסיק את השנייה מהראשון.", "en": "No. A small tilt lowers the centre of mass, and gravity drives it farther from the upper position: this equilibrium is unstable. Zero torque tests the exact configuration; stability asks what happens after a small disturbance. The first does not establish the second."},
+    "takeaway": {"he": "הבחינו בין תנאי שיווי משקל לבין תגובת המערכת להפרעה.", "en": "Distinguish an equilibrium condition from the system's response to a disturbance."}
+  },
+  {
+    "id": "quick-sw-111",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-087"],
+    "title": {"he": "שלושה חיתוכים בקרן", "en": "Three crossings along a ray"},
+    "prompt": {"he": "מנקודה שאינה על שפת מצולע פשוט מעבירים קרן עד אינסוף. היא חוצה ממש את השפה שלוש פעמים, בלי לפגוע בקודקודים ובלי להשיק. האם הנקודה בפנים או בחוץ? המצולע אינו חייב להיות קמור.", "en": "A ray from a point off a simple polygon's boundary crosses the boundary properly three times before infinity, without touching vertices or tangencies. Is the point inside or outside? The polygon need not be convex."},
+    "answer": {"he": "בפנים. רחוק מספיק נמצאים מחוץ למצולע החסום. כשחוזרים לאורך הקרן, כל חצייה מחליפה בין חוץ לפנים: אחרי שלוש חציות מגיעים לפנים. במצולע קעור ייתכנו כמה קטעי פנים לאורך אותו ישר; אין להסתפק בחיתוך הראשון.", "en": "Inside. Sufficiently far away is outside the bounded polygon. Moving back along the ray, each proper crossing switches between outside and inside; three switches leave us inside. A concave polygon can have several interior intervals on one line, so the first intersection alone is insufficient."},
+    "takeaway": {"he": "סופרים את כל חציות השפה ומשתמשים בזוגיות, גם כשהצורה קעורה.", "en": "Count all proper boundary crossings and use parity, including for concave shapes."}
+  },
+  {
+    "id": "quick-sw-112",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-087"],
+    "title": {"he": "קודקוד אחד, לא שתי חציות", "en": "One vertex, not two crossings"},
+    "prompt": {"he": "קרן אופקית פוגעת בדיוק בקודקוד מצולע. אחת הצלעות הסמוכות ממשיכה מתחת לגובה הקרן והשנייה מעליו. למה אסור לספור כל צלע עם שני קצותיה כלולים, ואיזה כלל מונע את הטעות?", "en": "A horizontal ray hits a polygon vertex exactly. One adjacent edge continues below the ray's height and the other above it. Why must both edges not include both endpoints when counting, and what rule prevents the error?"},
+    "answer": {"he": "יש חצייה אחת, אבל הכללת שני הקצוות בכל צלע תספור אותה פעמיים ותשנה את הזוגיות בטעות. בודקים צלע רק אם בדיוק אחד מקצותיה גבוה מגובה הקרן: (Ay>Py)!=(By>Py). כך במקרה הזה רק הצלע העולה נבחרת. עדיין צריך לבדוק שהחיתוך בכיוון הקרן.", "en": "There is one crossing, but including both endpoints of both edges counts it twice and corrupts parity. Consider an edge only when exactly one endpoint is above the ray: (Ay>Py)!=(By>Py). Here only the edge extending upward qualifies. The intersection must still lie in the ray's direction."},
+    "takeaway": {"he": "כשמקטעים חולקים קצה, קבעו כלל אחיד שמונע ספירה כפולה של אותו אירוע.", "en": "When segments share an endpoint, use a consistent convention to avoid counting the same event twice."}
+  },
+  {
+    "id": "quick-sw-113",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-087"],
+    "title": {"he": "גבול שאינו פשוט צריך כלל פנים", "en": "A nonsimple boundary needs an inside rule"},
+    "prompt": {"he": "מתאר סגור מקיף נקודה פעמיים באותו כיוון. האם הכלל ״מספר חציות אי־זוגי״ והכלל ״מספר ליפופים לא אפס״ בהכרח מסווגים אותה באופן זהה? מותר למתאר לחפוף לעצמו.", "en": "A closed boundary goes around a point twice in the same direction. Must the odd-crossing rule and the nonzero-winding rule classify it identically? The boundary is allowed to overlap itself."},
+    "answer": {"he": "לא. למשל, בהקפה כפולה של אותו ריבוע, קרן מנקודה מרכזית חוצה את הגבול פעמיים. כלל הזוגיות מסווג אותה בחוץ; מספר הליפופים הוא 2, ולכן כלל הליפוף מסווג בפנים. עבור גבול שאינו פשוט חייבים להגדיר מה פירוש ״בפנים״ לפני בחירת אלגוריתם.", "en": "No. For example, traversing the same square twice gives two ray crossings from its centre. The parity rule classifies it outside; its winding number is 2, so nonzero winding classifies it inside. For a nonsimple boundary, define what “inside” means before choosing an algorithm."},
+    "takeaway": {"he": "אלגוריתם נכון תלוי גם בהגדרת התוצאה, ולא רק ברשימת נקודות הקלט.", "en": "A correct algorithm depends on the output's definition, not just the input vertices."}
+  },
+  {
+    "id": "quick-sw-114",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-090"],
+    "title": {"he": "תוספת להיקף בלי תלות ברדיוס המקורי", "en": "Added circumference does not depend on the original radius"},
+    "prompt": {"he": "לחבל מעגלי מוסיפים 2π ס״מ ומסדרים אותו שוב כמעגל בעל אותו מרכז. בכמה גדל הרדיוס? האם התשובה שונה לחבל סביב כוס לעומת חבל סביב כדור הארץ? מניחים מעגלים אידאליים ללא שקיעה.", "en": "Add 2π centimetres to a circular rope and reshape it as a circle with the same centre. How much does its radius increase? Does the answer differ around a cup versus around Earth? Assume ideal circles without sagging."},
+    "answer": {"he": "הרדיוס גדל ב־1 ס״מ בשני המקרים. אם הרדיוס המקורי R והתוספת h, הפרש ההיקפים הוא 2π(R+h)−2πR=2πh. מציבים תוספת של 2π ס״מ ומקבלים h=1 ס״מ. הרדיוס המקורי מתבטל בחיסור.", "en": "The radius increases by 1 centimetre in both cases. With original radius R and increase h, the circumference difference is 2π(R+h)−2πR=2πh. Setting the added length to 2π centimetres gives h=1 centimetre. The original radius cancels in the subtraction."},
+    "takeaway": {"he": "כששואלים על שינוי, חיסור שני המצבים עשוי לבטל נתון שנראה חשוב.", "en": "When asked about a change, subtracting the two states may eliminate a seemingly important quantity."}
+  },
+  {
+    "id": "quick-sw-115",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-063"],
+    "title": {"he": "איטי בדרך, מהיר בזווית", "en": "Slower along the path, faster around the centre"},
+    "prompt": {"he": "שחיין מקיף מעגל ברדיוס 1/4 מטר במהירות מטר לשנייה. רץ מקיף מעגל בעל אותו מרכז ברדיוס מטר במהירות 3 מטר לשנייה. מי משנה את הזווית סביב המרכז מהר יותר? אין צורך לנתח בריחה.", "en": "A swimmer circles at radius 1/4 metre and speed 1 metre per second. A runner circles the same centre at radius 1 metre and speed 3 metres per second. Who changes their angle about the centre faster? No escape analysis is required."},
+    "answer": {"he": "השחיין: המהירות הזוויתית היא מהירות הדרך חלקי הרדיוס. אצלו 1/(1/4)=4 רדיאנים לשנייה, ואצל הרץ 3/1=3. הרץ עובר יותר מטרים בשנייה, אבל נדרש לו מסלול ארוך יותר כדי לשנות זווית באותה מידה.", "en": "The swimmer: angular speed is path speed divided by radius. The swimmer achieves 1/(1/4)=4 radians per second, versus the runner's 3/1=3. The runner covers more metres per second but needs a longer path for the same angle change."},
+    "takeaway": {"he": "השוו את הגודל שמתאים למטרה: יתרון במהירות דרך אינו בהכרח יתרון במהירות זוויתית.", "en": "Compare the quantity relevant to the goal: faster path speed need not mean faster angular speed."}
+  },
+  {
+    "id": "quick-sw-116",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-093"],
+    "title": {"he": "שטח שווה אינו אותה צורה", "en": "Equal area does not mean the same shape"},
+    "prompt": {"he": "מלבן במידות 1×4 וריבוע במידות 2×2 שניהם בעלי שטח 4. האם הם חופפים, כלומר אפשר להתאים אותם בדיוק באמצעות הזזה, סיבוב או שיקוף בלבד? האם ״חלקים שווי שטח״ בהכרח דורש חפיפה?", "en": "A 1×4 rectangle and a 2×2 square both have area 4. Are they congruent, meaning an exact match using only translation, rotation or reflection? Does asking for equal-area pieces necessarily require congruence?"},
+    "answer": {"he": "לא ולא. למלבן צלעות באורכים 1 ו־4, ולריבוע צלעות באורך 2; הזזה, סיבוב ושיקוף אינם משנים אורכים. שטח שווה הוא דרישה חלשה יותר מחפיפה. לכן צריך לקרוא אם השאלה דורשת רק שטח שווה או גם אותה צורה.", "en": "No to both. The rectangle has side lengths 1 and 4; the square has sides of length 2. Translation, rotation and reflection preserve lengths. Equal area is weaker than congruence. Check whether the problem requires equal area alone or the same shape as well."},
+    "takeaway": {"he": "הגדירו מה צריך להיות שווה: כמות שטח, צורה או שניהם.", "en": "Specify what must match: amount of area, shape, or both."}
+  },
+  {
+    "id": "quick-sw-117",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-025"],
+    "title": {"he": "כל תשובה משנה גם את הכלים שנותרו", "en": "Each answer also changes the tools left"},
+    "prompt": {"he": "יש שני כדורים זהים הנשברים מקומת סף ומעלה; כדור ששרד ניתן לשימוש חוזר. קומה 0 בטוחה וייתכן שאין קומה שוברת בטווח. עם שלוש זריקות לכל היותר, כמה קומות אפשר לבדוק תוך זיהוי הסף בוודאות?", "en": "Two identical balls break at a threshold floor and above; surviving balls are reusable. Floor 0 is safe; there may be no breaking floor in the range. With at most three drops, how many floors can be covered while identifying the threshold with certainty?"},
+    "answer": {"he": "6 קומות. זריקה ראשונה בקומה 3: אם נשבר, נשארות שתי זריקות עם כדור אחד לבדיקת 1 ו־2. אם שרד, אפשר לבדוק את שלוש הקומות שמעליו בשתי זריקות ושני כדורים. זה גם החסם: שתי זריקות מכסות 2 קומות עם כדור אחד, או 3 עם שניים; יחד 2+1+3=6.", "en": "6 floors. First drop at 3: breakage leaves two drops with one ball to test 1 and 2. Survival leaves two drops with two balls for the three floors above. This is also the bound: two drops cover 2 floors with one ball, or 3 with two; together 2+1+3=6."},
+    "takeaway": {"he": "עץ בדיקות חייב להתחשב במשאבים שנותרים בכל ענף, ולא רק במספר התשובות האפשריות.", "en": "A testing tree must account for resources remaining in each branch, not just possible answers."}
+  },
+  {
+    "id": "quick-sw-118",
+    "topic": "reasoning",
+    "interviewIds": ["PREP-096"],
+    "title": {"he": "מילת צבע שמשמשת כהודעה", "en": "A color word used as a message"},
+    "prompt": {"he": "בחידת הכובעים מסכימים שהראשון אומר ״לבן״ כדי לציין שמספר הכובעים השחורים שהוא רואה זוגי. הוא אומר ״לבן״. האם הבאים רשאים להתייחס לכובע שלו כלבן? צבע כובעו אינו גלוי לו ואין הגבלה על מלאי הצבעים.", "en": "In a hats puzzle, the first speaker agrees to say “white” when the number of visible black hats is even. They say “white.” May later speakers treat that speaker's own hat as white? Their own hat is invisible to them, and color counts are unrestricted."},
+    "answer": {"he": "לא. ״לבן״ כאן מוסר זוגיות של כובעים אחרים, ולא עובדה ידועה על כובעו של הדובר. החלפת כובעו בלבד אינה משנה את מה שראה או את ההודעה ששלח. הבאים משתמשים בהודעה כמידע מקודד; אסור להוסיף אותה לרשימת צבעי הכובעים שכבר ידועים בוודאות.", "en": "No. Here “white” communicates parity of other hats, not a known fact about the speaker's hat. Changing only that hat changes neither the view nor the message. Later speakers use the reply as encoded information; they must not add it to the list of hat colors already known with certainty."},
+    "takeaway": {"he": "משמעותה של הודעה נקבעת בפרוטוקול; מילה שנשמעת כמו תשובה אינה בהכרח עובדה על הדובר.", "en": "A protocol defines a message's meaning; a word resembling an answer need not state a fact about its speaker."}
+  }
+]

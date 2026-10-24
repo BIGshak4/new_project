@@ -1,0 +1,618 @@
+[
+  {
+    "id": "quick-hw-101",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-001"
+    ],
+    "title": {
+      "he": "לאיזה משקל שייך הנשא?",
+      "en": "Which weight does the carry have?"
+    },
+    "prompt": {
+      "he": "שלושה ביטים במשקל 4 נכנסים ל־Full Adder. משקל פלט הסכום S הוא 4. באיזו עמודת משקל צריך להשתמש בנשא K בשלב הבא: עם ביטים במשקל 4 או במשקל 8?",
+      "en": "Three weight-4 bits enter a full adder. Its sum output S has weight 4. In the next stage, should carry K be combined with other weight-4 bits or with weight-8 bits?"
+    },
+    "answer": {
+      "he": "עם ביטים במשקל 8. המחבר מקיים `A+B+C=S+2K`, ולכן `4(A+B+C)=4S+8K`. למשל שלושה אחדות מייצגים 12: סכום 1 במשקל 4 ונשא 1 במשקל 8. כדי לשמר את הערך, כניסות של מחבר רגיל באותו שלב צריכות להשתייך לאותו משקל.",
+      "en": "With weight-8 bits. The adder preserves `A+B+C=S+2K`, so `4(A+B+C)=4S+8K`. Three ones represent 12: sum 1 at weight 4 plus carry 1 at weight 8. To preserve value, inputs combined by an ordinary adder at one stage must share the same weight."
+    },
+    "takeaway": {
+      "he": "ברשת מחברים שומרים על הערך באמצעות משקל כפול לכל נשא.",
+      "en": "An adder network preserves value by assigning each carry double the input weight."
+    },
+    "code": {
+      "language": "python",
+      "text": "def weighted(a, b, c):\n    s = a ^ b ^ c\n    carry = (a & b) | (a & c) | (b & c)\n    return 4 * s + 8 * carry"
+    }
+  },
+  {
+    "id": "quick-hw-102",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-052"
+    ],
+    "title": {
+      "he": "מתי הנשיאה תלויה בכניסה השלישית?",
+      "en": "When does carry depend on carry-in?"
+    },
+    "prompt": {
+      "he": "ב־Full Adder, מתי נשא היציאה נקבע על ידי A ו־B לבדם, ומתי הוא שווה לנשא הכניסה Cin?",
+      "en": "In a full adder, when do A and B alone determine carry-out, and when does carry-out equal carry-in Cin?"
+    },
+    "answer": {
+      "he": "אם A=B=0, הנשיאה היא 0 בלי קשר ל־Cin. אם A=B=1, הנשיאה היא 1. אם A שונה מ־B, כבר יש בדיוק אחד אחד, ולכן Cin קובע אם הסכום מגיע ל־2. נגדיר `P=A XOR B`: אם P=1 בוחרים Cin, ואחרת בוחרים A.",
+      "en": "If A=B=0, carry is 0 regardless of Cin. If A=B=1, carry is 1. If A differs from B, exactly one is already present, so Cin decides whether the total reaches 2. Set `P=A XOR B`: select Cin when P=1, otherwise select A."
+    },
+    "takeaway": {
+      "he": "אפשר לבנות נשיאה מבחירת אחד משני ערכים לפי השאלה אם הקלטים שונים.",
+      "en": "Carry can select between two values according to whether the operand bits differ."
+    },
+    "code": {
+      "language": "python",
+      "text": "def carry_out(a, b, cin):\n    return cin if a ^ b else a"
+    }
+  },
+  {
+    "id": "quick-hw-103",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-011",
+      "PREP-052"
+    ],
+    "title": {
+      "he": "גוזרים חיבורי MUX מהפונקציה",
+      "en": "Derive MUX connections from the function"
+    },
+    "prompt": {
+      "he": "רוצים לממש `F=(NOT A AND B) OR (A AND C)` בעזרת MUX שבוחר D0 כאשר S=0 ו־D1 כאשר S=1. בוחרים S=A. איך נגזור את חיבורי הנתונים בלי לנחש?",
+      "en": "Implement `F=(NOT A AND B) OR (A AND C)` with a MUX selecting D0 for S=0 and D1 for S=1. Set S=A. How can the data connections be derived without guessing?"
+    },
+    "answer": {
+      "he": "מציבים A=0 בפונקציה ומקבלים B, ולכן D0=B. מציבים A=1 ומקבלים C, ולכן D1=C. שתי ההצבות מכסות את כל ערכי A. באופן כללי מחברים D0 לפונקציה לאחר הצבת S=0, ואת D1 לפונקציה לאחר הצבת S=1.",
+      "en": "Substitute A=0 into the function, obtaining B, so D0=B. Substitute A=1, obtaining C, so D1=C. These two cases cover every A. In general, connect D0 to the function with S fixed at 0, and D1 to the function with S fixed at 1."
+    },
+    "takeaway": {
+      "he": "קובעים כניסת בחירה, ואז מחשבים בנפרד מה הפלט צריך להיות בכל ערך שלה.",
+      "en": "Choose the select input, then derive the required output for each of its values."
+    },
+    "diagram": {
+      "kind": "gate",
+      "gate": "MUX",
+      "inputs": [
+        "D0=B",
+        "D1=C",
+        "S=A"
+      ],
+      "output": "F"
+    }
+  },
+  {
+    "id": "quick-hw-104",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-092"
+    ],
+    "title": {
+      "he": "משתפים שער במימוש XOR",
+      "en": "Share a gate when building XOR"
+    },
+    "prompt": {
+      "he": "נתון `t=NAND(A,B)`. מוסיפים `u=NAND(A,t)`, `v=NAND(B,t)` ולבסוף `Y=NAND(u,v)`. איזו פונקציה מתקבלת, וכמה שערי NAND נדרשים?",
+      "en": "Let `t=NAND(A,B)`, followed by `u=NAND(A,t)`, `v=NAND(B,t)` and `Y=NAND(u,v)`. What function results, and how many NAND gates are required?"
+    },
+    "answer": {
+      "he": "מתקבל XOR בארבעה שערים. עבור A,B בסדר 00,01,10,11 הפלט הוא 0,1,1,0. השער t משותף לשני הענפים; אין צורך לבנות אותו פעמיים. זהו מימוש לוגי, ללא טענה על תזמון פיזי או גליצ׳ים.",
+      "en": "This builds XOR with four gates. For A,B in order 00,01,10,11, the output is 0,1,1,0. The t gate feeds both branches and need not be built twice. This is a logical construction, with no claim about physical timing or glitches."
+    },
+    "takeaway": {
+      "he": "תוצאת ביניים משותפת יכולה לצמצם את מספר השערים במימוש.",
+      "en": "Sharing an intermediate result can reduce the gate count."
+    },
+    "code": {
+      "language": "python",
+      "text": "def nand_xor(a, b):\n    t = 1 - (a & b)\n    u, v = 1 - (a & t), 1 - (b & t)\n    return 1 - (u & v)"
+    }
+  },
+  {
+    "id": "quick-hw-105",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-086"
+    ],
+    "title": {
+      "he": "בקשה גבוהה חוסמת נמוכה",
+      "en": "A higher request blocks a lower one"
+    },
+    "prompt": {
+      "he": "וקטור בקשות x[3:0] צריך להפיק וקטור y באותו רוחב, שבו רק הבקשה הפעילה הגבוהה ביותר נשארת 1. איך מחשבים את y1?",
+      "en": "Requests x[3:0] produce a same-width vector y retaining only the highest active request. How is y1 computed?"
+    },
+    "answer": {
+      "he": "`y1=x1 AND NOT(x2 OR x3)`. בקשה 1 נשמרת רק כשהיא פעילה ואין אף בקשה גבוהה ממנה. x0 אינו משפיע עליה. למשל עבור x=1010 הפלט הוא 1000, ולא האינדקס הבינארי 11. אם כל הבקשות אפס, גם הפלט אפס.",
+      "en": "`y1=x1 AND NOT(x2 OR x3)`. Request 1 survives only when active and no higher request is active. x0 cannot affect it. For x=1010 the output is 1000, rather than binary index 11. All-zero requests produce all-zero output."
+    },
+    "takeaway": {
+      "he": "בחירת ביט בעדיפות מחייבת גם בקשה מקומית וגם היעדר בקשה גבוהה יותר.",
+      "en": "Priority selection requires a local request and the absence of any higher request."
+    },
+    "code": {
+      "language": "python",
+      "text": "def keep_bit_one(x):\n    return ((x >> 1) & 1) & int((x >> 2) == 0)"
+    }
+  },
+  {
+    "id": "quick-hw-106",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-086"
+    ],
+    "title": {
+      "he": "אותה עבודה, פחות רמות",
+      "en": "Same work, fewer levels"
+    },
+    "prompt": {
+      "he": "מסכמים n ביטי בקשה לאות יחיד שמציין אם יש בקשה פעילה, בעזרת שערי OR בעלי שתי כניסות. מה ההבדל בעומק הלוגי בין שרשרת שערים לעץ מאוזן, בהנחה שעיכוב כל שער קבוע?",
+      "en": "Combine n request bits into one signal indicating whether any request is active, using two-input OR gates. How does logical depth differ between a serial chain and a balanced tree, assuming constant delay per gate?"
+    },
+    "answer": {
+      "he": "בשרשרת מידע עשוי לעבור דרך n−1 שערים. בעץ מאוזן בעל שתי כניסות לשער הוא עובר דרך `ceil(log2(n))` רמות. בשניהם נדרשים n−1 שערים עבור n>=2. הניתוח מתייחס לשלב הסיכום בלבד, מניח מספר כניסות חסום ומתעלם מחיווט ועומסים; הוא אינו הבטחת תזמון פיזי.",
+      "en": "A chain can require information to cross n−1 gates. A balanced two-input tree has `ceil(log2(n))` levels. Both need n−1 gates for n>=2. This describes only the summary stage, assumes bounded fan-in and ignores wiring and loading; it is not a physical timing guarantee."
+    },
+    "takeaway": {
+      "he": "מספר הרכיבים ועומק התלות ביניהם הם מדדים שונים.",
+      "en": "Component count and the depth of dependencies are different measures."
+    }
+  },
+  {
+    "id": "quick-hw-107",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-083"
+    ],
+    "title": {
+      "he": "איך משוב ב־MUX זוכר ביט?",
+      "en": "How does MUX feedback retain a bit?"
+    },
+    "prompt": {
+      "he": "במודל לוגי של נועל מחברים MUX כך ש־S=EN, D0=Q, D1=D, והפלט הוא Q. מה קורה כש־EN=0, ומה קורה כש־EN=1?",
+      "en": "An ideal logical latch uses a MUX with S=EN, D0=Q, D1=D, and output Q. What happens for EN=0 and for EN=1?"
+    },
+    "answer": {
+      "he": "כאשר EN=0 נבחר Q עצמו: מצב יציב קודם יכול להישמר. כאשר EN=1 נבחר D, ולכן הנועל שקוף ויכול לעקוב אחר שינויי D. המשוב אינו קובע ערך התחלתי. זהו מודל עקרוני לאחסון; מימוש פיזי מחייב תא זיכרון ותנאי תזמון מתאימים.",
+      "en": "With EN=0, Q feeds itself, allowing a previously stable value to persist. With EN=1, D is selected, so the latch is transparent and can follow D changes. Feedback does not define initialization. This is a conceptual storage model; physical implementation needs suitable storage circuitry and timing constraints."
+    },
+    "takeaway": {
+      "he": "בחירה בין משוב לנתון חדש יוצרת החזקה או שקיפות, בלי להגדיר מצב התחלתי.",
+      "en": "Selecting feedback or new data gives hold or transparency without defining initialization."
+    }
+  },
+  {
+    "id": "quick-hw-108",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-083"
+    ],
+    "title": {
+      "he": "למה שני הנועלים אינם פתוחים יחד?",
+      "en": "Why must two latches not open together?"
+    },
+    "prompt": {
+      "he": "שני נועלים מחוברים בטור. כדי ליצור רגיסטר בחזית עולה, הראשון שקוף כש־CLK=0 והשני כש־CLK=1. למה לא להפוך את שניהם לשקופים כש־CLK=1?",
+      "en": "Two latches are connected in series. For a rising-edge register, the first is transparent at CLK=0 and the second at CLK=1. Why not make both transparent at CLK=1?"
+    },
+    "answer": {
+      "he": "אם שניהם פתוחים יחד, שינוי בקלט עשוי לעבור דרך שניהם במהלך הרמה הגבוהה. בפאזות הפוכות, הראשון נסגר בחזית העלייה והשני מעביר את הערך שנשמר בו. כשהראשון שוב פתוח, השני סגור. המודל מניח תנאי תזמון תקינים; חפיפת פתיחה פיזית עלולה להפריע.",
+      "en": "If both open together, input changes may pass through both during the high level. With opposite phases, the first closes at the rising edge and the second passes its stored value. When the first reopens, the second is closed. This assumes valid timing; physical transparency overlap can break that behavior."
+    },
+    "takeaway": {
+      "he": "דגימה בחזית נוצרת מהפרדה בזמן בין קליטת הנתון לבין העברתו למוצא.",
+      "en": "Edge sampling separates input acquisition from output transfer in time."
+    }
+  },
+  {
+    "id": "quick-hw-109",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-091"
+    ],
+    "title": {
+      "he": "להשוות את ההווה לדגימה האחרונה",
+      "en": "Compare now with the last sample"
+    },
+    "prompt": {
+      "he": "Q שומר את In שנדגם בחזית השעון העולה האחרונה. רוצים OUT=1 כשהקלט הנוכחי שונה מהדגימה, גם בעלייה וגם בירידה. איזה שער מתאים? האם הפלט זוכר כל מעבר שהתרחש?",
+      "en": "Q stores In sampled at the last rising clock edge. OUT should be 1 when the current input differs from that sample, for either transition direction. Which gate fits? Does it remember every transition?"
+    },
+    "answer": {
+      "he": "`OUT=In XOR Q`. שינוי יחיד אחרי הדגימה יוצר אי־שוויון עד החזית הבאה. אבל שני שינויים שחוזרים לערך המקורי מבטלים את אי־השוויון עוד לפני הדגימה. המעגל מציג הבדל נוכחי; הוא אינו יומן אירועים. מניחים יציבות סביב חזיתות הדגימה.",
+      "en": "`OUT=In XOR Q`. A single transition after sampling creates a mismatch until the next edge. Two transitions returning to the original value remove the mismatch even before sampling. This circuit indicates current disagreement; it is not an event log. Assume stability around sampling edges."
+    },
+    "takeaway": {
+      "he": "השוואה למצב שמור יכולה לזהות הבדל, אך אינה בהכרח זוכרת אירוע שחלף.",
+      "en": "Comparison with saved state detects a difference but need not retain a past event."
+    }
+  },
+  {
+    "id": "quick-hw-110",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-091",
+      "PREP-042"
+    ],
+    "title": {
+      "he": "הפולס לא תמיד באורך מחזור",
+      "en": "The pulse is not always one cycle"
+    },
+    "prompt": {
+      "he": "במעגל OUT=In XOR Q, כאשר Q נדגם בחזיתות עולה כל 10ns, In משתנה פעם אחת ב־3ns. חזיתות השעון ב־0 וב־10ns. כמה זמן OUT גבוה במודל ללא עיכובים?",
+      "en": "For OUT=In XOR Q, Q samples on rising edges every 10ns. In changes once at 3ns, between clock edges at 0 and 10ns. How long is OUT high in a zero-delay model?"
+    },
+    "answer": {
+      "he": "7ns: מרגע השינוי ב־3ns ועד הדגימה ב־10ns. שינוי ב־8ns היה יוצר פולס של 2ns בלבד. לכן רוחב הפולס תלוי במועד שינוי הקלט. גלאי סינכרוני שמרים פלט רשום למחזור שלם פועל לפי חוזה אחר.",
+      "en": "7ns, from the transition at 3ns until sampling at 10ns. A transition at 8ns would create only a 2ns pulse. Width therefore depends on input transition time. A synchronous detector that asserts a registered output for a full cycle has a different contract."
+    },
+    "takeaway": {
+      "he": "פולס שמסתיים בחזית הבאה אינו בהכרח פולס באורך מחזור שלם.",
+      "en": "A pulse ending at the next edge need not last a full clock period."
+    }
+  },
+  {
+    "id": "quick-hw-111",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-074"
+    ],
+    "title": {
+      "he": "מחלק תדר מול יחס המחזור",
+      "en": "Frequency division versus duty cycle"
+    },
+    "prompt": {
+      "he": "פליפ־פלופ עולה מחובר D=NOT Q. חזיתות העלייה מגיעות כל 10ns, אבל השעון גבוה רק 2ns בכל מחזור. אחרי האתחול, מה יחס המחזור של Q במודל ללא עיכובים?",
+      "en": "A rising-edge flip-flop has D=NOT Q. Rising edges arrive every 10ns, but the clock is high for only 2ns per period. After initialization, what is Q's duty cycle in a zero-delay model?"
+    },
+    "answer": {
+      "he": "50%. Q מתהפך רק בחזיתות העלייה, ולכן נשאר בכל ערך במשך 10ns: גבוה 10ns ונמוך 10ns. המחזור שלו הוא 20ns. יחס המחזור של שעון הכניסה אינו מועתק ל־Q; המרווח הקבוע בין חזיתות העלייה הוא שקובע כאן.",
+      "en": "50%. Q changes only at rising edges, spending 10ns in each value: high for 10ns and low for 10ns, with a 20ns period. The input clock's duty cycle is not copied to Q; the fixed spacing between rising edges determines this result."
+    },
+    "takeaway": {
+      "he": "במחלק מתהפך קצב חזיתות הדגימה קובע את זמני ההחזקה, ולא רוחב רמת השעון הגבוהה.",
+      "en": "For a toggle divider, sampling-edge spacing determines hold durations, rather than input high time."
+    }
+  },
+  {
+    "id": "quick-hw-112",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-074"
+    ],
+    "title": {
+      "he": "לתת למשוב להספיק להתייצב",
+      "en": "Allow feedback time to settle"
+    },
+    "prompt": {
+      "he": "במשוב Q→XOR→D, clock-to-Q מרבי הוא 1ns, XOR וחיווט 2ns ו־setup הוא 1ns. ב־A=1 הפלט מתהפך בכל חזית. האם מחזור הפלט 2T מאפשר לבדוק את הנתיב מול 2T במקום T? אין skew או אי־ודאות.",
+      "en": "In Q→XOR→D feedback, maximum clock-to-Q is 1ns, XOR/wiring 2ns, and setup 1ns. With A=1 the output toggles each edge. Does its 2T output period let us budget against 2T rather than T? Assume no skew or uncertainty."
+    },
+    "answer": {
+      "he": "לא. בכל חזית נשמר Q חדש, והמשוב צריך להכין את D לחזית הבאה כעבור T. לכן `T>=1+2+1=4ns`, אף שמחזור Q הוא 2T. תדירות נמוכה יותר במוצא אינה הופכת את מסלול המשוב למסלול של שני מחזורי שעון. עדיין נדרשת בדיקת hold נפרדת.",
+      "en": "No. Each edge stores a new Q, and feedback must prepare D for the next edge, only T later. Thus `T>=1+2+1=4ns` even though Q has period 2T. A slower output waveform does not make the feedback path a two-cycle path. Hold still requires a separate check."
+    },
+    "takeaway": {
+      "he": "משוב דרך פליפ־פלופ כפוף למסלול תזמון בין שתי חזיתות, כמו כל מסלול רשום אחר.",
+      "en": "Feedback through a flip-flop obeys an edge-to-edge timing path like any other registered path."
+    }
+  },
+  {
+    "id": "quick-hw-113",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-078"
+    ],
+    "title": {
+      "he": "האירוע החמישי, לא המחזור החמישי",
+      "en": "The fifth event, not the fifth cycle"
+    },
+    "prompt": {
+      "he": "מונה c שומר כמה עליות x נצפו מאז הפולס הקודם, בטווח 0..4. prev שומר את הדגימה הקודמת. איזה תנאי על הערכים הישנים יוצר פולס באירוע החמישי?",
+      "en": "Counter c stores x rises since the previous pulse, ranging from 0 through 4. prev stores the previous sample. What condition using old state produces a pulse on the fifth event?"
+    },
+    "answer": {
+      "he": "עלייה היא `x=1 AND prev=0`; מפיקים פולס כאשר יש עלייה וגם c=4. אז מאפסים c; בעלייה אחרת מגדילים אותו, ובאין עלייה מחזיקים. אחר כך מעדכנים prev ל־x. רמה גבוהה שנמשכת כמה מחזורים נספרת פעם אחת בלבד.",
+      "en": "A rise means `x=1 AND prev=0`; pulse when that holds and c=4. Then clear c; on another rise increment it, otherwise hold it. Update prev to x. A high level lasting multiple cycles counts only once."
+    },
+    "takeaway": {
+      "he": "גוזרים תחילה אירוע מדגימות, ורק אז סופרים אירועים לפי המצב שלפני העדכון.",
+      "en": "Derive an event from samples first, then count events using pre-update state."
+    },
+    "code": {
+      "language": "python",
+      "text": "def fifth(prev, c, x):\n    rise = x == 1 and prev == 0\n    pulse = rise and c == 4\n    return x, (0 if pulse else c + int(rise)), int(pulse)"
+    }
+  },
+  {
+    "id": "quick-hw-114",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-095"
+    ],
+    "title": {
+      "he": "חלון שמתחיל באפסים",
+      "en": "A window starting with zeros"
+    },
+    "prompt": {
+      "he": "גלאי מוציא 1 אם לפחות שלוש מתוך עשר הדגימות האחרונות הן 1. לפי החוזה, לפני ההתחלה ההיסטוריה מלאה באפסים. אחרי דגימות 1,1,1, האם כבר מותר לפלט להיות 1?",
+      "en": "A detector outputs 1 when at least three of the last ten samples are 1. Its contract initializes pre-start history to zeros. After samples 1,1,1, may output already be 1?"
+    },
+    "answer": {
+      "he": "כן. אחרי הדגימה השלישית החלון כולל שלוש אחדות ושבעה אפסים קודמים, ולכן הפלט צריך להיות 1. אין צורך לחכות לעשר דגימות אמיתיות. חוזה שמגדיר פלט כלא תקף עד מילוי החלון יהיה חוזה אחר.",
+      "en": "Yes. After sample three, the window contains three ones and seven earlier zeros, so output must be 1. There is no need to wait for ten real samples. A contract marking output invalid until the window fills would be different."
+    },
+    "takeaway": {
+      "he": "מדיניות האתחול של ההיסטוריה קובעת אם חלון חלקי כבר יכול להפיק תוצאה.",
+      "en": "History initialization determines whether a partly filled window can already produce a result."
+    }
+  },
+  {
+    "id": "quick-hw-115",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-095"
+    ],
+    "title": {
+      "he": "רוויה מאבדת מידע שהחלון עוד צריך",
+      "en": "Saturation loses information the window still needs"
+    },
+    "prompt": {
+      "he": "בחלון של עשרה ביטים יש ארבע אחדות, אך מונה האחדות נשמר ברוויה ב־3. הדגימה היוצאת היא 1 והנכנסת 0. האם אפשר פשוט להוריד 1 מהמונה הרווי כדי לבדוק סף שלוש?",
+      "en": "A ten-bit window has four ones, but its count saturates at 3. The departing sample is 1 and the entering sample 0. Can subtracting one from the saturated count correctly check the threshold of three?"
+    },
+    "answer": {
+      "he": "לא. המספר האמיתי יורד מ־4 ל־3, ולכן הפלט נשאר 1. המונה הרווי יורד מ־3 ל־2 ומחזיר תשובה שגויה. בחלון שממנו ערכים גם יוצאים, מידע שמעל הסף עשוי להיות נחוץ בהמשך; אפשר לשמור ספירה מדויקת והיסטוריה.",
+      "en": "No. The real count drops from 4 to 3, so output stays 1. The saturated count drops from 3 to 2 and gives the wrong result. When samples also expire, information above the threshold may matter later; retaining an exact count and history is one option."
+    },
+    "takeaway": {
+      "he": "רוויה מתאימה לספים מצטברים מסוימים, אך לא בהכרח לסכום חלון שממנו גורעים.",
+      "en": "Saturation can suit cumulative thresholds but need not suit a window with removals."
+    }
+  },
+  {
+    "id": "quick-hw-116",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-095"
+    ],
+    "title": {
+      "he": "בדיקה גם מעבר לסף",
+      "en": "Test beyond the threshold too"
+    },
+    "prompt": {
+      "he": "הדרישה היא Y=1 כשיש לפחות שלוש אחדות בחלון. מימוש שגוי בודק count==3. בדיקות עם ספירות 0,2,3 עברו. איזו ספירה נוספת תגלה את השגיאה?",
+      "en": "Y must be 1 for at least three ones in a window. A faulty implementation uses count==3. Tests at counts 0,2,3 passed. What additional count reveals the error?"
+    },
+    "answer": {
+      "he": "למשל 4: הדרישה מחזירה 1, אך בדיקת שוויון מחזירה 0. בודקים מתחת לסף, בסף וגם מעליו. הביטוי הנכון הוא `count>=3`, כל עוד count הוא מספר האחדות בחלון המוגדר.",
+      "en": "Use 4: the requirement gives 1, but equality gives 0. Test below, at, and above the threshold. The correct expression is `count>=3`, with count representing ones in the specified window."
+    },
+    "takeaway": {
+      "he": "בדיקת הסף עצמו אינה מבחינה בין שוויון לבין לפחות.",
+      "en": "Testing the threshold itself cannot distinguish equality from at least."
+    }
+  },
+  {
+    "id": "quick-hw-117",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-095",
+      "PREP-081"
+    ],
+    "title": {
+      "he": "חלון זז אינו בלוק נפרד",
+      "en": "A sliding window is not a separate block"
+    },
+    "prompt": {
+      "he": "רוצים לפחות שלוש אחדות בכל חלון נע של עשר דגימות. מימוש מאפס את הספירה אחרי דגימות 10,20,30. בדגימות 9,10,11 יש 1 ובכל האחרות 0. מה צריך להיות הפלט בדגימה 11?",
+      "en": "Detect at least three ones in each sliding ten-sample window. An implementation clears its count after samples 10,20,30. Samples 9,10,11 are 1 and all others 0. What should output be at sample 11?"
+    },
+    "answer": {
+      "he": "1. החלון שמסתיים בדגימה 11 כולל את דגימות 2..11, ובהן כל שלוש האחדות. איפוס ב־10 מפריד אותן בין שני בלוקים ומפספס את המקרה. חלון נע מזיז את הגבול בדגימה אחת בכל צעד; בלוקים נפרדים משתמשים בגבולות קבועים.",
+      "en": "1. The window ending at sample 11 contains samples 2..11 and all three ones. Clearing at 10 splits them across two blocks and misses this case. A sliding window moves its boundary by one sample each step; separate blocks use fixed boundaries."
+    },
+    "takeaway": {
+      "he": "תמיד מגדירים אילו דגימות שייכות לחלון, במיוחד סביב גבולות שנראים טבעיים למונה.",
+      "en": "Define exactly which samples belong to a window, especially around tempting counter boundaries."
+    }
+  },
+  {
+    "id": "quick-hw-118",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-075"
+    ],
+    "title": {
+      "he": "קריאה וכתיבה לאותה כתובת",
+      "en": "Reading and writing the same address"
+    },
+    "prompt": {
+      "he": "ממשק זיכרון מבטיח write-first: קריאה וכתיבה בו־זמנית לאותה כתובת מחזירות את הנתון החדש. הזיכרון הפנימי אינו מבטיח זאת. איזה נתון אפשר לבחור ישירות לנתיב תשובת הקריאה במקרה הזה?",
+      "en": "A memory interface promises write-first: simultaneous read and write to the same address return the new data. Its internal memory does not guarantee this. What data can be selected directly for that read response?"
+    },
+    "answer": {
+      "he": "את write_data של אותה פעולה. מזהים read_en וגם write_en וגם שוויון הכתובות, ובוחרים נתיב מעקף במקום פלט הזיכרון. מתאימים גם את תזמון התשובה ו־read_valid לחוזה. המעקף מטפל בהתנגשות זו; הוא אינו פותר לבדו קריאה וכתיבה לכתובות שונות בפורט יחיד.",
+      "en": "Select that operation's write_data. Detect read_en, write_en and equal addresses, then choose a bypass instead of memory output. Align response timing and read_valid with the contract too. This handles the same-address collision; it does not alone solve different-address read/write on one port."
+    },
+    "takeaway": {
+      "he": "ערך הקריאה בזמן התנגשות הוא חלק מחוזה הממשק, ולעיתים דורש מעקף מפורש.",
+      "en": "Read-during-write value is part of the interface contract and may require explicit forwarding."
+    }
+  },
+  {
+    "id": "quick-hw-119",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-076"
+    ],
+    "title": {
+      "he": "אותו דפוס מסתיר כתובות משותפות",
+      "en": "One pattern hides shared addresses"
+    },
+    "prompt": {
+      "he": "שתי כתובות לוגיות עלולות להגיע לאותו תא זיכרון. כותבים 1 לכל הכתובות ורק אחר כך קוראים את כולן ומקבלים 1. האם זה שולל aliasing בין הכתובות?",
+      "en": "Two logical addresses might access the same memory cell. Write 1 to every address, then read all addresses and obtain 1 everywhere. Does this rule out address aliasing?"
+    },
+    "answer": {
+      "he": "לא. גם כתובות שמשתפות תא יקראו 1, כי כולן קיבלו אותו ערך. כדי לחשוף חפיפה צריך ליצור ביניהן הבדל: למשל לכתוב לכתובת אחת 0 ולאחרת 1, ואז לבדוק שלא דרסו זו את זו. מיפוי הקריאה והכתיבה מניחים יציב.",
+      "en": "No. Aliased addresses also read 1 because every write used that value. Expose aliasing by creating a difference: for example, write 0 to one address and 1 to another, then check they did not overwrite each other. Assume a stable read/write mapping."
+    },
+    "takeaway": {
+      "he": "בדיקת כתובות דורשת דפוס שמבחין ביניהן, ולא רק בדיקה שכל תא מחזיק ביט.",
+      "en": "An address test needs distinguishing patterns, not merely proof that a cell retains a bit."
+    }
+  },
+  {
+    "id": "quick-hw-120",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-076"
+    ],
+    "title": {
+      "he": "מיפוי פיזי שאי אפשר לראות",
+      "en": "A physical mapping you cannot observe"
+    },
+    "prompt": {
+      "he": "כל קריאה וכתיבה לכתובת 0 מופנית בעקביות לתא הפיזי 1, ולהפך. אין כתובות משותפות, ואין גישה עצמאית לתאים הפיזיים. האם אפשר לזהות את ההחלפה דרך אותו ממשק בלבד?",
+      "en": "Every read and write to logical address 0 consistently uses physical cell 1, and vice versa. There is no aliasing or independent physical-cell access. Can that swap be detected through this interface alone?"
+    },
+    "answer": {
+      "he": "לא. נתון שנכתב לכתובת לוגית עדיין נקרא ממנה כרגיל. תמורה חד־חד־ערכית עקבית של התאים שומרת על ההתנהגות הנצפית. אפשר לבדוק הפרדה בין כתובות, אך אי אפשר להוכיח את המספר הפיזי של התא בלי מידע או גישה נוספים.",
+      "en": "No. Data written to a logical address still reads back normally from it. A consistent bijective permutation of cells preserves observable behavior. You can test separation between addresses, but cannot establish a cell's physical number without additional information or access."
+    },
+    "takeaway": {
+      "he": "בדיקה דרך ממשק יכולה להוכיח רק הבדלים שהממשק מאפשר לצפות בהם.",
+      "en": "An interface test can establish only distinctions observable through that interface."
+    }
+  },
+  {
+    "id": "quick-hw-121",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-076"
+    ],
+    "title": {
+      "he": "כתובת רחבה, נתון של ביט אחד",
+      "en": "Wide addresses, one-bit data"
+    },
+    "prompt": {
+      "he": "לזיכרון כתובות 0..7 ונתון של ביט אחד. כתיבת address modulo 2 אינה מבדילה בין 0 ל־2. איך ניצור דפוסי בדיקה שמבדילים בין כל זוג כתובות במודל aliasing יציב?",
+      "en": "A memory has addresses 0..7 and one-bit data. Writing address modulo 2 cannot distinguish 0 from 2. How can test patterns distinguish every address pair under a stable aliasing model?"
+    },
+    "answer": {
+      "he": "מבצעים שלושה סבבים, אחד לכל ביט כתובת. בסבב k כותבים לכל הכתובות את `(address>>k)&1`, ורק אז קוראים ומשווים לדפוס. כל שתי כתובות שונות נבדלות לפחות בביט אחד; בסבב המתאים תא משותף לא יכול להחזיק את שני הערכים המצופים.",
+      "en": "Use three passes, one per address bit. In pass k, write `(address>>k)&1` to every address, then read and compare against that pattern. Every distinct pair differs in some bit; in that pass, one shared cell cannot hold both expected values."
+    },
+    "takeaway": {
+      "he": "אפשר לפרוס מזהה רחב על פני כמה סבבי בדיקה, גם כשהנתון בכל תא צר.",
+      "en": "A wide identifier can be spread across test passes even when each cell holds narrow data."
+    },
+    "code": {
+      "language": "python",
+      "text": "def address_pattern(address, k):\n    return (address >> k) & 1"
+    }
+  },
+  {
+    "id": "quick-hw-122",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-075"
+    ],
+    "title": {
+      "he": "שכפול נתונים אינו שכפול פורטים חופשי",
+      "en": "Copies do not create free ports"
+    },
+    "prompt": {
+      "he": "שני עותקים זהים של זיכרון חד־פורטי נשמרים מעודכנים באמצעות כתיבת כל שינוי לשניהם באותה חזית. האם כך אפשר להבטיח גם קריאה מכתובת אחרת באותה חזית? כל רכיב מבצע פעולה אחת בחזית.",
+      "en": "Two identical single-port memory copies receive every write at the same edge to stay current. Does this guarantee a simultaneous read from another address? Each primitive can perform only one operation per edge."
+    },
+    "answer": {
+      "he": "לא. במחזור כתיבה שני הפורטים כבר עסוקים בכתיבה, ואין פורט פנוי לקריאה לכתובת אחרת. שני עותקים מאפשרים שתי קריאות כשאין כתיבה, אך אין בכך פתרון מלא לקריאה וכתיבה במקביל. צריך ארגון נוסף שמטפל בעדכניות ובקונפליקטים.",
+      "en": "No. During a write both ports are already occupied, leaving no port for a different-address read. Two copies allow two reads when no write occurs, but do not by themselves solve concurrent read/write. Additional organization must handle freshness and conflicts."
+    },
+    "takeaway": {
+      "he": "בארכיטקטורת זיכרון סופרים פעולות לפורט בכל חזית, כולל פעולות שמתחזקות עותקים.",
+      "en": "Count operations per port at each edge, including writes needed to maintain replicas."
+    }
+  },
+  {
+    "id": "quick-hw-123",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-075"
+    ],
+    "title": {
+      "he": "שני בנקים עדיין יכולים להתנגש",
+      "en": "Two banks can still conflict"
+    },
+    "prompt": {
+      "he": "מחלקים זיכרון לשני בנקים חד־פורטיים לפי הביט הנמוך של הכתובת: זוגיות בבנק 0 ואי־זוגיות בבנק 1. האם קריאה מ־0 וכתיבה ל־2 יכולות להתבצע יחד ללא מנגנון נוסף?",
+      "en": "Split memory into two single-port banks by address parity: even addresses in bank 0, odd in bank 1. Can a read from 0 and write to 2 occur together without another mechanism?"
+    },
+    "answer": {
+      "he": "לא. שתי הכתובות מגיעות לבנק 0, שבו מותרת רק פעולה אחת בחזית. קריאה מ־0 וכתיבה ל־1 אינן מתנגשות כך. בנקאות משפרת מקביליות עבור כתובות מסוימות; היא אינה מבטיחה כל זוג בקשות ללא טיפול בקונפליקטים.",
+      "en": "No. Both addresses use bank 0, which permits only one operation per edge. Reading 0 while writing 1 would not have this bank conflict. Banking increases concurrency for some address combinations; it does not guarantee every request pair without conflict handling."
+    },
+    "takeaway": {
+      "he": "בודקים אם בקשות עצמאיות יכולות לבחור אותו משאב פנימי באותו זמן.",
+      "en": "Check whether independent requests can select the same internal resource simultaneously."
+    }
+  },
+  {
+    "id": "quick-hw-124",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-081"
+    ],
+    "title": {
+      "he": "השגיאה האחרונה בבלוק עדיין נספרת",
+      "en": "The last error in a block still counts"
+    },
+    "prompt": {
+      "he": "מנטרים יותר מעשר שגיאות בכל בלוק נפרד של 100,000 דגימות. לפני הדגימה האחרונה נספרו עשר שגיאות, ובדגימה האחרונה ERROR=1. האם מותר לאפס קודם את הספירה ואז לבדוק Failed?",
+      "en": "Monitor more than ten errors in each separate 100,000-sample block. Ten errors have occurred before the last sample, whose ERROR is 1. May the monitor clear its count before checking Failed?"
+    },
+    "answer": {
+      "he": "לא. הדגימה האחרונה היא השגיאה ה־11, ולכן הבלוק נכשל. משלימים את ספירת הדגימה ובדיקת הסף, שומרים את תוצאת הבלוק, ורק אז מאתחלים את הספירה לבלוק הבא. עשר שגיאות בדיוק אינן כישלון. אלו בלוקים נפרדים; לא חלון נע שמסתיים בכל דגימה.",
+      "en": "No. The final sample is error 11, so that block fails. Include the sample and evaluate the threshold, retain the block result, then initialize counting for the next block. Exactly ten errors do not fail. These are separate blocks, rather than a sliding window ending at every sample."
+    },
+    "takeaway": {
+      "he": "בגבול בלוק מסיימים את התוצאה הישנה לפני שמאפסים את המצב עבור הבלוק הבא.",
+      "en": "At a block boundary, finish the old result before resetting state for the next block."
+    },
+    "code": {
+      "language": "python",
+      "text": "def close_block(count, final_error):\n    failed = count + final_error > 10\n    return 0, int(failed)"
+    }
+  },
+  {
+    "id": "quick-hw-125",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-010"
+    ],
+    "title": {
+      "he": "שלושה מחזורים לא מתחלקים לחצי שלם",
+      "en": "Three cycles cannot split into integer halves"
+    },
+    "prompt": {
+      "he": "פלט בינארי רשום יכול להשתנות רק בחזיתות העלייה, שמרווחיהן T. רוצים צורת גל מחזורית באורך 3T וביחס מחזור 50%. למה אי אפשר לקבל זאת תחת ההגבלות האלה?",
+      "en": "A registered binary output can change only at rising edges spaced T apart. We want a repeating waveform of period 3T and 50% duty cycle. Why is this impossible under those restrictions?"
+    },
+    "answer": {
+      "he": "50% דורש זמן גבוה של 1.5T בכל מחזור. אבל כל קטע גבוה בפלט כזה נמשך מספר שלם של מרווחי T. בחלוקה לשלושה אפשר לקבל למשל T גבוה ו־2T נמוך, כלומר שליש. כדי לקבל חצי צריך לאפשר גם תזמון נוסף, כגון שימוש מבוקר בחזית הנגדית.",
+      "en": "50% requires 1.5T high during each period. But high durations here are integer multiples of T. A divide-by-three waveform can instead be high for T and low for 2T, giving one-third duty. Achieving half duty requires additional timing opportunities, such as a controlled use of the opposite edge."
+    },
+    "takeaway": {
+      "he": "לפני שמחפשים שערים, בודקים אם רגעי השינוי המותרים יכולים לייצג את זמני הפלט הנדרשים.",
+      "en": "Before choosing gates, check whether allowed transition times can express the required output durations."
+    }
+  }
+]

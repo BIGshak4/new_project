@@ -13,15 +13,15 @@ const api: QuickProgressApi = {
   resetFundamental: async () => { throw new Error("Unexpected SSR mutation"); },
 };
 
-test("200 distinct concise cards follow the requested 50/35/15 mix and every code answer fits five lines", () => {
-  assert.equal(quickQuestions.length, 200);
-  assert.equal(new Set(quickQuestions.map(q => q.id)).size, 200);
-  assert.equal(quickQuestions.filter(q => q.id.startsWith("quick-hw-")).length, 100);
-  assert.equal(quickQuestions.filter(q => q.topic === "reasoning").length, 70);
-  assert.equal(quickQuestions.filter(q => ["python", "algorithms"].includes(q.topic)).length, 30);
+test("250 distinct concise cards keep the rounded topic mix and every code answer fits five lines", () => {
+  assert.equal(quickQuestions.length, 250);
+  assert.equal(new Set(quickQuestions.map(q => q.id)).size, 250);
+  assert.equal(quickQuestions.filter(q => q.id.startsWith("quick-hw-")).length, 125);
+  assert.equal(quickQuestions.filter(q => q.topic === "reasoning").length, 88);
+  assert.equal(quickQuestions.filter(q => ["python", "algorithms"].includes(q.topic)).length, 37);
   for (const lang of ["he", "en"] as const) {
-    assert.equal(new Set(quickQuestions.map(q => q.title[lang].trim().toLocaleLowerCase())).size, 200);
-    assert.equal(new Set(quickQuestions.map(q => q.prompt[lang].trim().toLocaleLowerCase())).size, 200);
+    assert.equal(new Set(quickQuestions.map(q => q.title[lang].trim().toLocaleLowerCase())).size, 250);
+    assert.equal(new Set(quickQuestions.map(q => q.prompt[lang].trim().toLocaleLowerCase())).size, 250);
   }
   for (const topic of quickTopics) assert.ok(quickQuestions.some(q => q.topic === topic.id));
   for (const question of quickQuestions) {
@@ -37,7 +37,7 @@ test("200 distinct concise cards follow the requested 50/35/15 mix and every cod
 });
 
 test("topic and bilingual search compose; empty results remain empty", () => {
-  assert.equal(filterQuickQuestions("python", "", "he").length, 10);
+  assert.equal(filterQuickQuestions("python", "", "he").length, 11);
   const q = quickQuestions[0];
   assert.ok(filterQuickQuestions(q.topic, q.title.en, "en").includes(q));
   assert.ok(filterQuickQuestions(q.topic, q.title.he, "he").includes(q));

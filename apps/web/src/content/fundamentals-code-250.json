@@ -1,0 +1,175 @@
+[
+  {
+    "id": "quick-sw-119",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-089"
+    ],
+    "title": {
+      "he": "זוגות אינדקסים אינם זוגות ערכים",
+      "en": "Index pairs are not value pairs"
+    },
+    "prompt": {
+      "he": "במערך [1,4,1,4] מחפשים סכום 5. כמה זוגות אינדקסים i<j מתאימים, וכמה זוגות ערכים שונים? מדוע קבוצת ערכים לבדה אינה מספיקה לספירת זוגות האינדקסים?",
+      "en": "In [1,4,1,4], the target sum is 5. How many index pairs i<j qualify, and how many distinct value pairs? Why is a set of values insufficient for counting index pairs?"
+    },
+    "answer": {
+      "he": "יש ארבעה זוגות אינדקסים: כל אחד משני מופעי 1 מתאים לכל אחד משני מופעי 4. יש רק זוג ערכים אחד, {1,4}. קבוצת ערכים מאבדת את מספר ההופעות. בסריקה משמאל לימין מוסיפים לכל איבר את מספר המשלימים שכבר נראו, ורק אחר כך מעדכנים את תדירותו; כך לא משתמשים באיבר פעמיים.",
+      "en": "There are four index pairs: either occurrence of 1 can pair with either occurrence of 4. There is one distinct value pair, {1,4}. A set loses multiplicities. When scanning left to right, add the number of earlier complements before updating the current value's frequency; this prevents pairing an item with itself."
+    },
+    "takeaway": {
+      "he": "לפני שסופרים זוגות, הגדירו אם הופעות שוות נחשבות איברים שונים.",
+      "en": "Before counting pairs, define whether equal occurrences count as different items."
+    }
+  },
+  {
+    "id": "quick-sw-120",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-088"
+    ],
+    "title": {
+      "he": "ביט שמפריד בין שני חסרים",
+      "en": "A bit that separates two missing values"
+    },
+    "prompt": {
+      "he": "שני מספרים שונים חסרים מטווח שלמים לא שליליים. אחרי ביטול כל המספרים הקיימים ב־XOR מתקבל z=a XOR b. מדוע אפשר לבחור ביט דלוק ב־z ולהפריד באמצעותו בין שני החסרים?",
+      "en": "Two distinct values are missing from a nonnegative integer range. XOR cancellation leaves z=a XOR b. Why can a set bit in z separate the two missing values?"
+    },
+    "answer": {
+      "he": "ביט דלוק ב־XOR אומר שהביטים המקבילים שונים: אצל חסר אחד הביט 1 ואצל השני 0. לכן הם שייכים לקבוצות שונות. כל ערך קיים מופיע פעמיים באותה קבוצה ומתבטל, ומשאיר חסר אחד בכל קבוצה. מכיוון שהחסרים שונים, z אינו אפס; z & -z מבודד את הביט הדלוק הנמוך ביותר בשלמי Python.",
+      "en": "A set XOR bit means the corresponding bits differ: one missing value has 1 there and the other has 0. They therefore enter different groups. Every present value appears twice within its group and cancels, leaving one missing value per group. Distinct missing values make z nonzero; z & -z isolates its lowest set bit for Python integers."
+    },
+    "takeaway": {
+      "he": "בחרו תכונה שמפרידה בין הלא־ידועים אך שומרת עותקים זהים יחד.",
+      "en": "Choose a property separating unknowns while keeping identical copies together."
+    },
+    "code": {
+      "language": "python",
+      "text": "def separating_mask(z):\n    return z & -z"
+    }
+  },
+  {
+    "id": "quick-sw-121",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-094"
+    ],
+    "title": {
+      "he": "גם אפסים מובילים חייבים להתהפך",
+      "en": "Leading zeros must be reversed too"
+    },
+    "prompt": {
+      "he": "הפכו את סדר כל שמונה הסיביות של מספר בתחום 0..255, ללא מערך או מחרוזת. מדוע עבור 00000001 אסור להפסיק ברגע שהסיביות שנותרו בקלט הן אפס?",
+      "en": "Reverse all eight bits of an integer in 0..255 without an array or string. For 00000001, why must processing continue after the remaining input bits become zero?"
+    },
+    "answer": {
+      "he": "התשובה היא 10000000, כלומר 128. שבעת האפסים המובילים הם חלק מהייצוג המקורי ולכן גם להם יש מקומות בפלט. מעבירים את ביט i למקום 7−i, עבור כל שמונת המקומות. לולאה שעוצרת לפי ערך הקלט עלולה להחזיר 1 במקום 128. אין שינוי במספר סיביות ה־1.",
+      "en": "The answer is 10000000, or 128. The seven leading zeros belong to the original representation and have output positions too. Move bit i to position 7−i for all eight positions. Stopping based on the remaining input value can return 1 instead of 128. The number of set bits stays unchanged."
+    },
+    "takeaway": {
+      "he": "בהיפוך ביטים, רוחב הייצוג קובע כמה מקומות מעבדים.",
+      "en": "For bit reversal, representation width determines how many positions to process."
+    },
+    "code": {
+      "language": "python",
+      "text": "def reverse_byte(value):\n    result = 0\n    for bit in range(8):\n        result |= ((value >> bit) & 1) << (7 - bit)\n    return result"
+    }
+  },
+  {
+    "id": "quick-sw-122",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-087"
+    ],
+    "title": {
+      "he": "בדיקת חיתוך בלי לחלק",
+      "en": "Test an intersection without division"
+    },
+    "prompt": {
+      "he": "צלע A→B חוצה את גובה P ממש בין קצותיה; P אינה על הישר שלה. נגדיר cross=(Bx−Ax)(Py−Ay)−(By−Ay)(Px−Ax). איך בודקים אם חיתוך הקרן האופקית נמצא מימין ל־P? האם cross>0 מספיק גם כשמחליפים בין A ל־B?",
+      "en": "Edge A→B straddles P's height strictly between its endpoints; P is not on its supporting line. Define cross=(Bx−Ax)(Py−Ay)−(By−Ay)(Px−Ax). How can you check whether the horizontal intersection is right of P? Is cross>0 sufficient after reversing A and B?"
+    },
+    "answer": {
+      "he": "החיתוך מימין כאשר cross ו־By−Ay בעלי אותו סימן. ההפרש בין מיקום החיתוך לבין Px הוא cross/(By−Ay), ולכן אפשר להשוות סימנים בלי חילוק. בהחלפת הקצוות שני הסימנים מתהפכים והתוצאה נשמרת. בדיקת cross>0 לבדה נכונה רק לצלע עולה. הקוד מניח מראש חציית גובה ממש וללא נקודה על הישר.",
+      "en": "The intersection is rightward when cross and By−Ay have the same sign. Its x-coordinate minus Px equals cross/(By−Ay), so compare signs without division. Reversing endpoints flips both signs and preserves the result. Testing cross>0 alone works only for an upward edge. The code assumes strict height straddling and that P is not on the supporting line."
+    },
+    "takeaway": {
+      "he": "לפני שמסירים חילוק מאי־שוויון, בדקו גם את סימן המכנה.",
+      "en": "Before removing division from an inequality, account for the denominator's sign."
+    },
+    "code": {
+      "language": "python",
+      "text": "def ray_hits_right(ax, ay, bx, by, px, py):\n    cross = (bx - ax) * (py - ay) - (by - ay) * (px - ax)\n    return (cross > 0) == (by > ay)"
+    }
+  },
+  {
+    "id": "quick-sw-123",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-080"
+    ],
+    "title": {
+      "he": "למה הנפה מתחילה בריבוע?",
+      "en": "Why does the sieve start at the square?"
+    },
+    "prompt": {
+      "he": "בנפת ארטוסתנס כבר טיפלנו בראשוניים הקטנים מ־5. כשמגיעים ל־5, מדוע מותר להתחיל למחוק כפולות ב־25 ולא ב־10? נמקו גם עבור ראשוני כללי p.",
+      "en": "In the Sieve of Eratosthenes, primes smaller than 5 have already been processed. Why may marking multiples of 5 start at 25 instead of 10? Explain for a general prime p too."
+    },
+    "answer": {
+      "he": "10 ו־20 כבר נמחקו בכפולות 2, ו־15 בכפולות 3. באופן כללי, כפולה p×k עם 2≤k<p מכילה גורם ראשוני של k שקטן מ־p, ולכן נמחקה קודם. p² היא הכפולה הראשונה שעשויה להוסיף מידע. אין למחוק את p עצמו: הוא ראשוני.",
+      "en": "10 and 20 were marked by 2; 15 was marked by 3. In general, a multiple p×k with 2≤k<p has a prime factor of k smaller than p, so it was marked earlier. Thus p² is the first multiple that may add information. Do not mark p itself: it is prime."
+    },
+    "takeaway": {
+      "he": "נצלו מידע שכבר חושב כדי להימנע מעבודה חוזרת.",
+      "en": "Use previously established information to avoid repeated work."
+    }
+  },
+  {
+    "id": "quick-sw-124",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-037"
+    ],
+    "title": {
+      "he": "מספר הסוגריים לא מוכיח קינון תקין",
+      "en": "Bracket counts do not prove valid nesting"
+    },
+    "prompt": {
+      "he": "במחרוזת ([)] יש מספר שווה של פותחים וסוגרים מכל סוג. מדוע היא בכל זאת אינה תקינה? איזה מידע צריך לשמור בזמן הסריקה?",
+      "en": "The string ([)] has equal opening and closing counts of each type. Why is it invalid anyway? What information must a scan retain?"
+    },
+    "answer": {
+      "he": "כאשר מגיעים ל־), הסוגר הפותח האחרון שעדיין לא נסגר הוא [, שאינו מתאים. שומרים מחסנית של פותחים שטרם נסגרו. כל סוגר חייב להתאים לראש המחסנית ולהסירו; מחסנית ריקה בזמן סגירה או סוג שגוי פוסלים מיד. בסוף המחסנית חייבת להיות ריקה. מונים לבדם מאבדים את סדר הקינון.",
+      "en": "At ), the most recent unmatched opener is [, which does not match. Keep a stack of unmatched openers. Each closer must match and remove its top; an empty stack on closing or a wrong type immediately invalidates the string. The stack must be empty at the end. Counts alone lose nesting order."
+    },
+    "takeaway": {
+      "he": "בקינון, הפתיחה האחרונה שטרם נסגרה חייבת להיסגר ראשונה.",
+      "en": "In nesting, the most recent unmatched opener must close first."
+    }
+  },
+  {
+    "id": "quick-sw-125",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-026"
+    ],
+    "title": {
+      "he": "הבן הימני אינו תמיד הגדול ביותר",
+      "en": "The rightmost node is not always largest"
+    },
+    "prompt": {
+      "he": "בעץ בינארי השורש 3, בנו השמאלי 99 ובנו הימני 4, ושניהם עלים. האם הליכה רק ימינה מוצאת את המקסימום? איזו הבטחה נוספת הייתה מאפשרת זאת?",
+      "en": "A binary tree has root 3, left child 99 and right child 4, both leaves. Does walking only right find the maximum? What additional guarantee would make that approach valid?"
+    },
+    "answer": {
+      "he": "לא: הליכה ימינה תחזיר 4, אך המקסימום הוא 99. עץ בינארי מגביל את מספר הילדים, ולא את סדר הערכים. רק הבטחת עץ חיפוש בינארי עם סדר תקין בכל תת־עץ מאפשרת למצוא מקסימום בקצה הימני. בלי הבטחת סדר צריך לבדוק את כל הצמתים; ערך גדול יותר עשוי להסתתר בכל מקום.",
+      "en": "No: walking right returns 4, but the maximum is 99. Binary limits the number of children, not value order. A valid binary search tree ordering throughout every subtree allows finding a maximum at the rightmost node. Without an ordering guarantee, every node must be inspected because a larger value could be anywhere."
+    },
+    "takeaway": {
+      "he": "לפני שפוסלים ענף, ודאו שתכונות מבנה הנתונים מצדיקות זאת.",
+      "en": "Before discarding a branch, check that the data structure guarantees justify it."
+    }
+  }
+]
