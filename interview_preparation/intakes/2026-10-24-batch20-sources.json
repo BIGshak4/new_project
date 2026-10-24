@@ -1,0 +1,489 @@
+{
+  "received_on": "2026-10-24",
+  "screenshot_count": 20,
+  "status": "integrated",
+  "sources": [
+    {
+      "screenshot": 1,
+      "question_ids": [
+        "PREP-094"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-01.png"
+      ],
+      "original_filename": "codex-clipboard-93b44d25-bc8c-43f4-91ba-436717ccc10f.png",
+      "sha256": "82e5e7cd47ac4bb7aa40158d3e2844f43b6c5caf2e8623c904eb9afe5731b2fa",
+      "original_prompt": "כתוב פונקציה המקבלת מספר המורכב משמונה ביטים, ומחזירה את המספר בסידור הפוך של ביטים, ללא שימוש במערך. לדוגמא, עבור הקלט 01101011 יוחזר 11010110",
+      "reported_companies": [
+        "Marvell",
+        "Intel"
+      ],
+      "source_tags": [
+        "intel",
+        "algorithms-software",
+        "software",
+        "marvell"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 2,
+      "question_ids": [
+        "PREP-097"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-02.png"
+      ],
+      "original_filename": "codex-clipboard-5ed7509a-9f50-4fa1-9e69-8c2542d09947.png",
+      "sha256": "ea465c07d5405c68aec3b75858d8f79c864628df274e2c7349317e5700f5fc1f",
+      "original_prompt": "נתונה מטריצה כאשר העמודות וגם השורות ממויינות (משמאל לימין). צריך למצוא כמות מספרים שליליים במטריצה (בצורה יעילה מבלי לעבור על כל המטריצה).",
+      "reported_companies": [
+        "NVIDIA",
+        "Cisco"
+      ],
+      "source_tags": [
+        "cisco",
+        "hardware",
+        "nvidia"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 3,
+      "question_ids": [
+        "PREP-005"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-03.png"
+      ],
+      "original_filename": "codex-clipboard-1a57e206-19ac-4370-b68f-7907a136424f.png",
+      "sha256": "e5ca9a8871561398c773ba941dff3e538253fa6e7ad2459afb8cb85b6ce9d2da",
+      "original_prompt": "1. נתון קופסה שממיינת שני מספרים, לבנות באמצעותה ממיין ל4 כניסות ו6 כניסות",
+      "reported_companies": [
+        "NVIDIA",
+        "Intel"
+      ],
+      "source_tags": [
+        "intel",
+        "hardware",
+        "verification",
+        "nvidia"
+      ],
+      "decision": "additional_source_existing_question",
+      "decision_note": "Same two-input comparator networks for4and6; preserve established constructions and cost models."
+    },
+    {
+      "screenshot": 4,
+      "question_ids": [
+        "PREP-072"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-04.png"
+      ],
+      "original_filename": "codex-clipboard-3485789b-fd55-4751-a2df-460ff6bd0bd8.png",
+      "sha256": "f12a7981a20c57743eab337903002c3b5c74f0ded70a30e1d279c8baada69e02",
+      "original_prompt": "נתון מערך עם מספרים (חיוביים ושליליים) לא ממוין. יש לממש פונקציה שמחזירה את הסכום המקסימלי של תת סדרה רציפה.",
+      "reported_companies": [
+        "Amazon",
+        "NVIDIA",
+        "Cisco",
+        "Intel"
+      ],
+      "source_tags": [
+        "intel",
+        "cisco",
+        "nvidia",
+        "verification",
+        "hardware",
+        "amazon"
+      ],
+      "decision": "additional_source_existing_question",
+      "decision_note": "Sum-only subset of the established nonempty maximum-subarray problem. No change to the reference."
+    },
+    {
+      "screenshot": 5,
+      "question_ids": [
+        "PREP-098"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-05.png"
+      ],
+      "original_filename": "codex-clipboard-c614e97c-4c73-44f5-8b09-951d5f0b2873.png",
+      "sha256": "1bbc59c7a02165733428806f28533c09c11d213b381f50a5e1221df4fbd0e6bd",
+      "original_prompt": "merge 2 sorted array",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "decision": "new_manual_question",
+      "decision_note": "Manual source of SW-005/example-merge-measurement-streams. Preserve both stored identities and histories; prefer the manual version in the library."
+    },
+    {
+      "screenshot": 6,
+      "question_ids": [
+        "PREP-062"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-06.png"
+      ],
+      "original_filename": "codex-clipboard-b1841347-7f3e-4b25-a5ef-aeae24737c9f.png",
+      "sha256": "43ef316c0120c4b52b0e1ca911f22be06f842625ab99f9554ed1136753036978",
+      "original_prompt": "נתונים לך שני רובוטים שנמצאים במרחק מסוים אחד מהשני (הבעיה היא חד מימדית). ליד כל רובוט יש דגל שהרובוט יכול לזהות. עליך לתת את אותו אלגוריתם לשני הרובוטים על מנת שיפגשו. הפעולות שאתה יכול להשתמש בהן הן זוז ימינה/שמאלה, עצירה ובדיקה האם יש דגל לידך.",
+      "reported_companies": [
+        "Intel",
+        "NVIDIA"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "intel"
+      ],
+      "decision": "existing_question_source_and_variant",
+      "decision_note": "Flag-only physical rendezvous variantD; no did_meet sensor is granted. Prior models A/B/C remain separate."
+    },
+    {
+      "screenshot": 7,
+      "question_ids": [
+        "PREP-099"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-07.png"
+      ],
+      "original_filename": "codex-clipboard-80aef1b0-2e36-4901-ac81-eb09fb3b9341.png",
+      "sha256": "dc3e6c3c0b764a818134d64c54809dfafee035f705fd0bc6f07364cbabac1906",
+      "original_prompt": "איך ניתן למדוד קיבול של קבל? נתון: נגד עם ערך כלשהוא ואנו במעבדה עם כל מכשיר שנרצה",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_tags": [
+        "logic",
+        "hardware",
+        "nvidia"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 8,
+      "question_ids": [
+        "PREP-006"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-08.png"
+      ],
+      "original_filename": "codex-clipboard-06000b1c-63b2-4edb-a9cf-c45df666d211.png",
+      "sha256": "6a5ea2d690ae92f43350bd4a14dccaabcb6c7555c02d9f387683908f68165ae1",
+      "original_prompt": "A store owner has an inventory of N items and has numbered them from 1....N (N is very big)\nImplement the following procedures:\n1) set_price(prod_num, price)\n2) get_price(prod_num)\n3) set_price_all(price)\nThe implementation should be O(1).\nHow much memory did you use?",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_tags": [
+        "nvidia",
+        "software"
+      ],
+      "decision": "additional_source_existing_question",
+      "decision_note": "Same Set/Get/SetAll mechanism with1-basedproduct IDs: use index=prod_num-1. Per-operationO(1) does not meanO(1) totalstorage orinitialization."
+    },
+    {
+      "screenshot": 9,
+      "question_ids": [
+        "PREP-009"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-09.png"
+      ],
+      "original_filename": "codex-clipboard-3df22867-e8ec-497c-8539-ab5e05f18263.png",
+      "sha256": "bc5305dfc17f30c292ac80d88cf5edd5660e161e36e3681e01ed8244562df6a7",
+      "original_prompt": "לפנייך 25 סוסים ומסלול מירוצים עם מקום ל-5 סוסים כל פעם. מהו מספר המקצים המינימלי שתצטרך לערוך כדי למצוא את 3 הסוסים המהירים ביותר (ואת הסדר ביניהם)?",
+      "reported_companies": [
+        "Google",
+        "IBM",
+        "NVIDIA",
+        "Marvell"
+      ],
+      "source_tags": [
+        "marvell",
+        "nvidia",
+        "ibm",
+        "logic",
+        "google"
+      ],
+      "decision": "additional_source_existing_question",
+      "decision_note": "Same top-three-with-order race problem. Order-only observations, no timing device and fixed distinct speeds remain explicit assumptions."
+    },
+    {
+      "screenshot": 10,
+      "question_ids": [
+        "PREP-100"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-10.png"
+      ],
+      "original_filename": "codex-clipboard-04892920-7ff3-4e57-8398-4c524eb426f3.png",
+      "sha256": "ca226a4201093bdfd1f8e319a5d7f411aaea21545f3c208f82f834306e6f1466",
+      "original_prompt": "נדרש לממש הכפלה ב6 של מספר בן 8 סיביות בעזרת FA בלבד",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 11,
+      "question_ids": [
+        "PREP-067"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-11.png"
+      ],
+      "original_filename": "codex-clipboard-8aaeb405-3063-4138-be40-9cc796b06ba7.png",
+      "sha256": "4301657a49cc8e3d0e663bdf27ebbfecf37fe5528dc2ce6f5907abdf1b2d7d60",
+      "original_prompt": "תכנן רכיב המממש תור (FIFO) בעל הכניסות (push, pop, data_in) והיציאה data_out. ניתן להשתמש בכל רכיב לוגי מוכר (שערים לוגים, מחברים, מחסרים, פילפלופים, מוקסים וכו׳)",
+      "reported_companies": [
+        "Samsung",
+        "Apple",
+        "NVIDIA",
+        "Amazon"
+      ],
+      "source_tags": [
+        "amazon",
+        "nvidia",
+        "apple",
+        "samsung"
+      ],
+      "decision": "additional_source_existing_question",
+      "decision_note": "General FIFO source omits depth and timing policies. The existing8-slot synchronous edition clearly states its additional assumptions."
+    },
+    {
+      "screenshot": 12,
+      "question_ids": [
+        "PREP-101"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-12.png"
+      ],
+      "original_filename": "codex-clipboard-40c1883a-7923-413b-aa6d-b2fcf26768ef.png",
+      "sha256": "04bea50cc58fdb3ec2f811a30b6e8664007cf3af9d02e7d34cadf040e08c3b4c",
+      "original_prompt": "נתון מערך באורך N מלא במספרים. בנוסף, נתון S int. צריך להדפיס את כל השלשות (לאו דווקא רצפים) שסכומם שווה ל-S. סיבוכיות של פחות מ-n^3....",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "decision": "new_manual_question",
+      "decision_note": "Subcubic total time requires unique value triples; all index triples can have cubic output. Both meanings are distinguished explicitly."
+    },
+    {
+      "screenshot": 13,
+      "question_ids": [
+        "PREP-029"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-13.png"
+      ],
+      "original_filename": "codex-clipboard-7444c75a-71ca-4aac-80ad-7cc26139bbb2.png",
+      "sha256": "48be3a50f0f8c81ba6000dbbd01a581c1d167854fa62370619baaf7f966a0a81",
+      "original_prompt": "נתונים 10 חבלים, על אחד מהחבלים תלוי קוף ולא ידוע על איזה מהם. עלייך לירות חץ הרדמה על הקוף. לא ידוע על איזה מהחבלים מצוי הקוף. במידה וירית חץ ולא פגעת בקוף, הקוף זז חבל אחד ימינה או חבל אחד שמאלה (בהכרח זז ממקומו). הבהרה: אם הקוף על החבל הכי צידי ולא פגעת בו, הוא זז לחבל שלידו. למשל אם הוא נמצא בחבל הכי ימני, הוא ינוע לחבל שמשמאלו. עלייך לפגוע בקוף בכמה שפחות יריות חצים.",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "verification"
+      ],
+      "decision": "additional_source_existing_question",
+      "decision_note": "Same mandatory-adjacent moving target on a10-position path, includingforcedendpointmoves; preserves16-shot solution and exact minimax proof."
+    },
+    {
+      "screenshot": 14,
+      "question_ids": [
+        "PREP-005"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-14.png"
+      ],
+      "original_filename": "codex-clipboard-96835cf2-daa2-4faf-bbf8-756dd0f1270f.png",
+      "sha256": "3da3d65476ac1bd5c44b151b74e64378aa4062c1797a530a5b9cbfeff8f0c3f9",
+      "original_prompt": "יש רכיב A המקבל שני מספרים כקלט ומחזיר אותם ממויינים. עליך ליצור בעזרת מינימום רכיבי A רכיב המקבל 4 מספרים ומחזיר אותם ממויינים. לאחר מכן באמצעות שני הרכיבים למיין 6 מספרים.",
+      "reported_companies": [
+        "Actelis Networks",
+        "Amazon",
+        "NVIDIA"
+      ],
+      "source_tags": [
+        "nvidia",
+        "hardware",
+        "amazon",
+        "actelis-networks"
+      ],
+      "decision": "additional_source_existing_question",
+      "decision_note": "Same4-and6sorting family. Minimum4-input black-box count and the use of two-input/four-input boxes remain distinct cost models."
+    },
+    {
+      "screenshot": 15,
+      "question_ids": [
+        "PREP-102"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-15.png"
+      ],
+      "original_filename": "codex-clipboard-00a9f90f-6053-48cd-92bf-763f312a2938.png",
+      "sha256": "0a729b2c347ab21ee45206cac73c438f5eddc7e5c803d8c6d867e0bb068c220b",
+      "original_prompt": "ברשותך מרחב זכרון רציף של 32 כתובות כאשר כל כתובת היא בגודל 32 ביט. ממש malloc שמחזיר אינדקס של כתובת פנויה ו-free שמקבל מספר שורה ומשחרר את הזיכרון בה. בנוסף ברשותך זיכרון נוסף באורך 32 ביט לניהול הזיכרון.",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_tags": [
+        "nvidia",
+        "software"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 16,
+      "question_ids": [
+        "PREP-066"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-16.png"
+      ],
+      "original_filename": "codex-clipboard-8933448d-3bc4-4331-80e8-379eee077ca2.png",
+      "sha256": "0b4f5156881fdc709c453430376617085a42fac68a1c02fb5417147958b65f45",
+      "original_prompt": "מוצג גרף של מנייה, שואלים בקוד איך לדעת מתי לקנות ולמכור, לממש בפסאודו-קוד",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_tags": [
+        "nvidia",
+        "logic"
+      ],
+      "decision": "additional_source_existing_question",
+      "decision_note": "Same one-transaction stock problem; source mentions a chart but contains no plotted data. No invented prices are attributed to source."
+    },
+    {
+      "screenshot": 17,
+      "question_ids": [
+        "PREP-103"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-17.png"
+      ],
+      "original_filename": "codex-clipboard-3d114593-05de-4025-a5d1-f1b67882b0bf.png",
+      "sha256": "7b0eee63a5e1c6c2e169fd54e1819818f6c6783ea55300e22ce1b46288ce1f10",
+      "original_prompt": "ממש DFF בעזרת TFF",
+      "reported_companies": [
+        "SanDisk"
+      ],
+      "source_tags": [
+        "logic",
+        "verification",
+        "sandisk"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 18,
+      "question_ids": [
+        "PREP-083"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-18.png"
+      ],
+      "original_filename": "codex-clipboard-8bb1b791-2afe-480c-b095-aa39f60dd68c.png",
+      "sha256": "5749a4ec53fa43b5a2e4c030d30165e5813223737a3821722fdb33d387dbd5e5",
+      "original_prompt": "מה ההבדל בין latch לבין FF? שרטט latch באמצעות mux 2:1.",
+      "reported_companies": [
+        "Valens",
+        "Apple"
+      ],
+      "source_tags": [
+        "apple",
+        "hardware",
+        "valens"
+      ],
+      "decision": "additional_source_existing_question",
+      "decision_note": "Latch/FF distinction andMUXfeedbacklatch are a subset ofPREP083; preserve its later register design."
+    },
+    {
+      "screenshot": 19,
+      "question_ids": [
+        "PREP-104"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-19.png"
+      ],
+      "original_filename": "codex-clipboard-63234dd1-3daf-4f0a-be38-75ee54aa91e4.png",
+      "sha256": "26866369b45141223e859dc617c62742856a5eedf258d22f44567d8451fe555a",
+      "original_prompt": "יצרת מעגל פשוט בו שירשרת שלושה רכיבי FF אחד אחרי השני, הכניסה קבועה על 0 ועולה ברגע t=0 ל-1 ונשארת גבוהה. הציפייה היא שלאחר שלושה מחזורי שעון היציאה תעלה ל-1. היציאה עולה לאחר שני מחזורי שעון, איזה תנאי לא התקיים? תנאי setup או תנאי hold? היציאה עולה לאחר ארבעה מחזורי שעון, איזה תנאי לא התקיים כעת?",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "decision": "new_manual_question",
+      "decision_note": "Two/four-cycle observations do not uniquely prove hold/setup violations without an edge/phase convention; model and diagnosis caveats added explicitly."
+    },
+    {
+      "screenshot": 20,
+      "question_ids": [
+        "PREP-105"
+      ],
+      "archive_paths": [
+        "sources/2026-10-24-batch20-20.png"
+      ],
+      "original_filename": "codex-clipboard-245aa78c-23c4-44ef-925a-f05ced7d68c2.png",
+      "sha256": "aa090b19b696332a3a0016aa2568223106f370a5d8c52b465ad2d2a0209d615a",
+      "original_prompt": "Implement the following function:\nBOOLEAN is_one_bit_active(int32 n)\nThat receives a 32bit integer and returns TRUE if only one bit is active, and FALSE otherwise.\nFor example:\n0x00080000: returns TRUE. 100000000 ?\n0x000C0000 returns FALSE. 110000000 ?\nb) can it be done more efficiently?",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_tags": [
+        "nvidia",
+        "software"
+      ],
+      "decision": "new_manual_question",
+      "decision_note": "Signed-int32bit-pattern variant differs from numericpositivepowerof2 atINT32_MIN. KeepsPREP023unchanged andlinked."
+    }
+  ],
+  "new_question_ids": [
+    "PREP-097",
+    "PREP-098",
+    "PREP-099",
+    "PREP-100",
+    "PREP-101",
+    "PREP-102",
+    "PREP-103",
+    "PREP-104",
+    "PREP-105"
+  ],
+  "additional_sources_for": [
+    "PREP-005",
+    "PREP-006",
+    "PREP-009",
+    "PREP-029",
+    "PREP-062",
+    "PREP-066",
+    "PREP-067",
+    "PREP-072",
+    "PREP-083",
+    "PREP-094"
+  ],
+  "existing_content_revisions": [
+    "PREP-062"
+  ],
+  "notes": [
+    "20 screenshots are retained;9manual records appended.098overlapsanexistingexample;displaydedupkeepsbothhistoryidentities.",
+    "062flag-onlyvariantDdoesnotaddmeetingdetection;priorA/B/Ccontractsandinteractivehintsarepreserved.",
+    "105isalinkedsigned32bitpatternvariant;023numericpositivepoweroftworemainsunchanged."
+  ]
+}

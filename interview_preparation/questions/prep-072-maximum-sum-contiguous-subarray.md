@@ -297,3 +297,10 @@ Keep the best nonempty interval sum ending here and the global best. Restart aft
 - [checks/check_prep_072.py](../checks/check_prep_072.py)
 
 - [checks/prep-072-verification.json](../checks/prep-072-verification.json)
+
+
+## מקורות נוספים — 24.10.2026, מקבץ 20
+
+- [צילום 4](../sources/2026-10-24-batch20-04.png) — Amazon, NVIDIA, Cisco, Intel; דיווח מקור לא מאומת.
+
+המזהה, היסטוריית התרגול והאישורים האנושיים אינם מוחלפים בעקבות קליטת מקור. הנוסח, שלושת הרמזים והפתרון הטכני נשמרו.

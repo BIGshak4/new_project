@@ -252,3 +252,11 @@ Descending diagrams directly match the source MAX/MIN cell. The original ascendi
 ![שרטוט קופסאות 4](../diagrams/prep-005-boxes-pruned-last.png)
 
 [תמונת סגנון שסיפק המשתמש](../sources/prep-005-box-diagram-style-reference.png)
+
+
+## מקורות נוספים — 24.10.2026, מקבץ 20
+
+- [צילום 3](../sources/2026-10-24-batch20-03.png) — NVIDIA, Intel; דיווח מקור לא מאומת.
+- [צילום 14](../sources/2026-10-24-batch20-14.png) — Actelis Networks, Amazon, NVIDIA; דיווח מקור לא מאומת.
+
+המזהה, היסטוריית התרגול והאישורים האנושיים אינם מוחלפים בעקבות קליטת מקור. הנוסח, שלושת הרמזים והפתרון הטכני נשמרו.

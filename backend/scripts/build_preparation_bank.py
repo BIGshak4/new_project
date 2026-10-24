@@ -58,6 +58,7 @@ PRIMARY = [
     "combinational_blocks", "arrays_and_search", "bit_manipulation",
     "arrays_and_search", "estimation_sanity_checks", "edge_detection", "boolean_algebra",
     "estimation_sanity_checks", "bit_manipulation", "debugging_methodology", "estimation_sanity_checks",
+    "arrays_and_search", "arrays_and_search", "debugging_methodology", "binary_arithmetic", "arrays_and_search", "basic_data_structures", "latches_flip_flops", "setup_hold_timing", "bit_manipulation",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

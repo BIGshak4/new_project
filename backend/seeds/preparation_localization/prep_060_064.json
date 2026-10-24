@@ -272,7 +272,8 @@
         "כל הוראה מבוצעת עולה יחידת זמן, כולל בדיקה וקפיצה; קפיצה מותנית שלא מבוצעת אינה צורכת זמן.",
         "שני הסוכנים נעים ברציפות בזמן צעד. מפגש הוא מקום משותף, לא דרישת גילוי או עצירה אוטומטית.",
         "למעבד המקומי רק מונה פקודות וקריאת סימן; נתוני הסביבה מוסתרים ממנו.",
-        "וריאנט API נפרד ג: תנועה והמתנה אורכות יחידה; בדיקות ובקרה מיידיות. מודלי א–ב נשארים ללא שינוי."
+        "וריאנט API נפרד ג: תנועה והמתנה אורכות יחידה; בדיקות ובקרה מיידיות. מודלי א–ב נשארים ללא שינוי.",
+        "וריאנט ד׳: חישת דגל בלבד, ללא חיישן מפגש; המתנה וצעד בזמן יחידה, בקרה מיידית ויעד של מפגש פיזי בלבד."
       ],
       "en": [
         "Common forward orientation, synchronized start and equal clocks.",
@@ -281,7 +282,8 @@
         "Every executed primitive costs one tick, including test and jump; a skipped guarded jump consumes no execution tick.",
         "Movement is continuous during its tick. Meeting means shared location, not automatic detection or stopping.",
         "The local CPU has only a program counter and marker bit; environment data is hidden from it.",
-        "Separate API variant C: movement/wait cost one tick; queries/control are instantaneous; all original A/B timing assumptions remain unchanged for those variants."
+        "Separate API variant C: movement/wait cost one tick; queries/control are instantaneous; all original A/B timing assumptions remain unchanged for those variants.",
+        "Variant D: marker presence only, no meeting sensor; unit wait/movement, instantaneous control and physical rendezvous only."
       ]
     },
     "optimality": {
@@ -289,18 +291,20 @@
         "criterion": "הבטחת מפגש בכל מרחק שלם במודל ההוראות שנבחר.",
         "result": "פגישה בזמן 6D−1; זיכרון מקומי קבוע וזמן ליניארי במרחק.",
         "proof": "לפני הסימן הפער D; אחרי המעבר ללולאה המהירה הוא קטן באחת בכל שלוש הוראות.",
-        "scope": "אין טענה למינימום זמן או הוראות; לא מכסה מרחק ממשי שרירותי, כיוונים בלתי תלויים, שעונים שונים או בקרה חינמית."
+        "scope": "אין טענה למינימום זמן או הוראות; לא מכסה מרחק ממשי שרירותי, כיוונים בלתי תלויים, שעונים שונים או בקרה חינמית.",
+        "variant_d": "זמן מפגש 4D−2 במרחק שלם חיובי במודל ד׳; מספר קבוע של מצבים מקומיים, ללא טענת זמן מינימלי או זיהוי המפגש."
       },
       "en": {
         "criterion": "Guaranteed meeting for every integer separation in the declared instruction model.",
         "result": "Meeting at 6D−1; constant local memory and linear time in separation.",
         "proof": "The gap is D before marker discovery; afterward it decreases by one per three-instruction cycle.",
-        "scope": "No minimum-time or minimum-program claim; does not cover arbitrary real separation, independent orientations, unequal clocks or free control."
+        "scope": "No minimum-time or minimum-program claim; does not cover arbitrary real separation, independent orientations, unequal clocks or free control.",
+        "variant_d": "Meeting time 4D−2 for positive integer spacing in D; constant local states, without minimum-time or meeting-detection claim."
       }
     },
     "verification": {
-      "he": "עברו 1,536 הרצות מפרש: מרחקים 1 עד 256, שני סדרי סוכנים ושלוש הזזות צירים. זמן המפגש וזמן בדיקת הסימן הושוו לנוסחאות עצמאיות. נבדקו מרחק אפס וארבע דוגמאות חצי־שלמות שבהן הסימן מוחמץ, וכן כיווני קדימה הפוכים. החיישן המקומי אינו מקבל מיקומים. זו בדיקת מודל סופית ולא ניסוי פיזי או הוכחה למודלים אחרים. וריאנט API נפרד: 1,536 בדיקות מסלול למרחק חיובי מול 4D−2, בכיוון משותף, התחלה מסונכרנת ובדיקות מיידיות בלבד.",
-      "en": "Passed 1,536 interpreter runs: distances 1..256, both agent orders and three translations. Meeting and marker-test times matched independent formulas. Checked initial coincidence, four noninteger marker misses and opposite forward directions. The local sensor never receives positions. Finite model checks are not physical experiments or proof for other execution models. Separate API variant: finite trajectory checks compare meeting with 4D-2 for 1,536 positive-distance cases; common orientation, synchronized start and instantaneous queries/control only."
+      "he": "עברו 1,536 הרצות מפרש: מרחקים 1 עד 256, שני סדרי סוכנים ושלוש הזזות צירים. זמן המפגש וזמן בדיקת הסימן הושוו לנוסחאות עצמאיות. נבדקו מרחק אפס וארבע דוגמאות חצי־שלמות שבהן הסימן מוחמץ, וכן כיווני קדימה הפוכים. החיישן המקומי אינו מקבל מיקומים. זו בדיקת מודל סופית ולא ניסוי פיזי או הוכחה למודלים אחרים. וריאנט API נפרד: 1,536 בדיקות מסלול למרחק חיובי מול 4D−2, בכיוון משותף, התחלה מסונכרנת ובדיקות מיידיות בלבד. וריאנט ד׳ נבדק בנפרד: 772 מרחקים/הזזות/החלפות, 201,984 נקודות מסלול מול נוסחה עצמאית ושלוש דוגמאות נגדיות חצי־שלמות; רק הרתמה רואה מפגש.",
+      "en": "Passed 1,536 interpreter runs: distances 1..256, both agent orders and three translations. Meeting and marker-test times matched independent formulas. Checked initial coincidence, four noninteger marker misses and opposite forward directions. The local sensor never receives positions. Finite model checks are not physical experiments or proof for other execution models. Separate API variant: finite trajectory checks compare meeting with 4D-2 for 1,536 positive-distance cases; common orientation, synchronized start and instantaneous queries/control only. Variant D separately passed 772 distance/translation/agent-order cases and 201,984 trajectory points against an independent formula, plus three half-integer counterexamples; only the harness sees meetings."
     },
     "edge_cases": {
       "he": [
@@ -310,7 +314,8 @@
         "סימן במרחק חצי יחידה עלול שלא להידגם לעולם.",
         "התחלה באותה נקודה היא מפגש בזמן אפס.",
         "המודל אינו דורש זיהוי מפגש מתוך התוכנית עצמה.",
-        "בווריאנט API בודקים מפגש התחלתי ועוזבים את המצנח העצמי לפני בדיקת הסימן; ההמתנה הותרה רק במקור החדש."
+        "בווריאנט API בודקים מפגש התחלתי ועוזבים את המצנח העצמי לפני בדיקת הסימן; ההמתנה הותרה רק במקור החדש.",
+        "בד׳ גם אחרי מפגש ממשיכים לפעול; D=0 הוא מפגש התחלתי. ׳עצירה׳ חייבת להתיר המתנה מתוזמנת, לא רק halt סופי."
       ],
       "en": [
         "Testing before the first step sees each agent’s own marker and does not break symmetry.",
@@ -319,7 +324,8 @@
         "A marker half a unit away may never be sampled.",
         "Coincident starts are a meeting at time zero.",
         "The program itself need not detect that a meeting has happened.",
-        "API variant: explicitly check initial coincidence; leave the own marker before testing on_parachute. Its waiting primitive is allowed by the new source only."
+        "API variant: explicitly check initial coincidence; leave the own marker before testing on_parachute. Its waiting primitive is allowed by the new source only.",
+        "D continues after a meeting; D=0 is initially co-located. “Stop” must permit a timed wait rather than permanent halt only."
       ]
     },
     "common_mistakes": {
@@ -330,7 +336,8 @@
         "להשתמש בפקודת המתנה או סעיף אחר שלא הותרו.",
         "לקרוא בקוד למרחק או למיקום האחר שהסוכן אינו יודע.",
         "להרחיב את ההוכחה למרחקים לא שלמים או לכיוונים שונים בלי פתרון נוסף.",
-        "העתקת זמן 6D−1 והשרטוטים מהמודל הישן לווריאנט API עם המתנה ובדיקות חינמיות."
+        "העתקת זמן 6D−1 והשרטוטים מהמודל הישן לווריאנט API עם המתנה ובדיקות חינמיות.",
+        "הוספת did_meet() לגרסת הדגלים, או לולאת בדיקות מיידיות שאינה מניעה את הזמן."
       ],
       "en": [
         "Expecting identical programs with identical motion to meet without a symmetry-breaking observation.",
@@ -339,12 +346,13 @@
         "Introducing an unauthorized WAIT or ELSE.",
         "Reading hidden separation or the other position from inside agent code.",
         "Generalizing the proof to noninteger separation or different orientations without another solution.",
-        "Reusing the paid-instruction 6D-1 time or old diagrams for the API variant with free queries and explicit waiting."
+        "Reusing the paid-instruction 6D-1 time or old diagrams for the API variant with free queries and explicit waiting.",
+        "Adding did_meet() to the flag-only variant or busy-looping on instantaneous queries without a timed action."
       ]
     },
     "interview_answer": {
-      "he": "שניהם נעים באותו כיוון בלולאה איטית: צעד, בדיקת מצנח וקפיצה. רק האחורי יגיע למצנח שהקדמי השאיר. הוא יעבור ללולאה של שני צעדים וקפיצה, ולכן יתקדם בממוצע פי שניים ויסגור פער. במודל של הוראה אחת ליחידת זמן ומרחק שלם הפגישה בזמן 6D−1. אותם תנאי כיוון ותזמון חייבים להיות מפורשים.",
-      "en": "Both advance in the same direction using a slow step/test/jump loop. Only the trailer reaches the leader’s fixed marker, then switches to two steps and a jump. Its average speed doubles and closes the gap. With one tick per executed primitive and integer separation, meeting occurs at 6D−1. Direction and timing assumptions must be explicit."
+      "he": "שניהם נעים באותו כיוון בלולאה איטית: צעד, בדיקת מצנח וקפיצה. רק האחורי יגיע למצנח שהקדמי השאיר. הוא יעבור ללולאה של שני צעדים וקפיצה, ולכן יתקדם בממוצע פי שניים ויסגור פער. במודל של הוראה אחת ליחידת זמן ומרחק שלם הפגישה בזמן 6D−1. אותם תנאי כיוון ותזמון חייבים להיות מפורשים. בד׳ ללא חיישן מפגש: צעד ימינה, ואז המתנה וצעד עד דגל נוסף, ומשם צעדים בלי המתנות. מוכיחים מפגש פיזי בלי לדרוש שהתוכנית תזהה אותו.",
+      "en": "Both advance in the same direction using a slow step/test/jump loop. Only the trailer reaches the leader’s fixed marker, then switches to two steps and a jump. Its average speed doubles and closes the gap. With one tick per executed primitive and integer separation, meeting occurs at 6D−1. Direction and timing assumptions must be explicit. In D without meeting sensing: move right, then wait/move until another flag, then move without waiting. Prove physical co-location without requiring program detection."
     },
     "source_ambiguities": {
       "he": {
@@ -353,7 +361,8 @@
         "orientation": "כיוון קדימה משותף והתחלה מסונכרנת נאמרים במפורש בעריכה.",
         "operation_count": "מקור הרכבות אומר שלוש פעולות אך מונה MF,MB,ifP,GOTO; נשמר הטקסט המקורי ומובהר שבעריכה יש ארבע צורות.",
         "static": "המילה סטטי במקור הרובוטים מתארת את המצנח, לא את הרובוט.",
-        "api_variant": "המקור החדש מתיר המתנה אך אינו קובע זמן לבדיקות. וריאנט ג בוחר בדיקות ובקרה מיידיות ומגדיר כיוון משותף, התחלה יחד וסריג שלם."
+        "api_variant": "המקור החדש מתיר המתנה אך אינו קובע זמן לבדיקות. וריאנט ג בוחר בדיקות ובקרה מיידיות ומגדיר כיוון משותף, התחלה יחד וסריג שלם.",
+        "variant_d": "צילום ד׳ מוסיף עצירה/המתנה אך אינו מספק חיישן מפגש, משכי פעולה או סריג. ההבהרות של ד׳ נבחרו במפורש ואינן מחליפות את מודלי א׳–ג׳."
       },
       "en": {
         "distance": "Source X is not explicitly integer. The discrete solution assumes a unit lattice; half-unit separation provides a counterexample.",
@@ -361,19 +370,46 @@
         "orientation": "Common forward direction and synchronized start are explicit editorial additions.",
         "operation_count": "The train source says three operations but listsMF,MB,ifP,GOTO; the literal source is retained and four forms are clarified.",
         "static": "Static in the robot source refers to the parachute marker, not the moving robot.",
-        "api_variant": "New API explicitly permits waiting but leaves query timing unspecified. Variant C chooses zero-time queries/control and keeps common orientation, synchronized start and integer spacing explicit."
+        "api_variant": "New API explicitly permits waiting but leaves query timing unspecified. Variant C chooses zero-time queries/control and keeps common orientation, synchronized start and integer spacing explicit.",
+        "variant_d": "Source D permits stopping/waiting but specifies neither a meeting sensor, action timing nor lattice. D's declared choices do not replace A–C."
       }
     },
     "solution_extensions": {
       "he": {
         "question": "מה משתנה אם בדיקה וקפיצה הן חינמיות או שהמרחק הוא חצי יחידה?",
         "direction": "הסבירו מדוע יחס המהירויות או זיהוי הסימן כבר אינם מובטחים בתוכנית הנתונה. צריך לבחור במפורש מודל תנועה וחישה אחר או אלגוריתם שמייצר האטה ממשית; אין להסיק שהמודל החדש נפתר מאותו חישוב.",
-        "status": "המשך מוכן בתוכן; אינו מחובר לתור ההמשך החי."
+        "status": "המשך מוכן בתוכן; אינו מחובר לתור ההמשך החי.",
+        "variant_d": "מה אם נדרש גם לעצור יחד כשנפגשים? המפגש הפיזי המוכח אינו נותן כשלעצמו אירוע חישה או פרוטוקול עצירה. יש להגדיר תקשורת/חישה מותרות או להוכיח פרוטוקול אחר; לא מוסיפים חיישן בשקט. ההרחבה אינה ממומשת."
       },
       "en": {
         "question": "What changes if test/jump are free or the markers are half a unit apart?",
         "direction": "Explain why this program no longer guarantees the speed ratio or marker observation. Specify another movement/sensing model or a genuinely slowing algorithm; do not reuse the old proof unchanged.",
-        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue.",
+        "variant_d": "What if both must also stop on meeting? Proven physical co-location does not itself provide a sensing event or stopping protocol. Define permitted sensing/communication or prove another protocol; never silently add a sensor. This extension is not implemented."
+      }
+    },
+    "prompt_variants": {
+      "he": {
+        "D": {
+          "prompt": "### ד. מקור נוסף — דגלים והמתנה, ללא חיישן מפגש\nשני רובוטים זהים נמצאים במקומות לא ידועים על ישר. ליד כל אחד דגל קבוע. התקינו את אותו אלגוריתם בשניהם כדי שיימצאו יחד באותו מקום. מותר לנוע ימינה או שמאלה, לעצור/להמתין ולבדוק רק אם יש דגל במיקום הנוכחי. אין חיישן מפגש, זהות רובוט או זהות דגל.\n\nמודל מפורש נוסף: ישר אינסופי, דגלים נשארים באתרי ההתחלה, מרחק שלם לא שלילי בצעדי יחידה, התחלה מסונכרנת וכיוון ימינה משותף. צעד יחידה והמתנה נמשכים כל אחד יחידת זמן; בדיקת דגל ובקרה מקומית מיידיות. ״עצירה״ מתפרשת כהמתנה ליחידת זמן, לא כסיום התוכנית לעד. המטרה היא מפגש פיזי לפחות פעם אחת, לא זיהוי אוטומטי שלו או עצירה משותפת. מקור זה אינו מספק did_meet(), ואין להוסיף אותה. תעדו במפורש מה ההוכחה אינה מכסה.",
+          "hints": [
+            "האם דגל נשאר במקום גם אחרי שהרובוט שהתחיל לידו כבר התרחק? חפשו אירוע שיקרה רק לאחד מהם כששניהם הולכים ימינה.",
+            "אחרי ששניהם עזבו את הדגל שלהם, רק הרובוט האחורי יוכל לפגוש דגל נוסף. אפשר להשתמש בדגל כדי לשנות את כמות ההמתנה שלו.",
+            "התחילו בצעד ימינה בלי בדיקת דגל. עד לדגל הבא המתינו יחידה ואז לכו צעד; אחריו לכו בלי המתנות. כל לולאה כוללת פעולה שצורכת זמן, ואין צורך לזהות את רגע המפגש."
+          ],
+          "integration_status": "רמזי ד׳ נשמרו, אך אינם נבחרים אוטומטית בתור הרמזים הקיים."
+        }
+      },
+      "en": {
+        "D": {
+          "prompt": "### D. Additional source — flags and waiting, without a meeting sensor\nTwo identical robots occupy unknown positions on a line, with a fixed flag at each starting point. Install the same algorithm on both so they occupy one location together. They may move right/left, stop/wait, and test only whether a flag is at their current position. No meeting sensor, robot identity or flag identity is available.\n\nSeparate explicit model: infinite line, flags left at the initial sites, nonnegative integer separation in unit steps, synchronized start and common right orientation. A unit move and a wait each take one time unit; flag queries and local control are instantaneous. Interpret “stop” as a one-unit wait, not permanent termination. The target is physical co-location at least once, not automatically detecting it or stopping together. This source supplies no did_meet(), and none may be added. State what the proof does not cover.",
+          "hints": [
+            "Does a flag remain where it was after its original robot leaves? Look for an event occurring to only one robot when both move right.",
+            "After leaving their own flags, only the trailer can encounter another flag. Use that event to change its waiting behavior.",
+            "First move right without testing the starting flag. Until another flag, alternate one-unit waiting and movement; afterward move without waiting. Every loop executes a timed action; no meeting detection is needed."
+          ],
+          "integration_status": "D hints are saved but not automatically selected by the existing hint queue."
+        }
       }
     }
   },

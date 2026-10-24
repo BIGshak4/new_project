@@ -1,0 +1,11 @@
+{
+  "question_id": "PREP-099",
+  "status": "passed",
+  "network_inference_cases": 192,
+  "decimal_transition_checks": 960,
+  "independent_kcl_rk4_cases": 48,
+  "rk4_steps_per_case": 8000,
+  "invalid_cases_rejected": 12,
+  "example_capacitance_farad": 1e-07,
+  "scope": "Ideal lumped first-order RC network; Decimal algebra and independent KCL/RK4 numerical integration. No physical measurement, instrument calibration or fitted uncertainty claim."
+}

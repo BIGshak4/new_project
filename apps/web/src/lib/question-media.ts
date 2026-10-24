@@ -6,6 +6,7 @@ const withheld = new Set<string>(sourceScreenshots.map(filename => filename.toLo
 // Bare IDs, explicit source markers and dated intake names are reserved for sources.
 // Authored illustrations use descriptive names without an intake date.
 const archivedImageName = /^prep-\d{3,}(?:-(?:source|\d{3,}-full-context)|-(?:.+-)?\d{4}-\d{2}-\d{2}(?:-[\w-]+)?)?\.[^.]+$/i;
+const archivedIntakeName = /^\d{4}-\d{2}-\d{2}-batch\d+-\d+\.[^.]+$/i;
 const archivedSourcePath = /(?:^|\/)sources(?:\/|$)/i;
 
 function isArchivedSource(item: ResourceMedia): boolean {
@@ -19,7 +20,7 @@ function isArchivedSource(item: ResourceMedia): boolean {
   }
   const basename = filename.slice(filename.lastIndexOf("/") + 1);
   return withheld.has(basename.toLowerCase())
-    || (item.kind === "image" && archivedImageName.test(basename));
+    || (item.kind === "image" && (archivedImageName.test(basename) || archivedIntakeName.test(basename)));
 }
 
 // Compatibility for already-issued resource responses during the API rollout.

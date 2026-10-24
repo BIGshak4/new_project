@@ -1,0 +1,10 @@
+{
+  "question_id": "PREP-104",
+  "checked_on": "2026-10-24",
+  "status": "passed",
+  "ideal_streams": 4088,
+  "ideal_sampling_edges": 28688,
+  "exact_rational_timing_cases": 216,
+  "oracle": "Independent reversed deque for three stages; absolute arrival/capture deadlines for setup and hold. Counterexamples show latency alone is not diagnostic.",
+  "scope": "Ideal two-state traces and scalar timing equations with explicit signed skew. No deterministic waveform after violations, analog metastability model, HDL compilation or physical timing certification."
+}

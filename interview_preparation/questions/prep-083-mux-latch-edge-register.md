@@ -364,3 +364,10 @@ The ideal Python model passed eight truth rows, 10,922 latch streams containing 
 - [prep_083_mux_latch_register.sv](../solutions/prep_083_mux_latch_register.sv)
 - [check_prep_083.py](../checks/check_prep_083.py)
 - [prep-083-verification.json](../checks/prep-083-verification.json)
+
+
+## מקורות נוספים — 24.10.2026, מקבץ 20
+
+- [צילום 18](../sources/2026-10-24-batch20-18.png) — Valens, Apple; דיווח מקור לא מאומת.
+
+המזהה, היסטוריית התרגול והאישורים האנושיים אינם מוחלפים בעקבות קליטת מקור. הנוסח, שלושת הרמזים והפתרון הטכני נשמרו.

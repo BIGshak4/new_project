@@ -1,0 +1,792 @@
+{
+  "PREP-102": {
+    "assumptions": {
+      "he": [
+        "32 תאים נפרדים, אינדקסים 0..31, הקצאת תא יחיד ותחילה כולם פנויים.",
+        "סביבה סדרתית; רק מפת התפוסה נשמרת כמצב ניהול.",
+        "כישלון הקצאה מחזיר ‎-1; שחרור שגוי או כפול מחזיר false בלי שינוי."
+      ],
+      "en": [
+        "32 individual slots indexed 0..31, one slot per request, initially all free.",
+        "Sequential operation; only the occupancy bitmap is persistent management state.",
+        "Allocation failure returns -1; invalid or repeated release returns false without change."
+      ]
+    },
+    "optimality": {
+      "he": "נדרשים לפחות 32 ביטים לתיאור שרירותי של 2^32 קבוצות תפוסה, אם כל קבוצת תאים יכולה להיות מוקצית ואין מידע ניהול חיצוני. המפה משיגה חסם מצב זה. אין טענה למספר הוראות מכונה מינימלי.",
+      "en": "Arbitrary occupancy has 2^32 possible subsets, requiring at least 32 bits when every subset is allowed and no external management information exists. The bitmap meets this state bound; no minimum instruction-count claim is made."
+    },
+    "edge_cases": {
+      "he": [
+        "תחילה ריק; לאחר 32 הקצאות כל בקשה נכשלת.",
+        "התא 31 משתמש בביט הגבוה; אין להזיז במספר שלילי או ב־32.",
+        "שחרור כפול, אינדקס שגוי, ומחזור שחרור והקצאה מחדש."
+      ],
+      "en": [
+        "Initially empty; after 32 allocations every request fails.",
+        "Slot 31 uses the highest bit; never shift by a negative count or by 32.",
+        "Double free, invalid index, and release followed by reallocation."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשתמש ב־~used של Python ללא מסכת 32 ביטים.",
+        "להחזיר אותו תא בלי לסמן תפוסה או לנקות את כל המפה בשחרור.",
+        "לטעון ש־O(1) פעולות מחייב אפס אתחול, או שמודל Python צורך פיזית רק 32 ביטים."
+      ],
+      "en": [
+        "Using Python ~used without a 32-bit mask.",
+        "Returning a slot without marking it or clearing the entire map on release.",
+        "Confusing constant-time operations with zero initialization, or claiming a Python object physically occupies 32 bits."
+      ]
+    },
+    "interview_answer": {
+      "he": "מילה בת 32 ביטים היא מפת תפוסה. מקצים על ידי חיפוש ביט אפס והדלקתו, ומשחררים על ידי ניקוי הביט המתאים. סריקה של 32 ביטים היא זמן קבוע בקיבולת הנתונה; כל המטען נשאר מחוץ למצב הניהול.",
+      "en": "Use the 32-bit word as an occupancy bitmap. Allocate by finding and setting a zero bit; release by clearing the indexed bit. Scanning 32 bits is constant time for the fixed capacity, and payload stays separate from management state."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר תחילת מצב, כישלון, מספור, שחרור שגוי, מקביליות או מדיניות בחירה. החוזה המפורש נוסף בעריכה, אינו ציטוט מהמקור.",
+      "en": "The source omits initialization, failure behavior, indexing, invalid frees, concurrency and selection policy. The explicit contract is an editorial addition, not a source quotation."
+    },
+    "verification": {
+      "he": "הקוד בפייתון הורץ מול אורקל קבוצות נפרד: כל 65,536 מצבי תפוסת 16 התאים הנמוכים כאשר העליונים תפוסים, 50,000 פעולות אקראיות, מלא/ריק ושחרורים לא תקינים. C++ נכתב אך לא קומפל; אין בדיקת מקביליות.",
+      "en": "The actual Python model was checked against an independent set oracle: all 65,536 lower-16 occupancy states with upper slots occupied, 50,000 random operations, full/empty cases and invalid frees. C++ was authored but not compiled; concurrency was not tested."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם שתי יחידות מבקשות להקצות במקביל?",
+        "direction": "עדכון של קריאה-שינוי-כתיבה יכול להחזיר אותו תא פעמיים. נדרש מנעול או לולאת פעולה אטומית; מפת ביטים לבדה אינה מספקת סנכרון."
+      },
+      "en": {
+        "question": "What changes if two units allocate concurrently?",
+        "direction": "A read-modify-write race can return the same slot twice. Use synchronization such as a lock or an atomic update loop; a bitmap alone does not synchronize."
+      }
+    }
+  },
+  "PREP-105": {
+    "assumptions": {
+      "he": [
+        "קלט int32 תקין; בודקים את כל תבנית משלים ל־2, כולל ביט הסימן.",
+        "אפס אינו מתקבל; INT32_MIN מתקבל; אין דרישת חיוביות מספרית.",
+        "לניתוח זמן קבוע מניחים מילה של 32 ביטים ופעולות מכונה עליה."
+      ],
+      "en": [
+        "Valid int32 input; inspect all two's-complement bits including the sign bit.",
+        "Zero is rejected; INT32_MIN is accepted; numeric positivity is not required.",
+        "Constant-time analysis assumes a 32-bit machine word with machine-word operations."
+      ]
+    },
+    "optimality": {
+      "he": "הפתרון מפחית סריקה של עד 32 בדיקות למספר קטן וקבוע של פעולות על מילה. שניהם O(1) לרוחב קבוע; לא נטען שמספר ההוראות הוא המינימלי לכל מעבד.",
+      "en": "The solution replaces up to 32 inspections with a small fixed number of word operations. Both are O(1) at fixed width; no universal minimum instruction count is claimed."
+    },
+    "edge_cases": {
+      "he": [
+        "0 ו־‎-1 מחזירים false.",
+        "כל 32 התבניות עם אחד יחיד מתקבלות, כולל 0x80000000.",
+        "0x00080000 מתקבל; 0x000C0000 מכיל שני אחדים ונפסל."
+      ],
+      "en": [
+        "0 and -1 return false.",
+        "All 32 one-hot patterns are accepted, including 0x80000000.",
+        "0x00080000 is accepted; 0x000C0000 has two ones and is rejected."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לדרוש n>0 ולפסול בטעות את ביט הסימן היחיד.",
+        "לשכוח לפסול אפס.",
+        "לבצע חיסור חתום לפני ההמרה או להניח שעלויות שלמים רחבים הן קבועות."
+      ],
+      "en": [
+        "Requiring n>0 and incorrectly rejecting the lone sign bit.",
+        "Forgetting to reject zero.",
+        "Subtracting in the signed type before conversion or assuming arbitrary-width operations have fixed cost."
+      ]
+    },
+    "interview_answer": {
+      "he": "אמיר קודם ל־uint32_t. אם u אינו אפס ו־u&(u-1) הוא אפס, היה בו בדיוק אחד יחיד: החיסור וה־AND מוחקים את האחד הנמוך ביותר. ההמרה לפני החיסור גם מטפלת בביט הסימן בלי גלישה חתומה.",
+      "en": "Convert to uint32_t first. Nonzero u has exactly one set bit iff u&(u-1) is zero, because this clears the lowest set bit. Converting before subtraction also handles the sign bit without signed overflow."
+    },
+    "source_ambiguities": {
+      "he": "המקור משתמש ב־int32 אך אינו דן בביט הסימן. בעריכה הוגדר במפורש ש״ביט אחד פעיל״ מתייחס לתבנית כולה. ההערות הבינאריות הלא ברורות בצילום נשמרו במקור, ובדוגמאות הערוכות משתמשים בהקס ובמיקומי ביט מדויקים.",
+      "en": "The source uses int32 without discussing the sign bit. This edition explicitly interprets one active bit over the complete pattern. Unclear binary annotations remain in the archived source; edited examples use exact hexadecimal values and bit positions."
+    },
+    "verification": {
+      "he": "הפונקציה בפייתון הורצה מול ספירת ספרות עצמאית: כל 65,536 תבניות 16 הביטים הנמוכים, 32 תבניות one-hot, כל 496 זוגות ביטים, 10,000 תבניות מלאות אקראיות, ביט הסימן ואפס. C++ סופק אך לא קומפל בסביבה הזאת.",
+      "en": "The actual Python function was compared with independent digit counting: all 65,536 low-16 patterns, 32 one-hot patterns, all 496 two-bit pairs, 10,000 random full-width patterns, the sign bit and zero. C++ was supplied but not compiled in this environment."
+    },
+    "relationship_note": {
+      "he": "וריאציה מקושרת ל־PREP-023: שם בודקים חזקה חיובית של שתיים, ולכן שליליים נפסלים; כאן נבדק ייצוג int32 והביט הגבוה היחיד מתקבל. המזהים וההיסטוריה של השאלה המקורית אינם מוחלפים.",
+      "en": "Linked variant of PREP-023: that question checks a positive numeric power of two and rejects negatives; this one checks an int32 representation and accepts the lone high bit. The original identity and history remain unchanged."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך סופרים את כל הביטים הפעילים בעזרת אותה פעולה?",
+        "direction": "כל עוד u אינו אפס, החליפו אותו ב־u&(u-1) והגדילו מונה. כל איטרציה מוחקת אחד אחד; הזמן תלוי במספר האחדים במילת הקלט."
+      },
+      "en": {
+        "question": "How can the same operation count all active bits?",
+        "direction": "While u is nonzero, replace it by u&(u-1) and increment a counter. Each iteration clears one set bit, so iterations equal the input word's set-bit count."
+      }
+    }
+  },
+  "PREP-097": {
+    "assumptions": {
+      "he": [
+        "מטריצה מלבנית, שורות לא יורדות ימינה ועמודות לא יורדות מטה.",
+        "קלט שלמים מדויק וממוין מובטח; אפס אינו שלילי; הקלט אינו משתנה.",
+        "ריק מחזיר 0; שורות באורכים שונים נפסלות."
+      ],
+      "en": [
+        "Rectangular matrix; rows nondecreasing rightward and columns nondecreasing downward.",
+        "Exact integer and sortedness promises; zero is not negative; input is read-only.",
+        "Empty shapes return 0; ragged rows are rejected."
+      ]
+    },
+    "optimality": {
+      "he": "סריקת הגבול O(R+C) וב־O(1) מילים; אין טענת אופטימליות לכל יחס ממדים או לחישוב על שלמים בלתי חסומים.",
+      "en": "Boundary walk: O(R+C) time, O(1) words; no optimality claim for every aspect ratio or unbounded-integer arithmetic."
+    },
+    "edge_cases": {
+      "he": [
+        "אין שורות, שורות ריקות, תא יחיד, הכול שלילי או שום שלילי.",
+        "אפסים וחזרות על הגבול; שורה אחת או עמודה אחת.",
+        "אין להפעיל את הנוסחה על כיווני מיון אחרים בלי להתאים את הפינה."
+      ],
+      "en": [
+        "No rows, empty rows, singleton, all-negative and no-negative matrices.",
+        "Zeros and repeated boundary values; one row or column.",
+        "Other sorting directions require a corresponding corner adjustment."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להוסיף את מספר השורה במקום r+1 באינדוקס מאפס.",
+        "לספור אפס כשלילי או לבחור פינה שאינה מאפשרת לפסול קטע.",
+        "להבטיח O(R+C) ובמקביל לבדוק את מיון כל התאים."
+      ],
+      "en": [
+        "Adding r instead of r+1 with zero-based indexing.",
+        "Counting zero or choosing a corner that cannot eliminate a portion.",
+        "Claiming O(R+C) while fully validating every cell for sortedness."
+      ]
+    },
+    "interview_answer": {
+      "he": "אתחיל בשמאל למטה. בשלילי אוסיף את כל העמודה שמעליו ואעבור ימינה; באפס או חיובי אדלג על יתר השורה ואעלה. בכל צעד שורה או עמודה יוצאת מהמלבן, ולכן O(R+C) זמן ו־O(1) משתנים.",
+      "en": "Start bottom left. For a negative, count its entire remaining column above and move right; otherwise discard the row remainder and move up. Every step removes a row or column portion: O(R+C) time and O(1) state."
+    },
+    "source_ambiguities": {
+      "he": "המקור אומר שגם השורות וגם העמודות ממוינות אך אינו מגדיר בבירור את כיוון העמודות. כיוונים לא יורדים, מלבניות, קלט שלם ודרישת אי־שינוי הם הבהרות עריכה. תגית hardware נשמרת כתגית מקור; הבעיה אלגוריתמית.",
+      "en": "The source says rows and columns are sorted without clearly specifying the column direction. Nondecreasing directions, rectangular shape, integer input and immutability are editorial clarifications. Hardware remains a source tag; the task is algorithmic."
+    },
+    "verification": {
+      "he": "הקוד בפועל עבר 337 מטריצות ממוינות ממצות עד גודל 3×3 מעל ‎{-1,0,1}, מול אורקל שסופר בכל התאים. נבדקו גם ריק, אי־שינוי, שלמים גדולים ודחיית מבנה לא מלבני. אין אימות חומרה או מדידת ביצועים.",
+      "en": "The actual implementation passed 337 exhaustive monotone matrices up to 3×3 over {-1,0,1}, compared with a full-cell counting oracle. Also checked empty shapes, immutability, large integers and ragged rejection. No hardware verification or performance benchmark."
+    },
+    "relationship_note": {
+      "he": "שאלה חדשה; חיפוש בינארי בשורה הוא חלופה קשורה, אך כאן המיון בשני הצירים מאפשר לעבור על גבול משותף.",
+      "en": "New question. Row-wise binary search is a related alternative; the two-axis ordering supports a shared boundary walk."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך סופרים איברים הקטנים מסף t במקום שליליים?",
+        "direction": "מחליפים את ההשוואה לערך קטן מ־t. אותו נימוק מיון נשמר; לשאלה קטנים או שווים יש להתאים את תנאי השוויון.",
+        "status": "מוכן בתוכן, לא מחובר לתור המשך."
+      },
+      "en": {
+        "question": "How would you count entries below threshold t rather than below zero?",
+        "direction": "Replace the comparison by value<t. The same sorted-order proof holds; counting at most t requires changing the equality boundary.",
+        "status": "Prepared in content, not connected to the follow-up queue."
+      }
+    }
+  },
+  "PREP-101": {
+    "assumptions": {
+      "he": [
+        "הפלט הראשי הוא שלשות ערכים ייחודיות בסדר לקסיקוגרפי, ולא כל שלשות האינדקסים.",
+        "כל שלשה משתמשת בשלוש הופעות שונות; חזרות, אפסים ושליליים מותרים.",
+        "מותר עותק ממוין ואחסון פלט; אין שינוי קלט."
+      ],
+      "en": [
+        "Primary output is unique value triples in lexicographic order, not every index triple.",
+        "Each uses three distinct occurrences; duplicates, zeros and negatives are allowed.",
+        "A sorted copy and output storage are permitted; input is unchanged."
+      ]
+    },
+    "optimality": {
+      "he": "לפתרון המוצע O(n²) זמן במודל מילה, O(n) עזר ו־O(K) פלט. אין טענת חסם תחתון ריבועי כללי ל־3SUM. לפלט כל האינדקסים יש חסם Ω(K), ולעיתים K=Θ(n³).",
+      "en": "Proposed algorithm: O(n²) word-operation time, O(n) auxiliary storage and O(K) output. No universal quadratic 3SUM lower bound is claimed. Listing all indices requires Ω(K), with K sometimes Θ(n³)."
+    },
+    "edge_cases": {
+      "he": [
+        "פחות משלושה איברים; שלושה אפסים; אפסים רבים מפיקים שלשת ערכים אחת.",
+        "שלשה הדורשת שני מופעים של ערך אינה חוקית אם קיים רק מופע אחד.",
+        "יעד שלילי, כל הערכים זהים, אין פתרון ושלמים גדולים."
+      ],
+      "en": [
+        "Fewer than three items; three zeros; many zeros produce one value triple.",
+        "A triple needing two copies of a value is invalid when only one exists.",
+        "Negative target, all-equal input, no match and large integers."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשתמש באותו אינדקס פעמיים או להחזיר שלשות ערכים כפולות.",
+        "לדלג על חזרות בלי להבהיר שהפלט לפי ערכים ולא לפי אינדקסים.",
+        "להבטיח הדפסת כל שלשות האינדקסים בזמן תת־קובי.",
+        "למיין את הקלט המקורי למרות איסור שינוי או להתעלם מזיכרון המיון והפלט."
+      ],
+      "en": [
+        "Reusing an index or emitting duplicate value triples.",
+        "Skipping duplicates without stating value rather than index output.",
+        "Promising total subcubic time for every index triple.",
+        "Mutating the original via sorting or ignoring sort/output storage."
+      ]
+    },
+    "interview_answer": {
+      "he": "אברר תחילה אם שלשות ייחודיות לפי ערכים או אינדקסים. לערכים אמיין עותק, אקבע ערך ראשון ואחפש זוג משלים בשני מצביעים תוך דילוג על חזרות. זמן O(n²). לכל אינדקסים ייתכן פלט קובי, ולכן לא ניתן להבטיח זמן כולל קטן מ־n³.",
+      "en": "Clarify value versus index output first. For unique values, sort a copy, fix the first value and use two pointers for the complement, skipping duplicates. Time is O(n²). All-index output can be cubic, preventing a total subcubic guarantee."
+    },
+    "source_ambiguities": {
+      "he": "“כל השלשות” ו“פחות מ־n³” אינם תואמים תמיד אם שומרים ריבוי אינדקסים. העריכה בוחרת במפורש ערכים ייחודיים ומציגה את חלופת האינדקסים וחסם הפלט, בלי לייחס בחירה זו למקור. מקור השלמים, אי־שינוי הקלט וסדר הפלט הובהרו.",
+      "en": "“All triples” and “less than n³” are not always compatible with index multiplicity. This edition explicitly selects unique values and presents the index alternative/output bound without attributing that choice to the source. Integer input, immutability and output order are clarified."
+    },
+    "verification": {
+      "he": "הקוד בפועל עבר 22,960 מקרי מערך/יעד ממצים: אורכים 0..7 מעל ‎{-1,0,1}, יעדים ‎-3..3, מול אורקל המונה ישירות שלוש הופעות ומייחד ערכים. נבדקו ריבוי, סדר לקסיקוגרפי, אי־שינוי, 100 אפסים ושלמים גדולים. אין מבחן ביצועים או מימוש לאלטרנטיבת כל האינדקסים.",
+      "en": "The actual code passed 22,960 exhaustive array/target cases: lengths 0..7 over {-1,0,1}, targets -3..3, against direct three-occurrence enumeration followed by value deduplication. Also checked multiplicity, lexicographic order, immutability, 100 zeros and large integers. No performance benchmark or implementation of the all-index alternative."
+    },
+    "relationship_note": {
+      "he": "קשורה ל־PREP-040 ול־PREP-089, אך כאן בוחרים שלוש הופעות ומחזירים את כל שלשות הערכים. מציאת זוג או ספירת זוגות אינה ממלאת את החוזה.",
+      "en": "Related to PREP-040 and PREP-089, but selects three occurrences and returns all value triples. Finding a pair or counting pairs does not satisfy this contract."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה אם מבקשים רק האם קיימת שלשה, בלי להחזיר את כולן?",
+        "direction": "אפשר לעצור בהתאמה הראשונה, בלי אחסון O(K) לפלט. החסם הגרוע ביותר של אותו אלגוריתם נשאר O(n²); אין עוד חסם פלט קובי.",
+        "status": "מוכן בתוכן, לא מחובר לתור המשך."
+      },
+      "en": {
+        "question": "What if only the existence of a triple is required?",
+        "direction": "Stop at the first match without O(K) output storage. The same algorithm remains O(n²) in the worst case; cubic output is no longer an obstacle.",
+        "status": "Prepared in content, not connected to the follow-up queue."
+      }
+    }
+  },
+  "PREP-098": {
+    "assumptions": {
+      "he": [
+        "שני מערכי שלמים בסדר לא יורד; חזרות ואפסים ושליליים מותרים.",
+        "פלט חדש שומר את כל n+m המופעים; שני הקלטים נשארים ללא שינוי.",
+        "גישה לאיבר לפי אינדקס ול־len בעלות קבועה; אין sort ואין דרישה למיזוג במקום.",
+        "בשוויון בוחרים משמאל; ההבטחה שהקלט ממוין אינה נבדקת בידי הפונקציה."
+      ],
+      "en": [
+        "Two nondecreasing integer arrays; duplicates, zero and negatives are allowed.",
+        "Fresh output preserves all n+m occurrences while both inputs remain unchanged.",
+        "Constant-cost indexed access and len; no sort call and no in-place requirement.",
+        "Choose left on ties; sortedness is promised rather than validated by the function."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "time": "Θ(n+m) פעולות על מילים, עם לכל היותר n+m−1 השוואות ראשים כששניהם לא ריקים.",
+        "output": "Θ(n+m) מקומות פלט למערך מלא חדש.",
+        "auxiliary": "O(1) מילות עזר מעבר לפלט; האינדקסים אינם בעלי מספר קבוע של ביטים לכל n,m.",
+        "scope": "זמן לינארי נדרש לכתיבת הפלט המלא. לא נטענת מינימליות השוואות בכל מקרה או היתכנות לאותו חוזה במקום."
+      },
+      "en": {
+        "time": "Θ(n+m) word operations, with at most n+m−1 head comparisons when both inputs are nonempty.",
+        "output": "Θ(n+m) output slots for a fresh materialized array.",
+        "auxiliary": "O(1) auxiliary words beyond output; index bit widths are not constant for arbitrary n,m.",
+        "scope": "Writing all output requires linear time. No minimum-comparison claim for every instance or in-place construction is made."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "שני קלטים ריקים מחזירים רשימה חדשה ריקה.",
+        "קלט אחד ריק: כל המופעים של האחר מועתקים, בלי להחזיר אותו אובייקט.",
+        "[4,4] ו־[4] מחזירים שלושה מופעי 4.",
+        "מספרים שליליים, אפס ושלמים גדולים מטופלים בהשוואה רגילה.",
+        "מערכים באורכים שונים מאוד, או שכל ערכי אחד קטנים משל האחר.",
+        "קלט שאינו ממוין מחוץ לחוזה; אין תיקון אוטומטי באמצעות sort."
+      ],
+      "en": [
+        "Two empty inputs return a fresh empty list.",
+        "One empty input copies every occurrence of the other without returning the same object.",
+        "[4,4] and [4] yield three fours.",
+        "Negatives, zero and large exact integers use ordinary comparison.",
+        "Very unequal lengths or all values in one array preceding the other's values.",
+        "Unsorted input is outside the contract; no automatic sort repairs it."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "קידום שני האינדקסים בשוויון ואיבוד מופע.",
+        "עצירה כשהראשון נגמר בלי להעתיק את השארית.",
+        "החזרת אחד הקלטים עצמו במקרה שהשני ריק, למרות דרישת פלט חדש.",
+        "הוצאה חוזרת מראש רשימת Python ושינוי הקלט או יצירת עלות ריבועית.",
+        "מיון האיחוד במקום שימוש במיון שכבר קיים.",
+        "דיווח זיכרון O(1) בלי להפריד את הפלט בגודל n+m."
+      ],
+      "en": [
+        "Advancing both cursors on equality and losing an occurrence.",
+        "Stopping when one input ends without copying the remaining suffix.",
+        "Returning an input object when the other is empty despite the fresh-output contract.",
+        "Repeatedly removing Python list heads, mutating input or incurring quadratic work.",
+        "Sorting the concatenation instead of using already-established order.",
+        "Reporting O(1) storage without separating the n+m output slots."
+      ]
+    },
+    "interview_answer": {
+      "he": "אחזיק אינדקס בכל מערך ופלט חדש. בכל פעם אעתיק את הקטן משני הראשים; בשוויון אבחר משמאל ואקדם רק את האינדקס שלו. כשאחד נגמר אעתיק את יתרת האחר. כל מופע נצרך פעם אחת, ולכן הזמן Θ(n+m), הפלט Θ(n+m) וזיכרון העזר מעבר לפלט O(1) מילים.",
+      "en": "Keep one cursor per array and fresh output. Append the smaller current head, choosing left on ties, and advance only its cursor. When one input ends, copy the other's suffix. Every occurrence is consumed once: Θ(n+m) time and output storage, with O(1) auxiliary words beyond output."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור כולל רק ארבע מילים באנגלית; סימן, סוג ערכים, חזרות, מיון לא יורד, פלט חדש ואי־שינוי קלט נוספו במפורש.",
+        "המקור אינו מבטיח קיבולת פנויה או דורש מיזוג במקום. אלו חוזים נפרדים.",
+        "בחירה משמאל בשוויון היא הבהרת יציבות, ולא הבדל שמצדיק ספירה כשאלה טכנית נוספת לעומת SW-005."
+      ],
+      "en": [
+        "The source contains only four English words; integer type, duplicates, nondecreasing order, fresh output and immutability are explicit editorial choices.",
+        "The source neither provides spare capacity nor requires in-place merging; those are separate contracts.",
+        "Left-first ties are a stability clarification, not a technical difference justifying an extra unique question relative to SW-005."
+      ]
+    },
+    "verification": {
+      "he": "עברו 3,136 זוגות מערכים ממוינים באורכים 0..5 מעל −2,0,3 מול שחזור מתדירויות בלתי תלוי, וכן הדוגמה, ריקים, שלמים בגודל 10¹⁰⁰ ושמירת קלט. הקוד המוצע בפייתון הורץ בפועל; ללא מדידת זמן או אישור מקצועי אנושי.",
+      "en": "Passed 3,136 sorted-array pairs of lengths 0..5 over −2,0,3 against independent frequency reconstruction, plus the example, empty arrays, integers of magnitude 10¹⁰⁰ and input preservation. Proposed Python code executed; no timing benchmark or human professional approval."
+    },
+    "relationship_note": {
+      "he": "אותו עיקרון וחוזה בסיסי כמו הדוגמה SW-005. זו הגרסה המבוססת על מקור שסופק ידנית, המקושרת לדוגמה הקיימת; אין להגדיל בגללה את מספר השאלות הייחודיות. יש להעדיף אותה בקבוצת כפילויות ולשמר מזהים והיסטוריית תרגול קיימים.",
+      "en": "Equivalent core principle and contract to example SW-005. This is the manually supplied source counterpart, linked to the existing example; it must not inflate the unique-question count. Prefer it within a duplicate group while preserving existing IDs and practice history."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם left כבר כולל בסופו m מקומות פנויים, ומותר לעדכן אותו במקום?",
+        "direction": "זה חוזה אחר: משווים את האיברים הגדולים שטרם נכתבו וממלאים את הפלט מהסוף, כדי לא לדרוס ערכים שעוד נדרשים. יש להגדיר בנפרד אורך תקף וקיבולת. ההרחבה אינה הקוד הראשי.",
+        "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך."
+      },
+      "en": {
+        "question": "What if left has m spare slots at its end and may be updated in place?",
+        "direction": "That is another contract: compare the largest unread values and fill backward to avoid overwriting values still needed. Define valid length and capacity separately. The extension is not the main implementation.",
+        "status": "Prepared in content; not connected to the interactive follow-up queue."
+      }
+    }
+  },
+  "PREP-100": {
+    "assumptions": {
+      "he": [
+        "קלט לא־מסומן בן 8 ביטים; פלט מדויק בן 11 ביטים.",
+        "מותר FA, חיווט, פיצול וקבוע אפס בלבד; אין Half Adder נפרד.",
+        "ניתוח קומבינטורי לאחר התייצבות; לא נדרשה מינימליות."
+      ],
+      "en": [
+        "Unsigned eight-bit input; exact eleven-bit output.",
+        "Only FAs, wiring, fanout and constant zero; no separate half adder.",
+        "Settled combinational analysis; minimum size was not required."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "result": "שמונה FA במבנה נשיאה טורי; 11 ביטי פלט נדרשים לתוצאה המלאה.",
+        "scope": "רוחב הפלט מוצדק לפי 1530>1023; אין הוכחת מספר FA מזערי, שטח פיזי או השהיה מיטבית."
+      },
+      "en": {
+        "result": "Eight FAs in a ripple construction; eleven output bits are required for the full result.",
+        "scope": "Output width follows from 1530>1023; no proof of minimum FA count, physical area or optimal delay."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "x=0 מחזיר 0.",
+        "x=1 מחזיר 6; y0 תמיד אפס.",
+        "x=255 מחזיר 1530 ודורש את הביט העליון.",
+        "הרחבה אחרי חיתוך אינה מחזירה נשאים שאבדו.",
+        "קלט מסומן מחייב הרחבת סימן וחיווט מתאים."
+      ],
+      "en": [
+        "x=0 returns zero.",
+        "x=1 returns six; y0 is always zero.",
+        "x=255 returns 1530 and needs the highest bit.",
+        "Widening after truncation cannot restore lost carry.",
+        "Signed input requires sign extension and suitable connections."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חיבור בשמונה ביטים ושמירת תוצאה שגויה בגלל גלישה.",
+        "שימוש ב־HA או שערים למרות מגבלת FA בלבד.",
+        "חיבור נשא לעמודה באותו משקל במקום למשקל כפול.",
+        "ספירת הזזה קבועה כרכיב חישוב.",
+        "טענת מינימום שמונה מחברים על סמך מימוש אחד בלבד."
+      ],
+      "en": [
+        "Adding in eight bits and losing overflow.",
+        "Using a separate HA or gates despite the FA-only rule.",
+        "Connecting a carry to the same weight instead of double weight.",
+        "Counting fixed rewiring as an arithmetic component.",
+        "Claiming eight adders are minimal solely because one construction uses eight."
+      ]
+    },
+    "interview_answer": {
+      "he": "אכתוב 6x=2x+4x, אזיז בחיווט ואחבר רק עמודות חופפות. y0=0 ו־y1=a0. שמונה FA מחברים את עמודות 2..9, והנשא האחרון הוא y10. כל מחבר משמר סכום משוקלל; הפלט בן 11 ביטים.",
+      "en": "Write 6x=2x+4x, shift by wiring, and add only overlapping columns. Wire y0=0 and y1=a0. Eight FAs handle columns 2..9, with final carry y10. Every adder preserves weighted sum; the output has eleven bits."
+    },
+    "source_ambiguities": {
+      "he": [
+        "בצילום לא נקבעו סימן, רוחב פלט או היתר קבועים; החוזה הראשי מגדיר אותם במפורש.",
+        "הצילום דורש FA בלבד, אך אינו דורש הוכחת מינימום.",
+        "Apple היא חברה שמדווחת במקור בלבד; השיוך לא אומת."
+      ],
+      "en": [
+        "The screenshot omits signedness, output width and permission for constants; the main contract states them explicitly.",
+        "The source requires FAs only but no minimum-size proof.",
+        "Apple is attributed only by the supplied source and is not independently verified."
+      ]
+    },
+    "verification": {
+      "he": "עברו 256 קלטים ממצים מול כפל שלם והוספה חוזרת, שמונה שורות אמת FA ו־2,048 בדיקות שימור משקל. חמש דחיות קלט לא חוקי. Python בלבד; ללא סינתזה, הידור HDL או תזמון פיזי.",
+      "en": "Passed 256 exhaustive inputs against exact multiplication and repeated addition, eight FA truth rows and 2,048 weighted-column checks, plus five invalid-input rejections. Python only; no synthesis, HDL compilation or physical timing analysis."
+    },
+    "relationship_note": {
+      "he": "קשורה ל־PREP-001 ול־PREP-034 דרך מחברים ומשקלי נשיאה. אינה כפילות של PREP-035, שבו מכפילים בעזרת הוראות יחידה וארבעה רגיסטרים.",
+      "en": "Related to PREP-001 and PREP-034 through adders and carry weights. Not a duplicate of PREP-035, which multiplies using unit instructions and four registers."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם x מסומן במשלים לשתיים?",
+        "direction": "מרחיבים סימן ל־11 ביטים לפני יצירת 2x ו־4x ומחזירים 11 ביטים מסומנים. יש לאמת בנפרד את ‎-128 ואת 127; חיווט הקלט הלא־מסומן אינו מספיק.",
+        "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך."
+      },
+      "en": {
+        "question": "What changes when x is signed two's complement?",
+        "direction": "Sign-extend to eleven bits before forming 2x and 4x and retain an eleven-bit signed result. Separately check -128 and 127; the unsigned wiring is insufficient.",
+        "status": "Prepared in content; not connected to the interactive follow-up queue."
+      }
+    }
+  },
+  "PREP-103": {
+    "assumptions": {
+      "he": [
+        "TFF דוגם בחזית עולה: T=0 מחזיק ו־T=1 הופך.",
+        "מותר XOR ומשוב Q; השעון המקורי אינו משתנה.",
+        "מצב בינארי יציב ותנאי setup/hold תקינים; אין reset מוגדר."
+      ],
+      "en": [
+        "Rising-edge TFF: T=0 holds and T=1 toggles.",
+        "XOR and Q feedback are allowed; the original clock is unchanged.",
+        "Stable binary state and valid setup/hold; no reset is specified."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "construction": "TFF אחד ושער XOR אחד; אגירה בחזית אחת בלי מחזור נוסף.",
+        "scope": "אין טענת מינימום שטח, מספר טרנזיסטורים או השהיה פיזית."
+      },
+      "en": {
+        "construction": "One TFF plus one XOR; one-edge capture without an added cycle.",
+        "scope": "No minimum area, transistor-count or physical-delay claim."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "D שווה ל־Q: מחזיקים.",
+        "D שונה מ־Q: הופכים.",
+        "שינוי D בין חזיתות אינו מעדכן את Q מיד.",
+        "אין להסיק מצב Q לפני החזית הראשונה ללא אתחול.",
+        "מודל ארבעה מצבים יכול להישאר X למרות זהות בינארית תקינה."
+      ],
+      "en": [
+        "D=Q holds.",
+        "D differs from Q: toggle.",
+        "Changing D between edges does not immediately change Q.",
+        "Do not assume Q before the first edge without initialization.",
+        "A four-state model may remain X despite a valid binary identity."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חיבור T=D ישירות: D=1 יהפוך שוב ושוב במקום לשמור 1.",
+        "בלבול בין TFF דוגם לנועל שקוף.",
+        "שינוי נתיב השעון כדי לחקות החזקה.",
+        "הנחת אפס התחלתי או התעלמות מתזמון מסלול המשוב.",
+        "הסקת התנהגות אנלוגית או התאוששות מ־X מאלגברה בינארית."
+      ],
+      "en": [
+        "Wiring T=D directly: D=1 repeatedly toggles instead of storing one.",
+        "Confusing an edge-triggered TFF with a transparent latch.",
+        "Changing the clock path to imitate holding.",
+        "Assuming initial zero or overlooking feedback timing.",
+        "Inferring analog behavior or X recovery from two-state algebra."
+      ]
+    },
+    "interview_answer": {
+      "he": "אחבר T=D XOR Q. כשהנתון כבר שמור T=0, וכשהוא שונה T=1 וה־TFF הופך. לכן Q_next=Q XOR D XOR Q=D בכל חזית. השעון נשאר זהה, ובין חזיתות Q מוחזק.",
+      "en": "Connect T=D XOR Q. T=0 when data is already stored, and T=1 when a toggle is needed. Thus Q_next=Q XOR D XOR Q=D at each edge. Keep the same clock; Q holds between edges."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור הקצר אינו מגדיר קוטביות חזית, לוגיקה מותרת או אתחול; הנחות אלה נוספו במפורש.",
+        "Sandisk מופיעה במקור בלבד, ללא אימות שיוך עצמאי."
+      ],
+      "en": [
+        "The short source does not define edge polarity, allowed logic or initialization; those assumptions are explicitly added.",
+        "Sandisk appears only in the source and is not independently verified."
+      ]
+    },
+    "verification": {
+      "he": "ארבע שורות Q,D, ארבע החזקות ללא חזית ו־4,094 רצפים משני מצבי התחלה עברו מול אורקל DFF עצמאי, בסך 36,868 חזיתות. Python בשני מצבים בלבד; ללא HDL, תזמון פיזי או מטא־יציבות.",
+      "en": "Four Q,D rows, four no-edge holds and 4,094 streams from both initial states passed against an independent DFF oracle, totaling 36,868 edges. Two-state Python only; no HDL, physical timing or metastability simulation."
+    },
+    "relationship_note": {
+      "he": "PREP-074 מממש TFF מ־DFF ו־XOR; כאן כיוון ההמרה הפוך. PREP-065 מממש DFF מרכיב SR, שהוא פרימיטיב אחר.",
+      "en": "PREP-074 constructs a TFF from a DFF and XOR; this reverses that conversion. PREP-065 uses an SR primitive instead."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך מוסיפים enable בעזרת אותו TFF?",
+        "direction": "משנים מצב רק כאשר enable=1 וגם D שונה מ־Q, לכן T=enable AND (D XOR Q). מוכיחים החזקה כש־enable=0 בלי לשער את השעון.",
+        "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך."
+      },
+      "en": {
+        "question": "How can enable be added using the same TFF?",
+        "direction": "Toggle only if enable=1 and D differs from Q, so T=enable AND (D XOR Q). Prove holding for enable=0 without gating the clock.",
+        "status": "Prepared in content; not connected to the interactive follow-up queue."
+      }
+    }
+  },
+  "PREP-104": {
+    "assumptions": {
+      "he": [
+        "שלוש דרגות DFF בחזית עולה משותפת, ללא enable או reset פעילים בעקבת הייחוס.",
+        "מתחילים ב־000; מונים חזיתות מהראשונה שבה x=1 עומד בתנאי הדגימה.",
+        "תזמון תקין בעקבת הייחוס בלבד; התצפיות החריגות אינן מניחות סיבת כשל ידועה.",
+        "skew מוגדר כהגעת קליטה פחות הגעת שיגור; יחידות הזמנים עקביות."
+      ],
+      "en": [
+        "Three DFF stages on a common rising-edge clock, with no active enable/reset in the reference trace.",
+        "Start at 000; count from the first edge where x=1 satisfies sampling requirements.",
+        "The reference trace alone assumes valid timing; anomalous observations do not assume a known cause.",
+        "Skew means capture arrival minus launch arrival; use consistent time units."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "purpose": "אבחון חוזה ותזמון, לא אופטימיזציית מספר רכיבים.",
+        "scope": "המודל מחשב עקבה תקינה ומרווחים בלבד; אינו מנבא תוצאות הפרה או תזמון פיזי."
+      },
+      "en": {
+        "purpose": "Contract and timing diagnosis, not component-count optimization.",
+        "scope": "The model computes valid traces and margins only, not violation outcomes or physical timing."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "חזית ראשונה בזמן 0 לעומת שינוי קלט בזמן 0 משנים את ספירת התקופות.",
+        "הפרת תזמון אינה מבטיחה טעות במחזור שלם או אפילו טעות שנצפית.",
+        "מצב התחלתי לא ידוע אינו מאפשר להניח גל 000→100.",
+        "נתיב קלט חיצוני ל־FF1 חייב לעמוד בתזמון בפני עצמו.",
+        "skew חיובי משפיע בכיוונים הפוכים על setup ועל hold."
+      ],
+      "en": [
+        "A first capture at time zero differs from an input change at time zero when counting periods.",
+        "A violation need not produce a full-cycle error or even an observed error.",
+        "Unknown initialization cannot justify a 000→100 trace.",
+        "The external input path to FF1 needs its own timing checks.",
+        "Positive skew affects setup and hold in opposite directions."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "קביעה שהקדמה מוכיחה hold או שאיחור מוכיח setup בלי נתונים נוספים.",
+        "העברת הערך החדש דרך כל הדרגות באותה חזית במודל סינכרוני תקין.",
+        "ערבוב בין מספר חזיתות כולל הראשונה לבין תקופות זמן שחלפו.",
+        "שימוש בעיכובים מרביים לבדיקת hold במקום מזעריים.",
+        "ניבוי גל ודאי לאחר מטא־יציבות או הנחה ששעון איטי פותר hold."
+      ],
+      "en": [
+        "Claiming an early output proves hold or a late output proves setup without further evidence.",
+        "Propagating fresh data through every stage at the same edge in a valid synchronous model.",
+        "Mixing inclusive capture-edge counting with elapsed periods.",
+        "Using maximum rather than minimum delays for hold.",
+        "Predicting a certain post-metastability waveform or assuming a slower clock fixes hold."
+      ]
+    },
+    "interview_answer": {
+      "he": "בעקבה תקינה נקבל 100,110,111 בשלוש חזיתות דגימה. הקדמה מכוונת לבדוק hold ומרוץ של נתון חדש סביב אותה חזית; איחור מכוון לבדוק setup ופספוס דגימה. זהו כיוון בלבד: צריך מוסכמת זמן, חיווט, enable ונתוני min/max עם skew כדי לאבחן.",
+      "en": "A valid trace is 100,110,111 across three capture edges. Early output suggests inspecting hold and same-edge races; late output suggests setup and a missed capture. Those are only leads: establish timing convention, wiring, enables and min/max path data with skew before diagnosis."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור מציין t=0 בלי פאזת שעון, סוג FF או מצב התחלתי מפורש של הדרגות; הייחוס מגדיר אותם.",
+        "המקור מבקש לבחור הפרה אחת בכל תצפית, אך תצפית השהיה לבדה אינה מספיקה להוכחת הסיבה.",
+        "Apple מדווחת במקור בלבד ולא אומתה עצמאית."
+      ],
+      "en": [
+        "The source gives t=0 without clock phase, FF type or explicit stage initialization; the reference defines them.",
+        "The source asks for one violation per observation, but latency alone cannot prove causation.",
+        "Apple is source-reported only, not independently verified."
+      ]
+    },
+    "verification": {
+      "he": "נבדקו 4,088 רצפי קלט מאורך אפס עד שמונה מכל שמונת מצבי ההתחלה, 28,688 חזיתות מול תור עצמאי, ו־216 מקרי תזמון עם שברים מדויקים מול זמני הגעה מוחלטים. נבדקו דוגמאות נגדיות לאבחון ודאי מהשהיה בלבד. ללא HDL או מודל כשל אנלוגי.",
+      "en": "Checked 4,088 streams of lengths zero through eight from all eight initial states, 28,688 edges against an independent queue, and 216 exact-rational timing cases against absolute arrival deadlines. Counterexamples reject certain diagnosis from latency alone. No HDL or analog failure model."
+    },
+    "relationship_note": {
+      "he": "קשורה לדוגמאות setup/hold ועקבת nonblocking, אך כאן נדרש להסביר מדוע הקדמה או איחור אינם אבחנה מספקת ולספור חזיתות במפורש. PREP-074 דן בתזמון משוב ולא בשרשרת זו.",
+      "en": "Related to setup/hold and nonblocking-trace examples, but this problem explicitly tests why early/late latency is not a sufficient diagnosis and requires an edge-counting convention. PREP-074 concerns feedback rather than this chain."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד skew חיובי משפיע על שני האילוצים, והאם הארכת המחזור מתקנת את שניהם?",
+        "direction": "skew חיובי מוסיף זמן ל־setup אך מגדיל את דרישת ההחזקה. הארכת המחזור משפיעה על setup, לא על hold באותו מבנה שעון ומסלול. יש לאמת מחדש פינות min/max.",
+        "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך."
+      },
+      "en": {
+        "question": "How does positive skew affect the two constraints, and does a longer period repair both?",
+        "direction": "Positive skew helps setup but increases the hold requirement. A longer period changes setup, not hold with fixed clock/path structure. Recheck min/max corners.",
+        "status": "Prepared in content; not connected to the interactive follow-up queue."
+      }
+    }
+  },
+  "PREP-099": {
+    "assumptions": {
+      "he": [
+        "מותר כל מכשיר מתאים, ולכן מד קיבול או LCR הם תשובה תקפה.",
+        "R נמדד תחילה; המקור אינו מוסר ערך ידוע.",
+        "הקבל מבודד ממעגל אחר ובמודל הבסיסי ליניארי ואידאלי.",
+        "מדרגת הכניסה מהירה יחסית לקבוע הזמן, ואפשר למדוד את המתח ההתחלתי והסופי.",
+        "הנוסחה המתוקנת מניחה Rs,Rp,Cp ידועים וללא פרזיטים נוספים מהותיים."
+      ],
+      "en": [
+        "Any suitable instrument is allowed; a capacitance or LCR meter is valid.",
+        "Measure R first; its numerical value is not supplied.",
+        "The capacitor is isolated and, in the basic model, linear and ideal.",
+        "The input edge is fast relative to the time constant, and initial/final levels can be measured.",
+        "The corrected formula assumes known Rs,Rp,Cp and no other significant parasitics."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מדידה מנומקת, לא מינימום מכשירים או דיוק שלא הוגדר.",
+        "result": "מד LCR/קיבול ישיר; או מדידת R וזמן τ לקבלת C, עם תיקון מודל עומס לפי הצורך.",
+        "scope": "זמן התייצבות פיזי תלוי ב־RC ובדיוק המבוקש. חישוב הנוסחה הוא מספר קבוע של פעולות, אך אינו מבטל את זמן המדידה או את אי־הוודאות."
+      },
+      "en": {
+        "criterion": "Justified measurement, not an unspecified minimum instrument count or accuracy.",
+        "result": "Direct capacitance/LCR measurement, or measured R and τ with appropriate loading correction.",
+        "scope": "Physical settling time depends on RC and desired precision. Formula evaluation uses constant arithmetic work but does not remove measurement time or uncertainty."
+      }
+    },
+    "verification": {
+      "he": "עברו 192 רשתות RC, 960 השוואות Decimal ו־48 אינטגרציות RK4 עצמאיות של KCL עם 8,000 צעדים למקרה, וכן 12 דחיות קלט. דוגמה מחושבת: 10 kΩ ו־1 ms נותנים 100 nF. אין ניסוי פיזי או כיול.",
+      "en": "Passed 192 RC networks, 960 Decimal comparisons, 48 independent KCL/RK4 integrations with 8,000 steps each, and 12 invalid-input rejections. Calculated example: 10 kΩ and 1 ms give 100 nF. No physical experiment or calibration."
+    },
+    "edge_cases": {
+      "he": [
+        "R או C זעירים עלולים ליצור מעבר שהמכשיר אינו פותר בזמן; R גדול מגביר עומס התנגדותי.",
+        "בקבל קטן קיבול הפרוב והחיווט עלול להשתוות לקבל הנבדק.",
+        "מתח התחלתי שאינו אפס דורש יעד יחסי לשינוי המתח, לא 63.2% מ־Vs.",
+        "טעינה ופריקה משתמשות בהתאמה ב־63.2% מהשינוי וב־36.8% מהשארית.",
+        "דליפה, ESR והשראות משמעותיים מחייבים מודל נוסף; קבל במעגל עשוי להראות קיבול שקול אחר.",
+        "קוד החישוב דוחה פרמטרים שאינם חיוביים/סופיים במקומות הנדרשים ותיקון שמחזיר קיבול לא חיובי."
+      ],
+      "en": [
+        "Tiny R or C may create an unresolved transient; large R magnifies resistive loading.",
+        "For a small DUT, probe and wiring capacitance can be comparable to its capacitance.",
+        "Nonzero initial voltage requires a target relative to the full transition, not 63.2% of Vs.",
+        "Charging uses 63.2% completed change; discharge retains 36.8% of the difference.",
+        "Significant leakage, ESR or inductance needs an extended model; in-circuit tests may measure another equivalent capacitance.",
+        "The calculation rejects required positive/finite parameters that violate the contract and corrections yielding nonpositive capacitance."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להניח ש־R ידוע אף שהמקור אינו מוסר ערך; יש למדוד אותו.",
+        "לפסול מד קיבול אף שהמקור מתיר כל מכשיר.",
+        "לחכות ל־100% מדויק או להתייחס ל־5τ כאילו אין בו שגיאת התייצבות.",
+        "להשתמש ב־R בלבד כשהתנגדות מקור או עומס פרוב משמעותיים.",
+        "להתעלם מ־Cp או להחליף בין מילישניות לשניות ובין קילו־אוהם לאוהם.",
+        "להציג בדיקת Python כאילו בוצעו מדידת מעבדה וכיול."
+      ],
+      "en": [
+        "Assuming R is known although the source supplies no value; measure it.",
+        "Rejecting a capacitance meter although any instrument is allowed.",
+        "Waiting for exact 100% or treating 5τ as error-free settling.",
+        "Using only R despite significant source resistance or probe loading.",
+        "Ignoring Cp or mixing milliseconds/seconds and kilohms/ohms.",
+        "Presenting Python checks as a performed laboratory experiment and calibration."
+      ]
+    },
+    "interview_answer": {
+      "he": "אם כל מכשיר מותר, אשתמש במד קיבול או LCR. כדי להראות עיקרון עם הנגד, אמדוד את R, אחבר מקור מדרגה דרך R לקבל ואמדוד באוסצילוסקופ את הזמן עד 63.2% משינוי המתח. אז C=τ/R במודל הפשוט. במידת הצורך אכלול התנגדות מקור, עומס פרוב ופרזיטים; אין לי מדידת C מוחלטת אם R עדיין לא ידוע.",
+      "en": "If any instrument is allowed, use a capacitance or LCR meter. To demonstrate the resistor method, measure R, drive the capacitor through it with a step and read the time to 63.2% of the voltage change on a scope. Then C=τ/R in the basic model. Include source resistance, probe loading and parasitics when material; unknown R does not yield an absolute C from τ alone."
+    },
+    "source_ambiguities": {
+      "he": [
+        "הנגד מתואר כבעל ערך כלשהו, בלי לציין שהערך ידוע; מדידת התנגדות מותרת כאן במפורש.",
+        "כל מכשיר מותר, ולכן אין הצדקה לכפות רק אוסצילוסקופ ונגד.",
+        "לא ניתנו טווח קיבול, דירוג מתח, דיוק, תדר או מודל פרזיטים; נוספו מודל בסיסי וגבולותיו בלי להמציא תוצאות מדידה."
+      ],
+      "en": [
+        "The resistor has some value but is not explicitly known; resistance measurement is expressly permitted.",
+        "Any instrument is allowed, so a resistor/scope-only restriction must not be invented.",
+        "No capacitance range, voltage rating, accuracy, frequency or parasitic model is supplied; the edition declares a basic model and its limits without inventing measurements."
+      ]
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה אפשר להסיק אם גם R אינו ידוע ואפשר למדוד רק עקומת טעינה אחת?",
+        "direction": "במודל אידאלי העקומה קובעת את המכפלה RC בלבד: הכפלת R ב־k וחלוקת C ב־k משאירות אותה τ. נדרשת מדידת R/זרם או התערבות נוספת כדי להפריד ביניהם.",
+        "status": "מוכן בתוכן; אינו מחובר לתור שאלות המשך."
+      },
+      "en": {
+        "question": "What if R is also unknown and only one charging curve is observable?",
+        "direction": "The ideal curve determines only RC: multiplying R by k and dividing C by k preserves τ. Measure R/current or make another controlled intervention to separate them.",
+        "status": "Prepared in content; not connected to the follow-up queue."
+      }
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "Pico Technology — ניסוי בקבל",
+          "url": "https://www.picotech.com/library/articles/application-note/capacitor",
+          "note": "מקור יצרן לניסוי RC ולעומס כניסת האוסצילוסקופ; נבדק ב־2026-10-24."
+        },
+        {
+          "title": "Tektronix — מבוא לפרובים",
+          "url": "https://www.tek.com/en/documents/whitepaper/abcs-probes-primer",
+          "note": "התנגדות וקיבול פרוב משנים את המעגל; פרוב אינו צופה אידאלי."
+        },
+        {
+          "title": "Keysight — שיטות בדיקת קבל",
+          "url": "https://www.keysight.com/used/in/en/knowledge/guides/how-to-test-a-capacitor",
+          "note": "חלופת מד קיבול ושיטת קבוע הזמן; לא יוחס ליצרן אימות של הקוד שלנו."
+        }
+      ],
+      "en": [
+        {
+          "title": "Pico Technology — capacitor experiment",
+          "url": "https://www.picotech.com/library/articles/application-note/capacitor",
+          "note": "Manufacturer RC experiment and oscilloscope input-loading discussion; checked 2026-10-24."
+        },
+        {
+          "title": "Tektronix — ABCs of probes",
+          "url": "https://www.tek.com/en/documents/whitepaper/abcs-probes-primer",
+          "note": "Probe resistance and capacitance alter the measured circuit; a probe is not an ideal observer."
+        },
+        {
+          "title": "Keysight — capacitor-testing methods",
+          "url": "https://www.keysight.com/used/in/en/knowledge/guides/how-to-test-a-capacitor",
+          "note": "Capacitance-meter and time-constant alternatives; not a manufacturer validation of our code."
+        }
+      ]
+    },
+    "relationship_note": {
+      "he": "תרגיל מדידה אנלוגי חדש במאגר, להבדיל משאלות תזמון דיגיטלי. אין לייחס ל־NVIDIA את הפתרון או אימות מקצועי; השיוך מופיע בצילום בלבד.",
+      "en": "A new analog-measurement exercise, distinct from digital timing questions. NVIDIA attribution is source-reported only, not authorship or professional validation of this solution."
+    }
+  }
+}

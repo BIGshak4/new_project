@@ -75,3 +75,10 @@ An exact belief-state model removes the shot position from the current possible 
 - [דיווח נוסף](../sources/prep-029-apple-2026-10-22.png): Apple metaphor for the same mandatory-move line search, not a new algorithm. The existing explicit no-staying/no-wrapping model remains necessary; source wording does not independently specify every timing detail.
 
 הנוסח, הרמזים, הפתרון ומצב הביקורת הקיימים נשמרו. שיוכי חברות מדווחים מהמקור ולא אומתו עצמאית.
+
+
+## מקורות נוספים — 24.10.2026, מקבץ 20
+
+- [צילום 13](../sources/2026-10-24-batch20-13.png) — NVIDIA; דיווח מקור לא מאומת.
+
+המזהה, היסטוריית התרגול והאישורים האנושיים אינם מוחלפים בעקבות קליטת מקור. הנוסח, שלושת הרמזים והפתרון הטכני נשמרו.

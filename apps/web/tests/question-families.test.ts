@@ -29,7 +29,7 @@ test("a filtered or partial API result never loses the only available version", 
 });
 
 test("useful variations with different constraints are not silently merged", () => {
-  const keys = ["example-balanced-brackets", "prep-balanced-brackets-mixed-text", "example-count-set-bits", "prep-eight-bit-popcount-adders"];
+  const keys = ["example-balanced-brackets", "prep-balanced-brackets-mixed-text", "example-count-set-bits", "prep-eight-bit-popcount-adders", "prep-power-of-two-check", "prep-one-active-bit-signed-int32-pattern"];
   const rows = keys.map((key, i) => ({ ...generic, key, id: String(i) }));
   assert.deepEqual(uniqueLibraryQuestions(rows), rows);
   assert.equal(questionFamily(keys[0]), keys[0]);
@@ -41,20 +41,34 @@ test("legacy and canonical URLs remain discoverable in both directions", () => {
   assert.deepEqual(relatedQuestionKeys("unrelated-question"), []);
 });
 
-test("the new intake yields 125 records and 124 unique questions without dropping new exercises", () => {
+test("the twenty-image intake yields 134 records and 132 unique questions without dropping new exercises", () => {
   const rows = ["example_bank", "preparation_bank"].flatMap(name => {
     const seed = JSON.parse(readFileSync(new URL(`../../../backend/seeds/questions/${name}.json`, import.meta.url), "utf8"));
     return seed.map((q: { key: string; assets: { preparation_id?: string } }) => ({
       key: q.key, id: q.key, preparation_id: q.assets.preparation_id,
     } as QuestionSummary));
   });
-  assert.equal(rows.length, 125);
+  assert.equal(rows.length, 134);
   const unique = uniqueLibraryQuestions(rows);
-  assert.equal(unique.length, 124);
-  for (const id of Array.from({ length: 37 }, (_, i) => `PREP-${String(i + 60).padStart(3, "0")}`)) {
+  assert.equal(unique.length, 132);
+  for (const id of Array.from({ length: 46 }, (_, i) => `PREP-${String(i + 60).padStart(3, "0")}`)) {
     assert.equal(rows.filter(q => q.preparation_id === id).length, 1, `${id}: one canonical source record`);
     assert.equal(unique.filter(q => q.preparation_id === id).length, 1, id);
   }
   assert.equal(unique.filter(q => q.preparation_id === "PREP-023").length, 1);
   assert.ok(!unique.some(q => q.key === "example-power-of-two-check"));
+  assert.ok(!unique.some(q => q.key === "example-merge-measurement-streams"));
+});
+
+test("the merge source is preferred without rewriting the example's history or company reports", () => {
+  const example = { ...generic, id: "merge-example-id", key: "example-merge-measurement-streams", title: "Merge measurement streams", reported_companies: [] };
+  const collected = { ...manual, id: "merge-manual-id", key: "prep-merge-two-sorted-arrays", title: "Merge two sorted arrays", preparation_id: "PREP-098", reported_companies: ["NVIDIA"] };
+  for (const rows of [[example, collected], [collected, example]]) {
+    assert.deepEqual(uniqueLibraryQuestions(rows), [collected]);
+    assert.deepEqual(uniqueLibraryQuestions(rows.filter(q => matchesQuestion(q, "measurement"))), [example]);
+    assert.deepEqual(uniqueLibraryQuestions(rows.filter(q => matchesQuestion(q, "PREP-098"))), [collected]);
+  }
+  assert.deepEqual(example.reported_companies, []);
+  assert.deepEqual(relatedQuestionKeys(example.key), [collected.key]);
+  assert.deepEqual(relatedQuestionKeys(collected.key), [example.key]);
 });

@@ -5,6 +5,7 @@ import type { QuestionSummary } from "./practice-api";
 const DUPLICATES: Readonly<Record<string, string>> = {
   // The manually collected preparation question is the primary version, with its source/company reports.
   "example-power-of-two-check": "prep-power-of-two-check",
+  "example-merge-measurement-streams": "prep-merge-two-sorted-arrays",
 };
 
 export function questionFamily(key: string): string {

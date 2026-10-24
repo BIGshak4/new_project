@@ -44,6 +44,8 @@ test("withholds future source filenames without depending on the stale filename 
     "prep-999-additional-2027-01-01-third.png",
     "prep-999-source.png",
     "prep-999-1000-full-context.png",
+    "2026-10-24-batch20-01.png",
+    "2027-01-01-batch30-001.PNG",
   ]) {
     for (const role of ["prompt", "solution"] as const) {
       const screenshot: ResourceMedia = {

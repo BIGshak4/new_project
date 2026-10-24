@@ -1,0 +1,11 @@
+{
+  "question_id": "PREP-103",
+  "checked_on": "2026-10-24",
+  "status": "passed",
+  "q_data_truth_rows": 4,
+  "hold_without_edge_cases": 4,
+  "exhaustive_streams": 4094,
+  "sampling_edges": 36868,
+  "oracle": "A separate ideal DFF directly stores each sampled data bit; TFF oracle uses conditional inversion.",
+  "scope": "Both concrete initial states, two-state sampled logic only. No reset assumption, HDL compilation, analog initialization, metastability or physical timing simulation."
+}

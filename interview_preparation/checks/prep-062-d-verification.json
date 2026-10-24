@@ -1,0 +1,13 @@
+{
+  "question_id": "PREP-062",
+  "variant": "D_marker_only_no_meeting_sensor",
+  "status": "passed",
+  "integer_distance_cases": 772,
+  "trajectory_points_vs_independent_formula": 201984,
+  "zero_separation": "co-located initially; programs continue timed actions",
+  "half_integer_counterexamples": 3,
+  "local_sensor_inputs": [
+    "flag_here"
+  ],
+  "scope": "Synchronized start, shared direction, integer separation, unit movement/wait, free control/query. Harness alone observes physical meeting; no automatic stop or minimum-time claim."
+}

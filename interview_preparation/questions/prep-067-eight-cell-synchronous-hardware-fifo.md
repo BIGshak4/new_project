@@ -238,3 +238,10 @@ Python comparison against an independent deque passed 65,408 transitions over ev
 - [Code](../solutions/prep_067_fifo8.sv)
 - [Verification](../checks/check_prep_067.py)
 - [Evidence](../checks/prep-067-verification.json)
+
+
+## מקורות נוספים — 24.10.2026, מקבץ 20
+
+- [צילום 11](../sources/2026-10-24-batch20-11.png) — Samsung, Apple, NVIDIA, Amazon; דיווח מקור לא מאומת.
+
+המזהה, היסטוריית התרגול והאישורים האנושיים אינם מוחלפים בעקבות קליטת מקור. הנוסח, שלושת הרמזים והפתרון הטכני נשמרו.

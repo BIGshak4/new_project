@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "all_low_16bit_patterns": 65536,
+  "one_hot_patterns": 32,
+  "two_hot_patterns": 496,
+  "random_full_width_patterns": 10000,
+  "sign_bit_and_zero_and_source_examples": true,
+  "executed": "actual Python model",
+  "cpp_compiled": false,
+  "scope": "Fixed-width bit pattern logic; Python validation rejects non-int32 inputs."
+}

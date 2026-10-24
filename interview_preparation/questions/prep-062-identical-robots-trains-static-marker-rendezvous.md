@@ -342,3 +342,10 @@ No chat request was written as learner progress. The prepared follow-up is not c
 ## תוספת API — 24.10.2026
 
 נוספה [גרסת API נפרדת עם move_left, move_right, no_operation, on_parachute ו־did_meet](prep-062-api-addendum-2026-10-24.md), לפי [המקור הנוסף](../sources/prep-062-api-2026-10-24.png). מודל התזמון הקודם נשמר; החדש מגדיר במפורש בדיקות מיידיות לעומת פעולות תנועה/המתנה של יחידת זמן. שינוי החומר אינו יורש אישור אנושי קודם.
+
+
+## מקורות נוספים — 24.10.2026, מקבץ 20
+
+- [צילום 6](../sources/2026-10-24-batch20-06.png) — Intel, NVIDIA; דיווח מקור לא מאומת.
+
+המזהה, היסטוריית התרגול והאישורים האנושיים אינם מוחלפים בעקבות קליטת מקור. נוספה [גרסה ד נפרדת של מפגש עם דגלים ללא חיישן מפגש](prep-062-d-robots-flags-no-meeting-sensor.md); הפתרון המורחב ממתין לבדיקה אנושית.

@@ -1,0 +1,8 @@
+{
+  "question_id": "PREP-101",
+  "checked_on": "2026-10-24",
+  "status": "passed",
+  "exhaustive_cases": 22960,
+  "oracle": "Brute-force three distinct occurrences, exact sum, canonicalize values and deduplicate; lengths 0..7 over {-1,0,1}, targets -3..3.",
+  "scope": "Actual proposed Python implementation executed; includes empty/boundary inputs, exact large integers and input preservation. No fixed-width compilation, runtime benchmark or human professional approval."
+}

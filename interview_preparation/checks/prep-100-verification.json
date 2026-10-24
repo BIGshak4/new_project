@@ -1,0 +1,11 @@
+{
+  "question_id": "PREP-100",
+  "checked_on": "2026-10-24",
+  "status": "passed",
+  "full_adder_truth_rows": 8,
+  "exhaustive_unsigned_inputs": 256,
+  "weighted_column_checks": 2048,
+  "full_adders_per_input": 8,
+  "oracle": "Exact integer multiplication plus independent repeated addition; weighted-column conservation.",
+  "scope": "Unsigned 8-bit input, exact 11-bit output; Python logical steady-state model only. No minimum-FA proof, HDL compilation, synthesis or physical timing verification."
+}

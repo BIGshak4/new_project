@@ -257,3 +257,10 @@ Scan by selling day, retaining the lowest earlier price and its first index. Eva
 - [checks/check_prep_066.py](../checks/check_prep_066.py)
 
 - [checks/prep-066-verification.json](../checks/prep-066-verification.json)
+
+
+## מקורות נוספים — 24.10.2026, מקבץ 20
+
+- [צילום 16](../sources/2026-10-24-batch20-16.png) — NVIDIA; דיווח מקור לא מאומת.
+
+המזהה, היסטוריית התרגול והאישורים האנושיים אינם מוחלפים בעקבות קליטת מקור. הנוסח, שלושת הרמזים והפתרון הטכני נשמרו.
