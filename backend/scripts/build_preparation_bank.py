@@ -56,6 +56,8 @@ PRIMARY = [
     "estimation_sanity_checks", "arrays_and_search", "debugging_methodology", "estimation_sanity_checks",
     "latches_flip_flops", "estimation_sanity_checks", "estimation_sanity_checks",
     "combinational_blocks", "arrays_and_search", "bit_manipulation",
+    "arrays_and_search", "estimation_sanity_checks", "edge_detection", "boolean_algebra",
+    "estimation_sanity_checks", "bit_manipulation", "debugging_methodology", "estimation_sanity_checks",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

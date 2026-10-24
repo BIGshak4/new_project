@@ -337,3 +337,8 @@ Passed 1,536 interpreter runs for separations 1 through 256, both initial agent 
 - [Evidence](../checks/prep-062-verification.json)
 
 No chat request was written as learner progress. The prepared follow-up is not connected to the interactive queue.
+
+
+## תוספת API — 24.10.2026
+
+נוספה [גרסת API נפרדת עם move_left, move_right, no_operation, on_parachute ו־did_meet](prep-062-api-addendum-2026-10-24.md), לפי [המקור הנוסף](../sources/prep-062-api-2026-10-24.png). מודל התזמון הקודם נשמר; החדש מגדיר במפורש בדיקות מיידיות לעומת פעולות תנועה/המתנה של יחידת זמן. שינוי החומר אינו יורש אישור אנושי קודם.

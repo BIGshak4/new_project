@@ -1,0 +1,832 @@
+{
+  "PREP-089": {
+    "assumptions": {
+      "he": [
+        "מספרים שלמים; חזרות, אפס ושליליים מותרים.",
+        "סופרים זוגות אינדקסים לא מסודרים i<j עם ריבוי, לא זוגות ערכים ייחודיים.",
+        "הקלט אינו משתנה; מותר מילון עזר. S=5 הוא דוגמה בלבד."
+      ],
+      "en": [
+        "Integer input; duplicates, zero and negatives are allowed.",
+        "Count unordered distinct-index pairs i<j with multiplicity, not unique value pairs.",
+        "Read-only input; an auxiliary dictionary is allowed. S=5 is only an example."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "time": "O(n) צפוי בהנחת גיבוב מתאים; Θ(n²) להשוואת כל הזוגות ללא גיבוב.",
+        "space": "O(k) רשומות עבור k ערכים שונים, עד O(n).",
+        "scope": "נדרש לבדוק את הקלט במקרה הגרוע; אין טענת חסם גרוע ביותר לינארי לטבלת גיבוב או מינימום זיכרון לכל חלופה."
+      },
+      "en": {
+        "time": "O(n) expected under suitable hashing; Θ(n²) for direct pair enumeration.",
+        "space": "O(k) entries for k distinct values, at most O(n).",
+        "scope": "Input inspection is needed in the worst case; no worst-case linear hash-table or universal minimum-space claim."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "מערך ריק או איבר יחיד: אפס זוגות.",
+        "[0,0,0] עם S=0: שלושה זוגות.",
+        "[2,2,2] עם S=4: שלושה זוגות; [2] מחזיר אפס.",
+        "גם מספרים שליליים ויעד שלילי חוקיים.",
+        "המונה יכול להיות n(n−1)/2."
+      ],
+      "en": [
+        "Empty or singleton input has zero pairs.",
+        "[0,0,0] with S=0 has three pairs.",
+        "[2,2,2] with S=4 has three pairs; [2] has none.",
+        "Negative values and negative targets are valid.",
+        "The count can reach n(n−1)/2."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שימוש ב־set מאבד את מספר המופעים של המשלים.",
+        "הוספת x למילון לפני החיפוש עלולה לספור איבר עם עצמו.",
+        "ספירת (i,j) וגם (j,i).",
+        "בלבול בין זוגות אינדקסים לזוגות ערכים או בין ספירה להחזרת רשימה.",
+        "הנחה שזמן גיבוב צפוי הוא חסם גרוע ביותר, או הזנחת גלישת המונה."
+      ],
+      "en": [
+        "A set loses complement multiplicity.",
+        "Inserting x before looking up can count an element with itself.",
+        "Counting both (i,j) and (j,i).",
+        "Confusing index pairs, unique value pairs and listing versus counting.",
+        "Treating expected hash time as worst-case or overlooking count overflow."
+      ]
+    },
+    "interview_answer": {
+      "he": "עוברים פעם אחת עם מילון תדירויות. לכל x מוסיפים את מספר מופעי S−x שכבר נראו, ורק אז מוסיפים את x למילון. כל זוג נספר בדיוק כשמגיעים לאינדקס המאוחר שלו. זמן צפוי O(n), זיכרון O(k).",
+      "en": "Scan once with a frequency dictionary. For x, add the number of preceding occurrences of S−x, then insert x. Each pair is counted exactly at its later endpoint. Expected O(n) time and O(k) storage."
+    },
+    "source_ambiguities": {
+      "he": [
+        "בצילום לא נקבע אם חזרות נספרות לפי אינדקסים או לפי ערכים; הנוסח הערוך בוחר בראשונה ומפרט את החלופה.",
+        "תחום המספרים, אי־שינוי הקלט והרשאה למילון הם הבהרות עריכה.",
+        "התגיות hardware ו־verification הן תגיות מקור; הדרישה המהותית היא אלגוריתם תוכנה."
+      ],
+      "en": [
+        "The screenshot does not specify index multiplicity versus unique values; the edited contract chooses the former and explains the alternative.",
+        "Integer domain, input immutability and permission for a dictionary are editorial clarifications.",
+        "Hardware and verification are source tags; the substantive task is a software algorithm."
+      ]
+    },
+    "verification": {
+      "he": "עברו 615,857 מקרי מערך/יעד ממצים, 400 דגימות עם אורקל בלתי תלוי המונה ישירות i<j, קלט זרם, אי־שינוי קלט ואי־תלות בסדר ובהזזה. מקרה של 10,000 אפסים אימת 49,995,000 זוגות. ללא בדיקת ביצועי גיבוב או הידור ברוחב קבוע.",
+      "en": "Passed 615,857 exhaustive array/target cases and 400 seeded cases against independent direct i<j enumeration; also streams, immutability, permutation and translation invariance. Ten thousand zeros confirmed 49,995,000 pairs. No hash-performance benchmark or fixed-width compilation."
+    },
+    "relationship_note": {
+      "he": "קשורה ל־PREP-040 ולדוגמת Two Sum, אך כאן מחזירים את מספר כל הזוגות עם ריבוי. מציאת זוג יחיד או בדיקת קיום אינה פותרת את החוזה הזה.",
+      "en": "Related to PREP-040 and Two Sum examples, but returns the count of all pairs with multiplicity. Finding one pair or deciding existence does not satisfy this contract."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם מבקשים זוגות ערכים ייחודיים או את כל זוגות האינדקסים?",
+        "direction": "לייחודיות סופרים כל x<y פעם אחת ובודקים שני מופעים כש־x=y. בהחזרת כל זוגות האינדקסים יש להביא בחשבון פלט שיכול להיות ריבועי.",
+        "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך."
+      },
+      "en": {
+        "question": "What changes for unique value pairs or for listing all index pairs?",
+        "direction": "For uniqueness, count each x<y once and require two occurrences when x=y. Listing all index pairs must account for potentially quadratic output.",
+        "status": "Prepared in content; not connected to the interactive follow-up queue."
+      }
+    }
+  },
+  "PREP-092": {
+    "assumptions": {
+      "he": [
+        "שערי NAND בעלי שתי כניסות בלבד; כניסות חיצוניות A,B ללא היפוך מוכן.",
+        "מותר פיצול חוט וחיבור שני פינים לאותו חוט; אין קבועים או מהפכים חיצוניים חינמיים.",
+        "מעגל קומבינטורי חסר משוב, בערכים לוגיים שהתייצבו."
+      ],
+      "en": [
+        "Only two-input NAND gates; external inputs are uncomplemented A,B.",
+        "Fanout and tied input pins are allowed; no free external constants or inverters.",
+        "Acyclic combinational network evaluated at settled Boolean values."
+      ]
+    },
+    "netlist": {
+      "he": [
+        "G1: T=NAND(A,B)",
+        "G2: P=NAND(A,T)",
+        "G3: Q=NAND(B,T)",
+        "G4: Y=NAND(P,Q)"
+      ],
+      "en": [
+        "G1: T=NAND(A,B)",
+        "G2: P=NAND(A,T)",
+        "G3: Q=NAND(B,T)",
+        "G4: Y=NAND(P,Q)"
+      ]
+    },
+    "truth_table": {
+      "he": [
+        {
+          "A": 0,
+          "B": 0,
+          "T": 1,
+          "P": 1,
+          "Q": 1,
+          "Y": 0
+        },
+        {
+          "A": 0,
+          "B": 1,
+          "T": 1,
+          "P": 1,
+          "Q": 0,
+          "Y": 1
+        },
+        {
+          "A": 1,
+          "B": 0,
+          "T": 1,
+          "P": 0,
+          "Q": 1,
+          "Y": 1
+        },
+        {
+          "A": 1,
+          "B": 1,
+          "T": 0,
+          "P": 1,
+          "Q": 1,
+          "Y": 0
+        }
+      ],
+      "en": [
+        {
+          "A": 0,
+          "B": 0,
+          "T": 1,
+          "P": 1,
+          "Q": 1,
+          "Y": 0
+        },
+        {
+          "A": 0,
+          "B": 1,
+          "T": 1,
+          "P": 1,
+          "Q": 0,
+          "Y": 1
+        },
+        {
+          "A": 1,
+          "B": 0,
+          "T": 1,
+          "P": 0,
+          "Q": 1,
+          "Y": 1
+        },
+        {
+          "A": 1,
+          "B": 1,
+          "T": 0,
+          "P": 1,
+          "Q": 1,
+          "Y": 0
+        }
+      ]
+    },
+    "optimality": {
+      "he": "ארבעה שערים, עומק מרבי של שלושה. מינימום מספר שערים אומת במנייה ממצה עד שלושה שערים, ורק במודל NAND דו־כניסתי חסר משוב וללא היפוכים או קבועים חיצוניים חינמיים. לא נטען מינימום שטח פיזי או השהיה.",
+      "en": "Four gates, maximum depth three. Minimum gate count is established by exhaustive enumeration through three gates only in the acyclic two-input NAND model with no free external inversion or constants. No physical-area or delay minimum is claimed."
+    },
+    "edge_cases": {
+      "he": [
+        "00 ו־11 מחזירים 0; 01 ו־10 מחזירים 1.",
+        "ב־11 התוצאה T=0 ושני שערי הביניים מחזירים 1.",
+        "שינוי כניסות בו־זמני עשוי ליצור גליצ'ים; טבלת אמת אינה הוכחת חסינות.",
+        "חוט T משותף, אך פיצולו אינו שער נוסף במודל זה."
+      ],
+      "en": [
+        "00 and 11 give zero; 01 and 10 give one.",
+        "For 11, T=0 and both middle gates output one.",
+        "Concurrent input transitions may cause glitches; a truth table does not establish hazard freedom.",
+        "The T wire is shared; fanout is not another gate in this model."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חיבור NAND(A,B) ישירות למוצא: זה אינו XOR.",
+        "ספירה של שער T פעמיים בגלל פיצול החוט.",
+        "שימוש ב־NOT, AND או OR בלי לבנות אותם מהשערים המותרים.",
+        "בלבול בין XOR ל־XNOR.",
+        "הסקת חסינות לגליצ'ים או אופטימליות פיזית מטבלת אמת בלבד."
+      ],
+      "en": [
+        "Using NAND(A,B) directly as XOR.",
+        "Counting the shared T gate twice because its wire splits.",
+        "Using free NOT, AND or OR gates outside the allowed library.",
+        "Confusing XOR with XNOR.",
+        "Inferring hazard freedom or physical optimality from a truth table."
+      ]
+    },
+    "interview_answer": {
+      "he": "מחשבים T=NAND(A,B), ואז P=NAND(A,T) ו־Q=NAND(B,T), ולבסוף Y=NAND(P,Q). P ו־Q הם גלאים פעילים־נמוך לשני מקרי השוני; לכן ה־NAND האחרון מחזיר 1 בדיוק ב־01 וב־10. ארבעה שערים, עומק שלושה.",
+      "en": "Compute T=NAND(A,B), P=NAND(A,T), Q=NAND(B,T), then Y=NAND(P,Q). P and Q are active-low detectors of the two unequal cases, so the final NAND outputs one exactly for 01 and 10. Four gates, depth three."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור לא מגדיר מספר כניסות לשער או הרשאה לפיצול חוט; הנוסח מגדיר NAND דו־כניסתי ופיצול מותר.",
+        "טענת מינימליות היא תוספת עריכה במודל מוגדר; המקור מבקש מימוש בלבד."
+      ],
+      "en": [
+        "The source does not define gate fan-in or fanout permission; this edition uses two-input NAND with allowed fanout.",
+        "The scoped minimum-gate result is an editorial extension; the source asks only for an implementation."
+      ]
+    },
+    "verification": {
+      "he": "אומתו כל ארבע שורות טבלת האמת מול A!=B, וכן כל 3/18/180 הרשתות המסודרות טופולוגית בעלות שער NAND אחד/שניים/שלושה במודל המוצהר. נבדק ציור מול ארבע משוואות החיבור. ללא הידור HDL, סינתזה, STA או בדיקת השהיה פיזית.",
+      "en": "Verified all four truth rows against A!=B, plus all 3/18/180 topologically ordered one/two/three-NAND networks in the stated model. Diagram checked against the four connection equations. No HDL compilation, synthesis, STA or physical-delay verification."
+    },
+    "diagram_description": {
+      "he": "G1 יוצר T ומפצל אותו ל־G2 ול־G3. A מחובר גם ל־G2 ו־B גם ל־G3. מוצאי P,Q נכנסים ל־G4. נקודות מסמנות פיצול מחובר; העיגול ביציאת כל שער מציין היפוך.",
+      "en": "G1 creates T and fans it into G2 and G3. A also enters G2 and B also enters G3. Their P,Q outputs enter G4. Dots mark connected branches; each output bubble denotes inversion."
+    },
+    "relationship_note": {
+      "he": "העיקרון קשור למימוש XOR מספריית רכיבים מוגבלת ב־PREP-031 וב־PREP-015; ספריית NAND כאן שונה ומצריכה רשת אחרת.",
+      "en": "Related to constrained-library XOR constructions in PREP-031 and PREP-015; the NAND library here requires a different network."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד נבנה XNOR מאותה רשת?",
+        "direction": "מוסיפים NAND שמקבל את Y בשתי כניסותיו כדי להפוך אותו. זו הרחבה ישירה ולא טענה למינימום מספר שערי XNOR.",
+        "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך."
+      },
+      "en": {
+        "question": "How can the same network produce XNOR?",
+        "direction": "Add a NAND with Y tied to both inputs to invert it. This is a direct extension, not a minimum-XNOR-gate claim.",
+        "status": "Prepared in content; not connected to the interactive follow-up queue."
+      }
+    }
+  },
+  "PREP-094": {
+    "assumptions": {
+      "he": [
+        "קלט שלם לא־מסומן בטווח 0..255; רוחב שמונה סיביות כולל אפסים מובילים.",
+        "אין מערך, רשימה, מחרוזת או טבלת חיפוש בפתרון; משתנים שלמים מותרים.",
+        "הפלט הוא מספר; כתיבה בשמונה סיביות משמשת להסבר בלבד."
+      ],
+      "en": [
+        "Unsigned integer input in 0..255; exactly eight bits, including leading zeros.",
+        "No array, list, string or lookup table in the solution; scalar integers are allowed.",
+        "Return an integer; eight-bit display is explanatory only."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "time": "שמונה איטרציות: O(1) לרוחב הקבוע. להכללה לרוחב w: O(w) צעדי ביט, בהנחה שהמילה מכילה את הערך.",
+        "space": "O(1) משתנים/מילים; בהכללה הרוחב הכולל הוא O(w) ביטים.",
+        "scope": "אין טענת מינימום הוראות או עדיפות על פקודת חומרה ייעודית. החלפות במסכות יכולות לתת חלופה לרוחב קבוע."
+      },
+      "en": {
+        "time": "Eight iterations: O(1) for the fixed width. For width w: O(w) bit steps assuming the value fits the word.",
+        "space": "O(1) scalar variables/words; generalized scalar width is O(w) bits.",
+        "scope": "No minimum-instruction or superiority-to-dedicated-hardware claim. Masked swaps are an alternative at fixed width."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "0 ו־255 נשארים ללא שינוי.",
+        "1 הופך ל־128 ו־128 ל־1.",
+        "אפסים מובילים חייבים לעבור לתוצאה.",
+        "01101011 הופך ל־11010110, כלומר 107 ל־214.",
+        "הקוד דוחה קלט מחוץ לתחום וגם ערכים שאינם שלמים."
+      ],
+      "en": [
+        "Zero and 255 are unchanged.",
+        "One maps to 128 and 128 to one.",
+        "Leading zeros must be processed.",
+        "01101011 becomes 11010110, or 107 becomes 214.",
+        "The implementation rejects out-of-range and noninteger input."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לולאת while value שמפסיקה לפני שכל שמונה הסיביות עובדו.",
+        "היפוך ערכי הסיביות באמצעות NOT במקום היפוך הסדר.",
+        "סיבוב סיביות במקום היפוך סדרן.",
+        "שימוש במחרוזת, במערך או בטבלת חיפוש למרות ההגבלה.",
+        "התעלמות מרוחב וסימן בהזזה בשפה ברוחב קבוע."
+      ],
+      "en": [
+        "A while-value loop stops before all eight positions are processed.",
+        "Complementing bit values with NOT instead of reversing order.",
+        "Rotating instead of reversing.",
+        "Using a string, array or lookup table despite the constraint.",
+        "Ignoring width and signed-shift behavior in fixed-width languages."
+      ]
+    },
+    "interview_answer": {
+      "he": "אתחל result=0. חזור שמונה פעמים: הזז את result שמאלה, צרף עם OR את value&1, והזז את value ימינה. הסיבית הראשונה שנקראה נודדת שמאלה עד לקצה. שמונה צעדים קבועים, בלי מערך עזר.",
+      "en": "Initialize result=0. Repeat eight times: shift result left, OR in value&1, then shift value right. The first extracted bit moves left until it reaches the far end. Eight fixed steps and no auxiliary array."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אומר מספר בן שמונה ביטים וללא מערך; הנוסח מבהיר טווח לא־מסומן, עיבוד אפסים מובילים ואיסור שימוש במחרוזת כתחליף למערך.",
+        "תגיות המקור כוללות Intel ו־Marvell; השיוך מדווח ולא אומת עצמאית."
+      ],
+      "en": [
+        "The source specifies eight bits and no array; the edition clarifies the unsigned range, leading-zero handling and no string workaround.",
+        "Intel and Marvell are source-reported attributions, not independently verified."
+      ]
+    },
+    "verification": {
+      "he": "אומתו כל 256 הקלטים מול אורקל בלתי תלוי של היפוך מחרוזת בת שמונה תווים, 2,048 בדיקות מיקום סיבית, היפוך כפול, שימור מספר אחדים, התאמה למשלים ושבע דחיות של קלט לא תקין. מחרוזות משמשות באורקל בלבד. ללא הידור לשפה ברוחב קבוע או מדידת ביצועים.",
+      "en": "Verified all 256 inputs against independent fixed-width string reversal, 2,048 individual bit positions, reversal involution, set-bit preservation, complement compatibility and seven invalid-input rejections. Strings are used only in the oracle. No fixed-width language compilation or benchmark."
+    },
+    "relationship_note": {
+      "he": "קשורה לתרגילי הזזה וסיבוב, אך היפוך סדר שמונה הסיביות הוא פעולה אחרת; בפרט אין לשנות את הרוחב לפי גודל המספר.",
+      "en": "Related to shift and rotation exercises, but reversing all eight positions is a different operation; the width must not shrink to the numerical bit length."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך אפשר להפוך שמונה סיביות בשלושה שלבי החלפה במסכות?",
+        "direction": "מחליפים סיביות שכנות במסכות 0x55/0xAA, אחר כך זוגות ב־0x33/0xCC ולבסוף רביעיות ב־0x0F/0xF0. יש להוכיח בנפרד את כיווני ההזזה ולשמור על רוחב שמונה.",
+        "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך."
+      },
+      "en": {
+        "question": "How can three masked-swap stages reverse a byte?",
+        "direction": "Swap neighboring bits using 0x55/0xAA, then pairs using 0x33/0xCC, then nibbles using 0x0F/0xF0. Separately justify shift directions and retain eight-bit width.",
+        "status": "Prepared in content; not connected to the interactive follow-up queue."
+      }
+    }
+  },
+  "PREP-090": {
+    "assumptions": {
+      "he": [
+        "כדור מושלם, מסלול מקורי במעגל גדול ומעגל חדש באותו מישור ומרכז.",
+        "המרווח אחיד; הרדיוס החדש הוא R+h, עם R חיובי וכל האורכים במטרים.",
+        "חבל דק ללא מתיחה שניתן לתמוך בו כרצוננו; אין שקיעה, הרים או אילוצי מגע."
+      ],
+      "en": [
+        "Perfect sphere, original great-circle route and enlarged circle in the same plane with the same center.",
+        "Uniform clearance, so the new radius is R+h; R is positive and all lengths use metres.",
+        "Thin inextensible rope held in the required shape; sag, terrain and contact mechanics are excluded."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מציאת המרווח האחיד לאחר הוספת אורך נתון.",
+        "result": "עבור תוספת dL מתקיים h=dL/(2π); עבור 10 מטר מתקבל כ־1.59 מטר.",
+        "proof": "מחסרים 2πR מ־2π(R+h); מתקבל dL=2πh.",
+        "scope": "פתרון יחיד במודל מעגלים קונצנטריים, לא בעיית אופטימיזציה של צורת חבל אמיתי."
+      },
+      "en": {
+        "criterion": "Find uniform clearance after a given circumference increment.",
+        "result": "For added length dL, h=dL/(2π); ten metres gives about 1.59 metres.",
+        "proof": "Subtract 2πR from 2π(R+h), obtaining dL=2πh.",
+        "scope": "Unique answer for concentric circles, not an optimization of a real rope's shape."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "תוספת אפס נותנת מרווח אפס.",
+        "תוספת של 2π מטרים נותנת בדיוק מטר מרווח בכל רדיוס.",
+        "הרמת נקודה יחידה או מרווח שאינו אחיד משנים את המודל.",
+        "אם רוצים מרווח H, יש להוסיף 2πH מטרים."
+      ],
+      "en": [
+        "Zero added length gives zero clearance.",
+        "Adding 2π metres gives exactly one metre of clearance at any radius.",
+        "Lifting a single point or allowing uneven clearance changes the model.",
+        "To obtain clearance H, add 2πH metres."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לחלק עשרה מטרים בהיקף כדור הארץ ולהסיק שהמרווח זניח.",
+        "לחשב שינוי בקוטר ולזהות אותו בטעות עם המרווח הרדיאלי.",
+        "להניח שצריך לדעת את רדיוס כדור הארץ המספרי.",
+        "לפתור הרמה מקומית של החבל אף שהמקור דורש מרווח אחיד."
+      ],
+      "en": [
+        "Dividing ten metres by Earth's circumference and treating the tiny ratio as the gap.",
+        "Confusing diameter change with radial clearance.",
+        "Assuming a numerical Earth radius is required.",
+        "Solving a locally lifted rope despite the required uniform gap."
+      ]
+    },
+    "interview_answer": {
+      "he": "אסמן מרווח אחיד h. תוספת האורך היא 2π(R+h)−2πR=2πh=10, ולכן h=10/(2π), בערך 1.59 מטר. אדם בגובה מטר יכול לעבור במודל האידאלי. הרדיוס R מתבטל: המרווח תלוי רק בתוספת האורך.",
+      "en": "Let h be uniform clearance. The extra length is 2π(R+h)−2πR=2πh=10, so h=10/(2π), about 1.59 metres. A one-metre person fits in the ideal model. R cancels: clearance depends only on the extra length."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כמה אורך צריך להוסיף כדי לקבל מרווח אחיד של שני מטרים?",
+        "direction": "מכפילים את המרווח ב־2π: נדרשים 4π מטרים, בלי תלות ברדיוס המקורי.",
+        "status": "מוכן בארכיון; לא מחובר לתור המשך אינטראקטיבי."
+      },
+      "en": {
+        "question": "How much extra rope produces a uniform two-metre gap?",
+        "direction": "Multiply clearance by 2π: the required increment is 4π metres, independent of original radius.",
+        "status": "Prepared in the archive; not connected to the interactive follow-up queue."
+      }
+    },
+    "source_ambiguities": {
+      "he": [
+        "כדור מושלם ומסלול מעגל גדול הם הגדרת מודל מפורשת, לא תיאור פני הארץ האמיתיים.",
+        "המרווח האחיד נדרש במקור; אופן החזקת החבל במיקום זה אינו מתואר ומונח כאפשרי.",
+        "גובה האדם הוא מטר לפי המקור, ולא גובה אנושי ממוצע."
+      ],
+      "en": [
+        "A perfect sphere and great-circle route are explicit idealizations, not claims about real terrain.",
+        "The source requires a uniform gap; how the rope is held there is unspecified and assumed possible.",
+        "The source specifies a one-metre person, not average human height."
+      ]
+    },
+    "verification": {
+      "he": "עברו 30 צירופים של רדיוסים ותוספות, מול חישוב היקפים עצמאי ב־Decimal עם 100 ספרות ו־π המחושב בזהות Machin. נבדקו מרווח מטר, תוספת אפס ושישה קלטים פסולים. זו בדיקת מודל גאומטרי, לא ניסוי בחבל אמיתי.",
+      "en": "Passed thirty radius/increment combinations against an independent 100-digit Decimal circumference calculation with pi from Machin's identity. Checked the one-metre threshold, zero increment and six invalid inputs. This verifies geometry, not a physical rope experiment."
+    }
+  },
+  "PREP-093": {
+    "assumptions": {
+      "he": [
+        "המידות 4×4 ומשבצות היחידה הן שחזור אידאלי מפורש שנוסף; לא נתון שנמדד מהצילום.",
+        "כל אחד משלושת אזורי ה־L הלבנים הוא 2×2 פחות משבצת יחידה, ו־D הוא ריבוע 2×2 מלא.",
+        "כל אזור מחולק בפני עצמו; החלקים מכסים אותו ללא חפיפה של פנים וללא שימוש בשטח הכהה.",
+        "נדרשים חלקים מחוברים שווי שטח. ההצעה מספקת גם חפיפה גאומטרית בתוך כל אזור; סיבוב ושיקוף מותרים להשוואה."
+      ],
+      "en": [
+        "The 4×4 dimensions and unit cells are an openly added ideal reconstruction, not screenshot measurements.",
+        "Each white L is a 2×2 square minus one unit cell; D is a complete 2×2 square.",
+        "Each region is partitioned independently, covering it with disjoint interiors and excluding dark area.",
+        "Pieces are connected and equal in area. The construction also gives congruent pieces within each region, allowing rotations and reflections for comparison."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "בניית 2,3,4,7 חלקים שווי שטח בתוך A,B,C,D בהתאמה.",
+        "result": "A: שני טרפזים חופפים; B: שלושה ריבועים; C: ארבעה L-ים קטנים; D: שבע רצועות מלבניות.",
+        "proof": "סימטריה ב־A, יחידות שטח ב־B, הקטנה פי שניים בכל צלע ואריח מרכזי ב־C, גובה שווה ב־D.",
+        "scope": "בניית קיום במודל המידות המוצהר; אין טענה למינימום מספר פעולות חיתוך או לפתרון יחיד."
+      },
+      "en": {
+        "criterion": "Construct 2,3,4,7 equal-area pieces within A,B,C,D respectively.",
+        "result": "A: two congruent trapezoids; B: three squares; C: four small L shapes; D: seven rectangular strips.",
+        "proof": "Reflection in A, unit squares in B, half-scale L tiling with a central tile in C, equal heights in D.",
+        "scope": "Existence construction under explicit dimensions; no minimum-cut or uniqueness claim."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "השטח הכהה אינו מתווסף לאף חלק.",
+        "שוויון שטחים נדרש בתוך אזור, לא בין כל 16 החלקים בארבעת האזורים.",
+        "קווים משותפים אינם יוצרים חפיפה בעלת שטח חיובי.",
+        "הגדלה אחידה של כל השרטוט שומרת על השוויון והחפיפה.",
+        "שינוי לא אחיד של המידות עלול לשבור את הסימטריה ואת אריחי ה־L."
+      ],
+      "en": [
+        "No dark area belongs to a piece.",
+        "Area equality is required within a region, not among all sixteen pieces across four regions.",
+        "Shared boundary lines do not create positive-area overlap.",
+        "Uniformly scaling the diagram preserves equality and congruence.",
+        "Changing relative dimensions can break reflection symmetry and the L tiling."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להניח שהחלקים בכל ארבעת האזורים חייבים להיראות אותו דבר.",
+        "לחלק מלבן חוסם ולכלול בטעות שטח כהה.",
+        "לחלק את צלעות ה־L לארבע ולצפות אוטומטית לארבעה שטחים שווים.",
+        "לייחס למידות משוערות בצילום דיוק שלא קיים במקור.",
+        "לספור שלושה L-ים בפינות של C ולשכוח את ה־L המרכזי."
+      ],
+      "en": [
+        "Requiring all four regions to use the same piece shape.",
+        "Partitioning a bounding rectangle and accidentally including dark area.",
+        "Dividing L boundary lengths by four and assuming equal areas follow.",
+        "Treating estimated screenshot dimensions as exact source data.",
+        "Counting C's three corner L tiles but forgetting the central L."
+      ]
+    },
+    "interview_answer": {
+      "he": "במודל המשבצות, A,B,C הם L בשטח 3 ו־D ריבוע בשטח 4. ב־A אחבר את הפינה הפנימית לפינה החיצונית הנגדית לקבלת שני טרפזים חופפים. B מתפרק לשלוש משבצות. C מתפרק לארבעה L-ים בחצי קנה מידה: אחד במרכז ושלושה בפינות. D מתחלק לשבע רצועות שוות. השטחים לכל חלק הם 3/2,1,3/4,4/7 בהתאמה.",
+      "en": "Under the grid model, A,B,C are area-three L shapes and D is an area-four square. Split A along its reflection axis into two congruent trapezoids. Split B into three unit squares. Tile C with four half-scale L shapes: one central and three at corners. Split D into seven equal strips. Piece areas are 3/2,1,3/4,4/7 respectively."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "האם אפשר לחלק את C לשישה־עשר L-ים חופפים?",
+        "direction": "כן. מפעילים שוב את חלוקת ארבעת ה־L-ים על כל אחד מארבעת החלקים. כל צלע קטנה לרבע מהמקור והשטח של כל חלק הוא 3/16.",
+        "status": "כיוון הרחבה מוכח; מוכן בארכיון ואינו מחובר לתור המשך אינטראקטיבי."
+      },
+      "en": {
+        "question": "Can C be divided into sixteen congruent L shapes?",
+        "direction": "Yes. Repeat the four-L construction inside each of its four tiles. Each length is one quarter of the original and each piece has area 3/16.",
+        "status": "Proved extension direction; prepared in the archive, not connected to the interactive follow-up queue."
+      }
+    },
+    "source_ambiguities": {
+      "he": [
+        "בצילום אין מידות ואין הבטחה מפורשת ליחסי צלעות; המודל המדויק 4×4 נוסף וסומן.",
+        "המילה ׳שווים׳ יכולה להתפרש כשווי שטח או כחופפים. ההצעה מקיימת גם וגם בתוך כל אזור במודל הנתון.",
+        "אין דרישה למספר קווי חיתוך מינימלי, לחיתוך פיזי רציף, או לצורה משותפת לכל האזורים.",
+        "תג המקור 2312313 נשמר כתג גולמי בלבד ואינו מסווג כחברה או כמיומנות."
+      ],
+      "en": [
+        "The screenshot supplies no dimensions or exact side-length ratios; the exact 4×4 model was added and labelled.",
+        "Equal could mean equal area or congruent. This construction satisfies both within each region under the stated model.",
+        "The source does not require a minimum number of cuts, a physical continuous cutting procedure, or one piece shape shared by all regions.",
+        "Source tag 2312313 is retained only as a raw tag, not interpreted as a company or skill."
+      ]
+    },
+    "verification": {
+      "he": "נבדקו בדיוק שברי שטח של כל 16 החלקים, סכום שטח לבן 13, וחפיפה גאומטרית בתוך כל אזור לאחר הזזה ושיקוף או סיבוב. אורקל גאומטרי נפרד בדק 50,176 נקודות ללא נקודות גבול מול הגדרת המשבצות, ללא חורים או חפיפות שנמצאו. הסריקה היא בדיקה נוספת לבניית הריצוף המדויקת; אינה טענה על כל מצולע או על המידות המקוריות בצילום.",
+      "en": "Checked exact rational areas of all sixteen pieces, total white area thirteen, and within-region congruence under translation and a square symmetry. An independent geometry oracle checked 50,176 nonboundary sample points against the cell definition, finding no gaps or overlaps. Sampling supplements the exact tiling construction; it makes no general polygon or original screenshot-dimension claim."
+    }
+  },
+  "PREP-091": {
+    "assumptions": {
+      "he": [
+        "OUT מציין אי־התאמה בין In הנוכחי לדגימה האחרונה בחזית עולה.",
+        "אתחול In=Q=0 נוסף למודל ואינו איפוס שניתן במקור.",
+        "שינוי קלט אינו חופף לחזית ונדרש setup/hold; הניתוח הבוליאני מתעלם מהשהיה."
+      ],
+      "en": [
+        "OUT is the mismatch between current In and its last rising-edge sample.",
+        "Known initial In=Q=0 is an added model condition, not a source reset.",
+        "Input transitions do not coincide with sampling edges and satisfy setup/hold; ideal zero-delay Boolean behavior."
+      ]
+    },
+    "waveform_observations": {
+      "he": [
+        "OUT עולה עם עלייה ועם ירידה של הקלט לפני חזית השעון הבאה.",
+        "שני הפולסים מסתיימים בחזית העולה הבאה, ולא בהכרח לאחר מחזור שלם."
+      ],
+      "en": [
+        "Source OUT rises on both input directions before the next clock edge.",
+        "Both shown pulses end at the next rising edge and need not be a full period."
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "תרשים סופי אינו מגדיר את כל הקלטים האפשריים; חוזה אי־ההתאמה נוסף בעריכה.",
+        "אין הגדרת איפוס, אירועים חופפים, ריבוי שינויים במחזור או תזמון פיזי."
+      ],
+      "en": [
+        "Finite source traces do not distinguish every possible circuit; the explicit mismatch contract is editorial.",
+        "Reset, simultaneous events, repeated within-cycle transitions and physical timing are unspecified."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "קלט קבוע אינו יוצר פולס אחרי אתחול.",
+        "שני שינויים לפני דגימה מבטלים את אי־ההתאמה; אין תור אירועים.",
+        "אתחול לא ידוע או הפרת setup/hold אינם מכוסים בהבטחה האידאלית."
+      ],
+      "en": [
+        "No input change gives no pulse after initialization.",
+        "Two input changes before sampling cancel the disagreement rather than queue events.",
+        "Unknown startup state or setup/hold violations invalidate the ideal guarantee."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שימוש בשני רגיסטרים דגומים שמאחרים את תחילת הפולס.",
+        "הבטחת פולס באורך מחזור או לכידת כל שינוי אסינכרוני.",
+        "התייחסות למוצא XOR כשעון בטוח או כמסנכרן CDC."
+      ],
+      "en": [
+        "Using two sampled registers and silently delaying the pulse until an edge.",
+        "Claiming a one-cycle pulse or guaranteed capture for arbitrary asynchronous input.",
+        "Using XOR output as a safe clock or a CDC synchronizer."
+      ]
+    },
+    "optimality": {
+      "he": "דלגלג D אחד ו־XOR מספיקים לחוזה שנבחר. דרוש זיכרון; לא הוכח מינימום פיזי של שטח או השהיה.",
+      "en": "One DFF plus XOR suffices for the explicit ideal mismatch contract; memory is necessary, but physical gate-area/delay minima are not claimed."
+    },
+    "verification": {
+      "he": "עברו 19,682 רצפי אירועים ממצים, 147,624 השוואות אירועים ושבע בדיקות אירועי דוגמת המקור מול שמירת הדגימה האחרונה בנפרד. Python אידאלי בלבד; ללא HDL, סינתזה, STA או בדיקה פיזית.",
+      "en": "Passed 19,682 exhaustive event traces, 147,624 event comparisons and seven source-waveform event checks against independently retained last-sample state. Ideal Python only; no HDL, synthesis, STA or physical verification."
+    },
+    "interview_answer": {
+      "he": "שומרים את In בדלגלג D בחזית עולה ומשווים ב־XOR לקלט החי. שינוי יוצר אי־התאמה עד הדגימה הבאה. יש להגדיר אתחול, תזמון וריבוי שינויים.",
+      "en": "Store In in a rising-edge DFF and XOR the stored sample with live In. A change creates mismatch until the next sample. Both input directions work; timing, initialization and multiple-change behavior must be specified."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך ייראה פולס סינכרוני באורך מחזור מלא?",
+        "direction": "משווים דגימות מושהות ומגדירים השהיית דיווח ודרישות CDC; התוצאה אינה תגובה מיידית מהצילום.",
+        "status": "מוכן בתוכן; אינו מחובר לתור המשך חי."
+      },
+      "en": {
+        "question": "How would a synchronous full-cycle pulse differ?",
+        "direction": "Sample and compare delayed values, with explicit latency and CDC assumptions; do not promise the immediate source waveform.",
+        "status": "Prepared; not connected to the live follow-up queue."
+      }
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "הנחיות Intel לתכנון FPGA — תזמון ומטא־יציבות",
+          "url": "https://www.intel.com/content/www/us/en/docs/programmable/683082/24-3/recommended-design-practices.html",
+          "note": "מקור לגבולות התזמון; פרשנות הצילום, המימוש והבדיקות נכתבו בנפרד."
+        }
+      ],
+      "en": [
+        {
+          "title": "Intel FPGA design recommendations — asynchronous hazards and metastability",
+          "url": "https://www.intel.com/content/www/us/en/docs/programmable/683082/24-3/recommended-design-practices.html",
+          "note": "Timing limitations only; source interpretation, circuit and checks are independently authored."
+        }
+      ]
+    }
+  },
+  "PREP-095": {
+    "assumptions": {
+      "he": [
+        "עשר הדגימות כוללות את הנוכחית; Y=1 אם ורק אם יש לפחות שלושה אחדים.",
+        "איפוס והשלמת התחלה באפס; ללא מחזור השהיה נוסף במוצא.",
+        "יש לקבוע דגימת X וקריאת Y מיוצבת ללא מרוץ; אין ערכי X/Z."
+      ],
+      "en": [
+        "Last ten includes the current logical sample; Y iff the count is at least three.",
+        "Reset zeroes history; missing warmup samples are zero; no extra output cycle latency.",
+        "Define race-free X acquisition and settled Y observation; no X/Z values."
+      ]
+    },
+    "waveform_observations": {
+      "he": [
+        "עבור 1,0,1,0,1 ואז אפסים, Y גבוה בדגימות חמש עד עשר כולל.",
+        "בדגימה האחת עשרה האחד הראשון פוקע והספירה יורדת לשתיים."
+      ],
+      "en": [
+        "For input 1,0,1,0,1 then zeros, Y is high on samples five through ten inclusive.",
+        "At sample eleven the first one expires, making the count two."
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "אין במקור הגדרה מפורשת למוצא אחרת, לאיפוס, להתחלה, להשהיה או לסדר אירועי השעון.",
+        "חוזה השלמת האפסים והדיווח באותה דגימה נוסף בעריכה וצריך להתאים לרכיב שנבדק."
+      ],
+      "en": [
+        "Source does not define otherwise-zero behavior, reset, warmup, output latency or scheduling for X changes on clock edges.",
+        "The edited zero-padding and same-cycle contract must be agreed before connecting a DUT."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "בדיוק שניים לעומת שלושה אחדים.",
+        "יציאת האחד הישן לאחר עשר דגימות כלולות בדיוק.",
+        "איפוס כש־Y גבוה וכניסה לסף לפני עשר דגימות.",
+        "אורך מוצאים שונה מאורך הקלט וקלט שאינו בינארי."
+      ],
+      "en": [
+        "Exactly two versus exactly three ones.",
+        "Oldest one expires precisely after ten included samples.",
+        "Reset after a high output; startup may reach threshold before ten samples.",
+        "Observed sequence length mismatch and nonbinary input."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "ספירת כל ההיסטוריה או חלוקה למקטעים נפרדים של עשרה.",
+        "השוואה לפני הכנסת X או הוצאת הביט הישן מוקדם מדי.",
+        "חישוב ציפייה ללא השוואה ל־Y האמיתי.",
+        "קריאת Y בשלב סימולציה שגוי או שינוי השהיה ללא מפרט."
+      ],
+      "en": [
+        "Counting lifetime ones or disjoint ten-sample blocks.",
+        "Comparing before inserting current X or expiring a sample one cycle too soon.",
+        "Computing expected Y without comparing actual DUT Y.",
+        "Reading Y in the wrong simulator phase or silently changing latency."
+      ]
+    },
+    "optimality": {
+      "he": "היסטוריה של עשרה ביטים נותנת אחסון ועבודה חסומים לכל מחזור. לחלון W נדרשים W ביטים; אין טענת מינימום שטח חומרה.",
+      "en": "A fixed ten-bit history is bounded storage with fixed per-cycle work. Generalized W-bit history costs W bits; no minimum circuit-area claim."
+    },
+    "verification": {
+      "he": "עברו 32,767 רצפים בינאריים עד אורך 14, 425,986 השוואות דגימה לסכומי פרוסות מפורשים וזוהו 98,298 שיבושי מוצא במחזור יחיד. נבדקו איפוס, כניסה לסף ופקיעה, קלט שגוי ואורך לא תואם. Python בלבד; ללא DUT חי או סימולציית HDL.",
+      "en": "Passed 32,767 binary streams through length fourteen, 425,986 sample comparisons against explicit suffix sums, and 98,298 injected single-cycle output corruptions. Reset, threshold arrival/expiry, invalid samples and length mismatch checked. Python only; no live DUT or HDL simulation."
+    },
+    "interview_answer": {
+      "he": "מכניסים X לחלון זז של עשר דגימות ומוציאים את הישנה. מצפים ל־Y=1 אם יש לפחות שלושה אחדים ומשווים למוצא המיוצב לפי איפוס, התחלה והשהיה שהוגדרו.",
+      "en": "Retain a ten-sample sliding history, insert current X and expire the oldest, then expect Y iff at least three bits are one. Compare with settled DUT Y using an explicit reset, warmup and latency convention."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך מעדכנים מונה בחומרה בלי לסכם מחדש את כל החלון?",
+        "direction": "שומרים היסטוריה ומעדכנים מונה באמצעות הביט הנכנס פחות היוצא. הרוחב צריך להכיל 0 עד 10, וההשוואה היא למונה המעודכן.",
+        "status": "מוכן בתוכן; אינו מחובר לתור המשך חי."
+      },
+      "en": {
+        "question": "How can hardware update a count without recounting the whole window?",
+        "direction": "Keep history and update count = count + incoming_bit - outgoing_bit, using widths that represent zero through ten and comparing the updated count.",
+        "status": "Prepared; not connected to the live follow-up queue."
+      }
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "מודל התזמון של cocotb — זיהוי חזית וקריאה אחרי התייצבות",
+          "url": "https://docs.cocotb.org/en/v2.0.0/timing_model.html",
+          "note": "מקור להערת תזמון הסימולציה; המודל, הבדיקות והחוזה נכתבו בנפרד."
+        }
+      ],
+      "en": [
+        {
+          "title": "cocotb timing model — edge triggers and final observation phases",
+          "url": "https://docs.cocotb.org/en/v2.0.0/timing_model.html",
+          "note": "Supports the simulator-phase caveat; Python monitor, tests and contract are independently authored."
+        }
+      ]
+    }
+  },
+  "PREP-096": {
+    "assumptions": {
+      "he": [
+        "n חיובי, צבעים בינאריים וסדר תשובות מהאחורי לקדמי.",
+        "תיאום מראש, שמיעת כל התשובות וזיכרון מקומי; אין תקשורת נוספת.",
+        "אין מגבלה ידועה על מספר הכובעים מכל צבע."
+      ],
+      "en": [
+        "Positive n, binary colors and rear-to-front answers.",
+        "Pre-agreement, audible answers and private memory; no other communication.",
+        "No known inventory limit for either hat color."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "criterion": "מספר היודעים את צבעם בוודאות, בכל סידור אפשרי.",
+        "result": "n−1; הראשון מעביר זוגיות ולא יודע את כובעו.",
+        "proof": "החלפת כובעו של הראשון משאירה את כל תצפיותיו זהות; אי אפשר להבטיח n. ביט הזוגיות מאפשר לכל יתר n−1 להסיק את צבעם."
+      },
+      "en": {
+        "criterion": "Number guaranteed to know their own color for every arrangement.",
+        "result": "n−1; the first transmits parity without knowing their own hat.",
+        "proof": "Flipping the first speaker’s invisible hat leaves observations identical, ruling out n. Parity lets all other n−1 infer their colors."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "n=1: אין יודע מובטח; n=2: הקדמי יודע.",
+        "כל הכובעים באותו צבע או תבניות זוגיות מתחלפות.",
+        "הראשון עשוי לענות נכון במקרה, אך אינו יודע זאת.",
+        "שמיעה חסרה או סדר שונה דורשים בעיה אחרת."
+      ],
+      "en": [
+        "n=1 guarantees zero knowers; n=2 guarantees the front dwarf.",
+        "Uniform colors and alternating parity patterns.",
+        "The first may be correct by chance but does not know.",
+        "Missing audibility or a different answer order changes the contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לספור את ההודעה הראשונה כאילו היא צבעו האמיתי של האחורי.",
+        "לנסות להעביר את מספר השחורים המלא במילה אחת במקום רק זוגיות.",
+        "לשכוח שהבאים משתמשים גם בתשובות הקודמות ולא רק במה שהם רואים.",
+        "לטעון שכל n בהכרח טועים או צודקים במקום להבחין בין הבטחה למקרה."
+      ],
+      "en": [
+        "Treating the initial parity message as the rear dwarf’s true hat color.",
+        "Trying to encode the full black-hat count in one word instead of parity.",
+        "Ignoring previous correct replies when decoding later hats.",
+        "Confusing a worst-case guarantee with whether all n happen to be correct."
+      ]
+    },
+    "interview_answer": {
+      "he": "האחורי אומר שחור אם מספר השחורים שלפניו אי־זוגי ולבן אם הוא זוגי. כל הבא משלב את הזוגיות עם הצבעים שכבר נשמעו ועם מה שהוא רואה, ונשאר רק כובעו. כך n−1 יודעים בוודאות. אי אפשר להבטיח גם לראשון לדעת, כי כובעו אינו משפיע על שום מידע שיש לו.",
+      "en": "The rear dwarf announces parity of black hats ahead. Each later dwarf XORs that message with correctly announced colors and visible hats, leaving their own color. Thus n−1 know with certainty. The first cannot know, because flipping only their invisible hat changes none of their observations."
+    },
+    "source_ambiguities": {
+      "he": {
+        "audibility": "המקור אינו אומר במפורש ששומעים תשובות. זו הנחה שנוספה והיא חיונית.",
+        "inventory": "לא ניתנה מכסה לכל צבע; אין לייבא את חמשת הכובעים של PREP-033.",
+        "objective": "מבחינים בין לדעת בוודאות לבין ניחוש שעשוי להצליח."
+      },
+      "en": {
+        "audibility": "The source does not explicitly state hearing replies; this added assumption is essential.",
+        "inventory": "No color inventory is given; do not import PREP-033’s five-hat restriction.",
+        "objective": "Knowing with certainty differs from a possibly successful guess."
+      }
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם יש k צבעים וכל תשובה יכולה להיות אחד מ־k שמות הצבעים?",
+        "answer_direction": "ממספרים צבעים 0..k−1 ומשדרים סכום מודולו k במקום XOR; כל הבא מחסר את הצבעים הידועים ומוצא את שלו.",
+        "tests": "הכללת ביט הזוגיות למידע מודולרי; נשארים k שמות מותרים."
+      },
+      "en": {
+        "question": "What if there are k colors and each answer may be one of the k color names?",
+        "answer_direction": "Encode colors 0..k−1 and announce a sum modulo k instead of XOR; subtract known colors to recover each missing one.",
+        "tests": "Generalizing parity to modular information while retaining exactly k permitted words."
+      }
+    },
+    "verification": {
+      "he": "בדיקת Python ממצה של 32,766 עולמות עבור n=1..14, ובהם 393,220 תשובות של גמדים שאינם הראשונים. נבדקו 16,383 זוגות עולמות עם אותו מידע גלוי וצבע אחורי שונה, ועוד 120 עולמות מדגמיים עד n=1024. נבדקו שימור הקלט וארבע דחיות קלט. ההוכחה הכללית והחסם העליון כתובים בנפרד; אין כאן ניסוי פיזי או ביקורת אנושית.",
+      "en": "Python exhaustively checks 32,766 worlds for n=1..14, including 393,220 nonfirst replies, plus16,383 paired worlds differing only in the invisible rear hat and120 seeded worlds up to n=1024. Input preservation and4 invalid-world rejections are checked. The general proof and upper bound are separate; no physical experiment or human review."
+    },
+    "relationship_note": {
+      "he": "קשורה ל־PREP-033 בנושא כובעים, אך כאן n כללי, אין מכסת צבעים ידועה והמידע מועבר במכוון בתשובות סדרתיות.",
+      "en": "Related to PREP-033’s hats theme, but here n is general, color inventories are unknown and sequential answers deliberately carry information."
+    }
+  }
+}

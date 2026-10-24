@@ -1,0 +1,15 @@
+{
+  "question_id": "PREP-094",
+  "checked_on": "2026-10-24",
+  "status": "passed",
+  "exhaustive_valid_inputs": 256,
+  "bit_position_checks": 2048,
+  "invalid_inputs_rejected": 7,
+  "involution_popcount_complement_checks": 256,
+  "source_example": {
+    "input": "01101011",
+    "output": "11010110"
+  },
+  "oracle": "Independent fixed-width 8-character string reversal; strings and arrays are used only by verification, not the solution.",
+  "scope": "Unsigned 8-bit values, Python execution; no fixed-width language compilation or runtime benchmark."
+}

@@ -283,3 +283,8 @@ Exact arithmetic permits three add/subtract assignments. At eight bits use a^=b;
 שאלת ההמשך מוכנה בתוכן בלבד ואינה מחוברת לתור המשך אינטראקטיבי.
 
 The follow-up is prepared as content only; it is not connected to the interactive follow-up queue.
+
+
+## מקור נוסף — 24.10.2026
+
+[דיווח נוסף על החלפה ללא משתנה עזר](../sources/prep-077-additional-2026-10-24.png), עם שיוכי Apple ו־Rafael מהצילום בלבד. הנוסח, הרמזים, הפתרונות והמזהה נשמרו; אין אישור אנושי חדש או פעילות משתמש.

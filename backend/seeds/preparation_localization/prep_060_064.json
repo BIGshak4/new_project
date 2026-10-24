@@ -271,7 +271,8 @@
         "מצנחים הם סימני נקודה קבועים; החיישן נבדק במקום הנוכחי בלבד ואינו מזהה את בעל הסימן.",
         "כל הוראה מבוצעת עולה יחידת זמן, כולל בדיקה וקפיצה; קפיצה מותנית שלא מבוצעת אינה צורכת זמן.",
         "שני הסוכנים נעים ברציפות בזמן צעד. מפגש הוא מקום משותף, לא דרישת גילוי או עצירה אוטומטית.",
-        "למעבד המקומי רק מונה פקודות וקריאת סימן; נתוני הסביבה מוסתרים ממנו."
+        "למעבד המקומי רק מונה פקודות וקריאת סימן; נתוני הסביבה מוסתרים ממנו.",
+        "וריאנט API נפרד ג: תנועה והמתנה אורכות יחידה; בדיקות ובקרה מיידיות. מודלי א–ב נשארים ללא שינוי."
       ],
       "en": [
         "Common forward orientation, synchronized start and equal clocks.",
@@ -279,7 +280,8 @@
         "Parachutes are fixed point markers; the sensor tests only the current location and cannot identify ownership.",
         "Every executed primitive costs one tick, including test and jump; a skipped guarded jump consumes no execution tick.",
         "Movement is continuous during its tick. Meeting means shared location, not automatic detection or stopping.",
-        "The local CPU has only a program counter and marker bit; environment data is hidden from it."
+        "The local CPU has only a program counter and marker bit; environment data is hidden from it.",
+        "Separate API variant C: movement/wait cost one tick; queries/control are instantaneous; all original A/B timing assumptions remain unchanged for those variants."
       ]
     },
     "optimality": {
@@ -297,8 +299,8 @@
       }
     },
     "verification": {
-      "he": "עברו 1,536 הרצות מפרש: מרחקים 1 עד 256, שני סדרי סוכנים ושלוש הזזות צירים. זמן המפגש וזמן בדיקת הסימן הושוו לנוסחאות עצמאיות. נבדקו מרחק אפס וארבע דוגמאות חצי־שלמות שבהן הסימן מוחמץ, וכן כיווני קדימה הפוכים. החיישן המקומי אינו מקבל מיקומים. זו בדיקת מודל סופית ולא ניסוי פיזי או הוכחה למודלים אחרים.",
-      "en": "Passed 1,536 interpreter runs: distances 1..256, both agent orders and three translations. Meeting and marker-test times matched independent formulas. Checked initial coincidence, four noninteger marker misses and opposite forward directions. The local sensor never receives positions. Finite model checks are not physical experiments or proof for other execution models."
+      "he": "עברו 1,536 הרצות מפרש: מרחקים 1 עד 256, שני סדרי סוכנים ושלוש הזזות צירים. זמן המפגש וזמן בדיקת הסימן הושוו לנוסחאות עצמאיות. נבדקו מרחק אפס וארבע דוגמאות חצי־שלמות שבהן הסימן מוחמץ, וכן כיווני קדימה הפוכים. החיישן המקומי אינו מקבל מיקומים. זו בדיקת מודל סופית ולא ניסוי פיזי או הוכחה למודלים אחרים. וריאנט API נפרד: 1,536 בדיקות מסלול למרחק חיובי מול 4D−2, בכיוון משותף, התחלה מסונכרנת ובדיקות מיידיות בלבד.",
+      "en": "Passed 1,536 interpreter runs: distances 1..256, both agent orders and three translations. Meeting and marker-test times matched independent formulas. Checked initial coincidence, four noninteger marker misses and opposite forward directions. The local sensor never receives positions. Finite model checks are not physical experiments or proof for other execution models. Separate API variant: finite trajectory checks compare meeting with 4D-2 for 1,536 positive-distance cases; common orientation, synchronized start and instantaneous queries/control only."
     },
     "edge_cases": {
       "he": [
@@ -307,7 +309,8 @@
         "אין צורך לשנות קוד כשהסוכן השני מתחיל משמאל; התפקידים מתחלפים מאליהם.",
         "סימן במרחק חצי יחידה עלול שלא להידגם לעולם.",
         "התחלה באותה נקודה היא מפגש בזמן אפס.",
-        "המודל אינו דורש זיהוי מפגש מתוך התוכנית עצמה."
+        "המודל אינו דורש זיהוי מפגש מתוך התוכנית עצמה.",
+        "בווריאנט API בודקים מפגש התחלתי ועוזבים את המצנח העצמי לפני בדיקת הסימן; ההמתנה הותרה רק במקור החדש."
       ],
       "en": [
         "Testing before the first step sees each agent’s own marker and does not break symmetry.",
@@ -315,7 +318,8 @@
         "If the other agent starts on the left, roles swap automatically without a code change.",
         "A marker half a unit away may never be sampled.",
         "Coincident starts are a meeting at time zero.",
-        "The program itself need not detect that a meeting has happened."
+        "The program itself need not detect that a meeting has happened.",
+        "API variant: explicitly check initial coincidence; leave the own marker before testing on_parachute. Its waiting primitive is allowed by the new source only."
       ]
     },
     "common_mistakes": {
@@ -325,7 +329,8 @@
         "לספור בדיקה וקפיצה פעם כזמן אפס ופעם כיחידה.",
         "להשתמש בפקודת המתנה או סעיף אחר שלא הותרו.",
         "לקרוא בקוד למרחק או למיקום האחר שהסוכן אינו יודע.",
-        "להרחיב את ההוכחה למרחקים לא שלמים או לכיוונים שונים בלי פתרון נוסף."
+        "להרחיב את ההוכחה למרחקים לא שלמים או לכיוונים שונים בלי פתרון נוסף.",
+        "העתקת זמן 6D−1 והשרטוטים מהמודל הישן לווריאנט API עם המתנה ובדיקות חינמיות."
       ],
       "en": [
         "Expecting identical programs with identical motion to meet without a symmetry-breaking observation.",
@@ -333,7 +338,8 @@
         "Counting tests and jumps as free in one part and costly in another.",
         "Introducing an unauthorized WAIT or ELSE.",
         "Reading hidden separation or the other position from inside agent code.",
-        "Generalizing the proof to noninteger separation or different orientations without another solution."
+        "Generalizing the proof to noninteger separation or different orientations without another solution.",
+        "Reusing the paid-instruction 6D-1 time or old diagrams for the API variant with free queries and explicit waiting."
       ]
     },
     "interview_answer": {
@@ -346,14 +352,16 @@
         "timing": "הצילומים אינם קובעים מחיר לבדיקה ולקפיצה; המודל כאן מעניק יחידה לכל הוראה מבוצעת.",
         "orientation": "כיוון קדימה משותף והתחלה מסונכרנת נאמרים במפורש בעריכה.",
         "operation_count": "מקור הרכבות אומר שלוש פעולות אך מונה MF,MB,ifP,GOTO; נשמר הטקסט המקורי ומובהר שבעריכה יש ארבע צורות.",
-        "static": "המילה סטטי במקור הרובוטים מתארת את המצנח, לא את הרובוט."
+        "static": "המילה סטטי במקור הרובוטים מתארת את המצנח, לא את הרובוט.",
+        "api_variant": "המקור החדש מתיר המתנה אך אינו קובע זמן לבדיקות. וריאנט ג בוחר בדיקות ובקרה מיידיות ומגדיר כיוון משותף, התחלה יחד וסריג שלם."
       },
       "en": {
         "distance": "Source X is not explicitly integer. The discrete solution assumes a unit lattice; half-unit separation provides a counterexample.",
         "timing": "The screenshots do not assign costs to tests/jumps; this model charges one tick to every executed primitive.",
         "orientation": "Common forward direction and synchronized start are explicit editorial additions.",
         "operation_count": "The train source says three operations but listsMF,MB,ifP,GOTO; the literal source is retained and four forms are clarified.",
-        "static": "Static in the robot source refers to the parachute marker, not the moving robot."
+        "static": "Static in the robot source refers to the parachute marker, not the moving robot.",
+        "api_variant": "New API explicitly permits waiting but leaves query timing unspecified. Variant C chooses zero-time queries/control and keeps common orientation, synchronized start and integer spacing explicit."
       }
     },
     "solution_extensions": {

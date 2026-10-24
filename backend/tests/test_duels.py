@@ -248,8 +248,16 @@ class TestTheGuards:
         assert capped.value.code == "usage_limit" and "tomorrow" in capped.value.message
         assert (await svc.create(B, language="en", mode="judged")).status == "open"
 
-    async def test_a_daily_duel_count_when_shaked_sets_one(self, catalog):
+    async def test_a_daily_duel_count_when_shaked_sets_one(self, catalog, monkeypatch):
         svc, store, clock = service(catalog)
+
+        class StoreDateTime(datetime):
+            @classmethod
+            def now(cls, tz=None):
+                return clock.now.astimezone(tz) if tz is not None else clock.now.replace(tzinfo=None)
+
+        # The service's accepted_at and the store's UTC day must use the same clock.
+        monkeypatch.setattr("app.services.memory_store.datetime", StoreDateTime)
         svc.rules.duel_daily_cap = 1
         try:
             duel = await start_duel(svc)

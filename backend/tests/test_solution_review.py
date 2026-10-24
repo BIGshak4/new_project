@@ -15,6 +15,8 @@ from app.repo.questions import LoadedQuestion, detail, summary
 
 BACKEND = Path(__file__).resolve().parents[1]
 REVISED_SOLUTION_KEY = "prep-seventeen-prisoners-two-mandatory-switches"
+REVISED_ROBOT_KEY = "prep-identical-robots-trains-static-marker-rendezvous"
+REVISED_SOLUTION_KEYS = {REVISED_SOLUTION_KEY, REVISED_ROBOT_KEY}
 
 
 @pytest.fixture(scope="module")
@@ -26,7 +28,7 @@ def test_frozen_attestation_covers_only_existing_snapshot(catalog):
     registry = json.loads((BACKEND / "seeds/solution_review_attestations.json").read_text(encoding="utf-8"))
     assert len(registry["questions"]) == 93
     for question in catalog.questions.values():
-        if question.key not in registry["questions"] or question.key == REVISED_SOLUTION_KEY:
+        if question.key not in registry["questions"] or question.key in REVISED_SOLUTION_KEYS:
             assert solution_review(question).status == "pending_review"
             assert solution_review(question).reviewed_on is None
             continue
@@ -57,8 +59,23 @@ def test_prisoner_explanation_revision_preserves_but_does_not_inherit_old_attest
         assert summary(row, language).solution_review.status == "pending_review"
         assert detail(row, language).solution_review.status == "pending_review"
     reviewed = {q.key for q in catalog.questions.values() if solution_review(q).status == "human_reviewed"}
-    assert len(reviewed) == 92
-    assert reviewed == set(registry["questions"]) - {REVISED_SOLUTION_KEY}
+    assert len(reviewed) == 91
+    assert reviewed == set(registry["questions"]) - REVISED_SOLUTION_KEYS
+
+
+def test_robot_rewrite_keeps_frozen_attestation_without_approving_new_sensing_contract(catalog):
+    registry = json.loads((BACKEND / "seeds/solution_review_attestations.json").read_text(encoding="utf-8"))
+    old_record = registry["questions"][REVISED_ROBOT_KEY]
+    assert old_record["content_sha256"] == "9838d558893d4a2faeb5480b3a09885a2df4951ddc97c2f73ad2a871823571a2"
+    assert old_record["status"] == "human_reviewed" and old_record["reviewed_on"] == "2026-10-21"
+    question = catalog.questions[REVISED_ROBOT_KEY]
+    assert solution_content_hash(question) != old_record["content_sha256"]
+    assert "solution_review" not in question.assets
+    assert solution_review(question).model_dump() == {"status": "pending_review", "reviewed_on": None}
+    row = LoadedQuestion(uuid.uuid4(), question, question.version)
+    for language in ("he", "en"):
+        assert summary(row, language).solution_review.status == "pending_review"
+        assert detail(row, language).solution_review.status == "pending_review"
 
 
 @pytest.mark.parametrize("change", ["reference", "prompt", "technical_material", "media", "code", "correct_choice"])

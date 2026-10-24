@@ -1,0 +1,139 @@
+{
+  "received_on": "2026-10-24",
+  "screenshot_count": 10,
+  "new_question_ids": [
+    "PREP-089",
+    "PREP-090",
+    "PREP-091",
+    "PREP-092",
+    "PREP-093",
+    "PREP-094",
+    "PREP-095",
+    "PREP-096"
+  ],
+  "additional_sources_for": [
+    "PREP-062",
+    "PREP-077"
+  ],
+  "sources": [
+    {
+      "screenshot": 1,
+      "question_ids": [
+        "PREP-089"
+      ],
+      "archive_paths": [
+        "sources/prep-089-source.png"
+      ],
+      "original_filename": "codex-clipboard-2bcbeb2e-04af-4a8b-b859-4ab63eaacf1f.png",
+      "sha256": "e4fe223d609bb6d682c235c7685557acbedab9514d03de721fe6d7cf09581cf4"
+    },
+    {
+      "screenshot": 2,
+      "question_ids": [
+        "PREP-090"
+      ],
+      "archive_paths": [
+        "sources/prep-090-source.png"
+      ],
+      "original_filename": "codex-clipboard-e963dd5f-aa60-41c4-81ab-c8d24d4033b7.png",
+      "sha256": "fd17f11ad34ba21184519612be346aace530b47a0c01b1a9d1772c99dd11e9c1"
+    },
+    {
+      "screenshot": 3,
+      "question_ids": [
+        "PREP-091"
+      ],
+      "archive_paths": [
+        "sources/prep-091-source.png"
+      ],
+      "original_filename": "codex-clipboard-b3e5e95c-7f3a-45ba-a1e4-2548e8924aec.png",
+      "sha256": "e8ab5d45da44497e25f62c799e6e5e0e69d7678922dd0d68446402a896a1d8e3"
+    },
+    {
+      "screenshot": 4,
+      "question_ids": [
+        "PREP-077"
+      ],
+      "archive_paths": [
+        "sources/prep-077-additional-2026-10-24.png"
+      ],
+      "original_filename": "codex-clipboard-23c2c377-2634-48c1-a6b6-a01e0b5b65aa.png",
+      "sha256": "f772edbb00ca839a73839dc6981df9950ddf4574206c1120dc2e0ddc32fb697d"
+    },
+    {
+      "screenshot": 5,
+      "question_ids": [
+        "PREP-092"
+      ],
+      "archive_paths": [
+        "sources/prep-092-source.png"
+      ],
+      "original_filename": "codex-clipboard-f1765b51-5458-42e8-8b55-dd2aeecbf4c6.png",
+      "sha256": "d2b6264d200bb6c209a1629ea08511357b63b5d0e62aa689fc802716a63fa8af"
+    },
+    {
+      "screenshot": 6,
+      "question_ids": [
+        "PREP-093"
+      ],
+      "archive_paths": [
+        "sources/prep-093-source.png"
+      ],
+      "original_filename": "codex-clipboard-f0fc958c-7269-4460-ab94-09404adc7d97.png",
+      "sha256": "a5b008b4d223d89025756cf888e8fa2a54c967ed4519a5d9d393000bf1b7c8dd"
+    },
+    {
+      "screenshot": 7,
+      "question_ids": [
+        "PREP-094"
+      ],
+      "archive_paths": [
+        "sources/prep-094-source.png"
+      ],
+      "original_filename": "codex-clipboard-97bbfda7-6afb-4881-bd32-0fb78917dab5.png",
+      "sha256": "553d22e9457f1860f35c68c68d4cf7c433bc632be6c26d2b47c70908d8992f56"
+    },
+    {
+      "screenshot": 8,
+      "question_ids": [
+        "PREP-062"
+      ],
+      "archive_paths": [
+        "sources/prep-062-api-2026-10-24.png"
+      ],
+      "original_filename": "codex-clipboard-eb732ef6-080d-45f2-bc31-e5c674360102.png",
+      "sha256": "d7315123df47392d15470b82b5c647b1fb7a2f87cc50512630c5739a67dcc5ec"
+    },
+    {
+      "screenshot": 9,
+      "question_ids": [
+        "PREP-095"
+      ],
+      "archive_paths": [
+        "sources/prep-095-source.png"
+      ],
+      "original_filename": "codex-clipboard-b3ba25a6-35cd-47de-9f51-e7ca1729199e.png",
+      "sha256": "f6cfdea44d79ced3c191fbf9b4c97d732e7cadbbdab7a92b0f505259f1967f3f"
+    },
+    {
+      "screenshot": 10,
+      "question_ids": [
+        "PREP-096"
+      ],
+      "archive_paths": [
+        "sources/prep-096-source.png"
+      ],
+      "original_filename": "codex-clipboard-94890c19-99ba-456e-9634-6051eec4c0ff.png",
+      "sha256": "d36e3fd38057914b23095ed058065f871612aa449754f0eef1cc45e7e8bda341"
+    }
+  ],
+  "notes": [
+    "089 counts unordered distinct-index pairs;040 asks only for existence. Duplicate-value multiplicity and unique-value alternative are explicit.",
+    "091 chosen interpretation has asynchronous change pulses until the next rising clock edge, unlike the delayed full-cycle pulses of004. The finite hand drawing does not uniquely specify arbitrary input behavior.",
+    "062 receives an explicitly timed API variant, preserving the existing instruction-timing model as a separate contract.",
+    "093 uses an explicitly added ideal grid and equal-area definition, without inferring exact dimensions or congruence from screenshot pixels.",
+    "095 uses a10-sample sliding window and at least3 highs;081 is a different100000-cycle error-monitor problem.",
+    "096 is a general parity strategy with sequential audible answers;033 has a different three-person/limited-hat-inventory deduction contract.",
+    "077 receives source attribution only. No learner activity or new human approval is created."
+  ]
+}

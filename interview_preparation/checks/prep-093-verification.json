@@ -1,0 +1,20 @@
+{
+  "question_id": "PREP-093",
+  "status": "passed",
+  "piece_counts": {
+    "A": 2,
+    "B": 3,
+    "C": 4,
+    "D": 7
+  },
+  "exact_piece_areas": {
+    "A": "3/2",
+    "B": "1",
+    "C": "3/4",
+    "D": "4/7"
+  },
+  "congruence": "All pieces within each region have identical polygon vertex sets under translation and a square symmetry, after removing collinear vertices.",
+  "independent_point_membership_cases": 50176,
+  "total_white_area": 13,
+  "scope": "Exact added 4x4 ideal grid, not dimensions measured from a screenshot; finite grid coverage is an additional check, not a general polygon theorem."
+}

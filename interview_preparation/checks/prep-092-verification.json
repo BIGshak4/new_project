@@ -1,0 +1,35 @@
+{
+  "question_id": "PREP-092",
+  "checked_on": "2026-10-24",
+  "status": "passed",
+  "truth_table": [
+    {
+      "A": 0,
+      "B": 0,
+      "Y": 0
+    },
+    {
+      "A": 0,
+      "B": 1,
+      "Y": 1
+    },
+    {
+      "A": 1,
+      "B": 0,
+      "Y": 1
+    },
+    {
+      "A": 1,
+      "B": 1,
+      "Y": 0
+    }
+  ],
+  "one_two_three_gate_network_counts": [
+    3,
+    18,
+    180
+  ],
+  "lower_bound_scope": "Acyclic combinational networks of two-input NAND gates; only uncomplemented A,B as external inputs; tied pins and unrestricted fanout allowed; output any gate wire; no free constants or inversion.",
+  "oracle": "a!=b for construction; exhaustive four-row truth-vector propagation for every <=3-gate DAG topology in the stated model.",
+  "scope": "Steady-state Boolean model; no HDL compilation, physical delay, hazard or transistor-area verification."
+}

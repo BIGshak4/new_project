@@ -23,6 +23,7 @@ from tests.test_practice_hardening import GOOD, SEEDS, scripted
 ROOT = Path(__file__).resolve().parents[2]
 THIRD_INTAKE_IDS = {f"PREP-{number:03d}" for number in range(74, 83)}
 FOURTH_INTAKE_IDS = {f"PREP-{number:03d}" for number in range(83, 89)}
+FIFTH_INTAKE_IDS = {f"PREP-{number:03d}" for number in range(89, 97)}
 
 
 @pytest.fixture
@@ -40,12 +41,12 @@ def test_compilation_preserves_every_question_and_all_original_images(catalog):
     built, uploads = builder.load()
     assert built == json.loads((SEEDS / "questions/preparation_bank.json").read_text(encoding="utf-8"))
     assert uploads == manifest["files"]
-    assert len(source["questions"]) == len(built) == 87
+    assert len(source["questions"]) == len(built) == 95
     for q in built:
         for media in q["assets"]["bank_media"]:
             if any(word in media["filename"] for word in ("external-answer", "clarification", "style-reference", "course-adder-summary")):
                 assert media["role"] == "solution", "An explanation screenshot must never leak before reference reveal"
-    assert len(catalog.questions) == 117
+    assert len(catalog.questions) == 125
     archived_images = {p.relative_to(ROOT / "interview_preparation").as_posix()
                        for folder in ("sources", "diagrams")
                        for p in (ROOT / "interview_preparation" / folder).glob("*.png")}
@@ -155,7 +156,7 @@ async def test_unsafe_storage_path_is_rejected_before_network():
 async def test_archive_screenshots_never_receive_learner_links(catalog):
     archive = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])
                if m.get("source_path", "").startswith("sources/")]
-    assert len(archive) == 120
+    assert len(archive) == 130
     # No credentials or network needed: the boundary applies before signing.
     assert await question_resources.sign_media(archive, "", "") == []
     all_media = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])]
@@ -209,11 +210,14 @@ def test_third_intake_is_bilingual_study_only_and_preserves_frozen_solution_revi
             assert text.reference_solution not in safe.model_dump_json(), ident
 
     # The new batch cannot inherit an attestation. The separately rewritten
-    # PREP-054 explanation no longer matches its retained frozen attestation.
+    # PREP-054 and PREP-062 explanations no longer match their retained frozen attestations.
     registry = json.loads((SEEDS / "solution_review_attestations.json").read_text(encoding="utf-8"))
     reviewed = {q.key for q in catalog.questions.values() if solution_review(q).status == "human_reviewed"}
     assert len(registry["questions"]) == 93
-    assert reviewed == set(registry["questions"]) - {"prep-seventeen-prisoners-two-mandatory-switches"}
+    assert reviewed == set(registry["questions"]) - {
+        "prep-seventeen-prisoners-two-mandatory-switches",
+        "prep-identical-robots-trains-static-marker-rendezvous",
+    }
     assert not (set(q.key for q in additions.values()) & reviewed)
 
 
@@ -257,13 +261,36 @@ async def test_third_intake_resource_reveal_keeps_sources_private_and_prompt_geo
     assert not store.metrics
 
 
-async def test_fourth_intake_has_six_bilingual_pending_questions_and_gates_all_solutions(catalog, monkeypatch):
-    additions = [q for q in catalog.questions.values() if q.assets.get("preparation_id") in FOURTH_INTAKE_IDS]
-    assert len(additions) == 6
-    assert {q.assets["preparation_id"] for q in additions} == FOURTH_INTAKE_IDS
+def test_fifth_intake_keeps_the_source_timing_and_window_contracts_distinct(catalog):
+    by_id = {q.assets.get("preparation_id"): q for q in catalog.questions.values()}
+    asynchronous, synchronous = by_id["PREP-091"], by_id["PREP-004"]
+    assert asynchronous.key != synchronous.key
+    assert "OUT rises immediately on either input transition" in asynchronous.text("en").prompt
+    assert "OUT = In XOR Q" in asynchronous.text("en").reference_solution
+    assert "out=Q1 XOR Q2" in synchronous.text("en").reference_solution
+    assert "sticky" in asynchronous.text("en").reference_solution
+    assert "CDC synchronizer" in asynchronous.text("en").reference_solution
+
+    monitor = by_id["PREP-095"]
+    prompt = monitor.text("en").prompt
+    assert "at least three of the last ten clock samples" in prompt
+    assert "includes the current sample" in prompt and "not a sequence of disjoint ten-cycle blocks" in prompt
+    assert "Reset initializes the history to zero" in prompt
+    assert "100,000" not in prompt and "100000" not in prompt and "100k" not in prompt.lower()
+    assert "actual DUT Y" in monitor.text("en").reference_solution
+    assert "sample eleven" in monitor.text("en").reference_solution
+
+
+@pytest.mark.parametrize("intake_ids,prompt_geometry", [
+    (FOURTH_INTAKE_IDS, {"PREP-085": "clock", "PREP-087": "polygon"}),
+    (FIFTH_INTAKE_IDS, {"PREP-090": "rope", "PREP-091": "prompt-waveform", "PREP-093": "regions"}),
+], ids=["fourth-intake", "fifth-intake"])
+async def test_new_intakes_are_bilingual_pending_and_gate_all_solutions(catalog, monkeypatch, intake_ids, prompt_geometry):
+    additions = [q for q in catalog.questions.values() if q.assets.get("preparation_id") in intake_ids]
+    assert len(additions) == len(intake_ids)
+    assert {q.assets["preparation_id"] for q in additions} == intake_ids
     mandatory_material = {"assumptions", "optimality", "verification", "edge_cases", "common_mistakes",
                           "interview_answer", "solution_extensions", "source_ambiguities"}
-    prompt_geometry = {"PREP-085": "clock", "PREP-087": "polygon"}
     signed = []
 
     async def fake_sign(media, *_):

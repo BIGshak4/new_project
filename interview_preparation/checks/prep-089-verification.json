@@ -1,0 +1,13 @@
+{
+  "question_id": "PREP-089",
+  "checked_on": "2026-10-24",
+  "status": "passed",
+  "exhaustive_array_target_cases": 615857,
+  "seeded_random_cases": 400,
+  "single_pass_iterators": true,
+  "permutation_and_translation_invariance": true,
+  "large_duplicate_case_length": 10000,
+  "input_unchanged": true,
+  "oracle": "Independent enumeration of every i<j index pair; no frequency dictionary in oracle.",
+  "scope": "Exact integer promised inputs; no hash-table worst-case or fixed-width overflow benchmark."
+}
