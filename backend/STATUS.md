@@ -3,6 +3,8 @@
 A living summary of what exists in `backend/`, how it was verified, what was decided, and what is next.
 Updated at the end of every build step. Newest changes are at the bottom of the changelog.
 
+> **Review for Shaked, requested by Harel — 24 October 2026:** [Payments, pricing, AI models and duels: detailed findings and calculations](../docs/payments-pricing-models-and-duels-review-for-shaked-2026-10-24.md). Read before enabling paid billing or finalising the coin/duel launch. The document separates locally reproduced billing defects, inspection-based risks, pricing assumptions and proposed next steps. This is a documentation handoff; no billing, migrations, prices or model replacements were activated.
+
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
 **Last updated:** 2026-10-20 (paying for the site, not mandatory yet §5zr) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
