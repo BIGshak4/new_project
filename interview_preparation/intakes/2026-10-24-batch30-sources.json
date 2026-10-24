@@ -1,0 +1,239 @@
+{
+  "intake_date": "2026-10-24",
+  "batch": "batch30",
+  "screenshot_count": 10,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-10-24-batch30-01.png"
+      ],
+      "sha256": "2e276e2b29419cd774280c66809311dd9d748b733d841559acbb6ec66cd7ece6",
+      "original_prompt": "צייר טרנזיסטור MOSFET, הסבר על כל שכבה, הסבר כיצד יוצרים זיהום n+, צייר אופיין של זרם הטרנזיסטור, מהי המשוואה לזרם הטרנזיסטור, כיצד משפיע שינוי מתח VDD על הטרנזיסטור",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "source_company_badge": "Nvidia",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-115"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-10-24-batch30-02.png"
+      ],
+      "sha256": "dff4b540890aed293e37eca460e5188d2238411ffba3b1050025f2c2996a5d34",
+      "original_prompt": "בהינתן מחרוזת מחזיר true אם המחרוזת היא פולינדרום, אחרת false. המחרוזת מורכבת מאותיות ascii",
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "source_company_badge": "Nvidia",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-116"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-10-24-batch30-03.png"
+      ],
+      "sha256": "ca30e76c20454a246e309efc68785825bff660f61542e393664f94e742f67ca7",
+      "original_prompt": "הפעם, ברשותך מרחב זכרון רציף של 64 כתובות כאשר כל כתובת היא באורך 64 ביט. ממש malloc שמחזיר אינדקס של כתובת פנויה ו-free שמקבל מספר שורה ומשחרר את הזיכרון בה. בנוסף ברשותך מרחב זיכרון נוסף באורך 32 ביט לניהול הזיכרון.",
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "source_company_badge": "Nvidia",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-117"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-10-24-batch30-04.png"
+      ],
+      "sha256": "eb8254911c8d1b73822e80bf2534701a9d59375fe9cf2c1991f6e2f1a7758e64",
+      "original_prompt": "איך ניתן לבנות מערכת שמקבלת מתח VIN מתח אנלוגי בין תחום טווח מסוים ומוציאה אות ספרתי (1 לוגי או 0 לוגי ביחס לכניסה)?",
+      "source_tags": [
+        "hardware",
+        "verification",
+        "nvidia"
+      ],
+      "source_company_badge": "Nvidia",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-118"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-10-24-batch30-05.png"
+      ],
+      "sha256": "c768837ce7a6e5141fc63a2e8e63a665a6e22b7b9a7c1875b483a8bba60e030a",
+      "original_prompt": "צריך לממש פונקציה שמקבלת 9 או 13. אם מקבלת 9 מוציאה 13 ואם מקבלת 13 מוציאה 9. צריך לממש ללא if,else",
+      "source_tags": [
+        "intel",
+        "amazon",
+        "verification",
+        "hardware",
+        "apple"
+      ],
+      "source_company_badge": "אפל",
+      "reported_companies": [
+        "Apple",
+        "Intel",
+        "Amazon"
+      ],
+      "question_ids": [
+        "PREP-119"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-10-24-batch30-06.png"
+      ],
+      "sha256": "7949a8b564f570776e57f1172eb0e113a426697768e62b064562a550ad735e78",
+      "original_prompt": "1. לבנות xor בעזרת mux.\n2. מה התדר המקסימלי אם זמן ההשהייה הוא 2 ננו.\n3. כיצד ניתן להעלות את התדר המקסימלי",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "verification"
+      ],
+      "source_company_badge": "Nvidia",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-031"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-10-24-batch30-07.png"
+      ],
+      "sha256": "f63d7c2285de8eb77e3eed0cc4a556831084e136389a89995b62bc90267442f8",
+      "original_prompt": "ממש PRIORITY ENCODER בעל 16 כניסות מ PRIORITY ENCODER בעל 4 כניסות",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "source_company_badge": "Nvidia",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-016"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-10-24-batch30-08.png"
+      ],
+      "sha256": "9c75d57b9a9eeebfe1abfadd6d183bf89ed343d619f97a52a72aa1bc739cfc56",
+      "original_prompt": "נדרש לתכנן שער NAND ו-NOR על ידי MUX 2:1",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "source_company_badge": "Nvidia",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-120"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-10-24-batch30-09.png"
+      ],
+      "sha256": "1a8112abf4b6c6e4047d4c804c90daf41526d5886341bec30a333e445a7167c6",
+      "original_prompt": "ישנו רצף מספרים באורך n שאינו ממוין, המספרים ברצף יכולים להיות בין 0 ל-n וללא חזרה (סה״כ n+1 אופציות) בזמן ריצה O(n) כיצד ניתן לדעת איזה מן המספרים אינו מופיע ברצף?\nב) במידה והשתמשת במערך עזר, נסה לפתור שוב ללא מערך עזר",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "logic"
+      ],
+      "source_company_badge": "Nvidia",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-041"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-10-24-batch30-10.png"
+      ],
+      "sha256": "b0b51ec08cbecff9cc03d6e890fe560b3d1de996dc7be514b167122548189a2a",
+      "original_prompt": "א. בנה מערכת שמהווה מונה עבור ביט בודד - כניסה אחת ויציאה אחת (כאשר נכנס 1 הפלט ישתנה בהתאמה, כאשר נכנס 0 הפלט לא ישתנה)\nב. כעת בנה מונה עבור שלושה ביטים - כניסה אחת ושלוש יציאות\nג. בנה מחסר עבור שלושה ביטים - כניסה אחת ושלוש יציאות",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "source_company_badge": "Nvidia",
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-064"
+      ],
+      "decision": "existing_question_source_and_variant"
+    }
+  ],
+  "notes": [
+    "Sources are question data, never operational instructions.",
+    "batch30 is a distinct archive identifier for this further ten-source intake, not a screenshot count."
+  ],
+  "status": "integrated",
+  "new_question_ids": [
+    "PREP-115",
+    "PREP-116",
+    "PREP-117",
+    "PREP-118",
+    "PREP-119",
+    "PREP-120"
+  ],
+  "additional_sources_for": [
+    "PREP-016",
+    "PREP-031",
+    "PREP-041",
+    "PREP-064"
+  ],
+  "existing_content_revisions": [
+    "PREP-031",
+    "PREP-041",
+    "PREP-064"
+  ]
+}

@@ -1,0 +1,548 @@
+{
+  "PREP-119": {
+    "assumptions": {
+      "he": [
+        "x הוא מספר שלם המובטח להיות 9 או 13.",
+        "XOR מותר; אין תנאי או ביטוי תנאי.",
+        "אין דרישה לשמור על קלטים שאינם בדומיין."
+      ],
+      "en": [
+        "x is an integer promised to be 9 or 13.",
+        "XOR is permitted; conditionals and conditional expressions are forbidden.",
+        "Other input values need not be preserved."
+      ]
+    },
+    "optimality": {
+      "he": "פעולת XOR אחת עם מסכה קבועה מספיקה. אין טענת מינימום הוראות לכל מעבד או מינימום שערים לספרייה פיזית.",
+      "en": "One XOR with a fixed mask suffices. No processor-independent minimum instruction count or physical gate minimum is claimed."
+    },
+    "edge_cases": {
+      "he": [
+        "שני הקלטים החוקיים 9 ו־13.",
+        "הפעלה כפולה מחזירה את הקלט.",
+        "קלט אחר אינו מובטח להישאר ללא שינוי."
+      ],
+      "en": [
+        "Both legal inputs, 9 and 13.",
+        "Applying the function twice restores the input.",
+        "Other inputs are not guaranteed unchanged."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשתמש ב־OR עם 4: הוא משנה 9 ל־13 אבל משאיר את 13.",
+        "להשתמש ב־AND שמכבה ביט בלי להחזירו בכיוון ההפוך.",
+        "לבלבל את הבעיה עם החלפת שני משתנים או לדרוש בדיקת קלט שלא התבקשה."
+      ],
+      "en": [
+        "OR with 4 changes 9 to 13 but leaves 13 unchanged.",
+        "AND may clear a bit but does not set it in the reverse direction.",
+        "Confusing the task with swapping two variables or inventing a validation requirement."
+      ]
+    },
+    "interview_answer": {
+      "he": "9 ו־13 שונים רק בביט שמשקלו 4. XOR עם 4 הופך אותו בשני הכיוונים, ולכן מחזירים x^4. ההבטחה שקלט הוא אחד משניהם חיונית.",
+      "en": "9 and 13 differ only at the bit of weight 4. XOR with 4 toggles it in both directions, so return x^4. The two-value domain promise is essential."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו קובע שפת תכנות או עלות מינימלית. הותר XOR במפורש בעריכה; קלטים אחרים נשארים מחוץ לחוזה המקורי.",
+      "en": "The source does not specify a language or minimum cost. XOR permission is explicit in the edited contract; other inputs remain outside the original promise."
+    },
+    "verification": {
+      "he": "שני מקרי הדרישה ו־131,072 כיווני מיפוי של ההכללה נבדקו בפייתון. בדיקת AST בודקת היעדר תנאי בפונקציה הראשית; לא בוצע ניסוי חומרה.",
+      "en": "Both required cases and 131,072 generalized directional mappings were checked in Python. An AST check verifies no conditional in the primary function; no hardware experiment was performed."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך מחליפים בין שני ערכים קבועים a,b כשהקלט מובטח להיות אחד מהם?",
+        "direction": "השתמשו במסכה a XOR b. ההוכחה מבטלת את העותק הכפול של הקלט. אם דורשים לשמר מספרים אחרים, זהו חוזה נוסף שדורש זיהוי חברות בדומיין."
+      },
+      "en": {
+        "question": "How do you swap any fixed a,b when input is promised to be one of them?",
+        "direction": "Use mask a XOR b. Correctness cancels the repeated input. Preserving all other numbers is a different contract requiring domain membership detection."
+      }
+    }
+  },
+  "PREP-120": {
+    "assumptions": {
+      "he": [
+        "מרבבים לא־מהפכים בעלי select יחיד; S=0 בוחר D0.",
+        "A,B וקבועי 0,1 זמינים; כניסות מהופכות אינן חינם.",
+        "רשת קומבינטורית חסרת מחזורים; מותר פיצול ושימוש חוזר בפלט ביניים."
+      ],
+      "en": [
+        "Noninverting single-select MUXes; S=0 selects D0.",
+        "A,B and constants 0,1 available; complemented inputs not free.",
+        "Acyclic combinational network; fan-out and sharing intermediate outputs permitted."
+      ]
+    },
+    "optimality": {
+      "he": "שני MUX מינימליים לכל שער בנפרד; שלושה לשני המוצאים עם היפוך משותף. מיצוי 64 חיבורים שולל שער יחיד; נימוק השער הראשון שולל שניים לשני המוצאים יחד.",
+      "en": "Two MUXes are minimal per target; three for both outputs sharing a complement. Exhausting 64 pin assignments excludes one; the first-gate argument excludes two for both outputs."
+    },
+    "edge_cases": {
+      "he": [
+        "כל ארבע שורות A,B, בפרט 00 שמחייב 1 בשני המוצאים.",
+        "ל־NAND ול־NOR חיבורי נתונים שונים למרות select משותף.",
+        "היתר להיפוך חינמי או לקבוע אחד בלבד משנה את המודל."
+      ],
+      "en": [
+        "All four A,B rows, especially 00 requiring one at both outputs.",
+        "NAND and NOR have different data connections despite the shared select.",
+        "A free complement or only one permitted constant changes the model."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להחליף D0 ו־D1 בלי לשנות את הגדרת select.",
+        "לצייר NOT B שמגיע משום מקום בלי לספור את יצירתו.",
+        "לספור ארבעה מרבבים כשההיפוך ניתן לשיתוף, או לטעון שאחד מספיק כשאין כניסה מהופכת."
+      ],
+      "en": [
+        "Swapping D0,D1 while keeping the select convention.",
+        "Drawing NOT B without counting its generation.",
+        "Counting four MUXes despite sharing, or claiming one suffices without a complemented input."
+      ]
+    },
+    "interview_answer": {
+      "he": "מייצרים t=NOT B באמצעות MUX(B,1,0). אחר כך NAND הוא MUX(A,1,t) ו־NOR הוא MUX(A,t,0). שניים לכל אחד בנפרד, או שלושה יחד כשמשתפים t.",
+      "en": "Generate t=NOT B using MUX(B,1,0). NAND is MUX(A,1,t); NOR is MUX(A,t,0). Each alone takes two, or both share t for three total."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר קבועים, כניסות מהופכות, מלאי מרבבים או דרישת מינימום. המודל הראשי והחלופות מוגדרים במפורש; זה אינו אילוץ ״רק אפס״ של 031.",
+      "en": "The source omits constants, complemented inputs, available MUX count and minimum requirements. The primary model and alternatives are explicit; this is not PREP-031's zero-only constraint."
+    },
+    "verification": {
+      "he": "כל ארבע השורות וכל 64 חיבורי המרבב היחיד נבדקו בפייתון; נמצאו 12 פונקציות שונות, ללא NAND/NOR. הוכחת מינימום לשני מוצאים היא נימוק מבני נפרד.",
+      "en": "All four rows and 64 single-MUX wirings were executed in Python, yielding 12 distinct functions without NAND/NOR. The two-output lower bound is a separate structural argument."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "האם אפשר לבנות אחד מהשערים אם מותר רק קבוע 0 וללא כניסות מהופכות?",
+        "direction": "לא ברשת חסרת מחזורים: ב־A=B=0 כל אות התחלתי הוא אפס, וכל מרבב ישמור על אפס. שני היעדים דורשים דווקא 1 בקלט הזה."
+      },
+      "en": {
+        "question": "Can either target be built with only zero and no complemented inputs?",
+        "direction": "Not in an acyclic network: at A=B=0 every starting signal is zero, and every MUX preserves zero. Both targets require one at that input."
+      }
+    }
+  },
+  "PREP-115": {
+    "assumptions": {
+      "he": [
+        "NMOS מסוג enhancement, תעלה ארוכה, גוף מחובר למקור, VDS≥0, טמפרטורה וניידות קבועות.",
+        "VT>0, β>0; מודל הבסיס מזניח תת־סף, דליפות ומודולציית אורך תעלה.",
+        "החתך מושגי ומישורי; תהליך הייצור והפרמטרים אינם מפרט של רכיב מסחרי."
+      ],
+      "en": [
+        "Enhancement long-channel NMOS, body tied to source, VDS≥0, constant temperature/mobility.",
+        "VT>0 and β>0; core omits subthreshold conduction, leakage and channel-length modulation.",
+        "The planar cross-section is conceptual; fabrication discussion and parameters do not specify a commercial device."
+      ]
+    },
+    "optimality": {
+      "he": "אין טענת מינימום רכיבים או אופטימליות. חישוב נקודת DC במודל דורש O(1) פעולות וזיכרון; גרף בן m נקודות דורש O(m) חישובים. תכנון תהליך, שטח, השהיה והספק אינם נגזרים ממספר הפעולות בקוד.",
+      "en": "No minimum-component or optimality claim. One modeled DC point costs O(1) arithmetic/storage; an m-point plot takes O(m) evaluations. Process design, area, delay and power do not follow from code-operation count."
+    },
+    "verification": {
+      "he": "בוצעו 858 נקודות על רשת ערכים עם אינטגרציית מטען עצמאית ב־Decimal בדיוק 60 ספרות; 27 מקרי הרחבת CLM, שתי דוגמאות חיבור שונות של VDD וארבע דחיות קלט. נבדקו גבולות ויחידות בדוגמה. זו בדיקת משוואות Python, לא אימות תהליך, סימולציית רכיב או מדידה.",
+      "en": "Executed 858 grid points against independent 60-digit Decimal charge integration, 27 CLM-extension cases, two distinct VDD connections and four rejected inputs. Boundary behavior and example units were checked. This verifies Python equations, not fabrication, device simulation or measurements."
+    },
+    "edge_cases": {
+      "he": [
+        "VDS=0 נותן זרם אפס גם כאשר יש תעלה.",
+        "ב־VGS=VT מודל הבסיס נותן אפס; זרם אמיתי סמוך לסף אינו נחתך בחדות.",
+        "VDS=Vov הוא גבול רציף בין טריודה לרוויה.",
+        "בגרף ID–VGS יש לוודא שתנאי הרוויה מתקיים עד סוף טווח הסריקה.",
+        "VDS שלילי, גוף שאינו במתח המקור או גלישת מתח דורשים מודל אחר."
+      ],
+      "en": [
+        "VDS=0 gives zero current even with an induced channel.",
+        "At VGS=VT the core gives zero; a real near-threshold current does not abruptly vanish.",
+        "VDS=Vov is a continuous triode/saturation boundary.",
+        "An ID–VGS saturation plot must satisfy saturation throughout its sweep.",
+        "Negative VDS, body different from source or overvoltage requires a different model."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בלבול בין אילוח n+ קבוע לבין שכבת היפוך נשלטת שער.",
+        "אמירה שצביטת התעלה מפסיקה את הזרם.",
+        "השמטת W/L או שימוש ב־Cox כקיבול כולל במקום ליחידת שטח.",
+        "החלפת VGS ב־VDD בלי לציין חיבורי מסופים.",
+        "שימוש בחוק הריבוע כמדידה או מודל מדויק לכל טרנזיסטור מודרני."
+      ],
+      "en": [
+        "Confusing permanent n+ doping with gate-induced inversion.",
+        "Claiming pinch-off stops current.",
+        "Omitting W/L or treating Cox as total rather than per-area capacitance.",
+        "Replacing VGS with VDD without terminal connections.",
+        "Presenting the square law as a measurement or an accurate model of every modern transistor."
+      ]
+    },
+    "interview_answer": {
+      "he": "ב־NMOS בגוף p יש מקור ושפך n+ ושער מבודד. את האילוח יוצרים בייצור, למשל בהחדרת תורמים וטיפול חום; שער חיובי יוצר תעלת היפוך ניידת, לא אילוח. מעל VT הזרם בטריודה הוא β[(VGS−VT)VDS−VDS²/2], וברוויה β(VGS−VT)²/2 כאשר VDS≥VGS−VT. VDD משפיע לפי חיבורי VGS,VDS והגוף, ולכן חייבים לציין מעגל הטיה.",
+      "en": "An NMOS has n+ source/drain in a p body and an insulated gate. Fabrication, for example donor implantation and annealing, creates the doping; positive gate bias creates mobile inversion, not doping. Above VT, triode current is β[(VGS−VT)VDS−VDS²/2]; saturation is β(VGS−VT)²/2 for VDS≥VGS−VT. VDD acts through the actual gate/drain/body biases, so specify a circuit."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו בוחר סוג טרנזיסטור, מבנה גוף או תהליך; נבחר מודל NMOS לימודי מפורש.",
+        "״אופיין זרם״ אינו מציין צירים; נוספו אופיין מוצא ואופיין מעבר עם תנאי הטיה.",
+        "VDD לבדו אינו מגדיר מתח שער או שפך. דוגמאות החיבור הוספו בעריכה.",
+        "שיוך NVIDIA מדווח מהצילום ולא אומת עצמאית."
+      ],
+      "en": [
+        "The source does not choose transistor type, body structure or process; an explicit educational NMOS model is selected.",
+        "“Current characteristic” supplies no axes; output and transfer plots with bias conditions are added.",
+        "VDD alone does not define gate or drain voltage. Bias examples are editorial additions.",
+        "NVIDIA attribution is reported by the screenshot, not independently verified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה כאשר הגוף אינו מחובר למקור?",
+          "answer_direction": "נדרש קשר של VT להטיית הגוף בתנאי דיודות מתאימים; אי אפשר להמשיך להשתמש באותו VT קבוע בלי הצדקה.",
+          "principle": "מתח נמדד בין מסופים ומודל סף תלוי בהנחות ההטיה."
+        },
+        {
+          "question": "מדוע רוויה אינה נותנת עקומה שטוחה לחלוטין במדידה?",
+          "answer_direction": "הסבירו מודולציית אורך תעלה ותופעות נוספות; הפיקו שיפוע מתוך מדידה רק אם קיימים נתונים.",
+          "principle": "להפריד מודל סדר ראשון מנתוני רכיב."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes when body is not tied to source?",
+          "answer_direction": "VT needs a body-bias relation under appropriate junction conditions; keeping the same fixed VT needs justification.",
+          "principle": "Terminal differences and bias assumptions define the threshold model."
+        },
+        {
+          "question": "Why is a measured saturation curve not perfectly flat?",
+          "answer_direction": "Explain channel-length modulation and other effects; extract a slope from measurements only when data exists.",
+          "principle": "Separate a first-order model from device data."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "MIT 6.012, הרצאה 9 — חתך ותעלת היפוך ותחום טריודה",
+          "url": "https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2005/5c5960f14ae37d0a65478c4f3f628d98_lec9.pdf"
+        },
+        {
+          "title": "MIT 6.012, הרצאה 10 — רוויה, צביטה והטיית גוף",
+          "url": "https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2005/0498bbf0f0e585507d9cfe5dc3bd54b1_lec10.pdf"
+        },
+        {
+          "title": "Berkeley EECS-2012-50, סעיף 5.2 — החדרת מקור/שפך וטיפול חום להפעלת האילוח",
+          "url": "https://www2.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-50.pdf"
+        }
+      ],
+      "en": [
+        {
+          "title": "MIT 6.012 Lecture 9 — cross-section, inversion and triode operation",
+          "url": "https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2005/5c5960f14ae37d0a65478c4f3f628d98_lec9.pdf"
+        },
+        {
+          "title": "MIT 6.012 Lecture 10 — saturation, pinch-off and body bias",
+          "url": "https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2005/0498bbf0f0e585507d9cfe5dc3bd54b1_lec10.pdf"
+        },
+        {
+          "title": "Berkeley EECS-2012-50 §5.2 — source/drain implantation and dopant-activation annealing",
+          "url": "https://www2.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-50.pdf"
+        }
+      ]
+    }
+  },
+  "PREP-118": {
+    "assumptions": {
+      "he": [
+        "Vin,Vref חולקים ייחוס מתח; תחום הכניסה, הסף וההזנות יוגדרו במפרט.",
+        "הקוטביות שנבחרה לא־מהפכת. בשוויון ובפס אי־ודאות אין דרישת 0/1.",
+        "היסטרזיס אופציונלי ומשנה את המפרט לשני ספים עם זיכרון; אין אתחול מובטח בתוך הרצועה.",
+        "בדיקות Python מתארות החלטה יציבה בלבד. התאמת רכיב ויציאה נבדקת בנפרד."
+      ],
+      "en": [
+        "Vin and Vref share a voltage reference; range, threshold and supplies are specification parameters.",
+        "Selected polarity is non-inverting. Equality and the uncertainty band have no required 0/1 value.",
+        "Optional hysteresis changes the contract to two thresholds with memory; in-band startup is not guaranteed.",
+        "Python checks model settled decisions only. Device/output compatibility needs separate checking."
+      ]
+    },
+    "optimality": {
+      "he": "לסף יחיד מספיק עקרונית משווה אחד ואות ייחוס, עם רכיבי ממשק לפי הצורך. אין טענת מינימום רכיבים פיזי או אופטימליות הספק/מהירות. החלטה במודל דורשת O(1) זמן; היסטרזיס מחזיק ביט מצב. ההשהיה האמיתית תלויה ברכיב, בהפרש הכניסה ובעומס.",
+      "en": "One comparator and a reference conceptually suffice for one threshold, with interface components as needed. No physical minimum-component or power/speed optimality claim. A model decision costs O(1); hysteresis retains one state bit. Physical delay depends on device, input overdrive and load."
+    },
+    "verification": {
+      "he": "בוצעו 225 החלטות מול אורקל רווחי אי־ודאות ב־Decimal; 11,718 רצפי היסטרזיס עם 55,665 צעדים מול היסטוריית החציה האחרונה; דוגמת רעש בת 16 דגימות וארבע דחיות קלט. נבדקו שוויון ואתחול לא ידוע. זו בדיקת חוזה Python, ללא סימולציה אנלוגית, בחירת חלק או הוכחת חסינות פיזית.",
+      "en": "Executed 225 decisions against Decimal uncertainty intervals; 11,718 hysteresis streams/55,665 steps against last-crossing history; a 16-sample noise example and four rejected inputs. Equality and unknown startup were checked. This is a Python contract check, not analog simulation, part selection or physical-immunity proof."
+    },
+    "edge_cases": {
+      "he": [
+        "Vin=Vref אינו מבטיח יציאה.",
+        "בתוך רצועת היסטרזיס קלט זהה יכול לתת שני פלטים בהתאם להיסטוריה.",
+        "באתחול בתוך הרצועה המצב לא ידוע אם הרכיב לא מבטיח אחרת.",
+        "מתח חוקי ביחס לאדמה עלול להיות מחוץ לתחום הכניסה של רכיב מסוים.",
+        "יציאה תקינה ללא עומס אינה מבטיחה רמות תקינות בעומס.",
+        "רעש החוצה את שני ספי ההיסטרזיס עדיין יכול למתג."
+      ],
+      "en": [
+        "Vin=Vref does not guarantee an output.",
+        "Within the hysteresis band the same input can have two outputs depending on history.",
+        "In-band startup is unknown unless the device specifies otherwise.",
+        "A ground-referenced voltage may lie outside a specific comparator’s input operating range.",
+        "Correct unloaded output does not guarantee loaded logic levels.",
+        "Noise crossing both hysteresis thresholds can still switch the output."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בחירה אוטומטית של חצי VDD במקום לברר סף.",
+        "בלבול בין תחום כניסה אנלוגי לרמות 0/1 ביציאה.",
+        "הבטחת רמה בשוויון או השהיה אפסית.",
+        "טענה שהיסטרזיס שומר על אותה פונקציית סף חסרת זיכרון.",
+        "משיכת כל open-drain לכל מתח בלי דף נתונים.",
+        "דרישה ל־ADC מרובה ביטים כשצריך רק החלטת סף, או שימוש במגבר שרת לא מתאים."
+      ],
+      "en": [
+        "Assuming half-VDD instead of specifying a threshold.",
+        "Confusing the analog input operating range with digital output levels.",
+        "Guaranteeing equality behavior or zero delay.",
+        "Treating hysteresis as the same memoryless threshold function.",
+        "Pulling any open-drain output to any voltage without checking its datasheet.",
+        "Demanding a multibit ADC for one threshold decision, or using an unsuitable op amp."
+      ]
+    },
+    "interview_answer": {
+      "he": "קודם מגדירים סף וקוטביות. להחלטה Vin>Vref מחברים Vin ל־+ וייחוס ל־− של משווה מתח, בודקים תחומי כניסה חוקיים ותאימות VOH/VOL לצרכן. ליד הסף אין ערך מובטח, ורעש עלול לרצד. אם המפרט דורש, מוסיפים היסטרזיס עם סף עליון ותחתון ושימור מצב ביניהם. בחירת pull-up והשהיה תלויה בדף הנתונים.",
+      "en": "First specify threshold and polarity. For Vin>Vref connect Vin to + and reference to − of a voltage comparator, checking legal input range and VOH/VOL compatibility. Near the threshold the result is not guaranteed and noise may cause chatter. If required, add upper/lower hysteresis thresholds and retain state between them. Pull-up and delay depend on the datasheet."
+    },
+    "source_ambiguities": {
+      "he": [
+        "לא ניתנו מספרים לטווח, סף, קוטביות, הזנות, עומס, רעש או מהירות. אלה נשארו פרמטרים.",
+        "״ביחס לכניסה״ אינו מגדיר מהי ההשוואה; נבחרה במפורש השוואה ל־Vref.",
+        "קידוד כמה רמות מתח או בדיקת שייכות לחלון אינם אותה בקשת סף יחיד.",
+        "שיוך NVIDIA מדווח מהצילום ולא אומת עצמאית."
+      ],
+      "en": [
+        "Range, threshold, polarity, supplies, load, noise and speed are not numerically specified; they remain parameters.",
+        "“Relative to the input” does not define a comparison; Vref comparison is explicitly selected.",
+        "Encoding multiple levels or testing membership in a window differs from one threshold request.",
+        "NVIDIA attribution is source-reported, not independently verified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך להוציא 1 רק כאשר Vin נמצא בין שני מתחים?",
+          "answer_direction": "השתמשו בשתי השוואות גבול וצרפו את תוצאותיהן; הגדירו בנפרד התנהגות בשוויון ורעש.",
+          "principle": "מבחן חלון מכיל שני גבולות, בשונה מהיסטרזיס שתלוי בהיסטוריה."
+        },
+        {
+          "question": "מה משתנה אם התוצאה נכנסת לרכיב בעל שעון?",
+          "answer_direction": "יציאת המשווה אינה בהכרח סינכרונית. נדרש ממשק המתחשב בהשהיה ובסנכרון למניעת הפצת מטא־יציבות; מודל הסף לבדו אינו פותר זאת.",
+          "principle": "החלטה אנלוגית והעברה לתחום שעון הן בעיות נפרדות."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can output be one only when Vin lies between two voltages?",
+          "answer_direction": "Use two boundary comparisons and combine their results; define equality and noise behavior separately.",
+          "principle": "A window has two boundaries, unlike history-dependent hysteresis."
+        },
+        {
+          "question": "What changes when a clocked device consumes the result?",
+          "answer_direction": "Comparator output is not necessarily synchronous. Account for delay and synchronization to limit metastability propagation; a threshold model alone does not solve this.",
+          "principle": "Analog decision and clock-domain interfacing are separate problems."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "TI Precision Labs — תפקוד משווה, תחומי כניסה, היסט ויציאות",
+          "url": "https://www.ti.com/video/series/precision-labs/ti-precision-labs-comparators.html"
+        },
+        {
+          "title": "TI — סקירת משווים, בדיקת כל כניסה בנפרד וריצוד ליד הסף",
+          "url": "https://www.ti.com/video/6298641904001"
+        },
+        {
+          "title": "TI TLV701x/TLV702x — דוגמה להיסטרזיס, מגבלות ויציאות תלויות רכיב",
+          "url": "https://www.ti.com/lit/ds/symlink/tlv7011.pdf"
+        },
+        {
+          "title": "Toshiba — היסטרזיס ושני ספי מיתוג עם משוב חיובי",
+          "url": "https://toshiba.semicon-storage.com/ap-en/semiconductor/knowledge/faq/linear_opamp/how-can-i-provide-hysteresis-for-a-comparator.html"
+        }
+      ],
+      "en": [
+        {
+          "title": "TI Precision Labs — comparator operation, input ranges, offset and outputs",
+          "url": "https://www.ti.com/video/series/precision-labs/ti-precision-labs-comparators.html"
+        },
+        {
+          "title": "TI comparator overview — individual input limits and threshold chatter",
+          "url": "https://www.ti.com/video/6298641904001"
+        },
+        {
+          "title": "TI TLV701x/TLV702x — device-specific hysteresis, limits and output examples",
+          "url": "https://www.ti.com/lit/ds/symlink/tlv7011.pdf"
+        },
+        {
+          "title": "Toshiba — hysteresis and positive-feedback switching thresholds",
+          "url": "https://toshiba.semicon-storage.com/ap-en/semiconductor/knowledge/faq/linear_opamp/how-can-i-provide-hysteresis-for-a-comparator.html"
+        }
+      ]
+    }
+  },
+  "PREP-116": {
+    "assumptions": {
+      "he": [
+        "המימוש מקבל str של אותיות A..Z/a..z בלבד; הריקה מותרת.",
+        "השוואה רגישה לאותיות גדולות, ללא נרמול, סינון או העתקה.",
+        "קלט מחוץ לתחום מעלה ValueError; אינו שקול ל־false."
+      ],
+      "en": [
+        "Accept str over A..Z/a..z only, including empty.",
+        "Case-sensitive comparison without normalization, filtering or copying.",
+        "Out-of-domain input raises ValueError rather than returning false."
+      ]
+    },
+    "optimality": {
+      "he": "O(n) זמן ו־O(1) מילות עזר במודל גישה לתווים; אימות התחום כלול בזמן. במקרה הגרוע יש לבדוק מספר לינארי של תווים. אין טענת זמן קבוע לאחר אימות או זיכרון קבוע בביטים לכל n.",
+      "en": "O(n) time and O(1) auxiliary words in the character-access model, including validation. Worst-case character inspection is linear. No constant post-validation total time or fixed-bit-space claim for arbitrary n."
+    },
+    "edge_cases": {
+      "he": [
+        "ריקה, אות אחת, אורך זוגי ואי־זוגי, וכל האותיות שוות.",
+        "Aa שקר אך aa אמת; זוג שונה קרוב למרכז.",
+        "רווח, ספרה, פיסוק או תו שאינו ASCII אינם נזרקים אלא נפסלים."
+      ],
+      "en": [
+        "Empty, singleton, even/odd lengths and all equal letters.",
+        "Aa is false while aa is true; a mismatch near the middle.",
+        "Spaces, digits, punctuation and non-ASCII characters are rejected rather than discarded."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להמיר לאותיות קטנות למרות דרישה להשוואה מדויקת.",
+        "להשוות רק את הזוג הראשון או להחזיר true בתוך הלולאה.",
+        "לבנות היפוך ולהציג אותו כ־O(1) זיכרון.",
+        "לבלבל false של קלט חוקי עם דחיית קלט מחוץ לתחום."
+      ],
+      "en": [
+        "Lowercasing despite exact-comparison semantics.",
+        "Checking only the first pair or returning true inside the loop.",
+        "Building a reverse while claiming O(1) auxiliary storage.",
+        "Confusing false on valid input with rejection of invalid-domain input."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשווה אות ראשונה ואחרונה בשני אינדקסים ואנוע פנימה. כל שוני מחזיר false; אם כל הזוגות שווים נחזיר true. ההשוואה רגישה לאותיות גדולות, והריקה אמת. זמן O(n), זיכרון עזר O(1) מילים בלי לבנות היפוך.",
+      "en": "Compare first and last letters with two indices, moving inward. Any mismatch returns false; matching every pair returns true. Comparison is case-sensitive and empty input is true. O(n) time, O(1) auxiliary words, no reverse copy."
+    },
+    "source_ambiguities": {
+      "he": "המקור אומר אותיות ASCII אך לא קובע טיפול בקלט שגוי, ריקה או רגישות לגודל אות. A..Z/a..z, השוואה מדויקת, ריקה אמת ודחייה מפורשת נוספו בעריכה. ASCII עצמו כולל גם ספרות, פיסוק ותווי בקרה; איסורם הוא מדיניות תחום הקלט שבחרנו, ולא תכונה של התקן. אם הכוונה לכל תווי ASCII בעלי קודים 0..127, אותו אלגוריתם השוואה תקף אחרי הרחבת האימות. לא הונחו סינון או נרמול.",
+      "en": "The source says ASCII letters without specifying invalid input, empty strings or case sensitivity. A..Z/a..z, exact comparison, empty-as-true and explicit rejection are editorial choices. ASCII itself also includes digits, punctuation and control characters; rejecting them is this edition’s domain policy, not a property of the standard. If all ASCII characters with codes 0..127 are intended, the same exact-comparison algorithm applies after broadening validation. Filtering and normalization were not inferred."
+    },
+    "verification": {
+      "he": "21,845 מחרוזות ממצות באורכים 0..7 מעל A,B,a,b עברו מול אורקל היפוך עצמאי. נוספו דוגמאות גודל אות, עשר דחיות תחום ו־10,001 אותיות. רק אורקל הבדיקה יוצר מחרוזת הפוכה; הפונקציה המוצעת אינה מעתיקה.",
+      "en": "21,845 exhaustive strings of lengths 0..7 over A,B,a,b passed an independent reverse oracle, plus case examples, ten domain rejections and 10,001 letters. Only the test oracle creates a reversed string; the proposed function does not copy."
+    },
+    "relationship_note": {
+      "he": "לא נמצאה שאלת פלינדרום במאגר ההכנה, הדוגמאות או מאגר האימות. זו שאלה חדשה על אינווריאנט של זוגות סימטריים.",
+      "en": "No palindrome question was found in the preparation, example or validation banks. New question about a symmetric-pair invariant."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם מותר למחוק לכל היותר אות אחת כדי לקבל פלינדרום?",
+        "direction": "בשוני הראשון צריך לבדוק את שתי האפשרויות: דילוג על האות השמאלית או על הימנית. אין לבחור אחת באופן שרירותי; שאר ההשוואות כבר תואמות. ההרחבה אינה ממומשת.",
+        "status": "מוכן בתוכן; לא מחובר לתור המשך."
+      },
+      "en": {
+        "question": "What changes if at most one letter may be deleted to obtain a palindrome?",
+        "direction": "At the first mismatch check both choices: skip the left letter or the right one. Do not choose arbitrarily; earlier symmetric pairs already match. Extension not implemented.",
+        "status": "Prepared in content; not connected to the follow-up queue."
+      }
+    }
+  },
+  "PREP-117": {
+    "assumptions": {
+      "he": [
+        "קישורי ניהול מותרים רק בתוך תאים פנויים; כל 64 ביטי מטען מוקצה נשמרים.",
+        "כל התאים פנויים תחילה, אתחול הקישורים מותר, ואינדקסים הם 0..63.",
+        "free מקבלת תא שמוקצה כרגע; שחרור כפול או מזהה ישן מחוץ לחוזה.",
+        "פעולות סדרתיות; מילה חיצונית אחת בת 32 ביטים, כתובת בסיס נתונה ומשתנים זמניים קבועים."
+      ],
+      "en": [
+        "Links may occupy free cells only; every allocated 64-bit payload is preserved.",
+        "Initially all free, link initialization allowed, indices 0..63.",
+        "free requires a currently allocated slot; repeated/stale frees are outside the contract.",
+        "Sequential operations; one external 32-bit control word, supplied base address and constant temporaries."
+      ]
+    },
+    "optimality": {
+      "he": "אתחול O(m), פעולות חוקיות O(1), וראש בעל שבעה ביטים לוגיים בתוך 32 החיצוניים. לא נטען למינימום הוראות או לתקציב היפ Python. חסם 64 הביטים חל רק כשאסור לאחסן ניהול בתוך כל המאגר.",
+      "en": "O(m) initialization, O(1) valid operations, seven logical head bits within 32 external bits. No instruction minimum or Python heap-budget claim. The 64-bit lower bound applies only when all in-band management is forbidden."
+    },
+    "edge_cases": {
+      "he": [
+        "הרשימה מתרוקנת אחרי 64 הקצאות ואז malloc מחזירה ‎-1 בלי שינוי.",
+        "שחרור והקצאה מחדש, תא 63, וערכי מטען 0,64,2^64−1.",
+        "אין להניח שהמילה בתא מוקצה עדיין מכילה קישור.",
+        "קלט free מחוץ לטווח נפסל; שחרור כפול אינו נבדק."
+      ],
+      "en": [
+        "Empty list after 64 allocations; subsequent malloc returns -1 unchanged.",
+        "Release/reuse, slot 63 and payload values 0,64,2^64−1.",
+        "An allocated word need not retain a next link.",
+        "Out-of-range free is rejected; repeated free is not detected."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להכריז על אי־אפשרות רק מפני שמפה חיצונית דורשת 64 ביטים.",
+        "לשמור דגל או קישור במטען מוקצה בלי רשות או להסתמך על ערך קסם.",
+        "להסתיר set תפוסה במודל ולייחס את מצבו לראש בלבד.",
+        "להבטיח זיהוי שחרור כפול או סדר האינדקס הנמוך ביותר בלי לממשם."
+      ],
+      "en": [
+        "Declaring impossibility merely because an external bitmap needs 64 bits.",
+        "Using allocated payload bits without permission or relying on a magic value.",
+        "Hiding an occupancy set in the model while attributing state to head alone.",
+        "Promising repeated-free detection or lowest-index selection without implementing it."
+      ]
+    },
+    "interview_answer": {
+      "he": "אברר אם תאים פנויים מותרים למטא־נתונים. אם כן אשמור בהם רשימת קישורים, וב־32 הביטים החיצוניים רק ראש 0..64. malloc מוציאה ראש ו־free של תא מוקצה מכניסה אותו. כל מטען מוקצה נשמר; בלי רשות לאחסון פנימי יש חסם מידע אחר.",
+      "en": "Clarify whether free cells may store metadata. If so, put links there and only head 0..64 in external control. malloc pops; free of a live slot pushes. All allocated payload is preserved. Forbidding in-band state gives a different information bound."
+    },
+    "source_ambiguities": {
+      "he": "המקור מצמצם ניהול חיצוני ל־32 ביטים אך אינו אומר אם מותר לכתוב ניהול בתאים פנויים, אם יש דרישת סדר או איך מטפלים ב־free לא חוקית. הפתרון מתנה את הבנייה ברשות מפורשת לאחסון פנימי ובשחרור חוקי, ומנתח בנפרד איסור מוחלט.",
+      "en": "The source limits external management to 32 bits but does not define free-cell metadata permission, allocation order or invalid free semantics. The construction explicitly assumes in-band free links and valid releases; a total in-band prohibition is analyzed separately."
+    },
+    "verification": {
+      "he": "10,065 פעולות תקינות נבדקו מול רתמת deque ומילון מטענים בלתי תלויים: ריקון 64 התאים, כישלון במלא ו־10,000 פעולות מדגמיות. אחרי כל פעולה נבדקו רשימת הפנויים, ראש עד 64 וכל מטעני ה־64 ביטים המוקצים. הרתמה בלבד מחזיקה מידע חברות; היישום אינו מחזיקו.",
+      "en": "10,065 valid operations matched an independent deque and allocated-payload dictionary: draining all 64 slots, full failure and 10,000 seeded actions. Every step checked free-list membership, head≤64 and all allocated uint64 payloads. Membership metadata exists only in the oracle, not the implementation."
+    },
+    "relationship_note": {
+      "he": "וריאציה חדשה המקושרת ל־PREP-102: שם 32 תאים ומפת 32 ביטים מספיקים. כאן הקיבולת גדלה בלי להגדיל את הבקרה החיצונית, ולכן נדרש לברר מקום למידע ולהחליף ייצוג.",
+      "en": "Linked variant of PREP-102: its 32-slot/32-bit bitmap fits. Here capacity grows without more external control, requiring an explicit storage-permission question and another representation."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך מזהים שחרור של תא שכבר פנוי בלי מפה חיצונית נוספת?",
+        "direction": "אפשר לסרוק את הרשימה לפני ההכנסה ולבדוק אם האינדקס מופיע. העלות היא עד מספר התאים הפנויים; לקיבולת כללית m היא O(m). מזהה ישן לתא שהוקצה מחדש דורש חוזה או מידע נוספים.",
+        "status": "מוכן בתוכן; לא מחובר לתור המשך."
+      },
+      "en": {
+        "question": "How could an already-free release be detected without another external bitmap?",
+        "direction": "Scan the list for the index before pushing. Cost is up to the free-list length, O(m) for general capacity m. Stale handles after reuse require another contract or information.",
+        "status": "Prepared in content; not connected to the follow-up queue."
+      }
+    }
+  }
+}

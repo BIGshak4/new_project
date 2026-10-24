@@ -1,0 +1,12 @@
+{
+  "question_id": "PREP-031",
+  "variant": "batch30_timing",
+  "status": "passed",
+  "xor_truth_rows": 4,
+  "single_input_transition_cases": 8,
+  "worst_transport_delay_ns": 4,
+  "setup_arrival_deadline_cases": 48,
+  "hold_arrival_deadline_cases": 36,
+  "invalid_cases_rejected": 9,
+  "scope": "Exact rational timing and ideal equal-delay transport model; not STA, HDL simulation or characterized hardware."
+}

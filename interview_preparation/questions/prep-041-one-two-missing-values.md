@@ -468,3 +468,7 @@ Reported companies: NVIDIA.
 ### English clarification
 
 Source does not explicitly specify the value domain or whether one hundred means original range or remaining length. Integrate as existing Part A under the added assumption: original permutation 1..100, one removed, ninety-nine accessible entries. This is an editorial clarification, not source text. Without a known domain/multiplicity contract no unique missing value is inferable.
+
+## סעיף ג נוסף — 24.10.2026
+
+[המקור הנוסף](../sources/2026-10-24-batch30-09.png) מגדיר n ערכים שונים בטווח 0..n וחסר אחד. [הסעיף המלא בשתי השפות](prep-041-c-zero-based-one-missing.md) כולל נוסח, שלושה רמזים משלימים, מערך דגלים, פתרון XOR ללא מערך עזר, נימוק ובדיקות. סעיפי א–ב והרמזים האינטראקטיביים המקוריים נשמרו. גרסת התוכן המורחבת היא 2 וממתינה לביקורת אנושית; אין ירושת אישור אוטומטית להרחבה.

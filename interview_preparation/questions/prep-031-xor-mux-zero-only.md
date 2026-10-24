@@ -75,3 +75,108 @@ If a 4:1 MUX is permitted, one suffices with S1=a,S0=b and data (0,b,a,0); also 
 ![XOR עם שני מוקסים וקבוע 0](../diagrams/prep-031-xor-two-mux.png)
 
 כניסות בעלות אותו שם הן אותו אות; I0 נבחרת כשהסלקטור 0 ו־I1 כשהוא 1.
+
+
+## מקור נוסף — batch30 / Additional source — batch30
+
+[נוסח, שלושה רמזים ופתרון משלים בשתי השפות / Bilingual variant, three hints and solution](prep-031-timing-variant-batch30.md)
+
+### עברית
+
+### מקור נוסף: מרבבים, השהיה ותדר
+א. בנו XOR בעזרת מרבבי MUX 2:1. ב. מהו התדר המרבי אם ההשהיה היא 2 ns? ג. כיצד אפשר להעלות את התדר המרבי?
+
+המקור הנוסף אינו קובע אילו קבועים ושערים זמינים, למה בדיוק מתייחסות שתי הננו־שניות או מהו ממשק השעון. כדי לקשר לגרסה המקורית נשמרת כאן רשת המרבבים שלה עם קבוע 0 בלבד. נתחו בנפרד: (1) 2 ns הם ההשהיה המרבית של כל הלוגיקה והחיווט בין שני דלגלגים; (2) 2 ns הם ההשהיה של כל מרבב, ובמסלול המגביל עוברים שניים בטור. תנו תחילה גבול אידאלי ללא תקורות שעון, ואחר כך נוסחה הכוללת זמן שעון־למוצא, הכנה, סטיית שעון ואי־ודאות. הניחו אותות בינאריים, דלגלגים על אותה חזית ומסלולים חד־מחזוריים. הסבירו מה ניתן לשנות בלי לשנות פונקציה ומה מחייב הסכמה על השהיה במחזורים. אין כאן נתוני ספריית תאים או תדר פיזי מובטח.
+
+### תחילה בודקים מה בעצם נתון
+המשפט ״השהיה של 2 ns״ אינו מספיק כדי לקבוע תדר פיזי יחיד. שער צירופי בפני עצמו אינו מקבל שעון, ולכן אין לו תדר מרבי סינכרוני בלי להגדיר מי משגר ומי דוגם. כאן נוסיף במפורש מודל של דלגלג משגר, לוגיקה וחיווט, ודלגלג קולט במחזור הבא. נפריד בין שתי משמעויות אפשריות של המספר במקור.
+
+### מימוש ה־XOR המקורי נשאר תקף
+נגדיר MUX(S,D0,D1): כאשר S=0 בוחרים D0, וכאשר S=1 בוחרים D1. נשתמש רק ב־a,b ובקבוע 0, כפי שנדרש בגרסה המקורית:
+
+```text
+t = MUX(b, a, 0)
+y = MUX(a, b, t)
+```
+
+אם a=0, המרבב האחרון מעביר b: זהו 0 XOR b. אם a=1, המרבב האחרון בוחר t, והראשון בוחר 1 כאשר b=0 או 0 כאשר b=1. לכן t מתנהג כמו NOT b בדיוק בענף שבו צריך אותו. ארבע שורות האמת הן 00→0,01→1,10→1,11→0. אין קבוע 1 ואין שער NOT שהוברח למימוש.
+
+לשתי הרמות יש מסלול סידורי אמיתי: כש־a=1 ו־b יורד מ־1 ל־0, השינוי עובר דרך המרבב הראשון ואז דרך כניסת הנתונים של השני. זמן שתי הרמות מצטבר. העובדה של־b יש גם חיבור ישיר למרבב השני אינה מבטלת את המסלול הארוך. אם מותר אות משלים מוכן, אפשר לחבר MUX(a,b,NOT b); זהו מרבב אחד בתוספת העלות וההשהיה של יצירת NOT b, ולא שער היפוך חינם תחת אילוצי המקור. הוכחת המינימום המקורית מתייחסת למספר מרבבי 2:1 תחת קבוע 0 בלבד, ולא לתדר מיטבי בכל ספרייה.
+
+### שתי תשובות מותנות למספר שתי ננו־שניות
+אם 2 ns הם כבר ההשהיה המרבית של כל המסלול הצירופי, ובמודל האידאלי כל תקורות השעון אפס ואין מסלול אחר שמגביל, אז T≥2 ns ולכן f≤1/(2×10⁻⁹)=500 MHz.
+
+אם 2 ns הם ההשהיה המרבית של כל מרבב ברשת המקורית, מתעלמים מחיווט נוסף, ושתי הרמות הן המסלול המגביל, אז T≥2+2=4 ns ולכן f≤250 MHz באותו מודל אידאלי. אין להכפיל שוב בשתיים רק משום שגל שעון כולל גם עלייה וגם ירידה: השיגור והדגימה כאן הם בחזיתות עולות עוקבות, שהמרחק ביניהן הוא מחזור שלם. במעגל חזיתות הפוכות יידרש ניתוח אחר.
+
+### מה מוסיפים במערכת אמיתית?
+נסמן s כזמן הגעת השעון לקולט פחות זמן הגעתו למשגר, ו־U כאי־ודאות שמקצרים בגינה את חלון ההכנה. עבור מסלול חד־מחזורי:
+
+```text
+T_min >= t_cq,max + d_comb,max + t_setup + U - s
+f_max <= 1 / T_min
+hold: t_cq,min + d_comb,min >= s + t_hold
+```
+
+האי־שוויון הראשון הוא תנאי על תקופת השעון, ולא הבטחה שהתכנון כולו פועל בתדר הזה. d_comb כולל לוגיקה וחיווט; יש לבדוק את כל המסלולים והפינות הרלוונטיים. זמן ההשהיה המרבי צריך לכסות עליות וירידות ותלויות כניסה/מוצא, עומס, שיפוע כניסה ותנאי העבודה. אם 2 ns הם נתון אופייני בלבד, אין ממנו גבול בטוח. במודל זה s חיובי נותן יותר זמן להכנה אבל מקשה על החזקה; אין להסיק שסטיית שעון מועילה בלי לבדוק את שניהם. תנאי ההחזקה אינו נעשה תקין מעצם הארכת המחזור.
+
+דוגמה ערוכה: d_comb=2 ns, t_cq,max=0.2 ns, t_setup=0.3 ns, U=0.1 ns ו־s=0 נותנים T_min=2.6 ns, כלומר גבול של כ־384.6 MHz למסלול הזה. המספרים פרט לשתי הננו־שניות נוספו להמחשה, ואינם נתוני המקור.
+
+### כיצד מעלים את התדר?
+אפשר לקצר את המסלול המגביל באמצעות מימוש לוגי מתאים לאילוצים, תאים מהירים יותר, הפחתת עומס/פיצול, תכנון חיווט ומיקום טובים יותר. תא מהיר יותר עלול לעלות בשטח ובהספק; נתון 2 ns אינו כולל אוטומטית את כל השינויים האלה. הורדת השהיה במסלול שאינו מגביל אינה בהכרח משפרת את תדר המערכת.
+
+אם הממשק מתיר תוספת השהיה במחזורים, אפשר לשקול חלוקה לשלבי צינור או תזמון מחדש. הוספת אוגר באמצע רשת שני המרבבים מחייבת לשמור גם את a,b המתאימים לאותו פריט נתונים, כדי שלא לשלב t ממחזור קודם עם קלט חדש. שלבים מאוזנים יכולים לשפר קצב קבלת תוצאות, אך מוסיפים אוגרים ותקורות ומשנים את מספר המחזורים עד לתוצאה. אין הבטחה להכפלת התדר: תקורות הדלגלגים, חוסר איזון ומסלולים אחרים נשארים. אם החוזה דורש אותה תגובה צירופית או אותה השהיה במחזורים, אי אפשר להציע שלב נוסף כאילו לא שינה את החוזה.
+
+### עלות ואימות
+המימוש נשאר שני מרבבים ברשת המקורית, ללא שינוי בפונקציה. עלות/תדר של מימוש אחר תלויים במשאבים המותרים ובספרייה. בדקנו ארבע שורות אמת, שמונה שינויי קלט יחיד במודל השהיית מעבר אידאלי שווה של 2 ns למרבב, 48 השוואות זמן הגעה מול מועד הכנה ו־36 מקרי החזקה בחשבון רציונלי מדויק. ההשהיה המרבית במודל המעבר היא 4 ns. זהו מודל פייתון והוכחה, לא הרצת HDL, סינתזה, STA או מדידה פיזית.
+
+שלושת הרמזים המקוריים והתור שלהם נשמרו. שלושה רמזים לווריאנט התזמון נשמרו בנפרד בחומר המשלים ובמסמך; התור הקיים אינו בוחר אותם אוטומטית לפי וריאנט. התוכן החדש הוא הצעה בסיוע AI, ללא אישור מקצועי חדש.
+
+### English
+
+### Additional source: MUXes, delay and frequency
+(a) Build XOR using 2:1 MUXes. (b) What is the maximum frequency if the delay is 2 ns? (c) How can the maximum frequency be increased?
+
+This source does not specify available constants/gates, what exactly the two nanoseconds measure, or the clock interface. To link it to the original, retain the original zero-only MUX network. Analyze separately: (1) 2 ns is the maximum delay of the complete combinational logic and routing between two flip-flops; (2) each MUX has 2 ns delay and the limiting path crosses two in series. First give an ideal bound ignoring clock overheads, then a formula including clock-to-Q, setup, clock skew and uncertainty. Assume binary signals, same-edge registers and single-cycle paths. Explain changes preserving function and changes needing agreement on latency in cycles. No cell-library characterization or guaranteed physical frequency is supplied.
+
+### First establish what the number describes
+“A delay of 2 ns” cannot determine one physical maximum frequency. A combinational gate itself has no clock; define a launching register, logic/routing and a register capturing at the next edge. We explicitly add that model and distinguish two possible meanings of the source's number.
+
+### Retain the original XOR circuit
+Let MUX(S,D0,D1) select D0 for S=0 and D1 for S=1. Use only a,b and constant zero, as required by the original:
+
+```text
+t = MUX(b, a, 0)
+y = MUX(a, b, t)
+```
+
+When a=0, the last MUX forwards b, giving 0 XOR b. When a=1, it selects t; the first MUX gives one for b=0 and zero for b=1. Thus t acts as NOT b exactly in the branch needing it. The truth rows are 00→0,01→1,10→1,11→0. No constant one or hidden inverter was introduced.
+
+There is a real serial two-level path: hold a=1 and change b from one to zero. Its effect passes through the first MUX and then the second MUX's data input. Those delays add. The direct b connection to the second MUX does not remove that longer path. If a complement is supplied, MUX(a,b,NOT b) uses one final MUX, but complement generation still has a cost and delay; it is not free under the original constraints. The original minimum-cell proof concerns 2:1 MUX count with only zero, not optimal frequency in every library.
+
+### Two conditional answers for two nanoseconds
+If 2 ns already measures the complete combinational path, every clock overhead is ignored and no other path limits the design, T≥2 ns and f≤1/(2×10⁻⁹)=500 MHz in that ideal model.
+
+If each original MUX has maximum delay 2 ns, extra routing is neglected and the two serial levels are limiting, T≥2+2=4 ns and f≤250 MHz under the same ideal assumptions. Do not multiply by two again just because a clock has rising and falling edges: launch and capture here use consecutive rising edges, one whole period apart. An opposite-edge design needs a different analysis.
+
+### Include register and clock effects
+Define s as capture-clock arrival minus launch-clock arrival, and U as setup uncertainty reducing the available window. For a single-cycle path:
+
+```text
+T_min >= t_cq,max + d_comb,max + t_setup + U - s
+f_max <= 1 / T_min
+hold: t_cq,min + d_comb,min >= s + t_hold
+```
+
+The first inequality constrains the clock period; it does not guarantee the entire design works at that frequency. d_comb includes logic and routing; check all relevant paths and operating corners. A maximum delay must cover rising/falling transitions, pin arcs, loading, input slew and operating conditions. A typical-only 2 ns number is not a guaranteed bound. Positive s helps setup but hurts hold in this model; neither conclusion replaces the other check. Simply making the clock period longer does not repair hold.
+
+Editorial example: d_comb=2 ns, t_cq,max=0.2 ns, t_setup=0.3 ns, U=0.1 ns and s=0 give T_min=2.6 ns, or a path bound of about 384.6 MHz. Numbers other than two nanoseconds are added illustrations, not supplied facts.
+
+### How can maximum frequency increase?
+Shorten the limiting path using a legal logic implementation, faster cells, reduced fanout/loading or better placement/routing. Faster cells may cost area and power; the single 2 ns figure does not characterize all these choices. Improving a nonlimiting path need not improve the system clock.
+
+If the interface permits additional latency in cycles, consider pipelining or retiming. Registering the intermediate t in this two-MUX network also requires retaining the matching a,b for that same data item, rather than combining an old t with new inputs. Balanced stages may improve output throughput while adding registers/overheads and changing latency in cycles. Frequency need not double: register overhead, imbalance and other paths remain. A contract requiring unchanged combinational response or cycle latency cannot silently accept an extra pipeline stage.
+
+### Cost and actual verification
+The original implementation remains two MUXes with unchanged Boolean function. Other implementations' cost/frequency depends on the allowed resources and library. Checked four truth rows, eight single-input transitions in an ideal equal-2-ns transport-delay model, 48 arrival-versus-setup-deadline comparisons and 36 hold cases using exact rational arithmetic. The transition model's worst delay is 4 ns. These are Python checks plus reasoning, not HDL simulation, synthesis, static timing analysis or physical measurements.
+
+All original hints and their queue remain. Three timing-variant hints are saved in supplementary material and the addendum, but the existing queue does not automatically select hints by variant. New content is AI-assisted proposed material without new professional approval.

@@ -299,3 +299,130 @@ Python gate equations were compared with an independent arithmetic oracle: all 3
 - [SystemVerilog](../solutions/prep_064_three_bit_up_down.sv)
 - [Checks](../checks/check_prep_064.py)
 - [Evidence](../checks/prep-064-verification.json)
+
+
+## מקור נוסף — batch30 / Additional source — batch30
+
+[נוסח, שלושה רמזים ופתרון משלים בשתי השפות / Bilingual variant, three hints and solution](prep-064-staged-enable-batch30.md)
+
+### עברית
+
+### מקור נוסף: בונים את המונה בשלושה שלבים
+א. תכננו רכיב בעל כניסת אפשור e ומוצא של ביט אחד. בכל חזית שעון עולה, e=1 הופך את המוצא ו־e=0 משאיר אותו ללא שינוי. ב. תכננו מונה עולה בן שלושה ביטים, עם כניסת אפשור אחת ושלוש יציאות. ג. תכננו בנפרד מונה יורד בן שלושה ביטים עם אותו ממשק.
+
+הבהרות עריכה: השעון הוא כניסת תזמון משתמעת נוספת ואינו e. שלוש היציאות מייצגות יחד מספר בינארי ללא סימן בטווח 0–7. ב־e=1 מוסיפים או מפחיתים אחד, לפי התכנון; ב־e=0 מחזיקים. הספירה מודולו 8: 7 עולה ל־0 ו־0 יורד ל־7. כל הדלגלגים חולקים חזית עולה, e סינכרוני ועומד בהכנה ובהחזקה. לצורך התחלה ידועה נוסף איפוס סינכרוני פעיל בגבוה שקובע 0 וגובר על e; הוא לא נכתב במקור. השתמשו בדלגלגים ושערים, הציגו משוואות ודוגמה. אלו שני תכנונים נפרדים, לא דרישה להוסיף כניסת כיוון לממשק. הגרסה המקורית עם inc,dec והחזקה כשהם שווים נשמרת ללא שינוי.
+
+### מתחילים מביט אחד: לשמור או להפוך
+ביט הוא מונה מודולו 2: הוספת אחד הופכת 0 ל־1 ו־1 ל־0. נשמור q בדלגלג D ונחזיר אותו לכניסה דרך XOR:
+
+```text
+D = q XOR e
+```
+
+אם e=0 אז D=q, ואם e=1 אז D=NOT q. הדלגלג דוגם רק בחזית עולה, ולכן e שנשאר אחד במשך שלושה מחזורי שעון גורם לשלושה היפוכים, לא להיפוך יחיד. זו ספירת מחזורים שבהם e=1, לא גלאי קצה של e. כשהשעון אינו מתקדם המצב נשמר, גם אם e משתנה. תנאי ההכנה וההחזקה נדרשים כרגיל; e אינו שעון. זה אותו קשר נתונים שב־PREP-074, כעת כחלק מבניית מונה.
+
+### משלושה ביטים למספר אחד
+q2 הוא הביט המשמעותי ו־q0 הנמוך. שלושה דלגלגים מייצגים את המספר 4q2+2q1+q0. אין כאן שלושה מונים עצמאיים. בכל חזית נחשב לכל ביט T_i: האם להפוך אותו. נכניס לדלגלג D_i=q_i XOR T_i.
+
+### מונה עולה עם אפשור אחד
+q0 מתהפך בכל בקשת ספירה. q1 מתהפך כשהביט הנמוך הישן הוא 1, כי הוספת אחד עוטפת אותו ל־0. q2 מתהפך רק כשהזוג הנמוך הישן הוא 11. לכן:
+
+```text
+T0 = e
+T1 = e AND q0
+T2 = e AND q1 AND q0
+D_i = q_i XOR T_i
+```
+
+כאשר e=0, כל T אפס וכל הדלגלגים מחזיקים. כאשר e=1, רצף האחדים הנמוכים מתהפך לאפס והאפס הבא מתהפך לאחד. זה בדיוק חיבור אחד. מ־111 כל הביטים מתהפכים ל־000, בהתאם למודולו 8.
+
+### מונה יורד הוא תכנון נפרד
+בירידה q0 מתהפך בכל בקשה. אם q0 הישן אפס, חיסור אחד דורש השאלה ולכן גם q1 מתהפך. אם שני הביטים הנמוכים הישנים אפס, גם q2 מתהפך. לכן:
+
+```text
+T0 = e
+T1 = e AND NOT q0
+T2 = e AND NOT q1 AND NOT q0
+D_i = q_i XOR T_i
+```
+
+כאן רצף האפסים הנמוכים מתהפך לאחד והאחד הבא מתהפך לאפס: בדיוק חיסור אחד. מ־000 מקבלים 111. המונח ״מחסר״ במקור מתפרש כאן כמונה יורד המפחית אחד לכל בקשה, ולא כרכיב שמחסר שני מספרים שלא ניתנו בממשק. לביט יחיד, עלייה וירידה זהות מודולו 2.
+
+### השעון והאיפוס
+כל שלושת הדלגלגים מקבלים אותו clk; אף Q אינו מחובר לשעון של דלגלג אחר. כל תנאי T מחושב מהמצב שלפני אותה חזית. למשל, בעלייה מ־011 שלושת התנאים פעילים יחד ולכן מקבלים 100; אם מחשבים q1 מתוך q0 שכבר שונה, התוצאה עלולה להיות שגויה. איפוס סינכרוני פעיל בגבוה קובע 000 בחזית וגובר על e. האיפוס נוסף במפורש לעריכה; בלי איפוס או מצב התחלתי מובטח, משוואות המעבר תקפות אך הערך ההתחלתי לא ידוע.
+
+דוגמה שנוספה: מתחילים ב־110 ומזינים e ברצף 1,0,1,1. המונה העולה נותן 111,111,000,001. המונה היורד נותן 101,101,100,011. אלו שתי ריצות של שני תכנונים שונים, ולא שינוי כיוון באמצעות כניסה נסתרת.
+
+### הקשר לגרסה המקורית
+ב־PREP-064 המקורית יש שתי בקרות inc,dec: עלייה רק ב־10, ירידה רק ב־01, וב־00 או 11 מחזיקים. המונה העולה כאן מתקבל מהצבה inc=e,dec=0; היורד מתקבל מהצבה inc=0,dec=e. אין שינוי בהתנהגות המקורית כששתי הבקרות אחד, ואין צורך להכפיל שאלות זהות במאגר. וריאנט זה מדגיש את ההתקדמות מביט אחד לשלושה ואת ההבדל בין אפשור לשעון.
+
+### נכונות, עלות ומקרי קצה
+התנאים הופכים בדיוק את רצף הביטים הנמוכים הנדרש בחיבור או בחיסור אחד, וחוסמים כל שינוי ב־e=0. הדלגלגים מספקים זיכרון, ולכן זה אינו מעגל צירופי המתנדנד במשוב. שמונה מצבים נבדלים דורשים לפחות שלושה ביטי זיכרון, ושלושה דלגלגים מספיקים; זהו מינימום אחסון לוגי בלבד, לא טענת מינימום שערים או השהיה. מעגל יחיד דורש ביט זיכרון אחד.
+
+ל־n ביטים אפשר להכליל את המכפלה של כל הביטים הנמוכים או משלימיהם. שרשרת ארוכה עלולה להגדיל השהיה, ולכן יש לבדוק ספריית שערים, פיצול חוטים ותקופת שעון; אין בתיאור הזה תדר מובטח. גלישה אינה רוויה: 7→0 ו־0→7 נדרשים כאן. אם רוצים רוויה או ספירת קצוות של e, זהו חוזה אחר עם לוגיקה נוספת.
+
+### מה נבדק?
+מודל שערים הושווה לאורקל אריתמטי עצמאי בכל 40 מקרי מצב/אפשור/כיוון ברוחבים אחד ושלושה, ב־40 מקרי עדיפות איפוס ובכל 5,120 רצפי אפשור באורך שמונה מכל מצב התחלתי ולשני הכיוונים. נבדקו גם שקילות לבקרות המונה המקורי וערכי גבול. זו בדיקת פייתון, לא קומפילציית HDL, סינתזה או סימולציית תזמון פיזית.
+
+שלושת הרמזים המקוריים והתור שלהם נשמרו. שלושה רמזים מדורגים לווריאנט הזה הוכנו בחומר המשלים ובמסמך; אין בחירה אוטומטית שלהם לפי וריאנט בתור הקיים. התוכן הנוסף מוצע בסיוע AI וממתין לביקורת מקצועית.
+
+### English
+
+### Additional source: build the counter in three stages
+(a) Design a component with enable e and one output bit. At each rising clock edge, e=1 toggles the output and e=0 retains it. (b) Design a three-bit up counter with one enable input and three outputs. (c) Separately design a three-bit down counter with the same interface.
+
+Editorial clarifications: a clock is an additional implicit timing input, never e. The three outputs together encode an unsigned binary value 0..7. When e=1, add or subtract one according to the design; e=0 holds. Wrap modulo eight: up from seven gives zero and down from zero gives seven. All flip-flops share one rising edge; synchronous e meets setup/hold. For known initialization, add a synchronous active-high reset loading zero and overriding e; reset was absent from the source. Use gates and flip-flops, with equations and an example. These are separate designs, not a requirement to add a direction port. The original inc/dec interface and hold behavior for equal controls remain unchanged.
+
+### Start with one bit: retain or invert
+A bit is a modulo-two counter: adding one changes zero to one or one to zero. Store q in a DFF and feed it back through XOR:
+
+```text
+D = q XOR e
+```
+
+With e=0, D=q; with e=1, D=NOT q. Sampling happens only at a rising clock edge, so e held high for three clock cycles causes three toggles, not one. This counts cycles with e=1 rather than edges of e. Without an advancing clock the state remains, even if e changes. Setup/hold still applies; e is never the clock. This is PREP-074's data-feedback relationship, now used to build a counter.
+
+### Three bits encode one number
+q2 is the MSB and q0 the LSB. Three DFFs encode 4q2+2q1+q0; they are not independent counters. At every edge compute T_i, whether bit i must toggle, and drive D_i=q_i XOR T_i.
+
+### Separately enabled up counter
+q0 toggles on every count request. q1 toggles when old q0 is one because adding one wraps it to zero. q2 toggles only when the old low pair is 11:
+
+```text
+T0 = e
+T1 = e AND q0
+T2 = e AND q1 AND q0
+D_i = q_i XOR T_i
+```
+
+At e=0 every T is zero, so every bit holds. At e=1, trailing ones turn to zero and the next zero turns to one: precisely addition of one. From 111 all bits toggle to 000, as modulo-eight counting requires.
+
+### The down counter is a separate design
+q0 again toggles for every request. If old q0 is zero, subtracting one borrows and toggles q1. If both old low bits are zero, q2 toggles too:
+
+```text
+T0 = e
+T1 = e AND NOT q0
+T2 = e AND NOT q1 AND NOT q0
+D_i = q_i XOR T_i
+```
+
+Trailing zeros turn to one and the next one turns to zero, exactly subtraction of one. From 000 the result is 111. The source's “subtractor” is interpreted as a down counter subtracting one per request, not as an arithmetic block subtracting two numbers absent from the interface. At width one, up and down are identical modulo two.
+
+### Clock and reset
+All DFFs share clk; no Q output clocks another flip-flop. Every T uses the state before that same edge. For example, incrementing 011 activates all three toggles simultaneously and gives 100. Computing q1 from an already changed q0 can produce a wrong answer. Added synchronous active-high reset loads 000 at an edge and overrides e. Without a reset or guaranteed initialization, transition equations still apply but initial phase/value is unknown.
+
+Added example: start at 110 and apply e=1,0,1,1. The up design produces 111,111,000,001. The down design produces 101,101,100,011. These are two runs of separate designs, not direction changes through an undisclosed input.
+
+### Relationship to the original question
+Original PREP-064 has inc,dec: only 10 counts up, only 01 counts down, and 00/11 hold. The new up design is the specialization inc=e,dec=0; down uses inc=0,dec=e. Nothing changes the original both-high hold behavior, and an equivalent specialization does not require another catalog question. This variant emphasizes building from one bit to three and distinguishing enable from clock.
+
+### Correctness, cost and boundaries
+The toggle conditions invert exactly the required trailing bit pattern for a unit increment/decrement and block every change at e=0. Flip-flops provide memory; this is not an oscillating combinational feedback loop. Eight distinguishable states require at least three logical memory bits and three DFFs suffice. That proves minimum logical storage only, not minimum gates or delay. The one-bit case requires one memory bit.
+
+For n bits, extend the product of all lower bits or their complements. Long chains may increase delay, so examine the gate library, fanout and clock period. No physical frequency is guaranteed here. Wrapping is not saturation: 7→0 and 0→7 are required. Saturating behavior or counting only edges of e is a different contract requiring further logic.
+
+### Actual verification
+Gate equations were compared with an independent arithmetic oracle for all 40 state/enable/direction cases at widths one and three, 40 reset-priority cases, and all 5,120 eight-cycle enable streams from every initial state in both directions. Equivalence to the original counter controls and boundary transitions were also checked. This is Python verification, not HDL compilation, synthesis or physical timing simulation.
+
+Original hints and their queue remain unchanged. Three progressive variant hints are prepared in supplementary material and the addendum; the current queue does not automatically select them by variant. New AI-assisted proposed material awaits professional review.

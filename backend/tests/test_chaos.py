@@ -140,6 +140,12 @@ async def test_random_sequences_keep_every_invariant(catalog, seed):
     users = [uuid.uuid4() for _ in range(3)]
     await asyncio.gather(*[run_user(svc, store, catalog, random.Random(seed * 10 + i), user, steps=40)
                            for i, user in enumerate(users)])
+    # Bank growth can make every random submission require images, which this
+    # fixture intentionally cannot fetch. Exercise the flaky model path too,
+    # while retaining all full-catalog random actions and the same invariants.
+    anchor = await svc.start(users[0], question_key="example-mod-six-counter", mode="deep", language="en")
+    await svc.submit(users[0], uuid.UUID(anchor.id), "q holds when enable is zero and wraps from five to zero.",
+                     idempotency_key="provider-coverage-anchor")
     check_invariants(store, catalog)
     assert provider.calls > 0
     # usage: one row per model call that returned (failures raise before a response exists)

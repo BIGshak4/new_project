@@ -1,0 +1,8 @@
+{
+  "question_id": "PREP-117",
+  "checked_on": "2026-10-24",
+  "status": "passed",
+  "exhaustive_or_operation_cases": 10065,
+  "oracle": "Independent deque of free slots plus a dictionary of allocated uint64 payloads; 10,065 valid operations, all 64 slots drained, full sentinel and 10,000 seeded actions; every allocated payload preserved.",
+  "scope": "Actual proposed Python executed, no fixed-width compilation, Python heap-budget claim, performance benchmark or human professional approval."
+}

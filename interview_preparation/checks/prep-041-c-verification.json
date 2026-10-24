@@ -1,0 +1,8 @@
+{
+  "question_id": "PREP-041-C",
+  "checked_on": "2026-10-24",
+  "status": "passed",
+  "exhaustive_or_operation_cases": 46233,
+  "oracle": "Independent linear membership oracle over 46,233 valid zero-based permutations plus 400 seeded cases; compare the actual flags and XOR implementations and verify input preservation.",
+  "scope": "Actual proposed Python executed, no fixed-width compilation, Python heap-budget claim, performance benchmark or human professional approval."
+}

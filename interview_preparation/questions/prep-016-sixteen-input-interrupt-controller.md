@@ -240,3 +240,8 @@ A component has four inputs and two index output bits, returning the highest-num
 
 (a) Does this sufficiently specify the case with no active input? Explain what is missing from the interface.
 (b) After adding a `valid` output that is one when any input is active and zero otherwise, extend the completed component to sixteen inputs, four index output bits and one validity output. Specify what the index means when it is invalid.
+
+
+## מקור נוסף — 24.10.2026, מקבץ נוסף בן עשרה צילומים
+
+[צילום 7](../sources/2026-10-24-batch30-07.png) — NVIDIA מדווחת בצילום, ללא אימות עצמאי. זו אותה היררכיית מקודדי קדימות 16 מ־4, עם אינדקס מקודד וסימון תקפות. אין החלפה לשאלת one-hot, ואין טענת מינימום חדשה ללא הגדרת הלוגיקה הנוספת המותרת. הנוסח, הרמזים, הפתרון, המזהה וגרסת התוכן נשמרו.

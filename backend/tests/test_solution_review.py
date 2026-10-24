@@ -16,7 +16,10 @@ from app.repo.questions import LoadedQuestion, detail, summary
 BACKEND = Path(__file__).resolve().parents[1]
 REVISED_SOLUTION_KEY = "prep-seventeen-prisoners-two-mandatory-switches"
 REVISED_ROBOT_KEY = "prep-identical-robots-trains-static-marker-rendezvous"
-REVISED_SOLUTION_KEYS = {REVISED_SOLUTION_KEY, REVISED_ROBOT_KEY}
+REVISED_SOLUTION_KEYS = {
+    REVISED_SOLUTION_KEY, REVISED_ROBOT_KEY,
+    "prep-xor-mux-zero-only", "prep-one-two-missing-values", "prep-three-bit-up-down-counter-gates",
+}
 
 
 @pytest.fixture(scope="module")
@@ -59,7 +62,7 @@ def test_prisoner_explanation_revision_preserves_but_does_not_inherit_old_attest
         assert summary(row, language).solution_review.status == "pending_review"
         assert detail(row, language).solution_review.status == "pending_review"
     reviewed = {q.key for q in catalog.questions.values() if solution_review(q).status == "human_reviewed"}
-    assert len(reviewed) == 91
+    assert len(reviewed) == 88
     assert reviewed == set(registry["questions"]) - REVISED_SOLUTION_KEYS
 
 
