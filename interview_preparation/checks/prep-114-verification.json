@@ -1,0 +1,30 @@
+{
+  "question_id": "PREP-114",
+  "status": "passed",
+  "all_small_graphs": 4113,
+  "valid_small_graphs": 11,
+  "valid_by_guest_couples": {
+    "0": 1,
+    "1": 2,
+    "2": 8
+  },
+  "constructed_larger_graphs": 21,
+  "constructed_guest_range": [
+    0,
+    20
+  ],
+  "four_guest_example_degrees": [
+    4,
+    4,
+    0,
+    8,
+    1,
+    7,
+    2,
+    6,
+    3,
+    5
+  ],
+  "invalid_graphs_rejected": 4,
+  "scope": "All simple nonpartner graphs for zero through two guest couples; valid family through twenty guest couples. General complement-peeling proof, not exhaustive enumeration, establishes the ten-person result."
+}

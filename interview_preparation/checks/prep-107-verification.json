@@ -1,0 +1,11 @@
+{
+  "question_id": "PREP-107",
+  "checked_on": "2026-10-24",
+  "status": "passed",
+  "exhaustive_vectors_width_1_through_12": 8190,
+  "seeded_wide_vectors": 600,
+  "invalid_vectors_rejected": 6,
+  "source_example": "1110100 -> 0000100",
+  "oracle": "Independent least-index numerical scan; subset/one-hot invariants.",
+  "scope": "Basic Boolean gate-prefix model, including zero; no subtractor in the proposed datapath, HDL compilation or physical delay/minimum-area claim."
+}

@@ -1,0 +1,21 @@
+{
+  "question_id": "PREP-109",
+  "checked_on": "2026-10-24",
+  "status": "passed",
+  "source_truth_rows": 8,
+  "nand_solution_gates": 4,
+  "nor_solution_gates": 2,
+  "exhaustive_too_small_network_counts": {
+    "NAND": [
+      6,
+      60,
+      900
+    ],
+    "NOR": [
+      6
+    ]
+  },
+  "mixed_library_minimum": 2,
+  "proof_model": "Acyclic two-input commutative NAND/NOR gates, raw A/B/C only, fanout and tied pins allowed, no free constants/inversions. Every gate is charged, including tied-pin inversion.",
+  "scope": "Finite complete small-network enumeration plus constructive circuits and essential-variable lower bound. No transistor-area, arbitrary-fan-in, hazard or physical-delay optimality claim."
+}

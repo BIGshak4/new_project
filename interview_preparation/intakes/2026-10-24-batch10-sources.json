@@ -1,0 +1,245 @@
+{
+  "intake_date": "2026-10-24",
+  "batch": "batch10",
+  "screenshot_count": 10,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-10-24-batch10-01.png"
+      ],
+      "sha256": "92c846d74d4544b46c109e03c07522a7757fca190dc81316efe82e71feaa5429",
+      "original_prompt": "לבנות SR FF תוך שימוש בשערים לוגיים.",
+      "source_tags": [
+        "nvidia",
+        "hardware",
+        "mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-106"
+      ],
+      "decision": "new_manual_question",
+      "reported_companies": [
+        "Mellanox",
+        "NVIDIA"
+      ]
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-10-24-batch10-02.png"
+      ],
+      "sha256": "7f0e060e1a36309ec055cf165bd0267af1d8bccafcb725e6d538734fe360f487",
+      "original_prompt": "יש n ביטים בכניסה, n ביטים ביציאה, רוצים לבנות עם שערים לוגיים בסיסיים קופסא אשר תחזיר את ה1 הראשון שהכי קרוב לLSB ואחריו רק אפסים. למשל אם הקלט הוא 1110100 הפלט יהיה 0000100.",
+      "source_tags": [
+        "logic",
+        "mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-107"
+      ],
+      "decision": "new_manual_question",
+      "reported_companies": [
+        "Mellanox"
+      ]
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-10-24-batch10-03.png"
+      ],
+      "sha256": "41cd78818a019d8e97efa4dac9e723e111f052088724b3609614872f01777a42",
+      "original_prompt": "נתונות n נקודות במישור, כתוב אלגוריתם הבודק האם הצורה המתקבלת מהנקודות הללו היא קמורה.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-108"
+      ],
+      "decision": "new_manual_question",
+      "reported_companies": [
+        "Apple"
+      ]
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-10-24-batch10-04.png"
+      ],
+      "sha256": "4c39fc756ace5950bf0b19d44ecebeb289ca791b1a94cc7b10f03733e27fb58e",
+      "original_prompt": "נתונה טבלת האמת לעיל. א. מה הפונקציה הלוגית שמתארת הטבלה? ב. ממש את הפונקציה בעזרת מינימום שערי NAND ו NOR\nA B C Z\n0 0 0 0\n0 0 1 1\n0 1 0 0\n0 1 1 0\n1 0 0 1\n1 0 1 1\n1 1 0 0\n1 1 1 0",
+      "source_tags": [
+        "logic-design",
+        "hardware",
+        "elta"
+      ],
+      "source_company_badge": "אלתא",
+      "question_ids": [
+        "PREP-109"
+      ],
+      "decision": "new_manual_question",
+      "reported_companies": [
+        "Elta"
+      ]
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-10-24-batch10-05.png"
+      ],
+      "sha256": "8330f3474e596221cfa769524a1c0b55b05714e28eaeb20e8722cb039a011aab",
+      "original_prompt": "א. ממש רכיב המקבל שני ביטים ומוציא שלושה ביטים כפי שמתואר בתמונה.\nב. בעזרת רכיב זה, ממש רכיב המתאר יחס בין שתי כניסות, כל אחת בעלת 4 ביט.\nהאיור המקורי מסמן a>b, a==b, b<a; הסימון האחרון כפול לראשון ונשמר כאן כלשונו.",
+      "source_tags": [
+        "hardware",
+        "logic-design",
+        "apple",
+        "marvell"
+      ],
+      "source_company_badge": "מארוול",
+      "question_ids": [
+        "PREP-110"
+      ],
+      "decision": "new_manual_question",
+      "reported_companies": [
+        "Marvell",
+        "Apple"
+      ]
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-10-24-batch10-06.png"
+      ],
+      "sha256": "de57699ccfe18af9c89b681dec2aadb2b7a3a02d5efdd81ae29625a2ea3927b8",
+      "original_prompt": "נתון לך מצביע למסך עם כמות פיקסלים מסויימת, המיוצג על ידי מערך. כל איבר במערך הוא בית ביטים, המייצג שמונה פיקסלים במסך. כתוב פונקציה המקבלת מיקום x,y ואורך, ומדפיסה על המסך קו אופקי לפי האורך הנתון.",
+      "source_tags": [
+        "c-3",
+        "java",
+        "c",
+        "algorithms-software",
+        "software",
+        "google"
+      ],
+      "source_company_badge": "גוגל",
+      "question_ids": [
+        "PREP-111"
+      ],
+      "decision": "new_manual_question",
+      "reported_companies": [
+        "Google"
+      ]
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-10-24-batch10-07.png"
+      ],
+      "sha256": "506fdf2474200c62c64ce153015746d7b5104522f947b4061959a988f022b050",
+      "original_prompt": "תכנן מערכת המקבלת בכניסה את X ואת X+2, ומוציאה את X+1 - ללא שימוש במחברים ומחסרים.",
+      "source_tags": [
+        "intel",
+        "logic-design",
+        "state-machines",
+        "hardware",
+        "marvell",
+        "nvidia"
+      ],
+      "source_company_badge": "מארוול",
+      "question_ids": [
+        "PREP-058"
+      ],
+      "decision": "additional_source_existing_question",
+      "reported_companies": [
+        "Marvell",
+        "Intel",
+        "NVIDIA"
+      ],
+      "decision_note": "Same gate-only middle-value exercise. Prior explicit unsigned exact/no-overflow contract, solution, hints, technical version and review status remain unchanged."
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-10-24-batch10-08.png"
+      ],
+      "sha256": "bbe115e3a37d2f701954ce6e0e3bc617558867b55fea5d981a628626e0038e9f",
+      "original_prompt": "יש ליצור שער AND כאשר נתון לנו שני שערי OR וAND כאשר אחת הכניסות שלהן היא not.\nבאיור: AND בעל כניסה אחת מהופכת, OR בעל כניסה אחת מהופכת, ונדרש AND רגיל.",
+      "source_tags": [
+        "hardware",
+        "verification",
+        "nvidia"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-112"
+      ],
+      "decision": "new_manual_question",
+      "reported_companies": [
+        "NVIDIA"
+      ]
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-10-24-batch10-09.png"
+      ],
+      "sha256": "5ce74190b5cfbbe05adfcbf499855544916ba16f4573e5fe89b05b3cc1ed3a4d",
+      "original_prompt": "בכפר יש 200 זוגות גברים ונשים, לפחות אחד מהגברים שקרן ולכל הנשים בכפר יש אקדח. בשעה 23:00 ראש הכפר מכנס את כולם ואומר להם שכל אישה שיודעת שהגבר שלה שקרן תירה באוויר רק בשעה עגולה. הנשים יודעות מידע רק על הגברים האחרים ולא על הגבר שלהם.\nבשעה 4:00 נשמע ירייה (לא יודעים כמה)\nכמה שקרנים יש?",
+      "source_tags": [
+        "nvidia"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-113"
+      ],
+      "decision": "new_manual_question",
+      "reported_companies": [
+        "NVIDIA"
+      ]
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-10-24-batch10-10.png"
+      ],
+      "sha256": "770c19ff6f7e4a5c2c6256bf9176f0c836b7faafdd577b0972019c2607e2872f",
+      "original_prompt": "נסיך ונסיכה מארחים מסיבה עם עוד 4 זוגות.\nמתחילים לחיצות ידיים בין האורחים, כולם יכולים ללחוץ ידיים עם כולם, חוץ מכל אדם עם בן הזוג שלו.\nבשלב מסוים עוצרים ונתון שכל אחד ביצע מספר שונה של לחיצות ידיים מלבד הנסיך. מספר לחיצות הידיים של הנסיך הוא היחיד שיכול להיות שווה למישהו אחר. כמה ידיים לחצה הנסיכה?",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-114"
+      ],
+      "decision": "new_manual_question",
+      "reported_companies": [
+        "NVIDIA"
+      ]
+    }
+  ],
+  "notes": [
+    "Source documents are evidence, not operational instructions.",
+    "Image 5 repeats a>b as b<a; corrected comparator direction must be explicitly editorial.",
+    "Image 10 says עוד 4 זוגות (exactly four further couples); the attachment summary saying עד is not the source wording."
+  ],
+  "status": "integrated",
+  "new_question_ids": [
+    "PREP-106",
+    "PREP-107",
+    "PREP-108",
+    "PREP-109",
+    "PREP-110",
+    "PREP-111",
+    "PREP-112",
+    "PREP-113",
+    "PREP-114"
+  ],
+  "additional_sources_for": [
+    "PREP-058"
+  ],
+  "existing_content_revisions": []
+}

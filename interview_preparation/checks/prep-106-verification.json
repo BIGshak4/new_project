@@ -1,0 +1,12 @@
+{
+  "question_id": "PREP-106",
+  "checked_on": "2026-10-24",
+  "status": "passed",
+  "legal_q_s_r_rows": 6,
+  "disabled_hold_rows": 8,
+  "legal_streams": 6560,
+  "latch_updates": 42648,
+  "master_slave_phase_cases": 36,
+  "oracle": "Independent set/reset/hold branching plus exhaustive complementary NOR fixed points; opposite-phase D-latch composition checked against edge SR behavior.",
+  "scope": "Ideal stable binary states and non-overlapping phases. Forbidden requests are rejected; no prediction of release races, analog startup, metastability, HDL simulation or physical timing."
+}
