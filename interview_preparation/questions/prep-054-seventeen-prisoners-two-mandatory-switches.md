@@ -26,61 +26,76 @@
 
 ## הצעה לפתרון
 
-**פתרון מוצע — סופר אחד, אות שממתין לאיסוף ושתי הזדמנויות דיווח לכל אסיר אחר.**
+**פתרון מוצע — מתג אחד מעביר הודעות, והמתג השני מאפשר לא לפגוע בהן.**
 
-### קודם מפרידים שתי דרישות
+נמנה אסיר אחד לסופר ואת 16 האחרים למדווחים. הסופר אוסף הודעות, לא סופר ביקורים: גם אם אותו אסיר נכנס שוב ושוב, יש לו מכסה מוגבלת של הודעות. נתחיל במקרה הפשוט שבו מתג הספירה מתחיל כבוי, ואז נתאים את הכללים למצב ההתחלתי הלא ידוע שבשאלה.
 
-בטיחות פירושה שאף הכרזה לא תהיה שגויה, בלי קשר לסדר הביקורים. סיום פירושו שהכרזה אכן תקרה; לכך צריך שכל האסירים יחזרו לבקר. לא ניתן להכריח אסיר שמעולם לא נבחר להגיע באמצעות מתג. מותר לקבוע תוכנית לפני הבידוד; בלי אפשרות כזאת המקור אינו מתאר את חידת הפרוטוקול הרגילה.
+### שני מתגים, שני תפקידים
 
-### למה צריך את המתג השני?
+- **מתג א׳ — מתג הספירה (S):** למעלה פירושו שיש הודעה שממתינה לסופר; למטה פירושו שאפשר להשאיר הודעה חדשה. רק מדווחים מעלים אותו, ורק הסופר מוריד אותו.
+- **מתג ב׳ — מתג הסרק (D):** בכל ביקור שבו לא משנים את מתג א׳, הופכים את מתג ב׳ במקום. לא מפיקים ממנו מידע, ומצבו ההתחלתי אינו משנה.
 
-נסמן את המתג הראשון S והוא נושא אותות. המתג השני D הוא מתג דמה: לא מפיקים ממנו שום מידע. בכל ביקור שבו הכללים שלמטה אינם משנים את S, הופכים את D במקום זאת. כך כל ביקור משנה **בדיוק מתג אחד**, גם אם אין שום דבר מועיל לדווח. אם משנים את S, לא נוגעים ב־D. מצבו ההתחלתי של D אינו חשוב.
+כך תמיד הופכים בדיוק מתג אחד. מתג הסרק מאפשר לקיים את חובת הפעולה בלי למחוק הודעה שעוד לא נאספה.
 
-### חלוקת תפקידים וכללי פעולה
+### מתחילים בפשטות: מתג א׳ מתחיל למטה, והדבר ידוע
 
-ממנים אסיר אחד לסופר. 16 האחרים הם מדווחים. כל מדווח זוכר כמה פעמים שלח אות, ומתחיל מאפס; מותר לו לשלוח לכל היותר פעמיים. הסופר שומר מונה פרטי C, שמתחיל מאפס. רק הסופר מכבה את מתג האות, ורק מדווח רשאי להדליק אותו.
+זהו מקרה לימוד פשוט, לא הנחת הפתיחה של השאלה המקורית. מספיק לדעת שמתג א׳ כבוי; מתג ב׳ יכול להתחיל בכל מצב.
 
-**ביקור של מדווח:** אם S כבוי והוא שלח פחות משני אותות, הוא מדליק את S ומגדיל את מונה השליחות הפרטי שלו באחד. הוא אינו שולח פעמיים באותו ביקור. אם S דלוק, או שכבר שלח פעמיים, הופכים רק את מתג הדמה D.
+כל מדווח זוכר רק: **האם כבר שלחתי את ההודעה שלי?**
 
-**ביקור של הסופר:** אם S דלוק, הוא מכבה אותו ומגדיל את C באחד. אם S כבוי, הופכים רק את מתג הדמה D. ברגע ש־C מגיע ל־32, הוא מכריז שכל 17 האסירים ביקרו. הסופר אינו שולח אות לעצמו ואינו סופר ביקורים רגילים או שינויים במתג הדמה.
+| מי נכנס? | מה הוא רואה או זוכר? | מה הוא עושה? |
+| --- | --- | --- |
+| מדווח | א׳ למטה, וטרם שלח הודעה | מעלה את א׳ וזוכר ששלח; לא ישלח שוב |
+| מדווח | א׳ למעלה, או שכבר שלח | הופך רק את ב׳ |
+| הסופר | א׳ למעלה | מוריד את א׳ ומוסיף 1 למונה שלו |
+| הסופר | א׳ למטה | הופך רק את ב׳; המונה לא משתנה |
 
-### אינטואיציה — המתג שומר אסימון אחד
+לדוגמה, דני נכנס ומעלה את א׳. יוסי נכנס אחריו: הוא רואה שיש הודעה ממתינה, ולכן הופך רק את ב׳ ועדיין לא מסמן לעצמו ששלח. כשהסופר מגיע, הוא מוריד את א׳ וסופר הודעה אחת. רק כעת אפשר להשאיר את ההודעה הבאה.
 
-כשמדווח מדליק, הוא משאיר אסימון לסופר. כל עוד האור דלוק, מדווחים אחרים אינם נוגעים בו ולכן אינם מוחקים את האסימון. הסופר מכבה בעת האיסוף, וכך אותו אסימון לא נספר שוב בביקור הבא שלו. הנורה אינה יכולה לצבור כמה אסימונים; מדווח נוסף מחכה לביקור מתאים שבו ימצא אותה כבויה.
+ההודעה אינה נמחקת כשהאחרים נכנסים, והסופר אינו יכול לספור אותה פעמיים: אחרי שאסף אותה, א׳ שוב למטה. גם דני אינו יכול לייצר הודעות נוספות, כי הוא זוכר שכבר שלח.
 
-הסופר לא צריך לזהות מי שלח כל אסימון. ההגבלה המקומית של שתי שליחות לכל מדווח היא שמאפשרת להסיק בסוף שכולם השתתפו.
+**כשהסופר מגיע ל־16, כל 16 המדווחים בוודאות ביקרו.** כל אחד יכול היה לתרום לכל היותר הודעה אחת, ולכן 16 ההודעות באו מ־16 אנשים שונים. הסופר עצמו נמצא בחדר, ולכן כל 17 האסירים ביקרו.
 
-### למה דווקא 32, ומה עושים במצב התחלתי דלוק?
+### חוזרים לשאלה: מה אם מתג א׳ התחיל למעלה?
 
-אור שדלק עוד לפני הביקור הראשון עשוי להיספר כאסימון אחד שאיש לא שלח. זהו **לכל היותר אסימון עודף אחד**, משום שהסופר מכבה אותו כשסופר. אחר כך כל הדלקה מגיעה ממדווח לפי הכללים.
+הסופר עלול להיכנס, להוריד אותו ולספור הודעה שאיש לא שלח. כך הוא עלול להגיע ל־16 עם 15 הודעות אמיתיות בלבד, בזמן שאסיר אחד כלל לא ביקר. זו הסיבה שהשיטה הפשוטה אינה מספיקה למצב התחלתי לא ידוע.
 
-נניח לשם סתירה שאחד מ־16 המדווחים עדיין לא ביקר כשהסופר מכריז. לכל היותר 15 מדווחים יכלו לשלוח, וכל אחד שולח לכל היותר שניים. יחד עם האסימון ההתחלתי:
+המצב ההתחלתי יכול להוסיף **לכל היותר הודעה מדומה אחת**: הסופר מכבה אותה באיסוף הראשון; כל הדלקה מאוחרת יותר חייבת להגיע ממדווח.
+
+### הפתרון למצב לא ידוע: מכסה של שתי הודעות וספירה עד 32
+
+משנים רק שני דברים:
+
+1. כל מדווח רשאי לשלוח **עד שתי הודעות בסך הכול**, בביקורים נפרדים. הוא זוכר אם שלח 0, 1 או 2. הוא מעלה את א׳ רק כשהוא למטה ונותרה לו מכסה; בכל מקרה אחר הופך רק את ב׳.
+2. הסופר פועל כמקודם, אבל מכריז רק אחרי **32 איסופים**. כשהוא מוריד את א׳, הוא מוסיף 1; אם א׳ כבר למטה, הוא הופך רק את ב׳ בלי לספור.
+
+| מצב הפתיחה של א׳ | מכסת הודעות לכל מדווח | מתי הסופר מכריז? |
+| --- | --- | --- |
+| ידוע שלמטה | עד הודעה אחת | אחרי 16 איסופים |
+| לא ידוע — השאלה שלנו | עד שתי הודעות | אחרי 32 איסופים |
+
+### למה 32 מוכיח שכולם ביקרו?
+
+דמיינו שאסיר אחד עדיין לא נכנס אפילו פעם אחת. נשארים רק 15 מדווחים שיכולים לשלוח הודעות. כל אחד רשאי לשלוח עד שתיים:
 
 ```text
-C <= 2*15 + 1 = 31 < 32
+15 × 2 = 30 הודעות אמיתיות לכל היותר
+30 + 1 = 31, גם עם ההודעה המדומה מההתחלה
 ```
 
-לכן אי אפשר להגיע ל־32 אם מדווח כלשהו לא ביקר. גם הסופר עצמו ביקר, מפני שהוא מבצע את ההכרזה במהלך ביקור שלו. מכאן שכל 17 האסירים ביקרו בוודאות.
+**אם חסר אפילו מדווח אחד, אי אפשר להגיע ל־32.** לכן ספירה של 32 מוכיחה שכל 16 המדווחים ביקרו. גם הסופר ביקר, כי ההכרזה נעשית בזמן ביקורו.
 
-הטענה אינה שכולם בהכרח שלחו פעמיים בזמן ההכרזה. אם התחילו באור דלוק, ייתכן שאחד שלח רק פעם אחת. ההכרזה דורשת ביקור, לא ניצול מלא של כל מכסת האותות.
+אין צורך לדעת מי שלח כל הודעה. גם אין צורך שכולם ישלחו פעמיים לפני ההכרזה: אם הייתה הודעה מדומה בהתחלה, ייתכן שאחד המדווחים שלח רק פעם אחת. המטרה היא להוכיח שכולם **ביקרו**, לא שכולם מיצו את מכסתם.
 
-### למה זה מסתיים?
+### למה התהליך יסתיים?
 
-אם S דלוק, ביקור עתידי של הסופר יאסוף אות ויכבה אותו. אם S כבוי ועדיין חסרים אותות, יש מדווח שטרם ניצל את שתי שליחותיו; תחת הוגנות הוא יבקר שוב וידליק. אחרי כל פעולה מועילה קטן מספר האותות שעוד צריך לשלוח או לאסוף. יש בסך הכול מכסה סופית של 32 אותות אמיתיים ואולי אות התחלתי, ולכן תחת ביקורים הוגנים הסופר יגיע לסף. אין חסם קבוע למספר הביקורים חסרי התועלת בין הפעולות.
+הודעה שנשארת למעלה מחכה עד לביקור הבא של הסופר. כשא׳ למטה ועדיין לא הגענו ל־32, יש מדווח שנותרה לו מכסה; בביקור מתאים הוא יוכל לשלוח. כל שליחה או איסוף מקדמים את התהליך.
 
-בבחירה עצמאית ואחידה, חזרה אינסופית של כל אסיר מתרחשת בהסתברות 1, ולכן גם סיום הוא כמעט ודאי. הבטיחות עצמה אינה הסתברותית: גם סדר ביקורים חריג לא יפיק הכרזה שגויה. סדר לא הוגן עלול פשוט לא להסתיים.
+בהנחה שכל אסיר ממשיך להיבחר שוב ושוב, נגיע לסף. בבחירה עצמאית ואחידה זה קורה בהסתברות 1. אין מספר ביקורים קבוע שמבטיח סיום: ייתכנו ביקורים רבים שבהם רק הופכים את ב׳. אם אסיר מסוים לעולם אינו נבחר, התהליך עלול לא להסתיים, אבל לא תצא ממנו הכרזה שגויה.
 
-### אם ידוע שהאות מתחיל כבוי
+### זיכרון ובדיקות
 
-אפשר לקצר: כל אחד מ־16 המדווחים מדליק פעם אחת בלבד, והסופר מכריז אחרי 16 איסופים. אין אות התחלתי שגוי, וכל איסוף מוכיח מדווח אחר. כללי מתג הדמה נשארים כדי לקיים שינוי של מתג אחד בכל ביקור. זו חלופה רק כשמצב התחלתי כבוי ידוע; אסור להעביר אליה בשקט את הפתרון למצב לא ידוע.
-
-דוגמה נגדית לשיטה המקוצרת כאשר המצב אינו ידוע: בשלושה אסירים, אור התחלתי דלוק נספר, מדווח אחד שולח עוד אות, והסופר מגיע לשניים למרות שהמדווח השני כלל לא ביקר. לכן מכסה של אות אחד וסף 16 אינם בטוחים בנוסח הנוכחי.
-
-### זיכרון ואימות
-
-כל מדווח שומר ערך מקומי 0,1,2; הסופר שומר מונה עד 32. הפעולה בכל ביקור היא בזמן קבוע; סך הזיכרון המקומי לכל האסירים הוא ליניארי במספרם, אך אין חסם דטרמיניסטי לאורך סדרת הביקורים. לא נטען שזהו הפרוטוקול המהיר או הקצר ביותר.
-
-הקוד המצורף הוא מודל פרוטוקול לבדיקה. במציאות לכל אסיר יש רק זיכרונו שלו ומצב המתג הנראה; אין מחשב מרכזי שקורא את המונים הפרטיים. הבדיקות הממצות משתמשות בסימטריה בין מדווחים כדי לבדוק את כל המצבים הנגישים לפי מספר האותות שכל אחד שלח. בדיקות אקראיות הן דוגמאות נוספות בלבד; הוכחת הסיום נשענת בנפרד על ההוגנות.
+בגרסה הראשית כל מדווח זוכר 0, 1 או 2 שליחות, והסופר זוכר מונה עד 32. כל ביקור דורש עבודה קבועה; אין כאן טענה למינימום ביקורים או זמן המתנה. הקוד המצורף הוא מודל בדיקה: במציאות כל אסיר יודע רק את זיכרונו שלו ואת מצב המתגים, ולא קורא את המונים של האחרים. בדיקות המצבים מאמתות את כללי האיתות ואת בטיחות ההכרזה; הוכחת הסיום דורשת בנפרד את הנחת הביקורים ההוגנים.
 
 ![כללי הפרוטוקול וחסם הכרזה בטוחה](../diagrams/prep-054-signal-protocol-he.png)
 
@@ -171,61 +186,76 @@ Editorial clarification: pre-agreement, private memory, unknown initial state an
 
 ## Proposed solution
 
-**Proposed solution — one counter, one pending token and two reporting opportunities per contributor.**
+**Proposed solution — one switch carries messages; the other lets visitors leave those messages intact.**
 
-### Separate safety from termination
+Choose one prisoner as the counter and the other 16 as reporters. The counter collects messages, not visits: repeated visits by one person cannot create unlimited messages. First understand the simpler case where the signal switch is known to start OFF; then adapt it to the unknown initial state in the actual question.
 
-Safety means every declaration is correct under any visit order. Termination means a declaration eventually happens; that requires every prisoner to return. A switch cannot force an unselected prisoner to visit. The strategy is agreed before isolation; without pre-agreement, the source is not the usual coordinated-protocol puzzle.
+### Two switches, two jobs
 
-### Why use the second switch?
+- **Switch A — the signal switch (S):** UP means a message is waiting for the counter; DOWN means a new message can be left. Only reporters turn it ON, and only the counter turns it OFF.
+- **Switch B — the dummy switch (D):** whenever a visitor does not change A, they toggle B instead. Nobody reads information from B, so its initial state is irrelevant.
 
-Call the signal switch S. The other switch D is a dummy: nobody extracts information from it. On any visit where the rules below do not change S, toggle D instead. Thus EVERY visit toggles exactly ONE switch, even without useful information to send. A visit changing S must not change D. The dummy's initial state is irrelevant.
+Every visit therefore toggles exactly one switch. The dummy satisfies the mandatory action without erasing a message that has not been collected.
 
-### Roles and visit rules
+### Start with the simple case: A is initially known DOWN
 
-Designate one counter. The other 16 prisoners are contributors. Each remembers how many tokens they have sent, initially zero, with a lifetime allowance of TWO. The counter privately stores C, initially zero. Only the counter turns the signal OFF; only contributors turn it ON.
+This is a learning example, not the original question's initial-state assumption. Only A must be known OFF; B may start in either state.
 
-**Contributor visit:** if S is OFF and fewer than two tokens have been sent, turn S ON and increment the private sent count. Send only once on this visit. If S is ON or the allowance is exhausted, toggle ONLY dummy D.
+Each reporter remembers just: **Have I already sent my message?**
 
-**Counter visit:** if S is ON, turn it OFF and increment C. If S is OFF, toggle ONLY dummy D. When C reaches 32, declare that all 17 have visited. The counter never contributes a token to themself and does not count ordinary visits or dummy changes.
+| Visitor | What do they see or remember? | Action |
+| --- | --- | --- |
+| Reporter | A is DOWN and they have not sent | Turn A UP, remember sending, and never send again |
+| Reporter | A is UP, or they have already sent | Toggle B only |
+| Counter | A is UP | Turn A DOWN and add 1 to their count |
+| Counter | A is DOWN | Toggle B only; do not change the count |
 
-### Intuition: one stored token
+For example, Dan enters and turns A UP. Joseph enters next: a message is waiting, so he toggles only B and does not mark himself as having sent. When the counter arrives, they turn A DOWN and count one message. Only now can the next message be left.
 
-A contributor's OFF-to-ON action leaves a token. While it is ON, other contributors do not change S, so they cannot erase it. The counter turns it OFF when collecting, preventing recounting on the next visit. The signal cannot store several tokens at once; the next contributor must wait for a suitable visit while it is OFF.
+Other visitors do not erase the waiting message. The counter cannot count it twice, because collecting it leaves A DOWN. Dan cannot create extra messages either, because he remembers already sending.
 
-The counter never learns who sent each token. The private per-contributor allowance provides enough information to conclude that everybody participated.
+**At 16 collections, all 16 reporters must have visited.** Each person could contribute at most one message, so the 16 messages came from 16 different people. The counter is also in the room, which accounts for all 17 prisoners.
 
-### Why 32, including an initially ON signal?
+### Back to the actual question: what if A started UP?
 
-An initially ON signal can be counted as one token nobody sent. It contributes at most ONE phantom token because the counter clears it on collection. Every later ON event is a genuine contributor action.
+The counter could enter, turn it DOWN and count a message nobody sent. They could then reach 16 with only 15 genuine messages while one prisoner has never visited. That is why the simple strategy is unsafe when the initial state is unknown.
 
-Suppose one of the 16 contributors had not visited when the counter declares. At most 15 contributors could have sent, at most twice each. Including the initial phantom:
+The initial state can contribute **at most one phantom message**: the counter clears it on the first collection; every later ON event must come from a reporter.
+
+### The unknown-state solution: two-message allowance and a target of 32
+
+Change just two things:
+
+1. Each reporter may send **at most two messages in total**, on separate visits. They remember sending 0, 1 or 2. They turn A UP only when it is DOWN and they have unused allowance; otherwise they toggle B only.
+2. The counter acts as before but declares only after **32 collections**. Turning A DOWN adds 1; finding it already DOWN means toggling B without counting.
+
+| Initial state of A | Allowance per reporter | Declaration target |
+| --- | --- | --- |
+| Known DOWN | At most one message | 16 collections |
+| Unknown — our actual question | At most two messages | 32 collections |
+
+### Why does 32 prove that everyone visited?
+
+Imagine one prisoner has never entered. Only 15 reporters remain available to send messages, each at most twice:
 
 ```text
-C <= 2*15 + 1 = 31 < 32
+15 × 2 = at most 30 genuine messages
+30 + 1 = 31, even with the initial phantom message
 ```
 
-Thus C cannot reach 32 while any contributor is missing. The counter has also visited, because the declaration is made on their own visit. Therefore all 17 have certainly visited.
+**With even one reporter missing, 32 is impossible.** Reaching 32 therefore proves that all 16 reporters visited. The counter also visited, because the declaration happens during their visit.
 
-This does not claim everyone necessarily sent twice before the declaration. With an initially ON signal, one may have sent only once. The required fact is visiting, not exhausting all allowances.
+The counter does not need to identify each sender. Nor must everyone send twice before the declaration: with an initial phantom message, one reporter may have sent only once. The goal is to prove that everyone **visited**, not that everyone exhausted their allowance.
 
-### Why it eventually finishes
+### Why will the process finish?
 
-If S is ON, a future counter visit collects and clears it. If S is OFF and more tokens are needed, at least one contributor still has unused allowance; fairness guarantees a future visit when productive progress can occur. Each productive step reduces the remaining number of tokens to emit or collect. At most 32 genuine tokens and one initial token exist, so under fair repeated visitation the counter eventually reaches the threshold. No fixed bound limits the unproductive visits between those steps.
+An UP message waits until the counter returns. If A is DOWN and the count is still below 32, some reporter has unused allowance and can send on a suitable visit. Every send or collection advances the process.
 
-Independent uniform selection visits everyone infinitely often with probability one, so termination is almost sure in that model. Safety is not probabilistic: even an unusual order cannot produce a false declaration. An unfair order can simply fail to terminate.
+If every prisoner keeps being selected repeatedly, the target is eventually reached. Independent uniform selection has this property with probability 1. There is no fixed visit bound: many visits may merely toggle B. A schedule that never selects some prisoner can stall forever, but cannot produce a false declaration.
 
-### If the signal is initially known OFF
+### Memory and checks
 
-Use one token per contributor and declare after 16 collections. With no phantom token, every collection proves a distinct contributor. Keep the dummy-switch rule to satisfy the mandatory one-toggle action on every visit. This is only the known-OFF variant; do not silently apply it to an unknown initial state.
-
-Counterexample for the shortened strategy with unknown initial state: with three prisoners, the initially ON signal is counted, one contributor sends another token, and the counter reaches two although the other contributor has never visited. Thus a one-token allowance and threshold 16 are unsafe for the present unknown-state question.
-
-### Memory and verification
-
-Each contributor stores 0,1,2 locally; the counter stores a count through 32. Each visit takes constant work. Total private memory is linear in prisoner count, but no deterministic visit-sequence length bound exists. This is not a claim of optimal speed or minimum state.
-
-The attached code is a protocol test model. Real prisoners access only their own memory and the visible switch, not everybody's private counters. Exhaustive checks exploit contributor symmetry to explore every reachable aggregate state by tokens emitted. Random executions are additional examples only; the termination proof separately uses fairness.
+In the main version each reporter remembers 0, 1 or 2 sends, and the counter remembers a count through 32. Each visit takes constant work; no minimum-visit or waiting-time claim is made. The attached code is a test model: real prisoners know only their own memory and the visible switches, not everyone else's counters. State exploration checks the signaling rules and declaration safety; termination separately requires fair repeated visits.
 
 ![Protocol rules and safe declaration bound](../diagrams/prep-054-signal-protocol-en.png)
 
@@ -401,3 +431,9 @@ The known-state exhaustive search checked 402 states and 1,196 transitions; unkn
 - [Variant code](../solutions/prep_054_101_prisoners_variant.py)
 - [Variant checks](../checks/check_prep_054_101.py)
 - [Variant evidence](../checks/prep-054-101-verification.json)
+
+## עדכון ניסוח — 24.10.2026
+
+ההסבר הראשי שוכתב על בסיס הניסוח שהראל שלח: תפקידי מתג הספירה ומתג הסרק, דוגמת פתיחה כבויה וטבלת פעולות, ואז התאמה מפורשת למצב התחלתי לא ידוע. הנוסח מדייק שמותר לשלוח עד פעמיים ושהסופר סופר הודעות. וריאציית 101 האסירים, השאלה, הרמזים וקוד המודל נשמרו. שינוי הנוסח אינו יורש את האישור האנושי של גרסת הפתרון הקודמת.
+
+[ניסוח ההסבר שמסר הראל](../sources/prep-054-user-explanation-2026-10-24.md) נשמר כחומר עריכה בנפרד מנוסח הלומד.

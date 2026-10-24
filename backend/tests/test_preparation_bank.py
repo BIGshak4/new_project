@@ -208,11 +208,12 @@ def test_third_intake_is_bilingual_study_only_and_preserves_frozen_solution_revi
             assert not safe.reviewed and safe.difficulty is None
             assert text.reference_solution not in safe.model_dump_json(), ident
 
-    # The new batch cannot inherit an attestation or invalidate the existing frozen snapshot.
+    # The new batch cannot inherit an attestation. The separately rewritten
+    # PREP-054 explanation no longer matches its retained frozen attestation.
     registry = json.loads((SEEDS / "solution_review_attestations.json").read_text(encoding="utf-8"))
     reviewed = {q.key for q in catalog.questions.values() if solution_review(q).status == "human_reviewed"}
     assert len(registry["questions"]) == 93
-    assert reviewed == set(registry["questions"])
+    assert reviewed == set(registry["questions"]) - {"prep-seventeen-prisoners-two-mandatory-switches"}
     assert not (set(q.key for q in additions.values()) & reviewed)
 
 
