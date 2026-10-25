@@ -61,6 +61,7 @@ PRIMARY = [
     "arrays_and_search", "arrays_and_search", "debugging_methodology", "binary_arithmetic", "arrays_and_search", "basic_data_structures", "latches_flip_flops", "setup_hold_timing", "bit_manipulation",
     "latches_flip_flops", "combinational_blocks", "arrays_and_search", "combinational_blocks", "combinational_blocks", "bit_manipulation", "combinational_blocks", "estimation_sanity_checks", "estimation_sanity_checks",
     "estimation_sanity_checks", "arrays_and_search", "basic_data_structures", "debugging_methodology", "binary_arithmetic", "combinational_blocks",
+    "estimation_sanity_checks", "binary_arithmetic", "basic_data_structures", "estimation_sanity_checks", "arrays_and_search",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.
@@ -78,7 +79,7 @@ def strip_personal(value):
 
 def paths_in(value):
     if isinstance(value, str):
-        yield from re.findall(r"(?:sources|diagrams|solutions)/[\w./-]+\.(?:png|sv|py|cpp|java)", value)
+        yield from re.findall(r"(?:sources|diagrams|solutions)/[\w./-]+\.(?:png|sv|py|cpp|java|asm)", value)
     elif isinstance(value, dict):
         for v in value.values():
             yield from paths_in(v)

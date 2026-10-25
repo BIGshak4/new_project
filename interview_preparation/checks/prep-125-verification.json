@@ -1,0 +1,12 @@
+{
+  "question_id": "PREP-125",
+  "checked_on": "2026-10-25",
+  "status": "passed",
+  "exhaustive_grid_pairs": 1089,
+  "seeded_pairs": 100,
+  "extra_boundary_pairs": 4,
+  "program_executions": 2386,
+  "maximum_executed_instructions": 66117,
+  "oracle": "Python multiplication and absolute difference, independent of the expanded ISA programs; strict instruction, underflow, last-result branch and halting checks.",
+  "scope": "Educational four-op interpreter execution on unbounded natural registers; not compiled machine assembly, hardware timing or human professional approval."
+}

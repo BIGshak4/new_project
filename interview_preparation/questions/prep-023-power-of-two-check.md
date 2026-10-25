@@ -101,3 +101,8 @@ Reported companies: NVIDIA, Apple.
 ### English clarification
 
 Same power-of-two predicate; retain the existing edited integer/nonnegative-exponent contract, including one and excluding zero/negatives. Existing learner copy is unchanged.
+
+
+## מקור נוסף — 25.10.2026
+
+הצילום חוזר על בדיקת חזקה של שתיים למספר unsigned. אותה שאלה; נותרו בדיקת אפס והקישור ל־SW-002 ול־PREP-105 בעלת חוזה signed שונה.

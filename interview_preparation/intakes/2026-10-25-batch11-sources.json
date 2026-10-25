@@ -1,0 +1,247 @@
+{
+  "intake_date": "2026-10-25",
+  "batch": "batch11",
+  "screenshot_count": 11,
+  "question_source_count": 10,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-10-25-batch11-01.png"
+      ],
+      "sha256": "6729a363055f8b52157c6e9204731cb03369735675f75f776affe15b26e883fe",
+      "original_prompt": "כתיבת פונקציות free ו-alloc לניהול זיכרון. זיכרון עם 32 שורות חוץ מהזיכרון יש int32 reg שניתן להשתמש בו. (int ולא מערך)",
+      "source_tags": [
+        "hardware",
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-102"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-10-25-batch11-02.png"
+      ],
+      "sha256": "705fecbd0834c300871395efc24a1bf81d98950aee26aae7019890b7a5d223b8",
+      "original_prompt": "ממש באמצעות רכיבי Full-Adder מכונה הסופרת את כמות ה'1' בכניסה בעלת 5 סיביות.",
+      "source_tags": [
+        "nvidia",
+        "logic",
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel",
+        "NVIDIA"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-001"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-10-25-batch11-03.png"
+      ],
+      "sha256": "be9bdcd3e82e4f21ff46e63db8efb7a3e51228dfb3899a58ff581e771b14dc86",
+      "original_prompt": "מקבלים מערך שיש בו רק את הספרות 0,1,2. צריך למצוא דרך למיין אותו על ידי מעבר אחד במערך וללא מערך עזר.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-019"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-10-25-batch11-04.png"
+      ],
+      "sha256": "d087132728dab06d68cf28bee7e388a4e3cb68d5822018c5d4487828198fa38b",
+      "original_prompt": "ממש מכונת מצבים אשר מזהה מספרים מתחלקים בשלוש (מקבלת רצף של אחדים ואפסים)",
+      "source_tags": [
+        "hardware",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-036"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-10-25-batch11-05.png"
+      ],
+      "sha256": "c636b7ddc6afd57b7c040535ed1f267ca91d01381ea8a72ab15fd5fba6ac644e",
+      "original_prompt": "סוחר רוצה להעביר את 3000 הבננות שלו לשוק הנמצא 1000 ק״מ מהן. לשם כך הוא משתמש בגמל שלו, שיכול לסחוב 1000 בננות לכל היותר בכל פעם, ואוכל בננה אחת בכל קילומטר שעובר. מהו מקסימום הבננות שיוכל הסוחר להעביר לשוק?",
+      "source_tags": [
+        "apple",
+        "logic",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox",
+        "Apple"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-121"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-10-25-batch11-06.png"
+      ],
+      "sha256": "0d27fb2950fd05ef3c02a5044e6c83da7239968f71a6e4f17b07fa717a43ac4d",
+      "original_prompt": "כתוב פונקציה הקובעת האם מספר הוא חזקה של 2. הפונקציה מקבלת את המספר unsigned int n ומחזירה ערך בוליאני.",
+      "source_tags": [
+        "intel",
+        "hardware",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox",
+        "Intel"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-023"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-10-25-batch11-07.png"
+      ],
+      "sha256": "369afe32b29cee14a43bd7e6c5f21e2d15bdf181db1e6c1ade0c45dd7ed899d0",
+      "original_prompt": "תכנן מחבר עבור 2 מספרים בעלי 4 סיביות כל אחד באמצעות HA בלבד",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-122"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-10-25-batch11-08.png"
+      ],
+      "sha256": "a6f3a609e5a86c2e51e6e91e10466b64862e82bee63ecf10e92ede60637fc49c",
+      "original_prompt": "הראה דרך לחישוב ביטוי מתמטי הנתון בצורת postorder בעזרת מחסנית.\nלמשל: הביטוי 3,2,+,5,+,2,* יחושב כך: ((3+2)+5)*2.",
+      "source_tags": [],
+      "reported_companies": [],
+      "source_company_badge": null,
+      "question_ids": [
+        "PREP-123"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-10-25-batch11-09.png"
+      ],
+      "sha256": "16f4467adfa7b73245f488911752648d24067c6f1505714d862a2ee80a2f9378",
+      "original_prompt": "ברשותך שני פתילים. ידוע לך שמן הרגע שהדלקת את קצהו של אחד הפתילים, הוא יבער במשך שעה אחת בדיוק. קצב הבעירה אינו אחיד (כלומר - חצי פתיל לא בהכרח יבער במשך חצי שעה). מדוד שלושת רבעי השעה בעזרת שני הפתילים.",
+      "source_tags": [
+        "logic",
+        "applied-materials"
+      ],
+      "reported_companies": [
+        "Applied Materials"
+      ],
+      "source_company_badge": "Applied Materials",
+      "question_ids": [
+        "PREP-124"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-10-25-batch11-10.png"
+      ],
+      "sha256": "4a3e814c68690818c3bcf869743bcf890d68772c5acaeecb5ef94981360a30b4",
+      "original_prompt": "על פי הדרישות המצורפות בקובץ (באמצעות הפקודות הרשומות בלבד!!!) ממש שתי פונקציות:\n1. תוצאת המכפלה של שני ערכי רגיסטרים A ו-B\n2. ערך מוחלט של הפרש הרגיסטרים A ו-B.",
+      "source_tags": [],
+      "reported_companies": [],
+      "source_company_badge": null,
+      "question_ids": [
+        "PREP-125"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-10-25-batch11-11.png"
+      ],
+      "sha256": "9acdce8e0e1bc0268f8fe79fb6ab06b2913a6f22e23d30571e97ce8e58e765a9",
+      "original_prompt": "Primitive Assembly Question:\nAssume your assembly language includes ONLY the following instructions:\n- 'inc REG': increments a given register by one.\n- 'dec REG': decrements a given register by one.\n- 'jnz LABEL': jumps to a given LABEL if the previous instruction's result was not zero.\n- 'HALT': stops running.\nIn addition the language holds registers A, B, ..., Z, which you can assume are initialized at program start to zero.\nTask: You have not negative values in registers A and B and need to put into C the result of the multiplication A*B.",
+      "source_tags": [],
+      "reported_companies": [],
+      "source_company_badge": null,
+      "question_ids": [
+        "PREP-125"
+      ],
+      "decision": "new_manual_question",
+      "transcription_note": "Instruction text transcribed; unrelated personal filename heading deliberately omitted. Original pixels retained privately. All learner-facing filenames/labels and the authored instruction card must be neutral.",
+      "supplements_screenshot": 10
+    }
+  ],
+  "notes": [
+    "Images 10 and 11 form one question with two requested programs.",
+    "Document commands are the question ISA, not operational instructions.",
+    "The supplied instruction photo is reference only: redraw a clean bilingual prompt card in the site style, with no personal filename/name in learner text or artifact names."
+  ],
+  "status": "integrated",
+  "new_question_ids": [
+    "PREP-121",
+    "PREP-122",
+    "PREP-123",
+    "PREP-124",
+    "PREP-125"
+  ],
+  "additional_sources_for": [
+    "PREP-001",
+    "PREP-019",
+    "PREP-023",
+    "PREP-036",
+    "PREP-102"
+  ],
+  "existing_content_revisions": [
+    "PREP-001",
+    "PREP-019"
+  ]
+}

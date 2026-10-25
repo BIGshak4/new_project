@@ -1,0 +1,14 @@
+{
+  "question_id": "PREP-001",
+  "variant": "five_input_fa_only",
+  "status": "passed",
+  "fa_primitive_rows": 8,
+  "input_vectors": 32,
+  "weighted_column_checks": 96,
+  "zero_cell_networks_excluded": 1,
+  "one_cell_networks_excluded": 56,
+  "two_cell_networks_excluded": 6720,
+  "invalid_inputs_rejected": 4,
+  "minimum_fa_count_under_declared_model": 3,
+  "scope": "Complete finite Boolean enumeration: three-input FA cells, raw inputs/free zero, arbitrary repeated pins/fanout, acyclic wiring and direct output taps. No extra logic/complements/constants. Python only, not HDL, physical timing, area or power proof; human review pending."
+}

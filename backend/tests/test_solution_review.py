@@ -19,6 +19,7 @@ REVISED_ROBOT_KEY = "prep-identical-robots-trains-static-marker-rendezvous"
 REVISED_SOLUTION_KEYS = {
     REVISED_SOLUTION_KEY, REVISED_ROBOT_KEY,
     "prep-xor-mux-zero-only", "prep-one-two-missing-values", "prep-three-bit-up-down-counter-gates",
+    "prep-eight-bit-popcount-adders", "prep-three-color-in-place-partition",
 }
 
 
@@ -62,7 +63,7 @@ def test_prisoner_explanation_revision_preserves_but_does_not_inherit_old_attest
         assert summary(row, language).solution_review.status == "pending_review"
         assert detail(row, language).solution_review.status == "pending_review"
     reviewed = {q.key for q in catalog.questions.values() if solution_review(q).status == "human_reviewed"}
-    assert len(reviewed) == 88
+    assert len(reviewed) == 86
     assert reviewed == set(registry["questions"]) - REVISED_SOLUTION_KEYS
 
 
@@ -101,7 +102,8 @@ def test_changed_content_loses_attestation(catalog, change):
 
 
 def test_operational_metadata_and_private_sources_do_not_change_scope(catalog):
-    question = next(q.model_copy(deep=True) for q in catalog.questions.values() if q.assets.get("preparation_id"))
+    question = next(q.model_copy(deep=True) for q in catalog.questions.values()
+                    if q.assets.get("preparation_id") == "PREP-002")
     baseline = solution_content_hash(question)
     question.times_served += 7
     question.assets["content_hash"] = "operational"
@@ -150,7 +152,7 @@ def test_solution_review_metadata_does_not_reset_general_seed_approval(catalog):
     spec = importlib.util.spec_from_file_location("review_seed_db", BACKEND / "scripts/seed_db.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    question = next(q for q in catalog.questions.values() if q.assets.get("preparation_id"))
+    question = next(q for q in catalog.questions.values() if q.assets.get("preparation_id") == "PREP-002")
     before = question.model_copy(deep=True)
     before.assets.pop("solution_review")
     assert module.content_hash(before) == module.content_hash(question)

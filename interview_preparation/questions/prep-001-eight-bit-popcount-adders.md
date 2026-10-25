@@ -187,3 +187,8 @@ Four is minimum only for a weight-preserving FA/HA bit-reduction network: reduci
 בדוגמה x6..x0=1001101: FA1 מקבל (1,0,1) ומוציא sA=0,cA=1; FA2 מקבל (1,0,0) ומוציא sB=1,cB=0; FA3 מקבל (0,1,1) ומוציא y0=0,cC=1; FA4 מקבל (1,0,1) ומוציא y1=0,y2=1. הפלט 100. חוטים בעלי אותו שם בשרטוט מחוברים פיזית, גם כאשר קו ארוך הוחלף בתוויות. כל Cin הוא ביט קלט במשקל השווה ל־A ול־B של אותו מחבר; מותר לחבר אליו ביט נתון, אין צורך שיהיה נשא ממחבר קודם.
 
 Intuition: a full adder splits up to three ones into a pair (carry) and a leftover unit (sum). FA1/FA2 keep pairs cA,cB and leftovers sA,sB. FA3 combines the leftovers and seventh input, yielding final unit y0 and another pair cC. FA4 counts the three pair indicators; its sum has original weight 2 and its carry original weight 4, giving y1,y2. Read output as y2y1y0. For input x6..x0=1001101: FA1 inputs (1,0,1) -> (sA,cA)=(0,1); FA2 (1,0,0)->(sB,cB)=(1,0); FA3 (0,1,1)->(y0,cC)=(0,1); FA4 (1,0,1)->(y1,y2)=(0,1). Output 100. Repeated net labels in the diagram denote the same physical connection. Cin has the same weight as A and B within a full adder and may receive an ordinary input bit.
+
+
+## מקור נוסף — 25.10.2026
+
+נוספה גרסת כניסה מקבילית בת5 ביט באמצעות Full Adder בלבד, לצד גרסאות8 ו7 הביט הקיימות. [הרחבת5 הביט](prep-001-five-input-fa-only-batch11.md).

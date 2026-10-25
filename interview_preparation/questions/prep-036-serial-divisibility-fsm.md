@@ -107,3 +107,8 @@ Verification: 8191 words, 90114 prefixes, both models and state distinction pass
 ![כפולות חיוביות בלבד](../diagrams/prep-036-positive-fsm-round.png)
 
 ![תמונת סגנון מקורית](../sources/prep-036-round-state-style-reference.png)
+
+
+## מקור נוסף — 25.10.2026
+
+הצילום מבקש התחלקות בשלוש בלי לדרוש מספר חיובי בלבד. הוא ממופה לענף הרגיל, הכולל אפס, שכבר נשמר בפתרון; הדרישה החיובית מהמקור הישן נשארת בגרסה הראשית ולא נוספה לצילום החדש.

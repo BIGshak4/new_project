@@ -1,0 +1,11 @@
+{
+  "question_id": "PREP-122",
+  "status": "passed",
+  "ha_primitive_rows": 4,
+  "operand_pairs": 256,
+  "weighted_column_checks": 1024,
+  "exclusive_carry_and_zero_discard_checks": 768,
+  "ha_cells_in_construction": 10,
+  "invalid_inputs_rejected": 5,
+  "scope": "Exhaustive fixed-width Python Boolean model versus ordinary integer addition and column invariants. Ten HA is a construction, not a minimum. No HDL compilation, synthesis or physical timing/power/area validation; human professional review pending."
+}

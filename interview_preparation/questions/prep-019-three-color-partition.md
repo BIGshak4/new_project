@@ -97,3 +97,8 @@ Each iteration shrinks the unknown region by one, giving exactly n iterations an
 Exhaustive tests covered 9,841 arrays of lengths 0..8, the source example, monochrome and long sorted/reversed cases. Checks verify ordering, list identity, preservation of all original objects and exactly one key/color classification per original object.
 
 התוכן נוצר בסיוע AI וממתין לסקירה; טרם פורסם באתר.
+
+
+## מקור נוסף — 25.10.2026
+
+נוספה גרסה מספרית0/1/2 עם מעבר חלוקה יחיד ומקום קבוע. [הרחבה מלאה](prep-019-numeric-012-variant.md).

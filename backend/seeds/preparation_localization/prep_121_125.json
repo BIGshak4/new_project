@@ -1,0 +1,412 @@
+{
+  "PREP-122": {
+    "assumptions": {
+      "he": [
+        "שני קלטים ללא סימן בני ארבעה ביטים; פלט מדויק בן חמישה ביטים, ללא Cin חיצוני.",
+        "רק רכיבי HA עם שני מוצאים; חיווט ופיצול מותרים, ואין שערים חיצוניים, FA או אוגרים.",
+        "המעגל צירופי וערכי הכניסה בינאריים יציבים; אין טענת תזמון או מינימום פיזי."
+      ],
+      "en": [
+        "Two unsigned four-bit inputs, exact five-bit output and no external Cin.",
+        "Only two-output HA primitives; wires/fanout allowed, no external gates, FAs or registers.",
+        "Combinational settled binary inputs; no physical timing or minimum-size claim."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "construction": "10 HA: אחד בעמודה הנמוכה ועוד שלושה לכל עמודה גבוהה.",
+        "scope": "אין דרישת מינימום במקור, ולא נטען ש־10 מזערי.",
+        "scaling": "אותה תבנית לרוחב n משתמשת ב־3n−2 רכיבי HA ובאורך תלות 2n−1 לרכיבים עד הנשׂא האחרון; O(n) משאבים ועומק מבני, ללא תדר פיזי."
+      },
+      "en": {
+        "construction": "10 HAs: one in the lowest column and three in each higher column.",
+        "scope": "The source does not demand a minimum, and ten is not claimed minimal.",
+        "scaling": "At width n the same template uses 3n−2 HAs and 2n−1 component dependency layers to the last carry: O(n) resources/structural depth, without a physical frequency claim."
+      }
+    },
+    "verification": {
+      "he": "נבדקו ארבע שורות HA, כל 256 זוגות A,B, כל 1,024 משוואות העמודות, 768 מקרי בלעדיות נשאים ו־Ui=0, וחמש דחיות קלט. ההשוואה היא לחיבור שלמים עצמאי. מודל Python בלבד, ללא HDL, סינתזה או מדידה.",
+      "en": "Checked four HA rows, all 256 A,B pairs, 1,024 column equations, 768 exclusive-carry/Ui=0 cases and five invalid inputs. Compared against independent integer addition. Python only; no HDL, synthesis or measurements."
+    },
+    "edge_cases": {
+      "he": [
+        "0000+0000=00000.",
+        "1111+1111=11110; אין להשמיט את הביט החמישי.",
+        "1111+0001=10000 בודק מעבר נשא דרך כל העמודות.",
+        "1111+0000=01111 בודק היעדר גלישה.",
+        "Ui הוא Carry של HA האיחוד ואפס תמיד; C(i+1) מגיע דווקא ממוצא Sum שלו."
+      ],
+      "en": [
+        "0000+0000=00000.",
+        "1111+1111=11110; retain the fifth bit.",
+        "1111+0001=10000 exercises full carry propagation.",
+        "1111+0000=01111 checks no overflow.",
+        "Ui is the merge HA’s Carry and always zero; C(i+1) comes from its Sum output."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שימוש בשני HA ושער OR חיצוני, שאינו משאב מותר.",
+        "לקיחת Carry במקום Sum מן ה־HA השלישי; ה־Carry שלו תמיד אפס.",
+        "אמירה ש־XOR שווה ל־OR בכל מצב, בלי הוכחת בלעדיות.",
+        "חיבור מוצאים זה לזה במקום חיבור למבואי רכיב.",
+        "קיצור הפלט לארבעה ביטים בלי לציין מודולו וגלישה, או טענת מינימום לא מוכחת."
+      ],
+      "en": [
+        "Using two HAs plus an external OR, which is not permitted.",
+        "Taking Carry rather than Sum from the third HA; its Carry is always zero.",
+        "Claiming XOR always equals OR instead of proving exclusivity.",
+        "Shorting outputs together instead of feeding component inputs.",
+        "Truncating to four bits without a modulo/overflow contract, or claiming an unproved minimum."
+      ]
+    },
+    "interview_answer": {
+      "he": "בעמודה הנמוכה HA אחד. בכל עמודה גבוהה HA ראשון מחבר Ai,Bi, שני מחבר את הסכום ל־Ci. הנשאים שלהם בלעדיים ולכן Sum של HA שלישי מאחד אותם ל־C(i+1), ו־Carry שלו אפס. שלוש עמודות כאלה ועוד העמודה הנמוכה נותנות 10 HA. הפלט החמישי הוא C4, ולכן מתקבל הסכום המלא עד 30.",
+      "en": "Use one HA in the lowest column. In each higher column, one HA adds Ai,Bi and another adds its Sum to Ci. Their carries are exclusive, so a third HA’s Sum merges them into C(i+1), while its Carry is zero. Three such columns plus the lowest use ten HAs. Fifth output bit C4 retains the exact sum up to thirty."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מציין סימן, נשא חיצוני או רוחב תוצאה; נבחרו קלטים ללא סימן ותוצאה מלאה ללא Cin.",
+        "נבחר מעגל צירופי; לא נתבקשו שעון או אחסון.",
+        "Apple מופיעה במקור; השיוך מדווח ולא אומת עצמאית."
+      ],
+      "en": [
+        "The source omits signedness, external carry and result width; unsigned inputs/full output/no Cin are explicit choices.",
+        "A combinational design is selected; clock/storage were not requested.",
+        "Apple attribution is source-reported, not independently verified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם מוסיפים נשא כניסה Cin?",
+          "answer_direction": "אפשר להשתמש בתא שלושת ה־HA גם בעמודה 0: ארבע עמודות נותנות מימוש של 12 HA. זהו מימוש תקף, ללא טענת מינימום.",
+          "principle": "שינוי ממשק עשוי לשנות את עלות העמודה הראשונה."
+        },
+        {
+          "question": "האם אפשר לקבל רק ארבעה ביטי תוצאה?",
+          "answer_direction": "כן, אם מגדירים פלט מודולו 16. נשא C4 הוא מידע גלישה ללא סימן; בחיבור חתום יש להגדיר גלישה חתומה בנפרד.",
+          "principle": "רוחב הפלט הוא חלק ממשמעות החיבור."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes with an external carry-in Cin?",
+          "answer_direction": "Use the three-HA cell in column zero too: four columns give a valid twelve-HA construction, without a minimum claim.",
+          "principle": "An interface change can change first-column cost."
+        },
+        {
+          "question": "Can the result have only four bits?",
+          "answer_direction": "Yes under an explicit modulo-sixteen contract. C4 is unsigned-overflow information; signed overflow needs its own definition.",
+          "principle": "Output width defines arithmetic semantics."
+        }
+      ]
+    },
+    "relationship_note": {
+      "he": "PREP-034 בונה מחבר מ־FA ומנתחת ארכיטקטורות גדולות; כאן הספרייה מוגבלת ל־HA בלבד. דוגמת HW-008 משתמשת בשני HA וב־OR, ולכן אסור להעתיק אותה ללא שינוי.",
+      "en": "PREP-034 builds from FAs and studies larger architectures; this question restricts the library to HAs. HW-008 uses two HAs plus OR, so its construction cannot be copied unchanged."
+    }
+  },
+  "PREP-123": {
+    "assumptions": {
+      "he": [
+        "רשימה או tuple סופיים של int ושל \"+\",\"-\",\"*\"; bool, מחרוזות מספרים וחילוק אינם בתחום.",
+        "שלמים מדויקים, פעולות בינאריות בלבד, והקלט אינו משתנה."
+      ],
+      "en": [
+        "Finite list or tuple of int values and \"+\",\"-\",\"*\"; bool, numeric strings and division are outside the domain.",
+        "Exact integers, binary operators only, unchanged input."
+      ]
+    },
+    "optimality": {
+      "he": "O(k) פעולות מחסנית ו־O(d) זיכרון, d≤k. בקלט מפורש צריך לעבד את הטוקנים כדי לאמת ביטוי ולחשב אותו. זמן חשבון שלמים גדולים תלוי ברוחב; אין טענת זמן קבוע לכל כפל או מינימום הוראות.",
+      "en": "O(k) stack operations and O(d) storage, d≤k. Explicit input tokens must be processed for validation/evaluation. Large-integer arithmetic cost depends on width; no constant cost per unbounded multiplication or minimum instruction count is claimed."
+    },
+    "edge_cases": {
+      "he": [
+        "מספר יחיד, כולל אפס או מספר שלילי, הוא ביטוי תקין.",
+        "קלט ריק, פעולה בהתחלה או שני מספרים שנותרו בסוף אינם תקינים.",
+        "[3,2,\"-\"] מחזיר 1 ואילו [2,3,\"-\"] מחזיר ‎-1.",
+        "הדוגמה המקורית מחזירה 20; תוצאות ביניים גדולות אינן נחתכות."
+      ],
+      "en": [
+        "One integer, including zero or a negative, is valid.",
+        "Empty input, an initial operator or leftover numbers are invalid.",
+        "[3,2,\"-\"] yields 1; [2,3,\"-\"] yields -1.",
+        "The source example yields 20; large intermediate values are not truncated."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשתמש באופרנד הראשון שנשלף בתור השמאלי, ואז להפוך חיסור.",
+        "לאמת רק גודל סופי ולפספס חוסר אופרנדים מוקדם.",
+        "להחזיר את העליון למרות שנותרו ערכים נוספים.",
+        "להוסיף קדימות אופרטורים, סוגריים או eval אף שה־postfix כבר קובע את הקיבוץ."
+      ],
+      "en": [
+        "Using the first popped value as the left operand and reversing subtraction.",
+        "Checking final size only and missing an earlier operand shortage.",
+        "Returning the top despite extra remaining values.",
+        "Adding precedence handling, parentheses or eval when postfix already fixes grouping."
+      ]
+    },
+    "interview_answer": {
+      "he": "אעבור משמאל לימין. מספר נדחף למחסנית; פעולה שולפת ימין ואז שמאל, מחשבת left op right ודוחפת תוצאה. בכל פעולה נדרשים שני ערכים ובסוף ערך אחד. כך כל תת־ביטוי מחושב כשאופרנדיו מוכנים. O(k) פעולות מחסנית ו־O(k) זיכרון במקרה הגרוע.",
+      "en": "Scan left to right. Push each number; an operator pops right then left, computes left op right and pushes the result. Require two values at an operator and one at the end. Each subexpression is evaluated when its operands are ready. O(k) stack operations and worst-case O(k) space."
+    },
+    "source_ambiguities": {
+      "he": "המקור משתמש ב־postorder ואינו מגדיר טיפוס טוקנים, אוסף פעולות או טיפול בשגיאות. העריכה מגדירה postfix של שלמים ופעולות בינאריות +,-,* בלבד, שגיאות מפורשות וללא נרמול של טקסט. לא נוספו שיוכי חברות.",
+      "en": "The source says postorder without defining token types, operator set or malformed-input behavior. This edition defines integer postfix with binary +,-,* only and explicit errors, without implicit text parsing. No employer attribution was added."
+    },
+    "verification": {
+      "he": "97,656 רצפי טוקנים באורכים 0..7 נבדקו מול מנתח רקורסיבי עצמאי מהסוף, כולל רצפים תקינים ולא תקינים. נוספו הדוגמה, סדר חיסור, שלמים גדולים ושמונה דחיות תחום. המודל בפייתון הורץ; אין מדידת ביצועים או אישור מומחה.",
+      "en": "97,656 streams of lengths 0..7 matched an independent recursive parser from the right, covering valid and invalid streams. Additional checks cover the example, subtraction order, large integers and eight domain rejections. Actual Python ran; no benchmark or expert approval."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד מוסיפים חילוק בלי לעמעם את משמעות התוצאה?",
+        "direction": "בחרו תחילה חוזה: שברים מדויקים או חילוק שלמים עם כלל עיגול מוגדר. שמרו סדר left/right ודחו מחלק אפס; אין להניח ש־// זהה לחיתוך לכיוון אפס במספרים שליליים.",
+        "status": "מוכן בתוכן בלבד; אינו מחובר לתור המשך."
+      },
+      "en": {
+        "question": "How can division be added without ambiguous results?",
+        "direction": "First choose exact rational arithmetic or integer division with a specified rounding rule. Preserve left/right order and reject zero divisors; // does not mean truncation toward zero for negative values.",
+        "status": "Prepared as content only; not connected to the follow-up queue."
+      }
+    }
+  },
+  "PREP-125": {
+    "assumptions": {
+      "he": [
+        "שתי תוכניות נפרדות עם אתחול חדש: A=a≥0,B=b≥0 וכל שאר A..Z אפס.",
+        "אוגרים טבעיים לא חסומים; DEC באפס נפסלת, ואין גלישה במודל.",
+        "JNZ בודקת רק את תוצאת ה־INC/DEC שבוצעה מיד לפניה; אין בדיקת אוגר עצמאית או קפיצה חינם.",
+        "המקור אינו דורש שימור קלטים: הכפל משמר A וצורך B; ההפרש צורך את שניהם."
+      ],
+      "en": [
+        "Separate fresh starts: A=a≥0,B=b≥0; all remaining A..Z registers zero.",
+        "Unbounded natural registers; DEC at zero is rejected, with no modeled overflow.",
+        "JNZ tests only the immediately preceding executed INC/DEC result; no independent register test or free jump.",
+        "Input preservation is not required: multiplication preserves A/consumes B; difference consumes both."
+      ]
+    },
+    "optimality": {
+      "he": "הכפל המסוים: b·(17a+13)+5 פקודות, O(b(a+1)+1), ובחיוביים Θ(ab). ההפרש: O(a+b+1). משתמשים ב־5 או 4 אוגרים מתוך A..Z. לא נטען למינימום פקודות מדויק; ab הגדלות של C הן חסם לכפל עם פלט ביחידות, ומספר אוגרים קבוע אינו מספר ביטים קבוע.",
+      "en": "This product listing uses b·(17a+13)+5 instructions, O(b(a+1)+1), Θ(ab) for positive inputs. Difference takes O(a+b+1). Five or four of A..Z are used. No exact minimum-instruction claim; ab increments of C lower-bound unit-output multiplication, and constant registers do not imply constant bits."
+    },
+    "edge_cases": {
+      "he": [
+        "A=0, B=0, שני אפסים, אחדים וקלטים שווים.",
+        "A<B לעומת A>B: רק צד השארית משתנה.",
+        "תוצאת DEC שווה לאפס חייבת למנוע JNZ גם אם קודם הייתה תוצאה לא אפס.",
+        "בקלטים חיוביים גדולים נדרש רוחב מספיק גם לתוצאת הכפל ול־INC הזמנית בבדיקות."
+      ],
+      "en": [
+        "A=0, B=0, both zero, ones and equal inputs.",
+        "A<B versus A>B changes which remainder is transferred.",
+        "A zero DEC result must suppress JNZ despite an earlier nonzero result.",
+        "Large positive inputs require enough width for product and temporary probe increments."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לכתוב if A==0 או JNZ A כאילו הותרה בדיקה ישירה של אוגר.",
+        "להוסיף MOV, חיבור או JMP שאינם בשפה, או לקרוא למאקרו שלא הורחב.",
+        "להפחית מאפס כדי לבדוק אותו במודל טבעי.",
+        "לשכוח את שחזור A בין חיבורי הכפל או להריץ את התוכנית השנייה על השאריות של הראשונה.",
+        "להבטיח שימור B בכפל או שימור קלטי ההפרש למרות שהם נצרכים."
+      ],
+      "en": [
+        "Writing if A==0 or JNZ A as if direct register testing were provided.",
+        "Adding MOV, addition or JMP, or invoking an unexpanded macro.",
+        "Decrementing zero as a test in the natural-register model.",
+        "Failing to restore A between additions or running the second program on the first program’s remnants.",
+        "Claiming preservation of product input B or the difference inputs, which are consumed."
+      ]
+    },
+    "interview_answer": {
+      "he": "אייצר בדיקת אפס חוקית דרך INC ואז DEC של אותו אוגר; התוצאה האחרונה היא ערכו המקורי. בכפל אוסיף את A ל־C פעם לכל יחידת B ואשחזר את A דרך D. להפרש אקטין את שניהם יחד ואז אעביר ל־C את השארית. אפילו קפיצה שתמיד נלקחת תיכתב כשלוש פקודות מותרות בעזרת Z=1.",
+      "en": "Probe zero legally by incrementing then decrementing the same register; the last result is its original value. For product, add A to C once per B unit and restore A through D. For difference, decrement both together then transfer the remainder to C. Even an always-taken branch is expanded into three legal instructions using Z=1."
+    },
+    "source_ambiguities": {
+      "he": "צילום 10 מבקש שתי פונקציות וצילום 11 מגדיר שפה ותנאי התחלה ומפרט במפורש רק את הכפל. שולבו כתוכניות עצמאיות עם אותו אתחול. המקור אינו מגדיר רוחב, גלישה, הפחתת אפס או שימור קלטים; נבחר מודל טבעי לא חסום, בדיקת JNZ מיידית ושימוש מותר באוגרי עזר. כותרת אישית לא רלוונטית לא הועתקה לכרטיס הלומדים; כרטיס הפקודות נוצר מחדש בסגנון האתר.",
+      "en": "Image 10 requests two functions; image 11 supplies the ISA/initialization and explicitly states multiplication only. They are combined as independent fresh-start programs. Width, overflow, DEC-zero and input preservation were unspecified; unbounded natural values, immediate JNZ tests and scratch registers are explicit choices. An unrelated personal heading was not copied into learner content; the instruction card was redrawn in the site style."
+    },
+    "verification": {
+      "he": "2,386 הרצות של הקבצים המורחבים עברו מול כפל וערך מוחלט עצמאיים: רשת ממצה של 1,089 זוגות בטווח 0..32, 100 דגימות וארבעה זוגות קצה, שתי תוכניות לכל זוג. נבדקו הגבלת פקודות, דגל JNZ מיידי, דחיית הפחתת אפס, שימור A בכפל וסיום. מפרש פייתון בלבד, לא קוד מכונה מקומפל או אישור מקצועי.",
+      "en": "2,386 expanded-file executions matched independent multiplication/absolute-difference oracles: all 1,089 pairs in 0..32, 100 seeded pairs and four boundary pairs, two programs each. Checks cover instruction limits, immediate JNZ flags, DEC-zero rejection, product A preservation and termination. Python interpreter only, not compiled machine code or professional approval."
+    },
+    "relationship_note": {
+      "he": "וריאציה חדשה מקושרת ל־PREP-035: יותר אוגרים, ענף לפי תוצאת פקודה קודמת בלבד, קלטי אפס ושתי תוכניות. בדיקות התנאי הישירות בפתרון 035 אינן פקודות מותרות כאן.",
+      "en": "New linked variant of PREP-035: more registers, preceding-result-only branches, zero inputs and two programs. PREP-035’s direct conditional tests are not permitted instructions here."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד נשמר גם את B בכפל, או את שני הקלטים בהפרש?",
+        "direction": "העבירו יחידות לאוגר עותק ולאוגר שחזור, החזירו את המקור והפעילו את הלולאה ההרסנית על העותק. גם ההעתקה חייבת להיות מורכבת מ־INC,DEC,JNZ בלבד, בלי MOV. יש מספיק אוגרים בשפה, אך יש לפרט את אתחולם ועלותם.",
+        "status": "מוכן בחומר המשלים בלבד; אינו מחובר לתור המשך."
+      },
+      "en": {
+        "question": "How could product also preserve B, or difference preserve both inputs?",
+        "direction": "Transfer units into a working copy and a restoration register, restore the source, then run the destructive loop on the copy. Copying must itself use INC,DEC,JNZ, never MOV. Registers are available, but specify their initialization and cost.",
+        "status": "Prepared in supplemental content only; not connected to the follow-up queue."
+      }
+    }
+  },
+  "PREP-121": {
+    "assumptions": {
+      "he": [
+        "גמל אחד; מזון הדרך נכלל בקיבולת ונאכל בכל כיוון.",
+        "מחסנים חופשיים ללא קלקול או עלות העמסה, וכל המלאי בנקודת ההתחלה.",
+        "אין חזרה מהשוק בסיום. רציף ושברים לעומת שלמים ותחנות שלמות הם מודלים נפרדים."
+      ],
+      "en": [
+        "One camel; carried travel food counts toward capacity and is consumed in both directions.",
+        "Unrestricted caches without spoilage/loading cost; all stock starts at the origin.",
+        "No final return. Divisible/continuous and whole-banana/integer-station versions are separate models."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "objective": "מקסימום מסירה בשוק, לא מינימום נסיעות או זמן.",
+        "continuous": "1600/3 בננות, מושג בחלוקה לעלויות 5,3,1; חסם חציות לפי חתכים חל גם על סדרי מחסנים אחרים.",
+        "integer": "533 בננות שלמות מושגות בתחנות 200,533 עם השארת אחת; חסם רציף שולל 534."
+      },
+      "en": {
+        "objective": "Maximum market delivery, not minimum legs or elapsed time.",
+        "continuous": "1600/3 bananas, attained by consumption rates 5,3,1; the cut-crossing bound covers arbitrary cache schedules.",
+        "integer": "533 whole bananas are attained at stations 200,533 with one left behind; the continuous bound excludes 534."
+      }
+    },
+    "verification": {
+      "he": "Fraction ושימור מטען לאורך 43 אירועי שתי תוכניות, תשעה קטעי הליכה בכל אחת; 105 בעיות שלמות קטנות ממצות ו־1263 מצבים מול חיפוש עצמאי. ההוכחה הכללית היא חסם חתכים, לא המקרים הסופיים.",
+      "en": "Exact Fraction arithmetic and cargo conservation over forty-three events in two nine-leg plans; 105 exhaustive small integer-road cases covering 1263 states against an independent search. General proof is the cut bound, not finite cases."
+    },
+    "edge_cases": {
+      "he": [
+        "חייבים לשמור אוכל לחזרה לפני שמפקידים מטען; לעולם אין אוכל חינם.",
+        "כאשר המלאי מגיע בדיוק ל־2000 או ל־1000 מספר המטענים יורד מיד.",
+        "בגרסה השלמה יש 1001 בקילומטר 533; לא מעמיסים יותר מ־1000.",
+        "תחנת הקילומטר 533⅓ אינה תחנה מותרת במודל תחנות שלמות."
+      ],
+      "en": [
+        "Retain return food before depositing cargo; no free return travel.",
+        "At exactly 2000 or 1000 stock, the load count decreases immediately.",
+        "The integer plan has 1001 at km533; never load more than 1000.",
+        "A km533⅓ cache is unavailable in the integer-station model."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לחשב צריכה רק בכיוון השוק, או להעמיס 1000 בננות ועוד מזון.",
+        "להעביר מטען אחד את כל הדרך ולשכוח כיצד הגמל חוזר להביא אחרים.",
+        "לעגל תשובה שברית בלי תוכנית שלמה, או להציג 533⅓ כבננות שלמות.",
+        "להניח שכל תוכנית אופטימלית חייבת להיות בצורת המחסנים שבדוגמה בלי חסם כללי."
+      ],
+      "en": [
+        "Charging only forward travel, or carrying 1000 cargo plus extra food.",
+        "Sending one load all the way and ignoring how the camel returns for the rest.",
+        "Rounding a fractional answer without an integer witness, or calling 533⅓ whole bananas.",
+        "Assuming every optimal schedule has the example's depot shape without a general bound."
+      ]
+    },
+    "interview_answer": {
+      "he": "שלושה מטענים דורשים 5 חציות לק״מ עד שנותרות 2000 בקילומטר 200. שני מטענים דורשים 3 עד שנותרות 1000 בקילומטר 533⅓. מכאן הליכה אחת משאירה 533⅓. לשלמים משתמשים ב־533, משאירים אחת ומוסרים 533. חסם חציות לכל חתך מוכיח שאין שיפור.",
+      "en": "Three loads cost five crossings/km until 2000 remain at km200. Two cost three until 1000 remain at km533⅓. One final trip delivers 533⅓. For whole fruit stop at533, leave one and deliver533. A cut-crossing bound excludes improvement."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מפרט מחסנים, טעינה, חלוקת בננות, תחנות שבריות, מזון חלופי או חזרת סיום. ההנחות הוספו בגלוי; ללא הגדרת מודל אין להצמיד תשובה שברית לכל קריאה של המקור.",
+      "en": "The source omits caches, loading, divisible fruit, fractional stations, outside food and a final return. These are explicit clarifications; a fractional answer is not universal across every reading."
+    },
+    "relationship_note": {
+      "he": "שאלה חדשה במאגר ההכנה; לא נמצאה כפילות במאגר הדוגמאות או האימות. העיקרון הוא מחיר העברה כתלות בקיבולת והוכחת חסם לכל תוכנית.",
+      "en": "New preparation question; no equivalent example/validation-bank prompt found. Its principle is capacity-dependent transport cost and a bound for every schedule."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה למלאי התחלתי S ולקיבולת C במודל הרציף?",
+        "direction": "במדרגה עם k=ceil(S/C) מטענים המחיר הוא 2k−1. מתקדמים עד הסף (k−1)C או עד היעד, ואז מחשבים מחדש. זהו גם המודל הכללי בקוד; אין להסיק ממנו ללא בדיקה תוכנית שלמה לכל נתון.",
+        "integration_status": "הרחבה מוכנה בחומר; אינה נבחרת אוטומטית בתור ההמשך."
+      },
+      "en": {
+        "question": "What changes for initial stock S and capacity C in the continuous model?",
+        "direction": "With k=ceil(S/C) required loads, cost is 2k−1. Advance to threshold (k−1)C or the destination and recompute. The model code implements this generalization; it does not automatically provide an integer witness for arbitrary parameters.",
+        "integration_status": "Prepared supporting material, not automatically selected by the follow-up queue."
+      }
+    }
+  },
+  "PREP-124": {
+    "assumptions": {
+      "he": [
+        "כל אחד משני הפתילים מכיל 60 דקות בעירה מקצה אחד; פרופילי האורך יכולים להיות שונים.",
+        "זמן בעירה מקומי מצטבר, קבוע והפיך בכיוון; חזיתות אינן משפיעות זו על זו לפני המפגש.",
+        "הדלקות קצה מיידיות בתחילה או באירוע כיבוי; אין חיתוך, שעון חיצוני או כיבוי יזום."
+      ],
+      "en": [
+        "Each rope totals sixty one-end burn-minutes; spatial profiles may differ.",
+        "Local burn-time is additive, fixed and direction-symmetric; fronts do not affect each other before meeting.",
+        "Instant endpoint ignitions at the start/burnout events; no cutting, external clock or deliberate extinguishing."
+      ]
+    },
+    "optimality": {
+      "he": "השיטה משיגה בדיוק 45 דקות במודל שהוצהר, עם שני פתילים וארבע הדלקות קצה. לא נטען מינימום משאבים לכל מודל חישה או חומר פיזי.",
+      "en": "The procedure attains exactly forty-five minutes in the declared model, using two ropes and four endpoint ignitions. No resource minimum for every sensing model/physical material is claimed."
+    },
+    "verification": {
+      "he": "1352 זוגות פרופילים וכיווני התחלה ממצים מעל 26 פרופילים, ועוד 800 כיוונים בזוגות מדגמיים עם 2–12 מקטעים. סימולציית חזיתות מרחבית מדויקת מול אורקל זמן־בעירה מצטבר; ללא ניסוי בעירה פיזי.",
+      "en": "1352 exhaustive profile-pair/start-direction cases over twenty-six profiles, plus eight hundred directions for seeded pairs of two through twelve segments. Exact spatial-front simulation versus an independent cumulative burn-time oracle; no physical experiment."
+    },
+    "edge_cases": {
+      "he": [
+        "הפתיל הראשון יכול להיכבות בנקודה שאינה אמצע האורך.",
+        "הפתיל השני יכול להיות בעל פרופיל שונה, ולהתחיל מכל קצה.",
+        "חצי זמן בעירה שנותר אינו אומר חצי אורך שנותר.",
+        "עיכוב בהדלקה אחרי הכיבוי או זמן כולל שונה משעה משנים את המדידה."
+      ],
+      "en": [
+        "A's fronts may meet away from its spatial midpoint.",
+        "B may have an unrelated profile and start at either endpoint.",
+        "Half the burn-time remaining does not imply half the length remains.",
+        "Delayed ignition after burnout or a non-sixty total changes the duration."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לחתוך לחצי או לרבע ולהניח שזמן הבעירה נחתך באותו יחס.",
+        "לכבות פתיל או להמתין 15 דקות בעזרת שעון שלא הותר.",
+        "להניח ששני הפתילים זהים או שדלקו חזיתות באותו מרחק פיזי.",
+        "לטעון ששעה מקצה אחד לבדה מוכיחה כל התנהגות פיזיקלית אפשרית בהדלקה כפולה."
+      ],
+      "en": [
+        "Cutting in halves/quarters and assuming proportional burn duration.",
+        "Extinguishing or externally timing a fifteen-minute wait.",
+        "Assuming identical ropes or equal physical distances burned by the two fronts.",
+        "Claiming a one-end total alone proves arbitrary two-front physical behavior."
+      ]
+    },
+    "interview_answer": {
+      "he": "בתחילה מדליקים את א׳ בשני קצותיו ואת ב׳ בקצה אחד. א׳ כבה אחרי 30 דקות; אז מדליקים את קצהו האחר של ב׳. נשארו בו 30 דקות בעירה מקצה אחד, ששתי חזיתות משלימות ב־15. הכיבוי השני מסמן 45 דקות, בלי למדוד אורך.",
+      "en": "Initially light A at both ends and B at one. A burns out after thirty minutes; then light B's other end. Its remaining thirty one-end burn-minutes disappear in fifteen. The second burnout marks forty-five minutes without length measurement."
+    },
+    "source_ambiguities": {
+      "he": "המקור מציין שעה ואי־אחידות אך לא מפרט חיתוך, הדלקות סימולטניות, זמני תגובה או השפעה בין חזיתות. הוגדר במפורש מודל קצוות וזמן־בעירה מקומי; אין צורך בפרופילים זהים או באורך אחיד.",
+      "en": "The source gives one hour and nonuniform burning but omits cutting, simultaneous ignitions, reaction times and front interaction. Endpoint events and additive local burn-time are explicit assumptions; identical profiles or uniform length are unnecessary."
+    },
+    "relationship_note": {
+      "he": "שאלה חדשה של אינווריאנט מדידה. PREP-090 עוסקת בחבל סביב כדור הארץ ובגאומטריה; היא אינה כפילות של פתילים בוערים.",
+      "en": "New measurement-invariant question. PREP-090 concerns a rope around the Earth and geometry, not burning-rope timing."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה תהיה שעת כיבוי ב׳ אם א׳ נשרף מקצה אחד במשך TA וב׳ במשך TB?",
+        "direction": "א׳ בשני קצותיו יוצר אירוע ב־TA/2. אם TA/2<TB, ב׳ עדיין בוער; הדלקת הקצה השני נותנת סיום ב־TB/2+TA/4. אם התנאי נכשל, ב׳ כבר כבה ואין להחיל את הנוסחה בלי ניתוח חדש.",
+        "integration_status": "מוכנה בחומר; אינה נבחרת אוטומטית בתור ההמשך."
+      },
+      "en": {
+        "question": "When does B finish if A's one-end total is TA and B's is TB?",
+        "direction": "A lit both ways creates an event at TA/2. If TA/2<TB, B is still burning; igniting its second end gives final time TB/2+TA/4. Otherwise B already burned out and this schedule's formula needs a new analysis.",
+        "integration_status": "Prepared material, not automatically selected by the follow-up queue."
+      }
+    }
+  }
+}

@@ -4,24 +4,28 @@
       "he": [
         "אבני הבניין המותרות הן מחברים בינאריים אידאליים מסוג Half-Adder ו־Full-Adder; השערים שבתוכם אינם נספרים.",
         "הפלט הוא ספירת אחדות בינארית ללא סימן ברוחב 4 ביטים; y0 הוא הביט הפחות משמעותי.",
-        "אופטימליות פירושה מספר מינימלי של רכיבי Half/Full-Adder באילוצים האלה, תוך שימור כל שמונת ביטי הקלט."
+        "אופטימליות פירושה מספר מינימלי של רכיבי Half/Full-Adder באילוצים האלה, תוך שימור כל שמונת ביטי הקלט.",
+        "וריאנט חמישה ביטים: כל הכניסות מקבילות במשקל יחידה; FA בלבד, אפס וחיווט חופשיים, פלט ספירה מדויק בן שלושה ביטים, ללא זיכרון או שערים חיצוניים."
       ],
       "en": [
         "The allowed building blocks are ideal binary Half-Adders and Full-Adders; gates inside them are not counted.",
         "The output is a 4-bit unsigned binary population count; y0 is the least-significant bit.",
-        "Optimality means the minimum number of Half/Full-Adder components under these constraints, while preserving all eight input bits."
+        "Optimality means the minimum number of Half/Full-Adder components under these constraints, while preserving all eight input bits.",
+        "Five-input variant: parallel unit-weight bits, FAs only, free zero/wiring and exact three-bit count, without memory or external gates."
       ]
     },
     "optimality": {
       "he": {
         "criterion": "מספר מינימלי של מחברים מהסוגים המותרים",
         "result": "4 מחברים מלאים (Full-Adders) ו־3 מחברים למחצה (Half-Adders)",
-        "proof": "כל Full-Adder מקטין באחד את מספר חוטי האות הכולל, וכל Half-Adder משמר אותו. מעבר משמונה חוטי קלט לארבעה חוטי פלט מחייב לפחות ארבעה Full-Adders. משוואות העמודות מחייבות אחר כך לפחות שלושה Half-Adders: ‏2f0+h0=7 במשקל 1, ‏2f1+h1=3 במשקל 2 לאחר ארבעה נשאים, ו־2f2+h2=1 במשקל 4. הרשת המוצעת משיגה את החסמים התחתונים האלה."
+        "proof": "כל Full-Adder מקטין באחד את מספר חוטי האות הכולל, וכל Half-Adder משמר אותו. מעבר משמונה חוטי קלט לארבעה חוטי פלט מחייב לפחות ארבעה Full-Adders. משוואות העמודות מחייבות אחר כך לפחות שלושה Half-Adders: ‏2f0+h0=7 במשקל 1, ‏2f1+h1=3 במשקל 2 לאחר ארבעה נשאים, ו־2f2+h2=1 במשקל 4. הרשת המוצעת משיגה את החסמים התחתונים האלה.",
+        "batch11_five_input_fa": "שלושה FA הם מינימום בספריית FA תלת־כניסתי, קלטים גולמיים ואפס בלבד, חיווט חסר מעגלים ופיצול חופשי. מנייה מלאה שוללת אפס/רכיב אחד/שניים: 1,56,6720 אפשרויות. אין טענת מינימום פיזי או השהיה."
       },
       "en": {
         "criterion": "minimum number of allowed adders",
         "result": "4 Full-Adders + 3 Half-Adders",
-        "proof": "Each Full-Adder reduces the total number of signal wires by one and each Half-Adder preserves it. Eight input wires and four output wires require at least four Full-Adders. Column equations then force at least three Half-Adders: 2f0+h0=7 for weight 1, 2f1+h1=3 for weight 2 after four carries, and 2f2+h2=1 for weight 4. The proposed network meets these lower bounds."
+        "proof": "Each Full-Adder reduces the total number of signal wires by one and each Half-Adder preserves it. Eight input wires and four output wires require at least four Full-Adders. Column equations then force at least three Half-Adders: 2f0+h0=7 for weight 1, 2f1+h1=3 for weight 2 after four carries, and 2f2+h2=1 for weight 4. The proposed network meets these lower bounds.",
+        "batch11_five_input_fa": "Three FAs are minimal with three-input FAs, only raw bits/zero, acyclic wiring and free fanout. Complete enumeration excludes 0/1/2 cells: 1,56,6720 possibilities. No physical size/delay optimum is claimed."
       }
     },
     "edge_cases": {
@@ -45,6 +49,15 @@
           "input": "11111111",
           "count": 8,
           "output": "1000"
+        },
+        {
+          "variant": "five_input_fa_only",
+          "examples": [
+            "00000→000",
+            "10000→001",
+            "11111→101"
+          ],
+          "note": "כל מיקום קלט נספר כיחידה אחת; השלישי מחבר c1,c2 במשקל שתיים, לא יחד עם x במשקל יחידה."
         }
       ],
       "en": [
@@ -67,6 +80,15 @@
           "input": "11111111",
           "count": 8,
           "output": "1000"
+        },
+        {
+          "variant": "five_input_fa_only",
+          "examples": [
+            "00000→000",
+            "10000→001",
+            "11111→101"
+          ],
+          "note": "Every input position counts as one; the third FA adds c1,c2 at weight two, not mixed with a raw weight-one x."
         }
       ]
     },
@@ -74,21 +96,23 @@
       "he": {
         "status": "passed",
         "method": "סימולציה ממצה של כל 256 הקלטים בני שמונת הביטים באמצעות רשימת החיבורים של שבעת המחברים; כל פלט התאים לספירת הביטים המתמטית.",
-        "checked_on": "2026-09-24"
+        "checked_on": "2026-09-24",
+        "batch11_five_input_fa": "הווריאנט עבר 32 וקטורים, 96 משוואות עמודה, שמונה שורות FA וארבע דחיות קלט. מניית חסם תחתון מלאה בדקה 56 רשתות FA יחיד ו־6,720 רשתות שני FA, ללא פתרון. Python בלבד; לא HDL או חומרה."
       },
       "en": {
         "status": "passed",
         "method": "Exhaustive simulation of all 256 eight-bit inputs using the seven-adder netlist; every output matched the mathematical bit count.",
-        "checked_on": "2026-09-24"
+        "checked_on": "2026-09-24",
+        "batch11_five_input_fa": "Variant passed 32 vectors, 96 column equations, eight FA rows and four rejected inputs. Complete lower-bound enumeration found no solution among 56 one-FA/6,720 two-FA networks. Python only, not HDL or hardware."
       }
     },
     "interview_answer": {
-      "he": "אבנה מונה אחדות בשיטת Carry-Save. תחילה אצמצם את שמונת קלטי משקל 1 באמצעות שלושה Full-Adders ו־Half-Adder אחד; אחר כך אצמצם את ארבעת הנשאים בעמודת משקל 2 באמצעות Full-Adder ו־Half-Adder; ולבסוף אשתמש ב־Half-Adder בעמודת משקל 4. התוצאה היא ארבעה ביטי פלט, באמצעות 4 FAs ו־3 HAs. זהו מינימום: ארבעה FAs נדרשים לצמצום שמונה חוטים לארבעה, ומשוואות העמודות מחייבות שלושה HAs.",
-      "en": "I would build a carry-save population counter. First reduce the eight weight-1 inputs with three Full-Adders and one Half-Adder; then reduce the four carries in the weight-2 column with one Full-Adder and one Half-Adder; finally use one Half-Adder in the weight-4 column. The result is four output bits and uses 4 FAs plus 3 HAs, which is minimal because four FAs are needed to reduce eight wires to four and the column equations force three HAs."
+      "he": "אבנה מונה אחדות בשיטת Carry-Save. תחילה אצמצם את שמונת קלטי משקל 1 באמצעות שלושה Full-Adders ו־Half-Adder אחד; אחר כך אצמצם את ארבעת הנשאים בעמודת משקל 2 באמצעות Full-Adder ו־Half-Adder; ולבסוף אשתמש ב־Half-Adder בעמודת משקל 4. התוצאה היא ארבעה ביטי פלט, באמצעות 4 FAs ו־3 HAs. זהו מינימום: ארבעה FAs נדרשים לצמצום שמונה חוטים לארבעה, ומשוואות העמודות מחייבות שלושה HAs.\n\nלחמישה ביטים: FA(x0,x1,x2) נותן s1,c1; FA(s1,x3,x4) נותן y0,c2; FA(c1,c2,0) נותן y1,y2. c1,c2 במשקל שתיים ולכן Sum האחרון הוא ביט השתיים ו־Carry ביט הארבע. שלושה FA; הפלט בטווח 0..5.",
+      "en": "I would build a carry-save population counter. First reduce the eight weight-1 inputs with three Full-Adders and one Half-Adder; then reduce the four carries in the weight-2 column with one Full-Adder and one Half-Adder; finally use one Half-Adder in the weight-4 column. The result is four output bits and uses 4 FAs plus 3 HAs, which is minimal because four FAs are needed to reduce eight wires to four and the column equations force three HAs.\n\nFor five bits: FA(x0,x1,x2) gives s1,c1; FA(s1,x3,x4) gives y0,c2; FA(c1,c2,0) gives y1,y2. c1,c2 have weight two, making final Sum weight two and Carry weight four. Three FAs, output zero through five."
     },
     "relationship_note": {
-      "he": "נושאים קשורים של מחברים וספירת אחדות; אין כאן קביעה שמדובר בשאלות כפולות.",
-      "en": "Related adder and population-count topics; these are not asserted to be duplicate questions."
+      "he": "נושאים קשורים של מחברים וספירת אחדות; אין כאן קביעה שמדובר בשאלות כפולות.\n\nמקור נוסף ל־PREP-001 עם רוחב וחוק ספרייה אחרים; גרסאות שמונה ושבעה ביטים נשמרו, ואין כפילות חדשה במאגר.",
+      "en": "Related adder and population-count topics; these are not asserted to be duplicate questions.\n\nAdditional PREP-001 source with another width/library contract. Eight/seven-bit variants remain, without a new duplicate catalog entry."
     },
     "prompt_variants": {
       "he": [
@@ -144,6 +168,17 @@
           "solution_diagrams": [
             "diagrams/prep-001-seven-bit-four-fa.png"
           ]
+        },
+        {
+          "key": "five_input_fa_only",
+          "prompt": "### מקור נוסף: ספירת אחדות בחמישה ביטים באמצעות FA בלבד\nממשו בעזרת רכיבי Full-Adder בלבד מערכת המקבלת חמישה ביטים ומחזירה את מספר האחדות בהם בבינארי.\n\nהבהרות עריכה: חמש הכניסות ניתנות יחד כווקטור x[4:0]; נבחר מעגל צירופי, לא ספירה של ביטים המגיעים לאורך זמן. התוצאה y[2:0] היא ללא סימן בטווח 0..5. כל FA מקבל שלושה ביטים ומוציא Sum,Carry לפי a+b+c=Sum+2·Carry. מותר חיווט, פיצול וקבוע 0. אין HA, שערים חיצוניים, קלטים מהופכים בחינם, קבוע 1 או רכיבי זיכרון; מותר לקבע מבוא FA לאפס, והוא עדיין נספר כ־FA. הציגו חיבורים, משקלים, הוכחה ועלות. מינימום רכיבים אינו דרישה במקור; אם טוענים לו, יש לתחום את מודל הרכיבים ולהצדיק את החסם. הגרסאות הקודמות נשמרות בנפרד.",
+          "hints": [
+            "כל כניסה תורמת יחידה אחת לספירה, בלי קשר למיקומה בווקטור. כמה ביטים דרושים כדי לייצג מספר בין אפס לחמש?",
+            "FA מחלק עד שלוש אחדות לשארית במשקל אחד ולזוג במשקל שתיים. חברו שלוש כניסות, ואז את השארית ושתי הכניסות שנותרו.",
+            "לאחר שני ה־FA יש ביט יחידות סופי ושני נשאים במשקל שתיים. חברו את הנשאים ב־FA שלישי עם כניסה שלישית אפס; Sum ו־Carry שלו יהפכו לביטי המשקל שתיים וארבע."
+          ],
+          "solution": "### סופרים זוגות ושאריות\nFA אינו חייב לקבל נשא ממחבר קודם: שלוש כניסותיו שוות במשקלן. הוא מחלק את מספר האחדות שבשלושתן לשארית Sum ולזוג Carry. לדוגמה, 1+1+1=3 נותן Sum=1,Carry=1, כלומר יחידה ועוד זוג.\n\n### שלושה מחברים מלאים, ללא HA\nבכל זוג מוצאים מופיעים Sum ואז Carry:\n\n```text\n(s1, c1) = FA(x0, x1, x2)\n(y0, c2) = FA(s1, x3, x4)\n(y1, y2) = FA(c1, c2, 0)\n```\n\nשני המחברים הראשונים עובדים במשקל יחידה. השני קובע את y0 הסופי ומשאיר יחד עם הראשון שני זוגות אפשריים c1,c2, כל אחד במשקל שתיים. ה־FA השלישי מקבל את שני הנשאים באותו משקל ואפס: Sum שלו הוא y1 במשקל שתיים ו־Carry שלו הוא y2 במשקל ארבע. אין רכיב HA מוסתר; זהו FA רגיל שמבוא אחד שלו מחובר לאפס. קוראים את הפלט y2y1y0.\n\n### הוכחת שימור הערך\nשלוש משוואות הרכיבים נותנות:\n\n```text\nx0+x1+x2 = s1+2c1\ns1+x3+x4 = y0+2c2\nc1+c2    = y1+2y2\n```\n\nלכן סכום חמש הכניסות הוא y0+2(c1+c2)=y0+2y1+4y2. כך מקבלים את מספר האחדות, ולא את ערך הקלט הבינארי או רק זוגיות. למשל 11111 נותן s1=1,c1=1; אחר כך y0=1,c2=1; ולבסוף y1=0,y2=1. הפלט 101 הוא חמש. קלט 10000 נותן 001, וקלט אפס נותן 000. שלושה ביטים דרושים כי הפלט יכול להיות חמש.\n\n### עלות וחסם תחתון מוגדר\nהמימוש משתמש בשלושה FA ובשלוש שכבות תלות; אין טענה למדידת תזמון פיזי. אפשר גם להוכיח ששלושה הם מינימום רכיבי FA בספרייה שהוגדרה, באמצעות מנייה מלאה קטנה של כל רשת עם עד שני רכיבים. כל רשת חסרת מעגלים ניתנת לסדר טופולוגי. לרכיב הראשון זמינים חמישה קלטים ואפס: יש 56 שלשות פינים בלתי־מסודרות עם חזרות. אחריו זמינים גם שני מוצאיו, ולכן לרכיב השני יש 120 שלשות אפשריות. נבדקו כל 56 רשתות הרכיב היחיד וכל 56·120=6,720 רשתות שני הרכיבים, עם חזרות בפינים, פיצול ושימוש בכל חוט זמין כמוצא. אף רשת לא מכילה בו־זמנית את שלוש פונקציות ביטי הספירה בכל 32 הקלטים. בלי רכיבים גם הן אינן קלטים גולמיים. זו מנייה ממצה של המודל הסופי המוגדר, ולא ראיה ממדגם או מינימום שטח/שערים בספרייה אחרת.\n\nהמימוש נבדק בכל 32 הווקטורים וב־96 משוואות רכיבים משוקללות מול ספירת אחדות עצמאית. זהו Python בלבד, ללא HDL, סינתזה או מדידה. שלושת רמזי הווריאנט שמורים בחומר המשלים ובתוספת המסמך; שלושת הרמזים המקוריים נשארו בתור הקיים, שאינו בוחר רמזים אוטומטית לפי וריאנט. התוכן החדש מוצע בסיוע AI וממתין לביקורת אנושית.",
+          "integration_status": "רמזים משלימים בלבד; התור הקיים אינו בוחר לפי וריאנט."
         }
       ],
       "en": [
@@ -199,6 +234,55 @@
           "solution_diagrams": [
             "diagrams/prep-001-seven-bit-four-fa.png"
           ]
+        },
+        {
+          "key": "five_input_fa_only",
+          "prompt": "### Additional source: five-input population count using FAs only\nUsing only full-adder components, accept five bits and return their number of ones in binary.\n\nEditorial clarifications: all five inputs arrive together as vector x[4:0]; choose a combinational circuit, not a count of serially arriving bits. Unsigned y[2:0] ranges from zero to five. Each FA has three bit inputs and Sum/Carry outputs with a+b+c=Sum+2·Carry. Wiring, fanout and constant zero are allowed. No HAs, external gates, free complemented inputs, constant one or memory. An FA with one pin tied to zero is permitted and still counted as an FA. Show connections, weights, correctness and cost. Minimum components is not requested by the source; any minimum claim needs an explicit library and lower bound. Earlier variants remain separate.",
+          "hints": [
+            "Each input contributes one counting unit, regardless of its vector position. How many output bits encode zero through five?",
+            "An FA splits up to three ones into a weight-one leftover and a weight-two pair. Add three inputs, then that leftover and the remaining two inputs.",
+            "After two FAs, keep the final unit bit and two weight-two carries. Add those carries using a third FA with its remaining input tied to zero; its Sum/Carry become weights two/four."
+          ],
+          "solution": "### Count pairs and leftovers\nAn FA does not require a carry from an earlier adder: its three inputs have equal weight. It splits their number of ones into a Sum leftover and a Carry pair. For example, 1+1+1=3 gives Sum=1,Carry=1: one unit plus one pair.\n\n### Three full adders, no HA\nEvery output pair is ordered Sum, then Carry:\n\n```text\n(s1, c1) = FA(x0, x1, x2)\n(y0, c2) = FA(s1, x3, x4)\n(y1, y2) = FA(c1, c2, 0)\n```\n\nThe first two cells operate at unit weight. The second fixes final y0, leaving two possible pairs c1,c2, each of weight two. The third FA adds those equal-weight carries and zero: its Sum is y1 at weight two and Carry is y2 at weight four. No HA is hidden; this is an ordinary FA with one input tied to zero. Read output y2y1y0.\n\n### Value-preservation proof\nThe three component equations give:\n\n```text\nx0+x1+x2 = s1+2c1\ns1+x3+x4 = y0+2c2\nc1+c2    = y1+2y2\n```\n\nThus the five input bits sum to y0+2(c1+c2)=y0+2y1+4y2. This is population count, not the input’s binary value or just parity. For 11111, the first FA gives s1=1,c1=1; the second gives y0=1,c2=1; the last gives y1=0,y2=1. Output 101 means five. Input 10000 gives 001; zero gives 000. Three bits are necessary because the output may be five.\n\n### Cost and a scoped lower bound\nThe construction has three FAs and three dependency layers, without a physical timing claim. Three is also a minimum FA-cell count in the declared library, proved by complete small-network enumeration. Every acyclic network has a topological order. The first cell can use five raw bits and zero: 56 unordered pin triples with repetition. Its two outputs expand the second cell’s pool to eight wires, giving 120 triples. All 56 one-cell and 56·120=6,720 two-cell networks were checked, allowing repeated pins, fanout and any available output tap. None simultaneously supplies all three population-count bit functions on all 32 inputs. Those functions are not raw wires in the zero-cell case either. This is complete finite-model enumeration, not sampled evidence or a physical area/gate minimum under another library.\n\nThe construction passed all 32 input vectors and 96 weighted component equations against an independent count. Python only; no HDL, synthesis or measurements. Three variant hints are stored in supporting material and the addendum. The original three remain in the existing hint queue, which does not automatically choose hints by variant. New content is AI-assisted proposed material awaiting human review.",
+          "integration_status": "Supplementary hints only; the existing queue does not select by variant."
+        }
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בלבול בין ספירת חמישה ביטים מקבילים לבין מונה סדרתי.",
+        "ערבוב משקלי יחידה ושתיים באותו FA.",
+        "החלפת ה־FA השלישי ב־HA למרות איסור הספרייה.",
+        "פלט זוגיות של ביט אחד או קיצוץ הספירה לשני ביטים."
+      ],
+      "en": [
+        "Confusing five parallel input bits with a serial counter.",
+        "Mixing weight-one and weight-two inputs in one FA.",
+        "Replacing the third FA with an HA despite the library restriction.",
+        "Returning one parity bit or truncating the count to two bits."
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "״מכונה״ אינה מגדירה שעון או סדרה; הוגדר וקטור בן חמישה ביטים ומעגל צירופי. זמינות אפס ומדד מינימום הוגדרו בעריכה. Intel ו־NVIDIA מדווחות בצילום ולא אומתו עצמאית."
+      ],
+      "en": [
+        "“Machine” specifies no clock or serial protocol; an explicit five-bit vector/combinational model is selected. Free zero and minimum-count model are editorial choices. Intel/NVIDIA are source-reported, not independently verified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "האם אפשר לממש בלי שום קבוע זמין?",
+          "answer_direction": "לא במודל FA בלבד עם חוטים ופיצול: בקלט 11111 כל מבוא של כל FA הוא 1 ושני מוצאיו 1 באינדוקציה. הפלט הדרוש הוא 101, ולכן ביטו האמצעי חייב להיות 0 שאינו יכול להיווצר.",
+          "principle": "אינווריאנט על קלט מיוחד יכול להוכיח מגבלת ספרייה."
+        }
+      ],
+      "en": [
+        {
+          "question": "Can this be built with no available constant?",
+          "answer_direction": "Not with FAs/wiring/fanout only: on input 11111 every FA input is one and both outputs stay one inductively. Required output 101 has a zero middle bit, which cannot be produced.",
+          "principle": "An invariant on a special input can prove a library limitation."
         }
       ]
     }
