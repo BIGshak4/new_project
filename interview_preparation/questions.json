@@ -25079,7 +25079,7 @@
       "optimality": "This product listing uses b·(17a+13)+5 instructions, O(b(a+1)+1), Θ(ab) for positive inputs. Difference takes O(a+b+1). Five or four of A..Z are used. No exact minimum-instruction claim; ab increments of C lower-bound unit-output multiplication, and constant registers do not imply constant bits.",
       "edge_cases": [
         "A=0, B=0, both zero, ones and equal inputs.",
-        "A<B versus A>B changes which remainder is transferred.",
+        "Cases where A is smaller than B or larger than B change which remainder is transferred.",
         "A zero DEC result must suppress JNZ despite an earlier nonzero result.",
         "Large positive inputs require enough width for product and temporary probe increments."
       ],

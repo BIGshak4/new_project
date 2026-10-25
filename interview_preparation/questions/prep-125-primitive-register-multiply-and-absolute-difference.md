@@ -326,13 +326,13 @@ This is a linked variant of PREP-035. That question allows direct register-condi
   "edge_cases": {
     "he": [
       "A=0, B=0, שני אפסים, אחדים וקלטים שווים.",
-      "A<B לעומת A>B: רק צד השארית משתנה.",
+      "כאשר A קטן מ־B לעומת המצב שבו A גדול מ־B: רק צד השארית משתנה.",
       "תוצאת DEC שווה לאפס חייבת למנוע JNZ גם אם קודם הייתה תוצאה לא אפס.",
       "בקלטים חיוביים גדולים נדרש רוחב מספיק גם לתוצאת הכפל ול־INC הזמנית בבדיקות."
     ],
     "en": [
       "A=0, B=0, both zero, ones and equal inputs.",
-      "A<B versus A>B changes which remainder is transferred.",
+      "Cases where A is smaller than B or larger than B change which remainder is transferred.",
       "A zero DEC result must suppress JNZ despite an earlier nonzero result.",
       "Large positive inputs require enough width for product and temporary probe increments."
     ]

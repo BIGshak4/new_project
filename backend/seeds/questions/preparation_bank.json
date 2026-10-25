@@ -57265,7 +57265,7 @@
         "optimality": "This product listing uses b·(17a+13)+5 instructions, O(b(a+1)+1), Θ(ab) for positive inputs. Difference takes O(a+b+1). Five or four of A..Z are used. No exact minimum-instruction claim; ab increments of C lower-bound unit-output multiplication, and constant registers do not imply constant bits.",
         "edge_cases": [
           "A=0, B=0, both zero, ones and equal inputs.",
-          "A<B versus A>B changes which remainder is transferred.",
+          "Cases where A is smaller than B or larger than B change which remainder is transferred.",
           "A zero DEC result must suppress JNZ despite an earlier nonzero result.",
           "Large positive inputs require enough width for product and temporary probe increments."
         ],
@@ -57307,13 +57307,13 @@
           "edge_cases": {
             "he": [
               "A=0, B=0, שני אפסים, אחדים וקלטים שווים.",
-              "A<B לעומת A>B: רק צד השארית משתנה.",
+              "כאשר A קטן מ־B לעומת המצב שבו A גדול מ־B: רק צד השארית משתנה.",
               "תוצאת DEC שווה לאפס חייבת למנוע JNZ גם אם קודם הייתה תוצאה לא אפס.",
               "בקלטים חיוביים גדולים נדרש רוחב מספיק גם לתוצאת הכפל ול־INC הזמנית בבדיקות."
             ],
             "en": [
               "A=0, B=0, both zero, ones and equal inputs.",
-              "A<B versus A>B changes which remainder is transferred.",
+              "Cases where A is smaller than B or larger than B change which remainder is transferred.",
               "A zero DEC result must suppress JNZ despite an earlier nonzero result.",
               "Large positive inputs require enough width for product and temporary probe increments."
             ]
@@ -57370,7 +57370,7 @@
           "learner_text_edited": false
         }
       },
-      "source_sha256": "59e607ba74cd6c449578b818bf25f5fe8562c6d86d9c04643b6b8567e05354d2"
+      "source_sha256": "44f12d22d95bc4dbdc8c878d3312d2f8c385cd987b46c471117edd07ed0c772d"
     }
   }
 ]
