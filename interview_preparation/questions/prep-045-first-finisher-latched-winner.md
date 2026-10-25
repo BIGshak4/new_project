@@ -642,3 +642,8 @@ A priority encoder produces a two-bit candidate. Store it in a register enabled 
 - [דיווח נוסף](../sources/prep-045-additional-2026-10-22.png): Same first-winner latch exercise already solved in PREP-045. Sampling, reset and tie-policy editorial clarifications are retained rather than attributed to the source.
 
 הנוסח, הרמזים, הפתרון ומצב הביקורת הקיימים נשמרו. שיוכי חברות מדווחים מהמקור ולא אומתו עצמאית.
+
+
+## מקורות נוספים — 25.10.2026, מקבץ20
+
+[צילום9](../sources/2026-10-25-batch20-09.png) חוזר על שלושת הזוכים, פולס מחזור יחיד וללא תיקו, כולל מימוש ללא עצירת השעון. מנגנון השמירה הסינכרוני כבר קיים.

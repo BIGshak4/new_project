@@ -186,7 +186,13 @@
         "המקור אינו מנסח את מודל השליפה באופן חד־משמעי. הנחות ההוצאה וההסתרה נוספו בעריכה באישור הראל; חלופות הניסוח מוסברות בפתרון.",
         "הקוד מניח קלט העומד בהבטחה. בדיקת האורך בקובץ הקוד אינה בדיקה מלאה של ייחודיות או תחום.",
         "חלופת הדגלים מותנית בכך שמותר O(n) זיכרון נוסף. היא משתמשת בערך המספר כאינדקס, משאירה את התא 0 ללא שימוש ומניחה את אותה הבטחת קלט.",
-        "בסעיף ג בלבד: n הוא אורך הקלט; הערכים שונים ובטווח הסגור 0..n, כולל אפס. ההבטחה אינה מאומתת במלואה. הקלט נשאר ללא שינוי."
+        "בסעיף ג בלבד: n הוא אורך הקלט; הערכים שונים ובטווח הסגור 0..n, כולל אפס. ההבטחה אינה מאומתת במלואה. הקלט נשאר ללא שינוי.",
+        "סעיף ד: תחום התשובות1..N, אפס הוא מציין מקום, חזרות מותרות.",
+        "סימון אינו משנה קלט ומאפשר אורךL כללי; הצבה דורשת רשות שינוי ואורךN−1.",
+        "גודל פלטk נפרד מעזר; הוא עשוי להיותN.",
+        "סעיף ד: תחום התשובות1..N, אפס הוא מציין מקום, חזרות מותרות.",
+        "סימון אינו משנה קלט ומאפשר אורךL כללי; הצבה דורשת רשות שינוי ואורךN−1.",
+        "גודל פלטk נפרד מעזר; הוא עשוי להיותN."
       ],
       "en": [
         "The initial contents are a permutation of 1 through n, each value once; n=100 in the given instance.",
@@ -195,7 +201,13 @@
         "The source does not specify an unambiguous draw model. Removal and concealment are user-authorized editorial assumptions; alternatives are explained in the solution.",
         "The code assumes the promised input contract. The file's length checks do not fully validate uniqueness or range.",
         "The flag-array alternative requires permission to use O(n) additional storage. It indexes by value, leaves index zero unused, and assumes the same valid-input promise.",
-        "Part C only: n is input length; entries are distinct in the closed range 0..n, including zero. The promise is not fully validated. Input remains unchanged."
+        "Part C only: n is input length; entries are distinct in the closed range 0..n, including zero. The promise is not fully validated. Input remains unchanged.",
+        "D: answer domain1..N, zero sentinel, repeats allowed.",
+        "Flags preserve input for general L; placement needs mutation permission and lengthN−1.",
+        "Output size k is separate from workspace and may equal N.",
+        "D: answer domain1..N, zero sentinel, repeats allowed.",
+        "Flags preserve input for general L; placement needs mutation permission and lengthN−1.",
+        "Output size k is separate from workspace and may equal N."
       ]
     },
     "optimality": {
@@ -209,7 +221,8 @@
           "flags": "O(n) זמן ו־O(n) תאי עזר; n+1 דגלים והסריקה כוללת 0..n.",
           "xor": "O(n) פעולות על מילים ו־O(1) מילות עזר, שהן O(log(n+1)) ביטים. עלות פעולת ביטים תלויה ברוחב כשמספרים אינם חסומים.",
           "proof": "דגל הוא אמת בדיוק לערך שנצפה; ב־XOR כל ערך קיים מופיע פעמיים והחסר פעם אחת. קריאה לינארית נדרשת במקרה הגרוע בקלט לא ממוין במודל זה."
-        }
+        },
+        "variant_D_all_missing": "דגלים O(L+N) זמן/O(N) עזר; הצבה באורךN−1 O(N) זמן/O(1) מילות עזר, ועודO(k) פלט. כל פלטN מפורש דורשΩ(N) זמן ושטח פלט."
       },
       "en": {
         "criterion": "Time as a function of n for an accessible unsorted remaining array under the valid-input promise.",
@@ -221,12 +234,13 @@
           "flags": "O(n) time and O(n) entries: n+1 flags scanned over 0..n inclusive.",
           "xor": "O(n) word operations and O(1) auxiliary words, representing O(log(n+1)) bits. Unbounded-width bit-operation cost depends on operand width.",
           "proof": "Flags precisely identify observed values; XOR includes each observed value twice and the omission once. An unsorted input requires linear reads in the worst case in this model."
-        }
+        },
+        "variant_D_all_missing": "Flags O(L+N) time/O(N) auxiliary entries; N−1 placement O(N) time/O(1) words plus O(k) output. An explicit N-item answer requires Ω(N) output time/storage."
       }
     },
     "verification": {
-      "he": "48,214 בדיקות פייתון עברו מול אורקל בלתי תלוי של הפרש קבוצות: 24,023 בדיקות של פתרונות הסכום וה־XOR ו־24,191 בדיקות של מערך הדגלים. נבדקו כל 100 החסרים היחידים וכל 4,950 זוגות החסרים עבור n=100, בשלושה סדרי קלט; כל סדרי השארית בגדלים 1 עד 7; תנאי התחלה, קלט ריק, שמירת הקלט ואי־החזרת אינדקס 0. בדיקות נוספות מאמתות את פונקציית הדגלים גם ללא חסרים ועם יותר משניים, בלי לשנות את סעיפי השאלה. זהו אימות תוכנה במסגרת ההנחות, ולא סקירה מקצועית או בדיקת לחיצות באתר חי.\n\nסעיף ג: 46,233 תמורות חוקיות ממצות עבור n=0..7 ועוד 400 דגימות עד n=2000 עברו מול חיפוש חברות עצמאי. שני המימושים בפייתון הורצו ונבדקה שמירת הקלט; אין כאן קומפילציה ברוחב קבוע או אישור מומחה.",
-      "en": "48,214 Python checks passed against an independent set-difference oracle: 24,023 checks of the sum/XOR alternatives and 24,191 of the flag array. Coverage includes all 100 single omissions and all 4,950 missing pairs for n=100 in three input orders, every remaining permutation for sizes 1 through 7, initialization, empty inputs, input preservation and exclusion of unused index zero. Additional generic flags cases cover no omissions and more than two without changing the question's subparts. This is software verification under the stated assumptions, not professional review or authenticated live-site clicking.\n\nPart C: all 46,233 valid permutations for n=0..7 plus 400 seeded cases up to n=2000 passed independent membership-search checks. Both actual Python implementations ran with input preservation checked; no fixed-width compilation or expert approval is claimed."
+      "he": "48,214 בדיקות פייתון עברו מול אורקל בלתי תלוי של הפרש קבוצות: 24,023 בדיקות של פתרונות הסכום וה־XOR ו־24,191 בדיקות של מערך הדגלים. נבדקו כל 100 החסרים היחידים וכל 4,950 זוגות החסרים עבור n=100, בשלושה סדרי קלט; כל סדרי השארית בגדלים 1 עד 7; תנאי התחלה, קלט ריק, שמירת הקלט ואי־החזרת אינדקס 0. בדיקות נוספות מאמתות את פונקציית הדגלים גם ללא חסרים ועם יותר משניים, בלי לשנות את סעיפי השאלה. זהו אימות תוכנה במסגרת ההנחות, ולא סקירה מקצועית או בדיקת לחיצות באתר חי.\n\nסעיף ג: 46,233 תמורות חוקיות ממצות עבור n=0..7 ועוד 400 דגימות עד n=2000 עברו מול חיפוש חברות עצמאי. שני המימושים בפייתון הורצו ונבדקה שמירת הקלט; אין כאן קומפילציה ברוחב קבוע או אישור מומחה.\n\nמיצוי קלטיN−1 עבורN=1..7 ועוד300 דגימות מול חברות עצמאית; נבדקו שימור קלט/רב־קבוצה ופסילה אטומית.\n\n280,392 קלטי N−1 ממצים עבור N=1..7 ועוד 300 דגימות מול חברות עצמאית; נבדקו שימור קלט/רב־קבוצה ופסילה אטומית.",
+      "en": "48,214 Python checks passed against an independent set-difference oracle: 24,023 checks of the sum/XOR alternatives and 24,191 of the flag array. Coverage includes all 100 single omissions and all 4,950 missing pairs for n=100 in three input orders, every remaining permutation for sizes 1 through 7, initialization, empty inputs, input preservation and exclusion of unused index zero. Additional generic flags cases cover no omissions and more than two without changing the question's subparts. This is software verification under the stated assumptions, not professional review or authenticated live-site clicking.\n\nPart C: all 46,233 valid permutations for n=0..7 plus 400 seeded cases up to n=2000 passed independent membership-search checks. Both actual Python implementations ran with input preservation checked; no fixed-width compilation or expert approval is claimed.\n\nExhaustive length-N−1 inputs for N=1..7 plus300 seeded arrays versus membership search; preservation/multiset and atomic rejection checked.\n\n280,392 exhaustive length-N−1 inputs for N=1..7 plus 300 seeded arrays versus membership search; preservation/multiset and atomic rejection checked."
     },
     "edge_cases": {
       "he": [
@@ -238,7 +252,11 @@
         "בדגלים: מתחילים ב־False, מסמנים את ערך האיבר ולא את מיקומו, וסורקים רק את 1 עד n. מערך ריק עם n=1 או n=2 מחזיר את כל הערכים החסרים המתאימים.",
         "ג: n=0 מחזיר 0; n=1 מחזיר 0 או 1 לפי הערך הקיים.",
         "ג: חסר 0, חסר n, תמורה הפוכה או לא ממוינת.",
-        "ג: דוגמה [3,0,1] מחזירה 2; הדגלים כוללים גם את האינדקס 0."
+        "ג: דוגמה [3,0,1] מחזירה 2; הדגלים כוללים גם את האינדקס 0.",
+        "הכול אפסים, הרבה חזרות, חסרN, נוכחותN ו־N=1 עם ריקה.",
+        "ערך כפול שכבר במקומו חייב לעצור החלפות; פסילה לפני כתיבה.",
+        "הכול אפסים, הרבה חזרות, חסרN, נוכחותN ו־N=1 עם ריקה.",
+        "ערך כפול שכבר במקומו חייב לעצור החלפות; פסילה לפני כתיבה."
       ],
       "en": [
         "Missing 1 or n: neither the sum formula nor XOR depends on an interior omission.",
@@ -249,7 +267,11 @@
         "For flags, initialize False, mark the entry's value rather than its position, and scan only 1 through n. An empty remainder with n=1 or n=2 returns all the appropriate missing values.",
         "C: n=0 returns 0; n=1 returns 0 or 1 according to the observed value.",
         "C: missing 0, missing n, reversed or unsorted input.",
-        "C: [3,0,1] returns 2; flags include index zero."
+        "C: [3,0,1] returns 2; flags include index zero.",
+        "All zeros, many duplicates, missing/present N and N=1 empty.",
+        "A duplicate already at its home must not swap forever; reject before mutation.",
+        "All zeros, many duplicates, missing/present N and N=1 empty.",
+        "A duplicate already at its home must not swap forever; reject before mutation."
       ]
     },
     "common_mistakes": {
@@ -266,7 +288,13 @@
         "ג: להעתיק את סריקת הדגלים של א–ב שמתחילה ב־1, ואז לפספס חסר 0.",
         "ג: לבלבל בין n בתור מספר הערכים שנותרו לבין גודל הטווח המקורי.",
         "ג: לאמת ייחודיות באמצעות set ואז לטעון לזיכרון עזר קבוע.",
-        "ג: להשתמש בחילוק נקודה צפה או להתעלם מגלישת סכום ברוחב קבוע."
+        "ג: להשתמש בחילוק נקודה צפה או להתעלם מגלישת סכום ברוחב קבוע.",
+        "להחזיר אפס, להשתמש בביטול XOR למרות חזרות או להמשיך להבטיח חסר יחיד.",
+        "להתעלם מזיכרון הפלט או לטעון לחסם זיכרון דגלים בכל מודל.",
+        "לגשת לאינדקסN−1 במערך בןN−1 תאים.",
+        "להחזיר אפס, להשתמש בביטול XOR למרות חזרות או להמשיך להבטיח חסר יחיד.",
+        "להתעלם מזיכרון הפלט או לטעון לחסם זיכרון דגלים בכל מודל.",
+        "לגשת לאינדקסN−1 במערך בןN−1 תאים."
       ],
       "en": [
         "Treating numbered cells as a guarantee about their contents: the values, not just the addresses, need a contract.",
@@ -281,12 +309,18 @@
         "C: copying the A–B flags scan starting at 1 and missing a zero omission.",
         "C: confusing n as remaining length with the earlier original-range size.",
         "C: validating uniqueness with a set while claiming constant auxiliary space.",
-        "C: using floating-point division or ignoring fixed-width intermediate-sum overflow."
+        "C: using floating-point division or ignoring fixed-width intermediate-sum overflow.",
+        "Returning zero, XOR-cancelling repeats or retaining a one-omission promise.",
+        "Ignoring output storage or claiming flag-space lower bounds in every model.",
+        "Accessing index N−1 in an N−1-slot input.",
+        "Returning zero, XOR-cancelling repeats or retaining a one-omission promise.",
+        "Ignoring output storage or claiming flag-space lower bounds in every model.",
+        "Accessing index N−1 in an N−1-slot input."
       ]
     },
     "interview_answer": {
-      "he": "אבהיר שהקלט היה תמורה של 1 עד n ושאפשר לקרוא את השארית. כשמותר זיכרון נוסף, אאתחל n+1 דגלים ל־False, אסמן True עבור כל ערך שקראתי, ואחזיר את האינדקסים מ־1 עד n שהדגל שלהם נשאר False. אותה פונקציה מוצאת חסר אחד או שניים בזמן O(n) ובזיכרון נוסף O(n), ללא נוסחאות. אם נדרש זיכרון עזר קבוע במילים, לחסר אחד אשתמש בהפרש סכומים ולשניים ב־XOR וחלוקה לפי ביט מבדיל.\n\nבסעיף ג אורך הקלט n והטווח 0..n. עם זיכרון אסמן n+1 דגלים לפי הערכים ואחזיר את הדגל החסר, כולל אפס. בלי מערך עזר אעשה XOR של כל הטווח ושל הקלט; ערכים קיימים מתבטלים ונשאר החסר. הזמן לינארי, וזיכרון XOR קבוע במילים בלי לשנות את המערך.",
-      "en": "First clarify that the original input was a permutation of 1 through n and that the remainder is accessible. If extra memory is allowed, initialize n+1 False flags, mark True for every value read, and return the indices 1 through n whose flags remain False. One function finds one or two omissions in O(n) time and O(n) extra storage, without formulas. If constant auxiliary words are required, use a sum difference for one omission and XOR with a distinguishing-bit partition for two.\n\nIn C input length is n and domain is 0..n. With extra memory mark n+1 value-indexed flags and return the missing flag, including zero. Without an auxiliary array XOR the full range and input: present values cancel, leaving the omission. Time is linear and XOR uses constant words without modifying the array."
+      "he": "אבהיר שהקלט היה תמורה של 1 עד n ושאפשר לקרוא את השארית. כשמותר זיכרון נוסף, אאתחל n+1 דגלים ל־False, אסמן True עבור כל ערך שקראתי, ואחזיר את האינדקסים מ־1 עד n שהדגל שלהם נשאר False. אותה פונקציה מוצאת חסר אחד או שניים בזמן O(n) ובזיכרון נוסף O(n), ללא נוסחאות. אם נדרש זיכרון עזר קבוע במילים, לחסר אחד אשתמש בהפרש סכומים ולשניים ב־XOR וחלוקה לפי ביט מבדיל.\n\nבסעיף ג אורך הקלט n והטווח 0..n. עם זיכרון אסמן n+1 דגלים לפי הערכים ואחזיר את הדגל החסר, כולל אפס. בלי מערך עזר אעשה XOR של כל הטווח ושל הקלט; ערכים קיימים מתבטלים ונשאר החסר. הזמן לינארי, וזיכרון XOR קבוע במילים בלי לשנות את המערך.\n\nאסמן נוכחות של1..N ואחזיר כל דגל חסר; אפסים וחזרות אינם מוסיפים ערך חדש. אם מותר לשנותN−1 תאים, אציב כלv<N בביתו ואשמור דגל לנוכחותN. זמן תת־לינארי אינו אפשרי כשצריך להוציאN חסרים.\n\nאסמן נוכחות של1..N ואחזיר כל דגל חסר; אפסים וחזרות אינם מוסיפים ערך חדש. אם מותר לשנותN−1 תאים, אציב כלv<N בביתו ואשמור דגל לנוכחותN. זמן תת־לינארי אינו אפשרי כשצריך להוציאN חסרים.",
+      "en": "First clarify that the original input was a permutation of 1 through n and that the remainder is accessible. If extra memory is allowed, initialize n+1 False flags, mark True for every value read, and return the indices 1 through n whose flags remain False. One function finds one or two omissions in O(n) time and O(n) extra storage, without formulas. If constant auxiliary words are required, use a sum difference for one omission and XOR with a distinguishing-bit partition for two.\n\nIn C input length is n and domain is 0..n. With extra memory mark n+1 value-indexed flags and return the missing flag, including zero. Without an auxiliary array XOR the full range and input: present values cancel, leaving the omission. Time is linear and XOR uses constant words without modifying the array.\n\nMark presence of1..N and emit missing flags; zeros/repeats add nothing. With N−1 mutable entries, place each v<N at its home and flag N. Sublinear time is impossible when N omissions must be emitted.\n\nMark presence of1..N and emit missing flags; zeros/repeats add nothing. With N−1 mutable entries, place each v<N at its home and flag N. Sublinear time is impossible when N omissions must be emitted."
     },
     "solution_extensions": {
       "he": {
@@ -297,6 +331,11 @@
           "question": "בסעיף ג, מה קורה אם החוזה מתיר חזרה אחת במקום ערך חסר?",
           "direction": "הוכחת הביטול כבר אינה נותנת בהכרח מספר חסר יחיד. יש להגדיר מחדש את מספר החזרות והחסרים, להוסיף מידע מתאים או לאמת את החוזה; אין להציג את אוגר ה־XOR לבדו כתשובה מאומתת.",
           "status": "שלושת רמזי ג ושאלת ההמשך מוכנים בתוכן בלבד; תור הרמזים המקורי נשמר."
+        },
+        "variant_D_all_missing": {
+          "question": "מה אם אסור לשנות קלט ומותר מעט זיכרון, אך מותר זמן רב יותר?",
+          "direction": "אפשר לבדוק כל מועמד מול כל הקלט בסריקות חוזרות ולהזרים חסרים; החיסכון בזיכרון בא על חשבוןO(NL) זמן.",
+          "status": "רמזים והמשך מוכנים בחומר המשלים בלבד; התור הקודם נשמר."
         }
       },
       "en": {
@@ -307,6 +346,11 @@
           "question": "In C, what changes if a duplicate may replace a value?",
           "direction": "Cancellation no longer necessarily identifies one omission. Define duplicate/missing multiplicities and add suitable information or contract validation; the XOR accumulator alone is not a validated answer.",
           "status": "C’s three hints and follow-up are prepared as content only; the original hint queue is retained."
+        },
+        "variant_D_all_missing": {
+          "question": "What if input is read-only and little workspace is available, but more time is allowed?",
+          "direction": "Search the entire input per candidate and stream omissions; O(NL) time trades for little workspace.",
+          "status": "Supplemental hints/follow-up only; original queue retained."
         }
       }
     },
@@ -320,6 +364,15 @@
             "בלי הדגלים, השתמשו בכך ש־x XOR x שווה לאפס: בטלו את ערכי הטווח המלא מול הקלט. הערך החסר יופיע פעם אחת בלבד."
           ],
           "integration_status": "מוכן בחומר המשלים; אינו מחליף את תור שלושת הרמזים המקורי של א–ב."
+        },
+        "D_all_missing": {
+          "prompt": "### ד. חזרות, אפסים וכל הערכים החסרים\nבסעיף החדש התחום המבוקש הוא 1..N, עם N≥1. בקלט N−1 תאים, אך כעת מותרות חזרות ואפסים; אפס הוא מציין מקום שאינו ערך בתחום. החזירו בסדר עולה את כל ערכי1..N שלא הופיעו. גם קלט שכולו אפסים אפשרי, ואז כולם חסרים. האם אפשר להבטיח גם זמן וגם מקום קטנים מ־O(N)?\n\nהבהרות: תחום הקלט0..N מובטח ונבדק במימוש החדש; אין מספרים שליליים. הבדילו זיכרון עזר מזיכרון הפלט, ופלט מפורש מזרם. תחילה פתרון שאינו משנה קלט, המוכלל לאורך L כלשהו. אחר כך חלופה מפורשת שמותר לה לשנות את N−1 התאים. סעיפי א–ג והרמזים הקודמים נשארים ללא שינוי; שני החסרים בסעיף ב דורשים N−2 ערכים שונים.",
+          "hints": [
+            "מה משתנה בבדיקת נוכחות כאשר אותו ערך מופיע כמה פעמים, והאם צריך להחזיר אפס?",
+            "דגל נוכחות אינו משתנה אחרי החזרה הראשונה. במקרה של אפסים בלבד יש לכתוב N תוצאות, בלי קשר לאלגוריתם הפנימי.",
+            "ללא שינוי קלט סמנו דגל לכל ערך. אם מותר לשנות N−1 תאים, הציבו v בתחום1..N−1 במקוםv−1, הימנעו מהחלפת כפילויות ללא סוף, ושמרו דגל יחיד לנוכחותN."
+          ],
+          "integration_status": "רמזי הסעיף מוכנים בחומר המשלים בלבד; תור הרמזים המקורי נשמר."
         }
       },
       "en": {
@@ -331,12 +384,21 @@
             "Without flags, exploit x XOR x = 0: cancel the complete range against the observed input. Only the missing value occurs once."
           ],
           "integration_status": "Prepared in supplemental material; does not replace the original three-hint queue for A–B."
+        },
+        "D_all_missing": {
+          "prompt": "### D. Repetitions, zero sentinels and every missing value\nThe new part asks for domain1..N, N≥1. Input has N−1 entries, now allowing repetitions and zeros. Zero is a sentinel outside the requested domain. Return in ascending order every value1..N absent from input. All-zero input is valid and makes all N values missing. Can both time and space be guaranteed below O(N)?\n\nClarify auxiliary versus output storage and materialized versus streamed output. Input values lie in0..N; new implementations validate this. First give a read-only solution generalized to arbitrary length L, then an explicitly permitted mutating alternative for exactly N−1 slots. Parts A–C and their old hints remain unchanged; distinct two-omission Part B has N−2 observations.",
+          "hints": [
+            "How does presence change when a value repeats, and should zero ever be returned?",
+            "A presence flag does not change after the first occurrence. All-zero input requires writing N answers regardless of internal algorithm.",
+            "Read-only: mark value-indexed flags. With N−1 mutable slots, place v in1..N−1 at v−1, avoid duplicate swap loops, and retain one presence flag for N."
+          ],
+          "integration_status": "Part-specific hints are supplemental only; original hint queue retained."
         }
       }
     },
     "source_ambiguities": {
-      "he": "צילום 9 מבטיח במפורש טווח 0..n, אורך n, מספרים שונים ודרישת זמן לינארי; אחר כך הוא אוסר מערך עזר. העריכה מגדירה קריאה בלבד, n=0 והבטחת קלט במקום אימות מלא. זו תוספת לסעיף ג ואינה מחליפה את פירושי המקור של א–ב.",
-      "en": "Image 9 explicitly promises range 0..n, length n, distinct entries and linear time, then forbids an auxiliary array. Read-only input, n=0 and a promise rather than full validation are added clarifications. This describes C and does not replace A–B source interpretations."
+      "he": "צילום 9 מבטיח במפורש טווח 0..n, אורך n, מספרים שונים ודרישת זמן לינארי; אחר כך הוא אוסר מערך עזר. העריכה מגדירה קריאה בלבד, n=0 והבטחת קלט במקום אימות מלא. זו תוספת לסעיף ג ואינה מחליפה את פירושי המקור של א–ב.\n\nהצילום מחדש את סעיפי חסר אחד/שניים שכבר קיימים, ומוסיף חזרות ואף אפסים בניגוד לתחום המקורי. העריכה מפרשת אפסים כמצייני מקום, משאירה א–ג ומקצה ד לחסרים מרובים; אורךL כללי מוצג כהכללה מפורשת.\n\nהצילום חוזר על סעיפי חסר אחד/שניים שכבר קיימים, ומוסיף חזרות ואף אפסים בניגוד לתחום המקורי. העריכה מפרשת אפסים כמצייני מקום, משאירה א–ג ומקצה ד לחסרים מרובים; אורךL כללי מוצג כהכללה מפורשת.",
+      "en": "Image 9 explicitly promises range 0..n, length n, distinct entries and linear time, then forbids an auxiliary array. Read-only input, n=0 and a promise rather than full validation are added clarifications. This describes C and does not replace A–B source interpretations.\n\nSource repeats the existing one/two-omission parts and introduces repeats/zeros contrary to the original domain. Zeros are explicitly sentinels, A–C remain, and D handles multiple omissions; general L is a labeled generalization.\n\nSource repeats the existing one/two-omission parts and introduces repeats/zeros contrary to the original domain. Zeros are explicitly sentinels, A–C remain, and D handles multiple omissions; general L is a labeled generalization."
     }
   },
   "PREP-042": {

@@ -45,6 +45,16 @@ SOURCE_ONLY_TECHNICAL_SHA256 = {
     "PREP-083": "33d777510df846b1ecab98458efa153c5b4b4eacce6d431eccbe8aa07a81143a",
     "PREP-094": "3032a71a0cd3ca8fecdf130505bd4e2b0a0f3e4d36b8d8623fdae7e6b29a22cc",
 }
+# PREP-094 received an appended C variant on October 25. Reconstruct its
+# original technical snapshot before hashing, preserving every prior hint and
+# exact prompt/solution prefix while permitting that later version to grow.
+LATER_APPEND_PREFIX_LENGTHS = {
+    "PREP-094": {
+        "version": 1,
+        "he": {"prompt": 425, "reference_solution": 2546},
+        "en": {"prompt": 513, "reference_solution": 3000},
+    },
+}
 
 
 @pytest.fixture
@@ -79,14 +89,25 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
     questions = {item["id"]: item for item in archive()["questions"]}
     for ident, expected_hash in SOURCE_ONLY_TECHNICAL_SHA256.items():
         question = questions[ident]
-        technical = {key: question.get(key) for key in ("version", "translations", "prepared_hints")}
+        technical = json.loads(json.dumps({
+            key: question.get(key) for key in ("version", "translations", "prepared_hints")
+        }))
+        if ident in LATER_APPEND_PREFIX_LENGTHS:
+            baseline = LATER_APPEND_PREFIX_LENGTHS[ident]
+            assert question["version"] >= baseline["version"] + 1, ident
+            technical["version"] = baseline["version"]
+            for language in ("he", "en"):
+                for field, length in baseline[language].items():
+                    value = technical["translations"][language][field]
+                    assert len(value) > length, (ident, language, field)
+                    technical["translations"][language][field] = value[:length]
         serialized = json.dumps(technical, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         assert hashlib.sha256(serialized.encode()).hexdigest() == expected_hash, ident
 
 
 def test_nine_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 124
-    assert len(catalog.questions) == 154
+    assert len(archive()["questions"]) == 135
+    assert len(catalog.questions) == 165
     additions = {q.assets.get("preparation_id"): q for q in catalog.questions.values()
                  if q.assets.get("preparation_id") in NEW_IDS}
     assert set(additions) == NEW_IDS

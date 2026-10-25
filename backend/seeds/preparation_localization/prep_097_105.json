@@ -279,13 +279,21 @@
         "שני מערכי שלמים בסדר לא יורד; חזרות ואפסים ושליליים מותרים.",
         "פלט חדש שומר את כל n+m המופעים; שני הקלטים נשארים ללא שינוי.",
         "גישה לאיבר לפי אינדקס ול־len בעלות קבועה; אין sort ואין דרישה למיזוג במקום.",
-        "בשוויון בוחרים משמאל; ההבטחה שהקלט ממוין אינה נבדקת בידי הפונקציה."
+        "בשוויון בוחרים משמאל; ההבטחה שהקלט ממוין אינה נבדקת בידי הפונקציה.",
+        "הקידומת b[:m] בלבד היא קלט; שארn התאים קיבולת, גם כשאפס הוא נתון אמיתי.",
+        "קלטים ממוינים, ללא חפיפה; מותר לכתובb וחובה לשמרa.",
+        "הקידומת b[:m] בלבד היא קלט; שארn התאים קיבולת, גם כשאפס הוא נתון אמיתי.",
+        "קלטים ממוינים, ללא חפיפה; מותר לכתובb וחובה לשמרa."
       ],
       "en": [
         "Two nondecreasing integer arrays; duplicates, zero and negatives are allowed.",
         "Fresh output preserves all n+m occurrences while both inputs remain unchanged.",
         "Constant-cost indexed access and len; no sort call and no in-place requirement.",
-        "Choose left on ties; sortedness is promised rather than validated by the function."
+        "Choose left on ties; sortedness is promised rather than validated by the function.",
+        "Only b[:m] is input; remaining n slots are capacity even when zero is real data.",
+        "Sorted disjoint inputs; b may be written while a must be preserved.",
+        "Only b[:m] is input; remaining n slots are capacity even when zero is real data.",
+        "Sorted disjoint inputs; b may be written while a must be preserved."
       ]
     },
     "optimality": {
@@ -293,13 +301,15 @@
         "time": "Θ(n+m) פעולות על מילים, עם לכל היותר n+m−1 השוואות ראשים כששניהם לא ריקים.",
         "output": "Θ(n+m) מקומות פלט למערך מלא חדש.",
         "auxiliary": "O(1) מילות עזר מעבר לפלט; האינדקסים אינם בעלי מספר קבוע של ביטים לכל n,m.",
-        "scope": "זמן לינארי נדרש לכתיבת הפלט המלא. לא נטענת מינימליות השוואות בכל מקרה או היתכנות לאותו חוזה במקום."
+        "scope": "זמן לינארי נדרש לכתיבת הפלט המלא. לא נטענת מינימליות השוואות בכל מקרה או היתכנות לאותו חוזה במקום.",
+        "variant_B_inplace": "O(m+n) זמן במקרה הגרוע, O(1) מילות עזר וזהותb נשמרת. a ריק יכול להסתיים מיד; אין פלט חדש או מיון."
       },
       "en": {
         "time": "Θ(n+m) word operations, with at most n+m−1 head comparisons when both inputs are nonempty.",
         "output": "Θ(n+m) output slots for a fresh materialized array.",
         "auxiliary": "O(1) auxiliary words beyond output; index bit widths are not constant for arbitrary n,m.",
-        "scope": "Writing all output requires linear time. No minimum-comparison claim for every instance or in-place construction is made."
+        "scope": "Writing all output requires linear time. No minimum-comparison claim for every instance or in-place construction is made.",
+        "variant_B_inplace": "Worst-case O(m+n), O(1) auxiliary words, retained b identity. Empty a may finish immediately; no fresh output or sorting."
       }
     },
     "edge_cases": {
@@ -309,7 +319,11 @@
         "[4,4] ו־[4] מחזירים שלושה מופעי 4.",
         "מספרים שליליים, אפס ושלמים גדולים מטופלים בהשוואה רגילה.",
         "מערכים באורכים שונים מאוד, או שכל ערכי אחד קטנים משל האחר.",
-        "קלט שאינו ממוין מחוץ לחוזה; אין תיקון אוטומטי באמצעות sort."
+        "קלט שאינו ממוין מחוץ לחוזה; אין תיקון אוטומטי באמצעות sort.",
+        "a ריק, קידומתb ריקה, שניהם ריקים.",
+        "אפסים אמיתיים, שליליים, שוויונות רבים; m ידוע וקיבולת מדויקת.",
+        "a ריק, קידומתb ריקה, שניהם ריקים.",
+        "אפסים אמיתיים, שליליים, שוויונות רבים; m ידוע וקיבולת מדויקת."
       ],
       "en": [
         "Two empty inputs return a fresh empty list.",
@@ -317,7 +331,11 @@
         "[4,4] and [4] yield three fours.",
         "Negatives, zero and large exact integers use ordinary comparison.",
         "Very unequal lengths or all values in one array preceding the other's values.",
-        "Unsorted input is outside the contract; no automatic sort repairs it."
+        "Unsorted input is outside the contract; no automatic sort repairs it.",
+        "Empty a/b-prefix/both.",
+        "Real zeros, negatives, many ties; explicit m and exact capacity.",
+        "Empty a/b-prefix/both.",
+        "Real zeros, negatives, many ties; explicit m and exact capacity."
       ]
     },
     "common_mistakes": {
@@ -327,7 +345,13 @@
         "החזרת אחד הקלטים עצמו במקרה שהשני ריק, למרות דרישת פלט חדש.",
         "הוצאה חוזרת מראש רשימת Python ושינוי הקלט או יצירת עלות ריבועית.",
         "מיון האיחוד במקום שימוש במיון שכבר קיים.",
-        "דיווח זיכרון O(1) בלי להפריד את הפלט בגודל n+m."
+        "דיווח זיכרון O(1) בלי להפריד את הפלט בגודל n+m.",
+        "להסיק את m מהאפס הראשון.",
+        "לכתוב מהתחלה ולדרוס קלט או לדלג על שני אינדקסים בשוויון.",
+        "להשתמש בחיתוך או מיון כפתרון בלי לחשב זיכרון, או לטעון שגםb נשמר.",
+        "להסיק את m מהאפס הראשון.",
+        "לכתוב מהתחלה ולדרוס קלט או לדלג על שני אינדקסים בשוויון.",
+        "להשתמש בחיתוך או מיון כפתרון בלי לחשב זיכרון, או לטעון שגםb נשמר."
       ],
       "en": [
         "Advancing both cursors on equality and losing an occurrence.",
@@ -335,28 +359,38 @@
         "Returning an input object when the other is empty despite the fresh-output contract.",
         "Repeatedly removing Python list heads, mutating input or incurring quadratic work.",
         "Sorting the concatenation instead of using already-established order.",
-        "Reporting O(1) storage without separating the n+m output slots."
+        "Reporting O(1) storage without separating the n+m output slots.",
+        "Inferring m from the first zero.",
+        "Overwriting unread input forward or skipping both equal heads.",
+        "Hiding slice/sort storage or claiming b is preserved.",
+        "Inferring m from the first zero.",
+        "Overwriting unread input forward or skipping both equal heads.",
+        "Hiding slice/sort storage or claiming b is preserved."
       ]
     },
     "interview_answer": {
-      "he": "אחזיק אינדקס בכל מערך ופלט חדש. בכל פעם אעתיק את הקטן משני הראשים; בשוויון אבחר משמאל ואקדם רק את האינדקס שלו. כשאחד נגמר אעתיק את יתרת האחר. כל מופע נצרך פעם אחת, ולכן הזמן Θ(n+m), הפלט Θ(n+m) וזיכרון העזר מעבר לפלט O(1) מילים.",
-      "en": "Keep one cursor per array and fresh output. Append the smaller current head, choosing left on ties, and advance only its cursor. When one input ends, copy the other's suffix. Every occurrence is consumed once: Θ(n+m) time and output storage, with O(1) auxiliary words beyond output."
+      "he": "אחזיק אינדקס בכל מערך ופלט חדש. בכל פעם אעתיק את הקטן משני הראשים; בשוויון אבחר משמאל ואקדם רק את האינדקס שלו. כשאחד נגמר אעתיק את יתרת האחר. כל מופע נצרך פעם אחת, ולכן הזמן Θ(n+m), הפלט Θ(n+m) וזיכרון העזר מעבר לפלט O(1) מילים.\n\nאמזג לאחור לתוךb: הגדול בין שני הקצוות נכנס למקום הימני הפנוי. היעד תמיד מימין לקידומתb שטרם נקראה. a נשמר; אם הוא נגמר, שארb כבר במקומו. זמן לינארי ועזר קבוע במילים.\n\nאמזג לאחור לתוךb: הגדול בין שני הקצוות נכנס למקום הימני הפנוי. היעד תמיד מימין לקידומתb שטרם נקראה. a נשמר; אם הוא נגמר, שארb כבר במקומו. זמן לינארי ועזר קבוע במילים.",
+      "en": "Keep one cursor per array and fresh output. Append the smaller current head, choosing left on ties, and advance only its cursor. When one input ends, copy the other's suffix. Every occurrence is consumed once: Θ(n+m) time and output storage, with O(1) auxiliary words beyond output.\n\nMerge backward into b: put the larger remaining end value in the rightmost destination. Destination remains beyond unread b. Preserve a; stop when a ends. Linear worst-case time, constant auxiliary words.\n\nMerge backward into b: put the larger remaining end value in the rightmost destination. Destination remains beyond unread b. Preserve a; stop when a ends. Linear worst-case time, constant auxiliary words."
     },
     "source_ambiguities": {
       "he": [
         "המקור כולל רק ארבע מילים באנגלית; סימן, סוג ערכים, חזרות, מיון לא יורד, פלט חדש ואי־שינוי קלט נוספו במפורש.",
         "המקור אינו מבטיח קיבולת פנויה או דורש מיזוג במקום. אלו חוזים נפרדים.",
-        "בחירה משמאל בשוויון היא הבהרת יציבות, ולא הבדל שמצדיק ספירה כשאלה טכנית נוספת לעומת SW-005."
+        "בחירה משמאל בשוויון היא הבהרת יציבות, ולא הבדל שמצדיק ספירה כשאלה טכנית נוספת לעומת SW-005.",
+        "הצילום החדש אוסר מקום נוסף ומספק קיבולת ב־b, בניגוד למערך חדש בגרסה המקורית. ממוינת היא הקידומת התקפה, לא האפסים השמורים. ההבדל נשמר כסעיף נפרד תחת098.",
+        "הצילום החדש אוסר מקום נוסף ומספק קיבולת ב־b, בניגוד למערך חדש בגרסה המקורית. ממוינת היא הקידומת התקפה, לא האפסים השמורים. ההבדל נשמר כסעיף נפרד תחת098."
       ],
       "en": [
         "The source contains only four English words; integer type, duplicates, nondecreasing order, fresh output and immutability are explicit editorial choices.",
         "The source neither provides spare capacity nor requires in-place merging; those are separate contracts.",
-        "Left-first ties are a stability clarification, not a technical difference justifying an extra unique question relative to SW-005."
+        "Left-first ties are a stability clarification, not a technical difference justifying an extra unique question relative to SW-005.",
+        "New source forbids extra space and provides b capacity, unlike the original fresh output. Only the valid prefix is sorted input, not padding. Retained as a separate098 part.",
+        "New source forbids extra space and provides b capacity, unlike the original fresh output. Only the valid prefix is sorted input, not padding. Retained as a separate098 part."
       ]
     },
     "verification": {
-      "he": "עברו 3,136 זוגות מערכים ממוינים באורכים 0..5 מעל −2,0,3 מול שחזור מתדירויות בלתי תלוי, וכן הדוגמה, ריקים, שלמים בגודל 10¹⁰⁰ ושמירת קלט. הקוד המוצע בפייתון הורץ בפועל; ללא מדידת זמן או אישור מקצועי אנושי.",
-      "en": "Passed 3,136 sorted-array pairs of lengths 0..5 over −2,0,3 against independent frequency reconstruction, plus the example, empty arrays, integers of magnitude 10¹⁰⁰ and input preservation. Proposed Python code executed; no timing benchmark or human professional approval."
+      "he": "עברו 3,136 זוגות מערכים ממוינים באורכים 0..5 מעל −2,0,3 מול שחזור מתדירויות בלתי תלוי, וכן הדוגמה, ריקים, שלמים בגודל 10¹⁰⁰ ושמירת קלט. הקוד המוצע בפייתון הורץ בפועל; ללא מדידת זמן או אישור מקצועי אנושי.\n\n3,136 זוגות ממצים ועוד200 דגימות מול מיון עצמאי; נשמרו זהותb ו־a, כולל אפסים וכפילויות.\n\n3,136 זוגות ממצים ועוד200 דגימות מול מיון עצמאי; נשמרו זהותb ו־a, כולל אפסים וכפילויות.",
+      "en": "Passed 3,136 sorted-array pairs of lengths 0..5 over −2,0,3 against independent frequency reconstruction, plus the example, empty arrays, integers of magnitude 10¹⁰⁰ and input preservation. Proposed Python code executed; no timing benchmark or human professional approval.\n\n3,136 exhaustive pairs plus200 seeded pairs versus independent sorting; b identity/a preservation, zeros and duplicates checked.\n\n3,136 exhaustive pairs plus 200 seeded pairs versus independent sorting; b identity/a preservation, zeros and duplicates checked."
     },
     "relationship_note": {
       "he": "אותו עיקרון וחוזה בסיסי כמו הדוגמה SW-005. זו הגרסה המבוססת על מקור שסופק ידנית, המקושרת לדוגמה הקיימת; אין להגדיל בגללה את מספר השאלות הייחודיות. יש להעדיף אותה בקבוצת כפילויות ולשמר מזהים והיסטוריית תרגול קיימים.",
@@ -366,12 +400,46 @@
       "he": {
         "question": "מה משתנה אם left כבר כולל בסופו m מקומות פנויים, ומותר לעדכן אותו במקום?",
         "direction": "זה חוזה אחר: משווים את האיברים הגדולים שטרם נכתבו וממלאים את הפלט מהסוף, כדי לא לדרוס ערכים שעוד נדרשים. יש להגדיר בנפרד אורך תקף וקיבולת. ההרחבה אינה הקוד הראשי.",
-        "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך."
+        "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך.",
+        "variant_B_inplace": {
+          "question": "מה משתנה אם המערכים חולקים זיכרון?",
+          "direction": "כתיבה עלולה להשחית גם אתa שלא נקרא. יש להגדיר בדיוק את החפיפה ולתכנן אלגוריתם אחר או להתיר העתקה; ההוכחה הנוכחית אינה חלה.",
+          "status": "מוכן בחומר משלים בלבד; תור הרמזים המקורי נשמר."
+        }
       },
       "en": {
         "question": "What if left has m spare slots at its end and may be updated in place?",
         "direction": "That is another contract: compare the largest unread values and fill backward to avoid overwriting values still needed. Define valid length and capacity separately. The extension is not the main implementation.",
-        "status": "Prepared in content; not connected to the interactive follow-up queue."
+        "status": "Prepared in content; not connected to the interactive follow-up queue.",
+        "variant_B_inplace": {
+          "question": "What changes with overlapping memory?",
+          "direction": "Writing can corrupt unread a as well. Specify overlap and redesign or permit copying; the current safety proof does not apply.",
+          "status": "Supplemental only; original hint queue retained."
+        }
+      }
+    },
+    "prompt_variants": {
+      "he": {
+        "B_inplace": {
+          "prompt": "### וריאציה נוספת — מיזוג בתוך קיבולת שמורה\nנתון a ממוין בסדר לא יורד ובאורך n, ו־b באורך m+n: רק m האיברים הראשונים הם קלט ממוין, ואחריהם n תאי קיבולת פנויים המסומנים באפס. מזגו את כל המופעים לתוך b ללא מערך עזר, תוך שימור a.\n\nהבהרות: m נתון במפורש; אפס יכול להיות גם ערך נתון אמיתי, ולכן אין לחפש אפס כדי לגלות את סוף הקלט. גם שליליים וחזרות מותרים. המערכים אינם חופפים, והמקומות השמורים אינם נתונים. b נשאר אותו אובייקט באורך m+n. המיון והטיפוסים מובטחים; המימוש בודק קיבולת ו־m, אך אינו מאמת מיון. הגרסה המקורית שמחזירה מערך חדש ואינה משנה את שני הקלטים נשמרה בנפרד.",
+          "hints": [
+            "איזו כתיבה בתחילת b עלולה לדרוס איבר שעוד לא קראתם?",
+            "השטח הפנוי נמצא בסוף, והערך הגדול ביותר שנותר מתאים למקום האחרון שעוד לא מולא.",
+            "שמרו אינדקס אחרון ב־a, אינדקס אחרון בקידומת התקפה שלb ואינדקס כתיבה בסופו. מלאו מהגדול לקטן; כש־a נגמר, קידומתb שנותרה כבר במקומה."
+          ],
+          "integration_status": "רמזי הסעיף מוכנים בחומר המשלים בלבד; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "B_inplace": {
+          "prompt": "### Additional variant — merge into reserved capacity\nArray a is nondecreasing with length n; b has length m+n, with only its first m entries containing sorted input and its last n slots reserved, shown as zeros. Merge every occurrence into b without an auxiliary array, preserving a.\n\nm is explicit. Zero may also be real input, so never infer the input boundary by searching for zero. Negatives and duplicates are valid. Arrays do not overlap; reserved slots are not data. b retains identity and length m+n. Sortedness/types are promises; implementation checks capacity/m, not sorting. The original fresh-output variant that preserves both inputs is retained separately.",
+          "hints": [
+            "Which write at the front of b could overwrite an unread entry?",
+            "Free space is at the end; the largest remaining value belongs in the last unfilled slot.",
+            "Track the last unread a value, last valid-prefix b value and last destination slot. Fill largest first; after a ends, the remaining b prefix is already in place."
+          ],
+          "integration_status": "Part-specific hints are supplemental only; original hint queue retained."
+        }
       }
     }
   },

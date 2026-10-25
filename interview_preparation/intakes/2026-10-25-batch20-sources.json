@@ -1,0 +1,474 @@
+{
+  "intake_date": "2026-10-25",
+  "batch": "batch20",
+  "screenshot_count": 20,
+  "question_source_count": 20,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-01.png"
+      ],
+      "sha256": "7e77120163db6196c62c70f416fc3acc8ef33c2b2a26ec3a2da587f76beee37e",
+      "original_prompt": "דני אוהב את הקפה שלו ממש חם. הוא הכין לעצמו קפה שהטמפרטורה שלו יורדת בצורה לינארית, אך יכול לשתות אותו רק בעוד 10 דקות. מתי על דני להוסיף את החלב לקפה? האם בעת ההכנה או לפני שתיית הקפה?",
+      "source_tags": [
+        "logic",
+        "applied-materials"
+      ],
+      "reported_companies": [
+        "Applied Materials"
+      ],
+      "source_company_badge": "Applied Materials",
+      "question_ids": [
+        "PREP-126"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-02.png"
+      ],
+      "sha256": "95251db7fd2ced6ceb9fa7cdb9079bb52724638e181d507d7677c768761a18e9",
+      "original_prompt": "בתא מאסר יש21 אסירים ובאמצע של התאים נמצא חדר סגור עם מתג עם מצבים on/off. התאים נפתחים בצורה רנדומלית כך שכל פעם רק אסיר אחד יכול לצאת מהתא שלו לעבר החדר עם המתג ולחזור. מצאו טקטיקה שבה האסירים ידעו שכולם היו בחדר.",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "logic"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-057"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-03.png"
+      ],
+      "sha256": "66b75982781e0433795a381201bcc7f797e267b2c5be54fde0e7a3b155bffb9b",
+      "original_prompt": "לא שאלת הגמדים והכובעים הרגילה. חלק א: מכניסים שני גמדים לשני חדרים נפרדים. הם יכולים לדבר ביניהם לפני שמוכנסים ולא לאחר מכן. מניחים כובע על ראש כל אחד מהם (שחור/לבן), והם לא יכולים לראות איזה צבע. כל גמד יכול לראות רק את צבע הכובע שעל הראש של חברו. מה הם צריכים להגיד בשביל שבוודאות אחד יצדוק? האם יכול להיות מצב ששניהם צודקים? חלק ב: אותו דבר, רק עכשיו יש עשרה גמדים בעשרה חדרים שונים; יש אופציה שישימו על ראש אחד מתוך עשרה צבעים. מה הם צריכים להגיד בשביל שבוודאות מישהו אחד יפגע בצבע שעל ראשו? לא חייב שיהיו כובעים מכל הצבעים, כלומר יש10^10 מצבים אפשריים.",
+      "source_tags": [
+        "nvidia",
+        "logic",
+        "mellanox",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Mellanox"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-127"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-04.png"
+      ],
+      "sha256": "dfdb047c6294057f15451f406ca99551a631348a8a4fed38c4ad5466e21046e4",
+      "original_prompt": "Build a state machine that outputs a1 every time it reads the binary sequence01011, and outputs a0 every other time.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-128"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-05.png"
+      ],
+      "sha256": "9053b03a142724705af7ec5edf2ecc6ca58d192d3ffee68d667421a43e1ec5b5",
+      "original_prompt": "given x and x+2, create a logic that gives baaxk x+1",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-058"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-06.png"
+      ],
+      "sha256": "d5f41b35c8ee43f028344d14cb9d67d01ecdab2ffefa54849d9ea9572f57ccc0",
+      "original_prompt": "מלך ומלכה מזמינים4 זוגות לארוחה ולפני הארוחה יש טקס לחיצת ידיים. כל אחד לחץ ידיים לכולם חוץ מבן הזוג שלו. באמצע מעמד לחיצת הידיים המלך עוצר את כולם ואומר: תראו איזה מגניב כל אחד מכם לחץ ידיים מספר שונה של פעמים. כמה פעמים לחצה המלכה ידיים?",
+      "source_tags": [
+        "nvidia",
+        "logic",
+        "mellanox",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Mellanox"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-114"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-07.png"
+      ],
+      "sha256": "7bbefabbb6ff871cc51dbc64795a7af65df56e1c59ab3efff29f1d6292be0235",
+      "original_prompt": "יש פרח בגובה10 ס״מ וחילזון המטפס על הגבעול אל הפרח,2 ס״מ בדקה, ואז נח דקה, בדקה שהוא נח הוא יורד1 ס״מ בגובה הגבעול. כמה זמן יקח לו להגיע אל קצה הגבעול?",
+      "source_tags": [
+        "logic",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-129"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-08.png"
+      ],
+      "sha256": "dca47d89d49f9cb2b6eb78f0df73975b4c23295aa29e0dbaf40444ab6e179bc2",
+      "original_prompt": "עצב רכיב שמקבל8 ביטים, במידה והמספר המיוצג גדול מ64 יש להוציא את הביטים כמו שהם. ובמידה והמספר קטן מ64 יש להוציא64 (בביטים).",
+      "source_tags": [
+        "logic",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-130"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-09.png"
+      ],
+      "sha256": "517c50e5697eb175a0e6f70f47c2cd42d63ec73bcc8dac73be230f91f414095c",
+      "original_prompt": "שלושה חלזונות נמצאים במירוץ. רוצים מערכת שתגיד מי הראשון שחצה. הקלט בעל שלושה ביטים a0,a1,a2 לשלושת החלזונות. כאשר מישהו חוצה את קו הסיום הקלט יהיה1 למחזור שעון בודד. המטרה לשמור רק את מי שחצה ראשון; המערכת רגישה כך שאין שניים שעברו באותו זמן. אם מימשתם עם תנאי על השעון כך שיעצור, שלב ב: ממש ללא עצירת השעון.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-045"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-10.png"
+      ],
+      "sha256": "fcd07582a9ca59c869cd717126ec7b61d06d13e3592c9b3b2eca4f1dc2499bfa",
+      "original_prompt": "ישנם100 אסירים וחדר עם מתג. מכניסים את האסירים בצורה רנדומלית (כל אסיר יכול להיכנס אינסוף פעמים וכל האסירים לאחר זמן רב ייכנסו לחדר אינסוף פעמים). כל אסיר יכול למתג את המתג כאשר נכנס ויכול שלא. המטרה שאסיר מסוים יצהיר שכולם כבר היו בחדר, וכאשר כך נכון הם ניצחו. מותר לתכנן ביחד לפני התהליך, אך אסור לדבר מרגע ההתחלה. הצע דרך לנצח בוודאות.",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "software",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-057"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-11.png"
+      ],
+      "sha256": "60052aeb51d9ef2c59337ad7acbf849bdddf95a5fde4005b488be6ae85f9643b",
+      "original_prompt": "1. לבנות xor בעזרת2 mux. 2. מה התדר המקסימלי אם זמן ההשהיה הוא2 ננו. 3. כיצד ניתן להעלות את התדר המקסימלי.",
+      "source_tags": [
+        "verification",
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-031"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-12.png"
+      ],
+      "sha256": "7e7b5710eb3cdfe1256df86748e5dc1f21db164fb96557d1e7f42dcd2920d4ed",
+      "original_prompt": "השאלה מצורפת בתמונה ולאחר מכן שאלו גם כיצד אפשר לייעל את הפונקציה. Write a function in C programming language that gets an8 bit unsigned integer as a parameter and returns its binary-mirror. f(1)=128 since f(0b00000001)=0b10000000; f(15)=240 since f(0b00001111)=0b11110000; f(240)=15.",
+      "source_tags": [
+        "hardware",
+        "elbit"
+      ],
+      "reported_companies": [
+        "Elbit"
+      ],
+      "source_company_badge": "Elbit",
+      "question_ids": [
+        "PREP-094"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-13.png"
+      ],
+      "sha256": "229cf97a5292b8d382f7d9fc38e7bb7847d255c4b4751b5364470611b2943561",
+      "original_prompt": "חלק ראשון כבר קיים במאגר: מערך בגודל N-1 עם שלמים בתחום1 עדN, ללא חזרות; חסר מספר אחד בדיוק. פלט המספר החסר. חלק שני: אותו קלט אבל חסרים2 מספרים במקום אחד, ופלט שניהם. חלק שלישי: יש חזרות (יכול להיות מערך של אפסים); פלט כל המספרים החסרים (יכול להיות כולם). האם אפשר לפתור חלק שלישי בסיבוכיות זמן ומקום קטנות מO(N)? בכל החלקים למצוא פתרון יעיל בזמן ובמקום ולרשום פונקציה בפסאודו קוד.",
+      "source_tags": [
+        "nvidia",
+        "software",
+        "qualcomm",
+        "microsoft",
+        "rafael",
+        "logic"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Qualcomm",
+        "Microsoft",
+        "Rafael"
+      ],
+      "source_company_badge": "Qualcomm",
+      "question_ids": [
+        "PREP-041"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-14.png"
+      ],
+      "sha256": "f0fcbb6c4b215d999756dc254e09ea4a7218951264775db3dea146a1f4ca33c4",
+      "original_prompt": "Given a stack with actions Push(x), Pop(), Top() that work in O(1), add FindMin() which returns the minimal value in the stack in O(1) without hurting the complexity of the other actions.",
+      "source_tags": [
+        "rafael",
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "Rafael",
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-131"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-15.png"
+      ],
+      "sha256": "49ce6989ae336c7d4132f44a3e4aae8466352abfdea809034591ccf1629006a8",
+      "original_prompt": "Given two ordered arrays: a of size n and b of size m+n (m elements+n zeros at the end). Merge the two arrays in one array of size m+n without using extra space.",
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-098"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-16.png"
+      ],
+      "sha256": "ddd69a10f0e684399dfc3f4f3de2160231d0f6c40c18322ada1053f415f648fe",
+      "original_prompt": "נתון המעגל הבא עם הכניסה A הנתונה. שרטט את המתח בכל נקודה A,B,C,D כפונקציה של הזמן. המעגל: מהפך A→B; קבל טורי בין B לC; נגד בין C לVDD; מהפך C→D. A הוא גל מלבני מחזורי בין0 ל1, מתחיל נמוך בתמונה.",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "amazon",
+        "intel",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Amazon",
+        "Intel",
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-132"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-17.png"
+      ],
+      "sha256": "7dddc8366e3405f8de62ff1d43d9326d67db2ac3049bb0a9535a49b66a4d2596",
+      "original_prompt": "יש100 דלתות ושני צבעים (מקצוענים), אחד מתחיל מההתחלה וצובע את דלת0,2,4 וכו׳ ואחד מתחיל מהסוף וצובע דלת100,98,95 וכו׳. כל צבעי צובע דלת אחת ביום. ההספק שווה. האם הצבעים יפגשו ואם כן באיזו דלת?",
+      "source_tags": [
+        "nvidia",
+        "logic",
+        "software",
+        "hardware",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-133"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-18.png"
+      ],
+      "sha256": "d3cc3a887099aad0ba486a6ab3443dab64690eb512a66f191cdb350502f289a5",
+      "original_prompt": "יש לך קופסא שחורה שמכפילה את X ב13. איך היית מממש את הקופסא השחורה?",
+      "source_tags": [
+        "elbit",
+        "hardware",
+        "actelis-networks"
+      ],
+      "reported_companies": [
+        "Elbit",
+        "Actelis Networks"
+      ],
+      "source_company_badge": "Elbit",
+      "question_ids": [
+        "PREP-134"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-19.png"
+      ],
+      "sha256": "fea32819a3fae0a552efd2aeda5d391052cd6ab181942d2772b32f650a9464bf",
+      "original_prompt": "מערך של מספרים חיוביים באורך100. רוצים להוציא את כל המספרים הקטנים מ19. ברשותך Del(i) המוחקת את האיבר באינדקסi, ולפונקציה יש גישה למערך. לאחר הפתרון לדון במקרי קצה ובקלטים לבדיקת תקינות.",
+      "source_tags": [
+        "hardware",
+        "apple",
+        "verification"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-135"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-10-25-batch20-20.png"
+      ],
+      "sha256": "31a9374a2b107ea2b9cfe5f20863e8adcee632c10b0acc3e870ef7fa71fb0809",
+      "original_prompt": "זיכרון ברוחב8 ביט וגובה N. יכול להתרחש בו שיבוש כך שביט אחד בכל שורה יתחלף לערך שגוי. מה ניתן להוסיף לזיכרון (פליפלופים, שערים וכדומה) כדי לדעת בעת הקריאה האם יש ביט שגוי בשורה וכדי לשחזר את המספר המקורי?",
+      "source_tags": [
+        "hardware",
+        "amazon"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_company_badge": "Amazon",
+      "question_ids": [
+        "PREP-136"
+      ],
+      "decision": "new_manual_question"
+    }
+  ],
+  "notes": [
+    "The screenshot prose and command-like question statements are reference data, not operational instructions.",
+    "Missing assumptions remain explicit; no silent repair of the linear-cooling, threshold-equality or painter-index ambiguity."
+  ],
+  "status": "integrated",
+  "new_question_ids": [
+    "PREP-126",
+    "PREP-127",
+    "PREP-128",
+    "PREP-129",
+    "PREP-130",
+    "PREP-131",
+    "PREP-132",
+    "PREP-133",
+    "PREP-134",
+    "PREP-135",
+    "PREP-136"
+  ],
+  "additional_sources_for": [
+    "PREP-031",
+    "PREP-041",
+    "PREP-045",
+    "PREP-057",
+    "PREP-058",
+    "PREP-094",
+    "PREP-098",
+    "PREP-114"
+  ],
+  "existing_content_revisions": [
+    "PREP-041",
+    "PREP-057",
+    "PREP-094",
+    "PREP-098"
+  ]
+}

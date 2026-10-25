@@ -1,0 +1,880 @@
+{
+  "PREP-132": {
+    "assumptions": {
+      "he": [
+        "מהפכים אידאליים ללא השהיה, סף VM מוגדר וכניסה בעלת עכבה אינסופית.",
+        "נגד וקבל לינאריים; ללא דיודות הגבלה במודל הראשי.",
+        "לפני החזית הראשונה A נמוכה זמן רב ו־B=C=VDD."
+      ],
+      "en": [
+        "Ideal zero-delay inverters, specified VM and infinite second-input impedance.",
+        "Linear R and capacitance; no clamps in the main model.",
+        "A is low long enough initially that B=C=VDD."
+      ]
+    },
+    "optimality": {
+      "he": "ניתוח פרמטרי עקבי; אין טענת מינימום רכיבים או מדידת תזמון. קוד ההמחשה מחשב כל דגימה מהאירועים, ואינו מממש חומרה.",
+      "en": "Consistent parametric analysis; no component-minimum or measured-timing claim. The illustration code recomputes samples from events and is not a hardware implementation."
+    },
+    "verification": {
+      "he": "60 השוואות למודל RK4 עצמאי עם1,000 צעדים,60 בדיקות רציפות ושש דגימות גבול. אין SPICE, סינתזה או בדיקה פיזית.",
+      "en": "60 comparisons to an independent1,000-step RK4 model,60 continuity checks and six edge samples. No SPICE, synthesis or physical verification."
+    },
+    "edge_cases": {
+      "he": [
+        "קלט קבוע והתייצבות ארוכה.",
+        "חזית הבאה לפני חציית הסף, תדר גבוה או מתח התחלתי שונה.",
+        "התחלה מעל הסף; חריגה מעל האספקה; שינוי במודל ההגבלה."
+      ],
+      "en": [
+        "Constant input and long settling.",
+        "A new edge before crossing, high input frequency or different initial state.",
+        "Starting above threshold, supply overshoot and a changed clamp model."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "קביעה ש־C היא פשוט ההיפוך של B.",
+        "איפוס המתח על הקבל בכל מחזור בלי סיבה.",
+        "מתן רוחב פולס מספרי ללא RC וסף.",
+        "העתקת הגל הלא מוגבל לרכיב עם דיודות הגנה."
+      ],
+      "en": [
+        "Treating C as simply the inverse of B.",
+        "Resetting capacitor state every cycle without justification.",
+        "Giving a numeric pulse width without RC and threshold.",
+        "Applying the unclamped waveform unchanged to a protected input."
+      ]
+    },
+    "interview_answer": {
+      "he": "B היא ההיפוך של A. בכל חזית C קופצת בדיוק בהפרש של B, כי מתח הקבל רציף; בין החזיתות הנגד מחזיר אותה לאספקה באופן מעריכי. הופכים את D לפי חציית הסף. ההיסטוריה והגבלת המתח קובעות את פרטי הגל.",
+      "en": "B inverts A. Each edge moves C by B’s change because capacitor voltage is continuous; between edges the resistor restores C exponentially toward supply. Determine D from threshold crossings. History and clamps govern the detailed waveform."
+    },
+    "source_ambiguities": {
+      "he": "R, הקיבול, הסף, ההשהיות, המצב ההתחלתי ומודל ההגנה לא סופקו. הדוגמה המנורמלת מסומנת כהנחה ולא כנתון מקור.",
+      "en": "Resistance, capacitance, threshold, delays, initial state and protection model were not supplied. The normalized illustration is explicitly assumed, not source data."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד דיודת הגבלה לאספקה תשנה את המחזור הבא?",
+        "direction": "יש לעדכן את מצב הקבל בזמן ההגבלה ואז להמשיך מהערך הזה; אי אפשר לקצץ רק את ציור הגל.",
+        "status": "מוכן בחומר המשלים, ללא תור המשך אוטומטי."
+      },
+      "en": {
+        "question": "How does a supply clamp affect the following cycle?",
+        "direction": "Update capacitor state during clamp conduction and continue from that state; merely clipping the drawing is insufficient.",
+        "status": "Prepared in supplemental material, not an automatic follow-up queue."
+      }
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "TI — דיודות הגנה בכניסות לוגיות",
+          "url": "https://www.ti.com/document-viewer/lit/html/SSZTCN0/GUID-540DB5B6-45A1-40EF-A3C7-A07EB772C47F",
+          "scope": "רקע להבחנה בין מודל קבל לא מוגבל לבין רכיב כניסה ממשי. אין במקור אימות למעגל שנשלח."
+        }
+      ],
+      "en": [
+        {
+          "title": "TI — protection diodes in logic inputs",
+          "url": "https://www.ti.com/document-viewer/lit/html/SSZTCN0/GUID-540DB5B6-45A1-40EF-A3C7-A07EB772C47F",
+          "scope": "Background for distinguishing an unclamped capacitor model from a real input device, not validation of the supplied circuit."
+        }
+      ]
+    }
+  },
+  "PREP-133": {
+    "assumptions": {
+      "he": [
+        "אין כלל המשך מובטח מעבר לתחיליות המקור.",
+        "הענף המחושב מציין מראש מספור מיקומים, יום0 ושתי נוסחאות.",
+        "מהירות תנועה קבועה בין ימים היא הנחה נוספת בלבד."
+      ],
+      "en": [
+        "No guaranteed rule beyond the supplied prefixes.",
+        "The calculated branch explicitly declares position labels, day0 and both formulas.",
+        "Constant-speed travel between days is an additional assumption only."
+      ]
+    },
+    "optimality": {
+      "he": "המטרה היא לזהות מידע חסר ולא להמציא תשובה. לכלל המותנה אפשר לבדוק ימים בקבוע זיכרון, או לפתור את המשוואה; אין טענת מיטביות של מסלול שלא הוגדר.",
+      "en": "The goal is specification analysis, not inventing an answer. The conditional rule allows constant-space day checks or an equation; no optimal route is claimed for an unspecified route."
+    },
+    "verification": {
+      "he": "1,001 השוואות לנוסחת סכום, שתי השלמות לתחילית, בדיקת ריבועיות849 ומפגש רציף166/15 במיקום332/15 תחת מודל תנועה מוצהר.",
+      "en": "1,001 comparisons with a step sum, two prefix continuations, a perfect-square check for849 and a conditional continuous intersection at time166/15 and position332/15."
+    },
+    "edge_cases": {
+      "he": [
+        "מספור0 מול1 ומספר הדלתות בפועל.",
+        "צביעה באותו יום מול ביקור באותה דלת בימים שונים.",
+        "דילוג מעל דלת, יציאה מהטווח, זמן נסיעה ויום התחלה."
+      ],
+      "en": [
+        "Zero-based versus one-based labels and the actual door count.",
+        "Same-day painting versus visiting a door on different days.",
+        "Skipping a door, leaving range, travel time and starting day."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "תיקון שקט של איבר בסדרה כדי לקבל תשובה מוכרת.",
+        "הסקת מהירות הליכה משוויון בהספק צביעה.",
+        "לקיחת שורש לא שלם כאילו היה יום צביעה תקף."
+      ],
+      "en": [
+        "Silently changing a prefix term to obtain a familiar answer.",
+        "Inferring walking speed from equal painting output.",
+        "Treating a noninteger equation root as a valid painting day."
+      ]
+    },
+    "interview_answer": {
+      "he": "שלוש דלתות ראשונות אינן מגדירות המשך. אבקש כלל סדרה, מספור והגדרת מפגש. בענף של צעדים2 מול2,3,4 אין יום צביעה משותף; מפגש תוך תנועה דורש מודל נוסף ואינו בהכרח בדלת.",
+      "en": "Three starting labels do not determine a rule. Ask for continuation, numbering and meeting definition. For steps2 versus2,3,4 there is no common integer painting day; travel intersections need a separate model and need not occur at a door."
+    },
+    "source_ambiguities": {
+      "he": "הסדרות, מספור100 הדלתות עם התוויות0 ו100, תנועת הצבעים ומשמעות מפגש אינם נקבעים בטקסט. נשמר95 ללא תיקון.",
+      "en": "Continuation rules,100-door numbering using labels0 and100, travel and the meaning of meeting are unspecified. The95 term was preserved without correction."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם95 הוחלף במפורש ב96 ושני הצדדים מתקדמים2?",
+        "direction": "זהו כלל חדש. תחת התחלה בו־זמנית במיקומים0 ו100 מתקבל2t=100−2t, כלומרt=25 ומיקום50. אין לייחס זאת למקור הנוכחי.",
+        "status": "המשך מוכן בחומר בלבד."
+      },
+      "en": {
+        "question": "What if95 is explicitly corrected to96 and both step by2?",
+        "direction": "That defines a different rule. Starting simultaneously at0 and100 yields2t=100−2t, so t=25 at position50. Do not attribute this to the uncorrected source.",
+        "status": "Prepared supplemental follow-up only."
+      }
+    }
+  },
+  "PREP-136": {
+    "assumptions": {
+      "he": [
+        "עד היפוך יחיד בין כתיבה תקינה לקריאה בכל12 הביטים, כולל בדיקות.",
+        "הכתובת, הלוגיקה והכתיבה תקינות; אין היפוך נוסף לפני התיקון.",
+        "במודל המורחב רק מובטחים תיקון אחד וזיהוי שניים."
+      ],
+      "en": [
+        "At most one flip between valid write/read anywhere in all12 stored bits, including checks.",
+        "Addressing, logic and writing are correct; no further flip occurs before correction.",
+        "The extended model guarantees correction of one and detection of two only."
+      ]
+    },
+    "optimality": {
+      "he": "ארבע סיביות יתירות הן מינימום לקוד בלוקים בינארי בעל256 מילות מידע ותיקון יחיד בכל המילה, לפי חסם כדורי האמינג. העלות4N ביטים; לא נטען למינימום שערים או השהיה.",
+      "en": "Four redundant bits are minimum for a binary block code with256 payloads and single-error correction throughout the word, by the Hamming packing bound. Cost4N bits; no gate-count or delay minimum is claimed."
+    },
+    "verification": {
+      "he": "3,328 מקרי SEC מול חילוץ מקורי ואורקל מילת קוד קרובה; מרחק קוד מינימלי3. הרחבת13 ביט: מרחק4,3,328 היפוכים יחידים ו־19,968 היפוכים כפולים.",
+      "en": "3,328 SEC cases matched original payloads and a nearest-codeword oracle; minimum distance3. The13-bit extension has distance4 and passed3,328 single flips and19,968 double flips."
+    },
+    "edge_cases": {
+      "he": [
+        "אפס, כל האחדים, כל מיקום מידע וכל מיקום בדיקה.",
+        "שורה תקינה ותסמונת שאינה מיקום קיים.",
+        "שתי שגיאות העלולות להטעות SEC; תקלה בכתובת מחוץ למודל."
+      ],
+      "en": [
+        "Zero/all-one payloads and every data/check position.",
+        "A clean row and syndromes outside the shortened layout.",
+        "Two errors can fool SEC; address faults are outside the model."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "הסתפקות בזוגיות אחת כשנדרש גם שחזור.",
+        "חישוב הבדיקות רק על המידע בלי סיביות הבדיקה שהתקבלו.",
+        "הבטחת תיקון שתי שגיאות באמצעות קוד SEC.",
+        "הנחה שסיביות הבדיקה אינן יכולות להיפגע בלי לומר זאת."
+      ],
+      "en": [
+        "Using one parity bit when recovery is also required.",
+        "Recomputing checks without the received check bits.",
+        "Claiming SEC corrects two faults.",
+        "Silently assuming check storage cannot fail."
+      ]
+    },
+    "interview_answer": {
+      "he": "אוסיף4 סיביות בדיקה בכל שורה לקוד בן12 ביט. ארבע בדיקות XOR חופפות נותנות תסמונת שהיא מספר הביט שהתהפך; אהפוך אותו ואחלץ8 ביטי מידע. זה מתקן יחיד כולל בדיקות. לזיהוי זוג שגיאות אוסיף זוגיות כוללת ואבדיל SECDED.",
+      "en": "Add four check bits per row for a12-bit code. Four overlapping XOR checks give the flipped position as syndrome; invert it and extract eight data bits. This corrects one fault including checks. Add overall parity and SECDED decisions to detect pairs."
+    },
+    "source_ambiguities": {
+      "he": "לא צוין אם הבדיקה הנוספת עצמה מוגנת או אם שגיאות כפולות אפשריות. המודל הראשי כולל עד היפוך אחד גם בבדיקות; זיהוי כפול הוא הרחבה נפרדת.",
+      "en": "The source does not specify check-storage reliability or multiple faults. The main promise includes at most one flip even in check bits; pair detection is a separate extension."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "האם כדאי לכתוב חזרה את המילה שתוקנה?",
+        "direction": "תיקון בקריאה בלבד משאיר את השגיאה באחסון. כתיבה חוזרת או scrubbing יכולה להסיר אותה, אבל דורשת הגדרת מרוץ מול כותבים ותזמון; אין בכך הבטחה לתקן שגיאות מרובות שכבר הצטברו.",
+        "status": "מוכן בחומר בלבד."
+      },
+      "en": {
+        "question": "Should corrected codewords be written back?",
+        "direction": "Read correction alone leaves the stored fault present. Writeback/scrubbing can remove it but needs concurrency/timing rules; it does not recover multiple faults already accumulated.",
+        "status": "Prepared supplemental follow-up only."
+      }
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "MIT — קוד האמינג ותיקון שגיאה יחידה",
+          "url": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2009/8ef531797e54260f68c2a430932d1630_MIT6_004s09_tutor01.pdf",
+          "scope": "הקשר בין אינדקס מיקום לבדיקות זוגיות. הדוגמה שלנו מקוצרת עצמאית לשמונה ביטי מידע ונבדקה במיצוי."
+        }
+      ],
+      "en": [
+        {
+          "title": "MIT — Hamming single-error-correcting code",
+          "url": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2009/8ef531797e54260f68c2a430932d1630_MIT6_004s09_tutor01.pdf",
+          "scope": "Binary position indices select parity checks. Our independently shortened eight-data-bit example was exhaustively verified."
+        }
+      ]
+    }
+  },
+  "PREP-128": {
+    "assumptions": {
+      "he": [
+        "זרם ביטים רציף בסדר הכתוב, ביט תקין אחד בכל חזית עולה.",
+        "Moore עם תצפית אחרי החזית וההתייצבות; איפוס סינכרוני גובר ומוחק היסטוריה.",
+        "כל מופע נבדק, חפיפה מותרת; לרצף המסוים אין גבול עצמי לא־ריק.",
+        "קודי מצב לא־מנוצלים וכניסות שאינן בינאריות מחוץ למודל התקין."
+      ],
+      "en": [
+        "Continuous temporal written-order stream, one valid bit per rising edge.",
+        "Moore output observed after edge/settling; priority synchronous reset discards history.",
+        "Every occurrence is checked with overlap permitted; this pattern has no nonempty proper border.",
+        "Unused encodings and nonbinary inputs are outside the normal model."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "Moore": "שישה מצבים נגישים ומובחנים זוגית, כלומר שלושה ביטי מצב.",
+        "Mealy": "חמישה מצבי קידומת עם אירוע על מעבר; חמשת המצבים מובחנים, אך תזמון המוצא שונה.",
+        "scope": "מינימום מצבים בחוזים המוגדרים בלבד; לא מינימום שערים או השהיה. רישום מוצא Mealy בנפרד מוסיף אחסון."
+      },
+      "en": {
+        "Moore": "Six reachable, pairwise distinguishable states, requiring three state bits.",
+        "Mealy": "Five distinguishable prefix states with transition events, under a different output timing contract.",
+        "scope": "Logical-state minimum only; no gate/delay minimum. Separately registering a Mealy output adds storage."
+      }
+    },
+    "verification": {
+      "he": "עברו 8,191 מילים ו־90,114 קידומות, 4,096 רצפי איפוס/נתונים עם 24,576 חזיתות, 15 זוגות Moore ועשרה זוגות Mealy מובחנים. אורקל סיומת עצמאי. ללא HDL או אימות תזמון פיזי.",
+      "en": "Passed 8,191 words/90,114 prefixes, 4,096 reset/data streams with 24,576 edges, fifteen distinguished Moore pairs and ten Mealy pairs. Independent suffix oracle. No HDL or physical timing validation."
+    },
+    "edge_cases": {
+      "he": [
+        "זרם ריק או פחות מחמישה ביטים אינו מזהה.",
+        "0101011 מפיק 1 רק בביט השביעי בזכות fallback.",
+        "0101101011 מזהה בביטים חמש ועשר.",
+        "איפוס אחרי 0101 מוחק את ההתקדמות; 1 אחריו אינו משלים זיהוי.",
+        "הוספת bit_valid מחייבת להגדיר האם Y הוא פולס בכל מחזור או רק באירועי קליטה; החזקת Q5 בזמן השהיה עשויה להאריך אותו."
+      ],
+      "en": [
+        "Empty/fewer-than-five-bit history cannot detect.",
+        "0101011 detects only at bit seven because of fallback.",
+        "0101101011 detects at bits five and ten.",
+        "Reset after 0101 discards progress; the next one does not complete a match.",
+        "Adding bit_valid needs a pulse-versus-accepted-event contract; holding Q5 during a pause can stretch Y."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "מחיקת כל הקידומת בכישלון חלקי.",
+        "קריאת הרצף מהסוף במקום לפי סדר ההגעה.",
+        "מוצא של מחזור קודם במקום אחרי קליטת הביט הנוכחי.",
+        "טענה ששני זיהויים מלאים חייבים לחפוף למרות שאין לרצף גבול עצמי.",
+        "ערבוב תזמון Mealy ו־Moore או טענת חסינות גליצ׳ים מטבלת אמת בלבד."
+      ],
+      "en": [
+        "Discarding the whole prefix on partial mismatch.",
+        "Reading the target backward rather than in arrival order.",
+        "Reporting the previous cycle instead of after the current accepted bit.",
+        "Assuming full matches must overlap despite the pattern having no proper border.",
+        "Mixing Mealy/Moore timing or inferring hazard freedom from a truth table."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור את הקידומת הארוכה של 01011 שהיא סיומת ההיסטוריה: שישה מצבי Moore. Q4 בקלט 0 חוזר ל־Q3 כי 01010 מסתיים ב־010; בקלט 1 עובר לזיהוי Q5. Y=1 רק ב־Q5 אחרי החזית. איפוס מוחק היסטוריה. אפשר חמישה מצבי Mealy עם אירוע על המעבר, בתזמון מוצא אחר.",
+      "en": "Track the longest prefix of 01011 that remains a history suffix: six Moore states. Q4 on zero falls back to Q3 because 01010 ends in 010; one enters detection Q5. Only Q5 outputs one after the edge. Reset clears history. A five-prefix-state Mealy alternative emits on the transition under a different timing contract."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מגדיר שעון, איפוס, חפיפה, השהיית מוצא או מרווחים בין ביטים; ההנחות הוגדרו בעריכה.",
+        "זיהוי מילולי בזרם אינו המרת מספר בעל סדר ביטים אחר.",
+        "שיוך NVIDIA מהמקור לא אומת עצמאית."
+      ],
+      "en": [
+        "Clock, reset, overlap, output timing and input pauses are absent; assumptions are editorial.",
+        "Literal stream matching is not numeric conversion with a different bit order.",
+        "NVIDIA attribution is source-reported, not independently verified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מטפלים בקודי המצב 110,111 בקידוד הבינארי?",
+          "answer_direction": "הגדירו התנהגות התאוששות מפורשת, למשל מצב הבא Q0 ומוצא 0, ובדקו בנפרד. אין להסיק התאוששות מקודים שלא הוגדרו בטבלה.",
+          "principle": "נגישות לוגית אינה מדיניות התאוששות פיזית."
+        },
+        {
+          "question": "מה משתנה ברצף 01010?",
+          "answer_direction": "יש לו סיומת 010 שהיא גם קידומת, ולכן אחרי זיהוי מלא אפשר לשמור התקדמות במקום לאפס; הבחירה אם לאפשר חפיפה עשויה לשנות אירועים.",
+          "principle": "הגבולות העצמיים של התבנית קובעים את fallback."
+        }
+      ],
+      "en": [
+        {
+          "question": "What should binary encodings 110/111 do?",
+          "answer_direction": "Define and separately test explicit recovery, for example next Q0/output zero. The normal table does not imply unused-code recovery.",
+          "principle": "Logical reachability is not physical recovery policy."
+        },
+        {
+          "question": "What changes for target 01010?",
+          "answer_direction": "Its suffix 010 is also a prefix, so full-match fallback can retain progress; overlap policy can then change detection events.",
+          "principle": "Pattern borders determine fallback."
+        }
+      ]
+    }
+  },
+  "PREP-130": {
+    "assumptions": {
+      "he": [
+        "שמונה ביטים ללא סימן, 0..255, פלט באותו רוחב.",
+        "ב־x=64 מוציאים 64; שני ענפי המקור מתלכדים לערך זה.",
+        "מעגל צירופי, ערכים לאחר התייצבות, ללא שעון או זיכרון."
+      ],
+      "en": [
+        "Eight unsigned bits in 0..255, same-width output.",
+        "At x=64 output 64; both source branches agree there.",
+        "Combinational settled values, without clock or memory."
+      ]
+    },
+    "optimality": {
+      "he": "מימוש מוצע: שישה AND, שני OR ו־NOT אחד. אין טענת מינימום רכיבים/שטח/השהיה. ברוחב שמונה העלות קבועה; הכללה לרוחב W עם סף חזקה של שתיים דורשת בחינת ביטים גבוהים ומיסוך נמוכים, O(W) משאבים במימוש פשוט.",
+      "en": "Proposed construction: six AND, two OR and one NOT. No minimum size/area/delay claim. Cost is fixed at eight bits; a simple W-bit power-of-two generalization checks high bits and masks low bits using O(W) resources."
+    },
+    "verification": {
+      "he": "כל 256 הקלטים עברו מול max שלמים, כולל 256 בדיקות אי־שינוי בפעולה חוזרת, מונוטוניות וארבע דחיות קלט. Python בלבד, ללא HDL או תזמון פיזי.",
+      "en": "All 256 inputs passed an integer-max oracle, 256 idempotence checks, monotonicity and four invalid inputs. Python only, without HDL or physical timing."
+    },
+    "edge_cases": {
+      "he": [
+        "0 ו־63 נותנים 64.",
+        "64 נשאר 64; 65 נשאר 65.",
+        "128 נשאר 128 למרות ש־x6=0.",
+        "255 נשאר 255.",
+        "ערך מחוץ לשמונה ביטים או פירוש חתום אינו אותו חוזה."
+      ],
+      "en": [
+        "Zero and 63 give 64.",
+        "64 stays 64; 65 stays 65.",
+        "128 stays 128 although x6=0.",
+        "255 stays 255.",
+        "Out-of-width or signed interpretation is another contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "מימוש min במקום max.",
+        "בדיקת x6 בלבד והשמטת x7.",
+        "איפוס הביטים הגבוהים של מספרים שכבר מעל הסף.",
+        "הנחה שכל ביטי הפלט מועתקים פרט לביט 6: בקלט קטן חייבים לאפס גם את ששת הנמוכים.",
+        "בלבול בין סימן המספר לבין סיבית הנתונים העליונה."
+      ],
+      "en": [
+        "Implementing min instead of max.",
+        "Checking x6 alone and omitting x7.",
+        "Clearing high bits of inputs already above threshold.",
+        "Copying all bits except bit six: low inputs also require clearing all six low bits.",
+        "Confusing signed interpretation with the highest data bit."
+      ]
+    },
+    "interview_answer": {
+      "he": "מספר קטן מ־64 בדיוק כש־x7=x6=0. אשתמש ב־e=x7 OR x6, אמסך כל ביט נמוך ב־e, אעתיק y7=x7 ואקבע y6=x6 OR NOT x7. כך 00 בביטים העליונים נותן 64 ובשלושת המצבים האחרים מעבירים את הקלט. גם בשוויון התוצאה 64.",
+      "en": "An unsigned input is below 64 exactly when x7=x6=0. Use e=x7 OR x6, AND each low bit with e, copy y7=x7 and use y6=x6 OR NOT x7. High pair 00 yields 64; all other pairs pass input. Equality also gives 64."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו קובע סימן, שוויון, רכיבים או תזמון. נבחרו ללא סימן ומימוש צירופי; שוויון נפתר כי שתי הפעולות נותנות אותו ערך.",
+        "שיוך NVIDIA מדווח ולא אומת עצמאית."
+      ],
+      "en": [
+        "Signedness, equality, component library and timing are omitted. Unsigned/combinational are explicit choices; equality has the same result under both actions.",
+        "NVIDIA attribution is source-reported and unverified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך משתנה הרעיון לסף 32?",
+          "answer_direction": "נדרש OR של x7,x6,x5 להחלטת העברת הביטים הנמוכים. משאירים ביטים גבוהים מתאימים ומכריחים את ביט 5 כשכל הגבוהים אפס.",
+          "principle": "סף שהוא חזקה של שתיים מתאים לחלוקת ביטים."
+        },
+        {
+          "question": "מה אם שמונה הביטים מייצגים מספר חתום?",
+          "answer_direction": "מספר עם x7=1 הוא שלילי ולכן צריך להחזיר 64. נתחו את התחום החיובי בנפרד; אין להעתיק את נוסחאות ללא סימן ללא שינוי.",
+          "principle": "משמעות הביטים היא חלק מהמפרט."
+        }
+      ],
+      "en": [
+        {
+          "question": "How does this change for threshold 32?",
+          "answer_direction": "OR x7,x6,x5 to decide whether low bits pass; keep appropriate high bits and force bit five when the higher region is zero.",
+          "principle": "A power-of-two threshold aligns with a bit partition."
+        },
+        {
+          "question": "What if the eight bits are signed?",
+          "answer_direction": "x7=1 denotes a negative value that should become 64. Analyze positive inputs separately; unsigned equations cannot be copied unchanged.",
+          "principle": "Bit interpretation belongs to the specification."
+        }
+      ]
+    }
+  },
+  "PREP-134": {
+    "assumptions": {
+      "he": [
+        "קלט ללא סימן בן N≥1 ביטים; פלט מדויק בן M=N+4 ביטים.",
+        "מחברים, שערים, אפסים ופיצול חוטים מותרים; הזזות קבועות בחיווט אחרי הרחבה.",
+        "מעגל צירופי ללא שעון או צינור; המודל מממש שני ripple adders בלתי מצומצמים."
+      ],
+      "en": [
+        "Unsigned N≥1 input; exact M=N+4-bit output.",
+        "Adders/gates/zero/fanout allowed; constant shifts are wiring after extension.",
+        "Combinational without clock/pipeline; model uses two unpruned ripple adders."
+      ]
+    },
+    "optimality": {
+      "he": "שני מחברים ברוחב M במימוש המוצע; מודל ripple לא מצומצם משתמש ב־2M רכיבי FA, O(N) משאבים ונתיב תלות עליון O(N). אין טענת מינימום מחברים/שערים או תדר פיזי. רוחב N+4 מספיק; אינו טענת רוחב מזערי לכל N, ובפרט לא ל־N=1.",
+      "en": "Two M-bit adders in this construction; an unpruned ripple model uses 2M FAs, O(N) resources and an O(N) dependency upper bound. No minimum-adder/gate or physical-frequency claim. N+4 suffices; it is not claimed minimal for every N, notably N=1."
+    },
+    "verification": {
+      "he": "עברו 2,446 מקרי מכפלה: 2,046 ממצים לרוחבים 1..10 ועוד 400 מדגמיים רחבים, 104,436 בדיקות עמודה, שמונה שורות FA וחמש דחיות קלט. מול כפל וחיבור חוזר שלמים; Python בלבד.",
+      "en": "Passed 2,446 products: 2,046 exhaustive widths1..10 plus400 seeded wide cases, 104,436 column checks, eight FA rows and five invalid inputs. Compared with integer multiplication/repeated addition; Python only."
+    },
+    "edge_cases": {
+      "he": [
+        "X=0 מחזיר 0; X=1 מחזיר 13.",
+        "X=2^N−1 דורש הרחבה לפני חיבור.",
+        "N=1 תקין בפורט בן חמישה ביטים, אף שפלט ארבעה מספיק.",
+        "קיצוץ תוצאת ביניים ואחר כך הרחבה אינו משחזר ביטים שאבדו.",
+        "בקלט חתום הרחבת אפסים משנה את המספר."
+      ],
+      "en": [
+        "Zero gives zero; one gives thirteen.",
+        "X=2^N−1 requires extension before addition.",
+        "N=1 is valid with a five-bit port even though four bits suffice.",
+        "Widening after intermediate truncation does not recover lost bits.",
+        "Zero-extension changes a signed negative input."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שכחת ענף X ב־8X+4X+X.",
+        "הזזות וחיבור ברוחב N לפני הרחבה.",
+        "ספירת חיווט קבוע כאילו הוא בהכרח מזיז משתנה.",
+        "העברת נשא למשקל שגוי או השמטת ביט גבוה.",
+        "הכרזה ששני מחברים הם מינימום או שתדר מובטח בלי ספרייה ומודל עלות."
+      ],
+      "en": [
+        "Omitting X from 8X+4X+X.",
+        "Shifting/adding at width N before extension.",
+        "Treating fixed wiring as necessarily a variable shifter.",
+        "Sending a carry to the wrong weight or dropping a high bit.",
+        "Claiming two adders minimal or a guaranteed frequency without a library/cost model."
+      ]
+    },
+    "interview_answer": {
+      "he": "13=8+4+1, ולכן אפצל X לשלושה עותקים מוזזים 3,2,0 מיקומים. אחרי הרחבת אפסים ל־N+4 ביטים אחבר תחילה 8X+4X ואז אוסיף X. החסם 13(2^N−1)<2^(N+4) מבטיח תוצאה מלאה. אלו שני מחברים במימוש פשוט, ללא טענת מינימום או תזמון פיזי.",
+      "en": "13=8+4+1. Fan X into copies shifted by 3,2,0 positions. Zero-extend to N+4 before adding 8X+4X, then X. The bound 13(2^N−1)<2^(N+4) guarantees a full result. This is a simple two-adder construction, without a minimum or physical-timing claim."
+    },
+    "source_ambiguities": {
+      "he": [
+        "לא ניתנו רוחב, סימן, גלישה, ספריית רכיבים, שעון או מדד עלות; ההנחות נוספו במפורש.",
+        "קבוע 13 אינו מגדיר איסור מחברים או דרישת FA בלבד.",
+        "Elbit ו־Actelis Networks מדווחות במקור ולא אומתו עצמאית."
+      ],
+      "en": [
+        "Width, sign, overflow, library, clock and cost metric are absent; assumptions are explicit additions.",
+        "Constant thirteen does not imply adders are forbidden or an FA-only requirement.",
+        "Elbit/Actelis Networks are source-reported, not independently verified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך תחלקו את הנתיב לשני מחזורי שעון?",
+          "answer_direction": "אוגר אחרי תוצאת הביניים, ובמקביל אוגר המיישר את עותק X שייכנס למחבר השני. הגדירו reset/valid/latency לפני מימוש; הצינור משנה את החוזה הצירופי.",
+          "principle": "יישור נתונים חשוב כמו חלוקת נתיב."
+        },
+        {
+          "question": "האם 16X−2X−X עדיף?",
+          "answer_direction": "זהות תקפה, אך השוו עלות ותזמון מחסרים מול מחברים בספרייה ממשית ושמרו את הרוחב. אין מסקנת מהירות מזהות אלגברית לבדה.",
+          "principle": "ייצוג אלגברי אינו מודל עלות פיזי."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would you pipeline into two clock cycles?",
+          "answer_direction": "Register the subtotal and also the matching X copy for the second adder. Define reset/valid/latency first; pipelining changes the combinational contract.",
+          "principle": "Data alignment matters as much as path splitting."
+        },
+        {
+          "question": "Is 16X−2X−X preferable?",
+          "answer_direction": "It is valid algebra, but compare subtractor/adders in the actual library and retain width. Algebra alone does not establish speed.",
+          "principle": "An algebraic representation is not a physical cost model."
+        }
+      ]
+    }
+  },
+  "PREP-131": {
+    "assumptions": {
+      "he": [
+        "שלמים, סדר השוואה מלא, ומידע נוסף לכל צומת או מחסנית עזר מותרים.",
+        "פעולות ריקה נכשלות במפורש; המינימום אינו ערך ברירת מחדל."
+      ],
+      "en": [
+        "Integers with a total order; per-node metadata or another stack allowed.",
+        "Empty queries fail explicitly rather than returning a default minimum."
+      ]
+    },
+    "optimality": {
+      "he": "O(1) פעולות מצביעים ומילים לכל פעולה תחת הנחת הפרימיטיבים; O(s) מידע מינימום. אין טענת זמן אמת, מינימום זיכרון או קבוע בביטים.",
+      "en": "O(1) pointer/word operations under primitive assumptions; O(s) saved minima. No real-time, memory-minimum or fixed-bit claim."
+    },
+    "edge_cases": {
+      "he": [
+        "ריקה, איבר אחד, ערכים שליליים, סדר עולה ויורד.",
+        "מינימום כפול, הוצאתו פעם אחת ואז פעמיים, ריקון ודחיפה מחדש."
+      ],
+      "en": [
+        "Empty/singleton, negatives, increasing/decreasing values.",
+        "Duplicate minima, popping one then both, emptying and reusing."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לסרוק בעת הוצאת המינימום.",
+        "למחוק מינימום כפול מוקדם מדי.",
+        "להציג append של מערך דינמי כחסם קשיח לכל קריאה בלי הסתייגות."
+      ],
+      "en": [
+        "Rescanning after minimum removal.",
+        "Discarding a duplicate minimum too early.",
+        "Calling dynamic-array append worst-case constant without qualification."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור לצד כל איבר את המינימום של הקידומת עד אליו. Push מחשבת min עם הקודם, Pop חושפת את הצומת והמינימום הקודמים, ו־FindMin קוראת שדה בראש. כך כל פעולה קבועה במודל הפרימיטיבים, עם זיכרון לינארי בעומק.",
+      "en": "Store the minimum through each entry. Push computes min with the old minimum, Pop reveals the previous node/minimum, and FindMin reads the head field. Constant primitive work per operation, linear storage in depth."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו אוסר מידע עזר ואינו מגדיר טיפוסים, ריקה או מודל הקצאה. אלה הוגדרו במפורש. VSW-006 במאגר האימות דנה באותו עיקרון ובהקטנת תקורה; אין שאלה ידנית או שאלת דוגמה מקבילה.",
+      "en": "Source does not forbid metadata or define types, emptiness or allocation cost; these are explicit choices. Verification-bank VSW-006 covers the same principle and memory overhead; no equivalent manual/example record exists."
+    },
+    "verification": {
+      "he": "19,531 רצפים ו־10,000 פעולות מדגמיות מול רשימה ו־min עצמאי; ארבע דחיות Push. המימוש בפועל הורץ.",
+      "en": "19,531 sequences and 10,000 seeded operations versus a list/min oracle; four invalid Push cases. Actual implementation executed."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד חוסכים רשומות במחסנית המינימום הנפרדת?",
+        "direction": "אפשר לשמור רק ירידות במינימום, אך צריך לשמור גם מונה הופעות או לדחוף בשוויון כדי לטפל בכפילויות.",
+        "status": "מוכן בתוכן בלבד; לא מחובר לתור המשך."
+      },
+      "en": {
+        "question": "How can a separate minimum stack store fewer entries?",
+        "direction": "Keep only decreases, but retain multiplicity or push equal minima too.",
+        "status": "Prepared in content only; not connected to follow-up queue."
+      }
+    }
+  },
+  "PREP-135": {
+    "assumptions": {
+      "he": [
+        "Del מוחקת ומזיזה שמאלה באותו מערך ומקטינה את אורכו.",
+        "נדרשים סדר וריבוי השורדים; 19 נשאר.",
+        "דחיסה חלופית דורשת כתיבה ומחיקת זנב."
+      ],
+      "en": [
+        "Del removes/shifts left in the same array and reduces length.",
+        "Preserve survivor order/multiplicity; keep 19.",
+        "Compaction additionally needs writes and tail deletion."
+      ]
+    },
+    "optimality": {
+      "he": "N בדיקות ו־k קריאות Del. הזמן O(N+סכום עלויות Del), עד Θ(N²) עם הזזות. דחיסה+מחיקות זנב O(N) אם פעולותיהן קבועות; O(1) מילות עזר.",
+      "en": "N tests and k Del calls. Time O(N+sum of Del costs), up to Θ(N²) for shifting. Compaction/tail deletion O(N) when primitives are constant; O(1) auxiliary words."
+    },
+    "edge_cases": {
+      "he": [
+        "ריקה, הכול או כלום, יחיד, רצפים רצופים של נמוכים.",
+        "18,19,20; נמוך ראשון/אחרון; כפילויות ושמירת סדר."
+      ],
+      "en": [
+        "Empty, all/none removed, singleton, consecutive low runs.",
+        "18/19/20; first/last low; duplicates and stable order."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לקדם אינדקס קדימה אחרי מחיקה ולדלג על האיבר שהוזז.",
+        "למחוק גם 19 או להסתמך על קיבולת במקום אורך.",
+        "לטעון O(N) פיזי בלי להגדיר עלות Del."
+      ],
+      "en": [
+        "Advancing after deletion and skipping the shifted-in item.",
+        "Deleting19 or using capacity instead of logical length.",
+        "Claiming physical O(N) without a Del cost contract."
+      ]
+    },
+    "interview_answer": {
+      "he": "אסרוק מהסוף להתחלה: מחיקה לא משנה תאים נמוכים שעוד לא נבדקו. כך כל ערך נבחן פעם אחת, אבל הזזות Del עלולות לעלות ריבועית. אם מותר לכתוב, אדחוס שורדים לקידומת ואמחק רק את הזנב כדי להשיג זמן לינארי במודל מערך רגיל.",
+      "en": "Scan backward: deletion leaves lower unprocessed positions unchanged. Each value is tested once, but Del shifts may be quadratic. With writes, compact survivors into a prefix and delete only the tail for linear packed-array work."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר האם Del מזיזה, משנה אורך או כמה היא עולה. אלו הנחות מפורשות; סימון חורים בלבד או מחיקה בהחלפה עם האחרון הם חוזים אחרים. לא נמצאה שאלה מקבילה בשלושת המאגרים.",
+      "en": "Source does not define Del shifting, length or cost. These are explicit assumptions; hole marking or swap-with-last deletion are different contracts. No equivalent was found in the three banks."
+    },
+    "verification": {
+      "he": "87,381 מערכים ו־200 מקרי אורך100 בשני המימושים מול מסנן עצמאי; נבדקו כל אינדקס וספירת הזזות.",
+      "en": "87,381 arrays and 200 length-100 cases for both models versus independent filtering; deletion indices and shift counts checked."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם אין צורך לשמור סדר ו־Del מחליפה באיבר האחרון?",
+        "direction": "הערך שהועבר למקום שנמחק עוד לא נבדק; צריך לבדוק שוב אותו אינדקס לפני שמתקדמים. עלות המחיקה והאינווריאנט שונים.",
+        "status": "מוכן בתוכן בלבד; לא מחובר לתור המשך."
+      },
+      "en": {
+        "question": "What if order is irrelevant and Del swaps in the last entry?",
+        "direction": "The replacement is unprocessed, so recheck that index before advancing. Deletion cost and invariant change.",
+        "status": "Prepared in content only; not connected to follow-up queue."
+      }
+    }
+  },
+  "PREP-126": {
+    "assumptions": {
+      "he": [
+        "המקור אינו מגדיר את שיפוע התערובת; אין תשובה בלתי מותנית.",
+        "חלב בכמות זהה נשמר בטמפרטורה קבועה עד ההוספה; ערבוב מיידי ושומר חום.",
+        "קיבולי החום מייצגים מסה וסגוליות. המודל האפיני תקף לעשר דקות בלבד; ניוטון הוא הרחבה אחרת."
+      ],
+      "en": [
+        "The source leaves postmix slope undefined, so no unconditional answer.",
+        "Same milk quantity held at fixed temperature; instantaneous heat-conserving mixing.",
+        "Heat capacities include mass/specific heat. Affine cooling applies for the ten-minute interval; Newton is a separate extension."
+      ]
+    },
+    "optimality": {
+      "he": "השוואת טמפרטורה בזמן השתייה תחת מודל מוגדר: שיפוע זהה מעדיף סוף, הספק זהה נותן שוויון. אין טענת מודל פיזי מיטבי או המלצה לכל כוס.",
+      "en": "Compare drinking temperature within each explicit model: same slope favors late; same power ties. No best physical model or universal cup recommendation is claimed."
+    },
+    "verification": {
+      "he": "486 מקרי שיפוע זהה,486 מקרי הספק קבוע מול מאזן אנרגיה עצמאי ו־1458 שיפועי תערובת כלליים בחשבון שברים. שלושת סימני ההפרש הודגמו ושישה פרמטרים שגויים נדחו; ניוטון אינו ממומש בבדיקות.",
+      "en": "486 equal-slope,486 constant-power energy-balance and 1458 general postmix-slope cases in exact rational arithmetic. All three difference signs and six invalid parameters checked; Newton is not implemented in these checks."
+    },
+    "edge_cases": {
+      "he": [
+        "אין חלב, אין זמן המתנה או אין קירור נותנים שוויון בענף השיפוע הזהה.",
+        "חלב שמתחמם בחוץ או אובדן חום בזמן ערבוב משנים את החוזה.",
+        "b קטן, שווה או גדול מ־alpha*a נותן שלוש תשובות אפשריות גם בקירור לינארי."
+      ],
+      "en": [
+        "Zero milk, delay or cooling ties in the equal-slope branch.",
+        "Milk warming while held or heat lost during mixing changes the contract.",
+        "b below/equal/above alpha*a yields all three comparisons even for linear cooling."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להחליף את הנתון הלינארי בניוטון בלי לומר זאת.",
+        "לבלבל מעלות לדקה עם יחידות חום לדקה.",
+        "לעשות ממוצע טמפרטורות לא משוקלל למרות כמויות או קיבולי חום שונים.",
+        "להציג מספרי דוגמה כאילו נמדדו או סופקו במקור."
+      ],
+      "en": [
+        "Silently replacing linear cooling with Newton cooling.",
+        "Confusing degrees per minute with heat energy per minute.",
+        "Using an unweighted average despite different heat capacities.",
+        "Presenting illustrative values as supplied facts or physical measurements."
+      ]
+    },
+    "interview_answer": {
+      "he": "אברר מה קבוע אחרי הערבוב. אם a הוא שיפוע הקפה ו־b של התערובת, הפרש סוף פחות התחלה הוא (b−alpha*a)*10. b=a מעדיף הוספה בסוף; הספק חום קבוע נותן b=alpha*a ושוויון. המקור לבדו לא בוחר ביניהם.",
+      "en": "Clarify the postmix rule. With coffee slope a, mixture slope b and coffee heat-capacity share alpha, late minus early is(b−alpha*a)*10. Same slope favors late; constant power makes b=alpha*a and ties. The source does not select one."
+    },
+    "source_ambiguities": {
+      "he": "לא נמסרו טמפרטורת וכמות החלב, שמירתו או קצב התערובת. לינאריות אינה מחייבת אותו שיפוע אחרי שינוי קיבול חום. הנתונים והענפים נוספו במפורש; אין תשובה פיזית גורפת מן הצילום.",
+      "en": "Milk temperature/quantity, holding conditions and postmix cooling are unspecified. Linearity does not force identical slope after changing heat capacity. Models/values are declared additions; the image establishes no universal physical answer."
+    },
+    "relationship_note": {
+      "he": "שאלה חדשה: לא נמצאה כפילות במאגרי ההכנה, הדוגמאות או האימות. היא בודקת הגדרת מודל והבדל בין חום לטמפרטורה.",
+      "en": "New question; no equivalent preparation/example/validation prompt found. It tests model specification and heat versus temperature."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה מתקבל בחוק קירור ניוטון עם אותו k בשתי התערובות?",
+        "direction": "הפרש מוקדם פחות מאוחר הוא (1−alpha)*(Ta−Tm)*(1−exp(−kt)). חלב קר מהסביבה מעדיף מוקדם; בטמפרטורת הסביבה שוויון במודל זה. זהו חוק לא לינארי שונה, ושינוי k דורש ניתוח חדש.",
+        "integration_status": "הרחבה מוסברת אך לא ממומשת בקוד ולא נבחרת אוטומטית בתור המשך."
+      },
+      "en": {
+        "question": "What changes under Newton cooling with the same k before/after mixing?",
+        "direction": "Early minus late is(1−alpha)*(Ta−Tm)*(1−exp(−kt)). Milk below ambient favors early; ambient-temperature milk ties in this model. This is a different nonlinear law; changing k needs fresh analysis.",
+        "integration_status": "Explained extension, not code-implemented or automatically queued."
+      }
+    }
+  },
+  "PREP-127": {
+    "assumptions": {
+      "he": [
+        "תיאום קודם ומזהי גמדים וצבעים מוסכמים; אחרי התיאום אין תקשורת או תשובות שנשמעות לפני החלטה.",
+        "כל אחד רואה את כל הכובעים האחרים ולא את שלו. בעשרה צבעים חזרות מותרות וכל10^10 הסידורים אפשריים.",
+        "כל פלט הוא שם צבע יחיד; ההבטחה היא שמישהו ינחש נכון ולא שמישהו יודע מראש שהוא צודק."
+      ],
+      "en": [
+        "Pre-agreement and shared player/color labels; no later communication or audible answers before deciding.",
+        "Each sees every other hat, never their own. Repeats are allowed and all 10^10 ten-color worlds possible.",
+        "One color-name output each; someone guesses correctly, without needing advance knowledge of being correct."
+      ]
+    },
+    "optimality": {
+      "he": "ל־n גמדים ו־n צבעים, ספירת הצלחות על כל n^n העולמות מגבילה הבטחה לאחת. בניית השאריות משיגה בדיוק אחת בכל עולם. כל אסטרטגיה שמבטיחה אחת חייבת לתת בדיוק אחת תמיד.",
+      "en": "For n players/n colors, counting correct events over n^n worlds limits a universal guarantee to one. Residues attain exactly one per world. Every universally winning protocol must yield exactly one everywhere."
+    },
+    "verification": {
+      "he": "3413 עולמות ממצים ל־n=1..5;10004 עולמות בעשרה צבעים; כל16 זוגות כללים בינאריים, מהם2 מנצחים בכל עולם. ההוכחה, ולא הדגימה, מכסה10^10 עולמות.",
+      "en": "3413 exhaustive worlds at n=1..5;10004 ten-color worlds; all16 binary local-protocol pairs, of which2 win universally. Proof, not the sample, covers10^10 worlds."
+    },
+    "edge_cases": {
+      "he": [
+        "כל הכובעים באותו צבע, צבעים חוזרים או הופעה של כל הצבעים מותרים.",
+        "בחיסור שלילי נדרשת שארית בטווח0..n−1.",
+        "הגמד שמספרו סכום הצבעים מודולו n מצליח, אבל הסכום הזה משמש את ההוכחה ולא מידע שניתן לו.",
+        "ויתור על הבטחה לכל עולם מאפשר ששניהם צודקים לפעמים; זה אינו פתרון לאותה דרישה."
+      ],
+      "en": [
+        "All hats one color, repeated colors and all colors appearing are allowed.",
+        "Negative subtraction must map into residues0..n−1.",
+        "The successful label equals total-color residue, but that total belongs to the proof, not the controller's information.",
+        "Dropping the universal guarantee allows both correct sometimes, but no longer solves the same requirement."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לתת לשניהם אותו כלל ולהתעלם ממקרה שבו שניהם טועים.",
+        "למסור לכל גמד את סכום כל הצבעים, כולל צבעו הנסתר.",
+        "להניח שכל צבע מופיע פעם אחת בלבד, בניגוד ל־10^10 הסידורים.",
+        "לייבא תשובה סדרתית או קוד זוגיות שנשמע מהגמד הראשון כמו בשאלת הטור.",
+        "לטעון שהגמד הנכון יודע את צבעו בוודאות לפני תשובות."
+      ],
+      "en": [
+        "Giving both the same rule and ignoring worlds where both fail.",
+        "Supplying the controller the total including its own hidden color.",
+        "Assuming every color appears exactly once despite10^10 possible assignments.",
+        "Importing sequential audible parity signaling from the line puzzle.",
+        "Claiming the successful player individually knows their own color before answers."
+      ]
+    },
+    "interview_answer": {
+      "he": "בשניים: אחד אומר את הצבע האחר ואחד את הנגדי, ולכן בדיוק אחד צודק. בעשרה: גמד i מנחש i פחות סכום מה שהוא רואה מודולו10. הוא צודק אם ורק אם i שווה לסכום הכול מודולו10, ולכן אחד בדיוק. ספירת הצלחות שוללת יותר מאחד בכל פרוטוקול שמבטיח לפחות הצלחה אחת בכל סידור.",
+      "en": "Binary: one repeats the other hat, one says its opposite, yielding exactly one correct. Ten colors: player i guesses i minus the visible sum modulo10. Correctness is equivalent to i equaling the total residue, so exactly one succeeds. Counting excludes multiple correct in any universally winning protocol."
+    },
+    "source_ambiguities": {
+      "he": "בסעיף ב׳ ׳אותו דבר׳ בחדרים נפרדים לא מפרט איך רואים תשעה אחרים או מתי שומעים תשובות. הוגדרו ראות מלאה של אחרים ותשובות ללא תקשורת. מלאי הצבעים הלא מוגבל נאמר במקור במפורש.",
+      "en": "B's 'same thing' in separate rooms omits how nine other hats are visible and whether answers are audible. Full other-hat visibility and noncommunicating guesses are declared. Repeated/unrestricted color assignments are explicit in the source."
+    },
+    "relationship_note": {
+      "he": "שאלה חדשה המקושרת ל־PREP-096 ול־PREP-033. ב־096 יש טור ותשובות שנשמעות; ב־033 מלאי מוגבל והסקה מאמירות. כאן אין ערוץ תקשורת בזמן הפתרון וכל צבע עצמי נשאר לא ידוע אישית.",
+      "en": "New linked question, distinct from PREP-096's audible sequential line and PREP-033's limited inventory/public inference. Here no communication channel operates during guessing and own color remains individually unknown."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה אם מבקשים לאפשר לכל הגמדים להיות צודקים באותו עולם ומוותרים על ההבטחה שתהיה הצלחה בכל עולם?",
+        "direction": "בחרו שארית יעד משותפת r, וכל גמד יאמר r פחות סכום האחרים מודולו n. כולם צודקים כשסכום הכול הוא r, וכולם טועים אחרת. זה מדגים מדוע מדובר במטרה אחרת, לא שיפור לאסטרטגיה שמבטיחה אחד.",
+        "integration_status": "מוכנה בחומר; אינה נבחרת אוטומטית בתור המשך."
+      },
+      "en": {
+        "question": "What if all players may be correct on some world, but success need not be guaranteed on every world?",
+        "direction": "Choose a common target residue r; each says r minus the visible sum modulo n. All are correct when total residue is r, and all fail otherwise. This changes the objective rather than improving the guaranteed-one strategy.",
+        "integration_status": "Prepared supporting material, not automatically queued."
+      }
+    }
+  },
+  "PREP-129": {
+    "assumptions": {
+      "he": [
+        "מתחילים בגובה אפס ובדקת טיפוס; דקה אחת בעלייה ודקה אחת במנוחה וגלישה.",
+        "מהירויות קבועות2 ו־1 ס״מ לדקה בשלבים המתאימים; תנועה רציפה בתוך כל שלב.",
+        "עוצרים במפגש הראשון עם גובה10, ללא מנוחה אחרונה או דרישה להשלים מחזור."
+      ],
+      "en": [
+        "Start at height zero with a climbing minute; one minute climbing alternates with one resting/sliding minute.",
+        "Constant phase speeds2 and1 cm/min; continuous motion within each phase.",
+        "Stop at first contact with height ten, without a final rest or completed-cycle requirement."
+      ]
+    },
+    "optimality": {
+      "he": "17 הוא זמן המפגש הראשון במסלול שנקבע, עם9 טיפוסים ו־8 גלישות. זו אינה טענת אסטרטגיית מנוחה מינימלית כשמותר לשנות את הכללים.",
+      "en": "Seventeen is first contact under the fixed schedule, with nine climbs/eight slides. No fastest resting strategy with altered rules is claimed."
+    },
+    "verification": {
+      "he": "300 צירופי גובה ומהירות מול אורקל זמן גלובלי עצמאי ברשת1/12 דקה; שלושה גבהים שבריים, התחלה ביעד ומקרים בלתי נגישים.9 טיפוסים ו־8 מנוחות במקרה המקור; חמש דחיות פרמטרים.",
+      "en": "Three hundred height/rate cases versus an independent global-time oracle on a 1/12-minute grid; three fractional heights, initial arrival and unreachable cases. Nine climbs/eight rests for the source and five invalid parameters checked."
+    },
+    "edge_cases": {
+      "he": [
+        "גובה שנגיש בתוך דקת הטיפוס הראשונה מושג לפני מנוחה כלשהי.",
+        "בגובה10 מגיעים בסוף הטיפוס התשיעי ולא מתחילים מנוחה תשיעית.",
+        "בהרחבות יכול להיות זמן הגעה שברי; אין עיגול אוטומטי כלפי מעלה.",
+        "אם קצב נטו של צמד אינו חיובי והיעד גבוה מהטיפוס הראשון, לא מגיעים במודל המתחיל בקרקע."
+      ],
+      "en": [
+        "A target reachable during the first climb is reached before any rest.",
+        "Height ten is reached at the ninth climb's end; there is no ninth rest.",
+        "Extended targets may have fractional arrival times; do not automatically round up.",
+        "With nonpositive pair drift and a target above the first climb, the ground-start model never reaches it."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לחשב נטו סנטימטר לכל דקה במקום לכל צמד דקות.",
+        "להוסיף גלישה אחרי שכבר הגיע ליעד.",
+        "להעתיק תשובה מחידת ימים שבה הטיפוס והגלישה שניהם חלק מיום אחד.",
+        "להציג סימולציה לבדה כהוכחה שאין מפגש מוקדם יותר."
+      ],
+      "en": [
+        "Treating one-centimetre pair gain as per minute.",
+        "Adding a slide after arrival.",
+        "Copying a daily puzzle in which both movements count as one day.",
+        "Using simulation alone to establish no earlier contact."
+      ]
+    },
+    "interview_answer": {
+      "he": "אחרי שמונה צמדי טיפוס ומנוחה עברו16 דקות והגובה8. הטיפוס הבא מוסיף2 בדקה אחת ומגיע לפרח. לכן17 דקות, תשעה טיפוסים ושמונה גלישות. אין גלישה אחרי ההגעה.",
+      "en": "Eight completed climb/rest pairs take sixteen minutes and leave height eight. The next one-minute climb adds two and reaches the flower: seventeen minutes, nine climbs/eight slides, without a post-arrival slide."
+    },
+    "source_ambiguities": {
+      "he": "נאמר טיפוס בדקה ואז מנוחה בדקה, ולכן לא מאחדים אותם ליום אחד. גובה התחלתי, תנועה רציפה בכל שלב ועצירה מיד עם ההגעה הובהרו בעריכה; הם אינם תוספת מנוחה או שינוי מהירויות.",
+      "en": "The source uses separate climb/rest minutes, not one combined day. Starting height, continuous within-phase motion and stopping on arrival are explicit clarifications, without adding rest or changing speeds."
+    },
+    "relationship_note": {
+      "he": "שאלה חדשה במאגרי ההכנה, הדוגמאות והאימות. אינה מירוץ החומרה PREP-045: כאן מחושבת הגעה ראשונה במסלול נתון ולא נשמר מזהה מנצח.",
+      "en": "New preparation/example/validation topic. Distinct from hardware race PREP-045: this computes a fixed path's first contact rather than latching a winner identity."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מהו זמן ההגעה ליעד כללי H כשמטפסים u בדקה וגולשים s בדקת המנוחה, עם u>s?",
+        "direction": "מספר הצמדים המלאים לפני הטיפוס האחרון הוא k=max(0,ceil((H−u)/(u−s))). הזמן2k+(H−k*(u−s))/u. זו דקת טיפוס אחרונה חלקית כשצריך; עבור H=10,u=2,s=1 מקבלים17.",
+        "integration_status": "הרחבה מוסברת ונבדקה בגבהים נוספים; לא מחוברת אוטומטית לתור ההמשך."
+      },
+      "en": {
+        "question": "For target H, climbing u per minute and sliding s in the resting minute with u>s, when is first contact?",
+        "direction": "Completed pairs before the final climb are k=max(0,ceil((H−u)/(u−s))). Time is 2k+(H−k*(u−s))/u, including a fractional final climb when needed. H=10,u=2,s=1 gives17.",
+        "integration_status": "Explained and checked on other heights; not automatically queued."
+      }
+    }
+  }
+}

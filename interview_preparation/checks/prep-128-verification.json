@@ -1,0 +1,11 @@
+{
+  "question_id": "PREP-128",
+  "status": "passed",
+  "exhaustive_words": 8191,
+  "prefix_checks": 90114,
+  "reset_data_streams": 4096,
+  "reset_data_edges": 24576,
+  "moore_distinguished_pairs": 15,
+  "mealy_distinguished_pairs": 10,
+  "scope": "Executed finite Python state models versus independent literal history suffixes; reachable-state and distinguishing-suffix proofs under the specified clock/output contract. No HDL, synthesis or physical timing; human review pending."
+}

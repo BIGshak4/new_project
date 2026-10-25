@@ -311,3 +311,8 @@ The attached code is a protocol test model. Real prisoners access only their own
 - [Verification evidence](../checks/prep-057-verification.json)
 
 No chat hint/solution request is recorded as learner activity. Publication is a pilot content action, not professional approval. The authored follow-up remains unconnected to the interactive queue.
+
+
+## מקורות נוספים — 25.10.2026, מקבץ20
+
+[צילום2](../sources/2026-10-25-batch20-02.png) הוא מקור נוסף ל־21 אסירים; [צילום10](../sources/2026-10-25-batch20-10.png) מוסיף [וריאציית100 אסירים](prep-057-hundred-prisoner-variant.md). הנוסח והרמזים הקודמים נשמרו.

@@ -51,7 +51,8 @@ def test_full_bilingual_reasoning_content_remains_proposed_and_diagrams_are_gate
     record = question(ident)
     assert record["solution_status"] == "proposed" and record["status"] == "in_review"
     assert record["reviewed_by"] is None and record["difficulty"] is None
-    assert record["reported_companies"] == ["NVIDIA"]
+    # Preserve this intake's attribution while later supplied sources may add companies.
+    assert {"NVIDIA"} <= set(record["reported_companies"])
     for lang in ("he", "en"):
         hints = [hint["content"] for hint in record["prepared_hints"] if hint["language"] == lang]
         assert len(hints) == len(set(hints)) == 3

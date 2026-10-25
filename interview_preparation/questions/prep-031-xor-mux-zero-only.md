@@ -180,3 +180,8 @@ If the interface permits additional latency in cycles, consider pipelining or re
 The original implementation remains two MUXes with unchanged Boolean function. Other implementations' cost/frequency depends on the allowed resources and library. Checked four truth rows, eight single-input transitions in an ideal equal-2-ns transport-delay model, 48 arrival-versus-setup-deadline comparisons and 36 hold cases using exact rational arithmetic. The transition model's worst delay is 4 ns. These are Python checks plus reasoning, not HDL simulation, synthesis, static timing analysis or physical measurements.
 
 All original hints and their queue remain. Three timing-variant hints are saved in supplementary material and the addendum, but the existing queue does not automatically select hints by variant. New content is AI-assisted proposed material without new professional approval.
+
+
+## מקורות נוספים — 25.10.2026, מקבץ20
+
+[צילום11](../sources/2026-10-25-batch20-11.png) חוזר על XOR בשני מרבבים, זמן השהיה2 ננו ושיפור תדר. סעיף התזמון וההנחות כבר קיימים; הטקסט, הרמזים והגרסה נשמרו.
