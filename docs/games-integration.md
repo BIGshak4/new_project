@@ -13,7 +13,7 @@ The game uses local CSS modules and existing semantic theme variables. Global co
 
 ## Match behavior
 
-The server samples five distinct source IDs, then one variant per source, without reading player exposure history. Each linked source needs all five variants approved. The older standalone draft bank remains compatible but is not automatically approved. `docs/game-question-bank.md` lists the ten new sources and fifty variants.
+The server samples five distinct source IDs, then one variant per source, without reading player exposure history. Each linked source needs all five variants approved. The older standalone draft bank remains compatible but is not automatically approved. `docs/game-question-bank.md` records all 250 short sources and 1,250 bilingual variants, released for the pilot at Harel's explicit request on 29 October. The 40 standalone legacy drafts remain excluded.
 
 Acceptance stakes both players' coins and opens a readiness lobby. The question stays hidden and the answering clock stays stopped until both players call `POST /v1/duels/{id}/ready`. Either participant can cancel before the clock starts. A lobby expires after ten minutes, with refunds processed on the next read. The active/null-deadline lobby fits the existing database schema; no new migration is required for readiness.
 
@@ -34,7 +34,7 @@ The exporter copies only the ten explicitly selected demo source groups, rather 
 
 ## Live activation still required
 
-1. Human review of the new Hebrew/English questions, choices and explanations; mark the reviewed variant groups `approved` only after review. Automated correctness checks are not a human attestation.
+1. Harel explicitly authorized pilot publication of the completed 1,250-variant bank on 29 October. Content-bound release metadata preserves `professional_review: pending`; automated and AI checks do not assert expert human review.
 2. Confirm that the existing coins and duels migrations have been approved and applied in the intended database. This implementation did not apply migrations or modify the live database.
 3. Deploy the matching backend and frontend, then verify two real accounts: invite, both-ready, five answers, refresh/reconnect, settlement and wallet balances. This work's HTTP tests use authenticated test identities and an in-memory store; they do not prove the deployed database or provider configuration.
 

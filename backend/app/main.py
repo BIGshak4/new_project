@@ -333,8 +333,11 @@ async def catalog_summary() -> dict:
             catalog = await asyncio.to_thread(load_catalog, get_settings().seeds_dir)
         except CatalogError as exc:
             return {"valid": False, "problems": exc.problems}
+    quiz_groups = runtime.duels.quiz_groups() if runtime is not None and runtime.duels is not None else {}
     return {
         "valid": True, "subjects": sorted(catalog.domains), "skills": len(catalog.leaf_skills),
         "roles": sorted(catalog.roles), "companies": sorted(catalog.companies),
         "questions": len(catalog.questions), "tips": len(catalog.tips), "glossary_terms": len(catalog.glossary),
+        "quiz_source_count": len(quiz_groups),
+        "quiz_variant_count": sum(len(items) for items in quiz_groups.values()),
     }

@@ -1,0 +1,2275 @@
+[
+  {
+    "key": "quick-sw-05-v1",
+    "method": "source execution and list identity",
+    "inputs": {
+      "items": [
+        2,
+        4
+      ],
+      "added": 7
+    },
+    "expected": "[2, 4]"
+  },
+  {
+    "key": "quick-sw-05-v2",
+    "method": "source execution and list identity",
+    "inputs": {
+      "items": [
+        -1,
+        3
+      ],
+      "added": 0
+    },
+    "expected": "[-1, 3]"
+  },
+  {
+    "key": "quick-sw-05-v3",
+    "method": "source execution and list identity",
+    "inputs": {
+      "items": [],
+      "added": 8
+    },
+    "expected": "[]"
+  },
+  {
+    "key": "quick-sw-05-v4",
+    "method": "source execution and list identity",
+    "inputs": {
+      "items": [
+        5
+      ],
+      "added": 5
+    },
+    "expected": "[5]"
+  },
+  {
+    "key": "quick-sw-05-v5",
+    "method": "source execution and list identity",
+    "inputs": {
+      "items": [
+        0,
+        0,
+        2
+      ],
+      "added": -2
+    },
+    "expected": "[0, 0, 2]"
+  },
+  {
+    "key": "quick-sw-09-v1",
+    "method": "source dictionary count versus filtered enumeration",
+    "inputs": {
+      "text": "ababa",
+      "character": "a"
+    },
+    "expected": "3"
+  },
+  {
+    "key": "quick-sw-09-v2",
+    "method": "source dictionary count versus filtered enumeration",
+    "inputs": {
+      "text": "a a",
+      "character": " "
+    },
+    "expected": "1"
+  },
+  {
+    "key": "quick-sw-09-v3",
+    "method": "source dictionary count versus filtered enumeration",
+    "inputs": {
+      "text": "xyz",
+      "character": "q"
+    },
+    "expected": "0"
+  },
+  {
+    "key": "quick-sw-09-v4",
+    "method": "source dictionary count versus filtered enumeration",
+    "inputs": {
+      "text": "BBBBb",
+      "character": "B"
+    },
+    "expected": "4"
+  },
+  {
+    "key": "quick-sw-09-v5",
+    "method": "source dictionary count versus filtered enumeration",
+    "inputs": {
+      "text": "mississippi",
+      "character": "s"
+    },
+    "expected": "4"
+  },
+  {
+    "key": "quick-sw-11-v1",
+    "method": "source scan versus sorted reference",
+    "inputs": {
+      "values": [
+        -8,
+        -2,
+        -5
+      ]
+    },
+    "expected": "-2"
+  },
+  {
+    "key": "quick-sw-11-v2",
+    "method": "source scan versus sorted reference",
+    "inputs": {
+      "values": []
+    },
+    "expected": "None"
+  },
+  {
+    "key": "quick-sw-11-v3",
+    "method": "source scan versus sorted reference",
+    "inputs": {
+      "values": [
+        0,
+        -3,
+        -1
+      ]
+    },
+    "expected": "0"
+  },
+  {
+    "key": "quick-sw-11-v4",
+    "method": "source scan versus sorted reference",
+    "inputs": {
+      "values": [
+        4,
+        9,
+        9,
+        2
+      ]
+    },
+    "expected": "9"
+  },
+  {
+    "key": "quick-sw-11-v5",
+    "method": "source scan versus sorted reference",
+    "inputs": {
+      "values": [
+        -10
+      ]
+    },
+    "expected": "-10"
+  },
+  {
+    "key": "quick-sw-12-v1",
+    "method": "target index and sorted partition membership",
+    "inputs": {
+      "values": [
+        1,
+        4,
+        7,
+        9,
+        12,
+        15,
+        20
+      ],
+      "target": 15,
+      "middle": 3
+    },
+    "expected": "Right, excluding the middle"
+  },
+  {
+    "key": "quick-sw-12-v2",
+    "method": "target index and sorted partition membership",
+    "inputs": {
+      "values": [
+        2,
+        5,
+        8,
+        11,
+        14,
+        17,
+        23
+      ],
+      "target": 5,
+      "middle": 3
+    },
+    "expected": "Left, excluding the middle"
+  },
+  {
+    "key": "quick-sw-12-v3",
+    "method": "target index and sorted partition membership",
+    "inputs": {
+      "values": [
+        -8,
+        -4,
+        -1,
+        0,
+        3,
+        6,
+        10
+      ],
+      "target": -4,
+      "middle": 3
+    },
+    "expected": "Left, excluding the middle"
+  },
+  {
+    "key": "quick-sw-12-v4",
+    "method": "target index and sorted partition membership",
+    "inputs": {
+      "values": [
+        0,
+        3,
+        6,
+        9,
+        12,
+        15,
+        18
+      ],
+      "target": 9,
+      "middle": 3
+    },
+    "expected": "Stop: a match was found"
+  },
+  {
+    "key": "quick-sw-12-v5",
+    "method": "target index and sorted partition membership",
+    "inputs": {
+      "values": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14
+      ],
+      "target": 12,
+      "middle": 3
+    },
+    "expected": "Right, excluding the middle"
+  },
+  {
+    "key": "quick-sw-14-v1",
+    "method": "source flag array versus set difference",
+    "inputs": {
+      "n": 6,
+      "values": [
+        6,
+        5,
+        3,
+        2,
+        1
+      ]
+    },
+    "expected": "[4]"
+  },
+  {
+    "key": "quick-sw-14-v2",
+    "method": "source flag array versus set difference",
+    "inputs": {
+      "n": 1,
+      "values": []
+    },
+    "expected": "[1]"
+  },
+  {
+    "key": "quick-sw-14-v3",
+    "method": "source flag array versus set difference",
+    "inputs": {
+      "n": 8,
+      "values": [
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    "expected": "[8]"
+  },
+  {
+    "key": "quick-sw-14-v4",
+    "method": "source flag array versus set difference",
+    "inputs": {
+      "n": 7,
+      "values": [
+        7,
+        6,
+        5,
+        4,
+        3,
+        2
+      ]
+    },
+    "expected": "[1]"
+  },
+  {
+    "key": "quick-sw-14-v5",
+    "method": "source flag array versus set difference",
+    "inputs": {
+      "n": 9,
+      "values": [
+        9,
+        8,
+        7,
+        6,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    "expected": "[5]"
+  },
+  {
+    "key": "quick-sw-15-v1",
+    "method": "source pair existence versus exhaustive index pairs",
+    "inputs": {
+      "values": [
+        3
+      ],
+      "target": 6,
+      "pairs": []
+    },
+    "expected": "0"
+  },
+  {
+    "key": "quick-sw-15-v2",
+    "method": "source pair existence versus exhaustive index pairs",
+    "inputs": {
+      "values": [
+        3,
+        3
+      ],
+      "target": 6,
+      "pairs": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "expected": "1"
+  },
+  {
+    "key": "quick-sw-15-v3",
+    "method": "source pair existence versus exhaustive index pairs",
+    "inputs": {
+      "values": [
+        1,
+        4,
+        2
+      ],
+      "target": 6,
+      "pairs": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    "expected": "1"
+  },
+  {
+    "key": "quick-sw-15-v4",
+    "method": "source pair existence versus exhaustive index pairs",
+    "inputs": {
+      "values": [
+        -2,
+        5,
+        7
+      ],
+      "target": 3,
+      "pairs": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "expected": "1"
+  },
+  {
+    "key": "quick-sw-15-v5",
+    "method": "source pair existence versus exhaustive index pairs",
+    "inputs": {
+      "values": [],
+      "target": 0,
+      "pairs": []
+    },
+    "expected": "0"
+  },
+  {
+    "key": "quick-sw-17-v1",
+    "method": "merge head versus full sorted reference",
+    "inputs": {
+      "a": [
+        2,
+        8
+      ],
+      "b": [
+        4,
+        5
+      ]
+    },
+    "expected": "2"
+  },
+  {
+    "key": "quick-sw-17-v2",
+    "method": "merge head versus full sorted reference",
+    "inputs": {
+      "a": [
+        -3,
+        1
+      ],
+      "b": [
+        -1,
+        7
+      ]
+    },
+    "expected": "-3"
+  },
+  {
+    "key": "quick-sw-17-v3",
+    "method": "merge head versus full sorted reference",
+    "inputs": {
+      "a": [
+        6,
+        9
+      ],
+      "b": [
+        1,
+        10
+      ]
+    },
+    "expected": "1"
+  },
+  {
+    "key": "quick-sw-17-v4",
+    "method": "merge head versus full sorted reference",
+    "inputs": {
+      "a": [
+        0,
+        2
+      ],
+      "b": [
+        3,
+        4
+      ]
+    },
+    "expected": "0"
+  },
+  {
+    "key": "quick-sw-17-v5",
+    "method": "merge head versus full sorted reference",
+    "inputs": {
+      "a": [
+        5,
+        8
+      ],
+      "b": [
+        -2,
+        6
+      ]
+    },
+    "expected": "-2"
+  },
+  {
+    "key": "quick-sw-18-v1",
+    "method": "source adjacent comparisons versus sorted equality",
+    "inputs": {
+      "first": [],
+      "second": [
+        1,
+        1,
+        2
+      ]
+    },
+    "expected": "Both lists"
+  },
+  {
+    "key": "quick-sw-18-v2",
+    "method": "source adjacent comparisons versus sorted equality",
+    "inputs": {
+      "first": [
+        3,
+        2
+      ],
+      "second": [
+        -1,
+        0
+      ]
+    },
+    "expected": "Only the second list"
+  },
+  {
+    "key": "quick-sw-18-v3",
+    "method": "source adjacent comparisons versus sorted equality",
+    "inputs": {
+      "first": [
+        1
+      ],
+      "second": [
+        2,
+        1
+      ]
+    },
+    "expected": "Only the first list"
+  },
+  {
+    "key": "quick-sw-18-v4",
+    "method": "source adjacent comparisons versus sorted equality",
+    "inputs": {
+      "first": [
+        2,
+        1
+      ],
+      "second": [
+        0,
+        -1
+      ]
+    },
+    "expected": "Neither list"
+  },
+  {
+    "key": "quick-sw-18-v5",
+    "method": "source adjacent comparisons versus sorted equality",
+    "inputs": {
+      "first": [
+        -3,
+        -3
+      ],
+      "second": [
+        0,
+        0,
+        0
+      ]
+    },
+    "expected": "Both lists"
+  },
+  {
+    "key": "quick-sw-31-v1",
+    "method": "source filtered sum versus explicit selection",
+    "inputs": {
+      "values": [
+        -2,
+        4,
+        0,
+        7
+      ]
+    },
+    "expected": "11"
+  },
+  {
+    "key": "quick-sw-31-v2",
+    "method": "source filtered sum versus explicit selection",
+    "inputs": {
+      "values": []
+    },
+    "expected": "0"
+  },
+  {
+    "key": "quick-sw-31-v3",
+    "method": "source filtered sum versus explicit selection",
+    "inputs": {
+      "values": [
+        -5,
+        -1
+      ]
+    },
+    "expected": "0"
+  },
+  {
+    "key": "quick-sw-31-v4",
+    "method": "source filtered sum versus explicit selection",
+    "inputs": {
+      "values": [
+        2,
+        2,
+        -3
+      ]
+    },
+    "expected": "4"
+  },
+  {
+    "key": "quick-sw-31-v5",
+    "method": "source filtered sum versus explicit selection",
+    "inputs": {
+      "values": [
+        0,
+        9,
+        -9,
+        1
+      ]
+    },
+    "expected": "10"
+  },
+  {
+    "key": "quick-sw-32-v1",
+    "method": "source slicing versus reverse-index traversal",
+    "inputs": {
+      "text": "code"
+    },
+    "expected": "'edoc'"
+  },
+  {
+    "key": "quick-sw-32-v2",
+    "method": "source slicing versus reverse-index traversal",
+    "inputs": {
+      "text": "level"
+    },
+    "expected": "'level'"
+  },
+  {
+    "key": "quick-sw-32-v3",
+    "method": "source slicing versus reverse-index traversal",
+    "inputs": {
+      "text": ""
+    },
+    "expected": "''"
+  },
+  {
+    "key": "quick-sw-32-v4",
+    "method": "source slicing versus reverse-index traversal",
+    "inputs": {
+      "text": "abca"
+    },
+    "expected": "'acba'"
+  },
+  {
+    "key": "quick-sw-32-v5",
+    "method": "source slicing versus reverse-index traversal",
+    "inputs": {
+      "text": "Python"
+    },
+    "expected": "'nohtyP'"
+  },
+  {
+    "key": "quick-sw-33-v1",
+    "method": "source execution and parallel-assignment reference",
+    "inputs": {
+      "a": 2,
+      "b": 7
+    },
+    "expected": "(7, 2)"
+  },
+  {
+    "key": "quick-sw-33-v2",
+    "method": "source execution and parallel-assignment reference",
+    "inputs": {
+      "a": -3,
+      "b": 4
+    },
+    "expected": "(4, -3)"
+  },
+  {
+    "key": "quick-sw-33-v3",
+    "method": "source execution and parallel-assignment reference",
+    "inputs": {
+      "a": 0,
+      "b": 9
+    },
+    "expected": "(9, 0)"
+  },
+  {
+    "key": "quick-sw-33-v4",
+    "method": "source execution and parallel-assignment reference",
+    "inputs": {
+      "a": 8,
+      "b": -1
+    },
+    "expected": "(-1, 8)"
+  },
+  {
+    "key": "quick-sw-33-v5",
+    "method": "source execution and parallel-assignment reference",
+    "inputs": {
+      "a": -5,
+      "b": -2
+    },
+    "expected": "(-2, -5)"
+  },
+  {
+    "key": "quick-sw-34-v1",
+    "method": "deque simulation versus independent list trace",
+    "inputs": {
+      "kind": "stack",
+      "operations": [
+        "A",
+        "B",
+        null,
+        "C",
+        "D"
+      ]
+    },
+    "expected": "D"
+  },
+  {
+    "key": "quick-sw-34-v2",
+    "method": "deque simulation versus independent list trace",
+    "inputs": {
+      "kind": "stack",
+      "operations": [
+        "D",
+        "A",
+        "C",
+        null,
+        "B",
+        null
+      ]
+    },
+    "expected": "A"
+  },
+  {
+    "key": "quick-sw-34-v3",
+    "method": "deque simulation versus independent list trace",
+    "inputs": {
+      "kind": "stack",
+      "operations": [
+        "C",
+        "B",
+        "A",
+        "D",
+        null
+      ]
+    },
+    "expected": "A"
+  },
+  {
+    "key": "quick-sw-34-v4",
+    "method": "deque simulation versus independent list trace",
+    "inputs": {
+      "kind": "stack",
+      "operations": [
+        "B",
+        "D",
+        null,
+        "C",
+        null,
+        "A"
+      ]
+    },
+    "expected": "A"
+  },
+  {
+    "key": "quick-sw-34-v5",
+    "method": "deque simulation versus independent list trace",
+    "inputs": {
+      "kind": "stack",
+      "operations": [
+        "D",
+        "C",
+        "B",
+        null,
+        null,
+        "A"
+      ]
+    },
+    "expected": "A"
+  },
+  {
+    "key": "quick-sw-35-v1",
+    "method": "deque simulation versus independent list trace",
+    "inputs": {
+      "kind": "queue",
+      "operations": [
+        "A",
+        "B",
+        null,
+        "C",
+        "D"
+      ]
+    },
+    "expected": "B"
+  },
+  {
+    "key": "quick-sw-35-v2",
+    "method": "deque simulation versus independent list trace",
+    "inputs": {
+      "kind": "queue",
+      "operations": [
+        "D",
+        "A",
+        "C",
+        null,
+        "B",
+        null
+      ]
+    },
+    "expected": "C"
+  },
+  {
+    "key": "quick-sw-35-v3",
+    "method": "deque simulation versus independent list trace",
+    "inputs": {
+      "kind": "queue",
+      "operations": [
+        "C",
+        "B",
+        "A",
+        "D",
+        null
+      ]
+    },
+    "expected": "B"
+  },
+  {
+    "key": "quick-sw-35-v4",
+    "method": "deque simulation versus independent list trace",
+    "inputs": {
+      "kind": "queue",
+      "operations": [
+        "B",
+        "D",
+        null,
+        "C",
+        null,
+        "A"
+      ]
+    },
+    "expected": "C"
+  },
+  {
+    "key": "quick-sw-35-v5",
+    "method": "deque simulation versus independent list trace",
+    "inputs": {
+      "kind": "queue",
+      "operations": [
+        "D",
+        "C",
+        "B",
+        null,
+        null,
+        "A"
+      ]
+    },
+    "expected": "B"
+  },
+  {
+    "key": "quick-sw-36-v1",
+    "method": "set versus frequency-map keys",
+    "inputs": {
+      "values": [
+        4,
+        2,
+        4
+      ]
+    },
+    "expected": "2"
+  },
+  {
+    "key": "quick-sw-36-v2",
+    "method": "set versus frequency-map keys",
+    "inputs": {
+      "values": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "expected": "1"
+  },
+  {
+    "key": "quick-sw-36-v3",
+    "method": "set versus frequency-map keys",
+    "inputs": {
+      "values": []
+    },
+    "expected": "0"
+  },
+  {
+    "key": "quick-sw-36-v4",
+    "method": "set versus frequency-map keys",
+    "inputs": {
+      "values": [
+        -1,
+        0,
+        -1,
+        2
+      ]
+    },
+    "expected": "3"
+  },
+  {
+    "key": "quick-sw-36-v5",
+    "method": "set versus frequency-map keys",
+    "inputs": {
+      "values": [
+        5,
+        4,
+        3,
+        2,
+        5
+      ]
+    },
+    "expected": "4"
+  },
+  {
+    "key": "quick-sw-37-v1",
+    "method": "pointer-map traversal",
+    "inputs": {
+      "order": "ACDB",
+      "links": {
+        "A": "C",
+        "C": "D",
+        "D": "B",
+        "B": "\u0000"
+      }
+    },
+    "expected": "A, C, D, B"
+  },
+  {
+    "key": "quick-sw-37-v2",
+    "method": "pointer-map traversal",
+    "inputs": {
+      "order": "BDAC",
+      "links": {
+        "B": "D",
+        "D": "A",
+        "A": "C",
+        "C": "\u0000"
+      }
+    },
+    "expected": "B, D, A, C"
+  },
+  {
+    "key": "quick-sw-37-v3",
+    "method": "pointer-map traversal",
+    "inputs": {
+      "order": "CADB",
+      "links": {
+        "C": "A",
+        "A": "D",
+        "D": "B",
+        "B": "\u0000"
+      }
+    },
+    "expected": "C, A, D, B"
+  },
+  {
+    "key": "quick-sw-37-v4",
+    "method": "pointer-map traversal",
+    "inputs": {
+      "order": "DBCA",
+      "links": {
+        "D": "B",
+        "B": "C",
+        "C": "A",
+        "A": "\u0000"
+      }
+    },
+    "expected": "D, B, C, A"
+  },
+  {
+    "key": "quick-sw-37-v5",
+    "method": "pointer-map traversal",
+    "inputs": {
+      "order": "ABDC",
+      "links": {
+        "A": "B",
+        "B": "D",
+        "D": "C",
+        "C": "\u0000"
+      }
+    },
+    "expected": "A, B, D, C"
+  },
+  {
+    "key": "quick-sw-38-v1",
+    "method": "unsuccessful sequential-search comparison count",
+    "inputs": {
+      "length": 7
+    },
+    "expected": "7"
+  },
+  {
+    "key": "quick-sw-38-v2",
+    "method": "unsuccessful sequential-search comparison count",
+    "inputs": {
+      "length": 12
+    },
+    "expected": "12"
+  },
+  {
+    "key": "quick-sw-38-v3",
+    "method": "unsuccessful sequential-search comparison count",
+    "inputs": {
+      "length": 1
+    },
+    "expected": "1"
+  },
+  {
+    "key": "quick-sw-38-v4",
+    "method": "unsuccessful sequential-search comparison count",
+    "inputs": {
+      "length": 20
+    },
+    "expected": "20"
+  },
+  {
+    "key": "quick-sw-38-v5",
+    "method": "unsuccessful sequential-search comparison count",
+    "inputs": {
+      "length": 5
+    },
+    "expected": "5"
+  },
+  {
+    "key": "quick-sw-39-v1",
+    "method": "prefix subtraction versus direct slice sum",
+    "inputs": {
+      "values": [
+        2,
+        3,
+        1,
+        4
+      ],
+      "prefix": [
+        0,
+        2,
+        5,
+        6,
+        10
+      ],
+      "left": 1,
+      "right": 2
+    },
+    "expected": "4"
+  },
+  {
+    "key": "quick-sw-39-v2",
+    "method": "prefix subtraction versus direct slice sum",
+    "inputs": {
+      "values": [
+        -2,
+        5,
+        3,
+        1
+      ],
+      "prefix": [
+        0,
+        -2,
+        3,
+        6,
+        7
+      ],
+      "left": 0,
+      "right": 2
+    },
+    "expected": "6"
+  },
+  {
+    "key": "quick-sw-39-v3",
+    "method": "prefix subtraction versus direct slice sum",
+    "inputs": {
+      "values": [
+        4,
+        -1,
+        2,
+        6
+      ],
+      "prefix": [
+        0,
+        4,
+        3,
+        5,
+        11
+      ],
+      "left": 2,
+      "right": 3
+    },
+    "expected": "8"
+  },
+  {
+    "key": "quick-sw-39-v4",
+    "method": "prefix subtraction versus direct slice sum",
+    "inputs": {
+      "values": [
+        7,
+        0,
+        -3,
+        5
+      ],
+      "prefix": [
+        0,
+        7,
+        7,
+        4,
+        9
+      ],
+      "left": 1,
+      "right": 3
+    },
+    "expected": "2"
+  },
+  {
+    "key": "quick-sw-39-v5",
+    "method": "prefix subtraction versus direct slice sum",
+    "inputs": {
+      "values": [
+        1,
+        8,
+        2,
+        -4
+      ],
+      "prefix": [
+        0,
+        1,
+        9,
+        11,
+        7
+      ],
+      "left": 0,
+      "right": 0
+    },
+    "expected": "1"
+  },
+  {
+    "key": "quick-sw-89-v1",
+    "method": "source linear algorithm versus exhaustive buy/sell pairs",
+    "inputs": {
+      "prices": [
+        7,
+        1,
+        5,
+        3,
+        6
+      ]
+    },
+    "expected": "5"
+  },
+  {
+    "key": "quick-sw-89-v2",
+    "method": "source linear algorithm versus exhaustive buy/sell pairs",
+    "inputs": {
+      "prices": [
+        9,
+        7,
+        4,
+        2
+      ]
+    },
+    "expected": "0"
+  },
+  {
+    "key": "quick-sw-89-v3",
+    "method": "source linear algorithm versus exhaustive buy/sell pairs",
+    "inputs": {
+      "prices": []
+    },
+    "expected": "0"
+  },
+  {
+    "key": "quick-sw-89-v4",
+    "method": "source linear algorithm versus exhaustive buy/sell pairs",
+    "inputs": {
+      "prices": [
+        2,
+        8,
+        1,
+        4
+      ]
+    },
+    "expected": "6"
+  },
+  {
+    "key": "quick-sw-89-v5",
+    "method": "source linear algorithm versus exhaustive buy/sell pairs",
+    "inputs": {
+      "prices": [
+        0,
+        3,
+        0,
+        5
+      ]
+    },
+    "expected": "5"
+  },
+  {
+    "key": "quick-sw-90-v1",
+    "method": "enumeration of the two exhaustive ending-subarray cases",
+    "inputs": {
+      "previous": -3,
+      "item": 4
+    },
+    "expected": "4"
+  },
+  {
+    "key": "quick-sw-90-v2",
+    "method": "enumeration of the two exhaustive ending-subarray cases",
+    "inputs": {
+      "previous": 5,
+      "item": -2
+    },
+    "expected": "3"
+  },
+  {
+    "key": "quick-sw-90-v3",
+    "method": "enumeration of the two exhaustive ending-subarray cases",
+    "inputs": {
+      "previous": -7,
+      "item": -1
+    },
+    "expected": "-1"
+  },
+  {
+    "key": "quick-sw-90-v4",
+    "method": "enumeration of the two exhaustive ending-subarray cases",
+    "inputs": {
+      "previous": 2,
+      "item": 6
+    },
+    "expected": "8"
+  },
+  {
+    "key": "quick-sw-90-v5",
+    "method": "enumeration of the two exhaustive ending-subarray cases",
+    "inputs": {
+      "previous": 0,
+      "item": -4
+    },
+    "expected": "-4"
+  },
+  {
+    "key": "quick-sw-91-v1",
+    "method": "source stable sort versus explicit original-index tie breaker",
+    "inputs": {
+      "records": [
+        [
+          "A",
+          2
+        ],
+        [
+          "B",
+          1
+        ],
+        [
+          "C",
+          2
+        ]
+      ]
+    },
+    "expected": "B, A, C"
+  },
+  {
+    "key": "quick-sw-91-v2",
+    "method": "source stable sort versus explicit original-index tie breaker",
+    "inputs": {
+      "records": [
+        [
+          "Z",
+          3
+        ],
+        [
+          "A",
+          3
+        ],
+        [
+          "M",
+          1
+        ]
+      ]
+    },
+    "expected": "M, Z, A"
+  },
+  {
+    "key": "quick-sw-91-v3",
+    "method": "source stable sort versus explicit original-index tie breaker",
+    "inputs": {
+      "records": [
+        [
+          "C",
+          0
+        ],
+        [
+          "A",
+          -1
+        ],
+        [
+          "B",
+          0
+        ]
+      ]
+    },
+    "expected": "A, C, B"
+  },
+  {
+    "key": "quick-sw-91-v4",
+    "method": "source stable sort versus explicit original-index tie breaker",
+    "inputs": {
+      "records": [
+        [
+          "B",
+          5
+        ],
+        [
+          "C",
+          5
+        ],
+        [
+          "A",
+          5
+        ]
+      ]
+    },
+    "expected": "B, C, A"
+  },
+  {
+    "key": "quick-sw-91-v5",
+    "method": "source stable sort versus explicit original-index tie breaker",
+    "inputs": {
+      "records": [
+        [
+          "X",
+          2
+        ],
+        [
+          "Y",
+          0
+        ],
+        [
+          "Z",
+          0
+        ]
+      ]
+    },
+    "expected": "Y, Z, X"
+  },
+  {
+    "key": "quick-sw-92-v1",
+    "method": "inclusive index-range enumeration",
+    "inputs": {
+      "index": 2
+    },
+    "expected": "3"
+  },
+  {
+    "key": "quick-sw-92-v2",
+    "method": "inclusive index-range enumeration",
+    "inputs": {
+      "index": 4
+    },
+    "expected": "5"
+  },
+  {
+    "key": "quick-sw-92-v3",
+    "method": "inclusive index-range enumeration",
+    "inputs": {
+      "index": 1
+    },
+    "expected": "2"
+  },
+  {
+    "key": "quick-sw-92-v4",
+    "method": "inclusive index-range enumeration",
+    "inputs": {
+      "index": 6
+    },
+    "expected": "7"
+  },
+  {
+    "key": "quick-sw-92-v5",
+    "method": "inclusive index-range enumeration",
+    "inputs": {
+      "index": 3
+    },
+    "expected": "4"
+  },
+  {
+    "key": "quick-sw-93-v1",
+    "method": "object-identity traversal versus first shared identifier",
+    "inputs": {
+      "first": "ACD",
+      "second": "BCD"
+    },
+    "expected": "C"
+  },
+  {
+    "key": "quick-sw-93-v2",
+    "method": "object-identity traversal versus first shared identifier",
+    "inputs": {
+      "first": "ABC",
+      "second": "DBC"
+    },
+    "expected": "B"
+  },
+  {
+    "key": "quick-sw-93-v3",
+    "method": "object-identity traversal versus first shared identifier",
+    "inputs": {
+      "first": "AC",
+      "second": "BD"
+    },
+    "expected": "None"
+  },
+  {
+    "key": "quick-sw-93-v4",
+    "method": "object-identity traversal versus first shared identifier",
+    "inputs": {
+      "first": "ABC",
+      "second": "ABC"
+    },
+    "expected": "A"
+  },
+  {
+    "key": "quick-sw-93-v5",
+    "method": "object-identity traversal versus first shared identifier",
+    "inputs": {
+      "first": "ABCD",
+      "second": "CD"
+    },
+    "expected": "C"
+  },
+  {
+    "key": "quick-sw-94-v1",
+    "method": "ordered event replay with strictly increasing timestamps",
+    "inputs": {
+      "local": [
+        2,
+        3
+      ],
+      "global_write": [
+        9,
+        5
+      ],
+      "later": [
+        4,
+        7
+      ]
+    },
+    "expected": "(9, 4)"
+  },
+  {
+    "key": "quick-sw-94-v2",
+    "method": "ordered event replay with strictly increasing timestamps",
+    "inputs": {
+      "local": [
+        8,
+        2
+      ],
+      "global_write": [
+        6,
+        4
+      ],
+      "later": [
+        1,
+        9
+      ]
+    },
+    "expected": "(6, 1)"
+  },
+  {
+    "key": "quick-sw-94-v3",
+    "method": "ordered event replay with strictly increasing timestamps",
+    "inputs": {
+      "local": [
+        -1,
+        1
+      ],
+      "global_write": [
+        0,
+        6
+      ],
+      "later": [
+        7,
+        8
+      ]
+    },
+    "expected": "(0, 7)"
+  },
+  {
+    "key": "quick-sw-94-v4",
+    "method": "ordered event replay with strictly increasing timestamps",
+    "inputs": {
+      "local": [
+        3,
+        4
+      ],
+      "global_write": [
+        5,
+        8
+      ],
+      "later": [
+        2,
+        10
+      ]
+    },
+    "expected": "(5, 2)"
+  },
+  {
+    "key": "quick-sw-94-v5",
+    "method": "ordered event replay with strictly increasing timestamps",
+    "inputs": {
+      "local": [
+        6,
+        2
+      ],
+      "global_write": [
+        -2,
+        7
+      ],
+      "later": [
+        9,
+        11
+      ]
+    },
+    "expected": "(-2, 9)"
+  },
+  {
+    "key": "quick-sw-95-v1",
+    "method": "instrumented memoized recursion versus subproblem interval",
+    "inputs": {
+      "n": 4,
+      "computed": [
+        2,
+        3,
+        4
+      ]
+    },
+    "expected": "3"
+  },
+  {
+    "key": "quick-sw-95-v2",
+    "method": "instrumented memoized recursion versus subproblem interval",
+    "inputs": {
+      "n": 6,
+      "computed": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "expected": "5"
+  },
+  {
+    "key": "quick-sw-95-v3",
+    "method": "instrumented memoized recursion versus subproblem interval",
+    "inputs": {
+      "n": 2,
+      "computed": [
+        2
+      ]
+    },
+    "expected": "1"
+  },
+  {
+    "key": "quick-sw-95-v4",
+    "method": "instrumented memoized recursion versus subproblem interval",
+    "inputs": {
+      "n": 8,
+      "computed": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "expected": "7"
+  },
+  {
+    "key": "quick-sw-95-v5",
+    "method": "instrumented memoized recursion versus subproblem interval",
+    "inputs": {
+      "n": 5,
+      "computed": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "expected": "4"
+  },
+  {
+    "key": "quick-sw-96-v1",
+    "method": "source incremental window versus direct slice sums",
+    "inputs": {
+      "values": [
+        2,
+        5,
+        1
+      ],
+      "k": 2
+    },
+    "expected": "[7, 6]"
+  },
+  {
+    "key": "quick-sw-96-v2",
+    "method": "source incremental window versus direct slice sums",
+    "inputs": {
+      "values": [
+        -3,
+        4,
+        2,
+        -1
+      ],
+      "k": 2
+    },
+    "expected": "[1, 6, 1]"
+  },
+  {
+    "key": "quick-sw-96-v3",
+    "method": "source incremental window versus direct slice sums",
+    "inputs": {
+      "values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "k": 3
+    },
+    "expected": "[6, 9]"
+  },
+  {
+    "key": "quick-sw-96-v4",
+    "method": "source incremental window versus direct slice sums",
+    "inputs": {
+      "values": [
+        5,
+        -2,
+        0
+      ],
+      "k": 1
+    },
+    "expected": "[5, -2, 0]"
+  },
+  {
+    "key": "quick-sw-96-v5",
+    "method": "source incremental window versus direct slice sums",
+    "inputs": {
+      "values": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "k": 2
+    },
+    "expected": "[4, 4, 4]"
+  },
+  {
+    "key": "quick-sw-97-v1",
+    "method": "Python truth conversion and None identity",
+    "inputs": {
+      "result": 0
+    },
+    "expected": "(False, True)"
+  },
+  {
+    "key": "quick-sw-97-v2",
+    "method": "Python truth conversion and None identity",
+    "inputs": {
+      "result": null
+    },
+    "expected": "(False, False)"
+  },
+  {
+    "key": "quick-sw-97-v3",
+    "method": "Python truth conversion and None identity",
+    "inputs": {
+      "result": 3
+    },
+    "expected": "(True, True)"
+  },
+  {
+    "key": "quick-sw-97-v4",
+    "method": "Python truth conversion and None identity",
+    "inputs": {
+      "result": 7
+    },
+    "expected": "(True, True)"
+  },
+  {
+    "key": "quick-sw-97-v5",
+    "method": "Python truth conversion and None identity",
+    "inputs": {
+      "result": 1
+    },
+    "expected": "(True, True)"
+  },
+  {
+    "key": "quick-sw-98-v1",
+    "method": "source branch execution versus independent predicate concatenation",
+    "inputs": {
+      "number": 2
+    },
+    "expected": "['positive', 'even']"
+  },
+  {
+    "key": "quick-sw-98-v2",
+    "method": "source branch execution versus independent predicate concatenation",
+    "inputs": {
+      "number": 3
+    },
+    "expected": "['positive']"
+  },
+  {
+    "key": "quick-sw-98-v3",
+    "method": "source branch execution versus independent predicate concatenation",
+    "inputs": {
+      "number": 0
+    },
+    "expected": "['even']"
+  },
+  {
+    "key": "quick-sw-98-v4",
+    "method": "source branch execution versus independent predicate concatenation",
+    "inputs": {
+      "number": -4
+    },
+    "expected": "['even']"
+  },
+  {
+    "key": "quick-sw-98-v5",
+    "method": "source branch execution versus independent predicate concatenation",
+    "inputs": {
+      "number": -3
+    },
+    "expected": "[]"
+  },
+  {
+    "key": "quick-sw-99-v1",
+    "method": "source repeated calls and distinct list identity",
+    "inputs": {
+      "first": 1,
+      "second": 2
+    },
+    "expected": "([1], [2])"
+  },
+  {
+    "key": "quick-sw-99-v2",
+    "method": "source repeated calls and distinct list identity",
+    "inputs": {
+      "first": 4,
+      "second": 7
+    },
+    "expected": "([4], [7])"
+  },
+  {
+    "key": "quick-sw-99-v3",
+    "method": "source repeated calls and distinct list identity",
+    "inputs": {
+      "first": -1,
+      "second": 0
+    },
+    "expected": "([-1], [0])"
+  },
+  {
+    "key": "quick-sw-99-v4",
+    "method": "source repeated calls and distinct list identity",
+    "inputs": {
+      "first": 8,
+      "second": 8
+    },
+    "expected": "([8], [8])"
+  },
+  {
+    "key": "quick-sw-99-v5",
+    "method": "source repeated calls and distinct list identity",
+    "inputs": {
+      "first": 3,
+      "second": -2
+    },
+    "expected": "([3], [-2])"
+  },
+  {
+    "key": "quick-sw-100-v1",
+    "method": "source range sum versus arithmetic-series formula",
+    "inputs": {
+      "n": 0
+    },
+    "expected": "0"
+  },
+  {
+    "key": "quick-sw-100-v2",
+    "method": "source range sum versus arithmetic-series formula",
+    "inputs": {
+      "n": 1
+    },
+    "expected": "1"
+  },
+  {
+    "key": "quick-sw-100-v3",
+    "method": "source range sum versus arithmetic-series formula",
+    "inputs": {
+      "n": 4
+    },
+    "expected": "10"
+  },
+  {
+    "key": "quick-sw-100-v4",
+    "method": "source range sum versus arithmetic-series formula",
+    "inputs": {
+      "n": 7
+    },
+    "expected": "28"
+  },
+  {
+    "key": "quick-sw-100-v5",
+    "method": "source range sum versus arithmetic-series formula",
+    "inputs": {
+      "n": 10
+    },
+    "expected": "55"
+  },
+  {
+    "key": "quick-sw-119-v1",
+    "method": "exhaustive pair enumeration versus frequency accumulation",
+    "inputs": {
+      "values": [
+        1,
+        4,
+        1,
+        4
+      ],
+      "target": 5
+    },
+    "expected": "4"
+  },
+  {
+    "key": "quick-sw-119-v2",
+    "method": "exhaustive pair enumeration versus frequency accumulation",
+    "inputs": {
+      "values": [
+        3,
+        3,
+        3
+      ],
+      "target": 6
+    },
+    "expected": "3"
+  },
+  {
+    "key": "quick-sw-119-v3",
+    "method": "exhaustive pair enumeration versus frequency accumulation",
+    "inputs": {
+      "values": [
+        2,
+        2,
+        5
+      ],
+      "target": 7
+    },
+    "expected": "2"
+  },
+  {
+    "key": "quick-sw-119-v4",
+    "method": "exhaustive pair enumeration versus frequency accumulation",
+    "inputs": {
+      "values": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "target": 0
+    },
+    "expected": "6"
+  },
+  {
+    "key": "quick-sw-119-v5",
+    "method": "exhaustive pair enumeration versus frequency accumulation",
+    "inputs": {
+      "values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "target": 6
+    },
+    "expected": "2"
+  },
+  {
+    "key": "quick-sw-120-v1",
+    "method": "source mask versus first differing bit enumeration",
+    "inputs": {
+      "a": 2,
+      "b": 6,
+      "xor": 4
+    },
+    "expected": "4"
+  },
+  {
+    "key": "quick-sw-120-v2",
+    "method": "source mask versus first differing bit enumeration",
+    "inputs": {
+      "a": 3,
+      "b": 5,
+      "xor": 6
+    },
+    "expected": "2"
+  },
+  {
+    "key": "quick-sw-120-v3",
+    "method": "source mask versus first differing bit enumeration",
+    "inputs": {
+      "a": 0,
+      "b": 8,
+      "xor": 8
+    },
+    "expected": "8"
+  },
+  {
+    "key": "quick-sw-120-v4",
+    "method": "source mask versus first differing bit enumeration",
+    "inputs": {
+      "a": 7,
+      "b": 9,
+      "xor": 14
+    },
+    "expected": "2"
+  },
+  {
+    "key": "quick-sw-120-v5",
+    "method": "source mask versus first differing bit enumeration",
+    "inputs": {
+      "a": 4,
+      "b": 5,
+      "xor": 1
+    },
+    "expected": "1"
+  },
+  {
+    "key": "quick-sw-121-v1",
+    "method": "source bit loop versus fixed-width string reversal",
+    "inputs": {
+      "value": 1,
+      "width": 8
+    },
+    "expected": "128"
+  },
+  {
+    "key": "quick-sw-121-v2",
+    "method": "source bit loop versus fixed-width string reversal",
+    "inputs": {
+      "value": 2,
+      "width": 8
+    },
+    "expected": "64"
+  },
+  {
+    "key": "quick-sw-121-v3",
+    "method": "source bit loop versus fixed-width string reversal",
+    "inputs": {
+      "value": 12,
+      "width": 8
+    },
+    "expected": "48"
+  },
+  {
+    "key": "quick-sw-121-v4",
+    "method": "source bit loop versus fixed-width string reversal",
+    "inputs": {
+      "value": 129,
+      "width": 8
+    },
+    "expected": "129"
+  },
+  {
+    "key": "quick-sw-121-v5",
+    "method": "source bit loop versus fixed-width string reversal",
+    "inputs": {
+      "value": 0,
+      "width": 8
+    },
+    "expected": "0"
+  },
+  {
+    "key": "quick-sw-122-v1",
+    "method": "source orientation test versus exact rational intersection",
+    "inputs": {
+      "coordinates": [
+        2,
+        0,
+        2,
+        4,
+        0,
+        2
+      ],
+      "cross": 8,
+      "x_intersection": "2"
+    },
+    "expected": "Right; the signs match"
+  },
+  {
+    "key": "quick-sw-122-v2",
+    "method": "source orientation test versus exact rational intersection",
+    "inputs": {
+      "coordinates": [
+        -2,
+        4,
+        -2,
+        0,
+        0,
+        2
+      ],
+      "cross": 8,
+      "x_intersection": "-2"
+    },
+    "expected": "Left; the signs differ"
+  },
+  {
+    "key": "quick-sw-122-v3",
+    "method": "source orientation test versus exact rational intersection",
+    "inputs": {
+      "coordinates": [
+        0,
+        0,
+        4,
+        4,
+        1,
+        2
+      ],
+      "cross": 4,
+      "x_intersection": "2"
+    },
+    "expected": "Right; the signs match"
+  },
+  {
+    "key": "quick-sw-122-v4",
+    "method": "source orientation test versus exact rational intersection",
+    "inputs": {
+      "coordinates": [
+        4,
+        4,
+        0,
+        0,
+        3,
+        2
+      ],
+      "cross": 4,
+      "x_intersection": "2"
+    },
+    "expected": "Left; the signs differ"
+  },
+  {
+    "key": "quick-sw-122-v5",
+    "method": "source orientation test versus exact rational intersection",
+    "inputs": {
+      "coordinates": [
+        1,
+        -2,
+        5,
+        6,
+        1,
+        0
+      ],
+      "cross": 8,
+      "x_intersection": "2"
+    },
+    "expected": "Right; the signs match"
+  },
+  {
+    "key": "quick-sw-123-v1",
+    "method": "enumerated smaller-multiple factor coverage",
+    "inputs": {
+      "prime": 3,
+      "smaller_primes": [
+        2
+      ]
+    },
+    "expected": "9"
+  },
+  {
+    "key": "quick-sw-123-v2",
+    "method": "enumerated smaller-multiple factor coverage",
+    "inputs": {
+      "prime": 5,
+      "smaller_primes": [
+        2,
+        3
+      ]
+    },
+    "expected": "25"
+  },
+  {
+    "key": "quick-sw-123-v3",
+    "method": "enumerated smaller-multiple factor coverage",
+    "inputs": {
+      "prime": 7,
+      "smaller_primes": [
+        2,
+        3,
+        5
+      ]
+    },
+    "expected": "49"
+  },
+  {
+    "key": "quick-sw-123-v4",
+    "method": "enumerated smaller-multiple factor coverage",
+    "inputs": {
+      "prime": 11,
+      "smaller_primes": [
+        2,
+        3,
+        5,
+        7
+      ]
+    },
+    "expected": "121"
+  },
+  {
+    "key": "quick-sw-123-v5",
+    "method": "enumerated smaller-multiple factor coverage",
+    "inputs": {
+      "prime": 2,
+      "smaller_primes": []
+    },
+    "expected": "4"
+  },
+  {
+    "key": "quick-sw-124-v1",
+    "method": "stack parser on all four candidate strings",
+    "inputs": {
+      "strings": [
+        "([])",
+        "([)]",
+        "(()",
+        "]["
+      ],
+      "valid": [
+        true,
+        false,
+        false,
+        false
+      ]
+    },
+    "expected": "`([])`"
+  },
+  {
+    "key": "quick-sw-124-v2",
+    "method": "stack parser on all four candidate strings",
+    "inputs": {
+      "strings": [
+        "{[]}",
+        "{[}]",
+        "}{",
+        "(()"
+      ],
+      "valid": [
+        true,
+        false,
+        false,
+        false
+      ]
+    },
+    "expected": "`{[]}`"
+  },
+  {
+    "key": "quick-sw-124-v3",
+    "method": "stack parser on all four candidate strings",
+    "inputs": {
+      "strings": [
+        "[()()]",
+        "[)(]",
+        "[(])",
+        "]["
+      ],
+      "valid": [
+        true,
+        false,
+        false,
+        false
+      ]
+    },
+    "expected": "`[()()]`"
+  },
+  {
+    "key": "quick-sw-124-v4",
+    "method": "stack parser on all four candidate strings",
+    "inputs": {
+      "strings": [
+        "({[]})",
+        "({[}])",
+        "())(",
+        "{{}"
+      ],
+      "valid": [
+        true,
+        false,
+        false,
+        false
+      ]
+    },
+    "expected": "`({[]})`"
+  },
+  {
+    "key": "quick-sw-124-v5",
+    "method": "stack parser on all four candidate strings",
+    "inputs": {
+      "strings": [
+        "()[]{}",
+        "([{})]",
+        "][][",
+        "((]"
+      ],
+      "valid": [
+        true,
+        false,
+        false,
+        false
+      ]
+    },
+    "expected": "`()[]{}`"
+  },
+  {
+    "key": "quick-sw-125-v1",
+    "method": "full node enumeration versus sorted maximum",
+    "inputs": {
+      "root": 3,
+      "left": 99,
+      "right": 4
+    },
+    "expected": "99"
+  },
+  {
+    "key": "quick-sw-125-v2",
+    "method": "full node enumeration versus sorted maximum",
+    "inputs": {
+      "root": -2,
+      "left": -1,
+      "right": -5
+    },
+    "expected": "-1"
+  },
+  {
+    "key": "quick-sw-125-v3",
+    "method": "full node enumeration versus sorted maximum",
+    "inputs": {
+      "root": 8,
+      "left": 12,
+      "right": 10
+    },
+    "expected": "12"
+  },
+  {
+    "key": "quick-sw-125-v4",
+    "method": "full node enumeration versus sorted maximum",
+    "inputs": {
+      "root": 7,
+      "left": 1,
+      "right": 4
+    },
+    "expected": "7"
+  },
+  {
+    "key": "quick-sw-125-v5",
+    "method": "full node enumeration versus sorted maximum",
+    "inputs": {
+      "root": 0,
+      "left": -3,
+      "right": 5
+    },
+    "expected": "5"
+  }
+]

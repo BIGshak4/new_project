@@ -1,0 +1,6122 @@
+[
+  {
+    "key": "quick-sw-05-v1",
+    "source_key": "quick-sw-05",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python נתון `a=[2, 4]`. מבצעים `b=a[:]` ואז `b.append(7)`. מה ערכה של `a` כעת?",
+      "en": "In Python, `a=[2, 4]`. Execute `b=a[:]`, then `b.append(7)`. What is `a` now?"
+    },
+    "choices": [
+      {
+        "he": "[7]",
+        "en": "[7]"
+      },
+      {
+        "he": "[4, 2]",
+        "en": "[4, 2]"
+      },
+      {
+        "he": "[2, 4]",
+        "en": "[2, 4]"
+      },
+      {
+        "he": "[2, 4, 7]",
+        "en": "[2, 4, 7]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "החיתוך יוצר רשימה חדשה, ולכן ההוספה ל־`b` אינה משנה את `a`.",
+      "en": "Slicing creates a new list, so appending to `b` leaves `a` unchanged."
+    }
+  },
+  {
+    "key": "quick-sw-05-v2",
+    "source_key": "quick-sw-05",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python נתון `a=[-1, 3]`. מבצעים `b=a[:]` ואז `b.append(0)`. מה ערכה של `a` כעת?",
+      "en": "In Python, `a=[-1, 3]`. Execute `b=a[:]`, then `b.append(0)`. What is `a` now?"
+    },
+    "choices": [
+      {
+        "he": "[3, -1]",
+        "en": "[3, -1]"
+      },
+      {
+        "he": "[-1, 3]",
+        "en": "[-1, 3]"
+      },
+      {
+        "he": "[-1, 3, 0]",
+        "en": "[-1, 3, 0]"
+      },
+      {
+        "he": "[0]",
+        "en": "[0]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "החיתוך יוצר רשימה חדשה, ולכן ההוספה ל־`b` אינה משנה את `a`.",
+      "en": "Slicing creates a new list, so appending to `b` leaves `a` unchanged."
+    }
+  },
+  {
+    "key": "quick-sw-05-v3",
+    "source_key": "quick-sw-05",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python נתון `a=[]`. מבצעים `b=a[:]` ואז `b.append(8)`. מה ערכה של `a` כעת?",
+      "en": "In Python, `a=[]`. Execute `b=a[:]`, then `b.append(8)`. What is `a` now?"
+    },
+    "choices": [
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "[8]",
+        "en": "[8]"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "[8, 8]",
+        "en": "[8, 8]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "החיתוך יוצר רשימה חדשה, ולכן ההוספה ל־`b` אינה משנה את `a`.",
+      "en": "Slicing creates a new list, so appending to `b` leaves `a` unchanged."
+    }
+  },
+  {
+    "key": "quick-sw-05-v4",
+    "source_key": "quick-sw-05",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python נתון `a=[5]`. מבצעים `b=a[:]` ואז `b.append(5)`. מה ערכה של `a` כעת?",
+      "en": "In Python, `a=[5]`. Execute `b=a[:]`, then `b.append(5)`. What is `a` now?"
+    },
+    "choices": [
+      {
+        "he": "[5, 5]",
+        "en": "[5, 5]"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "[5, 5, 5]",
+        "en": "[5, 5, 5]"
+      },
+      {
+        "he": "[5]",
+        "en": "[5]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "החיתוך יוצר רשימה חדשה, ולכן ההוספה ל־`b` אינה משנה את `a`.",
+      "en": "Slicing creates a new list, so appending to `b` leaves `a` unchanged."
+    }
+  },
+  {
+    "key": "quick-sw-05-v5",
+    "source_key": "quick-sw-05",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python נתון `a=[0, 0, 2]`. מבצעים `b=a[:]` ואז `b.append(-2)`. מה ערכה של `a` כעת?",
+      "en": "In Python, `a=[0, 0, 2]`. Execute `b=a[:]`, then `b.append(-2)`. What is `a` now?"
+    },
+    "choices": [
+      {
+        "he": "[-2]",
+        "en": "[-2]"
+      },
+      {
+        "he": "[2, 0, 0]",
+        "en": "[2, 0, 0]"
+      },
+      {
+        "he": "[0, 0, 2]",
+        "en": "[0, 0, 2]"
+      },
+      {
+        "he": "[0, 0, 2, -2]",
+        "en": "[0, 0, 2, -2]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "החיתוך יוצר רשימה חדשה, ולכן ההוספה ל־`b` אינה משנה את `a`.",
+      "en": "Slicing creates a new list, so appending to `b` leaves `a` unchanged."
+    }
+  },
+  {
+    "key": "quick-sw-09-v1",
+    "source_key": "quick-sw-09",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מונים כל תו בנפרד במחרוזת `'ababa'`, כולל רווחים ובהבחנה בין אות גדולה לקטנה. כמה פעמים מופיע התו `'a'`?",
+      "en": "Count individual characters in `'ababa'`, including spaces and distinguishing case. How often does `'a'` occur?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "סורקים את המחרוזת ומגדילים את המונה רק בתו המבוקש: 3 הופעות.",
+      "en": "Scan the string and increment only for the requested character: 3 occurrences."
+    }
+  },
+  {
+    "key": "quick-sw-09-v2",
+    "source_key": "quick-sw-09",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מונים כל תו בנפרד במחרוזת `'a a'`, כולל רווחים ובהבחנה בין אות גדולה לקטנה. כמה פעמים מופיע התו `' '`?",
+      "en": "Count individual characters in `'a a'`, including spaces and distinguishing case. How often does `' '` occur?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "סורקים את המחרוזת ומגדילים את המונה רק בתו המבוקש: 1 הופעות.",
+      "en": "Scan the string and increment only for the requested character: 1 occurrences."
+    }
+  },
+  {
+    "key": "quick-sw-09-v3",
+    "source_key": "quick-sw-09",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מונים כל תו בנפרד במחרוזת `'xyz'`, כולל רווחים ובהבחנה בין אות גדולה לקטנה. כמה פעמים מופיע התו `'q'`?",
+      "en": "Count individual characters in `'xyz'`, including spaces and distinguishing case. How often does `'q'` occur?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "סורקים את המחרוזת ומגדילים את המונה רק בתו המבוקש: 0 הופעות.",
+      "en": "Scan the string and increment only for the requested character: 0 occurrences."
+    }
+  },
+  {
+    "key": "quick-sw-09-v4",
+    "source_key": "quick-sw-09",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מונים כל תו בנפרד במחרוזת `'BBBBb'`, כולל רווחים ובהבחנה בין אות גדולה לקטנה. כמה פעמים מופיע התו `'B'`?",
+      "en": "Count individual characters in `'BBBBb'`, including spaces and distinguishing case. How often does `'B'` occur?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "סורקים את המחרוזת ומגדילים את המונה רק בתו המבוקש: 4 הופעות.",
+      "en": "Scan the string and increment only for the requested character: 4 occurrences."
+    }
+  },
+  {
+    "key": "quick-sw-09-v5",
+    "source_key": "quick-sw-09",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מונים כל תו בנפרד במחרוזת `'mississippi'`, כולל רווחים ובהבחנה בין אות גדולה לקטנה. כמה פעמים מופיע התו `'s'`?",
+      "en": "Count individual characters in `'mississippi'`, including spaces and distinguishing case. How often does `'s'` occur?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "סורקים את המחרוזת ומגדילים את המונה רק בתו המבוקש: 4 הופעות.",
+      "en": "Scan the string and increment only for the requested character: 4 occurrences."
+    }
+  },
+  {
+    "key": "quick-sw-11-v1",
+    "source_key": "quick-sw-11",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "פונקציה מחזירה את המספר הגדול ביותר ברשימה, או `None` כשהיא ריקה. מה תחזיר עבור `[-8, -2, -5]`?",
+      "en": "A function returns the largest list element, or `None` for an empty list. What does it return for `[-8, -2, -5]`?"
+    },
+    "choices": [
+      {
+        "he": "-2",
+        "en": "-2"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "-8",
+        "en": "-8"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בודקים את כל האיברים; התוצאה היא `-2`. אין להניח שהמקסימום אינו שלילי.",
+      "en": "Check every item; the result is `-2`. Do not assume a nonnegative maximum."
+    }
+  },
+  {
+    "key": "quick-sw-11-v2",
+    "source_key": "quick-sw-11",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "פונקציה מחזירה את המספר הגדול ביותר ברשימה, או `None` כשהיא ריקה. מה תחזיר עבור `[]`?",
+      "en": "A function returns the largest list element, or `None` for an empty list. What does it return for `[]`?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "-99",
+        "en": "-99"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בודקים את כל האיברים; התוצאה היא `None`. אין להניח שהמקסימום אינו שלילי.",
+      "en": "Check every item; the result is `None`. Do not assume a nonnegative maximum."
+    }
+  },
+  {
+    "key": "quick-sw-11-v3",
+    "source_key": "quick-sw-11",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "פונקציה מחזירה את המספר הגדול ביותר ברשימה, או `None` כשהיא ריקה. מה תחזיר עבור `[0, -3, -1]`?",
+      "en": "A function returns the largest list element, or `None` for an empty list. What does it return for `[0, -3, -1]`?"
+    },
+    "choices": [
+      {
+        "he": "-99",
+        "en": "-99"
+      },
+      {
+        "he": "99",
+        "en": "99"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בודקים את כל האיברים; התוצאה היא `0`. אין להניח שהמקסימום אינו שלילי.",
+      "en": "Check every item; the result is `0`. Do not assume a nonnegative maximum."
+    }
+  },
+  {
+    "key": "quick-sw-11-v4",
+    "source_key": "quick-sw-11",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "פונקציה מחזירה את המספר הגדול ביותר ברשימה, או `None` כשהיא ריקה. מה תחזיר עבור `[4, 9, 9, 2]`?",
+      "en": "A function returns the largest list element, or `None` for an empty list. What does it return for `[4, 9, 9, 2]`?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בודקים את כל האיברים; התוצאה היא `9`. אין להניח שהמקסימום אינו שלילי.",
+      "en": "Check every item; the result is `9`. Do not assume a nonnegative maximum."
+    }
+  },
+  {
+    "key": "quick-sw-11-v5",
+    "source_key": "quick-sw-11",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "פונקציה מחזירה את המספר הגדול ביותר ברשימה, או `None` כשהיא ריקה. מה תחזיר עבור `[-10]`?",
+      "en": "A function returns the largest list element, or `None` for an empty list. What does it return for `[-10]`?"
+    },
+    "choices": [
+      {
+        "he": "-10",
+        "en": "-10"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "-99",
+        "en": "-99"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בודקים את כל האיברים; התוצאה היא `-10`. אין להניח שהמקסימום אינו שלילי.",
+      "en": "Check every item; the result is `-10`. Do not assume a nonnegative maximum."
+    }
+  },
+  {
+    "key": "quick-sw-12-v1",
+    "source_key": "quick-sw-12",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בחיפוש בינארי ברשימה העולה `[1, 4, 7, 9, 12, 15, 20]` מחפשים 15. האיבר האמצעי שנבדק הוא 9. מה הצעד הבא?",
+      "en": "Binary search in the ascending list `[1, 4, 7, 9, 12, 15, 20]` seeks 15. The middle item checked is 9. What is the next step?"
+    },
+    "choices": [
+      {
+        "he": "שמאלה, ללא האמצע",
+        "en": "Left, excluding the middle"
+      },
+      {
+        "he": "עוצרים: נמצאה התאמה",
+        "en": "Stop: a match was found"
+      },
+      {
+        "he": "חייבים לבדוק מחדש את כל הרשימה",
+        "en": "The entire list must be searched again"
+      },
+      {
+        "he": "ימינה, ללא האמצע",
+        "en": "Right, excluding the middle"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "סדר הרשימה מאפשר להשליך את הצד שבו היעד אינו יכול להימצא; בשוויון עוצרים.",
+      "en": "The ordering rules out the side that cannot contain the target; equality ends the search."
+    }
+  },
+  {
+    "key": "quick-sw-12-v2",
+    "source_key": "quick-sw-12",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בחיפוש בינארי ברשימה העולה `[2, 5, 8, 11, 14, 17, 23]` מחפשים 5. האיבר האמצעי שנבדק הוא 11. מה הצעד הבא?",
+      "en": "Binary search in the ascending list `[2, 5, 8, 11, 14, 17, 23]` seeks 5. The middle item checked is 11. What is the next step?"
+    },
+    "choices": [
+      {
+        "he": "עוצרים: נמצאה התאמה",
+        "en": "Stop: a match was found"
+      },
+      {
+        "he": "חייבים לבדוק מחדש את כל הרשימה",
+        "en": "The entire list must be searched again"
+      },
+      {
+        "he": "ימינה, ללא האמצע",
+        "en": "Right, excluding the middle"
+      },
+      {
+        "he": "שמאלה, ללא האמצע",
+        "en": "Left, excluding the middle"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "סדר הרשימה מאפשר להשליך את הצד שבו היעד אינו יכול להימצא; בשוויון עוצרים.",
+      "en": "The ordering rules out the side that cannot contain the target; equality ends the search."
+    }
+  },
+  {
+    "key": "quick-sw-12-v3",
+    "source_key": "quick-sw-12",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בחיפוש בינארי ברשימה העולה `[-8, -4, -1, 0, 3, 6, 10]` מחפשים -4. האיבר האמצעי שנבדק הוא 0. מה הצעד הבא?",
+      "en": "Binary search in the ascending list `[-8, -4, -1, 0, 3, 6, 10]` seeks -4. The middle item checked is 0. What is the next step?"
+    },
+    "choices": [
+      {
+        "he": "חייבים לבדוק מחדש את כל הרשימה",
+        "en": "The entire list must be searched again"
+      },
+      {
+        "he": "ימינה, ללא האמצע",
+        "en": "Right, excluding the middle"
+      },
+      {
+        "he": "שמאלה, ללא האמצע",
+        "en": "Left, excluding the middle"
+      },
+      {
+        "he": "עוצרים: נמצאה התאמה",
+        "en": "Stop: a match was found"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "סדר הרשימה מאפשר להשליך את הצד שבו היעד אינו יכול להימצא; בשוויון עוצרים.",
+      "en": "The ordering rules out the side that cannot contain the target; equality ends the search."
+    }
+  },
+  {
+    "key": "quick-sw-12-v4",
+    "source_key": "quick-sw-12",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בחיפוש בינארי ברשימה העולה `[0, 3, 6, 9, 12, 15, 18]` מחפשים 9. האיבר האמצעי שנבדק הוא 9. מה הצעד הבא?",
+      "en": "Binary search in the ascending list `[0, 3, 6, 9, 12, 15, 18]` seeks 9. The middle item checked is 9. What is the next step?"
+    },
+    "choices": [
+      {
+        "he": "ימינה, ללא האמצע",
+        "en": "Right, excluding the middle"
+      },
+      {
+        "he": "שמאלה, ללא האמצע",
+        "en": "Left, excluding the middle"
+      },
+      {
+        "he": "עוצרים: נמצאה התאמה",
+        "en": "Stop: a match was found"
+      },
+      {
+        "he": "חייבים לבדוק מחדש את כל הרשימה",
+        "en": "The entire list must be searched again"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "סדר הרשימה מאפשר להשליך את הצד שבו היעד אינו יכול להימצא; בשוויון עוצרים.",
+      "en": "The ordering rules out the side that cannot contain the target; equality ends the search."
+    }
+  },
+  {
+    "key": "quick-sw-12-v5",
+    "source_key": "quick-sw-12",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בחיפוש בינארי ברשימה העולה `[2, 4, 6, 8, 10, 12, 14]` מחפשים 12. האיבר האמצעי שנבדק הוא 8. מה הצעד הבא?",
+      "en": "Binary search in the ascending list `[2, 4, 6, 8, 10, 12, 14]` seeks 12. The middle item checked is 8. What is the next step?"
+    },
+    "choices": [
+      {
+        "he": "שמאלה, ללא האמצע",
+        "en": "Left, excluding the middle"
+      },
+      {
+        "he": "עוצרים: נמצאה התאמה",
+        "en": "Stop: a match was found"
+      },
+      {
+        "he": "חייבים לבדוק מחדש את כל הרשימה",
+        "en": "The entire list must be searched again"
+      },
+      {
+        "he": "ימינה, ללא האמצע",
+        "en": "Right, excluding the middle"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "סדר הרשימה מאפשר להשליך את הצד שבו היעד אינו יכול להימצא; בשוויון עוצרים.",
+      "en": "The ordering rules out the side that cannot contain the target; equality ends the search."
+    }
+  },
+  {
+    "key": "quick-sw-14-v1",
+    "source_key": "quick-sw-14",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הרשימה `[6, 5, 3, 2, 1]` כוללת את כל השלמים מ־1 עד 6 מלבד אחד, ללא כפילויות. פונקציה מחזירה רשימה ובה המספר החסר. מה תחזיר?",
+      "en": "The list `[6, 5, 3, 2, 1]` contains all integers from 1 through 6 except one, with no duplicates. A function returns a list containing the missing number. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "[7]",
+        "en": "[7]"
+      },
+      {
+        "he": "[4]",
+        "en": "[4]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "[0]",
+        "en": "[0]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מסמנים את הערכים שנמצאו בטווח, ומתעלמים מתא הדגל 0. התוצאה היא `[4]`.",
+      "en": "Mark encountered values within the range, ignoring flag index 0. The result is `[4]`."
+    }
+  },
+  {
+    "key": "quick-sw-14-v2",
+    "source_key": "quick-sw-14",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הרשימה `[]` כוללת את כל השלמים מ־1 עד 1 מלבד אחד, ללא כפילויות. פונקציה מחזירה רשימה ובה המספר החסר. מה תחזיר?",
+      "en": "The list `[]` contains all integers from 1 through 1 except one, with no duplicates. A function returns a list containing the missing number. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "[1]",
+        "en": "[1]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "[0]",
+        "en": "[0]"
+      },
+      {
+        "he": "[2]",
+        "en": "[2]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מסמנים את הערכים שנמצאו בטווח, ומתעלמים מתא הדגל 0. התוצאה היא `[1]`.",
+      "en": "Mark encountered values within the range, ignoring flag index 0. The result is `[1]`."
+    }
+  },
+  {
+    "key": "quick-sw-14-v3",
+    "source_key": "quick-sw-14",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הרשימה `[7, 6, 5, 4, 3, 2, 1]` כוללת את כל השלמים מ־1 עד 8 מלבד אחד, ללא כפילויות. פונקציה מחזירה רשימה ובה המספר החסר. מה תחזיר?",
+      "en": "The list `[7, 6, 5, 4, 3, 2, 1]` contains all integers from 1 through 8 except one, with no duplicates. A function returns a list containing the missing number. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "[0]",
+        "en": "[0]"
+      },
+      {
+        "he": "[9]",
+        "en": "[9]"
+      },
+      {
+        "he": "[8]",
+        "en": "[8]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מסמנים את הערכים שנמצאו בטווח, ומתעלמים מתא הדגל 0. התוצאה היא `[8]`.",
+      "en": "Mark encountered values within the range, ignoring flag index 0. The result is `[8]`."
+    }
+  },
+  {
+    "key": "quick-sw-14-v4",
+    "source_key": "quick-sw-14",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הרשימה `[7, 6, 5, 4, 3, 2]` כוללת את כל השלמים מ־1 עד 7 מלבד אחד, ללא כפילויות. פונקציה מחזירה רשימה ובה המספר החסר. מה תחזיר?",
+      "en": "The list `[7, 6, 5, 4, 3, 2]` contains all integers from 1 through 7 except one, with no duplicates. A function returns a list containing the missing number. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "[0]",
+        "en": "[0]"
+      },
+      {
+        "he": "[8]",
+        "en": "[8]"
+      },
+      {
+        "he": "[1]",
+        "en": "[1]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מסמנים את הערכים שנמצאו בטווח, ומתעלמים מתא הדגל 0. התוצאה היא `[1]`.",
+      "en": "Mark encountered values within the range, ignoring flag index 0. The result is `[1]`."
+    }
+  },
+  {
+    "key": "quick-sw-14-v5",
+    "source_key": "quick-sw-14",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הרשימה `[9, 8, 7, 6, 4, 3, 2, 1]` כוללת את כל השלמים מ־1 עד 9 מלבד אחד, ללא כפילויות. פונקציה מחזירה רשימה ובה המספר החסר. מה תחזיר?",
+      "en": "The list `[9, 8, 7, 6, 4, 3, 2, 1]` contains all integers from 1 through 9 except one, with no duplicates. A function returns a list containing the missing number. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "[10]",
+        "en": "[10]"
+      },
+      {
+        "he": "[5]",
+        "en": "[5]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "[0]",
+        "en": "[0]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מסמנים את הערכים שנמצאו בטווח, ומתעלמים מתא הדגל 0. התוצאה היא `[5]`.",
+      "en": "Mark encountered values within the range, ignoring flag index 0. The result is `[5]`."
+    }
+  },
+  {
+    "key": "quick-sw-15-v1",
+    "source_key": "quick-sw-15",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ברשימה `[3]` כמה זוגות אינדקסים שונים `i<j` נותנים סכום 6? ערכים שווים באינדקסים שונים מותרים.",
+      "en": "In `[3]`, how many distinct index pairs `i<j` sum to 6? Equal values at different indices are allowed."
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מונים רק זוגות עם `i<j`, בלי להשתמש באותו איבר פעמיים. יש 0 זוגות מתאימים.",
+      "en": "Count only pairs with `i<j`, never reusing an item. There are 0 qualifying pairs."
+    }
+  },
+  {
+    "key": "quick-sw-15-v2",
+    "source_key": "quick-sw-15",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ברשימה `[3, 3]` כמה זוגות אינדקסים שונים `i<j` נותנים סכום 6? ערכים שווים באינדקסים שונים מותרים.",
+      "en": "In `[3, 3]`, how many distinct index pairs `i<j` sum to 6? Equal values at different indices are allowed."
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מונים רק זוגות עם `i<j`, בלי להשתמש באותו איבר פעמיים. יש 1 זוגות מתאימים.",
+      "en": "Count only pairs with `i<j`, never reusing an item. There are 1 qualifying pairs."
+    }
+  },
+  {
+    "key": "quick-sw-15-v3",
+    "source_key": "quick-sw-15",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ברשימה `[1, 4, 2]` כמה זוגות אינדקסים שונים `i<j` נותנים סכום 6? ערכים שווים באינדקסים שונים מותרים.",
+      "en": "In `[1, 4, 2]`, how many distinct index pairs `i<j` sum to 6? Equal values at different indices are allowed."
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מונים רק זוגות עם `i<j`, בלי להשתמש באותו איבר פעמיים. יש 1 זוגות מתאימים.",
+      "en": "Count only pairs with `i<j`, never reusing an item. There are 1 qualifying pairs."
+    }
+  },
+  {
+    "key": "quick-sw-15-v4",
+    "source_key": "quick-sw-15",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ברשימה `[-2, 5, 7]` כמה זוגות אינדקסים שונים `i<j` נותנים סכום 3? ערכים שווים באינדקסים שונים מותרים.",
+      "en": "In `[-2, 5, 7]`, how many distinct index pairs `i<j` sum to 3? Equal values at different indices are allowed."
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מונים רק זוגות עם `i<j`, בלי להשתמש באותו איבר פעמיים. יש 1 זוגות מתאימים.",
+      "en": "Count only pairs with `i<j`, never reusing an item. There are 1 qualifying pairs."
+    }
+  },
+  {
+    "key": "quick-sw-15-v5",
+    "source_key": "quick-sw-15",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ברשימה `[]` כמה זוגות אינדקסים שונים `i<j` נותנים סכום 0? ערכים שווים באינדקסים שונים מותרים.",
+      "en": "In `[]`, how many distinct index pairs `i<j` sum to 0? Equal values at different indices are allowed."
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מונים רק זוגות עם `i<j`, בלי להשתמש באותו איבר פעמיים. יש 0 זוגות מתאימים.",
+      "en": "Count only pairs with `i<j`, never reusing an item. There are 0 qualifying pairs."
+    }
+  },
+  {
+    "key": "quick-sw-17-v1",
+    "source_key": "quick-sw-17",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממזגים את הרשימות הממוינות `[2, 8]` ו־`[4, 5]` בסדר עולה. איזה ערך יש להוציא ראשון, מראש אחת הרשימות?",
+      "en": "Merge the sorted lists `[2, 8]` and `[4, 5]` in ascending order. Which value must be taken first from a list head?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "משווים רק בין הראשים. 2 הוא הקטן מביניהם ולכן קודם במיזוג.",
+      "en": "Compare the heads. 2 is the smaller head and must come first."
+    }
+  },
+  {
+    "key": "quick-sw-17-v2",
+    "source_key": "quick-sw-17",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממזגים את הרשימות הממוינות `[-3, 1]` ו־`[-1, 7]` בסדר עולה. איזה ערך יש להוציא ראשון, מראש אחת הרשימות?",
+      "en": "Merge the sorted lists `[-3, 1]` and `[-1, 7]` in ascending order. Which value must be taken first from a list head?"
+    },
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "-3",
+        "en": "-3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "משווים רק בין הראשים. -3 הוא הקטן מביניהם ולכן קודם במיזוג.",
+      "en": "Compare the heads. -3 is the smaller head and must come first."
+    }
+  },
+  {
+    "key": "quick-sw-17-v3",
+    "source_key": "quick-sw-17",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממזגים את הרשימות הממוינות `[6, 9]` ו־`[1, 10]` בסדר עולה. איזה ערך יש להוציא ראשון, מראש אחת הרשימות?",
+      "en": "Merge the sorted lists `[6, 9]` and `[1, 10]` in ascending order. Which value must be taken first from a list head?"
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "משווים רק בין הראשים. 1 הוא הקטן מביניהם ולכן קודם במיזוג.",
+      "en": "Compare the heads. 1 is the smaller head and must come first."
+    }
+  },
+  {
+    "key": "quick-sw-17-v4",
+    "source_key": "quick-sw-17",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממזגים את הרשימות הממוינות `[0, 2]` ו־`[3, 4]` בסדר עולה. איזה ערך יש להוציא ראשון, מראש אחת הרשימות?",
+      "en": "Merge the sorted lists `[0, 2]` and `[3, 4]` in ascending order. Which value must be taken first from a list head?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "משווים רק בין הראשים. 0 הוא הקטן מביניהם ולכן קודם במיזוג.",
+      "en": "Compare the heads. 0 is the smaller head and must come first."
+    }
+  },
+  {
+    "key": "quick-sw-17-v5",
+    "source_key": "quick-sw-17",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממזגים את הרשימות הממוינות `[5, 8]` ו־`[-2, 6]` בסדר עולה. איזה ערך יש להוציא ראשון, מראש אחת הרשימות?",
+      "en": "Merge the sorted lists `[5, 8]` and `[-2, 6]` in ascending order. Which value must be taken first from a list head?"
+    },
+    "choices": [
+      {
+        "he": "-2",
+        "en": "-2"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "משווים רק בין הראשים. -2 הוא הקטן מביניהם ולכן קודם במיזוג.",
+      "en": "Compare the heads. -2 is the smaller head and must come first."
+    }
+  },
+  {
+    "key": "quick-sw-18-v1",
+    "source_key": "quick-sw-18",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "איזו רשימה ממוינת בסדר לא יורד? הראשונה `[]`, השנייה `[1, 1, 2]`. שוויון מותר; רשימה ריקה נחשבת ממוינת.",
+      "en": "Which list is nondecreasing? First: `[]`; second: `[1, 1, 2]`. Equal neighbors are allowed; an empty list counts as sorted."
+    },
+    "choices": [
+      {
+        "he": "אף רשימה",
+        "en": "Neither list"
+      },
+      {
+        "he": "רק הרשימה הראשונה",
+        "en": "Only the first list"
+      },
+      {
+        "he": "רק הרשימה השנייה",
+        "en": "Only the second list"
+      },
+      {
+        "he": "שתי הרשימות",
+        "en": "Both lists"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בודקים כל זוג סמוך. ירידה אחת פוסלת; שוויון אינו פוסל.",
+      "en": "Check each adjacent pair. One decrease invalidates a list; equal values do not."
+    }
+  },
+  {
+    "key": "quick-sw-18-v2",
+    "source_key": "quick-sw-18",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "איזו רשימה ממוינת בסדר לא יורד? הראשונה `[3, 2]`, השנייה `[-1, 0]`. שוויון מותר; רשימה ריקה נחשבת ממוינת.",
+      "en": "Which list is nondecreasing? First: `[3, 2]`; second: `[-1, 0]`. Equal neighbors are allowed; an empty list counts as sorted."
+    },
+    "choices": [
+      {
+        "he": "רק הרשימה הראשונה",
+        "en": "Only the first list"
+      },
+      {
+        "he": "רק הרשימה השנייה",
+        "en": "Only the second list"
+      },
+      {
+        "he": "שתי הרשימות",
+        "en": "Both lists"
+      },
+      {
+        "he": "אף רשימה",
+        "en": "Neither list"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בודקים כל זוג סמוך. ירידה אחת פוסלת; שוויון אינו פוסל.",
+      "en": "Check each adjacent pair. One decrease invalidates a list; equal values do not."
+    }
+  },
+  {
+    "key": "quick-sw-18-v3",
+    "source_key": "quick-sw-18",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "איזו רשימה ממוינת בסדר לא יורד? הראשונה `[1]`, השנייה `[2, 1]`. שוויון מותר; רשימה ריקה נחשבת ממוינת.",
+      "en": "Which list is nondecreasing? First: `[1]`; second: `[2, 1]`. Equal neighbors are allowed; an empty list counts as sorted."
+    },
+    "choices": [
+      {
+        "he": "רק הרשימה השנייה",
+        "en": "Only the second list"
+      },
+      {
+        "he": "שתי הרשימות",
+        "en": "Both lists"
+      },
+      {
+        "he": "אף רשימה",
+        "en": "Neither list"
+      },
+      {
+        "he": "רק הרשימה הראשונה",
+        "en": "Only the first list"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בודקים כל זוג סמוך. ירידה אחת פוסלת; שוויון אינו פוסל.",
+      "en": "Check each adjacent pair. One decrease invalidates a list; equal values do not."
+    }
+  },
+  {
+    "key": "quick-sw-18-v4",
+    "source_key": "quick-sw-18",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "איזו רשימה ממוינת בסדר לא יורד? הראשונה `[2, 1]`, השנייה `[0, -1]`. שוויון מותר; רשימה ריקה נחשבת ממוינת.",
+      "en": "Which list is nondecreasing? First: `[2, 1]`; second: `[0, -1]`. Equal neighbors are allowed; an empty list counts as sorted."
+    },
+    "choices": [
+      {
+        "he": "שתי הרשימות",
+        "en": "Both lists"
+      },
+      {
+        "he": "אף רשימה",
+        "en": "Neither list"
+      },
+      {
+        "he": "רק הרשימה הראשונה",
+        "en": "Only the first list"
+      },
+      {
+        "he": "רק הרשימה השנייה",
+        "en": "Only the second list"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בודקים כל זוג סמוך. ירידה אחת פוסלת; שוויון אינו פוסל.",
+      "en": "Check each adjacent pair. One decrease invalidates a list; equal values do not."
+    }
+  },
+  {
+    "key": "quick-sw-18-v5",
+    "source_key": "quick-sw-18",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "איזו רשימה ממוינת בסדר לא יורד? הראשונה `[-3, -3]`, השנייה `[0, 0, 0]`. שוויון מותר; רשימה ריקה נחשבת ממוינת.",
+      "en": "Which list is nondecreasing? First: `[-3, -3]`; second: `[0, 0, 0]`. Equal neighbors are allowed; an empty list counts as sorted."
+    },
+    "choices": [
+      {
+        "he": "אף רשימה",
+        "en": "Neither list"
+      },
+      {
+        "he": "רק הרשימה הראשונה",
+        "en": "Only the first list"
+      },
+      {
+        "he": "רק הרשימה השנייה",
+        "en": "Only the second list"
+      },
+      {
+        "he": "שתי הרשימות",
+        "en": "Both lists"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בודקים כל זוג סמוך. ירידה אחת פוסלת; שוויון אינו פוסל.",
+      "en": "Check each adjacent pair. One decrease invalidates a list; equal values do not."
+    }
+  },
+  {
+    "key": "quick-sw-31-v1",
+    "source_key": "quick-sw-31",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה סכום האיברים החיוביים ממש ברשימה `[-2, 4, 0, 7]`? אפס ושליליים אינם נכללים.",
+      "en": "What is the sum of the strictly positive items in `[-2, 4, 0, 7]`? Exclude zero and negative items."
+    },
+    "choices": [
+      {
+        "he": "11",
+        "en": "11"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחברים רק ערכים הגדולים מ־0. מתקבל 11.",
+      "en": "Add only values greater than 0. The result is 11."
+    }
+  },
+  {
+    "key": "quick-sw-31-v2",
+    "source_key": "quick-sw-31",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה סכום האיברים החיוביים ממש ברשימה `[]`? אפס ושליליים אינם נכללים.",
+      "en": "What is the sum of the strictly positive items in `[]`? Exclude zero and negative items."
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מחברים רק ערכים הגדולים מ־0. מתקבל 0.",
+      "en": "Add only values greater than 0. The result is 0."
+    }
+  },
+  {
+    "key": "quick-sw-31-v3",
+    "source_key": "quick-sw-31",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה סכום האיברים החיוביים ממש ברשימה `[-5, -1]`? אפס ושליליים אינם נכללים.",
+      "en": "What is the sum of the strictly positive items in `[-5, -1]`? Exclude zero and negative items."
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "-6",
+        "en": "-6"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מחברים רק ערכים הגדולים מ־0. מתקבל 0.",
+      "en": "Add only values greater than 0. The result is 0."
+    }
+  },
+  {
+    "key": "quick-sw-31-v4",
+    "source_key": "quick-sw-31",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה סכום האיברים החיוביים ממש ברשימה `[2, 2, -3]`? אפס ושליליים אינם נכללים.",
+      "en": "What is the sum of the strictly positive items in `[2, 2, -3]`? Exclude zero and negative items."
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מחברים רק ערכים הגדולים מ־0. מתקבל 4.",
+      "en": "Add only values greater than 0. The result is 4."
+    }
+  },
+  {
+    "key": "quick-sw-31-v5",
+    "source_key": "quick-sw-31",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה סכום האיברים החיוביים ממש ברשימה `[0, 9, -9, 1]`? אפס ושליליים אינם נכללים.",
+      "en": "What is the sum of the strictly positive items in `[0, 9, -9, 1]`? Exclude zero and negative items."
+    },
+    "choices": [
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחברים רק ערכים הגדולים מ־0. מתקבל 10.",
+      "en": "Add only values greater than 0. The result is 10."
+    }
+  },
+  {
+    "key": "quick-sw-32-v1",
+    "source_key": "quick-sw-32",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה מחזיר ביטוי ה־Python `'code'[::-1]`? האפשרויות מוצגות כמחרוזות.",
+      "en": "What does the Python expression `'code'[::-1]` return? Options are string representations."
+    },
+    "choices": [
+      {
+        "he": "'code'",
+        "en": "'code'"
+      },
+      {
+        "he": "'ode'",
+        "en": "'ode'"
+      },
+      {
+        "he": "'codecode'",
+        "en": "'codecode'"
+      },
+      {
+        "he": "'edoc'",
+        "en": "'edoc'"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "צעד שלילי בחיתוך קורא מהסוף להתחלה, כולל בקלט ריק.",
+      "en": "A negative slice step reads from end to start, including for empty input."
+    }
+  },
+  {
+    "key": "quick-sw-32-v2",
+    "source_key": "quick-sw-32",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה מחזיר ביטוי ה־Python `'level'[::-1]`? האפשרויות מוצגות כמחרוזות.",
+      "en": "What does the Python expression `'level'[::-1]` return? Options are string representations."
+    },
+    "choices": [
+      {
+        "he": "'levellevel'",
+        "en": "'levellevel'"
+      },
+      {
+        "he": "'None'",
+        "en": "'None'"
+      },
+      {
+        "he": "'level'",
+        "en": "'level'"
+      },
+      {
+        "he": "'evel'",
+        "en": "'evel'"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "צעד שלילי בחיתוך קורא מהסוף להתחלה, כולל בקלט ריק.",
+      "en": "A negative slice step reads from end to start, including for empty input."
+    }
+  },
+  {
+    "key": "quick-sw-32-v3",
+    "source_key": "quick-sw-32",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה מחזיר ביטוי ה־Python `''[::-1]`? האפשרויות מוצגות כמחרוזות.",
+      "en": "What does the Python expression `''[::-1]` return? Options are string representations."
+    },
+    "choices": [
+      {
+        "he": "'xy'",
+        "en": "'xy'"
+      },
+      {
+        "he": "''",
+        "en": "''"
+      },
+      {
+        "he": "'None'",
+        "en": "'None'"
+      },
+      {
+        "he": "'x'",
+        "en": "'x'"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "צעד שלילי בחיתוך קורא מהסוף להתחלה, כולל בקלט ריק.",
+      "en": "A negative slice step reads from end to start, including for empty input."
+    }
+  },
+  {
+    "key": "quick-sw-32-v4",
+    "source_key": "quick-sw-32",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה מחזיר ביטוי ה־Python `'abca'[::-1]`? האפשרויות מוצגות כמחרוזות.",
+      "en": "What does the Python expression `'abca'[::-1]` return? Options are string representations."
+    },
+    "choices": [
+      {
+        "he": "'acba'",
+        "en": "'acba'"
+      },
+      {
+        "he": "'abca'",
+        "en": "'abca'"
+      },
+      {
+        "he": "'bca'",
+        "en": "'bca'"
+      },
+      {
+        "he": "'abcaabca'",
+        "en": "'abcaabca'"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "צעד שלילי בחיתוך קורא מהסוף להתחלה, כולל בקלט ריק.",
+      "en": "A negative slice step reads from end to start, including for empty input."
+    }
+  },
+  {
+    "key": "quick-sw-32-v5",
+    "source_key": "quick-sw-32",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה מחזיר ביטוי ה־Python `'Python'[::-1]`? האפשרויות מוצגות כמחרוזות.",
+      "en": "What does the Python expression `'Python'[::-1]` return? Options are string representations."
+    },
+    "choices": [
+      {
+        "he": "'Python'",
+        "en": "'Python'"
+      },
+      {
+        "he": "'ython'",
+        "en": "'ython'"
+      },
+      {
+        "he": "'PythonPython'",
+        "en": "'PythonPython'"
+      },
+      {
+        "he": "'nohtyP'",
+        "en": "'nohtyP'"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "צעד שלילי בחיתוך קורא מהסוף להתחלה, כולל בקלט ריק.",
+      "en": "A negative slice step reads from end to start, including for empty input."
+    }
+  },
+  {
+    "key": "quick-sw-33-v1",
+    "source_key": "quick-sw-33",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python מתחילים ב־`a=2, b=7` ומבצעים `a,b=b,a`. מה הזוג `(a,b)` כעת?",
+      "en": "In Python, initially `a=2, b=7`. Execute `a,b=b,a`. What is `(a,b)` now?"
+    },
+    "choices": [
+      {
+        "he": "(2, 2)",
+        "en": "(2, 2)"
+      },
+      {
+        "he": "(7, 7)",
+        "en": "(7, 7)"
+      },
+      {
+        "he": "(7, 2)",
+        "en": "(7, 2)"
+      },
+      {
+        "he": "(2, 7)",
+        "en": "(2, 7)"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "צד ימין מחושב לפני ההשמה, ולכן שני הערכים מוחלפים בלי לאבד אחד מהם.",
+      "en": "The right-hand side is evaluated before assignment, so the values swap without losing either one."
+    }
+  },
+  {
+    "key": "quick-sw-33-v2",
+    "source_key": "quick-sw-33",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python מתחילים ב־`a=-3, b=4` ומבצעים `a,b=b,a`. מה הזוג `(a,b)` כעת?",
+      "en": "In Python, initially `a=-3, b=4`. Execute `a,b=b,a`. What is `(a,b)` now?"
+    },
+    "choices": [
+      {
+        "he": "(4, 4)",
+        "en": "(4, 4)"
+      },
+      {
+        "he": "(4, -3)",
+        "en": "(4, -3)"
+      },
+      {
+        "he": "(-3, 4)",
+        "en": "(-3, 4)"
+      },
+      {
+        "he": "(-3, -3)",
+        "en": "(-3, -3)"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "צד ימין מחושב לפני ההשמה, ולכן שני הערכים מוחלפים בלי לאבד אחד מהם.",
+      "en": "The right-hand side is evaluated before assignment, so the values swap without losing either one."
+    }
+  },
+  {
+    "key": "quick-sw-33-v3",
+    "source_key": "quick-sw-33",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python מתחילים ב־`a=0, b=9` ומבצעים `a,b=b,a`. מה הזוג `(a,b)` כעת?",
+      "en": "In Python, initially `a=0, b=9`. Execute `a,b=b,a`. What is `(a,b)` now?"
+    },
+    "choices": [
+      {
+        "he": "(9, 0)",
+        "en": "(9, 0)"
+      },
+      {
+        "he": "(0, 9)",
+        "en": "(0, 9)"
+      },
+      {
+        "he": "(0, 0)",
+        "en": "(0, 0)"
+      },
+      {
+        "he": "(9, 9)",
+        "en": "(9, 9)"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "צד ימין מחושב לפני ההשמה, ולכן שני הערכים מוחלפים בלי לאבד אחד מהם.",
+      "en": "The right-hand side is evaluated before assignment, so the values swap without losing either one."
+    }
+  },
+  {
+    "key": "quick-sw-33-v4",
+    "source_key": "quick-sw-33",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python מתחילים ב־`a=8, b=-1` ומבצעים `a,b=b,a`. מה הזוג `(a,b)` כעת?",
+      "en": "In Python, initially `a=8, b=-1`. Execute `a,b=b,a`. What is `(a,b)` now?"
+    },
+    "choices": [
+      {
+        "he": "(8, -1)",
+        "en": "(8, -1)"
+      },
+      {
+        "he": "(8, 8)",
+        "en": "(8, 8)"
+      },
+      {
+        "he": "(-1, -1)",
+        "en": "(-1, -1)"
+      },
+      {
+        "he": "(-1, 8)",
+        "en": "(-1, 8)"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "צד ימין מחושב לפני ההשמה, ולכן שני הערכים מוחלפים בלי לאבד אחד מהם.",
+      "en": "The right-hand side is evaluated before assignment, so the values swap without losing either one."
+    }
+  },
+  {
+    "key": "quick-sw-33-v5",
+    "source_key": "quick-sw-33",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python מתחילים ב־`a=-5, b=-2` ומבצעים `a,b=b,a`. מה הזוג `(a,b)` כעת?",
+      "en": "In Python, initially `a=-5, b=-2`. Execute `a,b=b,a`. What is `(a,b)` now?"
+    },
+    "choices": [
+      {
+        "he": "(-5, -5)",
+        "en": "(-5, -5)"
+      },
+      {
+        "he": "(-2, -2)",
+        "en": "(-2, -2)"
+      },
+      {
+        "he": "(-2, -5)",
+        "en": "(-2, -5)"
+      },
+      {
+        "he": "(-5, -2)",
+        "en": "(-5, -2)"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "צד ימין מחושב לפני ההשמה, ולכן שני הערכים מוחלפים בלי לאבד אחד מהם.",
+      "en": "The right-hand side is evaluated before assignment, so the values swap without losing either one."
+    }
+  },
+  {
+    "key": "quick-sw-34-v1",
+    "source_key": "quick-sw-34",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחסנית מוציאה את האחרון שנכנס. מתחילים במבנה ריק: מכניסים A, מכניסים B, מוציאים איבר, מכניסים C, מכניסים D. מי ייצא בהוצאה הבאה?",
+      "en": "A stack removes the last item inserted. Start empty: insert A, insert B, remove one item, insert C, insert D. Which item leaves next?"
+    },
+    "choices": [
+      {
+        "he": "D",
+        "en": "D"
+      },
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      },
+      {
+        "he": "C",
+        "en": "C"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "עוקבים אחרי ההכנסות וההוצאות לפי הסדר. האיבר הבא לפי כלל ההוצאה הוא D.",
+      "en": "Trace the insertions and removals in order. The next item under the removal rule is D."
+    }
+  },
+  {
+    "key": "quick-sw-34-v2",
+    "source_key": "quick-sw-34",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחסנית מוציאה את האחרון שנכנס. מתחילים במבנה ריק: מכניסים D, מכניסים A, מכניסים C, מוציאים איבר, מכניסים B, מוציאים איבר. מי ייצא בהוצאה הבאה?",
+      "en": "A stack removes the last item inserted. Start empty: insert D, insert A, insert C, remove one item, insert B, remove one item. Which item leaves next?"
+    },
+    "choices": [
+      {
+        "he": "D",
+        "en": "D"
+      },
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "C",
+        "en": "C"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "עוקבים אחרי ההכנסות וההוצאות לפי הסדר. האיבר הבא לפי כלל ההוצאה הוא A.",
+      "en": "Trace the insertions and removals in order. The next item under the removal rule is A."
+    }
+  },
+  {
+    "key": "quick-sw-34-v3",
+    "source_key": "quick-sw-34",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחסנית מוציאה את האחרון שנכנס. מתחילים במבנה ריק: מכניסים C, מכניסים B, מכניסים A, מכניסים D, מוציאים איבר. מי ייצא בהוצאה הבאה?",
+      "en": "A stack removes the last item inserted. Start empty: insert C, insert B, insert A, insert D, remove one item. Which item leaves next?"
+    },
+    "choices": [
+      {
+        "he": "B",
+        "en": "B"
+      },
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "D",
+        "en": "D"
+      },
+      {
+        "he": "C",
+        "en": "C"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "עוקבים אחרי ההכנסות וההוצאות לפי הסדר. האיבר הבא לפי כלל ההוצאה הוא A.",
+      "en": "Trace the insertions and removals in order. The next item under the removal rule is A."
+    }
+  },
+  {
+    "key": "quick-sw-34-v4",
+    "source_key": "quick-sw-34",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחסנית מוציאה את האחרון שנכנס. מתחילים במבנה ריק: מכניסים B, מכניסים D, מוציאים איבר, מכניסים C, מוציאים איבר, מכניסים A. מי ייצא בהוצאה הבאה?",
+      "en": "A stack removes the last item inserted. Start empty: insert B, insert D, remove one item, insert C, remove one item, insert A. Which item leaves next?"
+    },
+    "choices": [
+      {
+        "he": "C",
+        "en": "C"
+      },
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      },
+      {
+        "he": "D",
+        "en": "D"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "עוקבים אחרי ההכנסות וההוצאות לפי הסדר. האיבר הבא לפי כלל ההוצאה הוא A.",
+      "en": "Trace the insertions and removals in order. The next item under the removal rule is A."
+    }
+  },
+  {
+    "key": "quick-sw-34-v5",
+    "source_key": "quick-sw-34",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחסנית מוציאה את האחרון שנכנס. מתחילים במבנה ריק: מכניסים D, מכניסים C, מכניסים B, מוציאים איבר, מוציאים איבר, מכניסים A. מי ייצא בהוצאה הבאה?",
+      "en": "A stack removes the last item inserted. Start empty: insert D, insert C, insert B, remove one item, remove one item, insert A. Which item leaves next?"
+    },
+    "choices": [
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "D",
+        "en": "D"
+      },
+      {
+        "he": "C",
+        "en": "C"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "עוקבים אחרי ההכנסות וההוצאות לפי הסדר. האיבר הבא לפי כלל ההוצאה הוא A.",
+      "en": "Trace the insertions and removals in order. The next item under the removal rule is A."
+    }
+  },
+  {
+    "key": "quick-sw-35-v1",
+    "source_key": "quick-sw-35",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "תור מוציא את הראשון שנכנס. מתחילים במבנה ריק: מכניסים A, מכניסים B, מוציאים איבר, מכניסים C, מכניסים D. מי ייצא בהוצאה הבאה?",
+      "en": "A queue removes the first item inserted. Start empty: insert A, insert B, remove one item, insert C, insert D. Which item leaves next?"
+    },
+    "choices": [
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      },
+      {
+        "he": "C",
+        "en": "C"
+      },
+      {
+        "he": "D",
+        "en": "D"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "עוקבים אחרי ההכנסות וההוצאות לפי הסדר. האיבר הבא לפי כלל ההוצאה הוא B.",
+      "en": "Trace the insertions and removals in order. The next item under the removal rule is B."
+    }
+  },
+  {
+    "key": "quick-sw-35-v2",
+    "source_key": "quick-sw-35",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "תור מוציא את הראשון שנכנס. מתחילים במבנה ריק: מכניסים D, מכניסים A, מכניסים C, מוציאים איבר, מכניסים B, מוציאים איבר. מי ייצא בהוצאה הבאה?",
+      "en": "A queue removes the first item inserted. Start empty: insert D, insert A, insert C, remove one item, insert B, remove one item. Which item leaves next?"
+    },
+    "choices": [
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "C",
+        "en": "C"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      },
+      {
+        "he": "D",
+        "en": "D"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "עוקבים אחרי ההכנסות וההוצאות לפי הסדר. האיבר הבא לפי כלל ההוצאה הוא C.",
+      "en": "Trace the insertions and removals in order. The next item under the removal rule is C."
+    }
+  },
+  {
+    "key": "quick-sw-35-v3",
+    "source_key": "quick-sw-35",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "תור מוציא את הראשון שנכנס. מתחילים במבנה ריק: מכניסים C, מכניסים B, מכניסים A, מכניסים D, מוציאים איבר. מי ייצא בהוצאה הבאה?",
+      "en": "A queue removes the first item inserted. Start empty: insert C, insert B, insert A, insert D, remove one item. Which item leaves next?"
+    },
+    "choices": [
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "D",
+        "en": "D"
+      },
+      {
+        "he": "C",
+        "en": "C"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "עוקבים אחרי ההכנסות וההוצאות לפי הסדר. האיבר הבא לפי כלל ההוצאה הוא B.",
+      "en": "Trace the insertions and removals in order. The next item under the removal rule is B."
+    }
+  },
+  {
+    "key": "quick-sw-35-v4",
+    "source_key": "quick-sw-35",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "תור מוציא את הראשון שנכנס. מתחילים במבנה ריק: מכניסים B, מכניסים D, מוציאים איבר, מכניסים C, מוציאים איבר, מכניסים A. מי ייצא בהוצאה הבאה?",
+      "en": "A queue removes the first item inserted. Start empty: insert B, insert D, remove one item, insert C, remove one item, insert A. Which item leaves next?"
+    },
+    "choices": [
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      },
+      {
+        "he": "D",
+        "en": "D"
+      },
+      {
+        "he": "C",
+        "en": "C"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "עוקבים אחרי ההכנסות וההוצאות לפי הסדר. האיבר הבא לפי כלל ההוצאה הוא C.",
+      "en": "Trace the insertions and removals in order. The next item under the removal rule is C."
+    }
+  },
+  {
+    "key": "quick-sw-35-v5",
+    "source_key": "quick-sw-35",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "תור מוציא את הראשון שנכנס. מתחילים במבנה ריק: מכניסים D, מכניסים C, מכניסים B, מוציאים איבר, מוציאים איבר, מכניסים A. מי ייצא בהוצאה הבאה?",
+      "en": "A queue removes the first item inserted. Start empty: insert D, insert C, insert B, remove one item, remove one item, insert A. Which item leaves next?"
+    },
+    "choices": [
+      {
+        "he": "D",
+        "en": "D"
+      },
+      {
+        "he": "C",
+        "en": "C"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      },
+      {
+        "he": "A",
+        "en": "A"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "עוקבים אחרי ההכנסות וההוצאות לפי הסדר. האיבר הבא לפי כלל ההוצאה הוא B.",
+      "en": "Trace the insertions and removals in order. The next item under the removal rule is B."
+    }
+  },
+  {
+    "key": "quick-sw-36-v1",
+    "source_key": "quick-sw-36",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מוסיפים לקבוצת Python ריקה את כל הערכים ברשימה `[4, 2, 4]`. כמה איברים שונים יהיו בקבוצה?",
+      "en": "Insert all values from `[4, 2, 4]` into an empty Python set. How many distinct elements remain?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "קבוצה שומרת ערכים שונים בלבד, ולכן נשארים 2 איברים.",
+      "en": "A set retains distinct values only, leaving 2 elements."
+    }
+  },
+  {
+    "key": "quick-sw-36-v2",
+    "source_key": "quick-sw-36",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מוסיפים לקבוצת Python ריקה את כל הערכים ברשימה `[1, 1, 1, 1]`. כמה איברים שונים יהיו בקבוצה?",
+      "en": "Insert all values from `[1, 1, 1, 1]` into an empty Python set. How many distinct elements remain?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "קבוצה שומרת ערכים שונים בלבד, ולכן נשארים 1 איברים.",
+      "en": "A set retains distinct values only, leaving 1 elements."
+    }
+  },
+  {
+    "key": "quick-sw-36-v3",
+    "source_key": "quick-sw-36",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מוסיפים לקבוצת Python ריקה את כל הערכים ברשימה `[]`. כמה איברים שונים יהיו בקבוצה?",
+      "en": "Insert all values from `[]` into an empty Python set. How many distinct elements remain?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "קבוצה שומרת ערכים שונים בלבד, ולכן נשארים 0 איברים.",
+      "en": "A set retains distinct values only, leaving 0 elements."
+    }
+  },
+  {
+    "key": "quick-sw-36-v4",
+    "source_key": "quick-sw-36",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מוסיפים לקבוצת Python ריקה את כל הערכים ברשימה `[-1, 0, -1, 2]`. כמה איברים שונים יהיו בקבוצה?",
+      "en": "Insert all values from `[-1, 0, -1, 2]` into an empty Python set. How many distinct elements remain?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "קבוצה שומרת ערכים שונים בלבד, ולכן נשארים 3 איברים.",
+      "en": "A set retains distinct values only, leaving 3 elements."
+    }
+  },
+  {
+    "key": "quick-sw-36-v5",
+    "source_key": "quick-sw-36",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מוסיפים לקבוצת Python ריקה את כל הערכים ברשימה `[5, 4, 3, 2, 5]`. כמה איברים שונים יהיו בקבוצה?",
+      "en": "Insert all values from `[5, 4, 3, 2, 5]` into an empty Python set. How many distinct elements remain?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "קבוצה שומרת ערכים שונים בלבד, ולכן נשארים 4 איברים.",
+      "en": "A set retains distinct values only, leaving 4 elements."
+    }
+  },
+  {
+    "key": "quick-sw-37-v1",
+    "source_key": "quick-sw-37",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ברשימה מקושרת הראש הוא A, והקישורים הם `A.next=C; C.next=D; D.next=B; B.next=None`. מה סדר הביקור עד `None`?",
+      "en": "A linked list starts at A with links `A.next=C; C.next=D; D.next=B; B.next=None`. What is the traversal order until `None`?"
+    },
+    "choices": [
+      {
+        "he": "B, D, C, A",
+        "en": "B, D, C, A"
+      },
+      {
+        "he": "C, D, B, A",
+        "en": "C, D, B, A"
+      },
+      {
+        "he": "A, C, D, B",
+        "en": "A, C, D, B"
+      },
+      {
+        "he": "A, B, C, D",
+        "en": "A, B, C, D"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מתחילים בראש ועוקבים אחרי `next`; שמות הצמתים אינם קובעים סדר.",
+      "en": "Start at the head and follow `next`; node names do not determine the order."
+    }
+  },
+  {
+    "key": "quick-sw-37-v2",
+    "source_key": "quick-sw-37",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ברשימה מקושרת הראש הוא B, והקישורים הם `B.next=D; D.next=A; A.next=C; C.next=None`. מה סדר הביקור עד `None`?",
+      "en": "A linked list starts at B with links `B.next=D; D.next=A; A.next=C; C.next=None`. What is the traversal order until `None`?"
+    },
+    "choices": [
+      {
+        "he": "D, A, C, B",
+        "en": "D, A, C, B"
+      },
+      {
+        "he": "B, D, A, C",
+        "en": "B, D, A, C"
+      },
+      {
+        "he": "A, B, C, D",
+        "en": "A, B, C, D"
+      },
+      {
+        "he": "C, A, D, B",
+        "en": "C, A, D, B"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מתחילים בראש ועוקבים אחרי `next`; שמות הצמתים אינם קובעים סדר.",
+      "en": "Start at the head and follow `next`; node names do not determine the order."
+    }
+  },
+  {
+    "key": "quick-sw-37-v3",
+    "source_key": "quick-sw-37",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ברשימה מקושרת הראש הוא C, והקישורים הם `C.next=A; A.next=D; D.next=B; B.next=None`. מה סדר הביקור עד `None`?",
+      "en": "A linked list starts at C with links `C.next=A; A.next=D; D.next=B; B.next=None`. What is the traversal order until `None`?"
+    },
+    "choices": [
+      {
+        "he": "C, A, D, B",
+        "en": "C, A, D, B"
+      },
+      {
+        "he": "A, B, C, D",
+        "en": "A, B, C, D"
+      },
+      {
+        "he": "B, D, A, C",
+        "en": "B, D, A, C"
+      },
+      {
+        "he": "A, D, B, C",
+        "en": "A, D, B, C"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מתחילים בראש ועוקבים אחרי `next`; שמות הצמתים אינם קובעים סדר.",
+      "en": "Start at the head and follow `next`; node names do not determine the order."
+    }
+  },
+  {
+    "key": "quick-sw-37-v4",
+    "source_key": "quick-sw-37",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ברשימה מקושרת הראש הוא D, והקישורים הם `D.next=B; B.next=C; C.next=A; A.next=None`. מה סדר הביקור עד `None`?",
+      "en": "A linked list starts at D with links `D.next=B; B.next=C; C.next=A; A.next=None`. What is the traversal order until `None`?"
+    },
+    "choices": [
+      {
+        "he": "A, B, C, D",
+        "en": "A, B, C, D"
+      },
+      {
+        "he": "A, C, B, D",
+        "en": "A, C, B, D"
+      },
+      {
+        "he": "B, C, A, D",
+        "en": "B, C, A, D"
+      },
+      {
+        "he": "D, B, C, A",
+        "en": "D, B, C, A"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מתחילים בראש ועוקבים אחרי `next`; שמות הצמתים אינם קובעים סדר.",
+      "en": "Start at the head and follow `next`; node names do not determine the order."
+    }
+  },
+  {
+    "key": "quick-sw-37-v5",
+    "source_key": "quick-sw-37",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ברשימה מקושרת הראש הוא A, והקישורים הם `A.next=B; B.next=D; D.next=C; C.next=None`. מה סדר הביקור עד `None`?",
+      "en": "A linked list starts at A with links `A.next=B; B.next=D; D.next=C; C.next=None`. What is the traversal order until `None`?"
+    },
+    "choices": [
+      {
+        "he": "C, D, B, A",
+        "en": "C, D, B, A"
+      },
+      {
+        "he": "B, D, C, A",
+        "en": "B, D, C, A"
+      },
+      {
+        "he": "A, B, D, C",
+        "en": "A, B, D, C"
+      },
+      {
+        "he": "A, B, C, D",
+        "en": "A, B, C, D"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מתחילים בראש ועוקבים אחרי `next`; שמות הצמתים אינם קובעים סדר.",
+      "en": "Start at the head and follow `next`; node names do not determine the order."
+    }
+  },
+  {
+    "key": "quick-sw-38-v1",
+    "source_key": "quick-sw-38",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחפשים ערך ברשימה לא ממוינת של 7 איברים, לפי הסדר, עד התאמה או סוף הרשימה. אין מידע נוסף. כמה השוואות נדרשות במקרה הגרוע ביותר?",
+      "en": "Search an unsorted list of 7 items sequentially until a match or the end. No other information is available. How many comparisons are needed in the worst case?"
+    },
+    "choices": [
+      {
+        "he": "14",
+        "en": "14"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "כשהערך חסר נבדקים כל 7 האיברים, ולכן נדרשות 7 השוואות.",
+      "en": "An absent value requires checking all 7 items, so 7 comparisons are needed."
+    }
+  },
+  {
+    "key": "quick-sw-38-v2",
+    "source_key": "quick-sw-38",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחפשים ערך ברשימה לא ממוינת של 12 איברים, לפי הסדר, עד התאמה או סוף הרשימה. אין מידע נוסף. כמה השוואות נדרשות במקרה הגרוע ביותר?",
+      "en": "Search an unsorted list of 12 items sequentially until a match or the end. No other information is available. How many comparisons are needed in the worst case?"
+    },
+    "choices": [
+      {
+        "he": "12",
+        "en": "12"
+      },
+      {
+        "he": "11",
+        "en": "11"
+      },
+      {
+        "he": "13",
+        "en": "13"
+      },
+      {
+        "he": "24",
+        "en": "24"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "כשהערך חסר נבדקים כל 12 האיברים, ולכן נדרשות 12 השוואות.",
+      "en": "An absent value requires checking all 12 items, so 12 comparisons are needed."
+    }
+  },
+  {
+    "key": "quick-sw-38-v3",
+    "source_key": "quick-sw-38",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחפשים ערך ברשימה לא ממוינת של 1 איברים, לפי הסדר, עד התאמה או סוף הרשימה. אין מידע נוסף. כמה השוואות נדרשות במקרה הגרוע ביותר?",
+      "en": "Search an unsorted list of 1 items sequentially until a match or the end. No other information is available. How many comparisons are needed in the worst case?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "כשהערך חסר נבדקים כל 1 האיברים, ולכן נדרשות 1 השוואות.",
+      "en": "An absent value requires checking all 1 items, so 1 comparisons are needed."
+    }
+  },
+  {
+    "key": "quick-sw-38-v4",
+    "source_key": "quick-sw-38",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחפשים ערך ברשימה לא ממוינת של 20 איברים, לפי הסדר, עד התאמה או סוף הרשימה. אין מידע נוסף. כמה השוואות נדרשות במקרה הגרוע ביותר?",
+      "en": "Search an unsorted list of 20 items sequentially until a match or the end. No other information is available. How many comparisons are needed in the worst case?"
+    },
+    "choices": [
+      {
+        "he": "21",
+        "en": "21"
+      },
+      {
+        "he": "40",
+        "en": "40"
+      },
+      {
+        "he": "20",
+        "en": "20"
+      },
+      {
+        "he": "19",
+        "en": "19"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "כשהערך חסר נבדקים כל 20 האיברים, ולכן נדרשות 20 השוואות.",
+      "en": "An absent value requires checking all 20 items, so 20 comparisons are needed."
+    }
+  },
+  {
+    "key": "quick-sw-38-v5",
+    "source_key": "quick-sw-38",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחפשים ערך ברשימה לא ממוינת של 5 איברים, לפי הסדר, עד התאמה או סוף הרשימה. אין מידע נוסף. כמה השוואות נדרשות במקרה הגרוע ביותר?",
+      "en": "Search an unsorted list of 5 items sequentially until a match or the end. No other information is available. How many comparisons are needed in the worst case?"
+    },
+    "choices": [
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "כשהערך חסר נבדקים כל 5 האיברים, ולכן נדרשות 5 השוואות.",
+      "en": "An absent value requires checking all 5 items, so 5 comparisons are needed."
+    }
+  },
+  {
+    "key": "quick-sw-39-v1",
+    "source_key": "quick-sw-39",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "לרשימה באורך 4 נתון `P=[0, 2, 5, 6, 10]`, כאשר `P[k]` הוא סכום `k` האיברים הראשונים ו־`P[0]=0`. מה סכום האיברים באינדקסים 1 עד 2 כולל? האינדקסים מתחילים ב־0.",
+      "en": "Given `P=[0, 2, 5, 6, 10]`, where `P[k]` sums the first `k` items of a 4-item list and `P[0]=0`, what is the sum at indices 1 through 2 inclusive? Indices start at 0."
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחסרים את הסכום שלפני הטווח: `P[3]-P[1]=4`.",
+      "en": "Subtract the prefix before the range: `P[3]-P[1]=4`."
+    }
+  },
+  {
+    "key": "quick-sw-39-v2",
+    "source_key": "quick-sw-39",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "לרשימה באורך 4 נתון `P=[0, -2, 3, 6, 7]`, כאשר `P[k]` הוא סכום `k` האיברים הראשונים ו־`P[0]=0`. מה סכום האיברים באינדקסים 0 עד 2 כולל? האינדקסים מתחילים ב־0.",
+      "en": "Given `P=[0, -2, 3, 6, 7]`, where `P[k]` sums the first `k` items of a 4-item list and `P[0]=0`, what is the sum at indices 0 through 2 inclusive? Indices start at 0."
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מחסרים את הסכום שלפני הטווח: `P[3]-P[0]=6`.",
+      "en": "Subtract the prefix before the range: `P[3]-P[0]=6`."
+    }
+  },
+  {
+    "key": "quick-sw-39-v3",
+    "source_key": "quick-sw-39",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "לרשימה באורך 4 נתון `P=[0, 4, 3, 5, 11]`, כאשר `P[k]` הוא סכום `k` האיברים הראשונים ו־`P[0]=0`. מה סכום האיברים באינדקסים 2 עד 3 כולל? האינדקסים מתחילים ב־0.",
+      "en": "Given `P=[0, 4, 3, 5, 11]`, where `P[k]` sums the first `k` items of a 4-item list and `P[0]=0`, what is the sum at indices 2 through 3 inclusive? Indices start at 0."
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "11",
+        "en": "11"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מחסרים את הסכום שלפני הטווח: `P[4]-P[2]=8`.",
+      "en": "Subtract the prefix before the range: `P[4]-P[2]=8`."
+    }
+  },
+  {
+    "key": "quick-sw-39-v4",
+    "source_key": "quick-sw-39",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "לרשימה באורך 4 נתון `P=[0, 7, 7, 4, 9]`, כאשר `P[k]` הוא סכום `k` האיברים הראשונים ו־`P[0]=0`. מה סכום האיברים באינדקסים 1 עד 3 כולל? האינדקסים מתחילים ב־0.",
+      "en": "Given `P=[0, 7, 7, 4, 9]`, where `P[k]` sums the first `k` items of a 4-item list and `P[0]=0`, what is the sum at indices 1 through 3 inclusive? Indices start at 0."
+    },
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מחסרים את הסכום שלפני הטווח: `P[4]-P[1]=2`.",
+      "en": "Subtract the prefix before the range: `P[4]-P[1]=2`."
+    }
+  },
+  {
+    "key": "quick-sw-39-v5",
+    "source_key": "quick-sw-39",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "לרשימה באורך 4 נתון `P=[0, 1, 9, 11, 7]`, כאשר `P[k]` הוא סכום `k` האיברים הראשונים ו־`P[0]=0`. מה סכום האיברים באינדקסים 0 עד 0 כולל? האינדקסים מתחילים ב־0.",
+      "en": "Given `P=[0, 1, 9, 11, 7]`, where `P[k]` sums the first `k` items of a 4-item list and `P[0]=0`, what is the sum at indices 0 through 0 inclusive? Indices start at 0."
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחסרים את הסכום שלפני הטווח: `P[1]-P[0]=1`.",
+      "en": "Subtract the prefix before the range: `P[1]-P[0]=1`."
+    }
+  },
+  {
+    "key": "quick-sw-89-v1",
+    "source_key": "quick-sw-89",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המחירים היומיים הם `[7, 1, 5, 3, 6]`. מותרת קנייה אחת ומכירה ביום מאוחר יותר, או ויתור על העסקה ברווח 0. מה הרווח המרבי?",
+      "en": "Daily prices are `[7, 1, 5, 3, 6]`. Buy once and sell on a later day, or skip the transaction for profit 0. What is the maximum profit?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בודקים רק זוגות ימים לפי הסדר, ומשווים גם לוויתור על העסקה. הרווח המרבי הוא 5.",
+      "en": "Consider only day pairs in time order, including skipping the trade. Maximum profit is 5."
+    }
+  },
+  {
+    "key": "quick-sw-89-v2",
+    "source_key": "quick-sw-89",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המחירים היומיים הם `[9, 7, 4, 2]`. מותרת קנייה אחת ומכירה ביום מאוחר יותר, או ויתור על העסקה ברווח 0. מה הרווח המרבי?",
+      "en": "Daily prices are `[9, 7, 4, 2]`. Buy once and sell on a later day, or skip the transaction for profit 0. What is the maximum profit?"
+    },
+    "choices": [
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בודקים רק זוגות ימים לפי הסדר, ומשווים גם לוויתור על העסקה. הרווח המרבי הוא 0.",
+      "en": "Consider only day pairs in time order, including skipping the trade. Maximum profit is 0."
+    }
+  },
+  {
+    "key": "quick-sw-89-v3",
+    "source_key": "quick-sw-89",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המחירים היומיים הם `[]`. מותרת קנייה אחת ומכירה ביום מאוחר יותר, או ויתור על העסקה ברווח 0. מה הרווח המרבי?",
+      "en": "Daily prices are `[]`. Buy once and sell on a later day, or skip the transaction for profit 0. What is the maximum profit?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בודקים רק זוגות ימים לפי הסדר, ומשווים גם לוויתור על העסקה. הרווח המרבי הוא 0.",
+      "en": "Consider only day pairs in time order, including skipping the trade. Maximum profit is 0."
+    }
+  },
+  {
+    "key": "quick-sw-89-v4",
+    "source_key": "quick-sw-89",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המחירים היומיים הם `[2, 8, 1, 4]`. מותרת קנייה אחת ומכירה ביום מאוחר יותר, או ויתור על העסקה ברווח 0. מה הרווח המרבי?",
+      "en": "Daily prices are `[2, 8, 1, 4]`. Buy once and sell on a later day, or skip the transaction for profit 0. What is the maximum profit?"
+    },
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בודקים רק זוגות ימים לפי הסדר, ומשווים גם לוויתור על העסקה. הרווח המרבי הוא 6.",
+      "en": "Consider only day pairs in time order, including skipping the trade. Maximum profit is 6."
+    }
+  },
+  {
+    "key": "quick-sw-89-v5",
+    "source_key": "quick-sw-89",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המחירים היומיים הם `[0, 3, 0, 5]`. מותרת קנייה אחת ומכירה ביום מאוחר יותר, או ויתור על העסקה ברווח 0. מה הרווח המרבי?",
+      "en": "Daily prices are `[0, 3, 0, 5]`. Buy once and sell on a later day, or skip the transaction for profit 0. What is the maximum profit?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בודקים רק זוגות ימים לפי הסדר, ומשווים גם לוויתור על העסקה. הרווח המרבי הוא 5.",
+      "en": "Consider only day pairs in time order, including skipping the trade. Maximum profit is 5."
+    }
+  },
+  {
+    "key": "quick-sw-90-v1",
+    "source_key": "quick-sw-90",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "באלגוריתם Kadane הסכום המרבי של רצף סמוך לא ריק שמסתיים באיבר הקודם הוא -3. האיבר הבא הוא 4. מה הסכום המרבי של רצף שמסתיים באיבר החדש?",
+      "en": "In Kadane’s algorithm, the best nonempty contiguous sum ending at the previous item is -3. The next item is 4. What is the best sum ending at the new item?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "-3",
+        "en": "-3"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בוחרים בין האיבר לבדו לבין הרחבת הרצף: `max(4, -3+4)=4`.",
+      "en": "Choose the item alone or extend the previous subarray: `max(4, -3+4)=4`."
+    }
+  },
+  {
+    "key": "quick-sw-90-v2",
+    "source_key": "quick-sw-90",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "באלגוריתם Kadane הסכום המרבי של רצף סמוך לא ריק שמסתיים באיבר הקודם הוא 5. האיבר הבא הוא -2. מה הסכום המרבי של רצף שמסתיים באיבר החדש?",
+      "en": "In Kadane’s algorithm, the best nonempty contiguous sum ending at the previous item is 5. The next item is -2. What is the best sum ending at the new item?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בוחרים בין האיבר לבדו לבין הרחבת הרצף: `max(-2, 5+-2)=3`.",
+      "en": "Choose the item alone or extend the previous subarray: `max(-2, 5+-2)=3`."
+    }
+  },
+  {
+    "key": "quick-sw-90-v3",
+    "source_key": "quick-sw-90",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "באלגוריתם Kadane הסכום המרבי של רצף סמוך לא ריק שמסתיים באיבר הקודם הוא -7. האיבר הבא הוא -1. מה הסכום המרבי של רצף שמסתיים באיבר החדש?",
+      "en": "In Kadane’s algorithm, the best nonempty contiguous sum ending at the previous item is -7. The next item is -1. What is the best sum ending at the new item?"
+    },
+    "choices": [
+      {
+        "he": "-8",
+        "en": "-8"
+      },
+      {
+        "he": "-7",
+        "en": "-7"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בוחרים בין האיבר לבדו לבין הרחבת הרצף: `max(-1, -7+-1)=-1`.",
+      "en": "Choose the item alone or extend the previous subarray: `max(-1, -7+-1)=-1`."
+    }
+  },
+  {
+    "key": "quick-sw-90-v4",
+    "source_key": "quick-sw-90",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "באלגוריתם Kadane הסכום המרבי של רצף סמוך לא ריק שמסתיים באיבר הקודם הוא 2. האיבר הבא הוא 6. מה הסכום המרבי של רצף שמסתיים באיבר החדש?",
+      "en": "In Kadane’s algorithm, the best nonempty contiguous sum ending at the previous item is 2. The next item is 6. What is the best sum ending at the new item?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בוחרים בין האיבר לבדו לבין הרחבת הרצף: `max(6, 2+6)=8`.",
+      "en": "Choose the item alone or extend the previous subarray: `max(6, 2+6)=8`."
+    }
+  },
+  {
+    "key": "quick-sw-90-v5",
+    "source_key": "quick-sw-90",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "באלגוריתם Kadane הסכום המרבי של רצף סמוך לא ריק שמסתיים באיבר הקודם הוא 0. האיבר הבא הוא -4. מה הסכום המרבי של רצף שמסתיים באיבר החדש?",
+      "en": "In Kadane’s algorithm, the best nonempty contiguous sum ending at the previous item is 0. The next item is -4. What is the best sum ending at the new item?"
+    },
+    "choices": [
+      {
+        "he": "-3",
+        "en": "-3"
+      },
+      {
+        "he": "-4",
+        "en": "-4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בוחרים בין האיבר לבדו לבין הרחבת הרצף: `max(-4, 0+-4)=-4`.",
+      "en": "Choose the item alone or extend the previous subarray: `max(-4, 0+-4)=-4`."
+    }
+  },
+  {
+    "key": "quick-sw-91-v1",
+    "source_key": "quick-sw-91",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממיינים את הרשומות `[('A', 2), ('B', 1), ('C', 2)]` לפי המספר בסדר עולה, במיון יציב. מה סדר השמות בתוצאה?",
+      "en": "Stably sort `[('A', 2), ('B', 1), ('C', 2)]` by number in ascending order. What is the resulting name order?"
+    },
+    "choices": [
+      {
+        "he": "B, A, C",
+        "en": "B, A, C"
+      },
+      {
+        "he": "A, B, C",
+        "en": "A, B, C"
+      },
+      {
+        "he": "A, C, B",
+        "en": "A, C, B"
+      },
+      {
+        "he": "B, C, A",
+        "en": "B, C, A"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "המספר קובע את הסדר; ברשומות בעלות מספר שווה נשמר הסדר המקורי.",
+      "en": "The number determines order; equal-number records retain their original relative order."
+    }
+  },
+  {
+    "key": "quick-sw-91-v2",
+    "source_key": "quick-sw-91",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממיינים את הרשומות `[('Z', 3), ('A', 3), ('M', 1)]` לפי המספר בסדר עולה, במיון יציב. מה סדר השמות בתוצאה?",
+      "en": "Stably sort `[('Z', 3), ('A', 3), ('M', 1)]` by number in ascending order. What is the resulting name order?"
+    },
+    "choices": [
+      {
+        "he": "Z, A, M",
+        "en": "Z, A, M"
+      },
+      {
+        "he": "Z, M, A",
+        "en": "Z, M, A"
+      },
+      {
+        "he": "A, Z, M",
+        "en": "A, Z, M"
+      },
+      {
+        "he": "M, Z, A",
+        "en": "M, Z, A"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "המספר קובע את הסדר; ברשומות בעלות מספר שווה נשמר הסדר המקורי.",
+      "en": "The number determines order; equal-number records retain their original relative order."
+    }
+  },
+  {
+    "key": "quick-sw-91-v3",
+    "source_key": "quick-sw-91",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממיינים את הרשומות `[('C', 0), ('A', -1), ('B', 0)]` לפי המספר בסדר עולה, במיון יציב. מה סדר השמות בתוצאה?",
+      "en": "Stably sort `[('C', 0), ('A', -1), ('B', 0)]` by number in ascending order. What is the resulting name order?"
+    },
+    "choices": [
+      {
+        "he": "C, B, A",
+        "en": "C, B, A"
+      },
+      {
+        "he": "A, B, C",
+        "en": "A, B, C"
+      },
+      {
+        "he": "A, C, B",
+        "en": "A, C, B"
+      },
+      {
+        "he": "C, A, B",
+        "en": "C, A, B"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "המספר קובע את הסדר; ברשומות בעלות מספר שווה נשמר הסדר המקורי.",
+      "en": "The number determines order; equal-number records retain their original relative order."
+    }
+  },
+  {
+    "key": "quick-sw-91-v4",
+    "source_key": "quick-sw-91",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממיינים את הרשומות `[('B', 5), ('C', 5), ('A', 5)]` לפי המספר בסדר עולה, במיון יציב. מה סדר השמות בתוצאה?",
+      "en": "Stably sort `[('B', 5), ('C', 5), ('A', 5)]` by number in ascending order. What is the resulting name order?"
+    },
+    "choices": [
+      {
+        "he": "C, A, B",
+        "en": "C, A, B"
+      },
+      {
+        "he": "B, C, A",
+        "en": "B, C, A"
+      },
+      {
+        "he": "B, A, C",
+        "en": "B, A, C"
+      },
+      {
+        "he": "C, B, A",
+        "en": "C, B, A"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "המספר קובע את הסדר; ברשומות בעלות מספר שווה נשמר הסדר המקורי.",
+      "en": "The number determines order; equal-number records retain their original relative order."
+    }
+  },
+  {
+    "key": "quick-sw-91-v5",
+    "source_key": "quick-sw-91",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממיינים את הרשומות `[('X', 2), ('Y', 0), ('Z', 0)]` לפי המספר בסדר עולה, במיון יציב. מה סדר השמות בתוצאה?",
+      "en": "Stably sort `[('X', 2), ('Y', 0), ('Z', 0)]` by number in ascending order. What is the resulting name order?"
+    },
+    "choices": [
+      {
+        "he": "Y, Z, X",
+        "en": "Y, Z, X"
+      },
+      {
+        "he": "X, Y, Z",
+        "en": "X, Y, Z"
+      },
+      {
+        "he": "X, Z, Y",
+        "en": "X, Z, Y"
+      },
+      {
+        "he": "Y, X, Z",
+        "en": "Y, X, Z"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "המספר קובע את הסדר; ברשומות בעלות מספר שווה נשמר הסדר המקורי.",
+      "en": "The number determines order; equal-number records retain their original relative order."
+    }
+  },
+  {
+    "key": "quick-sw-92-v1",
+    "source_key": "quick-sw-92",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בערבוב Fisher–Yates תקין מטפלים באינדקס 2. בוחרים באופן אחיד אינדקס להחלפה מתוך כל האינדקסים מ־0 ועד 2, כולל החלפה עצמית. כמה אפשרויות בחירה צריכות להיות?",
+      "en": "In correct Fisher–Yates shuffling, process index 2. Choose uniformly among indices from 0 through 2, including a self-swap. How many choices must be available?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הטווח כולל את שני הקצוות ולכן מכיל 3 אינדקסים. אסור להשמיט את ההחלפה העצמית.",
+      "en": "The inclusive range contains 3 indices. The self-swap must remain possible."
+    }
+  },
+  {
+    "key": "quick-sw-92-v2",
+    "source_key": "quick-sw-92",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בערבוב Fisher–Yates תקין מטפלים באינדקס 4. בוחרים באופן אחיד אינדקס להחלפה מתוך כל האינדקסים מ־0 ועד 4, כולל החלפה עצמית. כמה אפשרויות בחירה צריכות להיות?",
+      "en": "In correct Fisher–Yates shuffling, process index 4. Choose uniformly among indices from 0 through 4, including a self-swap. How many choices must be available?"
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "הטווח כולל את שני הקצוות ולכן מכיל 5 אינדקסים. אסור להשמיט את ההחלפה העצמית.",
+      "en": "The inclusive range contains 5 indices. The self-swap must remain possible."
+    }
+  },
+  {
+    "key": "quick-sw-92-v3",
+    "source_key": "quick-sw-92",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בערבוב Fisher–Yates תקין מטפלים באינדקס 1. בוחרים באופן אחיד אינדקס להחלפה מתוך כל האינדקסים מ־0 ועד 1, כולל החלפה עצמית. כמה אפשרויות בחירה צריכות להיות?",
+      "en": "In correct Fisher–Yates shuffling, process index 1. Choose uniformly among indices from 0 through 1, including a self-swap. How many choices must be available?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "הטווח כולל את שני הקצוות ולכן מכיל 2 אינדקסים. אסור להשמיט את ההחלפה העצמית.",
+      "en": "The inclusive range contains 2 indices. The self-swap must remain possible."
+    }
+  },
+  {
+    "key": "quick-sw-92-v4",
+    "source_key": "quick-sw-92",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בערבוב Fisher–Yates תקין מטפלים באינדקס 6. בוחרים באופן אחיד אינדקס להחלפה מתוך כל האינדקסים מ־0 ועד 6, כולל החלפה עצמית. כמה אפשרויות בחירה צריכות להיות?",
+      "en": "In correct Fisher–Yates shuffling, process index 6. Choose uniformly among indices from 0 through 6, including a self-swap. How many choices must be available?"
+    },
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "הטווח כולל את שני הקצוות ולכן מכיל 7 אינדקסים. אסור להשמיט את ההחלפה העצמית.",
+      "en": "The inclusive range contains 7 indices. The self-swap must remain possible."
+    }
+  },
+  {
+    "key": "quick-sw-92-v5",
+    "source_key": "quick-sw-92",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בערבוב Fisher–Yates תקין מטפלים באינדקס 3. בוחרים באופן אחיד אינדקס להחלפה מתוך כל האינדקסים מ־0 ועד 3, כולל החלפה עצמית. כמה אפשרויות בחירה צריכות להיות?",
+      "en": "In correct Fisher–Yates shuffling, process index 3. Choose uniformly among indices from 0 through 3, including a self-swap. How many choices must be available?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הטווח כולל את שני הקצוות ולכן מכיל 4 אינדקסים. אסור להשמיט את ההחלפה העצמית.",
+      "en": "The inclusive range contains 4 indices. The self-swap must remain possible."
+    }
+  },
+  {
+    "key": "quick-sw-93-v1",
+    "source_key": "quick-sw-93",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "שתי רשימות מקושרות הן `A -> C -> D -> None` ו־`B -> C -> D -> None`. כל הצמתים מכילים 7; אות זהה מציינת את אותו צומת בזיכרון, ואותיות שונות מציינות צמתים נפרדים. מהו הצומת המשותף הראשון, או `None` אם אין כזה?",
+      "en": "The linked lists are `A -> C -> D -> None` and `B -> C -> D -> None`. Every node stores 7; the same letter denotes the same object, and different letters denote distinct objects. What is the first shared node, or `None` if absent?"
+    },
+    "choices": [
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "D",
+        "en": "D"
+      },
+      {
+        "he": "C",
+        "en": "C"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "משווים זהות צמתים ולא ערכים. מעבר לפי הקישורים מחזיר `C`.",
+      "en": "Compare node identity rather than values. Following the links gives `C`."
+    }
+  },
+  {
+    "key": "quick-sw-93-v2",
+    "source_key": "quick-sw-93",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "שתי רשימות מקושרות הן `A -> B -> C -> None` ו־`D -> B -> C -> None`. כל הצמתים מכילים 7; אות זהה מציינת את אותו צומת בזיכרון, ואותיות שונות מציינות צמתים נפרדים. מהו הצומת המשותף הראשון, או `None` אם אין כזה?",
+      "en": "The linked lists are `A -> B -> C -> None` and `D -> B -> C -> None`. Every node stores 7; the same letter denotes the same object, and different letters denote distinct objects. What is the first shared node, or `None` if absent?"
+    },
+    "choices": [
+      {
+        "he": "C",
+        "en": "C"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "A",
+        "en": "A"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "משווים זהות צמתים ולא ערכים. מעבר לפי הקישורים מחזיר `B`.",
+      "en": "Compare node identity rather than values. Following the links gives `B`."
+    }
+  },
+  {
+    "key": "quick-sw-93-v3",
+    "source_key": "quick-sw-93",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "שתי רשימות מקושרות הן `A -> C -> None` ו־`B -> D -> None`. כל הצמתים מכילים 7; אות זהה מציינת את אותו צומת בזיכרון, ואותיות שונות מציינות צמתים נפרדים. מהו הצומת המשותף הראשון, או `None` אם אין כזה?",
+      "en": "The linked lists are `A -> C -> None` and `B -> D -> None`. Every node stores 7; the same letter denotes the same object, and different letters denote distinct objects. What is the first shared node, or `None` if absent?"
+    },
+    "choices": [
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "C",
+        "en": "C"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "משווים זהות צמתים ולא ערכים. מעבר לפי הקישורים מחזיר `None`.",
+      "en": "Compare node identity rather than values. Following the links gives `None`."
+    }
+  },
+  {
+    "key": "quick-sw-93-v4",
+    "source_key": "quick-sw-93",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "שתי רשימות מקושרות הן `A -> B -> C -> None` ו־`A -> B -> C -> None`. כל הצמתים מכילים 7; אות זהה מציינת את אותו צומת בזיכרון, ואותיות שונות מציינות צמתים נפרדים. מהו הצומת המשותף הראשון, או `None` אם אין כזה?",
+      "en": "The linked lists are `A -> B -> C -> None` and `A -> B -> C -> None`. Every node stores 7; the same letter denotes the same object, and different letters denote distinct objects. What is the first shared node, or `None` if absent?"
+    },
+    "choices": [
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      },
+      {
+        "he": "C",
+        "en": "C"
+      },
+      {
+        "he": "A",
+        "en": "A"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "משווים זהות צמתים ולא ערכים. מעבר לפי הקישורים מחזיר `A`.",
+      "en": "Compare node identity rather than values. Following the links gives `A`."
+    }
+  },
+  {
+    "key": "quick-sw-93-v5",
+    "source_key": "quick-sw-93",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "שתי רשימות מקושרות הן `A -> B -> C -> D -> None` ו־`C -> D -> None`. כל הצמתים מכילים 7; אות זהה מציינת את אותו צומת בזיכרון, ואותיות שונות מציינות צמתים נפרדים. מהו הצומת המשותף הראשון, או `None` אם אין כזה?",
+      "en": "The linked lists are `A -> B -> C -> D -> None` and `C -> D -> None`. Every node stores 7; the same letter denotes the same object, and different letters denote distinct objects. What is the first shared node, or `None` if absent?"
+    },
+    "choices": [
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      },
+      {
+        "he": "C",
+        "en": "C"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "משווים זהות צמתים ולא ערכים. מעבר לפי הקישורים מחזיר `C`.",
+      "en": "Compare node identity rather than values. Following the links gives `C`."
+    }
+  },
+  {
+    "key": "quick-sw-94-v1",
+    "source_key": "quick-sw-94",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "חותמות הזמן עולות ואינן גולשות. בתא נשמר 2 בזמן 3, ו־`SetAll` שומר 9 בזמן 5. קוראים את התא; אחר כך כותבים בו 4 בזמן 7 וקוראים שוב. מה זוג התוצאות לפי הסדר?",
+      "en": "Timestamps increase without overflow. A cell stores 2 at time 3; `SetAll` stores 9 at time 5. Read the cell, write 4 locally at time 7, then read again. What is the ordered result pair?"
+    },
+    "choices": [
+      {
+        "he": "(2, 2)",
+        "en": "(2, 2)"
+      },
+      {
+        "he": "(9, 4)",
+        "en": "(9, 4)"
+      },
+      {
+        "he": "(2, 4)",
+        "en": "(2, 4)"
+      },
+      {
+        "he": "(9, 9)",
+        "en": "(9, 9)"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בכל קריאה בוחרים את הערך בעל חותמת הזמן המאוחרת יותר: תחילה הכללי, ואז המקומי החדש.",
+      "en": "Each read selects the later timestamp: first the global value, then the new local value."
+    }
+  },
+  {
+    "key": "quick-sw-94-v2",
+    "source_key": "quick-sw-94",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "חותמות הזמן עולות ואינן גולשות. בתא נשמר 8 בזמן 2, ו־`SetAll` שומר 6 בזמן 4. קוראים את התא; אחר כך כותבים בו 1 בזמן 9 וקוראים שוב. מה זוג התוצאות לפי הסדר?",
+      "en": "Timestamps increase without overflow. A cell stores 8 at time 2; `SetAll` stores 6 at time 4. Read the cell, write 1 locally at time 9, then read again. What is the ordered result pair?"
+    },
+    "choices": [
+      {
+        "he": "(6, 1)",
+        "en": "(6, 1)"
+      },
+      {
+        "he": "(8, 1)",
+        "en": "(8, 1)"
+      },
+      {
+        "he": "(6, 6)",
+        "en": "(6, 6)"
+      },
+      {
+        "he": "(8, 8)",
+        "en": "(8, 8)"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בכל קריאה בוחרים את הערך בעל חותמת הזמן המאוחרת יותר: תחילה הכללי, ואז המקומי החדש.",
+      "en": "Each read selects the later timestamp: first the global value, then the new local value."
+    }
+  },
+  {
+    "key": "quick-sw-94-v3",
+    "source_key": "quick-sw-94",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "חותמות הזמן עולות ואינן גולשות. בתא נשמר -1 בזמן 1, ו־`SetAll` שומר 0 בזמן 6. קוראים את התא; אחר כך כותבים בו 7 בזמן 8 וקוראים שוב. מה זוג התוצאות לפי הסדר?",
+      "en": "Timestamps increase without overflow. A cell stores -1 at time 1; `SetAll` stores 0 at time 6. Read the cell, write 7 locally at time 8, then read again. What is the ordered result pair?"
+    },
+    "choices": [
+      {
+        "he": "(-1, 7)",
+        "en": "(-1, 7)"
+      },
+      {
+        "he": "(0, 0)",
+        "en": "(0, 0)"
+      },
+      {
+        "he": "(-1, -1)",
+        "en": "(-1, -1)"
+      },
+      {
+        "he": "(0, 7)",
+        "en": "(0, 7)"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בכל קריאה בוחרים את הערך בעל חותמת הזמן המאוחרת יותר: תחילה הכללי, ואז המקומי החדש.",
+      "en": "Each read selects the later timestamp: first the global value, then the new local value."
+    }
+  },
+  {
+    "key": "quick-sw-94-v4",
+    "source_key": "quick-sw-94",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "חותמות הזמן עולות ואינן גולשות. בתא נשמר 3 בזמן 4, ו־`SetAll` שומר 5 בזמן 8. קוראים את התא; אחר כך כותבים בו 2 בזמן 10 וקוראים שוב. מה זוג התוצאות לפי הסדר?",
+      "en": "Timestamps increase without overflow. A cell stores 3 at time 4; `SetAll` stores 5 at time 8. Read the cell, write 2 locally at time 10, then read again. What is the ordered result pair?"
+    },
+    "choices": [
+      {
+        "he": "(5, 5)",
+        "en": "(5, 5)"
+      },
+      {
+        "he": "(3, 3)",
+        "en": "(3, 3)"
+      },
+      {
+        "he": "(5, 2)",
+        "en": "(5, 2)"
+      },
+      {
+        "he": "(3, 2)",
+        "en": "(3, 2)"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בכל קריאה בוחרים את הערך בעל חותמת הזמן המאוחרת יותר: תחילה הכללי, ואז המקומי החדש.",
+      "en": "Each read selects the later timestamp: first the global value, then the new local value."
+    }
+  },
+  {
+    "key": "quick-sw-94-v5",
+    "source_key": "quick-sw-94",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "חותמות הזמן עולות ואינן גולשות. בתא נשמר 6 בזמן 2, ו־`SetAll` שומר -2 בזמן 7. קוראים את התא; אחר כך כותבים בו 9 בזמן 11 וקוראים שוב. מה זוג התוצאות לפי הסדר?",
+      "en": "Timestamps increase without overflow. A cell stores 6 at time 2; `SetAll` stores -2 at time 7. Read the cell, write 9 locally at time 11, then read again. What is the ordered result pair?"
+    },
+    "choices": [
+      {
+        "he": "(6, 6)",
+        "en": "(6, 6)"
+      },
+      {
+        "he": "(-2, 9)",
+        "en": "(-2, 9)"
+      },
+      {
+        "he": "(6, 9)",
+        "en": "(6, 9)"
+      },
+      {
+        "he": "(-2, -2)",
+        "en": "(-2, -2)"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בכל קריאה בוחרים את הערך בעל חותמת הזמן המאוחרת יותר: תחילה הכללי, ואז המקומי החדש.",
+      "en": "Each read selects the later timestamp: first the global value, then the new local value."
+    }
+  },
+  {
+    "key": "quick-sw-95-v1",
+    "source_key": "quick-sw-95",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחשבים `F(4)` לפי `F(k)=F(k-1)+F(k-2)` ושומרים כל תוצאה במטמון. `F(0)=0` ו־`F(1)=1` כבר שמורים. כמה ערכי `F` חדשים מחושבים? אין לספור פגיעות במטמון.",
+      "en": "Compute `F(4)` using `F(k)=F(k-1)+F(k-2)` and cache every result. `F(0)=0` and `F(1)=1` are already cached. How many new `F` values are computed? Exclude cache hits."
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחשבים פעם אחת כל ערך מ־`F(2)` עד `F(4)`: בסך הכול 3 ערכים חדשים.",
+      "en": "Compute each value from `F(2)` through `F(4)` once: 3 new values."
+    }
+  },
+  {
+    "key": "quick-sw-95-v2",
+    "source_key": "quick-sw-95",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחשבים `F(6)` לפי `F(k)=F(k-1)+F(k-2)` ושומרים כל תוצאה במטמון. `F(0)=0` ו־`F(1)=1` כבר שמורים. כמה ערכי `F` חדשים מחושבים? אין לספור פגיעות במטמון.",
+      "en": "Compute `F(6)` using `F(k)=F(k-1)+F(k-2)` and cache every result. `F(0)=0` and `F(1)=1` are already cached. How many new `F` values are computed? Exclude cache hits."
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מחשבים פעם אחת כל ערך מ־`F(2)` עד `F(6)`: בסך הכול 5 ערכים חדשים.",
+      "en": "Compute each value from `F(2)` through `F(6)` once: 5 new values."
+    }
+  },
+  {
+    "key": "quick-sw-95-v3",
+    "source_key": "quick-sw-95",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחשבים `F(2)` לפי `F(k)=F(k-1)+F(k-2)` ושומרים כל תוצאה במטמון. `F(0)=0` ו־`F(1)=1` כבר שמורים. כמה ערכי `F` חדשים מחושבים? אין לספור פגיעות במטמון.",
+      "en": "Compute `F(2)` using `F(k)=F(k-1)+F(k-2)` and cache every result. `F(0)=0` and `F(1)=1` are already cached. How many new `F` values are computed? Exclude cache hits."
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מחשבים פעם אחת כל ערך מ־`F(2)` עד `F(2)`: בסך הכול 1 ערכים חדשים.",
+      "en": "Compute each value from `F(2)` through `F(2)` once: 1 new values."
+    }
+  },
+  {
+    "key": "quick-sw-95-v4",
+    "source_key": "quick-sw-95",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחשבים `F(8)` לפי `F(k)=F(k-1)+F(k-2)` ושומרים כל תוצאה במטמון. `F(0)=0` ו־`F(1)=1` כבר שמורים. כמה ערכי `F` חדשים מחושבים? אין לספור פגיעות במטמון.",
+      "en": "Compute `F(8)` using `F(k)=F(k-1)+F(k-2)` and cache every result. `F(0)=0` and `F(1)=1` are already cached. How many new `F` values are computed? Exclude cache hits."
+    },
+    "choices": [
+      {
+        "he": "16",
+        "en": "16"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מחשבים פעם אחת כל ערך מ־`F(2)` עד `F(8)`: בסך הכול 7 ערכים חדשים.",
+      "en": "Compute each value from `F(2)` through `F(8)` once: 7 new values."
+    }
+  },
+  {
+    "key": "quick-sw-95-v5",
+    "source_key": "quick-sw-95",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחשבים `F(5)` לפי `F(k)=F(k-1)+F(k-2)` ושומרים כל תוצאה במטמון. `F(0)=0` ו־`F(1)=1` כבר שמורים. כמה ערכי `F` חדשים מחושבים? אין לספור פגיעות במטמון.",
+      "en": "Compute `F(5)` using `F(k)=F(k-1)+F(k-2)` and cache every result. `F(0)=0` and `F(1)=1` are already cached. How many new `F` values are computed? Exclude cache hits."
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחשבים פעם אחת כל ערך מ־`F(2)` עד `F(5)`: בסך הכול 4 ערכים חדשים.",
+      "en": "Compute each value from `F(2)` through `F(5)` once: 4 new values."
+    }
+  },
+  {
+    "key": "quick-sw-96-v1",
+    "source_key": "quick-sw-96",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מהם סכומי כל החלונות הסמוכים באורך 2 ברשימה `[2, 5, 1]`, לפי סדר ההתחלה שלהם?",
+      "en": "What are the sums of all contiguous length-2 windows in `[2, 5, 1]`, in starting-position order?"
+    },
+    "choices": [
+      {
+        "he": "[6, 7]",
+        "en": "[6, 7]"
+      },
+      {
+        "he": "[7]",
+        "en": "[7]"
+      },
+      {
+        "he": "[2, 5, 1]",
+        "en": "[2, 5, 1]"
+      },
+      {
+        "he": "[7, 6]",
+        "en": "[7, 6]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מסכמים את החלון הראשון; בכל הזזה מחסרים את האיבר היוצא ומוסיפים את הנכנס.",
+      "en": "Sum the first window; each move subtracts the departing item and adds the arriving one."
+    }
+  },
+  {
+    "key": "quick-sw-96-v2",
+    "source_key": "quick-sw-96",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מהם סכומי כל החלונות הסמוכים באורך 2 ברשימה `[-3, 4, 2, -1]`, לפי סדר ההתחלה שלהם?",
+      "en": "What are the sums of all contiguous length-2 windows in `[-3, 4, 2, -1]`, in starting-position order?"
+    },
+    "choices": [
+      {
+        "he": "[-3, 4, 2, -1]",
+        "en": "[-3, 4, 2, -1]"
+      },
+      {
+        "he": "[0, 0, 0]",
+        "en": "[0, 0, 0]"
+      },
+      {
+        "he": "[1, 6, 1]",
+        "en": "[1, 6, 1]"
+      },
+      {
+        "he": "[1]",
+        "en": "[1]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מסכמים את החלון הראשון; בכל הזזה מחסרים את האיבר היוצא ומוסיפים את הנכנס.",
+      "en": "Sum the first window; each move subtracts the departing item and adds the arriving one."
+    }
+  },
+  {
+    "key": "quick-sw-96-v3",
+    "source_key": "quick-sw-96",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מהם סכומי כל החלונות הסמוכים באורך 3 ברשימה `[1, 2, 3, 4]`, לפי סדר ההתחלה שלהם?",
+      "en": "What are the sums of all contiguous length-3 windows in `[1, 2, 3, 4]`, in starting-position order?"
+    },
+    "choices": [
+      {
+        "he": "[1, 2, 3, 4]",
+        "en": "[1, 2, 3, 4]"
+      },
+      {
+        "he": "[6, 9]",
+        "en": "[6, 9]"
+      },
+      {
+        "he": "[9, 6]",
+        "en": "[9, 6]"
+      },
+      {
+        "he": "[6]",
+        "en": "[6]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מסכמים את החלון הראשון; בכל הזזה מחסרים את האיבר היוצא ומוסיפים את הנכנס.",
+      "en": "Sum the first window; each move subtracts the departing item and adds the arriving one."
+    }
+  },
+  {
+    "key": "quick-sw-96-v4",
+    "source_key": "quick-sw-96",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מהם סכומי כל החלונות הסמוכים באורך 1 ברשימה `[5, -2, 0]`, לפי סדר ההתחלה שלהם?",
+      "en": "What are the sums of all contiguous length-1 windows in `[5, -2, 0]`, in starting-position order?"
+    },
+    "choices": [
+      {
+        "he": "[5, -2, 0]",
+        "en": "[5, -2, 0]"
+      },
+      {
+        "he": "[0, -2, 5]",
+        "en": "[0, -2, 5]"
+      },
+      {
+        "he": "[5]",
+        "en": "[5]"
+      },
+      {
+        "he": "[0, 0, 0]",
+        "en": "[0, 0, 0]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מסכמים את החלון הראשון; בכל הזזה מחסרים את האיבר היוצא ומוסיפים את הנכנס.",
+      "en": "Sum the first window; each move subtracts the departing item and adds the arriving one."
+    }
+  },
+  {
+    "key": "quick-sw-96-v5",
+    "source_key": "quick-sw-96",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מהם סכומי כל החלונות הסמוכים באורך 2 ברשימה `[2, 2, 2, 2]`, לפי סדר ההתחלה שלהם?",
+      "en": "What are the sums of all contiguous length-2 windows in `[2, 2, 2, 2]`, in starting-position order?"
+    },
+    "choices": [
+      {
+        "he": "[4]",
+        "en": "[4]"
+      },
+      {
+        "he": "[2, 2, 2, 2]",
+        "en": "[2, 2, 2, 2]"
+      },
+      {
+        "he": "[0, 0, 0]",
+        "en": "[0, 0, 0]"
+      },
+      {
+        "he": "[4, 4, 4]",
+        "en": "[4, 4, 4]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מסכמים את החלון הראשון; בכל הזזה מחסרים את האיבר היוצא ומוסיפים את הנכנס.",
+      "en": "Sum the first window; each move subtracts the departing item and adds the arriving one."
+    }
+  },
+  {
+    "key": "quick-sw-97-v1",
+    "source_key": "quick-sw-97",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python פונקציית חיפוש מחזירה אינדקס או `None`. עבור `result=0` מה הזוג `(bool(result), result is not None)`?",
+      "en": "In Python, a search returns an index or `None`. For `result=0`, what is `(bool(result), result is not None)`?"
+    },
+    "choices": [
+      {
+        "he": "(False, True)",
+        "en": "(False, True)"
+      },
+      {
+        "he": "(False, False)",
+        "en": "(False, False)"
+      },
+      {
+        "he": "(True, True)",
+        "en": "(True, True)"
+      },
+      {
+        "he": "(True, False)",
+        "en": "(True, False)"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אפס הוא ערך שקרי אך אינו `None`; בדיקת זהות ל־`None` מבדילה בין אינדקס תקין להיעדר התאמה.",
+      "en": "Zero is false in a condition but is not `None`; testing identity against `None` distinguishes a valid index from no match."
+    }
+  },
+  {
+    "key": "quick-sw-97-v2",
+    "source_key": "quick-sw-97",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python פונקציית חיפוש מחזירה אינדקס או `None`. עבור `result=None` מה הזוג `(bool(result), result is not None)`?",
+      "en": "In Python, a search returns an index or `None`. For `result=None`, what is `(bool(result), result is not None)`?"
+    },
+    "choices": [
+      {
+        "he": "(False, False)",
+        "en": "(False, False)"
+      },
+      {
+        "he": "(True, True)",
+        "en": "(True, True)"
+      },
+      {
+        "he": "(True, False)",
+        "en": "(True, False)"
+      },
+      {
+        "he": "(False, True)",
+        "en": "(False, True)"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אפס הוא ערך שקרי אך אינו `None`; בדיקת זהות ל־`None` מבדילה בין אינדקס תקין להיעדר התאמה.",
+      "en": "Zero is false in a condition but is not `None`; testing identity against `None` distinguishes a valid index from no match."
+    }
+  },
+  {
+    "key": "quick-sw-97-v3",
+    "source_key": "quick-sw-97",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python פונקציית חיפוש מחזירה אינדקס או `None`. עבור `result=3` מה הזוג `(bool(result), result is not None)`?",
+      "en": "In Python, a search returns an index or `None`. For `result=3`, what is `(bool(result), result is not None)`?"
+    },
+    "choices": [
+      {
+        "he": "(True, True)",
+        "en": "(True, True)"
+      },
+      {
+        "he": "(True, False)",
+        "en": "(True, False)"
+      },
+      {
+        "he": "(False, True)",
+        "en": "(False, True)"
+      },
+      {
+        "he": "(False, False)",
+        "en": "(False, False)"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אפס הוא ערך שקרי אך אינו `None`; בדיקת זהות ל־`None` מבדילה בין אינדקס תקין להיעדר התאמה.",
+      "en": "Zero is false in a condition but is not `None`; testing identity against `None` distinguishes a valid index from no match."
+    }
+  },
+  {
+    "key": "quick-sw-97-v4",
+    "source_key": "quick-sw-97",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python פונקציית חיפוש מחזירה אינדקס או `None`. עבור `result=7` מה הזוג `(bool(result), result is not None)`?",
+      "en": "In Python, a search returns an index or `None`. For `result=7`, what is `(bool(result), result is not None)`?"
+    },
+    "choices": [
+      {
+        "he": "(True, False)",
+        "en": "(True, False)"
+      },
+      {
+        "he": "(False, True)",
+        "en": "(False, True)"
+      },
+      {
+        "he": "(False, False)",
+        "en": "(False, False)"
+      },
+      {
+        "he": "(True, True)",
+        "en": "(True, True)"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "אפס הוא ערך שקרי אך אינו `None`; בדיקת זהות ל־`None` מבדילה בין אינדקס תקין להיעדר התאמה.",
+      "en": "Zero is false in a condition but is not `None`; testing identity against `None` distinguishes a valid index from no match."
+    }
+  },
+  {
+    "key": "quick-sw-97-v5",
+    "source_key": "quick-sw-97",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python פונקציית חיפוש מחזירה אינדקס או `None`. עבור `result=1` מה הזוג `(bool(result), result is not None)`?",
+      "en": "In Python, a search returns an index or `None`. For `result=1`, what is `(bool(result), result is not None)`?"
+    },
+    "choices": [
+      {
+        "he": "(False, True)",
+        "en": "(False, True)"
+      },
+      {
+        "he": "(False, False)",
+        "en": "(False, False)"
+      },
+      {
+        "he": "(True, True)",
+        "en": "(True, True)"
+      },
+      {
+        "he": "(True, False)",
+        "en": "(True, False)"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "אפס הוא ערך שקרי אך אינו `None`; בדיקת זהות ל־`None` מבדילה בין אינדקס תקין להיעדר התאמה.",
+      "en": "Zero is false in a condition but is not `None`; testing identity against `None` distinguishes a valid index from no match."
+    }
+  },
+  {
+    "key": "quick-sw-98-v1",
+    "source_key": "quick-sw-98",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מוסיפים תווית `positive` כשהמספר גדול מ־0, ואחריה `even` כשהוא זוגי, בשתי בדיקות `if` נפרדות. מה הרשימה עבור 2?",
+      "en": "Append `positive` when the number exceeds 0, then `even` when it is even, using two separate `if` tests. What list is returned for 2?"
+    },
+    "choices": [
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "['positive', 'even']",
+        "en": "['positive', 'even']"
+      },
+      {
+        "he": "['positive']",
+        "en": "['positive']"
+      },
+      {
+        "he": "['even']",
+        "en": "['even']"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "שני התנאים נבדקים באופן עצמאי, ולכן עשויות להתווסף שתי תוויות.",
+      "en": "Both conditions are tested independently, so both labels may be added."
+    }
+  },
+  {
+    "key": "quick-sw-98-v2",
+    "source_key": "quick-sw-98",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מוסיפים תווית `positive` כשהמספר גדול מ־0, ואחריה `even` כשהוא זוגי, בשתי בדיקות `if` נפרדות. מה הרשימה עבור 3?",
+      "en": "Append `positive` when the number exceeds 0, then `even` when it is even, using two separate `if` tests. What list is returned for 3?"
+    },
+    "choices": [
+      {
+        "he": "['positive', 'even']",
+        "en": "['positive', 'even']"
+      },
+      {
+        "he": "['positive']",
+        "en": "['positive']"
+      },
+      {
+        "he": "['even']",
+        "en": "['even']"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "שני התנאים נבדקים באופן עצמאי, ולכן עשויות להתווסף שתי תוויות.",
+      "en": "Both conditions are tested independently, so both labels may be added."
+    }
+  },
+  {
+    "key": "quick-sw-98-v3",
+    "source_key": "quick-sw-98",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מוסיפים תווית `positive` כשהמספר גדול מ־0, ואחריה `even` כשהוא זוגי, בשתי בדיקות `if` נפרדות. מה הרשימה עבור 0?",
+      "en": "Append `positive` when the number exceeds 0, then `even` when it is even, using two separate `if` tests. What list is returned for 0?"
+    },
+    "choices": [
+      {
+        "he": "['positive']",
+        "en": "['positive']"
+      },
+      {
+        "he": "['even']",
+        "en": "['even']"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "['positive', 'even']",
+        "en": "['positive', 'even']"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "שני התנאים נבדקים באופן עצמאי, ולכן עשויות להתווסף שתי תוויות.",
+      "en": "Both conditions are tested independently, so both labels may be added."
+    }
+  },
+  {
+    "key": "quick-sw-98-v4",
+    "source_key": "quick-sw-98",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מוסיפים תווית `positive` כשהמספר גדול מ־0, ואחריה `even` כשהוא זוגי, בשתי בדיקות `if` נפרדות. מה הרשימה עבור -4?",
+      "en": "Append `positive` when the number exceeds 0, then `even` when it is even, using two separate `if` tests. What list is returned for -4?"
+    },
+    "choices": [
+      {
+        "he": "['even']",
+        "en": "['even']"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "['positive', 'even']",
+        "en": "['positive', 'even']"
+      },
+      {
+        "he": "['positive']",
+        "en": "['positive']"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "שני התנאים נבדקים באופן עצמאי, ולכן עשויות להתווסף שתי תוויות.",
+      "en": "Both conditions are tested independently, so both labels may be added."
+    }
+  },
+  {
+    "key": "quick-sw-98-v5",
+    "source_key": "quick-sw-98",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מוסיפים תווית `positive` כשהמספר גדול מ־0, ואחריה `even` כשהוא זוגי, בשתי בדיקות `if` נפרדות. מה הרשימה עבור -3?",
+      "en": "Append `positive` when the number exceeds 0, then `even` when it is even, using two separate `if` tests. What list is returned for -3?"
+    },
+    "choices": [
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "['positive', 'even']",
+        "en": "['positive', 'even']"
+      },
+      {
+        "he": "['positive']",
+        "en": "['positive']"
+      },
+      {
+        "he": "['even']",
+        "en": "['even']"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "שני התנאים נבדקים באופן עצמאי, ולכן עשויות להתווסף שתי תוויות.",
+      "en": "Both conditions are tested independently, so both labels may be added."
+    }
+  },
+  {
+    "key": "quick-sw-99-v1",
+    "source_key": "quick-sw-99",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python הפונקציה `add_item(item, items=None)` יוצרת רשימה ריקה חדשה כש־`items is None`, מוסיפה אליה את `item` ומחזירה אותה. מבצעים `a=add_item(1)` ואז `b=add_item(2)`. מה הזוג `(a,b)` אחרי שתי הקריאות?",
+      "en": "In Python, `add_item(item, items=None)` creates a fresh empty list when `items is None`, appends `item`, and returns the list. Execute `a=add_item(1)`, then `b=add_item(2)`. What is `(a,b)` after both calls?"
+    },
+    "choices": [
+      {
+        "he": "([1], [2])",
+        "en": "([1], [2])"
+      },
+      {
+        "he": "([1, 2], [1, 2])",
+        "en": "([1, 2], [1, 2])"
+      },
+      {
+        "he": "([1], [1, 2])",
+        "en": "([1], [1, 2])"
+      },
+      {
+        "he": "([], [])",
+        "en": "([], [])"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בכל קריאה בלי רשימה מפורשת נוצרת רשימה חדשה, כך שהקריאות אינן חולקות רשימה.",
+      "en": "Each call without an explicit list creates a fresh list, so the calls do not share one."
+    }
+  },
+  {
+    "key": "quick-sw-99-v2",
+    "source_key": "quick-sw-99",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python הפונקציה `add_item(item, items=None)` יוצרת רשימה ריקה חדשה כש־`items is None`, מוסיפה אליה את `item` ומחזירה אותה. מבצעים `a=add_item(4)` ואז `b=add_item(7)`. מה הזוג `(a,b)` אחרי שתי הקריאות?",
+      "en": "In Python, `add_item(item, items=None)` creates a fresh empty list when `items is None`, appends `item`, and returns the list. Execute `a=add_item(4)`, then `b=add_item(7)`. What is `(a,b)` after both calls?"
+    },
+    "choices": [
+      {
+        "he": "([4, 7], [4, 7])",
+        "en": "([4, 7], [4, 7])"
+      },
+      {
+        "he": "([4], [4, 7])",
+        "en": "([4], [4, 7])"
+      },
+      {
+        "he": "([], [])",
+        "en": "([], [])"
+      },
+      {
+        "he": "([4], [7])",
+        "en": "([4], [7])"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בכל קריאה בלי רשימה מפורשת נוצרת רשימה חדשה, כך שהקריאות אינן חולקות רשימה.",
+      "en": "Each call without an explicit list creates a fresh list, so the calls do not share one."
+    }
+  },
+  {
+    "key": "quick-sw-99-v3",
+    "source_key": "quick-sw-99",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python הפונקציה `add_item(item, items=None)` יוצרת רשימה ריקה חדשה כש־`items is None`, מוסיפה אליה את `item` ומחזירה אותה. מבצעים `a=add_item(-1)` ואז `b=add_item(0)`. מה הזוג `(a,b)` אחרי שתי הקריאות?",
+      "en": "In Python, `add_item(item, items=None)` creates a fresh empty list when `items is None`, appends `item`, and returns the list. Execute `a=add_item(-1)`, then `b=add_item(0)`. What is `(a,b)` after both calls?"
+    },
+    "choices": [
+      {
+        "he": "([-1], [-1, 0])",
+        "en": "([-1], [-1, 0])"
+      },
+      {
+        "he": "([], [])",
+        "en": "([], [])"
+      },
+      {
+        "he": "([-1], [0])",
+        "en": "([-1], [0])"
+      },
+      {
+        "he": "([-1, 0], [-1, 0])",
+        "en": "([-1, 0], [-1, 0])"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בכל קריאה בלי רשימה מפורשת נוצרת רשימה חדשה, כך שהקריאות אינן חולקות רשימה.",
+      "en": "Each call without an explicit list creates a fresh list, so the calls do not share one."
+    }
+  },
+  {
+    "key": "quick-sw-99-v4",
+    "source_key": "quick-sw-99",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python הפונקציה `add_item(item, items=None)` יוצרת רשימה ריקה חדשה כש־`items is None`, מוסיפה אליה את `item` ומחזירה אותה. מבצעים `a=add_item(8)` ואז `b=add_item(8)`. מה הזוג `(a,b)` אחרי שתי הקריאות?",
+      "en": "In Python, `add_item(item, items=None)` creates a fresh empty list when `items is None`, appends `item`, and returns the list. Execute `a=add_item(8)`, then `b=add_item(8)`. What is `(a,b)` after both calls?"
+    },
+    "choices": [
+      {
+        "he": "([], [])",
+        "en": "([], [])"
+      },
+      {
+        "he": "([8], [8])",
+        "en": "([8], [8])"
+      },
+      {
+        "he": "([8, 8], [8, 8])",
+        "en": "([8, 8], [8, 8])"
+      },
+      {
+        "he": "([8], [8, 8])",
+        "en": "([8], [8, 8])"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בכל קריאה בלי רשימה מפורשת נוצרת רשימה חדשה, כך שהקריאות אינן חולקות רשימה.",
+      "en": "Each call without an explicit list creates a fresh list, so the calls do not share one."
+    }
+  },
+  {
+    "key": "quick-sw-99-v5",
+    "source_key": "quick-sw-99",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־Python הפונקציה `add_item(item, items=None)` יוצרת רשימה ריקה חדשה כש־`items is None`, מוסיפה אליה את `item` ומחזירה אותה. מבצעים `a=add_item(3)` ואז `b=add_item(-2)`. מה הזוג `(a,b)` אחרי שתי הקריאות?",
+      "en": "In Python, `add_item(item, items=None)` creates a fresh empty list when `items is None`, appends `item`, and returns the list. Execute `a=add_item(3)`, then `b=add_item(-2)`. What is `(a,b)` after both calls?"
+    },
+    "choices": [
+      {
+        "he": "([3], [-2])",
+        "en": "([3], [-2])"
+      },
+      {
+        "he": "([3, -2], [3, -2])",
+        "en": "([3, -2], [3, -2])"
+      },
+      {
+        "he": "([3], [3, -2])",
+        "en": "([3], [3, -2])"
+      },
+      {
+        "he": "([], [])",
+        "en": "([], [])"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בכל קריאה בלי רשימה מפורשת נוצרת רשימה חדשה, כך שהקריאות אינן חולקות רשימה.",
+      "en": "Each call without an explicit list creates a fresh list, so the calls do not share one."
+    }
+  },
+  {
+    "key": "quick-sw-100-v1",
+    "source_key": "quick-sw-100",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה ערך הביטוי `sum(range(1, 0+1))` ב־Python?",
+      "en": "What is the value of `sum(range(1, 0+1))` in Python?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הביטוי range(1, 1) ריק כי גבול העצירה אינו נכלל. סכום הרצף הריק הוא 0.",
+      "en": "The range(1, 1) sequence is empty because the stop boundary is excluded. Its sum is 0."
+    }
+  },
+  {
+    "key": "quick-sw-100-v2",
+    "source_key": "quick-sw-100",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה ערך הביטוי `sum(range(1, 1+1))` ב־Python?",
+      "en": "What is the value of `sum(range(1, 1+1))` in Python?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "גבול העצירה אינו נכלל, ולכן מסכמים מ־1 עד 1 כולל. הסכום הוא 1.",
+      "en": "The stop boundary is excluded, so the sum includes 1 through 1. The sum is 1."
+    }
+  },
+  {
+    "key": "quick-sw-100-v3",
+    "source_key": "quick-sw-100",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה ערך הביטוי `sum(range(1, 4+1))` ב־Python?",
+      "en": "What is the value of `sum(range(1, 4+1))` in Python?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "גבול העצירה אינו נכלל, ולכן מסכמים מ־1 עד 4 כולל. הסכום הוא 10.",
+      "en": "The stop boundary is excluded, so the sum includes 1 through 4. The sum is 10."
+    }
+  },
+  {
+    "key": "quick-sw-100-v4",
+    "source_key": "quick-sw-100",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה ערך הביטוי `sum(range(1, 7+1))` ב־Python?",
+      "en": "What is the value of `sum(range(1, 7+1))` in Python?"
+    },
+    "choices": [
+      {
+        "he": "28",
+        "en": "28"
+      },
+      {
+        "he": "21",
+        "en": "21"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "גבול העצירה אינו נכלל, ולכן מסכמים מ־1 עד 7 כולל. הסכום הוא 28.",
+      "en": "The stop boundary is excluded, so the sum includes 1 through 7. The sum is 28."
+    }
+  },
+  {
+    "key": "quick-sw-100-v5",
+    "source_key": "quick-sw-100",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה ערך הביטוי `sum(range(1, 10+1))` ב־Python?",
+      "en": "What is the value of `sum(range(1, 10+1))` in Python?"
+    },
+    "choices": [
+      {
+        "he": "45",
+        "en": "45"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "55",
+        "en": "55"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "גבול העצירה אינו נכלל, ולכן מסכמים מ־1 עד 10 כולל. הסכום הוא 55.",
+      "en": "The stop boundary is excluded, so the sum includes 1 through 10. The sum is 55."
+    }
+  },
+  {
+    "key": "quick-sw-119-v1",
+    "source_key": "quick-sw-119",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה זוגות אינדקסים `i<j` ברשימה `[1, 4, 1, 4]` נותנים סכום 5? סופרים בנפרד מופעים שונים גם כשערכיהם שווים.",
+      "en": "How many index pairs `i<j` in `[1, 4, 1, 4]` sum to 5? Distinct occurrences count separately even when values match."
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מונים זוגות אינדקסים ולא רק זוגות ערכים. יש 4 זוגות מתאימים.",
+      "en": "Count index pairs rather than just value pairs. There are 4 qualifying pairs."
+    }
+  },
+  {
+    "key": "quick-sw-119-v2",
+    "source_key": "quick-sw-119",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה זוגות אינדקסים `i<j` ברשימה `[3, 3, 3]` נותנים סכום 6? סופרים בנפרד מופעים שונים גם כשערכיהם שווים.",
+      "en": "How many index pairs `i<j` in `[3, 3, 3]` sum to 6? Distinct occurrences count separately even when values match."
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מונים זוגות אינדקסים ולא רק זוגות ערכים. יש 3 זוגות מתאימים.",
+      "en": "Count index pairs rather than just value pairs. There are 3 qualifying pairs."
+    }
+  },
+  {
+    "key": "quick-sw-119-v3",
+    "source_key": "quick-sw-119",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה זוגות אינדקסים `i<j` ברשימה `[2, 2, 5]` נותנים סכום 7? סופרים בנפרד מופעים שונים גם כשערכיהם שווים.",
+      "en": "How many index pairs `i<j` in `[2, 2, 5]` sum to 7? Distinct occurrences count separately even when values match."
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מונים זוגות אינדקסים ולא רק זוגות ערכים. יש 2 זוגות מתאימים.",
+      "en": "Count index pairs rather than just value pairs. There are 2 qualifying pairs."
+    }
+  },
+  {
+    "key": "quick-sw-119-v4",
+    "source_key": "quick-sw-119",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה זוגות אינדקסים `i<j` ברשימה `[0, 0, 0, 0]` נותנים סכום 0? סופרים בנפרד מופעים שונים גם כשערכיהם שווים.",
+      "en": "How many index pairs `i<j` in `[0, 0, 0, 0]` sum to 0? Distinct occurrences count separately even when values match."
+    },
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מונים זוגות אינדקסים ולא רק זוגות ערכים. יש 6 זוגות מתאימים.",
+      "en": "Count index pairs rather than just value pairs. There are 6 qualifying pairs."
+    }
+  },
+  {
+    "key": "quick-sw-119-v5",
+    "source_key": "quick-sw-119",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה זוגות אינדקסים `i<j` ברשימה `[1, 2, 3, 4, 5]` נותנים סכום 6? סופרים בנפרד מופעים שונים גם כשערכיהם שווים.",
+      "en": "How many index pairs `i<j` in `[1, 2, 3, 4, 5]` sum to 6? Distinct occurrences count separately even when values match."
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מונים זוגות אינדקסים ולא רק זוגות ערכים. יש 2 זוגות מתאימים.",
+      "en": "Count index pairs rather than just value pairs. There are 2 qualifying pairs."
+    }
+  },
+  {
+    "key": "quick-sw-120-v1",
+    "source_key": "quick-sw-120",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "שני המספרים החסרים הם 2 ו־6. מתקבל `z=2 XOR 6`. מה ערך המסכה `z & -z` ב־Python, המבודדת את הביט הדלוק הנמוך ביותר?",
+      "en": "The missing values are 2 and 6, giving `z=2 XOR 6`. What is Python’s `z & -z` mask, isolating the lowest set bit?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "המסכה היא 4; בביט הזה שני החסרים שונים ולכן יופרדו לשתי קבוצות.",
+      "en": "The mask is 4; the missing values differ at that bit, separating them into two groups."
+    }
+  },
+  {
+    "key": "quick-sw-120-v2",
+    "source_key": "quick-sw-120",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "שני המספרים החסרים הם 3 ו־5. מתקבל `z=3 XOR 5`. מה ערך המסכה `z & -z` ב־Python, המבודדת את הביט הדלוק הנמוך ביותר?",
+      "en": "The missing values are 3 and 5, giving `z=3 XOR 5`. What is Python’s `z & -z` mask, isolating the lowest set bit?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "המסכה היא 2; בביט הזה שני החסרים שונים ולכן יופרדו לשתי קבוצות.",
+      "en": "The mask is 2; the missing values differ at that bit, separating them into two groups."
+    }
+  },
+  {
+    "key": "quick-sw-120-v3",
+    "source_key": "quick-sw-120",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "שני המספרים החסרים הם 0 ו־8. מתקבל `z=0 XOR 8`. מה ערך המסכה `z & -z` ב־Python, המבודדת את הביט הדלוק הנמוך ביותר?",
+      "en": "The missing values are 0 and 8, giving `z=0 XOR 8`. What is Python’s `z & -z` mask, isolating the lowest set bit?"
+    },
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "המסכה היא 8; בביט הזה שני החסרים שונים ולכן יופרדו לשתי קבוצות.",
+      "en": "The mask is 8; the missing values differ at that bit, separating them into two groups."
+    }
+  },
+  {
+    "key": "quick-sw-120-v4",
+    "source_key": "quick-sw-120",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "שני המספרים החסרים הם 7 ו־9. מתקבל `z=7 XOR 9`. מה ערך המסכה `z & -z` ב־Python, המבודדת את הביט הדלוק הנמוך ביותר?",
+      "en": "The missing values are 7 and 9, giving `z=7 XOR 9`. What is Python’s `z & -z` mask, isolating the lowest set bit?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "14",
+        "en": "14"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "המסכה היא 2; בביט הזה שני החסרים שונים ולכן יופרדו לשתי קבוצות.",
+      "en": "The mask is 2; the missing values differ at that bit, separating them into two groups."
+    }
+  },
+  {
+    "key": "quick-sw-120-v5",
+    "source_key": "quick-sw-120",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "שני המספרים החסרים הם 4 ו־5. מתקבל `z=4 XOR 5`. מה ערך המסכה `z & -z` ב־Python, המבודדת את הביט הדלוק הנמוך ביותר?",
+      "en": "The missing values are 4 and 5, giving `z=4 XOR 5`. What is Python’s `z & -z` mask, isolating the lowest set bit?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "המסכה היא 1; בביט הזה שני החסרים שונים ולכן יופרדו לשתי קבוצות.",
+      "en": "The mask is 1; the missing values differ at that bit, separating them into two groups."
+    }
+  },
+  {
+    "key": "quick-sw-121-v1",
+    "source_key": "quick-sw-121",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "הופכים את סדר כל 8 הסיביות של 1, המיוצג כ־`00000001`. מה הערך העשרוני של התוצאה? גם אפסים מובילים משתתפים.",
+      "en": "Reverse all 8 bits of 1, represented as `00000001`. What is the decimal result? Include leading zeros."
+    },
+    "choices": [
+      {
+        "he": "254",
+        "en": "254"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "128",
+        "en": "128"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "הייצוג ההפוך הוא `10000000`, ולכן הערך העשרוני הוא 128.",
+      "en": "The reversed representation is `10000000`, giving decimal value 128."
+    }
+  },
+  {
+    "key": "quick-sw-121-v2",
+    "source_key": "quick-sw-121",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "הופכים את סדר כל 8 הסיביות של 2, המיוצג כ־`00000010`. מה הערך העשרוני של התוצאה? גם אפסים מובילים משתתפים.",
+      "en": "Reverse all 8 bits of 2, represented as `00000010`. What is the decimal result? Include leading zeros."
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "64",
+        "en": "64"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "253",
+        "en": "253"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "הייצוג ההפוך הוא `01000000`, ולכן הערך העשרוני הוא 64.",
+      "en": "The reversed representation is `01000000`, giving decimal value 64."
+    }
+  },
+  {
+    "key": "quick-sw-121-v3",
+    "source_key": "quick-sw-121",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "הופכים את סדר כל 8 הסיביות של 12, המיוצג כ־`00001100`. מה הערך העשרוני של התוצאה? גם אפסים מובילים משתתפים.",
+      "en": "Reverse all 8 bits of 12, represented as `00001100`. What is the decimal result? Include leading zeros."
+    },
+    "choices": [
+      {
+        "he": "48",
+        "en": "48"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      },
+      {
+        "he": "243",
+        "en": "243"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "הייצוג ההפוך הוא `00110000`, ולכן הערך העשרוני הוא 48.",
+      "en": "The reversed representation is `00110000`, giving decimal value 48."
+    }
+  },
+  {
+    "key": "quick-sw-121-v4",
+    "source_key": "quick-sw-121",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "הופכים את סדר כל 8 הסיביות של 129, המיוצג כ־`10000001`. מה הערך העשרוני של התוצאה? גם אפסים מובילים משתתפים.",
+      "en": "Reverse all 8 bits of 129, represented as `10000001`. What is the decimal result? Include leading zeros."
+    },
+    "choices": [
+      {
+        "he": "126",
+        "en": "126"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "129",
+        "en": "129"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הייצוג ההפוך הוא `10000001`, ולכן הערך העשרוני הוא 129.",
+      "en": "The reversed representation is `10000001`, giving decimal value 129."
+    }
+  },
+  {
+    "key": "quick-sw-121-v5",
+    "source_key": "quick-sw-121",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "הופכים את סדר כל 8 הסיביות של 0, המיוצג כ־`00000000`. מה הערך העשרוני של התוצאה? גם אפסים מובילים משתתפים.",
+      "en": "Reverse all 8 bits of 0, represented as `00000000`. What is the decimal result? Include leading zeros."
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "255",
+        "en": "255"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "הייצוג ההפוך הוא `00000000`, ולכן הערך העשרוני הוא 0.",
+      "en": "The reversed representation is `00000000`, giving decimal value 0."
+    }
+  },
+  {
+    "key": "quick-sw-122-v1",
+    "source_key": "quick-sw-122",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "נתונים `A=(2,0), B=(2,4), P=(0,2)`. הקטע חוצה את גובה `P` ממש בין קצותיו. נגדיר `cross=(Bx-Ax)*(Py-Ay)-(By-Ay)*(Px-Ax)`. באיזה צד של `P` החיתוך האופקי, ומה הקשר בין סימני `cross` ו־`By-Ay`?",
+      "en": "Given `A=(2,0), B=(2,4), P=(0,2)`, the segment strictly straddles P’s height. Define `cross=(Bx-Ax)*(Py-Ay)-(By-Ay)*(Px-Ax)`. Which side of P contains the horizontal intersection, and how do the signs of `cross` and `By-Ay` compare?"
+    },
+    "choices": [
+      {
+        "he": "אין חיתוך בגובה הנקודה",
+        "en": "No intersection at the point’s height"
+      },
+      {
+        "he": "ימינה; הסימנים זהים",
+        "en": "Right; the signs match"
+      },
+      {
+        "he": "שמאלה; הסימנים שונים",
+        "en": "Left; the signs differ"
+      },
+      {
+        "he": "על הנקודה; המכפלה הווקטורית אפס",
+        "en": "At the point; the cross product is zero"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מתקבל `cross=8` ו־`By-Ay=4`. סימנים זהים מציינים חיתוך מימין; סימנים שונים מציינים חיתוך משמאל.",
+      "en": "Here `cross=8` and `By-Ay=4`. Matching signs mean rightward; different signs mean leftward."
+    }
+  },
+  {
+    "key": "quick-sw-122-v2",
+    "source_key": "quick-sw-122",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "נתונים `A=(-2,4), B=(-2,0), P=(0,2)`. הקטע חוצה את גובה `P` ממש בין קצותיו. נגדיר `cross=(Bx-Ax)*(Py-Ay)-(By-Ay)*(Px-Ax)`. באיזה צד של `P` החיתוך האופקי, ומה הקשר בין סימני `cross` ו־`By-Ay`?",
+      "en": "Given `A=(-2,4), B=(-2,0), P=(0,2)`, the segment strictly straddles P’s height. Define `cross=(Bx-Ax)*(Py-Ay)-(By-Ay)*(Px-Ax)`. Which side of P contains the horizontal intersection, and how do the signs of `cross` and `By-Ay` compare?"
+    },
+    "choices": [
+      {
+        "he": "ימינה; הסימנים זהים",
+        "en": "Right; the signs match"
+      },
+      {
+        "he": "שמאלה; הסימנים שונים",
+        "en": "Left; the signs differ"
+      },
+      {
+        "he": "על הנקודה; המכפלה הווקטורית אפס",
+        "en": "At the point; the cross product is zero"
+      },
+      {
+        "he": "אין חיתוך בגובה הנקודה",
+        "en": "No intersection at the point’s height"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מתקבל `cross=8` ו־`By-Ay=-4`. סימנים זהים מציינים חיתוך מימין; סימנים שונים מציינים חיתוך משמאל.",
+      "en": "Here `cross=8` and `By-Ay=-4`. Matching signs mean rightward; different signs mean leftward."
+    }
+  },
+  {
+    "key": "quick-sw-122-v3",
+    "source_key": "quick-sw-122",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "נתונים `A=(0,0), B=(4,4), P=(1,2)`. הקטע חוצה את גובה `P` ממש בין קצותיו. נגדיר `cross=(Bx-Ax)*(Py-Ay)-(By-Ay)*(Px-Ax)`. באיזה צד של `P` החיתוך האופקי, ומה הקשר בין סימני `cross` ו־`By-Ay`?",
+      "en": "Given `A=(0,0), B=(4,4), P=(1,2)`, the segment strictly straddles P’s height. Define `cross=(Bx-Ax)*(Py-Ay)-(By-Ay)*(Px-Ax)`. Which side of P contains the horizontal intersection, and how do the signs of `cross` and `By-Ay` compare?"
+    },
+    "choices": [
+      {
+        "he": "שמאלה; הסימנים שונים",
+        "en": "Left; the signs differ"
+      },
+      {
+        "he": "על הנקודה; המכפלה הווקטורית אפס",
+        "en": "At the point; the cross product is zero"
+      },
+      {
+        "he": "אין חיתוך בגובה הנקודה",
+        "en": "No intersection at the point’s height"
+      },
+      {
+        "he": "ימינה; הסימנים זהים",
+        "en": "Right; the signs match"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מתקבל `cross=4` ו־`By-Ay=4`. סימנים זהים מציינים חיתוך מימין; סימנים שונים מציינים חיתוך משמאל.",
+      "en": "Here `cross=4` and `By-Ay=4`. Matching signs mean rightward; different signs mean leftward."
+    }
+  },
+  {
+    "key": "quick-sw-122-v4",
+    "source_key": "quick-sw-122",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "נתונים `A=(4,4), B=(0,0), P=(3,2)`. הקטע חוצה את גובה `P` ממש בין קצותיו. נגדיר `cross=(Bx-Ax)*(Py-Ay)-(By-Ay)*(Px-Ax)`. באיזה צד של `P` החיתוך האופקי, ומה הקשר בין סימני `cross` ו־`By-Ay`?",
+      "en": "Given `A=(4,4), B=(0,0), P=(3,2)`, the segment strictly straddles P’s height. Define `cross=(Bx-Ax)*(Py-Ay)-(By-Ay)*(Px-Ax)`. Which side of P contains the horizontal intersection, and how do the signs of `cross` and `By-Ay` compare?"
+    },
+    "choices": [
+      {
+        "he": "על הנקודה; המכפלה הווקטורית אפס",
+        "en": "At the point; the cross product is zero"
+      },
+      {
+        "he": "אין חיתוך בגובה הנקודה",
+        "en": "No intersection at the point’s height"
+      },
+      {
+        "he": "ימינה; הסימנים זהים",
+        "en": "Right; the signs match"
+      },
+      {
+        "he": "שמאלה; הסימנים שונים",
+        "en": "Left; the signs differ"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מתקבל `cross=4` ו־`By-Ay=-4`. סימנים זהים מציינים חיתוך מימין; סימנים שונים מציינים חיתוך משמאל.",
+      "en": "Here `cross=4` and `By-Ay=-4`. Matching signs mean rightward; different signs mean leftward."
+    }
+  },
+  {
+    "key": "quick-sw-122-v5",
+    "source_key": "quick-sw-122",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "נתונים `A=(1,-2), B=(5,6), P=(1,0)`. הקטע חוצה את גובה `P` ממש בין קצותיו. נגדיר `cross=(Bx-Ax)*(Py-Ay)-(By-Ay)*(Px-Ax)`. באיזה צד של `P` החיתוך האופקי, ומה הקשר בין סימני `cross` ו־`By-Ay`?",
+      "en": "Given `A=(1,-2), B=(5,6), P=(1,0)`, the segment strictly straddles P’s height. Define `cross=(Bx-Ax)*(Py-Ay)-(By-Ay)*(Px-Ax)`. Which side of P contains the horizontal intersection, and how do the signs of `cross` and `By-Ay` compare?"
+    },
+    "choices": [
+      {
+        "he": "אין חיתוך בגובה הנקודה",
+        "en": "No intersection at the point’s height"
+      },
+      {
+        "he": "ימינה; הסימנים זהים",
+        "en": "Right; the signs match"
+      },
+      {
+        "he": "שמאלה; הסימנים שונים",
+        "en": "Left; the signs differ"
+      },
+      {
+        "he": "על הנקודה; המכפלה הווקטורית אפס",
+        "en": "At the point; the cross product is zero"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מתקבל `cross=8` ו־`By-Ay=8`. סימנים זהים מציינים חיתוך מימין; סימנים שונים מציינים חיתוך משמאל.",
+      "en": "Here `cross=8` and `By-Ay=8`. Matching signs mean rightward; different signs mean leftward."
+    }
+  },
+  {
+    "key": "quick-sw-123-v1",
+    "source_key": "quick-sw-123",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בנפת ארטוסתנס כבר טופלו כל הראשוניים הקטנים מ־3. מהי הכפולה הראשונה של 3 שעשויה להימחק לראשונה בשלב שלו? אין למחוק את הראשוני עצמו.",
+      "en": "In the Sieve of Eratosthenes, all primes smaller than 3 have been processed. What is the first multiple of 3 that may be newly marked at its stage? Do not mark the prime itself."
+    },
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "כל כפולה קטנה יותר, מלבד 3 עצמו, כבר מסומנת דרך גורם ראשוני קטן יותר. מתחילים ב־9.",
+      "en": "Each smaller multiple other than 3 itself was already marked via a smaller prime factor. Start at 9."
+    }
+  },
+  {
+    "key": "quick-sw-123-v2",
+    "source_key": "quick-sw-123",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בנפת ארטוסתנס כבר טופלו כל הראשוניים הקטנים מ־5. מהי הכפולה הראשונה של 5 שעשויה להימחק לראשונה בשלב שלו? אין למחוק את הראשוני עצמו.",
+      "en": "In the Sieve of Eratosthenes, all primes smaller than 5 have been processed. What is the first multiple of 5 that may be newly marked at its stage? Do not mark the prime itself."
+    },
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "30",
+        "en": "30"
+      },
+      {
+        "he": "25",
+        "en": "25"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "כל כפולה קטנה יותר, מלבד 5 עצמו, כבר מסומנת דרך גורם ראשוני קטן יותר. מתחילים ב־25.",
+      "en": "Each smaller multiple other than 5 itself was already marked via a smaller prime factor. Start at 25."
+    }
+  },
+  {
+    "key": "quick-sw-123-v3",
+    "source_key": "quick-sw-123",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בנפת ארטוסתנס כבר טופלו כל הראשוניים הקטנים מ־7. מהי הכפולה הראשונה של 7 שעשויה להימחק לראשונה בשלב שלו? אין למחוק את הראשוני עצמו.",
+      "en": "In the Sieve of Eratosthenes, all primes smaller than 7 have been processed. What is the first multiple of 7 that may be newly marked at its stage? Do not mark the prime itself."
+    },
+    "choices": [
+      {
+        "he": "14",
+        "en": "14"
+      },
+      {
+        "he": "56",
+        "en": "56"
+      },
+      {
+        "he": "49",
+        "en": "49"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "כל כפולה קטנה יותר, מלבד 7 עצמו, כבר מסומנת דרך גורם ראשוני קטן יותר. מתחילים ב־49.",
+      "en": "Each smaller multiple other than 7 itself was already marked via a smaller prime factor. Start at 49."
+    }
+  },
+  {
+    "key": "quick-sw-123-v4",
+    "source_key": "quick-sw-123",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בנפת ארטוסתנס כבר טופלו כל הראשוניים הקטנים מ־11. מהי הכפולה הראשונה של 11 שעשויה להימחק לראשונה בשלב שלו? אין למחוק את הראשוני עצמו.",
+      "en": "In the Sieve of Eratosthenes, all primes smaller than 11 have been processed. What is the first multiple of 11 that may be newly marked at its stage? Do not mark the prime itself."
+    },
+    "choices": [
+      {
+        "he": "132",
+        "en": "132"
+      },
+      {
+        "he": "121",
+        "en": "121"
+      },
+      {
+        "he": "11",
+        "en": "11"
+      },
+      {
+        "he": "22",
+        "en": "22"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "כל כפולה קטנה יותר, מלבד 11 עצמו, כבר מסומנת דרך גורם ראשוני קטן יותר. מתחילים ב־121.",
+      "en": "Each smaller multiple other than 11 itself was already marked via a smaller prime factor. Start at 121."
+    }
+  },
+  {
+    "key": "quick-sw-123-v5",
+    "source_key": "quick-sw-123",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בנפת ארטוסתנס כבר טופלו כל הראשוניים הקטנים מ־2. מהי הכפולה הראשונה של 2 שעשויה להימחק לראשונה בשלב שלו? אין למחוק את הראשוני עצמו.",
+      "en": "In the Sieve of Eratosthenes, all primes smaller than 2 have been processed. What is the first multiple of 2 that may be newly marked at its stage? Do not mark the prime itself."
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "כל כפולה קטנה יותר, מלבד 2 עצמו, כבר מסומנת דרך גורם ראשוני קטן יותר. מתחילים ב־4.",
+      "en": "Each smaller multiple other than 2 itself was already marked via a smaller prime factor. Start at 4."
+    }
+  },
+  {
+    "key": "quick-sw-124-v1",
+    "source_key": "quick-sw-124",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "נתונות המחרוזות `([])`, `([)]`, `(()`, `][`. איזו מהן מקוננת כהלכה? כל סימן סגירה חייב להתאים לפותח האחרון שטרם נסגר.",
+      "en": "Given strings `([])`, `([)]`, `(()`, `][`, which is correctly nested? Each closing bracket must match the most recent unmatched opener."
+    },
+    "choices": [
+      {
+        "he": "`([)]`",
+        "en": "`([)]`"
+      },
+      {
+        "he": "`(()`",
+        "en": "`(()`"
+      },
+      {
+        "he": "`][`",
+        "en": "`][`"
+      },
+      {
+        "he": "`([])`",
+        "en": "`([])`"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בדיקת מחסנית מקבלת רק את המחרוזת המסומנת: בכל סגירה הסוג מתאים, ובסוף המחסנית ריקה.",
+      "en": "A stack check accepts only the marked string: each closing type matches and the stack ends empty."
+    }
+  },
+  {
+    "key": "quick-sw-124-v2",
+    "source_key": "quick-sw-124",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "נתונות המחרוזות `{[]}`, `{[}]`, `}{`, `(()`. איזו מהן מקוננת כהלכה? כל סימן סגירה חייב להתאים לפותח האחרון שטרם נסגר.",
+      "en": "Given strings `{[]}`, `{[}]`, `}{`, `(()`, which is correctly nested? Each closing bracket must match the most recent unmatched opener."
+    },
+    "choices": [
+      {
+        "he": "`}{`",
+        "en": "`}{`"
+      },
+      {
+        "he": "`(()`",
+        "en": "`(()`"
+      },
+      {
+        "he": "`{[]}`",
+        "en": "`{[]}`"
+      },
+      {
+        "he": "`{[}]`",
+        "en": "`{[}]`"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בדיקת מחסנית מקבלת רק את המחרוזת המסומנת: בכל סגירה הסוג מתאים, ובסוף המחסנית ריקה.",
+      "en": "A stack check accepts only the marked string: each closing type matches and the stack ends empty."
+    }
+  },
+  {
+    "key": "quick-sw-124-v3",
+    "source_key": "quick-sw-124",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "נתונות המחרוזות `[()()]`, `[)(]`, `[(])`, `][`. איזו מהן מקוננת כהלכה? כל סימן סגירה חייב להתאים לפותח האחרון שטרם נסגר.",
+      "en": "Given strings `[()()]`, `[)(]`, `[(])`, `][`, which is correctly nested? Each closing bracket must match the most recent unmatched opener."
+    },
+    "choices": [
+      {
+        "he": "`][`",
+        "en": "`][`"
+      },
+      {
+        "he": "`[()()]`",
+        "en": "`[()()]`"
+      },
+      {
+        "he": "`[)(]`",
+        "en": "`[)(]`"
+      },
+      {
+        "he": "`[(])`",
+        "en": "`[(])`"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בדיקת מחסנית מקבלת רק את המחרוזת המסומנת: בכל סגירה הסוג מתאים, ובסוף המחסנית ריקה.",
+      "en": "A stack check accepts only the marked string: each closing type matches and the stack ends empty."
+    }
+  },
+  {
+    "key": "quick-sw-124-v4",
+    "source_key": "quick-sw-124",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "נתונות המחרוזות `({[]})`, `({[}])`, `())(`, `{{}`. איזו מהן מקוננת כהלכה? כל סימן סגירה חייב להתאים לפותח האחרון שטרם נסגר.",
+      "en": "Given strings `({[]})`, `({[}])`, `())(`, `{{}`, which is correctly nested? Each closing bracket must match the most recent unmatched opener."
+    },
+    "choices": [
+      {
+        "he": "`({[]})`",
+        "en": "`({[]})`"
+      },
+      {
+        "he": "`({[}])`",
+        "en": "`({[}])`"
+      },
+      {
+        "he": "`())(`",
+        "en": "`())(`"
+      },
+      {
+        "he": "`{{}`",
+        "en": "`{{}`"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בדיקת מחסנית מקבלת רק את המחרוזת המסומנת: בכל סגירה הסוג מתאים, ובסוף המחסנית ריקה.",
+      "en": "A stack check accepts only the marked string: each closing type matches and the stack ends empty."
+    }
+  },
+  {
+    "key": "quick-sw-124-v5",
+    "source_key": "quick-sw-124",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "נתונות המחרוזות `()[]{}`, `([{})]`, `][][`, `((]`. איזו מהן מקוננת כהלכה? כל סימן סגירה חייב להתאים לפותח האחרון שטרם נסגר.",
+      "en": "Given strings `()[]{}`, `([{})]`, `][][`, `((]`, which is correctly nested? Each closing bracket must match the most recent unmatched opener."
+    },
+    "choices": [
+      {
+        "he": "`([{})]`",
+        "en": "`([{})]`"
+      },
+      {
+        "he": "`][][`",
+        "en": "`][][`"
+      },
+      {
+        "he": "`((]`",
+        "en": "`((]`"
+      },
+      {
+        "he": "`()[]{}`",
+        "en": "`()[]{}`"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בדיקת מחסנית מקבלת רק את המחרוזת המסומנת: בכל סגירה הסוג מתאים, ובסוף המחסנית ריקה.",
+      "en": "A stack check accepts only the marked string: each closing type matches and the stack ends empty."
+    }
+  },
+  {
+    "key": "quick-sw-125-v1",
+    "source_key": "quick-sw-125",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בעץ בינארי השורש הוא 3, הבן השמאלי 99 והימני 4; שניהם עלים. אין הבטחה של עץ חיפוש. מהו הערך המרבי בעץ?",
+      "en": "A binary tree has root 3, left child 99, and right child 4; both children are leaves. No search-tree ordering is guaranteed. What is its maximum value?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "99",
+        "en": "99"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בודקים את כל שלושת הצמתים. המקסימום הוא 99; מיקום ימני אינו מבטיח ערך גדול יותר בעץ בינארי כללי.",
+      "en": "Inspect all three nodes. The maximum is 99; a rightward position does not guarantee a larger value in a general binary tree."
+    }
+  },
+  {
+    "key": "quick-sw-125-v2",
+    "source_key": "quick-sw-125",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בעץ בינארי השורש הוא -2, הבן השמאלי -1 והימני -5; שניהם עלים. אין הבטחה של עץ חיפוש. מהו הערך המרבי בעץ?",
+      "en": "A binary tree has root -2, left child -1, and right child -5; both children are leaves. No search-tree ordering is guaranteed. What is its maximum value?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "-2",
+        "en": "-2"
+      },
+      {
+        "he": "-5",
+        "en": "-5"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בודקים את כל שלושת הצמתים. המקסימום הוא -1; מיקום ימני אינו מבטיח ערך גדול יותר בעץ בינארי כללי.",
+      "en": "Inspect all three nodes. The maximum is -1; a rightward position does not guarantee a larger value in a general binary tree."
+    }
+  },
+  {
+    "key": "quick-sw-125-v3",
+    "source_key": "quick-sw-125",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בעץ בינארי השורש הוא 8, הבן השמאלי 12 והימני 10; שניהם עלים. אין הבטחה של עץ חיפוש. מהו הערך המרבי בעץ?",
+      "en": "A binary tree has root 8, left child 12, and right child 10; both children are leaves. No search-tree ordering is guaranteed. What is its maximum value?"
+    },
+    "choices": [
+      {
+        "he": "12",
+        "en": "12"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בודקים את כל שלושת הצמתים. המקסימום הוא 12; מיקום ימני אינו מבטיח ערך גדול יותר בעץ בינארי כללי.",
+      "en": "Inspect all three nodes. The maximum is 12; a rightward position does not guarantee a larger value in a general binary tree."
+    }
+  },
+  {
+    "key": "quick-sw-125-v4",
+    "source_key": "quick-sw-125",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בעץ בינארי השורש הוא 7, הבן השמאלי 1 והימני 4; שניהם עלים. אין הבטחה של עץ חיפוש. מהו הערך המרבי בעץ?",
+      "en": "A binary tree has root 7, left child 1, and right child 4; both children are leaves. No search-tree ordering is guaranteed. What is its maximum value?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בודקים את כל שלושת הצמתים. המקסימום הוא 7; מיקום ימני אינו מבטיח ערך גדול יותר בעץ בינארי כללי.",
+      "en": "Inspect all three nodes. The maximum is 7; a rightward position does not guarantee a larger value in a general binary tree."
+    }
+  },
+  {
+    "key": "quick-sw-125-v5",
+    "source_key": "quick-sw-125",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בעץ בינארי השורש הוא 0, הבן השמאלי -3 והימני 5; שניהם עלים. אין הבטחה של עץ חיפוש. מהו הערך המרבי בעץ?",
+      "en": "A binary tree has root 0, left child -3, and right child 5; both children are leaves. No search-tree ordering is guaranteed. What is its maximum value?"
+    },
+    "choices": [
+      {
+        "he": "-3",
+        "en": "-3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בודקים את כל שלושת הצמתים. המקסימום הוא 5; מיקום ימני אינו מבטיח ערך גדול יותר בעץ בינארי כללי.",
+      "en": "Inspect all three nodes. The maximum is 5; a rightward position does not guarantee a larger value in a general binary tree."
+    }
+  }
+]

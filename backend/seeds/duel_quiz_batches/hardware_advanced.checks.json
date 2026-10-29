@@ -1,0 +1,5196 @@
+[
+  {
+    "key": "quick-hw-61-v1",
+    "method": "enumerate_differing_bits",
+    "inputs": {
+      "a": 3,
+      "b": 3,
+      "width": 4
+    },
+    "expected": {
+      "xor": 0,
+      "eq": 1
+    },
+    "correct_text": {
+      "he": "XOR=0; eq=1",
+      "en": "XOR=0; eq=1"
+    }
+  },
+  {
+    "key": "quick-hw-61-v2",
+    "method": "enumerate_differing_bits",
+    "inputs": {
+      "a": 3,
+      "b": 7,
+      "width": 4
+    },
+    "expected": {
+      "xor": 4,
+      "eq": 0
+    },
+    "correct_text": {
+      "he": "XOR=4; eq=0",
+      "en": "XOR=4; eq=0"
+    }
+  },
+  {
+    "key": "quick-hw-61-v3",
+    "method": "enumerate_differing_bits",
+    "inputs": {
+      "a": 10,
+      "b": 2,
+      "width": 4
+    },
+    "expected": {
+      "xor": 8,
+      "eq": 0
+    },
+    "correct_text": {
+      "he": "XOR=8; eq=0",
+      "en": "XOR=8; eq=0"
+    }
+  },
+  {
+    "key": "quick-hw-61-v4",
+    "method": "enumerate_differing_bits",
+    "inputs": {
+      "a": 0,
+      "b": 0,
+      "width": 5
+    },
+    "expected": {
+      "xor": 0,
+      "eq": 1
+    },
+    "correct_text": {
+      "he": "XOR=0; eq=1",
+      "en": "XOR=0; eq=1"
+    }
+  },
+  {
+    "key": "quick-hw-61-v5",
+    "method": "enumerate_differing_bits",
+    "inputs": {
+      "a": 17,
+      "b": 19,
+      "width": 5
+    },
+    "expected": {
+      "xor": 2,
+      "eq": 0
+    },
+    "correct_text": {
+      "he": "XOR=2; eq=0",
+      "en": "XOR=2; eq=0"
+    }
+  },
+  {
+    "key": "quick-hw-62-v1",
+    "method": "half_adder_truth_table",
+    "inputs": {
+      "a": 0,
+      "b": 0
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0,0",
+      "en": "0,0"
+    }
+  },
+  {
+    "key": "quick-hw-62-v2",
+    "method": "half_adder_truth_table",
+    "inputs": {
+      "a": 0,
+      "b": 1
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1,0",
+      "en": "1,0"
+    }
+  },
+  {
+    "key": "quick-hw-62-v3",
+    "method": "half_adder_truth_table",
+    "inputs": {
+      "a": 1,
+      "b": 0
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1,0",
+      "en": "1,0"
+    }
+  },
+  {
+    "key": "quick-hw-62-v4",
+    "method": "half_adder_truth_table",
+    "inputs": {
+      "a": 1,
+      "b": 1
+    },
+    "expected": [
+      0,
+      1
+    ],
+    "correct_text": {
+      "he": "0,1",
+      "en": "0,1"
+    }
+  },
+  {
+    "key": "quick-hw-62-v5",
+    "method": "half_adder_integer_sum",
+    "inputs": {
+      "a": 1,
+      "b": 1
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-63-v1",
+    "method": "enumerate_set_positions",
+    "inputs": {
+      "word": "0000"
+    },
+    "expected": {
+      "valid": 0,
+      "index": null
+    },
+    "correct_text": {
+      "he": "valid=0; האינדקס חסר משמעות",
+      "en": "valid=0; index is meaningless"
+    }
+  },
+  {
+    "key": "quick-hw-63-v2",
+    "method": "enumerate_set_positions",
+    "inputs": {
+      "word": "0001"
+    },
+    "expected": {
+      "valid": 1,
+      "index": 0
+    },
+    "correct_text": {
+      "he": "valid=1; index=0",
+      "en": "valid=1; index=0"
+    }
+  },
+  {
+    "key": "quick-hw-63-v3",
+    "method": "enumerate_set_positions",
+    "inputs": {
+      "word": "0010"
+    },
+    "expected": {
+      "valid": 1,
+      "index": 1
+    },
+    "correct_text": {
+      "he": "valid=1; index=1",
+      "en": "valid=1; index=1"
+    }
+  },
+  {
+    "key": "quick-hw-63-v4",
+    "method": "enumerate_set_positions",
+    "inputs": {
+      "word": "1010"
+    },
+    "expected": {
+      "valid": 1,
+      "index": 3
+    },
+    "correct_text": {
+      "he": "valid=1; index=3",
+      "en": "valid=1; index=3"
+    }
+  },
+  {
+    "key": "quick-hw-63-v5",
+    "method": "enumerate_set_positions",
+    "inputs": {
+      "word": "1000"
+    },
+    "expected": {
+      "valid": 1,
+      "index": 3
+    },
+    "correct_text": {
+      "he": "valid=1; index=3",
+      "en": "valid=1; index=3"
+    }
+  },
+  {
+    "key": "quick-hw-64-v1",
+    "method": "concatenate_binary_group_and_local",
+    "inputs": {
+      "group": 0,
+      "local": 3
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-hw-64-v2",
+    "method": "concatenate_binary_group_and_local",
+    "inputs": {
+      "group": 1,
+      "local": 2
+    },
+    "expected": 6,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-hw-64-v3",
+    "method": "concatenate_binary_group_and_local",
+    "inputs": {
+      "group": 2,
+      "local": 1
+    },
+    "expected": 9,
+    "correct_text": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-hw-64-v4",
+    "method": "concatenate_binary_group_and_local",
+    "inputs": {
+      "group": 3,
+      "local": 0
+    },
+    "expected": 12,
+    "correct_text": {
+      "he": "12",
+      "en": "12"
+    }
+  },
+  {
+    "key": "quick-hw-64-v5",
+    "method": "concatenate_binary_group_and_local",
+    "inputs": {
+      "group": 3,
+      "local": 3
+    },
+    "expected": 15,
+    "correct_text": {
+      "he": "15",
+      "en": "15"
+    }
+  },
+  {
+    "key": "quick-hw-65-v1",
+    "method": "compare_healthy_and_stuck_trace",
+    "inputs": {
+      "stuck": 0,
+      "samples": "01"
+    },
+    "expected": [
+      2
+    ],
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-65-v2",
+    "method": "compare_healthy_and_stuck_trace",
+    "inputs": {
+      "stuck": 1,
+      "samples": "01"
+    },
+    "expected": [
+      1
+    ],
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-65-v3",
+    "method": "compare_healthy_and_stuck_trace",
+    "inputs": {
+      "stuck": 0,
+      "samples": "10"
+    },
+    "expected": [
+      1
+    ],
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-65-v4",
+    "method": "compare_healthy_and_stuck_trace",
+    "inputs": {
+      "stuck": 1,
+      "samples": "10"
+    },
+    "expected": [
+      2
+    ],
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-65-v5",
+    "method": "compare_healthy_and_stuck_trace",
+    "inputs": {
+      "stuck": 0,
+      "samples": "001"
+    },
+    "expected": [
+      3
+    ],
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-hw-66-v1",
+    "method": "enumerate_healthy_and_faulty_gate",
+    "inputs": {
+      "gate": "AND",
+      "stuck": 0,
+      "required_b": null
+    },
+    "expected": {
+      "he": "X=1, B=1",
+      "en": "X=1, B=1"
+    },
+    "correct_text": {
+      "he": "X=1, B=1",
+      "en": "X=1, B=1"
+    }
+  },
+  {
+    "key": "quick-hw-66-v2",
+    "method": "enumerate_healthy_and_faulty_gate",
+    "inputs": {
+      "gate": "OR",
+      "stuck": 1,
+      "required_b": null
+    },
+    "expected": {
+      "he": "X=0, B=0",
+      "en": "X=0, B=0"
+    },
+    "correct_text": {
+      "he": "X=0, B=0",
+      "en": "X=0, B=0"
+    }
+  },
+  {
+    "key": "quick-hw-66-v3",
+    "method": "enumerate_healthy_and_faulty_gate",
+    "inputs": {
+      "gate": "AND",
+      "stuck": 1,
+      "required_b": null
+    },
+    "expected": {
+      "he": "X=0, B=1",
+      "en": "X=0, B=1"
+    },
+    "correct_text": {
+      "he": "X=0, B=1",
+      "en": "X=0, B=1"
+    }
+  },
+  {
+    "key": "quick-hw-66-v4",
+    "method": "enumerate_healthy_and_faulty_gate",
+    "inputs": {
+      "gate": "OR",
+      "stuck": 0,
+      "required_b": null
+    },
+    "expected": {
+      "he": "X=1, B=0",
+      "en": "X=1, B=0"
+    },
+    "correct_text": {
+      "he": "X=1, B=0",
+      "en": "X=1, B=0"
+    }
+  },
+  {
+    "key": "quick-hw-66-v5",
+    "method": "enumerate_healthy_and_faulty_gate",
+    "inputs": {
+      "gate": "XOR",
+      "stuck": 0,
+      "required_b": 0
+    },
+    "expected": {
+      "he": "X=1, B=0",
+      "en": "X=1, B=0"
+    },
+    "correct_text": {
+      "he": "X=1, B=0",
+      "en": "X=1, B=0"
+    }
+  },
+  {
+    "key": "quick-hw-67-v1",
+    "method": "exhaustive_fault_observability",
+    "inputs": {
+      "a": 0,
+      "b": 0,
+      "all_inputs": false
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-67-v2",
+    "method": "exhaustive_fault_observability",
+    "inputs": {
+      "a": 0,
+      "b": 1,
+      "all_inputs": false
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-67-v3",
+    "method": "exhaustive_fault_observability",
+    "inputs": {
+      "a": 1,
+      "b": 0,
+      "all_inputs": false
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-67-v4",
+    "method": "exhaustive_fault_observability",
+    "inputs": {
+      "a": 1,
+      "b": 1,
+      "all_inputs": false
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-67-v5",
+    "method": "exhaustive_fault_observability",
+    "inputs": {
+      "a": 1,
+      "b": 0,
+      "all_inputs": true
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-68-v1",
+    "method": "interval_intersection_delay_model",
+    "inputs": {
+      "direct": 1,
+      "inverted": 4
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-hw-68-v2",
+    "method": "interval_intersection_delay_model",
+    "inputs": {
+      "direct": 2,
+      "inverted": 7
+    },
+    "expected": 5,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-hw-68-v3",
+    "method": "interval_intersection_delay_model",
+    "inputs": {
+      "direct": 3,
+      "inverted": 5
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-68-v4",
+    "method": "interval_intersection_delay_model",
+    "inputs": {
+      "direct": 1,
+      "inverted": 8
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-hw-68-v5",
+    "method": "interval_intersection_delay_model",
+    "inputs": {
+      "direct": 4,
+      "inverted": 9
+    },
+    "expected": 5,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-hw-69-v1",
+    "method": "tri_state_contract_case",
+    "inputs": {
+      "case": 1
+    },
+    "expected": {
+      "he": "אין ערך לוגי מובטח",
+      "en": "No logic value is guaranteed"
+    },
+    "correct_text": {
+      "he": "אין ערך לוגי מובטח",
+      "en": "No logic value is guaranteed"
+    }
+  },
+  {
+    "key": "quick-hw-69-v2",
+    "method": "tri_state_contract_case",
+    "inputs": {
+      "case": 2
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-69-v3",
+    "method": "tri_state_contract_case",
+    "inputs": {
+      "case": 3
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-69-v4",
+    "method": "tri_state_contract_case",
+    "inputs": {
+      "case": 4
+    },
+    "expected": {
+      "he": "קונפליקט בין דרייברים",
+      "en": "Driver contention"
+    },
+    "correct_text": {
+      "he": "קונפליקט בין דרייברים",
+      "en": "Driver contention"
+    }
+  },
+  {
+    "key": "quick-hw-69-v5",
+    "method": "tri_state_contract_case",
+    "inputs": {
+      "case": 5
+    },
+    "expected": {
+      "he": "עכבה גבוהה, ללא כפיית ערך",
+      "en": "High impedance, without forcing a value"
+    },
+    "correct_text": {
+      "he": "עכבה גבוהה, ללא כפיית ערך",
+      "en": "High impedance, without forcing a value"
+    }
+  },
+  {
+    "key": "quick-hw-70-v1",
+    "method": "signed_range_and_sign_change_crosscheck",
+    "inputs": {
+      "width": 4,
+      "a": 7,
+      "b": 1
+    },
+    "expected": {
+      "stored": -8,
+      "overflow": true
+    },
+    "correct_text": {
+      "he": "-8; גלישה: כן",
+      "en": "-8; overflow: yes"
+    }
+  },
+  {
+    "key": "quick-hw-70-v2",
+    "method": "signed_range_and_sign_change_crosscheck",
+    "inputs": {
+      "width": 4,
+      "a": -8,
+      "b": -1
+    },
+    "expected": {
+      "stored": 7,
+      "overflow": true
+    },
+    "correct_text": {
+      "he": "7; גלישה: כן",
+      "en": "7; overflow: yes"
+    }
+  },
+  {
+    "key": "quick-hw-70-v3",
+    "method": "signed_range_and_sign_change_crosscheck",
+    "inputs": {
+      "width": 5,
+      "a": 15,
+      "b": 2
+    },
+    "expected": {
+      "stored": -15,
+      "overflow": true
+    },
+    "correct_text": {
+      "he": "-15; גלישה: כן",
+      "en": "-15; overflow: yes"
+    }
+  },
+  {
+    "key": "quick-hw-70-v4",
+    "method": "signed_range_and_sign_change_crosscheck",
+    "inputs": {
+      "width": 5,
+      "a": -16,
+      "b": -2
+    },
+    "expected": {
+      "stored": 14,
+      "overflow": true
+    },
+    "correct_text": {
+      "he": "14; גלישה: כן",
+      "en": "14; overflow: yes"
+    }
+  },
+  {
+    "key": "quick-hw-70-v5",
+    "method": "signed_range_and_sign_change_crosscheck",
+    "inputs": {
+      "width": 4,
+      "a": 3,
+      "b": 2
+    },
+    "expected": {
+      "stored": 5,
+      "overflow": false
+    },
+    "correct_text": {
+      "he": "5; גלישה: לא",
+      "en": "5; overflow: no"
+    }
+  },
+  {
+    "key": "quick-hw-71-v1",
+    "method": "wide_sum_vs_modular_sum",
+    "inputs": {
+      "width": 4,
+      "a": 15,
+      "b": 1
+    },
+    "expected": [
+      0,
+      16
+    ],
+    "correct_text": {
+      "he": "0, 16",
+      "en": "0, 16"
+    }
+  },
+  {
+    "key": "quick-hw-71-v2",
+    "method": "wide_sum_vs_modular_sum",
+    "inputs": {
+      "width": 4,
+      "a": 12,
+      "b": 7
+    },
+    "expected": [
+      3,
+      19
+    ],
+    "correct_text": {
+      "he": "3, 19",
+      "en": "3, 19"
+    }
+  },
+  {
+    "key": "quick-hw-71-v3",
+    "method": "wide_sum_vs_modular_sum",
+    "inputs": {
+      "width": 5,
+      "a": 31,
+      "b": 2
+    },
+    "expected": [
+      1,
+      33
+    ],
+    "correct_text": {
+      "he": "1, 33",
+      "en": "1, 33"
+    }
+  },
+  {
+    "key": "quick-hw-71-v4",
+    "method": "wide_sum_vs_modular_sum",
+    "inputs": {
+      "width": 3,
+      "a": 7,
+      "b": 5
+    },
+    "expected": [
+      4,
+      12
+    ],
+    "correct_text": {
+      "he": "4, 12",
+      "en": "4, 12"
+    }
+  },
+  {
+    "key": "quick-hw-71-v5",
+    "method": "wide_sum_vs_modular_sum",
+    "inputs": {
+      "width": 5,
+      "a": 20,
+      "b": 20
+    },
+    "expected": [
+      8,
+      40
+    ],
+    "correct_text": {
+      "he": "8, 40",
+      "en": "8, 40"
+    }
+  },
+  {
+    "key": "quick-hw-72-v1",
+    "method": "algebra_and_exact_double_crosscheck",
+    "inputs": {
+      "a": 4,
+      "gap": 2
+    },
+    "expected": 5,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-hw-72-v2",
+    "method": "algebra_and_exact_double_crosscheck",
+    "inputs": {
+      "a": 7,
+      "gap": 4
+    },
+    "expected": 9,
+    "correct_text": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-hw-72-v3",
+    "method": "algebra_and_exact_double_crosscheck",
+    "inputs": {
+      "a": 10,
+      "gap": 6
+    },
+    "expected": 13,
+    "correct_text": {
+      "he": "13",
+      "en": "13"
+    }
+  },
+  {
+    "key": "quick-hw-72-v4",
+    "method": "algebra_and_exact_double_crosscheck",
+    "inputs": {
+      "a": 12,
+      "gap": 2
+    },
+    "expected": 13,
+    "correct_text": {
+      "he": "13",
+      "en": "13"
+    }
+  },
+  {
+    "key": "quick-hw-72-v5",
+    "method": "algebra_and_exact_double_crosscheck",
+    "inputs": {
+      "a": 3,
+      "gap": 8
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-hw-73-v1",
+    "method": "minimum_twos_complement_negation",
+    "inputs": {
+      "width": 3,
+      "minimum": -4
+    },
+    "expected": -4,
+    "correct_text": {
+      "he": "נשמר -4, עם גלישה",
+      "en": "-4 is stored, with overflow"
+    }
+  },
+  {
+    "key": "quick-hw-73-v2",
+    "method": "minimum_twos_complement_negation",
+    "inputs": {
+      "width": 4,
+      "minimum": -8
+    },
+    "expected": -8,
+    "correct_text": {
+      "he": "נשמר -8, עם גלישה",
+      "en": "-8 is stored, with overflow"
+    }
+  },
+  {
+    "key": "quick-hw-73-v3",
+    "method": "minimum_twos_complement_negation",
+    "inputs": {
+      "width": 5,
+      "minimum": -16
+    },
+    "expected": -16,
+    "correct_text": {
+      "he": "נשמר -16, עם גלישה",
+      "en": "-16 is stored, with overflow"
+    }
+  },
+  {
+    "key": "quick-hw-73-v4",
+    "method": "minimum_twos_complement_negation",
+    "inputs": {
+      "width": 6,
+      "minimum": -32
+    },
+    "expected": -32,
+    "correct_text": {
+      "he": "נשמר -32, עם גלישה",
+      "en": "-32 is stored, with overflow"
+    }
+  },
+  {
+    "key": "quick-hw-73-v5",
+    "method": "minimum_twos_complement_negation",
+    "inputs": {
+      "width": 7,
+      "minimum": -64
+    },
+    "expected": -64,
+    "correct_text": {
+      "he": "נשמר -64, עם גלישה",
+      "en": "-64 is stored, with overflow"
+    }
+  },
+  {
+    "key": "quick-hw-74-v1",
+    "method": "division_remainder_and_bitmask_crosscheck",
+    "inputs": {
+      "x": 53,
+      "k": 3
+    },
+    "expected": 5,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-hw-74-v2",
+    "method": "division_remainder_and_bitmask_crosscheck",
+    "inputs": {
+      "x": 27,
+      "k": 2
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-hw-74-v3",
+    "method": "division_remainder_and_bitmask_crosscheck",
+    "inputs": {
+      "x": 94,
+      "k": 4
+    },
+    "expected": 14,
+    "correct_text": {
+      "he": "14",
+      "en": "14"
+    }
+  },
+  {
+    "key": "quick-hw-74-v4",
+    "method": "division_remainder_and_bitmask_crosscheck",
+    "inputs": {
+      "x": 41,
+      "k": 3
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-74-v5",
+    "method": "division_remainder_and_bitmask_crosscheck",
+    "inputs": {
+      "x": 127,
+      "k": 5
+    },
+    "expected": 31,
+    "correct_text": {
+      "he": "31",
+      "en": "31"
+    }
+  },
+  {
+    "key": "quick-hw-75-v1",
+    "method": "gray_encode_bitwise",
+    "inputs": {
+      "binary": 3,
+      "width": 3
+    },
+    "expected": "010",
+    "correct_text": {
+      "he": "010",
+      "en": "010"
+    }
+  },
+  {
+    "key": "quick-hw-75-v2",
+    "method": "gray_encode_bitwise",
+    "inputs": {
+      "binary": 4,
+      "width": 3
+    },
+    "expected": "110",
+    "correct_text": {
+      "he": "110",
+      "en": "110"
+    }
+  },
+  {
+    "key": "quick-hw-75-v3",
+    "method": "gray_encode_bitwise",
+    "inputs": {
+      "binary": 7,
+      "width": 4
+    },
+    "expected": "0100",
+    "correct_text": {
+      "he": "0100",
+      "en": "0100"
+    }
+  },
+  {
+    "key": "quick-hw-75-v4",
+    "method": "gray_encode_bitwise",
+    "inputs": {
+      "binary": 8,
+      "width": 4
+    },
+    "expected": "1100",
+    "correct_text": {
+      "he": "1100",
+      "en": "1100"
+    }
+  },
+  {
+    "key": "quick-hw-75-v5",
+    "method": "gray_encode_bitwise",
+    "inputs": {
+      "binary": 10,
+      "width": 4
+    },
+    "expected": "1111",
+    "correct_text": {
+      "he": "1111",
+      "en": "1111"
+    }
+  },
+  {
+    "key": "quick-hw-76-v1",
+    "method": "enumerate_address_and_occupancy_ranges",
+    "inputs": {
+      "depth": 4
+    },
+    "expected": [
+      2,
+      3
+    ],
+    "correct_text": {
+      "he": "2, 3",
+      "en": "2, 3"
+    }
+  },
+  {
+    "key": "quick-hw-76-v2",
+    "method": "enumerate_address_and_occupancy_ranges",
+    "inputs": {
+      "depth": 8
+    },
+    "expected": [
+      3,
+      4
+    ],
+    "correct_text": {
+      "he": "3, 4",
+      "en": "3, 4"
+    }
+  },
+  {
+    "key": "quick-hw-76-v3",
+    "method": "enumerate_address_and_occupancy_ranges",
+    "inputs": {
+      "depth": 16
+    },
+    "expected": [
+      4,
+      5
+    ],
+    "correct_text": {
+      "he": "4, 5",
+      "en": "4, 5"
+    }
+  },
+  {
+    "key": "quick-hw-76-v4",
+    "method": "enumerate_address_and_occupancy_ranges",
+    "inputs": {
+      "depth": 32
+    },
+    "expected": [
+      5,
+      6
+    ],
+    "correct_text": {
+      "he": "5, 6",
+      "en": "5, 6"
+    }
+  },
+  {
+    "key": "quick-hw-76-v5",
+    "method": "enumerate_address_and_occupancy_ranges",
+    "inputs": {
+      "depth": 64
+    },
+    "expected": [
+      6,
+      7
+    ],
+    "correct_text": {
+      "he": "6, 7",
+      "en": "6, 7"
+    }
+  },
+  {
+    "key": "quick-hw-77-v1",
+    "method": "maximum_product_range_bound",
+    "inputs": {
+      "a_width": 2,
+      "b_width": 2
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-hw-77-v2",
+    "method": "maximum_product_range_bound",
+    "inputs": {
+      "a_width": 3,
+      "b_width": 3
+    },
+    "expected": 6,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-hw-77-v3",
+    "method": "maximum_product_range_bound",
+    "inputs": {
+      "a_width": 4,
+      "b_width": 4
+    },
+    "expected": 8,
+    "correct_text": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-hw-77-v4",
+    "method": "maximum_product_range_bound",
+    "inputs": {
+      "a_width": 3,
+      "b_width": 5
+    },
+    "expected": 8,
+    "correct_text": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-hw-77-v5",
+    "method": "maximum_product_range_bound",
+    "inputs": {
+      "a_width": 5,
+      "b_width": 5
+    },
+    "expected": 10,
+    "correct_text": {
+      "he": "10",
+      "en": "10"
+    }
+  },
+  {
+    "key": "quick-hw-78-v1",
+    "method": "stream_remainder_vs_integer_division",
+    "inputs": {
+      "bits": "110"
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-78-v2",
+    "method": "stream_remainder_vs_integer_division",
+    "inputs": {
+      "bits": "101"
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-78-v3",
+    "method": "stream_remainder_vs_integer_division",
+    "inputs": {
+      "bits": "1110"
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-78-v4",
+    "method": "stream_remainder_vs_integer_division",
+    "inputs": {
+      "bits": "1001"
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-78-v5",
+    "method": "stream_remainder_vs_integer_division",
+    "inputs": {
+      "bits": "10111"
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-79-v1",
+    "method": "synchronous_SR_truth_table",
+    "inputs": {
+      "d_samples": "01"
+    },
+    "expected": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "correct_text": {
+      "he": "01; 10",
+      "en": "01; 10"
+    }
+  },
+  {
+    "key": "quick-hw-79-v2",
+    "method": "synchronous_SR_truth_table",
+    "inputs": {
+      "d_samples": "10"
+    },
+    "expected": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "correct_text": {
+      "he": "10; 01",
+      "en": "10; 01"
+    }
+  },
+  {
+    "key": "quick-hw-79-v3",
+    "method": "synchronous_SR_truth_table",
+    "inputs": {
+      "d_samples": "001"
+    },
+    "expected": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "correct_text": {
+      "he": "01; 01; 10",
+      "en": "01; 01; 10"
+    }
+  },
+  {
+    "key": "quick-hw-79-v4",
+    "method": "synchronous_SR_truth_table",
+    "inputs": {
+      "d_samples": "110"
+    },
+    "expected": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "correct_text": {
+      "he": "10; 10; 01",
+      "en": "10; 10; 01"
+    }
+  },
+  {
+    "key": "quick-hw-79-v5",
+    "method": "synchronous_SR_truth_table",
+    "inputs": {
+      "d_samples": "101"
+    },
+    "expected": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "correct_text": {
+      "he": "10; 01; 10",
+      "en": "10; 01; 10"
+    }
+  },
+  {
+    "key": "quick-hw-80-v1",
+    "method": "level_enable_vs_edge_transition",
+    "inputs": {
+      "initial": 0,
+      "new_d": 1,
+      "enable": 1
+    },
+    "expected": {
+      "latch": 1,
+      "dff": 0
+    },
+    "correct_text": {
+      "he": "latch=1, DFF=0",
+      "en": "latch=1, DFF=0"
+    }
+  },
+  {
+    "key": "quick-hw-80-v2",
+    "method": "level_enable_vs_edge_transition",
+    "inputs": {
+      "initial": 1,
+      "new_d": 0,
+      "enable": 1
+    },
+    "expected": {
+      "latch": 0,
+      "dff": 1
+    },
+    "correct_text": {
+      "he": "latch=0, DFF=1",
+      "en": "latch=0, DFF=1"
+    }
+  },
+  {
+    "key": "quick-hw-80-v3",
+    "method": "level_enable_vs_edge_transition",
+    "inputs": {
+      "initial": 0,
+      "new_d": 1,
+      "enable": 0
+    },
+    "expected": {
+      "latch": 0,
+      "dff": 0
+    },
+    "correct_text": {
+      "he": "latch=0, DFF=0",
+      "en": "latch=0, DFF=0"
+    }
+  },
+  {
+    "key": "quick-hw-80-v4",
+    "method": "level_enable_vs_edge_transition",
+    "inputs": {
+      "initial": 1,
+      "new_d": 0,
+      "enable": 0
+    },
+    "expected": {
+      "latch": 1,
+      "dff": 1
+    },
+    "correct_text": {
+      "he": "latch=1, DFF=1",
+      "en": "latch=1, DFF=1"
+    }
+  },
+  {
+    "key": "quick-hw-80-v5",
+    "method": "level_enable_vs_edge_transition",
+    "inputs": {
+      "initial": 1,
+      "new_d": 1,
+      "enable": 1
+    },
+    "expected": {
+      "latch": 1,
+      "dff": 1
+    },
+    "correct_text": {
+      "he": "latch=1, DFF=1",
+      "en": "latch=1, DFF=1"
+    }
+  },
+  {
+    "key": "quick-hw-81-v1",
+    "method": "setup_window_subtraction",
+    "inputs": {
+      "edge": 10,
+      "setup": 2
+    },
+    "expected": 8,
+    "correct_text": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-hw-81-v2",
+    "method": "setup_window_subtraction",
+    "inputs": {
+      "edge": 12,
+      "setup": 3
+    },
+    "expected": 9,
+    "correct_text": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-hw-81-v3",
+    "method": "setup_window_subtraction",
+    "inputs": {
+      "edge": 20,
+      "setup": 4
+    },
+    "expected": 16,
+    "correct_text": {
+      "he": "16",
+      "en": "16"
+    }
+  },
+  {
+    "key": "quick-hw-81-v4",
+    "method": "setup_window_subtraction",
+    "inputs": {
+      "edge": 15,
+      "setup": 2
+    },
+    "expected": 13,
+    "correct_text": {
+      "he": "13",
+      "en": "13"
+    }
+  },
+  {
+    "key": "quick-hw-81-v5",
+    "method": "setup_window_subtraction",
+    "inputs": {
+      "edge": 18,
+      "setup": 5
+    },
+    "expected": 13,
+    "correct_text": {
+      "he": "13",
+      "en": "13"
+    }
+  },
+  {
+    "key": "quick-hw-82-v1",
+    "method": "hold_window_boundary_comparison",
+    "inputs": {
+      "edge": 10,
+      "hold": 2,
+      "arrival": 11
+    },
+    "expected": {
+      "limit": 12,
+      "violation": true
+    },
+    "correct_text": {
+      "he": "12 ns; הפרה: כן",
+      "en": "12 ns; violation: yes"
+    }
+  },
+  {
+    "key": "quick-hw-82-v2",
+    "method": "hold_window_boundary_comparison",
+    "inputs": {
+      "edge": 12,
+      "hold": 3,
+      "arrival": 13
+    },
+    "expected": {
+      "limit": 15,
+      "violation": true
+    },
+    "correct_text": {
+      "he": "15 ns; הפרה: כן",
+      "en": "15 ns; violation: yes"
+    }
+  },
+  {
+    "key": "quick-hw-82-v3",
+    "method": "hold_window_boundary_comparison",
+    "inputs": {
+      "edge": 20,
+      "hold": 4,
+      "arrival": 22
+    },
+    "expected": {
+      "limit": 24,
+      "violation": true
+    },
+    "correct_text": {
+      "he": "24 ns; הפרה: כן",
+      "en": "24 ns; violation: yes"
+    }
+  },
+  {
+    "key": "quick-hw-82-v4",
+    "method": "hold_window_boundary_comparison",
+    "inputs": {
+      "edge": 15,
+      "hold": 2,
+      "arrival": 18
+    },
+    "expected": {
+      "limit": 17,
+      "violation": false
+    },
+    "correct_text": {
+      "he": "17 ns; הפרה: לא",
+      "en": "17 ns; violation: no"
+    }
+  },
+  {
+    "key": "quick-hw-82-v5",
+    "method": "hold_window_boundary_comparison",
+    "inputs": {
+      "edge": 18,
+      "hold": 3,
+      "arrival": 21
+    },
+    "expected": {
+      "limit": 21,
+      "violation": false
+    },
+    "correct_text": {
+      "he": "21 ns; הפרה: לא",
+      "en": "21 ns; violation: no"
+    }
+  },
+  {
+    "key": "quick-hw-83-v1",
+    "method": "parallel_path_max_plus_gate",
+    "inputs": {
+      "path_a": 3,
+      "path_b": 5,
+      "gate": 2
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-hw-83-v2",
+    "method": "parallel_path_max_plus_gate",
+    "inputs": {
+      "path_a": 2,
+      "path_b": 7,
+      "gate": 1
+    },
+    "expected": 8,
+    "correct_text": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-hw-83-v3",
+    "method": "parallel_path_max_plus_gate",
+    "inputs": {
+      "path_a": 6,
+      "path_b": 4,
+      "gate": 3
+    },
+    "expected": 9,
+    "correct_text": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-hw-83-v4",
+    "method": "parallel_path_max_plus_gate",
+    "inputs": {
+      "path_a": 1,
+      "path_b": 8,
+      "gate": 2
+    },
+    "expected": 10,
+    "correct_text": {
+      "he": "10",
+      "en": "10"
+    }
+  },
+  {
+    "key": "quick-hw-83-v5",
+    "method": "parallel_path_max_plus_gate",
+    "inputs": {
+      "path_a": 5,
+      "path_b": 5,
+      "gate": 4
+    },
+    "expected": 9,
+    "correct_text": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-hw-84-v1",
+    "method": "enumerate_pipeline_output_times",
+    "inputs": {
+      "latency": 2,
+      "items": 5
+    },
+    "expected": 6,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-hw-84-v2",
+    "method": "enumerate_pipeline_output_times",
+    "inputs": {
+      "latency": 3,
+      "items": 4
+    },
+    "expected": 6,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-hw-84-v3",
+    "method": "enumerate_pipeline_output_times",
+    "inputs": {
+      "latency": 4,
+      "items": 6
+    },
+    "expected": 9,
+    "correct_text": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-hw-84-v4",
+    "method": "enumerate_pipeline_output_times",
+    "inputs": {
+      "latency": 5,
+      "items": 3
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-hw-84-v5",
+    "method": "enumerate_pipeline_output_times",
+    "inputs": {
+      "latency": 2,
+      "items": 8
+    },
+    "expected": 9,
+    "correct_text": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-hw-85-v1",
+    "method": "CDC_contract_limitation_review",
+    "inputs": {
+      "case": 1
+    },
+    "expected": {
+      "he": "הסיכון מצטמצם, אך אינו נהפך לאפס מובטח",
+      "en": "The risk is reduced, but not guaranteed to be zero"
+    },
+    "correct_text": {
+      "he": "הסיכון מצטמצם, אך אינו נהפך לאפס מובטח",
+      "en": "The risk is reduced, but not guaranteed to be zero"
+    }
+  },
+  {
+    "key": "quick-hw-85-v2",
+    "method": "CDC_contract_limitation_review",
+    "inputs": {
+      "case": 2
+    },
+    "expected": {
+      "he": "פרוטוקול להעברה עקבית של כל המילה",
+      "en": "A protocol for coherent transfer of the whole word"
+    },
+    "correct_text": {
+      "he": "פרוטוקול להעברה עקבית של כל המילה",
+      "en": "A protocol for coherent transfer of the whole word"
+    }
+  },
+  {
+    "key": "quick-hw-85-v3",
+    "method": "CDC_contract_limitation_review",
+    "inputs": {
+      "case": 3
+    },
+    "expected": {
+      "he": "כדי להקטין את הסיכוי שמטא־יציבות תגיע ללוגיקה בהמשך",
+      "en": "To reduce the chance that metastability reaches downstream logic"
+    },
+    "correct_text": {
+      "he": "כדי להקטין את הסיכוי שמטא־יציבות תגיע ללוגיקה בהמשך",
+      "en": "To reduce the chance that metastability reaches downstream logic"
+    }
+  },
+  {
+    "key": "quick-hw-85-v4",
+    "method": "CDC_contract_limitation_review",
+    "inputs": {
+      "case": 4
+    },
+    "expected": {
+      "he": "אפס מוחלט של כשלים ממטא־יציבות",
+      "en": "Absolutely zero metastability failures"
+    },
+    "correct_text": {
+      "he": "אפס מוחלט של כשלים ממטא־יציבות",
+      "en": "Absolutely zero metastability failures"
+    }
+  },
+  {
+    "key": "quick-hw-85-v5",
+    "method": "CDC_contract_limitation_review",
+    "inputs": {
+      "case": 5
+    },
+    "expected": {
+      "he": "לא; לכל דרישה נדרש מנגנון העברה מתאים",
+      "en": "No; each requirement needs a suitable transfer mechanism"
+    },
+    "correct_text": {
+      "he": "לא; לכל דרישה נדרש מנגנון העברה מתאים",
+      "en": "No; each requirement needs a suitable transfer mechanism"
+    }
+  },
+  {
+    "key": "quick-hw-86-v1",
+    "method": "explicit_edge_sample_pulse_intersection",
+    "inputs": {
+      "period": 10,
+      "pulse_start": 2,
+      "pulse_end": 5
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0",
+      "en": "0, 0"
+    }
+  },
+  {
+    "key": "quick-hw-86-v2",
+    "method": "explicit_edge_sample_pulse_intersection",
+    "inputs": {
+      "period": 12,
+      "pulse_start": 1,
+      "pulse_end": 8
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0",
+      "en": "0, 0"
+    }
+  },
+  {
+    "key": "quick-hw-86-v3",
+    "method": "explicit_edge_sample_pulse_intersection",
+    "inputs": {
+      "period": 8,
+      "pulse_start": 2,
+      "pulse_end": 6
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0",
+      "en": "0, 0"
+    }
+  },
+  {
+    "key": "quick-hw-86-v4",
+    "method": "explicit_edge_sample_pulse_intersection",
+    "inputs": {
+      "period": 20,
+      "pulse_start": 4,
+      "pulse_end": 13
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0",
+      "en": "0, 0"
+    }
+  },
+  {
+    "key": "quick-hw-86-v5",
+    "method": "explicit_edge_sample_pulse_intersection",
+    "inputs": {
+      "period": 16,
+      "pulse_start": 3,
+      "pulse_end": 11
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0",
+      "en": "0, 0"
+    }
+  },
+  {
+    "key": "quick-hw-87-v1",
+    "method": "accepted_FIFO_operations_count",
+    "inputs": {
+      "count": 3,
+      "push": 1,
+      "pop": 0
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-hw-87-v2",
+    "method": "accepted_FIFO_operations_count",
+    "inputs": {
+      "count": 3,
+      "push": 0,
+      "pop": 1
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-87-v3",
+    "method": "accepted_FIFO_operations_count",
+    "inputs": {
+      "count": 4,
+      "push": 1,
+      "pop": 1
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-hw-87-v4",
+    "method": "accepted_FIFO_operations_count",
+    "inputs": {
+      "count": 0,
+      "push": 0,
+      "pop": 0
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-87-v5",
+    "method": "accepted_FIFO_operations_count",
+    "inputs": {
+      "count": 6,
+      "push": 1,
+      "pop": 1
+    },
+    "expected": 6,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-hw-88-v1",
+    "method": "FIFO_list_pop_append_model",
+    "inputs": {
+      "before": [
+        "A",
+        "B",
+        "C"
+      ],
+      "written": "X"
+    },
+    "expected": {
+      "read": "A",
+      "after": [
+        "B",
+        "C",
+        "X"
+      ]
+    },
+    "correct_text": {
+      "he": "נקרא A; נותר B,C,X",
+      "en": "Read A; remaining B,C,X"
+    }
+  },
+  {
+    "key": "quick-hw-88-v2",
+    "method": "FIFO_list_pop_append_model",
+    "inputs": {
+      "before": [
+        "P",
+        "Q",
+        "R",
+        "S"
+      ],
+      "written": "Y"
+    },
+    "expected": {
+      "read": "P",
+      "after": [
+        "Q",
+        "R",
+        "S",
+        "Y"
+      ]
+    },
+    "correct_text": {
+      "he": "נקרא P; נותר Q,R,S,Y",
+      "en": "Read P; remaining Q,R,S,Y"
+    }
+  },
+  {
+    "key": "quick-hw-88-v3",
+    "method": "FIFO_list_pop_append_model",
+    "inputs": {
+      "before": [
+        "M",
+        "N"
+      ],
+      "written": "Z"
+    },
+    "expected": {
+      "read": "M",
+      "after": [
+        "N",
+        "Z"
+      ]
+    },
+    "correct_text": {
+      "he": "נקרא M; נותר N,Z",
+      "en": "Read M; remaining N,Z"
+    }
+  },
+  {
+    "key": "quick-hw-88-v4",
+    "method": "FIFO_list_pop_append_model",
+    "inputs": {
+      "before": [
+        "J",
+        "K",
+        "L",
+        "M",
+        "N"
+      ],
+      "written": "W"
+    },
+    "expected": {
+      "read": "J",
+      "after": [
+        "K",
+        "L",
+        "M",
+        "N",
+        "W"
+      ]
+    },
+    "correct_text": {
+      "he": "נקרא J; נותר K,L,M,N,W",
+      "en": "Read J; remaining K,L,M,N,W"
+    }
+  },
+  {
+    "key": "quick-hw-88-v5",
+    "method": "FIFO_list_pop_append_model",
+    "inputs": {
+      "before": [
+        "R",
+        "S",
+        "T"
+      ],
+      "written": "V"
+    },
+    "expected": {
+      "read": "R",
+      "after": [
+        "S",
+        "T",
+        "V"
+      ]
+    },
+    "correct_text": {
+      "he": "נקרא R; נותר S,T,V",
+      "en": "Read R; remaining S,T,V"
+    }
+  },
+  {
+    "key": "quick-hw-89-v1",
+    "method": "pre_edge_empty_no_bypass_FIFO_model",
+    "inputs": {
+      "read_request": 1,
+      "write_request": 1,
+      "second_read": false
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-89-v2",
+    "method": "pre_edge_empty_no_bypass_FIFO_model",
+    "inputs": {
+      "read_request": 1,
+      "write_request": 0,
+      "second_read": false
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-89-v3",
+    "method": "pre_edge_empty_no_bypass_FIFO_model",
+    "inputs": {
+      "read_request": 0,
+      "write_request": 1,
+      "second_read": false
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-89-v4",
+    "method": "pre_edge_empty_no_bypass_FIFO_model",
+    "inputs": {
+      "read_request": 0,
+      "write_request": 0,
+      "second_read": false
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-89-v5",
+    "method": "pre_edge_empty_no_bypass_FIFO_model",
+    "inputs": {
+      "read_request": 1,
+      "write_request": 1,
+      "second_read": true
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-90-v1",
+    "method": "ready_valid_stability_contract",
+    "inputs": {
+      "data": "A",
+      "stall_cycles": 1
+    },
+    "expected": {
+      "he": "valid=1; data=A",
+      "en": "valid=1; data=A"
+    },
+    "correct_text": {
+      "he": "valid=1; data=A",
+      "en": "valid=1; data=A"
+    }
+  },
+  {
+    "key": "quick-hw-90-v2",
+    "method": "ready_valid_stability_contract",
+    "inputs": {
+      "data": "B",
+      "stall_cycles": 2
+    },
+    "expected": {
+      "he": "valid=1; data=B",
+      "en": "valid=1; data=B"
+    },
+    "correct_text": {
+      "he": "valid=1; data=B",
+      "en": "valid=1; data=B"
+    }
+  },
+  {
+    "key": "quick-hw-90-v3",
+    "method": "ready_valid_stability_contract",
+    "inputs": {
+      "data": "C",
+      "stall_cycles": 3
+    },
+    "expected": {
+      "he": "valid=1; data=C",
+      "en": "valid=1; data=C"
+    },
+    "correct_text": {
+      "he": "valid=1; data=C",
+      "en": "valid=1; data=C"
+    }
+  },
+  {
+    "key": "quick-hw-90-v4",
+    "method": "ready_valid_stability_contract",
+    "inputs": {
+      "data": "D",
+      "stall_cycles": 4
+    },
+    "expected": {
+      "he": "valid=1; data=D",
+      "en": "valid=1; data=D"
+    },
+    "correct_text": {
+      "he": "valid=1; data=D",
+      "en": "valid=1; data=D"
+    }
+  },
+  {
+    "key": "quick-hw-90-v5",
+    "method": "ready_valid_stability_contract",
+    "inputs": {
+      "data": "E",
+      "stall_cycles": 5
+    },
+    "expected": {
+      "he": "valid=1; data=E",
+      "en": "valid=1; data=E"
+    },
+    "correct_text": {
+      "he": "valid=1; data=E",
+      "en": "valid=1; data=E"
+    }
+  },
+  {
+    "key": "quick-hw-91-v1",
+    "method": "step_simulation_vs_saturation_bound",
+    "inputs": {
+      "width": 3,
+      "start": 6,
+      "steps": 3
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-hw-91-v2",
+    "method": "step_simulation_vs_saturation_bound",
+    "inputs": {
+      "width": 4,
+      "start": 13,
+      "steps": 4
+    },
+    "expected": 15,
+    "correct_text": {
+      "he": "15",
+      "en": "15"
+    }
+  },
+  {
+    "key": "quick-hw-91-v3",
+    "method": "step_simulation_vs_saturation_bound",
+    "inputs": {
+      "width": 3,
+      "start": 5,
+      "steps": 4
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-hw-91-v4",
+    "method": "step_simulation_vs_saturation_bound",
+    "inputs": {
+      "width": 4,
+      "start": 14,
+      "steps": 2
+    },
+    "expected": 15,
+    "correct_text": {
+      "he": "15",
+      "en": "15"
+    }
+  },
+  {
+    "key": "quick-hw-91-v5",
+    "method": "step_simulation_vs_saturation_bound",
+    "inputs": {
+      "width": 5,
+      "start": 29,
+      "steps": 5
+    },
+    "expected": 31,
+    "correct_text": {
+      "he": "31",
+      "en": "31"
+    }
+  },
+  {
+    "key": "quick-hw-92-v1",
+    "method": "counter_simulation_vs_toggle_equation",
+    "inputs": {
+      "old": 1,
+      "inc": 1,
+      "dec": 0
+    },
+    "expected": {
+      "next": 2,
+      "toggle": true
+    },
+    "correct_text": {
+      "he": "010; כן",
+      "en": "010; yes"
+    }
+  },
+  {
+    "key": "quick-hw-92-v2",
+    "method": "counter_simulation_vs_toggle_equation",
+    "inputs": {
+      "old": 2,
+      "inc": 0,
+      "dec": 1
+    },
+    "expected": {
+      "next": 1,
+      "toggle": true
+    },
+    "correct_text": {
+      "he": "001; כן",
+      "en": "001; yes"
+    }
+  },
+  {
+    "key": "quick-hw-92-v3",
+    "method": "counter_simulation_vs_toggle_equation",
+    "inputs": {
+      "old": 3,
+      "inc": 1,
+      "dec": 1
+    },
+    "expected": {
+      "next": 3,
+      "toggle": false
+    },
+    "correct_text": {
+      "he": "011; לא",
+      "en": "011; no"
+    }
+  },
+  {
+    "key": "quick-hw-92-v4",
+    "method": "counter_simulation_vs_toggle_equation",
+    "inputs": {
+      "old": 4,
+      "inc": 0,
+      "dec": 0
+    },
+    "expected": {
+      "next": 4,
+      "toggle": false
+    },
+    "correct_text": {
+      "he": "100; לא",
+      "en": "100; no"
+    }
+  },
+  {
+    "key": "quick-hw-92-v5",
+    "method": "counter_simulation_vs_toggle_equation",
+    "inputs": {
+      "old": 6,
+      "inc": 1,
+      "dec": 0
+    },
+    "expected": {
+      "next": 7,
+      "toggle": false
+    },
+    "correct_text": {
+      "he": "111; לא",
+      "en": "111; no"
+    }
+  },
+  {
+    "key": "quick-hw-93-v1",
+    "method": "combinational_assignment_path_coverage",
+    "inputs": {
+      "case": 1
+    },
+    "expected": {
+      "he": "next=state",
+      "en": "next=state"
+    },
+    "correct_text": {
+      "he": "next=state",
+      "en": "next=state"
+    }
+  },
+  {
+    "key": "quick-hw-93-v2",
+    "method": "combinational_assignment_path_coverage",
+    "inputs": {
+      "case": 2
+    },
+    "expected": {
+      "he": "נשאר DONE, ונוצרת דרישה לאחסון לא מכוון",
+      "en": "It remains DONE, requiring unintended storage"
+    },
+    "correct_text": {
+      "he": "נשאר DONE, ונוצרת דרישה לאחסון לא מכוון",
+      "en": "It remains DONE, requiring unintended storage"
+    }
+  },
+  {
+    "key": "quick-hw-93-v3",
+    "method": "combinational_assignment_path_coverage",
+    "inputs": {
+      "case": 3
+    },
+    "expected": {
+      "he": "RUN",
+      "en": "RUN"
+    },
+    "correct_text": {
+      "he": "RUN",
+      "en": "RUN"
+    }
+  },
+  {
+    "key": "quick-hw-93-v4",
+    "method": "combinational_assignment_path_coverage",
+    "inputs": {
+      "case": 4
+    },
+    "expected": {
+      "he": "next מקבל IDLE: אין מסלול חסר, אך התנהגות השמירה שגויה",
+      "en": "next gets IDLE: assignment coverage is complete, but hold behavior is wrong"
+    },
+    "correct_text": {
+      "he": "next מקבל IDLE: אין מסלול חסר, אך התנהגות השמירה שגויה",
+      "en": "next gets IDLE: assignment coverage is complete, but hold behavior is wrong"
+    }
+  },
+  {
+    "key": "quick-hw-93-v5",
+    "method": "combinational_assignment_path_coverage",
+    "inputs": {
+      "case": 5
+    },
+    "expected": {
+      "he": "else next=state",
+      "en": "else next=state"
+    },
+    "correct_text": {
+      "he": "else next=state",
+      "en": "else next=state"
+    }
+  },
+  {
+    "key": "quick-hw-94-v1",
+    "method": "product_machine_distinguishing_sequence_search",
+    "inputs": {
+      "outputs": {
+        "W0": 0,
+        "W1": 0,
+        "DONE": 1
+      },
+      "transitions": {
+        "W0": {
+          "0": "W1",
+          "1": "DONE"
+        },
+        "W1": {
+          "0": "W0",
+          "1": "DONE"
+        },
+        "DONE": {
+          "0": "DONE",
+          "1": "DONE"
+        }
+      }
+    },
+    "expected": {
+      "he": "W0 עם W1",
+      "en": "W0 with W1"
+    },
+    "correct_text": {
+      "he": "W0 עם W1",
+      "en": "W0 with W1"
+    }
+  },
+  {
+    "key": "quick-hw-94-v2",
+    "method": "product_machine_distinguishing_sequence_search",
+    "inputs": {
+      "outputs": {
+        "W0": 0,
+        "W1": 0,
+        "DONE": 1
+      },
+      "transitions": {
+        "W0": {
+          "0": "W1",
+          "1": "DONE"
+        },
+        "W1": {
+          "0": "W0",
+          "1": "W0"
+        },
+        "DONE": {
+          "0": "DONE",
+          "1": "DONE"
+        }
+      }
+    },
+    "expected": "1",
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-94-v3",
+    "method": "current_output_distinguishes_Moore_states",
+    "inputs": {
+      "outputs": [
+        0,
+        1
+      ]
+    },
+    "expected": "",
+    "correct_text": {
+      "he": "כבר במוצא הנוכחי, בלי לקרוא קלט נוסף",
+      "en": "By the current output, without reading another input"
+    }
+  },
+  {
+    "key": "quick-hw-94-v4",
+    "method": "product_machine_equivalence_class_count",
+    "inputs": {
+      "outputs": {
+        "W0": 0,
+        "W1": 0,
+        "W2": 0,
+        "DONE": 1
+      },
+      "transitions": {
+        "W0": {
+          "0": "W1",
+          "1": "DONE"
+        },
+        "W1": {
+          "0": "W2",
+          "1": "DONE"
+        },
+        "W2": {
+          "0": "W0",
+          "1": "DONE"
+        },
+        "DONE": {
+          "0": "DONE",
+          "1": "DONE"
+        }
+      }
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-94-v5",
+    "method": "product_machine_distinguishing_sequence_search",
+    "inputs": {
+      "outputs": {
+        "W0": 0,
+        "W1": 0,
+        "DONE": 1
+      },
+      "transitions": {
+        "W0": {
+          "0": "W1",
+          "1": "DONE"
+        },
+        "W1": {
+          "0": "W0",
+          "1": "DONE"
+        },
+        "DONE": {
+          "0": "DONE",
+          "1": "DONE"
+        }
+      }
+    },
+    "expected": {
+      "he": "אין רצף כזה",
+      "en": "No such sequence exists"
+    },
+    "correct_text": {
+      "he": "אין רצף כזה",
+      "en": "No such sequence exists"
+    }
+  },
+  {
+    "key": "quick-hw-95-v1",
+    "method": "explicit_READY_RUN_WAIT_trace",
+    "inputs": {
+      "samples": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-95-v2",
+    "method": "explicit_READY_RUN_WAIT_trace",
+    "inputs": {
+      "samples": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-95-v3",
+    "method": "explicit_READY_RUN_WAIT_trace",
+    "inputs": {
+      "samples": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-95-v4",
+    "method": "explicit_READY_RUN_WAIT_trace",
+    "inputs": {
+      "samples": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-95-v5",
+    "method": "explicit_READY_RUN_WAIT_trace",
+    "inputs": {
+      "samples": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-96-v1",
+    "method": "LSB_stream_weighted_sum_vs_integer",
+    "inputs": {
+      "bits_in_time_order": "10"
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-96-v2",
+    "method": "LSB_stream_weighted_sum_vs_integer",
+    "inputs": {
+      "bits_in_time_order": "11"
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-96-v3",
+    "method": "LSB_stream_weighted_sum_vs_integer",
+    "inputs": {
+      "bits_in_time_order": "101"
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-96-v4",
+    "method": "LSB_stream_weighted_sum_vs_integer",
+    "inputs": {
+      "bits_in_time_order": "1101"
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-96-v5",
+    "method": "LSB_stream_weighted_sum_vs_integer",
+    "inputs": {
+      "bits_in_time_order": "01101"
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-97-v1",
+    "method": "quadrature_cycle_adjacency",
+    "inputs": {
+      "previous": "01",
+      "current": "00"
+    },
+    "expected": "One backward step",
+    "correct_text": {
+      "he": "צעד אחורה",
+      "en": "One backward step"
+    }
+  },
+  {
+    "key": "quick-hw-97-v2",
+    "method": "quadrature_cycle_adjacency",
+    "inputs": {
+      "previous": "00",
+      "current": "01"
+    },
+    "expected": "One forward step",
+    "correct_text": {
+      "he": "צעד קדימה",
+      "en": "One forward step"
+    }
+  },
+  {
+    "key": "quick-hw-97-v3",
+    "method": "quadrature_cycle_adjacency",
+    "inputs": {
+      "previous": "11",
+      "current": "10"
+    },
+    "expected": "One forward step",
+    "correct_text": {
+      "he": "צעד קדימה",
+      "en": "One forward step"
+    }
+  },
+  {
+    "key": "quick-hw-97-v4",
+    "method": "quadrature_cycle_adjacency",
+    "inputs": {
+      "previous": "00",
+      "current": "11"
+    },
+    "expected": "Two-bit change; direction is not determined",
+    "correct_text": {
+      "he": "שינוי של שני ביטים; הכיוון אינו נקבע",
+      "en": "Two-bit change; direction is not determined"
+    }
+  },
+  {
+    "key": "quick-hw-97-v5",
+    "method": "quadrature_cycle_adjacency",
+    "inputs": {
+      "previous": "10",
+      "current": "10"
+    },
+    "expected": "No change",
+    "correct_text": {
+      "he": "אין שינוי",
+      "en": "No change"
+    }
+  },
+  {
+    "key": "quick-hw-98-v1",
+    "method": "Moore_high_state_interval_count",
+    "inputs": {
+      "high_states": 2,
+      "period": 10
+    },
+    "expected": 20,
+    "correct_text": {
+      "he": "20",
+      "en": "20"
+    }
+  },
+  {
+    "key": "quick-hw-98-v2",
+    "method": "Moore_high_state_interval_count",
+    "inputs": {
+      "high_states": 3,
+      "period": 8
+    },
+    "expected": 24,
+    "correct_text": {
+      "he": "24",
+      "en": "24"
+    }
+  },
+  {
+    "key": "quick-hw-98-v3",
+    "method": "Moore_high_state_interval_count",
+    "inputs": {
+      "high_states": 4,
+      "period": 5
+    },
+    "expected": 20,
+    "correct_text": {
+      "he": "20",
+      "en": "20"
+    }
+  },
+  {
+    "key": "quick-hw-98-v4",
+    "method": "Moore_high_state_interval_count",
+    "inputs": {
+      "high_states": 2,
+      "period": 12
+    },
+    "expected": 24,
+    "correct_text": {
+      "he": "24",
+      "en": "24"
+    }
+  },
+  {
+    "key": "quick-hw-98-v5",
+    "method": "Moore_high_state_interval_count",
+    "inputs": {
+      "high_states": 3,
+      "period": 7
+    },
+    "expected": 21,
+    "correct_text": {
+      "he": "21",
+      "en": "21"
+    }
+  },
+  {
+    "key": "quick-hw-99-v1",
+    "method": "paired_data_valid_pipeline_tag",
+    "inputs": {
+      "stages": 2
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-99-v2",
+    "method": "paired_data_valid_pipeline_tag",
+    "inputs": {
+      "stages": 3
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-hw-99-v3",
+    "method": "paired_data_valid_pipeline_tag",
+    "inputs": {
+      "stages": 4
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-hw-99-v4",
+    "method": "paired_data_valid_pipeline_tag",
+    "inputs": {
+      "stages": 5
+    },
+    "expected": 5,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-hw-99-v5",
+    "method": "paired_data_valid_pipeline_tag",
+    "inputs": {
+      "stages": 6
+    },
+    "expected": 6,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-hw-100-v1",
+    "method": "enumerate_parity_and_last_bit",
+    "inputs": {
+      "bits": ""
+    },
+    "expected": {
+      "parity": 0,
+      "last": 0
+    },
+    "correct_text": {
+      "he": "parity=0, last=0",
+      "en": "parity=0, last=0"
+    }
+  },
+  {
+    "key": "quick-hw-100-v2",
+    "method": "enumerate_parity_and_last_bit",
+    "inputs": {
+      "bits": "1"
+    },
+    "expected": {
+      "parity": 1,
+      "last": 1
+    },
+    "correct_text": {
+      "he": "parity=1, last=1",
+      "en": "parity=1, last=1"
+    }
+  },
+  {
+    "key": "quick-hw-100-v3",
+    "method": "enumerate_parity_and_last_bit",
+    "inputs": {
+      "bits": "10"
+    },
+    "expected": {
+      "parity": 1,
+      "last": 0
+    },
+    "correct_text": {
+      "he": "parity=1, last=0",
+      "en": "parity=1, last=0"
+    }
+  },
+  {
+    "key": "quick-hw-100-v4",
+    "method": "enumerate_parity_and_last_bit",
+    "inputs": {
+      "bits": "11"
+    },
+    "expected": {
+      "parity": 0,
+      "last": 1
+    },
+    "correct_text": {
+      "he": "parity=0, last=1",
+      "en": "parity=0, last=1"
+    }
+  },
+  {
+    "key": "quick-hw-100-v5",
+    "method": "enumerate_parity_and_last_bit",
+    "inputs": {
+      "bits": "1011"
+    },
+    "expected": {
+      "parity": 1,
+      "last": 1
+    },
+    "correct_text": {
+      "he": "parity=1, last=1",
+      "en": "parity=1, last=1"
+    }
+  },
+  {
+    "key": "quick-hw-101-v1",
+    "method": "exhaustive_weighted_full_adder_identity",
+    "inputs": {
+      "weight": 1
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-101-v2",
+    "method": "exhaustive_weighted_full_adder_identity",
+    "inputs": {
+      "weight": 2
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-hw-101-v3",
+    "method": "exhaustive_weighted_full_adder_identity",
+    "inputs": {
+      "weight": 4
+    },
+    "expected": 8,
+    "correct_text": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-hw-101-v4",
+    "method": "exhaustive_weighted_full_adder_identity",
+    "inputs": {
+      "weight": 8
+    },
+    "expected": 16,
+    "correct_text": {
+      "he": "16",
+      "en": "16"
+    }
+  },
+  {
+    "key": "quick-hw-101-v5",
+    "method": "exhaustive_weighted_full_adder_identity",
+    "inputs": {
+      "weight": 16
+    },
+    "expected": 32,
+    "correct_text": {
+      "he": "32",
+      "en": "32"
+    }
+  },
+  {
+    "key": "quick-hw-102-v1",
+    "method": "full_adder_carry_threshold_table",
+    "inputs": {
+      "a": 0,
+      "b": 0
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0",
+      "en": "0, 0"
+    }
+  },
+  {
+    "key": "quick-hw-102-v2",
+    "method": "full_adder_carry_threshold_table",
+    "inputs": {
+      "a": 0,
+      "b": 1
+    },
+    "expected": [
+      0,
+      1
+    ],
+    "correct_text": {
+      "he": "0, 1",
+      "en": "0, 1"
+    }
+  },
+  {
+    "key": "quick-hw-102-v3",
+    "method": "full_adder_carry_threshold_table",
+    "inputs": {
+      "a": 1,
+      "b": 0
+    },
+    "expected": [
+      0,
+      1
+    ],
+    "correct_text": {
+      "he": "0, 1",
+      "en": "0, 1"
+    }
+  },
+  {
+    "key": "quick-hw-102-v4",
+    "method": "full_adder_carry_threshold_table",
+    "inputs": {
+      "a": 1,
+      "b": 1
+    },
+    "expected": [
+      1,
+      1
+    ],
+    "correct_text": {
+      "he": "1, 1",
+      "en": "1, 1"
+    }
+  },
+  {
+    "key": "quick-hw-102-v5",
+    "method": "exhaustive_carry_mux_equivalence",
+    "inputs": {
+      "expression": "mux(A,Cin,A XOR B)"
+    },
+    "expected": {
+      "he": "A XOR B",
+      "en": "A XOR B"
+    },
+    "correct_text": {
+      "he": "A XOR B",
+      "en": "A XOR B"
+    }
+  },
+  {
+    "key": "quick-hw-103-v1",
+    "method": "Shannon_cofactor_substitution",
+    "inputs": {
+      "d0": "B",
+      "d1": "C"
+    },
+    "expected": {
+      "he": "B; C",
+      "en": "B; C"
+    },
+    "correct_text": {
+      "he": "B; C",
+      "en": "B; C"
+    }
+  },
+  {
+    "key": "quick-hw-103-v2",
+    "method": "Shannon_cofactor_substitution",
+    "inputs": {
+      "d0": "NOT B",
+      "d1": "C"
+    },
+    "expected": {
+      "he": "NOT B; C",
+      "en": "NOT B; C"
+    },
+    "correct_text": {
+      "he": "NOT B; C",
+      "en": "NOT B; C"
+    }
+  },
+  {
+    "key": "quick-hw-103-v3",
+    "method": "Shannon_cofactor_substitution",
+    "inputs": {
+      "d0": "B",
+      "d1": "NOT C"
+    },
+    "expected": {
+      "he": "B; NOT C",
+      "en": "B; NOT C"
+    },
+    "correct_text": {
+      "he": "B; NOT C",
+      "en": "B; NOT C"
+    }
+  },
+  {
+    "key": "quick-hw-103-v4",
+    "method": "Shannon_cofactor_substitution",
+    "inputs": {
+      "d0": "0",
+      "d1": "B"
+    },
+    "expected": {
+      "he": "0; B",
+      "en": "0; B"
+    },
+    "correct_text": {
+      "he": "0; B",
+      "en": "0; B"
+    }
+  },
+  {
+    "key": "quick-hw-103-v5",
+    "method": "Shannon_cofactor_substitution",
+    "inputs": {
+      "d0": "C",
+      "d1": "1"
+    },
+    "expected": {
+      "he": "C; 1",
+      "en": "C; 1"
+    },
+    "correct_text": {
+      "he": "C; 1",
+      "en": "C; 1"
+    }
+  },
+  {
+    "key": "quick-hw-104-v1",
+    "method": "exhaustive_NAND_network_vs_XOR",
+    "inputs": {
+      "input_pairs": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "expected": [
+      0,
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 1, 0",
+      "en": "0, 1, 0"
+    }
+  },
+  {
+    "key": "quick-hw-104-v2",
+    "method": "exhaustive_NAND_network_vs_XOR",
+    "inputs": {
+      "input_pairs": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "expected": [
+      0,
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 1, 0",
+      "en": "0, 1, 0"
+    }
+  },
+  {
+    "key": "quick-hw-104-v3",
+    "method": "exhaustive_NAND_network_vs_XOR",
+    "inputs": {
+      "input_pairs": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "expected": [
+      1,
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 1, 0",
+      "en": "1, 1, 0"
+    }
+  },
+  {
+    "key": "quick-hw-104-v4",
+    "method": "exhaustive_NAND_network_vs_XOR",
+    "inputs": {
+      "input_pairs": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "expected": [
+      1,
+      0,
+      1
+    ],
+    "correct_text": {
+      "he": "1, 0, 1",
+      "en": "1, 0, 1"
+    }
+  },
+  {
+    "key": "quick-hw-104-v5",
+    "method": "exhaustive_NAND_network_vs_XOR",
+    "inputs": {
+      "input_pairs": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "expected": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "correct_text": {
+      "he": "0, 0, 1, 1",
+      "en": "0, 0, 1, 1"
+    }
+  },
+  {
+    "key": "quick-hw-105-v1",
+    "method": "enumerate_highest_one_hot_request",
+    "inputs": {
+      "word": "1010"
+    },
+    "expected": "1000",
+    "correct_text": {
+      "he": "1000",
+      "en": "1000"
+    }
+  },
+  {
+    "key": "quick-hw-105-v2",
+    "method": "enumerate_highest_one_hot_request",
+    "inputs": {
+      "word": "0111"
+    },
+    "expected": "0100",
+    "correct_text": {
+      "he": "0100",
+      "en": "0100"
+    }
+  },
+  {
+    "key": "quick-hw-105-v3",
+    "method": "enumerate_highest_one_hot_request",
+    "inputs": {
+      "word": "1001"
+    },
+    "expected": "1000",
+    "correct_text": {
+      "he": "1000",
+      "en": "1000"
+    }
+  },
+  {
+    "key": "quick-hw-105-v4",
+    "method": "enumerate_highest_one_hot_request",
+    "inputs": {
+      "word": "0000"
+    },
+    "expected": "0000",
+    "correct_text": {
+      "he": "0000",
+      "en": "0000"
+    }
+  },
+  {
+    "key": "quick-hw-105-v5",
+    "method": "enumerate_highest_one_hot_request",
+    "inputs": {
+      "word": "0011"
+    },
+    "expected": "0010",
+    "correct_text": {
+      "he": "0010",
+      "en": "0010"
+    }
+  },
+  {
+    "key": "quick-hw-106-v1",
+    "method": "binary_tree_level_count",
+    "inputs": {
+      "inputs": 4
+    },
+    "expected": {
+      "chain": 3,
+      "tree": 2,
+      "gates": 3
+    },
+    "correct_text": {
+      "he": "3, 2",
+      "en": "3, 2"
+    }
+  },
+  {
+    "key": "quick-hw-106-v2",
+    "method": "binary_tree_level_count",
+    "inputs": {
+      "inputs": 8
+    },
+    "expected": {
+      "chain": 7,
+      "tree": 3,
+      "gates": 7
+    },
+    "correct_text": {
+      "he": "7, 3",
+      "en": "7, 3"
+    }
+  },
+  {
+    "key": "quick-hw-106-v3",
+    "method": "binary_tree_level_count",
+    "inputs": {
+      "inputs": 16
+    },
+    "expected": {
+      "chain": 15,
+      "tree": 4,
+      "gates": 15
+    },
+    "correct_text": {
+      "he": "15, 4",
+      "en": "15, 4"
+    }
+  },
+  {
+    "key": "quick-hw-106-v4",
+    "method": "binary_tree_level_count",
+    "inputs": {
+      "inputs": 32
+    },
+    "expected": {
+      "chain": 31,
+      "tree": 5,
+      "gates": 31
+    },
+    "correct_text": {
+      "he": "31, 5",
+      "en": "31, 5"
+    }
+  },
+  {
+    "key": "quick-hw-106-v5",
+    "method": "binary_tree_level_count",
+    "inputs": {
+      "inputs": 64
+    },
+    "expected": {
+      "chain": 63,
+      "tree": 6,
+      "gates": 63
+    },
+    "correct_text": {
+      "he": "63, 6",
+      "en": "63, 6"
+    }
+  },
+  {
+    "key": "quick-hw-107-v1",
+    "method": "MUX_latch_selection_contract",
+    "inputs": {
+      "initial": 0,
+      "data": 1,
+      "enable": 0
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "Q=0; שומר את Q הקודם",
+      "en": "Q=0; retains previous Q"
+    }
+  },
+  {
+    "key": "quick-hw-107-v2",
+    "method": "MUX_latch_selection_contract",
+    "inputs": {
+      "initial": 1,
+      "data": 0,
+      "enable": 0
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "Q=1; שומר את Q הקודם",
+      "en": "Q=1; retains previous Q"
+    }
+  },
+  {
+    "key": "quick-hw-107-v3",
+    "method": "MUX_latch_selection_contract",
+    "inputs": {
+      "initial": 0,
+      "data": 1,
+      "enable": 1
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "Q=1; שקוף ל־D",
+      "en": "Q=1; transparent to D"
+    }
+  },
+  {
+    "key": "quick-hw-107-v4",
+    "method": "MUX_latch_selection_contract",
+    "inputs": {
+      "initial": 1,
+      "data": 0,
+      "enable": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "Q=0; שקוף ל־D",
+      "en": "Q=0; transparent to D"
+    }
+  },
+  {
+    "key": "quick-hw-107-v5",
+    "method": "MUX_latch_selection_contract",
+    "inputs": {
+      "initial": 1,
+      "data": 1,
+      "enable": 1
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "Q=1; שקוף ל־D",
+      "en": "Q=1; transparent to D"
+    }
+  },
+  {
+    "key": "quick-hw-108-v1",
+    "method": "two_latch_phase_contract_case",
+    "inputs": {
+      "case": 1
+    },
+    "expected": {
+      "he": "השינוי עלול לעבור דרך שני הלאצ׳ים באותו מצב גבוה",
+      "en": "The change may pass through both latches during that high level"
+    },
+    "correct_text": {
+      "he": "השינוי עלול לעבור דרך שני הלאצ׳ים באותו מצב גבוה",
+      "en": "The change may pass through both latches during that high level"
+    }
+  },
+  {
+    "key": "quick-hw-108-v2",
+    "method": "two_latch_phase_contract_case",
+    "inputs": {
+      "case": 2
+    },
+    "expected": {
+      "he": "נסגר ושומר את הדגימה עבור השני",
+      "en": "It closes and retains the sample for the second"
+    },
+    "correct_text": {
+      "he": "נסגר ושומר את הדגימה עבור השני",
+      "en": "It closes and retains the sample for the second"
+    }
+  },
+  {
+    "key": "quick-hw-108-v3",
+    "method": "two_latch_phase_contract_case",
+    "inputs": {
+      "case": 3
+    },
+    "expected": {
+      "he": "להיסגר ולשמור את מוצאו",
+      "en": "Close and retain its output"
+    },
+    "correct_text": {
+      "he": "להיסגר ולשמור את מוצאו",
+      "en": "Close and retain its output"
+    }
+  },
+  {
+    "key": "quick-hw-108-v4",
+    "method": "two_latch_phase_contract_case",
+    "inputs": {
+      "case": 4
+    },
+    "expected": {
+      "he": "מרוץ שבו קלט חדש עובר מעבר לנקודת הדגימה המיועדת",
+      "en": "A race allowing new input past the intended sampling boundary"
+    },
+    "correct_text": {
+      "he": "מרוץ שבו קלט חדש עובר מעבר לנקודת הדגימה המיועדת",
+      "en": "A race allowing new input past the intended sampling boundary"
+    }
+  },
+  {
+    "key": "quick-hw-108-v5",
+    "method": "two_latch_phase_contract_case",
+    "inputs": {
+      "case": 5
+    },
+    "expected": {
+      "he": "כדי להפריד בין איסוף הדגימה לבין העברתה למוצא",
+      "en": "To separate capturing a sample from passing it to the output"
+    },
+    "correct_text": {
+      "he": "כדי להפריד בין איסוף הדגימה לבין העברתה למוצא",
+      "en": "To separate capturing a sample from passing it to the output"
+    }
+  },
+  {
+    "key": "quick-hw-109-v1",
+    "method": "XOR_mismatch_trace",
+    "inputs": {
+      "sample": 0,
+      "between_edge_values": "1"
+    },
+    "expected": [
+      1
+    ],
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-109-v2",
+    "method": "XOR_mismatch_trace",
+    "inputs": {
+      "sample": 1,
+      "between_edge_values": "0"
+    },
+    "expected": [
+      1
+    ],
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-109-v3",
+    "method": "XOR_mismatch_trace",
+    "inputs": {
+      "sample": 0,
+      "between_edge_values": "10"
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 0",
+      "en": "1, 0"
+    }
+  },
+  {
+    "key": "quick-hw-109-v4",
+    "method": "XOR_mismatch_trace",
+    "inputs": {
+      "sample": 1,
+      "between_edge_values": "01"
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 0",
+      "en": "1, 0"
+    }
+  },
+  {
+    "key": "quick-hw-109-v5",
+    "method": "XOR_mismatch_trace",
+    "inputs": {
+      "sample": 0,
+      "between_edge_values": "101"
+    },
+    "expected": [
+      1,
+      0,
+      1
+    ],
+    "correct_text": {
+      "he": "1, 0, 1",
+      "en": "1, 0, 1"
+    }
+  },
+  {
+    "key": "quick-hw-110-v1",
+    "method": "mismatch_interval_until_next_edge",
+    "inputs": {
+      "period": 10,
+      "transition": 3
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-hw-110-v2",
+    "method": "mismatch_interval_until_next_edge",
+    "inputs": {
+      "period": 10,
+      "transition": 8
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-110-v3",
+    "method": "mismatch_interval_until_next_edge",
+    "inputs": {
+      "period": 12,
+      "transition": 5
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-hw-110-v4",
+    "method": "mismatch_interval_until_next_edge",
+    "inputs": {
+      "period": 20,
+      "transition": 4
+    },
+    "expected": 16,
+    "correct_text": {
+      "he": "16",
+      "en": "16"
+    }
+  },
+  {
+    "key": "quick-hw-110-v5",
+    "method": "mismatch_interval_until_next_edge",
+    "inputs": {
+      "period": 16,
+      "transition": 9
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-hw-111-v1",
+    "method": "toggle_edge_spacing_waveform",
+    "inputs": {
+      "edge_period": 10,
+      "clock_high": 2
+    },
+    "expected": {
+      "q_period": 20,
+      "duty_percent": 50
+    },
+    "correct_text": {
+      "he": "20 ns; 50%",
+      "en": "20 ns; 50%"
+    }
+  },
+  {
+    "key": "quick-hw-111-v2",
+    "method": "toggle_edge_spacing_waveform",
+    "inputs": {
+      "edge_period": 12,
+      "clock_high": 3
+    },
+    "expected": {
+      "q_period": 24,
+      "duty_percent": 50
+    },
+    "correct_text": {
+      "he": "24 ns; 50%",
+      "en": "24 ns; 50%"
+    }
+  },
+  {
+    "key": "quick-hw-111-v3",
+    "method": "toggle_edge_spacing_waveform",
+    "inputs": {
+      "edge_period": 8,
+      "clock_high": 6
+    },
+    "expected": {
+      "q_period": 16,
+      "duty_percent": 50
+    },
+    "correct_text": {
+      "he": "16 ns; 50%",
+      "en": "16 ns; 50%"
+    }
+  },
+  {
+    "key": "quick-hw-111-v4",
+    "method": "toggle_edge_spacing_waveform",
+    "inputs": {
+      "edge_period": 20,
+      "clock_high": 4
+    },
+    "expected": {
+      "q_period": 40,
+      "duty_percent": 50
+    },
+    "correct_text": {
+      "he": "40 ns; 50%",
+      "en": "40 ns; 50%"
+    }
+  },
+  {
+    "key": "quick-hw-111-v5",
+    "method": "toggle_edge_spacing_waveform",
+    "inputs": {
+      "edge_period": 16,
+      "clock_high": 12
+    },
+    "expected": {
+      "q_period": 32,
+      "duty_percent": 50
+    },
+    "correct_text": {
+      "he": "32 ns; 50%",
+      "en": "32 ns; 50%"
+    }
+  },
+  {
+    "key": "quick-hw-112-v1",
+    "method": "one_cycle_feedback_setup_budget",
+    "inputs": {
+      "clock_to_q": 1,
+      "logic": 2,
+      "setup": 1
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-hw-112-v2",
+    "method": "one_cycle_feedback_setup_budget",
+    "inputs": {
+      "clock_to_q": 2,
+      "logic": 3,
+      "setup": 1
+    },
+    "expected": 6,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-hw-112-v3",
+    "method": "one_cycle_feedback_setup_budget",
+    "inputs": {
+      "clock_to_q": 1,
+      "logic": 4,
+      "setup": 2
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-hw-112-v4",
+    "method": "one_cycle_feedback_setup_budget",
+    "inputs": {
+      "clock_to_q": 3,
+      "logic": 2,
+      "setup": 2
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-hw-112-v5",
+    "method": "one_cycle_feedback_setup_budget",
+    "inputs": {
+      "clock_to_q": 2,
+      "logic": 5,
+      "setup": 1
+    },
+    "expected": 8,
+    "correct_text": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-hw-113-v1",
+    "method": "rising_event_counter_state_trace",
+    "inputs": {
+      "initial_count": 4,
+      "previous": 0,
+      "samples": "1"
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-hw-113-v2",
+    "method": "rising_event_counter_state_trace",
+    "inputs": {
+      "initial_count": 4,
+      "previous": 1,
+      "samples": "101"
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-hw-113-v3",
+    "method": "rising_event_counter_state_trace",
+    "inputs": {
+      "initial_count": 3,
+      "previous": 0,
+      "samples": "101"
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-hw-113-v4",
+    "method": "rising_event_counter_state_trace",
+    "inputs": {
+      "initial_count": 2,
+      "previous": 0,
+      "samples": "10101"
+    },
+    "expected": 5,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-hw-113-v5",
+    "method": "rising_event_counter_state_trace",
+    "inputs": {
+      "initial_count": 4,
+      "previous": 0,
+      "samples": "0111"
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-114-v1",
+    "method": "zero_padded_window_explicit_history",
+    "inputs": {
+      "window": 10,
+      "threshold": 3,
+      "samples": "111"
+    },
+    "expected": {
+      "count": 3,
+      "output": 1
+    },
+    "correct_text": {
+      "he": "count=3; Y=1",
+      "en": "count=3; Y=1"
+    }
+  },
+  {
+    "key": "quick-hw-114-v2",
+    "method": "zero_padded_window_explicit_history",
+    "inputs": {
+      "window": 8,
+      "threshold": 2,
+      "samples": "11"
+    },
+    "expected": {
+      "count": 2,
+      "output": 1
+    },
+    "correct_text": {
+      "he": "count=2; Y=1",
+      "en": "count=2; Y=1"
+    }
+  },
+  {
+    "key": "quick-hw-114-v3",
+    "method": "zero_padded_window_explicit_history",
+    "inputs": {
+      "window": 12,
+      "threshold": 4,
+      "samples": "1111"
+    },
+    "expected": {
+      "count": 4,
+      "output": 1
+    },
+    "correct_text": {
+      "he": "count=4; Y=1",
+      "en": "count=4; Y=1"
+    }
+  },
+  {
+    "key": "quick-hw-114-v4",
+    "method": "zero_padded_window_explicit_history",
+    "inputs": {
+      "window": 10,
+      "threshold": 3,
+      "samples": "110"
+    },
+    "expected": {
+      "count": 2,
+      "output": 0
+    },
+    "correct_text": {
+      "he": "count=2; Y=0",
+      "en": "count=2; Y=0"
+    }
+  },
+  {
+    "key": "quick-hw-114-v5",
+    "method": "zero_padded_window_explicit_history",
+    "inputs": {
+      "window": 6,
+      "threshold": 2,
+      "samples": "101"
+    },
+    "expected": {
+      "count": 2,
+      "output": 1
+    },
+    "correct_text": {
+      "he": "count=2; Y=1",
+      "en": "count=2; Y=1"
+    }
+  },
+  {
+    "key": "quick-hw-115-v1",
+    "method": "exact_vs_saturated_window_update",
+    "inputs": {
+      "actual": 4,
+      "saturation": 3
+    },
+    "expected": [
+      3,
+      2
+    ],
+    "correct_text": {
+      "he": "3, 2",
+      "en": "3, 2"
+    }
+  },
+  {
+    "key": "quick-hw-115-v2",
+    "method": "exact_vs_saturated_window_update",
+    "inputs": {
+      "actual": 5,
+      "saturation": 3
+    },
+    "expected": [
+      4,
+      2
+    ],
+    "correct_text": {
+      "he": "4, 2",
+      "en": "4, 2"
+    }
+  },
+  {
+    "key": "quick-hw-115-v3",
+    "method": "exact_vs_saturated_window_update",
+    "inputs": {
+      "actual": 6,
+      "saturation": 4
+    },
+    "expected": [
+      5,
+      3
+    ],
+    "correct_text": {
+      "he": "5, 3",
+      "en": "5, 3"
+    }
+  },
+  {
+    "key": "quick-hw-115-v4",
+    "method": "exact_vs_saturated_window_update",
+    "inputs": {
+      "actual": 7,
+      "saturation": 5
+    },
+    "expected": [
+      6,
+      4
+    ],
+    "correct_text": {
+      "he": "6, 4",
+      "en": "6, 4"
+    }
+  },
+  {
+    "key": "quick-hw-115-v5",
+    "method": "exact_vs_saturated_window_update",
+    "inputs": {
+      "actual": 8,
+      "saturation": 6
+    },
+    "expected": [
+      7,
+      5
+    ],
+    "correct_text": {
+      "he": "7, 5",
+      "en": "7, 5"
+    }
+  },
+  {
+    "key": "quick-hw-116-v1",
+    "method": "threshold_predicate_counterexample",
+    "inputs": {
+      "threshold": 2
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-hw-116-v2",
+    "method": "threshold_predicate_counterexample",
+    "inputs": {
+      "threshold": 3
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-hw-116-v3",
+    "method": "threshold_predicate_counterexample",
+    "inputs": {
+      "threshold": 4
+    },
+    "expected": 5,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-hw-116-v4",
+    "method": "threshold_predicate_counterexample",
+    "inputs": {
+      "threshold": 5
+    },
+    "expected": 6,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-hw-116-v5",
+    "method": "threshold_predicate_counterexample",
+    "inputs": {
+      "threshold": 6
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-hw-117-v1",
+    "method": "sliding_interval_vs_disjoint_block_count",
+    "inputs": {
+      "window": 10,
+      "threshold": 3,
+      "one_positions": [
+        9,
+        10,
+        11
+      ],
+      "query_sample": 11
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 0",
+      "en": "1, 0"
+    }
+  },
+  {
+    "key": "quick-hw-117-v2",
+    "method": "sliding_interval_vs_disjoint_block_count",
+    "inputs": {
+      "window": 8,
+      "threshold": 3,
+      "one_positions": [
+        7,
+        8,
+        9
+      ],
+      "query_sample": 9
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 0",
+      "en": "1, 0"
+    }
+  },
+  {
+    "key": "quick-hw-117-v3",
+    "method": "sliding_interval_vs_disjoint_block_count",
+    "inputs": {
+      "window": 12,
+      "threshold": 4,
+      "one_positions": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "query_sample": 13
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 0",
+      "en": "1, 0"
+    }
+  },
+  {
+    "key": "quick-hw-117-v4",
+    "method": "sliding_interval_vs_disjoint_block_count",
+    "inputs": {
+      "window": 6,
+      "threshold": 2,
+      "one_positions": [
+        6,
+        7
+      ],
+      "query_sample": 7
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 0",
+      "en": "1, 0"
+    }
+  },
+  {
+    "key": "quick-hw-117-v5",
+    "method": "sliding_interval_vs_disjoint_block_count",
+    "inputs": {
+      "window": 16,
+      "threshold": 4,
+      "one_positions": [
+        14,
+        15,
+        16,
+        17
+      ],
+      "query_sample": 17
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 0",
+      "en": "1, 0"
+    }
+  },
+  {
+    "key": "quick-hw-118-v1",
+    "method": "write_first_same_address_bypass_contract",
+    "inputs": {
+      "address": 0,
+      "old": 3,
+      "write_data": 9
+    },
+    "expected": 9,
+    "correct_text": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-hw-118-v2",
+    "method": "write_first_same_address_bypass_contract",
+    "inputs": {
+      "address": 2,
+      "old": 7,
+      "write_data": 4
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-hw-118-v3",
+    "method": "write_first_same_address_bypass_contract",
+    "inputs": {
+      "address": 5,
+      "old": 1,
+      "write_data": 6
+    },
+    "expected": 6,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-hw-118-v4",
+    "method": "write_first_same_address_bypass_contract",
+    "inputs": {
+      "address": 7,
+      "old": 8,
+      "write_data": 2
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-118-v5",
+    "method": "write_first_same_address_bypass_contract",
+    "inputs": {
+      "address": 3,
+      "old": 5,
+      "write_data": 0
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-119-v1",
+    "method": "stable_alias_two_address_memory_simulation",
+    "inputs": {
+      "first": 0,
+      "second": 1
+    },
+    "expected": {
+      "he": "לכתוב 0 ל־0, ואז 1 ל־1; לקרוא ולדרוש 0,1",
+      "en": "Write 0 to 0, then 1 to 1; read and require 0,1"
+    },
+    "correct_text": {
+      "he": "לכתוב 0 ל־0, ואז 1 ל־1; לקרוא ולדרוש 0,1",
+      "en": "Write 0 to 0, then 1 to 1; read and require 0,1"
+    }
+  },
+  {
+    "key": "quick-hw-119-v2",
+    "method": "stable_alias_two_address_memory_simulation",
+    "inputs": {
+      "first": 0,
+      "second": 2
+    },
+    "expected": {
+      "he": "לכתוב 0 ל־0, ואז 1 ל־2; לקרוא ולדרוש 0,1",
+      "en": "Write 0 to 0, then 1 to 2; read and require 0,1"
+    },
+    "correct_text": {
+      "he": "לכתוב 0 ל־0, ואז 1 ל־2; לקרוא ולדרוש 0,1",
+      "en": "Write 0 to 0, then 1 to 2; read and require 0,1"
+    }
+  },
+  {
+    "key": "quick-hw-119-v3",
+    "method": "stable_alias_two_address_memory_simulation",
+    "inputs": {
+      "first": 1,
+      "second": 3
+    },
+    "expected": {
+      "he": "לכתוב 0 ל־1, ואז 1 ל־3; לקרוא ולדרוש 0,1",
+      "en": "Write 0 to 1, then 1 to 3; read and require 0,1"
+    },
+    "correct_text": {
+      "he": "לכתוב 0 ל־1, ואז 1 ל־3; לקרוא ולדרוש 0,1",
+      "en": "Write 0 to 1, then 1 to 3; read and require 0,1"
+    }
+  },
+  {
+    "key": "quick-hw-119-v4",
+    "method": "stable_alias_two_address_memory_simulation",
+    "inputs": {
+      "first": 2,
+      "second": 6
+    },
+    "expected": {
+      "he": "לכתוב 0 ל־2, ואז 1 ל־6; לקרוא ולדרוש 0,1",
+      "en": "Write 0 to 2, then 1 to 6; read and require 0,1"
+    },
+    "correct_text": {
+      "he": "לכתוב 0 ל־2, ואז 1 ל־6; לקרוא ולדרוש 0,1",
+      "en": "Write 0 to 2, then 1 to 6; read and require 0,1"
+    }
+  },
+  {
+    "key": "quick-hw-119-v5",
+    "method": "stable_alias_two_address_memory_simulation",
+    "inputs": {
+      "first": 3,
+      "second": 7
+    },
+    "expected": {
+      "he": "לכתוב 0 ל־3, ואז 1 ל־7; לקרוא ולדרוש 0,1",
+      "en": "Write 0 to 3, then 1 to 7; read and require 0,1"
+    },
+    "correct_text": {
+      "he": "לכתוב 0 ל־3, ואז 1 ל־7; לקרוא ולדרוש 0,1",
+      "en": "Write 0 to 3, then 1 to 7; read and require 0,1"
+    }
+  },
+  {
+    "key": "quick-hw-120-v1",
+    "method": "bijective_address_permutation_simulation",
+    "inputs": {
+      "address_a": 0,
+      "address_b": 1,
+      "data_a": 3,
+      "data_b": 7
+    },
+    "expected": [
+      3,
+      7
+    ],
+    "correct_text": {
+      "he": "3, 7",
+      "en": "3, 7"
+    }
+  },
+  {
+    "key": "quick-hw-120-v2",
+    "method": "bijective_address_permutation_simulation",
+    "inputs": {
+      "address_a": 1,
+      "address_b": 2,
+      "data_a": 4,
+      "data_b": 9
+    },
+    "expected": [
+      4,
+      9
+    ],
+    "correct_text": {
+      "he": "4, 9",
+      "en": "4, 9"
+    }
+  },
+  {
+    "key": "quick-hw-120-v3",
+    "method": "bijective_address_permutation_simulation",
+    "inputs": {
+      "address_a": 2,
+      "address_b": 3,
+      "data_a": 5,
+      "data_b": 8
+    },
+    "expected": [
+      5,
+      8
+    ],
+    "correct_text": {
+      "he": "5, 8",
+      "en": "5, 8"
+    }
+  },
+  {
+    "key": "quick-hw-120-v4",
+    "method": "bijective_address_permutation_simulation",
+    "inputs": {
+      "address_a": 0,
+      "address_b": 3,
+      "data_a": 6,
+      "data_b": 2
+    },
+    "expected": [
+      6,
+      2
+    ],
+    "correct_text": {
+      "he": "6, 2",
+      "en": "6, 2"
+    }
+  },
+  {
+    "key": "quick-hw-120-v5",
+    "method": "bijective_address_permutation_simulation",
+    "inputs": {
+      "address_a": 4,
+      "address_b": 7,
+      "data_a": 1,
+      "data_b": 0
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 0",
+      "en": "1, 0"
+    }
+  },
+  {
+    "key": "quick-hw-121-v1",
+    "method": "exhaustive_address_pair_separation",
+    "inputs": {
+      "address_width": 2,
+      "depth": 4
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-121-v2",
+    "method": "exhaustive_address_pair_separation",
+    "inputs": {
+      "address_width": 3,
+      "depth": 8
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-hw-121-v3",
+    "method": "exhaustive_address_pair_separation",
+    "inputs": {
+      "address_width": 4,
+      "depth": 16
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-hw-121-v4",
+    "method": "exhaustive_address_pair_separation",
+    "inputs": {
+      "address_width": 5,
+      "depth": 32
+    },
+    "expected": 5,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-hw-121-v5",
+    "method": "exhaustive_address_pair_separation",
+    "inputs": {
+      "address_width": 6,
+      "depth": 64
+    },
+    "expected": 6,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-hw-122-v1",
+    "method": "single_port_operation_budget",
+    "inputs": {
+      "copies": 2,
+      "write": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-122-v2",
+    "method": "single_port_operation_budget",
+    "inputs": {
+      "copies": 3,
+      "write": 0
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-hw-122-v3",
+    "method": "single_port_operation_budget",
+    "inputs": {
+      "copies": 4,
+      "write": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-hw-122-v4",
+    "method": "single_port_operation_budget",
+    "inputs": {
+      "copies": 2,
+      "write": 0
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-hw-122-v5",
+    "method": "replicated_memory_freshness_counterexample",
+    "inputs": {
+      "copies": 2,
+      "written_copies": [
+        0
+      ],
+      "later_read_copy": 1
+    },
+    "expected": {
+      "he": "העותק השני עלול להחזיר מידע ישן",
+      "en": "The second copy may return stale data"
+    },
+    "correct_text": {
+      "he": "העותק השני עלול להחזיר מידע ישן",
+      "en": "The second copy may return stale data"
+    }
+  },
+  {
+    "key": "quick-hw-123-v1",
+    "method": "bank_mapping_modulo_two_conflict",
+    "inputs": {
+      "read_address": 0,
+      "write_address": 2
+    },
+    "expected": {
+      "read_bank": 0,
+      "write_bank": 0,
+      "conflict": true
+    },
+    "correct_text": {
+      "he": "בנקים 0,0; קונפליקט",
+      "en": "Banks 0,0; conflict"
+    }
+  },
+  {
+    "key": "quick-hw-123-v2",
+    "method": "bank_mapping_modulo_two_conflict",
+    "inputs": {
+      "read_address": 0,
+      "write_address": 1
+    },
+    "expected": {
+      "read_bank": 0,
+      "write_bank": 1,
+      "conflict": false
+    },
+    "correct_text": {
+      "he": "בנקים 0,1; אין קונפליקט",
+      "en": "Banks 0,1; no conflict"
+    }
+  },
+  {
+    "key": "quick-hw-123-v3",
+    "method": "bank_mapping_modulo_two_conflict",
+    "inputs": {
+      "read_address": 3,
+      "write_address": 5
+    },
+    "expected": {
+      "read_bank": 1,
+      "write_bank": 1,
+      "conflict": true
+    },
+    "correct_text": {
+      "he": "בנקים 1,1; קונפליקט",
+      "en": "Banks 1,1; conflict"
+    }
+  },
+  {
+    "key": "quick-hw-123-v4",
+    "method": "bank_mapping_modulo_two_conflict",
+    "inputs": {
+      "read_address": 4,
+      "write_address": 7
+    },
+    "expected": {
+      "read_bank": 0,
+      "write_bank": 1,
+      "conflict": false
+    },
+    "correct_text": {
+      "he": "בנקים 0,1; אין קונפליקט",
+      "en": "Banks 0,1; no conflict"
+    }
+  },
+  {
+    "key": "quick-hw-123-v5",
+    "method": "bank_mapping_modulo_two_conflict",
+    "inputs": {
+      "read_address": 6,
+      "write_address": 8
+    },
+    "expected": {
+      "read_bank": 0,
+      "write_bank": 0,
+      "conflict": true
+    },
+    "correct_text": {
+      "he": "בנקים 0,0; קונפליקט",
+      "en": "Banks 0,0; conflict"
+    }
+  },
+  {
+    "key": "quick-hw-124-v1",
+    "method": "inclusive_final_sample_block_threshold",
+    "inputs": {
+      "threshold": 10,
+      "before_last": 10,
+      "last_error": 1
+    },
+    "expected": {
+      "total": 11,
+      "failed": true
+    },
+    "correct_text": {
+      "he": "11; נכשל",
+      "en": "11; failed"
+    }
+  },
+  {
+    "key": "quick-hw-124-v2",
+    "method": "inclusive_final_sample_block_threshold",
+    "inputs": {
+      "threshold": 10,
+      "before_last": 9,
+      "last_error": 1
+    },
+    "expected": {
+      "total": 10,
+      "failed": false
+    },
+    "correct_text": {
+      "he": "10; לא נכשל",
+      "en": "10; not failed"
+    }
+  },
+  {
+    "key": "quick-hw-124-v3",
+    "method": "inclusive_final_sample_block_threshold",
+    "inputs": {
+      "threshold": 4,
+      "before_last": 4,
+      "last_error": 1
+    },
+    "expected": {
+      "total": 5,
+      "failed": true
+    },
+    "correct_text": {
+      "he": "5; נכשל",
+      "en": "5; failed"
+    }
+  },
+  {
+    "key": "quick-hw-124-v4",
+    "method": "inclusive_final_sample_block_threshold",
+    "inputs": {
+      "threshold": 5,
+      "before_last": 5,
+      "last_error": 0
+    },
+    "expected": {
+      "total": 5,
+      "failed": false
+    },
+    "correct_text": {
+      "he": "5; לא נכשל",
+      "en": "5; not failed"
+    }
+  },
+  {
+    "key": "quick-hw-124-v5",
+    "method": "inclusive_final_sample_block_threshold",
+    "inputs": {
+      "threshold": 6,
+      "before_last": 6,
+      "last_error": 1
+    },
+    "expected": {
+      "total": 7,
+      "failed": true
+    },
+    "correct_text": {
+      "he": "7; נכשל",
+      "en": "7; failed"
+    }
+  },
+  {
+    "key": "quick-hw-125-v1",
+    "method": "integer_edge_grid_half_period_impossibility",
+    "inputs": {
+      "period_cycles": 3
+    },
+    "expected": {
+      "required_high_cycles": 1.5,
+      "possible": false
+    },
+    "correct_text": {
+      "he": "1.5T; בלתי אפשרי בתנאים האלה",
+      "en": "1.5T; impossible under these restrictions"
+    }
+  },
+  {
+    "key": "quick-hw-125-v2",
+    "method": "integer_edge_grid_half_period_impossibility",
+    "inputs": {
+      "period_cycles": 5
+    },
+    "expected": {
+      "required_high_cycles": 2.5,
+      "possible": false
+    },
+    "correct_text": {
+      "he": "2.5T; בלתי אפשרי בתנאים האלה",
+      "en": "2.5T; impossible under these restrictions"
+    }
+  },
+  {
+    "key": "quick-hw-125-v3",
+    "method": "integer_edge_grid_half_period_impossibility",
+    "inputs": {
+      "period_cycles": 7
+    },
+    "expected": {
+      "required_high_cycles": 3.5,
+      "possible": false
+    },
+    "correct_text": {
+      "he": "3.5T; בלתי אפשרי בתנאים האלה",
+      "en": "3.5T; impossible under these restrictions"
+    }
+  },
+  {
+    "key": "quick-hw-125-v4",
+    "method": "integer_edge_grid_half_period_impossibility",
+    "inputs": {
+      "period_cycles": 9
+    },
+    "expected": {
+      "required_high_cycles": 4.5,
+      "possible": false
+    },
+    "correct_text": {
+      "he": "4.5T; בלתי אפשרי בתנאים האלה",
+      "en": "4.5T; impossible under these restrictions"
+    }
+  },
+  {
+    "key": "quick-hw-125-v5",
+    "method": "integer_edge_grid_half_period_impossibility",
+    "inputs": {
+      "period_cycles": 11
+    },
+    "expected": {
+      "required_high_cycles": 5.5,
+      "possible": false
+    },
+    "correct_text": {
+      "he": "5.5T; בלתי אפשרי בתנאים האלה",
+      "en": "5.5T; impossible under these restrictions"
+    }
+  }
+]

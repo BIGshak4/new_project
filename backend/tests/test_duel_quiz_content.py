@@ -20,14 +20,14 @@ def answer(key, language="en"):
     return q["choices"][q["correct"]][language]
 
 
-def test_linked_batch_has_ten_real_sources_and_five_bilingual_variants_each():
+def test_linked_batch_covers_every_short_source_with_five_bilingual_variants():
     source_cards = {}
     for path in (ROOT / "apps/web/src/content").glob("fundamentals-*.json"):
         content = json.loads(path.read_text(encoding="utf-8"))
         if isinstance(content, list):
             source_cards.update({c["id"]: c for c in content})
     groups = defaultdict(list)
-    assert len(LINKED) == 50
+    assert len(LINKED) == 1250
     assert len({q["key"] for q in SEED["questions"]}) == len(SEED["questions"])
     for q in LINKED.values():
         assert q["source_key"] in source_cards
@@ -42,7 +42,8 @@ def test_linked_batch_has_ten_real_sources_and_five_bilingual_variants_each():
             assert all(choices)
             assert len(set(choices)) == 4, q["key"]
         groups[q["source_key"]].append(q)
-    assert len(groups) == 10
+    assert len(groups) == len(source_cards) == 250
+    assert set(groups) == set(source_cards)
     for variants in groups.values():
         assert sorted(q["variant"] for q in variants) == [1, 2, 3, 4, 5]
         for lang in ("he", "en"):

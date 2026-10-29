@@ -1,0 +1,6347 @@
+[
+  {
+    "key": "quick-sw-01-v1",
+    "method": "exhaustive evaluation of distinct predicate sets",
+    "inputs": {
+      "predicates": [
+        [
+          false,
+          "A"
+        ],
+        [
+          true,
+          "A"
+        ],
+        [
+          false,
+          "B"
+        ]
+      ],
+      "required_true": 1,
+      "truth_counts": {
+        "A": 2,
+        "B": 1,
+        "C": 2
+      }
+    },
+    "expected": {
+      "he": "B",
+      "en": "B"
+    }
+  },
+  {
+    "key": "quick-sw-01-v2",
+    "method": "exhaustive evaluation of distinct predicate sets",
+    "inputs": {
+      "predicates": [
+        [
+          true,
+          "A"
+        ],
+        [
+          true,
+          "A"
+        ],
+        [
+          true,
+          "B"
+        ]
+      ],
+      "required_true": 2,
+      "truth_counts": {
+        "A": 2,
+        "B": 1,
+        "C": 0
+      }
+    },
+    "expected": {
+      "he": "A",
+      "en": "A"
+    }
+  },
+  {
+    "key": "quick-sw-01-v3",
+    "method": "exhaustive evaluation of distinct predicate sets",
+    "inputs": {
+      "predicates": [
+        [
+          true,
+          "C"
+        ],
+        [
+          false,
+          "A"
+        ],
+        [
+          true,
+          "B"
+        ]
+      ],
+      "required_true": 0,
+      "truth_counts": {
+        "A": 0,
+        "B": 2,
+        "C": 2
+      }
+    },
+    "expected": {
+      "he": "A",
+      "en": "A"
+    }
+  },
+  {
+    "key": "quick-sw-01-v4",
+    "method": "exhaustive evaluation of distinct predicate sets",
+    "inputs": {
+      "predicates": [
+        [
+          false,
+          "C"
+        ],
+        [
+          true,
+          "B"
+        ],
+        [
+          true,
+          "B"
+        ]
+      ],
+      "required_true": 3,
+      "truth_counts": {
+        "A": 1,
+        "B": 3,
+        "C": 0
+      }
+    },
+    "expected": {
+      "he": "B",
+      "en": "B"
+    }
+  },
+  {
+    "key": "quick-sw-01-v5",
+    "method": "exhaustive evaluation of distinct predicate sets",
+    "inputs": {
+      "predicates": [
+        [
+          true,
+          "C"
+        ],
+        [
+          true,
+          "C"
+        ],
+        [
+          false,
+          "C"
+        ]
+      ],
+      "required_true": 2,
+      "truth_counts": {
+        "A": 1,
+        "B": 1,
+        "C": 2
+      }
+    },
+    "expected": {
+      "he": "C",
+      "en": "C"
+    }
+  },
+  {
+    "key": "quick-sw-04-v1",
+    "method": "enumerate all 24 permutations",
+    "inputs": {
+      "valid": [
+        [
+          "D",
+          "A",
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "expected": {
+      "he": "D, A, B, C",
+      "en": "D, A, B, C"
+    }
+  },
+  {
+    "key": "quick-sw-04-v2",
+    "method": "enumerate all 24 permutations",
+    "inputs": {
+      "valid": [
+        [
+          "C",
+          "A",
+          "B",
+          "D"
+        ]
+      ]
+    },
+    "expected": {
+      "he": "C, A, B, D",
+      "en": "C, A, B, D"
+    }
+  },
+  {
+    "key": "quick-sw-04-v3",
+    "method": "enumerate all 24 permutations",
+    "inputs": {
+      "valid": [
+        [
+          "B",
+          "D",
+          "A",
+          "C"
+        ]
+      ]
+    },
+    "expected": {
+      "he": "B, D, A, C",
+      "en": "B, D, A, C"
+    }
+  },
+  {
+    "key": "quick-sw-04-v4",
+    "method": "enumerate all 24 permutations",
+    "inputs": {
+      "valid": [
+        [
+          "A",
+          "C",
+          "D",
+          "B"
+        ]
+      ]
+    },
+    "expected": {
+      "he": "A, C, D, B",
+      "en": "A, C, D, B"
+    }
+  },
+  {
+    "key": "quick-sw-04-v5",
+    "method": "enumerate all 24 permutations",
+    "inputs": {
+      "valid": [
+        [
+          "D",
+          "C",
+          "B",
+          "A"
+        ]
+      ]
+    },
+    "expected": {
+      "he": "D, C, B, A",
+      "en": "D, C, B, A"
+    }
+  },
+  {
+    "key": "quick-sw-06-v1",
+    "method": "sum segment times and recombine distance",
+    "inputs": {
+      "distance": 60,
+      "speeds": [
+        30,
+        60
+      ]
+    },
+    "expected": {
+      "he": "40",
+      "en": "40"
+    }
+  },
+  {
+    "key": "quick-sw-06-v2",
+    "method": "sum segment times and recombine distance",
+    "inputs": {
+      "distance": 120,
+      "speeds": [
+        40,
+        80
+      ]
+    },
+    "expected": {
+      "he": "160/3",
+      "en": "160/3"
+    }
+  },
+  {
+    "key": "quick-sw-06-v3",
+    "method": "sum segment times and recombine distance",
+    "inputs": {
+      "distance": 30,
+      "speeds": [
+        20,
+        60
+      ]
+    },
+    "expected": {
+      "he": "30",
+      "en": "30"
+    }
+  },
+  {
+    "key": "quick-sw-06-v4",
+    "method": "sum segment times and recombine distance",
+    "inputs": {
+      "distance": 100,
+      "speeds": [
+        50,
+        100
+      ]
+    },
+    "expected": {
+      "he": "200/3",
+      "en": "200/3"
+    }
+  },
+  {
+    "key": "quick-sw-06-v5",
+    "method": "sum segment times and recombine distance",
+    "inputs": {
+      "distance": 90,
+      "speeds": [
+        30,
+        90
+      ]
+    },
+    "expected": {
+      "he": "45",
+      "en": "45"
+    }
+  },
+  {
+    "key": "quick-sw-07-v1",
+    "method": "enumerate positive common multiples; compare lcm",
+    "inputs": {
+      "periods": [
+        6,
+        10
+      ]
+    },
+    "expected": {
+      "he": "30",
+      "en": "30"
+    }
+  },
+  {
+    "key": "quick-sw-07-v2",
+    "method": "enumerate positive common multiples; compare lcm",
+    "inputs": {
+      "periods": [
+        4,
+        6
+      ]
+    },
+    "expected": {
+      "he": "12",
+      "en": "12"
+    }
+  },
+  {
+    "key": "quick-sw-07-v3",
+    "method": "enumerate positive common multiples; compare lcm",
+    "inputs": {
+      "periods": [
+        8,
+        12
+      ]
+    },
+    "expected": {
+      "he": "24",
+      "en": "24"
+    }
+  },
+  {
+    "key": "quick-sw-07-v4",
+    "method": "enumerate positive common multiples; compare lcm",
+    "inputs": {
+      "periods": [
+        9,
+        15
+      ]
+    },
+    "expected": {
+      "he": "45",
+      "en": "45"
+    }
+  },
+  {
+    "key": "quick-sw-07-v5",
+    "method": "enumerate positive common multiples; compare lcm",
+    "inputs": {
+      "periods": [
+        5,
+        7
+      ]
+    },
+    "expected": {
+      "he": "35",
+      "en": "35"
+    }
+  },
+  {
+    "key": "quick-sw-08-v1",
+    "method": "recursive recurrence checked by sequence enumeration",
+    "inputs": {
+      "stairs": 3
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-08-v2",
+    "method": "recursive recurrence checked by sequence enumeration",
+    "inputs": {
+      "stairs": 4
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-08-v3",
+    "method": "recursive recurrence checked by sequence enumeration",
+    "inputs": {
+      "stairs": 5
+    },
+    "expected": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-sw-08-v4",
+    "method": "recursive recurrence checked by sequence enumeration",
+    "inputs": {
+      "stairs": 6
+    },
+    "expected": {
+      "he": "13",
+      "en": "13"
+    }
+  },
+  {
+    "key": "quick-sw-08-v5",
+    "method": "recursive recurrence checked by sequence enumeration",
+    "inputs": {
+      "stairs": 7
+    },
+    "expected": {
+      "he": "21",
+      "en": "21"
+    }
+  },
+  {
+    "key": "quick-sw-10-v1",
+    "method": "age difference invariant",
+    "inputs": {
+      "ages": [
+        8,
+        13
+      ],
+      "years": 5
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-10-v2",
+    "method": "age difference invariant",
+    "inputs": {
+      "ages": [
+        6,
+        15
+      ],
+      "years": 10
+    },
+    "expected": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-sw-10-v3",
+    "method": "age difference invariant",
+    "inputs": {
+      "ages": [
+        12,
+        19
+      ],
+      "years": 4
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-sw-10-v4",
+    "method": "age difference invariant",
+    "inputs": {
+      "ages": [
+        3,
+        11
+      ],
+      "years": 7
+    },
+    "expected": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-sw-10-v5",
+    "method": "age difference invariant",
+    "inputs": {
+      "ages": [
+        20,
+        32
+      ],
+      "years": 8
+    },
+    "expected": {
+      "he": "12",
+      "en": "12"
+    }
+  },
+  {
+    "key": "quick-sw-101-v1",
+    "method": "capacity bound excluding one participant",
+    "inputs": {
+      "senders": 3,
+      "lifetime_limit": 2,
+      "extra_counts": 1
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-101-v2",
+    "method": "capacity bound excluding one participant",
+    "inputs": {
+      "senders": 4,
+      "lifetime_limit": 2,
+      "extra_counts": 1
+    },
+    "expected": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-sw-101-v3",
+    "method": "capacity bound excluding one participant",
+    "inputs": {
+      "senders": 5,
+      "lifetime_limit": 2,
+      "extra_counts": 1
+    },
+    "expected": {
+      "he": "10",
+      "en": "10"
+    }
+  },
+  {
+    "key": "quick-sw-101-v4",
+    "method": "capacity bound excluding one participant",
+    "inputs": {
+      "senders": 3,
+      "lifetime_limit": 3,
+      "extra_counts": 1
+    },
+    "expected": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-sw-101-v5",
+    "method": "capacity bound excluding one participant",
+    "inputs": {
+      "senders": 4,
+      "lifetime_limit": 3,
+      "extra_counts": 2
+    },
+    "expected": {
+      "he": "12",
+      "en": "12"
+    }
+  },
+  {
+    "key": "quick-sw-102-v1",
+    "method": "enumerate legal one-switch changes preserving message bit",
+    "inputs": {
+      "message_switch": "A",
+      "spare_switch": "B"
+    },
+    "expected": {
+      "he": "להדליק רק את B",
+      "en": "Turn only B on"
+    }
+  },
+  {
+    "key": "quick-sw-102-v2",
+    "method": "enumerate legal one-switch changes preserving message bit",
+    "inputs": {
+      "message_switch": "A",
+      "spare_switch": "B"
+    },
+    "expected": {
+      "he": "לכבות רק את B",
+      "en": "Turn only B off"
+    }
+  },
+  {
+    "key": "quick-sw-102-v3",
+    "method": "enumerate legal one-switch changes preserving message bit",
+    "inputs": {
+      "message_switch": "A",
+      "spare_switch": "B"
+    },
+    "expected": {
+      "he": "להדליק רק את B",
+      "en": "Turn only B on"
+    }
+  },
+  {
+    "key": "quick-sw-102-v4",
+    "method": "enumerate legal one-switch changes preserving message bit",
+    "inputs": {
+      "message_switch": "A",
+      "spare_switch": "B"
+    },
+    "expected": {
+      "he": "לכבות רק את B",
+      "en": "Turn only B off"
+    }
+  },
+  {
+    "key": "quick-sw-102-v5",
+    "method": "enumerate legal one-switch changes preserving message bit",
+    "inputs": {
+      "message_switch": "B",
+      "spare_switch": "A"
+    },
+    "expected": {
+      "he": "להדליק רק את A",
+      "en": "Turn only A on"
+    }
+  },
+  {
+    "key": "quick-sw-103-v1",
+    "method": "geometric absorption probability and recurrence substitution",
+    "inputs": {
+      "per_attempt_success": "1/2"
+    },
+    "expected": {
+      "he": "2/3",
+      "en": "2/3"
+    }
+  },
+  {
+    "key": "quick-sw-103-v2",
+    "method": "geometric absorption probability and recurrence substitution",
+    "inputs": {
+      "per_attempt_success": "1/3"
+    },
+    "expected": {
+      "he": "3/5",
+      "en": "3/5"
+    }
+  },
+  {
+    "key": "quick-sw-103-v3",
+    "method": "geometric absorption probability and recurrence substitution",
+    "inputs": {
+      "per_attempt_success": "2/3"
+    },
+    "expected": {
+      "he": "3/4",
+      "en": "3/4"
+    }
+  },
+  {
+    "key": "quick-sw-103-v4",
+    "method": "geometric absorption probability and recurrence substitution",
+    "inputs": {
+      "per_attempt_success": "1/4"
+    },
+    "expected": {
+      "he": "4/7",
+      "en": "4/7"
+    }
+  },
+  {
+    "key": "quick-sw-103-v5",
+    "method": "geometric absorption probability and recurrence substitution",
+    "inputs": {
+      "per_attempt_success": "3/4"
+    },
+    "expected": {
+      "he": "4/5",
+      "en": "4/5"
+    }
+  },
+  {
+    "key": "quick-sw-104-v1",
+    "method": "conditional probability multiplication rule",
+    "inputs": {
+      "reach": "3/5",
+      "win_given_reach": "1/2"
+    },
+    "expected": {
+      "he": "3/10",
+      "en": "3/10"
+    }
+  },
+  {
+    "key": "quick-sw-104-v2",
+    "method": "conditional probability multiplication rule",
+    "inputs": {
+      "reach": "2/3",
+      "win_given_reach": "3/4"
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    }
+  },
+  {
+    "key": "quick-sw-104-v3",
+    "method": "conditional probability multiplication rule",
+    "inputs": {
+      "reach": "1/2",
+      "win_given_reach": "2/5"
+    },
+    "expected": {
+      "he": "1/5",
+      "en": "1/5"
+    }
+  },
+  {
+    "key": "quick-sw-104-v4",
+    "method": "conditional probability multiplication rule",
+    "inputs": {
+      "reach": "4/5",
+      "win_given_reach": "1/4"
+    },
+    "expected": {
+      "he": "1/5",
+      "en": "1/5"
+    }
+  },
+  {
+    "key": "quick-sw-104-v5",
+    "method": "conditional probability multiplication rule",
+    "inputs": {
+      "reach": "3/4",
+      "win_given_reach": "2/3"
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    }
+  },
+  {
+    "key": "quick-sw-105-v1",
+    "method": "piecewise travel-time integration",
+    "inputs": {
+      "half_distance": 1,
+      "speeds": [
+        1,
+        2
+      ],
+      "times": [
+        "3/2",
+        "1"
+      ]
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    }
+  },
+  {
+    "key": "quick-sw-105-v2",
+    "method": "piecewise travel-time integration",
+    "inputs": {
+      "half_distance": 2,
+      "speeds": [
+        1,
+        4
+      ],
+      "times": [
+        "5/2",
+        "1"
+      ]
+    },
+    "expected": {
+      "he": "3/2",
+      "en": "3/2"
+    }
+  },
+  {
+    "key": "quick-sw-105-v3",
+    "method": "piecewise travel-time integration",
+    "inputs": {
+      "half_distance": 3,
+      "speeds": [
+        2,
+        3
+      ],
+      "times": [
+        "5/2",
+        "2"
+      ]
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    }
+  },
+  {
+    "key": "quick-sw-105-v4",
+    "method": "piecewise travel-time integration",
+    "inputs": {
+      "half_distance": 4,
+      "speeds": [
+        2,
+        4
+      ],
+      "times": [
+        "3",
+        "2"
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-105-v5",
+    "method": "piecewise travel-time integration",
+    "inputs": {
+      "half_distance": 6,
+      "speeds": [
+        3,
+        6
+      ],
+      "times": [
+        "3",
+        "2"
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-106-v1",
+    "method": "gravitational and kinetic energy equality",
+    "inputs": {
+      "g": 10,
+      "height": 5
+    },
+    "expected": {
+      "he": "10",
+      "en": "10"
+    }
+  },
+  {
+    "key": "quick-sw-106-v2",
+    "method": "gravitational and kinetic energy equality",
+    "inputs": {
+      "g": 10,
+      "height": 20
+    },
+    "expected": {
+      "he": "20",
+      "en": "20"
+    }
+  },
+  {
+    "key": "quick-sw-106-v3",
+    "method": "gravitational and kinetic energy equality",
+    "inputs": {
+      "g": 8,
+      "height": 9
+    },
+    "expected": {
+      "he": "12",
+      "en": "12"
+    }
+  },
+  {
+    "key": "quick-sw-106-v4",
+    "method": "gravitational and kinetic energy equality",
+    "inputs": {
+      "g": 9,
+      "height": 8
+    },
+    "expected": {
+      "he": "12",
+      "en": "12"
+    }
+  },
+  {
+    "key": "quick-sw-106-v5",
+    "method": "gravitational and kinetic energy equality",
+    "inputs": {
+      "g": 10,
+      "height": 45
+    },
+    "expected": {
+      "he": "30",
+      "en": "30"
+    }
+  },
+  {
+    "key": "quick-sw-107-v1",
+    "method": "opposing torque balance equation",
+    "inputs": {
+      "left_mass": 2,
+      "left_arm": 1,
+      "right_arm": 2
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-107-v2",
+    "method": "opposing torque balance equation",
+    "inputs": {
+      "left_mass": 3,
+      "left_arm": 2,
+      "right_arm": 3
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-107-v3",
+    "method": "opposing torque balance equation",
+    "inputs": {
+      "left_mass": 4,
+      "left_arm": 3,
+      "right_arm": 6
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-107-v4",
+    "method": "opposing torque balance equation",
+    "inputs": {
+      "left_mass": 6,
+      "left_arm": 1,
+      "right_arm": 3
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-107-v5",
+    "method": "opposing torque balance equation",
+    "inputs": {
+      "left_mass": 5,
+      "left_arm": 4,
+      "right_arm": 2
+    },
+    "expected": {
+      "he": "10",
+      "en": "10"
+    }
+  },
+  {
+    "key": "quick-sw-108-v1",
+    "method": "vector center-of-mass sum",
+    "inputs": {
+      "points": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "added": [
+        0,
+        -2
+      ]
+    },
+    "expected": {
+      "he": "(0, -2)",
+      "en": "(0, -2)"
+    }
+  },
+  {
+    "key": "quick-sw-108-v2",
+    "method": "vector center-of-mass sum",
+    "inputs": {
+      "points": [
+        [
+          -2,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "added": [
+        0,
+        -6
+      ]
+    },
+    "expected": {
+      "he": "(0, -6)",
+      "en": "(0, -6)"
+    }
+  },
+  {
+    "key": "quick-sw-108-v3",
+    "method": "vector center-of-mass sum",
+    "inputs": {
+      "points": [
+        [
+          -4,
+          2
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "added": [
+        0,
+        -4
+      ]
+    },
+    "expected": {
+      "he": "(0, -4)",
+      "en": "(0, -4)"
+    }
+  },
+  {
+    "key": "quick-sw-108-v4",
+    "method": "vector center-of-mass sum",
+    "inputs": {
+      "points": [
+        [
+          -3,
+          5
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "added": [
+        0,
+        -10
+      ]
+    },
+    "expected": {
+      "he": "(0, -10)",
+      "en": "(0, -10)"
+    }
+  },
+  {
+    "key": "quick-sw-108-v5",
+    "method": "vector center-of-mass sum",
+    "inputs": {
+      "points": [
+        [
+          -5,
+          4
+        ],
+        [
+          5,
+          4
+        ]
+      ],
+      "added": [
+        0,
+        -8
+      ]
+    },
+    "expected": {
+      "he": "(0, -8)",
+      "en": "(0, -8)"
+    }
+  },
+  {
+    "key": "quick-sw-109-v1",
+    "method": "superposition of specified torque sums",
+    "inputs": {
+      "group_sizes": [
+        3,
+        2
+      ],
+      "torque_sums": [
+        0,
+        0
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-sw-109-v2",
+    "method": "superposition of specified torque sums",
+    "inputs": {
+      "group_sizes": [
+        4,
+        3
+      ],
+      "torque_sums": [
+        0,
+        0
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-sw-109-v3",
+    "method": "superposition of specified torque sums",
+    "inputs": {
+      "group_sizes": [
+        5,
+        2
+      ],
+      "torque_sums": [
+        0,
+        0
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-sw-109-v4",
+    "method": "superposition of specified torque sums",
+    "inputs": {
+      "group_sizes": [
+        2,
+        6
+      ],
+      "torque_sums": [
+        0,
+        0
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-sw-109-v5",
+    "method": "superposition of specified torque sums",
+    "inputs": {
+      "group_sizes": [
+        7,
+        4
+      ],
+      "torque_sums": [
+        0,
+        0
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-sw-110-v1",
+    "method": "local potential energy and torque sign",
+    "inputs": {
+      "case": 1
+    },
+    "expected": {
+      "he": "הכבידה מרחיקה מהמצב ההתחלתי",
+      "en": "Gravity drives it farther from the initial position"
+    }
+  },
+  {
+    "key": "quick-sw-110-v2",
+    "method": "local potential energy and torque sign",
+    "inputs": {
+      "case": 2
+    },
+    "expected": {
+      "he": "יציב",
+      "en": "Stable"
+    }
+  },
+  {
+    "key": "quick-sw-110-v3",
+    "method": "local potential energy and torque sign",
+    "inputs": {
+      "case": 3
+    },
+    "expected": {
+      "he": "אדיש",
+      "en": "Neutral"
+    }
+  },
+  {
+    "key": "quick-sw-110-v4",
+    "method": "local potential energy and torque sign",
+    "inputs": {
+      "case": 4
+    },
+    "expected": {
+      "he": "נגד ההטיה",
+      "en": "Against the tilt"
+    }
+  },
+  {
+    "key": "quick-sw-110-v5",
+    "method": "local potential energy and torque sign",
+    "inputs": {
+      "case": 5
+    },
+    "expected": {
+      "he": "התגובה להפרעה קטנה יוצרת מומנט מחזיר",
+      "en": "Small disturbances produce a restoring torque"
+    }
+  },
+  {
+    "key": "quick-sw-111-v1",
+    "method": "iterate parity state across proper crossings",
+    "inputs": {
+      "crossings": 1
+    },
+    "expected": {
+      "he": "הנקודה בפנים",
+      "en": "The point is inside"
+    }
+  },
+  {
+    "key": "quick-sw-111-v2",
+    "method": "iterate parity state across proper crossings",
+    "inputs": {
+      "crossings": 2
+    },
+    "expected": {
+      "he": "הנקודה בחוץ",
+      "en": "The point is outside"
+    }
+  },
+  {
+    "key": "quick-sw-111-v3",
+    "method": "iterate parity state across proper crossings",
+    "inputs": {
+      "crossings": 3
+    },
+    "expected": {
+      "he": "הנקודה בפנים",
+      "en": "The point is inside"
+    }
+  },
+  {
+    "key": "quick-sw-111-v4",
+    "method": "iterate parity state across proper crossings",
+    "inputs": {
+      "crossings": 4
+    },
+    "expected": {
+      "he": "הנקודה בחוץ",
+      "en": "The point is outside"
+    }
+  },
+  {
+    "key": "quick-sw-111-v5",
+    "method": "iterate parity state across proper crossings",
+    "inputs": {
+      "crossings": 5
+    },
+    "expected": {
+      "he": "הנקודה בפנים",
+      "en": "The point is inside"
+    }
+  },
+  {
+    "key": "quick-sw-112-v1",
+    "method": "evaluate half-open endpoint predicate on both incident edges",
+    "inputs": {
+      "ray_y": 0,
+      "other_endpoint_heights": [
+        -1,
+        1
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-112-v2",
+    "method": "evaluate half-open endpoint predicate on both incident edges",
+    "inputs": {
+      "ray_y": 2,
+      "other_endpoint_heights": [
+        0,
+        4
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-112-v3",
+    "method": "evaluate half-open endpoint predicate on both incident edges",
+    "inputs": {
+      "ray_y": 5,
+      "other_endpoint_heights": [
+        3,
+        8
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-112-v4",
+    "method": "evaluate half-open endpoint predicate on both incident edges",
+    "inputs": {
+      "ray_y": -2,
+      "other_endpoint_heights": [
+        -5,
+        1
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-112-v5",
+    "method": "evaluate half-open endpoint predicate on both incident edges",
+    "inputs": {
+      "ray_y": 10,
+      "other_endpoint_heights": [
+        7,
+        12
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-113-v1",
+    "method": "evaluate parity and nonzero winding on repeated traversal",
+    "inputs": {
+      "repeated_traversals": 2
+    },
+    "expected": {
+      "he": "בחוץ לפי זוגיות, בפנים לפי ליפוף לא־אפס",
+      "en": "Outside by parity, inside by nonzero winding"
+    }
+  },
+  {
+    "key": "quick-sw-113-v2",
+    "method": "evaluate parity and nonzero winding on repeated traversal",
+    "inputs": {
+      "repeated_traversals": 3
+    },
+    "expected": {
+      "he": "בפנים לפי שתי השיטות",
+      "en": "Inside under both rules"
+    }
+  },
+  {
+    "key": "quick-sw-113-v3",
+    "method": "evaluate parity and nonzero winding on repeated traversal",
+    "inputs": {
+      "repeated_traversals": 4
+    },
+    "expected": {
+      "he": "בחוץ לפי זוגיות, בפנים לפי ליפוף לא־אפס",
+      "en": "Outside by parity, inside by nonzero winding"
+    }
+  },
+  {
+    "key": "quick-sw-113-v4",
+    "method": "evaluate parity and nonzero winding on repeated traversal",
+    "inputs": {
+      "repeated_traversals": 5
+    },
+    "expected": {
+      "he": "בפנים לפי שתי השיטות",
+      "en": "Inside under both rules"
+    }
+  },
+  {
+    "key": "quick-sw-113-v5",
+    "method": "evaluate parity and nonzero winding on repeated traversal",
+    "inputs": {
+      "repeated_traversals": 6
+    },
+    "expected": {
+      "he": "בחוץ לפי זוגיות, בפנים לפי ליפוף לא־אפס",
+      "en": "Outside by parity, inside by nonzero winding"
+    }
+  },
+  {
+    "key": "quick-sw-114-v1",
+    "method": "subtract circle circumferences algebraically",
+    "inputs": {
+      "original_radius": 1,
+      "added_pi_multiple": 2
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-114-v2",
+    "method": "subtract circle circumferences algebraically",
+    "inputs": {
+      "original_radius": 10,
+      "added_pi_multiple": 4
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-114-v3",
+    "method": "subtract circle circumferences algebraically",
+    "inputs": {
+      "original_radius": 100,
+      "added_pi_multiple": 6
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-114-v4",
+    "method": "subtract circle circumferences algebraically",
+    "inputs": {
+      "original_radius": 1000,
+      "added_pi_multiple": 8
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-114-v5",
+    "method": "subtract circle circumferences algebraically",
+    "inputs": {
+      "original_radius": 3,
+      "added_pi_multiple": 10
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-115-v1",
+    "method": "exact rational angular-speed comparison",
+    "inputs": {
+      "radii": [
+        "1/4",
+        "1"
+      ],
+      "speeds": [
+        1,
+        3
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-115-v2",
+    "method": "exact rational angular-speed comparison",
+    "inputs": {
+      "radii": [
+        "1/2",
+        "2"
+      ],
+      "speeds": [
+        2,
+        6
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-115-v3",
+    "method": "exact rational angular-speed comparison",
+    "inputs": {
+      "radii": [
+        "1",
+        "2"
+      ],
+      "speeds": [
+        3,
+        5
+      ]
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    }
+  },
+  {
+    "key": "quick-sw-115-v4",
+    "method": "exact rational angular-speed comparison",
+    "inputs": {
+      "radii": [
+        "2",
+        "3"
+      ],
+      "speeds": [
+        6,
+        8
+      ]
+    },
+    "expected": {
+      "he": "1/3",
+      "en": "1/3"
+    }
+  },
+  {
+    "key": "quick-sw-115-v5",
+    "method": "exact rational angular-speed comparison",
+    "inputs": {
+      "radii": [
+        "1/3",
+        "2"
+      ],
+      "speeds": [
+        1,
+        5
+      ]
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    }
+  },
+  {
+    "key": "quick-sw-116-v1",
+    "method": "compare area product and rigid-motion side invariants",
+    "inputs": {
+      "dimensions": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          2
+        ]
+      ]
+    },
+    "expected": {
+      "he": "שטחם שווה אך הם אינם חופפים",
+      "en": "They have equal area but are not congruent"
+    }
+  },
+  {
+    "key": "quick-sw-116-v2",
+    "method": "compare area product and rigid-motion side invariants",
+    "inputs": {
+      "dimensions": [
+        [
+          1,
+          9
+        ],
+        [
+          3,
+          3
+        ]
+      ]
+    },
+    "expected": {
+      "he": "שטחם שווה אך הם אינם חופפים",
+      "en": "They have equal area but are not congruent"
+    }
+  },
+  {
+    "key": "quick-sw-116-v3",
+    "method": "compare area product and rigid-motion side invariants",
+    "inputs": {
+      "dimensions": [
+        [
+          2,
+          8
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    "expected": {
+      "he": "שטחם שווה אך הם אינם חופפים",
+      "en": "They have equal area but are not congruent"
+    }
+  },
+  {
+    "key": "quick-sw-116-v4",
+    "method": "compare area product and rigid-motion side invariants",
+    "inputs": {
+      "dimensions": [
+        [
+          2,
+          18
+        ],
+        [
+          6,
+          6
+        ]
+      ]
+    },
+    "expected": {
+      "he": "שטחם שווה אך הם אינם חופפים",
+      "en": "They have equal area but are not congruent"
+    }
+  },
+  {
+    "key": "quick-sw-116-v5",
+    "method": "compare area product and rigid-motion side invariants",
+    "inputs": {
+      "dimensions": [
+        [
+          1,
+          16
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    "expected": {
+      "he": "שטחם שווה אך הם אינם חופפים",
+      "en": "They have equal area but are not congruent"
+    }
+  },
+  {
+    "key": "quick-sw-117-v1",
+    "method": "full resource-state recurrence checked against triangular formula",
+    "inputs": {
+      "balls": 2,
+      "drops": 2
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-117-v2",
+    "method": "full resource-state recurrence checked against triangular formula",
+    "inputs": {
+      "balls": 2,
+      "drops": 3
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-117-v3",
+    "method": "full resource-state recurrence checked against triangular formula",
+    "inputs": {
+      "balls": 2,
+      "drops": 4
+    },
+    "expected": {
+      "he": "10",
+      "en": "10"
+    }
+  },
+  {
+    "key": "quick-sw-117-v4",
+    "method": "full resource-state recurrence checked against triangular formula",
+    "inputs": {
+      "balls": 2,
+      "drops": 5
+    },
+    "expected": {
+      "he": "15",
+      "en": "15"
+    }
+  },
+  {
+    "key": "quick-sw-117-v5",
+    "method": "full resource-state recurrence checked against triangular formula",
+    "inputs": {
+      "balls": 2,
+      "drops": 6
+    },
+    "expected": {
+      "he": "21",
+      "en": "21"
+    }
+  },
+  {
+    "key": "quick-sw-118-v1",
+    "method": "two indistinguishable worlds differing only in sender's own hat",
+    "inputs": {
+      "visible_black": 2,
+      "message": "white",
+      "own_hat_worlds": [
+        "white",
+        "black"
+      ]
+    },
+    "expected": {
+      "he": "צבעו עדיין יכול להיות לבן או שחור",
+      "en": "It may still be either white or black"
+    }
+  },
+  {
+    "key": "quick-sw-118-v2",
+    "method": "two indistinguishable worlds differing only in sender's own hat",
+    "inputs": {
+      "visible_black": 3,
+      "message": "black",
+      "own_hat_worlds": [
+        "white",
+        "black"
+      ]
+    },
+    "expected": {
+      "he": "צבעו עדיין יכול להיות לבן או שחור",
+      "en": "It may still be either white or black"
+    }
+  },
+  {
+    "key": "quick-sw-118-v3",
+    "method": "two indistinguishable worlds differing only in sender's own hat",
+    "inputs": {
+      "visible_black": 4,
+      "message": "white",
+      "own_hat_worlds": [
+        "white",
+        "black"
+      ]
+    },
+    "expected": {
+      "he": "צבעו עדיין יכול להיות לבן או שחור",
+      "en": "It may still be either white or black"
+    }
+  },
+  {
+    "key": "quick-sw-118-v4",
+    "method": "two indistinguishable worlds differing only in sender's own hat",
+    "inputs": {
+      "visible_black": 5,
+      "message": "black",
+      "own_hat_worlds": [
+        "white",
+        "black"
+      ]
+    },
+    "expected": {
+      "he": "צבעו עדיין יכול להיות לבן או שחור",
+      "en": "It may still be either white or black"
+    }
+  },
+  {
+    "key": "quick-sw-118-v5",
+    "method": "two indistinguishable worlds differing only in sender's own hat",
+    "inputs": {
+      "visible_black": 0,
+      "message": "white",
+      "own_hat_worlds": [
+        "white",
+        "black"
+      ]
+    },
+    "expected": {
+      "he": "צבעו עדיין יכול להיות לבן או שחור",
+      "en": "It may still be either white or black"
+    }
+  },
+  {
+    "key": "quick-sw-13-v1",
+    "method": "enumerate conditioned binary sample space",
+    "inputs": {
+      "coins": 2,
+      "minimum_heads": 1,
+      "retained": 3
+    },
+    "expected": {
+      "he": "1/3",
+      "en": "1/3"
+    }
+  },
+  {
+    "key": "quick-sw-13-v2",
+    "method": "enumerate conditioned binary sample space",
+    "inputs": {
+      "coins": 3,
+      "minimum_heads": 1,
+      "retained": 7
+    },
+    "expected": {
+      "he": "1/7",
+      "en": "1/7"
+    }
+  },
+  {
+    "key": "quick-sw-13-v3",
+    "method": "enumerate conditioned binary sample space",
+    "inputs": {
+      "coins": 3,
+      "minimum_heads": 2,
+      "retained": 4
+    },
+    "expected": {
+      "he": "1/4",
+      "en": "1/4"
+    }
+  },
+  {
+    "key": "quick-sw-13-v4",
+    "method": "enumerate conditioned binary sample space",
+    "inputs": {
+      "coins": 4,
+      "minimum_heads": 1,
+      "retained": 15
+    },
+    "expected": {
+      "he": "1/15",
+      "en": "1/15"
+    }
+  },
+  {
+    "key": "quick-sw-13-v5",
+    "method": "enumerate conditioned binary sample space",
+    "inputs": {
+      "coins": 4,
+      "minimum_heads": 3,
+      "retained": 5
+    },
+    "expected": {
+      "he": "1/5",
+      "en": "1/5"
+    }
+  },
+  {
+    "key": "quick-sw-16-v1",
+    "method": "solve and substitute both positions",
+    "inputs": {
+      "gap": 4,
+      "speeds": [
+        1,
+        3
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-16-v2",
+    "method": "solve and substitute both positions",
+    "inputs": {
+      "gap": 12,
+      "speeds": [
+        2,
+        5
+      ]
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-16-v3",
+    "method": "solve and substitute both positions",
+    "inputs": {
+      "gap": 15,
+      "speeds": [
+        1,
+        4
+      ]
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-16-v4",
+    "method": "solve and substitute both positions",
+    "inputs": {
+      "gap": 8,
+      "speeds": [
+        3,
+        5
+      ]
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-16-v5",
+    "method": "solve and substitute both positions",
+    "inputs": {
+      "gap": 20,
+      "speeds": [
+        4,
+        9
+      ]
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-19-v1",
+    "method": "enumerate checkerboard color counts",
+    "inputs": {
+      "size": 4,
+      "color_counts": [
+        6,
+        8
+      ]
+    },
+    "expected": {
+      "he": "נותרו כמויות שונות של שני הצבעים",
+      "en": "The two colors have unequal remaining counts"
+    }
+  },
+  {
+    "key": "quick-sw-19-v2",
+    "method": "enumerate checkerboard color counts",
+    "inputs": {
+      "size": 6,
+      "color_counts": [
+        16,
+        18
+      ]
+    },
+    "expected": {
+      "he": "נותרו כמויות שונות של שני הצבעים",
+      "en": "The two colors have unequal remaining counts"
+    }
+  },
+  {
+    "key": "quick-sw-19-v3",
+    "method": "enumerate checkerboard color counts",
+    "inputs": {
+      "size": 8,
+      "color_counts": [
+        30,
+        32
+      ]
+    },
+    "expected": {
+      "he": "נותרו כמויות שונות של שני הצבעים",
+      "en": "The two colors have unequal remaining counts"
+    }
+  },
+  {
+    "key": "quick-sw-19-v4",
+    "method": "enumerate checkerboard color counts",
+    "inputs": {
+      "size": 10,
+      "color_counts": [
+        48,
+        50
+      ]
+    },
+    "expected": {
+      "he": "נותרו כמויות שונות של שני הצבעים",
+      "en": "The two colors have unequal remaining counts"
+    }
+  },
+  {
+    "key": "quick-sw-19-v5",
+    "method": "enumerate checkerboard color counts",
+    "inputs": {
+      "size": 12,
+      "color_counts": [
+        70,
+        72
+      ]
+    },
+    "expected": {
+      "he": "נותרו כמויות שונות של שני הצבעים",
+      "en": "The two colors have unequal remaining counts"
+    }
+  },
+  {
+    "key": "quick-sw-20-v1",
+    "method": "binary decision-tree capacity lower and upper bounds",
+    "inputs": {
+      "boxes": 4
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-20-v2",
+    "method": "binary decision-tree capacity lower and upper bounds",
+    "inputs": {
+      "boxes": 5
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-20-v3",
+    "method": "binary decision-tree capacity lower and upper bounds",
+    "inputs": {
+      "boxes": 8
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-20-v4",
+    "method": "binary decision-tree capacity lower and upper bounds",
+    "inputs": {
+      "boxes": 9
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-20-v5",
+    "method": "binary decision-tree capacity lower and upper bounds",
+    "inputs": {
+      "boxes": 16
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-21-v1",
+    "method": "enumerate the three possible heads-count changes",
+    "inputs": {
+      "coins": 10,
+      "target": 9,
+      "changes": [
+        -2,
+        0,
+        2
+      ]
+    },
+    "expected": {
+      "he": "זוגיות מספר מטבעות העץ נשמרת",
+      "en": "The parity of the heads count is invariant"
+    }
+  },
+  {
+    "key": "quick-sw-21-v2",
+    "method": "enumerate the three possible heads-count changes",
+    "inputs": {
+      "coins": 8,
+      "target": 5,
+      "changes": [
+        -2,
+        0,
+        2
+      ]
+    },
+    "expected": {
+      "he": "זוגיות מספר מטבעות העץ נשמרת",
+      "en": "The parity of the heads count is invariant"
+    }
+  },
+  {
+    "key": "quick-sw-21-v3",
+    "method": "enumerate the three possible heads-count changes",
+    "inputs": {
+      "coins": 12,
+      "target": 11,
+      "changes": [
+        -2,
+        0,
+        2
+      ]
+    },
+    "expected": {
+      "he": "זוגיות מספר מטבעות העץ נשמרת",
+      "en": "The parity of the heads count is invariant"
+    }
+  },
+  {
+    "key": "quick-sw-21-v4",
+    "method": "enumerate the three possible heads-count changes",
+    "inputs": {
+      "coins": 6,
+      "target": 3,
+      "changes": [
+        -2,
+        0,
+        2
+      ]
+    },
+    "expected": {
+      "he": "זוגיות מספר מטבעות העץ נשמרת",
+      "en": "The parity of the heads count is invariant"
+    }
+  },
+  {
+    "key": "quick-sw-21-v5",
+    "method": "enumerate the three possible heads-count changes",
+    "inputs": {
+      "coins": 14,
+      "target": 7,
+      "changes": [
+        -2,
+        0,
+        2
+      ]
+    },
+    "expected": {
+      "he": "זוגיות מספר מטבעות העץ נשמרת",
+      "en": "The parity of the heads count is invariant"
+    }
+  },
+  {
+    "key": "quick-sw-22-v1",
+    "method": "pigeonhole upper bound and distinct-color lower-bound witness",
+    "inputs": {
+      "colors": 3
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-22-v2",
+    "method": "pigeonhole upper bound and distinct-color lower-bound witness",
+    "inputs": {
+      "colors": 4
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-22-v3",
+    "method": "pigeonhole upper bound and distinct-color lower-bound witness",
+    "inputs": {
+      "colors": 5
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-22-v4",
+    "method": "pigeonhole upper bound and distinct-color lower-bound witness",
+    "inputs": {
+      "colors": 6
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-sw-22-v5",
+    "method": "pigeonhole upper bound and distinct-color lower-bound witness",
+    "inputs": {
+      "colors": 7
+    },
+    "expected": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-sw-23-v1",
+    "method": "subtract event timestamps",
+    "inputs": {
+      "empty_times": [
+        4,
+        7
+      ]
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-23-v2",
+    "method": "subtract event timestamps",
+    "inputs": {
+      "empty_times": [
+        5,
+        9
+      ]
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-23-v3",
+    "method": "subtract event timestamps",
+    "inputs": {
+      "empty_times": [
+        3,
+        8
+      ]
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-23-v4",
+    "method": "subtract event timestamps",
+    "inputs": {
+      "empty_times": [
+        7,
+        12
+      ]
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-23-v5",
+    "method": "subtract event timestamps",
+    "inputs": {
+      "empty_times": [
+        6,
+        11
+      ]
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-24-v1",
+    "method": "swap adjacent race ranks",
+    "inputs": {
+      "passed_rank": 2
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-24-v2",
+    "method": "swap adjacent race ranks",
+    "inputs": {
+      "passed_rank": 3
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-24-v3",
+    "method": "swap adjacent race ranks",
+    "inputs": {
+      "passed_rank": 4
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-24-v4",
+    "method": "swap adjacent race ranks",
+    "inputs": {
+      "passed_rank": 5
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-24-v5",
+    "method": "swap adjacent race ranks",
+    "inputs": {
+      "passed_rank": 6
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-25-v1",
+    "method": "two derangements; mixed-label observation separates both",
+    "inputs": {
+      "valid_arrangements": 2
+    },
+    "expected": {
+      "he": "מהמסומנת ״תערובת״",
+      "en": "The one labeled 'mixed'"
+    }
+  },
+  {
+    "key": "quick-sw-25-v2",
+    "method": "enumerate label derangements and filter by observation",
+    "inputs": {
+      "draw": "apple",
+      "queried_label": "apples",
+      "arrangement": [
+        "oranges",
+        "mixed",
+        "apples"
+      ]
+    },
+    "expected": {
+      "he": "רק תפוזים",
+      "en": "Only oranges"
+    }
+  },
+  {
+    "key": "quick-sw-25-v3",
+    "method": "enumerate label derangements and filter by observation",
+    "inputs": {
+      "draw": "orange",
+      "queried_label": "oranges",
+      "arrangement": [
+        "mixed",
+        "apples",
+        "oranges"
+      ]
+    },
+    "expected": {
+      "he": "רק תפוחים",
+      "en": "Only apples"
+    }
+  },
+  {
+    "key": "quick-sw-25-v4",
+    "method": "enumerate label derangements and filter by observation",
+    "inputs": {
+      "draw": "apple",
+      "queried_label": "oranges",
+      "arrangement": [
+        "oranges",
+        "mixed",
+        "apples"
+      ]
+    },
+    "expected": {
+      "he": "תערובת",
+      "en": "A mixture"
+    }
+  },
+  {
+    "key": "quick-sw-25-v5",
+    "method": "enumerate label derangements and filter by observation",
+    "inputs": {
+      "draw": "orange",
+      "queried_label": "apples",
+      "arrangement": [
+        "mixed",
+        "apples",
+        "oranges"
+      ]
+    },
+    "expected": {
+      "he": "תערובת",
+      "en": "A mixture"
+    }
+  },
+  {
+    "key": "quick-sw-26-v1",
+    "method": "enumerate three heavy-coin hypotheses against distinct weighing observations",
+    "inputs": {
+      "left": "A",
+      "right": "B",
+      "outcome": 0
+    },
+    "expected": {
+      "he": "C",
+      "en": "C"
+    }
+  },
+  {
+    "key": "quick-sw-26-v2",
+    "method": "enumerate three heavy-coin hypotheses against distinct weighing observations",
+    "inputs": {
+      "left": "A",
+      "right": "B",
+      "outcome": 1
+    },
+    "expected": {
+      "he": "A",
+      "en": "A"
+    }
+  },
+  {
+    "key": "quick-sw-26-v3",
+    "method": "enumerate three heavy-coin hypotheses against distinct weighing observations",
+    "inputs": {
+      "left": "A",
+      "right": "B",
+      "outcome": -1
+    },
+    "expected": {
+      "he": "B",
+      "en": "B"
+    }
+  },
+  {
+    "key": "quick-sw-26-v4",
+    "method": "enumerate three heavy-coin hypotheses against distinct weighing observations",
+    "inputs": {
+      "left": "A",
+      "right": "C",
+      "outcome": 0
+    },
+    "expected": {
+      "he": "B",
+      "en": "B"
+    }
+  },
+  {
+    "key": "quick-sw-26-v5",
+    "method": "enumerate three heavy-coin hypotheses against distinct weighing observations",
+    "inputs": {
+      "left": "B",
+      "right": "C",
+      "outcome": -1
+    },
+    "expected": {
+      "he": "C",
+      "en": "C"
+    }
+  },
+  {
+    "key": "quick-sw-27-v1",
+    "method": "volume conservation",
+    "inputs": {
+      "capacities": [
+        3,
+        5
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-27-v2",
+    "method": "volume conservation",
+    "inputs": {
+      "capacities": [
+        4,
+        7
+      ]
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-27-v3",
+    "method": "volume conservation",
+    "inputs": {
+      "capacities": [
+        5,
+        9
+      ]
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-27-v4",
+    "method": "volume conservation",
+    "inputs": {
+      "capacities": [
+        2,
+        7
+      ]
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-27-v5",
+    "method": "volume conservation",
+    "inputs": {
+      "capacities": [
+        6,
+        10
+      ]
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-28-v1",
+    "method": "count eliminations invariant",
+    "inputs": {
+      "players": 8
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-sw-28-v2",
+    "method": "count eliminations invariant",
+    "inputs": {
+      "players": 12
+    },
+    "expected": {
+      "he": "11",
+      "en": "11"
+    }
+  },
+  {
+    "key": "quick-sw-28-v3",
+    "method": "count eliminations invariant",
+    "inputs": {
+      "players": 16
+    },
+    "expected": {
+      "he": "15",
+      "en": "15"
+    }
+  },
+  {
+    "key": "quick-sw-28-v4",
+    "method": "count eliminations invariant",
+    "inputs": {
+      "players": 7
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-28-v5",
+    "method": "count eliminations invariant",
+    "inputs": {
+      "players": 20
+    },
+    "expected": {
+      "he": "19",
+      "en": "19"
+    }
+  },
+  {
+    "key": "quick-sw-29-v1",
+    "method": "enumerate all unordered pairs",
+    "inputs": {
+      "people": 4
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-29-v2",
+    "method": "enumerate all unordered pairs",
+    "inputs": {
+      "people": 5
+    },
+    "expected": {
+      "he": "10",
+      "en": "10"
+    }
+  },
+  {
+    "key": "quick-sw-29-v3",
+    "method": "enumerate all unordered pairs",
+    "inputs": {
+      "people": 6
+    },
+    "expected": {
+      "he": "15",
+      "en": "15"
+    }
+  },
+  {
+    "key": "quick-sw-29-v4",
+    "method": "enumerate all unordered pairs",
+    "inputs": {
+      "people": 7
+    },
+    "expected": {
+      "he": "21",
+      "en": "21"
+    }
+  },
+  {
+    "key": "quick-sw-29-v5",
+    "method": "enumerate all unordered pairs",
+    "inputs": {
+      "people": 8
+    },
+    "expected": {
+      "he": "28",
+      "en": "28"
+    }
+  },
+  {
+    "key": "quick-sw-30-v1",
+    "method": "classical implication truth-table case",
+    "inputs": {
+      "case": 1,
+      "allowed_worlds": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "אי אפשר לקבוע אם הוא מתכנת",
+      "en": "It is undetermined whether he is a programmer"
+    }
+  },
+  {
+    "key": "quick-sw-30-v2",
+    "method": "classical implication truth-table case",
+    "inputs": {
+      "case": 2,
+      "allowed_worlds": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "דני אינו מתכנת",
+      "en": "Danny is not a programmer"
+    }
+  },
+  {
+    "key": "quick-sw-30-v3",
+    "method": "classical implication truth-table case",
+    "inputs": {
+      "case": 3,
+      "allowed_worlds": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "הוא לובש כחול",
+      "en": "He wears blue"
+    }
+  },
+  {
+    "key": "quick-sw-30-v4",
+    "method": "classical implication truth-table case",
+    "inputs": {
+      "case": 4,
+      "allowed_worlds": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "אדם שאינו מתכנת ולובש כחול",
+      "en": "A nonprogrammer who wears blue"
+    }
+  },
+  {
+    "key": "quick-sw-30-v5",
+    "method": "classical implication truth-table case",
+    "inputs": {
+      "case": 5,
+      "allowed_worlds": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "מתכנת שאינו לובש כחול",
+      "en": "A programmer who does not wear blue"
+    }
+  },
+  {
+    "key": "quick-sw-40-v1",
+    "method": "binomial coefficient checked by binary-sequence enumeration",
+    "inputs": {
+      "right": 2,
+      "up": 1
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-40-v2",
+    "method": "binomial coefficient checked by binary-sequence enumeration",
+    "inputs": {
+      "right": 3,
+      "up": 1
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-40-v3",
+    "method": "binomial coefficient checked by binary-sequence enumeration",
+    "inputs": {
+      "right": 2,
+      "up": 2
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-40-v4",
+    "method": "binomial coefficient checked by binary-sequence enumeration",
+    "inputs": {
+      "right": 4,
+      "up": 1
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-40-v5",
+    "method": "binomial coefficient checked by binary-sequence enumeration",
+    "inputs": {
+      "right": 3,
+      "up": 2
+    },
+    "expected": {
+      "he": "10",
+      "en": "10"
+    }
+  },
+  {
+    "key": "quick-sw-41-v1",
+    "method": "enumerate Cartesian product",
+    "inputs": {
+      "counts": [
+        2,
+        3
+      ]
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-41-v2",
+    "method": "enumerate Cartesian product",
+    "inputs": {
+      "counts": [
+        3,
+        4
+      ]
+    },
+    "expected": {
+      "he": "12",
+      "en": "12"
+    }
+  },
+  {
+    "key": "quick-sw-41-v3",
+    "method": "enumerate Cartesian product",
+    "inputs": {
+      "counts": [
+        4,
+        5
+      ]
+    },
+    "expected": {
+      "he": "20",
+      "en": "20"
+    }
+  },
+  {
+    "key": "quick-sw-41-v4",
+    "method": "enumerate Cartesian product",
+    "inputs": {
+      "counts": [
+        2,
+        6
+      ]
+    },
+    "expected": {
+      "he": "12",
+      "en": "12"
+    }
+  },
+  {
+    "key": "quick-sw-41-v5",
+    "method": "enumerate Cartesian product",
+    "inputs": {
+      "counts": [
+        5,
+        3
+      ]
+    },
+    "expected": {
+      "he": "15",
+      "en": "15"
+    }
+  },
+  {
+    "key": "quick-sw-42-v1",
+    "method": "explicit family-tree substitution",
+    "inputs": {
+      "case": 1
+    },
+    "expected": {
+      "he": "אחיה של האישה",
+      "en": "The woman's brother"
+    }
+  },
+  {
+    "key": "quick-sw-42-v2",
+    "method": "explicit family-tree substitution",
+    "inputs": {
+      "case": 2
+    },
+    "expected": {
+      "he": "אביו של הילד",
+      "en": "The boy's father"
+    }
+  },
+  {
+    "key": "quick-sw-42-v3",
+    "method": "explicit family-tree substitution",
+    "inputs": {
+      "case": 3
+    },
+    "expected": {
+      "he": "נכדו של המצולם",
+      "en": "The photographed man's grandchild"
+    }
+  },
+  {
+    "key": "quick-sw-42-v4",
+    "method": "explicit family-tree substitution",
+    "inputs": {
+      "case": 4
+    },
+    "expected": {
+      "he": "סבו של הילד",
+      "en": "The boy's grandfather"
+    }
+  },
+  {
+    "key": "quick-sw-42-v5",
+    "method": "explicit family-tree substitution",
+    "inputs": {
+      "case": 5
+    },
+    "expected": {
+      "he": "בנו של המצולם",
+      "en": "The photographed man's son"
+    }
+  },
+  {
+    "key": "quick-sw-43-v1",
+    "method": "nested response truth/lie composition",
+    "inputs": {
+      "case": 1,
+      "truthful_reports": "trap",
+      "liar_reports": "trap"
+    },
+    "expected": {
+      "he": "B",
+      "en": "B"
+    }
+  },
+  {
+    "key": "quick-sw-43-v2",
+    "method": "nested response truth/lie composition",
+    "inputs": {
+      "case": 2,
+      "truthful_reports": "trap",
+      "liar_reports": "trap"
+    },
+    "expected": {
+      "he": "A",
+      "en": "A"
+    }
+  },
+  {
+    "key": "quick-sw-43-v3",
+    "method": "nested response truth/lie composition",
+    "inputs": {
+      "case": 3,
+      "truthful_reports": "trap",
+      "liar_reports": "trap"
+    },
+    "expected": {
+      "he": "B",
+      "en": "B"
+    }
+  },
+  {
+    "key": "quick-sw-43-v4",
+    "method": "nested response truth/lie composition",
+    "inputs": {
+      "case": 4,
+      "truthful_reports": "trap",
+      "liar_reports": "trap"
+    },
+    "expected": {
+      "he": "A",
+      "en": "A"
+    }
+  },
+  {
+    "key": "quick-sw-43-v5",
+    "method": "nested response truth/lie composition",
+    "inputs": {
+      "case": 5,
+      "truthful_reports": "trap",
+      "liar_reports": "trap"
+    },
+    "expected": {
+      "he": "שתי זהויות המשיב מובילות להצבעה על המלכודת",
+      "en": "Both possible respondent identities point to the trap"
+    }
+  },
+  {
+    "key": "quick-sw-44-v1",
+    "method": "substitute both sum-and-difference constraints",
+    "inputs": {
+      "total": 10,
+      "difference": 2,
+      "solution": [
+        6,
+        4
+      ]
+    },
+    "expected": {
+      "he": "6, 4",
+      "en": "6, 4"
+    }
+  },
+  {
+    "key": "quick-sw-44-v2",
+    "method": "substitute both sum-and-difference constraints",
+    "inputs": {
+      "total": 18,
+      "difference": 4,
+      "solution": [
+        11,
+        7
+      ]
+    },
+    "expected": {
+      "he": "11, 7",
+      "en": "11, 7"
+    }
+  },
+  {
+    "key": "quick-sw-44-v3",
+    "method": "substitute both sum-and-difference constraints",
+    "inputs": {
+      "total": 20,
+      "difference": 6,
+      "solution": [
+        13,
+        7
+      ]
+    },
+    "expected": {
+      "he": "13, 7",
+      "en": "13, 7"
+    }
+  },
+  {
+    "key": "quick-sw-44-v4",
+    "method": "substitute both sum-and-difference constraints",
+    "inputs": {
+      "total": 25,
+      "difference": 5,
+      "solution": [
+        15,
+        10
+      ]
+    },
+    "expected": {
+      "he": "15, 10",
+      "en": "15, 10"
+    }
+  },
+  {
+    "key": "quick-sw-44-v5",
+    "method": "substitute both sum-and-difference constraints",
+    "inputs": {
+      "total": 30,
+      "difference": 8,
+      "solution": [
+        19,
+        11
+      ]
+    },
+    "expected": {
+      "he": "19, 11",
+      "en": "19, 11"
+    }
+  },
+  {
+    "key": "quick-sw-45-v1",
+    "method": "piece-count invariant with constructive row/column cuts",
+    "inputs": {
+      "rows": 2,
+      "columns": 3
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-45-v2",
+    "method": "piece-count invariant with constructive row/column cuts",
+    "inputs": {
+      "rows": 3,
+      "columns": 3
+    },
+    "expected": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-sw-45-v3",
+    "method": "piece-count invariant with constructive row/column cuts",
+    "inputs": {
+      "rows": 2,
+      "columns": 5
+    },
+    "expected": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-sw-45-v4",
+    "method": "piece-count invariant with constructive row/column cuts",
+    "inputs": {
+      "rows": 3,
+      "columns": 4
+    },
+    "expected": {
+      "he": "11",
+      "en": "11"
+    }
+  },
+  {
+    "key": "quick-sw-45-v5",
+    "method": "piece-count invariant with constructive row/column cuts",
+    "inputs": {
+      "rows": 4,
+      "columns": 4
+    },
+    "expected": {
+      "he": "15",
+      "en": "15"
+    }
+  },
+  {
+    "key": "quick-sw-46-v1",
+    "method": "sum of independent per-box upper bounds",
+    "inputs": {
+      "boxes": 10,
+      "bounds": [
+        2,
+        3
+      ],
+      "claim": 31
+    },
+    "expected": {
+      "he": "30",
+      "en": "30"
+    }
+  },
+  {
+    "key": "quick-sw-46-v2",
+    "method": "sum of independent per-box upper bounds",
+    "inputs": {
+      "boxes": 6,
+      "bounds": [
+        1,
+        4
+      ],
+      "claim": 25
+    },
+    "expected": {
+      "he": "24",
+      "en": "24"
+    }
+  },
+  {
+    "key": "quick-sw-46-v3",
+    "method": "sum of independent per-box upper bounds",
+    "inputs": {
+      "boxes": 8,
+      "bounds": [
+        3,
+        5
+      ],
+      "claim": 41
+    },
+    "expected": {
+      "he": "40",
+      "en": "40"
+    }
+  },
+  {
+    "key": "quick-sw-46-v4",
+    "method": "sum of independent per-box upper bounds",
+    "inputs": {
+      "boxes": 5,
+      "bounds": [
+        2,
+        6
+      ],
+      "claim": 31
+    },
+    "expected": {
+      "he": "30",
+      "en": "30"
+    }
+  },
+  {
+    "key": "quick-sw-46-v5",
+    "method": "sum of independent per-box upper bounds",
+    "inputs": {
+      "boxes": 7,
+      "bounds": [
+        1,
+        3
+      ],
+      "claim": 22
+    },
+    "expected": {
+      "he": "21",
+      "en": "21"
+    }
+  },
+  {
+    "key": "quick-sw-47-v1",
+    "method": "interval intersection",
+    "inputs": {
+      "intervals": [
+        [
+          9,
+          12
+        ],
+        [
+          11,
+          14
+        ]
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-47-v2",
+    "method": "interval intersection",
+    "inputs": {
+      "intervals": [
+        [
+          8,
+          13
+        ],
+        [
+          10,
+          12
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-47-v3",
+    "method": "interval intersection",
+    "inputs": {
+      "intervals": [
+        [
+          10,
+          15
+        ],
+        [
+          12,
+          17
+        ]
+      ]
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-47-v4",
+    "method": "interval intersection",
+    "inputs": {
+      "intervals": [
+        [
+          7,
+          11
+        ],
+        [
+          9,
+          13
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-47-v5",
+    "method": "interval intersection",
+    "inputs": {
+      "intervals": [
+        [
+          13,
+          18
+        ],
+        [
+          14,
+          17
+        ]
+      ]
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-48-v1",
+    "method": "iterate weekday cycle and modulo",
+    "inputs": {
+      "start": 0,
+      "days": 10,
+      "result": 3
+    },
+    "expected": {
+      "he": "חמישי",
+      "en": "Thursday"
+    }
+  },
+  {
+    "key": "quick-sw-48-v2",
+    "method": "iterate weekday cycle and modulo",
+    "inputs": {
+      "start": 2,
+      "days": 15,
+      "result": 3
+    },
+    "expected": {
+      "he": "חמישי",
+      "en": "Thursday"
+    }
+  },
+  {
+    "key": "quick-sw-48-v3",
+    "method": "iterate weekday cycle and modulo",
+    "inputs": {
+      "start": 4,
+      "days": 9,
+      "result": 6
+    },
+    "expected": {
+      "he": "ראשון",
+      "en": "Sunday"
+    }
+  },
+  {
+    "key": "quick-sw-48-v4",
+    "method": "iterate weekday cycle and modulo",
+    "inputs": {
+      "start": 6,
+      "days": 11,
+      "result": 3
+    },
+    "expected": {
+      "he": "חמישי",
+      "en": "Thursday"
+    }
+  },
+  {
+    "key": "quick-sw-48-v5",
+    "method": "iterate weekday cycle and modulo",
+    "inputs": {
+      "start": 1,
+      "days": 20,
+      "result": 0
+    },
+    "expected": {
+      "he": "שני",
+      "en": "Monday"
+    }
+  },
+  {
+    "key": "quick-sw-49-v1",
+    "method": "evaluate premise and conclusion for all four candidates",
+    "inputs": {
+      "ending": 2,
+      "divisor": 4,
+      "candidates": [
+        12,
+        22,
+        32,
+        52
+      ]
+    },
+    "expected": {
+      "he": "22",
+      "en": "22"
+    }
+  },
+  {
+    "key": "quick-sw-49-v2",
+    "method": "evaluate premise and conclusion for all four candidates",
+    "inputs": {
+      "ending": 4,
+      "divisor": 8,
+      "candidates": [
+        24,
+        14,
+        64,
+        104
+      ]
+    },
+    "expected": {
+      "he": "14",
+      "en": "14"
+    }
+  },
+  {
+    "key": "quick-sw-49-v3",
+    "method": "evaluate premise and conclusion for all four candidates",
+    "inputs": {
+      "ending": 5,
+      "divisor": 10,
+      "candidates": [
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "expected": {
+      "he": "15",
+      "en": "15"
+    }
+  },
+  {
+    "key": "quick-sw-49-v4",
+    "method": "evaluate premise and conclusion for all four candidates",
+    "inputs": {
+      "ending": 6,
+      "divisor": 4,
+      "candidates": [
+        16,
+        26,
+        36,
+        56
+      ]
+    },
+    "expected": {
+      "he": "26",
+      "en": "26"
+    }
+  },
+  {
+    "key": "quick-sw-49-v5",
+    "method": "evaluate premise and conclusion for all four candidates",
+    "inputs": {
+      "ending": 8,
+      "divisor": 16,
+      "candidates": [
+        48,
+        18,
+        80,
+        128
+      ]
+    },
+    "expected": {
+      "he": "18",
+      "en": "18"
+    }
+  },
+  {
+    "key": "quick-sw-50-v1",
+    "method": "area ratio algebra",
+    "inputs": {
+      "linear_factor": 2
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-50-v2",
+    "method": "area ratio algebra",
+    "inputs": {
+      "linear_factor": 3
+    },
+    "expected": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-sw-50-v3",
+    "method": "area ratio algebra",
+    "inputs": {
+      "linear_factor": 4
+    },
+    "expected": {
+      "he": "16",
+      "en": "16"
+    }
+  },
+  {
+    "key": "quick-sw-50-v4",
+    "method": "area ratio algebra",
+    "inputs": {
+      "linear_factor": 5
+    },
+    "expected": {
+      "he": "25",
+      "en": "25"
+    }
+  },
+  {
+    "key": "quick-sw-50-v5",
+    "method": "area ratio algebra",
+    "inputs": {
+      "linear_factor": 6
+    },
+    "expected": {
+      "he": "36",
+      "en": "36"
+    }
+  },
+  {
+    "key": "quick-sw-51-v1",
+    "method": "distinct vertices versus parent/child roles in a path",
+    "inputs": {
+      "generations": 3,
+      "father_roles": 2,
+      "son_roles": 2
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-51-v2",
+    "method": "distinct vertices versus parent/child roles in a path",
+    "inputs": {
+      "generations": 4,
+      "father_roles": 3,
+      "son_roles": 3
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-51-v3",
+    "method": "distinct vertices versus parent/child roles in a path",
+    "inputs": {
+      "generations": 5,
+      "father_roles": 4,
+      "son_roles": 4
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-51-v4",
+    "method": "distinct vertices versus parent/child roles in a path",
+    "inputs": {
+      "generations": 6,
+      "father_roles": 5,
+      "son_roles": 5
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-51-v5",
+    "method": "distinct vertices versus parent/child roles in a path",
+    "inputs": {
+      "generations": 7,
+      "father_roles": 6,
+      "son_roles": 6
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-sw-52-v1",
+    "method": "pigeonhole bound with balanced extremal witness",
+    "inputs": {
+      "colors": 2,
+      "threshold": 3
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-52-v2",
+    "method": "pigeonhole bound with balanced extremal witness",
+    "inputs": {
+      "colors": 3,
+      "threshold": 3
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-sw-52-v3",
+    "method": "pigeonhole bound with balanced extremal witness",
+    "inputs": {
+      "colors": 2,
+      "threshold": 4
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-sw-52-v4",
+    "method": "pigeonhole bound with balanced extremal witness",
+    "inputs": {
+      "colors": 4,
+      "threshold": 3
+    },
+    "expected": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-sw-52-v5",
+    "method": "pigeonhole bound with balanced extremal witness",
+    "inputs": {
+      "colors": 3,
+      "threshold": 4
+    },
+    "expected": {
+      "he": "10",
+      "en": "10"
+    }
+  },
+  {
+    "key": "quick-sw-53-v1",
+    "method": "adversarial sequence of failures and remaining-candidate count",
+    "inputs": {
+      "keys": 3
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-53-v2",
+    "method": "adversarial sequence of failures and remaining-candidate count",
+    "inputs": {
+      "keys": 4
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-53-v3",
+    "method": "adversarial sequence of failures and remaining-candidate count",
+    "inputs": {
+      "keys": 5
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-53-v4",
+    "method": "adversarial sequence of failures and remaining-candidate count",
+    "inputs": {
+      "keys": 6
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-53-v5",
+    "method": "adversarial sequence of failures and remaining-candidate count",
+    "inputs": {
+      "keys": 7
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-54-v1",
+    "method": "enumerate nonnegative linear combinations up to target",
+    "inputs": {
+      "steps": [
+        3,
+        5
+      ],
+      "target": 7
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-sw-54-v2",
+    "method": "enumerate nonnegative linear combinations up to target",
+    "inputs": {
+      "steps": [
+        4,
+        7
+      ],
+      "target": 10
+    },
+    "expected": {
+      "he": "10",
+      "en": "10"
+    }
+  },
+  {
+    "key": "quick-sw-54-v3",
+    "method": "enumerate nonnegative linear combinations up to target",
+    "inputs": {
+      "steps": [
+        3,
+        7
+      ],
+      "target": 8
+    },
+    "expected": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-sw-54-v4",
+    "method": "enumerate nonnegative linear combinations up to target",
+    "inputs": {
+      "steps": [
+        5,
+        8
+      ],
+      "target": 12
+    },
+    "expected": {
+      "he": "12",
+      "en": "12"
+    }
+  },
+  {
+    "key": "quick-sw-54-v5",
+    "method": "enumerate nonnegative linear combinations up to target",
+    "inputs": {
+      "steps": [
+        4,
+        9
+      ],
+      "target": 14
+    },
+    "expected": {
+      "he": "14",
+      "en": "14"
+    }
+  },
+  {
+    "key": "quick-sw-55-v1",
+    "method": "additive burn-time measure from both ends",
+    "inputs": {
+      "single_end_minutes": 60
+    },
+    "expected": {
+      "he": "30",
+      "en": "30"
+    }
+  },
+  {
+    "key": "quick-sw-55-v2",
+    "method": "additive burn-time measure from both ends",
+    "inputs": {
+      "single_end_minutes": 40
+    },
+    "expected": {
+      "he": "20",
+      "en": "20"
+    }
+  },
+  {
+    "key": "quick-sw-55-v3",
+    "method": "additive burn-time measure from both ends",
+    "inputs": {
+      "single_end_minutes": 90
+    },
+    "expected": {
+      "he": "45",
+      "en": "45"
+    }
+  },
+  {
+    "key": "quick-sw-55-v4",
+    "method": "additive burn-time measure from both ends",
+    "inputs": {
+      "single_end_minutes": 50
+    },
+    "expected": {
+      "he": "25",
+      "en": "25"
+    }
+  },
+  {
+    "key": "quick-sw-55-v5",
+    "method": "additive burn-time measure from both ends",
+    "inputs": {
+      "single_end_minutes": 120
+    },
+    "expected": {
+      "he": "60",
+      "en": "60"
+    }
+  },
+  {
+    "key": "quick-sw-56-v1",
+    "method": "enumerate die outcomes",
+    "inputs": {
+      "sides": 6,
+      "divisor": 2,
+      "favorable": [
+        2,
+        4,
+        6
+      ]
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    }
+  },
+  {
+    "key": "quick-sw-56-v2",
+    "method": "enumerate die outcomes",
+    "inputs": {
+      "sides": 8,
+      "divisor": 2,
+      "favorable": [
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    }
+  },
+  {
+    "key": "quick-sw-56-v3",
+    "method": "enumerate die outcomes",
+    "inputs": {
+      "sides": 6,
+      "divisor": 3,
+      "favorable": [
+        3,
+        6
+      ]
+    },
+    "expected": {
+      "he": "1/3",
+      "en": "1/3"
+    }
+  },
+  {
+    "key": "quick-sw-56-v4",
+    "method": "enumerate die outcomes",
+    "inputs": {
+      "sides": 10,
+      "divisor": 5,
+      "favorable": [
+        5,
+        10
+      ]
+    },
+    "expected": {
+      "he": "1/5",
+      "en": "1/5"
+    }
+  },
+  {
+    "key": "quick-sw-56-v5",
+    "method": "enumerate die outcomes",
+    "inputs": {
+      "sides": 12,
+      "divisor": 3,
+      "favorable": [
+        3,
+        6,
+        9,
+        12
+      ]
+    },
+    "expected": {
+      "he": "1/3",
+      "en": "1/3"
+    }
+  },
+  {
+    "key": "quick-sw-57-v1",
+    "method": "balance mass equation",
+    "inputs": {
+      "weights": [
+        1,
+        3
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-57-v2",
+    "method": "balance mass equation",
+    "inputs": {
+      "weights": [
+        2,
+        7
+      ]
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-57-v3",
+    "method": "balance mass equation",
+    "inputs": {
+      "weights": [
+        3,
+        8
+      ]
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-57-v4",
+    "method": "balance mass equation",
+    "inputs": {
+      "weights": [
+        4,
+        10
+      ]
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-57-v5",
+    "method": "balance mass equation",
+    "inputs": {
+      "weights": [
+        2,
+        9
+      ]
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-sw-58-v1",
+    "method": "enumerate ternary outcome strings",
+    "inputs": {
+      "weighings": 1
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-58-v2",
+    "method": "enumerate ternary outcome strings",
+    "inputs": {
+      "weighings": 2
+    },
+    "expected": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-sw-58-v3",
+    "method": "enumerate ternary outcome strings",
+    "inputs": {
+      "weighings": 3
+    },
+    "expected": {
+      "he": "27",
+      "en": "27"
+    }
+  },
+  {
+    "key": "quick-sw-58-v4",
+    "method": "enumerate ternary outcome strings",
+    "inputs": {
+      "weighings": 4
+    },
+    "expected": {
+      "he": "81",
+      "en": "81"
+    }
+  },
+  {
+    "key": "quick-sw-58-v5",
+    "method": "enumerate ternary outcome strings",
+    "inputs": {
+      "weighings": 5
+    },
+    "expected": {
+      "he": "243",
+      "en": "243"
+    }
+  },
+  {
+    "key": "quick-sw-59-v1",
+    "method": "explicit premise-and-conclusion counterexample",
+    "inputs": {
+      "claim": "Every prime number is odd",
+      "witness": 2
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-59-v2",
+    "method": "explicit premise-and-conclusion counterexample",
+    "inputs": {
+      "claim": "Every even number is divisible by 4",
+      "witness": 6
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-59-v3",
+    "method": "explicit premise-and-conclusion counterexample",
+    "inputs": {
+      "claim": "Every perfect square is even",
+      "witness": 9
+    },
+    "expected": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-sw-59-v4",
+    "method": "explicit premise-and-conclusion counterexample",
+    "inputs": {
+      "claim": "Every multiple of 3 is a multiple of 6",
+      "witness": 9
+    },
+    "expected": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-sw-59-v5",
+    "method": "explicit premise-and-conclusion counterexample",
+    "inputs": {
+      "claim": "Every positive integer greater than 1 is not a perfect square",
+      "witness": 4
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-60-v1",
+    "method": "finite uniform sample space",
+    "inputs": {
+      "red": 1,
+      "blue": 3
+    },
+    "expected": {
+      "he": "1/4",
+      "en": "1/4"
+    }
+  },
+  {
+    "key": "quick-sw-60-v2",
+    "method": "finite uniform sample space",
+    "inputs": {
+      "red": 2,
+      "blue": 5
+    },
+    "expected": {
+      "he": "2/7",
+      "en": "2/7"
+    }
+  },
+  {
+    "key": "quick-sw-60-v3",
+    "method": "finite uniform sample space",
+    "inputs": {
+      "red": 3,
+      "blue": 1
+    },
+    "expected": {
+      "he": "3/4",
+      "en": "3/4"
+    }
+  },
+  {
+    "key": "quick-sw-60-v4",
+    "method": "finite uniform sample space",
+    "inputs": {
+      "red": 4,
+      "blue": 6
+    },
+    "expected": {
+      "he": "2/5",
+      "en": "2/5"
+    }
+  },
+  {
+    "key": "quick-sw-60-v5",
+    "method": "finite uniform sample space",
+    "inputs": {
+      "red": 5,
+      "blue": 2
+    },
+    "expected": {
+      "he": "5/7",
+      "en": "5/7"
+    }
+  },
+  {
+    "key": "quick-sw-62-v1",
+    "method": "enumerate pooled-test signatures",
+    "inputs": {
+      "signatures": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          1,
+          0
+        ],
+        "C": [
+          0,
+          1
+        ],
+        "D": [
+          1,
+          1
+        ]
+      },
+      "observed": [
+        1,
+        0
+      ]
+    },
+    "expected": {
+      "he": "B",
+      "en": "B"
+    }
+  },
+  {
+    "key": "quick-sw-62-v2",
+    "method": "enumerate pooled-test signatures",
+    "inputs": {
+      "signatures": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          1,
+          0
+        ],
+        "C": [
+          0,
+          1
+        ],
+        "D": [
+          1,
+          1
+        ]
+      },
+      "observed": [
+        0,
+        1
+      ]
+    },
+    "expected": {
+      "he": "C",
+      "en": "C"
+    }
+  },
+  {
+    "key": "quick-sw-62-v3",
+    "method": "enumerate pooled-test signatures",
+    "inputs": {
+      "signatures": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          1,
+          0
+        ],
+        "C": [
+          0,
+          1
+        ],
+        "D": [
+          1,
+          1
+        ]
+      },
+      "observed": [
+        0,
+        0
+      ]
+    },
+    "expected": {
+      "he": "A",
+      "en": "A"
+    }
+  },
+  {
+    "key": "quick-sw-62-v4",
+    "method": "enumerate pooled-test signatures",
+    "inputs": {
+      "signatures": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          1,
+          0
+        ],
+        "C": [
+          0,
+          1
+        ],
+        "D": [
+          1,
+          1
+        ]
+      },
+      "observed": [
+        1,
+        1
+      ]
+    },
+    "expected": {
+      "he": "D",
+      "en": "D"
+    }
+  },
+  {
+    "key": "quick-sw-62-v5",
+    "method": "enumerate pooled-test signatures",
+    "inputs": {
+      "signatures": {
+        "D": [
+          0,
+          0
+        ],
+        "C": [
+          1,
+          0
+        ],
+        "B": [
+          0,
+          1
+        ],
+        "A": [
+          1,
+          1
+        ]
+      },
+      "observed": [
+        1,
+        0
+      ]
+    },
+    "expected": {
+      "he": "C",
+      "en": "C"
+    }
+  },
+  {
+    "key": "quick-sw-63-v1",
+    "method": "translation invariance checked with signed displacements",
+    "inputs": {
+      "initial_gap": 5,
+      "moves": [
+        1,
+        2,
+        -1
+      ]
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-63-v2",
+    "method": "translation invariance checked with signed displacements",
+    "inputs": {
+      "initial_gap": 8,
+      "moves": [
+        3,
+        -2,
+        4
+      ]
+    },
+    "expected": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-sw-63-v3",
+    "method": "translation invariance checked with signed displacements",
+    "inputs": {
+      "initial_gap": 12,
+      "moves": [
+        -1,
+        -1,
+        5
+      ]
+    },
+    "expected": {
+      "he": "12",
+      "en": "12"
+    }
+  },
+  {
+    "key": "quick-sw-63-v4",
+    "method": "translation invariance checked with signed displacements",
+    "inputs": {
+      "initial_gap": 7,
+      "moves": [
+        2,
+        2,
+        -3
+      ]
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-sw-63-v5",
+    "method": "translation invariance checked with signed displacements",
+    "inputs": {
+      "initial_gap": 20,
+      "moves": [
+        -4,
+        6,
+        1
+      ]
+    },
+    "expected": {
+      "he": "20",
+      "en": "20"
+    }
+  },
+  {
+    "key": "quick-sw-64-v1",
+    "method": "construct an arbitrary finite prefix followed by periodic fair schedule",
+    "inputs": {
+      "people": 3,
+      "prefix_length": 10
+    },
+    "expected": {
+      "he": "אפשר לבחור אדם אחד 10 פעמים ואז להתחיל סבב הוגן",
+      "en": "One person may be chosen 10 times before a fair cycle begins"
+    }
+  },
+  {
+    "key": "quick-sw-64-v2",
+    "method": "construct an arbitrary finite prefix followed by periodic fair schedule",
+    "inputs": {
+      "people": 4,
+      "prefix_length": 20
+    },
+    "expected": {
+      "he": "אפשר לבחור אדם אחד 20 פעמים ואז להתחיל סבב הוגן",
+      "en": "One person may be chosen 20 times before a fair cycle begins"
+    }
+  },
+  {
+    "key": "quick-sw-64-v3",
+    "method": "construct an arbitrary finite prefix followed by periodic fair schedule",
+    "inputs": {
+      "people": 5,
+      "prefix_length": 50
+    },
+    "expected": {
+      "he": "אפשר לבחור אדם אחד 50 פעמים ואז להתחיל סבב הוגן",
+      "en": "One person may be chosen 50 times before a fair cycle begins"
+    }
+  },
+  {
+    "key": "quick-sw-64-v4",
+    "method": "construct an arbitrary finite prefix followed by periodic fair schedule",
+    "inputs": {
+      "people": 2,
+      "prefix_length": 100
+    },
+    "expected": {
+      "he": "אפשר לבחור אדם אחד 100 פעמים ואז להתחיל סבב הוגן",
+      "en": "One person may be chosen 100 times before a fair cycle begins"
+    }
+  },
+  {
+    "key": "quick-sw-64-v5",
+    "method": "construct an arbitrary finite prefix followed by periodic fair schedule",
+    "inputs": {
+      "people": 6,
+      "prefix_length": 1000
+    },
+    "expected": {
+      "he": "אפשר לבחור אדם אחד 1000 פעמים ואז להתחיל סבב הוגן",
+      "en": "One person may be chosen 1000 times before a fair cycle begins"
+    }
+  },
+  {
+    "key": "quick-sw-65-v1",
+    "method": "heads conservation before flip and complement after flip",
+    "inputs": {
+      "total": 12,
+      "total_heads": 3,
+      "selected_count": 3,
+      "selected_heads": 1
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-65-v2",
+    "method": "heads conservation before flip and complement after flip",
+    "inputs": {
+      "total": 15,
+      "total_heads": 4,
+      "selected_count": 4,
+      "selected_heads": 2
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-65-v3",
+    "method": "heads conservation before flip and complement after flip",
+    "inputs": {
+      "total": 20,
+      "total_heads": 5,
+      "selected_count": 5,
+      "selected_heads": 0
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-65-v4",
+    "method": "heads conservation before flip and complement after flip",
+    "inputs": {
+      "total": 18,
+      "total_heads": 6,
+      "selected_count": 6,
+      "selected_heads": 4
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-65-v5",
+    "method": "heads conservation before flip and complement after flip",
+    "inputs": {
+      "total": 10,
+      "total_heads": 2,
+      "selected_count": 2,
+      "selected_heads": 2
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-sw-66-v1",
+    "method": "sender-capacity counting bound",
+    "inputs": {
+      "senders": 3,
+      "signals": 3,
+      "max_per_sender": 1
+    },
+    "expected": {
+      "he": "כל משדר רשאי לשלוח אות אחד בלבד בכל התהליך",
+      "en": "Each sender may send at most one signal in the entire process"
+    }
+  },
+  {
+    "key": "quick-sw-66-v2",
+    "method": "sender-capacity counting bound",
+    "inputs": {
+      "senders": 4,
+      "signals": 4,
+      "max_per_sender": 1
+    },
+    "expected": {
+      "he": "כל משדר רשאי לשלוח אות אחד בלבד בכל התהליך",
+      "en": "Each sender may send at most one signal in the entire process"
+    }
+  },
+  {
+    "key": "quick-sw-66-v3",
+    "method": "sender-capacity counting bound",
+    "inputs": {
+      "senders": 5,
+      "signals": 5,
+      "max_per_sender": 1
+    },
+    "expected": {
+      "he": "כל משדר רשאי לשלוח אות אחד בלבד בכל התהליך",
+      "en": "Each sender may send at most one signal in the entire process"
+    }
+  },
+  {
+    "key": "quick-sw-66-v4",
+    "method": "sender-capacity counting bound",
+    "inputs": {
+      "senders": 6,
+      "signals": 6,
+      "max_per_sender": 1
+    },
+    "expected": {
+      "he": "כל משדר רשאי לשלוח אות אחד בלבד בכל התהליך",
+      "en": "Each sender may send at most one signal in the entire process"
+    }
+  },
+  {
+    "key": "quick-sw-66-v5",
+    "method": "sender-capacity counting bound",
+    "inputs": {
+      "senders": 8,
+      "signals": 8,
+      "max_per_sender": 1
+    },
+    "expected": {
+      "he": "כל משדר רשאי לשלוח אות אחד בלבד בכל התהליך",
+      "en": "Each sender may send at most one signal in the entire process"
+    }
+  },
+  {
+    "key": "quick-sw-67-v1",
+    "method": "trace deterministic acyclic adjacency graph",
+    "inputs": {
+      "edges": [
+        [
+          "1",
+          "2"
+        ],
+        [
+          "2",
+          "3"
+        ]
+      ],
+      "required_length": 4
+    },
+    "expected": {
+      "he": "המסלול נתקע בספרה 3, שאין ממנה מעבר מותר",
+      "en": "The path ends at digit 3, which has no allowed outgoing transition"
+    }
+  },
+  {
+    "key": "quick-sw-67-v2",
+    "method": "trace deterministic acyclic adjacency graph",
+    "inputs": {
+      "edges": [
+        [
+          "1",
+          "2"
+        ],
+        [
+          "2",
+          "3"
+        ],
+        [
+          "3",
+          "4"
+        ]
+      ],
+      "required_length": 5
+    },
+    "expected": {
+      "he": "המסלול נתקע בספרה 4, שאין ממנה מעבר מותר",
+      "en": "The path ends at digit 4, which has no allowed outgoing transition"
+    }
+  },
+  {
+    "key": "quick-sw-67-v3",
+    "method": "trace deterministic acyclic adjacency graph",
+    "inputs": {
+      "edges": [
+        [
+          "2",
+          "4"
+        ],
+        [
+          "4",
+          "5"
+        ],
+        [
+          "5",
+          "6"
+        ]
+      ],
+      "required_length": 5
+    },
+    "expected": {
+      "he": "המסלול נתקע בספרה 6, שאין ממנה מעבר מותר",
+      "en": "The path ends at digit 6, which has no allowed outgoing transition"
+    }
+  },
+  {
+    "key": "quick-sw-67-v4",
+    "method": "trace deterministic acyclic adjacency graph",
+    "inputs": {
+      "edges": [
+        [
+          "1",
+          "3"
+        ],
+        [
+          "3",
+          "5"
+        ],
+        [
+          "5",
+          "7"
+        ],
+        [
+          "7",
+          "9"
+        ]
+      ],
+      "required_length": 6
+    },
+    "expected": {
+      "he": "המסלול נתקע בספרה 9, שאין ממנה מעבר מותר",
+      "en": "The path ends at digit 9, which has no allowed outgoing transition"
+    }
+  },
+  {
+    "key": "quick-sw-67-v5",
+    "method": "trace deterministic acyclic adjacency graph",
+    "inputs": {
+      "edges": [
+        [
+          "2",
+          "4"
+        ],
+        [
+          "4",
+          "8"
+        ]
+      ],
+      "required_length": 4
+    },
+    "expected": {
+      "he": "המסלול נתקע בספרה 8, שאין ממנה מעבר מותר",
+      "en": "The path ends at digit 8, which has no allowed outgoing transition"
+    }
+  },
+  {
+    "key": "quick-sw-68-v1",
+    "method": "full recursive minimax of finite game",
+    "inputs": {
+      "start": 8,
+      "target": 12,
+      "max_add": 3
+    },
+    "expected": {
+      "he": "4 − x",
+      "en": "4 − x"
+    }
+  },
+  {
+    "key": "quick-sw-68-v2",
+    "method": "full recursive minimax of finite game",
+    "inputs": {
+      "start": 6,
+      "target": 12,
+      "max_add": 2
+    },
+    "expected": {
+      "he": "3 − x",
+      "en": "3 − x"
+    }
+  },
+  {
+    "key": "quick-sw-68-v3",
+    "method": "full recursive minimax of finite game",
+    "inputs": {
+      "start": 15,
+      "target": 20,
+      "max_add": 4
+    },
+    "expected": {
+      "he": "5 − x",
+      "en": "5 − x"
+    }
+  },
+  {
+    "key": "quick-sw-68-v4",
+    "method": "full recursive minimax of finite game",
+    "inputs": {
+      "start": 12,
+      "target": 20,
+      "max_add": 3
+    },
+    "expected": {
+      "he": "4 − x",
+      "en": "4 − x"
+    }
+  },
+  {
+    "key": "quick-sw-68-v5",
+    "method": "full recursive minimax of finite game",
+    "inputs": {
+      "start": 12,
+      "target": 15,
+      "max_add": 2
+    },
+    "expected": {
+      "he": "3 − x",
+      "en": "3 − x"
+    }
+  },
+  {
+    "key": "quick-sw-69-v1",
+    "method": "maximum simultaneous duration plus serial return",
+    "inputs": {
+      "individual_times": [
+        2,
+        7
+      ]
+    },
+    "expected": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-sw-69-v2",
+    "method": "maximum simultaneous duration plus serial return",
+    "inputs": {
+      "individual_times": [
+        1,
+        5
+      ]
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-69-v3",
+    "method": "maximum simultaneous duration plus serial return",
+    "inputs": {
+      "individual_times": [
+        3,
+        8
+      ]
+    },
+    "expected": {
+      "he": "11",
+      "en": "11"
+    }
+  },
+  {
+    "key": "quick-sw-69-v4",
+    "method": "maximum simultaneous duration plus serial return",
+    "inputs": {
+      "individual_times": [
+        4,
+        9
+      ]
+    },
+    "expected": {
+      "he": "13",
+      "en": "13"
+    }
+  },
+  {
+    "key": "quick-sw-69-v5",
+    "method": "maximum simultaneous duration plus serial return",
+    "inputs": {
+      "individual_times": [
+        2,
+        11
+      ]
+    },
+    "expected": {
+      "he": "13",
+      "en": "13"
+    }
+  },
+  {
+    "key": "quick-sw-70-v1",
+    "method": "enumerate both job orders",
+    "inputs": {
+      "durations": [
+        1,
+        4
+      ],
+      "totals": [
+        6,
+        9
+      ]
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-70-v2",
+    "method": "enumerate both job orders",
+    "inputs": {
+      "durations": [
+        2,
+        5
+      ],
+      "totals": [
+        9,
+        12
+      ]
+    },
+    "expected": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-sw-70-v3",
+    "method": "enumerate both job orders",
+    "inputs": {
+      "durations": [
+        3,
+        7
+      ],
+      "totals": [
+        13,
+        17
+      ]
+    },
+    "expected": {
+      "he": "13",
+      "en": "13"
+    }
+  },
+  {
+    "key": "quick-sw-70-v4",
+    "method": "enumerate both job orders",
+    "inputs": {
+      "durations": [
+        2,
+        8
+      ],
+      "totals": [
+        12,
+        18
+      ]
+    },
+    "expected": {
+      "he": "12",
+      "en": "12"
+    }
+  },
+  {
+    "key": "quick-sw-70-v5",
+    "method": "enumerate both job orders",
+    "inputs": {
+      "durations": [
+        4,
+        9
+      ],
+      "totals": [
+        17,
+        22
+      ]
+    },
+    "expected": {
+      "he": "17",
+      "en": "17"
+    }
+  },
+  {
+    "key": "quick-sw-71-v1",
+    "method": "enumerate all binary outcomes and check complementary event",
+    "inputs": {
+      "tosses": 2
+    },
+    "expected": {
+      "he": "3/4",
+      "en": "3/4"
+    }
+  },
+  {
+    "key": "quick-sw-71-v2",
+    "method": "enumerate all binary outcomes and check complementary event",
+    "inputs": {
+      "tosses": 3
+    },
+    "expected": {
+      "he": "7/8",
+      "en": "7/8"
+    }
+  },
+  {
+    "key": "quick-sw-71-v3",
+    "method": "enumerate all binary outcomes and check complementary event",
+    "inputs": {
+      "tosses": 4
+    },
+    "expected": {
+      "he": "15/16",
+      "en": "15/16"
+    }
+  },
+  {
+    "key": "quick-sw-71-v4",
+    "method": "enumerate all binary outcomes and check complementary event",
+    "inputs": {
+      "tosses": 5
+    },
+    "expected": {
+      "he": "31/32",
+      "en": "31/32"
+    }
+  },
+  {
+    "key": "quick-sw-71-v5",
+    "method": "enumerate all binary outcomes and check complementary event",
+    "inputs": {
+      "tosses": 6
+    },
+    "expected": {
+      "he": "63/64",
+      "en": "63/64"
+    }
+  },
+  {
+    "key": "quick-sw-72-v1",
+    "method": "compare independent ordered-pair probabilities",
+    "inputs": {
+      "heads_probability": "1/4"
+    },
+    "expected": {
+      "he": "3/16",
+      "en": "3/16"
+    }
+  },
+  {
+    "key": "quick-sw-72-v2",
+    "method": "compare independent ordered-pair probabilities",
+    "inputs": {
+      "heads_probability": "1/3"
+    },
+    "expected": {
+      "he": "2/9",
+      "en": "2/9"
+    }
+  },
+  {
+    "key": "quick-sw-72-v3",
+    "method": "compare independent ordered-pair probabilities",
+    "inputs": {
+      "heads_probability": "2/3"
+    },
+    "expected": {
+      "he": "2/9",
+      "en": "2/9"
+    }
+  },
+  {
+    "key": "quick-sw-72-v4",
+    "method": "compare independent ordered-pair probabilities",
+    "inputs": {
+      "heads_probability": "3/4"
+    },
+    "expected": {
+      "he": "3/16",
+      "en": "3/16"
+    }
+  },
+  {
+    "key": "quick-sw-72-v5",
+    "method": "compare independent ordered-pair probabilities",
+    "inputs": {
+      "heads_probability": "1/5"
+    },
+    "expected": {
+      "he": "4/25",
+      "en": "4/25"
+    }
+  },
+  {
+    "key": "quick-sw-73-v1",
+    "method": "finite possible-world knowledge model",
+    "inputs": {
+      "case": 1,
+      "allowed_worlds": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "לבן",
+      "en": "White"
+    }
+  },
+  {
+    "key": "quick-sw-73-v2",
+    "method": "finite possible-world knowledge model",
+    "inputs": {
+      "case": 2,
+      "allowed_worlds": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "לבן",
+      "en": "White"
+    }
+  },
+  {
+    "key": "quick-sw-73-v3",
+    "method": "finite possible-world knowledge model",
+    "inputs": {
+      "case": 3,
+      "allowed_worlds": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "שני הצבעים עדיין אפשריים",
+      "en": "Either color remains possible"
+    }
+  },
+  {
+    "key": "quick-sw-73-v4",
+    "method": "finite possible-world knowledge model",
+    "inputs": {
+      "case": 4,
+      "allowed_worlds": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "שחור",
+      "en": "Black"
+    }
+  },
+  {
+    "key": "quick-sw-73-v5",
+    "method": "finite possible-world knowledge model",
+    "inputs": {
+      "case": 5,
+      "allowed_worlds": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "גם עולם שבו כובעו שחור מתאים למה שהוא רואה",
+      "en": "A world where their own hat is black fits the same observation"
+    }
+  },
+  {
+    "key": "quick-sw-74-v1",
+    "method": "enumerate XOR preimage",
+    "inputs": {
+      "observed": 0,
+      "repeats": 1,
+      "possible": [
+        "00",
+        "11"
+      ]
+    },
+    "expected": {
+      "he": "00 / 11",
+      "en": "00 / 11"
+    }
+  },
+  {
+    "key": "quick-sw-74-v2",
+    "method": "enumerate XOR preimage",
+    "inputs": {
+      "observed": 1,
+      "repeats": 1,
+      "possible": [
+        "01",
+        "10"
+      ]
+    },
+    "expected": {
+      "he": "01 / 10",
+      "en": "01 / 10"
+    }
+  },
+  {
+    "key": "quick-sw-74-v3",
+    "method": "enumerate XOR preimage",
+    "inputs": {
+      "observed": 0,
+      "repeats": 3,
+      "possible": [
+        "00",
+        "11"
+      ]
+    },
+    "expected": {
+      "he": "00 / 11",
+      "en": "00 / 11"
+    }
+  },
+  {
+    "key": "quick-sw-74-v4",
+    "method": "enumerate XOR preimage",
+    "inputs": {
+      "observed": 1,
+      "repeats": 4,
+      "possible": [
+        "01",
+        "10"
+      ]
+    },
+    "expected": {
+      "he": "01 / 10",
+      "en": "01 / 10"
+    }
+  },
+  {
+    "key": "quick-sw-74-v5",
+    "method": "enumerate XOR preimage",
+    "inputs": {
+      "observed": 0,
+      "repeats": 10,
+      "possible": [
+        "00",
+        "11"
+      ]
+    },
+    "expected": {
+      "he": "00 / 11",
+      "en": "00 / 11"
+    }
+  },
+  {
+    "key": "quick-sw-75-v1",
+    "method": "conservation and integer parity contradiction",
+    "inputs": {
+      "counts": [
+        2,
+        5
+      ],
+      "total": 7
+    },
+    "expected": {
+      "he": "הסכום הכולל אי־זוגי ונשמר",
+      "en": "The preserved total is odd"
+    }
+  },
+  {
+    "key": "quick-sw-75-v2",
+    "method": "conservation and integer parity contradiction",
+    "inputs": {
+      "counts": [
+        3,
+        8
+      ],
+      "total": 11
+    },
+    "expected": {
+      "he": "הסכום הכולל אי־זוגי ונשמר",
+      "en": "The preserved total is odd"
+    }
+  },
+  {
+    "key": "quick-sw-75-v3",
+    "method": "conservation and integer parity contradiction",
+    "inputs": {
+      "counts": [
+        6,
+        7
+      ],
+      "total": 13
+    },
+    "expected": {
+      "he": "הסכום הכולל אי־זוגי ונשמר",
+      "en": "The preserved total is odd"
+    }
+  },
+  {
+    "key": "quick-sw-75-v4",
+    "method": "conservation and integer parity contradiction",
+    "inputs": {
+      "counts": [
+        4,
+        9
+      ],
+      "total": 13
+    },
+    "expected": {
+      "he": "הסכום הכולל אי־זוגי ונשמר",
+      "en": "The preserved total is odd"
+    }
+  },
+  {
+    "key": "quick-sw-75-v5",
+    "method": "conservation and integer parity contradiction",
+    "inputs": {
+      "counts": [
+        1,
+        10
+      ],
+      "total": 11
+    },
+    "expected": {
+      "he": "הסכום הכולל אי־זוגי ונשמר",
+      "en": "The preserved total is odd"
+    }
+  },
+  {
+    "key": "quick-sw-76-v1",
+    "method": "exact rational repeated division",
+    "inputs": {
+      "start": 1,
+      "divisor": 2,
+      "steps": 3
+    },
+    "expected": {
+      "he": "1/8",
+      "en": "1/8"
+    }
+  },
+  {
+    "key": "quick-sw-76-v2",
+    "method": "exact rational repeated division",
+    "inputs": {
+      "start": 3,
+      "divisor": 2,
+      "steps": 4
+    },
+    "expected": {
+      "he": "3/16",
+      "en": "3/16"
+    }
+  },
+  {
+    "key": "quick-sw-76-v3",
+    "method": "exact rational repeated division",
+    "inputs": {
+      "start": 1,
+      "divisor": 3,
+      "steps": 2
+    },
+    "expected": {
+      "he": "1/9",
+      "en": "1/9"
+    }
+  },
+  {
+    "key": "quick-sw-76-v4",
+    "method": "exact rational repeated division",
+    "inputs": {
+      "start": 5,
+      "divisor": 2,
+      "steps": 5
+    },
+    "expected": {
+      "he": "5/32",
+      "en": "5/32"
+    }
+  },
+  {
+    "key": "quick-sw-76-v5",
+    "method": "exact rational repeated division",
+    "inputs": {
+      "start": 2,
+      "divisor": 3,
+      "steps": 3
+    },
+    "expected": {
+      "he": "2/27",
+      "en": "2/27"
+    }
+  },
+  {
+    "key": "quick-sw-77-v1",
+    "method": "inclusion-exclusion cardinality equation",
+    "inputs": {
+      "union": 10,
+      "counts": [
+        6,
+        5
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-77-v2",
+    "method": "inclusion-exclusion cardinality equation",
+    "inputs": {
+      "union": 20,
+      "counts": [
+        12,
+        11
+      ]
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-77-v3",
+    "method": "inclusion-exclusion cardinality equation",
+    "inputs": {
+      "union": 15,
+      "counts": [
+        9,
+        10
+      ]
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-77-v4",
+    "method": "inclusion-exclusion cardinality equation",
+    "inputs": {
+      "union": 12,
+      "counts": [
+        8,
+        7
+      ]
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-77-v5",
+    "method": "inclusion-exclusion cardinality equation",
+    "inputs": {
+      "union": 25,
+      "counts": [
+        16,
+        14
+      ]
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-78-v1",
+    "method": "one-resource threshold decision-tree lower bound and ascending construction",
+    "inputs": {
+      "floors": 3
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-78-v2",
+    "method": "one-resource threshold decision-tree lower bound and ascending construction",
+    "inputs": {
+      "floors": 4
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-78-v3",
+    "method": "one-resource threshold decision-tree lower bound and ascending construction",
+    "inputs": {
+      "floors": 5
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-78-v4",
+    "method": "one-resource threshold decision-tree lower bound and ascending construction",
+    "inputs": {
+      "floors": 6
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-78-v5",
+    "method": "one-resource threshold decision-tree lower bound and ascending construction",
+    "inputs": {
+      "floors": 7
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-sw-79-v1",
+    "method": "decimal place-value modular identity",
+    "inputs": {
+      "number": 123,
+      "digit_sum": 6
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-sw-79-v2",
+    "method": "decimal place-value modular identity",
+    "inputs": {
+      "number": 245,
+      "digit_sum": 11
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-79-v3",
+    "method": "decimal place-value modular identity",
+    "inputs": {
+      "number": 702,
+      "digit_sum": 9
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-sw-79-v4",
+    "method": "decimal place-value modular identity",
+    "inputs": {
+      "number": 1011,
+      "digit_sum": 3
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    }
+  },
+  {
+    "key": "quick-sw-79-v5",
+    "method": "decimal place-value modular identity",
+    "inputs": {
+      "number": 4321,
+      "digit_sum": 10
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-80-v1",
+    "method": "inverse operations checked by forward substitution",
+    "inputs": {
+      "multiplier": 2,
+      "addition": 3,
+      "result": 17
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-sw-80-v2",
+    "method": "inverse operations checked by forward substitution",
+    "inputs": {
+      "multiplier": 3,
+      "addition": 4,
+      "result": 19
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-80-v3",
+    "method": "inverse operations checked by forward substitution",
+    "inputs": {
+      "multiplier": 2,
+      "addition": 5,
+      "result": 23
+    },
+    "expected": {
+      "he": "9",
+      "en": "9"
+    }
+  },
+  {
+    "key": "quick-sw-80-v4",
+    "method": "inverse operations checked by forward substitution",
+    "inputs": {
+      "multiplier": 4,
+      "addition": 2,
+      "result": 26
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-80-v5",
+    "method": "inverse operations checked by forward substitution",
+    "inputs": {
+      "multiplier": 3,
+      "addition": 7,
+      "result": 31
+    },
+    "expected": {
+      "he": "8",
+      "en": "8"
+    }
+  },
+  {
+    "key": "quick-sw-81-v1",
+    "method": "unrolled-cylinder Euclidean length",
+    "inputs": {
+      "circumference": 3,
+      "height": 4,
+      "turns": 1
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-81-v2",
+    "method": "unrolled-cylinder Euclidean length",
+    "inputs": {
+      "circumference": 6,
+      "height": 8,
+      "turns": 1
+    },
+    "expected": {
+      "he": "10",
+      "en": "10"
+    }
+  },
+  {
+    "key": "quick-sw-81-v3",
+    "method": "unrolled-cylinder Euclidean length",
+    "inputs": {
+      "circumference": 5,
+      "height": 12,
+      "turns": 1
+    },
+    "expected": {
+      "he": "13",
+      "en": "13"
+    }
+  },
+  {
+    "key": "quick-sw-81-v4",
+    "method": "unrolled-cylinder Euclidean length",
+    "inputs": {
+      "circumference": 3,
+      "height": 8,
+      "turns": 2
+    },
+    "expected": {
+      "he": "10",
+      "en": "10"
+    }
+  },
+  {
+    "key": "quick-sw-81-v5",
+    "method": "unrolled-cylinder Euclidean length",
+    "inputs": {
+      "circumference": 4,
+      "height": 15,
+      "turns": 2
+    },
+    "expected": {
+      "he": "17",
+      "en": "17"
+    }
+  },
+  {
+    "key": "quick-sw-82-v1",
+    "method": "enumerate divisors and verify perfect-square criterion",
+    "inputs": {
+      "candidates": [
+        16,
+        12,
+        18,
+        20
+      ],
+      "divisor_counts": [
+        5,
+        6,
+        6,
+        6
+      ]
+    },
+    "expected": {
+      "he": "16",
+      "en": "16"
+    }
+  },
+  {
+    "key": "quick-sw-82-v2",
+    "method": "enumerate divisors and verify perfect-square criterion",
+    "inputs": {
+      "candidates": [
+        25,
+        15,
+        24,
+        30
+      ],
+      "divisor_counts": [
+        3,
+        4,
+        8,
+        8
+      ]
+    },
+    "expected": {
+      "he": "25",
+      "en": "25"
+    }
+  },
+  {
+    "key": "quick-sw-82-v3",
+    "method": "enumerate divisors and verify perfect-square criterion",
+    "inputs": {
+      "candidates": [
+        49,
+        21,
+        35,
+        42
+      ],
+      "divisor_counts": [
+        3,
+        4,
+        4,
+        8
+      ]
+    },
+    "expected": {
+      "he": "49",
+      "en": "49"
+    }
+  },
+  {
+    "key": "quick-sw-82-v4",
+    "method": "enumerate divisors and verify perfect-square criterion",
+    "inputs": {
+      "candidates": [
+        81,
+        27,
+        45,
+        63
+      ],
+      "divisor_counts": [
+        5,
+        4,
+        6,
+        6
+      ]
+    },
+    "expected": {
+      "he": "81",
+      "en": "81"
+    }
+  },
+  {
+    "key": "quick-sw-82-v5",
+    "method": "enumerate divisors and verify perfect-square criterion",
+    "inputs": {
+      "candidates": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "divisor_counts": [
+        1,
+        2,
+        2,
+        4
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-83-v1",
+    "method": "enumerate objective around all integer candidate positions plus median theorem",
+    "inputs": {
+      "positions": [
+        0,
+        4,
+        10
+      ],
+      "minimum": 10
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-83-v2",
+    "method": "enumerate objective around all integer candidate positions plus median theorem",
+    "inputs": {
+      "positions": [
+        -5,
+        1,
+        9
+      ],
+      "minimum": 14
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    }
+  },
+  {
+    "key": "quick-sw-83-v3",
+    "method": "enumerate objective around all integer candidate positions plus median theorem",
+    "inputs": {
+      "positions": [
+        2,
+        7,
+        8
+      ],
+      "minimum": 6
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-sw-83-v4",
+    "method": "enumerate objective around all integer candidate positions plus median theorem",
+    "inputs": {
+      "positions": [
+        0,
+        3,
+        20
+      ],
+      "minimum": 20
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-83-v5",
+    "method": "enumerate objective around all integer candidate positions plus median theorem",
+    "inputs": {
+      "positions": [
+        -8,
+        -2,
+        4
+      ],
+      "minimum": 12
+    },
+    "expected": {
+      "he": "-2",
+      "en": "-2"
+    }
+  },
+  {
+    "key": "quick-sw-84-v1",
+    "method": "ranking lower bound with witness order",
+    "inputs": {
+      "known_faster": 2
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    }
+  },
+  {
+    "key": "quick-sw-84-v2",
+    "method": "ranking lower bound with witness order",
+    "inputs": {
+      "known_faster": 3
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    }
+  },
+  {
+    "key": "quick-sw-84-v3",
+    "method": "ranking lower bound with witness order",
+    "inputs": {
+      "known_faster": 4
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    }
+  },
+  {
+    "key": "quick-sw-84-v4",
+    "method": "ranking lower bound with witness order",
+    "inputs": {
+      "known_faster": 5
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    }
+  },
+  {
+    "key": "quick-sw-84-v5",
+    "method": "ranking lower bound with witness order",
+    "inputs": {
+      "known_faster": 6
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    }
+  },
+  {
+    "key": "quick-sw-85-v1",
+    "method": "exact finite weighted expectation",
+    "inputs": {
+      "sides": 4
+    },
+    "expected": {
+      "he": "5/2",
+      "en": "5/2"
+    }
+  },
+  {
+    "key": "quick-sw-85-v2",
+    "method": "exact finite weighted expectation",
+    "inputs": {
+      "sides": 6
+    },
+    "expected": {
+      "he": "7/2",
+      "en": "7/2"
+    }
+  },
+  {
+    "key": "quick-sw-85-v3",
+    "method": "exact finite weighted expectation",
+    "inputs": {
+      "sides": 8
+    },
+    "expected": {
+      "he": "9/2",
+      "en": "9/2"
+    }
+  },
+  {
+    "key": "quick-sw-85-v4",
+    "method": "exact finite weighted expectation",
+    "inputs": {
+      "sides": 10
+    },
+    "expected": {
+      "he": "11/2",
+      "en": "11/2"
+    }
+  },
+  {
+    "key": "quick-sw-85-v5",
+    "method": "exact finite weighted expectation",
+    "inputs": {
+      "sides": 12
+    },
+    "expected": {
+      "he": "13/2",
+      "en": "13/2"
+    }
+  },
+  {
+    "key": "quick-sw-86-v1",
+    "method": "independent conditional probability factorization",
+    "inputs": {
+      "prior_heads": 4,
+      "next": "tails"
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    }
+  },
+  {
+    "key": "quick-sw-86-v2",
+    "method": "independent conditional probability factorization",
+    "inputs": {
+      "prior_heads": 6,
+      "next": "heads"
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    }
+  },
+  {
+    "key": "quick-sw-86-v3",
+    "method": "independent conditional probability factorization",
+    "inputs": {
+      "prior_heads": 10,
+      "next": "tails"
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    }
+  },
+  {
+    "key": "quick-sw-86-v4",
+    "method": "independent conditional probability factorization",
+    "inputs": {
+      "prior_heads": 3,
+      "next": "heads"
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    }
+  },
+  {
+    "key": "quick-sw-86-v5",
+    "method": "independent conditional probability factorization",
+    "inputs": {
+      "prior_heads": 20,
+      "next": "tails"
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    }
+  },
+  {
+    "key": "quick-sw-87-v1",
+    "method": "dynamic programming optimum compared with greedy trace",
+    "inputs": {
+      "coins": [
+        1,
+        3,
+        4
+      ],
+      "target": 6,
+      "greedy": 3
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-87-v2",
+    "method": "dynamic programming optimum compared with greedy trace",
+    "inputs": {
+      "coins": [
+        1,
+        4,
+        5
+      ],
+      "target": 8,
+      "greedy": 4
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-87-v3",
+    "method": "dynamic programming optimum compared with greedy trace",
+    "inputs": {
+      "coins": [
+        1,
+        5,
+        6
+      ],
+      "target": 10,
+      "greedy": 5
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-87-v4",
+    "method": "dynamic programming optimum compared with greedy trace",
+    "inputs": {
+      "coins": [
+        1,
+        6,
+        7
+      ],
+      "target": 12,
+      "greedy": 6
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-87-v5",
+    "method": "dynamic programming optimum compared with greedy trace",
+    "inputs": {
+      "coins": [
+        1,
+        7,
+        8
+      ],
+      "target": 14,
+      "greedy": 7
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    }
+  },
+  {
+    "key": "quick-sw-88-v1",
+    "method": "directed-cycle relation and all-order enumeration",
+    "inputs": {
+      "case": 1,
+      "cycle": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ]
+      ]
+    },
+    "expected": {
+      "he": "מעגל ניצחונות",
+      "en": "A cycle of wins"
+    }
+  },
+  {
+    "key": "quick-sw-88-v2",
+    "method": "directed-cycle relation and all-order enumeration",
+    "inputs": {
+      "case": 2,
+      "cycle": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ]
+      ]
+    },
+    "expected": {
+      "he": "C",
+      "en": "C"
+    }
+  },
+  {
+    "key": "quick-sw-88-v3",
+    "method": "directed-cycle relation and all-order enumeration",
+    "inputs": {
+      "case": 3,
+      "cycle": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ]
+      ]
+    },
+    "expected": {
+      "he": "A מנצח C",
+      "en": "A beats C"
+    }
+  },
+  {
+    "key": "quick-sw-88-v4",
+    "method": "directed-cycle relation and all-order enumeration",
+    "inputs": {
+      "case": 4,
+      "cycle": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ]
+      ]
+    },
+    "expected": {
+      "he": "A, B, C",
+      "en": "A, B, C"
+    }
+  },
+  {
+    "key": "quick-sw-88-v5",
+    "method": "directed-cycle relation and all-order enumeration",
+    "inputs": {
+      "case": 5,
+      "cycle": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ]
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    }
+  }
+]
