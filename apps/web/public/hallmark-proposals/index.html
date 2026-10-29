@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="שלוש הצעות לממשק התרגול של JobRun, סביבת עבודה, ספרייה פתוחה וזירת תרגול.">
+  <meta name="robots" content="noindex,nofollow">
+  <title>JobRun, שלוש דרכים לתרגל</title>
+  <link rel="stylesheet" href="./gallery.css">
+  <script src="./gallery.js" defer></script>
+</head>
+<body>
+  <header class="gallery-header container">
+    <a class="wordmark" href="https://jobrun-practice.netlify.app/" aria-label="JobRun, האתר הפעיל" dir="ltr">jobrun.</a>
+    <p>הצעות עיצוב לבחירה, האתר הפעיל נשאר כפי שהוא.</p>
+  </header>
+  <main>
+    <section class="intro container" aria-labelledby="page-title">
+      <div><h1 id="page-title">שלוש דרכים לתרגל.</h1><p>אותו מוצר, שלוש נקודות פתיחה שונות. בחרו כיוון והתנסו בממשק.</p></div>
+      <p class="scope">הסקיצות מציגות שאלות לדוגמה. הפעולות מקומיות ואינן נשמרות בחשבון.</p>
+    </section>
+    <nav class="directions container" aria-label="בחירת הצעת עיצוב">
+      <button type="button" data-design="bench" aria-pressed="true" aria-labelledby="bench-label" aria-describedby="bench-description"><strong id="bench-label">סביבת עבודה</strong><span id="bench-description">השאלה והכלים באותו מקום. חושבים באמצעות המעגל.</span><span class="palette palette-bench" aria-hidden="true"></span></button>
+      <button type="button" data-design="library" aria-pressed="false" aria-labelledby="library-label" aria-describedby="library-description"><strong id="library-label">ספרייה פתוחה</strong><span id="library-description">תוכן וטיפוגרפיה מובילים. מוצאים נושא ונכנסים לעומק.</span><span class="palette palette-library" aria-hidden="true"></span></button>
+      <button type="button" data-design="arena" aria-pressed="false" aria-labelledby="arena-label" aria-describedby="arena-description"><strong id="arena-label">זירת תרגול</strong><span id="arena-description">מסך כהה וממוקד. שאלה אחת, החלטה אחת, ממשיכים.</span><span class="palette palette-arena" aria-hidden="true"></span></button>
+    </nav>
+    <section class="comparison container" aria-label="תצוגה חיה של ההצעה">
+      <div class="toolbar">
+        <p id="current">סביבת עבודה</p>
+        <div class="devices" role="group" aria-label="רוחב תצוגה">
+          <button type="button" data-device="desktop" aria-pressed="true">מחשב</button>
+          <button type="button" data-device="phone" aria-pressed="false">טלפון</button>
+        </div>
+        <a id="full-size" href="./bench/index.html" target="_blank" rel="noopener">פתיחה בגודל מלא</a>
+        <button type="button" id="share">העתקת קישור</button>
+      </div>
+      <p id="share-status" role="status" aria-live="polite"></p>
+      <div class="frame-shell" data-device="desktop">
+        <iframe src="./bench/index.html" title="הצעת סביבת עבודה, ממשק הדגמה מקומי" id="preview"></iframe>
+      </div>
+    </section>
+  </main>
+  <footer class="container gallery-footer"><p>עיצוב בעזרת Hallmark. הסקיצות שומרות על משפחת הצבעים והכתב של JobRun, ובוחנות מבנה וחוויית שימוש חדשים.</p><a href="https://jobrun-practice.netlify.app/">לאתר הפעיל</a></footer>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="הצעת סביבת עבודה לתרגול הנדסי, עם מעגלים, טבלאות אמת ורמזים מקומיים.">
+  <title>JobRun, סביבת עבודה</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main" data-copy="skip">דילוג לתרגול</a>
+  <div class="proposal"><div class="shell"><span data-copy="proposal">הצעת עיצוב, תרגול מקומי לדוגמה</span><a href="../index.html" data-copy="gallery">כל ההצעות</a></div></div>
+  <header class="header shell">
+    <a class="brand" href="../index.html" aria-label="JobRun, כל ההצעות"><span dir="ltr">JobRun</span><span class="brand-note" data-copy="name">סביבת עבודה</span></a>
+    <nav aria-label="ניווט ראשי" id="nav">
+      <button type="button" id="practice-nav" class="nav-item" aria-current="page" data-copy="practice">תרגול</button>
+      <button type="button" id="questions-nav" class="nav-item" data-copy="questions">שאלות</button>
+    </nav>
+    <button type="button" class="language" id="language" lang="en">English</button>
+  </header>
+  <main class="shell" id="main" tabindex="-1">
+    <section id="practice-view" aria-labelledby="question-title">
+      <div class="question-heading">
+        <div><h1 id="question-title">מתי שער AND מחזיר 1?</h1><p class="topic" id="topic">לוגיקה ספרתית</p><p class="question-prompt" id="prompt">שנו את הכניסות, בדקו את הפלט והסבירו את הקשר.</p></div>
+        <button class="quiet change-question" type="button" id="change-question" data-copy="change">החלפת שאלה</button>
+      </div>
+      <div class="workspace">
+        <section class="simulation" aria-labelledby="simulation-title">
+          <div class="region-head"><h2 id="simulation-title" data-copy="simulation">בדיקת כניסות</h2><bdi dir="ltr" class="equation" id="equation">Y = A ∧ B</bdi></div>
+          <div class="signals">
+            <label class="signal" for="input-a"><span id="input-a-label">כניסה A</span><span class="bit-control"><input id="input-a" type="checkbox"><span class="switch-track" aria-hidden="true"></span><bdi class="bit" dir="ltr" id="bit-a">0</bdi></span></label>
+            <label class="signal" for="input-b"><span id="input-b-label">כניסה B</span><span class="bit-control"><input id="input-b" type="checkbox"><span class="switch-track" aria-hidden="true"></span><bdi class="bit" dir="ltr" id="bit-b">0</bdi></span></label>
+          </div>
+          <div class="circuit-stage" id="circuit-stage">
+            <svg class="circuit" viewBox="0 0 480 204" role="img" aria-labelledby="circuit-title" dir="ltr">
+              <title id="circuit-title">שער AND עם שתי כניסות ופלט אחד</title>
+              <g class="wire" id="wire-a"><path d="M66 72H192"/><circle cx="66" cy="72" r="4"/></g>
+              <g class="wire" id="wire-b"><path d="M66 140H192"/><circle cx="66" cy="140" r="4"/></g>
+              <path class="gate-body" id="gate-body" d="M192 43H253A63 63 0 0 1 253 169H192Z"/>
+              <g class="wire" id="wire-y"><path d="M316 106H418"/><circle cx="418" cy="106" r="4"/></g>
+              <g class="diagram-labels"><text x="63" y="49" id="wire-a-text">A = 0</text><text x="63" y="174" id="wire-b-text">B = 0</text><text x="353" y="83" id="wire-y-text">Y = 0</text><text x="249" y="113" text-anchor="middle" id="gate-name">AND</text></g>
+            </svg>
+          </div>
+          <div class="output-strip" aria-live="polite" aria-atomic="true"><span id="output-label">הפלט כעת</span><output id="output" dir="ltr">Y = 0</output><span id="output-detail">לפחות כניסה אחת כבויה</span></div>
+          <p class="simulation-note" data-copy="simulationNote">התרשים והטבלה מתעדכנים יחד עם הכניסות.</p>
+        </section>
+        <section class="reasoning" aria-labelledby="reasoning-title">
+          <div class="region-head"><h2 id="reasoning-title" data-copy="reasoning">מה אפשר להסיק?</h2><span data-copy="local">עבודה מקומית</span></div>
+          <table dir="ltr" class="truth-table" aria-describedby="table-note">
+            <caption id="table-caption">טבלת אמת, שער AND</caption>
+            <thead><tr><th scope="col" id="col-a">A</th><th scope="col" id="col-b">B</th><th scope="col" id="col-y">Y</th><th scope="col" class="row-state" data-copy="state">מצב</th></tr></thead>
+            <tbody id="truth-body"><tr class="is-current"><td>0</td><td>0</td><td>0</td><td class="row-state">נבחר</td></tr><tr><td>0</td><td>1</td><td>0</td><td class="row-state"></td></tr><tr><td>1</td><td>0</td><td>0</td><td class="row-state"></td></tr><tr><td>1</td><td>1</td><td>1</td><td class="row-state"></td></tr></tbody>
+          </table>
+          <p class="table-note" id="table-note" data-copy="tableNote">השורה המסומנת תואמת לכניסות שבחרתם.</p>
+          <label class="answer-label" for="explanation" data-copy="answerLabel">ההסבר שלכם</label>
+          <textarea id="explanation" rows="3" placeholder="באילו תנאים מתקבל פלט 1?" aria-describedby="answer-note"></textarea>
+          <p class="answer-note" id="answer-note" data-copy="answerNote">לחשיבה שלכם. אין בדיקה אוטומטית, הטקסט נשאר כאן עד רענון.</p>
+        </section>
+      </div>
+      <div class="support-rail">
+        <section class="hint-region" aria-labelledby="hint-title"><div class="support-heading"><h2 id="hint-title" data-copy="hintTitle">כיוון למחשבה</h2><button type="button" class="quiet" id="hint" data-copy="hint">רמז ראשון</button></div><p id="hint-content" data-copy="hintEmpty" aria-live="polite">אפשר להתחיל משתי כניסות שוות, ואז לשנות רק אחת.</p></section>
+        <details class="reference" id="reference"><summary data-copy="reference">השוואה לפתרון</summary><p id="solution">שער AND מחזיר 1 רק כאשר שתי הכניסות הן 1. בכל צירוף אחר הפלט הוא 0.</p><bdi dir="ltr" id="solution-equation">Y = A ∧ B</bdi></details>
+      </div>
+    </section>
+    <section id="questions-view" aria-labelledby="questions-title" hidden>
+      <div class="question-heading"><div><h1 id="questions-title" data-copy="questionBank">בוחרים בעיה, מתחילים לחשוב.</h1><p class="question-prompt" data-copy="bankDescription">שלוש שאלות לדוגמה שאפשר לחקור בסביבת העבודה.</p></div></div>
+      <label for="question-search" class="search-label" data-copy="searchLabel">חיפוש בשאלות לדוגמה</label>
+      <input type="search" id="question-search" placeholder="AND, XOR או מכונת מצבים" autocomplete="off">
+      <div class="question-list" id="question-list"></div>
+      <p id="search-status" aria-live="polite"></p>
+    </section>
+    <noscript><p class="noscript">הדוגמה מוצגת במצב התחלתי. החלפת שפה וכניסות דורשת JavaScript.</p></noscript>
+  </main>
+  <footer class="footer shell"><p data-copy="footer">סביבת עבודה, הצעה עצמאית ל־JobRun</p><a href="https://jobrun-practice.netlify.app/" target="_blank" rel="noopener noreferrer" data-copy="website">לאתר JobRun</a></footer>
+</body>
+</html>

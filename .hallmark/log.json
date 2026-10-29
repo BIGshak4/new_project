@@ -1,0 +1,140 @@
+[
+ {
+  "date": "2026-10-29",
+  "mode": "build",
+  "scope": "app",
+  "prototype": true,
+  "shape": "app screen",
+  "genre": "modern-minimal",
+  "theme": "brand: Ion dark",
+  "entry": "apps/web/public/hallmark-proposals/arena/index.html",
+  "signature": "Five-round question rail and a single focused answer decision",
+  "fingerprint": {
+   "entry": "round-first",
+   "dominant": "quiz canvas",
+   "columns": 1,
+   "reading": "question and answer rules",
+   "navigation": "round rail and review",
+   "support": "deterministic explanations"
+  },
+  "nav": "round rail and review",
+  "imagery": "Actual interactive local question UI; no invented users, companies or metrics",
+  "photos": [],
+  "prompt": "Propose new, intentional UI directions for JobRun using Hallmark, appropriate to Israeli hardware/software interview preparation.",
+  "verification": {
+   "staticFails": 0,
+   "renderedFails": 0,
+   "requiredURLCaptures": 20,
+   "interactionChecks": 15,
+   "failedInteractionChecks": 0,
+   "externalRequests": 0,
+   "backendRequests": 0,
+   "pageErrors": 0,
+   "review": "Fresh-context Hallmark finish review: ship after library bidi whitespace fix",
+   "dismissed": [
+    {
+     "gate": "F4",
+     "reason": "Library topic buttons are mutually exclusive filters; only the selected topic is filled. They are not competing primary calls to action."
+    }
+   ],
+   "protocol": "Static source lint and HTTP render evaluated separately. file:// iframes have different origin semantics and are not the deployment protocol."
+  },
+  "limitations": [
+   "Design proposals only; production design untouched",
+   "Sample authored questions; no backend, account, AI or durable storage",
+   "Arena is solo demo; no real multiplayer, XP, coins or rankings"
+  ]
+ },
+ {
+  "date": "2026-10-29",
+  "mode": "build",
+  "scope": "app",
+  "prototype": true,
+  "shape": "app screen",
+  "genre": "editorial",
+  "theme": "brand: Mineral light",
+  "entry": "apps/web/public/hallmark-proposals/library/index.html",
+  "signature": "Open question rows with a topic margin and dedicated reading space",
+  "fingerprint": {
+   "entry": "search-first",
+   "dominant": "editorial index",
+   "columns": "margin and list",
+   "reading": "broad dedicated detail",
+   "navigation": "topics and bookmarks",
+   "support": "progressive disclosure"
+  },
+  "nav": "topics and bookmarks",
+  "imagery": "Actual interactive local question UI; no invented users, companies or metrics",
+  "photos": [],
+  "prompt": "Propose new, intentional UI directions for JobRun using Hallmark, appropriate to Israeli hardware/software interview preparation.",
+  "verification": {
+   "staticFails": 0,
+   "renderedFails": 0,
+   "requiredURLCaptures": 20,
+   "interactionChecks": 15,
+   "failedInteractionChecks": 0,
+   "externalRequests": 0,
+   "backendRequests": 0,
+   "pageErrors": 0,
+   "review": "Fresh-context Hallmark finish review: ship after library bidi whitespace fix",
+   "dismissed": [
+    {
+     "gate": "F4",
+     "reason": "Library topic buttons are mutually exclusive filters; only the selected topic is filled. They are not competing primary calls to action."
+    }
+   ],
+   "protocol": "Static source lint and HTTP render evaluated separately. file:// iframes have different origin semantics and are not the deployment protocol."
+  },
+  "limitations": [
+   "Design proposals only; production design untouched",
+   "Sample authored questions; no backend, account, AI or durable storage",
+   "Arena is solo demo; no real multiplayer, XP, coins or rankings"
+  ]
+ },
+ {
+  "date": "2026-10-29",
+  "mode": "build",
+  "scope": "app",
+  "prototype": true,
+  "shape": "app screen",
+  "genre": "modern-minimal",
+  "theme": "brand: Mineral light",
+  "entry": "apps/web/public/hallmark-proposals/bench/index.html",
+  "signature": "Live AND/XOR circuit aligned with its truth table; one-step FSM exploration",
+  "fingerprint": {
+   "entry": "question-first",
+   "dominant": "technical workspace",
+   "columns": 2,
+   "reading": "paired tools and reasoning",
+   "navigation": "practice or local question picker",
+   "support": "hint rail"
+  },
+  "nav": "practice or local question picker",
+  "imagery": "Actual interactive local question UI; no invented users, companies or metrics",
+  "photos": [],
+  "prompt": "Propose new, intentional UI directions for JobRun using Hallmark, appropriate to Israeli hardware/software interview preparation.",
+  "verification": {
+   "staticFails": 0,
+   "renderedFails": 0,
+   "requiredURLCaptures": 20,
+   "interactionChecks": 15,
+   "failedInteractionChecks": 0,
+   "externalRequests": 0,
+   "backendRequests": 0,
+   "pageErrors": 0,
+   "review": "Fresh-context Hallmark finish review: ship after library bidi whitespace fix",
+   "dismissed": [
+    {
+     "gate": "F4",
+     "reason": "Library topic buttons are mutually exclusive filters; only the selected topic is filled. They are not competing primary calls to action."
+    }
+   ],
+   "protocol": "Static source lint and HTTP render evaluated separately. file:// iframes have different origin semantics and are not the deployment protocol."
+  },
+  "limitations": [
+   "Design proposals only; production design untouched",
+   "Sample authored questions; no backend, account, AI or durable storage",
+   "Arena is solo demo; no real multiplayer, XP, coins or rankings"
+  ]
+ }
+]

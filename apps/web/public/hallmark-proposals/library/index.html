@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="הצעת עיצוב לספריית שאלות JobRun, עם חיפוש ותרגול מקומי לדוגמה.">
+  <title>ספרייה פתוחה | JobRun</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="skip">דילוג לתוכן</a>
+  <header class="masthead wrap">
+    <a href="../index.html" class="wordmark" aria-label="JobRun, גלריית ההצעות" dir="ltr">JobRun<span aria-hidden="true">/</span></a>
+    <nav aria-label="ניווט הצעת עיצוב" data-aria="navigation">
+      <a href="../index.html" data-i18n="gallery">כל ההצעות</a>
+      <a class="live-link" href="https://jobrun-practice.netlify.app/" data-i18n="live">לאתר הקיים</a>
+      <button type="button" id="language" lang="en" dir="ltr">English</button>
+    </nav>
+  </header>
+  <main id="main" class="wrap">
+    <section id="index-view" aria-labelledby="index-title">
+      <div class="introduction">
+        <h1 id="index-title" tabindex="-1" data-i18n="title">ספרייה פתוחה</h1>
+        <p data-i18n="intro">בוחרים שאלה, מפרקים את הבעיה, כותבים את דרך החשיבה.</p>
+      </div>
+      <div class="search-line">
+        <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+        <label for="query" class="visually-hidden" data-i18n="searchLabel">חיפוש בשש שאלות לדוגמה</label>
+        <input id="query" type="search" name="query" autocomplete="off" placeholder="מה רוצים להבין היום?" data-placeholder="searchPlaceholder">
+        <span class="search-key" aria-hidden="true">/</span>
+      </div>
+      <div class="index-layout">
+        <aside class="directory" aria-label="סינון הספרייה" data-aria="filters">
+          <details id="filter-disclosure" open>
+            <summary data-i18n="directory">נושאים וסינון</summary>
+            <div class="filter-content">
+              <div class="topics" role="group" aria-label="נושא" data-aria="topicLabel">
+                <button type="button" data-topic="all" aria-pressed="true"><span data-i18n="all">כל השאלות</span><span class="num">6</span></button>
+                <button type="button" data-topic="hardware" aria-pressed="false"><span data-i18n="hardware">חומרה</span><span class="num">2</span></button>
+                <button type="button" data-topic="software" aria-pressed="false"><span data-i18n="software">תוכנה</span><span class="num">2</span></button>
+                <button type="button" data-topic="reasoning" aria-pressed="false"><span data-i18n="reasoning">חשיבה</span><span class="num">2</span></button>
+              </div>
+              <button class="saved-filter" id="saved-only" type="button" aria-pressed="false"><span data-i18n="savedFilter">סימניות בלשונית</span><span id="saved-count" class="num">0</span></button>
+              <p class="directory-note" data-i18n="directoryNote">לא צריך למהר לפתרון. מתחילים בהסבר משלכם.</p>
+            </div>
+          </details>
+        </aside>
+        <section class="question-index" aria-label="שאלות לדוגמה" data-aria="questions">
+          <div class="list-heading"><h2 data-i18n="questionsTitle">שאלות לתרגול</h2><p id="result-count" role="status">6 שאלות לדוגמה</p></div>
+          <ol class="question-list" id="question-list">
+            <li class="no-script-question"><h3>היכן הלולאה חורגת מגבולות המערך?</h3><p>תוכנה, גבולות מערך בשפת C.</p><a href="?question=bounds">פתיחת השאלה</a></li>
+          </ol>
+          <div id="empty" class="empty" hidden><h3 data-i18n="emptyTitle">אין שאלות בתצוגה הזו</h3><p data-i18n="emptyText">אפשר לנסות חיפוש אחר או להסיר את הסינון.</p><button type="button" id="clear-filters" class="text-button" data-i18n="clear">ניקוי הסינון</button></div>
+        </section>
+      </div>
+    </section>
+    <section id="reading-view" class="reading-view" aria-labelledby="reading-title" hidden>
+      <div class="reading-toolbar"><button type="button" id="back" class="text-button" data-i18n="back">חזרה לספרייה</button><span id="reading-position"></span><button type="button" id="reading-bookmark" class="text-button" aria-pressed="false"></button></div>
+      <div class="reading-layout">
+        <aside class="reading-margin"><p id="reading-topic"></p><p id="reading-subject"></p><p class="reading-note" data-i18n="readingNote">קראו, נסו להסביר בקול, ואז כתבו. הרמזים כאן כשצריך.</p></aside>
+        <article class="reading-column">
+          <h1 id="reading-title" tabindex="-1"></h1>
+          <section class="prompt-section" aria-labelledby="prompt-heading"><h2 id="prompt-heading" data-i18n="question">השאלה</h2><p id="prompt"></p><pre id="code" dir="ltr" tabindex="0" hidden><code></code></pre></section>
+          <section class="explanation" aria-labelledby="explanation-title">
+            <h2 id="explanation-title" data-i18n="explanation">דרך החשיבה שלכם</h2>
+            <label for="answer" data-i18n="answerLabel">מה ידוע, מה צריך לבדוק, ואיך מגיעים לפתרון?</label>
+            <textarea id="answer" name="explanation" rows="6" data-placeholder="answerPlaceholder" placeholder="אפשר להתחיל מההנחה הראשונה…"></textarea>
+            <div class="draft-actions"><button type="button" id="save-draft" class="primary" data-i18n="saveDraft">שמירת טיוטה בלשונית</button><p id="draft-status" role="status" data-i18n="draftNotice">הטקסט נשאר בלשונית הזו בלבד. לא נשלח דבר.</p></div>
+          </section>
+          <section class="help-section" aria-labelledby="help-title"><h2 id="help-title" data-i18n="help">כשצריך כיוון נוסף</h2><details id="hint-one"><summary data-i18n="hintOne">רמז ראשון</summary><p></p></details><details id="hint-two"><summary data-i18n="hintTwo">רמז נוסף</summary><p></p></details><details id="solution"><summary data-i18n="solution">פתרון לעיון</summary><p></p><pre id="solution-code" dir="ltr" tabindex="0" hidden><code></code></pre></details></section>
+          <div class="reading-end"><p data-i18n="noGrade">זהו תרגול עצמי. ההצעה אינה בודקת או מדרגת תשובות.</p><button type="button" id="next-question" class="text-button" data-i18n="next">לשאלה הבאה</button></div>
+        </article>
+      </div>
+    </section>
+    <noscript><p class="noscript">זוהי הצעת עיצוב עם שש שאלות לדוגמה. חיפוש, סינון ופתיחת התרגול דורשים JavaScript. This sample prototype requires JavaScript for search and practice.</p></noscript>
+  </main>
+  <footer class="prototype-footer"><div class="wrap"><p data-i18n="sample">הצעת עיצוב בלבד. שש שאלות לדוגמה, ללא חיבור לחשבון.</p><span data-i18n="local">סימניות וטיוטות נמחקות ברענון.</span></div></footer>
+</body>
+</html>

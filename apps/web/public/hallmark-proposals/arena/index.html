@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="זירת תרגול מקומית של JobRun: חמש שאלות הנדסיות עם תשובה ומשוב, כהדמיית עיצוב אישית.">
+  <title>זירת תרגול | JobRun</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main" data-copy="skip">דילוג לתרגול</a>
+  <div class="scope-bar">
+    <div class="shell scope-inner">
+      <p data-copy="scope">סקיצת עיצוב, תרגול מקומי בלבד</p>
+      <div class="scope-links">
+        <a href="../index.html" data-copy="gallery">כל הכיוונים</a>
+        <a href="https://jobrun-practice.netlify.app/" data-copy="live">לאתר הקיים</a>
+      </div>
+    </div>
+  </div>
+  <header class="shell app-header">
+    <a class="wordmark" href="../index.html" aria-label="JobRun, כל כיווני העיצוב"><bdi dir="ltr">JobRun</bdi></a>
+    <nav aria-label="ניווט בזירה" id="navigation">
+      <button type="button" class="nav-button is-current" data-view="practice" data-copy="practice" aria-current="page">תרגול קצר</button>
+      <button type="button" class="nav-button" data-view="questions" data-copy="questions">סקירת שאלות</button>
+    </nav>
+    <button type="button" class="language" id="language" aria-label="Switch to English">English</button>
+  </header>
+  <main class="shell" id="main" tabindex="-1">
+    <div class="arena-intro">
+      <h1 data-copy="arena">זירת תרגול</h1>
+      <p data-copy="invitation">חמש שאלות קצרות. מתחילים כאן.</p>
+    </div>
+    <p class="simulation-note" data-copy="simulation">הדמיה אישית של העיצוב, ללא יריב אמיתי.</p>
+    <section id="arena" aria-label="תרגול מקומי">
+      <ol class="rounds" aria-label="סבבי התרגול">
+        <li class="is-active" aria-current="step"><span>1</span>AND</li>
+        <li><span>2</span>XOR</li><li><span>3</span>C</li><li><span>4</span>FSM</li><li><span>5</span>Logic</li>
+      </ol>
+      <div class="question-heading"><p>שאלה 1 מתוך 5</p><p>שערים לוגיים</p></div>
+      <h2 class="problem-title">מתי הפלט הוא 1?</h2>
+      <p class="problem-description">בחרו את צירוף הקלטים שמפעיל שער AND בעל שני קלטים.</p>
+      <pre class="problem-material"><code>Y = A AND B</code></pre>
+      <div class="answers" role="group" aria-label="בחירת תשובה אחת">
+        <button class="option" type="button" aria-pressed="false"><span class="option-letter">א</span><bdi dir="ltr">A = 0, B = 0</bdi></button>
+        <button class="option" type="button" aria-pressed="false"><span class="option-letter">ב</span><bdi dir="ltr">A = 0, B = 1</bdi></button>
+        <button class="option" type="button" aria-pressed="false"><span class="option-letter">ג</span><bdi dir="ltr">A = 1, B = 0</bdi></button>
+        <button class="option" type="button" aria-pressed="false"><span class="option-letter">ד</span><bdi dir="ltr">A = 1, B = 1</bdi></button>
+      </div>
+      <div class="action-row"><button type="button" class="primary" disabled>בדיקת תשובה</button><p>בחרו תשובה אחת כדי לבדוק אותה.</p></div>
+    </section>
+    <noscript><p class="no-script">כדי לבחור תשובות ולקבל הסבר, יש להפעיל JavaScript. השאלה הראשונה מוצגת כאן לקריאה.</p></noscript>
+  </main>
+  <footer class="shell app-footer">
+    <p data-copy="local">התשובות קיימות רק בחלון הזה ונמחקות ברענון.</p>
+    <p data-copy="future">דו־קרב עם חברים הוא רעיון להמשך. כאן מתרגלים לבד.</p>
+  </footer>
+</body>
+</html>

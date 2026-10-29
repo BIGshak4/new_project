@@ -1,0 +1,74 @@
+/* Hallmark · shape: app screen · genre: modern-minimal · theme: brand
+ * paper: Mineral gray-green · accent: plum · display: Heebo · body: Heebo
+ * nav: three named directions · signature: real interactive UI comparison
+ * states: selected, loading iframe, clipboard success/error · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: V, preserve a neutral comparison wrapper so the three application structures carry the variety */
+@import url("./fonts.css");
+@import url("./tokens.css");
+@import url("./base.css");
+:root {
+  --gallery-line: color-mix(in srgb, var(--color-rule) 45%, var(--color-paper));
+  --gallery-dark: #171024;
+  --gallery-lilac: #c2a7fb;
+  --gallery-amber: #ffb85c;
+  --gallery-frame: #b8c7c1;
+}
+body { background: var(--color-paper-2); }
+button, a { -webkit-tap-highlight-color: var(--color-transparent); touch-action: manipulation; }
+button { cursor: pointer; }
+.gallery-header { min-height: 88px; display: flex; align-items: center; justify-content: space-between; gap: var(--space-32); border-bottom: 1px solid var(--gallery-line); }
+.wordmark { font-size: 32px; font-weight: 900; letter-spacing: -0.035em; text-decoration: none; }
+.gallery-header p { color: var(--color-muted); font-size: 16px; }
+.intro { display: flex; justify-content: space-between; align-items: end; gap: var(--space-48); padding-block: var(--space-44) var(--space-32); }
+.intro h1 { font-size: 36px; margin-bottom: var(--space-md); }
+.intro p { color: var(--color-ink-2); }
+.intro .scope { max-width: 29ch; color: var(--color-muted); }
+.directions { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: var(--space-lg); }
+.directions button { text-align: start; display: grid; gap: var(--space-sm); padding: var(--space-20) 0; border: 0; border-top: 2px solid var(--gallery-line); background: var(--color-transparent); color: var(--color-ink); }
+.directions button strong { font-size: 24px; font-weight: 700; white-space: nowrap; }
+.directions button > span:not(.palette) { color: var(--color-muted); max-width: 32ch; }
+.directions button:hover { border-color: var(--color-ink); }
+.directions button[aria-pressed="true"] { border-color: var(--color-accent); }
+.directions button[aria-pressed="true"] strong { color: var(--color-accent); }
+.directions button:active { transform: translateY(1px); }
+.palette { height: 8px; display: flex; width: 100%; background: var(--color-paper); }
+.palette::after { content: ""; width: 40px; margin-inline-start: auto; background: var(--color-accent); }
+.palette-library { background: var(--color-paper-3); }
+.palette-library::after { width: 60px; }
+.palette-arena { background: var(--gallery-dark); }
+.palette-arena::after { background: var(--gallery-lilac); }
+.comparison { margin-block-start: var(--space-lg); }
+.toolbar { display: flex; align-items: center; gap: var(--space-20); flex-wrap: wrap; padding: var(--space-md) 0; border-top: 1px solid var(--gallery-line); }
+.toolbar > p { font-weight: 700; margin-inline-end: auto; }
+.toolbar a { text-underline-offset: 4px; }
+.toolbar button, .toolbar a { display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; }
+.toolbar button { padding: var(--space-xs) var(--space-sm); border: 1px solid var(--gallery-line); border-radius: 4px; background: var(--color-paper-2); color: var(--color-ink); }
+.toolbar button:hover { background: var(--color-paper); }
+.toolbar button:active { transform: translateY(1px); }
+.devices { display: flex; gap: var(--space-2xs); }
+.devices button[aria-pressed="true"] { background: var(--color-soft); border-color: var(--color-accent); }
+#share-status { color: var(--color-muted); min-height: 1lh; font-size: 16px; }
+.frame-shell { background: var(--gallery-frame); padding: var(--space-md); }
+iframe { display: block; width: 100%; height: 870px; border: 0; background: var(--color-paper); margin-inline: auto; }
+iframe:focus-visible, iframe:focus, iframe[data-focus-inside="true"] { outline: 3px solid var(--color-focus); outline-offset: 4px; }
+.frame-shell[data-device="phone"] iframe { width: min(390px,100%); height: 844px; }
+.gallery-footer { display: flex; align-items: start; justify-content: space-between; gap: var(--space-32); padding-block: var(--space-32); color: var(--color-muted); }
+.gallery-footer p { max-width: 75ch; }
+.gallery-footer a { white-space: nowrap; }
+@media(max-width:760px) {
+  .gallery-header { min-height: 72px; gap: var(--space-20); }
+  .gallery-header p { max-width: 28ch; font-size: 16px; }
+  .intro { display: block; padding-block: var(--space-28) var(--space-20); }
+  .intro h1 { font-size: 30px; }
+  .intro .scope { max-width: none; margin-block-start: var(--space-md); }
+  .directions { grid-template-columns: minmax(0,1fr); gap: 0; }
+  .directions button { padding-block: var(--space-sm); gap: var(--space-2xs); }
+  .directions button strong { font-size: 20px; }
+  .directions button > span:not(.palette) { max-width: none; }
+  .palette { display: none; }
+  .toolbar { gap: var(--space-sm); }
+  .toolbar > p { flex-basis: 100%; }
+  .frame-shell { padding: 0; }
+  .gallery-footer { display: block; }
+  .gallery-footer a { display: inline-flex; align-items: center; min-height: 44px; margin-block-start: var(--space-md); }
+}
