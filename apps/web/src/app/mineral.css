@@ -1,0 +1,49 @@
+/* Approved Mineral light theme. Import after ion.css; existing semantic roles
+   reach portals, editors and new features without a second component palette.
+   Dark Ion and the user's saved theme preference remain unchanged. */
+:root[data-theme="light"] {
+  --paper: #e0e6e5;
+  --surface: #f2f6f4;
+  --surface-2: #cbd8d5;
+  --ink: #35204f;
+  --ink-2: #4d355f;
+  --muted: #5b4a68;
+  --line: #687a74;
+  --link: #633c87;
+  --action: #634086;
+  --action-ink: #fffaf2;
+  --soft: #dfd9e8;
+  --code-comment: #695573;
+}
+
+/* The grid belongs to the introductory demonstration, never to a reading
+   sheet, code editor or circuit workspace. Use named production classes
+   rather than the comparison harness's structural selectors. */
+:root[data-theme="light"] .ion-landing .ion-hero {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--line) 12%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--line) 12%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+:root[data-theme="light"] .topnav {
+  background: var(--surface);
+}
+
+:root[data-theme="light"] .ion-landing .ion-art {
+  padding-block: 18px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+}
+
+/* A control border is deliberately stronger in Mineral. Selected code needs
+   a pale text surface, not that border color, to keep syntax readable. */
+:root[data-theme="light"] .technical-code-editor .cm-selectionBackground {
+  background: var(--soft) !important;
+}
+
+/* The fill image can extend past the illustration's scene. It is decorative;
+   never let its transparent pixels intercept the sibling XOR controls. */
+.ion-landing .ion-chip-scene {
+  pointer-events: none;
+}

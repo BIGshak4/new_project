@@ -1,6 +1,6 @@
 ---
 name: JobRun
-description: Adaptive Ion practice site and separately preserved sage task workspace.
+description: Mineral light practice site, preserved dark Ion and separate sage task workspace.
 colors:
   ion-dark-paper: "#171024"
   ion-dark-surface: "#21182f"
@@ -32,17 +32,17 @@ colors:
   ion-dark-circuit-wire: "#b4a4c5"
   ion-dark-circuit-high: "#84d2b3"
   ion-dark-circuit-unknown: "#ffb85c"
-  ion-light-paper: "#faf4e8"
-  ion-light-surface: "#fffcf6"
-  ion-light-surface-2: "#f0e7f3"
+  ion-light-paper: "#e0e6e5"
+  ion-light-surface: "#f2f6f4"
+  ion-light-surface-2: "#cbd8d5"
   ion-light-ink: "#35204f"
   ion-light-ink-2: "#4d355f"
-  ion-light-muted: "#6a577b"
-  ion-light-line: "#d8c9df"
+  ion-light-muted: "#5b4a68"
+  ion-light-line: "#687a74"
   ion-light-link: "#633c87"
   ion-light-action: "#634086"
   ion-light-action-ink: "#fffaf2"
-  ion-light-soft: "#eae0f1"
+  ion-light-soft: "#dfd9e8"
   ion-light-ok: "#216a50"
   ion-light-ok-soft: "#e5f1e8"
   ion-light-ok-line: "#b5d7be"
@@ -58,7 +58,7 @@ colors:
   ion-light-code-keyword: "#6b2fa0"
   ion-light-code-string: "#286345"
   ion-light-code-number: "#89491d"
-  ion-light-code-comment: "#766284"
+  ion-light-code-comment: "#695573"
   ion-light-circuit-wire: "#705582"
   ion-light-circuit-high: "#216a50"
   ion-light-circuit-unknown: "#966118"
@@ -303,34 +303,34 @@ components:
 
 ## Overview
 
-**Creative North Star: "Adaptive Ion"**
+**Creative North Star: "Mineral / Adaptive Ion"**
 
-The production practice app (apps/web) uses adaptive Ion, approved on 2026-10-01: violet midnight surfaces, lilac links and amber actions, with a cream and deep-purple light alternative. Heavy Heebo headings lead into calm reading and working areas, thin dividers and restrained panels. The dimensional violet chip is the approved identity image.
+The production practice app (apps/web) uses Mineral light, selected from /color-preview and approved for production on 2026-10-29: cool gray-green grounds, plum reading text and purple actions. The optional dark theme retains the adaptive Ion system approved on 2026-10-01: violet midnight surfaces, lilac links and amber actions. Heavy Heebo headings lead into calm reading and working areas, clear dividers and restrained panels. The dimensional violet chip is the approved identity image.
 
 The private founder task app (apps/tasks) retains its engineering working notebook / ledger system: sage surroundings, white surfaces, deep-green actions and compact Heebo text. Its original metaphor remains an implementation assumption for that app only. The task app is a separate scope, not an Ion light variant. Galleries and /site-preview remain references.
 
 **Key Characteristics:**
 - Hebrew-first text with logical alignment and technical LTR content.
-- Light-first Ion with an optional persistent dark preference.
+- Mineral light by default with an optional persistent dark Ion preference.
 - Flat practice panels, fine dividers and labelled semantic states.
 - Separate task palette, compact navigation and soft card depth.
 
-Evidence: apps/web/src/app/ion.css overrides globals.css; layout.tsx loads its fonts. Theme, landing, learn, technical code editor, circuit editor and road chart components were sampled. Task source is apps/tasks/src/app/globals.css. Approval is recorded in PRODUCT.md and the production surface contract; finish fixes have a bounded ship verdict in .impeccable/review/ion-production/verdict.md.
+Evidence: apps/web/src/app/mineral.css is imported after ion.css in layout.tsx and overrides its light semantic variables; ion.css overrides globals.css. layout.tsx loads the unchanged fonts. Theme, landing, learn, technical code editor, circuit editor and road chart components were sampled. Task source is apps/tasks/src/app/globals.css. The Mineral approval and scope are recorded in .impeccable/surfaces/mineral-production.md; PRODUCT.md records the historical Ion brand decision and its dated Mineral light successor. Current rendering evidence is in .impeccable/review/mineral-production. Historical Ion finish evidence remains in .impeccable/review/ion-production/verdict.md.
 
-Frontmatter ion-dark-* and ion-light-* names map to semantic CSS variables under each theme. Task-* preserves incumbent token values. Historical task-prefixed practice tokens are retained for compatibility with the old document, not authority for the current practice site.
+Frontmatter ion-dark-* and ion-light-* names map to semantic CSS variables under each theme. The retained ion-light-* registry names now describe Mineral, not the earlier cream alternative. Task-* preserves incumbent token values. Historical task-prefixed practice tokens are retained for compatibility with the old document, not authority for the current practice site.
 
 ## Colors
 
 ### Primary
-Ion uses amber actions on dark violet and purple actions on cream. Action-ink supplies the paired foreground; link supplies lilac or purple emphasis, navigation, carets and focus. Task scope retains green primary actions, light-green secondary actions and deeper primary hover.
+Mineral light uses purple actions on cool gray-green grounds; dark Ion uses amber actions on dark violet. Action-ink supplies the paired foreground; link supplies lilac or purple emphasis, navigation, carets and focus. Task scope retains green primary actions, light-green secondary actions and deeper primary hover.
 
 ### Secondary
 Ion ok/signal/copper/danger roles and corresponding soft fills carry labelled feedback. Charts use ok/signal/copper for strong/partial/weak, link for level. Dedicated code keyword/string/number/comment and circuit-wire/high/unknown colors make technical tools theme-aware. Dark copper-text records the effective cascade alias rather than the earlier overridden literal. Task scope retains warm notices, gold focus and doing/blocked/done/todo pairs.
 
 ### Neutral
-Ion paper/surface/surface-2 form tonal layers; ink/ink-2/muted provide reading hierarchy, line supplies boundaries and soft fills selection. Task paper, white surfaces, sidebar, borders, navigation fill and badge backgrounds remain separate.
+Mineral paper/surface/surface-2 form cool gray-green tonal layers; plum ink/ink-2/muted provide reading hierarchy. The stronger green-gray line supplies boundaries, while pale lavender soft supplies selected controls and light editor selection. Dark Ion retains its existing tonal layers and selection treatment. Task paper, white surfaces, sidebar, borders, navigation fill and badge backgrounds remain separate.
 
-**The Theme Continuity Rule.** Apply Ion through root semantic variables, including portals, charts and editors; changing theme preserves mounted work.
+**The Theme Continuity Rule.** Apply Mineral light and dark Ion through root semantic variables, including portals, charts and editors; changing theme preserves mounted work.
 
 **The Labelled State Rule.** Status colors accompany written labels; keep the status meaning available in text.
 
@@ -354,7 +354,7 @@ Task scope preserves its frontmatter ramp: authentication display becomes 38px, 
 
 ## Layout
 
-Ion content caps at 1440px with 5% side insets. The desktop header is 84px high with 22px navigation gaps. Learning panes use a 28px gap. The public hero pairs equal columns with a 7% gap, then stacks on mobile; its composition stays in the surface brief. Progress metrics use open divided rows inside the overview.
+Ion content caps at 1440px with 5% side insets. The desktop header is 84px high with 22px navigation gaps. Learning panes use a 28px gap. The public hero pairs equal columns with a 7% gap, then stacks on mobile; its composition stays in the surface brief. In light mode the landing demonstration alone carries the approved fine 40px grid, with one-pixel lines mixed from 12% line color and transparent. Its chip field uses surface-2, a one-pixel line border and 18px block padding. The header uses surface. Working sheets and editors retain clean backgrounds; the circuit editor retains its own native dot grid. Progress metrics use open divided rows inside the overview.
 
 At 1150px secondary header statistics hide. At 780px the header becomes 73px, desktop tabs hide and four-destination authenticated bottom navigation appears. Its 72px base height adds safe-area padding; content reserves bottom space. Learning and public sections stack; question/answer sheets use mobile padding. At 370px the public headline and chip reduce further. Local breakpoints in globals.css still govern individual components.
 
@@ -398,9 +398,9 @@ Ion desktop tabs are unboxed: muted at rest, ink on hover/active with a 2px acti
 The task rail stays sage with transparent resting items, selected fill and weight 700. Compact task navigation retains labels while hiding icons, with 8px 10px padding and 13px type.
 
 ### Technical work and identity image
-CodeMirror surfaces, gutters, selection, cursor, autocomplete and syntax resolve semantic tokens. Its content has a 260px minimum height and 540px scroller maximum. Circuit wires, states, labels, controls and 20px dot grid use Ion variables; chart tooltips follow the same theme without changing actual data.
+CodeMirror surfaces, gutters, cursor, autocomplete and syntax resolve semantic tokens. Mineral code selection uses soft rather than the stronger control-border line; dark selection retains its existing line treatment. The separate code-comment token keeps italic comments readable on the light surface. Its content has a 260px minimum height and 540px scroller maximum. Circuit wires, states, labels, controls and 20px dot grid use Ion variables; chart tooltips follow the same theme without changing actual data.
 
-The approved /design-worlds/ion-chip.png retains embedded provenance and its existing provenance sidecar; no new raster was generated. XOR buttons update its result. The entrance lasts .65s with cubic-bezier(0.16, 1, 0.3, 1), from 16px displacement and -4deg rotation; reduced motion disables it. Gallery imagery and alternative typefaces remain outside production rules.
+The approved /design-worlds/ion-chip.png retains embedded provenance and its existing provenance sidecar; no new raster was generated. The decorative chip scene does not intercept pointer events; its sibling XOR buttons update the result. The entrance lasts .65s with cubic-bezier(0.16, 1, 0.3, 1), from 16px displacement and -4deg rotation; reduced motion disables it. Gallery imagery and alternative typefaces remain outside production rules.
 
 Task editing retains sticky save controls, written feedback and 180ms view transitions with reduced-motion overrides.
 
@@ -429,7 +429,8 @@ Evidence: `apps/web/src/components/quick-practice.tsx`, `apps/web/src/lib/fundam
 
 ### Don't:
 - **Don't** use the code font for ordinary interface text.
-- **Don't** reintroduce graph paper, handwriting, a navy header or sticky-note decoration into production Ion.
+- **Don't** extend the approved landing grid onto reading sheets or code workspaces; retain native technical diagrams and the circuit editor's functional dot grid.
+- **Don't** reintroduce handwriting, a navy header or sticky-note decoration into the production practice site.
 - **Don't** promote gallery alternatives or dormant legacy selectors into production rules.
 - **Don't** remove written navigation labels on compact layouts.
 

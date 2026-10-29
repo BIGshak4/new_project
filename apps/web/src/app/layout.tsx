@@ -8,6 +8,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import "./ion.css";
+import "./mineral.css";
 import { themeBootstrap } from "../lib/theme";
 import { Toaster } from "../components/toaster";
 import { MotionProvider } from "../components/ui/motion";
