@@ -10,7 +10,7 @@ import { Wardrobe } from "./wardrobe";
 
 function LiveWardrobe({ userId, lang, controls }: { userId: string; lang: AvatarLanguage; controls: React.ReactNode }) {
   const client = useMemo(() => avatarApi(userId), [userId]);
-  return <Wardrobe client={client} lang={lang} controls={controls}/>;
+  return <Wardrobe client={client} lang={lang} controls={controls} draftKey={userId}/>;
 }
 
 export function WardrobePage() {

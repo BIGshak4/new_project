@@ -32,8 +32,8 @@ import { shuffleQuestions, useQuestionOrderSeed } from "../lib/question-order";
 import { Auth, type Lang } from "../components/auth";
 import { avatarApi } from "../lib/avatar-api";
 import type { AvatarConfig } from "../lib/avatar-types";
-import { LogicAvatar } from "../components/wardrobe/logic-avatar";
-import gameIdentityStyles from "../components/duels/game-avatar.module.css";
+import { FeatureNav } from "../components/wardrobe/feature-nav";
+import headerStyles from "../components/wardrobe/workspace-header.module.css";
 import { PracticeSession } from "../components/practice-session";
 import { GoalSetup } from "../components/goal-setup";
 import { LanguageMenu } from "../components/ui/language-menu";
@@ -443,13 +443,14 @@ function Workspace({
 
   return (
     <div className="app-shell">
-      <header className="topnav">
+      <header className={`topnav ${headerStyles.header}`}>
         <a href="/" className="wordmark" dir="ltr">
           <span>.</span>jobrun
         </a>
         <nav className="tabs" aria-label={t("ניווט", "Navigation")}>
           {tabButtons(false)}
         </nav>
+        <FeatureNav lang={lang} avatar={profileAvatar} hideAvatar={active || route.view === "interview"} />
         {overview && overview.answered > 0 && <div className="topnav-stats">
           <span
             className={`stat-chip streak ${(overview?.streak_days ?? 0) > 0 ? "lit" : ""}`}
@@ -471,7 +472,7 @@ function Workspace({
             {overview?.level && <span className="level-word" dir="auto">{overview.level}</span>}
           </span>
         </div>}
-        <div className="topnav-actions">
+        <div className={`topnav-actions ${headerStyles.toolbar}`}>
           <UserInboxButton lang={lang} />
           <MuxiTourLauncher userId={user.id} lang={lang} controls={languageControl} ready={!loading} />
           {languageControl}
@@ -488,12 +489,6 @@ function Workspace({
         {tabButtons(true)}
       </nav>
       <main className="content">
-        <nav className={gameIdentityStyles.profileRow} aria-label={t("משחקים והדמות שלי", "Games and my character")}>
-          <a href="/games" className={gameIdentityStyles.shopLink}><Gamepad2 size={20} aria-hidden="true" />{t("משחקים", "Games")}</a>
-          <a href="/games/shop" className={gameIdentityStyles.shopLink}>
-            {profileAvatar ? <LogicAvatar config={profileAvatar} size={38} /> : <Shirt size={20} aria-hidden="true" />}{t("הדמות והחנות", "Avatar & shop")}
-          </a>
-        </nav>
         <div className="pilot-note" role="note">
           {!healthKnown
             ? t(

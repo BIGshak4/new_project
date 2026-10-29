@@ -456,6 +456,7 @@ def every_route():
         ("GET", "/v1/me/avatar", None),
         ("PUT", "/v1/me/avatar", {"component": "mux", "color": "violet", "skin": "classic"}),
         ("POST", "/v1/me/avatar/buy", {"skin": "aurora"}),
+        ("POST", "/v1/me/avatar/onboarding", {}),
         # duels (2026-10-22)
         ("GET", "/v1/duels", None), ("POST", "/v1/duels", {"language": "he"}), ("POST", "/v1/duels/accept", {"code": "abcd2345"}),
         ("POST", f"/v1/duels/{uuid.UUID(int=0)}/ready", {}),

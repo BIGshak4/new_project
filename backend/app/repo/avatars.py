@@ -10,7 +10,9 @@ TABLE = "game_avatar"
 
 
 async def available():
-    return await db.has_table(TABLE)
+    if not await db.has_table(TABLE):
+        return False
+    return "onboarding_completed" in (await db.table(TABLE)).c
 
 
 async def load(connection, user_id):
@@ -29,9 +31,11 @@ async def load_many(connection, user_ids):
     return {str(row["user_id"]): dict(row) for row in rows}
 
 
-async def save(connection, user_id, avatar, owned_skins):
+async def save(connection, user_id, avatar, owned_skins, onboarding_completed=None):
     table = await db.table(TABLE)
     values = {"user_id": user_id, **avatar, "owned_skins": list(owned_skins)}
+    if onboarding_completed is not None:
+        values["onboarding_completed"] = onboarding_completed
     statement = insert(table).values(**values)
     await connection.execute(statement.on_conflict_do_update(index_elements=[table.c.user_id],
                              set_={k: v for k, v in values.items() if k != "user_id"}))

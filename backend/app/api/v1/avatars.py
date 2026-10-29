@@ -21,6 +21,12 @@ class CosmeticBuy(BaseModel):
     skin: str = Field(..., min_length=1, max_length=24)
 
 
+class AvatarOnboarding(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    component: str | None = Field(None, min_length=1, max_length=24)
+    color: str | None = Field(None, min_length=1, max_length=24)
+
+
 class AvatarView(BaseModel):
     avatar: AvatarConfig
     owned_skins: list[str]
@@ -32,6 +38,7 @@ class AvatarView(BaseModel):
     shop_enabled: bool
     shirt_text: str = "Job_Run"
     capabilities: dict
+    onboarding_completed: bool
 
 
 @router.get("", response_model=AvatarView, summary="My avatar, owned skins and the server-priced cosmetic catalog")
@@ -48,3 +55,8 @@ async def save_avatar(body: AvatarConfig, access: CurrentAccess, avatars: Avatar
 @router.post("/buy", response_model=AvatarView, summary="Buy a permanent cosmetic skin once with earned coins")
 async def buy_skin(body: CosmeticBuy, access: CurrentAccess, avatars: Avatars):
     return await avatars.buy(access.user_id, body.skin)
+
+
+@router.post("/onboarding", response_model=AvatarView, summary="Complete or skip free avatar setup without spending coins")
+async def complete_avatar_onboarding(body: AvatarOnboarding, access: CurrentAccess, avatars: Avatars):
+    return await avatars.complete_onboarding(access.user_id, component=body.component, color=body.color)

@@ -11,7 +11,7 @@
 .shell input::placeholder { color: var(--muted); opacity: 1; }
 .shell h1, .shell h2, .shell h3 { color: var(--ink); text-wrap: balance; }
 .shell p { max-width: 70ch; line-height: 1.75; }
-.header { min-height: 84px; border-block-end: 1px solid var(--line); padding: 16px max(5%, calc((100vw - 1160px) / 2)); display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+.header { min-height: 84px; border-block-end: 1px solid var(--line); padding: 10px max(5%, calc((100vw - 1160px) / 2)); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 18px; }
 .brand { display: inline-flex; align-items: baseline; gap: 16px; font-size: 25px; font-weight: 900; text-decoration: none; }
 .brand span { padding-inline-start: 16px; border-inline-start: 1px solid var(--line); color: var(--muted); font-size: 15px; font-weight: 400; }
 .controls { display: flex; gap: 8px; align-items: center; }
@@ -109,6 +109,7 @@
 @media (prefers-reduced-motion: reduce) { .timeTrack > span { transition: none; } }
 @media (max-width: 650px) {
   .header { min-height: 73px; padding: 13px 5%; }
+  .header > nav { order: 3; flex-basis: 100%; justify-content: center; }
   .brand { font-size: 23px; gap: 10px; }
   .brand span { padding-inline-start: 10px; font-size: 13px; }
   .main { width: 92%; padding-block-start: 15px; padding-bottom: max(20px, env(safe-area-inset-bottom)); }
@@ -124,7 +125,8 @@
   .invite { grid-template-columns: 1fr; }
   .invite input { font-size: 16px; }
   .players { gap: 14px; }
-  .players > div { min-width: 95px; }
+  .players > div { min-width: 0; flex: 1; }
+  .players > div > svg { width: min(100%, 150px); height: auto; }
   .players > div > span { font-size: 12px; }
   .scoreboard { padding: 0 8px 18px; }
   .scoreboard span { font-size: 12px; }

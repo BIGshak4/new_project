@@ -274,10 +274,11 @@ class _MemoryTx:
     async def load_avatars(self, user_ids):
         return {str(user): copy.deepcopy(self.s.avatars[user]) for user in user_ids if user in self.s.avatars}
 
-    async def save_avatar(self, user_id, avatar, owned_skins):
+    async def save_avatar(self, user_id, avatar, owned_skins, onboarding_completed=None):
         if "save_avatar" in self.s.failures:
             raise RuntimeError("injected save_avatar failure")
-        self.s.avatars[user_id] = {**avatar, "owned_skins": list(owned_skins)}
+        completed = (self.s.avatars.get(user_id) or {}).get("onboarding_completed", False) if onboarding_completed is None else onboarding_completed
+        self.s.avatars[user_id] = {**avatar, "owned_skins": list(owned_skins), "onboarding_completed": completed}
 
     @asynccontextmanager
     async def savepoint(self):

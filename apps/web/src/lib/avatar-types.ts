@@ -1,7 +1,7 @@
 export type AvatarLanguage = "he" | "en";
 export type AvatarConfig = { component: string; color: string; skin: string };
 export type AvatarText = { he: string; en: string };
-export type AvatarSkin = { key: string; label: AvatarText; description: AvatarText; price: number };
+export type AvatarSkin = { key: string; label: AvatarText; description: AvatarText; price: number; category?: "classic" | "basic" | "meme" };
 export type AvatarPayload = {
   avatar: AvatarConfig;
   owned_skins: string[];
@@ -12,12 +12,14 @@ export type AvatarPayload = {
   enabled: boolean;
   shop_enabled: boolean;
   shirt_text: string;
+  onboarding_completed?: boolean;
   capabilities: { persistent_avatar: boolean; cosmetic_shop: boolean };
 };
 export type AvatarClient = {
   get(): Promise<AvatarPayload>;
   save(config: AvatarConfig): Promise<AvatarPayload>;
   buy(skin: string): Promise<AvatarPayload>;
+  completeOnboarding?(config?: Pick<AvatarConfig, "component" | "color">): Promise<AvatarPayload>;
 };
 
 export const DEFAULT_AVATAR: AvatarConfig = { component: "mux", color: "violet", skin: "classic" };

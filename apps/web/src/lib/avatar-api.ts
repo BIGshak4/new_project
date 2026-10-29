@@ -31,5 +31,6 @@ export function avatarApi(userId: string, baseUrl = process.env.NEXT_PUBLIC_API_
     get: () => call("GET"),
     save: (config: AvatarConfig) => call("PUT", "", { component: config.component, color: config.color, skin: config.skin }),
     buy: (skin) => call("POST", "/buy", { skin }),
+    completeOnboarding: (config) => call("POST", "/onboarding", config ?? {}),
   };
 }

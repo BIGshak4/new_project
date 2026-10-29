@@ -1,1 +1,11 @@
-.avatar { display: block; flex: 0 0 auto; max-width: 100%; height: auto; overflow: visible; }
+.avatar {
+  --avatar-edge: color-mix(in srgb, var(--link, #c2a7fb) 68%, var(--surface, #21182f));
+  display: block;
+  flex: 0 0 auto;
+  max-width: 100%;
+  height: auto;
+  overflow: visible;
+  isolation: isolate;
+}
+
+:global(:root[data-theme="light"]) .avatar { --avatar-edge: transparent; }

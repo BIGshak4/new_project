@@ -36,13 +36,15 @@ class AvatarsService:
 
     async def _view(self, tx, user_id):
         enabled = await tx.avatars_available()
-        avatar, owned = self._state(await tx.load_avatar(user_id) if enabled else None)
+        row = await tx.load_avatar(user_id) if enabled else None
+        avatar, owned = self._state(row)
         shop_enabled = enabled and await self.coins.enabled(tx)
         if shop_enabled:
             await self.coins.ensure_gift(tx, user_id)
         return {"avatar": avatar, "owned_skins": owned, **self.catalog,
                 "balance": await tx.coin_balance(user_id) if shop_enabled else 0,
                 "enabled": enabled, "shop_enabled": shop_enabled, "shirt_text": "Job_Run",
+                "onboarding_completed": bool((row or {}).get("onboarding_completed", False)),
                 "capabilities": {"persistent_avatar": True, "cosmetic_shop": True}}
 
     async def get(self, user_id):
@@ -64,7 +66,23 @@ class AvatarsService:
             _, owned = self._state(await tx.load_avatar(user_id))
             if avatar["skin"] not in owned:
                 raise ApiError("forbidden", "this skin is not owned by this account")
-            await tx.save_avatar(user_id, avatar, owned)
+            await tx.save_avatar(user_id, avatar, owned, onboarding_completed=True)
+            return await self._view(tx, user_id)
+
+    async def complete_onboarding(self, user_id, *, component=None, color=None):
+        # Only free choices may be supplied; omitted choices preserve an existing look.
+        for value, group in ((component, "components"), (color, "colors")):
+            if value is not None and value not in {item["key"] for item in self.catalog[group]}:
+                raise ApiError("validation", "unknown free avatar choice")
+        async with self.store.transaction() as tx:
+            await self._available(tx)
+            await tx.lock_usage(user_id, "coins")
+            avatar, owned = self._state(await tx.load_avatar(user_id))
+            if component is not None:
+                avatar["component"] = component
+            if color is not None:
+                avatar["color"] = color
+            await tx.save_avatar(user_id, avatar, owned, onboarding_completed=True)
             return await self._view(tx, user_id)
 
     async def buy(self, user_id, skin):

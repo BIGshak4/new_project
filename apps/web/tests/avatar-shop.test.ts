@@ -22,6 +22,8 @@ test("preview catalog and avatar colors match the server's canonical catalog", (
   assert.deepEqual(catalog, source);
   assert.deepEqual(Object.fromEntries(catalog.colors.map(color => [color.key, color.hex])), AVATAR_COLORS);
   assert.equal(catalog.skins.find(skin => skin.key === "classic")!.price, 0);
+  for (const key of ["aurora", "circuit", "cosmic", "gold"]) assert.equal(catalog.skins.find(s => s.key === key)!.price, 20);
+  assert.equal(catalog.skins.filter(s => s.price === 40).length, 6);
 });
 
 test("trying or saving an unowned skin cannot bypass purchase; duplicate demo buys debit once", async () => {
@@ -31,14 +33,15 @@ test("trying or saving an unowned skin cannot bypass purchase; duplicate demo bu
   await assert.rejects(() => api.save({ ...DEFAULT_AVATAR, skin: "gold" }));
   assert.deepEqual((await api.get()).avatar, DEFAULT_AVATAR);
   const after = await api.buy("gold");
-  assert.equal(after.balance, 20);
+  assert.equal(after.balance, 140);
   assert.ok(after.owned_skins.includes("gold"));
-  assert.equal((await api.buy("gold")).balance, 20);
+  assert.equal((await api.buy("gold")).balance, 140);
   await api.save({ component: "xor", color: "mint", skin: "gold" });
   assert.deepEqual(getDemoAvatar(), { component: "xor", color: "mint", skin: "gold" });
   assert.deepEqual((await demoAvatarClient().get()).avatar, getDemoAvatar());
-  await assert.rejects(() => api.buy("cosmic"), (error: unknown) => (error as { status: number }).status === 402);
-  assert.equal((await api.get()).balance, 20);
+  for (const key of ["aurora", "circuit", "cosmic", "negative_feedback", "binary_people"]) await api.buy(key);
+  await assert.rejects(() => api.buy("sleep_not_found"), (error: unknown) => (error as { status: number }).status === 402);
+  assert.equal((await api.get()).balance, 0);
 });
 
 test("real wardrobe calls bind to the account and submit catalog identifiers rather than price or ownership", async () => {
@@ -47,8 +50,10 @@ test("real wardrobe calls bind to the account and submit catalog identifiers rat
   const calls: { url: string; init: RequestInit }[] = [];
   mock.method(globalThis, "fetch", async (url: string, init: RequestInit) => { calls.push({ url, init }); return Response.json(payload); });
   const api = client.avatarApi("alice", "https://api.example");
-  await api.get(); await api.save({ component: "xor", color: "mint", skin: "classic" }); await api.buy("aurora");
-  assert.deepEqual(calls.map(call => call.init.method), ["GET", "PUT", "POST"]);
+  await api.get(); await api.save({ component: "xor", color: "mint", skin: "classic" }); await api.buy("aurora"); await api.completeOnboarding!({ component: "dff", color: "mint" });
+  assert.deepEqual(calls.map(call => call.init.method), ["GET", "PUT", "POST", "POST"]);
+  assert.equal(calls[3].url, "https://api.example/v1/me/avatar/onboarding");
+  assert.deepEqual(JSON.parse(calls[3].init.body as string), { component: "dff", color: "mint" });
   assert.equal(calls[2].url, "https://api.example/v1/me/avatar/buy");
   assert.deepEqual(JSON.parse(calls[1].init.body as string), { component: "xor", color: "mint", skin: "classic" });
   assert.deepEqual(JSON.parse(calls[2].init.body as string), { skin: "aurora" });
@@ -60,11 +65,23 @@ test("real wardrobe calls bind to the account and submit catalog identifiers rat
   }
 });
 
+test("free onboarding persists a choice or skip without charging or resetting equipped purchases", async () => {
+  storage(); const api = demoAvatarClient();
+  assert.equal((await api.get()).onboarding_completed, false);
+  await api.buy("negative_feedback");
+  await api.save({component: "xor", color: "mint", skin: "negative_feedback"});
+  const chosen = await api.completeOnboarding!({component: "dff", color: "sky"});
+  assert.deepEqual(chosen.avatar, {component: "dff", color: "sky", skin: "negative_feedback"});
+  assert.equal(chosen.balance, 120);
+  assert.deepEqual((await api.completeOnboarding!()).avatar, chosen.avatar);
+  assert.equal((await demoAvatarClient().get()).onboarding_completed, true);
+});
+
 test("switching accounts prevents old-account wardrobe reads and writes before transmission", async () => {
   mock.method(supabase.auth, "getSession", async () => ({ data: { session: { access_token: "bob-token", user: { id: "bob" } } }, error: null }));
   const fetch = mock.method(globalThis, "fetch", async () => Response.json({}));
   const api = client.avatarApi("alice", "https://api.example");
-  for (const request of [() => api.get(), () => api.save(DEFAULT_AVATAR), () => api.buy("gold")])
+  for (const request of [() => api.get(), () => api.save(DEFAULT_AVATAR), () => api.buy("gold"), () => api.completeOnboarding!()])
     await assert.rejects(request, (error: unknown) => error instanceof client.AvatarApiError && error.code === "unauthenticated");
   assert.equal(fetch.mock.callCount(), 0);
 });

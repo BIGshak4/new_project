@@ -49,7 +49,7 @@ async def test_buy_debits_once_and_skin_must_be_owned_before_equipping(service):
         await svc.save(user, wanted)
     assert denied.value.code == "forbidden"
     one, two = await asyncio.gather(svc.buy(user, "aurora"), svc.buy(user, "aurora"))
-    assert one["balance"] == two["balance"] == 10
+    assert one["balance"] == two["balance"] == 30
     assert one["owned_skins"] == ["aurora", "classic"]
     assert (await svc.save(user, wanted))["avatar"] == wanted
     assert (await svc.get(other))["owned_skins"] == ["classic"]
@@ -61,12 +61,10 @@ async def test_competing_spends_cannot_overdraw_and_failures_do_not_grant_a_skin
     svc, store = service
     user = uuid.uuid4()
     await svc.get(user)
-    async with store.transaction() as tx:
-        await tx.coin_add(user_id=user, delta=50, kind="earn", reference="fixture")
-    results = await asyncio.gather(svc.buy(user, "circuit"), svc.buy(user, "cosmic"), return_exceptions=True)
+    results = await asyncio.gather(svc.buy(user, "negative_feedback"), svc.buy(user, "binary_people"), return_exceptions=True)
     assert sum(isinstance(r, ApiError) and r.status == 402 for r in results) == 1
     view = await svc.get(user)
-    assert view["balance"] in (10, 40) and len(view["owned_skins"]) == 2
+    assert view["balance"] == 10 and len(view["owned_skins"]) == 2
     assert len([r for r in store.coin_ledger if r["kind"] == "spend"]) == 1
     another = uuid.uuid4()
     await svc.get(another)
@@ -118,7 +116,7 @@ async def test_http_identity_validation_and_opponent_cosmetics(monkeypatch):
         assert (await client.put(base, headers=a, json={**DEFAULT_AVATAR, "user_id": str(uuid.uuid4())})).status_code == 422
         assert (await client.put(base, headers=b, json={**DEFAULT_AVATAR, "skin": "gold"})).status_code == 403
         purchased = await client.post(base + "/buy", headers=a, json={"skin": "aurora"})
-        assert purchased.status_code == 200 and purchased.json()["balance"] == 10
+        assert purchased.status_code == 200 and purchased.json()["balance"] == 30
         wanted = {"component": "and", "color": "sky", "skin": "aurora"}
         assert (await client.put(base, headers=a, json=wanted)).json()["avatar"] == wanted
         assert (await client.get(base, headers=b)).json()["owned_skins"] == ["classic"]
@@ -137,3 +135,73 @@ def test_migration_has_owner_read_but_no_browser_write_grants():
     assert "user_id = (select auth.uid())" in sql
     assert "grant select on public.game_avatar to authenticated" in sql
     assert "for update to authenticated" not in sql and "for insert to authenticated" not in sql
+
+
+async def test_onboarding_is_free_durable_and_preserves_owned_skin_on_skip(service):
+    svc, store = service
+    user = uuid.uuid4()
+    assert (await svc.get(user))["onboarding_completed"] is False
+    chosen = await svc.complete_onboarding(user, component="dff", color="sky")
+    assert chosen["onboarding_completed"] is True
+    assert chosen["avatar"] == {"component": "dff", "color": "sky", "skin": "classic"}
+    assert chosen["balance"] == 50
+    assert all(row["kind"] != "spend" for row in store.coin_ledger)
+    await svc.buy(user, "gold")
+    await svc.save(user, {"component": "xor", "color": "rose", "skin": "gold"})
+    skipped = await svc.complete_onboarding(user)
+    assert skipped["avatar"] == {"component": "xor", "color": "rose", "skin": "gold"}
+    assert skipped["onboarding_completed"] is True and skipped["balance"] == 30
+    assert (await svc.get(user))["onboarding_completed"] is True
+    another = uuid.uuid4()
+    assert (await svc.complete_onboarding(another))["avatar"] == DEFAULT_AVATAR
+    with pytest.raises(ApiError):
+        await svc.complete_onboarding(another, color="not-a-catalog-color")
+
+
+async def test_generic_and_meme_prices_are_authoritative_and_legacy_ownership_survives(service):
+    svc, store = service
+    prices = {item["key"]: item["price"] for item in svc.catalog["skins"]}
+    assert prices["classic"] == 0
+    assert all(prices[key] == 20 for key in ("aurora", "circuit", "cosmic", "gold"))
+    memes = {"negative_feedback", "works_on_my_machine", "binary_people", "gate_keeper", "sleep_not_found", "resistance_futile"}
+    assert all(prices[key] == 40 for key in memes)
+    user = uuid.uuid4()
+    # An old purchase remains owned and is never repurchased/refunded just because prices changed.
+    store.avatars[user] = {**DEFAULT_AVATAR, "skin": "cosmic", "owned_skins": ["classic", "cosmic"], "onboarding_completed": True}
+    original = await svc.get(user)
+    again = await svc.buy(user, "cosmic")
+    assert again["balance"] == original["balance"] == 50
+    assert again["avatar"]["skin"] == "cosmic" and again["onboarding_completed"] is True
+    assert not any(row["kind"] == "spend" for row in store.coin_ledger)
+
+
+async def test_onboarding_http_allows_only_free_fields_and_is_account_bound(monkeypatch):
+    settings = Settings(_env_file=None, llm_provider="scripted", allow_in_review_content=True)
+    catalog = load_catalog(SEEDS)
+    runtime = build_runtime(settings, catalog=catalog, store=InMemoryStore(catalog))
+    monkeypatch.setattr(app.state, "runtime", runtime, raising=False)
+    monkeypatch.setattr(app.state, "verifier", make_verifier(), raising=False)
+    monkeypatch.setattr(app.state, "access_resolver", member_resolver({"setup-a@example.com", "setup-b@example.com"}), raising=False)
+    monkeypatch.setattr(get_settings(), "require_pilot_membership", True)
+    a = {"Authorization": f"Bearer {make_token(email='setup-a@example.com')[1]}"}
+    b = {"Authorization": f"Bearer {make_token(email='setup-b@example.com')[1]}"}
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+        base = "/v1/me/avatar"
+        assert (await client.post(base + "/onboarding", json={})).status_code == 401
+        assert (await client.post(base + "/onboarding", headers=a, json={"skin": "gold"})).status_code == 422
+        assert (await client.post(base + "/onboarding", headers=a, json={"user_id": "other"})).status_code == 422
+        assert (await client.post(base + "/onboarding", headers=a, json={"component": "unsafe"})).status_code == 422
+        result = (await client.post(base + "/onboarding", headers=a, json={"component": "and", "color": "amber"})).json()
+        assert result["onboarding_completed"] and result["balance"] == 50
+        assert (await client.get(base, headers=b)).json()["onboarding_completed"] is False
+        assert (await client.post(base + "/onboarding", headers=a, json={})).json()["avatar"] == result["avatar"]
+
+
+def test_catalog_migration_preserves_security_and_existing_rows():
+    migrations = Path(__file__).resolve().parents[2] / "supabase" / "migrations"
+    sql = next(migrations.glob("*_avatar_shirt_catalog_and_onboarding.sql")).read_text(encoding="utf-8").lower()
+    assert "drop constraint if exists game_avatar_check" in sql
+    assert "negative_feedback" in sql and "resistance_futile" in sql
+    assert "onboarding_completed boolean not null default true" in sql
+    assert "onboarding_completed set default false" in sql
+    assert "delete from" not in sql and "disable row level security" not in sql and "grant" not in sql

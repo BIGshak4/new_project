@@ -13,5 +13,5 @@ export function WardrobePreview() {
   useEffect(() => { setClient(demoAvatarClient()); try { if (localStorage.getItem("jobrun-language") === "en") setLang("en"); } catch {} }, []);
   useEffect(() => { document.documentElement.lang = lang; document.documentElement.dir = lang === "he" ? "rtl" : "ltr"; try { localStorage.setItem("jobrun-language", lang); } catch {} }, [lang]);
   if (!client) return <main role="status">טוענים את החנות… / Loading shop…</main>;
-  return <Wardrobe client={client} lang={lang} demo controls={<><ThemeToggle lang={lang}/><LanguageMenu lang={lang} onChange={setLang}/></>}/>;
+  return <Wardrobe client={client} lang={lang} demo draftKey="demo" controls={<><ThemeToggle lang={lang}/><LanguageMenu lang={lang} onChange={setLang}/></>}/>;
 }

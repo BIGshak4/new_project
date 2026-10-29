@@ -1,6 +1,7 @@
 "use client";
 
 import { PracticeLanding } from "./practice-landing";
+import { AvatarOnboardingGate } from "./wardrobe/avatar-onboarding";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, LockKeyhole, LogOut, Mail } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
@@ -118,7 +119,9 @@ export function Auth({
         {he ? "טוענים את סביבת העבודה…" : "Loading your workspace…"}
       </div>
     );
-  if (user && member) return children(user, signOut);
+  if (user && member) return kind === "practice"
+    ? <AvatarOnboardingGate key={user.id} userId={user.id} lang={lang}>{children(user, signOut)}</AvatarOnboardingGate>
+    : children(user, signOut);
   const gate = (
     <div className="auth-form">
       <LockKeyhole size={30} />

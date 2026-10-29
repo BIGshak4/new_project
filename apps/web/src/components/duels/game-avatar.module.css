@@ -1,4 +1,9 @@
-.profileRow { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 18px; align-items: center; margin-block-start: 12px; }
-.shopLink { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--link); font-size: 14px; text-decoration: none; }
-.shopLink:hover { text-decoration: underline; }
 .avatar { display: block; margin-inline: auto; flex-shrink: 0; }
+.looks { text-align:start; margin:20px auto 26px; max-width:650px; border-block:1px solid var(--line); }
+.looks summary { display:flex; align-items:center; justify-content:center; gap:9px; min-height:46px; padding:10px; color:var(--link); cursor:pointer; text-decoration:underline; text-underline-offset:4px; }
+.looks summary:focus-visible { outline:2px solid var(--link); outline-offset:3px; }
+.prints { display:grid; grid-template-columns:1fr 1fr; gap:22px; padding-block:12px 24px; }
+.prints h3 { font-size:14px; text-align:center; margin:0 0 12px; }
+.prints section > div { padding:20px; border-radius:10px; }
+.prints svg { display:block; width:100%; height:auto; }
+@media(max-width:650px) { .prints { grid-template-columns:1fr; gap:26px; } .prints section { max-width:340px; width:100%; margin-inline:auto; } }

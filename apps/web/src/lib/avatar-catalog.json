@@ -97,7 +97,8 @@
         "he": "הדמות שלכם, בצבע שתבחרו.",
         "en": "Your character, in your favorite color."
       },
-      "price": 0
+      "price": 0,
+      "category": "classic"
     },
     {
       "key": "aurora",
@@ -109,7 +110,8 @@
         "he": "גווני זוהר קוטבי ופסי אור עדינים.",
         "en": "Aurora colors with delicate ribbons of light."
       },
-      "price": 40
+      "price": 20,
+      "category": "basic"
     },
     {
       "key": "circuit",
@@ -121,7 +123,8 @@
         "he": "מסלולי מעגל ופרטי נחושת.",
         "en": "Circuit traces and copper details."
       },
-      "price": 60
+      "price": 20,
+      "category": "basic"
     },
     {
       "key": "cosmic",
@@ -133,7 +136,8 @@
         "he": "כוכבים קטנים ומראה של אסטרונאוט.",
         "en": "Little stars and an astronaut-inspired finish."
       },
-      "price": 90
+      "price": 20,
+      "category": "basic"
     },
     {
       "key": "gold",
@@ -145,7 +149,86 @@
         "he": "גימור זהוב ופרטים חגיגיים.",
         "en": "A golden finish with celebratory details."
       },
-      "price": 140
+      "price": 20,
+      "category": "basic"
+    },
+    {
+      "key": "negative_feedback",
+      "label": {
+        "he": "משוב שלילי בלבד",
+        "en": "Negative feedback only"
+      },
+      "description": {
+        "he": "מגבר שרת עם גישה חיובית למשוב שלילי.",
+        "en": "An op-amp with a positive attitude toward negative feedback."
+      },
+      "price": 40,
+      "category": "meme"
+    },
+    {
+      "key": "works_on_my_machine",
+      "label": {
+        "he": "אצלי זה עובד",
+        "en": "Works on my machine"
+      },
+      "description": {
+        "he": "עובד במחשב שלי. במחשב שלכם זו כבר הרפתקה.",
+        "en": "It works on my machine. Yours is a separate adventure."
+      },
+      "price": 40,
+      "category": "meme"
+    },
+    {
+      "key": "binary_people",
+      "label": {
+        "he": "יש 10 סוגי אנשים",
+        "en": "10 types of people"
+      },
+      "description": {
+        "he": "מי שמבינים בינארי, ומי שעוד סופרים.",
+        "en": "Those who understand binary, and those still counting."
+      },
+      "price": 40,
+      "category": "meme"
+    },
+    {
+      "key": "gate_keeper",
+      "label": {
+        "he": "שומר השער",
+        "en": "Gate keeper"
+      },
+      "description": {
+        "he": "נכנסים רק כששני התנאים מתקיימים. AND מסכים.",
+        "en": "Both conditions must be true to enter. AND agrees."
+      },
+      "price": 40,
+      "category": "meme"
+    },
+    {
+      "key": "sleep_not_found",
+      "label": {
+        "he": "שינה לא נמצאה",
+        "en": "Sleep not found"
+      },
+      "description": {
+        "he": "404: השינה לא נמצאה. נסו אחרי הדיבוג.",
+        "en": "404: sleep not found. Try again after debugging."
+      },
+      "price": 40,
+      "category": "meme"
+    },
+    {
+      "key": "resistance_futile",
+      "label": {
+        "he": "אין טעם להתנגד",
+        "en": "Resistance is futile"
+      },
+      "description": {
+        "he": "חמוד, עקשן, ועדיין מציית לחוק אוהם.",
+        "en": "Cute, stubborn, and still obeying Ohm’s law."
+      },
+      "price": 40,
+      "category": "meme"
     }
   ]
 }
