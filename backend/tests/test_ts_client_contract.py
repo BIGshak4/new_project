@@ -13,6 +13,8 @@ import pytest
 from app.main import app
 
 CLIENT = Path(__file__).resolve().parents[2] / "apps" / "web" / "src" / "lib" / "practice-api.ts"
+GAME_CLIENT = CLIENT.with_name("duel-api.ts")
+AVATAR_CLIENT = CLIENT.with_name("avatar-api.ts")
 pytestmark = pytest.mark.skipif(not CLIENT.exists(), reason="apps/web not checked out")
 
 # OpenAPI schema name -> TypeScript type name
@@ -38,9 +40,7 @@ PENDING_IN_CLIENT = {"SkillProgress": {"expired"},         # evidence older than
 # New routes the web client does not call yet, for the same reason; remove once practice-api.ts calls them.
 PENDING_ROUTES_IN_CLIENT: set[tuple[str, str]] = {        # the payment screen is Harel's next item (2026-10-20)
     ("GET", "/v1/me/billing"), ("POST", "/v1/me/billing/checkout"), ("POST", "/v1/me/billing/portal"),
-    ("GET", "/v1/me/coins"), ("POST", "/v1/me/coins/buy"),                     # the coins screen (2026-10-22)
-    ("GET", "/v1/duels"), ("POST", "/v1/duels"), ("POST", "/v1/duels/accept"), ("GET", "/v1/duels/{duel_id}"),
-    ("POST", "/v1/duels/{duel_id}/answer"), ("POST", "/v1/duels/{duel_id}/cancel")}
+    ("POST", "/v1/me/coins/buy")}                     # the coins shop is separate from the game wallet
 
 
 def ts_fields(source: str, type_name: str) -> set[str]:
@@ -82,6 +82,17 @@ def test_every_v1_route_is_called_by_the_client(spec, source):
         normalized = re.sub(r"\$\{q\([^)]*\)\}", "", path)          # drop the query-string helper
         normalized = re.sub(r"\$\{[^}]+\}", "{}", normalized)
         called.add((method, normalized))
+    # The game client infers HTTP method from an optional JSON body, with named GET operations.
+    game = GAME_CLIENT.read_text(encoding="utf-8")
+    for name, path in re.findall(r'(\w+):[^\n]+?call<[^>]+>\(\s*["`]([^"`]+)["`]', game):
+        method = "GET" if name in {"list", "wallet", "get"} else "POST"
+        normalized = re.sub(r"\$\{[^}]+\}", "{}", path).split("?")[0]
+        called.add((method, normalized))
+    avatar = AVATAR_CLIENT.read_text(encoding="utf-8")
+    # The wardrobe client prefixes account-bound endpoints and supplies a method and optional suffix.
+    assert "/v1/me/avatar${suffix}" in avatar
+    for method, suffix in re.findall(r'call\("(GET|PUT|POST)"(?:,\s*"([^"]*)")?', avatar):
+        called.add((method, "/v1/me/avatar" + suffix))
     missing = []
     for method, path in routes:
         pattern = re.sub(r"\{[^}]+\}", "{}", path)

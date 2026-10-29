@@ -10,7 +10,8 @@ Each player sees their own view: their own result as soon as it exists, the oppo
 settled. Coins move through the ledger (GET /v1/me/coins shows the stake, the payout or the refund). No XP, no
 skill-profile change: a duel is a game on coins, and coins have no monetary value.
 
-Status words: open (waiting for an opponent), active (clock running), settled, cancelled.
+Status words: open (waiting for an opponent), active (waiting room while deadline is null; then clock running),
+settled, cancelled. Quiz clocks start only after both players POST ready; waiting rooms expire after ten minutes.
 Outcome words once settled: challenger | opponent (that side won), draw (both refunded), forfeit_challenger |
 forfeit_opponent (that side never answered; the other won), no_show (nobody answered; both refunded),
 cancelled | expired (the invite was withdrawn or nobody accepted within a day; the challenger is refunded).
@@ -24,8 +25,9 @@ from datetime import datetime, timedelta
 from fastapi import APIRouter, Query
 from pydantic import BaseModel, Field
 
-from app.api.deps import CurrentAccess, Duels
+from app.api.deps import Avatars, CurrentAccess, Duels
 from app.repo.duels import Duel
+from app.services.duels import LOBBY_TTL
 
 router = APIRouter(prefix="/v1/duels", tags=["duels"])
 
@@ -39,6 +41,8 @@ class DuelQuestionView(BaseModel):
 
 
 class DuelSideView(BaseModel):
+    avatar: dict[str, str] | None = None
+    ready: bool = False                         # quiz waiting room: both must be ready before the clock starts
     answered: bool = False                      # judged: sent an answer; quiz: finished every question
     band: str | None = None                     # judged — mine: once judged; the opponent's: once the duel is settled
     summary: str | None = None                  # the judge's one line, same visibility as the band
@@ -50,6 +54,9 @@ class DuelSideView(BaseModel):
 
 class QuizItemView(BaseModel):
     index: int                                  # 0-based
+    key: str
+    source_key: str
+    variant: int | None = None
     prompt: str
     choices: list[str]                          # four options, in the duel's language
 
@@ -63,6 +70,9 @@ class QuizAnswerView(BaseModel):
 
 class QuizReviewView(BaseModel):
     index: int
+    key: str
+    source_key: str
+    variant: int | None = None
     prompt: str
     choices: list[str]
     correct: int                                # the correct option, only once settled
@@ -108,6 +118,9 @@ class DuelView(BaseModel):
     created_at: datetime
     accepted_at: datetime | None = None
     settled_at: datetime | None = None
+    started_at: datetime | None = None
+    server_now: datetime
+    lobby_expires_at: datetime | None = None
 
 
 class DuelListView(BaseModel):
@@ -138,24 +151,27 @@ def _quiz_view(svc, duel: Duel, user_id: uuid.UUID, settled: bool) -> QuizView |
     other = duel.players.get(str(duel.other(user_id)), {}) if duel.other(user_id) else {}
     answers = list(me.get("answers", []))
     index = len(answers)
-    limit = svc.rules.duel_quiz_seconds
+    limit = svc.quiz_seconds(duel)
     current, seconds_left = None, None
     if duel.status == "active" and index < len(duel.items) and me.get("opened_at"):
-        q = svc.quiz.get(duel.items[index]["key"])
-        current = (QuizItemView(index=index, prompt=q.text(q.prompt, language), choices=[q.text(c, language) for c in q.choices])
-                   if q else QuizItemView(index=index, prompt="(this question was removed)", choices=["", "", "", ""]))
+        q = svc.quiz_item(duel.items[index])
+        current = (QuizItemView(index=index, key=q.key, source_key=q.source_key or q.key, variant=q.variant,
+                                prompt=q.text(q.prompt, language), choices=[q.text(c, language) for c in q.choices])
+                   if q else QuizItemView(index=index, key=duel.items[index]["key"], source_key=duel.items[index]["key"],
+                                          prompt="(this question was removed)", choices=["", "", "", ""]))
         opened = datetime.fromisoformat(me["opened_at"])
         seconds_left = max(0, int((opened + timedelta(seconds=limit) - svc.clock()).total_seconds()))
     review = []
     if settled:
         theirs = list(other.get("answers", []))
         for i, item in enumerate(duel.items):
-            q = svc.quiz.get(item["key"])
+            q = svc.quiz_item(item)
             if q is None:
                 continue
             mine = answers[i] if i < len(answers) else {}
             his = theirs[i] if i < len(theirs) else {}
-            review.append(QuizReviewView(index=i, prompt=q.text(q.prompt, language), choices=[q.text(c, language) for c in q.choices],
+            review.append(QuizReviewView(index=i, key=q.key, source_key=q.source_key or q.key, variant=q.variant,
+                                         prompt=q.text(q.prompt, language), choices=[q.text(c, language) for c in q.choices],
                                          correct=q.correct, explanation=q.text(q.explanation, language),
                                          mine=mine.get("choice"), theirs=his.get("choice"),
                                          mine_correct=bool(mine.get("correct")), theirs_correct=bool(his.get("correct"))))
@@ -177,7 +193,7 @@ def _view(svc, duel: Duel, user_id: uuid.UUID) -> DuelView:
         answers = p.get("answers")
         if duel.mode == "quiz":
             count = len(answers or [])
-            return DuelSideView(answered=p.get("status") in ("done", "absent"), answered_count=count,
+            return DuelSideView(ready=bool(p.get("ready")), answered=p.get("status") in ("done", "absent"), answered_count=count,
                                 score=(sum(1 for a in answers or [] if a.get("correct")) if reveal else None),
                                 seconds=p.get("seconds") if reveal and settled else None)
         return DuelSideView(answered=bool(p.get("submitted_at")) or done, band=p.get("band") if reveal and done else None,
@@ -207,44 +223,75 @@ def _view(svc, duel: Duel, user_id: uuid.UUID) -> DuelView:
                     quiz=_quiz_view(svc, duel, user_id, settled),
                     deadline=duel.deadline, seconds_left=seconds_left, me=side(mine, reveal=True),
                     opponent=side(theirs, reveal=settled) if other_id else None, outcome=duel.outcome, won=won,
-                    coins_delta=delta, created_at=duel.created_at, accepted_at=duel.accepted_at, settled_at=duel.settled_at)
+                    coins_delta=delta, created_at=duel.created_at, accepted_at=duel.accepted_at, settled_at=duel.settled_at,
+                    server_now=svc.clock(),
+                    started_at=datetime.fromisoformat(duel.meta["started_at"]) if duel.meta.get("started_at") else None,
+                    lobby_expires_at=(duel.accepted_at + LOBBY_TTL if duel.status == "active" and duel.mode == "quiz"
+                                      and duel.deadline is None and duel.accepted_at else None))
+
+
+def _with_avatars(view, duel, user_id, configs):
+    view.me.avatar = configs.get(str(user_id))
+    if view.opponent is not None:
+        view.opponent.avatar = configs.get(str(duel.other(user_id)))
+    return view
 
 
 def _rules(svc) -> dict:
     r = svc.rules
     return {"stake": r.duel_stake, "mode_default": r.duel_mode_default, "quiz_questions": r.duel_quiz_questions,
-            "quiz_seconds_per_question": r.duel_quiz_seconds, "quiz_available": len(svc.quiz_pool()) >= r.duel_quiz_questions,
+            "quiz_seconds_per_question": r.duel_quiz_seconds, "quiz_available": len(svc.quiz_groups()) >= r.duel_quiz_questions,
+            "quiz_source_count": len(svc.quiz_groups()), "quiz_variant_count": sum(len(items) for items in svc.quiz_groups().values()),
+            "readiness_required": True,
             "clock_seconds": r.duel_clock_seconds, "cooldown_minutes": r.duel_cooldown_minutes,
             "daily_earning_cap": r.duel_daily_earning_cap, "daily_cap": r.duel_daily_cap, "no_monetary_value": True}
 
 
 @router.get("", response_model=DuelListView, summary="My duels, newest first (overdue ones are settled on the way)")
-async def list_duels(access: CurrentAccess, duels: Duels, limit: int = Query(20, ge=1, le=50)) -> DuelListView:
+async def list_duels(access: CurrentAccess, duels: Duels, avatars: Avatars, limit: int = Query(20, ge=1, le=50)) -> DuelListView:
     rows = await duels.list(access.user_id, limit=limit)
-    return DuelListView(duels=[_view(duels, d, access.user_id) for d in rows], rules=_rules(duels))
+    configs = await avatars.public_configs({p for d in rows for p in (d.challenger_id, d.opponent_id) if p})
+    return DuelListView(duels=[_with_avatars(_view(duels, d, access.user_id), d, access.user_id, configs) for d in rows], rules=_rules(duels))
 
 
 @router.post("", response_model=DuelView, status_code=201, summary="Open a duel: stake 5 coins, get an invite code")
-async def create_duel(body: CreateDuelRequest, access: CurrentAccess, duels: Duels) -> DuelView:
-    return _view(duels, await duels.create(access.user_id, language=body.language, mode=body.mode), access.user_id)
+async def create_duel(body: CreateDuelRequest, access: CurrentAccess, duels: Duels, avatars: Avatars) -> DuelView:
+    duel = await duels.create(access.user_id, language=body.language, mode=body.mode)
+    configs = await avatars.public_configs([duel.challenger_id, duel.opponent_id])
+    return _with_avatars(_view(duels, duel, access.user_id), duel, access.user_id, configs)
 
 
-@router.post("/accept", response_model=DuelView, summary="Accept an invite by code: stake 5, the questions appear, the clock starts")
-async def accept_duel(body: AcceptDuelRequest, access: CurrentAccess, duels: Duels) -> DuelView:
-    return _view(duels, await duels.accept(access.user_id, body.code), access.user_id)
+@router.post("/accept", response_model=DuelView, summary="Accept an invite by code: stake 5, join the quiz waiting room")
+async def accept_duel(body: AcceptDuelRequest, access: CurrentAccess, duels: Duels, avatars: Avatars) -> DuelView:
+    duel = await duels.accept(access.user_id, body.code)
+    configs = await avatars.public_configs([duel.challenger_id, duel.opponent_id])
+    return _with_avatars(_view(duels, duel, access.user_id), duel, access.user_id, configs)
+
+
+@router.post("/{duel_id}/ready", response_model=DuelView, summary="Ready for the quiz: both ready starts the server clock")
+async def ready_duel(duel_id: uuid.UUID, access: CurrentAccess, duels: Duels, avatars: Avatars) -> DuelView:
+    duel = await duels.ready(access.user_id, duel_id)
+    configs = await avatars.public_configs([duel.challenger_id, duel.opponent_id])
+    return _with_avatars(_view(duels, duel, access.user_id), duel, access.user_id, configs)
 
 
 @router.get("/{duel_id}", response_model=DuelView, summary="One duel as I see it")
-async def get_duel(duel_id: uuid.UUID, access: CurrentAccess, duels: Duels) -> DuelView:
-    return _view(duels, await duels.get(access.user_id, duel_id), access.user_id)
+async def get_duel(duel_id: uuid.UUID, access: CurrentAccess, duels: Duels, avatars: Avatars) -> DuelView:
+    duel = await duels.get(access.user_id, duel_id)
+    configs = await avatars.public_configs([duel.challenger_id, duel.opponent_id])
+    return _with_avatars(_view(duels, duel, access.user_id), duel, access.user_id, configs)
 
 
 @router.post("/{duel_id}/answer", response_model=DuelView,
              summary="Quiz: {choice, item} for the question in front of me. Judged: {text}, scored on the spot")
-async def answer_duel(duel_id: uuid.UUID, body: DuelAnswerRequest, access: CurrentAccess, duels: Duels) -> DuelView:
-    return _view(duels, await duels.answer(access.user_id, duel_id, body.text, choice=body.choice, item=body.item), access.user_id)
+async def answer_duel(duel_id: uuid.UUID, body: DuelAnswerRequest, access: CurrentAccess, duels: Duels, avatars: Avatars) -> DuelView:
+    duel = await duels.answer(access.user_id, duel_id, body.text, choice=body.choice, item=body.item)
+    configs = await avatars.public_configs([duel.challenger_id, duel.opponent_id])
+    return _with_avatars(_view(duels, duel, access.user_id), duel, access.user_id, configs)
 
 
-@router.post("/{duel_id}/cancel", response_model=DuelView, summary="Withdraw my open invite (the stake comes back)")
-async def cancel_duel(duel_id: uuid.UUID, access: CurrentAccess, duels: Duels) -> DuelView:
-    return _view(duels, await duels.cancel(access.user_id, duel_id), access.user_id)
+@router.post("/{duel_id}/cancel", response_model=DuelView, summary="Withdraw my invite or leave the waiting room (stakes refunded)")
+async def cancel_duel(duel_id: uuid.UUID, access: CurrentAccess, duels: Duels, avatars: Avatars) -> DuelView:
+    duel = await duels.cancel(access.user_id, duel_id)
+    configs = await avatars.public_configs([duel.challenger_id, duel.opponent_id])
+    return _with_avatars(_view(duels, duel, access.user_id), duel, access.user_id, configs)

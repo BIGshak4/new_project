@@ -12,6 +12,7 @@ from app.auth import AuthenticatedUser, current_user
 from app.config import get_settings
 from app.repo import cache
 from app.repo.users import Access, resolve_access
+from app.services.avatars import AvatarsService
 from app.services.billing import BillingService
 from app.services.coins import CoinsService
 from app.services.duels import DuelService
@@ -76,6 +77,13 @@ def duel_service(request: Request) -> DuelService:
     return runtime.duels
 
 
+def avatars_service(request: Request) -> AvatarsService:
+    runtime = getattr(request.app.state, "runtime", None)
+    if runtime is None or getattr(runtime, "avatars", None) is None:
+        raise ApiError("evaluation_unavailable", "avatar service is not started", status=503)
+    return runtime.avatars
+
+
 def practice_service(request: Request) -> PracticeService:
     runtime = getattr(request.app.state, "runtime", None)
     if runtime is None:
@@ -94,6 +102,7 @@ CurrentAccess = Annotated[Access, Depends(current_access)]
 PaidAccess = Annotated[Access, Depends(paid_access)]
 Billing = Annotated[BillingService, Depends(billing_service)]
 Coins = Annotated[CoinsService, Depends(coins_service)]
+Avatars = Annotated[AvatarsService, Depends(avatars_service)]
 Duels = Annotated[DuelService, Depends(duel_service)]
 Practice = Annotated[PracticeService, Depends(practice_service)]
 Interview = Annotated[InterviewService, Depends(interview_service)]

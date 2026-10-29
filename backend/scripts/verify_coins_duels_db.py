@@ -141,7 +141,10 @@ async def main() -> int:
         invite = await duels.create(a, language="he")
         ok("quiz invite open, stake taken", invite.status == "open" and invite.mode == "quiz" and (await coins.wallet(a)).balance == 45)
         duel = await duels.accept(b, invite.code)
-        ok("accepted: five items, deadline 300 s, both staked", duel.status == "active" and len(duel.items) == 5
+        ok("accepted: waiting room, no clock yet", duel.status == "active" and duel.deadline is None)
+        await duels.ready(a, duel.id)
+        duel = await duels.ready(b, duel.id)
+        ok("both ready: five items, deadline 300 s, both staked", duel.status == "active" and len(duel.items) == 5
            and duel.deadline == clock.now + timedelta(seconds=300) and (await coins.wallet(b)).balance == 45)
         loaded = await duels.get(a, duel.id)
         ok("jsonb round trip: items and players", [i["key"] for i in loaded.items] == [i["key"] for i in duel.items]
@@ -188,6 +191,8 @@ async def main() -> int:
             ok("cooldown refuses the pair (429)", exc.code == "usage_limit" and exc.status == 429)
         clock.advance(11 * 60)
         d2 = await duels.accept(b, inv2.code)
+        await duels.ready(a, d2.id)
+        d2 = await duels.ready(b, d2.id)
         clock.advance(6 * 60)
         listed = await duels.list(b)
         ok("nobody pressed anything: no_show, both refunded", listed[0].id == d2.id and listed[0].outcome == "no_show"

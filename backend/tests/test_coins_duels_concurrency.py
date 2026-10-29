@@ -61,6 +61,8 @@ class TestDuelRaces:
     async def test_the_last_two_answers_land_together_and_pay_once(self, catalog):
         svc, coins, store = services(catalog)
         duel = await svc.accept(B, (await svc.create(A, language="he")).code)
+        await svc.ready(A, duel.id)
+        duel = await svc.ready(B, duel.id)
         corrects = [svc.quiz[i["key"]].correct for i in duel.items]
         for i, c in enumerate(corrects[:-1]):
             svc.clock.advance(2)
@@ -78,6 +80,8 @@ class TestDuelRaces:
     async def test_both_players_read_an_overdue_duel_together(self, catalog):
         svc, coins, store = services(catalog)
         duel = await svc.accept(B, (await svc.create(A, language="he")).code)
+        await svc.ready(A, duel.id)
+        duel = await svc.ready(B, duel.id)
         svc.clock.advance(3)
         await svc.answer(A, duel.id, choice=svc.quiz[duel.items[0]["key"]].correct, item=0)
         svc.clock.advance(6 * 60)
@@ -109,6 +113,35 @@ class TestDuelRaces:
             assert [r["kind"] for r in a_rows] == ["stake", "refund"] and (await coins.wallet(A)).balance == 50
         else:
             assert final.status == "active" and [r["kind"] for r in a_rows] == ["stake"]
+
+    async def test_both_ready_together_start_one_clock_and_retries_do_not_restart_it(self, catalog):
+        svc, coins, store = services(catalog)
+        duel = await svc.accept(B, (await svc.create(A, language="he")).code)
+        svc.clock.advance(12)
+        results = await gather_errors(svc.ready(A, duel.id), svc.ready(B, duel.id), svc.ready(A, duel.id))
+        assert not [r for r in results if isinstance(r, Exception)], results
+        started = await svc.get(A, duel.id)
+        assert started.deadline == svc.clock.now + timedelta(seconds=300)
+        assert started.player(A)["opened_at"] == started.player(B)["opened_at"]
+        svc.clock.advance(9)
+        retried = await svc.ready(B, duel.id)
+        assert retried.deadline == started.deadline and retried.meta["started_at"] == started.meta["started_at"]
+        assert len([r for r in store.coin_ledger if r["kind"] == "stake"]) == 2
+
+    async def test_final_ready_and_lobby_cancel_have_one_consistent_outcome(self, catalog):
+        svc, coins, store = services(catalog)
+        duel = await svc.accept(B, (await svc.create(A, language="he")).code)
+        await svc.ready(A, duel.id)
+        results = await gather_errors(svc.ready(B, duel.id), svc.cancel(A, duel.id))
+        errors = [r for r in results if isinstance(r, ApiError)]
+        assert len(errors) == 1 and errors[0].code == "conflict"
+        final = await svc.get(A, duel.id)
+        if final.status == "cancelled":
+            assert final.deadline is None and len(payouts(store, duel.id)) == 2
+            assert (await coins.wallet(A)).balance == (await coins.wallet(B)).balance == 50
+        else:
+            assert final.deadline is not None and not payouts(store, duel.id)
+            assert (await coins.wallet(A)).balance == (await coins.wallet(B)).balance == 45
 
 
 class TestCoinRaces:

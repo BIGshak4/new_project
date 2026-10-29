@@ -12,6 +12,8 @@ from app.config import Settings
 from app.engine.catalog import Catalog, load_catalog
 from app.engine.providers import Provider, build_provider
 from app.repo.fundamentals import DbFundamentalsRepository, MemoryFundamentalsRepository
+from app.services.avatars import AvatarsService
+from app.services.avatars import load_catalog as load_avatar_catalog
 from app.services.billing import BillingConfig, BillingService, FakeStripe, HttpStripe, load_plans
 from app.services.coins import CoinsService
 from app.services.coins import load_rules as load_coin_rules
@@ -38,6 +40,7 @@ class Runtime:
     image_fetcher: StorageImageFetcher | None = None  # set when answer photos can be read for the evaluator
     interview: InterviewService | None = None        # mock interviews
     fundamentals: FundamentalsService | None = None  # self-reported short-card history, no grading
+    avatars: AvatarsService | None = None             # persistent logical-component customization and cosmetic ownership
 
     async def aclose(self) -> None:
         # a redeploy waits a little for feedback being written; anything unfinished is resumed on the next read
@@ -112,6 +115,7 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
 
     return Runtime(catalog=catalog, provider=provider, store=store, practice=practice, store_kind=kind,
                    image_fetcher=fetcher, billing=billing, coins=coins,
+                   avatars=AvatarsService(store, coins, load_avatar_catalog(settings.seeds_dir / "avatar_cosmetics.json")),
                    duels=DuelService(store, catalog, provider, coins, reviewed_only=settings.suggest_reviewed_only,
                                      site_url=settings.site_url, quiz=load_quiz(settings.seeds_dir / "duel_quiz.json")),
                    fundamentals=FundamentalsService(

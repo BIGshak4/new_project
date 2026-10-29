@@ -453,8 +453,12 @@ def every_route():
         ("DELETE", "/v1/fundamentals/progress/quick-sw-01", None),
         # coins and the shop (2026-10-22)
         ("GET", "/v1/me/coins", None), ("POST", "/v1/me/coins/buy", {"item": "extra_questions_10"}),
+        ("GET", "/v1/me/avatar", None),
+        ("PUT", "/v1/me/avatar", {"component": "mux", "color": "violet", "skin": "classic"}),
+        ("POST", "/v1/me/avatar/buy", {"skin": "aurora"}),
         # duels (2026-10-22)
         ("GET", "/v1/duels", None), ("POST", "/v1/duels", {"language": "he"}), ("POST", "/v1/duels/accept", {"code": "abcd2345"}),
+        ("POST", f"/v1/duels/{uuid.UUID(int=0)}/ready", {}),
         ("GET", f"/v1/duels/{aid}", None), ("POST", f"/v1/duels/{aid}/answer", {"text": "x"}),
         ("POST", f"/v1/duels/{aid}/cancel", None),
     ]

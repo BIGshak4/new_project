@@ -51,6 +51,8 @@ class InMemoryStore:
         self.coins_enabled = True                                  # False imitates a database without the table
         self.duels: dict[uuid.UUID, dict] = {}                     # duel id -> the row as a dict (app.repo.duels.Duel)
         self.duels_enabled = True
+        self.avatars: dict[uuid.UUID, dict] = {}
+        self.avatars_enabled = True
         self.failures: set[str] = set()                           # names of operations that should raise (tests)
         self.fail_once: set[str] = set()                          # ... only the next time
         self._commits = 0
@@ -66,7 +68,7 @@ class InMemoryStore:
         # made every action slower as the store grew)
         snapshot = (dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips),
                     dict(self.sessions), dict(self.goals), list(self.sightings), dict(self.plans), dict(self.plan_links),
-                    list(self.reports), list(self.coin_ledger), dict(self.duels))
+                    list(self.reports), list(self.coin_ledger), dict(self.duels), dict(self.avatars))
         commits_before = self._commits
         tx = _MemoryTx(self)
         try:
@@ -74,7 +76,7 @@ class InMemoryStore:
         except BaseException:
             if self._commits == commits_before:
                 (self.attempts, self.profiles, self.metrics, self.usage, self.tips, self.sessions, self.goals,
-                 self.sightings, self.plans, self.plan_links, self.reports, self.coin_ledger, self.duels) = snapshot
+                 self.sightings, self.plans, self.plan_links, self.reports, self.coin_ledger, self.duels, self.avatars) = snapshot
             raise
         else:
             self._commits += 1
@@ -262,6 +264,20 @@ class _MemoryTx:
 
     async def coins_available(self):
         return self.s.coins_enabled
+
+    async def avatars_available(self):
+        return self.s.avatars_enabled
+
+    async def load_avatar(self, user_id):
+        return copy.deepcopy(self.s.avatars.get(user_id))
+
+    async def load_avatars(self, user_ids):
+        return {str(user): copy.deepcopy(self.s.avatars[user]) for user in user_ids if user in self.s.avatars}
+
+    async def save_avatar(self, user_id, avatar, owned_skins):
+        if "save_avatar" in self.s.failures:
+            raise RuntimeError("injected save_avatar failure")
+        self.s.avatars[user_id] = {**avatar, "owned_skins": list(owned_skins)}
 
     @asynccontextmanager
     async def savepoint(self):

@@ -17,6 +17,8 @@ import {
   Map as MapIcon,
   Star,
   Zap,
+  Gamepad2,
+  Shirt,
 } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
@@ -28,6 +30,10 @@ import { textDirection } from "../lib/bidi-segments";
 import { relatedQuestionKeys, uniqueLibraryQuestions } from "../lib/question-families";
 import { shuffleQuestions, useQuestionOrderSeed } from "../lib/question-order";
 import { Auth, type Lang } from "../components/auth";
+import { avatarApi } from "../lib/avatar-api";
+import type { AvatarConfig } from "../lib/avatar-types";
+import { LogicAvatar } from "../components/wardrobe/logic-avatar";
+import gameIdentityStyles from "../components/duels/game-avatar.module.css";
 import { PracticeSession } from "../components/practice-session";
 import { GoalSetup } from "../components/goal-setup";
 import { LanguageMenu } from "../components/ui/language-menu";
@@ -126,6 +132,12 @@ function Workspace({
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [api] = useState(() => practiceApi());
+  const [profileAvatar, setProfileAvatar] = useState<AvatarConfig | null>(null);
+  useEffect(() => {
+    let current = true;
+    void avatarApi(user.id).get().then(value => { if (current) setProfileAvatar(value.avatar); }).catch(() => {});
+    return () => { current = false; };
+  }, [user.id]);
   const [route, setRoute] = useState<Route>({ view: DEFAULT_VIEW });
   const [questions, setQuestions] = useState<QuestionSummary[]>([]);
   const orderSeed = useQuestionOrderSeed();
@@ -476,6 +488,12 @@ function Workspace({
         {tabButtons(true)}
       </nav>
       <main className="content">
+        <nav className={gameIdentityStyles.profileRow} aria-label={t("משחקים והדמות שלי", "Games and my character")}>
+          <a href="/games" className={gameIdentityStyles.shopLink}><Gamepad2 size={20} aria-hidden="true" />{t("משחקים", "Games")}</a>
+          <a href="/games/shop" className={gameIdentityStyles.shopLink}>
+            {profileAvatar ? <LogicAvatar config={profileAvatar} size={38} /> : <Shirt size={20} aria-hidden="true" />}{t("הדמות והחנות", "Avatar & shop")}
+          </a>
+        </nav>
         <div className="pilot-note" role="note">
           {!healthKnown
             ? t(
@@ -590,6 +608,14 @@ function Workspace({
               <Zap size={20} aria-hidden="true" /><span><strong>{t("יש לכם רגע? יסודות בקטנה", "Have a moment? A little practice")}</strong>
               <span>{t("שאלות קצרות לחיזוק הבסיס, גם מהטלפון.", "Short questions to strengthen the basics, from your phone too.")}</span></span>
             </button>
+            <a className="quick-home-link" href="/games">
+              <Gamepad2 size={20} aria-hidden="true" /><span><strong>{t("דו־קרב עם חבר", "Challenge a friend")}</strong>
+              <span>{t("חמש שאלות קצרות, אותו אתגר לשניכם.", "Five short questions. The same challenge for both of you.")}</span></span>
+            </a>
+            <a className="quick-home-link" href="/games/shop">
+              <Shirt size={20} aria-hidden="true" /><span><strong>{t("הדמות שלכם, החנות של מוקסי", "Your avatar, Muxi's shop")}</strong>
+              <span>{t("בחרו רכיב וצבע, וגלו סקינים למטבעות שהרווחתם.", "Choose a component and color, and discover skins for the coins you earn.")}</span></span>
+            </a>
           </>
         ) : (
           <>

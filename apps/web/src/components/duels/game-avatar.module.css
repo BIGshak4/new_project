@@ -1,0 +1,4 @@
+.profileRow { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 18px; align-items: center; margin-block-start: 12px; }
+.shopLink { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--link); font-size: 14px; text-decoration: none; }
+.shopLink:hover { text-decoration: underline; }
+.avatar { display: block; margin-inline: auto; flex-shrink: 0; }

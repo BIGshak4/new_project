@@ -1,0 +1,1955 @@
+{
+  "_about": "Public, unreviewed demonstration questions. Simulated opponent and coins; no real match data. Synced from the curated seed subset by tools/duels/sync-demo.mjs.",
+  "questions": [
+    {
+      "key": "quick-hw-03-v1",
+      "source_key": "quick-hw-03",
+      "variant": 1,
+      "topic": "gates",
+      "status": "approved",
+      "prompt": {
+        "he": "אזעקה צריכה לפעול בדיוק כשאחד משני החיישנים פעיל, ולהיות כבויה כששניהם פעילים. איזה שער מתאים?",
+        "en": "An alarm must run when exactly one of two sensors is active, and stay off when both are active. Which gate fits?"
+      },
+      "choices": [
+        {
+          "he": "XNOR",
+          "en": "XNOR"
+        },
+        {
+          "he": "XOR",
+          "en": "XOR"
+        },
+        {
+          "he": "OR",
+          "en": "OR"
+        },
+        {
+          "he": "AND",
+          "en": "AND"
+        }
+      ],
+      "correct": 1,
+      "explanation": {
+        "he": "XOR של שני ביטים מחזיר 1 כשהם שונים, ו־0 כשהם שווים.",
+        "en": "Two-input XOR outputs 1 when the bits differ and 0 when they are equal."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-03-v2",
+      "source_key": "quick-hw-03",
+      "variant": 2,
+      "topic": "gates",
+      "status": "approved",
+      "prompt": {
+        "he": "מחשבים Y=A XOR B עבור זוגות הקלט, לפי הסדר: (0,0), (0,1), (1,1). מה רצף המוצאים?",
+        "en": "Compute Y=A XOR B for input pairs, in order: (0,0), (0,1), (1,1). What is the output sequence?"
+      },
+      "choices": [
+        {
+          "he": "0, 1, 1",
+          "en": "0, 1, 1"
+        },
+        {
+          "he": "1, 0, 1",
+          "en": "1, 0, 1"
+        },
+        {
+          "he": "0, 0, 1",
+          "en": "0, 0, 1"
+        },
+        {
+          "he": "0, 1, 0",
+          "en": "0, 1, 0"
+        }
+      ],
+      "correct": 3,
+      "explanation": {
+        "he": "XOR מחזיר 1 רק בזוג האמצעי, שבו הביטים שונים.",
+        "en": "Only the middle pair contains different bits, so only its XOR output is 1."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-03-v3",
+      "source_key": "quick-hw-03",
+      "variant": 3,
+      "topic": "gates",
+      "status": "approved",
+      "prompt": {
+        "he": "באיזה זוג קלטים שני השערים OR ו־XOR נותנים מוצאים שונים?",
+        "en": "For which input pair do OR and XOR produce different outputs?"
+      },
+      "choices": [
+        {
+          "he": "A=1, B=0",
+          "en": "A=1, B=0"
+        },
+        {
+          "he": "A=1, B=1",
+          "en": "A=1, B=1"
+        },
+        {
+          "he": "A=0, B=0",
+          "en": "A=0, B=0"
+        },
+        {
+          "he": "A=0, B=1",
+          "en": "A=0, B=1"
+        }
+      ],
+      "correct": 1,
+      "explanation": {
+        "he": "כששתי הכניסות 1, OR מחזיר 1 ו־XOR מחזיר 0. בשאר הזוגות הם שווים.",
+        "en": "With both inputs 1, OR outputs 1 and XOR outputs 0. They agree on every other pair."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-03-v4",
+      "source_key": "quick-hw-03",
+      "variant": 4,
+      "topic": "gates",
+      "status": "approved",
+      "prompt": {
+        "he": "נתון Y=A XOR B, כאשר A=1 ו־Y=1. מה חייב להיות הערך של B?",
+        "en": "Given Y=A XOR B with A=1 and Y=1, what must B be?"
+      },
+      "choices": [
+        {
+          "he": "1",
+          "en": "1"
+        },
+        {
+          "he": "יכול להיות 0 או 1",
+          "en": "Either 0 or 1"
+        },
+        {
+          "he": "אי אפשר לקבל Y=1",
+          "en": "Y=1 is impossible"
+        },
+        {
+          "he": "0",
+          "en": "0"
+        }
+      ],
+      "correct": 3,
+      "explanation": {
+        "he": "כדי ש־XOR יהיה 1, הכניסות חייבות להיות שונות. לכן B=0.",
+        "en": "XOR is 1 only when its inputs differ, so B=0."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-03-v5",
+      "source_key": "quick-hw-03",
+      "variant": 5,
+      "topic": "gates",
+      "status": "approved",
+      "prompt": {
+        "he": "איזה ביטוי שווה ל־A XOR B לכל ערכי שני הביטים?",
+        "en": "Which expression equals A XOR B for every pair of input bits?"
+      },
+      "choices": [
+        {
+          "he": "NOT (A OR B)",
+          "en": "NOT (A OR B)"
+        },
+        {
+          "he": "(A AND NOT B) OR (NOT A AND B)",
+          "en": "(A AND NOT B) OR (NOT A AND B)"
+        },
+        {
+          "he": "A OR B",
+          "en": "A OR B"
+        },
+        {
+          "he": "A AND B",
+          "en": "A AND B"
+        }
+      ],
+      "correct": 1,
+      "explanation": {
+        "he": "הביטוי בוחר את שני המקרים שבהם כניסה אחת היא 1 והשנייה 0.",
+        "en": "The expression selects exactly the two cases in which one input is 1 and the other is 0."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-05-v1",
+      "source_key": "quick-hw-05",
+      "variant": 1,
+      "topic": "gates",
+      "status": "approved",
+      "prompt": {
+        "he": "בורר MUX מעביר D0 כש־S=0 ו־D1 כש־S=1. נתון D0=0, D1=1, S=0. מהו Y?",
+        "en": "A MUX passes D0 for S=0 and D1 for S=1. Given D0=0, D1=1, S=0, what is Y?"
+      },
+      "choices": [
+        {
+          "he": "D0 OR D1",
+          "en": "D0 OR D1"
+        },
+        {
+          "he": "NOT D0",
+          "en": "NOT D0"
+        },
+        {
+          "he": "0",
+          "en": "0"
+        },
+        {
+          "he": "1",
+          "en": "1"
+        }
+      ],
+      "correct": 2,
+      "explanation": {
+        "he": "S=0 בוחר את D0, שערכו 0.",
+        "en": "S=0 selects D0, whose value is 0."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-05-v2",
+      "source_key": "quick-hw-05",
+      "variant": 2,
+      "topic": "gates",
+      "status": "approved",
+      "prompt": {
+        "he": "בורר MUX מעביר D0 כש־S=0 ו־D1 כש־S=1. נתון D0=1, D1=0. מהו רצף Y כש־S משתנה מ־0 ל־1, אחרי התייצבות?",
+        "en": "A MUX passes D0 for S=0 and D1 for S=1. Given D0=1, D1=0, what is Y before and after S changes from 0 to 1, after settling?"
+      },
+      "choices": [
+        {
+          "he": "1, 0",
+          "en": "1, 0"
+        },
+        {
+          "he": "0, 1",
+          "en": "0, 1"
+        },
+        {
+          "he": "1, 1",
+          "en": "1, 1"
+        },
+        {
+          "he": "0, 0",
+          "en": "0, 0"
+        }
+      ],
+      "correct": 0,
+      "explanation": {
+        "he": "תחילה נבחר D0=1, ואחר כך נבחר D1=0.",
+        "en": "D0=1 is selected first, followed by D1=0."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-05-v3",
+      "source_key": "quick-hw-05",
+      "variant": 3,
+      "topic": "gates",
+      "status": "approved",
+      "prompt": {
+        "he": "בורר MUX מעביר D0 כש־S=0 ו־D1 כש־S=1. שתי כניסות הנתונים הן 1. מהו Y עבור כל ערך של S?",
+        "en": "A MUX passes D0 for S=0 and D1 for S=1. Both data inputs are 1. What is Y for either value of S?"
+      },
+      "choices": [
+        {
+          "he": "S",
+          "en": "S"
+        },
+        {
+          "he": "NOT S",
+          "en": "NOT S"
+        },
+        {
+          "he": "תמיד 1",
+          "en": "Always 1"
+        },
+        {
+          "he": "תמיד 0",
+          "en": "Always 0"
+        }
+      ],
+      "correct": 2,
+      "explanation": {
+        "he": "כל בחירה מעבירה כניסת נתונים שערכה 1; S אינו מועתק ישירות למוצא.",
+        "en": "Either selection passes a data input equal to 1; the select bit is not copied directly to the output."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-05-v4",
+      "source_key": "quick-hw-05",
+      "variant": 4,
+      "topic": "gates",
+      "status": "approved",
+      "prompt": {
+        "he": "בורר MUX מעביר D0 כש־S=0 ו־D1 כש־S=1. נתון S=1. איזו כניסה יכולה לשנות את Y אם נשנה רק אותה?",
+        "en": "A MUX passes D0 for S=0 and D1 for S=1. With S fixed at 1, which data input can change Y when changed alone?"
+      },
+      "choices": [
+        {
+          "he": "D1",
+          "en": "D1"
+        },
+        {
+          "he": "D0",
+          "en": "D0"
+        },
+        {
+          "he": "שתיהן, כל אחת בנפרד",
+          "en": "Either data input independently"
+        },
+        {
+          "he": "אף אחת",
+          "en": "Neither input"
+        }
+      ],
+      "correct": 0,
+      "explanation": {
+        "he": "כאשר S=1 המוצא הוא D1, ולכן שינוי D0 לבדו אינו משפיע לאחר התייצבות.",
+        "en": "With S=1, Y equals D1; changing D0 alone has no effect after settling."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-05-v5",
+      "source_key": "quick-hw-05",
+      "variant": 5,
+      "topic": "gates",
+      "status": "approved",
+      "prompt": {
+        "he": "בורר MUX מעביר D0 כש־S=0 ו־D1 כש־S=1. איך מחברים קבועים כדי לקבל Y=S?",
+        "en": "A MUX passes D0 for S=0 and D1 for S=1. Which constant inputs implement Y=S?"
+      },
+      "choices": [
+        {
+          "he": "D0=0, D1=0",
+          "en": "D0=0, D1=0"
+        },
+        {
+          "he": "D0=1, D1=1",
+          "en": "D0=1, D1=1"
+        },
+        {
+          "he": "D0=0, D1=1",
+          "en": "D0=0, D1=1"
+        },
+        {
+          "he": "D0=1, D1=0",
+          "en": "D0=1, D1=0"
+        }
+      ],
+      "correct": 2,
+      "explanation": {
+        "he": "בחירה 0 מעבירה 0 ובחירה 1 מעבירה 1, ולכן המוצא שווה ל־S.",
+        "en": "Selecting 0 passes 0 and selecting 1 passes 1, so the output equals S."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-09-v1",
+      "source_key": "quick-hw-09",
+      "variant": 1,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מהו הערך המרבי של מספר לא מסומן בן 5 ביטים?",
+        "en": "What is the largest unsigned value representable with 5 bits?"
+      },
+      "choices": [
+        {
+          "he": "32",
+          "en": "32"
+        },
+        {
+          "he": "16",
+          "en": "16"
+        },
+        {
+          "he": "63",
+          "en": "63"
+        },
+        {
+          "he": "31",
+          "en": "31"
+        }
+      ],
+      "correct": 3,
+      "explanation": {
+        "he": "בחמישה ביטים יש 32 ערכים, מ־0 עד 31.",
+        "en": "Five bits give 32 values, from 0 through 31."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-09-v2",
+      "source_key": "quick-hw-09",
+      "variant": 2,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "כמה ערכים שונים, כולל אפס, אפשר לייצג ב־3 ביטים?",
+        "en": "How many distinct values, including zero, can 3 bits represent?"
+      },
+      "choices": [
+        {
+          "he": "9",
+          "en": "9"
+        },
+        {
+          "he": "8",
+          "en": "8"
+        },
+        {
+          "he": "7",
+          "en": "7"
+        },
+        {
+          "he": "6",
+          "en": "6"
+        }
+      ],
+      "correct": 1,
+      "explanation": {
+        "he": "שלושה ביטים נותנים 2×2×2=8 צירופים.",
+        "en": "Three bits provide 2×2×2=8 bit patterns."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-09-v3",
+      "source_key": "quick-hw-09",
+      "variant": 3,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מהו מספר הביטים המזערי הדרוש לייצוג כל המספרים הלא מסומנים מ־0 עד 20, כולל?",
+        "en": "What is the minimum bit width needed to represent every unsigned integer from 0 through 20 inclusive?"
+      },
+      "choices": [
+        {
+          "he": "4",
+          "en": "4"
+        },
+        {
+          "he": "6",
+          "en": "6"
+        },
+        {
+          "he": "20",
+          "en": "20"
+        },
+        {
+          "he": "5",
+          "en": "5"
+        }
+      ],
+      "correct": 3,
+      "explanation": {
+        "he": "ארבעה ביטים מגיעים רק ל־15; חמישה מגיעים ל־31 וכוללים את 20.",
+        "en": "Four bits reach only 15; five bits reach 31 and include 20."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-09-v4",
+      "source_key": "quick-hw-09",
+      "variant": 4,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מהו הטווח של מספר לא מסומן בן 6 ביטים?",
+        "en": "What is the range of an unsigned 6-bit integer?"
+      },
+      "choices": [
+        {
+          "he": "-32..31",
+          "en": "-32..31"
+        },
+        {
+          "he": "0..63",
+          "en": "0..63"
+        },
+        {
+          "he": "0..64",
+          "en": "0..64"
+        },
+        {
+          "he": "1..64",
+          "en": "1..64"
+        }
+      ],
+      "correct": 1,
+      "explanation": {
+        "he": "יש 64 צירופים, והספירה מתחילה באפס, ולכן הערך האחרון הוא 63.",
+        "en": "There are 64 patterns and counting begins at zero, making the last value 63."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-09-v5",
+      "source_key": "quick-hw-09",
+      "variant": 5,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מרחיבים שדה לא מסומן מ־4 ביטים ל־5 ביטים. פי כמה גדל מספר הערכים שאפשר לייצג?",
+        "en": "An unsigned field grows from 4 bits to 5 bits. By what factor does its number of representable values grow?"
+      },
+      "choices": [
+        {
+          "he": "1",
+          "en": "1"
+        },
+        {
+          "he": "4",
+          "en": "4"
+        },
+        {
+          "he": "16",
+          "en": "16"
+        },
+        {
+          "he": "2",
+          "en": "2"
+        }
+      ],
+      "correct": 3,
+      "explanation": {
+        "he": "כל ביט נוסף מכפיל את מספר הצירופים: מ־16 ל־32.",
+        "en": "Each extra bit doubles the patterns: from 16 to 32."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-10-v1",
+      "source_key": "quick-hw-10",
+      "variant": 1,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מחברים את המספרים הלא מסומנים 14 ו־3, ושומרים רק את 4 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
+        "en": "Add unsigned integers 14 and 3, keeping only the lowest 4 bits. What decimal value is stored?"
+      },
+      "choices": [
+        {
+          "he": "1",
+          "en": "1"
+        },
+        {
+          "he": "15",
+          "en": "15"
+        },
+        {
+          "he": "17",
+          "en": "17"
+        },
+        {
+          "he": "0",
+          "en": "0"
+        }
+      ],
+      "correct": 0,
+      "explanation": {
+        "he": "הסכום המלא הוא 17. שמירת 4 ביטים שקולה לשארית בחלוקה ב־16, ולכן נשמר 1.",
+        "en": "The full sum is 17. Keeping 4 bits takes the remainder modulo 16, leaving 1."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-10-v2",
+      "source_key": "quick-hw-10",
+      "variant": 2,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מחברים את המספרים הלא מסומנים 7 ו־2, ושומרים רק את 3 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
+        "en": "Add unsigned integers 7 and 2, keeping only the lowest 3 bits. What decimal value is stored?"
+      },
+      "choices": [
+        {
+          "he": "9",
+          "en": "9"
+        },
+        {
+          "he": "0",
+          "en": "0"
+        },
+        {
+          "he": "1",
+          "en": "1"
+        },
+        {
+          "he": "7",
+          "en": "7"
+        }
+      ],
+      "correct": 2,
+      "explanation": {
+        "he": "הסכום המלא הוא 9. שמירת 3 ביטים שקולה לשארית בחלוקה ב־8, ולכן נשמר 1.",
+        "en": "The full sum is 9. Keeping 3 bits takes the remainder modulo 8, leaving 1."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-10-v3",
+      "source_key": "quick-hw-10",
+      "variant": 3,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מחברים את המספרים הלא מסומנים 15 ו־1, ושומרים רק את 4 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
+        "en": "Add unsigned integers 15 and 1, keeping only the lowest 4 bits. What decimal value is stored?"
+      },
+      "choices": [
+        {
+          "he": "0",
+          "en": "0"
+        },
+        {
+          "he": "15",
+          "en": "15"
+        },
+        {
+          "he": "16",
+          "en": "16"
+        },
+        {
+          "he": "1",
+          "en": "1"
+        }
+      ],
+      "correct": 0,
+      "explanation": {
+        "he": "הסכום המלא הוא 16. שמירת 4 ביטים שקולה לשארית בחלוקה ב־16, ולכן נשמר 0.",
+        "en": "The full sum is 16. Keeping 4 bits takes the remainder modulo 16, leaving 0."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-10-v4",
+      "source_key": "quick-hw-10",
+      "variant": 4,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מחברים את המספרים הלא מסומנים 30 ו־5, ושומרים רק את 5 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
+        "en": "Add unsigned integers 30 and 5, keeping only the lowest 5 bits. What decimal value is stored?"
+      },
+      "choices": [
+        {
+          "he": "35",
+          "en": "35"
+        },
+        {
+          "he": "5",
+          "en": "5"
+        },
+        {
+          "he": "3",
+          "en": "3"
+        },
+        {
+          "he": "31",
+          "en": "31"
+        }
+      ],
+      "correct": 2,
+      "explanation": {
+        "he": "הסכום המלא הוא 35. שמירת 5 ביטים שקולה לשארית בחלוקה ב־32, ולכן נשמר 3.",
+        "en": "The full sum is 35. Keeping 5 bits takes the remainder modulo 32, leaving 3."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-10-v5",
+      "source_key": "quick-hw-10",
+      "variant": 5,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מחברים את המספרים הלא מסומנים 6 ו־1, ושומרים רק את 3 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
+        "en": "Add unsigned integers 6 and 1, keeping only the lowest 3 bits. What decimal value is stored?"
+      },
+      "choices": [
+        {
+          "he": "7",
+          "en": "7"
+        },
+        {
+          "he": "0",
+          "en": "0"
+        },
+        {
+          "he": "6",
+          "en": "6"
+        },
+        {
+          "he": "8",
+          "en": "8"
+        }
+      ],
+      "correct": 0,
+      "explanation": {
+        "he": "הסכום המלא הוא 7. שמירת 3 ביטים שקולה לשארית בחלוקה ב־8, ולכן נשמר 7.",
+        "en": "The full sum is 7. Keeping 3 bits takes the remainder modulo 8, leaving 7."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-15-v1",
+      "source_key": "quick-hw-15",
+      "variant": 1,
+      "topic": "sequential",
+      "status": "approved",
+      "prompt": {
+        "he": "דלגלג D דוגם רק בחזית עולה, ללא איפוס. Q=1, ו־D יורד ל־0 בין חזיתות. מהו Q לפני החזית העולה הבאה?",
+        "en": "A D flip-flop samples only on rising edges and has no reset. Q=1 and D falls to 0 between edges. What is Q before the next rising edge?"
+      },
+      "choices": [
+        {
+          "he": "לא ידוע בגלל שינוי D בלבד",
+          "en": "Unknown solely because D changed"
+        },
+        {
+          "he": "1",
+          "en": "1"
+        },
+        {
+          "he": "0",
+          "en": "0"
+        },
+        {
+          "he": "משתנה הלוך ושוב",
+          "en": "It oscillates"
+        }
+      ],
+      "correct": 1,
+      "explanation": {
+        "he": "בין חזיתות הדלגלג שומר את Q הקודם, 1.",
+        "en": "Between rising edges the flip-flop retains its previous Q value, 1."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-15-v2",
+      "source_key": "quick-hw-15",
+      "variant": 2,
+      "topic": "sequential",
+      "status": "approved",
+      "prompt": {
+        "he": "דלגלג D דוגם בחזית עולה, ללא איפוס, ומתחיל ב־Q=1. ערכי D היציבים כנדרש סביב שתי חזיתות עוקבות הם 0 ואז 1. מהו רצף Q אחרי כל חזית וזמן ההתפשטות?",
+        "en": "A D flip-flop samples on rising edges, has no reset, and starts at Q=1. The validly stable D values at two successive edges are 0 then 1. What is Q after each edge and propagation delay?"
+      },
+      "choices": [
+        {
+          "he": "1, 0",
+          "en": "1, 0"
+        },
+        {
+          "he": "0, 0",
+          "en": "0, 0"
+        },
+        {
+          "he": "1, 1",
+          "en": "1, 1"
+        },
+        {
+          "he": "0, 1",
+          "en": "0, 1"
+        }
+      ],
+      "correct": 3,
+      "explanation": {
+        "he": "בכל חזית נשמר D שנדגם בה. תחילה נשמר 0, ובחזית הבאה נשמר 1.",
+        "en": "Each edge stores the D sampled at that edge: first 0, then 1."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-15-v3",
+      "source_key": "quick-hw-15",
+      "variant": 3,
+      "topic": "sequential",
+      "status": "approved",
+      "prompt": {
+        "he": "דלגלג D דוגם בחזית עולה בלבד וללא איפוס. תחילה Q=0 ו־D=1. מתרחשת רק חזית יורדת. מהו Q אחריה?",
+        "en": "A D flip-flop samples only on rising edges, with no reset. Initially Q=0 and D=1. Only a falling edge occurs. What is Q afterward?"
+      },
+      "choices": [
+        {
+          "he": "לא ניתן לדעת את הערך הקודם",
+          "en": "The previous value is unknown"
+        },
+        {
+          "he": "0",
+          "en": "0"
+        },
+        {
+          "he": "1",
+          "en": "1"
+        },
+        {
+          "he": "תמיד ההיפוך של Q הקודם",
+          "en": "Always the inverse of the old Q"
+        }
+      ],
+      "correct": 1,
+      "explanation": {
+        "he": "חזית יורדת אינה חזית הדגימה שהוגדרה, ולכן Q נשאר 0.",
+        "en": "A falling edge is not the specified sampling edge, so Q stays 0."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-15-v4",
+      "source_key": "quick-hw-15",
+      "variant": 4,
+      "topic": "sequential",
+      "status": "approved",
+      "prompt": {
+        "he": "דלגלג D דוגם בחזית עולה, ללא איפוס. D עולה ל־1 וחוזר ל־0 בין שתי חזיתות, ונשאר 0 סביב החזית הבאה כנדרש. מה יישמר בחזית הבאה?",
+        "en": "A D flip-flop samples on rising edges, with no reset. D pulses to 1 and returns to 0 between two edges, remaining validly stable at 0 around the next edge. What is stored at the next edge?"
+      },
+      "choices": [
+        {
+          "he": "1",
+          "en": "1"
+        },
+        {
+          "he": "מספר הפולסים",
+          "en": "The pulse count"
+        },
+        {
+          "he": "ממוצע של 0 ו־1",
+          "en": "The average of 0 and 1"
+        },
+        {
+          "he": "0",
+          "en": "0"
+        }
+      ],
+      "correct": 3,
+      "explanation": {
+        "he": "הדלגלג דוגם את D בחזית. פולס שהסתיים לפניה אינו נשמר, ולכן נדגם 0.",
+        "en": "The flip-flop samples D at the edge. The pulse ended before it, so the sampled value is 0."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-15-v5",
+      "source_key": "quick-hw-15",
+      "variant": 5,
+      "topic": "sequential",
+      "status": "approved",
+      "prompt": {
+        "he": "דלגלג D דוגם בחזית עולה, ללא איפוס. ערכי D היציבים סביב שלוש חזיתות עוקבות הם 1,0,1. מהו רצף Q אחרי כל חזית וזמן ההתפשטות?",
+        "en": "A D flip-flop samples on rising edges, with no reset. The validly stable D values at three successive edges are 1,0,1. What is Q after each edge and propagation delay?"
+      },
+      "choices": [
+        {
+          "he": "0, 0, 1",
+          "en": "0, 0, 1"
+        },
+        {
+          "he": "1, 0, 1",
+          "en": "1, 0, 1"
+        },
+        {
+          "he": "0, 1, 0",
+          "en": "0, 1, 0"
+        },
+        {
+          "he": "1, 1, 1",
+          "en": "1, 1, 1"
+        }
+      ],
+      "correct": 1,
+      "explanation": {
+        "he": "כל חזית שומרת את D שנדגם בה, ולכן רצף Q הוא אותו רצף: 1,0,1.",
+        "en": "Each edge stores its sampled D, giving the same sequence at Q: 1,0,1."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-21-v1",
+      "source_key": "quick-hw-21",
+      "variant": 1,
+      "topic": "sequential",
+      "status": "approved",
+      "prompt": {
+        "he": "מונה לא מסומן בן 2 ביטים מתחיל בערך העשרוני 2, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 3 חזיתות, כשנשמרים רק 2 ביטים?",
+        "en": "An unsigned 2-bit counter starts at decimal 2 and increments on every rising edge without reset. What is its value after 3 edges, keeping only 2 bits?"
+      },
+      "choices": [
+        {
+          "he": "2",
+          "en": "2"
+        },
+        {
+          "he": "0",
+          "en": "0"
+        },
+        {
+          "he": "1",
+          "en": "1"
+        },
+        {
+          "he": "3",
+          "en": "3"
+        }
+      ],
+      "correct": 2,
+      "explanation": {
+        "he": "מחשבים (2+3) מודולו 4, ומקבלים 1.",
+        "en": "Compute (2+3) modulo 4, which gives 1."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-21-v2",
+      "source_key": "quick-hw-21",
+      "variant": 2,
+      "topic": "sequential",
+      "status": "approved",
+      "prompt": {
+        "he": "מונה לא מסומן בן 3 ביטים מתחיל בערך העשרוני 6, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 4 חזיתות, כשנשמרים רק 3 ביטים?",
+        "en": "An unsigned 3-bit counter starts at decimal 6 and increments on every rising edge without reset. What is its value after 4 edges, keeping only 3 bits?"
+      },
+      "choices": [
+        {
+          "he": "2",
+          "en": "2"
+        },
+        {
+          "he": "7",
+          "en": "7"
+        },
+        {
+          "he": "6",
+          "en": "6"
+        },
+        {
+          "he": "4",
+          "en": "4"
+        }
+      ],
+      "correct": 0,
+      "explanation": {
+        "he": "מחשבים (6+4) מודולו 8, ומקבלים 2.",
+        "en": "Compute (6+4) modulo 8, which gives 2."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-21-v3",
+      "source_key": "quick-hw-21",
+      "variant": 3,
+      "topic": "sequential",
+      "status": "approved",
+      "prompt": {
+        "he": "מונה לא מסומן בן 3 ביטים מתחיל בערך העשרוני 0, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 9 חזיתות, כשנשמרים רק 3 ביטים?",
+        "en": "An unsigned 3-bit counter starts at decimal 0 and increments on every rising edge without reset. What is its value after 9 edges, keeping only 3 bits?"
+      },
+      "choices": [
+        {
+          "he": "7",
+          "en": "7"
+        },
+        {
+          "he": "9",
+          "en": "9"
+        },
+        {
+          "he": "1",
+          "en": "1"
+        },
+        {
+          "he": "0",
+          "en": "0"
+        }
+      ],
+      "correct": 2,
+      "explanation": {
+        "he": "מחשבים (0+9) מודולו 8, ומקבלים 1.",
+        "en": "Compute (0+9) modulo 8, which gives 1."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-21-v4",
+      "source_key": "quick-hw-21",
+      "variant": 4,
+      "topic": "sequential",
+      "status": "approved",
+      "prompt": {
+        "he": "מונה לא מסומן בן 4 ביטים מתחיל בערך העשרוני 14, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 3 חזיתות, כשנשמרים רק 4 ביטים?",
+        "en": "An unsigned 4-bit counter starts at decimal 14 and increments on every rising edge without reset. What is its value after 3 edges, keeping only 4 bits?"
+      },
+      "choices": [
+        {
+          "he": "1",
+          "en": "1"
+        },
+        {
+          "he": "15",
+          "en": "15"
+        },
+        {
+          "he": "0",
+          "en": "0"
+        },
+        {
+          "he": "3",
+          "en": "3"
+        }
+      ],
+      "correct": 0,
+      "explanation": {
+        "he": "מחשבים (14+3) מודולו 16, ומקבלים 1.",
+        "en": "Compute (14+3) modulo 16, which gives 1."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-21-v5",
+      "source_key": "quick-hw-21",
+      "variant": 5,
+      "topic": "sequential",
+      "status": "approved",
+      "prompt": {
+        "he": "מונה לא מסומן בן 2 ביטים מתחיל בערך העשרוני 1, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 4 חזיתות, כשנשמרים רק 2 ביטים?",
+        "en": "An unsigned 2-bit counter starts at decimal 1 and increments on every rising edge without reset. What is its value after 4 edges, keeping only 2 bits?"
+      },
+      "choices": [
+        {
+          "he": "2",
+          "en": "2"
+        },
+        {
+          "he": "3",
+          "en": "3"
+        },
+        {
+          "he": "1",
+          "en": "1"
+        },
+        {
+          "he": "0",
+          "en": "0"
+        }
+      ],
+      "correct": 2,
+      "explanation": {
+        "he": "מחשבים (1+4) מודולו 4, ומקבלים 1.",
+        "en": "Compute (1+4) modulo 4, which gives 1."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-40-v1",
+      "source_key": "quick-hw-40",
+      "variant": 1,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מהו הערך העשרוני של המספר הבינארי הלא מסומן 10011?",
+        "en": "What is the decimal value of the unsigned binary number 10011?"
+      },
+      "choices": [
+        {
+          "he": "17",
+          "en": "17"
+        },
+        {
+          "he": "21",
+          "en": "21"
+        },
+        {
+          "he": "23",
+          "en": "23"
+        },
+        {
+          "he": "19",
+          "en": "19"
+        }
+      ],
+      "correct": 3,
+      "explanation": {
+        "he": "מחברים את משקלי הביטים שערכם 1: 16+2+1=19.",
+        "en": "Add the weights of the set bits: 16+2+1=19."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-40-v2",
+      "source_key": "quick-hw-40",
+      "variant": 2,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מהו הערך העשרוני של המספר הבינארי הלא מסומן 01101?",
+        "en": "What is the decimal value of the unsigned binary number 01101?"
+      },
+      "choices": [
+        {
+          "he": "26",
+          "en": "26"
+        },
+        {
+          "he": "13",
+          "en": "13"
+        },
+        {
+          "he": "11",
+          "en": "11"
+        },
+        {
+          "he": "14",
+          "en": "14"
+        }
+      ],
+      "correct": 1,
+      "explanation": {
+        "he": "מחברים את משקלי הביטים שערכם 1: 8+4+1=13.",
+        "en": "Add the weights of the set bits: 8+4+1=13."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-40-v3",
+      "source_key": "quick-hw-40",
+      "variant": 3,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מהו הערך העשרוני של המספר הבינארי הלא מסומן 10101?",
+        "en": "What is the decimal value of the unsigned binary number 10101?"
+      },
+      "choices": [
+        {
+          "he": "19",
+          "en": "19"
+        },
+        {
+          "he": "20",
+          "en": "20"
+        },
+        {
+          "he": "23",
+          "en": "23"
+        },
+        {
+          "he": "21",
+          "en": "21"
+        }
+      ],
+      "correct": 3,
+      "explanation": {
+        "he": "מחברים את משקלי הביטים שערכם 1: 16+4+1=21.",
+        "en": "Add the weights of the set bits: 16+4+1=21."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-40-v4",
+      "source_key": "quick-hw-40",
+      "variant": 4,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מהו הערך העשרוני של המספר הבינארי הלא מסומן 11010?",
+        "en": "What is the decimal value of the unsigned binary number 11010?"
+      },
+      "choices": [
+        {
+          "he": "28",
+          "en": "28"
+        },
+        {
+          "he": "26",
+          "en": "26"
+        },
+        {
+          "he": "24",
+          "en": "24"
+        },
+        {
+          "he": "25",
+          "en": "25"
+        }
+      ],
+      "correct": 1,
+      "explanation": {
+        "he": "מחברים את משקלי הביטים שערכם 1: 16+8+2=26.",
+        "en": "Add the weights of the set bits: 16+8+2=26."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-hw-40-v5",
+      "source_key": "quick-hw-40",
+      "variant": 5,
+      "topic": "bits",
+      "status": "approved",
+      "prompt": {
+        "he": "מהו הערך העשרוני של המספר הבינארי הלא מסומן 100001?",
+        "en": "What is the decimal value of the unsigned binary number 100001?"
+      },
+      "choices": [
+        {
+          "he": "17",
+          "en": "17"
+        },
+        {
+          "he": "32",
+          "en": "32"
+        },
+        {
+          "he": "34",
+          "en": "34"
+        },
+        {
+          "he": "33",
+          "en": "33"
+        }
+      ],
+      "correct": 3,
+      "explanation": {
+        "he": "מחברים את משקלי הביטים שערכם 1: 32+1=33.",
+        "en": "Add the weights of the set bits: 32+1=33."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-02-v1",
+      "source_key": "quick-sw-02",
+      "variant": 1,
+      "topic": "reasoning",
+      "status": "approved",
+      "prompt": {
+        "he": "2 מכונות זהות מתחילות פנויות. כל מכונה מייצרת חלק שלם ב־4 דקות ועובדת על חלק אחד בכל פעם. אסור לפצל חלק בין מכונות. מה הזמן המזערי, בדקות, לייצור 5 חלקים?",
+        "en": "2 identical machines start idle. Each takes 4 minutes per whole part and processes one part at a time. Parts cannot be split between machines. What is the minimum time in minutes to finish 5 parts?"
+      },
+      "choices": [
+        {
+          "he": "12",
+          "en": "12"
+        },
+        {
+          "he": "8",
+          "en": "8"
+        },
+        {
+          "he": "10",
+          "en": "10"
+        },
+        {
+          "he": "20",
+          "en": "20"
+        }
+      ],
+      "correct": 0,
+      "explanation": {
+        "he": "נדרשים 3 סבבים, כי בכל סבב מסתיימים עד 2 חלקים. לכן הזמן הוא 3×4=12 דקות.",
+        "en": "3 rounds are needed because each round completes at most 2 parts. The time is 3×4=12 minutes."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-02-v2",
+      "source_key": "quick-sw-02",
+      "variant": 2,
+      "topic": "reasoning",
+      "status": "approved",
+      "prompt": {
+        "he": "3 מכונות זהות מתחילות פנויות. כל מכונה מייצרת חלק שלם ב־5 דקות ועובדת על חלק אחד בכל פעם. אסור לפצל חלק בין מכונות. מה הזמן המזערי, בדקות, לייצור 7 חלקים?",
+        "en": "3 identical machines start idle. Each takes 5 minutes per whole part and processes one part at a time. Parts cannot be split between machines. What is the minimum time in minutes to finish 7 parts?"
+      },
+      "choices": [
+        {
+          "he": "12",
+          "en": "12"
+        },
+        {
+          "he": "35",
+          "en": "35"
+        },
+        {
+          "he": "15",
+          "en": "15"
+        },
+        {
+          "he": "10",
+          "en": "10"
+        }
+      ],
+      "correct": 2,
+      "explanation": {
+        "he": "נדרשים 3 סבבים, כי בכל סבב מסתיימים עד 3 חלקים. לכן הזמן הוא 3×5=15 דקות.",
+        "en": "3 rounds are needed because each round completes at most 3 parts. The time is 3×5=15 minutes."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-02-v3",
+      "source_key": "quick-sw-02",
+      "variant": 3,
+      "topic": "reasoning",
+      "status": "approved",
+      "prompt": {
+        "he": "4 מכונות זהות מתחילות פנויות. כל מכונה מייצרת חלק שלם ב־3 דקות ועובדת על חלק אחד בכל פעם. אסור לפצל חלק בין מכונות. מה הזמן המזערי, בדקות, לייצור 9 חלקים?",
+        "en": "4 identical machines start idle. Each takes 3 minutes per whole part and processes one part at a time. Parts cannot be split between machines. What is the minimum time in minutes to finish 9 parts?"
+      },
+      "choices": [
+        {
+          "he": "9",
+          "en": "9"
+        },
+        {
+          "he": "6",
+          "en": "6"
+        },
+        {
+          "he": "7",
+          "en": "7"
+        },
+        {
+          "he": "27",
+          "en": "27"
+        }
+      ],
+      "correct": 0,
+      "explanation": {
+        "he": "נדרשים 3 סבבים, כי בכל סבב מסתיימים עד 4 חלקים. לכן הזמן הוא 3×3=9 דקות.",
+        "en": "3 rounds are needed because each round completes at most 4 parts. The time is 3×3=9 minutes."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-02-v4",
+      "source_key": "quick-sw-02",
+      "variant": 4,
+      "topic": "reasoning",
+      "status": "approved",
+      "prompt": {
+        "he": "2 מכונות זהות מתחילות פנויות. כל מכונה מייצרת חלק שלם ב־6 דקות ועובדת על חלק אחד בכל פעם. אסור לפצל חלק בין מכונות. מה הזמן המזערי, בדקות, לייצור 4 חלקים?",
+        "en": "2 identical machines start idle. Each takes 6 minutes per whole part and processes one part at a time. Parts cannot be split between machines. What is the minimum time in minutes to finish 4 parts?"
+      },
+      "choices": [
+        {
+          "he": "18",
+          "en": "18"
+        },
+        {
+          "he": "24",
+          "en": "24"
+        },
+        {
+          "he": "12",
+          "en": "12"
+        },
+        {
+          "he": "6",
+          "en": "6"
+        }
+      ],
+      "correct": 2,
+      "explanation": {
+        "he": "נדרשים 2 סבבים, כי בכל סבב מסתיימים עד 2 חלקים. לכן הזמן הוא 2×6=12 דקות.",
+        "en": "2 rounds are needed because each round completes at most 2 parts. The time is 2×6=12 minutes."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-02-v5",
+      "source_key": "quick-sw-02",
+      "variant": 5,
+      "topic": "reasoning",
+      "status": "approved",
+      "prompt": {
+        "he": "3 מכונות זהות מתחילות פנויות. כל מכונה מייצרת חלק שלם ב־2 דקות ועובדת על חלק אחד בכל פעם. אסור לפצל חלק בין מכונות. מה הזמן המזערי, בדקות, לייצור 10 חלקים?",
+        "en": "3 identical machines start idle. Each takes 2 minutes per whole part and processes one part at a time. Parts cannot be split between machines. What is the minimum time in minutes to finish 10 parts?"
+      },
+      "choices": [
+        {
+          "he": "8",
+          "en": "8"
+        },
+        {
+          "he": "6",
+          "en": "6"
+        },
+        {
+          "he": "7",
+          "en": "7"
+        },
+        {
+          "he": "20",
+          "en": "20"
+        }
+      ],
+      "correct": 0,
+      "explanation": {
+        "he": "נדרשים 4 סבבים, כי בכל סבב מסתיימים עד 3 חלקים. לכן הזמן הוא 4×2=8 דקות.",
+        "en": "4 rounds are needed because each round completes at most 3 parts. The time is 4×2=8 minutes."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-03-v1",
+      "source_key": "quick-sw-03",
+      "variant": 1,
+      "topic": "python",
+      "status": "approved",
+      "prompt": {
+        "he": "פונקציה מחזירה את המספר הזוגי הראשון ברשימת שלמים לפי סדר הרשימה משמאל לימין, או None אם אין כזה. מה תחזיר עבור [7, 4, 2, 9]?",
+        "en": "A function returns the first even integer in a list, scanning left to right, or None when none exists. What does it return for [7, 4, 2, 9]?"
+      },
+      "choices": [
+        {
+          "he": "None",
+          "en": "None"
+        },
+        {
+          "he": "4",
+          "en": "4"
+        },
+        {
+          "he": "2",
+          "en": "2"
+        },
+        {
+          "he": "7",
+          "en": "7"
+        }
+      ],
+      "correct": 1,
+      "explanation": {
+        "he": "הערך 4 במקום 2 הוא הראשון שמתחלק ב־2 ללא שארית.",
+        "en": "4 at position 2 is the first value divisible by 2 without remainder."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-03-v2",
+      "source_key": "quick-sw-03",
+      "variant": 2,
+      "topic": "python",
+      "status": "approved",
+      "prompt": {
+        "he": "פונקציה מחזירה את המספר הזוגי הראשון ברשימת שלמים לפי סדר הרשימה משמאל לימין, או None אם אין כזה. מה תחזיר עבור [3, 0, 8]?",
+        "en": "A function returns the first even integer in a list, scanning left to right, or None when none exists. What does it return for [3, 0, 8]?"
+      },
+      "choices": [
+        {
+          "he": "8",
+          "en": "8"
+        },
+        {
+          "he": "3",
+          "en": "3"
+        },
+        {
+          "he": "None",
+          "en": "None"
+        },
+        {
+          "he": "0",
+          "en": "0"
+        }
+      ],
+      "correct": 3,
+      "explanation": {
+        "he": "הערך 0 במקום 2 הוא הראשון שמתחלק ב־2 ללא שארית.",
+        "en": "0 at position 2 is the first value divisible by 2 without remainder."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-03-v3",
+      "source_key": "quick-sw-03",
+      "variant": 3,
+      "topic": "python",
+      "status": "approved",
+      "prompt": {
+        "he": "פונקציה מחזירה את המספר הזוגי הראשון ברשימת שלמים לפי סדר הרשימה משמאל לימין, או None אם אין כזה. מה תחזיר עבור [-5, -2, 6]?",
+        "en": "A function returns the first even integer in a list, scanning left to right, or None when none exists. What does it return for [-5, -2, 6]?"
+      },
+      "choices": [
+        {
+          "he": "None",
+          "en": "None"
+        },
+        {
+          "he": "-2",
+          "en": "-2"
+        },
+        {
+          "he": "6",
+          "en": "6"
+        },
+        {
+          "he": "-5",
+          "en": "-5"
+        }
+      ],
+      "correct": 1,
+      "explanation": {
+        "he": "הערך -2 במקום 2 הוא הראשון שמתחלק ב־2 ללא שארית.",
+        "en": "-2 at position 2 is the first value divisible by 2 without remainder."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-03-v4",
+      "source_key": "quick-sw-03",
+      "variant": 4,
+      "topic": "python",
+      "status": "approved",
+      "prompt": {
+        "he": "פונקציה מחזירה את המספר הזוגי הראשון ברשימת שלמים לפי סדר הרשימה משמאל לימין, או None אם אין כזה. מה תחזיר עבור [1, 7, 3]?",
+        "en": "A function returns the first even integer in a list, scanning left to right, or None when none exists. What does it return for [1, 7, 3]?"
+      },
+      "choices": [
+        {
+          "he": "1",
+          "en": "1"
+        },
+        {
+          "he": "3",
+          "en": "3"
+        },
+        {
+          "he": "7",
+          "en": "7"
+        },
+        {
+          "he": "None",
+          "en": "None"
+        }
+      ],
+      "correct": 3,
+      "explanation": {
+        "he": "כל הערכים ברשימה אי־זוגיים, ולכן מוחזר None.",
+        "en": "All values are odd, so the function returns None."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-03-v5",
+      "source_key": "quick-sw-03",
+      "variant": 5,
+      "topic": "python",
+      "status": "approved",
+      "prompt": {
+        "he": "פונקציה מחזירה את המספר הזוגי הראשון ברשימת שלמים לפי סדר הרשימה משמאל לימין, או None אם אין כזה. מה תחזיר עבור [9, 6, 2, 4]?",
+        "en": "A function returns the first even integer in a list, scanning left to right, or None when none exists. What does it return for [9, 6, 2, 4]?"
+      },
+      "choices": [
+        {
+          "he": "None",
+          "en": "None"
+        },
+        {
+          "he": "6",
+          "en": "6"
+        },
+        {
+          "he": "2",
+          "en": "2"
+        },
+        {
+          "he": "4",
+          "en": "4"
+        }
+      ],
+      "correct": 1,
+      "explanation": {
+        "he": "הערך 6 במקום 2 הוא הראשון שמתחלק ב־2 ללא שארית.",
+        "en": "6 at position 2 is the first value divisible by 2 without remainder."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-61-v1",
+      "source_key": "quick-sw-61",
+      "variant": 1,
+      "topic": "reasoning",
+      "status": "approved",
+      "prompt": {
+        "he": "מהו אמצע הקטע בין הנקודות (2,5) ו־(8,1)? כל זוג נכתב בסדר (x,y).",
+        "en": "What is the midpoint of (2,5) and (8,1)? Each pair is written as (x,y)."
+      },
+      "choices": [
+        {
+          "he": "(10,6)",
+          "en": "(10,6)"
+        },
+        {
+          "he": "(3,2)",
+          "en": "(3,2)"
+        },
+        {
+          "he": "(5,3)",
+          "en": "(5,3)"
+        },
+        {
+          "he": "(6,4)",
+          "en": "(6,4)"
+        }
+      ],
+      "correct": 2,
+      "explanation": {
+        "he": "ממצעים כל קואורדינטה בנפרד: x=(2+8)/2=5, y=(5+1)/2=3.",
+        "en": "Average each coordinate separately: x=(2+8)/2=5, y=(5+1)/2=3."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-61-v2",
+      "source_key": "quick-sw-61",
+      "variant": 2,
+      "topic": "reasoning",
+      "status": "approved",
+      "prompt": {
+        "he": "איזה זוג נקודות נותן אמצע ששתי הקואורדינטות שלו שלמות?",
+        "en": "Which pair of points has a midpoint with two integer coordinates?"
+      },
+      "choices": [
+        {
+          "he": "(1,2), (5,8)",
+          "en": "(1,2), (5,8)"
+        },
+        {
+          "he": "(1,2), (4,8)",
+          "en": "(1,2), (4,8)"
+        },
+        {
+          "he": "(2,1), (4,6)",
+          "en": "(2,1), (4,6)"
+        },
+        {
+          "he": "(0,0), (1,1)",
+          "en": "(0,0), (1,1)"
+        }
+      ],
+      "correct": 0,
+      "explanation": {
+        "he": "רק בזוג (1,2),(5,8) סכום ערכי x וסכום ערכי y זוגיים; האמצע הוא (3,5).",
+        "en": "Only (1,2),(5,8) have even sums for both x and y; their midpoint is (3,5)."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-61-v3",
+      "source_key": "quick-sw-61",
+      "variant": 3,
+      "topic": "reasoning",
+      "status": "approved",
+      "prompt": {
+        "he": "מהו אמצע הקטע בין (1,2) ו־(2,1), למרות שסכום ארבע הקואורדינטות הוא 6?",
+        "en": "What is the midpoint of (1,2) and (2,1), even though the sum of all four coordinates is 6?"
+      },
+      "choices": [
+        {
+          "he": "(2,2)",
+          "en": "(2,2)"
+        },
+        {
+          "he": "(3,3)",
+          "en": "(3,3)"
+        },
+        {
+          "he": "(1.5,1.5)",
+          "en": "(1.5,1.5)"
+        },
+        {
+          "he": "(1,1)",
+          "en": "(1,1)"
+        }
+      ],
+      "correct": 2,
+      "explanation": {
+        "he": "כל סכום קואורדינטות הוא 3, ולכן כל ממוצע הוא 1.5. זוגיות הסכום הכולל אינה מספיקה.",
+        "en": "Each coordinate sum is 3, giving 1.5 for each average. An even grand total is insufficient."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-61-v4",
+      "source_key": "quick-sw-61",
+      "variant": 4,
+      "topic": "reasoning",
+      "status": "approved",
+      "prompt": {
+        "he": "לשתי נקודות קואורדינטות שלמות. מהו התנאי ההכרחי והמספיק לכך שגם לאמצע הקטע יהיו שתי קואורדינטות שלמות?",
+        "en": "Two points have integer coordinates. Which condition is necessary and sufficient for their midpoint to have two integer coordinates?"
+      },
+      "choices": [
+        {
+          "he": "ערכי x באותה זוגיות, וגם ערכי y באותה זוגיות",
+          "en": "The x values have the same parity, and so do the y values"
+        },
+        {
+          "he": "רק סכום ארבע הקואורדינטות חייב להיות זוגי",
+          "en": "Only the sum of all four coordinates must be even"
+        },
+        {
+          "he": "רק ערכי x חייבים להיות באותה זוגיות",
+          "en": "Only the x values must have the same parity"
+        },
+        {
+          "he": "כל ארבע הקואורדינטות חייבות להיות זוגיות",
+          "en": "All four coordinates must be even"
+        }
+      ],
+      "correct": 0,
+      "explanation": {
+        "he": "כל ממוצע חייב להיות שלם בפני עצמו, ולכן סכום כל זוג קואורדינטות מתאים חייב להיות זוגי.",
+        "en": "Each average must be an integer independently, so each corresponding coordinate pair must have an even sum."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    },
+    {
+      "key": "quick-sw-61-v5",
+      "source_key": "quick-sw-61",
+      "variant": 5,
+      "topic": "reasoning",
+      "status": "approved",
+      "prompt": {
+        "he": "מהו אמצע הקטע בין הנקודות (-3,4) ו־(5,-2)? כל זוג נכתב בסדר (x,y).",
+        "en": "What is the midpoint of (-3,4) and (5,-2)? Each pair is written as (x,y)."
+      },
+      "choices": [
+        {
+          "he": "(2,2)",
+          "en": "(2,2)"
+        },
+        {
+          "he": "(-1,1)",
+          "en": "(-1,1)"
+        },
+        {
+          "he": "(1,1)",
+          "en": "(1,1)"
+        },
+        {
+          "he": "(4,-3)",
+          "en": "(4,-3)"
+        }
+      ],
+      "correct": 2,
+      "explanation": {
+        "he": "מחשבים (-3+5)/2=1 ו־(4-2)/2=1; סימנים שליליים אינם משנים את כלל הממוצע.",
+        "en": "Compute (-3+5)/2=1 and (4-2)/2=1; negative signs do not change the averaging rule."
+      },
+      "release_approval": {
+        "basis": "user_authorized_pilot_release",
+        "on": "2026-10-29",
+        "professional_review": "pending"
+      }
+    }
+  ]
+}

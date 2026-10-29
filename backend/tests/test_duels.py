@@ -5,6 +5,7 @@ in-memory store with scripted judges, and over HTTP with two members."""
 from __future__ import annotations
 
 import uuid
+from dataclasses import replace
 from datetime import UTC, datetime, timedelta
 
 import pytest
@@ -84,7 +85,11 @@ async def balance(svc, user):
 
 async def start_duel(svc, *, language="en", mode="judged"):
     duel = await svc.create(A, language=language, mode=mode)
-    return await svc.accept(B, duel.code)
+    duel = await svc.accept(B, duel.code)
+    if mode == "quiz":
+        await svc.ready(A, duel.id)
+        duel = await svc.ready(B, duel.id)
+    return duel
 
 
 class TestThePool:
@@ -300,7 +305,7 @@ class TestTheJudge:
         assert await svc.list(A) == []
 
 
-MEMBERS = {"a@example.com", "b@example.com"}
+MEMBERS = {"a@example.com", "b@example.com", "c@example.com"}
 
 
 @pytest.fixture
@@ -382,10 +387,11 @@ class TestTheQuizContent:
         assert all(len(q.choices) == 4 and 0 <= q.correct < 4 for q in QUIZ)
         assert all(q.prompt["he"] and q.prompt["en"] and q.explanation["he"] and q.explanation["en"] for q in QUIZ)
         assert len({q.key for q in QUIZ}) == len(QUIZ)
-        assert all(q.status == "draft" for q in QUIZ)                 # nothing enters production until approved
+        assert all(q.status in {"draft", "approved"} for q in QUIZ)    # release status is independent of expert review
 
     def test_production_pool_is_only_the_approved_ones(self, catalog):
         svc, _, _ = service(catalog)
+        svc.quiz = {q.key: replace(q, status="draft") for q in QUIZ}
         svc.approved_only = True
         assert svc.quiz_pool() == []
         svc.approved_only = False
@@ -399,6 +405,9 @@ class TestAQuizDuel:
         assert invite.mode == "quiz" and invite.clock_seconds == 5 * 60
         duel = await svc.accept(B, invite.code)
         assert duel.status == "active" and len(duel.items) == 5 and len({i["key"] for i in duel.items}) == 5
+        assert duel.deadline is None
+        await svc.ready(A, duel.id)
+        duel = await svc.ready(B, duel.id)
         assert duel.deadline == clock.now + timedelta(seconds=300)
         a_choices, b_choices = answers_for(svc, duel, right=4), answers_for(svc, duel, right=2)
         after = await svc.answer(A, duel.id, choice=a_choices[0], item=0)
@@ -459,17 +468,21 @@ class TestAQuizDuel:
         assert listed[0].id == duel2.id and listed[0].outcome == "no_show"
         assert await balance(svc, A) == 55 and await balance(svc, B) == 45
 
-    async def test_questions_both_players_met_are_avoided(self, catalog):
+    async def test_quiz_selection_does_not_consult_exposure_history(self, catalog, monkeypatch):
         svc, store, clock = service(catalog)
+        from app.services.memory_store import _MemoryTx
+
+        async def forbidden(*args, **kwargs):
+            raise AssertionError("quiz selection must not query exposure history")
+
+        monkeypatch.setattr(_MemoryTx, "duel_question_keys", forbidden)
+        monkeypatch.setattr(_MemoryTx, "seen_question_keys", forbidden)
         duel = await start_duel(svc, mode="quiz")
-        await play(svc, A, duel, answers_for(svc, duel, right=5), clock)
-        await play(svc, B, duel, answers_for(svc, duel, right=0), clock)
-        clock.advance(15 * 60)
-        duel2 = await start_duel(svc, mode="quiz")
-        assert not {i["key"] for i in duel.items} & {i["key"] for i in duel2.items}
+        assert len(duel.items) == 5
 
     async def test_a_quiz_needs_five_approved_questions(self, catalog):
         svc, store, clock = service(catalog)
+        svc.quiz = {q.key: replace(q, status="draft") for q in QUIZ}
         svc.approved_only = True
         with pytest.raises(ApiError) as none:
             await svc.create(A, language="he")
@@ -502,6 +515,14 @@ class TestQuizOverHttp:
         accepted = await client.post("/v1/duels/accept", json={"code": invite["code"]}, headers=hb)
         assert accepted.status_code == 200, accepted.text
         body = accepted.json()
+        assert body["deadline"] is None and body["quiz"]["current"] is None
+        assert not body["me"]["ready"] and not body["opponent"]["ready"]
+        did = body["id"]
+        first = await client.post(f"/v1/duels/{did}/ready", headers=ha)
+        assert first.status_code == 200 and first.json()["quiz"]["current"] is None
+        ready = await client.post(f"/v1/duels/{did}/ready", headers=hb)
+        assert ready.status_code == 200, ready.text
+        body = ready.json()
         quiz = body["quiz"]
         assert quiz["total"] == 5 and quiz["index"] == 0 and len(quiz["current"]["choices"]) == 4 and quiz["review"] == []
         assert 0 < quiz["seconds_left"] <= 60 and body["seconds_left"] <= 300
@@ -530,3 +551,31 @@ class TestQuizOverHttp:
         assert (await client.get("/v1/me/coins", headers=ha)).json()["balance"] == 55
         assert (await client.post(f"/v1/duels/{did}/answer", json={"choice": 9}, headers=hb)).status_code == 422
         assert (await client.post("/v1/duels", json={"language": "he", "mode": "chess"}, headers=ha)).status_code == 422
+
+    async def test_an_outsider_cannot_read_ready_cancel_or_answer_and_stale_answers_do_not_repeat(self, client):
+        ha = {"Authorization": f"Bearer {make_token(email='a@example.com')[1]}"}
+        hb = {"Authorization": f"Bearer {make_token(email='b@example.com')[1]}"}
+        hc = {"Authorization": f"Bearer {make_token(email='c@example.com')[1]}"}
+        invite = (await client.post("/v1/duels", json={"language": "en", "mode": "quiz"}, headers=ha)).json()
+        duel = (await client.post("/v1/duels/accept", json={"code": invite["code"]}, headers=hb)).json()
+        did = duel["id"]
+        assert (await client.get(f"/v1/duels/{did}", headers=hc)).status_code == 404
+        for action, body in (("ready", {}), ("cancel", {}), ("answer", {"choice": 0, "item": 0})):
+            denied = await client.post(f"/v1/duels/{did}/{action}", json=body, headers=hc)
+            assert denied.status_code == 404, denied.text
+        assert (await client.get("/v1/duels", headers=hc)).json()["duels"] == []
+        early = await client.post(f"/v1/duels/{did}/answer", json={"choice": 0, "item": 0}, headers=ha)
+        assert early.status_code == 409
+        await client.post(f"/v1/duels/{did}/ready", headers=ha)
+        await client.post(f"/v1/duels/{did}/ready", headers=hb)
+        before = (await client.get(f"/v1/duels/{did}", headers=ha)).json()
+        opponent = (await client.get(f"/v1/duels/{did}", headers=hb)).json()
+        assert before["quiz"]["current"] == opponent["quiz"]["current"]
+        assert "snapshot" not in str(before) and "correct" not in before["quiz"]["current"]
+        first = await client.post(f"/v1/duels/{did}/answer", json={"choice": 0, "item": 0}, headers=ha)
+        assert first.status_code == 200 and first.json()["quiz"]["index"] == 1
+        replay = await client.post(f"/v1/duels/{did}/answer", json={"choice": 0, "item": 0}, headers=ha)
+        assert replay.status_code == 409
+        recovered = (await client.get(f"/v1/duels/{did}", headers=ha)).json()
+        assert recovered["quiz"]["index"] == 1 and len(recovered["quiz"]["answers"]) == 1
+        assert recovered["quiz"]["review"] == [] and recovered["opponent"]["score"] is None

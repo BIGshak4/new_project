@@ -25,6 +25,7 @@ from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine
 from app import db
 from app.repo import (
     attempts,
+    avatars,
     billing,
     coins,
     duels,
@@ -78,6 +79,10 @@ class Tx(Protocol):
     async def record_billing_event(self, *, event_id: str, kind: str, user_id: uuid.UUID | None, summary: dict) -> bool: ...
     # coins: a ledger (app.repo.coins); absent table -> available() is False, reads are 0, writes refuse
     async def coins_available(self) -> bool: ...
+    async def avatars_available(self) -> bool: ...
+    async def load_avatar(self, user_id: uuid.UUID) -> dict | None: ...
+    async def load_avatars(self, user_ids: list[uuid.UUID]) -> dict: ...
+    async def save_avatar(self, user_id: uuid.UUID, avatar: dict, owned_skins: list[str]) -> None: ...
     def savepoint(self): ...                                   # async context manager: a nested transaction
     async def coin_balance(self, user_id: uuid.UUID) -> int: ...
     async def coin_movements(self, user_id: uuid.UUID, *, limit: int = 20) -> list[Movement]: ...
@@ -222,6 +227,18 @@ class DbTx:
 
     async def coins_available(self):
         return await coins.available()
+
+    async def avatars_available(self):
+        return await avatars.available()
+
+    async def load_avatar(self, user_id):
+        return await avatars.load(self.connection, user_id)
+
+    async def load_avatars(self, user_ids):
+        return await avatars.load_many(self.connection, user_ids)
+
+    async def save_avatar(self, user_id, avatar, owned_skins):
+        await avatars.save(self.connection, user_id, avatar, owned_skins)
 
     @asynccontextmanager
     async def savepoint(self):
