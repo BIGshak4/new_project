@@ -1,4 +1,4 @@
-"""A whole mock interview on the REAL model, without database writes (in-memory store).
+"""A whole mock interview on the REAL model (LLM_PROVIDER=openai, fallback anthropic), without database writes (in-memory store).
 
 Answers alternate between a good and a weak canned reply so the router has something to react to.
 Prints each turn (skill, difficulty, question, hidden band), the closing report, timings and cost.
@@ -20,7 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.config import get_settings  # noqa: E402
 from app.engine.catalog import load_catalog  # noqa: E402
-from app.engine.providers import build_provider  # noqa: E402
+from app.runtime import REAL_PROVIDERS, make_provider  # noqa: E402
 from app.services.interview_service import InterviewConfig, InterviewService  # noqa: E402
 from app.services.memory_store import InMemoryStore  # noqa: E402
 
@@ -35,10 +35,9 @@ async def main() -> None:
     parser.add_argument("--language", default="en", choices=("en", "he"))
     args = parser.parse_args()
     settings = get_settings()
-    if not settings.anthropic_api_key:
-        raise SystemExit("ANTHROPIC_API_KEY is not set")
-    provider = build_provider("anthropic", api_key=settings.anthropic_api_key, model=settings.anthropic_model,
-                              enable_fallbacks=settings.anthropic_enable_fallbacks, role_models=settings.role_models)
+    if settings.llm_provider not in REAL_PROVIDERS:
+        raise SystemExit("set LLM_PROVIDER=openai (or anthropic) with its key in backend/.env")
+    provider = make_provider(settings)                          # openai or anthropic, by LLM_PROVIDER
     catalog = load_catalog(settings.seeds_dir)
     store = InMemoryStore(catalog)
     svc = InterviewService(store, catalog, provider, InterviewConfig(reviewed_only=False, narrative=True))

@@ -9,6 +9,7 @@
 The OpenAPI document at /docs is the contract the web app is written against.
 
     LLM_PROVIDER=scripted   instant fake evaluations (default; for building the web app)
+    LLM_PROVIDER=openai     the real model (fallback: anthropic); the key is checked at the first call
     DATABASE_URL unset      everything in memory, questions from the seed files
 """
 

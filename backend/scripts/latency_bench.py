@@ -49,8 +49,8 @@ from app.config import get_settings  # noqa: E402
 from app.engine import checks, evaluator, feedback, generator  # noqa: E402
 from app.engine.catalog import load_catalog  # noqa: E402
 from app.engine.practice import PracticeAttempt  # noqa: E402
-from app.engine.providers import build_provider  # noqa: E402
 from app.repo import cache  # noqa: E402
+from app.runtime import REAL_PROVIDERS, make_provider  # noqa: E402
 from app.services.practice_service import PracticeService, ServiceConfig  # noqa: E402
 
 CURRENT: contextvars.ContextVar[str | None] = contextvars.ContextVar("bench_answer", default=None)
@@ -173,10 +173,9 @@ async def wait_for_feedback(svc: PracticeService, user: uuid.UUID, attempt_id: u
 async def run(args) -> dict:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     settings = get_settings()
-    if not settings.anthropic_api_key or not settings.database_url:
-        raise SystemExit("ANTHROPIC_API_KEY and DATABASE_URL are needed")
-    provider = build_provider("anthropic", api_key=settings.anthropic_api_key, model=settings.anthropic_model,
-                              enable_fallbacks=settings.anthropic_enable_fallbacks, role_models=settings.role_models)
+    if settings.llm_provider not in REAL_PROVIDERS or not settings.database_url:
+        raise SystemExit("set LLM_PROVIDER=openai (or anthropic) with its key, and DATABASE_URL, in backend/.env")
+    provider = make_provider(settings)                          # openai or anthropic, by LLM_PROVIDER
     catalog = load_catalog(settings.seeds_dir)
     instrument()
     engine = db.get_engine()

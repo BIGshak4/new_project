@@ -78,7 +78,7 @@ CASES = [
 async def main() -> None:
     s = get_settings()
     if s.llm_provider not in ("anthropic", "openai"):
-        raise SystemExit("set LLM_PROVIDER=anthropic or openai (with its key) in backend/.env to run the review set")
+        raise SystemExit("set LLM_PROVIDER=openai (or anthropic) with its key in backend/.env to run the review set")
     provider = make_provider(s)                                 # anthropic or openai, by LLM_PROVIDER
     cat = load_catalog(SEEDS)
     total_cost, total_time = 0.0, 0.0

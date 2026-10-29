@@ -1553,6 +1553,8 @@ uv run python scripts/cli_practice.py --language he
 
 For the web app: `.env` with `SUPABASE_URL` (login verification), `ALLOWED_ORIGINS=http://localhost:3000`, `LLM_PROVIDER=scripted` (instant fake feedback, no key). Without `DATABASE_URL` everything runs in memory with the seed questions. Send the Supabase access token as `Authorization: Bearer <token>`; the e-mail must be in `jr_members`.
 
+The real model (2026-10-29): `LLM_PROVIDER=openai` with `OPENAI_API_KEY` (judge `OPENAI_MODEL`, prose roles `OPENAI_ROLE_MODELS`). The fallback is `LLM_PROVIDER=anthropic` with `ANTHROPIC_API_KEY`. With `LLM_PROVIDER=openai` and an empty key the API and `/health` still start; the first model call fails with `OPENAI_API_KEY is not set`. Production refuses to start without the key of the chosen provider. The scripts (`cli_practice.py --provider openai`, `e2e_real_flow.py`, `generate_questions.py`, the live e2e and latency scripts) follow `LLM_PROVIDER` the same way.
+
 With the manual provider, each model call appears as `workdir/manual_llm/NNN_<role>.request.md`; write the reply as `NNN_<role>.response.json` and the loop continues.
 
 ---

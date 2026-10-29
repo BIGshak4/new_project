@@ -200,3 +200,35 @@ class TestSettings:
         assert build_provider("openai", api_key="k").name == "openai"
         with pytest.raises(ValueError):
             build_provider("gemini")
+
+
+class TestMissingKey:
+    """LLM_PROVIDER=openai with an empty OPENAI_API_KEY (the state of backend/.env until the key is pasted) must not
+    take down startup, /health or the scripts: the SDK raises at construction, the provider defers that to the first
+    model call, like the Anthropic SDK does on its own."""
+
+    def test_construction_without_a_key_does_not_raise(self, monkeypatch):
+        monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+        provider = OpenAIProvider()
+        assert provider.name == "openai" and provider.client is None
+
+    async def test_the_first_call_fails_clearly_and_is_not_retried(self, monkeypatch):
+        monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+        provider = OpenAIProvider(api_key=None)
+        with pytest.raises(LLMError, match="OPENAI_API_KEY is not set") as info:
+            await provider.complete(request())
+        assert info.value.retryable is False and not isinstance(info.value, LLMRefusal)
+
+    def test_the_runtime_builds_with_openai_and_no_key(self, monkeypatch):
+        monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+        s = Settings(_env_file=None, llm_provider="openai", openai_api_key=None)
+        p = make_provider(s)
+        assert isinstance(p, OpenAIProvider) and p.client is None and p.model_for("tip") == "gpt-6.1-terra"
+
+    def test_an_empty_key_is_no_key(self, monkeypatch):
+        monkeypatch.setenv("OPENAI_API_KEY", "")                      # what an empty OPENAI_API_KEY= line amounts to
+        assert OpenAIProvider(api_key="").client is None
+
+    def test_a_key_from_the_environment_still_counts(self, monkeypatch):
+        monkeypatch.setenv("OPENAI_API_KEY", "env-key")
+        assert OpenAIProvider(api_key=None).client is not None

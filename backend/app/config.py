@@ -58,20 +58,24 @@ class Settings(BaseSettings):
     # Attempts a user may start per UTC day. Fails gracefully with 429, never silently.
     daily_attempt_limit: int = 30
 
-    # scripted  = instant fake evaluations, for building and demoing the web app without a key.
+    # scripted  = instant fake evaluations, for building and demoing the web app without a key (the default here,
+    #             so tests and a fresh checkout need no key; a deployment sets LLM_PROVIDER explicitly).
     # manual    = prompts are written to files and a person (or Claude Code) writes the replies.
-    # anthropic = the real Claude API; needs ANTHROPIC_API_KEY.
-    # openai    = the real OpenAI API; needs OPENAI_API_KEY (Shaked, 2026-10-29).
+    # openai    = the real provider: the OpenAI API; needs OPENAI_API_KEY (Shaked, 2026-10-29).
+    # anthropic = the fallback real provider: the Claude API; needs ANTHROPIC_API_KEY.
     llm_provider: str = "scripted"
+    # The real provider (openai). The judge model, and cheaper models for the prose roles (the card and the tip only
+    # reword a judgement already made).
+    openai_api_key: str | None = None
+    openai_model: str = "gpt-6.1-sol"                      # the judge (evaluator), and any role not overridden
+    openai_role_models: str = "feedback=gpt-6.1-terra,tip=gpt-6.1-terra,generator=gpt-6.1-terra"
+    # The fallback real provider (anthropic), kept selectable with LLM_PROVIDER=anthropic.
     anthropic_api_key: str | None = None
     anthropic_model: str = "claude-opus-5-5"               # the judge (evaluator), and any role not overridden; Opus 5 → 5.5 on 2026-10-01 (13/13 bands, same misconception keys)
     # role=model pairs for the prose roles. Measured 2026-09-19: Sonnet 5 writes the same card for a
     # fifth of the price; the evaluator stays on Opus until the golden set says otherwise.
     anthropic_role_models: str = "feedback=claude-sonnet-5,tip=claude-sonnet-5,generator=claude-sonnet-5"
     anthropic_enable_fallbacks: bool = True
-    openai_api_key: str | None = None
-    openai_model: str = "gpt-6.1-sol"                      # the judge on OpenAI; the prose roles below
-    openai_role_models: str = "feedback=gpt-6.1-terra,tip=gpt-6.1-terra,generator=gpt-6.1-terra"
 
     seeds_dir: Path = BACKEND_DIR / "seeds"
     workdir: Path = BACKEND_DIR / "workdir"
@@ -180,10 +184,10 @@ class Settings(BaseSettings):
             problems.append("SUPABASE_URL is not set (needed to verify login tokens)")
         if not self.allowed_origins:
             problems.append("ALLOWED_ORIGINS is empty (no browser could call the API)")
-        if self.llm_provider == "anthropic" and not self.anthropic_api_key:
-            problems.append("LLM_PROVIDER=anthropic but ANTHROPIC_API_KEY is not set")
         if self.llm_provider == "openai" and not self.openai_api_key:
             problems.append("LLM_PROVIDER=openai but OPENAI_API_KEY is not set")
+        if self.llm_provider == "anthropic" and not self.anthropic_api_key:
+            problems.append("LLM_PROVIDER=anthropic but ANTHROPIC_API_KEY is not set")
         if self.llm_provider == "manual":
             problems.append("LLM_PROVIDER=manual waits for a person to answer each model call")
         if self.llm_provider == "scripted":

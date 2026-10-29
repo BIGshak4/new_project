@@ -16,7 +16,7 @@ services:
       - key: ENV
         value: staging                 # production refuses to start with a scripted model; switch when the key is in
       - key: LLM_PROVIDER
-        sync: false                    # existing pilot uses anthropic; preserve the operator's selected provider
+        sync: false                    # openai (fallback: anthropic); scripted/manual never in production
       - key: SUPABASE_URL
         value: https://djpwvqpsqbkvprlncjjg.supabase.co
       - key: REQUIRE_PILOT_MEMBERSHIP
@@ -26,15 +26,15 @@ services:
       - key: DATABASE_URL
         sync: false                    # Supabase -> Project Settings -> Database -> Session pooler URI
       - key: ANTHROPIC_API_KEY
-        sync: false                    # required for the real Anthropic provider
+        sync: false                    # fallback provider only: needed when LLM_PROVIDER=anthropic
       - key: SUPABASE_SERVICE_ROLE_KEY
         sync: false                    # backend-only read access to private answer photos; never a browser variable
       - key: ANTHROPIC_MODEL
-        value: claude-opus-5
+        value: claude-opus-5           # fallback provider's judge model
       - key: OPENAI_API_KEY
-        sync: false                    # required when LLM_PROVIDER=openai (2026-10-29)
+        sync: false                    # required for the real provider (LLM_PROVIDER=openai, 2026-10-29)
       - key: OPENAI_MODEL
-        value: gpt-6.1-sol
+        value: gpt-6.1-sol             # the judge; OPENAI_ROLE_MODELS (default in app/config.py) picks the prose models
       - key: ALLOW_IN_REVIEW_CONTENT
         value: "true"                  # the pilot serves in_review questions until the first ones are published
       - key: DAILY_ATTEMPT_LIMIT

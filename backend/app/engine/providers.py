@@ -3,9 +3,11 @@
     ScriptedProvider   canned replies, for tests and persona runs
     ManualProvider     writes each prompt to a file and waits for a reply file, so the
                        whole loop can run (and be inspected) before an API key exists
-    AnthropicProvider  Claude Opus 5, effort per engine role, prompt caching, refusal handling
+    OpenAIProvider     the real provider: GPT through the Responses API, reasoning effort per engine role,
+                       prefix caching, structured output, refusal handling
+    AnthropicProvider  the fallback: Claude, effort per engine role, prompt caching, refusal handling
 
-The engine never talks to an SDK directly. Swapping providers is configuration.
+The engine never talks to an SDK directly. Swapping providers is configuration (LLM_PROVIDER).
 """
 
 from __future__ import annotations
@@ -13,6 +15,7 @@ from __future__ import annotations
 import asyncio
 import base64
 import json
+import os
 import time
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
@@ -392,7 +395,14 @@ class OpenAIProvider:
         self.model = model                                    # the judge (evaluator) and any role not listed below
         self.role_models = dict(role_models or {})            # cheaper models for the prose roles
         self._schema_unsupported = False
-        self.client = openai.AsyncOpenAI(api_key=api_key, timeout=timeout_seconds, max_retries=max_retries)
+        api_key = api_key or os.environ.get("OPENAI_API_KEY") or None       # an empty OPENAI_API_KEY= line is no key
+        if api_key is None:
+            # No key in the settings and none in the environment. The Anthropic SDK accepts that and fails at the
+            # first request; this SDK raises at construction, which would take down app startup, /health and every
+            # script. Same behaviour as the other side: the app comes up, the first model call fails with a clear reason.
+            self.client = None
+        else:
+            self.client = openai.AsyncOpenAI(api_key=api_key, timeout=timeout_seconds, max_retries=max_retries)
 
     def model_for(self, role: str) -> str:
         return self.role_models.get(role, self.model)
@@ -435,6 +445,8 @@ class OpenAIProvider:
             raise
 
     async def complete(self, request: LLMRequest) -> LLMResponse:
+        if self.client is None:
+            raise LLMError("OPENAI_API_KEY is not set (put it in backend/.env or the host's environment)", retryable=False)
         openai = self._openai
         started = time.perf_counter()
         common = dict(model=self.model_for(request.role), instructions=self._instructions(request), input=self._input(request),

@@ -4,7 +4,7 @@
 
 Three attempts: a wrong majority answer (XOR mistake) in English, a buggy Python answer in Hebrew
 (the code test runs and fails), and a drawn majority circuit (the derived function passes the check).
-Uses the in-memory store, so nothing is persisted. Costs about half a dollar. Needs ANTHROPIC_API_KEY.
+Uses the in-memory store, so nothing is persisted. Costs about half a dollar. Needs LLM_PROVIDER=openai with OPENAI_API_KEY (fallback: anthropic).
 
     uv run python scripts/e2e_real_flow.py
 """
@@ -102,7 +102,7 @@ async def run_attempt(svc, user, *, key, language, answer, follow_up_answer):
 async def main() -> None:
     settings = get_settings()
     if settings.llm_provider not in ("anthropic", "openai"):
-        raise SystemExit("set LLM_PROVIDER=anthropic or openai (with its key) in backend/.env")
+        raise SystemExit("set LLM_PROVIDER=openai (or anthropic) with its key in backend/.env")
     provider = make_provider(settings)                          # anthropic or openai, by LLM_PROVIDER
     catalog = load_catalog(settings.seeds_dir)
     store = InMemoryStore(catalog)

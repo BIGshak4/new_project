@@ -46,15 +46,20 @@ class Runtime:
             await self.image_fetcher.aclose()
 
 
+REAL_PROVIDERS = ("openai", "anthropic")        # a model is really called; openai is the default, anthropic the fallback
+
+
 def make_provider(settings: Settings) -> Provider:
+    """The provider LLM_PROVIDER names. A missing key does not raise here: the real providers fail at the first
+    model call with a clear LLMError, so the app, /health and the scripts still start."""
     if settings.llm_provider == "scripted":
         return DemoProvider()
-    if settings.llm_provider == "anthropic":
-        return build_provider("anthropic", api_key=settings.anthropic_api_key, model=settings.anthropic_model,
-                              enable_fallbacks=settings.anthropic_enable_fallbacks, role_models=settings.role_models)
     if settings.llm_provider == "openai":
         return build_provider("openai", api_key=settings.openai_api_key, model=settings.openai_model,
                               role_models=settings.role_models)
+    if settings.llm_provider == "anthropic":
+        return build_provider("anthropic", api_key=settings.anthropic_api_key, model=settings.anthropic_model,
+                              enable_fallbacks=settings.anthropic_enable_fallbacks, role_models=settings.role_models)
     return build_provider("manual", manual_dir=settings.workdir / "manual_llm")
 
 
@@ -72,7 +77,7 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
         kind = "database" if isinstance(store, DbStore) else "memory"
     config = ServiceConfig(role=settings.default_role, company=settings.default_company,
                            default_language=settings.default_language, daily_attempt_limit=settings.daily_attempt_limit,
-                           polish_tips=settings.llm_provider == "anthropic",
+                           polish_tips=settings.llm_provider in REAL_PROVIDERS,
                            suggest_reviewed_only=settings.suggest_reviewed_only,
                            feedback_in_background=settings.feedback_in_background)
     fetcher = make_image_fetcher(settings)
@@ -80,7 +85,7 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                                        default_language=settings.default_language,
                                        daily_limit=settings.interview_daily_limit,
                                        reviewed_only=settings.interview_reviewed_only,
-                                       narrative=settings.llm_provider == "anthropic")
+                                       narrative=settings.llm_provider in REAL_PROVIDERS)
     plans = load_plans(settings.seeds_dir / "billing_plans.json",
                        {"stripe_price_regular": settings.stripe_price_regular, "stripe_price_premium": settings.stripe_price_premium})
     configured = bool(settings.stripe_secret_key)

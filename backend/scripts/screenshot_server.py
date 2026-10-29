@@ -39,9 +39,9 @@ def _harness_environment(web_origin: str) -> None:
     os.environ["ALLOWED_ORIGINS"] = ",".join({web_origin, web_origin.replace("localhost", "127.0.0.1"),
                                               web_origin.replace("127.0.0.1", "localhost")})
     # /health reports the process settings and the web app switches to "demo mode" (hides XP, streak, grades) when the
-    # provider is not anthropic; the runtime itself is built below with the scripted provider, so no model is called
-    os.environ["LLM_PROVIDER"] = "anthropic"
-    os.environ["ANTHROPIC_API_KEY"] = "sk-ant-screenshot-harness-no-calls"
+    # provider is not a real one; the runtime itself is built below with the scripted provider, so no model is called
+    os.environ["LLM_PROVIDER"] = "openai"
+    os.environ["OPENAI_API_KEY"] = "sk-screenshot-harness-no-calls"
     os.environ["DATABASE_URL"] = ""
     os.environ["ENV"] = "development"
     os.environ["REQUIRE_PILOT_MEMBERSHIP"] = "false"

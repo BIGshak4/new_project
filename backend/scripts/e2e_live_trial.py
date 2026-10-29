@@ -26,7 +26,7 @@ from livetools import RollbackStore  # noqa: E402
 from app import db  # noqa: E402
 from app.config import get_settings  # noqa: E402
 from app.engine.catalog import load_catalog  # noqa: E402
-from app.engine.providers import build_provider  # noqa: E402
+from app.runtime import REAL_PROVIDERS, make_provider  # noqa: E402
 from app.services.interview_service import InterviewConfig, InterviewService  # noqa: E402
 from app.services.practice_service import PracticeService, ServiceConfig  # noqa: E402
 
@@ -38,10 +38,9 @@ INTERVIEW_ANSWER = ("I would state the assumptions, derive it step by step from 
 async def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")   # Windows consoles default to cp1252
     settings = get_settings()
-    if not settings.anthropic_api_key or not settings.database_url:
-        raise SystemExit("ANTHROPIC_API_KEY and DATABASE_URL are needed")
-    provider = build_provider("anthropic", api_key=settings.anthropic_api_key, model=settings.anthropic_model,
-                              enable_fallbacks=settings.anthropic_enable_fallbacks, role_models=settings.role_models)
+    if settings.llm_provider not in REAL_PROVIDERS or not settings.database_url:
+        raise SystemExit("set LLM_PROVIDER=openai (or anthropic) with its key, and DATABASE_URL, in backend/.env")
+    provider = make_provider(settings)                          # openai or anthropic, by LLM_PROVIDER
     catalog = load_catalog(settings.seeds_dir)
     started = time.perf_counter()
     async with db.get_engine().connect() as connection:

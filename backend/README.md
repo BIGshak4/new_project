@@ -29,10 +29,10 @@ While answering: `:hint` (next hint level), `:reveal` (reference solution; befor
 submitting this means the attempt gives no evidence), `:skip`, `:quit`. End a
 multi-line answer with a line containing only a dot.
 
-With an API key in `.env`:
+With an API key in `.env` (`OPENAI_API_KEY`; `--provider anthropic` is the fallback and needs `ANTHROPIC_API_KEY`):
 
 ```powershell
-uv run python scripts/cli_practice.py --provider anthropic --debug
+uv run python scripts/cli_practice.py --provider openai --debug
 ```
 
 Your progress is kept in `workdir/cli_profile.json`. Delete it to start over.

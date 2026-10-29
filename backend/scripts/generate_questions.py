@@ -41,7 +41,7 @@ from app.engine import evaluator, scores
 from app.engine.catalog import load_catalog  # noqa: E402
 from app.engine.checks import run_check  # noqa: E402
 from app.engine.params import DEFAULT_PARAMS  # noqa: E402
-from app.engine.providers import AnthropicProvider, LLMError, LLMRequest, call  # noqa: E402
+from app.engine.providers import LLMError, LLMRequest, build_provider, call  # noqa: E402
 from app.schemas.bank import BankQuestion  # noqa: E402
 
 BACKEND = Path(__file__).resolve().parent.parent
@@ -362,7 +362,7 @@ async def main() -> int:
     parser.add_argument("--skills", nargs="*", help="only these skill keys")
     parser.add_argument("--track", choices=["hardware", "software", "soft", "all", "hardware+software"], default="hardware+software",
                         help="hardware, software, soft (reasoning and behavioural) or all; default hardware and software")
-    parser.add_argument("--model", default="claude-opus-5-5", help="the drafting model")
+    parser.add_argument("--model", default=None, help="the drafting model; default: the configured judge (OPENAI_MODEL, or ANTHROPIC_MODEL on the fallback)")
     parser.add_argument("--judge", default=None, help="the verifying judge; default: the configured judge")
     parser.add_argument("--verify", action="store_true", help="grade every draft's reference with the judge")
     parser.add_argument("--concurrency", type=int, default=3)
@@ -370,6 +370,7 @@ async def main() -> int:
     parser.add_argument("--out", type=Path, default=OUTPUT)
     parser.add_argument("--append", action="store_true", help="keep what --out already holds and add to it")
     args = parser.parse_args()
+    args.model = args.model or get_settings().judge_model    # the configured real provider's judge drafts by default
 
     cat = load_catalog(SEEDS)
     role = next(iter(cat.roles.values()))
@@ -407,14 +408,18 @@ async def main() -> int:
         return 0
 
     settings = get_settings()
-    if not settings.anthropic_api_key:
-        print("ANTHROPIC_API_KEY is not set", file=sys.stderr)
+    if settings.llm_provider not in ("openai", "anthropic"):
+        print("set LLM_PROVIDER=openai (or anthropic) with its key in backend/.env", file=sys.stderr)
         return 2
-    drafter = AnthropicProvider(api_key=settings.anthropic_api_key, model=args.model, role_models={"generator": args.model})
+    key = settings.openai_api_key if settings.llm_provider == "openai" else settings.anthropic_api_key
+    if not key:
+        print(f"{settings.llm_provider.upper()}_API_KEY is not set", file=sys.stderr)
+        return 2
+    drafter = build_provider(settings.llm_provider, api_key=key, model=args.model, role_models={"generator": args.model})
     # the draft schema is far bigger than the API's structured-output grammar allows ("compiled grammar is too large"),
     # so ask for JSON in the text with the schema in the prompt from the start; the reply is still validated by pydantic
     drafter._schema_unsupported = True  # noqa: SLF001
-    judge = AnthropicProvider(api_key=settings.anthropic_api_key, model=args.judge or settings.anthropic_model, role_models={})
+    judge = build_provider(settings.llm_provider, api_key=key, model=args.judge or settings.judge_model, role_models={})
     tip_keys = sorted(cat.tips)
     catalog_skills = sorted(k for k, s in cat.leaf_skills.items() if s.subject in wanted_subjects or s.subject in HARDWARE_SUBJECTS + SOFTWARE_SUBJECTS)
     subject_label = {k: s.label for k, s in cat.skills.items()}

@@ -2,7 +2,7 @@
 
     uv run python scripts/cli_practice.py                     # manual provider, English
     uv run python scripts/cli_practice.py --language he
-    uv run python scripts/cli_practice.py --provider anthropic
+    uv run python scripts/cli_practice.py --provider openai      # the real model (fallback: --provider anthropic)
     uv run python scripts/cli_practice.py --question majority_vote_three_sensors --debug
 
 While answering:   :hint   next hint level      :reveal   show the reference (no evidence if before submit)
@@ -31,6 +31,7 @@ from app.engine.catalog import Catalog, CatalogError, load_catalog  # noqa: E402
 from app.engine.plan import merge_skill_sets  # noqa: E402
 from app.engine.practice import PracticeAttempt, PracticeContext, PracticeError, PracticeOutcome  # noqa: E402
 from app.engine.providers import build_provider  # noqa: E402
+from app.runtime import REAL_PROVIDERS, make_provider  # noqa: E402
 from app.schemas.engine import PlanSkill  # noqa: E402
 from app.services.local_store import LocalStore  # noqa: E402
 
@@ -143,11 +144,11 @@ async def run(args) -> int:
     store = LocalStore(settings.workdir / "cli_profile.json")
 
     manual_dir = settings.workdir / "manual_llm"
-    kwargs = {}
-    if args.provider == "anthropic":
-        kwargs = {"model": settings.anthropic_model, "api_key": settings.anthropic_api_key,
-                  "enable_fallbacks": settings.anthropic_enable_fallbacks}
-    provider = build_provider(args.provider, manual_dir=manual_dir, **kwargs)
+    if args.provider in REAL_PROVIDERS:
+        # the same construction as the API (model, key and prose models from the settings of the chosen provider)
+        provider = make_provider(settings.model_copy(update={"llm_provider": args.provider}))
+    else:
+        provider = build_provider("manual", manual_dir=manual_dir)
     if args.provider == "manual":
         provider.on_wait = lambda request, response: print(f"\n[manual LLM] read  {request}\n[manual LLM] write {response}")
 
@@ -155,7 +156,7 @@ async def run(args) -> int:
         provider=provider, skills=catalog.leaf_skills, language=args.language, seniority=args.seniority,
         difficulty_ceiling=profile.difficulty_ceiling, required_levels={s.key: s.required_level for s in plan},
         skill_weights={s.key: s.combined_weight for s in plan}, tips=list(catalog.tips.values()),
-        glossary=catalog.glossary, role_family=role.family, polish_tips=args.provider == "anthropic")
+        glossary=catalog.glossary, role_family=role.family, polish_tips=args.provider in REAL_PROVIDERS)
 
     while True:
         question, familiarity, reason = pick_question(catalog, plan, store, args, profile.difficulty_ceiling)
@@ -263,7 +264,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     settings = get_settings()
     parser.add_argument("--language", choices=["en", "he"], default=settings.default_language)
-    parser.add_argument("--provider", choices=["manual", "anthropic"], default=settings.llm_provider)
+    parser.add_argument("--provider", choices=["manual", "openai", "anthropic"],
+                        default=settings.llm_provider if settings.llm_provider != "scripted" else "manual")
     parser.add_argument("--role", default=settings.default_role)
     parser.add_argument("--company", default=settings.default_company)
     parser.add_argument("--seniority", default="student")
