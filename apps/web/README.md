@@ -1,5 +1,7 @@
 # JobRun Practice
 
+The isolated `/color-preview` route compares ten gray/green background treatments with purple branding. Its local landing/library simulation, phone preview and shareable palette links do not replace the production theme or modify real practice data. For a full-size candidate use `/color-preview?palette=sage&screen=home&style=ion-light&embed=1&motion=0`. Browser verification and captured comparisons: `node tools/qa/color-preview.mjs` from the repository root with the web dev server on port 3225.
+
 Private bilingual interview practice, deployed at https://jobrun-practice.netlify.app.
 
 Node.js 24, Next.js App Router, React, TypeScript and Supabase. Copy `.env.example` to `.env.local`, run `npm ci`, then `npm run dev`. `npm run build` includes TypeScript validation.
