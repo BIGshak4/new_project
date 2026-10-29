@@ -31,6 +31,10 @@ services:
         sync: false                    # backend-only read access to private answer photos; never a browser variable
       - key: ANTHROPIC_MODEL
         value: claude-opus-5
+      - key: OPENAI_API_KEY
+        sync: false                    # required when LLM_PROVIDER=openai (2026-10-29)
+      - key: OPENAI_MODEL
+        value: gpt-6.1-sol
       - key: ALLOW_IN_REVIEW_CONTENT
         value: "true"                  # the pilot serves in_review questions until the first ones are published
       - key: DAILY_ATTEMPT_LIMIT

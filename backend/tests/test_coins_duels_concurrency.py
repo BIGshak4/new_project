@@ -30,7 +30,8 @@ def catalog():
 
 class Clock:
     def __init__(self):
-        self.now = datetime(2026, 10, 22, 9, 0, tzinfo=UTC)
+        # today at 09:00: 'accepted today' and 'won today' are counted against the real calendar day
+        self.now = datetime.now(UTC).replace(hour=9, minute=0, second=0, microsecond=0)
 
     def __call__(self):
         return self.now

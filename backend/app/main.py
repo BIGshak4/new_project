@@ -66,7 +66,7 @@ async def lifespan(app: FastAPI):
                 raise RuntimeError(f"cannot reach the database ({type(exc).__name__}: {exc}). " + "; ".join(hints)) from exc
         log.info("runtime: provider=%s store=%s questions=%d", settings.llm_provider, app.state.runtime.store_kind,
                  len(app.state.runtime.catalog.questions))
-        if settings.llm_provider != "anthropic" and app.state.runtime.store_kind == "database":
+        if settings.llm_provider not in ("anthropic", "openai") and app.state.runtime.store_kind == "database":
             log.warning("the %s provider is writing DEMO evaluations into the real database; every submission is "
                         "marked assessed_by=demo and must not be treated as real evidence", settings.llm_provider)
     yield
@@ -306,7 +306,8 @@ async def health(request: Request, db_check: bool = False) -> dict:
             "database_pooler": settings.database_pooler_mode,
             "auth_configured": bool(settings.supabase_url),
             "allowed_origins": len(settings.allowed_origins), "store": runtime.store_kind if runtime else None,
-            "models": {"evaluator": settings.anthropic_model, **settings.role_models} if settings.llm_provider == "anthropic" else None,
+            "models": ({"evaluator": settings.judge_model, **settings.role_models}
+                       if settings.llm_provider in ("anthropic", "openai") else None),
             "answer_images": "assessed" if settings.supabase_service_role_key and settings.supabase_url else "stored_only"}
     if not detailed:
         body = {k: body[k] for k in ("status", "engine_version", "source_revision", "llm_provider") if k in body}

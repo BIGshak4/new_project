@@ -21,7 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.config import get_settings  # noqa: E402
 from app.engine.catalog import load_catalog  # noqa: E402
-from app.engine.providers import build_provider  # noqa: E402
+from app.runtime import make_provider  # noqa: E402
 from app.services.memory_store import InMemoryStore  # noqa: E402
 from app.services.practice_service import PracticeService, ServiceConfig  # noqa: E402
 
@@ -101,10 +101,9 @@ async def run_attempt(svc, user, *, key, language, answer, follow_up_answer):
 
 async def main() -> None:
     settings = get_settings()
-    if not settings.anthropic_api_key:
-        raise SystemExit("ANTHROPIC_API_KEY is not set")
-    provider = build_provider("anthropic", api_key=settings.anthropic_api_key, model=settings.anthropic_model,
-                              enable_fallbacks=settings.anthropic_enable_fallbacks, role_models=settings.role_models)
+    if settings.llm_provider not in ("anthropic", "openai"):
+        raise SystemExit("set LLM_PROVIDER=anthropic or openai (with its key) in backend/.env")
+    provider = make_provider(settings)                          # anthropic or openai, by LLM_PROVIDER
     catalog = load_catalog(settings.seeds_dir)
     store = InMemoryStore(catalog)
     # suggest_reviewed_only=False: the seed bank is still in review; production suggests published questions only

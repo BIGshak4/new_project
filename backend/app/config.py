@@ -60,7 +60,8 @@ class Settings(BaseSettings):
 
     # scripted  = instant fake evaluations, for building and demoing the web app without a key.
     # manual    = prompts are written to files and a person (or Claude Code) writes the replies.
-    # anthropic = the real API; needs ANTHROPIC_API_KEY.
+    # anthropic = the real Claude API; needs ANTHROPIC_API_KEY.
+    # openai    = the real OpenAI API; needs OPENAI_API_KEY (Shaked, 2026-10-29).
     llm_provider: str = "scripted"
     anthropic_api_key: str | None = None
     anthropic_model: str = "claude-opus-5-5"               # the judge (evaluator), and any role not overridden; Opus 5 → 5.5 on 2026-10-01 (13/13 bands, same misconception keys)
@@ -68,6 +69,9 @@ class Settings(BaseSettings):
     # fifth of the price; the evaluator stays on Opus until the golden set says otherwise.
     anthropic_role_models: str = "feedback=claude-sonnet-5,tip=claude-sonnet-5,generator=claude-sonnet-5"
     anthropic_enable_fallbacks: bool = True
+    openai_api_key: str | None = None
+    openai_model: str = "gpt-6.1-sol"                      # the judge on OpenAI; the prose roles below
+    openai_role_models: str = "feedback=gpt-6.1-terra,tip=gpt-6.1-terra,generator=gpt-6.1-terra"
 
     seeds_dir: Path = BACKEND_DIR / "seeds"
     workdir: Path = BACKEND_DIR / "workdir"
@@ -90,7 +94,8 @@ class Settings(BaseSettings):
 
     @field_validator("database_url", "supabase_url", "supabase_jwt_secret", "supabase_service_role_key", "anthropic_api_key",
                      "stripe_secret_key", "stripe_webhook_secret", "stripe_price_regular", "stripe_price_premium",
-                     "anthropic_model", "anthropic_role_models", "llm_provider", "env", "default_language", mode="before")
+                     "anthropic_model", "anthropic_role_models", "openai_api_key", "openai_model", "openai_role_models", "llm_provider",
+                     "env", "default_language", mode="before")
     @classmethod
     def _strip(cls, value):
         """Values pasted into a dashboard often carry a trailing newline or spaces; the database then
@@ -105,8 +110,14 @@ class Settings(BaseSettings):
         return value
 
     @property
+    def judge_model(self) -> str:
+        """The evaluator's model for the active real provider."""
+        return self.openai_model if self.llm_provider == "openai" else self.anthropic_model
+
+    @property
     def role_models(self) -> dict[str, str]:
-        pairs = (p.strip() for p in (self.anthropic_role_models or "").split(",") if p.strip())
+        source = self.openai_role_models if self.llm_provider == "openai" else self.anthropic_role_models
+        pairs = (p.strip() for p in (source or "").split(",") if p.strip())
         out = {}
         for pair in pairs:
             role, _, model = pair.partition("=")
@@ -171,6 +182,8 @@ class Settings(BaseSettings):
             problems.append("ALLOWED_ORIGINS is empty (no browser could call the API)")
         if self.llm_provider == "anthropic" and not self.anthropic_api_key:
             problems.append("LLM_PROVIDER=anthropic but ANTHROPIC_API_KEY is not set")
+        if self.llm_provider == "openai" and not self.openai_api_key:
+            problems.append("LLM_PROVIDER=openai but OPENAI_API_KEY is not set")
         if self.llm_provider == "manual":
             problems.append("LLM_PROVIDER=manual waits for a person to answer each model call")
         if self.llm_provider == "scripted":

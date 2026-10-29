@@ -1476,6 +1476,53 @@ line for the build.
 **The migrations themselves are unchanged by this** (the coins one dry-runs OK; the duels one dry-runs OK) and are
 still **not applied**; the quiz questions are still all `draft`.
 
+## 5zv. OpenAI as the model provider (2026-10-29, Shaked: "i want to change the api key to open ai key")
+
+**Why.** Shaked switched the Anthropic key off and asked to delete that organization (the usage table shows the last
+model call in production on 19 October; 76 calls and $1.50 in the thirty days before; no failed answer since, so
+nobody practised meanwhile). He wants the judge and the prose roles on an OpenAI key instead.
+
+**What changed.** One new class, `OpenAIProvider` in `app/engine/providers.py`, behind the same `Provider` interface
+as the Anthropic one, through the official `openai` SDK's Responses API: the system blocks go in `instructions`
+(most stable first, so OpenAI's automatic prefix cache catches the role's instructions and the question block;
+`prompt_cache_key` groups a role's calls), the user text and the answer photos in `input` (images as data URLs),
+structured replies through `responses.parse` with the pydantic schema and a once-per-process fallback to
+JSON-in-text when a model rejects the schema, the per-role effort straight onto `reasoning.effort` (same words),
+`status == "incomplete"` checked before content is read (cut-off → retried; content filter → refusal, never
+retried), SDK errors mapped to the same retryable/not-retryable `LLMError`s. OpenAI counts cached tokens inside
+`input_tokens`; the provider splits them out so `LLMUsage` keeps one meaning across providers, and `cost_usd`
+prices OpenAI models from `OPENAI_PRICES` (input, cached input, output per million; read from the pricing page on
+2026-10-29; a dated model id prices as its family). Nothing in the engine, the prompts, the thresholds, the
+services or the web app changed; the Anthropic class stays, so `LLM_PROVIDER` is the only switch.
+
+**Settings and deploy.** `LLM_PROVIDER=openai`, `OPENAI_API_KEY`, `OPENAI_MODEL` (default `gpt-6.1-sol`, the
+judge), `OPENAI_ROLE_MODELS` (default `gpt-6.1-terra` for feedback, tip and the follow-up wording).
+`Settings.judge_model` and `Settings.role_models` follow the active provider; the production start refuses
+`openai` without a key, like `anthropic`; `/health.models` reports whichever is active. `render.yaml` and
+`.env.example` carry the new variables; `openai` is in `pyproject.toml` and `uv.lock`. The two real-model scripts
+(`scripts/p2_review_set.py`, `scripts/e2e_real_flow.py`) now build the provider from the settings, so the same
+calibration runs on either provider.
+
+**Why these models.** The flagship list on 2026-10-29 is `gpt-6-astra` ($10 / $50 per million in / out),
+`gpt-6.1-sol` ($2 / $10), `gpt-6.1-terra` ($1 / $5), `gpt-6-luna` ($0.10 / $0.50). Sol sits where Sonnet 5 sat on
+price and below Opus 5.5 ($4 / $20); Astra is two and a half times Opus. The judge defaults to Sol and the prose
+roles to Terra; if the calibration below shows Sol banding differently from Opus, Astra is one variable
+(`OPENAI_MODEL=gpt-6-astra`). At the measured token counts a practice answer on Sol+Terra should cost under a cent;
+the first real run will say exactly.
+
+**Tests.** `tests/test_openai_provider.py` (19): what is sent per role, images, the cache key, cost with the cached
+split, refusal, content filter, cut-off, garbage, every SDK error class, the schema fallback remembered for the
+process, the evaluator end to end with one retry, the settings and the factory. Offline suite: see the changelog.
+
+**Not done yet, and why: the calibration.** The band thresholds and the golden review set were tuned on Opus. Before
+any OpenAI model judges live answers, `scripts/p2_review_set.py` (13 answers with expected bands) and
+`scripts/e2e_real_flow.py` must run on the new key and the bands be compared side by side; that spends tokens and
+changes how answers are scored, so it is Shaked's to accept. **There is no `OPENAI_API_KEY` in `backend/.env`
+yet**, so neither script could run tonight. Steps when the key exists: put it in `backend/.env` with
+`LLM_PROVIDER=openai`, run `uv run python scripts/p2_review_set.py`, read the bands, then set the two variables on
+Render (`LLM_PROVIDER`, `OPENAI_API_KEY`) and redeploy. Production is still on `LLM_PROVIDER=anthropic` with a dead
+key: every judged answer fails until one of the two keys is live.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1514,6 +1561,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-10-29 | OpenAI as a second real provider (§5zv): `OpenAIProvider` on the Responses API behind the same interface (instructions prefix cache, structured parse with JSON-in-text fallback, effort per role, images, incomplete/refusal handling, cached tokens split out, OpenAI price table); `LLM_PROVIDER=openai`, `OPENAI_API_KEY`, `OPENAI_MODEL=gpt-6.1-sol`, `OPENAI_ROLE_MODELS` (Terra for prose); the two real-model scripts follow the settings. 19 new tests; offline 1,468 passed / 9 skipped (one duel test was pinned to 22 October and failed on the real calendar day; its clock now starts on today's date). Calibration on the review set waits for the key. |
 | 2026-10-22 | Full verification of coins and duels (§5zu): independent review + quiz fact-check + a real-database scenario in a rolled-back transaction (`scripts/verify_coins_duels_db.py`, 32 checks) + race and deadline tests. Fixed: the ledger insert could not match the partial unique index on Postgres (every coin write would have been a 500), `table.c.items` was the collection's method, a ledger error could roll back a saved answer (now a savepoint), a judged answer still with the judge at the deadline was forfeited (two-minute grace), promises before the ledger was looked at, seed defaults, removed-question 500s; forty quiz answers verified right, Hebrew formulas given left-to-right marks. Offline 1,446 passed / 9 skipped; live suites did not complete (pooler timeout in the seeding fixture, as on 21 Oct). Build `6562694` live, smoke clean. |
 | 2026-10-22 | Quiz duels, the default mode (§5zt): five American questions from `seeds/duel_quiz.json`, a minute each at most, more correct answers win then the lower total time, no judge; forty questions drafted in both languages, all `draft` until approved; `mode`/`items` on the duel row (migration edited in place, dry run OK, not applied); nine more tests; offline 1,435 passed / 9 skipped. |
 | 2026-10-22 | Coins next to XP and duels, backend only (§5zt): ledger `coin_ledger` (gift 50, STRONG answer 10 / 20 at difficulty 5, STRONG interview turn 10, idempotent by reference), `GET /v1/me/coins` + `POST /v1/me/coins/buy` (ten more questions today for 100, added to the plan's daily cap), `coins_earned` on submissions and interview turns; duels (`duel` table, six routes: open an invite, accept by code, answer on a three-minute clock judged by the same evaluator, cancel, list, read; better band wins the ten, tie → faster, dead heat → refund, no-show forfeits, overdue duels settled on read; pair cooldown 10 min, winnings ceiling 100/day, `daily_cap` switch off). Coins have no monetary value. Migrations `20261022090000_coins.sql` and `20261022100000_duels.sql` dry-run OK, not applied. 31 new tests; offline 1,425 passed / 9 skipped on the tree merged with Harel's fourteen commits (fundamentals service, nine questions). Queue items 18–19 for Harel. |

@@ -20,7 +20,7 @@ from app.engine import evaluator, feedback, scores  # noqa: E402
 from app.engine.catalog import load_catalog  # noqa: E402
 from app.engine.checks import run_check  # noqa: E402
 from app.engine.params import DEFAULT_PARAMS  # noqa: E402
-from app.engine.providers import AnthropicProvider  # noqa: E402
+from app.runtime import make_provider  # noqa: E402
 
 SEEDS = Path(__file__).resolve().parent.parent / "seeds"
 
@@ -77,7 +77,9 @@ CASES = [
 
 async def main() -> None:
     s = get_settings()
-    provider = AnthropicProvider(api_key=s.anthropic_api_key, model=s.anthropic_model, role_models=s.role_models)
+    if s.llm_provider not in ("anthropic", "openai"):
+        raise SystemExit("set LLM_PROVIDER=anthropic or openai (with its key) in backend/.env to run the review set")
+    provider = make_provider(s)                                 # anthropic or openai, by LLM_PROVIDER
     cat = load_catalog(SEEDS)
     total_cost, total_time = 0.0, 0.0
     for i, (key, language, expected, kind, answer, want_card) in enumerate(CASES, 1):

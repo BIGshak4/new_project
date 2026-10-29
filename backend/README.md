@@ -77,7 +77,7 @@ app/
     scorecards.py            fit scores with core-gap caps, profile roll-up, target fit
     bank.py                  bank-first question selection
     catalog.py               load and validate the seed files
-    providers.py             ScriptedProvider, ManualProvider, AnthropicProvider
+    providers.py             ScriptedProvider, ManualProvider, AnthropicProvider, OpenAIProvider
     evaluator.py, generator.py, tips.py, feedback.py, reporter.py, i18n.py
     prompts/                 versioned prompt files, one per engine role, plus language blocks
 scripts/                     cli_practice.py, seed_db.py
