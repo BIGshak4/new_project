@@ -49,6 +49,9 @@ V1_ROUTES = {
     ("GET", "/v1/me/coins"), ("POST", "/v1/me/coins/buy"),
     ("GET", "/v1/duels"), ("POST", "/v1/duels"), ("POST", "/v1/duels/accept"), ("GET", "/v1/duels/{duel_id}"),
     ("POST", "/v1/duels/{duel_id}/answer"), ("POST", "/v1/duels/{duel_id}/cancel"),
+    ("POST", "/v1/duels/{duel_id}/ready"),                                    # Harel's waiting room (2026-10-29)
+    ("GET", "/v1/me/avatar"), ("PUT", "/v1/me/avatar"), ("POST", "/v1/me/avatar/buy"),   # Harel's avatars (2026-10-29)
+    ("POST", "/v1/me/avatar/onboarding"),
     # Harel's self-reported short-card completion (2026-10-21)
     ("GET", "/v1/fundamentals/progress"), ("PUT", "/v1/fundamentals/progress/{question_key}"),
     ("DELETE", "/v1/fundamentals/progress/{question_key}"),
