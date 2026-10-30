@@ -202,7 +202,7 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
           <h3>{t("סיבוב קצר, ויוצאים לדרך", "A quick look around")}</h3>
           <p>{t("מכירים את ארבעת אזורי האתר ומתנסים בעיקר: יעד, חיפוש ונושאים, עורך קוד, סימולציה, רמז, משוב והתקדמות. אפשר להעמיק אחר כך.", "Meet the four areas and try the essentials: a goal, search and subjects, code editor, simulation, a hint, feedback and progress. Go deeper later.")}</p>
           <p className={styles.choiceMeta}>{tourSteps("short").length} {t("תחנות · היכרות מעשית וקצרה", "stations · a short hands-on introduction")}</p>
-          <button type="button" onClick={() => start("short")}>{t("מתחילים בסיור הקצר", "Start the short tour")}<NextArrow size={17} /></button>
+          <button type="button" className="primary" onClick={() => start("short")}>{t("מתחילים בסיור הקצר", "Start the short tour")}<NextArrow size={17} /></button>
         </section>
       </div>
       {progress.status === "paused" && (progress.completed.length > 0 || progress.skipped.length > 0) && <div className={styles.resume}><div><strong>{t("כבר הכרנו קצת?", "Already started?")}</strong><p>{t("המקום שלכם נשמר במכשיר הזה.", "Your place is saved on this device.")}</p></div><button type="button" onClick={() => start(progress.kind, true)}><Play size={16} />{t("ממשיכים מהמקום שעצרנו", "Resume where I stopped")}</button></div>}
