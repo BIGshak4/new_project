@@ -6,14 +6,16 @@ export function LandingXorControls({
   he,
   onToggle,
   className,
+  descriptionId,
 }: {
   bits: LandingBits;
   he: boolean;
   onToggle: (input: LandingBitInput) => void;
   className?: string;
+  descriptionId?: string;
 }) {
   return (
-    <div className={className} role="group" aria-label={he ? "שער XOR אינטראקטיבי" : "Interactive XOR gate"} dir="ltr">
+    <div className={className} role="group" aria-label={he ? "שער XOR אינטראקטיבי" : "Interactive XOR gate"} aria-describedby={descriptionId} dir="ltr">
       {(["a", "b"] as const).map(input => (
         <button
           key={input}

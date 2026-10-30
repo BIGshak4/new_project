@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, LockKeyhole, LogOut, Mail } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
 import { AccessCheck, accessForUser, observeAuthUser, type AccessState } from "../lib/auth-access";
+import styles from "./auth.module.css";
 export type Lang = "he" | "en";
 export function Auth({
   lang = "he",
@@ -149,18 +150,47 @@ export function Auth({
   const form = (
     <form className="auth-form" onSubmit={submit}>
       <h2>
-        {mode === "login"
+        {kind === "practice"
           ? he
-            ? "טוב שחזרתם."
-            : "Welcome back."
-          : he
-            ? "מתחילים כאן."
-            : "Start here."}
+            ? "מתחילים או ממשיכים לתרגל."
+            : "Start or continue your practice."
+          : mode === "login"
+            ? he
+              ? "טוב שחזרתם."
+              : "Welcome back."
+            : he
+              ? "מתחילים כאן."
+              : "Start here."}
       </h2>
+      {kind === "practice" && (
+        <div className={styles.modes} role="group" aria-label={he ? "יצירת חשבון או התחברות" : "Create an account or sign in"}>
+          {(["signup", "login"] as const).map((option) => (
+            <button
+              key={option}
+              type="button"
+              aria-pressed={mode === option}
+              disabled={busy}
+              onClick={() => {
+                setMode(option);
+                setError("");
+                setMessage("");
+              }}
+            >
+              {option === "signup"
+                ? he ? "יצירת חשבון" : "Create account"
+                : he ? "יש לי חשבון" : "I have an account"}
+            </button>
+          ))}
+        </div>
+      )}
       <p>
-        {he
-          ? "התחברו עם האימייל שאושר לפיילוט."
-          : "Use the email approved for the pilot."}
+        {kind === "practice" && mode === "signup"
+          ? he
+            ? "בפעם הראשונה? צרו חשבון עם האימייל שאושר לפיילוט."
+            : "First time here? Create an account with the email approved for the pilot."
+          : he
+            ? "התחברו עם האימייל שאושר לפיילוט."
+            : "Sign in with the email approved for the pilot."}
       </p>
       <label>
         {he ? "אימייל" : "Email"}
@@ -201,23 +231,24 @@ export function Auth({
           {message}
         </p>
       )}
-      <button className="primary" disabled={busy}>
+      <button type="submit" className="primary" disabled={busy}>
         {busy
           ? he
             ? "רגע…"
             : "One moment…"
           : mode === "login"
             ? he
-              ? "כניסה לסביבת העבודה"
+              ? kind === "practice" ? "כניסה לתרגול" : "כניסה לסביבת העבודה"
               : "Sign in"
             : he
               ? "יצירת חשבון"
               : "Create account"}
         {he ? <ArrowLeft size={17} /> : <ArrowRight size={17} />}
       </button>
-      <button
+      {kind === "tasks" && <button
         type="button"
         className="text-button"
+        disabled={busy}
         onClick={() => {
           setMode(mode === "login" ? "signup" : "login");
           setError("");
@@ -231,11 +262,15 @@ export function Auth({
           : he
             ? "כבר יש חשבון? התחברו"
             : "Already have an account? Sign in"}
-      </button>
+      </button>}
       <p className="small muted">
-        {he
-          ? "יצירת חשבון אינה מעניקה גישה אוטומטית לנתוני הצוות."
-          : "Creating an account does not automatically grant access to team data."}
+        {kind === "practice"
+          ? he
+            ? "יצירת חשבון אינה מעניקה גישה אוטומטית לפיילוט. הגישה מיועדת למשתתפים שאושרו מראש."
+            : "Creating an account does not automatically grant pilot access. Access is for participants approved in advance."
+          : he
+            ? "יצירת חשבון אינה מעניקה גישה אוטומטית לנתוני הצוות."
+            : "Creating an account does not automatically grant access to team data."}
       </p>
     </form>
   );

@@ -105,7 +105,7 @@ export default function Page() {
   }, [lang]);
   const languageControl = <><ThemeToggle lang={lang} /><LanguageMenu lang={lang} onChange={setLang} /></>;
   return (
-    <Auth lang={lang} kind="practice" controls={<><a className="muxi-public-tour" href="/tour">{lang === "he" ? "סיור עם מוקסי" : "Tour with Muxi"}</a><UserInboxButton lang={lang} />{languageControl}</>}>
+    <Auth lang={lang} kind="practice" controls={<><UserInboxButton lang={lang} />{languageControl}</>}>
       {(user, signOut) => (
         <Workspace
           key={user.id}

@@ -13,5 +13,5 @@ export default function TourPage() {
     document.documentElement.dir = lang === "he" ? "rtl" : "ltr";
     try { localStorage.setItem("jobrun-language", lang); } catch {}
   }, [lang]);
-  return <MuxiTour lang={lang} standalone controls={<><ThemeToggle lang={lang} /><LanguageMenu lang={lang} onChange={setLang} /></>} onClose={() => { window.location.assign("/"); }} />;
+  return <MuxiTour lang={lang} standalone controls={<><ThemeToggle lang={lang} /><LanguageMenu lang={lang} onChange={setLang} /></>} onClose={() => { window.location.assign("/#signin"); }} />;
 }

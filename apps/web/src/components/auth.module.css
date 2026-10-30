@@ -1,0 +1,43 @@
+.modes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.modes button {
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.modes button[aria-pressed="true"] {
+  border-color: var(--link);
+  background: var(--soft);
+  color: var(--link);
+}
+
+.modes button:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 3px;
+}
+
+.modes button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .modes button:hover:not(:disabled) {
+    border-color: var(--link);
+    background: var(--soft);
+  }
+}

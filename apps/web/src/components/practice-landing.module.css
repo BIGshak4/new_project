@@ -2,6 +2,116 @@
   min-width: 0;
 }
 
+.landingNav .landingNavigation {
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+
+.landingNav .navTour {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--link);
+  border-radius: 7px;
+  color: var(--link);
+  background: var(--soft);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.tourButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 11px 16px;
+  border: 1px solid var(--link);
+  border-radius: 7px;
+  color: var(--link);
+  background: var(--surface);
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+}
+
+:global(.ion-hero-copy) > .tourDescription {
+  max-width: 47ch;
+  margin-block: 14px 0;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.binaryArt > .xorHint {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  max-width: 43ch;
+  margin: 24px auto 0;
+  padding-inline: 16px;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.65;
+  text-align: start;
+}
+
+.xorHint svg {
+  flex-shrink: 0;
+  margin-block-start: 3px;
+  color: var(--link);
+}
+
+.signinSection.signinSection {
+  row-gap: 0;
+}
+
+.signinIntro {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.signinSection > :global(.auth-form) {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.signinTour {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-block-start: 32px;
+  padding-block-start: 28px;
+  border-block-start: 1px solid var(--line);
+}
+
+.signinTour .tourMascot {
+  width: 64px;
+}
+
+.signinTour > div {
+  min-width: 0;
+}
+
+.signinTour h3 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.signinTour p {
+  margin-block: 10px 18px;
+  max-width: 45ch;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
 .binaryArt .chip {
   width: min(440px, 100%);
   height: auto;
@@ -13,7 +123,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-block-start: 24px;
+  margin-block-start: 8px;
   padding-block: 8px;
 }
 
@@ -165,6 +275,12 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .tourButton:hover,
+  .landingNav .navTour:hover {
+    background: var(--soft);
+    color: var(--ink);
+  }
+
   .binaryControls button:hover {
     border-color: var(--link);
     background: var(--soft);
@@ -172,6 +288,46 @@
 }
 
 @media (max-width: 780px) {
+  .signinSection.signinSection {
+    row-gap: 28px;
+  }
+
+  .signinSection > :global(.auth-form) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .signinTour {
+    grid-row: 3;
+    margin-block-start: 0;
+  }
+
+  .landingNav.landingNav {
+    height: auto;
+    min-height: 73px;
+    flex-wrap: wrap;
+    padding-block: 12px;
+    gap: 12px;
+  }
+
+  .landingNav .landingNavigation {
+    display: flex;
+    order: 3;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    padding-block-start: 10px;
+    border-block-start: 1px solid var(--line);
+    gap: 8px 16px;
+    font-size: 13px;
+  }
+
+  .landingNavigation > a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
   .binaryArt .chip {
     width: min(340px, 100%);
   }
@@ -182,6 +338,26 @@
 
   .testimonials {
     padding-block: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .landingNav .landingNavigation {
+    gap: 4px 10px;
+    font-size: 12px;
+  }
+
+  .landingNav .navTour {
+    gap: 5px;
+    padding-inline: 8px;
+  }
+
+  .signinTour {
+    gap: 10px;
+  }
+
+  .signinTour .tourMascot {
+    width: 48px;
   }
 }
 
