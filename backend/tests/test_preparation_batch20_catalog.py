@@ -20,6 +20,7 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+from tests.preparation_history import technical_before_batch90
 from tests.test_practice_hardening import scripted
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -90,9 +91,7 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
     questions = {item["id"]: item for item in archive()["questions"]}
     for ident, expected_hash in SOURCE_ONLY_TECHNICAL_SHA256.items():
         question = questions[ident]
-        technical = json.loads(json.dumps({
-            key: question.get(key) for key in ("version", "translations", "prepared_hints")
-        }))
+        technical = technical_before_batch90(question)
         if ident in LATER_APPEND_PREFIX_LENGTHS:
             baseline = LATER_APPEND_PREFIX_LENGTHS[ident]
             assert question["version"] >= baseline["version"] + 1, ident
@@ -107,8 +106,8 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
 
 
 def test_nine_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 176
-    assert len(catalog.questions) == 206
+    assert len(archive()["questions"]) == 186
+    assert len(catalog.questions) == 216
     additions = {q.assets.get("preparation_id"): q for q in catalog.questions.values()
                  if q.assets.get("preparation_id") in NEW_IDS}
     assert set(additions) == NEW_IDS

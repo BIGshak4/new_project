@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "enumerated_initial_states": 8190,
+  "additional_cases": 15,
+  "cases": 8205,
+  "domain": "All bit patterns at each size 1..12, plus five larger sizes and three initial patterns.",
+  "cost": "N reads + N+1 writes, independent of initial bits",
+  "limitations": "Destructive abstract Python interface model; no physical RAM, concurrency or address-overflow test."
+}

@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "cases": 97655,
+  "domain": "All nonempty arrays over -2,-1,0,1,2 at lengths 1..7",
+  "oracle": "Enumerate every nonempty interval; choose maximal sum, earliest start, then earliest exclusive end",
+  "stream_contract": "One iteration, each item consumed once, no indexing, length query or replay",
+  "empty_input": "ValueError",
+  "limitations": "Finite exact Python integer model; no bounded-width C overflow or infinite-stream termination claim."
+}

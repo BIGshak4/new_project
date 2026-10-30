@@ -548,12 +548,18 @@
       "he": {
         "requested_output": "המקור מבקש רצף אך הדוגמה מחזירה סכום. הפתרון מחזיר סכום וגבולות, ומהם אפשר להפיק את שתי צורות הפלט.",
         "example": "תעתיק ASCII אפשרי: [1,-4,-2,5,1,0,-5,4,1,-3,-3]. בו המקסימום 6, לא 7. סימנים וסדר בצילום RTL אינם ודאיים; אין התאמה מומצאת ל־7.",
-        "edited_example": "דוגמה נפרדת: [-2,1,-3,4,-1,2,1,-5,4] מחזירה (6,3,6)."
+        "edited_example": "דוגמה נפרדת: [-2,1,-3,4,-1,2,1,-5,4] מחזירה (6,3,6).",
+        "batch90_sequential_access": [
+          "הצילום החדש אוסר גישה אקראית. נוסח העריכה מגדיר זרם סופי ופלט גבולות וסכום; החזרת האיברים עצמם דורשת חוזה זיכרון או קריאה חוזרת נפרד."
+        ]
       },
       "en": {
         "requested_output": "Source asks for an interval but its example returns a sum. Return sum plus boundaries, supporting either output form.",
         "example": "Possible ASCII transcription: [1,-4,-2,5,1,0,-5,4,1,-3,-3]. Its maximum is six, not seven. RTL sign/order is uncertain; no fabricated seven match.",
-        "edited_example": "Separate example: [-2,1,-3,4,-1,2,1,-5,4] returns (6,3,6)."
+        "edited_example": "Separate example: [-2,1,-3,4,-1,2,1,-5,4] returns (6,3,6).",
+        "batch90_sequential_access": [
+          "The new source forbids random access. The edited variant defines a finite stream and boundaries-plus-sum output; returning values needs a separate buffering or replay contract."
+        ]
       }
     },
     "optimality": {
@@ -571,8 +577,8 @@
       }
     },
     "verification": {
-      "he": "עברו כל 97,656 המערכים באורכים 0–7 מעל ‎-2..2 ועוד 500 מערכי מספרים גדולים. אורקל עצמאי מונה כל רצף לא־ריק ומחשב את סכומו ישירות; משווה סכום, שני גבולות ושוויונות. נבדקה גם אי־התאמה בין טענת 7 לבין התעתיק האפשרי שמחזיר 6. קוד פייתון רץ בפועל; אין עדיין סקירה מקצועית אנושית עצמאית.",
-      "en": "Passed all 97,656 arrays of lengths 0..7 over -2..2 plus 500 large-integer arrays. Independent oracle enumerates every nonempty interval and sums directly; checks include sum, both boundaries and ties. Also verified the seven-versus-six discrepancy for the possible source transcription. Python executed; independent human professional review pending."
+      "he": "עברו כל 97,656 המערכים באורכים 0–7 מעל ‎-2..2 ועוד 500 מערכי מספרים גדולים. אורקל עצמאי מונה כל רצף לא־ריק ומחשב את סכומו ישירות; משווה סכום, שני גבולות ושוויונות. נבדקה גם אי־התאמה בין טענת 7 לבין התעתיק האפשרי שמחזיר 6. קוד פייתון רץ בפועל; אין עדיין סקירה מקצועית אנושית עצמאית.\n\nבנוסף לבדיקות הקודמות, הווריאציה הטורית עברה 97,655 השוואות מול מנייה עצמאית של כל הקטעים באורכים 1–7 מעל חמשת הערכים −2..2; נבדקו שוויונות, שליליים בלבד ואיסור מעבר נוסף.",
+      "en": "Passed all 97,656 arrays of lengths 0..7 over -2..2 plus 500 large-integer arrays. Independent oracle enumerates every nonempty interval and sums directly; checks include sum, both boundaries and ties. Also verified the seven-versus-six discrepancy for the possible source transcription. Python executed; independent human professional review pending.\n\nIn addition to prior checks, the stream variant passed 97,655 comparisons with independent interval enumeration at lengths 1–7 over values −2..2, including ties, all-negative input and no replay."
     },
     "edge_cases": {
       "he": [
@@ -624,6 +630,24 @@
         "question": "What changes if the array is circular and an interval may wrap?",
         "direction": "Consider the ordinary maximum or total sum minus a minimum-sum interval. Prevent an empty complement when that minimum covers the whole array, especially for all-negative inputs, and define wraparound boundaries.",
         "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+      }
+    },
+    "prompt_variants": {
+      "he": {
+        "stream_sequential_only": "### וריאציה: מותר לקרוא את הקלט רק לפי סדר\nהקלט הוא זרם סופי ולא ריק של מספרים שלמים. אפשר לקבל את האיבר הבא בלבד; אין אינדוקס, אורך ידוע מראש, חזרה לאחור או קריאה חוזרת. החזירו סכום מרבי של קטע רציף לא ריק ואת גבולותיו [start,end), שמתחילים מאינדקס 0. בשוויון בחרו תחילה התחלה מוקדמת ואחריה סיום מוקדם. הסבירו מה משתנה אם מבקשים גם להחזיר את האיברים עצמם. מספרים שלמים מדויקים הם הנחת המודל; בטיפוס מוגבל צריך לטפל בגלישה.",
+        "stream_hints": [
+          "שמרו את הקטע הטוב ביותר שמסתיים בפריט הנוכחי.",
+          "סכום שלילי עד עכשיו אינו עוזר להמשך; אפשר להתחיל מן הפריט הבא.",
+          "החזיקו שני רישומים: המסתיים כעת והשיא; גבולות וסכום אינם דורשים את שמירת כל האיברים."
+        ]
+      },
+      "en": {
+        "stream_sequential_only": "### Variant: input may only be read in sequence\nThe input is a finite nonempty stream of integers. Only the next item is available: no indexing, known length, rewinding or replay. Return a maximal sum of a nonempty contiguous interval and its zero-based half-open boundaries [start,end). Break ties by earlier start, then earlier end. Explain what changes if the actual values must also be returned. Exact integer arithmetic is the model; bounded types need overflow handling.",
+        "stream_hints": [
+          "Track the best interval ending at the current item.",
+          "A negative prefix cannot help a future continuation, so restart at the next item.",
+          "Keep ending-here and best-so-far records; indices and sum do not require all values."
+        ]
       }
     }
   },

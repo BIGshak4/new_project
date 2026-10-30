@@ -112,6 +112,14 @@
             "כתבו D_i=q_i XOR T_i. לשני הכיוונים T0=e. לעלייה T1=e AND q0 ו־T2=e AND q1 AND q0; לירידה החליפו את בדיקות הביטים הנמוכים בבדיקות אפס. כל q הוא הערך הישן באותה חזית."
           ],
           "integration_status": "הרמזים הוכנו כתוכן משלים; התור הקיים אינו בוחר אותם אוטומטית לפי וריאנט."
+        },
+        "two_bit_enable_direction": {
+          "prompt": "### וריאציה חדשה: שתי יציאות ואות כיוון\nא. תכננו מונה בן שני ביטים: Inc=1 מגדיל באחד בחזית העולה הבאה, ו־Inc=0 שומר מצב.\nב. הוסיפו Dec כאות בחירת כיוון: Dec=1 סופר למטה ו־Dec=0 למעלה. נשמר Inc כאפשר־ספירה, ולכן Inc=0 שומר מצב בכל כיוון. המצב הוא 0..3 מודולו 4, עם איפוס סינכרוני לאפס.\n\nזהו חוזה עריכה מפורש: בצילום נאמר שתי יציאות ו־Dec כאות כיוון, אך לא נקבע במפורש איך Dec פועל כש־Inc=0. אם הכוונה לשתי בקשות עצמאיות, זוהי הגרסה המקורית למעלה; שם 11 מחזיק מצב, ואילו כאן 11 מקטין. אין להחליף ביניהן בשקט.",
+          "hints": [
+            "הפרידו את ההחלטה אם לספור מההחלטה לאיזה כיוון.",
+            "בעלייה q1 מתהפך כש־q0 הישן הוא 1; בירידה כש־q0 הישן הוא 0.",
+            "T0=Inc ו־T1=Inc AND (q0 XOR Dec). כל כניסת D היא q XOR T."
+          ]
         }
       },
       "en": {
@@ -123,6 +131,14 @@
             "Write D_i=q_i XOR T_i. Both directions use T0=e. Up uses T1=e AND q0, T2=e AND q1 AND q0; down tests lower bits for zero instead. Every q is the old value at the same edge."
           ],
           "integration_status": "Hints are prepared supplementary content; the current queue does not automatically select them by variant."
+        },
+        "two_bit_enable_direction": {
+          "prompt": "### New variant: two outputs and a direction control\nA. Design a two-bit counter: Inc=1 increments at the next rising edge, and Inc=0 holds.\nB. Add Dec as a direction selector: Dec=1 counts down and Dec=0 counts up. Retain Inc as count-enable, so Inc=0 holds in either direction. State wraps modulo four, with synchronous reset to zero.\n\nThis is an explicit editorial contract: the screenshot says two outputs and describes Dec as direction, but does not specify its behavior when Inc=0. Independent request controls are the original variant above: there 11 holds; here 11 decrements. Do not silently interchange the interfaces.",
+          "hints": [
+            "Separate whether to count from which direction to use.",
+            "Counting up toggles q1 at old q0=1; counting down toggles it at old q0=0.",
+            "T0=Inc and T1=Inc AND (q0 XOR Dec). Each D input is q XOR T."
+          ]
         }
       }
     }

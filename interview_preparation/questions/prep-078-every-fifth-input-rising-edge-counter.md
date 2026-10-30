@@ -268,3 +268,16 @@ Store the previous sample and compute e=x AND NOT previous. Enable the counter o
 - [solutions/prep_078_fifth_rise.sv](../solutions/prep_078_fifth_rise.sv)
 - [checks/check_prep_078.py](../checks/check_prep_078.py)
 - [checks/prep-078-verification.json](../checks/prep-078-verification.json)
+
+
+## מקור נוסף — 30.10.2026, מקבץ90
+
+[צילום מקור פרטי 17](../sources/2026-10-30-batch90-17.png)
+
+ממש גוזר בעליית שעון ביחס של 1:50.
+
+שיוכי מקור מדווחים: Apple.
+
+נוספה וריאציה טכנית בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו כתחילית. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-078-fiftieth_edge-batch90-addendum.md)

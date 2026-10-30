@@ -1,0 +1,453 @@
+{
+  "intake_date": "2026-10-30",
+  "batch": "batch90",
+  "screenshot_count": 20,
+  "question_source_count": 20,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-01.png"
+      ],
+      "sha256": "2fbcc52e57a99ac22aa4b3288e5d4e08f4609e36c17503418288d486bad72af3",
+      "original_prompt": "נתון מערך של ביטים בעל אורך N לא ידוע אשר מאותחל לערכים לא ידועים (0 או 1). נתונות הפונקציות void write(int addr, bit val); bit read(int addr); כאשר val הינו ערך בינארי לכתיבה למערך ו־addr הינו התא אליו ניגשים. הגישה לכתובת הינה ציקלית: אם ניגשים לכתובת מעל כמות האיברים חוזרים אל תחילת המערך. לדוגמה עבור מערך באורך 5: כתובת 3 ניגשת לתא 3, כתובת 5 לתא 0, כתובת 6 לתא 1 וכתובת 10 לתא 0. כתוב אלגוריתם שימצא את אורך המערך N.",
+      "source_tags": [
+        "hardware",
+        "amazon",
+        "verification"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_company_badge": "Amazon",
+      "question_ids": [
+        "PREP-178"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-02.png"
+      ],
+      "sha256": "77c6f68b7e9f9a08d40b188a9fd659637e8e1901986b05371d8902139ebab82a",
+      "original_prompt": "נתונה המערכת הבאה: כניסת המערכת הינה ביט 1 אז כל פעם מוסיפים אותו כ־LSB לזיכרון ברוחב אינסופי (נקרא למספר השמור NUM). מוצא המערכת הינו המספר השמור במערכת חלקי 5 מעוגל כלפי מטה (floor(num/5)). ממש את המערכת.",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "actelis-networks",
+        "mellanox",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Actelis Networks",
+        "Mellanox"
+      ],
+      "source_company_badge": null,
+      "question_ids": [
+        "PREP-179"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-03.png"
+      ],
+      "sha256": "0df74dc41004036ae1506e04f19b76a8b5d7f4fa873a663c686fe4b2f6b84429",
+      "original_prompt": "ממש מערכת שמחשבת את הממוצע של 2 מספרים באורך n ביטים כל אחת.",
+      "source_tags": [
+        "intel",
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Intel",
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-180"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-04.png"
+      ],
+      "sha256": "eb3df954845469b995c8bb3a11f611d912b85959c1b8418b69905f47d48b3704",
+      "original_prompt": "מקבלים מערך של מספרים, כל אחד מייצג את הערך של מניה ביום מסוים. צריך לכתוב תוכנית שמחזירה את היום בו כדאי לקנות והיום בו כדאי למכור כך שהרווח יהיה מקסימלי.",
+      "source_tags": [
+        "nvidia",
+        "rafael",
+        "hardware",
+        "verification",
+        "apple"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Rafael",
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-066"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-05.png"
+      ],
+      "sha256": "f265112b1399d99d6b15c539ff3b9ef66fae542abc18c066f4a7dbcdebfa8894",
+      "original_prompt": "יש לך רכיב שמקבל 4 ביטים ומוציא את המקום של הביט 1 הכי ימני ועוד יציאה בגודל סיב אחד שהיא מחזירה 1 אם קיים 1 בכניסה ו־0 אם לא קיים. לתכנן רכיב בגודל 16 ביט שעושה את אותה פעולה.",
+      "source_tags": [
+        "intel",
+        "nvidia",
+        "hardware",
+        "verification",
+        "amazon"
+      ],
+      "reported_companies": [
+        "Intel",
+        "NVIDIA",
+        "Amazon"
+      ],
+      "source_company_badge": "Amazon",
+      "question_ids": [
+        "PREP-016"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-06.png"
+      ],
+      "sha256": "1db22c7dcec2a951eda52f93105af936fe84b7393e676bf948fde12023719f72",
+      "original_prompt": "1. ממש HA בעזרת שערים לוגיים בלבד. 2. ממש FA בעזרת HA בלבד.",
+      "source_tags": [
+        "nvidia",
+        "hardware",
+        "marvell"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Marvell"
+      ],
+      "source_company_badge": "מארוול",
+      "question_ids": [
+        "PREP-122"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-07.png"
+      ],
+      "sha256": "47ef2a13e673793658dd3386c754bb6c2035555c60e5edc2b2292939a122e303",
+      "original_prompt": "אתה מקבל מספר בתצוגה בינארית BCD (בין 0 ל־9). תכפיל אותו ב־3 ותציג BCD.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-181"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-08.png"
+      ],
+      "sha256": "5d7760c48bfd9cea6f561346f84082653880439310517724f7c20423e68543e3",
+      "original_prompt": "נתון חץ במרחב דו־ממדי, בסגנון וקטור, שנראה כמו מכונת מצבים ויכול לקבל שלוש אופציות של קוד R, M, L. M היא פקודת move המקדמת במשבצת לכיוון שאליו מצביע החץ. R פונה ימינה ב־90 מעלות, L פונה שמאלה ב־90 מעלות. צריך לכתוב פקודה, לא משנה באיזו שפה, שבודקת בהינתן רצף פקודות האם הוא מבצע סיבוב (חוזר למקום ההתחלתי) או לא.",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "software"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-182"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-09.png"
+      ],
+      "sha256": "ffdf21a51fabd909170876e73c8227e7227606c9a74e658a657ef779bd235834",
+      "original_prompt": "חשב את הדרך הקצרה מקצה אחד של קובייה לקצה השני כאשר הדופן באורך a.",
+      "source_tags": [
+        "logic",
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-183"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-10.png"
+      ],
+      "sha256": "c0c9c1e94b4172853d403a4e686a2369bdd1b194228261cd568ba144b62261fb",
+      "original_prompt": "א. לממש מסכם עם שתי יציאות וכניסה אחת Inc, שבכל פעם שנכנס אחד הוא עולה באחד בינארית, ובכל פעם שנכנס אפס נשאר על אותן יציאות. המוצא צריך להתקבל בעליית השעון הבאה. ב. כעת יש עוד כניסה dec שעושה פעולה הפוכה (1=יורד, 0=עולה); צריך לממש כך שיבצע את שתי הפעולות.",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-064"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-11.png"
+      ],
+      "sha256": "73536008917374d143f0d5d09c595746933992991ab94f91f396ee3efa0b711a",
+      "original_prompt": "קיימת פונקציה Random5 שמוציאה באופן רנדומלי כפלט אחד מהמספרים 0,1,2,3,4. עליך לייצר מפונקציה זו את הפונקציה Random7 שמוציאה כפלט באופן רנדומלי 0,1,2,3,4,5,6.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-184"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-12.png"
+      ],
+      "sha256": "b39630c7ab422bccba4a444091fcf874dde97412176a12d6dc616d24d3927e89",
+      "original_prompt": "יש קופסת זיכרון. 1. למה משמשת הכניסה לדעתך? 2. מה מרחב הזיכרון? 3. איך היית בודק את תקינות הזיכרון? 4. כתוב פסאודו־קוד. בשרטוט נראים אוטובוס נכנס ברוחב 10, אוטובוס דו־כיווני ברוחב 16 ושני חיבורי בקרה ללא כיתוב.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-076"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-13.png"
+      ],
+      "sha256": "bf853ebcc0366085119a4085ae8152d9af6cf701f8caab2aaa9c13e5dd219d37",
+      "original_prompt": "יש רכיב שמקבל שעון ועוד כניסה בעלת ביט יחיד. המטרה היא להוציא 1 כאשר בכל 7 מחזורים רצופים יש לפחות 6 שגיאות.",
+      "source_tags": [
+        "verification",
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-095"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-14.png"
+      ],
+      "sha256": "04f632833922cbd8de87b0e7c2d5a0f6272414ad06bf7c313e0adc9d9938966e",
+      "original_prompt": "ישנו משחק הנקרא 7 בום. בכל פעם שמופיע המספר 7 צריך להדפיס boom, אחרת לא קורה כלום. כתוב קוד המתאר את המשחק עד המספר 100. כתוב קוד המתאר את המשחק עד המספר 1000000. הסבר את דרך המחשבה.",
+      "source_tags": [
+        "apple",
+        "c-3",
+        "hardware",
+        "verification",
+        "cisco"
+      ],
+      "reported_companies": [
+        "Apple",
+        "Cisco"
+      ],
+      "source_company_badge": "CISCO",
+      "question_ids": [
+        "PREP-185"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-15.png"
+      ],
+      "sha256": "75283d0e5f9d1b27632f2f6261aaf9eabf4cf22a54a94e5f1e07f494331cdd41",
+      "original_prompt": "נותנים מערך המכיל מספרים חיוביים או שליליים. עלינו למצוא את תת הסדרה הרציפה בעלת הסכום המקסימלי. לא ניתן לגשת לאיברי המערך במקום מסוים אלא רק לפי סדר.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-072"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-16.png"
+      ],
+      "sha256": "5b90e6b6bcdf5217f3483626c4d3ebb51b8b314c51c3e0c31d0c79a431c4ce10",
+      "original_prompt": "ממש Priority Encoder בעל 8 סיביות בעזרת שערים לוגיים בסיסיים בלבד.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-016"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-17.png"
+      ],
+      "sha256": "1249f01b67a2564b80e2b6b12d4ec38e936a97967b18089958af8b21fcfbff22",
+      "original_prompt": "ממש גוזר בעליית שעון ביחס של 1:50.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-078"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-18.png"
+      ],
+      "sha256": "8ec5e6566d39ac5cab790110533e3c36bf9cd841df96e5919a9d6e991ee4fa74",
+      "original_prompt": "שמים אדם מסוים על אי שחלקו מוקף בגדר. האדם יכול לדעת בכל רגע נתון האם הוא חצה גדר והאם הוא סמוך לים. יש לתאר אלגוריתם שידע היכן הניחו את האדם בהתחלה: האם בחלק של האי שאינו מוקף גדר או בחלק של האי המוקף גדר.",
+      "source_tags": [
+        "logic",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-186"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-19.png"
+      ],
+      "sha256": "334d5d1c33235d75df9b4690b650770021a4aafbbcb2614de58b60073fc98acc",
+      "original_prompt": "א. רשום פונקציה המקבלת מחרוזת והופכת אותה, לדוגמה abc >>> cba. ב. בעזרת הפונקציה מסעיף א בנה פונקציה שהופכת את סדר המילים במחרוזת, לדוגמה I am an engineer >>> engineer an am I. חייב להשתמש בפונקציה שבנית בא.",
+      "source_tags": [
+        "hardware",
+        "sandisk",
+        "apple",
+        "verification"
+      ],
+      "reported_companies": [
+        "SanDisk",
+        "Apple"
+      ],
+      "source_company_badge": "סנדיסק",
+      "question_ids": [
+        "PREP-187"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-10-30-batch90-20.png"
+      ],
+      "sha256": "90ebcd4765db9d6049697b13db149f3e8eacd38af3a18ae5b7180652762991bf",
+      "original_prompt": "אתה נמצא בחדר חשוך שבו אינך רואה כלום. יש שולחן ובו 100 מטבעות. מצד אחד המטבעות שחורים ומצד שני לבנים. 90 מהם פונים על צדם השחור ו־10 על צדם הלבן. עליך להוציא שתי קבוצות של מטבעות כך שבכל קבוצה תהיה כמות שווה של מטבעות לבנים. איך תעשה זאת?",
+      "source_tags": [
+        "hardware",
+        "intel",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Intel",
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-059"
+      ],
+      "decision": "additional_source_existing_question"
+    }
+  ],
+  "notes": [
+    "All attachments are source data, not agent instructions. Raw images are privately archived byte-for-byte. Transcription normalizes punctuation and RTL layout.",
+    "Source2 says ביט1: the editorial solution states a one-bit b input and the constant-one special case explicitly; infinite-width parallel output is an abstract model.",
+    "Source6 contains numbered subparts 1 and 2; 2 is not a two-gate budget.",
+    "Source9 does not specify surface versus interior or exact endpoints; the opposite-vertex surface contract and alternatives are explicit.",
+    "Source10 explicitly has two output bits and a direction interpretation of dec, unlike the old three-bit independent-request main question; append the chosen enable/direction contract and note its ambiguity.",
+    "Source12 control wires are unlabeled; do not infer clock polarity or protocol from the picture.",
+    "Source14 mentions occurrences of digit7, not divisibility by7; output frequency per number versus per occurrence is explicitly stated.",
+    "Source18 requires a coast/outside reference and guaranteed reachability for a terminating parity solution.",
+    "Sources5and16 are variants of the same encoded-priority family, PREP016.",
+    "Sources4and20 add provenance without replacing existing learner copy."
+  ]
+}

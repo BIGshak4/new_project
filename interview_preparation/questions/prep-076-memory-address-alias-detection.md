@@ -227,3 +227,16 @@ Write all addresses before reading any back. If words cannot hold unique address
 - [solutions/prep_076_address_alias.py](../solutions/prep_076_address_alias.py)
 - [checks/check_prep_076.py](../checks/check_prep_076.py)
 - [checks/prep-076-verification.json](../checks/prep-076-verification.json)
+
+
+## מקור נוסף — 30.10.2026, מקבץ90
+
+[צילום מקור פרטי 12](../sources/2026-10-30-batch90-12.png)
+
+יש קופסת זיכרון. 1. למה משמשת הכניסה לדעתך? 2. מה מרחב הזיכרון? 3. איך היית בודק את תקינות הזיכרון? 4. כתוב פסאודו־קוד. בשרטוט נראים אוטובוס נכנס ברוחב 10, אוטובוס דו־כיווני ברוחב 16 ושני חיבורי בקרה ללא כיתוב.
+
+שיוכי מקור מדווחים: Apple.
+
+נוספה וריאציה טכנית בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו כתחילית. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-076-capacity-batch90-addendum.md)

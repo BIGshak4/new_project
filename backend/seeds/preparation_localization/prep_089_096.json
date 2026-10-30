@@ -750,12 +750,20 @@
       "he": [
         "עשר הדגימות כוללות את הנוכחית; Y=1 אם ורק אם יש לפחות שלושה אחדים.",
         "איפוס והשלמת התחלה באפס; ללא מחזור השהיה נוסף במוצא.",
-        "יש לקבוע דגימת X וקריאת Y מיוצבת ללא מרוץ; אין ערכי X/Z."
+        "יש לקבוע דגימת X וקריאת Y מיוצבת ללא מרוץ; אין ערכי X/Z.",
+        "חלון חופף בן7 הכולל את הדגימה הנוכחית; לפחות6 ולא בדיוק6.",
+        "לעניין ההתחלה נבחר חלון מלא; זו תוספת מוצהרת ואינה משנה את המקור095.",
+        "חלון חופף בן 7 הכולל את הדגימה הנוכחית; לפחות 6 ולא בדיוק 6.",
+        "לעניין ההתחלה נבחר חלון מלא; זו תוספת מוצהרת ואינה משנה את המקור 095."
       ],
       "en": [
         "Last ten includes the current logical sample; Y iff the count is at least three.",
         "Reset zeroes history; missing warmup samples are zero; no extra output cycle latency.",
-        "Define race-free X acquisition and settled Y observation; no X/Z values."
+        "Define race-free X acquisition and settled Y observation; no X/Z values.",
+        "An overlapping seven-sample window including the current sample; at least six, not exactly six.",
+        "Full-window startup is an explicit added policy; original095 is unchanged.",
+        "An overlapping seven-sample window including the current sample; at least six, not exactly six.",
+        "Full-window startup is an explicit added policy; original095 is unchanged."
       ]
     },
     "waveform_observations": {
@@ -771,11 +779,19 @@
     "source_ambiguities": {
       "he": [
         "אין במקור הגדרה מפורשת למוצא אחרת, לאיפוס, להתחלה, להשהיה או לסדר אירועי השעון.",
-        "חוזה השלמת האפסים והדיווח באותה דגימה נוסף בעריכה וצריך להתאים לרכיב שנבדק."
+        "חוזה השלמת האפסים והדיווח באותה דגימה נוסף בעריכה וצריך להתאים לרכיב שנבדק.",
+        "המקור אינו קובע התנהגות באתחול; נבחר חלון מלא.",
+        "הביטוי „בכל7” מפורש כאן כחלון נע של הדגימות האחרונות, לא כבלוקים.",
+        "המקור אינו קובע התנהגות באתחול; נבחר חלון מלא.",
+        "הביטוי „בכל 7” מפורש כאן כחלון נע של הדגימות האחרונות, לא כבלוקים."
       ],
       "en": [
         "Source does not define otherwise-zero behavior, reset, warmup, output latency or scheduling for X changes on clock edges.",
-        "The edited zero-padding and same-cycle contract must be agreed before connecting a DUT."
+        "The edited zero-padding and same-cycle contract must be agreed before connecting a DUT.",
+        "The source omits startup; full windows are chosen explicitly.",
+        "“Every7” is interpreted as a sliding recent-sample window, not disjoint blocks.",
+        "The source omits startup; full windows are chosen explicitly.",
+        "“Every7” is interpreted as a sliding recent-sample window, not disjoint blocks."
       ]
     },
     "edge_cases": {
@@ -783,13 +799,25 @@
         "בדיוק שניים לעומת שלושה אחדים.",
         "יציאת האחד הישן לאחר עשר דגימות כלולות בדיוק.",
         "איפוס כש־Y גבוה וכניסה לסף לפני עשר דגימות.",
-        "אורך מוצאים שונה מאורך הקלט וקלט שאינו בינארי."
+        "אורך מוצאים שונה מאורך הקלט וקלט שאינו בינארי.",
+        "דגימה6 עדיין אינה חלון מלא.",
+        "בדיוק6 או7 שגיאות בחלון: פלט1.",
+        "ירידה טבעית של count אחרי יציאת שגיאה; reset מתחיל חלון חדש.",
+        "דגימה 6 עדיין אינה חלון מלא.",
+        "בדיוק 6 או 7 שגיאות בחלון: פלט 1.",
+        "ירידה טבעית של count אחרי יציאת שגיאה; reset מתחיל חלון חדש."
       ],
       "en": [
         "Exactly two versus exactly three ones.",
         "Oldest one expires precisely after ten included samples.",
         "Reset after a high output; startup may reach threshold before ten samples.",
-        "Observed sequence length mismatch and nonbinary input."
+        "Observed sequence length mismatch and nonbinary input.",
+        "Sample six is not a full window.",
+        "Exactly six or seven errors in the window: output1.",
+        "Count decreases as an old error expires; reset starts a fresh window.",
+        "Sample six is not a full window.",
+        "Exactly six or seven errors in the window: output 1.",
+        "Count decreases as an old error expires; reset starts a fresh window."
       ]
     },
     "common_mistakes": {
@@ -797,37 +825,63 @@
         "ספירת כל ההיסטוריה או חלוקה למקטעים נפרדים של עשרה.",
         "השוואה לפני הכנסת X או הוצאת הביט הישן מוקדם מדי.",
         "חישוב ציפייה ללא השוואה ל־Y האמיתי.",
-        "קריאת Y בשלב סימולציה שגוי או שינוי השהיה ללא מפרט."
+        "קריאת Y בשלב סימולציה שגוי או שינוי השהיה ללא מפרט.",
+        "בדיקה פעם בשבעה מחזורים בלבד.",
+        "בדיקת count הישן וחלון שזז מחזור מאוחר.",
+        "אי־הגדרת התנהגות לפני שבע דגימות.",
+        "בדיקה פעם בשבעה מחזורים בלבד.",
+        "בדיקת count הישן וחלון שזז מחזור מאוחר.",
+        "אי־הגדרת התנהגות לפני שבע דגימות."
       ],
       "en": [
         "Counting lifetime ones or disjoint ten-sample blocks.",
         "Comparing before inserting current X or expiring a sample one cycle too soon.",
         "Computing expected Y without comparing actual DUT Y.",
-        "Reading Y in the wrong simulator phase or silently changing latency."
+        "Reading Y in the wrong simulator phase or silently changing latency.",
+        "Checking only every seventh cycle.",
+        "Using old count and reporting one cycle late.",
+        "Leaving startup behavior unstated.",
+        "Checking only every seventh cycle.",
+        "Using old count and reporting one cycle late.",
+        "Leaving startup behavior unstated."
       ]
     },
     "optimality": {
-      "he": "היסטוריה של עשרה ביטים נותנת אחסון ועבודה חסומים לכל מחזור. לחלון W נדרשים W ביטים; אין טענת מינימום שטח חומרה.",
-      "en": "A fixed ten-bit history is bounded storage with fixed per-cycle work. Generalized W-bit history costs W bits; no minimum circuit-area claim."
+      "he": "היסטוריה של עשרה ביטים נותנת אחסון ועבודה חסומים לכל מחזור. לחלון W נדרשים W ביטים; אין טענת מינימום שטח חומרה.\n\nאוגר היסטוריה בן7 ביטים וספירות קטנות; עדכון קבוע לכל דגימה. אין טענת מינימום חומרה.\n\nאוגר היסטוריה בן 7 ביטים וספירות קטנות; עדכון קבוע לכל דגימה. אין טענת מינימום חומרה.",
+      "en": "A fixed ten-bit history is bounded storage with fixed per-cycle work. Generalized W-bit history costs W bits; no minimum circuit-area claim.\n\nSeven history bits and small counters; constant work per sample. No hardware minimum claimed.\n\nSeven history bits and small counters; constant work per sample. No hardware minimum claimed."
     },
     "verification": {
-      "he": "עברו 32,767 רצפים בינאריים עד אורך 14, 425,986 השוואות דגימה לסכומי פרוסות מפורשים וזוהו 98,298 שיבושי מוצא במחזור יחיד. נבדקו איפוס, כניסה לסף ופקיעה, קלט שגוי ואורך לא תואם. Python בלבד; ללא DUT חי או סימולציית HDL.",
-      "en": "Passed 32,767 binary streams through length fourteen, 425,986 sample comparisons against explicit suffix sums, and 98,298 injected single-cycle output corruptions. Reset, threshold arrival/expiry, invalid samples and length mismatch checked. Python only; no live DUT or HDL simulation."
+      "he": "עברו 32,767 רצפים בינאריים עד אורך 14, 425,986 השוואות דגימה לסכומי פרוסות מפורשים וזוהו 98,298 שיבושי מוצא במחזור יחיד. נבדקו איפוס, כניסה לסף ופקיעה, קלט שגוי ואורך לא תואם. Python בלבד; ללא DUT חי או סימולציית HDL.\n\n8,191 מילים ו־90,114 תצפיות קידומת מול סכומי חלונות בלתי תלויים. ה־SV לא הודר.\n\n8,191 מילים ו־90,114 תצפיות קידומת מול סכומי חלונות בלתי תלויים. ה־SV לא הודר.",
+      "en": "Passed 32,767 binary streams through length fourteen, 425,986 sample comparisons against explicit suffix sums, and 98,298 injected single-cycle output corruptions. Reset, threshold arrival/expiry, invalid samples and length mismatch checked. Python only; no live DUT or HDL simulation.\n\n8,191 words and90,114 prefix observations against independent window sums. SV was not compiled.\n\n8,191 words and 90,114 prefix observations against independent window sums. SV was not compiled."
     },
     "interview_answer": {
-      "he": "מכניסים X לחלון זז של עשר דגימות ומוציאים את הישנה. מצפים ל־Y=1 אם יש לפחות שלושה אחדים ומשווים למוצא המיוצב לפי איפוס, התחלה והשהיה שהוגדרו.",
-      "en": "Retain a ten-sample sliding history, insert current X and expire the oldest, then expect Y iff at least three bits are one. Compare with settled DUT Y using an explicit reset, warmup and latency convention."
+      "he": "מכניסים X לחלון זז של עשר דגימות ומוציאים את הישנה. מצפים ל־Y=1 אם יש לפחות שלושה אחדים ומשווים למוצא המיוצב לפי איפוס, התחלה והשהיה שהוגדרו.\n\nאשמור את שבע הדגימות האחרונות ואת סכומן. אוסיף את הקלט ואחסיר את היוצא, ואשווה את הסכום החדש לשש כאשר יש חלון מלא.\n\nאשמור את שבע הדגימות האחרונות ואת סכומן. אוסיף את הקלט ואחסיר את היוצא, ואשווה את הסכום החדש לשש כאשר יש חלון מלא.",
+      "en": "Retain a ten-sample sliding history, insert current X and expire the oldest, then expect Y iff at least three bits are one. Compare with settled DUT Y using an explicit reset, warmup and latency convention.\n\nRetain seven samples and their sum, add the incoming bit, subtract the outgoing bit and compare the updated sum with six once the window is full.\n\nRetain seven samples and their sum, add the incoming bit, subtract the outgoing bit and compare the updated sum with six once the window is full."
     },
     "solution_extensions": {
       "he": {
         "question": "איך מעדכנים מונה בחומרה בלי לסכם מחדש את כל החלון?",
         "direction": "שומרים היסטוריה ומעדכנים מונה באמצעות הביט הנכנס פחות היוצא. הרוחב צריך להכיל 0 עד 10, וההשוואה היא למונה המעודכן.",
-        "status": "מוכן בתוכן; אינו מחובר לתור המשך חי."
+        "status": "מוכן בתוכן; אינו מחובר לתור המשך חי.",
+        "batch90_six_of_seven": [
+          {
+            "question": "מה משתנה אם מותר ריפוד באפסים בהתחלה?",
+            "answer_direction": "אפשר להסיר את חסימת filled; שש 1 ראשונות ידליקו כבר בדגימה 6. שאר משוואות הספירה נשארות.",
+            "principle": "מדיניות אתחול משנה את העקבות הראשונות."
+          }
+        ]
       },
       "en": {
         "question": "How can hardware update a count without recounting the whole window?",
         "direction": "Keep history and update count = count + incoming_bit - outgoing_bit, using widths that represent zero through ten and comparing the updated count.",
-        "status": "Prepared; not connected to the live follow-up queue."
+        "status": "Prepared; not connected to the live follow-up queue.",
+        "batch90_six_of_seven": [
+          {
+            "question": "What changes with zero-padded startup?",
+            "answer_direction": "Remove the filled gate: six initial ones can assert on sample six. Count updates stay the same.",
+            "principle": "Startup policy changes initial traces."
+          }
+        ]
       }
     },
     "technical_references": {
@@ -845,6 +899,30 @@
           "note": "Supports the simulator-phase caveat; Python monitor, tests and contract are independently authored."
         }
       ]
+    },
+    "prompt_variants": {
+      "he": {
+        "batch90_six_of_seven": {
+          "prompt": "### וריאציה: לפחות שש שגיאות מתוך שבע\nכניסת error נדגמת בכל עליית שעון. הפיקו 1 כאשר בחלון שבע הדגימות האחרונות יש לפחות שש 1. הפיקו 0 אחרת.\n\nזוהי דרישה שונה משלוש בעשר לעיל. החלונות חופפים וכוללים את הדגימה הנוכחית. המקור אינו מגדיר אתחול: בווריאציה נבחר שהפלט 0 עד להשלמת שבע דגימות אחרי reset; החוזה המקורי עם ריפוד באפסים נשמר במקומו. הפלט מתעדכן לאחר החזית הדוגמת ללא מחזור השהיה נוסף, והקלט יציב לפי דרישות setup/hold.",
+          "hints": [
+            "החלון מחליק בדגימה אחת: מגיעה שגיאה חדשה ואחת ישנה יוצאת.",
+            "סכום השגיאות יכול להתעדכן בהוספת הקלט וחיסור הביט שיוצא, במקום לספור את כל החלון מחדש.",
+            "שמרו 7 סיביות ומונה שגיאות. השתמשו ב־count_next=count+error−oldest, והכריעו לפי count_next כדי לכלול את הדגימה הנוכחית."
+          ],
+          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "batch90_six_of_seven": {
+          "prompt": "### Variant: at least six errors in seven samples\nSample error at every rising clock edge. Output 1 when at least six of the last seven samples are 1; output 0 otherwise.\n\nThis differs from the retained three-in-ten task. Windows overlap and include the current sample. Startup was unspecified: choose output 0 until seven post-reset samples have been acquired. The original zero-padded contract remains unchanged. Output settles after the capturing edge without another cycle of latency; input meets setup/hold.",
+          "hints": [
+            "Each step adds a new error bit and expires the oldest one.",
+            "Update the count by adding the new bit and subtracting the expired bit.",
+            "Store seven history bits and a count. Use count_next=count+error−oldest so the current sample is included in the decision."
+          ],
+          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+        }
+      }
     }
   },
   "PREP-096": {

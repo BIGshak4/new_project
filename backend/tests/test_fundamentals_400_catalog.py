@@ -11,6 +11,8 @@ from pathlib import Path
 
 import pytest
 
+from tests.preparation_history import BASELINE, assert_pre_batch90_archive
+
 ROOT=Path(__file__).resolve().parents[2]
 CONTENT=ROOT/'apps/web/src/content'
 SEEDS=ROOT/'backend/seeds'
@@ -86,8 +88,9 @@ def test_every_prior_quiz_object_and_authorization_is_unchanged():
     assert len(quiz)==2040 and sum(q['status']=='approved' for q in quiz)==2000
 
 
-def test_the_interview_bank_and_its_human_attestations_are_not_rewritten():
-    assert hashlib.sha256((ROOT/'interview_preparation/questions.json').read_bytes()).hexdigest()==ARCHIVE_SHA256
+def test_later_intake_preserves_the_prior_archive_and_its_human_attestations():
+    assert BASELINE['archive_byte_sha256'] == ARCHIVE_SHA256
+    assert_pre_batch90_archive(read(ROOT/'interview_preparation/questions.json'))
     assert hashlib.sha256((SEEDS/'solution_review_attestations.json').read_bytes().replace(b'\r\n',b'\n')).hexdigest()==REVIEW_SHA256
 
 

@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "integers_checked": 1000000,
+  "booms_through100": 19,
+  "booms_through1000000": 468559,
+  "method": "Both numerical digit scanning and incremental digit-state outputs versus independent decimal-string membership for every input 1..1000000; combinatorial count 1e6-9^6; actual boom-only generator checked through one million.",
+  "limitation": "The rule emits boom once per matching number and nothing for nonmatches; divisibility by 7 is not a source requirement. Printing throughput not benchmarked.",
+  "question_id": "PREP-185",
+  "ai_assisted": true,
+  "professional_review": "pending"
+}

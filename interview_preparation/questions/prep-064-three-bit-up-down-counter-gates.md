@@ -426,3 +426,16 @@ For n bits, extend the product of all lower bits or their complements. Long chai
 Gate equations were compared with an independent arithmetic oracle for all 40 state/enable/direction cases at widths one and three, 40 reset-priority cases, and all 5,120 eight-cycle enable streams from every initial state in both directions. Equivalence to the original counter controls and boundary transitions were also checked. This is Python verification, not HDL compilation, synthesis or physical timing simulation.
 
 Original hints and their queue remain unchanged. Three progressive variant hints are prepared in supplementary material and the addendum; the current queue does not automatically select them by variant. New AI-assisted proposed material awaits professional review.
+
+
+## מקור נוסף — 30.10.2026, מקבץ90
+
+[צילום מקור פרטי 10](../sources/2026-10-30-batch90-10.png)
+
+א. לממש מסכם עם שתי יציאות וכניסה אחת Inc, שבכל פעם שנכנס אחד הוא עולה באחד בינארית, ובכל פעם שנכנס אפס נשאר על אותן יציאות. המוצא צריך להתקבל בעליית השעון הבאה. ב. כעת יש עוד כניסה dec שעושה פעולה הפוכה (1=יורד, 0=עולה); צריך לממש כך שיבצע את שתי הפעולות.
+
+שיוכי מקור מדווחים: NVIDIA.
+
+נוספה וריאציה טכנית בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו כתחילית. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-064-two-bit-enable-direction-batch90-addendum.md)

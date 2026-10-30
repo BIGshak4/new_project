@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "strings_checked": 9841,
+  "range_reversals_checked": 1549,
+  "method": "All strings over a,b,space through length 8 versus independent reversed-token oracle; involution and character multiplicity; every inclusive/empty range through length 4.",
+  "limitation": "Words use ASCII space as delimiter; tabs/punctuation are word content. Python strings are copied by the wrapper; in-place mutable-buffer operation uses constant extra words.",
+  "question_id": "PREP-187",
+  "ai_assisted": true,
+  "professional_review": "pending"
+}

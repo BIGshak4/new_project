@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "transitions_with_reset": 32,
+  "sequences": 21844,
+  "domain": "All four states, binary enable/direction/reset; all control sequences at lengths0..6 from every state.",
+  "interface": "inc=enable, dec=direction (1down,0up); inc0 holds even if dec1",
+  "limitations": "Synchronous logical Python model, no HDL synthesis or timing simulation."
+}

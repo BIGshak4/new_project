@@ -3233,7 +3233,11 @@
         "הפלט הוא אינדקס בינארי וחיווי תקפות, ולא וקטור one-hot.",
         "ללא בקשות: Y=0; בוחרים במפורש index=0. קודים מקומיים לא תקפים עשויים להיות שרירותיים.",
         "קומבינטורי, ללא דרישת שעון או FF.",
-        "מותרים שערי עזר, ולכן מינימום מספר הבקרים הייעודיים מחייב אילוץ ארכיטקטוני מפורש."
+        "מותרים שערי עזר, ולכן מינימום מספר הבקרים הייעודיים מחייב אילוץ ארכיטקטוני מפורש.",
+        "קדימות הווריאציה ל־LSB; החוזה המקורי ל־MSB נשאר ללא שינוי.",
+        "valid נפרד מהקוד; קודים בקבוצות ריקות אינם מהימנים.",
+        "קדימות הווריאציה ל־LSB; החוזה המקורי ל־MSB נשאר ללא שינוי.",
+        "valid נפרד מהקוד; קודים בקבוצות ריקות אינם מהימנים."
       ],
       "en": [
         "Highest input index has highest priority; source does not specify the direction.",
@@ -3241,7 +3245,11 @@
         "Output is a binary index plus valid, not a one-hot vector.",
         "No requests: Y=0; explicitly choose index=0. Local invalid codes may be arbitrary.",
         "Combinational, no clock/FF requirement.",
-        "Auxiliary gates are permitted, so minimum dedicated-controller count needs a stated architecture constraint."
+        "Auxiliary gates are permitted, so minimum dedicated-controller count needs a stated architecture constraint.",
+        "The variant uses LSB priority; the original MSB contract is unchanged.",
+        "Valid is separate from index; inactive local codes cannot be trusted.",
+        "The variant uses LSB priority; the original MSB contract is unchanged.",
+        "Valid is separate from index; inactive local codes cannot be trusted."
       ]
     },
     "optimality": {
@@ -3249,13 +3257,15 @@
         "criterion": "מספר בקרים ייעודיים בני ארבע כניסות במודלי עלות נפרדים ומוגדרים במפורש",
         "result": "4 בארכיטקטורה קבועה של ארבע קבוצות מקומיות; 5 בעץ עדיפות המבוסס רק על בקרים; 0 עם שערים ללא הגבלה (או 1 אם חייבים להשתמש בבקר אחד לפחות).",
         "proof": "ארבע קבוצות מקומיות מכסות 16 בקשות; חסם העלים בעץ ארבע־ענפי 1+3B נותן B>=5; מבנה מפורש לבחירת זוכה ואינדקס באמצעות שערים בלבד מוכיח שאפס מספיק כששערים אינם מוגבלים.",
-        "scope": "אין טענה לשטח או להשהיה מינימליים בטכנולוגיה מסוימת, או למינימום בלתי מותנה של ארבעה/חמישה בקרים."
+        "scope": "אין טענה לשטח או להשהיה מינימליים בטכנולוגיה מסוימת, או למינימום בלתי מותנה של ארבעה/חמישה בקרים.",
+        "batch90_lsb_priority": "ארבעה מקודדים מקומיים ולוגיקת קבוצה/MUX, או קופסה חמישית לקבוצה. אין הוכחת מינימום כששערים חופשיים; מקודד 8 הוא רשת prefix/grant."
       },
       "en": {
         "criterion": "Number of dedicated four-input controllers under explicitly separated cost models",
         "result": "4 in the fixed four-local-group architecture; 5 in a pure controller priority tree; 0 with unrestricted gates (or 1 if use of at least one is mandatory).",
         "proof": "Four local groups cover 16 requests; four-ary tree leaf bound 1+3B yields B>=5; explicit gates-only winner/index construction establishes zero under unrestricted gates.",
-        "scope": "No claim of technology-specific minimum area, delay, or an unconditional four/five-controller minimum."
+        "scope": "No claim of technology-specific minimum area, delay, or an unconditional four/five-controller minimum.",
+        "batch90_lsb_priority": "Four local encoders plus group/mux logic, or a fifth box for groups. No minimum under unrestricted free gates; PE8 uses a prefix/grant network."
       }
     },
     "editorial_notes": {
@@ -3275,7 +3285,13 @@
         "כל הבקשות פעילות: index=15",
         "כמה קבוצות פעילות: הקבוצה הגבוהה ביותר מנצחת",
         "כמה בקשות באותה קבוצה: האינדקס המקומי הגבוה ביותר מנצח",
-        "קודים של קבוצות לא פעילות אינם רשאים להשפיע על פלט תקף"
+        "קודים של קבוצות לא פעילות אינם רשאים להשפיע על פלט תקף",
+        "כל הכניסות0: valid=0.",
+        "I0 בלבד: valid=1, code=0.",
+        "כמה קבוצות פעילות; יש לבחור את בעלת האינדקס הקטן.",
+        "כל הכניסות 0: valid=0.",
+        "I0 בלבד: valid=1, code=0.",
+        "כמה קבוצות פעילות; יש לבחור את בעלת האינדקס הקטן."
       ],
       "en": [
         "No requests: valid=0,index=0",
@@ -3283,7 +3299,13 @@
         "All requests: index=15",
         "Several active groups: highest group wins",
         "Several requests within one group: highest local index wins",
-        "Codes from inactive groups must not influence a valid output"
+        "Codes from inactive groups must not influence a valid output",
+        "All-zero input: valid=0.",
+        "I0 only: valid=1, code=0.",
+        "Several groups active: select the lowest group index.",
+        "All-zero input: valid=0.",
+        "I0 only: valid=1, code=0.",
+        "Several groups active: select the lowest group index."
       ]
     },
     "verification": {
@@ -3293,7 +3315,8 @@
         "script_path": "checks/check_prep_016.py",
         "method": "כל 65,536 הקלטים במודלים של ארבעה/חמישה בקרים ושל שערים בלבד; כל ארבעת הקודים המקומיים הלא תקפים עבור כל חלופה היררכית.",
         "scope": "מודלים בוליאניים בפייתון; ללא סימולציית HDL, סינתזה או ניתוח תזמון פיזי.",
-        "diagram_review": "שני שרטוטי הבלוקים בעלי תוויות החיבורים נבדקו חזותית: מיפוי קבוצות הקלט, אפיקי תקפות ואינדקס, בוחר ה־MUX, שרשור ומיסוך פלט לא תקף."
+        "diagram_review": "שני שרטוטי הבלוקים בעלי תוויות החיבורים נבדקו חזותית: מיפוי קבוצות הקלט, אפיקי תקפות ואינדקס, בוחר ה־MUX, שרשור ומיסוך פלט לא תקף.",
+        "batch90_lsb_priority": "262,144 מקרי היררכיה ו־256 מקרי שערים, כולל כמה 1 וקודים שרירותיים בקבוצות ריקות."
       },
       "en": {
         "status": "passed",
@@ -3301,12 +3324,13 @@
         "script_path": "checks/check_prep_016.py",
         "method": "All 65,536 inputs for four-/five-controller and gates-only models; all four invalid local codes for each hierarchical variant.",
         "scope": "Python Boolean models; no HDL simulation, synthesis or physical timing analysis.",
-        "diagram_review": "Both net-labelled block schematics visually checked: input group mapping, valid and index buses, mux selector, concatenation and invalid-output masking."
+        "diagram_review": "Both net-labelled block schematics visually checked: input group mapping, valid and index buses, mux selector, concatenation and invalid-output masking.",
+        "batch90_lsb_priority": "262,144 hierarchy cases and 256 gate cases, including multiple asserted inputs and arbitrary inactive codes."
       }
     },
     "interview_answer": {
-      "he": "אחלק לארבע קבוצות ואשתמש בבקר מקומי לכל אחת. אבחר את הקבוצה הפעילה הגבוהה לפי אותות Y, ואשתמש בקוד הקבוצה לבחירת הקוד המקומי ב־MUX. אשרשר את שני קודי שני הביטים לקבלת אינדקס בן ארבעה ביטים. בחירת הקבוצה דורשת בקר חמישי או שערים. מאחר ששערים אחרים מותרים, אין מינימום מוחלט של ארבעה או חמישה בקרים ללא אילוץ נוסף על הארכיטקטורה.",
-      "en": "I would divide the inputs into four groups with one local controller each. I would select the highest active group using the Y signals, then use its group code to select the local code through a MUX. Concatenating the two two-bit codes gives a four-bit index. Group selection requires a fifth controller or gates. Since additional gates are allowed, no absolute minimum of four or five controllers follows without a further architecture constraint."
+      "he": "אחלק לארבע קבוצות ואשתמש בבקר מקומי לכל אחת. אבחר את הקבוצה הפעילה הגבוהה לפי אותות Y, ואשתמש בקוד הקבוצה לבחירת הקוד המקומי ב־MUX. אשרשר את שני קודי שני הביטים לקבלת אינדקס בן ארבעה ביטים. בחירת הקבוצה דורשת בקר חמישי או שערים. מאחר ששערים אחרים מותרים, אין מינימום מוחלט של ארבעה או חמישה בקרים ללא אילוץ נוסף על הארכיטקטורה.\n\nאחשב valid וקוד בכל רביעייה, אקודד את הקבוצה הראשונה שאינה ריקה ואבחר את הקוד המקומי שלה ב־MUX. בשערים אחסום כל כניסה אם יש1 נמוך ממנה.\n\nאחשב valid וקוד בכל רביעייה, אקודד את הקבוצה הראשונה שאינה ריקה ואבחר את הקוד המקומי שלה ב־MUX. בשערים אחסום כל כניסה אם יש 1 נמוך ממנה.",
+      "en": "I would divide the inputs into four groups with one local controller each. I would select the highest active group using the Y signals, then use its group code to select the local code through a MUX. Concatenating the two two-bit codes gives a four-bit index. Group selection requires a fifth controller or gates. Since additional gates are allowed, no absolute minimum of four or five controllers follows without a further architecture constraint.\n\nCompute local valid/index, encode the first nonempty group and mux its local code. Gate logic suppresses each input if a lower bit is active.\n\nCompute local valid/index, encode the first nonempty group and mux its local code. Gate logic suppresses each input if a lower bit is active."
     },
     "common_mistakes": {
       "he": [
@@ -3316,7 +3340,13 @@
         "הנחת סדר עדיפות שלא תועד",
         "הוספת רגיסטרים ללא צורך",
         "בחירת הקוד המקומי הגבוה ביותר בין הקבוצות במקום בחירת הקבוצה הגבוהה תחילה",
-        "ספירת שרשור כמחבר"
+        "ספירת שרשור כמחבר",
+        "איחוד הקודים ב־OR.",
+        "החלפה שקטה בין קדימות MSB ל־LSB.",
+        "התעלמות מ־valid כאשר code=0.",
+        "איחוד הקודים ב־OR.",
+        "החלפה שקטה בין קדימות MSB ל־LSB.",
+        "התעלמות מ־valid כאשר code=0."
       ],
       "en": [
         "ORing local indices instead of muxing the winning group",
@@ -3325,7 +3355,13 @@
         "Assuming undocumented priority order",
         "Adding registers unnecessarily",
         "Selecting highest local code across groups instead of highest group first",
-        "Counting concatenation as an adder"
+        "Counting concatenation as an adder",
+        "OR-combining codes.",
+        "Silently switching MSB and LSB priority.",
+        "Ignoring valid when code=0.",
+        "OR-combining codes.",
+        "Silently switching MSB and LSB priority.",
+        "Ignoring valid when code=0."
       ]
     },
     "hierarchy_diagram_explanation_he": {
@@ -3341,20 +3377,42 @@
       "en": "All 16 group-valid patterns checked; full and simplified G0 equations equivalent, group index and valid correct."
     },
     "prompt_variants": {
-      "he": [
-        {
-          "title": "וריאציה מהמקור הנוסף — למה נחוץ אות תקפות?",
-          "prompt": "למקודד עדיפות בן ארבע כניסות יש שתי יציאות שמחזירות את מספר הכניסה הגבוהה ביותר שדולקת: 1111 מחזיר 11, ו־0101 מחזיר 10. א. מה חסר בהגדרה כאשר הקלט 0000? הגדירו חיווי valid שמפריד בין היעדר בקשה לבין בקשה בכניסה 0. ב. בעזרת הרכיב המורחב, תכננו מקודד של 16 כניסות, אינדקס בן ארבעה ביטים וחיווי תקפות.",
-          "clarification": "שתי היציאות הן אינדקס בינארי, לא ערך הביט הדלוק ולא וקטור one-hot. valid=1 בדיוק כשקיימת כניסה דלוקה. כאשר valid=0, האינדקס אינו מייצג בקשה; אפשר לבחור עבורו אפס, אבל אסור להסיק שיש בקשה 0. הנוסח המקורי המפורש של השאלה ושלוש תמונות המקור נשמרו בנפרד מהעריכה."
+      "he": {
+        "preserved": [
+          {
+            "title": "וריאציה מהמקור הנוסף — למה נחוץ אות תקפות?",
+            "prompt": "למקודד עדיפות בן ארבע כניסות יש שתי יציאות שמחזירות את מספר הכניסה הגבוהה ביותר שדולקת: 1111 מחזיר 11, ו־0101 מחזיר 10. א. מה חסר בהגדרה כאשר הקלט 0000? הגדירו חיווי valid שמפריד בין היעדר בקשה לבין בקשה בכניסה 0. ב. בעזרת הרכיב המורחב, תכננו מקודד של 16 כניסות, אינדקס בן ארבעה ביטים וחיווי תקפות.",
+            "clarification": "שתי היציאות הן אינדקס בינארי, לא ערך הביט הדלוק ולא וקטור one-hot. valid=1 בדיוק כשקיימת כניסה דלוקה. כאשר valid=0, האינדקס אינו מייצג בקשה; אפשר לבחור עבורו אפס, אבל אסור להסיק שיש בקשה 0. הנוסח המקורי המפורש של השאלה ושלוש תמונות המקור נשמרו בנפרד מהעריכה."
+          }
+        ],
+        "batch90_lsb_priority": {
+          "prompt": "### וריאציות מקור נוספות: קדימות לימין ומימוש בשערים\nצילום 5 נותן מקודד לארבע כניסות שמחזיר את מיקום ה־1 הימני ביותר ואת valid. בנו בעזרתו מקודד לשש־עשרה כניסות. צילום 16 מבקש מקודד עדיפות לשמונה כניסות בשערים בסיסיים.\n\nבחלק זה דווקא הביט בעל האינדקס הנמוך הוא בעל העדיפות הגבוהה, בניגוד לחוזה המקורי לעיל. נבחר מספור I0=LSB, פלט מיקום בינארי ו־valid. כאשר אין 1 נגדיר מיקום 0, שרק valid=0 מבדיל אותו מקלט חוקי I0. במימוש שמונה הכניסות נבחר AND/OR/NOT עם fanout וחיווט מותרים; אין אופטימום ספריית תאים מוסכם.",
+          "hints": [
+            "קדימות בתוך קבוצה אינה מספיקה; צריך לבחור גם את הקבוצה הראשונה שיש בה 1.",
+            "חלקו את 16 הכניסות לארבע קבוצות, וצרו valid לכל קבוצה. קוד הקבוצה הוא שני הביטים העליונים.",
+            "בחרו בעזרת MUX את הקוד המקומי של הקבוצה הזוכה. למימוש שערים, חסמו כל כניסה אם כבר הופיעה כניסה נמוכה יותר."
+          ],
+          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
         }
-      ],
-      "en": [
-        {
-          "title": "Additional-source variant — why validity is necessary",
-          "prompt": "A four-input priority encoder has two outputs giving the highest active input index: 1111 produces 11 and 0101 produces 10. (a) What is missing for input 0000? Define valid to distinguish no request from a request at input zero. (b) Use the extended component to build a sixteen-input encoder with a four-bit index and validity.",
-          "clarification": "The two outputs are a binary index, not the bit value and not a one-hot vector. valid is one exactly when at least one input is active. When valid is zero, the index does not name a request; choosing zero is permitted but must not be interpreted as request zero. The exact source wording and all three screenshots are archived separately from this edit."
+      },
+      "en": {
+        "preserved": [
+          {
+            "title": "Additional-source variant — why validity is necessary",
+            "prompt": "A four-input priority encoder has two outputs giving the highest active input index: 1111 produces 11 and 0101 produces 10. (a) What is missing for input 0000? Define valid to distinguish no request from a request at input zero. (b) Use the extended component to build a sixteen-input encoder with a four-bit index and validity.",
+            "clarification": "The two outputs are a binary index, not the bit value and not a one-hot vector. valid is one exactly when at least one input is active. When valid is zero, the index does not name a request; choosing zero is permitted but must not be interpreted as request zero. The exact source wording and all three screenshots are archived separately from this edit."
+          }
+        ],
+        "batch90_lsb_priority": {
+          "prompt": "### Additional source variants: rightmost priority and basic gates\nSource 5 supplies a four-input encoder returning the rightmost1 position and valid; build a 16-input encoder from it. Source 16 requests an eight-input priority encoder from basic gates.\n\nThis variant assigns highest priority to the LOWEST input index, unlike the original contract above. Choose I0=LSB, a binary position and valid. Normalize inactive code to 0; valid=0 distinguishes it from the genuine active I0 case. For eight inputs choose AND/OR/NOT gates with wiring and fanout; no cell-library optimum is specified.",
+          "hints": [
+            "Local priority is insufficient: select the first nonempty group as well.",
+            "Split16 inputs into four groups; group-valid priority gives the upper two index bits.",
+            "Mux the winning local code. For gate-only logic, inhibit each input when any lower input is asserted."
+          ],
+          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
         }
-      ]
+      }
     },
     "solution_schematic_verification": {
       "he": "עברו כל 65,536 הקלטים; 130,321 צירופים של קודים מקומיים לא תקפים במימוש ארבעה בקרים ו־131,089 במימוש חמישה. אלו מודלים בפייתון בלבד, ללא סימולציית HDL, סינתזה או אישור מקצועי.",
@@ -3364,13 +3422,41 @@
       "he": {
         "question": "מה משתנה אם המקודד המקומי אינו מספק valid, וגם אינו מבטיח קוד מסוים בקלט אפס?",
         "direction": "אי אפשר להסיק תקפות מקוד האינדקס לבדו, כי כל ארבעת הקודים יכולים לציין בקשה חוקית. אם כניסות הקבוצה זמינות, צרו valid באמצעות OR שלהן; אחרת דרוש שינוי בממשק או הנחה נוספת. אין להשתמש בהשוואת index לאפס כתחליף.",
-        "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+        "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי.",
+        "batch90_lsb_priority": [
+          {
+            "question": "האם קוד 0 לבדו מוכיח שלא היה קלט?",
+            "answer_direction": "לא. מיקום 0 הוא קלט חוקי; valid חיוני כדי להבחין.",
+            "principle": "אפס נתונים אינו בהכרח חוסר נתונים."
+          }
+        ]
       },
       "en": {
         "question": "What changes if a local encoder has no valid output and no guaranteed code for all-zero input?",
         "direction": "The index alone cannot reveal validity: all four codes can name real requests. If raw group inputs are accessible, OR them to create valid; otherwise the interface or assumptions must change. Comparing index with zero is not a substitute.",
-        "status": "Follow-up prepared in content; not connected to the interactive follow-up queue."
+        "status": "Follow-up prepared in content; not connected to the interactive follow-up queue.",
+        "batch90_lsb_priority": [
+          {
+            "question": "Does index0 prove no input was active?",
+            "answer_direction": "No. Input0 is a genuine winner; valid distinguishes it.",
+            "principle": "A zero value is not absence."
+          }
+        ]
       }
+    },
+    "source_ambiguities": {
+      "he": [
+        "צילום16 אינו מציין כיוון קדימות; כאן נבחר LSB בגלוי.",
+        "המספר המינימלי תלוי בעלות ובפעולות שמותר לבצע ללא קופסה.",
+        "צילום 16 אינו מציין כיוון קדימות; כאן נבחר LSB בגלוי.",
+        "המספר המינימלי תלוי בעלות ובפעולות שמותר לבצע ללא קופסה."
+      ],
+      "en": [
+        "Source 16 does not specify priority direction; this variant explicitly selects LSB.",
+        "A minimum depends on the cost and logic allowed outside boxes.",
+        "Source 16 does not specify priority direction; this variant explicitly selects LSB.",
+        "A minimum depends on the cost and logic allowed outside boxes."
+      ]
     }
   }
 }

@@ -4,29 +4,39 @@
       "he": [
         "שני קלטים ללא סימן בני ארבעה ביטים; פלט מדויק בן חמישה ביטים, ללא Cin חיצוני.",
         "רק רכיבי HA עם שני מוצאים; חיווט ופיצול מותרים, ואין שערים חיצוניים, FA או אוגרים.",
-        "המעגל צירופי וערכי הכניסה בינאריים יציבים; אין טענת תזמון או מינימום פיזי."
+        "המעגל צירופי וערכי הכניסה בינאריים יציבים; אין טענת תזמון או מינימום פיזי.",
+        "XOR ו־AND מותרים במימוש HA.",
+        "במימוש FA מותר HA בלבד; שימוש ביציאה אחת של תא מותר.",
+        "XOR ו־AND מותרים במימוש HA.",
+        "במימוש FA מותר HA בלבד; שימוש ביציאה אחת של תא מותר."
       ],
       "en": [
         "Two unsigned four-bit inputs, exact five-bit output and no external Cin.",
         "Only two-output HA primitives; wires/fanout allowed, no external gates, FAs or registers.",
-        "Combinational settled binary inputs; no physical timing or minimum-size claim."
+        "Combinational settled binary inputs; no physical timing or minimum-size claim.",
+        "XOR and AND are allowed for the HA.",
+        "The FA uses only HAs; unused outputs are allowed.",
+        "XOR and AND are allowed for the HA.",
+        "The FA uses only HAs; unused outputs are allowed."
       ]
     },
     "optimality": {
       "he": {
         "construction": "10 HA: אחד בעמודה הנמוכה ועוד שלושה לכל עמודה גבוהה.",
         "scope": "אין דרישת מינימום במקור, ולא נטען ש־10 מזערי.",
-        "scaling": "אותה תבנית לרוחב n משתמשת ב־3n−2 רכיבי HA ובאורך תלות 2n−1 לרכיבים עד הנשׂא האחרון; O(n) משאבים ועומק מבני, ללא תדר פיזי."
+        "scaling": "אותה תבנית לרוחב n משתמשת ב־3n−2 רכיבי HA ובאורך תלות 2n−1 לרכיבים עד הנשׂא האחרון; O(n) משאבים ועומק מבני, ללא תדר פיזי.",
+        "batch90_ha_fa": "HA בשני שערים תחת ספריית XOR/AND; FA בשלושה תאי HA. אין טענת מינימום למודל חומרה אחר."
       },
       "en": {
         "construction": "10 HAs: one in the lowest column and three in each higher column.",
         "scope": "The source does not demand a minimum, and ten is not claimed minimal.",
-        "scaling": "At width n the same template uses 3n−2 HAs and 2n−1 component dependency layers to the last carry: O(n) resources/structural depth, without a physical frequency claim."
+        "scaling": "At width n the same template uses 3n−2 HAs and 2n−1 component dependency layers to the last carry: O(n) resources/structural depth, without a physical frequency claim.",
+        "batch90_ha_fa": "Two gates for HA under the XOR/AND library; three HA cells for FA. No minimum claimed under a different hardware model."
       }
     },
     "verification": {
-      "he": "נבדקו ארבע שורות HA, כל 256 זוגות A,B, כל 1,024 משוואות העמודות, 768 מקרי בלעדיות נשאים ו־Ui=0, וחמש דחיות קלט. ההשוואה היא לחיבור שלמים עצמאי. מודל Python בלבד, ללא HDL, סינתזה או מדידה.",
-      "en": "Checked four HA rows, all 256 A,B pairs, 1,024 column equations, 768 exclusive-carry/Ui=0 cases and five invalid inputs. Compared against independent integer addition. Python only; no HDL, synthesis or measurements."
+      "he": "נבדקו ארבע שורות HA, כל 256 זוגות A,B, כל 1,024 משוואות העמודות, 768 מקרי בלעדיות נשאים ו־Ui=0, וחמש דחיות קלט. ההשוואה היא לחיבור שלמים עצמאי. מודל Python בלבד, ללא HDL, סינתזה או מדידה.\n\nכל4+8 השורות נבדקו מול סכום שלם, כולל הוכחת g·h=0 והיעדר שער OR חיצוני במודל.\n\nכל 4+8 השורות נבדקו מול סכום שלם, כולל הוכחת g·h=0 והיעדר שער OR חיצוני במודל.",
+      "en": "Checked four HA rows, all 256 A,B pairs, 1,024 column equations, 768 exclusive-carry/Ui=0 cases and five invalid inputs. Compared against independent integer addition. Python only; no HDL, synthesis or measurements.\n\nAll 4+8 truth rows checked against integer addition, including g·h=0 and no external OR in the model.\n\nAll 4+8 truth rows checked against integer addition, including g·h=0 and no external OR in the model."
     },
     "edge_cases": {
       "he": [
@@ -34,14 +44,26 @@
         "1111+1111=11110; אין להשמיט את הביט החמישי.",
         "1111+0001=10000 בודק מעבר נשא דרך כל העמודות.",
         "1111+0000=01111 בודק היעדר גלישה.",
-        "Ui הוא Carry של HA האיחוד ואפס תמיד; C(i+1) מגיע דווקא ממוצא Sum שלו."
+        "Ui הוא Carry של HA האיחוד ואפס תמיד; C(i+1) מגיע דווקא ממוצא Sum שלו.",
+        "A=B=1: g=1, h=0.",
+        "Cin=1 ו־A≠B: h=1, g=0.",
+        "שלוש כניסות1 נותנות S=1, Cout=1.",
+        "A=B=1: g=1, h=0.",
+        "Cin=1 ו־A≠B: h=1, g=0.",
+        "שלוש כניסות 1 נותנות S=1, Cout=1."
       ],
       "en": [
         "0000+0000=00000.",
         "1111+1111=11110; retain the fifth bit.",
         "1111+0001=10000 exercises full carry propagation.",
         "1111+0000=01111 checks no overflow.",
-        "Ui is the merge HA’s Carry and always zero; C(i+1) comes from its Sum output."
+        "Ui is the merge HA’s Carry and always zero; C(i+1) comes from its Sum output.",
+        "A=B=1 gives g=1, h=0.",
+        "Cin=1 with A≠B gives h=1, g=0.",
+        "Three asserted inputs give S=1, Cout=1.",
+        "A=B=1 gives g=1, h=0.",
+        "Cin=1 with A≠B gives h=1, g=0.",
+        "Three asserted inputs give S=1, Cout=1."
       ]
     },
     "common_mistakes": {
@@ -50,30 +72,46 @@
         "לקיחת Carry במקום Sum מן ה־HA השלישי; ה־Carry שלו תמיד אפס.",
         "אמירה ש־XOR שווה ל־OR בכל מצב, בלי הוכחת בלעדיות.",
         "חיבור מוצאים זה לזה במקום חיבור למבואי רכיב.",
-        "קיצור הפלט לארבעה ביטים בלי לציין מודולו וגלישה, או טענת מינימום לא מוכחת."
+        "קיצור הפלט לארבעה ביטים בלי לציין מודולו וגלישה, או טענת מינימום לא מוכחת.",
+        "הוספת OR שאסור לפי חוזה HA בלבד.",
+        "בלבול מספור הסעיף עם תקציב שערים.",
+        "שימוש ביציאת Carry של HA3 במקום Sum.",
+        "הוספת OR שאסור לפי חוזה HA בלבד.",
+        "בלבול מספור הסעיף עם תקציב שערים.",
+        "שימוש ביציאת Carry של HA3 במקום Sum."
       ],
       "en": [
         "Using two HAs plus an external OR, which is not permitted.",
         "Taking Carry rather than Sum from the third HA; its Carry is always zero.",
         "Claiming XOR always equals OR instead of proving exclusivity.",
         "Shorting outputs together instead of feeding component inputs.",
-        "Truncating to four bits without a modulo/overflow contract, or claiming an unproved minimum."
+        "Truncating to four bits without a modulo/overflow contract, or claiming an unproved minimum.",
+        "Adding an OR forbidden by the HA-only contract.",
+        "Confusing section numbering with a gate budget.",
+        "Using HA3 Carry rather than Sum as Cout.",
+        "Adding an OR forbidden by the HA-only contract.",
+        "Confusing section numbering with a gate budget.",
+        "Using HA3 Carry rather than Sum as Cout."
       ]
     },
     "interview_answer": {
-      "he": "בעמודה הנמוכה HA אחד. בכל עמודה גבוהה HA ראשון מחבר Ai,Bi, שני מחבר את הסכום ל־Ci. הנשאים שלהם בלעדיים ולכן Sum של HA שלישי מאחד אותם ל־C(i+1), ו־Carry שלו אפס. שלוש עמודות כאלה ועוד העמודה הנמוכה נותנות 10 HA. הפלט החמישי הוא C4, ולכן מתקבל הסכום המלא עד 30.",
-      "en": "Use one HA in the lowest column. In each higher column, one HA adds Ai,Bi and another adds its Sum to Ci. Their carries are exclusive, so a third HA’s Sum merges them into C(i+1), while its Carry is zero. Three such columns plus the lowest use ten HAs. Fifth output bit C4 retains the exact sum up to thirty."
+      "he": "בעמודה הנמוכה HA אחד. בכל עמודה גבוהה HA ראשון מחבר Ai,Bi, שני מחבר את הסכום ל־Ci. הנשאים שלהם בלעדיים ולכן Sum של HA שלישי מאחד אותם ל־C(i+1), ו־Carry שלו אפס. שלוש עמודות כאלה ועוד העמודה הנמוכה נותנות 10 HA. הפלט החמישי הוא C4, ולכן מתקבל הסכום המלא עד 30.\n\nHA הוא XOR לסכום ו־AND לנשא. ב־FA אחבר שני HA, ואז HA שלישי יחשב XOR של שני הנשאים הזרים; זו בדיוק פעולת OR הנדרשת.\n\nHA הוא XOR לסכום ו־AND לנשא. ב־FA אחבר שני HA, ואז HA שלישי יחשב XOR של שני הנשאים הזרים; זו בדיוק פעולת OR הנדרשת.",
+      "en": "Use one HA in the lowest column. In each higher column, one HA adds Ai,Bi and another adds its Sum to Ci. Their carries are exclusive, so a third HA’s Sum merges them into C(i+1), while its Carry is zero. Three such columns plus the lowest use ten HAs. Fifth output bit C4 retains the exact sum up to thirty.\n\nHA uses XOR for sum and AND for carry. Two HAs produce the FA sum; a third XORs the mutually exclusive carries, which equals their OR.\n\nHA uses XOR for sum and AND for carry. Two HAs produce the FA sum; a third XORs the mutually exclusive carries, which equals their OR."
     },
     "source_ambiguities": {
       "he": [
         "המקור אינו מציין סימן, נשא חיצוני או רוחב תוצאה; נבחרו קלטים ללא סימן ותוצאה מלאה ללא Cin.",
         "נבחר מעגל צירופי; לא נתבקשו שעון או אחסון.",
-        "Apple מופיעה במקור; השיוך מדווח ולא אומת עצמאית."
+        "Apple מופיעה במקור; השיוך מדווח ולא אומת עצמאית.",
+        "„2” בצילום מייצג סעיף2, לא „שני שערים בלבד”.",
+        "„2” בצילום מייצג סעיף 2, לא „שני שערים בלבד”."
       ],
       "en": [
         "The source omits signedness, external carry and result width; unsigned inputs/full output/no Cin are explicit choices.",
         "A combinational design is selected; clock/storage were not requested.",
-        "Apple attribution is source-reported, not independently verified."
+        "Apple attribution is source-reported, not independently verified.",
+        "The source’s “2” labels part 2, not a two-gate-only constraint.",
+        "The source’s “2” labels part 2, not a two-gate-only constraint."
       ]
     },
     "solution_extensions": {
@@ -87,6 +125,16 @@
           "question": "האם אפשר לקבל רק ארבעה ביטי תוצאה?",
           "answer_direction": "כן, אם מגדירים פלט מודולו 16. נשא C4 הוא מידע גלישה ללא סימן; בחיבור חתום יש להגדיר גלישה חתומה בנפרד.",
           "principle": "רוחב הפלט הוא חלק ממשמעות החיבור."
+        },
+        {
+          "question": "למה אי אפשר להחליף כל OR ב־XOR?",
+          "answer_direction": "החלפה מותרת כאן רק משום שהוכח ששתי כניסות הנשאים אינן1 יחד.",
+          "principle": "שקילות תחת אינווריאנט אינה שקילות כללית."
+        },
+        {
+          "question": "למה אי אפשר להחליף כל OR ב־XOR?",
+          "answer_direction": "החלפה מותרת כאן רק משום שהוכח ששתי כניסות הנשאים אינן 1 יחד.",
+          "principle": "שקילות תחת אינווריאנט אינה שקילות כללית."
         }
       ],
       "en": [
@@ -99,12 +147,46 @@
           "question": "Can the result have only four bits?",
           "answer_direction": "Yes under an explicit modulo-sixteen contract. C4 is unsigned-overflow information; signed overflow needs its own definition.",
           "principle": "Output width defines arithmetic semantics."
+        },
+        {
+          "question": "Why cannot every OR become XOR?",
+          "answer_direction": "This replacement is valid only because the carry inputs are proved mutually exclusive.",
+          "principle": "Equivalence under an invariant is not universal equivalence."
+        },
+        {
+          "question": "Why cannot every OR become XOR?",
+          "answer_direction": "This replacement is valid only because the carry inputs are proved mutually exclusive.",
+          "principle": "Equivalence under an invariant is not universal equivalence."
         }
       ]
     },
     "relationship_note": {
       "he": "PREP-034 בונה מחבר מ־FA ומנתחת ארכיטקטורות גדולות; כאן הספרייה מוגבלת ל־HA בלבד. דוגמת HW-008 משתמשת בשני HA וב־OR, ולכן אסור להעתיק אותה ללא שינוי.",
       "en": "PREP-034 builds from FAs and studies larger architectures; this question restricts the library to HAs. HW-008 uses two HAs plus OR, so its construction cannot be copied unchanged."
+    },
+    "prompt_variants": {
+      "he": {
+        "batch90_ha_fa": {
+          "prompt": "### סעיפי יסוד נוספים מהצילום\nא. ממשו Half Adder בעזרת שערים לוגיים. ב. ממשו Full Adder באמצעות HA בלבד. „2” שבצילום הוא מספור הסעיף השני, לא מגבלה לשני שערים. בחלק א נבחר XOR ו־AND כשערים בסיסיים מותרים. בחלק ב מותרים רק תאי HA, חוטים ופיצול אות; אין שער OR חיצוני. כל הכניסות והיציאות פעילות ב־1, ובמחבר המלא יש Cin. זהו נספח למימוש ארבעת הביטים המקורי, שאינו משתנה.",
+          "hints": [
+            "חצי מחבר צריך לשמר את השוויון A+B=S+2 C.",
+            "שני תאי HA יפיקו את סיבית הסכום ושני נשאים. האם שני הנשאים יכולים להיות 1 יחד?",
+            "הנשאים הם g=A·B ו־h=(A XOR B)·Cin. הם זרים, לכן OR שלהם שווה XOR: גם איחוד הנשאים ניתן לביצוע בתא HA."
+          ],
+          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "batch90_ha_fa": {
+          "prompt": "### Additional elementary source parts\nA. Implement a half adder using logic gates. B. Implement a full adder using HAs only. The source’s “2” enumerates its second part; it is not a two-gate budget. Part A allows XOR and AND primitives. Part B permits only HA cells, wires and fanout, with no external OR. Inputs/outputs are active-high and the FA has Cin. The original four-bit construction is retained.",
+          "hints": [
+            "A half adder preserves A+B=S+2 C.",
+            "Two HAs give the final sum and two carries. Can both carries be1 simultaneously?",
+            "g=A·B and h=(A XOR B)·Cin are mutually exclusive. Their OR equals XOR, so a third HA can combine them."
+          ],
+          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+        }
+      }
     }
   },
   "PREP-123": {

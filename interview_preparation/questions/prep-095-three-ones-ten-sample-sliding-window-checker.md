@@ -117,3 +117,16 @@ Use all zeros, only two ones, the exact third one, adjacent and separated ones, 
 ## קוד ובדיקות
 
 [מודל Python](../solutions/prep_095_sliding_window_monitor.py) · [בדיקות](../checks/check_prep_095.py) · [תוצאות](../checks/prep-095-verification.json)
+
+
+## מקור נוסף — 30.10.2026, מקבץ90
+
+[צילום מקור פרטי 13](../sources/2026-10-30-batch90-13.png)
+
+יש רכיב שמקבל שעון ועוד כניסה בעלת ביט יחיד. המטרה היא להוציא 1 כאשר בכל 7 מחזורים רצופים יש לפחות 6 שגיאות.
+
+שיוכי מקור מדווחים: Apple.
+
+נוספה וריאציה טכנית בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו כתחילית. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-095-six_of_seven-batch90-addendum.md)

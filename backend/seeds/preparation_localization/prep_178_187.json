@@ -1,0 +1,742 @@
+{
+  "PREP-178": {
+    "assumptions": {
+      "he": [
+        "N חיובי וסופי; addr ממופה מודולו N והמונה אינו גולש.",
+        "מותר להרוס את תוכן הזיכרון; קריאה וכתיבה אמינות ואין גישה מקבילית."
+      ],
+      "en": [
+        "Positive finite N; addresses map modulo N without counter overflow.",
+        "Destructive reliable read/write operations; no concurrent access."
+      ]
+    },
+    "optimality": {
+      "he": "האלגוריתם משתמש ב־2N+1 פעולות ממשק ובמספר קבוע של מילות עזר. אין טענת מינימום שאילתות ללא מודל חישוב וחסם תחתון מפורשים.",
+      "en": "The algorithm uses 2N+1 interface calls and constant auxiliary words. No minimum-query claim is made without a stated computational model and lower bound."
+    },
+    "verification": {
+      "he": "8,205 מקרים עברו: כל מצבי הביטים באורכים 1–12 ועוד 15 תרחישים באורכים 13,31,64,127,1000. נבדקו תוצאת N, עקבת העוגן ומספר הקריאות והכתיבות המדויק.",
+      "en": "8,205 cases passed: all bit states at lengths 1–12 plus 15 cases at 13,31,64,127,1000. Checked N, anchor trace and exact read/write counts."
+    },
+    "edge_cases": {
+      "he": [
+        "N=1: הכתיבה החיובית הראשונה מוחקת את הסימן.",
+        "כל הביטים שווים או מחזוריים: אין הסתמכות עליהם.",
+        "N=0, גלישת כתובת או כותב נוסף נמצאים מחוץ לחוזה."
+      ],
+      "en": [
+        "N=1: the first positive write clears the marker.",
+        "Uniform or periodic contents do not affect the method.",
+        "Zero length, address overflow or another writer violate the contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חיפוש דפוס שחוזר בלי ליצור סימן אמין.",
+        "בדיקת כתובות בחזקות שתיים בלבד: באורך 3 הן לעולם אינן כפולות של 3.",
+        "הבטחת שימור הנתונים למרות איפוסם."
+      ],
+      "en": [
+        "Searching for a repeating pattern without establishing a marker.",
+        "Probing only powers of two: at length 3 none is divisible by 3.",
+        "Claiming old data survives the destructive writes."
+      ]
+    },
+    "interview_answer": {
+      "he": "אקבע סימן 1 בתא 0. אכתוב 0 לכתובות החיוביות לפי הסדר ואקרא כל פעם את 0. רק בכפולה חיובית של N הסימן יכול להימחק, והראשונה היא N. העלות 2N+1 פעולות והבדיקה הרסנית.",
+      "en": "Set cell 0 to 1. Write 0 at successive positive addresses and reread 0 each time. Only a positive multiple of N can clear it; the first is N. Cost is 2N+1 calls and contents are destroyed."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו דורש שחזור מידע; האפשרות לשנותו נאמרת במפורש בנוסח הערוך.",
+        "הגדרת כתובות בלתי חסומות ואמינות הממשק הן הנחות למודל, לא תכונות שנמדדו בחומרה."
+      ],
+      "en": [
+        "The source does not require restoring contents; destructive permission is explicit in the edited version.",
+        "Unbounded addresses and a reliable interface are model assumptions, not measured hardware properties."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מדוע קפיצה רק לכתובות 1,2,4,8,... אינה פתרון כללי?",
+          "answer_direction": "עבור N=3 אף כתובת כזו אינה פוגעת בעוגן; הראו את השאריות 1,2 לסירוגין.",
+          "principle": "סיום חייב להיות מובטח לכל גודל חוקי, לא רק לחזקות שתיים."
+        }
+      ],
+      "en": [
+        {
+          "question": "Why not probe only 1,2,4,8,...?",
+          "answer_direction": "At N=3 their residues alternate 1,2 and never reach the anchor.",
+          "principle": "Termination must hold for every legal size, not just powers of two."
+        }
+      ]
+    }
+  },
+  "PREP-179": {
+    "assumptions": {
+      "he": [
+        "בכל צעד נוספת סיבית בצד הפחות משמעותי; המספר ללא סימן. האיפוס לאפס.",
+        "פלט טורי וחוזה רוחב מקביל מופרדים במפורש."
+      ],
+      "en": [
+        "Unsigned MSB-first prefix accumulation; reset to zero.",
+        "Serial output and a bounded parallel-register contract are separate."
+      ]
+    },
+    "optimality": {
+      "he": "בקר קבוע בעל חמישה מצבים; מנה טורית בעלות קבועה לסיבית. מנה מקבילית של m סיביות קלט דורשת O(m) אחסון.",
+      "en": "Five controller states and constant logical work per serial input. Parallel quotient storage grows as O(m)."
+    },
+    "verification": {
+      "he": "8,191 מילים עד אורך 12; 90,114 תצפיות קידומת; עשרה מעברים ומקרה 256 אחדות מול divmod. קוד SV מוצע לא הודר.",
+      "en": "8,191 words through length 12,90,114 prefix observations, ten transitions and a 256-one case against divmod. Proposed SV was not compiled."
+    },
+    "edge_cases": {
+      "he": [
+        "קלט ריק ואפסים מובילים.",
+        "המשך valid=0 שומר שארית; באיפוס גם המנה מתאפסת.",
+        "רוחב מנה קבוע חייב מדיניות גלישה."
+      ],
+      "en": [
+        "Empty input and leading zeros.",
+        "A valid=0 gap preserves remainder; reset starts a new quotient.",
+        "A fixed quotient width needs an overflow policy."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לשמור רק שארית ואז לטעון שמתקבלת מנה מקבילית מלאה.",
+        "להוסיף את הסיבית כ־MSB של המספר הקודם במקום כ־LSB.",
+        "למחוק אפסים בתחילת הפלט ולפגוע ביישור."
+      ],
+      "en": [
+        "Keeping only r while claiming a complete parallel quotient.",
+        "Prepending the input as MSB instead of appending as LSB.",
+        "Discarding leading quotient zeros when alignment matters."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור את r של הקידומת. מחשב t=2 r+b, פולט z לפי t≥5 ומחסיר 5 כשצריך. Q_next=2 Q+z. הבקרה סופית; פלט Q מקבילי לזרם בלתי מוגבל דורש אחסון גדל.",
+      "en": "Keep prefix remainder r. Compute t=2 r+b, emit z=(t≥5), subtract5 when needed and update Q_next=2 Q+z. The controller is finite; an unbounded parallel quotient needs growing storage."
+    },
+    "source_ambiguities": {
+      "he": [
+        "הביט „1” בצילום עשוי לתאר סיבית אחת או קבוע 1; שני המקרים נידונים.",
+        "אין גבול אורך או דרישת תקפות פלט במקור; נוספו במפורש."
+      ],
+      "en": [
+        "“bit 1” may mean one bit or constant 1; both interpretations are covered.",
+        "Source omits length and output-valid timing; these contracts are explicit additions."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "האם שארית לבדה מספיקה להוציא מנה מקבילית?",
+          "answer_direction": "לא. שתי קידומות שונות עשויות לחלוק שארית, אך המנות שלהן שונות; נדרש אחסון Q או פלט טורי שנאסף בחוץ.",
+          "principle": "מצב בקרה אינו בהכרח כל מצב הנתונים."
+        }
+      ],
+      "en": [
+        {
+          "question": "Does remainder alone determine a parallel quotient?",
+          "answer_direction": "No. Different prefixes can share r but have different quotients; retain Q or accumulate serial output externally.",
+          "principle": "Control state is not necessarily the whole datapath state."
+        }
+      ]
+    }
+  },
+  "PREP-180": {
+    "assumptions": {
+      "he": [
+        "חוזה ראשי ללא סימן, n≥1, שתי כניסות עצמאיות.",
+        "פלט מדויק כולל סיבית חצי; פלט שלם בלבד מעוגל מטה."
+      ],
+      "en": [
+        "Primary contract is unsigned, n≥1, independent inputs.",
+        "Exact output has a half-unit flag; integer-only output is rounded down."
+      ]
+    },
+    "optimality": {
+      "he": "מחבר בן n+1 ביטים וחיווט הזזה; תלות השטח וההשהיה בארכיטקטורת המחבר מתועדת.",
+      "en": "An n+1-bit adder and shift wiring; area/delay depend on the adder architecture."
+    },
+    "verification": {
+      "he": "21,844 זוגות ברוחבים 1–7 נבדקו מול שוויון 2·whole+half=A+B וחלופה בלתי תלויה; שני מקרי גבול של 8 ביט. ללא הידור HDL.",
+      "en": "21,844 pairs at widths 1..7 checked against 2·whole+half=A+B and an independent bitwise identity; two eight-bit boundary cases. No HDL compilation."
+    },
+    "edge_cases": {
+      "he": [
+        "אפסים ושתי כניסות מרביות.",
+        "סכום אי־זוגי דורש חצי או כלל עיגול.",
+        "קלט מסומן מחייב הרחבת סימן ולא אפס."
+      ],
+      "en": [
+        "Zeros and two maximal inputs.",
+        "An odd sum needs a half bit or rounding rule.",
+        "Signed inputs require sign extension, not zero extension."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "איבוד carry לפני ההזזה.",
+        "הנחה שההפרש הוא שתיים כמו בשאלה הקשורה.",
+        "הצגת הזזה אריתמטית כעיגול לאפס לכל סימן."
+      ],
+      "en": [
+        "Discarding carry before shifting.",
+        "Assuming a difference of two as in the related question.",
+        "Calling arithmetic shift truncation toward zero for every sign."
+      ]
+    },
+    "interview_answer": {
+      "he": "ארחיב את הסכום ל־n+1 ביטים. הביטים העליונים לאחר הזזה הם הרצפה, והביט הנמוך מציין חצי. אסכם במפורש את מדיניות הסימן והעיגול.",
+      "en": "Form an n+1-bit sum; its upper n bits are the floor and its lowest bit denotes one half. State sign and rounding policy explicitly."
+    },
+    "source_ambiguities": {
+      "he": [
+        "הצילום אינו מגדיר סימן, שבר או עיגול.",
+        "אין דרישה שהמספרים יבדלו בשתיים; זו אינה PREP-058."
+      ],
+      "en": [
+        "The source leaves sign, fractions and rounding unspecified.",
+        "There is no difference-two promise; this is not PREP-058."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מעגלים תמיד כלפי מעלה?",
+          "answer_direction": "מוסיפים ל־whole את half. במקסימום שתי הכניסות שוות וה־half אפס, לכן גם התוצאה המעוגלת נכנסת ל־n ביטים.",
+          "principle": "ביט השארית קובע את תיקון העיגול."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can the mean always be rounded up?",
+          "answer_direction": "Add half to whole. At the maximum both inputs are equal and half=0, so the result still fits n bits.",
+          "principle": "The remainder bit determines the rounding correction."
+        }
+      ]
+    }
+  },
+  "PREP-181": {
+    "assumptions": {
+      "he": [
+        "כניסה בת ארבע סיביות; הקודים 0–9 תקינים בלבד.",
+        "שתי ספרות BCD ואות valid; התנהגות שגיאה מפורשת."
+      ],
+      "en": [
+        "Four input bits; only codes0..9 are valid digits.",
+        "Two BCD output digits and a valid flag; invalid behavior is explicit."
+      ]
+    },
+    "optimality": {
+      "he": "פונקציה צירופית קבועה. מחבר קטן, השוואות וחיסורי קבועים או LUT הם חלופות; לא הוכח מינימום שערים.",
+      "en": "A fixed combinational function. Small arithmetic, constant comparisons/subtractions and LUTs are alternatives; no gate minimum is proved."
+    },
+    "verification": {
+      "he": "כל 16 קודי הקלט נבדקו, כולל שישה קודים לא תקינים. עבור התקינים אומתו חוקיות כל ספרה ושוויון 10 T+U=3 D. ללא הידור HDL.",
+      "en": "All 16 input words checked, including six invalid codes. Valid digits satisfy digit bounds and 10 T+U=3 D. No HDL compilation."
+    },
+    "edge_cases": {
+      "he": [
+        "D=0 נותן 00; D=9 נותן 27.",
+        "D=3/4 ו־D=6/7 מסמנים מעברי עשרות.",
+        "קלט 1010 אינו הספרה 10 ב־BCD חד־ספרתי."
+      ],
+      "en": [
+        "D=0 gives 00; D=9 gives 27.",
+        "D=3/4 and D=6/7 straddle tens transitions.",
+        "1010 is not a one-digit BCD encoding of 10."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "החזרת מכפלה בינארית רגילה במקום BCD.",
+        "פלט ספרה אחת שמאבד את העשרות.",
+        "שימוש ב־don’t-care אף שהקלט הלא תקין מוגדר."
+      ],
+      "en": [
+        "Returning ordinary binary rather than BCD.",
+        "Using one output digit and losing the tens.",
+        "Using don’t-cares despite defined invalid behavior."
+      ]
+    },
+    "interview_answer": {
+      "he": "אחשב P=2 D+D, בתחום 0–27, ואז אבחר עשרות 0/1/2 ואחסיר את בסיס העשרות לקבלת האחדות. הפלט שתי ספרות BCD ו־valid לקלט 0–9.",
+      "en": "Compute P=2 D+D in 0..27; choose tens0/1/2 and subtract the tens base for units. Output two BCD digits and valid for inputs 0..9."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו נותן מספר ספרות פלט או התנהגות לקודים לא חוקיים; שניהם נוספו בגלוי.",
+        "BCD אינו מפענח נורות שבעה מקטעים."
+      ],
+      "en": [
+        "Source omits output digit count and invalid-code behavior; both are explicit additions.",
+        "BCD is not a seven-segment drive pattern."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "האם אפשר לאפס את סיבית העשרות הגבוהה ביותר?",
+          "answer_direction": "כן. העשרות בתחום 0–2 ולכן שתי הסיביות הגבוהות שלה תמיד 0; חיבורן לקבועים אינו משנה את רוחב ממשק BCD.",
+          "principle": "טווח הערכים עשוי לכפות סיביות קבועות."
+        }
+      ],
+      "en": [
+        {
+          "question": "Can the high tens bits be tied low?",
+          "answer_direction": "Yes. Tens ranges over0..2, so its two most significant bits are always0; fixed wires retain the four-bit BCD interface.",
+          "principle": "A value range can force constant bits."
+        }
+      ]
+    }
+  },
+  "PREP-182": {
+    "assumptions": {
+      "he": [
+        "כל M היא צעד באותו אורך; פניות מדויקות של 90 מעלות.",
+        "ביצוע יחיד; שוויון מיקום בלבד, ללא דרישה לכיוון סופי."
+      ],
+      "en": [
+        "Every M has the same unit length; turns are exact right angles.",
+        "One execution; equality of position only, not final heading."
+      ]
+    },
+    "optimality": {
+      "he": "O(n) זמן, O(1) מילים נוספות או O(log(n+1)) ביטים לקואורדינטות; אין שמירת מסלול.",
+      "en": "O(n) time, O(1) extra words or O(log(n+1)) coordinate bits; no trail storage."
+    },
+    "verification": {
+      "he": "כל 29,524 הרצפים עד אורך 9 ו־250,959 צעדים נבדקו מול מודל מרוכב נפרד; שלושה קלטים פגומים נדחו.",
+      "en": "All 29,524 sequences through length 9 and 250,959 steps matched an independent complex model; three invalid inputs were rejected."
+    },
+    "edge_cases": {
+      "he": [
+        "רצף ריק או פניות בלבד: חוזר.",
+        "חזרה למיקום עם כיוון אחר נחשבת הצלחה.",
+        "M יחיד אינו חוזר; אות קטנה אינה פקודה חוקית בחוזה שנבחר."
+      ],
+      "en": [
+        "Empty sequence or turns only return.",
+        "Returning with another heading is success.",
+        "One M does not return; lowercase is invalid under the chosen contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לדרוש גם כיוון סופי זהה.",
+        "לבלבל חזרה בביצוע יחיד עם חסימות במספר אינסופי של חזרות.",
+        "לשמור כל נקודה במקום לצבור תזוזה."
+      ],
+      "en": [
+        "Also requiring equal final headings.",
+        "Confusing one-run return with bounded repeated motion.",
+        "Storing every point instead of accumulating displacement."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור x,y וכיוון מתוך ארבעה. R ו־L יעדכנו כיוון, M יעדכן מיקום. אחזיר אמת רק אם שתי הקואורדינטות אפס, בלי לבדוק כיוון סופי.",
+      "en": "Keep x,y and one of four headings. R/L change heading; M changes position. Return true exactly when both coordinates are zero, regardless of final heading."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המילה סיבוב במקור הובהרה כחזרה למיקום אחרי הרצף פעם אחת; זהו התנאי שבסוגריים בצילום.",
+        "הכיוון והראשית נבחרו לצורכי ייצוג בלבד."
+      ],
+      "en": [
+        "The source's parenthetical return-to-initial-position defines the one-run contract.",
+        "Initial axes and heading are representation choices only."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם גם הכיוון הסופי חייב להיות זהה?",
+          "answer_direction": "מוסיפים לתנאי הסיום d=0; שאר העדכונים נשארים.",
+          "principle": "מפרידים בין דרישת מיקום לדרישת מצב מלא."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if final heading must also match?",
+          "answer_direction": "Add d=0 to the final condition; retain all updates.",
+          "principle": "Distinguish position from full state."
+        }
+      ]
+    }
+  },
+  "PREP-183": {
+    "assumptions": {
+      "he": [
+        "a חיובי; שני הקודקודים נגדיים במרחב.",
+        "מסלול רציף על הפאות, ללא חדירה לגוף וללא הגבלה למקצועות בלבד."
+      ],
+      "en": [
+        "Positive side a; diametrically opposite vertices.",
+        "Continuous face travel, without interior shortcuts or an edges-only restriction."
+      ]
+    },
+    "optimality": {
+      "he": "אורך מינימלי a√5 לפי בנייה וחסם תחתון תואם; חישוב האורך O(1).",
+      "en": "Minimum length a√5 by construction and matching lower bound; O(1) length calculation."
+    },
+    "verification": {
+      "he": "909 דגימות חצייה ותשעה גדלים מול מרחקי 3D; ארבעה אורכים פגומים נדחו. הוכחת המינימליות רציפה ונפרדת מהדגימה.",
+      "en": "909 crossing samples over nine sizes versus 3D distances; four invalid sides rejected. Continuous minimality is proved separately from sampling."
+    },
+    "edge_cases": {
+      "he": [
+        "a=0 או a שלילי אינם קובייה בחוזה.",
+        "מעבר דרך הגוף נותן a√3; מקצועות בלבד נותנים 3a.",
+        "מספר מסלולים סימטריים משיגים אותו מינימום."
+      ],
+      "en": [
+        "Zero or negative a is outside the cube contract.",
+        "Interior travel gives a√3; edges only give3a.",
+        "Symmetric paths attain the same minimum."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לתת את אלכסון הגוף כשנדרש מסלול על הפאות.",
+        "להניח שאלכסון פאה ועוד מקצוע הוא מיטבי.",
+        "להציג פריסה חוקית בלי לשלול מסלול קצר יותר."
+      ],
+      "en": [
+        "Giving the space diagonal for surface travel.",
+        "Assuming a face diagonal plus one edge is optimal.",
+        "Presenting a legal unfolding without a lower bound."
+      ]
+    },
+    "interview_answer": {
+      "he": "בפני השטח פותחים שתי פאות למלבן 2a על a. האלכסון הוא a√5 וחוצה את המקצוע באמצעו. החסם דרך נקודת מעבר בין קבוצות הפאות מוכיח שאין דרך קצרה יותר.",
+      "en": "Unfold two faces into a 2a by a rectangle. Its diagonal is a√5 and crosses the shared edge midway. A near/far-face crossing lower bound rules out shorter alternatives."
+    },
+    "source_ambiguities": {
+      "he": [
+        "סוג הקצוות והיתר התנועה חסרים בצילום; הבחירה בקודקודים נגדיים על הפאות היא הנחת עריכה גלויה."
+      ],
+      "en": [
+        "Endpoints and permitted motion are underspecified in the screenshot; opposite vertices with surface travel are an explicit editorial choice."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה יקרה בתיבה בעלת שלוש צלעות שונות?",
+          "answer_direction": "למסלול בין קודקודים נגדיים משווים פריסות במידות (a+b)×c, (a+c)×b ו־(b+c)×a.",
+          "principle": "מגדירים את מרחב התנועה ומשווים מבנים סימטריים שהפכו לשונים."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes for a rectangular box with unequal dimensions?",
+          "answer_direction": "For opposite vertices compare the(a+b)×c, (a+c)×b and(b+c)×a unfoldings.",
+          "principle": "Specify the motion domain and compare formerly symmetric constructions."
+        }
+      ]
+    }
+  },
+  "PREP-184": {
+    "assumptions": {
+      "he": [
+        "כל קריאה מחזירה מספר שלם אחיד בתחום 0–4.",
+        "הקריאות בלתי תלויות; מותר מספר קריאות משתנה."
+      ],
+      "en": [
+        "Each call returns a uniform integer in 0..4.",
+        "Calls are independent; variable call count is allowed."
+      ]
+    },
+    "optimality": {
+      "he": "תוחלת 50/21 קריאות מקור ו־O(1) מקום; אין חסם זמן סופי למקרה הגרוע. לא נטענת אופטימליות גלובלית.",
+      "en": "Expected 50/21 source calls and O(1) space; no finite worst-case time bound. Global optimality is not claimed."
+    },
+    "verification": {
+      "he": "25 זוגות, 1,785 היסטוריות קבלה עד ארבעה ניסיונות וחישוב רציונלי של התוחלת; אין בדיקת איכות למחולל חיצוני.",
+      "en": "25 pairs,1,785 first-accept histories through four attempts and rational expectation; no external RNG-quality certification."
+    },
+    "edge_cases": {
+      "he": [
+        "v=20 מתקבל ונותן 6; v=21 נדחה.",
+        "רצף של דחיות יכול להיות ארוך כרצוננו.",
+        "מקור לא אחיד או מתואם אינו מכוסה בהוכחה."
+      ],
+      "en": [
+        "v=20 is accepted as 6; v=21 is rejected.",
+        "A rejection run may be arbitrarily long.",
+        "Biased or correlated sources are outside the proof."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להחזיר v mod 7 לכל 25 הערכים: ארבע תשובות יקבלו הופעה נוספת.",
+        "לקרוא לעצירה בהסתברות 1 חסם זמן מובטח.",
+        "להניח שהמילה רנדומלי לבדה מבטיחה אי־תלות ואחידות."
+      ],
+      "en": [
+        "Applying v mod7 to all 25 values gives four answers extra mass.",
+        "Calling almost-sure termination a deterministic runtime bound.",
+        "Assuming the word random alone guarantees independence and uniformity."
+      ]
+    },
+    "interview_answer": {
+      "he": "אייצר 25 זוגות אחידים משתי קריאות, אדחה את 21–24 ואחזיר שארית מודולו 7 עבור השאר. לכל תשובה שלושה זוגות; התוחלת 50/21 קריאות, עם עצירה בהסתברות 1 בלבד.",
+      "en": "Generate25 equiprobable pairs, reject 21..24 and return modulo 7 for the rest. Each answer has three pairs; expect 50/21 calls, with almost-sure rather than bounded termination."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור לא מציין אי־תלות ואחידות; הן הוצהרו כהנחות הנחוצות להבטחת פלט אחיד."
+      ],
+      "en": [
+        "Independence and uniformity are necessary assumptions, explicitly added because the screenshot does not state them."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה ההכללה ל־RandomM שממנו רוצים RandomN?",
+          "answer_direction": "בונים k ספרות בבסיס M עד שיש לפחות N מצבים, מקבלים כפולה של N מצבים ומחלקים לפי שארית; מחשבים הסתברות קבלה.",
+          "principle": "דחייה משמרת קבוצות שוות הסתברות."
+        }
+      ],
+      "en": [
+        {
+          "question": "How does this generalize from RandomM to RandomN?",
+          "answer_direction": "Build k base-M digits until there are at least N states; accept a multiple of N states and use the remainder, then compute acceptance probability.",
+          "principle": "Rejection preserves equal probability groups."
+        }
+      ]
+    }
+  },
+  "PREP-185": {
+    "assumptions": {
+      "he": [
+        "טווח חיובי כולל הקצה; ייצוג עשרוני ללא אפסים מובילים.",
+        "פלט אחד לכל מספר שמכיל 7; אין כלל נוסף של התחלקות ב־7."
+      ],
+      "en": [
+        "Positive inclusive interval; usual decimal representation without leading zeroes.",
+        "One output per number containing 7; no additional divisibility rule."
+      ]
+    },
+    "optimality": {
+      "he": "בדיקה ישירה O(N log N) פעולות ספרה; תחזוקת count 7 היא O(N) עדכוני ספרה מצטברים. B התאמות מפיקות B מילים קבועות ו־Θ(B) תווי פלט; אין פלט עבור שאר המספרים.",
+      "en": "Direct membership uses O(N log N) digit operations; count 7 maintenance uses O(N) amortized digit updates. B matches emit B fixed words and Θ(B) characters; nonmatches emit nothing."
+    },
+    "verification": {
+      "he": "כל 1,000,000 המספרים נבדקו מול כתיב עשרוני עצמאי; נמצאו 19 פלטי boom עד 100 ו־468,559 עד מיליון.",
+      "en": "All 1,000,000 integers matched independent decimal-string membership;19 booms through 100 and 468,559 through one million."
+    },
+    "edge_cases": {
+      "he": [
+        "77 מפיק boom אחד ולא שניים.",
+        "14 אינו מפיק פלט על פי הכלל המצולם.",
+        "ב־69→70 נכנס 7; ב־79→80 הוא נעלם; N=0 מפיק רצף ריק בהכללת ה־API."
+      ],
+      "en": [
+        "77 yields one boom, not two.",
+        "14 emits no output under the supplied rule.",
+        "69→70 introduces7;79→80 removes it; generalized API N=0 yields no lines."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להוסיף כפולות של 7 בלי שהמקור ביקש זאת.",
+        "להדפיס את המספר הרגיל כשאין בו 7, בניגוד למקור.",
+        "לא לעדכן ספרות שנמחקו או השתנו בנשא."
+      ],
+      "en": [
+        "Adding multiples of 7 without a source requirement.",
+        "Printing a nonmatching number despite the source's no-action rule.",
+        "Failing to update digit state across carries."
+      ]
+    },
+    "interview_answer": {
+      "he": "אבדוק הופעת הספרה 7 ואפיק boom אחד רק בהתאמה; אחרת לא יהיה פלט. מיליון קטן מספיק גם לסריקה פשוטה. לשיפור החלטת הזיהוי אשמור ספרות ומונה שביעיות ואעדכן רק את הנשא; אספור גם את מחיר הפלט.",
+      "en": "Test for digit7 and emit one boom only on a match; otherwise emit nothing. A simple scan handles one million. To optimize membership keep decimal digits and a seven-count, update carried digits and include output cost."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור דורש boom בהופעת 7 ואחרת שום פעולה; אין הדפסת המספרים הלא־מתאימים.",
+        "שם המשחק המקובל עשוי לכלול כפולות 7, אך הנוסח בצילום מציין רק הופעת הספרה.",
+        "פלט יחיד למספר מתאים נבחר בגלוי כשיש יותר מהופעה אחת."
+      ],
+      "en": [
+        "The source requires boom on a 7 occurrence and otherwise no action; nonmatching numbers are not printed.",
+        "The familiar game's name may include multiples of 7, but the screenshot specifies only digit occurrence.",
+        "One output per matching integer is explicitly chosen when the digit occurs repeatedly."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "אם צריך רק לספור כמה מספרים עד N מכילים 7, בלי להדפיסם?",
+          "answer_direction": "אפשר להשתמש ב־digit DP או לספור את המשלימים ללא 7; אז אין הכרח לעבור על כל N המספרים.",
+          "principle": "גודל הפלט משנה את החסם התחתון."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if only the count through N is needed, without printing each value?",
+          "answer_direction": "Use digit DP or count the complement without7; then visiting every integer is unnecessary.",
+          "principle": "Output requirements determine lower bounds."
+        }
+      ]
+    }
+  },
+  "PREP-186": {
+    "assumptions": {
+      "he": [
+        "אי חסום ופשוט־קשר בעל חוף חיצוני סגור פשוט יחיד, ללא חורים או אגמים; גדר סגורה פשוטה אחת, פוליגונלית ופנימית לחוף; נקודת ההתחלה אינה על הגדר.",
+        "אפשר לנוע ולחצות; מובטחת הגעה לרצועת חישה חופית הידועה כולה מחוץ לגדר אחרי מספר סופי של חציות אמיתיות.",
+        "חיישני חצייה וסמיכות לים שניהם קיימים; חיווי סמיכות נחשב עוגן רק תחת הבטחת הרצועה החיצונית."
+      ],
+      "en": [
+        "Bounded simply connected island with one simple closed outer shore, no holes or inland lakes; one simple closed polygonal fence wholly inland; start off its boundary.",
+        "Crossable terrain and a route guaranteed to reach a sensing strip known entirely outside the fence after finitely many genuine crossings.",
+        "Both crossing and sea-proximity sensors exist; proximity is an anchor only under the outside-strip promise."
+      ]
+    },
+    "optimality": {
+      "he": "O(k) עיבוד ל־k אירועים וביט אחד; אורך וזמן ההליכה אינם חסומים על סמך המקור בלבד.",
+      "en": "O(k) processing for k events and one parity bit; original data alone give no walking-distance or travel-time bound."
+    },
+    "verification": {
+      "he": "32,766 היסטוריות עם עוגן ידוע, 289 קרניים באי מלבני סינתטי ודחיית עוגן לא ידוע; אין ניווט בשטח או הוכחת גאומטריה באמצעות מדגם בלבד.",
+      "en": "32,766 anchored histories,289 rays in synthetic rectangular geometry and unknown-anchor rejection; no field navigation or geometric proof based solely on samples."
+    },
+    "edge_cases": {
+      "he": [
+        "אפס חציות והגעה לרצועת החישה החיצונית: ההתחלה בחוץ.",
+        "נגיעה אינה חצייה; התחלה על גבול חסרה בחוזה המקורי.",
+        "לגונה פנימית או טווח סמיכות רחב מדי עלולים לבטל את עוגן החוף."
+      ],
+      "en": [
+        "Zero crossings ending in the outside sensing strip means an outside start.",
+        "A contact is not a crossing; a boundary start is unspecified originally.",
+        "An inland lagoon or overly wide proximity zone can invalidate the coastal anchor."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להפוך זוגיות ליד נגיעה בלי מעבר צד.",
+        "להניח שכל חיווי סמיכות לים הוא מחוץ לגדר בלי לכייל את הרצועה או לשלול חוף פנימי.",
+        "להבטיח עצירה בלי לתת יכולת להגיע לעוגן."
+      ],
+      "en": [
+        "Toggling on a touch without changing sides.",
+        "Treating every sea-proximity indication as outside without a strip guarantee or excluding inner shores.",
+        "Promising termination without an anchor-reaching motion guarantee."
+      ]
+    },
+    "interview_answer": {
+      "he": "חציות נותנות רק זוגיות, ולכן דרוש עוגן. בהבטחה שרצועת החישה החופית כולה בחוץ ונגישה, אגיע אליה ואשמור זוגיות חציות. בסיום אני בחוץ; זוגיות אי־זוגית פירושה שהתחלתי בפנים. בלי ההבטחות אין הכרעה כללית.",
+      "en": "Crossings provide parity, so an anchor is needed. Given a reachable sea-sensing strip known wholly outside, walk there while toggling a bit. The final side is outside; odd parity means an inside start. Without those promises no universal decision follows."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור מציין גם ים וגם חציות, אך אינו מגדיר טופולוגיית אי, חוף פנימי, טווח סמיכות, צורת גדר, יכולת תנועה או התחלה בגבול.",
+        "אי ללא חורים ורצועת חישה ידועה כחיצונית הן הנחות עריכה מפורשות. הפתרון המותנה אינו מחליף את המקור."
+      ],
+      "en": [
+        "The source supplies sea and crossing observations but no island topology, inner-shore, proximity-range, fence, motion or boundary-start contract.",
+        "A hole-free island and a sensing strip known outside are explicit editorial assumptions; the conditional solution does not replace the source."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה עושים אם החיישן מחמיץ חצייה אחת?",
+          "answer_direction": "כל ביט הזוגיות עלול להתהפך; ללא יתירות או תצפית מצב נוספת אין הבטחת נכונות.",
+          "principle": "אינווריאנט דורש התאמה בין אירוע פיזי לתצפית."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if the sensor misses one crossing?",
+          "answer_direction": "Parity may be inverted; correctness needs redundancy or another absolute-side observation.",
+          "principle": "An invariant relies on observations matching physical events."
+        }
+      ]
+    }
+  },
+  "PREP-187": {
+    "assumptions": {
+      "he": [
+        "מילה היא מקטע מרבי שאינו רווח ASCII; כל הרווחים נשמרים.",
+        "א פועלת על מקטע כולל במאגר ניתן לשינוי; ב חייבת לקרוא לה.",
+        "המעטפת מקבלת מחרוזת ומעתיקה; הפעולה בתוך מאגר קיים אינה מעתיקה אותו."
+      ],
+      "en": [
+        "Words are maximal non-ASCII-space runs; all spaces are retained.",
+        "A reverses an inclusive interval in a mutable buffer; B must call it.",
+        "The string wrapper copies; the core operates in an existing buffer."
+      ]
+    },
+    "optimality": {
+      "he": "O(n) זמן. ליבה בתוך מאגר קיים: O(1) מילים נוספות; מעטפת מחרוזת Python: O(n) מקום.",
+      "en": "O(n) time. Core in an existing buffer: O(1) extra words; Python string wrapper: O(n) space."
+    },
+    "verification": {
+      "he": "9,841 מחרוזות, 1,549 מקטעים, אורקל טוקנים נפרד, הפעלה כפולה ושימור שכיחויות תווים; דוגמת המקור נבדקה בפועל.",
+      "en": "9,841 strings,1,549 intervals, independent token oracle, involution and character frequencies; the source example was executed."
+    },
+    "edge_cases": {
+      "he": [
+        "מחרוזת ריקה ומקטע ריק חוקיים.",
+        "רווחים בקצוות עוברים לקצה ההפוך; אין מחיקת רווחים.",
+        "טאב אינו מפריד בחוזה הזה; אשכולות Unicode אינם מפורקים לשונית."
+      ],
+      "en": [
+        "Empty strings and empty intervals are valid.",
+        "Edge spaces move to the opposite edge; no spaces are dropped.",
+        "A tab is not a delimiter here; Unicode grapheme segmentation is not performed."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להחזיר רק היפוך כל התווים.",
+        "לפתור באמצעות split/join בלי לקרוא לפונקציית א.",
+        "לקרוא למימוש עם העתקה in-place או למחוק רווחים בלי להגדיר זאת."
+      ],
+      "en": [
+        "Returning only the full character reversal.",
+        "Using split/join without calling A.",
+        "Calling a copying wrapper in-place or silently dropping spaces."
+      ]
+    },
+    "interview_answer": {
+      "he": "אממש היפוך מקטע עם שני מצביעים. אפעיל אותו על כל המאגר, ואחר כך על כל מילה. היפוך ראשון משנה את סדר המילים; השני מתקן את התווים בתוכן. הזמן לינארי, והמקום תלוי אם יש מאגר ניתן לשינוי או עותק.",
+      "en": "Implement a two-pointer interval reversal. Apply it to the whole buffer, then to every word. The first changes word order; the second repairs each word. Time is linear; space depends on whether a mutable buffer is supplied or copied."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מגדיר רווחים מרובים, פיסוק או קידוד. חוזה המקטעים וההעתקה הוצהר בגלוי בלי לשנות את הדוגמה."
+      ],
+      "en": [
+        "Multiple spaces, punctuation and encoding are unspecified originally. Block and copying contracts are explicit and preserve the supplied example."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך שומרים את מספר הרווחים המקורי בכל מיקום תוך היפוך המילים בלבד?",
+          "answer_direction": "זהו חוזה אחר: צריך לאסוף או לזהות מקטעי מילים ולהעתיקם אל שלד ההפרדות המקורי; הניתוח והזיכרון משתנים.",
+          "principle": "קובעים איזה מבנה נחשב נתון לפני שבוחרים אלגוריתם."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would you preserve each original separator position while reversing only words?",
+          "answer_direction": "That is another contract: identify word blocks and place them into the original separator skeleton, with a corresponding space analysis.",
+          "principle": "Define which structure is preserved before selecting an algorithm."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "words_checked": 29524,
+  "command_steps": 250959,
+  "method": "Exhaustive words through length 9 versus independent complex-number rotations; position and orientation compared separately.",
+  "edge_cases": [
+    "empty",
+    "turns only",
+    "return with changed heading",
+    "invalid symbols"
+  ],
+  "limitation": "Finite enumeration supports the stated induction; no physical turtle tested.",
+  "question_id": "PREP-182",
+  "ai_assisted": true,
+  "professional_review": "pending"
+}
