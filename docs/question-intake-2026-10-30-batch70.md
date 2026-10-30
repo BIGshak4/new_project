@@ -121,7 +121,7 @@
 
 [commit התוכן daa68114dc8edb23ac49df8d3a1f90075a5c09cf](https://github.com/BIGshak4/new_project/commit/daa68114dc8edb23ac49df8d3a1f90075a5c09cf) נדחף ל־`master`. כל 109 טביעות הנכסים החדשים תאמו ל־blobs שהוכנו בגיט. שינויים לא קשורים ב־quiz ובקובצי Supabase נשמרו ולא צורפו למקבץ.
 
-ב־**30.10.2026, 11:09:55 UTC**, [בדיקת Netlify](https://jobrun-practice.netlify.app/api/health?expected=daa68114dc8edb23ac49df8d3a1f90075a5c09cf) ו[בדיקת Render עם מסד](https://jobrun-api.onrender.com/health?db_check=true) החזירו בדיוק את SHA התוכן ואת `status=ok`. סבב המסד ארך **2.87ms**. השירות החי הוא הפיילוט הציבורי; תצורת השרת מדווחת `env=staging`. [ריצת הפריסה 41045952220](https://github.com/BIGshak4/new_project/actions/runs/41045952220) הסתיימה בהצלחה עבור אותו SHA. ראיות הבדיקה המקומיות נשמרו ב־`.impeccable/intake-20261030-batch70/deployment-verified.json` וב־`github-workflow-verification.json`.
+ב־**30.10.2026, 11:09:55 UTC**, [בדיקת Netlify](https://jobrun-practice.netlify.app/api/health?expected=daa68114dc8edb23ac49df8d3a1f90075a5c09cf) ו[בדיקת Render עם מסד](https://jobrun-api.onrender.com/health?db_check=true) החזירו בדיוק את SHA התוכן ואת `status=ok`. סבב המסד ארך **2.87ms**. [ריצת הפריסה 41045952220](https://github.com/BIGshak4/new_project/actions/runs/41045952220) הסתיימה בהצלחה עבור אותו SHA. ראיות הבדיקה המקומיות נשמרו ב־`.impeccable/intake-20261030-batch70/deployment-verified.json` וב־`github-workflow-verification.json`.
 
 אלו כתובות הפיילוט הציבורי הפעיל. תגובת הבריאות של השרת מציינת `env=staging`; אימות הפריסה מתייחס לפיילוט זה, ולא לסביבה המסומנת `production`.
 
@@ -131,7 +131,7 @@
 
 1. לחפש בנפרד `PREP-170`, `PREP-161` ו־`PREP-173`, ולוודא שהתוצאה המתאימה נפתחת.
 2. בכל אחת לפתוח שלושה רמזים בהדרגה, לחשוף את הפתרון ולפתוח את הסעיפים והשרטוטים.
-3. לעבור ל־English ולוודא שהשאלה, הרמזים והפתרון עוברים לשפה המתאימה ושמצב החשיפה נשמר.
+3. לעבור ל־English ולוודא שהשאלה, הפתרון והחומר המשלים מתורגמים ושמצב החשיפה נשמר. רמזים ומשוב שכבר נשמרו בניסיון נשארים בשפת הניסיון המקורית בהתאם לחוזה האתר; יש לבדוק רמזים באנגלית בניסיון ששפתו אנגלית.
 4. לבצע בנפרד בדיקת חשבון בקריאה בלבד: להשוות רשימות שמורות, היסטוריה, התקדמות והגדרות למצב שלפני המקבץ, ללא יצירת ניסיון חדש או שינוי פרטי חשבון במסגרת אותה בדיקת שימור.
 
 מסלול זה הוא הוראות לבדיקה ידנית שטרם בוצעה בחשבון ייצור מחובר; הוא אינו נכלל במספר תצוגות ה־QA המקומיות המאומתות לעיל.
