@@ -21,6 +21,8 @@ SOURCES = tuple(CONTENT / name for name in (
     "fundamentals-code-expansion.json",
     "fundamentals-hardware-250.json", "fundamentals-reasoning-250.json",
     "fundamentals-code-250.json",
+    "fundamentals-hardware-400.json", "fundamentals-reasoning-400.json",
+    "fundamentals-code-400.json",
 ))
 BACKEND_OUTPUT = ROOT / "backend/seeds/fundamentals_catalog.json"
 WEB_OUTPUT = CONTENT / "fundamentals-revisions.json"

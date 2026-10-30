@@ -103,6 +103,27 @@ async def test_user_ids_and_extra_properties_cannot_be_injected(client):
     assert runtime.fundamentals.repository.rows == {}
 
 
+async def test_400_card_registry_accepts_new_completions_and_preserves_old_dates(client):
+    http, runtime = client
+    _, token = make_token()
+    auth = headers(token)
+    assert len(runtime.fundamentals.revisions) == 400
+    old_url = f"/v1/fundamentals/progress/{KEY}"
+    previous = await http.put(old_url, headers=auth, json={
+        "content_revision": runtime.fundamentals.revisions[KEY]})
+    assert previous.status_code == 200
+    old_record = previous.json()
+    new_keys = ("quick-hw-200", "quick-sw-177", "quick-sw-200")
+    for key in new_keys:
+        response = await http.put(f"/v1/fundamentals/progress/{key}", headers=auth, json={
+            "content_revision": runtime.fundamentals.revisions[key]})
+        assert response.status_code == 200 and response.json()["question_key"] == key
+    records = (await http.get("/v1/fundamentals/progress", headers=auth)).json()["completed"]
+    assert {row["question_key"] for row in records} == {KEY, *new_keys}
+    assert next(row for row in records if row["question_key"] == KEY) == old_record
+    assert not runtime.store.metrics
+
+
 async def test_unknown_keys_stale_revisions_and_malformed_hashes_do_not_write(client):
     http, runtime = client
     _, token = make_token()

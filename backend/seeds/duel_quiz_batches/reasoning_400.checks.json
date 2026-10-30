@@ -1,0 +1,4673 @@
+[
+  {
+    "key": "quick-sw-126-v1",
+    "method": "enumerate injective complete assignments and relocation cost",
+    "inputs": {
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0
+        ]
+      ],
+      "old": [
+        0
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-126-v2",
+    "method": "enumerate injective complete assignments and relocation cost",
+    "inputs": {
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0
+        ]
+      ],
+      "old": [
+        0,
+        1
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-126-v3",
+    "method": "enumerate injective complete assignments and relocation cost",
+    "inputs": {
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          0
+        ]
+      ],
+      "old": [
+        0,
+        1,
+        2
+      ]
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-126-v4",
+    "method": "enumerate injective complete assignments and relocation cost",
+    "inputs": {
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          1
+        ],
+        [
+          0
+        ]
+      ],
+      "old": [
+        0,
+        1
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-126-v5",
+    "method": "enumerate injective complete assignments and relocation cost",
+    "inputs": {
+      "edges": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0
+        ]
+      ],
+      "old": [
+        0,
+        1
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-127-v1",
+    "method": "maximum Hall subset deficit",
+    "inputs": {
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-127-v2",
+    "method": "maximum Hall subset deficit",
+    "inputs": {
+      "edges": [
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-127-v3",
+    "method": "maximum Hall subset deficit",
+    "inputs": {
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-127-v4",
+    "method": "maximum Hall subset deficit",
+    "inputs": {
+      "edges": [
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-127-v5",
+    "method": "maximum Hall subset deficit",
+    "inputs": {
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-128-v1",
+    "method": "enumerate occupancy demand at every unit interval",
+    "inputs": {
+      "jobs": [
+        [
+          0,
+          4,
+          2
+        ],
+        [
+          1,
+          3,
+          3
+        ]
+      ]
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    },
+    "value": "5",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-128-v2",
+    "method": "enumerate occupancy demand at every unit interval",
+    "inputs": {
+      "jobs": [
+        [
+          0,
+          2,
+          4
+        ],
+        [
+          3,
+          5,
+          3
+        ]
+      ]
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    },
+    "value": "4",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-128-v3",
+    "method": "enumerate occupancy demand at every unit interval",
+    "inputs": {
+      "jobs": [
+        [
+          0,
+          5,
+          1
+        ],
+        [
+          1,
+          4,
+          2
+        ],
+        [
+          2,
+          3,
+          3
+        ]
+      ]
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    },
+    "value": "6",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-128-v4",
+    "method": "enumerate occupancy demand at every unit interval",
+    "inputs": {
+      "jobs": [
+        [
+          0,
+          3,
+          2
+        ],
+        [
+          1,
+          4,
+          2
+        ],
+        [
+          2,
+          5,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    },
+    "value": "5",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-128-v5",
+    "method": "enumerate occupancy demand at every unit interval",
+    "inputs": {
+      "jobs": [
+        [
+          0,
+          6,
+          2
+        ],
+        [
+          2,
+          4,
+          5
+        ],
+        [
+          3,
+          5,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "8",
+      "en": "8"
+    },
+    "value": "8",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-129-v1",
+    "method": "sum independent skill deficits",
+    "inputs": {
+      "need": [
+        2,
+        0
+      ],
+      "have": [
+        1,
+        1
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-129-v2",
+    "method": "sum independent skill deficits",
+    "inputs": {
+      "need": [
+        1,
+        1
+      ],
+      "have": [
+        2,
+        0
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-129-v3",
+    "method": "sum independent skill deficits",
+    "inputs": {
+      "need": [
+        2,
+        1
+      ],
+      "have": [
+        2,
+        1
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-129-v4",
+    "method": "sum independent skill deficits",
+    "inputs": {
+      "need": [
+        0,
+        3
+      ],
+      "have": [
+        2,
+        1
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-129-v5",
+    "method": "sum independent skill deficits",
+    "inputs": {
+      "need": [
+        2,
+        2
+      ],
+      "have": [
+        3,
+        0
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-130-v1",
+    "method": "finite specification uniquely inferred value",
+    "inputs": {
+      "allowed": [
+        400,
+        500
+      ]
+    },
+    "expected": {
+      "he": "אין כמות יחידה שנקבעת",
+      "en": "No unique count is determined"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-130-v2",
+    "method": "finite specification uniquely inferred value",
+    "inputs": {
+      "allowed": [
+        500
+      ]
+    },
+    "expected": {
+      "he": "500",
+      "en": "500"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-130-v3",
+    "method": "finite specification uniquely inferred value",
+    "inputs": {
+      "allowed": [
+        400
+      ]
+    },
+    "expected": {
+      "he": "400",
+      "en": "400"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-130-v4",
+    "method": "finite specification uniquely inferred value",
+    "inputs": {
+      "allowed": []
+    },
+    "expected": {
+      "he": "אין חבילה העומדת בדרישות",
+      "en": "No compliant pack exists"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-130-v5",
+    "method": "finite specification uniquely inferred value",
+    "inputs": {
+      "allowed": [
+        200,
+        250,
+        500
+      ]
+    },
+    "expected": {
+      "he": "אין כמות יחידה שנקבעת",
+      "en": "No unique count is determined"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-131-v1",
+    "method": "inclusive integer boundary neighborhoods",
+    "inputs": {
+      "low": 209,
+      "high": 211
+    },
+    "expected": {
+      "he": "(208, 209, 211, 212)",
+      "en": "(208, 209, 211, 212)"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-131-v2",
+    "method": "inclusive integer boundary neighborhoods",
+    "inputs": {
+      "low": 296,
+      "high": 298
+    },
+    "expected": {
+      "he": "(295, 296, 298, 299)",
+      "en": "(295, 296, 298, 299)"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-131-v3",
+    "method": "inclusive integer boundary neighborhoods",
+    "inputs": {
+      "low": 8,
+      "high": 12
+    },
+    "expected": {
+      "he": "(7, 8, 12, 13)",
+      "en": "(7, 8, 12, 13)"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-131-v4",
+    "method": "inclusive integer boundary neighborhoods",
+    "inputs": {
+      "low": 19,
+      "high": 20
+    },
+    "expected": {
+      "he": "(18, 19, 20, 21)",
+      "en": "(18, 19, 20, 21)"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-131-v5",
+    "method": "inclusive integer boundary neighborhoods",
+    "inputs": {
+      "low": 4,
+      "high": 4
+    },
+    "expected": {
+      "he": "(3, 4, 4, 5)",
+      "en": "(3, 4, 4, 5)"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-132-v1",
+    "method": "quantify over every possible measurement value",
+    "inputs": {
+      "limit": 10,
+      "reading": 10,
+      "error": 1
+    },
+    "expected": {
+      "he": "אין הכרעה בטווח האי־ודאות",
+      "en": "Inconclusive under uncertainty"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-132-v2",
+    "method": "quantify over every possible measurement value",
+    "inputs": {
+      "limit": 10,
+      "reading": 8,
+      "error": 1
+    },
+    "expected": {
+      "he": "עומד בדרישה",
+      "en": "Accept"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-132-v3",
+    "method": "quantify over every possible measurement value",
+    "inputs": {
+      "limit": 10,
+      "reading": 12,
+      "error": 1
+    },
+    "expected": {
+      "he": "נכשל בדרישה",
+      "en": "Reject"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-132-v4",
+    "method": "quantify over every possible measurement value",
+    "inputs": {
+      "limit": 20,
+      "reading": 19,
+      "error": 1
+    },
+    "expected": {
+      "he": "עומד בדרישה",
+      "en": "Accept"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-132-v5",
+    "method": "quantify over every possible measurement value",
+    "inputs": {
+      "limit": 20,
+      "reading": 21,
+      "error": 2
+    },
+    "expected": {
+      "he": "אין הכרעה בטווח האי־ודאות",
+      "en": "Inconclusive under uncertainty"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-133-v1",
+    "method": "compare positive and negative control outcomes",
+    "inputs": {
+      "expected": [
+        1,
+        0
+      ],
+      "observed": [
+        1,
+        1
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-133-v2",
+    "method": "compare positive and negative control outcomes",
+    "inputs": {
+      "expected": [
+        1,
+        0
+      ],
+      "observed": [
+        1,
+        0
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-133-v3",
+    "method": "compare positive and negative control outcomes",
+    "inputs": {
+      "expected": [
+        1,
+        0
+      ],
+      "observed": [
+        0,
+        0
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-133-v4",
+    "method": "compare positive and negative control outcomes",
+    "inputs": {
+      "expected": [
+        1,
+        0
+      ],
+      "observed": [
+        0,
+        1
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-133-v5",
+    "method": "compare positive and negative control outcomes",
+    "inputs": {
+      "expected": [
+        1,
+        0,
+        0
+      ],
+      "observed": [
+        1,
+        1,
+        1
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-134-v1",
+    "method": "requirement-to-test coverage union",
+    "inputs": {
+      "total": 3,
+      "covers": [
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-134-v2",
+    "method": "requirement-to-test coverage union",
+    "inputs": {
+      "total": 4,
+      "covers": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-134-v3",
+    "method": "requirement-to-test coverage union",
+    "inputs": {
+      "total": 4,
+      "covers": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-134-v4",
+    "method": "requirement-to-test coverage union",
+    "inputs": {
+      "total": 2,
+      "covers": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-134-v5",
+    "method": "requirement-to-test coverage union",
+    "inputs": {
+      "total": 5,
+      "covers": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-135-v1",
+    "method": "metamorphic permutation-invariance check",
+    "inputs": {
+      "pairs": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-135-v2",
+    "method": "metamorphic permutation-invariance check",
+    "inputs": {
+      "pairs": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-135-v3",
+    "method": "metamorphic permutation-invariance check",
+    "inputs": {
+      "pairs": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-135-v4",
+    "method": "metamorphic permutation-invariance check",
+    "inputs": {
+      "pairs": [
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-135-v5",
+    "method": "metamorphic permutation-invariance check",
+    "inputs": {
+      "pairs": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-136-v1",
+    "method": "final-volume and color conservation",
+    "inputs": {
+      "a": 100,
+      "b": 200,
+      "q": 7
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    },
+    "value": "7",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-136-v2",
+    "method": "final-volume and color conservation",
+    "inputs": {
+      "a": 80,
+      "b": 80,
+      "q": 10
+    },
+    "expected": {
+      "he": "10",
+      "en": "10"
+    },
+    "value": "10",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-136-v3",
+    "method": "final-volume and color conservation",
+    "inputs": {
+      "a": 60,
+      "b": 150,
+      "q": 0
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-136-v4",
+    "method": "final-volume and color conservation",
+    "inputs": {
+      "a": 90,
+      "b": 40,
+      "q": 4
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    },
+    "value": "4",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-136-v5",
+    "method": "final-volume and color conservation",
+    "inputs": {
+      "a": 30,
+      "b": 70,
+      "q": 6
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    },
+    "value": "6",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-137-v1",
+    "method": "compare exact foreign-volume fractions",
+    "inputs": {
+      "a": 100,
+      "b": 200,
+      "q": 5
+    },
+    "expected": {
+      "he": "השיעור ב־A גדול יותר",
+      "en": "The fraction in A is larger"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-137-v2",
+    "method": "compare exact foreign-volume fractions",
+    "inputs": {
+      "a": 200,
+      "b": 100,
+      "q": 5
+    },
+    "expected": {
+      "he": "השיעור ב־B גדול יותר",
+      "en": "The fraction in B is larger"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-137-v3",
+    "method": "compare exact foreign-volume fractions",
+    "inputs": {
+      "a": 100,
+      "b": 100,
+      "q": 5
+    },
+    "expected": {
+      "he": "שיעורים חיוביים שווים",
+      "en": "Equal positive fractions"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-137-v4",
+    "method": "compare exact foreign-volume fractions",
+    "inputs": {
+      "a": 100,
+      "b": 200,
+      "q": 0
+    },
+    "expected": {
+      "he": "שניהם אפס",
+      "en": "Both are zero"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-137-v5",
+    "method": "compare exact foreign-volume fractions",
+    "inputs": {
+      "a": 30,
+      "b": 90,
+      "q": 3
+    },
+    "expected": {
+      "he": "השיעור ב־A גדול יותר",
+      "en": "The fraction in A is larger"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-138-v1",
+    "method": "strict total-time lower bound",
+    "inputs": {
+      "u": 10,
+      "g": 20
+    },
+    "expected": {
+      "he": "רק גבול כאשר המהירות שואפת לאינסוף",
+      "en": "Only approached as return speed tends to infinity"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-138-v2",
+    "method": "strict total-time lower bound",
+    "inputs": {
+      "u": 10,
+      "g": 15
+    },
+    "expected": {
+      "he": "אפשר במהירות חזרה סופית חיובית",
+      "en": "Achievable with a finite positive return speed"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-138-v3",
+    "method": "strict total-time lower bound",
+    "inputs": {
+      "u": 10,
+      "g": 25
+    },
+    "expected": {
+      "he": "מעל החסם ולכן בלתי אפשרי",
+      "en": "Above the upper bound and impossible"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-138-v4",
+    "method": "strict total-time lower bound",
+    "inputs": {
+      "u": 10,
+      "g": 10
+    },
+    "expected": {
+      "he": "אפשר במהירות חזרה סופית חיובית",
+      "en": "Achievable with a finite positive return speed"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-138-v5",
+    "method": "strict total-time lower bound",
+    "inputs": {
+      "u": 10,
+      "g": 19
+    },
+    "expected": {
+      "he": "אפשר במהירות חזרה סופית חיובית",
+      "en": "Achievable with a finite positive return speed"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-139-v1",
+    "method": "invert the total-distance divided by total-time equation",
+    "inputs": {
+      "u": 6,
+      "g": 8
+    },
+    "expected": {
+      "he": "12",
+      "en": "12"
+    },
+    "value": "12",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-139-v2",
+    "method": "invert the total-distance divided by total-time equation",
+    "inputs": {
+      "u": 10,
+      "g": 12
+    },
+    "expected": {
+      "he": "15",
+      "en": "15"
+    },
+    "value": "15",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-139-v3",
+    "method": "invert the total-distance divided by total-time equation",
+    "inputs": {
+      "u": 3,
+      "g": 4
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    },
+    "value": "6",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-139-v4",
+    "method": "invert the total-distance divided by total-time equation",
+    "inputs": {
+      "u": 8,
+      "g": 12
+    },
+    "expected": {
+      "he": "24",
+      "en": "24"
+    },
+    "value": "24",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-139-v5",
+    "method": "invert the total-distance divided by total-time equation",
+    "inputs": {
+      "u": 10,
+      "g": 5
+    },
+    "expected": {
+      "he": "10/3",
+      "en": "10/3"
+    },
+    "value": "10/3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-140-v1",
+    "method": "heat-capacity-weighted energy balance",
+    "inputs": {
+      "hot": 80,
+      "cold": 20,
+      "cc": 3,
+      "cm": 1
+    },
+    "expected": {
+      "he": "65",
+      "en": "65"
+    },
+    "value": "65",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-140-v2",
+    "method": "heat-capacity-weighted energy balance",
+    "inputs": {
+      "hot": 80,
+      "cold": 20,
+      "cc": 1,
+      "cm": 3
+    },
+    "expected": {
+      "he": "35",
+      "en": "35"
+    },
+    "value": "35",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-140-v3",
+    "method": "heat-capacity-weighted energy balance",
+    "inputs": {
+      "hot": 90,
+      "cold": 10,
+      "cc": 1,
+      "cm": 1
+    },
+    "expected": {
+      "he": "50",
+      "en": "50"
+    },
+    "value": "50",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-140-v4",
+    "method": "heat-capacity-weighted energy balance",
+    "inputs": {
+      "hot": 70,
+      "cold": 30,
+      "cc": 2,
+      "cm": 1
+    },
+    "expected": {
+      "he": "170/3",
+      "en": "170/3"
+    },
+    "value": "170/3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-140-v5",
+    "method": "heat-capacity-weighted energy balance",
+    "inputs": {
+      "hot": 60,
+      "cold": 20,
+      "cc": 1,
+      "cm": 4
+    },
+    "expected": {
+      "he": "28",
+      "en": "28"
+    },
+    "value": "28",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-141-v1",
+    "method": "compare two explicitly defined affine cooling schedules",
+    "inputs": {
+      "cc": 3,
+      "cm": 1,
+      "a": 1,
+      "b": null
+    },
+    "expected": {
+      "he": "אין מספיק מידע",
+      "en": "Insufficient information"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-141-v2",
+    "method": "compare two explicitly defined affine cooling schedules",
+    "inputs": {
+      "cc": 3,
+      "cm": 1,
+      "a": 1,
+      "b": "1"
+    },
+    "expected": {
+      "he": "להוסיף מאוחר נותן חם יותר",
+      "en": "Late addition is warmer"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-141-v3",
+    "method": "compare two explicitly defined affine cooling schedules",
+    "inputs": {
+      "cc": 3,
+      "cm": 1,
+      "a": 1,
+      "b": "3/4"
+    },
+    "expected": {
+      "he": "התוצאה שווה",
+      "en": "Equal final temperature"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-141-v4",
+    "method": "compare two explicitly defined affine cooling schedules",
+    "inputs": {
+      "cc": 3,
+      "cm": 1,
+      "a": 1,
+      "b": "1/2"
+    },
+    "expected": {
+      "he": "להוסיף מוקדם נותן חם יותר",
+      "en": "Early addition is warmer"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-141-v5",
+    "method": "compare two explicitly defined affine cooling schedules",
+    "inputs": {
+      "cc": 1,
+      "cm": 1,
+      "a": 2,
+      "b": "3"
+    },
+    "expected": {
+      "he": "להוסיף מאוחר נותן חם יותר",
+      "en": "Late addition is warmer"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-142-v1",
+    "method": "piecewise-linear first-passage calculation",
+    "inputs": {
+      "height": 4,
+      "up": 3,
+      "down": 1
+    },
+    "expected": {
+      "he": "8/3",
+      "en": "8/3"
+    },
+    "value": "8/3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-142-v2",
+    "method": "piecewise-linear first-passage calculation",
+    "inputs": {
+      "height": 3,
+      "up": 2,
+      "down": 1
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-142-v3",
+    "method": "piecewise-linear first-passage calculation",
+    "inputs": {
+      "height": 2,
+      "up": 3,
+      "down": 1
+    },
+    "expected": {
+      "he": "2/3",
+      "en": "2/3"
+    },
+    "value": "2/3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-142-v4",
+    "method": "piecewise-linear first-passage calculation",
+    "inputs": {
+      "height": 5,
+      "up": 3,
+      "down": 1
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-142-v5",
+    "method": "piecewise-linear first-passage calculation",
+    "inputs": {
+      "height": 10,
+      "up": 2,
+      "down": 1
+    },
+    "expected": {
+      "he": "17",
+      "en": "17"
+    },
+    "value": "17",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-143-v1",
+    "method": "integer lattice intersection rather than continuous crossing",
+    "inputs": {
+      "left": 0,
+      "right": 10,
+      "a": 2,
+      "b": 3
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-143-v2",
+    "method": "integer lattice intersection rather than continuous crossing",
+    "inputs": {
+      "left": 0,
+      "right": 11,
+      "a": 2,
+      "b": 3
+    },
+    "expected": {
+      "he": "אין מפגש בזמן שלם",
+      "en": "No integer-time meeting"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-143-v3",
+    "method": "integer lattice intersection rather than continuous crossing",
+    "inputs": {
+      "left": 1,
+      "right": 9,
+      "a": 2,
+      "b": 2
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-143-v4",
+    "method": "integer lattice intersection rather than continuous crossing",
+    "inputs": {
+      "left": 3,
+      "right": 3,
+      "a": 1,
+      "b": 1
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-143-v5",
+    "method": "integer lattice intersection rather than continuous crossing",
+    "inputs": {
+      "left": 0,
+      "right": 3,
+      "a": 2,
+      "b": 1
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-144-v1",
+    "method": "construct distinct valid continuations or apply a supplied rule",
+    "inputs": {
+      "prefix": [
+        100,
+        98,
+        95
+      ],
+      "rule": null
+    },
+    "expected": {
+      "he": "לא נקבע מספר יחיד",
+      "en": "No unique next number"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-144-v2",
+    "method": "construct distinct valid continuations or apply a supplied rule",
+    "inputs": {
+      "prefix": [
+        100,
+        98,
+        95
+      ],
+      "rule": "growing"
+    },
+    "expected": {
+      "he": "91",
+      "en": "91"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-144-v3",
+    "method": "construct distinct valid continuations or apply a supplied rule",
+    "inputs": {
+      "prefix": [
+        100,
+        98,
+        95
+      ],
+      "rule": "alternating"
+    },
+    "expected": {
+      "he": "93",
+      "en": "93"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-144-v4",
+    "method": "construct distinct valid continuations or apply a supplied rule",
+    "inputs": {
+      "prefix": [
+        100,
+        98,
+        96
+      ],
+      "rule": "constant"
+    },
+    "expected": {
+      "he": "94",
+      "en": "94"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-144-v5",
+    "method": "construct distinct valid continuations or apply a supplied rule",
+    "inputs": {
+      "prefix": [
+        100,
+        98,
+        95
+      ],
+      "rule": "decreasing"
+    },
+    "expected": {
+      "he": "לא נקבע מספר יחיד",
+      "en": "No unique next number"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-145-v1",
+    "method": "independent numeric and geometric objectives",
+    "inputs": {
+      "sums": [
+        26,
+        26,
+        26
+      ],
+      "areas": [
+        1,
+        2,
+        1
+      ]
+    },
+    "expected": {
+      "he": "רק הסכומים שווים",
+      "en": "Only the sums are equal"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-145-v2",
+    "method": "independent numeric and geometric objectives",
+    "inputs": {
+      "sums": [
+        25,
+        26,
+        27
+      ],
+      "areas": [
+        2,
+        2,
+        2
+      ]
+    },
+    "expected": {
+      "he": "רק השטחים שווים",
+      "en": "Only the areas are equal"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-145-v3",
+    "method": "independent numeric and geometric objectives",
+    "inputs": {
+      "sums": [
+        26,
+        26,
+        26
+      ],
+      "areas": [
+        2,
+        2,
+        2
+      ]
+    },
+    "expected": {
+      "he": "שניהם שווים",
+      "en": "Both are equal"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-145-v4",
+    "method": "independent numeric and geometric objectives",
+    "inputs": {
+      "sums": [
+        25,
+        26,
+        27
+      ],
+      "areas": [
+        1,
+        2,
+        3
+      ]
+    },
+    "expected": {
+      "he": "אף אחד אינו שווה",
+      "en": "Neither is equal"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-145-v5",
+    "method": "independent numeric and geometric objectives",
+    "inputs": {
+      "sums": [
+        10,
+        10,
+        10
+      ],
+      "areas": [
+        1,
+        3,
+        2
+      ]
+    },
+    "expected": {
+      "he": "רק הסכומים שווים",
+      "en": "Only the sums are equal"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-146-v1",
+    "method": "enumerate contiguous circular arcs",
+    "inputs": {
+      "count": 4,
+      "candidates": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    "expected": {
+      "he": "[0, 2]",
+      "en": "[0, 2]"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-146-v2",
+    "method": "enumerate contiguous circular arcs",
+    "inputs": {
+      "count": 5,
+      "candidates": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    "expected": {
+      "he": "[0, 2]",
+      "en": "[0, 2]"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-146-v3",
+    "method": "enumerate contiguous circular arcs",
+    "inputs": {
+      "count": 6,
+      "candidates": [
+        [
+          0,
+          2,
+          4
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          3,
+          4,
+          5
+        ]
+      ]
+    },
+    "expected": {
+      "he": "[0, 2, 4]",
+      "en": "[0, 2, 4]"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-146-v4",
+    "method": "enumerate contiguous circular arcs",
+    "inputs": {
+      "count": 6,
+      "candidates": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          3,
+          4,
+          5
+        ]
+      ]
+    },
+    "expected": {
+      "he": "[0, 1, 3]",
+      "en": "[0, 1, 3]"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-146-v5",
+    "method": "enumerate contiguous circular arcs",
+    "inputs": {
+      "count": 5,
+      "candidates": [
+        [
+          0,
+          2,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4
+        ]
+      ]
+    },
+    "expected": {
+      "he": "[0, 2, 3]",
+      "en": "[0, 2, 3]"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-147-v1",
+    "method": "exact central exclusion and half-turn pair distance",
+    "inputs": {
+      "radius": 1,
+      "distance": 2
+    },
+    "expected": {
+      "he": "מהלך היריב חוקי והזוג אינו חופף",
+      "en": "Opponent legal; reflected pair disjoint"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-147-v2",
+    "method": "exact central exclusion and half-turn pair distance",
+    "inputs": {
+      "radius": 1,
+      "distance": 1
+    },
+    "expected": {
+      "he": "מהלך היריב אינו חוקי אך הזוג אינו חופף",
+      "en": "Opponent illegal; reflected pair disjoint"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-147-v3",
+    "method": "exact central exclusion and half-turn pair distance",
+    "inputs": {
+      "radius": 1,
+      "distance": 0
+    },
+    "expected": {
+      "he": "מהלך היריב אינו חוקי וגם הזוג חופף",
+      "en": "Opponent illegal; reflected pair overlaps"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-147-v4",
+    "method": "exact central exclusion and half-turn pair distance",
+    "inputs": {
+      "radius": 2,
+      "distance": 3
+    },
+    "expected": {
+      "he": "מהלך היריב אינו חוקי אך הזוג אינו חופף",
+      "en": "Opponent illegal; reflected pair disjoint"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-147-v5",
+    "method": "exact central exclusion and half-turn pair distance",
+    "inputs": {
+      "radius": 2,
+      "distance": 4
+    },
+    "expected": {
+      "he": "מהלך היריב חוקי והזוג אינו חופף",
+      "en": "Opponent legal; reflected pair disjoint"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-148-v1",
+    "method": "positive-area packing bound",
+    "inputs": {
+      "table": 3,
+      "coin": 1
+    },
+    "expected": {
+      "he": "9",
+      "en": "9"
+    },
+    "value": "9",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-148-v2",
+    "method": "positive-area packing bound",
+    "inputs": {
+      "table": 5,
+      "coin": 2
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    },
+    "value": "6",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-148-v3",
+    "method": "positive-area packing bound",
+    "inputs": {
+      "table": 4,
+      "coin": 1
+    },
+    "expected": {
+      "he": "16",
+      "en": "16"
+    },
+    "value": "16",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-148-v4",
+    "method": "positive-area packing bound",
+    "inputs": {
+      "table": 2,
+      "coin": 2
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-148-v5",
+    "method": "positive-area packing bound",
+    "inputs": {
+      "table": 7,
+      "coin": 2
+    },
+    "expected": {
+      "he": "12",
+      "en": "12"
+    },
+    "value": "12",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-149-v1",
+    "method": "whole-system displacement before and after unloading",
+    "inputs": {
+      "rho": "2",
+      "water": 1
+    },
+    "expected": {
+      "he": "המפלס יורד",
+      "en": "Level falls"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-149-v2",
+    "method": "whole-system displacement before and after unloading",
+    "inputs": {
+      "rho": "1/2",
+      "water": 1
+    },
+    "expected": {
+      "he": "המפלס אינו משתנה",
+      "en": "Level unchanged"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-149-v3",
+    "method": "whole-system displacement before and after unloading",
+    "inputs": {
+      "rho": "1",
+      "water": 1
+    },
+    "expected": {
+      "he": "המפלס אינו משתנה",
+      "en": "Level unchanged"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-149-v4",
+    "method": "whole-system displacement before and after unloading",
+    "inputs": {
+      "rho": null,
+      "water": 1
+    },
+    "expected": {
+      "he": "הצפיפות חסרה ולכן אין הכרעה",
+      "en": "Density missing; undetermined"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-149-v5",
+    "method": "whole-system displacement before and after unloading",
+    "inputs": {
+      "rho": "3",
+      "water": 2
+    },
+    "expected": {
+      "he": "המפלס יורד",
+      "en": "Level falls"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-150-v1",
+    "method": "two-stage individual-outcome probability",
+    "inputs": {
+      "a": 1,
+      "b": 99
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    },
+    "value": "1/2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-150-v2",
+    "method": "two-stage individual-outcome probability",
+    "inputs": {
+      "a": 2,
+      "b": 8
+    },
+    "expected": {
+      "he": "1/4",
+      "en": "1/4"
+    },
+    "value": "1/4",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-150-v3",
+    "method": "two-stage individual-outcome probability",
+    "inputs": {
+      "a": 8,
+      "b": 2
+    },
+    "expected": {
+      "he": "1/16",
+      "en": "1/16"
+    },
+    "value": "1/16",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-150-v4",
+    "method": "two-stage individual-outcome probability",
+    "inputs": {
+      "a": 5,
+      "b": 5
+    },
+    "expected": {
+      "he": "1/10",
+      "en": "1/10"
+    },
+    "value": "1/10",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-150-v5",
+    "method": "two-stage individual-outcome probability",
+    "inputs": {
+      "a": 3,
+      "b": 17
+    },
+    "expected": {
+      "he": "1/6",
+      "en": "1/6"
+    },
+    "value": "1/6",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-151-v1",
+    "method": "exchange argument with fixed denominators",
+    "inputs": {
+      "total": 100,
+      "size": 2
+    },
+    "expected": {
+      "he": "הסיכוי לאדום עולה",
+      "en": "Red probability increases"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-151-v2",
+    "method": "exchange argument with fixed denominators",
+    "inputs": {
+      "total": 100,
+      "size": 50
+    },
+    "expected": {
+      "he": "הסיכוי אינו משתנה",
+      "en": "Probability unchanged"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-151-v3",
+    "method": "exchange argument with fixed denominators",
+    "inputs": {
+      "total": 100,
+      "size": 80
+    },
+    "expected": {
+      "he": "הסיכוי לאדום יורד",
+      "en": "Red probability decreases"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-151-v4",
+    "method": "exchange argument with fixed denominators",
+    "inputs": {
+      "total": 100,
+      "size": 0
+    },
+    "expected": {
+      "he": "ההחלפה אינה מוגדרת בתיבה ריקה",
+      "en": "Swap undefined for an empty urn"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-151-v5",
+    "method": "exchange argument with fixed denominators",
+    "inputs": {
+      "total": 10,
+      "size": 3
+    },
+    "expected": {
+      "he": "הסיכוי לאדום עולה",
+      "en": "Red probability increases"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-152-v1",
+    "method": "enumerate coin-position and deviation-direction worlds",
+    "inputs": {
+      "coins": 9,
+      "directions": [
+        -1,
+        1
+      ]
+    },
+    "expected": {
+      "he": "18",
+      "en": "18"
+    },
+    "value": "18",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-152-v2",
+    "method": "enumerate coin-position and deviation-direction worlds",
+    "inputs": {
+      "coins": 9,
+      "directions": [
+        -1
+      ]
+    },
+    "expected": {
+      "he": "9",
+      "en": "9"
+    },
+    "value": "9",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-152-v3",
+    "method": "enumerate coin-position and deviation-direction worlds",
+    "inputs": {
+      "coins": 12,
+      "directions": [
+        -1,
+        1
+      ]
+    },
+    "expected": {
+      "he": "24",
+      "en": "24"
+    },
+    "value": "24",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-152-v4",
+    "method": "enumerate coin-position and deviation-direction worlds",
+    "inputs": {
+      "coins": 3,
+      "directions": [
+        1
+      ]
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-152-v5",
+    "method": "enumerate coin-position and deviation-direction worlds",
+    "inputs": {
+      "coins": 5,
+      "directions": [
+        -1,
+        1
+      ]
+    },
+    "expected": {
+      "he": "10",
+      "en": "10"
+    },
+    "value": "10",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-153-v1",
+    "method": "reserve zero and count injective nonzero binary codes",
+    "inputs": {
+      "bottles": 4
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-153-v2",
+    "method": "reserve zero and count injective nonzero binary codes",
+    "inputs": {
+      "bottles": 7
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-153-v3",
+    "method": "reserve zero and count injective nonzero binary codes",
+    "inputs": {
+      "bottles": 8
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    },
+    "value": "4",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-153-v4",
+    "method": "reserve zero and count injective nonzero binary codes",
+    "inputs": {
+      "bottles": 15
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    },
+    "value": "4",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-153-v5",
+    "method": "reserve zero and count injective nonzero binary codes",
+    "inputs": {
+      "bottles": 16
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    },
+    "value": "5",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-154-v1",
+    "method": "time-indexed observation equivalence classes",
+    "inputs": {
+      "bottles": 4,
+      "start": 0,
+      "delay": 24,
+      "observe": 23
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-154-v2",
+    "method": "time-indexed observation equivalence classes",
+    "inputs": {
+      "bottles": 4,
+      "start": 0,
+      "delay": 24,
+      "observe": 24
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    },
+    "value": "4",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-154-v3",
+    "method": "time-indexed observation equivalence classes",
+    "inputs": {
+      "bottles": 8,
+      "start": 3,
+      "delay": 24,
+      "observe": 24
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-154-v4",
+    "method": "time-indexed observation equivalence classes",
+    "inputs": {
+      "bottles": 8,
+      "start": 3,
+      "delay": 24,
+      "observe": 27
+    },
+    "expected": {
+      "he": "8",
+      "en": "8"
+    },
+    "value": "8",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-154-v5",
+    "method": "time-indexed observation equivalence classes",
+    "inputs": {
+      "bottles": 2,
+      "start": 0,
+      "delay": 1,
+      "observe": 0
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-155-v1",
+    "method": "construct groups of three with one final four/five block",
+    "inputs": {
+      "people": 1000
+    },
+    "expected": {
+      "he": "667",
+      "en": "667"
+    },
+    "value": "667",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-155-v2",
+    "method": "construct groups of three with one final four/five block",
+    "inputs": {
+      "people": 10
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    },
+    "value": "7",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-155-v3",
+    "method": "construct groups of three with one final four/five block",
+    "inputs": {
+      "people": 11
+    },
+    "expected": {
+      "he": "8",
+      "en": "8"
+    },
+    "value": "8",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-155-v4",
+    "method": "construct groups of three with one final four/five block",
+    "inputs": {
+      "people": 8
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    },
+    "value": "6",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-155-v5",
+    "method": "construct groups of three with one final four/five block",
+    "inputs": {
+      "people": 9
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    },
+    "value": "6",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-156-v1",
+    "method": "parity construction plus indistinguishable-world upper bound",
+    "inputs": {
+      "people": 3
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-156-v2",
+    "method": "parity construction plus indistinguishable-world upper bound",
+    "inputs": {
+      "people": 2
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-156-v3",
+    "method": "parity construction plus indistinguishable-world upper bound",
+    "inputs": {
+      "people": 4
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-156-v4",
+    "method": "parity construction plus indistinguishable-world upper bound",
+    "inputs": {
+      "people": 5
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    },
+    "value": "4",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-156-v5",
+    "method": "parity construction plus indistinguishable-world upper bound",
+    "inputs": {
+      "people": 8
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    },
+    "value": "7",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-157-v1",
+    "method": "solve a single unknown in a ternary checksum",
+    "inputs": {
+      "checksum": 2,
+      "known": [
+        1
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-157-v2",
+    "method": "solve a single unknown in a ternary checksum",
+    "inputs": {
+      "checksum": 0,
+      "known": [
+        1,
+        1
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-157-v3",
+    "method": "solve a single unknown in a ternary checksum",
+    "inputs": {
+      "checksum": 1,
+      "known": [
+        2
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-157-v4",
+    "method": "solve a single unknown in a ternary checksum",
+    "inputs": {
+      "checksum": 2,
+      "known": [
+        0,
+        1
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-157-v5",
+    "method": "solve a single unknown in a ternary checksum",
+    "inputs": {
+      "checksum": 0,
+      "known": [
+        1,
+        2
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-158-v1",
+    "method": "enumerate distributed local guesses over every coloring",
+    "inputs": {
+      "colors": 2,
+      "offsets": [
+        0,
+        1
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-158-v2",
+    "method": "enumerate distributed local guesses over every coloring",
+    "inputs": {
+      "colors": 2,
+      "offsets": [
+        0,
+        0
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-158-v3",
+    "method": "enumerate distributed local guesses over every coloring",
+    "inputs": {
+      "colors": 3,
+      "offsets": [
+        0,
+        1,
+        2
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-158-v4",
+    "method": "enumerate distributed local guesses over every coloring",
+    "inputs": {
+      "colors": 3,
+      "offsets": [
+        0,
+        1,
+        1
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-158-v5",
+    "method": "enumerate distributed local guesses over every coloring",
+    "inputs": {
+      "colors": 4,
+      "offsets": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-159-v1",
+    "method": "recursive extreme-pair elimination in a spouse-excluded handshake graph",
+    "inputs": {
+      "couples": 5,
+      "degree": 0
+    },
+    "expected": {
+      "he": "8",
+      "en": "8"
+    },
+    "value": "8",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-159-v2",
+    "method": "recursive extreme-pair elimination in a spouse-excluded handshake graph",
+    "inputs": {
+      "couples": 5,
+      "degree": 8
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-159-v3",
+    "method": "recursive extreme-pair elimination in a spouse-excluded handshake graph",
+    "inputs": {
+      "couples": 5,
+      "degree": 2
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    },
+    "value": "6",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-159-v4",
+    "method": "recursive extreme-pair elimination in a spouse-excluded handshake graph",
+    "inputs": {
+      "couples": 4,
+      "degree": 1
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    },
+    "value": "5",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-159-v5",
+    "method": "recursive extreme-pair elimination in a spouse-excluded handshake graph",
+    "inputs": {
+      "couples": 3,
+      "degree": 2
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-160-v1",
+    "method": "finite public-announcement possible-world elimination",
+    "inputs": {
+      "red": 3
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-160-v2",
+    "method": "finite public-announcement possible-world elimination",
+    "inputs": {
+      "red": 1
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-160-v3",
+    "method": "finite public-announcement possible-world elimination",
+    "inputs": {
+      "red": 2
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-160-v4",
+    "method": "finite public-announcement possible-world elimination",
+    "inputs": {
+      "red": 4
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    },
+    "value": "4",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-160-v5",
+    "method": "finite public-announcement possible-world elimination",
+    "inputs": {
+      "red": 5
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    },
+    "value": "5",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-161-v1",
+    "method": "enumerate loaded forward legs and necessary empty returns",
+    "inputs": {
+      "loads": 3
+    },
+    "expected": {
+      "he": "5",
+      "en": "5"
+    },
+    "value": "5",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-161-v2",
+    "method": "enumerate loaded forward legs and necessary empty returns",
+    "inputs": {
+      "loads": 1
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-161-v3",
+    "method": "enumerate loaded forward legs and necessary empty returns",
+    "inputs": {
+      "loads": 2
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-161-v4",
+    "method": "enumerate loaded forward legs and necessary empty returns",
+    "inputs": {
+      "loads": 4
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    },
+    "value": "7",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-161-v5",
+    "method": "enumerate loaded forward legs and necessary empty returns",
+    "inputs": {
+      "loads": 5
+    },
+    "expected": {
+      "he": "9",
+      "en": "9"
+    },
+    "value": "9",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-162-v1",
+    "method": "piecewise resource-rate breakpoint",
+    "inputs": {
+      "stock": 3000,
+      "capacity": 1000
+    },
+    "expected": {
+      "he": "200",
+      "en": "200"
+    },
+    "value": "200",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-162-v2",
+    "method": "piecewise resource-rate breakpoint",
+    "inputs": {
+      "stock": 2500,
+      "capacity": 1000
+    },
+    "expected": {
+      "he": "100",
+      "en": "100"
+    },
+    "value": "100",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-162-v3",
+    "method": "piecewise resource-rate breakpoint",
+    "inputs": {
+      "stock": 2000,
+      "capacity": 1000
+    },
+    "expected": {
+      "he": "1000/3",
+      "en": "1000/3"
+    },
+    "value": "1000/3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-162-v4",
+    "method": "piecewise resource-rate breakpoint",
+    "inputs": {
+      "stock": 1500,
+      "capacity": 1000
+    },
+    "expected": {
+      "he": "500/3",
+      "en": "500/3"
+    },
+    "value": "500/3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-162-v5",
+    "method": "piecewise resource-rate breakpoint",
+    "inputs": {
+      "stock": 1200,
+      "capacity": 500
+    },
+    "expected": {
+      "he": "40",
+      "en": "40"
+    },
+    "value": "40",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-163-v1",
+    "method": "exact segment-intersection and oriented-turn classification",
+    "inputs": {
+      "points": [
+        [
+          0,
+          3
+        ],
+        [
+          2,
+          -3
+        ],
+        [
+          -3,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          -2,
+          -3
+        ]
+      ]
+    },
+    "expected": {
+      "he": "נחתך בעצמו; בדיקת פניות אינה מספיקה",
+      "en": "Self-crossing; turn signs alone are insufficient"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-163-v2",
+    "method": "exact segment-intersection and oriented-turn classification",
+    "inputs": {
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          0,
+          3
+        ]
+      ]
+    },
+    "expected": {
+      "he": "פשוט וקמור",
+      "en": "Simple and convex"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-163-v3",
+    "method": "exact segment-intersection and oriented-turn classification",
+    "inputs": {
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          0,
+          3
+        ]
+      ]
+    },
+    "expected": {
+      "he": "פשוט וקעור",
+      "en": "Simple and concave"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-163-v4",
+    "method": "exact segment-intersection and oriented-turn classification",
+    "inputs": {
+      "points": [
+        [
+          0,
+          3
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "expected": {
+      "he": "פשוט וקמור",
+      "en": "Simple and convex"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-163-v5",
+    "method": "exact segment-intersection and oriented-turn classification",
+    "inputs": {
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "expected": {
+      "he": "מנוון ללא שטח",
+      "en": "Degenerate with zero area"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-164-v1",
+    "method": "separate collinearity from inward turns and zero area",
+    "inputs": {
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    "expected": {
+      "he": "קמור חלש אך לא ממש",
+      "en": "Weakly convex but not strict"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-164-v2",
+    "method": "separate collinearity from inward turns and zero area",
+    "inputs": {
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    "expected": {
+      "he": "קמור ממש",
+      "en": "Strictly convex"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-164-v3",
+    "method": "separate collinearity from inward turns and zero area",
+    "inputs": {
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          0,
+          3
+        ]
+      ]
+    },
+    "expected": {
+      "he": "קעור",
+      "en": "Concave"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-164-v4",
+    "method": "separate collinearity from inward turns and zero area",
+    "inputs": {
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "expected": {
+      "he": "מנוון",
+      "en": "Degenerate"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-164-v5",
+    "method": "separate collinearity from inward turns and zero area",
+    "inputs": {
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    "expected": {
+      "he": "קמור חלש אך לא ממש",
+      "en": "Weakly convex but not strict"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-165-v1",
+    "method": "rotation-equivariant relabeling of a fixed elimination trace",
+    "inputs": {
+      "count": 5,
+      "survivor": 2,
+      "offset": 1
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-165-v2",
+    "method": "rotation-equivariant relabeling of a fixed elimination trace",
+    "inputs": {
+      "count": 6,
+      "survivor": 4,
+      "offset": 3
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-165-v3",
+    "method": "rotation-equivariant relabeling of a fixed elimination trace",
+    "inputs": {
+      "count": 7,
+      "survivor": 3,
+      "offset": 5
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-165-v4",
+    "method": "rotation-equivariant relabeling of a fixed elimination trace",
+    "inputs": {
+      "count": 4,
+      "survivor": 0,
+      "offset": 2
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-165-v5",
+    "method": "rotation-equivariant relabeling of a fixed elimination trace",
+    "inputs": {
+      "count": 8,
+      "survivor": 7,
+      "offset": 1
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-166-v1",
+    "method": "enumerate the four cyclic rotations",
+    "inputs": {
+      "a": "1100",
+      "b": "1010"
+    },
+    "expected": {
+      "he": "אותו מספר דלוקים אך אין סיבוב מתאים",
+      "en": "Same ON count but no matching rotation"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-166-v2",
+    "method": "enumerate the four cyclic rotations",
+    "inputs": {
+      "a": "1100",
+      "b": "0110"
+    },
+    "expected": {
+      "he": "סיבוב יכול להפוך את הראשון לשני",
+      "en": "A rotation can transform the first into the second"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-166-v3",
+    "method": "enumerate the four cyclic rotations",
+    "inputs": {
+      "a": "1000",
+      "b": "1100"
+    },
+    "expected": {
+      "he": "מספר הדלוקים שונה",
+      "en": "The numbers of ON switches differ"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-166-v4",
+    "method": "enumerate the four cyclic rotations",
+    "inputs": {
+      "a": "1001",
+      "b": "1100"
+    },
+    "expected": {
+      "he": "סיבוב יכול להפוך את הראשון לשני",
+      "en": "A rotation can transform the first into the second"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-166-v5",
+    "method": "enumerate the four cyclic rotations",
+    "inputs": {
+      "a": "0000",
+      "b": "0000"
+    },
+    "expected": {
+      "he": "סיבוב יכול להפוך את הראשון לשני",
+      "en": "A rotation can transform the first into the second"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-167-v1",
+    "method": "enumerate both moving-target histories",
+    "inputs": {
+      "schedule": [
+        0,
+        1
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-167-v2",
+    "method": "enumerate both moving-target histories",
+    "inputs": {
+      "schedule": [
+        0,
+        0
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-167-v3",
+    "method": "enumerate both moving-target histories",
+    "inputs": {
+      "schedule": [
+        1,
+        0
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-167-v4",
+    "method": "enumerate both moving-target histories",
+    "inputs": {
+      "schedule": [
+        0,
+        1,
+        0,
+        1
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-167-v5",
+    "method": "enumerate both moving-target histories",
+    "inputs": {
+      "schedule": []
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-168-v1",
+    "method": "compare two explicitly feasible bridge schedules",
+    "inputs": {
+      "a": 1,
+      "b": 2,
+      "c": 5,
+      "d": 10
+    },
+    "expected": {
+      "he": "17",
+      "en": "17"
+    },
+    "value": "17",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-168-v2",
+    "method": "compare two explicitly feasible bridge schedules",
+    "inputs": {
+      "a": 1,
+      "b": 4,
+      "c": 5,
+      "d": 10
+    },
+    "expected": {
+      "he": "21",
+      "en": "21"
+    },
+    "value": "21",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-168-v3",
+    "method": "compare two explicitly feasible bridge schedules",
+    "inputs": {
+      "a": 2,
+      "b": 3,
+      "c": 4,
+      "d": 9
+    },
+    "expected": {
+      "he": "20",
+      "en": "20"
+    },
+    "value": "20",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-168-v4",
+    "method": "compare two explicitly feasible bridge schedules",
+    "inputs": {
+      "a": 1,
+      "b": 3,
+      "c": 5,
+      "d": 8
+    },
+    "expected": {
+      "he": "18",
+      "en": "18"
+    },
+    "value": "18",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-168-v5",
+    "method": "compare two explicitly feasible bridge schedules",
+    "inputs": {
+      "a": 2,
+      "b": 4,
+      "c": 9,
+      "d": 12
+    },
+    "expected": {
+      "he": "26",
+      "en": "26"
+    },
+    "value": "26",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-169-v1",
+    "method": "stateful torch and participant-location feasibility",
+    "inputs": {
+      "schedule": [
+        [
+          "AB",
+          1
+        ],
+        [
+          "AC",
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-169-v2",
+    "method": "stateful torch and participant-location feasibility",
+    "inputs": {
+      "schedule": [
+        [
+          "AB",
+          1
+        ],
+        [
+          "A",
+          -1
+        ],
+        [
+          "AC",
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-169-v3",
+    "method": "stateful torch and participant-location feasibility",
+    "inputs": {
+      "schedule": [
+        [
+          "AB",
+          1
+        ],
+        [
+          "A",
+          -1
+        ],
+        [
+          "BC",
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-169-v4",
+    "method": "stateful torch and participant-location feasibility",
+    "inputs": {
+      "schedule": [
+        [
+          "A",
+          1
+        ],
+        [
+          "A",
+          -1
+        ],
+        [
+          "BC",
+          1
+        ],
+        [
+          "B",
+          -1
+        ],
+        [
+          "AB",
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-169-v5",
+    "method": "stateful torch and participant-location feasibility",
+    "inputs": {
+      "schedule": [
+        [
+          "AB",
+          1
+        ],
+        [
+          "B",
+          -1
+        ],
+        [
+          "BC",
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-170-v1",
+    "method": "union of test pools versus a single-poison code",
+    "inputs": {
+      "x": 1,
+      "y": 2
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-170-v2",
+    "method": "union of test pools versus a single-poison code",
+    "inputs": {
+      "x": 1,
+      "y": 3
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-170-v3",
+    "method": "union of test pools versus a single-poison code",
+    "inputs": {
+      "x": 2,
+      "y": 4
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    },
+    "value": "6",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-170-v4",
+    "method": "union of test pools versus a single-poison code",
+    "inputs": {
+      "x": 3,
+      "y": 4
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    },
+    "value": "7",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-170-v5",
+    "method": "union of test pools versus a single-poison code",
+    "inputs": {
+      "x": 3,
+      "y": 5
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    },
+    "value": "7",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-171-v1",
+    "method": "one-step expected continuation-value comparison",
+    "inputs": {
+      "prob": "1/2",
+      "hit": "1/4",
+      "miss": "3/4"
+    },
+    "expected": {
+      "he": "להחטיא בכוונה",
+      "en": "Deliberately miss"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-171-v2",
+    "method": "one-step expected continuation-value comparison",
+    "inputs": {
+      "prob": "1/2",
+      "hit": "3/4",
+      "miss": "1/4"
+    },
+    "expected": {
+      "he": "לנסות לפגוע",
+      "en": "Attempt the hit"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-171-v3",
+    "method": "one-step expected continuation-value comparison",
+    "inputs": {
+      "prob": "1/2",
+      "hit": "1/2",
+      "miss": "1/2"
+    },
+    "expected": {
+      "he": "שווה בשתי הפעולות",
+      "en": "Both actions have equal value"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-171-v4",
+    "method": "one-step expected continuation-value comparison",
+    "inputs": {
+      "prob": "1/4",
+      "hit": "1/10",
+      "miss": "4/5"
+    },
+    "expected": {
+      "he": "להחטיא בכוונה",
+      "en": "Deliberately miss"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-171-v5",
+    "method": "one-step expected continuation-value comparison",
+    "inputs": {
+      "prob": "0",
+      "hit": "1",
+      "miss": "0"
+    },
+    "expected": {
+      "he": "שווה בשתי הפעולות",
+      "en": "Both actions have equal value"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-172-v1",
+    "method": "active experiment separating remaining model candidates",
+    "inputs": {
+      "predictions": [
+        [
+          10,
+          10
+        ],
+        [
+          12,
+          15
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          6,
+          6
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-172-v2",
+    "method": "active experiment separating remaining model candidates",
+    "inputs": {
+      "predictions": [
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          5,
+          5
+        ]
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-172-v3",
+    "method": "active experiment separating remaining model candidates",
+    "inputs": {
+      "predictions": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          7
+        ]
+      ]
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    },
+    "value": "4",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-172-v4",
+    "method": "active experiment separating remaining model candidates",
+    "inputs": {
+      "predictions": [
+        [
+          5,
+          5
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          6,
+          6
+        ]
+      ]
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-172-v5",
+    "method": "active experiment separating remaining model candidates",
+    "inputs": {
+      "predictions": [
+        [
+          4,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          9,
+          9
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-173-v1",
+    "method": "reverse two-stage conditioning by exact joint probability",
+    "inputs": {
+      "ar": 1,
+      "aw": 0,
+      "br": 49,
+      "bw": 50
+    },
+    "expected": {
+      "he": "99/148",
+      "en": "99/148"
+    },
+    "value": "99/148",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-173-v2",
+    "method": "reverse two-stage conditioning by exact joint probability",
+    "inputs": {
+      "ar": 1,
+      "aw": 1,
+      "br": 1,
+      "bw": 3
+    },
+    "expected": {
+      "he": "2/3",
+      "en": "2/3"
+    },
+    "value": "2/3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-173-v3",
+    "method": "reverse two-stage conditioning by exact joint probability",
+    "inputs": {
+      "ar": 2,
+      "aw": 0,
+      "br": 1,
+      "bw": 1
+    },
+    "expected": {
+      "he": "2/3",
+      "en": "2/3"
+    },
+    "value": "2/3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-173-v4",
+    "method": "reverse two-stage conditioning by exact joint probability",
+    "inputs": {
+      "ar": 1,
+      "aw": 3,
+      "br": 3,
+      "bw": 1
+    },
+    "expected": {
+      "he": "1/4",
+      "en": "1/4"
+    },
+    "value": "1/4",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-173-v5",
+    "method": "reverse two-stage conditioning by exact joint probability",
+    "inputs": {
+      "ar": 2,
+      "aw": 2,
+      "br": 2,
+      "bw": 2
+    },
+    "expected": {
+      "he": "1/2",
+      "en": "1/2"
+    },
+    "value": "1/2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-174-v1",
+    "method": "enumerate all simple four-person handshake graphs",
+    "inputs": {
+      "prefix": [
+        1,
+        1,
+        1
+      ]
+    },
+    "expected": {
+      "he": "אי־זוגי",
+      "en": "Odd"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-174-v2",
+    "method": "enumerate all simple four-person handshake graphs",
+    "inputs": {
+      "prefix": [
+        2,
+        2,
+        2
+      ]
+    },
+    "expected": {
+      "he": "זוגי",
+      "en": "Even"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-174-v3",
+    "method": "enumerate all simple four-person handshake graphs",
+    "inputs": {
+      "prefix": [
+        0,
+        1,
+        1
+      ]
+    },
+    "expected": {
+      "he": "זוגי",
+      "en": "Even"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-174-v4",
+    "method": "enumerate all simple four-person handshake graphs",
+    "inputs": {
+      "prefix": [
+        3,
+        3,
+        3
+      ]
+    },
+    "expected": {
+      "he": "אי־זוגי",
+      "en": "Odd"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-174-v5",
+    "method": "enumerate all simple four-person handshake graphs",
+    "inputs": {
+      "prefix": [
+        0,
+        0,
+        3
+      ]
+    },
+    "expected": {
+      "he": "אין גרף לחיצות מתאים",
+      "en": "No matching handshake graph"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-175-v1",
+    "method": "partition known-lighter hypotheses by first-weighing outcomes",
+    "inputs": {
+      "total": 9,
+      "pan": 1
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    },
+    "value": "7",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-175-v2",
+    "method": "partition known-lighter hypotheses by first-weighing outcomes",
+    "inputs": {
+      "total": 9,
+      "pan": 3
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-175-v3",
+    "method": "partition known-lighter hypotheses by first-weighing outcomes",
+    "inputs": {
+      "total": 9,
+      "pan": 4
+    },
+    "expected": {
+      "he": "4",
+      "en": "4"
+    },
+    "value": "4",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-175-v4",
+    "method": "partition known-lighter hypotheses by first-weighing outcomes",
+    "inputs": {
+      "total": 8,
+      "pan": 3
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-175-v5",
+    "method": "partition known-lighter hypotheses by first-weighing outcomes",
+    "inputs": {
+      "total": 7,
+      "pan": 2
+    },
+    "expected": {
+      "he": "3",
+      "en": "3"
+    },
+    "value": "3",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-176-v1",
+    "method": "interleaved local snapshots and shared writes",
+    "inputs": {
+      "initial": 0,
+      "events": [
+        "RA",
+        "RB",
+        "WA",
+        "WB"
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-176-v2",
+    "method": "interleaved local snapshots and shared writes",
+    "inputs": {
+      "initial": 0,
+      "events": [
+        "RA",
+        "WA",
+        "RB",
+        "WB"
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-176-v3",
+    "method": "interleaved local snapshots and shared writes",
+    "inputs": {
+      "initial": 5,
+      "events": [
+        "RB",
+        "RA",
+        "WB",
+        "WA"
+      ]
+    },
+    "expected": {
+      "he": "6",
+      "en": "6"
+    },
+    "value": "6",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-176-v4",
+    "method": "interleaved local snapshots and shared writes",
+    "inputs": {
+      "initial": 5,
+      "events": [
+        "RB",
+        "WB",
+        "RA",
+        "WA"
+      ]
+    },
+    "expected": {
+      "he": "7",
+      "en": "7"
+    },
+    "value": "7",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-176-v5",
+    "method": "interleaved local snapshots and shared writes",
+    "inputs": {
+      "initial": 1,
+      "events": [
+        "RA",
+        "RB",
+        "WB",
+        "WA"
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-177-v1",
+    "method": "minimum supported payoff versus probability-weighted expectation",
+    "inputs": {
+      "outcomes": [
+        [
+          0,
+          1
+        ],
+        [
+          4,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-177-v2",
+    "method": "minimum supported payoff versus probability-weighted expectation",
+    "inputs": {
+      "outcomes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "1",
+      "en": "1"
+    },
+    "value": "1",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-177-v3",
+    "method": "minimum supported payoff versus probability-weighted expectation",
+    "inputs": {
+      "outcomes": [
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-177-v4",
+    "method": "minimum supported payoff versus probability-weighted expectation",
+    "inputs": {
+      "outcomes": [
+        [
+          0,
+          1
+        ],
+        [
+          3,
+          9
+        ]
+      ]
+    },
+    "expected": {
+      "he": "0",
+      "en": "0"
+    },
+    "value": "0",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-177-v5",
+    "method": "minimum supported payoff versus probability-weighted expectation",
+    "inputs": {
+      "outcomes": [
+        [
+          2,
+          9
+        ],
+        [
+          5,
+          1
+        ]
+      ]
+    },
+    "expected": {
+      "he": "2",
+      "en": "2"
+    },
+    "value": "2",
+    "professional_review": "pending"
+  }
+]

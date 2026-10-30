@@ -13,15 +13,15 @@ const api: QuickProgressApi = {
   resetFundamental: async () => { throw new Error("Unexpected SSR mutation"); },
 };
 
-test("250 distinct concise cards keep the rounded topic mix and every code answer fits five lines", () => {
-  assert.equal(quickQuestions.length, 250);
-  assert.equal(new Set(quickQuestions.map(q => q.id)).size, 250);
-  assert.equal(quickQuestions.filter(q => q.id.startsWith("quick-hw-")).length, 125);
-  assert.equal(quickQuestions.filter(q => q.topic === "reasoning").length, 88);
-  assert.equal(quickQuestions.filter(q => ["python", "algorithms"].includes(q.topic)).length, 37);
+test("400 distinct concise cards keep the exact topic mix and every code answer fits five lines", () => {
+  assert.equal(quickQuestions.length, 400);
+  assert.equal(new Set(quickQuestions.map(q => q.id)).size, 400);
+  assert.equal(quickQuestions.filter(q => q.id.startsWith("quick-hw-")).length, 200);
+  assert.equal(quickQuestions.filter(q => q.topic === "reasoning").length, 140);
+  assert.equal(quickQuestions.filter(q => ["python", "algorithms"].includes(q.topic)).length, 60);
   for (const lang of ["he", "en"] as const) {
-    assert.equal(new Set(quickQuestions.map(q => q.title[lang].trim().toLocaleLowerCase())).size, 250);
-    assert.equal(new Set(quickQuestions.map(q => q.prompt[lang].trim().toLocaleLowerCase())).size, 250);
+    assert.equal(new Set(quickQuestions.map(q => q.title[lang].trim().toLocaleLowerCase())).size, 400);
+    assert.equal(new Set(quickQuestions.map(q => q.prompt[lang].trim().toLocaleLowerCase())).size, 400);
   }
   for (const topic of quickTopics) assert.ok(quickQuestions.some(q => q.topic === topic.id));
   for (const question of quickQuestions) {
@@ -37,11 +37,24 @@ test("250 distinct concise cards keep the rounded topic mix and every code answe
 });
 
 test("topic and bilingual search compose; empty results remain empty", () => {
-  assert.equal(filterQuickQuestions("python", "", "he").length, 11);
+  assert.equal(filterQuickQuestions("python", "", "he").length, quickQuestions.filter(q => q.topic === "python").length);
   const q = quickQuestions[0];
   assert.ok(filterQuickQuestions(q.topic, q.title.en, "en").includes(q));
   assert.ok(filterQuickQuestions(q.topic, q.title.he, "he").includes(q));
   assert.equal(filterQuickQuestions("python", "no-matching-card-123456", "he").length, 0);
+});
+
+test("switching the display language preserves a searched card and its ordering", () => {
+  for (const id of ["quick-hw-126", "quick-sw-148", "quick-sw-190"]) {
+    const card = quickQuestions.find(q => q.id === id)!;
+    for (const queryLanguage of ["he", "en"] as const) {
+      const query = card.title[queryLanguage];
+      const before = filterQuickQuestions(card.topic, query, "he");
+      const after = filterQuickQuestions(card.topic, query, "en");
+      assert.ok(before.includes(card));
+      assert.deepEqual(after.map(q => q.id), before.map(q => q.id));
+    }
+  }
 });
 
 test("initial quick practice loads owned history before showing potentially repeated questions", () => {

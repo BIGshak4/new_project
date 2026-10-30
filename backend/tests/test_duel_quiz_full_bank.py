@@ -36,12 +36,12 @@ def test_complete_bank_has_valid_bilingual_text_and_source_ids():
     data, checks, errors, numbers = assembler.collect()
     assert not errors
     assert len(assembler.reviewed_number_flags(data["questions"], numbers)) == len(numbers)
-    assert len(checks) == 1200
+    assert len(checks) == 1950
     assert read(ROOT / "backend/seeds/duel_quiz.json") == data
-    assert len(load_quiz(ROOT / "backend/seeds/duel_quiz.json")) == 1290
+    assert len(load_quiz(ROOT / "backend/seeds/duel_quiz.json")) == 2040
 
 
-@pytest.mark.parametrize("name", ["hardware_basic", "hardware_advanced", "reasoning", "code"])
+@pytest.mark.parametrize("name", ["hardware_basic", "hardware_advanced", "reasoning", "code", "hardware_400", "reasoning_400", "code_400"])
 def test_authored_cases_recompute_and_match_saved_output(name):
     author = module(name)
     # Each author exposes verification in build(). A generated JSON edit cannot
@@ -57,7 +57,7 @@ def test_new_variants_have_content_bound_pilot_authorization():
     new = [
         q for q in data["questions"] if q.get("source_key") and q["source_key"] not in assembler.PILOT_SOURCES
     ]
-    assert len(new) == 1200
+    assert len(new) == 1950
     assert all(q["status"] == "approved" for q in new)
     for q in new:
         approval = q["release_approval"]
@@ -79,7 +79,7 @@ def test_new_variants_have_content_bound_pilot_authorization():
 def test_production_pool_contains_all_linked_sources_and_excludes_legacy_drafts():
     quiz = load_quiz(ROOT / "backend/seeds/duel_quiz.json")
     service = DuelService(None, None, None, SimpleNamespace(rules=None), quiz=quiz)
-    assert len(service.quiz_pool()) == 1250
+    assert len(service.quiz_pool()) == 2000
     assert set(service.quiz_groups()) == set(module("assemble").source_cards())
     assert all(len(items) == 5 for items in service.quiz_groups().values())
 
@@ -110,6 +110,6 @@ async def test_operational_summary_reports_pool_counts_without_answers(monkeypat
     runtime = SimpleNamespace(catalog=load_catalog(ROOT / "backend/seeds"), duels=duels)
     monkeypatch.setattr(app.state, "runtime", runtime, raising=False)
     summary = await catalog_summary()
-    assert summary["quiz_source_count"] == 250
-    assert summary["quiz_variant_count"] == 1250
+    assert summary["quiz_source_count"] == 400
+    assert summary["quiz_variant_count"] == 2000
     assert not ({"choices", "correct", "explanation", "prompt"} & summary.keys())

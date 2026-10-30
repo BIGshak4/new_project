@@ -1,0 +1,3912 @@
+[
+  {
+    "key": "quick-sw-178-v1",
+    "source_key": "quick-sw-178",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "השורות והעמודות של [[-5,-2,0],[-1,2,4]] ממוינות בסדר לא יורד. כמה תאים שליליים יש? אפס אינו שלילי.",
+      "en": "Rows and columns of [[-5,-2,0],[-1,2,4]] are nondecreasing. How many cells are negative? Zero is not negative."
+    },
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בשורה העליונה 2 שליליים ובתחתונה 1; יחד 3.",
+      "en": "The upper row has 2 negatives and the lower row 1: total 3."
+    }
+  },
+  {
+    "key": "quick-sw-178-v2",
+    "source_key": "quick-sw-178",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במטריצה ממוינת [[0,0],[0,1]] סופרים ערכים הקטנים ממש מאפס. מה מוחזר?",
+      "en": "For sorted matrix [[0,0],[0,1]], count values strictly below zero. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אפס אינו שלילי; כל 4 התאים אינם שליליים, ולכן מוחזר 0.",
+      "en": "Zero is not negative; all 4 cells are nonnegative, so return 0."
+    }
+  },
+  {
+    "key": "quick-sw-178-v3",
+    "source_key": "quick-sw-178",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "שורה ממוינת היא [-7,-3,-1,4]. בסריקת מדרגות נבדק התא השלילי באינדקס 2. כמה תאים בשורה עד אליו אפשר לספור בלי השוואות נוספות?",
+      "en": "A sorted row is [-7,-3,-1,4]. A staircase scan checks the negative cell at index 2. How many row cells through it are certified without further comparisons?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "האינדקס מבוסס אפס, ולכן הקידומת כוללת 2+1=3 תאים שליליים.",
+      "en": "The index is zero-based, so the prefix contains 2+1=3 negative cells."
+    }
+  },
+  {
+    "key": "quick-sw-178-v4",
+    "source_key": "quick-sw-178",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־[[-5,-2,0],[-1,2,4]] מתחילים מימין למעלה: בערך שלילי יורדים שורה, ובאחר זזים שמאלה. כמה תאים נבדקים עד יציאה מהגבולות?",
+      "en": "For [[-5,-2,0],[-1,2,4]], start top-right: move down on a negative value and left otherwise. How many cells are checked before leaving the matrix?"
+    },
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "נבדקים 0,-2,2,-1: בסך הכול 4 תאים, ללא סריקת כל המטריצה.",
+      "en": "The checked values are 0,-2,2,-1: 4 cells, without scanning the entire matrix."
+    }
+  },
+  {
+    "key": "quick-sw-178-v5",
+    "source_key": "quick-sw-178",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "העמודות של [[1,-1],[2,0]] ממוינות, אבל השורות אינן. ספירת כל הקידומת בשורה בגלל ‎-1 בפינה העליונה־ימנית שגויה. איזו הבטחה חסרה?",
+      "en": "Columns of [[1,-1],[2,0]] are sorted but rows are not. Counting the entire row prefix from top-right value -1 is wrong. Which missing guarantee invalidates that step?"
+    },
+    "choices": [
+      {
+        "he": "כל הערכים חיוביים",
+        "en": "All values positive"
+      },
+      {
+        "he": "מיון השורות",
+        "en": "Sorted rows"
+      },
+      {
+        "he": "ערכים שונים",
+        "en": "Distinct values"
+      },
+      {
+        "he": "מטריצה ריבועית",
+        "en": "A square matrix"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "‎-1 אינו מוכיח שהתא 1 שמשמאלו שלילי; חסר מיון השורות.",
+      "en": "Value -1 cannot certify that the preceding 1 is negative; row ordering is missing."
+    }
+  },
+  {
+    "key": "quick-sw-179-v1",
+    "source_key": "quick-sw-179",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממזגים במקום מהסוף את a=[1,7] ואת שני נתוני b=[3,5], עם 2 תאים פנויים בסוף b. מה הערך הראשון שנכתב לתא האחרון?",
+      "en": "Merge a=[1,7] into b's two data values [3,5], with 2 spare slots at b's end. Working backward, which value is written first into the last slot?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הגדול מבין שני הזנבות הוא 7; הוא שייך למקום הימני ביותר.",
+      "en": "The larger unread tail is 7, which belongs in the rightmost position."
+    }
+  },
+  {
+    "key": "quick-sw-179-v2",
+    "source_key": "quick-sw-179",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "אחרי מיזוג אחורי של a=[8,9] לתוך b=[1,2,_,_], כל איברי a נכתבו. איזו קידומת של b אפשר להשאיר בלי העתקה נוספת?",
+      "en": "After backward-merging a=[8,9] into b=[1,2,_,_], all a values have been written. Which b prefix can stay without another copy?"
+    },
+    "choices": [
+      {
+        "he": "[8, 9]",
+        "en": "[8, 9]"
+      },
+      {
+        "he": "[1]",
+        "en": "[1]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "[1, 2]",
+        "en": "[1, 2]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הקידומת [1,2] כבר במקומה; רק הנתונים שהגיעו מ־a מילאו את הזנב.",
+      "en": "Prefix [1,2] is already placed; values from a filled only the tail."
+    }
+  },
+  {
+    "key": "quick-sw-179-v3",
+    "source_key": "quick-sw-179",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־b שני נתוני קלט [0,2] ועוד 2 תאים פנויים; a=[0,3]. אפס הוא נתון חוקי. מה כל הפלט הממוזג?",
+      "en": "Array b has two data values [0,2] and 2 spare slots; a=[0,3]. Zero is valid data. What is the complete merged output?"
+    },
+    "choices": [
+      {
+        "he": "[0, 2]",
+        "en": "[0, 2]"
+      },
+      {
+        "he": "[0, 0, 0, 3]",
+        "en": "[0, 0, 0, 3]"
+      },
+      {
+        "he": "[0, 0, 2, 3]",
+        "en": "[0, 0, 2, 3]"
+      },
+      {
+        "he": "[0, 2, 3]",
+        "en": "[0, 2, 3]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "סופרים את m נתוני b לפי האורך, לא לפי ערכם; שני מופעי 0 נשמרים.",
+      "en": "Use m to identify b's data, not their values; both occurrences of 0 survive."
+    }
+  },
+  {
+    "key": "quick-sw-179-v4",
+    "source_key": "quick-sw-179",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מיזוג שגוי מתחיל לכתוב קדימה לתוך b=[2,4,_,_] מתוך a=[1,3], בלי לשמור נתונים שנדרסים. כתיבת 1 ב־b[0] מאבדת איזה נתון שטרם נקרא?",
+      "en": "A faulty forward merge writes into b=[2,4,_,_] from a=[1,3], without saving overwritten data. Writing 1 into b[0] destroys which unread value?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "התא b[0] הכיל 2 שעדיין צריך למזג; כתיבה אחורית מגינה על קלט זה.",
+      "en": "Slot b[0] held the still-needed 2; backward writing protects that input."
+    }
+  },
+  {
+    "key": "quick-sw-179-v5",
+    "source_key": "quick-sw-179",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממזגים a=[2,2] ונתון b=[2] לתוך b בעל 2 תאים נוספים. מותרות כפילויות. מה הפלט?",
+      "en": "Merge a=[2,2] and b's data [2] into b with 2 additional slots. Duplicates are allowed. What is the output?"
+    },
+    "choices": [
+      {
+        "he": "[2]",
+        "en": "[2]"
+      },
+      {
+        "he": "[2, 2]",
+        "en": "[2, 2]"
+      },
+      {
+        "he": "[2, 2, 2]",
+        "en": "[2, 2, 2]"
+      },
+      {
+        "he": "[0, 2, 2]",
+        "en": "[0, 2, 2]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מיזוג שומר הופעות; שוויון אינו רשות למחוק נתון.",
+      "en": "Merging preserves occurrences; equality does not authorize dropping data."
+    }
+  },
+  {
+    "key": "quick-sw-180-v1",
+    "source_key": "quick-sw-180",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה שלשות אינדקסים i<j<k במערך [0,0,0,0] סכומן 0? כאן סופרים הופעות, לא שלשות ערכים ייחודיות.",
+      "en": "How many index triples i<j<k in [0,0,0,0] sum to 0? Count occurrences, not distinct value triples."
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בוחרים 3 מתוך 4 אינדקסים; יש 4 בחירות למרות שלשת ערכים יחידה.",
+      "en": "Choose 3 of 4 indices: 4 choices despite a single value triple."
+    }
+  },
+  {
+    "key": "quick-sw-180-v2",
+    "source_key": "quick-sw-180",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחפשים שלשות ערכים ייחודיות מסכום 0 ב־[-1,-1,2], תוך שימוש באינדקסים שונים. כמה שלשות יאבדו אם נהפוך את הקלט לקבוצת ערכים לפני החיפוש?",
+      "en": "Seek distinct value triples summing to 0 in [-1,-1,2], using different indices. How many valid triples disappear if the input is deduplicated before searching?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "השלשה (-1,-1,2) זקוקה לשתי הופעות של ‎-1; קבוצה מוחקת אחת מהן.",
+      "en": "Triple (-1,-1,2) requires two occurrences of -1; a set removes one."
+    }
+  },
+  {
+    "key": "quick-sw-180-v3",
+    "source_key": "quick-sw-180",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במערך ממוין [-2,-2,-2,0,1] הסתיים הטיפול בעוגן באינדקס 0. כדי להימנע משלשות ערכים כפולות, מה אינדקס העוגן הבא בעל ערך חדש?",
+      "en": "In sorted [-2,-2,-2,0,1], processing anchor index 0 is finished. To avoid repeated value triples, which index is the next anchor with a new value?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "האינדקסים 1 ו־2 חוזרים על ערך העוגן; הערך הבא מתחיל באינדקס 3.",
+      "en": "Indices 1 and 2 repeat the anchor value; the next value starts at index 3."
+    }
+  },
+  {
+    "key": "quick-sw-180-v4",
+    "source_key": "quick-sw-180",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה שלשות ערכים ייחודיות מסכום 0 יש ב־[-1,0,1,2,-1,-4]? כל שלשה משתמשת בשלושה אינדקסים שונים.",
+      "en": "How many distinct value triples sum to 0 in [-1,0,1,2,-1,-4]? Each uses three different indices."
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "רק (-1,-1,2) ו־(-1,0,1) מתאימות; כפילות של אינדקסים אינה פלט נוסף.",
+      "en": "Only (-1,-1,2) and (-1,0,1) qualify; repeated index realizations do not add outputs."
+    }
+  },
+  {
+    "key": "quick-sw-180-v5",
+    "source_key": "quick-sw-180",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במערך הממוין [2,3,4,5] אפילו סכום שלושת הקטנים גדול מ־6. כמה שלשות מסכום 6 יכולות להישאר לחיפוש?",
+      "en": "In sorted [2,3,4,5], even the three smallest values sum above 6. How many sum-6 triples can remain to search?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הסכום המזערי הוא 2+3+4=9, ולכן אין שלשה מסכום 6.",
+      "en": "The minimum sum is 2+3+4=9, so no sum-6 triple exists."
+    }
+  },
+  {
+    "key": "quick-sw-181-v1",
+    "source_key": "quick-sw-181",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "במסכה בת 4 ביטים 1011, ביט 1 תפוס ו־0 פנוי. האינדקסים מתחילים מ־0 ב־LSB. מה אינדקס התא הפנוי הראשון?",
+      "en": "In 4-bit bitmap 1011, 1 is occupied and 0 free. Indices start at 0 at the LSB. What is the first free index?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "הביט הפנוי היחיד הוא באינדקס 2.",
+      "en": "The only free bit has index 2."
+    }
+  },
+  {
+    "key": "quick-sw-181-v2",
+    "source_key": "quick-sw-181",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מוצאים תא פנוי רק בתחום 4 הביטים של 1111. מה מחזירה first_free, שמחזירה None כשאין מקום?",
+      "en": "Find a free slot only within the 4 bits of 1111. What does first_free return, using None when full?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "כל הביטים החוקיים תפוסים; ביטים מחוץ לרוחב אינם תאים נוספים.",
+      "en": "All valid bits are occupied; bits outside the width are not extra slots."
+    }
+  },
+  {
+    "key": "quick-sw-181-v3",
+    "source_key": "quick-sw-181",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מקצה מאפשר n=0 תאים ומשתמש במסכה 0. מה מחזיר חיפוש התא הפנוי הראשון: אינדקס חוקי או None?",
+      "en": "An allocator permits n=0 slots and uses bitmap 0. What does first-free search return: a valid index or None?"
+    },
+    "choices": [
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אין תחום תאים; המסכה המוגבלת אפס ולכן אין אינדקס פנוי.",
+      "en": "There are no slots; the bounded free mask is zero, so no free index exists."
+    }
+  },
+  {
+    "key": "quick-sw-181-v4",
+    "source_key": "quick-sw-181",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בפייתון ~0 הוא ‎-1. מהו (~0)&((1<<3)-1), כשמגבילים את התאים הפנויים לרוחב 3?",
+      "en": "In Python ~0 is -1. What is (~0)&((1<<3)-1), restricting free slots to width 3?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מסכת הרוחב היא 7, ולכן נשארים בדיוק 3 הביטים הנמוכים.",
+      "en": "The width mask is 7, retaining exactly the lowest 3 bits."
+    }
+  },
+  {
+    "key": "quick-sw-181-v5",
+    "source_key": "quick-sw-181",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מסכת תפוסה בת 8 ביטים היא 11110000. מה ערך מסכת הפנויים לאחר משלים מוגבל לאותו רוחב, ולא אינדקס של תא?",
+      "en": "The 8-bit occupied mask is 11110000. What is the bounded free-mask value, rather than a slot index?"
+    },
+    "choices": [
+      {
+        "he": "15",
+        "en": "15"
+      },
+      {
+        "he": "240",
+        "en": "240"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "המסכה הפנויה היא 00001111, שערכה 15; זהו דפוס ביטים ולא אינדקס.",
+      "en": "The free mask is 00001111, value 15; it is a bit pattern, not an index."
+    }
+  },
+  {
+    "key": "quick-sw-182-v1",
+    "source_key": "quick-sw-182",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בדיקת פלינדרום של אותיות ASCII רגישה לאותיות גדולות וקטנות. מה היא מחזירה עבור Aa?",
+      "en": "An ASCII-letter palindrome check is case-sensitive. What does it return for Aa?"
+    },
+    "choices": [
+      {
+        "he": "אינו מסתיים",
+        "en": "Does not terminate"
+      },
+      {
+        "he": "מחזיר true",
+        "en": "Returns true"
+      },
+      {
+        "he": "מחזיר false",
+        "en": "Returns false"
+      },
+      {
+        "he": "זורק שגיאה",
+        "en": "Raises an error"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "A שונה מ־a, ולכן הזוג הסימטרי נכשל.",
+      "en": "A differs from a, so the symmetric pair fails."
+    }
+  },
+  {
+    "key": "quick-sw-182-v2",
+    "source_key": "quick-sw-182",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "לפי החוזה, מחרוזת ריקה היא פלינדרום. מה מחזירה בדיקה שמשווה את כל הזוגות הסימטריים של הקלט הריק?",
+      "en": "By contract, the empty string is a palindrome. What does a check of all its symmetric pairs return?"
+    },
+    "choices": [
+      {
+        "he": "מחזיר true",
+        "en": "Returns true"
+      },
+      {
+        "he": "מחזיר false",
+        "en": "Returns false"
+      },
+      {
+        "he": "זורק שגיאה",
+        "en": "Raises an error"
+      },
+      {
+        "he": "אינו מסתיים",
+        "en": "Does not terminate"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אין זוג מפר; all על קבוצת בדיקות ריקה מחזיר true.",
+      "en": "There is no violating pair; all over an empty set of checks returns true."
+    }
+  },
+  {
+    "key": "quick-sw-182-v3",
+    "source_key": "quick-sw-182",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה זוגות סימטריים שונים צריך לבדוק במחרוזת abcba, בלי להשוות את התו האמצעי לעצמו?",
+      "en": "How many distinct symmetric pairs must be checked in abcba, excluding a self-comparison of the middle character?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "באורך 5 יש 5//2=2 זוגות; התו האמצעי אינו מוסיף תנאי.",
+      "en": "Length 5 gives 5//2=2 pairs; the middle character adds no condition."
+    }
+  },
+  {
+    "key": "quick-sw-182-v4",
+    "source_key": "quick-sw-182",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בדיקת פלינדרום ב־abcda מתחילה מהקצוות ועוצרת באי־שוויון הראשון. כמה השוואות בין תווים היא מבצעת?",
+      "en": "A palindrome check on abcda starts at the ends and stops at the first mismatch. How many character comparisons does it make?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "תחילה a מול a, ואחר כך b מול d. ההשוואה השנייה פוסלת.",
+      "en": "First compare a with a, then b with d. The second comparison rejects."
+    }
+  },
+  {
+    "key": "quick-sw-182-v5",
+    "source_key": "quick-sw-182",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בפלינדרום abXba מחליפים רק את התו האמצעי X ב־Y. מה מחזירה אותה בדיקה רגישה לאותיות עבור abYba?",
+      "en": "Replace only the central X of palindrome abXba with Y. What does the same case-sensitive check return for abYba?"
+    },
+    "choices": [
+      {
+        "he": "אינו מסתיים",
+        "en": "Does not terminate"
+      },
+      {
+        "he": "מחזיר true",
+        "en": "Returns true"
+      },
+      {
+        "he": "מחזיר false",
+        "en": "Returns false"
+      },
+      {
+        "he": "זורק שגיאה",
+        "en": "Raises an error"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "הזוגות החיצוניים לא השתנו; התו האמצעי יכול להיות כל אות.",
+      "en": "The outer pairs are unchanged; the middle can be any letter."
+    }
+  },
+  {
+    "key": "quick-sw-183-v1",
+    "source_key": "quick-sw-183",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "רשימת התאים החופשיים היא 2→4→6. מקצים את התא 2, קוראים תחילה את קישורו, ואז המשתמש רשאי לדרוס אותו. מה הראש החדש?",
+      "en": "The free list is 2→4→6. Allocate slot 2, first reading its link; the caller may then overwrite it. What is the new head?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "הראש מתקדם לקישור 4 לפני העברת הבעלות על התא 2.",
+      "en": "Advance the head to link 4 before transferring ownership of slot 2."
+    }
+  },
+  {
+    "key": "quick-sw-183-v2",
+    "source_key": "quick-sw-183",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הראש החופשי הוא 4. משחררים תא מוקצה 1 ומכניסים אותו לראש הרשימה. איזה קישור כותבים בתא 1 לפני עדכון הראש?",
+      "en": "The free head is 4. Free allocated slot 1 and prepend it. Which link is written in slot 1 before updating the head?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "התא ששוחרר מצביע לראש הקודם 4; אחר כך הראש נהיה 1.",
+      "en": "The freed slot points to the previous head 4; the head then becomes 1."
+    }
+  },
+  {
+    "key": "quick-sw-183-v3",
+    "source_key": "quick-sw-183",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מקצה מחזיר None כשאין תא חופשי. הראש כבר None. מה מוחזר מניסיון הקצאה בלי גישה לתוכן של תא כלשהו?",
+      "en": "An allocator returns None when no slot is free. Its head is already None. What does allocation return without reading any slot payload?"
+    },
+    "choices": [
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "ראש ריק פירושו מיצוי התאים; אין לקרוא תא דרך None.",
+      "en": "An empty head means exhaustion; no slot may be read through None."
+    }
+  },
+  {
+    "key": "quick-sw-183-v4",
+    "source_key": "quick-sw-183",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "רק התאים 3→5 חופשיים. המשתמש כותב 99 בתא המוקצה 2. מה סדר התאים החופשיים אחרי הכתיבה, אם הבעלות מנוהלת נכון?",
+      "en": "Only slots 3→5 are free. A caller writes 99 into allocated slot 2. What is the free-list order afterward under correct ownership?"
+    },
+    "choices": [
+      {
+        "he": "[5]",
+        "en": "[5]"
+      },
+      {
+        "he": "[3, 5]",
+        "en": "[3, 5]"
+      },
+      {
+        "he": "[2, 3, 5]",
+        "en": "[2, 3, 5]"
+      },
+      {
+        "he": "[99, 5]",
+        "en": "[99, 5]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "תוכן תא מוקצה אינו קישור חופשי; הרשימה 3→5 אינה משתנה.",
+      "en": "Allocated payload is not a free link; list 3→5 remains unchanged."
+    }
+  },
+  {
+    "key": "quick-sw-183-v5",
+    "source_key": "quick-sw-183",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מימוש ללא בדיקת double-free משחרר את תא 2, ואז משחרר אותו שוב כשהראש כבר 2. בכל שחרור כותבים בתא את הראש הישן. לאן יפנה הקישור שבתא 2?",
+      "en": "Without double-free validation, slot 2 is freed and then freed again when the head is already 2. Each free stores the old head in the slot. Where does slot 2's link point?"
+    },
+    "choices": [
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הקישור נהיה 2→2, מעגל עצמי; זו הדגמת תקלה ולא פעולה חוקית.",
+      "en": "The link becomes 2→2, a self-cycle; this demonstrates a fault, not a valid free."
+    }
+  },
+  {
+    "key": "quick-sw-184-v1",
+    "source_key": "quick-sw-184",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה תוצאת ביטוי postfix: 8 3 -?",
+      "en": "What is the result of postfix expression 8 3 -?"
+    },
+    "choices": [
+      {
+        "he": "-5",
+        "en": "-5"
+      },
+      {
+        "he": "11",
+        "en": "11"
+      },
+      {
+        "he": "24",
+        "en": "24"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "שולפים ימין 3 ושמאל 8; התוצאה 5.",
+      "en": "Pop right 3 and left 8; the result is 5."
+    }
+  },
+  {
+    "key": "quick-sw-184-v2",
+    "source_key": "quick-sw-184",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "חילוק מדויק: מה תוצאת postfix של 8 2 /?",
+      "en": "Using exact division, what is postfix 8 2 /?"
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "16",
+        "en": "16"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0.25",
+        "en": "0.25"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "הסדר הוא 8/2=4, ולא 2/8.",
+      "en": "The order is 8/2=4, not 2/8."
+    }
+  },
+  {
+    "key": "quick-sw-184-v3",
+    "source_key": "quick-sw-184",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה תוצאת postfix של 2 3 4 * +?",
+      "en": "What is the result of postfix 2 3 4 * +?"
+    },
+    "choices": [
+      {
+        "he": "24",
+        "en": "24"
+      },
+      {
+        "he": "14",
+        "en": "14"
+      },
+      {
+        "he": "20",
+        "en": "20"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "קודם 3*4=12, ואז 2+12=14.",
+      "en": "First 3*4=12, then 2+12=14."
+    }
+  },
+  {
+    "key": "quick-sw-184-v4",
+    "source_key": "quick-sw-184",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מעריך postfix דורש שני אופרנדים לחיסור. איזו בעיה מתגלה ב־8 -?",
+      "en": "A postfix evaluator requires two operands for subtraction. What fails in 8 -?"
+    },
+    "choices": [
+      {
+        "he": "חסר אופרנד",
+        "en": "Missing operand"
+      },
+      {
+        "he": "נשאר עודף",
+        "en": "Extra result"
+      },
+      {
+        "he": "ביטוי חוקי",
+        "en": "Valid expression"
+      },
+      {
+        "he": "תוצאה אפס",
+        "en": "Zero result"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "יש רק אופרנד אחד; מדובר במחסור במחסנית.",
+      "en": "Only one operand is available: stack underflow."
+    }
+  },
+  {
+    "key": "quick-sw-184-v5",
+    "source_key": "quick-sw-184",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בסוף postfix תקין נשאר ערך אחד. מה הבעיה בביטוי 1 2 ללא פעולה?",
+      "en": "A valid postfix expression ends with one value. What fails in expression 1 2 with no operator?"
+    },
+    "choices": [
+      {
+        "he": "חסר אופרנד",
+        "en": "Missing operand"
+      },
+      {
+        "he": "ביטוי חוקי",
+        "en": "Valid expression"
+      },
+      {
+        "he": "חילוק באפס",
+        "en": "Division by zero"
+      },
+      {
+        "he": "עודף תוצאות",
+        "en": "Extra results"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "נשארים שני ערכים ולא תוצאה יחידה.",
+      "en": "Two values remain rather than one result."
+    }
+  },
+  {
+    "key": "quick-sw-185-v1",
+    "source_key": "quick-sw-185",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "דוחפים למחסנית מינימום 5,2,2 ושולפים פעם אחת. מה FindMin מחזירה?",
+      "en": "Push 5,2,2 into a minimum stack and pop once. What does FindMin return?"
+    },
+    "choices": [
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מופע נוסף של 2 עדיין במחסנית; שליפה אחת אינה מוחקת את שניהם.",
+      "en": "Another occurrence of 2 remains; one pop does not remove both."
+    }
+  },
+  {
+    "key": "quick-sw-185-v2",
+    "source_key": "quick-sw-185",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במחסנית הוגדר ש־FindMin מחזירה None כשהיא ריקה. דוחפים 4 ושולפים אותו. מה מוחזר?",
+      "en": "FindMin is defined to return None for an empty stack. Push 4 and pop it. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "לא נשאר איבר; אין להחזיר מינימום היסטורי של קידומת שכבר הוסרה.",
+      "en": "No item remains; a removed prefix's historical minimum must not be returned."
+    }
+  },
+  {
+    "key": "quick-sw-185-v3",
+    "source_key": "quick-sw-185",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "דוחפים 3 ואחריו 7. Top מחזירה 7; מה FindMin צריכה להחזיר?",
+      "en": "Push 3 followed by 7. Top returns 7; what should FindMin return?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "ראש המחסנית והערך המזערי הם שאילתות שונות; המינימום הוא 3.",
+      "en": "The top and minimum are different queries; the minimum is 3."
+    }
+  },
+  {
+    "key": "quick-sw-185-v4",
+    "source_key": "quick-sw-185",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "דוחפים 2, שולפים אותו, ואז דוחפים 3. אין איברים אחרים. מה FindMin מחזירה?",
+      "en": "Push 2, pop it, then push 3. No other items exist. What does FindMin return?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "הערך 2 כבר אינו חלק מהמחסנית; המינימום החדש 3.",
+      "en": "Value 2 is no longer in the stack; the new minimum is 3."
+    }
+  },
+  {
+    "key": "quick-sw-185-v5",
+    "source_key": "quick-sw-185",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ליד כל איבר במחסנית [4,1,3] שומרים את מינימום הקידומת עד אליו. מה רצף ערכי העזר, מלמטה למעלה?",
+      "en": "Beside each item of stack [4,1,3], store its prefix minimum. What are the auxiliary values from bottom to top?"
+    },
+    "choices": [
+      {
+        "he": "[1, 1, 1]",
+        "en": "[1, 1, 1]"
+      },
+      {
+        "he": "[3, 1, 4]",
+        "en": "[3, 1, 4]"
+      },
+      {
+        "he": "[4, 1, 1]",
+        "en": "[4, 1, 1]"
+      },
+      {
+        "he": "[4, 1, 3]",
+        "en": "[4, 1, 3]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "הקידומות הן [4], [4,1], [4,1,3]; מינימיהן 4,1,1.",
+      "en": "Prefixes are [4], [4,1], [4,1,3]; their minima are 4,1,1."
+    }
+  },
+  {
+    "key": "quick-sw-186-v1",
+    "source_key": "quick-sw-186",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מוחקים מרשימת Python [3,4,20] את כל הערכים שמתחת ל־19, בסריקה מהסוף. מה נשאר?",
+      "en": "Delete all values below 19 from Python list [3,4,20], scanning backward. What remains?"
+    },
+    "choices": [
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "[20]",
+        "en": "[20]"
+      },
+      {
+        "he": "[4, 20]",
+        "en": "[4, 20]"
+      },
+      {
+        "he": "[3, 20]",
+        "en": "[3, 20]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "שני הערכים הסמוכים 3 ו־4 נמחקים; אין דילוג לאחר הזזה.",
+      "en": "Adjacent values 3 and 4 are both removed; shifting causes no skip."
+    }
+  },
+  {
+    "key": "quick-sw-186-v2",
+    "source_key": "quick-sw-186",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־[3,4,20] מוחקים ערך מתחת ל־19 ואז תמיד מגדילים אינדקס, גם לאחר מחיקה. מה נשאר במימוש קדמי שגוי זה?",
+      "en": "In [3,4,20], delete values below 19, always incrementing the index even after deletion. What remains in this faulty forward implementation?"
+    },
+    "choices": [
+      {
+        "he": "[4, 20]",
+        "en": "[4, 20]"
+      },
+      {
+        "he": "[20]",
+        "en": "[20]"
+      },
+      {
+        "he": "[3, 20]",
+        "en": "[3, 20]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אחרי מחיקת 3, הערך 4 זז לאינדקס שכבר לא ייבדק.",
+      "en": "After deleting 3, value 4 shifts into an index that will not be checked."
+    }
+  },
+  {
+    "key": "quick-sw-186-v3",
+    "source_key": "quick-sw-186",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה רצף האינדקסים ב־range(len(a)-1,-1,-1) כאשר אורך הרשימה 3, לפני השפעת מחיקות?",
+      "en": "What indices does range(len(a)-1,-1,-1) produce for a list of length 3, before accounting for deletion effects?"
+    },
+    "choices": [
+      {
+        "he": "[3, 2, 1]",
+        "en": "[3, 2, 1]"
+      },
+      {
+        "he": "[2, 1]",
+        "en": "[2, 1]"
+      },
+      {
+        "he": "[0, 1, 2]",
+        "en": "[0, 1, 2]"
+      },
+      {
+        "he": "[2, 1, 0]",
+        "en": "[2, 1, 0]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "תחילת הסריקה באינדקס 2; הגבול ‎-1 אינו נכלל ולכן גם 0 נבדק.",
+      "en": "Start at index 2; excluded bound -1 ensures index 0 is still checked."
+    }
+  },
+  {
+    "key": "quick-sw-186-v4",
+    "source_key": "quick-sw-186",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "דחיסה יציבה שומרת מ־[20,3,21,4] רק ערכים שלפחות 19. מה סדר הפלט?",
+      "en": "Stable compaction retains only values at least 19 from [20,3,21,4]. What is the output order?"
+    },
+    "choices": [
+      {
+        "he": "[3, 4]",
+        "en": "[3, 4]"
+      },
+      {
+        "he": "[20, 3, 21]",
+        "en": "[20, 3, 21]"
+      },
+      {
+        "he": "[20, 21]",
+        "en": "[20, 21]"
+      },
+      {
+        "he": "[21, 20]",
+        "en": "[21, 20]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "יציבות שומרת את סדר 20 לפני 21; הערכים 3 ו־4 נמחקים.",
+      "en": "Stability preserves 20 before 21; values 3 and 4 are removed."
+    }
+  },
+  {
+    "key": "quick-sw-186-v5",
+    "source_key": "quick-sw-186",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "במערך רציף באורך 8 מוחקים את התא באינדקס 0 ושומרים סדר באמצעות הזזת הזנב. כמה איברים חייבים לזוז בפעולה הזאת?",
+      "en": "In a contiguous array of length 8, delete index 0 while preserving order by shifting the suffix. How many elements move in this operation?"
+    },
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "כל 7 האיברים שמימין למחיקה זזים; נכונות סריקה אינה הופכת מחיקה לזמן קבוע.",
+      "en": "All 7 elements after the deletion move; traversal correctness does not make deletion constant-time."
+    }
+  },
+  {
+    "key": "quick-sw-187-v1",
+    "source_key": "quick-sw-187",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "חיפוש מדויק במערך ממוין [1,2,2,4] צריך להחזיר את המופע הראשון של 2. מה האינדקס מבוסס האפס?",
+      "en": "Exact search in sorted [1,2,2,4] must return the first occurrence of 2. What is its zero-based index?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "lower_bound מגיע לאינדקס 1, הראשון שערכו לפחות 2 ושווה לו.",
+      "en": "lower_bound reaches index 1, the first value at least 2 and equal to it."
+    }
+  },
+  {
+    "key": "quick-sw-187-v2",
+    "source_key": "quick-sw-187",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "lower_bound של 2 במערך [1,3,5] הוא 1. פונקציית חיפוש מדויק מחזירה ‎-1 בהיעדר התאמה. מה היא צריכה להחזיר?",
+      "en": "The lower_bound of 2 in [1,3,5] is 1. An exact-search function returns -1 when absent. What must it return?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "באינדקס 1 נמצא 3 ולא 2; מקום הכנסה אינו התאמה.",
+      "en": "Index 1 contains 3 rather than 2; an insertion position is not a match."
+    }
+  },
+  {
+    "key": "quick-sw-187-v3",
+    "source_key": "quick-sw-187",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "חיפוש מדויק מחזיר ‎-1 כשאין ערך. מה תוצאת חיפוש 4 במערך הריק, בלי לקרוא תא כלשהו?",
+      "en": "Exact search returns -1 when absent. What is the result of searching for 4 in an empty array without reading any cell?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "האינדקס שווה לאורך 0; בדיקת הגבול מונעת גישה לא חוקית.",
+      "en": "The candidate index equals length 0; the bounds check prevents invalid access."
+    }
+  },
+  {
+    "key": "quick-sw-187-v4",
+    "source_key": "quick-sw-187",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מה lower_bound מחזיר עבור 9 במערך [1,3,5], כאשר אין איבר שערכו לפחות 9? זו שאילתת גבול, לא חיפוש מדויק.",
+      "en": "What does lower_bound return for 9 in [1,3,5] when no item is at least 9? This asks for the boundary, not exact-search failure."
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "גבול ההכנסה הוא אורך המערך 3; אין לקרוא a[3].",
+      "en": "The insertion boundary is array length 3; a[3] must not be read."
+    }
+  },
+  {
+    "key": "quick-sw-187-v5",
+    "source_key": "quick-sw-187",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "כל הערכים ב־[5,5,5,5] שווים ליעד 5. חיפוש שמחזיר את המופע הראשון חייב להחזיר איזה אינדקס?",
+      "en": "Every value in [5,5,5,5] equals target 5. Which index must a first-occurrence search return?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "גם כאשר כל הבדיקות פוגשות שוויון, הגבול השמאלי נשאר 0.",
+      "en": "Even when every comparison finds equality, the left boundary remains 0."
+    }
+  },
+  {
+    "key": "quick-sw-188-v1",
+    "source_key": "quick-sw-188",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה תאי char דרושים לטקסט בינארי מינימלי של 0, כולל NUL?",
+      "en": "How many char slots hold minimal binary text for 0, including NUL?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "סופרים לפחות ספרה אחת, ומוסיפים תא אחד ל־NUL.",
+      "en": "Count at least one digit, then add one slot for NUL."
+    }
+  },
+  {
+    "key": "quick-sw-188-v2",
+    "source_key": "quick-sw-188",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה תאי char דרושים לטקסט 1000 של המספר 8, כולל NUL?",
+      "en": "How many char slots hold text 1000 for number 8, including NUL?"
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "סופרים לפחות ספרה אחת, ומוסיפים תא אחד ל־NUL.",
+      "en": "Count at least one digit, then add one slot for NUL."
+    }
+  },
+  {
+    "key": "quick-sw-188-v3",
+    "source_key": "quick-sw-188",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה קיבולת המחרוזת הדרושה ל־255 בלתי מסומן, בייצוג בינארי מינימלי כולל NUL?",
+      "en": "What string capacity is needed for unsigned 255 in minimal binary, including NUL?"
+    },
+    "choices": [
+      {
+        "he": "11",
+        "en": "11"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "סופרים לפחות ספרה אחת, ומוסיפים תא אחד ל־NUL.",
+      "en": "Count at least one digit, then add one slot for NUL."
+    }
+  },
+  {
+    "key": "quick-sw-188-v4",
+    "source_key": "quick-sw-188",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ממיר מספר 255 לטקסט בינארי מינימלי עם NUL, ובודק קיבולת לפני כתיבה. למאגר יש 8 תאי char בלבד. האם הוא יכול לכתוב את כל המחרוזת?",
+      "en": "A converter writes minimal binary text for 255 with NUL, checking capacity first. The buffer has only 8 char slots. Can it write the complete string?"
+    },
+    "choices": [
+      {
+        "he": "לא, חסר תא לסיום",
+        "en": "No, the terminator lacks a slot"
+      },
+      {
+        "he": "כן, מספיק בדיוק",
+        "en": "Yes, it fits exactly"
+      },
+      {
+        "he": "כן, אם מתעלמים מ־NUL",
+        "en": "Yes, ignoring NUL is allowed"
+      },
+      {
+        "he": "לא, כי 255 שלילי",
+        "en": "No, because 255 is negative"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "נדרשים 8 תווי ספרה ועוד NUL: סך הכול 9 תאים.",
+      "en": "There are 8 digit characters plus NUL: 9 slots total."
+    }
+  },
+  {
+    "key": "quick-sw-188-v5",
+    "source_key": "quick-sw-188",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "כעת החוזה דורש תמיד 8 ספרות בינאריות, כולל אפסים מובילים, ואחריהן NUL. כמה תאי char נדרשים גם לקלט 1?",
+      "en": "Now the contract always requires 8 binary digits, including leading zeros, followed by NUL. How many char slots are required even for input 1?"
+    },
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "ברוחב קבוע הקיבולת היא 8+1=9, בלי קשר לאורך המינימלי של 1.",
+      "en": "For fixed width, capacity is 8+1=9, independent of the minimal length of 1."
+    }
+  },
+  {
+    "key": "quick-sw-189-v1",
+    "source_key": "quick-sw-189",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "התגים A ו־B מזהים כתיבות לכתובת 7. מגיע ACK רק ל־A. האם קריאה ל־7 עדיין חסומה בגלל כתיבה בתהליך? בהרחבה מפורשת מותרות כמה כתיבות בתהליך. התגים ייחודיים ואינם ממוחזרים באצווה; ACK מאשר השלמה ונראות. אין forwarding.",
+      "en": "Tags A and B identify writes to address 7. Only A is ACKed. Is a read of 7 still blocked by an outstanding write? Explicit extension: several writes may be outstanding. Tags are unique and never reused within the batch; ACK confirms completion and visibility. No forwarding exists."
+    },
+    "choices": [
+      {
+        "he": "יש למחוק את הקריאה",
+        "en": "The read must be discarded"
+      },
+      {
+        "he": "חייבים לעצור את השעון",
+        "en": "The clock must stop"
+      },
+      {
+        "he": "כן, B עדיין פעילה",
+        "en": "Yes, B remains outstanding"
+      },
+      {
+        "he": "לא, כל הכתובת נפרשה",
+        "en": "No, the whole address was retired"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "ACK של A אינו פורש את B, אף ששתיהן פונות ל־7.",
+      "en": "ACK for A does not retire B, even though both target 7."
+    }
+  },
+  {
+    "key": "quick-sw-189-v2",
+    "source_key": "quick-sw-189",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "A כותבת ל־7 ו־B ל־8. B משלימה ראשונה ומקבלת ACK. האם קריאה ל־7 חייבת עדיין לחכות ל־A? בהרחבה מפורשת מותרות כמה כתיבות בתהליך. התגים ייחודיים ואינם ממוחזרים באצווה; ACK מאשר השלמה ונראות. אין forwarding.",
+      "en": "A writes 7 and B writes 8. B completes first and is ACKed. Must a read of 7 still wait for A? Explicit extension: several writes may be outstanding. Tags are unique and never reused within the batch; ACK confirms completion and visibility. No forwarding exists."
+    },
+    "choices": [
+      {
+        "he": "ACK של B בהכרח מאשר גם A",
+        "en": "B's ACK necessarily acknowledges A too"
+      },
+      {
+        "he": "כן",
+        "en": "Yes"
+      },
+      {
+        "he": "לא",
+        "en": "No"
+      },
+      {
+        "he": "כל השלמה פורשת את כל הכתיבות",
+        "en": "Any completion retires all writes"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "השלמה מחוץ לסדר מותאמת לתג B בלבד; A נשארת פעילה ב־7.",
+      "en": "The out-of-order completion matches only tag B; A remains outstanding at 7."
+    }
+  },
+  {
+    "key": "quick-sw-189-v3",
+    "source_key": "quick-sw-189",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "A כותבת ל־7 ו־B ל־8. מתקבל ACK של A. הבדיקה כאן היא רק התנגשות עם כתיבות שטרם הושלמו: האם קריאה ל־7 עדיין חסומה? בהרחבה מפורשת מותרות כמה כתיבות בתהליך. התגים ייחודיים ואינם ממוחזרים באצווה; ACK מאשר השלמה ונראות. אין forwarding.",
+      "en": "A writes 7 and B writes 8. A is ACKed. Checking only outstanding-write conflicts, is a read of 7 still blocked? Explicit extension: several writes may be outstanding. Tags are unique and never reused within the batch; ACK confirms completion and visibility. No forwarding exists."
+    },
+    "choices": [
+      {
+        "he": "לא, נותרה רק B ב־8",
+        "en": "No, only B at 8 remains"
+      },
+      {
+        "he": "כן, עד שכל הכתיבות יושלמו",
+        "en": "Yes, until all writes complete"
+      },
+      {
+        "he": "A נמחקה ולכן הנתון אבד",
+        "en": "Retiring A loses its data"
+      },
+      {
+        "he": "צריך למחזר מיד את A",
+        "en": "A must immediately be reused"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אין עוד כתיבה בתהליך ל־7; הכתיבה B ל־8 אינה אותה התנגשות.",
+      "en": "No outstanding write targets 7; B at 8 is a different address."
+    }
+  },
+  {
+    "key": "quick-sw-189-v4",
+    "source_key": "quick-sw-189",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "A ל־7 ו־B ל־8 בתהליך. מגיע ACK עם תג לא מוכר Z, ואין למחוק שום רשומה שאינה מותאמת. אילו תגים נשארים פעילים? בהרחבה מפורשת מותרות כמה כתיבות בתהליך. התגים ייחודיים ואינם ממוחזרים באצווה; ACK מאשר השלמה ונראות. אין forwarding.",
+      "en": "A at 7 and B at 8 are outstanding. An unknown-tag Z ACK arrives; no unmatched entry may be removed. Which tags remain active? Explicit extension: several writes may be outstanding. Tags are unique and never reused within the batch; ACK confirms completion and visibility. No forwarding exists."
+    },
+    "choices": [
+      {
+        "he": "[\"A\"]",
+        "en": "[\"A\"]"
+      },
+      {
+        "he": "[\"B\"]",
+        "en": "[\"B\"]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "[\"A\", \"B\"]",
+        "en": "[\"A\", \"B\"]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "Z אינו מפתח קיים; הוא אינו אישור של A או B.",
+      "en": "Z is not an existing key; it acknowledges neither A nor B."
+    }
+  },
+  {
+    "key": "quick-sw-189-v5",
+    "source_key": "quick-sw-189",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "A כבר נפרשה; B לכתובת 7 עדיין בתהליך. מגיע שוב ACK ישן של A. האם קריאה ל־7 חייבת להישאר חסומה? בהרחבה מפורשת מותרות כמה כתיבות בתהליך. התגים ייחודיים ואינם ממוחזרים באצווה; ACK מאשר השלמה ונראות. אין forwarding.",
+      "en": "A is already retired; B at address 7 remains outstanding. A duplicate old ACK for A arrives. Must a read of 7 remain blocked? Explicit extension: several writes may be outstanding. Tags are unique and never reused within the batch; ACK confirms completion and visibility. No forwarding exists."
+    },
+    "choices": [
+      {
+        "he": "מקטינים מונה בלי בדיקת תג",
+        "en": "Decrement without matching the tag"
+      },
+      {
+        "he": "חייבים להחליף את התג של B",
+        "en": "B's tag must be replaced"
+      },
+      {
+        "he": "כן",
+        "en": "Yes"
+      },
+      {
+        "he": "לא",
+        "en": "No"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "A אינה פעילה ואינה ממוחזרת באצווה; האישור הישן אינו מסיר את B ל־7.",
+      "en": "A is inactive and not reused within the batch; its old ACK cannot remove B at 7."
+    }
+  },
+  {
+    "key": "quick-sw-190-v1",
+    "source_key": "quick-sw-190",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ברשימה 0→1→2→3→4→2, המפגש הראשון של Floyd הוא בצומת 3. מהי כניסת המעגל, שהיא הצומת הראשון אליו נכנסים במעגל מהראש?",
+      "en": "In list 0→1→2→3→4→2, Floyd first meets at node 3. What is the cycle entry, the first cyclic node reached from the head?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "הכניסה היא 2; צומת מפגש 3 אינו בהכרח הכניסה.",
+      "en": "The entry is 2; meeting node 3 need not be the entry."
+    }
+  },
+  {
+    "key": "quick-sw-190-v2",
+    "source_key": "quick-sw-190",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "אחרי מפגש ב־3 ברשימה 0→1→2→3→4→2, מצביע אחד מאופס לראש 0 והאחר נשאר ב־3. מה הזוג אחרי שמקדמים את שניהם צעד אחד?",
+      "en": "After meeting at 3 in 0→1→2→3→4→2, reset one pointer to head 0 and leave the other at 3. What is the pair after advancing both one step?"
+    },
+    "choices": [
+      {
+        "he": "[1, 4]",
+        "en": "[1, 4]"
+      },
+      {
+        "he": "[1, 3]",
+        "en": "[1, 3]"
+      },
+      {
+        "he": "[2, 4]",
+        "en": "[2, 4]"
+      },
+      {
+        "he": "[1, 2]",
+        "en": "[1, 2]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "הקישורים נותנים 0→1 ו־3→4; בשלב השחזור שניהם זזים באותה מהירות.",
+      "en": "Links give 0→1 and 3→4; both pointers use equal speed during recovery."
+    }
+  },
+  {
+    "key": "quick-sw-190-v3",
+    "source_key": "quick-sw-190",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ברשימה 0→1→2→3→4→2, משאירים מצביע ב־3 ומאפסים אחר ל־0. כמה צעדים שווים יידרשו עד מפגשם בכניסת המעגל? משווים גם לפני צעד ראשון.",
+      "en": "For 0→1→2→3→4→2, leave one pointer at 3 and reset the other to 0. How many equal-speed steps are needed to meet at cycle entry? Also compare before the first step."
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מתקבלים (1,4) ואחר כך (2,2), ולכן 2 צעדים.",
+      "en": "The pairs become (1,4), then (2,2), requiring 2 steps."
+    }
+  },
+  {
+    "key": "quick-sw-190-v4",
+    "source_key": "quick-sw-190",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "אחרי זיהוי מעגל ברשימה 0→1→2→3→4→2, מאפסים בטעות את שני המצביעים לראש ומשווים מיד. איזה צומת יוחזר בטעות ככניסה?",
+      "en": "After detecting the cycle in 0→1→2→3→4→2, a bug resets both pointers to the head and compares immediately. Which node is incorrectly returned as entry?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "שניהם כבר ב־0, אף שהכניסה 2. חייבים לשמר מצביע אחד במפגש.",
+      "en": "Both are already at 0 although entry is 2. One pointer must retain the meeting position."
+    }
+  },
+  {
+    "key": "quick-sw-190-v5",
+    "source_key": "quick-sw-190",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ברשימה 0→1→2→3→4→1, אורך המעגל 4. במפגש ראשון האיטי עבר 4 קישורים והמהיר 8. מה שארית מרחק האיטי מודולו אורך המעגל? זהו קשר המופע המשמש לשחזור הכניסה.",
+      "en": "In 0→1→2→3→4→1, cycle length is 4. At first meeting slow traveled 4 links and fast 8. What is slow's distance modulo cycle length? This phase relation supports entry recovery."
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מרחק האיטי הוא כפולה של אורך המעגל: 4 מודולו 4 הוא 0.",
+      "en": "Slow's distance is a cycle-length multiple: 4 modulo 4 is 0."
+    }
+  },
+  {
+    "key": "quick-sw-191-v1",
+    "source_key": "quick-sw-191",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מוצאים מינימום ומקסימום של 6 ערכים בשיטת הזוגות, כולל אתחול. כמה השוואות מתבצעות? בקלט אי־זוגי מאתחלים בערך הראשון.",
+      "en": "Find minimum and maximum of 6 values by pairing, including initialization. How many comparisons are performed? For odd input, initialize from the first value."
+    },
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "זוג אתחול דורש השוואה אחת, וכל זוג אחר שלוש; ערך אתחול יחיד אינו דורש השוואה.",
+      "en": "An initial pair needs one comparison and every later pair three; a single initial value needs none."
+    }
+  },
+  {
+    "key": "quick-sw-191-v2",
+    "source_key": "quick-sw-191",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מוצאים מינימום ומקסימום של 1 ערכים בשיטת הזוגות, כולל אתחול. כמה השוואות מתבצעות? בקלט אי־זוגי מאתחלים בערך הראשון.",
+      "en": "Find minimum and maximum of 1 values by pairing, including initialization. How many comparisons are performed? For odd input, initialize from the first value."
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "זוג אתחול דורש השוואה אחת, וכל זוג אחר שלוש; ערך אתחול יחיד אינו דורש השוואה.",
+      "en": "An initial pair needs one comparison and every later pair three; a single initial value needs none."
+    }
+  },
+  {
+    "key": "quick-sw-191-v3",
+    "source_key": "quick-sw-191",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מוצאים מינימום ומקסימום של 5 ערכים בשיטת הזוגות, כולל אתחול. כמה השוואות מתבצעות? בקלט אי־זוגי מאתחלים בערך הראשון.",
+      "en": "Find minimum and maximum of 5 values by pairing, including initialization. How many comparisons are performed? For odd input, initialize from the first value."
+    },
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "זוג אתחול דורש השוואה אחת, וכל זוג אחר שלוש; ערך אתחול יחיד אינו דורש השוואה.",
+      "en": "An initial pair needs one comparison and every later pair three; a single initial value needs none."
+    }
+  },
+  {
+    "key": "quick-sw-191-v4",
+    "source_key": "quick-sw-191",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ל־6 ערכים, חיפוש מינימום ומקסימום בנפרד צורך 10 השוואות. שיטת הזוגות צורכת 7. כמה השוואות נחסכות?",
+      "en": "For 6 values, separate minimum and maximum scans use 10 comparisons. Pairwise processing uses 7. How many comparisons are saved?"
+    },
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "החיסכון הוא 10-7=3; אין צורך במיון כדי למצוא שני קצוות.",
+      "en": "The saving is 10-7=3; finding both extremes does not require sorting."
+    }
+  },
+  {
+    "key": "quick-sw-191-v5",
+    "source_key": "quick-sw-191",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המינימום 1 והמקסימום 9 כבר אותחלו. מגיע זוג (2,8). בשיטת הזוגות משווים בתוך הזוג, ואז כל מועמד לקצה המתאים. כמה השוואות נוספות נדרשות?",
+      "en": "Minimum 1 and maximum 9 are initialized. Pair (2,8) arrives. Pairwise processing compares within the pair, then each candidate against its appropriate extreme. How many further comparisons are made?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "השוואה פנימית ועוד בדיקת מינימום ובדיקת מקסימום: 3.",
+      "en": "One internal comparison, one minimum check and one maximum check: 3."
+    }
+  },
+  {
+    "key": "quick-sw-192-v1",
+    "source_key": "quick-sw-192",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממקסמים לקסיקוגרפית (מספר מקבלי העדפה, מספר מקבלי העדפה ראשונה). איזה ציון עדיף: (3,3) או (4,2)?",
+      "en": "Maximize lexicographically (people receiving an acceptable choice, people receiving their first choice). Which score wins: (3,3) or (4,2)?"
+    },
+    "choices": [
+      {
+        "he": "[4, 2]",
+        "en": "[4, 2]"
+      },
+      {
+        "he": "[3, 2]",
+        "en": "[3, 2]"
+      },
+      {
+        "he": "[4, 3]",
+        "en": "[4, 3]"
+      },
+      {
+        "he": "[3, 3]",
+        "en": "[3, 3]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "יותר מקבלים קודם: 4 עדיף על 3 גם עם פחות בחירות ראשונות.",
+      "en": "More served takes priority: 4 beats 3 even with fewer first choices."
+    }
+  },
+  {
+    "key": "quick-sw-192-v2",
+    "source_key": "quick-sw-192",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בהשוואה לקסיקוגרפית של (מקבלים,בחירות ראשונות), שני ציונים הם (4,2) ו־(4,3). איזה מהם נבחר?",
+      "en": "Using lexicographic (served,first choices), scores are (4,2) and (4,3). Which is selected?"
+    },
+    "choices": [
+      {
+        "he": "[3, 4]",
+        "en": "[3, 4]"
+      },
+      {
+        "he": "[2, 4]",
+        "en": "[2, 4]"
+      },
+      {
+        "he": "[4, 2]",
+        "en": "[4, 2]"
+      },
+      {
+        "he": "[4, 3]",
+        "en": "[4, 3]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מספר המקבלים שווה, ולכן מכריעות 3 בחירות ראשונות לעומת 2.",
+      "en": "Served counts tie, so 3 first choices beat 2."
+    }
+  },
+  {
+    "key": "quick-sw-192-v3",
+    "source_key": "quick-sw-192",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "יש תחפושת יחידה מכל סוג. הקצאה נותנת את a לשני אנשים, ושניהם מרוצים. האם מותר להשוות את ציונה להקצאות חוקיות ולבחור בה?",
+      "en": "There is one costume of each type. An assignment gives a to two satisfied people. May it compete with feasible assignments and be selected by score?"
+    },
+    "choices": [
+      {
+        "he": "רק בשוויון ציונים",
+        "en": "Only for tied scores"
+      },
+      {
+        "he": "לא, היא אינה חוקית",
+        "en": "No, it is infeasible"
+      },
+      {
+        "he": "כן, כי שניהם מרוצים",
+        "en": "Yes, both are happy"
+      },
+      {
+        "he": "כן, אם זו העדפה ראשונה",
+        "en": "Yes, if it is a first choice"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "ציון גבוה אינו מתקן שימוש כפול במשאב יחיד.",
+      "en": "A high score does not repair assigning a single resource twice."
+    }
+  },
+  {
+    "key": "quick-sw-192-v4",
+    "source_key": "quick-sw-192",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "שתי הקצאות חוקיות מקבלות ציונים (1,1) ו־(2,1), לפי מספר מקבלים ואז בחירות ראשונות. איזה ציון מנצח?",
+      "en": "Two feasible assignments score (1,1) and (2,1), ordered by served count then first choices. Which score wins?"
+    },
+    "choices": [
+      {
+        "he": "[1, 1]",
+        "en": "[1, 1]"
+      },
+      {
+        "he": "[2, 1]",
+        "en": "[2, 1]"
+      },
+      {
+        "he": "[1, 2]",
+        "en": "[1, 2]"
+      },
+      {
+        "he": "[2, 0]",
+        "en": "[2, 0]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "אותו מספר בחירות ראשונות אינו מצדיק להשאיר אדם נוסף ללא העדפה.",
+      "en": "Equal first-choice counts do not justify leaving another person unserved."
+    }
+  },
+  {
+    "key": "quick-sw-192-v5",
+    "source_key": "quick-sw-192",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "יש לכל היותר 4 אנשים, והציון החוקי מקיים 0≤first≤served≤4. איזו משקולת מבין 0,1,5,-1 ב־W*served+first מבטיחה שיותר מקבלים תמיד עדיף? אין טענת מינימום למשקולת.",
+      "en": "At most 4 people give valid scores 0≤first≤served≤4. Which listed weight 0,1,5,-1 in W*served+first guarantees that more served always wins? No minimal-weight claim is made."
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "תוספת 5 לרכיב הראשון גדולה מכל הפרש אפשרי של בחירות ראשונות בתחום 0..4.",
+      "en": "An added 5 outweighs any possible first-choice difference within 0..4."
+    }
+  },
+  {
+    "key": "quick-sw-193-v1",
+    "source_key": "quick-sw-193",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "משימות דורשות 2 עובדים ב־`[1,3)` ו־3 ב־`[3,5)`. החלפה מיידית מותרת, ללא מעבר. מה מינימום מספר העובדים?",
+      "en": "Tasks need 2 workers in `[1,3)` and 3 in `[3,5)`. Immediate reassignment is allowed, without travel. What is the minimum headcount?"
+    },
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הקטעים חצי־פתוחים ואינם חופפים; שיא הדרישה 3.",
+      "en": "The half-open intervals do not overlap; peak demand is 3."
+    }
+  },
+  {
+    "key": "quick-sw-193-v2",
+    "source_key": "quick-sw-193",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הפעם שתי הדרישות כוללות את שני הקצוות: 2 עובדים ב־[1,3] ו־3 ב־[3,5]. גם רגע יחיד נחשב. כמה עובדים דרושים בזמן 3?",
+      "en": "Now both endpoints are included: 2 workers in [1,3] and 3 in [3,5]. Even one instant counts. How many workers are required at time 3?"
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בזמן 3 שתי המשימות פעילות, ולכן 2+3=5.",
+      "en": "At time 3 both tasks are active, requiring 2+3=5."
+    }
+  },
+  {
+    "key": "quick-sw-193-v3",
+    "source_key": "quick-sw-193",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "באותו זמן מסתיימת דרישה של 2 עובדים ומתחילה דרישה של 3, בקטעים חצי־פתוחים. מה השינוי נטו בדרישה לאחר קיבוץ האירועים?",
+      "en": "At one time, demand for 2 workers ends and demand for 3 starts under half-open intervals. What is the net change after grouping the events?"
+    },
+    "choices": [
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מחברים שינויים חתומים: ‎-2+3=1, בלי שיא ביניים מלאכותי.",
+      "en": "Add signed changes: -2+3=1, without an artificial intermediate peak."
+    }
+  },
+  {
+    "key": "quick-sw-193-v4",
+    "source_key": "quick-sw-193",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בקטעים חצי־פתוחים העומס לפני זמן מעבר הוא 2. מתחילים בטעות את 3 העובדים החדשים לפני שחרור 2 הישנים, ומודדים 5 במקום 3. בכמה גדל השיא המדומה?",
+      "en": "For half-open intervals, load before a boundary is 2. A bug adds 3 new workers before releasing the old 2, measuring 5 instead of 3. By how much is the apparent peak inflated?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "סדר העיבוד יצר תוספת מדומה של 5-3=2.",
+      "en": "The event order created an artificial increase of 5-3=2."
+    }
+  },
+  {
+    "key": "quick-sw-193-v5",
+    "source_key": "quick-sw-193",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "החוזה מאפשר קטעים ריקים ומגדיר דרישה בקטע `[5,5)` של 9 עובדים. מה התרומה לשיא הדרישה?",
+      "en": "The contract allows empty intervals and specifies demand for 9 workers during `[5,5)`. What does this contribute to peak demand?"
+    },
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "18",
+        "en": "18"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "אין זמן ששייך לקטע הריק `[5,5)`, ולכן תרומתו 0.",
+      "en": "No time belongs to empty interval `[5,5)`, so its contribution is 0."
+    }
+  },
+  {
+    "key": "quick-sw-194-v1",
+    "source_key": "quick-sw-194",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מאפסים שורות ועמודות שמכילות אפס במטריצה המקורית [[1,0],[3,4]]. אפסים שנוצרים אינם מפיצים שינוי נוסף. מה התוצאה?",
+      "en": "Zero rows and columns containing an original zero in [[1,0],[3,4]]. Newly written zeros trigger no further change. What is the result?"
+    },
+    "choices": [
+      {
+        "he": "[[0, 0], [0, 4]]",
+        "en": "[[0, 0], [0, 4]]"
+      },
+      {
+        "he": "[[0, 0], [3, 0]]",
+        "en": "[[0, 0], [3, 0]]"
+      },
+      {
+        "he": "[[0, 0], [0, 0]]",
+        "en": "[[0, 0], [0, 0]]"
+      },
+      {
+        "he": "[[1, 0], [3, 4]]",
+        "en": "[[1, 0], [3, 4]]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "רק השורה העליונה והעמודה הימנית מסומנות; 3 נשאר.",
+      "en": "Only the top row and right column are marked; 3 remains."
+    }
+  },
+  {
+    "key": "quick-sw-194-v2",
+    "source_key": "quick-sw-194",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "אותו כלל מאפס לפי אפסים מקוריים בלבד. מה קורה ל־[[1,2],[3,4]] שבה אין אפס?",
+      "en": "The same rule zeros only from original zeros. What happens to [[1,2],[3,4]], containing no zero?"
+    },
+    "choices": [
+      {
+        "he": "[[1, 2], [3, 4]]",
+        "en": "[[1, 2], [3, 4]]"
+      },
+      {
+        "he": "[[0, 0], [0, 0]]",
+        "en": "[[0, 0], [0, 0]]"
+      },
+      {
+        "he": "[[1, 0], [0, 4]]",
+        "en": "[[1, 0], [0, 4]]"
+      },
+      {
+        "he": "[[0, 2], [3, 0]]",
+        "en": "[[0, 2], [3, 0]]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אין שורה או עמודה מסומנת, ולכן כל הנתונים נשמרים.",
+      "en": "No row or column is marked, so every value is preserved."
+    }
+  },
+  {
+    "key": "quick-sw-194-v3",
+    "source_key": "quick-sw-194",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "במטריצה [[1,0],[0,4]] מאפסים לפי כל האפסים המקוריים יחד. מה הפלט?",
+      "en": "In matrix [[1,0],[0,4]], apply zeroing from all original zeros together. What is the output?"
+    },
+    "choices": [
+      {
+        "he": "[[1, 0], [0, 4]]",
+        "en": "[[1, 0], [0, 4]]"
+      },
+      {
+        "he": "[[0, 0], [0, 4]]",
+        "en": "[[0, 0], [0, 4]]"
+      },
+      {
+        "he": "[[1, 0], [0, 0]]",
+        "en": "[[1, 0], [0, 0]]"
+      },
+      {
+        "he": "[[0, 0], [0, 0]]",
+        "en": "[[0, 0], [0, 0]]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "כל שורה וכל עמודה מכילה אפס מקורי, ולכן כל התאים מתאפסים.",
+      "en": "Every row and column contains an original zero, so all cells become zero."
+    }
+  },
+  {
+    "key": "quick-sw-194-v4",
+    "source_key": "quick-sw-194",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "לפני כתיבה ב־[[1,0],[3,4]], אוספים זוג רשימות: (אינדקסי שורות עם אפס, אינדקסי עמודות עם אפס). מהן הרשימות, בבסיס אפס?",
+      "en": "Before writing into [[1,0],[3,4]], collect (row indices containing zero, column indices containing zero). What are the zero-based lists?"
+    },
+    "choices": [
+      {
+        "he": "[[1], [0]]",
+        "en": "[[1], [0]]"
+      },
+      {
+        "he": "[[0], [0]]",
+        "en": "[[0], [0]]"
+      },
+      {
+        "he": "[[0], [1]]",
+        "en": "[[0], [1]]"
+      },
+      {
+        "he": "[[0, 1], [0, 1]]",
+        "en": "[[0, 1], [0, 1]]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "האפס המקורי נמצא בשורה 0 ובעמודה 1, לפני שנכתבו אפסים חדשים.",
+      "en": "The original zero is at row 0, column 1, before any new zeros are written."
+    }
+  },
+  {
+    "key": "quick-sw-194-v5",
+    "source_key": "quick-sw-194",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מימוש החזרה־בעותק מאפשר גם מטריצה ריקה []. מה יחזיר כלל איפוס השורות והעמודות במקרה זה?",
+      "en": "A copy-returning implementation also permits empty matrix []. What does row-and-column zeroing return for it?"
+    },
+    "choices": [
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "[[]]",
+        "en": "[[]]"
+      },
+      {
+        "he": "[[0]]",
+        "en": "[[0]]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "אין תאים ואין שורות לסמן; הצורה הריקה נשמרת.",
+      "en": "There are no cells or rows to mark; the empty shape is preserved."
+    }
+  },
+  {
+    "key": "quick-sw-195-v1",
+    "source_key": "quick-sw-195",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "טבלת popcount כוללת תשובה לכל קלט בלתי מסומן בן 8 ביטים. כמה כניסות דרושות, כולל הקלט 0?",
+      "en": "A popcount table stores an answer for every unsigned 8-bit input. How many entries are needed, including input 0?"
+    },
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "255",
+        "en": "255"
+      },
+      {
+        "he": "256",
+        "en": "256"
+      },
+      {
+        "he": "257",
+        "en": "257"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "יש 2^8=256 דפוסי קלט, כולל כל האפסים.",
+      "en": "There are 2^8=256 input patterns, including all zeros."
+    }
+  },
+  {
+    "key": "quick-sw-195-v2",
+    "source_key": "quick-sw-195",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "טבלת ספירת ביטים מכילה 256 תשובות, כל אחת בבית אחד. כמה בתי מטען דרושים? התעלמו מתקורת אובייקט ויישור.",
+      "en": "A bit-count table contains 256 answers, each in one byte. How many payload bytes are required? Ignore object and alignment overhead."
+    },
+    "choices": [
+      {
+        "he": "256",
+        "en": "256"
+      },
+      {
+        "he": "512",
+        "en": "512"
+      },
+      {
+        "he": "2048",
+        "en": "2048"
+      },
+      {
+        "he": "32",
+        "en": "32"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "256 כניסות כפול בית אחד נותנות 256 בתי מטען.",
+      "en": "256 entries times one byte give 256 payload bytes."
+    }
+  },
+  {
+    "key": "quick-sw-195-v3",
+    "source_key": "quick-sw-195",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במקום לחלק לבתים בונים טבלה מלאה לכל קלט בן 16 ביטים. כמה כניסות דרושות?",
+      "en": "Instead of splitting into bytes, build a complete table for every 16-bit input. How many entries are needed?"
+    },
+    "choices": [
+      {
+        "he": "512",
+        "en": "512"
+      },
+      {
+        "he": "65536",
+        "en": "65536"
+      },
+      {
+        "he": "16",
+        "en": "16"
+      },
+      {
+        "he": "256",
+        "en": "256"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מרחב הקלט גדל ל־2^16=65536; הוא אינו נשאר בגודל טבלת בית.",
+      "en": "The domain grows to 2^16=65536; it does not remain byte-table sized."
+    }
+  },
+  {
+    "key": "quick-sw-195-v4",
+    "source_key": "quick-sw-195",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מילה בת 32 ביטים מפוצלת למקטעים של 8 ביטים. לכל מקטע מבצעים lookup אחד ומחברים את התשובות. כמה גישות לטבלה נעשות?",
+      "en": "A 32-bit word is split into 8-bit chunks. Each chunk needs one lookup, then results are summed. How many table accesses occur?"
+    },
+    "choices": [
+      {
+        "he": "32",
+        "en": "32"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "32/8=4 מקטעים, ולכן 4 גישות, לא גישה יחידה לכל רוחב.",
+      "en": "32/8=4 chunks require 4 accesses, not one access for every width."
+    }
+  },
+  {
+    "key": "quick-sw-195-v5",
+    "source_key": "quick-sw-195",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "טבלת הבית מחזירה את מספר הביטים הדלוקים. מה הערך עבור קלט 10110010, שערכו העשרוני 178?",
+      "en": "A byte table returns the number of set bits. What value corresponds to input 10110010, decimal 178?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "178",
+        "en": "178"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בדפוס 10110010 יש 4 ביטים דלוקים; ערך האינדקס אינו התשובה.",
+      "en": "Pattern 10110010 has 4 set bits; the table index is not the answer."
+    }
+  },
+  {
+    "key": "quick-sw-196-v1",
+    "source_key": "quick-sw-196",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מיון 2000 ערכים שומר קלט ופלט מיזוג בזיכרון פנימי מספיק. קוראים כל ערך פעם אחת וכותבים פעם אחת לפלט חדש. כמה העברות ערך חיצוניות יש?",
+      "en": "Sorting 2000 values has enough internal storage for input and merge output. Read each value once and write each once to fresh output. How many external value transfers occur?"
+    },
+    "choices": [
+      {
+        "he": "4000",
+        "en": "4000"
+      },
+      {
+        "he": "6000",
+        "en": "6000"
+      },
+      {
+        "he": "8000",
+        "en": "8000"
+      },
+      {
+        "he": "2000",
+        "en": "2000"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "2000 קריאות ועוד 2000 כתיבות: 4000 העברות במודל הנתון.",
+      "en": "2000 reads plus 2000 writes give 4000 transfers in this model."
+    }
+  },
+  {
+    "key": "quick-sw-196-v2",
+    "source_key": "quick-sw-196",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ממיינים שני חצאים של 2000 ערכים, קוראים וכותבים כל חצי לזיכרון חיצוני. אחר כך המיזוג קורא וכותב שוב כל ערך. כמה העברות יש בבנייה הזאת?",
+      "en": "Sort two halves totaling 2000 values, reading and writing each half externally. Merging then reads and writes every value again. How many transfers does this construction use?"
+    },
+    "choices": [
+      {
+        "he": "8000",
+        "en": "8000"
+      },
+      {
+        "he": "10000",
+        "en": "10000"
+      },
+      {
+        "he": "2000",
+        "en": "2000"
+      },
+      {
+        "he": "4000",
+        "en": "4000"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "שני שלבים, בכל אחד קריאה וכתיבה של 2000: סך הכול 8000.",
+      "en": "Two stages each read and write 2000 values: 8000 total."
+    }
+  },
+  {
+    "key": "quick-sw-196-v3",
+    "source_key": "quick-sw-196",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בנייה מפעילה קופסת מיון 5 פעמים. כל הפעלה קוראת 1000 ערכים חיצוניים וכותבת 1000, בלי שימור בין הפעלות. כמה העברות היא מבצעת? אין כאן טענת מינימום.",
+      "en": "A construction invokes a sorter 5 times. Each call externally reads 1000 values and writes 1000, without retention between calls. How many transfers occur? No minimum is claimed."
+    },
+    "choices": [
+      {
+        "he": "20000",
+        "en": "20000"
+      },
+      {
+        "he": "5000",
+        "en": "5000"
+      },
+      {
+        "he": "8000",
+        "en": "8000"
+      },
+      {
+        "he": "10000",
+        "en": "10000"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "5 כפול (1000+1000) הוא 10000 העברות בבנייה המוגדרת.",
+      "en": "5 times (1000+1000) gives 10000 transfers for the stated construction."
+    }
+  },
+  {
+    "key": "quick-sw-196-v4",
+    "source_key": "quick-sw-196",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ספירה מצאה 4000 העברות ערך. כל ערך בן 4 בתים; מתעלמים מהשפעות cache ועסקאות בלוק. כמה בתים מועברים?",
+      "en": "A count gives 4000 value transfers, each value 4 bytes. Ignore cache and block-transaction effects. How many bytes are transferred?"
+    },
+    "choices": [
+      {
+        "he": "1000",
+        "en": "1000"
+      },
+      {
+        "he": "4000",
+        "en": "4000"
+      },
+      {
+        "he": "8000",
+        "en": "8000"
+      },
+      {
+        "he": "16000",
+        "en": "16000"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מכפילים יחידות: 4000 ערכים כפול 4 בתים נותנים 16000 בתים.",
+      "en": "Convert units: 4000 values times 4 bytes give 16000 bytes."
+    }
+  },
+  {
+    "key": "quick-sw-196-v5",
+    "source_key": "quick-sw-196",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "שאלת מיון אינה מגדירה קיבולת פנימית, יחידת העברה או מיקום פלט. מודלים חוקיים נותנים 4000 או 8000 העברות. האם מותר להסיק מספר אופטימלי יחיד בלי הנחות נוספות?",
+      "en": "A sorting problem omits internal capacity, transfer unit and output location. Valid models give 4000 or 8000 transfers. May one unconditional optimal count be inferred without more assumptions?"
+    },
+    "choices": [
+      {
+        "he": "כן, תמיד 4000",
+        "en": "Yes, always 4000"
+      },
+      {
+        "he": "כן, תמיד 8000",
+        "en": "Yes, always 8000"
+      },
+      {
+        "he": "כן, הממוצע 6000",
+        "en": "Yes, the average 6000"
+      },
+      {
+        "he": "לא, מודל העלות חסר",
+        "en": "No, the cost model is incomplete"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "4000 ו־8000 מבוססים על אילוצים שונים; אין למצע ביניהם כדי להגדיר אופטימום.",
+      "en": "4000 and 8000 assume different constraints; averaging them cannot define an optimum."
+    }
+  },
+  {
+    "key": "quick-sw-197-v1",
+    "source_key": "quick-sw-197",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מדפיסים כל תמורה נראית שונה של aab פעם אחת. כמה פלטים יש?",
+      "en": "Print each distinct visible permutation of aab once. How many outputs exist?"
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הפלטים הם aab,aba,baa: בדיוק 3.",
+      "en": "The outputs are aab,aba,baa: exactly 3."
+    }
+  },
+  {
+    "key": "quick-sw-197-v2",
+    "source_key": "quick-sw-197",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בחוזה המתמטי של מחולל תמורות, למחרוזת ריקה יש תמורה ריקה אחת. כמה פלטים המחולל צריך להחזיר?",
+      "en": "Under the mathematical permutation-generator contract, the empty string has one empty permutation. How many outputs should the generator yield?"
+    },
+    "choices": [
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "יש דרך אחת לבחור סידור של אפס תווים; מקרה הבסיס מפיק מחרוזת ריקה.",
+      "en": "There is one ordering of zero characters; the base case emits an empty string."
+    }
+  },
+  {
+    "key": "quick-sw-197-v3",
+    "source_key": "quick-sw-197",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־aab ספירת a היא 2. ענף צורך a אחד, מסיים, וחוזרים לאחור לפני ניסיון הענף הבא. לאיזה ערך חייבת ספירת a לחזור?",
+      "en": "In aab, count(a)=2. A branch consumes one a, finishes, and backtracks before the next branch. What must count(a) be restored to?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מחזירים את העותק שנצרך, ולכן המלאי הקודם 2 משוחזר.",
+      "en": "Restore the consumed copy, returning to the previous inventory of 2."
+    }
+  },
+  {
+    "key": "quick-sw-197-v4",
+    "source_key": "quick-sw-197",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מה קבוצת התמורות השונות של abb? סדר הרשימה אינו חשוב, אבל כל פלט צריך להופיע פעם אחת.",
+      "en": "What is the set of distinct permutations of abb? List order is irrelevant, but each output appears once."
+    },
+    "choices": [
+      {
+        "he": "[\"abb\", \"abb\", \"bba\"]",
+        "en": "[\"abb\", \"abb\", \"bba\"]"
+      },
+      {
+        "he": "[\"ab\", \"ba\"]",
+        "en": "[\"ab\", \"ba\"]"
+      },
+      {
+        "he": "[\"aab\", \"aba\", \"baa\"]",
+        "en": "[\"aab\", \"aba\", \"baa\"]"
+      },
+      {
+        "he": "[\"abb\", \"bab\", \"bba\"]",
+        "en": "[\"abb\", \"bab\", \"bba\"]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בכל פלט נשמרים a אחד ושני b, והכפילויות בין עותקי b אינן ענפים נוספים.",
+      "en": "Each output retains one a and two b; identical b copies do not add branches."
+    }
+  },
+  {
+    "key": "quick-sw-197-v5",
+    "source_key": "quick-sw-197",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מחולל תמורות בוחר לפי ערך תו בעל ספירה חיובית. כמה בחירות שונות יש לתו הראשון של aab, לפני הרקורסיה?",
+      "en": "A permutation generator branches by character value with positive count. How many distinct first-character choices does aab have before recursion?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "רק a או b: יש 2 סוגי תווים, למרות 3 הופעות.",
+      "en": "Only a or b: 2 character values despite 3 occurrences."
+    }
+  },
+  {
+    "key": "quick-sw-198-v1",
+    "source_key": "quick-sw-198",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "אותה שארית סכום הופיעה באינדקסים 0 ו־4, וכעת באינדקס 7. איזה אורך מרבי מתקבל משמירת ההופעה המוקדמת? מדובר באינדקסי קידומות.",
+      "en": "The same prefix-sum remainder occurred at indices 0 and 4 and now at index 7. What maximum length follows from retaining the earliest occurrence? These are prefix indices."
+    },
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הפרש האינדקסים הוא 7-0=7; הבחירה ב־4 הייתה נותנת 3 בלבד.",
+      "en": "The distance is 7-0=7; choosing 4 would give only 3."
+    }
+  },
+  {
+    "key": "quick-sw-198-v2",
+    "source_key": "quick-sw-198",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במערך [1,2] מחפשים קטע רציף שסכומו מתחלק ב־3. רושמים מראש שארית 0 באינדקס ‎-1. מה האורך המרבי?",
+      "en": "In [1,2], seek a contiguous sum divisible by 3. Initialize remainder 0 at index -1. What is the maximum length?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "כל הקלט מתאים: הסכום 3 והאורך 1-(-1)=2.",
+      "en": "The entire input qualifies: sum 3 and length 1-(-1)=2."
+    }
+  },
+  {
+    "key": "quick-sw-198-v3",
+    "source_key": "quick-sw-198",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במערך [1] אין חובה לבחור קטע אם אין התאמה. מה אורך הקטע הרציף הארוך שסכומו מתחלק ב־3, כאשר בהיעדרו מחזירים 0?",
+      "en": "In [1], no interval is required when none qualifies. What is the longest contiguous length with sum divisible by 3, returning 0 when absent?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הקטע הלא־ריק היחיד סכומו 1; אין התאמה ולכן מוחזר 0.",
+      "en": "The only nonempty interval sums to 1; none qualifies, so return 0."
+    }
+  },
+  {
+    "key": "quick-sw-198-v4",
+    "source_key": "quick-sw-198",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־[3,3], אלגוריתם שגוי מעדכן את אינדקס שארית 0 בכל הופעה, לאחר מדידת האורך. בכמה קטן האורך שהוא ימצא לעומת שמירת אינדקס ‎-1 המקורי?",
+      "en": "For [3,3], a faulty algorithm overwrites remainder 0's index after measuring each length. By how much does its result fall short of keeping the original index -1?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "השגוי מוצא 1 במקום 2, כי ההופעה המוקדמת נמחקה.",
+      "en": "The faulty result is 1 instead of 2 because the earliest occurrence was lost."
+    }
+  },
+  {
+    "key": "quick-sw-198-v5",
+    "source_key": "quick-sw-198",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בהרחבה מפורשת המתירה גם מספרים שליליים, משתמשים בשאריות מנורמלות. מה האורך המרבי ב־[-1,1] שסכומו מתחלק ב־3?",
+      "en": "In an explicit extension allowing negative integers, use normalized remainders. What is the longest qualifying length in [-1,1] with sum divisible by 3?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הסכום הכולל הוא 0, שמתחלק ב־3, ולכן כל 2 האיברים מתאימים.",
+      "en": "The total is 0, divisible by 3, so all 2 items qualify."
+    }
+  },
+  {
+    "key": "quick-sw-199-v1",
+    "source_key": "quick-sw-199",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "לשני חסרים חיוביים שונים מתקבלים S=a+b=7 ו־Q=a²+b²=25. מהם שני החסרים, בסדר עולה?",
+      "en": "Two distinct positive omissions give S=a+b=7 and Q=a²+b²=25. What are the omissions in ascending order?"
+    },
+    "choices": [
+      {
+        "he": "[3, 4]",
+        "en": "[3, 4]"
+      },
+      {
+        "he": "[2, 5]",
+        "en": "[2, 5]"
+      },
+      {
+        "he": "[1, 6]",
+        "en": "[1, 6]"
+      },
+      {
+        "he": "[0, 7]",
+        "en": "[0, 7]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "2Q-S²=50-49=1, ולכן ההפרש 1 והמספרים 3 ו־4.",
+      "en": "2Q-S²=50-49=1, giving difference 1 and values 3 and 4."
+    }
+  },
+  {
+    "key": "quick-sw-199-v2",
+    "source_key": "quick-sw-199",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "אם S=119 ו־Q=8093 הם סכום וסכום ריבועי שני חסרים, מה ערך D=2Q-S²? אין צורך בשורש נקודה צפה.",
+      "en": "If S=119 and Q=8093 are two omissions' sum and squared sum, what is D=2Q-S²? No floating-point square root is needed."
+    },
+    "choices": [
+      {
+        "he": "2025",
+        "en": "2025"
+      },
+      {
+        "he": "8093",
+        "en": "8093"
+      },
+      {
+        "he": "14161",
+        "en": "14161"
+      },
+      {
+        "he": "45",
+        "en": "45"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "2*8093-119²=2025=45²; החישוב כולו שלם ומדויק.",
+      "en": "2*8093-119²=2025=45²; all arithmetic is exact integer arithmetic."
+    }
+  },
+  {
+    "key": "quick-sw-199-v3",
+    "source_key": "quick-sw-199",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בזרם חסרים בדיוק שני ערכים שונים מתוך 1..100, ללא חזרות. ההפרשים המדויקים הם S=119,Q=8093. איזה זוג משוחזר?",
+      "en": "A stream omits exactly two distinct values from 1..100, without duplicates. Exact differences are S=119,Q=8093. Which pair is recovered?"
+    },
+    "choices": [
+      {
+        "he": "[36, 83]",
+        "en": "[36, 83]"
+      },
+      {
+        "he": "[45, 74]",
+        "en": "[45, 74]"
+      },
+      {
+        "he": "[37, 82]",
+        "en": "[37, 82]"
+      },
+      {
+        "he": "[38, 81]",
+        "en": "[38, 81]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "השורש המדויק הוא 45, ולכן (119-45)/2=37 ו־(119+45)/2=82.",
+      "en": "The exact root is 45, giving (119-45)/2=37 and (119+45)/2=82."
+    }
+  },
+  {
+    "key": "quick-sw-199-v4",
+    "source_key": "quick-sw-199",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "קלט פגום נותן S=3,Q=6, ולכן D=3. האם D יכול להיות ריבוע ההפרש של שני מספרים שלמים? בדיקה זו אינה ולידציה מלאה של הזרם.",
+      "en": "Malformed summaries give S=3,Q=6, hence D=3. Can D be the squared difference of two integers? This check is not full stream validation."
+    },
+    "choices": [
+      {
+        "he": "רק אם שניהם שליליים",
+        "en": "Only if both are negative"
+      },
+      {
+        "he": "לא, אינו ריבוע שלם",
+        "en": "No, it is not an integer square"
+      },
+      {
+        "he": "כן, מעגלים את השורש",
+        "en": "Yes, round the root"
+      },
+      {
+        "he": "כן, ההפרש אפס",
+        "en": "Yes, the difference is zero"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "אין מספר שלם שריבועו 3; עיגול אינו הופך סיכומים פגומים לפתרון.",
+      "en": "No integer square equals 3; rounding cannot turn malformed summaries into a solution."
+    }
+  },
+  {
+    "key": "quick-sw-199-v5",
+    "source_key": "quick-sw-199",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "לרשימות השונות [1,4,6,7] ו־[2,3,5,8] סכום 18 וסכום ריבועים 102. האם שני הסיכומים לבדם מזהים איזו רשימה התקבלה?",
+      "en": "Different lists [1,4,6,7] and [2,3,5,8] both have sum 18 and squared sum 102. Do those two summaries alone identify which list was received?"
+    },
+    "choices": [
+      {
+        "he": "לא",
+        "en": "No"
+      },
+      {
+        "he": "כן",
+        "en": "Yes"
+      },
+      {
+        "he": "בהכרח הרשימה הראשונה",
+        "en": "Necessarily the first list"
+      },
+      {
+        "he": "בהכרח הרשימה השנייה",
+        "en": "Necessarily the second list"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אותם 18 ו־102 מתקבלים משתי רשימות; פענוח תחת הבטחה אינו אימות קלט מלא.",
+      "en": "The same 18 and 102 arise from both lists; promise-based recovery is not full validation."
+    }
+  },
+  {
+    "key": "quick-sw-200-v1",
+    "source_key": "quick-sw-200",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מוסיפים לזרם רק סוגריים עגולים, ובודקים תקינות כל הקידומת. מה מוחזר אחרי הטקסט `)(`, למרות שוויון הכמויות?",
+      "en": "Append round parentheses and test the entire prefix. What is returned after text `)(`, despite equal totals?"
+    },
+    "choices": [
+      {
+        "he": "מחזיר false",
+        "en": "Returns false"
+      },
+      {
+        "he": "זורק שגיאה",
+        "en": "Raises an error"
+      },
+      {
+        "he": "אינו מסתיים",
+        "en": "Does not terminate"
+      },
+      {
+        "he": "מחזיר true",
+        "en": "Returns true"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "סגירה קדמה לפותח; הוספה מאוחרת אינה מתקנת את הסדר.",
+      "en": "A close preceded its opener; later appending cannot repair that order."
+    }
+  },
+  {
+    "key": "quick-sw-200-v2",
+    "source_key": "quick-sw-200",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בזרם רק סוגריים עגולים נספרים; תווים אחרים מתעלמים. מה מחזירה בדיקת תקינות הקידומת (a)?",
+      "en": "Only round parentheses matter in a stream; other characters are ignored. What does whole-prefix validity return for (a)?"
+    },
+    "choices": [
+      {
+        "he": "זורק שגיאה",
+        "en": "Raises an error"
+      },
+      {
+        "he": "אינו מסתיים",
+        "en": "Does not terminate"
+      },
+      {
+        "he": "מחזיר true",
+        "en": "Returns true"
+      },
+      {
+        "he": "מחזיר false",
+        "en": "Returns false"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "התעלמות מ־a משאירה זוג סוגריים מסודר וסגור.",
+      "en": "Ignoring a leaves a correctly ordered, closed parenthesis pair."
+    }
+  },
+  {
+    "key": "quick-sw-200-v3",
+    "source_key": "quick-sw-200",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מאתחלים מוניטור סוגריים בעומק 0 ובדגל שגיאה כבוי. טרם התקבל תו. מה תקינות הקידומת הריקה?",
+      "en": "Initialize a parenthesis monitor with depth 0 and error flag false. No character has arrived. What is the empty prefix's validity?"
+    },
+    "choices": [
+      {
+        "he": "אינו מסתיים",
+        "en": "Does not terminate"
+      },
+      {
+        "he": "מחזיר true",
+        "en": "Returns true"
+      },
+      {
+        "he": "מחזיר false",
+        "en": "Returns false"
+      },
+      {
+        "he": "זורק שגיאה",
+        "en": "Raises an error"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "אין פתיחות חסרות ואין הפרת סדר; הקידומת הריקה חוקית.",
+      "en": "There are no unmatched openings or ordering violations; the empty prefix is valid."
+    }
+  },
+  {
+    "key": "quick-sw-200-v4",
+    "source_key": "quick-sw-200",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "הקידומת `((` אינה עדיין ביטוי שלם. האם אפשר להפוך אותה לביטוי סוגריים חוקי באמצעות הוספה בסוף בלבד? זו שאלת אפשרות השלמה, לא תקינות נוכחית.",
+      "en": "Prefix `((` is not yet a complete expression. Can appending only at the end make it valid? This asks about completability, not current validity."
+    },
+    "choices": [
+      {
+        "he": "מחזיר true",
+        "en": "Returns true"
+      },
+      {
+        "he": "מחזיר false",
+        "en": "Returns false"
+      },
+      {
+        "he": "זורק שגיאה",
+        "en": "Raises an error"
+      },
+      {
+        "he": "אינו מסתיים",
+        "en": "Does not terminate"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אפשר להוסיף `))`; עומק חיובי ללא הפרת סדר ניתן להשלמה.",
+      "en": "Append `))`; positive depth without an ordering violation is completable."
+    }
+  },
+  {
+    "key": "quick-sw-200-v5",
+    "source_key": "quick-sw-200",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מוניטור קרא `)(` ונכנס לשגיאה. מתחילים סשן חדש ומאפסים גם עומק וגם דגל שגיאה, ואז מזינים (). מה תקינות הסשן החדש?",
+      "en": "A monitor read `)(` and became invalid. Start a new session, resetting both depth and the error flag, then feed (). What is the new session's validity?"
+    },
+    "choices": [
+      {
+        "he": "מחזיר false",
+        "en": "Returns false"
+      },
+      {
+        "he": "זורק שגיאה",
+        "en": "Raises an error"
+      },
+      {
+        "he": "אינו מסתיים",
+        "en": "Does not terminate"
+      },
+      {
+        "he": "מחזיר true",
+        "en": "Returns true"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "השגיאה דביקה בתוך סשן, אך איפוס מפורש מתחיל מצב חדש ונקי.",
+      "en": "The error is sticky within a session; explicit reset starts fresh state."
+    }
+  }
+]

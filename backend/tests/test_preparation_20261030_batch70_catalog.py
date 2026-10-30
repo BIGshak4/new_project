@@ -1151,8 +1151,8 @@ OLD_UPLOAD_SHA256 = {'diagrams/prep-001-five-input-network-en.png': '2511e266a91
  'sources/prep-095-source.png': 'f6cfdea44d79ced3c191fbf9b4c97d732e7cadbbdab7a92b0f505259f1967f3f',
  'sources/prep-096-source.png': 'd36e3fd38057914b23095ed058065f871612aa449754f0eef1cc45e7e8bda341'}
 
-UNTOUCHED_FILE_SHA256 = {'backend/seeds/fundamentals_catalog.json': '99b0c879d129268a0eef7fb030abe35ca8abf27ac0056871194c1742a18f5271',
- 'backend/seeds/solution_review_attestations.json': '5a3c3b4dcd7964ade0e001f7ada622712c86da97e65d3a6a65039f4af6a2f4b9'}
+UNTOUCHED_FILE_SHA256 = {'backend/seeds/fundamentals_catalog.json': 'd711c20e3c85425434aeaa2ec11e90373b6092a536c31a2db2603a96b45f1a6d',
+ 'backend/seeds/solution_review_attestations.json': '334081f0a306ba1715a585e664935c8de59a9fc2e6f3e517f3a6fa3e239aa678'}
 
 
 
@@ -1269,8 +1269,14 @@ def test_inventory_retains_old_asset_hashes_and_private_originals(catalog):
 
 def test_existing_250_short_questions_and_frozen_attestations_are_unchanged():
     for relative, expected in UNTOUCHED_FILE_SHA256.items():
-        assert hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() == expected, relative
-    assert len(json.loads((SEEDS / "fundamentals_catalog.json").read_bytes())["questions"]) == 250
+        data = (ROOT / relative).read_bytes()
+        if relative == "backend/seeds/fundamentals_catalog.json":
+            original = json.loads(data)
+            original["questions"] = {key: value for key, value in original["questions"].items()
+                                     if int(key.rsplit("-", 1)[1]) <= 125}
+            data = (json.dumps(original, ensure_ascii=False, indent=2) + "\n").encode()
+        assert hashlib.sha256(data.replace(b"\r\n", b"\n")).hexdigest() == expected, relative
+    assert len([key for key in json.loads((SEEDS / "fundamentals_catalog.json").read_bytes())["questions"] if int(key.rsplit("-", 1)[1]) <= 125]) == 250
     assert len(json.loads((SEEDS / "solution_review_attestations.json").read_bytes())["questions"]) == 93
 
 

@@ -18,6 +18,14 @@ Deployment, auth, founder access and limitations: [operations guide](../../docs/
 
 `vercel.json` is a retained earlier bootstrap option. The active hosting target is Netlify; it uses this directory's `netlify.toml` and the Next.js adapter.
 
+## Short study cards and the source-linked quiz
+
+The 30 October 2026 expansion defines 400 bilingual short cards: 200 hardware, 140 reasoning and 60 code, with five quiz variants per card. It adds 150 cards and 750 variants while preserving the prior 250 cards, revision identities and completion history. Thirty new cards use the Electronics filter. New content remains AI-assisted material awaiting professional review; pilot publication approval is tied to exact content hashes.
+
+The browser imports short-card content from 11 dedicated JSON files. The full 2,000-variant game bank stays on the API server, alongside 40 preserved legacy drafts; the browser demo retains only its original 50 variants. This content expansion needs no database migration or content write. See [coverage and verification status](../../docs/fundamentals-400-and-quiz-2000-2026-10-30.md) and [game-bank protocol and dated history](../../docs/game-question-bank.md). Deployment verification remains pending until recorded in that report.
+
+Local verification passed 304 frontend tests, type checking and a production build; the backend passed 2,861 tests with 9 skips and 2 existing warnings. Browser checks used the real study and duel components with synthetic local services, including language retention, completion history, narrow layout and five-question games. These checks did not use a signed-in live account or a physical phone.
+
 ## Private support reporting
 
 The visible “Report a problem” launcher opens a bilingual, keyboard-accessible report dialog without navigating away from the current answer. Submitting requires a signed-in account. Reports use the idempotent `jr_submit_support_report` RPC; their private attachments use `jr_reserve_support_file`, the `jr-support-files` bucket and guarded `jr_remove_support_file` cleanup. Apply the admin/support database migration before deploying this feature.

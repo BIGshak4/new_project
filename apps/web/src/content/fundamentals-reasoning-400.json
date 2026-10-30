@@ -1,0 +1,1199 @@
+[
+  {
+    "id": "quick-sw-126",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-148"
+    ],
+    "title": {
+      "he": "לפעמים צריך לפנות מקום",
+      "en": "Sometimes an earlier choice must move"
+    },
+    "prompt": {
+      "he": "כל אדם צריך פריט שונה. רשימות הפריטים המותרים הן [[0, 1], [0]]; ההקצאות הנוכחיות לאנשים הראשונים הן [0], והאחרון ממתין. כמה הקצאות קיימות לפחות חייבות להשתנות כדי לשרת את כולם?",
+      "en": "Each person needs a different item. Allowed-item lists are [[0, 1], [0]]; current assignments for the first people are [0], and the last waits. What minimum number of existing assignments must change to serve everyone?"
+    },
+    "answer": {
+      "he": "1. אפשר להעביר אדם לפריט חלופי ולפנות את הפריט הדרוש לאחר. ממזערים שינויים רק בין הקצאות מלאות חוקיות.",
+      "en": "1. An alternative item can free the required item for another person. Minimize changes among legal complete assignments."
+    },
+    "takeaway": {
+      "he": "הקצאה קיימת אינה אילוץ קבוע אם מותר לשנותה כדי לפתוח מסלול לאחר.",
+      "en": "A previous assignment can move along a reassignment path when the rules allow it."
+    }
+  },
+  {
+    "id": "quick-sw-127",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-148"
+    ],
+    "title": {
+      "he": "מחסור יכול להסתתר בתת־קבוצה",
+      "en": "A shortage can hide in a subset"
+    },
+    "prompt": {
+      "he": "אנשים צריכים פריטים שונים, ורשימות האפשרויות שלהם הן [[0, 1], [0, 1], [0, 1]]. לפי קבוצת האנשים עם המחסור הגדול ביותר בפריטים זמינים, כמה אנשים לפחות בהכרח יישארו ללא פריט?",
+      "en": "People need distinct items and have allowed lists [[0, 1], [0, 1], [0, 1]]. Using the subset with the largest shortage of available items, how many people must remain unserved at minimum?"
+    },
+    "answer": {
+      "he": "1. לקבוצה בת k אנשים עם רק m פריטים אפשריים יש מחסור של לפחות k−m. בודקים גם תתי־קבוצות, לא רק את האיחוד הכולל.",
+      "en": "1. A subset of k people with only m possible items has shortage at least k−m. Inspect subsets, not only the total union."
+    },
+    "takeaway": {
+      "he": "מספיק פריטים בסך הכול אינם מבטיחים מספיק אפשרויות לכל קבוצת אנשים.",
+      "en": "Enough items overall do not ensure enough options for every subset of people."
+    }
+  },
+  {
+    "id": "quick-sw-128",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-149"
+    ],
+    "title": {
+      "he": "משימה אחת יכולה לדרוש כמה עובדים",
+      "en": "One job can require several workers"
+    },
+    "prompt": {
+      "he": "משימות (התחלה, סיום, עובדים): [(0, 4, 2), (1, 3, 3)]. משימה פעילה מההתחלה ועד לפני הסיום ודורשת עובדים לכל משכה. עובדים זהים ופנויים יכולים לעבור בין משימות. כמה עובדים נדרשים בשעת העומס?",
+      "en": "Jobs (start, end, workers): [(0, 4, 2), (1, 3, 3)]. Each is active from start until just before end and needs workers throughout. Workers are interchangeable and reusable. How many are required at the busiest time?"
+    },
+    "answer": {
+      "he": "5. סוכמים את הדרישות של המשימות הפעילות יחד, ולא רק את מספר המשימות או את כל הדרישות לאורך היום.",
+      "en": "5. Add simultaneous worker demands, rather than counting jobs or summing demands across the entire day."
+    },
+    "takeaway": {
+      "he": "עומס משוקלל הוא סכום הדרישות הפעילות, ולא ספירת האירועים בלבד.",
+      "en": "Weighted concurrency sums active demands rather than merely counting events."
+    }
+  },
+  {
+    "id": "quick-sw-129",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-149"
+    ],
+    "title": {
+      "he": "מספיק אנשים אך לא מספיק מיומנויות",
+      "en": "Enough people but the wrong skills"
+    },
+    "prompt": {
+      "he": "שתי מיומנויות A ו־B אינן ניתנות להחלפה. משימות בו־זמניות צריכות [2, 0] עובדים בהתאמה; זמינים [1, 1], וכל עובד שייך למיומנות אחת בלבד. כמה עובדים מתאימים נוספים נדרשים?",
+      "en": "Skills A and B are not interchangeable. Simultaneous jobs need [2, 0] workers respectively; available counts are [1, 1], each worker holding only one skill. How many additional appropriately skilled workers are needed?"
+    },
+    "answer": {
+      "he": "1. עודף במיומנות אחת אינו מפצה על מחסור באחרת. חסם לפי מספר העובדים הכולל מניח שהם ניתנים להחלפה.",
+      "en": "1. A surplus of one skill cannot repair a shortage of another. A total-headcount sufficiency claim assumes interchangeable workers."
+    },
+    "takeaway": {
+      "he": "חסם עומס הופך להבטחת ביצוע רק כשהנחות הכשירות וההחלפה מתקיימות.",
+      "en": "A load bound guarantees feasibility only under the required qualification and interchangeability assumptions."
+    }
+  },
+  {
+    "id": "quick-sw-130",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-159"
+    ],
+    "title": {
+      "he": "מפרט לפני בדיקת קבלה",
+      "en": "A specification before acceptance"
+    },
+    "prompt": {
+      "he": "דרישות המוצר מאפשרות בדיוק את כמויות הדפים [400, 500]. איזו כמות יחידה ניתן להסיק עבור חבילה שעומדת בדרישות, אם בכלל? אין מפרט נוסף.",
+      "en": "The product requirements permit exactly these sheet counts: [400, 500]. What unique count can be inferred for a compliant pack, if any? There is no additional specification."
+    },
+    "answer": {
+      "he": "אין כמות יחידה שנקבעת. מחליטים לפי המפרט הנתון. אין להמציא כמות מקובלת; רשימה ריקה אינה מפרט בר־מימוש.",
+      "en": "No unique count is determined. Use the stated requirements rather than inventing a customary pack size. An empty allowed set is infeasible."
+    },
+    "takeaway": {
+      "he": "בדיקת קבלה צריכה קריטריון נתון; מנהג משוער אינו דרישה.",
+      "en": "Acceptance testing needs an actual criterion; an assumed convention is not a requirement."
+    }
+  },
+  {
+    "id": "quick-sw-131",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-159"
+    ],
+    "title": {
+      "he": "שני צדדים לכל גבול",
+      "en": "Both sides of each boundary"
+    },
+    "prompt": {
+      "he": "אורך דף נמדד ביחידות שלמות. המפרט מקבל כל ערך בין 209 ל־211, כולל הקצוות. איזו רביעיית בדיקות מכסה לכל גבול את הערך המותר ואת השכן האסור הקרוב?",
+      "en": "A sheet dimension uses integer units. Values from 209 through 211, inclusive, are accepted. Which four-test tuple covers each allowed boundary and its nearest forbidden neighbor?"
+    },
+    "answer": {
+      "he": "(208, 209, 211, 212). לכל גבול בודקים את הקצה עצמו ואת היחידה הצמודה שמחוץ לטווח. אין להחליף אותם בדגימות פנימיות בלבד.",
+      "en": "(208, 209, 211, 212). Test each boundary itself and its immediately adjacent outside value, rather than sampling only interior values."
+    },
+    "takeaway": {
+      "he": "בדיקות גבול מכסות גם צד מותר וגם צד אסור של תנאי הקבלה.",
+      "en": "Boundary tests cover the accepted and rejected sides of the acceptance condition."
+    }
+  },
+  {
+    "id": "quick-sw-132",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-159"
+    ],
+    "title": {
+      "he": "המדידה אינה ערך מדויק",
+      "en": "A measurement is not exact"
+    },
+    "prompt": {
+      "he": "נדרש אורך שאינו עולה על 10. מכשיר מדווח 10 עם שגיאה חסומה של ±1; כל ערך בטווח אפשרי. איזו החלטה ודאית מותרת?",
+      "en": "Length must not exceed 10. An instrument reports 10 with bounded error ±1; every value in that interval is possible. Which certain decision is justified?"
+    },
+    "answer": {
+      "he": "אין הכרעה בטווח האי־ודאות. מאשרים רק אם כל הטווח מותר, ודוחים בוודאות רק אם כולו אסור. טווח שחוצה את הסף דורש הכרעה נוספת.",
+      "en": "Inconclusive under uncertainty. Accept only if the entire interval passes; reject with certainty only if it entirely fails. A straddling interval is inconclusive."
+    },
+    "takeaway": {
+      "he": "החלטה ודאית צריכה להתאים לכל הערכים המותרים על ידי שגיאת המדידה.",
+      "en": "A certain verdict must hold for every value permitted by measurement error."
+    }
+  },
+  {
+    "id": "quick-sw-133",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-159"
+    ],
+    "title": {
+      "he": "גם דוגמה פגומה היא בקרה",
+      "en": "A defective sample is a control too"
+    },
+    "prompt": {
+      "he": "בודקים דוגמאות בקרה שידוע אם עליהן לעבור: [1, 0], כאשר 1 הוא עובר ו־0 נכשל. הבודק החזיר [1, 1]. כמה תוצאות בקרה סותרות את הידוע?",
+      "en": "Control samples have known expected verdicts [1, 0], where 1 means pass and 0 fail. The tester returns [1, 1]. How many control results contradict their known truth?"
+    },
+    "answer": {
+      "he": "1. גם קבלה של דוגמה פגומה היא כשל של הבודק. מעבר של דוגמה תקינה לבדו אינו מוכיח שהבדיקה מגלה פגמים.",
+      "en": "1. Accepting a known defective sample is also a tester failure. Passing a good sample alone does not establish defect detection."
+    },
+    "takeaway": {
+      "he": "בדקו שהבדיקה מצליחה לדחות כשל ידוע, ולא רק לקבל מוצר תקין.",
+      "en": "Check rejection of a known defect as well as acceptance of a known good product."
+    }
+  },
+  {
+    "id": "quick-sw-134",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-159"
+    ],
+    "title": {
+      "he": "הרבה בדיקות אינן בהכרח כיסוי",
+      "en": "Many tests do not imply coverage"
+    },
+    "prompt": {
+      "he": "יש 3 דרישות שמספריהן מתחילים ב־0. הבדיקות מכסות את קבוצות הדרישות [[0], [0], [1]]. כמה דרישות לא כוסו, גם אם כל הבדיקות עברו?",
+      "en": "There are 3 requirements numbered from 0. Tests cover these requirement sets: [[0], [0], [1]]. How many requirements remain uncovered even if every test passes?"
+    },
+    "answer": {
+      "he": "1. סופרים דרישות שונות שכוסו, לא את מספר הבדיקות. בדיקות חוזרות לאותו סעיף אינן מכסות סעיף חסר.",
+      "en": "1. Count distinct covered requirements, not the number of tests. Repeated checks of one requirement do not cover a missing one."
+    },
+    "takeaway": {
+      "he": "קשרו כל בדיקה לדרישה; כמות בדיקות אינה תחליף למפת כיסוי.",
+      "en": "Trace each test to a requirement; test count does not replace a coverage map."
+    }
+  },
+  {
+    "id": "quick-sw-135",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-159"
+    ],
+    "title": {
+      "he": "לגלות כשל בלי לדעת את התשובה",
+      "en": "Find inconsistency without the true answer"
+    },
+    "prompt": {
+      "he": "בדיקת חבילה אמורה להיות אדישה לסדר הדפים. בכל זוג מוצגות תוצאות לפני ואחרי שינוי סדר של אותם דפים: [(1, 0), (1, 1)]; 1 הוא עובר. כמה זוגות מפרים את האינווריאנט?",
+      "en": "A pack test must ignore sheet order. Each pair gives results before and after reordering the same sheets: [(1, 0), (1, 1)]; 1 means pass. How many pairs violate this invariant?"
+    },
+    "answer": {
+      "he": "1. תוצאה ששונה לאחר שינוי שאינו אמור להשפיע חושפת חוסר עקביות, גם בלי לדעת איזו תוצאה היא הנכונה.",
+      "en": "1. A verdict changed by an irrelevant transformation exposes inconsistency even without knowing which verdict is correct."
+    },
+    "takeaway": {
+      "he": "שינוי שאמור לשמר תוצאה מספק בדיקת עקביות גם ללא אורקל מלא.",
+      "en": "An outcome-preserving transformation provides a consistency check without a complete oracle."
+    }
+  },
+  {
+    "id": "quick-sw-136",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-143"
+    ],
+    "title": {
+      "he": "נפח זר מול נפח זר",
+      "en": "Foreign volume against foreign volume"
+    },
+    "prompt": {
+      "he": "כוס A התחילה עם 100 מ״ל אדום וכוס B עם 200 מ״ל כחול. העבירו נפח כלשהו מ־A ל־B ואז אותו נפח בחזרה, ללא אובדן. בסוף ב־A יש 7 מ״ל כחול. כמה אדום יש ב־B?",
+      "en": "A initially held 100 ml red and B 200 ml blue. Transfer some volume A→B, then the same volume back, without loss. A finally contains 7 ml blue. How much red is in B?"
+    },
+    "answer": {
+      "he": "7. נפח A חזר לערכו המקורי. כל מיליליטר כחול שנשאר בה מחליף מיליליטר אדום שנשאר בכוס השנייה.",
+      "en": "7. A returns to its original volume. Each blue millilitre remaining there replaces one red millilitre left in the other cup."
+    },
+    "takeaway": {
+      "he": "נפחים זרים שווים נובעים משימור נפח סופי, גם בלי ערבוב אחיד.",
+      "en": "Equal foreign volumes follow from restored cup volume, even without perfect mixing."
+    }
+  },
+  {
+    "id": "quick-sw-137",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-143"
+    ],
+    "title": {
+      "he": "אותה כמות אך שיעור אחר",
+      "en": "Same amount, different fraction"
+    },
+    "prompt": {
+      "he": "אחרי העברת כפות הלוך וחזור נשארו 5 מ״ל זרים בכל כוס. הנפחים הסופיים הם A=100, B=200 מ״ל. השוו את שיעור הנוזל הזר בכל כוס.",
+      "en": "After equal spoon transfers out and back, each cup holds 5 ml foreign liquid. Final volumes are A=100, B=200 ml. Compare their foreign-liquid fractions."
+    },
+    "answer": {
+      "he": "השיעור ב־A גדול יותר. מחלקים אותה כמות זרה בנפח הכולל של כל כוס. שוויון בכמות אינו מבטיח שוויון בשיעור.",
+      "en": "The fraction in A is larger. Divide the same foreign amount by each cup's total volume. Equal amounts need not mean equal fractions."
+    },
+    "takeaway": {
+      "he": "בהשוואת שיעורים בדקו גם את המכנה ולא רק את הכמות המשותפת.",
+      "en": "When comparing fractions, check the denominator as well as the shared numerator."
+    }
+  },
+  {
+    "id": "quick-sw-138",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-146"
+    ],
+    "title": {
+      "he": "ממוצע שרק מתקרבים אליו",
+      "en": "An average only approached"
+    },
+    "prompt": {
+      "he": "נוסעים מרחק חיובי במהירות 10 וחוזרים אותו מרחק במהירות חיובית ללא עצירה. סווגו יעד של מהירות ממוצעת 20 לכל הנסיעה.",
+      "en": "Travel a positive distance at speed 10, then the same distance back at a positive speed, without stops. Classify a target whole-trip average of 20."
+    },
+    "answer": {
+      "he": "רק גבול כאשר המהירות שואפת לאינסוף. ההלוך כבר צורך זמן d/u. לחזרה סופית נדרש זמן חיובי נוסף, ולכן הממוצע קטן ממש מ־2u.",
+      "en": "Only approached as return speed tends to infinity. The outward leg already takes d/u. A finite return requires additional positive time, so the average is strictly below 2u."
+    },
+    "takeaway": {
+      "he": "גבול מושג במגמה אינו בהכרח ערך שאפשר להשיג בפעולה סופית.",
+      "en": "A limiting value need not be attainable by a finite action."
+    }
+  },
+  {
+    "id": "quick-sw-139",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-146"
+    ],
+    "title": {
+      "he": "לתכנן את מהירות החזרה",
+      "en": "Plan the return speed"
+    },
+    "prompt": {
+      "he": "מרחק ההלוך והחזור שווה ואין עצירות. מהירות ההלוך 6, והמהירות הממוצעת המבוקשת 8. איזו מהירות חזרה חיובית דרושה?",
+      "en": "Outward and return distances are equal, with no stops. Outward speed is 6 and the desired whole-trip average is 8. What positive return speed is required?"
+    },
+    "answer": {
+      "he": "12. משווים את זמן ההלוך והחזור לזמן הכולל המבוקש: v=u·g/(2u−g). אין לחשב 2g−u.",
+      "en": "12. Equate total leg time with the target time: v=u·g/(2u−g). The arithmetic-mean shortcut 2g−u is invalid."
+    },
+    "takeaway": {
+      "he": "פתרו יעד ממוצע דרך תקציב הזמן שנותר, ולא דרך ממוצע חשבוני של מהירויות.",
+      "en": "Solve an average-speed target through remaining time, rather than arithmetic averaging of speeds."
+    }
+  },
+  {
+    "id": "quick-sw-140",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-126"
+    ],
+    "title": {
+      "he": "המשקל של כל טמפרטורה",
+      "en": "Each temperature has a weight"
+    },
+    "prompt": {
+      "he": "מערבבים מיד, ללא אובדן חום: קפה בטמפרטורה 80 וקיבול חום 3, וחלב בטמפרטורה 20 וקיבול חום 1. מה טמפרטורת התערובת? הקיבולים קבועים.",
+      "en": "Mix instantaneously without heat loss: coffee at 80 with heat capacity 3, and milk at 20 with heat capacity 1. What is the mixture temperature? Capacities are constant."
+    },
+    "answer": {
+      "he": "65. משמרים אנרגיה: טמפרטורת התערובת היא סכום מכפלות הטמפרטורות בקיבולים, חלקי סכום הקיבולים.",
+      "en": "65. Conserve energy: divide the sum of temperature-times-capacity products by total heat capacity."
+    },
+    "takeaway": {
+      "he": "ממוצע פיזיקלי משוקלל לפי הכמות שנשמרת; ממוצע פשוט דורש משקלים שווים.",
+      "en": "A physical average is weighted by the conserved quantity;simple averaging requires equal weights."
+    }
+  },
+  {
+    "id": "quick-sw-141",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-126"
+    ],
+    "title": {
+      "he": "לינארי אינו מפרט קצב חדש",
+      "en": "Linear does not specify the new rate"
+    },
+    "prompt": {
+      "he": "משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה=3, חלב=1; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר 1 מעלות לדקה; התערובת לא ידוע. איזה סיום חם יותר?",
+      "en": "Compare adding milk before versus after one minute. Heat capacities: coffee=3, milk=1; milk stays at fixed temperature. Coffee alone cools 1 degrees/minute; mixture rate is unknown. Which finishes warmer?"
+    },
+    "answer": {
+      "he": "אין מספיק מידע. משווים קירור של התערובת למשקל קירור הקפה לבדו בתערובת. בלי קצב התערובת לא ניתן להכריע; עצם הלינאריות אינה מגדירה אותו.",
+      "en": "Insufficient information. Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate, the comparison is undetermined;linearity alone does not specify it."
+    },
+    "takeaway": {
+      "he": "אחרי שינוי המערכת יש להגדיר מחדש את פרמטרי המודל, ולא רק לשמר את שם החוק.",
+      "en": "After changing a system, specify its new model parameters rather than retaining only the law's name."
+    }
+  },
+  {
+    "id": "quick-sw-142",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-129"
+    ],
+    "title": {
+      "he": "עוצרים בזמן המגע הראשון",
+      "en": "Stop at the first contact"
+    },
+    "prompt": {
+      "he": "מטפס מתחיל בגובה 0. במשך דקה הוא עולה במהירות 3 יחידות לדקה, ובדקת המנוחה יורד 1. הדפוס חוזר, והתנועה רציפה. מתי בדקות ייגע לראשונה בגובה 4? עוצרים מיד במגע.",
+      "en": "A climber starts at height 0, climbs at 3 units/minute for one minute, then slips 1 during a one-minute rest. The cycle repeats continuously. At what time in minutes first reach height 4? Stop immediately at contact."
+    },
+    "answer": {
+      "he": "8/3. סופרים מחזורים מלאים רק לפני העלייה האחרונה. בעלייה שבה נוגעים ביעד אין מנוחה נוספת, ואפשר להגיע באמצע הדקה.",
+      "en": "8/3. Count full cycles only before the final ascent. No rest follows first contact, and the target may be reached partway through a minute."
+    },
+    "takeaway": {
+      "he": "יעד שמסיים תהליך מבטל את השלבים שהיו אמורים לבוא אחריו.",
+      "en": "A terminating target removes the stages that would otherwise follow it."
+    }
+  },
+  {
+    "id": "quick-sw-143",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-158"
+    ],
+    "title": {
+      "he": "חוצים אך לא נפגשים בטיק",
+      "en": "Crossing without a sampled meeting"
+    },
+    "prompt": {
+      "he": "בודקים רק בטיקים שלמים t=0,1,2,... . מצביע שמאל מתחיל ב־0 ומתקדם 2 בכל טיק; ימין מתחיל ב־10 ויורד 3. באיזה טיק הם באותו אינדקס?",
+      "en": "Observe only integer ticks t=0,1,2,... . Left starts at 0 and advances 2 per tick; right starts at 10 and decreases 3. At which tick do they occupy the same index?"
+    },
+    "answer": {
+      "he": "2. פותרים left+a·t=right−b·t, ואז דורשים t שלם ולא שלילי. חצייה בין טיקים אינה מפגש נצפה.",
+      "en": "2. Solve left+a·t=right−b·t, then require a nonnegative integer t. Crossing between ticks is not an observed meeting."
+    },
+    "takeaway": {
+      "he": "פתרון בזמן רציף חייב להשתייך גם לרשת הזמנים שהמערכת אכן בודקת.",
+      "en": "A continuous-time solution must also belong to the time grid actually observed."
+    }
+  },
+  {
+    "id": "quick-sw-144",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-133"
+    ],
+    "title": {
+      "he": "דוגמאות אינן מגדירות את ההמשך",
+      "en": "Examples do not define the continuation"
+    },
+    "prompt": {
+      "he": "סדרה מתחילה [100, 98, 95]; לא נמסר כלל. מה מוכרח להיות האיבר הבא?",
+      "en": "A sequence begins [100, 98, 95]; no rule is given. What must the next term be?"
+    },
+    "answer": {
+      "he": "לא נקבע מספר יחיד. קידומת סופית לבדה אינה חוק. כשנמסר כלל מפורש מפעילים אותו; אחרת המשכים שונים יכולים להתאים לאותו עבר.",
+      "en": "No unique next number. A finite prefix is not a rule. Apply an explicit recurrence when supplied;otherwise different continuations can share the same past."
+    },
+    "takeaway": {
+      "he": "לפני חיזוי המשך הבדילו בין נתונים שנצפו לבין כלל שבאמת הובטח.",
+      "en": "Before extrapolating, distinguish observed data from a rule actually guaranteed."
+    }
+  },
+  {
+    "id": "quick-sw-145",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-165"
+    ],
+    "title": {
+      "he": "סכום שווה אינו שטח שווה",
+      "en": "Equal sums are not equal areas"
+    },
+    "prompt": {
+      "he": "דף חולק לשלושה אזורים. סכומי המספרים בהם הם [26, 26, 26], ושטחיהם הם [1, 2, 1]. איזה סוג של שוויון מתקיים?",
+      "en": "A sheet is split into three regions. Their label sums are [26, 26, 26], and their areas are [1, 2, 1]. Which type of equality holds?"
+    },
+    "answer": {
+      "he": "רק הסכומים שווים. סכום מספרים ושטח הם גדלים שונים. יש לבדוק כל דרישה בפני עצמה, בלי להסיק אחת מהשנייה.",
+      "en": "Only the sums are equal. Label sum and geometric area are different quantities. Check each requirement independently rather than inferring one from the other."
+    },
+    "takeaway": {
+      "he": "הגדירו איזה גודל צריך להשתוות; שוויון בתוויות אינו קובע גאומטריה.",
+      "en": "Specify which quantity must match;equal label sums do not determine geometry."
+    }
+  },
+  {
+    "id": "quick-sw-146",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-165"
+    ],
+    "title": {
+      "he": "חלוקה מספרית צריכה גם להתאפשר במישור",
+      "en": "A numeric partition must fit the geometry"
+    },
+    "prompt": {
+      "he": "על מעגל מסומנים 0 עד 3 בסדרם. מבין הקבוצות [[0, 2], [0, 1], [1, 2], [2, 3]], איזו אינה יכולה להיות כל הסימונים בכיפה המבודדת בחיתוך ישר יחיד שאינו עובר על סימון?",
+      "en": "A circle has labels 0 through 3 in order. Among [[0, 2], [0, 1], [1, 2], [2, 3]], which set cannot be exactly the labels in a cap isolated by one straight cut avoiding labels?"
+    },
+    "answer": {
+      "he": "[0, 2]. כיפה של קו ישר פוגשת קשת רציפה אחת. קבוצת סימונים עם פער פנימי ושאר סימונים משני צדדיו אינה כיפה אחת.",
+      "en": "[0, 2]. A straight-cut cap meets one contiguous circular arc. An interleaved label set cannot form one cap."
+    },
+    "takeaway": {
+      "he": "אילוץ גאומטרי מגביל אילו קבוצות מספרים אפשר באמת לבודד.",
+      "en": "Geometric constraints restrict which numeric groups can actually be isolated."
+    }
+  },
+  {
+    "id": "quick-sw-147",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-166"
+    ],
+    "title": {
+      "he": "המרכז מגן על התגובה הסימטרית",
+      "en": "The center protects the symmetric reply"
+    },
+    "prompt": {
+      "he": "על שולחן עגול יש רק מטבע מרכזי ברדיוס 1. יריב מניח זהה במרחק 2, והתגובה ממול. כל המיקומים בגבולות השולחן; מגע מותר. האם מהלך היריב חוקי והאם זוג המטבעות החדשים חופף?",
+      "en": "A circular table holds only a radius-1 central coin. An equal opponent coin is 2 from center;reply at its opposite point. All positions fit table boundaries;tangency is allowed. Is the opponent move legal, and does the new pair overlap?"
+    },
+    "answer": {
+      "he": "מהלך היריב חוקי והזוג אינו חופף. המרכז דורש מרחק לפחות 2r ממהלך היריב. בין מיקום היריב למיקומו הנגדי המרחק כפול.",
+      "en": "Opponent legal; reflected pair disjoint. Avoiding the central coin requires distance at least 2r. Opposite positions are twice that distance apart."
+    },
+    "takeaway": {
+      "he": "בהוכחת אסטרטגיית שיקוף בדקו גם חפיפה בין המהלך החדש לבין תגובתו.",
+      "en": "A symmetry strategy must also avoid collision between the new move and its reply."
+    }
+  },
+  {
+    "id": "quick-sw-148",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-166"
+    ],
+    "title": {
+      "he": "חסם שטח מוכיח שהמשחק יסתיים",
+      "en": "An area bound proves the game ends"
+    },
+    "prompt": {
+      "he": "מטבעות עגולים ברדיוס 1 מונחים בשלמותם ללא חפיפת פנים על שולחן עגול ברדיוס 3. מהו החסם העליון השלם ההדוק ביותר שנובע מהשוואת שטחים בלבד, ללא טענת אריזה מיטבית?",
+      "en": "Radius-1 circular coins lie wholly on a radius-3 circular table without interior overlap. What is the tightest integer upper bound from area alone, without claiming optimal packing?"
+    },
+    "answer": {
+      "he": "9. שטח כל מטבע חיובי. סכום השטחים אינו עולה על שטח השולחן, ולכן K≤floor(R²/r²). החסם אינו בהכרח ניתן להשגה.",
+      "en": "9. Each coin has positive area. Total coin area cannot exceed table area, so K≤floor(R²/r²). The bound need not be attainable."
+    },
+    "takeaway": {
+      "he": "חסם סופי מספיק להוכחת סיום, גם כשאינו מתאר את האריזה המרבית.",
+      "en": "A finite bound proves termination even without solving maximum packing."
+    }
+  },
+  {
+    "id": "quick-sw-149",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-167"
+    ],
+    "title": {
+      "he": "צריך להפחית גם את עומס הסירה",
+      "en": "Also remove the boat's old load"
+    },
+    "prompt": {
+      "he": "חפץ מוצק אינרטי נזרק מסירה צפה לבריכה סגורה ללא גלישה. צפיפות המים 1, וצפיפות החפץ 2. הסירה נשארת צפה. מה קורה למפלס לאחר התייצבות?",
+      "en": "An inert solid is thrown from a floating boat into a closed pool without spill. Water density is 1; object density is 2. The boat remains afloat. What happens to settled water level?"
+    },
+    "answer": {
+      "he": "המפלס יורד. בסירה החפץ דחה מים לפי משקלו. אם הוא שוקע הוא דוחה רק את נפחו, ואם הוא צף דחייתו נשארת לפי אותו משקל.",
+      "en": "Level falls. While carried, the object displaced water by weight. Sinking leaves only its volume;floating retains the same weight-based displacement."
+    },
+    "takeaway": {
+      "he": "השוו את כל המערכת לפני ואחרי, ולא רק את החפץ שנכנס למים.",
+      "en": "Compare the whole system before and after, rather than only the newly immersed object."
+    }
+  },
+  {
+    "id": "quick-sw-150",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-169"
+    ],
+    "title": {
+      "he": "תיבה אחידה אינה כדור אחיד מכל המאגר",
+      "en": "Uniform urns are not uniform balls"
+    },
+    "prompt": {
+      "he": "בוחרים תיבה בסיכוי 1/2 לכל אחת, ואז כדור אחיד מתוכה. גדלי התיבות הם A=1, B=99. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
+      "en": "Choose either urn with probability 1/2, then a uniform ball within it. Urn sizes are A=1, B=99. What is the probability of selecting one particular marked ball in A?"
+    },
+    "answer": {
+      "he": "1/2. מסלול הבחירה של הכדור עובר דרך A: מכפילים 1/2 ב־1/|A|. הכדורים אינם בהכרח שווי־סיכוי בכל התיבות יחד.",
+      "en": "1/2. The marked ball's path goes through A: multiply 1/2 by 1/|A|. Balls across different-sized urns need not be equally likely."
+    },
+    "takeaway": {
+      "he": "סדר ההגרלה וגודל הקבוצה משנים את הסיכוי של פריט בודד.",
+      "en": "Selection order and group size affect the probability of an individual item."
+    }
+  },
+  {
+    "id": "quick-sw-151",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-169"
+    ],
+    "title": {
+      "he": "החלפה שמוכיחה כיוון לשיפור",
+      "en": "An exchange proves a direction of improvement"
+    },
+    "prompt": {
+      "he": "מחלקים 100 כדורים לשתי תיבות, A בגודל 2. בוחרים תיבה אחיד ואז כדור אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום, או שאינה מוגדרת?",
+      "en": "Split 100 balls into urns, A having size 2. Choose an urn uniformly, then a ball uniformly. Exchange a white in A for a red in B, keeping sizes fixed. Both balls are guaranteed when both urns are nonempty. What changes, or is the exchange undefined?"
+    },
+    "answer": {
+      "he": "הסיכוי לאדום עולה. השינוי הוא חצי כפול (1/|A|−1/|B|). העברת אדום לתיבה הקטנה משתלמת יותר מאובדנו בתיבה הגדולה.",
+      "en": "Red probability increases. The change is half of (1/|A|−1/|B|). Moving a red into the smaller urn gains more than losing it from the larger urn."
+    },
+    "takeaway": {
+      "he": "אפשר להוכיח שיפור מקומי תוך שמירת האילוצים, לפני חיפוש האופטימום הכולל.",
+      "en": "Prove a constraint-preserving local improvement before optimizing the whole allocation."
+    }
+  },
+  {
+    "id": "quick-sw-152",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-049",
+      "PREP-168"
+    ],
+    "title": {
+      "he": "המטבע וכיוון השוני הם שני נתונים",
+      "en": "Position and deviation direction are separate facts"
+    },
+    "prompt": {
+      "he": "בין 9 מטבעות יש בדיוק מזויף אחד, שהוא קל או כבד, ולא ידוע איזה. כמה השערות נפרדות של (מיקום, כיוון שוני) צריך פתרון מלא להבחין ביניהן?",
+      "en": "Among 9 coins, exactly one is counterfeit and is lighter or heavier, unknown which. How many distinct (position, direction) hypotheses must a complete solution distinguish?"
+    },
+    "answer": {
+      "he": "18. לכל מיקום סופרים בנפרד כל כיוון משקל שמותר לפי ההבטחה. כיוון ידוע מסיר אפשרויות, לא מטבעות פיזיים.",
+      "en": "18. For each position, count every weight direction allowed by the promise. Knowing direction removes hypotheses, not physical coins."
+    },
+    "takeaway": {
+      "he": "סופרים מצבים שיש להבחין ביניהם, ולא רק עצמים פיזיים.",
+      "en": "Count distinguishable hypotheses rather than merely physical objects."
+    }
+  },
+  {
+    "id": "quick-sw-153",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-073"
+    ],
+    "title": {
+      "he": "כשגם אין רעל הוא מצב אפשרי",
+      "en": "When no poison is a possible state"
+    },
+    "prompt": {
+      "he": "יש 4 בקבוקים, ולכל היותר אחד מורעל; גם היעדר רעל אפשרי. בדיקות תערובת מקבילות מחזירות ביט אמין. כמה בדיקות לפחות דרושות לזיהוי ודאי, כולל הבחנה במצב שאין רעל?",
+      "en": "There are 4 bottles, at most one poisoned; none is also possible. Parallel pooled tests return reliable bits. What minimum test count distinguishes every bottle and the no-poison case?"
+    },
+    "answer": {
+      "he": "3. יש N+1 מצבים. תבנית האפס שמורה להיעדר רעל, וכל בקבוק מקבל קוד לא־אפס שונה.",
+      "en": "3. There are N+1 states. Reserve the all-zero pattern for no poison and give every bottle a distinct nonzero code."
+    },
+    "takeaway": {
+      "he": "הוספת מצב אפשרי מחייבת להבחין גם בו; קוד ריק כבר אינו פנוי לבקבוק.",
+      "en": "An added possible state needs its own signature;the empty code is no longer free for a bottle."
+    }
+  },
+  {
+    "id": "quick-sw-154",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-073"
+    ],
+    "title": {
+      "he": "מידע שטרם הגיע אינו זמין",
+      "en": "Information not yet received is unavailable"
+    },
+    "prompt": {
+      "he": "בדיוק אחד מ־4 בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן 0, ותוצאה מופיעה בדיוק 24 שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן 23? לפני הופעת תוצאה כולם שליליים.",
+      "en": "Exactly one of 4 bottles is poisoned, each with a unique test code. All tests start at time 0; outcomes appear exactly 24 hours later. How many distinct observable patterns are possible at time 23? Before then all results are negative."
+    },
+    "answer": {
+      "he": "1. לפני רגע התוצאה כל עולמות הרעל נראים זהים. מרגע הופעתה אפשר לראות את הקודים השונים.",
+      "en": "1. Before the result instant, all poisoned-bottle worlds look identical. At that instant, the distinct codes become observable."
+    },
+    "takeaway": {
+      "he": "חסם זמן נבחן לפי מועד הופעת המידע, כולל משמעות נקודת הסיום.",
+      "en": "A deadline must account for when information appears, including its endpoint semantics."
+    }
+  },
+  {
+    "id": "quick-sw-155",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-096"
+    ],
+    "title": {
+      "he": "שארית שלא זורקים",
+      "en": "Do not abandon the remainder"
+    },
+    "prompt": {
+      "he": "מחלקים 1000 חובשי כובעים לקבוצות של 3; שארית של 1 או 2 מצרפים לשלישייה האחרונה. בכל קבוצה הראשון משדר זוגיות וכל האחרים יודעים בוודאות את צבעם. כמה נכונים מובטחים בלי לסמוך על המובילים?",
+      "en": "Split 1000 hat wearers into groups of 3;merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?"
+    },
+    "answer": {
+      "he": "667. מספר הקבוצות הוא floor(N/3), ולכן מאבדים בהבטחה לכל היותר מוביל אחד לכל קבוצה. שארית אינה נשארת מבודדת.",
+      "en": "667. There are floor(N/3) groups, each losing at most one guaranteed answer. The remainder is not left isolated."
+    },
+    "takeaway": {
+      "he": "הבטחה יחסית במספר שלם מחייבת גם עיגול נכון וגם בנייה שמטפלת בשארית.",
+      "en": "An integral fractional guarantee needs correct rounding and a construction handling the remainder."
+    }
+  },
+  {
+    "id": "quick-sw-156",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-096"
+    ],
+    "title": {
+      "he": "בנייה וחסם נותנים הבטחה הדוקה",
+      "en": "A construction and bound give a tight guarantee"
+    },
+    "prompt": {
+      "he": "יש 3 חובשי כובעים בינאריים ללא מכסה. מדברים מאחור לפנים; כל אחד רואה רק לפניו ושומע תשובות קודמות. מותר תיאום, ורק מילת צבע אחת לכל אדם. מה המספר המרבי של נכונים שאפשר להבטיח לכל חלוקת צבעים?",
+      "en": "There are 3 binary-hat wearers with no color quota. They speak rear-to-front;each sees only ahead and hears earlier answers. Prior coordination is allowed;each says one color word. What maximum correct-answer count can be guaranteed for every coloring?"
+    },
+    "answer": {
+      "he": "2. זוגיות מהראשון מאפשרת לכל האחרים להסיק את צבעם. אי אפשר להבטיח את כולם: החלפת כובע הראשון אינה משנה שום מידע שזמין לו.",
+      "en": "2. The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible:flipping only the first hat leaves that speaker's information unchanged."
+    },
+    "takeaway": {
+      "he": "מקסימום מובטח דורש גם אסטרטגיה שמשיגה אותו וגם חסם שמונע יותר.",
+      "en": "A tight guarantee needs both an attaining strategy and a bound excluding any larger guarantee."
+    }
+  },
+  {
+    "id": "quick-sw-157",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-096"
+    ],
+    "title": {
+      "he": "שלושה צבעים דורשים שלוש שאריות",
+      "en": "Three colors need three residues"
+    },
+    "prompt": {
+      "he": "שלושה צבעי כובעים מקודדים 0,1,2. הודעה אמינה אומרת שסכום קבוצת הכובעים מודולו 3 הוא 2. כל תרומות הקבוצה פרט לכובעך ידועות: [1]. מה צבעך המקודד?",
+      "en": "Three hat colors are encoded 0,1,2. A reliable message says the group's color sum modulo 3 is 2. Every contribution except your hat is known: [1]. What is your encoded color?"
+    },
+    "answer": {
+      "he": "1. מחסרים מהשארית הכוללת את התרומות הידועות ולוקחים שוב מודולו 3. זוגיות בינארית בלבד אינה מבחינה בין שלושה צבעים.",
+      "en": "1. Subtract known contributions from the checksum and reduce modulo 3. A binary parity bit alone cannot distinguish three colors."
+    },
+    "takeaway": {
+      "he": "בחרו אלפבית קוד שמתאים למספר הערכים האפשריים, לא רק לכלי הבינארי המוכר.",
+      "en": "Match the coding alphabet to possible values rather than always using binary parity."
+    }
+  },
+  {
+    "id": "quick-sw-158",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-127"
+    ],
+    "title": {
+      "he": "תפקידים משלימים בלי לשמוע תשובות",
+      "en": "Complementary roles without hearing answers"
+    },
+    "prompt": {
+      "he": "יש 2 אנשים ו־2 צבעים 0..1. כל אחד רואה את האחרים בלבד ומנחש במקביל (היסט פחות סכום הנראים) מודולו 2. ההיסטים הם [0, 1]. כמה נכונים מובטחים לכל חלוקת צבעים?",
+      "en": "There are 2 people and 2 colors 0..1. Each sees only others and simultaneously guesses (offset minus visible sum) modulo 2. Offsets are [0, 1]. How many correct guesses are guaranteed for every coloring?"
+    },
+    "answer": {
+      "he": "1. אדם צודק בדיוק כשההיסט שלו שווה לסכום כל הכובעים מודולו מספר הצבעים. ההבטחה היא הריבוי המזערי של שארית בין ההיסטים.",
+      "en": "1. A person is correct exactly when their offset equals the total hat-sum residue. The guarantee is the smallest residue multiplicity among offsets."
+    },
+    "takeaway": {
+      "he": "אסטרטגיות מקומיות שונות יכולות לכסות יחד את כל העולמות האפשריים.",
+      "en": "Different local strategies can jointly cover every possible world."
+    }
+  },
+  {
+    "id": "quick-sw-159",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-114"
+    ],
+    "title": {
+      "he": "הקיצונים חייבים להיות זוג",
+      "en": "The extremes must be spouses"
+    },
+    "prompt": {
+      "he": "במפגש 5 זוגות אין לחיצות עם עצמך או בן זוג. מלבד השואל, כל האחרים דיווחו מספרים שונים 0..8. אדם דיווח 0. כמה לחיצות ביצע בן זוגו, לפי קילוף זוגות הקיצון?",
+      "en": "At a gathering of 5 couples, nobody shakes themselves or a spouse. Everyone except the questioner reports distinct counts 0..8. One reports 0. How many handshakes did their spouse make, by extreme-pair elimination?"
+    },
+    "answer": {
+      "he": "8. מי שלחץ לכולם חוץ מבן זוגו חייב להיות בן זוגו של המדווח אפס. מסירים אותם וחוזרים; מספרי בני הזוג משלימים ל־2n−2.",
+      "en": "8. The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat;spouse counts complement to 2n−2."
+    },
+    "takeaway": {
+      "he": "אילוצי קשרים יכולים לזהות זוג קיצון, ואז לצמצם את אותה בעיה לגודל קטן יותר.",
+      "en": "Relationship constraints can identify an extreme pair and reduce to a smaller instance."
+    }
+  },
+  {
+    "id": "quick-sw-160",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-113"
+    ],
+    "title": {
+      "he": "מידע פומבי מתחיל שרשרת מסקנות",
+      "en": "Public information starts a reasoning cascade"
+    },
+    "prompt": {
+      "he": "יש 3 כובעים אדומים בפועל. כל אדם רואה את האחרים בלבד. פורסם לפחות אדום אחד; כולם מסיקים בהיגיון ושומעים גם שתיקה בסבבים סימולטניים. אדם מכריז אדום רק כשבטוח. הסבב הראשון הוא 1. באיזה סבב תישמע ההכרזה הראשונה?",
+      "en": "Actually 3 hats are red. Each reasoner sees only others. At least one red is publicly announced;everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?"
+    },
+    "answer": {
+      "he": "3. אדום יחיד היה יודע מיד. כשיש יותר, כל סבב שקט שולל את האפשרות שיש אדום אחד פחות. ההודעה הפומבית מתחילה את האינדוקציה המשותפת.",
+      "en": "3. One red would know immediately. Each silent round rules out one fewer red. The public announcement starts this shared induction."
+    },
+    "takeaway": {
+      "he": "פרסום משנה גם מה כל אחד יודע שהאחרים יודעים, ולא רק עובדה פרטית.",
+      "en": "A public announcement changes knowledge about others' knowledge, not merely a private fact."
+    }
+  },
+  {
+    "id": "quick-sw-161",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-121"
+    ],
+    "title": {
+      "he": "הדרך חזרה צורכת מלאי",
+      "en": "The return trip consumes inventory"
+    },
+    "prompt": {
+      "he": "גמל מעביר מלאי המחייב 3 מטענים לאורך קטע קצר. בכל הלוך הוא נושא מטען, וחוזר רק כדי להביא את הבא; אחרי המטען האחרון אינו חוזר. הוא אוכל בננה לכל יחידת דרך. כמה בננות נצרכות ליחידת התקדמות?",
+      "en": "A camel moves inventory requiring 3 loads along a short segment. It goes forward with each load and returns only to collect the next;there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?"
+    },
+    "answer": {
+      "he": "5. יש k מעברי הלוך ו־k−1 חזרות. משלמים גם על דרך החזרה, ולא רק על המרחק שבו המלאי מתקדם.",
+      "en": "5. There are k forward traversals and k−1 returns. Return travel also consumes food even though inventory makes no net progress then."
+    },
+    "takeaway": {
+      "he": "עלות לוגיסטית נמדדת בכל המעברים, כולל אלה שאינם מקדמים את המטען.",
+      "en": "Logistical cost includes every traversal, including those with no net cargo progress."
+    }
+  },
+  {
+    "id": "quick-sw-162",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-121"
+    ],
+    "title": {
+      "he": "העלות משתנה בנקודת קיבולת",
+      "en": "Cost changes at a capacity breakpoint"
+    },
+    "prompt": {
+      "he": "יש 3000 בננות וקיבולת גמל 1000. כרגע דרושים 3 מטענים, בעלות 5 בננות ליחידת התקדמות. כמה דרך עוברים עד שהמלאי מספיק בדיוק ל־2 מטענים ואפשר להפחית את העלות?",
+      "en": "There are 3000 bananas and camel capacity 1000. Currently 3 loads cost 5 bananas per progress unit. How far until stock fits exactly 2 loads and the cost can decrease?"
+    },
+    "answer": {
+      "he": "200. נקודת השינוי היא כפולה של הקיבולת. מחלקים את המלאי שמעל אותה נקודה בקצב הצריכה הנוכחי, ולא משתמשים באותו קצב לכל המסלול.",
+      "en": "200. The breakpoint is a capacity multiple. Divide inventory above it by the current consumption rate rather than keeping that rate for the whole journey."
+    },
+    "takeaway": {
+      "he": "כשהמשאב חוצה סף שמשנה את מספר הפעולות, פצלו את החישוב למקטעים.",
+      "en": "Split a calculation where a resource threshold changes the number of required operations."
+    }
+  },
+  {
+    "id": "quick-sw-163",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-108"
+    ],
+    "title": {
+      "he": "בודקים גם שהגבול פשוט",
+      "en": "Check that the boundary is simple"
+    },
+    "prompt": {
+      "he": "מחברים את הנקודות בסדר הנתון וסוגרים לראשונה: [[0, 3], [2, -3], [-3, 1], [3, 1], [-2, -3]]. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
+      "en": "Connect these vertices in order and close back to the first: [[0, 3], [2, -3], [-3, 1], [3, 1], [-2, -3]]. Which classification is justified? Equal-sign local turns alone do not establish absence of self-intersection."
+    },
+    "answer": {
+      "he": "נחתך בעצמו; בדיקת פניות אינה מספיקה. קודם מוודאים גבול פשוט ושטח לא־אפס. רק אז סימני הפניות יכולים לשמש מבחן קמירות של מצולע מסודר.",
+      "en": "Self-crossing; turn signs alone are insufficient. First establish a simple boundary and nonzero area. Only then can turn signs test convexity of the ordered polygon."
+    },
+    "takeaway": {
+      "he": "תנאי מקומי אינו מחליף הנחה גלובלית שעליה נשענת ההוכחה.",
+      "en": "A local condition does not replace the global precondition required by its proof."
+    }
+  },
+  {
+    "id": "quick-sw-164",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-108"
+    ],
+    "title": {
+      "he": "קמירות חלשה וממש אינן אותה דרישה",
+      "en": "Weak and strict convexity differ"
+    },
+    "prompt": {
+      "he": "נקודות גבול מסודרות: [[0, 0], [1, 0], [2, 0], [2, 2], [0, 2]]. קמירות ממש דורשת פניות לא־אפס מאותו סימן; קמירות חלשה מתירה פנייה אפס לאורך צלע. איך מסווגים את הגבול?",
+      "en": "Ordered boundary vertices: [[0, 0], [1, 0], [2, 0], [2, 2], [0, 2]]. Strict convexity requires same-sign nonzero turns;weak convexity permits zero turns along an edge. How is this boundary classified?"
+    },
+    "answer": {
+      "he": "קמור חלש אך לא ממש. קודקוד נוסף על צלע ישרה יכול לשמר קמירות חלשה אבל מפר קמירות ממש. קודקוד שפונה פנימה יוצר קעירות.",
+      "en": "Weakly convex but not strict. An extra vertex on a straight edge preserves weak convexity but violates strict convexity. An inward turn makes the polygon concave."
+    },
+    "takeaway": {
+      "he": "מקרה שוויון יכול להיות חוקי בהגדרה אחת ופסול באחרת; הגדירו אותו מראש.",
+      "en": "An equality case may be valid under one definition and invalid under another;define it explicitly."
+    }
+  },
+  {
+    "id": "quick-sw-165",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-012"
+    ],
+    "title": {
+      "he": "מספר חדש לאותו אדם במעגל",
+      "en": "A new label for the same person"
+    },
+    "prompt": {
+      "he": "במעגל 5 אנשים עם תוויות 0..4, תהליך הדחה יחסי הסתיים בשורד 2. מחליפים כל תווית x ב־(x+1) מודולו 5, בלי לשנות אנשים, סדר פיזי או נקודת התחלה. מה תווית אותו שורד כעת?",
+      "en": "A relative-position elimination process on 5 people labeled 0..4 leaves survivor 2. Relabel every x as (x+1) modulo 5, keeping physical people, order, and start unchanged. What is that survivor's new label?"
+    },
+    "answer": {
+      "he": "3. שינוי קואורדינטות אינו משנה את האדם ששרד. מפעילים את ההעתקה רק על תוויתו, כולל גלישה מודולרית.",
+      "en": "3. Changing coordinates does not change the surviving person. Apply the relabeling map to their label, including modular wraparound."
+    },
+    "takeaway": {
+      "he": "הפרידו בין מצב פיזי לבין התוויות שבהן מייצגים אותו.",
+      "en": "Separate the physical state from the labels used to represent it."
+    }
+  },
+  {
+    "id": "quick-sw-166",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-008"
+    ],
+    "title": {
+      "he": "שני דלוקים אינם תמיד אותו מצב",
+      "en": "Two ON switches need not be one state"
+    },
+    "prompt": {
+      "he": "ארבעה מתגים מסודרים סביב שולחן ריבועי. 1 הוא דלוק. שני תיאורים הם 1100 ו־1010, באותו כיוון סריקה. מותר רק סיבוב ברבעי סיבוב, לא שיקוף. האם הם אותו מצב עד כדי סיבוב?",
+      "en": "Four switches surround a square table;1 means ON. Two descriptions are 1100 and 1010, read in the same direction. Only quarter-turn rotations, not reflections, are allowed. Are they the same state up to rotation?"
+    },
+    "answer": {
+      "he": "אותו מספר דלוקים אך אין סיבוב מתאים. סיבוב שומר גם את דפוס השכנות ולא רק את מספר הדלוקים. שני דלוקים סמוכים אינם שני דלוקים מנוגדים.",
+      "en": "Same ON count but no matching rotation. Rotation preserves adjacency patterns as well as ON count. Adjacent ON switches are not opposite ON switches."
+    },
+    "takeaway": {
+      "he": "תיאור שאינו משתנה בסיבוב עדיין יכול לאבד מידע חשוב על שכנות.",
+      "en": "A rotation-invariant summary can still lose important adjacency information."
+    }
+  },
+  {
+    "id": "quick-sw-167",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-029"
+    ],
+    "title": {
+      "he": "בדקת כל מקום אך המטרה זזה",
+      "en": "Every location checked, but the target moved"
+    },
+    "prompt": {
+      "he": "מטרה מסתתרת באחד משני שיחים 0,1. אחרי כל חיפוש שמחטיא היא חייבת לעבור לשיח השני. סדר החיפושים הוא [0, 1]. כמה מיקומי התחלה יכולים להתחמק מכל החיפושים? אם נתפסה התהליך נגמר.",
+      "en": "A target starts in bush 0 or 1. After each missed search it must switch bushes. Search order is [0, 1]. How many initial positions can avoid every search? Capture ends the process."
+    },
+    "answer": {
+      "he": "1. מעדכנים את מקום המטרה אחרי כל החטאה. ביקור בכל מקום אינו הוכחה שהמטרה הנעה הייתה שם בזמן הביקור.",
+      "en": "1. Update target position after every miss. Visiting every location does not establish that the moving target was there at that time."
+    },
+    "takeaway": {
+      "he": "בחיפוש דינמי עקבו אחר המצבים בזמן הבדיקה, לא רק אחר המקומות שכבר נסרקו.",
+      "en": "In dynamic search, track states at observation time rather than only locations previously visited."
+    }
+  },
+  {
+    "id": "quick-sw-168",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-039"
+    ],
+    "title": {
+      "he": "החוזר הכי מהיר אינו כל האסטרטגיה",
+      "en": "The fastest returner is not the whole strategy"
+    },
+    "prompt": {
+      "he": "זמני ארבעה חוצים הם a=1, b=2, c=5, d=10. שני לוחות זמנים חוקיים עם לפיד עולים A=a+3b+d ו־B=2a+b+c+d. מה העלות הקטנה מבין שני הלוחות האלה? אין טענת מינימום על כל לוח אפשרי.",
+      "en": "Four crossing times are a=1, b=2, c=5, d=10. Two legal torch schedules cost A=a+3b+d and B=2a+b+c+d. What is the lower cost of these two schedules? No global-optimality claim is assumed."
+    },
+    "answer": {
+      "he": "17. משווים את הלוחות השלמים, כולל חזרות. שימוש קבוע בחוזר המהיר ביותר אינו בהכרח זול יותר משילוח שני האיטיים יחד.",
+      "en": "17. Compare complete schedules including returns. Always using the fastest returner can cost more than sending the two slowest together."
+    },
+    "takeaway": {
+      "he": "בחירה מקומית מהירה יכולה ליצור יותר עלות במעברים האחרים.",
+      "en": "A locally fast choice may increase the cost of the remaining trips."
+    }
+  },
+  {
+    "id": "quick-sw-169",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-039"
+    ],
+    "title": {
+      "he": "לפיד אינו משאב שנמצא בשני הצדדים",
+      "en": "The torch cannot be on both sides"
+    },
+    "prompt": {
+      "he": "A, B, C והלפיד מתחילים משמאל. כל מעבר של אדם או זוג דורש שכולם והלפיד באותו צד. הלוח הוא ['AB→', 'AC→']; → הוא ימינה. מה מספר המעבר הבלתי חוקי הראשון? החזירו 0 אם כולם חוקיים.",
+      "en": "A, B, C and the torch start left. A solo/pair crossing requires all participants and the torch on its starting side. Schedule: ['AB→', 'AC→']; → means right. What is the first illegal move number? Return 0 if all are legal."
+    },
+    "answer": {
+      "he": "2. יש לעקוב גם אחר צד הלפיד וגם אחר צד כל חוצה. סכום זמנים יפה אינו מכשיר מעבר כשאדם או הלפיד אינם בנקודת היציאה.",
+      "en": "2. Track the torch and every person's side. An attractive time total cannot legalize a trip whose people or torch are on the wrong side."
+    },
+    "takeaway": {
+      "he": "בדקו שלוח זמנים אפשרי לפני שמחשבים אם הוא מהיר.",
+      "en": "Check schedule feasibility before evaluating its speed."
+    }
+  },
+  {
+    "id": "quick-sw-170",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-073"
+    ],
+    "title": {
+      "he": "שני מקורות יכולים לחקות מקור אחר",
+      "en": "Two sources can mimic a third"
+    },
+    "prompt": {
+      "he": "בדיקות תערובת מחזירות חיובי אם קיבלו רעל כלשהו. לשני בקבוקים מורעלים יש קודים בינאריים שמספריהם 1 ו־2. איזה מספר מתקבל מתבנית התוצאות, אם מאחדים את הקודים ב־OR סיביתי?",
+      "en": "Pooled tests are positive if they receive any poison. Two poisoned bottles have binary code numbers 1 and 2. What number does the outcome pattern encode, using bitwise OR of the codes?"
+    },
+    "answer": {
+      "he": "3. כל ביט שהופיע באחד משני הקודים נדלק. התוצאה יכולה להיות קוד חוקי של בקבוק אחר, ולכן קידוד חד־רעל אינו בהכרח מגלה רעל מרובה.",
+      "en": "3. Every bit present in either code becomes positive. The result can be another valid bottle's code, so a single-poison code need not detect multiple poisons."
+    },
+    "takeaway": {
+      "he": "חתימות ייחודיות לעצם יחיד אינן מבטיחות ייחודיות לצירופים של עצמים.",
+      "en": "Unique singleton signatures do not guarantee unique signatures for combinations."
+    }
+  },
+  {
+    "id": "quick-sw-171",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-079"
+    ],
+    "title": {
+      "he": "פגיעה אינה בהכרח ניצחון",
+      "en": "A hit is not necessarily a win"
+    },
+    "prompt": {
+      "he": "מטרתך לנצח בסוף. ניסיון פגיעה מצליח בסיכוי 1/2. לאחר הצלחה סיכוי הניצחון העתידי שלך 1/4, ולאחר החטאה 3/4. החטאה מכוונת מובילה לאותו המשך של החטאה. איזו פעולה עדיפה?",
+      "en": "Your goal is eventual victory. An attempted hit succeeds with probability 1/2. After a hit your continuation win chance is 1/4;after a miss it is 3/4. Deliberately missing gives the same miss continuation. Which action is better?"
+    },
+    "answer": {
+      "he": "להחטיא בכוונה. משקללים את סיכויי ההמשך של כל תוצאה. הצלחה מקומית יכולה להוביל למצב עתידי גרוע יותר.",
+      "en": "Deliberately miss. Weight the continuation values of each outcome. A local success can lead to a worse future state."
+    },
+    "takeaway": {
+      "he": "אופטימיזציה נמדדת ביעד הסופי, לא בהצלחת הפעולה הקרובה בלבד.",
+      "en": "Optimize the final objective rather than merely the next action's success."
+    }
+  },
+  {
+    "id": "quick-sw-172",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-154"
+    ],
+    "title": {
+      "he": "למדוד היכן שהתחזיות נפרדות",
+      "en": "Measure where the predictions differ"
+    },
+    "prompt": {
+      "he": "נותרו שתי רשתות נגדים אפשריות. ארבע מדידות מועמדות מנבאות עבורן זוגות התנגדות אלה, לפי הסדר: [(10, 10), (12, 15), (8, 8), (6, 6)]. המדידה אידאלית. איזה מספר מדידה מפריד ביניהן בוודאות? המספור מתחיל ב־1.",
+      "en": "Two candidate resistor networks remain. Four possible measurements predict these resistance pairs for the candidates, in order: [(10, 10), (12, 15), (8, 8), (6, 6)]. Measurement is ideal. Which measurement number certainly distinguishes them? Numbering starts at 1."
+    },
+    "answer": {
+      "he": "2. בוחרים מדידה שהתחזיות שלה שונות בין האפשרויות. מדידה מדויקת עם אותה תחזית בשתיהן אינה מזהה את הרשת.",
+      "en": "2. Choose a measurement with different predictions across candidates. Even an exact measurement with the same prediction cannot identify the network."
+    },
+    "takeaway": {
+      "he": "בחרו ניסוי לפי יכולתו להפריד בין ההסברים שנותרו, לא רק לפי דיוקו.",
+      "en": "Choose an experiment by its ability to separate remaining explanations, not only its precision."
+    }
+  },
+  {
+    "id": "quick-sw-173",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-169"
+    ],
+    "title": {
+      "he": "תוצאה משנה את הסיכוי למקורה",
+      "en": "An outcome updates its source probability"
+    },
+    "prompt": {
+      "he": "בוחרים תיבה A או B בסיכוי 1/2 ואז כדור אחיד. כמויות (אדומים, לבנים): A=(1,0), B=(49,50). נצפה אדום. מה הסיכוי שנבחרה A?",
+      "en": "Choose urn A or B with probability 1/2, then a uniform ball. Counts (red, white): A=(1,0), B=(49,50). A red was observed. What is the probability A was chosen?"
+    },
+    "answer": {
+      "he": "99/148. לאחר אדום משווים את משקלי מסלולי הבחירה האדומים. ההסתברות ל־A היא סיכוי אדום בה חלקי סכום סיכויי האדום בשתי התיבות.",
+      "en": "99/148. Condition on the red-selection paths. A's posterior is its red likelihood divided by the sum of both urns' red likelihoods."
+    },
+    "takeaway": {
+      "he": "הסתברות של תוצאה בהינתן מקור שונה מהסתברות המקור אחרי התוצאה.",
+      "en": "An outcome given a source differs from the source probability after observing the outcome."
+    }
+  },
+  {
+    "id": "quick-sw-174",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-114"
+    ],
+    "title": {
+      "he": "גם בלי לדעת את מספר הלחיצות",
+      "en": "Even without the exact handshake count"
+    },
+    "prompt": {
+      "he": "ארבעה אנשים לוחצים ידיים; כל זוג לכל היותר פעם אחת וללא עצמם. שלושת הראשונים דיווחו [1, 1, 1]. איזו זוגיות חייבת להיות למספר הלחיצות של הרביעי, או שהדיווחים אינם אפשריים?",
+      "en": "Four people shake hands, each pair at most once and never themselves. The first three report [1, 1, 1]. What parity must the fourth person's count have, or are the reports impossible?"
+    },
+    "answer": {
+      "he": "אי־זוגי. סכום הדרגות הוא פעמיים מספר לחיצות הידיים. לכן מספר הדרגות האי־זוגיות זוגי; נוסף לכך צריך שהדיווחים יתאימו לגרף כלשהו.",
+      "en": "Odd. Degree sum is twice the number of handshakes, so the number of odd degrees is even. Reports must also be realizable by a graph."
+    },
+    "takeaway": {
+      "he": "אילוץ זוגיות גלובלי יכול לקבוע תכונה גם כשהערך המדויק נשאר לא ידוע.",
+      "en": "A global parity constraint can determine a property while leaving the exact value unknown."
+    }
+  },
+  {
+    "id": "quick-sw-175",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-168"
+    ],
+    "title": {
+      "he": "משאירים ענף שאפשר לסיים",
+      "en": "Leave a branch that can be finished"
+    },
+    "prompt": {
+      "he": "בין 9 מטבעות יש מזויף יחיד שידוע כקל. בשקילה הראשונה שמים 1 מול 1. כמה מועמדים לכל היותר יישארו בענף הגדול ביותר? שקילה נוספת אחת מבחינה לכל היותר בשלוש תוצאות.",
+      "en": "Among 9 coins, one counterfeit is known lighter. First weigh 1 against 1. How many candidates remain in the largest outcome branch? One further weighing has at most three outcomes."
+    },
+    "answer": {
+      "he": "7. בהטיה נשארים מועמדים בצד הקל, ובאיזון הלא־נשקלים. אם נשארים יותר מ־3 מועמדים, אי אפשר להכריע בשקילה היחידה שנותרה. מתכננים לפי הענף הגרוע.",
+      "en": "7. A tilt leaves the lighter pan's candidates;balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch."
+    },
+    "takeaway": {
+      "he": "תכנון בדיקות צריך להתאים את כל ענפי ההמשך לתקציב שנותר.",
+      "en": "A test plan must fit every remaining branch within the remaining budget."
+    }
+  },
+  {
+    "id": "quick-sw-176",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-161"
+    ],
+    "title": {
+      "he": "שתי הגדלות שלא בהכרח מצטברות",
+      "en": "Two increments may not accumulate"
+    },
+    "prompt": {
+      "he": "מונה משותף מתחיל ב־0. לכל A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי, W כותבת העותק+1. סדר הפעולות הוא ['RA', 'RB', 'WA', 'WB']. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
+      "en": "A shared counter starts at 0. Each of A and B performs R to read a local copy, and W to write that copy+1. Event order is ['RA', 'RB', 'WA', 'WB']. What is the final counter? Read and write together are not atomic."
+    },
+    "answer": {
+      "he": "1. כתיבה משתמשת בעותק שנקרא קודם. אם שני הצדדים קראו אותו ערך, כתיבה מאוחרת יכולה לדרוס עדכון במקום להוסיף עליו.",
+      "en": "1. A write uses the earlier local snapshot. If both read the same value, a later write can overwrite rather than accumulate the other update."
+    },
+    "takeaway": {
+      "he": "פעולות נכונות בנפרד עלולות לאבד מידע כאשר רצפי הקריאה והכתיבה משתלבים.",
+      "en": "Individually correct operations can lose information when read/write sequences interleave."
+    }
+  },
+  {
+    "id": "quick-sw-177",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-096"
+    ],
+    "title": {
+      "he": "תוחלת אינה רצפת הצלחה",
+      "en": "Expectation is not a guaranteed floor"
+    },
+    "prompt": {
+      "he": "במשחק כובעים, מדיניות נתונה מניבה את האפשרויות (מספר נכונים, משקל הסתברות חיובי): [(0, 1), (4, 1)]. מחלקים את המשקלים בסכומם. כמה נכונים מובטחים בכל משחק, בלי להחליף את ההבטחה בתוחלת?",
+      "en": "In a hats game, a policy has outcomes (correct answers, positive probability weight): [(0, 1), (4, 1)]. Normalize weights by their sum. How many correct answers are guaranteed in every game, rather than merely expected?"
+    },
+    "answer": {
+      "he": "0. הבטחה נקבעת לפי המינימום בין כל התוצאות האפשריות. גם תוצאה נדירה עם משקל קטן מונעת הבטחה גדולה יותר.",
+      "en": "0. A guarantee is the minimum over all possible outcomes. Even a rare low outcome prevents a larger certainty guarantee."
+    },
+    "takeaway": {
+      "he": "להבטחת מקרה גרוע בודקים גם אפשרויות בעלות הסתברות קטנה, לא רק את הממוצע.",
+      "en": "A worst-case guarantee includes low-probability possibilities rather than only the average."
+    }
+  }
+]

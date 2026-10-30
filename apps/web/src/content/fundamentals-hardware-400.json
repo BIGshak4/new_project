@@ -1,0 +1,1727 @@
+[
+  {
+    "id": "quick-hw-126",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-099"
+    ],
+    "title": {
+      "he": "אותה עקומה, קיבול אחר",
+      "en": "Same curve, different capacitance"
+    },
+    "prompt": {
+      "he": "נמדדה קבועת זמן tau=2 ms. איזה C ב־µF מתאים אם R=1kΩ? R אינו ידוע מהעקומה לבדה.",
+      "en": "Measured tau=2 ms. What C in µF fits R=1kΩ? The curve alone does not specify R."
+    },
+    "answer": {
+      "he": "2. C=tau/R. שינוי R משנה את הקיבול המתאים לאותה עקומה; צריך למדוד או לדעת את R בנפרד.",
+      "en": "2. C=tau/R. Changing R changes the compatible capacitance while preserving the curve; independently measure or know R."
+    },
+    "takeaway": {
+      "he": "מדידת RC אינה מפרידה בין R ל־C בלי מידע נוסף.",
+      "en": "An RC response alone does not separate R from C."
+    }
+  },
+  {
+    "id": "quick-hw-127",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-099"
+    ],
+    "title": {
+      "he": "חצי מתח אינו קבוע זמן",
+      "en": "Half voltage is not one time constant"
+    },
+    "prompt": {
+      "he": "קבל נטען ממדרגה דרך R=1kΩ, עם C=1 nF. מתי המתח מגיע לחצי מערכו הסופי, ב־µs?",
+      "en": "A step charges C=1 nF through R=1kΩ. When does it reach half its final voltage, in µs?"
+    },
+    "answer": {
+      "he": "0.693147. מהתגובה 1−exp(−t/RC) מתקבל t=RC ln(2), ולא RC. הנתונים כאן במודל אידאלי.",
+      "en": "0.693147. From 1−exp(−t/RC), the crossing is RC ln(2), not RC. This is an ideal lumped model."
+    },
+    "takeaway": {
+      "he": "זמן חצייה תלוי גם בסף התצפית.",
+      "en": "Crossing time depends on the observation threshold."
+    }
+  },
+  {
+    "id": "quick-hw-128",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-132"
+    ],
+    "title": {
+      "he": "איזה מתח רציף על הקבל?",
+      "en": "Which capacitor voltage stays continuous?"
+    },
+    "prompt": {
+      "he": "בקבל טורי אידאלי, B משתנה מ־3V ל־0V. C היה 3V לפני הקפיצה. מהו C מיד אחריה, ללא clamp?",
+      "en": "Across an ideal coupling capacitor, B changes from 3V to 0V. Node C was 3V. What is C immediately afterward, without a clamp?"
+    },
+    "answer": {
+      "he": "0. המתח C−B על הקבל נשמר בקפיצה ללא הזרקת מטען; לכן שינוי C שווה לשינוי B.",
+      "en": "0. Without impulsive injected charge, C−B stays continuous; the change in C equals the change in B."
+    },
+    "takeaway": {
+      "he": "קפיצה בשני הקצוות יכולה לשמר את המתח ביניהם.",
+      "en": "Both terminals may jump while their difference stays continuous."
+    }
+  },
+  {
+    "id": "quick-hw-129",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-132"
+    ],
+    "title": {
+      "he": "אחרי שהמעבר נגמר",
+      "en": "After the transition ends"
+    },
+    "prompt": {
+      "he": "B קבוע אחרי מעבר. C מחובר דרך נגד ל־VDD=1V וכניסת האינוורטר אידאלית. לאיזה מתח C שואף לאחר זמן רב?",
+      "en": "B stays constant after an edge. A resistor pulls C to VDD=1V; the inverter input is ideal. What voltage does C approach after a long time?"
+    },
+    "answer": {
+      "he": "1. במצב DC אין זרם קבל מתמשך. ללא זרם כניסה אין נפילת מתח על הנגד, ולכן C שואף ל־VDD.",
+      "en": "1. At DC no capacitor current persists. With zero input current there is no resistor drop, so C approaches VDD."
+    },
+    "takeaway": {
+      "he": "קבל טורי אינו מעביר שינוי DC קבוע.",
+      "en": "A series capacitor does not pass a permanent DC change."
+    }
+  },
+  {
+    "id": "quick-hw-130",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-132"
+    ],
+    "title": {
+      "he": "האם המסילה היא מהדק?",
+      "en": "Is the rail automatically a clamp?"
+    },
+    "prompt": {
+      "he": "במודל קבל טורי ללא clamp, C הוא 3V וקצה B קופץ ב־3V. מהו C מיד אחרי הקפיצה, גם אם עבר את VDD?",
+      "en": "In an unclamped coupling model, C is 3V and B jumps by 3V. What is C immediately afterward, even if it exceeds VDD?"
+    },
+    "answer": {
+      "he": "6. המודל מתיר overshoot: מוסיפים ל־C את אותה קפיצה. רכיב פיזי עשוי לכלול הגנה, שמשנה גם את מצב הקבל.",
+      "en": "6. The model permits overshoot:add the same step to C. Physical protection may limit it and change capacitor history."
+    },
+    "takeaway": {
+      "he": "אין להוסיף דיודת הגנה למודל שלא הגדיר אותה.",
+      "en": "Do not silently add a protection diode to a model."
+    }
+  },
+  {
+    "id": "quick-hw-131",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-132"
+    ],
+    "title": {
+      "he": "המעבר הבא זוכר את הקודם",
+      "en": "The next edge remembers the previous one"
+    },
+    "prompt": {
+      "he": "C מתחיל ב־0V ונרגע לעבר VDD=4V. עד הקצה הבא פקטור הדעיכה הוא 0.5; אז מתווספת קפיצה 4V. מהו המתח החדש?",
+      "en": "C starts at 0V and relaxes toward VDD=4V. Decay factor before the next edge is 0.5; that edge adds 4V. What is the new voltage?"
+    },
+    "answer": {
+      "he": "6. לפני הקצה C=VDD+(Cstart−VDD)·decay. רק לאחר חישוב זה מוסיפים את הקפיצה; אין לאתחל ל־VDD בכל קצה.",
+      "en": "6. Before the edge, C=VDD+(Cstart−VDD)·decay. Then add the step; do not reset to VDD at every edge."
+    },
+    "takeaway": {
+      "he": "מעבירים את המצב האנלוגי בין קטעי הזמן.",
+      "en": "Carry analog state across waveform segments."
+    }
+  },
+  {
+    "id": "quick-hw-132",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-115"
+    ],
+    "title": {
+      "he": "שער מבודד עדיין נטען",
+      "en": "An insulated gate still charges"
+    },
+    "prompt": {
+      "he": "שער MOS מיוצג בקיבול C=2 pF. מתחו משתנה ב־3V. מה המטען שהדרייבר מעביר, ב־pC, במודל הקיבולי?",
+      "en": "A MOS gate is modeled as C=2 pF. Its voltage changes by 3V. What charge does its driver transfer, in pC?"
+    },
+    "answer": {
+      "he": "6. Q=C·ΔV. בידוד השער אינו מבטל את הקיבול; מקור ההנעה מספק או שואב מטען במעבר.",
+      "en": "6. Q=C·ΔV. Gate insulation does not remove capacitance; the driver supplies or removes charge during transitions."
+    },
+    "takeaway": {
+      "he": "זרם DC קטן אינו אומר שאין עומס בזמן מעבר.",
+      "en": "Tiny DC current does not imply zero switching load."
+    }
+  },
+  {
+    "id": "quick-hw-133",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-115"
+    ],
+    "title": {
+      "he": "זיהום לעומת תעלת היפוך",
+      "en": "Doping versus inversion"
+    },
+    "prompt": {
+      "he": "במודל MOS, הפעולה המתוארת היא השתלת תורמים ב־source. איזו תוצאה מתאימה?",
+      "en": "In a MOS model, the action is implanting donors in the source. Which result fits?"
+    },
+    "answer": {
+      "he": "זיהום קבוע של החומר. השתלת מזהמים יוצרת אזור חומר מסומם; מתח שער יוצר שכבת היפוך הפיכה ואינו מחליף את הרכב המזהמים.",
+      "en": "Permanent material doping. Implantation changes material doping; gate bias creates a reversible inversion layer without replacing dopants."
+    },
+    "takeaway": {
+      "he": "לא כל ריכוז אלקטרונים נוצר באותו מנגנון.",
+      "en": "Carrier concentration can arise through different mechanisms."
+    }
+  },
+  {
+    "id": "quick-hw-134",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-115"
+    ],
+    "title": {
+      "he": "מתח שער ביחס למי?",
+      "en": "Gate voltage relative to what?"
+    },
+    "prompt": {
+      "he": "ל־NMOS ארוך־תעלה VG=2V, VS=0V, VT=1V. מתעלמים מזרם תת־סף. מה קובע המודל לגבי תעלת היפוך?",
+      "en": "A long-channel NMOS has VG=2V, VS=0V, VT=1V. Ignore subthreshold current. What does the model say about inversion?"
+    },
+    "answer": {
+      "he": "מעל הסף; תעלת היפוך אפשרית. מחשבים VGS=VG−VS ומשווים ל־VT. מתח שער גבוה ביחס לאדמה לבדו אינו מספיק אם גם ה־source עולה.",
+      "en": "Above threshold; inversion channel possible. Compute VGS=VG−VS and compare with VT. A high gate-to-ground voltage alone is insufficient if the source also rises."
+    },
+    "takeaway": {
+      "he": "הסף תלוי ב־VGS, לא בשם מסילת האספקה.",
+      "en": "Threshold compares VGS, not merely a supply name."
+    }
+  },
+  {
+    "id": "quick-hw-135",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-115"
+    ],
+    "title": {
+      "he": "מעל הסף אינו בהכרח רוויה",
+      "en": "Above threshold need not mean saturation"
+    },
+    "prompt": {
+      "he": "במודל NMOS ארוך־תעלה, VGS=3V, VT=1V, VDS=1V. הזניחו אפקטים קצרים. מהו אזור הפעולה?",
+      "en": "For a long-channel NMOS, VGS=3V, VT=1V, VDS=1V. Ignore short-channel effects. What is its region?"
+    },
+    "answer": {
+      "he": "אזור לינארי. אם VGS≤VT זהו קיטעון במודל. אחרת רוויה דורשת VDS≥VGS−VT; מתחת לגבול זהו אזור לינארי.",
+      "en": "Linear region. If VGS≤VT, the model is cutoff. Otherwise saturation needs VDS≥VGS−VT; below that boundary the region is linear."
+    },
+    "takeaway": {
+      "he": "אזור פעולה נקבע משילוב מתחים.",
+      "en": "Operating region depends on several voltages."
+    }
+  },
+  {
+    "id": "quick-hw-136",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-115"
+    ],
+    "title": {
+      "he": "מכפילים את מתח היתר",
+      "en": "Scaling overdrive"
+    },
+    "prompt": {
+      "he": "במודל רוויה ID=K(VGS−VT)² עם K קבוע, מתח היתר מוכפל ב־2. פי כמה גדל הזרם?",
+      "en": "In saturation ID=K(VGS−VT)² with fixed K, the overdrive is multiplied by 2. What is the current factor?"
+    },
+    "answer": {
+      "he": "4. הגורם נכנס בריבוע. ההשוואה מניחה ש־VT, K ואזור הרוויה נשארו מתאימים; אינה כלל לכל MOS מודרני.",
+      "en": "4. The factor is squared. This holds with fixed VT, K and continued saturation, not as a universal modern-MOS rule."
+    },
+    "takeaway": {
+      "he": "מודל ריבועי אינו יחס ישר במתח היתר.",
+      "en": "A square-law model is not linear in overdrive."
+    }
+  },
+  {
+    "id": "quick-hw-137",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-153"
+    ],
+    "title": {
+      "he": "למה האחד אינו מגיע למסילה?",
+      "en": "Why is high below the rail?"
+    },
+    "prompt": {
+      "he": "בעומס NMOS ששערו ו־drain שלו ב־VDD=5V, מודל סף קבוע VT=1V וללא body effect. לאיזה VOH שואף המוצא ללא עומס DC?",
+      "en": "An NMOS load has gate/drain at VDD=5V. Assume fixed VT=1V, no body effect and no DC load. What VOH does it approach?"
+    },
+    "answer": {
+      "he": "4. בעת עליית המוצא, VGS של העומס קטן. במודל הוא מתקרב ל־VT ולכן VOH≈VDD−VT, לא VDD.",
+      "en": "4. As output rises, the load VGS falls toward VT, giving VOH≈VDD−VT rather than VDD in this model."
+    },
+    "takeaway": {
+      "he": "עומס NMOS מסוג enhancement יכול לתת רמה גבוהה מוחלשת.",
+      "en": "An enhancement-NMOS load can produce a degraded high."
+    }
+  },
+  {
+    "id": "quick-hw-138",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-153"
+    ],
+    "title": {
+      "he": "אפס לוגי עם זרם קבוע",
+      "en": "Logical low with static current"
+    },
+    "prompt": {
+      "he": "להמחשת עומס NMOS, מחליפים מסלול pull-up ב־9kΩ ו־pull-down פעיל ב־1kΩ בטור. VDD=5V. מה זרם המסילה ב־mA?",
+      "en": "For an NMOS-load illustration, use 9kΩ pull-up and active 1kΩ pull-down in series. VDD=5V. What is rail current in mA?"
+    },
+    "answer": {
+      "he": "0.5. שני מסלולים מוליכים יוצרים זרם גם בלי מיתוג: I=VDD/(Rup+Rdown). זוהי המחשת התנגדויות, לא מודל MOS מדויק.",
+      "en": "0.5. Both conducting paths create current without switching:I=VDD/(Rup+Rdown). This resistance illustration is not an exact MOS model."
+    },
+    "takeaway": {
+      "he": "פלט יציב אינו מבטיח שההספק הסטטי אפס.",
+      "en": "A stable output does not imply zero static power."
+    }
+  },
+  {
+    "id": "quick-hw-139",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-170"
+    ],
+    "title": {
+      "he": "מה נשמר ברגע ההחלפה?",
+      "en": "What survives the switching instant?"
+    },
+    "prompt": {
+      "he": "קבל אידאלי טעון ל־1V מחובר לסליל שזרמו היה 0, ללא הזרקת אנרגיה. מה הזוג vC, iL מיד לאחר ההעברה?",
+      "en": "An ideal capacitor charged to 1V connects to an inductor initially carrying 0 current, without injected energy. What is vC, iL immediately afterward?"
+    },
+    "answer": {
+      "he": "1, 0. מתח הקבל וזרם הסליל רציפים בהעברה האידאלית. אין להחליף תנאי התחלה בתוצאה הסופית של מעגל נגדי.",
+      "en": "1, 0. Capacitor voltage and inductor current remain continuous at the ideal transfer. A resistive final-state intuition cannot replace initial conditions."
+    },
+    "takeaway": {
+      "he": "תנאי התחלה פיזיקליים קובעים את צורת התגובה.",
+      "en": "Physical initial conditions determine the response."
+    }
+  },
+  {
+    "id": "quick-hw-140",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-170"
+    ],
+    "title": {
+      "he": "אפס מתח, זרם מרבי",
+      "en": "Zero voltage, maximum current"
+    },
+    "prompt": {
+      "he": "ב־LC אידאלי, V0=2V, C=1F, L=1H וזרם התחלתי 0. ברבע מחזור ראשון מתח הקבל 0. מהו זרם הסליל החיובי כלפי מטה?",
+      "en": "In ideal LC, V0=2V, C=1F, L=1H and initial current 0. At the first quarter-period capacitor voltage is 0. What is downward inductor current?"
+    },
+    "answer": {
+      "he": "2. משימור אנרגיה L·I²/2=C·V₀²/2 מתקבל I=V₀√(C/L), עם הסימן לפי ההגדרה. אפס מתח אינו אפס אנרגיה כוללת.",
+      "en": "2. Energy conservation gives L·I²/2=C·V₀²/2 and I=V₀√(C/L), with the defined sign. Zero voltage is not zero total energy."
+    },
+    "takeaway": {
+      "he": "אנרגיה יכולה לעבור מהשדה החשמלי למגנטי.",
+      "en": "Energy can move from electric to magnetic storage."
+    }
+  },
+  {
+    "id": "quick-hw-141",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-170"
+    ],
+    "title": {
+      "he": "הקבל יכול להחליף קוטביות",
+      "en": "The capacitor can reverse polarity"
+    },
+    "prompt": {
+      "he": "קבל מתחיל ב־V0=1V וזרם הסליל 0. מה מתח הקבל אחרי חצי מחזור LC אידאלי וללא הפסדים?",
+      "en": "A capacitor starts at V0=1V with 0 inductor current. What is its voltage after half an ideal lossless LC period?"
+    },
+    "answer": {
+      "he": "-1. vC=V0 cos(ωt). בחצי מחזור cos(π)=−1; האנרגיה חזרה לקבל בקוטביות הפוכה.",
+      "en": "-1. vC=V0 cos(ωt). At half a period cos(π)=−1:energy is back in the capacitor with reversed polarity."
+    },
+    "takeaway": {
+      "he": "סליל אינו רק נגד שמרוקן קבל.",
+      "en": "An inductor is not merely a capacitor-discharging resistor."
+    }
+  },
+  {
+    "id": "quick-hw-142",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-170"
+    ],
+    "title": {
+      "he": "משנים L או C",
+      "en": "Changing L or C"
+    },
+    "prompt": {
+      "he": "במעגל LC אידאלי, L מוכפל ב־4 ו־C מוכפל ב־1. פי כמה משתנה המחזור T?",
+      "en": "In ideal LC, L is multiplied by 4 and C by 1. What is the period multiplier?"
+    },
+    "answer": {
+      "he": "2. T=2π√(LC), ולכן יחס המחזורים הוא √(Lratio·Cratio). מתח הטעינה אינו קובע את המחזור במודל הלינארי.",
+      "en": "2. T=2π√(LC), so period scales by √(Lratio·Cratio). Initial voltage does not set the period in this linear model."
+    },
+    "takeaway": {
+      "he": "תדר עצמי נקבע משורש מכפלת L ו־C.",
+      "en": "Natural frequency depends on the square root of LC."
+    }
+  },
+  {
+    "id": "quick-hw-143",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-175"
+    ],
+    "title": {
+      "he": "מחיר הבאפר בנתיב השלם",
+      "en": "Count the whole buffered path"
+    },
+    "prompt": {
+      "he": "מודל באפר:Rs=10, Cin=1, Rb=1, CL=20, tb=2, ביחידות עקביות. מה אומדן ההשהיה ln(2)(RsCin+RbCL)+tb?",
+      "en": "Buffer model:Rs=10, Cin=1, Rb=1, CL=20, tb=2, in consistent units. What is ln(2)(RsCin+RbCL)+tb?"
+    },
+    "answer": {
+      "he": "22.7944. המקור טוען את Cin, ואז הבאפר מניע את CL. מוסיפים גם tb; לא משווים רק התנגדות יציאה.",
+      "en": "22.7944. The source charges Cin, then the buffer drives CL. Add tb as well; output resistance alone is not the complete comparison."
+    },
+    "takeaway": {
+      "he": "הקלה על המקור אינה מבטלת השהיית יציאה.",
+      "en": "Unloading the source does not remove output delay."
+    }
+  },
+  {
+    "id": "quick-hw-144",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-175"
+    ],
+    "title": {
+      "he": "מתי ההוספה משתלמת?",
+      "en": "When does an added buffer pay off?"
+    },
+    "prompt": {
+      "he": "Rs=10>Rb=2, Cin=1, tb=0. באומדן RC, מהו CL שבו ln(2)RsCL שווה להשהיה עם באפר?",
+      "en": "Rs=10>Rb=2, Cin=1, tb=0. In the RC estimate, what CL makes direct ln(2)RsCL equal buffered delay?"
+    },
+    "answer": {
+      "he": "1.25. פותרים CL=[RsCin+tb/ln(2)]/(Rs−Rb). מעליו הבאפר עוזר במודל ומתחתיו עלול להזיק; זו אינה בחירת תא פיזי.",
+      "en": "1.25. Solve CL=[RsCin+tb/ln(2)]/(Rs−Rb). Above it the model benefits; below it buffering may hurt. This is not physical cell selection."
+    },
+    "takeaway": {
+      "he": "רכיב נוסף עשוי להאט עומס קטן.",
+      "en": "An added component may slow a small load."
+    }
+  },
+  {
+    "id": "quick-hw-145",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-172"
+    ],
+    "title": {
+      "he": "לד צריך גם הגבלת זרם",
+      "en": "An LED also needs current limiting"
+    },
+    "prompt": {
+      "he": "לד טורי:Vs=5V, Vf=2V, נפילת דרייבר Vd=0V וזרם רצוי 3 mA. איזה נגד ב־kΩ נותן המודל האידאלי?",
+      "en": "Series LED:Vs=5V, Vf=2V, driver drop Vd=0V, target current 3 mA. What resistor in kΩ follows the ideal model?"
+    },
+    "answer": {
+      "he": "1. R=(Vs−Vf−Vd)/I. זו המחשה; במימוש בודקים טווח Vf, דירוגי זרם והספק, ולא מניחים ששער מספק זרם בלתי מוגבל.",
+      "en": "1. R=(Vs−Vf−Vd)/I. Check Vf variation, current/power ratings in hardware; a logic output is not an unlimited current source."
+    },
+    "takeaway": {
+      "he": "טבלת אמת אינה קובעת זרם מותר.",
+      "en": "A truth table does not specify allowed current."
+    }
+  },
+  {
+    "id": "quick-hw-146",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-176"
+    ],
+    "title": {
+      "he": "שעון לכידה מאוחר",
+      "en": "A later capture clock"
+    },
+    "prompt": {
+      "he": "skew חיובי מוגדר כלכידה מאוחרת. מוסיפים s=0.2 ns, בלי שינוי אחר. מה שינוי ה־slack בסדר setup, hold?",
+      "en": "Positive skew means later capture. Add s=0.2 ns with nothing else changed. What are the setup, hold slack changes?"
+    },
+    "answer": {
+      "he": "0.2, -0.2. ל־setup מתווסף s ול־hold נגרע s באותו נתיב חד־מחזורי. סימן skew חייב להישאר עקבי.",
+      "en": "0.2, -0.2. Setup gains s while hold loses s on this one-cycle path. Keep the skew sign convention consistent."
+    },
+    "takeaway": {
+      "he": "אותו skew פועל בכיוונים הפוכים על setup ו־hold.",
+      "en": "The same skew affects setup and hold in opposite directions."
+    }
+  },
+  {
+    "id": "quick-hw-147",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-176"
+    ],
+    "title": {
+      "he": "לאן נעלם מרווח הביטחון?",
+      "en": "Where did timing margin go?"
+    },
+    "prompt": {
+      "he": "נוספו אי־ודאות setup של 0.1 ns ואי־ודאות hold של 0.2 ns. מה שינוי ה־slack בסדר setup, hold?",
+      "en": "Add setup uncertainty 0.1 ns and hold uncertainty 0.2 ns. What are the setup, hold slack changes?"
+    },
+    "answer": {
+      "he": "-0.1, -0.2. כל אי־ודאות מקטינה את המרווח של הבדיקה המתאימה. אלו שני תקציבים נפרדים, לא שינוי במחזור הנתון.",
+      "en": "-0.1, -0.2. Each uncertainty reduces its corresponding margin. They are separate budgets, not a change to the stated clock period."
+    },
+    "takeaway": {
+      "he": "אי־ודאות צורכת תקציב ולא מוסיפה זמן נתון.",
+      "en": "Uncertainty consumes budget rather than creating data time."
+    }
+  },
+  {
+    "id": "quick-hw-148",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-176"
+    ],
+    "title": {
+      "he": "מהירות יכולה ליצור תקלה אחרת",
+      "en": "Speed can create another violation"
+    },
+    "prompt": {
+      "he": "תיקון מקטין Dmax ב־0.3 ns ו־Dmin ב־0.1 ns. כל היתר קבוע. מה שינוי setup slack, hold slack?",
+      "en": "A repair reduces Dmax by 0.3 ns and Dmin by 0.1 ns. Everything else stays fixed. What are the setup, hold slack changes?"
+    },
+    "answer": {
+      "he": "0.3, -0.1. נתון מאוחר מגיע מוקדם יותר ולכן setup משתפר. גם הנתון המוקדם מקדים ולכן hold קטן; אין להסיק ששניהם השתפרו.",
+      "en": "0.3, -0.1. Latest arrival improves setup, while earlier earliest arrival reduces hold margin. Faster does not automatically improve both."
+    },
+    "takeaway": {
+      "he": "שיפור נתיב מקסימום מחייב בדיקה מחודשת של המינימום.",
+      "en": "Improving maximum delay requires rechecking minimum delay."
+    }
+  },
+  {
+    "id": "quick-hw-149",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-176"
+    ],
+    "title": {
+      "he": "דוח נוח או חוזה נכון?",
+      "en": "A convenient report or a valid contract?"
+    },
+    "prompt": {
+      "he": "הפרוטוקול מבטיח שהמקלט לא דורש נתון לפני 2 מחזורים. מגדירים ל־setup תקציב של 2 מחזורים, ובודקים hold בנפרד. האם ההרחבה מוצדקת בהבטחה הזאת?",
+      "en": "The protocol guarantees no required capture before 2 cycles. Setup is constrained to 2 cycles and hold is checked separately. Does that promise justify this budget?"
+    },
+    "answer": {
+      "he": "החריגה תואמת את החוזה שנמסר. אסור לתת לכלי יותר זמן ממה שהפונקציה מאפשרת. התחייבות פרוטוקולית מתאימה יכולה להצדיק multicycle; דוח אדום לבדו אינו הצדקה.",
+      "en": "The exception matches the stated contract. The tool cannot be granted more time than function permits. A matching protocol promise can justify multicycle; a red report alone cannot."
+    },
+    "takeaway": {
+      "he": "חריגת תזמון זקוקה להצדקה פונקציונלית.",
+      "en": "A timing exception needs a functional basis."
+    }
+  },
+  {
+    "id": "quick-hw-150",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-177"
+    ],
+    "title": {
+      "he": "מי טוען את קבל הצימוד?",
+      "en": "Who charges the coupling capacitor?"
+    },
+    "prompt": {
+      "he": "במודל שיפועים מיושרים, Cg=2 ו־Cc=1. היחס k=a′/v′ הוא 1. מהו Ceff=Cg+Cc(1−k)?",
+      "en": "For prescribed aligned slopes, Cg=2, Cc=1, and k=a′/v′=1. What is Ceff=Cg+Cc(1−k)?"
+    },
+    "answer": {
+      "he": "2. ביחד קבל הצימוד עשוי לא לדרוש מטען, מול שכן שקט הוא נטען פעם אחת ובמעבר נגדי שווה פעמיים. זו המחשת שיפועים, לא גורם אוניברסלי.",
+      "en": "2. Same ramps can remove coupling charge; quiet and equal opposite ramps give one and two coupling contributions. This prescribed-slope model is not universal."
+    },
+    "takeaway": {
+      "he": "זרם צימוד תלוי בשינוי הפרש המתחים.",
+      "en": "Coupling current depends on changing voltage difference."
+    }
+  },
+  {
+    "id": "quick-hw-151",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-177"
+    ],
+    "title": {
+      "he": "רעש בלי מעבר מתוכנן",
+      "en": "Noise without an intended transition"
+    },
+    "prompt": {
+      "he": "בהמחשה מיידית, דרייבר הקורבן פתוח; Cg=3, Cc=1. ה־aggressor קופץ ב־4V. משימור מטען, מה קפיצת מתח הקורבן?",
+      "en": "For an instantaneous illustration, the victim driver is open; Cg=3, Cc=1. The aggressor steps by 4V. By charge conservation, what is the victim step?"
+    },
+    "answer": {
+      "he": "1. משימור מטען מתקבל Δv=Cc·Δa/(Cg+Cc). אחר כך הדרייבר וההתנגדויות משנים את הפולס; אין לייחס זאת למעבר לוגי מתוכנן.",
+      "en": "1. Charge conservation gives Δv=Cc·Δa/(Cg+Cc). Driver resistance changes the later pulse; this is not an intended logical transition."
+    },
+    "takeaway": {
+      "he": "קורבן שקט דורש ניתוח רעש ולא רק השהיה.",
+      "en": "A quiet victim needs noise analysis, not only delay analysis."
+    }
+  },
+  {
+    "id": "quick-hw-152",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-177"
+    ],
+    "title": {
+      "he": "חלון הפעילות חשוב",
+      "en": "Activity windows matter"
+    },
+    "prompt": {
+      "he": "להערכת חפיפה בלבד, מעבר הקורבן פעיל ב־[1, 4]ns ומעבר השכן ב־[2, 5]ns. כמה ns חופפים? אין כאן חישוב delay פיזי.",
+      "en": "For overlap accounting only, the victim transition spans[1, 4]ns and the aggressor spans[2, 5]ns. How many ns overlap? This is not physical delay."
+    },
+    "answer": {
+      "he": "2. אורך החיתוך הוא max(0, min(ends)−max(starts)). חלון ללא חפיפה שונה ממעברים מיושרים גם אם שני הביטים מסיימים באותם ערכים.",
+      "en": "2. Intersection length is max(0, min(ends)−max(starts)). Nonoverlapping activity differs from aligned transitions despite identical final bits."
+    },
+    "takeaway": {
+      "he": "אותם ערכים סופיים אינם מבטיחים אותה הפרעת תזמון.",
+      "en": "Identical final values need not imply identical timing interference."
+    }
+  },
+  {
+    "id": "quick-hw-153",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-177"
+    ],
+    "title": {
+      "he": "מגן מוסיף גם עומס",
+      "en": "A shield also adds load"
+    },
+    "prompt": {
+      "he": "במודל מעבר נגדי, Ceff=Cg+2 Cc. לפני מגן:Cg=2, Cc=2; אחריו:Cg=3, Cc=0.5. מה השינוי Ceff_after−Ceff_before?",
+      "en": "For opposite ramps, Ceff=Cg+2 Cc. Before shielding:Cg=2, Cc=2; afterward:Cg=3, Cc=0.5. What is Ceff_after−Ceff_before?"
+    },
+    "answer": {
+      "he": "-2. מחשבים את שתי התרומות. מגן יכול להקטין Cc ולהגדיל Cg, ולכן צריך להעריך מחדש השהיה והספק במקום להניח שיפור חינם.",
+      "en": "-2. Count both terms. Shielding can reduce Cc while increasing Cg, so recompute delay and power rather than assuming a free improvement."
+    },
+    "takeaway": {
+      "he": "הקטנת צימוד אינה בהכרח הקטנת כל הקיבול.",
+      "en": "Less coupling does not necessarily mean less total capacitance."
+    }
+  },
+  {
+    "id": "quick-hw-154",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-144"
+    ],
+    "title": {
+      "he": "סינוס שנעלם בדגימה",
+      "en": "A sine wave invisible to sampling"
+    },
+    "prompt": {
+      "he": "דוגמים x(t)=sin(2π·1t+φ), ב־fs=2·1 וב־φ=0π. מה ארבע הדגימות עבור n=0, 1, 2, 3?",
+      "en": "Sample x(t)=sin(2π·1t+φ) at fs=2·1, with φ=0π. What are samples n=0, 1, 2, 3?"
+    },
+    "answer": {
+      "he": "0, 0, 0, 0. בגבול הזה הדגימות הן sin(πn+φ). כאשר φ=0 הן כולן 0 אף שהאות אינו אפס; שינוי מופע משנה את הסדרה אך אינו מבטיח שחזור כל מופע.",
+      "en": "0, 0, 0, 0. At this boundary samples are sin(πn+φ). For φ=0 all are 0 despite a nonzero signal; other phases change the sequence without guaranteeing every-phase reconstruction."
+    },
+    "takeaway": {
+      "he": "בגבול Nyquist גם המופע חשוב.",
+      "en": "At the Nyquist boundary, phase matters."
+    }
+  },
+  {
+    "id": "quick-hw-155",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-144"
+    ],
+    "title": {
+      "he": "אחרי הקיפול כבר מאוחר",
+      "en": "After aliasing, it is too late"
+    },
+    "prompt": {
+      "he": "קוסינוס בתדר 18 kHz נדגם ב־fs=20 kHz. מה תדר ה־alias החיובי בתחום 0..fs/2? נניח דגימה אחידה אידאלית.",
+      "en": "A cosine at 18 kHz is sampled at fs=20 kHz. What is its nonnegative alias in 0..fs/2 under ideal uniform sampling?"
+    },
+    "answer": {
+      "he": "2. תדרים הנבדלים בכפולות fs, ובהיפוך סימן לקוסינוס, יכולים ליצור אותן דגימות. מסנן אנלוגי לפני הדגימה מונע את הערבוב מלכתחילה.",
+      "en": "2. Frequencies differing by fs multiples, and sign for cosine, can share samples. Analog filtering before sampling prevents the mixing."
+    },
+    "takeaway": {
+      "he": "סינון דיגיטלי אינו מחזיר מידע שכבר התקפל.",
+      "en": "Digital filtering cannot restore already aliased information."
+    }
+  },
+  {
+    "id": "quick-hw-156",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-156"
+    ],
+    "title": {
+      "he": "רוחב פס אינו כל הסיפור",
+      "en": "Bandwidth is not the whole story"
+    },
+    "prompt": {
+      "he": "לפס ממשי חיובי(90, 110), ובחירת m=5>1, מה גבולות חלון fs:2 fh/m < fs < 2 fl/(m−1)? הגבולות עצמם אינם כלולים.",
+      "en": "For positive real band(90, 110) and m=5>1, what are the bounds of 2 fh/m < fs < 2 fl/(m−1)? Endpoints are excluded."
+    },
+    "answer": {
+      "he": "44, 45. שני הגבולות מונעים חפיפה בין עותקים ספקטרליים גם עם הפס השלילי. דרישה fs>2·bandwidth לבדה אינה מספיקה לכל מיקום.",
+      "en": "44, 45. Both bounds prevent spectral-copy overlap, including the negative band. The condition fs>2·bandwidth alone is not sufficient for every band location."
+    },
+    "takeaway": {
+      "he": "בדגימת bandpass גם מיקום הפס קובע.",
+      "en": "Bandpass sampling depends on band location too."
+    }
+  },
+  {
+    "id": "quick-hw-157",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-156"
+    ],
+    "title": {
+      "he": "גבול פתוח הוא דרישה אמיתית",
+      "en": "An open bound is a real condition"
+    },
+    "prompt": {
+      "he": "החוזה דורש חלון פתוח לפס(90, 110), m=5:2 fh/m < fs < 2 fl/(m−1). האם fs=44.5 נמצא בתוכו?",
+      "en": "The contract requires the open interval for band(90, 110), m=5:2 fh/m < fs < 2 fl/(m−1). Is fs=44.5 inside?"
+    },
+    "answer": {
+      "he": "בתוך החלון הפתוח שנבחר. בודקים את שתי אי־השוויונות בקפדנות. שוויון אינו עונה לחוזה הפתוח; בפס סגור טוני קצה עלולים להיות בלתי נבדלים.",
+      "en": "Inside the selected open safe interval. Check both strict inequalities. Equality fails this open contract; closed-band edge tones can become indistinguishable."
+    },
+    "takeaway": {
+      "he": "נגיעה בקצות פס אינה מרווח בטוח לכל אות.",
+      "en": "Touching band edges is not safe margin for every signal."
+    }
+  },
+  {
+    "id": "quick-hw-158",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-136"
+    ],
+    "title": {
+      "he": "זיהוי אינו איתור",
+      "en": "Detecting is not locating"
+    },
+    "prompt": {
+      "he": "למילת מידע בת 8 ביטים נשמר ביט זוגיות. התגלתה זוגיות שגויה וידוע שהתקלקל בדיוק ביט מידע אחד. כמה מיקומי תקלה אפשריים עדיין מתאימים לזוגיות לבדה?",
+      "en": "An 8-data-bit word stores one parity bit. Parity is wrong and exactly one data bit flipped. How many fault positions remain compatible with parity alone?"
+    },
+    "answer": {
+      "he": "8. כל אחד מביטי המידע יכול להפוך זוגיות, ולכן נותרים n מיקומים אפשריים. כש־n>1 אין איתור יחיד; n=1 הוא החריג הטריוויאלי.",
+      "en": "8. Every data-bit flip changes parity, leaving n possible positions. For n>1 there is no unique location; n=1 is the trivial exception."
+    },
+    "takeaway": {
+      "he": "זוגיות אחת מבחינה בשינוי אך אינה מזהה את מיקומו.",
+      "en": "One parity bit can detect a change without locating it."
+    }
+  },
+  {
+    "id": "quick-hw-159",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-136"
+    ],
+    "title": {
+      "he": "כמה ביטי בדיקה צריכים?",
+      "en": "How many check bits are needed?"
+    },
+    "prompt": {
+      "he": "ל־8 ביטי מידע נדרשת תיקון תקלה יחידה בכל המילה, כולל ביטי הבדיקה. מה r המינימלי המקיים 2^r≥1+8+r?",
+      "en": "For 8 data bits, correct one flip anywhere including check bits. What is the smallest r satisfying 2^r≥1+8+r?"
+    },
+    "answer": {
+      "he": "4. צריך להבחין בין ללא תקלה לבין כל אחד מ־data+r מיקומים. זו מגבלת יתירות, לא הוכחת מינימום שערים או מחזורי קריאה.",
+      "en": "4. Distinguish no error from each of data+r positions. This bounds redundancy, not minimum gate count or read latency."
+    },
+    "takeaway": {
+      "he": "תיקון דורש קוד נפרד לכל מיקום וגם ללא שגיאה.",
+      "en": "Correction needs distinct signatures for every position and no error."
+    }
+  },
+  {
+    "id": "quick-hw-160",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-136"
+    ],
+    "title": {
+      "he": "הסינדרום הוא כתובת תקלה",
+      "en": "The syndrome names the error position"
+    },
+    "prompt": {
+      "he": "בקוד Hamming במיקומים 1..12, בדיקת משקל k מכסה מיקומים שהביט k שלהם דולק. התהפך רק מיקום 10. מה ערך הסינדרום?",
+      "en": "In Hamming positions 1..12, weight-k checks cover positions with bit k set. Only position 10 flips. What is the syndrome value?"
+    },
+    "answer": {
+      "he": "10. התקלה משנה בדיוק את הבדיקות המתאימות לכתיבה הבינארית של מיקומה, ולכן הסינדרום שווה למיקום, גם כשהוא ביט בדיקה.",
+      "en": "10. The flip changes checks matching its binary position, so syndrome equals position, including check-bit locations."
+    },
+    "takeaway": {
+      "he": "קבוצות בדיקה בינאריות מזהות גם ביט בדיקה פגום.",
+      "en": "Binary check groups identify failed check bits too."
+    }
+  },
+  {
+    "id": "quick-hw-161",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-136"
+    ],
+    "title": {
+      "he": "שתי תקלות אינן תקלה אחת",
+      "en": "Two errors are not one error"
+    },
+    "prompt": {
+      "he": "ב־SECDED, לכל היותר 2 תקלות. סינדרום S=0, וזוגיות כוללת שגויה P=0. מה האבחנה? S מתייחס למילת Hamming ללא הביט הכולל.",
+      "en": "In SECDED, at most 2 faults:syndrome S=0, bad overall parity P=0. What is the diagnosis? S excludes the overall parity bit."
+    },
+    "answer": {
+      "he": "אין שגיאה תחת ההבטחה. זוגיות שגויה מתאימה למספר אי־זוגי של תקלות. עם ההבטחה, סינדרום לא אפס וזוגיות תקינה מציינים זוג שאין לתקן כיחיד.",
+      "en": "No error under the promise. Bad parity indicates an odd count. Under the promise, nonzero syndrome with correct parity identifies a double error that must not be single-corrected."
+    },
+    "takeaway": {
+      "he": "SECDED מפריד תיקון יחיד מזיהוי זוג תקלות.",
+      "en": "SECDED separates single correction from double-error detection."
+    }
+  },
+  {
+    "id": "quick-hw-162",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-136"
+    ],
+    "title": {
+      "he": "כתובת תקלה שאינה קיימת",
+      "en": "An error position that does not exist"
+    },
+    "prompt": {
+      "he": "בקוד Hamming מקוצר בן 12 ביטים עם הבטחת עד תקלה יחידה, נקרא סינדרום 0. מה הפעולה המותרת במודל?",
+      "en": "A shortened 12-bit Hamming code promises at most one fault. Its syndrome is 0. What action is valid in this model?"
+    },
+    "answer": {
+      "he": "ללא שגיאה תחת הבטחת יחיד. 0 מציין ללא שגיאה תחת ההבטחה, 1..12 מאפשרים תיקון.13..15 אינם מיקומי מילה ולכן מצביעים על מצב מחוץ למודל.",
+      "en": "No error under the single-error promise. 0 means no error under the promise; 1..12 locate a correction.13..15 are not stored positions and must be rejected as outside the model."
+    },
+    "takeaway": {
+      "he": "קוד מקוצר אינו מתיר להפוך ביט מחוץ למילה.",
+      "en": "A shortened code does not permit flipping a nonexistent bit."
+    }
+  },
+  {
+    "id": "quick-hw-163",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-139"
+    ],
+    "title": {
+      "he": "תור סופי מול השהיה לא חסומה",
+      "en": "Finite queue, unbounded delay"
+    },
+    "prompt": {
+      "he": "תור ריק מכיל לכל היותר 4 בקשות. הזיכרון אינו משלים דבר בזמן שמגיעות 5 בקשות שאסור לעכב. כמה אינן נכנסות לתור?",
+      "en": "An empty queue holds at most 4 requests. Memory completes nothing while 5 unpausable requests arrive. How many do not fit?"
+    },
+    "answer": {
+      "he": "1. קיבולת סופית אינה סופגת זרם לא חסום. נדרשים חסם תעבורה, backpressure או חוזה דחייה וניסיון חוזר.",
+      "en": "1. Finite capacity cannot absorb an unbounded stream. Require bounded traffic, backpressure or explicit rejection/retry."
+    },
+    "takeaway": {
+      "he": "ללא backpressure או חסם תעבורה אין הבטחת אפס אובדן.",
+      "en": "Without backpressure or a traffic bound, zero loss is not guaranteed."
+    }
+  },
+  {
+    "id": "quick-hw-164",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-139"
+    ],
+    "title": {
+      "he": "ACK אינו בהכרח התחייבות לזיכרון",
+      "en": "ACK need not mean committed"
+    },
+    "prompt": {
+      "he": "כתיבה קיבלה ACK בתור ב־t=1 אך נראית לקריאות רק ב־t=5. קריאה לאותה כתובת מונפקת ב־t=2, בלי forwarding. מה ניתן לקבוע?",
+      "en": "A write gets enqueue ACK at t=1 but becomes read-visible at t=5. A same-address read issues at t=2, without forwarding. What follows?"
+    },
+    "answer": {
+      "he": "ייתכן ערך ישן בלי forwarding. ACK של הכנסה לתור אינו commit. כדי למנוע ערך ישן מחכים לנראות הכתיבה או מוסיפים forwarding וחוזה סדר מתאים.",
+      "en": "Stale data is possible without forwarding. An enqueue ACK is not commit. Wait for write visibility or add forwarding with an explicit ordering contract."
+    },
+    "takeaway": {
+      "he": "סדר פקודות צריך להתייחס לנראות ולא רק לקבלה.",
+      "en": "Command ordering depends on visibility, not only acceptance."
+    }
+  },
+  {
+    "id": "quick-hw-165",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-139"
+    ],
+    "title": {
+      "he": "מונה המתנה אינו ראיית השלמה",
+      "en": "A wait count is not completion evidence"
+    },
+    "prompt": {
+      "he": "בקר מתקדם אחרי 3 מחזורים, אבל הפעולה המסוימת משלימה רק אחרי 5. מה נכון למקרה הזה?",
+      "en": "A controller proceeds after 3 cycles, but this operation completes after 5. What is true for this case?"
+    },
+    "answer": {
+      "he": "ההתקדמות מוקדמת מההשלמה. אם ההמתנה קצרה מה־latency ההתקדמות מוקדמת. גם המתנה שמספיקה בדוגמה אינה מוכיחה חסם לכל פעולות העתיד.",
+      "en": "Progress precedes completion. A wait shorter than actual latency is premature. A sufficient wait for one example does not prove a bound for future operations."
+    },
+    "takeaway": {
+      "he": "latency משתנה דורש אירוע השלמה או חסם מוכח.",
+      "en": "Variable latency needs completion evidence or a proven bound."
+    }
+  },
+  {
+    "id": "quick-hw-166",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-139"
+    ],
+    "title": {
+      "he": "השלמה באותה חזית",
+      "en": "Completion on the acceptance edge"
+    },
+    "prompt": {
+      "he": "במצב ISSUE:פקודה accepted=1, והשלמה תואמת done=1 באותה חזית. החוזה מתיר זאת. לאיזה מצב עוברים? accepted=0 מחייב done=0.",
+      "en": "In ISSUE, command accepted=1 and matching done=1 occur at this edge. The contract permits immediate completion. Which state follows? accepted=0 requires done=0."
+    },
+    "answer": {
+      "he": "RESP: לשמור תגובה. כשקבלה והשלמה חופפות שומרים תגובה ונכנסים RESP. מעבר עיוור ל־WAIT עלול להחמיץ את האירוע היחיד.",
+      "en": "RESP: retain response. When acceptance and completion coincide, retain the response and enter RESP. Blindly entering WAIT can lose the only completion event."
+    },
+    "takeaway": {
+      "he": "יש לטפל גם במקרה המהיר ביותר שהממשק מתיר.",
+      "en": "Handle the fastest completion the interface permits."
+    }
+  },
+  {
+    "id": "quick-hw-167",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-139"
+    ],
+    "title": {
+      "he": "מי מקבל את התור הבא?",
+      "en": "Who gets the next turn?"
+    },
+    "prompt": {
+      "he": "READ ו־WRITE מבקשים ברציפות. round-robin מקבל 4 בקשות, החל ב־R. כל פעולה ותגובה משלימות לפני הבחירה הבאה. מה סדר הקבלות?",
+      "en": "READ and WRITE request continuously. Round-robin accepts 4 requests, starting withR. Each operation and response completes before the next arbitration. What is the acceptance order?"
+    },
+    "answer": {
+      "he": "R, W, R, W. בשתי בקשות מתמשכות מחליפים זוכה בכל קבלה. זה מונע רעב בהנחת התקדמות; אינו מבטיח latency מספרי לזיכרון.",
+      "en": "R, W, R, W. With both persistent requests, the winner alternates at each acceptance. This prevents starvation under progress assumptions, not a numeric memory-latency guarantee."
+    },
+    "takeaway": {
+      "he": "הוגנות דורשת מדיניות בחירה מפורשת.",
+      "en": "Fairness requires an explicit arbitration policy."
+    }
+  },
+  {
+    "id": "quick-hw-168",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-139"
+    ],
+    "title": {
+      "he": "כתובות שונות עדיין ממתינות",
+      "en": "Different addresses can still wait"
+    },
+    "prompt": {
+      "he": "בקר מסוריאל אינו מקבל פעולה נוספת עד שתגובת הקודמת נצרכת בחזית 3. הוא חוזר ל־IDLE אחריה. באיזו חזית מוקדמת אפשר לקבל בקשה חדשה?",
+      "en": "A serialized controller accepts nothing new until the previous response is consumed at edge 3; IDLE begins afterward. At which earliest edge can a new request be accepted?"
+    },
+    "answer": {
+      "he": "4. לפי מכונת המצבים הזאת הבחירה הבאה בחזית העוקבת, גם בכתובת אחרת. זו פשרה בטוחה ולא טענת throughput מיטבי.",
+      "en": "4. In this state-machine contract, the next acceptance is on the following edge, even for another address. This is a safe tradeoff, not optimal throughput."
+    },
+    "takeaway": {
+      "he": "בטיחות בסריאליזציה באה במחיר של מקביליות.",
+      "en": "Serialization trades concurrency for a simple safety invariant."
+    }
+  },
+  {
+    "id": "quick-hw-169",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-145"
+    ],
+    "title": {
+      "he": "איזה חלק עוקף את המחבר?",
+      "en": "Which part bypasses the incrementer?"
+    },
+    "prompt": {
+      "he": "במימוש A+SIZE, ‏A=255, SIZE=4=2^k. מה ערך k הביטים הנמוכים שמועברים ללא שינוי סביב ה־incrementer? עבור k=0 התוצאה 0.",
+      "en": "For A+SIZE, A=255, SIZE=4=2^k. What value do the k low bits bypass unchanged around the incrementer? For k=0 the value is 0."
+    },
+    "answer": {
+      "he": "3. מפרקים A=SIZE·U+L. מקדמים רק U, והשארית L=A mod SIZE נשמרת בחיווט.",
+      "en": "3. Write A=SIZE·U+L. Increment only U; remainder L=A mod SIZE is retained by wiring."
+    },
+    "takeaway": {
+      "he": "הוספת חזקה של 2 משאירה ביטים נמוכים ללא שינוי.",
+      "en": "Adding a power of 2 leaves lower bits unchanged."
+    }
+  },
+  {
+    "id": "quick-hw-170",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-145"
+    ],
+    "title": {
+      "he": "הנשא שחסר לבלוק",
+      "en": "The block’s missing carry"
+    },
+    "prompt": {
+      "he": "A=255, SIZE=1; נדרשת תוצאה מדויקת בת 9 ביטים. מה ביט המשקל 256 של A+SIZE? ה־incrementer עצמו מוציא רק 8 ביטים.",
+      "en": "A=255, SIZE=1; the exact result needs 9 bits. What is its weight 256 carry bit? The incrementer itself exposes only 8 result bits."
+    },
+    "answer": {
+      "he": "1. בודקים אם A+SIZE≥256. במקרה SIZE=1 ו־A=255 הבלוק עוטף לאפס, ולכן נדרש לשחזר carry מבחוץ.",
+      "en": "1. Check A+SIZE≥256. For SIZE=1, A=255, the block wraps to zero; the missing carry must be generated externally."
+    },
+    "takeaway": {
+      "he": "רוחב בלוק אינו מבטיח שפלט הנשיאה נגיש.",
+      "en": "A block width does not guarantee an exposed carry port."
+    }
+  },
+  {
+    "id": "quick-hw-171",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-145"
+    ],
+    "title": {
+      "he": "אפס חוקי ואפס של קלט פסול",
+      "en": "Valid zero and invalid-input zero"
+    },
+    "prompt": {
+      "he": "גרסת 8 ביטים מחזירה modulo 256 עם valid=1 רק ל־SIZE∈{1, 2, 4}; אחרת valid=0, result=0. עבור A=255, SIZE=1, מה valid, result?",
+      "en": "An 8-bit variant returns modulo 256 with valid=1 only for SIZE∈{1, 2, 4}; otherwise valid=0, result=0. For A=255, SIZE=1, what is valid, result?"
+    },
+    "answer": {
+      "he": "1, 0. גם אפס יכול להיות פלט חשבוני חוקי. אין להסיק פסילה מערך הנתון לבדו; SIZE קובע valid.",
+      "en": "1, 0. Zero can be a valid arithmetic output. Do not infer invalidity from the data value alone; SIZE determines valid."
+    },
+    "takeaway": {
+      "he": "valid צריך לשמר את משמעות הנתון.",
+      "en": "Validity must preserve data meaning."
+    }
+  },
+  {
+    "id": "quick-hw-172",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-140"
+    ],
+    "title": {
+      "he": "הפרש בין ריבועים",
+      "en": "The difference between squares"
+    },
+    "prompt": {
+      "he": "רכיב מחזיק n=0 ו־s=n². כמה צריך להוסיף ל־s כדי לקבל (n+1)² בלי מכפל?",
+      "en": "A component holds n=0 and s=n². What must be added to s to obtain(n+1)² without multiplication?"
+    },
+    "answer": {
+      "he": "1. מהזהות (n+1)²=n²+2n+1 מוסיפים את המספר האי־זוגי 2n+1. הצמדה של 1 לימין n מייצגת את אותו ערך.",
+      "en": "1. The identity(n+1)²=n²+2n+1 gives the odd increment 2n+1. Appending 1 to n in binary encodes that value."
+    },
+    "takeaway": {
+      "he": "רקורסיה יכולה להחליף מכפל ברצף ידוע.",
+      "en": "A recurrence can replace multiplication in a known sequence."
+    }
+  },
+  {
+    "id": "quick-hw-173",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-140"
+    ],
+    "title": {
+      "he": "באיזה n משתמש העדכון?",
+      "en": "Which n does the update use?"
+    },
+    "prompt": {
+      "he": "לפני חזית n=0, s=n². באותה חזית מבצעים n_next=n+1, s_next=s+2n+1. מה s_next? n בצד ימין הוא הערך הישן.",
+      "en": "Before an edge, n=0, s=n². Update n_next=n+1 and s_next=s+2n+1 together. What is s_next? Right-hand n is the old value."
+    },
+    "answer": {
+      "he": "1. השימוש ב־n הישן שומר s_next=n_next². שימוש ב־n שכבר הוגדל יוסיף 2 יותר מן הנדרש.",
+      "en": "1. Using old n preserves s_next=n_next². Using already-incremented n adds 2 too much."
+    },
+    "takeaway": {
+      "he": "עדכון מצומד צריך להשתמש במצב שקדם לחזית.",
+      "en": "Coupled updates must use pre-edge state."
+    }
+  },
+  {
+    "id": "quick-hw-174",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-140"
+    ],
+    "title": {
+      "he": "עוצרים את שני המצבים יחד",
+      "en": "Stop both coupled states together"
+    },
+    "prompt": {
+      "he": "מונה וריבועו מתחילים ב־0, 0 ומתקדמים יחד עד N=3, שם שניהם מחזיקים. מה n, s אחרי 5 חזיתות ללא reset?",
+      "en": "A counter and square start at 0, 0 and advance together until N=3, where both hold. What is n, s after 5 edges without reset?"
+    },
+    "answer": {
+      "he": "3, 9. n=min(steps, N), ו־s=n². החזקת המונה לבדו תוך המשך צבירה הייתה מפרה את הקשר. N=0 הוא מקרה חוקי.",
+      "en": "3, 9. n=min(steps, N), s=n². Holding only n while continuing accumulation would break the relation. N=0 is valid."
+    },
+    "takeaway": {
+      "he": "תנאי סיום צריך לשמר את האינווריאנט.",
+      "en": "A terminal condition must preserve the invariant."
+    }
+  },
+  {
+    "id": "quick-hw-175",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-147"
+    ],
+    "title": {
+      "he": "הערכים באמצע החלפה",
+      "en": "Values midway through a swap"
+    },
+    "prompt": {
+      "he": "בהחלפה על אוגרים נפרדים, X=3, Y=5. מבצעים X←X XOR Y, אחר כך Y←X XOR Y, אחר כך X←X XOR Y, בחזיתות נפרדות. מה X, Y אחרי 1 חזיתות?",
+      "en": "With separate registers, X=3, Y=5, perform X←X XOR Y, then Y←X XOR Y, then X←X XOR Y on separate edges. What is X, Y after 1 edges?"
+    },
+    "answer": {
+      "he": "6, 5. כל שורה משתמשת במצב החדש מן השורה הקודמת, ורק אוגר היעד נטען. ביטול XOR משחזר את שני הערכים, גם כשהם שווים.",
+      "en": "6, 5. Each step uses the preceding step’s state and loads only its target. XOR cancellation recovers both originals, including equal values."
+    },
+    "takeaway": {
+      "he": "טבלת פעולות צריכה להראות גם מצב ביניים.",
+      "en": "An operation schedule must show intermediate state."
+    }
+  },
+  {
+    "id": "quick-hw-176",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-147"
+    ],
+    "title": {
+      "he": "האם יש מצב שבו שניהם מחזיקים?",
+      "en": "Can both registers hold?"
+    },
+    "prompt": {
+      "he": "בחזית פעילה LOAD=1 טוען Y ו־NOT LOAD טוען X. LOAD=0, ללא global enable. אילו אוגרים מורשים להיטען בחזית 1?",
+      "en": "At an active edge LOAD=1 loads Y and NOT LOAD loads X. LOAD=0, with no global enable. Which registers are enabled at edge 1?"
+    },
+    "answer": {
+      "he": "רק X נטען. בכל LOAD בינארי בדיוק אוגר אחד מאופשר. כדי להבטיח שמירת שניהם אחרי ההחלפה צריך מנגנון עצירה נוסף שהמקור לא סיפק.",
+      "en": "Only X loads. For either binary LOAD exactly one register is enabled. Guaranteeing both hold after the swap needs an additional stop mechanism."
+    },
+    "takeaway": {
+      "he": "שתי הרשאות משלימות אינן הרשאת עצירה משותפת.",
+      "en": "Complementary enables are not a shared stop enable."
+    }
+  },
+  {
+    "id": "quick-hw-177",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-152"
+    ],
+    "title": {
+      "he": "נשא של המונה השחור",
+      "en": "Carry from the black-box counter"
+    },
+    "prompt": {
+      "he": "מונה 4 ביטים ו־FF גבוה יוצרים מונה modulo 32. לפני החזית המורחב הוא 15; הגבוה מתהפך כשהנמוך הישן 15. מה הערך אחרי 1 חזיתות?",
+      "en": "A 4-bit counter and high FF form modulo 32. The initial extended count is 15; high toggles when old low=15. What follows 1 edges?"
+    },
+    "answer": {
+      "he": "16. הנמוך עוטף באותה חזית שבה הגבוה מתהפך. כולם דוגמים את המצב הישן; אין צורך להפוך פלט מונה לשעון חדש.",
+      "en": "16. Low wrap and high toggle occur at the same edge using old state. No counter output must become a new clock."
+    },
+    "takeaway": {
+      "he": "מרחיבים מונה בשעון משותף ובבדיקת הערך הישן.",
+      "en": "Extend a counter with a shared clock and old-state carry."
+    }
+  },
+  {
+    "id": "quick-hw-178",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-110"
+    ],
+    "title": {
+      "he": "איזה ביט מכריע השוואה?",
+      "en": "Which bit decides the comparison?"
+    },
+    "prompt": {
+      "he": "משווים מילים לא מסומנות בנות 4 ביטים:A=8, B=7. הביטים הנמוכים אינם רשאים לגבור על הבדל גבוה יותר. מה היחס?",
+      "en": "Compare unsigned 4-bit words A=8, B=7. Lower bits cannot override a higher differing bit. What is the relation?"
+    },
+    "answer": {
+      "he": "A>B. מתחילים מן ה־MSB. רק כל עוד הביטים שווים ממשיכים למטה; ההבדל הראשון קובע את הכיוון.",
+      "en": "A>B. Scan from the MSB; continue only while equal. The first differing bit fixes the result."
+    },
+    "takeaway": {
+      "he": "בהשוואה לא מסומנת, הביט השונה הגבוה ביותר מכריע.",
+      "en": "The highest differing bit decides unsigned comparison."
+    }
+  },
+  {
+    "id": "quick-hw-179",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-151"
+    ],
+    "title": {
+      "he": "סופרים בזוגות בלי זליגת נשא",
+      "en": "Count pairs without cross-group carry"
+    },
+    "prompt": {
+      "he": "ל־byte x=255, מחשבים y=(x AND 85)+((x>>1) AND 85). מה ערך y? כל זוג ביטים מחזיק את מספר האחדות המקורי בו.",
+      "en": "For byte x=255, compute y=(x AND 85)+((x>>1) AND 85). What is y? Each bit pair stores its original one-count."
+    },
+    "answer": {
+      "he": "170. 85 הוא 01010101. כל חיבור זוג מקבל לכל היותר 2, שנכנס בשני ביטים, ולכן אינו נושא לקבוצה הבאה.",
+      "en": "170. 85 is 01010101. Each pair sums at most 2, which fits two bits and cannot carry into the next group."
+    },
+    "takeaway": {
+      "he": "מסכות יוצרות סכומים מקומיים בתוך מילה.",
+      "en": "Masks create local sums inside a word."
+    }
+  },
+  {
+    "id": "quick-hw-180",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-001"
+    ],
+    "title": {
+      "he": "רוחב פלט לספירת אחדות",
+      "en": "Output width for counting ones"
+    },
+    "prompt": {
+      "he": "סופרים אחדות ב־5 כניסות ביט עצמאיות ומוציאים ספירה מדויקת. כמה ביטי פלט נדרשים לכל התוצאות 0..5?",
+      "en": "Count ones in 5 independent input bits exactly. How many output bits cover every count 0..5?"
+    },
+    "answer": {
+      "he": "3. יש inputs+1 תוצאות אפשריות, לכן נדרש ceil(log₂(inputs+1)), ולפחות ביט אחד בחוזה הזה. אין צורך בביט פלט לכל כניסה.",
+      "en": "3. There are inputs+1 possible counts, requiring ceil(log₂(inputs+1)), with at least one bit in this contract. One output bit per input is unnecessary."
+    },
+    "takeaway": {
+      "he": "מספר התוצאות כולל גם את הספירה אפס.",
+      "en": "The output range includes the zero count."
+    }
+  },
+  {
+    "id": "quick-hw-181",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-100"
+    ],
+    "title": {
+      "he": "ביט שנקבע בלי לחשב",
+      "en": "A result bit fixed without calculation"
+    },
+    "prompt": {
+      "he": "רכיב מחשב 6x בדיוק עבור x=0 ללא סימן. מהו ביט 0 של התוצאה, לפני תכנון רשת המחברים?",
+      "en": "A component computes exact 6x for unsigned x=0. What is output bit 0 before designing its adder network?"
+    },
+    "answer": {
+      "he": "0. 6x=2·(3x) תמיד זוגי, ולכן ביט 0 תמיד 0. ההזזה הקבועה יכולה להיות חיווט ולא מחבר נוסף.",
+      "en": "0. 6x=2·(3x) is always even, so bit 0 is always 0. A fixed shift can be wiring rather than another adder."
+    },
+    "takeaway": {
+      "he": "גורם קבוע יכול לכפות ביטי פלט.",
+      "en": "A constant factor can force result bits."
+    }
+  },
+  {
+    "id": "quick-hw-182",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-122"
+    ],
+    "title": {
+      "he": "שני נשאים שלא יכולים להופיע יחד",
+      "en": "Two carries that cannot coexist"
+    },
+    "prompt": {
+      "he": "בבניית FA משני HA, C1=A AND B ו־C2=(A XOR B) AND Cin. עבור A=1, B=1, Cin=1, מה C1, C2?",
+      "en": "In a full-adder decomposition, C1=A AND B and C2=(A XOR B) AND Cin. For A=1, B=1, Cin=1, what is C1, C2?"
+    },
+    "answer": {
+      "he": "1, 0. כאשר C1=1 אז A=B=1 ולכן A XOR B=0 ו־C2=0. אין מצב 11, ולכן OR ו־XOR של שני הנשאים זהים כאן בלבד.",
+      "en": "1, 0. C1=1 implies A=B=1, forcing A XOR B=0 and C2=0. Pair 11 is impossible, so OR and XOR agree for these carries."
+    },
+    "takeaway": {
+      "he": "בלעדיות מאפשרת להחליף OR ב־XOR במקום המסוים.",
+      "en": "Mutual exclusion can make OR and XOR equivalent locally."
+    }
+  },
+  {
+    "id": "quick-hw-183",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-134"
+    ],
+    "title": {
+      "he": "כפל קבוע מתוך חיבורים",
+      "en": "Constant multiplication from wiring"
+    },
+    "prompt": {
+      "he": "מחשבים 13x כ־(x<<3)+(x<<2)+x בחשבון מדויק. עבור x=0, מה התוצאה? הזזות קבועות מותרות כחיווט.",
+      "en": "Compute exact 13x as(x<<3)+(x<<2)+x. For x=0, what is the result? Fixed shifts may be wiring."
+    },
+    "answer": {
+      "he": "0. 13=8+4+1, ולכן החיבור שקול לכפל. יש להרחיב לפני הזזות וחיבורים; הרחבה אחרי חיתוך אינה משחזרת ביטים.",
+      "en": "0. 13=8+4+1, so the sum equals multiplication. Widen before shifts/addition; widening a truncated result cannot restore bits."
+    },
+    "takeaway": {
+      "he": "פירוק הקבוע מאפשר לשתף מבנה חשבוני.",
+      "en": "Decomposing a constant exposes arithmetic structure."
+    }
+  },
+  {
+    "id": "quick-hw-184",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-174"
+    ],
+    "title": {
+      "he": "עמודת הביט של ארבע",
+      "en": "The weight-four column"
+    },
+    "prompt": {
+      "he": "X בן 2 ביטים ללא סימן, וערכו 0. מה ביט המשקל 4 בתוצאה המדויקת X²?",
+      "en": "Unsigned 2-bit X has value 0. What is the weight 4 bit of exact X²?"
+    },
+    "answer": {
+      "he": "0. הריבועים הם 0, 1, 4, 9. ביט המשקל 4 דולק רק בקלט 10, ולכן y2=a AND NOT b עבור X=(a, b).",
+      "en": "0. Squares are 0, 1, 4, 9. Weight 4 is set only for input 10, so y2=a AND NOT b for X=(a, b)."
+    },
+    "takeaway": {
+      "he": "טבלת אמת קטנה יכולה לבטל צורך במכפל כללי.",
+      "en": "A small truth table can eliminate a general multiplier."
+    }
+  },
+  {
+    "id": "quick-hw-185",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-174"
+    ],
+    "title": {
+      "he": "ריבוע תלוי בפירוש הקלט",
+      "en": "Squaring depends on input interpretation"
+    },
+    "prompt": {
+      "he": "התבנית בת 2 הביטים היא הערך העשרוני 3, ומפורשת במשלים לשתיים. מה הריבוע המתמטי המדויק שלה? זהו פירוש חתום, לא unsigned.",
+      "en": "A 2-bit pattern has unsigned code 3 but is interpreted as two’s complement. What is its exact mathematical square? This is signed, not unsigned."
+    },
+    "answer": {
+      "he": "1. הקודים 0, 1, 2, 3 מייצגים 0, 1, −2, −1. הריבועים הם 0, 1, 4, 1, שלא כמו טבלת unsigned בשורה 11.",
+      "en": "1. Codes 0, 1, 2, 3 denote 0, 1, −2, −1. Their squares are 0, 1, 4, 1, unlike the unsigned table at 11."
+    },
+    "takeaway": {
+      "he": "לפני שימוש בטבלה קובעים signedness.",
+      "en": "Specify signedness before choosing a truth table."
+    }
+  },
+  {
+    "id": "quick-hw-186",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-171"
+    ],
+    "title": {
+      "he": "בודקים את הרצף שנסגר",
+      "en": "Check the run that just closed"
+    },
+    "prompt": {
+      "he": "רצף של הביט 0 באורך 4 נסגר עכשיו בביט הנגדי. שגיאה היא אפסים באורך זוגי או אחדות באורך אי־זוגי. מה אירוע השגיאה 0/1?",
+      "en": "A run of bit 0, length 4, is now closed by the opposite bit. Errors are even zero runs or odd one runs. What is the 0/1 error event?"
+    },
+    "answer": {
+      "he": "1. בודקים את סוג הרצף הישן ואת זוגיות אורכו, ואז מתחילים רצף חדש באורך 1. לא בודקים את זוגיות הרצף החדש במקום הישן.",
+      "en": "1. Check old run type and length parity, then start a new length 1 run. Do not substitute the new run’s parity."
+    },
+    "takeaway": {
+      "he": "אירוע סגירה שונה מבדיקת כל קידומת זמנית.",
+      "en": "A closing event differs from testing each temporary prefix."
+    }
+  },
+  {
+    "id": "quick-hw-187",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-171"
+    ],
+    "title": {
+      "he": "מצב מדומה שמייצג התחלה ריקה",
+      "en": "A virtual state representing empty history"
+    },
+    "prompt": {
+      "he": "ZO/ZE הם רצף אפסים אי־זוגי/זוגי; OO/OE הם רצף אחדות אי־זוגי/זוגי. הגלאי היה ב־OO, אך reset קובע OE השקול להיסטוריה ריקה. הביט הראשון אחריו 0. מה המצב החדש ללא שגיאה?",
+      "en": "ZO/ZE mean odd/even zero runs; OO/OE mean odd/even one runs. Before reset, state=OO; reset sets OE, equivalent to empty history. First subsequent bit=0. What history state follows without error?"
+    },
+    "answer": {
+      "he": "ZO. ביט ראשון יוצר רצף באורך 1:אפס עובר ל־ZO ואחד ל־OO. הרצף המדומה באורך 0 אינו מדווח כשגיאה.",
+      "en": "ZO. The first bit starts a length 1 run:zero enters ZO, one enters OO. The virtual length 0 history causes no error."
+    },
+    "takeaway": {
+      "he": "מצבים שקולים נקבעים לפי התנהגות עתידית.",
+      "en": "State equivalence is determined by future behavior."
+    }
+  },
+  {
+    "id": "quick-hw-188",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-173"
+    ],
+    "title": {
+      "he": "כישלון חלקי אינו מחיקה מלאה",
+      "en": "A partial mismatch need not clear everything"
+    },
+    "prompt": {
+      "he": "גלאי 1011 קלט עד כה את ההיסטוריה 1010. מה אורך הקידומת הארוכה ביותר מבין ריקה, 1, 10, 101 שהיא גם סיומת ההיסטוריה?",
+      "en": "A 1011 detector has read history 1010. What is the longest suffix length among target prefixes empty, 1, 10, 101?"
+    },
+    "answer": {
+      "he": "2. משווים סיומות לקידומות היעד. למשל 1010 שומר 10 ולא מאפס הכול; כך לא מאבדים התחלה שכבר הגיעה.",
+      "en": "2. Match suffixes to target prefixes. For example, 1010 keeps 10 rather than clearing everything, retaining progress already received."
+    },
+    "takeaway": {
+      "he": "שומרים סיומת שהיא עדיין קידומת של היעד.",
+      "en": "Retain a suffix that is still a target prefix."
+    }
+  },
+  {
+    "id": "quick-hw-189",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-050"
+    ],
+    "title": {
+      "he": "שארית מנורמלת לקלט מהסוף",
+      "en": "Normalized remainder for LSB-first input"
+    },
+    "prompt": {
+      "he": "בגלאי חלוקה ב־5 לקלט LSB-first, המצב מוגדר r=V·2^(-k) mod 5 אחרי k ביטים. כעת r=0, והביט הבא 1. מה r_next=3(r+bit) mod 5?",
+      "en": "For LSB-first divisibility by 5, state r=V·2^(-k) mod 5 after k bits. Now r=0, next bit 1. What is r_next=3(r+bit) mod 5?"
+    },
+    "answer": {
+      "he": "3. 3 הוא ההופכי של 2 modulo 5. הכפלה בו מנרמלת את המשקל אחרי הוספת הביט, בלי לטעון ש־r הוא השארית המספרית הישירה.",
+      "en": "3. 3 is the inverse of 2 modulo 5. It normalizes the next weight after adding the bit; r is not the direct numeric remainder."
+    },
+    "takeaway": {
+      "he": "קידוד מצב מתאים יכול לספוג את מופע המשקל.",
+      "en": "A suitable state encoding can absorb weight phase."
+    }
+  },
+  {
+    "id": "quick-hw-190",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-045"
+    ],
+    "title": {
+      "he": "הראשון נשאר הראשון",
+      "en": "The first stays first"
+    },
+    "prompt": {
+      "he": "אוגר זוכה מתחיל ריק. בכל צעד מגיע לכל היותר מסיים אחד; - פירושו אין מסיים. הרצף הוא-, A, B. מי צריך להישאר שמור?",
+      "en": "A winner register starts empty. At most one finisher arrives per step; - means none. The sequence is-, A, B. Who must remain stored?"
+    },
+    "answer": {
+      "he": "A. טוענים רק כשהאוגר ריק ויש אירוע. לאחר הזכייה מתעלמים ממסיימים מאוחרים עד reset; זה אינו מנגנון העדיפות האחרון.",
+      "en": "A. Load only while empty and an event arrives. Ignore later finishers until reset; this is not last-arrival priority."
+    },
+    "takeaway": {
+      "he": "שמירת זוכה מחייבת חסימת כתיבות מאוחרות.",
+      "en": "Retaining a winner requires blocking later writes."
+    }
+  },
+  {
+    "id": "quick-hw-191",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-053"
+    ],
+    "title": {
+      "he": "גלאי נוכחות אינו גלאי כיוון",
+      "en": "Presence is not direction"
+    },
+    "prompt": {
+      "he": "גלאי יחיד מחזיר רק חסום/פנוי, ואדם יכול לעבור בשני הכיוונים. נצפה 0, 1, 0 עם זמן חסימה 1s. הכיוון לא משפיע על הרגישות. מה אפשר להסיק על הכיוון?",
+      "en": "One sensor reports blocked/clear only; people may move either way. Its trace is 0, 1, 0 with blocked duration 1s. Sensitivity is direction-independent. What can be inferred about direction?"
+    },
+    "answer": {
+      "he": "אותו רצף אינו מבחין בין הכיוונים. אותה תנועה הפוכה יכולה ליצור בדיוק אותה תצפית וזמן חסימה. ללא מידע נוסף אין הכרעה בין כניסה ליציאה.",
+      "en": "The trace cannot distinguish direction. Reversing the passage can produce the identical trace and duration. Without more information, entry and exit are indistinguishable."
+    },
+    "takeaway": {
+      "he": "האלגוריתם מוגבל למידע שהחיישן באמת חושף.",
+      "en": "An algorithm is limited by its actual observations."
+    }
+  },
+  {
+    "id": "quick-hw-192",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-053"
+    ],
+    "title": {
+      "he": "נסיגה אינה כניסה",
+      "en": "A retreat is not an entry"
+    },
+    "prompt": {
+      "he": "שני גלאים מסודרים, אדם יחיד וללא דגימות חסרות. נתיב החסימות הוא 00, 10, 00, ומסתיים באותו צד שממנו התחיל. מה שינוי ספירת האנשים בפנים?",
+      "en": "Two ordered sensors, one person, no missed samples:trace 00, 10, 00 ends on the starting side. What is the net occupancy change?"
+    },
+    "answer": {
+      "he": "0. האדם התקרב ונסוג בלי להשלים מעבר. שינוי הספירה 0; עדכון על החסימה הראשונה היה יוצר ספירת שווא.",
+      "en": "0. The person approached and retreated without a completed passage. Net change is 0; counting first activation creates a false entry."
+    },
+    "takeaway": {
+      "he": "סופרים מעבר מלא ולא רק הפעלת החיישן הראשון.",
+      "en": "Count a complete passage, not just first-sensor activation."
+    }
+  },
+  {
+    "id": "quick-hw-193",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-104"
+    ],
+    "title": {
+      "he": "תצפית אינה אבחנת סיבה",
+      "en": "An observation is not a root-cause proof"
+    },
+    "prompt": {
+      "he": "צינור אמור להציג שינוי אחרי 3 חזיתות, אך נצפה אחרי 2. אין נתוני נתיב, reset, חזית קלט או skew. מה ניתן להסיק על סוג התקלה?",
+      "en": "A pipeline should change after 3 edges, but changes after 2. Path, reset, input-edge and skew data are missing. What can be inferred about the fault type?"
+    },
+    "answer": {
+      "he": "אין אבחנה יחידה מהמספר לבדו. ספירת חזיתות לבדה אינה מוכיחה setup או hold. צריך לבדוק את ההגדרה והשעונים, תנאי ההתחלה והגעת הנתונים.",
+      "en": "The edge count alone is insufficient. Edge count alone does not prove setup or hold. Inspect the contract, clocks, initial conditions and arrivals."
+    },
+    "takeaway": {
+      "he": "מאבחנים תזמון בעזרת נתיב, שעון וראיות נוספות.",
+      "en": "Timing diagnosis needs path, clock and additional evidence."
+    }
+  },
+  {
+    "id": "quick-hw-194",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-112"
+    ],
+    "title": {
+      "he": "הבועה נמצאת בכניסה",
+      "en": "The bubble is on the input"
+    },
+    "prompt": {
+      "he": "לשער AND יש בועה רק בכניסת B. עבור A=0, B=0, מה הפלט? זה אינו NAND בעל בועה ביציאה.",
+      "en": "An AND gate has a bubble only on input B. For A=0, B=0, what is output? This is not NAND with an output bubble."
+    },
+    "answer": {
+      "he": "0. הפונקציה A AND NOT B. NAND היה NOT(A AND B), ולכן אסור להזיז בועה בלי שינוי מתאים בשערים.",
+      "en": "0. The function is A AND NOT B. NAND is NOT(A AND B); moving a bubble requires the corresponding logic transformation."
+    },
+    "takeaway": {
+      "he": "מיקום ההיפוך משנה את הפונקציה.",
+      "en": "The location of inversion changes the function."
+    }
+  },
+  {
+    "id": "quick-hw-195",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-119"
+    ],
+    "title": {
+      "he": "מסכה להחלפת שני ערכים מובטחים",
+      "en": "A mask for two promised values"
+    },
+    "prompt": {
+      "he": "הקלט מובטח להיות רק 9 או 13. רוצים להחליף ביניהם באמצעות x XOR mask. איזו mask פועלת בשני הכיוונים?",
+      "en": "Input is promised to be only 9 or 13. Swap these values using x XOR mask. Which mask works in both directions?"
+    },
+    "answer": {
+      "he": "4. mask=a XOR b. ביטול XOR מחזיר את הערך השני. אין כאן התחייבות למיפוי רצוי עבור מספרים מחוץ להבטחה.",
+      "en": "4. mask=a XOR b. XOR cancellation maps each promised value to the other. Inputs outside the promise have no additional required mapping."
+    },
+    "takeaway": {
+      "he": "טריק חוקי בתחום מובטח אינו מפרט לכל מספר.",
+      "en": "A trick on a promised domain is not a specification for every number."
+    }
+  },
+  {
+    "id": "quick-hw-196",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-118"
+    ],
+    "title": {
+      "he": "בתוך רצועת ההיסטרזיס",
+      "en": "Inside the hysteresis band"
+    },
+    "prompt": {
+      "he": "משווה היסטרזיס עולה ל־1 ב־Vin≥2V ויורד ל־0 ב־Vin≤1V. באמצע הוא מחזיק. היה פלט 0, ועכשיו Vin=1.5V. מה הפלט?",
+      "en": "A hysteretic comparator sets 1 at Vin≥2V and 0 at Vin≤1V; between thresholds it holds. Previous output=0, now Vin=1.5V. What is output?"
+    },
+    "answer": {
+      "he": "0. בתוך הרצועה שומרים את הפלט הקודם; מחוצה לה הסף המתאים קובע. אי אפשר לתאר את כל ההתנהגות בטבלת Vin חד־ערכית ללא מצב.",
+      "en": "0. Inside the band retain previous output; outside, the relevant threshold decides. Vin alone cannot describe the full behavior without state."
+    },
+    "takeaway": {
+      "he": "שני ספים יוצרים תלות מכוונת בהיסטוריה.",
+      "en": "Two thresholds intentionally introduce history dependence."
+    }
+  },
+  {
+    "id": "quick-hw-197",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-118"
+    ],
+    "title": {
+      "he": "מתח ביניים אינו חצי ביט",
+      "en": "An intermediate voltage is not half a bit"
+    },
+    "prompt": {
+      "he": "כניסה מבטיחה 0 כאשר Vin≤VIL=0.8V ו־1 כאשר Vin≥VIH=2V. כעת Vin=1.2V. מה מובטח?",
+      "en": "An input guarantees 0 for Vin≤VIL=0.8V and 1 for Vin≥VIH=2V. Now Vin=1.2V. What is guaranteed?"
+    },
+    "answer": {
+      "he": "הערך הלוגי אינו מובטח. בתחום שבין VIL ל־VIH אין ערך לוגי מובטח. זה אינו ערך נתון של 0.5, וסף אמיתי עשוי להשתנות עם תנאים.",
+      "en": "Logical value is unspecified. Between VIL and VIH no logic value is guaranteed. This is not a data value of 0.5, and actual thresholds vary with conditions."
+    },
+    "takeaway": {
+      "he": "רמות לוגיות מובטחות דורשות גבולות מתח.",
+      "en": "Guaranteed logic levels require voltage bounds."
+    }
+  },
+  {
+    "id": "quick-hw-198",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-160"
+    ],
+    "title": {
+      "he": "משווה בלוקים במקום מספר בודד",
+      "en": "Compare-split whole blocks"
+    },
+    "prompt": {
+      "he": "שני בלוקים שווי אורך הם[1, 9] ו־[2, 8]. פעולת compare-split ממיינת את האיחוד ומחזירה לבלוק הראשון את החצי הנמוך. מה נשאר בו?",
+      "en": "Equal-length blocks are[1, 9]and[2, 8]. Compare-split sorts their union and returns the lower half to the first block. What remains there?"
+    },
+    "answer": {
+      "he": "1, 2. ממיינים את כל ההופעות ושומרים את החצי הנמוך, כולל כפילויות. אין די בהשוואת איבר יחיד או במקסימום של כל בלוק.",
+      "en": "1, 2. Sort all occurrences and retain the lower half, including duplicates. One scalar comparison or block maximum is insufficient."
+    },
+    "takeaway": {
+      "he": "בלוק מיון יכול להפריד חצי נמוך וחצי גבוה.",
+      "en": "A sorter can split blocks into lower and upper halves."
+    }
+  },
+  {
+    "id": "quick-hw-199",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-160"
+    ],
+    "title": {
+      "he": "סף שחושף היפוך סדר",
+      "en": "A threshold exposing an inversion"
+    },
+    "prompt": {
+      "he": "בפלט מופיע 8 לפני 2, כאשר הראשון גדול יותר. רוצים סף θ כך שערך קטן מ־θ יהפוך 0 ואחרת 1, והזוג יהפוך 1, 0. איזה θ באמצע מתאים?",
+      "en": "Output places 8 before 2, with the first larger. Map values below θ to 0 and others to 1. Which midpoint θ makes this pair 1, 0?"
+    },
+    "answer": {
+      "he": "5. כל סף בין הערכים מפריד אותם. מיון וסיווג סף מתחלפים, לכן רשת שגויה בסדר מספרי חושפת גם כשל בינארי.",
+      "en": "5. A threshold between the values separates them. Sorting commutes with threshold classification, so a numeric inversion exposes a binary failure."
+    },
+    "takeaway": {
+      "he": "הוכחת מיון יכולה לצמצם שגיאה מספרית למקרה בינארי.",
+      "en": "A sorting proof can reduce a numeric inversion to a binary one."
+    }
+  },
+  {
+    "id": "quick-hw-200",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-160"
+    ],
+    "title": {
+      "he": "אינסוף מומצא עלול למחוק מידע",
+      "en": "A guessed infinity can erase data"
+    },
+    "prompt": {
+      "he": "מרפדים רשימת אמת[1, 200] בערך sentinel=100, ממיינים ועורכים חיתוך לאורך המקורי. מה הפלט בפועל? אין תג שמבדיל ריפוד מנתון.",
+      "en": "Pad real data[1, 200]with sentinel=100, sort, and keep the original length. What output actually remains? No tag separates padding from real data."
+    },
+    "answer": {
+      "he": "1, 100. אם sentinel קטן מנתון אמיתי הוא נכנס לפלט ודוחק מידע. תג ריפוד שמדורג מעל כל נתון פותר זאת בלי לנחש גבול מספרי.",
+      "en": "1, 100. A sentinel smaller than real data enters the output and displaces it. A padding tag ordered above all real data avoids guessing a numeric bound."
+    },
+    "takeaway": {
+      "he": "ריפוד צריך להיות גדול בהגדרה, לא רק בדוגמה.",
+      "en": "Padding must be greater by definition, not only in an example."
+    }
+  }
+]

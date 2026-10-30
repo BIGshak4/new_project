@@ -1,0 +1,5600 @@
+[
+  {
+    "key": "quick-hw-126-v1",
+    "method": "rc_ambiguity",
+    "inputs": {
+      "tau": 2,
+      "r": 1
+    },
+    "expected": 2.0,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-126-v2",
+    "method": "rc_ambiguity",
+    "inputs": {
+      "tau": 2,
+      "r": 2
+    },
+    "expected": 1.0,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-126-v3",
+    "method": "rc_ambiguity",
+    "inputs": {
+      "tau": 3,
+      "r": 6
+    },
+    "expected": 0.5,
+    "correct_text": {
+      "he": "0.5",
+      "en": "0.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-126-v4",
+    "method": "rc_ambiguity",
+    "inputs": {
+      "tau": 0.5,
+      "r": 5
+    },
+    "expected": 0.1,
+    "correct_text": {
+      "he": "0.1",
+      "en": "0.1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-126-v5",
+    "method": "rc_ambiguity",
+    "inputs": {
+      "tau": 10,
+      "r": 0.5
+    },
+    "expected": 20.0,
+    "correct_text": {
+      "he": "20",
+      "en": "20"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-127-v1",
+    "method": "rc_half",
+    "inputs": {
+      "r": 1,
+      "c": 1
+    },
+    "expected": 0.6931471805599453,
+    "correct_text": {
+      "he": "0.693147",
+      "en": "0.693147"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-127-v2",
+    "method": "rc_half",
+    "inputs": {
+      "r": 2,
+      "c": 3
+    },
+    "expected": 4.1588830833596715,
+    "correct_text": {
+      "he": "4.15888",
+      "en": "4.15888"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-127-v3",
+    "method": "rc_half",
+    "inputs": {
+      "r": 5,
+      "c": 0.2
+    },
+    "expected": 0.6931471805599453,
+    "correct_text": {
+      "he": "0.693147",
+      "en": "0.693147"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-127-v4",
+    "method": "rc_half",
+    "inputs": {
+      "r": 0.5,
+      "c": 8
+    },
+    "expected": 2.772588722239781,
+    "correct_text": {
+      "he": "2.77259",
+      "en": "2.77259"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-127-v5",
+    "method": "rc_half",
+    "inputs": {
+      "r": 10,
+      "c": 0.01
+    },
+    "expected": 0.06931471805599453,
+    "correct_text": {
+      "he": "0.0693147",
+      "en": "0.0693147"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-128-v1",
+    "method": "cap_jump",
+    "inputs": {
+      "before_b": 3,
+      "after_b": 0,
+      "before": 3
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-128-v2",
+    "method": "cap_jump",
+    "inputs": {
+      "before_b": 0,
+      "after_b": 3,
+      "before": 3
+    },
+    "expected": 6,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-128-v3",
+    "method": "cap_jump",
+    "inputs": {
+      "before_b": 5,
+      "after_b": 0,
+      "before": 4
+    },
+    "expected": -1,
+    "correct_text": {
+      "he": "-1",
+      "en": "-1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-128-v4",
+    "method": "cap_jump",
+    "inputs": {
+      "before_b": 1,
+      "after_b": 2,
+      "before": 0
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-128-v5",
+    "method": "cap_jump",
+    "inputs": {
+      "before_b": 2,
+      "after_b": 2,
+      "before": 1
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-129-v1",
+    "method": "cap_dc",
+    "inputs": {
+      "vdd": 1
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-129-v2",
+    "method": "cap_dc",
+    "inputs": {
+      "vdd": 1.8
+    },
+    "expected": 1.8,
+    "correct_text": {
+      "he": "1.8",
+      "en": "1.8"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-129-v3",
+    "method": "cap_dc",
+    "inputs": {
+      "vdd": 2.5
+    },
+    "expected": 2.5,
+    "correct_text": {
+      "he": "2.5",
+      "en": "2.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-129-v4",
+    "method": "cap_dc",
+    "inputs": {
+      "vdd": 3.3
+    },
+    "expected": 3.3,
+    "correct_text": {
+      "he": "3.3",
+      "en": "3.3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-129-v5",
+    "method": "cap_dc",
+    "inputs": {
+      "vdd": 5
+    },
+    "expected": 5,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-130-v1",
+    "method": "overshoot",
+    "inputs": {
+      "before": 3,
+      "jump": 3
+    },
+    "expected": 6,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-130-v2",
+    "method": "overshoot",
+    "inputs": {
+      "before": 2,
+      "jump": 1
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-130-v3",
+    "method": "overshoot",
+    "inputs": {
+      "before": 5,
+      "jump": 5
+    },
+    "expected": 10,
+    "correct_text": {
+      "he": "10",
+      "en": "10"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-130-v4",
+    "method": "overshoot",
+    "inputs": {
+      "before": 1,
+      "jump": -2
+    },
+    "expected": -1,
+    "correct_text": {
+      "he": "-1",
+      "en": "-1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-130-v5",
+    "method": "overshoot",
+    "inputs": {
+      "before": 0,
+      "jump": 2
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-131-v1",
+    "method": "cap_history",
+    "inputs": {
+      "start": 0,
+      "vdd": 4,
+      "decay": 0.5,
+      "jump": 4
+    },
+    "expected": 6.0,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-131-v2",
+    "method": "cap_history",
+    "inputs": {
+      "start": 8,
+      "vdd": 4,
+      "decay": 0.5,
+      "jump": -4
+    },
+    "expected": 2.0,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-131-v3",
+    "method": "cap_history",
+    "inputs": {
+      "start": 0,
+      "vdd": 2,
+      "decay": 0.25,
+      "jump": 2
+    },
+    "expected": 3.5,
+    "correct_text": {
+      "he": "3.5",
+      "en": "3.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-131-v4",
+    "method": "cap_history",
+    "inputs": {
+      "start": 3,
+      "vdd": 3,
+      "decay": 0.5,
+      "jump": -3
+    },
+    "expected": 0.0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-131-v5",
+    "method": "cap_history",
+    "inputs": {
+      "start": 1,
+      "vdd": 5,
+      "decay": 0.125,
+      "jump": 1
+    },
+    "expected": 5.5,
+    "correct_text": {
+      "he": "5.5",
+      "en": "5.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-132-v1",
+    "method": "gate_charge",
+    "inputs": {
+      "c": 2,
+      "dv": 3
+    },
+    "expected": 6,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-132-v2",
+    "method": "gate_charge",
+    "inputs": {
+      "c": 1,
+      "dv": 1.8
+    },
+    "expected": 1.8,
+    "correct_text": {
+      "he": "1.8",
+      "en": "1.8"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-132-v3",
+    "method": "gate_charge",
+    "inputs": {
+      "c": 5,
+      "dv": 0
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-132-v4",
+    "method": "gate_charge",
+    "inputs": {
+      "c": 0.5,
+      "dv": -2
+    },
+    "expected": -1.0,
+    "correct_text": {
+      "he": "-1",
+      "en": "-1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-132-v5",
+    "method": "gate_charge",
+    "inputs": {
+      "c": 4,
+      "dv": 2.5
+    },
+    "expected": 10.0,
+    "correct_text": {
+      "he": "10",
+      "en": "10"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-133-v1",
+    "method": "doping",
+    "inputs": {
+      "operation": "implant",
+      "description_he": "השתלת תורמים ב־source",
+      "description_en": "implanting donors in the source"
+    },
+    "expected": "permanent",
+    "correct_text": {
+      "he": "זיהום קבוע של החומר",
+      "en": "Permanent material doping"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-133-v2",
+    "method": "doping",
+    "inputs": {
+      "operation": "gate",
+      "description_he": "העלאת מתח השער מעל הסף",
+      "description_en": "raising gate bias above threshold"
+    },
+    "expected": "reversible",
+    "correct_text": {
+      "he": "שכבת היפוך הנשלטת במתח",
+      "en": "Voltage-controlled inversion layer"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-133-v3",
+    "method": "doping",
+    "inputs": {
+      "operation": "gate",
+      "description_he": "הסרת מתח השער אחרי היפוך",
+      "description_en": "removing gate bias after inversion"
+    },
+    "expected": "reversible",
+    "correct_text": {
+      "he": "שכבת היפוך הנשלטת במתח",
+      "en": "Voltage-controlled inversion layer"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-133-v4",
+    "method": "doping",
+    "inputs": {
+      "operation": "implant",
+      "description_he": "יצירת אזור drain מסוג n+",
+      "description_en": "forming an n+ drain"
+    },
+    "expected": "permanent",
+    "correct_text": {
+      "he": "זיהום קבוע של החומר",
+      "en": "Permanent material doping"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-133-v5",
+    "method": "doping",
+    "inputs": {
+      "operation": "gate",
+      "description_he": "שינוי אלקטרוסטטי של פני המצע",
+      "description_en": "electrostatically changing the body surface"
+    },
+    "expected": "reversible",
+    "correct_text": {
+      "he": "שכבת היפוך הנשלטת במתח",
+      "en": "Voltage-controlled inversion layer"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-134-v1",
+    "method": "mos_on",
+    "inputs": {
+      "vg": 2,
+      "vs": 0,
+      "vt": 1
+    },
+    "expected": "on",
+    "correct_text": {
+      "he": "מעל הסף; תעלת היפוך אפשרית",
+      "en": "Above threshold; inversion channel possible"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-134-v2",
+    "method": "mos_on",
+    "inputs": {
+      "vg": 2,
+      "vs": 1.5,
+      "vt": 1
+    },
+    "expected": "off",
+    "correct_text": {
+      "he": "מתחת לסף; אין תעלת היפוך במודל",
+      "en": "Below threshold; no inversion channel in the model"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-134-v3",
+    "method": "mos_on",
+    "inputs": {
+      "vg": 1,
+      "vs": 0,
+      "vt": 1
+    },
+    "expected": "off",
+    "correct_text": {
+      "he": "מתחת לסף; אין תעלת היפוך במודל",
+      "en": "Below threshold; no inversion channel in the model"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-134-v4",
+    "method": "mos_on",
+    "inputs": {
+      "vg": 3,
+      "vs": 1,
+      "vt": 0.5
+    },
+    "expected": "on",
+    "correct_text": {
+      "he": "מעל הסף; תעלת היפוך אפשרית",
+      "en": "Above threshold; inversion channel possible"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-134-v5",
+    "method": "mos_on",
+    "inputs": {
+      "vg": 0,
+      "vs": 0,
+      "vt": 1
+    },
+    "expected": "off",
+    "correct_text": {
+      "he": "מתחת לסף; אין תעלת היפוך במודל",
+      "en": "Below threshold; no inversion channel in the model"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-135-v1",
+    "method": "mos_region",
+    "inputs": {
+      "vgs": 3,
+      "vt": 1,
+      "vds": 1
+    },
+    "expected": "linear",
+    "correct_text": {
+      "he": "אזור לינארי",
+      "en": "Linear region"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-135-v2",
+    "method": "mos_region",
+    "inputs": {
+      "vgs": 3,
+      "vt": 1,
+      "vds": 2
+    },
+    "expected": "saturation",
+    "correct_text": {
+      "he": "רוויה",
+      "en": "Saturation"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-135-v3",
+    "method": "mos_region",
+    "inputs": {
+      "vgs": 3,
+      "vt": 1,
+      "vds": 4
+    },
+    "expected": "saturation",
+    "correct_text": {
+      "he": "רוויה",
+      "en": "Saturation"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-135-v4",
+    "method": "mos_region",
+    "inputs": {
+      "vgs": 0.5,
+      "vt": 1,
+      "vds": 2
+    },
+    "expected": "off",
+    "correct_text": {
+      "he": "קיטעון",
+      "en": "Cutoff"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-135-v5",
+    "method": "mos_region",
+    "inputs": {
+      "vgs": 2,
+      "vt": 0.5,
+      "vds": 0
+    },
+    "expected": "linear",
+    "correct_text": {
+      "he": "אזור לינארי",
+      "en": "Linear region"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-136-v1",
+    "method": "mos_square",
+    "inputs": {
+      "factor": 2
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-136-v2",
+    "method": "mos_square",
+    "inputs": {
+      "factor": 3
+    },
+    "expected": 9,
+    "correct_text": {
+      "he": "9",
+      "en": "9"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-136-v3",
+    "method": "mos_square",
+    "inputs": {
+      "factor": 0.5
+    },
+    "expected": 0.25,
+    "correct_text": {
+      "he": "0.25",
+      "en": "0.25"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-136-v4",
+    "method": "mos_square",
+    "inputs": {
+      "factor": 1
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-136-v5",
+    "method": "mos_square",
+    "inputs": {
+      "factor": 4
+    },
+    "expected": 16,
+    "correct_text": {
+      "he": "16",
+      "en": "16"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-137-v1",
+    "method": "nmos_high",
+    "inputs": {
+      "vdd": 5,
+      "vt": 1
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-137-v2",
+    "method": "nmos_high",
+    "inputs": {
+      "vdd": 3.3,
+      "vt": 0.7
+    },
+    "expected": 2.5999999999999996,
+    "correct_text": {
+      "he": "2.6",
+      "en": "2.6"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-137-v3",
+    "method": "nmos_high",
+    "inputs": {
+      "vdd": 2,
+      "vt": 0.5
+    },
+    "expected": 1.5,
+    "correct_text": {
+      "he": "1.5",
+      "en": "1.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-137-v4",
+    "method": "nmos_high",
+    "inputs": {
+      "vdd": 1.8,
+      "vt": 0.4
+    },
+    "expected": 1.4,
+    "correct_text": {
+      "he": "1.4",
+      "en": "1.4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-137-v5",
+    "method": "nmos_high",
+    "inputs": {
+      "vdd": 4,
+      "vt": 1.5
+    },
+    "expected": 2.5,
+    "correct_text": {
+      "he": "2.5",
+      "en": "2.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-138-v1",
+    "method": "static_current",
+    "inputs": {
+      "pullup": 9,
+      "pulldown": 1,
+      "vdd": 5
+    },
+    "expected": 0.5,
+    "correct_text": {
+      "he": "0.5",
+      "en": "0.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-138-v2",
+    "method": "static_current",
+    "inputs": {
+      "pullup": 4,
+      "pulldown": 1,
+      "vdd": 3
+    },
+    "expected": 0.6,
+    "correct_text": {
+      "he": "0.6",
+      "en": "0.6"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-138-v3",
+    "method": "static_current",
+    "inputs": {
+      "pullup": 1,
+      "pulldown": 1,
+      "vdd": 2
+    },
+    "expected": 1.0,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-138-v4",
+    "method": "static_current",
+    "inputs": {
+      "pullup": 19,
+      "pulldown": 1,
+      "vdd": 4
+    },
+    "expected": 0.2,
+    "correct_text": {
+      "he": "0.2",
+      "en": "0.2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-138-v5",
+    "method": "static_current",
+    "inputs": {
+      "pullup": 2,
+      "pulldown": 3,
+      "vdd": 5
+    },
+    "expected": 1.0,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-139-v1",
+    "method": "lc_initial",
+    "inputs": {
+      "v0": 1
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 0",
+      "en": "1, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-139-v2",
+    "method": "lc_initial",
+    "inputs": {
+      "v0": 3
+    },
+    "expected": [
+      3,
+      0
+    ],
+    "correct_text": {
+      "he": "3, 0",
+      "en": "3, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-139-v3",
+    "method": "lc_initial",
+    "inputs": {
+      "v0": -2
+    },
+    "expected": [
+      -2,
+      0
+    ],
+    "correct_text": {
+      "he": "-2, 0",
+      "en": "-2, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-139-v4",
+    "method": "lc_initial",
+    "inputs": {
+      "v0": 0
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0",
+      "en": "0, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-139-v5",
+    "method": "lc_initial",
+    "inputs": {
+      "v0": 5
+    },
+    "expected": [
+      5,
+      0
+    ],
+    "correct_text": {
+      "he": "5, 0",
+      "en": "5, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-140-v1",
+    "method": "lc_quarter",
+    "inputs": {
+      "v0": 2,
+      "c": 1,
+      "l": 1
+    },
+    "expected": 2.0,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-140-v2",
+    "method": "lc_quarter",
+    "inputs": {
+      "v0": 3,
+      "c": 4,
+      "l": 1
+    },
+    "expected": 6.0,
+    "correct_text": {
+      "he": "6",
+      "en": "6"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-140-v3",
+    "method": "lc_quarter",
+    "inputs": {
+      "v0": -2,
+      "c": 1,
+      "l": 4
+    },
+    "expected": -1.0,
+    "correct_text": {
+      "he": "-1",
+      "en": "-1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-140-v4",
+    "method": "lc_quarter",
+    "inputs": {
+      "v0": 0,
+      "c": 2,
+      "l": 1
+    },
+    "expected": 0.0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-140-v5",
+    "method": "lc_quarter",
+    "inputs": {
+      "v0": 1,
+      "c": 1,
+      "l": 4
+    },
+    "expected": 0.5,
+    "correct_text": {
+      "he": "0.5",
+      "en": "0.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-141-v1",
+    "method": "lc_half",
+    "inputs": {
+      "v0": 1
+    },
+    "expected": -1,
+    "correct_text": {
+      "he": "-1",
+      "en": "-1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-141-v2",
+    "method": "lc_half",
+    "inputs": {
+      "v0": 3
+    },
+    "expected": -3,
+    "correct_text": {
+      "he": "-3",
+      "en": "-3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-141-v3",
+    "method": "lc_half",
+    "inputs": {
+      "v0": -2
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-141-v4",
+    "method": "lc_half",
+    "inputs": {
+      "v0": 0
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-141-v5",
+    "method": "lc_half",
+    "inputs": {
+      "v0": 5
+    },
+    "expected": -5,
+    "correct_text": {
+      "he": "-5",
+      "en": "-5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-142-v1",
+    "method": "lc_period_ratio",
+    "inputs": {
+      "l_ratio": 4,
+      "c_ratio": 1
+    },
+    "expected": 2.0,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-142-v2",
+    "method": "lc_period_ratio",
+    "inputs": {
+      "l_ratio": 1,
+      "c_ratio": 9
+    },
+    "expected": 3.0,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-142-v3",
+    "method": "lc_period_ratio",
+    "inputs": {
+      "l_ratio": 4,
+      "c_ratio": 4
+    },
+    "expected": 4.0,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-142-v4",
+    "method": "lc_period_ratio",
+    "inputs": {
+      "l_ratio": 0.25,
+      "c_ratio": 1
+    },
+    "expected": 0.5,
+    "correct_text": {
+      "he": "0.5",
+      "en": "0.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-142-v5",
+    "method": "lc_period_ratio",
+    "inputs": {
+      "l_ratio": 0.25,
+      "c_ratio": 4
+    },
+    "expected": 1.0,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-143-v1",
+    "method": "buffer_delay",
+    "inputs": {
+      "rs": 10,
+      "cin": 1,
+      "rb": 1,
+      "cl": 20,
+      "tb": 2
+    },
+    "expected": 22.79441541679836,
+    "correct_text": {
+      "he": "22.7944",
+      "en": "22.7944"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-143-v2",
+    "method": "buffer_delay",
+    "inputs": {
+      "rs": 2,
+      "cin": 1,
+      "rb": 1,
+      "cl": 3,
+      "tb": 1
+    },
+    "expected": 4.465735902799727,
+    "correct_text": {
+      "he": "4.46574",
+      "en": "4.46574"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-143-v3",
+    "method": "buffer_delay",
+    "inputs": {
+      "rs": 5,
+      "cin": 0,
+      "rb": 2,
+      "cl": 4,
+      "tb": 0
+    },
+    "expected": 5.545177444479562,
+    "correct_text": {
+      "he": "5.54518",
+      "en": "5.54518"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-143-v4",
+    "method": "buffer_delay",
+    "inputs": {
+      "rs": 4,
+      "cin": 2,
+      "rb": 1,
+      "cl": 0,
+      "tb": 3
+    },
+    "expected": 8.545177444479563,
+    "correct_text": {
+      "he": "8.54518",
+      "en": "8.54518"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-143-v5",
+    "method": "buffer_delay",
+    "inputs": {
+      "rs": 10,
+      "cin": 1,
+      "rb": 1,
+      "cl": 1,
+      "tb": 10
+    },
+    "expected": 17.624618986159398,
+    "correct_text": {
+      "he": "17.6246",
+      "en": "17.6246"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-144-v1",
+    "method": "buffer_breakeven",
+    "inputs": {
+      "rs": 10,
+      "rb": 2,
+      "cin": 1,
+      "tb": 0
+    },
+    "expected": 1.25,
+    "correct_text": {
+      "he": "1.25",
+      "en": "1.25"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-144-v2",
+    "method": "buffer_breakeven",
+    "inputs": {
+      "rs": 8,
+      "rb": 4,
+      "cin": 2,
+      "tb": 0
+    },
+    "expected": 4.0,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-144-v3",
+    "method": "buffer_breakeven",
+    "inputs": {
+      "rs": 4,
+      "rb": 1,
+      "cin": 3,
+      "tb": 1
+    },
+    "expected": 4.480898346962988,
+    "correct_text": {
+      "he": "4.4809",
+      "en": "4.4809"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-144-v4",
+    "method": "buffer_breakeven",
+    "inputs": {
+      "rs": 20,
+      "rb": 5,
+      "cin": 0.5,
+      "tb": 2
+    },
+    "expected": 0.8590260054518618,
+    "correct_text": {
+      "he": "0.859026",
+      "en": "0.859026"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-144-v5",
+    "method": "buffer_breakeven",
+    "inputs": {
+      "rs": 5,
+      "rb": 4,
+      "cin": 1,
+      "tb": 0
+    },
+    "expected": 5.0,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-145-v1",
+    "method": "led_resistor",
+    "inputs": {
+      "vs": 5,
+      "vf": 2,
+      "vd": 0,
+      "current": 3
+    },
+    "expected": 1.0,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-145-v2",
+    "method": "led_resistor",
+    "inputs": {
+      "vs": 3.3,
+      "vf": 2,
+      "vd": 0,
+      "current": 2
+    },
+    "expected": 0.6499999999999999,
+    "correct_text": {
+      "he": "0.65",
+      "en": "0.65"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-145-v3",
+    "method": "led_resistor",
+    "inputs": {
+      "vs": 5,
+      "vf": 2,
+      "vd": 0.2,
+      "current": 2
+    },
+    "expected": 1.4,
+    "correct_text": {
+      "he": "1.4",
+      "en": "1.4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-145-v4",
+    "method": "led_resistor",
+    "inputs": {
+      "vs": 2,
+      "vf": 1.5,
+      "vd": 0,
+      "current": 1
+    },
+    "expected": 0.5,
+    "correct_text": {
+      "he": "0.5",
+      "en": "0.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-145-v5",
+    "method": "led_resistor",
+    "inputs": {
+      "vs": 12,
+      "vf": 3,
+      "vd": 1,
+      "current": 4
+    },
+    "expected": 2.0,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-146-v1",
+    "method": "skew_effect",
+    "inputs": {
+      "s": 0.2
+    },
+    "expected": [
+      0.2,
+      -0.2
+    ],
+    "correct_text": {
+      "he": "0.2, -0.2",
+      "en": "0.2, -0.2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-146-v2",
+    "method": "skew_effect",
+    "inputs": {
+      "s": -0.1
+    },
+    "expected": [
+      -0.1,
+      0.1
+    ],
+    "correct_text": {
+      "he": "-0.1, 0.1",
+      "en": "-0.1, 0.1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-146-v3",
+    "method": "skew_effect",
+    "inputs": {
+      "s": 0
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0",
+      "en": "0, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-146-v4",
+    "method": "skew_effect",
+    "inputs": {
+      "s": 0.5
+    },
+    "expected": [
+      0.5,
+      -0.5
+    ],
+    "correct_text": {
+      "he": "0.5, -0.5",
+      "en": "0.5, -0.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-146-v5",
+    "method": "skew_effect",
+    "inputs": {
+      "s": -0.4
+    },
+    "expected": [
+      -0.4,
+      0.4
+    ],
+    "correct_text": {
+      "he": "-0.4, 0.4",
+      "en": "-0.4, 0.4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-147-v1",
+    "method": "uncertainty",
+    "inputs": {
+      "us": 0.1,
+      "uh": 0.2
+    },
+    "expected": [
+      -0.1,
+      -0.2
+    ],
+    "correct_text": {
+      "he": "-0.1, -0.2",
+      "en": "-0.1, -0.2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-147-v2",
+    "method": "uncertainty",
+    "inputs": {
+      "us": 0,
+      "uh": 0.3
+    },
+    "expected": [
+      0,
+      -0.3
+    ],
+    "correct_text": {
+      "he": "0, -0.3",
+      "en": "0, -0.3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-147-v3",
+    "method": "uncertainty",
+    "inputs": {
+      "us": 0.4,
+      "uh": 0
+    },
+    "expected": [
+      -0.4,
+      0
+    ],
+    "correct_text": {
+      "he": "-0.4, 0",
+      "en": "-0.4, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-147-v4",
+    "method": "uncertainty",
+    "inputs": {
+      "us": 0.05,
+      "uh": 0.05
+    },
+    "expected": [
+      -0.05,
+      -0.05
+    ],
+    "correct_text": {
+      "he": "-0.05, -0.05",
+      "en": "-0.05, -0.05"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-147-v5",
+    "method": "uncertainty",
+    "inputs": {
+      "us": 0.2,
+      "uh": 0.1
+    },
+    "expected": [
+      -0.2,
+      -0.1
+    ],
+    "correct_text": {
+      "he": "-0.2, -0.1",
+      "en": "-0.2, -0.1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-148-v1",
+    "method": "speedup",
+    "inputs": {
+      "dmax_reduction": 0.3,
+      "dmin_reduction": 0.1
+    },
+    "expected": [
+      0.3,
+      -0.1
+    ],
+    "correct_text": {
+      "he": "0.3, -0.1",
+      "en": "0.3, -0.1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-148-v2",
+    "method": "speedup",
+    "inputs": {
+      "dmax_reduction": 0.2,
+      "dmin_reduction": 0
+    },
+    "expected": [
+      0.2,
+      0
+    ],
+    "correct_text": {
+      "he": "0.2, 0",
+      "en": "0.2, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-148-v3",
+    "method": "speedup",
+    "inputs": {
+      "dmax_reduction": 0,
+      "dmin_reduction": 0.2
+    },
+    "expected": [
+      0,
+      -0.2
+    ],
+    "correct_text": {
+      "he": "0, -0.2",
+      "en": "0, -0.2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-148-v4",
+    "method": "speedup",
+    "inputs": {
+      "dmax_reduction": 0.5,
+      "dmin_reduction": 0.5
+    },
+    "expected": [
+      0.5,
+      -0.5
+    ],
+    "correct_text": {
+      "he": "0.5, -0.5",
+      "en": "0.5, -0.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-148-v5",
+    "method": "speedup",
+    "inputs": {
+      "dmax_reduction": 0.1,
+      "dmin_reduction": 0.4
+    },
+    "expected": [
+      0.1,
+      -0.4
+    ],
+    "correct_text": {
+      "he": "0.1, -0.4",
+      "en": "0.1, -0.4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-149-v1",
+    "method": "timing_exception",
+    "inputs": {
+      "functional_cycles": 2,
+      "constraint_cycles": 2
+    },
+    "expected": "valid",
+    "correct_text": {
+      "he": "החריגה תואמת את החוזה שנמסר",
+      "en": "The exception matches the stated contract"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-149-v2",
+    "method": "timing_exception",
+    "inputs": {
+      "functional_cycles": 1,
+      "constraint_cycles": 2
+    },
+    "expected": "invalid",
+    "correct_text": {
+      "he": "החריגה אינה מוצדקת בחוזה שנמסר",
+      "en": "The exception is unsupported by the stated contract"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-149-v3",
+    "method": "timing_exception",
+    "inputs": {
+      "functional_cycles": 3,
+      "constraint_cycles": 2
+    },
+    "expected": "valid",
+    "correct_text": {
+      "he": "החריגה תואמת את החוזה שנמסר",
+      "en": "The exception matches the stated contract"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-149-v4",
+    "method": "timing_exception",
+    "inputs": {
+      "functional_cycles": 2,
+      "constraint_cycles": 3
+    },
+    "expected": "invalid",
+    "correct_text": {
+      "he": "החריגה אינה מוצדקת בחוזה שנמסר",
+      "en": "The exception is unsupported by the stated contract"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-149-v5",
+    "method": "timing_exception",
+    "inputs": {
+      "functional_cycles": 1,
+      "constraint_cycles": 1
+    },
+    "expected": "valid",
+    "correct_text": {
+      "he": "החריגה תואמת את החוזה שנמסר",
+      "en": "The exception matches the stated contract"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-150-v1",
+    "method": "coupling_ceff",
+    "inputs": {
+      "cg": 2,
+      "cc": 1,
+      "ratio": 1
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-150-v2",
+    "method": "coupling_ceff",
+    "inputs": {
+      "cg": 2,
+      "cc": 1,
+      "ratio": 0
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-150-v3",
+    "method": "coupling_ceff",
+    "inputs": {
+      "cg": 2,
+      "cc": 1,
+      "ratio": -1
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-150-v4",
+    "method": "coupling_ceff",
+    "inputs": {
+      "cg": 3,
+      "cc": 0,
+      "ratio": -1
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-150-v5",
+    "method": "coupling_ceff",
+    "inputs": {
+      "cg": 1,
+      "cc": 2,
+      "ratio": -1
+    },
+    "expected": 5,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-151-v1",
+    "method": "quiet_noise",
+    "inputs": {
+      "cg": 3,
+      "cc": 1,
+      "da": 4
+    },
+    "expected": 1.0,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-151-v2",
+    "method": "quiet_noise",
+    "inputs": {
+      "cg": 1,
+      "cc": 1,
+      "da": 2
+    },
+    "expected": 1.0,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-151-v3",
+    "method": "quiet_noise",
+    "inputs": {
+      "cg": 2,
+      "cc": 0,
+      "da": 3
+    },
+    "expected": 0.0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-151-v4",
+    "method": "quiet_noise",
+    "inputs": {
+      "cg": 1,
+      "cc": 3,
+      "da": -2
+    },
+    "expected": -1.5,
+    "correct_text": {
+      "he": "-1.5",
+      "en": "-1.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-151-v5",
+    "method": "quiet_noise",
+    "inputs": {
+      "cg": 4,
+      "cc": 1,
+      "da": 5
+    },
+    "expected": 1.0,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-152-v1",
+    "method": "window_overlap",
+    "inputs": {
+      "v0": 1,
+      "v1": 4,
+      "a0": 2,
+      "a1": 5
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-152-v2",
+    "method": "window_overlap",
+    "inputs": {
+      "v0": 1,
+      "v1": 2,
+      "a0": 3,
+      "a1": 4
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-152-v3",
+    "method": "window_overlap",
+    "inputs": {
+      "v0": 0,
+      "v1": 3,
+      "a0": 0,
+      "a1": 3
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-152-v4",
+    "method": "window_overlap",
+    "inputs": {
+      "v0": 2,
+      "v1": 6,
+      "a0": 3,
+      "a1": 4
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-152-v5",
+    "method": "window_overlap",
+    "inputs": {
+      "v0": 0,
+      "v1": 1,
+      "a0": 1,
+      "a1": 2
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-153-v1",
+    "method": "shield_delta",
+    "inputs": {
+      "old_cg": 2,
+      "old_cc": 2,
+      "new_cg": 3,
+      "new_cc": 0.5
+    },
+    "expected": -2.0,
+    "correct_text": {
+      "he": "-2",
+      "en": "-2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-153-v2",
+    "method": "shield_delta",
+    "inputs": {
+      "old_cg": 1,
+      "old_cc": 1,
+      "new_cg": 5,
+      "new_cc": 0
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-153-v3",
+    "method": "shield_delta",
+    "inputs": {
+      "old_cg": 3,
+      "old_cc": 0.5,
+      "new_cg": 4,
+      "new_cc": 0
+    },
+    "expected": 0.0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-153-v4",
+    "method": "shield_delta",
+    "inputs": {
+      "old_cg": 2,
+      "old_cc": 1,
+      "new_cg": 2,
+      "new_cc": 0
+    },
+    "expected": -2,
+    "correct_text": {
+      "he": "-2",
+      "en": "-2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-153-v5",
+    "method": "shield_delta",
+    "inputs": {
+      "old_cg": 1,
+      "old_cc": 2,
+      "new_cg": 3,
+      "new_cc": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-154-v1",
+    "method": "nyquist_phase",
+    "inputs": {
+      "frequency": 1,
+      "phase": 0
+    },
+    "expected": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0, 0, 0",
+      "en": "0, 0, 0, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-154-v2",
+    "method": "nyquist_phase",
+    "inputs": {
+      "frequency": 2,
+      "phase": 0.5
+    },
+    "expected": [
+      1,
+      -1,
+      1,
+      -1
+    ],
+    "correct_text": {
+      "he": "1, -1, 1, -1",
+      "en": "1, -1, 1, -1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-154-v3",
+    "method": "nyquist_phase",
+    "inputs": {
+      "frequency": 5,
+      "phase": 1
+    },
+    "expected": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0, 0, 0",
+      "en": "0, 0, 0, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-154-v4",
+    "method": "nyquist_phase",
+    "inputs": {
+      "frequency": 10,
+      "phase": -0.5
+    },
+    "expected": [
+      -1,
+      1,
+      -1,
+      1
+    ],
+    "correct_text": {
+      "he": "-1, 1, -1, 1",
+      "en": "-1, 1, -1, 1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-154-v5",
+    "method": "nyquist_phase",
+    "inputs": {
+      "frequency": 100,
+      "phase": 0
+    },
+    "expected": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0, 0, 0",
+      "en": "0, 0, 0, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-155-v1",
+    "method": "alias",
+    "inputs": {
+      "frequency": 18,
+      "fs": 20
+    },
+    "expected": 2.0,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-155-v2",
+    "method": "alias",
+    "inputs": {
+      "frequency": 23,
+      "fs": 20
+    },
+    "expected": 3.0,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-155-v3",
+    "method": "alias",
+    "inputs": {
+      "frequency": 7,
+      "fs": 20
+    },
+    "expected": 7.0,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-155-v4",
+    "method": "alias",
+    "inputs": {
+      "frequency": 30,
+      "fs": 20
+    },
+    "expected": 10.0,
+    "correct_text": {
+      "he": "10",
+      "en": "10"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-155-v5",
+    "method": "alias",
+    "inputs": {
+      "frequency": 41,
+      "fs": 20
+    },
+    "expected": 1.0,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-156-v1",
+    "method": "band_interval",
+    "inputs": {
+      "fl": 90,
+      "fh": 110,
+      "m": 5
+    },
+    "expected": [
+      44.0,
+      45.0
+    ],
+    "correct_text": {
+      "he": "44, 45",
+      "en": "44, 45"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-156-v2",
+    "method": "band_interval",
+    "inputs": {
+      "fl": 100,
+      "fh": 120,
+      "m": 5
+    },
+    "expected": [
+      48.0,
+      50.0
+    ],
+    "correct_text": {
+      "he": "48, 50",
+      "en": "48, 50"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-156-v3",
+    "method": "band_interval",
+    "inputs": {
+      "fl": 30,
+      "fh": 40,
+      "m": 3
+    },
+    "expected": [
+      26.666666666666668,
+      30.0
+    ],
+    "correct_text": {
+      "he": "26.6667, 30",
+      "en": "26.6667, 30"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-156-v4",
+    "method": "band_interval",
+    "inputs": {
+      "fl": 48,
+      "fh": 50,
+      "m": 4
+    },
+    "expected": [
+      25.0,
+      32.0
+    ],
+    "correct_text": {
+      "he": "25, 32",
+      "en": "25, 32"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-156-v5",
+    "method": "band_interval",
+    "inputs": {
+      "fl": 20,
+      "fh": 25,
+      "m": 3
+    },
+    "expected": [
+      16.666666666666668,
+      20.0
+    ],
+    "correct_text": {
+      "he": "16.6667, 20",
+      "en": "16.6667, 20"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-157-v1",
+    "method": "band_margin",
+    "inputs": {
+      "fl": 90,
+      "fh": 110,
+      "m": 5,
+      "fs": 44.5
+    },
+    "expected": "safe",
+    "correct_text": {
+      "he": "בתוך החלון הפתוח שנבחר",
+      "en": "Inside the selected open safe interval"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-157-v2",
+    "method": "band_margin",
+    "inputs": {
+      "fl": 90,
+      "fh": 110,
+      "m": 5,
+      "fs": 44
+    },
+    "expected": "unsafe",
+    "correct_text": {
+      "he": "אינו בתוך החלון הפתוח שנבחר",
+      "en": "Not inside the selected open safe interval"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-157-v3",
+    "method": "band_margin",
+    "inputs": {
+      "fl": 90,
+      "fh": 110,
+      "m": 5,
+      "fs": 45
+    },
+    "expected": "unsafe",
+    "correct_text": {
+      "he": "אינו בתוך החלון הפתוח שנבחר",
+      "en": "Not inside the selected open safe interval"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-157-v4",
+    "method": "band_margin",
+    "inputs": {
+      "fl": 100,
+      "fh": 120,
+      "m": 5,
+      "fs": 49
+    },
+    "expected": "safe",
+    "correct_text": {
+      "he": "בתוך החלון הפתוח שנבחר",
+      "en": "Inside the selected open safe interval"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-157-v5",
+    "method": "band_margin",
+    "inputs": {
+      "fl": 100,
+      "fh": 120,
+      "m": 5,
+      "fs": 48
+    },
+    "expected": "unsafe",
+    "correct_text": {
+      "he": "אינו בתוך החלון הפתוח שנבחר",
+      "en": "Not inside the selected open safe interval"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-158-v1",
+    "method": "parity_locations",
+    "inputs": {
+      "n": 8
+    },
+    "expected": 8,
+    "correct_text": {
+      "he": "8",
+      "en": "8"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-158-v2",
+    "method": "parity_locations",
+    "inputs": {
+      "n": 4
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-158-v3",
+    "method": "parity_locations",
+    "inputs": {
+      "n": 2
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-158-v4",
+    "method": "parity_locations",
+    "inputs": {
+      "n": 16
+    },
+    "expected": 16,
+    "correct_text": {
+      "he": "16",
+      "en": "16"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-158-v5",
+    "method": "parity_locations",
+    "inputs": {
+      "n": 1
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-159-v1",
+    "method": "hamming_bits",
+    "inputs": {
+      "data": 8
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-159-v2",
+    "method": "hamming_bits",
+    "inputs": {
+      "data": 4
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-159-v3",
+    "method": "hamming_bits",
+    "inputs": {
+      "data": 1
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-159-v4",
+    "method": "hamming_bits",
+    "inputs": {
+      "data": 11
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-159-v5",
+    "method": "hamming_bits",
+    "inputs": {
+      "data": 12
+    },
+    "expected": 5,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-160-v1",
+    "method": "syndrome",
+    "inputs": {
+      "position": 10
+    },
+    "expected": 10,
+    "correct_text": {
+      "he": "10",
+      "en": "10"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-160-v2",
+    "method": "syndrome",
+    "inputs": {
+      "position": 4
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-160-v3",
+    "method": "syndrome",
+    "inputs": {
+      "position": 1
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-160-v4",
+    "method": "syndrome",
+    "inputs": {
+      "position": 12
+    },
+    "expected": 12,
+    "correct_text": {
+      "he": "12",
+      "en": "12"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-160-v5",
+    "method": "syndrome",
+    "inputs": {
+      "position": 7
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-161-v1",
+    "method": "secded",
+    "inputs": {
+      "syndrome": 0,
+      "parity": 0
+    },
+    "expected": "none",
+    "correct_text": {
+      "he": "אין שגיאה תחת ההבטחה",
+      "en": "No error under the promise"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-161-v2",
+    "method": "secded",
+    "inputs": {
+      "syndrome": 0,
+      "parity": 1
+    },
+    "expected": "overall",
+    "correct_text": {
+      "he": "שגיאה בביט הזוגיות הכולל",
+      "en": "Error in the overall parity bit"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-161-v3",
+    "method": "secded",
+    "inputs": {
+      "syndrome": 5,
+      "parity": 1
+    },
+    "expected": "single",
+    "correct_text": {
+      "he": "שגיאה יחידה במילת Hamming",
+      "en": "Single error in the Hamming word"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-161-v4",
+    "method": "secded",
+    "inputs": {
+      "syndrome": 6,
+      "parity": 0
+    },
+    "expected": "double",
+    "correct_text": {
+      "he": "שתי שגיאות: לזהות ולא לתקן כיחידה",
+      "en": "Double error: detect, do not single-correct"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-161-v5",
+    "method": "secded",
+    "inputs": {
+      "syndrome": 12,
+      "parity": 1
+    },
+    "expected": "single",
+    "correct_text": {
+      "he": "שגיאה יחידה במילת Hamming",
+      "en": "Single error in the Hamming word"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-162-v1",
+    "method": "short_syndrome",
+    "inputs": {
+      "syndrome": 0
+    },
+    "expected": "clean",
+    "correct_text": {
+      "he": "ללא שגיאה תחת הבטחת יחיד",
+      "en": "No error under the single-error promise"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-162-v2",
+    "method": "short_syndrome",
+    "inputs": {
+      "syndrome": 12
+    },
+    "expected": "correct",
+    "correct_text": {
+      "he": "להפוך את הביט במיקום הסינדרום",
+      "en": "Flip the bit at the syndrome position"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-162-v3",
+    "method": "short_syndrome",
+    "inputs": {
+      "syndrome": 13
+    },
+    "expected": "reject",
+    "correct_text": {
+      "he": "לדחות כסינדרום מחוץ למודל",
+      "en": "Reject as outside the fault model"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-162-v4",
+    "method": "short_syndrome",
+    "inputs": {
+      "syndrome": 15
+    },
+    "expected": "reject",
+    "correct_text": {
+      "he": "לדחות כסינדרום מחוץ למודל",
+      "en": "Reject as outside the fault model"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-162-v5",
+    "method": "short_syndrome",
+    "inputs": {
+      "syndrome": 8
+    },
+    "expected": "correct",
+    "correct_text": {
+      "he": "להפוך את הביט במיקום הסינדרום",
+      "en": "Flip the bit at the syndrome position"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-163-v1",
+    "method": "queue_overflow",
+    "inputs": {
+      "capacity": 4,
+      "arrivals": 5
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-163-v2",
+    "method": "queue_overflow",
+    "inputs": {
+      "capacity": 2,
+      "arrivals": 2
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-163-v3",
+    "method": "queue_overflow",
+    "inputs": {
+      "capacity": 0,
+      "arrivals": 1
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-163-v4",
+    "method": "queue_overflow",
+    "inputs": {
+      "capacity": 8,
+      "arrivals": 12
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-163-v5",
+    "method": "queue_overflow",
+    "inputs": {
+      "capacity": 3,
+      "arrivals": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-164-v1",
+    "method": "commit_ack",
+    "inputs": {
+      "visible": 5,
+      "read_issue": 2
+    },
+    "expected": "stale_possible",
+    "correct_text": {
+      "he": "ייתכן ערך ישן בלי forwarding",
+      "en": "Stale data is possible without forwarding"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-164-v2",
+    "method": "commit_ack",
+    "inputs": {
+      "visible": 5,
+      "read_issue": 5
+    },
+    "expected": "safe",
+    "correct_text": {
+      "he": "ההנפקה אינה קודמת לנראות הכתיבה",
+      "en": "Issue does not precede write visibility"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-164-v3",
+    "method": "commit_ack",
+    "inputs": {
+      "visible": 3,
+      "read_issue": 4
+    },
+    "expected": "safe",
+    "correct_text": {
+      "he": "ההנפקה אינה קודמת לנראות הכתיבה",
+      "en": "Issue does not precede write visibility"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-164-v4",
+    "method": "commit_ack",
+    "inputs": {
+      "visible": 8,
+      "read_issue": 7
+    },
+    "expected": "stale_possible",
+    "correct_text": {
+      "he": "ייתכן ערך ישן בלי forwarding",
+      "en": "Stale data is possible without forwarding"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-164-v5",
+    "method": "commit_ack",
+    "inputs": {
+      "visible": 2,
+      "read_issue": 2
+    },
+    "expected": "safe",
+    "correct_text": {
+      "he": "ההנפקה אינה קודמת לנראות הכתיבה",
+      "en": "Issue does not precede write visibility"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-165-v1",
+    "method": "wait_evidence",
+    "inputs": {
+      "wait": 3,
+      "actual_latency": 5
+    },
+    "expected": "premature",
+    "correct_text": {
+      "he": "ההתקדמות מוקדמת מההשלמה",
+      "en": "Progress precedes completion"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-165-v2",
+    "method": "wait_evidence",
+    "inputs": {
+      "wait": 5,
+      "actual_latency": 5
+    },
+    "expected": "safe",
+    "correct_text": {
+      "he": "המתנה זו מספיקה למקרה המספרי בלבד",
+      "en": "This wait suffices for this numeric case only"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-165-v3",
+    "method": "wait_evidence",
+    "inputs": {
+      "wait": 8,
+      "actual_latency": 2
+    },
+    "expected": "safe",
+    "correct_text": {
+      "he": "המתנה זו מספיקה למקרה המספרי בלבד",
+      "en": "This wait suffices for this numeric case only"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-165-v4",
+    "method": "wait_evidence",
+    "inputs": {
+      "wait": 0,
+      "actual_latency": 1
+    },
+    "expected": "premature",
+    "correct_text": {
+      "he": "ההתקדמות מוקדמת מההשלמה",
+      "en": "Progress precedes completion"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-165-v5",
+    "method": "wait_evidence",
+    "inputs": {
+      "wait": 2,
+      "actual_latency": 9
+    },
+    "expected": "premature",
+    "correct_text": {
+      "he": "ההתקדמות מוקדמת מההשלמה",
+      "en": "Progress precedes completion"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-166-v1",
+    "method": "immediate_completion",
+    "inputs": {
+      "accepted": 1,
+      "done": 1,
+      "tag": 0
+    },
+    "expected": "RESP",
+    "correct_text": {
+      "he": "RESP: לשמור תגובה",
+      "en": "RESP: retain response"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-166-v2",
+    "method": "immediate_completion",
+    "inputs": {
+      "accepted": 1,
+      "done": 0,
+      "tag": 1
+    },
+    "expected": "WAIT",
+    "correct_text": {
+      "he": "WAIT: להמתין להשלמה",
+      "en": "WAIT: wait for completion"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-166-v3",
+    "method": "immediate_completion",
+    "inputs": {
+      "accepted": 0,
+      "done": 0,
+      "tag": 2
+    },
+    "expected": "ISSUE",
+    "correct_text": {
+      "he": "ISSUE: להמשיך להציג פקודה",
+      "en": "ISSUE: keep offering the command"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-166-v4",
+    "method": "immediate_completion",
+    "inputs": {
+      "accepted": 1,
+      "done": 1,
+      "tag": 3,
+      "he": "ב־ISSUE היו3 מחזורי stall. בחזית הבאה הפקודה מתקבלת וגם מסתיימת; done חוזר0 במחזור הבא. לאיזה מצב חייבים לעבור כדי לשמר את התגובה?",
+      "en": "ISSUE stalls for3cycles,then the command is accepted and completed at one edge; done returns0next cycle. Which state retains that response?"
+    },
+    "expected": "RESP",
+    "correct_text": {
+      "he": "RESP: לשמור תגובה",
+      "en": "RESP: retain response"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-166-v5",
+    "method": "immediate_completion",
+    "inputs": {
+      "accepted": 0,
+      "done": 0,
+      "tag": 4,
+      "he": "ב־ISSUE הפקודה לא התקבלה במשך4 חזיתות,ולא הייתה השלמה. באיזה מצב חייבים להמשיך להציג את הפקודה היציבה?",
+      "en": "In ISSUE,the command is unaccepted for4edges and no completion occurs. Which state must keep presenting the stable command?"
+    },
+    "expected": "ISSUE",
+    "correct_text": {
+      "he": "ISSUE: להמשיך להציג פקודה",
+      "en": "ISSUE: keep offering the command"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-167-v1",
+    "method": "round_robin",
+    "inputs": {
+      "n": 4,
+      "first": 0,
+      "first_label": "R"
+    },
+    "expected": "R, W, R, W",
+    "correct_text": {
+      "he": "R, W, R, W",
+      "en": "R, W, R, W"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-167-v2",
+    "method": "round_robin",
+    "inputs": {
+      "n": 5,
+      "first": 1,
+      "first_label": "W"
+    },
+    "expected": "W, R, W, R, W",
+    "correct_text": {
+      "he": "W, R, W, R, W",
+      "en": "W, R, W, R, W"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-167-v3",
+    "method": "round_robin",
+    "inputs": {
+      "n": 3,
+      "first": 0,
+      "first_label": "R"
+    },
+    "expected": "R, W, R",
+    "correct_text": {
+      "he": "R, W, R",
+      "en": "R, W, R"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-167-v4",
+    "method": "round_robin",
+    "inputs": {
+      "n": 6,
+      "first": 1,
+      "first_label": "W"
+    },
+    "expected": "W, R, W, R, W, R",
+    "correct_text": {
+      "he": "W, R, W, R, W, R",
+      "en": "W, R, W, R, W, R"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-167-v5",
+    "method": "round_robin",
+    "inputs": {
+      "n": 2,
+      "first": 0,
+      "first_label": "R"
+    },
+    "expected": "R, W",
+    "correct_text": {
+      "he": "R, W",
+      "en": "R, W"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-168-v1",
+    "method": "serialized_issue",
+    "inputs": {
+      "previous_response_consumed": 3
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-168-v2",
+    "method": "serialized_issue",
+    "inputs": {
+      "previous_response_consumed": 7
+    },
+    "expected": 8,
+    "correct_text": {
+      "he": "8",
+      "en": "8"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-168-v3",
+    "method": "serialized_issue",
+    "inputs": {
+      "previous_response_consumed": 1
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-168-v4",
+    "method": "serialized_issue",
+    "inputs": {
+      "previous_response_consumed": 10
+    },
+    "expected": 11,
+    "correct_text": {
+      "he": "11",
+      "en": "11"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-168-v5",
+    "method": "serialized_issue",
+    "inputs": {
+      "previous_response_consumed": 4
+    },
+    "expected": 5,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-169-v1",
+    "method": "size_low",
+    "inputs": {
+      "a": 255,
+      "size": 4
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-169-v2",
+    "method": "size_low",
+    "inputs": {
+      "a": 254,
+      "size": 4
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-169-v3",
+    "method": "size_low",
+    "inputs": {
+      "a": 13,
+      "size": 2
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-169-v4",
+    "method": "size_low",
+    "inputs": {
+      "a": 8,
+      "size": 2
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-169-v5",
+    "method": "size_low",
+    "inputs": {
+      "a": 255,
+      "size": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-170-v1",
+    "method": "size_carry",
+    "inputs": {
+      "a": 255,
+      "size": 1
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-170-v2",
+    "method": "size_carry",
+    "inputs": {
+      "a": 255,
+      "size": 4
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-170-v3",
+    "method": "size_carry",
+    "inputs": {
+      "a": 252,
+      "size": 4
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-170-v4",
+    "method": "size_carry",
+    "inputs": {
+      "a": 251,
+      "size": 4
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-170-v5",
+    "method": "size_carry",
+    "inputs": {
+      "a": 254,
+      "size": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-171-v1",
+    "method": "size_valid",
+    "inputs": {
+      "a": 255,
+      "size": 1
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 0",
+      "en": "1, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-171-v2",
+    "method": "size_valid",
+    "inputs": {
+      "a": 252,
+      "size": 4
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 0",
+      "en": "1, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-171-v3",
+    "method": "size_valid",
+    "inputs": {
+      "a": 0,
+      "size": 0
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0",
+      "en": "0, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-171-v4",
+    "method": "size_valid",
+    "inputs": {
+      "a": 20,
+      "size": 3
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0",
+      "en": "0, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-171-v5",
+    "method": "size_valid",
+    "inputs": {
+      "a": 4,
+      "size": 2
+    },
+    "expected": [
+      1,
+      6
+    ],
+    "correct_text": {
+      "he": "1, 6",
+      "en": "1, 6"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-172-v1",
+    "method": "odd_delta",
+    "inputs": {
+      "n": 0
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-172-v2",
+    "method": "odd_delta",
+    "inputs": {
+      "n": 1
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-172-v3",
+    "method": "odd_delta",
+    "inputs": {
+      "n": 3
+    },
+    "expected": 7,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-172-v4",
+    "method": "odd_delta",
+    "inputs": {
+      "n": 7
+    },
+    "expected": 15,
+    "correct_text": {
+      "he": "15",
+      "en": "15"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-172-v5",
+    "method": "odd_delta",
+    "inputs": {
+      "n": 15
+    },
+    "expected": 31,
+    "correct_text": {
+      "he": "31",
+      "en": "31"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-173-v1",
+    "method": "square_next",
+    "inputs": {
+      "n": 0
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-173-v2",
+    "method": "square_next",
+    "inputs": {
+      "n": 2
+    },
+    "expected": 9,
+    "correct_text": {
+      "he": "9",
+      "en": "9"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-173-v3",
+    "method": "square_next",
+    "inputs": {
+      "n": 4
+    },
+    "expected": 25,
+    "correct_text": {
+      "he": "25",
+      "en": "25"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-173-v4",
+    "method": "square_next",
+    "inputs": {
+      "n": 9
+    },
+    "expected": 100,
+    "correct_text": {
+      "he": "100",
+      "en": "100"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-173-v5",
+    "method": "square_next",
+    "inputs": {
+      "n": 15
+    },
+    "expected": 256,
+    "correct_text": {
+      "he": "256",
+      "en": "256"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-174-v1",
+    "method": "square_terminal",
+    "inputs": {
+      "limit": 3,
+      "steps": 5
+    },
+    "expected": [
+      3,
+      9
+    ],
+    "correct_text": {
+      "he": "3, 9",
+      "en": "3, 9"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-174-v2",
+    "method": "square_terminal",
+    "inputs": {
+      "limit": 0,
+      "steps": 4
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0",
+      "en": "0, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-174-v3",
+    "method": "square_terminal",
+    "inputs": {
+      "limit": 5,
+      "steps": 2
+    },
+    "expected": [
+      2,
+      4
+    ],
+    "correct_text": {
+      "he": "2, 4",
+      "en": "2, 4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-174-v4",
+    "method": "square_terminal",
+    "inputs": {
+      "limit": 2,
+      "steps": 2
+    },
+    "expected": [
+      2,
+      4
+    ],
+    "correct_text": {
+      "he": "2, 4",
+      "en": "2, 4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-174-v5",
+    "method": "square_terminal",
+    "inputs": {
+      "limit": 4,
+      "steps": 8
+    },
+    "expected": [
+      4,
+      16
+    ],
+    "correct_text": {
+      "he": "4, 16",
+      "en": "4, 16"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-175-v1",
+    "method": "xor_swap",
+    "inputs": {
+      "x": 3,
+      "y": 5,
+      "edges": 1
+    },
+    "expected": [
+      6,
+      5
+    ],
+    "correct_text": {
+      "he": "6, 5",
+      "en": "6, 5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-175-v2",
+    "method": "xor_swap",
+    "inputs": {
+      "x": 3,
+      "y": 5,
+      "edges": 2
+    },
+    "expected": [
+      6,
+      3
+    ],
+    "correct_text": {
+      "he": "6, 3",
+      "en": "6, 3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-175-v3",
+    "method": "xor_swap",
+    "inputs": {
+      "x": 3,
+      "y": 5,
+      "edges": 3
+    },
+    "expected": [
+      5,
+      3
+    ],
+    "correct_text": {
+      "he": "5, 3",
+      "en": "5, 3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-175-v4",
+    "method": "xor_swap",
+    "inputs": {
+      "x": 7,
+      "y": 7,
+      "edges": 3
+    },
+    "expected": [
+      7,
+      7
+    ],
+    "correct_text": {
+      "he": "7, 7",
+      "en": "7, 7"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-175-v5",
+    "method": "xor_swap",
+    "inputs": {
+      "x": 0,
+      "y": 9,
+      "edges": 2
+    },
+    "expected": [
+      9,
+      0
+    ],
+    "correct_text": {
+      "he": "9, 0",
+      "en": "9, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-176-v1",
+    "method": "complement_load",
+    "inputs": {
+      "load": 0,
+      "edge": 1
+    },
+    "expected": "X",
+    "correct_text": {
+      "he": "רק X נטען",
+      "en": "Only X loads"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-176-v2",
+    "method": "complement_load",
+    "inputs": {
+      "load": 1,
+      "edge": 2
+    },
+    "expected": "Y",
+    "correct_text": {
+      "he": "רק Y נטען",
+      "en": "Only Y loads"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-176-v3",
+    "method": "complement_load",
+    "inputs": {
+      "load": 0,
+      "edge": 3
+    },
+    "expected": "X",
+    "correct_text": {
+      "he": "רק X נטען",
+      "en": "Only X loads"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-176-v4",
+    "method": "complement_load",
+    "inputs": {
+      "load": 1,
+      "edge": 4
+    },
+    "expected": "Y",
+    "correct_text": {
+      "he": "רק Y נטען",
+      "en": "Only Y loads"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-176-v5",
+    "method": "complement_load",
+    "inputs": {
+      "load": 0,
+      "edge": 5
+    },
+    "expected": "X",
+    "correct_text": {
+      "he": "רק X נטען",
+      "en": "Only X loads"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-177-v1",
+    "method": "extended_counter",
+    "inputs": {
+      "initial": 15,
+      "edges": 1
+    },
+    "expected": 16,
+    "correct_text": {
+      "he": "16",
+      "en": "16"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-177-v2",
+    "method": "extended_counter",
+    "inputs": {
+      "initial": 31,
+      "edges": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-177-v3",
+    "method": "extended_counter",
+    "inputs": {
+      "initial": 14,
+      "edges": 2
+    },
+    "expected": 16,
+    "correct_text": {
+      "he": "16",
+      "en": "16"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-177-v4",
+    "method": "extended_counter",
+    "inputs": {
+      "initial": 0,
+      "edges": 16
+    },
+    "expected": 16,
+    "correct_text": {
+      "he": "16",
+      "en": "16"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-177-v5",
+    "method": "extended_counter",
+    "inputs": {
+      "initial": 30,
+      "edges": 3
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-178-v1",
+    "method": "compare_msb",
+    "inputs": {
+      "a": 8,
+      "b": 7
+    },
+    "expected": "greater",
+    "correct_text": {
+      "he": "A>B",
+      "en": "A>B"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-178-v2",
+    "method": "compare_msb",
+    "inputs": {
+      "a": 7,
+      "b": 8
+    },
+    "expected": "less",
+    "correct_text": {
+      "he": "A<B",
+      "en": "A<B"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-178-v3",
+    "method": "compare_msb",
+    "inputs": {
+      "a": 6,
+      "b": 6
+    },
+    "expected": "equal",
+    "correct_text": {
+      "he": "A=B",
+      "en": "A=B"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-178-v4",
+    "method": "compare_msb",
+    "inputs": {
+      "a": 10,
+      "b": 9
+    },
+    "expected": "greater",
+    "correct_text": {
+      "he": "A>B",
+      "en": "A>B"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-178-v5",
+    "method": "compare_msb",
+    "inputs": {
+      "a": 3,
+      "b": 4
+    },
+    "expected": "less",
+    "correct_text": {
+      "he": "A<B",
+      "en": "A<B"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-179-v1",
+    "method": "pair_counts",
+    "inputs": {
+      "x": 255
+    },
+    "expected": 170,
+    "correct_text": {
+      "he": "170",
+      "en": "170"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-179-v2",
+    "method": "pair_counts",
+    "inputs": {
+      "x": 170
+    },
+    "expected": 85,
+    "correct_text": {
+      "he": "85",
+      "en": "85"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-179-v3",
+    "method": "pair_counts",
+    "inputs": {
+      "x": 85
+    },
+    "expected": 85,
+    "correct_text": {
+      "he": "85",
+      "en": "85"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-179-v4",
+    "method": "pair_counts",
+    "inputs": {
+      "x": 0
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-179-v5",
+    "method": "pair_counts",
+    "inputs": {
+      "x": 60
+    },
+    "expected": 40,
+    "correct_text": {
+      "he": "40",
+      "en": "40"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-180-v1",
+    "method": "popcount_width",
+    "inputs": {
+      "inputs": 5
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-180-v2",
+    "method": "popcount_width",
+    "inputs": {
+      "inputs": 8
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-180-v3",
+    "method": "popcount_width",
+    "inputs": {
+      "inputs": 7
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-180-v4",
+    "method": "popcount_width",
+    "inputs": {
+      "inputs": 1
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-180-v5",
+    "method": "popcount_width",
+    "inputs": {
+      "inputs": 16
+    },
+    "expected": 5,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-181-v1",
+    "method": "times_six_low",
+    "inputs": {
+      "x": 0
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-181-v2",
+    "method": "times_six_low",
+    "inputs": {
+      "x": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-181-v3",
+    "method": "times_six_low",
+    "inputs": {
+      "x": 7
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-181-v4",
+    "method": "times_six_low",
+    "inputs": {
+      "x": 128
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-181-v5",
+    "method": "times_six_low",
+    "inputs": {
+      "x": 255
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-182-v1",
+    "method": "ha_carry_pair",
+    "inputs": {
+      "a": 1,
+      "b": 1,
+      "cin": 1
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 0",
+      "en": "1, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-182-v2",
+    "method": "ha_carry_pair",
+    "inputs": {
+      "a": 1,
+      "b": 0,
+      "cin": 1
+    },
+    "expected": [
+      0,
+      1
+    ],
+    "correct_text": {
+      "he": "0, 1",
+      "en": "0, 1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-182-v3",
+    "method": "ha_carry_pair",
+    "inputs": {
+      "a": 0,
+      "b": 1,
+      "cin": 0
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0",
+      "en": "0, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-182-v4",
+    "method": "ha_carry_pair",
+    "inputs": {
+      "a": 0,
+      "b": 0,
+      "cin": 1
+    },
+    "expected": [
+      0,
+      0
+    ],
+    "correct_text": {
+      "he": "0, 0",
+      "en": "0, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-182-v5",
+    "method": "ha_carry_pair",
+    "inputs": {
+      "a": 1,
+      "b": 1,
+      "cin": 0
+    },
+    "expected": [
+      1,
+      0
+    ],
+    "correct_text": {
+      "he": "1, 0",
+      "en": "1, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-183-v1",
+    "method": "times_thirteen",
+    "inputs": {
+      "x": 0
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-183-v2",
+    "method": "times_thirteen",
+    "inputs": {
+      "x": 1
+    },
+    "expected": 13,
+    "correct_text": {
+      "he": "13",
+      "en": "13"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-183-v3",
+    "method": "times_thirteen",
+    "inputs": {
+      "x": 3
+    },
+    "expected": 39,
+    "correct_text": {
+      "he": "39",
+      "en": "39"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-183-v4",
+    "method": "times_thirteen",
+    "inputs": {
+      "x": 15
+    },
+    "expected": 195,
+    "correct_text": {
+      "he": "195",
+      "en": "195"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-183-v5",
+    "method": "times_thirteen",
+    "inputs": {
+      "x": 255
+    },
+    "expected": 3315,
+    "correct_text": {
+      "he": "3315",
+      "en": "3315"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-184-v1",
+    "method": "square_bit2",
+    "inputs": {
+      "x": 0,
+      "case": 0
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-184-v2",
+    "method": "square_bit2",
+    "inputs": {
+      "x": 1,
+      "case": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-184-v3",
+    "method": "square_bit2",
+    "inputs": {
+      "x": 2,
+      "case": 2
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-184-v4",
+    "method": "square_bit2",
+    "inputs": {
+      "x": 3,
+      "case": 3
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-184-v5",
+    "method": "square_bit2",
+    "inputs": {
+      "x": 2,
+      "case": 4,
+      "inverse": true,
+      "he": "ל־X ללא סימן בן2 ביטים,ביט המשקל4 של X² הוא1. איזה X יחיד מתוך0..3 מתאים?",
+      "en": "For unsigned2-bit X,the weight4bit of X² is1. Which single X in0..3 fits?"
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-185-v1",
+    "method": "signed_square",
+    "inputs": {
+      "bits": 3,
+      "case": 0
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-185-v2",
+    "method": "signed_square",
+    "inputs": {
+      "bits": 2,
+      "case": 1
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-185-v3",
+    "method": "signed_square",
+    "inputs": {
+      "bits": 1,
+      "case": 2
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-185-v4",
+    "method": "signed_square",
+    "inputs": {
+      "bits": 0,
+      "case": 3
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-185-v5",
+    "method": "signed_square",
+    "inputs": {
+      "bits": 3,
+      "case": 4,
+      "difference": true,
+      "he": "לתבנית11,מה ההפרש בין הריבוע בפירוש unsigned לבין הריבוע בפירוש signed במשלים לשתיים?",
+      "en": "For pattern11,what is unsigned-square minus two’s-complement signed-square?"
+    },
+    "expected": 8,
+    "correct_text": {
+      "he": "8",
+      "en": "8"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-186-v1",
+    "method": "run_error",
+    "inputs": {
+      "bit": 0,
+      "length": 4
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-186-v2",
+    "method": "run_error",
+    "inputs": {
+      "bit": 1,
+      "length": 5
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-186-v3",
+    "method": "run_error",
+    "inputs": {
+      "bit": 0,
+      "length": 5
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-186-v4",
+    "method": "run_error",
+    "inputs": {
+      "bit": 1,
+      "length": 2
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-186-v5",
+    "method": "run_error",
+    "inputs": {
+      "bit": 0,
+      "length": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-187-v1",
+    "method": "run_reset",
+    "inputs": {
+      "first": 0,
+      "case": 0,
+      "old": "OO",
+      "he": "ZO/ZE הם רצף אפסים אי־זוגי/זוגי; OO/OE הם רצף אחדות אי־זוגי/זוגי. הגלאי היה ב־{old},אך reset קובע OE השקול להיסטוריה ריקה. הביט הראשון אחריו{first}. מה המצב החדש ללא שגיאה?",
+      "en": "ZO/ZE mean odd/even zero runs; OO/OE mean odd/even one runs. Before reset,state={old}; reset sets OE,equivalent to empty history. First subsequent bit={first}. What history state follows without error?"
+    },
+    "expected": "ZO",
+    "correct_text": {
+      "he": "ZO",
+      "en": "ZO"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-187-v2",
+    "method": "run_reset",
+    "inputs": {
+      "first": 1,
+      "case": 1,
+      "old": "ZE",
+      "he": "ZO/ZE הם רצף אפסים אי־זוגי/זוגי; OO/OE הם רצף אחדות אי־זוגי/זוגי. הגלאי היה ב־{old},אך reset קובע OE השקול להיסטוריה ריקה. הביט הראשון אחריו{first}. מה המצב החדש ללא שגיאה?",
+      "en": "ZO/ZE mean odd/even zero runs; OO/OE mean odd/even one runs. Before reset,state={old}; reset sets OE,equivalent to empty history. First subsequent bit={first}. What history state follows without error?"
+    },
+    "expected": "OO",
+    "correct_text": {
+      "he": "OO",
+      "en": "OO"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-187-v3",
+    "method": "run_reset",
+    "inputs": {
+      "first": 0,
+      "case": 2,
+      "old": "ZO",
+      "he": "ZO/ZE הם רצף אפסים אי־זוגי/זוגי; OO/OE הם רצף אחדות אי־זוגי/זוגי. הגלאי היה ב־{old},אך reset קובע OE השקול להיסטוריה ריקה. הביט הראשון אחריו{first}. מה המצב החדש ללא שגיאה?",
+      "en": "ZO/ZE mean odd/even zero runs; OO/OE mean odd/even one runs. Before reset,state={old}; reset sets OE,equivalent to empty history. First subsequent bit={first}. What history state follows without error?"
+    },
+    "expected": "ZO",
+    "correct_text": {
+      "he": "ZO",
+      "en": "ZO"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-187-v4",
+    "method": "run_reset",
+    "inputs": {
+      "first": 1,
+      "case": 3,
+      "old": "OE",
+      "he": "ZO/ZE הם רצף אפסים אי־זוגי/זוגי; OO/OE הם רצף אחדות אי־זוגי/זוגי. הגלאי היה ב־{old},אך reset קובע OE השקול להיסטוריה ריקה. הביט הראשון אחריו{first}. מה המצב החדש ללא שגיאה?",
+      "en": "ZO/ZE mean odd/even zero runs; OO/OE mean odd/even one runs. Before reset,state={old}; reset sets OE,equivalent to empty history. First subsequent bit={first}. What history state follows without error?"
+    },
+    "expected": "OO",
+    "correct_text": {
+      "he": "OO",
+      "en": "OO"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-187-v5",
+    "method": "run_reset",
+    "inputs": {
+      "first": 1,
+      "case": 4,
+      "old": "OO",
+      "he": "ZO/ZE הם רצף אפסים אי־זוגי/זוגי; OO/OE הם רצף אחדות אי־זוגי/זוגי. הגלאי היה ב־{old},אך reset קובע OE השקול להיסטוריה ריקה. הביט הראשון אחריו{first}. מה המצב החדש ללא שגיאה?",
+      "en": "ZO/ZE mean odd/even zero runs; OO/OE mean odd/even one runs. Before reset,state={old}; reset sets OE,equivalent to empty history. First subsequent bit={first}. What history state follows without error?"
+    },
+    "expected": "OO",
+    "correct_text": {
+      "he": "OO",
+      "en": "OO"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-188-v1",
+    "method": "prefix_fallback",
+    "inputs": {
+      "history": "1010"
+    },
+    "expected": 2,
+    "correct_text": {
+      "he": "2",
+      "en": "2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-188-v2",
+    "method": "prefix_fallback",
+    "inputs": {
+      "history": "1011"
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-188-v3",
+    "method": "prefix_fallback",
+    "inputs": {
+      "history": "100"
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-188-v4",
+    "method": "prefix_fallback",
+    "inputs": {
+      "history": "111"
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-188-v5",
+    "method": "prefix_fallback",
+    "inputs": {
+      "history": "0101"
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-189-v1",
+    "method": "lsb_five",
+    "inputs": {
+      "state": 0,
+      "bit": 1
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-189-v2",
+    "method": "lsb_five",
+    "inputs": {
+      "state": 3,
+      "bit": 0
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-189-v3",
+    "method": "lsb_five",
+    "inputs": {
+      "state": 2,
+      "bit": 1
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-189-v4",
+    "method": "lsb_five",
+    "inputs": {
+      "state": 4,
+      "bit": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-189-v5",
+    "method": "lsb_five",
+    "inputs": {
+      "state": 1,
+      "bit": 0
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-190-v1",
+    "method": "winner",
+    "inputs": {
+      "arrivals": [
+        "-",
+        "A",
+        "B"
+      ],
+      "trace": "-,A,B"
+    },
+    "expected": "A",
+    "correct_text": {
+      "he": "A",
+      "en": "A"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-190-v2",
+    "method": "winner",
+    "inputs": {
+      "arrivals": [
+        "B",
+        "C",
+        "A"
+      ],
+      "trace": "B,C,A"
+    },
+    "expected": "B",
+    "correct_text": {
+      "he": "B",
+      "en": "B"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-190-v3",
+    "method": "winner",
+    "inputs": {
+      "arrivals": [
+        "-",
+        "-",
+        "C"
+      ],
+      "trace": "-,-,C"
+    },
+    "expected": "C",
+    "correct_text": {
+      "he": "C",
+      "en": "C"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-190-v4",
+    "method": "winner",
+    "inputs": {
+      "arrivals": [
+        "-",
+        "-",
+        "-"
+      ],
+      "trace": "-,-,-"
+    },
+    "expected": "-",
+    "correct_text": {
+      "he": "טרם נשמר מנצח",
+      "en": "No winner retained yet"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-190-v5",
+    "method": "winner",
+    "inputs": {
+      "arrivals": [
+        "C",
+        "-",
+        "A"
+      ],
+      "trace": "C,-,A"
+    },
+    "expected": "C",
+    "correct_text": {
+      "he": "C",
+      "en": "C"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-191-v1",
+    "method": "one_sensor",
+    "inputs": {
+      "duration": "1s"
+    },
+    "expected": "ambiguous",
+    "correct_text": {
+      "he": "אותו רצף אינו מבחין בין הכיוונים",
+      "en": "The trace cannot distinguish direction"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-191-v2",
+    "method": "one_sensor",
+    "inputs": {
+      "duration": "2s"
+    },
+    "expected": "ambiguous",
+    "correct_text": {
+      "he": "אותו רצף אינו מבחין בין הכיוונים",
+      "en": "The trace cannot distinguish direction"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-191-v3",
+    "method": "one_sensor",
+    "inputs": {
+      "duration": "0.5s"
+    },
+    "expected": "ambiguous",
+    "correct_text": {
+      "he": "אותו רצף אינו מבחין בין הכיוונים",
+      "en": "The trace cannot distinguish direction"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-191-v4",
+    "method": "one_sensor",
+    "inputs": {
+      "duration": "3s"
+    },
+    "expected": "ambiguous",
+    "correct_text": {
+      "he": "אותו רצף אינו מבחין בין הכיוונים",
+      "en": "The trace cannot distinguish direction"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-191-v5",
+    "method": "one_sensor",
+    "inputs": {
+      "duration": "4s"
+    },
+    "expected": "ambiguous",
+    "correct_text": {
+      "he": "אותו רצף אינו מבחין בין הכיוונים",
+      "en": "The trace cannot distinguish direction"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-192-v1",
+    "method": "door_retreat",
+    "inputs": {
+      "trace": "00,10,00"
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-192-v2",
+    "method": "door_retreat",
+    "inputs": {
+      "trace": "00,01,00"
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-192-v3",
+    "method": "door_retreat",
+    "inputs": {
+      "trace": "00,10,11,10,00"
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-192-v4",
+    "method": "door_retreat",
+    "inputs": {
+      "trace": "00,01,11,01,00"
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-192-v5",
+    "method": "door_retreat",
+    "inputs": {
+      "trace": "00,10,10,00"
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-193-v1",
+    "method": "pipeline_diagnosis",
+    "inputs": {
+      "observed": 2,
+      "case": 0
+    },
+    "expected": "insufficient",
+    "correct_text": {
+      "he": "אין אבחנה יחידה מהמספר לבדו",
+      "en": "The edge count alone is insufficient"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-193-v2",
+    "method": "pipeline_diagnosis",
+    "inputs": {
+      "observed": 4,
+      "case": 1
+    },
+    "expected": "insufficient",
+    "correct_text": {
+      "he": "אין אבחנה יחידה מהמספר לבדו",
+      "en": "The edge count alone is insufficient"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-193-v3",
+    "method": "pipeline_diagnosis",
+    "inputs": {
+      "observed": 1,
+      "case": 2
+    },
+    "expected": "insufficient",
+    "correct_text": {
+      "he": "אין אבחנה יחידה מהמספר לבדו",
+      "en": "The edge count alone is insufficient"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-193-v4",
+    "method": "pipeline_diagnosis",
+    "inputs": {
+      "observed": 5,
+      "case": 3
+    },
+    "expected": "insufficient",
+    "correct_text": {
+      "he": "אין אבחנה יחידה מהמספר לבדו",
+      "en": "The edge count alone is insufficient"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-193-v5",
+    "method": "pipeline_diagnosis",
+    "inputs": {
+      "observed": 3,
+      "case": 4
+    },
+    "expected": "insufficient",
+    "correct_text": {
+      "he": "אין אבחנה יחידה מהמספר לבדו",
+      "en": "The edge count alone is insufficient"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-194-v1",
+    "method": "bubble_input",
+    "inputs": {
+      "a": 0,
+      "b": 0,
+      "case": 0
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-194-v2",
+    "method": "bubble_input",
+    "inputs": {
+      "a": 0,
+      "b": 1,
+      "case": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-194-v3",
+    "method": "bubble_input",
+    "inputs": {
+      "a": 1,
+      "b": 0,
+      "case": 2
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-194-v4",
+    "method": "bubble_input",
+    "inputs": {
+      "a": 1,
+      "b": 1,
+      "case": 3
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-194-v5",
+    "method": "bubble_input",
+    "inputs": {
+      "a": 1,
+      "b": 0,
+      "case": 4,
+      "inverse": true,
+      "he": "לשער AND עם בועה רק בכניסת B,נמדדו A=1 ופלט1. איזה B מתאים?",
+      "en": "An AND with a bubble only on input B has A=1 and output1. Which B fits?"
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-195-v1",
+    "method": "promise_mask",
+    "inputs": {
+      "a": 9,
+      "b": 13
+    },
+    "expected": 4,
+    "correct_text": {
+      "he": "4",
+      "en": "4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-195-v2",
+    "method": "promise_mask",
+    "inputs": {
+      "a": 4,
+      "b": 7
+    },
+    "expected": 3,
+    "correct_text": {
+      "he": "3",
+      "en": "3"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-195-v3",
+    "method": "promise_mask",
+    "inputs": {
+      "a": 0,
+      "b": 8
+    },
+    "expected": 8,
+    "correct_text": {
+      "he": "8",
+      "en": "8"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-195-v4",
+    "method": "promise_mask",
+    "inputs": {
+      "a": 3,
+      "b": 12
+    },
+    "expected": 15,
+    "correct_text": {
+      "he": "15",
+      "en": "15"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-195-v5",
+    "method": "promise_mask",
+    "inputs": {
+      "a": 5,
+      "b": 10
+    },
+    "expected": 15,
+    "correct_text": {
+      "he": "15",
+      "en": "15"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-196-v1",
+    "method": "hysteresis",
+    "inputs": {
+      "low": 1,
+      "high": 2,
+      "previous": 0,
+      "vin": 1.5
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-196-v2",
+    "method": "hysteresis",
+    "inputs": {
+      "low": 1,
+      "high": 2,
+      "previous": 1,
+      "vin": 1.5
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-196-v3",
+    "method": "hysteresis",
+    "inputs": {
+      "low": 1,
+      "high": 2,
+      "previous": 0,
+      "vin": 2
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-196-v4",
+    "method": "hysteresis",
+    "inputs": {
+      "low": 1,
+      "high": 2,
+      "previous": 1,
+      "vin": 1
+    },
+    "expected": 0,
+    "correct_text": {
+      "he": "0",
+      "en": "0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-196-v5",
+    "method": "hysteresis",
+    "inputs": {
+      "low": 0.5,
+      "high": 2.5,
+      "previous": 0,
+      "vin": 3
+    },
+    "expected": 1,
+    "correct_text": {
+      "he": "1",
+      "en": "1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-197-v1",
+    "method": "threshold_gap",
+    "inputs": {
+      "vil": 0.8,
+      "vih": 2,
+      "vin": 1.2
+    },
+    "expected": "unspecified",
+    "correct_text": {
+      "he": "הערך הלוגי אינו מובטח",
+      "en": "Logical value is unspecified"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-197-v2",
+    "method": "threshold_gap",
+    "inputs": {
+      "vil": 0.8,
+      "vih": 2,
+      "vin": 0.8
+    },
+    "expected": "low",
+    "correct_text": {
+      "he": "0 מובטח לפי הגבול",
+      "en": "0 guaranteed by the bound"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-197-v3",
+    "method": "threshold_gap",
+    "inputs": {
+      "vil": 0.8,
+      "vih": 2,
+      "vin": 2
+    },
+    "expected": "high",
+    "correct_text": {
+      "he": "1 מובטח לפי הגבול",
+      "en": "1 guaranteed by the bound"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-197-v4",
+    "method": "threshold_gap",
+    "inputs": {
+      "vil": 1,
+      "vih": 3,
+      "vin": 0
+    },
+    "expected": "low",
+    "correct_text": {
+      "he": "0 מובטח לפי הגבול",
+      "en": "0 guaranteed by the bound"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-197-v5",
+    "method": "threshold_gap",
+    "inputs": {
+      "vil": 1,
+      "vih": 3,
+      "vin": 4
+    },
+    "expected": "high",
+    "correct_text": {
+      "he": "1 מובטח לפי הגבול",
+      "en": "1 guaranteed by the bound"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-198-v1",
+    "method": "compare_split",
+    "inputs": {
+      "left": [
+        1,
+        9
+      ],
+      "right": [
+        2,
+        8
+      ]
+    },
+    "expected": [
+      1,
+      2
+    ],
+    "correct_text": {
+      "he": "1, 2",
+      "en": "1, 2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-198-v2",
+    "method": "compare_split",
+    "inputs": {
+      "left": [
+        4,
+        4
+      ],
+      "right": [
+        1,
+        4
+      ]
+    },
+    "expected": [
+      1,
+      4
+    ],
+    "correct_text": {
+      "he": "1, 4",
+      "en": "1, 4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-198-v3",
+    "method": "compare_split",
+    "inputs": {
+      "left": [
+        0,
+        2
+      ],
+      "right": [
+        3,
+        5
+      ]
+    },
+    "expected": [
+      0,
+      2
+    ],
+    "correct_text": {
+      "he": "0, 2",
+      "en": "0, 2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-198-v4",
+    "method": "compare_split",
+    "inputs": {
+      "left": [
+        -2,
+        7
+      ],
+      "right": [
+        -1,
+        0
+      ]
+    },
+    "expected": [
+      -2,
+      -1
+    ],
+    "correct_text": {
+      "he": "-2, -1",
+      "en": "-2, -1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-198-v5",
+    "method": "compare_split",
+    "inputs": {
+      "left": [
+        9,
+        10
+      ],
+      "right": [
+        1,
+        2
+      ]
+    },
+    "expected": [
+      1,
+      2
+    ],
+    "correct_text": {
+      "he": "1, 2",
+      "en": "1, 2"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-199-v1",
+    "method": "threshold_witness",
+    "inputs": {
+      "low": 2,
+      "high": 8
+    },
+    "expected": 5.0,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-199-v2",
+    "method": "threshold_witness",
+    "inputs": {
+      "low": -4,
+      "high": 2
+    },
+    "expected": -1.0,
+    "correct_text": {
+      "he": "-1",
+      "en": "-1"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-199-v3",
+    "method": "threshold_witness",
+    "inputs": {
+      "low": 1,
+      "high": 2
+    },
+    "expected": 1.5,
+    "correct_text": {
+      "he": "1.5",
+      "en": "1.5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-199-v4",
+    "method": "threshold_witness",
+    "inputs": {
+      "low": 0,
+      "high": 10
+    },
+    "expected": 5.0,
+    "correct_text": {
+      "he": "5",
+      "en": "5"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-199-v5",
+    "method": "threshold_witness",
+    "inputs": {
+      "low": 5,
+      "high": 9
+    },
+    "expected": 7.0,
+    "correct_text": {
+      "he": "7",
+      "en": "7"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-200-v1",
+    "method": "padding_failure",
+    "inputs": {
+      "real": [
+        1,
+        200
+      ],
+      "sentinel": 100
+    },
+    "expected": [
+      1,
+      100
+    ],
+    "correct_text": {
+      "he": "1, 100",
+      "en": "1, 100"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-200-v2",
+    "method": "padding_failure",
+    "inputs": {
+      "real": [
+        -1,
+        2
+      ],
+      "sentinel": 0
+    },
+    "expected": [
+      -1,
+      0
+    ],
+    "correct_text": {
+      "he": "-1, 0",
+      "en": "-1, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-200-v3",
+    "method": "padding_failure",
+    "inputs": {
+      "real": [
+        3,
+        4
+      ],
+      "sentinel": 99
+    },
+    "expected": [
+      3,
+      4
+    ],
+    "correct_text": {
+      "he": "3, 4",
+      "en": "3, 4"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-200-v4",
+    "method": "padding_failure",
+    "inputs": {
+      "real": [
+        7,
+        8
+      ],
+      "sentinel": 7
+    },
+    "expected": [
+      7,
+      7
+    ],
+    "correct_text": {
+      "he": "7, 7",
+      "en": "7, 7"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  },
+  {
+    "key": "quick-hw-200-v5",
+    "method": "padding_failure",
+    "inputs": {
+      "real": [
+        0,
+        1
+      ],
+      "sentinel": -1
+    },
+    "expected": [
+      -1,
+      0
+    ],
+    "correct_text": {
+      "he": "-1, 0",
+      "en": "-1, 0"
+    },
+    "scope": "Independent bounded teaching-model replay; not human review,hardware or timing signoff."
+  }
+]

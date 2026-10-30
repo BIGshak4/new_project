@@ -1,0 +1,2615 @@
+[
+  {
+    "key": "quick-sw-178-v1",
+    "task": "matrix_count",
+    "inputs": {
+      "a": [
+        [
+          -5,
+          -2,
+          0
+        ],
+        [
+          -1,
+          2,
+          4
+        ]
+      ]
+    },
+    "options": [
+      5,
+      2,
+      3,
+      4
+    ],
+    "expected": 3,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-178-v2",
+    "task": "matrix_count",
+    "inputs": {
+      "a": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "options": [
+      0,
+      1,
+      3,
+      4
+    ],
+    "expected": 0,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-178-v3",
+    "task": "negative_row_certificate",
+    "inputs": {
+      "row": [
+        -7,
+        -3,
+        -1,
+        4
+      ],
+      "j": 2
+    },
+    "options": [
+      2,
+      3,
+      4,
+      1
+    ],
+    "expected": 3,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-178-v4",
+    "task": "staircase_visits",
+    "inputs": {
+      "a": [
+        [
+          -5,
+          -2,
+          0
+        ],
+        [
+          -1,
+          2,
+          4
+        ]
+      ]
+    },
+    "options": [
+      5,
+      6,
+      3,
+      4
+    ],
+    "expected": 4,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-178-v5",
+    "task": "matrix_missing_order",
+    "inputs": {
+      "a": [
+        [
+          1,
+          -1
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "options": [
+      "positive",
+      "rows",
+      "unique",
+      "square"
+    ],
+    "expected": "rows",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-179-v1",
+    "task": "merge_last",
+    "inputs": {
+      "a": [
+        1,
+        7
+      ],
+      "b": [
+        3,
+        5
+      ]
+    },
+    "options": [
+      1,
+      3,
+      5,
+      7
+    ],
+    "expected": 7,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-179-v2",
+    "task": "merge_b_prefix",
+    "inputs": {
+      "a": [
+        8,
+        9
+      ],
+      "b": [
+        1,
+        2
+      ]
+    },
+    "options": [
+      [
+        8,
+        9
+      ],
+      [
+        1
+      ],
+      [],
+      [
+        1,
+        2
+      ]
+    ],
+    "expected": [
+      1,
+      2
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-179-v3",
+    "task": "merge_all",
+    "inputs": {
+      "a": [
+        0,
+        3
+      ],
+      "b": [
+        0,
+        2
+      ]
+    },
+    "options": [
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        3
+      ],
+      [
+        0,
+        0,
+        2,
+        3
+      ],
+      [
+        0,
+        2,
+        3
+      ]
+    ],
+    "expected": [
+      0,
+      0,
+      2,
+      3
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-179-v4",
+    "task": "forward_overwrite",
+    "inputs": {
+      "a": [
+        1,
+        3
+      ],
+      "b": [
+        2,
+        4
+      ]
+    },
+    "options": [
+      4,
+      1,
+      2,
+      3
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-179-v5",
+    "task": "merge_all",
+    "inputs": {
+      "a": [
+        2,
+        2
+      ],
+      "b": [
+        2
+      ]
+    },
+    "options": [
+      [
+        2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2
+      ],
+      [
+        0,
+        2,
+        2
+      ]
+    ],
+    "expected": [
+      2,
+      2,
+      2
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-180-v1",
+    "task": "triple_index_count",
+    "inputs": {
+      "a": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "target": 0
+    },
+    "options": [
+      3,
+      4,
+      6,
+      1
+    ],
+    "expected": 4,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-180-v2",
+    "task": "triple_unique",
+    "inputs": {
+      "a": [
+        -1,
+        -1,
+        2
+      ],
+      "target": 0
+    },
+    "options": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-180-v3",
+    "task": "next_anchor",
+    "inputs": {
+      "a": [
+        -2,
+        -2,
+        -2,
+        0,
+        1
+      ],
+      "i": 0
+    },
+    "options": [
+      4,
+      1,
+      2,
+      3
+    ],
+    "expected": 3,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-180-v4",
+    "task": "triple_value_count",
+    "inputs": {
+      "a": [
+        -1,
+        0,
+        1,
+        2,
+        -1,
+        -4
+      ],
+      "target": 0
+    },
+    "options": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-180-v5",
+    "task": "triple_value_count",
+    "inputs": {
+      "a": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "target": 6
+    },
+    "options": [
+      1,
+      2,
+      4,
+      0
+    ],
+    "expected": 0,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-181-v1",
+    "task": "first_free",
+    "inputs": {
+      "used": 11,
+      "n": 4
+    },
+    "options": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-181-v2",
+    "task": "first_free",
+    "inputs": {
+      "used": 15,
+      "n": 4
+    },
+    "options": [
+      4,
+      null,
+      0,
+      3
+    ],
+    "expected": null,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-181-v3",
+    "task": "first_free",
+    "inputs": {
+      "used": 0,
+      "n": 0
+    },
+    "options": [
+      null,
+      0,
+      1,
+      -1
+    ],
+    "expected": null,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-181-v4",
+    "task": "bounded_complement",
+    "inputs": {
+      "used": 0,
+      "n": 3
+    },
+    "options": [
+      0,
+      3,
+      7,
+      -1
+    ],
+    "expected": 7,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-181-v5",
+    "task": "bounded_complement",
+    "inputs": {
+      "used": 240,
+      "n": 8
+    },
+    "options": [
+      15,
+      240,
+      0,
+      4
+    ],
+    "expected": 15,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-182-v1",
+    "task": "palindrome",
+    "inputs": {
+      "s": "Aa"
+    },
+    "options": [
+      "loops",
+      "true",
+      "false",
+      "error"
+    ],
+    "expected": "false",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-182-v2",
+    "task": "palindrome",
+    "inputs": {
+      "s": ""
+    },
+    "options": [
+      "true",
+      "false",
+      "error",
+      "loops"
+    ],
+    "expected": "true",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-182-v3",
+    "task": "palindrome_pairs",
+    "inputs": {
+      "s": "abcba"
+    },
+    "options": [
+      2,
+      3,
+      5,
+      1
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-182-v4",
+    "task": "palindrome_checks",
+    "inputs": {
+      "s": "abcda"
+    },
+    "options": [
+      3,
+      5,
+      1,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-182-v5",
+    "task": "palindrome",
+    "inputs": {
+      "s": "abYba"
+    },
+    "options": [
+      "loops",
+      "true",
+      "false",
+      "error"
+    ],
+    "expected": "true",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-183-v1",
+    "task": "free_allocate_head",
+    "inputs": {
+      "free": [
+        2,
+        4,
+        6
+      ]
+    },
+    "options": [
+      2,
+      4,
+      6,
+      null
+    ],
+    "expected": 4,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-183-v2",
+    "task": "free_prepend_link",
+    "inputs": {
+      "free": [
+        4,
+        6
+      ],
+      "slot": 1
+    },
+    "options": [
+      4,
+      6,
+      null,
+      1
+    ],
+    "expected": 4,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-183-v3",
+    "task": "free_allocate_result",
+    "inputs": {
+      "free": []
+    },
+    "options": [
+      -1,
+      1,
+      null,
+      0
+    ],
+    "expected": null,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-183-v4",
+    "task": "free_ownership",
+    "inputs": {
+      "free": [
+        3,
+        5
+      ],
+      "allocated": 2,
+      "payload": 99
+    },
+    "options": [
+      [
+        5
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        2,
+        3,
+        5
+      ],
+      [
+        99,
+        5
+      ]
+    ],
+    "expected": [
+      3,
+      5
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-183-v5",
+    "task": "double_free_link",
+    "inputs": {
+      "slot": 2
+    },
+    "options": [
+      null,
+      0,
+      1,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-184-v1",
+    "task": "postfix",
+    "inputs": {
+      "tokens": [
+        8,
+        3,
+        "-"
+      ]
+    },
+    "options": [
+      -5,
+      11,
+      24,
+      5
+    ],
+    "expected": 5,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-184-v2",
+    "task": "postfix",
+    "inputs": {
+      "tokens": [
+        8,
+        2,
+        "/"
+      ]
+    },
+    "options": [
+      6,
+      16,
+      4,
+      0.25
+    ],
+    "expected": 4,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-184-v3",
+    "task": "postfix",
+    "inputs": {
+      "tokens": [
+        2,
+        3,
+        4,
+        "*",
+        "+"
+      ]
+    },
+    "options": [
+      24,
+      14,
+      20,
+      9
+    ],
+    "expected": 14,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-184-v4",
+    "task": "postfix",
+    "inputs": {
+      "tokens": [
+        8,
+        "-"
+      ]
+    },
+    "options": [
+      "underflow",
+      "extra",
+      "valid",
+      "zero"
+    ],
+    "expected": "underflow",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-184-v5",
+    "task": "postfix",
+    "inputs": {
+      "tokens": [
+        1,
+        2
+      ]
+    },
+    "options": [
+      "underflow",
+      "valid",
+      "division",
+      "extra"
+    ],
+    "expected": "extra",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-185-v1",
+    "task": "stack_min",
+    "inputs": {
+      "push": [
+        5,
+        2,
+        2
+      ],
+      "pops": 1
+    },
+    "options": [
+      null,
+      0,
+      2,
+      5
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-185-v2",
+    "task": "stack_min",
+    "inputs": {
+      "push": [
+        4
+      ],
+      "pops": 1
+    },
+    "options": [
+      -1,
+      null,
+      4,
+      0
+    ],
+    "expected": null,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-185-v3",
+    "task": "stack_min",
+    "inputs": {
+      "push": [
+        3,
+        7
+      ],
+      "pops": 0
+    },
+    "options": [
+      3,
+      7,
+      10,
+      null
+    ],
+    "expected": 3,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-185-v4",
+    "task": "stack_min_after_replace",
+    "inputs": {
+      "first": 2,
+      "next": 3
+    },
+    "options": [
+      3,
+      null,
+      0,
+      2
+    ],
+    "expected": 3,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-185-v5",
+    "task": "prefix_minima",
+    "inputs": {
+      "a": [
+        4,
+        1,
+        3
+      ]
+    },
+    "options": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        3,
+        1,
+        4
+      ],
+      [
+        4,
+        1,
+        1
+      ],
+      [
+        4,
+        1,
+        3
+      ]
+    ],
+    "expected": [
+      4,
+      1,
+      1
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-186-v1",
+    "task": "filter_below",
+    "inputs": {
+      "a": [
+        3,
+        4,
+        20
+      ],
+      "t": 19
+    },
+    "options": [
+      [],
+      [
+        20
+      ],
+      [
+        4,
+        20
+      ],
+      [
+        3,
+        20
+      ]
+    ],
+    "expected": [
+      20
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-186-v2",
+    "task": "naive_forward_delete",
+    "inputs": {
+      "a": [
+        3,
+        4,
+        20
+      ],
+      "t": 19
+    },
+    "options": [
+      [
+        4,
+        20
+      ],
+      [
+        20
+      ],
+      [
+        3,
+        20
+      ],
+      []
+    ],
+    "expected": [
+      4,
+      20
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-186-v3",
+    "task": "backward_indices",
+    "inputs": {
+      "n": 3
+    },
+    "options": [
+      [
+        3,
+        2,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        2,
+        1,
+        0
+      ]
+    ],
+    "expected": [
+      2,
+      1,
+      0
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-186-v4",
+    "task": "filter_below",
+    "inputs": {
+      "a": [
+        20,
+        3,
+        21,
+        4
+      ],
+      "t": 19
+    },
+    "options": [
+      [
+        3,
+        4
+      ],
+      [
+        20,
+        3,
+        21
+      ],
+      [
+        20,
+        21
+      ],
+      [
+        21,
+        20
+      ]
+    ],
+    "expected": [
+      20,
+      21
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-186-v5",
+    "task": "delete_shifts",
+    "inputs": {
+      "n": 8,
+      "i": 0
+    },
+    "options": [
+      8,
+      0,
+      1,
+      7
+    ],
+    "expected": 7,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-187-v1",
+    "task": "first_equal",
+    "inputs": {
+      "a": [
+        1,
+        2,
+        2,
+        4
+      ],
+      "x": 2
+    },
+    "options": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "expected": 1,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-187-v2",
+    "task": "first_equal",
+    "inputs": {
+      "a": [
+        1,
+        3,
+        5
+      ],
+      "x": 2
+    },
+    "options": [
+      0,
+      1,
+      2,
+      -1
+    ],
+    "expected": -1,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-187-v3",
+    "task": "first_equal",
+    "inputs": {
+      "a": [],
+      "x": 4
+    },
+    "options": [
+      4,
+      null,
+      -1,
+      0
+    ],
+    "expected": -1,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-187-v4",
+    "task": "lower_bound",
+    "inputs": {
+      "a": [
+        1,
+        3,
+        5
+      ],
+      "x": 9
+    },
+    "options": [
+      3,
+      -1,
+      0,
+      2
+    ],
+    "expected": 3,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-187-v5",
+    "task": "first_equal",
+    "inputs": {
+      "a": [
+        5,
+        5,
+        5,
+        5
+      ],
+      "x": 5
+    },
+    "options": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "expected": 0,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-188-v1",
+    "task": "binary_capacity",
+    "inputs": {
+      "n": 0
+    },
+    "options": [
+      1,
+      3,
+      4,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-188-v2",
+    "task": "binary_capacity",
+    "inputs": {
+      "n": 8
+    },
+    "options": [
+      6,
+      7,
+      5,
+      4
+    ],
+    "expected": 5,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-188-v3",
+    "task": "binary_capacity",
+    "inputs": {
+      "n": 255
+    },
+    "options": [
+      11,
+      9,
+      8,
+      10
+    ],
+    "expected": 9,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-188-v4",
+    "task": "binary_fits",
+    "inputs": {
+      "n": 255,
+      "capacity": 8
+    },
+    "options": [
+      "no",
+      "yes",
+      "skip",
+      "negative"
+    ],
+    "expected": "no",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-188-v5",
+    "task": "fixed_binary_capacity",
+    "inputs": {
+      "width": 8
+    },
+    "options": [
+      8,
+      9,
+      10,
+      2
+    ],
+    "expected": 9,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-189-v1",
+    "task": "tagged_read_blocked",
+    "inputs": {
+      "writes": [
+        [
+          "A",
+          7
+        ],
+        [
+          "B",
+          7
+        ]
+      ],
+      "acked": [
+        "A"
+      ],
+      "read": 7
+    },
+    "options": [
+      "drop",
+      "clock",
+      "yes",
+      "no"
+    ],
+    "expected": "yes",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-189-v2",
+    "task": "tagged_read_blocked",
+    "inputs": {
+      "writes": [
+        [
+          "A",
+          7
+        ],
+        [
+          "B",
+          8
+        ]
+      ],
+      "acked": [
+        "B"
+      ],
+      "read": 7
+    },
+    "options": [
+      "fifo",
+      "yes",
+      "no",
+      "clear"
+    ],
+    "expected": "yes",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-189-v3",
+    "task": "tagged_read_blocked",
+    "inputs": {
+      "writes": [
+        [
+          "A",
+          7
+        ],
+        [
+          "B",
+          8
+        ]
+      ],
+      "acked": [
+        "A"
+      ],
+      "read": 7
+    },
+    "options": [
+      "no",
+      "yes",
+      "lost",
+      "reuse"
+    ],
+    "expected": "no",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-189-v4",
+    "task": "tagged_pending",
+    "inputs": {
+      "writes": [
+        [
+          "A",
+          7
+        ],
+        [
+          "B",
+          8
+        ]
+      ],
+      "acked": [
+        "Z"
+      ]
+    },
+    "options": [
+      [
+        "A"
+      ],
+      [
+        "B"
+      ],
+      [],
+      [
+        "A",
+        "B"
+      ]
+    ],
+    "expected": [
+      "A",
+      "B"
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-189-v5",
+    "task": "tagged_read_blocked",
+    "inputs": {
+      "writes": [
+        [
+          "B",
+          7
+        ]
+      ],
+      "acked": [
+        "A"
+      ],
+      "read": 7
+    },
+    "options": [
+      "decrement",
+      "reuse",
+      "yes",
+      "no"
+    ],
+    "expected": "yes",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-190-v1",
+    "task": "cycle_entry",
+    "inputs": {
+      "next": [
+        1,
+        2,
+        3,
+        4,
+        2
+      ]
+    },
+    "options": [
+      4,
+      0,
+      2,
+      3
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-190-v2",
+    "task": "floyd_reset_next_pair",
+    "inputs": {
+      "next": [
+        1,
+        2,
+        3,
+        4,
+        2
+      ]
+    },
+    "options": [
+      [
+        1,
+        4
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "expected": [
+      1,
+      4
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-190-v3",
+    "task": "floyd_recovery_steps",
+    "inputs": {
+      "next": [
+        1,
+        2,
+        3,
+        4,
+        2
+      ]
+    },
+    "options": [
+      1,
+      2,
+      3,
+      0
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-190-v4",
+    "task": "floyd_reset_both_bug",
+    "inputs": {
+      "next": [
+        1,
+        2,
+        3,
+        4,
+        2
+      ]
+    },
+    "options": [
+      3,
+      4,
+      0,
+      2
+    ],
+    "expected": 0,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-190-v5",
+    "task": "floyd_meeting_phase",
+    "inputs": {
+      "next": [
+        1,
+        2,
+        3,
+        4,
+        1
+      ]
+    },
+    "options": [
+      4,
+      0,
+      1,
+      2
+    ],
+    "expected": 0,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-191-v1",
+    "task": "pair_minmax_count",
+    "inputs": {
+      "n": 6
+    },
+    "options": [
+      7,
+      8,
+      9,
+      10
+    ],
+    "expected": 7,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-191-v2",
+    "task": "pair_minmax_count",
+    "inputs": {
+      "n": 1
+    },
+    "options": [
+      1,
+      2,
+      3,
+      0
+    ],
+    "expected": 0,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-191-v3",
+    "task": "pair_minmax_count",
+    "inputs": {
+      "n": 5
+    },
+    "options": [
+      8,
+      9,
+      6,
+      7
+    ],
+    "expected": 6,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-191-v4",
+    "task": "minmax_savings",
+    "inputs": {
+      "n": 6
+    },
+    "options": [
+      5,
+      1,
+      2,
+      3
+    ],
+    "expected": 3,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-191-v5",
+    "task": "later_pair_comparisons",
+    "inputs": {
+      "pair": [
+        2,
+        8
+      ],
+      "min": 1,
+      "max": 9
+    },
+    "options": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "expected": 3,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-192-v1",
+    "task": "lex_score",
+    "inputs": {
+      "scores": [
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          2
+        ]
+      ]
+    },
+    "options": [
+      [
+        4,
+        2
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        3,
+        3
+      ]
+    ],
+    "expected": [
+      4,
+      2
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-192-v2",
+    "task": "lex_score",
+    "inputs": {
+      "scores": [
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ]
+    },
+    "options": [
+      [
+        3,
+        4
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        4,
+        3
+      ]
+    ],
+    "expected": [
+      4,
+      3
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-192-v3",
+    "task": "assignment_unique",
+    "inputs": {
+      "assigned": [
+        "a",
+        "a"
+      ]
+    },
+    "options": [
+      "tie",
+      "no",
+      "yes",
+      "first"
+    ],
+    "expected": "no",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-192-v4",
+    "task": "lex_score",
+    "inputs": {
+      "scores": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    "options": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "expected": [
+      2,
+      1
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-192-v5",
+    "task": "safe_score_weight",
+    "inputs": {
+      "n": 4,
+      "candidates": [
+        0,
+        1,
+        5,
+        -1
+      ]
+    },
+    "options": [
+      1,
+      5,
+      -1,
+      0
+    ],
+    "expected": 5,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-193-v1",
+    "task": "worker_peak",
+    "inputs": {
+      "intervals": [
+        [
+          1,
+          3,
+          2
+        ],
+        [
+          3,
+          5,
+          3
+        ]
+      ],
+      "closed": false
+    },
+    "options": [
+      5,
+      6,
+      2,
+      3
+    ],
+    "expected": 3,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-193-v2",
+    "task": "worker_peak",
+    "inputs": {
+      "intervals": [
+        [
+          1,
+          3,
+          2
+        ],
+        [
+          3,
+          5,
+          3
+        ]
+      ],
+      "closed": true
+    },
+    "options": [
+      6,
+      2,
+      3,
+      5
+    ],
+    "expected": 5,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-193-v3",
+    "task": "event_delta",
+    "inputs": {
+      "starts": [
+        3
+      ],
+      "ends": [
+        2
+      ]
+    },
+    "options": [
+      -1,
+      0,
+      1,
+      5
+    ],
+    "expected": 1,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-193-v4",
+    "task": "spurious_peak",
+    "inputs": {
+      "old": 2,
+      "starts": 3,
+      "ends": 2
+    },
+    "options": [
+      1,
+      2,
+      3,
+      0
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-193-v5",
+    "task": "worker_peak",
+    "inputs": {
+      "intervals": [
+        [
+          5,
+          5,
+          9
+        ]
+      ],
+      "closed": false
+    },
+    "options": [
+      9,
+      18,
+      0,
+      1
+    ],
+    "expected": 0,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-194-v1",
+    "task": "zero_matrix",
+    "inputs": {
+      "a": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    "options": [
+      [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        0,
+        0
+      ],
+      [
+        3,
+        0
+      ]
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-194-v2",
+    "task": "zero_matrix",
+    "inputs": {
+      "a": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    "options": [
+      [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      [
+        [
+          0,
+          2
+        ],
+        [
+          3,
+          0
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        1,
+        2
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-194-v3",
+    "task": "zero_matrix",
+    "inputs": {
+      "a": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    "options": [
+      [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-194-v4",
+    "task": "zero_markers",
+    "inputs": {
+      "a": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    "options": [
+      [
+        [
+          1
+        ],
+        [
+          0
+        ]
+      ],
+      [
+        [
+          0
+        ],
+        [
+          0
+        ]
+      ],
+      [
+        [
+          0
+        ],
+        [
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        0
+      ],
+      [
+        1
+      ]
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-194-v5",
+    "task": "zero_matrix",
+    "inputs": {
+      "a": []
+    },
+    "options": [
+      null,
+      [],
+      [
+        []
+      ],
+      [
+        [
+          0
+        ]
+      ]
+    ],
+    "expected": [],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-195-v1",
+    "task": "lookup_entries",
+    "inputs": {
+      "width": 8
+    },
+    "options": [
+      8,
+      255,
+      256,
+      257
+    ],
+    "expected": 256,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-195-v2",
+    "task": "lookup_bytes",
+    "inputs": {
+      "width": 8,
+      "bytes_per_entry": 1
+    },
+    "options": [
+      256,
+      512,
+      2048,
+      32
+    ],
+    "expected": 256,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-195-v3",
+    "task": "lookup_entries",
+    "inputs": {
+      "width": 16
+    },
+    "options": [
+      512,
+      65536,
+      16,
+      256
+    ],
+    "expected": 65536,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-195-v4",
+    "task": "byte_lookups",
+    "inputs": {
+      "width": 32
+    },
+    "options": [
+      32,
+      1,
+      4,
+      8
+    ],
+    "expected": 4,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-195-v5",
+    "task": "popcount",
+    "inputs": {
+      "n": 178
+    },
+    "options": [
+      3,
+      4,
+      5,
+      178
+    ],
+    "expected": 4,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-196-v1",
+    "task": "sort_transfers",
+    "inputs": {
+      "n": 2000,
+      "model": "internal"
+    },
+    "options": [
+      4000,
+      6000,
+      8000,
+      2000
+    ],
+    "expected": 4000,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-196-v2",
+    "task": "sort_transfers",
+    "inputs": {
+      "n": 2000,
+      "model": "roundtrip"
+    },
+    "options": [
+      8000,
+      10000,
+      2000,
+      4000
+    ],
+    "expected": 8000,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-196-v3",
+    "task": "sorter_call_transfers",
+    "inputs": {
+      "calls": 5,
+      "capacity": 1000
+    },
+    "options": [
+      20000,
+      5000,
+      8000,
+      10000
+    ],
+    "expected": 10000,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-196-v4",
+    "task": "transfer_bytes",
+    "inputs": {
+      "transfers": 4000,
+      "value_bytes": 4
+    },
+    "options": [
+      1000,
+      4000,
+      8000,
+      16000
+    ],
+    "expected": 16000,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-196-v5",
+    "task": "memory_model_unique",
+    "inputs": {
+      "n": 2000
+    },
+    "options": [
+      "4000",
+      "8000",
+      "average",
+      "no"
+    ],
+    "expected": "no",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-197-v1",
+    "task": "permutation_count",
+    "inputs": {
+      "s": "aab"
+    },
+    "options": [
+      6,
+      9,
+      2,
+      3
+    ],
+    "expected": 3,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-197-v2",
+    "task": "permutation_count",
+    "inputs": {
+      "s": ""
+    },
+    "options": [
+      null,
+      0,
+      1,
+      2
+    ],
+    "expected": 1,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-197-v3",
+    "task": "restore_count",
+    "inputs": {
+      "s": "aab",
+      "char": "a"
+    },
+    "options": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-197-v4",
+    "task": "permutation_outputs",
+    "inputs": {
+      "s": "abb"
+    },
+    "options": [
+      [
+        "abb",
+        "abb",
+        "bba"
+      ],
+      [
+        "ab",
+        "ba"
+      ],
+      [
+        "aab",
+        "aba",
+        "baa"
+      ],
+      [
+        "abb",
+        "bab",
+        "bba"
+      ]
+    ],
+    "expected": [
+      "abb",
+      "bab",
+      "bba"
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-197-v5",
+    "task": "distinct_root_branches",
+    "inputs": {
+      "s": "aab"
+    },
+    "options": [
+      3,
+      6,
+      1,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-198-v1",
+    "task": "earliest_distance",
+    "inputs": {
+      "previous": [
+        0,
+        4
+      ],
+      "end": 7
+    },
+    "options": [
+      8,
+      3,
+      4,
+      7
+    ],
+    "expected": 7,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-198-v2",
+    "task": "longest_mod3",
+    "inputs": {
+      "a": [
+        1,
+        2
+      ]
+    },
+    "options": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-198-v3",
+    "task": "longest_mod3",
+    "inputs": {
+      "a": [
+        1
+      ]
+    },
+    "options": [
+      1,
+      2,
+      -1,
+      0
+    ],
+    "expected": 0,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-198-v4",
+    "task": "overwrite_earliest_loss",
+    "inputs": {
+      "a": [
+        3,
+        3
+      ]
+    },
+    "options": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-198-v5",
+    "task": "longest_mod3",
+    "inputs": {
+      "a": [
+        -1,
+        1
+      ]
+    },
+    "options": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-199-v1",
+    "task": "recover_moments",
+    "inputs": {
+      "s": 7,
+      "q": 25
+    },
+    "options": [
+      [
+        3,
+        4
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        1,
+        6
+      ],
+      [
+        0,
+        7
+      ]
+    ],
+    "expected": [
+      3,
+      4
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-199-v2",
+    "task": "moment_discriminant",
+    "inputs": {
+      "s": 119,
+      "q": 8093
+    },
+    "options": [
+      2025,
+      8093,
+      14161,
+      45
+    ],
+    "expected": 2025,
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-199-v3",
+    "task": "recover_moments",
+    "inputs": {
+      "s": 119,
+      "q": 8093
+    },
+    "options": [
+      [
+        36,
+        83
+      ],
+      [
+        45,
+        74
+      ],
+      [
+        37,
+        82
+      ],
+      [
+        38,
+        81
+      ]
+    ],
+    "expected": [
+      37,
+      82
+    ],
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-199-v4",
+    "task": "moment_square_valid",
+    "inputs": {
+      "s": 3,
+      "q": 6
+    },
+    "options": [
+      "negative",
+      "no",
+      "yes",
+      "zero"
+    ],
+    "expected": "no",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-199-v5",
+    "task": "moment_collision",
+    "inputs": {
+      "a": [
+        1,
+        4,
+        6,
+        7
+      ],
+      "b": [
+        2,
+        3,
+        5,
+        8
+      ]
+    },
+    "options": [
+      "no",
+      "yes",
+      "first",
+      "second"
+    ],
+    "expected": "no",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-200-v1",
+    "task": "parenthesis_valid",
+    "inputs": {
+      "s": ")("
+    },
+    "options": [
+      "false",
+      "error",
+      "loops",
+      "true"
+    ],
+    "expected": "false",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-200-v2",
+    "task": "parenthesis_valid",
+    "inputs": {
+      "s": "(a)"
+    },
+    "options": [
+      "error",
+      "loops",
+      "true",
+      "false"
+    ],
+    "expected": "true",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-200-v3",
+    "task": "parenthesis_valid",
+    "inputs": {
+      "s": ""
+    },
+    "options": [
+      "loops",
+      "true",
+      "false",
+      "error"
+    ],
+    "expected": "true",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-200-v4",
+    "task": "parenthesis_completable",
+    "inputs": {
+      "s": "(("
+    },
+    "options": [
+      "true",
+      "false",
+      "error",
+      "loops"
+    ],
+    "expected": "true",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  },
+  {
+    "key": "quick-sw-200-v5",
+    "task": "parenthesis_reset",
+    "inputs": {
+      "before": ")(",
+      "after": "()"
+    },
+    "options": [
+      "false",
+      "error",
+      "loops",
+      "true"
+    ],
+    "expected": "true",
+    "method": "Independent case oracle and counterexample checks in backend/tests/test_fundamentals_code_400.py"
+  }
+]

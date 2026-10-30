@@ -1,0 +1,571 @@
+[
+  {
+    "id": "quick-sw-178",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-097"
+    ],
+    "title": {
+      "he": "פינה שמבטלת שורה או עמודה",
+      "en": "A corner eliminates a row or column"
+    },
+    "prompt": {
+      "he": "שורות ועמודות מטריצה מלבנית ממוינות בסדר לא יורד. עומדים בפינה הימנית העליונה. אם התא שלילי, כמה תאים בשורה אפשר לספור מיד? ואם הוא אפס או חיובי, באיזה כיוון מתקדמים? אפס אינו שלילי.",
+      "en": "Rows and columns of a rectangular matrix are nondecreasing. Start at the top right. If that cell is negative, how many row entries can be counted immediately? If it is zero or positive, which direction discards impossible negatives? Zero is not negative."
+    },
+    "answer": {
+      "he": "אם התא בעמודה j שלילי, כל j+1 התאים שמשמאלו ובו שליליים; סופרים ועוברים שורה למטה. אחרת יורדים בערך באמצעות תזוזה שמאלה. בכל צעד נמחקת שורה או עמודה מהחיפוש, ולכן מספיקים לכל היותר מספר השורות ועוד מספר העמודות צעדים. מיון בשני הכיוונים הוא ההנחה שמאפשרת זאת.",
+      "en": "A negative cell in column j certifies all j+1 entries through it are negative; count them and move down. Otherwise move left toward smaller values. Each step removes one row or column from further search, so at most rows plus columns steps suffice. Both ordering guarantees are essential."
+    },
+    "takeaway": {
+      "he": "סדר בשני צירים מאפשר לפסול אזור שלם בכל השוואה.",
+      "en": "Ordering on two axes lets one comparison eliminate an entire region."
+    }
+  },
+  {
+    "id": "quick-sw-179",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-098"
+    ],
+    "title": {
+      "he": "מיזוג במקום מתחיל מהסוף",
+      "en": "In-place merging starts at the end"
+    },
+    "prompt": {
+      "he": "ב־b יש m ערכים ממוינים ועוד n תאים פנויים בסוף. במערך a יש n ערכים ממוינים. מדוע ממלאים את b מהתא האחרון, ובוחרים בכל צעד את הגדול מבין שני הערכים האחרונים שטרם נקראו? התאים הפנויים אינם נתוני קלט.",
+      "en": "Array b holds m sorted values followed by n spare slots. Array a holds n sorted values. Why fill b from the last slot, choosing the larger of the two last unread values? Spare slots are capacity, not input data."
+    },
+    "answer": {
+      "he": "הערך הגדול שנותר שייך למקום הפנוי הימני ביותר. כתיבה שם אינה דורסת את הקידומת ב־b שעדיין צריך לקרוא. כש־a נגמר, שארית b כבר במקומה. אם b נגמר ראשון מעתיקים את שארית a. כל ערך נכתב לכל היותר פעם אחת: זמן ליניארי ומספר קבוע של אינדקסים.",
+      "en": "The largest remaining value belongs in the rightmost free position, beyond unread data in b. When a ends, the remaining prefix of b is already placed. If b ends first, copy the rest of a. Each value is written at most once: linear time and a constant number of indices."
+    },
+    "takeaway": {
+      "he": "כיוון הכתיבה צריך להגן על נתונים שעדיין לא נקראו.",
+      "en": "Choose a write direction that protects unread data."
+    }
+  },
+  {
+    "id": "quick-sw-180",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-101"
+    ],
+    "title": {
+      "he": "שלשות ערכים לעומת שלשות אינדקסים",
+      "en": "Value triples differ from index triples"
+    },
+    "prompt": {
+      "he": "במערך [0,0,0,0] מחפשים שלשות מסכום אפס, עם שלושה אינדקסים שונים. כמה שלשות אינדקסים קיימות, וכמה שלשות ערכים שונות? מה צריך לדלג במימוש ממוין שמדפיס שלשות ערכים בלבד?",
+      "en": "In [0,0,0,0], seek zero-sum triples using three distinct indices. How many index triples exist, and how many distinct value triples? What must a sorted implementation skip when printing value triples only?"
+    },
+    "answer": {
+      "he": "יש ארבע בחירות אינדקסים, אבל שלשת ערכים אחת: (0,0,0). כדי להדפיס ערכים ייחודיים מדלגים על ערך עוגן שכבר טופל; לאחר מציאת שלשה מקדמים גם את שני המצביעים מעבר לערכים שווים. אסור להסיר מראש כפילויות מהמערך: ייתכן שצריך כמה הופעות של אותו ערך בשלשה אחת.",
+      "en": "There are four index choices but one value triple: (0,0,0). Skip an anchor value already processed; after a match, advance both pointers past equal values. Do not deduplicate the input beforehand: a valid triple may require several occurrences of the same value."
+    },
+    "takeaway": {
+      "he": "מסירים פלטים כפולים בלי למחוק ריבוי הופעות שנחוץ לפתרון.",
+      "en": "Deduplicate outputs without discarding multiplicities needed by a solution."
+    }
+  },
+  {
+    "id": "quick-sw-181",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-102"
+    ],
+    "title": {
+      "he": "המשלים חייב להישאר בתוך מספר התאים",
+      "en": "Keep the complement inside the slot width"
+    },
+    "prompt": {
+      "he": "במסכת n ביטים, ביט 1 מסמן תא תפוס וביט 0 תא פנוי. בפייתון המספרים אינם מוגבלים לרוחב קבוע. כיצד מוצאים את אינדקס התא הפנוי הנמוך ביותר, או None אם כולם תפוסים? הניחו n לא שלילי ושהמסכה חוקית.",
+      "en": "In an n-bit bitmap, 1 marks occupied and 0 free. Python integers have unbounded width. Find the lowest free index, or None if all slots are occupied. Assume nonnegative n and a valid bitmap."
+    },
+    "answer": {
+      "he": "המשלים ~used כולל ביטים מחוץ לרוחב המותר. מגבילים אותו במסכה (1<<n)-1. אם התוצאה אפס אין תא פנוי. אחרת free & -free מבודד את הביט הפנוי הנמוך ביותר, ו־bit_length פחות אחת מחזיר אינדקס מבוסס אפס. גם n=0 מחזיר None.",
+      "en": "The complement ~used includes bits outside the permitted width. Mask it with (1<<n)-1. Zero means full. Otherwise free & -free isolates the lowest free bit, and bit_length minus one gives its zero-based index. With n=0, return None too."
+    },
+    "takeaway": {
+      "he": "בשלמים בלתי מוגבלים, מגדירים במפורש את רוחב המסכה.",
+      "en": "For unbounded integers, explicitly limit the bitmap width."
+    },
+    "code": {
+      "language": "python",
+      "text": "def first_free(used, n):\n    free = (~used) & ((1 << n) - 1)\n    return None if free == 0 else (free & -free).bit_length() - 1"
+    }
+  },
+  {
+    "id": "quick-sw-182",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-116"
+    ],
+    "title": {
+      "he": "זוגות סימטריים מספיקים לפלינדרום",
+      "en": "Symmetric pairs suffice for a palindrome"
+    },
+    "prompt": {
+      "he": "מחרוזת מכילה אותיות ASCII בלבד, והשוואה רגישה לאותיות גדולות וקטנות. כמה זוגות צריך להשוות כדי לבדוק פלינדרום, והאם התו האמצעי באורך אי־זוגי זקוק לבדיקה מיוחדת? מחרוזת ריקה נחשבת פלינדרום.",
+      "en": "A string contains ASCII letters only; comparisons are case-sensitive. How many symmetric pairs must be checked for a palindrome? Does the middle character of an odd-length string need a special comparison? Empty input is a palindrome."
+    },
+    "answer": {
+      "he": "משווים s[i] ל־s[n-1-i] עבור i קטן מ־n//2. התו האמצעי שווה לעצמו, ולכן אינו מוסיף תנאי. כל אי־שוויון פוסל מיד. זו בדיקה ליניארית במקרה הגרוע ובמקום עזר קבוע; היא אינה יוצרת עותק הפוך. לפי החוזה Aa אינו פלינדרום.",
+      "en": "Compare s[i] with s[n-1-i] for i below n//2. A middle character equals itself and adds no condition. Any mismatch rejects immediately. Worst-case time is linear with constant auxiliary space, without creating a reversed copy. Under this contract, Aa is not a palindrome."
+    },
+    "takeaway": {
+      "he": "מספיק לבדוק כל זוג פעם אחת; כללי נרמול הם חלק מהחוזה.",
+      "en": "Check each pair once; normalization rules belong to the contract."
+    },
+    "code": {
+      "language": "python",
+      "text": "def palindrome(s):\n    return all(s[i] == s[-1-i] for i in range(len(s)//2))"
+    }
+  },
+  {
+    "id": "quick-sw-183",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-117"
+    ],
+    "title": {
+      "he": "קישור חופשי אינו נתון של משתמש",
+      "en": "A free-list link is not user payload"
+    },
+    "prompt": {
+      "he": "מקצה תאים בגודל קבוע שומר את קישור התא החופשי הבא בתוך התא עצמו. בזמן הקצאה, באיזה סדר יש לקרוא את הקישור, להזיז את ראש הרשימה ולהעביר את התא למשתמש? מדוע אין לסרוק קישורים דרך תאים שכבר הוקצו?",
+      "en": "A fixed-slot allocator stores the next free-slot link inside each free slot. In what order should allocation read the link, advance the head and hand the slot to the caller? Why must traversal avoid allocated slots?"
+    },
+    "answer": {
+      "he": "קודם שומרים את הראש כתוצאת ההקצאה וקוראים ממנו את הקישור הבא; אחר כך מזיזים את הראש ורק אז מוסרים בעלות למשתמש. משתמש רשאי לדרוס את תוכן התא שהוקצה. בשחרור כותבים בתא את הראש הישן ומעדכנים את הראש לתא זה. המידע תקף רק כל עוד התא חופשי.",
+      "en": "Save the head as the result and read its next link before advancing the head and transferring ownership. The caller may overwrite allocated payload. To free, write the old head into that slot and make it the new head. Link metadata is valid only while its slot is free."
+    },
+    "takeaway": {
+      "he": "פירוש הזיכרון משתנה עם הבעלות: קישור חופשי או תוכן משתמש.",
+      "en": "Memory interpretation follows ownership: a free link or user payload."
+    }
+  },
+  {
+    "id": "quick-sw-184",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-123"
+    ],
+    "title": {
+      "he": "בסדר מחסנית הימני נשלף ראשון",
+      "en": "The right operand is popped first"
+    },
+    "prompt": {
+      "he": "מחשבים ביטוי postfix בעזרת מחסנית. לפני פעולת חיסור נמצאים בה [8,3], מלמטה למעלה. מה סדר שליפת האופרנדים ומה התוצאה? מדוע טעות בסדר עלולה להסתתר בבדיקות שכוללות רק חיבור?",
+      "en": "A postfix evaluator uses a stack. Immediately before subtraction, its contents are [8,3] from bottom to top. Which operand is popped first, and what result is pushed? Why can addition-only tests hide an operand-order bug?"
+    },
+    "answer": {
+      "he": "שולפים קודם את האופרנד הימני 3, ואז את השמאלי 8, ומחשבים 8-3=5. חיסור וחילוק תלויים בסדר; חיבור וכפל אינם חושפים החלפה. כל פעולה בינארית דורשת שני איברים זמינים, ובסוף ביטוי חוקי חייב להישאר ערך אחד בדיוק.",
+      "en": "Pop right operand 3, then left operand 8, and push 8-3=5. Subtraction and division depend on order; addition and multiplication can hide reversal. Every binary operator needs two available operands, and a valid completed expression leaves exactly one value."
+    },
+    "takeaway": {
+      "he": "בדקו סדר אופרנדים בפעולה שאינה חילופית.",
+      "en": "Test operand order using a noncommutative operation."
+    },
+    "code": {
+      "language": "python",
+      "text": "def apply_subtract(stack):\n    right = stack.pop()\n    left = stack.pop()\n    stack.append(left - right)"
+    }
+  },
+  {
+    "id": "quick-sw-185",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-131"
+    ],
+    "title": {
+      "he": "מינימום כפול צריך לשרוד שליפה",
+      "en": "A duplicate minimum must survive a pop"
+    },
+    "prompt": {
+      "he": "למחסנית נדחפים 5,2,2. אחרי שליפה אחת, מה המינימום? כיצד שמירת המינימום של כל קידומת מונעת איבוד מידע כשמופיעים ערכי מינימום שווים? כל פעולת מחסנית נדרשת בזמן קבוע.",
+      "en": "Push 5,2,2 onto a stack, then pop once. What is the minimum? How does retaining each prefix minimum avoid losing information when equal minima repeat? Every stack operation must take constant time."
+    },
+    "answer": {
+      "he": "המינימום נשאר 2. ליד כל איבר שומרים את המינימום עד אליו: (5,5),(2,2),(2,2). בשליפה מסירים זוג אחד בלבד, והזוג הקודם חושף את המינימום הנכון. כך Push, Pop, Top ו־FindMin נשארות בזמן קבוע, במחיר מקום ליניארי. למחסנית ריקה צריך להגדיר שגיאה או ערך חסר.",
+      "en": "The minimum remains 2. Store each item with its prefix minimum: (5,5),(2,2),(2,2). Popping removes only the last pair, exposing the previous correct minimum. Push, Pop, Top and FindMin stay constant-time using linear space. Empty-stack behavior must explicitly be an error or an absent result."
+    },
+    "takeaway": {
+      "he": "מידע עזר צריך להתעדכן גם במקרה של שוויון.",
+      "en": "Auxiliary state must handle equality as well as strict improvement."
+    }
+  },
+  {
+    "id": "quick-sw-186",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-135"
+    ],
+    "title": {
+      "he": "מחיקה מזיזה את האיבר הבא",
+      "en": "Deletion shifts the next item"
+    },
+    "prompt": {
+      "he": "מוחקים מרשימת Python את כל הערכים שקטנים מסף t. אחרי מחיקה באינדקס i, האיבר הבא זז ל־i. כיצד סריקה מהסוף מונעת דילוג על ערכים סמוכים? האם שינוי כיוון הסריקה הופך את כל המחיקות לזמן ליניארי?",
+      "en": "Delete every Python-list value below threshold t. After deletion at index i, the next item shifts into i. How does scanning backward avoid skipping adjacent rejected values? Does reversing traversal make all deletions linear-time?"
+    },
+    "answer": {
+      "he": "בסריקה יורדת, המחיקה מזיזה רק איברים שכבר נבדקו; האינדקסים שטרם נבדקו אינם משתנים. כך אין דילוג. עם זאת, del ברשימת Python עשויה להזיז תאים, ולכן סדרת מחיקות עדיין עלולה לעלות זמן ריבועי. לדחיסה יציבה ליניארית משתמשים באינדקס כתיבה ומוחקים את הזנב פעם אחת.",
+      "en": "Backward deletion shifts only already-visited items, leaving unread indices unchanged. This avoids skips. However, Python-list deletion can move elements, so repeated deletion can still cost quadratic time. Stable linear compaction uses a write index followed by one suffix deletion."
+    },
+    "takeaway": {
+      "he": "הגנה על נכונות האינדקסים אינה הוכחת יעילות.",
+      "en": "Protecting index correctness does not prove efficiency."
+    },
+    "code": {
+      "language": "python",
+      "text": "def remove_below(a, t):\n    for i in range(len(a)-1, -1, -1):\n        if a[i] < t: del a[i]"
+    }
+  },
+  {
+    "id": "quick-sw-187",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-137"
+    ],
+    "title": {
+      "he": "מקום הכנסה אינו בהכרח התאמה",
+      "en": "An insertion point is not necessarily a match"
+    },
+    "prompt": {
+      "he": "lower_bound מחזיר את האינדקס הראשון שערכו לפחות x, או את אורך המערך. מחפשים התאמה מדויקת במערך ממוין. מה עוד צריך לבדוק, וכיצד מבטיחים שמוחזר המופע הראשון כאשר יש כפילויות? בהיעדר התאמה החזירו ‎-1.",
+      "en": "lower_bound returns the first index with value at least x, or the array length. For exact search in a sorted array, what else must be checked? How does it guarantee the first occurrence when duplicates exist? Return -1 if absent."
+    },
+    "answer": {
+      "he": "בודקים שהאינדקס קטן מהאורך, ורק אז שהערך שווה ל־x. אחרת ייתכן שמצאנו מספר גדול יותר או את סוף המערך. מכיוון שכל האיברים לפני lower_bound קטנים מ־x, התאמה בו היא בהכרח הראשונה. החיפוש לוגריתמי; הבדיקה הנוספת קבועה.",
+      "en": "Check the index is below the length before comparing its value with x. Otherwise it may identify a larger value or the end. Every earlier entry is below x, so equality at lower_bound is necessarily the first occurrence. Search is logarithmic; the extra check is constant-time."
+    },
+    "takeaway": {
+      "he": "הפרידו בין מיקום גבול לבין הוכחת קיום הערך.",
+      "en": "Separate a boundary position from proof that the value exists."
+    },
+    "code": {
+      "language": "python",
+      "text": "from bisect import bisect_left\ndef first_equal(a, x):\n    i = bisect_left(a, x)\n    return i if i < len(a) and a[i] == x else -1"
+    }
+  },
+  {
+    "id": "quick-sw-188",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-138"
+    ],
+    "title": {
+      "he": "גם אפס צריך תו וסיום מחרוזת",
+      "en": "Zero needs a digit and a terminator"
+    },
+    "prompt": {
+      "he": "ממירים מספר שלם לא שלילי n לטקסט בינארי מינימלי ב־C, עם תו סיום NUL. כמה תאי char צריך עבור אפס ועבור 8? קוד Python המצורף מחשב קיבולת בלבד; הוא אינו מימוש C שנבדק בהידור.",
+      "en": "Convert nonnegative integer n to minimal binary text in C, including a NUL terminator. How many char slots are needed for zero and for 8? The Python snippet computes capacity only; it is not a compiled C implementation."
+    },
+    "answer": {
+      "he": "לאפס נדרש הטקסט \"0\" ועוד תו סיום, כלומר שני תאים. ל־8 נדרש \"1000\" ועוד תו סיום, כלומר חמישה. באופן כללי הקיבולת היא max(1,bit_length(n))+1. יש לבדוק קיבולת לפני כתיבה, ולהגדיר בנפרד אם רוחב קבוע ואפסים מובילים נדרשים.",
+      "en": "Zero needs \"0\" plus the terminator: two slots. Eight needs \"1000\" plus the terminator: five. In general use max(1,bit_length(n))+1. Check capacity before writing, and separately specify whether fixed-width leading zeros are required."
+    },
+    "takeaway": {
+      "he": "אורך התוכן וקיבולת האחסון אינם אותו מספר.",
+      "en": "Content length and storage capacity are different quantities."
+    },
+    "code": {
+      "language": "python",
+      "text": "def binary_capacity(n):\n    return max(1, n.bit_length()) + 1"
+    }
+  },
+  {
+    "id": "quick-sw-189",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-139"
+    ],
+    "title": {
+      "he": "השלמה פורשת רק את התג המתאים",
+      "en": "A completion retires only its matching tag"
+    },
+    "prompt": {
+      "he": "הרחבה מפורשת: הזיכרון מתיר כמה כתיבות בתהליך, עם תגים ייחודיים שאינם ממוחזרים באצווה. ACK מאשר השלמה ונראות לקריאה. A ו־B כותבות לכתובת 7; רק A אושרה. האם מותר לשחרר קריאה ל־7, ללא forwarding?",
+      "en": "Explicit extension: memory permits several outstanding writes. Tags are unique and never reused within the tracked batch. ACK confirms completion and read visibility. A and B write address 7; only A is ACKed. May a read of 7 proceed without forwarding?"
+    },
+    "answer": {
+      "he": "לא. ACK של A מסיר רק את הרשומה של A; הכתיבה B ל־7 עדיין חוסמת. שומרים מיפוי תג→כתובת ומחפשים התנגשות בין הרשומות שנותרו. תג לא מוכר או שכבר נפרש אינו מוחק פעולה אחרת. שימוש חוזר בין אצוות דורש גם מניעת ACK ישן מאוחר, למשל באמצעות מספר דור.",
+      "en": "No. ACK for A removes only A; write B to 7 still blocks. Keep a tag-to-address map and check remaining entries for conflicts. An unknown or retired tag cannot remove another operation. Reuse across batches additionally requires excluding delayed old ACKs, for example with generation numbers."
+    },
+    "takeaway": {
+      "he": "השלמה מתאימה לפעולה מזוהה, לא לכל הבקשות לאותה כתובת.",
+      "en": "Completion retires one identified operation, not every request sharing its address."
+    }
+  },
+  {
+    "id": "quick-sw-190",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-141"
+    ],
+    "title": {
+      "he": "נקודת המפגש אינה בהכרח כניסת המעגל",
+      "en": "The meeting point need not be the cycle entry"
+    },
+    "prompt": {
+      "he": "ברשימה 0→1→2→3→4→2, מצביעי Floyd נפגשים לראשונה ב־3. האם זו כניסת המעגל? כיצד איפוס מצביע אחד לראש וקידום שניהם בצעד אחד מוצאים את הכניסה? משווים זהות צמתים, לא ערכים.",
+      "en": "In list 0→1→2→3→4→2, Floyd pointers first meet at 3. Is that the entry? How does resetting one pointer to the head and advancing both one step recover the entry? Compare node identity, not values."
+    },
+    "answer": {
+      "he": "הכניסה היא 2. משאירים מצביע ב־3 ומאפסים את האחר ל־0; אחרי צעדים שווים מתקבלים (1,4),(2,2). במפגש הראשון המהיר עבר מרחק כפול, ולכן מרחק האיטי כפולה של אורך המעגל. אם אורך הזנב μ וההיסט במעגל x, מתקיים μ+x≡0 מודולו אורך המעגל. איפוס אחד משחזר את פער המופע הדרוש.",
+      "en": "Entry is 2. Leave one pointer at 3 and reset the other to 0; equal steps give (1,4),(2,2). At first meeting, fast traveled twice as far, so slow’s distance is a multiple of cycle length. With tail length μ and cycle offset x, μ+x≡0 modulo cycle length. Resetting one pointer recovers the required phase relationship."
+    },
+    "takeaway": {
+      "he": "המפגש מגלה מופע; איפוס אחד ממיר אותו למיקום הכניסה.",
+      "en": "The meeting establishes phase; one reset converts it into the entry position."
+    }
+  },
+  {
+    "id": "quick-sw-191",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-142"
+    ],
+    "title": {
+      "he": "זוג חוסך השוואה בחיפוש קצוות",
+      "en": "Pairing saves a min/max comparison"
+    },
+    "prompt": {
+      "he": "צריך למצוא מינימום ומקסימום של n מספרים באמצעות השוואות בלבד. עבור n=6, כמה השוואות דורשת שיטת הזוגות? חשבו גם את זוג האתחול. אין צורך למיין את הקלט.",
+      "en": "Find both minimum and maximum of n numbers using comparisons only. For n=6, how many comparisons does pairwise processing require, including the initialization pair? Sorting is unnecessary."
+    },
+    "answer": {
+      "he": "הזוג הראשון דורש השוואה אחת ומאתחל את שני הקצוות. כל זוג נוסף דורש שלוש: בין איבריו, בין הקטן למינימום ובין הגדול למקסימום. לכן לשישה מספרים צריך 1+3+3=7. עבור n≥1 החסם המדויק במקרה הגרוע הוא ceil(3n/2)-2; n=1 דורש אפס, וקלט ריק מחייב חוזה נפרד.",
+      "en": "The first pair uses one comparison to initialize both extrema. Each later pair needs three: within the pair, its smaller against the minimum, and its larger against the maximum. Six values need 1+3+3=7. For n≥1 the exact worst-case bound is ceil(3n/2)-2; n=1 needs zero. Empty input requires a separate contract."
+    },
+    "takeaway": {
+      "he": "השוואה פנימית מסננת מועמד אחד לכל קצה.",
+      "en": "A pair comparison eliminates one candidate for each extreme."
+    }
+  },
+  {
+    "id": "quick-sw-192",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-148"
+    ],
+    "title": {
+      "he": "קודם מספקים יותר אנשים",
+      "en": "Serve more people before improving preference rank"
+    },
+    "prompt": {
+      "he": "בהקצאה, הציון הוא (מספר מקבלי העדפה, מספר מקבלי העדפה ראשונה), בהשוואה לקסיקוגרפית. איזו תוצאה עדיפה: (3,3) או (4,2)? מה הטעות במקסום הבחירות הראשונות לפני מספר האנשים שמקבלים משהו רצוי?",
+      "en": "An assignment is scored lexicographically by (people receiving an acceptable choice, people receiving their first choice). Which score wins: (3,3) or (4,2)? What goes wrong if first choices are maximized before the number served?"
+    },
+    "answer": {
+      "he": "הציון (4,2) עדיף: קודם משווים את הרכיב הראשון ורק בשוויון את השני. סדר הפוך משנה את בעיית האופטימיזציה ועלול להשאיר אדם ללא הקצאה כדי לשפר דירוג אצל אחרים. חייבים עדיין לבדוק בנפרד שכל הקצאה חוקית ואינה משתמשת באותו משאב פעמיים.",
+      "en": "(4,2) wins: compare the first component, using the second only on a tie. Reversing priority changes the optimization problem and may leave someone unserved to improve others’ ranks. Feasibility still needs separate checks, including no resource being assigned twice."
+    },
+    "takeaway": {
+      "he": "פונקציית המטרה קודמת לבחירת אלגוריתם ההקצאה.",
+      "en": "Define the objective before choosing an assignment algorithm."
+    }
+  },
+  {
+    "id": "quick-sw-193",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-149"
+    ],
+    "title": {
+      "he": "סיום והתחלה באותו זמן",
+      "en": "An ending and a start at the same time"
+    },
+    "prompt": {
+      "he": "משימה דורשת שני עובדים בקטע [1,3), ואחרת שלושה בקטע [3,5). העובדים ניתנים להחלפה מיידית, בלי זמני מעבר. כמה עובדים מספיקים? כיצד כלל קטעים חצי־פתוחים משנה את עיבוד האירועים בזמן 3?",
+      "en": "One task needs two workers during [1,3), another three during [3,5). Workers can switch immediately with no travel time. How many suffice? How does the half-open convention affect simultaneous events at time 3?"
+    },
+    "answer": {
+      "he": "מספיקים שלושה. הקטע הראשון אינו פעיל בזמן 3, ולכן הדרישות אינן חופפות. מחברים את כל שינויי הדרישה באותו זמן ומחשבים עומס לאחר השינוי, או מעבדים סיום לפני התחלה. לעומת זאת, בקטעים סגורים ששניהם כוללים את 3, נדרשים שם חמישה עובדים.",
+      "en": "Three suffice. The first task is inactive at time 3, so the demands do not overlap. Aggregate all demand changes at that time before measuring load, or process endings before starts. If both closed intervals include time 3, five workers are required there instead."
+    },
+    "takeaway": {
+      "he": "סדר אירועים בשוויון חייב להתאים למוסכמת הקצוות.",
+      "en": "Tie ordering must match the interval endpoint convention."
+    }
+  },
+  {
+    "id": "quick-sw-194",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-150"
+    ],
+    "title": {
+      "he": "אפס חדש אינו מקור להפצה נוספת",
+      "en": "A new zero must not trigger more changes"
+    },
+    "prompt": {
+      "he": "מאפסים כל שורה ועמודה שמכילות אפס במטריצה המקורית. עבור [[1,0],[3,4]], למה אסור לאפס את התא הראשון ואז להתייחס אליו כאפס מקורי? קוד הדוגמה מחזיר מטריצה חדשה ואינו מבטיח מקום עזר קבוע.",
+      "en": "Zero every row and column containing an original matrix zero. For [[1,0],[3,4]], why must a newly written zero not trigger another column? The example returns a new matrix and does not claim constant auxiliary space."
+    },
+    "answer": {
+      "he": "רק השורה העליונה והעמודה הימנית מסומנות במקור, ולכן התוצאה [[0,0],[3,0]]. אם האפס החדש בשמאל למעלה מפעיל גם את העמודה השמאלית, מוחקים בטעות את 3. אוספים סימוני שורות ועמודות לפני כתיבה. המימוש משתמש בזמן ליניארי במספר התאים ובמקום עבור הפלט והסימונים.",
+      "en": "Only the top row and right column are originally marked, producing [[0,0],[3,0]]. Letting the new top-left zero trigger the left column incorrectly erases 3. Collect row and column markers before writing. This implementation takes time linear in cell count and space for output and markers."
+    },
+    "takeaway": {
+      "he": "שמרו את המצב המקורי כשכלל השינוי תלוי בו.",
+      "en": "Preserve original-state information when it controls later changes."
+    },
+    "code": {
+      "language": "python",
+      "text": "def zero_original(a):\n    rows = {i for i, r in enumerate(a) if 0 in r}\n    cols = {j for r in a for j, x in enumerate(r) if x == 0}\n    return [[0 if i in rows or j in cols else x for j, x in enumerate(r)] for i, r in enumerate(a)]"
+    }
+  },
+  {
+    "id": "quick-sw-195",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-151"
+    ],
+    "title": {
+      "he": "טבלת בית משלמת בזיכרון מראש",
+      "en": "A byte lookup table pays memory upfront"
+    },
+    "prompt": {
+      "he": "רוצים לספור ביטים דלוקים בקלט בן שמונה ביטים באמצעות טבלת lookup. כמה ערכים צריך להכין, ומה גודל המטען אם כל תשובה נשמרת בבית אחד? האם מכאן נובע שגם טבלה לכל מספר ברוחב משתנה היא קטנה?",
+      "en": "Count set bits in an eight-bit input using a lookup table. How many entries are needed, and what is the payload size with one byte per answer? Does this imply a full table stays small for arbitrary input width?"
+    },
+    "answer": {
+      "he": "יש 256 קלטים אפשריים, ולכן 256 תשובות ו־256 בתי מטען. בניית הטבלה עולה עבודה מראש; לאחר מכן חיפוש בבית הוא גישה אחת במודל RAM. טבלה לכל קלט ברוחב w דורשת 2^w כניסות. אפשר לחלק מילים לבתים ולחבר תשובות, במחיר מספר גישות שתלוי ברוחב.",
+      "en": "There are 256 possible inputs, so 256 answers and 256 payload bytes. Building the table costs upfront work; a byte lookup then takes one RAM-model access. A full w-bit table has 2^w entries. Splitting words into bytes and summing results uses a width-dependent number of accesses."
+    },
+    "takeaway": {
+      "he": "תחום קלט קבוע מאפשר טבלה; הרחבת הרוחב משנה את המחיר.",
+      "en": "A fixed domain permits lookup; widening the domain changes its cost."
+    },
+    "code": {
+      "language": "python",
+      "text": "def byte_table():\n    return bytes(bin(x).count(\"1\") for x in range(256))"
+    }
+  },
+  {
+    "id": "quick-sw-196",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-160"
+    ],
+    "title": {
+      "he": "סופרים העברות רק אחרי הגדרת זיכרון",
+      "en": "Count transfers only after defining memory"
+    },
+    "prompt": {
+      "he": "ממיינים 2000 ערכים בעזרת קופסת 1000. אם מותר לשמור את כל הקלט ואת תוצאת המיזוג פנימית, כמה העברות ערך דרושות לקריאה אחת ולכתיבה אחת לפלט חדש? האם זה מוכיח אותו מחיר גם כאשר שני החצאים חייבים לחזור לזיכרון החיצוני?",
+      "en": "Sort 2000 values using a 1000-value box. With enough internal storage for the input and merge output, how many value transfers cover one read and one fresh-output write? Does that count also apply when sorted halves must be stored externally before merging?"
+    },
+    "answer": {
+      "he": "במודל הראשון יש 2000 קריאות ועוד 2000 כתיבות: 4000 העברות. בבנייה שמחזירה את החצאים לזיכרון ואז ממזגת סקלרית, יש עוד קריאה וכתיבה של כל הנתונים: 8000. אלו מודלי זיכרון שונים. אין להסיק אופטימום כללי בלי להגדיר קיבולת פנימית, יחידת העברה ומיקום פלט.",
+      "en": "The first model uses 2000 reads plus 2000 writes: 4000 transfers. Round-tripping sorted halves before scalar merging adds another read and write of every value: 8000. These are different memory models. No unconditional optimum follows without internal capacity, transfer-unit and output-location assumptions."
+    },
+    "takeaway": {
+      "he": "אותו אלגוריתם רעיוני עשוי לקבל מחיר שונה במודלי זיכרון שונים.",
+      "en": "The same high-level algorithm can have different costs under different memory models."
+    }
+  },
+  {
+    "id": "quick-sw-197",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-162"
+    ],
+    "title": {
+      "he": "עותקים שווים אינם ענפים שונים",
+      "en": "Equal copies are not different branches"
+    },
+    "prompt": {
+      "he": "מדפיסים כל תמורה שונה של \"aab\" פעם אחת. כמה תוצאות יש, ומדוע בחירת אחד משני עותקי a כענפים נפרדים מייצרת כפילויות? מה מחזירים לספירת התווים אחרי שחוזרים מענף רקורסיבי?",
+      "en": "Print each distinct permutation of \"aab\" once. How many outputs exist, and why does treating the two copies of a as separate branches create duplicates? What must be restored in the character counts after returning from a recursive branch?"
+    },
+    "answer": {
+      "he": "שלוש תוצאות: aab, aba, baa. בוחרים תו לפי ערכו כל עוד ספירתו חיובית, מורידים עותק, ממשיכים ומחזירים אותו בחזרה. אין ענף נפרד לכל עותק זהה. מספר התמורות הוא n! חלקי מכפלת עצרות השכיחויות. אי־החזרת הספירה עלולה למחוק תוצאות מענפים מאוחרים.",
+      "en": "The outputs are aab, aba and baa. Branch on a character value with positive count, consume one copy, recurse, then restore it. Identical copies do not create separate branches. The count is n! divided by the product of frequency factorials. Missing restoration can erase outputs from later branches."
+    },
+    "takeaway": {
+      "he": "בחזרה לאחור משחזרים בדיוק את המלאי שהיה לפני הבחירה.",
+      "en": "Backtracking restores exactly the inventory present before the choice."
+    }
+  },
+  {
+    "id": "quick-sw-198",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-163"
+    ],
+    "title": {
+      "he": "לקטע הארוך שומרים הופעה מוקדמת",
+      "en": "For the longest interval keep the earliest occurrence"
+    },
+    "prompt": {
+      "he": "מחפשים קטע רציף ארוך שסכומו מתחלק ב־3. בקידומות הסכום הופיעה שארית 1 באינדקסים 0 ו־4, וכעת שוב באינדקס 7. איזה אינדקס קודם כדאי לשמור, ומה אורך הקטע שהוא מגדיר? האינדקסים מבוססי אפס.",
+      "en": "Find a longest contiguous interval with sum divisible by 3. Prefix remainder 1 occurred at indices 0 and 4, and now again at 7. Which previous occurrence should be retained, and what interval length does it give? Indices are zero-based."
+    },
+    "answer": {
+      "he": "שומרים את 0, שמגדיר קטע באינדקסים 1..7 באורך 7. שתי קידומות באותה שארית נבדלות בכפולה של 3. לכל סוף קבוע, ההופעה המוקדמת נותנת את המרחק הגדול ביותר. מתחילים גם עם שארית אפס באינדקס ‎-1 כדי לא לפספס קטע שמתחיל באיבר הראשון.",
+      "en": "Keep index 0, giving indices 1..7 and length 7. Equal prefix remainders differ by a multiple of 3. For a fixed ending, the earliest occurrence maximizes distance. Initialize remainder zero at index -1 as well, so an interval starting at the first item is not missed."
+    },
+    "takeaway": {
+      "he": "בבעיית האורך המרבי, היסטוריה מוקדמת יכולה להיות טובה יותר מהאחרונה.",
+      "en": "For maximum length, earlier history can be more useful than recent history."
+    }
+  },
+  {
+    "id": "quick-sw-199",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-041"
+    ],
+    "title": {
+      "he": "סכום וריבועים משחזרים שני חסרים",
+      "en": "Sum and squares recover two omissions"
+    },
+    "prompt": {
+      "he": "שני ערכים שונים a,b חסרים מטווח 1..n ללא חזרות. מעבר יחיד נותן הפרשי סכומים S=a+b ו־Q=a²+b². מדוע 2Q-S² מאפשר לשחזר את החסרים, ולמה לא כדאי להשתמש בשורש נקודה צפה? הסיכומים מדויקים.",
+      "en": "Two distinct values a,b are missing from 1..n without duplicates. One pass yields exact differences S=a+b and Q=a²+b². Why does 2Q-S² recover the omissions, and why avoid a floating-point square root?"
+    },
+    "answer": {
+      "he": "2Q-S²=(a-b)². שורש שלם מדויק נותן את ההפרש המוחלט d, ואז החסרים הם (S-d)/2 ו־(S+d)/2. צריך אריתמטיקה רחבה מספיק לסכומי הריבועים. הנחת תחום וייחוד הקלט נדרשת: שני סיכומים אינם אימות מלא של כל הקלט.",
+      "en": "2Q-S²=(a-b)². An exact integer root gives the absolute difference d; the omissions are (S-d)/2 and (S+d)/2. Use arithmetic wide enough for squared sums. Range and uniqueness are required promises: two summaries do not fully validate the input."
+    },
+    "takeaway": {
+      "he": "אלגברה מדויקת חוסכת מעבר נוסף, אך אינה מחליפה הבטחות קלט.",
+      "en": "Exact algebra can save a second pass without replacing input promises."
+    },
+    "code": {
+      "language": "python",
+      "text": "from math import isqrt\ndef recover_two(s, q):\n    d = isqrt(2*q - s*s)\n    return ((s-d)//2, (s+d)//2)"
+    }
+  },
+  {
+    "id": "quick-sw-200",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-037"
+    ],
+    "title": {
+      "he": "סגירה מוקדמת משאירה שגיאה קבועה",
+      "en": "An early close leaves a permanent error"
+    },
+    "prompt": {
+      "he": "לזרם מוסיפים תו אחד בכל פעם. רק סוגריים עגולים חשובים, ושאר התווים מתעלמים. אחרי \")(\" מספר הפותחים והסוגרים שווה. מדוע הקידומת עדיין אינה חוקית, ואיזה מידע דרוש בנוסף לעומק? אין פעולת מחיקה או undo.",
+      "en": "Append one character at a time; only round parentheses matter, and other characters are ignored. After \")(\", opening and closing totals match. Why is the whole prefix still invalid, and what information is needed besides depth? There is no deletion or undo."
+    },
+    "answer": {
+      "he": "סוגר שהגיע בלי פותח קודם כבר הפר את הסדר, והוספה בסוף אינה יכולה לתקן זאת. שומרים דגל broken שנשאר דלוק מרגע השגיאה, ועומק פתיחות שלא נסגרו. הקידומת חוקית בדיוק כשהעומק אפס והדגל כבוי. הקוד שומר עומק לא שלילי; בדיקת החוקיות נפרדת.",
+      "en": "A close without an earlier opener already violated order; appending cannot repair it. Keep a sticky broken flag and the unmatched-opening depth. The whole prefix is valid exactly when depth is zero and the flag is false. The snippet retains nonnegative depth; validity is a separate query."
+    },
+    "takeaway": {
+      "he": "איזון סופי אינו מוחק הפרת סדר שכבר התרחשה.",
+      "en": "A balanced final count does not erase an earlier ordering violation."
+    },
+    "code": {
+      "language": "python",
+      "text": "def feed(state, c):\n    depth, broken = state\n    broken = broken or (c == \")\" and depth == 0)\n    return (depth + (c == \"(\") - (c == \")\" and depth > 0), broken)"
+    }
+  }
+]

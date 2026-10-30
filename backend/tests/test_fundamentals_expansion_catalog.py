@@ -41,7 +41,7 @@ def test_250_unique_cards_with_rounded_topic_mix_and_distinct_bilingual_prompts(
 def test_each_added_card_has_its_actual_revision_in_both_runtime_manifests():
     web = json.loads((CONTENT / "fundamentals-revisions.json").read_text(encoding="utf-8"))
     backend = json.loads((ROOT / "backend/seeds/fundamentals_catalog.json").read_text(encoding="utf-8"))["questions"]
-    assert len(web) == len(backend) == 250
+    assert len(web) == len(backend) == 400
     for card in cards(ADDED + INTERVIEW_DERIVED):
         canonical = json.dumps(card, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         revision = hashlib.sha256(canonical.encode()).hexdigest()
