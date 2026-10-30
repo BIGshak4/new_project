@@ -41,12 +41,12 @@ def test_compilation_preserves_every_question_and_all_original_images(catalog):
     built, uploads = builder.load()
     assert built == json.loads((SEEDS / "questions/preparation_bank.json").read_text(encoding="utf-8"))
     assert uploads == manifest["files"]
-    assert len(source["questions"]) == len(built) == 135
+    assert len(source["questions"]) == len(built) == 146
     for q in built:
         for media in q["assets"]["bank_media"]:
             if any(word in media["filename"] for word in ("external-answer", "clarification", "style-reference", "course-adder-summary")):
                 assert media["role"] == "solution", "An explanation screenshot must never leak before reference reveal"
-    assert len(catalog.questions) == 165
+    assert len(catalog.questions) == 176
     archived_images = {p.relative_to(ROOT / "interview_preparation").as_posix()
                        for folder in ("sources", "diagrams")
                        for p in (ROOT / "interview_preparation" / folder).glob("*.png")}
@@ -156,7 +156,7 @@ async def test_unsafe_storage_path_is_rejected_before_network():
 async def test_archive_screenshots_never_receive_learner_links(catalog):
     archive = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])
                if m.get("source_path", "").startswith("sources/")]
-    assert len(archive) == 201
+    assert len(archive) == 221
     # No credentials or network needed: the boundary applies before signing.
     assert await question_resources.sign_media(archive, "", "") == []
     all_media = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])]
@@ -223,6 +223,8 @@ def test_third_intake_is_bilingual_study_only_and_preserves_frozen_solution_revi
         "prep-eight-bit-popcount-adders",
         "prep-three-color-in-place-partition",
         "prep-twenty-one-prisoners-one-light",
+        "prep-circuit-from-clock-input-output-waveforms",
+        "prep-serial-safe-abcd-sequence-detector",
     }
     assert not (set(q.key for q in additions.values()) & reviewed)
 

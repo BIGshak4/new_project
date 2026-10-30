@@ -41,17 +41,17 @@ test("legacy and canonical URLs remain discoverable in both directions", () => {
   assert.deepEqual(relatedQuestionKeys("unrelated-question"), []);
 });
 
-test("the accumulated intakes yield 165 records and 163 unique questions without dropping new exercises", () => {
+test("the accumulated intakes yield 176 records and 174 unique questions without dropping new exercises", () => {
   const rows = ["example_bank", "preparation_bank"].flatMap(name => {
     const seed = JSON.parse(readFileSync(new URL(`../../../backend/seeds/questions/${name}.json`, import.meta.url), "utf8"));
     return seed.map((q: { key: string; assets: { preparation_id?: string } }) => ({
       key: q.key, id: q.key, preparation_id: q.assets.preparation_id,
     } as QuestionSummary));
   });
-  assert.equal(rows.length, 165);
+  assert.equal(rows.length, 176);
   const unique = uniqueLibraryQuestions(rows);
-  assert.equal(unique.length, 163);
-  for (const id of Array.from({ length: 77 }, (_, i) => `PREP-${String(i + 60).padStart(3, "0")}`)) {
+  assert.equal(unique.length, 174);
+  for (const id of Array.from({ length: 88 }, (_, i) => `PREP-${String(i + 60).padStart(3, "0")}`)) {
     assert.equal(rows.filter(q => q.preparation_id === id).length, 1, `${id}: one canonical source record`);
     assert.equal(unique.filter(q => q.preparation_id === id).length, 1, id);
   }

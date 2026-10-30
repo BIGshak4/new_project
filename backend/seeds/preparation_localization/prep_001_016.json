@@ -450,12 +450,16 @@
       "he": [
         "מפרשים את תרשים התזמון כגלאי שינויים בין דגימות עוקבות בחזית עלייה.",
         "הקלט עומד בדרישות setup/hold; זה אינו תכנון CDC לקלט אסינכרוני.",
-        "שני רגיסטרי המצב מתחילים באפס; קוד ה־HDL המוצע מוסיף איפוס סינכרוני פעיל בגבוה, שלא הוגדר במקור."
+        "שני רגיסטרי המצב מתחילים באפס; קוד ה־HDL המוצע מוסיף איפוס סינכרוני פעיל בגבוה, שלא הוגדר במקור.",
+        "סדר דגימות כרונולוגי; עבר אפס; השהיה נוספת לפי הנוסחה; איפוס סינכרוני גובר על קליטה.",
+        "הנוסחה למחזור עבודה מחייבת מחזור נדגם זוגי עם שתי החלפות; קלט סינכרוני ולא אות CDC חופשי."
       ],
       "en": [
         "Interpret the waveform as a detector of changes between consecutive rising-edge samples.",
         "Input meets setup/hold requirements; this is not an asynchronous-input CDC design.",
-        "Both state registers start at zero; the reference HDL adds synchronous active-high reset, which was not specified in the source."
+        "Both state registers start at zero; the reference HDL adds synchronous active-high reset, which was not specified in the source.",
+        "Chronological samples, zero prehistory, extra latency as indexed, synchronous reset priority.",
+        "Duty formula requires an even sampled period with two transitions; synchronous input, not an arbitrary CDC signal."
       ]
     },
     "editorial_notes": {
@@ -472,12 +476,14 @@
       "he": {
         "criterion": "מספר ביטי המצב עבור חיווי שינוי סינכרוני הנשאר יציב בין חזיתות הדגימה",
         "result": "2 דלגלגי D ו־XOR אחד (ללא מעגלי האיפוס)",
-        "proof": "הפלט צריך לשמר את דגל השינוי וגם לזכור את דגימת הקלט האחרונה. כל ארבעת הצירופים (last_sample, flag) נגישים. למצבים בעלי דגלים שונים יש פלטים נוכחיים שונים; מצבים בעלי דגל זהה אך דגימה אחרונה שונה מפיקים פלט שונה בהמשך עבור אותו קלט הבא. לכן דרושים ארבעה מצבים מובחנים ולפחות שני ביטי אחסון בינאריים. שני המימושים המוצגים משיגים חסם זה. אין טענה למינימום שטח פיזי או השהיה בכל ספריית תאים."
+        "proof": "הפלט צריך לשמר את דגל השינוי וגם לזכור את דגימת הקלט האחרונה. כל ארבעת הצירופים (last_sample, flag) נגישים. למצבים בעלי דגלים שונים יש פלטים נוכחיים שונים; מצבים בעלי דגל זהה אך דגימה אחרונה שונה מפיקים פלט שונה בהמשך עבור אותו קלט הבא. לכן דרושים ארבעה מצבים מובחנים ולפחות שני ביטי אחסון בינאריים. שני המימושים המוצגים משיגים חסם זה. אין טענה למינימום שטח פיזי או השהיה בכל ספריית תאים.",
+        "variant_004_delayed_duty": "שלושה ביטי מצב ושער XOR במימוש הרשום המוצע, זמן קבוע לדגימה. אין טענת מינימום חדש או תדר פיזי. המינימום של שני ביטים בחוזה המקורי אינו אישור לאותה השהיה בהרחבה."
       },
       "en": {
         "criterion": "binary state storage for a synchronous change indicator stable between sampling edges",
         "result": "2 D-FF + 1 XOR (excluding reset circuitry)",
-        "proof": "The output must preserve the change flag while remembering the last input sample. All four (last_sample, flag) combinations are reachable. States with different flags have different current outputs; states with equal flags but different last samples produce different next outputs for the same next input. Thus four distinguishable states are needed, requiring at least two binary storage bits. Both presented implementations attain that bound. No claim of globally minimum physical area or delay across cell libraries is made."
+        "proof": "The output must preserve the change flag while remembering the last input sample. All four (last_sample, flag) combinations are reachable. States with different flags have different current outputs; states with equal flags but different last samples produce different next outputs for the same next input. Thus four distinguishable states are needed, requiring at least two binary storage bits. Both presented implementations attain that bound. No claim of globally minimum physical area or delay across cell libraries is made.",
+        "variant_004_delayed_duty": "Proposed registered construction: three state bits and one XOR, constant work per sample. No new minimum or physical frequency claim. The original two-bit lower bound applies to its original latency contract."
       }
     },
     "edge_cases": {
@@ -501,7 +507,10 @@
         {
           "case": "הקלט משתנה וחוזר לערכו בין חזיתות דגימה",
           "expected": "לא מזוהה שינוי אם ערכי הדגימות העוקבות שווים."
-        }
+        },
+        "011 נותן 001 בחוזה ההרחבה.",
+        "P=2 נותן 100% אחרי התייצבות.",
+        "שינויים בין חזיתות יכולים להיעלם; איפוס יכול לבטל אירוע שהיה בצינור."
       ],
       "en": [
         {
@@ -523,7 +532,10 @@
         {
           "case": "Input changes and returns between sampling edges",
           "expected": "No detected change if consecutive sampled values are equal."
-        }
+        },
+        "011 gives001 under the extension contract.",
+        "P=2 gives100% after startup.",
+        "Between-edge changes may disappear; reset may cancel an in-flight event."
       ]
     },
     "verification": {
@@ -532,23 +544,85 @@
         "method": "הורץ checks/check_prep_004.py: תרשים התזמון שבמקור, כל 256 הרצפים באורך 8 לכל אחד משני ערכי אתחול שווים של הרגיסטרים (512 מקרים), ואיפוס סינכרוני באמצע רצף. שני המימושים הלוגיים תאמו להשוואת דגימות עוקבות.",
         "scope": "מודל מצבים דיסקרטי בפייתון; לא סימולציית HDL או אימות תזמון פיזי ומטא־יציבות.",
         "checked_on": "2026-09-24",
-        "script_path": "checks/check_prep_004.py"
+        "script_path": "checks/check_prep_004.py",
+        "variant_004_delayed_duty": "עברו 16,382 צירופי זרם/אתחול, 100 מחזורים זוגיים ודוגמת נגד לדגימת גל 50% באותה רמה; Python ושברים מדויקים בלבד."
       },
       "en": {
         "status": "passed",
         "method": "Executed checks/check_prep_004.py: source waveform, all 256 length-8 sequences for each of two equal initial register values (512 cases), and a mid-sequence synchronous reset. Both logical implementations matched comparison of consecutive samples.",
         "scope": "Python discrete-state model, not HDL simulation or physical timing/metastability validation.",
         "checked_on": "2026-09-24",
-        "script_path": "checks/check_prep_004.py"
+        "script_path": "checks/check_prep_004.py",
+        "variant_004_delayed_duty": "Passed16,382stream/initialization pairs,100even periods and a same-phase50%-wave alias counterexample; Python and exact fractions only."
       }
     },
     "interview_answer": {
-      "he": "אשתמש בשני D-FF שמופעלים באותה חזית עלייה: הראשון דוגם את In והשני שומר את הדגימה הקודמת. XOR של המוצאים מזהה שינוי בין הדגימות ומפיק מחזור גבוה בעקבות שינוי מבודד. אם נדרש פלט רשום, אפשר לשמור את הדגימה הקודמת ב־FF אחד ולרשום את תוצאת ה־XOR ב־FF השני, באותו מספר רכיבים.",
-      "en": "I would use two D-FFs triggered by the same rising edge: the first samples In and the second stores the previous sample. XOR of their outputs detects a difference between the samples and produces one high cycle following an isolated change. If a registered output is required, one FF can store the previous sample and the second can register the XOR result, using the same number of components."
+      "he": "אשתמש בשני D-FF שמופעלים באותה חזית עלייה: הראשון דוגם את In והשני שומר את הדגימה הקודמת. XOR של המוצאים מזהה שינוי בין הדגימות ומפיק מחזור גבוה בעקבות שינוי מבודד. אם נדרש פלט רשום, אפשר לשמור את הדגימה הקודמת ב־FF אחד ולרשום את תוצאת ה־XOR ב־FF השני, באותו מספר רכיבים.\n\nאגדיר y[k]=x[k−1] XOR x[k−2], ואשמור שתי דגימות ומוצא רשום. בגל נדגם של P מחזורים עם שתי החלפות מתקבל duty של 2/P במצב מתמיד, כולל 100% עבור P=2; אות אנלוגי מהיר יכול להתקפל ולהחמיץ שינויים.",
+      "en": "I would use two D-FFs triggered by the same rising edge: the first samples In and the second stores the previous sample. XOR of their outputs detects a difference between the samples and produces one high cycle following an isolated change. If a registered output is required, one FF can store the previous sample and the second can register the XOR result, using the same number of components.\n\nDefine y[k]=x[k−1] XOR x[k−2], retain two samples and a registered output. A P-cycle sampled square wave with two transitions gives steady duty2/P, including100% atP=2; fast analog changes may alias or be missed."
     },
     "relationship_note": {
       "he": "נושא קשור של פולס בעקבות קלט נדגם; תרשים התזמון אינו זהה לתרגיל HW-013, העוסק בחזית עלייה בלבד.",
       "en": "Related sampled-input pulse topic; the waveform is not identical to the rising-edge-only exercise HW-013."
+    },
+    "common_mistakes": {
+      "he": [
+        "ערבוב טבלת המקור עם השהיה נוספת.",
+        "הנחה שכל פולס מחייב מחזור נמוך אחריו.",
+        "הסקת duty אנלוגי בלי לבחון את הדגימות."
+      ],
+      "en": [
+        "Mixing the original table with extra latency.",
+        "Assuming every pulse requires a low gap.",
+        "Inferring analog duty without inspecting samples."
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מגדיר סדר כתיבה, חלון קריאת מוצא, יחס תדרים או איפוס; הוספנו חוזה שמתאים לדוגמה ושמרנו את החוזה המקורי בנפרד."
+      ],
+      "en": [
+        "Source omits string orientation, output observation, frequency relationship and reset; the explicit example-compatible contract is separate from the preserved original."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה יקרה אם הכניסה תשתנה בכל חזית?",
+          "answer_direction": "אחרי מילוי הצינור מוצא גבוה רצוף; האירועים סמוכים ללא דרישת מחזור נמוך.",
+          "principle": "פעימה לוגית יכולה להיות סמוכה לפעימה אחרת."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if input changes every edge?",
+          "answer_direction": "After pipeline fill, output is continuously high; adjacent events need no low gap.",
+          "principle": "Logical event cycles may be adjacent."
+        }
+      ]
+    },
+    "prompt_variants": {
+      "he": {
+        "004_delayed_duty": {
+          "prompt": "### וריאציה: גלאי שני כיווני שינוי עם השהיה ומחזור עבודה\nבצילום החדש מבקשים גלאי סינכרוני לשינוי מ־0 ל־1 או להפך, עם מוצא מאוחר במחזור אחד, ודוגמה 011→001. זו הרחבת תזמון נפרדת מהטבלה המקורית לעיל. הגדירו תחילה את סדר הדגימות ואת זמן קריאת המוצא. כאן המחרוזות כתובות לפי סדר ההגעה, הדגימה הראשונה היא k=0, והעבר לפני תחילת הקלט הוא אפס. נבחר y[k]=x[k−1] XOR x[k−2], שנקרא אחרי חזית k; זו השהיה נוספת של מחזור לעומת z[k]=x[k] XOR x[k−1] שבשאלה המקורית. ממשו והסבירו את מחזור העבודה עבור גל כניסה של 50% כאשר משנים את מחזורו. ציינו מתי יחס פשוט של מחזורי השעון מספיק ומתי הדגימה מאבדת שינויים.",
+          "hints": [
+            "כתבו את מספר הדגימה ליד כל ביט בדוגמה. האם מותר לשנות את הטבלה המקורית כדי להתאים למקור החדש?",
+            "הבחינו בין חישוב ההפרש של שתי הדגימות האחרונות לבין רישום ההפרש למחזור הבא. השהיית צינור מזיזה פולסים אך אינה משנה את צפיפותם במצב מתמיד.",
+            "אם לגל הנדגם יש P דגימות במחזור ושתי החלפות, כל אחת מוסיפה מחזור מוצא גבוה. בדקו גם P=2 ואת האפשרות ששתי החלפות אנלוגיות מתרחשות בין דגימות."
+          ],
+          "integration_status": "רמזי ההרחבה בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "004_delayed_duty": {
+          "prompt": "### Variant: both-edge change detection, latency and duty cycle\nThe new source asks for a synchronous rising/falling change detector delayed by one cycle, and gives 011→001. This is a separate timing extension to the original table above. First define arrival order and output observation time. Here strings are chronological, the first sample is k=0 and prehistory is zero. Choose y[k]=x[k−1] XOR x[k−2], observed after edge k; this adds one cycle relative to the original z[k]=x[k] XOR x[k−1]. Implement it and analyze output duty for a 50%-duty input with varying period. State when a simple clock-period ratio applies and when sampling misses changes.",
+          "hints": [
+            "Index every bit in the example. Does the new latency require a different contract from the original timing table?",
+            "Separate comparison of consecutive samples from registering that comparison one cycle later. Pipeline delay shifts pulses but preserves steady-state density.",
+            "If the sampled period contains P samples and two transitions, each transition contributes one high output cycle. Also test P=2 and two analog transitions occurring between samples."
+          ],
+          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+        }
+      }
     }
   },
   "PREP-005": {

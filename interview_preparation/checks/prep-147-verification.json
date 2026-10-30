@@ -1,0 +1,8 @@
+{
+  "question_id": "PREP-147",
+  "status": "passed",
+  "exhaustive_pairs_widths_one_through_eight": 87380,
+  "seeded_wide_pairs": 400,
+  "controlled_capture_edges": 263340,
+  "scope": "Ideal fixed-width XOR/edge-enable Python model, complete small-state traces and seeded wide values. Assumes edge-triggered capture and no extra capture edges; no latch-race, HDL or physical timing claim."
+}

@@ -301,3 +301,10 @@ The supplied hardware code explicitly implements the transition table, requiring
 - [תוצאות / Evidence](../checks/prep-050-verification.json)
 
 Python-model verification is separate from HDL compilation/simulation, synthesis, physical hardware, professional review and live-site clicking. Follow-up content is prepared but not connected to the interactive queue.
+
+
+## מקור נוסף — 30.10.2026, צילום 18
+
+[צילום פרטי](../sources/2026-10-30-batch20-18.png)
+
+זהו מקור נוסף לשאלה הקיימת; הגרסה והתוכן הטכני נשמרו ללא שינוי.

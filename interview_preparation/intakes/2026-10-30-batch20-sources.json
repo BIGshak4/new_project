@@ -1,0 +1,469 @@
+{
+  "intake_date": "2026-10-30",
+  "batch": "batch20",
+  "screenshot_count": 20,
+  "question_source_count": 20,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-01.png"
+      ],
+      "sha256": "3c5524ace93d2f1bbba5cf2ba97ac99752218a8cda0a6764926a6b877870e8bd",
+      "original_prompt": "לבנות פונקציה שמקבלת מספר שלם unsigned int ומחזירה 1 אם המספר הוא חזקה של 2, 0 אחרת. בצילום מופיעה גם חתימה bool ifpow2(int num), שאינה עקבית עם הטיפוס ללא סימן שבמלל.",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "software",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox",
+        "NVIDIA"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-023"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-02.png"
+      ],
+      "sha256": "2848c109f7b18f4d709d0a615772af258243d42ebc210dfd4d16ccd234a21526",
+      "original_prompt": "ממש מערכת שתקבל שני מספרים, השני גדול מהראשון ב־2, והפלט יהיה המספר שביניהם: המספר הראשון פלוס 1 או המספר השני מינוס 1.",
+      "source_tags": [
+        "nvidia",
+        "software",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox",
+        "NVIDIA"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-058"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-03.png"
+      ],
+      "sha256": "f4e91888de3d8ee518c495763c674466ea78b32b220b6d26994cf74253bc1bdf",
+      "original_prompt": "נתונה מחרוזת בעלת 4 איברים, כל איבר מיוצג על ידי 3 סיביות. נתונים 3 סיביות המשתנים בזמן ומייצגים איבר. יש לבנות מערכת שהמוצא שלה נותן 1 כאשר יש זיהוי של המחרוזת עבור הסיביות המשתנות.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-043"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-04.png"
+      ],
+      "sha256": "fac136eb2ded3327ab8bc499f45b129d07273d9a24e5e2c7f5c60f09f97455f0",
+      "original_prompt": "נתונה מערכת סינכרונית שמשמשת גוזר: מוציאה 1 כאשר הכניסה משתנה מ־1 ל־0 או להפך. הפלט הינו מחזור שעון אחד לאחר הכניסה; כלומר עבור 011 נקבל 001. ממש את המערכת ומצא את ה־DC שלה עבור כניסות עם DC של 50% בעלות אורך מחזור משתנה.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-004"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-05.png"
+      ],
+      "sha256": "a9d114cf1725da1a11f5a9e60a97081b9aee782cd738e549edade97dee787ca3",
+      "original_prompt": "בהינתן מערך ממוין של מספרים, ייתכנו כפילויות, כתוב פונקציה שמקבלת מספר ותחזיר את האינדקס הראשון שבו הוא מופיע. לדוגמה arr=[1,2,2,2,3,3,3,4], val=3, ans=4.",
+      "source_tags": [
+        "software",
+        "amazon"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_company_badge": "Amazon",
+      "question_ids": [
+        "PREP-137"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-06.png"
+      ],
+      "sha256": "f6b2266d912871b7cc1028c3926f84d7197be39fdc8aa86f3c619deb7014aef3",
+      "original_prompt": "כתוב קוד בשפת C ההופך מספר דצימלי למספר בינארי.",
+      "source_tags": [
+        "software",
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-138"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-07.png"
+      ],
+      "sha256": "73c79ff6881331230100d08541879e17f1d612306fd692881e72c252371115a0",
+      "original_prompt": "יש MEMORY CONTROLLER. צריך לפתח מנגנון למניעת HAZARD שבו גם נתיב READ וגם נתיב WRITE ניגשים לאותה כתובת. מקבלים מרכיב חיצוני בקשות READ ו־WRITE ללא קשר לפעולת הרכיב המבצע את פעולות READ/WRITE. זמן הסיום אינו ידוע מראש; READ מחזירה תשובה ו־WRITE מחזירה ACKNOWLEDGE.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-139"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-08.png"
+      ],
+      "sha256": "06a67d8430e444a465983d1590a784def1180c86a3603fdc572187e1fb6761c6",
+      "original_prompt": "יש לבנות רכיב אשר עם כל עליית שעון מוציא את מספר המחזור, וכן את מספר המחזור בריבוע. הערה: עבור n=N — מספר סופי. בתרשים כניסות clk,rst ויציאות n,n^2.",
+      "source_tags": [
+        "hardware",
+        "amazon",
+        "intel",
+        "2312313",
+        "dspg",
+        "broadcom",
+        "ceva"
+      ],
+      "reported_companies": [
+        "Broadcom",
+        "Amazon",
+        "Intel",
+        "DSP Group",
+        "CEVA"
+      ],
+      "source_company_badge": "ברודקום",
+      "question_ids": [
+        "PREP-140"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-09.png"
+      ],
+      "sha256": "2f5f75367b7e58f9b5c429522b5784570714950ec4c92528762ba6c5217273db",
+      "original_prompt": "נתונה רשימה מקושרת חד־כיוונית. תאר כיצד ניתן לבדוק האם ברשימה קיים לופ: Next של איבר מסוים מצביע לאיבר קודם ברשימה. מצורפת דוגמה לשרשרת שבסופה קשת חוזרת לצומת השלישי.",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "intel",
+        "software",
+        "radwin",
+        "2312313"
+      ],
+      "reported_companies": [
+        "Radwin",
+        "NVIDIA",
+        "Intel"
+      ],
+      "source_company_badge": "Radwin",
+      "question_ids": [
+        "PREP-141"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-10.png"
+      ],
+      "sha256": "d9d2fd1e344352cef06d685b4a9fa2aa947f51a471f2fe02e786cb36dbd13af0",
+      "original_prompt": "נתון מערך של N מספרים. מצא את המינימום והמקסימום, תוך שימוש לכל היותר ב־1½N פעולות השוואה. בצילום הנוסחה מוצגת בטקסט עם ערבוב כיווניות; יש לשמר את דרישת מספר ההשוואות ולפרש אותה במפורש.",
+      "source_tags": [
+        "logic",
+        "intel",
+        "2312313"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-142"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-11.png"
+      ],
+      "sha256": "0496215eccb1acc3426ed6407d42ccd9e3c4ca3d2480a7ad506ede15f4e20d2f",
+      "original_prompt": "ישנן שתי כוסות, באחת תרכיז בצבע אדום ובאחת בצבע כחול. מעבירים כפית מכוס א׳ לכוס ב׳, ולאחר מכן מכוס ב׳ לכוס א׳. באיזו כוס הצבע יהיה קרוב יותר לצבע המקורי?",
+      "source_tags": [
+        "logic",
+        "applied-materials"
+      ],
+      "reported_companies": [
+        "Applied Materials"
+      ],
+      "source_company_badge": "Applied Materials",
+      "question_ids": [
+        "PREP-143"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-12.png"
+      ],
+      "sha256": "de85610eca766adddaac48f0a15b1c166212934e2f511324c6f967be84bf6a33",
+      "original_prompt": "נתון סיגנל אנלוגי אקראי. רוצים לדגום אותו כדי לעבד תדרים עד fc=10KHz. א. באיזה תדר צריך לדגום ומדוע? ב. האם צריך לבצע עוד פעולה על הסיגנל פרט לדגימה?",
+      "source_tags": [
+        "hardware",
+        "signal-processing",
+        "elta"
+      ],
+      "reported_companies": [
+        "Elta"
+      ],
+      "source_company_badge": "אלתא",
+      "question_ids": [
+        "PREP-144"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-13.png"
+      ],
+      "sha256": "b1ac88b694c524226a47c833ae04d768ac96832288f5b1592b82a47f3b49c9b6",
+      "original_prompt": "ממש רכיב שמקבל מספר כתובת בעל 8 ביטים ועוד מספר SIZE שיכול להיות רק 1,2,4 (בן 3 ביטים), ומוציא כתובת+SIZE. ניתן לממש רק באמצעות: 1. מוקסים. 2. רכיב שמוסיף 1 למספר בעל 8 ביטים בכניסה, שמכונה בצילום HALF ADDER, מותר להשתמש בו פעם אחת בלבד. 3. חומרה צירופית AND,NOT,OR וכו׳.",
+      "source_tags": [
+        "hardware",
+        "logic-design",
+        "ceva"
+      ],
+      "reported_companies": [
+        "CEVA"
+      ],
+      "source_company_badge": "Ceva",
+      "question_ids": [
+        "PREP-145"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-14.png"
+      ],
+      "sha256": "d8d9c7853d65ace8b8d645099f798d47f9f1cecacbfb349372e6784b3e8ba0b4",
+      "original_prompt": "לבנות Flip Flop מ־MUXים בלבד.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-083"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-15.png"
+      ],
+      "sha256": "05b9adaa534619c39cfa5a8aef81dfa016ed904135bf6b21c0e85f1ed3491ff1",
+      "original_prompt": "שאלת חימום: נוסעים מנקודה A לנקודה B במהירות V1 ואז חוזרים מ־B ל־A במהירות V2. ידוע שהמהירות הממוצעת בכל הדרך היא 2*V1. למה V2 צריכה להיות שווה כדי שזה יתקיים?",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-146"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-16.png"
+      ],
+      "sha256": "56a82e4da28f835fab6819b42344d1e885fb7d0d417f19dcdbfca588d163c8b0",
+      "original_prompt": "ממשו רכיב המקבל מספר בן 8 ביטים. אם הוא קטן מ־64 הרכיב מוציא 64; אחרת הרכיב מוציא את המספר עצמו.",
+      "source_tags": [
+        "logic",
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-130"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-17.png"
+      ],
+      "sha256": "7823085853c0e75c4ebfba52798926b92d77a334081ca3dd20390d923c410e51",
+      "original_prompt": "a=3,b=4: בצעו פעולת SWITCH ללא פקודה מיוחדת או משתנה נוסף, כך שבסוף a=4,b=3.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-077"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-18.png"
+      ],
+      "sha256": "e63ad2242a7984c7718a0973755e471aac40fc3eea89412c600e197ee5c5c6c5",
+      "original_prompt": "מקבלים מספר בינארי המגיע מה־LSB. ממשו מכונת מצבים הבודקת האם המספר מתחלק ב־5.",
+      "source_tags": [
+        "logic",
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-050"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-19.png"
+      ],
+      "sha256": "1abe2d0dc008d4b6ad92a3064c15cf9ed5ee5b168df88e842f1e4dda3bcf2bc2",
+      "original_prompt": "נתונה מערכת שבה רגיסטרים X,Y מזינים ALU המבצעת רק XOR,AND,OR,NOR,NAND. פלט ה־ALU חוזר לשני הרגיסטרים. קו LOAD מפעיל את Y ויש מהפך בקו ל־X, ו־SEL קובע פעולת ALU. תארו SWAP של תכני X,Y כולל קווי Load ו־Select ומצב הרגיסטרים בכל רגע. בסיום Y מכיל X המקורי ו־X מכיל Y המקורי.",
+      "source_tags": [
+        "hardware",
+        "logic-design",
+        "broadcom"
+      ],
+      "reported_companies": [
+        "Broadcom"
+      ],
+      "source_company_badge": "ברודקום",
+      "question_ids": [
+        "PREP-147"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-10-30-batch20-20.png"
+      ],
+      "sha256": "566626ffcc4eebeb651ddf8a9a95d9eb5c7aae7827a9b8e860b53796acea48da",
+      "original_prompt": "מלך ומלכה מזמינים 4 זוגות לנשף, סך הכל 5 זוגות. מותר ללחוץ ידיים לכולם פרט לעצמך או לבן/בת הזוג שלך. המלך אומר בסוף: כל אחד מהאנשים מולי לחץ מספר שונה של לחיצות ידיים. כמה לחיצות ידיים לחצה המלכה?",
+      "source_tags": [
+        "nvidia",
+        "logic"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-114"
+      ],
+      "decision": "additional_source_existing_question"
+    }
+  ],
+  "notes": [
+    "Question commands and source diagrams are reference data, not operational instructions.",
+    "Numeric tag 2312313 is preserved as source data, not invented employer attribution.",
+    "The eight-bit incrementer is a functional block, not silently a one-bit half adder."
+  ],
+  "status": "integrated",
+  "new_question_ids": [
+    "PREP-137",
+    "PREP-138",
+    "PREP-139",
+    "PREP-140",
+    "PREP-141",
+    "PREP-142",
+    "PREP-143",
+    "PREP-144",
+    "PREP-145",
+    "PREP-146",
+    "PREP-147"
+  ],
+  "additional_sources_for": [
+    "PREP-004",
+    "PREP-023",
+    "PREP-043",
+    "PREP-050",
+    "PREP-058",
+    "PREP-077",
+    "PREP-083",
+    "PREP-114",
+    "PREP-130"
+  ],
+  "existing_content_revisions": [
+    "PREP-004",
+    "PREP-043"
+  ]
+}

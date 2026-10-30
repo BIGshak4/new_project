@@ -1,0 +1,10 @@
+{
+  "question_id": "PREP-145",
+  "status": "passed",
+  "valid_address_size_cases": 768,
+  "invalid_size_rows": 1280,
+  "single_incrementer_calls": 2048,
+  "ninth_bit_carry_cases": 7,
+  "malformed_port_values_rejected": 6,
+  "scope": "All 2048 legal port bit patterns checked; 768 valid arithmetic cases compared with integer addition. One counted functional incrementer per row. No physical gate count, HDL or timing verification."
+}

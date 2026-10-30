@@ -63,6 +63,7 @@ PRIMARY = [
     "estimation_sanity_checks", "arrays_and_search", "basic_data_structures", "debugging_methodology", "binary_arithmetic", "combinational_blocks",
     "estimation_sanity_checks", "binary_arithmetic", "basic_data_structures", "estimation_sanity_checks", "arrays_and_search",
     "estimation_sanity_checks", "estimation_sanity_checks", "fsm_sequence_detectors", "estimation_sanity_checks", "combinational_blocks", "basic_data_structures", "combinational_blocks", "debugging_methodology", "binary_arithmetic", "arrays_and_search", "binary_arithmetic",
+    "arrays_and_search", "bit_manipulation", "fsm_state_tables", "binary_arithmetic", "basic_data_structures", "arrays_and_search", "estimation_sanity_checks", "estimation_sanity_checks", "combinational_blocks", "estimation_sanity_checks", "registers_shifters",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

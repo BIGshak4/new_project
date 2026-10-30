@@ -567,3 +567,10 @@ I remember the longest suffix matching the start of ABCD: four states for empty,
 [prep_043_serial_lock.py](../solutions/prep_043_serial_lock.py) · [prep_043_serial_lock.sv](../solutions/prep_043_serial_lock.sv) · [check_prep_043.py](../checks/check_prep_043.py) · [prep-043-verification.json](../checks/prep-043-verification.json)
 
 שאלת ההמשך מוכנה בשתי השפות אך טרם חוברה לתור האינטראקטיבי. ההערכה המקצועית ורמת הקושי עדיין בביקורת; אין להעניק לשאלה זו ראיות שליטה או ניקוד תחרותי. שאלות חומרה אומתו במודל Python בלבד; אין בכך טענה לסימולציית HDL או לבדיקה פיזית.
+
+
+## מקור נוסף — 30.10.2026, צילום 3
+
+[צילום פרטי](../sources/2026-10-30-batch20-03.png)
+
+נוספה הרחבה דו־לשונית, בלי למחוק את התוכן והרמזים הקודמים.

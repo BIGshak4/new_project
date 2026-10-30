@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "binary_stream_initializations": 16382,
+  "even_sampled_periods": 100,
+  "alignment_example": "011 -> 001",
+  "alias_counterexample": "50% analog input may yield constant sampled input",
+  "scope": "Python sampled-state and exact-rational model; no HDL, STA or CDC validation"
+}

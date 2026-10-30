@@ -1,0 +1,874 @@
+{
+  "PREP-139": {
+    "assumptions": {
+      "he": [
+        "שני valid/ready יציבים; קבלה בלבד מגדירה סדר.",
+        "פקודה אחת בלתי מסוימת, completion תואם, WRITE ACK הוא commit.",
+        "אותו תחום שעון; אין איפוס מבטל באמצע; התקדמות דורשת מענה בסוף."
+      ],
+      "en": [
+        "Stable two-port valid/ready; acceptance defines order.",
+        "One incomplete command, matching completion, write ACK means commit.",
+        "One clock domain; no uncontracted mid-operation cancellation; progress needs eventual responses."
+      ]
+    },
+    "optimality": {
+      "he": "פתרון מסריאל בטוח בעל O(A+D) אחסון, ארבעה מצבי שליטה ובורר סבב; אין טענת תפוקה, שטח או השהיה מיטביים.",
+      "en": "Safe serialized construction with O(A+D) retained bits, four control states and round-robin arbitration; no throughput, area or latency optimality claim."
+    },
+    "verification": {
+      "he": "עברו 781 רצפי בקשות כפול 12 תצורות השהיה: 9,372 ריצות ו־222,680 חזיתות, שמונה הכרעות סימולטניות וארבע דחיות completion פגום. אורקל זיכרון סדרתי עצמאי; Python בלבד.",
+      "en": "Passed 781 request sequences across 12 latency/stall configurations: 9,372 traces/222,680 edges, eight simultaneous arbitrations and four malformed-completion rejections. Independent serial-memory oracle; Python only."
+    },
+    "edge_cases": {
+      "he": [
+        "כתיבה ואז קריאה לאותה כתובת; קריאה ואז כתיבה; שתי כתיבות.",
+        "סיום באותה חזית של קבלת פקודה, או אחרי המתנה ארוכה.",
+        "cmd_ready או response_ready נמוכים: הפרטים נשמרים.",
+        "שני valid יחד; בקשה ממתינה אינה מתקבלת פעמיים.",
+        "זיכרון שלא משיב לעולם: בטיחות נשמרת, סיום אינו מובטח."
+      ],
+      "en": [
+        "Write/read, read/write and write/write to one address.",
+        "Completion coincident with command acceptance or after long delay.",
+        "Low cmd_ready or response_ready retains fields.",
+        "Simultaneous valid ports; an unaccepted request is not duplicated.",
+        "A backend that never completes preserves safety but prevents progress."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "המתנה קבועה במקום ACK.",
+        "שחרור busy ברגע שפקודה רק התקבלה.",
+        "איבוד בקשה שהגיעה בזמן עומס.",
+        "ACK שמשמעותו תור נחשב בטעות לכתיבה גלויה.",
+        "צריכת תשובה מאוחרת ללא שמירת הנתון."
+      ],
+      "en": [
+        "Fixed delay instead of completion.",
+        "Clearing busy when a command is merely accepted.",
+        "Dropping a request arriving while busy.",
+        "Confusing enqueue ACK with visible write commit.",
+        "Failing to retain a response under frontend backpressure."
+      ]
+    },
+    "interview_answer": {
+      "he": "אגדיר קבלה ב־valid/ready, אשמור עסקה אחת, ואחסום את הבאה עד לסיום READ או ACK של WRITE שמבטיח commit. מצבי IDLE/ISSUE/WAIT/RESP מפרידים קבלה, הוצאה, סיום וצריכת תשובה. זה בטוח גם לזמנים משתנים, במחיר סריאליזציה.",
+      "en": "Define valid/ready acceptance, retain one transaction and block the next until READ completion or a write ACK guaranteeing commit. IDLE/ISSUE/WAIT/RESP separate acceptance, issue, completion and response consumption. This handles variable latency safely at the cost of serialization."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מגדיר ready/valid, פורטי זיכרון, סדר בין בקשות סימולטניות או משמעות ACK; חוזה העריכה מפורש.",
+        "שיוך Apple מדווח בלבד."
+      ],
+      "en": [
+        "The source omits ready/valid, port count, simultaneous order and ACK semantics; editorial choices are explicit.",
+        "Apple attribution is source-reported only."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד לאפשר מקביליות לכתובות שונות?",
+          "answer_direction": "אם החומרה מאפשרת, שמרו טבלת עסקאות ומזהים; השוו כתובות והגדירו תלות RAW/WAR/WAW, סדר תשובות ומסלול forwarding.",
+          "principle": "הסרת סריאליזציה מעבירה אחריות למעקב תלות."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can different addresses proceed concurrently?",
+          "answer_direction": "If hardware permits it, retain a transaction table and identifiers; compare addresses and define RAW/WAR/WAW dependencies, response order and forwarding.",
+          "principle": "Removing serialization requires explicit dependency tracking."
+        }
+      ]
+    }
+  },
+  "PREP-140": {
+    "assumptions": {
+      "he": [
+        "N≥0 קבוע; פלט מדויק; איפוס סינכרוני נותן מחזור אפס.",
+        "החזית הראשונה ללא איפוס מגדילה ל־1 אם N>0.",
+        "ב־N מחזיקים; אין עטיפה שקטה; ההצבות משתמשות במצב הישן."
+      ],
+      "en": [
+        "Fixed N≥0; exact result; synchronous reset represents cycle zero.",
+        "First non-reset edge increments to one when N>0.",
+        "Hold at N, without implicit wrapping; assignments use old state."
+      ]
+    },
+    "optimality": {
+      "he": "ללא מכפל: מחבר s, מגדיל n, חיווט {n,1}, השוואה ואחסון O(log(N+1)). אין טענת מינימום שטח/תדר, והמקור אינו אוסר מכפל.",
+      "en": "Multiplier-free: s adder, n incrementer, concatenation, comparator and O(log(N+1)) storage. No minimum area/frequency claim; the source did not forbid a multiplier."
+    },
+    "verification": {
+      "he": "נבדקו כל N בין 0 ל־256: 33,924 דגימות וריצות איפוס, ועוד 15 מקרי גבול ברוחבים גדולים. השוואה לכפל שלמים עצמאי ובדיקת רוחב. Python בלבד.",
+      "en": "Checked every N from zero through 256: 33,924 trajectory/reset samples plus 15 wide boundary cases, against independent integer multiplication and width bounds. Python only."
+    },
+    "edge_cases": {
+      "he": [
+        "N=0,N=1.",
+        "חזית איפוס בגבול או באמצע ריצה.",
+        "N שהוא חזקה של שתיים: המונה צריך להכיל גם N.",
+        "ערך N² מרבי והתאמת רוחב הביניים."
+      ],
+      "en": [
+        "N=0 and N=1.",
+        "Reset at terminal or intermediate state.",
+        "Power-of-two N needs room to represent N itself.",
+        "Largest N² and sufficient intermediate width."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "הוספת 2n−1 אחרי שהוגדר n כישן.",
+        "שימוש ב־n החדש בתוך העדכון המקביל.",
+        "הקצאת רוחב n גם לריבוע.",
+        "מניית חזית איפוס כמחזור 1.",
+        "עטיפה שלא הוגדרה."
+      ],
+      "en": [
+        "Mixing the old/new index when choosing the odd difference.",
+        "Using updated n in a simultaneous assignment.",
+        "Giving the square only the counter width.",
+        "Counting a reset edge as cycle one.",
+        "Leaving wrap behavior unspecified."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור מונה n ואוגר s עם האינווריאנט s=n². באותה חזית אוסיף ל־s את 2n+1 ואגדיל n, על סמך הערכים הישנים. 2n+1 הוא השרשור {n,1}. אגדיר רוחב לכל יציאה והחזקה ב־N.",
+      "en": "Retain n and s with invariant s=n². At each edge add old 2n+1 to s and increment n. The odd difference is concatenation {n,1}. Give each output its own exact width and hold at N."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו קובע אתחול, מחזור ראשון או התנהגות בגבול. נבחרו מחזור אפס והחזקה באופן גלוי.",
+        "התג 2312313 נשמר כמקור ואינו שם חברה. שיוכי החברות לא אומתו."
+      ],
+      "en": [
+        "The source omits initialization, first-cycle convention and terminal behavior; cycle zero and saturation are explicit additions.",
+        "The tag 2312313 is source data, not an employer. Company reports are unverified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מפיקים גם n³ בלי מכפל?",
+          "answer_direction": "השתמשו בהפרשים סופיים: ההפרש בין קוביות הוא 3n²+3n+1, וניתן לתחזק גם הפרשים מדרגות נמוכות. הגדירו רוחבים וערכי התחלה.",
+          "principle": "פולינומים ניתנים ליצירה בעזרת שרשרת מצטברים."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can you generate n³ without a multiplier?",
+          "answer_direction": "Use finite differences: consecutive cubes differ by 3n²+3n+1. Lower-order difference accumulators can maintain this; specify widths and initial values.",
+          "principle": "Polynomial sequences can be generated by accumulator chains."
+        }
+      ]
+    }
+  },
+  "PREP-145": {
+    "assumptions": {
+      "he": [
+        "A ללא סימן בן 8 ביטים, SIZE בן 3 ביטים חוקי בערכים 1/2/4.",
+        "רכיב פונקציונלי יחיד INC8; פלטו מודולו 256, בלי נשא מובטח.",
+        "פלט מדויק בן 9 ביטים; קוד SIZE לא חוקי מסומן valid=0 והתוצאה 0."
+      ],
+      "en": [
+        "Unsigned eight-bit A; three-bit SIZE legal values 1/2/4.",
+        "One functional INC8 block, modulo 256 output without guaranteed carry.",
+        "Exact nine-bit output; invalid SIZE gives valid=0,result=0."
+      ]
+    },
+    "optimality": {
+      "he": "רכיב INC8 אחד ושתי שכבות ניתוב עם שערי גילוי נשא/valid. לא הוכח מינימום מרבבים, שערים, שטח או השהיה; שערים יכולים אף לממש הגדלה בעצמם ולכן המגבלה הפונקציונלית אינה מדד אופטימליות.",
+      "en": "One INC8 block plus input/output routing and carry/valid gates. No minimum MUX, gate, area or delay proof; gates could themselves implement incrementing, so the functional restriction is not an optimality metric."
+    },
+    "verification": {
+      "he": "כל 2,048 דפוסי הפורטים: 768 זוגות חוקיים, 1,280 לא חוקיים, 2,048 שימושים יחידים במגדיל. שבעה מקרי נשא לתשעה ביטים ושש דחיות טיפוס/רוחב. מודל Python בלבד.",
+      "en": "All 2,048 port patterns: 768 valid and 1,280 invalid rows, with 2,048 single incrementer uses. Seven ninth-bit carry cases and six malformed-width/type rejections. Python model only."
+    },
+    "edge_cases": {
+      "he": [
+        "A=0 לכל SIZE.",
+        "255+1=256, 255+2=257, 255+4=259.",
+        "253+2=255 מול 254+2=256.",
+        "קודי SIZE: 0,3,5,6,7.",
+        "כתובת בת 8 ביטים בלבד דורשת הצהרת גלישה מפורשת."
+      ],
+      "en": [
+        "A=0 for each SIZE.",
+        "255+1=256, 255+2=257, 255+4=259.",
+        "253+2=255 versus 254+2=256.",
+        "SIZE codes0,3,5,6,7.",
+        "An eight-bit-only address output needs an explicit overflow contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שימוש בשלושה מגדילים במקביל.",
+        "הגדלת כל A ואז הזזה: גם הביטים הנמוכים משתנים בטעות.",
+        "השמטת הנשיאה ב־255+1.",
+        "התייחסות למגדיל בן 8 ביטים כ־HA חד־ביטי.",
+        "שימוש במחבר נוסף במקום ניתוב קבוע."
+      ],
+      "en": [
+        "Using three parallel incrementers.",
+        "Incrementing all A and then shifting, corrupting low bits.",
+        "Losing the255+1 carry.",
+        "Treating the specified eight-bit incrementer as a one-bit HA.",
+        "Adding an unnecessary second arithmetic block instead of routing."
+      ]
+    },
+    "interview_answer": {
+      "he": "עבור SIZE=2^k אגדיל את A>>k פעם אחת, אחזיר אותו שמאלה k ואצרף את k הביטים הנמוכים המקוריים. מרבב בוחר k=0,1,2. רק בהגדלת255 בשלמותו נדרש נשא חיצוני AND של כל הביטים; בשאר המקרים הוא נמצא בתוצאת המגדיל המנותבת.",
+      "en": "For SIZE=2^k increment A>>k once, route it back left by k, and restore the original low k bits. A MUX selects k=0,1,2. Only whole-address255 increment needs an external all-bits-AND carry; other carries remain in the routed incrementer output."
+    },
+    "source_ambiguities": {
+      "he": [
+        "הכינוי HALFADDER סותר את תיאור הפעולה; ההגדרה הפונקציונלית נשמרה.",
+        "רוחב פלט, נשא וקודים לא חוקיים לא נמסרו ונבחרו במפורש.",
+        "CEVA מדווחת במקור בלבד."
+      ],
+      "en": [
+        "The HALFADDER name conflicts with its stated function; the functional definition is retained.",
+        "Output width, carry and invalid codes were unspecified and are explicitly chosen.",
+        "CEVA attribution is source-reported only."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם SIZE יכול להיות גם 8?",
+          "answer_direction": "הוסיפו בחירה של A>>3 ושמירת שלושה ביטים נמוכים. רמת הניתוב משתנה, אך אותו עיקרון והגדלה אחת עדיין תקפים.",
+          "principle": "תוספת חזקה של שתיים היא הגדלת חלק עליון."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if SIZE may also be 8?",
+          "answer_direction": "Add routing for A>>3 and preserve the low three bits. The selection grows but the same single-increment principle applies.",
+          "principle": "Adding a power of two increments the upper partition."
+        }
+      ]
+    }
+  },
+  "PREP-147": {
+    "assumptions": {
+      "he": [
+        "אוגרים נפרדים ברוחב W≥1, ללא אוגר נתונים נוסף.",
+        "קליטה בחזית; LOAD גבוה ל־Y ונמוך ל־X; Select בוחר XOR.",
+        "התוצאה נצפית אחרי שלוש חזיתות; החזקה מאוחרת דורשת איפשור נוסף."
+      ],
+      "en": [
+        "Separate W≥1 registers and no spare data register.",
+        "Edge capture; LOAD high writes Y, low writes X; select XOR.",
+        "Observe after three edges; later holding needs an additional enable contract."
+      ]
+    },
+    "optimality": {
+      "he": "שלוש כתיבות ושערי XOR ברוחב W; לוגיקה בעלות O(W) ואפס אוגרי נתונים נוספים. לא הוכח מינימום מחזורים לכל ארכיטקטורה או שטח תא.",
+      "en": "Three writes and W-bit XOR logic: O(W) logic and no extra data register. No minimum-cycle proof across architectures or cell-area claim."
+    },
+    "verification": {
+      "he": "87,380 זוגות ממצים לרוחבים 1..8 ועוד 400 זוגות מדגמיים רחבים, 263,340 חזיתות קליטה. כל עקבה נבדקה מול החלפה וערכי הביניים האלגבריים. Python בלבד, ללא HDL או מרוצי נועלים.",
+      "en": "87,380 exhaustive pairs for widths 1..8 plus 400 seeded wide pairs, 263,340 capture edges. Every trace checked against pair permutation and algebraic intermediate states. Python only; no HDL or latch-race validation."
+    },
+    "edge_cases": {
+      "he": [
+        "x=y גורם לאפס ביניים אך מסתיים נכון.",
+        "x=0,y=0 או W=1.",
+        "כל הביטים 1 והחלפת ערכים מנוגדים.",
+        "חזית רביעית אינה מובטחת להחזיק את התוצאה.",
+        "נועל שקוף במקום אוגר בחזית משנה את הבעיה."
+      ],
+      "en": [
+        "x=y produces an intermediate zero but finishes correctly.",
+        "x=0,y=0 or W=1.",
+        "All-one and complementary bit patterns.",
+        "A fourth edge is not guaranteed to retain the result.",
+        "Transparent latches instead of edge registers change the problem."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "טעינה לשני האוגרים באותה חזית מאבדת את שני המקורות.",
+        "היפוך סדר LOAD ללא התאמת הטבלה.",
+        "כתיבת XOR מקוצרת בשפה שאינה מבטיחה סדר.",
+        "הנחת SEL מספרי שלא ניתן.",
+        "הבטחת החזקה או היעדר גליצ׳ים ללא פרטי תזמון."
+      ],
+      "en": [
+        "Loading both registers together loses both originals.",
+        "Reversing LOAD without changing the state table.",
+        "Relying on an unsequenced compact programming expression.",
+        "Inventing a numerical SEL encoding.",
+        "Promising holding or glitch freedom without a timing contract."
+      ]
+    },
+    "interview_answer": {
+      "he": "אבחר XOR ב־ALU. ב־LOAD=0 אכתוב X=x XOR y; ב־LOAD=1 אכתוב Y=(x XOR y) XOR y=x; ב־LOAD=0 אכתוב X=(x XOR y) XOR x=y. בכל חזית רק אוגר אחד נכתב. התוצאה תקפה אחרי השלישית; המשך החזקה צריך איפשור מפורש.",
+      "en": "Select XOR. With LOAD=0 write X=x XOR y; with LOAD=1 write Y=(x XOR y) XOR y=x; with LOAD=0 write X=(x XOR y) XOR x=y. Exactly one register writes per edge. The result is valid after the third edge; persistent holding requires explicit enabling."
+    },
+    "source_ambiguities": {
+      "he": [
+        "השרטוט אינו מציג שעון או קובע אם LOAD הוא רמה או איפשור בחזית; מודל קליטה בחזית נבחר במפורש.",
+        "קידוד SEL ורוחב הנתון לא ניתנו.",
+        "Broadcom מדווחת במקור בלבד."
+      ],
+      "en": [
+        "The drawing shows no clock and does not establish whether LOAD is level-sensitive or an edge enable; edge capture is an explicit model.",
+        "SEL encoding and data width are unspecified.",
+        "Broadcom attribution is source-reported only."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד מחזיקים את שני האוגרים לאחר ההחלפה?",
+          "answer_direction": "הוסיפו איפשור קליטה גלובלי מוגדר ומסונכרן, או הגדירו שלוקח התוצאה דוגם אותה בחזית 3. אל תניחו שקו LOAD משלים לבדו מכבה את שניהם.",
+          "principle": "השלמת אלגוריתם אינה חוזה החזקה."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can both registers hold after the swap?",
+          "answer_direction": "Add a defined synchronous global capture enable or have the consumer sample at edge 3. Complementary LOAD alone cannot disable both.",
+          "principle": "Algorithm completion is not a holding contract."
+        }
+      ]
+    }
+  },
+  "PREP-137": {
+    "assumptions": {
+      "he": [
+        "מערך שלם ממוין בסדר לא יורד; גישה אקראית, קריאה בלבד ואינדקסים מאפס.",
+        "‎-1 מציין שאין הופעה; תקינות המיון היא הבטחה ולא בדיקה לינארית."
+      ],
+      "en": [
+        "Nondecreasing integer array; random access, read-only and zero-based indices.",
+        "-1 means absent; sortedness is promised, not linearly validated."
+      ]
+    },
+    "optimality": {
+      "he": "O(log(N+1)) זמן ו־O(1) מילות עזר במודל השוואות וגישה אקראית. החסם Ω(log N) הוא למקרה הגרוע בחיפוש כללי, לא לכל מופע.",
+      "en": "O(log(N+1)) time and O(1) words with random access. Ω(log N) is a general worst-case comparison lower bound, not a per-instance claim."
+    },
+    "edge_cases": {
+      "he": [
+        "ריק, איבר יחיד, יעד חסר בין שני ערכים או מחוץ לטווח.",
+        "כל האיברים שווים, הופעה ראשונה באפס או בסוף, דוגמת המקור."
+      ],
+      "en": [
+        "Empty, singleton, absent between entries or outside range.",
+        "All equal, first occurrence at zero/end, supplied example."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לעצור בשוויון הראשון שהחיפוש פגש.",
+        "לסרוק אחורה על כפילויות ולאבד זמן לוגריתמי.",
+        "להחזיר את lower_bound בלי לבדוק גבול ושוויון."
+      ],
+      "en": [
+        "Stopping at the first equality encountered.",
+        "Scanning backward through duplicates and losing logarithmic time.",
+        "Returning lower_bound without its range/equality checks."
+      ]
+    },
+    "interview_answer": {
+      "he": "אחפש בינארית את הגבול הראשון שבו הערך אינו קטן מהיעד. בשוויון עדיין אזיז את הקצה הימני לשמאל. כשהקצוות נפגשים, אחזיר את האינדקס רק אם הוא בתחום ושווה ליעד, אחרת ‎-1.",
+      "en": "Binary-search the first value not below target, continuing left on equality. At convergence return the index only when in range and equal; otherwise -1."
+    },
+    "source_ambiguities": {
+      "he": "המקור לא הגדיר היעדר הופעה, אינדוקס או סיבוכיות; הם הובהרו. קשורה ל־SW-004/example-first-greater-or-equal, אבל כלל ההחזרה בהיעדר ערך שונה. אין שאלה ידנית או שאלת אימות זהה.",
+      "en": "Source omits absence, index base and complexity; these are clarified. Related to SW-004/example-first-greater-or-equal, with a different absent result. No identical manual or verification record."
+    },
+    "verification": {
+      "he": "5,720 מקרים ממצים ו־1,000 דגימות מול סריקה עצמאית; חסם גישות והיעדר שינוי קלט נבדקו בפועל ב־Python.",
+      "en": "5,720 exhaustive cases and 1,000 seeded arrays versus independent scanning; actual Python access-bound and input-preservation checks."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך מחזירים גם את מספר ההופעות?",
+        "direction": "מצאו גם את הגבול הראשון שגדול ממש מהמטרה. הפרש שני הגבולות הוא מספר ההופעות, באותו חסם לוגריתמי.",
+        "status": "מוכן בחומר המשלים; אינו מחובר לתור המשך אינטראקטיבי."
+      },
+      "en": {
+        "question": "How would you also return the occurrence count?",
+        "direction": "Find the first value strictly greater than target as well. Subtract the two boundaries, retaining logarithmic time.",
+        "status": "Prepared as supplemental material; not wired to an interactive follow-up queue."
+      }
+    }
+  },
+  "PREP-138": {
+    "assumptions": {
+      "he": [
+        "C99 ומעלה, קלט unsigned int ומאגר עם קיבולת אמיתית, ללא הקצאה פנימית.",
+        "תוצאה קצרה ללא אפסים מובילים, אפס הוא \"0\", כולל NUL; כישלון אינו כותב."
+      ],
+      "en": [
+        "C99 or later, unsigned int input and truthful writable buffer capacity; no internal allocation.",
+        "Shortest text, no leading zeros, zero is \"0\", including NUL; failure writes nothing."
+      ]
+    },
+    "optimality": {
+      "he": "O(L) זמן, O(1) מילות עזר ופלט L+1 בתים. W תלוי בטיפוס; אין הנחת 32 ביט. כתיבת הפלט מחייבת Ω(L), בלי טענת מינימום הוראות.",
+      "en": "O(L) time, O(1) auxiliary words and L+1 output bytes. W depends on the type;32 bits is not assumed. Output writing costs Ω(L); no instruction minimum."
+    },
+    "edge_cases": {
+      "he": [
+        "0,1, חזקות שתיים, ערך מרבי בטיפוס, דוגמת 13.",
+        "NULL, קיבולת אפס או קצרה באחד, קיבולת מדויקת ובתים נוספים שלא משתנים."
+      ],
+      "en": [
+        "0,1, powers of two, the type maximum, example13.",
+        "NULL, zero/one-byte-short/exact capacity and unchanged extra bytes."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להחזיר int שהספרות העשרוניות שלו הן הביטים, עם גלישה אפשרית.",
+        "לשכוח NUL או לייצר מחרוזת ריקה עבור אפס.",
+        "לכתוב חלק מהתוצאה לפני בדיקת הקיבולת או להניח ש־int תמיד 32 ביט."
+      ],
+      "en": [
+        "Returning a decimal-digit int containing bits, with possible overflow.",
+        "Forgetting NUL or returning an empty string for zero.",
+        "Writing before the capacity check or assuming int is always32 bits."
+      ]
+    },
+    "interview_answer": {
+      "he": "אפיק מחרוזת: אספור ביטים על עותק של unsigned, אבדוק שיש מקום גם לסיום, ואז אמלא מהסוף עם הביט הנמוך והזזה ימינה. אפס מקבל תו אחד, וכישלון משאיר את המאגר ללא שינוי.",
+      "en": "Produce text: count digits on an unsigned copy, check room including NUL, then fill backward with the low bit and right shifts. Zero needs one digit; failure preserves the buffer."
+    },
+    "source_ambiguities": {
+      "he": "המקור לא הגדיר טיפוס, תוצאת הפונקציה או את משמעות ההמרה. נבחר במפורש ערך ללא סימן ופלט טקסט C. אין שאלה זהה בשלושת המאגרים; PREP-094 הופכת סדר ביטים ולא ממירה ייצוג לטקסט.",
+      "en": "Source omits type, output and meaning of conversion. Explicitly choose an unsigned value and C text. No identical record in the three banks; PREP-094 reverses bit positions rather than formatting text."
+    },
+    "verification": {
+      "he": "65,536 ערכים ועוד 733 מקרי גבול; ארבע קיבולות ו־NULL לכל ערך מול format. מודל Python הורץ; קוד C נשמר ולא קומפל.",
+      "en": "65,536 values plus733 boundary cases; four capacities and NULL per value against format. Python equivalent executed; C source saved and uncompiled."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך תתמכו בפלט ברוחב קבוע עם אפסים מובילים?",
+        "direction": "הוסיפו רוחב רצוי והגדירו חריגה אם הערך לא נכנס. ודאו קיבולת width+1, ומלאו את כל המיקומים עד ביט אפס.",
+        "status": "מוכן בחומר משלים בלבד."
+      },
+      "en": {
+        "question": "How would you support a fixed width with leading zeros?",
+        "direction": "Add the desired width and define overflow rejection. Require width+1 capacity and fill every position through bit zero.",
+        "status": "Prepared as supplemental material only."
+      }
+    }
+  },
+  "PREP-141": {
+    "assumptions": {
+      "he": [
+        "מספר סופי של צמתים נגישים, קישורי next תקפים ומבנה סטטי במהלך הבדיקה.",
+        "אין לשנות קישורים. השוואה לפי זהות, וראש ריק מותר."
+      ],
+      "en": [
+        "Finitely many reachable nodes, valid next links and a structure static during the check.",
+        "No link mutation; identity comparison; empty head allowed."
+      ]
+    },
+    "optimality": {
+      "he": "O(μ+λ)=O(N) זמן ו־O(1) מילות עזר; גם מציאת הכניסה נשארת באותו חסם. אין סריקה עם קבוצת צמתים בפתרון, ואין טענת זיכרון בביטים קבוע לכל גודל כתובת.",
+      "en": "O(μ+λ)=O(N) time and O(1) auxiliary words, including entry identification. No visited set in the solution; pointer bit width is not claimed constant for arbitrary address spaces."
+    },
+    "edge_cases": {
+      "he": [
+        "ראש ריק, צומת יחיד עם None או מעגל עצמי, שני צמתים.",
+        "הכניסה היא הראש או באמצע, מעגל קטן אחרי זנב ארוך, ערכים זהים בצמתים שונים.",
+        "מעגל בחלק שאינו נגיש מהראש אינו מעגל ברשימה הנבדקת."
+      ],
+      "en": [
+        "Empty, one node ending in None or self-loop, two nodes.",
+        "Entry at head/interior, short cycle after long prefix, equal payloads in distinct nodes.",
+        "A cycle unreachable from head is not part of the checked list."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לבדוק שוויון לפני תזוזה ולהכריז על כל רשימה כמעגלית.",
+        "לגשת ל־fast.next.next בלי לוודא קיום, או להשוות ערכים במקום צמתים.",
+        "להניח שמקום המפגש הוא הכניסה, או לשנות קישורים כדי לסמן ביקור."
+      ],
+      "en": [
+        "Treating equality before the first move as a cycle.",
+        "Dereferencing fast.next.next unsafely or comparing payloads instead of identities.",
+        "Assuming the meeting is entry or mutating links to mark visits."
+      ]
+    },
+    "interview_answer": {
+      "he": "אקדם איטי בצעד ומהיר בשניים עם בדיקות סוף. בלי מעגל המהיר יגיע ל־None; במעגל ההפרש היחסי הוא צעד מודולו אורכו, ולכן ייפגשו. לזיהוי הכניסה אחזיר אחד לראש ואקדם את שניהם יחד.",
+      "en": "Move slow once and fast twice with end checks. Without a cycle fast reaches None; inside a cycle their relative gain is one modulo its length, forcing a meeting. To find entry, reset one to head and advance both together."
+    },
+    "source_ambiguities": {
+      "he": "המקור לא קבע זיכרון, שינוי קלט או קלט ריק; הם הובהרו. VSW-007 היא שאלה זהה רעיונית אך פרטית ולא מפורסמת; נשמר קשר ללא שינוי מצבה. PREP-032 דנה בצומת משותף של שתי רשימות, בעיה אחרת.",
+      "en": "Source omits memory, mutation and empty behavior; these are clarified. VSW-007 is a conceptual duplicate but private/unpublished; linked without changing its state. PREP-032 finds a shared node of two lists, a different task."
+    },
+    "verification": {
+      "he": "50,069 צירופי גרפים וראש ועוד 2,144 מקרי שרשרת; אורקל קבוצת זהויות, היעדר שינוי קלט וחסם next עד5N+2 נבדקו ב־Python.",
+      "en": "50,069 graph/head configurations plus2,144 lasso cases; identity-set oracle, input preservation and next-access bound up to5N+2 checked in Python."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך מחשבים את אורך המעגל אחרי מפגש?",
+        "direction": "השאירו מצביע אחד במקום והקדימו שני עד שיחזור אליו, עם מונה צעדים. זהו λ, בזמן O(λ) ומקום קבוע.",
+        "status": "מוכן בחומר משלים; אינו מחובר לתור המשך."
+      },
+      "en": {
+        "question": "How would you obtain cycle length after meeting?",
+        "direction": "Keep one pointer fixed and advance the other until it returns, counting steps. The count is λ, in O(λ) time and constant space.",
+        "status": "Prepared as supplemental material; not wired to a follow-up queue."
+      }
+    }
+  },
+  "PREP-142": {
+    "assumptions": {
+      "he": [
+        "N≥1, סדר מלא, השוואת ערכי קלט היא היחידה הנספרת; קלט ריק מעלה ValueError.",
+        "כפילויות מותרות, הקלט לקריאה בלבד, אינדקסים והשוואות אורך אינם נכללים במניין השוואות האיברים."
+      ],
+      "en": [
+        "N≥1, total order, only input-value comparisons counted; empty input raises ValueError.",
+        "Duplicates allowed, read-only input; index/length tests excluded from the element-comparison count."
+      ]
+    },
+    "optimality": {
+      "he": "בדיוק ceil(3N/2)−2 השוואות, O(N) זמן ו־O(1) מילות עזר. אופטימליות במקרה הגרוע במודל השוואות מוכחת על ידי יריב עקבי; לא מינימום פיזי או מספר הוראות.",
+      "en": "Exactly ceil(3N/2)−2 comparisons, O(N) time and O(1) words. Worst-case comparison optimality follows from a consistent adversary, not a physical/instruction minimum."
+    },
+    "edge_cases": {
+      "he": [
+        "N=1,2, אורכים זוגיים ואי־זוגיים, כל הערכים שווים.",
+        "קיצונים בזוג הראשון/האחרון, סדר עולה/יורד, שליליים ושוויונות חוזרים.",
+        "ריק נכשל בלי ניסיון לקרוא איבר ראשון."
+      ],
+      "en": [
+        "N=1,2, even/odd lengths, all equal.",
+        "Extrema in first/last pairs, ascending/descending, negatives and repeated ties.",
+        "Empty fails without attempting the first element."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שתי סריקות נפרדות שדורשות 2N−2 השוואות.",
+        "לספור את ההשוואה בזוג הראשון פעמיים או לשכוח טיפול באורך אי־זוגי.",
+        "להציג דגימות כמוכיחות חסם תחתון, או לספור גם בדיקות לולאה כאילו היו השוואות איברים."
+      ],
+      "en": [
+        "Separate scans costing2N−2 comparisons.",
+        "Double-counting the first pair or omitting odd-length initialization.",
+        "Treating sampled tests as a lower-bound proof, or conflating loop checks with element comparisons."
+      ]
+    },
+    "interview_answer": {
+      "he": "אחלק לזוגות: השוואה אחת קובעת מי קטן ומי גדול, ואז כל אחד נבדק רק מול הקיצון המתאים. לאי־זוגי אתחיל מאיבר יחיד, ולזוגי מהזוג הראשון. מתקבל ceil(3N/2)−2; יריב יכול לאפשר חיסכון כפול רק בין שני איברים חדשים, ולכן אי אפשר לשפר את החסם במקרה הגרוע.",
+      "en": "Compare pairs internally, then only the smaller against min and the larger against max. Initialize one element for odd N or one pair for even N. This gives ceil(3N/2)−2; an adversary allows double eliminations only between two unseen values, proving the worst-case bound."
+    },
+    "source_ambiguities": {
+      "he": "הנוסחה הקצרה בצילום סובלת מערבוב כיווניות, ולכן המקור נשמר בלי לייחס לו קבוע סופי לא קריא. החוזה הערוך מצהיר בנפרד על החסם המדויק והוכחתו. אין שאלה זהה בשלושת המאגרים.",
+      "en": "The screenshot bound has bidirectional typography, so preserve it without attributing an unclear trailing constant. The edited contract separately states the precise bound and proof. No identical record in the three banks."
+    },
+    "verification": {
+      "he": "46,233 תמורות, 3,279 מערכים עם כפילויות, 300 דגימות, מניין השוואות בפועל וגרף תעודות; מינימקס עצמאי לעצים עד N=4. ההוכחה הכללית נפרדת מהבדיקות.",
+      "en": "46,233 permutations,3,279 duplicate arrays,300 seeded cases, actual comparison counts and certificate graphs; independent optimal decision trees through N=4. General proof is separate from tests."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "האם פחות גישות לזיכרון מובטחות מאותו חסם השוואות?",
+        "direction": "לא. יש להגדיר מודל גישות ומימוש שמירה באוגרים; אופטימליות במספר השוואות אינה מוכיחה אופטימליות במטמון או בהוראות.",
+        "status": "מוכן בחומר המשלים בלבד."
+      },
+      "en": {
+        "question": "Does this comparison bound guarantee fewer memory accesses?",
+        "direction": "No. Define a memory-access/register model separately. Comparison optimality does not establish cache or instruction optimality.",
+        "status": "Prepared as supplemental material only."
+      }
+    }
+  },
+  "PREP-143": {
+    "assumptions": {
+      "he": [
+        "נוזלים טהורים, נפחים מצטברים ללא אובדן, תגובה או שפיכה.",
+        "אותה כפית נפח בשני הכיוונים; בחישוב s בין אפס ל־A.",
+        "ערבוב אחיד נחוץ לנוסחת x המפורשת, ולא לשוויון הכמויות משימור.",
+        "קרבת צבע מוגדרת לצורך הניתוח כשיעור הנוזל הזר בלבד."
+      ],
+      "en": [
+        "Pure initial liquids; additive volumes without loss, reaction or spillage.",
+        "The same spoon volume in both directions; the calculation uses 0 <= s <= A.",
+        "Homogeneous mixing is needed for the explicit x formula, not for conservation equality.",
+        "Closeness is analyzed as foreign-liquid fraction, not an optical color metric."
+      ]
+    },
+    "optimality": {
+      "he": "הוכחת שימור ישירה דורשת מספר קבוע של יחסים. חישוב הנפחים משתמש במספר קבוע של פעולות אריתמטיות; אין טענת עלות ביטים קבועה למספרים רציונליים שרוחבם גדל.",
+      "en": "The direct conservation argument uses a constant number of relations. The volume calculation uses a constant number of arithmetic operations; arbitrary-precision rational bit costs are not claimed constant."
+    },
+    "verification": {
+      "he": "עברו 1,080 מקרים מדויקים של העברה וערבוב, כולל 90 מקרים של נפחים שווים, ו־4,447 הרכבים אפשריים של כפית חוזרת בלי הנחת ערבוב. חמש דחיות קלט. חשבון רציונלי בלבד; לא נבדק מודל אופטי.",
+      "en": "Passed 1,080 exact mixed-transfer cases including 90 equal-volume cases, plus 4,447 valid arbitrary returned-spoon compositions without homogeneous mixing. Five invalid cases rejected. Rational bookkeeping only; no optical model tested."
+    },
+    "edge_cases": {
+      "he": [
+        "כפית בנפח אפס משאירה את שני הנוזלים טהורים.",
+        "בלי ערבוב ההרכב המדויק עשוי להשתנות, אך כמויות הנוזל הזר עדיין שוות.",
+        "בנפחים התחלתיים שונים, הכוס הגדולה יותר מקבלת שיעור זר קטן יותר אם x חיובי.",
+        "אם הכפית החוזרת שונה בנפחה, הוכחת שוויון הנפחים בכוסות אינה תקפה."
+      ],
+      "en": [
+        "A zero-volume spoon leaves both liquids pure.",
+        "Without mixing the exact returned composition can vary, but foreign volumes remain equal.",
+        "With unequal initial volumes and positive x, the larger cup has the smaller foreign fraction.",
+        "A different return-spoon volume breaks the equal-final-volume argument."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לטעון שהכפית השנייה כחולה בלבד אף שיש בה גם אדום לאחר ערבוב.",
+        "להסיק שוויון באחוזים בלי לבדוק את נפחי הכוסות.",
+        "לזהות ריכוז עם תפיסת צבע בלי מודל אופטי.",
+        "להציג ערבוב כתנאי הכרחי לשימור הכמויות."
+      ],
+      "en": [
+        "Treating the mixed second spoon as pure blue.",
+        "Inferring equal percentages without checking cup volumes.",
+        "Equating concentration with perceived color without an optical model.",
+        "Treating homogeneous mixing as necessary for volume-conservation equality."
+      ]
+    },
+    "interview_answer": {
+      "he": "אותו נפח יצא וחזר, לכן האדום שחסר בכוס האדומה הוחלף בדיוק באותו נפח כחול. כמויות הנוזל הזר שוות. אם נפחי ההתחלה שווים גם האחוזים שווים; אחרת הכוס הגדולה פחות מדוללת. צבע נתפס דורש נתונים נוספים.",
+      "en": "Equal volumes leave and return, so missing red in the red cup is replaced by exactly the same blue volume. Foreign amounts are equal. Equal starting volumes also give equal fractions; otherwise the larger cup is less diluted. Perceived color needs additional data."
+    },
+    "source_ambiguities": {
+      "he": [
+        "הצילום אינו מציין נפחים התחלתיים, ערבוב, גודל כפית או מדד קרבת צבע.",
+        "שיוך Applied Materials מדווח בצילום ולא אומת עצמאית."
+      ],
+      "en": [
+        "Initial volumes, mixing, spoon size and a color-distance metric are absent.",
+        "Applied Materials attribution is source-reported, not independently verified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם מחזירים נפח t במקום s?",
+          "answer_direction": "סמנו r כאדום שחזר. אדום זר בכחולה הוא s−r וכחול זר באדומה t−r, ולכן הפרש הכמויות הוא s−t. גם הנפחים הסופיים משתנים.",
+          "principle": "בודקים איזה אינווריאנט תלוי בשוויון הפעולות."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes if the returned volume is t instead of s?",
+          "answer_direction": "Let r be the returned red. Foreign red in blue is s−r and foreign blue in red is t−r; their difference is s−t. Final cup volumes also change.",
+          "principle": "Identify which invariant depends on equal actions."
+        }
+      ]
+    }
+  },
+  "PREP-144": {
+    "assumptions": {
+      "he": [
+        "התחום הרצוי הוא פס בסיס 0..10 kHz; אין הנחה שזהו כל ספקטרום הרעש.",
+        "הטיעון התיאורטי משתמש בדגימה אחידה אידאלית ובאות מוגבל פס לאחר סינון.",
+        "אין במקור דרישות להנחתה, פאזה, קצב נתונים, תקציב או רזולוציית הממיר.",
+        "הדוגמה 48 ksample/s ותחום מעבר 10..24 kHz הם בחירת המחשה מפורשת."
+      ],
+      "en": [
+        "The useful band is baseband 0..10 kHz, not necessarily the whole noise spectrum.",
+        "The theoretical argument assumes uniform ideal sampling and a band-limited signal after filtering.",
+        "The source gives no attenuation, phase, data-rate, cost or converter-resolution requirements.",
+        "The 48 ksample/s rate and 10..24 kHz transition are explicit illustrative choices."
+      ]
+    },
+    "optimality": {
+      "he": "הגבול 2B הוא גבול דגימה תיאורטי; כאן משתמשים באי־שוויון חד כדי לא להבטיח שחזור של רכיב קצה שרירותי. אין טענת קצב מעשי או סדר מסנן מזעריים. עבור פס שימושי בלבד אפשר לעצב דרישות סינון שונות סביב תחומי הקיפול; המימוש לדוגמה מגן על כל תחום Nyquist הראשון.",
+      "en": "The 2B boundary is theoretical; a strict inequality avoids promising recovery of an arbitrary boundary component. No minimum practical rate or filter order is claimed. Protecting only a useful subband permits other alias-band filter specifications; the example protects the whole first Nyquist zone."
+    },
+    "verification": {
+      "he": "עברו 8,005 מקרי קיפול מול חיפוש כפולה קרובה עצמאי ו־136,085 השוואות דגימות קוסינוס. נבדקו 32 דגימות אפס בדוגמת קצה Nyquist, 128 דגימות זהות של 38 ו־10 kHz בקצב 48, וארבעה רכיבי מסנן אידאלי. ארבע דחיות קלט. ללא חומרה, תכנון מסנן אמיתי, רעש אקראי או מודל כימות.",
+      "en": "Passed 8,005 frequency folds against an independent nearest-multiple search and 136,085 cosine-sample comparisons. Checked 32 zero sine samples at the Nyquist boundary, 128 identical samples of 38/10 kHz at 48 ksample/s, and four ideal-filter components. Four invalid cases rejected. No hardware, practical filter design, random-noise process or quantization model."
+    },
+    "edge_cases": {
+      "he": [
+        "אות DC אינו מכתיב לבדו קצב חיובי מסוים; כאן הנתון הוא רוחב פס עד 10 kHz.",
+        "טון בדיוק בחצי קצב הדגימה עשוי להיעלם בפאזה מסוימת.",
+        "רעש בתוך הפס הרצוי אינו מוסר בלי מחיר על ידי מסנן מעביר נמוכים.",
+        "באות שכבר מוגבל באופן מספק על ידי החיישן ייתכן שאין צורך ברכיב מסנן נפרד; עדיין מאמתים את ההנחתה.",
+        "אות פס מעבר בתדר נשא גבוה דורש ניתוח אחר; אין להסיק אותו משאלת פס הבסיס."
+      ],
+      "en": [
+        "DC alone does not determine a particular positive sample rate; this question supplies a band up to 10 kHz.",
+        "A tone exactly at half the sample rate can vanish at a particular phase.",
+        "In-band noise cannot be removed for free by the same low-pass filter.",
+        "A sufficiently band-limited sensor/front end may not need a separate filter component; its attenuation still needs verification.",
+        "A high-carrier bandpass signal requires a different analysis, not implied by this baseband question."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לענות 20 kHz בדיוק בלי הנחות על הקצה או מסנן.",
+        "להתייחס לתחום העניין כאילו הוא כל רוחב ספקטרום הרעש.",
+        "להציב את מסנן מניעת הקיפול רק אחרי ה־ADC.",
+        "לחשב סדר מסנן או מספר ביטי ADC בלי דרישת הנחתה ודיוק.",
+        "לטעון שדגימת יתר לבדה מבטלת כל רעש או קיפול."
+      ],
+      "en": [
+        "Answering exactly 20 kHz without boundary or filter assumptions.",
+        "Treating the useful band as the complete noise bandwidth.",
+        "Putting the anti-alias filter only after the ADC.",
+        "Deriving filter order or ADC bit depth without attenuation and accuracy requirements.",
+        "Claiming oversampling alone eliminates all noise or aliasing."
+      ]
+    },
+    "interview_answer": {
+      "he": "לאות פס בסיס מוגבל עד 10 kHz אבחר קצב גדול מ־20 אלף דגימות לשנייה, עם מרווח למסנן מעשי. רעש מחוץ לפס עלול להתקפל פנימה, לכן אאמת או אוסיף מסנן אנלוגי נגד קיפול לפני ה־ADC. למשל 48 אלף נותן חצי קצב 24 kHz ותחום מעבר אחרי 10; ההנחתה והסדר תלויים בדרישות.",
+      "en": "For a baseband signal limited to 10 kHz I would choose more than 20 thousand samples/s, allowing room for a practical filter. Out-of-band noise can alias into the useful band, so verify or add analog anti-alias filtering before the ADC. For example, 48 thousand gives a 24 kHz Nyquist boundary and transition room after 10; attenuation and order depend on requirements."
+    },
+    "source_ambiguities": {
+      "he": [
+        "אופי האקראיות, תחום רעש מלא, הנחתה ודיוק לא נמסרו; לכן אין קצב מעשי יחיד או מסנן ייחודי.",
+        "המקור אינו אומר שהאות מוגבל פס בדיוק ב־fc.",
+        "שיוך Elta מדווח בצילום ולא אומת עצמאית."
+      ],
+      "en": [
+        "Random-process properties, full noise bandwidth, attenuation and accuracy are absent; no unique practical sample rate or filter follows.",
+        "The source does not state that the input is sharply band-limited at fc.",
+        "Elta attribution is source-reported, not independently verified."
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "Analog Devices — דגימה מוגבלת פס וקיפול",
+          "url": "https://www.analog.com/en/resources/technical-articles/basics-of-bandlimited-sampling-and-aliasing.html"
+        },
+        {
+          "title": "NI — סינון אנלוגי נגד קיפול לפני הדגימה",
+          "url": "https://www.ni.com/en/shop/data-acquisition/measurement-fundamentals/analog-fundamentals/anti-aliasing-filters-and-their-usage-explained.html"
+        },
+        {
+          "title": "Analog Devices — תחומי Nyquist ומרווח למסנן",
+          "url": "https://www.analog.com/en/resources/technical-articles/understanding-ac-behaviors-of-high-speed-adcs.html"
+        }
+      ],
+      "en": [
+        {
+          "title": "Analog Devices — Band-limited sampling and aliasing",
+          "url": "https://www.analog.com/en/resources/technical-articles/basics-of-bandlimited-sampling-and-aliasing.html"
+        },
+        {
+          "title": "NI — Analog anti-alias filtering before sampling",
+          "url": "https://www.ni.com/en/shop/data-acquisition/measurement-fundamentals/analog-fundamentals/anti-aliasing-filters-and-their-usage-explained.html"
+        },
+        {
+          "title": "Analog Devices — Nyquist zones and filter transition room",
+          "url": "https://www.analog.com/en/resources/technical-articles/understanding-ac-behaviors-of-high-speed-adcs.html"
+        }
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה יקרה אם נדגום תחילה ב־96 אלף ואז נוריד לקצב 24 אלף?",
+          "answer_direction": "דרוש גם סינון דיגיטלי לפני דילול הדגימות כדי למנוע קיפול נוסף. הסינון האנלוגי לפני הממיר מגן על שלב הדגימה הראשון; הוא אינו מחליף את מסנן הדילול.",
+          "principle": "כל פעולת הפחתת קצב יוצרת דרישת מניעת קיפול חדשה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if we sample at 96 thousand, then decimate to 24 thousand?",
+          "answer_direction": "Digital low-pass filtering is also needed before decimation to prevent a second aliasing event. Analog filtering protects the first sampling stage; it does not replace the decimation filter.",
+          "principle": "Every rate reduction introduces its own alias-prevention requirement."
+        }
+      ]
+    }
+  },
+  "PREP-146": {
+    "assumptions": {
+      "he": [
+        "אותו מרחק חיובי בכל כיוון ומהירויות קבועות חיוביות וסופיות.",
+        "ממוצע סקלרי של אורך דרך חלקי זמן, לא מהירות וקטורית ממוצעת.",
+        "אין עצירות; הוספתן רק מקטינה את הממוצע עבור אותן מהירויות."
+      ],
+      "en": [
+        "Equal positive leg distances and constant finite positive speeds.",
+        "Scalar average speed is path length over time, not vector average velocity.",
+        "No stops; adding stops only reduces average speed at fixed leg speeds."
+      ]
+    },
+    "optimality": {
+      "he": "הוכחת אי־אפשרות סופית: זמן ההלוך צורך את כל תקציב הזמן. הממוצע חסום ממש על ידי 2V1 לכל מהירות חזרה סופית; זהו חסם עליון שאפשר להתקרב אליו בלי להשיגו. אין טענת מהירות נסיעה מעשית.",
+      "en": "Finite-speed impossibility proof: the outbound leg consumes the entire time budget. Average speed is strictly below 2V1 for every finite return speed. This is an approachable supremum, not an attained maximum; no practical travel-speed claim is made."
+    },
+    "verification": {
+      "he": "עברו 4,800 נסיעות בחשבון רציונלי מול מאזן זמן עצמאי, 5,400 יעדי יחס בני השגה, וחמש דוגמאות המתקרבות לגבול. שש דחיות קלט. לא בוצע ניסוי נסיעה או שימוש במהירות אינסופית.",
+      "en": "Passed 4,800 rational trip cases against an independent elapsed-time relation, 5,400 attainable target ratios and five limit-sequence examples. Six invalid cases rejected. No travel experiment or infinite-speed execution."
+    },
+    "edge_cases": {
+      "he": [
+        "V2=V1 נותנת אותו ממוצע V1.",
+        "מהירות חזרה קטנה מאוד מורידה את הממוצע לכיוון אפס.",
+        "d=0 אינו אותו חוזה; ממוצע הדרך הזה אינו מוגדר כנוסחת 0/0.",
+        "במסלול סגור המהירות הווקטורית הממוצעת היא אפס, אך זו אינה השאלה על אורך הדרך."
+      ],
+      "en": [
+        "V2=V1 gives average V1.",
+        "Very small return speed drives the average toward zero.",
+        "d=0 is outside the contract; path-length average would have the indeterminate form 0/0.",
+        "A closed trip has zero vector average velocity, but the question asks scalar path-length average speed."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשתמש בממוצע חשבוני כשמרחקי הקטעים שווים.",
+        "לתת V2=3V1, שמייצרת ממוצע 1.5V1 בלבד.",
+        "לומר שאינסוף הוא מהירות אפשרית במקום לתאר גבול.",
+        "לבלבל בין אורך הדרך לבין העתק נטו."
+      ],
+      "en": [
+        "Using the arithmetic mean for equal-distance legs.",
+        "Giving V2=3V1, which produces only average 1.5V1.",
+        "Treating infinity as an attainable speed rather than a limit.",
+        "Confusing total path length with net displacement."
+      ]
+    },
+    "interview_answer": {
+      "he": "אין V2 חיובית וסופית. יעד של 2V1 על אורך כפול מתיר זמן כולל d/V1, וזה כבר זמן ההלוך. לחזרה נותר אפס זמן. לפי 2V1V2/(V1+V2), הממוצע תמיד קטן מ־2V1 ורק מתקרב אליו כש־V2 גדלה ללא גבול.",
+      "en": "No finite positive V2 works. Target 2V1 over twice the distance permits total time d/V1, already consumed outbound, leaving zero return time. The formula 2V1V2/(V1+V2) is always below 2V1 and only approaches it as V2 grows without bound."
+    },
+    "source_ambiguities": {
+      "he": [
+        "הצילום אינו מציין מרחקים וזמני עצירה; הוגדר מסלול חזרה זהה ללא עצירות.",
+        "הביטוי מהירות ממוצעת פורש כגודל סקלרי של אורך דרך חלקי זמן.",
+        "שיוך NVIDIA מדווח בצילום ולא אומת עצמאית."
+      ],
+      "en": [
+        "Distances and stops are not explicit; an identical return route without stops is specified editorially.",
+        "Average speed is interpreted as scalar path length divided by time.",
+        "NVIDIA attribution is source-reported, not independently verified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם נוסעים זמן שווה בכל מהירות במקום מרחק שווה?",
+          "answer_direction": "אז V_avg=(V1+V2)/2, ולכן V2=3V1 אכן נותנת ממוצע 2V1. השוו את משקלי הזמן, לא רק את רשימת המהירויות.",
+          "principle": "נוסחת הממוצע תלויה במשקלים שהבעיה קובעת."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if the two speeds are used for equal times instead of equal distances?",
+          "answer_direction": "Then V_avg=(V1+V2)/2, so V2=3V1 does give average 2V1. Compare time weights, not merely the list of speeds.",
+          "principle": "An averaging formula depends on the specified weights."
+        }
+      ]
+    }
+  }
+}
