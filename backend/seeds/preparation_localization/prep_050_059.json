@@ -250,14 +250,20 @@
         "אדם יחיד עובר בכל פעם, כולל מצב חפיפה 11 בכל מעבר מלא; אפשר להיעצר ולחזור אחורה.",
         "כל שינוי ביניים נצפה לאחר סנכרון וסינון ריצוד; הוספת מסנכרנים לבדה אינה הוכחת שימור סדר.",
         "איפוס רק עם פתח פנוי וספירה ידועה. בחומרה המצורפת הספירה ההתחלתית אפס.",
-        "מונה חסום ללא גלישה; שגיאה או חריגה מהגבול מורידות דגל תקפות עד איפוס מפוקח."
+        "מונה חסום ללא גלישה; שגיאה או חריגה מהגבול מורידות דגל תקפות עד איפוס מפוקח.",
+        "גלאי נוכחות רגיל אינו מחזיר כיוון; ספירה התחלתית ידועה.",
+        "פתרון שני הגלאים ממשיך את הנחות הגאומטריה והדגימה המקוריות.",
+        "גבול העדכון הוא השלמת מעבר, לא מיקום רציף."
       ],
       "en": [
         "A is outside and B inside; A is the first bit of the pair.",
         "One person at a time, with 11 overlap on every full crossing; pausing and reversal are allowed.",
         "Every intermediate transition is observed after synchronization and debounce; ordinary synchronizers alone are not an event-order proof.",
         "Reset only with a clear doorway and known occupancy; supplied HDL assumes initial zero.",
-        "Bounded nonwrapping count; a sequence or bound fault invalidates it until supervised reset."
+        "Bounded nonwrapping count; a sequence or bound fault invalidates it until supervised reset.",
+        "An ordinary presence detector does not report direction; initial count is known.",
+        "Two-sensor construction retains original geometry/sampling assumptions.",
+        "Update boundary is passage completion, not continuous position."
       ]
     },
     "optimality": {
@@ -265,18 +271,20 @@
         "criterion": "נכונות זיהוי מעבר מלא תחת הנחות הגאומטריה והדגימה.",
         "result": "שבעה מצבי התקדמות ומצב התאוששות, עם מונה ותקפות.",
         "proof": "מסלולי התקדמות ונסיגה שומרים את צד ההתחלה; רק חזרה ל־00 מהשלב האחרון משלימה מעבר.",
-        "scope": "לא נטען למינימום מצבים, שערים, זמן השהיה או משאבי חומרה; נכונות במודל אינה הבטחת מוצר פיזי."
+        "scope": "לא נטען למינימום מצבים, שערים, זמן השהיה או משאבי חומרה; נכונות במודל אינה הבטחת מוצר פיזי.",
+        "variant_053_single_sensor_70": "גלאי יחיד לא מספיק תחת מודל תצפיות זהות; שניים הם בנייה אפשרית תחת ההנחות, לא הוכחת מינימום לכל סוג חיישן חכם."
       },
       "en": {
         "criterion": "Correct recognition of complete crossings under the stated sensing model.",
         "result": "Seven progress states plus one recovery state, with occupancy and validity.",
         "proof": "Advance/retreat paths retain the starting side; only final-stage return to 00 completes a crossing.",
-        "scope": "No claim of minimum states, gates, delay or physical resources; model correctness is not a physical product guarantee."
+        "scope": "No claim of minimum states, gates, delay or physical resources; model correctness is not a physical product guarantee.",
+        "variant_053_single_sensor_70": "One sensor is insufficient in the stated observation model; two are a sufficient construction under its assumptions, not a minimum over all smart sensor technologies."
       }
     },
     "verification": {
-      "he": "עברו 88,572 דגימות באורקל תנועה גאומטרי עצמאי לעומק 10, כל 32 צירופי מצב וקלט ובדיקות נסיגה, השהיה, דילוג, התאוששות, תקפות דביקה, גלישה ותת־גלישה. זו בדיקת מודל פייתון; לא בוצעו קומפילציה או סימולציית חומרה, ניסוי בחיישנים או ניתוח תזמונים ומעבר תחומי שעון.",
-      "en": "Passed 88,572 samples in an independent geometric movement oracle to depth 10, all 32 state/input pairs, and retreat/pause/skip/recovery/sticky-validity/overflow/underflow tests. This verifies a Python model, not HDL compilation/simulation, sensors, timing or CDC."
+      "he": "עברו 88,572 דגימות באורקל תנועה גאומטרי עצמאי לעומק 10, כל 32 צירופי מצב וקלט ובדיקות נסיגה, השהיה, דילוג, התאוששות, תקפות דביקה, גלישה ותת־גלישה. זו בדיקת מודל פייתון; לא בוצעו קומפילציה או סימולציית חומרה, ניסוי בחיישנים או ניתוח תזמונים ומעבר תחומי שעון.\n\nשני עולמות זהים לגלאי יחיד, שני מעברים מלאים ונסיגה מול המודל הקיים.",
+      "en": "Passed 88,572 samples in an independent geometric movement oracle to depth 10, all 32 state/input pairs, and retreat/pause/skip/recovery/sticky-validity/overflow/underflow tests. This verifies a Python model, not HDL compilation/simulation, sensors, timing or CDC.\n\nTwo indistinguishable one-sensor worlds, two full traversals and one retreat against the unchanged model."
     },
     "edge_cases": {
       "he": [
@@ -285,7 +293,10 @@
         "10 אל 01 הוא דילוג חשוד; אין להמציא ביניהם את 11.",
         "מעבר שגוי מוריד תקפות; חזרה לפתח פנוי אינה מתקנת את המספר שכבר אינו ידוע.",
         "יציאה מאפס וכניסה בערך המרבי אינן עוטפות את המונה.",
-        "אדם נוסף בפתח או אזורי חישה ללא חפיפה נמצאים מחוץ להנחות."
+        "אדם נוסף בפתח או אזורי חישה ללא חפיפה נמצאים מחוץ להנחות.",
+        "אדם יחיד נעצר או חוזר באמצע.",
+        "אות גלאי יחיד זהה לשני כיוונים.",
+        "אין משמעות ״מדויק בכל רגע״ ללא גבול מוגדר."
       ],
       "en": [
         "Repeated pauses at any stage do not count extra people.",
@@ -293,7 +304,10 @@
         "10 to 01 is a suspicious skip; do not invent an observed 11.",
         "A sequence fault invalidates occupancy; a clear doorway does not repair an unknown count.",
         "Exit at zero and entry at maximum never wrap the counter.",
-        "Multiple people or non-overlapping regions are outside the assumptions."
+        "Multiple people or non-overlapping regions are outside the assumptions.",
+        "A single person pauses or retreats.",
+        "Identical single-sensor observations for opposite directions.",
+        "“Exact every instant” needs a defined boundary."
       ]
     },
     "common_mistakes": {
@@ -303,7 +317,10 @@
         "לספור אדם שסב לאחור כאילו השלים כניסה או יציאה.",
         "להניח ששני גלאים בכל מיקום מבטיחים כיוון, גם ללא חפיפה.",
         "להחזיר תקפות אוטומטית אחרי איבוד מידע.",
-        "להציג מודל פייתון כאילו עבר סימולציית חומרה."
+        "להציג מודל פייתון כאילו עבר סימולציית חומרה.",
+        "הנחה שהגלאי יודע כיוון בלי שנאמר כך.",
+        "ספירה על הפעלה ראשונה גם כשיש נסיגה.",
+        "הצגת count_valid שגוי כמספר מדויק."
       ],
       "en": [
         "Counting as soon as the first sensor activates.",
@@ -311,23 +328,34 @@
         "Counting a turnaround as a completed entry or exit.",
         "Assuming any two sensor positions guarantee direction even without overlap.",
         "Automatically restoring validity after losing information.",
-        "Presenting Python checks as HDL simulation."
+        "Presenting Python checks as HDL simulation.",
+        "Assuming a detector secretly reports direction.",
+        "Counting first activation despite possible retreat.",
+        "Presenting invalidcount_valid output as exact."
       ]
     },
     "interview_answer": {
-      "he": "אציב את A בחוץ ו־B בפנים עם חפיפה. אשמור מסלול כניסה 00,10,11,01,00 ומסלול יציאה הפוך, ואאפשר נסיגה והשהיה. רק השלב האחרון שחוזר ל־00 יוצר שינוי יחיד במונה. דילוג מפנה להתאוששות ומוריד תקפות עד כיול מחדש; המונה לא גולש ולא יורד מתחת לאפס. הנחות אדם יחיד, דגימה מלאה וסנכרון הן חלק מהמפרט.",
-      "en": "Place A outside and B inside with overlap. Track entry 00,10,11,01,00 and reverse exit, allowing pauses and retracing. Only final-stage return to 00 updates occupancy once. A skipped transition enters recovery and invalidates the count until recalibration; never overflow or go below zero. One person, complete sampling and synchronization are explicit assumptions."
+      "he": "אציב את A בחוץ ו־B בפנים עם חפיפה. אשמור מסלול כניסה 00,10,11,01,00 ומסלול יציאה הפוך, ואאפשר נסיגה והשהיה. רק השלב האחרון שחוזר ל־00 יוצר שינוי יחיד במונה. דילוג מפנה להתאוששות ומוריד תקפות עד כיול מחדש; המונה לא גולש ולא יורד מתחת לאפס. הנחות אדם יחיד, דגימה מלאה וסנכרון הן חלק מהמפרט.\n\nגלאי יחיד יכול לראות אותו רצף בכניסה וביציאה. אוסיף גלאי מסודר שני ואעקוב אחרי מעבר מלא עם אפשרות נסיגה. אגדיר במפורש מתי האדם נחשב בפנים ואשמור תקפות ספירה.",
+      "en": "Place A outside and B inside with overlap. Track entry 00,10,11,01,00 and reverse exit, allowing pauses and retracing. Only final-stage return to 00 updates occupancy once. A skipped transition enters recovery and invalidates the count until recalibration; never overflow or go below zero. One person, complete sampling and synchronization are explicit assumptions.\n\nOne detector can see the same entry/exit trace. Add an ordered second sensor and track a full passage including retreat. Explicitly define when a person counts as inside and retain count validity."
     },
     "source_ambiguities": {
       "he": {
         "sensor_order": "המקור אינו מגדיר סדר חד־משמעי; בעריכה A בחוץ ו־B בפנים.",
         "overlap": "נוספה חובת חפיפה. בלעדיה קריאות יכולות להיות בלתי ניתנות להבחנה.",
-        "faults": "המקור אינו קובע טיפול בנסיגה, איפוס, דילוגים וגבולות; המדיניות כאן מפורשת ומוצעת."
+        "faults": "המקור אינו קובע טיפול בנסיגה, איפוס, דילוגים וגבולות; המדיניות כאן מפורשת ומוצעת.",
+        "variant_053_single_sensor_70": [
+          "סוג הגלאי, גבול הספירה וזמן התגובה חסרים במקור החדש; הם לא יכולות סמויות של החומרה.",
+          "Rafael מדווחת בצילום בלבד."
+        ]
       },
       "en": {
         "sensor_order": "The source does not fix an unambiguous order; the edited model sets A outside and B inside.",
         "overlap": "Required overlap was added explicitly; without it observations can be ambiguous.",
-        "faults": "Retreat/reset/skip/bounds behavior is unspecified in the source; this proposed policy is explicit."
+        "faults": "Retreat/reset/skip/bounds behavior is unspecified in the source; this proposed policy is explicit.",
+        "variant_053_single_sensor_70": [
+          "Detector type, counting boundary and response latency are unspecified, not hidden hardware capabilities.",
+          "Rafael is source-reported only."
+        ]
       }
     },
     "transition_tables": {
@@ -338,12 +366,50 @@
       "he": {
         "question": "מה קורה אם הגלאים רחוקים ואין ביניהם חפיפה, או אם צריך לספור כמה אנשים במקביל?",
         "direction": "הציגו עקבות זהות שנובעות מתנועות שונות, והסבירו שלא ניתן להבטיח פתרון מאותו מידע בלבד. נדרשים חיישנים נוספים, שינוי גאומטריה, מעקב זהות או אילוץ תנועה מתאים. הגבלת זמן מעבר היא הנחה חדשה ואינה פותרת כל עצירה ונסיגה.",
-        "status": "המשך מוכן בתוכן; אינו מחובר לתור ההמשך החי."
+        "status": "המשך מוכן בתוכן; אינו מחובר לתור ההמשך החי.",
+        "variant_053_single_sensor_70": [
+          {
+            "question": "האם גלאי יחיד חכם שמחזיר כיוון משנה את התשובה?",
+            "answer_direction": "כן: הוא מספק מידע שלא היה בתצפית הבינארית. צריך לבדוק את אמינות הכיוון והגדרת אירוע, ולא להסיק שהוכחת אי־האפשרות חלה על כל מכשיר בשם גלאי.",
+            "principle": "יכולת חישה מגדירה את גבולות האלגוריתם."
+          }
+        ]
       },
       "en": {
         "question": "What if the sensor regions do not overlap or several people pass at once?",
         "direction": "Construct identical traces from different motions to show the information is insufficient. Add sensing, change geometry, track identities or impose a suitable movement constraint. A timeout is a new assumption and cannot resolve arbitrary pauses and reversals.",
-        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue.",
+        "variant_053_single_sensor_70": [
+          {
+            "question": "Does one smart directional sensor change the answer?",
+            "answer_direction": "Yes, it exposes information absent from binary presence. Verify direction/event reliability rather than applying the impossibility result to every device called a sensor.",
+            "principle": "Observations define algorithmic limits."
+          }
+        ]
+      }
+    },
+    "prompt_variants": {
+      "he": {
+        "053_single_sensor_70": {
+          "prompt": "### הרחבה: כמה גלאים צריך ומה פירוש ״בכל רגע״?\nאולם מאפשר מעבר אדם אחד בכל פעם. מותר להשתמש בגלאי אחד או יותר שמזהים מעבר. תכננו ספירת אנשים ודונו בבעיות אפשריות. הבהרה: גלאי חד־כיווני אינו נתון; נניח שכל גלאי רגיל מודיע נוכחות באזורו ואינו מזהה כיוון בעצמו. הראו מדוע גלאי יחיד אינו מספיק להבחין בין כניסה ליציאה. השימוש בשני גלאים ממוקמים, חופפים ומדוגמים כפי שהוגדר בחלק המקורי הוא פתרון מוצע. הגדירו גבול ספירה: המספר משתנה רק בהשלמת מעבר מלא; אם צריך לדעת מיקום רציף של אדם שנמצא חלקית בפתח, יש לקבוע קו גבול ומשמעות נפרדת. אין להבטיח זאת מחיישני נוכחות בינאריים בלבד.",
+          "hints": [
+            "האם אדם שנכנס ואדם שיוצא יכולים להפעיל אותו גלאי יחיד באותו רצף 0,1,0?",
+            "שני גלאים מסודרים נותנים סדר הפעלה שונה לשני הכיוונים, אך אדם יכול לעצור או לחזור לאחור.",
+            "השתמשו ב־FSM המקורית שסופרת רק 00→10→11→01→00 או המסלול ההפוך. לא מספיק לספור כל קצה, והשאלה ״בכל רגע״ דורשת גבול ספירה מוגדר."
+          ],
+          "integration_status": "רמזי ההרחבה בחומר המשלים בלבד; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "053_single_sensor_70": {
+          "prompt": "### Extension: how many sensors, and what does “at every instant” mean?\nOnly one person traverses a hall entrance at a time. One or more passage detectors may be used; design occupancy counting and discuss failures. Clarification:no directional detector is supplied. Model each ordinary detector as presence in a sensing region without direction. Show why one detector cannot distinguish entry from exit. The original two ordered, overlapping, sampled sensors are one proposed solution. Define a counting boundary: update only on a completed full passage. If continuous location of a partially crossing person is required, define a physical boundary and semantics separately; binary presence observations alone do not promise that.",
+          "hints": [
+            "Can one entry and one exit create the same0,1,0 trace at a single nondirectional detector?",
+            "Two ordered detectors reveal different activation order, but a person may pause or retreat.",
+            "Use the original full-passageFSM paths, not every edge. The phrase “at every instant” needs an explicit counting boundary."
+          ],
+          "integration_status": "Variant hints are supplemental only; the original interactive hint queue is retained."
+        }
       }
     }
   },

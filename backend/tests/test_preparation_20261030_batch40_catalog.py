@@ -6,6 +6,7 @@ pre-intake technical content; new material stays proposed and explicitly gated.
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 import uuid
@@ -29,6 +30,11 @@ SEEDS = ROOT / "backend/seeds"
 NEW_IDS = {f"PREP-{number:03d}" for number in range(148, 160)}
 SOURCE_MAP = {1: 'PREP-152', 2: 'PREP-112', 3: 'PREP-041', 4: 'PREP-158', 5: 'PREP-120', 6: 'PREP-155', 7: 'PREP-156', 8: 'PREP-155', 9: 'PREP-148', 10: 'PREP-149', 11: 'PREP-059', 12: 'PREP-159', 13: 'PREP-153', 14: 'PREP-150', 15: 'PREP-009', 16: 'PREP-094', 17: 'PREP-151', 18: 'PREP-157', 19: 'PREP-154', 20: 'PREP-096'}
 SOURCE_ONLY_TECHNICAL_SHA256 = {'PREP-041': '00af53562df488ec068c9d5600036b1c4ff3fe9bc6f7d9279949ba9dc7f79c5b', 'PREP-112': '679a4597d2ccb61e12888c7e7d4383c73108d14a26992f002af3489cd4d64a58', 'PREP-120': '46a1c3301169a4bdf41c43ef3a8f066967b1d00f27a8190b39287be4acd88a13'}
+
+
+# A later intake appends a one-pass variant. Rebuild the earlier snapshot
+# before checking its original unchanged SHA256; hints/titles remain exact.
+LATER_PREP041_PREFIX = {'version': 3, 'he': {'prompt': 1724, 'reference_solution': 12557}, 'en': {'prompt': 2129, 'reference_solution': 14630}}
 
 
 @pytest.fixture
@@ -65,14 +71,20 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
     questions = {item["id"]: item for item in archive()["questions"]}
     for ident, expected_hash in SOURCE_ONLY_TECHNICAL_SHA256.items():
         question = questions[ident]
-        technical = {key: question.get(key) for key in ("version", "translations", "prepared_hints")}
+        technical = copy.deepcopy({key: question.get(key) for key in ("version", "translations", "prepared_hints")})
+        if ident == "PREP-041":
+            technical["version"] = LATER_PREP041_PREFIX["version"]
+            assert question["version"] > technical["version"]
+            for language in ("he", "en"):
+                for field, length in LATER_PREP041_PREFIX[language].items():
+                    technical["translations"][language][field] = technical["translations"][language][field][:length]
         serialized = json.dumps(technical, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         assert hashlib.sha256(serialized.encode()).hexdigest() == expected_hash, ident
 
 
 def test_twelve_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 158
-    assert len(catalog.questions) == 188
+    assert len(archive()["questions"]) == 176
+    assert len(catalog.questions) == 206
     additions = {
         q.assets.get("preparation_id"): q
         for q in catalog.questions.values()
@@ -216,7 +228,11 @@ def test_four_expanded_questions_keep_runtime_prefixes_hints_and_invalidate_whol
 ):
     for ident, baseline in PREFIX_BASELINES.items():
         question = next(q for q in catalog.questions.values() if q.assets.get("preparation_id") == ident)
-        assert question.version == baseline["old_version"] + 1
+        if ident == "PREP-096":
+            # The later thousand-person appendix must keep this batch's exact prefix.
+            assert question.version >= baseline["old_version"] + 1
+        else:
+            assert question.version == baseline["old_version"] + 1
         assert solution_review(question).status == "pending_review"
         for language, previous in baseline["languages"].items():
             current = question.text(language)
@@ -233,8 +249,8 @@ def test_four_expanded_questions_keep_runtime_prefixes_hints_and_invalidate_whol
 def test_batch40_inventory_retains_source_bytes_and_does_not_alias_new_variations():
     uploads = json.loads((SEEDS / "preparation_uploads.json").read_bytes())["files"]
     sources = [value["local_path"] for value in uploads.values() if value["local_path"].startswith("sources/")]
-    assert len(uploads) == 812
-    assert len(sources) == 241 and len(set(sources)) == 240
+    assert len(uploads) == 921
+    assert len(sources) == 271 and len(set(sources)) == 270
     source_names = json.loads((ROOT / "apps/web/src/lib/source-screenshots.json").read_bytes())
     assert set(source_names) == {Path(path).name for path in sources}
     assert all(f"2026-10-30-batch40-{i:02d}.png" in source_names for i in range(1, 21))

@@ -387,3 +387,18 @@ Checks compare against an independent fast-doubling oracle, covering base cases,
 - [solutions/prep_061_fibonacci_software.py](../solutions/prep_061_fibonacci_software.py)
 - [checks/check_prep_061.py](../checks/check_prep_061.py)
 - [checks/prep-061-verification.json](../checks/prep-061-verification.json)
+
+
+## מקור נוסף — 30.10.2026, מקבץ70, צילום 15
+
+[צילום מקור פרטי](../sources/2026-10-30-batch70-15.png)
+
+זהו מקור נוסף לשאלה הקיימת; צילום זה אינו מוסיף שינוי טכני לגרסה.
+
+החלטת קליטה: `additional_source_existing_question`.
+
+תמלול המקור (נתוני מקור):
+
+```text
+כתוב פונקציה המממשת את סדרת פיבונאצ׳י: F0=0, F1=1, Fn=Fn−1+Fn−2. כתוב מימוש רקורסיבי ורגיל.
+```

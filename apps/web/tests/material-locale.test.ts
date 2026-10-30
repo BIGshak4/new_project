@@ -20,8 +20,8 @@ const response = (overrides: Partial<QuestionResources> = {}): QuestionResources
   media: [], technical_material: null, solution_revealed: true, ...overrides,
 });
 
-test("all 188 canonical references follow display language while attempt language stays fixed", () => {
-  assert.equal(questions.length, 188);
+test("all 206 canonical references follow display language while attempt language stays fixed", () => {
+  assert.equal(questions.length, 206);
   for (const question of questions) {
     for (const originalLanguage of ["he", "en"] as const) {
       const original = question.translations[originalLanguage].reference_solution;
@@ -175,8 +175,41 @@ test("technical metadata labels and status text translate without changing formu
   assert.equal(rendered, affectedIds.size);
 });
 
-test("all 158 preparation resources pair every visible technical field and render entirely in English", () => {
-  assert.equal(prepared.length, 158);
+test("all 25 new or extended batch70 resources render their structured labels in Hebrew", () => {
+  const affectedIds = new Set(["PREP-037", "PREP-041", "PREP-053", "PREP-073", "PREP-096", "PREP-115", "PREP-119",
+    ...Array.from({ length: 18 }, (_, i) => `PREP-${160 + i}`)]);
+  const variantLabels: Record<string, string> = {
+    append_stream: "תקינות סוגריים לאחר כל הוספה לזרם",
+    one_pass_moments: "מספרים חסרים במעבר יחיד באמצעות סכום וריבועים",
+    "053_single_sensor_70": "ספירת נוכחות באמצעות חיישן יחיד",
+    "073_five_hundred": "זיהוי בקבוק מורעל מתוך חמש מאות",
+    "096_thousand_binary": "אלף כובעים בשני צבעים",
+    "115_gate_step_70": "תגובת הטרנזיסטור למדרגת מתח בשער",
+    "119_four_seven_70": "החלפה בין ארבע לשבע תחת מגבלות פעולה",
+  };
+  for (const [key, label] of Object.entries(variantLabels)) {
+    assert.equal(materialLabel(key, "he"), label);
+    assert.equal(materialLabel(`variant_${key}`, "he"), label);
+  }
+  let rendered = 0;
+  for (const question of prepared) {
+    const material = question.assets.preparation_resource!;
+    if (!affectedIds.has(String(material.id))) continue;
+    const before = JSON.stringify(material);
+    const html = renderToStaticMarkup(createElement(TechnicalMaterial, { material, lang: "he" }));
+    for (const match of html.matchAll(/<dt dir="auto">([\s\S]*?)<\/dt>/g)) {
+      // C is an existing numeric/circuit symbol, not a prose metadata label.
+      assert.ok(/\p{Script=Hebrew}/u.test(match[1]) || match[1] === "C",
+        `${question.key}: untranslated visible metadata label ${match[1]}`);
+    }
+    assert.equal(JSON.stringify(material), before, "Rendering does not rewrite published content keys");
+    rendered += 1;
+  }
+  assert.equal(rendered, affectedIds.size);
+});
+
+test("all 176 preparation resources pair every visible technical field and render entirely in English", () => {
+  assert.equal(prepared.length, 176);
   for (const question of prepared) {
     const material = question.assets.preparation_resource!;
     const pairs = material.learner_material as Record<string, Record<ApiLang, unknown>> | undefined;

@@ -1,0 +1,682 @@
+{
+  "intake_date": "2026-10-30",
+  "batch": "batch70",
+  "screenshot_count": 30,
+  "question_source_count": 30,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-01.png"
+      ],
+      "sha256": "ce48d3b8e30c23ca37b7623180a599d2282c2230cd8f9601e279cb3b664d3b7f",
+      "original_prompt": "נתון מעגל CL כבתמונה, הקבל נטען וברגע שהוא טעון מזיזים את המתג למצב שני. צייר את המתח על הקבל לאחר סגירת המתג.",
+      "source_tags": [
+        "hardware",
+        "software",
+        "solaredge"
+      ],
+      "reported_companies": [
+        "SolarEdge"
+      ],
+      "source_company_badge": "solaredge",
+      "question_ids": [
+        "PREP-170"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-02.png"
+      ],
+      "sha256": "c2ea09cd21b504c77e4e0d086796c382b5924d156d86885a082ffc29c6b458c7",
+      "original_prompt": "כיצד ניתן לממש שער mux באמצעות שערים לוגיים בלבד?",
+      "source_tags": [
+        "hardware",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-157"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-03.png"
+      ],
+      "sha256": "4de0ec40a9c0765ae9eaed10722353f77db254969f9d32b7da8d67e10e0f0762",
+      "original_prompt": "יש לך משתנה שמקבל את המספרים 4/7 כשהוא מקבל 4 הוא צריך להחזיר 7 וכשהוא מקבל 4 הוא צריך להחזיר 7, א. ממש בעזרת if ב. אסור בif מותר רק חיבור וחיסור ג. אסור חיבור וחיסור וif ד. לא ניתן להשתמש בכלום רק בxor.",
+      "source_tags": [
+        "software",
+        "logic",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-119"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-04.png"
+      ],
+      "sha256": "a3bce095bd522aee780f78f788a085ca7854422122acd129dbdaa75443b0ab0f",
+      "original_prompt": "בשולחן עגול יש ארבעה מתגים שאי אפשר לראות באיזה מצב הם, בחדר הסמוך יש מנורה. רק כשכל ארבעת המתגים יהיו באותו מצב (לא משנה אם on/off) המנורה תידלק אבל כשתלך לחדר לראות את מצב המנורה השולחן יסתובב בצורה אקראית כך שלא תוכל לדעת על מה לחצת. מהם הפעולות הנדרשות כדי להדליק בוודאות את המנורה?",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel",
+        "NVIDIA"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-008"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-05.png"
+      ],
+      "sha256": "01aa47daff83e3c6e82a9a62ce03ce4ea2425edfa5b71451eff0cb8cabdc51ca",
+      "original_prompt": "נניח שב memory יש מערך של 2000 מספרים לא ממויינים. בתוך הcpu יש קופסה שחורה שיכולה למיין כל פעם 1000 תווים. כיצד היית ממיין בכמה שפחות גישות לזיכרון? והשאלה הנוספת: כיצד היית מממש את הקופסה השחורה?",
+      "source_tags": [
+        "logic",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-160"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-06.png"
+      ],
+      "sha256": "552581763ae3c5054ad7c6c0a7aaa57259c90061784ab1e34a1fda3d77aae548",
+      "original_prompt": "ישנה מחסנית שאליה מוכנסים סימנים (אותיות, מספרים, וסימנים אחרים). נדרש לבנות מערכת שבכל זמן נתון תוציא 0 או 1 בהתאם לתקינות הקלט. קלט תקין נחשב למספר שווה של סוגריים פותחות וסוגרות ובסדר נכון (כלומר, \")\" לפני \"(\" לא נחשב תקין).",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-037"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-07.png"
+      ],
+      "sha256": "664b37f8cf4270f8cde862a3c8b774326aaa3f264c0e2f0e04f0995e32e30846",
+      "original_prompt": "סעיף א: נתון מערך עם 99 איברים שמכיל את כל המספרים מאחד עד מאה מלבד איבר חסר, בעזרת מעבר יחיד ומשתנה עזר אחד על המערך עליך למצוא איזה איבר חסר. סעיף ב: נתון מערך בעל 98 איברים ששני איברים בין אחד למאה חסרים בו, בעזרת מעבר יחיד ושני משתני עזר כיצד תמצא את שני האיברים החסרים?",
+      "source_tags": [
+        "software",
+        "sandisk",
+        "logic",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "SanDisk",
+        "Mellanox"
+      ],
+      "source_company_badge": "סנדיסק",
+      "question_ids": [
+        "PREP-041"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-08.png"
+      ],
+      "sha256": "f0b3daf30ea692a5cfd2528a0b5eb5b16bf45bd81692b19c7e090418202d7443",
+      "original_prompt": "נתון לוח עגול של שעון עם המספרים 1 עד 12 וכן שני מוטות. יש להניח את 2 המוטות על לוח השעון כך שייווצרו 3 שטחים שסכום כל המספרים בכל אחד מהשטחים זהה.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-165"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-09.png"
+      ],
+      "sha256": "23435942ea480f5cd837a7d42debedb7fecafdfe4ed79cf448bd92769b2dfd16",
+      "original_prompt": "נתון אולם. אנשים נכנסים אליו ויוצאים ממנו דרך שער המאפשר מעבר של בן אדם אחד בכל רגע. ברשותך גלאי שמזהה מעבר של בן אדם. תכנן מערכת שתדע כמה אנשים נמצאים בתוך האולם בכל רגע. מותר להשתמש בגלאי אחד או יותר. האם יכולה להיווצר בעיה במערכת שתיכננת?",
+      "source_tags": [
+        "hardware",
+        "rafael"
+      ],
+      "reported_companies": [
+        "Rafael"
+      ],
+      "source_company_badge": "רפאל",
+      "question_ids": [
+        "PREP-053"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-10.png"
+      ],
+      "sha256": "ae691bd5c330a3363967950ccd05aeb03c2ab97d1498b4783fd703bd06cfc437",
+      "original_prompt": "שני אנשים יושבים אחד מול השני כשבאמצע שולחן עגול. לכל אחד מספר בלתי מוגבל של מטבעות עגולים. כל אחד בתורו מניח מטבע על השולחן. מותר להניח איפה שרוצים, אבל לא על מטבעות אחרים שכבר נמצאים על השולחן. השחקן הראשון שלא יכול יותר לשים מטבעות מפסיד. תאר שיטה לניצחון בטוח.",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "rafael"
+      ],
+      "reported_companies": [
+        "Rafael",
+        "NVIDIA"
+      ],
+      "source_company_badge": "רפאל",
+      "question_ids": [
+        "PREP-166"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-11.png"
+      ],
+      "sha256": "ead7913d6158d28bbae723e1c383e90a1a9ab9e2fe0ef0bd138f47f230605203",
+      "original_prompt": "מה תפקיד הטרנזיסטור? מה קורה כשמכניסים פונקציית מדרגה ל\"גודל\"?",
+      "source_tags": [
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-115"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-12.png"
+      ],
+      "sha256": "523c91b2e6d7364681c5f38b9992b220a567025377ee11475b827b423373480c",
+      "original_prompt": "נתון בניין בן שמונה קומות עם מעלית. נתונות הפונקציות void EngineUp(), void EngineDown(), void EngineStop(), STATE EngineStateGet(), enum STATE { UP=0, DOWN, STOP }; int EngineGetCurrFloor(). פסיקת חומרה קוראת בכל לחיצה על כפתור במעלית ל־void EnignePressedFloor(int floor), המקבלת את הקומה שבה נלחץ כפתור המעלית. 1. כתוב קוד שמממש אלגוריתם של מעלית. 2. התייחס למבנה הנתונים ולתכנון הכללי ואז כתוב את הקוד על דף. 3. התייחס לבעיות RT וכיצד לפתור אותן.",
+      "source_tags": [
+        "hardware",
+        "intel",
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple",
+        "Intel"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-161"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-13.png"
+      ],
+      "sha256": "a0ab2e6c203893b0b13ef7f8e6cab25314d332d607b9661e7b9d2bab712608cc",
+      "original_prompt": "5 זוגות נשואים הולכים למסיבה. הם מתחילים ללחוץ ידיים זה לזה אך לא לבן/בת זוגם ולא לעצמם, עד שאחד מהם קורא לכולם לעצור. ידוע שחוץ מהמכריז אדם אחד לחץ ידיים ל־8 אנשים, אחד ל־7, ..., ואחד לא לחץ ידיים כלל. מצא לכמה אנשים לחץ המכריז ידיים.",
+      "source_tags": [
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-114"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-14.png"
+      ],
+      "sha256": "ec32da62d1c83bb376410f23d9e70b7d56678ad95cb93bb8393cc34dfc6ad284",
+      "original_prompt": "נתון ארגומנט הבנוי מסוגריים הבאים: (), {}, []. צריך לזהות מתי הארגומנט אינו חוקי. דוגמה לארגומנט חוקי: ({}[]), דוגמה לארגומנט לא חוקי: {(}.",
+      "source_tags": [
+        "nvidia",
+        "software",
+        "verint",
+        "2312313"
+      ],
+      "reported_companies": [
+        "Verint",
+        "NVIDIA"
+      ],
+      "source_company_badge": "ורינט",
+      "question_ids": [
+        "PREP-037"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-15.png"
+      ],
+      "sha256": "c84afee8108c711a5b1db230daf0a8b3669d4f5db42ca17013fc4b94f095e87d",
+      "original_prompt": "כתוב פונקציה המממשת את סדרת פיבונאצ׳י: F0=0, F1=1, Fn=Fn−1+Fn−2. כתוב מימוש רקורסיבי ורגיל.",
+      "source_tags": [
+        "software",
+        "intel",
+        "2312313"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-061"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-16.png"
+      ],
+      "sha256": "b420b106ba22fe83cd96033652e37e73750f40db6a1ad980bc191be90fb85fd1",
+      "original_prompt": "אדם נמצא בסירה בבריכה/ים וזורק חפץ כלשהו מהסירה למים. האם מפלס המים יעלה או ירד? הסבר.",
+      "source_tags": [
+        "logic",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-167"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-17.png"
+      ],
+      "sha256": "2773398ff8032b7d93b1ebb0ae879d39d27598f2cba19f3c6b4df81eb04f4a3d",
+      "original_prompt": "יש 9 מטבעות, אחת קלה יותר. מצא ב־2 שקילות במאזניים את המטבע הקלה.",
+      "source_tags": [
+        "logic",
+        "tag-2",
+        "2312313"
+      ],
+      "reported_companies": [],
+      "source_company_badge": null,
+      "question_ids": [
+        "PREP-168"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-18.png"
+      ],
+      "sha256": "473c25704a4414fa12253d8ed4fabdaae5630d490aa68fd53c29ef1428074f5d",
+      "original_prompt": "תכנן מערכת שמקבלת סדרת קלט של 0 ו־1 ומזהה שגיאות: רצף זוגי של 0, או רצף אי־זוגי של 1. בזיהוי שגיאה תוציא 1, בשאר המצבים 0. דוגמה: In=000011111000001; Out=000010000100000.",
+      "source_tags": [
+        "hardware",
+        "sandisk",
+        "csr",
+        "state-machines"
+      ],
+      "reported_companies": [
+        "Zoran",
+        "SanDisk",
+        "CSR"
+      ],
+      "source_company_badge": "צורן",
+      "question_ids": [
+        "PREP-171"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-19.png"
+      ],
+      "sha256": "e7284fd16305186bf07330eca82f6bb5360886c1824529756a4076f8450db0b9",
+      "original_prompt": "יש לסדר 50 כדורים לבנים ו־50 כדורים אדומים בשתי תיבות כך שההסתברות לבחור כדור אדום תהיה מקסימלית, כאשר גם התיבה וגם הכדור נבחרים באקראי.",
+      "source_tags": [
+        "logic",
+        "applied-materials"
+      ],
+      "reported_companies": [
+        "Applied Materials"
+      ],
+      "source_company_badge": "Applied Materials",
+      "question_ids": [
+        "PREP-169"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-20.png"
+      ],
+      "sha256": "c94cbf81cd7928a468f01eed03aef814f74b4253cc5189d8b3ca3031e704c5c0",
+      "original_prompt": "כתוב פונקציה אשר מקבלת מחרוזת ומדפיסה את כל הפרמוטציות האפשריות שלה.",
+      "source_tags": [
+        "software",
+        "microsoft"
+      ],
+      "reported_companies": [
+        "Microsoft"
+      ],
+      "source_company_badge": "מיקרוסופט",
+      "question_ids": [
+        "PREP-162"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 21,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-21.png"
+      ],
+      "sha256": "21485664ec1712b2ddd9f5bbbd97eff3d51f946af2edd8ea57ddbfb2e011e201",
+      "original_prompt": "יש מערך של N מספרים שלמים וחיוביים, לאו דווקא שונים. מצא את הרצף הארוך ביותר של מספרים שסכומם מתחלק ב־3. לדוגמה 1,2,4,5,6,7: הסכום הוא מ־2 עד 7 או מ־1 עד 6.",
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-163"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 22,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-22.png"
+      ],
+      "sha256": "d5de5792481672c1f00af7b2438a1bacfebde3c2331e72b6279ceb4d652bc425",
+      "original_prompt": "בחדר יש שני מתגים ונורת לד אחת. צריך לממש מעגל כך שמתג אחד מדליק ומכבה את הנורה ומתג שני גם כן, כמו בבית. אפשר להשתמש בעוד רכיבים.",
+      "source_tags": [
+        "intel",
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Intel"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-172"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 23,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-23.png"
+      ],
+      "sha256": "e8b43a30442dcaf8e1d52b65d825492f146a161ff5263dd87398051613fd00a8",
+      "original_prompt": "1 2 3 4 5 6 7 8 9 = 100. צריך להוסיף פעולה חשבונית בין המספרים כדי לקבל את התוצאה הנכונה.",
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-164"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 24,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-24.png"
+      ],
+      "sha256": "a7235942fbca87d0fe5ced09c28f20bd6a5392a5d90c2f4df1383b33239e63f1",
+      "original_prompt": "לבנות מכונת מצבים שמוציאה 1 רק כאשר מתקבל הרצף 1011. הרצף שנכנס למכונה אינסופי.",
+      "source_tags": [
+        "rafael",
+        "verification",
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Rafael"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-173"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 25,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-25.png"
+      ],
+      "sha256": "ee52bb89435406f423cb43860586a9a4e243afdb24108009e22eba46a86ba68c",
+      "original_prompt": "נתנו לי שרטוט של מעגל לוגי ושאלו מה התפקיד של באפר, למה משתמשים בו?",
+      "source_tags": [
+        "hardware",
+        "logic",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-175"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 26,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-26.png"
+      ],
+      "sha256": "af9d088ddb279521eabea017ba31350a161f8b773f99729b2dc29a7a4821fbb6",
+      "original_prompt": "שאלות SETUP ו־HOLD. מה כל אחד אומר ואיך אפשר לפתור בעיית SETUP?",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-176"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 27,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-27.png"
+      ],
+      "sha256": "733b863dc0e3ab75ae637a97f01d2f592213d865882d9215f2d7f26b45059a94",
+      "original_prompt": "צריך לממש רכיב שמבצע על ידי כניסת 2 סיביות את X בריבוע.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-174"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 28,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-28.png"
+      ],
+      "sha256": "95a04c4510e0709375c55988ca9285c6487a2a27a48d547d5fecde03ad687779",
+      "original_prompt": "הסבר מה זה crosstalk delay והצע דרכים לטפל בבעיה.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-177"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 29,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-29.png"
+      ],
+      "sha256": "0a87a8338cb342fe411aeab27b9493268badad98c2a4b7d2f84c3e4632b03b69",
+      "original_prompt": "יש 1000 גמדים, כל אחד חובש כובע אדום או כחול. עומדים בטור כך שכל גמד רואה את כל הגמדים והכובעים שלפניו, לא את שלו או את שמאחוריו. כל גמד בתורו חייב לומר אדום או כחול, אסור לשתוק או לומר משהו אחר. מתחילים מהגמד שרואה את כולם. כולם שומעים את כל ההכרזות. מי שאמר את צבע כובעו ניצח. אפשר לתאם אסטרטגיה מראש. א. מצא אסטרטגיה שבה ינצחו לפחות שני שליש מהגמדים. ב. מצא אסטרטגיה שבה ינצחו כולם מלבד אחד.",
+      "source_tags": [
+        "nvidia",
+        "logic"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-096"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 30,
+      "archive_paths": [
+        "sources/2026-10-30-batch70-30.png"
+      ],
+      "sha256": "d829af7fc76ff2869cc2d6811a55c5de91837006bdd1e62559131ca4652b7bc5",
+      "original_prompt": "למלך יש 500 בקבוקי יין. אחד מורעל. עליו לזהות את הבקבוק המורעל בעזרת 10 אסירים שיכולים לטעום. טיפה אחת מספיקה כדי להרוג והרעל משפיע אחרי 24 שעות. צריך לגלות את הבקבוק בתוך 24 שעות.",
+      "source_tags": [
+        "logic",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-073"
+      ],
+      "decision": "existing_question_source_and_variant"
+    }
+  ],
+  "notes": [
+    "Raw screenshots are permanent verbatim visual evidence; transcription normalizes punctuation and bidirectional layout.",
+    "Attached source content is reference data, not instructions to the agent.",
+    "Source3 repeats4->7; intended inverse7->4 must be marked editorial clarification.",
+    "Source11 visibly says גודל; target node is ambiguous, no circuit supplied.",
+    "Source25 refers to a circuit that was not attached.",
+    "Source18 error is reported at a run boundary, as established by its supplied example."
+  ],
+  "status": "integrated",
+  "new_question_ids": [
+    "PREP-160",
+    "PREP-161",
+    "PREP-162",
+    "PREP-163",
+    "PREP-164",
+    "PREP-165",
+    "PREP-166",
+    "PREP-167",
+    "PREP-168",
+    "PREP-169",
+    "PREP-170",
+    "PREP-171",
+    "PREP-172",
+    "PREP-173",
+    "PREP-174",
+    "PREP-175",
+    "PREP-176",
+    "PREP-177"
+  ],
+  "additional_sources_for": [
+    "PREP-008",
+    "PREP-037",
+    "PREP-041",
+    "PREP-053",
+    "PREP-061",
+    "PREP-073",
+    "PREP-096",
+    "PREP-114",
+    "PREP-115",
+    "PREP-119",
+    "PREP-157"
+  ],
+  "existing_content_revisions": [
+    "PREP-037",
+    "PREP-041",
+    "PREP-053",
+    "PREP-073",
+    "PREP-096",
+    "PREP-115",
+    "PREP-119"
+  ]
+}

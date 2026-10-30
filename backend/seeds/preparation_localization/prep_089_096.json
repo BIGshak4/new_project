@@ -856,7 +856,11 @@
         "סדר הדיבור מהאחורי לקדמי, וכל אחד רואה לפניו ושומע את כל הקודמים.",
         "צבעים חוזרים מתוך שלושה; אין ספירה ידועה מראש ואין ערוץ מסרים נוסף.",
         "מותר לתכנן קידוד מראש, אבל כל תשובה בפועל היא רק שם צבע.",
-        "הדוברים הראשונים 100,99 הם המסמנים בענף 98;מוציאים את כובעיהם מחישוב הזוגיות."
+        "הדוברים הראשונים 100,99 הם המסמנים בענף 98;מוציאים את כובעיהם מחישוב הזוגיות.",
+        "כובעים בשני צבעים בלבד, ללא מכסה ידועה, והצבעים יכולים לחזור.",
+        "כל אחד רואה את כל הכובעים שלפניו ושומע את כל התשובות הקודמות ללא טעויות.",
+        "מדברים מהאחורי לקדמי, פעם אחת לאדם ורק במילת צבע;מותר תיאום לפני ההתחלה.",
+        "אין ערוץ צד של מחוות, שהיות או שינוי נוסח."
       ],
       "en": [
         "Positive n, binary colors and rear-to-front answers.",
@@ -865,7 +869,11 @@
         "Speakers go rear to front;each sees ahead and hears every earlier reply.",
         "Colors repeat among three, with no known counts and no extra communication channel.",
         "Prior code agreement is allowed, but each actual reply is just one color name.",
-        "The first two speakers 100/99 signal in the 98 branch;exclude their hats from parity counts."
+        "The first two speakers 100/99 signal in the 98 branch;exclude their hats from parity counts.",
+        "Binary hat colors may repeat with no known quota.",
+        "Each person sees all hats ahead and hears all earlier answers reliably.",
+        "Rear-to-front order, one color word per person, and prior coordination.",
+        "No gestures, timing signals, or other side channel."
       ]
     },
     "optimality": {
@@ -873,13 +881,15 @@
         "criterion": "מספר היודעים את צבעם בוודאות, בכל סידור אפשרי.",
         "result": "n−1; הראשון מעביר זוגיות ולא יודע את כובעו.",
         "proof": "החלפת כובעו של הראשון משאירה את כל תצפיותיו זהות; אי אפשר להבטיח n. ביט הזוגיות מאפשר לכל יתר n−1 להסיק את צבעם.",
-        "variant_096_three_colors": "50 ו־98 הן הבטחות של האסטרטגיות המדורגות;99 אופטימלית למקרה הגרוע לפי אי־הבחנה של הראשון. קוד ההדגמה סורק מחדש מידע לכל דובר ולכן O(N²) זמן כולל ו־O(N) עקבות/קלט, עם מספר קבוע של צוברים לחישוב תשובה מעבר לרשימות. אין טענת מהירות פיזית או הצלת כולם בכל סידור."
+        "variant_096_three_colors": "50 ו־98 הן הבטחות של האסטרטגיות המדורגות;99 אופטימלית למקרה הגרוע לפי אי־הבחנה של הראשון. קוד ההדגמה סורק מחדש מידע לכל דובר ולכן O(N²) זמן כולל ו־O(N) עקבות/קלט, עם מספר קבוע של צוברים לחישוב תשובה מעבר לרשימות. אין טענת מהירות פיזית או הצלת כולם בכל סידור.",
+        "variant_096_thousand_binary": "חלוקה ל־332 שלישיות ורביעייה מבטיחה 667;זוגיות אחת לכל הטור מבטיחה 999, והטיעון בשני עולמות מוכיח אופטימליות של 999. ההדמיה הישירה O(N²) זמן ו־O(N) זיכרון."
       },
       "en": {
         "criterion": "Number guaranteed to know their own color for every arrangement.",
         "result": "n−1; the first transmits parity without knowing their own hat.",
         "proof": "Flipping the first speaker’s invisible hat leaves observations identical, ruling out n. Parity lets all other n−1 infer their colors.",
-        "variant_096_three_colors": "The staged strategies guarantee 50 and 98;99 is worst-case optimal by first-speaker indistinguishability. The demonstration rescans information per speaker, so total time is O(N²) with O(N) input/trace storage and a constant number of accumulators beyond lists. No physical-speed or all-worlds 100-person guarantee is claimed."
+        "variant_096_three_colors": "The staged strategies guarantee 50 and 98;99 is worst-case optimal by first-speaker indistinguishability. The demonstration rescans information per speaker, so total time is O(N²) with O(N) input/trace storage and a constant number of accumulators beyond lists. No physical-speed or all-worlds 100-person guarantee is claimed.",
+        "variant_096_thousand_binary": "332 triples and one four-person group guarantee 667. Global parity guarantees 999, and indistinguishable worlds prove 999 optimal. The direct simulator takes O(N²) time and O(N) space."
       }
     },
     "edge_cases": {
@@ -892,7 +902,12 @@
         "ל־N=1 מובטחות אפס תשובות נכונות בענף הסכום.",
         "בענף שני המסמנים נדרשים לפחות שני אנשים.",
         "שלושה צבעים זהים לכל הכובעים אינם מפרים את ההנחות.",
-        "צמד שאריות הזוגיות(1,1) מצביע על הפרת מודל או תקלה במידע, לא על צבע רביעי."
+        "צמד שאריות הזוגיות(1,1) מצביע על הפרת מודל או תקלה במידע, לא על צבע רביעי.",
+        "לכל 1,000 מתמטית נדרשים 667 כדי לעמוד ברף שני השלישים.",
+        "333 שלישיות ובודד אינן מבטיחות 667.",
+        "המובילים יכולים להיות נכונים במקרה אך לא נספרים בהבטחה.",
+        "הבנייה המקומית מוגדרת ל־N≥3;בשני אנשים אי אפשר להבטיח ceil(2N/3)=2.",
+        "999 הוא מינימום מובטח, ולא מספר מדויק של ניצולים בכל מצב."
       ],
       "en": [
         "n=1 guarantees zero knowers; n=2 guarantees the front dwarf.",
@@ -903,7 +918,12 @@
         "N=1 guarantees zero correct replies in the sum strategy.",
         "The two-signaler branch requires at least two people.",
         "All hats having the same color is allowed.",
-        "Parity pair(1,1) means invalid model/history, not a fourth color."
+        "Parity pair(1,1) means invalid model/history, not a fourth color.",
+        "For 1,000, at least 667 are required by the two-thirds threshold.",
+        "333 triples and a singleton do not guarantee 667.",
+        "Leaders can be correct by chance but do not count toward the guarantee.",
+        "The grouped construction requires N≥3;two people cannot guarantee ceil(2N/3)=2.",
+        "999 is a worst-case guarantee, not an exact survivor count in every world."
       ]
     },
     "common_mistakes": {
@@ -916,7 +936,11 @@
         "להתייחס להודעת הראשון כאל צבעו האמיתי.",
         "לכלול את כובעי 100 ו־99 בספירת ענף 98 אף שצבעיהם אינם ידועים.",
         "לשנות סדר דיבור או להניח שמיעת תשובות בלי להצהיר עליה.",
-        "לקרוא לכל הכובעים שונים למרות שיש 100 כובעים ורק שלושה צבעים."
+        "לקרוא לכל הכובעים שונים למרות שיש 100 כובעים ורק שלושה צבעים.",
+        "לעגל שני שלישים כלפי מטה.",
+        "לכלול את צבעו המשוער של המוביל במקום את ביט הזוגיות ששידר.",
+        "להשתמש בכובעים שהאדם אינו רואה או בתשובה עתידית.",
+        "להסיק שאי אפשר להציל את הראשון אף פעם:אפשר במקרה, אך לא בוודאות."
       ],
       "en": [
         "Treating the initial parity message as the rear dwarf’s true hat color.",
@@ -927,12 +951,16 @@
         "Treating the first message as that speaker true color.",
         "Including hats 100/99 in the 98-branch population although their colors are unknown.",
         "Changing speaking order or assuming audible replies without stating it.",
-        "Calling all 100 hats distinct despite only three colors."
+        "Calling all 100 hats distinct despite only three colors.",
+        "Rounding two thirds down.",
+        "Treating the leader's parity word as their actual hat color.",
+        "Using an invisible hat or a future answer.",
+        "Claiming the first person can never survive;the impossibility concerns a guarantee."
       ]
     },
     "interview_answer": {
-      "he": "האחורי אומר שחור אם מספר השחורים שלפניו אי־זוגי ולבן אם הוא זוגי. כל הבא משלב את הזוגיות עם הצבעים שכבר נשמעו ועם מה שהוא רואה, ונשאר רק כובעו. כך n−1 יודעים בוודאות. אי אפשר להבטיח גם לראשון לדעת, כי כובעו אינו משפיע על שום מידע שיש לו.\n\nל־50 אשתמש בזוגות:אחד אומר את כובע הבא והוא חוזר. ל־98 שני הראשונים מעבירים זוגיות אדום וכחול בקרב 98 האחרים. ל־99 הראשון אומר סכום קודי הצבעים מודולו 3 של 99 שלפניו;כל הבא מחסר נראים וצבעים נכונים שכבר נשמעו. את 100 אי אפשר להבטיח כי הראשון אינו רואה את כובעו.",
-      "en": "The rear dwarf announces parity of black hats ahead. Each later dwarf XORs that message with correctly announced colors and visible hats, leaving their own color. Thus n−1 know with certainty. The first cannot know, because flipping only their invisible hat changes none of their observations.\n\nFor 50, use pairs:one says the next hat and the partner repeats it. For 98, two first speakers encode red/blue parities of the other 98. For 99, the first says the sum modulo 3 of visible color codes;each later speaker subtracts visible and already-correct colors. All 100 cannot be guaranteed because the first cannot observe their own hat."
+      "he": "האחורי אומר שחור אם מספר השחורים שלפניו אי־זוגי ולבן אם הוא זוגי. כל הבא משלב את הזוגיות עם הצבעים שכבר נשמעו ועם מה שהוא רואה, ונשאר רק כובעו. כך n−1 יודעים בוודאות. אי אפשר להבטיח גם לראשון לדעת, כי כובעו אינו משפיע על שום מידע שיש לו.\n\nל־50 אשתמש בזוגות:אחד אומר את כובע הבא והוא חוזר. ל־98 שני הראשונים מעבירים זוגיות אדום וכחול בקרב 98 האחרים. ל־99 הראשון אומר סכום קודי הצבעים מודולו 3 של 99 שלפניו;כל הבא מחסר נראים וצבעים נכונים שכבר נשמעו. את 100 אי אפשר להבטיח כי הראשון אינו רואה את כובעו.\n\n667 מתקבלים מ־332 שלישיות ורביעייה:בכל קבוצה הראשון מקודד זוגיות וכל היתר יודעים את צבעם. חזק יותר:הראשון מאחור מקודד זוגיות של כל 999 שלפניו, וכולם אחריו מפענחים. אי אפשר להבטיח גם אותו כי כובעו יכול להתחלף בלי לשנות שום תצפית שלו.",
+      "en": "The rear dwarf announces parity of black hats ahead. Each later dwarf XORs that message with correctly announced colors and visible hats, leaving their own color. Thus n−1 know with certainty. The first cannot know, because flipping only their invisible hat changes none of their observations.\n\nFor 50, use pairs:one says the next hat and the partner repeats it. For 98, two first speakers encode red/blue parities of the other 98. For 99, the first says the sum modulo 3 of visible color codes;each later speaker subtracts visible and already-correct colors. All 100 cannot be guaranteed because the first cannot observe their own hat.\n\nFor 667, use 332 triples and one group of four;each leader signals parity and all followers decode. More strongly, the rear speaker signals all 999 visible hats, so every follower succeeds. The rear speaker cannot be guaranteed because changing only their own hat leaves their observations unchanged."
     },
     "source_ambiguities": {
       "he": {
@@ -943,6 +971,12 @@
           "הצילום אינו מגדיר במלואו סדר, ראות וערוץ תשובות;חוזה הטור הוגדר בעריכה.",
           "הביטוי צבע אחר פורש כבחירה מתוך שלושה עם חזרות, והסתירה המילולית נשמרה בתיעוד.",
           "שיוכי Mellanox/NVIDIA מדווחים בצילום ולא אומתו עצמאית."
+        ],
+        "variant_096_thousand_binary": [
+          "המקור לא מגדיר במלואו כיוון ראייה, סדר דיבור או כללי התקשורת;הם נקבעו במפורש.",
+          "לפחות שני שלישים מתוך 1,000 פורש כ־667 כדי לכבד דרישה שלמה.",
+          "הווריאציה מצטרפת לרשומה הקיימת בלי להחליף את גרסאות שני/שלושה הצבעים או את רמזיהן.",
+          "שיוך NVIDIA מדווח בלבד."
         ]
       },
       "en": {
@@ -953,6 +987,12 @@
           "Speaking order, visibility and reply channel are not fully specified;the line contract is editorially explicit.",
           "Different color is interpreted as a choice among three with repetition;the literal contradiction is documented.",
           "Mellanox/NVIDIA attribution is source-reported, not independently verified."
+        ],
+        "variant_096_thousand_binary": [
+          "Viewing direction, speaking order, and communication rules are made explicit.",
+          "At least two thirds of 1,000 means 667 integral survivors.",
+          "This supplements the existing binary/ternary versions and retains their original hints.",
+          "NVIDIA attribution is source-reported only."
         ]
       }
     },
@@ -967,6 +1007,13 @@
             "answer_direction": "קודדו 0..q−1 והשתמשו בסכום מודולוq. הדובר הראשון מעביר אחת מ־q שאריות ושאר הדוברים משחזרים צבע אחד;N−1 עדיין חסם ההבטחה.",
             "principle": "גודל אלפבית התשובה קובע את ערוץ סכום הביקורת."
           }
+        ],
+        "variant_096_thousand_binary": [
+          {
+            "question": "אם רוצים לפחות שני שלישים עבור N שאינו מתחלק ב־3, איך מטפלים בשארית?",
+            "answer_direction": "עבור N≥3, אם N=3q+1 משתמשים ב־q−1 שלישיות ורביעייה, ואם N=3q+2 משתמשים ב־q−1 שלישיות וחמישייה. בכל קבוצה מצילים בוודאות את כולם מלבד המוביל. מספר המובילים floor(N/3), ולכן מובטחים N−floor(N/3)=ceil(2N/3).",
+            "principle": "הוכחת הבטחה דיסקרטית מחייבת טיפול בשארית ולא רק בממוצע."
+          }
         ]
       },
       "en": {
@@ -979,12 +1026,19 @@
             "answer_direction": "Encode 0..q−1 and use a sum moduloq. The first speaker sends one of q residues and each later speaker recovers one color;N−1 remains the guarantee bound.",
             "principle": "The reply alphabet provides the checksum channel."
           }
+        ],
+        "variant_096_thousand_binary": [
+          {
+            "question": "How should a two-thirds block strategy handle N not divisible by three?",
+            "answer_direction": "For N≥3, use q−1 triples and one four-person group when N=3q+1, or q−1 triples and one five-person group when N=3q+2. Each group loses at most its leader. There are floor(N/3) leaders, so N−floor(N/3)=ceil(2N/3) are guaranteed.",
+            "principle": "Discrete guarantees require handling remainders, not just averages."
+          }
         ]
       }
     },
     "verification": {
-      "he": "בדיקת Python ממצה של 32,766 עולמות עבור n=1..14, ובהם 393,220 תשובות של גמדים שאינם הראשונים. נבדקו 16,383 זוגות עולמות עם אותו מידע גלוי וצבע אחורי שונה, ועוד 120 עולמות מדגמיים עד n=1024. נבדקו שימור הקלט וארבע דחיות קלט. ההוכחה הכללית והחסם העליון כתובים בנפרד; אין כאן ניסוי פיזי או ביקורת אנושית.\n\nכל 9,840 סידורי שלושה צבעים באורכים 1..8 נבדקו בשלוש האסטרטגיות כשהן מוגדרות, וכן 1,000 סידורים בני 100. ב־243 מחלקות תצפית שונה רק כובע הראשון ונבדקה זהות הודעתו. פונקציות התשובה אינן מקבלות את הכובע שלהן. גבול 99 מוכח בנפרד.",
-      "en": "Python exhaustively checks 32,766 worlds for n=1..14, including 393,220 nonfirst replies, plus16,383 paired worlds differing only in the invisible rear hat and120 seeded worlds up to n=1024. Input preservation and4 invalid-world rejections are checked. The general proof and upper bound are separate; no physical experiment or human review.\n\nChecked all 9,840 three-color worlds of lengths 1..8 with each applicable strategy, plus 1,000 hundred-person worlds. In 243 visible-view classes only the first speaker hat changes and the first message stays identical. Reply functions do not receive their own hat. The 99 upper bound is separately proved."
+      "he": "בדיקת Python ממצה של 32,766 עולמות עבור n=1..14, ובהם 393,220 תשובות של גמדים שאינם הראשונים. נבדקו 16,383 זוגות עולמות עם אותו מידע גלוי וצבע אחורי שונה, ועוד 120 עולמות מדגמיים עד n=1024. נבדקו שימור הקלט וארבע דחיות קלט. ההוכחה הכללית והחסם העליון כתובים בנפרד; אין כאן ניסוי פיזי או ביקורת אנושית.\n\nכל 9,840 סידורי שלושה צבעים באורכים 1..8 נבדקו בשלוש האסטרטגיות כשהן מוגדרות, וכן 1,000 סידורים בני 100. ב־243 מחלקות תצפית שונה רק כובע הראשון ונבדקה זהות הודעתו. פונקציות התשובה אינן מקבלות את הכובע שלהן. גבול 99 מוכח בנפרד.\n\nכל 8,190 עולמות הכובעים באורכים 1..12;200 עולמות בני 1,000;עדי מקרה גרוע עם בדיוק 667 ו־999 תשובות נכונות. למפענח המקומי אין גישה לכובע של הדובר.",
+      "en": "Python exhaustively checks 32,766 worlds for n=1..14, including 393,220 nonfirst replies, plus16,383 paired worlds differing only in the invisible rear hat and120 seeded worlds up to n=1024. Input preservation and4 invalid-world rejections are checked. The general proof and upper bound are separate; no physical experiment or human review.\n\nChecked all 9,840 three-color worlds of lengths 1..8 with each applicable strategy, plus 1,000 hundred-person worlds. In 243 visible-view classes only the first speaker hat changes and the first message stays identical. Reply functions do not receive their own hat. The 99 upper bound is separately proved.\n\nAll 8,190 binary worlds of lengths 1..12;200 worlds of size 1,000;explicit worst-case witnesses with exactly 667 and 999 correct. Local decoders cannot access the speaker's own hat."
     },
     "relationship_note": {
       "he": "קשורה ל־PREP-033 בנושא כובעים, אך כאן n כללי, אין מכסת צבעים ידועה והמידע מועבר במכוון בתשובות סדרתיות.",
@@ -1000,6 +1054,15 @@
             "כדי להסתפק בדובר מסמן אחד, קודדו את שלושת הצבעים 0,1,2 והעבירו סכום מודולו 3. כל דובר אחר מחסר את הצבעים שהוא רואה ואת התשובות הקודמות שנכונות בוודאות."
           ],
           "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+        },
+        "096_thousand_binary": {
+          "prompt": "### וריאציה: 1,000 משתתפים, שני צבעים ושתי רמות של הבטחה\nאלף משתתפים עומדים בטור. לכל אחד כובע אדום או כחול, וצבעים יכולים לחזור ללא הגבלה או מכסה ידועה. כל משתתף רואה רק את הכובעים שלפניו, אינו רואה את שלו, ושומע את כל התשובות שכבר נאמרו. מתחילים מהאחרון בטור, שרואה 999 כובעים, ומתקדמים קדימה. כל אדם חייב לענות פעם אחת רק \"אדום\" או \"כחול\";תשובה נכונה מצילה אותו. מותר לתאם אסטרטגיה מראש, בלי מחוות, קצב דיבור או תקשורת נוספת.\n\nא. הבטיחו הצלה של לפחות שני שלישים. עבור 1,000 אנשים פירוש הדבר לפחות 667 בכל חלוקת צבעים. ב. מצאו אסטרטגיה שמבטיחה הצלה של כולם מלבד אחד, והוכיחו שלא ניתן להבטיח הצלה של כל האלף. אפשר להשתמש כבר בסעיף א באסטרטגיה החזקה של סעיף ב;הציגו גם בנייה מקומית בקבוצות שמסבירה את רף 667.",
+          "hints": [
+            "רף של שני שלישים הוא ceil(2·1000/3)=667, ולא 666. איך אדם ראשון בקבוצה יכול להשתמש בתשובתו כדי למסור ביט מידע לאחרים?",
+            "בקבוצת שלושה, הראשון מדווח זוגיות של שני הכובעים שלפניו. השניים האחרים יכולים להסיק את צבעיהם. טפלו בשארית:332 שלישיות ועוד רביעייה אחת.",
+            "לבנייה של 999, האדם הראשון מדווח זוגיות של כל 999 הכובעים שהוא רואה. בכל תור מחסרים ב־XOR את הצבעים שנשמעו ואת הצבעים שעוד רואים. הראשון אינו יכול לדעת את כובעו משני עולמות הנבדלים רק בו."
+          ],
+          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
         }
       },
       "en": {
@@ -1009,6 +1072,15 @@
             "A reply that is not necessarily correct for its speaker can help someone visible ahead. How can adjacent pairs use that?",
             "Two first speakers can send two bits about the remaining 98 hats. Can parities for two colors distinguish all three possibilities?",
             "To use just one signaler, encode colors 0,1,2 and announce a sum modulo 3. Later speakers subtract visible colors and previous answers known to be correct."
+          ],
+          "integration_status": "Variant hints are supplemental; original interactive hint queue retained."
+        },
+        "096_thousand_binary": {
+          "prompt": "### Variant: 1,000 people, two colors, and two guarantee levels\nOne thousand people stand in line. Every hat is red or blue;colors may repeat with no known quota. A person sees only the hats ahead, never their own, and hears every earlier answer. The rear person, who sees 999 hats, answers first, and turns proceed toward the front. Each person says exactly one color word, red or blue. A correct answer saves that person. A strategy may be agreed beforehand;gestures, timing codes, and other communication are forbidden.\n\n(a) Guarantee at least two thirds survive, meaning at least 667 of 1,000 for every coloring. (b) Guarantee everyone except possibly one survives, and prove all 1,000 cannot be guaranteed. The stronger strategy also answers(a);include a local block construction to explain the 667 threshold.",
+          "hints": [
+            "Two thirds of 1,000 requires ceil(2000/3)=667, not 666. Can a block leader use their color word to communicate one bit?",
+            "In a triple, the first person signals the parity of the other two hats. Both followers infer their own hats. Handle the remainder with 332 triples and one block of four.",
+            "For 999, let the first person signal the parity of all 999 visible hats. Each follower XORs away prior correct colors and still-visible hats. The first person cannot distinguish worlds differing only in their own hat."
           ],
           "integration_status": "Variant hints are supplemental; original interactive hint queue retained."
         }

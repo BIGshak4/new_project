@@ -41,23 +41,37 @@ test("legacy and canonical URLs remain discoverable in both directions", () => {
   assert.deepEqual(relatedQuestionKeys("unrelated-question"), []);
 });
 
-test("the accumulated intakes yield 188 records and 186 unique questions without dropping new exercises", () => {
+test("the accumulated intakes yield 206 records and 203 unique questions without dropping new exercises", () => {
   const rows = ["example_bank", "preparation_bank"].flatMap(name => {
     const seed = JSON.parse(readFileSync(new URL(`../../../backend/seeds/questions/${name}.json`, import.meta.url), "utf8"));
     return seed.map((q: { key: string; assets: { preparation_id?: string } }) => ({
       key: q.key, id: q.key, preparation_id: q.assets.preparation_id,
     } as QuestionSummary));
   });
-  assert.equal(rows.length, 188);
+  assert.equal(rows.length, 206);
   const unique = uniqueLibraryQuestions(rows);
-  assert.equal(unique.length, 186);
-  for (const id of Array.from({ length: 100 }, (_, i) => `PREP-${String(i + 60).padStart(3, "0")}`)) {
+  assert.equal(unique.length, 203);
+  for (const id of Array.from({ length: 118 }, (_, i) => `PREP-${String(i + 60).padStart(3, "0")}`)) {
     assert.equal(rows.filter(q => q.preparation_id === id).length, 1, `${id}: one canonical source record`);
     assert.equal(unique.filter(q => q.preparation_id === id).length, 1, id);
   }
   assert.equal(unique.filter(q => q.preparation_id === "PREP-023").length, 1);
   assert.ok(!unique.some(q => q.key === "example-power-of-two-check"));
   assert.ok(!unique.some(q => q.key === "example-merge-measurement-streams"));
+  assert.ok(!unique.some(q => q.key === "example-overlapping-sequence-1011"));
+});
+
+test("the collected overlapping 1011 detector is preferred while the example keeps its ID and search path", () => {
+  const example = { ...generic, id: "sequence-example-id", key: "example-overlapping-sequence-1011", title: "Overlapping sequence 1011" };
+  const collected = { ...manual, id: "sequence-manual-id", key: "prep-detect-overlapping-1011-stream", title: "Detect 1011 in a binary stream", preparation_id: "PREP-173", reported_companies: ["NVIDIA", "Rafael"] };
+  for (const rows of [[example, collected], [collected, example]]) {
+    assert.deepEqual(uniqueLibraryQuestions(rows), [collected]);
+    assert.deepEqual(uniqueLibraryQuestions(rows.filter(q => matchesQuestion(q, "Overlapping sequence"))), [example]);
+    assert.deepEqual(uniqueLibraryQuestions(rows.filter(q => matchesQuestion(q, "PREP-173"))), [collected]);
+  }
+  assert.equal(example.id, "sequence-example-id");
+  assert.deepEqual(relatedQuestionKeys(example.key), [collected.key]);
+  assert.deepEqual(relatedQuestionKeys(collected.key), [example.key]);
 });
 
 test("the merge source is preferred without rewriting the example's history or company reports", () => {

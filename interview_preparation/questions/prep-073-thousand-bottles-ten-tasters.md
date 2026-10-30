@@ -263,3 +263,18 @@ Checks constructed the actual pools and simulated every one of the 1000 possible
 [Python implementation](../solutions/prep_073_binary_bottles.py)
 [Independent checker](../checks/check_prep_073.py)
 [Verification evidence](../checks/prep-073-verification.json)
+
+
+## מקור נוסף — 30.10.2026, מקבץ70, צילום 30
+
+[צילום מקור פרטי](../sources/2026-10-30-batch70-30.png)
+
+נוספה הרחבה דו־לשונית ברשומה ובנספח נפרד; התוכן והרמזים הקודמים נשמרו.
+
+החלטת קליטה: `existing_question_source_and_variant`.
+
+תמלול המקור (נתוני מקור):
+
+```text
+למלך יש 500 בקבוקי יין. אחד מורעל. עליו לזהות את הבקבוק המורעל בעזרת 10 אסירים שיכולים לטעום. טיפה אחת מספיקה כדי להרוג והרעל משפיע אחרי 24 שעות. צריך לגלות את הבקבוק בתוך 24 שעות.
+```

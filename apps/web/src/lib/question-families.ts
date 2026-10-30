@@ -6,6 +6,7 @@ const DUPLICATES: Readonly<Record<string, string>> = {
   // The manually collected preparation question is the primary version, with its source/company reports.
   "example-power-of-two-check": "prep-power-of-two-check",
   "example-merge-measurement-streams": "prep-merge-two-sorted-arrays",
+  "example-overlapping-sequence-1011": "prep-detect-overlapping-1011-stream",
 };
 
 export function questionFamily(key: string): string {

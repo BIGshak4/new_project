@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "checked_on": "2026-10-30",
+  "compressed_binary_block_count_cases": 15332,
+  "seeded_2000_inputs": 100,
+  "bitonic_all_binary_inputs_through_length10": 2047,
+  "bitonic_seeded_thousand_inputs": 20,
+  "end_to_end_bitonic_box_construction": true,
+  "box_calls": 5,
+  "external_reads": 5000,
+  "external_writes": 5000,
+  "physical_memory_benchmark": false,
+  "evidence_scope": "Executed Python and independent oracle, not native compilation, hardware timing, physical RT or human approval."
+}

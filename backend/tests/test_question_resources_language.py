@@ -184,8 +184,10 @@ async def test_clean_doorway_geometry_is_visible_before_solution_but_fsm_is_gate
         assert shown.solution_revealed and shown.reference and shown.technical_material
         images = [m for m in signed[-1] if m["kind"] == "image"]
         assert {m["filename"] for m in images} == {
-            f"prep-053-doorway-{kind}-{language}.png" for kind in ("prompt", "fsm", "circuit")
+            *(f"prep-053-doorway-{kind}-{language}.png" for kind in ("prompt", "fsm", "circuit")),
+            f"prep-053-single-sensor-observability-{language}.png",
         }
+        assert next(m for m in images if "single-sensor-observability" in m["filename"])["role"] == "solution"
         assert all(not m["source_path"].startswith("sources/") for m in signed[-1])
     assert store.attempts[attempt_id] == before
     assert not provider.requests and not store.metrics

@@ -2094,24 +2094,30 @@
       "he": [
         "רק (), [] ו־{} נחשבים סוגריים.",
         "מתעלמים מתווים אחרים; אין כללי מחרוזות או הערות ייחודיים לשפת תכנות.",
-        "המחרוזת הריקה וטקסט ללא סוגריים תקינים."
+        "המחרוזת הריקה וטקסט ללא סוגריים תקינים.",
+        "הזנה היא הוספת תו אחד בסדר כרונולוגי; רק () מיוחדים בהרחבה.",
+        "valid מתארת תקינות מלאה כרגע ולא אפשרות להשלמה; אין pop."
       ],
       "en": [
         "Only (), [] and {} are brackets.",
         "Ignore other characters; no language-specific quote/comment rules.",
-        "Empty string and bracket-free text are valid."
+        "Empty string and bracket-free text are valid.",
+        "Feed appends one character chronologically; only() are special in the extension.",
+        "valid means complete current validity, not mere completable prefix; no pop."
       ]
     },
     "optimality": {
       "he": {
         "criterion": "זמן מעבר במקרה הגרוע",
         "result": "זמן Theta(n); מקום O(d) למחסנית, ולכל היותר O(n).",
-        "scope": "אין טענה למספר פעולות מדויק מינימלי או לזיכרון עזר אופטימלי בכל מודל."
+        "scope": "אין טענה למספר פעולות מדויק מינימלי או לזיכרון עזר אופטימלי בכל מודל.",
+        "variant_append_stream": "O(1) מילות מצב ועבודה לאירוע במודל מילה; עומק צורך O(log N) ביטים. תמיכה ב־undo דורשת חוזה ומידע נוספים."
       },
       "en": {
         "criterion": "Worst-case traversal time",
         "result": "Theta(n) time; O(d) stack space, at most O(n).",
-        "scope": "No claim of exact minimum operations or universally optimal auxiliary memory."
+        "scope": "No claim of exact minimum operations or universally optimal auxiliary memory.",
+        "variant_append_stream": "O(1) state words/work per event in a word model; depth uses O(log N) bits. Undo needs another contract/history."
       }
     },
     "verification": {
@@ -2119,13 +2125,85 @@
         "status": "passed",
         "checked_on": "2026-09-29",
         "script_path": "solutions/register_prep_037.py",
-        "method": "57000 מקרים: כל מילות הסוגריים באורך 0..6 מול בודק עצמאי המבוסס על צמצום זוגות; 1000 מחרוזות מעורבות עם seed קבוע; 10 דוגמאות מפורשות; 3 מקרים של קינון עמוק עם 10000 סוגריים פותחים."
+        "method": "57000 מקרים: כל מילות הסוגריים באורך 0..6 מול בודק עצמאי המבוסס על צמצום זוגות; 1000 מחרוזות מעורבות עם seed קבוע; 10 דוגמאות מפורשות; 3 מקרים של קינון עמוק עם 10000 סוגריים פותחים.",
+        "variant_append_stream": "29524 זרמים ו־ 250959 בדיקות prefix מול סריקה נפרדת; Python בפועל."
       },
       "en": {
         "status": "passed",
         "checked_on": "2026-09-29",
         "script_path": "solutions/register_prep_037.py",
-        "method": "57000 cases: all bracket words of length 0..6 against independent pair-reduction oracle; 1000 seeded mixed strings; 10 explicit examples; 3 deeply nested cases with 10000 opening parentheses."
+        "method": "57000 cases: all bracket words of length 0..6 against independent pair-reduction oracle; 1000 seeded mixed strings; 10 explicit examples; 3 deeply nested cases with 10000 opening parentheses.",
+        "variant_append_stream": "29524 streams/250959 prefix observations against separate scanning; actual Python."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "ריק, אותיות בלבד, פותח שנותר פתוח וסוגר לפני פותח.",
+        "reset אחרי שגיאה; תו בודד בלבד בכל feed."
+      ],
+      "en": [
+        "Empty, letters only, incomplete open and close-before-open.",
+        "Reset after failure; exactly one character per feed."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לכנות קידומת ניתנת להשלמה מאוזנת כבר עכשיו.",
+        "לשכוח הפרת סדר אחרי שכמויות השתוו.",
+        "להניח pop ללא היסטוריה או להשתמש במונה יחיד לשלושה סוגים."
+      ],
+      "en": [
+        "Treating a completable prefix as already balanced.",
+        "Forgetting earlier order violations after counts equalize.",
+        "Assuming pop without history or one counter for three types."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור עומק ודגל הפרת prefix, ואחזיר 1 רק אם אין הפרה והעומק 0. קליטת push אינה pop; לשחזור צריך לשמור היסטוריה.",
+      "en": "Retain depth and a prefix-failure flag; return 1 only when no failure and depth 0. Append is not pop; rollback requires history."
+    },
+    "source_ambiguities": {
+      "he": "לא ברור אם נדרשות הסרות או איזון מלא לעומת תקינות קידומת אפשרית. נבחר חוזה append מפורש ונשמר המקור.",
+      "en": "Removal and complete-valid versus completable-prefix meaning are unspecified. State the append-only contract and retain source."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מוסיפים תמיכה בביטול ההזנה האחרונה?",
+          "direction": "שומרים מצב קודם במחסנית ומחזירים אותו בעת pop; לא מנחשים מתוך המצב הנוכחי בלבד.",
+          "principle": "מצב מספיק לעדכון קדימה לא בהכרח מספיק ל־undo."
+        }
+      ],
+      "en": [
+        {
+          "question": "How is undo of the last feed supported?",
+          "direction": "Save prior state on a rollback stack and restore it on pop rather than guessing from current state alone.",
+          "principle": "Forward-update state need not support undo."
+        }
+      ]
+    },
+    "prompt_variants": {
+      "he": {
+        "append_stream": {
+          "prompt": "### הרחבה: סטטוס לאחר כל הוספה לזרם\nהמקור הנוסף מתאר סימנים שנדחפים למחסנית ומבקש 0/1 בכל רגע. נפרש push כהוספת תו לסוף סדר ההגעה, לא כסריקה מהראש של מחסנית קיימת. בחוזה ההרחבה רק () הם סוגריים וכל תו אחר מוזנח; הגרסה הקודמת של שלושת הסוגים נשמרת.\n\nfeed מקבלת תו אחד ומחזירה 1 בדיוק אם כל הקידומת עד כה מאוזנת וחוקית. ריק תקין; קידומת עם פותחים לא סגורים היא כרגע 0 גם אם ניתנת להשלמה. סגירה ללא פותח יוצרת שגיאה שלא תתוקן על ידי הוספה. יש reset וקריאת valid, אך אין פעולת הסרת תו במקור. הסבירו בנפרד מה יידרש כדי לתמוך ב־pop.",
+          "hints": [
+            "האם קידומת \"(\" תקינה כרגע או רק ניתנת להשלמה? הגדירו מה הפלט אומר.",
+            "לסוג יחיד מספיק עומק, אבל צריך לזכור גם אם הייתה אי־פעם סגירה ללא פותח.",
+            "אחרי הוספה valid הוא not broken ועומק 0. שגיאת prefix נשארת עד reset; כדי לבטל הוספות צריך לשמור מצבים קודמים."
+          ],
+          "integration_status": "בחומר משלים בלבד; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "append_stream": {
+          "prompt": "### Extension: status after each appended symbol\nThe additional source describes symbols pushed into a stack and asks for 0/1 at every moment. Interpret push as appending in arrival order, not reading an existing stack top-down. This extension treats only() as brackets and ignores other characters; the original three-type contract remains.\n\nfeed accepts one character and returns 1 exactly when the entire prefix so far is balanced and valid. Empty input is valid; unmatched openers yield 0 now even when completion remains possible. An unmatched close cannot be repaired by appending. Provide reset/valid but do not invent a removal operation; explain separately what pop would require.",
+          "hints": [
+            "Does prefix\"(\" count as valid now or only completable? Define the output.",
+            "One bracket type needs a depth counter plus whether an unmatched close ever occurred.",
+            "After append, valid means not broken and depth 0. Prefix failure remains until reset; undo requires previous-state information."
+          ],
+          "integration_status": "Supplemental only; original interactive hint queue retained."
+        }
       }
     }
   }

@@ -332,3 +332,18 @@ Attached are clean geometry, FSM and system diagrams, a Python model and HDL. Ch
 - [Verification evidence](../checks/prep-053-verification.json)
 
 No chat hint/solution request is recorded as learner activity. Publication is a pilot content action, not professional approval. The authored follow-up remains unconnected to the interactive queue.
+
+
+## מקור נוסף — 30.10.2026, מקבץ70, צילום 9
+
+[צילום מקור פרטי](../sources/2026-10-30-batch70-09.png)
+
+נוספה הרחבה דו־לשונית ברשומה ובנספח נפרד; התוכן והרמזים הקודמים נשמרו.
+
+החלטת קליטה: `existing_question_source_and_variant`.
+
+תמלול המקור (נתוני מקור):
+
+```text
+נתון אולם. אנשים נכנסים אליו ויוצאים ממנו דרך שער המאפשר מעבר של בן אדם אחד בכל רגע. ברשותך גלאי שמזהה מעבר של בן אדם. תכנן מערכת שתדע כמה אנשים נמצאים בתוך האולם בכל רגע. מותר להשתמש בגלאי אחד או יותר. האם יכולה להיווצר בעיה במערכת שתיכננת?
+```

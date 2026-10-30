@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "checked_on": "2026-10-30",
+  "finite_request_masks_floors_directions": 6144,
+  "duplicate_presses_coalesced": true,
+  "post_clear_same_floor_request_retained": true,
+  "invalid_floors": 4,
+  "non_atomic_lost_update_witness": true,
+  "scope": "Serialized landing-level Python scheduler only; no actual ISR timing, doors, braking or safety qualification.",
+  "evidence_scope": "Executed Python and independent oracle, not native compilation, hardware timing, physical RT or human approval."
+}

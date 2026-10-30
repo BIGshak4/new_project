@@ -1,0 +1,1326 @@
+{
+  "PREP-175": {
+    "assumptions": {
+      "he": [
+        "השרטוט המקורי חסר; ההמחשה נבחרה במפורש.",
+        "באפר זהות דיגיטלי עם עומס קיבולי ומודל RC מאוחד."
+      ],
+      "en": [
+        "Original circuit absent; the example is explicitly chosen.",
+        "Noninverting digital buffer with a lumped capacitive RC model."
+      ]
+    },
+    "optimality": {
+      "he": "אין מספר באפרים אופטימלי ללא ספריית תאים, עומסים וחוטים; תוספת שלב עולה בשטח, הספק והשהיה.",
+      "en": "No optimal buffer count follows without cells, loads and wiring; an added stage costs area, power and delay."
+    },
+    "verification": {
+      "he": "29 בדיקות מתמטיות עצמאיות; ללא בדיקת שבב או סימולציית טרנזיסטורים.",
+      "en": "29 independent mathematical cases; no chip or transistor simulation."
+    },
+    "edge_cases": {
+      "he": [
+        "עומס קטן: באפר עלול להאט.",
+        "עומס גדול או fanout גבוה; שרשרת אפשרית.",
+        "קלט רועש או מחוץ למסילות אינו מתוקן בהכרח."
+      ],
+      "en": [
+        "Small load may become slower.",
+        "Large load or fanout may benefit; staged drive is possible.",
+        "No general repair of noisy or out-of-range input."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "הטענה שבאפר הוא חוט ללא מחיר.",
+        "קביעה מה עשה הבאפר בשרטוט שלא צורף.",
+        "הנחה שבאפר רגיל הוא Schmitt או ממיר רמות."
+      ],
+      "en": [
+        "Calling a buffer a free wire.",
+        "Inventing the purpose in the missing diagram.",
+        "Assuming an ordinary buffer is a Schmitt input or level shifter."
+      ]
+    },
+    "interview_answer": {
+      "he": "לוגית Y=A, חשמלית הבאפר מפריד מקור חלש מעומס גדול ומספק יכולת הנעה. אשווה את עלות העומס הישיר לכניסה, השהיה פנימית וטעינת העומס דרך הבאפר, ואציין את מחיר ההספק והשטח.",
+      "en": "Logically Y=A; electrically the buffer separates a weak source from a large load. Compare direct loading with buffer input, intrinsic delay and output charging, then include power and area."
+    },
+    "source_ambiguities": {
+      "he": [
+        "אין שרטוט ולכן אין תשובה ייחודית על המעגל המצולם.",
+        "NVIDIA מדווחת במקור בלבד."
+      ],
+      "en": [
+        "No diagram means no unique explanation of the original circuit.",
+        "NVIDIA is source-reported only."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "האם הוספת באפר תמיד פותרת setup?",
+          "answer_direction": "לא. יש לבדוק סכום השהיות מלא מול הקטנת העומס, ואז לבדוק hold והספק מחדש.",
+          "principle": "אופטימיזציה נמדדת על נתיב שלם."
+        }
+      ],
+      "en": [
+        {
+          "question": "Does a buffer always fix setup?",
+          "answer_direction": "No; compare total added delay with reduced loading, and recheck hold and power.",
+          "principle": "Optimize a whole path."
+        }
+      ]
+    }
+  },
+  "PREP-176": {
+    "assumptions": {
+      "he": [
+        "אותו שעון וחזית, נתיב מחזור אחד; skew חיובי ללכידה מאוחרת.",
+        "מודל זמן מאוחד, זמני מינימום/מקסימום ו־uncertainty נפרדים."
+      ],
+      "en": [
+        "Same clock/edge, one-cycle path; positive skew means later capture.",
+        "One time unit, explicit min/max delays and separate uncertainties."
+      ]
+    },
+    "optimality": {
+      "he": "אין תיקון יחיד אופטימלי ללא נתיב וספרייה; צינור משנה latency והאצה עשויה לפגוע ב־hold.",
+      "en": "No unique best repair without the path/library; pipelining changes latency and acceleration may hurt hold."
+    },
+    "verification": {
+      "he": "54 בדיקות מול לוח זמנים מוחלט; הגדלת מחזור עוזרת רק ל־setup במודל.",
+      "en": "54 absolute-schedule checks; a longer period improves only setup in this model."
+    },
+    "edge_cases": {
+      "he": [
+        "skew שלילי או חיובי.",
+        "נתיב קצר מאוד מפר hold.",
+        "אפס slack הוא גבול המודל, לא מרווח הנדסי."
+      ],
+      "en": [
+        "Negative/positive skew.",
+        "A very short path can violate hold.",
+        "Zero slack is a model boundary, not engineering margin."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שימוש ב־max גם ל־hold.",
+        "בלבול בסימן skew.",
+        "הנחה שהורדת תדר מתקנת hold.",
+        "חריגת multicycle ללא בסיס פונקציונלי."
+      ],
+      "en": [
+        "Using maximum delays for hold.",
+        "Changing skew sign without definition.",
+        "Claiming lower frequency fixes hold.",
+        "Unsupported multicycle exceptions."
+      ]
+    },
+    "interview_answer": {
+      "he": "setup דורש הגעה לפני החזית ו־hold מונע הגעה מוקדמת של הנתון הבא. אבדוק max מול T+skew ל־setup, ו־min מול hold+skew ל־hold. אתקן עומק, עומס או ארכיטקטורה ואבדוק שוב את שניהם.",
+      "en": "Setup limits late arrival; hold limits early new-data arrival. Compare maximum delays with T+skew, and minimum delays with hold+skew. Repair depth, load or architecture, then recheck both."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור לא נותן נתיב או ערכים; הדוגמה והמודל נוספו במפורש."
+      ],
+      "en": [
+        "No path or numeric values were supplied; the model/example are explicit additions."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מדוע הגדלת T לא מתקנת hold?",
+          "answer_direction": "ההשוואה היא בין חזיתות של אותו מחזור לבין הנתון החדש, לכן T אינו מופיע באי־השוויון.",
+          "principle": "לפני תיקון מזהים אילו חזיתות משתתפות בדרישה."
+        }
+      ],
+      "en": [
+        {
+          "question": "Why does increasing T not fix hold?",
+          "answer_direction": "It compares same-cycle edges with earliest new data, so T is absent from the inequality.",
+          "principle": "Identify the edges participating in each constraint."
+        }
+      ]
+    }
+  },
+  "PREP-177": {
+    "assumptions": {
+      "he": [
+        "מודל קיבולי מאוחד ושיפועים מיושרים שנבחרו במפורש.",
+        "R, Cg חיוביים; Cc לא שלילי; k הוא−1,0 או 1."
+      ],
+      "en": [
+        "Explicit lumped capacitance and aligned prescribed slopes.",
+        "Positive R, Cg; nonnegative Cc; k is−1,0 or1."
+      ]
+    },
+    "optimality": {
+      "he": "הקטנת צימוד מתחרה בשטח, עומס, הספק וניתוב; אין פתרון מיטבי ללא פרזיטים וחלונות פעילות.",
+      "en": "Coupling reduction trades routing, area, power and load; no optimum without parasitics and switching windows."
+    },
+    "verification": {
+      "he": "33 בדיקות מטען וסדרי השהיה במודל מאוחד; ללא field solver או STA.",
+      "en": "33 charge/delay-order checks in a lumped model; no field solver or STA."
+    },
+    "edge_cases": {
+      "he": [
+        "Cc=0 מבטל תלות בשכן.",
+        "אותו כיוון מול נגדי, וחוסר חפיפה.",
+        "קורבן שקט דורש ניתוח פולס אחר."
+      ],
+      "en": [
+        "Cc=0 removes neighbor dependence.",
+        "Same/opposite transitions and nonoverlap.",
+        "Quiet victim needs a different pulse analysis."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "הטענה שצימוד רק מאט.",
+        "שימוש אוטומטי ב־2 Cc לכל מעבר.",
+        "התעלמות מ־hold או מחלונות פעילות."
+      ],
+      "en": [
+        "Claiming coupling only slows signals.",
+        "Assigning2 Cc to every event.",
+        "Ignoring hold or activity windows."
+      ]
+    },
+    "interview_answer": {
+      "he": "זרם הצימוד תלוי בנגזרת הפרש המתחים. במודל שיפועים שווים, יחד נותן 0 Cc, שקט 1 Cc ונגד 2 Cc. אבדוק האטת setup וגם האצת hold, ואקטין צימוד או אשנה ניתוב והנעה תוך בדיקה מחודשת.",
+      "en": "Coupling current follows the voltage-difference derivative. Equal ramps give0 Cc,1 Cc or2 Cc for same, quiet or opposite motion. Check setup slowdown and hold speedup, then tune routing, coupling or drive and recheck."
+    },
+    "source_ambiguities": {
+      "he": [
+        "אין במקור פרזיטים או צורות גל; כמות ההשהיה אינה ניתנת לחישוב יחיד."
+      ],
+      "en": [
+        "No parasitics or waveforms were supplied; a unique numeric delay cannot be inferred."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "למה מגן מוליך אינו פתרון חינם?",
+          "answer_direction": "הוא צורך ניתוב ועלול להוסיף קיבול; נדרש חיבור ייחוס והערכה של העומס והתזמון.",
+          "principle": "הקטנת הפרעה עשויה להגדיל עומס."
+        }
+      ],
+      "en": [
+        {
+          "question": "Why is shielding not free?",
+          "answer_direction": "It consumes routing and can add capacitance; provide a reference connection and re-evaluate load/timing.",
+          "principle": "Reducing interference may increase load."
+        }
+      ]
+    }
+  },
+  "PREP-170": {
+    "assumptions": {
+      "he": [
+        "מקור הטעינה מנותק לאחר המעבר; הסליל והקבל יוצרים לולאה מבודדת.",
+        "מתח V0, זרם סליל התחלתי אפס, רכיבים אידאליים."
+      ],
+      "en": [
+        "Charging source disconnects; capacitor and inductor form an isolated loop.",
+        "InitialV0, zero inductor current, ideal positiveL, C."
+      ]
+    },
+    "optimality": {
+      "he": "פתרון פרמטרי של מערכת מסדר שני; אין טענת מינימום רכיבים או תכנון פיזי מיטבי.",
+      "en": "Parametric second-order response; no component-count or physical-design optimum claimed."
+    },
+    "verification": {
+      "he": "ארבע ריצות RK4 עצמאיות,16,004 דגימות ו־16,004 בדיקות אנרגיה מול הפתרון האנליטי. מודל אידאלי בלבד.",
+      "en": "Four independent RK4 runs,16,004 samples and 16,004 energy checks against the analytic solution. Ideal model only."
+    },
+    "edge_cases": {
+      "he": [
+        "V0=0 משאיר אנרגיה ומתח אפס.",
+        "t=0 מתח רציף וזרם אפס; ברבע מחזור המתח אפס אך הזרם לא.",
+        "בלי ערכי L, C לא קיים ציר זמן מספרי יחיד."
+      ],
+      "en": [
+        "V0=0 gives zero energy and response.",
+        "At t=0 voltage is continuous; at quarter period voltage is zero but current is not.",
+        "AbsentL, C, no unique numeric time axis exists."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "ציור פריקת RC בלי נגד.",
+        "השארת מקור המתח מחובר אחרי העברת המתג.",
+        "עצירת הזרם כשהקבל מגיע לאפס.",
+        "הנחת דעיכה בלי הפסדים."
+      ],
+      "en": [
+        "Drawing anRC discharge without a resistor.",
+        "Leaving the source connected after transfer.",
+        "Stopping current at zero capacitor voltage.",
+        "Adding decay without losses."
+      ]
+    },
+    "interview_answer": {
+      "he": "לאחר ניתוק המקור הקבל והסליל מחליפים אנרגיה. רציפות vC ו־iL נותנת vC=V0 cos(t/sqrtLC), עם קוסינוס לא דועך במודל האידאלי וזרם שמגיע לשיא ברבע מחזור.",
+      "en": "After source disconnection, C andL exchange energy. Continuity gives vC=V0 cos(t/sqrtLC), an undamped ideal cosine with current maximal at a quarter period."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו נותן ערכי רכיבים, הפסדים או התנהגות מתג; ההנחות מוצגות בנפרד.",
+        "SolarEdge מדווחת בצילום בלבד."
+      ],
+      "en": [
+        "Values, losses and switch dynamics are absent; assumptions are explicit.",
+        "SolarEdge attribution is source-reported only."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם מוסיפים התנגדות טורית קטנה?",
+          "answer_direction": "משוואת הלולאה כוללת איבר ריסון. בתחום תת־מרוסן המשרעת דועכת ותדר התנודה קטן מעט; יש לחשב לפי R, L, C ולא להוסיף דעיכה שרירותית.",
+          "principle": "דעיכה נובעת מפיזור אנרגיה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes with a small series resistance?",
+          "answer_direction": "The equation gains damping. An underdamped response decays with a shifted frequency determined byR, L, C, not an arbitrary envelope.",
+          "principle": "Damping requires energy dissipation."
+        }
+      ]
+    }
+  },
+  "PREP-171": {
+    "assumptions": {
+      "he": [
+        "רצף נסגר רק בהופעת הביט ההפוך; אין סימן סוף.",
+        "שגיאה: אפסים זוגיים או אחדים אי־זוגיים; איפוס מוחק ללא אירוע."
+      ],
+      "en": [
+        "A run closes only on the opposite bit; no end marker.",
+        "Error:even zeros or odd ones; reset discards history without an event."
+      ]
+    },
+    "optimality": {
+      "he": "ארבעה מצבי היסטוריה מובחנים דורשים שני ביטים במודל Mealy. מוצא רשום מוסיף ביט; אין מינימום שטח/תדר פיזי.",
+      "en": "Four distinguishable history states need two Mealy state bits; registered output adds a bit. No physical-area or frequency minimum."
+    },
+    "verification": {
+      "he": "8,191 מילים,90,114 ביטים,4,096 רצפי איפוס וכל ששת זוגות המצבים מול אורקל רצפים עצמאי.",
+      "en": "8,191 words,90,114 bits,4,096 reset streams and all six state pairs versus an independent run oracle."
+    },
+    "edge_cases": {
+      "he": [
+        "קלט ריק, אפס יחיד ואחד יחיד לא סוגרים רצף.",
+        "רצפים ארוכים אינם דורשים מונה הולך וגדל.",
+        "איפוס באמצע אינו שגיאת רצף."
+      ],
+      "en": [
+        "Empty input, a single zero or one closes no run.",
+        "Arbitrarily long runs need no growing counter.",
+        "Midstream reset is not a run error."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "דיווח בכל פעם שהזוגיות זמנית שגויה.",
+        "בדיקת הרצף החדש במקום הרצף שנסגר.",
+        "הוספת שגיאה על האחד האחרון בדוגמה בלי סימן סוף."
+      ],
+      "en": [
+        "Reporting every temporarily wrong parity.",
+        "Checking the new run instead of the closed one.",
+        "Flagging the final one without an end marker."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור סוג ביט וזוגיות. בהמשך אותו ביט אהפוך זוגיות; בביט שונה אפיק שגיאה רק אם הישן היה אפסים זוגיים או אחדים אי־זוגיים, ואתחיל רצף באורך 1. OE שקול להתחלה ריקה.",
+      "en": "Track bit type and parity. The same bit toggles parity; the opposite bit flags even zeros or odd ones in the old run and starts length 1. OE is equivalent to empty initialization."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו כותב ״הסתיים״ במפורש, אך הדוגמה קובעת שהפלט מופיע בגבול ולא בקידומות.",
+        "זמן דגימה, איפוס ורישום מוצא הוגדרו בעריכה; חברות מדווחות בלבד."
+      ],
+      "en": [
+        "The source does not explicitly say completed, but its example places events at boundaries rather than prefixes.",
+        "Sampling, reset and output registration are editorial; companies are source-reported only."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד בודקים גם את הרצף האחרון של הודעה סופית?",
+          "answer_direction": "הוסיפו end או valid/end פרוטוקולי, והגדירו חזית דיווח נפרדת בלי להתחיל רצף נגדי מדומה.",
+          "principle": "סיום מידע הוא חלק מהממשק."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can the last run of a finite message be checked?",
+          "answer_direction": "Add an explicit end marker/protocol and define its reporting edge without inventing an opposite data bit.",
+          "principle": "End-of-data is an interface event."
+        }
+      ]
+    }
+  },
+  "PREP-172": {
+    "assumptions": {
+      "he": [
+        "כל פעם מחליפים מתג אחד כשהשני נשאר קבוע; מתייחסים למצב שהתייצב.",
+        "מעגל DC במתח נמוך, הגבלת זרם וכניסות שאינן צפות."
+      ],
+      "en": [
+        "Either individual switch changes while the other stays fixed; settled states.",
+        "Low-voltageDC, current limiting and nonfloating inputs."
+      ]
+    },
+    "optimality": {
+      "he": "XOR או XNOR מממשים את הדרישה. אין טענת מינימום התקנים, נגד או שערים; הנעת LED היא חלק נפרד מהמימוש הלוגי.",
+      "en": "XOR or XNOR meets the specification. No minimum device, resistor or gate claim; LED drive is separate from logical selection."
+    },
+    "verification": {
+      "he": "ארבע שורות אמת, שמונה החלפות בודדות, ארבע החלפות כפולות וחישוב נגד לדוגמה. ללא בדיקת מגעים או LED ממשי.",
+      "en": "Four truth rows, eight individual toggles, four double toggles and resistor arithmetic. No physical contacts or LED test."
+    },
+    "edge_cases": {
+      "he": [
+        "כל ארבעת מצבי המתגים; XOR לעומת XNOR.",
+        "שני מתגים מתחלפים יחד: אותו מצב סופי, אפשרות למצב ביניים.",
+        "מתג מכני קופץ; דרייבר עם נפילת מתח שאינה אפס."
+      ],
+      "en": [
+        "All four states; XOR versus XNOR.",
+        "Both switches change:same final state, possible intermediate transition.",
+        "Contact bounce and nonzero driver drop."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חיבור שני SPST בטור נותן AND ולא החלפה מכל מצב.",
+        "ניחוש שמתג אחד אחראי רק להדליק והשני רק לכבות.",
+        "כניסה צפה או LED בלי הגבלת זרם."
+      ],
+      "en": [
+        "Two series SPST switches implement AND, not the required toggle property.",
+        "Assigning one switch only-on and the other only-off.",
+        "Floating inputs or no LED current limiting."
+      ]
+    },
+    "interview_answer": {
+      "he": "החלפה של סיבית אחת חייבת להפוך פלט, ולכן זו XOR או XNOR. אפשר כניסות מתגים עם pull-up, שער XOR ודרייבר ללד עם נגד, או שני SPDT ושני חוטי מעבר. טבלת האמת מתארת מצב סופי ולא debounce.",
+      "en": "Changing one bit must invert output, so use XOR/XNOR. Options are pulled switch inputs plus XOR and a current-limited LED driver, or two SPDT switches and travelers. The truth table covers final states, not debounce."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו קובע סוג מתגים, מתח, קוטביות התחלה או דירוג LED; ההנחות גלויות.",
+        "NVIDIA ו־Intel מדווחות במקור בלבד."
+      ],
+      "en": [
+        "Switch types, voltage, initial polarity and LED ratings are unspecified; assumptions are explicit.",
+        "NVIDIA/Intel attribution is source-reported only."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה בשלושה מתגים עצמאיים?",
+          "answer_direction": "לוגית משתמשים בזוגיות של שלוש סיביות או היפוכה. חיבור מכני דורש טופולוגיית מתגים מתאימה ולא סתם SPST שלישי בטור.",
+          "principle": "כל החלפת קלט משנה זוגיות."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes with three independent switches?",
+          "answer_direction": "Use three-bit parity or its complement logically; a mechanical circuit needs appropriate switching topology, not another series SPST.",
+          "principle": "An individual input toggle changes parity."
+        }
+      ]
+    }
+  },
+  "PREP-173": {
+    "assumptions": {
+      "he": [
+        "ביט סינכרוני אחד לכל צעד; חפיפה מותרת; יעד 1011 לפי סדר הגעה.",
+        "אירוע Mealy מהמצב הישן והביט הנוכחי; רישום אירוע הוא חלופה מפורשת."
+      ],
+      "en": [
+        "One synchronous bit per step; overlap allowed; target 1011 in arrival order.",
+        "Mealy event uses old state/current input; registered event is an explicit alternative."
+      ]
+    },
+    "optimality": {
+      "he": "ארבעה מצבי קידומת מובחנים, שני ביטי מצב במודל Mealy. אוגר פלט, איפוס ותזמון פיזי נספרים בנפרד.",
+      "en": "Four distinguishable prefix states, two Mealy state bits. Output storage, reset and physical timing are separate costs."
+    },
+    "verification": {
+      "he": "8,191 מילים,90,114 ביטים,4,096 רצפי איפוס, שישה זוגות מצבים מובחנים ודוגמת חפיפה. מודל Python בלבד.",
+      "en": "8,191 words,90,114 bits,4,096 reset streams, six distinguished state pairs and overlap example. Python model only."
+    },
+    "edge_cases": {
+      "he": [
+        "קלט ריק או פחות מארבעה ביטים.",
+        "1011011 מזהה פעמיים;1010 שומר 10.",
+        "111 אינו זיהוי; איפוס באמצע מוחק התקדמות."
+      ],
+      "en": [
+        "Empty/fewer-than-four bits.",
+        "1011011 detects twice;1010 preserves 10.",
+        "111 is not a match; midstream reset clears progress."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "איפוס ל־S0 אחרי זיהוי שמפסיד חפיפה.",
+        "איפוס ל־S0 אחרי 1010 במקום שמירת 10.",
+        "החלפת הסדר ל־1101 או בלבול עם 01011.",
+        "ערבוב Mealy עם פלט אחרי חזית בלי אוגר."
+      ],
+      "en": [
+        "Clearing to S0 after detection and losing overlap.",
+        "Clearing after 1010 instead of retaining10.",
+        "Reversing the target or confusing it with 01011.",
+        "Describing a post-edge stored output without adding its register."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור קידומות ריקה,1,10,101. במצב 101 וקלט 1 אוציא אירוע ואשמור 1; בקלט 0 אשמור 10. כך 1011011 מזהה בביטים 4,7. אבחין בין אירוע Mealy לפולס שנרשם אחרי חזית.",
+      "en": "Track empty,1,10,101. From 101, one emits and keeps 1; zero keeps 10. Thus1011011 detects at 4,7. Distinguish the Mealy event from a registered post-edge pulse."
+    },
+    "source_ambiguities": {
+      "he": [
+        "זרם אינסופי אינו קובע חפיפה, איפוס או סוג מוצא; החוזה נוסף בגלוי.",
+        "אותה בעיית דוגמה קיימת נשמרת עם מזהה והיסטוריה; הידנית היא רשומת המקור הראשית."
+      ],
+      "en": [
+        "An infinite stream alone does not define overlap, reset or output timing; these are explicit choices.",
+        "The existing example keeps its identity/history; the manual record is the sourced primary family member."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך משתנה המימוש כשאסור לזהות חפיפה?",
+          "answer_direction": "אחרי זיהוי מלא עוברים להתחלה במקום לשמור את ה־1 האחרון; יש להגדיר אם דילוג כזה מותר גם במקרה כישלון חלקי.",
+          "principle": "מדיניות חפיפה היא דרישת ממשק ולא פרט קוסמטי."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes if overlap is forbidden?",
+          "answer_direction": "After a full match, reset progress rather than retaining the final1; specify whether partial mismatches retain prefixes.",
+          "principle": "Overlap policy is a contract, not a cosmetic detail."
+        }
+      ]
+    }
+  },
+  "PREP-174": {
+    "assumptions": {
+      "he": [
+        "X ללא סימן, בדיוק שתי סיביות; פלט מדויק ארבע סיביות.",
+        "מעגל צירופי עם AND, NOT, אפס וחיווט."
+      ],
+      "en": [
+        "Unsigned two-bit X; exact four-bit output.",
+        "Combinational AND, NOT, zero and wiring."
+      ]
+    },
+    "optimality": {
+      "he": "שני AND ו־NOT אחד במימוש המוצע; אין טענת מינימום ספריית תאים.",
+      "en": "TwoAND gates and one NOT in this construction; no minimum cell-library claim."
+    },
+    "verification": {
+      "he": "כל ארבע השורות מול כפל שלמים וארבע דחיות קלט מחוץ לחוזה. Python בלבד.",
+      "en": "All four rows against integer multiplication and four malformed inputs. Python only."
+    },
+    "edge_cases": {
+      "he": [
+        "0→0,1→1,2→4,3→9.",
+        "שלוש סיביות מוצא אינן מספיקות.",
+        "פירוש חתום משנה את שורת 11."
+      ],
+      "en": [
+        "0→0,1→1,2→4,3→9.",
+        "Three output bits are insufficient.",
+        "Signed interpretation changes input 11."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "מוצא בן שתי סיביות או השמטת הביט של 8.",
+        "הנחה שיש צורך במכפל גדול.",
+        "בלבול בין ריבוע למספר האחדות."
+      ],
+      "en": [
+        "Using a two-bit output or dropping the eight-weight bit.",
+        "Assuming a full multiplier is required.",
+        "Confusing square with population count."
+      ]
+    },
+    "interview_answer": {
+      "he": "אכתוב את 0,1,4,9 בארבע סיביות. מתקבל y0=b, y1=0, y2=a AND NOT b, y3=a AND b. זה כל המעגל, בהנחה שהקלט ללא סימן.",
+      "en": "Write 0,1,4,9 in four bits: y0=b, y1=0, y2=a AND NOT b, y3=a AND b. This completes the circuit for unsigned input."
+    },
+    "source_ambiguities": {
+      "he": [
+        "רוחב המוצא והסימן חסרים במקור ונוספו במפורש.",
+        "NVIDIA מדווחת בלבד."
+      ],
+      "en": [
+        "Output width and signedness were absent and are explicit additions.",
+        "NVIDIA attribution is source-reported."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מהי הטבלה אם שתי סיביות הקלט חתומות במשלים לשתיים?",
+          "answer_direction": "הערכים 0,1,−2,−1 נותנים 0,1,4,1. נדרשות שלוש סיביות; y2=a AND NOT b, y1=0, y0=b.",
+          "principle": "אותו וקטור ביטים עשוי לייצג מספר אחר."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if input is signed two-bit two's complement?",
+          "answer_direction": "Values 0,1,−2,−1 give0,1,4,1. Three bits suffice:y2=a AND NOT b, y1=0, y0=b.",
+          "principle": "The same bit vector can denote a different number."
+        }
+      ]
+    }
+  },
+  "PREP-160": {
+    "assumptions": {
+      "he": [
+        "רוחב וערכי קלט מוגדרים כמספרים שלמים; כפילויות מותרות ומיון עולה.",
+        "גישת זיכרון היא העברת ערך חיצוני בודד; כל הנחות הקיבולת והניתוב נפרדות."
+      ],
+      "en": [
+        "Integer values, duplicates allowed, ascending order.",
+        "An access is one external value transfer; capacity/routing assumptions are explicit and separate."
+      ]
+    },
+    "optimality": {
+      "he": "בנייה קופסה־בלבד:5 קריאות,5000 קריאות זיכרון ו־ 5000 כתיבות. לא מינימום כללי. bitonic מרופד:55 שכבות ו־ 28160 משווים, בלי אופטימום פיזי.",
+      "en": "Box-only construction:5 calls,5000 reads/5000 writes, without a global minimum. Padded bitonic:55 layers/28160 comparators, without physical optimality."
+    },
+    "edge_cases": {
+      "he": [
+        "כפילויות, שליליים, חלוקה לא נוחה של ערכים בין בלוקים.",
+        "ריפוד חייב להיות מזוהה בתג; קופסה שמחזירה מספר פריטים שגוי נדחית."
+      ],
+      "en": [
+        "Duplicates, negatives and adversarial block distribution.",
+        "Padding requires a tag; wrong-count primitive output is rejected."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לבלבל קריאות קופסה עם עסקאות זיכרון.",
+        "להניח שאין מקום פנימי נוסף, או להפך שיש 2000 תאים, בלי להצהיר.",
+        "להציג בנייה של חמש הפעלות כמינימום בלי הוכחה."
+      ],
+      "en": [
+        "Confusing box calls with memory transactions.",
+        "Silently assuming either no additional workspace or room for all 2000.",
+        "Calling a five-call construction minimal without proof."
+      ]
+    },
+    "interview_answer": {
+      "he": "אברר קיבולת פנימית ויחידת גישה. עם מספיק מקום יש קריאה וכתיבה אחת לכל איבר. כשמותר רק למיין 1000 בכל פעם, אפשר בנייה של ארבעה בלוקי 500 וחמש compare-split; המינימום הכללי אינו נקבע מהמקור.",
+      "en": "Clarify internal capacity and transfer units. Enough workspace permits one read/write per item. A box-only construction uses four 500-blocks and five compare-splits; the source alone does not specify a global optimum."
+    },
+    "source_ambiguities": {
+      "he": "מספרים לעומת תווים, קיבולת, העברות, השוואות חיצוניות ופלט אינם מוגדרים. אלה חוזים נפרדים; PREP-098 ממזגת קלט שכבר ממוין ואינה אותה שאלה.",
+      "en": "Numbers versus characters, capacity, transfers, external comparisons and output are unspecified. Separate contracts; PREP-098 starts with sorted inputs and is different."
+    },
+    "verification": {
+      "he": "15332 מצבי בלוקים,100 דגימות 2000,2047 בדיקות bitonic קטנות ו־ 20 מלאות; אורקל מיון מלא. Python בלבד.",
+      "en": "15332 block cases,100 full inputs,2047 small bitonic checks and 20 full-capacity cases versus full sorting. Python only."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם מודדים עסקאות cache-line במקום ערכים?",
+          "direction": "צריך רוחב שורה, קיבולת ומדיניות cache וסדר גישות; אי אפשר לחלק אוטומטית את המניין במספר קבוע.",
+          "principle": "מודל העלות הוא חלק מהבעיה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes when counting cache-line transactions?",
+          "direction": "Specify line size, capacity, cache policy and access order; dividing the scalar count by a constant is not generally valid.",
+          "principle": "The cost model belongs to the problem."
+        }
+      ]
+    }
+  },
+  "PREP-161": {
+    "assumptions": {
+      "he": [
+        "קומות 1..8, בקשות יעד ודריכה סריאלית רק בנקודות יישור במודל.",
+        "פסיקה אמיתית דורשת inbox אטומי ודריכה ממשימת בעלות יחידה; אין API של דלת או תקלה במקור."
+      ],
+      "en": [
+        "Floors 1..8, destination requests and serialized aligned-landing model steps.",
+        "Real ISR needs an atomic inbox and single task ownership; source has no door/fault API."
+      ]
+    },
+    "optimality": {
+      "he": "O(8) עבודה לאירוע ומסכות בגודל קבוע; לא מינימום המתנה או הוכחת WCET פיזית.",
+      "en": "O(8) bounded logical work per event and fixed masks; no waiting-time optimum or physical WCET proof."
+    },
+    "edge_cases": {
+      "he": [
+        "לחיצה בקומה הנוכחית, בקשות כפולות, שתי בקשות יחד והיפוך כיוון בגבול.",
+        "בקשה מיד אחרי ניקוז או שירות; קומה 0/9 נדחית."
+      ],
+      "en": [
+        "Current-floor press, duplicates, concurrent arrivals and direction reversal.",
+        "Request after draining/service; floors 0/9 rejected."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "המתנה או קריאת מנוע ארוכה בתוך ISR.",
+        "מסכת OR לא אטומית או ניקוז שמוחק בקשה חדשה.",
+        "הנחת זיהוי יישור או דלת שאינם ב־API."
+      ],
+      "en": [
+        "Waiting/long engine calls in the ISR.",
+        "Nonatomic OR or draining that erases a new request.",
+        "Assuming alignment/door feedback absent from the API."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור בקשות בביטים, אעדכן inbox באטומיות מהפסיקה ומשימת בקרה יחידה תנהל LOOK. אדרוש חוזה הגעה ובלימה, ואנתח WCET וקדימויות; מודל הקוד אינו לבדו בקר בטיחות פיזי.",
+      "en": "Store request bits, post atomically from ISR and let one task run LOOK. Require arrival/braking contracts and analyze WCET/priorities; the model alone is not a physical safety controller."
+    },
+    "source_ambiguities": {
+      "he": "לא הוגדרו מספרי קומות, זמן דגימה, יישור, דלתות, השהיית מנוע או סנכרון. הם נשארים הנחות ומגבלות גלויות. שם EnignePressedFloor נשמר.",
+      "en": "Floor numbering, sampling, alignment, doors, engine delay and synchronization are unspecified. Explicit assumptions/limits remain; preserve EnignePressedFloor spelling."
+    },
+    "verification": {
+      "he": "6144 מצבים, דגימות בקשות חוזרות, לאחר שירות וארבע דחיות קומה; סימולציה סריאלית בלבד.",
+      "en": "6144 configurations, duplicate/post-service requests and four invalid floors; serialized simulation only."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מרחיבים למעליות רבות?",
+          "direction": "נדרש משגר בקשות משותף וחוזה בעלות, עם פונקציית מטרה ותקציבי זמן חדשים; מסכת שמונה ביטים אינה פותרת שיבוץ צי.",
+          "principle": "מדיניות שיבוץ וסנכרון הן שכבות נפרדות."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would several elevators be coordinated?",
+          "direction": "Add shared dispatch, ownership and an explicit scheduling objective/deadlines; one eight-bit mask does not solve fleet allocation.",
+          "principle": "Dispatch policy and synchronization are separate layers."
+        }
+      ]
+    }
+  },
+  "PREP-162": {
+    "assumptions": {
+      "he": [
+        "פלטים שונים בלבד, בכל סדר; ריק נותן תמורה ריקה אחת.",
+        "תווים הם code points בקוד Python; recursion מותרת."
+      ],
+      "en": [
+        "Distinct visible outputs, any order; empty input has one empty permutation.",
+        "Python code points; recursion allowed."
+      ]
+    },
+    "optimality": {
+      "he": "O(σnP) חסם פשוט ו־O(n+σ) עזר; כתיבת הפלט Ω(nP). לא זמן קבוע ולא מקום כל הפלט כחלק מעזר.",
+      "en": "Simple O(σnP) bound/O(n+σ) auxiliary space; output writing Ω(nP). Not constant time and not hiding retained output storage."
+    },
+    "edge_cases": {
+      "he": [
+        "ריק, תו יחיד, כל התווים שווים, כל התווים שונים.",
+        "תווים חוזרים ותווים שאינם ASCII."
+      ],
+      "en": [
+        "Empty, singleton, all equal/all distinct.",
+        "Repeated and non-ASCII characters."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להדפיס עותקים זהים בגלל הבחנה במיקומים.",
+        "לא להחזיר ספירה אחרי רקורסיה.",
+        "לטעון O(n!) זמן בלי עלות תווי הפלט או O(1) מקום למרות מחסנית."
+      ],
+      "en": [
+        "Printing duplicate strings from distinct equal positions.",
+        "Not restoring counts after recursion.",
+        "Ignoring output characters or recursion storage in complexity claims."
+      ]
+    },
+    "interview_answer": {
+      "he": "אבחר כל תו זמין למיקום הבא מתוך מפת ספירות, ואז אחזיר אותו בחזרה מהרקורסיה. אוציא כל עלה דרך מחולל וכך אקבל כל תמורה שונה פעם אחת.",
+      "en": "Choose each available character from a count map and restore it on backtracking. Yield each leaf to generate every distinct permutation once."
+    },
+    "source_ambiguities": {
+      "he": "המקור לא הגדיר כפילויות, ריק או סוג תו; ההבהרות מפורשות. זו אינה תמורה אקראית של PREP-022.",
+      "en": "Source omits duplicates, empty input and character units; explicit choices are separate from random-permutation PREP-022."
+    },
+    "verification": {
+      "he": "1093 מחרוזות ו־ 40320 פלטים שונים, מול itertools.permutations באורקל בלבד.",
+      "en": "1093 strings and 40320 distinct outputs versus itertools.permutations used only by the oracle."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה אם צריך את התמורה הבאה בסדר מילוני בלבד?",
+          "direction": "זהו ממשק אחר: next_permutation על סדר ממוין, עם טיפול בחזרות; אינו מחייב שמירת כל התמורות.",
+          "principle": "ממשק הפלט משנה את האלגוריתם."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if only the next lexicographic permutation is needed?",
+          "direction": "Use a next_permutation interface from sorted order with duplicate handling; it need not store all outputs.",
+          "principle": "Output interfaces change algorithms."
+        }
+      ]
+    }
+  },
+  "PREP-163": {
+    "assumptions": {
+      "he": [
+        "חיוביים בחוזה המקור; הרחבה חתומה מפורשת.",
+        "קטע רציף לא ריק, גבולות כוללניים ותשובת היעדר מוגדרת."
+      ],
+      "en": [
+        "Positive source input; explicitly separate signed extension.",
+        "Nonempty contiguous interval, inclusive bounds and defined absence result."
+      ]
+    },
+    "optimality": {
+      "he": "Θ(N) פעולות מילה, שלושה אינדקסי שארית ו־O(1) מילות עזר; הפלט הוא גבולות.",
+      "en": "Θ(N) word operations, three residue indices/O(1) words; output is bounds."
+    },
+    "edge_cases": {
+      "he": [
+        "ריק, איבר יחיד, כל הסכום מתחלק 3, כמה קטעים מיטביים.",
+        "ללא פתרון לא ריק; שאריות שליליות בהרחבה."
+      ],
+      "en": [
+        "Empty, singleton, divisible whole sum, tied longest intervals.",
+        "No nonempty solution; normalized negative residues in the extension."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לדרוס מיקום מוקדם לשארית.",
+        "לשכוח קידומת ריקה ולפספס קטע שמתחיל באפס.",
+        "להחזיר תת־קבוצה לא רציפה או למקסם סכום במקום אורך."
+      ],
+      "en": [
+        "Overwriting earliest residue positions.",
+        "Missing the empty prefix and intervals beginning at index 0.",
+        "Returning a noncontiguous selection or maximizing sum instead of length."
+      ]
+    },
+    "interview_answer": {
+      "he": "שתי קידומות באותה שארית מגדירות קטע שסכומו מתחלק 3. אשמור את המיקום הראשון לכל שארית ואחשב בכל סוף את המרחק אליו, עם שארית 0 באינדקס−1.",
+      "en": "Equal prefix residues delimit a divisible interval. Save each residue's first index and maximize the distance at every end, with residue 0 initialized at−1."
+    },
+    "source_ambiguities": {
+      "he": "רצף פורש כרציף, והפלט ושובר השוויון הוגדרו. לא אותה שאלה כמו מקסימום סכום PREP-072.",
+      "en": "Sequence is interpreted as contiguous; output/ties are explicit. Different from maximum-sum PREP-072."
+    },
+    "verification": {
+      "he": "21845 חיוביים ו־ 19531 הרחבות חתומות מול כל קטע אפשרי; דוגמת המקור מחזירה(5,0,4).",
+      "en": "21845 positive and 19531 signed-extension arrays versus every interval; source example returns(5,0,4)."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "ומה אם המחלק הואK כקלט?",
+          "direction": "אותו רעיון עם מיקום ראשון לכל שארית, אבל המקום גדל עד O(K) או מספר השאריות שנראו.",
+          "principle": "קבוע בשאלה המקורית אינו קבוע בהכללה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if divisor K is supplied as input?",
+          "direction": "Use earliest indices per residue; storage now grows up to O(K) or the number of residues encountered.",
+          "principle": "A source constant is not constant in a generalization."
+        }
+      ]
+    }
+  },
+  "PREP-164": {
+    "assumptions": {
+      "he": [
+        "ספרות 1..9 בסדר, פעולה אחת מתוך ארבע בכל פער.",
+        "קדימות רגילה וחשבונות רציונליים מדויקים; פתרון אחד מספיק."
+      ],
+      "en": [
+        "Digits 1..9 in order, one of four operators per gap.",
+        "Ordinary precedence/exact rational arithmetic; one witness suffices."
+      ]
+    },
+    "optimality": {
+      "he": "הדוגמה מאומתת ישירות; חיפוש כללי עד 4^(n−1) מועמדים עם O(n) פעולות הערכה. אין טענת אופטימליות.",
+      "en": "Witness verified directly; generalized search has up to 4^(n−1) candidates/O(n) evaluation operations each. No optimality claim."
+    },
+    "edge_cases": {
+      "he": [
+        "חלוקה וקידמות פעולות, כמה פתרונות אפשריים.",
+        "שרשור וסוגריים שייכים לחוזה אחר."
+      ],
+      "en": [
+        "Division/precedence and multiple solutions.",
+        "Concatenation/parentheses belong to another contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לחשב משמאל לימין ולהתעלם מכפל קודם.",
+        "לשנות סדר ספרות בלי רשות או להשתמש בעיגול לצורך שוויון.",
+        "להציג פתרון אחד כיחיד בלי מנייה מתאימה."
+      ],
+      "en": [
+        "Ignoring multiplication precedence.",
+        "Reordering digits or using rounded equality.",
+        "Claiming uniqueness from one witness."
+      ]
+    },
+    "interview_answer": {
+      "he": "1 עד 7 בחיבור נותנים 28 ו־ 8 כפול 9 נותן 72. לכן הביטוי עם שבעה חיבורים וכפל בסוף שווה 100, בלי שינוי ספרות.",
+      "en": "Add 1 through 7 for 28 and multiply 8 by 9 for 72. Their sum is 100 without changing the digits."
+    },
+    "source_ambiguities": {
+      "he": "ספריית הפעולות והתחביר לא פורטו; נבחר חוזה שבו הדוגמה תקפה בלי שרשור או סוגריים. אין כפילות במאגרים.",
+      "en": "Operators/syntax are unspecified; choose an explicit grammar validating a witness without concatenation/parentheses. No bank duplicate."
+    },
+    "verification": {
+      "he": "כל 65536 השמות הפעולות מול מפרש מחסניות בלתי תלוי;15 פגיעות תחת החוזה, ללא eval.",
+      "en": "All 65536 assignments versus an independent stack parser;15 hits under the grammar, no eval."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך משתנה החיפוש אם מותר גם להשאיר פער בלי פעולה?",
+          "direction": "צריך להגדיר שרשור ספרות ולבנות טוקנים מספריים לפני הערכת קדימות; זה מגדיל את מרחב התחביר.",
+          "principle": "מנייה תלויה בדקדוק."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if a gap may contain no operator?",
+          "direction": "Define digit concatenation and tokenize numbers before precedence evaluation, enlarging the grammar.",
+          "principle": "Enumeration depends on syntax."
+        }
+      ]
+    }
+  },
+  "PREP-165": {
+    "assumptions": {
+      "he": [
+        "שעות במיקומי שעון רגיל סביב מעגל; כל תווית נספרת פעם אחת.",
+        "שני מוטות ישרים דקים, אפשר מקבילים, ללא כיסוי מספרים."
+      ],
+      "en": [
+        "Standard equally spaced clock labels;each label counted once.",
+        "Two thin straight rods may be parallel and avoid every label."
+      ]
+    },
+    "optimality": {
+      "he": "בנייה קבועה ללוח בן 12 מספרים. אין טענת יחידות של הפתרון או שוויון שטחי האזורים. שני חיתוכים מקבילים יוצרים שלושה חלקים.",
+      "en": "A fixed construction for 12 labels. No uniqueness or equal-area claim. Two parallel cuts produce three pieces."
+    },
+    "verification": {
+      "he": "נבדקו חלוקה של 12 תוויות, שלושה סכומי 26 ו־4,320 בדיקות מכפלה סקלרית ב־360 סיבובים. הבנייה הגאומטרית היא ההוכחה, והחישוב משתמש ב־floating point עם מרווח גדול מהגבולות.",
+      "en": "Checked 12 partitioned labels, three sums of 26, and 4,320 dot products over 360 rotations. Geometry supplies the proof; floating-point checks have a substantial boundary gap."
+    },
+    "edge_cases": {
+      "he": [
+        "12 ו־1 סמוכים סביב ההיקף אף שסדרם המספרי נשבר.",
+        "שני מוטות מצטלבים בתוך המעגל היו יוצרים בדרך כלל ארבעה אזורים.",
+        "אין להניח שהרצועה מכילה רק מספרים רציפים בסדר הרגיל."
+      ],
+      "en": [
+        "12 and 1 are circular neighbors despite numeric wraparound.",
+        "Intersecting cuts inside the circle generally create four regions.",
+        "The middle strip need not contain one numerically consecutive label interval."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לחלק לסכומים נכונים בלי להראות שקווים ישרים מייצרים את הקבוצות.",
+        "לכפות שטחים גאומטריים שווים.",
+        "להעביר מוט על מספר בלי להחליט לאיזה אזור הוא שייך."
+      ],
+      "en": [
+        "Giving equal-sum sets without realizing them with straight cuts.",
+        "Imposing equal geometric areas.",
+        "Passing a cut through a label without defining ownership."
+      ]
+    },
+    "interview_answer": {
+      "he": "כל אזור צריך 26. אבודד 11,12,1,2 ובקצה הנגדי 5,6,7,8 באמצעות שני מוטות מקבילים. ברצועה נשארים 3,4,9,10. שלושת הסכומים 26 וכל מספר מופיע פעם אחת.",
+      "en": "Each region needs 26. Parallel rods separate 11,12,1,2 and the opposite 5,6,7,8;the middle retains 3,4,9,10. All three sums are 26 and every label occurs once."
+    },
+    "source_ambiguities": {
+      "he": [
+        "רוחב המוטות ומיקום מדויק בתוך הרווחים לא נמסרו;נעשה שימוש בקווים אידאליים.",
+        "שיוך Apple מדווח בצילום ולא אומת עצמאית."
+      ],
+      "en": [
+        "Rod thickness and exact gap positions are unspecified;ideal lines are used.",
+        "Apple attribution is source-reported, not independently verified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "למה שתי קבוצות הקצה חייבות להיות רציפות סביב המעגל?",
+          "answer_direction": "קו ישר חותך מעגל בשתי נקודות ולכן כיפה אוספת קשת רציפה אחת. הרצועה בין שני קווים יכולה לאסוף שתי קשתות נפרדות.",
+          "principle": "האילוץ הגאומטרי מצמצם את חלוקות המספרים האפשריות."
+        }
+      ],
+      "en": [
+        {
+          "question": "Why are cap labels contiguous around the circle?",
+          "answer_direction": "A straight cut meets a circle twice and bounds one contiguous arc;the middle strip may meet two separate arcs.",
+          "principle": "Geometric realizability restricts numeric partitions."
+        }
+      ]
+    }
+  },
+  "PREP-166": {
+    "assumptions": {
+      "he": [
+        "מטבעות זהים ברדיוס חיובי, שולחן עגול סופי ומטבע ראשון מתאים.",
+        "אין חפיפה, ערימה, הזזה או הבלטה מעבר לשולחן;תורות ומיקומים אידאליים."
+      ],
+      "en": [
+        "Identical positive-radius coins, a finite circular table, and a first coin fits.",
+        "No overlap, stacking, moving or overhang;ideal alternating placement."
+      ]
+    },
+    "optimality": {
+      "he": "הבטחת ניצחון לראשון, לא מינימום מטבעות. חישוב נקודת התגובה הוא היפוך שני סימנים;בדיקת חוקיות מול K מטבעות בקוד עולה O(K). חסם השטח מוכיח סיום אך אינו חסם אריזה הדוק.",
+      "en": "Winning guarantee for the first player, not a minimum coin count. Response coordinates require two sign changes;checking legality against K coins in code takes O(K). The area bound proves termination, not optimal packing."
+    },
+    "verification": {
+      "he": "24 תגובות ראשונות ו־240 תגובות שניות על רשתות מדויקות, ועוד 100 משחקי רשת מדגמיים עם 262 זוגות תגובה חוקיים. לא נטען שנבדקו כל המיקומים הרציפים או סיום פיזי.",
+      "en": "24 first replies and 240 second replies on exact grids, plus 100 seeded grid games with 262 legal response pairs. Neither all continuous placements nor a physical game was enumerated."
+    },
+    "edge_cases": {
+      "he": [
+        "אם אף מטבע אינו מתאים, הנחת הפתיחה אינה מתקיימת.",
+        "אם רק מטבע אחד מתאים, הראשון מנצח מייד לאחר הנחתו.",
+        "גדלי מטבעות שונים או שולחן שאינו סימטרי עשויים לשבור את ההעתק."
+      ],
+      "en": [
+        "If no coin fits, the opening assumption fails.",
+        "If only one fits, the center opening immediately wins.",
+        "Different coin sizes or an asymmetric table may invalidate reflected replies."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להציע שיקוף בלי להציב מטבע מרכזי ובלי לבדוק חפיפה עם המהלך החדש.",
+        "להסיק שהשני מנצח רק מפני שיש לו אפשרות לחקות.",
+        "להתייחס לניסוי רשת כאילו כיסה כל נקודה במישור."
+      ],
+      "en": [
+        "Proposing reflection without the central coin or checking the new opponent coin.",
+        "Claiming the second player wins merely by copying.",
+        "Treating finite-grid trials as coverage of every continuous position."
+      ]
+    },
+    "interview_answer": {
+      "he": "אבחר לשחק ראשון ואניח במרכז. לכל מטבע יריב אגיב בסיבוב 180 מעלות סביב המרכז. הסימטריה שומרת חוקיות מול הישנים, והמטבע המרכזי מונע חפיפה בין זוג המהלכים החדשים. המשחק סופי ולכן השני ייתקע ראשון.",
+      "en": "Play first and place at center. Reply to every opponent coin by a180-degree turn. Symmetry avoids old coins, and the center coin keeps the new pair apart. The game is finite, so the second player runs out first."
+    },
+    "source_ambiguities": {
+      "he": [
+        "שוויון גדלים, הנחה מלאה על השולחן ותורות לא פורטו במלואם בצילום.",
+        "המקור אינו מעניק ניצחון לשחקן השני;האסטרטגיה בוחרת ראשון.",
+        "שיוכי Rafael/NVIDIA מדווחים בלבד."
+      ],
+      "en": [
+        "Equal sizes, whole-table placement and exact turn rules are editorial clarifications.",
+        "The winning strategy requires playing first, not a guaranteed second-player win.",
+        "Rafael/NVIDIA attributions are source-reported only."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "האם שולחן אליפטי משנה את הרעיון?",
+          "answer_direction": "גם אליפסה נשמרת בחצי סיבוב. אם אותו מטבע מרכזי מתאים וכללי ההנחה זהים, הוכחת ההעתק ממשיכה;צורה ללא סימטריה מרכזית דורשת ניתוח אחר.",
+          "principle": "מזהים איזו סימטריה, ולא איזה שם צורה, נחוצה להוכחה."
+        }
+      ],
+      "en": [
+        {
+          "question": "Does an elliptical table change the idea?",
+          "answer_direction": "An ellipse is also half-turn invariant. With a fitting central coin and the same rules, the proof continues;an asymmetric domain needs another analysis.",
+          "principle": "Identify the required symmetry rather than relying on the shape name."
+        }
+      ]
+    }
+  },
+  "PREP-167": {
+    "assumptions": {
+      "he": [
+        "סירה ואדם נשארים צפים לפני ואחרי;מסתם לא משתנה.",
+        "חפץ מוצק אינרטי בעל מסה ונפח קבועים, ללא התמוססות, ספיגה או הצפה של חלל.",
+        "בריכה סגורה ללא שפיכה, תמיכה חיצונית או שינוי כמות מים;משווים אחרי התייצבות.",
+        "לנוסחת שינוי גובה נבחר שטח חתך קבוע A."
+      ],
+      "en": [
+        "Boat/person remain floating with unchanged own mass.",
+        "An inert solid object has fixed mass/volume and no dissolution, absorption or flooding.",
+        "Closed pool, no spill, external support or water change;compare settled levels.",
+        "A constant pool cross-section A is used for the level formula."
+      ]
+    },
+    "optimality": {
+      "he": "חישוב במספר קבוע של פעולות אריתמטיות. אין טענה למפלס ים מדיד, לתנועת גלים או למודל לכל חפץ אפשרי.",
+      "en": "Constant-number arithmetic balance. No measurable open-ocean change, wave-motion or arbitrary-object model is claimed."
+    },
+    "verification": {
+      "he": "180 מאזני מסה/נפח רציונליים של המערכת כולה, עם חפץ שוקע, צף וניטרלי. דוגמה צפופה נותנת ירידה של 1 מ״מ עבור שטח 1 מ״ר. לא נערך ניסוי מים או חפץ פיזי.",
+      "en": "180 exact whole-system mass/displacement cases spanning sinking, floating and neutral objects. A dense example gives a1 mm drop for 1m² area. No physical water experiment."
+    },
+    "edge_cases": {
+      "he": [
+        "צפיפות שווה למים נותנת ללא שינוי, גם כשהחפץ שקוע כולו.",
+        "שחרור גל זמני אינו מפלס שיווי המשקל.",
+        "חפץ חלול שנפתח או סופג משנה את המודל.",
+        "בבריכה שגולשת כמות המים אינה נשמרת לפי ההנחות."
+      ],
+      "en": [
+        "Equal density leaves the level unchanged even when fully immersed.",
+        "A transient splash is not the equilibrium level.",
+        "A flooding hollow or absorbent object changes the model.",
+        "An overflowing pool does not conserve water under these assumptions."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לומר שכל חפץ שנכנס למים מעלה את המפלס בלי להפחית את עומס הסירה.",
+        "להשוות רק נפח חפץ במקום דחייה לפי משקלו כשהיה בסירה.",
+        "להחיל תוצאת אבן שוקעת על חפץ שצף."
+      ],
+      "en": [
+        "Counting only the newly immersed object and ignoring the unloaded boat.",
+        "Using object volume rather than weight-based displacement while carried.",
+        "Applying the sinking-stone result to a floating object."
+      ]
+    },
+    "interview_answer": {
+      "he": "בסירה החפץ גורם לדחיית m/ρמים. אם הוא שוקע, הוא דוחה במים רק את נפחו V, הקטן יותר, ולכן המפלס יורד. אם הוא צף או ניטרלי, הוא עדיין דוחה m/ρמים והמפלס נשאר. בלי נתוני החפץ אין תשובה יחידה של עולה או יורד.",
+      "en": "While carried, the object adds m/rho_water displacement. A sinking object then displaces only its smaller volume V, so the level falls. A floating or neutral object still displaces m/rho_water, so it stays unchanged. Without object assumptions there is no single up/down answer."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו נותן צפיפות, סוג חפץ, בריכה סגורה או זמן התצפית.",
+        "ים פתוח וחפץ שמשנה מסה/נפח דורשים מודל אחר;הפתרון מותנה במאזן בריכה מוגדר.",
+        "שיוך Intel מדווח בלבד."
+      ],
+      "en": [
+        "Density, object type, closed-basin conditions and observation time are absent.",
+        "Open ocean or mass/volume-changing objects need another model;the result is conditional on a defined pool balance.",
+        "Intel attribution is source-reported only."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה אם חפץ קל מוחזק כולו מתחת למים באמצעות תמיכה מחוץ לסירה?",
+          "answer_direction": "אז הוא דוחה V גדול מ־m/ρמים והמפלס יכול לעלות. יש להגדיר מי מספק כוח:אם התמיכה שייכת לסירה, יש לכלול את תגובת הכוח במאזן שלה.",
+          "principle": "כוחות חיצוניים ושיוך המערכת משנים את מאזן הציפה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if a light object is held fully underwater by support external to the boat?",
+          "answer_direction": "Then it displaces V greater than m/rho_water and level can rise. Specify the force source;if it is attached to the boat, include the reaction force in that boat balance.",
+          "principle": "External forces and system boundaries affect buoyancy accounting."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "OpenStax — עקרון ארכימדס וציפה",
+          "url": "https://openstax.org/books/university-physics-volume-1/pages/14-4-archimedes-principle-and-buoyancy"
+        }
+      ],
+      "en": [
+        {
+          "title": "OpenStax — Archimedes principle and buoyancy",
+          "url": "https://openstax.org/books/university-physics-volume-1/pages/14-4-archimedes-principle-and-buoyancy"
+        }
+      ]
+    }
+  },
+  "PREP-168": {
+    "assumptions": {
+      "he": [
+        "בדיוק מטבע אחד קל יותר, והגודל והצורה אינם מזהים אותו.",
+        "שמונת התקינים שווי משקל, שלוש תוצאות שקילה מדויקות, ללא רעש.",
+        "מותר לבחור שקילה שנייה לפי הראשונה."
+      ],
+      "en": [
+        "Exactly one lighter coin with no visual identifying feature.",
+        "Eight genuine coins have equal weight;three exact balance outcomes without noise.",
+        "The second weighing may depend on the first."
+      ]
+    },
+    "optimality": {
+      "he": "שתי שקילות מספיקות ונחוצות:9 אפשרויות,3 תוצאות לשקילה. זהו מינימום שאילתות מאזניים, לא מינימום תנועות יד או זמן פיזי.",
+      "en": "Two balance queries are sufficient and necessary:9 possibilities and 3 outcomes per query. This is a query minimum, not a minimum of handling actions or physical time."
+    },
+    "verification": {
+      "he": "כל 9 המיקומים, בתשעה שילובי משקל ויחס בכל מיקום:81 מקרים. בכל אחד שתי שקילות בגודל 3 מול 3 ואז 1 מול 1;כל 9 מסלולי התוצאה שונים.",
+      "en": "All 9 positions under 9 genuine/counterfeit weight combinations:81 cases. Each uses 3-versus 3 then 1-versus 1;all 9 outcome paths are distinct."
+    },
+    "edge_cases": {
+      "he": [
+        "איזון בשתי השקילות מזהה את המטבע השלישי בשלישייה 7,8,9.",
+        "גם הפרש משקל קטן כרצוננו מתאים למאזניים האידאליים.",
+        "אם לא ידוע כיוון הסטייה, תשעה מצבים הופכים ל־18 וההוכחה אינה חלה."
+      ],
+      "en": [
+        "Two balanced outcomes identify the third member of 7,8,9.",
+        "Arbitrarily small nonzero differences work only under the ideal exact balance.",
+        "Unknown heavier/lighter direction creates 18 states and invalidates this two-query bound."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לבחור את הכף הכבדה למרות שידוע שהחריג קל.",
+        "להתעלם מהשלישייה שלא נשקלה במקרה איזון.",
+        "להשתמש במשקל אמיתי או בזהות החריג בתוך האלגוריתם."
+      ],
+      "en": [
+        "Choosing the heavier pan despite known-lighter direction.",
+        "Ignoring the unweighed group on balance.",
+        "Giving the algorithm hidden weights or the counterfeit identity."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשקול 3 מול 3. הכף הקלה היא קבוצת החשודים, ובאיזון אלו 3 האחרים. אחר כך 1 מול 1 מתוכם:הקל או השלישי באיזון.3² תוצאות מאפשרות 9 זהויות ושקילה אחת אינה מספיקה.",
+      "en": "Weigh 3 against 3;the lighter pan remains, or the unweighed three if balanced. Then 1 against 1 identifies the lighter or the third on balance.3² paths distinguish 9 identities;one query cannot."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מפרט דיוק מאזניים ומשקלים שווים לתקינים;אלה הנחות הכרחיות שהוצהרו.",
+        "תגיות המקור המספריות אינן ייחוס חברה."
+      ],
+      "en": [
+        "Exact outcomes and equal genuine weights are explicit necessary assumptions.",
+        "Numeric source tags are not employer attributions."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם המטבע עשוי להיות גם כבד?",
+          "answer_direction": "צריך להבחין בין 18 מצבים. שתי שקילות מאפשרות לכל היותר 9 תוצאות משותפות, לכן אינן מספיקות.",
+          "principle": "סופרים את מצב התקלה יחד עם זהות הרכיב."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if the counterfeit may also be heavier?",
+          "answer_direction": "There are 18 identity/direction states but at most 9 two-query paths, so two cannot suffice.",
+          "principle": "Count fault direction as well as identity."
+        }
+      ]
+    }
+  },
+  "PREP-169": {
+    "assumptions": {
+      "he": [
+        "תיבה נבחרת אחיד ואז כדור אחיד מתוכה.",
+        "כל 50 האדומים וכל 50 הלבנים משובצים;שתי התיבות לא ריקות.",
+        "המתכנן רואה צבעים לפני החלוקה;הבחירה המאוחרת אקראית."
+      ],
+      "en": [
+        "Uniform urn choice followed by uniform within-urn choice.",
+        "All 50 red and 50 white balls allocated;both urns nonempty.",
+        "Colors are visible to the allocator before the later random selection."
+      ]
+    },
+    "optimality": {
+      "he": "74/99 הוא מקסימום ההסתברות תחת מודל הדגימה המוצהר. המנייה בקוד סופית בת 2,599 חלוקות;הוכחת המקסימום נפרדת ואינה מסקנה ממדגם אקראי.",
+      "en": "74/99 is globally maximal under the declared sampling model. Code enumerates 2599 finite allocations;the proof is separate from random experimentation."
+    },
+    "verification": {
+      "he": "כל 2,599 החלוקות הלא־ריקות נבדקו מול סכימת הסתברויות של תוצאות כדור בודדות. אומתו מקסימום 74/99, סימטריה ושתי חלוקות אופטימליות בלבד.",
+      "en": "All 2599 nonempty allocations were compared with an independent atomic-ball probability sum. Verified 74/99, symmetry, and exactly two optimal allocations."
+    },
+    "edge_cases": {
+      "he": [
+        "תיבה ריקה אינה תוצאה חוקית של המודל.",
+        "שתי תיבות בגודל 50 נותנות סיכוי 1/2 בלי קשר לפיצול האדומים.",
+        "בחירת כדור אחידה מכל 100 נותנת תמיד 1/2, אך זה ניסוי אחר."
+      ],
+      "en": [
+        "An empty urn is outside the model.",
+        "Two 50-ball urns give probability 1/2 regardless of red split.",
+        "Uniform choice among all 100 gives 1/2, but is a different experiment."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "למצע כמויות אדומים בלי לחלק בגודל כל תיבה.",
+        "להניח שכל כדור מקבל הסתברות 1/100.",
+        "להציג חלוקה טובה בלי להוכיח מקסימום."
+      ],
+      "en": [
+        "Averaging red counts without urn-size denominators.",
+        "Assigning probability 1/100 to every ball.",
+        "Giving a good candidate without proving optimality."
+      ]
+    },
+    "interview_answer": {
+      "he": "אדום יחיד בתיבה אחת וכל 99 האחרים בשנייה נותנים 74/99. להוכחה, בתיבה הקטנה גודל m≤50 ולכל m עדיף למלא אותה באדומים. הביטוי שנותר יורד עם m ולכן m=1 אופטימלי.",
+      "en": "One red alone and all other 99 balls together gives 74/99. For proof, the smaller urn has m≤50 and for fixed m should be all red. The resulting expression decreases with m, so m=1 is optimal."
+    },
+    "source_ambiguities": {
+      "he": [
+        "בחירה אקראית פורשה כאחידה בשני השלבים;בלי הסתברויות תיבה הבעיה חסרה.",
+        "המקור אינו מציין כמות חובה בכל תיבה;הוגדרה אי־ריקנות בלבד.",
+        "שיוך Applied Materials מדווח בלבד."
+      ],
+      "en": [
+        "Random means uniform at both stages;unspecified urn probabilities otherwise leave a gap.",
+        "No per-urn quota is supplied;only nonemptiness is imposed.",
+        "Applied Materials attribution is source-reported only."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה הסיכוי אם מחלקים 50 ו־50 בכל מקרה?",
+          "answer_direction": "אם בכל תיבה 50 כדורים, כל כדור מקבל 1/2·1/50=1/100 ולכן הסיכוי לאדום 1/2 לכל חלוקה.",
+          "principle": "סדר בחירה וגדלי הקבוצות קובעים את הסתברויות הפריטים."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if each urn must contain exactly 50 balls?",
+          "answer_direction": "Every ball then gets 1/2·1/50=1/100, so total red probability is 1/2 for every split.",
+          "principle": "Selection order and group sizes determine item probabilities."
+        }
+      ]
+    }
+  }
+}
