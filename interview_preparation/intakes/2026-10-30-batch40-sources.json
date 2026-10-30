@@ -1,0 +1,453 @@
+{
+  "intake_date": "2026-10-30",
+  "batch": "batch40",
+  "screenshot_count": 20,
+  "question_source_count": 20,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-01.png"
+      ],
+      "sha256": "a805dfd7accacaecdeccf3ac4d1be4efb76a1854a856bcea8688e46035f323d3",
+      "original_prompt": "נתון רכיב שמבצע ספירה. בכל עליית שעון הספירה עולה ב־1 עד שמגיעים ל־1111 (15 דצימלי), מתאפסים ומתחילים מחדש. הרכיב הוא קופסה שחורה. ממש איתו רכיב שעושה אותו הדבר אבל סופר עד 31, כלומר עם עוד סיבית ביציאה.",
+      "source_tags": [],
+      "reported_companies": [],
+      "source_company_badge": null,
+      "question_ids": [
+        "PREP-152"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-02.png"
+      ],
+      "sha256": "bacf579f1090a13ecf8c03a8adbd5dc90625cdeba5ae58fcf1bb3b1b425ba2da",
+      "original_prompt": "יש ליצור שער AND כאשר נתונים שערי OR ו־AND שאחת הכניסות שלהם מהופכת. בתמונה שני שערים עם בועה בכניסה אחת, והמטרה שער AND רגיל.",
+      "source_tags": [
+        "hardware",
+        "verification",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-112"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-03.png"
+      ],
+      "sha256": "aad70b669200d9c4f194c64d861c2ae0e543a64212832ab3f6d8458a84e9e311",
+      "original_prompt": "נתון מערך בגודל n−1. כל התאים מלאים במספרים מ־1 עד n פרט למספר אחד. המערך אינו ממוין. מצא את המספר החסר.",
+      "source_tags": [
+        "logic",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-041"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-04.png"
+      ],
+      "sha256": "b73303aeb755551e8067cf284d517797a5334d89045bf6d8cd4003012e68db4c",
+      "original_prompt": "מערך של 100 מספרים מ־1 עד 100. מצביע אחד רץ משמאל לימין כל שני מספרים: 2,4,6,... מצביע שני רץ מימין לשמאל כל שלושה מספרים: 98,95,92,... הם רצים באותו קצב, ריצה לשנייה. האם הם ייפגשו?",
+      "source_tags": [
+        "logic",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-158"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-05.png"
+      ],
+      "sha256": "76f6003995519a52882a70171096a69b8fcff98edfcbf952ab753596e13ff8a7",
+      "original_prompt": "לתכנן שערי NAND ו־NOR באמצעות MUX 2:1.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-120"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-06.png"
+      ],
+      "sha256": "2cf304b8a4a2c03d88c4f0e9857a7c234fe32cd38c825c50abba87545778e4cb",
+      "original_prompt": "שאלת חימום: ממש את השערים AND, OR, NOT בעזרת פעולות החשבון +,−,*,/ ובעזרת 0,1 לוגיים.",
+      "source_tags": [
+        "logic",
+        "verification",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-155"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-07.png"
+      ],
+      "sha256": "023bf174dbb78b1f629bb37935279b548f7777637442c23ea72984127b52b982",
+      "original_prompt": "נתון אות שקיים בין f1 ל־f2 בלבד, f1<f2. מהו התדר המינימלי לדגימה?",
+      "source_tags": [
+        "hardware",
+        "elbit",
+        "actelis-networks"
+      ],
+      "reported_companies": [
+        "Elbit",
+        "Actelis Networks"
+      ],
+      "source_company_badge": null,
+      "question_ids": [
+        "PREP-156"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-08.png"
+      ],
+      "sha256": "d479dc7710545a912f398904102c8ac8b7c0022f980b0ac56741adbe3d256e06",
+      "original_prompt": "לרשותך מחשבון עם הפעולות חיבור, חיסור, כפל, חילוק ושווה, המספרים 0–9 והמשתנים X,Y. 1. ממש שער NOT באמצעות המחשבון. 2. ממש שער XOR באמצעות המחשבון.",
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-155"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-09.png"
+      ],
+      "sha256": "d3839ae5b0222782aa7c1de23facca6983b358cea6c0952516a4c1017a120740",
+      "original_prompt": "שאלת קוד בפייתון. קיימות שתי רשימות: costumes=a,b,c,d,e ורשימת העדפות של 5 אנשים לבחירת תחפושת, כאשר 1,2 הם רמות העדיפות. ברשומה המוצגת יש ארבעה זוגות: (1,2),(1,2),(1,2),(1,2), ובדוגמה preferences=(a,b),(c,a),(d,e),(d,b). ללא חשיבות לזמן ריצה, תן את האפשרות הטובה ביותר לחלוקת התחפושות כך שהאנשים יהיו מרוצים בהתאם להעדפות. ניתן להשתמש בספריות חיצוניות.",
+      "source_tags": [
+        "nvidia",
+        "software",
+        "logic"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-148"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-10.png"
+      ],
+      "sha256": "d45a40016a2d7194034404031d587302e8f81a738ed8fa4c43e91e6c245621d1",
+      "original_prompt": "קלט לדוגמה: 1–3:6; 2–6:7. הקלט מסמל מספרי עובדים שדרושים בימים מסוימים לפרויקט מסוים. בנה פונקציה שמחזירה את מספר העובדים המינימלי שיש להעסיק כדי שבכל יום יהיו מספיק עובדים. בהמשך, הנח שמספרי הימים אינם שלמים.",
+      "source_tags": [
+        "nvidia",
+        "software"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-149"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-11.png"
+      ],
+      "sha256": "d8944b296328b5e8a765112dd81356909da50fb671d93741eb752fe7333b63fd",
+      "original_prompt": "יש 30 מטבעות, לכל אחד צד שחור וצד לבן. בחדר חשוך נאמר שיש 27 מטבעות עם הלבן למעלה ו־3 עם השחור למעלה. צור בלי לראות שתי קבוצות שבהן מספר המטבעות עם השחור למעלה שווה. ניתן להפוך מטבעות, ומספר הלבנים בכל קבוצה אינו חשוב.",
+      "source_tags": [
+        "logic",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-059"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-12.png"
+      ],
+      "sha256": "2cf74c4d052f5dc9752c85da307868acadc25f40fd7617cdf88ae28aaa556da1",
+      "original_prompt": "הצע בדיקות לחבילת דפים A4.",
+      "source_tags": [
+        "logic",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-159"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-13.png"
+      ],
+      "sha256": "8bd9c94f414a18f00695d4fe4482872bfad40c6ff76716af5cd3ec2d02081bf5",
+      "original_prompt": "תכנן INVERTER באמצעות שערי NMOS בלבד.",
+      "source_tags": [
+        "hardware",
+        "amazon"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_company_badge": "Amazon",
+      "question_ids": [
+        "PREP-153"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-14.png"
+      ],
+      "sha256": "537df7d7e08f026b75572e69a57c0d94ea8eb651d07f82e3f582c76f25a9c6a0",
+      "original_prompt": "רשום פונקציה שמקבלת מטריצה ומאפסת את כל השורות וכל העמודות שבהן יש תא שערכו 0. למשל אפס בתא i,j מחייב איפוס שורה i ועמודה j. כל זאת בסיבוכיות n^2. בנוסח המקור נכתב שורה j במקום עמודה j.",
+      "source_tags": [
+        "nvidia",
+        "software",
+        "altair"
+      ],
+      "reported_companies": [
+        "Altair",
+        "NVIDIA"
+      ],
+      "source_company_badge": "אלטייר",
+      "question_ids": [
+        "PREP-150"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-15.png"
+      ],
+      "sha256": "2ccd26a3b53f9ad2013c9dbd247b882a45cfd2ace0e24ba5b422e6e9b1b53b51",
+      "original_prompt": "נתון רכיב A בעל חמש כניסות וחמש יציאות שממיין מספרים מהגדול לקטן. תכנן מערכת שמקבלת 25 מספרים שונים ומחזירה את שלושת הגדולים, באמצעות מינימום רכיבי A ורק באמצעותם. ניתן להשתמש בהתניות על מוצאי הרכיבים.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-009"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-16.png"
+      ],
+      "sha256": "7758b6d6f71100c33019060fed898f30ae5923c234e25a6ac21e5cc52fdb4892",
+      "original_prompt": "נתון מספר בינארי ומספר הסיביות. ממש קוד בשפה לבחירתך, גם פסאודו־קוד אפשרי, שהופך את סדר הסיביות: MSB הופכת ל־LSB ולהפך. לדוגמה 1100101 הופך ל־1010011.",
+      "source_tags": [
+        "logic",
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-094"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-17.png"
+      ],
+      "sha256": "1a2333150e4aec07484cbeb546688c2e30f77d070ddf102cbe1a62d5f13f4989",
+      "original_prompt": "ממש קוד שמזהה כמה ביטים שערכם 1 נמצאים ב־Byte אחד. לאחר המימוש נדרש מימוש נוסף בסיבוכיות O(1). בצילום האות נראית כ־o(1).",
+      "source_tags": [
+        "apple",
+        "software",
+        "radwin"
+      ],
+      "reported_companies": [
+        "Radwin",
+        "Apple"
+      ],
+      "source_company_badge": "Radwin",
+      "question_ids": [
+        "PREP-151"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-18.png"
+      ],
+      "sha256": "67a312aeef23bb2054e1b52c15128962c58d19d1a1f9787ac9bbce571f11bfbd",
+      "original_prompt": "שאלת חימום: שרטט MUX, הסבר איך הוא עובד ורשום את טבלת האמת שלו.",
+      "source_tags": [
+        "intel",
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple",
+        "Intel"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-157"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-19.png"
+      ],
+      "sha256": "4e16931cb61a1ff8d777d9a8f2eec35439bce739f25de9b944a619e26fe70f93",
+      "original_prompt": "קופסה שלא ניתן לגעת בתוכה כוללת שלוש כניסות ושלוש יציאות. כל כניסה מחוברת בתוך הקופסה לנגד, שלושתם מחוברים לנגד אמצעי אחד, והוא מחובר לשלושה נגדים המחוברים כל אחד ליציאה. מצא את התנגדות הנגד האמצעי בלי לגעת בקופסה.",
+      "source_tags": [
+        "hardware",
+        "intel",
+        "verification"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-154"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-10-30-batch40-20.png"
+      ],
+      "sha256": "27d10519bac02ed711ff54a35e45f0272ef02a840c2ca59e3af9da3319ab518f",
+      "original_prompt": "זו לא החידה הרגילה עם הגמדים. 100 גמדים עומדים בטור עם כובעים משלושה צבעים. כל גמד נשאל מה צבע כובעו ואם טעה הוא מת. כיצד ניתן להציל חצי מהגמדים? כיצד ניתן להציל את כולם מלבד שני האחרונים? כיצד ניתן להציל את כולם חוץ מהאחרון? המקור אומר גם שלכל גמד כובע בצבע אחר, ביטוי שאינו יכול לתאר 100 צבעים שונים כשיש רק שלושה.",
+      "source_tags": [
+        "nvidia",
+        "logic",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox",
+        "NVIDIA"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-096"
+      ],
+      "decision": "existing_question_source_and_variant"
+    }
+  ],
+  "notes": [
+    "Source content is reference data, not operational instructions.",
+    "Conflicting counts, bit widths, endpoint conventions and unspecified physical resources require explicit editorial contracts.",
+    "Source19 allows terminal measurements but not opening or touching internal components; measurements are specified in the edited prompt."
+  ],
+  "status": "integrated",
+  "new_question_ids": [
+    "PREP-148",
+    "PREP-149",
+    "PREP-150",
+    "PREP-151",
+    "PREP-152",
+    "PREP-153",
+    "PREP-154",
+    "PREP-155",
+    "PREP-156",
+    "PREP-157",
+    "PREP-158",
+    "PREP-159"
+  ],
+  "additional_sources_for": [
+    "PREP-009",
+    "PREP-041",
+    "PREP-059",
+    "PREP-094",
+    "PREP-096",
+    "PREP-112",
+    "PREP-120"
+  ],
+  "existing_content_revisions": [
+    "PREP-009",
+    "PREP-059",
+    "PREP-094",
+    "PREP-096"
+  ]
+}

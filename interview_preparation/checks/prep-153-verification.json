@@ -1,0 +1,16 @@
+{
+  "question_id": "PREP-153",
+  "status": "passed",
+  "enhancement_high_analytic_cases": 27,
+  "enhancement_low_quadratic_cases": 27,
+  "body_effect_sweep_cases": 303,
+  "depletion_analytic_cases": 6,
+  "sizing_static_current_witnesses": 2,
+  "illustration_vdd": 5.0,
+  "illustration_vt": 1.0,
+  "illustration_beta_ratio": 8.0,
+  "illustration_voh_no_body": 4.0,
+  "illustration_vol_no_body": 0.22876383367174652,
+  "illustration_voh_body_gamma_point_four": 3.499909352058854,
+  "scope": "Long-channel square-law Python illustration, checked against closed-form high and low roots and Kirchhoff current balance. No SPICE, process parameters, fabricated measurement or guaranteed noise margins; cutoff high denotes charging from below in an ideal leakage-free model."
+}

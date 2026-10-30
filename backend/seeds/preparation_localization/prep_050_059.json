@@ -811,13 +811,19 @@
         "k גדול מעשרה ובדיוק עשרה מטבעות פלי בתחילה.",
         "אין אפשרות להבחין בצדדים בראייה, במישוש או בסימון.",
         "מותר לבחור, להפריד ולהפוך; היפוך מחליף בין הצדדים.",
-        "כל המטבעות מתחלקים לשתי קבוצות שיכולות להיות בגדלים שונים."
+        "כל המטבעות מתחלקים לשתי קבוצות שיכולות להיות בגדלים שונים.",
+        "הצד העליון אינו מזוהה בשום אמצעי; מותר למנות ולבחור מטבעות.",
+        "בדיוק שלושה שחורים מתוך 30 בתחילה; היפוך מחליף בין שני הצדדים.",
+        "שתי הקבוצות לא ריקות, אך אינן חייבות להיות שוות בגודל."
       ],
       "en": [
         "k>10 and initially exactly ten tails.",
         "No seeing, feeling or marks reveal orientations.",
         "Selection, separation and flipping are allowed; a flip exchanges faces.",
-        "All coins are partitioned; group sizes may differ."
+        "All coins are partitioned; group sizes may differ.",
+        "No orientation information is available;coins may be counted and chosen.",
+        "Exactly three of 30 start black up;flipping exchanges the two faces.",
+        "Both groups are nonempty;their sizes need not match."
       ]
     },
     "optimality": {
@@ -825,13 +831,15 @@
         "criterion": "הצלחה מובטחת ללא מידע על כיוונים.",
         "result": "בחירת כל עשרה והיפוך שלהם נותנים אותו מספר פלי בשתי הקבוצות.",
         "proof": "אם x פלי נבחרו, בחוץ 10−x פלי ובקבוצה הנבחרת 10−x עץ, שהופכים לפלי.",
-        "scope": "לא הוכח מינימום פעולות. רשימות אינדקסים מפורשות בקוד דורשות O(k) זמן וזיכרון; האסטרטגיה הפיזית הופכת רק עשרה."
+        "scope": "לא הוכח מינימום פעולות. רשימות אינדקסים מפורשות בקוד דורשות O(k) זמן וזיכרון; האסטרטגיה הפיזית הופכת רק עשרה.",
+        "variant_059_thirty_coins": "שלושה היפוכים ובחירת שלושה מספיקים. ייצוג מפורש של כל האינדקסים עולה O(N) זמן ומקום; התכנית הפיזית יכולה להשאיר את השאר כקבוצה משלימה. אין טענת מינימום בכל מודל פעולה."
       },
       "en": {
         "criterion": "Guaranteed success without orientation observations.",
         "result": "Choose any ten and flip them to equalize both tails counts.",
         "proof": "If x selected coins are tails, outside tails and selected heads both number 10−x; flipping converts the latter to tails.",
-        "scope": "No minimum action count is proved. Materialized index groups cost O(k) time/space; only ten physical coins need flipping."
+        "scope": "No minimum action count is proved. Materialized index groups cost O(k) time/space; only ten physical coins need flipping.",
+        "variant_059_thirty_coins": "Choosing and flipping three suffices. Explicitly materializing all indices costs O(N) time/space;the physical plan can leave the rest as the complement. No minimum across all operation models is claimed."
       }
     },
     "verification": {
@@ -840,14 +848,16 @@
         "method": "התוכנית אינה מקבלת כיוונים. אורקל עצמאי הופך את קבוצת האינדקסים באמצעות הפרש סימטרי וסופר פלי בשתי הקבוצות.",
         "coverage": "כל 12,375 סידורי עשרה פלי עבור k=11..16; עוד 500 מדגמים משוחזרים לגדלים גדולים; 2,026 מקרי הכללה.",
         "script_path": "checks/check_prep_056_058_059_and_032_update.py",
-        "scope": "בדיקות קוד ואלגוריתם בלבד; אין בכך אישור מקצועי אנושי או בדיקה בחשבון חי."
+        "scope": "בדיקות קוד ואלגוריתם בלבד; אין בכך אישור מקצועי אנושי או בדיקה בחשבון חי.",
+        "variant_059_thirty_coins": "כל 4,060 הסידורים של שלושה שחורים בין 30 מטבעות עברו. נבדקו חלוקה מלאה ללא חפיפה, שלושה היפוכים בלבד וארבעת ערכי x. המודל אינו מעביר צדדים לפונקציית התכנון."
       },
       "en": {
         "status": "Python-model checks passed; independent professional review pending.",
         "method": "The planner receives no orientations. An independent oracle flips the planned indices using symmetric difference and counts tails in each group.",
         "coverage": "All 12,375 placements of ten tails for k=11..16; 500 reproducible larger samples; 2,026 generalized cases.",
         "script_path": "checks/check_prep_056_058_059_and_032_update.py",
-        "scope": "Code/algorithm verification only; not human expert approval or authenticated live-account validation."
+        "scope": "Code/algorithm verification only; not human expert approval or authenticated live-account validation.",
+        "variant_059_thirty_coins": "All 4,060 arrangements of three black faces among 30 passed. Checked complete disjoint partition, exactly three flips and all four x values. Orientations are never passed to the planner."
       }
     },
     "edge_cases": {
@@ -855,13 +865,19 @@
         "k=11 נותן קבוצות בגדלים עשר ואחת; אין צורך בשוויון גדלים.",
         "אם כל הפלי נבחרו, שתי הקבוצות מסיימות עם אפס פלי.",
         "אם אין פלי בקבוצה הנבחרת, שתי הקבוצות מסיימות עם עשרה פלי, כאשר המצב אפשרי.",
-        "אין צורך לדעת את x; הוא משתנה הוכחה בלבד."
+        "אין צורך לדעת את x; הוא משתנה הוכחה בלבד.",
+        "בחירת כל השחורים נותנת אפס שחורים בשתי הקבוצות.",
+        "בחירת שלושה לבנים נותנת שלושה שחורים בכל קבוצה.",
+        "בחירה קבועה, למשל שלושת הראשונים, מספיקה; אין צורך באקראיות."
       ],
       "en": [
         "k=11 gives groups of ten and one; equal sizes are unnecessary.",
         "If all tails are selected both groups end with zero tails.",
         "If no tails are selected both end with ten tails, when that arrangement is feasible.",
-        "x is a proof variable, never information required by the strategy."
+        "x is a proof variable, never information required by the strategy.",
+        "Selecting all black coins leaves zero black in both groups.",
+        "Selecting three white coins leaves three black in each group.",
+        "A fixed choice, such as the first three, is sufficient;randomness is unnecessary."
       ]
     },
     "common_mistakes": {
@@ -869,29 +885,85 @@
         "חלוקה לשתי קבוצות שוות בגודל בלי הצדקה לספירת הפלי.",
         "בחירת עשרה פלי במקום כל עשרה מטבעות, מה שמצריך מידע אסור.",
         "היפוך שתי הקבוצות במקום רק זו שנבחרה.",
-        "ניסיון לנחש או לחוש צד במקום לנצל את הספירה הידועה."
+        "ניסיון לנחש או לחוש צד במקום לנצל את הספירה הידועה.",
+        "לחלק לשתי קבוצות שוות בלי לקשר את הגודל למספר השחורים.",
+        "להפוך את שתי הקבוצות במקום את שלושת הנבחרים בלבד.",
+        "לדרוש שמספר השחורים הכולל יישאר שלושה.",
+        "להשתמש בידיעת הבודק על המיקומים כחלק מהאלגוריתם."
       ],
       "en": [
         "Splitting into equal-size piles without justifying equal tails counts.",
         "Selecting ten tails rather than any ten coins, requiring forbidden information.",
         "Flipping both piles rather than just the selected ten.",
-        "Guessing or feeling orientations instead of using the known total."
+        "Guessing or feeling orientations instead of using the known total.",
+        "Splitting equal-sized groups without using the known black count.",
+        "Flipping both groups instead of only the selected three.",
+        "Requiring total black count to remain three.",
+        "Using the verifier orientation knowledge inside the planner."
       ]
     },
     "interview_answer": {
-      "he": "אקח כל עשרה מטבעות ואהפוך רק אותם. אם היו בהם x פלי, בחוץ נשארו 10−x פלי ובקבוצה שלקחתי היו 10−x עץ. אחרי ההיפוך גם בה יהיו 10−x פלי. לא צריך לראות אף מטבע ולא צריך קבוצות שוות בגודל.",
-      "en": "Take any ten coins and flip only those. If x selected coins were tails, 10−x tails remain outside and 10−x selected coins were heads. Flipping gives the selection 10−x tails too. No face observation or equal pile sizes are needed."
+      "he": "אקח כל עשרה מטבעות ואהפוך רק אותם. אם היו בהם x פלי, בחוץ נשארו 10−x פלי ובקבוצה שלקחתי היו 10−x עץ. אחרי ההיפוך גם בה יהיו 10−x פלי. לא צריך לראות אף מטבע ולא צריך קבוצות שוות בגודל.\n\nאבחר שלושה ואהפוך רק אותם. אם היו בהם x שחורים, נותרו בחוץ 3−x שחורים; בנבחרים היו בדיוק 3−x לבנים שיהפכו לשחורים. שתי הקבוצות שוות במספר השחורים, בלי לדעת את x.",
+      "en": "Take any ten coins and flip only those. If x selected coins were tails, 10−x tails remain outside and 10−x selected coins were heads. Flipping gives the selection 10−x tails too. No face observation or equal pile sizes are needed.\n\nChoose three and flip only them. If they had x black faces, the rest had 3−x;the selected group had 3−x white faces that now become black. Both counts match without learning x."
     },
     "solution_extensions": {
       "he": {
         "question": "מה משתנה אם נתון שיש בדיוק t מטבעות פלי, כאשר 0<t<k?",
         "answer_outline": "בוחרים כל t מטבעות והופכים רק אותם. אם x מהם פלי, בשתי הקבוצות יהיו t−x פלי אחרי ההיפוך.",
-        "integration_status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתהליך ההמשך החי."
+        "integration_status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתהליך ההמשך החי.",
+        "variant_059_thirty_coins": [
+          {
+            "question": "מה עושים כשיש N מטבעות ובדיוק b שחורים ידועים?",
+            "answer_direction": "עבור 0<b<N בוחרים b והופכים אותם:אם x שחורים נבחרו, בשתי הקבוצות מתקבלים b−x. במקרי b=0 או b=N צריך להתייחס בנפרד לדרישת קבוצות לא ריקות.",
+            "principle": "הקבוצה הנבחרת בגודל מספר המטרה הידוע."
+          }
+        ]
       },
       "en": {
         "question": "What if the known initial tails count is t with 0<t<k?",
         "answer_outline": "Choose any t coins and flip only them. If x selected coins were tails, both groups contain t−x tails afterward.",
-        "integration_status": "Follow-up prepared in content; not connected to the live follow-up workflow."
+        "integration_status": "Follow-up prepared in content; not connected to the live follow-up workflow.",
+        "variant_059_thirty_coins": [
+          {
+            "question": "What if N coins contain a known b black faces?",
+            "answer_direction": "For 0<b<N choose and flip b coins:if x selected faces were black, both groups end with b−x. Treat b=0 or b=N separately if nonempty groups are required.",
+            "principle": "Choose a group as large as the known target count."
+          }
+        ]
+      }
+    },
+    "source_ambiguities": {
+      "he": [
+        "הנוסח המספרי מחליף פלי/עץ בשחור/לבן וב־30/3; אין בו דרישה לשוויון בגודל הקבוצות.",
+        "שיוך Apple נוסף על סמך הצילום בלבד."
+      ],
+      "en": [
+        "The numeric source replaces tails/heads with black/white and 30/3;it does not require equal group sizes.",
+        "Apple attribution is added only from the supplied source."
+      ]
+    },
+    "prompt_variants": {
+      "he": {
+        "059_thirty_coins": {
+          "prompt": "### וריאציה מספרית: 30 מטבעות ושלושה צדדים שחורים למעלה\nבחדר חשוך יש 30 מטבעות דו־צדדיים: 27 עם הלבן למעלה ו־3 עם השחור למעלה. אי אפשר לראות, למשש או לזהות את הצד העליון. מותר לחלק את המטבעות לשתי קבוצות ולהפוך מטבעות. הבטיחו שבסיום מספר הצדדים השחורים למעלה יהיה זהה בשתי הקבוצות; מספר הלבנים וגודל הקבוצות אינם חייבים להיות שווים. כל מטבע מתהפך משחור ללבן או להפך, ולא נשאר על שפתו.",
+          "hints": [
+            "איזה גודל קבוצה מתאים למספר השחורים הכולל הידוע?",
+            "אם בוחרים שלושה ובהם x שחורים, כמה שחורים נשארו בחוץ וכמה לבנים נבחרו?",
+            "הפכו רק את שלושת המטבעות שנבחרו. הלבנים בקבוצה הזאת יהפכו לשחורים, ומספרם הוא בדיוק מספר השחורים שנותרו בחוץ."
+          ],
+          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "059_thirty_coins": {
+          "prompt": "### Numeric variant:30 coins, three black faces up\nA dark room contains 30 two-sided coins:27 white up and 3 black up. You cannot see, feel or otherwise identify their upper faces. Partition them into two groups and optionally flip coins so both groups finish with equal numbers of black-up faces. White counts and group sizes need not match. A flip exchanges black and white; no coin is left on its edge.",
+          "hints": [
+            "Which group size matches the known total black count?",
+            "If three chosen coins contain x black faces, how many black remain outside and how many selected faces are white?",
+            "Flip only the chosen three. Their white faces become black, and their count equals the black faces left outside."
+          ],
+          "integration_status": "Variant hints are supplemental; original interactive hint queue retained."
+        }
       }
     }
   }

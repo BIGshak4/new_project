@@ -1,0 +1,9 @@
+{
+  "question_id": "PREP-059",
+  "variant": "thirty_coins_three_black",
+  "status": "passed",
+  "all_three_black_placements": 4060,
+  "distinct_selected_black_counts": 4,
+  "blind_plan_receives_orientation_information": false,
+  "scope": "Every one of C(30,3)=4060 initial arrangements tested. The planner sees only total and known black count; the verifier alone sees orientations."
+}

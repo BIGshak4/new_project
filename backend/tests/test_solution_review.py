@@ -22,6 +22,7 @@ REVISED_SOLUTION_KEYS = {
     "prep-eight-bit-popcount-adders", "prep-three-color-in-place-partition",
     "prep-twenty-one-prisoners-one-light",
     "prep-circuit-from-clock-input-output-waveforms", "prep-serial-safe-abcd-sequence-detector",
+    "prep-twenty-five-horses", "prep-dark-room-ten-tails-equal-groups",
 }
 
 
@@ -65,7 +66,7 @@ def test_prisoner_explanation_revision_preserves_but_does_not_inherit_old_attest
         assert summary(row, language).solution_review.status == "pending_review"
         assert detail(row, language).solution_review.status == "pending_review"
     reviewed = {q.key for q in catalog.questions.values() if solution_review(q).status == "human_reviewed"}
-    assert len(reviewed) == 83
+    assert len(reviewed) == 81
     assert reviewed == set(registry["questions"]) - REVISED_SOLUTION_KEYS
 
 

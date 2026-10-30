@@ -261,3 +261,10 @@ Ten flips plus selecting/separating ten coins suffice; no orientation scan is re
 - [checks/prep-059-verification.json](../checks/prep-059-verification.json)
 
 Follow-ups are authored but not connected to the live queue. No HDL compilation/simulation or physical-device test is implied.
+
+
+## מקור נוסף — 30.10.2026, מקבץ40, צילום 11
+
+[צילום פרטי](../sources/2026-10-30-batch40-11.png)
+
+נוספה הרחבה דו־לשונית, בלי למחוק את התוכן והרמזים הקודמים.

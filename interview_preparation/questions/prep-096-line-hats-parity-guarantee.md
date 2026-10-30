@@ -291,3 +291,10 @@ Related to PREP-033’s hats theme, but here n is general, color inventories are
 - [Local reply and simulation model](../solutions/prep_096_line_hats_parity.py)
 - [Independent checks](../checks/check_prep_096.py)
 - [Verification evidence](../checks/prep-096-verification.json)
+
+
+## מקור נוסף — 30.10.2026, מקבץ40, צילום 20
+
+[צילום פרטי](../sources/2026-10-30-batch40-20.png)
+
+נוספה הרחבה דו־לשונית, בלי למחוק את התוכן והרמזים הקודמים.

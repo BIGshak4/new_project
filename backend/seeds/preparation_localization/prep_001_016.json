@@ -1607,13 +1607,19 @@
         "נצפה רק סדר הסיום בכל מירוץ; אין זמנים מספריים שאפשר להשוות בין מירוצים. הנחה זו אינה מפורשת במקור.",
         "מהירויות קבועות ושונות, ללא תיקו, עייפות או שינוי תנאים.",
         "בכל מירוץ משתתפים חמישה סוסים שונים ומתקבל סדר הסיום המלא שלהם.",
-        "ממזערים את מספר המירוצים המבטיח הצלחה בכל סדר מהירויות; הצלחה מוקדמת במקרה ממוזל אינה מקטינה חסם של המקרה הגרוע."
+        "ממזערים את מספר המירוצים המבטיח הצלחה בכל סדר מהירויות; הצלחה מוקדמת במקרה ממוזל אינה מקטינה חסם של המקרה הגרוע.",
+        "25 מספרים שונים בסדר מלא; הקופסה ממיינת בדיוק5 בסדר יורד.",
+        "רק הקופסה חושפת סדר; התניות חופשיות משמשות ניתוב לפי זהות בלבד.",
+        "מפרידים רשת צירופית משימוש סדרתי חוזר עם אחסון ובקרה."
       ],
       "en": [
         "Only within-race finishing order is observed; no comparable numerical times. This is not explicit in the source.",
         "Distinct fixed speeds, no ties, no fatigue or changing conditions.",
         "Each race includes five distinct horses and returns their complete finishing order.",
-        "Minimize the number of races guaranteeing success for every speed ordering; early lucky outcomes do not lower a worst-case bound."
+        "Minimize the number of races guaranteeing success for every speed ordering; early lucky outcomes do not lower a worst-case bound.",
+        "25distinct total-order values; each block sorts exactly5descending.",
+        "Only the block reveals ordering; free conditions perform identity-based routing only.",
+        "Separate combinational instances from sequential reuse with storage/control."
       ]
     },
     "optimality": {
@@ -1621,13 +1627,15 @@
         "criterion": "מספר מירוצים מובטח מינימלי במקרה הגרוע",
         "result": "7 מירוצים כאשר נצפה סדר בלבד; 5 עם זמנים מדויקים הניתנים להשוואה",
         "upper_bound": "חמישה מירוצי קבוצות, מירוץ אחד של המנצחים ומירוץ אחד של חמשת המועמדים הנותרים למקומות שני ושלישי.",
-        "lower_bound": "אי־האפשרות הכללית להסתפק בשישה מירוצים מופנית לניתוח המקרים של san ב־Mathematics Stack Exchange. הדוגמה הנגדית של שתי השלישיות בפתרון מוכיחה רק אי־מספיקות לאחר החלוקה המתוארת לקבוצות; הסימולציה מאמתת מספיקות, ולא את החסם התחתון הכללי."
+        "lower_bound": "אי־האפשרות הכללית להסתפק בשישה מירוצים מופנית לניתוח המקרים של san ב־Mathematics Stack Exchange. הדוגמה הנגדית של שתי השלישיות בפתרון מוכיחה רק אי־מספיקות לאחר החלוקה המתוארת לקבוצות; הסימולציה מאמתת מספיקות, ולא את החסם התחתון הכללי.",
+        "variant_009_sorter_variant": "7 קריאות במקרה הגרוע במודל חמש־דרך. מימוש פרוס משתמש7רכיבים; מימוש סדרתי יכול להשתמש ברכיב אחד וב־7קריאות. לא מינימום שטח כולל."
       },
       "en": {
         "criterion": "minimum guaranteed worst-case race count",
         "result": "7 races under order-only observations; 5 with exact comparable times",
         "upper_bound": "Five group races, one winners' race and one race among the five remaining second/third-place candidates.",
-        "lower_bound": "General six-race impossibility referenced to san's case analysis on Mathematics Stack Exchange. The two-triple counterexample in the solution only proves insufficiency after the stated grouping; simulation verifies sufficiency, not the general lower bound."
+        "lower_bound": "General six-race impossibility referenced to san's case analysis on Mathematics Stack Exchange. The two-triple counterexample in the solution only proves insufficiency after the stated grouping; simulation verifies sufficiency, not the general lower bound.",
+        "variant_009_sorter_variant": "7worst-case queries in the five-way ordering model. Unrolling uses7instances; sequential reuse can use1instance for7queries. Not a total-area optimum."
       }
     },
     "edge_cases": {
@@ -1637,7 +1645,10 @@
         "שניים משלושת המהירים ביותר בקבוצה אחת",
         "המנצחים מסיימים בכל תמורה שהיא: משנים את שמות הקבוצות לאחר מכן",
         "תיקו או מהירויות שאינן חוזרות על עצמן מחייבים מודל אחר",
-        "מדידת זמנים הניתנים להשוואה משנה את התשובה לחמישה"
+        "מדידת זמנים הניתנים להשוואה משנה את התשובה לחמישה",
+        "כל שלושת הגדולים באותה קבוצה; או בשלוש קבוצות.",
+        "סדר הקבוצות בכניסה שונה מסדר המנצחים; ערכים שליליים.",
+        "כפילויות מחוץ לחוזה; שימוש חוזר משנה את ספירת הרכיבים."
       ],
       "en": [
         "All three fastest in one initial group",
@@ -1645,7 +1656,10 @@
         "Two of the top three in one group",
         "Winners finish in any permutation: rename groups afterward",
         "Ties or non-repeatable speeds require a different model",
-        "Comparable timing changes the answer to five"
+        "Comparable timing changes the answer to five",
+        "Top three in one group or three separate groups.",
+        "Input group order differs from winner order; negative values.",
+        "Duplicates are outside the contract; reuse changes instance counts."
       ]
     },
     "verification": {
@@ -1654,19 +1668,21 @@
         "checked_on": "2026-09-26",
         "script_path": "checks/check_prep_009.py",
         "method": "23,800 סדרי מהירויות: כל 13,800 ההצבות הסדורות של שלושת המהירים ביותר כאשר יתר הדירוגים קבועים, ועוד 10,000 סדרים מלאים אקראיים עם זרע קבוע. נבדקים הסדר המדויק של שלושת המהירים, חמישה משתתפים שונים בכל מירוץ ובדיוק שבעה מירוצים.",
-        "scope": "נכונות האסטרטגיה במקרי הסדר המלא היציב שנבדקו; זו אינה בדיקה ממצה של 25! סדרים או הוכחה חישובית למינימליות. מספיקות כללית נובעת גם מטיעון הפסילה."
+        "scope": "נכונות האסטרטגיה במקרי הסדר המלא היציב שנבדקו; זו אינה בדיקה ממצה של 25! סדרים או הוכחה חישובית למינימליות. מספיקות כללית נובעת גם מטיעון הפסילה.",
+        "variant_009_sorter_variant": "13,800 הצבות של השלישייה ועוד1,000תמורות, כולן מול מיון מלא ובדיקת7קריאות."
       },
       "en": {
         "status": "passed",
         "checked_on": "2026-09-26",
         "script_path": "checks/check_prep_009.py",
         "method": "23,800 speed orderings: all 13,800 ordered placements of the fastest three with remaining ranks fixed, plus 10,000 seeded random full orders. Checks exact top-three order, five distinct entrants per race and exactly seven races.",
-        "scope": "Strategy correctness in tested stable strict-order cases; not exhaustive over 25! orders and not a computational proof of minimality. General sufficiency also follows from the elimination argument."
+        "scope": "Strategy correctness in tested stable strict-order cases; not exhaustive over 25! orders and not a computational proof of minimality. General sufficiency also follows from the elimination argument.",
+        "variant_009_sorter_variant": "13,800top-three placements plus1,000permutations versus full sorting, each checked for7calls."
       }
     },
     "interview_answer": {
-      "he": "בהנחה שאין זמני ריצה, אריץ חמש קבוצות ואז את חמשת המנצחים. אסמן את הקבוצות לפי דירוג המנצחים A עד E. A1 ראשון כללי; לפעמים סוס שלא ניצח בקבוצה עדיין מהיר ממנצח של קבוצה אחרת. לכן אריץ A2,A3,B1,B2,C1: שני הראשונים הם השני והשלישי הכלליים. בסך הכול שבעה מירוצים.",
-      "en": "Assuming no race times are available, I would run five groups and then race their five winners. I would label groups A through E by their winners' ranking. A1 is fastest overall; a horse that did not win its group can still be faster than another group's winner. I would therefore race A2,A3,B1,B2,C1: its first two are second and third overall. Seven races in total."
+      "he": "בהנחה שאין זמני ריצה, אריץ חמש קבוצות ואז את חמשת המנצחים. אסמן את הקבוצות לפי דירוג המנצחים A עד E. A1 ראשון כללי; לפעמים סוס שלא ניצח בקבוצה עדיין מהיר ממנצח של קבוצה אחרת. לכן אריץ A2,A3,B1,B2,C1: שני הראשונים הם השני והשלישי הכלליים. בסך הכול שבעה מירוצים.\n\nממיינים חמש קבוצות ואז את המנצחים; הגדול ידוע, וחמישה מועמדים בלבד נשארים למקומות2,3. הפעלה שביעית מכריעה. מספר הרכיבים הפיזיים תלוי אם שימוש חוזר מותר.",
+      "en": "Assuming no race times are available, I would run five groups and then race their five winners. I would label groups A through E by their winners' ranking. A1 is fastest overall; a horse that did not win its group can still be faster than another group's winner. I would therefore race A2,A3,B1,B2,C1: its first two are second and third overall. Seven races in total.\n\nSort five groups and their winners. The maximum is known and five candidates remain for places2and3. A seventh query resolves them; physical instance count depends on reuse."
     },
     "common_mistakes": {
       "he": [
@@ -1675,7 +1691,10 @@
         "הרצת A1 שוב במירוץ האחרון ובזבוז מסלול",
         "הנחה שאפשר להשוות זמנים ללא שעון עצר",
         "התייחסות לשמות הקבוצות כדירוג מנצחים שנקבע מראש",
-        "הסקה מסימולציית שבעה מירוצים שהצליחה שאין אסטרטגיה אחרת המבטיחה שישה"
+        "הסקה מסימולציית שבעה מירוצים שהצליחה שאין אסטרטגיה אחרת המבטיחה שישה",
+        "להציג שבע הפעלות כהוכחה לשבעה רכיבים בכל מודל.",
+        "לנתב מהקבוצות המקוריות בלי לעדכן את שמותיהן לפי דירוג המנצחים.",
+        "להשתמש בהשוואות סדר מחוץ לקופסה ולהמשיך לטעון לחסם שלה."
       ],
       "en": [
         "Taking the top three group winners as the overall top three",
@@ -1683,8 +1702,59 @@
         "Racing A1 again in the final race, wasting a lane",
         "Assuming times can be compared without a stopwatch",
         "Treating group names as preassigned winner rankings",
-        "Mistaking a successful seven-race simulation for a proof no other strategy can guarantee six"
+        "Mistaking a successful seven-race simulation for a proof no other strategy can guarantee six",
+        "Treating seven invocations as seven necessary physical instances in every model.",
+        "Routing fixed original groups instead of ranked winner groups.",
+        "Using external ordering comparisons while claiming the oracle lower bound."
       ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "מינימום רכיבים מול מינימום הפעלות, אחסון, ניתוב ושימוש בהתניות לא פורטו במקור; החוזים נפרדו."
+      ],
+      "en": [
+        "Instances versus invocations, storage, routing and allowed conditions are unspecified; contracts are separated."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה כאשר מרשים להשוות ערכים מחוץ לקופסה ללא עלות?",
+          "answer_direction": "אפשר למצוא שלישייה בליA; החסם על קריאותA כבר אינו מודל משמעותי.",
+          "principle": "חסם אופטימליות תלוי בגבול המשאבים."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes if free external value comparisons are allowed?",
+          "answer_direction": "Top three can be found withoutA; theA-query lower bound no longer models the task.",
+          "principle": "Optimality bounds depend on resource boundaries."
+        }
+      ]
+    },
+    "prompt_variants": {
+      "he": {
+        "009_sorter_variant": {
+          "prompt": "### וריאציה חומרתית: 25 מספרים ורכיב שממיין חמישה\nרכיבA מקבל חמישה מספרים שונים ומחזיר אותם בסדר יורד. תכננו מערכת שמחזירה את שלושת הגדולים מתוך25, עם מעט שימושים ברכיב. המקור מבקש מינימום רכיביA ומאפשר התניות על מוצאיהם.\n\nהבחינו בין מספר הפעלות לבין מספר רכיבים פיזיים. במודל הראשי נבחר רשת צירופית ללא מחזורי שימוש חוזר, שבה כל סדר יחסי נלמד רק מרכיביA. מותר לנתב ערכים לפי זהות הזוכה של רכיבA, אך אסור לבצע השוואות סדר חופשיות מחוץ להם. זהות ניתנת למעקב בחיווט מותנה או בבדיקת שוויון של ערכים שונים. בנוסף דונו במודל סדרתי שמאפשר לשמור תוצאות ולהשתמש שוב באותה קופסה. המקור אינו מכריע בין המודלים.",
+          "hints": [
+            "החלוקה לחמש קבוצות מהשאלה המקורית עדיין מועילה. אילו מספרים אפשר לפסול אחרי שממיינים גם את חמשת המנצחים?",
+            "מספר שכבר ידועים שלושה גדולים ממנו אינו מועמד לשלישייה. עקבו גם אחרי המיקום בתוך קבוצה וגם אחרי דירוג מנצחי הקבוצות.",
+            "סמנו את הקבוצות אחרי דירוג המנצחיםA,B,C,D,E. המועמדים למקומות2,3 הםA2,A3,B1,B2,C1. הפרידו בין שבע הפעלות לבין כמה קופסאות פיזיות מחזיקים."
+          ],
+          "integration_status": "רמזי ההרחבה בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "009_sorter_variant": {
+          "prompt": "### Hardware variant:25numbers and a five-way sorter\nBlockA takes five distinct numbers and returns them in descending order. Return the top three among25using few block uses. The source asks for the minimum number ofAcomponents and allows conditions on their outputs.\n\nDistinguish invocations from physical instances. The main model is an acyclic combinational network without time reuse: onlyAblocks reveal relative order. Values may be routed according to winner identity, but no free external order comparisons are allowed. Identity can be tracked by conditional routing or equality on distinct values. Also discuss sequential reuse with stored intermediate results. The source does not choose between these models.",
+          "hints": [
+            "The original five groups remain useful. Which numbers can be discarded after sorting the five group winners?",
+            "A value with three known larger values cannot be in the top three. Track both within-group rank and winner-group rank.",
+            "After ranking group winners asA,B,C,D,E, places2and3 come fromA2,A3,B1,B2,C1. Separate seven invocations from physical block count."
+          ],
+          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+        }
+      }
     }
   },
   "PREP-010": {

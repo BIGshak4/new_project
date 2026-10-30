@@ -1,0 +1,964 @@
+{
+  "PREP-155": {
+    "assumptions": {
+      "he": [
+        "X,Y הם ביטים סקלריים 0/1; פעולות חשבון מדויקות על מספרים קטנים.",
+        "שני המקורות מאוחדים, לרבות XOR ורשימת פעולות המחשבון."
+      ],
+      "en": [
+        "X,Y are scalar0/1 bits; exact arithmetic on small values.",
+        "Both sources are retained, including XOR and the calculator operation set."
+      ]
+    },
+    "optimality": {
+      "he": "מספר קבוע של פעולות לכל שער. לא נטען מינימום הוראות, שטח או השהיה.",
+      "en": "Fixed arithmetic operation count per gate; no minimum instruction, area or delay claim."
+    },
+    "verification": {
+      "he": "כל 4 זוגות הקלט וכל 16 פלטי השערים מול טבלת אמת עצמאית.",
+      "en": "All4 input pairs and16 gate outputs against an independent truth-table oracle."
+    },
+    "edge_cases": {
+      "he": [
+        "00,01,10,11; בפרט תיקון הסכום 2 במקרה11.",
+        "קלטים שאינם0/1 אינם בחוזה; אין חילוק."
+      ],
+      "en": [
+        "00,01,10,11, especially correcting sum2 for11.",
+        "Nonbinary inputs are outside the contract; no division."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "OR אינו X+Y לבדו, כי11 מחזיר2.",
+        "XOR אינו OR, ונוסחאות סקלריות אינן bitwise על מילים."
+      ],
+      "en": [
+        "OR is not just X+Y:11 returns2.",
+        "XOR differs from OR; scalar formulas are not word-level bitwise operations."
+      ]
+    },
+    "interview_answer": {
+      "he": "כפל מבודד את11. NOT הוא1−X; AND הואXY; מתקנים X+Y בעזרת מינוסXY ל־OR או מינוס2XY ל־XOR.",
+      "en": "Multiplication isolates11. NOT is1−X, AND isXY; correct X+Y by subtractingXY forOR or2XY forXOR."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מגדיר טיפוס מספרי; תחום הסיביות0/1 הוצהר במפורש."
+      ],
+      "en": [
+        "The source omits numeric types; scalar0/1 inputs are explicit."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך תממשו NAND ו־NOR באותו מחשבון?",
+          "answer_direction": "הפחיתו את תוצאת AND או OR מ־1.",
+          "principle": "הרכבת פונקציות ששומרות על תחום0/1."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would this calculator implement NAND and NOR?",
+          "answer_direction": "Subtract AND or OR from1.",
+          "principle": "Composition preserves the0/1 domain."
+        }
+      ]
+    }
+  },
+  "PREP-156": {
+    "assumptions": {
+      "he": [
+        "אות ממשי; תמיכה חיובית רציפה ידועה וסימטריה בתדרים שליליים.",
+        "דגימה אחידה; המודל הבדוק דורש פנים חלון ולא טוני קצה בכפולותfs/2."
+      ],
+      "en": [
+        "Real signal; known contiguous positive support and mirrored negative support.",
+        "Uniform sampling; the checked model requires an open window, excluding endpoint tones at multiples offs/2."
+      ]
+    },
+    "optimality": {
+      "he": "2B חסם אידאלי. חלונות מותרים נקבעים גם לפי המיקום. במודל הפתוח יש infimum ולא בהכרח מינימום; אין קצב פיזי מיטבי יחיד.",
+      "en": "2B is an ideal lower bound; admissible windows also depend on location. The open model has an infimum, not necessarily an attained minimum; no unique physical optimum."
+    },
+    "edge_cases": {
+      "he": [
+        "f1=0 חוזר ל־baseband; B>0.",
+        "יחסf2/B שלם עשוי לייצר חלון סגור ברוחב אפס.",
+        "רעש מחוץ לתחום, סטיות תדר וטוני קצה דורשים טיפול."
+      ],
+      "en": [
+        "f1=0 reduces to baseband; B>0.",
+        "Integerf2/B can create a zero-width nominal window.",
+        "Out-of-band noise, uncertainty and endpoint tones need separate treatment."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשיב2(f2−f1) בלי לבדוק חלון ומיקום.",
+        "לחשוב שכל קצב גדול יותר בהכרח תקין.",
+        "לבלבל דגימה ממשית בדגימתI/Q או לסמוך על סינון דיגיטלי מאוחר."
+      ],
+      "en": [
+        "Answering2(f2−f1) without a placement/window check.",
+        "Assuming every higher rate is safe.",
+        "Confusing real sampling withI/Q or relying on post-alias digital filtering."
+      ]
+    },
+    "interview_answer": {
+      "he": "2f2 הוא גבול מספיק רגיל. לחיסכון ב־bandpass בודקים חלונות2f2/m עד2f1/(m−1);2B לבדו אינו מספיק. מעשית בוחרים בפנים ומסננים אנלוגית לפני הדגימה.",
+      "en": "2f2 is the usual sufficient limit. Bandpass saving requires windows2f2/m through2f1/(m−1);2B alone is insufficient. Choose an interior rate and analog filtering in practice."
+    },
+    "verification": {
+      "he": "12,474 בדיקות ספקטרום מדויקות,525 דגימות aliasing ו־25 דגימות בדוגמת נגד בקצה.",
+      "en": "12,474 exact spectral checks,525 alias-tone samples and25 endpoint-counterexample samples."
+    },
+    "source_ambiguities": {
+      "he": [
+        "לא נמסר אות ממשי/מורכב, סינון, אי־ודאות או טיפול בקצות התחום; ההנחות הוגדרו בנפרד."
+      ],
+      "en": [
+        "Real/complex signal, filtering, uncertainty and endpoint treatment are unspecified; editorial assumptions are explicit."
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "Vaughan, Scott and White — The Theory of Bandpass Sampling (1991)",
+          "url": "https://courses.media.mit.edu/2022spring/mas836/readings/BandLimited.pdf",
+          "use": "מאמר המקור על תחומי קצב מותרים ושולי דגימת bandpass; הדוגמאות וההוכחות כאן נכתבו מחדש."
+        }
+      ],
+      "en": [
+        {
+          "title": "Vaughan, Scott and White — The Theory of Bandpass Sampling (1991)",
+          "url": "https://courses.media.mit.edu/2022spring/mas836/readings/BandLimited.pdf",
+          "use": "Primary paper on admissible rates and guard margins; examples and explanation here are newly authored."
+        }
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם המיקוםf1 לא ידוע במדויק?",
+          "answer_direction": "להרחיב את תחום התמיכה לפי האי־ודאות ולחשב מחדש חלונות, או לבחור דגימה מעל2f2 המתאים.",
+          "principle": "ידע מוקדם מדויק הוא חלק מחוזה השחזור."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if the lower band edge is uncertain?",
+          "answer_direction": "Enlarge the support by uncertainty and recompute windows, or use ordinary sampling above the appropriate2f2.",
+          "principle": "Prior band knowledge is part of the reconstruction contract."
+        }
+      ]
+    }
+  },
+  "PREP-157": {
+    "assumptions": {
+      "he": [
+        "מרבב2:1 של סיבית אחת; S=0 בוחרD0.",
+        "אין איפשור, שעון או מצב פנימי; לוגיקה דו־ערכית אידאלית."
+      ],
+      "en": [
+        "One-bit2:1MUX;S=0 selectsD0.",
+        "No enable, clock or state; ideal two-valued logic."
+      ]
+    },
+    "optimality": {
+      "he": "טבלת8 צירופים ומשוואת בחירה מדויקת; אין דרישת מינימום שערים או השהיה.",
+      "en": "Eight rows and an exact selection equation; no minimum gate or delay requirement."
+    },
+    "verification": {
+      "he": "כל8 שורות מול בחירה באינדקס, ושלוש דחיות קלט לא בינארי.",
+      "en": "All8rows against an indexed-selection oracle and3invalid input rejections."
+    },
+    "edge_cases": {
+      "he": [
+        "שני נתונים שווים; שינוי רק בכניסה שלא נבחרה.",
+        "החלפתS כשהנתונים שונים; קודי בחירה פנויים ב־N שאינו חזקה של2."
+      ],
+      "en": [
+        "Equal data values; changes only on the unselected input.",
+        "ChangingS with different data; unused codes whenN is not a power of2."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לבלבל בין נתון לסיבית הבחירה.",
+        "להניח זיכרון או שעון בגלל שהסמל נראה כמו רכיב מורכב.",
+        "לפרש לא־משנה בטבלה כסיביתX פיזית."
+      ],
+      "en": [
+        "Confusing data and select.",
+        "Assuming storage or a clock from the symbol.",
+        "Interpreting a truth-table don’t-care as a physicalX input."
+      ]
+    },
+    "interview_answer": {
+      "he": "מרבב מחבר לוגית כניסה נבחרת ליציאה: S=0 מעבירD0 ו־S=1 מעבירD1. הוא צירופי, והנוסחה היא NOT S·D0+S·D1 בלוגיקה בוליאנית.",
+      "en": "A multiplexer selects one input:S=0 passesD0,S=1 passesD1. It is combinational; the Boolean expression is NOT S·D0+S·D1."
+    },
+    "source_ambiguities": {
+      "he": [
+        "גודל המרבב ומוסכמת הבחירה אינם נתונים;2:1 והמוסכמה הוגדרו בנפרד."
+      ],
+      "en": [
+        "Size and selection convention are unspecified;2:1 and its convention are explicit."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מרחיבים למרבב4:1 באמצעות2:1?",
+          "answer_direction": "שני מרבבים בשלב ראשון ומרבב אחד בשני; סדר סיביות הבחירה חייב להיות עקבי.",
+          "principle": "פירוק בחירה היררכי."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can2:1MUXes build a4:1MUX?",
+          "answer_direction": "Two first-stageMUXes and one second-stageMUX; keep selector-bit ordering consistent.",
+          "principle": "Hierarchical selection."
+        }
+      ]
+    }
+  },
+  "PREP-152": {
+    "assumptions": {
+      "he": [
+        "הקופסה מבצעת בדיוק מודולו 16 בכל חזית עולה; המוצא שלה זמין כלוגיקה סינכרונית.",
+        "מותר ביט אחסון נוסף ושערים; כל הרכיבים באותו clk.",
+        "התחלה באפס דורשת אתחול משותף שהמקור לא הבטיח."
+      ],
+      "en": [
+        "The black box increments exactly modulo16 at every rising edge and exposes synchronous count outputs.",
+        "One extra state bit and gates are permitted; all storage shares clk.",
+        "Starting at zero needs aligned initialization that the source did not guarantee."
+      ]
+    },
+    "optimality": {
+      "he": "קופסה אחת, דלגלג נוסף אחד, גילוי ארבע אחדות ו־XOR. ביט נוסף הוא מינימום לאחסון לוגי עצמאי במודל בן 16 מצבים; אין הוכחת מינימום שערים או השהיה.",
+      "en": "One supplied box, one extra DFF, four-one detection and XOR. One additional independent bit is minimal for logical storage in the 16-state model; no gate or delay minimum is proved."
+    },
+    "verification": {
+      "he": "נבדקו 32 מעברים,32 מקרי איפוס מיושר ו־3,104 חזיתות ברצפים ארוכים מכל מצב, מול אורקל מודולו 32 ורכיב מודולו 16 בטבלת מעברים עצמאית. חמישה קלטים פגומים נדחו. Python בלבד; ללא HDL או תזמון פיזי.",
+      "en": "Checked 32 transitions,32 aligned resets and3,104 long-trace edges from every state against modulo32 and an independent modulo16 transition lookup. Five malformed states rejected. Python only; no HDL or physical timing."
+    },
+    "edge_cases": {
+      "he": [
+        "15→16 ו־31→0.",
+        "q=0 אחרי איפוס אינו סיבה להפוך h.",
+        "התחלה במצב לא ידוע נותנת מחזור תקין בפאזה לא ידועה.",
+        "החזקה או enable אינם קיימים בחוזה המקורי."
+      ],
+      "en": [
+        "15→16 and31→0.",
+        "q=0 after reset is not a reason to toggle h.",
+        "Unknown initialization gives a valid cycle with unknown phase.",
+        "Hold or enable is not part of the original interface."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בדיקת אפס אחרי החזית במקום 15 לפניה.",
+        "חיבור q3 כשעון בלי ניתוח clock-domain ותזמון.",
+        "תכנון מחדש של כל חמש הסיביות במקום שימוש בקופסה.",
+        "הבטחת אפס בתחילה ללא איפוס לקופסה."
+      ],
+      "en": [
+        "Testing new zero instead of pre-edge15.",
+        "Using q3 as a clock without clock-domain and timing analysis.",
+        "Replacing the supplied box with a new five-bit counter.",
+        "Promising zero initialization without a black-box reset."
+      ]
+    },
+    "interview_answer": {
+      "he": "ארבעת הביטים הנמוכים מגיעים מהקופסה. אוסיף h בדלגלג על אותו שעון, עם D=h XOR(q==15), ואוציא {h, q}. הבדיקה היא למצב הישן: כשהנמוכים עוברים 15→0, העליון מתהפך. אתחול שני החלקים חייב להיות מיושר.",
+      "en": "Use the box as the low four bits. Add same-clock h with D=h XOR(q==15) and output{h, q}. Evaluate the old state: whenever low bits wrap15→0, toggle high. Align initialization of both parts."
+    },
+    "source_ambiguities": {
+      "he": [
+        "אין במקור פירוט של רכיבים חיצוניים, איפוס או פאזה; ההרשאות וההנחות נוספו בגלוי.",
+        "לא מופיע שיוך חברה בצילום ואין להמציא כזה."
+      ],
+      "en": [
+        "The source omits external component permissions, reset and phase; these assumptions are explicitly added.",
+        "No employer attribution is visible, so none is invented."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מרחיבים מונה מודולו M שאינו חזקה של שתיים?",
+          "answer_direction": "ביט הקפה עדיין יכול להתהפך ב־M−1, אבל השרשור הבינארי אינו מייצג 0..2M−1 אם M אינו חזקה של שתיים. דרוש מיפוי h·M+q או ממשק פלט אחר.",
+          "principle": "תוספת מצב ומיפוי מספרי הם שאלות שונות."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if the low counter has modulus M that is not a power of two?",
+          "answer_direction": "A cycle bit can still toggle at M−1, but binary concatenation no longer encodes0..2M−1. Use h·M+q or another output representation.",
+          "principle": "State extension and numerical encoding are separate concerns."
+        }
+      ]
+    }
+  },
+  "PREP-153": {
+    "assumptions": {
+      "he": [
+        "הגרסה הראשית: שני enhancement NMOS, סף חיובי,0/VDD, ללא נגד.",
+        "גופי ההתקנים לאדמה; העומס סובל מאפקט גוף כשמקורו עולה.",
+        "מודל ארוך־ערוץ; high מתואר כטעינה מלמטה; אין פרמטרי תהליך אמיתיים."
+      ],
+      "en": [
+        "Primary: two enhancement NMOS devices, positive threshold,0/VDD, no resistor.",
+        "Bodies at ground; rising load source introduces body effect.",
+        "Long-channel educational model; high is approached by charging from below; no actual process parameters."
+      ]
+    },
+    "optimality": {
+      "he": "שני NMOS במימוש המוצע, ללא הוכחת מינימום או הבטחת רמות לוגיות לכל תהליך. יש מחיר ב־VOH, ב־VOL ובזרם הסטטי; דירוג לפי מספר טרנזיסטורים בלבד מחמיץ את הפשרה.",
+      "en": "Two NMOS devices in the proposed construction, without a minimum-device proof or universal logic-level guarantee. VOH, VOL and static current are tradeoffs not captured by transistor count alone."
+    },
+    "verification": {
+      "he": "נבדקו 27 רמות high אנליטיות,27 שורשי low של משוואה ריבועית,303 נקודות עם אפקט גוף ושש דוגמאות depletion, וכן דוגמת sizing וזרם סטטי. מודל Python עם מאזני זרם; אין SPICE, מדידת חומרה או מרווחי רעש מאומתים.",
+      "en": "Checked 27 analytic high levels,27 quadratic low roots,303 body-effect sweep points and six depletion cases, plus sizing/static-current witnesses. Python current-balance model; no SPICE, hardware measurement or validated noise margins."
+    },
+    "edge_cases": {
+      "he": [
+        "NMOS יחיד כבוי משאיר מוצא צף.",
+        "VOH של enhancement קטן מהמסילה העליונה.",
+        "דרייבר חלש מדי מעלה את VOL.",
+        "טכנולוגיה ללא depletion אינה יכולה להשתמש בחלופה כאילו היא נתונה.",
+        "מעבר Vin ליד הסף והעמסה קיבולית דורשים ניתוח נוסף."
+      ],
+      "en": [
+        "One off NMOS leaves a floating output.",
+        "Enhancement-load VOH is below the upper rail.",
+        "A weak driver raises VOL.",
+        "A process without depletion cannot silently use that alternative.",
+        "Input near threshold and capacitive loading need further analysis."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "ציור NMOS יחיד ללא pull-up.",
+        "הנחה שעומס enhancement נותן VDD מלא.",
+        "קריאת pseudo-NMOS מימוש NMOS בלבד.",
+        "השמטת זרם סטטי ויחסי חוזקים.",
+        "הצגת מודל חינוכי כבדיקת סינתזה או SPICE."
+      ],
+      "en": [
+        "Drawing one NMOS without a pull-up.",
+        "Claiming an enhancement load reaches fullVDD.",
+        "Calling pseudo-NMOS an all-NMOS circuit.",
+        "Omitting static current and strength ratio.",
+        "Reporting an educational model as synthesis or SPICE validation."
+      ]
+    },
+    "interview_answer": {
+      "he": "צריך מסלול טעינה ומסלול פריקה. אשתמש ב־NMOS עומס עם שער ונקז ל־VDD ומקור למוצא, וב־NMOS דרייבר למטה הנשלט ב־Vin. זה מהפך ratioed: high מוחלש ב־VT ובאפקט הגוף, low נקבע ביחס החוזקים, ויש זרם סטטי. עומס depletion יכול לשפר high רק אם מותר טכנולוגית.",
+      "en": "Provide charging and discharging paths: an NMOS load with gate/drain at VDD, source at output, and a Vin-driven NMOS pull-down. It is ratioed: high is degraded by threshold/body effect, low depends on sizing, and static current flows. A depletion load improves high only if the process permits it."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור לא מגדיר סוג NMOS, היתר נגד, מסילות, גוף או רמות ממשק; החלופות מופרדות.",
+        "שיוך Amazon מהצילום לא אומת באופן עצמאי."
+      ],
+      "en": [
+        "NMOS type, resistor permission, rails, body and interface thresholds are unspecified; alternatives are separated.",
+        "Amazon attribution is source-reported, not independently verified."
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "NTU Electronics III — NMOS inverter circuits",
+          "url": "https://cc.ee.ntu.edu.tw/~lhlu/eecourses/Electronics3/Electronics_Ch16.pdf",
+          "note": "שקף 16-9 מציג עומסי נגד, enhancement ו־depletion; שקף 16-15 מסביר רמת high מוחלשת ואפקט גוף. השרטוטים והמודל כאן נכתבו מחדש."
+        }
+      ],
+      "en": [
+        {
+          "title": "NTU Electronics III — NMOS inverter circuits",
+          "url": "https://cc.ee.ntu.edu.tw/~lhlu/eecourses/Electronics3/Electronics_Ch16.pdf",
+          "note": "Slide16-9 shows resistor, enhancement and depletion loads; slide16-15 explains weak high levels and body effect. These diagrams and model are independently authored."
+        }
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד בודקים אם אפשר לשרשר שני מהפכים כאלה?",
+          "answer_direction": "צריך לאפיין VTC, למצוא VIH/VIL ו־VOH/VOL ולבדוק מרווחי רעש עם עומס ותהליך מוגדרים. טבלת אמת אידאלית אינה מספיקה.",
+          "principle": "התאמה לוגית דורשת גם התאמת מתחים."
+        }
+      ],
+      "en": [
+        {
+          "question": "How do you check whether two such inverters can be cascaded?",
+          "answer_direction": "Characterize the VTC, determine VIH/VIL and VOH/VOL, and check noise margins under a specified process/load. An ideal truth table is insufficient.",
+          "principle": "Logical composition also needs voltage compatibility."
+        }
+      ]
+    }
+  },
+  "PREP-154": {
+    "assumptions": {
+      "he": [
+        "שבעה נגדים לינאריים, חיוביים וסופיים ברשת עץ ידועה.",
+        "כל זוג מסופים חיצוניים נגיש; שאר המסופים פתוחים.",
+        "הקופסה כבויה ומנותקת מעומסים; אין נגד סמוי או חיבור גוף נוסף."
+      ],
+      "en": [
+        "Seven positive, finite, linear resistors in the specified tree.",
+        "Any external pair is accessible; all other terminals stay open.",
+        "Power and external loads disconnected; no additional hidden connection."
+      ]
+    },
+    "optimality": {
+      "he": "ארבע מדידות מספיקות וזמן חישוב O(1). לא נטען מינימום מעבר למודל מדידות מפורש; לא נוספו קיצורי מסופים או מכשיר רב־מסופי.",
+      "en": "Four readings suffice with O(1) inference. No broader minimum is claimed; terminal shorting and multiport instruments are outside this construction."
+    },
+    "verification": {
+      "he": "128 צירופי נגדים ממצים בערכים 1,2 ועוד 200 רשתות מדגמיות רחבות.1,312 פתרונות נודאליים מדויקים ושחזור מלא, ועוד תשע קריאות המוכיחות דוגמת אי־זיהוי בגישה בין צדדים בלבד. ללא SPICE או חומרה.",
+      "en": "128 exhaustive networks with resistor values1,2 plus200 seeded wide networks.1,312 exact nodal solves recovered the target, plus nine readings for a cross-only nonidentifiability witness. No SPICE or hardware."
+    },
+    "edge_cases": {
+      "he": [
+        "ערכים שונים מאוד בין הנגדים אינם פוסלים את הביטול.",
+        "קצר או נתק אינם במסגרת שבעה נגדים חיוביים וסופיים.",
+        "חיבור המסופים האחרים למכשיר או לעומס משנה את המדידה.",
+        "קריאה של Rc שלילי מצביעה על רעש, שגיאת מדידה או הפרת טופולוגיה; אין לקבל אותה כנגד פיזי חיובי."
+      ],
+      "en": [
+        "Very different resistor magnitudes do not invalidate cancellation.",
+        "Shorts and opens violate the positive-finite resistor contract.",
+        "Other terminals connected to loads or instruments change the reading.",
+        "A negative inferred Rc indicates noise, measurement error or a topology violation, not a valid positive resistor."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חיבור כל שלושת ענפי הצד במקביל למרות שמסופיהם פתוחים.",
+        "הנחת שוויון נגדים שלא ניתנה.",
+        "שכחת חלוקה בשתיים.",
+        "הבטחת זיהוי מקריאות A–B בלבד.",
+        "הפעלת מד־התנגדות על מעגל מוזן."
+      ],
+      "en": [
+        "Treating three open-ended side branches as parallel paths.",
+        "Assuming equal values.",
+        "Forgetting the factor two.",
+        "Claiming cross-only identification.",
+        "Using an ohmmeter on a powered circuit."
+      ]
+    },
+    "interview_answer": {
+      "he": "אמדוד שני זוגות שחוצים את הקופסה ושני זוגות באותו צד. סכום המדידות החוצות פחות סכום המדידות הצדדיות הוא 2Rc, כי כל נגדי הצד מבוטלים. לכן אחלק בשתיים. יתר המסופים חייבים להישאר פתוחים, ונדרשת גישה גם למדידות באותו צד.",
+      "en": "Measure two cross pairs and two same-side pairs. Cross sum minus same-side sum equals 2Rc because all side resistors cancel; divide by two. Leave other terminals open, and require same-side measurement access."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור לא מגדיר מכשיר, מצב אספקה, גישת מסופים או טווח נגדים; הוגדרו במפורש.",
+        "אין היתר להגיע לצמתים פנימיים; הפתרון אינו דורש זאת.",
+        "Intel מדווחת בצילום ולא אומתה עצמאית."
+      ],
+      "en": [
+        "Instrument, power state, terminal access and resistor range were unspecified and are explicit assumptions.",
+        "Internal-node access remains prohibited and is unnecessary.",
+        "Intel attribution is source-reported and unverified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מעריכים את השפעת שגיאת המדידה?",
+          "answer_direction": "אם לכל קריאה שגיאה מוחלטת לכל היותר ε, שגיאת Rc לכל היותר 2ε לפי אי־שוויון המשולש. חזרות ומדידות עודפות יכולות לשפר אומדן סטטיסטי רק תחת מודל רעש מוגדר.",
+          "principle": "זהות מדויקת אינה מבטיחה דיוק מכשיר."
+        }
+      ],
+      "en": [
+        {
+          "question": "How does measurement error affect the estimate?",
+          "answer_direction": "If each reading has absolute error at most ε, the inferred Rc error is at most2ε by the triangle inequality. Repeats and redundant readings improve statistical estimates only under a specified noise model.",
+          "principle": "An exact identity does not imply instrument accuracy."
+        }
+      ]
+    }
+  },
+  "PREP-148": {
+    "assumptions": {
+      "he": [
+        "תחפושת אחת מכל שם, אדם אחד לכל היותר מקבל כל יחידה; שמות ייחודיים והעדפות מתוך המלאי.",
+        "אפס עד שתי העדפות לאדם; מותר None. ממקסמים לקסיקוגרפית (served,first).",
+        "בדוגמה רק ארבע שורות ידועות; אין אדם חמישי מומצא."
+      ],
+      "en": [
+        "One costume per unique name; at most one person per unit; preferences belong to inventory.",
+        "Zero through two preferences per person; None allowed. Maximize(served,first) lexicographically.",
+        "Only four preference rows are known in the example; no invented fifth person."
+      ]
+    },
+    "optimality": {
+      "he": "חיפוש מלא: חסם O(n·3^n+m+n), עזר O(m+n). מבטיח ציון מיטבי בלי לטעון שהוא היעיל ביותר. זרימת עלות מזערית היא חלופה פולינומית מתוארת.",
+      "en": "Exhaustive bound O(n·3^n+m+n), O(m+n) auxiliary words. Guarantees optimal score without fastest-algorithm claims. Min-cost flow is a described polynomial alternative."
+    },
+    "edge_cases": {
+      "he": [
+        "אין אנשים או תחפושות, אדם ללא העדפות, יותר אנשים מתחפושות.",
+        "התנגשות על אותה בחירה ראשונה, כמה פתרונות מיטביים, הקצאה שנייה שמאפשרת לספק עוד אדם.",
+        "מלאי עם שמות כפולים או העדפה לא קיימת נדחים."
+      ],
+      "en": [
+        "No people/costumes, no preferences, more people than costumes.",
+        "Shared first choice, tied optima, second choice enabling another served person.",
+        "Duplicate inventory names or unavailable preferences are rejected."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לבחור לפי סדר אנשים בלי לבחון השפעה על אחרים.",
+        "למקסם רק בחירות ראשונות בלי להגדיר עדיפות למספר המקבלים.",
+        "לשכוח לנקות used בחזרה מרקורסיה או להמציא העדפות חמישיות."
+      ],
+      "en": [
+        "Greedy person-order choices without considering competition.",
+        "Maximizing first choices alone without defining served-count priority.",
+        "Failing to undo used on backtracking or inventing fifth-person preferences."
+      ]
+    },
+    "interview_answer": {
+      "he": "אגדיר קודם (מספר מקבלי העדפה,מספר בחירות ראשונות). בלי מגבלת זמן אחפש כל העדפה פנויה או None לכל אדם, אמנע שימוש כפול ואשמור את הזוג הגדול ביותר. ארבע השורות נותנות (4,3); חסרה שורה לפתרון של חמישה אנשים.",
+      "en": "First define(served,first choices). With no time bound, try each free preference or None, prevent reuse and keep the largest score. The four rows achieve(4,3); a five-person instance lacks a row."
+    },
+    "source_ambiguities": {
+      "he": "ספירת האנשים והדוגמה סותרות, והמושג מרוצים אינו פונקציית מטרה מוגדרת. נשמר המקור ונוספו במפורש חוזה כללי ופירוש לקסיקוגרפי; אין שאלה זהה בשלושת המאגרים.",
+      "en": "The people count conflicts with the example, and happy is not a defined objective. Preserve the source and explicitly add a general contract and lexicographic interpretation; no identical record in the three banks."
+    },
+    "verification": {
+      "he": "6,506 מקרים ממצים ועוד 60 דגימות מול אורקל מוצר קרטזי נפרד; הדוגמה, חוקיות, ציון ושמירת קלט נבדקו ב־Python.",
+      "en": "6,506 exhaustive cases plus60 seeded cases against a separate Cartesian-product oracle; source example, feasibility, score and input preservation checked in Python."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה אם יש חשיבות רק למספר מקבלי ההעדפות?",
+          "answer_direction": "הסירו את רכיב first והשתמשו בהתאמה דו־צדדית בגודל מרבי; אין צורך לייעל עלות דירוג.",
+          "status": "בחומר משלים בלבד; לא מחובר לתור המשך."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if only the number receiving acceptable preferences matters?",
+          "answer_direction": "Drop first and use maximum-cardinality bipartite matching; ranking-cost optimization is unnecessary.",
+          "status": "Supplemental only; not wired to the follow-up queue."
+        }
+      ]
+    }
+  },
+  "PREP-149": {
+    "assumptions": {
+      "he": [
+        "עובדים בני החלפה, לא משמשים בשני פרויקטים בו־זמנית, ושחרור והקצאה מחדש ללא עיכוב.",
+        "ימים שלמים כוללים start,end; הרחבה רציפה חצי פתוחה כוללת start ומוציאה end.",
+        "demand שלם לא שלילי, זמני קלט סופיים; ריק מחזיר0."
+      ],
+      "en": [
+        "Interchangeable workers, no double service at one time, immediate release/reassignment.",
+        "Integer days include start/end; continuous extension is[start,end).",
+        "Nonnegative integer demands, finite endpoints; empty input returns0."
+      ]
+    },
+    "optimality": {
+      "he": "מינימום העובדים שווה לשיא סכום הדרישות, בהוכחת חסם והקצאה. O(K log K) זמן ו־O(K) עזר לאירועים, לא טענת מינימום זמן מיון.",
+      "en": "Minimum headcount equals peak demand, proved necessary/sufficient. O(K log K) event time/O(K) storage, without a minimum sorting-runtime claim."
+    },
+    "edge_cases": {
+      "he": [
+        "פרקים לא חופפים, זהים, מכילים זה את זה או נוגעים בקצה.",
+        "יום יחיד כולל קצוות לעומת קטע רציף ריק; דרישה0 ורשימה ריקה.",
+        "סיום קודם להתחלה, דרישה שלילית, זמנים לא סופיים או יום לא שלם בגרסת הימים נדחים."
+      ],
+      "en": [
+        "Disjoint, identical, nested or touching intervals.",
+        "One inclusive day versus an empty continuous interval; zero demand and empty input.",
+        "Reversed intervals, negative demand, nonfinite times or noninteger inclusive days are rejected."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לחבר את כל הפרויקטים גם כשהם בזמנים שונים.",
+        "להחסיר ביום הסיום למרות שהסוף כלול, או להוסיף1 לזמן סיום רציף.",
+        "לסרוק כל רגע רציף או להתעלם ממשקלים ולהסתפק במספר הפרקים החופפים."
+      ],
+      "en": [
+        "Summing all projects even at different times.",
+        "Releasing on an included final day or adding1 to a continuous end.",
+        "Iterating every continuous moment or counting intervals without their weights."
+      ]
+    },
+    "interview_answer": {
+      "he": "מספר העובדים הוא שיא סכום הדרישות. אמיין אירועי התחלה ושחרור ואסרוק סכום מצטבר. בימים כוללים אשחרר ב־end+1; בקטעים רציפים חצי פתוחים ב־end. הדוגמה דורשת13.",
+      "en": "Headcount is peak aggregate demand. Sort start/release events and scan the running total. Release at end+1 for inclusive days, end for continuous half-open intervals. The example needs13."
+    },
+    "source_ambiguities": {
+      "he": "המקור לא קבע קצוות או אילוצי עובדים. נבחרו שתי מוסכמות מפורשות ללא הנחת end+1 ברציף. VSW-010 מאחדת פרקים ללא דרישות משוקללות, ולכן אינה כפילות.",
+      "en": "Source omits endpoints and worker constraints. Two explicit conventions avoid assuming end+1 for continuous time. VSW-010 merges intervals without weighted demands, so is not a duplicate."
+    },
+    "verification": {
+      "he": "27,931 מקרים ממצים ועוד150 דגימות לכל מוסכמה, מול חישוב ישיר נפרד; נגיעה נותנת13 לעומת7 ומדגימה הבדל אמיתי.",
+      "en": "27,931 exhaustive cases plus150 seeded cases per convention against independent direct-demand oracles; touching intervals expose13 versus7."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "ומה אם גם בקלט הרציף שני הקצוות כלולים?",
+          "answer_direction": "צריך לטפל בהתחלות לפני שחרורים באותו זמן ולבדוק את הביקוש בנקודה עצמה, במקום להשתמש רק בסכום האירועים החצי פתוח.",
+          "status": "בחומר משלים בלבד."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if continuous intervals include both endpoints?",
+          "answer_direction": "Process starts before releases at equal times and inspect demand at the point itself, rather than relying on a half-open net-event total.",
+          "status": "Supplemental only."
+        }
+      ]
+    }
+  },
+  "PREP-150": {
+    "assumptions": {
+      "he": [
+        "מטריצה מלבנית של שלמים עם שורות ניתנות לשינוי ולא חופפות; האפסים הקובעים הם מהקלט המקורי.",
+        "המימוש משנה במקום ומחזיר אותו אובייקט; ריק ושורות באורך אפס מותרים.",
+        "O(1) עזר הוא סעיף הרחבה, לא מגבלה שיוחסה למקור."
+      ],
+      "en": [
+        "Rectangular integer matrix with mutable nonaliased rows; only original zeros decide.",
+        "Mutate in place and return the same object; empty/zero-column matrices allowed.",
+        "O(1) auxiliary storage is an extension, not a source-attributed restriction."
+      ]
+    },
+    "optimality": {
+      "he": "דגלים: O(R+C) עזר; סימון בגבולות: O(1) מילות עזר. זמן O(RC+R+C), ומכאן O(n²) בריבוע. חסם תחתון לקריאת תאים, בלי טענת מינימום הוראות.",
+      "en": "Flags use O(R+C) extra; border markers use O(1) words. Time O(RC+R+C), hence O(n²) for squares. Cell-inspection lower bound, no instruction minimum."
+    },
+    "edge_cases": {
+      "he": [
+        "ריק, שורה אחת, עמודה אחת, אפס עמודות.",
+        "אפס בשורה/עמודה ראשונה או ב־(0,0), כל אפס או אין אפסים.",
+        "תוצאה עם אפסים חדשים אינה בהכרח נקודת שבת של הפונקציה; מבנה לא מלבני נדחה."
+      ],
+      "en": [
+        "Empty, one row/column, zero columns.",
+        "Zero in first row/column or(0,0), all zero/no zeros.",
+        "Newly created zeros do not make the output necessarily a fixed point; ragged shape is rejected."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשתמש באפסים שנוצרו כרגע כדי לסמן עוד שורות.",
+        "לאפס את השורה הראשונה לפני שסיימנו להשתמש בסימוני העמודות.",
+        "לשמור רק דגל אחד ל־(0,0), או להסתיר העתקת מטריצה בתוך טענת מקום קבוע."
+      ],
+      "en": [
+        "Using newly written zeros to mark more rows.",
+        "Clearing the first row before consuming column markers.",
+        "Using one flag for(0,0) or hiding a matrix copy in a constant-space claim."
+      ]
+    },
+    "interview_answer": {
+      "he": "אפריד גילוי מאיפוס. לפתרון קבוע בעזר אשמור שני דגלים לגבולות ואשתמש בשורה ובעמודה הראשונות לסימון. אסרוק את הפנים, אאפס לפי הסימונים, ואטפל בגבולות רק בסוף.",
+      "en": "Separate discovery from clearing. For constant auxiliary words save two border flags, mark rows/columns in the first column/row, clear the interior, and handle borders last."
+    },
+    "source_ambiguities": {
+      "he": "המקור דורש זמן n² אך לא מגדיר מלבניות, שינוי קלט, מקור האפסים או מקום. הנוסח תיקן בגלוי שורה j לעמודה j והוסיף סעיף עזר קבוע. אין כפילות בשלושת המאגרים.",
+      "en": "Source asks for n² time but omits rectangularity, mutation, original-zero semantics and memory. The edited text explicitly corrects row j to column j and adds a constant-auxiliary-space extension. No duplicate in the three banks."
+    },
+    "verification": {
+      "he": "66,225 מטריצות ממצות ועוד300 דגימות, שתי שיטות מול מקור לא משתנה; נבדקו זהויות, אי־התפשטות ודחיית מבנה לא תקין.",
+      "en": "66,225 exhaustive matrices plus300 seeded cases, two methods versus unchanged source; identities, noncascade and invalid shapes checked."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה עושים אם אסור לשנות את הקלט וצריך מטריצת פלט נפרדת?",
+          "answer_direction": "אפשר לשמור דגלים ולהפיק כל תא מהמקור. מטריצת הפלט עצמה דורשת Θ(RC) מקום ויש להפריד אותה ממקום עזר.",
+          "status": "בחומר משלים בלבד."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if input is read-only and output must be separate?",
+          "answer_direction": "Keep flags and construct output from the source. The output itself costs Θ(RC) storage, distinct from auxiliary space.",
+          "status": "Supplemental only."
+        }
+      ]
+    }
+  },
+  "PREP-151": {
+    "assumptions": {
+      "he": [
+        "קלט שלם ללא סימן0..255 ופלט0..8, ללא פונקציית ספירה מובנית או המרה למחרוזת בפתרון.",
+        "גישה אקראית לטבלה ופעולות מילה הן המודל; הכנת הטבלה נספרת בנפרד.",
+        "O(1) הוא הפירוש הערוך לסימון המקור, ולא o(1) מתמטי."
+      ],
+      "en": [
+        "Unsigned0..255 input and0..8 output; no built-in popcount or string conversion in the solution.",
+        "Word operations/random access model; table setup counted separately.",
+        "O(1) is the explicit interpretation of the source notation, not mathematical o(1)."
+      ]
+    },
+    "optimality": {
+      "he": "כל שיטה קבועה בתחום של8 ביט. נוסחת הקבוצות אינה כוללת לולאת ביטים; טבלה עולה256 רשומות והכנתן. לרוחב משתנה יש לחשב מחדש זמן ומקום.",
+      "en": "Every method is bounded on8 bits. Grouping has no bit loop; a table needs256 entries and setup. Variable-width time/storage require separate analysis."
+    },
+    "edge_cases": {
+      "he": [
+        "0,255, ביט בודד בכל מיקום, דפוס מתחלף וכמה אחדות רצופות.",
+        "בית ומשלים שלו נספרים יחד לשמונה.",
+        "שליליים,256,True או שבר נדחים."
+      ],
+      "en": [
+        "0,255, every one-hot, alternating and consecutive-one patterns.",
+        "Byte and complement counts add to eight.",
+        "Negative,256,True or fractional inputs rejected."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לכנות לולאה של8 צעדים O(N) בלי להגדיר N משתנה.",
+        "לבלבל ספירת אחדות עם מספר הביטים הדרושים לייצוג או עם זוגיות.",
+        "להסתיר את256 רשומות הטבלה או לטעון שתוצאת בית מוכיחה O(1) למספר באורך לא חסום."
+      ],
+      "en": [
+        "Calling an eight-step loop O(N) without a varying N.",
+        "Confusing population count with representation length or parity.",
+        "Hiding256 table entries or extending a byte bound to unbounded integers."
+      ]
+    },
+    "interview_answer": {
+      "he": "לבית יש רק8 ביטים ולכן גם סריקה היא O(1). כדי להימנע מלולאה אספור במקביל זוגות, רביעיות ובית באמצעות מסכות; חלופה היא טבלה בת256 תשובות שהוכנה מראש. את מחיר ההכנה והמקום אפריד ממחיר השאילתה.",
+      "en": "A byte has eight bits, so scanning is already O(1). Without a loop, combine pair, nibble and byte counts with masks; alternatively use256 precomputed answers, separating setup/storage from query cost."
+    },
+    "source_ambiguities": {
+      "he": "במקור נראה o(1), והרוחב קבוע. הובהרה ההבחנה בלי לטעון שהסריקה אינה קבועה. קשורה ל־SW-001 ול־VSW-001 אך לא מפרסמת או מאשרת אותן; PREP-001 חומרתית.",
+      "en": "Source resembles o(1) on a fixed width. Clarify without falsely denying constant-time scanning. Linked to SW-001/VSW-001 without publishing or approving them; PREP-001 is hardware."
+    },
+    "verification": {
+      "he": "כל256 ערכי הבית בארבע שיטות,256 רשומות טבלה, ארבע דחיות לכל שיטה וזוגיות המשלים מול אורקל טקסט עצמאי. Python בלבד.",
+      "en": "All256 bytes in four methods,256 table entries, four invalid values each and complement identity against independent text oracle. Python only."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך משתמשים באותה טבלה לספירת אחדות ב־64 ביט?",
+          "answer_direction": "מחלצים שמונה בתים, קוראים את הטבלה לכל בית ומחברים; זה קבוע ל־64 ביט אך גדל לינארית במספר הבתים ברוחב משתנה.",
+          "status": "בחומר משלים בלבד."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can the same table count a64-bit value?",
+          "answer_direction": "Extract eight bytes, look up each and sum. Constant for64 bits, linear in byte count for variable width.",
+          "status": "Supplemental only."
+        }
+      ]
+    }
+  },
+  "PREP-158": {
+    "assumptions": {
+      "he": [
+        "עדכונים בו־זמניים פעם בשנייה; הזוג הראשון הוא (2,98).",
+        "מיקומי התאים נמדדים בתוויות 1..100; מפגש בדיד נבדק רק אחרי עדכון מלא משותף.",
+        "התנועה הרציפה מוצגת כהנחה נוספת בלבד, ולא כתכונה של מצביע בזיכרון."
+      ],
+      "en": [
+        "Simultaneous updates once per second, beginning with reported pair (2,98).",
+        "Positions use labels 1..100; discrete meeting is checked after a complete shared update.",
+        "Continuous motion is a separately stated assumption, not a property of memory pointers."
+      ]
+    },
+    "optimality": {
+      "he": "המשוואה קובעת מועמד יחיד במספר קבוע של פעולות אריתמטיות; יש לבדוק שלמות וטווח. מונה הביקורים בקוד עולה O(T) בזמן ו־O(1) בזיכרון עזר עבור T זוגות, בלי לכלול רשימת פלט אם אוספים אותה. אין טענת עלות ביטים קבועה למספרים שרירותיים.",
+      "en": "The equation determines one candidate in a constant number of arithmetic operations, followed by integer/range checks. The visit generator uses O(T) time and O(1) auxiliary space for T pairs, excluding materialized output. Arbitrary-precision bit costs are not claimed constant."
+    },
+    "verification": {
+      "he": "עברו 11,160 תצורות שלמות מול אורקל חלוקה עצמאי, עקבת החצייה המקורית והחיתוך הרציף בחשבון רציונלי. נבדק גם ביקור משותף בערך בזמנים שונים. אין כאן תנועה פיזית או מודל של עדכונים לא מסונכרנים.",
+      "en": "Passed 11,160 integer configurations against an independent divisibility oracle, the source crossing trace and exact rational continuous intersection. A common value visited at different ticks was also checked. No physical motion or unsynchronized-update model is claimed."
+    },
+    "edge_cases": {
+      "he": [
+        "מיקומים זהים בהתחלה הם מפגש בזמן 0.",
+        "אם המועמד מחוץ לטווח או שלילי, הוא אינו מפגש תקף.",
+        "שינוי אחד מערכי ההתחלה עשוי להפוך את הפער לכפולה של סכום הצעדים.",
+        "שוויון במיקום רציף לא מחייב שוויון בערך שלם."
+      ],
+      "en": [
+        "Equal initial positions meet at time 0.",
+        "A negative or out-of-range candidate is not a valid meeting.",
+        "Changing a start label can make the gap divisible by the sum of steps.",
+        "Equality at a continuous position does not imply equality at an integer cell."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לעגל את זמן הפתרון הלא־שלם.",
+        "להניח שהחלפת סדר מחייבת מפגש בדיד.",
+        "לערבב מספר צעד שונה לכל מצביע.",
+        "להחליף את הסדרה 98,95,92 בסדרה אחרת או להשתמש באינדקסים במקום הערכים בלי לציין."
+      ],
+      "en": [
+        "Rounding the noninteger candidate time.",
+        "Assuming reversing order forces a discrete meeting.",
+        "Using different step counters for the two pointers.",
+        "Replacing 98,95,92 with another sequence or silently switching from value labels to indices."
+      ]
+    },
+    "interview_answer": {
+      "he": "הפער הוא 96−5t, ולכן שוויון דורש t=19.2. אין צעד שלם כזה: ב־19 הם ב־40 ו־41, וב־20 ב־42 ו־38. הם חולפים זה על פני זה בלי מפגש בדיד. רק תחת תנועה רציפה נוספת הם חוצים במיקום 40.4.",
+      "en": "The gap is 96−5t, so equality needs t=19.2. No integer tick does that: tick 19 gives 40/41, tick 20 gives 42/38. They pass without a discrete meeting. Extra continuous-motion assumptions give a crossing at position 40.4."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המילה ייפגשו אינה מגדירה בדיקה אחרי קפיצה או מפגש לאורך תנועה; שני הפירושים הופרדו.",
+        "זמן האפס ותוויות המיקומים הוגדרו בעריכה באופן שמתאים לזוגות המפורשים.",
+        "שיוך NVIDIA מדווח בצילום ולא אומת עצמאית."
+      ],
+      "en": [
+        "Meeting could mean an update-time equality or crossing during travel; the interpretations are separated.",
+        "Time zero and labels are editorially defined to match the explicit position pairs.",
+        "NVIDIA attribution is source-reported, not independently verified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איזה שינוי של יחידה במיקום ההתחלה הימני יוצר מפגש?",
+          "answer_direction": "שינוי 98 ל־97 נותן פער 95; בזמן t=19 שניהם בערך 40. בדקו גם טווח, ולא רק חלוקה.",
+          "principle": "שארית של הפער ביחס למהירות הסגירה קובעת מפגש בדיד."
+        }
+      ],
+      "en": [
+        {
+          "question": "Which one-unit change to the right start produces a meeting?",
+          "answer_direction": "Changing 98 to 97 gives gap 95; at t=19 both are 40. Check range as well as divisibility.",
+          "principle": "The gap modulo closing step determines a discrete meeting."
+        }
+      ]
+    }
+  },
+  "PREP-159": {
+    "assumptions": {
+      "he": [
+        "זהו תכנון בדיקות, ולא דיווח על חבילה פיזית שנבדקה.",
+        "נתוני הכמות, המשקל המרחבי, הסבילות, הייעוד והאחסון מתקבלים מהתווית או ממפרט מוסכם.",
+        "מידות A4 הנומינליות הן 210×297 מ״מ; סבילות קבלה אינה מוסקת כאן מהשם בלבד.",
+        "בדיקות שימוש וסביבה תלויות בתנאים שהיצרן מצהיר עליהם ובציוד מדידה מתאים."
+      ],
+      "en": [
+        "This is a test-plan exercise, not a report on an inspected physical pack.",
+        "Count, grammage, tolerances, intended use and storage limits come from the label or agreed specification.",
+        "Nominal A4 dimensions are 210×297 mm; acceptance tolerances are not inferred here from the name alone.",
+        "Use/environment tests depend on declared conditions and suitable measurement equipment."
+      ]
+    },
+    "optimality": {
+      "he": "אין סט בדיקות מזערי יחיד בלי מודל כשלים ותקציב. סדר מוצע: בדיקות זולות ועתירות סיכון לפני ניסויי שימוש וסביבה. בדיקת כל N הדפים עולה לפחות O(N) פעולות התבוננות/ספירה; דגימה של M דפים עולה O(M) ואינה הוכחה שכל החבילה תקינה. מודל החלטת מרווח המדידה משתמש במספר קבוע של פעולות לכל תצפית.",
+      "en": "There is no unique minimum test set without a fault model and budget. Inspect cheap/high-risk properties before use and environment trials. Inspecting/counting all N sheets requires O(N) observations; M sampled sheets use O(M) and do not prove the whole pack conforms. The interval-decision model uses a constant number of operations per observation."
+    },
+    "verification": {
+      "he": "נבדק מודל סינתטי בלבד: 85 מרווחי מדידה מול אורקל קבוצות עצמאי, 32 החלפות כיוון של מידות, 515 צירופי כמות נמדדת/מוצהרת וחמש דחיות קלט. הסבילות של 1 מ״מ בנתוני הבדיקה היא נתון דמה להמחשת גבולות, לא סבילות ISO או דרישת מוצר. לא נבדקו חבילה, מדפסת, תנאי סביבה או עמידה בתקן.",
+      "en": "Only synthetic logic was tested:85 measurement intervals against an independent set oracle,32 dimension-orientation swaps,515 observed/declared count combinations and five invalid cases. The 1 mm fixture tolerance is invented for boundary demonstrations, not an ISO tolerance or product requirement. No pack, printer, environment or standards conformity was tested."
+    },
+    "edge_cases": {
+      "he": [
+        "אין כמות מוצהרת: מסמנים דרישה חסרה, לא מניחים 500 דפים.",
+        "אין סבילות: אין מסקנת עובר רק משום שהמידה קרובה ל־A4.",
+        "מדידה בגבול עם אי־ודאות עשויה להיות לא מכרעת.",
+        "חבילה עם נזק מקומי עשויה להיכשל אף שהדף העליון תקין.",
+        "הזנת מספר דפים יחד היא כשל שימוש שונה מחוסר דפים בחבילה."
+      ],
+      "en": [
+        "No declared count: mark a missing requirement, do not assume 500 sheets.",
+        "No tolerance: closeness to A4 nominal dimensions alone is not a pass decision.",
+        "A boundary measurement with uncertainty can be inconclusive.",
+        "Localized damage can be missed by checking only the top sheet.",
+        "Multiple-sheet feeding is a different use failure from a missing-sheet count."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לרשום רשימת רעיונות בלי תוצאה צפויה ושיטת מדידה.",
+        "להמציא כמות, משקל או סבילות קבלה ולייחס אותם למקור.",
+        "לבדוק רק את הדף הראשון ולהכריז שכל החבילה תקינה.",
+        "לבדוק התאמה לכל מדפסת או לכל תנאי לחות בלי שזו דרישה.",
+        "להציג בדיקת קוד סינתטית כאילו נמדד נייר פיזי."
+      ],
+      "en": [
+        "Listing ideas without expected results and measurement methods.",
+        "Inventing count, grammage or tolerances and attributing them to the source.",
+        "Inspecting only the first sheet and certifying the whole pack.",
+        "Requiring compatibility with every printer or humidity condition without such a requirement.",
+        "Presenting synthetic code checks as physical paper measurements."
+      ]
+    },
+    "interview_answer": {
+      "he": "אתחיל במפרט: כמות, מידות וסבילות, משקל, ייעוד ותנאי אחסון. אחר כך אבנה בדיקות עם שיטה ותוצאה צפויה: תווית ואריזה, ספירה, מידות ופגמים במדגם מפוזר, ואז כתיבה והדפסה בציוד המוצהר ותנאי אחסון מוגדרים. אתעד מדידות, אי־ודאות, כיסוי ומגבלות; דרישה חסרה אינה עובר.",
+      "en": "Start with specifications:count, dimensions/tolerances, grammage, intended use and storage. Then define methods and expected outcomes for label/package, count, dimensions and defects in a distributed sample, followed by writing/printing on declared devices and specified storage conditions. Record observations, uncertainty, coverage and limits; a missing requirement is not a pass."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור מבקש להציע בדיקות בלבד, בלי נתוני מוצר או קריטריוני קבלה.",
+        "מידות A4 נתמכות בתקן; שאר הדרישות דורשות תווית או מפרט ולא הומצאו.",
+        "שיוך Apple מדווח בצילום ולא אומת עצמאית."
+      ],
+      "en": [
+        "The source asks only for proposed tests, with no product data or acceptance limits.",
+        "The standard supports A4 nominal dimensions; other requirements must come from a label/specification and are not invented.",
+        "Apple attribution is source-reported, not independently verified."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך תשתנה התכנית אם יש רק עשר דקות לבדיקה?",
+          "answer_direction": "דרגו סיכונים ועלות: זהות, אריזה, כמות ומידות מדגמיות תחילה; בחרו דגימת שימוש אחת בהתאם לייעוד. תעדו מה לא נבדק, ואל תהפכו צמצום כיסוי לאישור מלא.",
+          "principle": "תיעדוף תחת תקציב מחייב דיווח על סיכון שיורי."
+        }
+      ],
+      "en": [
+        {
+          "question": "How does the plan change if testing has only ten minutes?",
+          "answer_direction": "Rank risk and cost:identity, package, count and sampled dimensions first; choose one use sample matching intended purpose. State what remains untested instead of certifying full coverage.",
+          "principle": "Budgeted prioritization requires reporting residual risk."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "ISO 216:2007 — תחום התקן ומצב הפרסום",
+          "url": "https://www.iso.org/standard/36631.html"
+        },
+        {
+          "title": "תצוגה מקדימה רשמית של ISO 216 — טבלת מידות A4",
+          "url": "https://preview.sist.si/sist-preview/36631/c0883203ea25445c9992bb09343620c5/ISO-216-2007.pdf"
+        }
+      ],
+      "en": [
+        {
+          "title": "ISO 216:2007 — Scope and publication status",
+          "url": "https://www.iso.org/standard/36631.html"
+        },
+        {
+          "title": "Official ISO 216 preview — A4 dimension table",
+          "url": "https://preview.sist.si/sist-preview/36631/c0883203ea25445c9992bb09343620c5/ISO-216-2007.pdf"
+        }
+      ]
+    }
+  }
+}

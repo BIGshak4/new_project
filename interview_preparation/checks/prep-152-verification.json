@@ -1,0 +1,9 @@
+{
+  "question_id": "PREP-152",
+  "status": "passed",
+  "all_state_transitions": 32,
+  "aligned_reset_cases": 32,
+  "long_trace_edges": 3104,
+  "invalid_states_rejected": 5,
+  "scope": "Executed logical same-clock Python model with independent modulo-16 transition lookup and modulo-32 oracle. Old low=15 triggers high toggle. No black-box internals, HDL, generated-clock or physical timing validation."
+}

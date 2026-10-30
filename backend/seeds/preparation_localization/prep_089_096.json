@@ -270,14 +270,18 @@
         "אין מערך, רשימה, מחרוזת או טבלת חיפוש בפתרון; משתנים שלמים מותרים.",
         "הפלט הוא מספר; כתיבה בשמונה סיביות משמשת להסבר בלבד.",
         "סעיף C: uint8_t קיים ביעד; הקלט כבר בית unsigned וכל שמונת הביטים נחשבים.",
-        "סעיף C: uint8_t קיים ביעד; הקלט כבר בית unsigned וכל שמונת הביטים נחשבים."
+        "סעיף C: uint8_t קיים ביעד; הקלט כבר בית unsigned וכל שמונת הביטים נחשבים.",
+        "מספר ללא סימן המתאים בדיוק לרוחב W שלם לא שלילי; כל האפסים המובילים נשמרים כחלק מהייצוג.",
+        "W=0 מקבל רק0. קוד הסקאלרים נמנע ממערך וממחרוזת; המקור החדש מתיר בחירת שפה ואף פסאודו־קוד."
       ],
       "en": [
         "Unsigned integer input in 0..255; exactly eight bits, including leading zeros.",
         "No array, list, string or lookup table in the solution; scalar integers are allowed.",
         "Return an integer; eight-bit display is explanatory only.",
         "C part: target provides uint8_t; input is already an unsigned byte and all eight bits matter.",
-        "C part: target provides uint8_t; input is already an unsigned byte and all eight bits matter."
+        "C part: target provides uint8_t; input is already an unsigned byte and all eight bits matter.",
+        "Unsigned value fitting nonnegative integer width W; leading-zero positions retained.",
+        "W=0 accepts only0. Scalar code avoids array/string, while the new source allows any language or pseudocode."
       ]
     },
     "optimality": {
@@ -285,13 +289,15 @@
         "time": "שמונה איטרציות: O(1) לרוחב הקבוע. להכללה לרוחב w: O(w) צעדי ביט, בהנחה שהמילה מכילה את הערך.",
         "space": "O(1) משתנים/מילים; בהכללה הרוחב הכולל הוא O(w) ביטים.",
         "scope": "אין טענת מינימום הוראות או עדיפות על פקודת חומרה ייעודית. החלפות במסכות יכולות לתת חלופה לרוחב קבוע.",
-        "variant_C_mirror": "שתי הדרכים קבועות לרוחב8; שלושה שלבי מסכות במקום שמונה איטרציות. הכללה O(logW) לעומת O(W) שלבי מילים, ללא מדידת מהירות."
+        "variant_C_mirror": "שתי הדרכים קבועות לרוחב8; שלושה שלבי מסכות במקום שמונה איטרציות. הכללה O(logW) לעומת O(W) שלבי מילים, ללא מדידת מהירות.",
+        "variant_given_width": "בדיוק W איטרציות ו־O(1) סקלרים. O(W) זמן במודל מילה מתאימה; Python ארוך דורש עד O(W) ביטי אחסון לסקלר ועלות פעולות תלוית רוחב. אין טענת מינימום."
       },
       "en": {
         "time": "Eight iterations: O(1) for the fixed width. For width w: O(w) bit steps assuming the value fits the word.",
         "space": "O(1) scalar variables/words; generalized scalar width is O(w) bits.",
         "scope": "No minimum-instruction or superiority-to-dedicated-hardware claim. Masked swaps are an alternative at fixed width.",
-        "variant_C_mirror": "Both fixed-width approaches are constant; three mask stages replace eight iterations. O(logW) versus O(W) generalized word stages, without measured speed claims."
+        "variant_C_mirror": "Both fixed-width approaches are constant; three mask stages replace eight iterations. O(logW) versus O(W) generalized word stages, without measured speed claims.",
+        "variant_given_width": "Exactly W iterations/O(1) scalars. O(W) in a suitable word model; Python long integers use up to O(W) bits per scalar and width-dependent operations. No minimum claim."
       }
     },
     "edge_cases": {
@@ -302,7 +308,10 @@
         "01101011 הופך ל־11010110, כלומר 107 ל־214.",
         "הקוד דוחה קלט מחוץ לתחום וגם ערכים שאינם שלמים.",
         "1,15,240; אפס,255,one-hot ואפסים מובילים.",
-        "1,15,240; אפס,255,one-hot ואפסים מובילים."
+        "1,15,240; אפס,255,one-hot ואפסים מובילים.",
+        "רוחב0,1,7,8; קלט0 וכל הביטים דלוקים.",
+        "אפסים מובילים, ערך1 ברוחבים שונים, רוחב שאינו חזקה של שתיים.",
+        "ערך מחוץ לרוחב או רוחב שלילי/לא שלם נדחה."
       ],
       "en": [
         "Zero and 255 are unchanged.",
@@ -311,7 +320,10 @@
         "01101011 becomes 11010110, or 107 becomes 214.",
         "The implementation rejects out-of-range and noninteger input.",
         "1/15/240; zero,255,one-hot and leading zeros.",
-        "1/15/240; zero,255,one-hot and leading zeros."
+        "1/15/240; zero,255,one-hot and leading zeros.",
+        "Widths0,1,7,8; zero/all ones.",
+        "Leading zeros, value1 at different widths, non-power-of-two widths.",
+        "Out-of-width values or negative/noninteger width rejected."
       ]
     },
     "common_mistakes": {
@@ -324,7 +336,10 @@
         "לעצור כשהקלט אפס, להפוך באמצעות NOT או להשתמש בהזזה חתומה שלילית.",
         "להציג שלושה שלבים כשלוש הוראות או מודל Python כהידור C.",
         "לעצור כשהקלט אפס, להפוך באמצעות NOT או להשתמש בהזזה חתומה שלילית.",
-        "להציג שלושה שלבים כשלוש הוראות או מודל Python כהידור C."
+        "להציג שלושה שלבים כשלוש הוראות או מודל Python כהידור C.",
+        "להשתמש באורך הייצוג המשמעותי במקום הרוחב שנמסר.",
+        "לעצור כשהקלט שנותר מתאפס.",
+        "לכנות O(1) סקלרים O(1) ביטים, או להחיל מסכות8 ביט בלי התאמה לרוחב אחר."
       ],
       "en": [
         "A while-value loop stops before all eight positions are processed.",
@@ -335,30 +350,35 @@
         "Stopping at zero, using NOT or a negative signed shift.",
         "Equating three stages with three instructions or Python modeling with C compilation.",
         "Stopping at zero, using NOT or a negative signed shift.",
-        "Equating three stages with three instructions or Python modeling with C compilation."
+        "Equating three stages with three instructions or Python modeling with C compilation.",
+        "Using significant-bit length rather than supplied width.",
+        "Stopping when remaining input becomes zero.",
+        "Equating constant scalars with constant bits or applying byte masks unchanged to other widths."
       ]
     },
     "interview_answer": {
-      "he": "אתחל result=0. חזור שמונה פעמים: הזז את result שמאלה, צרף עם OR את value&1, והזז את value ימינה. הסיבית הראשונה שנקראה נודדת שמאלה עד לקצה. שמונה צעדים קבועים, בלי מערך עזר.\n\nאציג לולאה של שמונה ביטים, ואז החלפות שכנים, זוגות וחצאי בית במסכות 0x55,0x33,0x0F. שני המימושים קבועים לבית; השיפור הוא במספר שלבי העבודה, בלי להבטיח זמן מעבד שנמדד.\n\nאציג לולאה של שמונה ביטים, ואז החלפות שכנים, זוגות וחצאי בית במסכות 0x55,0x33,0x0F. שני המימושים קבועים לבית; השיפור הוא במספר שלבי העבודה, בלי להבטיח זמן מעבד שנמדד.",
-      "en": "Initialize result=0. Repeat eight times: shift result left, OR in value&1, then shift value right. The first extracted bit moves left until it reaches the far end. Eight fixed steps and no auxiliary array.\n\nStart with eight bit steps, then exchange neighbours, pairs and nibbles with0x55/0x33/0x0F. Both are constant for a byte; the improvement is fewer stages, without measured CPU-time guarantees.\n\nStart with eight bit steps, then exchange neighbours, pairs and nibbles with0x55/0x33/0x0F. Both are constant for a byte; the improvement is fewer stages, without measured CPU-time guarantees."
+      "he": "אתחל result=0. חזור שמונה פעמים: הזז את result שמאלה, צרף עם OR את value&1, והזז את value ימינה. הסיבית הראשונה שנקראה נודדת שמאלה עד לקצה. שמונה צעדים קבועים, בלי מערך עזר.\n\nאציג לולאה של שמונה ביטים, ואז החלפות שכנים, זוגות וחצאי בית במסכות 0x55,0x33,0x0F. שני המימושים קבועים לבית; השיפור הוא במספר שלבי העבודה, בלי להבטיח זמן מעבד שנמדד.\n\nאציג לולאה של שמונה ביטים, ואז החלפות שכנים, זוגות וחצאי בית במסכות 0x55,0x33,0x0F. שני המימושים קבועים לבית; השיפור הוא במספר שלבי העבודה, בלי להבטיח זמן מעבד שנמדד.\n\nאחלץ את הביט הימני ואצרף אותו לתוצאה מוזזת שמאלה, בדיוק W פעמים. כך אפסים מובילים ממשיכים להזיז את התוצאה ומתקבל היפוך של הרוחב שנמסר; הדוגמה ברוחב7 מחזירה83.",
+      "en": "Initialize result=0. Repeat eight times: shift result left, OR in value&1, then shift value right. The first extracted bit moves left until it reaches the far end. Eight fixed steps and no auxiliary array.\n\nStart with eight bit steps, then exchange neighbours, pairs and nibbles with0x55/0x33/0x0F. Both are constant for a byte; the improvement is fewer stages, without measured CPU-time guarantees.\n\nStart with eight bit steps, then exchange neighbours, pairs and nibbles with0x55/0x33/0x0F. Both are constant for a byte; the improvement is fewer stages, without measured CPU-time guarantees.\n\nExtract the low bit and append to the left-shifted result exactly W times. Leading zeros still shift the result, yielding the declared-width reversal; the seven-bit example returns83."
     },
     "source_ambiguities": {
       "he": [
         "המקור אומר מספר בן שמונה ביטים וללא מערך; הנוסח מבהיר טווח לא־מסומן, עיבוד אפסים מובילים ואיסור שימוש במחרוזת כתחליף למערך.",
         "תגיות המקור כוללות Intel ו־Marvell; השיוך מדווח ולא אומת עצמאית.",
         "המקור החדש מוסיף C ובקשת ייעול לאותו יעד של094. נאמר במפורש מהו יעד uint8_t ומה לא נבדק; VSW-003 היא הכללת מסכות ל־32 ביטים.",
-        "המקור החדש מוסיף C ובקשת ייעול לאותו יעד של094. נאמר במפורש מהו יעד uint8_t ומה לא נבדק; VSW-003 היא הכללת מסכות ל־32 ביטים."
+        "המקור החדש מוסיף C ובקשת ייעול לאותו יעד של094. נאמר במפורש מהו יעד uint8_t ומה לא נבדק; VSW-003 היא הכללת מסכות ל־32 ביטים.",
+        "המקור החדש מספק רוחב ולא קובע סימן או שפת מימוש. זה שינוי מהותי לעומת8 ביט, ולכן נוסף כסעיף נפרד עם חוזה מפורש, בלי להחליף את נוסחי והרמזים הקודמים. VSW-003 הפרטית מציגה32 ביט בלבד."
       ],
       "en": [
         "The source specifies eight bits and no array; the edition clarifies the unsigned range, leading-zero handling and no string workaround.",
         "Intel and Marvell are source-reported attributions, not independently verified.",
         "New source adds C and optimization to094’s same target. uint8_t assumptions and unperformed compilation are explicit; VSW-003 is the32-bit mask generalization.",
-        "New source adds C and optimization to 094’s same target. uint8_t assumptions and unperformed compilation are explicit; VSW-003 is the 32-bit mask generalization."
+        "New source adds C and optimization to 094’s same target. uint8_t assumptions and unperformed compilation are explicit; VSW-003 is the 32-bit mask generalization.",
+        "The new source supplies width but omits signedness/language. This materially generalizes eight bits, so add a separate explicit contract while preserving old prompts/hints. Private VSW-003 uses32 bits only."
       ]
     },
     "verification": {
-      "he": "אומתו כל 256 הקלטים מול אורקל בלתי תלוי של היפוך מחרוזת בת שמונה תווים, 2,048 בדיקות מיקום סיבית, היפוך כפול, שימור מספר אחדים, התאמה למשלים ושבע דחיות של קלט לא תקין. מחרוזות משמשות באורקל בלבד. ללא הידור לשפה ברוחב קבוע או מדידת ביצועים.\n\nכל256 הקלטים בשני מודלי Python מול ביטים הפוכים, כולל היפוך כפול. C לא קומפל: ארבע פקודות מהדר לא נמצאו ב־PATH.\n\nכל256 הקלטים בשני מודלי Python מול ביטים הפוכים, כולל היפוך כפול. C לא קומפל: ארבע פקודות מהדר לא נמצאו ב־PATH.",
-      "en": "Verified all 256 inputs against independent fixed-width string reversal, 2,048 individual bit positions, reversal involution, set-bit preservation, complement compatibility and seven invalid-input rejections. Strings are used only in the oracle. No fixed-width language compilation or benchmark.\n\nAll256 inputs in two Python models versus reversed bits, including involution. C uncompiled: four compiler commands absent from PATH.\n\nAll 256 inputs in two Python models versus reversed bits, including involution. C uncompiled: four compiler commands absent from PATH."
+      "he": "אומתו כל 256 הקלטים מול אורקל בלתי תלוי של היפוך מחרוזת בת שמונה תווים, 2,048 בדיקות מיקום סיבית, היפוך כפול, שימור מספר אחדים, התאמה למשלים ושבע דחיות של קלט לא תקין. מחרוזות משמשות באורקל בלבד. ללא הידור לשפה ברוחב קבוע או מדידת ביצועים.\n\nכל256 הקלטים בשני מודלי Python מול ביטים הפוכים, כולל היפוך כפול. C לא קומפל: ארבע פקודות מהדר לא נמצאו ב־PATH.\n\nכל256 הקלטים בשני מודלי Python מול ביטים הפוכים, כולל היפוך כפול. C לא קומפל: ארבע פקודות מהדר לא נמצאו ב־PATH.\n\n8,191 קלטים ממצים ברוחבים0..12 ועוד800 קלטים רחבים; אורקל מחרוזת נפרד, היפוך כפול ושמירת אחדות. Python הורץ.",
+      "en": "Verified all 256 inputs against independent fixed-width string reversal, 2,048 individual bit positions, reversal involution, set-bit preservation, complement compatibility and seven invalid-input rejections. Strings are used only in the oracle. No fixed-width language compilation or benchmark.\n\nAll256 inputs in two Python models versus reversed bits, including involution. C uncompiled: four compiler commands absent from PATH.\n\nAll 256 inputs in two Python models versus reversed bits, including involution. C uncompiled: four compiler commands absent from PATH.\n\n8,191 exhaustive width0..12 inputs plus800 wide inputs; independent text oracle, involution and popcount. Python executed."
     },
     "relationship_note": {
       "he": "קשורה לתרגילי הזזה וסיבוב, אך היפוך סדר שמונה הסיביות הוא פעולה אחרת; בפרט אין לשנות את הרוחב לפי גודל המספר.",
@@ -373,7 +393,14 @@
           "question": "איך מרחיבים לרוחב32?",
           "direction": "ממשיכים בהחלפת בתים וחצאי מילה עם מסכות unsigned ברוחב מתאים; אין להשתמש בהזזה בגודל הרוחב.",
           "status": "מוכן בתוכן בלבד; הרמזים המקוריים נשמרו."
-        }
+        },
+        "variant_given_width": [
+          {
+            "question": "מה משתנה כשמספר חתום הוא הקלט?",
+            "answer_direction": "יש להגדיר אם הופכים תבנית ברוחב קבוע וללא סימן או ייצוג עם סימן. ממירים לתבנית בלתי מסומנת באותו רוחב; לא מבצעים הזזה אריתמטית לא מוגדרת בחוזה.",
+            "status": "בחומר משלים; רמזי הווריאנט אינם מחליפים את התור המקורי."
+          }
+        ]
       },
       "en": {
         "question": "How can three masked-swap stages reverse a byte?",
@@ -383,7 +410,14 @@
           "question": "How does this extend to 32 bits?",
           "direction": "Continue byte and halfword exchanges using width-correct unsigned masks; avoid shifts equal to the width.",
           "status": "Content prepared only; original hints retained."
-        }
+        },
+        "variant_given_width": [
+          {
+            "question": "What changes for signed input?",
+            "answer_direction": "Define whether reversing a fixed-width unsigned pattern or a signed textual representation. Convert to a same-width unsigned pattern; do not rely on an unstated arithmetic-shift contract.",
+            "status": "Supplemental; variant hints do not replace the original queue."
+          }
+        ]
       }
     },
     "prompt_variants": {
@@ -396,6 +430,15 @@
             "החליפו שכנים עם 0x55, קבוצות של שני ביטים עם 0x33 ואז חצאי בית עם 0x0F; שמרו פעולות unsigned והסבירו שלושה שלבים, לא שלוש הוראות מכונה."
           ],
           "integration_status": "רמזי הסעיף מוכנים בחומר המשלים בלבד; תור הרמזים המקורי נשמר."
+        },
+        "given_width": {
+          "prompt": "### הרחבה: הרוחב נתון כחלק מהקלט\nנתונים מספר בינארי ורוחב הייצוג W. כתבו קוד או פסאודו־קוד שהופך בדיוק את W הסיביות: ה־MSB הופכת ל־LSB ולהפך. דוגמת המקור היא W=7: הקלט1100101 הופך ל־1010011.\n\nנבחר קלט ללא סימן0≤value<2^W, עם W שלם לא שלילי. אפסים מובילים שייכים לרוחב ואסור להשמיטם; W=0 מקבל רק value=0 ומחזיר0. מימוש הסקאלרים אינו משתמש במערך או במחרוזת, אף שהמקור החדש לא חייב הגבלה זו. גרסת8 הביט המקורית וה־C שלה נשמרות בנפרד. נתחו מספר איטרציות, מקום במילים לעומת ביטים ומודל מספרים ברוחב לא חסום.",
+          "hints": [
+            "אם הערך הוא1, האם הפלט זהה עבור רוחב7 ועבור רוחב8?",
+            "אחרי חילוץ הביט הימני שומרים מקום לבא באמצעות הזזה שמאלה של התוצאה. מספר החזרות חייב להיות הרוחב הנתון.",
+            "בצעו W פעמים result=(result<<1)|(value&1), ואז value>>=1. התחילו result=0, אל תעצרו כשהערך מתאפס, ובדקו שהקלט מתאים לרוחב לפני ההרצה."
+          ],
+          "integration_status": "בחומר משלים בלבד; תור הרמזים המקורי נשמר."
         }
       },
       "en": {
@@ -407,6 +450,15 @@
             "Swap neighbours using 0x55, two-bit groups using 0x33, then nibbles using 0x0F. Use unsigned operations; distinguish three stages from three machine instructions."
           ],
           "integration_status": "Part-specific hints are supplemental only; original hint queue retained."
+        },
+        "given_width": {
+          "prompt": "### Extension: width is part of the input\nGiven a binary number and representation width W, write code or pseudocode reversing exactly W bit positions, exchanging MSB and LSB. Source example uses W=7:1100101 becomes1010011.\n\nChoose unsigned0<=value<2^W with nonnegative integer W. Leading zeros belong to the width and must not be discarded; W=0 accepts only value0 and returns0. The scalar implementation uses no array/string even though the new source does not impose that restriction. Original eight-bit and C contracts remain separate. Analyze iterations, words versus bits, and unbounded numeric representations.",
+          "hints": [
+            "For value1, should widths7 and8 produce the same answer?",
+            "After extracting the rightmost bit, shift the result left to make room for the next. The iteration count must equal the supplied width.",
+            "Repeat result=(result<<1)|(value&1), then value>>=1 exactly W times. Start result0, do not stop at value0, and validate width fit first."
+          ],
+          "integration_status": "Supplemental only; original hint queue retained."
         }
       }
     }
@@ -800,24 +852,34 @@
       "he": [
         "n חיובי, צבעים בינאריים וסדר תשובות מהאחורי לקדמי.",
         "תיאום מראש, שמיעת כל התשובות וזיכרון מקומי; אין תקשורת נוספת.",
-        "אין מגבלה ידועה על מספר הכובעים מכל צבע."
+        "אין מגבלה ידועה על מספר הכובעים מכל צבע.",
+        "סדר הדיבור מהאחורי לקדמי, וכל אחד רואה לפניו ושומע את כל הקודמים.",
+        "צבעים חוזרים מתוך שלושה; אין ספירה ידועה מראש ואין ערוץ מסרים נוסף.",
+        "מותר לתכנן קידוד מראש, אבל כל תשובה בפועל היא רק שם צבע.",
+        "הדוברים הראשונים 100,99 הם המסמנים בענף 98;מוציאים את כובעיהם מחישוב הזוגיות."
       ],
       "en": [
         "Positive n, binary colors and rear-to-front answers.",
         "Pre-agreement, audible answers and private memory; no other communication.",
-        "No known inventory limit for either hat color."
+        "No known inventory limit for either hat color.",
+        "Speakers go rear to front;each sees ahead and hears every earlier reply.",
+        "Colors repeat among three, with no known counts and no extra communication channel.",
+        "Prior code agreement is allowed, but each actual reply is just one color name.",
+        "The first two speakers 100/99 signal in the 98 branch;exclude their hats from parity counts."
       ]
     },
     "optimality": {
       "he": {
         "criterion": "מספר היודעים את צבעם בוודאות, בכל סידור אפשרי.",
         "result": "n−1; הראשון מעביר זוגיות ולא יודע את כובעו.",
-        "proof": "החלפת כובעו של הראשון משאירה את כל תצפיותיו זהות; אי אפשר להבטיח n. ביט הזוגיות מאפשר לכל יתר n−1 להסיק את צבעם."
+        "proof": "החלפת כובעו של הראשון משאירה את כל תצפיותיו זהות; אי אפשר להבטיח n. ביט הזוגיות מאפשר לכל יתר n−1 להסיק את צבעם.",
+        "variant_096_three_colors": "50 ו־98 הן הבטחות של האסטרטגיות המדורגות;99 אופטימלית למקרה הגרוע לפי אי־הבחנה של הראשון. קוד ההדגמה סורק מחדש מידע לכל דובר ולכן O(N²) זמן כולל ו־O(N) עקבות/קלט, עם מספר קבוע של צוברים לחישוב תשובה מעבר לרשימות. אין טענת מהירות פיזית או הצלת כולם בכל סידור."
       },
       "en": {
         "criterion": "Number guaranteed to know their own color for every arrangement.",
         "result": "n−1; the first transmits parity without knowing their own hat.",
-        "proof": "Flipping the first speaker’s invisible hat leaves observations identical, ruling out n. Parity lets all other n−1 infer their colors."
+        "proof": "Flipping the first speaker’s invisible hat leaves observations identical, ruling out n. Parity lets all other n−1 infer their colors.",
+        "variant_096_three_colors": "The staged strategies guarantee 50 and 98;99 is worst-case optimal by first-speaker indistinguishability. The demonstration rescans information per speaker, so total time is O(N²) with O(N) input/trace storage and a constant number of accumulators beyond lists. No physical-speed or all-worlds 100-person guarantee is claimed."
       }
     },
     "edge_cases": {
@@ -825,13 +887,23 @@
         "n=1: אין יודע מובטח; n=2: הקדמי יודע.",
         "כל הכובעים באותו צבע או תבניות זוגיות מתחלפות.",
         "הראשון עשוי לענות נכון במקרה, אך אינו יודע זאת.",
-        "שמיעה חסרה או סדר שונה דורשים בעיה אחרת."
+        "שמיעה חסרה או סדר שונה דורשים בעיה אחרת.",
+        "הראשון עשוי לנחש נכון במקרה; ההבטחה אינה אומרת שבהכרח יטעה.",
+        "ל־N=1 מובטחות אפס תשובות נכונות בענף הסכום.",
+        "בענף שני המסמנים נדרשים לפחות שני אנשים.",
+        "שלושה צבעים זהים לכל הכובעים אינם מפרים את ההנחות.",
+        "צמד שאריות הזוגיות(1,1) מצביע על הפרת מודל או תקלה במידע, לא על צבע רביעי."
       ],
       "en": [
         "n=1 guarantees zero knowers; n=2 guarantees the front dwarf.",
         "Uniform colors and alternating parity patterns.",
         "The first may be correct by chance but does not know.",
-        "Missing audibility or a different answer order changes the contract."
+        "Missing audibility or a different answer order changes the contract.",
+        "The first speaker can happen to guess correctly;the guarantee does not require a wrong answer.",
+        "N=1 guarantees zero correct replies in the sum strategy.",
+        "The two-signaler branch requires at least two people.",
+        "All hats having the same color is allowed.",
+        "Parity pair(1,1) means invalid model/history, not a fourth color."
       ]
     },
     "common_mistakes": {
@@ -839,50 +911,108 @@
         "לספור את ההודעה הראשונה כאילו היא צבעו האמיתי של האחורי.",
         "לנסות להעביר את מספר השחורים המלא במילה אחת במקום רק זוגיות.",
         "לשכוח שהבאים משתמשים גם בתשובות הקודמות ולא רק במה שהם רואים.",
-        "לטעון שכל n בהכרח טועים או צודקים במקום להבחין בין הבטחה למקרה."
+        "לטעון שכל n בהכרח טועים או צודקים במקום להבחין בין הבטחה למקרה.",
+        "להחיל XOR בינארי בלי להגדיר קוד לשלושה צבעים.",
+        "להתייחס להודעת הראשון כאל צבעו האמיתי.",
+        "לכלול את כובעי 100 ו־99 בספירת ענף 98 אף שצבעיהם אינם ידועים.",
+        "לשנות סדר דיבור או להניח שמיעת תשובות בלי להצהיר עליה.",
+        "לקרוא לכל הכובעים שונים למרות שיש 100 כובעים ורק שלושה צבעים."
       ],
       "en": [
         "Treating the initial parity message as the rear dwarf’s true hat color.",
         "Trying to encode the full black-hat count in one word instead of parity.",
         "Ignoring previous correct replies when decoding later hats.",
-        "Confusing a worst-case guarantee with whether all n happen to be correct."
+        "Confusing a worst-case guarantee with whether all n happen to be correct.",
+        "Applying binary XOR without a three-color code.",
+        "Treating the first message as that speaker true color.",
+        "Including hats 100/99 in the 98-branch population although their colors are unknown.",
+        "Changing speaking order or assuming audible replies without stating it.",
+        "Calling all 100 hats distinct despite only three colors."
       ]
     },
     "interview_answer": {
-      "he": "האחורי אומר שחור אם מספר השחורים שלפניו אי־זוגי ולבן אם הוא זוגי. כל הבא משלב את הזוגיות עם הצבעים שכבר נשמעו ועם מה שהוא רואה, ונשאר רק כובעו. כך n−1 יודעים בוודאות. אי אפשר להבטיח גם לראשון לדעת, כי כובעו אינו משפיע על שום מידע שיש לו.",
-      "en": "The rear dwarf announces parity of black hats ahead. Each later dwarf XORs that message with correctly announced colors and visible hats, leaving their own color. Thus n−1 know with certainty. The first cannot know, because flipping only their invisible hat changes none of their observations."
+      "he": "האחורי אומר שחור אם מספר השחורים שלפניו אי־זוגי ולבן אם הוא זוגי. כל הבא משלב את הזוגיות עם הצבעים שכבר נשמעו ועם מה שהוא רואה, ונשאר רק כובעו. כך n−1 יודעים בוודאות. אי אפשר להבטיח גם לראשון לדעת, כי כובעו אינו משפיע על שום מידע שיש לו.\n\nל־50 אשתמש בזוגות:אחד אומר את כובע הבא והוא חוזר. ל־98 שני הראשונים מעבירים זוגיות אדום וכחול בקרב 98 האחרים. ל־99 הראשון אומר סכום קודי הצבעים מודולו 3 של 99 שלפניו;כל הבא מחסר נראים וצבעים נכונים שכבר נשמעו. את 100 אי אפשר להבטיח כי הראשון אינו רואה את כובעו.",
+      "en": "The rear dwarf announces parity of black hats ahead. Each later dwarf XORs that message with correctly announced colors and visible hats, leaving their own color. Thus n−1 know with certainty. The first cannot know, because flipping only their invisible hat changes none of their observations.\n\nFor 50, use pairs:one says the next hat and the partner repeats it. For 98, two first speakers encode red/blue parities of the other 98. For 99, the first says the sum modulo 3 of visible color codes;each later speaker subtracts visible and already-correct colors. All 100 cannot be guaranteed because the first cannot observe their own hat."
     },
     "source_ambiguities": {
       "he": {
         "audibility": "המקור אינו אומר במפורש ששומעים תשובות. זו הנחה שנוספה והיא חיונית.",
         "inventory": "לא ניתנה מכסה לכל צבע; אין לייבא את חמשת הכובעים של PREP-033.",
-        "objective": "מבחינים בין לדעת בוודאות לבין ניחוש שעשוי להצליח."
+        "objective": "מבחינים בין לדעת בוודאות לבין ניחוש שעשוי להצליח.",
+        "variant_096_three_colors": [
+          "הצילום אינו מגדיר במלואו סדר, ראות וערוץ תשובות;חוזה הטור הוגדר בעריכה.",
+          "הביטוי צבע אחר פורש כבחירה מתוך שלושה עם חזרות, והסתירה המילולית נשמרה בתיעוד.",
+          "שיוכי Mellanox/NVIDIA מדווחים בצילום ולא אומתו עצמאית."
+        ]
       },
       "en": {
         "audibility": "The source does not explicitly state hearing replies; this added assumption is essential.",
         "inventory": "No color inventory is given; do not import PREP-033’s five-hat restriction.",
-        "objective": "Knowing with certainty differs from a possibly successful guess."
+        "objective": "Knowing with certainty differs from a possibly successful guess.",
+        "variant_096_three_colors": [
+          "Speaking order, visibility and reply channel are not fully specified;the line contract is editorially explicit.",
+          "Different color is interpreted as a choice among three with repetition;the literal contradiction is documented.",
+          "Mellanox/NVIDIA attribution is source-reported, not independently verified."
+        ]
       }
     },
     "solution_extensions": {
       "he": {
         "question": "מה משתנה אם יש k צבעים וכל תשובה יכולה להיות אחד מ־k שמות הצבעים?",
         "answer_direction": "ממספרים צבעים 0..k−1 ומשדרים סכום מודולו k במקום XOR; כל הבא מחסר את הצבעים הידועים ומוצא את שלו.",
-        "tests": "הכללת ביט הזוגיות למידע מודולרי; נשארים k שמות מותרים."
+        "tests": "הכללת ביט הזוגיות למידע מודולרי; נשארים k שמות מותרים.",
+        "variant_096_three_colors": [
+          {
+            "question": "מה משתנה עבור q צבעים ושמות צבע מותרים?",
+            "answer_direction": "קודדו 0..q−1 והשתמשו בסכום מודולוq. הדובר הראשון מעביר אחת מ־q שאריות ושאר הדוברים משחזרים צבע אחד;N−1 עדיין חסם ההבטחה.",
+            "principle": "גודל אלפבית התשובה קובע את ערוץ סכום הביקורת."
+          }
+        ]
       },
       "en": {
         "question": "What if there are k colors and each answer may be one of the k color names?",
         "answer_direction": "Encode colors 0..k−1 and announce a sum modulo k instead of XOR; subtract known colors to recover each missing one.",
-        "tests": "Generalizing parity to modular information while retaining exactly k permitted words."
+        "tests": "Generalizing parity to modular information while retaining exactly k permitted words.",
+        "variant_096_three_colors": [
+          {
+            "question": "What changes for q colors with q permitted color names?",
+            "answer_direction": "Encode 0..q−1 and use a sum moduloq. The first speaker sends one of q residues and each later speaker recovers one color;N−1 remains the guarantee bound.",
+            "principle": "The reply alphabet provides the checksum channel."
+          }
+        ]
       }
     },
     "verification": {
-      "he": "בדיקת Python ממצה של 32,766 עולמות עבור n=1..14, ובהם 393,220 תשובות של גמדים שאינם הראשונים. נבדקו 16,383 זוגות עולמות עם אותו מידע גלוי וצבע אחורי שונה, ועוד 120 עולמות מדגמיים עד n=1024. נבדקו שימור הקלט וארבע דחיות קלט. ההוכחה הכללית והחסם העליון כתובים בנפרד; אין כאן ניסוי פיזי או ביקורת אנושית.",
-      "en": "Python exhaustively checks 32,766 worlds for n=1..14, including 393,220 nonfirst replies, plus16,383 paired worlds differing only in the invisible rear hat and120 seeded worlds up to n=1024. Input preservation and4 invalid-world rejections are checked. The general proof and upper bound are separate; no physical experiment or human review."
+      "he": "בדיקת Python ממצה של 32,766 עולמות עבור n=1..14, ובהם 393,220 תשובות של גמדים שאינם הראשונים. נבדקו 16,383 זוגות עולמות עם אותו מידע גלוי וצבע אחורי שונה, ועוד 120 עולמות מדגמיים עד n=1024. נבדקו שימור הקלט וארבע דחיות קלט. ההוכחה הכללית והחסם העליון כתובים בנפרד; אין כאן ניסוי פיזי או ביקורת אנושית.\n\nכל 9,840 סידורי שלושה צבעים באורכים 1..8 נבדקו בשלוש האסטרטגיות כשהן מוגדרות, וכן 1,000 סידורים בני 100. ב־243 מחלקות תצפית שונה רק כובע הראשון ונבדקה זהות הודעתו. פונקציות התשובה אינן מקבלות את הכובע שלהן. גבול 99 מוכח בנפרד.",
+      "en": "Python exhaustively checks 32,766 worlds for n=1..14, including 393,220 nonfirst replies, plus16,383 paired worlds differing only in the invisible rear hat and120 seeded worlds up to n=1024. Input preservation and4 invalid-world rejections are checked. The general proof and upper bound are separate; no physical experiment or human review.\n\nChecked all 9,840 three-color worlds of lengths 1..8 with each applicable strategy, plus 1,000 hundred-person worlds. In 243 visible-view classes only the first speaker hat changes and the first message stays identical. Reply functions do not receive their own hat. The 99 upper bound is separately proved."
     },
     "relationship_note": {
       "he": "קשורה ל־PREP-033 בנושא כובעים, אך כאן n כללי, אין מכסת צבעים ידועה והמידע מועבר במכוון בתשובות סדרתיות.",
       "en": "Related to PREP-033’s hats theme, but here n is general, color inventories are unknown and sequential answers deliberately carry information."
+    },
+    "prompt_variants": {
+      "he": {
+        "096_three_colors": {
+          "prompt": "### הרחבה: 100 גמדים וכובעים בשלושה צבעים\n100 גמדים עומדים בטור. לכל אחד כובע מאחד משלושה צבעים, עם חזרות מותרות; הביטוי בצילום שלכל אחד צבע אחר אינו יכול להתפרש כ־100 צבעים שונים מתוך שלושה. תכננו מראש אסטרטגיות שמבטיחות לפחות 50 תשובות נכונות, אחר כך לפחות 98, ולבסוף לפחות 99. הוכיחו את ההבטחות והאם אפשר להבטיח 100.\n\nחוזה המידע: ממספרים מהקדמי 1 לאחורי 100. כל אחד רואה את כל הכובעים שלפניו בלבד, ללא כובעו; עונים לפי הסדר 100,99,...,1 וכל אחד שומע את כל התשובות הקודמות. כל תשובה היא שם צבע אחד מתוך שלושת השמות, ונחשבת לניחוש כובעו של הדובר; אין מסר נוסף דרך זמן, תנועה או צורת אמירה. שמות הצבעים יכולים לשמש קוד מוסכם. שני האחרונים במיקום הם 100,99, העונים ראשונים. אין מידע על מספר הכובעים מכל צבע.",
+          "hints": [
+            "אפשר להשתמש בתשובה שאינה בהכרח נכונה כדי לעזור למישהו שרואים לפני הדובר. איך עושים זאת בזוגות?",
+            "ל־98 האחרים אפשר להעביר שני ביטים על צבעים באמצעות שני הדוברים הראשונים. האם זוגיות של שני צבעים מספיקה לזהות את השלישי?",
+            "כדי להסתפק בדובר מסמן אחד, קודדו את שלושת הצבעים 0,1,2 והעבירו סכום מודולו 3. כל דובר אחר מחסר את הצבעים שהוא רואה ואת התשובות הקודמות שנכונות בוודאות."
+          ],
+          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "096_three_colors": {
+          "prompt": "### Extension:100 dwarfs and three hat colors\nEach of 100 dwarfs wears one of three hat colors, with repetition allowed. The source phrase saying everyone has a different color cannot literally mean 100 distinct colors chosen from three. Design prior-agreed strategies guaranteeing at least 50 correct answers, then at least 98, and finally at least 99. Prove each guarantee and whether 100 can be guaranteed.\n\nInformation contract:number front 1 to rear 100. Each sees all hats ahead but not their own or behind. Speakers answer 100,99,...,1 and hear every previous reply. Each reply is one of the three color names and is scored as that speaker own-hat guess;no extra timing, motion or vocal channel is allowed. Color names may carry agreed codes. The last two in line are 100 and 99, the first two speakers. No counts per color are supplied.",
+          "hints": [
+            "A reply that is not necessarily correct for its speaker can help someone visible ahead. How can adjacent pairs use that?",
+            "Two first speakers can send two bits about the remaining 98 hats. Can parities for two colors distinguish all three possibilities?",
+            "To use just one signaler, encode colors 0,1,2 and announce a sum modulo 3. Later speakers subtract visible colors and previous answers known to be correct."
+          ],
+          "integration_status": "Variant hints are supplemental; original interactive hint queue retained."
+        }
+      }
     }
   }
 }
