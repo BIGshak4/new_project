@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "witness_minutes": 28,
+  "strict_deadline_minutes": 30,
+  "margin_minutes": 2,
+  "state_count": 64,
+  "directed_edges": 320,
+  "reachable_states": 62,
+  "certificate_edges": 320,
+  "cumulative_minutes": [
+    3,
+    4,
+    15,
+    18,
+    24,
+    25,
+    28
+  ],
+  "method": "Replay source-specific schedule; independently build all tuple-bank states and legal one/two-person moves. Full Dijkstra and reverse Bellman-Ford agree at 28; potential inequalities checked on every reachable edge give a lower bound for arbitrary-length schedules.",
+  "limitation": "Exact deterministic positive crossing-time model, no overhead or physical trial. Strictly before 30 is satisfied; completion at exactly 30 would fail the source deadline."
+}

@@ -1,0 +1,814 @@
+{
+  "PREP-188": {
+    "assumptions": {
+      "he": [
+        "מרחק אוקלידי; אינדקסים שונים; קואורדינטות שלמות חסומות כפי שמוגדר בנוסח; מותר כל זוג בשוויון."
+      ],
+      "en": [
+        "Euclidean distance; distinct indices; bounded integer coordinates as declared; any minimizing tie is acceptable."
+      ]
+    },
+    "optimality": {
+      "he": "O(N log N) זמן גרוע־ביותר, O(N) מקום; פתרון כל־הזוגות O(N²) תקף אך איטי יותר.",
+      "en": "Worst-case O(N log N) time and O(N) storage; exhaustive O(N²) pairs are a valid slower alternative."
+    },
+    "verification": {
+      "he": "2,193 קלטים במודל Python מול אורקל כל־הזוגות. קוד C לא קומפל; נדרשת הרצת קומפיילר נפרדת לפני שימוש מעשי.",
+      "en": "2,193 Python-model inputs versus brute-force oracle. C was not compiled; a separate compiler run is required before practical use."
+    },
+    "edge_cases": {
+      "he": [
+        "פחות משתי נקודות; נקודות זהות; אותו x; שוויונות; גבולות ±10⁹; כישלון הקצאה."
+      ],
+      "en": [
+        "Fewer than two points; duplicate points; equal x; ties; ±10^9 boundaries; allocation failure."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "מיון הרצועה מחדש בכל רמה מעלה את הזמן ל־O(N log² N).",
+        "שמירת midpoint מתוך מערך שכבר מוין לפי y, או חיסור int32 לפני ההרחבה, עלולים לשבש את התוצאה."
+      ],
+      "en": [
+        "Sorting the strip afresh at every level yields O(N log² N).",
+        "Reading the split after y sorting, or subtracting int32 before widening, can invalidate the result."
+      ]
+    },
+    "interview_answer": {
+      "he": "מחלקים לפי x, פותרים בכל חצי וממזגים לפי y. רק רצועה צרה ושכנים קרובים יכולים לשפר, ולכן O(N log N).",
+      "en": "Split by x, solve each half and merge by y. Only a narrow strip and nearby neighbors can improve the bound, giving O(N log N)."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו קובע סוג קואורדינטות, שוויונות או דרישת סיבוכיות; המימוש מצהיר על בחירותיו."
+      ],
+      "en": [
+        "The source leaves coordinate type, tie rules and complexity unspecified; implementation choices are explicit."
+      ]
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך תטפלו בנתונים ממשיים או בנקודות שמגיעות בזרם?",
+        "direction": "ממשיים מחייבים חוזה דיוק; זרם דורש מבנה דינמי אחר ואינו אותו אלגוריתם offline.",
+        "integration": "מוכן בתוכן; לא מחובר לתור אינטראקטיבי."
+      },
+      "en": {
+        "question": "What changes for real coordinates or streaming insertions?",
+        "direction": "Reals need a precision contract; a dynamic stream requires another data structure rather than silently reusing the offline bound.",
+        "integration": "Prepared in content; not connected to an interactive queue."
+      }
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "מקור אקדמי לעקרון החלוקה והרצועה",
+          "url": "https://algs4.cs.princeton.edu/code/javadoc/edu/princeton/cs/algs4/ClosestPair.html"
+        }
+      ],
+      "en": [
+        {
+          "title": "Academic reference for divide-and-conquer closest pair",
+          "url": "https://algs4.cs.princeton.edu/code/javadoc/edu/princeton/cs/algs4/ClosestPair.html"
+        }
+      ]
+    }
+  },
+  "PREP-189": {
+    "assumptions": {
+      "he": [
+        "C++17; delete רגיל; בעלות מוגדרת; אין העברת הכלל לשפות בעלות finalizer."
+      ],
+      "en": [
+        "C++17, ordinary delete and explicit ownership; do not transfer these rules to finalizers in other languages."
+      ]
+    },
+    "optimality": {
+      "he": "אין סיבוכיות קבועה לכל destructor: העלות תלויה בניקוי החברים והמשאבים. בדוגמה מספר האובייקטים קבוע.",
+      "en": "There is no universal constant destructor cost; member/resource cleanup determines it. The illustration has a fixed number of objects."
+    },
+    "verification": {
+      "he": "סקירת הכללים והדוגמה מול הנחיות C++ רשמיות. לא בוצע קימפול C++ או ניסוי שמריץ התנהגות לא מוגדרת.",
+      "en": "Rules and illustration reviewed against the C++ Core Guidelines. No C++ compilation or experiment executing undefined behavior was performed."
+    },
+    "edge_cases": {
+      "he": [
+        "מצביע משקיף; בעלות ייחודית; מחיקה פולימורפית; מחלקה בסיסית שמונעת מחיקה; כישלון בנאי וחריגות ניקוי."
+      ],
+      "en": [
+        "Non-owning pointer; unique ownership; polymorphic deletion; base forbidding client deletion; failed construction and cleanup exceptions."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "ה־destructor האוטומטי אינו משחרר כל הקצאה שמצביע גולמי מפנה אליה.",
+        "delete דרך בסיס לא וירטואלי אינו ניסוי תקין להוכחת סדר הריסה.",
+        "אין לכתוב destructor ידני לכל מחלקה."
+      ],
+      "en": [
+        "An implicit destructor does not free every allocation referenced by a raw pointer.",
+        "Deleting through a non-virtual base is not a valid experiment for discovering a destruction order.",
+        "Do not manually define a destructor for every class."
+      ]
+    },
+    "interview_answer": {
+      "he": "RAII קושר משאב לחיי אובייקט. חברים מנהלי משאב מאפשרים ניקוי אוטומטי; delete פולימורפי דורש destructor בסיס וירטואלי.",
+      "en": "RAII ties a resource to object lifetime. Resource-owning members enable automatic cleanup; polymorphic delete requires a virtual base destructor."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מציין שפה; המונחים ברירת מחדל ווירטואלי מפורשים כאן בהקשר C++."
+      ],
+      "en": [
+        "The source does not name a language; default and virtual destruction are interpreted explicitly in C++."
+      ]
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתבש אם מעתיקים מחלקה שמחזיקה raw owning pointer?",
+        "direction": "העתקה רדודה עלולה ליצור שחרור כפול. העדיפו RAII ו־Rule of Zero או הגדירו חוזה copy/move תקין.",
+        "integration": "מוכן בתוכן; לא מחובר לתור."
+      },
+      "en": {
+        "question": "What breaks when copying a class with a raw owning pointer?",
+        "direction": "Shallow copy can cause double release. Prefer RAII and Rule of Zero or define a correct copy/move contract.",
+        "integration": "Prepared in content; not connected to the queue."
+      }
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "הנחיות C++ — C.20, C.30–C.37",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#c35-a-base-class-destructor-should-be-either-public-and-virtual-or-protected-and-non-virtual"
+        },
+        {
+          "title": "טיוטת תקן C++ — הריסת איברים ובסיסים",
+          "url": "https://eel.is/c++draft/class.dtor"
+        },
+        {
+          "title": "טיוטת תקן C++ — כללי delete",
+          "url": "https://eel.is/c++draft/expr.delete"
+        },
+        {
+          "title": "טיוטת תקן C++ — default_delete",
+          "url": "https://eel.is/c++draft/unique.ptr.dltr.dflt"
+        }
+      ],
+      "en": [
+        {
+          "title": "C++ Core Guidelines — C.20 and C.30–C.37",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#c35-a-base-class-destructor-should-be-either-public-and-virtual-or-protected-and-non-virtual"
+        },
+        {
+          "title": "C++ draft — member and base destruction",
+          "url": "https://eel.is/c++draft/class.dtor"
+        },
+        {
+          "title": "C++ draft — delete semantics",
+          "url": "https://eel.is/c++draft/expr.delete"
+        },
+        {
+          "title": "C++ draft — default_delete",
+          "url": "https://eel.is/c++draft/unique.ptr.dltr.dflt"
+        }
+      ]
+    }
+  },
+  "PREP-194": {
+    "assumptions": {
+      "he": [
+        "שרשרת סופית ולא מחזורית; empty test ובניית יחיד הותרו כהשלמה; השיתוף בלתי משתנה."
+      ],
+      "en": [
+        "Finite acyclic list; empty testing and singleton construction explicitly added; suffix sharing is immutable."
+      ]
+    },
+    "optimality": {
+      "he": "Θ(n) עם העתקת צד שמאל בלבד; Θ(n²) אם השרשור מעתיק את שני הצדדים. פלט Θ(n) תאים.",
+      "en": "Θ(n) when concatenation copies only the left side; Θ(n²) if both sides are copied. Output uses Θ(n) cells."
+    },
+    "verification": {
+      "he": "כל 3,280 הרשימות באורכים 0–7; בדיקה עצמאית של הפלט ושל אי־שינוי הקלט.",
+      "en": "All 3,280 lists at lengths 0..7, independently checking output and unchanged input."
+    },
+    "edge_cases": {
+      "he": [
+        "ריקה; יחיד; ערכים חוזרים; רשימה ארוכה; מחזור אינו קלט חוקי."
+      ],
+      "en": [
+        "Empty; singleton; duplicates; long lists; cycles are outside the contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "Head מחזירה ערך, לא שרשרת.",
+        "אין להתעלם מעלות @ או להניח ריקות שלא ניתנת לזיהוי."
+      ],
+      "en": [
+        "Head returns a value, not a list.",
+        "Do not ignore @ cost or assume an unavailable empty test."
+      ]
+    },
+    "interview_answer": {
+      "he": "צריך להשלים את הממשק. אחר כך מקדימים כל ראש לשרשרת המצטברת; העלות ליניארית רק כששרשור עם צד שמאל יחיד קבוע בזמן.",
+      "en": "Complete the interface, then prepend each head to an accumulator; linear time requires constant-time concatenation with a singleton left operand."
+    },
+    "source_ambiguities": {
+      "he": [
+        "אם Head הוגדרה להחזיר שרשרת יחיד במקום ערך, חלק מההשלמה כבר כלול — חייבים לברר זאת."
+      ],
+      "en": [
+        "If Head actually returns a singleton list rather than a value, part of the completion already exists; clarify it."
+      ]
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה העלות של reverse(Tail(L))@[Head(L)]?",
+        "direction": "סכום אורכי הצד השמאלי ריבועי במודל העתקה, בעוד מצטבר מקדים מעתיק יחיד בכל צעד.",
+        "integration": "מוכן בתוכן; לא מחובר לתור."
+      },
+      "en": {
+        "question": "What does reverse(Tail(L))@[Head(L)] cost?",
+        "direction": "Copied left lengths sum quadratically; a prepending accumulator copies one cell per step.",
+        "integration": "Prepared in content; not connected to the queue."
+      }
+    }
+  },
+  "PREP-196": {
+    "assumptions": {
+      "he": [
+        "דוגמת Python עם n≥0; חישוב סופי; ניתוח מילים מצוין בנפרד מעלות ביטים."
+      ],
+      "en": [
+        "Python example with n≥0, finite computation; word-model analysis is distinguished from bit cost."
+      ]
+    },
+    "optimality": {
+      "he": "לסכום: שתי הגרסאות Θ(n) זמן; מחסנית רקורסיבית Θ(n), לולאה O(1) מילות עזר.",
+      "en": "For summation both versions take Θ(n) time; recursive stack Θ(n), loop O(1) auxiliary words."
+    },
+    "verification": {
+      "he": "300 קלטים מול n(n+1)/2. לא נטענת בטיחות מחסנית לעומק לא חסום.",
+      "en": "300 inputs versus n(n+1)/2; no unbounded-depth stack-safety claim."
+    },
+    "edge_cases": {
+      "he": [
+        "n=0; שלילי נדחה; עומק גדול; תתי־בעיות חוזרות; עצים לא מאוזנים."
+      ],
+      "en": [
+        "n=0; negative input rejected; large depth; repeated subproblems; unbalanced trees."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "מבלבלים בין מספר קריאות לעומק פעיל.",
+        "המרה ללולאה אינה מבטיחה שמידע DFS ייעלם.",
+        "אין להבטיח tail-call optimization בכל שפה."
+      ],
+      "en": [
+        "Confusing total calls with active depth.",
+        "Converting to iteration does not remove required DFS state.",
+        "Never assume universal tail-call optimization."
+      ]
+    },
+    "interview_answer": {
+      "he": "רקורסיה מתאימה למבנה רקורסיבי ומקלה על הוכחה. משלמים על קריאות ועומק, וחייבים בסיס והתקדמות; זמן לא נובע מרקורסיה לבדה.",
+      "en": "Recursion fits recursive structure and induction. Calls/depth cost resources; base cases and progress are required, while time does not follow from recursion alone."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו דורש שפה או דוגמה; בחירת הסכום מדגימה את ההשוואה בלבד."
+      ],
+      "en": [
+        "The source specifies no language or example; summation is an explicit illustration only."
+      ]
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך memoization משנה פיבונאצ׳י נאיבי?",
+        "direction": "מחשבים כל אינדקס פעם אחת: O(n) חיבורים ו־O(n) זיכרון במודל מילים; איטרציה יכולה להחזיק שני ערכים.",
+        "integration": "מוכן בתוכן; לא מחובר לתור."
+      },
+      "en": {
+        "question": "How does memoization change naive Fibonacci?",
+        "direction": "Each index is computed once: O(n) additions and O(n) storage in the word model; iteration can retain two values.",
+        "integration": "Prepared in content; not connected to the queue."
+      }
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "תיעוד Python — מגבלת רקורסיה",
+          "url": "https://docs.python.org/3/library/sys.html#sys.getrecursionlimit"
+        }
+      ],
+      "en": [
+        {
+          "title": "Python documentation — recursion limit",
+          "url": "https://docs.python.org/3/library/sys.html#sys.getrecursionlimit"
+        }
+      ]
+    }
+  },
+  "PREP-191": {
+    "assumptions": {
+      "he": [
+        "הקלט לא מסומן, ברוחב 16, ויציב רק סביב חזית הקליטה בהתאם ל־setup/hold.",
+        "start בזמן busy נזנח; להתחלה חדשה צריך חזית פנויה עם start=1. valid נשמר אחרי תוצאה מוצלחת עד reset או התחלה חדשה."
+      ],
+      "en": [
+        "Unsigned 16-bit input meets setup/hold at capture; it need not remain stable throughout computation.",
+        "start while busy is ignored. A new idle edge with start=1 starts another operation. valid persists after successful completion until reset or a new start."
+      ]
+    },
+    "optimality": {
+      "he": "ארבע סיביות נחוצות לייצוג 16 תוצאות שונות, אבל אין כאן הוכחת מינימום FF כולל, שטח או זמן. המבנה המוצע משתמש ב־27 FF ועד 16 חזיתות אחרי הקליטה.",
+      "en": "Four bits are necessary to represent sixteen distinct answers; this is not a lower bound on all FFs, area or latency. The proposed structure uses 27 FFs and at most sixteen post-capture edges."
+    },
+    "verification": {
+      "he": "נבדקו כל 65,536 הקלטים מול אורקל של השוואות לחזקות שתיים, כולל אי־שוויון התחום ומספר החזיתות. נבדקו גם תמונת קלט, start בזמן busy, פולס done ואיפוס. זהו מודל פייתון; קוד SystemVerilog מוצע לא הודר.",
+      "en": "All 65,536 inputs were checked against an independent powers-of-two comparison oracle, including range inequalities and latency. Snapshot capture, ignored busy start, done pulse and reset were checked separately. Python model verification only; proposed SystemVerilog was not compiled."
+    },
+    "edge_cases": {
+      "he": [
+        "0 אינו מספר עם לוג מוגדר.",
+        "1 מחזיר 0 בחזית העבודה הראשונה; 32768 ו־65535 מחזירים 15 אחרי 16 חזיתות.",
+        "reset באמצע מבטל את העבודה."
+      ],
+      "en": [
+        "Zero has no defined logarithm.",
+        "One returns zero on the first working edge; 32768 and 65535 return fifteen after sixteen working edges.",
+        "Reset during computation cancels the operation."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לספור את מספר הסיביות ואז לשכוח להפחית אחת.",
+        "להזיז גם כאשר work=1, או להמתין לאפס ולהשתמש באותו פירוש מונה.",
+        "לשנות את הקלט הנלכד באמצע, או להציג את חזית הסיום כאילו אינה צורכת זמן."
+      ],
+      "en": [
+        "Returning bit length without subtracting one.",
+        "Shifting at work=1, or stopping at zero while retaining the same counter interpretation.",
+        "Reading changing input instead of a snapshot, or omitting the completion edge from latency."
+      ]
+    },
+    "interview_answer": {
+      "he": "אני לוכד את הקלט ומזיז ימינה עד שנשאר אחד. מספר ההזזות הוא מיקום האחד הגבוה, ולכן הלוג המעוגל. אפס מסומן כלא תקין; מונה ארבע סיביות מספיק. במימוש הזה יש חזית סיום נפרדת.",
+      "en": "Capture the input and shift right until one remains. The shift count is the highest set-bit position, hence the floor logarithm. Mark zero invalid; four counter bits suffice. This implementation includes a separate completion edge."
+    },
+    "source_ambiguities": {
+      "he": "הצילום אינו מגדיר סימן, ממשק התחלה, השהיה או טיפול באפס. אלו הנחות עריכה מפורשות. 100100 מתפרש כבינארי, כלומר 36.",
+      "en": "The source omits signedness, start interface, latency and zero behavior. These are explicit editorial choices. 100100 is interpreted as binary, namely 36."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך לקבל השהיה קבועה בלי לדרוש שהקלט יישאר יציב?",
+          "answer_direction": "לכדו תמונת קלט וסרקו תמיד 16 מיקומים או הריצו מספר מחזורים קבוע עם דגל סיום פנימי. השוו שטח, צריכת אנרגיה והשהיה.",
+          "principle": "הפרדה בין זמן חישוב תלוי נתונים לחוזה ממשק."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can latency be fixed without requiring a stable input throughout?",
+          "answer_direction": "Capture a snapshot and scan all sixteen positions, or execute a fixed number of cycles with an internal completion flag. Compare area, energy and latency.",
+          "principle": "Separate data-dependent work from the interface timing contract."
+        }
+      ]
+    }
+  },
+  "PREP-193": {
+    "assumptions": {
+      "he": [
+        "נבחר טריגר בעלייה, מצב מנוחה נמוך ורוחב τ חיובי וקבוע.",
+        "המודל בפייתון דוגם רמות בינאריות בזמני יחידה, ואינו מדמה מתח אנלוגי, ספי Schmitt, רעש או השהיות התפשטות."
+      ],
+      "en": [
+        "Rising-edge trigger, low resting output and a positive fixed duration τ are editorial choices.",
+        "The Python model samples binary levels at integer times. It does not simulate analog voltages, Schmitt thresholds, noise or propagation delay."
+      ]
+    },
+    "optimality": {
+      "he": "אין בשאלה יעד אופטימיזציה או מספיק פרטי מעגל לספירת רכיבים. במודל הדיגיטלי נדרשים זיכרון הרמה הקודמת וזמן סיום או מונה זמן; כל דגימה מתעדכנת בזמן קבוע.",
+      "en": "The source gives no optimization target or circuit sufficient for a component count. The digital model retains the previous level and an expiration time or timer; each sample updates in constant time."
+    },
+    "verification": {
+      "he": "40,960 תרחישים ממצים של 12 דגימות, עבור חמישה רוחבי פולס ושני מצבי טריגר חוזר, הושוו לאורקל נפרד הבונה קטעי זמן. נבדקו גם 2,048 תרחישי reset, גבול פקיעה ודוגמה המפריכה עקומה סטטית. לא בוצעו SPICE, בדיקת חומרה או אימות אנלוגי.",
+      "en": "40,960 exhaustive twelve-sample scenarios across five pulse widths and both retrigger modes were compared with an independent interval-construction oracle. Another 2,048 reset scenarios, expiration boundaries and a static-curve counterexample were checked. No SPICE, physical hardware or analog validation was performed."
+    },
+    "edge_cases": {
+      "he": [
+        "טריגר בזמן הפעולה: נזנח או מאריך לפי הסוג.",
+        "רמה גבוהה ממושכת אינה חזית חדשה.",
+        "טריגר בדיוק בפקיעה וטריגר יחד עם reset דורשים סדר קדימויות מפורש."
+      ],
+      "en": [
+        "Trigger while active: ignored or extends the pulse according to type.",
+        "A sustained high level is not a new edge.",
+        "An edge exactly at expiration, or together with reset, needs an explicit priority rule."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לשרטט Vout כתלות ב־Vin בלבד בלי היסטוריה.",
+        "להניח שכל חד־יציב נמתח מטריגר חוזר.",
+        "להצמיד נוסחת RC או סף של רכיב מוכר בלי שניתן מעגל מתאים."
+      ],
+      "en": [
+        "Drawing Vout as a function of Vin alone without history.",
+        "Assuming every monostable extends its pulse when retriggered.",
+        "Applying a familiar RC formula or threshold to an unspecified circuit."
+      ]
+    },
+    "interview_answer": {
+      "he": "חד־יציב זוכר טריגר לזמן קצוב ואז חוזר למנוחה. צריך להציג את הכניסה והיציאה בזמן; אותו Vin יכול לתת שתי יציאות לפי ההיסטוריה. לפני השרטוט אברר קוטביות, רוחב פולס והאם טריגר חוזר נזנח או מאריך.",
+      "en": "A monostable remembers a trigger for a timed interval and then returns to rest. Plot input and output against time: the same Vin can produce different outputs depending on history. First specify polarity, pulse width and whether retriggering is ignored or extends the pulse."
+    },
+    "source_ambiguities": {
+      "he": "לא צורפו סכימה, רמות מתח, ספים, קוטביות, אופן reset או התנהגות בהפעלה חוזרת. לא ניתן להסיק מהם גל אנלוגי מספרי יחיד. ההרחבה מבהירה זאת ומדגימה שתי התנהגויות מוכרות.",
+      "en": "No schematic, voltage levels, thresholds, polarity, reset behavior or retriggering policy were supplied. A unique quantitative analog waveform cannot be inferred. The explanation states this gap and illustrates two common behaviors."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה קורה אם מרווחי הטריגרים קצרים מ־τ בחד־יציב הניתן לטריגר חוזר?",
+          "answer_direction": "הסיום נדחה בכל טריגר תקף, ולכן היציאה יכולה להישאר גבוהה עד τ אחרי הטריגר האחרון, בכפוף למגבלות התאוששות של רכיב אמיתי.",
+          "principle": "הבדל בין זיכרון אירוע לבין פונקציה סטטית."
+        }
+      ],
+      "en": [
+        {
+          "question": "What happens if qualifying triggers are spaced less than τ apart in a retriggerable one-shot?",
+          "answer_direction": "Each trigger postpones expiration, so the output can remain high until τ after the final trigger, subject to a real device’s recovery limitations.",
+          "principle": "Distinguish event memory from a static transfer function."
+        }
+      ]
+    }
+  },
+  "PREP-197": {
+    "assumptions": {
+      "he": [
+        "ארבעה קווים בינאריים חד־כיווניים, ללא רעש, ושולח ומקלט מסכימים על מיפוי הסמלים.",
+        "בפתרון 18 הסמלים יש שתי דגימות למסגרת עם התחלה ידועה. לא מניחים קו תקפות או קו נתונים נוסף."
+      ],
+      "en": [
+        "Four noiseless, unidirectional binary DATA wires with an agreed symbol mapping.",
+        "The eighteen-symbol construction uses two samples per frame with a known beginning. No extra valid or DATA wire is assumed."
+      ]
+    },
+    "optimality": {
+      "he": "העברה יחידה מכילה לכל היותר 16 סמלים שונים. עבור 18 סמלים שתי העברות הן מינימליות תחת מסגרת באורך קבוע וארבעה קווים בינאריים; אין טענת אופטימליות בקידוד באורך משתנה או בניצול ספקטרום.",
+      "en": "One transfer represents at most sixteen distinct symbols. Two transfers are minimal for eighteen symbols under fixed-length framing over four binary wires. No variable-length coding or spectral-efficiency optimum is claimed."
+    },
+    "verification": {
+      "he": "נבדקה חד־חד־ערכיות של 16 קודי העברה אחת ושל 18 מסגרות, וכן כל 256 המסגרות האפשריות בשתי העברות: 18 מתקבלות ו־238 נדחות. זהו אימות קודק דיגיטלי, לא בדיקת קישור פיזי.",
+      "en": "Uniqueness was checked for sixteen one-transfer codes and eighteen frames. All 256 two-transfer words were checked: eighteen accepted and 238 rejected. This verifies a digital codec, not a physical link."
+    },
+    "edge_cases": {
+      "he": [
+        "סמלים 0,15,16,17 מדגימים גבולות בין המנות.",
+        "איבוד מופע מסגרת עלול להפוך מידע חוקי לשגוי או להפך.",
+        "קוד לא משויך מזוהה, אך לא כל שגיאת סיבית מביאה לקוד לא משויך."
+      ],
+      "en": [
+        "Symbols zero, fifteen, sixteen and seventeen exercise quotient boundaries.",
+        "Losing frame phase can turn valid data into another value or an invalid word.",
+        "Unassigned codes can be rejected, but not every bit error produces an unassigned code."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להניח שארבעה חוטים פירושם ארבעה סמלים בלבד.",
+        "לנסות למפות 18 סמלים ל־16 תבניות באותה דגימה.",
+        "להוסיף זמן, שעון, רמות מתח או חוט בלי להצהיר על כך."
+      ],
+      "en": [
+        "Confusing four wires with an alphabet of only four symbols.",
+        "Mapping eighteen symbols to sixteen patterns in one sample.",
+        "Adding time slots, a clock, voltage levels or a wire without declaring the change."
+      ]
+    },
+    "interview_answer": {
+      "he": "ארבעה קווים בינאריים נותנים 16 תבניות, ולכן 16 סמלים עוברים בדגימה אחת. 18 לא יכולים לעבור כך. אם מותרות שתי דגימות עם מסגור מוסכם, אשלח קוד בן חמש סיביות בשני חלקים על אותם קווים.",
+      "en": "Four binary wires give sixteen patterns, so sixteen symbols fit in one sample; eighteen cannot. If two samples with agreed framing are permitted, send a five-bit code in two parts over the same wires."
+    },
+    "source_ambiguities": {
+      "he": "הצילום אינו מגביל את מספר הדגימות או קובע שעון, כיוון, מסגור ורמות חשמליות. נפרדים במפורש אי־האפשרות בדגימה בינארית אחת והפתרון המותנה בשתי דגימות. התג 2312313 נשמר כמקור בלבד, ללא משמעות חברה או מיומנות.",
+      "en": "The source does not specify sample count, clock, direction, framing or electrical levels. The single-binary-sample impossibility and conditional two-sample construction are kept separate. Source tag 2312313 is retained as provenance without inventing a company or skill meaning."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך לשפר את הקצב הממוצע כאשר רוב הסמלים הם מ־0 עד 14?",
+          "answer_direction": "אפשר לשמור 1111 כתו בריחה ולשלוח אחריו קוד משלים עבור הסמלים הנותרים, אך צריך לקבוע מסגור חד־משמעי וקצב ממוצע לפי הסתברויות.",
+          "principle": "קידוד באורך משתנה דורש חוזה פענוח וניתוח התפלגות."
+        }
+      ],
+      "en": [
+        {
+          "question": "How could average rate improve if most symbols lie between zero and fourteen?",
+          "answer_direction": "Reserve 1111 as an escape and send an additional code for the remaining symbols, with unambiguous framing and an average-rate analysis based on probabilities.",
+          "principle": "Variable-length encoding needs a decoding contract and a distribution model."
+        }
+      ]
+    }
+  },
+  "PREP-190": {
+    "assumptions": {
+      "he": [
+        "דירוגים קבועים וחד־משמעיים; הצבעה זוגית כנה ברוב רגיל.",
+        "כל סימון של עדיפות ראשונה או שנייה שווה קול אחד; אין שיטה משוקללת אחרת."
+      ],
+      "en": [
+        "Fixed strict rankings; sincere ordinary-majority head-to-head votes.",
+        "First/second marks are equally weighted approvals, not an unspecified weighted scoring system."
+      ]
+    },
+    "optimality": {
+      "he": "תפקיד הממתין בגמר מנצח בכל 38 הפרופילים האפשריים במודל. זו הוכחה לתלות בסדר העימותים, לא משפט הוגנות לכל שיטת בחירות.",
+      "en": "The bye wins in all 38 feasible profiles under this model. This proves agenda dependence, not a universal fairness theorem."
+    },
+    "verification": {
+      "he": "54,872 פרופילים בעלי תיקו ראשון נמנו עצמאית; 38 מקיימים גם תיקו שני. הורחבו לקולות אישיים, וכל זוג וכל 114 סדרי העימותים נבדקו.",
+      "en": "Independently enumerated 54,872 first-tied profiles; 38 also satisfy the second tie. Individual ballots, all pairwise contests and all 114 bye agendas were checked."
+    },
+    "edge_cases": {
+      "he": [
+        "x=0 ו־x=37 יוצרים מחזורי רוב הפוכים באותה עוצמה.",
+        "אין תיקו זוגי ב־111 קולות; בשינוי למספר מצביעים זוגי צריך כלל שובר שוויון.",
+        "שינוי העדפות או משקלי ההצבעה השנייה מבטל את ההסקה מהתיקו."
+      ],
+      "en": [
+        "x=0 and x=37 give equally strong reversed cycles.",
+        "111 votes cannot tie pairwise; an even electorate needs a tie policy.",
+        "Changed rankings or different second-ballot weights invalidate the inference from the two ties."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להסיק מתיקו בהעדפות הראשונות שכל זוג יתאזן.",
+        "להכריז ש־A זוכה בלי לציין הצבעה זוגית כנה ודירוגים קבועים.",
+        "לומר שכל שיטת עימותים אינה הוגנת במקום להסביר מי שולט בסדר."
+      ],
+      "en": [
+        "Inferring pairwise ties from tied first choices.",
+        "Guaranteeing A wins without fixed rankings and sincere pairwise voting.",
+        "Calling every runoff unfair rather than identifying unilateral agenda control."
+      ]
+    },
+    "interview_answer": {
+      "he": "אציג שלוש קבוצות של 37 עם העדפות מחזוריות. כל מועמד מקבל 37 ראשונים ו־74 סימונים, אבל הרוב הזוגי מסתובב במעגל. A ממתין למנצח שהוא עצמו מנצח, ולכן מקבל יתרון מכריע. תחת ההנחות אפשר להוכיח שזה קורה בכל פרופיל שמתאים לשני התיקו.",
+      "en": "Use three cyclic groups of 37: first totals are 37 and approval totals 74, but pairwise majorities cycle. A waits for the opponent he defeats, securing the outcome. Under the assumptions this holds for every profile consistent with both ties."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מגדיר ניקוד לעדיפות השנייה, הצבעה אסטרטגית או מושג הוגנות. המודל והיקף המסקנה מוגדרים בגלוי."
+      ],
+      "en": [
+        "The source leaves second-choice scoring, strategic behavior and fairness undefined. The model and the scope of its conclusion are explicit."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה תעשה הגרלה הוגנת של המועמד שמדלג על העימות הראשון?",
+          "answer_direction": "כל מועמד יקבל דילוג בסיכוי 1/3 ולכן גם ניצחון בסיכוי 1/3 במודל המחזורי.",
+          "principle": "מפרידים בין כלל הצבעה לבין בחירת סדר מוטה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if the bye is assigned by a fair lottery?",
+          "answer_direction": "Each candidate receives the bye, and hence victory in this cyclic model, with probability 1/3.",
+          "principle": "Distinguish the voting rule from biased agenda assignment."
+        }
+      ]
+    }
+  },
+  "PREP-192": {
+    "assumptions": {
+      "he": [
+        "שישה אנשים שונים, שישה מושבים בשורה, וכל סידור שווה הסתברות.",
+        "אין התניה על המושב של C; ימין קבוע ביחס לסדר המושבים."
+      ],
+      "en": [
+        "Six distinct people, six seats in a line, equally likely permutations.",
+        "No condition on C's seat; right is defined by the fixed seat order."
+      ]
+    },
+    "optimality": {
+      "he": "התוצאות המדויקות הן 1/6 ו־1/2. נוסחאות כלליות 1/n ו־1/2 נובעות מספירה ומסימטריה; אין צורך בסימולציה.",
+      "en": "Exact results are 1/6 and 1/2. General formulas 1/n and 1/2 follow from counting and symmetry without simulation."
+    },
+    "verification": {
+      "he": "כל 46,232 הסידורים עבור 2–8 אנשים נמנו ונבדקו לפי מיקומים. עבור שישה: 120 סמוכים בכיוון הנכון ו־360 מימין מתוך 720.",
+      "en": "All 46,232 permutations at sizes 2..8 were checked by seat positions. For six: 120 immediately right and 360 anywhere right of 720."
+    },
+    "edge_cases": {
+      "he": [
+        "C בקצה הימני: אין אפשרות לשכן מימין; זה חלק מהמרחב המקורי.",
+        "אם מבקשים צמידות בלי כיוון, התוצאה 2/6=1/3.",
+        "לשני אנשים: צמוד מימין ומימין כלשהו הם אותו אירוע, בסיכוי 1/2."
+      ],
+      "en": [
+        "C at the far-right endpoint has no right neighbor; those arrangements remain in the sample space.",
+        "Adjacency without direction has probability 2/6=1/3.",
+        "With two people, immediate right and anywhere right coincide at probability 1/2."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להכפיל את CF ב־2 ולכלול גם FC.",
+        "לענות 1/5 בלי להכפיל בסיכוי של־C יש בכלל שכן מימין.",
+        "להשתמש במודל מעגלי או להניח סידור לא אחיד בלי לציין זאת."
+      ],
+      "en": [
+        "Multiplying the ordered CF block by two and also counting FC.",
+        "Answering 1/5 while ignoring the chance that C has no right neighbor.",
+        "Using circular or nonuniform seating without stating it."
+      ]
+    },
+    "interview_answer": {
+      "he": "לצמוד מימין אאחד את CF למקשה אחת: 5! מתוך 6!, כלומר 1/6. למימין כלשהו אחליף C ו־F כדי לקבל התאמה חד־חד־ערכית לימין ולשמאל, ולכן 1/2.",
+      "en": "For immediate right, merge CF into one ordered block: 5!/6!=1/6. For anywhere right, swapping C and F pairs every right arrangement with a left arrangement, giving 1/2."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור שואל הסתברות בלי לתאר אקראיות; שוויון ההסתברויות של כל הסידורים נוסף במפורש."
+      ],
+      "en": [
+        "The source asks probabilities without specifying a random mechanism; uniform seating is explicitly added."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה ההסתברות ש־F מימין ל־C אם ידוע שהם סמוכים?",
+          "answer_direction": "מתוך שני הסדרים CF ו־FC רק אחד מתאים, ולכן 1/2. זו הסתברות מותנית אחרת מ־1/6.",
+          "principle": "שומרים על מרחב דגימה והתניה עקביים."
+        }
+      ],
+      "en": [
+        {
+          "question": "What is the probability F is right of C given that they are adjacent?",
+          "answer_direction": "Only one of CF and FC qualifies, so 1/2. This conditional probability differs from 1/6.",
+          "principle": "Keep the sample space and conditioning consistent."
+        }
+      ]
+    }
+  },
+  "PREP-195": {
+    "assumptions": {
+      "he": [
+        "קופסאות ופתקים מסומנים 1–100; הפתקים הם תמורה ללא חזרות.",
+        "הסכמה מראש, עוזר שרואה הכול ומבצע לכל היותר החלפה אחת; אין מסר נוסף.",
+        "המחפש רואה רק קופסאות שהוא פותח ויכול לעקוב אחרי המספר שנמצא."
+      ],
+      "en": [
+        "Boxes and distinct notes are labeled 1..100, with notes forming a permutation.",
+        "Prior agreement; helper inspects all notes and makes at most one swap, with no later message.",
+        "The searcher sees only queried boxes and may follow each revealed label."
+      ]
+    },
+    "optimality": {
+      "he": "החלפה אחת מספיקה להבטחת 50 פתיחות לכל יעד, לפי פירוק מחזורים. העוזר O(n) זמן ומקום במימוש; המחפש O(k) קריאות ו־O(1) מילים, k≤50. אין טענת מינימום מקום לעוזר או חסם תחתון לכל אסטרטגיית חיפוש אפשרית.",
+      "en": "One swap suffices for the 50-open guarantee by cycle splitting. Helper O(n) time/space in this implementation; searcher O(k) queries and O(1) words, k≤50. No minimum helper-space or universal search-optimality claim."
+    },
+    "verification": {
+      "he": "נבדקו כל 46,233 התמורות בגדלים 1–8, לכל יעד, עם 1,042,153 קריאות ממשק אמיתיות במודל. נבדקו גם 50 אורכי מחזור ארוך עבור מאה קופסאות וכל מאה היעדים; מחזור 100 ללא החלפה נכשל כמצופה.",
+      "en": "Checked all 46,233 permutations at sizes 1..8 for every target, recording 1,042,153 actual model query calls. Also covered 50 long-cycle lengths at 100 boxes with all 100 targets; an unswapped 100-cycle fails as expected."
+    },
+    "edge_cases": {
+      "he": [
+        "כל המחזורים כבר באורך עד 50: אין צורך בהחלפה.",
+        "מחזור 51 מתפצל ל־25 ו־26; מחזור 100 לשני מחזורי 50.",
+        "פתק t בקופסה t נמצא בפתיחה אחת.",
+        "פתקים כפולים, קופסאות ללא תוויות או דרישה לבצע החלפה גם כשאין צורך הם חוזים אחרים."
+      ],
+      "en": [
+        "All cycles already have length at most 50: make no swap.",
+        "A 51-cycle splits into 25 and 26; a 100-cycle into 50 and 50.",
+        "Note t in box t is found in one opening.",
+        "Duplicate notes, unlabeled boxes or a compulsory swap even when unnecessary are different contracts."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשתמש בהסתברות ההצלחה של חידת האסירים ללא עוזר במקום בהבטחה לאחר החלפה.",
+        "להחליף תוויות קופסה במקום שני פתקים.",
+        "לחבר שני מחזורים שונים; הפעולה הדרושה היא לפצל את המחזור הארוך היחיד.",
+        "לאמת את כל התוכן מצד המחפש ובכך לחרוג מ־50 פתיחות."
+      ],
+      "en": [
+        "Substituting the no-helper prisoner's success probability for the post-swap guarantee.",
+        "Swapping box labels instead of two notes.",
+        "Joining different cycles rather than splitting the sole long one.",
+        "Letting the searcher inspect the entire permutation before its query loop."
+      ]
+    },
+    "interview_answer": {
+      "he": "נסכם על הליכה מהקופסה שמספרה הוא היעד אל הקופסה שמספרה נחשף. זמן החיפוש הוא אורך המחזור. יש לכל היותר מחזור אחד מעל 50, והעוזר מפצל אותו לשתי מחציות בהחלפת שני פתקים. אחר כך כל יעד נמצא בתוך 50 פתיחות, בלי שהעוזר יידע מהו.",
+      "en": "Start at the target's box and follow the revealed labels. Search length equals cycle length. At most one cycle exceeds 50; the helper swaps two notes about halfway apart to split it into halves. Every target then takes at most 50 opens, without the helper knowing the target."
+    },
+    "source_ambiguities": {
+      "he": [
+        "סימון הקופסאות, ההסכמה מראש ו'לכל היותר החלפה אחת' נוספו בגלוי. ההבטחה החזקה לכל יעד אינה דורשת לדעת מהו היעד לפני ההחלפה."
+      ],
+      "en": [
+        "Box labels, prior agreement and at-most-one swap are explicit clarifications. The stronger guarantee for every target does not require the helper to know the target beforehand."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "לאילו n ומגבלת פתיחות k אותה בנייה מבטיחה הצלחה?",
+          "answer_direction": "כאשר n≤2k יש לכל היותר מחזור אחד ארוך מ־k, והוא מתפצל לשניים באורך עד k. זו הבטחת הבנייה, לא הוכחת הכרח לכל שיטה אפשרית.",
+          "principle": "מפרידים תנאי מספיק לבנייה מטענת חסם אוניברסלי."
+        }
+      ],
+      "en": [
+        {
+          "question": "For which n and query budget k does this construction guarantee success?",
+          "answer_direction": "When n≤2k, at most one cycle exceeds k and it can be split into two cycles of length at most k. This is a sufficient condition for the construction, not a universal impossibility theorem.",
+          "principle": "Separate a construction's sufficient condition from a universal lower bound."
+        }
+      ]
+    }
+  },
+  "PREP-198": {
+    "assumptions": {
+      "he": [
+        "שני גבולות rand כלולים, והפלט הוא מספר שלם.",
+        "B אחיד מותנה ב־A; קריאה עם שני גבולות 0 חוקית ומחזירה 0."
+      ],
+      "en": [
+        "Both rand endpoints are inclusive and outputs are integers.",
+        "B is conditionally uniform given A; the degenerate 0..0 range is valid and returns zero."
+      ]
+    },
+    "optimality": {
+      "he": "A אחיד: 1/101 לכל ערך. B יורד ממש לפי סכום הזנב של 1/[101(a+1)]; E[A]=50, E[B]=25. חישוב כל המסות דורש O(M) חיבורי שברים ופלט בגודל O(M).",
+      "en": "A has mass 1/101 at each value. B strictly decreases according to the suffix sum of 1/[101(a+1)]; E[A]=50 and E[B]=25. All masses use O(M) rational additions and O(M) output fractions."
+    },
+    "verification": {
+      "he": "176,851 תאים משותפים עבור M=0..100 חושבו בשברים מדויקים מול אורקל נפרד. אומתו שתי ההתפלגויות, סכום 1, הפרשי מסות ותוחלות; עבור 100 גם Var(B)=500.",
+      "en": "176,851 joint cells for M=0..100 were enumerated with exact fractions against an independent oracle. Both marginals, unit sums, adjacent differences and means matched; at 100, Var(B)=500 was also verified."
+    },
+    "edge_cases": {
+      "he": [
+        "A=0 גורר B=0 בהסתברות 1.",
+        "B=100 דורש A=100 וגם בחירה אחת מתוך 101.",
+        "M=0 בהכללה: שתי ההתפלגויות מרוכזות ב־0.",
+        "גבול עליון שאינו כלול דורש הגדרה חדשה עבור rand(0,0)."
+      ],
+      "en": [
+        "A=0 forces B=0 with probability one.",
+        "B=100 requires A=100 and one particular outcome of its 101-value draw.",
+        "At generalized M=0, both variables are concentrated at zero.",
+        "Upper-exclusive bounds require a new definition for rand(0,0)."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לטעון ששתי קריאות לפונקציה אחידה מבטיחות ש־B אחיד.",
+        "לשקלל כל זוג (a,b) במשקל זהה; השורות בטבלה מכילות מספר שונה של תוצאות.",
+        "לחלק ב־a במקום ב־a+1 ולשכוח את האפשרות אפס.",
+        "להחליף התפלגות בדידה בצפיפות רציפה עם סינגולריות באפס."
+      ],
+      "en": [
+        "Assuming two uniform calls make B uniform.",
+        "Assigning every pair (a,b) equal mass even though rows have different sizes.",
+        "Dividing by a instead of a+1 and forgetting zero.",
+        "Replacing the discrete mass law with a continuous density singular at zero."
+      ]
+    },
+    "interview_answer": {
+      "he": "A אחיד על 101 ערכים. עבור B=b אסכם על כל A=a שגדול או שווה b: בכל שורה התרומה היא 1/101 כפול 1/(a+1). לכן ערכי B קטנים נפוצים יותר, P(B=0) בערך 5.15%, והתוחלת של B היא 25 לפי תוחלת מותנית.",
+      "en": "A is uniform over 101 values. For B=b, sum over every A=a≥b; each contributes 1/101 times 1/(a+1). Small B values are more likely; B=0 has mass about 5.15%, and conditional expectation gives E[B]=25."
+    },
+    "source_ambiguities": {
+      "he": [
+        "כוללניות הגבולות אינה כתובה בצילום; היא מוגדרת בגלוי. ללא הגדרה כזו התוצאה תלויה בספריית ההגרלה ובטיפול בטווח הריק."
+      ],
+      "en": [
+        "Endpoint inclusion is not specified by the screenshot and is explicitly chosen. Otherwise the answer depends on the RNG API and empty-range handling."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך אפשר לחשב את השונות של B בלי לפתח שוב את כל ההתפלגות?",
+          "answer_direction": "השתמשו ב־E[B²|A=a]=a(2a+1)/6. עבור הגבול 100 מתקבל E[B²]=1125 ולכן Var(B)=1125−25²=500.",
+          "principle": "תוחלת מותנית מאפשרת לחשב מומנטים של התפלגות מעורבת."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can B's variance be found without expanding its entire marginal again?",
+          "answer_direction": "Use E[B²|A=a]=a(2a+1)/6. At upper bound 100, E[B²]=1125 and Var(B)=1125−25²=500.",
+          "principle": "Conditional moments simplify mixture-distribution calculations."
+        }
+      ]
+    }
+  }
+}

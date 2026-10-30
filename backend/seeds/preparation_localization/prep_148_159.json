@@ -605,12 +605,12 @@
       "en": "Headcount is peak aggregate demand. Sort start/release events and scan the running total. Release at end+1 for inclusive days, end for continuous half-open intervals. The example needs13."
     },
     "source_ambiguities": {
-      "he": "המקור לא קבע קצוות או אילוצי עובדים. נבחרו שתי מוסכמות מפורשות ללא הנחת end+1 ברציף. VSW-010 מאחדת פרקים ללא דרישות משוקללות, ולכן אינה כפילות.",
-      "en": "Source omits endpoints and worker constraints. Two explicit conventions avoid assuming end+1 for continuous time. VSW-010 merges intervals without weighted demands, so is not a duplicate."
+      "he": "המקור לא קבע קצוות או אילוצי עובדים. נבחרו שתי מוסכמות מפורשות ללא הנחת end+1 ברציף. VSW-010 מאחדת פרקים ללא דרישות משוקללות, ולכן אינה כפילות.\n\nהצילום מזכיר קובץ מתעדכן אך אינו מגדיר לוג פתוח, מדגם שימוש משתנה או עלות עדכון. הפתרון מחשב רשומות גמורות בתמונה עקבית ומציין בנפרד הרחבה מקוונת.",
+      "en": "Source omits endpoints and worker constraints. Two explicit conventions avoid assuming end+1 for continuous time. VSW-010 merges intervals without weighted demands, so is not a duplicate.\n\nThe source mentions an updating log but omits open-record semantics, varying-load samples and update cost. The solution queries completed records in a consistent snapshot and separately describes an online extension."
     },
     "verification": {
-      "he": "27,931 מקרים ממצים ועוד150 דגימות לכל מוסכמה, מול חישוב ישיר נפרד; נגיעה נותנת13 לעומת7 ומדגימה הבדל אמיתי.",
-      "en": "27,931 exhaustive cases plus150 seeded cases per convention against independent direct-demand oracles; touching intervals expose13 versus7."
+      "he": "27,931 מקרים ממצים ועוד150 דגימות לכל מוסכמה, מול חישוב ישיר נפרד; נגיעה נותנת13 לעומת7 ומדגימה הבדל אמיתי.\n\n4,158 שאילתות על קידומות לוג מול סכימה ישירה של כל הקטעים הפעילים; אירועים באותו זמן ומשקלים שבריים נכללו.",
+      "en": "27,931 exhaustive cases plus150 seeded cases per convention against independent direct-demand oracles; touching intervals expose13 versus7.\n\n4,158 growing-prefix queries versus direct active-interval sums, including equal-time events and fractional weights."
     },
     "solution_extensions": {
       "he": [
@@ -627,6 +627,28 @@
           "status": "Supplemental only."
         }
       ]
+    },
+    "prompt_variants": {
+      "he": {
+        "batch110_weighted_cpu_log": {
+          "prompt": "### וריאציה: שיא שימוש CPU מתוך לוג שמתעדכן\nכל רשומה שהושלמה מכילה start,end,usage. usage הוא משקל קבוע ואי שלילי לאורך [start,end), והעומסים של רשומות חופפות מסתכמים. לדוגמה שימוש של 25% בין 09:00 ל־10:00. החזירו את העומס המקסימלי ברשומות של תמונת לוג עקבית, ורשות להחזיר את זמן ההופעה הראשון.\n\nהקובץ ממשיך לקבל רשומות, ולכן אפשר לשאול מחדש אחרי כל תוספת; אין דרישת סיבוכיות עדכון במקור. הדוגמה אינה מניחה שיא מוגבל ל־100 או אחוז שימוש שמשתנה בתוך רשומה. רשומה ללא end עדיין חסרה חוזה: כדי לכלול אותה דרושים זמן as_of וכלל לעומס החלקי. אין לנחש את סופה.",
+          "hints": [
+            "העומס משתנה רק בתחילה או בסיום של רשומה.",
+            "צרו אירוע חיובי בתחילה ושלילי בסוף, ואז סרקו לפי זמן.",
+            "אחדו את כל השינויים באותו זמן לפני בדיקת השיא כדי להתאים לקטעים חצי־פתוחים."
+          ]
+        }
+      },
+      "en": {
+        "batch110_weighted_cpu_log": {
+          "prompt": "### Variant: peak CPU usage from a growing log\nEach completed record supplies start,end,usage, with a constant nonnegative weight over [start,end). Concurrent weights add; e.g. 25% from 09:00 to 10:00. Return peak usage for a consistent finite log snapshot, optionally its earliest time.\n\nRecords continue arriving, so queries may be repeated after additions; the source specifies no update-time bound. Do not assume the total is capped at 100 or that a single record describes changing usage. An unfinished record without end needs a separate as_of and partial-usage contract; do not invent its end.",
+          "hints": [
+            "Load changes only at interval endpoints.",
+            "Create a positive start event and negative end event, then sweep in time order.",
+            "Combine all changes at one timestamp before measuring the peak, respecting half-open intervals."
+          ]
+        }
+      }
     }
   },
   "PREP-150": {

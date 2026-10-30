@@ -22,7 +22,7 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
-from tests.preparation_history import technical_before_batch90
+from tests.preparation_history import technical_before_batch90, technical_before_batch110
 from tests.test_practice_hardening import scripted
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -1193,7 +1193,7 @@ def test_thirty_sources_keep_bytes_full_transcriptions_and_exact_identity_mappin
 
 def test_all_previous_questions_preserve_technical_snapshots_or_exact_appended_prefixes(catalog):
     questions = archive()
-    assert len(questions) == 186 and len(catalog.questions) == 216
+    assert len(questions) == 197 and len(catalog.questions) == 227
     current_runtime = {q.assets.get("preparation_id"): q for q in catalog.questions.values() if q.assets.get("preparation_id")}
     for ident, expected in UNCHANGED_TECHNICAL_SHA256.items():
         original = questions[ident]
@@ -1201,7 +1201,8 @@ def test_all_previous_questions_preserve_technical_snapshots_or_exact_appended_p
         assert digest(actual) == expected, ident
     for ident, expected in APPENDED_PREFIXES.items():
         original, runtime = questions[ident], current_runtime[ident]
-        assert original["version"] == runtime.version == expected["version"] + 1, ident
+        assert original["version"] == runtime.version, ident
+        assert technical_before_batch110(original)["version"] == expected["version"] + 1, ident
         assert digest(original["prepared_hints"]) == expected["prepared_hints_sha256"]
         assert solution_review(runtime).status == "pending_review"
         for language in ("he", "en"):
@@ -1253,7 +1254,7 @@ def test_inventory_retains_old_asset_hashes_and_private_originals(catalog):
         assert by_local[path]["sha256"] == previous_digest
         assert hashlib.sha256((BANK / path).read_bytes()).hexdigest() == previous_digest
     sources = [entry["local_path"] for entry in uploads.values() if entry["local_path"].startswith("sources/")]
-    assert len(sources) == 291 and len(set(sources)) == 290
+    assert len(sources) == 311 and len(set(sources)) == 310
     names = json.loads((ROOT / "apps/web/src/lib/source-screenshots.json").read_bytes())
     assert set(names) == {Path(path).name for path in sources}
     for question in catalog.questions.values():

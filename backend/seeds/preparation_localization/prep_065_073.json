@@ -735,7 +735,10 @@
         "בדיוק בקבוק מורעל אחד מתוך 500 וכל שאר הבקבוקים תקינים.",
         "תוצאות בינאריות אמינות זמינות בנקודת 24 השעות;בדיקות מתחילות במקביל.",
         "מותר לערבב מנות מספיקות מכל קבוצה;אין מגבלות נפח או השפעות כימיות נוספות.",
-        "היעד הוא זיהוי הבקבוק, ולא שכל בקבוק ייטעם בפועל."
+        "היעד הוא זיהוי הבקבוק, ולא שכל בקבוק ייטעם בפועל.",
+        "בדיוק בקבוק אחד מורעל, התוצאות אמינות ומצטברות, והתגובה הראשונה נגרמת בתוך (0,60] דקות.",
+        "התערובות מתחילות יחד בדקה 0, וכוללות מינון מספק ללא נטרול או דילול שמונע זיהוי.",
+        "החסם מול כל תזמון אדפטיבי מניח השהיות לא ידועות שעשויות להיות שונות באופן עצמאי; בניית הסבב היחיד אינה זקוקה לעצמאות זו."
       ],
       "en": [
         "Exactly one of 1000 bottles is poisoned.",
@@ -745,7 +748,10 @@
         "Exactly one of 500 bottles is poisoned.",
         "Reliable binary outcomes are observable at the 24-hour endpoint after simultaneous starts.",
         "Adequate portions may be mixed without volume limits or additional chemical effects.",
-        "Identification is required;sampling every bottle is not."
+        "Identification is required;sampling every bottle is not.",
+        "Exactly one bottle is poisoned, outcomes are reliable and persistent, and first exposure produces a reaction after a delay in (0,60] minutes.",
+        "All mixtures start at minute zero and contain adequate portions without neutralization or detection-defeating dilution.",
+        "The bound against arbitrary adaptive timing assumes independently variable unknown delays; the one-round construction does not need that independence."
       ]
     },
     "optimality": {
@@ -754,19 +760,21 @@
         "result": "עשרה נחוצים ומספיקים.",
         "proof": "2^9=512 קטן מאלף, ו־2^10=1024 מספיק עם בניית הקידוד הבינארי.",
         "scope": "לא מינימום מנות או נפח, לא כמה בקבוקים מורעלים או תוצאות לא ודאיות, ולא מידע על שעת המוות.",
-        "variant_073_five_hundred": "תשעה טועמים הכרחיים ומספיקים:256<500≤512. סבב מקביל יחיד, פענוח ב־9 ביטים;הכנת רשימות O(500·9). הטועם העשירי אינו נדרש."
+        "variant_073_five_hundred": "תשעה טועמים הכרחיים ומספיקים:256<500≤512. סבב מקביל יחיד, פענוח ב־9 ביטים;הכנת רשימות O(500·9). הטועם העשירי אינו נדרש.",
+        "batch110_ninety_minutes": "עשרה נחוצים ומספיקים לסבב בינארי יחיד. הוכחת היריב מרחיבה זאת לתזמונים אדפטיביים רק במודל ההשהיות העצמאי המפורש. שבעה תחת השהיה מדויקת הם פתרון לחוזה אחר."
       },
       "en": {
         "criterion": "Taster count in one batch of deterministic binary endpoint results.",
         "result": "Ten are necessary and sufficient.",
         "proof": "2^9=512 is less than 1000, while 2^10=1024 suffice with the binary-pooling construction.",
         "scope": "No dose or volume minimum; excludes multiple poisons, uncertainty and death-time information.",
-        "variant_073_five_hundred": "Nine testers are necessary and sufficient:256<500≤512. One parallel round, nine-bit decoding, and O(500·9) explicit pool preparation. The tenth tester is unnecessary."
+        "variant_073_five_hundred": "Nine testers are necessary and sufficient:256<500≤512. One parallel round, nine-bit decoding, and O(500·9) explicit pool preparation. The tenth tester is unnecessary.",
+        "batch110_ninety_minutes": "Ten are necessary and sufficient for one binary round. The adversarial proof extends the bound to adaptive timing only under the explicit independently variable-delay model. Seven under exact delay solves a different contract."
       }
     },
     "verification": {
-      "he": "נבדקו כל 1000 אפשרויות הבקבוק המורעל לפי חברות בתערובות, ייחודיות ופענוח; הושוו לאורקל חלוקות ושאריות עצמאי. נבדקו כולם חיים, 24 דפוסים בלתי מנוצלים וחמישה קלטים פגומים. מודל פייתון בלבד; ללא ניסוי אנושי או כימי; ביקורת מקצועית ממתינה.\n\n1,000 הדמיות חד־רעל:כל 500 הבקבוקים עם 9 וגם 10 טועמים. כל 536 תבניות התוצאה הבלתי משויכות בשני הרוחבים נדחו. אומת שהטועם העשירי אינו מקבל דגימות. בדיקות קידוד בלבד.",
-      "en": "All 1000 poisoned-bottle cases passed pool-membership simulation, uniqueness and decoding against an independent division/remainder oracle. All-survive, 24 unused patterns and five malformed inputs passed. Python model only, no real human or chemical experiment; professional review pending.\n\n1,000 single-poison simulations cover all 500 bottles with nine and with ten testers. All 536 unassigned patterns across both widths are rejected. Tester 10 has an empty pool. These are coding checks only."
+      "he": "נבדקו כל 1000 אפשרויות הבקבוק המורעל לפי חברות בתערובות, ייחודיות ופענוח; הושוו לאורקל חלוקות ושאריות עצמאי. נבדקו כולם חיים, 24 דפוסים בלתי מנוצלים וחמישה קלטים פגומים. מודל פייתון בלבד; ללא ניסוי אנושי או כימי; ביקורת מקצועית ממתינה.\n\n1,000 הדמיות חד־רעל:כל 500 הבקבוקים עם 9 וגם 10 טועמים. כל 536 תבניות התוצאה הבלתי משויכות בשני הרוחבים נדחו. אומת שהטועם העשירי אינו מקבל דגימות. בדיקות קידוד בלבד.\n\nכל 1000 זהויות הבקבוק נבדקו מול אורקל חלוקה ושארית, כולל דפוס שלילי מלא ו־24 דפוסים לא משויכים. נבדקו 1000 דפוסי השהיות תקפים וכן תשעה זמני גבול בחשבון רציונלי. החסם האדפטיבי הוא הוכחה נפרדת, לא בדיקה ממצה של כל מדיניות זמנים.",
+      "en": "All 1000 poisoned-bottle cases passed pool-membership simulation, uniqueness and decoding against an independent division/remainder oracle. All-survive, 24 unused patterns and five malformed inputs passed. Python model only, no real human or chemical experiment; professional review pending.\n\n1,000 single-poison simulations cover all 500 bottles with nine and with ten testers. All 536 unassigned patterns across both widths are rejected. Tester 10 has an empty pool. These are coding checks only.\n\nAll one thousand bottle identities were checked against an independent division/remainder oracle, including all-negative and twenty-four unassigned masks. One thousand allowed delay patterns and nine rational-arithmetic timing boundaries were checked. The adaptive lower bound is a separate proof, not exhaustive testing of all timing policies."
     },
     "edge_cases": {
       "he": [
@@ -777,7 +785,10 @@
         "כל התוצאות שליליות מייצגות את בקבוק 1 לפי המספור שנבחר.",
         "תוצאה בקוד פנימי≥500 מפרה את המודל.",
         "ללא הבטחת בדיוק רעל אחד, תבנית אפס אינה מבדילה בין בקבוק 1 לבין היעדר רעל.",
-        "מועד שדורש זיהוי לפני נקודת 24 השעות אינו בר־ביצוע בהשהיה מדויקת."
+        "מועד שדורש זיהוי לפני נקודת 24 השעות אינו בר־ביצוע בהשהיה מדויקת.",
+        "דפוס שלילי מלא מזהה את בקבוק 1 במיספור שנבחר.",
+        "תגובה בדיוק בדקה 60 כלולה בחסם; מתחילים מספיק מוקדם.",
+        "„כשעה” ללא חסם עליון קשיח אינו מספק הבטחה בזמן."
       ],
       "en": [
         "All alive identifies unsampled bottle one.",
@@ -787,7 +798,10 @@
         "All-negative means public bottle 1 under this numbering.",
         "An internal code≥500 violates the model.",
         "Without exactly-one-poison, the zero pattern cannot distinguish bottle 1 from no poison.",
-        "A deadline strictly before 24 hours is impossible under exact latency."
+        "A deadline strictly before 24 hours is impossible under exact latency.",
+        "All-negative identifies bottle one under this numbering.",
+        "A reaction exactly at sixty is included in the bound; start promptly.",
+        "“About an hour” without a hard upper bound does not guarantee a timely result."
       ]
     },
     "common_mistakes": {
@@ -800,7 +814,10 @@
         "להשתמש בעשרה כי זה מספר הטועמים שסופק, ואז לטעון שזה המינימום.",
         "לערבב סדר סיביות בפענוח.",
         "לבלבל בין מספר חיצוני 1..500 לבין תווית פנימית 0..499.",
-        "להניח שאפשר לחכות לתוצאה ואז לבצע סבב נוסף לפני 24 שעות."
+        "להניח שאפשר לחכות לתוצאה ואז לבצע סבב נוסף לפני 24 שעות.",
+        "לחלק לעשר קבוצות זרות ולזהות רק קבוצה.",
+        "לחכות לתשובה ואז להתחיל סבב של שעה נוספת.",
+        "לבלבל „לכל היותר שעה” עם „בדיוק שעה” ולהשתמש בשלוש תוצאות ללא הצדקה."
       ],
       "en": [
         "Ten disjoint groups identify only a group.",
@@ -811,12 +828,15 @@
         "Calling ten minimal merely because ten were supplied.",
         "Changing bit order during decoding.",
         "Confusing public 1..500 numbers with internal 0..499 labels.",
-        "Waiting for a result and assuming another full round fits before 24 hours."
+        "Waiting for a result and assuming another full round fits before 24 hours.",
+        "Splitting bottles into ten disjoint groups identifies only a group.",
+        "Waiting for a result before starting another full-hour round.",
+        "Treating “at most an hour” as “exactly an hour” and assuming three outcomes per tester."
       ]
     },
     "interview_answer": {
-      "he": "אסמן בקבוקים בתוויות 0–999 בעשרה ביטים. כל טועם מקבל תערובת מכל בקבוק שהביט שלו 1, וכולם טועמים יחד. דפוס המתים בסוף היום הוא התווית; מוסיפים אחת למספר הגלוי. כולם חיים מזהה בקבוק 1. עשרה מינימליים כי תשעה נותנים רק 512 דפוסים.\n\nאשתמש בתשעה מתוך העשרה. לכל בקבוק קוד 9 ביטים שונה;טועם i מקבל את כל הבקבוקים שהביט i שלהם 1. תבנית התוצאות בנקודת 24 השעות מזהה את הקוד. שמונה אינם מספיקים כי 256<500, ותשעה מספיקים כי 512≥500.",
-      "en": "Assign labels 0..999 in ten bits. Each taster receives all bottles whose code has one in its bit, and all taste in parallel. The endpoint death pattern is the label; add one for the public bottle. All-alive means bottle one. Ten is minimal because nine give only 512 patterns.\n\nUse nine of the ten. Assign distinct nine-bit codes and give tester i all bottles with bit i set. The 24-hour outcome pattern identifies the code. Eight cannot distinguish 500 cases; nine can."
+      "he": "אסמן בקבוקים בתוויות 0–999 בעשרה ביטים. כל טועם מקבל תערובת מכל בקבוק שהביט שלו 1, וכולם טועמים יחד. דפוס המתים בסוף היום הוא התווית; מוסיפים אחת למספר הגלוי. כולם חיים מזהה בקבוק 1. עשרה מינימליים כי תשעה נותנים רק 512 דפוסים.\n\nאשתמש בתשעה מתוך העשרה. לכל בקבוק קוד 9 ביטים שונה;טועם i מקבל את כל הבקבוקים שהביט i שלהם 1. תבנית התוצאות בנקודת 24 השעות מזהה את הקוד. שמונה אינם מספיקים כי 256<500, ותשעה מספיקים כי 512≥500.\n\nאתן לבקבוקים תוויות של עשר סיביות, וכל בודק יקבל את התערובת של הסיבית שלו. כולם מתחילים מיד; אחרי שעה דפוס התוצאות הוא התווית, לפני תום השעה וחצי. לא אקודד זמן מוות בלי הבטחה להשהיה מדויקת.",
+      "en": "Assign labels 0..999 in ten bits. Each taster receives all bottles whose code has one in its bit, and all taste in parallel. The endpoint death pattern is the label; add one for the public bottle. All-alive means bottle one. Ten is minimal because nine give only 512 patterns.\n\nUse nine of the ten. Assign distinct nine-bit codes and give tester i all bottles with bit i set. The 24-hour outcome pattern identifies the code. Eight cannot distinguish 500 cases; nine can.\n\nAssign ten-bit labels and let each tester sample the pool for one bit. Start everyone immediately; after an hour the outcome mask is the bottle label, before the ninety-minute deadline. Do not encode reaction time without an exact-delay guarantee."
     },
     "solution_extensions": {
       "he": {
@@ -828,6 +848,13 @@
             "question": "ומה אם צריך להבדיל גם ממצב שאין בקבוק מורעל?",
             "answer_direction": "מקצים לתרחיש ללא רעל את תבנית האפס ונותנים לבקבוקים קודים 1..500.501 אפשרויות עדיין נכנסות בתשעה ביטים. אז כל בקבוק מקבל לפחות דגימה אחת.",
             "principle": "תכנון הקודים תלוי בקבוצת כל המצבים שיש להבחין ביניהם."
+          }
+        ],
+        "batch110_ninety_minutes": [
+          {
+            "question": "מה משתנה אם ההשהיה בדיוק שעה ותוצאת דקה 90 נחשבת בזמן?",
+            "answer_direction": "אפשר לתת לכל בודק אחת משלוש משמעויות: חשיפה בדקה 0, חשיפה בדקה 30 או ללא חשיפה. קוד בן שבע ספרות בבסיס שלוש מכסה 1000 בקבוקים.",
+            "principle": "כמות המידע תלויה בחוק התזמון, לא רק במספר הבודקים."
           }
         ]
       },
@@ -841,6 +868,13 @@
             "answer_direction": "Reserve zero for no poison and label bottles 1..500. The 501 possibilities still fit in nine bits;every bottle is now sampled by at least one tester.",
             "principle": "Codes depend on the complete set of distinguishable states."
           }
+        ],
+        "batch110_ninety_minutes": [
+          {
+            "question": "What changes with an exact sixty-minute delay and an inclusive minute-ninety deadline?",
+            "answer_direction": "Each tester can encode first exposure at zero, at thirty, or never. Seven ternary digits cover one thousand bottles.",
+            "principle": "Available information depends on the timing law, not just the tester count."
+          }
         ]
       }
     },
@@ -848,12 +882,14 @@
       "he": [
         "הצילום אינו מפרט מודל ערבוב או נפח;אלו הנחות מופשטות מפורשות.",
         "מועד 24 שעות מפורש ככולל את נקודת הופעת התוצאה.",
-        "שיוך Apple מדווח בלבד;הווריאציה מצורפת למשפחת הקידוד הקיימת."
+        "שיוך Apple מדווח בלבד;הווריאציה מצורפת למשפחת הקידוד הקיימת.",
+        "הניסוח המקורי מקורב בזמן ואינו מפרט ערבוב, דילול או חוק השהיה משותף. כל ההנחות הדרושות להבטחה מתועדות; הגרסאות הישנות ורמזיהן נשמרים."
       ],
       "en": [
         "Mixing and volume rules are explicit abstract assumptions absent from the screenshot.",
         "The deadline includes the observable 24-hour endpoint.",
-        "Apple attribution is source-reported;this is appended to the existing coding family."
+        "Apple attribution is source-reported;this is appended to the existing coding family.",
+        "The source gives an approximate duration and omits mixing, dilution and a common delay law. All assumptions needed for a guarantee are explicit. Earlier variants and their hints are retained."
       ]
     },
     "prompt_variants": {
@@ -864,6 +900,15 @@
             "לכל טועם יש שתי תוצאות. כמה תבניות שונות יכולים k טועמים להחזיר בסבב מקביל אחד?",
             "השוו 256 ו־512 למספר 500. אין חובה להשתמש בכל עשרת הטועמים הזמינים.",
             "תנו לבקבוקים תוויות פנימיות 0 עד 499 ב־9 ביטים. טועם i מקבל מכל בקבוק שהביט i בתוויתו הוא 1. גם תבנית שכל הביטים בה 0 היא מידע חוקי כשידוע שיש בדיוק בקבוק מורעל אחד."
+          ],
+          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+        },
+        "batch110_ninety_minutes": {
+          "prompt": "### וריאציה: אלף בקבוקים, עשרה בודקים ושעה וחצי\nבדיוק אחד מ־1000 בקבוקים מורעל. יש עשרה בודקים ו־90 דקות לזהותו. כל כמות מספקת מן הרעל גורמת לתוצאה מזוהה בתוך לכל היותר 60 דקות מהחשיפה הראשונה; אין ידיעה על זמן מדויק. מותר להכין ולדגום תערובות במקביל בתחילת הזמן, ללא מגבלת כמות שמכשילה את המודל. תכננו זיהוי מובטח והסבירו מה אפשר להסיק מזמני תגובה.\n\nהבהרת עריכה: המקור אומר „תוך כשעה”. לצורך הבטחה מתמטית נדרש חסם עליון קשיח של 60 דקות; זמן מקורב ללא חסם אינו מבטיח תוצאה לפני המשתה. ההצעה משתמשת רק בתוצאת קצה בינארית בדקה 60. היא אינה דורשת זמן תגובה זהה בין הבודקים. זהו מודל חידת קידוד מופשט.",
+          "hints": [
+            "כבר אחרי שעה אפשר לצפות בתוצאה של כל בדיקה שהחלה מיד. כמה תבניות בינאריות יש לעשרה בודקים?",
+            "כל בודק יכול להשתתף בתערובת אחרת, כך שיחד התוצאות יקודדו את מספר הבקבוק.",
+            "מספרו את הבקבוקים בקודים 0..999. בודק i מקבל בדיוק את הבקבוקים שבקוד שלהם סיבית i היא אחת. בדקה 60 קראו את דפוס התוצאות והוסיפו אחת."
           ],
           "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
         }
@@ -877,6 +922,15 @@
             "Give bottles internal labels 0 through 499 in nine bits. Tester i samples every bottle whose label has bit i set. The all-zero outcome is valid when exactly one poisoned bottle is guaranteed."
           ],
           "integration_status": "Variant hints are supplemental; original interactive hint queue retained."
+        },
+        "batch110_ninety_minutes": {
+          "prompt": "### Variant: one thousand bottles, ten testers and ninety minutes\nExactly one of one thousand bottles is poisoned. Ten testers and ninety minutes are available to identify it. Any adequate poisoned portion produces an identifiable outcome no later than sixty minutes after first exposure; the exact delay is unknown. Mixtures may be prepared and sampled simultaneously at time zero, without a volume limitation that defeats the model. Give a guaranteed identification strategy and explain what reaction timing does and does not reveal.\n\nEditorial clarification: the source says “within about an hour.” A mathematical guarantee needs a hard sixty-minute upper bound; an approximate duration without a bound cannot guarantee an answer before the feast. The construction uses only binary endpoint outcomes at minute sixty. It does not require equal reaction delays across testers. This is an abstract coding puzzle.",
+          "hints": [
+            "Every test started immediately has an observable result by sixty minutes. How many binary patterns can ten testers produce?",
+            "Each tester can receive a different mixture so the joint outcomes encode a bottle label.",
+            "Label bottles zero through 999. Tester i samples exactly those whose labels have bit i set. At minute sixty decode the outcome mask and add one."
+          ],
+          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
         }
       }
     }

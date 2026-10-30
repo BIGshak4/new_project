@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "arrangements_enumerated": 46232,
+  "widths": "2..8",
+  "six_people": {
+    "n": 6,
+    "arrangements": 720,
+    "immediate_right": 120,
+    "anywhere_right": 360
+  },
+  "method": "Every seating permutation enumerated independently; positions compared directly, exact rational probabilities versus block/symmetry formulas.",
+  "limitation": "Uniform random linear seating of distinct people; not a circular bench or a conditional-on-C-at-a-known-end problem."
+}

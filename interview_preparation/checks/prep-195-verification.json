@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "small_permutations_exhaustively_checked": 46233,
+  "actual_query_calls": 1042153,
+  "small_maximum_opens": 4,
+  "hundred_box_long_cycle_cases": 50,
+  "targets_per_hundred_box_case": 100,
+  "method": "Exhaust every permutation at sizes 1..8; helper result differs at zero or two positions, then independently trace the read-only finder for every target. Also cover every long-cycle length 51..100 and an untouched 100-cycle failure control.",
+  "limitation": "The source's boxes have explicit agreed labels and a permutation of distinct notes; at most one helper swap, known pointer-following agreement, no later communication. Proof covers all 100! arrangements; finite enumeration alone does not."
+}

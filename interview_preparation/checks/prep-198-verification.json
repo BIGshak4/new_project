@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "joint_cells_exactly_enumerated": 176851,
+  "upper_bounds": "0..100",
+  "mass_sum_A": "1",
+  "mass_sum_B": "1",
+  "expected_A": "50",
+  "expected_B": "25",
+  "variance_B": "500",
+  "B_zero_probability_decimal": 0.05145820304691713,
+  "B_hundred_probability": "1/10201",
+  "method": "Independent exact joint-table summation using Fraction for every upper bound 0..100; compare both marginals, normalization, adjacent mass differences and expected values.",
+  "limitation": "Inclusive integer endpoints and conditional uniform draws. No empirical RNG test and no continuous-uniform approximation substituted for the discrete law."
+}

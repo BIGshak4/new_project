@@ -311,12 +311,12 @@
       "en": "Probe zero legally by incrementing then decrementing the same register; the last result is its original value. For product, add A to C once per B unit and restore A through D. For difference, decrement both together then transfer the remainder to C. Even an always-taken branch is expanded into three legal instructions using Z=1."
     },
     "source_ambiguities": {
-      "he": "צילום 10 מבקש שתי פונקציות וצילום 11 מגדיר שפה ותנאי התחלה ומפרט במפורש רק את הכפל. שולבו כתוכניות עצמאיות עם אותו אתחול. המקור אינו מגדיר רוחב, גלישה, הפחתת אפס או שימור קלטים; נבחר מודל טבעי לא חסום, בדיקת JNZ מיידית ושימוש מותר באוגרי עזר. כותרת אישית לא רלוונטית לא הועתקה לכרטיס הלומדים; כרטיס הפקודות נוצר מחדש בסגנון האתר.",
-      "en": "Image 10 requests two functions; image 11 supplies the ISA/initialization and explicitly states multiplication only. They are combined as independent fresh-start programs. Width, overflow, DEC-zero and input preservation were unspecified; unbounded natural values, immediate JNZ tests and scratch registers are explicit choices. An unrelated personal heading was not copied into learner content; the instruction card was redrawn in the site style."
+      "he": "צילום 10 מבקש שתי פונקציות וצילום 11 מגדיר שפה ותנאי התחלה ומפרט במפורש רק את הכפל. שולבו כתוכניות עצמאיות עם אותו אתחול. המקור אינו מגדיר רוחב, גלישה, הפחתת אפס או שימור קלטים; נבחר מודל טבעי לא חסום, בדיקת JNZ מיידית ושימוש מותר באוגרי עזר. כותרת אישית לא רלוונטית לא הועתקה לכרטיס הלומדים; כרטיס הפקודות נוצר מחדש בסגנון האתר.\n\nהמקור אינו מגדיר סימן, גלישה, אתחול עזר או הוראת עצירה. העריכה מגדירה טבעיים, מאפסת בפועל את העזר, ומבדילה נפילה מסוף הרשימה מעצירת חומרה.",
+      "en": "Image 10 requests two functions; image 11 supplies the ISA/initialization and explicitly states multiplication only. They are combined as independent fresh-start programs. Width, overflow, DEC-zero and input preservation were unspecified; unbounded natural values, immediate JNZ tests and scratch registers are explicit choices. An unrelated personal heading was not copied into learner content; the instruction card was redrawn in the site style.\n\nThe source omits sign, overflow, scratch initialization and a halt mechanism. The variant declares naturals, explicitly clears scratch and distinguishes listing completion from a hardware halt."
     },
     "verification": {
-      "he": "2,386 הרצות של הקבצים המורחבים עברו מול כפל וערך מוחלט עצמאיים: רשת ממצה של 1,089 זוגות בטווח 0..32, 100 דגימות וארבעה זוגות קצה, שתי תוכניות לכל זוג. נבדקו הגבלת פקודות, דגל JNZ מיידי, דחיית הפחתת אפס, שימור A בכפל וסיום. מפרש פייתון בלבד, לא קוד מכונה מקומפל או אישור מקצועי.",
-      "en": "2,386 expanded-file executions matched independent multiplication/absolute-difference oracles: all 1,089 pairs in 0..32, 100 seeded pairs and four boundary pairs, two programs each. Checks cover instruction limits, immediate JNZ flags, DEC-zero rejection, product A preservation and termination. Python interpreter only, not compiled machine code or professional approval."
+      "he": "2,386 הרצות של הקבצים המורחבים עברו מול כפל וערך מוחלט עצמאיים: רשת ממצה של 1,089 זוגות בטווח 0..32, 100 דגימות וארבעה זוגות קצה, שתי תוכניות לכל זוג. נבדקו הגבלת פקודות, דגל JNZ מיידי, דחיית הפחתת אפס, שימור A בכפל וסיום. מפרש פייתון בלבד, לא קוד מכונה מקומפל או אישור מקצועי.\n\n625 זוגות 0..24 עם ערכי עזר לא ידועים במפרש המצומצם; פלט R2, שימור R0 ו־R4..R6, מניעת DEC באפס ודגל טרי.",
+      "en": "2,386 expanded-file executions matched independent multiplication/absolute-difference oracles: all 1,089 pairs in 0..32, 100 seeded pairs and four boundary pairs, two programs each. Checks cover instruction limits, immediate JNZ flags, DEC-zero rejection, product A preservation and termination. Python interpreter only, not compiled machine code or professional approval.\n\n625 pairs 0..24 with arbitrary scratch in the constrained interpreter; R2 result, R0/R4..R6 preservation, no DEC-at-zero and fresh arithmetic flags."
     },
     "relationship_note": {
       "he": "וריאציה חדשה מקושרת ל־PREP-035: יותר אוגרים, ענף לפי תוצאת פקודה קודמת בלבד, קלטי אפס ושתי תוכניות. בדיקות התנאי הישירות בפתרון 035 אינן פקודות מותרות כאן.",
@@ -332,6 +332,28 @@
         "question": "How could product also preserve B, or difference preserve both inputs?",
         "direction": "Transfer units into a working copy and a restoration register, restore the source, then run the destructive loop on the copy. Copying must itself use INC,DEC,JNZ, never MOV. Registers are available, but specify their initialization and cost.",
         "status": "Prepared in supplemental content only; not connected to the follow-up queue."
+      }
+    },
+    "prompt_variants": {
+      "he": {
+        "batch110_eight_register_product": {
+          "prompt": "### וריאציה: שמונה אוגרים ושלוש פקודות בלבד\nהפקודות היחידות הן INC R, DEC R ו־BNZ label לפי התוצאה החשבונית שבוצעה מיד לפני הקפיצה. האוגרים הם R0..R7. בתחילה R0=a,R1=b, כאשר a,b טבעיים כולל אפס; שאר האוגרים יכולים להכיל טבעיים שרירותיים. חשבו R2=a·b ללא HALT, MOV, CMP או JMP.\n\nמודל העריכה הוא טבעיים ללא גלישה ו־DEC באפס אסורה. END היא תווית מיד אחרי ההוראה האחרונה: המפרש הלימודי מסתיים בהגעה לסוף הרשימה. זו אינה הוראת HALT ואינה מבטיחה שמעבד פיזי יפסיק; התנהגות מעטפת ההרצה לא הוגדרה במקור. אין חובה לשמר R1; המימוש משמר את R0.",
+          "hints": [
+            "איך תבדקו ערך אוגר כשהקפיצה רואה רק את התוצאה האחרונה?",
+            "INC ואז DEC משחזרים ערך ומשאירים אותו כתוצאת הבדיקה. כפל ניתן לבצע בחיבור חוזר.",
+            "העבירו את R0 ל־R2 ושמרו כל יחידה ב־R3 כדי לשחזר; R7 קבוע 1 מאפשר לבנות קפיצה חוקית. אתחלו את אוגרי העזר בפועל."
+          ]
+        }
+      },
+      "en": {
+        "batch110_eight_register_product": {
+          "prompt": "### Variant: eight registers and only three instructions\nOnly INC R, DEC R and BNZ label are allowed; BNZ sees the arithmetic result executed immediately before it. Registers are R0..R7. Initially R0=a,R1=b for arbitrary naturals including zero; scratch registers may contain arbitrary naturals. Compute R2=a·b without HALT, MOV, CMP or JMP.\n\nThe editorial model uses unbounded naturals and forbids DEC at zero. END labels the position immediately beyond the listing; the educational interpreter completes on falling off the listing. This is not HALT and does not guarantee a physical CPU stops; the source gives no execution-envelope contract. R1 need not be preserved; this implementation preserves R0.",
+          "hints": [
+            "How do you test a register when branches see only the preceding result?",
+            "INC then DEC restores its value and provides that result; multiply with repeated addition.",
+            "Transfer R0 into R2 while counting units in R3 for restoration; a constant-one R7 constructs legal unconditional branches. Actually initialize scratch registers."
+          ]
+        }
       }
     }
   },

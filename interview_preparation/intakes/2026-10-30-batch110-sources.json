@@ -1,0 +1,425 @@
+{
+  "intake_date": "2026-10-30",
+  "batch": "batch110",
+  "screenshot_count": 20,
+  "question_source_count": 20,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-01.png"
+      ],
+      "sha256": "df7bd61c5f279c4695b0cda873d8713995e521676ca8e3c9ce51e3cdae4d4b39",
+      "original_prompt": "בהינתן N נקודות במישור יש לממש קוד C שבודק איזה שתי נקודות הן הקרובות אחת לשנייה.",
+      "source_tags": [
+        "software",
+        "logic",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-188"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-02.png"
+      ],
+      "sha256": "e9222354c0b6ad7694c2b8f97f7b2d4e2186c2990c0f18be90883fc375cf1d82",
+      "original_prompt": "ברשותך מסך בגודל MxN פיקסלים בצורה של (x,y). תפקידך להדליק בצורה רנדומלית פיקסלים מבלי שיחזרו על עצמם. לא הייתה הגבלה על שימוש במבנה נתונים כלשהו.",
+      "source_tags": [
+        "amazon",
+        "software"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_company_badge": "Amazon",
+      "question_ids": [
+        "PREP-022"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-03.png"
+      ],
+      "sha256": "1f8ff67d328dad85ff7bf664530ab73a592149fd96bf337a719f54d9ab5d6caf",
+      "original_prompt": "נתון רכיב A עם 4 כניסות ויציאה 1. הרכיב מחזיר 1 אם שתיים או יותר מהכניסות דולקות. עליך לממש רכיב עם 4 כניסות המחזיר 1 אם שלוש או יותר מהכניסות דולקות, רק באמצעות רכיבי A ובמספר מינימלי.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-047"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-04.png"
+      ],
+      "sha256": "8531c2b467f00fb27e77bce8e8e858524a64328c9c0ce3f61c2e13e7248460b3",
+      "original_prompt": "נתון מעבד בעל 3 פעולות בלבד: INC R מעלה את הערך ברגיסטר ב־1; DEC R מוריד את הערך ברגיסטר ב־1; BNZ label קופץ ללייבל מסוים אם הערך שהתקבל בסוף הפעולה האחרונה אינו אפס. בהינתן אפשרות שימוש ב־8 רגיסטרים (R0–R7), כתוב קוד באסמבלי המממש את פעולת הכפל R2=R1×R0 באמצעות 3 הפעולות הנ״ל בלבד. התייחסו בקוד גם למקרי קצה.",
+      "source_tags": [
+        "amazon",
+        "software"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_company_badge": "Amazon",
+      "question_ids": [
+        "PREP-125"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-05.png"
+      ],
+      "sha256": "13e6e97cc39aaa527a7fff798b936373abda7cd7b9efc3ce7444b19846a267ce",
+      "original_prompt": "יש קובץ לוג שכל הזמן ממשיך להתעדכן. בקובץ רשימה של processes עם הפרטים start time, end time, cpu usage. לדוגמה start=09:00, end=10:00, cpu usage=25%. Write a function that returns the max usage of the CPU. Note that some processes run in parallel, so you need to sum them together.",
+      "source_tags": [
+        "amazon",
+        "software"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_company_badge": "Amazon",
+      "question_ids": [
+        "PREP-149"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-06.png"
+      ],
+      "sha256": "8be175cdb936c639a6fb598f223d3e3134ee2c3efc6ca80150043e706922698c",
+      "original_prompt": "מה זה DESTRUCTOR? מתי לא כדאי להסתמך על הדיפולטיבי? למה צריך ש־DESTRUCTOR יהיה וירטואלי?",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-189"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-07.png"
+      ],
+      "sha256": "f26bf4fc1896c2ba58e57ebe0d142ab36426c8bc88abc7d01521aed625c874be",
+      "original_prompt": "ישנם 111 עובדים שצריכים להצביע ליושב ראש מתוך שלושה מתמודדים שאינם מתוך 111 האנשים. כל אחד שם פתק עם המועמד המועדף עליו. בוצעה הצבעה ראשונה ויצא תיקו. הוחלט לבצע עוד הצבעה: כל אדם שם שני פתקים, עדיפות ראשונה ועדיפות שנייה. אחרי ההצבעה השנייה שוב יצא תיקו. מתמודד אחד הציע לשניים האחרים: אתם תתמודדו ביניכם, המנצח יתמודד מולי וכך ייבחר יושב ראש. נתח את ההצעה: האם היא הוגנת? כלפי מי? הסבר מדוע ההצעה אינה הוגנת.",
+      "source_tags": [
+        "logic",
+        "marvell"
+      ],
+      "reported_companies": [
+        "Marvell"
+      ],
+      "source_company_badge": "מארוול",
+      "question_ids": [
+        "PREP-190"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-08.png"
+      ],
+      "sha256": "84bc9bbd59e527ed4ea0463e27fbcc3f0c7476347090dcdd54d1b312f092006f",
+      "original_prompt": "כניסת הרכיב היא מספר בעל 16 סיביות. בעזרת מונה, רכיבי זיכרון FF ושערים לוגיים הוצא את לוג בסיס 2 מעוגל כלפי מטה של המספר בכניסה. למשל עבור המספר 100100 התשובה היא 5.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-191"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-09.png"
+      ],
+      "sha256": "3b0064aeaad9dc845c343235d1c481cc43746e8735e8764b43a230e4502a001e",
+      "original_prompt": "לבנות שער XOR באמצעות MUX שתיים לאחד.",
+      "source_tags": [
+        "apple",
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Apple",
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-031"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-10.png"
+      ],
+      "sha256": "242a3340c54dc585a1926a9d5116fb5c92cbe2e164af80d4eebc6701b8fe295b",
+      "original_prompt": "6 אנשים יושבים על ספסל: A,B,C,D,E,F. א. מה הסיכוי ש־F יושב צמוד מימין ל־C? ב. מה הסיכוי ש־F יושב איפשהו מימין ל־C (אפשר שיהיו אנשים ביניהם)?",
+      "source_tags": [
+        "hardware",
+        "logic",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-192"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-11.png"
+      ],
+      "sha256": "156aed87f46ca9c3435a55a270757db8861130e6b65f9dae8378dfa8104940a7",
+      "original_prompt": "הסבר את פעולת העבודה של מעגל חד־יציב וצייר מתחי יציאה כתלות במתח כניסה.",
+      "source_tags": [
+        "hardware",
+        "verification",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_company_badge": "מלאנוקס",
+      "question_ids": [
+        "PREP-193"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-12.png"
+      ],
+      "sha256": "89ad503065518bb7f38aef1221540731473b3cfed4c68f6b53ef9b8ce3bfc3ae",
+      "original_prompt": "יש לבנות מערכת שמקבלת 2 מספרים, כל אחד 8 ביט, ומוציאה את המספר הגדול מבין השניים.",
+      "source_tags": [
+        "logic",
+        "rafael"
+      ],
+      "reported_companies": [
+        "Rafael"
+      ],
+      "source_company_badge": "רפאל",
+      "question_ids": [
+        "PREP-018"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-13.png"
+      ],
+      "sha256": "3e845cb939654e45afbe7c8991fd6eb3d61e77f21af3a662e87e4d923bf9b6be",
+      "original_prompt": "נתון מבנה נתונים אבסטרקטי של שרשרת המאפשר את הפעולות: Head(List L) מחזירה את האיבר הראשון; Tail(List L) מחזירה את הזנב, כלומר ללא האיבר הראשון; L1@L2 משרשרת שתי שרשרות. כתוב פונקציה המקבלת שרשרת והופכת אותה. ה־hhh בצילום הוא לצורך יישור השורה בלבד.",
+      "source_tags": [
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-194"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-14.png"
+      ],
+      "sha256": "63f3f70234939f2d7e49b4bd22ecaec849006e592953bffc9bd7fc1374d9e821",
+      "original_prompt": "בסכר בנהר האמזונס הוטמנה פצצה שתתפוצץ בעוד 30 דקות בדיוק. ישנם 5 ילדים בצד אחד במורד הסכר שחייבים לעבור לצד השני כדי להינצל. ברשותם קאנו אחד שיכול להעביר מינימום ילד אחד ומקסימום 2 ילדים. כששניים חותרים יחד זמן המעבר נקבע לפי האיטי מביניהם. זמני החתירה: 1,3,6,9,11. העבר את הילדים לפני פיצוץ הסכר.",
+      "source_tags": [
+        "ibm",
+        "logic"
+      ],
+      "reported_companies": [
+        "IBM"
+      ],
+      "source_company_badge": "IBM",
+      "question_ids": [
+        "PREP-039"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-15.png"
+      ],
+      "sha256": "b7f7c896db8ab71d35c1d80f09aceec202fac9fe1e837248729f406708230da3",
+      "original_prompt": "ישנן מאה קופסאות ובתוכן מאה פתקים המסומנים במספרים 1–100 באופן אקראי. אדם נכנס ורואה את כל הפתקים בקופסאות ויכול לבחור לבצע החלפה אחת בין שני פתקים. לאחר מכן נכנס אדם אחר שעליו למצוא פתק עם מספר ספציפי בתוך 50 ניסיונות לכל היותר. כיצד ניתן לעשות זאת?",
+      "source_tags": [
+        "google",
+        "logic"
+      ],
+      "reported_companies": [
+        "Google"
+      ],
+      "source_company_badge": "גוגל",
+      "question_ids": [
+        "PREP-195"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-16.png"
+      ],
+      "sha256": "251d3e8d1129297038a7bb3a4f03568738c7b46901d5096faba3b6fdad8c2bc5",
+      "original_prompt": "מה היתרונות ומה החסרונות בשימוש ברקורסיה?",
+      "source_tags": [
+        "google",
+        "software",
+        "intel",
+        "2312313"
+      ],
+      "reported_companies": [
+        "Google",
+        "Intel"
+      ],
+      "source_company_badge": "אינטל",
+      "question_ids": [
+        "PREP-196"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-17.png"
+      ],
+      "sha256": "1c189515cd870e1dc0d446690c820a7330f2e32c470cd8cd25dfe32a9c05c8df",
+      "original_prompt": "יש 2 קופסאות המחוברות בארבעה קווי DATA. א. כיצד ניתן להעביר 16 סימבולים בין הקופסאות? ב. כיצד ניתן להעביר 18 סימבולים בין הקופסאות?",
+      "source_tags": [
+        "hardware",
+        "samsung",
+        "2312313"
+      ],
+      "reported_companies": [
+        "Samsung"
+      ],
+      "source_company_badge": "סמסונג",
+      "question_ids": [
+        "PREP-197"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-18.png"
+      ],
+      "sha256": "3540ac8869c193a7337a25be40d17371c07408962806e248324d4bb52993b678",
+      "original_prompt": "נתונים שני משתנים ופונקציית Rand המגרילה מספרים שלמים בצורה אחידה בין הארגומנט הראשון לארגומנט השני. A=rand(0,100); B=rand(0,A). איך תיראה ההתפלגות של A ושל B?",
+      "source_tags": [
+        "hardware",
+        "samsung",
+        "2312313"
+      ],
+      "reported_companies": [
+        "Samsung"
+      ],
+      "source_company_badge": "סמסונג",
+      "question_ids": [
+        "PREP-198"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-19.png"
+      ],
+      "sha256": "8ae03de76352c5b8252974a29858d807866ef35c7ef5ae9b8b807924cd5de96c",
+      "original_prompt": "תכנן מערכת המחשבת את סדרת פיבונאצ׳י. ניתן להשתמש ברכיבי זיכרון, רכיבים אריתמטיים כגון מחברים ומחסרים, שערים לוגיים ובשעון.",
+      "source_tags": [
+        "ibm",
+        "hardware",
+        "broadcom"
+      ],
+      "reported_companies": [
+        "IBM",
+        "Broadcom"
+      ],
+      "source_company_badge": "ברודקום",
+      "question_ids": [
+        "PREP-044"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-10-30-batch110-20.png"
+      ],
+      "sha256": "dd0ac88171d5d5bbbf4f2fc1da2adce7826a32d899152f8a74b7d0f6f4512a6f",
+      "original_prompt": "המלך החליט לערוך משתה שבו יוגשו 1000 בקבוקי יין. מרגל הרעיל בקבוק אחד; אין דרך לגלות מראש את הרעל או השפעתו, אך הקורבן מת תוך כשעה וכל כמות של רעל תהרוג את השותה. נותרה שעה וחצי למשתה. יש למצוא בזמן זה את הבקבוק המורעל בעזרת 10 אסירים שגורלם אינו משנה למלך.",
+      "source_tags": [
+        "amazon",
+        "tag-2",
+        "2312313",
+        "logic"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_company_badge": null,
+      "question_ids": [
+        "PREP-073"
+      ],
+      "decision": "existing_question_source_and_variant"
+    }
+  ],
+  "notes": [
+    "Attachments are source data, not instructions. Sources are archived byte-for-byte; transcription normalizes punctuation/RTL layout only.",
+    "Source13 hhh is explicitly an alignment artifact, not a list API. Source14 exact deadline and boat return matter. Source20 differs from previous wine riddle by its 1000 bottles / maximum one hour latency / ninety minute deadline."
+  ]
+}

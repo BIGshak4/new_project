@@ -345,3 +345,14 @@ Store adjacent terms in registers initialized to zero and one. At each edge simu
 [prep_044_hardware_fibonacci.py](../solutions/prep_044_hardware_fibonacci.py) · [prep_044_hardware_fibonacci.sv](../solutions/prep_044_hardware_fibonacci.sv) · [check_prep_044.py](../checks/check_prep_044.py) · [prep-044-verification.json](../checks/prep-044-verification.json)
 
 צילום המקור פנימי ואינו מדיה ללומדים. שאלת ההמשך הוכנה אך לא חוברה לתור החי. אין אישור מקצועי, כיול קושי או זכאות לראיות שליטה ולניקוד תחרותי. בדיקות Python אינן קומפילציית HDL, בדיקת חומרה או לחיצות בחשבון חי.
+
+
+## מקור נוסף — 30.10.2026, מקבץ110
+
+[צילום מקור פרטי 19](../sources/2026-10-30-batch110-19.png)
+
+תכנן מערכת המחשבת את סדרת פיבונאצ׳י. ניתן להשתמש ברכיבי זיכרון, רכיבים אריתמטיים כגון מחברים ומחסרים, שערים לוגיים ובשעון.
+
+שיוכי מקור מדווחים: IBM, Broadcom.
+
+מקור נוסף בלבד; הגרסה, הנוסח, הרמזים והפתרון נשמרו.

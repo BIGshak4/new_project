@@ -6,32 +6,40 @@
         "הפנס חייב ללוות כל מעבר במנהרה, כולל חזרות; אין זריקה או מסירה בין הצדדים.",
         "במנהרה נמצאים לכל היותר שני אנשים בו־זמנית, וזוג מתקדם בזמן האיטי מביניהם. אין מעברי ביניים או החלפות בתוך המנהרה.",
         "זמן כל מעבר קבוע ודטרמיניסטי. הסוללה מספיקה ל־12 שעות פעילות, ללא החלפה או טעינה. אין זמן הכנה; לא ממתינים בין מעברים. לכן סכום זמני המעברים שווה לזמן שחלף גם אם הסוללה דולקת ברציפות.",
-        "אפשר לסיים בדיוק ברגע שבו נגמרות 12 השעות. הבהרות אלה הן הנחות עריכה, ואינן כולן מופיעות במפורש בצילום המקור."
+        "אפשר לסיים בדיוק ברגע שבו נגמרות 12 השעות. הבהרות אלה הן הנחות עריכה, ואינן כולן מופיעות במפורש בצילום המקור.",
+        "וריאציית הקאנו: חמישה ילדים בזמנים 1,3,6,9,11 דקות; מתחילים יחד עם קאנו אחד בעל קיבולת 1–2.",
+        "כל חזרה כוללת חותר; הזמן הוא המקסימום בין החותרים, ללא הכנות או זרם נוסף.",
+        "צריך להגיע לפני 30 ממש, ולא בדיוק בדקה 30."
       ],
       "en": [
         "All four people and the torch start on the same side; everyone must finish on the other side.",
         "The torch accompanies every trip through the tunnel, including returns; it cannot be thrown or passed between banks.",
         "At most two people occupy the tunnel at once, and a pair takes the slower person's time. No intermediate handoffs or changes inside the tunnel are allowed.",
         "Crossing times are fixed and deterministic. The battery supplies 12 hours of use, without replacement or recharging. Preparation takes no time and the schedule never waits. Thus summed trip time also equals wall-clock time if the torch stays on continuously.",
-        "Finishing exactly at 12 hours is allowed. These are editorial assumptions; the source screenshot does not state all of them explicitly."
+        "Finishing exactly at 12 hours is allowed. These are editorial assumptions; the source screenshot does not state all of them explicitly.",
+        "Canoe variant: five children with times 1,3,6,9,11 minutes, initially together with one canoe of capacity 1..2.",
+        "Every return has a rower; cost is the slower rower's time, with no overhead or extra current.",
+        "Arrival must be strictly before 30, not exactly at minute 30."
       ]
     },
     "optimality": {
-      "he": "המדד הוא זמן מצטבר עד שכל הארבעה הגיעו ליעד. התוכנית משיגה 12 שעות. ההוכחה בפתרון מחלקת את כל התוכניות לפי חזרה של אחד האיטיים ולפי מעבר האיטיים יחד או בנפרד, ומקבלת חסם תחתון 12. בנוסף נבדק חסם תחתון ממוחשב: לכל מצב ניתן ערך h, עם h(התחלה)=12 ו־h(סיום)=0; בכל אחד מ־112 המעברים מתקיים h(s)≤עלות(s,t)+h(t). חיבור האי־שוויונות לאורך כל תוכנית מוכיח שעלותה לפחות 12, בלי להגביל מראש את מספר המעברים.",
-      "en": "The objective is elapsed time until everyone reaches the destination. The witness achieves 12 hours. The solution's proof partitions schedules by whether a slow person returns and whether the slow people cross together, establishing a lower bound of 12. An additional exact certificate assigns h to every reachable state, with h(start)=12 and h(goal)=0, and checks h(s)≤cost(s,t)+h(t) on all 112 legal transitions. Summing these inequalities along any complete schedule proves a cost of at least 12 without assuming a fixed number of crossings."
+      "he": "המדד הוא זמן מצטבר עד שכל הארבעה הגיעו ליעד. התוכנית משיגה 12 שעות. ההוכחה בפתרון מחלקת את כל התוכניות לפי חזרה של אחד האיטיים ולפי מעבר האיטיים יחד או בנפרד, ומקבלת חסם תחתון 12. בנוסף נבדק חסם תחתון ממוחשב: לכל מצב ניתן ערך h, עם h(התחלה)=12 ו־h(סיום)=0; בכל אחד מ־112 המעברים מתקיים h(s)≤עלות(s,t)+h(t). חיבור האי־שוויונות לאורך כל תוכנית מוכיח שעלותה לפחות 12, בלי להגביל מראש את מספר המעברים.\n\nוריאציית הקאנו משיגה מינימום 28 דקות: תוכנית חוקית וחסם פוטנציאל מאומת על כל 320 המעברים. 28<30 נותן מרווח שתי דקות. זו הוכחה במודל זמנים קבועים, לא בדיקת שיט פיזית.",
+      "en": "The objective is elapsed time until everyone reaches the destination. The witness achieves 12 hours. The solution's proof partitions schedules by whether a slow person returns and whether the slow people cross together, establishing a lower bound of 12. An additional exact certificate assigns h to every reachable state, with h(start)=12 and h(goal)=0, and checks h(s)≤cost(s,t)+h(t) on all 112 legal transitions. Summing these inequalities along any complete schedule proves a cost of at least 12 without assuming a fixed number of crossings.\n\nThe canoe variant has optimum 28 minutes: a legal witness plus a potential lower-bound certificate checked on all 320 edges. 28<30 leaves two minutes. This is an exact fixed-time model, not a physical canoe test."
     },
     "verification": {
       "he": [
         "הורצו בפועל פותר דייקסטרה, שחזור נפרד של המעברים ומודל בלמן–פורד עצמאי הבונה את כל קשתות המצב.",
         "במקרה המקור נבדקו כל 32 המצבים וכל 112 המעברים המכוונים החוקיים; תעודת החסם התחתון והמסלול בן חמשת המעברים מאשרים מינימום 12.",
         "נבדקו כל 209 וקטורי הזמנים הלא־יורדים באורך 1 עד 4 עם זמני מעבר 1 עד 6, ועוד שתי דוגמאות: 1,2,5,10 ושינוי סדר האנשים. בכל מקרה תוצאת דייקסטרה תאמה למודל הנפרד והמסלול הוחזר ונבדק.",
-        "נדחו תשע תוכניות לא תקינות ושישה קלטי זמן לא חוקיים. אומת שהאסטרטגיה שבה האדם המהיר מלווה כל אחד בנפרד עולה 13. אלה בדיקות מודל מדויקות; לא בוצעו ניסוי פיזי או בדיקת חשבון באתר כחלק מהבדיקה הזאת."
+        "נדחו תשע תוכניות לא תקינות ושישה קלטי זמן לא חוקיים. אומת שהאסטרטגיה שבה האדם המהיר מלווה כל אחד בנפרד עולה 13. אלה בדיקות מודל מדויקות; לא בוצעו ניסוי פיזי או בדיקת חשבון באתר כחלק מהבדיקה הזאת.",
+        "נוספו בדיקת שחזור שבע ההפלגות, דייקסטרה ובלמן–פורד על 64 מצבים ו־320 קשתות. 62 מצבים נגישים; כל 320 אי־שוויונות החסם עברו. הסכומים המצטברים 3,4,15,18,24,25,28."
       ],
       "en": [
         "Executed Dijkstra, a separate schedule replay, and an independent Bellman–Ford model that constructs every legal state transition.",
         "For the supplied instance, checked all 32 states and all 112 legal directed transitions. The lower-bound certificate and five-trip witness establish an optimum of 12.",
         "Checked all 209 nondecreasing crossing-time vectors of length 1 through 4 with values 1 through 6, plus two cases: 1,2,5,10 and a permutation of the supplied times. Every Dijkstra result matched the independent model and its returned schedule replayed successfully.",
-        "Rejected nine invalid schedules and six invalid time inputs. Confirmed that the fastest-person shuttle strategy takes 13. These are exact model checks, not a physical experiment or an authenticated website test."
+        "Rejected nine invalid schedules and six invalid time inputs. Confirmed that the fastest-person shuttle strategy takes 13. These are exact model checks, not a physical experiment or an authenticated website test.",
+        "Added seven-trip replay, Dijkstra and Bellman–Ford over 64 states and 320 edges. 62 states are reachable; all 320 potential inequalities passed. Cumulative times are 3,4,15,18,24,25,28."
       ]
     },
     "edge_cases": {
@@ -39,13 +47,19 @@
         "תקציב של 11 שעות אינו מספיק לפי אותו מודל; 12 מספיק בדיוק.",
         "אם דורשים מרווח ביטחון חיובי לפני תום הסוללה, התוכנית אינה עומדת בדרישה הזאת.",
         "המתנה או כיבוי הפנס בין מעברים אינם מקצרים את 12 שעות ההליכה ההכרחיות. אם יש זמן הכנה חיובי או זמני מעבר לא ודאיים, צריך לתקצב אותם בנפרד.",
-        "שינוי בקיבולת, זמן זוג שאינו זמן האיטי, פנס נוסף, מסירה בתוך המנהרה או מצב התחלתי אחר יוצרים בעיה אחרת; אין להחיל עליה אוטומטית את תשובת 12 השעות."
+        "שינוי בקיבולת, זמן זוג שאינו זמן האיטי, פנס נוסף, מסירה בתוך המנהרה או מצב התחלתי אחר יוצרים בעיה אחרת; אין להחיל עליה אוטומטית את תשובת 12 השעות.",
+        "תקציב של 28 בדיוק מספיק רק אם מותר שוויון; דרישה להגיע לפני 28 אינה אפשרית במודל.",
+        "תוכנית שמסתיימת ב־30 אינה עומדת במועד שבצילום החדש.",
+        "עיכובי עלייה וירידה נספרים בנפרד אם אינם זניחים."
       ],
       "en": [
         "An 11-hour budget is insufficient under the same model; 12 is exactly sufficient.",
         "If a strictly positive safety margin before battery exhaustion is required, this schedule does not satisfy it.",
         "Waiting or switching the torch off between trips cannot reduce the required 12 hours of crossing. Positive preparation times or uncertain crossing times require separate budgeting.",
-        "Changing capacity, pair speed, the number of torches, intermediate handoffs, or the initial distribution changes the problem; the 12-hour answer does not automatically apply."
+        "Changing capacity, pair speed, the number of torches, intermediate handoffs, or the initial distribution changes the problem; the 12-hour answer does not automatically apply.",
+        "A budget of exactly 28 is enough only when equality is allowed; strictly before 28 is impossible in this model.",
+        "A schedule ending at 30 fails the new source deadline.",
+        "Nonnegligible boarding delays require separate budgeting."
       ]
     },
     "common_mistakes": {
@@ -54,23 +68,59 @@
         "לדרוש שתמיד האדם המהיר ביותר יחזיר את הפנס; במקרה הזה ההחלטה הזאת עלולה לגרור 13 שעות.",
         "לחבר את זמני שני האנשים שעוברים יחד; זוג משלם את זמן האיטי, לא את הסכום.",
         "להציג תוכנית של 12 שעות כהוכחת מינימום בלי לשלול תוכניות מהירות יותר.",
-        "לטעון שיש מרווח ביטחון: התוכנית צורכת את מלוא 12 השעות."
+        "לטעון שיש מרווח ביטחון: התוכנית צורכת את מלוא 12 השעות.",
+        "להחזיר קאנו בלי ילד או לשכוח אחת משלוש החזרות.",
+        "להעתיק את תשובת 12 השעות של המנהרה לנתונים החדשים בדקות.",
+        "לשלוח את המהיר עם כולם ולהסתפק ב־32 דקות.",
+        "להציג מסלול של 28 בלבד כהוכחת מינימום בלי חסם."
       ],
       "en": [
         "Forgetting a torch return or allowing it to return without a person.",
         "Insisting that the fastest person must return every time; here that choice can produce 13 hours.",
         "Adding the times of people crossing together; a pair takes the slower time, not their sum.",
         "Treating a 12-hour witness alone as proof of optimality without ruling out faster schedules.",
-        "Claiming a safety margin: the schedule uses all 12 hours."
+        "Claiming a safety margin: the schedule uses all 12 hours.",
+        "Returning an empty canoe or omitting one of the three returns.",
+        "Copying the original 12-hour torch result into the new minute-based instance.",
+        "Escorting everybody with the fastest and accepting 32 minutes.",
+        "Calling a 28-minute witness alone a proof of minimality."
       ]
     },
     "interview_answer": {
-      "he": "אשלח את בעלי זמני המעבר 1 ו־2 יחד, אחזיר את 1, אשלח את 4 ו־5 יחד, אחזיר את 2, ולבסוף אשלח את 1 ו־2 יחד. העלות היא 2+1+5+2+2=12 שעות. שני האיטיים חולקים מעבר אחד, והמהיר השני ממתין ביעד כדי להחזיר את הפנס. זה מינימלי: חזרה של איטי יקרה מדי, ובשני המקרים האחרים — האיטיים יחד או בנפרד — מתקבל חסם תחתון 12.",
-      "en": "Send 1 and 2 across, return 1, send 4 and 5 across together, return 2, then send 1 and 2 across. The cost is 2+1+5+2+2=12 hours. The slow people share one trip, while the second-fastest waits at the destination to return the torch. This is minimal: returning a slow person is already too expensive, and both remaining cases—slow people together or separately—give a lower bound of 12."
+      "he": "אשלח את בעלי זמני המעבר 1 ו־2 יחד, אחזיר את 1, אשלח את 4 ו־5 יחד, אחזיר את 2, ולבסוף אשלח את 1 ו־2 יחד. העלות היא 2+1+5+2+2=12 שעות. שני האיטיים חולקים מעבר אחד, והמהיר השני ממתין ביעד כדי להחזיר את הפנס. זה מינימלי: חזרה של איטי יקרה מדי, ובשני המקרים האחרים — האיטיים יחד או בנפרד — מתקבל חסם תחתון 12.\n\nבקאנו: 1,3 הלוך; 1 חזור; 9,11 הלוך; 3 חזור; 1,6 הלוך; 1 חזור; 1,3 הלוך. הסכום 28 דקות וקטן מ־30. האיטיים עוברים יחד והילד של 3 דקות מחזיר אחריהם את הקאנו.",
+      "en": "Send 1 and 2 across, return 1, send 4 and 5 across together, return 2, then send 1 and 2 across. The cost is 2+1+5+2+2=12 hours. The slow people share one trip, while the second-fastest waits at the destination to return the torch. This is minimal: returning a slow person is already too expensive, and both remaining cases—slow people together or separately—give a lower bound of 12.\n\nFor the canoe: 1,3 forward; 1 back; 9,11 forward; 3 back; 1,6 forward; 1 back; 1,3 forward. Total 28<30. The slow pair travels together and the 3-minute child returns their canoe."
     },
     "solution_extensions": {
-      "he": "שאלת המשך מוכנה, אך לא חוברה למנגנון שאלות ההמשך באתר: מה משתנה אם הזמנים הם 1,2,5,10 והתקציב הוא 17? כיוון לתשובה: אותו רעיון נותן 2+1+10+2+2=17, בעוד ליווי נפרד עם האדם המהיר עולה 19. הרחבה נוספת: למספר משתנה של אנשים, הגדירו מצב של צדדי האנשים והפנס והציעו חיפוש בעל עלויות חיוביות; הסבירו שמספר המצבים גדל מעריכית. ההרחבה בודקת העברת רעיון ומידול, ואינה חובה בפתרון המקורי.",
-      "en": "Prepared follow-up, not connected to the website's interactive follow-up flow: what changes if the times are 1,2,5,10 and the budget is 17? Answer direction: the same structure costs 2+1+10+2+2=17, whereas escorting each person separately with the fastest costs 19. Further extension: for a varying number of people, define a state containing everyone's bank and the torch's bank, and propose a positive-weight shortest-path search; explain that the state count grows exponentially. This tests transfer and modelling and is not required for the original puzzle."
+      "he": "שאלת המשך מוכנה, אך לא חוברה למנגנון שאלות ההמשך באתר: מה משתנה אם הזמנים הם 1,2,5,10 והתקציב הוא 17? כיוון לתשובה: אותו רעיון נותן 2+1+10+2+2=17, בעוד ליווי נפרד עם האדם המהיר עולה 19. הרחבה נוספת: למספר משתנה של אנשים, הגדירו מצב של צדדי האנשים והפנס והציעו חיפוש בעל עלויות חיוביות; הסבירו שמספר המצבים גדל מעריכית. ההרחבה בודקת העברת רעיון ומידול, ואינה חובה בפתרון המקורי.\n\n{\"question\": \"אם כל הפלגה מוסיפה חצי דקה של הכנה, האם התוכנית עדיין עומדת במועד?\", \"answer_direction\": \"שבע הפלגות מוסיפות 3.5 דקות והתוכנית אורכת 31.5, ולכן אינה מספיקה. כדי להסיק על כל תוכנית צריך לשנות את משקלי הקשתות ולחשב מחדש.\", \"principle\": \"מרווח נמדד לפי כל הפעולות; אי־הצלחת תוכנית אחת אינה הוכחת אי־אפשרות.\"}",
+      "en": "Prepared follow-up, not connected to the website's interactive follow-up flow: what changes if the times are 1,2,5,10 and the budget is 17? Answer direction: the same structure costs 2+1+10+2+2=17, whereas escorting each person separately with the fastest costs 19. Further extension: for a varying number of people, define a state containing everyone's bank and the torch's bank, and propose a positive-weight shortest-path search; explain that the state count grows exponentially. This tests transfer and modelling and is not required for the original puzzle.\n\n{\"question\": \"What if every trip adds half a minute of preparation?\", \"answer_direction\": \"Seven trips add 3.5 minutes, so this schedule becomes 31.5 and misses the deadline. To decide whether any schedule succeeds, change edge weights and solve again.\", \"principle\": \"Budget every operation; failure of one schedule is not an impossibility proof.\"}"
+    },
+    "source_ambiguities": {
+      "he": [
+        "הצילום החדש מתאר חמישה ילדים וקאנו ומועד קשיח של פיצוץ; ההוספה נשמרת כווריאציה ולא מחליפה את שאלת המנהרה המקורית.",
+        "אין פירוט לזרם, הכנות או עייפות; זמנים דטרמיניסטיים לשני הכיוונים הם הנחה גלויה."
+      ],
+      "en": [
+        "The new screenshot has five children, a canoe and a strict explosion deadline. It is appended as a variant, without replacing the old tunnel problem.",
+        "Current, overhead and fatigue are unspecified; deterministic bidirectional times are an explicit assumption."
+      ]
+    },
+    "prompt_variants": {
+      "he": {
+        "canoe_five_children_before_thirty_batch110": "### וריאציה נוספת: חמישה ילדים וקאנו לפני פיצוץ הסכר\nסכר יתפוצץ בעוד 30 דקות בדיוק. חמישה ילדים מתחילים באותה גדת נהר ועליהם להגיע לגדה השנייה לפני הפיצוץ. יש קאנו אחד, המכיל ילד אחד או שניים בכל הפלגה. זמני החתירה האישיים בדקות הם 1,3,6,9,11; זוג חותר בזמן האיטי מביניהם.\n\nמצאו תוכנית שמביאה את כולם ליעד לפני הדקה ה־30, ובדקו את הזמן הכולל. אפשר גם לברר מהו המינימום.\n\nהבהרות: הקאנו מתחיל עם הילדים, מלווה כל הפלגה וחייב לחזור עם ילד אחד לפחות כשנדרשת חזרה. אין אפשרות לשחות, לגרור קאנו ריק, להחליף חותרים באמצע או לבצע הפלגות מקבילות. הזמנים קבועים וזהים בשני הכיוונים; אין זמן הכנה או זרם נוסף. צריך לסיים בזמן קטן ממש מ־30, להבדיל מגרסת הפנס המקורית שמרשה סיום בדיוק בתקציב.",
+        "canoe_five_children_before_thirty_batch110_hints": [
+          "גם הקאנו צריך לחזור. מי צריך להימצא בגדה השנייה אחרי הפלגת שני הילדים האיטיים?",
+          "השתמשו בילדים של דקה ושלוש דקות כדי להעביר יחד את הילדים של 9 ו־11 דקות, בלי לחייב את אחד האיטיים לחזור.",
+          "1 ו־3 עוברים, 1 חוזר, 9 ו־11 עוברים, 3 חוזר. כעת נשאר להעביר את 1,3,6; בדקו את כל שבע ההפלגות ואת הזמן המצטבר."
+        ]
+      },
+      "en": {
+        "canoe_five_children_before_thirty_batch110": "### Additional variant: five children and a canoe before the dam explodes\nA dam will explode in exactly 30 minutes. Five children start on one riverbank and must reach the opposite bank before the explosion. One canoe carries either one or two children per trip. Their individual rowing times in minutes are 1,3,6,9,11; a pair takes the slower child's time.\n\nFind a schedule that gets everybody across strictly before minute 30 and check its total time. The minimum time is an optional additional objective.\n\nClarifications: the canoe starts with the children, accompanies every crossing and must return with at least one child when a return is needed. No swimming, empty-canoe return, midriver handoff or parallel trips. Times are fixed and identical in both directions, with no preparation overhead or additional current. Finishing time must be strictly less than 30, unlike the original torch version which permits equality with its budget.",
+        "canoe_five_children_before_thirty_batch110_hints": [
+          "The canoe must return too. Who should already be waiting on the destination bank after the two slowest cross?",
+          "Use the 1- and 3-minute children to move the 9- and 11-minute pair together, without returning a slow child.",
+          "Send 1 and 3, return 1, send 9 and 11, return 3. Then transfer 1,3,6; check all seven trips and cumulative time."
+        ]
+      }
     }
   },
   "PREP-040": {

@@ -365,7 +365,8 @@
           ]
         },
         "בדיקת גרסת המערך הנתון: עברו 5,914 מסלולי הגרלה ממצים באורכים 0–7, שימור המערך המקורי, גבולות הטווח, 10 תרחישי קצה ו־99 הגרלות באורך 100. אין זו בדיקת איכות המקור האקראי.",
-        "בדיקה נוספת ב־21 באוקטובר 2026: כל 5,914 מסלולי הבחירה לאורכים 0–7 עם זהויות אובייקטים, שש תמורות אינדקסים לשלושה ערכים כולל חזרה, ועשרה מקרי אובייקטים. שימור זהות המערך, הופעות וזהויות איברים נבדק. אין בדיקת איכות RNG."
+        "בדיקה נוספת ב־21 באוקטובר 2026: כל 5,914 מסלולי הבחירה לאורכים 0–7 עם זהויות אובייקטים, שש תמורות אינדקסים לשלושה ערכים כולל חזרה, ועשרה מקרי אובייקטים. שימור זהות המערך, הופעות וזהויות איברים נבדק. אין בדיקת איכות RNG.",
+        "נוספו 771 מסלולי הגרלה ממצים במסכים ריקים ועד שישה תאים, עם גבולות קואורדינטות וללא חזרה."
       ],
       "en": [
         {
@@ -383,7 +384,8 @@
           ]
         },
         "Existing-array variant: 5,914 exhaustive paths for lengths 0–7, in-place identity, exact bounds, 10 boundary runs and 99 draws at length 100 passed. This does not test RNG quality.",
-        "Additional 2026-10-21 checks: all 5,914 indexed choice paths for lengths 0..7 using object identity, six paths for three values including a duplicate, and ten object boundary cases. Array identity, element identities and multiplicities preserved. No RNG-quality test."
+        "Additional 2026-10-21 checks: all 5,914 indexed choice paths for lengths 0..7 using object identity, six paths for three values including a duplicate, and ten object boundary cases. Array identity, element identities and multiplicities preserved. No RNG-quality test.",
+        "Added771 exhaustive draw paths for empty through six-cell screens, checking coordinate bounds and no repetition."
       ]
     },
     "interview_answer": {
@@ -431,6 +433,36 @@
         },
         "### Existing-array variant with a two-bound random function\n\nThe supplied array already contains every required value exactly once. Swapping cells changes order while preserving the multiset, so reorder existing values instead of generating new ones.\n\nStart at index 99. Choose an index from inclusive range 0..99 and swap the chosen value into the final cell. That cell is now fixed. For index 98 choose only from 0..98, and continue down to index 1. The first cell is left with the final unchosen value.\n\n```text\nfor i = 99 down to 1:\n    j = rand_range(0, i)\n    swap(arr[i], arr[j])\n```\n\nA five-value trace, with the fixed suffix to the right of the divider:\n\n```text\n[1, 2, 3, 4, 5]\ni=4, j=1: [1, 5, 3, 4 | 2]\ni=3, j=0: [4, 5, 3 | 1, 2]\ni=2, j=2: [4, 5 | 3, 1, 2]\ni=1, j=0: [5 | 4, 3, 1, 2]\n```\n\nAllow `j=i`. Swapping a cell with itself is valid and is necessary for this algorithm to reach all permutations uniformly. Requiring the order to change is not a correct uniformity criterion.\n\n**Correctness:** swaps preserve every value and its multiplicity. Before each step, cells after i are fixed and prefix 0..i contains exactly the remaining values. Swapping a chosen prefix value into i fixes one additional cell while preserving the invariant. At termination the complete array is a permutation of the input.\n\n**Uniformity:** assuming each bounded draw is uniform conditional on prior draws, every value has probability 1/100 of filling the last cell, then each remaining value has probability 1/99 for the next, and so on. Every complete permutation corresponds to a unique choice path with probability `1/100!`. Biased draws still preserve values but need not produce uniform permutations.\n\n**Cost:** for general length n, there are n-1 draws/swaps: Theta(n) time and O(1) auxiliary machine words beyond the existing array, assuming constant-time bounded RNG and indexed access. Length 100 uses exactly 99 draws. Linear order of growth is necessary when all permutations must be possible: some change linearly many cells and require linearly many writes. The input array itself occupies Theta(n) storage. This does not establish a minimum number of random bits or RNG calls over all computational models.\n\n**Interface distinction:** use `rand_range(0, i)` directly. The older one-argument inclusive API would use `rand(i+1)-1`. Do not subtract one from the new API's result. If a library excludes its upper endpoint, adapt the call to `rand_range(0, i+1)` and state that different contract.\n\n**Implementation:** the function mutates the supplied array and returns None. It allocates no replacement array or used-values set. Call `shuffle_in_place(arr, rand_range)` after defining it.\n\n```python\n\"\"\"Shuffle the supplied array in place using inclusive rand_range(min, max).\"\"\"\nfrom collections.abc import Callable, MutableSequence\n\n\ndef shuffle_in_place(values: MutableSequence[int], rand_range: Callable[[int, int], int]) -> None:\n    \"\"\"O(n) swaps and O(1) auxiliary words; uniform if bounded draws are conditionally uniform.\"\"\"\n    for i in range(len(values) - 1, 0, -1):\n        j = rand_range(0, i)\n        if not isinstance(j, int) or isinstance(j, bool) or not 0 <= j <= i:\n            raise ValueError(\"rand_range(min, max) must return an integer within both inclusive bounds\")\n        values[i], values[j] = values[j], values[i]\n```\n\n**Edges and mistakes:** empty/singleton arrays need no draws. A sorted result or unchanged cell is valid. Generating new random values can duplicate or lose inputs. Swapping each position with a random index from the entire array at every step preserves values but is generally biased. Initial sorted order is not needed; the algorithm preserves any supplied input multiset.\n\n**Interview answer:** work backward, draw uniformly from the remaining prefix, swap the chosen value to its boundary and shrink the prefix. Swaps preserve values, and choosing uniformly among remaining values makes every permutation equally likely. Linear time and constant extra space.\n\nPrepared follow-up: must the entire array be shuffled to choose only 10 distinct values? Direction: perform just 10 boundary-fixing steps; the suffix holds a sample without replacement. Uniform draws give a uniform sample. O(k) steps for k selections from an existing array, excluding its construction. Not yet wired into the interactive follow-up queue."
       ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "הצילום אינו מגדיר אחידות, עצמאות או מתי מפסיקים. העריכה בוחרת סדר אחיד מלא ופלט מאפס."
+      ],
+      "en": [
+        "The source does not specify uniformity, independence or stopping; the variant chooses a complete uniform zero-based ordering."
+      ]
+    },
+    "prompt_variants": {
+      "he": {
+        "batch110_random_pixels": {
+          "prompt": "### וריאציה: פיקסלים אקראיים ללא חזרה\nמסך מכיל M שורות ו־N עמודות. הפיקו סדר אקראי של כל זוגות הקואורדינטות (row,column), בלי להדליק פיקסל שכבר נבחר. כל מבנה נתונים מותר. נגדיר אינדקסים מאפס, ממדים שלמים אי שליליים והגרלות בלתי תלויות ואחידות. במימוש randbelow(k) מחזירה 0..k−1; זהו ממשק עזר מוצהר ולא rand החד־בסיסית בנוסח הראשי.",
+          "hints": [
+            "מספרו כל פיקסל במספר יחיד.",
+            "בחרו בכל פעם מתוך מאגר הפיקסלים שטרם הוצאו.",
+            "מיפוי id=row·N+column הפיך בעזרת divmod; ערבבו/הסירו בהחלפת קצה."
+          ]
+        }
+      },
+      "en": {
+        "batch110_random_pixels": {
+          "prompt": "### Variant: random pixels without repetition\nA screen has M rows and N columns. Emit a random ordering of all (row,column) pixels without selecting one twice; any data structure is allowed. Use zero-based coordinates, nonnegative integer dimensions and independent uniform draws. Implementation randbelow(k) returns 0..k−1, an explicit helper contract different from the main question’s one-based rand.",
+          "hints": [
+            "Flatten every pixel to one integer.",
+            "Draw only from the remaining pool.",
+            "id=row·N+column is inverted by divmod; remove by exchanging with the active boundary."
+          ]
+        }
+      }
     }
   },
   "PREP-023": {

@@ -502,3 +502,14 @@ Clarify that constants 0,1 are free but inversion is not. Form p=A(c,d,0,0), q=A
 [prep_047_threshold_three_of_four.py](../solutions/prep_047_threshold_three_of_four.py) · [prep_047_threshold_three_of_four.sv](../solutions/prep_047_threshold_three_of_four.sv) · [check_prep_047.py](../checks/check_prep_047.py) · [prep-047-verification.json](../checks/prep-047-verification.json)
 
 צילום המקור פנימי ואינו מדיה ללומדים. שאלת ההמשך הוכנה אך לא חוברה לתור החי. אין אישור מקצועי, כיול קושי או זכאות לראיות שליטה ולניקוד תחרותי. בדיקות Python אינן קומפילציית HDL, בדיקת חומרה או לחיצות בחשבון חי.
+
+
+## מקור נוסף — 30.10.2026, מקבץ110
+
+[צילום מקור פרטי 3](../sources/2026-10-30-batch110-03.png)
+
+נתון רכיב A עם 4 כניסות ויציאה 1. הרכיב מחזיר 1 אם שתיים או יותר מהכניסות דולקות. עליך לממש רכיב עם 4 כניסות המחזיר 1 אם שלוש או יותר מהכניסות דולקות, רק באמצעות רכיבי A ובמספר מינימלי.
+
+שיוכי מקור מדווחים: Apple.
+
+מקור נוסף בלבד; הגרסה, הנוסח, הרמזים והפתרון נשמרו.

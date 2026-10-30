@@ -222,3 +222,16 @@ Cost is Theta(N) operations/swaps and O(1) auxiliary words beyond the supplied a
 
 [Additional check](../checks/check_prep_022_generic_array.py)
 [Verification evidence](../checks/prep-022-generic-array-verification.json)
+
+
+## מקור נוסף — 30.10.2026, מקבץ110
+
+[צילום מקור פרטי 2](../sources/2026-10-30-batch110-02.png)
+
+ברשותך מסך בגודל MxN פיקסלים בצורה של (x,y). תפקידך להדליק בצורה רנדומלית פיקסלים מבלי שיחזרו על עצמם. לא הייתה הגבלה על שימוש במבנה נתונים כלשהו.
+
+שיוכי מקור מדווחים: Amazon.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-022-random_pixels-batch110-addendum.md)

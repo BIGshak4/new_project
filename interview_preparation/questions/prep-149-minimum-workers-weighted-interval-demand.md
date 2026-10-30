@@ -251,3 +251,16 @@ Source omits endpoints and worker constraints. Two explicit conventions avoid as
     "status": "Supplemental only."
   }
 ]
+
+
+## מקור נוסף — 30.10.2026, מקבץ110
+
+[צילום מקור פרטי 5](../sources/2026-10-30-batch110-05.png)
+
+יש קובץ לוג שכל הזמן ממשיך להתעדכן. בקובץ רשימה של processes עם הפרטים start time, end time, cpu usage. לדוגמה start=09:00, end=10:00, cpu usage=25%. Write a function that returns the max usage of the CPU. Note that some processes run in parallel, so you need to sum them together.
+
+שיוכי מקור מדווחים: Amazon.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-149-weighted_cpu_log-batch110-addendum.md)

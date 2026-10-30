@@ -20,6 +20,7 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+from tests.preparation_history import BATCH110_BASELINE, before_batch110_record
 from tests.test_practice_hardening import scripted
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -71,8 +72,8 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
 
 
 def test_five_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 186
-    assert len(catalog.questions) == 216
+    assert len(archive()["questions"]) == 197
+    assert len(catalog.questions) == 227
     additions = {q.assets.get("preparation_id"): q for q in catalog.questions.values()
                  if q.assets.get("preparation_id") in NEW_IDS}
     assert set(additions) == NEW_IDS
@@ -197,9 +198,11 @@ def test_two_expanded_questions_keep_runtime_prefixes_hints_and_invalidate_whole
 def test_primitive_isa_includes_both_native_programs_as_hashed_solution_files(catalog):
     q = next(q for q in catalog.questions.values() if q.assets.get("preparation_id") == "PREP-125")
     media = q.assets["bank_media"]
-    programs = [m for m in media if m["filename"].endswith(".asm")]
+    programs = [m for m in media if m["filename"].endswith(".asm") and m["path"] in BATCH110_BASELINE["asset_sha256"]]
     assert {m["filename"] for m in programs} == {
         "prep_125_primitive_multiply.asm", "prep_125_primitive_absolute_difference.asm"}
+    assert {m["filename"] for m in media if m["filename"].endswith(".asm")} == {
+        *(m["filename"] for m in programs), "prep_125_eight_register_product_batch110.asm"}
     for m in programs:
         assert m["role"] == "solution" and m["kind"] == "file"
         data = (BANK / m["source_path"]).read_bytes()
@@ -219,7 +222,12 @@ def test_primitive_isa_includes_both_native_programs_as_hashed_solution_files(ca
 def test_assembly_question_does_not_invent_a_source_company_or_publish_personal_filename(catalog):
     q = next(q for q in catalog.questions.values() if q.assets.get("preparation_id") == "PREP-125")
     resource = q.assets["preparation_resource"]
-    assert not resource["reported_companies"]
-    filenames = [m["filename"] for m in q.assets["bank_media"]]
-    assert all("asm_" not in name for name in filenames)
+    original = before_batch110_record(next(row for row in archive()["questions"] if row["id"] == "PREP-125"))
+    assert not original["reported_companies"]
+    intake = json.loads((BANK / "intakes/2026-10-30-batch110-sources.json").read_bytes())
+    source = next(item for item in intake["sources"] if item["screenshot"] == 4)
+    assert resource["reported_companies"] == source["reported_companies"] == ["Amazon"]
+    media = q.assets["bank_media"]
+    assert all("asm_" not in m["filename"] and "moshe" not in m["filename"].lower() for m in media)
+    filenames = [m["filename"] for m in media if m["path"] in BATCH110_BASELINE["asset_sha256"]]
     assert all("primitive" in name or name.startswith("2026-10-25-batch11-") for name in filenames)

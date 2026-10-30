@@ -84,8 +84,21 @@ const hebrew: Record<string, string> = {
   superseded_acronym_assumption: "פירוש קודם של ראשי התיבות",
 };
 
+const additionalLabels: Record<string, Record<"he" | "en", string>> = {
+  batch110_random_pixels: { he: "הדלקת פיקסלים אקראית ללא חזרות", en: "Random pixels without repetition" },
+  batch30_variant: { he: "וריאציה נוספת", en: "Additional variant" },
+  canoe_five_children_before_thirty_batch110: { he: "חמישה ילדים וקאנו לפני תום שלושים דקות", en: "Five children and a canoe before thirty minutes" },
+  canoe_five_children_before_thirty_batch110_hints: { he: "רמזים לווריאציית הקאנו", en: "Canoe variant hints" },
+  batch110_ninety_minutes: { he: "זיהוי בקבוק מורעל בתוך תשעים דקות", en: "Poisoned wine: ninety-minute deadline" },
+  batch110_eight_register_product: { he: "כפל באמצעות שמונה אוגרים", en: "Multiplication with eight registers" },
+  batch110_weighted_cpu_log: { he: "שיא שימוש במעבד מתוך יומן מתעדכן", en: "Peak CPU usage in a growing log" },
+  integration: { he: "מצב החיבור לתרגול", en: "Follow-up availability" },
+};
+
 export function materialLabel(key: string, language: "he" | "en"): string {
   const base = key.replace(/_(?:he|en)$/, "");
+  const additional = additionalLabels[base] ?? additionalLabels[base.replace(/^variant_/, "")];
+  if (additional) return additional[language];
   const displayKey = hebrew[base] ? base : key;
   return language === "he" ? hebrew[key] ?? hebrew[displayKey] ?? key.replaceAll("_", " ") : displayKey.replaceAll("_", " ");
 }
