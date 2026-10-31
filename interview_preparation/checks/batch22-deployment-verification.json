@@ -1,0 +1,41 @@
+{
+  "expected_revisions": {
+    "web": "9de8aec12343b959f7f023823c8d81afd985fcdf",
+    "backend": "9de8aec12343b959f7f023823c8d81afd985fcdf"
+  },
+  "verified_at": "2026-10-31T21:56:18.596962+00:00",
+  "web": {
+    "service": "jobruner-web",
+    "status": "ok",
+    "revision": "9de8aec12343b959f7f023823c8d81afd985fcdf",
+    "checks": {
+      "application": "ok"
+    }
+  },
+  "backend": {
+    "status": "ok",
+    "engine_version": "0.1.0",
+    "source_revision": "9de8aec12343b959f7f023823c8d81afd985fcdf",
+    "env": "staging",
+    "llm_provider": "openai",
+    "database_configured": true,
+    "database_host": "pooler",
+    "database_pooler": "transaction",
+    "auth_configured": true,
+    "allowed_origins": 3,
+    "store": "database",
+    "models": {
+      "evaluator": "gpt-6.1-sol",
+      "feedback": "gpt-6.1-terra",
+      "tip": "gpt-6.1-terra",
+      "generator": "gpt-6.1-terra"
+    },
+    "answer_images": "assessed",
+    "database": {
+      "round_trip_ms": 3.38,
+      "pool_size": 5,
+      "pool_checked_out": 0,
+      "pool_overflow": -4
+    }
+  }
+}
