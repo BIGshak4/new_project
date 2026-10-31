@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "intake": "2026-10-31-batch20",
+  "state": "published_and_verified; scoped_UI_and_QA_cleanup_complete",
+  "source_screenshots": 20,
+  "new_preparation_questions": 11,
+  "extended_existing_questions": 5,
+  "source_only_existing_questions": 3,
+  "affected_question_ids": 19,
+  "counts": {
+    "preparation": 219,
+    "catalog": 249,
+    "unique_interview_questions": 245,
+    "media_manifest": 1222,
+    "new_private_assets": 81,
+    "new_authored_pngs": 32
+  },
+  "publication": {
+    "content_commit": "44c2ed90f200fbab509eecb7fabca6a7c21eb8fc",
+    "workflow_run_id": 41222236996,
+    "workflow_conclusion": "success",
+    "render_http_status": 200,
+    "netlify_http_status": 200,
+    "render_source_revision": "44c2ed90f200fbab509eecb7fabca6a7c21eb8fc",
+    "netlify_revision": "44c2ed90f200fbab509eecb7fabca6a7c21eb8fc",
+    "render_status": "ok",
+    "netlify_status": "ok",
+    "render_environment": "staging",
+    "database_configured": true,
+    "store": "database",
+    "verification_completed_at_utc": "2026-10-31T17:00:40.266046+00:00"
+  },
+  "database": {
+    "readback_passed": true,
+    "questions": 249,
+    "translations": 498,
+    "skill_links": 269,
+    "affected_questions_exact": 19,
+    "affected_translations_exact": 38,
+    "existing_identities_preserved": 238,
+    "unrelated_question_fingerprints_preserved": 230,
+    "unchanged_existing_translations": 466,
+    "existing_skill_links_preserved": 258,
+    "learner_writes_by_content_update": false
+  },
+  "private_resources": {
+    "objects_verified": 81,
+    "sha256_matches": 81,
+    "anonymous_direct_denials": 81,
+    "anonymous_public_denials": 81,
+    "learner_raw_sources_exposed": false
+  },
+  "live_api": {
+    "status": "pass",
+    "cases": 38,
+    "cases_per_language": {
+      "he": 19,
+      "en": 19
+    },
+    "exact_content_checked": true,
+    "unexposed_reference_protected": true,
+    "foreign_owner_denied_all": true,
+    "anonymous_denied_all": true,
+    "dedicated_qa_accounts_used": true,
+    "after_exposure": {
+      "status": "pass",
+      "attempts_verified": 38,
+      "resource_language_checks": 76,
+      "signed_learner_asset_hash_downloads": 276,
+      "exact_three_hints_persisted_each": true,
+      "reference_revealed_each": true,
+      "submissions_created": false,
+      "followups_created": false,
+      "state_unchanged_after_get": true,
+      "raw_source_images_exposed": false,
+      "ownership_and_anonymous_gates_passed": true
+    }
+  },
+  "software_checks": {
+    "backend_passed": 3185,
+    "backend_skipped": 33,
+    "backend_warnings": 2,
+    "backend_seconds": 123.33,
+    "backend_database_url_explicitly_empty": true,
+    "frontend_passed": 326,
+    "frontend_skipped": 0,
+    "typecheck_passed": true,
+    "production_build_passed": true,
+    "post_lint_focused_backend_passed": 238,
+    "post_lint_focused_backend_skipped": 1,
+    "post_lint_focused_seconds": 22.13,
+    "functional_failures_in_final_runs": 0
+  },
+  "lint": {
+    "edited_backend_tests_clean": true,
+    "implementation_models_and_builder_clean": true,
+    "scope": "Ruff checks actually performed; not a claim of global lint cleanliness",
+    "remaining_style_findings": 25,
+    "remaining_check_draw_files": 5,
+    "findings_per_file": {
+      "checks/check_20261031_batch20_sequential.py": 10,
+      "checks/check_batch20_algorithms_20261031.py": 1,
+      "solutions/draw_batch20_algorithms_20261031.py": 2,
+      "solutions/draw_batch20_combinational.py": 1,
+      "solutions/draw_batch20_sequential.py": 11
+    },
+    "unrelated_preexisting_findings_untouched": true
+  },
+  "native_execution": {
+    "c_compiled_and_executed": true,
+    "c_insertion_scenarios": 54,
+    "c_assertions": 2264,
+    "c_self_check_passed": true,
+    "c_sanitizer_run": false,
+    "bounded_sv_compiled_and_executed": true,
+    "bounded_sv_family_pass_markers": 6,
+    "bounded_sv_self_checks_passed": true,
+    "bounded_sv_runtime_ms": 3831,
+    "initial_larger_sv_run_timed_out": true,
+    "initial_timeout_runtime_ms": 6399,
+    "full_python_ranges_claimed_as_full_hdl_coverage": false
+  },
+  "browser_ui": {
+    "status": "complete_with_documented_scope",
+    "cases_completed": 38,
+    "cases_per_language": {
+      "he": 19,
+      "en": 19
+    },
+    "three_hints_opened_each": true,
+    "reference_revealed_each": true,
+    "all_available_material_sections_opened_each": true,
+    "actual_native_ui_clicks": true,
+    "material_sections_per_case_range": [
+      8,
+      11
+    ],
+    "search_verification": {
+      "status": "pass",
+      "queries_checked": 3,
+      "new_and_extended_question_found": true,
+      "synchronous_query_new_results": [
+        "PREP-216",
+        "PREP-220"
+      ],
+      "existing_fifo_also_found": true,
+      "library_unique_count": 245
+    },
+    "language_menu_transitions_tested": [
+      "he_to_en",
+      "en_to_he"
+    ],
+    "responsive_viewport_verification": {
+      "status": "pass_for_PREP_215_in_both_languages",
+      "desktop_viewport": [
+        1272,
+        716
+      ],
+      "desktop_client_width": 1264,
+      "desktop_scroll_width": 1264,
+      "emulated_phone_viewport": [
+        390,
+        844
+      ],
+      "phone_client_width": 382,
+      "phone_scroll_width": 382,
+      "phone_languages": [
+        "he",
+        "en"
+      ],
+      "horizontal_document_overflow": false,
+      "readable_phone_question_hint_and_reference_text": true,
+      "whole_circuit_label_readability_at_390_claimed": false,
+      "full_size_image_requires_phone_zoom_or_pan": true,
+      "all_questions_at_all_widths_claimed": false,
+      "physical_phone_tested": false
+    },
+    "ui_download_verification": {
+      "status": "pass",
+      "question": "PREP-215",
+      "bytes": 19854,
+      "top_level_fields": 45,
+      "valid_json": true,
+      "button_clicked": true
+    },
+    "full_size_diagram_link": {
+      "opened_through_ui": true,
+      "language": "he",
+      "native_dimensions": [
+        2300,
+        1550
+      ],
+      "phone_crop_used_as_full_circuit_proof": false
+    },
+    "visual_proof_files": [
+      "screenshots/intake-20261031-batch20/desktop-en.jpg",
+      "screenshots/intake-20261031-batch20/mobile-en.jpg",
+      "screenshots/intake-20261031-batch20/mobile-he.jpg"
+    ],
+    "library_count_source": "Actual accessibility-tree UI state, ui-extras metadata and API; no cropped screenshot count claim",
+    "every_lazy_asset_loaded_in_every_case_claimed": false,
+    "evidence_files": [
+      "browser-ui-verification.json",
+      "ui-extras-verification.json",
+      "responsive-verification.json",
+      "ui-download-verification.json"
+    ]
+  },
+  "review": {
+    "ai_assisted": true,
+    "professional_human_review": "pending",
+    "new_expert_approval": false,
+    "difficulty_calibration_claimed": false,
+    "hardware_synthesis_or_physical_timing_claimed": false
+  },
+  "evidence_files": [
+    "deployment-verification.json",
+    "live-readback-verification.json",
+    "signed-new-assets-verification.json",
+    "live-api-prepare-verification.json",
+    "browser-ui-verification.json",
+    "ruff-tests-after-fix.json",
+    "ruff-remaining-after-tests.json",
+    "backend-offline-db-disabled.log",
+    "tests-after-ruff-focused.log",
+    "frontend-tests.log",
+    "frontend-build.log",
+    "prep212-c-execution.json",
+    "sequential-rtl-bounded-execution.json",
+    "sequential-rtl-execution.json",
+    "live-api-after-verification.json",
+    "ui-extras-verification.json",
+    "responsive-verification.json",
+    "ui-download-verification.json",
+    "qa-cleanup-verification.json"
+  ],
+  "privacy": "Aggregate results only; no QA identities, QA URLs, signed URLs, passwords, access tokens or cookies are included.",
+  "cleanup": {
+    "status": "pass",
+    "verified_at_utc": "2026-10-31T17:49:40.376348+00:00",
+    "exact_qa_users_deleted": 2,
+    "auth_user_not_found_checks": 2,
+    "auth_not_found_status": 404,
+    "global_sessions_revoked_first": true,
+    "remaining_targeted_counts": {
+      "auth_users": 0,
+      "sessions": 0,
+      "memberships": 0,
+      "profiles": 0,
+      "attempts": 0,
+      "entries": 0,
+      "skill_profiles": 0
+    },
+    "content_counts_unchanged": {
+      "questions": 249,
+      "translations": 498,
+      "skill_links": 269
+    },
+    "browser_logout_confirmed": true,
+    "task_browser_tabs_closed": 15,
+    "user_browser_tabs_preserved": true,
+    "viewport_reset": true,
+    "runtime_credentials_cleared": true,
+    "evidence": "qa-cleanup-verification.json",
+    "credential_values_in_public_report": false,
+    "private_qa_files_removed": true,
+    "temporary_browser_credentials_cleared": true,
+    "download_export_archived_and_removed_from_downloads": true
+  }
+}
