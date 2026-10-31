@@ -25,6 +25,7 @@ import {
 } from "../lib/circuit";
 import { AnswerEditor } from "./answer-editor";
 import { EvaluationPanel, NextUpCard } from "./evaluation-panel";
+import { ExecutionResultView } from "./code-execution-result";
 import { HelpPopover } from "./ui/popover";
 import { SubjectSketch } from "./sketches";
 import { QuestionReport } from "./question-report";
@@ -727,7 +728,14 @@ export function PracticeSession({
                           )}
                     </h2>
                     <p className="muted small">
-                      {attempt.submission && demo
+                      {attempt.submission?.status === "failed"
+                        ? t(
+                            "התשובה נשמרה, אך משוב ה־AI לא הושלם. תוצאות בדיקות שבוצעו מוצגות למטה.",
+                            "Your answer is saved, but AI feedback did not complete. Results from any completed checks appear below.",
+                          )
+                        : attempt.submission?.status === "evaluating"
+                          ? t("התשובה נשמרה והמשוב עדיין בהכנה. תוצאות בדיקות זמינות מוצגות למטה.", "Your answer is saved and feedback is still being prepared. Available check results appear below.")
+                        : attempt.submission && demo
                         ? t(
                             "התשובה עדיין לא נבדקה. משוב אישי יופיע לאחר חיבור עוזר התרגול. בינתיים אפשר לפתוח את הפתרון המוצע ולהשוות לתשובה שלך.",
                             "Your answer has not been assessed yet. Personal feedback will be available once the practice assistant is connected. For now, reveal the reference solution and compare it with your answer.",
@@ -915,7 +923,9 @@ export function PracticeSession({
                 className="practice-flow"
                 aria-label={t("המשוב וההמשך", "Feedback and what comes next")}
               >
-                {attempt.submission.assessed_by === "unassessed" ? (
+                {attempt.submission.status !== "done" ? (
+                  <EvaluationPanel submission={attempt.submission} lang={lang} />
+                ) : attempt.submission.assessed_by === "unassessed" ? (
                   <p className="notice">
                     {t(
                       "התמונות שצירפתם נשמרו לבדיקה אנושית. השרת הזה עדיין לא יכול לקרוא תמונות מצורפות, ולכן לא חושב ציון ולא שונתה רמת המיומנות.",
@@ -932,6 +942,10 @@ export function PracticeSession({
                 ) : (
                   <EvaluationPanel submission={attempt.submission} lang={lang} />
                 )}
+                {attempt.submission.status === "done" &&
+                  (attempt.submission.assessed_by === "unassessed" || demo || attempt.submission.assessed_by === "demo") &&
+                  attempt.submission.check?.execution &&
+                  <ExecutionResultView result={attempt.submission.check.execution} lang={lang} />}
                 <FollowUps
                   attempt={attempt}
                   lang={lang}

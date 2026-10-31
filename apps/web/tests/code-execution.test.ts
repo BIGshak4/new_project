@@ -104,6 +104,23 @@ test("test totals use server counts rather than the bounded diagnostic sample", 
   assert.doesNotMatch(legacy, /undefined|NaN|defined tests passed/);
 });
 
+test("a failed or pending AI evaluation keeps real execution facts visible without a grade or XP", async () => {
+  const { EvaluationPanel } = await import("../src/components/evaluation-panel");
+  for (const status of ["failed", "evaluating"] as const) for (const lang of ["he", "en"] as const) {
+    const submission = {
+      status, assessed_by: "unassessed", band: null, xp_earned: null,
+      flags: ["eval_error_retryable", "eval_failed", "saved_without_evaluation"],
+      check: { type: "code_tests", passed: true, detail: "14 cases passed", execution: result({ status: "passed", passed: true, test_count: 14, passed_count: 14 }) },
+    } as unknown as import("../src/lib/practice-api").Submission;
+    const html = renderToStaticMarkup(createElement(EvaluationPanel, { submission, lang }));
+    assert.equal((html.match(/data-execution-status="passed"/g) ?? []).length, 1);
+    assert.match(html, /<bdi dir="ltr">14\/14<\/bdi>/);
+    assert.match(html, lang === "he" ? /כל הבדיקות שהוגדרו עברו/ : /All configured tests passed/);
+    assert.doesNotMatch(html, /band-ring|xp-pill|Strong answer|תשובה חזקה/);
+    if (status === "failed") assert.match(html, lang === "he" ? /משוב ה־AI לא הושלם/ : /AI feedback did not complete/);
+  }
+});
+
 test("execution posts only draft inputs to its owned attempt, with auth and idempotency", async () => {
   mock.method(supabase.auth, "getSession", async () => ({ data: { session: { access_token: "fixture-access" } }, error: null }));
   const requests: { url: string; init: RequestInit }[] = [];

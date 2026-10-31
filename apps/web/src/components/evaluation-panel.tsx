@@ -36,22 +36,28 @@ export function EvaluationPanel({
   const reduced = useReducedMotion();
   if (s.status === "evaluating") {
     return (
+      <>
       <p className="notice" role="status">
         {t(
           "התשובה נבדקת עכשיו. המשוב יופיע כאן בעוד רגע.",
           "Your answer is being assessed. Feedback appears here in a moment.",
         )}
       </p>
+      {s.check?.execution && <ExecutionResultView result={s.check.execution} lang={lang} />}
+      </>
     );
   }
   if (s.status === "failed") {
     return (
-      <p className="notice">
+      <>
+      <p className="notice" role="status">
         {t(
-          "ההערכה לא הושלמה. התשובה נשמרה ואפשר לנסות שוב.",
-          "Evaluation failed. Your answer is saved and can be retried.",
+          "משוב ה־AI לא הושלם. התשובה נשמרה ואפשר לנסות שוב. תוצאות ההרצה, אם קיימות, מוצגות בנפרד.",
+          "AI feedback did not complete. Your answer is saved and can be retried. Any available execution results are shown separately.",
         )}
       </p>
+      {s.check?.execution && <ExecutionResultView result={s.check.execution} lang={lang} />}
+      </>
     );
   }
   const band = s.band;
