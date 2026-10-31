@@ -27,7 +27,7 @@ def test_linked_batch_covers_every_short_source_with_five_bilingual_variants():
         if isinstance(content, list):
             source_cards.update({c["id"]: c for c in content})
     groups = defaultdict(list)
-    assert len(LINKED) == 2000
+    assert len(LINKED) == 2500
     assert len({q["key"] for q in SEED["questions"]}) == len(SEED["questions"])
     for q in LINKED.values():
         assert q["source_key"] in source_cards
@@ -42,7 +42,7 @@ def test_linked_batch_covers_every_short_source_with_five_bilingual_variants():
             assert all(choices)
             assert len(set(choices)) == 4, q["key"]
         groups[q["source_key"]].append(q)
-    assert len(groups) == len(source_cards) == 400
+    assert len(groups) == len(source_cards) == 500
     assert set(groups) == set(source_cards)
     for variants in groups.values():
         assert sorted(q["variant"] for q in variants) == [1, 2, 3, 4, 5]

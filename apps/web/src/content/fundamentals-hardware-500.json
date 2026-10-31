@@ -1,0 +1,1152 @@
+[
+  {
+    "id": "quick-hw-201",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-199"
+    ],
+    "title": {
+      "he": "הסיבוב מחזיר את הביטים לקצה השני",
+      "en": "Rotation returns bits at the opposite end"
+    },
+    "prompt": {
+      "he": "מסובבים את המילה הבלתי מסומנת 1001 ברוחב 4 ימינה ב־1 מקומות, באופן מעגלי. מה ערך הפלט העשרוני?",
+      "en": "Rotate unsigned 1001, width 4, right by 1 positions cyclically. What is the decimal output?"
+    },
+    "answer": {
+      "he": "12. הביטים היוצאים מצד ימין חוזרים לשמאל; מסכת הרוחב מסירה ביטים עודפים.",
+      "en": "12. Bits leaving the right return at the left; the width mask removes excess bits."
+    },
+    "takeaway": {
+      "he": "סיבוב שומר את כל הביטים, בניגוד להזזה שממלאת באפסים.",
+      "en": "Rotation preserves every bit, unlike a zero-filling shift."
+    }
+  },
+  {
+    "id": "quick-hw-202",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-199"
+    ],
+    "title": {
+      "he": "שני סיבובים הם כמות מודולרית אחת",
+      "en": "Two rotations form one modular amount"
+    },
+    "prompt": {
+      "he": "על מילה ברוחב 8 מבצעים סיבוב מעגלי ימינה ב־3 ואז ב־6. לאיזה סיבוב יחיד ימינה זה שקול, בתחום 0 עד 7?",
+      "en": "A width-8 word is rotated cyclically right by 3, then 6. What single right-rotation amount in 0 through 7 is equivalent?"
+    },
+    "answer": {
+      "he": "1. סיבובים באותו כיוון מצטברים; סיבוב ברוחב מלא מחזיר את אותה מילה.",
+      "en": "1. Same-direction rotations add; a full-width rotation returns the same word."
+    },
+    "takeaway": {
+      "he": "מפשטים שרשרת סיבובים באמצעות חיבור מודולו הרוחב.",
+      "en": "Simplify rotation chains by addition modulo width."
+    }
+  },
+  {
+    "id": "quick-hw-203",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-199"
+    ],
+    "title": {
+      "he": "עלות השלבים במסובב נשלט",
+      "en": "Count stages in a controlled rotator"
+    },
+    "prompt": {
+      "he": "מסובב מעגלי ברוחב 4, חזקה של 2, בנוי בשלבי סיבוב מותנה 1,2 וכן הלאה עד 2. בכל שלב MUX של ביט אחד לכל ביט. כמה רכיבי MUX 2:1 יש בסך הכול?",
+      "en": "A width-4 cyclic rotator, a power of 2, uses conditional rotation stages 1,2 and so on through 2. Each stage has one single-bit MUX per bit. How many 2:1 MUXes are used in total?"
+    },
+    "answer": {
+      "he": "8. יש log2 של הרוחב שלבים, וכל שלב משתמש במספר MUX השווה לרוחב.",
+      "en": "8. There are log2(width) stages, with width MUXes per stage."
+    },
+    "takeaway": {
+      "he": "מסובב בשלבים מחליף בחירה גדולה בכמה שכבות MUX.",
+      "en": "A staged rotator replaces a large selection with several MUX layers."
+    }
+  },
+  {
+    "id": "quick-hw-204",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-199"
+    ],
+    "title": {
+      "he": "כמות האחדים אינה מסתובבת החוצה",
+      "en": "The ones count cannot rotate away"
+    },
+    "prompt": {
+      "he": "מילה בת 4 ביטים היא 1011. מסובבים אותה מעגלית בכל כמות חוקית. כמה ביטי 1 יהיו בפלט, בלי לדעת את כמות הסיבוב?",
+      "en": "A 4-bit word is 1011. It is cyclically rotated by any legal amount. How many output bits are 1, regardless of the rotation amount?"
+    },
+    "answer": {
+      "he": "3. סיבוב מעגלי הוא תמורה של מיקומי הביטים ואינו משנה את מספר האחדים.",
+      "en": "3. Cyclic rotation permutes bit positions without changing the number of ones."
+    },
+    "takeaway": {
+      "he": "חיווט מחדש משנה מיקומים, לא את משקל המילה.",
+      "en": "Rewiring changes positions, not word Hamming weight."
+    }
+  },
+  {
+    "id": "quick-hw-205",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-199"
+    ],
+    "title": {
+      "he": "למצוא את מקורו של ביט פלט",
+      "en": "Find the source of an output bit"
+    },
+    "prompt": {
+      "he": "במסובב מעגלי ימינה ברוחב 8 ובכמות 3, איזה אינדקס קלט מזין את ביט הפלט 7? ביט 0 הוא LSB.",
+      "en": "For width-8 cyclic right rotation by 3, which input index feeds output bit 7? Bit 0 is the LSB."
+    },
+    "answer": {
+      "he": "2. בסיבוב ימינה, פלט j מקבל קלט j+k, מודולו רוחב המילה.",
+      "en": "2. For right rotation, output j receives input j+k modulo the word width."
+    },
+    "takeaway": {
+      "he": "כותבים מיפוי אינדקסים לפני שמחברים חוטים.",
+      "en": "Write the index mapping before connecting wires."
+    }
+  },
+  {
+    "id": "quick-hw-206",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-214"
+    ],
+    "title": {
+      "he": "מי סיבית הבחירה הגבוהה",
+      "en": "Which select bit is high-order"
+    },
+    "prompt": {
+      "he": "MUX 4:1 משתמש ב־S1 כסיבית הבחירה הגבוהה וב־S0 כנמוכה. הנתונים D0..D3 הם [7, 2, 9, 4]; S1=1, S0=0. מה הפלט?",
+      "en": "A 4:1 MUX uses S1 as the high select bit and S0 as the low bit. D0..D3 are [7, 2, 9, 4]; S1=1, S0=0. What is its output?"
+    },
+    "answer": {
+      "he": "9. מספר הנתון הנבחר הוא 2*S1+S0; אין להפוך בין הבחירה הגבוהה לנמוכה.",
+      "en": "9. The selected data index is 2*S1+S0; the high and low select bits are not interchangeable."
+    },
+    "takeaway": {
+      "he": "סדר סיביות הבחירה הוא חלק מהגדרת ה־MUX.",
+      "en": "Select-bit ordering is part of the MUX contract."
+    }
+  },
+  {
+    "id": "quick-hw-207",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-214"
+    ],
+    "title": {
+      "he": "קוד ביניים בבחירה יוצר פולס גם בלי השהיות",
+      "en": "An intermediate select code creates a pulse even without delays"
+    },
+    "prompt": {
+      "he": "MUX 4:1 אידאלי ללא השהיה מחזיק D0..D3=[0,1,1,0]. הבחירה משתנה מ־00 ל־11: S0 עולה בזמן 1 ns ו־S1 בזמן 4 ns. לכמה ns הפלט יהיה 1 בין שני מצבי הקצה?",
+      "en": "An ideal zero-delay 4:1 MUX holds D0..D3=[0,1,1,0]. Selection changes from 00 to 11: S0 rises at 1 ns and S1 at 4 ns. For how many ns is output 1 between the endpoint states?"
+    },
+    "answer": {
+      "he": "3. בין שני שינויי הבחירה נבחר D1 או D2. גם MUX ללא השהיות מגיב לקוד הביניים; איזון השהיות פנימיות לבדו אינו מונע זאת.",
+      "en": "3. Between the select changes, D1 or D2 is selected. Even a zero-delay MUX responds to that intermediate code; balancing internal delays alone cannot prevent it."
+    },
+    "takeaway": {
+      "he": "שינוי כמה ביטי בקרה דורש חוזה לדגימה או לקידוד הביניים.",
+      "en": "Changing several control bits needs a sampling or intermediate-code contract."
+    }
+  },
+  {
+    "id": "quick-hw-208",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-205"
+    ],
+    "title": {
+      "he": "אזורי הולכה חופפים במהפך CMOS",
+      "en": "Overlapping conduction regions in a CMOS inverter"
+    },
+    "prompt": {
+      "he": "במודל סף למהפך CMOS, VDD=4 V ומתח שני השערים 0 V. ספי ההולכה הם Vtn=1 V ו־|Vtp|=1 V. הולכה דורשת מתח שער־מקור שעובר ממש את הסף המתאים. מה [PMOS מוליך,NMOS מוליך], בביטי 0/1?",
+      "en": "In a CMOS inverter threshold model, VDD=4 V and both gates are at 0 V. Thresholds are Vtn=1 V and |Vtp|=1 V. Conduction requires gate-source magnitude strictly beyond the relevant threshold. What is [PMOS on,NMOS on] as 0/1 bits?"
+    },
+    "answer": {
+      "he": "[1,0]. עבור NMOS בודקים VG>Vtn; עבור PMOS בודקים VDD-VG>|Vtp|. באזור המעבר ייתכנו שני רכיבים מוליכים או שניהם כבויים.",
+      "en": "[1,0]. For NMOS test VG>Vtn; for PMOS test VDD-VG>|Vtp|. The transition region can have both devices on or both off."
+    },
+    "takeaway": {
+      "he": "עוברים ממודל ביטים למודל סף כדי להבין מצב מעבר.",
+      "en": "Use a threshold model to reason about the transition region."
+    }
+  },
+  {
+    "id": "quick-hw-209",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-200"
+    ],
+    "title": {
+      "he": "שני רכיבי מעבר משלימים זה את זה",
+      "en": "Two pass devices complement one another"
+    },
+    "prompt": {
+      "he": "NMOS ו־PMOS במקביל מעבירים נתון 1 V. מתחי הבקרה הם NG=1 V, PG=1 V; המסילה 1 V וסף כל רכיב 0.3 V. במודל מעבר סטטי ללא גוף או עומס, NMOS מעביר גבוה עד 0.7 ו־PMOS נמוך עד 0.3. מה הפלט, או Z כששניהם מנותקים?",
+      "en": "Parallel NMOS and PMOS pass 1 V. Controls: NG=1 V, PG=1 V; rail 1 V, thresholds 0.3 V. In a static model without body effect or load, NMOS passes high to 0.7 and PMOS low to 0.3. What is output, or Z if both disconnect?"
+    },
+    "answer": {
+      "he": "0.7. NMOS חזק בהעברת נמוך ו־PMOS חזק בהעברת גבוה; יחד הם מעבירים את שתי המסילות במודל הנתון.",
+      "en": "0.7. NMOS passes low strongly and PMOS passes high strongly; together they pass both rails in this model."
+    },
+    "takeaway": {
+      "he": "חיבור NMOS ו־PMOS במקביל יכול להעביר את שתי המסילות.",
+      "en": "Parallel NMOS and PMOS devices can pass both rails."
+    }
+  },
+  {
+    "id": "quick-hw-210",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-205"
+    ],
+    "title": {
+      "he": "אנרגיה מהמקור לעומת אנרגיה שנשמרת",
+      "en": "Supply energy differs from stored energy"
+    },
+    "prompt": {
+      "he": "מהפך אידאלי טוען עומס 2 pF מ־0 ל־VDD=3 V פעם אחת. כמה pJ מספק מקור המתח? אין זרם קצר או דליפה.",
+      "en": "An ideal inverter charges a 2 pF load from 0 to VDD=3 V once. How many pJ does the supply deliver? Ignore short-circuit and leakage currents."
+    },
+    "answer": {
+      "he": "18. המקור מספק מטען C*V במתח V, ולכן האנרגיה C*V²; בקבל נשמר רק חצי ממנה.",
+      "en": "18. The supply delivers charge C*V at voltage V, hence energy C*V²; only half is stored in the capacitor."
+    },
+    "takeaway": {
+      "he": "טעינה מלאה שואבת C*V² מהמקור; חצי נשמר בקבל.",
+      "en": "A full charge draws C*V² from the supply; half stays in the capacitor."
+    }
+  },
+  {
+    "id": "quick-hw-211",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-202"
+    ],
+    "title": {
+      "he": "מחזור החזרה תלוי גם בתבנית enable",
+      "en": "Recurrence depends on the enable pattern too"
+    },
+    "prompt": {
+      "he": "מונה מודולו 6 מתחיל ב־0. תבנית EN=[1, 0] חוזרת לנצח, ומתקדמים רק עם EN=1. אחרי כמה מחזורי שעון לראשונה גם המונה חוזר ל־0 וגם מסתיימת תבנית EN שלמה?",
+      "en": "A modulo-6 counter starts at 0. EN pattern [1, 0] repeats forever; advance only with EN=1. After how many clock cycles do both counter=0 and the end of a whole EN pattern first recur together?"
+    },
+    "answer": {
+      "he": "12. בכל תבנית מתקדמים כמספר האחדים שבה. חוזרים יחד כשהמספר המצטבר מתחלק ב־6 ומסתיימת תבנית שלמה.",
+      "en": "12. Each pattern advances by its number of ones. Joint recurrence requires a multiple of 6 increments and a whole number of EN patterns."
+    },
+    "takeaway": {
+      "he": "מפרידים בין מחזור המונה לבין הזמן בשעון המקור.",
+      "en": "Distinguish the counter cycle from time in source-clock cycles."
+    }
+  },
+  {
+    "id": "quick-hw-212",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-202"
+    ],
+    "title": {
+      "he": "התאוששות גם כאשר enable כבוי",
+      "en": "Recovery even when enable is low"
+    },
+    "prompt": {
+      "he": "מונה 3 ביטים מודולו 6 מוגדר כך: מצב לא חוקי 6 או 7 חוזר ל־0 בחזית הבאה, בלי קשר ל־EN. מצב חוקי מתקדם רק עם EN. כעת Q=6, EN=0. מה Q הבא?",
+      "en": "A 3-bit modulo-6 counter recovers from invalid state 6 or 7 to 0 at the next edge regardless of EN. Legal states advance only with EN. Now Q=6, EN=0. What is next Q?"
+    },
+    "answer": {
+      "he": "0. תנאי התאוששות ממצב לא חוקי קודם לתנאי enable, לפי החוזה המפורש.",
+      "en": "0. Invalid-state recovery takes precedence over enable under the explicit contract."
+    },
+    "takeaway": {
+      "he": "סדר קדימויות בין התאוששות והקפאה חייב להיות מוגדר.",
+      "en": "Recovery-versus-hold priority must be specified."
+    }
+  },
+  {
+    "id": "quick-hw-213",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-202"
+    ],
+    "title": {
+      "he": "wrap הוא מעבר ולא מצב מוחזק",
+      "en": "Wrap is a transition, not a held state"
+    },
+    "prompt": {
+      "he": "מונה מודולו 6 מתחיל ב־5; פולס wrap מופק רק בחזית מתקבלת המעבירה 5 ל־0. עבור EN=[0, 0, 1], כמה פולסי wrap יופקו?",
+      "en": "A modulo-6 counter starts at 5; a wrap pulse occurs only on an enabled edge taking 5 to 0. For EN=[0, 0, 1], how many wrap pulses occur?"
+    },
+    "answer": {
+      "he": "1. רק מעבר מתקבל מ־5 ל־0 הוא wrap; שהייה ב־5 עם EN=0 אינה פולס נוסף.",
+      "en": "1. Only an accepted 5-to-0 transition is a wrap; holding at 5 with EN=0 adds no pulse."
+    },
+    "takeaway": {
+      "he": "פולס על אירוע דורש את תנאי הקבלה לצד פענוח המצב.",
+      "en": "An event pulse needs acceptance as well as state decoding."
+    }
+  },
+  {
+    "id": "quick-hw-214",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-216"
+    ],
+    "title": {
+      "he": "ספירת חזיתות אחרי גידור נאיבי",
+      "en": "Count edges after naive clock gating"
+    },
+    "prompt": {
+      "he": "בבדיקת שעון מגודר, רמות clk AND EN שנמדדו בזמנים עוקבים הן [0, 1, 0, 1, 0], והרמה לפני המדגם הראשון היא 0. כמה חזיתות עלייה רואה הרכיב? שינוי EN בזמן clk גבוה עשוי ליצור חזית נוספת.",
+      "en": "In a gated-clock check, successive measured levels of clk AND EN are [0, 1, 0, 1, 0], with initial level 0. How many rising edges does the component see? Changing EN while clk is high can create an extra edge."
+    },
+    "answer": {
+      "he": "2. חזית עלייה היא מעבר 0 ל־1 של השעון המגודר עצמו, ולא של שעון המקור בהכרח.",
+      "en": "2. A rising edge is a 0-to-1 transition of the gated clock itself, not necessarily of the source clock."
+    },
+    "takeaway": {
+      "he": "enable סינכרוני אינו זהה ל־AND שרירותי על השעון.",
+      "en": "A synchronous enable is not an arbitrary AND on the clock."
+    }
+  },
+  {
+    "id": "quick-hw-215",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-216"
+    ],
+    "title": {
+      "he": "רוחב הרמה הגבוהה אחרי חלוקה",
+      "en": "High-phase width after division"
+    },
+    "prompt": {
+      "he": "שני TFF בטור מחלקים שעון בעל מחזור 2 ns ב־4. במצב מחזורי יציב, כמה ns נמשכת הרמה הגבוהה של היציאה הסופית, בהנחת רכיבים אידאליים?",
+      "en": "Two cascaded TFFs divide a clock of period 2 ns by 4. In steady periodic operation, how many ns is the final output high, assuming ideal devices?"
+    },
+    "answer": {
+      "he": "4. המחזור הסופי הוא ארבעה מחזורי קלט, והרמה הגבוהה נמשכת מחצית ממנו.",
+      "en": "4. The final period is four input periods, and its high phase occupies half of it."
+    },
+    "takeaway": {
+      "he": "מחזור ומשך רמה גבוהה הם גדלים שונים.",
+      "en": "Period and high-phase duration are different quantities."
+    }
+  },
+  {
+    "id": "quick-hw-216",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-216"
+    ],
+    "title": {
+      "he": "חזית ripple אינה מגיעה לכולם יחד",
+      "en": "Ripple edges do not arrive together"
+    },
+    "prompt": {
+      "he": "במונה ripple נתיב המעבר האחרון עובר דרך 2 רכיבי FF בזה אחר זה, עם clk-to-Q של 1 ns לכל אחד וללא השהיות אחרות. מה השהיית הנתיב ב־ns?",
+      "en": "A ripple-counter transition reaches the last output through 2 consecutive FFs, each with clk-to-Q 1 ns and no other delays. What is the path delay in ns?"
+    },
+    "answer": {
+      "he": "2. ב־ripple החזית עוברת רכיב אחר רכיב, ולכן מצטברות השהיות clk-to-Q.",
+      "en": "2. In a ripple structure, the edge travels through successive devices, accumulating clk-to-Q delays."
+    },
+    "takeaway": {
+      "he": "חלוקה פונקציונלית נכונה עדיין יכולה ליצור סטייה בתזמון החזיתות.",
+      "en": "Correct frequency division can still produce edge-timing skew."
+    }
+  },
+  {
+    "id": "quick-hw-217",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-204"
+    ],
+    "title": {
+      "he": "רגיסטר יציאה מזיז את מחזור הזיהוי",
+      "en": "An output register shifts detection time"
+    },
+    "prompt": {
+      "he": "ביט אחרון של רצף נקלט בחזית שמספרה 4. פלט Mealy המחושב אחריה נדגם ב־FF נוסף בחזית הבאה. באיזו חזית מתחיל הפולס הרשום? אין מסלול עוקף.",
+      "en": "A pattern's last bit is captured at edge 4. Its post-edge Mealy output is captured by an extra FF at the next edge. At which edge does the registered pulse begin? No bypass exists."
+    },
+    "answer": {
+      "he": "5. רגיסטר יציאה נוסף דוגם בחזית הבאה; הוא מוסיף מחזור השהיה ואינו משנה את הרצף המזוהה.",
+      "en": "5. An extra output register samples at the next edge, adding a cycle without changing the recognized pattern."
+    },
+    "takeaway": {
+      "he": "מציינים אם הפולס משויך לחזית האחרונה או לחזית שאחריה.",
+      "en": "Specify whether the pulse belongs to the final-bit edge or the next edge."
+    }
+  },
+  {
+    "id": "quick-hw-218",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-204"
+    ],
+    "title": {
+      "he": "המשך קלט שמוכיח ששני מצבים שונים",
+      "en": "A continuation proving two states differ"
+    },
+    "prompt": {
+      "he": "בשני מצבי גלאי 1101, ההיסטוריות הן ריקה ו־1. איזה המשך לא ריק וקצר ביותר ייתן זיהוי בסופו בדיוק באחד המצבים? אם יש תיקו, בוחרים לקסיקוגרפית עם 0 לפני 1.",
+      "en": "Two 1101-detector states have histories empty and 1. Which shortest nonempty continuation gives a detection at its final bit from exactly one state? Break ties lexicographically, with 0 before 1."
+    },
+    "answer": {
+      "he": "101. מצבים שנותנים פלט שונה לאותו המשך אינם ניתנים למיזוג. בודקים המשכים לפי אורך ואז סדר לקסיקוגרפי.",
+      "en": "101. States producing different output for the same continuation cannot be merged. Check continuations by length and then lexicographic order."
+    },
+    "takeaway": {
+      "he": "מוכיחים שמצבים נפרדים נחוצים באמצעות המשך שמבדיל ביניהם.",
+      "en": "Prove separate states are necessary with a distinguishing continuation."
+    }
+  },
+  {
+    "id": "quick-hw-219",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-217"
+    ],
+    "title": {
+      "he": "מרחק מזערי בין שתי הופעות",
+      "en": "Minimum separation between two occurrences"
+    },
+    "prompt": {
+      "he": "גלאי חופף מזהה את הרצף 101101. מה מספר מחזורי השעון המזערי האפשרי בין סיומי שתי הופעות שונות? כל מחזור מקבלים ביט אחד ואין הפסקות קבלה.",
+      "en": "An overlapping detector recognizes 101101. What is the minimum possible clock-cycle gap between the ends of two distinct occurrences? Accept one bit per cycle without pauses."
+    },
+    "answer": {
+      "he": "3. מרחק חפיפה חוקי דורש שהסיומת של ההופעה הראשונה תתאים לקידומת השנייה; בלי חפיפה המרחק הוא אורך הרצף.",
+      "en": "3. A legal overlap requires the first occurrence's suffix to equal the second's prefix; without overlap the gap equals pattern length."
+    },
+    "takeaway": {
+      "he": "סיומות וקידומות מגבילות את קצב הזיהויים האפשרי.",
+      "en": "Suffixes and prefixes constrain the maximum possible detection rate."
+    }
+  },
+  {
+    "id": "quick-hw-220",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-207"
+    ],
+    "title": {
+      "he": "בועת קבלה אינה ביט אפס ברצף",
+      "en": "An acceptance bubble is not a zero bit"
+    },
+    "prompt": {
+      "he": "גלאי חופף 0101 מקבל מדגמי [Valid,ביט]: [[1, 0], [0, 1], [1, 1], [1, 0], [1, 1]]. במחזור לא תקף המצב מוחזק והפלט 0. באילו מחזורי שעון פיזיים, ממוספרים מ־1, יופק פולס? המצב בתחילה ריק.",
+      "en": "An overlapping 0101 detector receives [Valid,bit] samples: [[1, 0], [0, 1], [1, 1], [1, 0], [1, 1]]. On invalid cycles state holds and output is 0. At which physical clock cycles, numbered from 1, does a pulse occur? Start with empty history."
+    },
+    "answer": {
+      "he": "[5]. רק דגימות תקפות מצטרפות לרצף, אבל הפולס ממוקם על ציר מחזורי השעון המקורי.",
+      "en": "[5]. Only valid samples extend the pattern, but pulses are placed on the original clock-cycle timeline."
+    },
+    "takeaway": {
+      "he": "רצף סיביות מתקבלות וציר מחזורי השעון אינם אותו ציר.",
+      "en": "The accepted-bit sequence and physical clock timeline are different axes."
+    }
+  },
+  {
+    "id": "quick-hw-221",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-218"
+    ],
+    "title": {
+      "he": "ערך זהה אינו אותה עסקה",
+      "en": "The same value is not the same transaction"
+    },
+    "prompt": {
+      "he": "קורא טביעות אצבע מקבל אותו ערך שוב ושוב. Valid לאורך 3 מחזורים הוא [1, 1, 1]. בכל Valid=1 מתקבלת דגימה חדשה, גם ללא שינוי בנתון. כמה דגימות התקבלו?",
+      "en": "A fingerprint reader presents the same value repeatedly. Valid over 3 cycles is [1, 1, 1]. Each Valid=1 accepts a new sample even without a data change. How many samples are accepted?"
+    },
+    "answer": {
+      "he": "3. Valid מתאר קבלה; נתון זהה יכול לייצג כמה דגימות נפרדות.",
+      "en": "3. Valid defines acceptance; identical data may represent several distinct samples."
+    },
+    "takeaway": {
+      "he": "מספר דגימות נקבע לפי Valid ולא לפי שינוי בנתון.",
+      "en": "Valid, not data transitions, determines the sample count."
+    }
+  },
+  {
+    "id": "quick-hw-222",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-218"
+    ],
+    "title": {
+      "he": "בועת Valid אינה אי־התאמה",
+      "en": "A Valid bubble is not a mismatch"
+    },
+    "prompt": {
+      "he": "מונה רצף התאמות מתחיל ב־0, מול ערך שמור 5. מדגמים [Valid,נתון] הם [[1, 5], [0, 2], [1, 5]]. אי־התאמה תקפה מאפסת; Valid=0 מקפיא. מה המונה בסוף?",
+      "en": "A matching-streak counter starts at 0 with reference 5. Samples [Valid,data] are [[1, 5], [0, 2], [1, 5]]. A valid mismatch resets; Valid=0 holds. What is the final count?"
+    },
+    "answer": {
+      "he": "2. דגימה לא תקפה אינה שוברת רצף של דגימות תקפות; רק אי־התאמה תקפה מאפסת.",
+      "en": "2. An invalid cycle does not break a streak of accepted samples; only an accepted mismatch resets it."
+    },
+    "takeaway": {
+      "he": "רצף דגימות תקפות שונה מרצף מחזורי שעון.",
+      "en": "A streak of accepted samples differs from a streak of clock cycles."
+    }
+  },
+  {
+    "id": "quick-hw-223",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-218"
+    ],
+    "title": {
+      "he": "התאמה כפולה אינה ספירה כפולה",
+      "en": "Two equal references do not double-count"
+    },
+    "prompt": {
+      "he": "שני ערכים שמורים הם [5, 5]. מדגמים [Valid,נתון] הם [[1, 5], [1, 2]]. משווים לשניהם במקביל, ומקבלים הצלחה אם לפחות השוואה אחת שווה. כמה הצלחות תקפות יש?",
+      "en": "Two stored references are [5, 5]. Samples [Valid,data] are [[1, 5], [1, 2]]. Compare both in parallel and accept a match if either equals the sample. How many valid matches occur?"
+    },
+    "answer": {
+      "he": "1. מחברים ב־OR את שתי תוצאות השוויון, ומסננים באמצעות Valid; לא סופרים אותה דגימה פעמיים.",
+      "en": "1. OR the equality results and qualify with Valid; never count one sample twice."
+    },
+    "takeaway": {
+      "he": "OR בין התאמות נותן הצלחה אחת לכל דגימה.",
+      "en": "OR of equality checks yields one success per sample."
+    }
+  },
+  {
+    "id": "quick-hw-224",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-208"
+    ],
+    "title": {
+      "he": "משימה מאוחרת אינה חלק מהצילום",
+      "en": "Later tasks are outside the snapshot"
+    },
+    "prompt": {
+      "he": "משימות התקבלו לפי הסדר [1, 2, 3]. לחיצת snapshot הייתה אחרי 2 הקבלות. המשימות שהושלמו הן [1, 3]. אילו תגיות מה־snapshot עדיין חסרות, בסדר עולה? התגיות ייחודיות.",
+      "en": "Tasks were accepted in order [1, 2, 3]. A snapshot was taken after 2 acceptances. Completed tasks are [1, 3]. Which snapshot tags are still missing, sorted ascending? Tags are unique."
+    },
+    "answer": {
+      "he": "[2]. צילום קובע קבוצת תגיות קבועה; השלמת משימה מאוחרת אינה משלימה תגית חסרה מהצילום.",
+      "en": "[2]. A snapshot fixes the tag set; finishing a later task cannot replace a missing snapshot tag."
+    },
+    "takeaway": {
+      "he": "מחסום צילום עוקב אחר הקבוצה שנקבעה ברגע הלחיצה.",
+      "en": "A snapshot barrier tracks the set fixed at button time."
+    }
+  },
+  {
+    "id": "quick-hw-225",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-208"
+    ],
+    "title": {
+      "he": "האחרונה שהתקבלה אינה בהכרח האחרונה שסיימה",
+      "en": "Last accepted need not finish last"
+    },
+    "prompt": {
+      "he": "צילום משימות מכיל תגיות ['A', 'B']; זמני השלמה מוחלטים הם {'A': 9, 'B': 4}. ניתן להשלים שלא לפי סדר. מה הזמן המוקדם ביותר שבו כל הצילום הושלם?",
+      "en": "A task snapshot contains tags ['A', 'B']; absolute completion times are {'A': 9, 'B': 4}. Completion may be out of order. What is the earliest time when the entire snapshot is complete?"
+    },
+    "answer": {
+      "he": "9. ממתינים לזמן ההשלמה המרבי בקבוצת הצילום, בלי להניח שסדר הקבלה הוא סדר ההשלמה.",
+      "en": "9. Wait for the latest completion within the snapshot, without assuming acceptance order equals completion order."
+    },
+    "takeaway": {
+      "he": "תגיות מאפשרות לזהות חורים בסדר ההשלמה.",
+      "en": "Tags expose holes in completion order."
+    }
+  },
+  {
+    "id": "quick-hw-226",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-208"
+    ],
+    "title": {
+      "he": "ACK רלוונטי לקבוצת המתנה מסוימת",
+      "en": "An ACK belongs to a particular waiting set"
+    },
+    "prompt": {
+      "he": "ממתינים לצילום תגיות [1, 2]. התקבלו ACK להשלמה עבור תגיות שונות [2, 3]. כל ACK מציין משימה שהושלמה, אבל חלקן מאוחרות מהצילום. כמה ACK רלוונטיים לצילום?",
+      "en": "A barrier waits for snapshot tags [1, 2]. Completion ACKs arrived for distinct tags [2, 3]. Some tasks were accepted after the snapshot. How many ACKs are relevant to this barrier?"
+    },
+    "answer": {
+      "he": "1. סופרים חיתוך קבוצות התגיות; ACK של משימה מחוץ לצילום אינו מקדם את המחסום הזה.",
+      "en": "1. Count the intersection of tag sets; an ACK outside the snapshot does not advance this barrier."
+    },
+    "takeaway": {
+      "he": "מונה כולל אינו תחליף לחברות בקבוצת הצילום.",
+      "en": "A total completion count does not replace snapshot membership."
+    }
+  },
+  {
+    "id": "quick-hw-227",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-209"
+    ],
+    "title": {
+      "he": "הזמן של חבילה שעדיין לא יצאה",
+      "en": "Time accumulated by an unfinished packet"
+    },
+    "prompt": {
+      "he": "חבילות נכנסו בזמנים [1, 3] וכולן עדיין בפנים בזמן 5. בכמה יחידות חבילה־זמן הן תרמו עד עכשיו לאינטגרל התפוסה?",
+      "en": "Packets arrived at times [1, 3] and all remain inside at time 5. How many packet-time units have they contributed so far to the occupancy integral?"
+    },
+    "answer": {
+      "he": "6. כל חבילה תורמת את הזמן שעבר מאז כניסתה; האינטגרל כולל גם חבילות שטרם יצאו.",
+      "en": "6. Each packet contributes elapsed time since entry; the integral includes packets that have not yet departed."
+    },
+    "takeaway": {
+      "he": "שטח מתחת לתפוסה כולל גם גיל של חבילות פעילות.",
+      "en": "Occupancy area includes the age of active packets."
+    }
+  },
+  {
+    "id": "quick-hw-228",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-209"
+    ],
+    "title": {
+      "he": "ממוצע של קבוצת חבילות שהושלמה",
+      "en": "Mean over a completed-packet cohort"
+    },
+    "prompt": {
+      "he": "רק החבילות שהושלמו נכללות בממוצע. זוגות [כניסה,יציאה] שלהן הם [[0, 4], [1, 7]]. מה זמן השהייה הממוצע? חבילות פעילות אינן כלולות. התוצאה שלמה.",
+      "en": "Only completed packets enter this mean. Their [arrival,departure] pairs are [[0, 4], [1, 7]]. What is mean residence time? Active packets are excluded. The result is an integer."
+    },
+    "answer": {
+      "he": "5. מסכמים יציאה פחות כניסה לכל חבילה שהושלמה ומחלקים במספר החבילות האלה.",
+      "en": "5. Sum departure minus arrival for each completed packet and divide by their count."
+    },
+    "takeaway": {
+      "he": "מגדירים את קבוצת החבילות לפני שמחלקים במונה.",
+      "en": "Define the packet cohort before dividing by a count."
+    }
+  },
+  {
+    "id": "quick-hw-229",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-209"
+    ],
+    "title": {
+      "he": "לשקלל את מספר החבילות בכל פורט",
+      "en": "Weight each port by packet count"
+    },
+    "prompt": {
+      "he": "בשני פורטים סכומי זמני השהייה הם [2, 18] ומספרי החבילות שהושלמו הם [1, 3]. מה הממוצע הכולל לכל חבילה? התוצאה שלמה.",
+      "en": "Two ports have residence-time sums [2, 18] and completed-packet counts [1, 3]. What is the overall mean per packet? The result is an integer."
+    },
+    "answer": {
+      "he": "5. מחלקים את סכום הזמנים הכולל במספר החבילות הכולל; ממוצע פשוט בין פורטים אינו משוקלל.",
+      "en": "5. Divide total residence time by total packet count; a simple mean of port means ignores weighting."
+    },
+    "takeaway": {
+      "he": "ממוצעים מקומיים דורשים משקלי מדגם כדי להתאחד נכון.",
+      "en": "Local means need sample weights to combine correctly."
+    }
+  },
+  {
+    "id": "quick-hw-230",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-220"
+    ],
+    "title": {
+      "he": "כתובת חדשה אינה משנה קריאה שכבר נדגמה",
+      "en": "A new address cannot alter a captured read"
+    },
+    "prompt": {
+      "he": "זיכרון סינכרוני מכיל בכתובות 0..3 את [3, 7, 2, 9]. בחזית קריאה נדגמה כתובת 0, ומיד אחריה הכתובת השתנתה ל־1. מה הנתון שנלכד ביציאה באותה חזית? אין כתיבה.",
+      "en": "A synchronous memory holds [3, 7, 2, 9] at addresses 0..3. A read edge samples address 0; just afterward the address changes to 1. Which value was captured at that edge? No write occurs."
+    },
+    "answer": {
+      "he": "3. הכתובת נדגמת בחזית; שינוי אחריה אינו מחליף בדיעבד את הדגימה שכבר נלכדה.",
+      "en": "3. The address is sampled at the edge; changing it afterward cannot replace the captured sample."
+    },
+    "takeaway": {
+      "he": "בקריאה סינכרונית הכתובת רלוונטית בחזית הקבלה.",
+      "en": "For synchronous reads, address matters at the accepting edge."
+    }
+  },
+  {
+    "id": "quick-hw-231",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-220"
+    ],
+    "title": {
+      "he": "הנתון מוחזק אבל Valid יורד",
+      "en": "Data holds while Valid falls"
+    },
+    "prompt": {
+      "he": "בזיכרון סינכרוני read_data הישן הוא 3. כש־re_en=0 היציאה מחזיקה ערך ו־Valid=0; כש־re_en=1 נלכד 7 ו־Valid=1. כעת re_en=0. מה [read_data,Valid] אחרי החזית?",
+      "en": "A synchronous memory's old read_data is 3. With re_en=0 it holds data and sets Valid=0; with re_en=1 it captures 7 and sets Valid=1. Now re_en=0. What is [read_data,Valid] after the edge?"
+    },
+    "answer": {
+      "he": "[3,0]. הנתון המוחזק אינו בהכרח תשובה חדשה; Valid מבדיל בין קבלה חדשה לבין ערך ישן.",
+      "en": "[3,0]. Held data need not be a new response; Valid distinguishes a new capture from an old value."
+    },
+    "takeaway": {
+      "he": "ערך ישן ביציאה אינו מעיד שהייתה קריאה חדשה.",
+      "en": "Old output data does not prove a new read occurred."
+    }
+  },
+  {
+    "id": "quick-hw-232",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-220"
+    ],
+    "title": {
+      "he": "שם המדיניות קובע מה נקרא בהתנגשות",
+      "en": "Collision policy determines the read value"
+    },
+    "prompt": {
+      "he": "אותה כתובת נקראת ונכתבת באותה חזית. ערכה הישן 2, והכתיבה מכניסה 9. המדיניות המפורשת היא read-first. מה נתון הקריאה? read-first מחזיר ישן, write-first מחזיר חדש.",
+      "en": "The same address is read and written at one edge. Its old value is 2 and the new write is 9. The explicit policy is read-first. What is read? Read-first returns old; write-first returns new."
+    },
+    "answer": {
+      "he": "2. הכרעת התנגשות אינה נגזרת מעצם המילה סינכרוני; משתמשים במדיניות שהוגדרה במפורש.",
+      "en": "2. Collision behavior is not implied by the word synchronous; use the explicitly specified policy."
+    },
+    "takeaway": {
+      "he": "מגדירים במפורש התנהגות קריאה וכתיבה לאותה כתובת.",
+      "en": "Define same-address read/write behavior explicitly."
+    }
+  },
+  {
+    "id": "quick-hw-233",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-220"
+    ],
+    "title": {
+      "he": "רגיסטר הקריאה אינו אחת ממילות הזיכרון",
+      "en": "The read register is not a stored memory word"
+    },
+    "prompt": {
+      "he": "בונים ארבע מילות זיכרון ברוחב 8 ביטים. בנוסף, מספר רגיסטרי היציאה ברוחב מילה הוא 1. מתעלמים מ־Valid ובקרה. כמה FF לאחסון נתונים דרושים?",
+      "en": "Build four memory words, each 8 bits wide, plus 1 word-wide output registers. Ignore Valid and control. How many data-storage FFs are required?"
+    },
+    "answer": {
+      "he": "40. יש ארבע מילות אחסון ועוד כל רגיסטר יציאה שנדרש בנפרד; כל ביט דורש FF במימוש זה.",
+      "en": "40. Count four stored words plus each separately required output register; each bit requires an FF in this implementation."
+    },
+    "takeaway": {
+      "he": "סופרים בנפרד את מערך הנתונים ואת אוגרי היציאה.",
+      "en": "Count the data array and output registers separately."
+    }
+  },
+  {
+    "id": "quick-hw-234",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-220"
+    ],
+    "title": {
+      "he": "כתיבה מפעילה רק מילה אחת",
+      "en": "A write enables only one word"
+    },
+    "prompt": {
+      "he": "בזיכרון בן ארבע כתובות, wr_addr=0 ו־wr_en=1. מה ערכה העשרוני של מסכת ה־enable בת 4 ביטים, כשביט i מפעיל כתובת i?",
+      "en": "In a four-address memory, wr_addr=0 and wr_en=1. What is the decimal 4-bit enable mask, where bit i enables address i?"
+    },
+    "answer": {
+      "he": "1. מפענח מפעיל ביט יחיד בכתובת הנבחרת רק כאשר כתיבה מאופשרת.",
+      "en": "1. The decoder activates exactly the selected address bit only when writing is enabled."
+    },
+    "takeaway": {
+      "he": "פענוח כתובת חייב להיות מגודר גם ב־write enable.",
+      "en": "Address decoding must also be qualified by write enable."
+    }
+  },
+  {
+    "id": "quick-hw-235",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-176"
+    ],
+    "title": {
+      "he": "גם שחרור איפוס כפוף לתזמון",
+      "en": "Reset release has timing constraints too"
+    },
+    "prompt": {
+      "he": "FF דורש ששחרור איפוס יקדים חזית פעילה בלפחות 3 ns, כולל שוויון. חזיתות באות בכפולות של 10 ns, והאיפוס משתחרר בזמן 8 ns. מה החזית הראשונה שמקיימת את חוזה ה־recovery? מתעלמים מ־removal.",
+      "en": "An FF requires reset release at least 3 ns before an active edge, equality allowed. Edges occur at multiples of 10 ns; reset releases at 8 ns. What is the first edge satisfying recovery? Ignore removal."
+    },
+    "answer": {
+      "he": "20. שחרור האיפוס אינו נתון רגיל, אך גם לו תנאי תזמון: מחפשים חזית שאינה קודמת לזמן השחרור ועוד recovery.",
+      "en": "20. Reset release is not ordinary data, but it has timing constraints too: find an edge no earlier than release plus recovery."
+    },
+    "takeaway": {
+      "he": "תזמון בקרה אסינכרונית דורש חוזה נפרד מתזמון הנתונים.",
+      "en": "Asynchronous control timing needs its own contract, separate from data timing."
+    }
+  },
+  {
+    "id": "quick-hw-236",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-034"
+    ],
+    "title": {
+      "he": "בוחרים יחד את הסכום והנשא",
+      "en": "Select sum and carry together"
+    },
+    "prompt": {
+      "he": "מחבר carry-select מחבר A=3 ו־B=1, כל אחד 4 ביטים. מחלקים לשתי קבוצות של 2 ביטים, עם carry-in כללי אפס. הקבוצה הגבוהה מחשבת מראש עם נשא 0 ועם 1. מה [שני ביטי סכום גבוהים כערך עשרוני,נשא סופי] אחרי בחירה לפי הקבוצה הנמוכה?",
+      "en": "A carry-select adder adds 4-bit A=3 and B=1 in two 2-bit groups, with initial carry-in zero. The high group precomputes carry-in 0 and 1. What is [high two sum bits as decimal,final carry] after selection by the low group?"
+    },
+    "answer": {
+      "he": "[1,0]. מחשבים נשא משני הביטים הנמוכים ובוחרים בעזרתו את זוג תוצאת הסכום והנשא הגבוהים; אסור לבחור אותם מנתיבי קדם־חישוב שונים.",
+      "en": "[1,0]. Compute carry from the low two bits and use it to select both high sum and high carry; never mix results from different precomputed branches."
+    },
+    "takeaway": {
+      "he": "ב־carry-select בחירת נתיב שגוי יכולה לפגוע בסכום או בנשא בנפרד.",
+      "en": "In carry-select, the wrong branch can corrupt sum and carry independently."
+    }
+  },
+  {
+    "id": "quick-hw-237",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-034"
+    ],
+    "title": {
+      "he": "העברת נשא בכל קבוצת הטורים",
+      "en": "Carry propagation across a whole group"
+    },
+    "prompt": {
+      "he": "מחברים מילים ברוחב 4: A=6, B=9. מגדירים G כנשא החוצה עם carry-in=0, ו־P=1 רק אם הנשיאה החוצה שווה ל־carry-in עבור שתי אפשרויותיו. מה [P,G] של כל הקבוצה?",
+      "en": "Add width-4 words A=6 and B=9. G is carry-out with carry-in=0; P=1 only if carry-out equals carry-in for both possible inputs. What is the whole group's [P,G]?"
+    },
+    "answer": {
+      "he": "[1,0]. G נבדק עם נשא כניסה אפס. הקבוצה מעבירה נשא רק כשסכומה ללא נשא הוא בדיוק 2^W-1.",
+      "en": "[1,0]. Evaluate G with carry-in zero. The group propagates only when its sum without carry-in is exactly 2^W-1."
+    },
+    "takeaway": {
+      "he": "העברת נשא של קבוצה דורשת מעבר דרך כל הטורים שלה.",
+      "en": "Group propagation requires propagation through every column."
+    }
+  },
+  {
+    "id": "quick-hw-238",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-215"
+    ],
+    "title": {
+      "he": "רוחב סכום של כניסות שאינן באותו רוחב",
+      "en": "Width of a sum with unequal input widths"
+    },
+    "prompt": {
+      "he": "מחברים מספר בלתי מסומן בן 2 ביטים למספר בלתי מסומן בן 4 ביטים. מה רוחב הפלט המזערי ששומר כל סכום אפשרי ללא גלישה?",
+      "en": "Add an unsigned 2-bit number to an unsigned 4-bit number. What minimum output width preserves every possible sum without overflow?"
+    },
+    "answer": {
+      "he": "5. מוצאים את סכום שני הערכים המרביים ואת מספר הביטים הדרוש לייצוגו.",
+      "en": "5. Find the sum of the two maximum inputs and the bits needed to represent it."
+    },
+    "takeaway": {
+      "he": "גוזרים רוחב מהערך המרבי, בלי לקטום נשא.",
+      "en": "Derive width from the maximum value without truncating carry."
+    }
+  },
+  {
+    "id": "quick-hw-239",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-180"
+    ],
+    "title": {
+      "he": "ממוצע בעיגול כלפי מעלה",
+      "en": "A mean rounded upward"
+    },
+    "prompt": {
+      "he": "מחשבים ממוצע של מספרים בלתי מסומנים A=2, B=5, עם חיבור ברוחב מספיק. נדרש עיגול כלפי מעלה. מה הפלט השלם?",
+      "en": "Average unsigned A=2 and B=5 using a sufficiently wide sum. Round upward. What integer is output?"
+    },
+    "answer": {
+      "he": "4. לסכום אי־זוגי מוסיפים אחד לפני חלוקה ב־2; עיגול כלפי מטה נותן תוצאה שונה.",
+      "en": "4. For an odd sum, add one before dividing by 2; rounding downward produces a different result."
+    },
+    "takeaway": {
+      "he": "רוחב מספיק ועיגול מוגדר הם שני תנאים נפרדים.",
+      "en": "Sufficient width and defined rounding are separate requirements."
+    }
+  },
+  {
+    "id": "quick-hw-240",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-180"
+    ],
+    "title": {
+      "he": "בחצי בוחרים את הזוגי",
+      "en": "At a half choose the even result"
+    },
+    "prompt": {
+      "he": "ממוצע A=2, B=3 מעוגל לשלם הקרוב; בדיוק בחצי בוחרים שלם זוגי. החיבור אינו גולש. מה הפלט?",
+      "en": "Average A=2 and B=3, rounding to nearest integer and breaking exact-half ties toward even. Addition does not overflow. What is the output?"
+    },
+    "answer": {
+      "he": "2. בסכום אי־זוגי שתי האפשרויות במרחק חצי; בוחרים את הזוגית מביניהן.",
+      "en": "2. For an odd sum, both neighboring integers are half a unit away; select the even one."
+    },
+    "takeaway": {
+      "he": "אותו סכום דורש תוספת שונה בהתאם לכלל העיגול.",
+      "en": "The rounding rule determines whether the truncated result needs incrementing."
+    }
+  },
+  {
+    "id": "quick-hw-241",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-181"
+    ],
+    "title": {
+      "he": "ספרת יחידות אינה חיתוך בינארי",
+      "en": "A units digit is not binary truncation"
+    },
+    "prompt": {
+      "he": "קלט BCD חוקי מייצג ספרה 4. מחזירים 3 פעמים הספרה בשתי ספרות BCD. מה ספרת היחידות העשרונית?",
+      "en": "A valid BCD input represents digit 4. Return 3 times it as two BCD digits. What is the decimal units digit?"
+    },
+    "answer": {
+      "he": "2. ספרת היחידות היא שארית 3*d בחלוקה ב־10; היא אינה ארבעת הביטים הנמוכים של המכפלה.",
+      "en": "2. The units digit is the remainder of 3*d modulo 10, not the product's low four bits."
+    },
+    "takeaway": {
+      "he": "BCD דורש חישוב ספרות עשרוניות ולא רק חיתוך לביטים.",
+      "en": "BCD requires decimal-digit arithmetic, not just bit truncation."
+    }
+  },
+  {
+    "id": "quick-hw-242",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-181"
+    ],
+    "title": {
+      "he": "גם עשרות יכולות להגיע לשתיים",
+      "en": "The tens digit can reach two"
+    },
+    "prompt": {
+      "he": "קלט BCD חוקי מייצג ספרה 3. מחזירים 3 פעמים הספרה בשתי ספרות BCD. מה ספרת העשרות העשרונית?",
+      "en": "A valid BCD input represents digit 3. Return 3 times it as two BCD digits. What is the decimal tens digit?"
+    },
+    "answer": {
+      "he": "0. ספרת העשרות היא החלק השלם של 3*d חלקי 10; היא יכולה להיות גם 2.",
+      "en": "0. The tens digit is the integer part of 3*d divided by 10; it may equal 2."
+    },
+    "takeaway": {
+      "he": "טווח הקלט קובע כמה ספרות BCD דרושות בפלט.",
+      "en": "Input range determines how many BCD output digits are needed."
+    }
+  },
+  {
+    "id": "quick-hw-243",
+    "topic": "gates",
+    "interviewIds": [
+      "PREP-181"
+    ],
+    "title": {
+      "he": "תחום BCD קובע אילו שורות מחייבות",
+      "en": "The BCD domain determines required rows"
+    },
+    "prompt": {
+      "he": "למכפיל BCD ב־3 מובטח שקלט בן 4 ביטים הוא רק 0..9. כמה מילות קלט מתוך 16 אינן מכוסות בהבטחה?",
+      "en": "A BCD times-3 circuit is promised a 4-bit input in 0..9. How many of the 16 input words lie outside the promise?"
+    },
+    "answer": {
+      "he": "6. מבין 16 צירופי ארבעה ביטים רק עשרה הם ספרות BCD; הגדרת התנהגות לשישה הנותרים היא חוזה נוסף.",
+      "en": "6. Of 16 four-bit patterns, only ten are BCD digits; defining the other six requires an additional contract."
+    },
+    "takeaway": {
+      "he": "קלט מחוץ לתחום אינו דוגמה נגדית לחוזה המובטח.",
+      "en": "An input outside the domain does not refute a promised-domain contract."
+    }
+  },
+  {
+    "id": "quick-hw-244",
+    "topic": "sequential",
+    "interviewIds": [
+      "PREP-191"
+    ],
+    "title": {
+      "he": "עוצרים באחד ולא באפס",
+      "en": "Stop at one instead of zero"
+    },
+    "prompt": {
+      "he": "למציאת floor(log2(x)) עבור x=1>0, מזיזים ימינה עד 1 וסופרים הזזות בלבד. מה המונה בסוף?",
+      "en": "To find floor(log2(x)) for x=1>0, shift right until reaching 1 and count shifts only. What is the final count?"
+    },
+    "answer": {
+      "he": "0. מספר ההזזות עד 1 שווה לאינדקס האחד הגבוה ביותר; אין לספור את ההזזה שהייתה מוחקת גם אותו.",
+      "en": "0. The shifts needed to reach 1 equal the highest-one index; do not count a shift that would erase it."
+    },
+    "takeaway": {
+      "he": "תנאי העצירה קובע אם סופרים אורך מילה או אינדקס ביט.",
+      "en": "The stopping condition distinguishes bit length from a bit index."
+    }
+  },
+  {
+    "id": "quick-hw-245",
+    "topic": "bits",
+    "interviewIds": [
+      "PREP-191"
+    ],
+    "title": {
+      "he": "רוחב אינדקס האחד הגבוה",
+      "en": "Width of the highest-one index"
+    },
+    "prompt": {
+      "he": "למילה בלתי מסומנת ברוחב 4 ו־x>0, מחזירים floor(log2(x)). כמה ביטי פלט מספיקים לכל התוצאות? אינדיקציית x=0 נשמרת בנפרד.",
+      "en": "For a width-4 unsigned word with x>0, return floor(log2(x)). How many output bits cover every result? Validity for x=0 is handled separately."
+    },
+    "answer": {
+      "he": "2. הערכים האפשריים הם 0 עד W-1; רוחב הפלט מקודד אינדקס ולא את המילה כולה.",
+      "en": "2. Possible results range from 0 to W-1; output width encodes an index, not the entire word."
+    },
+    "takeaway": {
+      "he": "קידוד מיקום דורש פחות ביטים מהמילה שאותה הוא מתאר.",
+      "en": "Encoding a position needs fewer bits than the word it describes."
+    }
+  },
+  {
+    "id": "quick-hw-246",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-179"
+    ],
+    "title": {
+      "he": "ביט המנה נובע מהשארית הקודמת",
+      "en": "The quotient bit comes from the old remainder"
+    },
+    "prompt": {
+      "he": "בחלוקה סדרתית ב־5, השארית הקודמת היא 0, וביט חדש 1 נצמד מימין. הספרה החדשה במנה היא floor((2r+b)/5). מה ערכה?",
+      "en": "In serial division by 5, the old remainder is 0 and new bit 1 is appended on the right. The next quotient bit is floor((2r+b)/5). What is it?"
+    },
+    "answer": {
+      "he": "0. השארית הקודמת קטנה מ־5, ולכן 2r+b לכל היותר 9 והספרה החדשה היא רק 0 או 1.",
+      "en": "0. The old remainder is below 5, so 2r+b is at most 9 and the next quotient digit is only 0 or 1."
+    },
+    "takeaway": {
+      "he": "בחילוק ארוך מעדכנים מנה ושארית מאותה קידומת.",
+      "en": "Long division updates quotient and remainder from the same prefix."
+    }
+  },
+  {
+    "id": "quick-hw-247",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-179"
+    ],
+    "title": {
+      "he": "מנה מצטברת אחרי כמה ביטים",
+      "en": "The accumulated quotient after several bits"
+    },
+    "prompt": {
+      "he": "ביטים 1101 נקלטים MSB תחילה, כולל אפסים מובילים, ומחלקים ב־5 תוך שמירת מנה ושארית. מה המנה העשרונית לאחר כל הביטים?",
+      "en": "Bits 1101 arrive MSB first, including leading zeros. A divider by 5 stores quotient and remainder. What is the decimal quotient after all bits?"
+    },
+    "answer": {
+      "he": "2. בכל צעד נשמרת הזהות קידומת=5*מנה+שארית; אפסים מובילים אינם משנים את הערך.",
+      "en": "2. Each step preserves prefix=5*quotient+remainder; leading zeros do not change the value."
+    },
+    "takeaway": {
+      "he": "האינווריאנט של חילוק נשמר בכל קידומת ולא רק בסוף.",
+      "en": "The division invariant holds for every prefix, not only the final word."
+    }
+  },
+  {
+    "id": "quick-hw-248",
+    "topic": "states",
+    "interviewIds": [
+      "PREP-179"
+    ],
+    "title": {
+      "he": "גודל מצב השארית אינו גודל המנה",
+      "en": "Remainder state width is not quotient width"
+    },
+    "prompt": {
+      "he": "מחלק סדרתי ב־5 שומר רק את השארית הלא שלילית. כמה FF לפחות דרושים לקודד את כל השאריות האפשריות בינארית? המנה מועברת בנפרד.",
+      "en": "A serial divider by 5 stores only its nonnegative remainder. How many FFs are needed for binary encoding of every possible remainder? Quotient data travels separately."
+    },
+    "answer": {
+      "he": "3. מחלק d דורש d שאריות שונות, 0 עד d-1; מספר הביטים הוא ceil(log2(d)).",
+      "en": "3. A divisor d requires d distinct remainder states, 0 through d-1; binary width is ceil(log2(d))."
+    },
+    "takeaway": {
+      "he": "מספר השאריות קבוע גם כשאורך זרם הקלט גדל.",
+      "en": "The number of remainder states stays fixed as the input stream grows."
+    }
+  },
+  {
+    "id": "quick-hw-249",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-193"
+    ],
+    "title": {
+      "he": "טריגר בזמן פולס יכול להיעלם",
+      "en": "A trigger during a pulse may disappear"
+    },
+    "prompt": {
+      "he": "חד־יציב שאינו ניתן לאתחול מחדש מפיק פולס ברוחב 5. טריגרים בזמנים [0, 2, 5]; טריגר בזמן פולס נזנח, ובדיוק בסיומו מתקבל. כמה פולסים מתחילים? המצב בתחילה נמוך.",
+      "en": "A non-retriggerable monostable emits width-5 pulses. Triggers occur at [0, 2, 5]; triggers during a pulse are ignored, while one exactly at its end is accepted. How many pulses start? Initially low."
+    },
+    "answer": {
+      "he": "2. לא כל טריגר יוצר פולס: טריגרים בתוך חלון פעיל אינם מזיזים את סיומו בחד־יציב זה.",
+      "en": "2. Not every trigger starts a pulse: triggers within an active window do not move its end in this monostable."
+    },
+    "takeaway": {
+      "he": "תגובה לטריגר תלויה בהגדרת retrigger, לא רק במתח הקלט.",
+      "en": "Trigger response depends on retrigger semantics, not just input voltage."
+    }
+  },
+  {
+    "id": "quick-hw-250",
+    "topic": "electronics",
+    "interviewIds": [
+      "PREP-193"
+    ],
+    "title": {
+      "he": "הטריגר האחרון דוחה את סיום הפולס",
+      "en": "The final trigger postpones pulse end"
+    },
+    "prompt": {
+      "he": "חד־יציב ניתן לאתחול מחדש מפיק רוחב 5. הטריגרים הם [0, 2, 4], וכל מרווח קטן מהרוחב, כך שהפלט אינו נופל ביניהם. מתי הפולס מסתיים?",
+      "en": "A retriggerable monostable has width 5. Triggers are [0, 2, 4], with every gap smaller than the width, so output never falls between them. When does the pulse end?"
+    },
+    "answer": {
+      "he": "9. כל טריגר דוחה את הסיום לרוחב מלא אחריו; בשרשרת ללא הפסקה קובע הטריגר האחרון.",
+      "en": "9. Each trigger postpones the end by a full width; in a continuous chain the last trigger determines the end."
+    },
+    "takeaway": {
+      "he": "בחד־יציב ניתן לאתחול מחדש שומרים את מועד הטריגר האחרון.",
+      "en": "A retriggerable monostable retains the latest trigger time."
+    }
+  }
+]

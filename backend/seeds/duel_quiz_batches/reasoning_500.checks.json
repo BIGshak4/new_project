@@ -1,0 +1,3388 @@
+[
+  {
+    "key": "quick-sw-201-v1",
+    "task": "nested_joint",
+    "inputs": {
+      "n": 3,
+      "a": 2,
+      "b": 1
+    },
+    "options": [
+      "1",
+      "1/2",
+      "1/12",
+      "0"
+    ],
+    "expected": "1/12",
+    "method": "Multiply conditional probabilities; independently enumerate weighted outcomes.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-201-v2",
+    "task": "nested_joint",
+    "inputs": {
+      "n": 2,
+      "a": 0,
+      "b": 0
+    },
+    "options": [
+      "0",
+      "1",
+      "1/2",
+      "1/3"
+    ],
+    "expected": "1/3",
+    "method": "Multiply conditional probabilities; independently enumerate weighted outcomes.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-201-v3",
+    "task": "nested_joint",
+    "inputs": {
+      "n": 4,
+      "a": 3,
+      "b": 2
+    },
+    "options": [
+      "1/20",
+      "0",
+      "1",
+      "1/2"
+    ],
+    "expected": "1/20",
+    "method": "Multiply conditional probabilities; independently enumerate weighted outcomes.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-201-v4",
+    "task": "nested_joint",
+    "inputs": {
+      "n": 3,
+      "a": 1,
+      "b": 2
+    },
+    "options": [
+      "1/3",
+      "0",
+      "1",
+      "1/2"
+    ],
+    "expected": "0",
+    "method": "Multiply conditional probabilities; independently enumerate weighted outcomes.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-201-v5",
+    "task": "nested_joint",
+    "inputs": {
+      "n": 5,
+      "a": 5,
+      "b": 5
+    },
+    "options": [
+      "1",
+      "1/2",
+      "1/36",
+      "0"
+    ],
+    "expected": "1/36",
+    "method": "Multiply conditional probabilities; independently enumerate weighted outcomes.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-202-v1",
+    "task": "nested_mean",
+    "inputs": {
+      "n": 4
+    },
+    "options": [
+      "0",
+      "2",
+      "4",
+      "1"
+    ],
+    "expected": "1",
+    "method": "Law of total expectation, checked by exact weighted outcome enumeration.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-202-v2",
+    "task": "nested_mean",
+    "inputs": {
+      "n": 2
+    },
+    "options": [
+      "1/2",
+      "0",
+      "1",
+      "2"
+    ],
+    "expected": "1/2",
+    "method": "Law of total expectation, checked by exact weighted outcome enumeration.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-202-v3",
+    "task": "nested_mean",
+    "inputs": {
+      "n": 6
+    },
+    "options": [
+      "6",
+      "3/2",
+      "0",
+      "3"
+    ],
+    "expected": "3/2",
+    "method": "Law of total expectation, checked by exact weighted outcome enumeration.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-202-v4",
+    "task": "nested_mean",
+    "inputs": {
+      "n": 1
+    },
+    "options": [
+      "1/2",
+      "1",
+      "1/4",
+      "0"
+    ],
+    "expected": "1/4",
+    "method": "Law of total expectation, checked by exact weighted outcome enumeration.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-202-v5",
+    "task": "nested_mean",
+    "inputs": {
+      "n": 8
+    },
+    "options": [
+      "0",
+      "4",
+      "8",
+      "2"
+    ],
+    "expected": "2",
+    "method": "Law of total expectation, checked by exact weighted outcome enumeration.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-203-v1",
+    "task": "modulo_fibers",
+    "inputs": {
+      "base": 5,
+      "m": 3
+    },
+    "options": [
+      "1",
+      "2",
+      "0",
+      "3"
+    ],
+    "expected": "1",
+    "method": "Count the exact fibers of the remainder map.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-203-v2",
+    "task": "modulo_fibers",
+    "inputs": {
+      "base": 6,
+      "m": 3
+    },
+    "options": [
+      "3",
+      "0",
+      "1",
+      "2"
+    ],
+    "expected": "0",
+    "method": "Count the exact fibers of the remainder map.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-203-v3",
+    "task": "modulo_fibers",
+    "inputs": {
+      "base": 7,
+      "m": 4
+    },
+    "options": [
+      "0",
+      "3",
+      "1",
+      "2"
+    ],
+    "expected": "1",
+    "method": "Count the exact fibers of the remainder map.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-203-v4",
+    "task": "modulo_fibers",
+    "inputs": {
+      "base": 8,
+      "m": 4
+    },
+    "options": [
+      "1",
+      "2",
+      "3",
+      "0"
+    ],
+    "expected": "0",
+    "method": "Count the exact fibers of the remainder map.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-203-v5",
+    "task": "modulo_fibers",
+    "inputs": {
+      "base": 9,
+      "m": 5
+    },
+    "options": [
+      "1",
+      "2",
+      "0",
+      "3"
+    ],
+    "expected": "1",
+    "method": "Count the exact fibers of the remainder map.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-204-v1",
+    "task": "rejection_cost",
+    "inputs": {
+      "base": 5,
+      "m": 7
+    },
+    "options": [
+      "92/21",
+      "50/21",
+      "71/21",
+      "29/21"
+    ],
+    "expected": "50/21",
+    "method": "Geometric stopping cost from exact accepted-pair count.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-204-v2",
+    "task": "rejection_cost",
+    "inputs": {
+      "base": 3,
+      "m": 4
+    },
+    "options": [
+      "5/4",
+      "17/4",
+      "9/4",
+      "13/4"
+    ],
+    "expected": "9/4",
+    "method": "Geometric stopping cost from exact accepted-pair count.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-204-v3",
+    "task": "rejection_cost",
+    "inputs": {
+      "base": 4,
+      "m": 5
+    },
+    "options": [
+      "47/15",
+      "17/15",
+      "62/15",
+      "32/15"
+    ],
+    "expected": "32/15",
+    "method": "Geometric stopping cost from exact accepted-pair count.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-204-v4",
+    "task": "rejection_cost",
+    "inputs": {
+      "base": 6,
+      "m": 9
+    },
+    "options": [
+      "2",
+      "3",
+      "1",
+      "4"
+    ],
+    "expected": "2",
+    "method": "Geometric stopping cost from exact accepted-pair count.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-204-v5",
+    "task": "rejection_cost",
+    "inputs": {
+      "base": 2,
+      "m": 3
+    },
+    "options": [
+      "14/3",
+      "8/3",
+      "11/3",
+      "5/3"
+    ],
+    "expected": "8/3",
+    "method": "Geometric stopping cost from exact accepted-pair count.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-205-v1",
+    "task": "nested_cdf",
+    "inputs": {
+      "n": 3,
+      "k": 0
+    },
+    "options": [
+      "1",
+      "1/2",
+      "25/48",
+      "0"
+    ],
+    "expected": "25/48",
+    "method": "Exact conditional counting of a cumulative event.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-205-v2",
+    "task": "nested_cdf",
+    "inputs": {
+      "n": 3,
+      "k": 1
+    },
+    "options": [
+      "0",
+      "1",
+      "1/2",
+      "19/24"
+    ],
+    "expected": "19/24",
+    "method": "Exact conditional counting of a cumulative event.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-205-v3",
+    "task": "nested_cdf",
+    "inputs": {
+      "n": 2,
+      "k": 2
+    },
+    "options": [
+      "1",
+      "0",
+      "1/2",
+      "1/3"
+    ],
+    "expected": "1",
+    "method": "Exact conditional counting of a cumulative event.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-205-v4",
+    "task": "nested_cdf",
+    "inputs": {
+      "n": 4,
+      "k": 1
+    },
+    "options": [
+      "1/2",
+      "107/150",
+      "0",
+      "1"
+    ],
+    "expected": "107/150",
+    "method": "Exact conditional counting of a cumulative event.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-205-v5",
+    "task": "nested_cdf",
+    "inputs": {
+      "n": 1,
+      "k": 0
+    },
+    "options": [
+      "1",
+      "1/2",
+      "3/4",
+      "0"
+    ],
+    "expected": "3/4",
+    "method": "Exact conditional counting of a cumulative event.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-206-v1",
+    "task": "right_neighbor",
+    "inputs": {
+      "n": 6
+    },
+    "options": [
+      "0",
+      "1",
+      "1/2",
+      "1/6"
+    ],
+    "expected": "1/6",
+    "method": "Fixed-order block count, checked against all seat permutations.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-206-v2",
+    "task": "right_neighbor",
+    "inputs": {
+      "n": 3
+    },
+    "options": [
+      "1/3",
+      "0",
+      "1",
+      "1/2"
+    ],
+    "expected": "1/3",
+    "method": "Fixed-order block count, checked against all seat permutations.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-206-v3",
+    "task": "right_neighbor",
+    "inputs": {
+      "n": 4
+    },
+    "options": [
+      "1/2",
+      "1/4",
+      "0",
+      "1"
+    ],
+    "expected": "1/4",
+    "method": "Fixed-order block count, checked against all seat permutations.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-206-v4",
+    "task": "right_neighbor",
+    "inputs": {
+      "n": 2
+    },
+    "options": [
+      "1",
+      "1/3",
+      "1/2",
+      "0"
+    ],
+    "expected": "1/2",
+    "method": "Fixed-order block count, checked against all seat permutations.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-206-v5",
+    "task": "right_neighbor",
+    "inputs": {
+      "n": 7
+    },
+    "options": [
+      "0",
+      "1",
+      "1/2",
+      "1/7"
+    ],
+    "expected": "1/7",
+    "method": "Fixed-order block count, checked against all seat permutations.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-207-v1",
+    "task": "overlapping_neighbors",
+    "inputs": {
+      "n": 5
+    },
+    "options": [
+      "1/20",
+      "1/25",
+      "1/5",
+      "1/4"
+    ],
+    "expected": "1/20",
+    "method": "Three-person block count and full permutation enumeration.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-207-v2",
+    "task": "overlapping_neighbors",
+    "inputs": {
+      "n": 3
+    },
+    "options": [
+      "1/2",
+      "1/6",
+      "1/9",
+      "1/3"
+    ],
+    "expected": "1/6",
+    "method": "Three-person block count and full permutation enumeration.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-207-v3",
+    "task": "overlapping_neighbors",
+    "inputs": {
+      "n": 4
+    },
+    "options": [
+      "1/4",
+      "1/3",
+      "1/12",
+      "1/16"
+    ],
+    "expected": "1/12",
+    "method": "Three-person block count and full permutation enumeration.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-207-v4",
+    "task": "overlapping_neighbors",
+    "inputs": {
+      "n": 6
+    },
+    "options": [
+      "1/36",
+      "1/6",
+      "1/5",
+      "1/30"
+    ],
+    "expected": "1/30",
+    "method": "Three-person block count and full permutation enumeration.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-207-v5",
+    "task": "overlapping_neighbors",
+    "inputs": {
+      "n": 7
+    },
+    "options": [
+      "1/42",
+      "1/49",
+      "1/7",
+      "1/6"
+    ],
+    "expected": "1/42",
+    "method": "Three-person block count and full permutation enumeration.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-208-v1",
+    "task": "agenda",
+    "inputs": {
+      "bye": 0,
+      "reverse": 0
+    },
+    "options": [
+      "no_winner",
+      "0",
+      "1",
+      "2"
+    ],
+    "expected": "0",
+    "method": "Enumerate the two pairwise rounds for each cycle orientation.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-208-v2",
+    "task": "agenda",
+    "inputs": {
+      "bye": 1,
+      "reverse": 0
+    },
+    "options": [
+      "2",
+      "no_winner",
+      "1",
+      "0"
+    ],
+    "expected": "1",
+    "method": "Enumerate the two pairwise rounds for each cycle orientation.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-208-v3",
+    "task": "agenda",
+    "inputs": {
+      "bye": 2,
+      "reverse": 0
+    },
+    "options": [
+      "0",
+      "1",
+      "no_winner",
+      "2"
+    ],
+    "expected": "2",
+    "method": "Enumerate the two pairwise rounds for each cycle orientation.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-208-v4",
+    "task": "agenda",
+    "inputs": {
+      "bye": 0,
+      "reverse": 1
+    },
+    "options": [
+      "0",
+      "1",
+      "2",
+      "no_winner"
+    ],
+    "expected": "0",
+    "method": "Enumerate the two pairwise rounds for each cycle orientation.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-208-v5",
+    "task": "agenda",
+    "inputs": {
+      "bye": 2,
+      "reverse": 1
+    },
+    "options": [
+      "no_winner",
+      "2",
+      "0",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Enumerate the two pairwise rounds for each cycle orientation.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-209-v1",
+    "task": "voting_margin",
+    "inputs": {
+      "m": 5,
+      "x": 1
+    },
+    "options": [
+      "2",
+      "5",
+      "3",
+      "4"
+    ],
+    "expected": "3",
+    "method": "Count sincere pairwise preferences across the six ranking classes.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-209-v2",
+    "task": "voting_margin",
+    "inputs": {
+      "m": 5,
+      "x": 4
+    },
+    "options": [
+      "4",
+      "2",
+      "5",
+      "3"
+    ],
+    "expected": "3",
+    "method": "Count sincere pairwise preferences across the six ranking classes.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-209-v3",
+    "task": "voting_margin",
+    "inputs": {
+      "m": 3,
+      "x": 0
+    },
+    "options": [
+      "3",
+      "4",
+      "2",
+      "5"
+    ],
+    "expected": "3",
+    "method": "Count sincere pairwise preferences across the six ranking classes.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-209-v4",
+    "task": "voting_margin",
+    "inputs": {
+      "m": 4,
+      "x": 2
+    },
+    "options": [
+      "3",
+      "0",
+      "1",
+      "2"
+    ],
+    "expected": "0",
+    "method": "Count sincere pairwise preferences across the six ranking classes.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-209-v5",
+    "task": "voting_margin",
+    "inputs": {
+      "m": 7,
+      "x": 5
+    },
+    "options": [
+      "2",
+      "5",
+      "3",
+      "4"
+    ],
+    "expected": "3",
+    "method": "Count sincere pairwise preferences across the six ranking classes.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-210-v1",
+    "task": "long_cycles",
+    "inputs": {
+      "n": 100,
+      "limit": 50
+    },
+    "options": [
+      "2",
+      "0",
+      "3",
+      "1"
+    ],
+    "expected": "1",
+    "method": "Disjoint-size lower bound with an attaining partition witness.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-210-v2",
+    "task": "long_cycles",
+    "inputs": {
+      "n": 12,
+      "limit": 4
+    },
+    "options": [
+      "2",
+      "3",
+      "1",
+      "4"
+    ],
+    "expected": "2",
+    "method": "Disjoint-size lower bound with an attaining partition witness.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-210-v3",
+    "task": "long_cycles",
+    "inputs": {
+      "n": 9,
+      "limit": 3
+    },
+    "options": [
+      "4",
+      "2",
+      "3",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Disjoint-size lower bound with an attaining partition witness.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-210-v4",
+    "task": "long_cycles",
+    "inputs": {
+      "n": 8,
+      "limit": 8
+    },
+    "options": [
+      "2",
+      "3",
+      "0",
+      "1"
+    ],
+    "expected": "0",
+    "method": "Disjoint-size lower bound with an attaining partition witness.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-210-v5",
+    "task": "long_cycles",
+    "inputs": {
+      "n": 15,
+      "limit": 6
+    },
+    "options": [
+      "3",
+      "1",
+      "4",
+      "2"
+    ],
+    "expected": "2",
+    "method": "Disjoint-size lower bound with an attaining partition witness.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-211-v1",
+    "task": "cycle_split",
+    "inputs": {
+      "length": 9
+    },
+    "options": [
+      "5",
+      "6",
+      "4",
+      "7"
+    ],
+    "expected": "5",
+    "method": "Minimax over every legal positive split.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-211-v2",
+    "task": "cycle_split",
+    "inputs": {
+      "length": 10
+    },
+    "options": [
+      "7",
+      "5",
+      "6",
+      "4"
+    ],
+    "expected": "5",
+    "method": "Minimax over every legal positive split.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-211-v3",
+    "task": "cycle_split",
+    "inputs": {
+      "length": 7
+    },
+    "options": [
+      "3",
+      "6",
+      "4",
+      "5"
+    ],
+    "expected": "4",
+    "method": "Minimax over every legal positive split.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-211-v4",
+    "task": "cycle_split",
+    "inputs": {
+      "length": 3
+    },
+    "options": [
+      "3",
+      "1",
+      "4",
+      "2"
+    ],
+    "expected": "2",
+    "method": "Minimax over every legal positive split.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-211-v5",
+    "task": "cycle_split",
+    "inputs": {
+      "length": 12
+    },
+    "options": [
+      "6",
+      "7",
+      "5",
+      "8"
+    ],
+    "expected": "6",
+    "method": "Minimax over every legal positive split.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-212-v1",
+    "task": "cycle_merge",
+    "inputs": {
+      "a": 3,
+      "b": 4
+    },
+    "options": [
+      "9",
+      "7",
+      "8",
+      "6"
+    ],
+    "expected": "7",
+    "method": "Trace an explicit pair of cycles after swapping their outgoing links.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-212-v2",
+    "task": "cycle_merge",
+    "inputs": {
+      "a": 1,
+      "b": 5
+    },
+    "options": [
+      "5",
+      "8",
+      "6",
+      "7"
+    ],
+    "expected": "6",
+    "method": "Trace an explicit pair of cycles after swapping their outgoing links.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-212-v3",
+    "task": "cycle_merge",
+    "inputs": {
+      "a": 2,
+      "b": 2
+    },
+    "options": [
+      "5",
+      "3",
+      "6",
+      "4"
+    ],
+    "expected": "4",
+    "method": "Trace an explicit pair of cycles after swapping their outgoing links.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-212-v4",
+    "task": "cycle_merge",
+    "inputs": {
+      "a": 4,
+      "b": 6
+    },
+    "options": [
+      "10",
+      "11",
+      "9",
+      "12"
+    ],
+    "expected": "10",
+    "method": "Trace an explicit pair of cycles after swapping their outgoing links.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-212-v5",
+    "task": "cycle_merge",
+    "inputs": {
+      "a": 1,
+      "b": 1
+    },
+    "options": [
+      "4",
+      "2",
+      "3",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Trace an explicit pair of cycles after swapping their outgoing links.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-213-v1",
+    "task": "necklaces",
+    "inputs": {
+      "n": 3
+    },
+    "options": [
+      "3",
+      "6",
+      "4",
+      "5"
+    ],
+    "expected": "4",
+    "method": "Burnside rotation count; independently enumerate canonical rotation representatives.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-213-v2",
+    "task": "necklaces",
+    "inputs": {
+      "n": 4
+    },
+    "options": [
+      "7",
+      "5",
+      "8",
+      "6"
+    ],
+    "expected": "6",
+    "method": "Burnside rotation count; independently enumerate canonical rotation representatives.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-213-v3",
+    "task": "necklaces",
+    "inputs": {
+      "n": 5
+    },
+    "options": [
+      "8",
+      "9",
+      "7",
+      "10"
+    ],
+    "expected": "8",
+    "method": "Burnside rotation count; independently enumerate canonical rotation representatives.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-213-v4",
+    "task": "necklaces",
+    "inputs": {
+      "n": 6
+    },
+    "options": [
+      "16",
+      "14",
+      "15",
+      "13"
+    ],
+    "expected": "14",
+    "method": "Burnside rotation count; independently enumerate canonical rotation representatives.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-213-v5",
+    "task": "necklaces",
+    "inputs": {
+      "n": 7
+    },
+    "options": [
+      "19",
+      "22",
+      "20",
+      "21"
+    ],
+    "expected": "20",
+    "method": "Burnside rotation count; independently enumerate canonical rotation representatives.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-214-v1",
+    "task": "ring_candidates",
+    "inputs": {
+      "bound": 10,
+      "distances": [
+        6,
+        9
+      ]
+    },
+    "options": [
+      "3",
+      "1",
+      "4",
+      "2"
+    ],
+    "expected": "2",
+    "method": "Divisibility constraints over every candidate ring size.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-214-v2",
+    "task": "ring_candidates",
+    "inputs": {
+      "bound": 12,
+      "distances": [
+        8,
+        12
+      ]
+    },
+    "options": [
+      "3",
+      "4",
+      "2",
+      "5"
+    ],
+    "expected": "3",
+    "method": "Divisibility constraints over every candidate ring size.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-214-v3",
+    "task": "ring_candidates",
+    "inputs": {
+      "bound": 8,
+      "distances": [
+        5,
+        10
+      ]
+    },
+    "options": [
+      "4",
+      "2",
+      "3",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Divisibility constraints over every candidate ring size.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-214-v4",
+    "task": "ring_candidates",
+    "inputs": {
+      "bound": 10,
+      "distances": [
+        12,
+        18
+      ]
+    },
+    "options": [
+      "3",
+      "6",
+      "4",
+      "5"
+    ],
+    "expected": "4",
+    "method": "Divisibility constraints over every candidate ring size.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-214-v5",
+    "task": "ring_candidates",
+    "inputs": {
+      "bound": 5,
+      "distances": [
+        4,
+        8
+      ]
+    },
+    "options": [
+      "4",
+      "2",
+      "5",
+      "3"
+    ],
+    "expected": "3",
+    "method": "Divisibility constraints over every candidate ring size.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-215-v1",
+    "task": "ferry",
+    "inputs": {
+      "w": 3,
+      "s": 3,
+      "forward": [
+        2
+      ],
+      "backward": [
+        1
+      ]
+    },
+    "options": [
+      "-1",
+      "1",
+      "3",
+      "5"
+    ],
+    "expected": "-1",
+    "method": "Breadth-first search; independently check shortest paths by repeated reachable-set expansion.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-215-v2",
+    "task": "ferry",
+    "inputs": {
+      "w": 1,
+      "s": 1,
+      "forward": [
+        2
+      ],
+      "backward": [
+        1
+      ]
+    },
+    "options": [
+      "3",
+      "1",
+      "2",
+      "0"
+    ],
+    "expected": "1",
+    "method": "Breadth-first search; independently check shortest paths by repeated reachable-set expansion.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-215-v3",
+    "task": "ferry",
+    "inputs": {
+      "w": 2,
+      "s": 2,
+      "forward": [
+        2
+      ],
+      "backward": [
+        1
+      ]
+    },
+    "options": [
+      "0",
+      "3",
+      "1",
+      "2"
+    ],
+    "expected": "1",
+    "method": "Breadth-first search; independently check shortest paths by repeated reachable-set expansion.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-215-v4",
+    "task": "ferry",
+    "inputs": {
+      "w": 3,
+      "s": 3,
+      "forward": [
+        1,
+        2
+      ],
+      "backward": [
+        1,
+        2
+      ]
+    },
+    "options": [
+      "8",
+      "6",
+      "9",
+      "7"
+    ],
+    "expected": "7",
+    "method": "Breadth-first search; independently check shortest paths by repeated reachable-set expansion.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-215-v5",
+    "task": "ferry",
+    "inputs": {
+      "w": 0,
+      "s": 3,
+      "forward": [
+        2
+      ],
+      "backward": [
+        1
+      ]
+    },
+    "options": [
+      "3",
+      "4",
+      "2",
+      "5"
+    ],
+    "expected": "3",
+    "method": "Breadth-first search; independently check shortest paths by repeated reachable-set expansion.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-216-v1",
+    "task": "safe_bank",
+    "inputs": {
+      "w": 3,
+      "s": 3
+    },
+    "options": [
+      "15",
+      "13",
+      "14",
+      "12"
+    ],
+    "expected": "13",
+    "method": "Disjoint case count for the stated logical implication.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-216-v2",
+    "task": "safe_bank",
+    "inputs": {
+      "w": 2,
+      "s": 3
+    },
+    "options": [
+      "10",
+      "13",
+      "11",
+      "12"
+    ],
+    "expected": "11",
+    "method": "Disjoint case count for the stated logical implication.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-216-v3",
+    "task": "safe_bank",
+    "inputs": {
+      "w": 4,
+      "s": 2
+    },
+    "options": [
+      "11",
+      "9",
+      "12",
+      "10"
+    ],
+    "expected": "10",
+    "method": "Disjoint case count for the stated logical implication.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-216-v4",
+    "task": "safe_bank",
+    "inputs": {
+      "w": 1,
+      "s": 4
+    },
+    "options": [
+      "10",
+      "11",
+      "9",
+      "12"
+    ],
+    "expected": "10",
+    "method": "Disjoint case count for the stated logical implication.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-216-v5",
+    "task": "safe_bank",
+    "inputs": {
+      "w": 0,
+      "s": 3
+    },
+    "options": [
+      "6",
+      "4",
+      "5",
+      "3"
+    ],
+    "expected": "4",
+    "method": "Disjoint case count for the stated logical implication.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-217-v1",
+    "task": "box_surface",
+    "inputs": {
+      "a": 1,
+      "b": 1,
+      "c": 1
+    },
+    "options": [
+      "4",
+      "7",
+      "5",
+      "6"
+    ],
+    "expected": "5",
+    "method": "Compare the three valid unfolding diagonals exactly.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-217-v2",
+    "task": "box_surface",
+    "inputs": {
+      "a": 1,
+      "b": 2,
+      "c": 3
+    },
+    "options": [
+      "19",
+      "17",
+      "20",
+      "18"
+    ],
+    "expected": "18",
+    "method": "Compare the three valid unfolding diagonals exactly.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-217-v3",
+    "task": "box_surface",
+    "inputs": {
+      "a": 2,
+      "b": 2,
+      "c": 3
+    },
+    "options": [
+      "25",
+      "26",
+      "24",
+      "27"
+    ],
+    "expected": "25",
+    "method": "Compare the three valid unfolding diagonals exactly.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-217-v4",
+    "task": "box_surface",
+    "inputs": {
+      "a": 2,
+      "b": 3,
+      "c": 4
+    },
+    "options": [
+      "43",
+      "41",
+      "42",
+      "40"
+    ],
+    "expected": "41",
+    "method": "Compare the three valid unfolding diagonals exactly.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-217-v5",
+    "task": "box_surface",
+    "inputs": {
+      "a": 1,
+      "b": 1,
+      "c": 4
+    },
+    "options": [
+      "19",
+      "22",
+      "20",
+      "21"
+    ],
+    "expected": "20",
+    "method": "Compare the three valid unfolding diagonals exactly.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-218-v1",
+    "task": "unseen_target",
+    "inputs": {
+      "n": 10,
+      "misses": 3
+    },
+    "options": [
+      "0",
+      "1",
+      "1/2",
+      "1/7"
+    ],
+    "expected": "1/7",
+    "method": "Condition on the observed misses; enumerate remaining target positions.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-218-v2",
+    "task": "unseen_target",
+    "inputs": {
+      "n": 8,
+      "misses": 0
+    },
+    "options": [
+      "1/8",
+      "0",
+      "1",
+      "1/2"
+    ],
+    "expected": "1/8",
+    "method": "Condition on the observed misses; enumerate remaining target positions.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-218-v3",
+    "task": "unseen_target",
+    "inputs": {
+      "n": 6,
+      "misses": 5
+    },
+    "options": [
+      "1/3",
+      "1",
+      "0",
+      "1/2"
+    ],
+    "expected": "1",
+    "method": "Condition on the observed misses; enumerate remaining target positions.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-218-v4",
+    "task": "unseen_target",
+    "inputs": {
+      "n": 12,
+      "misses": 8
+    },
+    "options": [
+      "1",
+      "1/2",
+      "1/4",
+      "0"
+    ],
+    "expected": "1/4",
+    "method": "Condition on the observed misses; enumerate remaining target positions.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-218-v5",
+    "task": "unseen_target",
+    "inputs": {
+      "n": 5,
+      "misses": 2
+    },
+    "options": [
+      "0",
+      "1",
+      "1/2",
+      "1/3"
+    ],
+    "expected": "1/3",
+    "method": "Condition on the observed misses; enumerate remaining target positions.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-219-v1",
+    "task": "coupon_remaining",
+    "inputs": {
+      "n": 4,
+      "seen": 2
+    },
+    "options": [
+      "6",
+      "7",
+      "5",
+      "8"
+    ],
+    "expected": "6",
+    "method": "Sum geometric-stage expectations; independently solve finite-state expectation equations.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-219-v2",
+    "task": "coupon_remaining",
+    "inputs": {
+      "n": 3,
+      "seen": 0
+    },
+    "options": [
+      "15/2",
+      "11/2",
+      "13/2",
+      "9/2"
+    ],
+    "expected": "11/2",
+    "method": "Sum geometric-stage expectations; independently solve finite-state expectation equations.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-219-v3",
+    "task": "coupon_remaining",
+    "inputs": {
+      "n": 5,
+      "seen": 4
+    },
+    "options": [
+      "4",
+      "7",
+      "5",
+      "6"
+    ],
+    "expected": "5",
+    "method": "Sum geometric-stage expectations; independently solve finite-state expectation equations.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-219-v4",
+    "task": "coupon_remaining",
+    "inputs": {
+      "n": 2,
+      "seen": 1
+    },
+    "options": [
+      "3",
+      "1",
+      "4",
+      "2"
+    ],
+    "expected": "2",
+    "method": "Sum geometric-stage expectations; independently solve finite-state expectation equations.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-219-v5",
+    "task": "coupon_remaining",
+    "inputs": {
+      "n": 4,
+      "seen": 3
+    },
+    "options": [
+      "4",
+      "5",
+      "3",
+      "6"
+    ],
+    "expected": "4",
+    "method": "Sum geometric-stage expectations; independently solve finite-state expectation equations.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-220-v1",
+    "task": "linear_orders",
+    "inputs": {
+      "n": 3,
+      "edges": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "options": [
+      "5",
+      "3",
+      "4",
+      "2"
+    ],
+    "expected": "3",
+    "method": "Enumerate linear extensions of the comparison relation.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-220-v2",
+    "task": "linear_orders",
+    "inputs": {
+      "n": 3,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    "options": [
+      "0",
+      "3",
+      "1",
+      "2"
+    ],
+    "expected": "1",
+    "method": "Enumerate linear extensions of the comparison relation.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-220-v3",
+    "task": "linear_orders",
+    "inputs": {
+      "n": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    "options": [
+      "9",
+      "7",
+      "10",
+      "8"
+    ],
+    "expected": "8",
+    "method": "Enumerate linear extensions of the comparison relation.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-220-v4",
+    "task": "linear_orders",
+    "inputs": {
+      "n": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    "options": [
+      "6",
+      "7",
+      "5",
+      "8"
+    ],
+    "expected": "6",
+    "method": "Enumerate linear extensions of the comparison relation.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-220-v5",
+    "task": "linear_orders",
+    "inputs": {
+      "n": 4,
+      "edges": []
+    },
+    "options": [
+      "26",
+      "24",
+      "25",
+      "23"
+    ],
+    "expected": "24",
+    "method": "Enumerate linear extensions of the comparison relation.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-221-v1",
+    "task": "elevator_distance",
+    "inputs": {
+      "start": 4,
+      "low": 1,
+      "high": 8
+    },
+    "options": [
+      "9",
+      "12",
+      "10",
+      "11"
+    ],
+    "expected": "10",
+    "method": "Compare both endpoint visitation orders; use interval coverage as a lower bound.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-221-v2",
+    "task": "elevator_distance",
+    "inputs": {
+      "start": 1,
+      "low": 1,
+      "high": 8
+    },
+    "options": [
+      "8",
+      "6",
+      "9",
+      "7"
+    ],
+    "expected": "7",
+    "method": "Compare both endpoint visitation orders; use interval coverage as a lower bound.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-221-v3",
+    "task": "elevator_distance",
+    "inputs": {
+      "start": 9,
+      "low": 2,
+      "high": 6
+    },
+    "options": [
+      "7",
+      "8",
+      "6",
+      "9"
+    ],
+    "expected": "7",
+    "method": "Compare both endpoint visitation orders; use interval coverage as a lower bound.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-221-v4",
+    "task": "elevator_distance",
+    "inputs": {
+      "start": 0,
+      "low": 3,
+      "high": 7
+    },
+    "options": [
+      "9",
+      "7",
+      "8",
+      "6"
+    ],
+    "expected": "7",
+    "method": "Compare both endpoint visitation orders; use interval coverage as a lower bound.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-221-v5",
+    "task": "elevator_distance",
+    "inputs": {
+      "start": 5,
+      "low": 2,
+      "high": 9
+    },
+    "options": [
+      "9",
+      "12",
+      "10",
+      "11"
+    ],
+    "expected": "10",
+    "method": "Compare both endpoint visitation orders; use interval coverage as a lower bound.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-222-v1",
+    "task": "weighted_completion",
+    "inputs": {
+      "a": 1,
+      "b": 4,
+      "wa": 1,
+      "wb": 10
+    },
+    "options": [
+      "46",
+      "44",
+      "47",
+      "45"
+    ],
+    "expected": "45",
+    "method": "Exact comparison of the two nonpreemptive schedules.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-222-v2",
+    "task": "weighted_completion",
+    "inputs": {
+      "a": 2,
+      "b": 3,
+      "wa": 2,
+      "wb": 1
+    },
+    "options": [
+      "9",
+      "10",
+      "8",
+      "11"
+    ],
+    "expected": "9",
+    "method": "Exact comparison of the two nonpreemptive schedules.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-222-v3",
+    "task": "weighted_completion",
+    "inputs": {
+      "a": 3,
+      "b": 1,
+      "wa": 4,
+      "wb": 1
+    },
+    "options": [
+      "18",
+      "16",
+      "17",
+      "15"
+    ],
+    "expected": "16",
+    "method": "Exact comparison of the two nonpreemptive schedules.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-222-v4",
+    "task": "weighted_completion",
+    "inputs": {
+      "a": 2,
+      "b": 2,
+      "wa": 1,
+      "wb": 3
+    },
+    "options": [
+      "9",
+      "12",
+      "10",
+      "11"
+    ],
+    "expected": "10",
+    "method": "Exact comparison of the two nonpreemptive schedules.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-222-v5",
+    "task": "weighted_completion",
+    "inputs": {
+      "a": 4,
+      "b": 5,
+      "wa": 3,
+      "wb": 2
+    },
+    "options": [
+      "31",
+      "29",
+      "32",
+      "30"
+    ],
+    "expected": "30",
+    "method": "Exact comparison of the two nonpreemptive schedules.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-223-v1",
+    "task": "set_cover",
+    "inputs": {
+      "n": 3,
+      "sets": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    "options": [
+      "2",
+      "3",
+      "1",
+      "4"
+    ],
+    "expected": "2",
+    "method": "Exhaustive minimum cover with a smaller-subset impossibility check.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-223-v2",
+    "task": "set_cover",
+    "inputs": {
+      "n": 3,
+      "sets": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    "options": [
+      "3",
+      "1",
+      "2",
+      "0"
+    ],
+    "expected": "1",
+    "method": "Exhaustive minimum cover with a smaller-subset impossibility check.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-223-v3",
+    "task": "set_cover",
+    "inputs": {
+      "n": 4,
+      "sets": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ]
+    },
+    "options": [
+      "1",
+      "4",
+      "2",
+      "3"
+    ],
+    "expected": "2",
+    "method": "Exhaustive minimum cover with a smaller-subset impossibility check.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-223-v4",
+    "task": "set_cover",
+    "inputs": {
+      "n": 3,
+      "sets": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    "options": [
+      "4",
+      "2",
+      "5",
+      "3"
+    ],
+    "expected": "3",
+    "method": "Exhaustive minimum cover with a smaller-subset impossibility check.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-223-v5",
+    "task": "set_cover",
+    "inputs": {
+      "n": 4,
+      "sets": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          0
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    "options": [
+      "2",
+      "3",
+      "1",
+      "4"
+    ],
+    "expected": "2",
+    "method": "Exhaustive minimum cover with a smaller-subset impossibility check.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-224-v1",
+    "task": "measurement_cover",
+    "inputs": {
+      "patterns": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "options": [
+      "4",
+      "2",
+      "3",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Find the smallest column subset with distinct row projections.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-224-v2",
+    "task": "measurement_cover",
+    "inputs": {
+      "patterns": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0
+        ]
+      ]
+    },
+    "options": [
+      "1",
+      "4",
+      "2",
+      "3"
+    ],
+    "expected": "2",
+    "method": "Find the smallest column subset with distinct row projections.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-224-v3",
+    "task": "measurement_cover",
+    "inputs": {
+      "patterns": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "options": [
+      "2",
+      "0",
+      "3",
+      "1"
+    ],
+    "expected": "1",
+    "method": "Find the smallest column subset with distinct row projections.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-224-v4",
+    "task": "measurement_cover",
+    "inputs": {
+      "patterns": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0
+        ]
+      ]
+    },
+    "options": [
+      "2",
+      "3",
+      "1",
+      "4"
+    ],
+    "expected": "2",
+    "method": "Find the smallest column subset with distinct row projections.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-224-v5",
+    "task": "measurement_cover",
+    "inputs": {
+      "patterns": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ]
+    },
+    "options": [
+      "5",
+      "3",
+      "4",
+      "2"
+    ],
+    "expected": "3",
+    "method": "Find the smallest column subset with distinct row projections.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-225-v1",
+    "task": "majority_error",
+    "inputs": {
+      "trials": 3,
+      "p": "1/4"
+    },
+    "options": [
+      "1",
+      "1/2",
+      "5/32",
+      "0"
+    ],
+    "expected": "5/32",
+    "method": "Exact binomial tail, checked by enumerating all outcome words.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-225-v2",
+    "task": "majority_error",
+    "inputs": {
+      "trials": 3,
+      "p": "1/3"
+    },
+    "options": [
+      "0",
+      "1",
+      "1/2",
+      "7/27"
+    ],
+    "expected": "7/27",
+    "method": "Exact binomial tail, checked by enumerating all outcome words.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-225-v3",
+    "task": "majority_error",
+    "inputs": {
+      "trials": 5,
+      "p": "1/4"
+    },
+    "options": [
+      "53/512",
+      "0",
+      "1",
+      "1/2"
+    ],
+    "expected": "53/512",
+    "method": "Exact binomial tail, checked by enumerating all outcome words.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-225-v4",
+    "task": "majority_error",
+    "inputs": {
+      "trials": 3,
+      "p": "1/2"
+    },
+    "options": [
+      "1/3",
+      "1/2",
+      "0",
+      "1"
+    ],
+    "expected": "1/2",
+    "method": "Exact binomial tail, checked by enumerating all outcome words.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-225-v5",
+    "task": "majority_error",
+    "inputs": {
+      "trials": 5,
+      "p": "1/3"
+    },
+    "options": [
+      "1",
+      "1/2",
+      "17/81",
+      "0"
+    ],
+    "expected": "17/81",
+    "method": "Exact binomial tail, checked by enumerating all outcome words.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-226-v1",
+    "task": "sample_miss",
+    "inputs": {
+      "n": 10,
+      "d": 2,
+      "k": 3
+    },
+    "options": [
+      "0",
+      "1",
+      "1/2",
+      "7/15"
+    ],
+    "expected": "7/15",
+    "method": "Hypergeometric zero-defect probability with exhaustive subset oracle.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-226-v2",
+    "task": "sample_miss",
+    "inputs": {
+      "n": 6,
+      "d": 1,
+      "k": 2
+    },
+    "options": [
+      "2/3",
+      "0",
+      "1",
+      "1/2"
+    ],
+    "expected": "2/3",
+    "method": "Hypergeometric zero-defect probability with exhaustive subset oracle.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-226-v3",
+    "task": "sample_miss",
+    "inputs": {
+      "n": 5,
+      "d": 2,
+      "k": 4
+    },
+    "options": [
+      "1/3",
+      "0",
+      "1",
+      "1/2"
+    ],
+    "expected": "0",
+    "method": "Hypergeometric zero-defect probability with exhaustive subset oracle.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-226-v4",
+    "task": "sample_miss",
+    "inputs": {
+      "n": 8,
+      "d": 3,
+      "k": 2
+    },
+    "options": [
+      "1",
+      "1/2",
+      "5/14",
+      "0"
+    ],
+    "expected": "5/14",
+    "method": "Hypergeometric zero-defect probability with exhaustive subset oracle.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-226-v5",
+    "task": "sample_miss",
+    "inputs": {
+      "n": 7,
+      "d": 0,
+      "k": 3
+    },
+    "options": [
+      "0",
+      "1/2",
+      "1/3",
+      "1"
+    ],
+    "expected": "1",
+    "method": "Hypergeometric zero-defect probability with exhaustive subset oracle.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-227-v1",
+    "task": "first_choices",
+    "inputs": {
+      "prefs": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "options": [
+      "1",
+      "2",
+      "0",
+      "3"
+    ],
+    "expected": "1",
+    "method": "Enumerate full assignments and optimize the declared first-choice score.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-227-v2",
+    "task": "first_choices",
+    "inputs": {
+      "prefs": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    "options": [
+      "4",
+      "2",
+      "3",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Enumerate full assignments and optimize the declared first-choice score.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-227-v3",
+    "task": "first_choices",
+    "inputs": {
+      "prefs": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    "options": [
+      "0",
+      "3",
+      "1",
+      "2"
+    ],
+    "expected": "1",
+    "method": "Enumerate full assignments and optimize the declared first-choice score.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-227-v4",
+    "task": "first_choices",
+    "inputs": {
+      "prefs": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    "options": [
+      "4",
+      "2",
+      "5",
+      "3"
+    ],
+    "expected": "3",
+    "method": "Enumerate full assignments and optimize the declared first-choice score.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-227-v5",
+    "task": "first_choices",
+    "inputs": {
+      "prefs": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    "options": [
+      "1",
+      "2",
+      "0",
+      "3"
+    ],
+    "expected": "1",
+    "method": "Enumerate full assignments and optimize the declared first-choice score.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-228-v1",
+    "task": "matching_count",
+    "inputs": {
+      "prefs": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "options": [
+      "4",
+      "2",
+      "3",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Count injective allowed assignments by exhaustive finite search.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-228-v2",
+    "task": "matching_count",
+    "inputs": {
+      "prefs": [
+        [
+          0
+        ],
+        [
+          0
+        ]
+      ]
+    },
+    "options": [
+      "2",
+      "3",
+      "0",
+      "1"
+    ],
+    "expected": "0",
+    "method": "Count injective allowed assignments by exhaustive finite search.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-228-v3",
+    "task": "matching_count",
+    "inputs": {
+      "prefs": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    "options": [
+      "3",
+      "1",
+      "4",
+      "2"
+    ],
+    "expected": "2",
+    "method": "Count injective allowed assignments by exhaustive finite search.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-228-v4",
+    "task": "matching_count",
+    "inputs": {
+      "prefs": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    "options": [
+      "1",
+      "2",
+      "0",
+      "3"
+    ],
+    "expected": "1",
+    "method": "Count injective allowed assignments by exhaustive finite search.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-228-v5",
+    "task": "matching_count",
+    "inputs": {
+      "prefs": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    "options": [
+      "8",
+      "6",
+      "7",
+      "5"
+    ],
+    "expected": "6",
+    "method": "Count injective allowed assignments by exhaustive finite search.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-229-v1",
+    "task": "all_visited",
+    "inputs": {
+      "n": 2,
+      "visits": 3
+    },
+    "options": [
+      "1",
+      "1/2",
+      "3/4",
+      "0"
+    ],
+    "expected": "3/4",
+    "method": "Inclusion-exclusion, independently enumerate visit sequences.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-229-v2",
+    "task": "all_visited",
+    "inputs": {
+      "n": 3,
+      "visits": 3
+    },
+    "options": [
+      "0",
+      "1",
+      "1/2",
+      "2/9"
+    ],
+    "expected": "2/9",
+    "method": "Inclusion-exclusion, independently enumerate visit sequences.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-229-v3",
+    "task": "all_visited",
+    "inputs": {
+      "n": 3,
+      "visits": 4
+    },
+    "options": [
+      "4/9",
+      "0",
+      "1",
+      "1/2"
+    ],
+    "expected": "4/9",
+    "method": "Inclusion-exclusion, independently enumerate visit sequences.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-229-v4",
+    "task": "all_visited",
+    "inputs": {
+      "n": 2,
+      "visits": 5
+    },
+    "options": [
+      "1/2",
+      "15/16",
+      "0",
+      "1"
+    ],
+    "expected": "15/16",
+    "method": "Inclusion-exclusion, independently enumerate visit sequences.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-229-v5",
+    "task": "all_visited",
+    "inputs": {
+      "n": 4,
+      "visits": 3
+    },
+    "options": [
+      "1/2",
+      "1/3",
+      "0",
+      "1"
+    ],
+    "expected": "0",
+    "method": "Inclusion-exclusion, independently enumerate visit sequences.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-230-v1",
+    "task": "hat_expectation",
+    "inputs": {
+      "n": 6,
+      "colors": 3
+    },
+    "options": [
+      "3",
+      "1",
+      "4",
+      "2"
+    ],
+    "expected": "2",
+    "method": "Condition on visible hats, then apply linearity; enumerate a dependent copy-neighbor policy as a check.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-230-v2",
+    "task": "hat_expectation",
+    "inputs": {
+      "n": 5,
+      "colors": 2
+    },
+    "options": [
+      "5/2",
+      "7/2",
+      "3/2",
+      "9/2"
+    ],
+    "expected": "5/2",
+    "method": "Condition on visible hats, then apply linearity; enumerate a dependent copy-neighbor policy as a check.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-230-v3",
+    "task": "hat_expectation",
+    "inputs": {
+      "n": 4,
+      "colors": 4
+    },
+    "options": [
+      "3",
+      "1",
+      "2",
+      "0"
+    ],
+    "expected": "1",
+    "method": "Condition on visible hats, then apply linearity; enumerate a dependent copy-neighbor policy as a check.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-230-v4",
+    "task": "hat_expectation",
+    "inputs": {
+      "n": 7,
+      "colors": 3
+    },
+    "options": [
+      "4/3",
+      "13/3",
+      "7/3",
+      "10/3"
+    ],
+    "expected": "7/3",
+    "method": "Condition on visible hats, then apply linearity; enumerate a dependent copy-neighbor policy as a check.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-230-v5",
+    "task": "hat_expectation",
+    "inputs": {
+      "n": 3,
+      "colors": 2
+    },
+    "options": [
+      "5/2",
+      "1/2",
+      "7/2",
+      "3/2"
+    ],
+    "expected": "3/2",
+    "method": "Condition on visible hats, then apply linearity; enumerate a dependent copy-neighbor policy as a check.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-231-v1",
+    "task": "urn_optimum",
+    "inputs": {
+      "red": 3,
+      "white": 3
+    },
+    "options": [
+      "7/10",
+      "0",
+      "1",
+      "1/2"
+    ],
+    "expected": "7/10",
+    "method": "Exhaust all integer urn allocations, including every nonempty-size boundary.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-231-v2",
+    "task": "urn_optimum",
+    "inputs": {
+      "red": 2,
+      "white": 4
+    },
+    "options": [
+      "1/2",
+      "3/5",
+      "0",
+      "1"
+    ],
+    "expected": "3/5",
+    "method": "Exhaust all integer urn allocations, including every nonempty-size boundary.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-231-v3",
+    "task": "urn_optimum",
+    "inputs": {
+      "red": 1,
+      "white": 4
+    },
+    "options": [
+      "1",
+      "1/3",
+      "1/2",
+      "0"
+    ],
+    "expected": "1/2",
+    "method": "Exhaust all integer urn allocations, including every nonempty-size boundary.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-231-v4",
+    "task": "urn_optimum",
+    "inputs": {
+      "red": 4,
+      "white": 2
+    },
+    "options": [
+      "0",
+      "1",
+      "1/2",
+      "4/5"
+    ],
+    "expected": "4/5",
+    "method": "Exhaust all integer urn allocations, including every nonempty-size boundary.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-231-v5",
+    "task": "urn_optimum",
+    "inputs": {
+      "red": 2,
+      "white": 1
+    },
+    "options": [
+      "3/4",
+      "0",
+      "1",
+      "1/2"
+    ],
+    "expected": "3/4",
+    "method": "Exhaust all integer urn allocations, including every nonempty-size boundary.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-232-v1",
+    "task": "signed_codes",
+    "inputs": {
+      "vectors": [
+        [
+          1,
+          0
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "options": [
+      "6",
+      "4",
+      "5",
+      "3"
+    ],
+    "expected": "4",
+    "method": "Union of signed signature vectors with explicit collision witnesses.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-232-v2",
+    "task": "signed_codes",
+    "inputs": {
+      "vectors": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "options": [
+      "3",
+      "6",
+      "4",
+      "5"
+    ],
+    "expected": "4",
+    "method": "Union of signed signature vectors with explicit collision witnesses.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-232-v3",
+    "task": "signed_codes",
+    "inputs": {
+      "vectors": [
+        [
+          1,
+          1
+        ],
+        [
+          -1,
+          -1
+        ]
+      ]
+    },
+    "options": [
+      "3",
+      "1",
+      "4",
+      "2"
+    ],
+    "expected": "2",
+    "method": "Union of signed signature vectors with explicit collision witnesses.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-232-v4",
+    "task": "signed_codes",
+    "inputs": {
+      "vectors": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "options": [
+      "3",
+      "4",
+      "2",
+      "5"
+    ],
+    "expected": "3",
+    "method": "Union of signed signature vectors with explicit collision witnesses.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-232-v5",
+    "task": "signed_codes",
+    "inputs": {
+      "vectors": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          -1
+        ]
+      ]
+    },
+    "options": [
+      "10",
+      "8",
+      "9",
+      "7"
+    ],
+    "expected": "8",
+    "method": "Union of signed signature vectors with explicit collision witnesses.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-233-v1",
+    "task": "timed_patterns",
+    "inputs": {
+      "tasters": 2,
+      "rounds": 2
+    },
+    "options": [
+      "8",
+      "11",
+      "9",
+      "10"
+    ],
+    "expected": "9",
+    "method": "Cartesian product of per-taster terminal outcome times.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-233-v2",
+    "task": "timed_patterns",
+    "inputs": {
+      "tasters": 3,
+      "rounds": 2
+    },
+    "options": [
+      "28",
+      "26",
+      "29",
+      "27"
+    ],
+    "expected": "27",
+    "method": "Cartesian product of per-taster terminal outcome times.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-233-v3",
+    "task": "timed_patterns",
+    "inputs": {
+      "tasters": 2,
+      "rounds": 3
+    },
+    "options": [
+      "16",
+      "17",
+      "15",
+      "18"
+    ],
+    "expected": "16",
+    "method": "Cartesian product of per-taster terminal outcome times.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-233-v4",
+    "task": "timed_patterns",
+    "inputs": {
+      "tasters": 1,
+      "rounds": 4
+    },
+    "options": [
+      "7",
+      "5",
+      "6",
+      "4"
+    ],
+    "expected": "5",
+    "method": "Cartesian product of per-taster terminal outcome times.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-233-v5",
+    "task": "timed_patterns",
+    "inputs": {
+      "tasters": 3,
+      "rounds": 1
+    },
+    "options": [
+      "7",
+      "10",
+      "8",
+      "9"
+    ],
+    "expected": "8",
+    "method": "Cartesian product of per-taster terminal outcome times.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-234-v1",
+    "task": "unknown_weight_minimax",
+    "inputs": {
+      "n": 9
+    },
+    "options": [
+      "7",
+      "5",
+      "8",
+      "6"
+    ],
+    "expected": "6",
+    "method": "Enumerate every first-pan size and each counterfeit position/direction outcome.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-234-v2",
+    "task": "unknown_weight_minimax",
+    "inputs": {
+      "n": 6
+    },
+    "options": [
+      "4",
+      "5",
+      "3",
+      "6"
+    ],
+    "expected": "4",
+    "method": "Enumerate every first-pan size and each counterfeit position/direction outcome.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-234-v3",
+    "task": "unknown_weight_minimax",
+    "inputs": {
+      "n": 8
+    },
+    "options": [
+      "8",
+      "6",
+      "7",
+      "5"
+    ],
+    "expected": "6",
+    "method": "Enumerate every first-pan size and each counterfeit position/direction outcome.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-234-v4",
+    "task": "unknown_weight_minimax",
+    "inputs": {
+      "n": 12
+    },
+    "options": [
+      "7",
+      "10",
+      "8",
+      "9"
+    ],
+    "expected": "8",
+    "method": "Enumerate every first-pan size and each counterfeit position/direction outcome.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-234-v5",
+    "task": "unknown_weight_minimax",
+    "inputs": {
+      "n": 5
+    },
+    "options": [
+      "5",
+      "3",
+      "6",
+      "4"
+    ],
+    "expected": "4",
+    "method": "Enumerate every first-pan size and each counterfeit position/direction outcome.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-235-v1",
+    "task": "subtraction_game",
+    "inputs": {
+      "n": 8,
+      "moves": [
+        1,
+        3,
+        4
+      ]
+    },
+    "options": [
+      "2",
+      "3",
+      "1",
+      "4"
+    ],
+    "expected": "2",
+    "method": "Finite minimax recurrence, checked independently by full game-tree recursion.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-235-v2",
+    "task": "subtraction_game",
+    "inputs": {
+      "n": 7,
+      "moves": [
+        1,
+        2
+      ]
+    },
+    "options": [
+      "4",
+      "2",
+      "3",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Finite minimax recurrence, checked independently by full game-tree recursion.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-235-v3",
+    "task": "subtraction_game",
+    "inputs": {
+      "n": 10,
+      "moves": [
+        1,
+        4
+      ]
+    },
+    "options": [
+      "3",
+      "6",
+      "4",
+      "5"
+    ],
+    "expected": "4",
+    "method": "Finite minimax recurrence, checked independently by full game-tree recursion.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-235-v4",
+    "task": "subtraction_game",
+    "inputs": {
+      "n": 9,
+      "moves": [
+        2,
+        3
+      ]
+    },
+    "options": [
+      "4",
+      "2",
+      "5",
+      "3"
+    ],
+    "expected": "3",
+    "method": "Finite minimax recurrence, checked independently by full game-tree recursion.",
+    "professional_review": "pending"
+  },
+  {
+    "key": "quick-sw-235-v5",
+    "task": "subtraction_game",
+    "inputs": {
+      "n": 6,
+      "moves": [
+        1,
+        3
+      ]
+    },
+    "options": [
+      "3",
+      "4",
+      "2",
+      "5"
+    ],
+    "expected": "3",
+    "method": "Finite minimax recurrence, checked independently by full game-tree recursion.",
+    "professional_review": "pending"
+  }
+]

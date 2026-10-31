@@ -344,8 +344,19 @@ async def test_new_question_feedback_cannot_create_assessment_metrics_or_xp(cata
 
 
 def test_short_cards_quiz_and_review_attestations_are_frozen():
-    assert digest(read(SEEDS / 'fundamentals_catalog.json')) == BATCH20_BASELINE['fundamentals_sha256']
-    assert digest(read(SEEDS / 'duel_quiz.json')) == BATCH20_BASELINE['quiz_sha256']
+    # A later authorized expansion adds keys; every pre-expansion record stays frozen.
+    registry = read(SEEDS / 'fundamentals_catalog.json')
+    previous_registry = {**registry, 'questions': {
+        key: value for key, value in registry['questions'].items()
+        if int(key.rsplit('-', 1)[1]) <= 200
+    }}
+    assert digest(previous_registry) == BATCH20_BASELINE['fundamentals_sha256']
+    quiz = read(SEEDS / 'duel_quiz.json')['questions']
+    historical_quiz = [row for row in quiz if not row.get('source_key')
+                       or int(row['source_key'].rsplit('-', 1)[1]) <= 200]
+    assert digest(sorted(historical_quiz, key=lambda row: row['key'])) == (
+        'd5658c38b6abbad3a0354993738e751e5a376a1a8cbbbf15efabf38a4e4067af'
+    )
     assert digest(read(SEEDS / 'solution_review_attestations.json')) == BATCH20_BASELINE['review_registry_sha256']
     content = ROOT / 'apps/web/src/content'
     cards = []
@@ -354,7 +365,6 @@ def test_short_cards_quiz_and_review_attestations_are_frozen():
         assert digest(rows) == expected
         cards.extend(rows)
     assert len(cards) == len({row['id'] for row in cards}) == 400
-    registry = read(SEEDS / 'fundamentals_catalog.json')
     assert read(content / 'fundamentals-revisions.json') == registry['questions']
-    quiz = read(SEEDS / 'duel_quiz.json')['questions']
-    assert len(quiz) == 2040 and sum(row['status'] == 'approved' for row in quiz) == 2000
+    assert len(historical_quiz) == 2040
+    assert sum(row['status'] == 'approved' for row in historical_quiz) == 2000

@@ -1,0 +1,2552 @@
+[
+  {
+    "key": "quick-sw-236-v1",
+    "source_key": "quick-sw-236",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בחשבון שלם מדויק, מה המרחק בריבוע בין (0,0) ובין (3,4)? אין להוציא שורש.",
+      "en": "With exact integer arithmetic, what is the squared distance between (0,0) and (3,4)? Do not take a square root."
+    },
+    "choices": [
+      {
+        "he": "25",
+        "en": "25"
+      },
+      {
+        "he": "49",
+        "en": "49"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "ריבועי ההפרשים נותנים 3²+4²=25.",
+      "en": "The squared differences give 3²+4²=25."
+    }
+  },
+  {
+    "key": "quick-sw-236-v2",
+    "source_key": "quick-sw-236",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "לנקודות (0,0),(3,0),(1,0), מה המרחק המזערי בריבוע בין שתי רשומות שונות?",
+      "en": "For points (0,0),(3,0),(1,0), what is the minimum squared distance between different records?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "הזוג (0,0),(1,0) נותן 1; שני המרחקים האחרים בריבוע הם 9 ו־4.",
+      "en": "Pair (0,0),(1,0) gives 1; the other squared distances are 9 and 4."
+    }
+  },
+  {
+    "key": "quick-sw-236-v3",
+    "source_key": "quick-sw-236",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מותרות רשומות שונות באותן קואורדינטות. מה המרחק המזערי בריבוע ברשומות (2,-1),(7,3),(2,-1)?",
+      "en": "Different records may have identical coordinates. What is the minimum squared distance in (2,-1),(7,3),(2,-1)?"
+    },
+    "choices": [
+      {
+        "he": "16",
+        "en": "16"
+      },
+      {
+        "he": "41",
+        "en": "41"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "שתי הרשומות בקואורדינטות (2,-1) יוצרות זוג במרחק 0.",
+      "en": "The two records at (2,-1) form a pair at distance 0."
+    }
+  },
+  {
+    "key": "quick-sw-236-v4",
+    "source_key": "quick-sw-236",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "אינדקסים מתחילים ב־0. בנקודות [(-1,-1),(2,3),(3,3)], איזה זוג אינדקסים קרוב ביותר? אין תיקו.",
+      "en": "Indices start at 0. For [(-1,-1),(2,3),(3,3)], which index pair is closest? There is no tie."
+    },
+    "choices": [
+      {
+        "he": "[1,1]",
+        "en": "[1,1]"
+      },
+      {
+        "he": "[0,1]",
+        "en": "[0,1]"
+      },
+      {
+        "he": "[0,2]",
+        "en": "[0,2]"
+      },
+      {
+        "he": "[1,2]",
+        "en": "[1,2]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "רק אינדקסים 1 ו־2 מרוחקים יחידה; זוג של רשומה עם עצמה אינו מותר.",
+      "en": "Only indices 1 and 2 are one unit apart; pairing a record with itself is disallowed."
+    }
+  },
+  {
+    "key": "quick-sw-236-v5",
+    "source_key": "quick-sw-236",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מזיזים את שני קצות הווקטור (3,4) לאותה נקודת מוצא: (10,-7),(13,-3). מה המרחק בריבוע לאחר ההזזה?",
+      "en": "Translate both endpoints of displacement (3,4) to (10,-7),(13,-3). What is their squared distance after translation?"
+    },
+    "choices": [
+      {
+        "he": "25",
+        "en": "25"
+      },
+      {
+        "he": "49",
+        "en": "49"
+      },
+      {
+        "he": "250",
+        "en": "250"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "הזזה משותפת אינה משנה הפרשים: עדיין מתקבל 3²+4²=25.",
+      "en": "A common translation preserves differences: 3²+4² remains 25."
+    }
+  },
+  {
+    "key": "quick-sw-237-v1",
+    "source_key": "quick-sw-237",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מסך ממוספר בשורות משמאל לימין, רוחב 3, אינדקסים מ־0. איזו קואורדינטה (x,y) מתאימה לאינדקס 5?",
+      "en": "A screen is row-major, left to right, width 3, with indices starting at 0. Which (x,y) coordinate corresponds to index 5?"
+    },
+    "choices": [
+      {
+        "he": "[5,0]",
+        "en": "[5,0]"
+      },
+      {
+        "he": "[2,1]",
+        "en": "[2,1]"
+      },
+      {
+        "he": "[1,2]",
+        "en": "[1,2]"
+      },
+      {
+        "he": "[0,5]",
+        "en": "[0,5]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "5%3=2 ו־5//3=1, ולכן הקואורדינטה היא (2,1).",
+      "en": "5%3=2 and 5//3=1, so the coordinate is (2,1)."
+    }
+  },
+  {
+    "key": "quick-sw-237-v2",
+    "source_key": "quick-sw-237",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מיפוי שורות ברוחב 4 משתמש באינדקס y*4+x. מה אינדקס הפיקסל (2,1), כשכל המספור מתחיל ב־0?",
+      "en": "A width-4 row-major map uses index y*4+x. What is the index of pixel (2,1), with all numbering starting at 0?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מדלגים על שורה אחת בת 4 תאים ומוסיפים x=2: מתקבל 6.",
+      "en": "Skip one row of 4 cells and add x=2: index 6."
+    }
+  },
+  {
+    "key": "quick-sw-237-v3",
+    "source_key": "quick-sw-237",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במסך 3 על 2 נבחרו 5 פיקסלים שונים מתוך פרמוטציה ללא חזרות. כמה בחירות חוקיות נוספות נותרו?",
+      "en": "In a 3-by-2 screen, 5 different pixels have been selected from a permutation without repetition. How many further valid selections remain?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "יש 6 פיקסלים, ולכן אחרי 5 נשאר פיקסל אחד.",
+      "en": "There are 6 pixels; after 5 selections, one remains."
+    }
+  },
+  {
+    "key": "quick-sw-237-v4",
+    "source_key": "quick-sw-237",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במסך 2 על 2 הסתיימה הפרמוטציה [2,0,3,1]. הממשק מחזיר None במיצוי. מה מוחזר בבקשה הבאה בלי לאפס את המסך?",
+      "en": "For a 2-by-2 screen, permutation [2,0,3,1] is exhausted. The interface returns None on exhaustion. What does another request return without a reset?"
+    },
+    "choices": [
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "[0,0]",
+        "en": "[0,0]"
+      },
+      {
+        "he": "[1,0]",
+        "en": "[1,0]"
+      },
+      {
+        "he": "[1,1]",
+        "en": "[1,1]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "כל 4 הפיקסלים כבר נוצלו; בחירה נוספת תפר את דרישת היעדר החזרות.",
+      "en": "All 4 pixels are used; another pixel selection would violate nonrepetition."
+    }
+  },
+  {
+    "key": "quick-sw-237-v5",
+    "source_key": "quick-sw-237",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "אינדקסים [3,0,2,1] הם פרמוטציה למסך ברוחב 2 וגובה 2. מה סדר הקואורדינטות (x,y) בשיטת שורות?",
+      "en": "Indices [3,0,2,1] permute a width-2, height-2 screen. What is the row-major sequence of (x,y) coordinates?"
+    },
+    "choices": [
+      {
+        "he": "[[1,1],[0,0],[0,1],[0,1]]",
+        "en": "[[1,1],[0,0],[0,1],[0,1]]"
+      },
+      {
+        "he": "[[1,1],[0,0],[0,1],[1,0]]",
+        "en": "[[1,1],[0,0],[0,1],[1,0]]"
+      },
+      {
+        "he": "[[1,1],[0,0],[1,0],[0,1]]",
+        "en": "[[1,1],[0,0],[1,0],[0,1]]"
+      },
+      {
+        "he": "[[0,0],[1,0],[0,1],[1,1]]",
+        "en": "[[0,0],[1,0],[0,1],[1,1]]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מחשבים לכל אינדקס שארית ומנה בחלוקה ב־2; כל זוג מופיע פעם אחת.",
+      "en": "Map each index using remainder and quotient by 2; every coordinate pair occurs once."
+    }
+  },
+  {
+    "key": "quick-sw-238-v1",
+    "source_key": "quick-sw-238",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מה סדר המילים אחרי היפוך כל התווים ואז היפוך התווים בכל מילה ב־red blue?",
+      "en": "After reversing all characters and then each word's characters in red blue, what is returned?"
+    },
+    "choices": [
+      {
+        "he": "eulb der",
+        "en": "eulb der"
+      },
+      {
+        "he": "red blue",
+        "en": "red blue"
+      },
+      {
+        "he": "blue red",
+        "en": "blue red"
+      },
+      {
+        "he": "der eulb",
+        "en": "der eulb"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "היפוך סדר מילים דורש לבטל גם את היפוך האותיות המקומי; כאן התוצאה היא blue red.",
+      "en": "Word-order reversal must also undo the local letter reversal; this case produces blue red."
+    }
+  },
+  {
+    "key": "quick-sw-238-v2",
+    "source_key": "quick-sw-238",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בשיטת היפוך סדר מילים, מהו מצב הביניים של ab cd מיד אחרי היפוך כל התווים, לפני תיקון כל מילה?",
+      "en": "In word-order reversal, what intermediate string follows reversing all characters of ab cd, before repairing each word?"
+    },
+    "choices": [
+      {
+        "he": "ba dc",
+        "en": "ba dc"
+      },
+      {
+        "he": "ab cd",
+        "en": "ab cd"
+      },
+      {
+        "he": "cd ab",
+        "en": "cd ab"
+      },
+      {
+        "he": "dc ba",
+        "en": "dc ba"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "היפוך סדר מילים דורש לבטל גם את היפוך האותיות המקומי; כאן התוצאה היא dc ba.",
+      "en": "Word-order reversal must also undo the local letter reversal; this case produces dc ba."
+    }
+  },
+  {
+    "key": "quick-sw-238-v3",
+    "source_key": "quick-sw-238",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "הופכים רק את התווים בכל מילה של ab cd, ומשאירים את סדר המילים. מה מתקבל בשלב הזה?",
+      "en": "Reverse only each word's characters in ab cd while preserving word order. What does this stage produce?"
+    },
+    "choices": [
+      {
+        "he": "ba dc",
+        "en": "ba dc"
+      },
+      {
+        "he": "cd ab",
+        "en": "cd ab"
+      },
+      {
+        "he": "dc ba",
+        "en": "dc ba"
+      },
+      {
+        "he": "ab cd",
+        "en": "ab cd"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "היפוך סדר מילים דורש לבטל גם את היפוך האותיות המקומי; כאן התוצאה היא ba dc.",
+      "en": "Word-order reversal must also undo the local letter reversal; this case produces ba dc."
+    }
+  },
+  {
+    "key": "quick-sw-238-v4",
+    "source_key": "quick-sw-238",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "החוזה מאפשר מחרוזת ריקה. מה מחזיר היפוך סדר המילים שלה? האפשרות עם זוג מרכאות מייצגת מחרוזת ריקה.",
+      "en": "The contract allows empty input. What does word-order reversal return for it? The quote-pair option represents an empty string."
+    },
+    "choices": [
+      {
+        "he": "error",
+        "en": "error"
+      },
+      {
+        "he": "\"\"",
+        "en": "\"\""
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "\" \"",
+        "en": "\" \""
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "היפוך סדר מילים דורש לבטל גם את היפוך האותיות המקומי; כאן התוצאה היא \"\".",
+      "en": "Word-order reversal must also undo the local letter reversal; this case produces \"\"."
+    }
+  },
+  {
+    "key": "quick-sw-238-v5",
+    "source_key": "quick-sw-238",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "למחרוזת single יש מילה אחת. מה מחזיר היפוך כל המחרוזת ואז היפוך כל מילה?",
+      "en": "String single contains one word. What follows reversing the whole string and then each word?"
+    },
+    "choices": [
+      {
+        "he": "\"\"",
+        "en": "\"\""
+      },
+      {
+        "he": "single extra",
+        "en": "single extra"
+      },
+      {
+        "he": "single",
+        "en": "single"
+      },
+      {
+        "he": "elgnis",
+        "en": "elgnis"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "היפוך סדר מילים דורש לבטל גם את היפוך האותיות המקומי; כאן התוצאה היא single.",
+      "en": "Word-order reversal must also undo the local letter reversal; this case produces single."
+    }
+  },
+  {
+    "key": "quick-sw-239-v1",
+    "source_key": "quick-sw-239",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־reverse(Tail(L))@[Head(L)], השרשור מעתיק רק את צד שמאל. בכמה חוליות מסתכמות כל ההעתקות ברשימה באורך 4? לא סופרים יצירת יחידונים.",
+      "en": "In reverse(Tail(L))@[Head(L)], concatenation copies only its left side. How many nodes are copied in total for length 4? Exclude singleton creation."
+    },
+    "choices": [
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "16",
+        "en": "16"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "סכום האורכים המועתקים הוא 0 עד 3, כלומר 6.",
+      "en": "Copy lengths sum from 0 through 3, giving 6."
+    }
+  },
+  {
+    "key": "quick-sw-239-v2",
+    "source_key": "quick-sw-239",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־reverse(Tail(L))@[Head(L)], השרשור מעתיק רק את צד שמאל. בכמה חוליות מסתכמות כל ההעתקות ברשימה באורך 1? לא סופרים יצירת יחידונים.",
+      "en": "In reverse(Tail(L))@[Head(L)], concatenation copies only its left side. How many nodes are copied in total for length 1? Exclude singleton creation."
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "סכום האורכים המועתקים הוא 0 עד 0, כלומר 0.",
+      "en": "Copy lengths sum from 0 through 0, giving 0."
+    }
+  },
+  {
+    "key": "quick-sw-239-v3",
+    "source_key": "quick-sw-239",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־reverse(Tail(L))@[Head(L)], השרשור מעתיק רק את צד שמאל. בכמה חוליות מסתכמות כל ההעתקות ברשימה באורך 8? לא סופרים יצירת יחידונים.",
+      "en": "In reverse(Tail(L))@[Head(L)], concatenation copies only its left side. How many nodes are copied in total for length 8? Exclude singleton creation."
+    },
+    "choices": [
+      {
+        "he": "16",
+        "en": "16"
+      },
+      {
+        "he": "28",
+        "en": "28"
+      },
+      {
+        "he": "64",
+        "en": "64"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "סכום האורכים המועתקים הוא 0 עד 7, כלומר 28.",
+      "en": "Copy lengths sum from 0 through 7, giving 28."
+    }
+  },
+  {
+    "key": "quick-sw-239-v4",
+    "source_key": "quick-sw-239",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "היפוך רשימה באורך 8 מעביר כל איבר לצובר באמצעות הוספה לראש בעלות קבועה. כמה פעולות הוספה מתבצעות?",
+      "en": "Reversing a length-8 list moves each item into an accumulator using constant-time prepending. How many prepend operations occur?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "28",
+        "en": "28"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "כל אחד מ־8 האיברים נוסף לראש פעם אחת.",
+      "en": "Each of the 8 items is prepended once."
+    }
+  },
+  {
+    "key": "quick-sw-239-v5",
+    "source_key": "quick-sw-239",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־reverse(Tail(L))@[Head(L)], השרשור מעתיק רק את צד שמאל. בכמה חוליות מסתכמות כל ההעתקות ברשימה באורך 200? לא סופרים יצירת יחידונים.",
+      "en": "In reverse(Tail(L))@[Head(L)], concatenation copies only its left side. How many nodes are copied in total for length 200? Exclude singleton creation."
+    },
+    "choices": [
+      {
+        "he": "40000",
+        "en": "40000"
+      },
+      {
+        "he": "200",
+        "en": "200"
+      },
+      {
+        "he": "9900",
+        "en": "9900"
+      },
+      {
+        "he": "19900",
+        "en": "19900"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "סכום האורכים המועתקים הוא 0 עד 199, כלומר 19900.",
+      "en": "Copy lengths sum from 0 through 199, giving 19900."
+    }
+  },
+  {
+    "key": "quick-sw-240-v1",
+    "source_key": "quick-sw-240",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מכניסים בהצלחה ערך 7 לראש רשימה ריקה. הפונקציה מחזירה את הראש החדש. מה סדר הערכים ברשימת הקורא אחרי שהראש הוחלף?",
+      "en": "Successfully prepend value 7 to an empty list. The function returns the new head. What values are in the caller's list after assigning that head?"
+    },
+    "choices": [
+      {
+        "he": "[7]",
+        "en": "[7]"
+      },
+      {
+        "he": "[0,7]",
+        "en": "[0,7]"
+      },
+      {
+        "he": "[7,7]",
+        "en": "[7,7]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "חוליה אחת מצביעת next ל־NULL; היא הראש החדש.",
+      "en": "One node points next to NULL and becomes the new head."
+    }
+  },
+  {
+    "key": "quick-sw-240-v2",
+    "source_key": "quick-sw-240",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הראש הישן הוא B, וחוליה חדשה A עומדת להתפרסם כראש. מה צריך להיות A.next כדי לשמר את הרשימה הישנה?",
+      "en": "Old head is B and new node A will become the head. What must A.next be to preserve the old list?"
+    },
+    "choices": [
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      },
+      {
+        "he": "NULL",
+        "en": "NULL"
+      },
+      {
+        "he": "uninitialized",
+        "en": "uninitialized"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "A.next חייב להצביע לראש הישן B לפני עדכון הראש.",
+      "en": "A.next must point to old head B before publishing A."
+    }
+  },
+  {
+    "key": "quick-sw-240-v3",
+    "source_key": "quick-sw-240",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הכנסה לראש [4,8] נכשלת בהקצאת החוליה 7. החוזה מבטיח כשל ללא שינוי. מה נשאר ברשימת הקורא?",
+      "en": "Prepending 7 to [4,8] fails during allocation. The contract guarantees no change on failure. What remains in the caller's list?"
+    },
+    "choices": [
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "[8]",
+        "en": "[8]"
+      },
+      {
+        "he": "[4,8]",
+        "en": "[4,8]"
+      },
+      {
+        "he": "[7,4,8]",
+        "en": "[7,4,8]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "לא מפרסמים ראש חדש לפני הצלחה; הרשימה הישנה נשמרת.",
+      "en": "No new head is published before success; the old list stays intact."
+    }
+  },
+  {
+    "key": "quick-sw-240-v4",
+    "source_key": "quick-sw-240",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־C ראש B נמסר כמצביע לפי ערך. הפונקציה מציבה רק בעותק המקומי head=A, אינה משנה חוליות ואינה מחזירה ראש. מה ראש הקורא?",
+      "en": "In C, head B is passed as a pointer by value. The function only assigns its local head=A, changes no nodes and returns no head. What is the caller's head?"
+    },
+    "choices": [
+      {
+        "he": "NULL",
+        "en": "NULL"
+      },
+      {
+        "he": "A then B",
+        "en": "A then B"
+      },
+      {
+        "he": "A",
+        "en": "A"
+      },
+      {
+        "he": "B",
+        "en": "B"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "המצביע המקומי הוא עותק; צריך להחזיר ראש או לעדכן דרך מצביע לראש.",
+      "en": "The local pointer is a copy; return the head or update through a pointer to it."
+    }
+  },
+  {
+    "key": "quick-sw-240-v5",
+    "source_key": "quick-sw-240",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מכניסים N בין P ל־Q ברשימה. לפני שמציבים P.next=N, מה צריך להציב ב־N.next?",
+      "en": "Insert N between P and Q in a list. Before assigning P.next=N, what must be assigned to N.next?"
+    },
+    "choices": [
+      {
+        "he": "Q",
+        "en": "Q"
+      },
+      {
+        "he": "N",
+        "en": "N"
+      },
+      {
+        "he": "NULL",
+        "en": "NULL"
+      },
+      {
+        "he": "P",
+        "en": "P"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "N חייב לשמור קישור ליורש הישן Q כדי שהמשך הרשימה לא יאבד.",
+      "en": "N must link to former successor Q so the rest of the list is not lost."
+    }
+  },
+  {
+    "key": "quick-sw-241-v1",
+    "source_key": "quick-sw-241",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־C++ אובייקטים מקומיים A ואז B נבנו בהצלחה באותו תחום. ביציאה רגילה, מה סדר ההורסים?",
+      "en": "C++ local objects A then B finish construction in one scope. What is the destructor order on normal scope exit?"
+    },
+    "choices": [
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "[\"B\",\"A\"]",
+        "en": "[\"B\",\"A\"]"
+      },
+      {
+        "he": "[\"A\",\"B\"]",
+        "en": "[\"A\",\"B\"]"
+      },
+      {
+        "he": "[\"A\"]",
+        "en": "[\"A\"]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "הורסים רק אובייקטים שבנייתם הושלמה, בסדר הפוך בכל תחום: [\"B\",\"A\"].",
+      "en": "Destroy only fully constructed objects, in reverse order within each scope: [\"B\",\"A\"]."
+    }
+  },
+  {
+    "key": "quick-sw-241-v2",
+    "source_key": "quick-sw-241",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "לאחר בנייה מלאה של A ואז B, חריגה גורמת לפריקת מחסנית רגילה אל catch חיצוני. שני ההורסים אינם זורקים. מה סדרם?",
+      "en": "After A then B fully construct, an exception unwinds normally to an outer catch. Both destructors are nonthrowing. What is their order?"
+    },
+    "choices": [
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "[\"A\",\"B\"]",
+        "en": "[\"A\",\"B\"]"
+      },
+      {
+        "he": "[\"B\",\"A\"]",
+        "en": "[\"B\",\"A\"]"
+      },
+      {
+        "he": "[\"B\"]",
+        "en": "[\"B\"]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "הורסים רק אובייקטים שבנייתם הושלמה, בסדר הפוך בכל תחום: [\"B\",\"A\"].",
+      "en": "Destroy only fully constructed objects, in reverse order within each scope: [\"B\",\"A\"]."
+    }
+  },
+  {
+    "key": "quick-sw-241-v3",
+    "source_key": "quick-sw-241",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "A מקומי בתחום חיצוני. B נבנה בתחום פנימי שמסתיים, ואחר כך מסתיים החיצוני. איזה רצף הריסה מלא מתקבל?",
+      "en": "A is local to an outer scope. B constructs in an inner scope that ends before the outer one. What is the complete destruction sequence?"
+    },
+    "choices": [
+      {
+        "he": "[\"A\",\"B\"]",
+        "en": "[\"A\",\"B\"]"
+      },
+      {
+        "he": "[\"B\",\"B\"]",
+        "en": "[\"B\",\"B\"]"
+      },
+      {
+        "he": "[\"A\"]",
+        "en": "[\"A\"]"
+      },
+      {
+        "he": "[\"B\",\"A\"]",
+        "en": "[\"B\",\"A\"]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הורסים רק אובייקטים שבנייתם הושלמה, בסדר הפוך בכל תחום: [\"B\",\"A\"].",
+      "en": "Destroy only fully constructed objects, in reverse order within each scope: [\"B\",\"A\"]."
+    }
+  },
+  {
+    "key": "quick-sw-241-v4",
+    "source_key": "quick-sw-241",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "A נבנה במלואו; בניית B זורקת לפני שהושלמה. בפריקת המחסנית, אילו הורסי אובייקטים שלמים A או B רצים? התעלמו מתתי־אובייקטים של B.",
+      "en": "A fully constructs; B's construction throws before completion. During unwinding, which complete-object destructors of A or B run? Ignore B's subobjects."
+    },
+    "choices": [
+      {
+        "he": "[\"A\"]",
+        "en": "[\"A\"]"
+      },
+      {
+        "he": "[\"B\"]",
+        "en": "[\"B\"]"
+      },
+      {
+        "he": "[\"B\",\"A\"]",
+        "en": "[\"B\",\"A\"]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "הורסים רק אובייקטים שבנייתם הושלמה, בסדר הפוך בכל תחום: [\"A\"].",
+      "en": "Destroy only fully constructed objects, in reverse order within each scope: [\"A\"]."
+    }
+  },
+  {
+    "key": "quick-sw-241-v5",
+    "source_key": "quick-sw-241",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "A,B,C נבנים לפי הסדר באותו תחום, ואז מתבצעת פריקת מחסנית רגילה. לכל אחד משאב ייחודי והורס שאינו זורק. מה סדר שחרור המשאבים?",
+      "en": "A,B,C construct in that order in one scope, followed by ordinary unwinding. Each owns a distinct resource and has a nonthrowing destructor. In what order are resources released?"
+    },
+    "choices": [
+      {
+        "he": "[\"A\",\"B\",\"C\"]",
+        "en": "[\"A\",\"B\",\"C\"]"
+      },
+      {
+        "he": "[\"C\",\"B\",\"A\"]",
+        "en": "[\"C\",\"B\",\"A\"]"
+      },
+      {
+        "he": "[\"C\"]",
+        "en": "[\"C\"]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "הורסים רק אובייקטים שבנייתם הושלמה, בסדר הפוך בכל תחום: [\"C\",\"B\",\"A\"].",
+      "en": "Destroy only fully constructed objects, in reverse order within each scope: [\"C\",\"B\",\"A\"]."
+    }
+  },
+  {
+    "key": "quick-sw-242-v1",
+    "source_key": "quick-sw-242",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "delete של Derived דרך Base* מותר, ולהורס Base יש virtual ונגישות ציבורית. מה סדר ההורסים?",
+      "en": "Deleting Derived through Base* is permitted; Base has a public virtual destructor. What is the destructor order?"
+    },
+    "choices": [
+      {
+        "he": "[\"Base\"]",
+        "en": "[\"Base\"]"
+      },
+      {
+        "he": "התנהגות לא מוגדרת",
+        "en": "Undefined behavior"
+      },
+      {
+        "he": "[\"Derived\",\"Base\"]",
+        "en": "[\"Derived\",\"Base\"]"
+      },
+      {
+        "he": "[\"Base\",\"Derived\"]",
+        "en": "[\"Base\",\"Derived\"]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "ההורס הווירטואלי מתחיל בנגזר, ואז ההריסה מגיעה לבסיס.",
+      "en": "Virtual destruction starts with Derived and then destroys Base."
+    }
+  },
+  {
+    "key": "quick-sw-242-v2",
+    "source_key": "quick-sw-242",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "Leaf יורש מ־Middle שיורש מ־Base. מוחקים דרך Base* עם הורס וירטואלי ציבורי. מה סדר שלושת ההורסים?",
+      "en": "Leaf derives from Middle, which derives from Base. Delete through Base* with a public virtual destructor. What is the three-destructor order?"
+    },
+    "choices": [
+      {
+        "he": "[\"Leaf\",\"Base\"]",
+        "en": "[\"Leaf\",\"Base\"]"
+      },
+      {
+        "he": "התנהגות לא מוגדרת",
+        "en": "Undefined behavior"
+      },
+      {
+        "he": "[\"Base\",\"Middle\",\"Leaf\"]",
+        "en": "[\"Base\",\"Middle\",\"Leaf\"]"
+      },
+      {
+        "he": "[\"Leaf\",\"Middle\",\"Base\"]",
+        "en": "[\"Leaf\",\"Middle\",\"Base\"]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "ההריסה עולה בהיררכיה מהנגזר ביותר: Leaf,Middle,Base.",
+      "en": "Destruction climbs from the most derived type: Leaf,Middle,Base."
+    }
+  },
+  {
+    "key": "quick-sw-242-v3",
+    "source_key": "quick-sw-242",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "Base רגיל, עם הורס ציבורי שאינו וירטואלי. Base* מצביע ל־new Derived ומבצעים delete דרכו. מה קובע התקן במקרה הרגיל הזה?",
+      "en": "Ordinary Base has a public nonvirtual destructor. A Base* points to new Derived and is deleted through that pointer. What applies in this ordinary case?"
+    },
+    "choices": [
+      {
+        "he": "התנהגות לא מוגדרת",
+        "en": "Undefined behavior"
+      },
+      {
+        "he": "[\"Base\"]",
+        "en": "[\"Base\"]"
+      },
+      {
+        "he": "[\"Derived\",\"Base\"]",
+        "en": "[\"Derived\",\"Base\"]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "זהו מקרה של התנהגות לא מוגדרת; אין סדר הורסים מובטח.",
+      "en": "This is undefined behavior; no destructor sequence is guaranteed."
+    }
+  },
+  {
+    "key": "quick-sw-242-v4",
+    "source_key": "quick-sw-242",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "Base* מצביע ל־new Base עצמו, וההורס ציבורי ולא וירטואלי. מוחקים דרך Base*. מה סדר ההריסה?",
+      "en": "A Base* points to new Base itself; its destructor is public and nonvirtual. Delete through Base*. What is the destruction sequence?"
+    },
+    "choices": [
+      {
+        "he": "התנהגות לא מוגדרת",
+        "en": "Undefined behavior"
+      },
+      {
+        "he": "[\"Base\"]",
+        "en": "[\"Base\"]"
+      },
+      {
+        "he": "[\"Derived\",\"Base\"]",
+        "en": "[\"Derived\",\"Base\"]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "אין כאן אי־התאמה בין טיפוס דינמי לבסיס; Base עצמו נהרס.",
+      "en": "There is no dynamic-type/base mismatch here; Base itself is destroyed."
+    }
+  },
+  {
+    "key": "quick-sw-242-v5",
+    "source_key": "quick-sw-242",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "Derived* מצביע ל־new Derived ומוחקים דרך אותו Derived*. שני ההורסים ציבוריים; Base אינו וירטואלי. מה סדרם?",
+      "en": "A Derived* points to new Derived and deletion uses that Derived*. Both destructors are public; Base's is nonvirtual. What is their order?"
+    },
+    "choices": [
+      {
+        "he": "התנהגות לא מוגדרת",
+        "en": "Undefined behavior"
+      },
+      {
+        "he": "[\"Base\"]",
+        "en": "[\"Base\"]"
+      },
+      {
+        "he": "[\"Derived\",\"Base\"]",
+        "en": "[\"Derived\",\"Base\"]"
+      },
+      {
+        "he": "[\"Base\",\"Derived\"]",
+        "en": "[\"Base\",\"Derived\"]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "המחיקה מתחילה בטיפוס הנכון Derived; לאחריו נהרס תת־אובייקט Base.",
+      "en": "Deletion starts at the correct type Derived, followed by its Base subobject."
+    }
+  },
+  {
+    "key": "quick-sw-243-v1",
+    "source_key": "quick-sw-243",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "רקורסיית עומק מבקרת כל צומת פעם אחת בעץ בינארי מושלם בן 7 צמתים (כל הרמות מלאות). ללא קריאות NULL או אופטימיזציית זנב, מה מספר מסגרות הצמתים הפעילות המרבי?",
+      "en": "Depth-first recursion visits every node once in a perfect binary tree of 7 nodes (every level is full). Exclude NULL calls and tail-call optimization. What is the peak number of active node frames?"
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מסגרות פעילות עוקבות אחר מסלול שטרם חזר; ענפים שהסתיימו כבר יצאו מהמחסנית.",
+      "en": "Active frames follow an unfinished path; completed branches have already left the stack."
+    }
+  },
+  {
+    "key": "quick-sw-243-v2",
+    "source_key": "quick-sw-243",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "רקורסיית עומק מבקרת כל צומת פעם אחת בשרשרת בת 7 צמתים. ללא קריאות NULL או אופטימיזציית זנב, מה מספר מסגרות הצמתים הפעילות המרבי?",
+      "en": "Depth-first recursion visits every node once in a chain of 7 nodes. Exclude NULL calls and tail-call optimization. What is the peak number of active node frames?"
+    },
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מסגרות פעילות עוקבות אחר מסלול שטרם חזר; ענפים שהסתיימו כבר יצאו מהמחסנית.",
+      "en": "Active frames follow an unfinished path; completed branches have already left the stack."
+    }
+  },
+  {
+    "key": "quick-sw-243-v3",
+    "source_key": "quick-sw-243",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "רקורסיית עומק מבקרת כל צומת פעם אחת בריק. ללא קריאות NULL או אופטימיזציית זנב, מה מספר מסגרות הצמתים הפעילות המרבי?",
+      "en": "Depth-first recursion visits every node once in an empty tree. Exclude NULL calls and tail-call optimization. What is the peak number of active node frames?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מסגרות פעילות עוקבות אחר מסלול שטרם חזר; ענפים שהסתיימו כבר יצאו מהמחסנית.",
+      "en": "Active frames follow an unfinished path; completed branches have already left the stack."
+    }
+  },
+  {
+    "key": "quick-sw-243-v4",
+    "source_key": "quick-sw-243",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "רקורסיית עומק מבקרת כל צומת פעם אחת בעץ בינארי מושלם בן 15 צמתים (כל הרמות מלאות). ללא קריאות NULL או אופטימיזציית זנב, מה מספר מסגרות הצמתים הפעילות המרבי?",
+      "en": "Depth-first recursion visits every node once in a perfect binary tree of 15 nodes (every level is full). Exclude NULL calls and tail-call optimization. What is the peak number of active node frames?"
+    },
+    "choices": [
+      {
+        "he": "15",
+        "en": "15"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מסגרות פעילות עוקבות אחר מסלול שטרם חזר; ענפים שהסתיימו כבר יצאו מהמחסנית.",
+      "en": "Active frames follow an unfinished path; completed branches have already left the stack."
+    }
+  },
+  {
+    "key": "quick-sw-243-v5",
+    "source_key": "quick-sw-243",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "רקורסיית עומק מבקרת כל צומת פעם אחת בעץ בינארי מושלם בן 7 צמתים (כל הרמות מלאות). ללא קריאות NULL או אופטימיזציית זנב, מה הצמד [ביקורים כוללים,מסגרות פעילות בשיא]?",
+      "en": "Depth-first recursion visits every node once in a perfect binary tree of 7 nodes (every level is full). Exclude NULL calls and tail-call optimization. What is [total visits,peak active frames]?"
+    },
+    "choices": [
+      {
+        "he": "[3,7]",
+        "en": "[3,7]"
+      },
+      {
+        "he": "[7,7]",
+        "en": "[7,7]"
+      },
+      {
+        "he": "[3,3]",
+        "en": "[3,3]"
+      },
+      {
+        "he": "[7,3]",
+        "en": "[7,3]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מסגרות פעילות עוקבות אחר מסלול שטרם חזר; ענפים שהסתיימו כבר יצאו מהמחסנית.",
+      "en": "Active frames follow an unfinished path; completed branches have already left the stack."
+    }
+  },
+  {
+    "key": "quick-sw-244-v1",
+    "source_key": "quick-sw-244",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הביטוי הוא 2+3*4=, עם קדימות כפל רגילה וחשבון מדויק. מה התוצאה לפני סימן הסיום?",
+      "en": "Expression 2+3*4= uses normal multiplication precedence and exact arithmetic. What is its value at the terminator?"
+    },
+    "choices": [
+      {
+        "he": "14",
+        "en": "14"
+      },
+      {
+        "he": "20",
+        "en": "20"
+      },
+      {
+        "he": "24",
+        "en": "24"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "משלימים את איברי הכפל לפני צירופם לסכום; במקרה זה מתקבל 14.",
+      "en": "Finish product terms before adding them to the sum; this case gives 14."
+    }
+  },
+  {
+    "key": "quick-sw-244-v2",
+    "source_key": "quick-sw-244",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הביטוי הוא 2*3+4=, עם קדימות כפל רגילה וחשבון מדויק. מה התוצאה לפני סימן הסיום?",
+      "en": "Expression 2*3+4= uses normal multiplication precedence and exact arithmetic. What is its value at the terminator?"
+    },
+    "choices": [
+      {
+        "he": "24",
+        "en": "24"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "14",
+        "en": "14"
+      },
+      {
+        "he": "20",
+        "en": "20"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "משלימים את איברי הכפל לפני צירופם לסכום; במקרה זה מתקבל 10.",
+      "en": "Finish product terms before adding them to the sum; this case gives 10."
+    }
+  },
+  {
+    "key": "quick-sw-244-v3",
+    "source_key": "quick-sw-244",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הביטוי הוא 2+0*9=, עם קדימות כפל רגילה וחשבון מדויק. מה התוצאה לפני סימן הסיום?",
+      "en": "Expression 2+0*9= uses normal multiplication precedence and exact arithmetic. What is its value at the terminator?"
+    },
+    "choices": [
+      {
+        "he": "18",
+        "en": "18"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "משלימים את איברי הכפל לפני צירופם לסכום; במקרה זה מתקבל 2.",
+      "en": "Finish product terms before adding them to the sum; this case gives 2."
+    }
+  },
+  {
+    "key": "quick-sw-244-v4",
+    "source_key": "quick-sw-244",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הביטוי הוא 5*0+7*2=, עם קדימות כפל רגילה וחשבון מדויק. מה התוצאה לפני סימן הסיום?",
+      "en": "Expression 5*0+7*2= uses normal multiplication precedence and exact arithmetic. What is its value at the terminator?"
+    },
+    "choices": [
+      {
+        "he": "24",
+        "en": "24"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "14",
+        "en": "14"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "משלימים את איברי הכפל לפני צירופם לסכום; במקרה זה מתקבל 14.",
+      "en": "Finish product terms before adding them to the sum; this case gives 14."
+    }
+  },
+  {
+    "key": "quick-sw-244-v5",
+    "source_key": "quick-sw-244",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "הביטוי הוא 2+3*4=, עם קדימות כפל רגילה וחשבון מדויק. מה הצמד [סכום איברים שסוימו,מכפלה נוכחית] מיד לפני =?",
+      "en": "Expression 2+3*4= uses normal multiplication precedence and exact arithmetic. What is [sum of completed terms,current product] immediately before =?"
+    },
+    "choices": [
+      {
+        "he": "[2,12]",
+        "en": "[2,12]"
+      },
+      {
+        "he": "[14,0]",
+        "en": "[14,0]"
+      },
+      {
+        "he": "[5,4]",
+        "en": "[5,4]"
+      },
+      {
+        "he": "[0,20]",
+        "en": "[0,20]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "משלימים את איברי הכפל לפני צירופם לסכום; במקרה זה מתקבל [2,12].",
+      "en": "Finish product terms before adding them to the sum; this case gives [2,12]."
+    }
+  },
+  {
+    "key": "quick-sw-245-v1",
+    "source_key": "quick-sw-245",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בדקדוק NUMBER ((+|*) NUMBER)* =, המספרים הם אסימונים לא שליליים. מה האבחנה עבור האסימונים: 2 + =?",
+      "en": "Under grammar NUMBER ((+|*) NUMBER)* =, numbers are nonnegative tokens. Classify tokens: 2 + =."
+    },
+    "choices": [
+      {
+        "he": "הביטוי חוקי",
+        "en": "The expression is valid"
+      },
+      {
+        "he": "חסר מספר במקום הנוכחי",
+        "en": "A number is missing at this position"
+      },
+      {
+        "he": "יש אסימון אחרי סימן הסיום",
+        "en": "A token follows the terminator"
+      },
+      {
+        "he": "חסר סימן הסיום =",
+        "en": "The = terminator is missing"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "הבדיקה שומרת האם צפוי מספר, צפוי אופרטור או שכבר התקבל סימן סיום; אין לקבל אסימונים אחריו.",
+      "en": "Validation tracks number expectation, operator expectation and completion; tokens after completion are forbidden."
+    }
+  },
+  {
+    "key": "quick-sw-245-v2",
+    "source_key": "quick-sw-245",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בדקדוק NUMBER ((+|*) NUMBER)* =, המספרים הם אסימונים לא שליליים. מה האבחנה עבור האסימונים: 2 = 3?",
+      "en": "Under grammar NUMBER ((+|*) NUMBER)* =, numbers are nonnegative tokens. Classify tokens: 2 = 3."
+    },
+    "choices": [
+      {
+        "he": "הביטוי חוקי",
+        "en": "The expression is valid"
+      },
+      {
+        "he": "חסר מספר במקום הנוכחי",
+        "en": "A number is missing at this position"
+      },
+      {
+        "he": "יש אסימון אחרי סימן הסיום",
+        "en": "A token follows the terminator"
+      },
+      {
+        "he": "חסר סימן הסיום =",
+        "en": "The = terminator is missing"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "הבדיקה שומרת האם צפוי מספר, צפוי אופרטור או שכבר התקבל סימן סיום; אין לקבל אסימונים אחריו.",
+      "en": "Validation tracks number expectation, operator expectation and completion; tokens after completion are forbidden."
+    }
+  },
+  {
+    "key": "quick-sw-245-v3",
+    "source_key": "quick-sw-245",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בדקדוק NUMBER ((+|*) NUMBER)* =, המספרים הם אסימונים לא שליליים. מה האבחנה עבור האסימונים: =?",
+      "en": "Under grammar NUMBER ((+|*) NUMBER)* =, numbers are nonnegative tokens. Classify tokens: =."
+    },
+    "choices": [
+      {
+        "he": "יש אסימון אחרי סימן הסיום",
+        "en": "A token follows the terminator"
+      },
+      {
+        "he": "חסר סימן הסיום =",
+        "en": "The = terminator is missing"
+      },
+      {
+        "he": "הביטוי חוקי",
+        "en": "The expression is valid"
+      },
+      {
+        "he": "חסר מספר במקום הנוכחי",
+        "en": "A number is missing at this position"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הבדיקה שומרת האם צפוי מספר, צפוי אופרטור או שכבר התקבל סימן סיום; אין לקבל אסימונים אחריו.",
+      "en": "Validation tracks number expectation, operator expectation and completion; tokens after completion are forbidden."
+    }
+  },
+  {
+    "key": "quick-sw-245-v4",
+    "source_key": "quick-sw-245",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בדקדוק NUMBER ((+|*) NUMBER)* =, המספרים הם אסימונים לא שליליים. מה האבחנה עבור האסימונים: 2 * 3?",
+      "en": "Under grammar NUMBER ((+|*) NUMBER)* =, numbers are nonnegative tokens. Classify tokens: 2 * 3."
+    },
+    "choices": [
+      {
+        "he": "חסר סימן הסיום =",
+        "en": "The = terminator is missing"
+      },
+      {
+        "he": "הביטוי חוקי",
+        "en": "The expression is valid"
+      },
+      {
+        "he": "חסר מספר במקום הנוכחי",
+        "en": "A number is missing at this position"
+      },
+      {
+        "he": "יש אסימון אחרי סימן הסיום",
+        "en": "A token follows the terminator"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "הבדיקה שומרת האם צפוי מספר, צפוי אופרטור או שכבר התקבל סימן סיום; אין לקבל אסימונים אחריו.",
+      "en": "Validation tracks number expectation, operator expectation and completion; tokens after completion are forbidden."
+    }
+  },
+  {
+    "key": "quick-sw-245-v5",
+    "source_key": "quick-sw-245",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בדקדוק NUMBER ((+|*) NUMBER)* =, המספרים הם אסימונים לא שליליים. מה האבחנה עבור האסימונים: 0 =?",
+      "en": "Under grammar NUMBER ((+|*) NUMBER)* =, numbers are nonnegative tokens. Classify tokens: 0 =."
+    },
+    "choices": [
+      {
+        "he": "חסר סימן הסיום =",
+        "en": "The = terminator is missing"
+      },
+      {
+        "he": "הביטוי חוקי",
+        "en": "The expression is valid"
+      },
+      {
+        "he": "חסר מספר במקום הנוכחי",
+        "en": "A number is missing at this position"
+      },
+      {
+        "he": "יש אסימון אחרי סימן הסיום",
+        "en": "A token follows the terminator"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "הבדיקה שומרת האם צפוי מספר, צפוי אופרטור או שכבר התקבל סימן סיום; אין לקבל אסימונים אחריו.",
+      "en": "Validation tracks number expectation, operator expectation and completion; tokens after completion are forbidden."
+    }
+  },
+  {
+    "key": "quick-sw-246-v1",
+    "source_key": "quick-sw-246",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "למערך [9,9,7,7,7], החזירו עד שני ערכים שונים בסדר יורד, כל אחד כ־[ערך,שכיחות]. אין להוסיף ערך חסר. מה הפלט?",
+      "en": "For array [9,9,7,7,7], return up to two distinct values in descending order as [value,frequency]. Do not invent a missing value. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "[[7,3],[9,2]]",
+        "en": "[[7,3],[9,2]]"
+      },
+      {
+        "he": "[[9,2],[7,1]]",
+        "en": "[[9,2],[7,1]]"
+      },
+      {
+        "he": "[[9,2],[7,3]]",
+        "en": "[[9,2],[7,3]]"
+      },
+      {
+        "he": "[[9,1],[9,1]]",
+        "en": "[[9,1],[9,1]]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "סופרים הופעות לכל ערך, בוחרים את שני המפתחות הגדולים ביותר ומשמרים את מוניהם.",
+      "en": "Count each value's occurrences, select the two greatest keys and retain their counts."
+    }
+  },
+  {
+    "key": "quick-sw-246-v2",
+    "source_key": "quick-sw-246",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "למערך [-3,-1,-1,-2], החזירו עד שני ערכים שונים בסדר יורד, כל אחד כ־[ערך,שכיחות]. אין להוסיף ערך חסר. מה הפלט?",
+      "en": "For array [-3,-1,-1,-2], return up to two distinct values in descending order as [value,frequency]. Do not invent a missing value. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "[[0,0],[-1,2]]",
+        "en": "[[0,0],[-1,2]]"
+      },
+      {
+        "he": "[[-1,1],[-1,1]]",
+        "en": "[[-1,1],[-1,1]]"
+      },
+      {
+        "he": "[[-3,1],[-2,1]]",
+        "en": "[[-3,1],[-2,1]]"
+      },
+      {
+        "he": "[[-1,2],[-2,1]]",
+        "en": "[[-1,2],[-2,1]]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "סופרים הופעות לכל ערך, בוחרים את שני המפתחות הגדולים ביותר ומשמרים את מוניהם.",
+      "en": "Count each value's occurrences, select the two greatest keys and retain their counts."
+    }
+  },
+  {
+    "key": "quick-sw-246-v3",
+    "source_key": "quick-sw-246",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "למערך [5,5,5], החזירו עד שני ערכים שונים בסדר יורד, כל אחד כ־[ערך,שכיחות]. אין להוסיף ערך חסר. מה הפלט?",
+      "en": "For array [5,5,5], return up to two distinct values in descending order as [value,frequency]. Do not invent a missing value. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "[[5,3]]",
+        "en": "[[5,3]]"
+      },
+      {
+        "he": "[[5,3],[0,0]]",
+        "en": "[[5,3],[0,0]]"
+      },
+      {
+        "he": "[[5,1],[5,2]]",
+        "en": "[[5,1],[5,2]]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "סופרים הופעות לכל ערך, בוחרים את שני המפתחות הגדולים ביותר ומשמרים את מוניהם.",
+      "en": "Count each value's occurrences, select the two greatest keys and retain their counts."
+    }
+  },
+  {
+    "key": "quick-sw-246-v4",
+    "source_key": "quick-sw-246",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "למערך [4,4,8,8,6], החזירו עד שני ערכים שונים בסדר יורד, כל אחד כ־[ערך,שכיחות]. אין להוסיף ערך חסר. מה הפלט?",
+      "en": "For array [4,4,8,8,6], return up to two distinct values in descending order as [value,frequency]. Do not invent a missing value. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "[[6,1],[4,2]]",
+        "en": "[[6,1],[4,2]]"
+      },
+      {
+        "he": "[[8,2],[6,1]]",
+        "en": "[[8,2],[6,1]]"
+      },
+      {
+        "he": "[[8,2],[4,2]]",
+        "en": "[[8,2],[4,2]]"
+      },
+      {
+        "he": "[[8,1],[8,1]]",
+        "en": "[[8,1],[8,1]]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "סופרים הופעות לכל ערך, בוחרים את שני המפתחות הגדולים ביותר ומשמרים את מוניהם.",
+      "en": "Count each value's occurrences, select the two greatest keys and retain their counts."
+    }
+  },
+  {
+    "key": "quick-sw-246-v5",
+    "source_key": "quick-sw-246",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "למערך [], החזירו עד שני ערכים שונים בסדר יורד, כל אחד כ־[ערך,שכיחות]. אין להוסיף ערך חסר. מה הפלט?",
+      "en": "For array [], return up to two distinct values in descending order as [value,frequency]. Do not invent a missing value. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "[[0,1]]",
+        "en": "[[0,1]]"
+      },
+      {
+        "he": "[[-1,1]]",
+        "en": "[[-1,1]]"
+      },
+      {
+        "he": "[]",
+        "en": "[]"
+      },
+      {
+        "he": "[[0,0]]",
+        "en": "[[0,0]]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "סופרים הופעות לכל ערך, בוחרים את שני המפתחות הגדולים ביותר ומשמרים את מוניהם.",
+      "en": "Count each value's occurrences, select the two greatest keys and retain their counts."
+    }
+  },
+  {
+    "key": "quick-sw-247-v1",
+    "source_key": "quick-sw-247",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־[4,2,4,2] מחפשים ערך שכיח. בשוויון בוחרים את הערך הקטן ביותר; ריק מחזיר None. מה התוצאה?",
+      "en": "Find the mode of [4,2,4,2]. Break frequency ties by the smallest value; empty input returns None. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "כלל ההכרעה משווה תחילה שכיחות ורק אחר כך ערך; None שמור לקלט ריק.",
+      "en": "The tie policy compares frequency first and value second; None is reserved for empty input."
+    }
+  },
+  {
+    "key": "quick-sw-247-v2",
+    "source_key": "quick-sw-247",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־[-1,-3,-1,-3] מחפשים ערך שכיח. בשוויון בוחרים את הערך הקטן ביותר; ריק מחזיר None. מה התוצאה?",
+      "en": "Find the mode of [-1,-3,-1,-3]. Break frequency ties by the smallest value; empty input returns None. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "-3",
+        "en": "-3"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "כלל ההכרעה משווה תחילה שכיחות ורק אחר כך ערך; None שמור לקלט ריק.",
+      "en": "The tie policy compares frequency first and value second; None is reserved for empty input."
+    }
+  },
+  {
+    "key": "quick-sw-247-v3",
+    "source_key": "quick-sw-247",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־[0,0,2] מחפשים ערך שכיח. בשוויון בוחרים את הערך הקטן ביותר; ריק מחזיר None. מה התוצאה?",
+      "en": "Find the mode of [0,0,2]. Break frequency ties by the smallest value; empty input returns None. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "כלל ההכרעה משווה תחילה שכיחות ורק אחר כך ערך; None שמור לקלט ריק.",
+      "en": "The tie policy compares frequency first and value second; None is reserved for empty input."
+    }
+  },
+  {
+    "key": "quick-sw-247-v4",
+    "source_key": "quick-sw-247",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־[] מחפשים ערך שכיח. בשוויון בוחרים את הערך הקטן ביותר; ריק מחזיר None. מה התוצאה?",
+      "en": "Find the mode of []. Break frequency ties by the smallest value; empty input returns None. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "כלל ההכרעה משווה תחילה שכיחות ורק אחר כך ערך; None שמור לקלט ריק.",
+      "en": "The tie policy compares frequency first and value second; None is reserved for empty input."
+    }
+  },
+  {
+    "key": "quick-sw-247-v5",
+    "source_key": "quick-sw-247",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "ב־[8,2,8,2,8] מחפשים ערך שכיח. בשוויון בוחרים את הערך הקטן ביותר; ריק מחזיר None. מה התוצאה?",
+      "en": "Find the mode of [8,2,8,2,8]. Break frequency ties by the smallest value; empty input returns None. What is returned?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "כלל ההכרעה משווה תחילה שכיחות ורק אחר כך ערך; None שמור לקלט ריק.",
+      "en": "The tie policy compares frequency first and value second; None is reserved for empty input."
+    }
+  },
+  {
+    "key": "quick-sw-248-v1",
+    "source_key": "quick-sw-248",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "השכיחויות לאחר מחיקת שתי הופעות של ערך אחד הן [[4,1],[9,3]], כל זוג [ערך,כמות]. במקור כל כמות התחלקה ב־3. איזה ערך נפגע?",
+      "en": "After deleting two occurrences of one value, frequencies are [[4,1],[9,3]], each pair [value,count]. Every original count was divisible by 3. Which value was affected?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "לערך שנפגע יש שכיחות השקולה ל־1 מודולו 3; כל שאר השכיחויות שקולות ל־0 מודולו 3.",
+      "en": "The affected frequency is 1 modulo 3; all other frequencies are 0 modulo 3."
+    }
+  },
+  {
+    "key": "quick-sw-248-v2",
+    "source_key": "quick-sw-248",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "השכיחויות לאחר מחיקת שתי הופעות של ערך אחד הן [[2,4],[5,6]], כל זוג [ערך,כמות]. במקור כל כמות התחלקה ב־3. איזה ערך נפגע?",
+      "en": "After deleting two occurrences of one value, frequencies are [[2,4],[5,6]], each pair [value,count]. Every original count was divisible by 3. Which value was affected?"
+    },
+    "choices": [
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "לערך שנפגע יש שכיחות השקולה ל־1 מודולו 3; כל שאר השכיחויות שקולות ל־0 מודולו 3.",
+      "en": "The affected frequency is 1 modulo 3; all other frequencies are 0 modulo 3."
+    }
+  },
+  {
+    "key": "quick-sw-248-v3",
+    "source_key": "quick-sw-248",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "השכיחויות לאחר מחיקת שתי הופעות של ערך אחד הן [[-7,4],[-1,3],[8,6]], כל זוג [ערך,כמות]. במקור כל כמות התחלקה ב־3. איזה ערך נפגע?",
+      "en": "After deleting two occurrences of one value, frequencies are [[-7,4],[-1,3],[8,6]], each pair [value,count]. Every original count was divisible by 3. Which value was affected?"
+    },
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "-7",
+        "en": "-7"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "לערך שנפגע יש שכיחות השקולה ל־1 מודולו 3; כל שאר השכיחויות שקולות ל־0 מודולו 3.",
+      "en": "The affected frequency is 1 modulo 3; all other frequencies are 0 modulo 3."
+    }
+  },
+  {
+    "key": "quick-sw-248-v4",
+    "source_key": "quick-sw-248",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "השכיחויות לאחר מחיקת שתי הופעות של ערך אחד הן [[3,7],[6,9]], כל זוג [ערך,כמות]. במקור כל כמות התחלקה ב־3. איזה ערך נפגע?",
+      "en": "After deleting two occurrences of one value, frequencies are [[3,7],[6,9]], each pair [value,count]. Every original count was divisible by 3. Which value was affected?"
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "לערך שנפגע יש שכיחות השקולה ל־1 מודולו 3; כל שאר השכיחויות שקולות ל־0 מודולו 3.",
+      "en": "The affected frequency is 1 modulo 3; all other frequencies are 0 modulo 3."
+    }
+  },
+  {
+    "key": "quick-sw-248-v5",
+    "source_key": "quick-sw-248",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "השכיחויות לאחר מחיקת שתי הופעות של ערך אחד הן [[0,1],[1,6]], כל זוג [ערך,כמות]. במקור כל כמות התחלקה ב־3. איזה ערך נפגע?",
+      "en": "After deleting two occurrences of one value, frequencies are [[0,1],[1,6]], each pair [value,count]. Every original count was divisible by 3. Which value was affected?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "None",
+        "en": "None"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "לערך שנפגע יש שכיחות השקולה ל־1 מודולו 3; כל שאר השכיחויות שקולות ל־0 מודולו 3.",
+      "en": "The affected frequency is 1 modulo 3; all other frequencies are 0 modulo 3."
+    }
+  },
+  {
+    "key": "quick-sw-249-v1",
+    "source_key": "quick-sw-249",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בייטי השורה הם [0]. פיקסל p הוא ביט p%8 מה־LSB בבייט p//8. מדליקים 3 פיקסלים החל מ־x=1, בלי לשנות אחרים. מה הבייטים החדשים בעשרוני?",
+      "en": "Row bytes are [0]. Pixel p is LSB-based bit p%8 in byte p//8. Set 3 pixels starting at x=1, preserving other pixels. What are the new decimal bytes?"
+    },
+    "choices": [
+      {
+        "he": "[0]",
+        "en": "[0]"
+      },
+      {
+        "he": "[14]",
+        "en": "[14]"
+      },
+      {
+        "he": "[7]",
+        "en": "[7]"
+      },
+      {
+        "he": "[15]",
+        "en": "[15]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מפעילים OR רק עם מסכת הטווח; גם ביטים שכבר דלקו מחוץ לטווח נשמרים.",
+      "en": "OR only the target mask; previously set bits outside the range are preserved."
+    }
+  },
+  {
+    "key": "quick-sw-249-v2",
+    "source_key": "quick-sw-249",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בייטי השורה הם [255]. פיקסל p הוא ביט p%8 מה־LSB בבייט p//8. מדליקים 0 פיקסלים החל מ־x=2, בלי לשנות אחרים. מה הבייטים החדשים בעשרוני?",
+      "en": "Row bytes are [255]. Pixel p is LSB-based bit p%8 in byte p//8. Set 0 pixels starting at x=2, preserving other pixels. What are the new decimal bytes?"
+    },
+    "choices": [
+      {
+        "he": "[251]",
+        "en": "[251]"
+      },
+      {
+        "he": "[4]",
+        "en": "[4]"
+      },
+      {
+        "he": "[255]",
+        "en": "[255]"
+      },
+      {
+        "he": "[0]",
+        "en": "[0]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מפעילים OR רק עם מסכת הטווח; גם ביטים שכבר דלקו מחוץ לטווח נשמרים.",
+      "en": "OR only the target mask; previously set bits outside the range are preserved."
+    }
+  },
+  {
+    "key": "quick-sw-249-v3",
+    "source_key": "quick-sw-249",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בייטי השורה הם [128,1]. פיקסל p הוא ביט p%8 מה־LSB בבייט p//8. מדליקים 4 פיקסלים החל מ־x=6, בלי לשנות אחרים. מה הבייטים החדשים בעשרוני?",
+      "en": "Row bytes are [128,1]. Pixel p is LSB-based bit p%8 in byte p//8. Set 4 pixels starting at x=6, preserving other pixels. What are the new decimal bytes?"
+    },
+    "choices": [
+      {
+        "he": "[192,192]",
+        "en": "[192,192]"
+      },
+      {
+        "he": "[255,255]",
+        "en": "[255,255]"
+      },
+      {
+        "he": "[64,3]",
+        "en": "[64,3]"
+      },
+      {
+        "he": "[192,3]",
+        "en": "[192,3]"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מפעילים OR רק עם מסכת הטווח; גם ביטים שכבר דלקו מחוץ לטווח נשמרים.",
+      "en": "OR only the target mask; previously set bits outside the range are preserved."
+    }
+  },
+  {
+    "key": "quick-sw-249-v4",
+    "source_key": "quick-sw-249",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בייטי השורה הם [85]. פיקסל p הוא ביט p%8 מה־LSB בבייט p//8. מדליקים 2 פיקסלים החל מ־x=2, בלי לשנות אחרים. מה הבייטים החדשים בעשרוני?",
+      "en": "Row bytes are [85]. Pixel p is LSB-based bit p%8 in byte p//8. Set 2 pixels starting at x=2, preserving other pixels. What are the new decimal bytes?"
+    },
+    "choices": [
+      {
+        "he": "[93]",
+        "en": "[93]"
+      },
+      {
+        "he": "[12]",
+        "en": "[12]"
+      },
+      {
+        "he": "[85]",
+        "en": "[85]"
+      },
+      {
+        "he": "[89]",
+        "en": "[89]"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מפעילים OR רק עם מסכת הטווח; גם ביטים שכבר דלקו מחוץ לטווח נשמרים.",
+      "en": "OR only the target mask; previously set bits outside the range are preserved."
+    }
+  },
+  {
+    "key": "quick-sw-249-v5",
+    "source_key": "quick-sw-249",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בייטי השורה הם [0,0]. פיקסל p הוא ביט p%8 מה־LSB בבייט p//8. מדליקים 2 פיקסלים החל מ־x=7, בלי לשנות אחרים. מה הבייטים החדשים בעשרוני?",
+      "en": "Row bytes are [0,0]. Pixel p is LSB-based bit p%8 in byte p//8. Set 2 pixels starting at x=7, preserving other pixels. What are the new decimal bytes?"
+    },
+    "choices": [
+      {
+        "he": "[128,0]",
+        "en": "[128,0]"
+      },
+      {
+        "he": "[128,1]",
+        "en": "[128,1]"
+      },
+      {
+        "he": "[1,128]",
+        "en": "[1,128]"
+      },
+      {
+        "he": "[255,255]",
+        "en": "[255,255]"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מפעילים OR רק עם מסכת הטווח; גם ביטים שכבר דלקו מחוץ לטווח נשמרים.",
+      "en": "OR only the target mask; previously set bits outside the range are preserved."
+    }
+  },
+  {
+    "key": "quick-sw-250-v1",
+    "source_key": "quick-sw-250",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מדפיסים boom פעם אחת למספר אם כתיבו העשרוני מכיל 7; התחלקות ב־7 אינה תנאי. האם 14 מפעיל, וכמה הדפסות?",
+      "en": "Print boom once per number if its decimal representation contains 7; divisibility by 7 is irrelevant. Does 14 trigger, and how many prints?"
+    },
+    "choices": [
+      {
+        "he": "הקלט אינו חוקי",
+        "en": "Invalid input"
+      },
+      {
+        "he": "כן, פעם אחת",
+        "en": "Yes, exactly once"
+      },
+      {
+        "he": "לא",
+        "en": "No"
+      },
+      {
+        "he": "כן, פעמיים",
+        "en": "Yes, twice"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מחפשים נוכחות של הספרה, לא מספר מופעיה ולא שארית בחלוקה ב־7.",
+      "en": "Test digit presence, not occurrence count or remainder modulo 7."
+    }
+  },
+  {
+    "key": "quick-sw-250-v2",
+    "source_key": "quick-sw-250",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מדפיסים boom פעם אחת למספר אם כתיבו העשרוני מכיל 7; התחלקות ב־7 אינה תנאי. האם 77 מפעיל, וכמה הדפסות?",
+      "en": "Print boom once per number if its decimal representation contains 7; divisibility by 7 is irrelevant. Does 77 trigger, and how many prints?"
+    },
+    "choices": [
+      {
+        "he": "לא",
+        "en": "No"
+      },
+      {
+        "he": "כן, פעמיים",
+        "en": "Yes, twice"
+      },
+      {
+        "he": "הקלט אינו חוקי",
+        "en": "Invalid input"
+      },
+      {
+        "he": "כן, פעם אחת",
+        "en": "Yes, exactly once"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מחפשים נוכחות של הספרה, לא מספר מופעיה ולא שארית בחלוקה ב־7.",
+      "en": "Test digit presence, not occurrence count or remainder modulo 7."
+    }
+  },
+  {
+    "key": "quick-sw-250-v3",
+    "source_key": "quick-sw-250",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מדפיסים boom פעם אחת למספר אם כתיבו העשרוני מכיל 7; התחלקות ב־7 אינה תנאי. האם 70 מפעיל, וכמה הדפסות?",
+      "en": "Print boom once per number if its decimal representation contains 7; divisibility by 7 is irrelevant. Does 70 trigger, and how many prints?"
+    },
+    "choices": [
+      {
+        "he": "כן, פעם אחת",
+        "en": "Yes, exactly once"
+      },
+      {
+        "he": "לא",
+        "en": "No"
+      },
+      {
+        "he": "כן, פעמיים",
+        "en": "Yes, twice"
+      },
+      {
+        "he": "הקלט אינו חוקי",
+        "en": "Invalid input"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחפשים נוכחות של הספרה, לא מספר מופעיה ולא שארית בחלוקה ב־7.",
+      "en": "Test digit presence, not occurrence count or remainder modulo 7."
+    }
+  },
+  {
+    "key": "quick-sw-250-v4",
+    "source_key": "quick-sw-250",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "מדפיסים boom פעם אחת למספר אם כתיבו העשרוני מכיל 7; התחלקות ב־7 אינה תנאי. האם 0 מפעיל, וכמה הדפסות?",
+      "en": "Print boom once per number if its decimal representation contains 7; divisibility by 7 is irrelevant. Does 0 trigger, and how many prints?"
+    },
+    "choices": [
+      {
+        "he": "כן, פעם אחת",
+        "en": "Yes, exactly once"
+      },
+      {
+        "he": "לא",
+        "en": "No"
+      },
+      {
+        "he": "כן, פעמיים",
+        "en": "Yes, twice"
+      },
+      {
+        "he": "הקלט אינו חוקי",
+        "en": "Invalid input"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מחפשים נוכחות של הספרה, לא מספר מופעיה ולא שארית בחלוקה ב־7.",
+      "en": "Test digit presence, not occurrence count or remainder modulo 7."
+    }
+  },
+  {
+    "key": "quick-sw-250-v5",
+    "source_key": "quick-sw-250",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "עוברים מ־1 עד 20 כולל, ומדפיסים את המספר פעם אחת רק אם כתיבו מכיל 7. אילו מספרים מודפסים?",
+      "en": "Scan 1 through 20 inclusive, printing each number once only if its decimal representation contains 7. Which numbers are printed?"
+    },
+    "choices": [
+      {
+        "he": "[7,14,17]",
+        "en": "[7,14,17]"
+      },
+      {
+        "he": "[7]",
+        "en": "[7]"
+      },
+      {
+        "he": "[7,17]",
+        "en": "[7,17]"
+      },
+      {
+        "he": "[7,14]",
+        "en": "[7,14]"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "7 ו־17 מכילים 7; 14 מתחלק ב־7 אך אינו מכיל את הספרה.",
+      "en": "7 and 17 contain 7; 14 is divisible by 7 but lacks the digit."
+    }
+  }
+]

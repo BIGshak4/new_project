@@ -1,0 +1,811 @@
+[
+  {
+    "id": "quick-sw-201",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-198"
+    ],
+    "title": {
+      "he": "הסתברות משותפת אינה אחידה",
+      "en": "Joint outcomes need not be uniform"
+    },
+    "prompt": {
+      "he": "מגרילים A באופן אחיד בשלמים 0..3, ואז B באופן אחיד ב־0..A. מה ההסתברות המשותפת A=2, B=1? הגבולות כלולים.",
+      "en": "Draw integer A uniformly from 0..3, then B uniformly from 0..A. What is the joint probability A=2, B=1? Both endpoints are included."
+    },
+    "answer": {
+      "he": "1/12. מכפילים את הסתברות A בהסתברות המותנית של B; אם B גדול מ־A התוצאה בלתי אפשרית.",
+      "en": "1/12. Multiply the probability of A by the conditional probability of B; B above A is impossible."
+    },
+    "takeaway": {
+      "he": "התניה משנה את משקלן של תוצאות אפשריות.",
+      "en": "Conditioning changes the weights of possible outcomes."
+    }
+  },
+  {
+    "id": "quick-sw-202",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-198"
+    ],
+    "title": {
+      "he": "ממוצע של ממוצעים מותנים",
+      "en": "Average the conditional averages"
+    },
+    "prompt": {
+      "he": "A אחיד בשלמים 0..4; לאחריו B אחיד בשלמים 0..A, כולל הגבולות. מהי תוחלת B?",
+      "en": "A is uniform over integers 0..4; B is then uniform over integers 0..A, including endpoints. What is the expectation of B?"
+    },
+    "answer": {
+      "he": "1. לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
+      "en": "1. For A=a the mean of B is a/2. Average again over A; independence is unnecessary."
+    },
+    "takeaway": {
+      "he": "לתוחלת מותנית אין צורך בהנחת אי־תלות.",
+      "en": "Conditional expectation does not require independence."
+    }
+  },
+  {
+    "id": "quick-sw-203",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-184"
+    ],
+    "title": {
+      "he": "שארית עלולה להטות הגרלה",
+      "en": "A remainder can bias a draw"
+    },
+    "prompt": {
+      "he": "X אחיד בשלמים 0..5 לא כולל 5. מחזירים X modulo 3. מה ההפרש בין מספר ערכי X שמובילים לשארית הנפוצה ביותר ולשארית הנדירה ביותר?",
+      "en": "X is uniform over integers 0..5, excluding 5. Return X modulo 3. What is the difference between the largest and smallest numbers of X values mapping to one remainder?"
+    },
+    "answer": {
+      "he": "1. מחלקים את ערכי הקלט בין השאריות. אם החלוקה אינה שלמה, חלק מהשאריות מקבלות מקור נוסף ולכן ההגרלה מוטה.",
+      "en": "1. Partition input values by remainder. An incomplete division gives some outputs an extra preimage, causing bias."
+    },
+    "takeaway": {
+      "he": "אחידות נשמרת כשמספר המקורות לכל פלט שווה.",
+      "en": "Uniform output needs equal numbers of input outcomes per result."
+    }
+  },
+  {
+    "id": "quick-sw-204",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-184"
+    ],
+    "title": {
+      "he": "דחייה הוגנת עולה ניסיונות",
+      "en": "Fair rejection costs attempts"
+    },
+    "prompt": {
+      "he": "כל ניסיון משתמש ב־2 הגרלות עצמאיות אחידות 0..5 לא כולל 5, ויוצר מספר דו־ספרתי בבסיס 5. מקבלים רק את הקידומת שאורכה הכפולה הגדולה ביותר של 7, ומנסים שוב בדחייה. מה תוחלת מספר ההגרלות עד קבלה?",
+      "en": "Each attempt uses 2 independent uniform draws from 0..5, excluding 5, forming a two-digit base-5 number. Accept only the longest initial range whose size is divisible by 7; otherwise retry. What is the expected number of primitive draws until acceptance?"
+    },
+    "answer": {
+      "he": "50/21. מחשבים את שיעור הקבלה מתוך כל הזוגות. תוחלת הניסיונות היא ההופכי שלו, וכל ניסיון צורך 2 הגרלות.",
+      "en": "50/21. Find the accepted fraction of all pairs. Expected attempts equal its reciprocal, and every attempt costs 2 primitive draws."
+    },
+    "takeaway": {
+      "he": "דחיית תוצאות משמרת אחידות אך מגדילה עלות צפויה.",
+      "en": "Rejection preserves uniformity while increasing expected cost."
+    }
+  },
+  {
+    "id": "quick-sw-205",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-198"
+    ],
+    "title": {
+      "he": "יותר דרכים לערך קטן",
+      "en": "Small values have more routes"
+    },
+    "prompt": {
+      "he": "A אחיד בשלמים 0..3; אז B אחיד בשלמים 0..A. הגבולות כלולים. מה ההסתברות B≤0?",
+      "en": "A is uniform over integers 0..3; B is then uniform over integers 0..A. Endpoints are included. What is the probability B≤0?"
+    },
+    "answer": {
+      "he": "25/48. לכל ערך של A סופרים את ערכי B המותרים שמתאימים, ומשקללים בהסתברות של אותו A.",
+      "en": "25/48. For each A, count qualifying B values among its allowed values, then weight by that A's probability."
+    },
+    "takeaway": {
+      "he": "בחירה אחידה בכל שלב אינה מחייבת פלט סופי אחיד.",
+      "en": "Uniform choices at each stage need not give a uniform final output."
+    }
+  },
+  {
+    "id": "quick-sw-206",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-192"
+    ],
+    "title": {
+      "he": "הקצה משפיע על שכנות",
+      "en": "An endpoint affects adjacency"
+    },
+    "prompt": {
+      "he": "6 אנשים שונים יושבים בשורה בסידור אחיד. מה ההסתברות ש־B יושב צמוד מימין ל־A? אין התניה על מושבו של A.",
+      "en": "6 distinct people sit in a uniformly random row. What is the probability B sits immediately right of A? A's seat is not conditioned on."
+    },
+    "answer": {
+      "he": "1/6. הזוג AB הוא יחידה אחת בסדר קבוע. מסדרים אותה עם שאר האנשים, ביחס לכל סידורי הישיבה.",
+      "en": "1/6. Treat AB as one fixed-order block. Compare arrangements of that block and the others with all seatings."
+    },
+    "takeaway": {
+      "he": "קיבוץ זוג בסדר קבוע שונה מקיבוץ זוג בכל סדר.",
+      "en": "A fixed-order pair differs from an unordered adjacent pair."
+    }
+  },
+  {
+    "id": "quick-sw-207",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-192"
+    ],
+    "title": {
+      "he": "שתי שכנויות חולקות אדם",
+      "en": "Two adjacencies share a person"
+    },
+    "prompt": {
+      "he": "5 אנשים שונים יושבים בשורה באחידות. מה ההסתברות שבאותו סידור B צמוד מימין ל־A וגם C צמוד מימין ל־B?",
+      "en": "5 distinct people sit uniformly in a row. What is the probability B is immediately right of A and C is immediately right of B in the same seating?"
+    },
+    "answer": {
+      "he": "1/20. שני התנאים מחייבים מקשה ABC. סופרים את המקשה פעם אחת, במקום להכפיל הסתברויות כאילו האירועים עצמאיים.",
+      "en": "1/20. Both conditions force one ABC block. Count that block once rather than assuming the adjacency events are independent."
+    },
+    "takeaway": {
+      "he": "אירועי שכנות שמשתפים אדם אינם בהכרח בלתי תלויים.",
+      "en": "Adjacency events sharing a person need not be independent."
+    }
+  },
+  {
+    "id": "quick-sw-208",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-190"
+    ],
+    "title": {
+      "he": "סדר העימותים בוחר מנצח",
+      "en": "An agenda selects the winner"
+    },
+    "prompt": {
+      "he": "מועמדים מקודדים 0,1,2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 0 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
+      "en": "Candidates are 0,1,2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 0 waits for the winner between the other two. Who wins the final?"
+    },
+    "answer": {
+      "he": "0. בכל כיוון של המעגל, המנצח בעימות הראשון הוא דווקא מי שהממתין בגמר מנצח בעימות זוגי.",
+      "en": "0. In either cycle direction, the first-round winner is precisely the opponent whom the waiting finalist beats."
+    },
+    "takeaway": {
+      "he": "מעגל רוב מאפשר לסדר ההצבעות להשפיע על התוצאה.",
+      "en": "A majority cycle makes the voting agenda consequential."
+    }
+  },
+  {
+    "id": "quick-sw-209",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-190"
+    ],
+    "title": {
+      "he": "תיקו כללי אינו תיקו זוגי",
+      "en": "Overall ties are not pairwise ties"
+    },
+    "prompt": {
+      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x,m−x,m−x,x,x,m−x. כאן m=5, x=1. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
+      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x,m−x,m−x,x,x,m−x. Here m=5, x=1. Earlier means preferred. What is the absolute vote margin in A versus B?"
+    },
+    "answer": {
+      "he": "3. מסכמים בנפרד את הדירוגים שמציבים A לפני B ואת אלה שמציבים B לפני A. תיקו בסיכומי מקומות אינו מספיק.",
+      "en": "3. Sum rankings putting A before B separately from those putting B before A. Tied position totals do not settle this comparison."
+    },
+    "takeaway": {
+      "he": "סכומי דירוגים אינם קובעים לבדם את עוצמת הרוב הזוגי.",
+      "en": "Ranking totals do not alone determine pairwise majority strength."
+    }
+  },
+  {
+    "id": "quick-sw-210",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-195"
+    ],
+    "title": {
+      "he": "כמה מחזורים ארוכים יכולים להתקיים",
+      "en": "How many long cycles can coexist"
+    },
+    "prompt": {
+      "he": "תמורה של 100 פתקים מתפרקת למחזורים זרים. מה מספר המחזורים המרבי שאורכם גדול מ־50? אין מגבלות נוספות על התמורה.",
+      "en": "A permutation of 100 notes decomposes into disjoint cycles. What is the maximum number of cycles longer than 50? No other constraints apply."
+    },
+    "answer": {
+      "he": "1. כל מחזור כזה צורך לפחות limit+1 פתקים נפרדים. החסם מושג במחזורים הקצרים ביותר שמקיימים את התנאי, עם שארית כרצוננו.",
+      "en": "1. Each such cycle consumes at least limit+1 distinct notes. Use cycles of that minimum length to attain the bound; arrange leftovers freely."
+    },
+    "takeaway": {
+      "he": "חסם על עצמים זרים נובע מתקציב כולל משותף.",
+      "en": "Disjoint structures share a finite total budget."
+    }
+  },
+  {
+    "id": "quick-sw-211",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-195"
+    ],
+    "title": {
+      "he": "לפצל קרוב ככל האפשר לחצי",
+      "en": "Split as close to half as possible"
+    },
+    "prompt": {
+      "he": "מחזור יחיד באורך 9 מפוצל בהחלפת שני חצים יוצאים. אפשר לקבל כל שני אורכים חיוביים שסכומם 9. מה האורך המרבי הקטן ביותר שניתן להבטיח בין שני המחזורים החדשים?",
+      "en": "Swapping two outgoing links splits one length-9 cycle into two positive lengths summing to 9. Any such split is allowed. What is the smallest achievable length of the larger resulting cycle?"
+    },
+    "answer": {
+      "he": "5. אחד החלקים חייב להכיל לפחות חצי מהאורך הכולל, בעיגול מעלה. חלוקה לשני חלקים שהפרשם לכל היותר 1 משיגה זאת.",
+      "en": "5. One part must contain at least half the total, rounded upward. Two parts differing by at most 1 attain the bound."
+    },
+    "takeaway": {
+      "he": "מזעור המקרה הגרוע דורש איזון בין שני הענפים.",
+      "en": "Minimizing the worst case requires balancing the two branches."
+    }
+  },
+  {
+    "id": "quick-sw-212",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-195"
+    ],
+    "title": {
+      "he": "החלפה יכולה גם לחבר מחזורים",
+      "en": "A swap can also merge cycles"
+    },
+    "prompt": {
+      "he": "בתמורה יש שני מחזורים זרים באורכים 3 ו־4. מחליפים את הפתקים בשתי קופסאות, אחת מכל מחזור. מה אורך המחזור החדש שמכיל את שתיהן?",
+      "en": "A permutation has disjoint cycles of lengths 3 and 4. Swap the notes in two boxes, one from each cycle. What is the length of the new cycle containing both boxes?"
+    },
+    "answer": {
+      "he": "7. החלפת החצים מעבירה את ההליכה דרך שני המחזורים לפני החזרה להתחלה. היא מחברת אותם, בניגוד להחלפה בתוך מחזור יחיד.",
+      "en": "7. The redirected walk traverses both cycles before returning. This merges them, unlike a swap within one cycle."
+    },
+    "takeaway": {
+      "he": "יש לבדוק אם שני הקצוות שייכים לאותו מחזור לפני שמשנים חצים.",
+      "en": "Check whether the chosen positions belong to the same cycle before swapping links."
+    }
+  },
+  {
+    "id": "quick-sw-213",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-008",
+      "PREP-201"
+    ],
+    "title": {
+      "he": "סימטריה מקטינה את מספר המצבים",
+      "en": "Symmetry reduces the state count"
+    },
+    "prompt": {
+      "he": "במעגל אנונימי של 3 חדרים לכל חדר מנורה בינארית. שני מצבי מנורות נחשבים זהים רק אם סיבוב מעביר אחד לשני; שיקוף אינו מותר. כמה מצבים שונים קיימים?",
+      "en": "An anonymous ring of 3 rooms has one binary lamp per room. Two lamp configurations count as identical exactly when a rotation maps one to the other; reflections are not allowed. How many distinct configurations exist?"
+    },
+    "answer": {
+      "he": "4. מקבצים את כל המילים הבינאריות לפי סיבוב. מצבים סימטריים יוצרים קבוצות קטנות יותר, ולכן חלוקה פשוטה של מספר המילים במספר החדרים אינה מספיקה.",
+      "en": "4. Group binary words by rotation. Symmetric words have smaller groups, so simply dividing the number of words by the room count is insufficient."
+    },
+    "takeaway": {
+      "he": "תיאורים מסובבים עשויים לייצג אותו מצב פיזי אנונימי.",
+      "en": "Rotated descriptions can represent one anonymous physical state."
+    }
+  },
+  {
+    "id": "quick-sw-214",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-201",
+      "PREP-178"
+    ],
+    "title": {
+      "he": "חזרות מגבילות אך לא תמיד מזהות",
+      "en": "Returns constrain without always identifying"
+    },
+    "prompt": {
+      "he": "מעגל מכיל N חדרים, 1≤N≤10. הולכים באותו כיוון, חדר לצעד. זיהוי אמין של חדר ההתחלה מאשר חזרה לאחר מרחקי הצעדים [6, 9]; לא ידוע אם היו חזרות נוספות. כמה ערכי N עדיין אפשריים?",
+      "en": "A ring has N rooms, 1≤N≤10. Move one room per step in one direction. Reliable start-room identification confirms returns after step distances [6, 9]; other returns may have occurred. How many N values remain possible?"
+    },
+    "answer": {
+      "he": "2. כל מרחק חזרה חייב להתחלק במספר החדרים. בודקים את כל המחלקים המשותפים בטווח; לא מניחים שהתצפית הייתה החזרה הראשונה.",
+      "en": "2. Every return distance is divisible by the room count. Retain common divisors in range; the observations need not be first returns."
+    },
+    "takeaway": {
+      "he": "כל תצפית צריכה לצמצם קבוצת מועמדים, ולא רק להתאים להשערה אחת.",
+      "en": "An observation must narrow candidate worlds rather than merely fit one hypothesis."
+    }
+  },
+  {
+    "id": "quick-sw-215",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-203"
+    ],
+    "title": {
+      "he": "כלל הפלגה משנה נגישות",
+      "en": "A crossing rule changes reachability"
+    },
+    "prompt": {
+      "he": "3 זאבים, 3 כבשים וסירה מתחילים משמאל. מספר נוסעים מותר בהלוך: [2]; בחזור: [1]. בגדה עם כבשים אסור רוב זאבים; גדה בלי כבשים מותרת. מה מספר ההפלגות המזערי להעברת כל הכבשים ימינה? החיות בסירה נספרות ביעד. החזירו −1 אם בלתי אפשרי.",
+      "en": "Start with 3 wolves, 3 sheep and a boat left. Allowed passenger counts: outward [2], return [1]. A bank with sheep cannot have more wolves; a sheep-free bank is allowed. Minimum crossings moving all sheep right? Boat occupants count at destination. Return −1 if impossible."
+    },
+    "answer": {
+      "he": "-1. מחפשים רק במצבים ובהפלגות החוקיים. המטרה עוסקת בכבשים; אין דרישה שכל הזאבים יועברו. חיפוש מלא מבחין בין מסלול ארוך לבין חוסר מסלול.",
+      "en": "-1. Search legal states and crossings only. The goal concerns sheep, without requiring every wolf to cross. Exhaustive reachability distinguishes a long route from no route."
+    },
+    "takeaway": {
+      "he": "פתרון של גרסה מוכרת אינו הוכחה לגרסה בעלת כללים אחרים.",
+      "en": "A familiar variant's solution does not prove reachability under different rules."
+    }
+  },
+  {
+    "id": "quick-sw-216",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-203"
+    ],
+    "title": {
+      "he": "איסור מותנה אינו איסור גורף",
+      "en": "A conditional prohibition is not universal"
+    },
+    "prompt": {
+      "he": "בגדה בודדת עשויים להיות 0..3 זאבים ו־0..3 כבשים. מצב בטוח אם אין כבשים, או שמספר הזאבים אינו גדול ממספר הכבשים. כמה זוגות ספירות בטוחים קיימים? אין כאן אילוץ על גדה שנייה.",
+      "en": "One bank may contain 0..3 wolves and 0..3 sheep. It is safe if sheep are absent or wolves do not outnumber sheep. How many safe count pairs exist? No second-bank constraint applies."
+    },
+    "answer": {
+      "he": "13. סופרים בנפרד את כל המצבים בלי כבשים. לכל כמות כבשים חיובית מגבילים את מספר הזאבים לכמות זו ולמלאי הקיים.",
+      "en": "13. Count all sheep-free states separately. With a positive sheep count, bound wolves by both that count and available stock."
+    },
+    "takeaway": {
+      "he": "אין כבשים הוא מקרה נפרד מתנאי בטיחות כאשר יש כבשים.",
+      "en": "A sheep-free bank is a separate case from safety when sheep are present."
+    }
+  },
+  {
+    "id": "quick-sw-217",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-183"
+    ],
+    "title": {
+      "he": "פורסים משטח לפני שמקצרים",
+      "en": "Unfold a surface before shortening"
+    },
+    "prompt": {
+      "he": "תיבה מלבנית בעלת מקצועות 1,1,1. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b,c), (a+c,b), (b+c,a). מה ריבוע אורך המסלול הקצר מביניהן?",
+      "en": "A rectangular box has edge lengths 1,1,1. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b,c), (a+c,b), (b+c,a). What is the squared length of the shortest route among them?"
+    },
+    "answer": {
+      "he": "5. בכל פריסה הקטע הישר הוא הקצר ביותר. משווים ריבועי אורכים לפי פיתגורס, בלי להתבלבל עם אלכסון פנימי שאינו מסלול על המשטח.",
+      "en": "5. A straight segment is shortest in each unfolding. Compare squared lengths by Pythagoras, excluding the interior diagonal from surface routes."
+    },
+    "takeaway": {
+      "he": "מרחק דרך גוף אינו בהכרח מסלול שמותר על פניו.",
+      "en": "A through-body distance need not be a permitted surface route."
+    }
+  },
+  {
+    "id": "quick-sw-218",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-022"
+    ],
+    "title": {
+      "he": "ללא החזרה משתנה המכנה",
+      "en": "Without replacement the denominator changes"
+    },
+    "prompt": {
+      "he": "יעד אחד מוסתר באחידות בין 10 תאים. בודקים תאים שונים ללא החזרה, ו־3 בדיקות נכשלו. מה הסיכוי שהתא הבא, שנבחר באחידות מהתאים שלא נבדקו, מכיל את היעד?",
+      "en": "One target is uniform among 10 cells. Check distinct cells without replacement; 3 checks have missed. What is the chance the next uniformly selected unchecked cell contains the target?"
+    },
+    "answer": {
+      "he": "1/7. אחרי הכישלונות היעד נמצא באחידות בין התאים שנותרו. אין סיבה להשאיר במכנה תאים שכבר נשללו.",
+      "en": "1/7. After the misses the target is uniform among remaining cells. Excluded cells no longer belong in the denominator."
+    },
+    "takeaway": {
+      "he": "כישלון ללא החזרה מסיר מועמד; דגימה עם החזרה אינה עושה זאת.",
+      "en": "A miss without replacement removes a candidate; sampling with replacement does not."
+    }
+  },
+  {
+    "id": "quick-sw-219",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-022"
+    ],
+    "title": {
+      "he": "בדיקה חוזרת יכולה לבזבז הגרלה",
+      "en": "Repeated sampling can waste a draw"
+    },
+    "prompt": {
+      "he": "בכל הגרלה עצמאית נבחר תא אחיד מתוך 4, עם החזרה. כבר נראו 2 תאים שונים. מה תוחלת מספר ההגרלות הנוספות עד שכל התאים נראו?",
+      "en": "Each independent draw selects a uniform cell among 4, with replacement. Already 2 distinct cells have been seen. What is the expected number of additional draws until all cells have appeared?"
+    },
+    "answer": {
+      "he": "6. כאשר ידועים i תאים, ההסתברות לתא חדש היא (n−i)/n. סוכמים את תוחלות ההמתנה לתא חדש בכל שלב שנותר.",
+      "en": "6. With i cells known, a new cell arrives with probability (n−i)/n. Add the expected waiting times for all remaining discovery stages."
+    },
+    "takeaway": {
+      "he": "דגימה ללא החזרה מונעת את עלות החזרות של דגימה עצמאית.",
+      "en": "Sampling without replacement avoids the repeat cost of independent draws."
+    }
+  },
+  {
+    "id": "quick-sw-220",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-009"
+    ],
+    "title": {
+      "he": "סדר חלקי משאיר כמה דירוגים",
+      "en": "A partial order leaves several rankings"
+    },
+    "prompt": {
+      "he": "יש 3 סוסים שונים במהירויות שונות. כל זוג [a,b] ברשימה [[0, 1]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
+      "en": "There are 3 horses with distinct speeds. Each pair [a,b] in [[0, 1]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
+    },
+    "answer": {
+      "he": "3. סופרים רק סדרים שמכבדים כל השוואה, כולל השלכות מעבריות. אין להפוך היעדר השוואה לשוויון או לקבוע סדר שרירותי בין הבלתי ידועים.",
+      "en": "3. Count orders respecting every comparison and its transitive consequences. Missing comparisons imply neither equality nor an arbitrary fixed order."
+    },
+    "takeaway": {
+      "he": "השוואות ידועות אינן בהכרח מגדירות סדר מלא.",
+      "en": "Known comparisons need not determine a complete order."
+    }
+  },
+  {
+    "id": "quick-sw-221",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-161"
+    ],
+    "title": {
+      "he": "מסלול פתוח אינו דורש חזרה",
+      "en": "An open route need not return"
+    },
+    "prompt": {
+      "he": "מעלית מתחילה בקומה 4 וחייבת לבקר בקומות 1 ו־8. העלות היא מרחק בקומות; עצירה חינם, ואין צורך לחזור להתחלה. מה המרחק הכולל המזערי?",
+      "en": "An elevator starts at floor 4 and must visit floors 1 and 8. Cost is floor distance; stops are free and no return is required. What is the minimum total distance?"
+    },
+    "answer": {
+      "he": "10. חייבים לכסות את הקטע בין שתי קומות היעד. נוסף עליו המרחק מההתחלה לקצה הראשון שנבחר; בוחרים את הקצה הקרוב יותר.",
+      "en": "10. The entire interval between destinations must be covered. Add the distance from the start to the first chosen endpoint; choose the nearer endpoint."
+    },
+    "takeaway": {
+      "he": "יש להגדיר אם חוזרים להתחלה לפני שממזערים מרחק כולל.",
+      "en": "Specify whether a return is required before minimizing travel."
+    }
+  },
+  {
+    "id": "quick-sw-222",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-161",
+      "PREP-149"
+    ],
+    "title": {
+      "he": "עדיפות משנה את סדר השירות",
+      "en": "Priority changes the service order"
+    },
+    "prompt": {
+      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A,B הם 1,4; משקלי החשיבות שלהם 1,10. אם CA,CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
+      "en": "One server processes two jobs available at time 0 without preemption. Durations A,B are 1,4; importance weights are 1,10. If CA,CB are completion times, what is the minimum wa·CA+wb·CB?"
+    },
+    "answer": {
+      "he": "45. מחשבים את זמני הסיום בשני הסדרים ואת העלות המשוקללת שלהם. משימה קצרה אינה בהכרח ראשונה כשמשקלי ההמתנה שונים.",
+      "en": "45. Compute completion times and weighted cost for both orders. A shorter job need not go first when waiting carries different weights."
+    },
+    "takeaway": {
+      "he": "הסדר הטוב תלוי בפונקציית העלות, לא רק במשך הפעולות.",
+      "en": "The best order depends on the objective, not just processing time."
+    }
+  },
+  {
+    "id": "quick-sw-223",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-159"
+    ],
+    "title": {
+      "he": "פחות בדיקות עם כיסוי מלא",
+      "en": "Fewer tests with complete coverage"
+    },
+    "prompt": {
+      "he": "דרישות מוצר ממוספרות 0..3 לא כולל 3. הבדיקות מכסות את קבוצות הדרישות [[0, 1], [1, 2], [0], [2]]. מה מספר הבדיקות המזערי שאיחוד הכיסוי שלהן כולל את כל הדרישות?",
+      "en": "Product requirements are numbered 0..3, excluding 3. Available tests cover requirement sets [[0, 1], [1, 2], [0], [2]]. What is the minimum number of tests whose combined coverage includes every requirement?"
+    },
+    "answer": {
+      "he": "2. בוחנים צירופי בדיקות לפי גודלם, ומאחדים את הדרישות שהן מכסות. בדיקות חופפות אינן מוסיפות כיסוי חדש באזורים החופפים.",
+      "en": "2. Consider subsets of tests by size and union their covered requirements. Overlapping tests add no new coverage in the overlap."
+    },
+    "takeaway": {
+      "he": "מספר הבדיקות אינו מדד לכיסוי; יש לחשב את איחוד הדרישות.",
+      "en": "Test count is not coverage; inspect the union of covered requirements."
+    }
+  },
+  {
+    "id": "quick-sw-224",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-159",
+      "PREP-154"
+    ],
+    "title": {
+      "he": "לבחור מדידות שמבדילות כל זוג",
+      "en": "Choose measurements distinguishing every pair"
+    },
+    "prompt": {
+      "he": "כל שורה ב־[[0, 0], [0, 1], [1, 0], [1, 1]] היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+      "en": "Each row of [[0, 0], [0, 1], [1, 0], [1, 1]] lists predicted binary measurement results for one hidden state. Measurements are reliable and chosen in advance. What minimum number of columns guarantees identifying the correct row?"
+    },
+    "answer": {
+      "he": "2. בקבוצת העמודות הנבחרת לכל מצב חייבת להיות חתימה שונה. מספיק להבדיל כל זוג מצבים; כמות המדידות לבדה אינה מבטיחה זאת.",
+      "en": "2. Every state needs a distinct signature on selected columns. Distinguish every state pair; the measurement count alone is insufficient."
+    },
+    "takeaway": {
+      "he": "כיסוי דרישות וזיהוי מצבים הן שתי מטרות שונות של בדיקה.",
+      "en": "Requirement coverage and state identification are different testing objectives."
+    }
+  },
+  {
+    "id": "quick-sw-225",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-159"
+    ],
+    "title": {
+      "he": "חזרה עצמאית מפחיתה טעות",
+      "en": "Independent repetition reduces error"
+    },
+    "prompt": {
+      "he": "בדיקה של מוצר תקין מחזירה טעות בהסתברות 1/4 בכל הפעלה, באופן בלתי תלוי. מפעילים 3 פעמים ומחליטים לפי רוב. מה הסתברות ההכרעה השגויה?",
+      "en": "A test of a conforming product independently gives a wrong result with probability 1/4 on each run. Run it 3 times and decide by majority. What is the probability of a wrong final verdict?"
+    },
+    "answer": {
+      "he": "5/32. שגיאה סופית דורשת רוב של תוצאות שגויות. סוכמים את הסתברויות כל מספרי השגיאות האלה; ללא עצמאות אותו חישוב אינו מוצדק.",
+      "en": "5/32. A wrong verdict requires a majority of erroneous runs. Sum those error-count probabilities; without independence this calculation is unjustified."
+    },
+    "takeaway": {
+      "he": "שיפור ברוב מדידות דורש הנחת עצמאות של הטעויות.",
+      "en": "Majority-vote improvement depends on independent errors."
+    }
+  },
+  {
+    "id": "quick-sw-226",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-159"
+    ],
+    "title": {
+      "he": "דגימה תקינה אינה הוכחת שלמות",
+      "en": "A passing sample does not prove perfection"
+    },
+    "prompt": {
+      "he": "חבילה מכילה 10 דפים, מהם בדיוק 2 פגומים. בוחרים באחידות 3 דפים שונים ללא החזרה ובודקים אותם בצורה מושלמת. מה ההסתברות שלא יימצא פגם?",
+      "en": "A pack contains 10 sheets, exactly 2 defective. Uniformly sample 3 distinct sheets without replacement and inspect perfectly. What is the probability no defect is found?"
+    },
+    "answer": {
+      "he": "7/15. מונה ההסתברות הוא מספר המדגמים שכל דפיהם תקינים; המכנה הוא מספר כל המדגמים בגודל הנתון. הצלחת המדגם אינה מבטיחה ששאר החבילה תקינה.",
+      "en": "7/15. Count samples containing only conforming sheets over all samples of the given size. A passing sample does not certify the untested remainder."
+    },
+    "takeaway": {
+      "he": "ללא החזרה, הסתברות מדגם מחושבת מתוך קבוצות ולא מניסיונות עצמאיים.",
+      "en": "Without replacement, sample probabilities count subsets rather than independent trials."
+    }
+  },
+  {
+    "id": "quick-sw-227",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-148"
+    ],
+    "title": {
+      "he": "מלא אינו בהכרח מועדף",
+      "en": "Complete does not mean most preferred"
+    },
+    "prompt": {
+      "he": "כל אדם צריך פריט שונה. רשימות הפריטים [[0, 1], [0, 1]] מסודרות מהעדיף ביותר לפחות עדיף; פריט שאינו ברשימה אסור. מבין הקצאות מלאות חוקיות, מה המספר המרבי של אנשים שמקבלים את הבחירה הראשונה שלהם?",
+      "en": "Each person needs a different item. Allowed-item lists [[0, 1], [0, 1]] run from most to least preferred; unlisted items are forbidden. Among legal complete assignments, what maximum number of people can receive their first choice?"
+    },
+    "answer": {
+      "he": "1. מסננים תחילה הקצאות מלאות ללא התנגשות, ואז ממקסמים את מספר הבחירות הראשונות. עצם קיום הקצאה מלאה אינו קובע את ציונה.",
+      "en": "1. First retain complete collision-free assignments, then maximize first-choice satisfaction. A complete matching's existence does not determine its preference score."
+    },
+    "takeaway": {
+      "he": "היתכנות ואיכות העדפות הן פונקציות מטרה שונות.",
+      "en": "Feasibility and preference quality are different objectives."
+    }
+  },
+  {
+    "id": "quick-sw-228",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-148"
+    ],
+    "title": {
+      "he": "הקצאה אפשרית אינה בהכרח יחידה",
+      "en": "A feasible assignment may not be unique"
+    },
+    "prompt": {
+      "he": "כל אדם צריך בדיוק פריט אחד, ואסור לשני אנשים לקבל אותו פריט. הרשימות [[0, 1], [0, 1]] מכילות את כל הפריטים המותרים לכל אדם. כמה הקצאות מלאות שונות קיימות? אנשים ופריטים נבדלים זה מזה.",
+      "en": "Each person needs exactly one item, with no item shared. Lists [[0, 1], [0, 1]] give all allowed items for each person. How many distinct complete assignments exist? People and items are distinguishable."
+    },
+    "answer": {
+      "he": "2. מונים הקצאות חוקיות ולא בחירות מקומיות נפרדות. שתי בחירות שמתנגשות באותו פריט אינן יוצרות פתרון מלא.",
+      "en": "2. Count legal complete assignments rather than independent local choices. Two choices colliding on one item do not form a solution."
+    },
+    "takeaway": {
+      "he": "מספר הפתרונות מבחין בין אפשרות, כפייה ואי־אפשרות.",
+      "en": "The solution count distinguishes feasibility, forced choices, and impossibility."
+    }
+  },
+  {
+    "id": "quick-sw-229",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-057"
+    ],
+    "title": {
+      "he": "סיכוי גבוה אינו ודאות",
+      "en": "High probability is not certainty"
+    },
+    "prompt": {
+      "he": "בכל ביקור בוחרים אסיר אחד באופן אחיד ועצמאי מתוך 2. מה ההסתברות שאחרי בדיוק 3 ביקורים כל אסיר נבחר לפחות פעם אחת? אין מידע על בחירות קודמות.",
+      "en": "Each visit independently chooses one prisoner uniformly from 2. What is the probability every prisoner has been selected after exactly 3 visits? There is no prior selection history."
+    },
+    "answer": {
+      "he": "3/4. סופרים רצפי ביקורים שמכסים את כל האסירים מתוך כל הרצפים האפשריים. גם סיכוי גבוה אינו שולל רצף שחוזר רק לאותו אסיר.",
+      "en": "3/4. Count visit sequences covering all prisoners among all possible sequences. Even a high probability does not exclude repeated selection of one prisoner."
+    },
+    "takeaway": {
+      "he": "הבטחה הסתברותית בחלון סופי שונה מהבטחה לכל רצף בחירות.",
+      "en": "A finite-window probability differs from a guarantee for every selection sequence."
+    }
+  },
+  {
+    "id": "quick-sw-230",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-096"
+    ],
+    "title": {
+      "he": "לינאריות ללא עצמאות הצלחות",
+      "en": "Linearity without independent successes"
+    },
+    "prompt": {
+      "he": "ל־6 אנשים כובעים עצמאיים ואחידים מתוך 3 צבעים. כל אחד רואה רק את האחרים ומנחש יחד איתם לפי כלל דטרמיניסטי מוסכם. מה תוחלת מספר הניחושים הנכונים, לכל כלל כזה? אין תקשורת אחרי הנחת הכובעים.",
+      "en": "6 people have independent uniform hats of 3 colors. Each sees only the others and simultaneously guesses using any agreed deterministic rule. What is the expected number correct, for every such rule? There is no communication after hats are placed."
+    },
+    "answer": {
+      "he": "2. לאחר קיבוע כל הכובעים שאדם רואה, צבעו שלו עדיין אחיד. לכל אדם סיכוי שווה להצליח; סוכמים תוחלות גם כשההצלחות תלויות זו בזו.",
+      "en": "2. After fixing every hat a person sees, their own color remains uniform. Add individual correctness expectations even if the success events are dependent."
+    },
+    "takeaway": {
+      "he": "לתוחלת סכום מספיקות תוחלות האיברים; אין צורך בעצמאות ביניהם.",
+      "en": "The expectation of a sum needs individual expectations, not their independence."
+    }
+  },
+  {
+    "id": "quick-sw-231",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-169"
+    ],
+    "title": {
+      "he": "ממקסמים את ההסתברות הכוללת",
+      "en": "Optimize the complete probability"
+    },
+    "prompt": {
+      "he": "מחלקים 3 כדורים אדומים ו־3 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
+      "en": "Split 3 red and 3 white balls between two nonempty urns without loss. Choose an urn uniformly, then a ball uniformly within it. What is the maximum probability of red?"
+    },
+    "answer": {
+      "he": "7/10. מחשבים ממוצע של שני השברים האדומים בכל חלוקה חוקית. אפשר לבדוק את כל החלוקות הקטנות, ולא להחליף בחירה אחידה של כד בבחירה אחידה של כדור.",
+      "en": "7/10. Average the two red fractions for each legal split. Enumerate these small allocations; uniform urn selection is not uniform selection among all balls."
+    },
+    "takeaway": {
+      "he": "אופטימום מקומי בקבוצה אחת אינו מספיק בלי לחשב את שתי הקבוצות.",
+      "en": "Improving one group alone does not replace calculating the total objective."
+    }
+  },
+  {
+    "id": "quick-sw-232",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-049"
+    ],
+    "title": {
+      "he": "קודים נגדיים מבלבלים כבד וקל",
+      "en": "Opposite codes confuse heavy and light"
+    },
+    "prompt": {
+      "he": "מטבע מזויף יחיד יכול להיות כבד או קל. חתימות המדידה המנורמלות של המטבעות הכבדים הן [[1, 0], [-1, 0], [0, 1]]; חתימת קל היא היפוכה. שקילות מאוזנות במטבעות תקינים ידועים. כמה חתימות תוצאה שונות יש לכל השערות מיקום וכיוון יחד?",
+      "en": "One counterfeit coin may be heavy or light. Normalized measurement signatures for heavy coins are [[1, 0], [-1, 0], [0, 1]]; a light coin gives the negative signature. Known normal coins balance the weighings. How many distinct outcome signatures exist across all position-and-direction hypotheses?"
+    },
+    "answer": {
+      "he": "4. מוסיפים לכל וקטור גם את הווקטור הנגדי, וסופרים חתימות שונות בלבד. וקטורים נגדיים או וקטור אפס יוצרים התנגשויות בין השערות.",
+      "en": "4. Include every vector and its negative, counting distinct signatures only. Opposite vectors and zero vectors cause hypothesis collisions."
+    },
+    "takeaway": {
+      "he": "ספירת תוצאות אינה מספיקה כאשר שתי השערות חולקות חתימה.",
+      "en": "Outcome capacity is insufficient when hypotheses share signatures."
+    }
+  },
+  {
+    "id": "quick-sw-233",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-073"
+    ],
+    "title": {
+      "he": "זמן התוצאה הוא מידע נוסף",
+      "en": "Outcome timing adds information"
+    },
+    "prompt": {
+      "he": "יש 2 טועמים ו־2 סבבים עוקבים. תוצאת כל סבב ידועה לפני הבא. לכל טועם תוצאה מובחנת: מוות בסבב מסוים, או הישרדות בכולם. מניחים מימוש חופשי של כל צירופי התוצאות. כמה חתימות זמן שונות אפשר לקודד?",
+      "en": "There are 2 tasters and 2 sequential rounds, each resolved before the next. A taster's distinguishable outcome is death in one round or survival through all. Assume every outcome combination is realizable. How many distinct timing signatures can be encoded?"
+    },
+    "answer": {
+      "he": "9. לכל טועם יש תוצאה לכל סבב מוות אפשרי ועוד תוצאת הישרדות. כופלים את מספר האפשרויות בין טועמים; אין להניח שרואים סבב שטרם הסתיים.",
+      "en": "9. Each taster has one outcome per possible death round plus survival. Multiply across tasters; unresolved future rounds provide no observations."
+    },
+    "takeaway": {
+      "he": "קיבולת הערוץ תלויה גם בתזמון שניתן להבחין בו לפני המועד.",
+      "en": "Channel capacity also depends on distinguishable outcome times before the deadline."
+    }
+  },
+  {
+    "id": "quick-sw-234",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-049"
+    ],
+    "title": {
+      "he": "מאזנים גם את ענפי ההשערות",
+      "en": "Balance hypothesis branches too"
+    },
+    "prompt": {
+      "he": "מתוך 9 מטבעות בדיוק אחד כבד או קל מהתקין, ולא יודעים איזה כיוון. בשקילה ראשונה שוקלים a מול a, בלי מטבעי ייחוס. איזה מספר השערות מזערי ניתן להשאיר בענף הגדול ביותר, בבחירה הטובה ביותר של a חיובי?",
+      "en": "Among 9 coins exactly one is heavy or light, direction unknown. First weigh a against a, without reference coins. By choosing positive a optimally, what minimum number of hypotheses remains in the largest outcome branch?"
+    },
+    "answer": {
+      "he": "6. באי־איזון יש אפשרויות כבד בצד אחד וקל בשני. באיזון המזויף בין מי שלא נשקלו, בשני כיווני המשקל. משווים את גודלי שלושת הענפים.",
+      "en": "6. An imbalance allows heavy on one pan or light on the other. Balance leaves each unweighed coin with both directions. Compare all three branch sizes."
+    },
+    "takeaway": {
+      "he": "תכנון שקילה צריך למזער את הענף הקשה, לא רק לאזן משקלים.",
+      "en": "A weighing plan should minimize its hardest hypothesis branch, not merely balance pan loads."
+    }
+  },
+  {
+    "id": "quick-sw-235",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-060"
+    ],
+    "title": {
+      "he": "שינוי מהלכים משנה את המצבים המפסידים",
+      "en": "Different moves change losing positions"
+    },
+    "prompt": {
+      "he": "משחק אבנים: בכל תור מסירים כמות מתוך [1, 3, 4], בלי להסיר יותר מהנותר. מי שאין לו מהלך מפסיד. מבין כמויות ההתחלה 1..8, כמה הן מצבים מפסידים לשחקן בתורו כששניהם משחקים מיטבית?",
+      "en": "In a stone game each turn removes a count from [1, 3, 4], never more than remains. A player with no legal move loses. Among starting counts 1..8, how many are losing positions for the player to move under optimal play?"
+    },
+    "answer": {
+      "he": "2. מצב מנצח אם יש ממנו מהלך למצב מפסיד; אחרת הוא מפסיד. מתחילים מהמצב הריק ובונים בהדרגה, במקום להניח את המחזור של משחק אחר.",
+      "en": "2. A position wins if some legal move reaches a losing one; otherwise it loses. Build from the empty position instead of assuming another game's period."
+    },
+    "takeaway": {
+      "he": "חוק מודולרי מוכר דורש הוכחה מחדש כשהמהלכים המותרים משתנים.",
+      "en": "A familiar modular strategy needs a new proof when permitted moves change."
+    }
+  }
+]

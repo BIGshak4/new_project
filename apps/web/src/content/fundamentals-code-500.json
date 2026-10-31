@@ -1,0 +1,113 @@
+[
+  {
+    "id": "quick-sw-236", "topic": "algorithms", "interviewIds": ["PREP-188"],
+    "title": {"he": "מרחקים בלי שורש", "en": "Distances without square roots"},
+    "prompt": {"he": "מחפשים שתי נקודות קרובות ביותר במישור, בקואורדינטות שלמות ובחשבון מדויק. מדוע מספיק להשוות מרחקים בריבוע? מה קורה אם שתי רשומות שונות מכילות אותה נקודה?", "en": "Find the closest pair of planar points with integer coordinates and exact arithmetic. Why is comparing squared distances sufficient? What if two distinct records contain the same point?"},
+    "answer": {"he": "השורש עולה עם הקלט הלא שלילי, ולכן אינו משנה את סדר המרחקים. משווים dx²+dy² בלי עיגול. שתי רשומות באותן קואורדינטות יוצרות זוג חוקי במרחק אפס; אין להסיר כפילויות בלי אישור. בטיפוס בעל רוחב קבוע צריך לוודא שההפרשים, הריבועים והסכום אינם גולשים.", "en": "Square root is increasing on nonnegative inputs, so squared distances preserve ordering. Compare dx²+dy² without rounding. Distinct records at identical coordinates form a valid distance-zero pair; do not remove them without permission. With fixed-width types, ensure differences, squares and their sum cannot overflow."},
+    "takeaway": {"he": "השוואה יכולה לשמר סדר בלי לחשב את הערך הגאומטרי עצמו.", "en": "An order-preserving comparison can avoid computing the geometric distance itself."},
+    "code": {"language": "python", "text": "def distance2(a, b):\n    return sum((x-y)**2 for x, y in zip(a, b))"}
+  },
+  {
+    "id": "quick-sw-237", "topic": "algorithms", "interviewIds": ["PREP-022"],
+    "title": {"he": "מיקום אקראי הוא גם מיקום פנוי", "en": "A random position must also be unused"},
+    "prompt": {"he": "כהרחבה של פרמוטציה ללא חזרות, מסך ברוחב W>0 ובגובה H>0 מכיל WH פיקסלים. כיצד הופכים פרמוטציה אחידה של האינדקסים 0 עד WH−1 לרצף קואורדינטות ללא חזרות? מתי חייבים לעצור?", "en": "Extend a permutation without repetition to a W-wide, H-high pixel screen, where W,H>0. How does a uniform permutation of indices 0 through WH−1 become a coordinate sequence without repeats? When must generation stop?"},
+    "answer": {"he": "לאינדקס i מתאימים x=i%W ו־y=i//W. זו התאמה חד־חד־ערכית, ולכן פרמוטציה אחידה עוברת לרצף פיקסלים אחיד בלי חזרות. אחרי WH בחירות כל הפיקסלים נוצלו וחייבים לדווח על מיצוי. בחירה חוזרת של קואורדינטות ופסילת תפוסות נעשית איטית ככל שהמסך מתמלא.", "en": "Map index i to x=i%W and y=i//W. This bijection turns a uniform index permutation into a uniform pixel order without repeats. After WH selections every pixel is used; report exhaustion. Repeatedly drawing coordinates and rejecting used ones slows as the screen fills."},
+    "takeaway": {"he": "התאמה חד־חד־ערכית שומרת על אחידות ועל היעדר חזרות.", "en": "A bijection preserves uniformity and the absence of repetition."},
+    "code": {"language": "python", "text": "def coordinates(indices, width):\n    return [(i % width, i // width) for i in indices]"}
+  },
+  {
+    "id": "quick-sw-238", "topic": "python", "interviewIds": ["PREP-187"],
+    "title": {"he": "הופכים מילים בלי להפוך את אותיותיהן", "en": "Reverse words while preserving their letters"},
+    "prompt": {"he": "מחרוזת מכילה מילים לא ריקות ורווח יחיד בין מילים, ללא רווחי קצה. מותרת פונקציה שהופכת תווים. כיצד משתמשים בה כדי להפוך רק את סדר המילים? גם הקלט הריק מותר.", "en": "A string has nonempty words separated by single spaces, without leading or trailing spaces. A character-reversal function is available. How can it reverse only the word order? Empty input is also allowed."},
+    "answer": {"he": "הופכים את כל המחרוזת: סדר המילים מתהפך וגם האותיות בכל מילה. אחר כך הופכים את התווים בכל מילה בנפרד, כך שאותיותיה חוזרות לסדר המקורי. אפשר גם להפוך כל מילה ואז את כל המחרוזת. אין לטעון ששיטת split שומרת מרווחים כלליים בלי להגדיר את חוזה הרווחים.", "en": "Reverse the whole string: both word order and each word's letters reverse. Then reverse each word separately to restore its letters. Reversing each word first and the whole string afterward also works. A split-based implementation must not claim to preserve arbitrary whitespace without a matching contract."},
+    "takeaway": {"he": "שתי פעולות היפוך יכולות לבטל שינוי מקומי ולשמר שינוי גלובלי.", "en": "Two reversals can undo a local change while retaining a global one."},
+    "code": {"language": "python", "text": "def reverse_chars(s): return s[::-1]\ndef reverse_words(s):\n    return ' '.join(reverse_chars(w) for w in reverse_chars(s).split(' '))"}
+  },
+  {
+    "id": "quick-sw-239", "topic": "algorithms", "interviewIds": ["PREP-194"],
+    "title": {"he": "מחיר השרשור מסתתר ברקורסיה", "en": "Concatenation cost hides inside recursion"},
+    "prompt": {"he": "ברשימה חד־כיוונית, Head ו־Tail עולות O(1), ושרשור A@B מעתיק את A. היפוך מוגדר כ־reverse(Tail(L))@[Head(L)]. מה זמן הריצה עבור n איברים? כיצד צבירה באמצעות הוספה לראש משנה אותו?", "en": "For a singly linked list, Head and Tail cost O(1), while A@B copies A. Reversal is reverse(Tail(L))@[Head(L)]. What is its runtime for n items? How does accumulating by constant-time prepending change it?"},
+    "answer": {"he": "בכל חזרה מועתקת רשימה באורך אחר: 0+1+…+(n−1), ולכן הזמן ריבועי. צובר שמקבל כל Head בהוספה לראש בעלות קבועה מבצע n הוספות, ולכן הזמן ליניארי. זה דורש פעולת יצירת חוליה או הוספה לראש בחוזה; עצם הכתיבה ברקורסיה אינה מבטיחה סיבוכיות ליניארית.", "en": "Returns copy lists of lengths 0+1+…+(n−1), giving quadratic time. An accumulator receiving each Head by constant-time prepending performs n insertions, giving linear time. That requires node construction or prepending in the interface; recursion alone does not guarantee linear complexity."},
+    "takeaway": {"he": "יש לספור גם את מחיר פעולות מבנה הנתונים, לא רק קריאות רקורסיביות.", "en": "Count data-structure operation costs, not merely recursive calls."}
+  },
+  {
+    "id": "quick-sw-240", "topic": "algorithms", "interviewIds": ["PREP-212"],
+    "title": {"he": "הכנסה לראש משנה את הראש", "en": "Prepending changes the head"},
+    "prompt": {"he": "פונקציה מכניסה חוליה חדשה לראש רשימה מקושרת ב־C. הראש עשוי להיות NULL, וההקצאה עלולה להיכשל. מה מחזירים או מעדכנים אצל הקורא, ובאיזה שלב מותר לפרסם את הראש החדש?", "en": "A C function prepends a node to a linked list. The head may be NULL and allocation can fail. What must be returned or updated for the caller, and when may the new head be published?"},
+    "answer": {"he": "צריך להחזיר ראש מעודכן, או לקבל מצביע לראש ולעדכנו. מקצים ובודקים הצלחה לפני שינוי הרשימה, מאתחלים את הערך ואת next לראש הישן, ורק אז מחליפים את הראש. בכשל הקצאה הרשימה נשארת כפי שהייתה. שינוי עותק מקומי של מצביע הראש בלבד אינו משנה את הראש אצל הקורא.", "en": "Return the updated head or accept a pointer to the caller's head. Allocate and check success before changing the list, initialize value and next to the old head, then publish the new head. Allocation failure leaves the list unchanged. Assigning only a local copy of the head pointer does not update the caller."},
+    "takeaway": {"he": "מאתחלים אובייקט לפני שמפרסמים אליו מצביע ומשמרים מצב קיים במקרה כשל.", "en": "Initialize an object before publishing its pointer; preserve existing state on failure."}
+  },
+  {
+    "id": "quick-sw-241", "topic": "algorithms", "interviewIds": ["PREP-189"],
+    "title": {"he": "משאב קשור לחיי אובייקט", "en": "A resource follows an object's lifetime"},
+    "prompt": {"he": "ב־C++ אובייקט מקומי מחזיק משאב ומשחרר אותו בהורס שאינו זורק. לאחר שבנייתו הושלמה נזרקת חריגה שנתפסת מחוץ לפונקציה, ומתבצעת פריקת מחסנית רגילה. האם דרושה קריאת cleanup ידנית בכל נתיב יציאה?", "en": "A local C++ object owns a resource and releases it in a nonthrowing destructor. After construction completes, an exception unwinds the stack normally and is caught outside the function. Does every exit path need an explicit cleanup call?"},
+    "answer": {"he": "לא. לפי RAII ההורס מופעל ביציאה רגילה מהתחום ובפריקת מחסנית, ולכן המשאב משתחרר אוטומטית. אובייקטים שנבנו במלואם נהרסים בסדר הפוך לבנייתם. ההבטחה אינה מכסה סיום תהליך חריג או משאב גולמי שאינו עטוף בבעלות. לא קוראים להורס ידנית עבור אותו אובייקט אוטומטי.", "en": "No. RAII invokes the destructor on normal scope exit and ordinary stack unwinding. Fully constructed local objects are destroyed in reverse construction order. This does not cover abrupt process termination or raw resources lacking an owner. Do not manually destroy the same automatic object."},
+    "takeaway": {"he": "קושרים שחרור משאב לבעלות ולזמן חיים במקום לשכפל ניקוי בכל נתיב.", "en": "Bind cleanup to ownership and lifetime instead of duplicating it along every exit path."}
+  },
+  {
+    "id": "quick-sw-242", "topic": "algorithms", "interviewIds": ["PREP-189"],
+    "title": {"he": "מחיקה פולימורפית דורשת חוזה מתאים", "en": "Polymorphic deletion needs the right contract"},
+    "prompt": {"he": "ב־C++17 מצביע Base* מצביע לאובייקט Derived שהוקצה ב־new, ומתוכנן delete רגיל דרך המצביע. מה צריך להיות נכון לגבי ההורס של Base?", "en": "In C++17, a Base* points to a Derived object allocated with new, and ordinary delete will use that pointer. What must hold for Base's destructor?"},
+    "answer": {"he": "בהנחה שהמחיקה מותרת דרך הבסיס, ההורס שלו צריך להיות נגיש ווירטואלי. כך מופעל קודם ההורס של הנגזר ואחריו של הבסיס. מחיקה כזאת דרך בסיס ללא הורס וירטואלי היא התנהגות לא מוגדרת; אין להסיק ש״רק הבסיס נהרס״ כתוצאה מובטחת. אם מחיקה דרך הבסיס אסורה, אפשר לבטא זאת בחוזה אחר.", "en": "If deletion through the base is permitted, its destructor must be accessible and virtual. The derived destructor runs before the base destructor. Such deletion through an ordinary nonvirtual base destructor is undefined behavior, not a guaranteed 'base-only destruction' outcome. An interface forbidding base-pointer deletion needs a different contract."},
+    "takeaway": {"he": "התנהגות לא מוגדרת אינה תוצאת ריצה שאפשר לחזות בביטחון.", "en": "Undefined behavior is not a runtime result that can be predicted reliably."}
+  },
+  {
+    "id": "quick-sw-243", "topic": "algorithms", "interviewIds": ["PREP-196", "PREP-061"],
+    "title": {"he": "כמות קריאות אינה עומק המחסנית", "en": "Call count is not stack depth"},
+    "prompt": {"he": "רקורסיה על עץ בינארי מבקרת כל צומת פעם אחת, משמאל לימין, ללא אופטימיזציית זנב. מה קובע את מספר מסגרות הקריאה הפעילות המרבי: מספר הצמתים או גובה העץ? הגדירו גובה כמספר הצמתים במסלול הארוך ביותר.", "en": "A recursion visits every binary-tree node once, left to right, without tail-call optimization. What determines the maximum number of active node frames: node count or tree height? Define height as the number of nodes on the longest root-to-leaf path."},
+    "answer": {"he": "העבודה הכוללת ליניארית במספר הצמתים, אבל מסגרות של תתי־עצים שכבר הסתיימו יוצאות מהמחסנית. השיא נקבע לפי גובה העץ, בתוספת קבוע אם מממשים קריאות NULL. עץ מאוזן עשוי לדרוש עומק לוגריתמי; שרשרת באותו מספר צמתים דורשת עומק ליניארי. אין להניח שפייתון מבטלת רקורסיית זנב.", "en": "Total work is linear in node count, but frames from completed subtrees leave the stack. Peak node frames equal tree height, with a constant extra frame if NULL calls are included. A balanced tree can have logarithmic depth, while a chain with the same node count has linear depth. Python does not eliminate tail recursion."},
+    "takeaway": {"he": "זמן סופר את כל העבודה; זיכרון מחסנית סופר קריאות שטרם חזרו.", "en": "Time counts all work; stack space counts calls that have not yet returned."}
+  },
+  {
+    "id": "quick-sw-244", "topic": "algorithms", "interviewIds": ["PREP-219"],
+    "title": {"he": "שומרים מכפלה פתוחה עד החיבור הבא", "en": "Keep a product open until the next addition"},
+    "prompt": {"he": "מחשבים זרם מספרים לא שליליים עם + ו־*, ולבסוף =. אין סוגריים, ולכפל קדימות רגילה. אילו שני ערכים מספיק לשמור כדי לא לקבע חיבור מוקדם מדי? למשל 2+3*4 אינו 20.", "en": "Evaluate a stream of nonnegative numbers with + and *, ending in =. There are no parentheses and multiplication has normal precedence. Which two values prevent committing an addition too early? For example, 2+3*4 is not 20."},
+    "answer": {"he": "שומרים סכום של איברי כפל שכבר הסתיימו ומכפלה נוכחית. בכפל מעדכנים רק את המכפלה. בחיבור מוסיפים את המכפלה לסכום ומתחילים מכפלה מהמספר הבא. בסימן = מחזירים סכום ועוד מכפלה. חשבון מדויק מונע גלישה, ובדיקת תחביר נפרדת מונעת שימוש בערך שחסר.", "en": "Keep a sum of completed product terms and the current product. Multiplication updates only that product. Addition commits it to the sum and starts a new term with the next number. At =, return sum plus product. Exact arithmetic avoids overflow; separate syntax validation prevents using missing operands."},
+    "takeaway": {"he": "קדימות מחייבת לדחות התחייבות לתוצאה שעדיין יכולה להשתנות.", "en": "Precedence requires delaying a result that a later operator may still change."}
+  },
+  {
+    "id": "quick-sw-245", "topic": "algorithms", "interviewIds": ["PREP-219"],
+    "title": {"he": "תוצאה מספרית אינה אישור לתחביר", "en": "A numeric result does not validate syntax"},
+    "prompt": {"he": "בדקדוק NUMBER ((+|*) NUMBER)* =, כל NUMBER הוא אסימון שלם ולא שלילי. אילו מצבים מבדילים בין מספר צפוי, אופרטור צפוי וביטוי שהסתיים? האם 2+= או 2=3 חוקיים?", "en": "Use grammar NUMBER ((+|*) NUMBER)* =, where NUMBER is one nonnegative integer token. Which states distinguish expecting a number, expecting an operator, and completion? Are 2+= or 2=3 valid?"},
+    "answer": {"he": "מתחילים בציפייה למספר. אחריו מצפים ל־+, ל־* או ל־=. אופרטור מחזיר לציפייה למספר; = מעביר למצב סיום שרק סוף קלט מותר אחריו. 2+= נפסל כי חסר מספר, ו־2=3 נפסל כי יש אסימון אחרי הסיום. יש לדרוש = אחד ולא לקבל ביטוי שנקטע לפניו.", "en": "Start expecting a number. After it, expect +, * or =. An operator returns to number expectation; = enters a finished state allowing only end of input. Reject 2+= for a missing number and 2=3 for a token after completion. Require exactly one = and reject premature end of input."},
+    "takeaway": {"he": "מפרידים בין מצב חישוב לבין מצב שמאשר שסדר האסימונים חוקי.", "en": "Separate computation state from the state validating token order."}
+  },
+  {
+    "id": "quick-sw-246", "topic": "algorithms", "interviewIds": ["PREP-211"],
+    "title": {"he": "המקום השני הוא ערך שונה", "en": "Second place means a different value"},
+    "prompt": {"he": "במערך [9,9,7,7,7] מחפשים את שני הערכים השונים הגדולים ביותר ואת שכיחותם. מה התשובה? מדוע שני תאים בעלי ערך 9 אינם מספיקים, ומה עושים אם יש רק ערך שונה אחד?", "en": "For [9,9,7,7,7], find the two greatest distinct values and their frequencies. What is returned? Why are two entries holding 9 insufficient, and what if only one distinct value exists?"},
+    "answer": {"he": "מחזירים (9,2) ו־(7,3). שתי הופעות של 9 מגדילות את שכיחות המקסימום, ואינן מגדירות מקום שני. במעבר יחיד שומרים שני ערכים שונים ומוניהם, ומעבירים את המקסימום הישן למקום שני כשמגיע גדול חדש. אם אין ערך שני, מחזירים סימון היעדר מפורש ולא מספר מומצא כגון 0.", "en": "Return (9,2) and (7,3). Repeated 9 increments the maximum's frequency rather than creating second place. A one-pass solution keeps two distinct values and counts, moving the old maximum into second place when a larger value arrives. If a second value is absent, return an explicit absence marker, not an invented number such as 0."},
+    "takeaway": {"he": "הגדרת שונות קובעת מה סופרים ואיזה מידע צריך לשמר.", "en": "The distinctness contract determines what to count and what information to retain."}
+  },
+  {
+    "id": "quick-sw-247", "topic": "python", "interviewIds": ["PREP-211"],
+    "title": {"he": "גם לשכיח יש תיקו", "en": "A mode can have a tie"},
+    "prompt": {"he": "נדרש להחזיר ערך שכיח במערך מספרים. ב־[4,2,4,2] שני ערכים שווים בשכיחות. הגדירו שבשוויון בוחרים את הערך הקטן ביותר, ובקלט ריק מחזירים None. מדוע צריך לכתוב את כלל השוויון במפורש?", "en": "Return an array's mode. In [4,2,4,2], two values tie in frequency. Choose the smaller value on a tie and return None for empty input. Why must the tie rule be explicit?"},
+    "answer": {"he": "שכיחות מרבית לבדה אינה קובעת תשובה יחידה. לפי החוזה כאן התשובה היא 2, בלי תלות בסדר המערך או בסדר סריקת המילון. אפשר לבנות טבלת שכיחויות ולבחור לפי הצמד (מינוס שכיחות, ערך). יש להפריד בין היעדר תשובה בקלט ריק לבין הערך החוקי 0.", "en": "Maximum frequency alone does not select a unique answer. Here the result is 2, independently of array or dictionary iteration order. Build frequencies and minimize the pair (negative frequency, value). Distinguish an empty input's absence result from the valid value 0."},
+    "takeaway": {"he": "כלל הכרעה מפורש הופך תשובה אפשרית לתוצאה דטרמיניסטית שאפשר לבדוק.", "en": "An explicit tie rule turns one possible answer into a deterministic, testable result."},
+    "code": {"language": "python", "text": "def mode_smallest(a):\n    from collections import Counter\n    counts = Counter(a)\n    return min(counts, key=lambda x: (-counts[x], x)) if counts else None"}
+  },
+  {
+    "id": "quick-sw-248", "topic": "algorithms", "interviewIds": ["PREP-210"],
+    "title": {"he": "שלשות חוזרות עדיין נעלמות מודולו שלוש", "en": "Repeated triples still cancel modulo three"},
+    "prompt": {"he": "כל ערך במערך הופיע בכפולה של 3 פעמים. נמחקו שתי הופעות של ערך אחד, גם אם הופיע קודם ב־6 או ב־9 תאים. כיצד טבלת שכיחויות ושאריות מודולו 3 מזהה אותו? הסדר אינו חשוב.", "en": "Every array value originally appeared a multiple of 3 times. Two occurrences of one value were removed, even if it previously occupied 6 or 9 entries. How do frequency counts modulo 3 identify it? Order is irrelevant."},
+    "answer": {"he": "לכל ערך שלא השתנה נשארת שארית 0. לערך שנמחקו ממנו שתיים נשארת שארית 1, כי 3k−2 שקול ל־1 מודולו 3. לכן בוחרים את המפתח שמונהו נותן שארית 1, גם אם שכיחותו בפועל 4 או 7 ולא 1. בטבלת גיבוב הזמן הממוצע ליניארי והזיכרון תלוי במספר הערכים השונים.", "en": "Unchanged values retain remainder 0. The affected value has remainder 1, since 3k−2 is congruent to 1 modulo 3. Select the key whose count leaves remainder 1 even when its actual frequency is 4 or 7 rather than 1. A hash table gives expected linear time and space proportional to distinct values."},
+    "takeaway": {"he": "בודקים את השארית של השכיחות, ולא מניחים שנותרה הופעה יחידה ממש.", "en": "Check a frequency's remainder rather than assuming exactly one occurrence remains."}
+  },
+  {
+    "id": "quick-sw-249", "topic": "python", "interviewIds": ["PREP-111"],
+    "title": {"he": "קו מצויר בלי למחוק את שכניו", "en": "Draw a line without erasing its neighbors"},
+    "prompt": {"he": "פיקסלים בשורה נארזים בבייטים; פיקסל x משתמש בביט x%8, מה־LSB. איך מדליקים טווח חצי־פתוח [x,x+length) בלי לשנות פיקסלים מחוץ לטווח? ההתחלה והאורך חוקיים, והשורה בת מספר שלם של בייטים.", "en": "A row packs pixels into bytes; pixel x uses bit x%8, starting at the LSB. Set the half-open range [x,x+length) without changing outside pixels. Start and length are valid, and the row contains a whole number of bytes."},
+    "answer": {"he": "לכל פיקסל בטווח מחשבים אינדקס בייט באמצעות חילוק ב־8, ומפעילים OR עם 1 מוזז למיקום הביט. OR מדליק את הביט ומשמר את שאר הבייט. בפתרון מהיר יותר ממלאים בייטים פנימיים וממסכים את שני הקצוות; אסור לדרוס בייט קצה שלם. אורך אפס אינו משנה דבר.", "en": "For each pixel, divide by 8 to locate its byte and OR with 1 shifted to the bit position. OR sets that bit while preserving its neighbors. A faster version fills interior bytes and masks both endpoints; do not overwrite an entire endpoint byte. Zero length changes nothing."},
+    "takeaway": {"he": "פעולת מסכה צריכה לשמר במפורש את כל הביטים שאינם חלק מהעדכון.", "en": "A mask update must explicitly preserve every bit outside its target."},
+    "code": {"language": "python", "text": "def draw_line(row, x, length):\n    for pixel in range(x, x + length):\n        row[pixel // 8] |= 1 << (pixel % 8)\n    return row"}
+  },
+  {
+    "id": "quick-sw-250", "topic": "python", "interviewIds": ["PREP-185"],
+    "title": {"he": "הספרה שבע אינה התחלקות בשבע", "en": "Containing seven is not divisibility by seven"},
+    "prompt": {"he": "בגרסת המשחק הזו מדפיסים boom פעם אחת למספר אם ורק אם הכתיב העשרוני שלו מכיל את הספרה 7. בודקים מספרים לא שליליים, ו־0 נכתב כ־0. האם 14 מפעיל את הכלל? וכמה פעמים 77 מפעיל אותו?", "en": "In this game version, print boom once per number exactly when its decimal representation contains digit 7. Inputs are nonnegative and zero is written as 0. Does 14 trigger it? How many times does 77 trigger it?"},
+    "answer": {"he": "14 אינו מכיל 7 ולכן אינו מפעיל, אף שהוא מתחלק ב־7. 77 מפעיל פעם אחת, כי ההחלטה היא תנאי על המספר ולא הדפסה בכל ספרה תואמת. בבדיקה באמצעות חילוק חוזר ב־10 אפשר לעצור עם הספרה הראשונה שמתאימה. מעבר על כל המספרים ובדיקת ספרותיהם אינו אלגוריתם בזמן קבוע.", "en": "14 does not trigger despite being divisible by 7. Number 77 triggers once because the predicate belongs to the number, not each matching digit. A repeated-division digit scan may stop at the first match. Enumerating numbers and scanning their digits is not a constant-time algorithm."},
+    "takeaway": {"he": "מממשים את התנאי שנכתב, ומפרידים בין התאמות פנימיות למספר פלטים.", "en": "Implement the stated predicate and distinguish internal matches from the number of outputs."},
+    "code": {"language": "python", "text": "def contains_seven(n):\n    return '7' in str(n)"}
+  }
+]

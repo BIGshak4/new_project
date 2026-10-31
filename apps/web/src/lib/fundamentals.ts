@@ -9,6 +9,9 @@ import interviewCode from "../content/fundamentals-code-250.json";
 import hardware400 from "../content/fundamentals-hardware-400.json";
 import reasoning400 from "../content/fundamentals-reasoning-400.json";
 import code400 from "../content/fundamentals-code-400.json";
+import hardware500 from "../content/fundamentals-hardware-500.json";
+import reasoning500 from "../content/fundamentals-reasoning-500.json";
+import code500 from "../content/fundamentals-code-500.json";
 
 export type QuickTopic = "gates" | "bits" | "sequential" | "states" | "electronics" | "python" | "algorithms" | "reasoning";
 type Localized = { he: string; en: string };
@@ -32,12 +35,13 @@ export const quickTopics: { id: QuickTopic; label: Localized }[] = [
 ];
 // Original study cards, deliberately separate from the interview assessment bank.
 // These newly authored answers have not received the founders' human-review attestation.
-// At 400 cards the mix is 200 hardware /140 reasoning /60 software.
+// At 500 cards the mix is 250 hardware /175 reasoning /75 software.
 // Presentation order belongs to each visit; IDs and revisions never depend on it.
 export const quickQuestions = [
   ...hardware, ...software, ...moreHardware, ...moreReasoning, ...moreCode,
   ...interviewHardware, ...interviewReasoning, ...interviewCode,
   ...hardware400, ...reasoning400, ...code400,
+  ...hardware500, ...reasoning500, ...code500,
 ] as QuickQuestion[];
 
 export function filterQuickQuestions(topic: QuickTopic | "all", query: string, lang: "he" | "en", questions: readonly QuickQuestion[] = quickQuestions) {

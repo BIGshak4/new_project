@@ -1,0 +1,2123 @@
+[
+  {
+    "key": "quick-sw-236-v1",
+    "task": "distance2",
+    "inputs": {
+      "a": [
+        0,
+        0
+      ],
+      "b": [
+        3,
+        4
+      ]
+    },
+    "options": [
+      25,
+      49,
+      5,
+      7
+    ],
+    "expected": 25,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-236-v2",
+    "task": "closest_distance2",
+    "inputs": {
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "options": [
+      0,
+      1,
+      4,
+      9
+    ],
+    "expected": 1,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-236-v3",
+    "task": "closest_distance2",
+    "inputs": {
+      "points": [
+        [
+          2,
+          -1
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          2,
+          -1
+        ]
+      ]
+    },
+    "options": [
+      16,
+      41,
+      0,
+      5
+    ],
+    "expected": 0,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-236-v4",
+    "task": "closest_indices",
+    "inputs": {
+      "points": [
+        [
+          -1,
+          -1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ]
+    },
+    "options": [
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "expected": [
+      1,
+      2
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-236-v5",
+    "task": "distance2",
+    "inputs": {
+      "a": [
+        10,
+        -7
+      ],
+      "b": [
+        13,
+        -3
+      ]
+    },
+    "options": [
+      25,
+      49,
+      250,
+      5
+    ],
+    "expected": 25,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-237-v1",
+    "task": "coordinate",
+    "inputs": {
+      "width": 3,
+      "index": 5
+    },
+    "options": [
+      [
+        5,
+        0
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        0,
+        5
+      ]
+    ],
+    "expected": [
+      2,
+      1
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-237-v2",
+    "task": "flatten",
+    "inputs": {
+      "width": 4,
+      "x": 2,
+      "y": 1
+    },
+    "options": [
+      3,
+      4,
+      6,
+      9
+    ],
+    "expected": 6,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-237-v3",
+    "task": "remaining_pixels",
+    "inputs": {
+      "width": 3,
+      "height": 2,
+      "used": 5
+    },
+    "options": [
+      2,
+      5,
+      0,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-237-v4",
+    "task": "next_pixel",
+    "inputs": {
+      "width": 2,
+      "height": 2,
+      "permutation": [
+        2,
+        0,
+        3,
+        1
+      ],
+      "used": 4
+    },
+    "options": [
+      null,
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "expected": null,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-237-v5",
+    "task": "coordinate_sequence",
+    "inputs": {
+      "width": 2,
+      "indices": [
+        3,
+        0,
+        2,
+        1
+      ]
+    },
+    "options": [
+      [
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      [
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      [
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-238-v1",
+    "task": "word_reverse",
+    "inputs": {
+      "text": "red blue",
+      "operation": "words"
+    },
+    "options": [
+      "eulb der",
+      "red blue",
+      "blue red",
+      "der eulb"
+    ],
+    "expected": "blue red",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-238-v2",
+    "task": "word_reverse",
+    "inputs": {
+      "text": "ab cd",
+      "operation": "whole"
+    },
+    "options": [
+      "ba dc",
+      "ab cd",
+      "cd ab",
+      "dc ba"
+    ],
+    "expected": "dc ba",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-238-v3",
+    "task": "word_reverse",
+    "inputs": {
+      "text": "ab cd",
+      "operation": "each"
+    },
+    "options": [
+      "ba dc",
+      "cd ab",
+      "dc ba",
+      "ab cd"
+    ],
+    "expected": "ba dc",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-238-v4",
+    "task": "word_reverse",
+    "inputs": {
+      "text": "",
+      "operation": "words"
+    },
+    "options": [
+      "error",
+      "",
+      "None",
+      " "
+    ],
+    "expected": "",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-238-v5",
+    "task": "word_reverse",
+    "inputs": {
+      "text": "single",
+      "operation": "words"
+    },
+    "options": [
+      "",
+      "single extra",
+      "single",
+      "elgnis"
+    ],
+    "expected": "single",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-239-v1",
+    "task": "reversal_work",
+    "inputs": {
+      "n": 4,
+      "kind": "concat"
+    },
+    "options": [
+      10,
+      16,
+      4,
+      6
+    ],
+    "expected": 6,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-239-v2",
+    "task": "reversal_work",
+    "inputs": {
+      "n": 1,
+      "kind": "concat"
+    },
+    "options": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "expected": 0,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-239-v3",
+    "task": "reversal_work",
+    "inputs": {
+      "n": 8,
+      "kind": "concat"
+    },
+    "options": [
+      16,
+      28,
+      64,
+      8
+    ],
+    "expected": 28,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-239-v4",
+    "task": "reversal_work",
+    "inputs": {
+      "n": 8,
+      "kind": "prepend"
+    },
+    "options": [
+      0,
+      7,
+      8,
+      28
+    ],
+    "expected": 8,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-239-v5",
+    "task": "reversal_work",
+    "inputs": {
+      "n": 200,
+      "kind": "concat"
+    },
+    "options": [
+      40000,
+      200,
+      9900,
+      19900
+    ],
+    "expected": 19900,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-240-v1",
+    "task": "list_prepend",
+    "inputs": {
+      "list": [],
+      "value": 7,
+      "success": true
+    },
+    "options": [
+      [
+        7
+      ],
+      [
+        0,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      []
+    ],
+    "expected": [
+      7
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-240-v2",
+    "task": "new_next",
+    "inputs": {
+      "old_head": "B",
+      "new_node": "A"
+    },
+    "options": [
+      "A",
+      "B",
+      "NULL",
+      "uninitialized"
+    ],
+    "expected": "B",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-240-v3",
+    "task": "list_prepend",
+    "inputs": {
+      "list": [
+        4,
+        8
+      ],
+      "value": 7,
+      "success": false
+    },
+    "options": [
+      [],
+      [
+        8
+      ],
+      [
+        4,
+        8
+      ],
+      [
+        7,
+        4,
+        8
+      ]
+    ],
+    "expected": [
+      4,
+      8
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-240-v4",
+    "task": "local_head",
+    "inputs": {
+      "caller_head": "B",
+      "local_assignment": "A"
+    },
+    "options": [
+      "NULL",
+      "A then B",
+      "A",
+      "B"
+    ],
+    "expected": "B",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-240-v5",
+    "task": "insertion_link",
+    "inputs": {
+      "before": "P",
+      "after": "Q",
+      "new": "N"
+    },
+    "options": [
+      "Q",
+      "N",
+      "NULL",
+      "P"
+    ],
+    "expected": "Q",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-241-v1",
+    "task": "destruction_trace",
+    "inputs": {
+      "events": [
+        [
+          "construct",
+          "A"
+        ],
+        [
+          "construct",
+          "B"
+        ],
+        [
+          "exit",
+          null
+        ]
+      ]
+    },
+    "options": [
+      [],
+      [
+        "B",
+        "A"
+      ],
+      [
+        "A",
+        "B"
+      ],
+      [
+        "A"
+      ]
+    ],
+    "expected": [
+      "B",
+      "A"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-241-v2",
+    "task": "destruction_trace",
+    "inputs": {
+      "events": [
+        [
+          "construct",
+          "A"
+        ],
+        [
+          "construct",
+          "B"
+        ],
+        [
+          "throw",
+          null
+        ]
+      ]
+    },
+    "options": [
+      [],
+      [
+        "A",
+        "B"
+      ],
+      [
+        "B",
+        "A"
+      ],
+      [
+        "B"
+      ]
+    ],
+    "expected": [
+      "B",
+      "A"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-241-v3",
+    "task": "destruction_trace",
+    "inputs": {
+      "events": [
+        [
+          "construct",
+          "A"
+        ],
+        [
+          "enter",
+          null
+        ],
+        [
+          "construct",
+          "B"
+        ],
+        [
+          "exit",
+          null
+        ],
+        [
+          "exit",
+          null
+        ]
+      ]
+    },
+    "options": [
+      [
+        "A",
+        "B"
+      ],
+      [
+        "B",
+        "B"
+      ],
+      [
+        "A"
+      ],
+      [
+        "B",
+        "A"
+      ]
+    ],
+    "expected": [
+      "B",
+      "A"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-241-v4",
+    "task": "destruction_trace",
+    "inputs": {
+      "events": [
+        [
+          "construct",
+          "A"
+        ],
+        [
+          "fail_construct",
+          "B"
+        ]
+      ]
+    },
+    "options": [
+      [
+        "A"
+      ],
+      [
+        "B"
+      ],
+      [
+        "B",
+        "A"
+      ],
+      []
+    ],
+    "expected": [
+      "A"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-241-v5",
+    "task": "destruction_trace",
+    "inputs": {
+      "events": [
+        [
+          "construct",
+          "A"
+        ],
+        [
+          "construct",
+          "B"
+        ],
+        [
+          "construct",
+          "C"
+        ],
+        [
+          "throw",
+          null
+        ]
+      ]
+    },
+    "options": [
+      [
+        "A",
+        "B",
+        "C"
+      ],
+      [
+        "C",
+        "B",
+        "A"
+      ],
+      [
+        "C"
+      ],
+      []
+    ],
+    "expected": [
+      "C",
+      "B",
+      "A"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-242-v1",
+    "task": "delete_trace",
+    "inputs": {
+      "chain": [
+        "Base",
+        "Derived"
+      ],
+      "pointer": "Base",
+      "virtual": true
+    },
+    "options": [
+      [
+        "Base"
+      ],
+      "undefined",
+      [
+        "Derived",
+        "Base"
+      ],
+      [
+        "Base",
+        "Derived"
+      ]
+    ],
+    "expected": [
+      "Derived",
+      "Base"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-242-v2",
+    "task": "delete_trace",
+    "inputs": {
+      "chain": [
+        "Base",
+        "Middle",
+        "Leaf"
+      ],
+      "pointer": "Base",
+      "virtual": true
+    },
+    "options": [
+      [
+        "Leaf",
+        "Base"
+      ],
+      "undefined",
+      [
+        "Base",
+        "Middle",
+        "Leaf"
+      ],
+      [
+        "Leaf",
+        "Middle",
+        "Base"
+      ]
+    ],
+    "expected": [
+      "Leaf",
+      "Middle",
+      "Base"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-242-v3",
+    "task": "delete_trace",
+    "inputs": {
+      "chain": [
+        "Base",
+        "Derived"
+      ],
+      "pointer": "Base",
+      "virtual": false
+    },
+    "options": [
+      "undefined",
+      [
+        "Base"
+      ],
+      [
+        "Derived",
+        "Base"
+      ],
+      []
+    ],
+    "expected": "undefined",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-242-v4",
+    "task": "delete_trace",
+    "inputs": {
+      "chain": [
+        "Base"
+      ],
+      "pointer": "Base",
+      "virtual": false
+    },
+    "options": [
+      "undefined",
+      [
+        "Base"
+      ],
+      [
+        "Derived",
+        "Base"
+      ],
+      []
+    ],
+    "expected": [
+      "Base"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-242-v5",
+    "task": "delete_trace",
+    "inputs": {
+      "chain": [
+        "Base",
+        "Derived"
+      ],
+      "pointer": "Derived",
+      "virtual": false
+    },
+    "options": [
+      "undefined",
+      [
+        "Base"
+      ],
+      [
+        "Derived",
+        "Base"
+      ],
+      [
+        "Base",
+        "Derived"
+      ]
+    ],
+    "expected": [
+      "Derived",
+      "Base"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-243-v1",
+    "task": "tree_stack",
+    "inputs": {
+      "children": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          6
+        ],
+        [],
+        [],
+        [],
+        []
+      ],
+      "kind": "depth"
+    },
+    "options": [
+      6,
+      7,
+      2,
+      3
+    ],
+    "expected": 3,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-243-v2",
+    "task": "tree_stack",
+    "inputs": {
+      "children": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          4
+        ],
+        [
+          5
+        ],
+        [
+          6
+        ],
+        []
+      ],
+      "kind": "depth"
+    },
+    "options": [
+      7,
+      1,
+      3,
+      6
+    ],
+    "expected": 7,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-243-v3",
+    "task": "tree_stack",
+    "inputs": {
+      "children": [],
+      "kind": "depth"
+    },
+    "options": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "expected": 0,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-243-v4",
+    "task": "tree_stack",
+    "inputs": {
+      "children": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          13,
+          14
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "kind": "depth"
+    },
+    "options": [
+      15,
+      3,
+      4,
+      7
+    ],
+    "expected": 4,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-243-v5",
+    "task": "tree_stack",
+    "inputs": {
+      "children": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          6
+        ],
+        [],
+        [],
+        [],
+        []
+      ],
+      "kind": "work_and_depth"
+    },
+    "options": [
+      [
+        3,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        3,
+        3
+      ],
+      [
+        7,
+        3
+      ]
+    ],
+    "expected": [
+      7,
+      3
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-244-v1",
+    "task": "expression",
+    "inputs": {
+      "tokens": [
+        2,
+        "+",
+        3,
+        "*",
+        4,
+        "="
+      ],
+      "kind": "value"
+    },
+    "options": [
+      14,
+      20,
+      24,
+      9
+    ],
+    "expected": 14,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-244-v2",
+    "task": "expression",
+    "inputs": {
+      "tokens": [
+        2,
+        "*",
+        3,
+        "+",
+        4,
+        "="
+      ],
+      "kind": "value"
+    },
+    "options": [
+      24,
+      10,
+      14,
+      20
+    ],
+    "expected": 10,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-244-v3",
+    "task": "expression",
+    "inputs": {
+      "tokens": [
+        2,
+        "+",
+        0,
+        "*",
+        9,
+        "="
+      ],
+      "kind": "value"
+    },
+    "options": [
+      18,
+      0,
+      2,
+      9
+    ],
+    "expected": 2,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-244-v4",
+    "task": "expression",
+    "inputs": {
+      "tokens": [
+        5,
+        "*",
+        0,
+        "+",
+        7,
+        "*",
+        2,
+        "="
+      ],
+      "kind": "value"
+    },
+    "options": [
+      24,
+      0,
+      7,
+      14
+    ],
+    "expected": 14,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-244-v5",
+    "task": "expression",
+    "inputs": {
+      "tokens": [
+        2,
+        "+",
+        3,
+        "*",
+        4,
+        "="
+      ],
+      "kind": "state"
+    },
+    "options": [
+      [
+        2,
+        12
+      ],
+      [
+        14,
+        0
+      ],
+      [
+        5,
+        4
+      ],
+      [
+        0,
+        20
+      ]
+    ],
+    "expected": [
+      2,
+      12
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-245-v1",
+    "task": "grammar",
+    "inputs": {
+      "tokens": [
+        2,
+        "+",
+        "="
+      ]
+    },
+    "options": [
+      "valid",
+      "number",
+      "trailing",
+      "terminator"
+    ],
+    "expected": "number",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-245-v2",
+    "task": "grammar",
+    "inputs": {
+      "tokens": [
+        2,
+        "=",
+        3
+      ]
+    },
+    "options": [
+      "valid",
+      "number",
+      "trailing",
+      "terminator"
+    ],
+    "expected": "trailing",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-245-v3",
+    "task": "grammar",
+    "inputs": {
+      "tokens": [
+        "="
+      ]
+    },
+    "options": [
+      "trailing",
+      "terminator",
+      "valid",
+      "number"
+    ],
+    "expected": "number",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-245-v4",
+    "task": "grammar",
+    "inputs": {
+      "tokens": [
+        2,
+        "*",
+        3
+      ]
+    },
+    "options": [
+      "terminator",
+      "valid",
+      "number",
+      "trailing"
+    ],
+    "expected": "terminator",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-245-v5",
+    "task": "grammar",
+    "inputs": {
+      "tokens": [
+        0,
+        "="
+      ]
+    },
+    "options": [
+      "terminator",
+      "valid",
+      "number",
+      "trailing"
+    ],
+    "expected": "valid",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-246-v1",
+    "task": "top_two",
+    "inputs": {
+      "values": [
+        9,
+        9,
+        7,
+        7,
+        7
+      ]
+    },
+    "options": [
+      [
+        [
+          7,
+          3
+        ],
+        [
+          9,
+          2
+        ]
+      ],
+      [
+        [
+          9,
+          2
+        ],
+        [
+          7,
+          1
+        ]
+      ],
+      [
+        [
+          9,
+          2
+        ],
+        [
+          7,
+          3
+        ]
+      ],
+      [
+        [
+          9,
+          1
+        ],
+        [
+          9,
+          1
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        9,
+        2
+      ],
+      [
+        7,
+        3
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-246-v2",
+    "task": "top_two",
+    "inputs": {
+      "values": [
+        -3,
+        -1,
+        -1,
+        -2
+      ]
+    },
+    "options": [
+      [
+        [
+          0,
+          0
+        ],
+        [
+          -1,
+          2
+        ]
+      ],
+      [
+        [
+          -1,
+          1
+        ],
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        [
+          -3,
+          1
+        ],
+        [
+          -2,
+          1
+        ]
+      ],
+      [
+        [
+          -1,
+          2
+        ],
+        [
+          -2,
+          1
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        -1,
+        2
+      ],
+      [
+        -2,
+        1
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-246-v3",
+    "task": "top_two",
+    "inputs": {
+      "values": [
+        5,
+        5,
+        5
+      ]
+    },
+    "options": [
+      [
+        [
+          5,
+          3
+        ]
+      ],
+      [
+        [
+          5,
+          3
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          5,
+          1
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      []
+    ],
+    "expected": [
+      [
+        5,
+        3
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-246-v4",
+    "task": "top_two",
+    "inputs": {
+      "values": [
+        4,
+        4,
+        8,
+        8,
+        6
+      ]
+    },
+    "options": [
+      [
+        [
+          6,
+          1
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      [
+        [
+          8,
+          2
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      [
+        [
+          8,
+          2
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      [
+        [
+          8,
+          1
+        ],
+        [
+          8,
+          1
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        8,
+        2
+      ],
+      [
+        6,
+        1
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-246-v5",
+    "task": "top_two",
+    "inputs": {
+      "values": []
+    },
+    "options": [
+      [
+        [
+          0,
+          1
+        ]
+      ],
+      [
+        [
+          -1,
+          1
+        ]
+      ],
+      [],
+      [
+        [
+          0,
+          0
+        ]
+      ]
+    ],
+    "expected": [],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-247-v1",
+    "task": "mode",
+    "inputs": {
+      "values": [
+        4,
+        2,
+        4,
+        2
+      ]
+    },
+    "options": [
+      4,
+      0,
+      null,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-247-v2",
+    "task": "mode",
+    "inputs": {
+      "values": [
+        -1,
+        -3,
+        -1,
+        -3
+      ]
+    },
+    "options": [
+      -3,
+      -1,
+      0,
+      null
+    ],
+    "expected": -3,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-247-v3",
+    "task": "mode",
+    "inputs": {
+      "values": [
+        0,
+        0,
+        2
+      ]
+    },
+    "options": [
+      null,
+      0,
+      2,
+      -1
+    ],
+    "expected": 0,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-247-v4",
+    "task": "mode",
+    "inputs": {
+      "values": []
+    },
+    "options": [
+      -1,
+      1,
+      null,
+      0
+    ],
+    "expected": null,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-247-v5",
+    "task": "mode",
+    "inputs": {
+      "values": [
+        8,
+        2,
+        8,
+        2,
+        8
+      ]
+    },
+    "options": [
+      0,
+      null,
+      2,
+      8
+    ],
+    "expected": 8,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-248-v1",
+    "task": "residual_triple",
+    "inputs": {
+      "counts": [
+        [
+          4,
+          1
+        ],
+        [
+          9,
+          3
+        ]
+      ]
+    },
+    "options": [
+      4,
+      9,
+      0,
+      null
+    ],
+    "expected": 4,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-248-v2",
+    "task": "residual_triple",
+    "inputs": {
+      "counts": [
+        [
+          2,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ]
+    },
+    "options": [
+      null,
+      2,
+      4,
+      5
+    ],
+    "expected": 2,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-248-v3",
+    "task": "residual_triple",
+    "inputs": {
+      "counts": [
+        [
+          -7,
+          4
+        ],
+        [
+          -1,
+          3
+        ],
+        [
+          8,
+          6
+        ]
+      ]
+    },
+    "options": [
+      8,
+      null,
+      -7,
+      -1
+    ],
+    "expected": -7,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-248-v4",
+    "task": "residual_triple",
+    "inputs": {
+      "counts": [
+        [
+          3,
+          7
+        ],
+        [
+          6,
+          9
+        ]
+      ]
+    },
+    "options": [
+      6,
+      7,
+      null,
+      3
+    ],
+    "expected": 3,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-248-v5",
+    "task": "residual_triple",
+    "inputs": {
+      "counts": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          6
+        ]
+      ]
+    },
+    "options": [
+      0,
+      1,
+      6,
+      null
+    ],
+    "expected": 0,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-249-v1",
+    "task": "draw_line",
+    "inputs": {
+      "row": [
+        0
+      ],
+      "x": 1,
+      "length": 3
+    },
+    "options": [
+      [
+        0
+      ],
+      [
+        14
+      ],
+      [
+        7
+      ],
+      [
+        15
+      ]
+    ],
+    "expected": [
+      14
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-249-v2",
+    "task": "draw_line",
+    "inputs": {
+      "row": [
+        255
+      ],
+      "x": 2,
+      "length": 0
+    },
+    "options": [
+      [
+        251
+      ],
+      [
+        4
+      ],
+      [
+        255
+      ],
+      [
+        0
+      ]
+    ],
+    "expected": [
+      255
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-249-v3",
+    "task": "draw_line",
+    "inputs": {
+      "row": [
+        128,
+        1
+      ],
+      "x": 6,
+      "length": 4
+    },
+    "options": [
+      [
+        192,
+        192
+      ],
+      [
+        255,
+        255
+      ],
+      [
+        64,
+        3
+      ],
+      [
+        192,
+        3
+      ]
+    ],
+    "expected": [
+      192,
+      3
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-249-v4",
+    "task": "draw_line",
+    "inputs": {
+      "row": [
+        85
+      ],
+      "x": 2,
+      "length": 2
+    },
+    "options": [
+      [
+        93
+      ],
+      [
+        12
+      ],
+      [
+        85
+      ],
+      [
+        89
+      ]
+    ],
+    "expected": [
+      93
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-249-v5",
+    "task": "draw_line",
+    "inputs": {
+      "row": [
+        0,
+        0
+      ],
+      "x": 7,
+      "length": 2
+    },
+    "options": [
+      [
+        128,
+        0
+      ],
+      [
+        128,
+        1
+      ],
+      [
+        1,
+        128
+      ],
+      [
+        255,
+        255
+      ]
+    ],
+    "expected": [
+      128,
+      1
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-250-v1",
+    "task": "contains_seven",
+    "inputs": {
+      "number": 14
+    },
+    "options": [
+      "error",
+      true,
+      false,
+      "twice"
+    ],
+    "expected": false,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-250-v2",
+    "task": "contains_seven",
+    "inputs": {
+      "number": 77
+    },
+    "options": [
+      false,
+      "twice",
+      "error",
+      true
+    ],
+    "expected": true,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-250-v3",
+    "task": "contains_seven",
+    "inputs": {
+      "number": 70
+    },
+    "options": [
+      true,
+      false,
+      "twice",
+      "error"
+    ],
+    "expected": true,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-250-v4",
+    "task": "contains_seven",
+    "inputs": {
+      "number": 0
+    },
+    "options": [
+      true,
+      false,
+      "twice",
+      "error"
+    ],
+    "expected": false,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  },
+  {
+    "key": "quick-sw-250-v5",
+    "task": "seven_outputs",
+    "inputs": {
+      "start": 1,
+      "stop": 20
+    },
+    "options": [
+      [
+        7,
+        14,
+        17
+      ],
+      [
+        7
+      ],
+      [
+        7,
+        17
+      ],
+      [
+        7,
+        14
+      ]
+    ],
+    "expected": [
+      7,
+      17
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_500.py"
+  }
+]

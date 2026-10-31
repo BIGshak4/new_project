@@ -13,9 +13,9 @@ test("saved per-question history excludes completed cards by default and makes t
   assert.equal(quickCompletionState(second, records), "unanswered");
   assert.equal(filterQuickHistory(quickQuestions, records, "unanswered").some(q => q.id === first.id), false);
   assert.deepEqual(filterQuickHistory(quickQuestions, records, "completed").map(q => q.id), [first.id]);
-  assert.equal(filterQuickHistory(quickQuestions, records, "all").length, 400);
+  assert.equal(filterQuickHistory(quickQuestions, records, "all").length, 500);
   const afterReload = readQuickProgress(JSON.parse(JSON.stringify({ completed: [completion] })));
-  assert.equal(filterQuickHistory(quickQuestions, afterReload, "unanswered").length, 399);
+  assert.equal(filterQuickHistory(quickQuestions, afterReload, "unanswered").length, 499);
 });
 
 test("an updated question keeps its history label and does not silently repeat", () => {

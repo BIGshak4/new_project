@@ -42,7 +42,7 @@ def test_old_250_card_bytes_and_revisions_are_preserved():
         assert hashlib.sha256((CONTENT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==expected,name
     web=read(CONTENT/'fundamentals-revisions.json')
     backend=read(SEEDS/'fundamentals_catalog.json')['questions']
-    assert len(web)==len(backend)==400 and web==backend
+    assert len(web)==len(backend)==500 and web==backend
     original={key:value for key,value in web.items() if old_id(key)}
     assert len(original)==250 and canonical_digest(original)==OLD_REVISIONS_SHA256
 
@@ -82,10 +82,11 @@ def test_every_prior_quiz_object_and_authorization_is_unchanged():
     manifest=read(SEEDS/'duel_quiz_batches/release-manifest.json')
     preserved=[entry for entry in manifest['questions'] if old_id(entry['key'].rsplit('-v',1)[0])]
     assert len(preserved)==1200 and canonical_digest(preserved)==OLD_RELEASE_SHA256
-    new=[q for q in quiz if q.get('source_key') and not old_id(q['source_key'])]
+    new=[q for q in quiz if q.get('source_key') and 126 <= int(q['source_key'].rsplit('-',1)[1]) <= 200]
     assert len(new)==750
     assert all(q['status']=='approved' and q['release_approval']['on']=='2026-10-30' and q['release_approval']['professional_review']=='pending' for q in new)
-    assert len(quiz)==2040 and sum(q['status']=='approved' for q in quiz)==2000
+    historical=[q for q in quiz if not q.get('source_key') or int(q['source_key'].rsplit('-',1)[1]) <= 200]
+    assert len(historical)==2040 and sum(q['status']=='approved' for q in historical)==2000
 
 
 def test_later_intake_preserves_the_prior_archive_and_its_human_attestations():

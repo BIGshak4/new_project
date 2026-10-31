@@ -1,0 +1,5952 @@
+[
+  {
+    "key": "quick-sw-201-v1",
+    "source_key": "quick-sw-201",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מגרילים A באופן אחיד בשלמים 0..3, ואז B באופן אחיד ב־0..A. מה ההסתברות המשותפת A=2, B=1? הגבולות כלולים.",
+      "en": "Draw integer A uniformly from 0..3, then B uniformly from 0..A. What is the joint probability A=2, B=1? Both endpoints are included."
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1/12",
+        "en": "1/12"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מכפילים את הסתברות A בהסתברות המותנית של B; אם B גדול מ־A התוצאה בלתי אפשרית.",
+      "en": "Multiply the probability of A by the conditional probability of B; B above A is impossible."
+    }
+  },
+  {
+    "key": "quick-sw-201-v2",
+    "source_key": "quick-sw-201",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מגרילים A באופן אחיד בשלמים 0..2, ואז B באופן אחיד ב־0..A. מה ההסתברות המשותפת A=0, B=0? הגבולות כלולים.",
+      "en": "Draw integer A uniformly from 0..2, then B uniformly from 0..A. What is the joint probability A=0, B=0? Both endpoints are included."
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1/3",
+        "en": "1/3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מכפילים את הסתברות A בהסתברות המותנית של B; אם B גדול מ־A התוצאה בלתי אפשרית.",
+      "en": "Multiply the probability of A by the conditional probability of B; B above A is impossible."
+    }
+  },
+  {
+    "key": "quick-sw-201-v3",
+    "source_key": "quick-sw-201",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מגרילים A באופן אחיד בשלמים 0..4, ואז B באופן אחיד ב־0..A. מה ההסתברות המשותפת A=3, B=2? הגבולות כלולים.",
+      "en": "Draw integer A uniformly from 0..4, then B uniformly from 0..A. What is the joint probability A=3, B=2? Both endpoints are included."
+    },
+    "choices": [
+      {
+        "he": "1/20",
+        "en": "1/20"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מכפילים את הסתברות A בהסתברות המותנית של B; אם B גדול מ־A התוצאה בלתי אפשרית.",
+      "en": "Multiply the probability of A by the conditional probability of B; B above A is impossible."
+    }
+  },
+  {
+    "key": "quick-sw-201-v4",
+    "source_key": "quick-sw-201",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מגרילים A באופן אחיד בשלמים 0..3, ואז B באופן אחיד ב־0..A. מה ההסתברות המשותפת A=1, B=2? הגבולות כלולים.",
+      "en": "Draw integer A uniformly from 0..3, then B uniformly from 0..A. What is the joint probability A=1, B=2? Both endpoints are included."
+    },
+    "choices": [
+      {
+        "he": "1/3",
+        "en": "1/3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מכפילים את הסתברות A בהסתברות המותנית של B; אם B גדול מ־A התוצאה בלתי אפשרית.",
+      "en": "Multiply the probability of A by the conditional probability of B; B above A is impossible."
+    }
+  },
+  {
+    "key": "quick-sw-201-v5",
+    "source_key": "quick-sw-201",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מגרילים A באופן אחיד בשלמים 0..5, ואז B באופן אחיד ב־0..A. מה ההסתברות המשותפת A=5, B=5? הגבולות כלולים.",
+      "en": "Draw integer A uniformly from 0..5, then B uniformly from 0..A. What is the joint probability A=5, B=5? Both endpoints are included."
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1/36",
+        "en": "1/36"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מכפילים את הסתברות A בהסתברות המותנית של B; אם B גדול מ־A התוצאה בלתי אפשרית.",
+      "en": "Multiply the probability of A by the conditional probability of B; B above A is impossible."
+    }
+  },
+  {
+    "key": "quick-sw-202-v1",
+    "source_key": "quick-sw-202",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "A אחיד בשלמים 0..4; לאחריו B אחיד בשלמים 0..A, כולל הגבולות. מהי תוחלת B?",
+      "en": "A is uniform over integers 0..4; B is then uniform over integers 0..A, including endpoints. What is the expectation of B?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
+      "en": "For A=a the mean of B is a/2. Average again over A; independence is unnecessary."
+    }
+  },
+  {
+    "key": "quick-sw-202-v2",
+    "source_key": "quick-sw-202",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "A אחיד בשלמים 0..2; לאחריו B אחיד בשלמים 0..A, כולל הגבולות. מהי תוחלת B?",
+      "en": "A is uniform over integers 0..2; B is then uniform over integers 0..A, including endpoints. What is the expectation of B?"
+    },
+    "choices": [
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
+      "en": "For A=a the mean of B is a/2. Average again over A; independence is unnecessary."
+    }
+  },
+  {
+    "key": "quick-sw-202-v3",
+    "source_key": "quick-sw-202",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "A אחיד בשלמים 0..6; לאחריו B אחיד בשלמים 0..A, כולל הגבולות. מהי תוחלת B?",
+      "en": "A is uniform over integers 0..6; B is then uniform over integers 0..A, including endpoints. What is the expectation of B?"
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "3/2",
+        "en": "3/2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
+      "en": "For A=a the mean of B is a/2. Average again over A; independence is unnecessary."
+    }
+  },
+  {
+    "key": "quick-sw-202-v4",
+    "source_key": "quick-sw-202",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "A אחיד בשלמים 0..1; לאחריו B אחיד בשלמים 0..A, כולל הגבולות. מהי תוחלת B?",
+      "en": "A is uniform over integers 0..1; B is then uniform over integers 0..A, including endpoints. What is the expectation of B?"
+    },
+    "choices": [
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/4",
+        "en": "1/4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
+      "en": "For A=a the mean of B is a/2. Average again over A; independence is unnecessary."
+    }
+  },
+  {
+    "key": "quick-sw-202-v5",
+    "source_key": "quick-sw-202",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "A אחיד בשלמים 0..8; לאחריו B אחיד בשלמים 0..A, כולל הגבולות. מהי תוחלת B?",
+      "en": "A is uniform over integers 0..8; B is then uniform over integers 0..A, including endpoints. What is the expectation of B?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
+      "en": "For A=a the mean of B is a/2. Average again over A; independence is unnecessary."
+    }
+  },
+  {
+    "key": "quick-sw-203-v1",
+    "source_key": "quick-sw-203",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "X אחיד בשלמים 0..5 לא כולל 5. מחזירים X modulo 3. מה ההפרש בין מספר ערכי X שמובילים לשארית הנפוצה ביותר ולשארית הנדירה ביותר?",
+      "en": "X is uniform over integers 0..5, excluding 5. Return X modulo 3. What is the difference between the largest and smallest numbers of X values mapping to one remainder?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחלקים את ערכי הקלט בין השאריות. אם החלוקה אינה שלמה, חלק מהשאריות מקבלות מקור נוסף ולכן ההגרלה מוטה.",
+      "en": "Partition input values by remainder. An incomplete division gives some outputs an extra preimage, causing bias."
+    }
+  },
+  {
+    "key": "quick-sw-203-v2",
+    "source_key": "quick-sw-203",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "X אחיד בשלמים 0..6 לא כולל 6. מחזירים X modulo 3. מה ההפרש בין מספר ערכי X שמובילים לשארית הנפוצה ביותר ולשארית הנדירה ביותר?",
+      "en": "X is uniform over integers 0..6, excluding 6. Return X modulo 3. What is the difference between the largest and smallest numbers of X values mapping to one remainder?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מחלקים את ערכי הקלט בין השאריות. אם החלוקה אינה שלמה, חלק מהשאריות מקבלות מקור נוסף ולכן ההגרלה מוטה.",
+      "en": "Partition input values by remainder. An incomplete division gives some outputs an extra preimage, causing bias."
+    }
+  },
+  {
+    "key": "quick-sw-203-v3",
+    "source_key": "quick-sw-203",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "X אחיד בשלמים 0..7 לא כולל 7. מחזירים X modulo 4. מה ההפרש בין מספר ערכי X שמובילים לשארית הנפוצה ביותר ולשארית הנדירה ביותר?",
+      "en": "X is uniform over integers 0..7, excluding 7. Return X modulo 4. What is the difference between the largest and smallest numbers of X values mapping to one remainder?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מחלקים את ערכי הקלט בין השאריות. אם החלוקה אינה שלמה, חלק מהשאריות מקבלות מקור נוסף ולכן ההגרלה מוטה.",
+      "en": "Partition input values by remainder. An incomplete division gives some outputs an extra preimage, causing bias."
+    }
+  },
+  {
+    "key": "quick-sw-203-v4",
+    "source_key": "quick-sw-203",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "X אחיד בשלמים 0..8 לא כולל 8. מחזירים X modulo 4. מה ההפרש בין מספר ערכי X שמובילים לשארית הנפוצה ביותר ולשארית הנדירה ביותר?",
+      "en": "X is uniform over integers 0..8, excluding 8. Return X modulo 4. What is the difference between the largest and smallest numbers of X values mapping to one remainder?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מחלקים את ערכי הקלט בין השאריות. אם החלוקה אינה שלמה, חלק מהשאריות מקבלות מקור נוסף ולכן ההגרלה מוטה.",
+      "en": "Partition input values by remainder. An incomplete division gives some outputs an extra preimage, causing bias."
+    }
+  },
+  {
+    "key": "quick-sw-203-v5",
+    "source_key": "quick-sw-203",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "X אחיד בשלמים 0..9 לא כולל 9. מחזירים X modulo 5. מה ההפרש בין מספר ערכי X שמובילים לשארית הנפוצה ביותר ולשארית הנדירה ביותר?",
+      "en": "X is uniform over integers 0..9, excluding 9. Return X modulo 5. What is the difference between the largest and smallest numbers of X values mapping to one remainder?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחלקים את ערכי הקלט בין השאריות. אם החלוקה אינה שלמה, חלק מהשאריות מקבלות מקור נוסף ולכן ההגרלה מוטה.",
+      "en": "Partition input values by remainder. An incomplete division gives some outputs an extra preimage, causing bias."
+    }
+  },
+  {
+    "key": "quick-sw-204-v1",
+    "source_key": "quick-sw-204",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל ניסיון משתמש ב־2 הגרלות עצמאיות אחידות 0..5 לא כולל 5, ויוצר מספר דו־ספרתי בבסיס 5. מקבלים רק את הקידומת שאורכה הכפולה הגדולה ביותר של 7, ומנסים שוב בדחייה. מה תוחלת מספר ההגרלות עד קבלה?",
+      "en": "Each attempt uses 2 independent uniform draws from 0..5, excluding 5, forming a two-digit base-5 number. Accept only the longest initial range whose size is divisible by 7; otherwise retry. What is the expected number of primitive draws until acceptance?"
+    },
+    "choices": [
+      {
+        "he": "92/21",
+        "en": "92/21"
+      },
+      {
+        "he": "50/21",
+        "en": "50/21"
+      },
+      {
+        "he": "71/21",
+        "en": "71/21"
+      },
+      {
+        "he": "29/21",
+        "en": "29/21"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מחשבים את שיעור הקבלה מתוך כל הזוגות. תוחלת הניסיונות היא ההופכי שלו, וכל ניסיון צורך 2 הגרלות.",
+      "en": "Find the accepted fraction of all pairs. Expected attempts equal its reciprocal, and every attempt costs 2 primitive draws."
+    }
+  },
+  {
+    "key": "quick-sw-204-v2",
+    "source_key": "quick-sw-204",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל ניסיון משתמש ב־2 הגרלות עצמאיות אחידות 0..3 לא כולל 3, ויוצר מספר דו־ספרתי בבסיס 3. מקבלים רק את הקידומת שאורכה הכפולה הגדולה ביותר של 4, ומנסים שוב בדחייה. מה תוחלת מספר ההגרלות עד קבלה?",
+      "en": "Each attempt uses 2 independent uniform draws from 0..3, excluding 3, forming a two-digit base-3 number. Accept only the longest initial range whose size is divisible by 4; otherwise retry. What is the expected number of primitive draws until acceptance?"
+    },
+    "choices": [
+      {
+        "he": "5/4",
+        "en": "5/4"
+      },
+      {
+        "he": "17/4",
+        "en": "17/4"
+      },
+      {
+        "he": "9/4",
+        "en": "9/4"
+      },
+      {
+        "he": "13/4",
+        "en": "13/4"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מחשבים את שיעור הקבלה מתוך כל הזוגות. תוחלת הניסיונות היא ההופכי שלו, וכל ניסיון צורך 2 הגרלות.",
+      "en": "Find the accepted fraction of all pairs. Expected attempts equal its reciprocal, and every attempt costs 2 primitive draws."
+    }
+  },
+  {
+    "key": "quick-sw-204-v3",
+    "source_key": "quick-sw-204",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל ניסיון משתמש ב־2 הגרלות עצמאיות אחידות 0..4 לא כולל 4, ויוצר מספר דו־ספרתי בבסיס 4. מקבלים רק את הקידומת שאורכה הכפולה הגדולה ביותר של 5, ומנסים שוב בדחייה. מה תוחלת מספר ההגרלות עד קבלה?",
+      "en": "Each attempt uses 2 independent uniform draws from 0..4, excluding 4, forming a two-digit base-4 number. Accept only the longest initial range whose size is divisible by 5; otherwise retry. What is the expected number of primitive draws until acceptance?"
+    },
+    "choices": [
+      {
+        "he": "47/15",
+        "en": "47/15"
+      },
+      {
+        "he": "17/15",
+        "en": "17/15"
+      },
+      {
+        "he": "62/15",
+        "en": "62/15"
+      },
+      {
+        "he": "32/15",
+        "en": "32/15"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מחשבים את שיעור הקבלה מתוך כל הזוגות. תוחלת הניסיונות היא ההופכי שלו, וכל ניסיון צורך 2 הגרלות.",
+      "en": "Find the accepted fraction of all pairs. Expected attempts equal its reciprocal, and every attempt costs 2 primitive draws."
+    }
+  },
+  {
+    "key": "quick-sw-204-v4",
+    "source_key": "quick-sw-204",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל ניסיון משתמש ב־2 הגרלות עצמאיות אחידות 0..6 לא כולל 6, ויוצר מספר דו־ספרתי בבסיס 6. מקבלים רק את הקידומת שאורכה הכפולה הגדולה ביותר של 9, ומנסים שוב בדחייה. מה תוחלת מספר ההגרלות עד קבלה?",
+      "en": "Each attempt uses 2 independent uniform draws from 0..6, excluding 6, forming a two-digit base-6 number. Accept only the longest initial range whose size is divisible by 9; otherwise retry. What is the expected number of primitive draws until acceptance?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחשבים את שיעור הקבלה מתוך כל הזוגות. תוחלת הניסיונות היא ההופכי שלו, וכל ניסיון צורך 2 הגרלות.",
+      "en": "Find the accepted fraction of all pairs. Expected attempts equal its reciprocal, and every attempt costs 2 primitive draws."
+    }
+  },
+  {
+    "key": "quick-sw-204-v5",
+    "source_key": "quick-sw-204",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל ניסיון משתמש ב־2 הגרלות עצמאיות אחידות 0..2 לא כולל 2, ויוצר מספר דו־ספרתי בבסיס 2. מקבלים רק את הקידומת שאורכה הכפולה הגדולה ביותר של 3, ומנסים שוב בדחייה. מה תוחלת מספר ההגרלות עד קבלה?",
+      "en": "Each attempt uses 2 independent uniform draws from 0..2, excluding 2, forming a two-digit base-2 number. Accept only the longest initial range whose size is divisible by 3; otherwise retry. What is the expected number of primitive draws until acceptance?"
+    },
+    "choices": [
+      {
+        "he": "14/3",
+        "en": "14/3"
+      },
+      {
+        "he": "8/3",
+        "en": "8/3"
+      },
+      {
+        "he": "11/3",
+        "en": "11/3"
+      },
+      {
+        "he": "5/3",
+        "en": "5/3"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מחשבים את שיעור הקבלה מתוך כל הזוגות. תוחלת הניסיונות היא ההופכי שלו, וכל ניסיון צורך 2 הגרלות.",
+      "en": "Find the accepted fraction of all pairs. Expected attempts equal its reciprocal, and every attempt costs 2 primitive draws."
+    }
+  },
+  {
+    "key": "quick-sw-205-v1",
+    "source_key": "quick-sw-205",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "A אחיד בשלמים 0..3; אז B אחיד בשלמים 0..A. הגבולות כלולים. מה ההסתברות B≤0?",
+      "en": "A is uniform over integers 0..3; B is then uniform over integers 0..A. Endpoints are included. What is the probability B≤0?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "25/48",
+        "en": "25/48"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "לכל ערך של A סופרים את ערכי B המותרים שמתאימים, ומשקללים בהסתברות של אותו A.",
+      "en": "For each A, count qualifying B values among its allowed values, then weight by that A's probability."
+    }
+  },
+  {
+    "key": "quick-sw-205-v2",
+    "source_key": "quick-sw-205",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "A אחיד בשלמים 0..3; אז B אחיד בשלמים 0..A. הגבולות כלולים. מה ההסתברות B≤1?",
+      "en": "A is uniform over integers 0..3; B is then uniform over integers 0..A. Endpoints are included. What is the probability B≤1?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "19/24",
+        "en": "19/24"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "לכל ערך של A סופרים את ערכי B המותרים שמתאימים, ומשקללים בהסתברות של אותו A.",
+      "en": "For each A, count qualifying B values among its allowed values, then weight by that A's probability."
+    }
+  },
+  {
+    "key": "quick-sw-205-v3",
+    "source_key": "quick-sw-205",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "A אחיד בשלמים 0..2; אז B אחיד בשלמים 0..A. הגבולות כלולים. מה ההסתברות B≤2?",
+      "en": "A is uniform over integers 0..2; B is then uniform over integers 0..A. Endpoints are included. What is the probability B≤2?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1/3",
+        "en": "1/3"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "לכל ערך של A סופרים את ערכי B המותרים שמתאימים, ומשקללים בהסתברות של אותו A.",
+      "en": "For each A, count qualifying B values among its allowed values, then weight by that A's probability."
+    }
+  },
+  {
+    "key": "quick-sw-205-v4",
+    "source_key": "quick-sw-205",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "A אחיד בשלמים 0..4; אז B אחיד בשלמים 0..A. הגבולות כלולים. מה ההסתברות B≤1?",
+      "en": "A is uniform over integers 0..4; B is then uniform over integers 0..A. Endpoints are included. What is the probability B≤1?"
+    },
+    "choices": [
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "107/150",
+        "en": "107/150"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "לכל ערך של A סופרים את ערכי B המותרים שמתאימים, ומשקללים בהסתברות של אותו A.",
+      "en": "For each A, count qualifying B values among its allowed values, then weight by that A's probability."
+    }
+  },
+  {
+    "key": "quick-sw-205-v5",
+    "source_key": "quick-sw-205",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "A אחיד בשלמים 0..1; אז B אחיד בשלמים 0..A. הגבולות כלולים. מה ההסתברות B≤0?",
+      "en": "A is uniform over integers 0..1; B is then uniform over integers 0..A. Endpoints are included. What is the probability B≤0?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "3/4",
+        "en": "3/4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "לכל ערך של A סופרים את ערכי B המותרים שמתאימים, ומשקללים בהסתברות של אותו A.",
+      "en": "For each A, count qualifying B values among its allowed values, then weight by that A's probability."
+    }
+  },
+  {
+    "key": "quick-sw-206-v1",
+    "source_key": "quick-sw-206",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "6 אנשים שונים יושבים בשורה בסידור אחיד. מה ההסתברות ש־B יושב צמוד מימין ל־A? אין התניה על מושבו של A.",
+      "en": "6 distinct people sit in a uniformly random row. What is the probability B sits immediately right of A? A's seat is not conditioned on."
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1/6",
+        "en": "1/6"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הזוג AB הוא יחידה אחת בסדר קבוע. מסדרים אותה עם שאר האנשים, ביחס לכל סידורי הישיבה.",
+      "en": "Treat AB as one fixed-order block. Compare arrangements of that block and the others with all seatings."
+    }
+  },
+  {
+    "key": "quick-sw-206-v2",
+    "source_key": "quick-sw-206",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "3 אנשים שונים יושבים בשורה בסידור אחיד. מה ההסתברות ש־B יושב צמוד מימין ל־A? אין התניה על מושבו של A.",
+      "en": "3 distinct people sit in a uniformly random row. What is the probability B sits immediately right of A? A's seat is not conditioned on."
+    },
+    "choices": [
+      {
+        "he": "1/3",
+        "en": "1/3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "הזוג AB הוא יחידה אחת בסדר קבוע. מסדרים אותה עם שאר האנשים, ביחס לכל סידורי הישיבה.",
+      "en": "Treat AB as one fixed-order block. Compare arrangements of that block and the others with all seatings."
+    }
+  },
+  {
+    "key": "quick-sw-206-v3",
+    "source_key": "quick-sw-206",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "4 אנשים שונים יושבים בשורה בסידור אחיד. מה ההסתברות ש־B יושב צמוד מימין ל־A? אין התניה על מושבו של A.",
+      "en": "4 distinct people sit in a uniformly random row. What is the probability B sits immediately right of A? A's seat is not conditioned on."
+    },
+    "choices": [
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1/4",
+        "en": "1/4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "הזוג AB הוא יחידה אחת בסדר קבוע. מסדרים אותה עם שאר האנשים, ביחס לכל סידורי הישיבה.",
+      "en": "Treat AB as one fixed-order block. Compare arrangements of that block and the others with all seatings."
+    }
+  },
+  {
+    "key": "quick-sw-206-v4",
+    "source_key": "quick-sw-206",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "2 אנשים שונים יושבים בשורה בסידור אחיד. מה ההסתברות ש־B יושב צמוד מימין ל־A? אין התניה על מושבו של A.",
+      "en": "2 distinct people sit in a uniformly random row. What is the probability B sits immediately right of A? A's seat is not conditioned on."
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/3",
+        "en": "1/3"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "הזוג AB הוא יחידה אחת בסדר קבוע. מסדרים אותה עם שאר האנשים, ביחס לכל סידורי הישיבה.",
+      "en": "Treat AB as one fixed-order block. Compare arrangements of that block and the others with all seatings."
+    }
+  },
+  {
+    "key": "quick-sw-206-v5",
+    "source_key": "quick-sw-206",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "7 אנשים שונים יושבים בשורה בסידור אחיד. מה ההסתברות ש־B יושב צמוד מימין ל־A? אין התניה על מושבו של A.",
+      "en": "7 distinct people sit in a uniformly random row. What is the probability B sits immediately right of A? A's seat is not conditioned on."
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1/7",
+        "en": "1/7"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "הזוג AB הוא יחידה אחת בסדר קבוע. מסדרים אותה עם שאר האנשים, ביחס לכל סידורי הישיבה.",
+      "en": "Treat AB as one fixed-order block. Compare arrangements of that block and the others with all seatings."
+    }
+  },
+  {
+    "key": "quick-sw-207-v1",
+    "source_key": "quick-sw-207",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "5 אנשים שונים יושבים בשורה באחידות. מה ההסתברות שבאותו סידור B צמוד מימין ל־A וגם C צמוד מימין ל־B?",
+      "en": "5 distinct people sit uniformly in a row. What is the probability B is immediately right of A and C is immediately right of B in the same seating?"
+    },
+    "choices": [
+      {
+        "he": "1/20",
+        "en": "1/20"
+      },
+      {
+        "he": "1/25",
+        "en": "1/25"
+      },
+      {
+        "he": "1/5",
+        "en": "1/5"
+      },
+      {
+        "he": "1/4",
+        "en": "1/4"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "שני התנאים מחייבים מקשה ABC. סופרים את המקשה פעם אחת, במקום להכפיל הסתברויות כאילו האירועים עצמאיים.",
+      "en": "Both conditions force one ABC block. Count that block once rather than assuming the adjacency events are independent."
+    }
+  },
+  {
+    "key": "quick-sw-207-v2",
+    "source_key": "quick-sw-207",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "3 אנשים שונים יושבים בשורה באחידות. מה ההסתברות שבאותו סידור B צמוד מימין ל־A וגם C צמוד מימין ל־B?",
+      "en": "3 distinct people sit uniformly in a row. What is the probability B is immediately right of A and C is immediately right of B in the same seating?"
+    },
+    "choices": [
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1/6",
+        "en": "1/6"
+      },
+      {
+        "he": "1/9",
+        "en": "1/9"
+      },
+      {
+        "he": "1/3",
+        "en": "1/3"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "שני התנאים מחייבים מקשה ABC. סופרים את המקשה פעם אחת, במקום להכפיל הסתברויות כאילו האירועים עצמאיים.",
+      "en": "Both conditions force one ABC block. Count that block once rather than assuming the adjacency events are independent."
+    }
+  },
+  {
+    "key": "quick-sw-207-v3",
+    "source_key": "quick-sw-207",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "4 אנשים שונים יושבים בשורה באחידות. מה ההסתברות שבאותו סידור B צמוד מימין ל־A וגם C צמוד מימין ל־B?",
+      "en": "4 distinct people sit uniformly in a row. What is the probability B is immediately right of A and C is immediately right of B in the same seating?"
+    },
+    "choices": [
+      {
+        "he": "1/4",
+        "en": "1/4"
+      },
+      {
+        "he": "1/3",
+        "en": "1/3"
+      },
+      {
+        "he": "1/12",
+        "en": "1/12"
+      },
+      {
+        "he": "1/16",
+        "en": "1/16"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "שני התנאים מחייבים מקשה ABC. סופרים את המקשה פעם אחת, במקום להכפיל הסתברויות כאילו האירועים עצמאיים.",
+      "en": "Both conditions force one ABC block. Count that block once rather than assuming the adjacency events are independent."
+    }
+  },
+  {
+    "key": "quick-sw-207-v4",
+    "source_key": "quick-sw-207",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "6 אנשים שונים יושבים בשורה באחידות. מה ההסתברות שבאותו סידור B צמוד מימין ל־A וגם C צמוד מימין ל־B?",
+      "en": "6 distinct people sit uniformly in a row. What is the probability B is immediately right of A and C is immediately right of B in the same seating?"
+    },
+    "choices": [
+      {
+        "he": "1/36",
+        "en": "1/36"
+      },
+      {
+        "he": "1/6",
+        "en": "1/6"
+      },
+      {
+        "he": "1/5",
+        "en": "1/5"
+      },
+      {
+        "he": "1/30",
+        "en": "1/30"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "שני התנאים מחייבים מקשה ABC. סופרים את המקשה פעם אחת, במקום להכפיל הסתברויות כאילו האירועים עצמאיים.",
+      "en": "Both conditions force one ABC block. Count that block once rather than assuming the adjacency events are independent."
+    }
+  },
+  {
+    "key": "quick-sw-207-v5",
+    "source_key": "quick-sw-207",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "7 אנשים שונים יושבים בשורה באחידות. מה ההסתברות שבאותו סידור B צמוד מימין ל־A וגם C צמוד מימין ל־B?",
+      "en": "7 distinct people sit uniformly in a row. What is the probability B is immediately right of A and C is immediately right of B in the same seating?"
+    },
+    "choices": [
+      {
+        "he": "1/42",
+        "en": "1/42"
+      },
+      {
+        "he": "1/49",
+        "en": "1/49"
+      },
+      {
+        "he": "1/7",
+        "en": "1/7"
+      },
+      {
+        "he": "1/6",
+        "en": "1/6"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "שני התנאים מחייבים מקשה ABC. סופרים את המקשה פעם אחת, במקום להכפיל הסתברויות כאילו האירועים עצמאיים.",
+      "en": "Both conditions force one ABC block. Count that block once rather than assuming the adjacency events are independent."
+    }
+  },
+  {
+    "key": "quick-sw-208-v1",
+    "source_key": "quick-sw-208",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מועמדים מקודדים 0,1,2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 0 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
+      "en": "Candidates are 0,1,2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 0 waits for the winner between the other two. Who wins the final?"
+    },
+    "choices": [
+      {
+        "he": "אין מנצח",
+        "en": "No winner"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בכל כיוון של המעגל, המנצח בעימות הראשון הוא דווקא מי שהממתין בגמר מנצח בעימות זוגי.",
+      "en": "In either cycle direction, the first-round winner is precisely the opponent whom the waiting finalist beats."
+    }
+  },
+  {
+    "key": "quick-sw-208-v2",
+    "source_key": "quick-sw-208",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מועמדים מקודדים 0,1,2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 1 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
+      "en": "Candidates are 0,1,2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 1 waits for the winner between the other two. Who wins the final?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "אין מנצח",
+        "en": "No winner"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בכל כיוון של המעגל, המנצח בעימות הראשון הוא דווקא מי שהממתין בגמר מנצח בעימות זוגי.",
+      "en": "In either cycle direction, the first-round winner is precisely the opponent whom the waiting finalist beats."
+    }
+  },
+  {
+    "key": "quick-sw-208-v3",
+    "source_key": "quick-sw-208",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מועמדים מקודדים 0,1,2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 2 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
+      "en": "Candidates are 0,1,2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 2 waits for the winner between the other two. Who wins the final?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "אין מנצח",
+        "en": "No winner"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בכל כיוון של המעגל, המנצח בעימות הראשון הוא דווקא מי שהממתין בגמר מנצח בעימות זוגי.",
+      "en": "In either cycle direction, the first-round winner is precisely the opponent whom the waiting finalist beats."
+    }
+  },
+  {
+    "key": "quick-sw-208-v4",
+    "source_key": "quick-sw-208",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מועמדים מקודדים 0,1,2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=1. מועמד 0 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
+      "en": "Candidates are 0,1,2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=1. Candidate 0 waits for the winner between the other two. Who wins the final?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "אין מנצח",
+        "en": "No winner"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בכל כיוון של המעגל, המנצח בעימות הראשון הוא דווקא מי שהממתין בגמר מנצח בעימות זוגי.",
+      "en": "In either cycle direction, the first-round winner is precisely the opponent whom the waiting finalist beats."
+    }
+  },
+  {
+    "key": "quick-sw-208-v5",
+    "source_key": "quick-sw-208",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מועמדים מקודדים 0,1,2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=1. מועמד 2 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
+      "en": "Candidates are 0,1,2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=1. Candidate 2 waits for the winner between the other two. Who wins the final?"
+    },
+    "choices": [
+      {
+        "he": "אין מנצח",
+        "en": "No winner"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בכל כיוון של המעגל, המנצח בעימות הראשון הוא דווקא מי שהממתין בגמר מנצח בעימות זוגי.",
+      "en": "In either cycle direction, the first-round winner is precisely the opponent whom the waiting finalist beats."
+    }
+  },
+  {
+    "key": "quick-sw-209-v1",
+    "source_key": "quick-sw-209",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x,m−x,m−x,x,x,m−x. כאן m=5, x=1. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
+      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x,m−x,m−x,x,x,m−x. Here m=5, x=1. Earlier means preferred. What is the absolute vote margin in A versus B?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מסכמים בנפרד את הדירוגים שמציבים A לפני B ואת אלה שמציבים B לפני A. תיקו בסיכומי מקומות אינו מספיק.",
+      "en": "Sum rankings putting A before B separately from those putting B before A. Tied position totals do not settle this comparison."
+    }
+  },
+  {
+    "key": "quick-sw-209-v2",
+    "source_key": "quick-sw-209",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x,m−x,m−x,x,x,m−x. כאן m=5, x=4. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
+      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x,m−x,m−x,x,x,m−x. Here m=5, x=4. Earlier means preferred. What is the absolute vote margin in A versus B?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מסכמים בנפרד את הדירוגים שמציבים A לפני B ואת אלה שמציבים B לפני A. תיקו בסיכומי מקומות אינו מספיק.",
+      "en": "Sum rankings putting A before B separately from those putting B before A. Tied position totals do not settle this comparison."
+    }
+  },
+  {
+    "key": "quick-sw-209-v3",
+    "source_key": "quick-sw-209",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x,m−x,m−x,x,x,m−x. כאן m=3, x=0. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
+      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x,m−x,m−x,x,x,m−x. Here m=3, x=0. Earlier means preferred. What is the absolute vote margin in A versus B?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מסכמים בנפרד את הדירוגים שמציבים A לפני B ואת אלה שמציבים B לפני A. תיקו בסיכומי מקומות אינו מספיק.",
+      "en": "Sum rankings putting A before B separately from those putting B before A. Tied position totals do not settle this comparison."
+    }
+  },
+  {
+    "key": "quick-sw-209-v4",
+    "source_key": "quick-sw-209",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x,m−x,m−x,x,x,m−x. כאן m=4, x=2. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
+      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x,m−x,m−x,x,x,m−x. Here m=4, x=2. Earlier means preferred. What is the absolute vote margin in A versus B?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מסכמים בנפרד את הדירוגים שמציבים A לפני B ואת אלה שמציבים B לפני A. תיקו בסיכומי מקומות אינו מספיק.",
+      "en": "Sum rankings putting A before B separately from those putting B before A. Tied position totals do not settle this comparison."
+    }
+  },
+  {
+    "key": "quick-sw-209-v5",
+    "source_key": "quick-sw-209",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x,m−x,m−x,x,x,m−x. כאן m=7, x=5. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
+      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x,m−x,m−x,x,x,m−x. Here m=7, x=5. Earlier means preferred. What is the absolute vote margin in A versus B?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מסכמים בנפרד את הדירוגים שמציבים A לפני B ואת אלה שמציבים B לפני A. תיקו בסיכומי מקומות אינו מספיק.",
+      "en": "Sum rankings putting A before B separately from those putting B before A. Tied position totals do not settle this comparison."
+    }
+  },
+  {
+    "key": "quick-sw-210-v1",
+    "source_key": "quick-sw-210",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "תמורה של 100 פתקים מתפרקת למחזורים זרים. מה מספר המחזורים המרבי שאורכם גדול מ־50? אין מגבלות נוספות על התמורה.",
+      "en": "A permutation of 100 notes decomposes into disjoint cycles. What is the maximum number of cycles longer than 50? No other constraints apply."
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "כל מחזור כזה צורך לפחות limit+1 פתקים נפרדים. החסם מושג במחזורים הקצרים ביותר שמקיימים את התנאי, עם שארית כרצוננו.",
+      "en": "Each such cycle consumes at least limit+1 distinct notes. Use cycles of that minimum length to attain the bound; arrange leftovers freely."
+    }
+  },
+  {
+    "key": "quick-sw-210-v2",
+    "source_key": "quick-sw-210",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "תמורה של 12 פתקים מתפרקת למחזורים זרים. מה מספר המחזורים המרבי שאורכם גדול מ־4? אין מגבלות נוספות על התמורה.",
+      "en": "A permutation of 12 notes decomposes into disjoint cycles. What is the maximum number of cycles longer than 4? No other constraints apply."
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "כל מחזור כזה צורך לפחות limit+1 פתקים נפרדים. החסם מושג במחזורים הקצרים ביותר שמקיימים את התנאי, עם שארית כרצוננו.",
+      "en": "Each such cycle consumes at least limit+1 distinct notes. Use cycles of that minimum length to attain the bound; arrange leftovers freely."
+    }
+  },
+  {
+    "key": "quick-sw-210-v3",
+    "source_key": "quick-sw-210",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "תמורה של 9 פתקים מתפרקת למחזורים זרים. מה מספר המחזורים המרבי שאורכם גדול מ־3? אין מגבלות נוספות על התמורה.",
+      "en": "A permutation of 9 notes decomposes into disjoint cycles. What is the maximum number of cycles longer than 3? No other constraints apply."
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "כל מחזור כזה צורך לפחות limit+1 פתקים נפרדים. החסם מושג במחזורים הקצרים ביותר שמקיימים את התנאי, עם שארית כרצוננו.",
+      "en": "Each such cycle consumes at least limit+1 distinct notes. Use cycles of that minimum length to attain the bound; arrange leftovers freely."
+    }
+  },
+  {
+    "key": "quick-sw-210-v4",
+    "source_key": "quick-sw-210",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "תמורה של 8 פתקים מתפרקת למחזורים זרים. מה מספר המחזורים המרבי שאורכם גדול מ־8? אין מגבלות נוספות על התמורה.",
+      "en": "A permutation of 8 notes decomposes into disjoint cycles. What is the maximum number of cycles longer than 8? No other constraints apply."
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "כל מחזור כזה צורך לפחות limit+1 פתקים נפרדים. החסם מושג במחזורים הקצרים ביותר שמקיימים את התנאי, עם שארית כרצוננו.",
+      "en": "Each such cycle consumes at least limit+1 distinct notes. Use cycles of that minimum length to attain the bound; arrange leftovers freely."
+    }
+  },
+  {
+    "key": "quick-sw-210-v5",
+    "source_key": "quick-sw-210",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "תמורה של 15 פתקים מתפרקת למחזורים זרים. מה מספר המחזורים המרבי שאורכם גדול מ־6? אין מגבלות נוספות על התמורה.",
+      "en": "A permutation of 15 notes decomposes into disjoint cycles. What is the maximum number of cycles longer than 6? No other constraints apply."
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "כל מחזור כזה צורך לפחות limit+1 פתקים נפרדים. החסם מושג במחזורים הקצרים ביותר שמקיימים את התנאי, עם שארית כרצוננו.",
+      "en": "Each such cycle consumes at least limit+1 distinct notes. Use cycles of that minimum length to attain the bound; arrange leftovers freely."
+    }
+  },
+  {
+    "key": "quick-sw-211-v1",
+    "source_key": "quick-sw-211",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מחזור יחיד באורך 9 מפוצל בהחלפת שני חצים יוצאים. אפשר לקבל כל שני אורכים חיוביים שסכומם 9. מה האורך המרבי הקטן ביותר שניתן להבטיח בין שני המחזורים החדשים?",
+      "en": "Swapping two outgoing links splits one length-9 cycle into two positive lengths summing to 9. Any such split is allowed. What is the smallest achievable length of the larger resulting cycle?"
+    },
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אחד החלקים חייב להכיל לפחות חצי מהאורך הכולל, בעיגול מעלה. חלוקה לשני חלקים שהפרשם לכל היותר 1 משיגה זאת.",
+      "en": "One part must contain at least half the total, rounded upward. Two parts differing by at most 1 attain the bound."
+    }
+  },
+  {
+    "key": "quick-sw-211-v2",
+    "source_key": "quick-sw-211",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מחזור יחיד באורך 10 מפוצל בהחלפת שני חצים יוצאים. אפשר לקבל כל שני אורכים חיוביים שסכומם 10. מה האורך המרבי הקטן ביותר שניתן להבטיח בין שני המחזורים החדשים?",
+      "en": "Swapping two outgoing links splits one length-10 cycle into two positive lengths summing to 10. Any such split is allowed. What is the smallest achievable length of the larger resulting cycle?"
+    },
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "אחד החלקים חייב להכיל לפחות חצי מהאורך הכולל, בעיגול מעלה. חלוקה לשני חלקים שהפרשם לכל היותר 1 משיגה זאת.",
+      "en": "One part must contain at least half the total, rounded upward. Two parts differing by at most 1 attain the bound."
+    }
+  },
+  {
+    "key": "quick-sw-211-v3",
+    "source_key": "quick-sw-211",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מחזור יחיד באורך 7 מפוצל בהחלפת שני חצים יוצאים. אפשר לקבל כל שני אורכים חיוביים שסכומם 7. מה האורך המרבי הקטן ביותר שניתן להבטיח בין שני המחזורים החדשים?",
+      "en": "Swapping two outgoing links splits one length-7 cycle into two positive lengths summing to 7. Any such split is allowed. What is the smallest achievable length of the larger resulting cycle?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "אחד החלקים חייב להכיל לפחות חצי מהאורך הכולל, בעיגול מעלה. חלוקה לשני חלקים שהפרשם לכל היותר 1 משיגה זאת.",
+      "en": "One part must contain at least half the total, rounded upward. Two parts differing by at most 1 attain the bound."
+    }
+  },
+  {
+    "key": "quick-sw-211-v4",
+    "source_key": "quick-sw-211",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מחזור יחיד באורך 3 מפוצל בהחלפת שני חצים יוצאים. אפשר לקבל כל שני אורכים חיוביים שסכומם 3. מה האורך המרבי הקטן ביותר שניתן להבטיח בין שני המחזורים החדשים?",
+      "en": "Swapping two outgoing links splits one length-3 cycle into two positive lengths summing to 3. Any such split is allowed. What is the smallest achievable length of the larger resulting cycle?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "אחד החלקים חייב להכיל לפחות חצי מהאורך הכולל, בעיגול מעלה. חלוקה לשני חלקים שהפרשם לכל היותר 1 משיגה זאת.",
+      "en": "One part must contain at least half the total, rounded upward. Two parts differing by at most 1 attain the bound."
+    }
+  },
+  {
+    "key": "quick-sw-211-v5",
+    "source_key": "quick-sw-211",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מחזור יחיד באורך 12 מפוצל בהחלפת שני חצים יוצאים. אפשר לקבל כל שני אורכים חיוביים שסכומם 12. מה האורך המרבי הקטן ביותר שניתן להבטיח בין שני המחזורים החדשים?",
+      "en": "Swapping two outgoing links splits one length-12 cycle into two positive lengths summing to 12. Any such split is allowed. What is the smallest achievable length of the larger resulting cycle?"
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אחד החלקים חייב להכיל לפחות חצי מהאורך הכולל, בעיגול מעלה. חלוקה לשני חלקים שהפרשם לכל היותר 1 משיגה זאת.",
+      "en": "One part must contain at least half the total, rounded upward. Two parts differing by at most 1 attain the bound."
+    }
+  },
+  {
+    "key": "quick-sw-212-v1",
+    "source_key": "quick-sw-212",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בתמורה יש שני מחזורים זרים באורכים 3 ו־4. מחליפים את הפתקים בשתי קופסאות, אחת מכל מחזור. מה אורך המחזור החדש שמכיל את שתיהן?",
+      "en": "A permutation has disjoint cycles of lengths 3 and 4. Swap the notes in two boxes, one from each cycle. What is the length of the new cycle containing both boxes?"
+    },
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "החלפת החצים מעבירה את ההליכה דרך שני המחזורים לפני החזרה להתחלה. היא מחברת אותם, בניגוד להחלפה בתוך מחזור יחיד.",
+      "en": "The redirected walk traverses both cycles before returning. This merges them, unlike a swap within one cycle."
+    }
+  },
+  {
+    "key": "quick-sw-212-v2",
+    "source_key": "quick-sw-212",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בתמורה יש שני מחזורים זרים באורכים 1 ו־5. מחליפים את הפתקים בשתי קופסאות, אחת מכל מחזור. מה אורך המחזור החדש שמכיל את שתיהן?",
+      "en": "A permutation has disjoint cycles of lengths 1 and 5. Swap the notes in two boxes, one from each cycle. What is the length of the new cycle containing both boxes?"
+    },
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "החלפת החצים מעבירה את ההליכה דרך שני המחזורים לפני החזרה להתחלה. היא מחברת אותם, בניגוד להחלפה בתוך מחזור יחיד.",
+      "en": "The redirected walk traverses both cycles before returning. This merges them, unlike a swap within one cycle."
+    }
+  },
+  {
+    "key": "quick-sw-212-v3",
+    "source_key": "quick-sw-212",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בתמורה יש שני מחזורים זרים באורכים 2 ו־2. מחליפים את הפתקים בשתי קופסאות, אחת מכל מחזור. מה אורך המחזור החדש שמכיל את שתיהן?",
+      "en": "A permutation has disjoint cycles of lengths 2 and 2. Swap the notes in two boxes, one from each cycle. What is the length of the new cycle containing both boxes?"
+    },
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "החלפת החצים מעבירה את ההליכה דרך שני המחזורים לפני החזרה להתחלה. היא מחברת אותם, בניגוד להחלפה בתוך מחזור יחיד.",
+      "en": "The redirected walk traverses both cycles before returning. This merges them, unlike a swap within one cycle."
+    }
+  },
+  {
+    "key": "quick-sw-212-v4",
+    "source_key": "quick-sw-212",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בתמורה יש שני מחזורים זרים באורכים 4 ו־6. מחליפים את הפתקים בשתי קופסאות, אחת מכל מחזור. מה אורך המחזור החדש שמכיל את שתיהן?",
+      "en": "A permutation has disjoint cycles of lengths 4 and 6. Swap the notes in two boxes, one from each cycle. What is the length of the new cycle containing both boxes?"
+    },
+    "choices": [
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "11",
+        "en": "11"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "החלפת החצים מעבירה את ההליכה דרך שני המחזורים לפני החזרה להתחלה. היא מחברת אותם, בניגוד להחלפה בתוך מחזור יחיד.",
+      "en": "The redirected walk traverses both cycles before returning. This merges them, unlike a swap within one cycle."
+    }
+  },
+  {
+    "key": "quick-sw-212-v5",
+    "source_key": "quick-sw-212",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בתמורה יש שני מחזורים זרים באורכים 1 ו־1. מחליפים את הפתקים בשתי קופסאות, אחת מכל מחזור. מה אורך המחזור החדש שמכיל את שתיהן?",
+      "en": "A permutation has disjoint cycles of lengths 1 and 1. Swap the notes in two boxes, one from each cycle. What is the length of the new cycle containing both boxes?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "החלפת החצים מעבירה את ההליכה דרך שני המחזורים לפני החזרה להתחלה. היא מחברת אותם, בניגוד להחלפה בתוך מחזור יחיד.",
+      "en": "The redirected walk traverses both cycles before returning. This merges them, unlike a swap within one cycle."
+    }
+  },
+  {
+    "key": "quick-sw-213-v1",
+    "source_key": "quick-sw-213",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "במעגל אנונימי של 3 חדרים לכל חדר מנורה בינארית. שני מצבי מנורות נחשבים זהים רק אם סיבוב מעביר אחד לשני; שיקוף אינו מותר. כמה מצבים שונים קיימים?",
+      "en": "An anonymous ring of 3 rooms has one binary lamp per room. Two lamp configurations count as identical exactly when a rotation maps one to the other; reflections are not allowed. How many distinct configurations exist?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מקבצים את כל המילים הבינאריות לפי סיבוב. מצבים סימטריים יוצרים קבוצות קטנות יותר, ולכן חלוקה פשוטה של מספר המילים במספר החדרים אינה מספיקה.",
+      "en": "Group binary words by rotation. Symmetric words have smaller groups, so simply dividing the number of words by the room count is insufficient."
+    }
+  },
+  {
+    "key": "quick-sw-213-v2",
+    "source_key": "quick-sw-213",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "במעגל אנונימי של 4 חדרים לכל חדר מנורה בינארית. שני מצבי מנורות נחשבים זהים רק אם סיבוב מעביר אחד לשני; שיקוף אינו מותר. כמה מצבים שונים קיימים?",
+      "en": "An anonymous ring of 4 rooms has one binary lamp per room. Two lamp configurations count as identical exactly when a rotation maps one to the other; reflections are not allowed. How many distinct configurations exist?"
+    },
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מקבצים את כל המילים הבינאריות לפי סיבוב. מצבים סימטריים יוצרים קבוצות קטנות יותר, ולכן חלוקה פשוטה של מספר המילים במספר החדרים אינה מספיקה.",
+      "en": "Group binary words by rotation. Symmetric words have smaller groups, so simply dividing the number of words by the room count is insufficient."
+    }
+  },
+  {
+    "key": "quick-sw-213-v3",
+    "source_key": "quick-sw-213",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "במעגל אנונימי של 5 חדרים לכל חדר מנורה בינארית. שני מצבי מנורות נחשבים זהים רק אם סיבוב מעביר אחד לשני; שיקוף אינו מותר. כמה מצבים שונים קיימים?",
+      "en": "An anonymous ring of 5 rooms has one binary lamp per room. Two lamp configurations count as identical exactly when a rotation maps one to the other; reflections are not allowed. How many distinct configurations exist?"
+    },
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מקבצים את כל המילים הבינאריות לפי סיבוב. מצבים סימטריים יוצרים קבוצות קטנות יותר, ולכן חלוקה פשוטה של מספר המילים במספר החדרים אינה מספיקה.",
+      "en": "Group binary words by rotation. Symmetric words have smaller groups, so simply dividing the number of words by the room count is insufficient."
+    }
+  },
+  {
+    "key": "quick-sw-213-v4",
+    "source_key": "quick-sw-213",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "במעגל אנונימי של 6 חדרים לכל חדר מנורה בינארית. שני מצבי מנורות נחשבים זהים רק אם סיבוב מעביר אחד לשני; שיקוף אינו מותר. כמה מצבים שונים קיימים?",
+      "en": "An anonymous ring of 6 rooms has one binary lamp per room. Two lamp configurations count as identical exactly when a rotation maps one to the other; reflections are not allowed. How many distinct configurations exist?"
+    },
+    "choices": [
+      {
+        "he": "16",
+        "en": "16"
+      },
+      {
+        "he": "14",
+        "en": "14"
+      },
+      {
+        "he": "15",
+        "en": "15"
+      },
+      {
+        "he": "13",
+        "en": "13"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מקבצים את כל המילים הבינאריות לפי סיבוב. מצבים סימטריים יוצרים קבוצות קטנות יותר, ולכן חלוקה פשוטה של מספר המילים במספר החדרים אינה מספיקה.",
+      "en": "Group binary words by rotation. Symmetric words have smaller groups, so simply dividing the number of words by the room count is insufficient."
+    }
+  },
+  {
+    "key": "quick-sw-213-v5",
+    "source_key": "quick-sw-213",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "במעגל אנונימי של 7 חדרים לכל חדר מנורה בינארית. שני מצבי מנורות נחשבים זהים רק אם סיבוב מעביר אחד לשני; שיקוף אינו מותר. כמה מצבים שונים קיימים?",
+      "en": "An anonymous ring of 7 rooms has one binary lamp per room. Two lamp configurations count as identical exactly when a rotation maps one to the other; reflections are not allowed. How many distinct configurations exist?"
+    },
+    "choices": [
+      {
+        "he": "19",
+        "en": "19"
+      },
+      {
+        "he": "22",
+        "en": "22"
+      },
+      {
+        "he": "20",
+        "en": "20"
+      },
+      {
+        "he": "21",
+        "en": "21"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מקבצים את כל המילים הבינאריות לפי סיבוב. מצבים סימטריים יוצרים קבוצות קטנות יותר, ולכן חלוקה פשוטה של מספר המילים במספר החדרים אינה מספיקה.",
+      "en": "Group binary words by rotation. Symmetric words have smaller groups, so simply dividing the number of words by the room count is insufficient."
+    }
+  },
+  {
+    "key": "quick-sw-214-v1",
+    "source_key": "quick-sw-214",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מעגל מכיל N חדרים, 1≤N≤10. הולכים באותו כיוון, חדר לצעד. זיהוי אמין של חדר ההתחלה מאשר חזרה לאחר מרחקי הצעדים [6, 9]; לא ידוע אם היו חזרות נוספות. כמה ערכי N עדיין אפשריים?",
+      "en": "A ring has N rooms, 1≤N≤10. Move one room per step in one direction. Reliable start-room identification confirms returns after step distances [6, 9]; other returns may have occurred. How many N values remain possible?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "כל מרחק חזרה חייב להתחלק במספר החדרים. בודקים את כל המחלקים המשותפים בטווח; לא מניחים שהתצפית הייתה החזרה הראשונה.",
+      "en": "Every return distance is divisible by the room count. Retain common divisors in range; the observations need not be first returns."
+    }
+  },
+  {
+    "key": "quick-sw-214-v2",
+    "source_key": "quick-sw-214",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מעגל מכיל N חדרים, 1≤N≤12. הולכים באותו כיוון, חדר לצעד. זיהוי אמין של חדר ההתחלה מאשר חזרה לאחר מרחקי הצעדים [8, 12]; לא ידוע אם היו חזרות נוספות. כמה ערכי N עדיין אפשריים?",
+      "en": "A ring has N rooms, 1≤N≤12. Move one room per step in one direction. Reliable start-room identification confirms returns after step distances [8, 12]; other returns may have occurred. How many N values remain possible?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "כל מרחק חזרה חייב להתחלק במספר החדרים. בודקים את כל המחלקים המשותפים בטווח; לא מניחים שהתצפית הייתה החזרה הראשונה.",
+      "en": "Every return distance is divisible by the room count. Retain common divisors in range; the observations need not be first returns."
+    }
+  },
+  {
+    "key": "quick-sw-214-v3",
+    "source_key": "quick-sw-214",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מעגל מכיל N חדרים, 1≤N≤8. הולכים באותו כיוון, חדר לצעד. זיהוי אמין של חדר ההתחלה מאשר חזרה לאחר מרחקי הצעדים [5, 10]; לא ידוע אם היו חזרות נוספות. כמה ערכי N עדיין אפשריים?",
+      "en": "A ring has N rooms, 1≤N≤8. Move one room per step in one direction. Reliable start-room identification confirms returns after step distances [5, 10]; other returns may have occurred. How many N values remain possible?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "כל מרחק חזרה חייב להתחלק במספר החדרים. בודקים את כל המחלקים המשותפים בטווח; לא מניחים שהתצפית הייתה החזרה הראשונה.",
+      "en": "Every return distance is divisible by the room count. Retain common divisors in range; the observations need not be first returns."
+    }
+  },
+  {
+    "key": "quick-sw-214-v4",
+    "source_key": "quick-sw-214",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מעגל מכיל N חדרים, 1≤N≤10. הולכים באותו כיוון, חדר לצעד. זיהוי אמין של חדר ההתחלה מאשר חזרה לאחר מרחקי הצעדים [12, 18]; לא ידוע אם היו חזרות נוספות. כמה ערכי N עדיין אפשריים?",
+      "en": "A ring has N rooms, 1≤N≤10. Move one room per step in one direction. Reliable start-room identification confirms returns after step distances [12, 18]; other returns may have occurred. How many N values remain possible?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "כל מרחק חזרה חייב להתחלק במספר החדרים. בודקים את כל המחלקים המשותפים בטווח; לא מניחים שהתצפית הייתה החזרה הראשונה.",
+      "en": "Every return distance is divisible by the room count. Retain common divisors in range; the observations need not be first returns."
+    }
+  },
+  {
+    "key": "quick-sw-214-v5",
+    "source_key": "quick-sw-214",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מעגל מכיל N חדרים, 1≤N≤5. הולכים באותו כיוון, חדר לצעד. זיהוי אמין של חדר ההתחלה מאשר חזרה לאחר מרחקי הצעדים [4, 8]; לא ידוע אם היו חזרות נוספות. כמה ערכי N עדיין אפשריים?",
+      "en": "A ring has N rooms, 1≤N≤5. Move one room per step in one direction. Reliable start-room identification confirms returns after step distances [4, 8]; other returns may have occurred. How many N values remain possible?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "כל מרחק חזרה חייב להתחלק במספר החדרים. בודקים את כל המחלקים המשותפים בטווח; לא מניחים שהתצפית הייתה החזרה הראשונה.",
+      "en": "Every return distance is divisible by the room count. Retain common divisors in range; the observations need not be first returns."
+    }
+  },
+  {
+    "key": "quick-sw-215-v1",
+    "source_key": "quick-sw-215",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "3 זאבים, 3 כבשים וסירה מתחילים משמאל. מספר נוסעים מותר בהלוך: [2]; בחזור: [1]. בגדה עם כבשים אסור רוב זאבים; גדה בלי כבשים מותרת. מה מספר ההפלגות המזערי להעברת כל הכבשים ימינה? החיות בסירה נספרות ביעד. החזירו −1 אם בלתי אפשרי.",
+      "en": "Start with 3 wolves, 3 sheep and a boat left. Allowed passenger counts: outward [2], return [1]. A bank with sheep cannot have more wolves; a sheep-free bank is allowed. Minimum crossings moving all sheep right? Boat occupants count at destination. Return −1 if impossible."
+    },
+    "choices": [
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחפשים רק במצבים ובהפלגות החוקיים. המטרה עוסקת בכבשים; אין דרישה שכל הזאבים יועברו. חיפוש מלא מבחין בין מסלול ארוך לבין חוסר מסלול.",
+      "en": "Search legal states and crossings only. The goal concerns sheep, without requiring every wolf to cross. Exhaustive reachability distinguishes a long route from no route."
+    }
+  },
+  {
+    "key": "quick-sw-215-v2",
+    "source_key": "quick-sw-215",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "1 זאבים, 1 כבשים וסירה מתחילים משמאל. מספר נוסעים מותר בהלוך: [2]; בחזור: [1]. בגדה עם כבשים אסור רוב זאבים; גדה בלי כבשים מותרת. מה מספר ההפלגות המזערי להעברת כל הכבשים ימינה? החיות בסירה נספרות ביעד. החזירו −1 אם בלתי אפשרי.",
+      "en": "Start with 1 wolves, 1 sheep and a boat left. Allowed passenger counts: outward [2], return [1]. A bank with sheep cannot have more wolves; a sheep-free bank is allowed. Minimum crossings moving all sheep right? Boat occupants count at destination. Return −1 if impossible."
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מחפשים רק במצבים ובהפלגות החוקיים. המטרה עוסקת בכבשים; אין דרישה שכל הזאבים יועברו. חיפוש מלא מבחין בין מסלול ארוך לבין חוסר מסלול.",
+      "en": "Search legal states and crossings only. The goal concerns sheep, without requiring every wolf to cross. Exhaustive reachability distinguishes a long route from no route."
+    }
+  },
+  {
+    "key": "quick-sw-215-v3",
+    "source_key": "quick-sw-215",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "2 זאבים, 2 כבשים וסירה מתחילים משמאל. מספר נוסעים מותר בהלוך: [2]; בחזור: [1]. בגדה עם כבשים אסור רוב זאבים; גדה בלי כבשים מותרת. מה מספר ההפלגות המזערי להעברת כל הכבשים ימינה? החיות בסירה נספרות ביעד. החזירו −1 אם בלתי אפשרי.",
+      "en": "Start with 2 wolves, 2 sheep and a boat left. Allowed passenger counts: outward [2], return [1]. A bank with sheep cannot have more wolves; a sheep-free bank is allowed. Minimum crossings moving all sheep right? Boat occupants count at destination. Return −1 if impossible."
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מחפשים רק במצבים ובהפלגות החוקיים. המטרה עוסקת בכבשים; אין דרישה שכל הזאבים יועברו. חיפוש מלא מבחין בין מסלול ארוך לבין חוסר מסלול.",
+      "en": "Search legal states and crossings only. The goal concerns sheep, without requiring every wolf to cross. Exhaustive reachability distinguishes a long route from no route."
+    }
+  },
+  {
+    "key": "quick-sw-215-v4",
+    "source_key": "quick-sw-215",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "3 זאבים, 3 כבשים וסירה מתחילים משמאל. מספר נוסעים מותר בהלוך: [1, 2]; בחזור: [1, 2]. בגדה עם כבשים אסור רוב זאבים; גדה בלי כבשים מותרת. מה מספר ההפלגות המזערי להעברת כל הכבשים ימינה? החיות בסירה נספרות ביעד. החזירו −1 אם בלתי אפשרי.",
+      "en": "Start with 3 wolves, 3 sheep and a boat left. Allowed passenger counts: outward [1, 2], return [1, 2]. A bank with sheep cannot have more wolves; a sheep-free bank is allowed. Minimum crossings moving all sheep right? Boat occupants count at destination. Return −1 if impossible."
+    },
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מחפשים רק במצבים ובהפלגות החוקיים. המטרה עוסקת בכבשים; אין דרישה שכל הזאבים יועברו. חיפוש מלא מבחין בין מסלול ארוך לבין חוסר מסלול.",
+      "en": "Search legal states and crossings only. The goal concerns sheep, without requiring every wolf to cross. Exhaustive reachability distinguishes a long route from no route."
+    }
+  },
+  {
+    "key": "quick-sw-215-v5",
+    "source_key": "quick-sw-215",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "0 זאבים, 3 כבשים וסירה מתחילים משמאל. מספר נוסעים מותר בהלוך: [2]; בחזור: [1]. בגדה עם כבשים אסור רוב זאבים; גדה בלי כבשים מותרת. מה מספר ההפלגות המזערי להעברת כל הכבשים ימינה? החיות בסירה נספרות ביעד. החזירו −1 אם בלתי אפשרי.",
+      "en": "Start with 0 wolves, 3 sheep and a boat left. Allowed passenger counts: outward [2], return [1]. A bank with sheep cannot have more wolves; a sheep-free bank is allowed. Minimum crossings moving all sheep right? Boat occupants count at destination. Return −1 if impossible."
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחפשים רק במצבים ובהפלגות החוקיים. המטרה עוסקת בכבשים; אין דרישה שכל הזאבים יועברו. חיפוש מלא מבחין בין מסלול ארוך לבין חוסר מסלול.",
+      "en": "Search legal states and crossings only. The goal concerns sheep, without requiring every wolf to cross. Exhaustive reachability distinguishes a long route from no route."
+    }
+  },
+  {
+    "key": "quick-sw-216-v1",
+    "source_key": "quick-sw-216",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בגדה בודדת עשויים להיות 0..3 זאבים ו־0..3 כבשים. מצב בטוח אם אין כבשים, או שמספר הזאבים אינו גדול ממספר הכבשים. כמה זוגות ספירות בטוחים קיימים? אין כאן אילוץ על גדה שנייה.",
+      "en": "One bank may contain 0..3 wolves and 0..3 sheep. It is safe if sheep are absent or wolves do not outnumber sheep. How many safe count pairs exist? No second-bank constraint applies."
+    },
+    "choices": [
+      {
+        "he": "15",
+        "en": "15"
+      },
+      {
+        "he": "13",
+        "en": "13"
+      },
+      {
+        "he": "14",
+        "en": "14"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "סופרים בנפרד את כל המצבים בלי כבשים. לכל כמות כבשים חיובית מגבילים את מספר הזאבים לכמות זו ולמלאי הקיים.",
+      "en": "Count all sheep-free states separately. With a positive sheep count, bound wolves by both that count and available stock."
+    }
+  },
+  {
+    "key": "quick-sw-216-v2",
+    "source_key": "quick-sw-216",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בגדה בודדת עשויים להיות 0..2 זאבים ו־0..3 כבשים. מצב בטוח אם אין כבשים, או שמספר הזאבים אינו גדול ממספר הכבשים. כמה זוגות ספירות בטוחים קיימים? אין כאן אילוץ על גדה שנייה.",
+      "en": "One bank may contain 0..2 wolves and 0..3 sheep. It is safe if sheep are absent or wolves do not outnumber sheep. How many safe count pairs exist? No second-bank constraint applies."
+    },
+    "choices": [
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "13",
+        "en": "13"
+      },
+      {
+        "he": "11",
+        "en": "11"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "סופרים בנפרד את כל המצבים בלי כבשים. לכל כמות כבשים חיובית מגבילים את מספר הזאבים לכמות זו ולמלאי הקיים.",
+      "en": "Count all sheep-free states separately. With a positive sheep count, bound wolves by both that count and available stock."
+    }
+  },
+  {
+    "key": "quick-sw-216-v3",
+    "source_key": "quick-sw-216",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בגדה בודדת עשויים להיות 0..4 זאבים ו־0..2 כבשים. מצב בטוח אם אין כבשים, או שמספר הזאבים אינו גדול ממספר הכבשים. כמה זוגות ספירות בטוחים קיימים? אין כאן אילוץ על גדה שנייה.",
+      "en": "One bank may contain 0..4 wolves and 0..2 sheep. It is safe if sheep are absent or wolves do not outnumber sheep. How many safe count pairs exist? No second-bank constraint applies."
+    },
+    "choices": [
+      {
+        "he": "11",
+        "en": "11"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "סופרים בנפרד את כל המצבים בלי כבשים. לכל כמות כבשים חיובית מגבילים את מספר הזאבים לכמות זו ולמלאי הקיים.",
+      "en": "Count all sheep-free states separately. With a positive sheep count, bound wolves by both that count and available stock."
+    }
+  },
+  {
+    "key": "quick-sw-216-v4",
+    "source_key": "quick-sw-216",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בגדה בודדת עשויים להיות 0..1 זאבים ו־0..4 כבשים. מצב בטוח אם אין כבשים, או שמספר הזאבים אינו גדול ממספר הכבשים. כמה זוגות ספירות בטוחים קיימים? אין כאן אילוץ על גדה שנייה.",
+      "en": "One bank may contain 0..1 wolves and 0..4 sheep. It is safe if sheep are absent or wolves do not outnumber sheep. How many safe count pairs exist? No second-bank constraint applies."
+    },
+    "choices": [
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "11",
+        "en": "11"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "סופרים בנפרד את כל המצבים בלי כבשים. לכל כמות כבשים חיובית מגבילים את מספר הזאבים לכמות זו ולמלאי הקיים.",
+      "en": "Count all sheep-free states separately. With a positive sheep count, bound wolves by both that count and available stock."
+    }
+  },
+  {
+    "key": "quick-sw-216-v5",
+    "source_key": "quick-sw-216",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בגדה בודדת עשויים להיות 0..0 זאבים ו־0..3 כבשים. מצב בטוח אם אין כבשים, או שמספר הזאבים אינו גדול ממספר הכבשים. כמה זוגות ספירות בטוחים קיימים? אין כאן אילוץ על גדה שנייה.",
+      "en": "One bank may contain 0..0 wolves and 0..3 sheep. It is safe if sheep are absent or wolves do not outnumber sheep. How many safe count pairs exist? No second-bank constraint applies."
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "סופרים בנפרד את כל המצבים בלי כבשים. לכל כמות כבשים חיובית מגבילים את מספר הזאבים לכמות זו ולמלאי הקיים.",
+      "en": "Count all sheep-free states separately. With a positive sheep count, bound wolves by both that count and available stock."
+    }
+  },
+  {
+    "key": "quick-sw-217-v1",
+    "source_key": "quick-sw-217",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "תיבה מלבנית בעלת מקצועות 1,1,1. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b,c), (a+c,b), (b+c,a). מה ריבוע אורך המסלול הקצר מביניהן?",
+      "en": "A rectangular box has edge lengths 1,1,1. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b,c), (a+c,b), (b+c,a). What is the squared length of the shortest route among them?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בכל פריסה הקטע הישר הוא הקצר ביותר. משווים ריבועי אורכים לפי פיתגורס, בלי להתבלבל עם אלכסון פנימי שאינו מסלול על המשטח.",
+      "en": "A straight segment is shortest in each unfolding. Compare squared lengths by Pythagoras, excluding the interior diagonal from surface routes."
+    }
+  },
+  {
+    "key": "quick-sw-217-v2",
+    "source_key": "quick-sw-217",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "תיבה מלבנית בעלת מקצועות 1,2,3. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b,c), (a+c,b), (b+c,a). מה ריבוע אורך המסלול הקצר מביניהן?",
+      "en": "A rectangular box has edge lengths 1,2,3. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b,c), (a+c,b), (b+c,a). What is the squared length of the shortest route among them?"
+    },
+    "choices": [
+      {
+        "he": "19",
+        "en": "19"
+      },
+      {
+        "he": "17",
+        "en": "17"
+      },
+      {
+        "he": "20",
+        "en": "20"
+      },
+      {
+        "he": "18",
+        "en": "18"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בכל פריסה הקטע הישר הוא הקצר ביותר. משווים ריבועי אורכים לפי פיתגורס, בלי להתבלבל עם אלכסון פנימי שאינו מסלול על המשטח.",
+      "en": "A straight segment is shortest in each unfolding. Compare squared lengths by Pythagoras, excluding the interior diagonal from surface routes."
+    }
+  },
+  {
+    "key": "quick-sw-217-v3",
+    "source_key": "quick-sw-217",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "תיבה מלבנית בעלת מקצועות 2,2,3. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b,c), (a+c,b), (b+c,a). מה ריבוע אורך המסלול הקצר מביניהן?",
+      "en": "A rectangular box has edge lengths 2,2,3. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b,c), (a+c,b), (b+c,a). What is the squared length of the shortest route among them?"
+    },
+    "choices": [
+      {
+        "he": "25",
+        "en": "25"
+      },
+      {
+        "he": "26",
+        "en": "26"
+      },
+      {
+        "he": "24",
+        "en": "24"
+      },
+      {
+        "he": "27",
+        "en": "27"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בכל פריסה הקטע הישר הוא הקצר ביותר. משווים ריבועי אורכים לפי פיתגורס, בלי להתבלבל עם אלכסון פנימי שאינו מסלול על המשטח.",
+      "en": "A straight segment is shortest in each unfolding. Compare squared lengths by Pythagoras, excluding the interior diagonal from surface routes."
+    }
+  },
+  {
+    "key": "quick-sw-217-v4",
+    "source_key": "quick-sw-217",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "תיבה מלבנית בעלת מקצועות 2,3,4. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b,c), (a+c,b), (b+c,a). מה ריבוע אורך המסלול הקצר מביניהן?",
+      "en": "A rectangular box has edge lengths 2,3,4. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b,c), (a+c,b), (b+c,a). What is the squared length of the shortest route among them?"
+    },
+    "choices": [
+      {
+        "he": "43",
+        "en": "43"
+      },
+      {
+        "he": "41",
+        "en": "41"
+      },
+      {
+        "he": "42",
+        "en": "42"
+      },
+      {
+        "he": "40",
+        "en": "40"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בכל פריסה הקטע הישר הוא הקצר ביותר. משווים ריבועי אורכים לפי פיתגורס, בלי להתבלבל עם אלכסון פנימי שאינו מסלול על המשטח.",
+      "en": "A straight segment is shortest in each unfolding. Compare squared lengths by Pythagoras, excluding the interior diagonal from surface routes."
+    }
+  },
+  {
+    "key": "quick-sw-217-v5",
+    "source_key": "quick-sw-217",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "תיבה מלבנית בעלת מקצועות 1,1,4. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b,c), (a+c,b), (b+c,a). מה ריבוע אורך המסלול הקצר מביניהן?",
+      "en": "A rectangular box has edge lengths 1,1,4. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b,c), (a+c,b), (b+c,a). What is the squared length of the shortest route among them?"
+    },
+    "choices": [
+      {
+        "he": "19",
+        "en": "19"
+      },
+      {
+        "he": "22",
+        "en": "22"
+      },
+      {
+        "he": "20",
+        "en": "20"
+      },
+      {
+        "he": "21",
+        "en": "21"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בכל פריסה הקטע הישר הוא הקצר ביותר. משווים ריבועי אורכים לפי פיתגורס, בלי להתבלבל עם אלכסון פנימי שאינו מסלול על המשטח.",
+      "en": "A straight segment is shortest in each unfolding. Compare squared lengths by Pythagoras, excluding the interior diagonal from surface routes."
+    }
+  },
+  {
+    "key": "quick-sw-218-v1",
+    "source_key": "quick-sw-218",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יעד אחד מוסתר באחידות בין 10 תאים. בודקים תאים שונים ללא החזרה, ו־3 בדיקות נכשלו. מה הסיכוי שהתא הבא, שנבחר באחידות מהתאים שלא נבדקו, מכיל את היעד?",
+      "en": "One target is uniform among 10 cells. Check distinct cells without replacement; 3 checks have missed. What is the chance the next uniformly selected unchecked cell contains the target?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1/7",
+        "en": "1/7"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "אחרי הכישלונות היעד נמצא באחידות בין התאים שנותרו. אין סיבה להשאיר במכנה תאים שכבר נשללו.",
+      "en": "After the misses the target is uniform among remaining cells. Excluded cells no longer belong in the denominator."
+    }
+  },
+  {
+    "key": "quick-sw-218-v2",
+    "source_key": "quick-sw-218",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יעד אחד מוסתר באחידות בין 8 תאים. בודקים תאים שונים ללא החזרה, ו־0 בדיקות נכשלו. מה הסיכוי שהתא הבא, שנבחר באחידות מהתאים שלא נבדקו, מכיל את היעד?",
+      "en": "One target is uniform among 8 cells. Check distinct cells without replacement; 0 checks have missed. What is the chance the next uniformly selected unchecked cell contains the target?"
+    },
+    "choices": [
+      {
+        "he": "1/8",
+        "en": "1/8"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "אחרי הכישלונות היעד נמצא באחידות בין התאים שנותרו. אין סיבה להשאיר במכנה תאים שכבר נשללו.",
+      "en": "After the misses the target is uniform among remaining cells. Excluded cells no longer belong in the denominator."
+    }
+  },
+  {
+    "key": "quick-sw-218-v3",
+    "source_key": "quick-sw-218",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יעד אחד מוסתר באחידות בין 6 תאים. בודקים תאים שונים ללא החזרה, ו־5 בדיקות נכשלו. מה הסיכוי שהתא הבא, שנבחר באחידות מהתאים שלא נבדקו, מכיל את היעד?",
+      "en": "One target is uniform among 6 cells. Check distinct cells without replacement; 5 checks have missed. What is the chance the next uniformly selected unchecked cell contains the target?"
+    },
+    "choices": [
+      {
+        "he": "1/3",
+        "en": "1/3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "אחרי הכישלונות היעד נמצא באחידות בין התאים שנותרו. אין סיבה להשאיר במכנה תאים שכבר נשללו.",
+      "en": "After the misses the target is uniform among remaining cells. Excluded cells no longer belong in the denominator."
+    }
+  },
+  {
+    "key": "quick-sw-218-v4",
+    "source_key": "quick-sw-218",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יעד אחד מוסתר באחידות בין 12 תאים. בודקים תאים שונים ללא החזרה, ו־8 בדיקות נכשלו. מה הסיכוי שהתא הבא, שנבחר באחידות מהתאים שלא נבדקו, מכיל את היעד?",
+      "en": "One target is uniform among 12 cells. Check distinct cells without replacement; 8 checks have missed. What is the chance the next uniformly selected unchecked cell contains the target?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1/4",
+        "en": "1/4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "אחרי הכישלונות היעד נמצא באחידות בין התאים שנותרו. אין סיבה להשאיר במכנה תאים שכבר נשללו.",
+      "en": "After the misses the target is uniform among remaining cells. Excluded cells no longer belong in the denominator."
+    }
+  },
+  {
+    "key": "quick-sw-218-v5",
+    "source_key": "quick-sw-218",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יעד אחד מוסתר באחידות בין 5 תאים. בודקים תאים שונים ללא החזרה, ו־2 בדיקות נכשלו. מה הסיכוי שהתא הבא, שנבחר באחידות מהתאים שלא נבדקו, מכיל את היעד?",
+      "en": "One target is uniform among 5 cells. Check distinct cells without replacement; 2 checks have missed. What is the chance the next uniformly selected unchecked cell contains the target?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1/3",
+        "en": "1/3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "אחרי הכישלונות היעד נמצא באחידות בין התאים שנותרו. אין סיבה להשאיר במכנה תאים שכבר נשללו.",
+      "en": "After the misses the target is uniform among remaining cells. Excluded cells no longer belong in the denominator."
+    }
+  },
+  {
+    "key": "quick-sw-219-v1",
+    "source_key": "quick-sw-219",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בכל הגרלה עצמאית נבחר תא אחיד מתוך 4, עם החזרה. כבר נראו 2 תאים שונים. מה תוחלת מספר ההגרלות הנוספות עד שכל התאים נראו?",
+      "en": "Each independent draw selects a uniform cell among 4, with replacement. Already 2 distinct cells have been seen. What is the expected number of additional draws until all cells have appeared?"
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "כאשר ידועים i תאים, ההסתברות לתא חדש היא (n−i)/n. סוכמים את תוחלות ההמתנה לתא חדש בכל שלב שנותר.",
+      "en": "With i cells known, a new cell arrives with probability (n−i)/n. Add the expected waiting times for all remaining discovery stages."
+    }
+  },
+  {
+    "key": "quick-sw-219-v2",
+    "source_key": "quick-sw-219",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בכל הגרלה עצמאית נבחר תא אחיד מתוך 3, עם החזרה. כבר נראו 0 תאים שונים. מה תוחלת מספר ההגרלות הנוספות עד שכל התאים נראו?",
+      "en": "Each independent draw selects a uniform cell among 3, with replacement. Already 0 distinct cells have been seen. What is the expected number of additional draws until all cells have appeared?"
+    },
+    "choices": [
+      {
+        "he": "15/2",
+        "en": "15/2"
+      },
+      {
+        "he": "11/2",
+        "en": "11/2"
+      },
+      {
+        "he": "13/2",
+        "en": "13/2"
+      },
+      {
+        "he": "9/2",
+        "en": "9/2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "כאשר ידועים i תאים, ההסתברות לתא חדש היא (n−i)/n. סוכמים את תוחלות ההמתנה לתא חדש בכל שלב שנותר.",
+      "en": "With i cells known, a new cell arrives with probability (n−i)/n. Add the expected waiting times for all remaining discovery stages."
+    }
+  },
+  {
+    "key": "quick-sw-219-v3",
+    "source_key": "quick-sw-219",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בכל הגרלה עצמאית נבחר תא אחיד מתוך 5, עם החזרה. כבר נראו 4 תאים שונים. מה תוחלת מספר ההגרלות הנוספות עד שכל התאים נראו?",
+      "en": "Each independent draw selects a uniform cell among 5, with replacement. Already 4 distinct cells have been seen. What is the expected number of additional draws until all cells have appeared?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "כאשר ידועים i תאים, ההסתברות לתא חדש היא (n−i)/n. סוכמים את תוחלות ההמתנה לתא חדש בכל שלב שנותר.",
+      "en": "With i cells known, a new cell arrives with probability (n−i)/n. Add the expected waiting times for all remaining discovery stages."
+    }
+  },
+  {
+    "key": "quick-sw-219-v4",
+    "source_key": "quick-sw-219",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בכל הגרלה עצמאית נבחר תא אחיד מתוך 2, עם החזרה. כבר נראו 1 תאים שונים. מה תוחלת מספר ההגרלות הנוספות עד שכל התאים נראו?",
+      "en": "Each independent draw selects a uniform cell among 2, with replacement. Already 1 distinct cells have been seen. What is the expected number of additional draws until all cells have appeared?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "כאשר ידועים i תאים, ההסתברות לתא חדש היא (n−i)/n. סוכמים את תוחלות ההמתנה לתא חדש בכל שלב שנותר.",
+      "en": "With i cells known, a new cell arrives with probability (n−i)/n. Add the expected waiting times for all remaining discovery stages."
+    }
+  },
+  {
+    "key": "quick-sw-219-v5",
+    "source_key": "quick-sw-219",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בכל הגרלה עצמאית נבחר תא אחיד מתוך 4, עם החזרה. כבר נראו 3 תאים שונים. מה תוחלת מספר ההגרלות הנוספות עד שכל התאים נראו?",
+      "en": "Each independent draw selects a uniform cell among 4, with replacement. Already 3 distinct cells have been seen. What is the expected number of additional draws until all cells have appeared?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "כאשר ידועים i תאים, ההסתברות לתא חדש היא (n−i)/n. סוכמים את תוחלות ההמתנה לתא חדש בכל שלב שנותר.",
+      "en": "With i cells known, a new cell arrives with probability (n−i)/n. Add the expected waiting times for all remaining discovery stages."
+    }
+  },
+  {
+    "key": "quick-sw-220-v1",
+    "source_key": "quick-sw-220",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יש 3 סוסים שונים במהירויות שונות. כל זוג [a,b] ברשימה [[0, 1]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
+      "en": "There are 3 horses with distinct speeds. Each pair [a,b] in [[0, 1]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
+    },
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "סופרים רק סדרים שמכבדים כל השוואה, כולל השלכות מעבריות. אין להפוך היעדר השוואה לשוויון או לקבוע סדר שרירותי בין הבלתי ידועים.",
+      "en": "Count orders respecting every comparison and its transitive consequences. Missing comparisons imply neither equality nor an arbitrary fixed order."
+    }
+  },
+  {
+    "key": "quick-sw-220-v2",
+    "source_key": "quick-sw-220",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יש 3 סוסים שונים במהירויות שונות. כל זוג [a,b] ברשימה [[0, 1], [1, 2]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
+      "en": "There are 3 horses with distinct speeds. Each pair [a,b] in [[0, 1], [1, 2]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "סופרים רק סדרים שמכבדים כל השוואה, כולל השלכות מעבריות. אין להפוך היעדר השוואה לשוויון או לקבוע סדר שרירותי בין הבלתי ידועים.",
+      "en": "Count orders respecting every comparison and its transitive consequences. Missing comparisons imply neither equality nor an arbitrary fixed order."
+    }
+  },
+  {
+    "key": "quick-sw-220-v3",
+    "source_key": "quick-sw-220",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יש 4 סוסים שונים במהירויות שונות. כל זוג [a,b] ברשימה [[0, 1], [0, 2]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
+      "en": "There are 4 horses with distinct speeds. Each pair [a,b] in [[0, 1], [0, 2]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
+    },
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "סופרים רק סדרים שמכבדים כל השוואה, כולל השלכות מעבריות. אין להפוך היעדר השוואה לשוויון או לקבוע סדר שרירותי בין הבלתי ידועים.",
+      "en": "Count orders respecting every comparison and its transitive consequences. Missing comparisons imply neither equality nor an arbitrary fixed order."
+    }
+  },
+  {
+    "key": "quick-sw-220-v4",
+    "source_key": "quick-sw-220",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יש 4 סוסים שונים במהירויות שונות. כל זוג [a,b] ברשימה [[0, 1], [2, 3]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
+      "en": "There are 4 horses with distinct speeds. Each pair [a,b] in [[0, 1], [2, 3]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "סופרים רק סדרים שמכבדים כל השוואה, כולל השלכות מעבריות. אין להפוך היעדר השוואה לשוויון או לקבוע סדר שרירותי בין הבלתי ידועים.",
+      "en": "Count orders respecting every comparison and its transitive consequences. Missing comparisons imply neither equality nor an arbitrary fixed order."
+    }
+  },
+  {
+    "key": "quick-sw-220-v5",
+    "source_key": "quick-sw-220",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יש 4 סוסים שונים במהירויות שונות. כל זוג [a,b] ברשימה [] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
+      "en": "There are 4 horses with distinct speeds. Each pair [a,b] in [] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
+    },
+    "choices": [
+      {
+        "he": "26",
+        "en": "26"
+      },
+      {
+        "he": "24",
+        "en": "24"
+      },
+      {
+        "he": "25",
+        "en": "25"
+      },
+      {
+        "he": "23",
+        "en": "23"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "סופרים רק סדרים שמכבדים כל השוואה, כולל השלכות מעבריות. אין להפוך היעדר השוואה לשוויון או לקבוע סדר שרירותי בין הבלתי ידועים.",
+      "en": "Count orders respecting every comparison and its transitive consequences. Missing comparisons imply neither equality nor an arbitrary fixed order."
+    }
+  },
+  {
+    "key": "quick-sw-221-v1",
+    "source_key": "quick-sw-221",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מעלית מתחילה בקומה 4 וחייבת לבקר בקומות 1 ו־8. העלות היא מרחק בקומות; עצירה חינם, ואין צורך לחזור להתחלה. מה המרחק הכולל המזערי?",
+      "en": "An elevator starts at floor 4 and must visit floors 1 and 8. Cost is floor distance; stops are free and no return is required. What is the minimum total distance?"
+    },
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "11",
+        "en": "11"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "חייבים לכסות את הקטע בין שתי קומות היעד. נוסף עליו המרחק מההתחלה לקצה הראשון שנבחר; בוחרים את הקצה הקרוב יותר.",
+      "en": "The entire interval between destinations must be covered. Add the distance from the start to the first chosen endpoint; choose the nearer endpoint."
+    }
+  },
+  {
+    "key": "quick-sw-221-v2",
+    "source_key": "quick-sw-221",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מעלית מתחילה בקומה 1 וחייבת לבקר בקומות 1 ו־8. העלות היא מרחק בקומות; עצירה חינם, ואין צורך לחזור להתחלה. מה המרחק הכולל המזערי?",
+      "en": "An elevator starts at floor 1 and must visit floors 1 and 8. Cost is floor distance; stops are free and no return is required. What is the minimum total distance?"
+    },
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "חייבים לכסות את הקטע בין שתי קומות היעד. נוסף עליו המרחק מההתחלה לקצה הראשון שנבחר; בוחרים את הקצה הקרוב יותר.",
+      "en": "The entire interval between destinations must be covered. Add the distance from the start to the first chosen endpoint; choose the nearer endpoint."
+    }
+  },
+  {
+    "key": "quick-sw-221-v3",
+    "source_key": "quick-sw-221",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מעלית מתחילה בקומה 9 וחייבת לבקר בקומות 2 ו־6. העלות היא מרחק בקומות; עצירה חינם, ואין צורך לחזור להתחלה. מה המרחק הכולל המזערי?",
+      "en": "An elevator starts at floor 9 and must visit floors 2 and 6. Cost is floor distance; stops are free and no return is required. What is the minimum total distance?"
+    },
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "חייבים לכסות את הקטע בין שתי קומות היעד. נוסף עליו המרחק מההתחלה לקצה הראשון שנבחר; בוחרים את הקצה הקרוב יותר.",
+      "en": "The entire interval between destinations must be covered. Add the distance from the start to the first chosen endpoint; choose the nearer endpoint."
+    }
+  },
+  {
+    "key": "quick-sw-221-v4",
+    "source_key": "quick-sw-221",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מעלית מתחילה בקומה 0 וחייבת לבקר בקומות 3 ו־7. העלות היא מרחק בקומות; עצירה חינם, ואין צורך לחזור להתחלה. מה המרחק הכולל המזערי?",
+      "en": "An elevator starts at floor 0 and must visit floors 3 and 7. Cost is floor distance; stops are free and no return is required. What is the minimum total distance?"
+    },
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "חייבים לכסות את הקטע בין שתי קומות היעד. נוסף עליו המרחק מההתחלה לקצה הראשון שנבחר; בוחרים את הקצה הקרוב יותר.",
+      "en": "The entire interval between destinations must be covered. Add the distance from the start to the first chosen endpoint; choose the nearer endpoint."
+    }
+  },
+  {
+    "key": "quick-sw-221-v5",
+    "source_key": "quick-sw-221",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מעלית מתחילה בקומה 5 וחייבת לבקר בקומות 2 ו־9. העלות היא מרחק בקומות; עצירה חינם, ואין צורך לחזור להתחלה. מה המרחק הכולל המזערי?",
+      "en": "An elevator starts at floor 5 and must visit floors 2 and 9. Cost is floor distance; stops are free and no return is required. What is the minimum total distance?"
+    },
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "11",
+        "en": "11"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "חייבים לכסות את הקטע בין שתי קומות היעד. נוסף עליו המרחק מההתחלה לקצה הראשון שנבחר; בוחרים את הקצה הקרוב יותר.",
+      "en": "The entire interval between destinations must be covered. Add the distance from the start to the first chosen endpoint; choose the nearer endpoint."
+    }
+  },
+  {
+    "key": "quick-sw-222-v1",
+    "source_key": "quick-sw-222",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A,B הם 1,4; משקלי החשיבות שלהם 1,10. אם CA,CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
+      "en": "One server processes two jobs available at time 0 without preemption. Durations A,B are 1,4; importance weights are 1,10. If CA,CB are completion times, what is the minimum wa·CA+wb·CB?"
+    },
+    "choices": [
+      {
+        "he": "46",
+        "en": "46"
+      },
+      {
+        "he": "44",
+        "en": "44"
+      },
+      {
+        "he": "47",
+        "en": "47"
+      },
+      {
+        "he": "45",
+        "en": "45"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מחשבים את זמני הסיום בשני הסדרים ואת העלות המשוקללת שלהם. משימה קצרה אינה בהכרח ראשונה כשמשקלי ההמתנה שונים.",
+      "en": "Compute completion times and weighted cost for both orders. A shorter job need not go first when waiting carries different weights."
+    }
+  },
+  {
+    "key": "quick-sw-222-v2",
+    "source_key": "quick-sw-222",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A,B הם 2,3; משקלי החשיבות שלהם 2,1. אם CA,CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
+      "en": "One server processes two jobs available at time 0 without preemption. Durations A,B are 2,3; importance weights are 2,1. If CA,CB are completion times, what is the minimum wa·CA+wb·CB?"
+    },
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "11",
+        "en": "11"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחשבים את זמני הסיום בשני הסדרים ואת העלות המשוקללת שלהם. משימה קצרה אינה בהכרח ראשונה כשמשקלי ההמתנה שונים.",
+      "en": "Compute completion times and weighted cost for both orders. A shorter job need not go first when waiting carries different weights."
+    }
+  },
+  {
+    "key": "quick-sw-222-v3",
+    "source_key": "quick-sw-222",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A,B הם 3,1; משקלי החשיבות שלהם 4,1. אם CA,CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
+      "en": "One server processes two jobs available at time 0 without preemption. Durations A,B are 3,1; importance weights are 4,1. If CA,CB are completion times, what is the minimum wa·CA+wb·CB?"
+    },
+    "choices": [
+      {
+        "he": "18",
+        "en": "18"
+      },
+      {
+        "he": "16",
+        "en": "16"
+      },
+      {
+        "he": "17",
+        "en": "17"
+      },
+      {
+        "he": "15",
+        "en": "15"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מחשבים את זמני הסיום בשני הסדרים ואת העלות המשוקללת שלהם. משימה קצרה אינה בהכרח ראשונה כשמשקלי ההמתנה שונים.",
+      "en": "Compute completion times and weighted cost for both orders. A shorter job need not go first when waiting carries different weights."
+    }
+  },
+  {
+    "key": "quick-sw-222-v4",
+    "source_key": "quick-sw-222",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A,B הם 2,2; משקלי החשיבות שלהם 1,3. אם CA,CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
+      "en": "One server processes two jobs available at time 0 without preemption. Durations A,B are 2,2; importance weights are 1,3. If CA,CB are completion times, what is the minimum wa·CA+wb·CB?"
+    },
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "11",
+        "en": "11"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מחשבים את זמני הסיום בשני הסדרים ואת העלות המשוקללת שלהם. משימה קצרה אינה בהכרח ראשונה כשמשקלי ההמתנה שונים.",
+      "en": "Compute completion times and weighted cost for both orders. A shorter job need not go first when waiting carries different weights."
+    }
+  },
+  {
+    "key": "quick-sw-222-v5",
+    "source_key": "quick-sw-222",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A,B הם 4,5; משקלי החשיבות שלהם 3,2. אם CA,CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
+      "en": "One server processes two jobs available at time 0 without preemption. Durations A,B are 4,5; importance weights are 3,2. If CA,CB are completion times, what is the minimum wa·CA+wb·CB?"
+    },
+    "choices": [
+      {
+        "he": "31",
+        "en": "31"
+      },
+      {
+        "he": "29",
+        "en": "29"
+      },
+      {
+        "he": "32",
+        "en": "32"
+      },
+      {
+        "he": "30",
+        "en": "30"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מחשבים את זמני הסיום בשני הסדרים ואת העלות המשוקללת שלהם. משימה קצרה אינה בהכרח ראשונה כשמשקלי ההמתנה שונים.",
+      "en": "Compute completion times and weighted cost for both orders. A shorter job need not go first when waiting carries different weights."
+    }
+  },
+  {
+    "key": "quick-sw-223-v1",
+    "source_key": "quick-sw-223",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "דרישות מוצר ממוספרות 0..3 לא כולל 3. הבדיקות מכסות את קבוצות הדרישות [[0, 1], [1, 2], [0], [2]]. מה מספר הבדיקות המזערי שאיחוד הכיסוי שלהן כולל את כל הדרישות?",
+      "en": "Product requirements are numbered 0..3, excluding 3. Available tests cover requirement sets [[0, 1], [1, 2], [0], [2]]. What is the minimum number of tests whose combined coverage includes every requirement?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בוחנים צירופי בדיקות לפי גודלם, ומאחדים את הדרישות שהן מכסות. בדיקות חופפות אינן מוסיפות כיסוי חדש באזורים החופפים.",
+      "en": "Consider subsets of tests by size and union their covered requirements. Overlapping tests add no new coverage in the overlap."
+    }
+  },
+  {
+    "key": "quick-sw-223-v2",
+    "source_key": "quick-sw-223",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "דרישות מוצר ממוספרות 0..3 לא כולל 3. הבדיקות מכסות את קבוצות הדרישות [[0, 1, 2], [0], [1], [2]]. מה מספר הבדיקות המזערי שאיחוד הכיסוי שלהן כולל את כל הדרישות?",
+      "en": "Product requirements are numbered 0..3, excluding 3. Available tests cover requirement sets [[0, 1, 2], [0], [1], [2]]. What is the minimum number of tests whose combined coverage includes every requirement?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בוחנים צירופי בדיקות לפי גודלם, ומאחדים את הדרישות שהן מכסות. בדיקות חופפות אינן מוסיפות כיסוי חדש באזורים החופפים.",
+      "en": "Consider subsets of tests by size and union their covered requirements. Overlapping tests add no new coverage in the overlap."
+    }
+  },
+  {
+    "key": "quick-sw-223-v3",
+    "source_key": "quick-sw-223",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "דרישות מוצר ממוספרות 0..4 לא כולל 4. הבדיקות מכסות את קבוצות הדרישות [[0, 1], [2, 3], [0, 2], [1, 3]]. מה מספר הבדיקות המזערי שאיחוד הכיסוי שלהן כולל את כל הדרישות?",
+      "en": "Product requirements are numbered 0..4, excluding 4. Available tests cover requirement sets [[0, 1], [2, 3], [0, 2], [1, 3]]. What is the minimum number of tests whose combined coverage includes every requirement?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בוחנים צירופי בדיקות לפי גודלם, ומאחדים את הדרישות שהן מכסות. בדיקות חופפות אינן מוסיפות כיסוי חדש באזורים החופפים.",
+      "en": "Consider subsets of tests by size and union their covered requirements. Overlapping tests add no new coverage in the overlap."
+    }
+  },
+  {
+    "key": "quick-sw-223-v4",
+    "source_key": "quick-sw-223",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "דרישות מוצר ממוספרות 0..3 לא כולל 3. הבדיקות מכסות את קבוצות הדרישות [[0], [1], [2]]. מה מספר הבדיקות המזערי שאיחוד הכיסוי שלהן כולל את כל הדרישות?",
+      "en": "Product requirements are numbered 0..3, excluding 3. Available tests cover requirement sets [[0], [1], [2]]. What is the minimum number of tests whose combined coverage includes every requirement?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בוחנים צירופי בדיקות לפי גודלם, ומאחדים את הדרישות שהן מכסות. בדיקות חופפות אינן מוסיפות כיסוי חדש באזורים החופפים.",
+      "en": "Consider subsets of tests by size and union their covered requirements. Overlapping tests add no new coverage in the overlap."
+    }
+  },
+  {
+    "key": "quick-sw-223-v5",
+    "source_key": "quick-sw-223",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "דרישות מוצר ממוספרות 0..4 לא כולל 4. הבדיקות מכסות את קבוצות הדרישות [[0, 1, 2], [1, 2, 3], [0], [3]]. מה מספר הבדיקות המזערי שאיחוד הכיסוי שלהן כולל את כל הדרישות?",
+      "en": "Product requirements are numbered 0..4, excluding 4. Available tests cover requirement sets [[0, 1, 2], [1, 2, 3], [0], [3]]. What is the minimum number of tests whose combined coverage includes every requirement?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בוחנים צירופי בדיקות לפי גודלם, ומאחדים את הדרישות שהן מכסות. בדיקות חופפות אינן מוסיפות כיסוי חדש באזורים החופפים.",
+      "en": "Consider subsets of tests by size and union their covered requirements. Overlapping tests add no new coverage in the overlap."
+    }
+  },
+  {
+    "key": "quick-sw-224-v1",
+    "source_key": "quick-sw-224",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל שורה ב־[[0, 0], [0, 1], [1, 0], [1, 1]] היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+      "en": "Each row of [[0, 0], [0, 1], [1, 0], [1, 1]] lists predicted binary measurement results for one hidden state. Measurements are reliable and chosen in advance. What minimum number of columns guarantees identifying the correct row?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בקבוצת העמודות הנבחרת לכל מצב חייבת להיות חתימה שונה. מספיק להבדיל כל זוג מצבים; כמות המדידות לבדה אינה מבטיחה זאת.",
+      "en": "Every state needs a distinct signature on selected columns. Distinguish every state pair; the measurement count alone is insufficient."
+    }
+  },
+  {
+    "key": "quick-sw-224-v2",
+    "source_key": "quick-sw-224",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל שורה ב־[[0, 0, 0], [0, 0, 1], [1, 1, 0]] היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+      "en": "Each row of [[0, 0, 0], [0, 0, 1], [1, 1, 0]] lists predicted binary measurement results for one hidden state. Measurements are reliable and chosen in advance. What minimum number of columns guarantees identifying the correct row?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "בקבוצת העמודות הנבחרת לכל מצב חייבת להיות חתימה שונה. מספיק להבדיל כל זוג מצבים; כמות המדידות לבדה אינה מבטיחה זאת.",
+      "en": "Every state needs a distinct signature on selected columns. Distinguish every state pair; the measurement count alone is insufficient."
+    }
+  },
+  {
+    "key": "quick-sw-224-v3",
+    "source_key": "quick-sw-224",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל שורה ב־[[0, 0, 0], [1, 1, 1]] היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+      "en": "Each row of [[0, 0, 0], [1, 1, 1]] lists predicted binary measurement results for one hidden state. Measurements are reliable and chosen in advance. What minimum number of columns guarantees identifying the correct row?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "בקבוצת העמודות הנבחרת לכל מצב חייבת להיות חתימה שונה. מספיק להבדיל כל זוג מצבים; כמות המדידות לבדה אינה מבטיחה זאת.",
+      "en": "Every state needs a distinct signature on selected columns. Distinguish every state pair; the measurement count alone is insufficient."
+    }
+  },
+  {
+    "key": "quick-sw-224-v4",
+    "source_key": "quick-sw-224",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל שורה ב־[[0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 0]] היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+      "en": "Each row of [[0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 0]] lists predicted binary measurement results for one hidden state. Measurements are reliable and chosen in advance. What minimum number of columns guarantees identifying the correct row?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "בקבוצת העמודות הנבחרת לכל מצב חייבת להיות חתימה שונה. מספיק להבדיל כל זוג מצבים; כמות המדידות לבדה אינה מבטיחה זאת.",
+      "en": "Every state needs a distinct signature on selected columns. Distinguish every state pair; the measurement count alone is insufficient."
+    }
+  },
+  {
+    "key": "quick-sw-224-v5",
+    "source_key": "quick-sw-224",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל שורה ב־[[0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0]] היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+      "en": "Each row of [[0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0]] lists predicted binary measurement results for one hidden state. Measurements are reliable and chosen in advance. What minimum number of columns guarantees identifying the correct row?"
+    },
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "בקבוצת העמודות הנבחרת לכל מצב חייבת להיות חתימה שונה. מספיק להבדיל כל זוג מצבים; כמות המדידות לבדה אינה מבטיחה זאת.",
+      "en": "Every state needs a distinct signature on selected columns. Distinguish every state pair; the measurement count alone is insufficient."
+    }
+  },
+  {
+    "key": "quick-sw-225-v1",
+    "source_key": "quick-sw-225",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בדיקה של מוצר תקין מחזירה טעות בהסתברות 1/4 בכל הפעלה, באופן בלתי תלוי. מפעילים 3 פעמים ומחליטים לפי רוב. מה הסתברות ההכרעה השגויה?",
+      "en": "A test of a conforming product independently gives a wrong result with probability 1/4 on each run. Run it 3 times and decide by majority. What is the probability of a wrong final verdict?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "5/32",
+        "en": "5/32"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "שגיאה סופית דורשת רוב של תוצאות שגויות. סוכמים את הסתברויות כל מספרי השגיאות האלה; ללא עצמאות אותו חישוב אינו מוצדק.",
+      "en": "A wrong verdict requires a majority of erroneous runs. Sum those error-count probabilities; without independence this calculation is unjustified."
+    }
+  },
+  {
+    "key": "quick-sw-225-v2",
+    "source_key": "quick-sw-225",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בדיקה של מוצר תקין מחזירה טעות בהסתברות 1/3 בכל הפעלה, באופן בלתי תלוי. מפעילים 3 פעמים ומחליטים לפי רוב. מה הסתברות ההכרעה השגויה?",
+      "en": "A test of a conforming product independently gives a wrong result with probability 1/3 on each run. Run it 3 times and decide by majority. What is the probability of a wrong final verdict?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "7/27",
+        "en": "7/27"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "שגיאה סופית דורשת רוב של תוצאות שגויות. סוכמים את הסתברויות כל מספרי השגיאות האלה; ללא עצמאות אותו חישוב אינו מוצדק.",
+      "en": "A wrong verdict requires a majority of erroneous runs. Sum those error-count probabilities; without independence this calculation is unjustified."
+    }
+  },
+  {
+    "key": "quick-sw-225-v3",
+    "source_key": "quick-sw-225",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בדיקה של מוצר תקין מחזירה טעות בהסתברות 1/4 בכל הפעלה, באופן בלתי תלוי. מפעילים 5 פעמים ומחליטים לפי רוב. מה הסתברות ההכרעה השגויה?",
+      "en": "A test of a conforming product independently gives a wrong result with probability 1/4 on each run. Run it 5 times and decide by majority. What is the probability of a wrong final verdict?"
+    },
+    "choices": [
+      {
+        "he": "53/512",
+        "en": "53/512"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "שגיאה סופית דורשת רוב של תוצאות שגויות. סוכמים את הסתברויות כל מספרי השגיאות האלה; ללא עצמאות אותו חישוב אינו מוצדק.",
+      "en": "A wrong verdict requires a majority of erroneous runs. Sum those error-count probabilities; without independence this calculation is unjustified."
+    }
+  },
+  {
+    "key": "quick-sw-225-v4",
+    "source_key": "quick-sw-225",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בדיקה של מוצר תקין מחזירה טעות בהסתברות 1/2 בכל הפעלה, באופן בלתי תלוי. מפעילים 3 פעמים ומחליטים לפי רוב. מה הסתברות ההכרעה השגויה?",
+      "en": "A test of a conforming product independently gives a wrong result with probability 1/2 on each run. Run it 3 times and decide by majority. What is the probability of a wrong final verdict?"
+    },
+    "choices": [
+      {
+        "he": "1/3",
+        "en": "1/3"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "שגיאה סופית דורשת רוב של תוצאות שגויות. סוכמים את הסתברויות כל מספרי השגיאות האלה; ללא עצמאות אותו חישוב אינו מוצדק.",
+      "en": "A wrong verdict requires a majority of erroneous runs. Sum those error-count probabilities; without independence this calculation is unjustified."
+    }
+  },
+  {
+    "key": "quick-sw-225-v5",
+    "source_key": "quick-sw-225",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בדיקה של מוצר תקין מחזירה טעות בהסתברות 1/3 בכל הפעלה, באופן בלתי תלוי. מפעילים 5 פעמים ומחליטים לפי רוב. מה הסתברות ההכרעה השגויה?",
+      "en": "A test of a conforming product independently gives a wrong result with probability 1/3 on each run. Run it 5 times and decide by majority. What is the probability of a wrong final verdict?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "17/81",
+        "en": "17/81"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "שגיאה סופית דורשת רוב של תוצאות שגויות. סוכמים את הסתברויות כל מספרי השגיאות האלה; ללא עצמאות אותו חישוב אינו מוצדק.",
+      "en": "A wrong verdict requires a majority of erroneous runs. Sum those error-count probabilities; without independence this calculation is unjustified."
+    }
+  },
+  {
+    "key": "quick-sw-226-v1",
+    "source_key": "quick-sw-226",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "חבילה מכילה 10 דפים, מהם בדיוק 2 פגומים. בוחרים באחידות 3 דפים שונים ללא החזרה ובודקים אותם בצורה מושלמת. מה ההסתברות שלא יימצא פגם?",
+      "en": "A pack contains 10 sheets, exactly 2 defective. Uniformly sample 3 distinct sheets without replacement and inspect perfectly. What is the probability no defect is found?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "7/15",
+        "en": "7/15"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מונה ההסתברות הוא מספר המדגמים שכל דפיהם תקינים; המכנה הוא מספר כל המדגמים בגודל הנתון. הצלחת המדגם אינה מבטיחה ששאר החבילה תקינה.",
+      "en": "Count samples containing only conforming sheets over all samples of the given size. A passing sample does not certify the untested remainder."
+    }
+  },
+  {
+    "key": "quick-sw-226-v2",
+    "source_key": "quick-sw-226",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "חבילה מכילה 6 דפים, מהם בדיוק 1 פגומים. בוחרים באחידות 2 דפים שונים ללא החזרה ובודקים אותם בצורה מושלמת. מה ההסתברות שלא יימצא פגם?",
+      "en": "A pack contains 6 sheets, exactly 1 defective. Uniformly sample 2 distinct sheets without replacement and inspect perfectly. What is the probability no defect is found?"
+    },
+    "choices": [
+      {
+        "he": "2/3",
+        "en": "2/3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מונה ההסתברות הוא מספר המדגמים שכל דפיהם תקינים; המכנה הוא מספר כל המדגמים בגודל הנתון. הצלחת המדגם אינה מבטיחה ששאר החבילה תקינה.",
+      "en": "Count samples containing only conforming sheets over all samples of the given size. A passing sample does not certify the untested remainder."
+    }
+  },
+  {
+    "key": "quick-sw-226-v3",
+    "source_key": "quick-sw-226",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "חבילה מכילה 5 דפים, מהם בדיוק 2 פגומים. בוחרים באחידות 4 דפים שונים ללא החזרה ובודקים אותם בצורה מושלמת. מה ההסתברות שלא יימצא פגם?",
+      "en": "A pack contains 5 sheets, exactly 2 defective. Uniformly sample 4 distinct sheets without replacement and inspect perfectly. What is the probability no defect is found?"
+    },
+    "choices": [
+      {
+        "he": "1/3",
+        "en": "1/3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מונה ההסתברות הוא מספר המדגמים שכל דפיהם תקינים; המכנה הוא מספר כל המדגמים בגודל הנתון. הצלחת המדגם אינה מבטיחה ששאר החבילה תקינה.",
+      "en": "Count samples containing only conforming sheets over all samples of the given size. A passing sample does not certify the untested remainder."
+    }
+  },
+  {
+    "key": "quick-sw-226-v4",
+    "source_key": "quick-sw-226",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "חבילה מכילה 8 דפים, מהם בדיוק 3 פגומים. בוחרים באחידות 2 דפים שונים ללא החזרה ובודקים אותם בצורה מושלמת. מה ההסתברות שלא יימצא פגם?",
+      "en": "A pack contains 8 sheets, exactly 3 defective. Uniformly sample 2 distinct sheets without replacement and inspect perfectly. What is the probability no defect is found?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "5/14",
+        "en": "5/14"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מונה ההסתברות הוא מספר המדגמים שכל דפיהם תקינים; המכנה הוא מספר כל המדגמים בגודל הנתון. הצלחת המדגם אינה מבטיחה ששאר החבילה תקינה.",
+      "en": "Count samples containing only conforming sheets over all samples of the given size. A passing sample does not certify the untested remainder."
+    }
+  },
+  {
+    "key": "quick-sw-226-v5",
+    "source_key": "quick-sw-226",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "חבילה מכילה 7 דפים, מהם בדיוק 0 פגומים. בוחרים באחידות 3 דפים שונים ללא החזרה ובודקים אותם בצורה מושלמת. מה ההסתברות שלא יימצא פגם?",
+      "en": "A pack contains 7 sheets, exactly 0 defective. Uniformly sample 3 distinct sheets without replacement and inspect perfectly. What is the probability no defect is found?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1/3",
+        "en": "1/3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מונה ההסתברות הוא מספר המדגמים שכל דפיהם תקינים; המכנה הוא מספר כל המדגמים בגודל הנתון. הצלחת המדגם אינה מבטיחה ששאר החבילה תקינה.",
+      "en": "Count samples containing only conforming sheets over all samples of the given size. A passing sample does not certify the untested remainder."
+    }
+  },
+  {
+    "key": "quick-sw-227-v1",
+    "source_key": "quick-sw-227",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל אדם צריך פריט שונה. רשימות הפריטים [[0, 1], [0, 1]] מסודרות מהעדיף ביותר לפחות עדיף; פריט שאינו ברשימה אסור. מבין הקצאות מלאות חוקיות, מה המספר המרבי של אנשים שמקבלים את הבחירה הראשונה שלהם?",
+      "en": "Each person needs a different item. Allowed-item lists [[0, 1], [0, 1]] run from most to least preferred; unlisted items are forbidden. Among legal complete assignments, what maximum number of people can receive their first choice?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מסננים תחילה הקצאות מלאות ללא התנגשות, ואז ממקסמים את מספר הבחירות הראשונות. עצם קיום הקצאה מלאה אינו קובע את ציונה.",
+      "en": "First retain complete collision-free assignments, then maximize first-choice satisfaction. A complete matching's existence does not determine its preference score."
+    }
+  },
+  {
+    "key": "quick-sw-227-v2",
+    "source_key": "quick-sw-227",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל אדם צריך פריט שונה. רשימות הפריטים [[0, 1], [0, 2], [1, 2]] מסודרות מהעדיף ביותר לפחות עדיף; פריט שאינו ברשימה אסור. מבין הקצאות מלאות חוקיות, מה המספר המרבי של אנשים שמקבלים את הבחירה הראשונה שלהם?",
+      "en": "Each person needs a different item. Allowed-item lists [[0, 1], [0, 2], [1, 2]] run from most to least preferred; unlisted items are forbidden. Among legal complete assignments, what maximum number of people can receive their first choice?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מסננים תחילה הקצאות מלאות ללא התנגשות, ואז ממקסמים את מספר הבחירות הראשונות. עצם קיום הקצאה מלאה אינו קובע את ציונה.",
+      "en": "First retain complete collision-free assignments, then maximize first-choice satisfaction. A complete matching's existence does not determine its preference score."
+    }
+  },
+  {
+    "key": "quick-sw-227-v3",
+    "source_key": "quick-sw-227",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל אדם צריך פריט שונה. רשימות הפריטים [[0, 1], [0, 1], [1, 2]] מסודרות מהעדיף ביותר לפחות עדיף; פריט שאינו ברשימה אסור. מבין הקצאות מלאות חוקיות, מה המספר המרבי של אנשים שמקבלים את הבחירה הראשונה שלהם?",
+      "en": "Each person needs a different item. Allowed-item lists [[0, 1], [0, 1], [1, 2]] run from most to least preferred; unlisted items are forbidden. Among legal complete assignments, what maximum number of people can receive their first choice?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מסננים תחילה הקצאות מלאות ללא התנגשות, ואז ממקסמים את מספר הבחירות הראשונות. עצם קיום הקצאה מלאה אינו קובע את ציונה.",
+      "en": "First retain complete collision-free assignments, then maximize first-choice satisfaction. A complete matching's existence does not determine its preference score."
+    }
+  },
+  {
+    "key": "quick-sw-227-v4",
+    "source_key": "quick-sw-227",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל אדם צריך פריט שונה. רשימות הפריטים [[1, 0], [2, 1], [0, 2]] מסודרות מהעדיף ביותר לפחות עדיף; פריט שאינו ברשימה אסור. מבין הקצאות מלאות חוקיות, מה המספר המרבי של אנשים שמקבלים את הבחירה הראשונה שלהם?",
+      "en": "Each person needs a different item. Allowed-item lists [[1, 0], [2, 1], [0, 2]] run from most to least preferred; unlisted items are forbidden. Among legal complete assignments, what maximum number of people can receive their first choice?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מסננים תחילה הקצאות מלאות ללא התנגשות, ואז ממקסמים את מספר הבחירות הראשונות. עצם קיום הקצאה מלאה אינו קובע את ציונה.",
+      "en": "First retain complete collision-free assignments, then maximize first-choice satisfaction. A complete matching's existence does not determine its preference score."
+    }
+  },
+  {
+    "key": "quick-sw-227-v5",
+    "source_key": "quick-sw-227",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל אדם צריך פריט שונה. רשימות הפריטים [[0, 1, 2], [0, 1, 2], [0, 1, 2]] מסודרות מהעדיף ביותר לפחות עדיף; פריט שאינו ברשימה אסור. מבין הקצאות מלאות חוקיות, מה המספר המרבי של אנשים שמקבלים את הבחירה הראשונה שלהם?",
+      "en": "Each person needs a different item. Allowed-item lists [[0, 1, 2], [0, 1, 2], [0, 1, 2]] run from most to least preferred; unlisted items are forbidden. Among legal complete assignments, what maximum number of people can receive their first choice?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מסננים תחילה הקצאות מלאות ללא התנגשות, ואז ממקסמים את מספר הבחירות הראשונות. עצם קיום הקצאה מלאה אינו קובע את ציונה.",
+      "en": "First retain complete collision-free assignments, then maximize first-choice satisfaction. A complete matching's existence does not determine its preference score."
+    }
+  },
+  {
+    "key": "quick-sw-228-v1",
+    "source_key": "quick-sw-228",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל אדם צריך בדיוק פריט אחד, ואסור לשני אנשים לקבל אותו פריט. הרשימות [[0, 1], [0, 1]] מכילות את כל הפריטים המותרים לכל אדם. כמה הקצאות מלאות שונות קיימות? אנשים ופריטים נבדלים זה מזה.",
+      "en": "Each person needs exactly one item, with no item shared. Lists [[0, 1], [0, 1]] give all allowed items for each person. How many distinct complete assignments exist? People and items are distinguishable."
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מונים הקצאות חוקיות ולא בחירות מקומיות נפרדות. שתי בחירות שמתנגשות באותו פריט אינן יוצרות פתרון מלא.",
+      "en": "Count legal complete assignments rather than independent local choices. Two choices colliding on one item do not form a solution."
+    }
+  },
+  {
+    "key": "quick-sw-228-v2",
+    "source_key": "quick-sw-228",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל אדם צריך בדיוק פריט אחד, ואסור לשני אנשים לקבל אותו פריט. הרשימות [[0], [0]] מכילות את כל הפריטים המותרים לכל אדם. כמה הקצאות מלאות שונות קיימות? אנשים ופריטים נבדלים זה מזה.",
+      "en": "Each person needs exactly one item, with no item shared. Lists [[0], [0]] give all allowed items for each person. How many distinct complete assignments exist? People and items are distinguishable."
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מונים הקצאות חוקיות ולא בחירות מקומיות נפרדות. שתי בחירות שמתנגשות באותו פריט אינן יוצרות פתרון מלא.",
+      "en": "Count legal complete assignments rather than independent local choices. Two choices colliding on one item do not form a solution."
+    }
+  },
+  {
+    "key": "quick-sw-228-v3",
+    "source_key": "quick-sw-228",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל אדם צריך בדיוק פריט אחד, ואסור לשני אנשים לקבל אותו פריט. הרשימות [[0, 1], [1, 2], [0, 2]] מכילות את כל הפריטים המותרים לכל אדם. כמה הקצאות מלאות שונות קיימות? אנשים ופריטים נבדלים זה מזה.",
+      "en": "Each person needs exactly one item, with no item shared. Lists [[0, 1], [1, 2], [0, 2]] give all allowed items for each person. How many distinct complete assignments exist? People and items are distinguishable."
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מונים הקצאות חוקיות ולא בחירות מקומיות נפרדות. שתי בחירות שמתנגשות באותו פריט אינן יוצרות פתרון מלא.",
+      "en": "Count legal complete assignments rather than independent local choices. Two choices colliding on one item do not form a solution."
+    }
+  },
+  {
+    "key": "quick-sw-228-v4",
+    "source_key": "quick-sw-228",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל אדם צריך בדיוק פריט אחד, ואסור לשני אנשים לקבל אותו פריט. הרשימות [[0], [1], [2]] מכילות את כל הפריטים המותרים לכל אדם. כמה הקצאות מלאות שונות קיימות? אנשים ופריטים נבדלים זה מזה.",
+      "en": "Each person needs exactly one item, with no item shared. Lists [[0], [1], [2]] give all allowed items for each person. How many distinct complete assignments exist? People and items are distinguishable."
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מונים הקצאות חוקיות ולא בחירות מקומיות נפרדות. שתי בחירות שמתנגשות באותו פריט אינן יוצרות פתרון מלא.",
+      "en": "Count legal complete assignments rather than independent local choices. Two choices colliding on one item do not form a solution."
+    }
+  },
+  {
+    "key": "quick-sw-228-v5",
+    "source_key": "quick-sw-228",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "כל אדם צריך בדיוק פריט אחד, ואסור לשני אנשים לקבל אותו פריט. הרשימות [[0, 1, 2], [0, 1, 2], [0, 1, 2]] מכילות את כל הפריטים המותרים לכל אדם. כמה הקצאות מלאות שונות קיימות? אנשים ופריטים נבדלים זה מזה.",
+      "en": "Each person needs exactly one item, with no item shared. Lists [[0, 1, 2], [0, 1, 2], [0, 1, 2]] give all allowed items for each person. How many distinct complete assignments exist? People and items are distinguishable."
+    },
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מונים הקצאות חוקיות ולא בחירות מקומיות נפרדות. שתי בחירות שמתנגשות באותו פריט אינן יוצרות פתרון מלא.",
+      "en": "Count legal complete assignments rather than independent local choices. Two choices colliding on one item do not form a solution."
+    }
+  },
+  {
+    "key": "quick-sw-229-v1",
+    "source_key": "quick-sw-229",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בכל ביקור בוחרים אסיר אחד באופן אחיד ועצמאי מתוך 2. מה ההסתברות שאחרי בדיוק 3 ביקורים כל אסיר נבחר לפחות פעם אחת? אין מידע על בחירות קודמות.",
+      "en": "Each visit independently chooses one prisoner uniformly from 2. What is the probability every prisoner has been selected after exactly 3 visits? There is no prior selection history."
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "3/4",
+        "en": "3/4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "סופרים רצפי ביקורים שמכסים את כל האסירים מתוך כל הרצפים האפשריים. גם סיכוי גבוה אינו שולל רצף שחוזר רק לאותו אסיר.",
+      "en": "Count visit sequences covering all prisoners among all possible sequences. Even a high probability does not exclude repeated selection of one prisoner."
+    }
+  },
+  {
+    "key": "quick-sw-229-v2",
+    "source_key": "quick-sw-229",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בכל ביקור בוחרים אסיר אחד באופן אחיד ועצמאי מתוך 3. מה ההסתברות שאחרי בדיוק 3 ביקורים כל אסיר נבחר לפחות פעם אחת? אין מידע על בחירות קודמות.",
+      "en": "Each visit independently chooses one prisoner uniformly from 3. What is the probability every prisoner has been selected after exactly 3 visits? There is no prior selection history."
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "2/9",
+        "en": "2/9"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "סופרים רצפי ביקורים שמכסים את כל האסירים מתוך כל הרצפים האפשריים. גם סיכוי גבוה אינו שולל רצף שחוזר רק לאותו אסיר.",
+      "en": "Count visit sequences covering all prisoners among all possible sequences. Even a high probability does not exclude repeated selection of one prisoner."
+    }
+  },
+  {
+    "key": "quick-sw-229-v3",
+    "source_key": "quick-sw-229",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בכל ביקור בוחרים אסיר אחד באופן אחיד ועצמאי מתוך 3. מה ההסתברות שאחרי בדיוק 4 ביקורים כל אסיר נבחר לפחות פעם אחת? אין מידע על בחירות קודמות.",
+      "en": "Each visit independently chooses one prisoner uniformly from 3. What is the probability every prisoner has been selected after exactly 4 visits? There is no prior selection history."
+    },
+    "choices": [
+      {
+        "he": "4/9",
+        "en": "4/9"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "סופרים רצפי ביקורים שמכסים את כל האסירים מתוך כל הרצפים האפשריים. גם סיכוי גבוה אינו שולל רצף שחוזר רק לאותו אסיר.",
+      "en": "Count visit sequences covering all prisoners among all possible sequences. Even a high probability does not exclude repeated selection of one prisoner."
+    }
+  },
+  {
+    "key": "quick-sw-229-v4",
+    "source_key": "quick-sw-229",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בכל ביקור בוחרים אסיר אחד באופן אחיד ועצמאי מתוך 2. מה ההסתברות שאחרי בדיוק 5 ביקורים כל אסיר נבחר לפחות פעם אחת? אין מידע על בחירות קודמות.",
+      "en": "Each visit independently chooses one prisoner uniformly from 2. What is the probability every prisoner has been selected after exactly 5 visits? There is no prior selection history."
+    },
+    "choices": [
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "15/16",
+        "en": "15/16"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "סופרים רצפי ביקורים שמכסים את כל האסירים מתוך כל הרצפים האפשריים. גם סיכוי גבוה אינו שולל רצף שחוזר רק לאותו אסיר.",
+      "en": "Count visit sequences covering all prisoners among all possible sequences. Even a high probability does not exclude repeated selection of one prisoner."
+    }
+  },
+  {
+    "key": "quick-sw-229-v5",
+    "source_key": "quick-sw-229",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "בכל ביקור בוחרים אסיר אחד באופן אחיד ועצמאי מתוך 4. מה ההסתברות שאחרי בדיוק 3 ביקורים כל אסיר נבחר לפחות פעם אחת? אין מידע על בחירות קודמות.",
+      "en": "Each visit independently chooses one prisoner uniformly from 4. What is the probability every prisoner has been selected after exactly 3 visits? There is no prior selection history."
+    },
+    "choices": [
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "1/3",
+        "en": "1/3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "סופרים רצפי ביקורים שמכסים את כל האסירים מתוך כל הרצפים האפשריים. גם סיכוי גבוה אינו שולל רצף שחוזר רק לאותו אסיר.",
+      "en": "Count visit sequences covering all prisoners among all possible sequences. Even a high probability does not exclude repeated selection of one prisoner."
+    }
+  },
+  {
+    "key": "quick-sw-230-v1",
+    "source_key": "quick-sw-230",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "ל־6 אנשים כובעים עצמאיים ואחידים מתוך 3 צבעים. כל אחד רואה רק את האחרים ומנחש יחד איתם לפי כלל דטרמיניסטי מוסכם. מה תוחלת מספר הניחושים הנכונים, לכל כלל כזה? אין תקשורת אחרי הנחת הכובעים.",
+      "en": "6 people have independent uniform hats of 3 colors. Each sees only the others and simultaneously guesses using any agreed deterministic rule. What is the expected number correct, for every such rule? There is no communication after hats are placed."
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "לאחר קיבוע כל הכובעים שאדם רואה, צבעו שלו עדיין אחיד. לכל אדם סיכוי שווה להצליח; סוכמים תוחלות גם כשההצלחות תלויות זו בזו.",
+      "en": "After fixing every hat a person sees, their own color remains uniform. Add individual correctness expectations even if the success events are dependent."
+    }
+  },
+  {
+    "key": "quick-sw-230-v2",
+    "source_key": "quick-sw-230",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "ל־5 אנשים כובעים עצמאיים ואחידים מתוך 2 צבעים. כל אחד רואה רק את האחרים ומנחש יחד איתם לפי כלל דטרמיניסטי מוסכם. מה תוחלת מספר הניחושים הנכונים, לכל כלל כזה? אין תקשורת אחרי הנחת הכובעים.",
+      "en": "5 people have independent uniform hats of 2 colors. Each sees only the others and simultaneously guesses using any agreed deterministic rule. What is the expected number correct, for every such rule? There is no communication after hats are placed."
+    },
+    "choices": [
+      {
+        "he": "5/2",
+        "en": "5/2"
+      },
+      {
+        "he": "7/2",
+        "en": "7/2"
+      },
+      {
+        "he": "3/2",
+        "en": "3/2"
+      },
+      {
+        "he": "9/2",
+        "en": "9/2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "לאחר קיבוע כל הכובעים שאדם רואה, צבעו שלו עדיין אחיד. לכל אדם סיכוי שווה להצליח; סוכמים תוחלות גם כשההצלחות תלויות זו בזו.",
+      "en": "After fixing every hat a person sees, their own color remains uniform. Add individual correctness expectations even if the success events are dependent."
+    }
+  },
+  {
+    "key": "quick-sw-230-v3",
+    "source_key": "quick-sw-230",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "ל־4 אנשים כובעים עצמאיים ואחידים מתוך 4 צבעים. כל אחד רואה רק את האחרים ומנחש יחד איתם לפי כלל דטרמיניסטי מוסכם. מה תוחלת מספר הניחושים הנכונים, לכל כלל כזה? אין תקשורת אחרי הנחת הכובעים.",
+      "en": "4 people have independent uniform hats of 4 colors. Each sees only the others and simultaneously guesses using any agreed deterministic rule. What is the expected number correct, for every such rule? There is no communication after hats are placed."
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "לאחר קיבוע כל הכובעים שאדם רואה, צבעו שלו עדיין אחיד. לכל אדם סיכוי שווה להצליח; סוכמים תוחלות גם כשההצלחות תלויות זו בזו.",
+      "en": "After fixing every hat a person sees, their own color remains uniform. Add individual correctness expectations even if the success events are dependent."
+    }
+  },
+  {
+    "key": "quick-sw-230-v4",
+    "source_key": "quick-sw-230",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "ל־7 אנשים כובעים עצמאיים ואחידים מתוך 3 צבעים. כל אחד רואה רק את האחרים ומנחש יחד איתם לפי כלל דטרמיניסטי מוסכם. מה תוחלת מספר הניחושים הנכונים, לכל כלל כזה? אין תקשורת אחרי הנחת הכובעים.",
+      "en": "7 people have independent uniform hats of 3 colors. Each sees only the others and simultaneously guesses using any agreed deterministic rule. What is the expected number correct, for every such rule? There is no communication after hats are placed."
+    },
+    "choices": [
+      {
+        "he": "4/3",
+        "en": "4/3"
+      },
+      {
+        "he": "13/3",
+        "en": "13/3"
+      },
+      {
+        "he": "7/3",
+        "en": "7/3"
+      },
+      {
+        "he": "10/3",
+        "en": "10/3"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "לאחר קיבוע כל הכובעים שאדם רואה, צבעו שלו עדיין אחיד. לכל אדם סיכוי שווה להצליח; סוכמים תוחלות גם כשההצלחות תלויות זו בזו.",
+      "en": "After fixing every hat a person sees, their own color remains uniform. Add individual correctness expectations even if the success events are dependent."
+    }
+  },
+  {
+    "key": "quick-sw-230-v5",
+    "source_key": "quick-sw-230",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "ל־3 אנשים כובעים עצמאיים ואחידים מתוך 2 צבעים. כל אחד רואה רק את האחרים ומנחש יחד איתם לפי כלל דטרמיניסטי מוסכם. מה תוחלת מספר הניחושים הנכונים, לכל כלל כזה? אין תקשורת אחרי הנחת הכובעים.",
+      "en": "3 people have independent uniform hats of 2 colors. Each sees only the others and simultaneously guesses using any agreed deterministic rule. What is the expected number correct, for every such rule? There is no communication after hats are placed."
+    },
+    "choices": [
+      {
+        "he": "5/2",
+        "en": "5/2"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "7/2",
+        "en": "7/2"
+      },
+      {
+        "he": "3/2",
+        "en": "3/2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "לאחר קיבוע כל הכובעים שאדם רואה, צבעו שלו עדיין אחיד. לכל אדם סיכוי שווה להצליח; סוכמים תוחלות גם כשההצלחות תלויות זו בזו.",
+      "en": "After fixing every hat a person sees, their own color remains uniform. Add individual correctness expectations even if the success events are dependent."
+    }
+  },
+  {
+    "key": "quick-sw-231-v1",
+    "source_key": "quick-sw-231",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מחלקים 3 כדורים אדומים ו־3 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
+      "en": "Split 3 red and 3 white balls between two nonempty urns without loss. Choose an urn uniformly, then a ball uniformly within it. What is the maximum probability of red?"
+    },
+    "choices": [
+      {
+        "he": "7/10",
+        "en": "7/10"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחשבים ממוצע של שני השברים האדומים בכל חלוקה חוקית. אפשר לבדוק את כל החלוקות הקטנות, ולא להחליף בחירה אחידה של כד בבחירה אחידה של כדור.",
+      "en": "Average the two red fractions for each legal split. Enumerate these small allocations; uniform urn selection is not uniform selection among all balls."
+    }
+  },
+  {
+    "key": "quick-sw-231-v2",
+    "source_key": "quick-sw-231",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מחלקים 2 כדורים אדומים ו־4 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
+      "en": "Split 2 red and 4 white balls between two nonempty urns without loss. Choose an urn uniformly, then a ball uniformly within it. What is the maximum probability of red?"
+    },
+    "choices": [
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "3/5",
+        "en": "3/5"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מחשבים ממוצע של שני השברים האדומים בכל חלוקה חוקית. אפשר לבדוק את כל החלוקות הקטנות, ולא להחליף בחירה אחידה של כד בבחירה אחידה של כדור.",
+      "en": "Average the two red fractions for each legal split. Enumerate these small allocations; uniform urn selection is not uniform selection among all balls."
+    }
+  },
+  {
+    "key": "quick-sw-231-v3",
+    "source_key": "quick-sw-231",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מחלקים 1 כדורים אדומים ו־4 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
+      "en": "Split 1 red and 4 white balls between two nonempty urns without loss. Choose an urn uniformly, then a ball uniformly within it. What is the maximum probability of red?"
+    },
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/3",
+        "en": "1/3"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מחשבים ממוצע של שני השברים האדומים בכל חלוקה חוקית. אפשר לבדוק את כל החלוקות הקטנות, ולא להחליף בחירה אחידה של כד בבחירה אחידה של כדור.",
+      "en": "Average the two red fractions for each legal split. Enumerate these small allocations; uniform urn selection is not uniform selection among all balls."
+    }
+  },
+  {
+    "key": "quick-sw-231-v4",
+    "source_key": "quick-sw-231",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מחלקים 4 כדורים אדומים ו־2 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
+      "en": "Split 4 red and 2 white balls between two nonempty urns without loss. Choose an urn uniformly, then a ball uniformly within it. What is the maximum probability of red?"
+    },
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      },
+      {
+        "he": "4/5",
+        "en": "4/5"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מחשבים ממוצע של שני השברים האדומים בכל חלוקה חוקית. אפשר לבדוק את כל החלוקות הקטנות, ולא להחליף בחירה אחידה של כד בבחירה אחידה של כדור.",
+      "en": "Average the two red fractions for each legal split. Enumerate these small allocations; uniform urn selection is not uniform selection among all balls."
+    }
+  },
+  {
+    "key": "quick-sw-231-v5",
+    "source_key": "quick-sw-231",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מחלקים 2 כדורים אדומים ו־1 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
+      "en": "Split 2 red and 1 white balls between two nonempty urns without loss. Choose an urn uniformly, then a ball uniformly within it. What is the maximum probability of red?"
+    },
+    "choices": [
+      {
+        "he": "3/4",
+        "en": "3/4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "1/2",
+        "en": "1/2"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מחשבים ממוצע של שני השברים האדומים בכל חלוקה חוקית. אפשר לבדוק את כל החלוקות הקטנות, ולא להחליף בחירה אחידה של כד בבחירה אחידה של כדור.",
+      "en": "Average the two red fractions for each legal split. Enumerate these small allocations; uniform urn selection is not uniform selection among all balls."
+    }
+  },
+  {
+    "key": "quick-sw-232-v1",
+    "source_key": "quick-sw-232",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מטבע מזויף יחיד יכול להיות כבד או קל. חתימות המדידה המנורמלות של המטבעות הכבדים הן [[1, 0], [-1, 0], [0, 1]]; חתימת קל היא היפוכה. שקילות מאוזנות במטבעות תקינים ידועים. כמה חתימות תוצאה שונות יש לכל השערות מיקום וכיוון יחד?",
+      "en": "One counterfeit coin may be heavy or light. Normalized measurement signatures for heavy coins are [[1, 0], [-1, 0], [0, 1]]; a light coin gives the negative signature. Known normal coins balance the weighings. How many distinct outcome signatures exist across all position-and-direction hypotheses?"
+    },
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מוסיפים לכל וקטור גם את הווקטור הנגדי, וסופרים חתימות שונות בלבד. וקטורים נגדיים או וקטור אפס יוצרים התנגשויות בין השערות.",
+      "en": "Include every vector and its negative, counting distinct signatures only. Opposite vectors and zero vectors cause hypothesis collisions."
+    }
+  },
+  {
+    "key": "quick-sw-232-v2",
+    "source_key": "quick-sw-232",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מטבע מזויף יחיד יכול להיות כבד או קל. חתימות המדידה המנורמלות של המטבעות הכבדים הן [[1, 0], [0, 1]]; חתימת קל היא היפוכה. שקילות מאוזנות במטבעות תקינים ידועים. כמה חתימות תוצאה שונות יש לכל השערות מיקום וכיוון יחד?",
+      "en": "One counterfeit coin may be heavy or light. Normalized measurement signatures for heavy coins are [[1, 0], [0, 1]]; a light coin gives the negative signature. Known normal coins balance the weighings. How many distinct outcome signatures exist across all position-and-direction hypotheses?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מוסיפים לכל וקטור גם את הווקטור הנגדי, וסופרים חתימות שונות בלבד. וקטורים נגדיים או וקטור אפס יוצרים התנגשויות בין השערות.",
+      "en": "Include every vector and its negative, counting distinct signatures only. Opposite vectors and zero vectors cause hypothesis collisions."
+    }
+  },
+  {
+    "key": "quick-sw-232-v3",
+    "source_key": "quick-sw-232",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מטבע מזויף יחיד יכול להיות כבד או קל. חתימות המדידה המנורמלות של המטבעות הכבדים הן [[1, 1], [-1, -1]]; חתימת קל היא היפוכה. שקילות מאוזנות במטבעות תקינים ידועים. כמה חתימות תוצאה שונות יש לכל השערות מיקום וכיוון יחד?",
+      "en": "One counterfeit coin may be heavy or light. Normalized measurement signatures for heavy coins are [[1, 1], [-1, -1]]; a light coin gives the negative signature. Known normal coins balance the weighings. How many distinct outcome signatures exist across all position-and-direction hypotheses?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מוסיפים לכל וקטור גם את הווקטור הנגדי, וסופרים חתימות שונות בלבד. וקטורים נגדיים או וקטור אפס יוצרים התנגשויות בין השערות.",
+      "en": "Include every vector and its negative, counting distinct signatures only. Opposite vectors and zero vectors cause hypothesis collisions."
+    }
+  },
+  {
+    "key": "quick-sw-232-v4",
+    "source_key": "quick-sw-232",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מטבע מזויף יחיד יכול להיות כבד או קל. חתימות המדידה המנורמלות של המטבעות הכבדים הן [[0, 0], [1, 0]]; חתימת קל היא היפוכה. שקילות מאוזנות במטבעות תקינים ידועים. כמה חתימות תוצאה שונות יש לכל השערות מיקום וכיוון יחד?",
+      "en": "One counterfeit coin may be heavy or light. Normalized measurement signatures for heavy coins are [[0, 0], [1, 0]]; a light coin gives the negative signature. Known normal coins balance the weighings. How many distinct outcome signatures exist across all position-and-direction hypotheses?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מוסיפים לכל וקטור גם את הווקטור הנגדי, וסופרים חתימות שונות בלבד. וקטורים נגדיים או וקטור אפס יוצרים התנגשויות בין השערות.",
+      "en": "Include every vector and its negative, counting distinct signatures only. Opposite vectors and zero vectors cause hypothesis collisions."
+    }
+  },
+  {
+    "key": "quick-sw-232-v5",
+    "source_key": "quick-sw-232",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מטבע מזויף יחיד יכול להיות כבד או קל. חתימות המדידה המנורמלות של המטבעות הכבדים הן [[1, 0], [0, 1], [1, 1], [1, -1]]; חתימת קל היא היפוכה. שקילות מאוזנות במטבעות תקינים ידועים. כמה חתימות תוצאה שונות יש לכל השערות מיקום וכיוון יחד?",
+      "en": "One counterfeit coin may be heavy or light. Normalized measurement signatures for heavy coins are [[1, 0], [0, 1], [1, 1], [1, -1]]; a light coin gives the negative signature. Known normal coins balance the weighings. How many distinct outcome signatures exist across all position-and-direction hypotheses?"
+    },
+    "choices": [
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מוסיפים לכל וקטור גם את הווקטור הנגדי, וסופרים חתימות שונות בלבד. וקטורים נגדיים או וקטור אפס יוצרים התנגשויות בין השערות.",
+      "en": "Include every vector and its negative, counting distinct signatures only. Opposite vectors and zero vectors cause hypothesis collisions."
+    }
+  },
+  {
+    "key": "quick-sw-233-v1",
+    "source_key": "quick-sw-233",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יש 2 טועמים ו־2 סבבים עוקבים. תוצאת כל סבב ידועה לפני הבא. לכל טועם תוצאה מובחנת: מוות בסבב מסוים, או הישרדות בכולם. מניחים מימוש חופשי של כל צירופי התוצאות. כמה חתימות זמן שונות אפשר לקודד?",
+      "en": "There are 2 tasters and 2 sequential rounds, each resolved before the next. A taster's distinguishable outcome is death in one round or survival through all. Assume every outcome combination is realizable. How many distinct timing signatures can be encoded?"
+    },
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "11",
+        "en": "11"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "לכל טועם יש תוצאה לכל סבב מוות אפשרי ועוד תוצאת הישרדות. כופלים את מספר האפשרויות בין טועמים; אין להניח שרואים סבב שטרם הסתיים.",
+      "en": "Each taster has one outcome per possible death round plus survival. Multiply across tasters; unresolved future rounds provide no observations."
+    }
+  },
+  {
+    "key": "quick-sw-233-v2",
+    "source_key": "quick-sw-233",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יש 3 טועמים ו־2 סבבים עוקבים. תוצאת כל סבב ידועה לפני הבא. לכל טועם תוצאה מובחנת: מוות בסבב מסוים, או הישרדות בכולם. מניחים מימוש חופשי של כל צירופי התוצאות. כמה חתימות זמן שונות אפשר לקודד?",
+      "en": "There are 3 tasters and 2 sequential rounds, each resolved before the next. A taster's distinguishable outcome is death in one round or survival through all. Assume every outcome combination is realizable. How many distinct timing signatures can be encoded?"
+    },
+    "choices": [
+      {
+        "he": "28",
+        "en": "28"
+      },
+      {
+        "he": "26",
+        "en": "26"
+      },
+      {
+        "he": "29",
+        "en": "29"
+      },
+      {
+        "he": "27",
+        "en": "27"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "לכל טועם יש תוצאה לכל סבב מוות אפשרי ועוד תוצאת הישרדות. כופלים את מספר האפשרויות בין טועמים; אין להניח שרואים סבב שטרם הסתיים.",
+      "en": "Each taster has one outcome per possible death round plus survival. Multiply across tasters; unresolved future rounds provide no observations."
+    }
+  },
+  {
+    "key": "quick-sw-233-v3",
+    "source_key": "quick-sw-233",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יש 2 טועמים ו־3 סבבים עוקבים. תוצאת כל סבב ידועה לפני הבא. לכל טועם תוצאה מובחנת: מוות בסבב מסוים, או הישרדות בכולם. מניחים מימוש חופשי של כל צירופי התוצאות. כמה חתימות זמן שונות אפשר לקודד?",
+      "en": "There are 2 tasters and 3 sequential rounds, each resolved before the next. A taster's distinguishable outcome is death in one round or survival through all. Assume every outcome combination is realizable. How many distinct timing signatures can be encoded?"
+    },
+    "choices": [
+      {
+        "he": "16",
+        "en": "16"
+      },
+      {
+        "he": "17",
+        "en": "17"
+      },
+      {
+        "he": "15",
+        "en": "15"
+      },
+      {
+        "he": "18",
+        "en": "18"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "לכל טועם יש תוצאה לכל סבב מוות אפשרי ועוד תוצאת הישרדות. כופלים את מספר האפשרויות בין טועמים; אין להניח שרואים סבב שטרם הסתיים.",
+      "en": "Each taster has one outcome per possible death round plus survival. Multiply across tasters; unresolved future rounds provide no observations."
+    }
+  },
+  {
+    "key": "quick-sw-233-v4",
+    "source_key": "quick-sw-233",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יש 1 טועמים ו־4 סבבים עוקבים. תוצאת כל סבב ידועה לפני הבא. לכל טועם תוצאה מובחנת: מוות בסבב מסוים, או הישרדות בכולם. מניחים מימוש חופשי של כל צירופי התוצאות. כמה חתימות זמן שונות אפשר לקודד?",
+      "en": "There are 1 tasters and 4 sequential rounds, each resolved before the next. A taster's distinguishable outcome is death in one round or survival through all. Assume every outcome combination is realizable. How many distinct timing signatures can be encoded?"
+    },
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "לכל טועם יש תוצאה לכל סבב מוות אפשרי ועוד תוצאת הישרדות. כופלים את מספר האפשרויות בין טועמים; אין להניח שרואים סבב שטרם הסתיים.",
+      "en": "Each taster has one outcome per possible death round plus survival. Multiply across tasters; unresolved future rounds provide no observations."
+    }
+  },
+  {
+    "key": "quick-sw-233-v5",
+    "source_key": "quick-sw-233",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "יש 3 טועמים ו־1 סבבים עוקבים. תוצאת כל סבב ידועה לפני הבא. לכל טועם תוצאה מובחנת: מוות בסבב מסוים, או הישרדות בכולם. מניחים מימוש חופשי של כל צירופי התוצאות. כמה חתימות זמן שונות אפשר לקודד?",
+      "en": "There are 3 tasters and 1 sequential rounds, each resolved before the next. A taster's distinguishable outcome is death in one round or survival through all. Assume every outcome combination is realizable. How many distinct timing signatures can be encoded?"
+    },
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "לכל טועם יש תוצאה לכל סבב מוות אפשרי ועוד תוצאת הישרדות. כופלים את מספר האפשרויות בין טועמים; אין להניח שרואים סבב שטרם הסתיים.",
+      "en": "Each taster has one outcome per possible death round plus survival. Multiply across tasters; unresolved future rounds provide no observations."
+    }
+  },
+  {
+    "key": "quick-sw-234-v1",
+    "source_key": "quick-sw-234",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מתוך 9 מטבעות בדיוק אחד כבד או קל מהתקין, ולא יודעים איזה כיוון. בשקילה ראשונה שוקלים a מול a, בלי מטבעי ייחוס. איזה מספר השערות מזערי ניתן להשאיר בענף הגדול ביותר, בבחירה הטובה ביותר של a חיובי?",
+      "en": "Among 9 coins exactly one is heavy or light, direction unknown. First weigh a against a, without reference coins. By choosing positive a optimally, what minimum number of hypotheses remains in the largest outcome branch?"
+    },
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "באי־איזון יש אפשרויות כבד בצד אחד וקל בשני. באיזון המזויף בין מי שלא נשקלו, בשני כיווני המשקל. משווים את גודלי שלושת הענפים.",
+      "en": "An imbalance allows heavy on one pan or light on the other. Balance leaves each unweighed coin with both directions. Compare all three branch sizes."
+    }
+  },
+  {
+    "key": "quick-sw-234-v2",
+    "source_key": "quick-sw-234",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מתוך 6 מטבעות בדיוק אחד כבד או קל מהתקין, ולא יודעים איזה כיוון. בשקילה ראשונה שוקלים a מול a, בלי מטבעי ייחוס. איזה מספר השערות מזערי ניתן להשאיר בענף הגדול ביותר, בבחירה הטובה ביותר של a חיובי?",
+      "en": "Among 6 coins exactly one is heavy or light, direction unknown. First weigh a against a, without reference coins. By choosing positive a optimally, what minimum number of hypotheses remains in the largest outcome branch?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "באי־איזון יש אפשרויות כבד בצד אחד וקל בשני. באיזון המזויף בין מי שלא נשקלו, בשני כיווני המשקל. משווים את גודלי שלושת הענפים.",
+      "en": "An imbalance allows heavy on one pan or light on the other. Balance leaves each unweighed coin with both directions. Compare all three branch sizes."
+    }
+  },
+  {
+    "key": "quick-sw-234-v3",
+    "source_key": "quick-sw-234",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מתוך 8 מטבעות בדיוק אחד כבד או קל מהתקין, ולא יודעים איזה כיוון. בשקילה ראשונה שוקלים a מול a, בלי מטבעי ייחוס. איזה מספר השערות מזערי ניתן להשאיר בענף הגדול ביותר, בבחירה הטובה ביותר של a חיובי?",
+      "en": "Among 8 coins exactly one is heavy or light, direction unknown. First weigh a against a, without reference coins. By choosing positive a optimally, what minimum number of hypotheses remains in the largest outcome branch?"
+    },
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "באי־איזון יש אפשרויות כבד בצד אחד וקל בשני. באיזון המזויף בין מי שלא נשקלו, בשני כיווני המשקל. משווים את גודלי שלושת הענפים.",
+      "en": "An imbalance allows heavy on one pan or light on the other. Balance leaves each unweighed coin with both directions. Compare all three branch sizes."
+    }
+  },
+  {
+    "key": "quick-sw-234-v4",
+    "source_key": "quick-sw-234",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מתוך 12 מטבעות בדיוק אחד כבד או קל מהתקין, ולא יודעים איזה כיוון. בשקילה ראשונה שוקלים a מול a, בלי מטבעי ייחוס. איזה מספר השערות מזערי ניתן להשאיר בענף הגדול ביותר, בבחירה הטובה ביותר של a חיובי?",
+      "en": "Among 12 coins exactly one is heavy or light, direction unknown. First weigh a against a, without reference coins. By choosing positive a optimally, what minimum number of hypotheses remains in the largest outcome branch?"
+    },
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "באי־איזון יש אפשרויות כבד בצד אחד וקל בשני. באיזון המזויף בין מי שלא נשקלו, בשני כיווני המשקל. משווים את גודלי שלושת הענפים.",
+      "en": "An imbalance allows heavy on one pan or light on the other. Balance leaves each unweighed coin with both directions. Compare all three branch sizes."
+    }
+  },
+  {
+    "key": "quick-sw-234-v5",
+    "source_key": "quick-sw-234",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "מתוך 5 מטבעות בדיוק אחד כבד או קל מהתקין, ולא יודעים איזה כיוון. בשקילה ראשונה שוקלים a מול a, בלי מטבעי ייחוס. איזה מספר השערות מזערי ניתן להשאיר בענף הגדול ביותר, בבחירה הטובה ביותר של a חיובי?",
+      "en": "Among 5 coins exactly one is heavy or light, direction unknown. First weigh a against a, without reference coins. By choosing positive a optimally, what minimum number of hypotheses remains in the largest outcome branch?"
+    },
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "באי־איזון יש אפשרויות כבד בצד אחד וקל בשני. באיזון המזויף בין מי שלא נשקלו, בשני כיווני המשקל. משווים את גודלי שלושת הענפים.",
+      "en": "An imbalance allows heavy on one pan or light on the other. Balance leaves each unweighed coin with both directions. Compare all three branch sizes."
+    }
+  },
+  {
+    "key": "quick-sw-235-v1",
+    "source_key": "quick-sw-235",
+    "variant": 1,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "משחק אבנים: בכל תור מסירים כמות מתוך [1, 3, 4], בלי להסיר יותר מהנותר. מי שאין לו מהלך מפסיד. מבין כמויות ההתחלה 1..8, כמה הן מצבים מפסידים לשחקן בתורו כששניהם משחקים מיטבית?",
+      "en": "In a stone game each turn removes a count from [1, 3, 4], never more than remains. A player with no legal move loses. Among starting counts 1..8, how many are losing positions for the player to move under optimal play?"
+    },
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מצב מנצח אם יש ממנו מהלך למצב מפסיד; אחרת הוא מפסיד. מתחילים מהמצב הריק ובונים בהדרגה, במקום להניח את המחזור של משחק אחר.",
+      "en": "A position wins if some legal move reaches a losing one; otherwise it loses. Build from the empty position instead of assuming another game's period."
+    }
+  },
+  {
+    "key": "quick-sw-235-v2",
+    "source_key": "quick-sw-235",
+    "variant": 2,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "משחק אבנים: בכל תור מסירים כמות מתוך [1, 2], בלי להסיר יותר מהנותר. מי שאין לו מהלך מפסיד. מבין כמויות ההתחלה 1..7, כמה הן מצבים מפסידים לשחקן בתורו כששניהם משחקים מיטבית?",
+      "en": "In a stone game each turn removes a count from [1, 2], never more than remains. A player with no legal move loses. Among starting counts 1..7, how many are losing positions for the player to move under optimal play?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "correct": 1,
+    "explanation": {
+      "he": "מצב מנצח אם יש ממנו מהלך למצב מפסיד; אחרת הוא מפסיד. מתחילים מהמצב הריק ובונים בהדרגה, במקום להניח את המחזור של משחק אחר.",
+      "en": "A position wins if some legal move reaches a losing one; otherwise it loses. Build from the empty position instead of assuming another game's period."
+    }
+  },
+  {
+    "key": "quick-sw-235-v3",
+    "source_key": "quick-sw-235",
+    "variant": 3,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "משחק אבנים: בכל תור מסירים כמות מתוך [1, 4], בלי להסיר יותר מהנותר. מי שאין לו מהלך מפסיד. מבין כמויות ההתחלה 1..10, כמה הן מצבים מפסידים לשחקן בתורו כששניהם משחקים מיטבית?",
+      "en": "In a stone game each turn removes a count from [1, 4], never more than remains. A player with no legal move loses. Among starting counts 1..10, how many are losing positions for the player to move under optimal play?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 2,
+    "explanation": {
+      "he": "מצב מנצח אם יש ממנו מהלך למצב מפסיד; אחרת הוא מפסיד. מתחילים מהמצב הריק ובונים בהדרגה, במקום להניח את המחזור של משחק אחר.",
+      "en": "A position wins if some legal move reaches a losing one; otherwise it loses. Build from the empty position instead of assuming another game's period."
+    }
+  },
+  {
+    "key": "quick-sw-235-v4",
+    "source_key": "quick-sw-235",
+    "variant": 4,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "משחק אבנים: בכל תור מסירים כמות מתוך [2, 3], בלי להסיר יותר מהנותר. מי שאין לו מהלך מפסיד. מבין כמויות ההתחלה 1..9, כמה הן מצבים מפסידים לשחקן בתורו כששניהם משחקים מיטבית?",
+      "en": "In a stone game each turn removes a count from [2, 3], never more than remains. A player with no legal move loses. Among starting counts 1..9, how many are losing positions for the player to move under optimal play?"
+    },
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "correct": 3,
+    "explanation": {
+      "he": "מצב מנצח אם יש ממנו מהלך למצב מפסיד; אחרת הוא מפסיד. מתחילים מהמצב הריק ובונים בהדרגה, במקום להניח את המחזור של משחק אחר.",
+      "en": "A position wins if some legal move reaches a losing one; otherwise it loses. Build from the empty position instead of assuming another game's period."
+    }
+  },
+  {
+    "key": "quick-sw-235-v5",
+    "source_key": "quick-sw-235",
+    "variant": 5,
+    "topic": "reasoning",
+    "status": "draft",
+    "prompt": {
+      "he": "משחק אבנים: בכל תור מסירים כמות מתוך [1, 3], בלי להסיר יותר מהנותר. מי שאין לו מהלך מפסיד. מבין כמויות ההתחלה 1..6, כמה הן מצבים מפסידים לשחקן בתורו כששניהם משחקים מיטבית?",
+      "en": "In a stone game each turn removes a count from [1, 3], never more than remains. A player with no legal move loses. Among starting counts 1..6, how many are losing positions for the player to move under optimal play?"
+    },
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "correct": 0,
+    "explanation": {
+      "he": "מצב מנצח אם יש ממנו מהלך למצב מפסיד; אחרת הוא מפסיד. מתחילים מהמצב הריק ובונים בהדרגה, במקום להניח את המחזור של משחק אחר.",
+      "en": "A position wins if some legal move reaches a losing one; otherwise it loses. Build from the empty position instead of assuming another game's period."
+    }
+  }
+]

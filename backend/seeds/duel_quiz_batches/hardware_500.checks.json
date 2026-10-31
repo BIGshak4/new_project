@@ -1,0 +1,5261 @@
+[
+  {
+    "key": "quick-hw-201-v1",
+    "task": 201,
+    "inputs": {
+      "w": 4,
+      "x": 9,
+      "k": 1
+    },
+    "options": [
+      12,
+      11,
+      13,
+      14
+    ],
+    "expected": 12,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-201-v2",
+    "task": 201,
+    "inputs": {
+      "w": 4,
+      "x": 6,
+      "k": 2
+    },
+    "options": [
+      8,
+      10,
+      11,
+      9
+    ],
+    "expected": 9,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-201-v3",
+    "task": 201,
+    "inputs": {
+      "w": 8,
+      "x": 129,
+      "k": 3
+    },
+    "options": [
+      49,
+      50,
+      48,
+      47
+    ],
+    "expected": 48,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-201-v4",
+    "task": 201,
+    "inputs": {
+      "w": 8,
+      "x": 165,
+      "k": 7
+    },
+    "options": [
+      77,
+      75,
+      74,
+      76
+    ],
+    "expected": 75,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-201-v5",
+    "task": 201,
+    "inputs": {
+      "w": 4,
+      "x": 11,
+      "k": 0
+    },
+    "options": [
+      11,
+      10,
+      12,
+      13
+    ],
+    "expected": 11,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-202-v1",
+    "task": 202,
+    "inputs": {
+      "w": 8,
+      "a": 3,
+      "b": 6
+    },
+    "options": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-202-v2",
+    "task": 202,
+    "inputs": {
+      "w": 4,
+      "a": 3,
+      "b": 1
+    },
+    "options": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-202-v3",
+    "task": 202,
+    "inputs": {
+      "w": 8,
+      "a": 0,
+      "b": 7
+    },
+    "options": [
+      9,
+      7,
+      6,
+      8
+    ],
+    "expected": 7,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-202-v4",
+    "task": 202,
+    "inputs": {
+      "w": 16,
+      "a": 12,
+      "b": 9
+    },
+    "options": [
+      5,
+      4,
+      6,
+      7
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-202-v5",
+    "task": 202,
+    "inputs": {
+      "w": 4,
+      "a": 2,
+      "b": 3
+    },
+    "options": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-203-v1",
+    "task": 203,
+    "inputs": {
+      "w": 4
+    },
+    "options": [
+      9,
+      10,
+      8,
+      7
+    ],
+    "expected": 8,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-203-v2",
+    "task": 203,
+    "inputs": {
+      "w": 8
+    },
+    "options": [
+      26,
+      24,
+      23,
+      25
+    ],
+    "expected": 24,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-203-v3",
+    "task": 203,
+    "inputs": {
+      "w": 16
+    },
+    "options": [
+      64,
+      63,
+      65,
+      66
+    ],
+    "expected": 64,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-203-v4",
+    "task": 203,
+    "inputs": {
+      "w": 32
+    },
+    "options": [
+      159,
+      161,
+      162,
+      160
+    ],
+    "expected": 160,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-203-v5",
+    "task": 203,
+    "inputs": {
+      "w": 64
+    },
+    "options": [
+      385,
+      386,
+      384,
+      383
+    ],
+    "expected": 384,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-204-v1",
+    "task": 204,
+    "inputs": {
+      "w": 4,
+      "x": 11
+    },
+    "options": [
+      5,
+      3,
+      2,
+      4
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-204-v2",
+    "task": 204,
+    "inputs": {
+      "w": 8,
+      "x": 129
+    },
+    "options": [
+      2,
+      1,
+      3,
+      4
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-204-v3",
+    "task": 204,
+    "inputs": {
+      "w": 8,
+      "x": 255
+    },
+    "options": [
+      7,
+      9,
+      10,
+      8
+    ],
+    "expected": 8,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-204-v4",
+    "task": 204,
+    "inputs": {
+      "w": 4,
+      "x": 0
+    },
+    "options": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-204-v5",
+    "task": 204,
+    "inputs": {
+      "w": 8,
+      "x": 90
+    },
+    "options": [
+      6,
+      4,
+      3,
+      5
+    ],
+    "expected": 4,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-205-v1",
+    "task": 205,
+    "inputs": {
+      "w": 8,
+      "k": 3,
+      "j": 7
+    },
+    "options": [
+      2,
+      1,
+      3,
+      4
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-205-v2",
+    "task": 205,
+    "inputs": {
+      "w": 8,
+      "k": 2,
+      "j": 1
+    },
+    "options": [
+      2,
+      4,
+      5,
+      3
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-205-v3",
+    "task": 205,
+    "inputs": {
+      "w": 4,
+      "k": 1,
+      "j": 3
+    },
+    "options": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-205-v4",
+    "task": 205,
+    "inputs": {
+      "w": 16,
+      "k": 7,
+      "j": 12
+    },
+    "options": [
+      5,
+      3,
+      2,
+      4
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-205-v5",
+    "task": 205,
+    "inputs": {
+      "w": 4,
+      "k": 0,
+      "j": 2
+    },
+    "options": [
+      2,
+      1,
+      3,
+      4
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-206-v1",
+    "task": 206,
+    "inputs": {
+      "d": [
+        7,
+        2,
+        9,
+        4
+      ],
+      "s1": 1,
+      "s0": 0
+    },
+    "options": [
+      8,
+      10,
+      11,
+      9
+    ],
+    "expected": 9,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-206-v2",
+    "task": 206,
+    "inputs": {
+      "d": [
+        1,
+        5,
+        8,
+        3
+      ],
+      "s1": 0,
+      "s0": 1
+    },
+    "options": [
+      6,
+      7,
+      5,
+      4
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-206-v3",
+    "task": 206,
+    "inputs": {
+      "d": [
+        6,
+        4,
+        2,
+        9
+      ],
+      "s1": 1,
+      "s0": 1
+    },
+    "options": [
+      11,
+      9,
+      8,
+      10
+    ],
+    "expected": 9,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-206-v4",
+    "task": 206,
+    "inputs": {
+      "d": [
+        8,
+        3,
+        5,
+        1
+      ],
+      "s1": 0,
+      "s0": 0
+    },
+    "options": [
+      8,
+      7,
+      9,
+      10
+    ],
+    "expected": 8,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-206-v5",
+    "task": 206,
+    "inputs": {
+      "d": [
+        2,
+        7,
+        1,
+        8
+      ],
+      "s1": 1,
+      "s0": 0
+    },
+    "options": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-207-v1",
+    "task": 207,
+    "inputs": {
+      "s0_time": 1,
+      "s1_time": 4
+    },
+    "options": [
+      4,
+      5,
+      3,
+      2
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-207-v2",
+    "task": 207,
+    "inputs": {
+      "s0_time": 5,
+      "s1_time": 2
+    },
+    "options": [
+      5,
+      3,
+      2,
+      4
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-207-v3",
+    "task": 207,
+    "inputs": {
+      "s0_time": 3,
+      "s1_time": 3
+    },
+    "options": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-207-v4",
+    "task": 207,
+    "inputs": {
+      "s0_time": 0,
+      "s1_time": 2
+    },
+    "options": [
+      1,
+      3,
+      4,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-207-v5",
+    "task": 207,
+    "inputs": {
+      "s0_time": 2,
+      "s1_time": 7
+    },
+    "options": [
+      6,
+      7,
+      5,
+      4
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-208-v1",
+    "task": 208,
+    "inputs": {
+      "vdd": 4,
+      "gate": 0,
+      "vtn": 1,
+      "vtp": 1
+    },
+    "options": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "expected": [
+      1,
+      0
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-208-v2",
+    "task": 208,
+    "inputs": {
+      "vdd": 4,
+      "gate": 4,
+      "vtn": 1,
+      "vtp": 1
+    },
+    "options": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "expected": [
+      0,
+      1
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-208-v3",
+    "task": 208,
+    "inputs": {
+      "vdd": 4,
+      "gate": 2,
+      "vtn": 1,
+      "vtp": 1
+    },
+    "options": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "expected": [
+      1,
+      1
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-208-v4",
+    "task": 208,
+    "inputs": {
+      "vdd": 2,
+      "gate": 1,
+      "vtn": 1.2,
+      "vtp": 1.2
+    },
+    "options": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "expected": [
+      0,
+      0
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-208-v5",
+    "task": 208,
+    "inputs": {
+      "vdd": 4,
+      "gate": 1.5,
+      "vtn": 1,
+      "vtp": 3
+    },
+    "options": [
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "expected": [
+      0,
+      1
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-209-v1",
+    "task": 209,
+    "inputs": {
+      "ng": 1,
+      "pg": 1,
+      "data": 1
+    },
+    "options": [
+      0.7,
+      0,
+      1,
+      0.3
+    ],
+    "expected": 0.7,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-209-v2",
+    "task": 209,
+    "inputs": {
+      "ng": 0,
+      "pg": 0,
+      "data": 0
+    },
+    "options": [
+      0,
+      1,
+      0.7,
+      0.3
+    ],
+    "expected": 0.3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-209-v3",
+    "task": 209,
+    "inputs": {
+      "ng": 1,
+      "pg": 0,
+      "data": 1
+    },
+    "options": [
+      0.3,
+      0.7,
+      1,
+      0
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-209-v4",
+    "task": 209,
+    "inputs": {
+      "ng": 1,
+      "pg": 0,
+      "data": 0
+    },
+    "options": [
+      0.7,
+      0,
+      1,
+      0.3
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-209-v5",
+    "task": 209,
+    "inputs": {
+      "ng": 0,
+      "pg": 1,
+      "data": 1
+    },
+    "options": [
+      "Z",
+      0,
+      1,
+      0.3
+    ],
+    "expected": "Z",
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-210-v1",
+    "task": 210,
+    "inputs": {
+      "c": 2,
+      "v": 3
+    },
+    "options": [
+      17,
+      19,
+      20,
+      18
+    ],
+    "expected": 18,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-210-v2",
+    "task": 210,
+    "inputs": {
+      "c": 4,
+      "v": 2
+    },
+    "options": [
+      17,
+      18,
+      16,
+      15
+    ],
+    "expected": 16,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-210-v3",
+    "task": 210,
+    "inputs": {
+      "c": 1,
+      "v": 5
+    },
+    "options": [
+      27,
+      25,
+      24,
+      26
+    ],
+    "expected": 25,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-210-v4",
+    "task": 210,
+    "inputs": {
+      "c": 3,
+      "v": 2
+    },
+    "options": [
+      12,
+      11,
+      13,
+      14
+    ],
+    "expected": 12,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-210-v5",
+    "task": 210,
+    "inputs": {
+      "c": 5,
+      "v": 1
+    },
+    "options": [
+      4,
+      6,
+      7,
+      5
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-211-v1",
+    "task": 211,
+    "inputs": {
+      "en": [
+        1,
+        0
+      ]
+    },
+    "options": [
+      13,
+      14,
+      12,
+      11
+    ],
+    "expected": 12,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-211-v2",
+    "task": 211,
+    "inputs": {
+      "en": [
+        1,
+        1,
+        0
+      ]
+    },
+    "options": [
+      11,
+      9,
+      8,
+      10
+    ],
+    "expected": 9,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-211-v3",
+    "task": 211,
+    "inputs": {
+      "en": [
+        1,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    "options": [
+      15,
+      14,
+      16,
+      17
+    ],
+    "expected": 15,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-211-v4",
+    "task": 211,
+    "inputs": {
+      "en": [
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    "options": [
+      7,
+      9,
+      10,
+      8
+    ],
+    "expected": 8,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-211-v5",
+    "task": 211,
+    "inputs": {
+      "en": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    "options": [
+      16,
+      17,
+      15,
+      14
+    ],
+    "expected": 15,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-212-v1",
+    "task": 212,
+    "inputs": {
+      "q": 6,
+      "en": 0
+    },
+    "options": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-212-v2",
+    "task": 212,
+    "inputs": {
+      "q": 7,
+      "en": 1
+    },
+    "options": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-212-v3",
+    "task": 212,
+    "inputs": {
+      "q": 5,
+      "en": 0
+    },
+    "options": [
+      4,
+      6,
+      7,
+      5
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-212-v4",
+    "task": 212,
+    "inputs": {
+      "q": 5,
+      "en": 1
+    },
+    "options": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-212-v5",
+    "task": 212,
+    "inputs": {
+      "q": 2,
+      "en": 1
+    },
+    "options": [
+      5,
+      3,
+      2,
+      4
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-213-v1",
+    "task": 213,
+    "inputs": {
+      "start": 5,
+      "en": [
+        0,
+        0,
+        1
+      ]
+    },
+    "options": [
+      1,
+      0,
+      2,
+      3
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-213-v2",
+    "task": 213,
+    "inputs": {
+      "start": 4,
+      "en": [
+        1,
+        1,
+        0
+      ]
+    },
+    "options": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-213-v3",
+    "task": 213,
+    "inputs": {
+      "start": 0,
+      "en": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "options": [
+      2,
+      3,
+      1,
+      0
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-213-v4",
+    "task": 213,
+    "inputs": {
+      "start": 5,
+      "en": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "options": [
+      4,
+      2,
+      1,
+      3
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-213-v5",
+    "task": 213,
+    "inputs": {
+      "start": 5,
+      "en": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "options": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-214-v1",
+    "task": 214,
+    "inputs": {
+      "clk": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    "options": [
+      1,
+      3,
+      4,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-214-v2",
+    "task": 214,
+    "inputs": {
+      "clk": [
+        1,
+        0,
+        1,
+        0,
+        1
+      ]
+    },
+    "options": [
+      4,
+      5,
+      3,
+      2
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-214-v3",
+    "task": 214,
+    "inputs": {
+      "clk": [
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    "options": [
+      3,
+      1,
+      0,
+      2
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-214-v4",
+    "task": 214,
+    "inputs": {
+      "clk": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    "options": [
+      1,
+      0,
+      2,
+      3
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-214-v5",
+    "task": 214,
+    "inputs": {
+      "clk": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    "options": [
+      2,
+      4,
+      5,
+      3
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-215-v1",
+    "task": 215,
+    "inputs": {
+      "period": 2
+    },
+    "options": [
+      5,
+      6,
+      4,
+      3
+    ],
+    "expected": 4,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-215-v2",
+    "task": 215,
+    "inputs": {
+      "period": 3
+    },
+    "options": [
+      8,
+      6,
+      5,
+      7
+    ],
+    "expected": 6,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-215-v3",
+    "task": 215,
+    "inputs": {
+      "period": 5
+    },
+    "options": [
+      10,
+      9,
+      11,
+      12
+    ],
+    "expected": 10,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-215-v4",
+    "task": 215,
+    "inputs": {
+      "period": 7
+    },
+    "options": [
+      13,
+      15,
+      16,
+      14
+    ],
+    "expected": 14,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-215-v5",
+    "task": 215,
+    "inputs": {
+      "period": 10
+    },
+    "options": [
+      21,
+      22,
+      20,
+      19
+    ],
+    "expected": 20,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-216-v1",
+    "task": 216,
+    "inputs": {
+      "ripple": 2,
+      "tcq": 1
+    },
+    "options": [
+      4,
+      2,
+      1,
+      3
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-216-v2",
+    "task": 216,
+    "inputs": {
+      "ripple": 3,
+      "tcq": 2
+    },
+    "options": [
+      6,
+      5,
+      7,
+      8
+    ],
+    "expected": 6,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-216-v3",
+    "task": 216,
+    "inputs": {
+      "ripple": 4,
+      "tcq": 1
+    },
+    "options": [
+      3,
+      5,
+      6,
+      4
+    ],
+    "expected": 4,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-216-v4",
+    "task": 216,
+    "inputs": {
+      "ripple": 2,
+      "tcq": 3
+    },
+    "options": [
+      7,
+      8,
+      6,
+      5
+    ],
+    "expected": 6,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-216-v5",
+    "task": 216,
+    "inputs": {
+      "ripple": 5,
+      "tcq": 2
+    },
+    "options": [
+      12,
+      10,
+      9,
+      11
+    ],
+    "expected": 10,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-217-v1",
+    "task": 217,
+    "inputs": {
+      "detect": 4
+    },
+    "options": [
+      5,
+      4,
+      6,
+      7
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-217-v2",
+    "task": 217,
+    "inputs": {
+      "detect": 6
+    },
+    "options": [
+      6,
+      8,
+      9,
+      7
+    ],
+    "expected": 7,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-217-v3",
+    "task": 217,
+    "inputs": {
+      "detect": 9
+    },
+    "options": [
+      11,
+      12,
+      10,
+      9
+    ],
+    "expected": 10,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-217-v4",
+    "task": 217,
+    "inputs": {
+      "detect": 12
+    },
+    "options": [
+      15,
+      13,
+      12,
+      14
+    ],
+    "expected": 13,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-217-v5",
+    "task": 217,
+    "inputs": {
+      "detect": 20
+    },
+    "options": [
+      21,
+      20,
+      22,
+      23
+    ],
+    "expected": 21,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-218-v1",
+    "task": 218,
+    "inputs": {
+      "a": "",
+      "b": "1"
+    },
+    "options": [
+      "0",
+      "1",
+      "01",
+      "101"
+    ],
+    "expected": "101",
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-218-v2",
+    "task": 218,
+    "inputs": {
+      "a": "1",
+      "b": "11"
+    },
+    "options": [
+      "1",
+      "101",
+      "01",
+      "0"
+    ],
+    "expected": "01",
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-218-v3",
+    "task": 218,
+    "inputs": {
+      "a": "11",
+      "b": "110"
+    },
+    "options": [
+      "101",
+      "1",
+      "0",
+      "01"
+    ],
+    "expected": "1",
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-218-v4",
+    "task": 218,
+    "inputs": {
+      "a": "",
+      "b": "110"
+    },
+    "options": [
+      "1",
+      "0",
+      "01",
+      "101"
+    ],
+    "expected": "1",
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-218-v5",
+    "task": 218,
+    "inputs": {
+      "a": "1",
+      "b": "110"
+    },
+    "options": [
+      "0",
+      "01",
+      "101",
+      "1"
+    ],
+    "expected": "1",
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-219-v1",
+    "task": 219,
+    "inputs": {
+      "pattern": "101101"
+    },
+    "options": [
+      4,
+      5,
+      3,
+      2
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-219-v2",
+    "task": 219,
+    "inputs": {
+      "pattern": "0101"
+    },
+    "options": [
+      4,
+      2,
+      1,
+      3
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-219-v3",
+    "task": 219,
+    "inputs": {
+      "pattern": "1101"
+    },
+    "options": [
+      3,
+      2,
+      4,
+      5
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-219-v4",
+    "task": 219,
+    "inputs": {
+      "pattern": "1111"
+    },
+    "options": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-219-v5",
+    "task": 219,
+    "inputs": {
+      "pattern": "10110"
+    },
+    "options": [
+      4,
+      5,
+      3,
+      2
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-220-v1",
+    "task": 220,
+    "inputs": {
+      "samples": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "options": [
+      [
+        3
+      ],
+      [
+        5
+      ],
+      [],
+      [
+        1
+      ]
+    ],
+    "expected": [
+      5
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-220-v2",
+    "task": 220,
+    "inputs": {
+      "samples": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "options": [
+      [
+        5
+      ],
+      [],
+      [
+        1
+      ],
+      [
+        3
+      ]
+    ],
+    "expected": [
+      5
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-220-v3",
+    "task": 220,
+    "inputs": {
+      "samples": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "options": [
+      [],
+      [
+        1
+      ],
+      [
+        3
+      ],
+      [
+        4,
+        7
+      ]
+    ],
+    "expected": [
+      4,
+      7
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-220-v4",
+    "task": 220,
+    "inputs": {
+      "samples": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "options": [
+      [
+        3
+      ],
+      [
+        2,
+        4
+      ],
+      [],
+      [
+        1
+      ]
+    ],
+    "expected": [],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-220-v5",
+    "task": 220,
+    "inputs": {
+      "samples": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "options": [
+      [
+        3
+      ],
+      [
+        5
+      ],
+      [],
+      [
+        1
+      ]
+    ],
+    "expected": [
+      5
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-221-v1",
+    "task": 221,
+    "inputs": {
+      "valid": [
+        1,
+        1,
+        1
+      ]
+    },
+    "options": [
+      3,
+      2,
+      4,
+      5
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-221-v2",
+    "task": 221,
+    "inputs": {
+      "valid": [
+        1,
+        0,
+        1
+      ]
+    },
+    "options": [
+      1,
+      3,
+      4,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-221-v3",
+    "task": 221,
+    "inputs": {
+      "valid": [
+        0,
+        0,
+        0
+      ]
+    },
+    "options": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-221-v4",
+    "task": 221,
+    "inputs": {
+      "valid": [
+        1,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    "options": [
+      5,
+      3,
+      2,
+      4
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-221-v5",
+    "task": 221,
+    "inputs": {
+      "valid": [
+        0,
+        1,
+        0,
+        1
+      ]
+    },
+    "options": [
+      2,
+      1,
+      3,
+      4
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-222-v1",
+    "task": 222,
+    "inputs": {
+      "ref": 5,
+      "samples": [
+        [
+          1,
+          5
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          5
+        ]
+      ]
+    },
+    "options": [
+      1,
+      3,
+      4,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-222-v2",
+    "task": 222,
+    "inputs": {
+      "ref": 5,
+      "samples": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ]
+      ]
+    },
+    "options": [
+      2,
+      3,
+      1,
+      0
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-222-v3",
+    "task": 222,
+    "inputs": {
+      "ref": 5,
+      "samples": [
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          5
+        ]
+      ]
+    },
+    "options": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-222-v4",
+    "task": 222,
+    "inputs": {
+      "ref": 5,
+      "samples": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          5
+        ]
+      ]
+    },
+    "options": [
+      3,
+      2,
+      4,
+      5
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-222-v5",
+    "task": 222,
+    "inputs": {
+      "ref": 5,
+      "samples": [
+        [
+          1,
+          5
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    "options": [
+      1,
+      2,
+      3,
+      0
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-223-v1",
+    "task": 223,
+    "inputs": {
+      "refs": [
+        5,
+        5
+      ],
+      "samples": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    "options": [
+      2,
+      3,
+      1,
+      0
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-223-v2",
+    "task": 223,
+    "inputs": {
+      "refs": [
+        2,
+        8
+      ],
+      "samples": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          0,
+          8
+        ]
+      ]
+    },
+    "options": [
+      4,
+      2,
+      1,
+      3
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-223-v3",
+    "task": 223,
+    "inputs": {
+      "refs": [
+        1,
+        3
+      ],
+      "samples": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    "options": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-223-v4",
+    "task": 223,
+    "inputs": {
+      "refs": [
+        0,
+        9
+      ],
+      "samples": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          9
+        ]
+      ]
+    },
+    "options": [
+      2,
+      4,
+      5,
+      3
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-223-v5",
+    "task": 223,
+    "inputs": {
+      "refs": [
+        4,
+        7
+      ],
+      "samples": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          7
+        ]
+      ]
+    },
+    "options": [
+      2,
+      3,
+      1,
+      0
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-224-v1",
+    "task": 224,
+    "inputs": {
+      "accepted": [
+        1,
+        2,
+        3
+      ],
+      "cut": 2,
+      "done": [
+        1,
+        3
+      ]
+    },
+    "options": [
+      [
+        1,
+        3
+      ],
+      [
+        2
+      ],
+      [],
+      [
+        1,
+        2
+      ]
+    ],
+    "expected": [
+      2
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-224-v2",
+    "task": 224,
+    "inputs": {
+      "accepted": [
+        2,
+        4,
+        6
+      ],
+      "cut": 1,
+      "done": [
+        4,
+        6
+      ]
+    },
+    "options": [
+      [
+        2
+      ],
+      [],
+      [
+        4,
+        6
+      ],
+      [
+        2,
+        4,
+        6
+      ]
+    ],
+    "expected": [
+      2
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-224-v3",
+    "task": 224,
+    "inputs": {
+      "accepted": [
+        1,
+        2
+      ],
+      "cut": 2,
+      "done": [
+        2,
+        1
+      ]
+    },
+    "options": [
+      [
+        1,
+        2
+      ],
+      [
+        0
+      ],
+      [
+        99
+      ],
+      []
+    ],
+    "expected": [],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-224-v4",
+    "task": 224,
+    "inputs": {
+      "accepted": [
+        3,
+        5,
+        7,
+        9
+      ],
+      "cut": 3,
+      "done": [
+        3
+      ]
+    },
+    "options": [
+      [
+        3,
+        5,
+        7
+      ],
+      [
+        3
+      ],
+      [
+        5,
+        7
+      ],
+      []
+    ],
+    "expected": [
+      5,
+      7
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-224-v5",
+    "task": 224,
+    "inputs": {
+      "accepted": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "cut": 0,
+      "done": [
+        1,
+        4
+      ]
+    },
+    "options": [
+      [
+        0
+      ],
+      [],
+      [
+        1,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ]
+    ],
+    "expected": [],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-225-v1",
+    "task": 225,
+    "inputs": {
+      "snapshot": [
+        "A",
+        "B"
+      ],
+      "times": {
+        "A": 9,
+        "B": 4
+      }
+    },
+    "options": [
+      9,
+      8,
+      10,
+      11
+    ],
+    "expected": 9,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-225-v2",
+    "task": 225,
+    "inputs": {
+      "snapshot": [
+        "A",
+        "C"
+      ],
+      "times": {
+        "A": 2,
+        "B": 20,
+        "C": 7
+      }
+    },
+    "options": [
+      6,
+      8,
+      9,
+      7
+    ],
+    "expected": 7,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-225-v3",
+    "task": 225,
+    "inputs": {
+      "snapshot": [
+        "B"
+      ],
+      "times": {
+        "A": 10,
+        "B": 3
+      }
+    },
+    "options": [
+      4,
+      5,
+      3,
+      2
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-225-v4",
+    "task": 225,
+    "inputs": {
+      "snapshot": [
+        "A",
+        "B",
+        "C"
+      ],
+      "times": {
+        "A": 8,
+        "B": 6,
+        "C": 4
+      }
+    },
+    "options": [
+      10,
+      8,
+      7,
+      9
+    ],
+    "expected": 8,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-225-v5",
+    "task": 225,
+    "inputs": {
+      "snapshot": [
+        "A",
+        "D"
+      ],
+      "times": {
+        "A": 1,
+        "D": 12
+      }
+    },
+    "options": [
+      12,
+      11,
+      13,
+      14
+    ],
+    "expected": 12,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-226-v1",
+    "task": 226,
+    "inputs": {
+      "snapshot": [
+        1,
+        2
+      ],
+      "done": [
+        2,
+        3
+      ]
+    },
+    "options": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-226-v2",
+    "task": 226,
+    "inputs": {
+      "snapshot": [
+        2,
+        4
+      ],
+      "done": [
+        1,
+        3
+      ]
+    },
+    "options": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-226-v3",
+    "task": 226,
+    "inputs": {
+      "snapshot": [
+        1,
+        2,
+        3
+      ],
+      "done": [
+        3,
+        1
+      ]
+    },
+    "options": [
+      4,
+      2,
+      1,
+      3
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-226-v4",
+    "task": 226,
+    "inputs": {
+      "snapshot": [
+        5
+      ],
+      "done": [
+        5,
+        6,
+        7
+      ]
+    },
+    "options": [
+      1,
+      0,
+      2,
+      3
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-226-v5",
+    "task": 226,
+    "inputs": {
+      "snapshot": [
+        1,
+        4
+      ],
+      "done": [
+        1,
+        4
+      ]
+    },
+    "options": [
+      1,
+      3,
+      4,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-227-v1",
+    "task": 227,
+    "inputs": {
+      "arrivals": [
+        1,
+        3
+      ],
+      "end": 5
+    },
+    "options": [
+      7,
+      8,
+      6,
+      5
+    ],
+    "expected": 6,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-227-v2",
+    "task": 227,
+    "inputs": {
+      "arrivals": [
+        0,
+        2,
+        4
+      ],
+      "end": 6
+    },
+    "options": [
+      14,
+      12,
+      11,
+      13
+    ],
+    "expected": 12,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-227-v3",
+    "task": 227,
+    "inputs": {
+      "arrivals": [
+        5
+      ],
+      "end": 5
+    },
+    "options": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-227-v4",
+    "task": 227,
+    "inputs": {
+      "arrivals": [
+        1,
+        1
+      ],
+      "end": 4
+    },
+    "options": [
+      5,
+      7,
+      8,
+      6
+    ],
+    "expected": 6,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-227-v5",
+    "task": 227,
+    "inputs": {
+      "arrivals": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "end": 4
+    },
+    "options": [
+      11,
+      12,
+      10,
+      9
+    ],
+    "expected": 10,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-228-v1",
+    "task": 228,
+    "inputs": {
+      "pairs": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          7
+        ]
+      ]
+    },
+    "options": [
+      7,
+      5,
+      4,
+      6
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-228-v2",
+    "task": 228,
+    "inputs": {
+      "pairs": [
+        [
+          2,
+          5
+        ]
+      ]
+    },
+    "options": [
+      3,
+      2,
+      4,
+      5
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-228-v3",
+    "task": 228,
+    "inputs": {
+      "pairs": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          9
+        ]
+      ]
+    },
+    "options": [
+      3,
+      5,
+      6,
+      4
+    ],
+    "expected": 4,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-228-v4",
+    "task": 228,
+    "inputs": {
+      "pairs": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          7
+        ]
+      ]
+    },
+    "options": [
+      5,
+      6,
+      4,
+      3
+    ],
+    "expected": 4,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-228-v5",
+    "task": 228,
+    "inputs": {
+      "pairs": [
+        [
+          0,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ]
+    },
+    "options": [
+      8,
+      6,
+      5,
+      7
+    ],
+    "expected": 6,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-229-v1",
+    "task": 229,
+    "inputs": {
+      "sums": [
+        2,
+        18
+      ],
+      "counts": [
+        1,
+        3
+      ]
+    },
+    "options": [
+      5,
+      4,
+      6,
+      7
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-229-v2",
+    "task": 229,
+    "inputs": {
+      "sums": [
+        4,
+        20
+      ],
+      "counts": [
+        2,
+        2
+      ]
+    },
+    "options": [
+      5,
+      7,
+      8,
+      6
+    ],
+    "expected": 6,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-229-v3",
+    "task": 229,
+    "inputs": {
+      "sums": [
+        6,
+        6
+      ],
+      "counts": [
+        3,
+        1
+      ]
+    },
+    "options": [
+      4,
+      5,
+      3,
+      2
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-229-v4",
+    "task": 229,
+    "inputs": {
+      "sums": [
+        0,
+        12
+      ],
+      "counts": [
+        1,
+        3
+      ]
+    },
+    "options": [
+      5,
+      3,
+      2,
+      4
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-229-v5",
+    "task": 229,
+    "inputs": {
+      "sums": [
+        12,
+        18
+      ],
+      "counts": [
+        2,
+        3
+      ]
+    },
+    "options": [
+      6,
+      5,
+      7,
+      8
+    ],
+    "expected": 6,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-230-v1",
+    "task": 230,
+    "inputs": {
+      "memory": [
+        3,
+        7,
+        2,
+        9
+      ],
+      "sampled_addr": 0,
+      "later_addr": 1
+    },
+    "options": [
+      2,
+      4,
+      5,
+      3
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-230-v2",
+    "task": 230,
+    "inputs": {
+      "memory": [
+        3,
+        7,
+        2,
+        9
+      ],
+      "sampled_addr": 1,
+      "later_addr": 3
+    },
+    "options": [
+      8,
+      9,
+      7,
+      6
+    ],
+    "expected": 7,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-230-v3",
+    "task": 230,
+    "inputs": {
+      "memory": [
+        3,
+        7,
+        2,
+        9
+      ],
+      "sampled_addr": 2,
+      "later_addr": 0
+    },
+    "options": [
+      4,
+      2,
+      1,
+      3
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-230-v4",
+    "task": 230,
+    "inputs": {
+      "memory": [
+        3,
+        7,
+        2,
+        9
+      ],
+      "sampled_addr": 3,
+      "later_addr": 2
+    },
+    "options": [
+      9,
+      8,
+      10,
+      11
+    ],
+    "expected": 9,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-230-v5",
+    "task": 230,
+    "inputs": {
+      "memory": [
+        3,
+        7,
+        2,
+        9
+      ],
+      "sampled_addr": 0,
+      "later_addr": 3
+    },
+    "options": [
+      2,
+      4,
+      5,
+      3
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-231-v1",
+    "task": 231,
+    "inputs": {
+      "old": 3,
+      "read": 7,
+      "en": 0
+    },
+    "options": [
+      [
+        3,
+        1
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        7,
+        1
+      ]
+    ],
+    "expected": [
+      3,
+      0
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-231-v2",
+    "task": 231,
+    "inputs": {
+      "old": 3,
+      "read": 7,
+      "en": 1
+    },
+    "options": [
+      [
+        7,
+        0
+      ],
+      [
+        7,
+        1
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ]
+    ],
+    "expected": [
+      7,
+      1
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-231-v3",
+    "task": 231,
+    "inputs": {
+      "old": 8,
+      "read": 2,
+      "en": 0
+    },
+    "options": [
+      [
+        8,
+        0
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        8,
+        1
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "expected": [
+      8,
+      0
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-231-v4",
+    "task": 231,
+    "inputs": {
+      "old": 0,
+      "read": 9,
+      "en": 1
+    },
+    "options": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        9,
+        0
+      ],
+      [
+        9,
+        1
+      ]
+    ],
+    "expected": [
+      9,
+      1
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-231-v5",
+    "task": 231,
+    "inputs": {
+      "old": 5,
+      "read": 5,
+      "en": 0
+    },
+    "options": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        5,
+        1
+      ]
+    ],
+    "expected": [
+      5,
+      0
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-232-v1",
+    "task": 232,
+    "inputs": {
+      "old": 2,
+      "new": 9,
+      "policy": "read-first"
+    },
+    "options": [
+      4,
+      2,
+      1,
+      3
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-232-v2",
+    "task": 232,
+    "inputs": {
+      "old": 2,
+      "new": 9,
+      "policy": "write-first"
+    },
+    "options": [
+      9,
+      8,
+      10,
+      11
+    ],
+    "expected": 9,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-232-v3",
+    "task": 232,
+    "inputs": {
+      "old": 0,
+      "new": 7,
+      "policy": "read-first"
+    },
+    "options": [
+      1,
+      2,
+      3,
+      0
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-232-v4",
+    "task": 232,
+    "inputs": {
+      "old": 8,
+      "new": 1,
+      "policy": "write-first"
+    },
+    "options": [
+      2,
+      3,
+      1,
+      0
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-232-v5",
+    "task": 232,
+    "inputs": {
+      "old": 5,
+      "new": 6,
+      "policy": "read-first"
+    },
+    "options": [
+      7,
+      5,
+      4,
+      6
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-233-v1",
+    "task": 233,
+    "inputs": {
+      "w": 8,
+      "registered": 1
+    },
+    "options": [
+      40,
+      39,
+      41,
+      42
+    ],
+    "expected": 40,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-233-v2",
+    "task": 233,
+    "inputs": {
+      "w": 4,
+      "registered": 0
+    },
+    "options": [
+      15,
+      17,
+      18,
+      16
+    ],
+    "expected": 16,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-233-v3",
+    "task": 233,
+    "inputs": {
+      "w": 16,
+      "registered": 1
+    },
+    "options": [
+      81,
+      82,
+      80,
+      79
+    ],
+    "expected": 80,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-233-v4",
+    "task": 233,
+    "inputs": {
+      "w": 1,
+      "registered": 1
+    },
+    "options": [
+      7,
+      5,
+      4,
+      6
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-233-v5",
+    "task": 233,
+    "inputs": {
+      "w": 3,
+      "registered": 0
+    },
+    "options": [
+      12,
+      11,
+      13,
+      14
+    ],
+    "expected": 12,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-234-v1",
+    "task": 234,
+    "inputs": {
+      "addr": 0,
+      "en": 1
+    },
+    "options": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-234-v2",
+    "task": 234,
+    "inputs": {
+      "addr": 3,
+      "en": 1
+    },
+    "options": [
+      9,
+      10,
+      8,
+      7
+    ],
+    "expected": 8,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-234-v3",
+    "task": 234,
+    "inputs": {
+      "addr": 2,
+      "en": 0
+    },
+    "options": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-234-v4",
+    "task": 234,
+    "inputs": {
+      "addr": 1,
+      "en": 1
+    },
+    "options": [
+      2,
+      1,
+      3,
+      4
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-234-v5",
+    "task": 234,
+    "inputs": {
+      "addr": 2,
+      "en": 1
+    },
+    "options": [
+      3,
+      5,
+      6,
+      4
+    ],
+    "expected": 4,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-235-v1",
+    "task": 235,
+    "inputs": {
+      "release": 8,
+      "recovery": 3,
+      "period": 10
+    },
+    "options": [
+      21,
+      22,
+      20,
+      19
+    ],
+    "expected": 20,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-235-v2",
+    "task": 235,
+    "inputs": {
+      "release": 7,
+      "recovery": 3,
+      "period": 10
+    },
+    "options": [
+      12,
+      10,
+      9,
+      11
+    ],
+    "expected": 10,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-235-v3",
+    "task": 235,
+    "inputs": {
+      "release": 0,
+      "recovery": 2,
+      "period": 5
+    },
+    "options": [
+      5,
+      4,
+      6,
+      7
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-235-v4",
+    "task": 235,
+    "inputs": {
+      "release": 15,
+      "recovery": 2,
+      "period": 8
+    },
+    "options": [
+      23,
+      25,
+      26,
+      24
+    ],
+    "expected": 24,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-235-v5",
+    "task": 235,
+    "inputs": {
+      "release": 4,
+      "recovery": 1,
+      "period": 5
+    },
+    "options": [
+      6,
+      7,
+      5,
+      4
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-236-v1",
+    "task": 236,
+    "inputs": {
+      "a": 3,
+      "b": 1
+    },
+    "options": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "expected": [
+      1,
+      0
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-236-v2",
+    "task": 236,
+    "inputs": {
+      "a": 7,
+      "b": 9
+    },
+    "options": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        3,
+        1
+      ]
+    ],
+    "expected": [
+      0,
+      1
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-236-v3",
+    "task": 236,
+    "inputs": {
+      "a": 5,
+      "b": 6
+    },
+    "options": [
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "expected": [
+      2,
+      0
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-236-v4",
+    "task": 236,
+    "inputs": {
+      "a": 15,
+      "b": 15
+    },
+    "options": [
+      [
+        0,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        3,
+        0
+      ]
+    ],
+    "expected": [
+      3,
+      1
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-236-v5",
+    "task": 236,
+    "inputs": {
+      "a": 8,
+      "b": 4
+    },
+    "options": [
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "expected": [
+      3,
+      0
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-237-v1",
+    "task": 237,
+    "inputs": {
+      "w": 4,
+      "a": 6,
+      "b": 9
+    },
+    "options": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "expected": [
+      1,
+      0
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-237-v2",
+    "task": 237,
+    "inputs": {
+      "w": 4,
+      "a": 7,
+      "b": 9
+    },
+    "options": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "expected": [
+      0,
+      1
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-237-v3",
+    "task": 237,
+    "inputs": {
+      "w": 4,
+      "a": 2,
+      "b": 3
+    },
+    "options": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "expected": [
+      0,
+      0
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-237-v4",
+    "task": 237,
+    "inputs": {
+      "w": 3,
+      "a": 3,
+      "b": 4
+    },
+    "options": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "expected": [
+      1,
+      0
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-237-v5",
+    "task": 237,
+    "inputs": {
+      "w": 3,
+      "a": 5,
+      "b": 5
+    },
+    "options": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "expected": [
+      0,
+      1
+    ],
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-238-v1",
+    "task": 238,
+    "inputs": {
+      "a": 2,
+      "b": 4
+    },
+    "options": [
+      4,
+      6,
+      7,
+      5
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-238-v2",
+    "task": 238,
+    "inputs": {
+      "a": 1,
+      "b": 4
+    },
+    "options": [
+      6,
+      7,
+      5,
+      4
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-238-v3",
+    "task": 238,
+    "inputs": {
+      "a": 3,
+      "b": 5
+    },
+    "options": [
+      8,
+      6,
+      5,
+      7
+    ],
+    "expected": 6,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-238-v4",
+    "task": 238,
+    "inputs": {
+      "a": 2,
+      "b": 2
+    },
+    "options": [
+      3,
+      2,
+      4,
+      5
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-238-v5",
+    "task": 238,
+    "inputs": {
+      "a": 1,
+      "b": 1
+    },
+    "options": [
+      1,
+      3,
+      4,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-239-v1",
+    "task": 239,
+    "inputs": {
+      "a": 2,
+      "b": 5
+    },
+    "options": [
+      5,
+      6,
+      4,
+      3
+    ],
+    "expected": 4,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-239-v2",
+    "task": 239,
+    "inputs": {
+      "a": 8,
+      "b": 9
+    },
+    "options": [
+      11,
+      9,
+      8,
+      10
+    ],
+    "expected": 9,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-239-v3",
+    "task": 239,
+    "inputs": {
+      "a": 0,
+      "b": 0
+    },
+    "options": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-239-v4",
+    "task": 239,
+    "inputs": {
+      "a": 15,
+      "b": 14
+    },
+    "options": [
+      14,
+      16,
+      17,
+      15
+    ],
+    "expected": 15,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-239-v5",
+    "task": 239,
+    "inputs": {
+      "a": 4,
+      "b": 6
+    },
+    "options": [
+      6,
+      7,
+      5,
+      4
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-240-v1",
+    "task": 240,
+    "inputs": {
+      "a": 2,
+      "b": 3
+    },
+    "options": [
+      4,
+      2,
+      1,
+      3
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-240-v2",
+    "task": 240,
+    "inputs": {
+      "a": 3,
+      "b": 4
+    },
+    "options": [
+      4,
+      3,
+      5,
+      6
+    ],
+    "expected": 4,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-240-v3",
+    "task": 240,
+    "inputs": {
+      "a": 0,
+      "b": 1
+    },
+    "options": [
+      1,
+      2,
+      3,
+      0
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-240-v4",
+    "task": 240,
+    "inputs": {
+      "a": 5,
+      "b": 6
+    },
+    "options": [
+      7,
+      8,
+      6,
+      5
+    ],
+    "expected": 6,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-240-v5",
+    "task": 240,
+    "inputs": {
+      "a": 6,
+      "b": 8
+    },
+    "options": [
+      9,
+      7,
+      6,
+      8
+    ],
+    "expected": 7,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-241-v1",
+    "task": 241,
+    "inputs": {
+      "digit": 4
+    },
+    "options": [
+      2,
+      1,
+      3,
+      4
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-241-v2",
+    "task": 241,
+    "inputs": {
+      "digit": 7
+    },
+    "options": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-241-v3",
+    "task": 241,
+    "inputs": {
+      "digit": 9
+    },
+    "options": [
+      8,
+      9,
+      7,
+      6
+    ],
+    "expected": 7,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-241-v4",
+    "task": 241,
+    "inputs": {
+      "digit": 0
+    },
+    "options": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-241-v5",
+    "task": 241,
+    "inputs": {
+      "digit": 6
+    },
+    "options": [
+      8,
+      7,
+      9,
+      10
+    ],
+    "expected": 8,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-242-v1",
+    "task": 242,
+    "inputs": {
+      "digit": 3
+    },
+    "options": [
+      1,
+      2,
+      3,
+      0
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-242-v2",
+    "task": 242,
+    "inputs": {
+      "digit": 4
+    },
+    "options": [
+      2,
+      3,
+      1,
+      0
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-242-v3",
+    "task": 242,
+    "inputs": {
+      "digit": 6
+    },
+    "options": [
+      3,
+      1,
+      0,
+      2
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-242-v4",
+    "task": 242,
+    "inputs": {
+      "digit": 7
+    },
+    "options": [
+      2,
+      1,
+      3,
+      4
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-242-v5",
+    "task": 242,
+    "inputs": {
+      "digit": 9
+    },
+    "options": [
+      1,
+      3,
+      4,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-243-v1",
+    "task": 243,
+    "inputs": {
+      "query": "excluded"
+    },
+    "options": [
+      7,
+      8,
+      6,
+      5
+    ],
+    "expected": 6,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-243-v2",
+    "task": 243,
+    "inputs": {
+      "query": "lowest_invalid"
+    },
+    "options": [
+      12,
+      10,
+      9,
+      11
+    ],
+    "expected": 10,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-243-v3",
+    "task": 243,
+    "inputs": {
+      "query": "highest_valid"
+    },
+    "options": [
+      9,
+      8,
+      10,
+      11
+    ],
+    "expected": 9,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-243-v4",
+    "task": 243,
+    "inputs": {
+      "query": "defined_rows"
+    },
+    "options": [
+      9,
+      11,
+      12,
+      10
+    ],
+    "expected": 10,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-243-v5",
+    "task": 243,
+    "inputs": {
+      "query": "output_max"
+    },
+    "options": [
+      28,
+      29,
+      27,
+      26
+    ],
+    "expected": 27,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-244-v1",
+    "task": 244,
+    "inputs": {
+      "x": 1
+    },
+    "options": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-244-v2",
+    "task": 244,
+    "inputs": {
+      "x": 2
+    },
+    "options": [
+      1,
+      0,
+      2,
+      3
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-244-v3",
+    "task": 244,
+    "inputs": {
+      "x": 7
+    },
+    "options": [
+      1,
+      3,
+      4,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-244-v4",
+    "task": 244,
+    "inputs": {
+      "x": 16
+    },
+    "options": [
+      5,
+      6,
+      4,
+      3
+    ],
+    "expected": 4,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-244-v5",
+    "task": 244,
+    "inputs": {
+      "x": 65535
+    },
+    "options": [
+      17,
+      15,
+      14,
+      16
+    ],
+    "expected": 15,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-245-v1",
+    "task": 245,
+    "inputs": {
+      "w": 4
+    },
+    "options": [
+      2,
+      1,
+      3,
+      4
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-245-v2",
+    "task": 245,
+    "inputs": {
+      "w": 8
+    },
+    "options": [
+      2,
+      4,
+      5,
+      3
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-245-v3",
+    "task": 245,
+    "inputs": {
+      "w": 16
+    },
+    "options": [
+      5,
+      6,
+      4,
+      3
+    ],
+    "expected": 4,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-245-v4",
+    "task": 245,
+    "inputs": {
+      "w": 32
+    },
+    "options": [
+      7,
+      5,
+      4,
+      6
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-245-v5",
+    "task": 245,
+    "inputs": {
+      "w": 64
+    },
+    "options": [
+      6,
+      5,
+      7,
+      8
+    ],
+    "expected": 6,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-246-v1",
+    "task": 246,
+    "inputs": {
+      "r": 0,
+      "bit": 1
+    },
+    "options": [
+      1,
+      2,
+      3,
+      0
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-246-v2",
+    "task": 246,
+    "inputs": {
+      "r": 2,
+      "bit": 0
+    },
+    "options": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-246-v3",
+    "task": 246,
+    "inputs": {
+      "r": 2,
+      "bit": 1
+    },
+    "options": [
+      3,
+      1,
+      0,
+      2
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-246-v4",
+    "task": 246,
+    "inputs": {
+      "r": 3,
+      "bit": 0
+    },
+    "options": [
+      1,
+      0,
+      2,
+      3
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-246-v5",
+    "task": 246,
+    "inputs": {
+      "r": 4,
+      "bit": 1
+    },
+    "options": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-247-v1",
+    "task": 247,
+    "inputs": {
+      "bits_value": 13,
+      "width": 4
+    },
+    "options": [
+      3,
+      4,
+      2,
+      1
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-247-v2",
+    "task": 247,
+    "inputs": {
+      "bits_value": 31,
+      "width": 5
+    },
+    "options": [
+      8,
+      6,
+      5,
+      7
+    ],
+    "expected": 6,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-247-v3",
+    "task": 247,
+    "inputs": {
+      "bits_value": 5,
+      "width": 8
+    },
+    "options": [
+      1,
+      0,
+      2,
+      3
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-247-v4",
+    "task": 247,
+    "inputs": {
+      "bits_value": 0,
+      "width": 4
+    },
+    "options": [
+      1,
+      2,
+      3,
+      0
+    ],
+    "expected": 0,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-247-v5",
+    "task": 247,
+    "inputs": {
+      "bits_value": 18,
+      "width": 5
+    },
+    "options": [
+      4,
+      5,
+      3,
+      2
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-248-v1",
+    "task": 248,
+    "inputs": {
+      "divisor": 5
+    },
+    "options": [
+      5,
+      3,
+      2,
+      4
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-248-v2",
+    "task": 248,
+    "inputs": {
+      "divisor": 3
+    },
+    "options": [
+      2,
+      1,
+      3,
+      4
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-248-v3",
+    "task": 248,
+    "inputs": {
+      "divisor": 8
+    },
+    "options": [
+      2,
+      4,
+      5,
+      3
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-248-v4",
+    "task": 248,
+    "inputs": {
+      "divisor": 9
+    },
+    "options": [
+      5,
+      6,
+      4,
+      3
+    ],
+    "expected": 4,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-248-v5",
+    "task": 248,
+    "inputs": {
+      "divisor": 16
+    },
+    "options": [
+      6,
+      4,
+      3,
+      5
+    ],
+    "expected": 4,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-249-v1",
+    "task": 249,
+    "inputs": {
+      "width": 5,
+      "triggers": [
+        0,
+        2,
+        5
+      ]
+    },
+    "options": [
+      2,
+      1,
+      3,
+      4
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-249-v2",
+    "task": 249,
+    "inputs": {
+      "width": 4,
+      "triggers": [
+        1,
+        2,
+        3
+      ]
+    },
+    "options": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-249-v3",
+    "task": 249,
+    "inputs": {
+      "width": 3,
+      "triggers": [
+        0,
+        3,
+        6
+      ]
+    },
+    "options": [
+      4,
+      5,
+      3,
+      2
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-249-v4",
+    "task": 249,
+    "inputs": {
+      "width": 5,
+      "triggers": [
+        0,
+        4,
+        8
+      ]
+    },
+    "options": [
+      4,
+      2,
+      1,
+      3
+    ],
+    "expected": 2,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-249-v5",
+    "task": 249,
+    "inputs": {
+      "width": 2,
+      "triggers": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "options": [
+      3,
+      2,
+      4,
+      5
+    ],
+    "expected": 3,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-250-v1",
+    "task": 250,
+    "inputs": {
+      "width": 5,
+      "triggers": [
+        0,
+        2,
+        4
+      ]
+    },
+    "options": [
+      8,
+      10,
+      11,
+      9
+    ],
+    "expected": 9,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-250-v2",
+    "task": 250,
+    "inputs": {
+      "width": 4,
+      "triggers": [
+        1,
+        3,
+        5
+      ]
+    },
+    "options": [
+      10,
+      11,
+      9,
+      8
+    ],
+    "expected": 9,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-250-v3",
+    "task": 250,
+    "inputs": {
+      "width": 3,
+      "triggers": [
+        0,
+        1,
+        2
+      ]
+    },
+    "options": [
+      7,
+      5,
+      4,
+      6
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-250-v4",
+    "task": 250,
+    "inputs": {
+      "width": 6,
+      "triggers": [
+        2,
+        5,
+        8
+      ]
+    },
+    "options": [
+      14,
+      13,
+      15,
+      16
+    ],
+    "expected": 14,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  },
+  {
+    "key": "quick-hw-250-v5",
+    "task": 250,
+    "inputs": {
+      "width": 2,
+      "triggers": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "options": [
+      4,
+      6,
+      7,
+      5
+    ],
+    "expected": 5,
+    "method": "Independent enumeration or event replay in test_fundamentals_hardware_500.py",
+    "scope": "Bounded teaching model; no HDL/SPICE, physical timing or human-review claim."
+  }
+]

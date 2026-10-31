@@ -13,6 +13,7 @@ import uuid
 from pathlib import Path
 
 import pytest
+
 from app.api.errors import ApiError
 from app.engine import bank
 from app.engine.catalog import load_catalog
@@ -21,7 +22,6 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
-
 from tests.preparation_history import (
     BATCH20_BASELINE,
     BATCH21_BASELINE,
@@ -220,12 +220,22 @@ def test_all_400_short_card_objects_revisions_and_2000_quiz_variants_remain_unch
         cards.extend(current)
     assert len(cards) == len({card["id"] for card in cards}) == 400
     registry = read(SEEDS / "fundamentals_catalog.json")
-    assert digest(registry) == BATCH21_BASELINE["fundamentals_catalog_sha256"]
+    # Later authorized expansions add keys, while this intake's content stays frozen.
+    historical_registry = {**registry, "questions": {
+        key: revision for key, revision in registry["questions"].items()
+        if int(key.rsplit("-", 1)[1]) <= 200
+    }}
+    assert len(historical_registry["questions"]) == 400
+    assert digest(historical_registry) == BATCH21_BASELINE["fundamentals_catalog_sha256"]
     assert read(content / "fundamentals-revisions.json") == registry["questions"]
-    quiz = read(SEEDS / "duel_quiz.json")
-    assert digest(quiz) == BATCH21_BASELINE["quiz_bank_sha256"]
-    assert len(quiz["questions"]) == 2040
-    assert sum(q["status"] == "approved" for q in quiz["questions"]) == 2000
+    quiz = read(SEEDS / "duel_quiz.json")["questions"]
+    historical_quiz = [q for q in quiz if not q.get("source_key")
+                       or int(q["source_key"].rsplit("-", 1)[1]) <= 200]
+    assert digest(sorted(historical_quiz, key=lambda q: q["key"])) == (
+        "d5658c38b6abbad3a0354993738e751e5a376a1a8cbbbf15efabf38a4e4067af"
+    )
+    assert len(historical_quiz) == 2040
+    assert sum(q["status"] == "approved" for q in historical_quiz) == 2000
     reviews = read(SEEDS / "solution_review_attestations.json")
     assert digest(reviews) == BATCH21_BASELINE["review_registry_canonical_sha256"]
     assert len(reviews["questions"]) == 93

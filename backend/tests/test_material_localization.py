@@ -20,7 +20,10 @@ def module(name):
 
 def test_bilingual_material_covers_every_visible_nonempty_field_and_keeps_author_data():
     builder = module("build_preparation_bank")
-    original = json.loads((ROOT / "interview_preparation/questions.json").read_text(encoding="utf-8-sig"))
+    archive = ROOT / "interview_preparation/questions.json"
+    original_bytes = archive.read_bytes()
+    original = json.loads(original_bytes.decode("utf-8-sig"))
+    editorial = json.loads((ROOT / "backend/seeds/preparation_editorial.json").read_bytes())
     built, _ = builder.load()
     resources = {q["assets"]["preparation_id"]: q["assets"]["preparation_resource"] for q in built}
     for source in original["questions"]:
@@ -28,9 +31,14 @@ def test_bilingual_material_covers_every_visible_nonempty_field_and_keeps_author
         paired = resource["learner_material"]
         required = {key for key in builder.MATERIAL_FIELDS if resource.get(key) not in (None, "", [], {})}
         assert set(paired) == required, source["id"]
+        overrides = editorial.get(source["id"], {}).get("learner_resource_fields", {})
         for key in required:
             assert set(paired[key]) == {"he", "en"}
-            assert resource[key] == builder.strip_personal(source[key]), (source["id"], key)
+            if key in overrides:
+                assert resource[key] == overrides[key] == paired[key], (source["id"], key)
+            else:
+                assert resource[key] == builder.strip_personal(source[key]), (source["id"], key)
+    assert archive.read_bytes() == original_bytes
 
 
 def test_missing_or_one_sided_technical_translations_cannot_be_compiled():
