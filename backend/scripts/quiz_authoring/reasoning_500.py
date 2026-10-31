@@ -107,7 +107,7 @@ def build_bundle():
     add(202, [198], ("ממוצע של ממוצעים מותנים", "Average the conditional averages"),
         ("לתוחלת מותנית אין צורך בהנחת אי־תלות.", "Conditional expectation does not require independence."),
         "nested_mean", [(dict(n=n), F(n, 4)) for n in [4, 2, 6, 1, 8]],
-        ("A אחיד בשלמים 0..{n}; לאחריו B אחיד בשלמים 0..A, כולל הגבולות. מהי תוחלת B?", 
+        ("A אחיד בשלמים 0..{n}; לאחריו B אחיד בשלמים 0..A, כולל הגבולות. מהי תוחלת B?",
          "A is uniform over integers 0..{n}; B is then uniform over integers 0..A, including endpoints. What is the expectation of B?"),
         ("לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
          "For A=a the mean of B is a/2. Average again over A; independence is unnecessary."),

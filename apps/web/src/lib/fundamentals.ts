@@ -36,6 +36,7 @@ export const quickTopics: { id: QuickTopic; label: Localized }[] = [
 // Original study cards, deliberately separate from the interview assessment bank.
 // These newly authored answers have not received the founders' human-review attestation.
 // At 500 cards the mix is 250 hardware /175 reasoning /75 software.
+// Interview-derived additions retain explicit links to their source PREP questions.
 // Presentation order belongs to each visit; IDs and revisions never depend on it.
 export const quickQuestions = [
   ...hardware, ...software, ...moreHardware, ...moreReasoning, ...moreCode,
