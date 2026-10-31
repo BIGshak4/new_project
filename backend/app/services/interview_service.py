@@ -224,8 +224,12 @@ class InterviewService:
                     return self._turn_view(turn, language, revealed=False), self._view(stored, state)
                 # a drawn circuit contributes its derived functions ("alarm = (A & B) | ...") to the check
                 checked = (text + "\n" + evidence.check_lines).strip() if evidence.check_lines else text
-                check = (await checks.run_check_async(question.deterministic_check, checked)
-                         if question.deterministic_check and checked else None)
+                runner = getattr(self, "code_execution", None)
+                check = (await runner.check_answer(user_id, f"interview:{session_id}:{turn_index}", question, checked)
+                         if runner is not None else None)
+                if check is None:
+                    check = (await checks.run_check_async(question.deterministic_check, checked)
+                             if question.deterministic_check and checked else None)
                 skill = self.catalog.skills[question.primary_skill]
                 result = await evaluator.evaluate(
                     self.provider, question_context=evaluator.question_block(question, language, skill),
@@ -661,7 +665,8 @@ class InterviewService:
             key_points_hit=meta.get("key_points_hit", []) if revealed else [],
             key_points_missed=meta.get("key_points_missed", []) if revealed else [],
             check=CheckView(type=check.get("type", ""), passed=check.get("passed"), detail=check.get("detail", ""),
-                            mismatches=list(check.get("mismatches") or [])[:8]) if revealed and check else None,
+                            mismatches=list(check.get("mismatches") or [])[:8],
+                            execution=check.get("execution")) if revealed and check else None,
             action_after=meta.get("action_after") if revealed else None,
             subject_switch=bool(meta.get("subject_switch", False)),
             related=(scores.OFF_TOPIC_FLAG not in (meta.get("flags") or [])) if revealed else True,

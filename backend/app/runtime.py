@@ -15,6 +15,7 @@ from app.repo.fundamentals import DbFundamentalsRepository, MemoryFundamentalsRe
 from app.services.avatars import AvatarsService
 from app.services.avatars import load_catalog as load_avatar_catalog
 from app.services.billing import BillingConfig, BillingService, FakeStripe, HttpStripe, load_plans
+from app.services.code_execution import CodeExecutionService
 from app.services.coins import CoinsService
 from app.services.coins import load_rules as load_coin_rules
 from app.services.demo_provider import DemoProvider
@@ -41,12 +42,15 @@ class Runtime:
     interview: InterviewService | None = None        # mock interviews
     fundamentals: FundamentalsService | None = None  # self-reported short-card history, no grading
     avatars: AvatarsService | None = None             # persistent logical-component customization and cosmetic ownership
+    code_execution: CodeExecutionService | None = None
 
     async def aclose(self) -> None:
         # a redeploy waits a little for feedback being written; anything unfinished is resumed on the next read
         await self.practice.drain(timeout=20)
         if self.image_fetcher is not None:
             await self.image_fetcher.aclose()
+        if self.code_execution is not None:
+            await self.code_execution.aclose()
 
 
 REAL_PROVIDERS = ("openai", "anthropic")        # a model is really called; openai is the default, anthropic the fallback
@@ -113,7 +117,7 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
     async def interview_finished(tx, user_id, session_id):
         await practice._complete_program_item(tx, user_id, session_id=session_id)
 
-    return Runtime(catalog=catalog, provider=provider, store=store, practice=practice, store_kind=kind,
+    runtime = Runtime(catalog=catalog, provider=provider, store=store, practice=practice, store_kind=kind,
                    image_fetcher=fetcher, billing=billing, coins=coins,
                    avatars=AvatarsService(store, coins, load_avatar_catalog(settings.seeds_dir / "avatar_cosmetics.json")),
                    duels=DuelService(store, catalog, provider, coins, reviewed_only=settings.suggest_reviewed_only,
@@ -123,6 +127,11 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                        load_fundamentals_catalog(settings.seeds_dir / "fundamentals_catalog.json")),
                    interview=InterviewService(store, catalog, provider, interview_config, image_fetcher=fetcher,
                                               on_finished=interview_finished, coins=coins))
+    runtime.code_execution = CodeExecutionService(settings, database=kind == "database")
+    practice.code_execution = runtime.code_execution
+    runtime.interview.code_execution = runtime.code_execution
+    runtime.duels.code_execution = runtime.code_execution
+    return runtime
 
 
 def make_image_fetcher(settings: Settings) -> StorageImageFetcher | None:

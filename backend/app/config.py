@@ -92,6 +92,34 @@ class Settings(BaseSettings):
     # wording follow within seconds (the app polls). False = the old way, everything in one response.
     feedback_in_background: bool = True
 
+    # Only the separate microVM broker can execute submitted source. The API never runs it locally.
+    # Broker health must advertise our pinned public-key fingerprint before any job is sent.
+    code_execution_enabled: bool = True
+    code_execution_url: str = "https://jobrun-executor-job-runer.vercel.app"
+    code_execution_signing_seed: str | None = None
+    code_execution_daily_limit: int = 60
+    code_execution_per_minute: int = 6
+    code_execution_concurrency: int = 2
+
+    @field_validator("code_execution_daily_limit", "code_execution_per_minute", "code_execution_concurrency")
+    @classmethod
+    def _execution_positive(cls, value):
+        if value < 1:
+            raise ValueError("execution limits must be positive")
+        return value
+
+    @field_validator("code_execution_url")
+    @classmethod
+    def _execution_https(cls, value):
+        from urllib.parse import urlsplit
+        if not value:
+            return value
+        parsed = urlsplit(value)
+        if (parsed.username or parsed.password or parsed.query or parsed.fragment or
+                (parsed.scheme != "https" and not (parsed.scheme == "http" and parsed.hostname in ("127.0.0.1", "localhost", "::1")))):
+            raise ValueError("the execution broker must use HTTPS (HTTP is allowed for loopback development only)")
+        return value.rstrip("/")
+
     default_language: str = "en"
     default_role: str = "digital-hardware-engineer"
     default_company: str = "generic"

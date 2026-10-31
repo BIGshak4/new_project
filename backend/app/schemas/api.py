@@ -6,6 +6,7 @@ from __future__ import annotations
 from pydantic import BaseModel, Field
 
 from app.repo.questions import QuestionDetail
+from app.schemas.execution import ExecutionResult
 from app.schemas.visual_answer import VisualAnswer
 
 
@@ -19,6 +20,7 @@ class CheckView(BaseModel):
     passed: bool | None
     detail: str
     mismatches: list[dict] = Field(default_factory=list)   # the first differing rows / test cases
+    execution: ExecutionResult | None = None
 
 
 class CardView(BaseModel):

@@ -763,6 +763,7 @@ export function PracticeSession({
                           disabled={disabled || !!pending}
                           codeLanguage={question.code_language}
                           starterCode={question.starter_code}
+                          execution={demo ? undefined : { attemptId: attempt.id, api }}
                         />
                         <VisualAnswer
                           value={visual}

@@ -21,6 +21,7 @@ import {
 import { apiMessage, bandLabel, readLocal, removeLocal, subjectLabel, writeLocal } from "../lib/practice-ui";
 import { BidiText } from "./bidi-text";
 import { textDirection } from "../lib/bidi-segments";
+import { ExecutionResultView } from "./code-execution-result";
 
 type Props = {
   api: PracticeApi;
@@ -617,7 +618,7 @@ export function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang })
           {t("מה חסר:", "Missing:")} <BidiText>{x.key_points_missed.join(" · ")}</BidiText>
         </p>
       )}
-      {x.check && (
+      {x.check?.execution ? <ExecutionResultView result={x.check.execution} lang={lang} /> : x.check && (
         <p className="small muted" dir={textDirection(t("הבדיקה האוטומטית", "Automatic check"))}>
           {x.check.passed === true
             ? t("הבדיקה האוטומטית עברה", "Automatic check passed")

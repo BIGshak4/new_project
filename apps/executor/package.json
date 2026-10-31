@@ -1,0 +1,16 @@
+{
+  "name": "jobrun-executor",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": "24.x" },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check api/execute.mjs && node --check lib/runner.mjs",
+    "provision": "node scripts/provision.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "check:fixtures": "node scripts/check-fixtures.mjs"
+  },
+  "dependencies": { "@vercel/sandbox": "3.9.1" },
+  "overrides": { "zod": "4.6.7" }
+}

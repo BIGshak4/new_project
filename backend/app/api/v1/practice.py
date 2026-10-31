@@ -29,6 +29,7 @@ from app.api.deps import Practice
 from app.api.errors import ApiError
 from app.engine.practice import MAX_ANSWER_CHARS
 from app.schemas.api import AttemptView, HintView, SubmissionView
+from app.schemas.execution import ExecutionCapabilities, ExecutionRequest, ExecutionResult
 from app.schemas.visual_answer import VisualAnswer
 from app.services.practice_service import PracticeService
 
@@ -145,6 +146,23 @@ async def start(body: StartAttemptRequest, access: CurrentAccess, practice: Prac
 @router.get("/{attempt_id}", response_model=AttemptView, summary="The attempt as it is now (refresh-safe)")
 async def get_attempt(attempt_id: AttemptId, access: CurrentAccess, practice: Practice) -> AttemptView:
     return await practice.get(access.user_id, attempt_id)
+
+
+@router.get("/{attempt_id}/execution-capabilities", response_model=ExecutionCapabilities)
+async def execution_capabilities(attempt_id: AttemptId, access: CurrentAccess, practice: Practice):
+    attempt, _, _, _ = await practice._load(access.user_id, attempt_id)
+    if practice.code_execution is None:
+        return ExecutionCapabilities(available=False, languages=[], tested_languages=[], reason="Code execution is unavailable.")
+    return await practice.code_execution.capabilities(attempt.question)
+
+
+@router.post("/{attempt_id}/executions", response_model=ExecutionResult,
+             summary="Run code in a separate microVM without submitting the answer")
+async def execute_code(attempt_id: AttemptId, body: ExecutionRequest, access: CurrentAccess, practice: Practice):
+    attempt, _, _, _ = await practice._load(access.user_id, attempt_id)
+    if practice.code_execution is None:
+        raise ApiError("temporarily_unavailable", "Code execution is unavailable.")
+    return await practice.code_execution.execute(access.user_id, f"practice:{attempt_id}", attempt.question, body)
 
 
 @router.post("/{attempt_id}/hints/next", response_model=HintResponse, summary="Show the next hint")

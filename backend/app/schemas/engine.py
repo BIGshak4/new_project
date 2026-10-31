@@ -11,6 +11,8 @@ from enum import StrEnum
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.schemas.execution import ExecutionResult
+
 # ----------------------------------------------------------------------------- enums
 
 
@@ -127,6 +129,7 @@ class CheckResult(BaseModel):
     detail: str = ""
     mismatches: list[dict] = Field(default_factory=list)
     runtime_ms: int = 0
+    execution: ExecutionResult | None = None
 
 
 # ----------------------------------------------------------------------------- catalog and plan

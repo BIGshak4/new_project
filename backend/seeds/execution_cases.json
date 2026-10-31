@@ -1,0 +1,5314 @@
+{
+  "version": 1,
+  "questions": {
+    "example-count-set-bits": {
+      "contract": {
+        "he": "החזירו את מספר ביטי ה־1 במילה unsigned בת 32 ביט. חתימת Python/JavaScript: count_set_bits(n). ב־C/C++: uint32_t count_set_bits(uint32_t n), עם 0/1 לתוצאה בוליאנית, ללא main.",
+        "en": "Return the number of set bits in an unsigned 32-bit value. Python/JavaScript: count_set_bits(n). C/C++: uint32_t count_set_bits(uint32_t n), returning 0/1 for a Boolean. Do not define main."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "count_set_bits",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                7
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                16
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                31
+              ],
+              "expected": 5
+            },
+            {
+              "args": [
+                180
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                255
+              ],
+              "expected": 8
+            },
+            {
+              "args": [
+                256
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                65535
+              ],
+              "expected": 16
+            },
+            {
+              "args": [
+                2147483647
+              ],
+              "expected": 31
+            },
+            {
+              "args": [
+                2147483648
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                4294967295
+              ],
+              "expected": 32
+            }
+          ],
+          "starter": "def count_set_bits(n):\n    # Return the result; do not print it.\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "count_set_bits",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                7
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                16
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                31
+              ],
+              "expected": 5
+            },
+            {
+              "args": [
+                180
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                255
+              ],
+              "expected": 8
+            },
+            {
+              "args": [
+                256
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                65535
+              ],
+              "expected": 16
+            },
+            {
+              "args": [
+                2147483647
+              ],
+              "expected": 31
+            },
+            {
+              "args": [
+                2147483648
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                4294967295
+              ],
+              "expected": 32
+            }
+          ],
+          "starter": "function count_set_bits(n) {\n  // Return the result; do not print it.\n  throw new Error('Implement me');\n}\n"
+        },
+        "c": {
+          "kind": "program",
+          "driver": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n#include \"solution.c\"\nint main(void) { uint32_t n; if (scanf(\"%\" SCNu32, &n) != 1) return 2;\n  printf(\"%u\\n\", (unsigned)count_set_bits(n)); return 0; }\n",
+          "cases": [
+            {
+              "stdin": "0\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "1\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "2\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "3\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "7\n",
+              "expected_stdout": "3\n"
+            },
+            {
+              "stdin": "16\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "31\n",
+              "expected_stdout": "5\n"
+            },
+            {
+              "stdin": "180\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "255\n",
+              "expected_stdout": "8\n"
+            },
+            {
+              "stdin": "256\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "65535\n",
+              "expected_stdout": "16\n"
+            },
+            {
+              "stdin": "2147483647\n",
+              "expected_stdout": "31\n"
+            },
+            {
+              "stdin": "2147483648\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "4294967295\n",
+              "expected_stdout": "32\n"
+            }
+          ],
+          "starter": "#include <stdint.h>\nuint32_t count_set_bits(uint32_t n) {\n    /* Return the result; do not define main. */\n    return 0;\n}\n"
+        },
+        "cpp": {
+          "kind": "program",
+          "driver": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n#include \"solution.cpp\"\nint main(void) { uint32_t n; if (scanf(\"%\" SCNu32, &n) != 1) return 2;\n  printf(\"%u\\n\", (unsigned)count_set_bits(n)); return 0; }\n",
+          "cases": [
+            {
+              "stdin": "0\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "1\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "2\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "3\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "7\n",
+              "expected_stdout": "3\n"
+            },
+            {
+              "stdin": "16\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "31\n",
+              "expected_stdout": "5\n"
+            },
+            {
+              "stdin": "180\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "255\n",
+              "expected_stdout": "8\n"
+            },
+            {
+              "stdin": "256\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "65535\n",
+              "expected_stdout": "16\n"
+            },
+            {
+              "stdin": "2147483647\n",
+              "expected_stdout": "31\n"
+            },
+            {
+              "stdin": "2147483648\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "4294967295\n",
+              "expected_stdout": "32\n"
+            }
+          ],
+          "starter": "#include <stdint.h>\nuint32_t count_set_bits(uint32_t n) {\n    /* Return the result; do not define main. */\n    return 0;\n}\n"
+        }
+      }
+    },
+    "example-power-of-two-check": {
+      "contract": {
+        "he": "החזירו ערך בוליאני: האם n בתחום unsigned32 הוא חזקה של 2. אפס אינו חזקה. חתימת Python/JavaScript: is_power_of_two(n). ב־C/C++: uint32_t is_power_of_two(uint32_t n), עם 0/1 לתוצאה בוליאנית, ללא main.",
+        "en": "Return a Boolean indicating whether unsigned32 n is a power of two. Zero is not. Python/JavaScript: is_power_of_two(n). C/C++: uint32_t is_power_of_two(uint32_t n), returning 0/1 for a Boolean. Do not define main."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "is_power_of_two",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                7
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                12
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                16
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                31
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                255
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                256
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                65535
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                2147483647
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                2147483648
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                4294967295
+              ],
+              "expected": false
+            }
+          ],
+          "starter": "def is_power_of_two(n):\n    # Return the result; do not print it.\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "is_power_of_two",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                7
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                12
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                16
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                31
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                255
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                256
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                65535
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                2147483647
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                2147483648
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                4294967295
+              ],
+              "expected": false
+            }
+          ],
+          "starter": "function is_power_of_two(n) {\n  // Return the result; do not print it.\n  throw new Error('Implement me');\n}\n"
+        },
+        "c": {
+          "kind": "program",
+          "driver": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n#include \"solution.c\"\nint main(void) { uint32_t n; if (scanf(\"%\" SCNu32, &n) != 1) return 2;\n  printf(\"%u\\n\", (unsigned)is_power_of_two(n)); return 0; }\n",
+          "cases": [
+            {
+              "stdin": "0\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "1\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "2\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "3\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "7\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "12\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "16\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "31\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "255\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "256\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "65535\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "2147483647\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "2147483648\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "4294967295\n",
+              "expected_stdout": "0\n"
+            }
+          ],
+          "starter": "#include <stdint.h>\nuint32_t is_power_of_two(uint32_t n) {\n    /* Return the result; do not define main. */\n    return 0;\n}\n"
+        },
+        "cpp": {
+          "kind": "program",
+          "driver": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n#include \"solution.cpp\"\nint main(void) { uint32_t n; if (scanf(\"%\" SCNu32, &n) != 1) return 2;\n  printf(\"%u\\n\", (unsigned)is_power_of_two(n)); return 0; }\n",
+          "cases": [
+            {
+              "stdin": "0\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "1\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "2\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "3\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "7\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "12\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "16\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "31\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "255\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "256\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "65535\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "2147483647\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "2147483648\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "4294967295\n",
+              "expected_stdout": "0\n"
+            }
+          ],
+          "starter": "#include <stdint.h>\nuint32_t is_power_of_two(uint32_t n) {\n    /* Return the result; do not define main. */\n    return 0;\n}\n"
+        }
+      }
+    },
+    "example-extract-register-field": {
+      "contract": {
+        "he": "החזירו את השדה המיושר לימין. הקלט חוקי וכולל width=32. python: extract_field(reg, lsb, width).",
+        "en": "Return the right-aligned field. Inputs obey the prompt and include width=32. python: extract_field(reg, lsb, width)."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "extract_field",
+          "cases": [
+            {
+              "args": [
+                214,
+                2,
+                3
+              ],
+              "expected": 5
+            },
+            {
+              "args": [
+                214,
+                0,
+                32
+              ],
+              "expected": 214
+            },
+            {
+              "args": [
+                4294967295,
+                0,
+                32
+              ],
+              "expected": 4294967295
+            },
+            {
+              "args": [
+                4294967295,
+                31,
+                1
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                2779096485,
+                4,
+                8
+              ],
+              "expected": 90
+            },
+            {
+              "args": [
+                2147483648,
+                31,
+                1
+              ],
+              "expected": 1
+            }
+          ],
+          "starter": "def extract_field(reg, lsb, width):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "extract_field",
+          "cases": [
+            {
+              "args": [
+                214,
+                2,
+                3
+              ],
+              "expected": 5
+            },
+            {
+              "args": [
+                214,
+                0,
+                32
+              ],
+              "expected": 214
+            },
+            {
+              "args": [
+                4294967295,
+                0,
+                32
+              ],
+              "expected": 4294967295
+            },
+            {
+              "args": [
+                4294967295,
+                31,
+                1
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                2779096485,
+                4,
+                8
+              ],
+              "expected": 90
+            },
+            {
+              "args": [
+                2147483648,
+                31,
+                1
+              ],
+              "expected": 1
+            }
+          ],
+          "starter": "function extract_field(reg, lsb, width) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "example-first-greater-or-equal": {
+      "contract": {
+        "he": "החזירו את האינדקס הראשון שערכו לפחות target, או len(a). python: lower_bound(a, target).",
+        "en": "Return the first index with value at least target, or the array length. python: lower_bound(a, target)."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "lower_bound",
+          "cases": [
+            {
+              "args": [
+                [
+                  2,
+                  4,
+                  4,
+                  9
+                ],
+                4
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                [
+                  2,
+                  4,
+                  4,
+                  9
+                ],
+                8
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                [
+                  2,
+                  4,
+                  4,
+                  9
+                ],
+                10
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                [],
+                5
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                [
+                  1,
+                  1,
+                  1
+                ],
+                1
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                [
+                  1,
+                  3,
+                  5,
+                  7,
+                  9,
+                  11
+                ],
+                6
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                [
+                  5
+                ],
+                5
+              ],
+              "expected": 0
+            }
+          ],
+          "starter": "def lower_bound(a, target):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "lower_bound",
+          "cases": [
+            {
+              "args": [
+                [
+                  2,
+                  4,
+                  4,
+                  9
+                ],
+                4
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                [
+                  2,
+                  4,
+                  4,
+                  9
+                ],
+                8
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                [
+                  2,
+                  4,
+                  4,
+                  9
+                ],
+                10
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                [],
+                5
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                [
+                  1,
+                  1,
+                  1
+                ],
+                1
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                [
+                  1,
+                  3,
+                  5,
+                  7,
+                  9,
+                  11
+                ],
+                6
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                [
+                  5
+                ],
+                5
+              ],
+              "expected": 0
+            }
+          ],
+          "starter": "function lower_bound(a, target) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "example-merge-measurement-streams": {
+      "contract": {
+        "he": "החזירו מערך ממוזג וממוין המשמר את כל הכפילויות. python: merge(a, b).",
+        "en": "Return the merged sorted array, preserving every duplicate. python: merge(a, b)."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "merge",
+          "cases": [
+            {
+              "args": [
+                [
+                  1,
+                  4,
+                  4
+                ],
+                [
+                  2,
+                  4,
+                  7
+                ]
+              ],
+              "expected": [
+                1,
+                2,
+                4,
+                4,
+                4,
+                7
+              ]
+            },
+            {
+              "args": [
+                [],
+                [
+                  1,
+                  2
+                ]
+              ],
+              "expected": [
+                1,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  3
+                ],
+                []
+              ],
+              "expected": [
+                3
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2,
+                  3
+                ],
+                [
+                  4,
+                  5
+                ]
+              ],
+              "expected": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            {
+              "args": [
+                [
+                  5
+                ],
+                [
+                  1
+                ]
+              ],
+              "expected": [
+                1,
+                5
+              ]
+            },
+            {
+              "args": [
+                [],
+                []
+              ],
+              "expected": []
+            }
+          ],
+          "starter": "def merge(a, b):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "merge",
+          "cases": [
+            {
+              "args": [
+                [
+                  1,
+                  4,
+                  4
+                ],
+                [
+                  2,
+                  4,
+                  7
+                ]
+              ],
+              "expected": [
+                1,
+                2,
+                4,
+                4,
+                4,
+                7
+              ]
+            },
+            {
+              "args": [
+                [],
+                [
+                  1,
+                  2
+                ]
+              ],
+              "expected": [
+                1,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  3
+                ],
+                []
+              ],
+              "expected": [
+                3
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2,
+                  3
+                ],
+                [
+                  4,
+                  5
+                ]
+              ],
+              "expected": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            {
+              "args": [
+                [
+                  5
+                ],
+                [
+                  1
+                ]
+              ],
+              "expected": [
+                1,
+                5
+              ]
+            },
+            {
+              "args": [
+                [],
+                []
+              ],
+              "expected": []
+            }
+          ],
+          "starter": "function merge(a, b) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "example-pair-sum-indices": {
+      "contract": {
+        "he": "החזירו [i,j] לשני אינדקסים שונים, או null/None כשאין זוג. למקרים כאן יש זוג יחיד; סדר האינדקסים חופשי. python: pair_sum(a, target).",
+        "en": "Return [i,j] for distinct indices, or null/None when absent. Cases have a unique pair; index order is unrestricted. python: pair_sum(a, target)."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "pair_sum",
+          "cases": [
+            {
+              "args": [
+                [
+                  6,
+                  6
+                ],
+                12
+              ],
+              "expected": [
+                0,
+                1
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  6
+                ],
+                12
+              ],
+              "expected": null
+            },
+            {
+              "args": [
+                [
+                  2,
+                  7,
+                  11,
+                  15
+                ],
+                9
+              ],
+              "expected": [
+                0,
+                1
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  3,
+                  2,
+                  4
+                ],
+                6
+              ],
+              "expected": [
+                1,
+                2
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  1,
+                  5,
+                  3,
+                  7
+                ],
+                10
+              ],
+              "expected": [
+                2,
+                3
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [],
+                0
+              ],
+              "expected": null
+            }
+          ],
+          "starter": "def pair_sum(a, target):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "pair_sum",
+          "cases": [
+            {
+              "args": [
+                [
+                  6,
+                  6
+                ],
+                12
+              ],
+              "expected": [
+                0,
+                1
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  6
+                ],
+                12
+              ],
+              "expected": null
+            },
+            {
+              "args": [
+                [
+                  2,
+                  7,
+                  11,
+                  15
+                ],
+                9
+              ],
+              "expected": [
+                0,
+                1
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  3,
+                  2,
+                  4
+                ],
+                6
+              ],
+              "expected": [
+                1,
+                2
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  1,
+                  5,
+                  3,
+                  7
+                ],
+                10
+              ],
+              "expected": [
+                2,
+                3
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [],
+                0
+              ],
+              "expected": null
+            }
+          ],
+          "starter": "function pair_sum(a, target) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "example-balanced-brackets": {
+      "contract": {
+        "he": "החזירו בוליאני עבור קינון תקין של (), [] ו־{}. מחרוזת ריקה תקינה. python: is_balanced(text).",
+        "en": "Return a Boolean for correctly nested (), [] and {}. Empty input is valid. python: is_balanced(text)."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "is_balanced",
+          "cases": [
+            {
+              "args": [
+                "([]{})"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "([)]"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "]"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                ""
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "((("
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "{[()()]}"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "(]"
+              ],
+              "expected": false
+            }
+          ],
+          "starter": "def is_balanced(text):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "is_balanced",
+          "cases": [
+            {
+              "args": [
+                "([]{})"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "([)]"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "]"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                ""
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "((("
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "{[()()]}"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "(]"
+              ],
+              "expected": false
+            }
+          ],
+          "starter": "function is_balanced(text) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-power-of-two-check": {
+      "contract": {
+        "he": "ממשו is_power_of_two(n) עבור unsigned32; החזירו בוליאני. נבדקת התוצאה; מספר הפעולות נבדק בהסבר. ב־C/C++ החתימה uint32_t is_power_of_two(uint32_t n), תוצאה 0/1, ללא main.",
+        "en": "Implement is_power_of_two(n) for unsigned32, returning a Boolean. Tests check output; the operation-count argument is reviewed separately. C/C++ signature: uint32_t is_power_of_two(uint32_t n), returning 0/1; no main."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "is_power_of_two",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                7
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                16
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                31
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                255
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                256
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                65535
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                2147483647
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                2147483648
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                4294967295
+              ],
+              "expected": false
+            }
+          ],
+          "starter": "def is_power_of_two(n):\n    # Return the result; do not print it.\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "is_power_of_two",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                7
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                16
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                31
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                255
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                256
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                65535
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                2147483647
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                2147483648
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                4294967295
+              ],
+              "expected": false
+            }
+          ],
+          "starter": "function is_power_of_two(n) {\n  // Return the result; do not print it.\n  throw new Error('Implement me');\n}\n"
+        },
+        "c": {
+          "kind": "program",
+          "driver": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n#include \"solution.c\"\nint main(void) { uint32_t n; if (scanf(\"%\" SCNu32, &n) != 1) return 2;\n  printf(\"%u\\n\", (unsigned)is_power_of_two(n)); return 0; }\n",
+          "cases": [
+            {
+              "stdin": "0\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "1\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "2\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "3\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "7\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "16\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "31\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "255\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "256\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "65535\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "2147483647\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "2147483648\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "4294967295\n",
+              "expected_stdout": "0\n"
+            }
+          ],
+          "starter": "#include <stdint.h>\nuint32_t is_power_of_two(uint32_t n) {\n    /* Return the result; do not define main. */\n    return 0;\n}\n"
+        },
+        "cpp": {
+          "kind": "program",
+          "driver": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n#include \"solution.cpp\"\nint main(void) { uint32_t n; if (scanf(\"%\" SCNu32, &n) != 1) return 2;\n  printf(\"%u\\n\", (unsigned)is_power_of_two(n)); return 0; }\n",
+          "cases": [
+            {
+              "stdin": "0\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "1\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "2\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "3\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "7\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "16\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "31\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "255\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "256\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "65535\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "2147483647\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "2147483648\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "4294967295\n",
+              "expected_stdout": "0\n"
+            }
+          ],
+          "starter": "#include <stdint.h>\nuint32_t is_power_of_two(uint32_t n) {\n    /* Return the result; do not define main. */\n    return 0;\n}\n"
+        }
+      }
+    },
+    "prep-reverse-exactly-eight-bits-without-array": {
+      "contract": {
+        "he": "החזירו את היפוך כל שמונת הביטים; אפסים מובילים נכללים. נבדק החלק של רוחב 8 בלבד. Python/JavaScript: reverse8(n). ב־C/C++: uint32_t reverse8(uint32_t n), ללא main; הקלט 0..255.",
+        "en": "Return the reversal of all eight bits, including leading zeros. This tests only the fixed-eight-bit part. Python/JavaScript: reverse8(n). C/C++: uint32_t reverse8(uint32_t n), no main; input 0..255."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "reverse8",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": 128
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": 64
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": 192
+            },
+            {
+              "args": [
+                4
+              ],
+              "expected": 32
+            },
+            {
+              "args": [
+                7
+              ],
+              "expected": 224
+            },
+            {
+              "args": [
+                8
+              ],
+              "expected": 16
+            },
+            {
+              "args": [
+                15
+              ],
+              "expected": 240
+            },
+            {
+              "args": [
+                16
+              ],
+              "expected": 8
+            },
+            {
+              "args": [
+                17
+              ],
+              "expected": 136
+            },
+            {
+              "args": [
+                31
+              ],
+              "expected": 248
+            },
+            {
+              "args": [
+                32
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                42
+              ],
+              "expected": 84
+            },
+            {
+              "args": [
+                63
+              ],
+              "expected": 252
+            },
+            {
+              "args": [
+                64
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                65
+              ],
+              "expected": 130
+            },
+            {
+              "args": [
+                85
+              ],
+              "expected": 170
+            },
+            {
+              "args": [
+                102
+              ],
+              "expected": 102
+            },
+            {
+              "args": [
+                127
+              ],
+              "expected": 254
+            },
+            {
+              "args": [
+                128
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                129
+              ],
+              "expected": 129
+            },
+            {
+              "args": [
+                153
+              ],
+              "expected": 153
+            },
+            {
+              "args": [
+                170
+              ],
+              "expected": 85
+            },
+            {
+              "args": [
+                192
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                204
+              ],
+              "expected": 51
+            },
+            {
+              "args": [
+                224
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                240
+              ],
+              "expected": 15
+            },
+            {
+              "args": [
+                247
+              ],
+              "expected": 239
+            },
+            {
+              "args": [
+                251
+              ],
+              "expected": 223
+            },
+            {
+              "args": [
+                253
+              ],
+              "expected": 191
+            },
+            {
+              "args": [
+                254
+              ],
+              "expected": 127
+            },
+            {
+              "args": [
+                255
+              ],
+              "expected": 255
+            }
+          ],
+          "starter": "def reverse8(n):\n    # Return the result; do not print it.\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "reverse8",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": 128
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": 64
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": 192
+            },
+            {
+              "args": [
+                4
+              ],
+              "expected": 32
+            },
+            {
+              "args": [
+                7
+              ],
+              "expected": 224
+            },
+            {
+              "args": [
+                8
+              ],
+              "expected": 16
+            },
+            {
+              "args": [
+                15
+              ],
+              "expected": 240
+            },
+            {
+              "args": [
+                16
+              ],
+              "expected": 8
+            },
+            {
+              "args": [
+                17
+              ],
+              "expected": 136
+            },
+            {
+              "args": [
+                31
+              ],
+              "expected": 248
+            },
+            {
+              "args": [
+                32
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                42
+              ],
+              "expected": 84
+            },
+            {
+              "args": [
+                63
+              ],
+              "expected": 252
+            },
+            {
+              "args": [
+                64
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                65
+              ],
+              "expected": 130
+            },
+            {
+              "args": [
+                85
+              ],
+              "expected": 170
+            },
+            {
+              "args": [
+                102
+              ],
+              "expected": 102
+            },
+            {
+              "args": [
+                127
+              ],
+              "expected": 254
+            },
+            {
+              "args": [
+                128
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                129
+              ],
+              "expected": 129
+            },
+            {
+              "args": [
+                153
+              ],
+              "expected": 153
+            },
+            {
+              "args": [
+                170
+              ],
+              "expected": 85
+            },
+            {
+              "args": [
+                192
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                204
+              ],
+              "expected": 51
+            },
+            {
+              "args": [
+                224
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                240
+              ],
+              "expected": 15
+            },
+            {
+              "args": [
+                247
+              ],
+              "expected": 239
+            },
+            {
+              "args": [
+                251
+              ],
+              "expected": 223
+            },
+            {
+              "args": [
+                253
+              ],
+              "expected": 191
+            },
+            {
+              "args": [
+                254
+              ],
+              "expected": 127
+            },
+            {
+              "args": [
+                255
+              ],
+              "expected": 255
+            }
+          ],
+          "starter": "function reverse8(n) {\n  // Return the result; do not print it.\n  throw new Error('Implement me');\n}\n"
+        },
+        "c": {
+          "kind": "program",
+          "driver": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n#include \"solution.c\"\nint main(void) { uint32_t n; if (scanf(\"%\" SCNu32, &n) != 1) return 2;\n  printf(\"%u\\n\", (unsigned)reverse8(n)); return 0; }\n",
+          "cases": [
+            {
+              "stdin": "0\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "1\n",
+              "expected_stdout": "128\n"
+            },
+            {
+              "stdin": "2\n",
+              "expected_stdout": "64\n"
+            },
+            {
+              "stdin": "3\n",
+              "expected_stdout": "192\n"
+            },
+            {
+              "stdin": "4\n",
+              "expected_stdout": "32\n"
+            },
+            {
+              "stdin": "7\n",
+              "expected_stdout": "224\n"
+            },
+            {
+              "stdin": "8\n",
+              "expected_stdout": "16\n"
+            },
+            {
+              "stdin": "15\n",
+              "expected_stdout": "240\n"
+            },
+            {
+              "stdin": "16\n",
+              "expected_stdout": "8\n"
+            },
+            {
+              "stdin": "17\n",
+              "expected_stdout": "136\n"
+            },
+            {
+              "stdin": "31\n",
+              "expected_stdout": "248\n"
+            },
+            {
+              "stdin": "32\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "42\n",
+              "expected_stdout": "84\n"
+            },
+            {
+              "stdin": "63\n",
+              "expected_stdout": "252\n"
+            },
+            {
+              "stdin": "64\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "65\n",
+              "expected_stdout": "130\n"
+            },
+            {
+              "stdin": "85\n",
+              "expected_stdout": "170\n"
+            },
+            {
+              "stdin": "102\n",
+              "expected_stdout": "102\n"
+            },
+            {
+              "stdin": "127\n",
+              "expected_stdout": "254\n"
+            },
+            {
+              "stdin": "128\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "129\n",
+              "expected_stdout": "129\n"
+            },
+            {
+              "stdin": "153\n",
+              "expected_stdout": "153\n"
+            },
+            {
+              "stdin": "170\n",
+              "expected_stdout": "85\n"
+            },
+            {
+              "stdin": "192\n",
+              "expected_stdout": "3\n"
+            },
+            {
+              "stdin": "204\n",
+              "expected_stdout": "51\n"
+            },
+            {
+              "stdin": "224\n",
+              "expected_stdout": "7\n"
+            },
+            {
+              "stdin": "240\n",
+              "expected_stdout": "15\n"
+            },
+            {
+              "stdin": "247\n",
+              "expected_stdout": "239\n"
+            },
+            {
+              "stdin": "251\n",
+              "expected_stdout": "223\n"
+            },
+            {
+              "stdin": "253\n",
+              "expected_stdout": "191\n"
+            },
+            {
+              "stdin": "254\n",
+              "expected_stdout": "127\n"
+            },
+            {
+              "stdin": "255\n",
+              "expected_stdout": "255\n"
+            }
+          ],
+          "starter": "#include <stdint.h>\nuint32_t reverse8(uint32_t n) {\n    /* Return the result; do not define main. */\n    return 0;\n}\n"
+        },
+        "cpp": {
+          "kind": "program",
+          "driver": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n#include \"solution.cpp\"\nint main(void) { uint32_t n; if (scanf(\"%\" SCNu32, &n) != 1) return 2;\n  printf(\"%u\\n\", (unsigned)reverse8(n)); return 0; }\n",
+          "cases": [
+            {
+              "stdin": "0\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "1\n",
+              "expected_stdout": "128\n"
+            },
+            {
+              "stdin": "2\n",
+              "expected_stdout": "64\n"
+            },
+            {
+              "stdin": "3\n",
+              "expected_stdout": "192\n"
+            },
+            {
+              "stdin": "4\n",
+              "expected_stdout": "32\n"
+            },
+            {
+              "stdin": "7\n",
+              "expected_stdout": "224\n"
+            },
+            {
+              "stdin": "8\n",
+              "expected_stdout": "16\n"
+            },
+            {
+              "stdin": "15\n",
+              "expected_stdout": "240\n"
+            },
+            {
+              "stdin": "16\n",
+              "expected_stdout": "8\n"
+            },
+            {
+              "stdin": "17\n",
+              "expected_stdout": "136\n"
+            },
+            {
+              "stdin": "31\n",
+              "expected_stdout": "248\n"
+            },
+            {
+              "stdin": "32\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "42\n",
+              "expected_stdout": "84\n"
+            },
+            {
+              "stdin": "63\n",
+              "expected_stdout": "252\n"
+            },
+            {
+              "stdin": "64\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "65\n",
+              "expected_stdout": "130\n"
+            },
+            {
+              "stdin": "85\n",
+              "expected_stdout": "170\n"
+            },
+            {
+              "stdin": "102\n",
+              "expected_stdout": "102\n"
+            },
+            {
+              "stdin": "127\n",
+              "expected_stdout": "254\n"
+            },
+            {
+              "stdin": "128\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "129\n",
+              "expected_stdout": "129\n"
+            },
+            {
+              "stdin": "153\n",
+              "expected_stdout": "153\n"
+            },
+            {
+              "stdin": "170\n",
+              "expected_stdout": "85\n"
+            },
+            {
+              "stdin": "192\n",
+              "expected_stdout": "3\n"
+            },
+            {
+              "stdin": "204\n",
+              "expected_stdout": "51\n"
+            },
+            {
+              "stdin": "224\n",
+              "expected_stdout": "7\n"
+            },
+            {
+              "stdin": "240\n",
+              "expected_stdout": "15\n"
+            },
+            {
+              "stdin": "247\n",
+              "expected_stdout": "239\n"
+            },
+            {
+              "stdin": "251\n",
+              "expected_stdout": "223\n"
+            },
+            {
+              "stdin": "253\n",
+              "expected_stdout": "191\n"
+            },
+            {
+              "stdin": "254\n",
+              "expected_stdout": "127\n"
+            },
+            {
+              "stdin": "255\n",
+              "expected_stdout": "255\n"
+            }
+          ],
+          "starter": "#include <stdint.h>\nuint32_t reverse8(uint32_t n) {\n    /* Return the result; do not define main. */\n    return 0;\n}\n"
+        }
+      }
+    },
+    "prep-byte-popcount-parallel-and-lookup": {
+      "contract": {
+        "he": "החזירו מספר ביטי 1 בבית. הבדיקות אינן מוכיחות היעדר לולאה או שימוש בטבלה. Python/JavaScript: popcount8(n). ב־C/C++: uint32_t popcount8(uint32_t n), ללא main; הקלט 0..255.",
+        "en": "Return a byte's set-bit count. Output checks cannot establish loop-free operation or table use. Python/JavaScript: popcount8(n). C/C++: uint32_t popcount8(uint32_t n), no main; input 0..255."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "popcount8",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                4
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                7
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                8
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                15
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                16
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                17
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                31
+              ],
+              "expected": 5
+            },
+            {
+              "args": [
+                32
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                42
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                63
+              ],
+              "expected": 6
+            },
+            {
+              "args": [
+                64
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                65
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                85
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                102
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                127
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                128
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                129
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                153
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                170
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                192
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                204
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                224
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                240
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                247
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                251
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                253
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                254
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                255
+              ],
+              "expected": 8
+            }
+          ],
+          "starter": "def popcount8(n):\n    # Return the result; do not print it.\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "popcount8",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                4
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                7
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                8
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                15
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                16
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                17
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                31
+              ],
+              "expected": 5
+            },
+            {
+              "args": [
+                32
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                42
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                63
+              ],
+              "expected": 6
+            },
+            {
+              "args": [
+                64
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                65
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                85
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                102
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                127
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                128
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                129
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                153
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                170
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                192
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                204
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                224
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                240
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                247
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                251
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                253
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                254
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                255
+              ],
+              "expected": 8
+            }
+          ],
+          "starter": "function popcount8(n) {\n  // Return the result; do not print it.\n  throw new Error('Implement me');\n}\n"
+        },
+        "c": {
+          "kind": "program",
+          "driver": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n#include \"solution.c\"\nint main(void) { uint32_t n; if (scanf(\"%\" SCNu32, &n) != 1) return 2;\n  printf(\"%u\\n\", (unsigned)popcount8(n)); return 0; }\n",
+          "cases": [
+            {
+              "stdin": "0\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "1\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "2\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "3\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "4\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "7\n",
+              "expected_stdout": "3\n"
+            },
+            {
+              "stdin": "8\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "15\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "16\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "17\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "31\n",
+              "expected_stdout": "5\n"
+            },
+            {
+              "stdin": "32\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "42\n",
+              "expected_stdout": "3\n"
+            },
+            {
+              "stdin": "63\n",
+              "expected_stdout": "6\n"
+            },
+            {
+              "stdin": "64\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "65\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "85\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "102\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "127\n",
+              "expected_stdout": "7\n"
+            },
+            {
+              "stdin": "128\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "129\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "153\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "170\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "192\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "204\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "224\n",
+              "expected_stdout": "3\n"
+            },
+            {
+              "stdin": "240\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "247\n",
+              "expected_stdout": "7\n"
+            },
+            {
+              "stdin": "251\n",
+              "expected_stdout": "7\n"
+            },
+            {
+              "stdin": "253\n",
+              "expected_stdout": "7\n"
+            },
+            {
+              "stdin": "254\n",
+              "expected_stdout": "7\n"
+            },
+            {
+              "stdin": "255\n",
+              "expected_stdout": "8\n"
+            }
+          ],
+          "starter": "#include <stdint.h>\nuint32_t popcount8(uint32_t n) {\n    /* Return the result; do not define main. */\n    return 0;\n}\n"
+        },
+        "cpp": {
+          "kind": "program",
+          "driver": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n#include \"solution.cpp\"\nint main(void) { uint32_t n; if (scanf(\"%\" SCNu32, &n) != 1) return 2;\n  printf(\"%u\\n\", (unsigned)popcount8(n)); return 0; }\n",
+          "cases": [
+            {
+              "stdin": "0\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "1\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "2\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "3\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "4\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "7\n",
+              "expected_stdout": "3\n"
+            },
+            {
+              "stdin": "8\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "15\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "16\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "17\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "31\n",
+              "expected_stdout": "5\n"
+            },
+            {
+              "stdin": "32\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "42\n",
+              "expected_stdout": "3\n"
+            },
+            {
+              "stdin": "63\n",
+              "expected_stdout": "6\n"
+            },
+            {
+              "stdin": "64\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "65\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "85\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "102\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "127\n",
+              "expected_stdout": "7\n"
+            },
+            {
+              "stdin": "128\n",
+              "expected_stdout": "1\n"
+            },
+            {
+              "stdin": "129\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "153\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "170\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "192\n",
+              "expected_stdout": "2\n"
+            },
+            {
+              "stdin": "204\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "224\n",
+              "expected_stdout": "3\n"
+            },
+            {
+              "stdin": "240\n",
+              "expected_stdout": "4\n"
+            },
+            {
+              "stdin": "247\n",
+              "expected_stdout": "7\n"
+            },
+            {
+              "stdin": "251\n",
+              "expected_stdout": "7\n"
+            },
+            {
+              "stdin": "253\n",
+              "expected_stdout": "7\n"
+            },
+            {
+              "stdin": "254\n",
+              "expected_stdout": "7\n"
+            },
+            {
+              "stdin": "255\n",
+              "expected_stdout": "8\n"
+            }
+          ],
+          "starter": "#include <stdint.h>\nuint32_t popcount8(uint32_t n) {\n    /* Return the result; do not define main. */\n    return 0;\n}\n"
+        }
+      }
+    },
+    "prep-one-active-bit-signed-int32-pattern": {
+      "contract": {
+        "he": "ממשו is_one_bit_active(n) והחזירו בוליאני על כל דפוס int32, כולל ביט הסימן; INT32_MIN מחזיר true.",
+        "en": "Implement is_one_bit_active(n), returning a Boolean over the whole int32 pattern, including the sign bit; INT32_MIN is true."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "is_one_bit_active",
+          "cases": [
+            {
+              "args": [
+                -2147483648
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                -2147483647
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                -1
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                0
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                524288
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                786432
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                2147483647
+              ],
+              "expected": false
+            }
+          ],
+          "starter": "def is_one_bit_active(n):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "is_one_bit_active",
+          "cases": [
+            {
+              "args": [
+                -2147483648
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                -2147483647
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                -1
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                0
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                524288
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                786432
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                2147483647
+              ],
+              "expected": false
+            }
+          ],
+          "starter": "function is_one_bit_active(n) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-ascii-letter-palindrome-two-pointers": {
+      "contract": {
+        "he": "ממשו is_palindrome(text) עבור אותיות ASCII בלבד, בהשוואה רגישה לאות גדולה/קטנה. נבדקים רק קלטים חוקיים.",
+        "en": "Implement is_palindrome(text) for ASCII letters with case-sensitive comparison. Only promised valid inputs are tested."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "is_palindrome",
+          "cases": [
+            {
+              "args": [
+                ""
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "a"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "Aa"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "aBa"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "abba"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "abca"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "abcba"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "ZzZ"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "abAB"
+              ],
+              "expected": false
+            }
+          ],
+          "starter": "def is_palindrome(text):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "is_palindrome",
+          "cases": [
+            {
+              "args": [
+                ""
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "a"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "Aa"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "aBa"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "abba"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "abca"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "abcba"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "ZzZ"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "abAB"
+              ],
+              "expected": false
+            }
+          ],
+          "starter": "function is_palindrome(text) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-balanced-brackets-mixed-text": {
+      "contract": {
+        "he": "ממשו is_balanced(text); התעלמו מתווים שאינם (), [] או {}. החזירו בוליאני. אין תחביר מרכאות או הערות מיוחד.",
+        "en": "Implement is_balanced(text), ignoring characters outside (), [] and {}. Return a Boolean; quotes/comments have no special syntax."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "is_balanced",
+          "cases": [
+            {
+              "args": [
+                ""
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "hello"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "a(b[c]{d})"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "([)]"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                ")text("
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "((text)"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "{a+[b*(c)]}"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "a]b"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "x<>y"
+              ],
+              "expected": true
+            }
+          ],
+          "starter": "def is_balanced(text):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "is_balanced",
+          "cases": [
+            {
+              "args": [
+                ""
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "hello"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "a(b[c]{d})"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "([)]"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                ")text("
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "((text)"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "{a+[b*(c)]}"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "a]b"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "x<>y"
+              ],
+              "expected": true
+            }
+          ],
+          "starter": "function is_balanced(text) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-first-equal-in-sorted-array": {
+      "contract": {
+        "he": "ממשו first_equal(a,value); החזירו אינדקס ראשון או ‎-1 בהיעדר ערך. זמן ריצה לוגריתמי דורש גם בדיקת ההסבר. python: first_equal(a, value).",
+        "en": "Implement first_equal(a,value), returning the first index or -1 when absent. Logarithmic complexity also needs reasoning review. python: first_equal(a, value)."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "first_equal",
+          "cases": [
+            {
+              "args": [
+                [],
+                1
+              ],
+              "expected": -1
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2,
+                  2,
+                  2,
+                  3,
+                  3,
+                  3,
+                  4
+                ],
+                3
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                [
+                  1,
+                  1,
+                  1
+                ],
+                1
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2
+                ],
+                0
+              ],
+              "expected": -1
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2
+                ],
+                3
+              ],
+              "expected": -1
+            },
+            {
+              "args": [
+                [
+                  -5,
+                  -2,
+                  -2,
+                  0
+                ],
+                -2
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                [
+                  5
+                ],
+                5
+              ],
+              "expected": 0
+            }
+          ],
+          "starter": "def first_equal(a, value):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "first_equal",
+          "cases": [
+            {
+              "args": [
+                [],
+                1
+              ],
+              "expected": -1
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2,
+                  2,
+                  2,
+                  3,
+                  3,
+                  3,
+                  4
+                ],
+                3
+              ],
+              "expected": 4
+            },
+            {
+              "args": [
+                [
+                  1,
+                  1,
+                  1
+                ],
+                1
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2
+                ],
+                0
+              ],
+              "expected": -1
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2
+                ],
+                3
+              ],
+              "expected": -1
+            },
+            {
+              "args": [
+                [
+                  -5,
+                  -2,
+                  -2,
+                  0
+                ],
+                -2
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                [
+                  5
+                ],
+                5
+              ],
+              "expected": 0
+            }
+          ],
+          "starter": "function first_equal(a, value) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-maximum-sum-contiguous-subarray": {
+      "contract": {
+        "he": "נבדק החלק המערכי: max_subarray(a) מחזירה [sum,start,end] עם קצוות כוללים ואפס־בסיס, או null/None לריק. בשוויון: תחילה התחלה מוקדמת ואז סוף מוקדם. לא נבדק ממשק הזרם.",
+        "en": "Array part only: max_subarray(a) returns [sum,start,end] with inclusive zero-based bounds, or null/None for empty input. Ties prefer earliest start then earliest end. The stream interface is not tested."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "max_subarray",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": null
+            },
+            {
+              "args": [
+                [
+                  -5
+                ]
+              ],
+              "expected": [
+                -5,
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  -8,
+                  -2,
+                  -6
+                ]
+              ],
+              "expected": [
+                -2,
+                1,
+                1
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  0
+                ]
+              ],
+              "expected": [
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  -1,
+                  1
+                ]
+              ],
+              "expected": [
+                1,
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  -2,
+                  1,
+                  -3,
+                  4,
+                  -1,
+                  2,
+                  1,
+                  -5,
+                  4
+                ]
+              ],
+              "expected": [
+                6,
+                3,
+                6
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2,
+                  -1
+                ]
+              ],
+              "expected": [
+                3,
+                0,
+                1
+              ]
+            },
+            {
+              "args": [
+                [
+                  -1,
+                  2,
+                  0,
+                  -2
+                ]
+              ],
+              "expected": [
+                2,
+                1,
+                1
+              ]
+            }
+          ],
+          "starter": "def max_subarray(a):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "max_subarray",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": null
+            },
+            {
+              "args": [
+                [
+                  -5
+                ]
+              ],
+              "expected": [
+                -5,
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  -8,
+                  -2,
+                  -6
+                ]
+              ],
+              "expected": [
+                -2,
+                1,
+                1
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  0
+                ]
+              ],
+              "expected": [
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  -1,
+                  1
+                ]
+              ],
+              "expected": [
+                1,
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  -2,
+                  1,
+                  -3,
+                  4,
+                  -1,
+                  2,
+                  1,
+                  -5,
+                  4
+                ]
+              ],
+              "expected": [
+                6,
+                3,
+                6
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2,
+                  -1
+                ]
+              ],
+              "expected": [
+                3,
+                0,
+                1
+              ]
+            },
+            {
+              "args": [
+                [
+                  -1,
+                  2,
+                  0,
+                  -2
+                ]
+              ],
+              "expected": [
+                2,
+                1,
+                1
+              ]
+            }
+          ],
+          "starter": "function max_subarray(a) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-postfix-expression-stack-evaluation": {
+      "contract": {
+        "he": "ממשו evaluate_postfix(tokens) עם מספרים שלמים והפעולות +,-,*. נבדקים ביטויים חוקיים בלבד; טיפול בקלט פסול נבדק בהסבר.",
+        "en": "Implement evaluate_postfix(tokens) with integer tokens and +,-,*. Only valid expressions are executed; invalid-input handling is reviewed separately."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "evaluate_postfix",
+          "cases": [
+            {
+              "args": [
+                [
+                  3,
+                  2,
+                  "+",
+                  5,
+                  "+",
+                  2,
+                  "*"
+                ]
+              ],
+              "expected": 20
+            },
+            {
+              "args": [
+                [
+                  9
+                ]
+              ],
+              "expected": 9
+            },
+            {
+              "args": [
+                [
+                  3,
+                  8,
+                  "-"
+                ]
+              ],
+              "expected": -5
+            },
+            {
+              "args": [
+                [
+                  -3,
+                  2,
+                  "*"
+                ]
+              ],
+              "expected": -6
+            },
+            {
+              "args": [
+                [
+                  8,
+                  3,
+                  2,
+                  "-",
+                  "-"
+                ]
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                [
+                  0,
+                  5,
+                  "*",
+                  4,
+                  "+"
+                ]
+              ],
+              "expected": 4
+            }
+          ],
+          "starter": "def evaluate_postfix(tokens):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "evaluate_postfix",
+          "cases": [
+            {
+              "args": [
+                [
+                  3,
+                  2,
+                  "+",
+                  5,
+                  "+",
+                  2,
+                  "*"
+                ]
+              ],
+              "expected": 20
+            },
+            {
+              "args": [
+                [
+                  9
+                ]
+              ],
+              "expected": 9
+            },
+            {
+              "args": [
+                [
+                  3,
+                  8,
+                  "-"
+                ]
+              ],
+              "expected": -5
+            },
+            {
+              "args": [
+                [
+                  -3,
+                  2,
+                  "*"
+                ]
+              ],
+              "expected": -6
+            },
+            {
+              "args": [
+                [
+                  8,
+                  3,
+                  2,
+                  "-",
+                  "-"
+                ]
+              ],
+              "expected": 7
+            },
+            {
+              "args": [
+                [
+                  0,
+                  5,
+                  "*",
+                  4,
+                  "+"
+                ]
+              ],
+              "expected": 4
+            }
+          ],
+          "starter": "function evaluate_postfix(tokens) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-three-color-in-place-partition": {
+      "contract": {
+        "he": "נבדקת הרחבת 0/1/2: sort012(a) מסדרת במקום ומחזירה את המערך המסודר. הבדיקות משוות את הפלט בלבד; עבודה במקום, מעבר יחיד וזיכרון דורשים סקירה.",
+        "en": "Numeric 0/1/2 extension: sort012(a) mutates and returns the sorted array. Tests compare the returned values only; in-place operation, one traversal and memory use need review."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "sort012",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": []
+            },
+            {
+              "args": [
+                [
+                  0
+                ]
+              ],
+              "expected": [
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  2,
+                  0,
+                  1
+                ]
+              ],
+              "expected": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  2,
+                  2,
+                  1,
+                  0,
+                  2,
+                  0
+                ]
+              ],
+              "expected": [
+                0,
+                0,
+                1,
+                2,
+                2,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  1,
+                  1
+                ]
+              ],
+              "expected": [
+                1,
+                1,
+                1
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  0,
+                  2,
+                  2
+                ]
+              ],
+              "expected": [
+                0,
+                0,
+                2,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  2,
+                  1,
+                  0,
+                  2,
+                  1,
+                  0
+                ]
+              ],
+              "expected": [
+                0,
+                0,
+                1,
+                1,
+                2,
+                2
+              ]
+            }
+          ],
+          "starter": "def sort012(a):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "sort012",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": []
+            },
+            {
+              "args": [
+                [
+                  0
+                ]
+              ],
+              "expected": [
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  2,
+                  0,
+                  1
+                ]
+              ],
+              "expected": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  2,
+                  2,
+                  1,
+                  0,
+                  2,
+                  0
+                ]
+              ],
+              "expected": [
+                0,
+                0,
+                1,
+                2,
+                2,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  1,
+                  1
+                ]
+              ],
+              "expected": [
+                1,
+                1,
+                1
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  0,
+                  2,
+                  2
+                ]
+              ],
+              "expected": [
+                0,
+                0,
+                2,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  2,
+                  1,
+                  0,
+                  2,
+                  1,
+                  0
+                ]
+              ],
+              "expected": [
+                0,
+                0,
+                1,
+                1,
+                2,
+                2
+              ]
+            }
+          ],
+          "starter": "function sort012(a) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-two-missing-zero-through-n-plus-one-no-aux-array": {
+      "contract": {
+        "he": "ממשו two_missing(a); len(a)=n, הערכים שונים ב־0..n+1. החזירו את שני החסרים בכל סדר. הבדיקה אינה מודדת זיכרון עזר.",
+        "en": "Implement two_missing(a): n distinct entries from 0..n+1. Return both missing numbers in any order. Tests do not measure auxiliary storage."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "two_missing",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": [
+                0,
+                1
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  0
+                ]
+              ],
+              "expected": [
+                1,
+                2
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  2
+                ]
+              ],
+              "expected": [
+                0,
+                1
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  3,
+                  0
+                ]
+              ],
+              "expected": [
+                1,
+                2
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  6,
+                  1,
+                  4,
+                  0,
+                  2
+                ]
+              ],
+              "expected": [
+                3,
+                5
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  4,
+                  3,
+                  2,
+                  1
+                ]
+              ],
+              "expected": [
+                0,
+                5
+              ],
+              "unordered": true
+            }
+          ],
+          "starter": "def two_missing(a):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "two_missing",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": [
+                0,
+                1
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  0
+                ]
+              ],
+              "expected": [
+                1,
+                2
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  2
+                ]
+              ],
+              "expected": [
+                0,
+                1
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  3,
+                  0
+                ]
+              ],
+              "expected": [
+                1,
+                2
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  6,
+                  1,
+                  4,
+                  0,
+                  2
+                ]
+              ],
+              "expected": [
+                3,
+                5
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                [
+                  4,
+                  3,
+                  2,
+                  1
+                ]
+              ],
+              "expected": [
+                0,
+                5
+              ],
+              "unordered": true
+            }
+          ],
+          "starter": "function two_missing(a) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-one-two-missing-values": {
+      "contract": {
+        "he": "נבדק סעיף C בלבד: missing_zero_to_n(a), שבו n=len(a), עם ערכים שונים ב־0..n; החזירו את החסר היחיד. חלקי 1..N ושני חסרים אינם נבדקים כאן.",
+        "en": "Part C only: missing_zero_to_n(a), n=len(a), contains distinct values in 0..n. Return the one missing value. The 1..N/two-omission parts are not tested here."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "missing_zero_to_n",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                [
+                  0
+                ]
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                [
+                  1
+                ]
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                [
+                  3,
+                  0,
+                  1
+                ]
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                [
+                  4,
+                  1,
+                  0,
+                  2
+                ]
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "expected": 4
+            }
+          ],
+          "starter": "def missing_zero_to_n(a):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "missing_zero_to_n",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                [
+                  0
+                ]
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                [
+                  1
+                ]
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                [
+                  3,
+                  0,
+                  1
+                ]
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                [
+                  4,
+                  1,
+                  0,
+                  2
+                ]
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "expected": 4
+            }
+          ],
+          "starter": "function missing_zero_to_n(a) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-longest-contiguous-sum-divisible-by-three": {
+      "contract": {
+        "he": "ממשו longest_mod3(a) לקלט חיובי; החזירו [length,start,end] עם סוף כולל. בהיעדר מקטע: [0,null,null]. בשוויון בחרו התחלה ואז סוף מוקדמים.",
+        "en": "Implement longest_mod3(a) for positive inputs; return [length,start,end] with inclusive end. No interval gives [0,null,null]. Ties prefer earlier start then end."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "longest_mod3",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": [
+                0,
+                null,
+                null
+              ]
+            },
+            {
+              "args": [
+                [
+                  1
+                ]
+              ],
+              "expected": [
+                0,
+                null,
+                null
+              ]
+            },
+            {
+              "args": [
+                [
+                  3
+                ]
+              ],
+              "expected": [
+                1,
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2
+                ]
+              ],
+              "expected": [
+                2,
+                0,
+                1
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              ],
+              "expected": [
+                5,
+                0,
+                4
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              ],
+              "expected": [
+                3,
+                0,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  2,
+                  2
+                ]
+              ],
+              "expected": [
+                0,
+                null,
+                null
+              ]
+            },
+            {
+              "args": [
+                [
+                  6,
+                  3,
+                  9
+                ]
+              ],
+              "expected": [
+                3,
+                0,
+                2
+              ]
+            }
+          ],
+          "starter": "def longest_mod3(a):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "longest_mod3",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": [
+                0,
+                null,
+                null
+              ]
+            },
+            {
+              "args": [
+                [
+                  1
+                ]
+              ],
+              "expected": [
+                0,
+                null,
+                null
+              ]
+            },
+            {
+              "args": [
+                [
+                  3
+                ]
+              ],
+              "expected": [
+                1,
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2
+                ]
+              ],
+              "expected": [
+                2,
+                0,
+                1
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              ],
+              "expected": [
+                5,
+                0,
+                4
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              ],
+              "expected": [
+                3,
+                0,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  2,
+                  2
+                ]
+              ],
+              "expected": [
+                0,
+                null,
+                null
+              ]
+            },
+            {
+              "args": [
+                [
+                  6,
+                  3,
+                  9
+                ]
+              ],
+              "expected": [
+                3,
+                0,
+                2
+              ]
+            }
+          ],
+          "starter": "function longest_mod3(a) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-software-fibonacci-recursion-improvement": {
+      "contract": {
+        "he": "ממשו fibonacci(n) ל־0..30 עם F0=0,F1=1. נבדק הערך בלבד; השוואת רקורסיה לאיטרציה והסיבוכיות נבדקות בהסבר.",
+        "en": "Implement fibonacci(n) for 0..30, with F0=0,F1=1. Tests check values; recursion versus iteration and complexity require reasoning review."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "fibonacci",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                4
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                5
+              ],
+              "expected": 5
+            },
+            {
+              "args": [
+                10
+              ],
+              "expected": 55
+            },
+            {
+              "args": [
+                20
+              ],
+              "expected": 6765
+            },
+            {
+              "args": [
+                30
+              ],
+              "expected": 832040
+            }
+          ],
+          "starter": "def fibonacci(n):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "fibonacci",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                4
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                5
+              ],
+              "expected": 5
+            },
+            {
+              "args": [
+                10
+              ],
+              "expected": 55
+            },
+            {
+              "args": [
+                20
+              ],
+              "expected": 6765
+            },
+            {
+              "args": [
+                30
+              ],
+              "expected": 832040
+            }
+          ],
+          "starter": "function fibonacci(n) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-all-distinct-string-permutations": {
+      "contract": {
+        "he": "מתאם הבדיקה: permutations(text) מחזירה מערך של כל הפרמוטציות השונות, במקום הדפסה. הסדר חופשי; אין כפילויות. לפרמוטציה של הריק הפלט [\"\"].",
+        "en": "Test adapter: permutations(text) returns every distinct permutation as an array instead of printing. Order is arbitrary; no duplicates. Empty input gives [\"\"]."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "permutations",
+          "cases": [
+            {
+              "args": [
+                ""
+              ],
+              "expected": [
+                ""
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                "a"
+              ],
+              "expected": [
+                "a"
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                "ab"
+              ],
+              "expected": [
+                "ab",
+                "ba"
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                "abc"
+              ],
+              "expected": [
+                "abc",
+                "acb",
+                "bac",
+                "bca",
+                "cab",
+                "cba"
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                "aab"
+              ],
+              "expected": [
+                "aab",
+                "aba",
+                "baa"
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                "aabb"
+              ],
+              "expected": [
+                "aabb",
+                "abab",
+                "abba",
+                "baab",
+                "baba",
+                "bbaa"
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                "aaaa"
+              ],
+              "expected": [
+                "aaaa"
+              ],
+              "unordered": true
+            }
+          ],
+          "starter": "def permutations(text):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "permutations",
+          "cases": [
+            {
+              "args": [
+                ""
+              ],
+              "expected": [
+                ""
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                "a"
+              ],
+              "expected": [
+                "a"
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                "ab"
+              ],
+              "expected": [
+                "ab",
+                "ba"
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                "abc"
+              ],
+              "expected": [
+                "abc",
+                "acb",
+                "bac",
+                "bca",
+                "cab",
+                "cba"
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                "aab"
+              ],
+              "expected": [
+                "aab",
+                "aba",
+                "baa"
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                "aabb"
+              ],
+              "expected": [
+                "aabb",
+                "abab",
+                "abba",
+                "baab",
+                "baba",
+                "bbaa"
+              ],
+              "unordered": true
+            },
+            {
+              "args": [
+                "aaaa"
+              ],
+              "expected": [
+                "aaaa"
+              ],
+              "unordered": true
+            }
+          ],
+          "starter": "function permutations(text) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-reverse-words-using-character-reversal": {
+      "contract": {
+        "he": "נבדק סעיף B: reverse_words(text) מחזירה סדר מילים הפוך ומשמרת את כל התווים, כולל היפוך סדר רצפי הרווחים. השימוש המחייב בפונקציית היפוך תווים דורש סקירה.",
+        "en": "Part B: reverse_words(text) returns reversed word order, retaining all characters and reversing the order of space runs. Mandatory reuse of the character-reversal function needs review."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "reverse_words",
+          "cases": [
+            {
+              "args": [
+                ""
+              ],
+              "expected": ""
+            },
+            {
+              "args": [
+                "abc"
+              ],
+              "expected": "abc"
+            },
+            {
+              "args": [
+                "I am an engineer"
+              ],
+              "expected": "engineer an am I"
+            },
+            {
+              "args": [
+                " a  bb "
+              ],
+              "expected": " bb  a "
+            },
+            {
+              "args": [
+                "one   two three"
+              ],
+              "expected": "three two   one"
+            },
+            {
+              "args": [
+                "   "
+              ],
+              "expected": "   "
+            },
+            {
+              "args": [
+                "a b c"
+              ],
+              "expected": "c b a"
+            }
+          ],
+          "starter": "def reverse_words(text):\n    raise NotImplementedError\n"
+        },
+        "javascript": {
+          "kind": "function",
+          "entry": "reverse_words",
+          "cases": [
+            {
+              "args": [
+                ""
+              ],
+              "expected": ""
+            },
+            {
+              "args": [
+                "abc"
+              ],
+              "expected": "abc"
+            },
+            {
+              "args": [
+                "I am an engineer"
+              ],
+              "expected": "engineer an am I"
+            },
+            {
+              "args": [
+                " a  bb "
+              ],
+              "expected": " bb  a "
+            },
+            {
+              "args": [
+                "one   two three"
+              ],
+              "expected": "three two   one"
+            },
+            {
+              "args": [
+                "   "
+              ],
+              "expected": "   "
+            },
+            {
+              "args": [
+                "a b c"
+              ],
+              "expected": "c b a"
+            }
+          ],
+          "starter": "function reverse_words(text) {\n  throw new Error('Implement me');\n}\n"
+        }
+      }
+    },
+    "prep-enabled-mod-six-counter": {
+      "contract": {
+        "he": "מודול enabled_mod_six_counter(clk,rst,enable,count[2:0]); reset סינכרוני פעיל בגבוה, חזית עולה, ספירת 0..5. נדגמים פלטים לאחר החזית, כולל השהיה, גלישה ואיפוס תוך enable=1. אין הזרקת מצבים פנימיים; התאוששות 6/7 דורשת סקירה.",
+        "en": "Module enabled_mod_six_counter(clk,rst,enable,count[2:0]); rising edge, synchronous active-high reset, count 0..5. Samples cover holds, wrap and reset with enable=1. No internal-state injection: recovery from 6/7 needs review."
+      },
+      "languages": {
+        "verilog": {
+          "kind": "hdl",
+          "top": "tb",
+          "testbench": "`timescale 1ns/1ps\nmodule tb;\nreg clk=0, rst=0, enable=0;\nwire [2:0] count;\nenabled_mod_six_counter dut(.clk(clk),.rst(rst),.enable(enable),.count(count));\ntask sample(input r, input e);\nbegin\n  clk=0; rst=r; enable=e; #5; clk=1; #1; $display(\"%0d\",count); #4;\nend\nendtask\ninitial begin\n  sample(1'b1,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b1,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b1,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  $finish;\nend\nendmodule\n",
+          "expected_stdout": "0\n0\n0\n0\n1\n2\n3\n3\n3\n4\n5\n0\n0\n0\n1\n2\n3\n0\n0\n1\n2\n3\n3\n3\n4\n5\n0\n0\n0\n1\n2\n0\n0\n0\n1\n2\n3\n3\n3\n4\n5\n0\n0\n0\n1\n2\n3\n",
+          "starter": "module enabled_mod_six_counter(input clk, rst, enable, output reg [2:0] count);\n// Synchronous active-high reset, rising edge. Advance modulo 6 only when enabled.\nalways @(posedge clk) begin\n    if (rst) count <= 3'd0;\n    else begin\n        // Implement update and recovery of states 6,7.\n    end\nend\nendmodule\n"
+        },
+        "systemverilog": {
+          "kind": "hdl",
+          "top": "tb",
+          "testbench": "`timescale 1ns/1ps\nmodule tb;\nreg clk=0, rst=0, enable=0;\nwire [2:0] count;\nenabled_mod_six_counter dut(.clk(clk),.rst(rst),.enable(enable),.count(count));\ntask sample(input r, input e);\nbegin\n  clk=0; rst=r; enable=e; #5; clk=1; #1; $display(\"%0d\",count); #4;\nend\nendtask\ninitial begin\n  sample(1'b1,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b1,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b1,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  $finish;\nend\nendmodule\n",
+          "expected_stdout": "0\n0\n0\n0\n1\n2\n3\n3\n3\n4\n5\n0\n0\n0\n1\n2\n3\n0\n0\n1\n2\n3\n3\n3\n4\n5\n0\n0\n0\n1\n2\n0\n0\n0\n1\n2\n3\n3\n3\n4\n5\n0\n0\n0\n1\n2\n3\n",
+          "starter": "module enabled_mod_six_counter(input clk, rst, enable, output reg [2:0] count);\n// Synchronous active-high reset, rising edge. Advance modulo 6 only when enabled.\nalways @(posedge clk) begin\n    if (rst) count <= 3'd0;\n    else begin\n        // Implement update and recovery of states 6,7.\n    end\nend\nendmodule\n"
+        }
+      }
+    },
+    "prep-serial-1101-state-storage-count": {
+      "contract": {
+        "he": "נבדק ממשק Moore לאחר חזית: sequence_1101(clk,rst,bit_in,found), reset סינכרוני פעיל בגבוה. found=1 בדיוק כשארבעת הביטים האחרונים שנקלטו מאז reset הם 1101, כולל חפיפה. זה אינו בודק את טענת מינימום רכיבי הזיכרון או ממשק Mealy.",
+        "en": "Post-edge Moore interface: sequence_1101(clk,rst,bit_in,found), synchronous active-high reset. found=1 exactly when the last four sampled bits since reset are 1101, including overlaps. Storage optimality and a Mealy timing alternative are not tested."
+      },
+      "languages": {
+        "verilog": {
+          "kind": "hdl",
+          "top": "tb",
+          "testbench": "`timescale 1ns/1ps\nmodule tb;\nreg clk=0, rst=0, bit_in=0;\nwire found;\nsequence_1101 dut(.clk(clk),.rst(rst),.bit_in(bit_in),.found(found));\ntask sample(input r, input b);\nbegin\n  clk=0; rst=r; bit_in=b; #5; clk=1; #1; $display(\"%0d\",found); #4;\nend\nendtask\ninitial begin\n  sample(1'b1,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b1,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  $finish;\nend\nendmodule\n",
+          "expected_stdout": "0\n0\n0\n0\n1\n0\n0\n0\n1\n0\n0\n0\n1\n0\n0\n0\n0\n0\n1\n0\n0\n1\n0\n0\n0\n0\n1\n0\n0\n0\n0\n0\n0\n0\n0\n0\n1\n0\n0\n1\n",
+          "starter": "module sequence_1101(input clk, rst, bit_in, output found);\n// Overlapping Moore detector: found reflects the state after the sampling edge.\n// Synchronous active-high reset clears found and all matched prefix history.\nassign found = 1'b0;\nendmodule\n"
+        },
+        "systemverilog": {
+          "kind": "hdl",
+          "top": "tb",
+          "testbench": "`timescale 1ns/1ps\nmodule tb;\nreg clk=0, rst=0, bit_in=0;\nwire found;\nsequence_1101 dut(.clk(clk),.rst(rst),.bit_in(bit_in),.found(found));\ntask sample(input r, input b);\nbegin\n  clk=0; rst=r; bit_in=b; #5; clk=1; #1; $display(\"%0d\",found); #4;\nend\nendtask\ninitial begin\n  sample(1'b1,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b1,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b1);\n  sample(1'b0,1'b0);\n  sample(1'b0,1'b1);\n  $finish;\nend\nendmodule\n",
+          "expected_stdout": "0\n0\n0\n0\n1\n0\n0\n0\n1\n0\n0\n0\n1\n0\n0\n0\n0\n0\n1\n0\n0\n1\n0\n0\n0\n0\n1\n0\n0\n0\n0\n0\n0\n0\n0\n0\n1\n0\n0\n1\n",
+          "starter": "module sequence_1101(input clk, rst, bit_in, output found);\n// Overlapping Moore detector: found reflects the state after the sampling edge.\n// Synchronous active-high reset clears found and all matched prefix history.\nassign found = 1'b0;\nendmodule\n"
+        }
+      }
+    },
+    "example-sensor-majority": {
+      "contract": {
+        "he": "ממשק הבדיקה: רכיב צירופי majority3 עם כניסות ביט a,b,c ופלט y. הפלט 1 אם לפחות שתי כניסות הן 1. כל שמונת הצירופים נבדקים; אין שעון.",
+        "en": "Test interface: combinational majority3 with one-bit a,b,c inputs and y output. y=1 iff at least two inputs are 1. All eight combinations are tested; no clock."
+      },
+      "languages": {
+        "verilog": {
+          "kind": "hdl",
+          "top": "tb",
+          "testbench": "`timescale 1ns/1ps\nmodule tb;\nreg a,b,c; wire y; integer i;\nmajority3 dut(.a(a),.b(b),.c(c),.y(y));\ninitial begin\n  for(i=0;i<8;i=i+1) begin {a,b,c}=i; #1; $display(\"%0d\",y); end\n  $finish;\nend\nendmodule\n",
+          "expected_stdout": "0\n0\n0\n1\n0\n1\n1\n1\n",
+          "starter": "module majority3(input a,b,c, output y);\nassign y = 1'b0;\nendmodule\n"
+        },
+        "systemverilog": {
+          "kind": "hdl",
+          "top": "tb",
+          "testbench": "`timescale 1ns/1ps\nmodule tb;\nreg a,b,c; wire y; integer i;\nmajority3 dut(.a(a),.b(b),.c(c),.y(y));\ninitial begin\n  for(i=0;i<8;i=i+1) begin {a,b,c}=i; #1; $display(\"%0d\",y); end\n  $finish;\nend\nendmodule\n",
+          "expected_stdout": "0\n0\n0\n1\n0\n1\n1\n1\n",
+          "starter": "module majority3(input a,b,c, output y);\nassign y = 1'b0;\nendmodule\n"
+        },
+        "vhdl": {
+          "kind": "hdl",
+          "top": "tb",
+          "testbench": "library ieee;\nuse ieee.std_logic_1164.all;\nuse ieee.std_logic_textio.all;\nuse ieee.numeric_std.all;\nuse std.textio.all;\nentity tb is end entity;\narchitecture test of tb is\n  signal x : std_logic_vector(2 downto 0) := (others => '0');\n  signal y : std_logic;\nbegin\n  dut: entity work.majority3 port map(a=>x(2),b=>x(1),c=>x(0),y=>y);\n  process\n    variable l : line;\n  begin\n    for i in 0 to 7 loop\n      x <= std_logic_vector(to_unsigned(i,3)); wait for 1 ns;\n      write(l, y); writeline(output,l);\n    end loop;\n    wait;\n  end process;\nend architecture;\n",
+          "expected_stdout": "0\n0\n0\n1\n0\n1\n1\n1\n",
+          "starter": "library ieee;\nuse ieee.std_logic_1164.all;\nentity majority3 is\n  port(a,b,c: in std_logic; y: out std_logic);\nend entity;\narchitecture rtl of majority3 is\nbegin\n  y <= '0';\nend architecture;\n"
+        }
+      }
+    },
+    "prep-eight-bit-unsigned-lower-clamp-sixty-four": {
+      "contract": {
+        "he": "ממשו רכיב צירופי clamp64 עם x[7:0],y[7:0] unsigned; y=max(x,64). כל 256 הערכים נבדקים.",
+        "en": "Implement combinational clamp64 with unsigned x[7:0],y[7:0]; y=max(x,64). All 256 values are tested."
+      },
+      "languages": {
+        "verilog": {
+          "kind": "hdl",
+          "top": "tb",
+          "testbench": "`timescale 1ns/1ps\nmodule tb;\nreg [7:0] x; wire [7:0] y; integer i;\nclamp64 dut(.x(x),.y(y));\ninitial begin\n  for(i=0;i<256;i=i+1) begin x=i; #1; $display(\"%0d\",y); end\n  $finish;\nend\nendmodule\n",
+          "expected_stdout": "64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n65\n66\n67\n68\n69\n70\n71\n72\n73\n74\n75\n76\n77\n78\n79\n80\n81\n82\n83\n84\n85\n86\n87\n88\n89\n90\n91\n92\n93\n94\n95\n96\n97\n98\n99\n100\n101\n102\n103\n104\n105\n106\n107\n108\n109\n110\n111\n112\n113\n114\n115\n116\n117\n118\n119\n120\n121\n122\n123\n124\n125\n126\n127\n128\n129\n130\n131\n132\n133\n134\n135\n136\n137\n138\n139\n140\n141\n142\n143\n144\n145\n146\n147\n148\n149\n150\n151\n152\n153\n154\n155\n156\n157\n158\n159\n160\n161\n162\n163\n164\n165\n166\n167\n168\n169\n170\n171\n172\n173\n174\n175\n176\n177\n178\n179\n180\n181\n182\n183\n184\n185\n186\n187\n188\n189\n190\n191\n192\n193\n194\n195\n196\n197\n198\n199\n200\n201\n202\n203\n204\n205\n206\n207\n208\n209\n210\n211\n212\n213\n214\n215\n216\n217\n218\n219\n220\n221\n222\n223\n224\n225\n226\n227\n228\n229\n230\n231\n232\n233\n234\n235\n236\n237\n238\n239\n240\n241\n242\n243\n244\n245\n246\n247\n248\n249\n250\n251\n252\n253\n254\n255\n",
+          "starter": "module clamp64(input [7:0] x, output [7:0] y);\nassign y = 0;\nendmodule\n"
+        },
+        "systemverilog": {
+          "kind": "hdl",
+          "top": "tb",
+          "testbench": "`timescale 1ns/1ps\nmodule tb;\nreg [7:0] x; wire [7:0] y; integer i;\nclamp64 dut(.x(x),.y(y));\ninitial begin\n  for(i=0;i<256;i=i+1) begin x=i; #1; $display(\"%0d\",y); end\n  $finish;\nend\nendmodule\n",
+          "expected_stdout": "64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n64\n65\n66\n67\n68\n69\n70\n71\n72\n73\n74\n75\n76\n77\n78\n79\n80\n81\n82\n83\n84\n85\n86\n87\n88\n89\n90\n91\n92\n93\n94\n95\n96\n97\n98\n99\n100\n101\n102\n103\n104\n105\n106\n107\n108\n109\n110\n111\n112\n113\n114\n115\n116\n117\n118\n119\n120\n121\n122\n123\n124\n125\n126\n127\n128\n129\n130\n131\n132\n133\n134\n135\n136\n137\n138\n139\n140\n141\n142\n143\n144\n145\n146\n147\n148\n149\n150\n151\n152\n153\n154\n155\n156\n157\n158\n159\n160\n161\n162\n163\n164\n165\n166\n167\n168\n169\n170\n171\n172\n173\n174\n175\n176\n177\n178\n179\n180\n181\n182\n183\n184\n185\n186\n187\n188\n189\n190\n191\n192\n193\n194\n195\n196\n197\n198\n199\n200\n201\n202\n203\n204\n205\n206\n207\n208\n209\n210\n211\n212\n213\n214\n215\n216\n217\n218\n219\n220\n221\n222\n223\n224\n225\n226\n227\n228\n229\n230\n231\n232\n233\n234\n235\n236\n237\n238\n239\n240\n241\n242\n243\n244\n245\n246\n247\n248\n249\n250\n251\n252\n253\n254\n255\n",
+          "starter": "module clamp64(input [7:0] x, output [7:0] y);\nassign y = 0;\nendmodule\n"
+        }
+      }
+    },
+    "prep-unsigned-two-bit-combinational-square": {
+      "contract": {
+        "he": "ממשו רכיב צירופי square2 עם x[1:0],y[3:0] unsigned; y=x*x. ארבעת הקלטים נבדקים; אין בדיקת שטח או מגבלות שערים.",
+        "en": "Implement combinational square2 with unsigned x[1:0],y[3:0]; y=x*x. All four inputs are tested; gate/area restrictions need review."
+      },
+      "languages": {
+        "verilog": {
+          "kind": "hdl",
+          "top": "tb",
+          "testbench": "`timescale 1ns/1ps\nmodule tb;\nreg [1:0] x; wire [3:0] y; integer i;\nsquare2 dut(.x(x),.y(y));\ninitial begin\n  for(i=0;i<4;i=i+1) begin x=i; #1; $display(\"%0d\",y); end\n  $finish;\nend\nendmodule\n",
+          "expected_stdout": "0\n1\n4\n9\n",
+          "starter": "module square2(input [1:0] x, output [3:0] y);\nassign y = 0;\nendmodule\n"
+        },
+        "systemverilog": {
+          "kind": "hdl",
+          "top": "tb",
+          "testbench": "`timescale 1ns/1ps\nmodule tb;\nreg [1:0] x; wire [3:0] y; integer i;\nsquare2 dut(.x(x),.y(y));\ninitial begin\n  for(i=0;i<4;i=i+1) begin x=i; #1; $display(\"%0d\",y); end\n  $finish;\nend\nendmodule\n",
+          "expected_stdout": "0\n1\n4\n9\n",
+          "starter": "module square2(input [1:0] x, output [3:0] y);\nassign y = 0;\nendmodule\n"
+        }
+      }
+    }
+  }
+}

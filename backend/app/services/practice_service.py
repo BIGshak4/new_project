@@ -148,6 +148,7 @@ class PracticeService:
         self.config = config or ServiceConfig()
         self.image_fetcher = image_fetcher                 # None: photos are stored but not shown to the evaluator
         self.question_image_fetcher = question_image_fetcher
+        self.code_execution = None
         self._locks: dict[uuid.UUID, asyncio.Lock] = {}
         self._user_locks: dict[uuid.UUID, asyncio.Lock] = {}     # one program action at a time per user (rebuild, start, goal)
         # the plan's cap on questions a day, when billing is wired (runtime); else the config's default
@@ -200,6 +201,8 @@ class PracticeService:
         for row in rows:
             question = self.catalog.questions.get(row.key)
             update = {"companies": [CompanyTag(**t) for t in tags.get(row.id, [])]}
+            if self.code_execution is not None and row.key in self.code_execution.fixtures:
+                update["has_check"] = True
             if question is not None:
                 update["job_types"] = self._job_types_for(question)
                 if job is not None:
@@ -332,6 +335,7 @@ class PracticeService:
             tags = await tx.sightings_for([str(loaded.id)])
         view = detail(loaded, self._language(language))
         return view.model_copy(update={"job_types": self._job_types_for(loaded.question),
+                                       "has_check": view.has_check or (self.code_execution is not None and loaded.question.key in self.code_execution.fixtures),
                                        "companies": [CompanyTag(**t) for t in tags.get(str(loaded.id), [])]})
 
     # ------------------------------------------------------------------ attempts
@@ -361,7 +365,7 @@ class PracticeService:
                     profile = await tx.load_profile(user_id)
                     goal = await tx.load_goal(user_id)
                     seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
-                    ctx = self._context(seniority, language, goal.job_type)
+                    ctx = self._context(seniority, language, goal.job_type, user_id=user_id)
                     try:
                         attempt = PracticeAttempt(ctx, loaded.question, profile.states, mode=mode, familiarity="new",
                                                   self_confidence=self_confidence, entry=entry)
@@ -1522,14 +1526,17 @@ class PracticeService:
                                 profile.difficulty_ceiling, plan)
         return self._plans[key]
 
-    def _context(self, seniority: str, language: str, job_type: str | None = None) -> PracticeContext:
+    def _context(self, seniority: str, language: str, job_type: str | None = None, *, user_id=None) -> PracticeContext:
         required, weights, ceiling, _ = self._plan(seniority, job_type)
         role = self.catalog.roles[self.config.role]
+        async def code_checker(question, answer, attempt_id):
+            return await self.code_execution.check_answer(user_id, f"practice:{attempt_id}", question, answer)
         return PracticeContext(provider=self.provider, skills=self.catalog.leaf_skills, language=language,
                                seniority=seniority, job_type=job_type, difficulty_ceiling=ceiling, required_levels=required,
                                skill_weights=weights, tips=list(self.catalog.tips.values()), glossary=self.catalog.glossary,
                                role_family=role.family, polish_tips=self.config.polish_tips,
-                               image_fetcher=self.image_fetcher, question_image_fetcher=self.question_image_fetcher)
+                               image_fetcher=self.image_fetcher, question_image_fetcher=self.question_image_fetcher,
+                               code_checker=code_checker if self.code_execution is not None and user_id is not None else None)
 
     async def _load(self, user_id: uuid.UUID, attempt_id: uuid.UUID
                     ) -> tuple[PracticeAttempt, StoredAttempt, LoadedQuestion, LoadedProfile]:
@@ -1555,7 +1562,7 @@ class PracticeService:
             goal = await tx.load_goal(user_id)
             seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
         profile.seniority = seniority
-        ctx = self._context(seniority, stored.row["practice_language"], goal.job_type)
+        ctx = self._context(seniority, stored.row["practice_language"], goal.job_type, user_id=user_id)
         attempt = PracticeAttempt.restore(ctx, loaded.question, profile.states, stored.row)
         return attempt, stored, loaded, profile
 
@@ -1608,7 +1615,8 @@ class PracticeService:
         if submission.check:
             check = CheckView(type=submission.check.get("type", ""), passed=submission.check.get("passed"),
                               detail=submission.check.get("detail", ""),
-                              mismatches=list(submission.check.get("mismatches") or [])[:8])
+                              mismatches=list(submission.check.get("mismatches") or [])[:8],
+                              execution=submission.check.get("execution"))
         return SubmissionView(
             revision=submission.revision, key=submission.key, turn=submission.turn, answer=submission.answer, visual=submission.visual,
             status="evaluating" if submission.status == EvaluationStatus.PENDING else submission.status.value,

@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "language": "python",
+      "question_key": "example-count-set-bits",
+      "correct": "def count_set_bits(n):\n    count = 0\n    while n:\n        count += n & 1\n        n >>= 1\n    return count\n",
+      "wrong": "def count_set_bits(n):\n    return 0\n",
+      "syntax_error": "def count_set_bits(n)\n    return 0\n"
+    },
+    {
+      "language": "javascript",
+      "question_key": "example-count-set-bits",
+      "correct": "function count_set_bits(n) {\n  let count = 0;\n  while (n !== 0) { count += n & 1; n >>>= 1; }\n  return count;\n}\n",
+      "wrong": "function count_set_bits(n) { return 0; }\n",
+      "syntax_error": "function count_set_bits( {\n"
+    },
+    {
+      "language": "c",
+      "question_key": "example-count-set-bits",
+      "correct": "#include <stdint.h>\nuint32_t count_set_bits(uint32_t n) {\n    uint32_t count = 0;\n    while (n) { count += n & 1u; n >>= 1; }\n    return count;\n}\n",
+      "wrong": "#include <stdint.h>\nuint32_t count_set_bits(uint32_t n) { return 0; }\n",
+      "syntax_error": "#include <stdint.h>\nuint32_t count_set_bits(uint32_t n) { return n }\n"
+    },
+    {
+      "language": "cpp",
+      "question_key": "example-count-set-bits",
+      "correct": "#include <stdint.h>\nuint32_t count_set_bits(uint32_t n) {\n    uint32_t count = 0;\n    while (n) { count += n & 1u; n >>= 1; }\n    return count;\n}\n",
+      "wrong": "#include <stdint.h>\nuint32_t count_set_bits(uint32_t n) { return 0; }\n",
+      "syntax_error": "#include <stdint.h>\nuint32_t count_set_bits(uint32_t n) { return n }\n"
+    },
+    {
+      "language": "verilog",
+      "question_key": "prep-enabled-mod-six-counter",
+      "correct": "module enabled_mod_six_counter (\n    input clk, rst, enable,\n    output reg [2:0] count\n);\n    always @(posedge clk) begin\n        if (rst) count <= 3'd0;\n        else if (count >= 3'd6) count <= 3'd0;\n        else if (enable) count <= count == 3'd5 ? 3'd0 : count + 3'd1;\n    end\nendmodule\n",
+      "wrong": "module enabled_mod_six_counter (\n    input clk, rst, enable,\n    output reg [2:0] count\n);\n    always @(posedge clk) begin\n        if (rst) count <= 3'd0;\n        else if (count >= 3'd6) count <= 3'd0;\n        else if (1'b1) count <= count == 3'd5 ? 3'd0 : count + 3'd1;\n    end\nendmodule\n",
+      "syntax_error": "module enabled_mod_six_counter(\n"
+    },
+    {
+      "language": "systemverilog",
+      "question_key": "prep-enabled-mod-six-counter",
+      "correct": "module enabled_mod_six_counter (\n    input logic clk, rst, enable,\n    output logic [2:0] count\n);\n    always_ff @(posedge clk) begin\n        if (rst) count <= 3'd0;\n        else if (count >= 3'd6) count <= 3'd0;\n        else if (enable) count <= count == 3'd5 ? 3'd0 : count + 3'd1;\n    end\nendmodule\n",
+      "wrong": "module enabled_mod_six_counter (\n    input logic clk, rst, enable,\n    output logic [2:0] count\n);\n    always_ff @(posedge clk) begin\n        if (rst) count <= 3'd0;\n        else if (count >= 3'd6) count <= 3'd0;\n        else if (1'b1) count <= count == 3'd5 ? 3'd0 : count + 3'd1;\n    end\nendmodule\n",
+      "syntax_error": "module enabled_mod_six_counter(\n"
+    },
+    {
+      "language": "vhdl",
+      "question_key": "example-sensor-majority",
+      "correct": "library ieee;\nuse ieee.std_logic_1164.all;\nentity majority3 is\nport(a,b,c: in std_logic; y: out std_logic);\nend entity;\narchitecture rtl of majority3 is\nbegin\ny <= (a and b) or (a and c) or (b and c);\nend architecture;\n",
+      "wrong": "library ieee;\nuse ieee.std_logic_1164.all;\nentity majority3 is\nport(a,b,c: in std_logic; y: out std_logic);\nend entity;\narchitecture rtl of majority3 is\nbegin\ny <= a xor b xor c;\nend architecture;\n",
+      "syntax_error": "library ieee;\nuse ieee.std_logic_1164.all;\nentity majority3 is\nport(a,b,c: in std_logic; y: out std_logic)\nend entity;\narchitecture rtl of majority3 is\nbegin\ny <= (a and b) or (a and c) or (b and c);\nend architecture;\n"
+    },
+    {
+      "language": "systemverilog",
+      "question_key": "prep-serial-1101-state-storage-count",
+      "correct": "module sequence_1101 (\n    input logic clk, rst, bit_in,\n    output logic found\n);\n    logic [2:0] state, next_state;\n    always_comb begin\n        case (state)\n            3'd0: next_state = bit_in ? 3'd1 : 3'd0;\n            3'd1: next_state = bit_in ? 3'd2 : 3'd0;\n            3'd2: next_state = bit_in ? 3'd2 : 3'd3;\n            3'd3: next_state = bit_in ? 3'd4 : 3'd0;\n            3'd4: next_state = bit_in ? 3'd2 : 3'd0;\n            default: next_state = 3'd0;\n        endcase\n    end\n    always_ff @(posedge clk) begin\n        if (rst) state <= 3'd0;\n        else state <= next_state;\n    end\n    assign found = state == 3'd4;\nendmodule\n",
+      "wrong": "module sequence_1101 (\n    input logic clk, rst, bit_in,\n    output logic found\n);\n    logic [2:0] state, next_state;\n    always_comb begin\n        case (state)\n            3'd0: next_state = bit_in ? 3'd1 : 3'd0;\n            3'd1: next_state = bit_in ? 3'd2 : 3'd0;\n            3'd2: next_state = bit_in ? 3'd2 : 3'd3;\n            3'd3: next_state = bit_in ? 3'd4 : 3'd0;\n            3'd4: next_state = bit_in ? 3'd2 : 3'd0;\n            default: next_state = 3'd0;\n        endcase\n    end\n    always_ff @(posedge clk) begin\n        if (rst) state <= 3'd0;\n        else state <= next_state;\n    end\n    assign found = 1'b0;\nendmodule\n",
+      "syntax_error": "module sequence_1101(\n"
+    }
+  ]
+}

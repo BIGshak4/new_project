@@ -18,6 +18,7 @@ import { GRADE_SEQUENCE as G } from "../lib/ui";
 import { Pop, Reveal, motion, useReducedMotion } from "./ui/motion";
 import { BidiText } from "./bidi-text";
 import { textDirection } from "../lib/bidi-segments";
+import { ExecutionResultView } from "./code-execution-result";
 
 /**
  * The evaluation a candidate sees after a real assessment: band ring, summary, automatic
@@ -301,6 +302,7 @@ function modelName(model: string) {
 function CheckBlock({ check, lang }: { check: CheckResult; lang: Lang }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const rows = check.mismatches ?? [];
+  if (check.execution) return <ExecutionResultView result={check.execution} lang={lang} />;
   return (
     <div className={`check-result check-${check.passed === null ? "none" : check.passed}`}>
       <strong>

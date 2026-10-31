@@ -431,6 +431,8 @@ def every_route():
         ("GET", "/v1/me", None), ("GET", "/v1/me/progress", None), ("GET", "/v1/questions", None),
         ("GET", f"/v1/questions/{Q}", None), ("GET", f"/v1/questions/{Q}/resources", None), ("POST", BASE, {"question_key": Q}), ("GET", f"{BASE}/{aid}", None),
         ("POST", f"{BASE}/{aid}/hints/next", None), ("POST", f"{BASE}/{aid}/reference", None),
+        ("GET", f"{BASE}/{aid}/execution-capabilities", None),
+        ("POST", f"{BASE}/{aid}/executions", {"language": "python", "source": "print(1)", "idempotency_key": "x"}),
         ("POST", f"{BASE}/{aid}/submissions", {"answer": "x"}), ("POST", f"{BASE}/{aid}/follow-ups/1/submissions", {"answer": "x"}),
         ("POST", f"{BASE}/{aid}/follow-ups/1/skip", None), ("POST", f"{BASE}/{aid}/submissions/1/retry", None),
         # mock interviews

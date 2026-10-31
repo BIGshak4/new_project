@@ -444,7 +444,10 @@ class DuelService:
             raise ApiError("conflict", "the clock ran out before your answer arrived")
         question = self.catalog.questions[duel.question_key]
         try:
-            check = (await checks.run_check_async(question.deterministic_check, text) if question.deterministic_check else None)
+            runner = getattr(self, "code_execution", None)
+            check = (await runner.check_answer(user_id, f"duel:{duel.id}", question, text) if runner is not None else None)
+            if check is None:
+                check = (await checks.run_check_async(question.deterministic_check, text) if question.deterministic_check else None)
             result = await evaluator.evaluate(
                 self.provider, question_context=evaluator.question_block(question, duel.language, self.catalog.skills.get(question.primary_skill)),
                 known_error_keys={e.key for e in question.common_errors}, language=duel.language,

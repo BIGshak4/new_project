@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { Lang } from "./auth";
 import { DictationControls } from "./dictation-controls";
 import { dictationExplanationLimit } from "../lib/speech-dictation";
+import type { CodeExecutionContext } from "./code-execution-panel";
 import {
   answerLanguages,
   defaultAnswerLanguage,
@@ -15,6 +16,7 @@ import {
 const CodeEditor = dynamic(() => import("./technical-code-editor"), {
   ssr: false,
 });
+const CodeExecutionPanel = dynamic(() => import("./code-execution-panel").then((module) => module.CodeExecutionPanel), { ssr: false });
 export function AnswerEditor({
   value,
   onChange,
@@ -23,6 +25,7 @@ export function AnswerEditor({
   codeLanguage,
   starterCode,
   initiallyShowCode,
+  execution,
 }: {
   value: string;
   onChange: (value: string) => void;
@@ -31,6 +34,7 @@ export function AnswerEditor({
   codeLanguage: string | null;
   starterCode: string | null;
   initiallyShowCode?: boolean;
+  execution?: CodeExecutionContext;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const parts = parseTechnicalAnswer(value);
@@ -138,10 +142,11 @@ export function AnswerEditor({
           />
           <p id="code-keyboard-help" className="small muted">
             {t(
-              "כתיבה משמאל לימין. Ctrl+Space לפתיחת הצעות השלמה; Enter לבחירה. Tab להזחה; Esc ואז Tab כדי לצאת מהעורך. הקוד נשמר כחלק מהתשובה ואינו מורץ כאן.",
-              "Left-to-right editing. Ctrl+Space opens completions; Enter accepts a suggestion. Tab indents; Esc then Tab leaves the editor. Code is saved with your answer and is not executed here.",
+              "כתיבה משמאל לימין. Ctrl+Space לפתיחת הצעות השלמה; Enter לבחירה. Tab להזחה; Esc ואז Tab כדי לצאת מהעורך. הקוד נשמר כחלק מהתשובה.",
+              "Left-to-right editing. Ctrl+Space opens completions; Enter accepts a suggestion. Tab indents; Esc then Tab leaves the editor. Code is saved with your answer.",
             )}
           </p>
+          {execution && language !== "text" ? <CodeExecutionPanel context={execution} language={language} source={parts.code} lang={lang} disabled={disabled} onUseStarter={(source) => update(parts.explanation, source)} /> : <p className="small muted">{t("הקוד אינו מורץ אוטומטית בזמן העריכה. הרצה זמינה בתרגול עם כפתור הרצה ייעודי.", "Code does not run automatically while editing. Execution is available in practice through a dedicated run button.")}</p>}
         </>
       )}
       <p

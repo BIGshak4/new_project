@@ -321,6 +321,22 @@ async def health(request: Request, db_check: bool = False) -> dict:
     return body
 
 
+@app.get("/execution/verification-key", tags=["ops"])
+async def execution_verification_key() -> dict:
+    """Public signature verification material. Never return the seed or a signing ticket."""
+    import base64
+    import hashlib
+
+    from app.services.code_execution import public_key_bytes
+    runtime = getattr(app.state, "runtime", None)
+    runner = getattr(runtime, "code_execution", None)
+    if runner is None or runner.key is None:
+        return {"configured": False}
+    public = public_key_bytes(runner.key)
+    return {"configured": True, "algorithm": "Ed25519", "public_key": base64.b64encode(public).decode(),
+            "fingerprint": hashlib.sha256(public).hexdigest()}
+
+
 @app.get("/catalog/summary", tags=["ops"])
 async def catalog_summary() -> dict:
     # the catalog the process serves, loaded and validated at startup (reloading it here cost ~35 ms of blocking

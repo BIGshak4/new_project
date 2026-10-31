@@ -14,6 +14,8 @@
  * hidden hint: hints come one at a time from nextHint(), the reference from revealReference().
  */
 import type { VisualAnswer } from "./circuit";
+import type { CodeExecutionRequest, CodeExecutionResult, ExecutionCapabilities } from "./code-execution";
+export type { CodeExecutionRequest, CodeExecutionResult, ExecutionCapabilities } from "./code-execution";
 import { supabase } from "./supabase";
 
 export type ApiLang = "en" | "he";
@@ -124,6 +126,8 @@ export type Check = {
   detail: string;
   /** the first differing truth-table rows or failing test cases (shape depends on type) */
   mismatches?: Record<string, unknown>[];
+  /** Authoritative server execution, separate from any prior draft run in the editor. */
+  execution?: CodeExecutionResult | null;
 };
 export type Card = {
   what_happened: string;
@@ -621,6 +625,7 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
     body?: unknown,
     extraHeaders: Record<string, string> = {},
     expectedUserId?: string,
+    signal?: AbortSignal,
   ): Promise<T> {
     const headers: Record<string, string> = {
       Authorization: `Bearer ${await token(expectedUserId)}`,
@@ -634,9 +639,12 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
         headers,
         body: body === undefined ? undefined : JSON.stringify(body),
         cache: "no-store",
-        signal: AbortSignal.timeout(method === "GET" ? 65000 : 150000),
+        signal: signal
+          ? AbortSignal.any([signal, AbortSignal.timeout(method === "GET" ? 65000 : 150000)])
+          : AbortSignal.timeout(method === "GET" ? 65000 : 150000),
       });
     } catch (error) {
+      if (signal?.aborted) throw error;
       throw new PracticeApiError(
         "network",
         `could not reach the practice API: ${String(error)}`,
@@ -732,6 +740,12 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
       call<Attempt>("POST", "/v1/practice/attempts", body),
     getAttempt: (attemptId: string) =>
       call<Attempt>("GET", `/v1/practice/attempts/${attemptId}`),
+    executionCapabilities: (attemptId: string, signal?: AbortSignal) =>
+      call<ExecutionCapabilities>("GET", `/v1/practice/attempts/${encodeURIComponent(attemptId)}/execution-capabilities`, undefined, {}, undefined, signal),
+    /** Runs a draft without submitting it. Only the server selects question tests. */
+    executeCode: (attemptId: string, body: CodeExecutionRequest, signal?: AbortSignal) =>
+      call<CodeExecutionResult>("POST", `/v1/practice/attempts/${encodeURIComponent(attemptId)}/executions`, body,
+        { "Idempotency-Key": body.idempotency_key }, undefined, signal),
     nextHint: (attemptId: string) =>
       call<{ hint: Hint | null; attempt: Attempt }>(
         "POST",

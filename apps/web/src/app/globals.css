@@ -1,5 +1,21 @@
 /* Shared production layout and component states. Ion tokens and shell: ion.css. */
 
+/* Shared draft-run and submitted-answer execution diagnostics. */
+.code-execution-result { margin-block-start: 1rem; min-width: 0; overflow-wrap: anywhere; }
+.code-execution-result-title { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .6rem 1rem; margin-block: .5rem; }
+.code-execution-result summary { cursor: pointer; font-size: .875rem; padding-block: .6rem; min-height: 44px; }
+.code-execution-result pre { margin-block: .4rem .75rem; padding: .8rem; background: var(--soft); border: 1px solid var(--line); border-radius: var(--radius); color: var(--ink); max-height: 18rem; overflow: auto; white-space: pre; font-size: .85rem; line-height: 1.6; text-align: start; tab-size: 2; }
+.code-execution-result :is(summary, pre):focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
+.code-execution-phases { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; padding-inline-start: 1rem; margin-block: .5rem; font-size: .85rem; }
+.code-execution-cases { padding-inline-start: 1.5rem; }
+.code-execution-cases li { margin-block: .75rem; font-size: .875rem; }
+.code-execution-stale-notice { color: var(--ink); font-size: .875rem; font-weight: 600; }
+.code-execution-stale { border-block-start: 1px dashed var(--line); padding-block-start: .75rem; }
+@media (max-width: 560px) {
+  .code-execution-result-title { align-items: start; }
+  .code-execution-phases { flex-direction: column; gap: .3rem; }
+}
+
 * {
   box-sizing: border-box;
 }

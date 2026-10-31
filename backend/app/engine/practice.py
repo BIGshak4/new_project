@@ -163,6 +163,7 @@ class PracticeContext:
     params: EngineParams = DEFAULT_PARAMS
     image_fetcher: ImageFetcher | None = None       # None: attached photos are kept but not shown to the evaluator
     question_image_fetcher: Callable[[BankQuestion], Awaitable[list[tuple[str, bytes]] | None]] | None = None
+    code_checker: Callable[[BankQuestion, str, str], Awaitable[CheckResult | None]] | None = None
 
 
 @dataclass
@@ -629,8 +630,10 @@ class PracticeAttempt:
                     return outcome
             # a drawn circuit contributes its derived functions ("alarm = (A & B) | ...") to the check
             checked_answer = (submission.answer + "\n" + check_lines).strip() if check_lines else submission.answer
-            check = (await checks.run_check_async(question.deterministic_check, checked_answer)
-                     if question.deterministic_check else None)        # submitted code is reviewed without host execution
+            check = (await ctx.code_checker(question, checked_answer, self.attempt_id) if ctx.code_checker else None)
+            if check is None:
+                check = (await checks.run_check_async(question.deterministic_check, checked_answer)
+                         if question.deterministic_check else None)  # legacy dispatch still never executes source locally
             result = await evaluator.evaluate(
                 ctx.provider, question_context=evaluator.question_block(question, ctx.language, primary),
                 known_error_keys={e.key for e in question.common_errors}, language=ctx.language,
