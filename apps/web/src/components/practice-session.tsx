@@ -1,8 +1,10 @@
 "use client";
 
 import { QuestionMetadata, ReportedCompanies } from "./question-metadata";
+import { QuestionStatusControl } from "./question-status-control";
 import { BidiText } from "./bidi-text";
 import { textDirection } from "../lib/bidi-segments";
+import { buildQuestionStates } from "../lib/question-personal-state";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -63,10 +65,12 @@ type Props = {
   api: PracticeApi;
   questionKey?: string;
   relatedQuestions?: QuestionSummary[];
+  statusQuestions?: QuestionSummary[];
   attemptId?: string;
   lang: Lang;
   user: User;
   entries: Entry[];
+  entriesReady?: boolean;
   onSaved: (entry: Entry) => void;
   onStarted: (id: string) => void;
   onNew: (key: string, source?: "retry" | "suggestion") => void;
@@ -83,10 +87,12 @@ export function PracticeSession({
   api,
   questionKey,
   relatedQuestions = [],
+  statusQuestions,
   attemptId,
   lang,
   user,
   entries,
+  entriesReady = true,
   onSaved,
   onStarted,
   onNew,
@@ -115,6 +121,10 @@ export function PracticeSession({
     live = useRef(true);
   const key = `jr-attempt-draft-v1-${user.id}-${attemptId}`;
   const entry = entries.find((e) => e.question_id === question?.id);
+  const personalStateQuestions = question
+    ? [...(statusQuestions ?? relatedQuestions).filter((q) => q.id !== question.id), question]
+    : statusQuestions ?? relatedQuestions;
+  const personalStates = buildQuestionStates(personalStateQuestions, entries);
 
   useEffect(() => {
     if (loading || !attempt?.reference) return;
@@ -559,6 +569,15 @@ export function PracticeSession({
                 </div>
                 <h1 dir={textDirection(question.title)}><BidiText>{question.title}</BidiText></h1>
                 <QuestionMetadata question={question} lang={lang} showCompanies={false} />
+                <QuestionStatusControl
+                  userId={user.id}
+                  question={question}
+                  questions={personalStateQuestions}
+                  state={personalStates.get(question.id) ?? { completed: false, hidden: false }}
+                  lang={lang}
+                  ready={entriesReady}
+                  onSaved={(saved) => saved.forEach(onSaved)}
+                />
                 {question.assessment_ready === false && <p className="notice study-review-note">
                   {t("המשוב ראשוני והתרגול נשמר, אך אינו משנה את רמת השליטה או מעניק נקודות.", "Feedback is provisional and practice is saved, but does not change skill levels or earn points.")}
                 </p>}
@@ -1085,13 +1104,11 @@ function PersonalNotes({
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
-  const [rating, setRating] = useState(entry?.self_rating ?? 0),
-    [completed, setCompleted] = useState(entry?.completed ?? false);
+  const [rating, setRating] = useState(entry?.self_rating ?? 0);
   const guard = useRef(false);
   useEffect(() => {
     setRating(entry?.self_rating ?? 0);
-    setCompleted(entry?.completed ?? false);
-  }, [entry?.self_rating, entry?.completed]);
+  }, [entry?.self_rating]);
   async function save(
     bookmarked = entry?.bookmarked ?? false,
     saveDraft = false,
@@ -1103,7 +1120,6 @@ function PersonalNotes({
     const payload = {
       bookmarked,
       self_rating: rating || null,
-      completed,
       ...(saveDraft ? { answer: draft } : {}),
     };
     try {
@@ -1167,14 +1183,6 @@ function PersonalNotes({
             <option value={2}>{t("בכיוון", "Getting there")}</option>
             <option value={3}>{t("מרגיש בטוח", "Feeling confident")}</option>
           </select>
-        </label>
-        <label className="check-label">
-          <input
-            type="checkbox"
-            checked={completed}
-            onChange={(e) => setCompleted(e.target.checked)}
-          />
-          {t("סיימתי ללמוד את השאלה", "I finished studying this question")}
         </label>
         {entry?.answer && (
           <details>

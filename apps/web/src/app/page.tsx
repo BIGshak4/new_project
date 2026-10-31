@@ -25,6 +25,8 @@ import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
 import { isRealEvaluationProvider } from "../lib/evaluation-readiness";
 import { companyNames, companyReportNote, matchesCompany, matchesQuestion, questionCategory } from "../lib/question-discovery";
 import { QuestionMetadata } from "../components/question-metadata";
+import { QuestionStatusControl } from "../components/question-status-control";
+import { buildQuestionStates, matchesQuestionStatus } from "../lib/question-personal-state";
 import { BidiText } from "../components/bidi-text";
 import { textDirection } from "../lib/bidi-segments";
 import { relatedQuestionKeys, uniqueLibraryQuestions } from "../lib/question-families";
@@ -151,6 +153,9 @@ function Workspace({
   const [query, setQuery] = useState(""),
     [subject, setSubject] = useState("all");
   const [category, setCategory] = useState("all");
+  const [statusFilter, setStatusFilter] = useState<"visible" | "not_done" | "done" | "hidden">("visible");
+  const [statusMessage, setStatusMessage] = useState("");
+  const statusFilterRef = useRef<HTMLDivElement>(null);
   const generation = useRef(0);
   const [progressReady, setProgressReady] = useState(false);
   const [entriesReady, setEntriesReady] = useState(false);
@@ -266,7 +271,7 @@ function Workspace({
         supabase
           .from("jr_practice_entries")
           .select(
-            "id,user_id,question_id,answer,self_rating,bookmarked,completed,version",
+            "id,user_id,question_id,answer,self_rating,bookmarked,completed,hidden,version",
           )
           .eq("user_id", user.id),
       )
@@ -380,8 +385,10 @@ function Workspace({
   const jobFiltering = !!jobFilter && jobQuestions === null;
   const jobKeys = jobFilter ? new Set((jobQuestions ?? []).map(q => q.key)) : null;
   const shown = jobKeys ? orderedQuestions.filter(q => jobKeys.has(q.key)) : orderedQuestions;
+  const questionStates = buildQuestionStates(questions, entries);
   const matching = shown.filter(
     (q) =>
+      matchesQuestionStatus(questionStates.get(q.id) ?? { completed: false, hidden: false }, statusFilter) &&
       (category === "all" || questionCategory(q) === category) &&
       (subject === "all" || q.subject === subject) &&
       matchesQuestion(q, query, [subjectLabel(q.subject, "he"), subjectLabel(q.subject, "en")]) &&
@@ -396,12 +403,25 @@ function Workspace({
   const showGoalSetup = route.view === "learn" && ((goalIncomplete && !goalSkipped) || editingGoal);
   const openQuestion = (q: QuestionSummary) =>
     navigate({ view: route.view, question: q.key });
+  const onQuestionStatusSaved = (q: QuestionSummary, saved: Entry[]) => {
+    const updated = mergeEntries(entries, saved);
+    const state = buildQuestionStates(questions, updated).get(q.id) ?? { completed: false, hidden: false };
+    setEntries((old) => mergeEntries(old, saved));
+    setStatusMessage(state.hidden
+      ? t("השאלה הוסתרה. אפשר להחזיר אותה דרך מסנן השאלות המוסתרות.", "Question hidden. Restore it using the Hidden questions filter.")
+      : state.completed ? t("השאלה סומנה כבוצעה.", "Question marked as done.") : t("השאלה סומנה כלא בוצעה.", "Question marked as not done."));
+    // A filtered row disappears after a successful save; keep keyboard focus on a useful control.
+    const focusedRow = document.activeElement?.closest<HTMLElement>(".library-question-row");
+    if (!matchesQuestionStatus(state, statusFilter) &&
+      (focusedRow?.dataset.questionId === q.id || document.activeElement === document.body)) {
+      statusFilterRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
+    }
+  };
   const date = (s: string) =>
     new Date(s).toLocaleString(lang === "he" ? "he-IL" : "en-GB", {
       dateStyle: "medium",
       timeStyle: "short",
     });
-  const recentKeys = new Set(progress.recent.map((a) => a.question_key));
   // demo grades are hidden everywhere else, so the numbers derived from them (XP, streak, level) are hidden too
   const overview = demo ? null : progress.overview ?? null;
   const activeTab = LIBRARY_VIEWS.has(route.view) ? "library" : route.view;
@@ -545,6 +565,8 @@ function Workspace({
             lang={lang}
             user={user}
             entries={entries}
+            entriesReady={entriesReady && !loading && questions.length > 0}
+            statusQuestions={questions}
             onSaved={onSaved}
             onStarted={(id) =>
               navigate({ view: route.view, attempt: id }, true)
@@ -644,7 +666,7 @@ function Workspace({
             {activeTab === "library" && (
               <div className="summary-strip">
                 <span>
-                  <strong>{loading || jobFiltering ? "—" : filtered.length}</strong>
+                  <strong>{loading || jobFiltering || !entriesReady ? "—" : filtered.length}</strong>
                   {" "}{route.view === "bookmarks" ? t("שאלות שמורות בתצוגה", "saved questions shown") : t("שאלות בתצוגה", "questions shown")}
                   {route.view !== "bookmarks" && <span>{" "}{t(`מתוך ${libraryTotal} שאלות במאגר`, `of ${libraryTotal} questions in the library`)}</span>}
                 </span>
@@ -693,7 +715,7 @@ function Workspace({
             {loading || (activeTab === "library" && route.view !== "history" && jobFiltering) ||
             ((route.view === "progress" || route.view === "history") &&
               progressLoading) ||
-            (route.view === "bookmarks" && entriesLoading) ? (
+            (activeTab === "library" && route.view !== "history" && entriesLoading) ? (
               <div className="loading" role="status">
                 {t(
                   "טוענים את התרגול… אחרי הפסקה השרת עשוי להזדקק לכדקה.",
@@ -702,7 +724,7 @@ function Workspace({
               </div>
             ) : ((route.view === "progress" || route.view === "history") &&
                 !progressReady) ||
-              (route.view === "bookmarks" &&
+              (activeTab === "library" && route.view !== "history" &&
                 !entriesReady) ? null : route.view === "progress" ? (
               <div className="progress-board">
                 {demo ? (
@@ -850,6 +872,23 @@ function Workspace({
                       onChange={(e) => setQuery(e.target.value)}
                     />
                   </div>
+                  <div ref={statusFilterRef} className="question-status-filter">
+                    <Select
+                      ariaLabel={t("סינון לפי מצב אישי", "Filter by personal status")}
+                      dir={lang === "he" ? "rtl" : "ltr"}
+                      value={statusFilter}
+                      onChange={(value) => {
+                        setStatusFilter(value as typeof statusFilter);
+                        setStatusMessage("");
+                      }}
+                      options={[
+                        { value: "visible", label: t("כל השאלות הגלויות", "All visible questions") },
+                        { value: "not_done", label: t("לא בוצעו", "Not done") },
+                        { value: "done", label: t("בוצעו", "Done") },
+                        { value: "hidden", label: t("מוסתרות", "Hidden") },
+                      ]}
+                    />
+                  </div>
                   <Select
                     ariaLabel={t("תחום", "Discipline")}
                     dir={lang === "he" ? "rtl" : "ltr"}
@@ -894,6 +933,8 @@ function Workspace({
                     </datalist>
                   </div>
                 </div>
+                <p className="small muted library-status-note">{t("סמנו מה בוצע והסתירו שאלות שאינן רלוונטיות. הסימון אישי ונשמר בחשבון.", "Mark what you have done and hide irrelevant questions. Your choices are saved to your account.")}</p>
+                <p className="small library-status-message" role="status" aria-live="polite">{statusMessage}</p>
                 <p className="company-report-note library-provenance">{companyReportNote(lang)}</p>
                 {jobFilter && jobQuestions && (
                   <p className="small muted filter-note" role="status">
@@ -905,30 +946,30 @@ function Workspace({
                 )}
                 <div className="question-table">
                   {filtered.map((q) => (
-                    <button
+                    <div
                       className="question-row library-question-row"
                       key={q.id}
-                      onClick={() => openQuestion(q)}
+                      data-question-id={q.id}
                     >
-                      <div>
+                      <div className="library-question-main">
                         <h3 dir={textDirection(q.title)}>
-                          <BidiText>{q.title}</BidiText>
+                          <button type="button" className="library-question-open" onClick={() => openQuestion(q)}>
+                            <BidiText>{q.title}</BidiText>
+                          </button>
                         </h3>
                         <QuestionMetadata question={q} lang={lang} compact />
                         {entries.some(e => e.question_id === q.id && e.bookmarked) && <span className="small muted">{t("שמורה", "Saved")}</span>}
                       </div>
-                      <span className="q-category small muted">
-                        {recentKeys.has(q.key)
-                          ? t("תרגלתם בעבר", "Previously practiced")
-                          : t("לתרגול", "Ready to practice")}
-                      </span>
+                      <QuestionStatusControl userId={user.id} question={q} questions={questions}
+                        state={questionStates.get(q.id) ?? { completed: false, hidden: false }} lang={lang}
+                        ready={entriesReady} onSaved={(saved) => onQuestionStatusSaved(q, saved)} />
                       <span className="q-difficulty badge">
                         {q.difficulty == null ? t("טרם דורג", "Unrated") : `${q.difficulty}/10`}
                       </span>
-                      <span className="small muted">
+                      <span className="small muted q-minutes">
                         {q.estimated_minutes ?? "—"} {t("דק׳", "min")}
                       </span>
-                    </button>
+                    </div>
                   ))}
                 </div>
                 {!filtered.length && (

@@ -23,6 +23,7 @@ test("a late language-refresh snapshot cannot undo a newly saved bookmark", () =
     self_rating: null,
     bookmarked: true,
     completed: false,
+    hidden: false,
     version: 2,
   };
   assert.equal(ui.mergeEntries([entry], [])[0].bookmarked, true);

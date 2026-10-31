@@ -13,6 +13,7 @@ export type Entry = {
   self_rating: number | null;
   bookmarked: boolean;
   completed: boolean;
+  hidden: boolean;
   version: number;
 };
 
