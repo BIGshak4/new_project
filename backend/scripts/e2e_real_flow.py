@@ -18,6 +18,8 @@ import uuid
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")      # Hebrew answers on the Windows console (crashed on cp1255, 2026-11-01)
 
 from app.config import get_settings  # noqa: E402
 from app.engine.catalog import load_catalog  # noqa: E402

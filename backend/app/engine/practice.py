@@ -631,7 +631,12 @@ class PracticeAttempt:
                     return outcome
             # a drawn circuit contributes its derived functions ("alarm = (A & B) | ...") to the check
             checked_answer = (submission.answer + "\n" + check_lines).strip() if check_lines else submission.answer
-            check = (await ctx.code_checker(question, checked_answer, self.attempt_id) if ctx.code_checker else None)
+            check = None
+            if ctx.code_checker:
+                try:
+                    check = await ctx.code_checker(question, checked_answer, self.attempt_id)
+                except Exception:                        # ledger/table/broker errors: the answer is graded as written
+                    log.exception("code checker failed for attempt %s; falling back to the legacy check", self.attempt_id)
             if check is None:
                 check = (await checks.run_check_async(question.deterministic_check, checked_answer)
                          if question.deterministic_check else None)  # legacy dispatch still never executes source locally

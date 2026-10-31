@@ -1523,6 +1523,165 @@ yet**, so neither script could run tonight. Steps when the key exists: put it in
 Render (`LLM_PROVIDER`, `OPENAI_API_KEY`) and redeploy. Production is still on `LLM_PROVIDER=anthropic` with a dead
 key: every judged answer fails until one of the two keys is live.
 
+## 5zw. Night of 31 October – 1 November: the judge's speed, measured and made tunable (Shaked: "i want tonight to lower the times"; "a full verification and a code review, a special check for the new api")
+
+**Where the time goes.** The first real OpenAI answer in production (31 Oct, 21:54 UTC) took 12.6 s in the judge,
+then 3.5 s for the tip and 5.1 s for the card in the background. The screen waits for the judge only
+(`FEEDBACK_IN_BACKGROUND=true`). Our own server adds almost nothing: the Render→pooler round trip is 4 ms and a warm
+submit is about twenty statements. The two other waits a user feels are Render's free-tier wake-up (about forty
+seconds after fifteen idle minutes) and the web app's poll interval, neither of which the backend can shorten.
+
+**The speed knobs (code).** `OPENAI_ROLE_EFFORT` (reasoning effort per role, e.g. `evaluator=low`) and
+`OPENAI_SERVICE_TIER` (`priority` = faster at twice the token price, `flex` = slower at half) are settings, validated
+before a production start (`OPENAI_EFFORTS`, `OPENAI_SERVICE_TIERS` in `app/config.py`), passed to `OpenAIProvider`
+(`role_effort`, `service_tier`) and shown in `/health.speed`. Unset, every request is byte-identical to before.
+`LLMUsage.service_tier` carries the tier OpenAI reports it served the call on (it may downgrade a priority request),
+`cost_usd` prices with the tier's multiplier, and the tier lands in `usage_event.meta`, so the bill can be explained
+later. Probed on 2026-11-01: `gpt-6.1-sol` accepts `low … max`, `gpt-6.1-terra` also `none`; `minimal` is refused by
+both with a 400, which the provider surfaces as a non-retryable `LLMError`.
+
+**The measurement.** `scripts/judge_speed_matrix.py` sends the thirteen review answers (`scripts/p2_review_set.py`,
+each with the band a careful human expects) through the evaluator only, under each configuration, twice: the second
+pass shows the prompt cache and the warm cost. Nothing is written to the database. Two runs tonight
+(`workdir/judge_speed_matrix.json`, `_2.json`), three answers in flight, laptop in Israel:
+
+| judge, effort, tier | median s | p90 s | warm $/answer | cold $/answer | bands = expectation | bands moved vs production |
+|---|---|---|---|---|---|---|
+| gpt-6.1-sol, low, default (**production now**) | 3.5–3.7 | 5.6 (one 16.2 s outlier in run 2) | 0.0027 | 0.0029 | 13/13 (12/13 in run 2) | – |
+| gpt-6.1-terra, low, default | 3.2–3.5 | 4.6–5.2 | 0.0012 | 0.0031 | 13/13 | 0 (identical misconception keys too) |
+| gpt-6.1-terra, none, default | 3.3 | 3.8 | 0.0011 | 0.0028 | 13/13 | 1 (off-by-one case PARTIAL → WEAK) |
+| gpt-6.1-sol, low, priority | 2.6 | 5.2 | ≈0.0055 | ≈0.013 | 13/13 | 0 |
+| gpt-6.1-terra, low, priority | 2.0 | 3.4 | ≈0.0024 | ≈0.006 | 13/13 | 0 |
+| gpt-6.1-terra, none, priority | 2.0 | 2.2 | ≈0.0022 | ≈0.005 | 13/13 | 1 (same case) |
+
+Priority costs are the standard figures doubled (the first run priced them before the multiplier existed; the
+second run prices them right). Reading: the production judge is already a median 3.5 s once the cache is warm; the
+12.6 s live call was a cold first call plus the usual variance. Terra at low effort gave the same thirteen bands and
+the same misconception keys as Sol for less than half the price and a little faster; priority processing takes
+another second off either. The one unstable case across every configuration is the off-by-one C loop (expected
+PARTIAL): Sol itself moved it to STRONG once in run 2, Terra at effort `none` moves it to WEAK. **Which row runs in
+production is Shaked's decision**, because it changes how answers are judged; nothing was changed on Render tonight.
+The change is two dashboard variables (`OPENAI_MODEL`, `OPENAI_ROLE_EFFORT`, optionally `OPENAI_SERVICE_TIER`) and
+no deploy.
+
+**Against the Anthropic record ("the special check for the new api").** Usage table, production: 37 answers judged
+by Opus 5.5 averaged $0.0745 per answer (judge 4.4 ¢, prose 1.9 ¢) with 7.5 s in the judge on average (max 15 s);
+the OpenAI answer cost $0.014 (judge 1.0 ¢, prose 0.4 ¢). `scripts/e2e_real_flow.py` on the new provider (memory
+store, prose inline, three attempts with follow-ups, a code test and a drawn circuit): main answers 9 s and 13 s
+including card, tip and follow-up wording, follow-ups 3–6 s, 14 model calls, **$0.04 and 40 s wall for the whole
+flow**; the same script on Anthropic on 2026-09-20 was $0.106 for two answers (36 s / 22 s per answer). Bands:
+XOR answer WEAK then STRONG on the follow-up, buggy Hebrew code PARTIAL then STRONG, circuit PARTIAL then STRONG,
+as recorded for Opus. So: about five times cheaper per answer and roughly twice as fast in the judge, with the
+review set banding identically.
+
+**Found on the way.** (1) The `DATABASE_URL` in `backend/.env` could no longer be parsed after it was saved tonight:
+the password contains `@` and `!`, which both drivers read as the end of the credentials (`asyncpg` splits at the
+first `@`), so the host became `!@aws-0-…` and every local database script failed with a DNS error. The two
+characters are now percent-encoded in the local file only; Render's value is separate and was never affected
+(`/health` kept answering with the database). Rule for the future: paste connection strings with the password
+URL-encoded. (2) `scripts/e2e_real_flow.py` crashed printing Hebrew on the Windows console; run it with
+`PYTHONIOENCODING=utf-8` (documented in the script).
+
+**Merge.** Harel pushed 42 commits since `5bfe86e` (fundamentals to 500 cards and 2,500 quiz variants, twenty-source
+interview intake, and a new backend feature: **isolated code execution**). Rebased onto them cleanly; the merged
+offline suite before any fix: 3,872 passed / 13 skipped (the content suites make up most of the growth).
+
+**Code execution is live in production, found tonight.** `app/services/code_execution.py` (Harel, 31 Oct) sends an
+answer's final fenced code block, with an Ed25519-signed ticket, to a broker at `jobrun-executor-job-runer.vercel.app`
+(his Vercel app; "fresh microVM, network deny-all"), and the broker's pass/fail becomes the deterministic check the
+judge sees, so it moves bands, XP and coins. `code_execution_enabled` defaults to true, the URL is a code default, the
+signing key is derived from `SUPABASE_SERVICE_ROLE_KEY` when `CODE_EXECUTION_SIGNING_SEED` is absent, and production
+has that key: the broker's `/api/health` answers `available: true` with the fingerprint Render publishes at
+`/execution/verification-key`, and migration `20261031095535_isolated_code_execution` (`code_execution_runs`, zero rows
+so far) plus `20261031142641_question_personal_visibility` are applied. This reverses SEC-001 ("submitted code is not
+executed") without the decision that §5zn said was Shaked's, and it went in outside the approval loop again. Not
+reverted tonight (it is Harel's feature and switching it off is a product call); reviewed instead.
+
+**Independent review (two reviewers, read-only, then fixes by me).** Fixed tonight, each with a test in
+`tests/test_review_2026_11_01.py`:
+
+1. *High.* `engine/practice.py` called the code checker unguarded. Any ledger or broker exception (the table missing
+   in an environment, a pooler error on the shared advisory lock, a non-object JSON body from the broker) escaped
+   `evaluate` after the answer was saved as EVALUATING, so the submit was a 500 and every retry raised again: the
+   answer stuck. Now caught and logged; the legacy check runs and the judge grades the answer as written. The
+   service's own `check_answer` also catches everything now (it swallowed only `ApiError`).
+2. *Medium.* The submit path waited up to 5 s (health probe) + 58 s (run) on the broker before the 90 s judge
+   deadline, inside the practice attempt's lock, the interview turn and the judged duel, whose grace after the
+   deadline is two minutes: a stalled broker could forfeit a player who answered in time. `SUBMIT_EXECUTION_SECONDS =
+   25` bounds the wait on the submit path only (the editor's Run button keeps the full client timeout); a timeout is
+   "unavailable" and the next call re-probes.
+3. *Medium.* The stored copy of a run (in the attempt's `submissions` jsonb, returned on every read, forever) carried
+   unbounded learner-program output and every hidden test vector, passing cases included. The stored copy now keeps
+   the failing cases only (at most eight) and trims `stdout`, `stderr`, `compile_output` and `detail` to 4,000
+   characters; the counts stay; the judge still receives the failing mismatches as before.
+4. *Medium.* Response bodies were size-checked after httpx had downloaded all of them; a broken broker could fill the
+   512 MB process with one reply. Bodies are now streamed with a byte cap (8 KiB health, 128 KiB run), and a
+   health body that is not a JSON object is "unavailable" instead of an `AttributeError`.
+5. *Low.* A broker-side `timeout` result was reused for an hour by `cached()`; now only real outcomes are reused.
+6. *Low.* The language aliases (`py`, `js`, `c++`, `sv`) were defined and never applied, so such answers silently
+   skipped execution.
+7. *Low.* `avatars.py`: a string price crashed the catalog load with `TypeError` instead of the intended message and
+   `True` passed as a price; and a skin removed from the catalog was deleted from the user's paid ownership on their
+   next save (ownership is now kept as stored; only what can be worn is checked against the catalog).
+8. *Low.* `load_quiz` accepted any `status` string and a string `correct`, so one typo removed a whole quiz source
+   from production silently; both are errors now. The shipped file (2,540 entries, 500 complete approved groups)
+   loads unchanged.
+9. `/health.code_execution` now says whether the runner is enabled and wired and what the broker last said, without
+   calling it; the smoke route list follows the two new routes (50 v1 routes).
+
+**Review findings left for decisions (not code I should change alone).**
+
+- *Grading policy (high).* A program that crashes, times out or fails to compile is reported with `passed: null`
+  ("no correctness result"), never `false`; the judge grades the prose with the facts attached. A learner whose
+  solution throws on the hard case therefore cannot get a hard fail from the runner, only "unassessed". Making
+  `compile_error` / `runtime_error` / `timeout` count as a failed check when a test spec exists is one line in
+  `check_answer`, but it changes how answers are judged: Shaked's call, with Harel.
+- *Broker trust (high).* The API trusts the broker's pass/fail. It is authenticated only by TLS to a free
+  `*.vercel.app` hostname in a code default; the "fingerprint echo" proves nothing (the fingerprint is public). If
+  that Vercel project is renamed or deleted and the subdomain re-registered, or the account is compromised, every
+  learner "passes". Fix is on Harel's side: the broker signs its result over `jti` and the job hash with a key pinned
+  in Render, the API verifies it, `CODE_EXECUTION_URL` defaults to empty (fail closed), ideally a custom domain.
+- *Quotas (medium).* Submissions share the editor's budget (6 a minute, 60 a day per user) and a site-wide
+  concurrency of two; a redeploy leaves "running" rows for two minutes. Under load the third submitter on the site is
+  graded "without execution" with no visible note. Options: exempt submissions from the per-minute gate, count
+  concurrency per user, mark orphans on startup. Harel's.
+- *Hidden tests (medium).* The editor's Run button returns `expected`/`input` for failing cases; eight runs reveal
+  the test vector. Stripping them from the learner-facing reply is a UI contract change: Harel's.
+- *Prompt framing (medium).* Execution facts enter the judge prompt as plain text with learner-controlled compiler
+  and stderr output (neutralised, truncated at 2,000). Wrapping them in a protocol tag and cutting to ~500 chars is a
+  prompt change: Shaked's.
+- *Signing seed (low).* Derived from the service-role key: rotating that key silently breaks the fingerprint and
+  every submission becomes "unavailable". Set `CODE_EXECUTION_SIGNING_SEED` on Render (and update the broker) before
+  the password/key rotation that is already on the owner list.
+- *Retention (low).* `code_execution_runs` is never pruned; a weekly delete needs a migration or a cron.
+- *Policy.* `jr_set_question_state` grants `authenticated` a direct write path through PostgREST, against the
+  backend-mediated-writes rule; and two more migrations were applied to production outside the dry-run-and-approval
+  loop (the third time; §5zn, §5zu). The process conversation with Harel is still owed.
+- Checked and fine by the reviewers: the learner cannot pick spec, testbench, destination or result; the ticket
+  (`iss`, `aud`, `sub`, `jti`, 90 s `exp`, job hash) is verified by the broker; attempt ownership on the new routes;
+  the ledger's advisory lock is transaction-scoped and pooler-safe; the avatar purchase path (lock before balance,
+  seed price, unique reference, 402 before any write); duel waiting room (clock cannot start twice, every write path
+  optimistic, lobby expiry refunds once); fundamentals scoping; the quiz data itself.
+
+**Verification tonight.** Offline suite after the fixes: 3,888 passed / 11 skipped. Live: `tests/test_live_db.py` 3 passed in 7 m 44 s
+(the first time since 21 Oct that the seeding fixture got through the pooler; alone, as the rule says), `test_live_service.py`
+ran six tests green and was then cut off by its 25-minute limit without a summary line (the slow pooler path again; not retried blind, next time with `--timeout=180` per test). `scripts/verify_coins_duels_db.py` now runs on the real tables (migrations applied) inside one rolled-back
+transaction starting the two scenario users from an empty ledger: 33 checks passed against production. Smoke against
+Render: clean on build `96aeb55` (the speed knobs; `/health.speed` shows the defaults), rerun after the final push below.
+`scripts/judge_speed_matrix.py` twice, `scripts/e2e_real_flow.py` once (above).
+
+**Morning list for Shaked.**
+
+1. Pick the judge row from the table above (my recommendation: Terra at low effort, identical bands at less than half
+   the price; add priority if the second matters more than the doubled cents). Two Render variables, no deploy.
+2. Render Starter (the forty-second wake is the longest wait a user feels) and an OpenAI monthly limit.
+3. Code execution: decide with Harel whether it stays on this week, and the three policy items above (fail on crash,
+   broker signing, hidden tests). Until then it is live.
+4. Payments: PayPal or an Israeli processor (Stripe does not open accounts for Israeli businesses); the backend side
+   is one evening once the provider is chosen.
+5. The owner items still open: `HEALTH_KEY`, DB password rotation (set `CODE_EXECUTION_SIGNING_SEED` first), Supabase
+   2FA and leaked-password protection.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1563,6 +1722,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-01 | The judge's speed, measured and made tunable, and the review of Harel's code-execution feature (§5zw): `OPENAI_ROLE_EFFORT` / `OPENAI_SERVICE_TIER` settings, priority pricing on the usage record, `/health.speed` and `/health.code_execution`, `scripts/judge_speed_matrix.py` (production judge 3.5 s median warm, $0.0027/answer, 13/13 bands; Terra identical at $0.0012; priority −1 s at 2×); OpenAI vs Anthropic: ≈5× cheaper, judge ≈2× faster, same bands on the review set and the real flow. Merged Harel's 42 commits; found code execution live in production; nine review fixes with tests (unguarded checker that could stick an answer, 25 s submit budget, trimmed stored run facts, streamed bounded bodies, timeout reuse, aliases, avatar price/ownership, quiz loader validation). Offline 3,888 passed / 11 skipped; live db 3 passed; coins/duels scenario 33 checks on production, rolled back. Decisions left to Shaked and Harel listed in §5zw. |
 | 2026-10-29 | OpenAI as a second real provider (§5zv): `OpenAIProvider` on the Responses API behind the same interface (instructions prefix cache, structured parse with JSON-in-text fallback, effort per role, images, incomplete/refusal handling, cached tokens split out, OpenAI price table); `LLM_PROVIDER=openai`, `OPENAI_API_KEY`, `OPENAI_MODEL=gpt-6.1-sol`, `OPENAI_ROLE_MODELS` (Terra for prose); the two real-model scripts follow the settings. 19 new tests; offline 1,468 passed / 9 skipped (one duel test was pinned to 22 October and failed on the real calendar day; its clock now starts on today's date). Calibration on the review set waits for the key. |
 | 2026-10-22 | Full verification of coins and duels (§5zu): independent review + quiz fact-check + a real-database scenario in a rolled-back transaction (`scripts/verify_coins_duels_db.py`, 32 checks) + race and deadline tests. Fixed: the ledger insert could not match the partial unique index on Postgres (every coin write would have been a 500), `table.c.items` was the collection's method, a ledger error could roll back a saved answer (now a savepoint), a judged answer still with the judge at the deadline was forfeited (two-minute grace), promises before the ledger was looked at, seed defaults, removed-question 500s; forty quiz answers verified right, Hebrew formulas given left-to-right marks. Offline 1,446 passed / 9 skipped; live suites did not complete (pooler timeout in the seeding fixture, as on 21 Oct). Build `6562694` live, smoke clean. |
 | 2026-10-22 | Quiz duels, the default mode (§5zt): five American questions from `seeds/duel_quiz.json`, a minute each at most, more correct answers win then the lower total time, no judge; forty questions drafted in both languages, all `draft` until approved; `mode`/`items` on the duel row (migration edited in place, dry run OK, not applied); nine more tests; offline 1,435 passed / 9 skipped. |

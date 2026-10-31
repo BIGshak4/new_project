@@ -17,7 +17,7 @@ def load_catalog(path: Path) -> dict:
             raise ValueError(f"duplicate avatar {group}")
         if any(not i.get("label", {}).get(lang) for i in items for lang in ("he", "en")):
             raise ValueError(f"avatar {group} must have bilingual labels")
-    if any(i["price"] < 0 or not isinstance(i["price"], int) for i in catalog["skins"]):
+    if any(not isinstance(i.get("price"), int) or isinstance(i.get("price"), bool) or i["price"] < 0 for i in catalog["skins"]):
         raise ValueError("skin price must be a nonnegative integer")
     return catalog
 
@@ -27,10 +27,12 @@ class AvatarsService:
         self.store, self.coins, self.catalog = store, coins, catalog
 
     def _state(self, row):
+        # Ownership is kept as stored (a skin missing from today's catalog is still paid for and comes back when
+        # the catalog does, review 2026-11-01); only what can be worn is checked against the catalog.
         known = {s["key"] for s in self.catalog["skins"]}
-        owned = {"classic", *((row or {}).get("owned_skins") or [])} & known
+        owned = {"classic", *((row or {}).get("owned_skins") or [])}
         avatar = {k: (row or {}).get(k, value) for k, value in DEFAULT_AVATAR.items()}
-        if avatar["skin"] not in owned:
+        if avatar["skin"] not in owned or avatar["skin"] not in known:
             avatar["skin"] = "classic"
         return avatar, sorted(owned)
 

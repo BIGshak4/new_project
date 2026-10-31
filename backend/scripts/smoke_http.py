@@ -53,6 +53,7 @@ V1_ROUTES = {
     ("GET", "/v1/me/avatar"), ("PUT", "/v1/me/avatar"), ("POST", "/v1/me/avatar/buy"),   # Harel's avatars (2026-10-29)
     ("POST", "/v1/me/avatar/onboarding"),
     # Harel's self-reported short-card completion (2026-10-21)
+    ("GET", "/v1/practice/attempts/{attempt_id}/execution-capabilities"), ("POST", "/v1/practice/attempts/{attempt_id}/executions"),
     ("GET", "/v1/fundamentals/progress"), ("PUT", "/v1/fundamentals/progress/{question_key}"),
     ("DELETE", "/v1/fundamentals/progress/{question_key}"),
     ("GET", "/v1/me/program"), ("POST", "/v1/me/program/start"),

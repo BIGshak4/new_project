@@ -314,7 +314,10 @@ async def health(request: Request, db_check: bool = False) -> dict:
             # the speed knobs (2026-11-01): each role's reasoning effort and the processing tier asked for
             "speed": ({"effort": {**ROLE_EFFORT, **settings.role_effort}, "service_tier": settings.service_tier or "default"}
                       if settings.llm_provider == "openai" else None),
-            "answer_images": "assessed" if settings.supabase_service_role_key and settings.supabase_url else "stored_only"}
+            "answer_images": "assessed" if settings.supabase_service_role_key and settings.supabase_url else "stored_only",
+            # the code runner (Harel, 2026-10-31): wired = enabled with a URL and a signing key; last_probe = what the
+            # broker said when it was last asked (None = not asked yet); nothing here calls the broker
+            "code_execution": _code_execution_health(runtime)}
     if not detailed:
         body = {k: body[k] for k in ("status", "engine_version", "source_revision", "llm_provider") if k in body}
     if db_check and runtime is not None and runtime.store_kind == "database":
@@ -323,6 +326,15 @@ async def health(request: Request, db_check: bool = False) -> dict:
         except Exception as exc:                                  # noqa: BLE001 - reported, never raised
             body["database"] = {"error": type(exc).__name__}
     return body
+
+
+def _code_execution_health(runtime) -> dict | None:
+    runner = getattr(runtime, "code_execution", None)
+    if runner is None:
+        return None
+    until, ready = runner._health
+    return {"enabled": bool(runner.enabled), "wired": bool(runner.enabled and runner.url and runner.key is not None),
+            "last_probe": None if until == 0 else ("available" if ready else "unavailable")}
 
 
 @app.get("/execution/verification-key", tags=["ops"])

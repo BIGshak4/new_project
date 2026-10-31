@@ -85,8 +85,10 @@ def load_quiz(path: Path) -> list[QuizQuestion]:
     out, keys, variants = [], set(), set()
     for raw in data.get("questions", []):
         choices = list(raw.get("choices") or [])
-        if len(choices) != 4 or not (0 <= int(raw["correct"]) < 4):
-            raise ValueError(f"quiz question {raw.get('key')!r} needs four choices and a correct index 0-3")
+        if len(choices) != 4 or type(raw.get("correct")) is not int or not (0 <= raw["correct"] < 4):
+            raise ValueError(f"quiz question {raw.get('key')!r} needs four choices and an integer correct index 0-3")
+        if raw.get("status", "draft") not in ("draft", "approved"):
+            raise ValueError(f"quiz question {raw.get('key')!r} has status {raw.get('status')!r}; expected draft or approved")
         for field_name in ("prompt", "explanation"):
             if not raw.get(field_name, {}).get("he") or not raw.get(field_name, {}).get("en"):
                 raise ValueError(f"quiz question {raw.get('key')!r} needs {field_name} in both languages")

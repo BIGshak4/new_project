@@ -51,7 +51,7 @@ class MemoryExecutionLedger:
             for row in reversed(list(self.rows.values())):
                 if (row["user"] == user and row["scope"] == scope and row["digest"] == digest
                         and row["created"] > time.time() - 3600 and row["result"]
-                        and row["result"]["status"] != "unavailable"):
+                        and row["result"]["status"] not in ("unavailable", "timeout")):
                     return row["result"]
         return None
 
@@ -132,6 +132,6 @@ class DbExecutionLedger:
             result = await conn.execute(text("""select result from public.code_execution_runs
                 where user_id=cast(:user as uuid) and scope=:scope and request_hash=:digest
                 and created_at > now() - interval '1 hour' and result is not null
-                and result->>'status' <> 'unavailable' order by created_at desc limit 1"""),
+                and result->>'status' not in ('unavailable', 'timeout') order by created_at desc limit 1"""),
                 dict(user=user, scope=scope, digest=digest))
             return result.scalar_one_or_none()

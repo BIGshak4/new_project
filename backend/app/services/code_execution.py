@@ -9,6 +9,7 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import json
+import logging
 import re
 import time
 import uuid
@@ -25,7 +26,15 @@ from app.schemas.bank import BankQuestion
 from app.schemas.engine import CheckResult
 from app.schemas.execution import ExecutionCapabilities, ExecutionRequest, ExecutionResult
 
+log = logging.getLogger("app.services.code_execution")
+
 LANGUAGES = ("python", "javascript", "c", "cpp", "verilog", "systemverilog", "vhdl")
+# A submitted answer waits this long at most for the runner (review 2026-11-01): the HTTP client allows 58 s, but a
+# judged duel has a two-minute grace after its deadline and a practice submit holds the attempt's lock meanwhile.
+SUBMIT_EXECUTION_SECONDS = 25.0
+# What a submission keeps of a run: diagnostics are learner-program output and the cases carry the hidden test
+# vectors, so the stored copy is trimmed and keeps the failing cases only (the Run button's own reply is untouched).
+STORED_TEXT_CHARS = 4000
 ALIASES = {"py": "python", "js": "javascript", "c++": "cpp", "sv": "systemverilog"}
 
 
@@ -48,7 +57,7 @@ def answer_code(answer: str) -> tuple[str, str] | None:
     if closing is None or closing.end() != len(answer):
         return None
     opening = None
-    for candidate in re.finditer(r"(^|\n)(`{3,})(c|cpp|python|javascript|verilog|systemverilog|vhdl|text)\n", answer):
+    for candidate in re.finditer(r"(^|\n)(`{3,})(c|cpp|python|javascript|verilog|systemverilog|vhdl|text|py|js|c\+\+|sv)\n", answer):
         if candidate[2] == closing[1] and candidate.end() <= closing.start():
             opening = candidate
     if opening is None:
@@ -56,7 +65,8 @@ def answer_code(answer: str) -> tuple[str, str] | None:
     code = answer[opening.end():closing.start()]
     if re.search(r"^" + re.escape(closing[1]) + r"$", code, flags=re.MULTILINE):
         return None
-    return (opening[3], code.strip()) if opening[3] in LANGUAGES and code.strip() else None
+    language = ALIASES.get(opening[3], opening[3])            # the aliases were defined but never applied (review 2026-11-01)
+    return (language, code.strip()) if language in LANGUAGES and code.strip() else None
 
 
 def _unavailable(language: str, detail="No verified execution result is available. The isolated runner is temporarily unavailable."):
@@ -99,14 +109,31 @@ class CodeExecutionService:
                 return self._health[1]
             ready = False
             try:
-                response = await self.client.get(f"{self.url}/api/health", timeout=5)
-                health = response.json() if response.status_code == 200 and len(response.content) <= 8192 else {}
+                status_code, body = await self._bounded("GET", f"{self.url}/api/health", 8192, timeout=5)
+                health = json.loads(body) if status_code == 200 and body is not None else {}
+                if not isinstance(health, dict):                      # a list or a string is not a health report
+                    health = {}
                 ready = (health.get("available") is True and health.get("key_fingerprint") ==
                          hashlib.sha256(public_key_bytes(self.key)).hexdigest())
             except (httpx.HTTPError, ValueError):
                 pass
             self._health = (time.monotonic() + (60 if ready else 5), ready)
             return ready
+
+    async def _bounded(self, method: str, url: str, cap: int, **kwargs) -> tuple[int, bytes | None]:
+        """Status and body, reading at most `cap` bytes: a broken or hostile broker cannot fill this process's
+        memory with one reply (review 2026-11-01; the old code measured the body after downloading all of it)."""
+        async with self.client.stream(method, url, **kwargs) as response:
+            declared = response.headers.get("content-length")
+            if declared and declared.isdigit() and int(declared) > cap:
+                return response.status_code, None
+            chunks, size = [], 0
+            async for chunk in response.aiter_bytes():
+                size += len(chunk)
+                if size > cap:
+                    return response.status_code, None
+                chunks.append(chunk)
+            return response.status_code, b"".join(chunks)
 
     def spec(self, question: BankQuestion, language: str, source: str = "") -> dict | None:
         fixture = self.fixtures.get(question.key, {}).get("languages", {}).get(language)
@@ -166,9 +193,10 @@ class CodeExecutionService:
         result = _unavailable(request.language)
         interrupted = False
         try:
-            response = await self.client.post(f"{self.url}/api/execute", json={"job_json": job_json, "ticket": ticket})
-            if response.status_code == 200 and len(response.content) <= 131072:
-                result = ExecutionResult.model_validate(response.json())
+            status_code, body = await self._bounded("POST", f"{self.url}/api/execute", 131072,
+                                                    json={"job_json": job_json, "ticket": ticket})
+            if status_code == 200 and body is not None:
+                result = ExecutionResult.model_validate(json.loads(body))
                 if result.language != request.language:
                     raise ValueError("executor returned a different language")
                 if result.status not in ("passed", "failed") and result.passed is not None:
@@ -206,12 +234,26 @@ class CodeExecutionService:
         if self.spec(question, language, source) is None:
             return None
         try:
-            result = await self.execute(user_id, scope, question,
-                ExecutionRequest(language=language, source=source, idempotency_key=f"submit-{uuid.uuid4()}"), reuse=True)
+            result = await asyncio.wait_for(
+                self.execute(user_id, scope, question,
+                             ExecutionRequest(language=language, source=source, idempotency_key=f"submit-{uuid.uuid4()}"),
+                             reuse=True),
+                timeout=SUBMIT_EXECUTION_SECONDS)
         except ApiError as exc:
             result = _unavailable(language, "No execution was performed: " + exc.message)
+        except TimeoutError:
+            self._health = (0, False)
+            result = _unavailable(language, "No execution result arrived in time; the answer is reviewed as written.")
+        except Exception:                                   # ledger or broker surprises are a quota problem, not a grade
+            log.exception("code execution failed on the submit path (%s); the answer is reviewed as written", scope)
+            self._health = (0, False)
+            result = _unavailable(language)
         contract = self.fixtures.get(question.key, {}).get("contract", {}).get("en", "")
-        detail = result.detail + ("\nAutomated test scope: " + contract if contract else "")
+        failing = [case for case in result.cases if not case.passed][:8]
+        stored = result.model_copy(update={"stdout": result.stdout[:STORED_TEXT_CHARS], "stderr": result.stderr[:STORED_TEXT_CHARS],
+                                           "compile_output": result.compile_output[:STORED_TEXT_CHARS],
+                                           "detail": result.detail[:STORED_TEXT_CHARS], "cases": failing})
+        detail = stored.detail + ("\nAutomated test scope: " + contract if contract else "")
         return CheckResult(type="code_tests", passed=result.passed, detail=detail,
-            mismatches=[case.model_dump(mode="json") for case in result.cases if not case.passed][:8],
-            runtime_ms=result.runtime_ms, execution=result)
+            mismatches=[case.model_dump(mode="json") for case in failing],
+            runtime_ms=result.runtime_ms, execution=stored)

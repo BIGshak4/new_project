@@ -1,6 +1,6 @@
 """Coins and duels against the REAL database, with zero residue (2026-10-22).
 
-The two migrations are not applied yet, so this runs them inside one transaction on one connection, reflects the
+If the two migrations are not applied yet this runs them inside one transaction on one connection (since 2026-10-29 production has them, so the scenario runs on the real tables), reflects the
 two new tables on that connection, drives the real services through a RollbackStore (savepoints on the same
 connection: every unique index, check and cast runs as in production), and rolls the outer transaction back.
 Afterwards it proves the tables are gone. Reads two user ids from user_profile (ids only, nothing personal).
@@ -73,16 +73,24 @@ async def main() -> int:
     async with engine.connect() as connection:
         outer = await connection.begin()
         await connection.execute(text("select 1"))
-        for path in MIGRATIONS:
-            for statement in statements(path.read_text(encoding="utf-8")):
-                await connection.execute(text(statement))
-        print("migrations applied inside the transaction")
+        present = (await connection.execute(text("select to_regclass('public.coin_ledger') is not null and to_regclass('public.duel') is not null"))).scalar_one()
+        if present:
+            print("migrations already applied (coin_ledger and duel exist); the scenario runs on the real tables, still rolled back")
+        else:
+            for path in MIGRATIONS:
+                for statement in statements(path.read_text(encoding="utf-8")):
+                    await connection.execute(text(statement))
+            print("migrations applied inside the transaction")
         metadata = await db.get_metadata()
         await connection.run_sync(lambda sync: metadata.reflect(bind=sync, schema="public", only=["coin_ledger", "duel"]))
         ok("tables visible to the app on this connection", await db.has_table("coin_ledger") and await db.has_table("duel"))
         users = [r[0] for r in (await connection.execute(text("select id from public.user_profile limit 2"))).all()]
         ok("two users to play with", len(users) == 2)
         a, b = users
+        if present:
+            # real tables: start the two users from nothing inside this transaction (rolled back at the end)
+            await connection.execute(text("delete from public.coin_ledger where user_id in (:a, :b)"), {"a": a, "b": b})
+            await connection.execute(text("delete from public.duel where challenger_id in (:a, :b) or opponent_id in (:a, :b)"), {"a": a, "b": b})
 
         store = RollbackStore(connection)
         rules = load_rules(ROOT / "seeds/coins.json")
@@ -224,8 +232,12 @@ async def main() -> int:
             ok("RLS: duel is closed to the browser", True)
         await outer.rollback()
     async with engine.connect() as connection:
-        gone = (await connection.execute(text("select to_regclass('public.coin_ledger') is null and to_regclass('public.duel') is null"))).scalar_one()
-        ok("rolled back: no table left behind", bool(gone))
+        if present:
+            left = (await connection.execute(text("select count(*) from public.coin_ledger where reference in ('seed', 'buy:old') or kind = 'gift' and created_at > now() - interval '2 minutes'"))).scalar_one()
+            ok("rolled back: no scenario row left behind", left == 0)
+        else:
+            gone = (await connection.execute(text("select to_regclass('public.coin_ledger') is null and to_regclass('public.duel') is null"))).scalar_one()
+            ok("rolled back: no table left behind", bool(gone))
     await db.dispose()
     print(f"all {len(PASSED)} checks passed")
     return 0
