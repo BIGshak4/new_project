@@ -318,3 +318,9 @@ def master_slave_phase(master, q, set_bit, reset_bit, clock):
   }
 }
 ```
+
+## קליטה נוספת — 31.10.2026 / Additional intake
+
+- מקור 10: [sources/2026-10-31-batch20-10.png](../sources/2026-10-31-batch20-10.png)
+
+ממש את הקופסה של SR Latch

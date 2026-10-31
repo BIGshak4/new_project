@@ -13,7 +13,6 @@ import uuid
 from pathlib import Path
 
 import pytest
-
 from app.api.errors import ApiError
 from app.engine import bank
 from app.engine.catalog import load_catalog
@@ -22,8 +21,11 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+
 from tests.preparation_history import (
+    BATCH20_BASELINE,
     BATCH21_BASELINE,
+    assert_pre_batch20_assets,
     assert_pre_batch21_archive,
     assert_pre_batch21_assets,
     assert_pre_batch21_localization,
@@ -88,8 +90,12 @@ def test_twenty_one_sources_keep_the_exact_original_bytes_and_identity_mapping()
 
 def test_authorized_extensions_preserve_all_197_original_records_and_1070_assets(catalog):
     archive = read(BANK / "questions.json")
-    assert len(archive["questions"]) == 208 and len(catalog.questions) == 238
-    previous_ids = {question["id"] for question in archive["questions"]}
+    assert len(archive["questions"]) == 219 and len(catalog.questions) == 249
+    # Freeze this intake's 208-record endpoint before projecting its 197-record
+    # predecessor. The later eleven additions have their own batch20 tests.
+    previous_ids = {question["id"] for question in archive["questions"]
+                    if question["id"] in BATCH20_BASELINE["records"]}
+    assert len(previous_ids) == 208
     assert previous_ids - set(BATCH21_BASELINE["records"]) == NEW_IDS
     assert_pre_batch21_archive(archive)
     assert_pre_batch21_assets(read(SEEDS / "preparation_uploads.json")["files"])
@@ -98,7 +104,8 @@ def test_authorized_extensions_preserve_all_197_original_records_and_1070_assets
         entries = read(path)
         assert not localization.keys() & entries.keys(), path
         localization.update(entries)
-    assert localization.keys() - BATCH21_BASELINE["localized_material"].keys() == NEW_IDS
+    historical_ids = localization.keys() & BATCH20_BASELINE["localized_material"].keys()
+    assert historical_ids - BATCH21_BASELINE["localized_material"].keys() == NEW_IDS
     assert_pre_batch21_localization(localization)
     # The three old aliases stay intact, plus the explicitly audited modulo-six example.
     module = (ROOT / "apps/web/src/lib/question-families.ts").read_text("utf-8")
@@ -111,7 +118,7 @@ def test_authorized_extensions_preserve_all_197_original_records_and_1070_assets
         "example-mod-six-counter": "prep-enabled-mod-six-counter",
     }
     assert set(aliases) | set(aliases.values()) <= catalog.questions.keys()
-    assert len({aliases.get(key, key) for key in catalog.questions}) == 234
+    assert len({aliases.get(key, key) for key in catalog.questions}) == 245
 
 
 def test_all_new_questions_and_extensions_remain_bilingual_proposed_unrated_and_gated(catalog):
@@ -167,12 +174,14 @@ def test_all_new_questions_and_extensions_remain_bilingual_proposed_unrated_and_
 def test_new_private_assets_are_safe_hash_bound_and_localized(catalog):
     uploads = read(SEEDS / "preparation_uploads.json")["files"]
     assert_pre_batch21_assets(uploads)
+    assert_pre_batch20_assets(uploads)
     assert len(BATCH21_BASELINE["asset_sha256"]) == 1070
-    new_paths = uploads.keys() - BATCH21_BASELINE["asset_sha256"].keys()
+    new_paths = BATCH20_BASELINE["asset_sha256"].keys() - BATCH21_BASELINE["asset_sha256"].keys()
     media_by_path = {item["path"]: item for q in catalog.questions.values()
                      if q.assets.get("preparation_id") in AFFECTED_IDS for item in q.assets["bank_media"]}
     assert new_paths <= media_by_path.keys()
-    assert len(uploads) == 1070 + NEW_ASSET_COUNT and len(new_paths) == NEW_ASSET_COUNT
+    assert len(BATCH20_BASELINE["asset_sha256"]) == 1070 + NEW_ASSET_COUNT
+    assert len(new_paths) == NEW_ASSET_COUNT
     assert sum(uploads[path]["local_path"].startswith("sources/") for path in new_paths) == 21
     assert sum(uploads[path]["local_path"].startswith("diagrams/") for path in new_paths) == NEW_DIAGRAM_COUNT
     assert sum(uploads[path]["local_path"].startswith("solutions/") for path in new_paths) == NEW_CODE_COUNT
@@ -189,7 +198,7 @@ def test_new_private_assets_are_safe_hash_bound_and_localized(catalog):
             if item["language"] == "en":
                 assert not any("\u05d0" <= char <= "\u05ea" for char in item["caption"])
     sources = [entry["local_path"] for entry in uploads.values() if entry["local_path"].startswith("sources/")]
-    assert len(sources) == 332 and len(set(sources)) == 331
+    assert len(sources) == 352 and len(set(sources)) == 351
     names = read(ROOT / "apps/web/src/lib/source-screenshots.json")
     assert set(names) == {Path(path).name for path in sources}
     assert all(f"2026-10-31-batch21-{number:02d}.png" in names for number in range(1, 22))

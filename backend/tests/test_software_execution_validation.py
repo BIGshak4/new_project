@@ -1,17 +1,24 @@
 """Operator-harness safety and assertion tests; no network or live execution."""
 
+import hashlib
 import json
 import subprocess
 import sys
 import uuid
-from pathlib import Path
 
 import httpx
 import pytest
-
 from app.config import Settings
 from scripts.validate_software_execution import (
-    BACKEND, PREFIX, LiveHTTPError, Validator, accepted, allocate, fixture_plan, is_software, output_dir,
+    BACKEND,
+    PREFIX,
+    LiveHTTPError,
+    Validator,
+    accepted,
+    allocate,
+    fixture_plan,
+    is_software,
+    output_dir,
 )
 
 
@@ -27,17 +34,39 @@ def test_exact_software_scope_plans_all_suites_and_cpp_checks_with_headroom():
     positives = json.loads((BACKEND / "tests/fixtures/execution_positive.json").read_text(encoding="utf-8"))["cases"]
     questions = [{"key": q["question_key"]} for q in scope["questions"]]
     budgets, assignments = allocate(questions, positives, maximum=4, minimum=4)
-    assert len(questions) == len(assignments) == 63
-    assert len(budgets) == 4 and sum(b["runs"] for b in budgets) == 177
+    assert len(questions) == len(assignments) == 66
+    assert len(budgets) == 4 and sum(b["runs"] for b in budgets) == 183
     assert all(b["runs"] < 60 and b["attempts"] < 30 for b in budgets)
     jobs = [job for q in questions for job in fixture_plan(q["key"], positives)]
     assert sum(job["kind"] == "question_suite" for job in jobs) == 56
-    assert sum(job["kind"] == "compile_error_probe" for job in jobs) == 63
+    assert sum(job["kind"] == "compile_error_probe" for job in jobs) == 66
     for q in questions:
         planned = fixture_plan(q["key"], positives)
         assert sum(job["language"] == "cpp" and job["kind"] != "compile_error_probe" for job in planned) == 1
     with pytest.raises(ValueError, match="allowance"):
         allocate(questions, positives, maximum=1)
+
+
+def test_scope_matches_current_software_seeds_and_preserves_the_63_question_live_report():
+    scope = json.loads((BACKEND / 'tests/fixtures/software_question_scope.json').read_bytes())
+    seeds = {q['key']: q for name in ('example_bank.json', 'preparation_bank.json')
+             for q in json.loads((BACKEND / 'seeds/questions' / name).read_bytes())}
+    expected = {key for key, q in seeds.items()
+                if is_software({'category': q.get('assets', {}).get('category'), 'subject': q['subject']})}
+    rows = {q['question_key']: q for q in scope['questions']}
+    assert len(rows) == len(scope['questions']) == scope['current_seed_count'] == 66
+    assert rows.keys() == expected
+    for key, row in rows.items():
+        payload = json.dumps(seeds[key], ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+        assert hashlib.sha256(payload).hexdigest() == row['seed_question_sha256'], key
+    assert set(scope['current_seed_additions']) == {
+        'prep-damaged-triple-groups', 'prep-top-two-distinct-and-mode', 'prep-opaque-c-linked-list-adt'}
+    historical = scope['historical_live_validation']
+    assert historical['question_count'] == 63 and historical['planned_execution_jobs'] == 177
+    assert historical['scope_fixture_sha256'] == '4fb0d4a93f2be2e1296548e20db6511857f1123959aa6db805e2d7d44270954a'
+    report = BACKEND.parent / historical['report_path']
+    expected_report_hash = 'e33959853626c6db7edf3e4f9e6cf756c0b5a8128668a1f3bf006d745cd53463'
+    assert hashlib.sha256(report.read_bytes()).hexdigest() == historical['report_sha256'] == expected_report_hash
 
 
 @pytest.mark.parametrize("changes", [{"compiled": None}, {"executed": False}, {"passed_count": 1},

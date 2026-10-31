@@ -14,6 +14,7 @@ from pathlib import Path
 BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_batch90.json").read_bytes())
 BATCH110_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_batch110.json").read_bytes())
 BATCH21_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_20261031_batch21.json").read_bytes())
+BATCH20_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_20261031_batch20.json").read_bytes())
 VARIANT_IDS = frozenset(BASELINE["variant_ids"])
 
 
@@ -72,8 +73,12 @@ def _before_record(question, baseline):
     return restored
 
 
+def before_batch20_record(question):
+    return _before_record(question, BATCH20_BASELINE)
+
+
 def before_batch21_record(question):
-    return _before_record(question, BATCH21_BASELINE)
+    return _before_record(before_batch20_record(question), BATCH21_BASELINE)
 
 
 def before_batch110_record(question):
@@ -105,7 +110,7 @@ def _assert_archive(archive, baseline, restore):
     by_id = {question["id"]: question for question in archive["questions"]}
     assert set(baseline["record_order"]) <= by_id.keys()
     original = {key: archive[key] for key in baseline["top_level"]}
-    assert archive["question_count"] == len(archive["questions"]) == 208
+    assert archive["question_count"] == len(archive["questions"]) == 219
     original["question_count"] = baseline["top_level"]["question_count"]
     original["questions"] = [restore(by_id[ident]) for ident in baseline["record_order"]]
     assert digest(original) == baseline["canonical_sha256"]
@@ -117,6 +122,10 @@ def assert_pre_batch110_archive(archive):
 
 def assert_pre_batch21_archive(archive):
     _assert_archive(archive, BATCH21_BASELINE, before_batch21_record)
+
+
+def assert_pre_batch20_archive(archive):
+    _assert_archive(archive, BATCH20_BASELINE, before_batch20_record)
 
 
 def assert_pre_batch90_archive(archive):
@@ -143,10 +152,28 @@ def assert_pre_batch21_assets(uploads):
         assert digest(uploads[path]) == previous_hash, path
 
 
+def assert_pre_batch20_assets(uploads):
+    assert len(BATCH20_BASELINE['asset_sha256']) == 1141
+    assert BATCH20_BASELINE['asset_sha256'].keys() <= uploads.keys()
+    for path, previous_hash in BATCH20_BASELINE['asset_sha256'].items():
+        assert digest(uploads[path]) == previous_hash, path
+
+
+def assert_pre_batch20_localization(localization):
+    for ident, previous in BATCH20_BASELINE['localized_material'].items():
+        current = localization[ident]
+        restored = (_prefix(current, previous['append_shape'], ('localized_material', ident))
+                    if 'append_shape' in previous else current)
+        assert digest(restored) == previous['sha256'], ('localized_material', ident)
+
+
 def assert_pre_batch21_localization(localization):
     """Localized material has its own frozen values and JSON types in both languages."""
     for ident, previous in BATCH21_BASELINE["localized_material"].items():
         current = localization[ident]
+        latest = BATCH20_BASELINE["localized_material"][ident]
+        if "append_shape" in latest:
+            current = _prefix(current, latest["append_shape"], ("localized_material", ident))
         restored = (_prefix(current, previous["append_shape"], ("localized_material", ident))
                     if "append_shape" in previous else current)
         assert digest(restored) == previous["sha256"], ("localized_material", ident)

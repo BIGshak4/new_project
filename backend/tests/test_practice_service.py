@@ -6,13 +6,13 @@ import asyncio
 import uuid
 
 import pytest
-
 from app.api.errors import ApiError
 from app.engine.providers import LLMError
 from app.repo.attempts import DuplicateSubmissionKey
 from app.services import memory_store
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+
 from tests.test_practice_hardening import GOOD, SEEDS, WEAK, scripted
 
 USER = uuid.uuid4()
@@ -141,7 +141,7 @@ class TestBoundaries:
         store = InMemoryStore(catalog, allow_in_review=False)
         svc = PracticeService(store, catalog, scripted([]))
         listed = await svc.list_questions(language="en")
-        assert len(listed) == 208 and all(q.preparation_id for q in listed)  # original 30 remain in_review
+        assert len(listed) == 219 and all(q.preparation_id for q in listed)  # original 30 remain in_review
         with pytest.raises(ApiError) as raised:
             await svc.start(USER, question_key=Q)
         assert raised.value.code == "not_found"

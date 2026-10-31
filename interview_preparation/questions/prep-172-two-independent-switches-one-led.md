@@ -204,3 +204,9 @@ def current_limit(supply, forward_drop, target_current, driver_drop=0.0):
   }
 }
 ```
+
+## קליטה נוספת — 31.10.2026 / Additional intake
+
+- מקור 4: [sources/2026-10-31-batch20-04.png](../sources/2026-10-31-batch20-04.png)
+
+בחדר יש שני מתגים ונורת לד אחת. צריך לממש מעגל כך שמתג אחד מדליק ומכבה את הנורה, ומתג שני גם כן (כמו בבית). אפשר להשתמש בעוד רכיבים.

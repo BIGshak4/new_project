@@ -1,0 +1,12 @@
+{
+  "question_id": "PREP-210",
+  "passed": true,
+  "exhaustive_group_damage_configurations": 6015,
+  "source_length_253_cases": 255,
+  "cases": 6270,
+  "oracle": "Global Counter residues modulo three, independent of equality-run scanning",
+  "element_read_bound": "at most 2*n-1",
+  "largest_observed_element_reads": 337,
+  "scope": "Every 1..6-group sequence over {0,1,2}, every damaged group; three 85-group families at every damage position. Promise inputs only; finite testing is not the general proof.",
+  "professional_review": "pending"
+}

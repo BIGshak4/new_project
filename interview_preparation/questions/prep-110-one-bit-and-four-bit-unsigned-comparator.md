@@ -238,3 +238,193 @@ def compare_words(a, b, width=4):
   }
 }
 ```
+
+## קליטה נוספת — 31.10.2026 / Additional intake
+
+- מקור 9: [sources/2026-10-31-batch20-09.png](../sources/2026-10-31-batch20-09.png)
+
+נתונה קופסה שמקבלת A,B שני מספרים בינארים באורך N, והקופסה מחזירה 1 אם A>B ו0 אחרת. תכנן את הקופסה בשערים ומוקסים
+
+- מקור 14: [sources/2026-10-31-batch20-14.png](../sources/2026-10-31-batch20-14.png)
+
+סעיף א׳ - נתון קופסה כניסות A,B ומוצא X,Y. ממש את X ו Y כך ש X=1 אם A
+
+התוכן הבא הוא הרחבה מוצעת בסיוע AI; הוא אינו אישור אנושי לפתרון המקורי או החדש.
+
+### he — הרחבה / Extension
+
+
+
+וריאציית מקור נוספת, צילום 9 מ־31.10.2026: שתי כניסות unsigned A,B ברוחב N≥1. הפיקו G=1 אם ורק אם A>B, ואפס אחרת, באמצעות שערים ומרבבים. השוויון מחזיר אפס; שמרו את הגרסה המקורית בעלת שלושת פלטי ההשוואה.
+
+השלמה עריכתית נפרדת לצילום 14, לפי בקשה מפורשת של המשתמש לאחר שהמקור נקטע: הגדירו A,B ככניסות של ביט יחיד, X=(A>B), Y=(A<B), ובשוויון X=Y=0. הנוסח המקורי הקטוע נשמר במקור; זהו נוסח משלים שאושר להכנה, לא שחזור מוכח של המשך הצילום.
+
+#### רמזים להרחבה / Variant hints
+
+1. בגרסת N הסיביות, חשבו מה קורה אם זוג הסיביות הגבוהות שווה, ומה קורה אם הוא שונה. בהשלמה החד־ביטית התחילו מארבע שורות.
+2. הסיבית הגבוהה ביותר שבה A ו־B שונים קובעת את היחס; סיביות שוות משמרות את תוצאת האזור הנמוך.
+3. התחילו g[-1]=0 והתקדמו מה־LSB: g[i]=MUX(Ai XOR Bi,g[i-1],Ai). לביט יחיד, X=A AND NOT B ו־Y=NOT A AND B.
+
+#### הצעה לפתרון / Proposed solution
+
+
+
+### הצעה לפתרון לגרסת N הסיביות
+נבנה בהדרגה את ההשוואה של A[i:0] ו־B[i:0]. מתחילים g[-1]=0, כי שתי מחרוזות ריקות שוות ואינן מקיימות גדול־ממש. לכל i מהנמוך לגבוה נגדיר d_i=Ai XOR Bi ו־g[i]=MUX(d_i,g[i−1],Ai). אם שתי הסיביות שוות, הן אינן משנות את היחס ולכן המרבב מחזיר את ההשוואה הנמוכה. אם הן שונות, זו הסיבית הגבוהה ביותר שנוספה: Ai=1 קובע גדול, ו־Ai=0 קובע שאינו גדול. האינדוקציה על i מוכיחה g[N−1]=(A>B). למשל A=1000,B=0111 מחזיר אחד, גם אם כל הביטים הנמוכים נוטים לכיוון ההפוך. כש־A=B כל d_i אפס והאתחול אפס נשמר.
+
+המבנה משתמש ב־N שערי XOR ו־N מרבבים ועומק ליניארי במסלול ההכרעה. חלופת שערים מאוזנת מייצגת כל מקטע בזוג (G,E), כאשר G מציין גדול ו־E שווה. עבור מקטע גבוה H ונמוך L משלבים G=G_H OR (E_H AND G_L), E=E_H AND E_L. מתחילים בכל סיבית ב־G_i=Ai AND NOT Bi ו־E_i=NOT(Ai XOR Bi), ומשלבים עץ של מקטעים סמוכים עד המילה המלאה. ההוכחה זהה: הגבוה מכריע אם אינו שווה, ורק בשוויון ניגשים לנמוך. עלות ישירה O(N) צמתים ועומק O(log N), בלי טענת מינימום פיזי או תזמון מספרי ללא ספריית שערים.
+
+### השלמה עריכתית מאושרת לצילום 14
+המקור נקטע אחרי התנאי 'כך ש X=1 אם A'. לפי בקשת המשתמש השלמנו תרגיל מפורש: A,B בני ביט יחיד, X מסמן A>B ו־Y מסמן A<B. אין טענה שזה מה שהופיע בחלק החסר.
+
+| A | B | X | Y |
+|---|---|---|---|
+|0|0|0|0|
+|0|1|0|1|
+|1|0|1|0|
+|1|1|0|0|
+
+לכן X=A AND NOT B ו־Y=NOT A AND B. כל פלט דורש זוג אחד בלבד מטבלת האמת, והם לעולם אינם אחד יחד. אם נדרש גם פלט שוויון, E=NOT(X OR Y). הגרסה הזו מקושרת ל־PREP-110 ואינה מחליפה את השאלה המקורית או ממציאה שיוך מקור חדש.
+
+נבדקו ממצה כל 87,380 זוגות unsigned ברוחבים 1..8 בכל אחד משני מימושי ההשוואה, כולל כל השוויונות, וארבע שורות ההשלמה החד־ביטית. הבדיקות הן מודלים עצמאיים של אמת לוגית, ללא RTL או בדיקת השהיה פיזית.
+
+#### assumptions
+
+[
+  "גרסה כללית: N≥1, unsigned, השוואה קשיחה A>B; g[-1]=0.",
+  "השלמת צילום 14 שאושרה על ידי המשתמש: A,B הם ביט יחיד ו־X,Y מסמנים גדול וקטן; שני הפלטים אפס בשוויון."
+]
+
+#### optimality
+
+"שרשרת: N XOR ו־N MUX, עומק O(N). עץ זוגות (G,E): O(N) צמתים ועומק O(log N). אין טענת מינימום שערים או זמן פיזי."
+
+#### verification
+
+"עברו כל 87,380 זוגות הקלט ברוחבים 1..8 בכל רשת, ועוד ארבע שורות ההשלמה החד־ביטית; ללא RTL או חומרה."
+
+#### edge_cases
+
+[
+  "A=B בכל רוחב מחזיר אפס ב־G.",
+  "0 מול הערך המרבי; הבדל רק ב־MSB; הבדל רק ב־LSB.",
+  "בהשלמה החד־ביטית X,Y לעולם אינם אחד יחד."
+]
+
+#### common_mistakes
+
+[
+  "אתחול g[-1]=1 הופך שוויון לגדול־או־שווה.",
+  "אין לעבור מהגבוה לנמוך באותה רקורסיה: סיבית נמוכה שונה עלולה למחוק הכרעה גבוהה.",
+  "אין להציג את השלמת צילום 14 כאילו שוחזרה מהמקור."
+]
+
+#### interview_answer
+
+"אעבור מהנמוך לגבוה: סיביות שוות שומרות תוצאה קודמת, ושונות בוחרות Ai; אתחול אפס נותן גדול־ממש. להשלמה החד־ביטית X=A∧¬B ו־Y=¬A∧B."
+
+#### source_ambiguities
+
+[
+  "צילום 9 אינו מציין signed; העריכה בוחרת unsigned במפורש.",
+  "צילום 14 קטוע. המשתמש ביקש במפורש להשלים אותו; המשך התרגיל הוא החלטת עריכה ולא עובדה שנקראה מן הצילום."
+]
+
+#### solution_extensions
+
+{
+  "question": "איך מתאימים את ההשוואה למספרים signed במשלים לשתיים באותו רוחב?",
+  "direction": "אם סיביות הסימן שונות, המספר עם סימן אפס גדול. אם הן שוות, השוואת unsigned של הדפוסים נותנת אותו סדר. אפשר לבחור בין שתי התוצאות לפי XOR של סיביות הסימן.",
+  "integration": "מוכן בתוכן; אינו מחובר לתור המשך אינטראקטיבי."
+}
+
+### en — הרחבה / Extension
+
+
+
+Additional source variant, screenshot nine on 31 October 2026: unsigned A,B of width N≥1. Produce G=1 exactly when A>B, otherwise zero, using gates and MUXes. Equality returns zero; retain the original three-output comparison exercise.
+
+Separate editorial completion for screenshot fourteen, explicitly requested by the user after source truncation: A,B are one-bit inputs, X=(A>B), Y=(A<B), and equality makes both zero. The truncated original is preserved in its source record. This is an authorized edited exercise, not a verified reconstruction of the missing screenshot text.
+
+#### רמזים להרחבה / Variant hints
+
+1. For N bits, distinguish equal and different high-bit pairs. For the one-bit completion, begin with four rows.
+2. The highest differing bit decides; equal bits preserve the lower-region result.
+3. Start g[-1]=0 and scan from the LSB: g[i]=MUX(Ai XOR Bi,g[i-1],Ai). For one bit use X=A AND NOT B and Y=NOT A AND B.
+
+#### הצעה לפתרון / Proposed solution
+
+
+
+### Proposed solution for the N-bit variant
+Build the comparison of A[i:0] and B[i:0] incrementally. Start g[-1]=0: two empty strings are equal, so strict greater-than is false. From low bits to high, define d_i=Ai XOR Bi and g[i]=MUX(d_i,g[i−1],Ai). Equal current bits do not change the lower comparison, so the MUX retains g[i−1]. Different current bits are the highest pair added: Ai=1 means greater, Ai=0 means not greater. Induction on i proves g[N−1]=(A>B). For A=1000,B=0111 the result is one despite the opposite tendency of every lower bit. When A=B all d_i are zero and the zero initialization survives.
+
+This uses N XOR gates and N MUXes with a linear decision path. A balanced gate alternative represents each block by (G,E), denoting greater and equal. Combine high block H and low block L as G=G_H OR (E_H AND G_L), E=E_H AND E_L. Initialize each bit with G_i=Ai AND NOT Bi and E_i=NOT(Ai XOR Bi), then combine adjacent blocks in a tree. Correctness follows because the high block decides unless equal, in which case the lower block decides. A direct construction has O(N) nodes and O(log N) depth, without physical-optimality or numerical timing claims absent a gate library.
+
+### Authorized editorial completion for screenshot fourteen
+The source stops after the partial condition 'X=1 if A'. At the user's explicit request, the completed exercise defines one-bit A,B, X=(A>B) and Y=(A<B). This does not claim to reconstruct the missing original text.
+
+| A | B | X | Y |
+|---|---|---|---|
+|0|0|0|0|
+|0|1|0|1|
+|1|0|1|0|
+|1|1|0|0|
+
+Thus X=A AND NOT B and Y=NOT A AND B. Each output recognizes just one input row, and they can never both be one. If equality is also required, E=NOT(X OR Y). This variant is linked to PREP-110, preserving its original question and making no invented source-attribution claim.
+
+Exhaustive checks covered all 87,380 unsigned operand pairs across widths 1..8 for both comparator implementations, including every equality, plus the four one-bit completion rows. These are independent Boolean models, without RTL compilation or physical-delay testing.
+
+#### assumptions
+
+[
+  "General variant: N≥1, unsigned strict A>B; g[-1]=0.",
+  "User-authorized screenshot-fourteen completion: one-bit A,B; X,Y denote greater and less; equality makes both zero."
+]
+
+#### optimality
+
+"Chain: N XORs and N MUXes, O(N) depth. A (G,E) tree uses O(N) nodes and O(log N) depth. No gate-count or physical-delay minimum claim."
+
+#### verification
+
+"All 87,380 operand pairs across widths one through eight passed in each network, plus four one-bit completion rows; no RTL or hardware."
+
+#### edge_cases
+
+[
+  "A=B returns zero for G at every width.",
+  "Zero versus maximum; MSB-only difference; LSB-only difference.",
+  "The one-bit completion never asserts X and Y together."
+]
+
+#### common_mistakes
+
+[
+  "Initializing g[-1]=1 changes equality into greater-or-equal.",
+  "Do not run the same recurrence high-to-low: a lower difference could erase a higher decision.",
+  "Do not present the screenshot-fourteen completion as recovered original text."
+]
+
+#### interview_answer
+
+"Scan low to high: equal bits retain the previous result, different bits select Ai; zero initialization ensures strict greater-than. For the one-bit completion X=A∧¬B and Y=¬A∧B."
+
+#### source_ambiguities
+
+[
+  "Screenshot nine does not state signedness; the edited version explicitly chooses unsigned.",
+  "Screenshot fourteen is truncated. The user explicitly requested completion; the completed contract is editorial, not a fact read from the screenshot."
+]
+
+#### solution_extensions
+
+{
+  "question": "How would you adapt comparison for same-width signed two's-complement numbers?",
+  "direction": "When sign bits differ, the nonnegative operand is greater. When signs match, unsigned comparison of the bit patterns has the same order. Select between these cases using the XOR of sign bits.",
+  "integration": "Prepared in content; not connected to an interactive follow-up queue."
+}
+
+- [solutions/prep_batch20_combinational.py](../solutions/prep_batch20_combinational.py)
+- [diagrams/prep-110-combinational-batch20-he.png](../diagrams/prep-110-combinational-batch20-he.png)
+- [diagrams/prep-110-combinational-batch20-en.png](../diagrams/prep-110-combinational-batch20-en.png)

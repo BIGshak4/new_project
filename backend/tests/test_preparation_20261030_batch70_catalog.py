@@ -13,7 +13,6 @@ import uuid
 from pathlib import Path
 
 import pytest
-
 from app.api.errors import ApiError
 from app.engine import bank
 from app.engine.catalog import load_catalog
@@ -22,6 +21,7 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+
 from tests.preparation_history import technical_before_batch90, technical_before_batch110
 from tests.test_practice_hardening import scripted
 
@@ -1193,7 +1193,7 @@ def test_thirty_sources_keep_bytes_full_transcriptions_and_exact_identity_mappin
 
 def test_all_previous_questions_preserve_technical_snapshots_or_exact_appended_prefixes(catalog):
     questions = archive()
-    assert len(questions) == 208 and len(catalog.questions) == 238
+    assert len(questions) == 219 and len(catalog.questions) == 249
     current_runtime = {q.assets.get("preparation_id"): q for q in catalog.questions.values() if q.assets.get("preparation_id")}
     for ident, expected in UNCHANGED_TECHNICAL_SHA256.items():
         original = questions[ident]
@@ -1254,7 +1254,7 @@ def test_inventory_retains_old_asset_hashes_and_private_originals(catalog):
         assert by_local[path]["sha256"] == previous_digest
         assert hashlib.sha256((BANK / path).read_bytes()).hexdigest() == previous_digest
     sources = [entry["local_path"] for entry in uploads.values() if entry["local_path"].startswith("sources/")]
-    assert len(sources) == 332 and len(set(sources)) == 331
+    assert len(sources) == 352 and len(set(sources)) == 351
     names = json.loads((ROOT / "apps/web/src/lib/source-screenshots.json").read_bytes())
     assert set(names) == {Path(path).name for path in sources}
     for question in catalog.questions.values():

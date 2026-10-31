@@ -2007,21 +2007,25 @@
         "ביטים מתווספים מימין: V_next=2V+x.",
         "ביט תקף אחד לכל חזית פעילה; המוצא נקבע לאחר צריכת הביט.",
         "עמימות לגבי אפס מתועדת בשתי פרשנויות נפרדות.",
-        "מכונת Moore עם reset מפורש."
+        "מכונת Moore עם reset מפורש.",
+        "וריאציית MSB: ביט חדש נוסף משמאל במשקל2^k; ביט תקף בחזית; אפס מתחלק; seen מבדיל מצב לפני קלט; reset ל־S0."
       ],
       "en": [
         "Bits append on the right: V_next=2V+x.",
         "One valid bit per active edge; output after consuming bit.",
         "Zero ambiguity documented as two separate interpretations.",
-        "Moore FSM with explicit reset."
+        "Moore FSM with explicit reset.",
+        "MSB variant: new leftmost bit has weight2^k; edge acceptance; zero is divisible; seen distinguishes pre-input; reset S0."
       ]
     },
     "source_ambiguities": {
       "he": [
-        "פלט הדוגמה הראשונה אינו כולל אפס, אף שאפס מתחלק בשלוש מבחינה מתמטית."
+        "פלט הדוגמה הראשונה אינו כולל אפס, אף שאפס מתחלק בשלוש מבחינה מתמטית.",
+        "מקור13 מוסיף במפורש משמאל/MSB בניגוד לצירוף מימין במקור הישן; נשמר כווריאציה. אפס ותוקף קדם־נתון הובהרו בעריכה."
       ],
       "en": [
-        "First example output excludes zero although zero is mathematically divisible by three."
+        "First example output excludes zero although zero is mathematically divisible by three.",
+        "Source13 explicitly says left/MSB, unlike original right appending; preserved as a variant. Zero and pre-input validity are clarified editorially."
       ]
     },
     "transition_tables": {
@@ -2098,12 +2102,14 @@
       "he": {
         "criterion": "מצבי Moore נגישים וניתנים להבחנה",
         "result": "3 מצבים להתחלקות רגילה ו־4 לכפולות חיוביות; 2 רכיבי DFF בכל אחד מהקידודים הבינאריים.",
-        "scope": "סמנטיקת reset ומוצא Moore מוגדרת; אין טענה למינימליות שערים או מכונת Mealy."
+        "scope": "סמנטיקת reset ומוצא Moore מוגדרת; אין טענה למינימליות שערים או מכונת Mealy.",
+        "batch20_extension": "לבדיקת החלוקה בווריאציה המנורמלת:3 מצבים,2 FF, ועוד seen אם נדרש תוקף לפני נתון. אין צורך לשמור את N הגדל או מונה אורך."
       },
       "en": {
         "criterion": "Reachable distinguishable Moore states",
         "result": "3 states for ordinary divisibility, 4 for positive multiples; 2 DFFs in either binary encoding.",
-        "scope": "Defined reset and Moore-output semantics; not gate or Mealy minimality."
+        "scope": "Defined reset and Moore-output semantics; not gate or Mealy minimality.",
+        "batch20_extension": "Normalized divisibility variant:3 states,2 FFs plus seen if pre-input validity is required; no growing N or length counter."
       }
     },
     "verification": {
@@ -2111,13 +2117,51 @@
         "status": "passed",
         "checked_on": "2026-09-29",
         "script_path": "solutions/register_prep_036.py",
-        "method": "כל 8191 המילים הבינאריות באורכים 0..12, 90114 דגימות קידומת, שתי הפרשנויות מול חשבון של מספרים שלמים; סיומות המבחינות בין כל זוג מצבים ונגישות; הדוגמה המקורית המדויקת עבור הפרשנות החיובית."
+        "method": "כל 8191 המילים הבינאריות באורכים 0..12, 90114 דגימות קידומת, שתי הפרשנויות מול חשבון של מספרים שלמים; סיומות המבחינות בין כל זוג מצבים ונגישות; הדוגמה המקורית המדויקת עבור הפרשנות החיובית.",
+        "batch20_extension": "וריאציית שמאל:32,767 רצפים עד אורך14 ו־425,986 קידומות עם אינווריאנט מספרי, השוואת כיוונים, hold/reset. כל דגלי החלוקה זהים לשיטת צירוף מימין בתחום הנבדק, כנדרש גם מההוכחה. אימות RTL שבוצע בפועל: prep036_left_mod3 קומפל והורץ מול assertions בכל511 הרצפים באורכים0..8, עם3,586 קידומות ואינווריאנט מספרי, seen, hold ו־reset. טווח0..14 הוא בדיקת Python נפרדת. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה."
       },
       "en": {
         "status": "passed",
         "checked_on": "2026-09-29",
         "script_path": "solutions/register_prep_036.py",
-        "method": "All 8191 binary words of length 0..12, 90114 prefix samples, both interpretations against integer arithmetic; pairwise state-distinguishing suffixes and reachability; exact supplied example for positive interpretation."
+        "method": "All 8191 binary words of length 0..12, 90114 prefix samples, both interpretations against integer arithmetic; pairwise state-distinguishing suffixes and reachability; exact supplied example for positive interpretation.",
+        "batch20_extension": "Left variant:32,767 streams up to length14 and425,986 prefixes with numeric invariant, direction comparison and hold/reset. Divisibility flags match right-append throughout, as also proved. Actual RTL validation: prep036_left_mod3 compiled and passed assertions on all511 streams of lengths0..8, with3,586 numeric-invariant prefixes plus seen, hold and reset. Lengths0..14 were separately checked in Python. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed."
+      }
+    },
+    "edge_cases": {
+      "he": [
+        "לפני נתון ראשון לעומת נתון0; רצף אפסים; הוספת0 כ־MSB משאירה N אך משנה k;1,0 נותן N=1 ולא2; idle אינו מגדיל k."
+      ],
+      "en": [
+        "Before first input versus accepted zero; all zeros; a new zero MSB holds N but advances k;1,0 gives N=1 rather than2; idle does not advance k."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשתמש בנוסחת2N+b כדי לתאר הוספה משמאל.",
+        "להסיק נכונות של כיוון הבנייה מבדיקת דגל בלבד: כאן שני הכיוונים תמיד מסכימים על התחלקות.",
+        "לחשוב ש־s הוא השארית הרגילה N mod3 במקום השארית המנורמלת."
+      ],
+      "en": [
+        "Using2N+b to describe left insertion.",
+        "Inferring direction correctness from flags alone: both directions always agree on divisibility here.",
+        "Interpreting s as ordinary N mod3 instead of the normalized remainder."
+      ]
+    },
+    "interview_answer": {
+      "he": "בגרסת MSB החדש משמאל אשתמש ב־s=N2^(−k) mod3; המעבר הוא2(s+b) mod3. שלושה מצבים מספיקים, ו־seen מונע תשובה לפני קלט. אבדוק אינווריאנט מספרי כי דגלי הכיוונים זהים.",
+      "en": "For new-left-MSB input use s=N2^(−k) mod3 with transition2(s+b) mod3. Three states suffice, with seen for pre-input validity. Check the numeric invariant because directional flags coincide."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "האם אותו נרמול עובד לחלוקה ב־5?",
+        "direction": "כן, כי2 הפיך מודולו5:2^(−1)=3, ולכן next_s=3(s+b) mod5. אין להסיק שכיווני הקבלה יתנו אותו דגל לכל קידומת; המיוחד ל־3 הוא2^2=1.",
+        "integration": "מוכן בתוכן; אינו מחובר לתור אינטראקטיבי."
+      },
+      "en": {
+        "question": "Does normalization also work modulo5?",
+        "direction": "Yes: inverse(2) modulo5 is3, giving next_s=3(s+b) mod5. Do not assume both directions give identical prefix flags; the modulo3 argument uses2^2=1.",
+        "integration": "Prepared in content; not connected to the interactive queue."
       }
     }
   },

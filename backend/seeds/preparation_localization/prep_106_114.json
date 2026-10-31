@@ -4,62 +4,80 @@
       "he": [
         "קלט בינארי ללא סימן; ביט 3 הוא המשמעותי ביותר.",
         "L מוגדר במפורש a<b במקום התווית הכפולה b<a במקור.",
-        "מותרות לוגיקה משלימה וחיווט; רכיב קומבינטורי ללא דרישת מינימום שערים."
+        "מותרות לוגיקה משלימה וחיווט; רכיב קומבינטורי ללא דרישת מינימום שערים.",
+        "גרסה כללית: N≥1, unsigned, השוואה קשיחה A>B; g[-1]=0.",
+        "השלמת צילום 14 שאושרה על ידי המשתמש: A,B הם ביט יחיד ו־X,Y מסמנים גדול וקטן; שני הפלטים אפס בשוויון."
       ],
       "en": [
         "Binary unsigned inputs; bit 3 is most significant.",
         "L explicitly means a<b, correcting the duplicated source label b<a.",
-        "Combining logic and wires allowed; combinational circuit, no minimum gate-count claim."
+        "Combining logic and wires allowed; combinational circuit, no minimum gate-count claim.",
+        "General variant: N≥1, unsigned strict A>B; g[-1]=0.",
+        "User-authorized screenshot-fourteen completion: one-bit A,B; X,Y denote greater and less; equality makes both zero."
       ]
     },
     "optimality": {
-      "he": "מוצגת בנייה לינארית במספר תאי הביט; לא הוכחה למינימום שערים. עץ צירוף מאפשר עומק לוגריתמי במודל מניפה קבועה.",
-      "en": "The construction uses a linear number of bit cells; it does not establish a minimum gate count. A balanced combination tree permits logarithmic depth with bounded fan-in."
+      "he": "מוצגת בנייה לינארית במספר תאי הביט; לא הוכחה למינימום שערים. עץ צירוף מאפשר עומק לוגריתמי במודל מניפה קבועה.\n\nשרשרת: N XOR ו־N MUX, עומק O(N). עץ זוגות (G,E): O(N) צמתים ועומק O(log N). אין טענת מינימום שערים או זמן פיזי.",
+      "en": "The construction uses a linear number of bit cells; it does not establish a minimum gate count. A balanced combination tree permits logarithmic depth with bounded fan-in.\n\nChain: N XORs and N MUXes, O(N) depth. A (G,E) tree uses O(N) nodes and O(log N) depth. No gate-count or physical-delay minimum claim."
     },
     "edge_cases": {
       "he": [
         "שוויון, אפסים, וכל הביטים אחד.",
         "הבדל בביט העליון מול הרבה הבדלים נמוכים בכיוון ההפוך.",
-        "הבדל בביט התחתון בלבד; קלט חתום דורש חוזה אחר."
+        "הבדל בביט התחתון בלבד; קלט חתום דורש חוזה אחר.",
+        "A=B בכל רוחב מחזיר אפס ב־G.",
+        "0 מול הערך המרבי; הבדל רק ב־MSB; הבדל רק ב־LSB.",
+        "בהשלמה החד־ביטית X,Y לעולם אינם אחד יחד."
       ],
       "en": [
         "Equal words, all zero and all one.",
         "A highest-bit difference versus many opposite lower differences.",
-        "A difference only at the lowest bit; signed input requires another contract."
+        "A difference only at the lowest bit; signed input requires another contract.",
+        "A=B returns zero for G at every width.",
+        "Zero versus maximum; MSB-only difference; LSB-only difference.",
+        "The one-bit completion never asserts X and Y together."
       ]
     },
     "common_mistakes": {
       "he": [
         "לחבר את כל תוצאות גדול ב־OR בלי בדיקת שוויון של הגבוהים.",
         "לעדכן E לפני שחישבתם G_next,L_next מהערכים הישנים.",
-        "לתאר ארבעה תאי השוואה קומבינטוריים כארבעה מחזורי שעון."
+        "לתאר ארבעה תאי השוואה קומבינטוריים כארבעה מחזורי שעון.",
+        "אתחול g[-1]=1 הופך שוויון לגדול־או־שווה.",
+        "אין לעבור מהגבוה לנמוך באותה רקורסיה: סיבית נמוכה שונה עלולה למחוק הכרעה גבוהה.",
+        "אין להציג את השלמת צילום 14 כאילו שוחזרה מהמקור."
       ],
       "en": [
         "ORing all greater outputs without higher-bit equality.",
         "Updating E before computing G_next,L_next from the old values.",
-        "Calling a four-cell combinational cascade four clock cycles."
+        "Calling a four-cell combinational cascade four clock cycles.",
+        "Initializing g[-1]=1 changes equality into greater-or-equal.",
+        "Do not run the same recurrence high-to-low: a lower difference could erase a higher decision.",
+        "Do not present the screenshot-fourteen completion as recovered original text."
       ]
     },
     "interview_answer": {
-      "he": "לתא ביט: g=a·¬b, e=¬(a⊕b), l=¬a·b. מחברים ארבעה תאים מהמשמעותי לפחות משמעותי. כל הכרעה נמוכה מותנית בשוויון כל הגבוהים; בדיוק דגל אחד דולק.",
-      "en": "For one bit use g=a·¬b, e=¬(a⊕b), l=¬a·b. Combine four cells from most to least significant, admitting a lower decision only if every higher bit is equal. Exactly one flag is high."
+      "he": "לתא ביט: g=a·¬b, e=¬(a⊕b), l=¬a·b. מחברים ארבעה תאים מהמשמעותי לפחות משמעותי. כל הכרעה נמוכה מותנית בשוויון כל הגבוהים; בדיוק דגל אחד דולק.\n\nאעבור מהנמוך לגבוה: סיביות שוות שומרות תוצאה קודמת, ושונות בוחרות Ai; אתחול אפס נותן גדול־ממש. להשלמה החד־ביטית X=A∧¬B ו־Y=¬A∧B.",
+      "en": "For one bit use g=a·¬b, e=¬(a⊕b), l=¬a·b. Combine four cells from most to least significant, admitting a lower decision only if every higher bit is equal. Exactly one flag is high.\n\nScan low to high: equal bits retain the previous result, different bits select Ai; zero initialization ensures strict greater-than. For the one-bit completion X=A∧¬B and Y=¬A∧B."
     },
     "source_ambiguities": {
-      "he": "התווית b<a כפולה ל־a>b; תוקנה ל־a<b בעריכה. המקור לא קובע חתימות, ספריית שערים או עלות מינימלית. ההנחות נוספו במפורש.",
-      "en": "The source label b<a duplicates a>b; this edition corrects it to a<b. Signedness, gate library and minimum cost were unspecified and are explicitly clarified."
+      "he": "התווית b<a כפולה ל־a>b; תוקנה ל־a<b בעריכה. המקור לא קובע חתימות, ספריית שערים או עלות מינימלית. ההנחות נוספו במפורש.\n\nצילום 9 אינו מציין signed; העריכה בוחרת unsigned במפורש.\nצילום 14 קטוע. המשתמש ביקש במפורש להשלים אותו; המשך התרגיל הוא החלטת עריכה ולא עובדה שנקראה מן הצילום.",
+      "en": "The source label b<a duplicates a>b; this edition corrects it to a<b. Signedness, gate library and minimum cost were unspecified and are explicitly clarified.\n\nScreenshot nine does not state signedness; the edited version explicitly chooses unsigned.\nScreenshot fourteen is truncated. The user explicitly requested completion; the completed contract is editorial, not a fact read from the screenshot."
     },
     "verification": {
-      "he": "5,460 זוגות ברוחבים 1..6, בהם כל 256 זוגות ארבעת הביטים, הושוו להשוואות שלמים נפרדות; אומתו דגל יחיד וקלט שגוי. מודל Python בלבד.",
-      "en": "5,460 pairs across widths 1..6, including all 256 four-bit pairs, matched independent integer comparisons; exactly-one and invalid inputs checked. Python model only."
+      "he": "5,460 זוגות ברוחבים 1..6, בהם כל 256 זוגות ארבעת הביטים, הושוו להשוואות שלמים נפרדות; אומתו דגל יחיד וקלט שגוי. מודל Python בלבד.\n\nעברו כל 87,380 זוגות הקלט ברוחבים 1..8 בכל רשת, ועוד ארבע שורות ההשלמה החד־ביטית; ללא RTL או חומרה.",
+      "en": "5,460 pairs across widths 1..6, including all 256 four-bit pairs, matched independent integer comparisons; exactly-one and invalid inputs checked. Python model only.\n\nAll 87,380 operand pairs across widths one through eight passed in each network, plus four one-bit completion rows; no RTL or hardware."
     },
     "solution_extensions": {
       "he": {
-        "question": "איך מקצרים את עומק השרשרת ברוחב גדול?",
-        "direction": "הגדירו לכל קבוצת ביטים G,E,L; צירוף קבוצה גבוהה ונמוכה הוא G=Gh OR(Eh AND Gl), E=Eh AND El, L=Lh OR(Eh AND Ll). בנו עץ מאוזן."
+        "question": "איך מקצרים את עומק השרשרת ברוחב גדול?\n\nאיך מתאימים את ההשוואה למספרים signed במשלים לשתיים באותו רוחב?",
+        "direction": "הגדירו לכל קבוצת ביטים G,E,L; צירוף קבוצה גבוהה ונמוכה הוא G=Gh OR(Eh AND Gl), E=Eh AND El, L=Lh OR(Eh AND Ll). בנו עץ מאוזן.\n\nאם סיביות הסימן שונות, המספר עם סימן אפס גדול. אם הן שוות, השוואת unsigned של הדפוסים נותנת אותו סדר. אפשר לבחור בין שתי התוצאות לפי XOR של סיביות הסימן.",
+        "integration": "מוכן בתוכן; אינו מחובר לתור המשך אינטראקטיבי."
       },
       "en": {
-        "question": "How can a wide comparison avoid linear cascade depth?",
-        "direction": "Represent each group by G,E,L. Combine high and low groups as G=Gh OR(Eh AND Gl), E=Eh AND El, L=Lh OR(Eh AND Ll), using a balanced tree."
+        "question": "How can a wide comparison avoid linear cascade depth?\n\nHow would you adapt comparison for same-width signed two's-complement numbers?",
+        "direction": "Represent each group by G,E,L. Combine high and low groups as G=Gh OR(Eh AND Gl), E=Eh AND El, L=Lh OR(Eh AND Ll), using a balanced tree.\n\nWhen sign bits differ, the nonnegative operand is greater. When signs match, unsigned comparison of the bit patterns has the same order. Select between these cases using the XOR of sign bits.",
+        "integration": "Prepared in content; not connected to an interactive follow-up queue."
       }
     }
   },
@@ -222,24 +240,28 @@
       "he": [
         "n>=1, ביט 0 הוא LSB, קלט ופלט באותו רוחב.",
         "מותרות רשתות קומבינטוריות משערים בסיסיים; אין רכיב אריתמטי מוכן.",
-        "אפס מחזיר אפס; ערכים יציבים בלבד."
+        "אפס מחזיר אפס; ערכים יציבים בלבד.",
+        "גרסת התזמון: רוחב 20; NOT בעל כניסה אחת ו־AND/OR בעלי שתי כניסות, כל שער 1 ns; חוטים ופיצול חופשיים."
       ],
       "en": [
         "n>=1, bit zero is LSB, and input/output widths match.",
         "Combinational basic-gate networks are allowed; no prebuilt arithmetic unit.",
-        "Zero gives zero; settled-value behavior only."
+        "Zero gives zero; settled-value behavior only.",
+        "Timing variant: width twenty; unary NOT and two-input AND/OR, 1 ns each; wires/fanout are free."
       ]
     },
     "optimality": {
       "he": {
         "chain": "O(n) שערים ועומק לוגי O(n) בשרשרת.",
         "parallel_alternative": "הכפלת קידומות מפורשת: O(n log n) שערי OR ועומק O(log n), ועוד מסיכות.",
-        "scope": "אין טענת מספר שערים מזערי או השהיה פיזית חסומה שאינה תלויה ברוחב."
+        "scope": "אין טענת מספר שערים מזערי או השהיה פיזית חסומה שאינה תלויה ברוחב.",
+        "batch20_extension": "שרשרת: 20 ns; עץ קידומות מוגדר: לכל היותר 7 ns ולכן עומד ב־10 ns. לא נטען מינימום פיזי. עצים נפרדים O(n²) שערים, רשת שיתוף O(n log n) בבנייה ישירה."
       },
       "en": {
         "chain": "O(n) gates and O(n) logical depth for the chain.",
         "parallel_alternative": "Explicit prefix doubling: O(n log n) OR gates at O(log n) depth, plus masks.",
-        "scope": "No minimum-gate or width-independent physical-delay claim."
+        "scope": "No minimum-gate or width-independent physical-delay claim.",
+        "batch20_extension": "Serial chain: 20 ns; declared balanced-prefix construction: at most 7 ns, meeting ten ns. No physical minimum claim. Separate trees take O(n²) gates; a direct shared prefix network uses O(n log n)."
       }
     },
     "edge_cases": {
@@ -248,14 +270,16 @@
         "n=1 נותן y0=x0.",
         "אם רק הביט העליון דלוק הוא נשמר.",
         "כל האחדים נותנים רק y0=1.",
-        "מספר אפסים מובילים אינו משנה את האינדקס אך נשמר ברוחב הפלט."
+        "מספר אפסים מובילים אינו משנה את האינדקס אך נשמר ברוחב הפלט.",
+        "אפס; אחד יחיד ב־LSB; אחד יחיד ב־MSB; כל הביטים אחד; כמה אחדות סמוכות."
       ],
       "en": [
         "All-zero input gives zero.",
         "n=1 gives y0=x0.",
         "A lone highest bit survives.",
         "All ones leave only y0=1.",
-        "Leading zeros preserve output width without changing the selected index."
+        "Leading zeros preserve output width without changing the selected index.",
+        "Zero; a lone LSB; a lone MSB; all ones; several adjacent ones."
       ]
     },
     "common_mistakes": {
@@ -264,35 +288,43 @@
         "החזרת אינדקס במקום וקטור באותו רוחב.",
         "OR של ביטים גבוהים במקום נמוכים.",
         "שימוש ב־x AND (−x) בלי לממש את החשבון המותר.",
-        "טענה ששרשרת של n שערים היא בעומק קבוע."
+        "טענה ששרשרת של n שערים היא בעומק קבוע.",
+        "OR של כל הביטים כולל x_i יחסום גם את האחד הרצוי; צריך רק את הביטים הנמוכים.",
+        "אין להניח שער OR בן 19 כניסות של 1 ns כשהותרו רק שתי כניסות.",
+        "עמידה ב־10 ns אינה הוכחת השהיה מינימלית."
       ],
       "en": [
         "Selecting the highest instead of lowest one.",
         "Returning an index instead of a same-width vector.",
         "ORing higher rather than lower bits.",
         "Using x AND (−x) without addressing the allowed gate implementation.",
-        "Claiming a chain of n gates has constant depth."
+        "Claiming a chain of n gates has constant depth.",
+        "Including x_i in its own blocking OR suppresses the desired bit; include lower bits only.",
+        "Do not assume a nineteen-input OR takes 1 ns when only fan-in two is allowed.",
+        "Meeting ten ns does not prove minimum delay."
       ]
     },
     "interview_answer": {
-      "he": "לכל ביט i אחשב p[i], OR של הביטים הנמוכים ממנו, ואוציא y[i]=x[i] AND NOT p[i]. קידומת מתחילה באפס ומתעדכנת ב־p[i+1]=p[i] OR x[i]. האחד הראשון עובר ומדליק חסימה לכל הגבוהים. שרשרת בגודל ובעומק O(n).",
-      "en": "For bit i compute p[i], OR of lower bits, then y[i]=x[i] AND NOT p[i]. Start p0=0 and update p[i+1]=p[i] OR x[i]. The first one passes and blocks higher positions. The chain has O(n) size and depth."
+      "he": "לכל ביט i אחשב p[i], OR של הביטים הנמוכים ממנו, ואוציא y[i]=x[i] AND NOT p[i]. קידומת מתחילה באפס ומתעדכנת ב־p[i+1]=p[i] OR x[i]. האחד הראשון עובר ומדליק חסימה לכל הגבוהים. שרשרת בגודל ובעומק O(n).\n\nאשאיר x_i רק אם כל הנמוכים אפס. שרשרת OR נותנת 20 ns; OR מאוזן עד חמישה מפלסים ועוד NOT ו־AND נותן 7 ns במודל ולכן עומד ב־10.",
+      "en": "For bit i compute p[i], OR of lower bits, then y[i]=x[i] AND NOT p[i]. Start p0=0 and update p[i+1]=p[i] OR x[i]. The first one passes and blocks higher positions. The chain has O(n) size and depth.\n\nKeep x_i only when all lower bits are zero. Serial OR gives twenty ns; a balanced five-level OR plus NOT and AND gives seven ns in the model and meets ten."
     },
     "source_ambiguities": {
       "he": [
         "בצילום חסר אפס מוביל בפלט הדוגמה; נשמר רוחב n במפורש.",
         "תגובה לקלט אפס ומודל שערים הוגדרו בעריכה.",
-        "Mellanox מופיעה במקור בלבד ולא אומתה עצמאית."
+        "Mellanox מופיעה במקור בלבד ולא אומתה עצמאית.",
+        "צילום 5 נותן תקציבי זמן אך לא מפרט השהיית שער או fan-in. מודל שתי כניסות ו־1 ns הוא הבהרת עריכה מפורשת."
       ],
       "en": [
         "The source example omits one leading output zero; the edition explicitly retains n bits.",
         "Zero behavior and the gate model are editorial clarifications.",
-        "Mellanox appears in the source only, without independent verification."
+        "Mellanox appears in the source only, without independent verification.",
+        "Screenshot five gives time budgets without gate-delay or fan-in details. The fan-in-two, 1 ns model is an explicit editorial assumption."
       ]
     },
     "verification": {
-      "he": "8,190 וקטורים ממצים ברוחבים 1..12 ו־600 מדגמים עד 257 ביטים הושוו לסריקת אינדקסים עצמאית. הדוגמה, אפס, one-hot, תת־קבוצה ושש דחיות קלט עברו. מודל Python בלבד; לא HDL או בדיקת חומרה.",
-      "en": "8,190 exhaustive vectors of widths 1..12 and 600 seeded cases through 257 bits matched an independent index scan. Example, zero, one-hot/subset properties and six invalid-input rejections passed. Python model only; no HDL or hardware experiment."
+      "he": "8,190 וקטורים ממצים ברוחבים 1..12 ו־600 מדגמים עד 257 ביטים הושוו לסריקת אינדקסים עצמאית. הדוגמה, אפס, one-hot, תת־קבוצה ושש דחיות קלט עברו. מודל Python בלבד; לא HDL או בדיקת חומרה.\n\nשתי הרשתות עברו כל 1,048,576 מילות 20 הסיביות. זמני 20 הפלטים הושוו לספירת מפלסים עצמאית; אין בדיקת חומרה.",
+      "en": "8,190 exhaustive vectors of widths 1..12 and 600 seeded cases through 257 bits matched an independent index scan. Example, zero, one-hot/subset properties and six invalid-input rejections passed. Python model only; no HDL or hardware experiment.\n\nBoth networks passed every one of 1,048,576 twenty-bit words. All twenty arrival bounds matched independent level counting; no hardware test."
     },
     "relationship_note": {
       "he": "PREP-014 ו־PREP-086 בוחרות את האחד הגבוה ביותר. כאן הכיוון הפוך והמסיכה תלויה רק בביטים הנמוכים. אין החלפת מזהה של התרגילים הקיימים.",
@@ -300,14 +332,16 @@
     },
     "solution_extensions": {
       "he": {
-        "question": "איך מצמצמים עומק כש־n גדול?",
-        "direction": "מחשבים קידומות OR במבנה הכפלה מקבילי. בכל רמה משתמשים רק באותות מהרמה הקודמת במרחק 1,2,4 וכן הלאה; המסיכה נשארת על הביטים הנמוכים בלבד.",
-        "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך."
+        "question": "איך מצמצמים עומק כש־n גדול?\n\nאם המוצא צריך להיות האינדקס של האחד הנמוך במקום וקטור one-hot, מה נוסף?",
+        "direction": "מחשבים קידומות OR במבנה הכפלה מקבילי. בכל רמה משתמשים רק באותות מהרמה הקודמת במרחק 1,2,4 וכן הלאה; המסיכה נשארת על הביטים הנמוכים בלבד.\n\nמקודד על הווקטור one-hot וסיבית valid נפרדת. ב־20 כניסות צריך חמישה ביטי אינדקס, ו־valid מבדיל בין קלט אפס לבין אינדקס אפס.",
+        "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך.",
+        "integration": "מוכן בתוכן; אינו מחובר לתור המשך אינטראקטיבי."
       },
       "en": {
-        "question": "How can depth be reduced for large n?",
-        "direction": "Compute OR prefixes using parallel doubling. Each level reads the preceding level at distances 1,2,4,...; the output mask still covers only lower bits.",
-        "status": "Prepared in content; not connected to the interactive follow-up queue."
+        "question": "How can depth be reduced for large n?\n\nIf the output must be the lowest-one index rather than a one-hot word, what must be added?",
+        "direction": "Compute OR prefixes using parallel doubling. Each level reads the preceding level at distances 1,2,4,...; the output mask still covers only lower bits.\n\nEncode the one-hot result and provide a separate valid bit. Twenty inputs require five index bits; valid distinguishes zero input from index zero.",
+        "status": "Prepared in content; not connected to the interactive follow-up queue.",
+        "integration": "Prepared in content; not connected to an interactive follow-up queue."
       }
     }
   },

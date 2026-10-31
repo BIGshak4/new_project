@@ -1,0 +1,11 @@
+{
+  "question_id": "PREP-211",
+  "passed": true,
+  "exhaustive_arrays": 9841,
+  "seeded_arrays": 200,
+  "boundary_arrays": 5,
+  "cases": 10046,
+  "oracle": "Sorted distinct values and independent list.count frequencies with explicit smallest-value mode tie",
+  "scope": "All arrays over {-2,0,3} of length0..8, 200 reproducible samples, empty/single distinct/ties/negative/wide integer boundaries. Python algorithms executed; no claim of worst-case constant-time hashing.",
+  "professional_review": "pending"
+}

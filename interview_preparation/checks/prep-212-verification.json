@@ -1,0 +1,40 @@
+{
+  "question_id": "PREP-212",
+  "passed": true,
+  "c_compiled": true,
+  "c_executed": true,
+  "execution_environment": "Isolated application C execution service; invoked for QA, not a learner submission or progress update",
+  "compiler_identity": "Not returned by execution service; no version claimed",
+  "platform_assessment_passed": null,
+  "platform_test_count": 0,
+  "execution_result": {
+    "passed": true,
+    "insertion_scenarios": 54,
+    "assertions": 2264,
+    "allocation_failure_injected": true,
+    "live_blocks_at_exit": 0
+  },
+  "execution_service_response": {
+    "status": "completed",
+    "language": "c",
+    "compiled": true,
+    "executed": true,
+    "passed": null,
+    "stdout": "{\"passed\":true,\"insertion_scenarios\":54,\"assertions\":2264,\"allocation_failure_injected\":true,\"live_blocks_at_exit\":0}\n",
+    "stderr": "",
+    "compile_output": "",
+    "cases": [],
+    "test_count": 0,
+    "passed_count": 0,
+    "runtime_ms": 4115,
+    "detail": "The program ran successfully. This question has no automated tests for this language; correctness was not assessed."
+  },
+  "source_sha256": {
+    "solutions/prep_212_linked_list_adt.h": "0b4c85e07bab2e29dedd129524b58f639ffa25f0282c4c301496654e2209c290",
+    "solutions/prep_212_linked_list_adt.c": "dafa2f3bcb7d2b7ed10f5fecc3b26f52950ccdeb33fe68aa674412c1e3bebd0b",
+    "checks/prep_212_linked_list_adt_test.c": "b3562d09b64f3ec999c4b05fc3a709be4b2a215b9a3fc906f676903c2795ec88",
+    "checks/prep_212_linked_list_adt_amalgamated.c": "608be9b16a522e12c385074f752557833bda3175412fa9bff10b6b41d81ebf8a"
+  },
+  "scope": "Actual C compilation and execution of the exact public header/implementation/harness include expansion. 54 insertion scenarios, 2,264 assertions, deterministic allocation-failure injection, tail ownership rejection and allocation tracking. Not a sanitizer run or exhaustive C/allocator/platform proof. Local pytest C compilation remains skipped because no local compiler is available.",
+  "professional_review": "pending"
+}

@@ -1,13 +1,13 @@
 {
-  "version": 1,
-  "description": "Canonical software-question scope for the all-question execution validation. This is a scope inventory, not a claim that all answers have automatic correctness suites.",
+  "version": 2,
+  "description": "Current canonical software-question seed inventory for execution validation; the separately frozen historical report covers the previous 63 questions. Inventory membership does not imply an automatic correctness suite or a completed live validation.",
   "selection_rule": "Match the website questionCategory: use explicit assets.category first; select software. Subject relevant_programming alone also includes two hardware questions and is not equivalent.",
   "catalog_sources": [
     "backend/seeds/questions/example_bank.json",
     "backend/seeds/questions/preparation_bank.json"
   ],
   "live_inventory_verified_on": "2026-10-31",
-  "live_inventory_status": "All 63 matching live questions were trial; trial questions remain servable even when parity_checked is false. Database/API state must be rechecked on every live validation.",
+  "live_inventory_status": "Historical live validation on 2026-10-31 covered 63 trial questions and 177 planned execution jobs. Current seeds contain 66 software questions after adding PREP-210..212; those three require a fresh live inventory/execution validation after publication. Trial serving and parity status must be read again from the live API.",
   "validation_layers": {
     "transport": "For every question, authenticated capabilities, complete-program execution and isolated runner errors can be validated independently of answer correctness.",
     "configured_suite": "Only suite_languages declares existing question-specific checks. The exact current contract and cases are owned by backend/seeds/execution_cases.json.",
@@ -358,7 +358,8 @@
         "javascript"
       ],
       "validation_scope": "Array part only: max_subarray(a) returns [sum,start,end] with inclusive zero-based bounds, or null/None for empty input. Ties prefer earliest start then earliest end. The stream interface is not tested.",
-      "seed_question_sha256": "730f5c0192cadaf761d1a52761f2ae964f3977629448b41cd9b477229ee6d698"
+      "seed_question_sha256": "80da302ea87ede802b4d0c117a64f786079e4c449f4bffefe692da432a192727",
+      "historical_live_seed_question_sha256": "730f5c0192cadaf761d1a52761f2ae964f3977629448b41cd9b477229ee6d698"
     },
     {
       "question_key": "prep-maximum-two-integers-without-comparisons",
@@ -660,7 +661,49 @@
       "suite_languages": [],
       "validation_scope": "Only original zero locations trigger clearing; harness must check same-object mutation, rectangular validation before writes and no propagated clearing.",
       "seed_question_sha256": "408dc8690dc5b649e5b1f57ca9b138043ea42510f71a41b511868175a8d78b87"
+    },
+    {
+      "question_key": "prep-damaged-triple-groups",
+      "preparation_id": "PREP-210",
+      "title_en": "Finding the value of a triple after two members are deleted",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Requires repeated adjacent/nonadjacent groups, source length253, independent frequency oracle and access-bound review; generic compilation cannot establish correctness or complexity.",
+      "seed_question_sha256": "7982c4995830887128e593498077e41c899cbe56d396d9c0a4e8d6cf96b0380d"
+    },
+    {
+      "question_key": "prep-top-two-distinct-and-mode",
+      "preparation_id": "PREP-211",
+      "title_en": "Two largest distinct values and the mode of an unsorted array",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Requires two DISTINCT maxima and counts, empty/single-distinct results, smallest-value mode ties, unknown range and input preservation; mode is not majority.",
+      "seed_question_sha256": "db059999bcbfedc24e3f64ad9d22a67e2442a06ce99b65aaa3f7ad9dcfd73f01"
+    },
+    {
+      "question_key": "prep-opaque-c-linked-list-adt",
+      "preparation_id": "PREP-212",
+      "title_en": "An opaque linked-list abstract data type in C",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Requires opaque interface, live-handle ownership, invalid-position no change, owned-tail rejection, allocation-failure injection and cleanup; a generic C++ transport probe is not an ADT correctness test.",
+      "seed_question_sha256": "4b07cd82318f36bcaa702778b8ca21a49d29e6c139a7bb5a66176193986cd66d"
     }
   ],
-  "seed_hash_format": "SHA256 of UTF-8 json.dumps(full seed question, sort_keys=True, ensure_ascii=False, separators=(comma, colon)), with no trailing newline."
+  "seed_hash_format": "SHA256 of UTF-8 json.dumps(full seed question, sort_keys=True, ensure_ascii=False, separators=(comma, colon)), with no trailing newline.",
+  "current_seed_count": 66,
+  "current_seed_updated_on": "2026-10-31",
+  "current_seed_additions": [
+    "prep-damaged-triple-groups",
+    "prep-top-two-distinct-and-mode",
+    "prep-opaque-c-linked-list-adt"
+  ],
+  "historical_live_validation": {
+    "question_count": 63,
+    "planned_execution_jobs": 177,
+    "scope_fixture_sha256": "4fb0d4a93f2be2e1296548e20db6511857f1123959aa6db805e2d7d44270954a",
+    "scope_entries_sha256": "79ff5785065e1a0a2455eb170652e750f7f670ff56107872fb85b787c0830678",
+    "report_path": "docs/validation/software-execution-2026-10-31.json",
+    "report_sha256": "e33959853626c6db7edf3e4f9e6cf756c0b5a8128668a1f3bf006d745cd53463"
+  }
 }

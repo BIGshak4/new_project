@@ -1,0 +1,38 @@
+{
+  "question_id": "PREP-036",
+  "status": "passed",
+  "method": "Python finite transition model against independent oracle",
+  "hdl_compiled": true,
+  "physical_hardware_tested": false,
+  "coverage": {
+    "binary_streams_lengths_0_through_14": 32767,
+    "numeric_left_invariant_and_direction_prefix_checks": 425986,
+    "append_right_same_divisibility_every_checked_prefix": true
+  },
+  "hdl_simulated": true,
+  "hdl_self_checks_passed": true,
+  "rtl_verification": {
+    "recorded_on": "2026-10-31",
+    "language": "SystemVerilog",
+    "compiled": true,
+    "executed": true,
+    "self_check_passed": true,
+    "scope": "Bounded RTL simulation; distinct from the larger Python exhaustive ranges",
+    "coverage": {
+      "binary_streams_lengths_0_through_8": 511,
+      "numeric_invariant_prefix_checks": 3586
+    },
+    "pass_line": "PREP-036 PASS 511 streams 3586 numeric-invariant prefixes",
+    "rtl_source": "solutions/prep_216_220_sequential.sv",
+    "rtl_source_sha256": "6dde03036cf9eb9227cf9ccaf0acfa2fbc53df63183c7d7e266442e072afc3a6",
+    "self_contained_testbench": "solutions/prep_216_220_sequential_tb.sv",
+    "testbench_sha256": "8f7ec28feab7dee6ece52438594b01ba5a8c46833851128aa22d1efca59fd3d0",
+    "combined_simulation_runtime_ms": 3831,
+    "raw_execution_evidence": ".impeccable/execution-intake-20261031-batch20/sequential-rtl-bounded-execution.json",
+    "raw_service_passed": null,
+    "assessment": "Service has no automated oracle; success is established by all in-testbench fatal assertions completing and explicit PASS markers.",
+    "earlier_larger_testbench_timeout": ".impeccable/execution-intake-20261031-batch20/sequential-rtl-execution.json",
+    "physical_hardware_tested": false,
+    "synthesis_timing_power_verified": false
+  }
+}

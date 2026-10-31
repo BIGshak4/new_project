@@ -8,7 +8,6 @@ import uuid
 from pathlib import Path
 
 import pytest
-
 from app.engine.catalog import load_catalog
 from app.engine.solution_review import attach_registered_reviews, solution_content_hash, solution_review
 from app.repo.questions import LoadedQuestion, detail, summary
@@ -28,6 +27,7 @@ REVISED_SOLUTION_KEYS = {
     "prep-random-permutation-fisher-yates",
     "prep-bridge-torch-twelve-hours",
     "prep-boolean-function-two-muxes",
+    "prep-serial-binary-divisibility-by-three-fsm",
 }
 
 
@@ -71,7 +71,7 @@ def test_prisoner_explanation_revision_preserves_but_does_not_inherit_old_attest
         assert summary(row, language).solution_review.status == "pending_review"
         assert detail(row, language).solution_review.status == "pending_review"
     reviewed = {q.key for q in catalog.questions.values() if solution_review(q).status == "human_reviewed"}
-    assert len(reviewed) == 75
+    assert len(reviewed) == 74
     assert reviewed == set(registry["questions"]) - REVISED_SOLUTION_KEYS
 
 

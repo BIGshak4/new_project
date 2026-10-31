@@ -69,6 +69,7 @@ PRIMARY = [
     "debugging_methodology", "binary_arithmetic", "binary_arithmetic", "binary_arithmetic", "arrays_and_search", "estimation_sanity_checks", "arrays_and_search", "arrays_and_search", "estimation_sanity_checks", "arrays_and_search",
     "arrays_and_search", "basic_data_structures", "estimation_sanity_checks", "registers_shifters", "estimation_sanity_checks", "edge_detection", "basic_data_structures", "estimation_sanity_checks", "arrays_and_search", "number_representation", "estimation_sanity_checks",
     "combinational_blocks", "combinational_blocks", "estimation_sanity_checks", "counters", "estimation_sanity_checks", "fsm_sequence_detectors", "boolean_algebra", "binary_arithmetic", "fsm_sequence_detectors", "fsm_controllers", "estimation_sanity_checks",
+    "arrays_and_search", "arrays_and_search", "basic_data_structures", "boolean_algebra", "combinational_blocks", "binary_arithmetic", "counters", "fsm_sequence_detectors", "fsm_controllers", "fsm_controllers", "registers_shifters",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.
@@ -86,7 +87,7 @@ def strip_personal(value):
 
 def paths_in(value):
     if isinstance(value, str):
-        yield from re.findall(r"(?:sources|diagrams|solutions)/[\w./-]+\.(?:png|sv|py|cpp|java|asm|c)\b", value)
+        yield from re.findall(r"(?:sources|diagrams|solutions)/[\w./-]+\.(?:png|sv|py|cpp|java|asm|c|h)\b", value)
     elif isinstance(value, dict):
         for v in value.values():
             yield from paths_in(v)

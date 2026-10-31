@@ -248,3 +248,157 @@ def lowest_onehot(value, width):
   }
 }
 ```
+
+## קליטה נוספת — 31.10.2026 / Additional intake
+
+- מקור 5: [sources/2026-10-31-batch20-05.png](../sources/2026-10-31-batch20-05.png)
+
+לממש מעגל שמקבל מחרוזת כלשהי בעלת 20 ביטים. ומחזיר מחרוזת שבה מופיע רק ה1בימני lsb וכל השאר מאופס. מותר רק שערים לוגיים בסיסיים שלב א? מימוש ראשוני שלב ב? מימוש בדילאיי של 20 ננו שלב ג? מימוש בדילאיי של 10 ננו
+
+התוכן הבא הוא הרחבה מוצעת בסיוע AI; הוא אינו אישור אנושי לפתרון המקורי או החדש.
+
+### he — הרחבה / Extension
+
+
+
+וריאציית מקור נוספת, 31.10.2026: קלט ופלט בני 20 סיביות. השאירו בפלט רק את האחד הקרוב ביותר ל־LSB, ואת כל השאר אפס. תנו מימוש בסיסי, מימוש שהשהייתו 20 ns, ומימוש שעומד בתקציב 10 ns. לצורך תזמון נשתמש רק ב־NOT בעל כניסה אחת ו־AND/OR בעלי שתי כניסות, עם 1 ns לכל שער; לחוטים ולפיצול אות אין השהיה במודל. אפס מוחזר לאפס. אין שימוש ביחידת חשבון מוכנה.
+
+#### רמזים להרחבה / Variant hints
+
+1. בגרסת 20 הסיביות, סיבית נשארת רק אם היא אחת ואין אף אחד מתחתיה.
+2. צרו לכל i את OR של הסיביות הנמוכות ממנו. חישבו את עומק הרשת אם OR זה בנוי כשרשרת.
+3. ל־y19 צריך OR של 19 כניסות. עץ OR מאוזן מוסיף חמישה מפלסים, ולאחריו NOT ו־AND; השוו לסף 10 ns.
+
+#### הצעה לפתרון / Proposed solution
+
+
+
+### הצעה לפתרון לגרסת 20/10 ns
+נגדיר P_i=x0 OR ... OR x(i−1), עם P0=0. אז y_i=x_i AND NOT P_i, ובפרט y0=x0 בחוט ישיר. אם i הוא מיקום האחד הנמוך ביותר, כל הביטים שמתחתיו אפס ולכן y_i=1; לכל אחד גבוה יותר P_i=1 ולכן הוא נחסם. אם אין אחד בקלט כל y_i אפס. למשל x=101100 מפיק 000100 ברוחב קבוע.
+
+שרשרת פשוטה מתחילה ב־P1=x0, וכל שלב מוסיף OR עם הסיבית הבאה. עבור y19, ה־OR של 19 כניסות דורש 18 שערים בטור, ואז NOT ו־AND: 18+1+1=20 ns. במודל המתואר זהו מימוש שעומד בדיוק ב־20 ns; אין צורך בשער ל־y0.
+
+כדי לעמוד ב־10 ns אין צורך להוכיח מינימום. בונים את OR של כל קידומת כעץ בעל שתי כניסות, או משתפים קידומות ברשת מאוזנת מתאימה. OR של i כניסות בעץ מאוזן עומקו לכל היותר ceil(log2 i). לכן מסלול לכל פלט הוא לכל היותר ceil(log2 19)+1+1=7 ns, ובפרט עומד ב־10 ns. תיאור פשוט שאינו משתף עצים עולה O(n²) שערי OR לכל הפלטים יחד, אך שומר O(log n) עומק; רשת קידומות מקבילית יכולה לשתף צמתי OR בעלות O(n log n). אלה חלופות בנייה, לא טענת אופטימום שטח/השהיה. בנוסחת x AND (−x) יש אותה פונקציה, אבל היא אינה שרטוט שערים העומד אוטומטית במגבלות התרגיל.
+
+הבדיקה עברה על כל 1,048,576 מילות 20 הסיביות בכל אחד משני המודלים, מול סריקת מחרוזת עצמאית מה־LSB. נבדקו גם זמני כל 20 הפלטים מול ספירת מפלסי עץ עצמאית. חוטים ופיצול חופשיים הם הנחה מופשטת; לא בוצעה סינתזה, בדיקת hazards או הוכחת זמן פיזי אופטימלי.
+
+#### assumptions
+
+[
+  "גרסת התזמון: רוחב 20; NOT בעל כניסה אחת ו־AND/OR בעלי שתי כניסות, כל שער 1 ns; חוטים ופיצול חופשיים."
+]
+
+#### optimality
+
+"שרשרת: 20 ns; עץ קידומות מוגדר: לכל היותר 7 ns ולכן עומד ב־10 ns. לא נטען מינימום פיזי. עצים נפרדים O(n²) שערים, רשת שיתוף O(n log n) בבנייה ישירה."
+
+#### verification
+
+"שתי הרשתות עברו כל 1,048,576 מילות 20 הסיביות. זמני 20 הפלטים הושוו לספירת מפלסים עצמאית; אין בדיקת חומרה."
+
+#### edge_cases
+
+[
+  "אפס; אחד יחיד ב־LSB; אחד יחיד ב־MSB; כל הביטים אחד; כמה אחדות סמוכות."
+]
+
+#### common_mistakes
+
+[
+  "OR של כל הביטים כולל x_i יחסום גם את האחד הרצוי; צריך רק את הביטים הנמוכים.",
+  "אין להניח שער OR בן 19 כניסות של 1 ns כשהותרו רק שתי כניסות.",
+  "עמידה ב־10 ns אינה הוכחת השהיה מינימלית."
+]
+
+#### interview_answer
+
+"אשאיר x_i רק אם כל הנמוכים אפס. שרשרת OR נותנת 20 ns; OR מאוזן עד חמישה מפלסים ועוד NOT ו־AND נותן 7 ns במודל ולכן עומד ב־10."
+
+#### source_ambiguities
+
+[
+  "צילום 5 נותן תקציבי זמן אך לא מפרט השהיית שער או fan-in. מודל שתי כניסות ו־1 ns הוא הבהרת עריכה מפורשת."
+]
+
+#### solution_extensions
+
+{
+  "question": "אם המוצא צריך להיות האינדקס של האחד הנמוך במקום וקטור one-hot, מה נוסף?",
+  "direction": "מקודד על הווקטור one-hot וסיבית valid נפרדת. ב־20 כניסות צריך חמישה ביטי אינדקס, ו־valid מבדיל בין קלט אפס לבין אינדקס אפס.",
+  "integration": "מוכן בתוכן; אינו מחובר לתור המשך אינטראקטיבי."
+}
+
+### en — הרחבה / Extension
+
+
+
+Additional source variant, 31 October 2026: use twenty-bit input/output words and retain only the one nearest the LSB. Give a basic construction, a 20 ns design and one meeting a 10 ns budget. For timing, use only unary NOT and two-input AND/OR gates with 1 ns per gate and zero wire/fanout delay in the model. Zero maps to zero. Do not use a prebuilt arithmetic unit.
+
+#### רמזים להרחבה / Variant hints
+
+1. In the twenty-bit variant, a bit survives only if it is one and every lower bit is zero.
+2. Build each lower-prefix OR. What is the depth when that prefix is a serial chain?
+3. y19 needs an OR of nineteen inputs. A balanced OR tree has five levels, followed by NOT and AND; compare with ten ns.
+
+#### הצעה לפתרון / Proposed solution
+
+
+
+### Proposed solution for the 20/10 ns variant
+Let P_i=x0 OR ... OR x(i−1), with P0=0. Then y_i=x_i AND NOT P_i; in particular y0=x0 is a wire. If i is the least-significant one, all lower bits are zero and y_i=1. Every higher one sees P_i=1 and is blocked. An all-zero input gives all-zero output. For example 101100 maps to 000100 with width preserved.
+
+The simple chain begins P1=x0 and adds one OR with each next bit. For y19, OR over nineteen inputs takes eighteen serial gates, then NOT and AND: 18+1+1=20 ns. This meets exactly 20 ns in the declared model; y0 needs no gate.
+
+Meeting 10 ns does not require proving a minimum. Build each lower-prefix OR as a fan-in-two balanced tree, or share prefixes in an appropriate balanced network. An i-input OR tree has depth at most ceil(log2 i), so every output arrives within ceil(log2 19)+1+1=7 ns, satisfying the 10 ns budget. Separate trees use O(n²) total OR gates with O(log n) depth; a parallel-prefix network can share OR nodes using O(n log n) area. These are constructions, not area/delay optimality claims. The formula x AND (−x) computes the same function but does not itself provide a gate network satisfying this exercise.
+
+All 1,048,576 twenty-bit words passed for each of the two models against an independent LSB-first string scan. All twenty output arrival bounds were also checked against independent tree-level counting. Free wires/fanout are abstract assumptions; no synthesis, hazard test or optimal physical timing proof was performed.
+
+#### assumptions
+
+[
+  "Timing variant: width twenty; unary NOT and two-input AND/OR, 1 ns each; wires/fanout are free."
+]
+
+#### optimality
+
+"Serial chain: 20 ns; declared balanced-prefix construction: at most 7 ns, meeting ten ns. No physical minimum claim. Separate trees take O(n²) gates; a direct shared prefix network uses O(n log n)."
+
+#### verification
+
+"Both networks passed every one of 1,048,576 twenty-bit words. All twenty arrival bounds matched independent level counting; no hardware test."
+
+#### edge_cases
+
+[
+  "Zero; a lone LSB; a lone MSB; all ones; several adjacent ones."
+]
+
+#### common_mistakes
+
+[
+  "Including x_i in its own blocking OR suppresses the desired bit; include lower bits only.",
+  "Do not assume a nineteen-input OR takes 1 ns when only fan-in two is allowed.",
+  "Meeting ten ns does not prove minimum delay."
+]
+
+#### interview_answer
+
+"Keep x_i only when all lower bits are zero. Serial OR gives twenty ns; a balanced five-level OR plus NOT and AND gives seven ns in the model and meets ten."
+
+#### source_ambiguities
+
+[
+  "Screenshot five gives time budgets without gate-delay or fan-in details. The fan-in-two, 1 ns model is an explicit editorial assumption."
+]
+
+#### solution_extensions
+
+{
+  "question": "If the output must be the lowest-one index rather than a one-hot word, what must be added?",
+  "direction": "Encode the one-hot result and provide a separate valid bit. Twenty inputs require five index bits; valid distinguishes zero input from index zero.",
+  "integration": "Prepared in content; not connected to an interactive follow-up queue."
+}
+
+- [solutions/prep_batch20_combinational.py](../solutions/prep_batch20_combinational.py)
+- [diagrams/prep-107-combinational-batch20-he.png](../diagrams/prep-107-combinational-batch20-he.png)
+- [diagrams/prep-107-combinational-batch20-en.png](../diagrams/prep-107-combinational-batch20-en.png)

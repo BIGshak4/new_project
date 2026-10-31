@@ -12,7 +12,6 @@ import uuid
 from pathlib import Path
 
 import pytest
-
 from app.api.errors import ApiError
 from app.engine import bank
 from app.engine.catalog import load_catalog
@@ -21,6 +20,7 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+
 from tests.test_practice_hardening import scripted
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -97,8 +97,8 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
 
 
 def test_eleven_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 208
-    assert len(catalog.questions) == 238
+    assert len(archive()["questions"]) == 219
+    assert len(catalog.questions) == 249
     additions = {
         q.assets.get("preparation_id"): q
         for q in catalog.questions.values()

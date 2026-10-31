@@ -1,0 +1,14 @@
+{
+  "status": "pass",
+  "full_adder_rows": 8,
+  "exhaustive_operand_pairs_per_architecture": 64,
+  "architectures": 3,
+  "maximum_unsigned_sum": 18,
+  "minimum_result_width": 5,
+  "ripple_fa_count": 4,
+  "ripple_delay_ns": 4,
+  "carry_select_fa_count": 6,
+  "carry_select_delay_ns": 2,
+  "unrestricted_zero_delay_mux_tree_delay_ns": 0,
+  "scope": "Exact arithmetic and stated unit-FA/zero-MUX timing model; no synthesis"
+}

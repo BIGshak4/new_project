@@ -389,3 +389,167 @@ The ideal Python model passed eight truth rows, 10,922 latch streams containing 
 שיוכי מקור מדווחים: NVIDIA.
 
 מקור נוסף בלבד; הגרסה, הנוסח, הרמזים והפתרון נשמרו.
+
+## קליטה נוספת — 31.10.2026 / Additional intake
+
+- מקור 19: [sources/2026-10-31-batch20-19.png](../sources/2026-10-31-batch20-19.png)
+
+ממש את הפונקציות הבאות על ידי רכיבי mux: 1. NOT 2. OR 3. XOR 4. LATCH 5. MASTER-SLAVE
+
+התוכן הבא הוא הרחבה מוצעת בסיוע AI; הוא אינו אישור אנושי לפתרון המקורי או החדש.
+
+### he — הרחבה / Extension
+
+
+
+וריאציית מקור נוספת, 31.10.2026: ממשו באמצעות MUX בלבד את NOT, OR, XOR, LATCH ו־MASTER-SLAVE. כאן מותרים קבועי 0/1 ומשוב לצורך אחסון. לדלגלג נבחר Master שקוף כשהשעון נמוך ו־Slave שקוף כשהוא גבוה. ציינו עלות משלים השעון, ותארו בנפרד מודל לוגי אידאלי ומגבלות מימוש פיזי.
+
+#### רמזים להרחבה / Variant hints
+
+1. בגרסה הנוספת, הפרידו בין פונקציות של הקלט הנוכחי לבין רכיבים שחייבים לשמור ערך קודם.
+2. לשערים פרקו לפי כניסת הבחירה; לנועל תנו למרבב לבחור בין קלט חדש לבין המוצא במשוב.
+3. צרו NOT clk באמצעות MUX(clk,1,0). הפעילו את האב כשהשעון נמוך ואת העבד כשהוא גבוה, ועקבו אחר שינוי D בכל חצי מחזור.
+
+#### הצעה לפתרון / Proposed solution
+
+
+
+### הצעה לפתרון לגרסת השערים והזיכרון
+נשתמש באותה מוסכמה MUX(S,D0,D1). המימושים הם NOT A=MUX(A,1,0), OR=MUX(A,B,1), ו־XOR=MUX(A,B,NOT B), כאשר NOT B=MUX(B,1,0). ההוכחה היא לפי שני ערכי הבורר: למשל XOR מחזיר B כש־A אפס ומשלים B כש־A אחד. לכן OR ו־NOT דורשים מרבב אחד כל אחד, ו־XOR דורש שניים אם משלים B אינו זמין.
+
+נועל צריך לזכור, ולכן רשת צירופית ללא מעגל משוב אינה מספיקה. בונים Q(next)=MUX(EN,Q,D): EN=1 מעביר D, ו־EN=0 בוחר את Q במשוב. בשלב השקוף שינויים ב־D יכולים להגיע למוצא; זו רגישות לרמה ולא דגימה בחזית. מצב ראשון אינו מובטח ללא אתחול או דגימה תקפה.
+
+לדלגלג בחזית עולה מחברים D→Master→M→Slave→Q. נגדיר nCLK=MUX(CLK,1,0), M(next)=MUX(nCLK,M,D), Q(next)=MUX(CLK,Q,M). כשהשעון נמוך האב עוקב אחרי D והעבד מחזיק Q. במעבר לגבוה האב נסגר והעבד מעביר את M השמור; שינוי מאוחר ב־D אינו עובר דרך האב. במעבר לנמוך העבד נסגר לפני חלון השקיפות המושגי הבא. במודל ההתייצבות מתקבלת דגימה בחזית עולה, בתנאי יציבות הנתון סביב החזית.
+
+הספירה המושגית לדלגלג ביט אחד היא שני מרבבי משוב ועוד מרבב ליצירת nCLK כאשר אינו מסופק. עבור W ביטים ניתן לשתף את יוצר nCLK במודל לוגי; עומס ופיזור שעון עדיין דורשים תכן פיזי. היפוך השעון באמצעות מרבב אינו מוכיח אי־חפיפה אמיתית: צריך תא אחסון מתאים וניתוח setup/hold, רוחב פולס, השהיות ובקרת מרוצים. אין לייחס למודל המשוב אישור לסינתזת לולאה צירופית שרירותית.
+
+נבדקו שמונה שורות נועל, 8,192 צעדי עקבות master-slave עם כל המצבים ההתחלתיים במודל, וכן 32 בדיקות שינויים בתוך פאזה יציבה. בדיקות השערים כלולות גם ב־20 השוואות הפונקציות של PREP-070. אלו בדיקות מודל התייצבות בלבד, ללא מטא־יציבות או חפיפת שעונים פיזית.
+
+#### assumptions
+
+[
+  "בגרסת צילום 19 קבועי 0/1 ומשוב מותרים; כל MUX בוחר D0 באפס.",
+  "האב נמוך־שקוף והעבד גבוה־שקוף; מצב התחלתי ידוע רק לצורך בדיקת המודל."
+]
+
+#### optimality
+
+"NOT/OR: מרבב אחד; XOR: שניים בלי משלים מוכן; נועל: מרבב משוב אחד; דלגלג מושגי: שני מרבבי משוב ועוד מהפך שעון לפי הצורך. אין טענת מינימום תאים פיזיים."
+
+#### verification
+
+"בדיקת הגרסה: שמונה שורות נועל, 8,192 צעדי עקבה ו־32 מקרי פאזה יציבה. ללא HDL, בדיקת מטא־יציבות או אי־חפיפה פיזית."
+
+#### edge_cases
+
+[
+  "שינוי D בשעון גבוה אינו עובר דרך האב הסגור.",
+  "שינוי D בשעון נמוך משנה את M אך העבד מחזיק Q.",
+  "בלי אתחול אין ערך התחלתי מובטח; משוב אינו reset."
+]
+
+#### common_mistakes
+
+[
+  "שני נועלים השקופים באותה רמה מאפשרים מעבר רציף במקום דגימה בחזית.",
+  "יש לספור מרבב עבור היפוך השעון כשאין משלים מוכן.",
+  "שעונים משלימים במודל אינם הוכחה לאי־חפיפה בחומרה."
+]
+
+#### interview_answer
+
+"שערים מתקבלים משני ענפי מרבב. אחסון דורש משוב; אב שקוף בנמוך ועבד בגבוה נותנים דגימה בחזית עולה במודל אידאלי, עם מרבב נוסף להיפוך השעון."
+
+#### source_ambiguities
+
+[
+  "צילום 19 אינו מגדיר קוטביות שקיפות, זמינות קבועים או איכות שעון. העריכה מצהירה על המודל ולא טוענת לאי־חפיפה פיזית."
+]
+
+#### solution_extensions
+
+{
+  "question": "איך הופכים את המבנה לדגימה בחזית יורדת בלי לשנות את מסלול הנתונים?",
+  "direction": "האב יהיה שקוף בגבוה והעבד בנמוך. ניתוח חצאי המחזור מתהפך; אותן מגבלות תזמון פיזיות נשארות.",
+  "integration": "מוכן בתוכן; אינו מחובר לתור המשך אינטראקטיבי."
+}
+
+### en — הרחבה / Extension
+
+
+
+Additional source variant, 31 October 2026: implement NOT, OR, XOR, a latch and master-slave storage using only MUXes. This variant permits 0/1 constants and feedback for storage. Choose a low-transparent master and a high-transparent slave. Count clock-complement generation and distinguish ideal logical behavior from physical implementation constraints.
+
+#### רמזים להרחבה / Variant hints
+
+1. For the added variant, separate current-input functions from elements that must retain a prior value.
+2. Use select cofactors for gates; a latch MUX chooses between new data and output feedback.
+3. Make NOT clk with MUX(clk,1,0). Enable the master low and the slave high; follow a D change in each phase.
+
+#### הצעה לפתרון / Proposed solution
+
+
+
+### Proposed solution for the gates-and-storage variant
+Use MUX(S,D0,D1). NOT A=MUX(A,1,0), OR=MUX(A,B,1), and XOR=MUX(A,B,NOT B), with NOT B=MUX(B,1,0). Prove each by its two select cases: XOR returns B at A=0 and its complement at A=1. NOT and OR each use one MUX; XOR uses two when complemented B is unavailable.
+
+A latch must retain state, so an acyclic combinational network is insufficient. Use Q(next)=MUX(EN,Q,D): EN=1 forwards D; EN=0 selects feedback Q. During transparency, D changes may reach Q, giving level sensitivity rather than edge sampling. Initial state is not guaranteed without initialization or a valid capture.
+
+For rising-edge storage connect D→Master→M→Slave→Q. Define nCLK=MUX(CLK,1,0), M(next)=MUX(nCLK,M,D), Q(next)=MUX(CLK,Q,M). With clock low the master follows D while the slave holds Q. At the rise the master closes and the slave forwards its retained M; later D changes cannot pass the master. At the fall the slave closes before the next conceptual transparency window. This settled model samples on the rising edge, subject to data stability around capture.
+
+Conceptual one-bit cost is two feedback MUXes plus one clock-inverter MUX unless nCLK is supplied. The inverter can be shared across W bits in the logical model; loading and clock distribution still need physical design. MUX clock inversion does not establish actual nonoverlap: appropriate storage cells and setup/hold, pulse-width, delay and race analysis remain necessary. The feedback model is not approval to synthesize arbitrary combinational loops.
+
+Checks covered eight latch rows, 8,192 master-slave trace steps over all modeled initial states, and 32 stable-phase change cases. Gate checks also appear in PREP-070's twenty function assertions. These are settled-state models, without physical clock-overlap or metastability validation.
+
+#### assumptions
+
+[
+  "Screenshot nineteen's variant permits constants 0/1 and feedback; every MUX selects D0 at zero.",
+  "Master is low-transparent, slave high-transparent; initial state is known only for model checking."
+]
+
+#### optimality
+
+"NOT/OR: one MUX; XOR: two without a supplied complement; latch: one feedback MUX; conceptual flip-flop: two feedback MUXes plus clock inverter if needed. No physical-cell optimum claim."
+
+#### verification
+
+"Variant checks: eight latch rows, 8,192 trace steps and 32 stable-phase cases. No HDL, metastability or physical nonoverlap test."
+
+#### edge_cases
+
+[
+  "High-clock D changes cannot pass the closed master.",
+  "Low-clock D changes update M while the slave holds Q.",
+  "Without initialization no initial value is guaranteed; feedback is not reset."
+]
+
+#### common_mistakes
+
+[
+  "Two same-polarity transparent latches allow racing instead of edge capture.",
+  "Count the clock-inverter MUX when no complement is supplied.",
+  "Complementary clocks in a model do not prove hardware nonoverlap."
+]
+
+#### interview_answer
+
+"Gates follow from MUX cofactors. Storage requires feedback; low-transparent master plus high-transparent slave gives ideal rising-edge capture, with an extra MUX for clock inversion."
+
+#### source_ambiguities
+
+[
+  "Screenshot nineteen omits transparency polarity, constants and clock quality. The edit states the model without claiming physical nonoverlap."
+]
+
+#### solution_extensions
+
+{
+  "question": "How do you obtain falling-edge capture without changing the data path?",
+  "direction": "Make the master high-transparent and slave low-transparent. The phase argument reverses; the same physical timing constraints remain.",
+  "integration": "Prepared in content; not connected to an interactive follow-up queue."
+}
+
+- [solutions/prep_batch20_combinational.py](../solutions/prep_batch20_combinational.py)
+- [diagrams/prep-083-combinational-batch20-he.png](../diagrams/prep-083-combinational-batch20-he.png)
+- [diagrams/prep-083-combinational-batch20-en.png](../diagrams/prep-083-combinational-batch20-en.png)

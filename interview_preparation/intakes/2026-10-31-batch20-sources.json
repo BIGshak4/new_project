@@ -1,0 +1,425 @@
+{
+  "received_on": "2026-10-31",
+  "batch": "2026-10-31-batch20",
+  "source_count": 20,
+  "notes": [
+    "Screenshot 14 is incomplete; user explicitly authorized an editorial completion in the conversation. Original truncation is preserved separately."
+  ],
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-01.png"
+      ],
+      "sha256": "f05f420e57348726861e4295b75c61e9643c6522fa4305c66b4d106d86217632",
+      "question_ids": [
+        "PREP-210"
+      ],
+      "decision": "new_manual_question",
+      "original_prompt": "ישנו מערך בעל 255 תאים ובו מספרים מסודרים בשלשות (יכולות להיות כפילויות בשלשות, לדוגמא - 1,1,1,5,5,5,1,1,1), והוצאנו שני מספרים השייכים לאותה השלשה. כיצד נדע איזה מספר נותר בודד?",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-02.png"
+      ],
+      "sha256": "accc314219cd55d5adc6372d47db80e9e986e066570646d66d1d8bc3afac9ac0",
+      "question_ids": [
+        "PREP-213"
+      ],
+      "decision": "new_manual_question",
+      "original_prompt": "נדרש לתכנן בקר עבור רכב בעל שני חיישנים - גלאי חום וגלאי שמן. הבקר מתריע על הדממת הרכב כאשר אחד מהגלאים (שמן או חום) מופעל.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-03.png"
+      ],
+      "sha256": "2b8c8c81162977aef2727ce6f059d68241352abbe7aba48d26d2c061644c8da6",
+      "question_ids": [
+        "PREP-211"
+      ],
+      "decision": "new_manual_question",
+      "original_prompt": "מקבלים מערך שאינו ממוין, המכיל מספרים (טווח המספרים אינו ידוע). א. יש לפלוט את שני המספרים הגדולים ביותר במערך וכמה פעמים הם מופיעים בו. ב. כעת יש לפלוט את המספר שמופיע הכי הרבה פעמים במערך.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-04.png"
+      ],
+      "sha256": "6a02b2f4ff2d21241afaa0b125dc9aba27091d1f307c36a7b413160780060819",
+      "question_ids": [
+        "PREP-172"
+      ],
+      "decision": "additional_source_existing_question",
+      "original_prompt": "בחדר יש שני מתגים ונורת לד אחת. צריך לממש מעגל כך שמתג אחד מדליק ומכבה את הנורה, ומתג שני גם כן (כמו בבית). אפשר להשתמש בעוד רכיבים.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-05.png"
+      ],
+      "sha256": "5da1d613580bfff976de7ed60042517eb1f5037d26301a30dac2e4b32cfbc4b0",
+      "question_ids": [
+        "PREP-107"
+      ],
+      "decision": "existing_question_source_and_variant",
+      "original_prompt": "לממש מעגל שמקבל מחרוזת כלשהי בעלת 20 ביטים. ומחזיר מחרוזת שבה מופיע רק ה1בימני lsb וכל השאר מאופס. מותר רק שערים לוגיים בסיסיים שלב א? מימוש ראשוני שלב ב? מימוש בדילאיי של 20 ננו שלב ג? מימוש בדילאיי של 10 ננו",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-06.png"
+      ],
+      "sha256": "18898bf4bf7fcd0e031cce69b75d041ebde3b982117f4fcdf5443ca83bbeea96",
+      "question_ids": [
+        "PREP-072"
+      ],
+      "decision": "additional_source_existing_question",
+      "original_prompt": "יש לנו מערך בגודל מסוים, וברצוננו למצוא את הסכום המקסימלי שניתן להניב ע״י חיבור איברי תת מערך של המערך שקיבלנו. מה זאת אומרת תת מערך? נניח וקיבלנו את המערך {2,3,4,7,9,1}, אזי תת מערך לדוגמא הוא - {4,7,9}",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-07.png"
+      ],
+      "sha256": "a8fb8d02016f73af4bc0749705beee82ee0df53e77a0f7212fbe25042c1d1585",
+      "question_ids": [
+        "PREP-214"
+      ],
+      "decision": "new_manual_question",
+      "original_prompt": "בנה MUX 4->1 ע״י MUXים של 2->1. בתרשים המצורף Q3,Q2 מוזנים למרבב העליון, Q1,Q0 לתחתון; S0 בורר בכל אחד מהם ו-S1 בורר במרבב המוצא.",
+      "source_tags": [
+        "hardware",
+        "cisco",
+        "verification",
+        "logic"
+      ],
+      "reported_companies": [
+        "Cisco"
+      ],
+      "source_company_badge": "CISCO",
+      "diagram_transcription": "S1S0=00 selects Q3; 01 selects Q2; 10 selects Q1; 11 selects Q0. This describes the supplied drawing, not the conventional index mapping."
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-08.png"
+      ],
+      "sha256": "76ab3fa759152154df6d4f0eebfdffe84425e862da498be0702277647b7bb0a8",
+      "question_ids": [
+        "PREP-216"
+      ],
+      "decision": "new_manual_question",
+      "original_prompt": "מימוש מחלק תדר 2:1 ואז מחלק תדר 4:1",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-09.png"
+      ],
+      "sha256": "0ed9db4a1abb6f23b1d162260b0a2fa66797a3c83365b5ae6fa97a21afc5e51b",
+      "question_ids": [
+        "PREP-110"
+      ],
+      "decision": "existing_question_source_and_variant",
+      "original_prompt": "נתונה קופסה שמקבלת A,B שני מספרים בינארים באורך N, והקופסה מחזירה 1 אם A>B ו0 אחרת. תכנן את הקופסה בשערים ומוקסים",
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-10.png"
+      ],
+      "sha256": "ba34c951792edacb21bd92ac13b1b8ad8c96f2626eb674c023e3421a7d5dcd78",
+      "question_ids": [
+        "PREP-106"
+      ],
+      "decision": "additional_source_existing_question",
+      "original_prompt": "ממש את הקופסה של SR Latch",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-11.png"
+      ],
+      "sha256": "431cdfc8c9311801576ef9dfe52a2ddcac5733a960c135fd15c6c07f09b3185e",
+      "question_ids": [
+        "PREP-070"
+      ],
+      "decision": "existing_question_source_and_variant",
+      "original_prompt": "תממש בעזרת MUX(2:1) את השערים: And, Or, Xor, Nand",
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-12.png"
+      ],
+      "sha256": "aed0cfcb8067cd0ec640130840b91145c7c867fc6f17a2907cf7d0004ed5176d",
+      "question_ids": [
+        "PREP-215"
+      ],
+      "decision": "new_manual_question",
+      "original_prompt": "השאלה חולקה למספר סעיפים. א. כאשר מחברים מספר המיוצג ע״י 2 סיביות a1-a2 ומספר המיוצג ע״י 4 סיביות b1-b4 בכמה סיביות התוצאה תיוצג? ב. בהינתן FA בלבד, ממש מכונה שעושה את החיבור עבור שני המספרים הנתונים. ג. בהינתן כעת שהדילאיי של כל FA הוא 1ns, מה הדילאיי הכולל של המכונה? ד. בהינתן מוקס בלי דילאיי, האם ניתן לייעל את המימוש? אם כן ממש אותו, מהו הדילאיי החדש? אם לא הסבר.",
+      "source_tags": [
+        "hardware",
+        "cisco",
+        "verification"
+      ],
+      "reported_companies": [
+        "Cisco"
+      ],
+      "source_company_badge": "CISCO"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-13.png"
+      ],
+      "sha256": "c16ff9da630cbe09ab555e72f1bf45d28ec123f11892d9a55add567482ceb771",
+      "question_ids": [
+        "PREP-036"
+      ],
+      "decision": "existing_question_source_and_variant",
+      "original_prompt": "יש לבנות מכונת מצבים, אשר מקבלת בכל פעם ביט שנכנס ל-MSB (מצד שמאל) ומחזירה 1 או 0 אם המספר הכולל שנבנה מתחלק ב-3 בלשארית",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-14.png"
+      ],
+      "sha256": "f67fd18dfc6fc7bfe2123a59a13ceb1331741db94b09a1666a51eaa3d482b69f",
+      "question_ids": [
+        "PREP-110"
+      ],
+      "decision": "existing_question_source_and_variant",
+      "original_prompt": "סעיף א׳ - נתון קופסה כניסות A,B ומוצא X,Y. ממש את X ו Y כך ש X=1 אם A",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "editorial_completion_authorization": {
+        "source": "user_reply_in_current_conversation",
+        "user_text": "האמת שלא כתוב אבל תשלים לבד את השאלה כמו שנראה לך",
+        "added_contract": "A,B are single bits; X=1 iff A>B, Y=1 iff A<B; equality yields X=Y=0. This contract was added editorially, not recovered from the screenshot."
+      }
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-15.png"
+      ],
+      "sha256": "e41d46be11ba1c0f4e325e76605db96a21ee1cf57f45b9a834e1484826fdb461",
+      "question_ids": [
+        "PREP-217"
+      ],
+      "decision": "new_manual_question",
+      "original_prompt": "נתון רצף 101101. בנה קופסה שמקבלת ביט כל מחזור שעון, וכאשר היא קיבלה את הרצף שביקשו אז שהקופסה תוציא 1. פתרתי את זה במכונת מצבים ואז לפני הטבלאות הוא עצר אותי ושאל איך אפשר לפתור את זה בעוד דרך (רעיון הפתרון מצורף). סעיף ב׳ - מה תופס יותר שטח הפתרון השני או הפתרון הראשון. סעיף ג׳ - מה החסרון המרכזי של הפתרון הראשון לעומת השני. סעיף ד׳ - אמר משהו על פייפ אבל נגמר הזמן.",
+      "source_tags": [
+        "hardware",
+        "apple",
+        "marvell"
+      ],
+      "reported_companies": [
+        "Apple",
+        "Marvell"
+      ],
+      "source_company_badge": "אפל",
+      "missing_attachment_note": "Source says an alternative solution idea was attached, but no separate alternative diagram was supplied in this intake; shift-register comparison is an independently authored solution."
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-16.png"
+      ],
+      "sha256": "bc8ae6f682ddfc20fda4887d2b7633acbeaecd9c095bba730d31b2affb339888",
+      "question_ids": [
+        "PREP-218"
+      ],
+      "decision": "new_manual_question",
+      "original_prompt": "היום קורא טביעות אצבע שמקבל 64 ביטים. הקורא מפעיל את Valid ברגע שמתחיל לפעול. א. בנה מערכת שמוציאה אחד אם טביעת האצבע זהה לטביעה ששמורה במערכת ו0 אחרת. ב. כעת בנה מערכת שמבצעת את אותו הדבר אך הפעם היא צריכה לקבל 2 טביעות אצבע (אחת אחרי השנייה) שזהות זו לזו ורק אז יתקבל 1. ג. בשמורות במערכת 2 טביעות אצבע אקראיות, הצע מכונה עם מינימום עלות וזמן שבודקת האם הטביעה הוא אחת מהאצבעות ששמורות במערכת ואם הוא זהה לאחת מהן תוציא 1.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-17.png"
+      ],
+      "sha256": "f8180c5834b0eba973661172d07069c17c2bc6e63115bca1b3588925e17b7000",
+      "question_ids": [
+        "PREP-219"
+      ],
+      "decision": "new_manual_question",
+      "original_prompt": "הקלט: מערך n של מספרים, כאשר בין כל 2 מספרים יש כפל או חיבור ובתא האחרון יש אופרטור \"=\". לכתוב תוכנית שתשמור את התוצאה. לבנות מכונת מצבים לתוכנית",
+      "source_tags": [
+        "hardware",
+        "apple",
+        "verification"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-18.png"
+      ],
+      "sha256": "877c2b93d5faec43407d9a86f41b045afc0dc9e18e58987160f19653f8a63a7a",
+      "question_ids": [
+        "PREP-212"
+      ],
+      "decision": "new_manual_question",
+      "original_prompt": "מימוש רשימה מקושרת באמצעות Abstract Data Types ב-C כולל פונקציות createNode, listContains ופונקציה להוספת node במקום כלשהו ברשימה",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-19.png"
+      ],
+      "sha256": "c39c9f5453108fd5baa26acf50ebe8db9e4801f6e59710a99607535ed1c7c4b4",
+      "question_ids": [
+        "PREP-083"
+      ],
+      "decision": "existing_question_source_and_variant",
+      "original_prompt": "ממש את הפונקציות הבאות על ידי רכיבי mux: 1. NOT 2. OR 3. XOR 4. LATCH 5. MASTER-SLAVE",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-10-31-batch20-20.png"
+      ],
+      "sha256": "9ced64e86e3f86832f878726e0a8b9671866bf1c71868524d9864e20b1051c7c",
+      "question_ids": [
+        "PREP-220"
+      ],
+      "decision": "new_manual_question",
+      "original_prompt": "בנה רכיב זיכרון המכיל זיכרון בעל 4 מקומות, באמצעות רכיבים נתונים: FF, וזיכרון בעל 4 מקומות. לרכיב 6 כניסות: wr_addr באורך 2 סיביות - כתובת לכתיבה; wr_data באורך מספר ביטים נתון - מידע לכתיבה; wr_en באורך סיבית אחת - 1 בכתיבה ו-0 אחרת; re_en באורך סיבית אחת - 1 בקריאה ו-0 אחרת; re_addr באורך 2 סיביות - כתובת לקריאה; clk באורך סיבית אחת - שעון סינכרוני. שתי יציאות: read_data באורך מילה, והסיבית Valid שהיא 1 כשהמידע ביציאת הקריאה הוא מה שרצינו להוציא וחשוב לנו, ו-0 אחרת.",
+      "source_tags": [
+        "hardware",
+        "intel",
+        "verification"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "אינטל"
+    }
+  ]
+}

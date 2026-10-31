@@ -243,11 +243,13 @@
     "assumptions": {
       "he": [
         "מרבב אידאלי בוחר D0 ב־S=0 ו־D1 ב־S=1.",
-        "קבוע אפס וחוטים מותרים; אין שער נוסף או שעון."
+        "קבוע אפס וחוטים מותרים; אין שער נוסף או שעון.",
+        "לגרסה הנוספת בלבד מותרים שני הקבועים ומרבב היוצר משלים; מוסכמת D0 באפס."
       ],
       "en": [
         "Ideal MUX chooses D0 at S=0 and D1 at S=1.",
-        "Zero constant and wires allowed; no additional gate or clock."
+        "Zero constant and wires allowed; no additional gate or clock.",
+        "The added variant permits both constants and a MUX-generated complement; D0 is selected at zero."
       ]
     },
     "optimality": {
@@ -255,31 +257,39 @@
         "criterion": "מספר מרבבים כשמותר רק חיווט וקבועים לצדם.",
         "result": "מרבב אחד נחוץ ומספיק.",
         "proof": "בלי רכיב פונקציונלי אפשר לקבל רק כניסה או קבוע, ולא AND; המימוש משתמש באחד.",
-        "scope": "אין טענת שטח או השהיה מינימליים בספריית שערים כללית."
+        "scope": "אין טענת שטח או השהיה מינימליים בספריית שערים כללית.",
+        "batch20_extension": "בנייה לכל ארבעת השערים: ארבעה מרבבי פונקציה ועוד מהפך MUX משותף אם nB אינו זמין. אין הוכחת מינימום משותף."
       },
       "en": {
         "criterion": "MUX count with only wires and constants otherwise.",
         "result": "One MUX is necessary and sufficient.",
         "proof": "With no functional component only a primary input or constant is possible, not AND; construction uses one.",
-        "scope": "No minimum physical area/delay claim for a general cell library."
+        "scope": "No minimum physical area/delay claim for a general cell library.",
+        "batch20_extension": "Displayed four-gate construction: four function MUXes plus one shared inverter MUX unless nB is free. No shared-network minimum proof."
       }
     },
     "verification": {
-      "he": "עברו כל 8 שורות המרבב, כל 4 שורות AND ו־4 שורות המימוש הסימטרי בפייתון. לא בוצעה סינתזה או בדיקת חומרה.",
-      "en": "Passed all eight MUX rows, four AND rows and four symmetric-implementation rows in Python. No synthesis or hardware tests."
+      "he": "עברו כל 8 שורות המרבב, כל 4 שורות AND ו־4 שורות המימוש הסימטרי בפייתון. לא בוצעה סינתזה או בדיקת חומרה.\n\nגרסת 2026-10-31 עברה ארבע שורות קלט ו־20 השוואות פונקציה; ללא סינתזה.",
+      "en": "Passed all eight MUX rows, four AND rows and four symmetric-implementation rows in Python. No synthesis or hardware tests.\n\nThe 2026-10-31 variant passed four input rows and twenty function assertions; no synthesis."
     },
     "edge_cases": {
       "he": [
         "A=0 קובע אפס בלי תלות ב־B.",
         "A=1 מעביר B, כולל B=0.",
         "אם ספריית הרכיבים משתמשת במוסכמת בחירה הפוכה יש להתאים את שמות הפורטים.",
-        "החלפת D0,D1 בלי להחליף תנאי בחירה נותנת פונקציה אחרת."
+        "החלפת D0,D1 בלי להחליף תנאי בחירה נותנת פונקציה אחרת.",
+        "A=B=1: XOR ו־NAND אפס.",
+        "A=0: NAND אחד ללא תלות ב־B.",
+        "משלים משותף נחוץ לשני פלטים, ולא צריך לשכפלו במודל אידאלי."
       ],
       "en": [
         "A=0 forces zero independently of B.",
         "A=1 forwards B, including B=0.",
         "A library with reversed select convention needs corresponding port mapping.",
-        "Swapping D0 and D1 without changing selection gives a different function."
+        "Swapping D0 and D1 without changing selection gives a different function.",
+        "A=B=1 makes XOR and NAND zero.",
+        "A=0 forces NAND high regardless of B.",
+        "The complement can be shared by two outputs in the ideal model."
       ]
     },
     "common_mistakes": {
@@ -287,30 +297,44 @@
         "לחבר D1 לקבוע 1 במקום ל־B, וכך להחזיר רק A.",
         "להחליף בין פורט הבחירה לפורט נתונים.",
         "להוסיף שער AND וכך לעקוף את השאלה.",
-        "לצייר חוטים ללא מספרי הפורטים ולכן לא להגדיר מה נבחר."
+        "לצייר חוטים ללא מספרי הפורטים ולכן לא להגדיר מה נבחר.",
+        "אין להשמיט את עלות המשלים בלי להצהיר שהוא מסופק.",
+        "אסור להחיל רשות להשתמש בקבוע 1 על שאלת PREP-031 בעלת אילוצים אחרים."
       ],
       "en": [
         "Tying D1 high instead of B, which outputs only A.",
         "Confusing select and data ports.",
         "Adding an AND gate and bypassing the constraint.",
-        "Omitting port numbers so select behavior remains ambiguous."
+        "Omitting port numbers so select behavior remains ambiguous.",
+        "Do not omit complement cost without declaring it supplied.",
+        "Do not transfer permission for constant one to PREP-031's different restrictions."
       ]
     },
     "interview_answer": {
-      "he": "אבחר A כ־S, אחבר D0=0 ו־D1=B. כאשר A=0 נקבל 0 וכאשר A=1 נקבל B, ולכן בדיוק A AND B. מספיק מרבב אחד, ללא שעון או שער נוסף.",
-      "en": "Use S=A,D0=0,D1=B. Select zero returns zero; select one returns B, exactly A AND B. One MUX suffices with no clock or extra gate."
+      "he": "אבחר A כ־S, אחבר D0=0 ו־D1=B. כאשר A=0 נקבל 0 וכאשר A=1 נקבל B, ולכן בדיוק A AND B. מספיק מרבב אחד, ללא שעון או שער נוסף.\n\nאבחר A כבורר, אכתוב את שני ענפי כל פונקציה ואשתף NOT B שנוצר מ־MUX(B,1,0).",
+      "en": "Use S=A,D0=0,D1=B. Select zero returns zero; select one returns B, exactly A AND B. One MUX suffices with no clock or extra gate.\n\nUse A as select, write both cofactors for each function and share NOT B from MUX(B,1,0)."
     },
     "solution_extensions": {
       "he": {
-        "question": "כיצד תממשו OR בעזרת אותו סוג מרבב יחיד?",
-        "direction": "בחרו S=A,D0=B,D1=1: כאשר A=0 צריך B וכאשר A=1 צריך תמיד 1. נדרש קבוע 1 מותר בגרסת ההמשך.",
-        "status": "מוכן בתוכן; לא מחובר לתור המשך חי."
+        "question": "כיצד תממשו OR בעזרת אותו סוג מרבב יחיד?\n\nאם B ו־NOT B כבר זמינים, כמה מרבבים צריך לבנייה המוצגת וכמה מפלסים יש?",
+        "direction": "בחרו S=A,D0=B,D1=1: כאשר A=0 צריך B וכאשר A=1 צריך תמיד 1. נדרש קבוע 1 מותר בגרסת ההמשך.\n\nארבעה מרבבים במקביל ומפלס אחד לכל פלט. בלי משלים מוכן למסלול XOR/NAND יש עוד מפלס היפוך.",
+        "status": "מוכן בתוכן; לא מחובר לתור המשך חי.",
+        "integration": "מוכן בתוכן; אינו מחובר לתור המשך אינטראקטיבי."
       },
       "en": {
-        "question": "How would you implement OR with one such MUX?",
-        "direction": "Use S=A,D0=B,D1=1: when A=0 return B; when A=1 return one. This follow-up explicitly permits a high constant.",
-        "status": "Prepared in content, not connected to the live follow-up queue."
+        "question": "How would you implement OR with one such MUX?\n\nIf B and NOT B are already available, how many MUXes and levels does the shown construction use?",
+        "direction": "Use S=A,D0=B,D1=1: when A=0 return B; when A=1 return one. This follow-up explicitly permits a high constant.\n\nFour parallel MUXes with one level per output. Without the supplied complement, XOR/NAND paths include another inverter level.",
+        "status": "Prepared in content, not connected to the live follow-up queue.",
+        "integration": "Prepared in content; not connected to an interactive follow-up queue."
       }
+    },
+    "source_ambiguities": {
+      "he": [
+        "צילום 11 מוסיף ארבע פונקציות אך אינו מציין זמינות קבועים או משלים; ההרשאות ועלות המשלים מפורשות בעריכה."
+      ],
+      "en": [
+        "Screenshot eleven adds four functions but omits constant/complement availability; permissions and complement cost are explicit editorial assumptions."
+      ]
     }
   },
   "PREP-066": {

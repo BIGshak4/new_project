@@ -12,7 +12,6 @@ import uuid
 from pathlib import Path
 
 import pytest
-
 from app.api.errors import ApiError
 from app.engine import bank
 from app.engine.catalog import load_catalog
@@ -21,6 +20,8 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+
+from tests.preparation_history import before_batch20_record
 from tests.test_practice_hardening import scripted
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -64,15 +65,15 @@ def test_ten_sources_have_exact_identity_mapping_and_permanent_matching_bytes():
 def test_source_only_questions_preserve_versions_translations_and_three_hint_sets():
     questions = {item["id"]: item for item in archive()["questions"]}
     for ident, expected_hash in SOURCE_ONLY_TECHNICAL_SHA256.items():
-        question = questions[ident]
+        question = before_batch20_record(questions[ident])
         technical = {key: question.get(key) for key in ("version", "translations", "prepared_hints")}
         serialized = json.dumps(technical, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         assert hashlib.sha256(serialized.encode()).hexdigest() == expected_hash, ident
 
 
 def test_eleven_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 208
-    assert len(catalog.questions) == 238
+    assert len(archive()["questions"]) == 219
+    assert len(catalog.questions) == 249
     additions = {
         q.assets.get("preparation_id"): q
         for q in catalog.questions.values()

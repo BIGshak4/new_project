@@ -13,7 +13,6 @@ import uuid
 from pathlib import Path
 
 import pytest
-
 from app.api.errors import ApiError
 from app.engine import bank
 from app.engine.catalog import load_catalog
@@ -22,6 +21,7 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+
 from tests.preparation_history import assert_pre_batch90_assets, technical_before_batch21
 from tests.test_practice_hardening import scripted
 
@@ -84,8 +84,8 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
 
 
 def test_twelve_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 208
-    assert len(catalog.questions) == 238
+    assert len(archive()["questions"]) == 219
+    assert len(catalog.questions) == 249
     additions = {
         q.assets.get("preparation_id"): q
         for q in catalog.questions.values()
@@ -255,7 +255,7 @@ def test_batch40_inventory_retains_source_bytes_and_does_not_alias_new_variation
     sources = [value["local_path"] for value in uploads.values() if value["local_path"].startswith("sources/")]
     assert_pre_batch90_assets(uploads)
     assert len(uploads) > 921
-    assert len(sources) == 332 and len(set(sources)) == 331
+    assert len(sources) == 352 and len(set(sources)) == 351
     source_names = json.loads((ROOT / "apps/web/src/lib/source-screenshots.json").read_bytes())
     assert set(source_names) == {Path(path).name for path in sources}
     assert all(f"2026-10-30-batch40-{i:02d}.png" in source_names for i in range(1, 21))

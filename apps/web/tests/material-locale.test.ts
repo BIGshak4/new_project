@@ -20,8 +20,8 @@ const response = (overrides: Partial<QuestionResources> = {}): QuestionResources
   media: [], technical_material: null, solution_revealed: true, ...overrides,
 });
 
-test("all 238 canonical references follow display language while attempt language stays fixed", () => {
-  assert.equal(questions.length, 238);
+test("all 249 canonical references follow display language while attempt language stays fixed", () => {
+  assert.equal(questions.length, 249);
   for (const question of questions) {
     for (const originalLanguage of ["he", "en"] as const) {
       const original = question.translations[originalLanguage].reference_solution;
@@ -261,8 +261,8 @@ test("all 20 affected October31 resources localize their visible structured labe
   assert.deepEqual([...new Set(untranslated)], []);
 });
 
-test("all 208 preparation resources pair every visible technical field and render entirely in English", () => {
-  assert.equal(prepared.length, 208);
+test("all 219 preparation resources pair every visible technical field and render entirely in English", () => {
+  assert.equal(prepared.length, 219);
   for (const question of prepared) {
     const material = question.assets.preparation_resource!;
     const pairs = material.learner_material as Record<string, Record<ApiLang, unknown>> | undefined;
