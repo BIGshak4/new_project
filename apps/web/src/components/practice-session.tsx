@@ -1,5 +1,4 @@
 "use client";
-import { hasHumanReviewedSolution, solutionReviewLabel } from "../lib/solution-review";
 
 import { QuestionMetadata, ReportedCompanies } from "./question-metadata";
 import { BidiText } from "./bidi-text";
@@ -560,12 +559,8 @@ export function PracticeSession({
                 </div>
                 <h1 dir={textDirection(question.title)}><BidiText>{question.title}</BidiText></h1>
                 <QuestionMetadata question={question} lang={lang} showCompanies={false} />
-                {hasHumanReviewedSolution(question) && <p className="solution-review-note"><span className="badge solution-reviewed">{solutionReviewLabel(question, lang)}</span>{" "}
-                  {t("הפתרון המוצע נבדק ואושר כפתרון טוב, לפי דיווח מפעילי האתר.", "The proposed solution was checked and approved as a good solution, as reported by the site operators.")}</p>}
                 {question.assessment_ready === false && <p className="notice study-review-note">
-                  {hasHumanReviewedSolution(question)
-                    ? t("הפתרון נבדק בידי אנשים; כיול הקושי וההערכה עדיין בתהליך. המשוב ראשוני והתרגול נשמר, אך אינו משנה את רמת השליטה או מעניק נקודות.", "The solution is human reviewed; difficulty and assessment calibration are still in progress. Feedback is provisional and practice is saved, but does not change skill levels or earn points.")
-                    : t("הפתרון ממתין לבדיקה, וגם רמת הקושי טרם אושרה. המשוב ראשוני והתרגול נשמר, אך אינו משנה את רמת השליטה או מעניק נקודות.", "The solution awaits review and its difficulty is not yet approved. Feedback is provisional and practice is saved, but does not change skill levels or earn points.")}
+                  {t("המשוב ראשוני והתרגול נשמר, אך אינו משנה את רמת השליטה או מעניק נקודות.", "Feedback is provisional and practice is saved, but does not change skill levels or earn points.")}
                 </p>}
                 <div className="row question-tools">
                   <SawItAt api={api} question={question} lang={lang} />
@@ -704,7 +699,7 @@ export function PracticeSession({
                 {relatedQuestions.length > 0 && <details className="related-questions">
                   <summary>{t("נוסח נוסף של אותה שאלה", "Another version of this question")}</summary>
                   <p className="small muted">{t("במאגר מופיעה שאלה אחת לכל בעיה זהה. הנוסח הנוסף נשאר זמין, יחד עם השמירות והתרגולים הקודמים שלו.", "The library shows one entry for the same problem. The other version remains available with its saved records and previous attempts.")}</p>
-                  {relatedQuestions.map((q) => <button type="button" className="text-button" key={q.key} onClick={() => onNew(q.key)}><BidiText>{q.title}{q.preparation_id ? ` · ${q.preparation_id}` : ""}</BidiText></button>)}
+                  {relatedQuestions.map((q) => <button type="button" className="text-button" key={q.key} onClick={() => onNew(q.key)}><BidiText>{q.title}</BidiText></button>)}
                 </details>}
                 <PersonalNotes
                   key={question.id}
@@ -991,8 +986,6 @@ function ReferenceSolution({ text, sourceLanguage, lang, resources, hasMedia }: 
     setOpenMaterialSections(current => current[section] === open ? current : { ...current, [section]: open });
   }
   const reference = referenceInLanguage(resources.data, lang, text, sourceLanguage);
-  const review = resources.data?.solution_revealed && resources.data.reference === reference
-    ? resources.data : {};
   return (
     <div
       className="solution"
@@ -1004,7 +997,6 @@ function ReferenceSolution({ text, sourceLanguage, lang, resources, hasMedia }: 
       <h3>
         {lang === "he" ? "פתרון מוצע" : "Reference solution"}
       </h3>
-      <p className={hasHumanReviewedSolution(review) ? "badge solution-reviewed" : "small muted"}>{solutionReviewLabel(review, lang)}</p>
       {reference === null
         ? <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} solution />
         : <div className="question-prompt"><StudyText text={reference} solution /></div>}

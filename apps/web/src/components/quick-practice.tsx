@@ -195,7 +195,7 @@ export function QuickPractice({ lang, api, userId }: { lang: "he" | "en"; api: Q
         : t("אין שאלות בתצוגה הזאת", "No questions in this view")}</h2>
       <p>{t("אפשר לבחור נושא אחר או לחזור לשאלות שכבר סיימתם.", "Choose another topic or revisit your finished questions.")}</p>
       <button onClick={() => { setQuery(""); setTopic("all"); setHistoryView("all"); }}>{t("הצגת כל השאלות", "Show all questions")}</button></div>}
-    <p className="quick-editorial-note">{t("תרגילים מקוריים עם פתרונות מוצעים שטרם נבדקו בידי אנשים. תרגול עצמי ללא ציון.", "Original exercises with proposed solutions awaiting human review. Self-study without a grade.")}</p>
+    <p className="quick-editorial-note">{t("תרגילים מקוריים עם פתרונות מוצעים. תרגול עצמי ללא ציון.", "Original exercises with proposed solutions. Self-study without a grade.")}</p>
   </section>;
 }
 

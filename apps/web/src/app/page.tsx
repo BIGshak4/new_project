@@ -22,7 +22,6 @@ import {
 } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
-import { hasHumanReviewedSolution, solutionReviewLabel } from "../lib/solution-review";
 import { isRealEvaluationProvider } from "../lib/evaluation-readiness";
 import { companyNames, companyReportNote, matchesCompany, matchesQuestion, questionCategory } from "../lib/question-discovery";
 import { QuestionMetadata } from "../components/question-metadata";
@@ -635,17 +634,13 @@ function Workspace({
                       : route.view === "bookmarks"
                         ? t("שאלות שסימנתם כדי לחזור אליהן. לחצו על שאלה כדי להתחיל.", "Questions you marked to come back to. Open one to start.")
                         : t(
-                            "שאלות הכנה בלוגיקה ספרתית, מכונות מצבים, חידות ותכנות. שאלות מהמאגר שהכנתם מסומנות לפי מספרן המקורי.",
-                            "Practice questions in digital logic, state machines, puzzles and code. Your preparation collection keeps its original question numbers.",
+                            "שאלות הכנה בלוגיקה ספרתית, מכונות מצבים, חידות ותכנות.",
+                            "Practice questions in digital logic, state machines, puzzles and code.",
                           )}
                 </p>
               </div>
             </div>
             {activeTab === "library" && libraryViews}
-            {activeTab === "library" && questions.some(hasHumanReviewedSolution) && <p className="solution-review-note">
-              {t("הפתרונות המסומנים ״נבדק בידי אנשים״ נבדקו ואושרו כפתרונות טובים, לפי דיווח מפעילי האתר. הסימון מתייחס לפתרון, בנפרד מכיול הקושי והמשוב האוטומטי.",
-                "Solutions marked ‘Human reviewed’ were checked and approved as good solutions, as reported by the site operators. This reviews the solution separately from difficulty calibration and automated feedback.")}
-            </p>}
             {activeTab === "library" && (
               <div className="summary-strip">
                 <span>
@@ -909,20 +904,15 @@ function Workspace({
                   </p>
                 )}
                 <div className="question-table">
-                  {filtered.map((q, i) => (
+                  {filtered.map((q) => (
                     <button
-                      className="question-row"
+                      className="question-row library-question-row"
                       key={q.id}
                       onClick={() => openQuestion(q)}
                     >
-                      <span className="q-num">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
                       <div>
                         <h3 dir={textDirection(q.title)}>
                           <BidiText>{q.title}</BidiText>
-                          {hasHumanReviewedSolution(q) ? <span className="badge solution-reviewed">{solutionReviewLabel(q, lang)}</span>
-                            : q.trial && <span className="badge trial">{solutionReviewLabel(q, lang)}</span>}
                         </h3>
                         <QuestionMetadata question={q} lang={lang} compact />
                         {entries.some(e => e.question_id === q.id && e.bookmarked) && <span className="small muted">{t("שמורה", "Saved")}</span>}

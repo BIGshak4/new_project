@@ -26,7 +26,6 @@ export function QuestionMetadata({ question, lang, showCompanies = true, compact
     <div className="question-taxonomy">
       <span className="discipline-label">{lang === "he" ? "תחום: " : "Discipline: "}{categoryLabel(questionCategory(question), lang)}</span>
       {!compact && <span><span className="metadata-label">{lang === "he" ? "נושא: " : "Topic: "}</span><bdi dir={textDirection(subjectLabel(question.subject, lang))}><BidiText>{subjectLabel(question.subject, lang)}</BidiText></bdi></span>}
-      {question.preparation_id && <bdi className="metadata-id">{question.preparation_id}</bdi>}
     </div>
     {!compact && !!question.topics?.length && <div className="question-topics">{[...new Set(question.topics)].map(topic => <bdi dir={textDirection(topic)} key={topic}><BidiText>{topic.replaceAll("_", " ")}</BidiText></bdi>)}</div>}
     {showCompanies && <ReportedCompanies question={question} lang={lang} compact={compact} />}

@@ -65,7 +65,8 @@ test("initial quick practice loads owned history before showing potentially repe
     assert.equal(html.includes("quick-diagram"), false);
     assert.equal(html.includes("quick-takeaway"), false);
     assert.ok(html.includes(lang === "he" ? "טוענים את השאלות שכבר סיימתם" : "Loading your finished questions"));
-    assert.ok(html.includes(lang === "he" ? "טרם נבדקו בידי אנשים" : "awaiting human review"));
+    assert.ok(html.includes(lang === "he" ? "תרגול עצמי ללא ציון" : "Self-study without a grade"));
+    assert.ok(!html.includes(lang === "he" ? "טרם נבדקו בידי אנשים" : "awaiting human review"));
   }
 });
 

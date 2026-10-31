@@ -128,7 +128,7 @@ function InterviewLobby({ api, lang, demo, onStarted, initialDuration }: Props) 
           ))}
         </div>
         <ul className="small muted interview-rules">
-          <li>{t("השאלות נבחרות מהמאגר הזמין לראיון. שאלות שנמצאות בבדיקה מסומנות בהתאם.", "Questions are selected from the available interview bank. Questions under review are marked accordingly.")}</li>
+          <li>{t("השאלות נבחרות מהמאגר הזמין לראיון.", "Questions are selected from the available interview bank.")}</li>
           <li>{t("אפשר לבקש רמז, אבל זה נרשם ומקטין את הראיה לשליטה עצמאית.", "You may ask for a hint; it is recorded and lowers the evidence of independent mastery.")}</li>
           <li>{t("אפשר לסיים מוקדם; הדוח מכסה את מה שנענה.", "You can stop early; the report covers what you answered.")}</li>
         </ul>
@@ -342,7 +342,6 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
           <div className="row spread">
             <span className="badge">
               <BidiText>{turn.skill_label}</BidiText>
-              {turn.trial && <span className="badge trial">{t("בבדיקה חיה", "On trial")}</span>}
             </span>
             <span className="row">
               <span className="small muted">

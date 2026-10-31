@@ -745,6 +745,9 @@ summary {
 .question-row:last-child {
   border-bottom: 0;
 }
+.library-question-row {
+  grid-template-columns: minmax(0, 1fr) 150px 65px 70px;
+}
 .question-row {
   transition: transform 260ms var(--ease-bounce), background 160ms ease;
 }
@@ -3073,6 +3076,9 @@ summary {
   .question-row .q-category {
     display: none;
   }
+  .library-question-row {
+    grid-template-columns: minmax(0, 1fr) 90px 55px;
+  }
   .stat-chip .level-word {
     display: none;
   }
@@ -3210,6 +3216,9 @@ summary {
   }
   .question-row .q-difficulty {
     display: none;
+  }
+  .library-question-row {
+    grid-template-columns: minmax(0, 1fr) 45px;
   }
   .question-row h3 {
     font-size: 14px;
