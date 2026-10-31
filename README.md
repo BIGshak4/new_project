@@ -28,3 +28,5 @@ Supabase's canonical schema lives in `supabase/migrations`. The founder addition
 ## Code execution — 2026-10-31
 
 The live practice site now compiles and runs Python, JavaScript, C, C++, Verilog, SystemVerilog and VHDL in isolated microVMs. See [the implementation, coverage and live verification record](docs/isolated-code-execution.md) and [executor operations](apps/executor/README.md). That record includes the current AI-feedback limitation and supersedes the earlier execution-readiness notes above.
+
+For the exhaustive check of all 63 software questions, see [the software execution validation report](docs/software-execution-validation-2026-10-31.md), including reproducible commands and the distinction between execution probes and question-specific correctness tests.
