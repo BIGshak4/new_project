@@ -10,6 +10,8 @@ import itertools
 import json
 import re
 import runpy
+import shutil
+import subprocess
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -19,6 +21,7 @@ BACKEND = Path(__file__).resolve().parents[1]
 AUTHORING = runpy.run_path(str(BACKEND / "tests/fixtures/execution_catalog_authoring.py"))
 MANIFEST = json.loads((BACKEND / "seeds/execution_cases.json").read_text(encoding="utf-8"))
 SMOKE = json.loads((BACKEND / "tests/fixtures/execution_smoke.json").read_text(encoding="utf-8"))
+POSITIVE = json.loads((BACKEND / "tests/fixtures/execution_positive.json").read_text(encoding="utf-8"))
 ORACLES = AUTHORING["ORACLES"]
 QUESTIONS = MANIFEST["questions"]
 LANGUAGES = {"python", "javascript", "c", "cpp", "verilog", "systemverilog", "vhdl"}
@@ -202,6 +205,71 @@ def test_smoke_fixtures_cover_correct_wrong_and_syntax_in_all_seven_languages():
 def test_manifest_and_smoke_are_reproducible_author_artifacts():
     assert AUTHORING["build_manifest"]() == MANIFEST
     assert AUTHORING["build_smoke"]() == SMOKE
+    assert AUTHORING["build_positive"]() == POSITIVE
+
+
+def test_positive_developer_sources_cover_every_manifest_question_language_pair_once():
+    assert POSITIVE["version"] == 1
+    assert len(POSITIVE["cases"]) == len(SPECS)
+    pairs = [(case["question_key"], case["language"]) for case in POSITIVE["cases"]]
+    assert len(set(pairs)) == len(pairs)
+    assert set(pairs) == {(key, language) for key, language, _ in SPECS}
+    assert all(case["source"].strip() for case in POSITIVE["cases"])
+
+
+@pytest.mark.parametrize("fixture", [case for case in POSITIVE["cases"] if case["language"] == "python"],
+                         ids=lambda case: case["question_key"])
+def test_committed_trusted_python_references_match_independent_expected_values(fixture):
+    # This is a developer-only check of sources authored directly above and
+    # committed in execution_positive.json. No network/learner source is accepted.
+    namespace = {}
+    exec(compile(fixture["source"], "<committed-developer-reference>", "exec"), namespace)
+    spec = QUESTIONS[fixture["question_key"]]["languages"]["python"]
+    for case in spec["cases"]:
+        args = json.loads(json.dumps(case["args"]))  # sort012 intentionally mutates its input.
+        actual = namespace[spec["entry"]](*args)
+        expected = ORACLES[fixture["question_key"]](*case["args"])
+        if case.get("unordered"):
+            assert sorted(actual) == sorted(expected)
+        else:
+            assert type(actual) is type(expected)
+            assert actual == expected
+
+
+def test_committed_trusted_javascript_references_match_the_private_oracles():
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("Node.js is needed to validate developer-authored JavaScript reference fixtures")
+    payload = []
+    for fixture in POSITIVE["cases"]:
+        if fixture["language"] != "javascript":
+            continue
+        spec = QUESTIONS[fixture["question_key"]]["languages"]["javascript"]
+        payload.append({"question_key": fixture["question_key"], "source": fixture["source"], "entry": spec["entry"],
+                        "args": [case["args"] for case in spec["cases"]]})
+    script = """
+const fs = require('node:fs'), vm = require('node:vm');
+const fixtures = JSON.parse(fs.readFileSync(0, 'utf8'));
+const results = fixtures.map(fixture => fixture.args.map(args => {
+  const context = vm.createContext({args});
+  // Only the committed developer references are evaluated, never HTTP source.
+  return vm.runInContext(fixture.source + '\\n' + fixture.entry + '(...args)', context, {timeout:500});
+}));
+process.stdout.write(JSON.stringify(results));
+"""
+    process = subprocess.run([node, "-e", script], input=json.dumps(payload).encode("utf-8"),
+        capture_output=True, check=False, timeout=15)
+    assert process.returncode == 0, process.stderr.decode("utf-8", errors="replace")
+    actual = json.loads(process.stdout)
+    for fixture, values in zip(payload, actual, strict=True):
+        key = fixture["question_key"]
+        spec = QUESTIONS[key]["languages"]["javascript"]
+        for case, value in zip(spec["cases"], values, strict=True):
+            if case.get("unordered"):
+                assert sorted(value) == sorted(case["expected"])
+            else:
+                assert type(value) is type(case["expected"])
+                assert value == case["expected"], (key, case["args"])
 
 
 @pytest.mark.asyncio

@@ -21,6 +21,7 @@ try {
   if (noSudo.exitCode === 0) throw new Error("The execution user unexpectedly has sudo access.");
   // No source, candidate data, application credentials or expected tests entered
   // this VM. All request VMs restore only these installed tools and user account.
-  const snapshot = await vm.snapshot(); snapshotted = true;
-  console.log(JSON.stringify({ snapshot_id: snapshot.snapshotId, region: vm.region, versions, runner_uid: 1100, network_at_execution: "deny-all", persistence_at_execution: false }, null, 2));
+  const snapshot = await vm.snapshot({ expiration: 0 }); snapshotted = true;
+  console.log(JSON.stringify({ snapshot_id: snapshot.snapshotId, region: vm.region, versions, runner_uid: 1100, expires_at: snapshot.expiresAt ? snapshot.expiresAt.toISOString() : null, network_at_execution: "deny-all", persistence_at_execution: false }, null, 2));
+  if (snapshot.expiresAt) throw new Error("The installed toolchain snapshot unexpectedly expires.");
 } finally { if (vm && !snapshotted) await vm.stop(); }

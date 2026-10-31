@@ -73,6 +73,8 @@ type Props = {
   onBack: () => void;
   onProgress: () => void;
   demo: boolean;
+  /** Explicitly supplied by the authenticated workspace, never by a tour/demo editor. */
+  executionEnabled?: boolean;
   source?: StartAttemptRequest["source"];
   screen?: string;
 };
@@ -91,6 +93,7 @@ export function PracticeSession({
   onBack,
   onProgress,
   demo,
+  executionEnabled = false,
   source = "library",
   screen = "library",
 }: Props) {
@@ -763,7 +766,7 @@ export function PracticeSession({
                           disabled={disabled || !!pending}
                           codeLanguage={question.code_language}
                           starterCode={question.starter_code}
-                          execution={demo ? undefined : { attemptId: attempt.id, api }}
+                          execution={executionEnabled ? { attemptId: attempt.id, api } : undefined}
                         />
                         <VisualAnswer
                           value={visual}

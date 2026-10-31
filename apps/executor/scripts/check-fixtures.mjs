@@ -16,6 +16,7 @@ if (process.platform !== "linux" || process.env.CI !== "true" || process.env.JOB
 const exec = promisify(execFile);
 const manifest = JSON.parse(await readFile(new URL("../../../backend/seeds/execution_cases.json", import.meta.url), "utf8"));
 const fixtures = JSON.parse(await readFile(new URL("../../../backend/tests/fixtures/execution_smoke.json", import.meta.url), "utf8"));
+const positives = JSON.parse(await readFile(new URL("../../../backend/tests/fixtures/execution_positive.json", import.meta.url), "utf8"));
 
 async function cleanup() {
   // Fixed absolute paths in the ephemeral GitHub host only; never derive a
@@ -61,6 +62,15 @@ for (const fixture of fixtures.cases) {
   for (const kind of ["correct", "wrong", "syntax_error"]) {
     await check({ language: fixture.language, source: fixture[kind], stdin: "", spec }, `${fixture.question_key}/${kind}`, kind === "correct" ? "passed" : kind === "wrong" ? "failed" : "compile_error");
   }
+}
+// All authored positive references are genuine algorithms, not oracle lookups.
+// Validate the full matrix in addition to representative wrong/syntax fixtures.
+const expectedPairs = new Set(Object.entries(manifest.questions).flatMap(([question, record]) => Object.keys(record.languages).map(language => `${question}/${language}`)));
+const positivePairs = new Set(positives.cases.map(row => `${row.question_key}/${row.language}`));
+if (positivePairs.size !== positives.cases.length || positivePairs.size !== expectedPairs.size || [...expectedPairs].some(pair => !positivePairs.has(pair))) throw new Error("Positive fixtures do not cover the manifest exactly once.");
+for (const fixture of positives.cases) {
+  const spec = manifest.questions[fixture.question_key].languages[fixture.language];
+  await check({ language: fixture.language, source: fixture.source, stdin: "", spec }, `${fixture.question_key}/all-positive`, "passed");
 }
 // Genuine filesystem permission regression: the first invocation attempts to
 // rewrite controls and plant symlinks; the second must still use intact control

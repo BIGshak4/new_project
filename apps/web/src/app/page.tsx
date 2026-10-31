@@ -23,6 +23,7 @@ import {
 import type { User } from "@supabase/supabase-js";
 import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
 import { hasHumanReviewedSolution, solutionReviewLabel } from "../lib/solution-review";
+import { isRealEvaluationProvider } from "../lib/evaluation-readiness";
 import { companyNames, companyReportNote, matchesCompany, matchesQuestion, questionCategory } from "../lib/question-discovery";
 import { QuestionMetadata } from "../components/question-metadata";
 import { BidiText } from "../components/bidi-text";
@@ -284,7 +285,7 @@ function Workspace({
         .health()
         .then((health) => {
           if (!current()) return;
-          setDemo(health.llm_provider !== "anthropic");
+          setDemo(!isRealEvaluationProvider(health.llm_provider));
           setHealthKnown(true);
         })
         .catch(report),
@@ -557,6 +558,7 @@ function Workspace({
             onProgress={refreshProgress}
             demo={demo}
             screen={route.view}
+            executionEnabled
             source={route.source ?? "library"}
           />
         ) : route.view === "learn" ? (

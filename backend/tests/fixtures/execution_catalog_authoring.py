@@ -437,6 +437,535 @@ def build_smoke():
     return {"version": 1, "cases": cases}
 
 
+def build_positive():
+    """Algorithmic developer sources for every declared contract, never case lookups."""
+    python = {
+        "example-count-set-bits": '''def count_set_bits(n):
+    total = 0
+    while n:
+        n &= n - 1
+        total += 1
+    return total
+''',
+        "example-power-of-two-check": '''def is_power_of_two(n):
+    return n != 0 and (n & (n - 1)) == 0
+''',
+        "example-extract-register-field": '''def extract_field(reg, lsb, width):
+    return (reg >> lsb) & ((1 << width) - 1)
+''',
+        "example-first-greater-or-equal": '''def lower_bound(a, target):
+    lo, hi = 0, len(a)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if a[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+''',
+        "example-merge-measurement-streams": '''def merge(a, b):
+    i = j = 0
+    out = []
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]:
+            out.append(a[i])
+            i += 1
+        else:
+            out.append(b[j])
+            j += 1
+    out.extend(a[i:])
+    out.extend(b[j:])
+    return out
+''',
+        "example-pair-sum-indices": '''def pair_sum(a, target):
+    seen = {}
+    for i, value in enumerate(a):
+        complement = target - value
+        if complement in seen:
+            return [seen[complement], i]
+        seen[value] = i
+    return None
+''',
+        "example-balanced-brackets": '''def is_balanced(text):
+    stack = []
+    matching = {')': '(', ']': '[', '}': '{'}
+    for char in text:
+        if char in '([{':
+            stack.append(char)
+        elif not stack or stack.pop() != matching[char]:
+            return False
+    return not stack
+''',
+        "prep-reverse-exactly-eight-bits-without-array": '''def reverse8(n):
+    result = 0
+    for _ in range(8):
+        result = (result << 1) | (n & 1)
+        n >>= 1
+    return result
+''',
+        "prep-byte-popcount-parallel-and-lookup": '''def popcount8(n):
+    n = n - ((n >> 1) & 0x55)
+    n = (n & 0x33) + ((n >> 2) & 0x33)
+    return (n + (n >> 4)) & 0x0f
+''',
+        "prep-one-active-bit-signed-int32-pattern": '''def is_one_bit_active(n):
+    bits = n & 0xffffffff
+    return bits != 0 and (bits & (bits - 1)) == 0
+''',
+        "prep-ascii-letter-palindrome-two-pointers": '''def is_palindrome(text):
+    left, right = 0, len(text) - 1
+    while left < right:
+        if text[left] != text[right]:
+            return False
+        left += 1
+        right -= 1
+    return True
+''',
+        "prep-balanced-brackets-mixed-text": '''def is_balanced(text):
+    stack = []
+    matching = {')': '(', ']': '[', '}': '{'}
+    for char in text:
+        if char in '([{':
+            stack.append(char)
+        elif char in matching and (not stack or stack.pop() != matching[char]):
+            return False
+    return not stack
+''',
+        "prep-first-equal-in-sorted-array": '''def first_equal(a, value):
+    lo, hi = 0, len(a)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if a[mid] < value:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo if lo < len(a) and a[lo] == value else -1
+''',
+        "prep-maximum-sum-contiguous-subarray": '''def max_subarray(a):
+    if not a:
+        return None
+    best = None
+    current = 0
+    start = 0
+    for end, value in enumerate(a):
+        if end == 0 or current < 0:
+            current = value
+            start = end
+        else:
+            current += value
+        # Keeping the first equal optimum implements earliest start/end ties.
+        if best is None or current > best[0]:
+            best = [current, start, end]
+    return best
+''',
+        "prep-postfix-expression-stack-evaluation": '''def evaluate_postfix(tokens):
+    stack = []
+    for token in tokens:
+        if type(token) is int:
+            stack.append(token)
+            continue
+        if token not in ('+', '-', '*') or len(stack) < 2:
+            raise ValueError('invalid postfix expression')
+        right, left = stack.pop(), stack.pop()
+        stack.append(left + right if token == '+' else left - right if token == '-' else left * right)
+    if len(stack) != 1:
+        raise ValueError('invalid postfix expression')
+    return stack[0]
+''',
+        "prep-three-color-in-place-partition": '''def sort012(a):
+    lo = mid = 0
+    hi = len(a) - 1
+    while mid <= hi:
+        if a[mid] == 0:
+            a[lo], a[mid] = a[mid], a[lo]
+            lo += 1
+            mid += 1
+        elif a[mid] == 1:
+            mid += 1
+        else:
+            a[mid], a[hi] = a[hi], a[mid]
+            hi -= 1
+    return a
+''',
+        "prep-two-missing-zero-through-n-plus-one-no-aux-array": '''def two_missing(a):
+    combined = 0
+    for value in range(len(a) + 2):
+        combined ^= value
+    for value in a:
+        combined ^= value
+    partition = combined & -combined
+    first = second = 0
+    for value in range(len(a) + 2):
+        if value & partition:
+            first ^= value
+        else:
+            second ^= value
+    for value in a:
+        if value & partition:
+            first ^= value
+        else:
+            second ^= value
+    return [first, second]
+''',
+        "prep-one-two-missing-values": '''def missing_zero_to_n(a):
+    missing = len(a)
+    for index, value in enumerate(a):
+        missing ^= index ^ value
+    return missing
+''',
+        "prep-longest-contiguous-sum-divisible-by-three": '''def longest_mod3(a):
+    first = [0, None, None]
+    remainder = 0
+    best = [0, None, None]
+    for end, value in enumerate(a):
+        remainder = (remainder + value) % 3
+        if first[remainder] is None:
+            first[remainder] = end + 1
+        else:
+            length = end + 1 - first[remainder]
+            if length > best[0]:
+                best = [length, first[remainder], end]
+    return best
+''',
+        "prep-software-fibonacci-recursion-improvement": '''def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+''',
+        "prep-all-distinct-string-permutations": '''def permutations(text):
+    frequencies = {}
+    for char in text:
+        frequencies[char] = frequencies.get(char, 0) + 1
+    out = []
+    def visit(prefix):
+        if len(prefix) == len(text):
+            out.append(prefix)
+            return
+        for char in frequencies:
+            if frequencies[char]:
+                frequencies[char] -= 1
+                visit(prefix + char)
+                frequencies[char] += 1
+    visit('')
+    return out
+''',
+        "prep-reverse-words-using-character-reversal": '''def reverse_range(chars, lo, hi):
+    while lo < hi:
+        chars[lo], chars[hi] = chars[hi], chars[lo]
+        lo += 1
+        hi -= 1
+
+def reverse_words(text):
+    chars = list(text)
+    reverse_range(chars, 0, len(chars) - 1)
+    start = 0
+    while start < len(chars):
+        if chars[start] == ' ':
+            start += 1
+            continue
+        end = start
+        while end < len(chars) and chars[end] != ' ':
+            end += 1
+        reverse_range(chars, start, end - 1)
+        start = end
+    return ''.join(chars)
+''',
+    }
+    python["prep-power-of-two-check"] = python["example-power-of-two-check"]
+    javascript = {
+        "example-count-set-bits": '''function count_set_bits(n) {
+  let count = 0;
+  while (n !== 0) { n = (n & (n - 1)) >>> 0; count++; }
+  return count;
+}
+''',
+        "example-power-of-two-check": '''function is_power_of_two(n) {
+  return n !== 0 && (n & (n - 1)) === 0;
+}
+''',
+        "example-extract-register-field": '''function extract_field(reg, lsb, width) {
+  return width === 32 ? reg >>> 0 : (reg >>> lsb) & (2 ** width - 1);
+}
+''',
+        "example-first-greater-or-equal": '''function lower_bound(a, target) {
+  let lo = 0, hi = a.length;
+  while (lo < hi) {
+    const mid = lo + Math.floor((hi - lo) / 2);
+    if (a[mid] < target) lo = mid + 1; else hi = mid;
+  }
+  return lo;
+}
+''',
+        "example-merge-measurement-streams": '''function merge(a, b) {
+  const out = []; let i = 0, j = 0;
+  while (i < a.length && j < b.length) {
+    if (a[i] <= b[j]) out.push(a[i++]); else out.push(b[j++]);
+  }
+  while (i < a.length) out.push(a[i++]);
+  while (j < b.length) out.push(b[j++]);
+  return out;
+}
+''',
+        "example-pair-sum-indices": '''function pair_sum(a, target) {
+  const seen = new Map();
+  for (let i = 0; i < a.length; i++) {
+    const complement = target - a[i];
+    if (seen.has(complement)) return [seen.get(complement), i];
+    seen.set(a[i], i);
+  }
+  return null;
+}
+''',
+        "example-balanced-brackets": '''function is_balanced(text) {
+  const stack = [], matching = {')':'(', ']':'[', '}':'{'};
+  for (const char of text) {
+    if ('([{'.includes(char)) stack.push(char);
+    else if (stack.length === 0 || stack.pop() !== matching[char]) return false;
+  }
+  return stack.length === 0;
+}
+''',
+        "prep-reverse-exactly-eight-bits-without-array": '''function reverse8(n) {
+  let result = 0;
+  for (let i = 0; i < 8; i++) { result = (result << 1) | (n & 1); n >>>= 1; }
+  return result;
+}
+''',
+        "prep-byte-popcount-parallel-and-lookup": '''function popcount8(n) {
+  n -= (n >>> 1) & 0x55;
+  n = (n & 0x33) + ((n >>> 2) & 0x33);
+  return (n + (n >>> 4)) & 0x0f;
+}
+''',
+        "prep-one-active-bit-signed-int32-pattern": '''function is_one_bit_active(n) {
+  const bits = n >>> 0;
+  return bits !== 0 && (bits & (bits - 1)) === 0;
+}
+''',
+        "prep-ascii-letter-palindrome-two-pointers": '''function is_palindrome(text) {
+  let left = 0, right = text.length - 1;
+  while (left < right) {
+    if (text[left++] !== text[right--]) return false;
+  }
+  return true;
+}
+''',
+        "prep-balanced-brackets-mixed-text": '''function is_balanced(text) {
+  const stack = [], matching = {')':'(', ']':'[', '}':'{'};
+  for (const char of text) {
+    if ('([{'.includes(char)) stack.push(char);
+    else if (Object.hasOwn(matching, char) &&
+             (stack.length === 0 || stack.pop() !== matching[char])) return false;
+  }
+  return stack.length === 0;
+}
+''',
+        "prep-first-equal-in-sorted-array": '''function first_equal(a, value) {
+  let lo = 0, hi = a.length;
+  while (lo < hi) {
+    const mid = lo + Math.floor((hi - lo) / 2);
+    if (a[mid] < value) lo = mid + 1; else hi = mid;
+  }
+  return lo < a.length && a[lo] === value ? lo : -1;
+}
+''',
+        "prep-maximum-sum-contiguous-subarray": '''function max_subarray(a) {
+  if (a.length === 0) return null;
+  let best = null, current = 0, start = 0;
+  for (let end = 0; end < a.length; end++) {
+    if (end === 0 || current < 0) { current = a[end]; start = end; }
+    else current += a[end];
+    if (best === null || current > best[0]) best = [current, start, end];
+  }
+  return best;
+}
+''',
+        "prep-postfix-expression-stack-evaluation": '''function evaluate_postfix(tokens) {
+  const stack = [];
+  for (const token of tokens) {
+    if (Number.isInteger(token)) { stack.push(token); continue; }
+    if (!['+', '-', '*'].includes(token) || stack.length < 2) throw new Error('invalid postfix expression');
+    const right = stack.pop(), left = stack.pop();
+    stack.push(token === '+' ? left + right : token === '-' ? left - right : left * right);
+  }
+  if (stack.length !== 1) throw new Error('invalid postfix expression');
+  return stack[0];
+}
+''',
+        "prep-three-color-in-place-partition": '''function sort012(a) {
+  let lo = 0, mid = 0, hi = a.length - 1;
+  while (mid <= hi) {
+    if (a[mid] === 0) { [a[lo], a[mid]] = [a[mid], a[lo]]; lo++; mid++; }
+    else if (a[mid] === 1) mid++;
+    else { [a[mid], a[hi]] = [a[hi], a[mid]]; hi--; }
+  }
+  return a;
+}
+''',
+        "prep-two-missing-zero-through-n-plus-one-no-aux-array": '''function two_missing(a) {
+  let combined = 0;
+  for (let value = 0; value < a.length + 2; value++) combined ^= value;
+  for (const value of a) combined ^= value;
+  const partition = combined & -combined;
+  let first = 0, second = 0;
+  for (let value = 0; value < a.length + 2; value++) {
+    if (value & partition) first ^= value; else second ^= value;
+  }
+  for (const value of a) {
+    if (value & partition) first ^= value; else second ^= value;
+  }
+  return [first, second];
+}
+''',
+        "prep-one-two-missing-values": '''function missing_zero_to_n(a) {
+  let missing = a.length;
+  for (let i = 0; i < a.length; i++) missing ^= i ^ a[i];
+  return missing;
+}
+''',
+        "prep-longest-contiguous-sum-divisible-by-three": '''function longest_mod3(a) {
+  const first = [0, null, null];
+  let remainder = 0, best = [0, null, null];
+  for (let end = 0; end < a.length; end++) {
+    remainder = (remainder + a[end]) % 3;
+    if (first[remainder] === null) first[remainder] = end + 1;
+    else {
+      const length = end + 1 - first[remainder];
+      if (length > best[0]) best = [length, first[remainder], end];
+    }
+  }
+  return best;
+}
+''',
+        "prep-software-fibonacci-recursion-improvement": '''function fibonacci(n) {
+  let a = 0, b = 1;
+  for (let i = 0; i < n; i++) [a, b] = [b, a + b];
+  return a;
+}
+''',
+        "prep-all-distinct-string-permutations": '''function permutations(text) {
+  const chars = Array.from(text), counts = new Map(), out = [];
+  for (const char of chars) counts.set(char, (counts.get(char) ?? 0) + 1);
+  function visit(path) {
+    if (path.length === chars.length) { out.push(path.join('')); return; }
+    for (const [char, count] of counts) if (count > 0) {
+      counts.set(char, count - 1); path.push(char); visit(path); path.pop(); counts.set(char, count);
+    }
+  }
+  visit([]);
+  return out;
+}
+''',
+        "prep-reverse-words-using-character-reversal": '''function reverse_range(chars, lo, hi) {
+  while (lo < hi) { [chars[lo], chars[hi]] = [chars[hi], chars[lo]]; lo++; hi--; }
+}
+function reverse_words(text) {
+  const chars = Array.from(text);
+  reverse_range(chars, 0, chars.length - 1);
+  let start = 0;
+  while (start < chars.length) {
+    if (chars[start] === ' ') { start++; continue; }
+    let end = start;
+    while (end < chars.length && chars[end] !== ' ') end++;
+    reverse_range(chars, start, end - 1);
+    start = end;
+  }
+  return chars.join('');
+}
+''',
+    }
+    javascript["prep-power-of-two-check"] = javascript["example-power-of-two-check"]
+    c = {
+        "example-count-set-bits": '''#include <stdint.h>
+uint32_t count_set_bits(uint32_t n) {
+    uint32_t total = 0;
+    while (n) { n &= n - 1u; total++; }
+    return total;
+}
+''',
+        "example-power-of-two-check": '''#include <stdint.h>
+uint32_t is_power_of_two(uint32_t n) {
+    return n != 0u && (n & (n - 1u)) == 0u;
+}
+''',
+        "prep-reverse-exactly-eight-bits-without-array": '''#include <stdint.h>
+uint32_t reverse8(uint32_t n) {
+    uint32_t result = 0;
+    for (unsigned i = 0; i < 8; i++) { result = (result << 1) | (n & 1u); n >>= 1; }
+    return result;
+}
+''',
+        "prep-byte-popcount-parallel-and-lookup": '''#include <stdint.h>
+uint32_t popcount8(uint32_t n) {
+    n -= (n >> 1) & 0x55u;
+    n = (n & 0x33u) + ((n >> 2) & 0x33u);
+    return (n + (n >> 4)) & 0x0fu;
+}
+''',
+    }
+    c["prep-power-of-two-check"] = c["example-power-of-two-check"]
+    hardware = {
+        "example-sensor-majority": '''module majority3(input a,b,c, output y);
+assign y = (a & b) | (a & c) | (b & c);
+endmodule
+''',
+        "prep-enabled-mod-six-counter": '''module enabled_mod_six_counter(input clk,rst,enable, output reg [2:0] count);
+always @(posedge clk) begin
+    if (rst) count <= 3'd0;
+    else if (count >= 3'd6) count <= 3'd0;
+    else if (enable) count <= count == 3'd5 ? 3'd0 : count + 3'd1;
+end
+endmodule
+''',
+        "prep-serial-1101-state-storage-count": '''module sequence_1101(input clk,rst,bit_in, output found);
+reg [2:0] state, next_state;
+always @* begin
+    case(state)
+      3'd0: next_state = bit_in ? 3'd1 : 3'd0;
+      3'd1: next_state = bit_in ? 3'd2 : 3'd0;
+      3'd2: next_state = bit_in ? 3'd2 : 3'd3;
+      3'd3: next_state = bit_in ? 3'd4 : 3'd0;
+      3'd4: next_state = bit_in ? 3'd2 : 3'd0;
+      default: next_state = 3'd0;
+    endcase
+end
+always @(posedge clk) begin
+    if (rst) state <= 3'd0;
+    else state <= next_state;
+end
+assign found = state == 3'd4;
+endmodule
+''',
+        "prep-eight-bit-unsigned-lower-clamp-sixty-four": '''module clamp64(input [7:0] x, output [7:0] y);
+assign y = x < 8'd64 ? 8'd64 : x;
+endmodule
+''',
+        "prep-unsigned-two-bit-combinational-square": '''module square2(input [1:0] x, output [3:0] y);
+assign y = {x[1] & x[0], x[1] & ~x[0], 1'b0, x[0]};
+endmodule
+''',
+    }
+    vhdl = '''library ieee;
+use ieee.std_logic_1164.all;
+entity majority3 is
+  port(a,b,c: in std_logic; y: out std_logic);
+end entity;
+architecture rtl of majority3 is
+begin
+  y <= (a and b) or (a and c) or (b and c);
+end architecture;
+'''
+    cases = []
+    for key, question in build_manifest()["questions"].items():
+        for language in question["languages"]:
+            sources = python if language == "python" else javascript if language == "javascript" else c if language in ("c", "cpp") else hardware
+            source = vhdl if language == "vhdl" else sources[key]
+            cases.append({"question_key": key, "language": language, "source": source})
+    return {"version": 1, "cases": cases}
+
+
 if __name__ == "__main__":
     (BACKEND / "seeds/execution_cases.json").write_text(json.dumps(build_manifest(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (BACKEND / "tests/fixtures/execution_smoke.json").write_text(json.dumps(build_smoke(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (BACKEND / "tests/fixtures/execution_positive.json").write_text(json.dumps(build_positive(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

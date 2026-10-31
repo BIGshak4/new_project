@@ -9,7 +9,8 @@
     "check": "node --check api/execute.mjs && node --check lib/runner.mjs",
     "provision": "node scripts/provision.mjs",
     "smoke": "node scripts/smoke.mjs",
-    "check:fixtures": "node scripts/check-fixtures.mjs"
+    "check:fixtures": "node scripts/check-fixtures.mjs",
+    "verify:positive": "node scripts/verify-positive.mjs"
   },
   "dependencies": { "@vercel/sandbox": "3.9.1" },
   "overrides": { "zod": "4.6.7" }

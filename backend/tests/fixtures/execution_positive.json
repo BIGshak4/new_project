@@ -1,0 +1,340 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "question_key": "example-count-set-bits",
+      "language": "python",
+      "source": "def count_set_bits(n):\n    total = 0\n    while n:\n        n &= n - 1\n        total += 1\n    return total\n"
+    },
+    {
+      "question_key": "example-count-set-bits",
+      "language": "javascript",
+      "source": "function count_set_bits(n) {\n  let count = 0;\n  while (n !== 0) { n = (n & (n - 1)) >>> 0; count++; }\n  return count;\n}\n"
+    },
+    {
+      "question_key": "example-count-set-bits",
+      "language": "c",
+      "source": "#include <stdint.h>\nuint32_t count_set_bits(uint32_t n) {\n    uint32_t total = 0;\n    while (n) { n &= n - 1u; total++; }\n    return total;\n}\n"
+    },
+    {
+      "question_key": "example-count-set-bits",
+      "language": "cpp",
+      "source": "#include <stdint.h>\nuint32_t count_set_bits(uint32_t n) {\n    uint32_t total = 0;\n    while (n) { n &= n - 1u; total++; }\n    return total;\n}\n"
+    },
+    {
+      "question_key": "example-power-of-two-check",
+      "language": "python",
+      "source": "def is_power_of_two(n):\n    return n != 0 and (n & (n - 1)) == 0\n"
+    },
+    {
+      "question_key": "example-power-of-two-check",
+      "language": "javascript",
+      "source": "function is_power_of_two(n) {\n  return n !== 0 && (n & (n - 1)) === 0;\n}\n"
+    },
+    {
+      "question_key": "example-power-of-two-check",
+      "language": "c",
+      "source": "#include <stdint.h>\nuint32_t is_power_of_two(uint32_t n) {\n    return n != 0u && (n & (n - 1u)) == 0u;\n}\n"
+    },
+    {
+      "question_key": "example-power-of-two-check",
+      "language": "cpp",
+      "source": "#include <stdint.h>\nuint32_t is_power_of_two(uint32_t n) {\n    return n != 0u && (n & (n - 1u)) == 0u;\n}\n"
+    },
+    {
+      "question_key": "example-extract-register-field",
+      "language": "python",
+      "source": "def extract_field(reg, lsb, width):\n    return (reg >> lsb) & ((1 << width) - 1)\n"
+    },
+    {
+      "question_key": "example-extract-register-field",
+      "language": "javascript",
+      "source": "function extract_field(reg, lsb, width) {\n  return width === 32 ? reg >>> 0 : (reg >>> lsb) & (2 ** width - 1);\n}\n"
+    },
+    {
+      "question_key": "example-first-greater-or-equal",
+      "language": "python",
+      "source": "def lower_bound(a, target):\n    lo, hi = 0, len(a)\n    while lo < hi:\n        mid = lo + (hi - lo) // 2\n        if a[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n"
+    },
+    {
+      "question_key": "example-first-greater-or-equal",
+      "language": "javascript",
+      "source": "function lower_bound(a, target) {\n  let lo = 0, hi = a.length;\n  while (lo < hi) {\n    const mid = lo + Math.floor((hi - lo) / 2);\n    if (a[mid] < target) lo = mid + 1; else hi = mid;\n  }\n  return lo;\n}\n"
+    },
+    {
+      "question_key": "example-merge-measurement-streams",
+      "language": "python",
+      "source": "def merge(a, b):\n    i = j = 0\n    out = []\n    while i < len(a) and j < len(b):\n        if a[i] <= b[j]:\n            out.append(a[i])\n            i += 1\n        else:\n            out.append(b[j])\n            j += 1\n    out.extend(a[i:])\n    out.extend(b[j:])\n    return out\n"
+    },
+    {
+      "question_key": "example-merge-measurement-streams",
+      "language": "javascript",
+      "source": "function merge(a, b) {\n  const out = []; let i = 0, j = 0;\n  while (i < a.length && j < b.length) {\n    if (a[i] <= b[j]) out.push(a[i++]); else out.push(b[j++]);\n  }\n  while (i < a.length) out.push(a[i++]);\n  while (j < b.length) out.push(b[j++]);\n  return out;\n}\n"
+    },
+    {
+      "question_key": "example-pair-sum-indices",
+      "language": "python",
+      "source": "def pair_sum(a, target):\n    seen = {}\n    for i, value in enumerate(a):\n        complement = target - value\n        if complement in seen:\n            return [seen[complement], i]\n        seen[value] = i\n    return None\n"
+    },
+    {
+      "question_key": "example-pair-sum-indices",
+      "language": "javascript",
+      "source": "function pair_sum(a, target) {\n  const seen = new Map();\n  for (let i = 0; i < a.length; i++) {\n    const complement = target - a[i];\n    if (seen.has(complement)) return [seen.get(complement), i];\n    seen.set(a[i], i);\n  }\n  return null;\n}\n"
+    },
+    {
+      "question_key": "example-balanced-brackets",
+      "language": "python",
+      "source": "def is_balanced(text):\n    stack = []\n    matching = {')': '(', ']': '[', '}': '{'}\n    for char in text:\n        if char in '([{':\n            stack.append(char)\n        elif not stack or stack.pop() != matching[char]:\n            return False\n    return not stack\n"
+    },
+    {
+      "question_key": "example-balanced-brackets",
+      "language": "javascript",
+      "source": "function is_balanced(text) {\n  const stack = [], matching = {')':'(', ']':'[', '}':'{'};\n  for (const char of text) {\n    if ('([{'.includes(char)) stack.push(char);\n    else if (stack.length === 0 || stack.pop() !== matching[char]) return false;\n  }\n  return stack.length === 0;\n}\n"
+    },
+    {
+      "question_key": "prep-power-of-two-check",
+      "language": "python",
+      "source": "def is_power_of_two(n):\n    return n != 0 and (n & (n - 1)) == 0\n"
+    },
+    {
+      "question_key": "prep-power-of-two-check",
+      "language": "javascript",
+      "source": "function is_power_of_two(n) {\n  return n !== 0 && (n & (n - 1)) === 0;\n}\n"
+    },
+    {
+      "question_key": "prep-power-of-two-check",
+      "language": "c",
+      "source": "#include <stdint.h>\nuint32_t is_power_of_two(uint32_t n) {\n    return n != 0u && (n & (n - 1u)) == 0u;\n}\n"
+    },
+    {
+      "question_key": "prep-power-of-two-check",
+      "language": "cpp",
+      "source": "#include <stdint.h>\nuint32_t is_power_of_two(uint32_t n) {\n    return n != 0u && (n & (n - 1u)) == 0u;\n}\n"
+    },
+    {
+      "question_key": "prep-reverse-exactly-eight-bits-without-array",
+      "language": "python",
+      "source": "def reverse8(n):\n    result = 0\n    for _ in range(8):\n        result = (result << 1) | (n & 1)\n        n >>= 1\n    return result\n"
+    },
+    {
+      "question_key": "prep-reverse-exactly-eight-bits-without-array",
+      "language": "javascript",
+      "source": "function reverse8(n) {\n  let result = 0;\n  for (let i = 0; i < 8; i++) { result = (result << 1) | (n & 1); n >>>= 1; }\n  return result;\n}\n"
+    },
+    {
+      "question_key": "prep-reverse-exactly-eight-bits-without-array",
+      "language": "c",
+      "source": "#include <stdint.h>\nuint32_t reverse8(uint32_t n) {\n    uint32_t result = 0;\n    for (unsigned i = 0; i < 8; i++) { result = (result << 1) | (n & 1u); n >>= 1; }\n    return result;\n}\n"
+    },
+    {
+      "question_key": "prep-reverse-exactly-eight-bits-without-array",
+      "language": "cpp",
+      "source": "#include <stdint.h>\nuint32_t reverse8(uint32_t n) {\n    uint32_t result = 0;\n    for (unsigned i = 0; i < 8; i++) { result = (result << 1) | (n & 1u); n >>= 1; }\n    return result;\n}\n"
+    },
+    {
+      "question_key": "prep-byte-popcount-parallel-and-lookup",
+      "language": "python",
+      "source": "def popcount8(n):\n    n = n - ((n >> 1) & 0x55)\n    n = (n & 0x33) + ((n >> 2) & 0x33)\n    return (n + (n >> 4)) & 0x0f\n"
+    },
+    {
+      "question_key": "prep-byte-popcount-parallel-and-lookup",
+      "language": "javascript",
+      "source": "function popcount8(n) {\n  n -= (n >>> 1) & 0x55;\n  n = (n & 0x33) + ((n >>> 2) & 0x33);\n  return (n + (n >>> 4)) & 0x0f;\n}\n"
+    },
+    {
+      "question_key": "prep-byte-popcount-parallel-and-lookup",
+      "language": "c",
+      "source": "#include <stdint.h>\nuint32_t popcount8(uint32_t n) {\n    n -= (n >> 1) & 0x55u;\n    n = (n & 0x33u) + ((n >> 2) & 0x33u);\n    return (n + (n >> 4)) & 0x0fu;\n}\n"
+    },
+    {
+      "question_key": "prep-byte-popcount-parallel-and-lookup",
+      "language": "cpp",
+      "source": "#include <stdint.h>\nuint32_t popcount8(uint32_t n) {\n    n -= (n >> 1) & 0x55u;\n    n = (n & 0x33u) + ((n >> 2) & 0x33u);\n    return (n + (n >> 4)) & 0x0fu;\n}\n"
+    },
+    {
+      "question_key": "prep-one-active-bit-signed-int32-pattern",
+      "language": "python",
+      "source": "def is_one_bit_active(n):\n    bits = n & 0xffffffff\n    return bits != 0 and (bits & (bits - 1)) == 0\n"
+    },
+    {
+      "question_key": "prep-one-active-bit-signed-int32-pattern",
+      "language": "javascript",
+      "source": "function is_one_bit_active(n) {\n  const bits = n >>> 0;\n  return bits !== 0 && (bits & (bits - 1)) === 0;\n}\n"
+    },
+    {
+      "question_key": "prep-ascii-letter-palindrome-two-pointers",
+      "language": "python",
+      "source": "def is_palindrome(text):\n    left, right = 0, len(text) - 1\n    while left < right:\n        if text[left] != text[right]:\n            return False\n        left += 1\n        right -= 1\n    return True\n"
+    },
+    {
+      "question_key": "prep-ascii-letter-palindrome-two-pointers",
+      "language": "javascript",
+      "source": "function is_palindrome(text) {\n  let left = 0, right = text.length - 1;\n  while (left < right) {\n    if (text[left++] !== text[right--]) return false;\n  }\n  return true;\n}\n"
+    },
+    {
+      "question_key": "prep-balanced-brackets-mixed-text",
+      "language": "python",
+      "source": "def is_balanced(text):\n    stack = []\n    matching = {')': '(', ']': '[', '}': '{'}\n    for char in text:\n        if char in '([{':\n            stack.append(char)\n        elif char in matching and (not stack or stack.pop() != matching[char]):\n            return False\n    return not stack\n"
+    },
+    {
+      "question_key": "prep-balanced-brackets-mixed-text",
+      "language": "javascript",
+      "source": "function is_balanced(text) {\n  const stack = [], matching = {')':'(', ']':'[', '}':'{'};\n  for (const char of text) {\n    if ('([{'.includes(char)) stack.push(char);\n    else if (Object.hasOwn(matching, char) &&\n             (stack.length === 0 || stack.pop() !== matching[char])) return false;\n  }\n  return stack.length === 0;\n}\n"
+    },
+    {
+      "question_key": "prep-first-equal-in-sorted-array",
+      "language": "python",
+      "source": "def first_equal(a, value):\n    lo, hi = 0, len(a)\n    while lo < hi:\n        mid = lo + (hi - lo) // 2\n        if a[mid] < value:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo if lo < len(a) and a[lo] == value else -1\n"
+    },
+    {
+      "question_key": "prep-first-equal-in-sorted-array",
+      "language": "javascript",
+      "source": "function first_equal(a, value) {\n  let lo = 0, hi = a.length;\n  while (lo < hi) {\n    const mid = lo + Math.floor((hi - lo) / 2);\n    if (a[mid] < value) lo = mid + 1; else hi = mid;\n  }\n  return lo < a.length && a[lo] === value ? lo : -1;\n}\n"
+    },
+    {
+      "question_key": "prep-maximum-sum-contiguous-subarray",
+      "language": "python",
+      "source": "def max_subarray(a):\n    if not a:\n        return None\n    best = None\n    current = 0\n    start = 0\n    for end, value in enumerate(a):\n        if end == 0 or current < 0:\n            current = value\n            start = end\n        else:\n            current += value\n        # Keeping the first equal optimum implements earliest start/end ties.\n        if best is None or current > best[0]:\n            best = [current, start, end]\n    return best\n"
+    },
+    {
+      "question_key": "prep-maximum-sum-contiguous-subarray",
+      "language": "javascript",
+      "source": "function max_subarray(a) {\n  if (a.length === 0) return null;\n  let best = null, current = 0, start = 0;\n  for (let end = 0; end < a.length; end++) {\n    if (end === 0 || current < 0) { current = a[end]; start = end; }\n    else current += a[end];\n    if (best === null || current > best[0]) best = [current, start, end];\n  }\n  return best;\n}\n"
+    },
+    {
+      "question_key": "prep-postfix-expression-stack-evaluation",
+      "language": "python",
+      "source": "def evaluate_postfix(tokens):\n    stack = []\n    for token in tokens:\n        if type(token) is int:\n            stack.append(token)\n            continue\n        if token not in ('+', '-', '*') or len(stack) < 2:\n            raise ValueError('invalid postfix expression')\n        right, left = stack.pop(), stack.pop()\n        stack.append(left + right if token == '+' else left - right if token == '-' else left * right)\n    if len(stack) != 1:\n        raise ValueError('invalid postfix expression')\n    return stack[0]\n"
+    },
+    {
+      "question_key": "prep-postfix-expression-stack-evaluation",
+      "language": "javascript",
+      "source": "function evaluate_postfix(tokens) {\n  const stack = [];\n  for (const token of tokens) {\n    if (Number.isInteger(token)) { stack.push(token); continue; }\n    if (!['+', '-', '*'].includes(token) || stack.length < 2) throw new Error('invalid postfix expression');\n    const right = stack.pop(), left = stack.pop();\n    stack.push(token === '+' ? left + right : token === '-' ? left - right : left * right);\n  }\n  if (stack.length !== 1) throw new Error('invalid postfix expression');\n  return stack[0];\n}\n"
+    },
+    {
+      "question_key": "prep-three-color-in-place-partition",
+      "language": "python",
+      "source": "def sort012(a):\n    lo = mid = 0\n    hi = len(a) - 1\n    while mid <= hi:\n        if a[mid] == 0:\n            a[lo], a[mid] = a[mid], a[lo]\n            lo += 1\n            mid += 1\n        elif a[mid] == 1:\n            mid += 1\n        else:\n            a[mid], a[hi] = a[hi], a[mid]\n            hi -= 1\n    return a\n"
+    },
+    {
+      "question_key": "prep-three-color-in-place-partition",
+      "language": "javascript",
+      "source": "function sort012(a) {\n  let lo = 0, mid = 0, hi = a.length - 1;\n  while (mid <= hi) {\n    if (a[mid] === 0) { [a[lo], a[mid]] = [a[mid], a[lo]]; lo++; mid++; }\n    else if (a[mid] === 1) mid++;\n    else { [a[mid], a[hi]] = [a[hi], a[mid]]; hi--; }\n  }\n  return a;\n}\n"
+    },
+    {
+      "question_key": "prep-two-missing-zero-through-n-plus-one-no-aux-array",
+      "language": "python",
+      "source": "def two_missing(a):\n    combined = 0\n    for value in range(len(a) + 2):\n        combined ^= value\n    for value in a:\n        combined ^= value\n    partition = combined & -combined\n    first = second = 0\n    for value in range(len(a) + 2):\n        if value & partition:\n            first ^= value\n        else:\n            second ^= value\n    for value in a:\n        if value & partition:\n            first ^= value\n        else:\n            second ^= value\n    return [first, second]\n"
+    },
+    {
+      "question_key": "prep-two-missing-zero-through-n-plus-one-no-aux-array",
+      "language": "javascript",
+      "source": "function two_missing(a) {\n  let combined = 0;\n  for (let value = 0; value < a.length + 2; value++) combined ^= value;\n  for (const value of a) combined ^= value;\n  const partition = combined & -combined;\n  let first = 0, second = 0;\n  for (let value = 0; value < a.length + 2; value++) {\n    if (value & partition) first ^= value; else second ^= value;\n  }\n  for (const value of a) {\n    if (value & partition) first ^= value; else second ^= value;\n  }\n  return [first, second];\n}\n"
+    },
+    {
+      "question_key": "prep-one-two-missing-values",
+      "language": "python",
+      "source": "def missing_zero_to_n(a):\n    missing = len(a)\n    for index, value in enumerate(a):\n        missing ^= index ^ value\n    return missing\n"
+    },
+    {
+      "question_key": "prep-one-two-missing-values",
+      "language": "javascript",
+      "source": "function missing_zero_to_n(a) {\n  let missing = a.length;\n  for (let i = 0; i < a.length; i++) missing ^= i ^ a[i];\n  return missing;\n}\n"
+    },
+    {
+      "question_key": "prep-longest-contiguous-sum-divisible-by-three",
+      "language": "python",
+      "source": "def longest_mod3(a):\n    first = [0, None, None]\n    remainder = 0\n    best = [0, None, None]\n    for end, value in enumerate(a):\n        remainder = (remainder + value) % 3\n        if first[remainder] is None:\n            first[remainder] = end + 1\n        else:\n            length = end + 1 - first[remainder]\n            if length > best[0]:\n                best = [length, first[remainder], end]\n    return best\n"
+    },
+    {
+      "question_key": "prep-longest-contiguous-sum-divisible-by-three",
+      "language": "javascript",
+      "source": "function longest_mod3(a) {\n  const first = [0, null, null];\n  let remainder = 0, best = [0, null, null];\n  for (let end = 0; end < a.length; end++) {\n    remainder = (remainder + a[end]) % 3;\n    if (first[remainder] === null) first[remainder] = end + 1;\n    else {\n      const length = end + 1 - first[remainder];\n      if (length > best[0]) best = [length, first[remainder], end];\n    }\n  }\n  return best;\n}\n"
+    },
+    {
+      "question_key": "prep-software-fibonacci-recursion-improvement",
+      "language": "python",
+      "source": "def fibonacci(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n"
+    },
+    {
+      "question_key": "prep-software-fibonacci-recursion-improvement",
+      "language": "javascript",
+      "source": "function fibonacci(n) {\n  let a = 0, b = 1;\n  for (let i = 0; i < n; i++) [a, b] = [b, a + b];\n  return a;\n}\n"
+    },
+    {
+      "question_key": "prep-all-distinct-string-permutations",
+      "language": "python",
+      "source": "def permutations(text):\n    frequencies = {}\n    for char in text:\n        frequencies[char] = frequencies.get(char, 0) + 1\n    out = []\n    def visit(prefix):\n        if len(prefix) == len(text):\n            out.append(prefix)\n            return\n        for char in frequencies:\n            if frequencies[char]:\n                frequencies[char] -= 1\n                visit(prefix + char)\n                frequencies[char] += 1\n    visit('')\n    return out\n"
+    },
+    {
+      "question_key": "prep-all-distinct-string-permutations",
+      "language": "javascript",
+      "source": "function permutations(text) {\n  const chars = Array.from(text), counts = new Map(), out = [];\n  for (const char of chars) counts.set(char, (counts.get(char) ?? 0) + 1);\n  function visit(path) {\n    if (path.length === chars.length) { out.push(path.join('')); return; }\n    for (const [char, count] of counts) if (count > 0) {\n      counts.set(char, count - 1); path.push(char); visit(path); path.pop(); counts.set(char, count);\n    }\n  }\n  visit([]);\n  return out;\n}\n"
+    },
+    {
+      "question_key": "prep-reverse-words-using-character-reversal",
+      "language": "python",
+      "source": "def reverse_range(chars, lo, hi):\n    while lo < hi:\n        chars[lo], chars[hi] = chars[hi], chars[lo]\n        lo += 1\n        hi -= 1\n\ndef reverse_words(text):\n    chars = list(text)\n    reverse_range(chars, 0, len(chars) - 1)\n    start = 0\n    while start < len(chars):\n        if chars[start] == ' ':\n            start += 1\n            continue\n        end = start\n        while end < len(chars) and chars[end] != ' ':\n            end += 1\n        reverse_range(chars, start, end - 1)\n        start = end\n    return ''.join(chars)\n"
+    },
+    {
+      "question_key": "prep-reverse-words-using-character-reversal",
+      "language": "javascript",
+      "source": "function reverse_range(chars, lo, hi) {\n  while (lo < hi) { [chars[lo], chars[hi]] = [chars[hi], chars[lo]]; lo++; hi--; }\n}\nfunction reverse_words(text) {\n  const chars = Array.from(text);\n  reverse_range(chars, 0, chars.length - 1);\n  let start = 0;\n  while (start < chars.length) {\n    if (chars[start] === ' ') { start++; continue; }\n    let end = start;\n    while (end < chars.length && chars[end] !== ' ') end++;\n    reverse_range(chars, start, end - 1);\n    start = end;\n  }\n  return chars.join('');\n}\n"
+    },
+    {
+      "question_key": "prep-enabled-mod-six-counter",
+      "language": "verilog",
+      "source": "module enabled_mod_six_counter(input clk,rst,enable, output reg [2:0] count);\nalways @(posedge clk) begin\n    if (rst) count <= 3'd0;\n    else if (count >= 3'd6) count <= 3'd0;\n    else if (enable) count <= count == 3'd5 ? 3'd0 : count + 3'd1;\nend\nendmodule\n"
+    },
+    {
+      "question_key": "prep-enabled-mod-six-counter",
+      "language": "systemverilog",
+      "source": "module enabled_mod_six_counter(input clk,rst,enable, output reg [2:0] count);\nalways @(posedge clk) begin\n    if (rst) count <= 3'd0;\n    else if (count >= 3'd6) count <= 3'd0;\n    else if (enable) count <= count == 3'd5 ? 3'd0 : count + 3'd1;\nend\nendmodule\n"
+    },
+    {
+      "question_key": "prep-serial-1101-state-storage-count",
+      "language": "verilog",
+      "source": "module sequence_1101(input clk,rst,bit_in, output found);\nreg [2:0] state, next_state;\nalways @* begin\n    case(state)\n      3'd0: next_state = bit_in ? 3'd1 : 3'd0;\n      3'd1: next_state = bit_in ? 3'd2 : 3'd0;\n      3'd2: next_state = bit_in ? 3'd2 : 3'd3;\n      3'd3: next_state = bit_in ? 3'd4 : 3'd0;\n      3'd4: next_state = bit_in ? 3'd2 : 3'd0;\n      default: next_state = 3'd0;\n    endcase\nend\nalways @(posedge clk) begin\n    if (rst) state <= 3'd0;\n    else state <= next_state;\nend\nassign found = state == 3'd4;\nendmodule\n"
+    },
+    {
+      "question_key": "prep-serial-1101-state-storage-count",
+      "language": "systemverilog",
+      "source": "module sequence_1101(input clk,rst,bit_in, output found);\nreg [2:0] state, next_state;\nalways @* begin\n    case(state)\n      3'd0: next_state = bit_in ? 3'd1 : 3'd0;\n      3'd1: next_state = bit_in ? 3'd2 : 3'd0;\n      3'd2: next_state = bit_in ? 3'd2 : 3'd3;\n      3'd3: next_state = bit_in ? 3'd4 : 3'd0;\n      3'd4: next_state = bit_in ? 3'd2 : 3'd0;\n      default: next_state = 3'd0;\n    endcase\nend\nalways @(posedge clk) begin\n    if (rst) state <= 3'd0;\n    else state <= next_state;\nend\nassign found = state == 3'd4;\nendmodule\n"
+    },
+    {
+      "question_key": "example-sensor-majority",
+      "language": "verilog",
+      "source": "module majority3(input a,b,c, output y);\nassign y = (a & b) | (a & c) | (b & c);\nendmodule\n"
+    },
+    {
+      "question_key": "example-sensor-majority",
+      "language": "systemverilog",
+      "source": "module majority3(input a,b,c, output y);\nassign y = (a & b) | (a & c) | (b & c);\nendmodule\n"
+    },
+    {
+      "question_key": "example-sensor-majority",
+      "language": "vhdl",
+      "source": "library ieee;\nuse ieee.std_logic_1164.all;\nentity majority3 is\n  port(a,b,c: in std_logic; y: out std_logic);\nend entity;\narchitecture rtl of majority3 is\nbegin\n  y <= (a and b) or (a and c) or (b and c);\nend architecture;\n"
+    },
+    {
+      "question_key": "prep-eight-bit-unsigned-lower-clamp-sixty-four",
+      "language": "verilog",
+      "source": "module clamp64(input [7:0] x, output [7:0] y);\nassign y = x < 8'd64 ? 8'd64 : x;\nendmodule\n"
+    },
+    {
+      "question_key": "prep-eight-bit-unsigned-lower-clamp-sixty-four",
+      "language": "systemverilog",
+      "source": "module clamp64(input [7:0] x, output [7:0] y);\nassign y = x < 8'd64 ? 8'd64 : x;\nendmodule\n"
+    },
+    {
+      "question_key": "prep-unsigned-two-bit-combinational-square",
+      "language": "verilog",
+      "source": "module square2(input [1:0] x, output [3:0] y);\nassign y = {x[1] & x[0], x[1] & ~x[0], 1'b0, x[0]};\nendmodule\n"
+    },
+    {
+      "question_key": "prep-unsigned-two-bit-combinational-square",
+      "language": "systemverilog",
+      "source": "module square2(input [1:0] x, output [3:0] y);\nassign y = {x[1] & x[0], x[1] & ~x[0], 1'b0, x[0]};\nendmodule\n"
+    }
+  ]
+}

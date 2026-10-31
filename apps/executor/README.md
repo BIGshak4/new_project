@@ -40,8 +40,11 @@ can return `passed: true`. Unsupported/missing tests return `passed: null`.
 The Hobby plan stops new sandbox creation at its included quota rather than
 charging overages; the broker returns unavailable on provider failures. Budget
 limits in the JobRun API remain necessary, independently of provider quotas.
-Snapshots can expire after inactivity; reprovision and verify before replacing a
-snapshot. The broker fails closed when snapshot/key configuration is missing.
+The provisioning script explicitly creates the selected toolchain snapshot with
+`expiration: 0`, so ordinary inactivity does not disable the feature. Snapshots
+created with platform defaults can expire; verify expiration metadata before
+replacing the configured snapshot. The broker fails closed when snapshot/key
+configuration is missing.
 
 `scripts/seal-snapshot.mjs` is a one-off trusted build task for converting an
 installed toolchain snapshot into a snapshot with `expiration: 0` via the SDK.
@@ -93,6 +96,13 @@ security sandbox**, is never called by HTTP, accepts no learner input, and does
 not establish that the cloud provider or live site works. The
 `verify-code-execution.yml` workflow runs it on trusted `master` pushes or an
 explicit dispatch with no hosting/model/database credentials.
+
+`npm run verify:positive -- <output.json>` runs every committed positive
+question/language reference against the deployed broker sequentially. It checks
+that the matrix covers the manifest exactly once and requires a nonempty full
+test-suite pass for every reference. It uses the same local-only signing seed and
+executor URL as the smoke script. The Linux fixture workflow runs the complete
+positive matrix as well as representative negative and syntax-error cases.
 
 References: [Sandbox SDK](https://vercel.com/docs/sandbox/sdk-reference),
 [network isolation](https://vercel.com/docs/sandbox/concepts/firewall),
