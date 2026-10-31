@@ -66,11 +66,18 @@ def _existing(row: dict, digest: str):
 
 def _limits(rows, user, now, daily, per_minute, concurrent):
     mine = [r for r in rows if r["user"] == user]
-    if sum(r["created"] > now - 86400 for r in mine) >= daily:
+    _count_limits(sum(r["created"] > now - 86400 for r in mine),
+                  sum(r["created"] > now - 60 for r in mine),
+                  sum(r["result"] is None and r["created"] > now - 120 for r in rows),
+                  daily, per_minute, concurrent)
+
+
+def _count_limits(day_used, minute_used, active, daily, per_minute, concurrent):
+    if day_used >= daily:
         raise ApiError("usage_limit", "the code execution daily allowance has been reached", headers={"Retry-After": "3600"})
-    if sum(r["created"] > now - 60 for r in mine) >= per_minute:
+    if minute_used >= per_minute:
         raise ApiError("usage_limit", "please wait before running code again", headers={"Retry-After": "60"})
-    if sum(r["result"] is None and r["created"] > now - 120 for r in rows) >= concurrent:
+    if active >= concurrent:
         raise ApiError("usage_limit", "the code runner is busy; please retry shortly", headers={"Retry-After": "10"})
 
 
@@ -96,13 +103,17 @@ class DbExecutionLedger:
             old = existing.mappings().one_or_none()
             if old:
                 return _existing(dict(old), digest)
-            result = await conn.execute(text("""
-                select id, user_id::text as "user", scope, idempotency_key as key,
-                       request_hash as digest, extract(epoch from created_at)::float as created, result
-                from public.code_execution_runs where created_at > now() - interval '2 days'
-            """))
-            rows = [dict(r) for r in result.mappings()]
-            _limits(rows, user, time.time(), self.daily, self.per_minute, self.concurrent)
+            # Quotas require three counts, never other learners' result payloads.
+            result = await conn.execute(text("""select
+                (select count(*) from public.code_execution_runs where user_id=cast(:user as uuid)
+                 and created_at > now() - interval '24 hours') as day_used,
+                (select count(*) from public.code_execution_runs where user_id=cast(:user as uuid)
+                 and created_at > now() - interval '1 minute') as minute_used,
+                (select count(*) from public.code_execution_runs where result is null
+                 and created_at > now() - interval '2 minutes') as active"""), dict(user=user))
+            counts = result.mappings().one()
+            _count_limits(counts["day_used"], counts["minute_used"], counts["active"],
+                          self.daily, self.per_minute, self.concurrent)
             run_id = str(uuid.uuid4())
             await conn.execute(text("""insert into public.code_execution_runs
                 (id,user_id,scope,idempotency_key,request_hash) values
