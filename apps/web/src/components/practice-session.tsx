@@ -559,14 +559,6 @@ export function PracticeSession({
             >
               <section className="question-sheet">
                 <SubjectSketch subject={question.subject} className="sheet-sketch-corner" />
-                <div className="row">
-                  <span className="badge">
-                    {question.difficulty == null ? t("קושי טרם נקבע", "Difficulty not yet rated") : `${t("קושי", "Difficulty")} ${question.difficulty}/10`}
-                  </span>
-                  <span className="small muted">
-                    {question.estimated_minutes ?? "—"} {t("דקות", "minutes")}
-                  </span>
-                </div>
                 <h1 dir={textDirection(question.title)}><BidiText>{question.title}</BidiText></h1>
                 <QuestionMetadata question={question} lang={lang} showCompanies={false} />
                 <QuestionStatusControl

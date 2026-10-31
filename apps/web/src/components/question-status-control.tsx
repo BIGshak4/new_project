@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Check, Circle, Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import type { Lang } from "./auth";
 import type { QuestionSummary } from "../lib/practice-api";
 import type { Entry } from "../lib/practice-ui";
@@ -49,17 +49,18 @@ export function QuestionStatusControl({
   return (
     <div className="question-status" role="group" aria-label={`${t("מצב אישי", "Personal status")}: ${question.title}`} aria-busy={busy}>
       <div className="question-status-actions">
-        <button
-          type="button"
+        <label
           className={`question-completion${ready && state.completed ? " is-completed" : ""}`}
-          disabled={!ready || busy}
-          aria-pressed={ready && state.completed}
-          aria-label={`${state.completed ? t("סימון כלא בוצעה", "Mark as not done") : t("סימון כבוצעה", "Mark as done")}: ${question.title}`}
-          onClick={() => void save({ completed: !state.completed })}
         >
-          {ready && state.completed ? <Check size={16} aria-hidden="true" /> : <Circle size={16} aria-hidden="true" />}
-          {ready ? state.completed ? t("בוצעה", "Done") : t("לא בוצעה", "Not done") : t("טוענים מצב…", "Loading status…")}
-        </button>
+          <input
+            type="checkbox"
+            checked={ready && state.completed}
+            disabled={!ready || busy}
+            aria-label={`${t("בוצעה", "Done")}: ${question.title}`}
+            onChange={(event) => void save({ completed: event.target.checked })}
+          />
+          <span>{t("בוצעה", "Done")}</span>
+        </label>
         <button
           type="button"
           className="question-visibility"

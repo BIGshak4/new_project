@@ -746,7 +746,7 @@ summary {
   border-bottom: 0;
 }
 .library-question-row {
-  grid-template-columns: minmax(0, 1fr) auto 65px 70px;
+  grid-template-columns: minmax(0, 1fr) auto;
 }
 .library-question-main { min-width: 0; }
 .library-question-open {
@@ -766,7 +766,22 @@ summary {
 .question-status { min-width: 0; display: grid; gap: 5px; justify-items: start; }
 .question-status-actions { display: flex; gap: 5px; flex-wrap: wrap; }
 .question-status-actions button { padding: 7px 9px; min-height: 44px; font-size: 13px; gap: 5px; }
-.question-status-actions .question-completion { white-space: nowrap; }
+.question-completion {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.question-completion:has(input:disabled) { opacity: .6; cursor: default; }
+.question-completion input[type="checkbox"] { margin: 0; flex-shrink: 0; cursor: inherit; }
 .question-completion.is-completed { color: var(--green-text); background: var(--green-soft); border-color: var(--green); }
 .question-visibility { color: var(--muted); }
 .question-status-error { color: var(--danger); max-width: 190px; }
@@ -1892,22 +1907,6 @@ summary {
 }
 .next-up-focus strong {
   color: var(--ink);
-}
-.difficulty-dots {
-  display: inline-flex;
-  gap: 3px;
-  margin-inline-start: 8px;
-  vertical-align: middle;
-}
-.difficulty-dots i {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--line);
-  display: inline-block;
-}
-.difficulty-dots i.on {
-  background: var(--green);
 }
 .badge.why-reinforce {
   background: var(--orange-soft);
@@ -3104,7 +3103,7 @@ summary {
     display: none;
   }
   .library-question-row {
-    grid-template-columns: minmax(0, 1fr) auto 65px 55px;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
   .stat-chip .level-word {
     display: none;
@@ -3241,15 +3240,11 @@ summary {
     grid-template-columns: 22px minmax(0, 1fr) 45px;
     gap: 10px;
   }
-  .question-row .q-difficulty {
-    display: none;
-  }
   .library-question-row {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
   }
   .library-question-main { grid-column: 1 / -1; }
   .library-question-row .question-status { grid-column: 1; }
-  .library-question-row .q-minutes { grid-column: 2; align-self: start; padding-block-start: 10px; }
   .question-status-filter { flex: 1 1 100%; }
   .toolbar .question-status-filter .ui-select-trigger { width: 100%; max-width: none; }
   .question-row h3 {

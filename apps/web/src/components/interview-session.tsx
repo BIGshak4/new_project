@@ -344,10 +344,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
               <BidiText>{turn.skill_label}</BidiText>
             </span>
             <span className="row">
-              <span className="small muted">
-                {t("רמת קושי", "Difficulty")} {turn.difficulty}
-                {turn.subject_switch && <> · {t("נושא חדש", "new subject")}</>}
-              </span>
+              {turn.subject_switch && <span className="small muted">{t("נושא חדש", "new subject")}</span>}
               {turn.question_key && <QuestionReport api={api} questionKey={turn.question_key} lang={lang} context="interview" />}
             </span>
           </div>

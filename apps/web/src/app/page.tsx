@@ -880,7 +880,7 @@ function Workspace({
                         setStatusMessage(null);
                       }}
                       options={[
-                        { value: "visible", label: t("כל השאלות הגלויות", "All visible questions") },
+                        { value: "visible", label: t("כל הסטטוסים", "All statuses") },
                         { value: "not_done", label: t("לא בוצעו", "Not done") },
                         { value: "done", label: t("בוצעו", "Done") },
                         { value: "hidden", label: t("מוסתרות", "Hidden") },
@@ -931,7 +931,7 @@ function Workspace({
                     </datalist>
                   </div>
                 </div>
-                <p className="small muted library-status-note">{t("סמנו מה בוצע והסתירו שאלות שאינן רלוונטיות. הסימון אישי ונשמר בחשבון.", "Mark what you have done and hide irrelevant questions. Your choices are saved to your account.")}</p>
+                <p className="small muted library-status-note">{t("הסימון אישי ונשמר בחשבון. שאלות שהוסתרו זמינות במסנן ״מוסתרות״.", "Your choices are saved to your account. Find hidden questions using the Hidden filter.")}</p>
                 <p className="small library-status-message" role="status" aria-live="polite">{statusMessage === "hidden"
                   ? t("השאלה הוסתרה. אפשר להחזיר אותה דרך מסנן השאלות המוסתרות.", "Question hidden. Restore it using the Hidden questions filter.")
                   : statusMessage === "done" ? t("השאלה סומנה כבוצעה.", "Question marked as done.")
@@ -964,12 +964,6 @@ function Workspace({
                       <QuestionStatusControl userId={user.id} question={q} questions={questions}
                         state={questionStates.get(q.id) ?? { completed: false, hidden: false }} lang={lang}
                         ready={entriesReady} onSaved={(saved) => onQuestionStatusSaved(q, saved)} />
-                      <span className="q-difficulty badge">
-                        {q.difficulty == null ? t("טרם דורג", "Unrated") : `${q.difficulty}/10`}
-                      </span>
-                      <span className="small muted q-minutes">
-                        {q.estimated_minutes ?? "—"} {t("דק׳", "min")}
-                      </span>
                     </div>
                   ))}
                 </div>

@@ -281,12 +281,7 @@ export function NextUpCard({
       )}
       <h4 dir={textDirection(next.title)}><BidiText>{next.title}</BidiText></h4>
       <p className="small muted">
-        <BidiText>{subjectLabel(next.subject, lang)}</BidiText> · {t("רמת קושי", "Difficulty")} {next.difficulty}
-        <span className="difficulty-dots" aria-hidden="true">
-          {Array.from({ length: 5 }, (_, i) => (
-            <i key={i} className={i < Math.min(5, next.difficulty) ? "on" : ""} />
-          ))}
-        </span>
+        <BidiText>{subjectLabel(next.subject, lang)}</BidiText>
       </p>
       <p dir={textDirection(next.reason)}><BidiText>{next.reason}</BidiText></p>
       <button type="button" onClick={() => onStart(next.key)}>
