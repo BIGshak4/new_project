@@ -31,6 +31,69 @@ def test_website_copy_rejects_unpaired_empty_or_review_edits(overrides):
         builder().learner_text({"learner_text": overrides}, "PREP-001")
 
 
+@pytest.mark.parametrize("hints", [
+    {"he": ["one", "two", "three"]},
+    {"he": ["one"], "en": ["one", "two", "three"]},
+    {"he": ["one", "two", ""], "en": ["one", "two", "three"]},
+    {"he": ["one", "two", 3], "en": ["one", "two", "three"]},
+])
+def test_learner_hint_edits_require_three_nonempty_paired_hints(hints):
+    with pytest.raises(ValueError):
+        builder().learner_hints({"learner_hints": hints}, "PREP-110")
+
+
+@pytest.mark.parametrize("overrides", [
+    {"status": {"he": "published", "en": "published"}},
+    {"id": {"he": "other", "en": "other"}},
+    {"reviewed_by": {"he": "person", "en": "person"}},
+    {"assumptions": {"he": "text"}},
+    {"assumptions": {"he": "different", "en": "text"}},
+])
+def test_download_copy_edits_cannot_change_identity_review_or_display_parity(overrides):
+    displayed = {"assumptions": {"he": "text", "en": "text"}}
+    with pytest.raises(ValueError):
+        builder().learner_resource_fields({"learner_resource_fields": overrides}, "PREP-110", displayed)
+
+
+def test_learner_caption_edits_cannot_add_paths_or_expose_archived_images():
+    module = builder()
+    question = {"id": "PREP-110", "media_assets": [{"path": "diagrams/existing.png"}]}
+    for captions in ({"sources/original.png": "source"}, {"diagrams/other.png": "new"},
+                     {"diagrams/existing.png": ""}):
+        with pytest.raises(ValueError):
+            module.apply_learner_media_captions(question, {"learner_media_captions": captions})
+
+
+def test_prep110_cleans_display_and_download_without_rewriting_source_or_review():
+    module = builder()
+    raw = next(q for q in json.loads((module.BANK / "questions.json").read_bytes())["questions"]
+               if q["id"] == "PREP-110")
+    rows, _ = module.load()
+    row = next(q for q in rows if q["assets"]["preparation_id"] == "PREP-110")
+    assert "צילום 14" in raw["translations"]["he"]["prompt"]
+    assert raw["key"] == row["key"].removeprefix("prep-")
+    assert raw["version"] == row["version"]
+    assert row["status"] == "trial" and row["reviewed_by"] is None
+    assert not row["assets"]["assessment_ready"]
+    resource = row["assets"]["preparation_resource"]
+    retired = re.compile(r"צילום\s*14|screenshot[- ]fourteen|editorial completion|השלמה עריכתית|"
+                         r"לפי בקשה מפורשת של המשתמש|at the user's explicit request|truncated", re.I)
+    assert not retired.search(json.dumps(row, ensure_ascii=False))
+    for language in ("he", "en"):
+        text = row["translations"][language]
+        assert len(text["hints"]) == 3
+        assert resource["translations"][language]["hint"] == text["hints"][0]
+        assert resource["translations"][language]["hints"] == text["hints"]
+        assert "X=(A>B)" in text["prompt"] and "Y=(A<B)" in text["prompt"]
+    for field, paired in resource["learner_material"].items():
+        assert resource[field] == paired
+    # The authorized copy edit must retain the actual four-row circuit exercise.
+    for language in ("he", "en"):
+        solution = row["translations"][language]["reference_solution"]
+        assert "X=A AND NOT B" in solution and "Y=NOT A AND B" in solution
+        assert "|0|0|0|0|" in solution and "|1|1|0|0|" in solution
+
+
 def test_prepared_copy_keeps_source_and_study_only_status():
     compiled, _ = builder().load()
     for row in compiled:

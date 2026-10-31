@@ -3,6 +3,7 @@
 import { QuestionMetadata, ReportedCompanies } from "./question-metadata";
 import { QuestionStatusControl } from "./question-status-control";
 import { BidiText } from "./bidi-text";
+import { QuestionTitle } from "./question-title";
 import { textDirection } from "../lib/bidi-segments";
 import { buildQuestionStates } from "../lib/question-personal-state";
 
@@ -559,7 +560,7 @@ export function PracticeSession({
             >
               <section className="question-sheet">
                 <SubjectSketch subject={question.subject} className="sheet-sketch-corner" />
-                <h1 dir={textDirection(question.title)}><BidiText>{question.title}</BidiText></h1>
+                <QuestionTitle as="h1" lang={lang}><BidiText>{question.title}</BidiText></QuestionTitle>
                 <QuestionMetadata question={question} lang={lang} showCompanies={false} />
                 <QuestionStatusControl
                   userId={user.id}

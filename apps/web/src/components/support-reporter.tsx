@@ -79,6 +79,7 @@ export function SupportReporter() {
   const reportSnapshot = useRef<SupportSubmission | null>(null);
   const ids = useId();
   const he = lang === "he";
+  const launcherLabel = he ? "נתקלתם בבעיה?" : "Report a problem";
   const pending = files.filter(file => !file.uploaded).length;
   const totalBytes = files.reduce((total, item) => total + item.file.size, 0);
 
@@ -198,8 +199,8 @@ export function SupportReporter() {
   }
 
   return <>
-    <button ref={trigger} type="button" className={styles.launcher} onClick={launch} aria-haspopup="dialog" aria-controls={`${ids}-dialog`}>
-      <CircleHelp size={18} aria-hidden="true" /><span>{he ? "נתקלתם בבעיה?" : "Report a problem"}</span>
+    <button ref={trigger} type="button" className={styles.launcher} onClick={launch} aria-label={launcherLabel} title={launcherLabel} aria-haspopup="dialog" aria-controls={`${ids}-dialog`}>
+      <CircleHelp size={18} aria-hidden="true" /><span className={styles.launcherLabel}>{launcherLabel}</span>
     </button>
     <dialog ref={dialog} data-jobrun-support-dialog id={`${ids}-dialog`} className={styles.dialog} dir={he ? "rtl" : "ltr"} lang={lang}
       aria-labelledby={`${ids}-title`} aria-describedby={`${ids}-intro`} onCancel={event => { event.preventDefault(); close(); }}>

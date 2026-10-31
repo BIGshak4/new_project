@@ -12,6 +12,7 @@ import uuid
 from pathlib import Path
 
 import pytest
+
 from app.api.errors import ApiError
 from app.engine import bank
 from app.engine.catalog import load_catalog
@@ -20,7 +21,6 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
-
 from tests.preparation_history import (
     BATCH20_BASELINE,
     BATCH21_BASELINE,
@@ -269,7 +269,10 @@ def test_critical_contracts_keep_source_order_minimum_width_and_authorized_compl
     mux = questions['PREP-214'].text('en').reference_solution
     assert all(row in mux for row in ('|0|0|Q3|', '|0|1|Q2|', '|1|0|Q1|', '|1|1|Q0|'))
     comparator = questions['PREP-110'].text('en')
-    assert 'editorial completion' in comparator.prompt and 'not a verified reconstruction' in comparator.prompt
+    assert 'One-bit comparison' in comparator.prompt
+    assert 'X=(A>B)' in comparator.prompt and 'Y=(A<B)' in comparator.prompt
+    assert 'X=Y=0' in comparator.prompt
+    assert 'editorial completion' not in comparator.prompt
     assert 'g[-1]=0' in comparator.reference_solution and 'g[i]=MUX' in comparator.reference_solution
     assert 'X=A AND NOT B' in comparator.reference_solution and 'Y=NOT A AND B' in comparator.reference_solution
     timing = questions['PREP-107'].text('en').reference_solution

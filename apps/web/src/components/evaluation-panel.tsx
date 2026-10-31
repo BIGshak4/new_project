@@ -17,6 +17,7 @@ import { bandFraction, whyLabel } from "../lib/charts";
 import { GRADE_SEQUENCE as G } from "../lib/ui";
 import { Pop, Reveal, motion, useReducedMotion } from "./ui/motion";
 import { BidiText } from "./bidi-text";
+import { QuestionTitle } from "./question-title";
 import { textDirection } from "../lib/bidi-segments";
 import { ExecutionResultView } from "./code-execution-result";
 
@@ -279,7 +280,7 @@ export function NextUpCard({
           <strong>{t("מה היה קשה כאן:", "What was hard here:")}</strong> <BidiText>{next.focus}</BidiText>
         </p>
       )}
-      <h4 dir={textDirection(next.title)}><BidiText>{next.title}</BidiText></h4>
+      <QuestionTitle as="h4" lang={lang}><BidiText>{next.title}</BidiText></QuestionTitle>
       <p className="small muted">
         <BidiText>{subjectLabel(next.subject, lang)}</BidiText>
       </p>

@@ -1,10 +1,16 @@
 .launcher {
   position: fixed;
-  inset-inline-start: 18px;
+  inset-inline-start: 12px;
   bottom: 18px;
   z-index: 500;
   min-height: 44px;
-  padding: 10px 15px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
   border: 1px solid var(--link);
   border-radius: 7px;
   background: var(--surface);
@@ -14,6 +20,16 @@
   font-weight: 700;
 }
 .launcher:hover { background: var(--soft); }
+.launcherLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 :global(body):has(:global([data-muxi-station])) .launcher { display: none; }
 .dialog {
   position: fixed;
@@ -85,7 +101,24 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
 @media (max-width: 780px) {
-  .launcher { inset-inline-start: 12px; bottom: calc(var(--tabbar-height, 72px) + 12px + env(safe-area-inset-bottom, 0px)); padding: 9px 12px; font-size: 12px; }
+  .launcher {
+    position: static;
+    display: flex;
+    width: fit-content;
+    max-width: calc(100% - 24px);
+    height: auto;
+    padding: 10px 15px;
+    margin: 16px auto calc(var(--tabbar-height, 72px) + 16px + env(safe-area-inset-bottom, 0px));
+  }
+  .launcherLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+  }
   .dialog { width: calc(100vw - 20px); max-height: calc(100dvh - 20px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); }
   .header { padding: 20px 18px 17px; gap: 10px; }
   .header h2 { font-size: 23px; }

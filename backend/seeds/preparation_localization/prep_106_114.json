@@ -6,14 +6,14 @@
         "L מוגדר במפורש a<b במקום התווית הכפולה b<a במקור.",
         "מותרות לוגיקה משלימה וחיווט; רכיב קומבינטורי ללא דרישת מינימום שערים.",
         "גרסה כללית: N≥1, unsigned, השוואה קשיחה A>B; g[-1]=0.",
-        "השלמת צילום 14 שאושרה על ידי המשתמש: A,B הם ביט יחיד ו־X,Y מסמנים גדול וקטן; שני הפלטים אפס בשוויון."
+        "בהשוואת שני ביטים, A,B הם ביט יחיד ו־X,Y מסמנים גדול וקטן; שני הפלטים אפס בשוויון."
       ],
       "en": [
         "Binary unsigned inputs; bit 3 is most significant.",
         "L explicitly means a<b, correcting the duplicated source label b<a.",
         "Combining logic and wires allowed; combinational circuit, no minimum gate-count claim.",
         "General variant: N≥1, unsigned strict A>B; g[-1]=0.",
-        "User-authorized screenshot-fourteen completion: one-bit A,B; X,Y denote greater and less; equality makes both zero."
+        "For one-bit A,B, X,Y denote greater and less; equality makes both outputs zero."
       ]
     },
     "optimality": {
@@ -27,7 +27,7 @@
         "הבדל בביט התחתון בלבד; קלט חתום דורש חוזה אחר.",
         "A=B בכל רוחב מחזיר אפס ב־G.",
         "0 מול הערך המרבי; הבדל רק ב־MSB; הבדל רק ב־LSB.",
-        "בהשלמה החד־ביטית X,Y לעולם אינם אחד יחד."
+        "בהשוואה החד־ביטית X,Y לעולם אינם אחד יחד."
       ],
       "en": [
         "Equal words, all zero and all one.",
@@ -45,7 +45,7 @@
         "לתאר ארבעה תאי השוואה קומבינטוריים כארבעה מחזורי שעון.",
         "אתחול g[-1]=1 הופך שוויון לגדול־או־שווה.",
         "אין לעבור מהגבוה לנמוך באותה רקורסיה: סיבית נמוכה שונה עלולה למחוק הכרעה גבוהה.",
-        "אין להציג את השלמת צילום 14 כאילו שוחזרה מהמקור."
+        "בשוויון אין להדליק את X או את Y; שני הפלטים מייצגים השוואה קשיחה."
       ],
       "en": [
         "ORing all greater outputs without higher-bit equality.",
@@ -53,20 +53,20 @@
         "Calling a four-cell combinational cascade four clock cycles.",
         "Initializing g[-1]=1 changes equality into greater-or-equal.",
         "Do not run the same recurrence high-to-low: a lower difference could erase a higher decision.",
-        "Do not present the screenshot-fourteen completion as recovered original text."
+        "Equality must assert neither X nor Y: both outputs represent strict comparisons."
       ]
     },
     "interview_answer": {
-      "he": "לתא ביט: g=a·¬b, e=¬(a⊕b), l=¬a·b. מחברים ארבעה תאים מהמשמעותי לפחות משמעותי. כל הכרעה נמוכה מותנית בשוויון כל הגבוהים; בדיוק דגל אחד דולק.\n\nאעבור מהנמוך לגבוה: סיביות שוות שומרות תוצאה קודמת, ושונות בוחרות Ai; אתחול אפס נותן גדול־ממש. להשלמה החד־ביטית X=A∧¬B ו־Y=¬A∧B.",
-      "en": "For one bit use g=a·¬b, e=¬(a⊕b), l=¬a·b. Combine four cells from most to least significant, admitting a lower decision only if every higher bit is equal. Exactly one flag is high.\n\nScan low to high: equal bits retain the previous result, different bits select Ai; zero initialization ensures strict greater-than. For the one-bit completion X=A∧¬B and Y=¬A∧B."
+      "he": "לתא ביט: g=a·¬b, e=¬(a⊕b), l=¬a·b. מחברים ארבעה תאים מהמשמעותי לפחות משמעותי. כל הכרעה נמוכה מותנית בשוויון כל הגבוהים; בדיוק דגל אחד דולק.\n\nאעבור מהנמוך לגבוה: סיביות שוות שומרות תוצאה קודמת, ושונות בוחרות Ai; אתחול אפס נותן גדול־ממש. להשוואה החד־ביטית X=A∧¬B ו־Y=¬A∧B.",
+      "en": "For one bit use g=a·¬b, e=¬(a⊕b), l=¬a·b. Combine four cells from most to least significant, admitting a lower decision only if every higher bit is equal. Exactly one flag is high.\n\nScan low to high: equal bits retain the previous result, different bits select Ai; zero initialization ensures strict greater-than. For the one-bit comparison X=A∧¬B and Y=¬A∧B."
     },
     "source_ambiguities": {
-      "he": "התווית b<a כפולה ל־a>b; תוקנה ל־a<b בעריכה. המקור לא קובע חתימות, ספריית שערים או עלות מינימלית. ההנחות נוספו במפורש.\n\nצילום 9 אינו מציין signed; העריכה בוחרת unsigned במפורש.\nצילום 14 קטוע. המשתמש ביקש במפורש להשלים אותו; המשך התרגיל הוא החלטת עריכה ולא עובדה שנקראה מן הצילום.",
-      "en": "The source label b<a duplicates a>b; this edition corrects it to a<b. Signedness, gate library and minimum cost were unspecified and are explicitly clarified.\n\nScreenshot nine does not state signedness; the edited version explicitly chooses unsigned.\nScreenshot fourteen is truncated. The user explicitly requested completion; the completed contract is editorial, not a fact read from the screenshot."
+      "he": "התווית b<a כפולה ל־a>b; תוקנה ל־a<b בעריכה. המקור לא קובע חתימות, ספריית שערים או עלות מינימלית. ההנחות נוספו במפורש.\n\nהגרסה הכללית משתמשת במספרים ללא סימן.",
+      "en": "The source label b<a duplicates a>b; this edition corrects it to a<b. Signedness, gate library and minimum cost were unspecified and are explicitly clarified.\n\nThe general-width variant uses unsigned numbers."
     },
     "verification": {
-      "he": "5,460 זוגות ברוחבים 1..6, בהם כל 256 זוגות ארבעת הביטים, הושוו להשוואות שלמים נפרדות; אומתו דגל יחיד וקלט שגוי. מודל Python בלבד.\n\nעברו כל 87,380 זוגות הקלט ברוחבים 1..8 בכל רשת, ועוד ארבע שורות ההשלמה החד־ביטית; ללא RTL או חומרה.",
-      "en": "5,460 pairs across widths 1..6, including all 256 four-bit pairs, matched independent integer comparisons; exactly-one and invalid inputs checked. Python model only.\n\nAll 87,380 operand pairs across widths one through eight passed in each network, plus four one-bit completion rows; no RTL or hardware."
+      "he": "5,460 זוגות ברוחבים 1..6, בהם כל 256 זוגות ארבעת הביטים, הושוו להשוואות שלמים נפרדות; אומתו דגל יחיד וקלט שגוי. מודל Python בלבד.\n\nעברו כל 87,380 זוגות הקלט ברוחבים 1..8 בכל רשת, ועוד ארבע שורות ההשוואה החד־ביטית; ללא RTL או חומרה.",
+      "en": "5,460 pairs across widths 1..6, including all 256 four-bit pairs, matched independent integer comparisons; exactly-one and invalid inputs checked. Python model only.\n\nAll 87,380 operand pairs across widths one through eight passed in each network, plus four one-bit comparison rows; no RTL or hardware."
     },
     "solution_extensions": {
       "he": {

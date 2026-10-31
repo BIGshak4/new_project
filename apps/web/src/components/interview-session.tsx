@@ -174,6 +174,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
   const [error, setError] = useState("");
   const [deadline, setDeadline] = useState<number | null>(null);
   const [now, setNow] = useState(Date.now());
+  const barRef = useRef<HTMLElement>(null);
   const live = useRef(true);
   const draftKey = `jr-interview-draft-${userId}-${interviewId}`;
 
@@ -183,6 +184,24 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
       live.current = false;
     };
   }, []);
+
+  useEffect(() => {
+    const bar = barRef.current;
+    const header = bar?.closest(".app-shell")?.querySelector<HTMLElement>(".topnav");
+    if (!bar || !header) return;
+    // The workspace header wraps with language, zoom and available width.
+    const alignBelowHeader = () => {
+      bar.style.top = `${Math.ceil(header.getBoundingClientRect().height)}px`;
+    };
+    alignBelowHeader();
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(alignBelowHeader);
+    observer?.observe(header);
+    window.addEventListener("resize", alignBelowHeader);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("resize", alignBelowHeader);
+    };
+  }, [interview?.status, lang]);
 
   const apply = useCallback((next: Interview) => {
     setInterview(next);
@@ -311,7 +330,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
   const Arrow = lang === "he" ? ArrowLeft : ArrowRight;
   return (
     <section className="interview-room">
-      <header className="interview-bar">
+      <header ref={barRef} className="interview-bar">
         <span className={`interview-timer tone-${tone}`} dir="ltr" aria-live="off">
           <Clock3 size={16} /> {mm}:{ss}
         </span>

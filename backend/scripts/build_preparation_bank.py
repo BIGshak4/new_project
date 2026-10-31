@@ -111,6 +111,43 @@ def learner_text(edit, ident):
     return overrides
 
 
+def learner_hints(edit, ident):
+    """Optional paired copy edits, without mutating archived delivered hints."""
+    hints = edit.get("learner_hints", {})
+    if not isinstance(hints, dict) or (hints and set(hints) != {"he", "en"}):
+        raise ValueError(f"{ident}: learner hints must include Hebrew and English")
+    for values in hints.values():
+        if (not isinstance(values, list) or len(values) != 3
+                or any(not isinstance(value, str) or not value.strip() for value in values)):
+            raise ValueError(f"{ident}: exactly three nonempty learner hints are required")
+    return hints
+
+
+def learner_resource_fields(edit, ident, localized):
+    """Allow cleaned technical copy in downloads; identity/review fields stay immutable."""
+    overrides = edit.get("learner_resource_fields", {})
+    if not isinstance(overrides, dict) or set(overrides) - MATERIAL_FIELDS:
+        raise ValueError(f"{ident}: unsupported learner resource field")
+    for field, values in overrides.items():
+        if (not isinstance(values, dict) or set(values) != {"he", "en"}
+                or any(value in (None, "", [], {}) for value in values.values())
+                or values != localized.get(field)):
+            raise ValueError(f"{ident}.{field}: downloaded copy must match both displayed languages")
+    return overrides
+
+
+def apply_learner_media_captions(question, edit):
+    captions = edit.get("learner_media_captions", {})
+    available = {item["path"] for item in question.get("media_assets", [])
+                 if item.get("path", "").startswith("diagrams/")}
+    if (not isinstance(captions, dict) or set(captions) - available
+            or any(not isinstance(value, str) or not value.strip() for value in captions.values())):
+        raise ValueError(f"{question['id']}: only existing authored diagram captions may be edited")
+    for item in question.get("media_assets", []):
+        if item.get("path") in captions:
+            item["description"] = captions[item["path"]]
+
+
 def load_material_localizations():
     result = {}
     for path in sorted((SEEDS / "preparation_localization").glob("*.json")):
@@ -153,11 +190,13 @@ def load():
         ident = q["id"]
         edit = additions[ident]
         overrides = learner_text(edit, ident)
+        hint_overrides = learner_hints(edit, ident)
+        apply_learner_media_captions(q, edit)
         texts = {}
         for lang in ("he", "en"):
             replacement = overrides.get(lang, {})
             text = {**q["translations"][lang], **replacement}
-            hints = [h["content"] for h in q.get("prepared_hints", []) if h.get("language") == lang]
+            hints = hint_overrides.get(lang) or [h["content"] for h in q.get("prepared_hints", []) if h.get("language") == lang]
             if not hints:
                 hints = edit["hints"][lang]
             reference = text.get("reference_solution") or edit["reference_solution"][lang]
@@ -208,9 +247,15 @@ def load():
         q["translations"] = {lang: {**q["translations"][lang], **overrides.get(lang, {}),
                                     "reference_solution": texts[lang]["reference_solution"]}
                              for lang in ("he", "en")}
+        for lang, hints in hint_overrides.items():
+            # Legacy author exports include these aliases as well as the effective
+            # hint array. They must not reintroduce retired wording in a download.
+            q["translations"][lang]["hint"] = hints[0]
+            q["translations"][lang]["hints"] = hints
         # Keep the archive's author data intact. Only the learner-facing view is
         # translated; source records, proofs, code and review status stay available.
         q["learner_material"] = learner_material(q, localizations)
+        q.update(learner_resource_fields(edit, ident, q["learner_material"]))
         q["website_editorial"] = {"solution_added": bool(edit.get("reference_solution")),
                                   "hints_translated": True, "human_review_pending": True,
                                   "learner_text_edited": bool(overrides)}

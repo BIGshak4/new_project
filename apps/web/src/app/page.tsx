@@ -28,7 +28,7 @@ import { QuestionMetadata } from "../components/question-metadata";
 import { QuestionStatusControl } from "../components/question-status-control";
 import { buildQuestionStates, matchesQuestionStatus } from "../lib/question-personal-state";
 import { BidiText } from "../components/bidi-text";
-import { textDirection } from "../lib/bidi-segments";
+import { QuestionTitle } from "../components/question-title";
 import { relatedQuestionKeys, uniqueLibraryQuestions } from "../lib/question-families";
 import { shuffleQuestions, useQuestionOrderSeed } from "../lib/question-order";
 import { Auth, type Lang } from "../components/auth";
@@ -789,10 +789,10 @@ function Workspace({
                     >
                       <History size={18} />
                       <div>
-                        <h3 dir={textDirection(questions.find((q) => q.key === a.question_key)?.title ?? a.question_key)}>
+                        <QuestionTitle lang={lang}>
                           <BidiText>{questions.find((q) => q.key === a.question_key)
                             ?.title ?? a.question_key}</BidiText>
-                        </h3>
+                        </QuestionTitle>
                         {questionsByKey.has(a.question_key) && <QuestionMetadata question={questionsByKey.get(a.question_key)!} lang={lang} compact />}
                         <span className="topic">
                           {date(a.started_at)} ·{" "}
@@ -841,7 +841,7 @@ function Workspace({
                         >
                           <BookOpen size={17} />
                           <div>
-                            <h3 dir={textDirection(q.title)}><BidiText>{q.title}</BidiText></h3>
+                            <QuestionTitle lang={lang}><BidiText>{q.title}</BidiText></QuestionTitle>
                             <QuestionMetadata question={q} lang={lang} compact />
                             <span className="topic">
                               {t(
@@ -953,11 +953,11 @@ function Workspace({
                       data-question-id={q.id}
                     >
                       <div className="library-question-main">
-                        <h3 dir={textDirection(q.title)}>
+                        <QuestionTitle lang={lang}>
                           <button type="button" className="library-question-open" onClick={() => openQuestion(q)}>
                             <BidiText>{q.title}</BidiText>
                           </button>
-                        </h3>
+                        </QuestionTitle>
                         <QuestionMetadata question={q} lang={lang} compact />
                         {entries.some(e => e.question_id === q.id && e.bookmarked) && <span className="small muted">{t("שמורה", "Saved")}</span>}
                       </div>

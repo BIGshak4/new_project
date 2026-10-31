@@ -53,7 +53,7 @@ import type { Lang } from "./auth";
 import { CircuitTruthTable } from "./circuit-truth-table";
 import { lockBodyScroll } from "../lib/body-scroll-lock";
 import { BidiText } from "./bidi-text";
-import { textDirection } from "../lib/bidi-segments";
+import { QuestionTitle } from "./question-title";
 import styles from "./circuit-workspace.module.css";
 
 export type CircuitQuestionReference = { title?: string; content: ReactNode };
@@ -1029,7 +1029,7 @@ export default function CircuitEditor({
       {full && question && showQuestion && (
         <aside className={styles.question} id={questionId} aria-label={t("השאלה בזמן השרטוט", "Question reference")}>
           <div className={styles.questionHeader}>
-            <h2 className={styles.questionTitle} dir={textDirection(question.title || t("השאלה", "Question"))}><BidiText>{question.title || t("השאלה", "Question")}</BidiText></h2>
+            <QuestionTitle as="h2" className={styles.questionTitle} lang={lang}><BidiText>{question.title || t("השאלה", "Question")}</BidiText></QuestionTitle>
             <button className={styles.questionClose} type="button" onClick={() => setShowQuestion(false)}
               aria-label={t("סגירת תצוגת השאלה", "Close question reference")}><X size={18} /></button>
           </div>

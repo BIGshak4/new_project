@@ -163,7 +163,7 @@ def compare(language):
     text(draw, (1490, 680), "...", 60, bold=True)
     text(draw, (1150, 1090), "g[-1]=0; g[i]=MUX(A_i XOR B_i, g[i-1], A_i)", 43, bold=True)
     text(draw, (1150, 1210), "Equal bit -> keep lower result; differing bit -> higher bit decides", 39)
-    note(draw, 1350, "השלמה עריכתית לסעיף שנקטע: גדול וקטן לביט יחיד", "Editorial completion of truncated part: one-bit greater and less", language, 38)
+    note(draw, 1350, "השוואת שני ביטים", "One-bit comparison", language, 38)
     text(draw, (1150, 1440), "X=A AND NOT B; Y=NOT A AND B; equal -> X=Y=0", 42)
     return image
 

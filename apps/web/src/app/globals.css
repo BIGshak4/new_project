@@ -1724,7 +1724,7 @@ summary {
 }
 .feedback-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 14px;
 }
 .feedback-good,
@@ -2591,7 +2591,7 @@ summary {
   border-radius: var(--radius-lg);
   padding: 10px 16px;
   position: sticky;
-  top: 80px;
+  top: 84px;
   z-index: 5;
 }
 .interview-timer {
@@ -3468,7 +3468,7 @@ summary {
   }
   .interview-bar {
     gap: 10px;
-    top: 66px;
+    top: 120px;
   }
   .interview-plan {
     display: none;
