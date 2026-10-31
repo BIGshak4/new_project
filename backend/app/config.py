@@ -13,6 +13,11 @@ from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 BACKEND_DIR = Path(__file__).resolve().parent.parent
 
 
+# OpenAI's words for reasoning depth and processing speed (developers.openai.com, read 2026-11-01).
+# Probe on 2026-11-01: gpt-6.1-sol accepts low..max, gpt-6.1-terra also "none"; "minimal" is refused by both (400).
+OPENAI_EFFORTS = ("none", "minimal", "low", "medium", "high", "xhigh", "max")
+OPENAI_SERVICE_TIERS = ("auto", "default", "flex", "priority")
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=BACKEND_DIR / ".env", env_file_encoding="utf-8", extra="ignore")
 
@@ -69,6 +74,12 @@ class Settings(BaseSettings):
     openai_api_key: str | None = None
     openai_model: str = "gpt-6.1-sol"                      # the judge (evaluator), and any role not overridden
     openai_role_models: str = "feedback=gpt-6.1-terra,tip=gpt-6.1-terra,generator=gpt-6.1-terra"
+    # Speed knobs (Shaked, 2026-11-01: "lower the times"), both Render variables, no deploy. Per-role reasoning effort
+    # overrides, e.g. "evaluator=minimal" (empty = the code's ROLE_EFFORT; the words are OpenAI's: none, minimal, low,
+    # medium, high). OPENAI_SERVICE_TIER=priority buys faster processing at a higher price, flex is slower and cheaper;
+    # empty = the account default. Changing the evaluator's effort changes how answers are judged: Shaked's call.
+    openai_role_effort: str = ""
+    openai_service_tier: str | None = None
     # The fallback real provider (anthropic), kept selectable with LLM_PROVIDER=anthropic.
     anthropic_api_key: str | None = None
     anthropic_model: str = "claude-opus-5-5"               # the judge (evaluator), and any role not overridden; Opus 5 → 5.5 on 2026-10-01 (13/13 bands, same misconception keys)
@@ -126,7 +137,7 @@ class Settings(BaseSettings):
 
     @field_validator("database_url", "supabase_url", "supabase_jwt_secret", "supabase_service_role_key", "anthropic_api_key",
                      "stripe_secret_key", "stripe_webhook_secret", "stripe_price_regular", "stripe_price_premium",
-                     "anthropic_model", "anthropic_role_models", "openai_api_key", "openai_model", "openai_role_models", "llm_provider",
+                     "anthropic_model", "anthropic_role_models", "openai_api_key", "openai_model", "openai_role_models", "openai_role_effort", "openai_service_tier", "llm_provider",
                      "env", "default_language", mode="before")
     @classmethod
     def _strip(cls, value):
@@ -146,16 +157,28 @@ class Settings(BaseSettings):
         """The evaluator's model for the active real provider."""
         return self.openai_model if self.llm_provider == "openai" else self.anthropic_model
 
+    @staticmethod
+    def _pairs(source: str | None) -> dict[str, str]:
+        """'role=value,role=value' -> dict; blanks and halves without both sides are dropped."""
+        out = {}
+        for pair in (p.strip() for p in (source or "").split(",") if p.strip()):
+            role, _, value = pair.partition("=")
+            if role.strip() and value.strip():
+                out[role.strip()] = value.strip()
+        return out
+
     @property
     def role_models(self) -> dict[str, str]:
-        source = self.openai_role_models if self.llm_provider == "openai" else self.anthropic_role_models
-        pairs = (p.strip() for p in (source or "").split(",") if p.strip())
-        out = {}
-        for pair in pairs:
-            role, _, model = pair.partition("=")
-            if role.strip() and model.strip():
-                out[role.strip()] = model.strip()
-        return out
+        return self._pairs(self.openai_role_models if self.llm_provider == "openai" else self.anthropic_role_models)
+
+    @property
+    def role_effort(self) -> dict[str, str]:
+        """OPENAI_ROLE_EFFORT parsed; only the OpenAI provider reads it."""
+        return self._pairs(self.openai_role_effort) if self.llm_provider == "openai" else {}
+
+    @property
+    def service_tier(self) -> str | None:
+        return (self.openai_service_tier or None) if self.llm_provider == "openai" else None
 
     @property
     def is_production(self) -> bool:
@@ -216,6 +239,11 @@ class Settings(BaseSettings):
             problems.append("LLM_PROVIDER=openai but OPENAI_API_KEY is not set")
         if self.llm_provider == "anthropic" and not self.anthropic_api_key:
             problems.append("LLM_PROVIDER=anthropic but ANTHROPIC_API_KEY is not set")
+        if self.service_tier and self.service_tier not in OPENAI_SERVICE_TIERS:
+            problems.append(f"OPENAI_SERVICE_TIER={self.service_tier!r} is not one of {', '.join(OPENAI_SERVICE_TIERS)}")
+        for role, effort in self.role_effort.items():
+            if effort not in OPENAI_EFFORTS:
+                problems.append(f"OPENAI_ROLE_EFFORT {role}={effort!r} is not one of {', '.join(OPENAI_EFFORTS)}")
         if self.llm_provider == "manual":
             problems.append("LLM_PROVIDER=manual waits for a person to answer each model call")
         if self.llm_provider == "scripted":

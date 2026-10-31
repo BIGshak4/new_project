@@ -37,6 +37,7 @@ from app.auth import TokenVerifier
 from app.config import get_settings
 from app.engine import ENGINE_VERSION
 from app.engine.catalog import CatalogError, load_catalog
+from app.engine.providers import ROLE_EFFORT
 from app.runtime import build_runtime
 
 log = logging.getLogger("app")
@@ -310,6 +311,9 @@ async def health(request: Request, db_check: bool = False) -> dict:
             "allowed_origins": len(settings.allowed_origins), "store": runtime.store_kind if runtime else None,
             "models": ({"evaluator": settings.judge_model, **settings.role_models}
                        if settings.llm_provider in ("anthropic", "openai") else None),
+            # the speed knobs (2026-11-01): each role's reasoning effort and the processing tier asked for
+            "speed": ({"effort": {**ROLE_EFFORT, **settings.role_effort}, "service_tier": settings.service_tier or "default"}
+                      if settings.llm_provider == "openai" else None),
             "answer_images": "assessed" if settings.supabase_service_role_key and settings.supabase_url else "stored_only"}
     if not detailed:
         body = {k: body[k] for k in ("status", "engine_version", "source_revision", "llm_provider") if k in body}

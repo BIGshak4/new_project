@@ -232,3 +232,82 @@ class TestMissingKey:
     def test_a_key_from_the_environment_still_counts(self, monkeypatch):
         monkeypatch.setenv("OPENAI_API_KEY", "env-key")
         assert OpenAIProvider(api_key=None).client is not None
+
+
+class TestSpeedKnobs:
+    """2026-11-01 (Shaked: "lower the times"): the judge's effort and OpenAI's processing tier are host settings."""
+
+    async def test_role_effort_overrides_the_code_default_for_that_role_only(self):
+        p = OpenAIProvider(api_key="k", role_effort={"evaluator": "minimal"})
+        p.sent = []
+        install(p, parse_outcome=fake_response(text=GOOD.model_dump_json(), parsed=GOOD),
+                create_outcome=fake_response(text="a sentence"))
+        await p.complete(request())
+        await p.complete(LLMRequest(role="tip", system=["s"], user="u", schema=None))
+        assert p.sent[0][1]["reasoning"] == {"effort": "minimal"}
+        assert p.sent[1][1]["reasoning"] == {"effort": "low"}                   # the code's ROLE_EFFORT still applies
+        assert "service_tier" not in p.sent[0][1] and "service_tier" not in p.sent[1][1]   # not asked = not sent
+
+    async def test_service_tier_is_sent_on_every_call_when_set(self):
+        p = OpenAIProvider(api_key="k", service_tier="priority")
+        p.sent = []
+        install(p, parse_outcome=fake_response(text=GOOD.model_dump_json(), parsed=GOOD),
+                create_outcome=fake_response(text="a sentence"))
+        await p.complete(request())
+        await p.complete(LLMRequest(role="feedback", system=["s"], user="u", schema=None))
+        assert all(sent["service_tier"] == "priority" for _, sent in p.sent)
+        assert OpenAIProvider(api_key="k", service_tier="").service_tier is None
+
+    def test_the_knobs_are_settings_and_reach_the_provider(self):
+        s = Settings(_env_file=None, llm_provider="openai", openai_api_key="k",
+                     openai_role_effort=" evaluator=minimal, feedback=low ,broken", openai_service_tier="priority ")
+        assert s.role_effort == {"evaluator": "minimal", "feedback": "low"} and s.service_tier == "priority"
+        p = make_provider(s)
+        assert p.role_effort == {"evaluator": "minimal", "feedback": "low"} and p.service_tier == "priority"
+        assert p.effort_for(request()) == "minimal" and p.effort_for(request(role="tip")) == "low"
+        assert not [x for x in s.production_problems() if "OPENAI_" in x and "KEY" not in x]
+
+    def test_defaults_send_nothing_new_and_other_providers_ignore_them(self):
+        s = Settings(_env_file=None, llm_provider="openai", openai_api_key="k")
+        assert s.role_effort == {} and s.service_tier is None
+        p = make_provider(s)
+        assert p.role_effort == {} and p.service_tier is None
+        a = Settings(_env_file=None, llm_provider="anthropic", anthropic_api_key="k", openai_role_effort="evaluator=minimal",
+                     openai_service_tier="priority")
+        assert a.role_effort == {} and a.service_tier is None and not [x for x in a.production_problems() if "OPENAI_" in x]
+
+    def test_unknown_words_are_named_before_production_starts(self):
+        s = Settings(_env_file=None, llm_provider="openai", openai_api_key="k", openai_role_effort="evaluator=turbo",
+                     openai_service_tier="fast")
+        problems = "\n".join(s.production_problems())
+        assert "OPENAI_SERVICE_TIER='fast'" in problems and "evaluator='turbo'" in problems
+
+
+class TestServiceTierPricing:
+    """Priority processing bills double, flex half; the tier OpenAI reports lands on the usage record (2026-11-01)."""
+
+    def test_priority_doubles_and_flex_halves_the_openai_price(self):
+        base = LLMUsage(input_tokens=200, cache_read_tokens=1000, output_tokens=300)
+        standard = base.cost_usd("gpt-6.1-sol")
+        assert LLMUsage(200, 300, 1000, 0, "priority").cost_usd("gpt-6.1-sol") == round(2 * standard, 6)
+        assert LLMUsage(200, 300, 1000, 0, "flex").cost_usd("gpt-6.1-sol") == round(0.5 * standard, 6)
+        assert LLMUsage(200, 300, 1000, 0, "default").cost_usd("gpt-6.1-sol") == standard
+        assert LLMUsage(200, 300, 1000, 0, "priority").cost_usd("claude-opus-5-5") == base.cost_usd("claude-opus-5-5")
+
+    async def test_the_tier_openai_reports_wins_over_the_one_asked_for(self):
+        p = OpenAIProvider(api_key="k", service_tier="priority")
+        p.sent = []
+        served = fake_response(text=GOOD.model_dump_json(), parsed=GOOD)
+        served.service_tier = "default"                              # priority asked, standard served (OpenAI may downgrade)
+        install(p, parse_outcome=served)
+        r = await p.complete(request())
+        assert r.usage.service_tier == "default" and r.usage.cost_usd(r.model) == LLMUsage(200, 300, 1000).cost_usd(r.model)
+        install(p, parse_outcome=fake_response(text=GOOD.model_dump_json(), parsed=GOOD))     # no field reported
+        r = await p.complete(request())
+        assert r.usage.service_tier == "priority" and r.usage.cost_usd(r.model) == round(2 * LLMUsage(200, 300, 1000).cost_usd(r.model), 6)
+
+    async def test_no_tier_means_none_on_the_record(self):
+        p = OpenAIProvider(api_key="k")
+        p.sent = []
+        install(p, parse_outcome=fake_response(text=GOOD.model_dump_json(), parsed=GOOD))
+        assert (await p.complete(request())).usage.service_tier is None

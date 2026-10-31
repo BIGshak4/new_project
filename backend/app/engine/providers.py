@@ -50,20 +50,26 @@ class LLMRefusal(LLMError):
     """The model (or a safety classifier) declined. Never retried on the same model."""
 
 
+# OpenAI bills priority processing at twice the standard token prices and flex at half (pricing page, 2026-11-01).
+SERVICE_TIER_MULTIPLIER = {"priority": 2.0, "flex": 0.5}
+
+
 @dataclass
 class LLMUsage:
     input_tokens: int = 0
     output_tokens: int = 0
     cache_read_tokens: int = 0
     cache_write_tokens: int = 0
+    service_tier: str | None = None                   # the tier OpenAI reports it served the call on (priority, flex, default)
 
     def cost_usd(self, model: str) -> float | None:
         """Estimated cost, or None when the model's price is not known. Unknown is never treated as free."""
         base = _openai_base(model)
         if base in OPENAI_PRICES:                                 # input_tokens here excludes the cached part
             price_in, price_cached, price_out = OPENAI_PRICES[base]
-            return round((self.input_tokens * price_in + self.cache_read_tokens * price_cached
-                          + self.output_tokens * price_out) / 1_000_000, 6)
+            factor = SERVICE_TIER_MULTIPLIER.get(self.service_tier or "", 1.0)
+            return round(factor * (self.input_tokens * price_in + self.cache_read_tokens * price_cached
+                                   + self.output_tokens * price_out) / 1_000_000, 6)
         if model not in PRICES:
             return None
         price_in, price_out = PRICES[model]
@@ -379,6 +385,8 @@ class OpenAIProvider:
     * Structured replies use `responses.parse` with the pydantic schema (strict JSON schema). An account or model
       that rejects the schema switches, once per process, to JSON-in-text with the schema in the prompt.
     * The per-role effort maps straight onto `reasoning.effort` (the same words); reasoning tokens bill as output.
+      `role_effort` (OPENAI_ROLE_EFFORT) overrides it per role and `service_tier` (OPENAI_SERVICE_TIER) asks for
+      priority or flex processing, so speed is tuned from the host's environment, not by a deploy (2026-11-01).
     * `status == "incomplete"` is checked before content is read: a cut-off reply is retried, a content filter
       is a refusal (never retried), like `stop_reason` on the Anthropic side.
     * Usage: OpenAI counts cached tokens inside `input_tokens`; they are split out so `LLMUsage` keeps one
@@ -388,12 +396,15 @@ class OpenAIProvider:
     name = "openai"
 
     def __init__(self, *, model: str = "gpt-6.1-sol", api_key: str | None = None, timeout_seconds: float = 120.0,
-                 max_retries: int = 2, role_models: dict[str, str] | None = None):
+                 max_retries: int = 2, role_models: dict[str, str] | None = None, role_effort: dict[str, str] | None = None,
+                 service_tier: str | None = None):
         import openai
 
         self._openai = openai
         self.model = model                                    # the judge (evaluator) and any role not listed below
         self.role_models = dict(role_models or {})            # cheaper models for the prose roles
+        self.role_effort = dict(role_effort or {})            # reasoning effort per role, over the code's ROLE_EFFORT
+        self.service_tier = service_tier or None              # priority | flex | default | auto; None = not sent
         self._schema_unsupported = False
         api_key = api_key or os.environ.get("OPENAI_API_KEY") or None       # an empty OPENAI_API_KEY= line is no key
         if api_key is None:
@@ -406,6 +417,9 @@ class OpenAIProvider:
 
     def model_for(self, role: str) -> str:
         return self.role_models.get(role, self.model)
+
+    def effort_for(self, request: LLMRequest) -> str:
+        return self.role_effort.get(request.role) or request.resolved_effort()
 
     @staticmethod
     def _instructions(request: LLMRequest) -> str:
@@ -450,8 +464,10 @@ class OpenAIProvider:
         openai = self._openai
         started = time.perf_counter()
         common = dict(model=self.model_for(request.role), instructions=self._instructions(request), input=self._input(request),
-                      max_output_tokens=request.resolved_max_tokens(), reasoning={"effort": request.resolved_effort()},
+                      max_output_tokens=request.resolved_max_tokens(), reasoning={"effort": self.effort_for(request)},
                       prompt_cache_key=f"jobrun:{request.role}", store=False)
+        if self.service_tier:
+            common["service_tier"] = self.service_tier
         try:
             response = await self._send(request, common)
         except openai.RateLimitError as exc:
@@ -485,9 +501,11 @@ class OpenAIProvider:
         usage = getattr(response, "usage", None)
         total_in = int(getattr(usage, "input_tokens", 0) or 0)
         cached = int(getattr(getattr(usage, "input_tokens_details", None), "cached_tokens", 0) or 0)
+        served_on = getattr(response, "service_tier", None) or self.service_tier     # what OpenAI says it used, else what we asked
         return LLMResponse(text=text, parsed=parsed,
                            usage=LLMUsage(input_tokens=max(0, total_in - cached), output_tokens=int(getattr(usage, "output_tokens", 0) or 0),
-                                          cache_read_tokens=cached, cache_write_tokens=0),
+                                          cache_read_tokens=cached, cache_write_tokens=0,
+                                          service_tier=served_on if isinstance(served_on, str) else None),
                            model=getattr(response, "model", "") or self.model_for(request.role),
                            latency_ms=int((time.perf_counter() - started) * 1000), stop_reason=status)
 

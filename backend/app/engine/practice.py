@@ -179,7 +179,8 @@ class UsageEvent:
                 "tokens_out": self.usage.output_tokens, "cache_read_tokens": self.usage.cache_read_tokens,
                 "cache_write_tokens": self.usage.cache_write_tokens,
                 "cost_usd": cost if cost is not None else 0.0, "latency_ms": self.latency_ms,
-                "meta": {"price_known": cost is not None}}
+                "meta": {"price_known": cost is not None,
+                         **({"service_tier": self.usage.service_tier} if self.usage.service_tier else {})}}
 
 
 @dataclass
