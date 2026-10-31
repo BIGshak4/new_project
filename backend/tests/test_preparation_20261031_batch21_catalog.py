@@ -90,7 +90,7 @@ def test_twenty_one_sources_keep_the_exact_original_bytes_and_identity_mapping()
 
 def test_authorized_extensions_preserve_all_197_original_records_and_1070_assets(catalog):
     archive = read(BANK / "questions.json")
-    assert len(archive["questions"]) == 219 and len(catalog.questions) == 249
+    assert len(archive["questions"]) == 231 and len(catalog.questions) == 261
     # Freeze this intake's 208-record endpoint before projecting its 197-record
     # predecessor. The later eleven additions have their own batch20 tests.
     previous_ids = {question["id"] for question in archive["questions"]
@@ -118,7 +118,7 @@ def test_authorized_extensions_preserve_all_197_original_records_and_1070_assets
         "example-mod-six-counter": "prep-enabled-mod-six-counter",
     }
     assert set(aliases) | set(aliases.values()) <= catalog.questions.keys()
-    assert len({aliases.get(key, key) for key in catalog.questions}) == 245
+    assert len({aliases.get(key, key) for key in catalog.questions}) == 257
 
 
 def test_all_new_questions_and_extensions_remain_bilingual_proposed_unrated_and_gated(catalog):
@@ -198,7 +198,7 @@ def test_new_private_assets_are_safe_hash_bound_and_localized(catalog):
             if item["language"] == "en":
                 assert not any("\u05d0" <= char <= "\u05ea" for char in item["caption"])
     sources = [entry["local_path"] for entry in uploads.values() if entry["local_path"].startswith("sources/")]
-    assert len(sources) == 352 and len(set(sources)) == 351
+    assert len(sources) == 372 and len(set(sources)) == 371
     names = read(ROOT / "apps/web/src/lib/source-screenshots.json")
     assert set(names) == {Path(path).name for path in sources}
     assert all(f"2026-10-31-batch21-{number:02d}.png" in names for number in range(1, 22))

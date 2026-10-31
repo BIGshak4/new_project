@@ -597,50 +597,64 @@
     "assumptions": {
       "he": [
         "רוחב וערכי קלט מוגדרים כמספרים שלמים; כפילויות מותרות ומיון עולה.",
-        "גישת זיכרון היא העברת ערך חיצוני בודד; כל הנחות הקיבולת והניתוב נפרדות."
+        "גישת זיכרון היא העברת ערך חיצוני בודד; כל הנחות הקיבולת והניתוב נפרדות.",
+        "ASCII A..Z בלבד; n=1000 בשאלה, המימוש כללי.",
+        "אורך אינו כולל terminator; C מניח charset ASCII ותאי קלט תקפים."
       ],
       "en": [
         "Integer values, duplicates allowed, ascending order.",
-        "An access is one external value transfer; capacity/routing assumptions are explicit and separate."
+        "An access is one external value transfer; capacity/routing assumptions are explicit and separate.",
+        "ASCII A..Z only; the task uses n=1000 while the reference is general.",
+        "Length excludes a terminator; C assumes an ASCII execution charset and valid input storage."
       ]
     },
     "optimality": {
-      "he": "בנייה קופסה־בלבד:5 קריאות,5000 קריאות זיכרון ו־ 5000 כתיבות. לא מינימום כללי. bitonic מרופד:55 שכבות ו־ 28160 משווים, בלי אופטימום פיזי.",
-      "en": "Box-only construction:5 calls,5000 reads/5000 writes, without a global minimum. Padded bitonic:55 layers/28160 comparators, without physical optimality."
+      "he": "בנייה קופסה־בלבד:5 קריאות,5000 קריאות זיכרון ו־ 5000 כתיבות. לא מינימום כללי. bitonic מרופד:55 שכבות ו־ 28160 משווים, בלי אופטימום פיזי.\n\nO(n+26) זמן ו־26 מונים, O(log(n+1)) ביטים לכל מונה. אין טענת מיון יציב של רשומות או שינוי חסמי I/O המקוריים.",
+      "en": "Box-only construction:5 calls,5000 reads/5000 writes, without a global minimum. Padded bitonic:55 layers/28160 comparators, without physical optimality.\n\nO(n+26) time and 26 counters of O(log(n+1)) bits each. No stable-record-sort claim or revision of prior I/O bounds."
     },
     "edge_cases": {
       "he": [
         "כפילויות, שליליים, חלוקה לא נוחה של ערכים בין בלוקים.",
-        "ריפוד חייב להיות מזוהה בתג; קופסה שמחזירה מספר פריטים שגוי נדחית."
+        "ריפוד חייב להיות מזוהה בתג; קופסה שמחזירה מספר פריטים שגוי נדחית.",
+        "ריק; אותה אות אלף פעמים; A ו־Z; כפילויות; אות קטנה; NUL בתוך טווח האורך."
       ],
       "en": [
         "Duplicates, negatives and adversarial block distribution.",
-        "Padding requires a tag; wrong-count primitive output is rejected."
+        "Padding requires a tag; wrong-count primitive output is rejected.",
+        "Empty; one letter repeated one thousand times; A/Z; duplicates; lowercase; NUL within the declared length."
       ]
     },
     "common_mistakes": {
       "he": [
         "לבלבל קריאות קופסה עם עסקאות זיכרון.",
         "להניח שאין מקום פנימי נוסף, או להפך שיש 2000 תאים, בלי להצהיר.",
-        "להציג בנייה של חמש הפעלות כמינימום בלי הוכחה."
+        "להציג בנייה של חמש הפעלות כמינימום בלי הוכחה.",
+        "שימוש במונה קטן שלא מכיל 1000.",
+        "שינוי המערך לפני סיום אימות התחום.",
+        "החלת אלפבית 26 על מספרים כלליים.",
+        "טענה ליציבות של payload שלא נשמר."
       ],
       "en": [
         "Confusing box calls with memory transactions.",
         "Silently assuming either no additional workspace or room for all 2000.",
-        "Calling a five-call construction minimal without proof."
+        "Calling a five-call construction minimal without proof.",
+        "A counter too narrow to represent 1000.",
+        "Mutating before domain validation completes.",
+        "Applying a 26-letter alphabet to arbitrary numbers.",
+        "Claiming stability for discarded payload records."
       ]
     },
     "interview_answer": {
-      "he": "אברר קיבולת פנימית ויחידת גישה. עם מספיק מקום יש קריאה וכתיבה אחת לכל איבר. כשמותר רק למיין 1000 בכל פעם, אפשר בנייה של ארבעה בלוקי 500 וחמש compare-split; המינימום הכללי אינו נקבע מהמקור.",
-      "en": "Clarify internal capacity and transfer units. Enough workspace permits one read/write per item. A box-only construction uses four 500-blocks and five compare-splits; the source alone does not specify a global optimum."
+      "he": "אברר קיבולת פנימית ויחידת גישה. עם מספיק מקום יש קריאה וכתיבה אחת לכל איבר. כשמותר רק למיין 1000 בכל פעם, אפשר בנייה של ארבעה בלוקי 500 וחמש compare-split; המינימום הכללי אינו נקבע מהמקור.\n\nאלפבית קטן מאפשר 26 מונים ואז כתיבה בסדר האותיות. אספור כל הופעה ואשמור ריבוי; זה מימוש מיוחד של הקופסה ולא שינוי של מודל הזיכרון החיצוני.",
+      "en": "Clarify internal capacity and transfer units. Enough workspace permits one read/write per item. A box-only construction uses four 500-blocks and five compare-splits; the source alone does not specify a global optimum.\n\nA small alphabet permits 26 counters followed by ordered emission. Preserve every multiplicity; this specializes the box without changing the external-memory model."
     },
     "source_ambiguities": {
-      "he": "מספרים לעומת תווים, קיבולת, העברות, השוואות חיצוניות ופלט אינם מוגדרים. אלה חוזים נפרדים; PREP-098 ממזגת קלט שכבר ממוין ואינה אותה שאלה.",
-      "en": "Numbers versus characters, capacity, transfers, external comparisons and output are unspecified. Separate contracts; PREP-098 starts with sorted inputs and is different."
+      "he": "מספרים לעומת תווים, קיבולת, העברות, השוואות חיצוניות ופלט אינם מוגדרים. אלה חוזים נפרדים; PREP-098 ממזגת קלט שכבר ממוין ואינה אותה שאלה.\n\nהמקור החדש מגביל במפורש לאותיות A–Z ומתיר מבני נתונים; הוא נשמר כסעיף מימוש לצד שאלת 2000 הערכים הכללית.",
+      "en": "Numbers versus characters, capacity, transfers, external comparisons and output are unspecified. Separate contracts; PREP-098 starts with sorted inputs and is different.\n\nThe new source explicitly restricts input to A–Z and permits data structures; it is retained as an implementation part beside the general 2000-value question."
     },
     "verification": {
-      "he": "15332 מצבי בלוקים,100 דגימות 2000,2047 בדיקות bitonic קטנות ו־ 20 מלאות; אורקל מיון מלא. Python בלבד.",
-      "en": "15332 block cases,100 full inputs,2047 small bitonic checks and 20 full-capacity cases versus full sorting. Python only."
+      "he": "15332 מצבי בלוקים,100 דגימות 2000,2047 בדיקות bitonic קטנות ו־ 20 מלאות; אורקל מיון מלא. Python בלבד.\n\n9,843 מקרי Python ו־C מול מיון עצמאי: אורכים 0..8 מעל A,M,Z, קלט באורך 1000 ותחום שגוי. GCC C99 מחמיר עבר בסביבה מבודדת.",
+      "en": "15332 block cases,100 full inputs,2047 small bitonic checks and 20 full-capacity cases versus full sorting. Python only.\n\n9,843 Python and C cases against independent sorting: lengths 0..8 over A,M,Z, length 1000 and invalid domain. Strict isolated GCC C99 compilation passed."
     },
     "solution_extensions": {
       "he": [
@@ -648,6 +662,11 @@
           "question": "מה משתנה אם מודדים עסקאות cache-line במקום ערכים?",
           "direction": "צריך רוחב שורה, קיבולת ומדיניות cache וסדר גישות; אי אפשר לחלק אוטומטית את המניין במספר קבוע.",
           "principle": "מודל העלות הוא חלק מהבעיה."
+        },
+        {
+          "question": "כיצד תשתנה השיטה אם האלפבית עצום ורוב הערכים לא מופיעים?",
+          "answer_direction": "השוו מערך מונים גדול למילון ספירות ומיון המפתחות שהופיעו; המקום והזמן תלויים במספר הערכים השונים ובסדר הנדרש.",
+          "principle": "תחום ערכים קטן הוא משאב אלגוריתמי."
         }
       ],
       "en": [
@@ -655,8 +674,37 @@
           "question": "What changes when counting cache-line transactions?",
           "direction": "Specify line size, capacity, cache policy and access order; dividing the scalar count by a constant is not generally valid.",
           "principle": "The cost model belongs to the problem."
+        },
+        {
+          "question": "What changes for a huge mostly unused alphabet?",
+          "answer_direction": "Compare a dense counter array with sparse counts plus sorting observed keys; costs depend on distinct keys and required order.",
+          "principle": "A small value domain is an algorithmic resource."
         }
       ]
+    },
+    "prompt_variants": {
+      "he": {
+        "batch22_uppercase_counting": {
+          "prompt": "### סעיף נוסף: מימוש קופסה למיון אלף אותיות A–Z\nנתונים 1000 תווים, שכל אחד מהם אות ASCII גדולה A..Z. ממשו את קופסת המיון המחזירה אותם בסדר עולה, כאשר מותר לבחור כל מבנה נתונים. שימרו את מספר ההופעות של כל אות.\n\nזהו מימוש מיוחד לאלפבית של 26 אותיות, לצד שאלת הזיכרון החיצוני המקורית של 2000 ערכים; מודלי גישות הזיכרון הקודמים נשארים בתוקף. מימוש הייחוס משנה מערך תווים במקום, אינו כולל terminator בגודל הקלט, ומאמת את התחום לפני שינוי. הוא תומך גם באורכים אחרים לצורכי הכללה ובדיקה.",
+          "hints": [
+            "האם צריך להשוות כל זוג תווים כאשר יש רק 26 ערכים אפשריים?",
+            "ספרו כמה פעמים כל אות מופיעה במערך מונים קבוע.",
+            "אחרי הספירה כתבו A כמספר הופעותיה, אחריה B וכן הלאה עד Z. בצעו אימות תחום לפני הכתיבה."
+          ],
+          "integration_status": "רמזי הסעיף בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "batch22_uppercase_counting": {
+          "prompt": "### Additional part: implement a box sorting one thousand A–Z letters\nGiven 1000 characters, each an uppercase ASCII letter A..Z, implement the sorting box in ascending order using any data structure. Preserve every letter’s multiplicity.\n\nThis is a 26-letter-alphabet specialization alongside the original 2000-value external-memory question; earlier memory-access models remain intact. The reference mutates the character array in place, excludes any string terminator from the length, and validates the domain before mutation. Other lengths are supported for generalization and testing.",
+          "hints": [
+            "Are pairwise character comparisons necessary when only 26 values can occur?",
+            "Count occurrences in a fixed array of 26 counters.",
+            "After counting, write A its count times, then B, through Z. Validate the domain before overwriting."
+          ],
+          "integration_status": "Part-specific hints are supplemental; the original interactive hint queue is retained."
+        }
+      }
     }
   },
   "PREP-161": {

@@ -22,7 +22,7 @@ AUTHORING = runpy.run_path(str(BACKEND / "tests/fixtures/execution_catalog_autho
 MANIFEST = json.loads((BACKEND / "seeds/execution_cases.json").read_text(encoding="utf-8"))
 SMOKE = json.loads((BACKEND / "tests/fixtures/execution_smoke.json").read_text(encoding="utf-8"))
 POSITIVE = json.loads((BACKEND / "tests/fixtures/execution_positive.json").read_text(encoding="utf-8"))
-ORACLES = AUTHORING["ORACLES"]
+ORACLES = dict(AUTHORING["ORACLES"])
 QUESTIONS = MANIFEST["questions"]
 LANGUAGES = {"python", "javascript", "c", "cpp", "verilog", "systemverilog", "vhdl"}
 CATALOG = {
@@ -34,9 +34,47 @@ SPECS = [(key, language, spec) for key, question in QUESTIONS.items()
          for language, spec in question["languages"].items()]
 
 
+def word_list_mode_oracle(words):
+    # Independent list-count selection, deliberately not the reference's hash
+    # table plus second pass. Python max keeps the first maximum on a tie.
+    if not words:
+        return None
+    winner = max(words, key=words.count)
+    return [winner, words.count(winner)]
+
+
+ORACLES.update({
+    "prep-merge-k-sorted-linked-lists": lambda lists: sorted(value for values in lists for value in values),
+    "prep-most-frequent-word-list": word_list_mode_oracle,
+    "prep-ascii-word-anagrams": lambda left, right: sorted(left) == sorted(right),
+    "prep-stable-move-zeroes-to-end": lambda values: [value for value in values if value != 0] + [0] * values.count(0),
+})
+
+
+def fifo_request_transcript_oracle(stdin):
+    """A linear sequence oracle, without ring-index-based queue decisions."""
+    integers = list(map(int, stdin.split()))
+    capacity, steps = integers[:2]
+    assert capacity > 0 and steps >= 0 and len(integers) == 2 + 3 * steps
+    pending, output = [], []
+    writes = reads = 0
+    for offset in range(2, len(integers), 3):
+        write_request, value, read_request = integers[offset:offset + 3]
+        wrote = bool(write_request and len(pending) < capacity)
+        if wrote:
+            pending.append(value)
+            writes += 1
+        read = bool(read_request and pending)
+        answer = pending.pop(0) if read else 0
+        reads += int(read)
+        output.append(f"{int(wrote)} {int(read)} {answer}")
+    output.append(f"{reads % capacity} {writes % capacity} {int(len(pending) == capacity)} {int(not pending)}")
+    return "\n".join(output) + "\n"
+
+
 def test_manifest_is_versioned_and_all_contracts_belong_to_current_catalog():
     assert MANIFEST["version"] == 1
-    assert 20 <= len(QUESTIONS) <= 30
+    assert len(QUESTIONS) == 33
     assert set(QUESTIONS) <= CATALOG.keys()
     for question in QUESTIONS.values():
         assert set(question["contract"]) == {"he", "en"}
@@ -116,8 +154,62 @@ def test_function_expected_results_match_independent_reference_models(key, langu
 @pytest.mark.parametrize("key,language,spec", [item for item in SPECS if item[2]["kind"] == "program"])
 def test_c_and_cpp_driver_cases_use_the_same_independent_scalar_oracles(key, language, spec):
     for case in spec["cases"]:
+        if key == "prep-c-fifo-write-then-read-requests":
+            assert language == "c"
+            assert case["expected_stdout"] == fifo_request_transcript_oracle(case["stdin"])
+            continue
         n = int(case["stdin"].strip())
         assert case["expected_stdout"] == f"{int(ORACLES[key](n))}\n"
+
+
+def test_new_software_profiles_exercise_their_distinguishing_contract_boundaries():
+    merge = QUESTIONS["prep-merge-k-sorted-linked-lists"]["languages"]["python"]["cases"]
+    assert any(case["args"] == [[]] and case["expected"] == [] for case in merge)
+    assert any(case["args"] == [[[], [], []]] and case["expected"] == [] for case in merge)
+    assert any(case["expected"] == [2] * 6 for case in merge)
+
+    mode = QUESTIONS["prep-most-frequent-word-list"]["languages"]["python"]["cases"]
+    assert {"args": [["a", "b", "b", "a"]], "expected": ["a", 2]} in mode
+    assert {"args": [["Cat", "cat", "Cat"]], "expected": ["Cat", 2]} in mode
+    assert {"args": [["", "x", ""]], "expected": ["", 2]} in mode
+    assert {"args": [[]], "expected": None} in mode
+
+    anagrams = QUESTIONS["prep-ascii-word-anagrams"]["languages"]["python"]["cases"]
+    assert {"args": ["aab", "abb"], "expected": False} in anagrams
+    assert {"args": ["Ab", "ba"], "expected": False} in anagrams
+    assert {"args": ["", ""], "expected": True} in anagrams
+    assert {"args": ["abc", "ab"], "expected": False} in anagrams
+
+    zeroes = QUESTIONS["prep-stable-move-zeroes-to-end"]["languages"]["python"]["cases"]
+    assert {"args": [[1, 0, 9, 0, 3, 4, 5, 1]], "expected": [1, 9, 3, 4, 5, 1, 0, 0]} in zeroes
+    assert {"args": [[0, -1, 0, -1, 2, 0]], "expected": [-1, -1, 2, 0, 0, 0]} in zeroes
+    assert {"args": [[]], "expected": []} in zeroes
+
+
+def test_fifo_profile_covers_empty_full_both_requests_and_wrap_without_conflation():
+    spec = QUESTIONS["prep-c-fifo-write-then-read-requests"]["languages"]["c"]
+    by_input = {case["stdin"]: case["expected_stdout"] for case in spec["cases"]}
+    assert by_input["1 1\n1 7 1\n"] == "1 1 7\n0 0 0 1\n"
+    assert by_input["1 2\n1 7 0\n1 9 1\n"] == "1 0 0\n0 1 7\n0 0 0 1\n"
+    assert any(int(case["stdin"].split()[1]) > int(case["stdin"].split()[0]) for case in spec["cases"])
+    for case in spec["cases"]:
+        assert case["expected_stdout"] == fifo_request_transcript_oracle(case["stdin"])
+
+
+@pytest.mark.parametrize("key", [
+    "prep-merge-k-sorted-linked-lists", "prep-most-frequent-word-list",
+    "prep-ascii-word-anagrams", "prep-stable-move-zeroes-to-end",
+    "prep-c-fifo-write-then-read-requests",
+])
+def test_each_new_profile_has_exactly_one_matching_positive_and_smoke_fixture(key):
+    languages = set(QUESTIONS[key]["languages"])
+    assert languages == ({"c"} if "fifo" in key else {"python"})
+    for language in languages:
+        positive = [item for item in POSITIVE["cases"] if item["question_key"] == key and item["language"] == language]
+        smoke = [item for item in SMOKE["cases"] if item["question_key"] == key and item["language"] == language]
+        assert len(positive) == len(smoke) == 1
+        assert positive[0]["source"] == smoke[0]["correct"]
+        assert len(QUESTIONS[key]["languages"][language]["cases"]) >= 5
 
 
 def test_byte_boundary_patterns_and_exhaustive_truth_tables_are_not_only_happy_paths():

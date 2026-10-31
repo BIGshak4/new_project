@@ -1,0 +1,422 @@
+{
+  "intake_date": "2026-10-31",
+  "batch": "batch22",
+  "screenshot_count": 20,
+  "question_source_count": 20,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-01.png"
+      ],
+      "sha256": "63d713fc766f874315a271669b5726a62a88f62157f1e3b08b18970c30869c2f",
+      "original_prompt": "יש בניין עם N קומות ואתה מקבל 2 ביצים. יש למצוא את הקומה המקסימלית לזריקת ביצה ללא שבירה שלה במספר איטרציות הנמוך ביותר. ניתן להשתמש בביצה שזרקת ולא נשברה. היה צריך להציג את הדרך לפתרון בצורה מתמטית ולהסביר.",
+      "source_tags": [
+        "hardware",
+        "logic",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "Apple",
+      "question_ids": [
+        "PREP-025"
+      ],
+      "decision": "meaningful_variant"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-02.png"
+      ],
+      "sha256": "710c9bcc42b539451d01a2fa22592be18010dbb23d3e6bf2a4f16c5d27f53e3d",
+      "original_prompt": "ממש LPF. איך עובד מגבר יחידה?",
+      "source_tags": [
+        "marvell",
+        "hardware",
+        "amazon"
+      ],
+      "reported_companies": [
+        "Amazon",
+        "Marvell"
+      ],
+      "source_company_badge": "Amazon",
+      "question_ids": [
+        "PREP-221"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-03.png"
+      ],
+      "sha256": "02925f313b8ea15d205fcc2368cfa4f28b802f0529567051d2d208252dbd443e",
+      "original_prompt": "נתון מעגל עם מגבר שרת וצריך לתאר מה המעגל הזה עושה. [בשרטוט: Vin דרך R לכניסה העליונה של מגבר השרת, הכניסה התחתונה להארקה וקבל C במשוב מן המוצא לכניסה העליונה.]",
+      "source_tags": [
+        "verification",
+        "hardware",
+        "elbit"
+      ],
+      "reported_companies": [
+        "Elbit"
+      ],
+      "source_company_badge": "Elbit",
+      "question_ids": [
+        "PREP-222"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-04.png"
+      ],
+      "sha256": "c967ec6ec05cdbc1999b49799d70c6e8f5ffb52f56bdaeaf7e7b80ed12d6acea",
+      "original_prompt": "רוצים לבדוק זכרון בגודל של 256 בתים (כל בית=8 ביטים). לשם כך יש לנו רק פונקציה אחת: int read(adress). הפונקציה קוראת מהזכרון 4 בתים (32 ביטים), בכתובת השווה לערך המשתנה adress. הזכרון צריך להיות מאותחל לפונקציית ramp, כלומר הבתים מסודרים כך: 00000000 00000001 00000010 00000011... א. מה מחזיר read(0)? ב. כתוב קוד שבודק את כל הזכרון.",
+      "source_tags": [
+        "hardware",
+        "amazon",
+        "verification"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_company_badge": "Amazon",
+      "question_ids": [
+        "PREP-223"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-05.png"
+      ],
+      "sha256": "b2033e20b69e97c1dbe2c750d018cb1636b391cc123c6d4e322da87f5c337900",
+      "original_prompt": "עלינו למצוא את 3 הסוסים הכי מהירים מתוך קבוצה של 25 סוסים. בכל מירוץ מתחרים 5 סוסים וניתן לדעת מה מיקומו של כל סוס. מה מספר המירוצים המינימלי על מנת למצוא את 3 הסוסים המהירים ביותר?",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "Apple",
+      "question_ids": [
+        "PREP-009"
+      ],
+      "decision": "additional_source_no_duplicate"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-06.png"
+      ],
+      "sha256": "f3ad56ffef06d47c2d2caeb276ff6ac188d6ffe2634c2da522b5f08e596a66f9",
+      "original_prompt": "יש מערך בגודל k שכל תא במערך הוא החוליה הראשונה של רשימה מקושרת ממוינת. עליך לחבר את כולם לרשימה ממוינת אחת. סה״כ יש n איברים (חוליות). [שרטוט: k=4,n=9; רשימות 3→7, 2→3→4, 6→11, 4→7.]",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "Apple",
+      "question_ids": [
+        "PREP-224"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-07.png"
+      ],
+      "sha256": "a2b71a21f47b61f87e8d7aa2e411a7db3d3499a73d3c5a9c067a3aae3c86cb5c",
+      "original_prompt": "לכתוב קוד של פונקציה שמקבלת מספר int ומחזירה את המספר לאחר הפיכה של סדר הביטים. דוגמה: עבור הקלט 13, הפלט יהיה 11 (13 בבינארי 1101, 11 בבינארי 1011).",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "Apple",
+      "question_ids": [
+        "PREP-094"
+      ],
+      "decision": "meaningful_variant"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-08.png"
+      ],
+      "sha256": "1eb5e58fbca6c6139e2d67f53facd437b035cd2f824db979bff10722a095d55e",
+      "original_prompt": "מקבלים רשימה של מילים וצריך להחזיר את המילה שהכי הרבה מופיעה ואת הכמות שהיא מופיעה.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "Apple",
+      "question_ids": [
+        "PREP-225"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-09.png"
+      ],
+      "sha256": "f8fd8f540d7172e588eef66b8ee323c3a421a8b03847158ce397cdc12f3d0055",
+      "original_prompt": "ממש שער NAND עם הרכיבים a,b. [טבלה a: x,y=00→1,01→Z,10→Z,11→Z. טבלה b: 11→0,01→Z,10→Z,00→Z. Z: נתק.]",
+      "source_tags": [
+        "apple",
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel",
+        "Apple"
+      ],
+      "source_company_badge": "Intel",
+      "question_ids": [
+        "PREP-015"
+      ],
+      "decision": "meaningful_variant"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-10.png"
+      ],
+      "sha256": "8b7fbdd85a87899714dc184913981b11cfa27d4ef77ceca150828ab2ad7a6e23",
+      "original_prompt": "בהינתן שעה (שעות, דקות), מה הזווית בין מחוגי השעון?",
+      "source_tags": [
+        "qualcomm",
+        "c-3",
+        "c",
+        "software"
+      ],
+      "reported_companies": [
+        "Vayyar",
+        "Qualcomm"
+      ],
+      "source_company_badge": "Vayyar",
+      "question_ids": [
+        "PREP-017"
+      ],
+      "decision": "meaningful_variant"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-11.png"
+      ],
+      "sha256": "f7e465252b0041f08d31d02a738bdc43c93b677748ef68bff91c8c2ded4664fc",
+      "original_prompt": "Anagrams: SILENT/LISTEN, ARMY/MARY, CAT/ACT, etc. Write a function to determine if 2 words are anagrams of each other; input: two Strings containing an English word each; output: Boolean, true when the input words are anagrams of each other, false otherwise.",
+      "source_tags": [
+        "amazon",
+        "software"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_company_badge": "Amazon",
+      "question_ids": [
+        "PREP-226"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-12.png"
+      ],
+      "sha256": "4ca1930e8074fdaac04f33032c6686223b74447a8f27adb2fd96a7e7e49c521f",
+      "original_prompt": "לכתוב קטע קוד שמקבל מספר אינטג׳ר שמורכב מאחדות או אפסים וסופר את מספר האחדות.",
+      "source_tags": [
+        "hardware",
+        "verification",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_company_badge": "Intel",
+      "question_ids": [
+        "PREP-151"
+      ],
+      "decision": "meaningful_variant"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-13.png"
+      ],
+      "sha256": "63e350a09a9168314263e11503e1f6bb7551085c793812e305e95a5a77c6f44b",
+      "original_prompt": "ברשותך שני רגיסטרים בעלי n סיביות. עליך להעביר את המידע מהרגיסטר הראשון לשני ללא רגיסטר עזר. איך תבצע זאת?",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "Apple",
+      "question_ids": [
+        "PREP-227"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-14.png"
+      ],
+      "sha256": "c2ae375188770e04e7fd0ac613a6851e2283d6fd216cc556bc37922d30e332d1",
+      "original_prompt": "מה השימוש של מחסנית?",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "Apple",
+      "question_ids": [
+        "PREP-228"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-15.png"
+      ],
+      "sha256": "922098b445e16663d9acea325b9f1b2d1be4c48ccb3f59b3928f92cac9c23b9d",
+      "original_prompt": "נתון מערך בגודל n ובו מספרים שונים. עליך לכתוב אלגוריתם שיפלוט את המערך כך שכל המספרים בו יהיו מרוכזים בסוף. לדוגמה עבור [1,0,9,0,3,4,5,1] הפלט [1,9,3,4,5,1,0,0].",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "Apple",
+      "question_ids": [
+        "PREP-229"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-16.png"
+      ],
+      "sha256": "28b12c6035fd0892486dc98b3558be40fa7136576564103a61a13ec85d0652fe",
+      "original_prompt": "רשום פונקציה שמממשת מחסנית בשיטת FIFO. הפונקציה מקבלת את גודל המחסנית, מצביע לראש הקריאה, מצביע לראש כתיבה, משתנים ISFULL, ISEMPTY, משתני פסיקה שמראים אם צריך לכתוב או לקרוא. הפונקציה יכולה לכתוב ואז לקרוא באותה קריאה לפונקציה. קריאה משמע משיכת הערך מהזכרון.",
+      "source_tags": [
+        "hardware",
+        "software",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_company_badge": "Mellanox",
+      "question_ids": [
+        "PREP-230"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-17.png"
+      ],
+      "sha256": "1b749787170e1cd45ca9396f9c0d28d99ed8660907908b2234f89d3359ee7cfe",
+      "original_prompt": "יש לך קלט של 1000 אותיות מ-A עד Z, שעובר דרך קופסה שחורה. הקופסה השחורה צריכה למיין את הקלט. אתה יכול להשתמש במבני נתונים וכלי תכנות. דוגמה ...AAABBBB...",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "Apple",
+      "question_ids": [
+        "PREP-160"
+      ],
+      "decision": "meaningful_variant"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-18.png"
+      ],
+      "sha256": "50eff44a4b906da132b650b0279bdc888cb17036c83112294c75700bef07d011",
+      "original_prompt": "באי בודד יש 100 אריות ופרה אחת. כל אריה יכול לאכול דשא כדי לשרוד (יש מקום בלתי מוגבל של דשא) אבל הם יעדיפו לאכול את הפרה. האריה שאוכל את הפרה בעצמו הופך לפרה; הוא יודע שאחרי שהוא יאכל אותה שאר האריות יכולים לאכול אותו. הם יודעים כמה אריות יש, כולם חכמים וחושבים בהיגיון ויעשו הכל כדי לשרוד. האם הפרה תאכל ולמה?",
+      "source_tags": [
+        "logic",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "Apple",
+      "question_ids": [
+        "PREP-231"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-19.png"
+      ],
+      "sha256": "a0cf2810d987ba9da5732abcc46f455f42e1879195d56d742e28a4ad2af4b722",
+      "original_prompt": "ישנה מטריצה בגודל n*m. בכל מקום שיש אפסים צריך לאפס את השורה והעמודה.",
+      "source_tags": [
+        "apple",
+        "software",
+        "microsoft"
+      ],
+      "reported_companies": [
+        "Microsoft",
+        "Apple"
+      ],
+      "source_company_badge": "Microsoft",
+      "question_ids": [
+        "PREP-150"
+      ],
+      "decision": "additional_source_no_duplicate"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-10-31-batch22-20.png"
+      ],
+      "sha256": "7b3063f000acccc4555afee37fe5e338ab6c4930b9fadd5beca0826c41f97893",
+      "original_prompt": "סוזנה הייתה בת 8 לפני יומיים ובשנה הבאה היא תהיה בת 11. איך זה הגיוני?",
+      "source_tags": [
+        "logic",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "Apple",
+      "question_ids": [
+        "PREP-232"
+      ],
+      "decision": "new_manual_question"
+    }
+  ]
+}

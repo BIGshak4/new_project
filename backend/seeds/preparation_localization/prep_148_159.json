@@ -726,53 +726,75 @@
       "he": [
         "קלט שלם ללא סימן0..255 ופלט0..8, ללא פונקציית ספירה מובנית או המרה למחרוזת בפתרון.",
         "גישה אקראית לטבלה ופעולות מילה הן המודל; הכנת הטבלה נספרת בנפרד.",
-        "O(1) הוא הפירוש הערוך לסימון המקור, ולא o(1) מתמטי."
+        "O(1) הוא הפירוש הערוך לסימון המקור, ולא o(1) מתמטי.",
+        "החוזה הראשי מקבל uint32_t וכולל אפס.",
+        "הקוד המוצע ללא intrinsic הוא אפשרות ולא דרישת המקור.",
+        "למספר מסומן או לרוחב אחר נדרשת פרשנות מפורשת."
       ],
       "en": [
         "Unsigned0..255 input and0..8 output; no built-in popcount or string conversion in the solution.",
         "Word operations/random access model; table setup counted separately.",
-        "O(1) is the explicit interpretation of the source notation, not mathematical o(1)."
+        "O(1) is the explicit interpretation of the source notation, not mathematical o(1).",
+        "The main contract accepts uint32_t including zero.",
+        "The intrinsic-free code is an option, not a source restriction.",
+        "Signed values and other widths need an explicit interpretation."
       ]
     },
     "optimality": {
-      "he": "כל שיטה קבועה בתחום של8 ביט. נוסחת הקבוצות אינה כוללת לולאת ביטים; טבלה עולה256 רשומות והכנתן. לרוחב משתנה יש לחשב מחדש זמן ומקום.",
-      "en": "Every method is bounded on8 bits. Grouping has no bit loop; a table needs256 entries and setup. Variable-width time/storage require separate analysis."
+      "he": "כל שיטה קבועה בתחום של8 ביט. נוסחת הקבוצות אינה כוללת לולאת ביטים; טבלה עולה256 רשומות והכנתן. לרוחב משתנה יש לחשב מחדש זמן ומקום.\n\nk איטרציות עבור k אחדים, O(1) מילים נוספות במודל מילה; עד 32 צעדים בתחום uint32_t. אין טענת ביצועים אופטימליים או זמן ריצה אחיד.",
+      "en": "Every method is bounded on8 bits. Grouping has no bit loop; a table needs256 entries and setup. Variable-width time/storage require separate analysis.\n\nk iterations for k set bits and O(1) auxiliary words; at most 32 steps for uint32_t. No optimal-performance or constant-runtime claim."
     },
     "edge_cases": {
       "he": [
         "0,255, ביט בודד בכל מיקום, דפוס מתחלף וכמה אחדות רצופות.",
         "בית ומשלים שלו נספרים יחד לשמונה.",
-        "שליליים,256,True או שבר נדחים."
+        "שליליים,256,True או שבר נדחים.",
+        "0 מחזיר 0.",
+        "`0xFFFFFFFF` מחזיר 32.",
+        "ביט 31 לבדו מחזיר 1.",
+        "ביטים מובילים אפס אינם משנים את הספירה."
       ],
       "en": [
         "0,255, every one-hot, alternating and consecutive-one patterns.",
         "Byte and complement counts add to eight.",
-        "Negative,256,True or fractional inputs rejected."
+        "Negative,256,True or fractional inputs rejected.",
+        "0 returns 0.",
+        "`0xFFFFFFFF` returns 32.",
+        "Bit 31 alone returns 1.",
+        "Leading zero bits do not affect the count."
       ]
     },
     "common_mistakes": {
       "he": [
         "לכנות לולאה של8 צעדים O(N) בלי להגדיר N משתנה.",
         "לבלבל ספירת אחדות עם מספר הביטים הדרושים לייצוג או עם זוגיות.",
-        "להסתיר את256 רשומות הטבלה או לטעון שתוצאת בית מוכיחה O(1) למספר באורך לא חסום."
+        "להסתיר את256 רשומות הטבלה או לטעון שתוצאת בית מוכיחה O(1) למספר באורך לא חסום.",
+        "לספור את ערך המספר במקום את הביטים.",
+        "לקרוא לכל לולאה על רוחב קבוע O(n) בלי להגדיר n.",
+        "להזיז int שלילי עד שיתאפס.",
+        "לפסול popcount ספרייה בלי שהחוזה אוסר אותו."
       ],
       "en": [
         "Calling an eight-step loop O(N) without a varying N.",
         "Confusing population count with representation length or parity.",
-        "Hiding256 table entries or extending a byte bound to unbounded integers."
+        "Hiding256 table entries or extending a byte bound to unbounded integers.",
+        "Counting integer magnitude rather than set bits.",
+        "Calling every fixed-width loop O(n) without defining n.",
+        "Shifting a negative signed int until zero.",
+        "Rejecting a library popcount without a contractual ban."
       ]
     },
     "interview_answer": {
-      "he": "לבית יש רק8 ביטים ולכן גם סריקה היא O(1). כדי להימנע מלולאה אספור במקביל זוגות, רביעיות ובית באמצעות מסכות; חלופה היא טבלה בת256 תשובות שהוכנה מראש. את מחיר ההכנה והמקום אפריד ממחיר השאילתה.",
-      "en": "A byte has eight bits, so scanning is already O(1). Without a loop, combine pair, nibble and byte counts with masks; alternatively use256 precomputed answers, separating setup/storage from query cost."
+      "he": "לבית יש רק8 ביטים ולכן גם סריקה היא O(1). כדי להימנע מלולאה אספור במקביל זוגות, רביעיות ובית באמצעות מסכות; חלופה היא טבלה בת256 תשובות שהוכנה מראש. את מחיר ההכנה והמקום אפריד ממחיר השאילתה.\n\nכל x&(x−1) מוחק את האחד הימני ביותר. אספור מחיקות עד אפס; האינווריאנט ומספר האחדים מוכיחים נכונות ועצירה. אגדיר unsigned ורוחב לפני ניתוח העלות.",
+      "en": "A byte has eight bits, so scanning is already O(1). Without a loop, combine pair, nibble and byte counts with masks; alternatively use256 precomputed answers, separating setup/storage from query cost.\n\nEach x&(x−1) clears the lowest one. Count deletions until zero; the invariant and remaining-one count prove correctness and termination. Specify unsigned width before complexity."
     },
     "source_ambiguities": {
-      "he": "במקור נראה o(1), והרוחב קבוע. הובהרה ההבחנה בלי לטעון שהסריקה אינה קבועה. קשורה ל־SW-001 ול־VSW-001 אך לא מפרסמת או מאשרת אותן; PREP-001 חומרתית.",
-      "en": "Source resembles o(1) on a fixed width. Clarify without falsely denying constant-time scanning. Linked to SW-001/VSW-001 without publishing or approving them; PREP-001 is hardware."
+      "he": "במקור נראה o(1), והרוחב קבוע. הובהרה ההבחנה בלי לטעון שהסריקה אינה קבועה. קשורה ל־SW-001 ול־VSW-001 אך לא מפרסמת או מאשרת אותן; PREP-001 חומרתית.\n\nרוחב וסימן אינם מוגדרים בנוסח הכללי. הווריאציה מגדירה uint32_t ודנה בנפרד בחלופות; מגבלות בית אחד אינן מועתקות אליה.",
+      "en": "Source resembles o(1) on a fixed width. Clarify without falsely denying constant-time scanning. Linked to SW-001/VSW-001 without publishing or approving them; PREP-001 is hardware.\n\nWidth and sign are unspecified in the generic wording. This variant chooses uint32_t and treats alternatives separately; byte-only restrictions are not copied into it."
     },
     "verification": {
-      "he": "כל256 ערכי הבית בארבע שיטות,256 רשומות טבלה, ארבע דחיות לכל שיטה וזוגיות המשלים מול אורקל טקסט עצמאי. Python בלבד.",
-      "en": "All256 bytes in four methods,256 table entries, four invalid values each and complement identity against independent text oracle. Python only."
+      "he": "כל256 ערכי הבית בארבע שיטות,256 רשומות טבלה, ארבע דחיות לכל שיטה וזוגיות המשלים מול אורקל טקסט עצמאי. Python בלבד.\n\nכל 65536 ערכי 16 הביטים ומדגם דטרמיניסטי של ערכי 32 ביטים נבדקו מול אורקל עצמאי. קוד C מוצע נשמר; המודל אינו הידור C או בדיקת תזמון CPU.",
+      "en": "All256 bytes in four methods,256 table entries, four invalid values each and complement identity against independent text oracle. Python only.\n\nAll 65536 sixteen-bit values and a deterministic 32-bit sample matched an independent oracle. Proposed C is retained; model execution is not C compilation or CPU timing measurement."
     },
     "solution_extensions": {
       "he": [
@@ -780,6 +802,11 @@
           "question": "איך משתמשים באותה טבלה לספירת אחדות ב־64 ביט?",
           "answer_direction": "מחלצים שמונה בתים, קוראים את הטבלה לכל בית ומחברים; זה קבוע ל־64 ביט אך גדל לינארית במספר הבתים ברוחב משתנה.",
           "status": "בחומר משלים בלבד."
+        },
+        {
+          "question": "האם O(1) עבור uint32_t אומר שאין דליפת מידע דרך זמן הריצה?",
+          "answer_direction": "לא. מספר האיטרציות תלוי ב־k. אסימפטוטיקה בתחום קבוע אינה הבטחת constant-time קריפטוגרפית.",
+          "principle": "חסם על רוחב וסמנטיקת תזמון הן טענות שונות."
         }
       ],
       "en": [
@@ -787,8 +814,37 @@
           "question": "How can the same table count a64-bit value?",
           "answer_direction": "Extract eight bytes, look up each and sum. Constant for64 bits, linear in byte count for variable width.",
           "status": "Supplemental only."
+        },
+        {
+          "question": "Does O(1) for uint32_t imply no timing leakage?",
+          "answer_direction": "No. Iteration count depends on k. Fixed-domain asymptotics do not establish cryptographic constant-time behavior.",
+          "principle": "A width bound and a timing guarantee are different claims."
         }
       ]
+    },
+    "prompt_variants": {
+      "he": {
+        "batch22_uint32_count": {
+          "prompt": "### וריאציה: ספירת אחדים במספר בינארי שלם\nכתבו קוד הסופר את ביטי ה־1 של מספר שלם בינארי. למימוש מפורש ב־C נבחר uint32_t, כולל אפס וכל דפוס בן 32 ביטים. הציגו לולאה והסבירו נכונות, עצירה ועלות; הבחינו בין מספר ביטי ה־1 לבין ערך המספר.\n\nבווריאציה זו אין איסור על פונקציית ספרייה או הוראת popcount כאשר הן זמינות; הקוד ללא intrinsic הוא דרך להסביר את העיקרון, ולא מגבלה על כל פתרון. דונו בנפרד ברוחב כללי W ובמספר שלם מסומן או בדיוק שרירותי. החלק הקודם על בית אחד ועל דרישת מימוש ללא לולאת ביטים נשמר כחוזה נפרד.",
+          "hints": [
+            "מספר כמו 8 הוא 1000 בבינארי: כמה ביטים דלוקים בו? אפסים מובילים אינם מוסיפים לספירה.",
+            "בדקו מה עושה x AND (x−1) לביט ה־1 הימני ביותר.",
+            "הגדילו מונה פעם בכל מחיקה, עד x=0. האינווריאנט הוא המונה ועוד מספר האחדים שנותרו שווה למספר האחדים בקלט המקורי."
+          ],
+          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "batch22_uint32_count": {
+          "prompt": "### Variant: count the ones in a binary integer\nWrite code counting the 1 bits of a binary integer. For an explicit C implementation choose uint32_t, including zero and every 32-bit pattern. Give a loop and explain correctness, termination and cost; distinguish the population count from the integer’s value.\n\nThis variant does not forbid a library operation or popcount instruction when available; the intrinsic-free implementation explains the principle rather than restricting every valid answer. Separately discuss general width W, signed inputs and arbitrary-precision integers. The earlier byte-only, no-bit-loop part remains a separate contract.",
+          "hints": [
+            "The integer 8 is binary 1000: how many set bits does it contain? Leading zeros do not contribute.",
+            "Inspect what x AND (x−1) does to the lowest set bit.",
+            "Increment once per deletion until x=0. Counter plus remaining ones equals the original population count."
+          ],
+          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+        }
+      }
     }
   },
   "PREP-158": {

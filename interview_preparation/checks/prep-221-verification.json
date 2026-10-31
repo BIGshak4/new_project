@@ -1,0 +1,12 @@
+{
+  "question_id": "PREP-221",
+  "status": "pass",
+  "model_cases": 15,
+  "method": "Executed deterministic Python equation, truth-table, byte or old-state capture checks; independent pytest oracles are separate.",
+  "independent_tests": "backend/tests/test_preparation_20261031_batch22_hardware.py",
+  "limitations": [
+    "No SPICE, HDL compilation, physical measurements or timing signoff.",
+    "Proposed C was not compiled in these local Python checks.",
+    "Human professional review pending."
+  ]
+}

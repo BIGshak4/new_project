@@ -70,6 +70,7 @@ PRIMARY = [
     "arrays_and_search", "basic_data_structures", "estimation_sanity_checks", "registers_shifters", "estimation_sanity_checks", "edge_detection", "basic_data_structures", "estimation_sanity_checks", "arrays_and_search", "number_representation", "estimation_sanity_checks",
     "combinational_blocks", "combinational_blocks", "estimation_sanity_checks", "counters", "estimation_sanity_checks", "fsm_sequence_detectors", "boolean_algebra", "binary_arithmetic", "fsm_sequence_detectors", "fsm_controllers", "estimation_sanity_checks",
     "arrays_and_search", "arrays_and_search", "basic_data_structures", "boolean_algebra", "combinational_blocks", "binary_arithmetic", "counters", "fsm_sequence_detectors", "fsm_controllers", "fsm_controllers", "registers_shifters",
+    "tradeoff_reasoning", "tradeoff_reasoning", "testbench_basics", "basic_data_structures", "arrays_and_search", "arrays_and_search", "registers_shifters", "basic_data_structures", "arrays_and_search", "basic_data_structures", "estimation_sanity_checks", "estimation_sanity_checks",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

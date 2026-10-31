@@ -57,3 +57,16 @@ Measured clockwise from 12, the minute hand is at 30*6=180 degrees. The hour han
 Generally, for h:m, minute angle=6m, hour angle=30(h mod 12)+m/2; let d be their absolute difference and return min(d,360-d). This takes O(1) time and space per query. Exact-fraction Python checks cover the source time, additional examples, all 720 minute positions against relative angular motion at 5.5 degrees per minute, and 12-hour periodicity.
 
 התוכן נוצר בסיוע AI וממתין לסקירה; טרם פורסם באתר.
+
+
+## מקור נוסף — 31.10.2026, מקבץ 22
+
+[צילום מקור פרטי 10](../sources/2026-10-31-batch22-10.png)
+
+בהינתן שעה (שעות, דקות), מה הזווית בין מחוגי השעון?
+
+שיוכי מקור מדווחים: Vayyar, Qualcomm.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-017-general_clock_batch22-addendum.md)

@@ -8,11 +8,11 @@ import uuid
 from datetime import timedelta
 
 import pytest
+
 from app.engine.catalog import load_catalog
 from app.services.interview_service import InterviewConfig, InterviewService
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
-
 from tests.test_interview_service import Clock, interviewer, run_to_the_end
 from tests.test_practice_hardening import GOOD, SEEDS, WEAK, scripted
 from tests.test_program import TODAY
@@ -73,8 +73,9 @@ class TestTheSeedLoader:
     """Review findings 2026-10-15: `false` or "0" must not become an exclusion; a job type must leave something."""
 
     def test_emphasis_takes_numbers_only(self):
-        from app.schemas.bank import JobType
         from pydantic import ValidationError
+
+        from app.schemas.bank import JobType
         for bad in (False, True, "0", "1.5"):
             with pytest.raises(ValidationError):
                 JobType(key="x", label={"en": "x"}, emphasis={"counters": bad})
@@ -109,15 +110,15 @@ class TestTheLibrary:
     async def test_counts_the_filtered_library_is_everything_minus_the_excluded_primary_skills(self, catalog):
         svc, _ = practice(catalog)
         everything = await svc.list_questions(language="en")
-        expected_hidden = {"embedded_firmware": 9, "software": 62, "digital_design": 52, "fpga": 52, "verification": 0,
-                           "student_general": 0}                                 # 31-Oct twenty-source intake: 249 raw questions
+        expected_hidden = {"embedded_firmware": 10, "software": 64, "digital_design": 58, "fpga": 58, "verification": 0,
+                           "student_general": 0}                                 # Batch22: 261 raw questions, including six new software exercises.
         for key, job in catalog.job_types.items():
             hidden = {r.key for r in everything if job.excludes(catalog.questions[r.key].primary_skill)}
             rows = await svc.list_questions(language="en", job=key)
             assert len(rows) == len(everything) - len(hidden), key
             assert not ({r.key for r in rows} & hidden), key
             assert all(key in r.job_types and r.relevance is not None for r in rows), key
-            assert len(everything) == 249
+            assert len(everything) == 261
             assert len(hidden) == expected_hidden[key], key
 
     async def test_the_job_tags_on_a_question_use_the_same_rule(self, catalog):

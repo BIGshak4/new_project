@@ -12,6 +12,7 @@ import uuid
 from pathlib import Path
 
 import pytest
+
 from app.api.errors import ApiError
 from app.engine import bank
 from app.engine.catalog import load_catalog
@@ -20,7 +21,6 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
-
 from tests.test_practice_hardening import scripted
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -97,8 +97,8 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
 
 
 def test_eleven_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 219
-    assert len(catalog.questions) == 249
+    assert len(archive()["questions"]) == 231
+    assert len(catalog.questions) == 261
     additions = {
         q.assets.get("preparation_id"): q
         for q in catalog.questions.values()
@@ -402,7 +402,9 @@ def test_four_expanded_questions_keep_runtime_prefixes_hints_and_invalidate_whol
 
 def test_c_mirror_is_a_hashed_private_solution_resource_and_not_a_raw_source(catalog):
     q = next(q for q in catalog.questions.values() if q.assets.get("preparation_id") == "PREP-094")
-    media = [m for m in q.assets["bank_media"] if m["filename"].endswith(".c")]
+    # The significant-width variant adds a second C program; retain this
+    # historical mirror contract against its original private resource.
+    media = [m for m in q.assets["bank_media"] if m["source_path"] == "solutions/prep_094_binary_mirror.c"]
     assert len(media) == 1
     item = media[0]
     assert item["role"] == "solution" and item["kind"] == "file"

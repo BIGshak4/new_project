@@ -303,3 +303,14 @@ Source asks for n² time but omits rectangularity, mutation, original-zero seman
     "status": "Supplemental only."
   }
 ]
+
+
+## מקור נוסף — 31.10.2026, מקבץ 22
+
+[צילום מקור פרטי 19](../sources/2026-10-31-batch22-19.png)
+
+ישנה מטריצה בגודל n*m. בכל מקום שיש אפסים צריך לאפס את השורה והעמודה.
+
+שיוכי מקור מדווחים: Microsoft, Apple.
+
+מקור נוסף בלבד; הגרסה, הנוסח, הרמזים והפתרון נשמרו.

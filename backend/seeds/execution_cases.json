@@ -5309,6 +5309,471 @@
           "starter": "module square2(input [1:0] x, output [3:0] y);\nassign y = 0;\nendmodule\n"
         }
       }
+    },
+    "prep-merge-k-sorted-linked-lists": {
+      "contract": {
+        "he": "מתאם הרצה: merge_sorted_lists(values) מקבלת רשימת רשימות ערכים ממוינות ומחזירה את הערכים הממוזגים. בפתרון הראיון יש למזג צמתים; הפלט המספרי לבדו אינו מוכיח מיחזור, יציבות זהויות או חסם מקום.",
+        "en": "Execution adapter merge_sorted_lists(values) takes a list of sorted value lists and returns merged values. The interview solution merges linked nodes; numeric output alone does not prove node reuse, identity stability or space bounds."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "merge_sorted_lists",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": []
+            },
+            {
+              "args": [
+                [
+                  [],
+                  [],
+                  []
+                ]
+              ],
+              "expected": []
+            },
+            {
+              "args": [
+                [
+                  [
+                    1,
+                    4,
+                    9
+                  ],
+                  [
+                    1,
+                    3,
+                    7
+                  ],
+                  [
+                    2,
+                    8
+                  ]
+                ]
+              ],
+              "expected": [
+                1,
+                1,
+                2,
+                3,
+                4,
+                7,
+                8,
+                9
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    -5,
+                    -1,
+                    0
+                  ],
+                  [
+                    -5,
+                    -5,
+                    9
+                  ],
+                  []
+                ]
+              ],
+              "expected": [
+                -5,
+                -5,
+                -5,
+                -1,
+                0,
+                9
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    2,
+                    2
+                  ],
+                  [
+                    2
+                  ],
+                  [
+                    2,
+                    2,
+                    2
+                  ]
+                ]
+              ],
+              "expected": [
+                2,
+                2,
+                2,
+                2,
+                2,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    1,
+                    2,
+                    3
+                  ]
+                ]
+              ],
+              "expected": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "args": [
+                [
+                  [],
+                  [
+                    0
+                  ],
+                  []
+                ]
+              ],
+              "expected": [
+                0
+              ]
+            }
+          ],
+          "starter": "def merge_sorted_lists(values):\n    raise NotImplementedError\n"
+        }
+      }
+    },
+    "prep-most-frequent-word-list": {
+      "contract": {
+        "he": "most_frequent_word(words) מקבלת רשימת מחרוזות ומחזירה [מילה, שכיחות] או None בריק. שוויון מוכרע לפי הופעה ראשונה; רישיות נשמרת, מחרוזת ריקה היא מילה חוקית. אין tokenization.",
+        "en": "most_frequent_word(words) returns [word, frequency], or None for an empty list. Break ties by first appearance; equality is case-sensitive and empty strings are valid words. No tokenization."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "most_frequent_word",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": null
+            },
+            {
+              "args": [
+                [
+                  "a"
+                ]
+              ],
+              "expected": [
+                "a",
+                1
+              ]
+            },
+            {
+              "args": [
+                [
+                  "a",
+                  "b",
+                  "b",
+                  "a"
+                ]
+              ],
+              "expected": [
+                "a",
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  "Cat",
+                  "cat",
+                  "Cat"
+                ]
+              ],
+              "expected": [
+                "Cat",
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  "",
+                  "x",
+                  ""
+                ]
+              ],
+              "expected": [
+                "",
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  "x",
+                  "y",
+                  "z"
+                ]
+              ],
+              "expected": [
+                "x",
+                1
+              ]
+            },
+            {
+              "args": [
+                [
+                  "b",
+                  "a",
+                  "a",
+                  "b",
+                  "c",
+                  "c"
+                ]
+              ],
+              "expected": [
+                "b",
+                2
+              ]
+            }
+          ],
+          "starter": "def most_frequent_word(words):\n    raise NotImplementedError\n"
+        }
+      }
+    },
+    "prep-ascii-word-anagrams": {
+      "contract": {
+        "he": "are_anagrams(left, right) מחזירה Boolean לשתי מילים ב־ASCII אותיות A..Z,a..z בלבד. רישיות וכמויות נשמרות; שני קלטים ריקים מתאימים. מקרי ההרצה בתחום; תחום שגוי נבדק בנפרד בקוד הייחוס.",
+        "en": "are_anagrams(left, right) returns a Boolean for ASCII-letter words A..Z,a..z. Case and multiplicities matter; empty/empty matches. Runtime cases are in-domain; invalid-domain behavior is checked separately in reference tests."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "are_anagrams",
+          "cases": [
+            {
+              "args": [
+                "",
+                ""
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "listen",
+                "silent"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "aab",
+                "abb"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "Ab",
+                "ba"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "aAbB",
+                "BAba"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "abc",
+                "ab"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "aaaa",
+                "aaaa"
+              ],
+              "expected": true
+            }
+          ],
+          "starter": "def are_anagrams(left, right):\n    raise NotImplementedError\n"
+        }
+      }
+    },
+    "prep-stable-move-zeroes-to-end": {
+      "contract": {
+        "he": "move_zeroes(values) מעדכנת את אותו מערך שלמים ומחזירה אותו: כל האפסים בסוף, הלא־אפסים בסדרם המקורי ובריבוי המקורי. פלט ההרצה בודק ערכים; הוכחת מקום וזהות נבדקת בנפרד.",
+        "en": "move_zeroes(values) mutates and returns the same integer list: zeroes move to the end while nonzero order/multiplicity remain. Runtime output checks values; in-place identity and space reasoning are checked separately."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "move_zeroes",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": []
+            },
+            {
+              "args": [
+                [
+                  0
+                ]
+              ],
+              "expected": [
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  0,
+                  9,
+                  0,
+                  3,
+                  4,
+                  5,
+                  1
+                ]
+              ],
+              "expected": [
+                1,
+                9,
+                3,
+                4,
+                5,
+                1,
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ],
+              "expected": [
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  -1,
+                  2
+                ]
+              ],
+              "expected": [
+                1,
+                -1,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  -1,
+                  0,
+                  -1,
+                  2,
+                  0
+                ]
+              ],
+              "expected": [
+                -1,
+                -1,
+                2,
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  1,
+                  0,
+                  2,
+                  0,
+                  3
+                ]
+              ],
+              "expected": [
+                1,
+                2,
+                3,
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "starter": "def move_zeroes(values):\n    raise NotImplementedError\n"
+        }
+      }
+    },
+    "prep-c-fifo-write-then-read-requests": {
+      "contract": {
+        "he": "C99: הגדירו FifoResult והפונקציה fifo_step בדיוק כמו בחתימה המוצעת, ללא main. אחסון התור מסופק, בעלים יחיד, WRITE THEN READ. valid מציין תיאור תקף; value נצרך רק אם read=true. capacity חיובי עד 64 במתאם. הפונקציה אינה מטפלת בסנכרון ISR.",
+        "en": "C99: provide FifoResult and fifo_step with the proposed signature, without main. Caller-supplied storage, one owner, WRITE THEN READ. valid denotes a valid descriptor; value is consumed only when read=true. Adapter capacity is 1..64. ISR synchronization is outside this function."
+      },
+      "languages": {
+        "c": {
+          "kind": "program",
+          "driver": "#include <stdio.h>\n#include <stdbool.h>\n#include <stddef.h>\n#include \"solution.c\"\nint main(void) {\n  int capacity, steps, data[64] = {0}; size_t r=0, w=0;\n  bool full=false, empty=true;\n  if (scanf(\"%d%d\", &capacity, &steps)!=2 || capacity<1 || capacity>64 || steps<0 || steps>1000) return 2;\n  for(int i=0;i<steps;++i) {\n    int wr,value,rr;\n    if(scanf(\"%d%d%d\",&wr,&value,&rr)!=3) return 2;\n    FifoResult x=fifo_step(data,(size_t)capacity,&r,&w,&full,&empty,wr!=0,value,rr!=0);\n    if(!x.valid) return 3;\n    printf(\"%d %d %d\\n\",x.wrote?1:0,x.read?1:0,x.read?x.value:0);\n  }\n  printf(\"%zu %zu %d %d\\n\",r,w,full?1:0,empty?1:0);\n  return 0;\n}\n",
+          "cases": [
+            {
+              "stdin": "1 0\n",
+              "expected_stdout": "0 0 0 1\n"
+            },
+            {
+              "stdin": "1 1\n1 7 1\n",
+              "expected_stdout": "1 1 7\n0 0 0 1\n"
+            },
+            {
+              "stdin": "1 2\n1 7 0\n1 9 1\n",
+              "expected_stdout": "1 0 0\n0 1 7\n0 0 0 1\n"
+            },
+            {
+              "stdin": "2 6\n0 0 1\n1 -5 0\n1 0 0\n1 9 1\n1 7 1\n0 0 1\n",
+              "expected_stdout": "0 0 0\n1 0 0\n1 0 0\n0 1 -5\n1 1 0\n0 1 7\n1 1 0 1\n"
+            },
+            {
+              "stdin": "3 8\n1 0 0\n1 1 0\n1 2 0\n0 0 1\n1 4 0\n0 0 1\n0 0 1\n0 0 1\n",
+              "expected_stdout": "1 0 0\n1 0 0\n1 0 0\n0 1 0\n1 0 0\n0 1 1\n0 1 2\n0 1 4\n1 1 0 1\n"
+            }
+          ],
+          "starter": "#include <stdbool.h>\n#include <stddef.h>\ntypedef struct { bool valid,wrote,read; int value; } FifoResult;\nFifoResult fifo_step(int *data,size_t capacity,size_t *read_head,size_t *write_head,\n bool *is_full,bool *is_empty,bool write_request,int write_value,bool read_request) {\n    FifoResult result={false,false,false,0};\n    return result;\n}\n"
+        }
+      }
     }
   }
 }

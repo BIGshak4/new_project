@@ -20,8 +20,8 @@ const response = (overrides: Partial<QuestionResources> = {}): QuestionResources
   media: [], technical_material: null, solution_revealed: true, ...overrides,
 });
 
-test("all 249 canonical references follow display language while attempt language stays fixed", () => {
-  assert.equal(questions.length, 249);
+test("all 261 canonical references follow display language while attempt language stays fixed", () => {
+  assert.equal(questions.length, 261);
   for (const question of questions) {
     for (const originalLanguage of ["he", "en"] as const) {
       const original = question.translations[originalLanguage].reference_solution;
@@ -261,8 +261,47 @@ test("all 20 affected October31 resources localize their visible structured labe
   assert.deepEqual([...new Set(untranslated)], []);
 });
 
-test("all 219 preparation resources pair every visible technical field and render entirely in English", () => {
-  assert.equal(prepared.length, 219);
+test("all 20 batch22 resources localize visible metadata in both languages", () => {
+  const ids = new Set(["PREP-009", "PREP-015", "PREP-017", "PREP-025", "PREP-094", "PREP-150", "PREP-151", "PREP-160",
+    ...Array.from({ length: 12 }, (_, i) => `PREP-${221 + i}`)]);
+  const variantLabels = {
+    batch22_nand_drivers: "מימוש שער NAND ברכיבי דרייבר",
+    batch22_significant_bits: "היפוך הביטים המשמעותיים",
+    batch22_uint32_count: "ספירת אחדות במספר בן 32 ביטים",
+    batch22_uppercase_counting: "מיון אותיות באמצעות ספירה",
+    general_clock_batch22: "זווית מחוגים בשעה נתונה",
+    general_clock_batch22_hints: "רמזים לחישוב זווית המחוגים",
+    highest_safe_batch22: "מציאת הקומה הבטוחה הגבוהה ביותר",
+    highest_safe_batch22_hints: "רמזים למציאת הקומה הבטוחה",
+  };
+  for (const [key, label] of Object.entries(variantLabels)) {
+    assert.equal(materialLabel(key, "he"), label);
+    assert.doesNotMatch(materialLabel(key, "en"), /batch22|\p{Script=Hebrew}/u);
+  }
+  const circuitIdentifiers = new Set(["A", "B", "C", "a", "b", "c", "f", "s", "i0", "i1", "in1", "in2", "out", "t", "EN", "D"]);
+  const untranslated: string[] = [];
+  let rendered = 0;
+  for (const question of prepared) {
+    const material = question.assets.preparation_resource!;
+    if (!ids.has(String(material.id))) continue;
+    const before = JSON.stringify(material);
+    for (const lang of ["he", "en"] as const) {
+      const html = renderToStaticMarkup(createElement(TechnicalMaterial, { material, lang }));
+      for (const match of html.matchAll(/<dt dir="auto">([\s\S]*?)<\/dt>/g)) {
+        // Existing numeric iteration bins and cell pins are data, not prose labels.
+        if (lang === "he" && !/\p{Script=Hebrew}/u.test(match[1]) && !circuitIdentifiers.has(match[1]) && !/^\d+\+?$/.test(match[1])) untranslated.push(`${material.id}: ${match[1]}`);
+        if (lang === "en") assert.doesNotMatch(match[1], /batch22|\p{Script=Hebrew}/u, `${material.id}: ${match[1]}`);
+      }
+    }
+    assert.equal(JSON.stringify(material), before);
+    rendered += 1;
+  }
+  assert.equal(rendered, 20);
+  assert.deepEqual([...new Set(untranslated)], []);
+});
+
+test("all 231 preparation resources pair every visible technical field and render entirely in English", () => {
+  assert.equal(prepared.length, 231);
   for (const question of prepared) {
     const material = question.assets.preparation_resource!;
     const pairs = material.learner_material as Record<string, Record<ApiLang, unknown>> | undefined;

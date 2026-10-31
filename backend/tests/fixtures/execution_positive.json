@@ -335,6 +335,31 @@
       "question_key": "prep-unsigned-two-bit-combinational-square",
       "language": "systemverilog",
       "source": "module square2(input [1:0] x, output [3:0] y);\nassign y = {x[1] & x[0], x[1] & ~x[0], 1'b0, x[0]};\nendmodule\n"
+    },
+    {
+      "question_key": "prep-merge-k-sorted-linked-lists",
+      "language": "python",
+      "source": "\"\"\"Destructively merge disjoint, acyclic sorted integer lists.\n\nNode identity is preserved. Equal values prefer the lower input-list index;\nwithin each input list order is preserved. The caller relinquishes the old\nindependent-list topology. Sortedness, disjointness and acyclicity are promises.\n\"\"\"\nimport heapq\n\n\nclass Node:\n    def __init__(self, value, next_node=None):\n        self.value = value\n        self.next = next_node\n\n\ndef merge_k_lists(heads):\n    heap = [(node.value, index, node) for index, node in enumerate(heads) if node is not None]\n    heapq.heapify(heap)\n    sentinel = Node(None)\n    tail = sentinel\n    while heap:\n        _, index, node = heapq.heappop(heap)\n        successor = node.next\n        tail.next = node\n        tail = node\n        if successor is not None:\n            heapq.heappush(heap, (successor.value, index, successor))\n    tail.next = None\n    return sentinel.next\n\n\ndef merge_sorted_lists(values):\n    \"\"\"Execution adapter: build list nodes from nested arrays, return values.\"\"\"\n    heads = []\n    for sequence in values:\n        head = None\n        for value in reversed(sequence):\n            head = Node(value, head)\n        heads.append(head)\n    out, node = [], merge_k_lists(heads)\n    while node is not None:\n        out.append(node.value)\n        node = node.next\n    return out\n"
+    },
+    {
+      "question_key": "prep-most-frequent-word-list",
+      "language": "python",
+      "source": "\"\"\"Exact, case-sensitive words; frequency ties prefer first appearance.\"\"\"\n\n\ndef most_frequent_word(words):\n    if not words:\n        return None\n    counts = {}\n    for word in words:\n        counts[word] = counts.get(word, 0) + 1\n    best = words[0]\n    for word in words:\n        if counts[word] > counts[best]:\n            best = word\n    return [best, counts[best]]\n"
+    },
+    {
+      "question_key": "prep-ascii-word-anagrams",
+      "language": "python",
+      "source": "\"\"\"Case-sensitive ASCII A..Z/a..z only; empty strings are valid words.\"\"\"\n\n\ndef are_anagrams(left, right):\n    if any(not ('A' <= ch <= 'Z' or 'a' <= ch <= 'z') for word in (left, right) for ch in word):\n        raise ValueError('ASCII letters only')\n    if len(left) != len(right):\n        return False\n    balance = [0] * 128\n    for a, b in zip(left, right):\n        balance[ord(a)] += 1\n        balance[ord(b)] -= 1\n    return all(count == 0 for count in balance)\n"
+    },
+    {
+      "question_key": "prep-stable-move-zeroes-to-end",
+      "language": "python",
+      "source": "\"\"\"Move integer zeroes to the end in place, preserving nonzero order.\"\"\"\n\n\ndef move_zeroes(values):\n    write = 0\n    for read in range(len(values)):\n        if values[read] != 0:\n            values[write] = values[read]\n            write += 1\n    for index in range(write, len(values)):\n        values[index] = 0\n    return values\n"
+    },
+    {
+      "question_key": "prep-c-fifo-write-then-read-requests",
+      "language": "c",
+      "source": "/* C99, single owner; caller supplies capacity valid int slots and distinct\n * control objects. Requests are snapshots passed by value. No allocation,\n * waiting or implicit ISR synchronization. Operations are WRITE then READ.\n */\n#include <stdbool.h>\n#include <stddef.h>\n\ntypedef struct {\n    bool valid;\n    bool wrote;\n    bool read;\n    int value; /* meaningful only when read is true */\n} FifoResult;\n\nFifoResult fifo_step(int *data, size_t capacity, size_t *read_head,\n                     size_t *write_head, bool *is_full, bool *is_empty,\n                     bool write_request, int write_value, bool read_request) {\n    FifoResult result = {false, false, false, 0};\n    if (!data || !read_head || !write_head || !is_full || !is_empty || capacity == 0)\n        return result;\n    if (*read_head >= capacity || *write_head >= capacity) return result;\n    if (*read_head == *write_head ? (*is_full == *is_empty) : (*is_full || *is_empty))\n        return result;\n    result.valid = true;\n    if (write_request && !*is_full) {\n        data[*write_head] = write_value;\n        *write_head = *write_head + 1 == capacity ? 0 : *write_head + 1;\n        *is_empty = false;\n        *is_full = *write_head == *read_head;\n        result.wrote = true;\n    }\n    if (read_request && !*is_empty) {\n        result.value = data[*read_head];\n        *read_head = *read_head + 1 == capacity ? 0 : *read_head + 1;\n        *is_full = false;\n        *is_empty = *read_head == *write_head;\n        result.read = true;\n    }\n    return result;\n}\n"
     }
   ]
 }

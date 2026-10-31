@@ -108,6 +108,231 @@ ORACLES = {
 }
 
 
+# Durable batch22 inputs. Reference sources supply positive submissions only;
+# independent finite oracles below calculate the private expected outputs.
+BATCH22_SOURCES = {'prep-merge-k-sorted-linked-lists': 'prep_224_merge_k_sorted_linked_lists.py',
+ 'prep-most-frequent-word-list': 'prep_225_word_list_mode.py',
+ 'prep-ascii-word-anagrams': 'prep_226_ascii_word_anagrams.py',
+ 'prep-stable-move-zeroes-to-end': 'prep_229_stable_zero_compaction.py',
+ 'prep-c-fifo-write-then-read-requests': 'prep_230_request_fifo.c'}
+
+BATCH22_INPUTS = {'prep-merge-k-sorted-linked-lists': {'contract': {'he': 'מתאם הרצה: merge_sorted_lists(values) מקבלת רשימת '
+                                                         'רשימות ערכים ממוינות ומחזירה את הערכים הממוזגים. '
+                                                         'בפתרון הראיון יש למזג צמתים; הפלט המספרי לבדו אינו '
+                                                         'מוכיח מיחזור, יציבות זהויות או חסם מקום.',
+                                                   'en': 'Execution adapter merge_sorted_lists(values) takes '
+                                                         'a list of sorted value lists and returns merged '
+                                                         'values. The interview solution merges linked '
+                                                         'nodes; numeric output alone does not prove node '
+                                                         'reuse, identity stability or space bounds.'},
+                                      'languages': {'python': {'kind': 'function',
+                                                               'entry': 'merge_sorted_lists',
+                                                               'cases': [{'args': [[]]},
+                                                                         {'args': [[[], [], []]]},
+                                                                         {'args': [[[1, 4, 9],
+                                                                                    [1, 3, 7],
+                                                                                    [2, 8]]]},
+                                                                         {'args': [[[-5, -1, 0],
+                                                                                    [-5, -5, 9],
+                                                                                    []]]},
+                                                                         {'args': [[[2, 2], [2], [2, 2, 2]]]},
+                                                                         {'args': [[[1, 2, 3]]]},
+                                                                         {'args': [[[], [0], []]]}],
+                                                               'starter': 'def merge_sorted_lists(values):\n'
+                                                                          '    raise '
+                                                                          'NotImplementedError\n'}}},
+ 'prep-most-frequent-word-list': {'contract': {'he': 'most_frequent_word(words) מקבלת רשימת מחרוזות ומחזירה '
+                                                     '[מילה, שכיחות] או None בריק. שוויון מוכרע לפי הופעה '
+                                                     'ראשונה; רישיות נשמרת, מחרוזת ריקה היא מילה חוקית. אין '
+                                                     'tokenization.',
+                                               'en': 'most_frequent_word(words) returns [word, frequency], '
+                                                     'or None for an empty list. Break ties by first '
+                                                     'appearance; equality is case-sensitive and empty '
+                                                     'strings are valid words. No tokenization.'},
+                                  'languages': {'python': {'kind': 'function',
+                                                           'entry': 'most_frequent_word',
+                                                           'cases': [{'args': [[]]},
+                                                                     {'args': [['a']]},
+                                                                     {'args': [['a', 'b', 'b', 'a']]},
+                                                                     {'args': [['Cat', 'cat', 'Cat']]},
+                                                                     {'args': [['', 'x', '']]},
+                                                                     {'args': [['x', 'y', 'z']]},
+                                                                     {'args': [['b',
+                                                                                'a',
+                                                                                'a',
+                                                                                'b',
+                                                                                'c',
+                                                                                'c']]}],
+                                                           'starter': 'def most_frequent_word(words):\n'
+                                                                      '    raise NotImplementedError\n'}}},
+ 'prep-ascii-word-anagrams': {'contract': {'he': 'are_anagrams(left, right) מחזירה Boolean לשתי מילים '
+                                                 'ב־ASCII אותיות A..Z,a..z בלבד. רישיות וכמויות נשמרות; שני '
+                                                 'קלטים ריקים מתאימים. מקרי ההרצה בתחום; תחום שגוי נבדק '
+                                                 'בנפרד בקוד הייחוס.',
+                                           'en': 'are_anagrams(left, right) returns a Boolean for '
+                                                 'ASCII-letter words A..Z,a..z. Case and multiplicities '
+                                                 'matter; empty/empty matches. Runtime cases are in-domain; '
+                                                 'invalid-domain behavior is checked separately in reference '
+                                                 'tests.'},
+                              'languages': {'python': {'kind': 'function',
+                                                       'entry': 'are_anagrams',
+                                                       'cases': [{'args': ['', '']},
+                                                                 {'args': ['listen', 'silent']},
+                                                                 {'args': ['aab', 'abb']},
+                                                                 {'args': ['Ab', 'ba']},
+                                                                 {'args': ['aAbB', 'BAba']},
+                                                                 {'args': ['abc', 'ab']},
+                                                                 {'args': ['aaaa', 'aaaa']}],
+                                                       'starter': 'def are_anagrams(left, right):\n'
+                                                                  '    raise NotImplementedError\n'}}},
+ 'prep-stable-move-zeroes-to-end': {'contract': {'he': 'move_zeroes(values) מעדכנת את אותו מערך שלמים '
+                                                       'ומחזירה אותו: כל האפסים בסוף, הלא־אפסים בסדרם המקורי '
+                                                       'ובריבוי המקורי. פלט ההרצה בודק ערכים; הוכחת מקום '
+                                                       'וזהות נבדקת בנפרד.',
+                                                 'en': 'move_zeroes(values) mutates and returns the same '
+                                                       'integer list: zeroes move to the end while nonzero '
+                                                       'order/multiplicity remain. Runtime output checks '
+                                                       'values; in-place identity and space reasoning are '
+                                                       'checked separately.'},
+                                    'languages': {'python': {'kind': 'function',
+                                                             'entry': 'move_zeroes',
+                                                             'cases': [{'args': [[]]},
+                                                                       {'args': [[0]]},
+                                                                       {'args': [[1, 0, 9, 0, 3, 4, 5, 1]]},
+                                                                       {'args': [[0, 0, 0]]},
+                                                                       {'args': [[1, -1, 2]]},
+                                                                       {'args': [[0, -1, 0, -1, 2, 0]]},
+                                                                       {'args': [[0, 1, 0, 2, 0, 3]]}],
+                                                             'starter': 'def move_zeroes(values):\n'
+                                                                        '    raise NotImplementedError\n'}}},
+ 'prep-c-fifo-write-then-read-requests': {'contract': {'he': 'C99: הגדירו FifoResult והפונקציה fifo_step '
+                                                             'בדיוק כמו בחתימה המוצעת, ללא main. אחסון התור '
+                                                             'מסופק, בעלים יחיד, WRITE THEN READ. valid '
+                                                             'מציין תיאור תקף; value נצרך רק אם read=true. '
+                                                             'capacity חיובי עד 64 במתאם. הפונקציה אינה '
+                                                             'מטפלת בסנכרון ISR.',
+                                                       'en': 'C99: provide FifoResult and fifo_step with the '
+                                                             'proposed signature, without main. '
+                                                             'Caller-supplied storage, one owner, WRITE THEN '
+                                                             'READ. valid denotes a valid descriptor; value '
+                                                             'is consumed only when read=true. Adapter '
+                                                             'capacity is 1..64. ISR synchronization is '
+                                                             'outside this function.'},
+                                          'languages': {'c': {'kind': 'program',
+                                                              'driver': '#include <stdio.h>\n'
+                                                                        '#include <stdbool.h>\n'
+                                                                        '#include <stddef.h>\n'
+                                                                        '#include "solution.c"\n'
+                                                                        'int main(void) {\n'
+                                                                        '  int capacity, steps, data[64] = '
+                                                                        '{0}; size_t r=0, w=0;\n'
+                                                                        '  bool full=false, empty=true;\n'
+                                                                        '  if (scanf("%d%d", &capacity, '
+                                                                        '&steps)!=2 || capacity<1 || '
+                                                                        'capacity>64 || steps<0 || '
+                                                                        'steps>1000) return 2;\n'
+                                                                        '  for(int i=0;i<steps;++i) {\n'
+                                                                        '    int wr,value,rr;\n'
+                                                                        '    '
+                                                                        'if(scanf("%d%d%d",&wr,&value,&rr)!=3) '
+                                                                        'return 2;\n'
+                                                                        '    FifoResult '
+                                                                        'x=fifo_step(data,(size_t)capacity,&r,&w,&full,&empty,wr!=0,value,rr!=0);\n'
+                                                                        '    if(!x.valid) return 3;\n'
+                                                                        '    printf("%d %d '
+                                                                        '%d\\n",x.wrote?1:0,x.read?1:0,x.read?x.value:0);\n'
+                                                                        '  }\n'
+                                                                        '  printf("%zu %zu %d '
+                                                                        '%d\\n",r,w,full?1:0,empty?1:0);\n'
+                                                                        '  return 0;\n'
+                                                                        '}\n',
+                                                              'cases': [{'stdin': '1 0\n'},
+                                                                        {'stdin': '1 1\n1 7 1\n'},
+                                                                        {'stdin': '1 2\n1 7 0\n1 9 1\n'},
+                                                                        {'stdin': '2 6\n'
+                                                                                  '0 0 1\n'
+                                                                                  '1 -5 0\n'
+                                                                                  '1 0 0\n'
+                                                                                  '1 9 1\n'
+                                                                                  '1 7 1\n'
+                                                                                  '0 0 1\n'},
+                                                                        {'stdin': '3 8\n'
+                                                                                  '1 0 0\n'
+                                                                                  '1 1 0\n'
+                                                                                  '1 2 0\n'
+                                                                                  '0 0 1\n'
+                                                                                  '1 4 0\n'
+                                                                                  '0 0 1\n'
+                                                                                  '0 0 1\n'
+                                                                                  '0 0 1\n'}],
+                                                              'starter': '#include <stdbool.h>\n'
+                                                                         '#include <stddef.h>\n'
+                                                                         'typedef struct { bool '
+                                                                         'valid,wrote,read; int value; } '
+                                                                         'FifoResult;\n'
+                                                                         'FifoResult fifo_step(int '
+                                                                         '*data,size_t capacity,size_t '
+                                                                         '*read_head,size_t *write_head,\n'
+                                                                         ' bool *is_full,bool *is_empty,bool '
+                                                                         'write_request,int write_value,bool '
+                                                                         'read_request) {\n'
+                                                                         '    FifoResult '
+                                                                         'result={false,false,false,0};\n'
+                                                                         '    return result;\n'
+                                                                         '}\n'}}}}
+
+
+def batch22_word_frequency(words):
+    if not words:
+        return None
+    winner = max(words, key=words.count)
+    return [winner, words.count(winner)]
+
+
+def batch22_fifo_output(stdin):
+    values = list(map(int, stdin.split()))
+    capacity, steps = values[:2]
+    queue, output = [], []
+    reads = writes = 0
+    for index in range(steps):
+        write, value, read = values[2 + 3 * index:5 + 3 * index]
+        wrote = bool(write and len(queue) < capacity)
+        if wrote:
+            queue.append(value)
+            writes += 1
+        did_read = bool(read and queue)
+        removed = queue.pop(0) if did_read else 0
+        reads += did_read
+        output.append(f"{int(wrote)} {int(did_read)} {removed}")
+    output.append(f"{reads % capacity} {writes % capacity} "
+                  f"{int(len(queue) == capacity)} {int(not queue)}")
+    return "\n".join(output) + "\n"
+
+
+BATCH22_ORACLES = {
+    "prep-merge-k-sorted-linked-lists": lambda lists: sorted(value for seq in lists for value in seq),
+    "prep-most-frequent-word-list": batch22_word_frequency,
+    "prep-ascii-word-anagrams": lambda left, right: sorted(left) == sorted(right),
+    "prep-stable-move-zeroes-to-end": lambda values: [v for v in values if v != 0] + [0] * values.count(0),
+}
+
+
+def build_batch22_contracts():
+    questions = json.loads(json.dumps(BATCH22_INPUTS))
+    for key, question in questions.items():
+        for language, spec in question["languages"].items():
+            for case in spec["cases"]:
+                if language == "python":
+                    case["expected"] = BATCH22_ORACLES[key](*case["args"])
+                else:
+                    case["expected_stdout"] = batch22_fifo_output(case["stdin"])
+    return questions
+
+
+def batch22_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH22_SOURCES[key]).read_text(encoding="utf-8")
+
+
 COUNTER_STIMULUS = [(1, 1), (0, 0)] + [(int(i in (15, 29)), int(i % 5 not in (0, 1))) for i in range(45)]
 SEQUENCE_STIMULUS = [(1, 1)] + [(0, int(c)) for c in "1101110111010011011010110110"] + [(1, 1)] + [(0, int(c)) for c in "1011101101"]
 
@@ -397,6 +622,8 @@ endmodule
             for lang in ("verilog", "systemverilog")
         }}
 
+    questions.update(build_batch22_contracts())
+
     # Every function contract names the callable interface; this is a test adapter, not a new question.
     for question in questions.values():
         for language, spec in question["languages"].items():
@@ -434,6 +661,18 @@ def build_smoke():
                   "correct": seq[seq.index("module "):],
                   "wrong": seq[seq.index("module "):].replace("assign found = state == 3'd4;", "assign found = 1'b0;"),
                   "syntax_error": "module sequence_1101(\n"})
+    for key, question in build_batch22_contracts().items():
+        for language, spec in question["languages"].items():
+            correct = batch22_source(key)
+            if language == "python":
+                entry = spec["entry"]
+                wrong = f"def {entry}(*args):\n    return None\n"
+                syntax = f"def {entry}(*args)\n    return None\n"
+            else:
+                wrong = '#include <stdbool.h>\n#include <stddef.h>\ntypedef struct { bool valid,wrote,read; int value; } FifoResult;\nFifoResult fifo_step(int *data,size_t capacity,size_t *read_head,size_t *write_head,\n bool *is_full,bool *is_empty,bool write_request,int write_value,bool read_request) {\n    FifoResult result={true,false,false,0};\n    return result;\n}\n'
+                syntax = "this is not valid C source\n"
+            cases.append({"question_key": key, "language": language, "correct": correct,
+                          "wrong": wrong, "syntax_error": syntax})
     return {"version": 1, "cases": cases}
 
 
@@ -956,6 +1195,8 @@ begin
   y <= (a and b) or (a and c) or (b and c);
 end architecture;
 '''
+    for key, filename in BATCH22_SOURCES.items():
+        (c if filename.endswith(".c") else python)[key] = batch22_source(key)
     cases = []
     for key, question in build_manifest()["questions"].items():
         for language in question["languages"]:

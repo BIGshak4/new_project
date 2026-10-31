@@ -293,3 +293,16 @@ All256 bytes in four methods,256 table entries, four invalid values each and com
     "status": "Supplemental only."
   }
 ]
+
+
+## מקור נוסף — 31.10.2026, מקבץ 22
+
+[צילום מקור פרטי 12](../sources/2026-10-31-batch22-12.png)
+
+לכתוב קטע קוד שמקבל מספר אינטג׳ר שמורכב מאחדות או אפסים וסופר את מספר האחדות.
+
+שיוכי מקור מדווחים: Intel.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-151-uint32_count-batch22-addendum.md)

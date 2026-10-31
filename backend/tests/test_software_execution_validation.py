@@ -8,6 +8,7 @@ import uuid
 
 import httpx
 import pytest
+
 from app.config import Settings
 from scripts.validate_software_execution import (
     BACKEND,
@@ -20,6 +21,8 @@ from scripts.validate_software_execution import (
     is_software,
     output_dir,
 )
+from tests.preparation_compiled_history import before_batch22_compiled
+from tests.preparation_history import BATCH22_BASELINE
 
 
 def test_selection_matches_explicit_ui_category_override():
@@ -47,7 +50,7 @@ def test_exact_software_scope_plans_all_suites_and_cpp_checks_with_headroom():
         allocate(questions, positives, maximum=1)
 
 
-def test_scope_matches_current_software_seeds_and_preserves_the_63_question_live_report():
+def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_72_membership():
     scope = json.loads((BACKEND / 'tests/fixtures/software_question_scope.json').read_bytes())
     seeds = {q['key']: q for name in ('example_bank.json', 'preparation_bank.json')
              for q in json.loads((BACKEND / 'seeds/questions' / name).read_bytes())}
@@ -55,9 +58,22 @@ def test_scope_matches_current_software_seeds_and_preserves_the_63_question_live
                 if is_software({'category': q.get('assets', {}).get('category'), 'subject': q['subject']})}
     rows = {q['question_key']: q for q in scope['questions']}
     assert len(rows) == len(scope['questions']) == scope['current_seed_count'] == 66
-    assert rows.keys() == expected
+    # The committed inventory predates batch22. Keep every old row/hash and its
+    # separate 63-question live report frozen; new inventory is not a live run.
+    prior_keys = {key for key in expected if not seeds[key].get('assets', {}).get('preparation_id')
+                  or seeds[key]['assets']['preparation_id'] in BATCH22_BASELINE['records']}
+    assert rows.keys() == prior_keys
+    assert len(expected) == 72
+    assert expected - rows.keys() == {
+        'prep-merge-k-sorted-linked-lists', 'prep-most-frequent-word-list',
+        'prep-ascii-word-anagrams', 'prep-stack-adt-and-call-stack-uses',
+        'prep-stable-move-zeroes-to-end', 'prep-c-fifo-write-then-read-requests',
+    }
     for key, row in rows.items():
-        payload = json.dumps(seeds[key], ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+        question = seeds[key]
+        if question.get('assets', {}).get('preparation_id'):
+            question = before_batch22_compiled(question)
+        payload = json.dumps(question, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
         assert hashlib.sha256(payload).hexdigest() == row['seed_question_sha256'], key
     assert set(scope['current_seed_additions']) == {
         'prep-damaged-triple-groups', 'prep-top-two-distinct-and-mode', 'prep-opaque-c-linked-list-adt'}

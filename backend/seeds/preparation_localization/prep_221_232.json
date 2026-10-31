@@ -1,0 +1,818 @@
+{
+  "PREP-221": {
+    "assumptions": {
+      "he": [
+        "מסנן RC מסדר ראשון, מקור אידאלי וכניסת עומס בעלת התנגדות גבוהה.",
+        "העוקב פועל במשוב שלילי, יציב וללא רוויה; רכיבים חיוביים ותנאי התחלה מפורשים."
+      ],
+      "en": [
+        "First-order RC, ideal source and high-resistance load input.",
+        "Follower uses stable negative feedback without saturation; positive components and explicit initial conditions."
+      ]
+    },
+    "optimality": {
+      "he": "R ו־C ועוקב אופציונלי; אין טענת אופטימליות פיזית. דרגות סינון נוספות נדרשות אם המפרט דורש שיפוע חד יותר.",
+      "en": "R and C with an optional follower; no physical optimum. A steeper specified rolloff requires additional filtering order."
+    },
+    "verification": {
+      "he": "נבדקו KCL בתדר, נקודת החיתוך ותגובת מדרגה מול אינטגרציית ODE עצמאית. אין SPICE, בדיקת יציבות מגבר מסוים או חומרה.",
+      "en": "Checked frequency-domain KCL, the cutoff and step response against an independent ODE integration. No SPICE, particular-amplifier stability check or hardware test."
+    },
+    "edge_cases": {
+      "he": [
+        "f=0 נותן הגבר יחידה במודל הלא־עמוס.",
+        "בתנאי התחלה שאינם אפס חייבים להוסיף את תגובת המצב ההתחלתי.",
+        "עומס נמוך או רוויה פוסלים את העתקת נוסחת המודל."
+      ],
+      "en": [
+        "At f=0 the unloaded model has unity gain.",
+        "Nonzero initial voltage adds an initial-state response.",
+        "Heavy loading or saturation invalidates copying the ideal formula."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "למדוד על הנגד ולקבל HPF במקום LPF.",
+        "לחשוב שהמגבר מפיק אנרגיה בלי אספקה.",
+        "להניח שכל מגבר שרת יציב בהגבר יחידה או מגיע עד המסילות."
+      ],
+      "en": [
+        "Measuring across R produces a high-pass response instead.",
+        "Assuming the amplifier creates power without supplies.",
+        "Assuming every op-amp is unity-gain stable or reaches both rails."
+      ]
+    },
+    "interview_answer": {
+      "he": "נגד בטור וקבל לאדמה נותנים H=1/(1+sRC), עם fc=1/(2πRC). עוקב במשוב שלילי שומר הגבר מתח קרוב ליחידה ומבודד את העומס, בכפוף למגבלות המגבר.",
+      "en": "A series resistor and shunt capacitor give H=1/(1+sRC), fc=1/(2πRC). A negative-feedback follower keeps near-unity voltage gain while isolating the load, subject to device limits."
+    },
+    "source_ambiguities": {
+      "he": "סדר המסנן, תדר החיתוך, העומס וההזנה לא הוגדרו; המימוש הראשי מגדיר חוזה מסדר ראשון. מגבר יחידה מפורש כעוקב מתח.",
+      "en": "Order, cutoff, load and supplies were unspecified; the main construction states a first-order contract. Unity gain is interpreted as a voltage follower."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם עומס RL מחובר ישירות לצומת הקבל?",
+          "answer_direction": "הגבר DC הוא RL/(R+RL), וקבוע הזמן (R||RL)C. עוקב אידאלי מבודד את RL מהצומת.",
+          "principle": "עומס משנה את המעגל ולא רק את הזרם ביציאה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if RL directly loads the capacitor node?",
+          "answer_direction": "DC gain is RL/(R+RL), with time constant (R||RL)C. An ideal follower isolates RL from that node.",
+          "principle": "Loading changes the transfer function, not just output current."
+        }
+      ]
+    }
+  },
+  "PREP-222": {
+    "assumptions": {
+      "he": [
+        "R מגיע לכניסה −, הקבל במשוב שלילי והכניסה + מוארקת.",
+        "מגבר אידאלי בתחום ליניארי, ללא רוויה; מתח התחלתי נשמר במפורש."
+      ],
+      "en": [
+        "R drives −, the capacitor forms negative feedback, and + is grounded.",
+        "Ideal linear amplifier without saturation; initial voltage is explicit."
+      ]
+    },
+    "optimality": {
+      "he": "נגד, קבל ומגבר; RF הוא הרחבה נפרדת. אין הוכחת מינימום רכיבים או טענה על דיוק של מעגל פיזי.",
+      "en": "Resistor, capacitor and op-amp; RF is a separate extension. No component-minimum proof or physical accuracy claim."
+    },
+    "verification": {
+      "he": "אינטגרציה של קלטים קבועים ומקטעיים וסינוס נבדקה מול אינטגרציה נומרית עצמאית; נבדקו DC ותדרים במודל RF. אין SPICE או מדידה.",
+      "en": "Constant, piecewise and sinusoidal inputs were checked against independent numerical integration; RF DC/frequency behavior was checked. No SPICE or measurement."
+    },
+    "edge_cases": {
+      "he": [
+        "Vin=0 שומר תנאי התחלה במודל אידאלי.",
+        "הסימן משתנה עם קוטביות הקלט.",
+        "במסילה נגמר תוקף הניתוח הליניארי."
+      ],
+      "en": [
+        "Zero input preserves ideal initial state.",
+        "Input polarity changes the ramp sign.",
+        "The linear analysis ends at a rail."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשמיט Vout(0).",
+        "להתייחס לאדמה וירטואלית כאל קצר פיזי.",
+        "לכנות את האינטגרטור האידאלי LPF עם הגבר DC יחידה.",
+        "להוסיף RF בלי לומר שהמבנה השתנה."
+      ],
+      "en": [
+        "Dropping Vout(0).",
+        "Treating virtual ground as a physical short.",
+        "Calling the ideal integrator a unity-DC-gain LPF.",
+        "Adding RF without acknowledging a changed circuit."
+      ]
+    },
+    "interview_answer": {
+      "he": "לפי KCL בכניסה − מתקבל dVout/dt=−Vin/(RC). לכן הפלט הוא אינטגרל הופכי עם תנאי התחלה. DC מצטבר לרוויה; RF במקביל לקבל מגביל הגבר DC.",
+      "en": "KCL at − gives dVout/dt=−Vin/(RC): inverted integration with an initial condition. DC accumulates toward saturation; RF across C limits DC gain."
+    },
+    "source_ambiguities": {
+      "he": "סימוני הקוטביות אינם חד־משמעיים; החוזה מגדיר כניסה הופכת ומשוב שלילי. חיבור לקבל בכניסה + דורש ניתוח שונה ואינו אותו אינטגרטור.",
+      "en": "Polarity labels are indistinct; the contract explicitly chooses the inverting input and negative feedback. Feedback to + is a different circuit and not this integrator."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה התגובה למדרגה אם מוסיפים RF במקביל לקבל?",
+          "answer_direction": "זו תגובת מסדר ראשון למתח הסופי −RF*Vin/R, עם קבוע זמן RF*C ותנאי התחלה.",
+          "principle": "נתיב DC סופי הופך צבירה בלתי מוגבלת להתכנסות."
+        }
+      ],
+      "en": [
+        {
+          "question": "What is the step response with RF across C?",
+          "answer_direction": "A first-order response toward −RF*Vin/R, time constant RF*C, retaining the initial state.",
+          "principle": "A finite DC path replaces unlimited accumulation with convergence."
+        }
+      ]
+    }
+  },
+  "PREP-223": {
+    "assumptions": {
+      "he": [
+        "כתובת היא כתובת בית; כל קריאה מכסה ארבעה בתים, ללא גלילה.",
+        "מיפוי סדר בתים וחוקיות קריאות לא מיושרות ניתנים מבחוץ.",
+        "ערכי הזיכרון יציבים ו־read מספק 32 ביטים לפי החוזה."
+      ],
+      "en": [
+        "Addresses are byte addresses; reads cover four bytes without wrapping.",
+        "Endianness and unaligned-read legality are externally specified.",
+        "Memory is stable and read supplies 32-bit contents according to contract."
+      ]
+    },
+    "optimality": {
+      "he": "64 קריאות הן מינימום לכיסוי 256 בתים בארבעה בכל קריאה. בדיקת כל התחלה חוקית היא חוזה אחר עם 253 קריאות. O(N) זמן, O(1) מקום.",
+      "en": "64 reads are minimal for 256-byte coverage at four bytes per read. Testing every legal start is a different 253-read contract. O(N) time, O(1) space."
+    },
+    "verification": {
+      "he": "מודל Python נבדק מול int.from_bytes, שתי קוטביות סדר בתים, החזרה מסומנת וכל ביט פגום ב־256 בתים. קוד C מוצע נכלל בנפרד; אין כאן בדיקת חומרת RAM.",
+      "en": "Python was checked against int.from_bytes, both endiannesses, signed returns and every single-bit corruption across 256 bytes. Proposed C is separate; no RAM hardware was tested."
+    },
+    "edge_cases": {
+      "he": [
+        "הקריאה האחרונה מתחילה ב־252.",
+        "ביט הסימן של המילה האחרונה אינו פגם.",
+        "כישלון בקריאה אחת גורר fail ואינו ממשיך כהצלחה."
+      ],
+      "en": [
+        "The final read starts at 252.",
+        "The last word having a sign bit is not corruption.",
+        "One mismatching read causes failure rather than a successful result."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להניח little-endian ללא חוזה.",
+        "לקרוא ב־255 ארבעה בתים.",
+        "להשתמש ב־int מסומן לבניית 255<<24.",
+        "לטעון שבדיקת תבנית אחת מוכיחה שכל הכתיבות תקינות."
+      ],
+      "en": [
+        "Assuming little-endian without a contract.",
+        "Reading four bytes starting at 255.",
+        "Constructing 255<<24 in signed int.",
+        "Claiming one read-only pattern proves all writes work."
+      ]
+    },
+    "interview_answer": {
+      "he": "אגדיר סדר בתים ואבנה מילים צפויות מארבעת אינדקסי הבתים. אקרא 0,4,...,252 לכיסוי מלא בלי חריגה, או את כל 253 ההתחלות אם בודקים גם קריאות לא מיושרות.",
+      "en": "Define byte order and assemble expected words from byte indices. Read 0,4,...,252 for full bounded coverage, or all 253 starts when unaligned read operations are also being tested."
+    },
+    "source_ambiguities": {
+      "he": "סדר בתים, יישור ומשמעות int אינם מוגדרים. שתי האפשרויות מוצגות, ומימוש C משתמש בחוזה int32_t/uint32_t מפורש.",
+      "en": "Byte order, alignment and int width are unspecified. Both endian cases are shown; proposed C uses an explicit int32_t/uint32_t contract."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "האם הצלחה מוכיחה שאין שני כתובות שממופות לאותו תא פיזי בכל מצב?",
+          "answer_direction": "היא בודקת את הקריאות והדפוס הנתונים בלבד. לבדיקת aliasing כללית תחת מפת read/write עקבית נדרש מודל ויכולת כתיבה; אין להסיק אותם מממשק קריאה בלבד.",
+          "principle": "כיסוי כתובות אינו כיסוי של כל מודלי התקלה."
+        }
+      ],
+      "en": [
+        {
+          "question": "Does passing prove two addresses can never share a physical cell?",
+          "answer_direction": "It checks the exercised reads and pattern only. General alias testing under a stable read/write map needs its own model and write capability, neither implied by a read-only interface.",
+          "principle": "Address coverage is not coverage of every fault model."
+        }
+      ]
+    }
+  },
+  "PREP-227": {
+    "assumptions": {
+      "he": [
+        "A, B הם רגיסטרים נפרדים, N חיובי והקלטים נלכדים מאותו מצב ישן.",
+        "העתקה אינה משמרת את B הישן.",
+        "הגרסה המקבילית והטורית משתמשות בחוזי פורטים שונים; מספר חזיתות טוריות נשלט מבחוץ אם אין אחסון בקרה."
+      ],
+      "en": [
+        "A and B are separate registers, N positive, and captures use the same old state.",
+        "Copying does not preserve old B.",
+        "Parallel and serial versions have different port contracts; external control supplies serial edge count when extra control storage is forbidden."
+      ]
+    },
+    "optimality": {
+      "he": "מקבילי: N חיבורים וחזית לכידה אחת. טורי: N חזיתות וחיבורים לביט יחיד. חסם N חל רק על נתיב של ביט אחד לחזית, ללא ידע קודם.",
+      "en": "Parallel: N wires and one edge. Serial: N edges and a one-bit path. The N-edge bound applies only to one new bit per edge without prior information."
+    },
+    "verification": {
+      "he": "כל זוג מילים ברוחבים 1..6 נבדק: ההעתקה הטורית מסיימת ב־(A, A), ו־A חוזר למקור; נבדקו גם מקרי רוחב גדולים. אין HDL, סינתזה או מדידת תזמון.",
+      "en": "Every word pair at widths 1..6 was checked: serial copying ends at (A, A) with A restored; larger widths were sampled too. No HDL, synthesis or timing measurement."
+    },
+    "edge_cases": {
+      "he": [
+        "N=1 תקין.",
+        "A=B אינו מקרה מיוחד.",
+        "אפס ואחדות מלאות נשמרים.",
+        "צריכים לעצור בדיוק לאחר N חזיתות טוריות."
+      ],
+      "en": [
+        "N=1 is valid.",
+        "A=B requires no special handling.",
+        "Zero and all-one values are preserved.",
+        "Stop after exactly N serial edges."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לפתור swap במקום copy.",
+        "להוסיף משתנה זמני בן N ביטים.",
+        "לעדכן A לפני שקוראים את הביט המשותף הישן.",
+        "להוסיף מונה ואז לומר שלא נוסף אף רגיסטר."
+      ],
+      "en": [
+        "Solving a swap instead of a copy.",
+        "Adding an N-bit temporary.",
+        "Updating A before reading the shared old outgoing bit.",
+        "Adding a counter while claiming no extra registers."
+      ]
+    },
+    "interview_answer": {
+      "he": "אם יש חיבור מקביל, B טוען את A בחזית אחת ו־A מחזיק. בממשק טורי אפשר לסובב את A ולהזין את אותו ביט יוצא ל־B במשך N חזיתות, כך ש־A משוחזר.",
+      "en": "With parallel connections B captures A in one edge while A holds. With serial ports, recirculate A and send its outgoing bit into B for N edges, restoring A."
+    },
+    "source_ambiguities": {
+      "he": "סוג הפורטים, חובת שימור A והיתר בקרה לא הוגדרו. המימוש הראשי מגדיר העתקה מקבילית משמרת, והטורי הוא חוזה חלופי מפורש.",
+      "en": "Ports, preservation of A and control-storage permission were unspecified. The main contract preserves A through parallel copying; serial operation is an explicit alternative."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה אם גם את B הישן חייבים לשמר?",
+          "answer_direction": "אז מדובר בהחלפה או בגיבוי של שני ערכים; חיבור העתקה פשוט אינו מספיק. יש להגדיר ALU והיתרי כתיבה לפני פתרון כמו XOR swap.",
+          "principle": "שימור מידע משנה את הבעיה ואת המשאבים הדרושים."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if old B must also survive?",
+          "answer_direction": "That becomes swapping or preserving two values. Simple copying is insufficient; define the ALU and write controls before suggesting XOR swap.",
+          "principle": "Information-preservation requirements change the problem and its resources."
+        }
+      ]
+    }
+  },
+  "PREP-224": {
+    "assumptions": {
+      "he": [
+        "K יכול להיות אפס; רשימות ממוינות, חד־כיווניות, ללא שיתוף או מעגלים.",
+        "מיחזור צמתים מותר; סדר שוויון הוא מספר רשימה ואז סדר מקורי."
+      ],
+      "en": [
+        "K may be zero; sorted singly linked lists are disjoint and acyclic.",
+        "Nodes may be reused; ties follow source index and original within-list order."
+      ]
+    },
+    "optimality": {
+      "he": "O(K + N log(max(2,k))) זמן, כאשר k הוא מספר הרשימות הלא־ריקות; O(k) מקום עזר. שימור קלט מחייב פלט מוקצה בנפרד.",
+      "en": "O(K + N log(max(2,k))) time for k nonempty lists; O(k) auxiliary space. Preserving input topology needs separately allocated output."
+    },
+    "verification": {
+      "he": "8,421 צירופי רשימות ממוינות באורכים עד שלושה, עבור K=0..3, מול מיון עצמאי של ערך/מספר רשימה/מיקום; נבדקו זהויות, סדר והיעדר מעגל בפלט.",
+      "en": "8,421 combinations of sorted lists up to length three, K=0..3, compared with independent value/source/position sorting; identities, order and output acyclicity checked."
+    },
+    "edge_cases": {
+      "he": [
+        "אין רשימות; כולן ריקות; רשימה יחידה; כפילויות ושליליים; רשימות באורכים שונים."
+      ],
+      "en": [
+        "No lists; all empty; one list; duplicates and negatives; unequal list lengths."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "סריקה של כל K הראשים בכל צעד מגדילה עלות ל־O(NK).",
+        "מחיקת next לפני ששומרים את היורש מאבדת קלט.",
+        "שימוש בצמתים משותפים בלי מדיניות בעלות מפר את המודל."
+      ],
+      "en": [
+        "Scanning all K heads each time can cost O(NK).",
+        "Clearing next before saving the successor loses input.",
+        "Shared nodes without an ownership policy violate the model."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור בערימה ראש אחד לכל רשימה פעילה. אוציא מינימום ואחליפו ביורשו, תוך חיבור אותו צומת לפלט; כך כל צומת מטופל פעם אחת מול ערימה קטנה.",
+      "en": "Keep one head per active list in a heap. Extract the minimum, replace it with its successor, and append the same node; each node is handled once against a small frontier."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו קובע מדיניות בעלות או שוויון; נבחרו מיחזור צמתים ורשימות זרות עם שוויון לפי מספר רשימה.",
+      "en": "The source leaves ownership and ties unspecified; this version reuses disjoint nodes and breaks ties by source index."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מתי עדיף מיזוג זוגי מאוזן?",
+          "answer_direction": "מיזוג זוגי לאורך עץ מאוזן נותן גם O(N log K); משווים קבועים, locality ושימור צמתים. מיזוג רציף לרשימה הולכת וגדלה עלול לחזור על עבודה.",
+          "principle": "מבנה שילוב העבודה קובע כמה פעמים כל איבר עובר."
+        }
+      ],
+      "en": [
+        {
+          "question": "When might balanced pairwise merging be preferable?",
+          "answer_direction": "A balanced merge tree also gives O(N log K); compare constants, locality and ownership. Sequentially merging into one growing list can repeat work.",
+          "principle": "The combination tree determines how often each item is processed."
+        }
+      ]
+    }
+  },
+  "PREP-225": {
+    "assumptions": {
+      "he": [
+        "קלט הוא רשימת מחרוזות; שוויון מדויק ורישיות נשמרת.",
+        "בשכיחות שווה נבחרת ההופעה הראשונה; קלט ריק מחזיר None."
+      ],
+      "en": [
+        "Input is a list of strings with exact case-sensitive equality.",
+        "Equal frequencies select the first appearance; empty input returns None."
+      ]
+    },
+    "optimality": {
+      "he": "O(N) פעולות מילון בתוחלת במודל מפתחות יחידה, או O(L+N) עם עבודת תווים; O(U) רשומות ומונים.",
+      "en": "Expected O(N) dictionary operations for unit-size keys, or O(L+N) including characters; O(U) entries and counters."
+    },
+    "verification": {
+      "he": "5,463 מקרים מול ספירה עצמאית: כל הרשימות באורכים 0..6 מעל ארבע מילים, ועוד מקרי שוויון ורישיות; נבדק שהקלט לא השתנה.",
+      "en": "5,463 cases against independent counting: every list of lengths 0..6 over four words plus directed tie/case tests; input preservation checked."
+    },
+    "edge_cases": {
+      "he": [
+        "רשימה ריקה; מילה אחת; כל המילים שונות; שוויון; רישיות; מחרוזת ריקה."
+      ],
+      "en": [
+        "Empty list; one word; all unique; ties; case sensitivity; empty string."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שובר שוויון לפי מי שהגיע ראשון לשיא זמני.",
+        "שימוש ב־>= שמעדיף את ההופעה האחרונה.",
+        "פיצול או נרמול מילים ללא דרישה."
+      ],
+      "en": [
+        "Breaking ties by who first reaches a temporary maximum.",
+        "Using >= and thereby preferring a later appearance.",
+        "Tokenizing or normalizing words without a requirement."
+      ]
+    },
+    "interview_answer": {
+      "he": "אספור במילון ואז אבחר לפי סדר הקלט, עם החלפה רק עבור שכיחות גדולה יותר. כך שוויון נשאר אצל המילה הראשונה.",
+      "en": "Count with a dictionary, then select in input order with strictly greater replacement; ties remain with the first word."
+    },
+    "source_ambiguities": {
+      "he": "המקור מבקש שכיחות של מילים ברשימה ולא קובע שוויון וריק; מדיניות אלה הוגדרו במפורש, בלי להרחיב לעיבוד טקסט.",
+      "en": "The source asks for word-list frequency and omits ties/empty behavior; these are explicit policies without expanding into text processing."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה בזרם שאי אפשר לקרוא שוב?",
+          "answer_direction": "שומרים גם אינדקס ראשון לכל מילה ומשווים שכיחות סופית ואינדקס, או מסיימים בסריקת רשומות המילון. ספירה מדויקת עדיין עשויה לדרוש מקום לכל הערכים השונים.",
+          "principle": "מגבלת מעבר משנה את המידע שצריך לזכור."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes for a stream that cannot be reread?",
+          "answer_direction": "Store the first index per word and compare final count/index, or scan dictionary entries at completion. Exact frequency can still require all distinct keys.",
+          "principle": "A pass restriction changes which information must be retained."
+        }
+      ]
+    }
+  },
+  "PREP-226": {
+    "assumptions": {
+      "he": [
+        "ASCII אותיות בלבד; רישיות נשמרת; כפילויות נספרות.",
+        "שני קלטים ריקים מתאימים; קלט מחוץ לתחום מעלה ValueError במודל Python."
+      ],
+      "en": [
+        "ASCII letters only, case-sensitive, counting duplicates.",
+        "Two empty inputs match; out-of-domain input raises ValueError in the Python reference."
+      ]
+    },
+    "optimality": {
+      "he": "O(|a|+|b|+128) זמן ו־O(128) מונים; האלפבית הקבוע הופך את המקום ל־O(1).",
+      "en": "O(|a|+|b|+128) time and O(128) counters, constant auxiliary space for the fixed alphabet."
+    },
+    "verification": {
+      "he": "14,645 מקרים: כל זוגות 121 המילים באורכים 0..4 מעל a,A,b וארבעה מקרי תחום שגוי, מול מיון עצמאי.",
+      "en": "14,645 cases: all pairs of 121 words of lengths 0..4 over a,A,b plus four invalid-alphabet cases, against independent sorting."
+    },
+    "edge_cases": {
+      "he": [
+        "אורכים שונים; ריק וריק; אותיות חוזרות; הבדל רישיות; אות לא־ASCII."
+      ],
+      "en": [
+        "Different lengths; empty/empty; repeated letters; case difference; non-ASCII letter."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "השוואת set מאבדת שכיחויות.",
+        "zip בלי בדיקת אורך מתעלם מסיומת.",
+        "ספירה רק של אותיות קטנות משנה את החוזה."
+      ],
+      "en": [
+        "Set equality loses multiplicities.",
+        "zip without a length check ignores suffixes.",
+        "Counting lowercase letters only changes the contract."
+      ]
+    },
+    "interview_answer": {
+      "he": "תמורה משמרת מלאי אותיות. אבדוק אורכים ואאזן ספירות; אפס בכל תא הוא תנאי הכרחי ומספיק לאנגרמה.",
+      "en": "A permutation preserves the letter inventory. Check lengths and balance counts; zero in every cell is necessary and sufficient."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר רישיות, אלפבית או ריק; הוגדר חוזה ASCII מפורש, ללא רווחים ונרמול.",
+      "en": "The source omits case, alphabet and empty behavior; this version explicitly chooses ASCII without spaces or normalization."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם אין אלפבית חסום?",
+          "answer_direction": "אפשר מילון שכיחויות בגודל מספר התווים השונים; העלות תלויה בייצוג התווים ובחוזה הנרמול.",
+          "principle": "מקום קבוע נשען על תחום סמלים קבוע."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes without a bounded alphabet?",
+          "answer_direction": "Use a frequency dictionary sized by distinct symbols; costs depend on symbol representation and normalization.",
+          "principle": "Constant storage relies on a fixed symbol domain."
+        }
+      ]
+    }
+  },
+  "PREP-228": {
+    "assumptions": {
+      "he": [
+        "מחסנית היא ADT בעל LIFO; קוד העזר משתמש ברשימת Python.",
+        "פרטי מסגרות קריאה ופריסת זיכרון תלויים בשפה, במהדר וב־ABI."
+      ],
+      "en": [
+        "A stack is a LIFO ADT; the illustration uses a Python list.",
+        "Call frames and memory layout depend on language, compiler and ABI."
+      ]
+    },
+    "optimality": {
+      "he": "מצב בגודל עומק d דורש O(d) איברים; מסגרות בגודל s דורשות O(d·s). push במערך דינמי אמורטי O(1), לא חסם לכל פעולה.",
+      "en": "Depth d stores O(d) items; size-s frames cost O(d·s). Dynamic-array push is amortized O(1), not a per-operation worst-case guarantee."
+    },
+    "verification": {
+      "he": "ארבע עקבות מכוונות מאמתות LIFO, מצב ריק ותת־זרימה. זהו אימות הדוגמה האבסטרקטית בלבד, ללא מדידת ABI או CPU.",
+      "en": "Four directed traces check LIFO, empty state and underflow. This verifies the abstract illustration only, without ABI or CPU measurements."
+    },
+    "edge_cases": {
+      "he": [
+        "pop/top בריק; עומק גדול; undo של פעולה שאינה הפיכה; הבדל מתור FIFO."
+      ],
+      "en": [
+        "Empty pop/top; large depth; undo of an irreversible action; contrast with FIFO."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להגדיר LIFO כתור FIFO.",
+        "לטעון שכל משתנה מקומי תמיד במחסנית הפיזית.",
+        "להחליף רקורסיה במחסנית מפורשת ולטעון שמקום העזר נהיה קבוע."
+      ],
+      "en": [
+        "Confusing LIFO with FIFO.",
+        "Claiming every local variable is always on the physical stack.",
+        "Replacing recursion with an explicit stack and claiming constant auxiliary storage."
+      ]
+    },
+    "interview_answer": {
+      "he": "מחסנית מתאימה לעבודה מקוננת: מסיימים את האחרונה לפני שחוזרים לקודמת. זה מסביר קריאות, undo ו־DFS; הממשק אינו קובע את פריסת הזיכרון.",
+      "en": "A stack fits nested work: finish the latest before resuming the previous one. This explains calls, undo and DFS, while the ADT does not prescribe physical memory layout."
+    },
+    "source_ambiguities": {
+      "he": "המקור שואל על שימושי מחסנית בקצרה; נוספו עקבה, חוזה ריק והבחנה בין ADT למחסנית קריאות כדי להפוך את הדיון לבדיקה ברורה.",
+      "en": "The short source asks about stack uses; a trace, empty contract and ADT/call-stack distinction make the discussion concrete."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מדוע תור מתאים ל־BFS ומחסנית ל־DFS?",
+          "answer_direction": "FIFO מעבד קודם חזיתות ותיקות ומשמר שכבות; LIFO ממשיך קודם בענף החדש ביותר. סדר ההוצאה, ולא רק האחסון, קובע את החיפוש.",
+          "principle": "מדיניות תזמון מגדירה את סדר החיפוש."
+        }
+      ],
+      "en": [
+        {
+          "question": "Why does BFS use a queue while DFS uses a stack?",
+          "answer_direction": "FIFO processes older frontier nodes first and preserves layers; LIFO explores the latest branch first. Removal order determines traversal.",
+          "principle": "Scheduling policy defines search order."
+        }
+      ]
+    }
+  },
+  "PREP-229": {
+    "assumptions": {
+      "he": [
+        "מערך מספרים שלמים; אפס הוא ערך הנתונים 0.",
+        "יציבות, כפילויות וזהות המערך נשמרות; מותר לשנות את התאים."
+      ],
+      "en": [
+        "Integer array, with numeric zero as the special value.",
+        "Preserve stability, duplicates and array identity; cells may be mutated."
+      ]
+    },
+    "optimality": {
+      "he": "O(N) זמן, O(1) מילות עזר; אין טענת מינימום כתיבות.",
+      "en": "O(N) time and O(1) auxiliary words; no minimum-write claim."
+    },
+    "verification": {
+      "he": "9,842 מקרים: כל המערכים באורכים 0..8 מעל −1,0,1 ודוגמת המקור, מול סינון עצמאי; נבדקו יציבות, ריבוי, זהות ואידמפוטנטיות.",
+      "en": "9,842 cases: every array of lengths 0..8 over −1,0,1 plus the source example, against independent filtering; stability, multiplicity, identity and idempotence checked."
+    },
+    "edge_cases": {
+      "he": [
+        "ריק; הכול אפסים; אין אפסים; אפסים בהתחלה ובסוף; כפילויות; שליליים."
+      ],
+      "en": [
+        "Empty; all zeroes; no zeroes; leading/trailing zeroes; duplicates; negatives."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "החלפה עם האיבר האחרון משנה סדר.",
+        "מחיקה תוך כדי איטרציה מדלגת על תאים ומשנה אורך.",
+        "בניית מערך חדש מפרה דרישת עדכון במקום."
+      ],
+      "en": [
+        "Swapping with the last item changes order.",
+        "Deleting while iterating can skip items and changes length.",
+        "Building a new array violates the in-place requirement."
+      ]
+    },
+    "interview_answer": {
+      "he": "אעתיק כל איבר שאינו אפס לקידומת עם סמן כתיבה שאינו עובר את הקריאה. אחר כך אאפס את הסיומת; סדר וריבוי נשמרים.",
+      "en": "Copy nonzero values into a prefix with a write cursor that never passes the read cursor, then zero the suffix; order and multiplicity are preserved."
+    },
+    "source_ambiguities": {
+      "he": "למרות אזכור ערכים שונים, בדוגמה יש פעמיים 1. החוזה שומר כפילויות ואינו מסתמך על ייחודיות.",
+      "en": "The source mentions distinct values but its example repeats one; the contract preserves duplicates and does not assume uniqueness."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מצמצמים כתיבות כשהקלט כבר מסודר?",
+          "answer_direction": "כותבים רק אם תא היעד שונה, וגם במילוי הסיומת בודקים אם כבר אפס. זו אופטימיזציה של כתיבות, לא שינוי בחסם סריקת הקלט.",
+          "principle": "עלות מעבר ועלות כתיבה הן מדדים שונים."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can writes be reduced when input is already compacted?",
+          "answer_direction": "Assign only when the destination differs, including suffix zeroing. This optimizes writes without removing the input-scan bound.",
+          "principle": "Traversal cost and write cost are different measures."
+        }
+      ]
+    }
+  },
+  "PREP-230": {
+    "assumptions": {
+      "he": [
+        "בעלים יחיד; הבקשות הן ערכי snapshot; WRITE THEN READ.",
+        "אחסון וראשים תקפים, קיבולת חיובית, מצביעי בקרה נפרדים ודגלים עקביים.",
+        "אין אובדן אירועי בקשה מובטח בלי מונה או תור בקשות."
+      ],
+      "en": [
+        "Single owner, snapshotted request values, WRITE THEN READ.",
+        "Valid storage/heads, positive capacity, distinct control objects and consistent flags.",
+        "Boolean request flags do not guarantee lossless event accumulation."
+      ]
+    },
+    "optimality": {
+      "he": "O(1) זמן להפעלה ומצב בקרה קבוע; O(capacity) תאי נתונים שסופקו מראש. אין הבטחת סנכרון ISR או זמן תגובה RT.",
+      "en": "O(1) time per call and constant control state; O(capacity) caller-supplied payload cells. No ISR synchronization or real-time latency guarantee."
+    },
+    "verification": {
+      "he": "21,844 עקבות ממצות במודל Python מול deque, בקיבולות 1..4 ואורכים 0..6. רתמת C נפרדת משתמשת באורקל מערך; הידור ותוצאתו מתועדים בנפרד.",
+      "en": "21,844 exhaustive Python histories against deque, capacities 1..4 and lengths 0..6. A separate C harness uses an array oracle; compilation and results are recorded separately."
+    },
+    "edge_cases": {
+      "he": [
+        "קיבולת אחת; ריק/מלא ושתי בקשות; wrap; אין בקשות; ראש מחוץ לטווח; דגלים סותרים."
+      ],
+      "en": [
+        "Capacity one; empty/full with both requests; wrap; no requests; out-of-range head; inconsistent flags."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שימוש ב־else if מונע קריאה וכתיבה באותה הפעלה.",
+        "החלפת סדר הפעולות בלי לשנות את החוזה.",
+        "קריאת value כאשר read=false.",
+        "הנחה ש־volatile הוא מנעול או שדגל אחד סופר כמה פסיקות."
+      ],
+      "en": [
+        "Using else if prevents two operations in one call.",
+        "Changing operation order without changing the contract.",
+        "Reading value when read=false.",
+        "Treating volatile as a lock or one flag as an interrupt counter."
+      ]
+    },
+    "interview_answer": {
+      "he": "אגדיר FIFO מעגלי עם שני ראשים ודגלי ריק/מלא. אבצע כתיבה אם מותר, ואחריה קריאה לפי המצב החדש; אדווח הצלחה בנפרד לכל פעולה. סנכרון פסיקות הוא חוזה נוסף.",
+      "en": "Use a circular FIFO with two heads and empty/full flags. Attempt write, then read against the resulting state, reporting each success separately. Interrupt synchronization is a separate contract."
+    },
+    "source_ambiguities": {
+      "he": "המקור מכנה FIFO מחסנית ואינו מגדיר פעולות יחד או בעלות על מצב. הוגדרו תור, סדר כתיבה־קריאה ובעלים יחיד; הרחבת ISR מחייבת סנכרון מפורש.",
+      "en": "The source calls a FIFO a stack and leaves simultaneous actions/state ownership unspecified. This version defines a queue, write-before-read and single ownership; ISR extension needs explicit synchronization."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם רוצים לאפשר כתיבה באותה הפעלה שבה תור מלא נקרא?",
+          "answer_direction": "בוחרים read-then-write או מדיניות החלטה סימולטנית, ומשנים במקביל את התנהגות ריק+שתיהן ואת האורקל. לא משנים רק תנאי full בודד.",
+          "principle": "התנהגות גבול נובעת מסדר commit של הפעולות."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if a full queue must accept a write when the same call reads?",
+          "answer_direction": "Choose read-then-write or a simultaneous decision policy and revise empty/both semantics and the oracle too. Do not change only one full check.",
+          "principle": "Boundary behavior follows the operation commit order."
+        }
+      ]
+    }
+  },
+  "PREP-231": {
+    "assumptions": {
+      "he": [
+        "הישרדות קודמת לבשר; עשב זמין ללא הגבלה ומאפשר חיים.",
+        "אכילה סדרתית יחידנית והפיכה מיידית לפרה, ללא שיתוף או הסכמים.",
+        "ידיעה משותפת של ההעדפות ושל מספר האריות; החלטות לפי המשחק הקטן יותר."
+      ],
+      "en": [
+        "Survival outranks meat; unlimited grass supports life.",
+        "Sequential single-eater actions and immediate cow transformation; no sharing or contracts.",
+        "Common knowledge of preferences and lion count; decisions use the smaller game."
+      ]
+    },
+    "optimality": {
+      "he": "הוכחת אינדוקציה נותנת זוגיות. בניית טבלה O(n) זמן ו־O(1) מצב; בדיקת זוגיות היא O(1) פעולות מילה, לא חסם על קריאת כתיב מספר בלתי חסום.",
+      "en": "Induction gives parity. Tabulation takes O(n) time and O(1) state; parity needs O(1) word operations, excluding unbounded input-reading cost."
+    },
+    "verification": {
+      "he": "אורקל זהויות ותועלת בדק 1,024 החלטות בגדלים 0..8; כל 501 הגדלים 0..500 התאימו בין ההישנות לזוגיות. נבדק בנפרד שהעדפת בשר על הישרדות משנה את הדוגמה עם שני אריות.",
+      "en": "Identity/utility oracle checked 1,024 decisions for counts 0..8; all 501 counts 0..500 matched recurrence and parity. A separate two-lion preference counterexample changes the conclusion."
+    },
+    "edge_cases": {
+      "he": [
+        "אפס אריות; אריה יחיד; שניים; מאה לעומת מאה ואחד; זהות אוכל לא קבועה; היעדר הזדמנות לביצוע פעולה."
+      ],
+      "en": [
+        "Zero, one and two lions; one hundred versus one hundred and one; unspecified eater identity; absent action opportunities."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להסיק שכל רעב חייב לאכול גם אם ימות.",
+        "להתחיל ממאה בלי לבסס את המשחקים הקטנים.",
+        "להתיר אכילה משותפת או להניח שאריות טועים בניגוד למודל."
+      ],
+      "en": [
+        "Assuming hunger overrides survival.",
+        "Starting at one hundred without establishing smaller games.",
+        "Allowing shared eating or mistakes contrary to the model."
+      ]
+    },
+    "interview_answer": {
+      "he": "עם אחד אכילה בטוחה, עם שניים האוכל ייאכל, ולכן הם נמנעים; בכל אריה נוסף התוצאה מתהפכת. מאה זוגי ולכן איש אינו אוכל. ההוכחה תלויה בהישרדות לפני בשר ובאכילה סדרתית.",
+      "en": "One lion eats safely; with two the eater would be eaten, so both refrain. Each added lion flips the outcome. One hundred is even, so no lion eats, assuming survival-first sequential decisions."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המילה רציונלי דורשת יחס העדפות וידע. כאן הישרדות קודמת למזון והידע משותף. אין מסקנה דומה אוטומטית למודל של שיתוף ארוחה או העדפות אחרות."
+      ],
+      "en": [
+        "Rationality needs preferences and knowledge. Here survival comes first and knowledge is common. Shared meals or other preferences need separate analysis."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה יקרה אם האריות מעדיפים בשר אפילו במחיר חייהם?",
+          "answer_direction": "אז אכילה אינה נפסלת בגלל הפרה העתידית; מקרה שני האריות כבר סותר את כלל הזוגיות.",
+          "principle": "אינדוקציה במשחק נשענת על פונקציית התועלת ולא על המילה רציונלי בלבד."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if lions prefer meat even at the cost of their lives?",
+          "answer_direction": "Future predation no longer rules eating out; the two-lion case already contradicts the parity rule.",
+          "principle": "Game induction depends on utility, not the word rational alone."
+        }
+      ]
+    }
+  },
+  "PREP-232": {
+    "assumptions": {
+      "he": [
+        "גיל בשנים שלמות לפי תאריך יום הולדת.",
+        "שנה הבאה היא שנה קלנדרית; לפני יומיים הוא חיסור שני תאריכים.",
+        "אין צורך ביום הולדת מעובר, שעות או אזורי זמן."
+      ],
+      "en": [
+        "Completed years based on birthday dates.",
+        "Next year is a calendar year; two days ago subtracts two dates.",
+        "No leap birthday, time-of-day or timezone trick is needed."
+      ]
+    },
+    "optimality": {
+      "he": "ציר התשובה נבנה במספר קבוע של פעולות. חיפוש אימות סופי על D תאריכים ו־B ימי הולדת עולה O(D·B); אין צורך בו כדי לענות בראיון.",
+      "en": "The answer timeline uses a fixed number of operations. Finite verification over D dates and B birthdays costs O(D·B); it is not needed to answer the interview puzzle."
+    },
+    "verification": {
+      "he": "400,040 זוגות נבדקו בשלוש השנים 2023–2025 מול 365 ימי הולדת רגילים, וכן שמונה מקרי גבול. אורקל ספר שלושה אירועי יום הולדת אחרי התאריך המוקדם; בכל שנה הפתרון היה 1 בינואר ו־31 בדצמבר.",
+      "en": "400,040 pairs across 2023–2025 and 365 ordinary birthday dates were checked, plus eight boundaries. An independent oracle counted three birthday events after the earlier date; every year yielded January first and December thirty-first."
+    },
+    "edge_cases": {
+      "he": [
+        "2 בינואר אינו תחליף ל־1 בינואר במודל הגיל הנתון.",
+        "השנה הנוכחית יכולה להיות מעוברת; הפתרון אינו משתמש ב־29 בפברואר.",
+        "בשנה הבאה אינו בהכרח בעוד שנה מהיום."
+      ],
+      "en": [
+        "January second does not replace January first under the stated age model.",
+        "The current year may be a leap year; the solution does not use February twenty-ninth.",
+        "Next calendar year need not mean exactly one year from today."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להניח שהיא כבר בת עשר היום.",
+        "לפרש בשנה הבאה כבעוד 365 ימים.",
+        "לשכוח את יום ההולדת המאוחר בשנה הנוכחית."
+      ],
+      "en": [
+        "Assuming she is already ten today.",
+        "Reading next year as exactly 365 days later.",
+        "Omitting the late birthday in the current year."
+      ]
+    },
+    "interview_answer": {
+      "he": "היום 1 בינואר ויום ההולדת 31 בדצמבר: לפני יומיים הייתה בת שמונה, אתמול תשע, בסוף השנה הזאת עשר ובסוף השנה הבאה אחת עשרה.",
+      "en": "Today is January first and the birthday is December thirty-first: eight two days ago, nine yesterday, ten at this year's end and eleven at next year's end."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המונח בשנה הבאה מתייחס לגבול השנה בלוח; פירוש של 12 חודשים בדיוק אינו אותו תנאי."
+      ],
+      "en": [
+        "Next year refers to a calendar boundary; exactly twelve elapsed months is a different condition."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "האם 2 בינואר ויום הולדת ב־31 בדצמבר עדיין מתאימים?",
+          "answer_direction": "לא. לפני יומיים כבר היה 31 בדצמבר, ולכן הגיל באותו תאריך כבר גדל; אין שלושה ימי הולדת נוספים עד סוף השנה הבאה.",
+          "principle": "גבולות כלולים וסדר אירועים חשובים גם בחידה מילולית."
+        }
+      ],
+      "en": [
+        {
+          "question": "Would January second with a December thirty-first birthday still work?",
+          "answer_direction": "No. Two days ago was already December thirty-first, so that date's completed age includes the birthday. Only two later birthday events remain before next year's end.",
+          "principle": "Endpoint inclusion and event order matter in verbal puzzles too."
+        }
+      ]
+    }
+  }
+}

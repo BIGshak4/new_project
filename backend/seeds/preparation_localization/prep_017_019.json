@@ -4,36 +4,46 @@
       "he": [
         "לוח שעון אנלוגי רגיל של 12 שעות עם תנועה אחידה ורציפה של מחוג השעות.",
         "השעה היא בדיוק 6:30; מתעלמים ממחוג השניות.",
-        "לפי המוסכמה מתבקשת הזווית הקטנה הלא מכוונת; הזווית הנישאה מתועדת בנפרד."
+        "לפי המוסכמה מתבקשת הזווית הקטנה הלא מכוונת; הזווית הנישאה מתועדת בנפרד.",
+        "שעון רגיל בן 12 שעות עם מחוג שעות רציף.",
+        "h שלם בתחום 0..23 ו־m שלם בתחום 0..59; שניות אינן חלק מהקלט.",
+        "מבקשים את הזווית הקטנה במעלות ולא את הקשת הרפלקסיבית."
       ],
       "en": [
         "Standard 12-hour analog dial with uniform, continuous hour-hand motion.",
         "Exactly 6:30; seconds hand is ignored.",
-        "Smaller undirected angle requested by convention; reflex angle documented separately."
+        "Smaller undirected angle requested by convention; reflex angle documented separately.",
+        "Ordinary twelve-hour clock with a continuously moving hour hand.",
+        "Integer h in 0..23 and m in 0..59; seconds are outside the input.",
+        "Return the minor angle in degrees rather than the reflex arc."
       ]
     },
     "optimality": {
       "he": {
         "criterion": "חישוב ישיר עבור ערך זמן יחיד",
         "result": "15 מעלות; זמן ומקום O(1)",
-        "proof": "חצי מהמרווח של 30 מעלות בין סימוני שעות סמוכים; אין צורך בסימולציה."
+        "proof": "חצי מהמרווח של 30 מעלות בין סימוני שעות סמוכים; אין צורך בסימולציה.",
+        "general_clock_batch22": "נוסחה ישירה במספר קבוע של פעולות ו־O(1) מקום עבור תחום הקלט הנתון; אין חיפוש בזמן ואין סימולציה שנייה אחר שנייה."
       },
       "en": {
         "criterion": "Direct calculation for one time value",
         "result": "15 degrees; O(1) time and space",
-        "proof": "Half of the 30-degree interval between adjacent hour marks; no simulation required."
+        "proof": "Half of the 30-degree interval between adjacent hour marks; no simulation required.",
+        "general_clock_batch22": "Direct formula with a fixed number of operations and O(1) space for the bounded input domain; no time search or per-second simulation."
       }
     },
     "edge_cases": {
       "he": [
         "יש להבחין בין מחוג שעות שנע ברציפות לבין מחוג שנשאר על הספרה.",
         "הזווית הקטנה היא 15 מעלות לעומת הזווית הנישאה של 345 מעלות.",
-        "ב־06:30 וב־18:30 מיקומי המחוגים זהים."
+        "ב־06:30 וב־18:30 מיקומי המחוגים זהים.",
+        "חצות וצהריים; 6:00; 6:30; 10:10; שעות מעל 12; דקה 59; דקה 60 מחוץ לחוזה."
       ],
       "en": [
         "Distinguish continuously moving hour hand from a hand fixed at the numeral.",
         "Smaller angle 15 degrees versus reflex angle 345 degrees.",
-        "06:30 and 18:30 have the same hand positions."
+        "06:30 and 18:30 have the same hand positions.",
+        "Midnight and noon; 6:00; 6:30; 10:10; hours above twelve; minute fifty-nine; minute sixty outside the contract."
       ]
     },
     "verification": {
@@ -41,28 +51,80 @@
         "status": "passed",
         "checked_on": "2026-09-27",
         "script_path": "checks/check_prep_017.py",
-        "method": "שברים מדויקים; מיקומי המחוגים שבמקור (195,180); שש דוגמאות; כל 720 מיקומי הדקות מול נוסחת התנועה היחסית; מחזוריות של 12 שעות."
+        "method": "שברים מדויקים; מיקומי המחוגים שבמקור (195,180); שש דוגמאות; כל 720 מיקומי הדקות מול נוסחת התנועה היחסית; מחזוריות של 12 שעות.",
+        "general_clock_batch22": "כל 720 זמני הדקה במחזור התאימו לאורקל מהירות יחסית, וכל אחד התאים גם אחרי הוספת 12 שעות. נבדקו במפורש 0, 15, 115 ו־180 מעלות."
       },
       "en": {
         "status": "passed",
         "checked_on": "2026-09-27",
         "script_path": "checks/check_prep_017.py",
-        "method": "Exact fractions; source hand positions (195,180); six examples; all 720 minute positions vs relative-motion formula; 12-hour periodicity."
+        "method": "Exact fractions; source hand positions (195,180); six examples; all 720 minute positions vs relative-motion formula; 12-hour periodicity.",
+        "general_clock_batch22": "All 720 minute-times matched a relative-speed oracle and each also matched twelve hours later. Explicit results include zero, fifteen, 115 and 180 degrees."
       }
     },
     "interview_answer": {
-      "he": "ב־6:30 מחוג הדקות על 6, אבל מחוג השעות כבר באמצע הדרך ל־7. בין שתי ספרות יש 30 מעלות, ולכן חצי המרווח הוא 15 מעלות.",
-      "en": "At 6:30 the minute hand is on 6, but the hour hand is already halfway to 7. Adjacent numerals are 30 degrees apart, so half that interval is 15 degrees."
+      "he": "ב־6:30 מחוג הדקות על 6, אבל מחוג השעות כבר באמצע הדרך ל־7. בין שתי ספרות יש 30 מעלות, ולכן חצי המרווח הוא 15 מעלות.\n\nמחוג הדקות נמצא ב־6m מעלות ומחוג השעות ב־30(h mod 12)+m/2. אקח את ההפרש ואת המשלים ל־360 ואחזיר את הקטן. אחשב בשברים או בחצאי מעלות כדי לא לעגל.",
+      "en": "At 6:30 the minute hand is on 6, but the hour hand is already halfway to 7. Adjacent numerals are 30 degrees apart, so half that interval is 15 degrees.\n\nUse M=6m and H=30(h mod 12)+m/2. Return the smaller of their difference and its complement to 360. Fractions or half-degree units keep the result exact."
     },
     "common_mistakes": {
       "he": [
         "תשובה של אפס מתוך הנחה שמחוג השעות נשאר על 6.",
-        "התעלמות מכך שהמוסכמה לזווית לא מכוונת היא הזווית הקטנה."
+        "התעלמות מכך שהמוסכמה לזווית לא מכוונת היא הזווית הקטנה.",
+        "להשמיט m/2 ממיקום מחוג השעות.",
+        "להחזיר תמיד את ההפרש המוחלט גם אם הוא גדול מ־180.",
+        "לעשות חילוק שלם ולאבד חצי מעלה.",
+        "להסיק שעת קלט מציור במקום להשתמש ב־h,m שנמסרו."
       ],
       "en": [
         "Answering zero by assuming the hour hand stays at 6.",
-        "Ignoring that an undirected angle conventionally means the smaller angle."
+        "Ignoring that an undirected angle conventionally means the smaller angle.",
+        "Omitting m/2 from the hour hand.",
+        "Always returning the absolute difference even above 180.",
+        "Truncating division and losing a half degree.",
+        "Inferring inputs from an illustration instead of using the supplied h,m."
       ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "הזווית מוגדרת כקטנה; תנועת מחוג השעות רציפה. שעון עם מחוג שקופץ רק פעם בשעה היה מודל אחר."
+      ],
+      "en": [
+        "The requested angle is minor and hour-hand motion is continuous. A hand jumping only once per hour is a different model."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מוסיפים קלט של שניות?",
+          "answer_direction": "מחליפים m בזמן הדקות המדויק m+s/60 עבור שני המחוגים, ומיישמים שוב בחירת קשת קטנה.",
+          "principle": "שינוי רזולוציית הקלט דורש לעדכן את כל הרכיבים שנעים בזמן."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would seconds be included?",
+          "answer_direction": "Replace m by exact elapsed minutes m+s/60 in both hand positions, then choose the minor arc again.",
+          "principle": "Finer time resolution affects every hand that moves continuously."
+        }
+      ]
+    },
+    "prompt_variants": {
+      "he": {
+        "general_clock_batch22": "### שעה ודקות כלליות\nנתונים שעה שלמה h בתחום 0..23 ודקות שלמות m בתחום 0..59. חשבו את הזווית הקטנה בין מחוג השעות למחוג הדקות בשעון מחוגים רגיל בן 12 שעות. מחוג השעות נע ברציפות גם בתוך השעה; אין צורך במחוג שניות. החזירו מעלות בדיוק, כולל אפשרות של חצי מעלה, והסבירו את הנוסחה ואת מקרי הגבול.",
+        "general_clock_batch22_hints": [
+          "מצאו בנפרד כמה מעלות עובר כל מחוג במשך דקה. מחוג השעות אינו נע רק בשעה עגולה.",
+          "מדדו את שני המיקומים בכיוון השעון מהספרה 12. בדקו מדוע צריך לצמצם את השעה מודולו 12.",
+          "חשבו M=6m ו־H=30(h mod 12)+m/2. אם ההפרש הוא d, השוו אותו ל־360−d כדי לקבל את הזווית הקטנה."
+        ]
+      },
+      "en": {
+        "general_clock_batch22": "### General hour and minute inputs\nGiven integer hour h in 0..23 and integer minute m in 0..59, compute the smaller angle between hour and minute hands on an ordinary twelve-hour analog clock. The hour hand moves continuously within each hour; ignore seconds. Return exact degrees, including half degrees, and explain the formula and boundary cases.",
+        "general_clock_batch22_hints": [
+          "Find each hand's degrees per minute. The hour hand moves between whole hours too.",
+          "Measure both positions clockwise from twelve and reduce the hour modulo twelve.",
+          "Compute M=6m and H=30(h mod 12)+m/2. If their difference is d, compare d with 360−d to choose the minor angle."
+        ]
+      }
     }
   },
   "PREP-018": {

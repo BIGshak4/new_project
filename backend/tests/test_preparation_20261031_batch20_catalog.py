@@ -21,9 +21,11 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+from tests.preparation_compiled_history import before_batch22_compiled
 from tests.preparation_history import (
     BATCH20_BASELINE,
     BATCH21_BASELINE,
+    BATCH22_BASELINE,
     assert_pre_batch20_archive,
     assert_pre_batch20_assets,
     assert_pre_batch20_localization,
@@ -133,9 +135,11 @@ def test_twenty_exact_sources_keep_full_tags_companies_and_nineteen_identities(a
 
 
 def test_all_208_previous_records_and_1141_assets_remain_hash_bound(archive):
-    assert len(archive['questions']) == archive['question_count'] == 219
+    assert len(archive['questions']) == archive['question_count'] == 231
     raw = {q['id']: q for q in archive['questions']}
-    assert raw.keys() - BATCH20_BASELINE['records'].keys() == NEW_IDS
+    historical_ids = raw.keys() & BATCH22_BASELINE['records'].keys()
+    assert len(historical_ids) == 219
+    assert historical_ids - BATCH20_BASELINE['records'].keys() == NEW_IDS
     assert len(BATCH20_BASELINE['records']) == 208
     assert BATCH20_BASELINE['canonical_sha256'] == 'ee6a131ca1b39ad067b768017fd69296607a0b5548b1a54420b145139c3e27a7'
     assert_pre_batch20_archive(archive)
@@ -153,11 +157,15 @@ def test_all_208_previous_records_and_1141_assets_remain_hash_bound(archive):
         assert not entries.keys() & localization.keys()
         localization.update(entries)
     assert localization.keys() == raw.keys()
-    assert localization.keys() - BATCH20_BASELINE['localized_material'].keys() == NEW_IDS
+    historical_localization = localization.keys() & BATCH22_BASELINE['localized_material'].keys()
+    assert historical_localization - BATCH20_BASELINE['localized_material'].keys() == NEW_IDS
     assert_pre_batch20_localization(localization)
     compiled = read(SEEDS / 'questions/preparation_bank.json')
-    assert len(compiled) == 219
+    assert len(compiled) == 231
     for question in compiled:
+        if question['assets']['preparation_id'] not in BATCH22_BASELINE['records']:
+            continue
+        question = before_batch22_compiled(question)
         if question['assets']['preparation_id'] not in AFFECTED_IDS:
             assert digest(question) == BATCH20_BASELINE['compiled_sha256'][question['key']]
         if question['assets']['preparation_id'] in VARIANT_IDS:
@@ -179,7 +187,7 @@ def test_all_208_previous_records_and_1141_assets_remain_hash_bound(archive):
 def test_all_nineteen_questions_are_bilingual_and_eleven_new_records_are_unrated_pending(catalog, archive):
     questions = selected(catalog)
     raw = {q['id']: q for q in archive['questions']}
-    assert len(catalog.questions) == 249 and set(questions) == AFFECTED_IDS
+    assert len(catalog.questions) == 261 and set(questions) == AFFECTED_IDS
     for ident, question in questions.items():
         source = raw[ident]
         resource = question.assets['preparation_resource']
@@ -219,8 +227,10 @@ def test_all_nineteen_questions_are_bilingual_and_eleven_new_records_are_unrated
 
 def test_new_private_media_has_exact_paths_hashes_png_bytes_and_protected_code(catalog):
     uploads = read(SEEDS / 'preparation_uploads.json')['files']
-    new_paths = uploads.keys() - BATCH20_BASELINE['asset_sha256'].keys()
-    assert len(uploads) == 1222 and len(new_paths) == 81
+    historical_paths = BATCH22_BASELINE['asset_sha256'].keys()
+    assert historical_paths <= uploads.keys()
+    new_paths = historical_paths - BATCH20_BASELINE['asset_sha256'].keys()
+    assert len(historical_paths) == 1222 and len(new_paths) == 81
     assert sum(uploads[path]['local_path'].startswith('sources/') for path in new_paths) == 20
     assert sum(uploads[path]['local_path'].startswith('diagrams/') for path in new_paths) == 32
     assert sum(uploads[path]['local_path'].startswith('solutions/') for path in new_paths) == 29
@@ -251,7 +261,7 @@ def test_new_private_media_has_exact_paths_hashes_png_bytes_and_protected_code(c
         for filename in ('prep_216_220_sequential.sv', 'prep_216_220_sequential_tb.sv'):
             assert files[filename]['kind'] == 'file' and files[filename]['role'] == 'solution'
     sources = [entry['local_path'] for entry in uploads.values() if entry['local_path'].startswith('sources/')]
-    assert len(sources) == 352 and len(set(sources)) == 351
+    assert len(sources) == 372 and len(set(sources)) == 371
     assert set(read(ROOT / 'apps/web/src/lib/source-screenshots.json')) == {Path(path).name for path in sources}
 
 

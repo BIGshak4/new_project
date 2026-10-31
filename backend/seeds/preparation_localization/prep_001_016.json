@@ -3158,14 +3158,20 @@
         "מותרים עותקים רבים של A/B, חוטים והסתעפויות ללא עלות, וחיבור אותו אות לשתי כניסות.",
         "נהגים פעילים תואמים מסכימים על הערך; אסורים ערכים פעילים מנוגדים; רשת שכל נהגיה Z אינה יכולה להזין רכיב אחר.",
         "מודל רשתות בוליאניות קומבינטורי ללא משוב; ללא רכיבי משיכה, שערים נוספים או קלטים משלימים בחינם.",
-        "לא ניתן מפרט תזמון פיזי; בודקים התנהגות במצב יציב."
+        "לא ניתן מפרט תזמון פיזי; בודקים התנהגות במצב יציב.",
+        "A מניע רק 1 ב־00 ו־B רק 0 ב־11; בשאר המקרים Z.",
+        "מותרות כניסות קשורות ויציאות משותפות באותה רמה, ללא משוב או שערים נוספים.",
+        "כניסה לרכיב חייבת להיות ביט מוגדר בכל צירוף קלט."
       ],
       "en": [
         "External inputs are binary; resolved intermediate nets must be binary for all stable input cases.",
         "Multiple copies of A/B, free wires and fanout, and connecting one signal to both inputs are permitted.",
         "Compatible active drivers agree; opposite active values are prohibited; an all-Z net cannot feed another component.",
         "Combinational acyclic Boolean-net model; no pull devices, extra gates or free complementary inputs.",
-        "No physical timing specification is provided; verify stable-state behavior."
+        "No physical timing specification is provided; verify stable-state behavior.",
+        "A drives 1 only at 00 and B drives 0 only at 11; otherwise Z.",
+        "Tied inputs and agreeing shared drivers are allowed, without feedback or extra gates.",
+        "Each cell input must be a defined bit on every input case."
       ]
     },
     "optimality": {
@@ -3173,13 +3179,15 @@
         "criterion": "מספר רכיבי A/B במעגלים ללא משוב בעלי רשתות בוליאניות שערכן מוגדר במלואו",
         "result": "7 רכיבים: 3 מסוג A ו־4 מסוג B",
         "proof": "מעברי כיסוי מינימלי מדויקים וחיפוש בעלות עולה על קבוצות של פונקציות בוליאניות בנות 4 ביטים; המינימום הוא 7 עם קבועים בחינם ובלעדיהם. ראו check_prep_015.py.",
-        "scope": "רשתות בוליאניות סטטיות ללא משוב עם ערך מוגדר בכל מצב; אין טענה לשטח פיזי או לבטיחות בזמן מעברים."
+        "scope": "רשתות בוליאניות סטטיות ללא משוב עם ערך מוגדר בכל מצב; אין טענה לשטח פיזי או לבטיחות בזמן מעברים.",
+        "batch22_nand_drivers": "מינימום 3 תאים: שני A ואחד B. החסם חל על מודל תאים א־מחזורי עם קלטים מוגדרים, ולא על ספריות טרנזיסטורים או כניסות משלימות חופשיות."
       },
       "en": {
         "criterion": "A/B component count in acyclic circuits with fully resolved Boolean nets",
         "result": "7 components: 3 A + 4 B",
         "proof": "Exact minimum-cover transitions and increasing-cost search over sets of 4-bit Boolean functions; minimum 7 with and without free constants. See check_prep_015.py.",
-        "scope": "Static acyclic fully driven Boolean nets; not a physical area or transition-safety claim."
+        "scope": "Static acyclic fully driven Boolean nets; not a physical area or transition-safety claim.",
+        "batch22_nand_drivers": "Exactly 3 cells: two A and one B. The bound is for acyclic defined-input cell networks, not transistor libraries or free complemented inputs."
       }
     },
     "edge_cases": {
@@ -3188,14 +3196,18 @@
         "01: n=0,f=1",
         "10: n=0,f=1",
         "11: ‏n=0,f=0; שני נהגים של אותו ערך אפס על n",
-        "Z אינו אפס ואינו ערך בוליאני חופשי; אין להזין Z לא מוגדר לרכיב."
+        "Z אינו אפס ואינו ערך בוליאני חופשי; אין להזין Z לא מוגדר לרכיב.",
+        "ב־00 מותרים שני דרייברים שמסכימים על 1.",
+        "ב־11 שני A מנותקים ורק B מניע 0."
       ],
       "en": [
         "00: n=1,f=0",
         "01: n=0,f=1",
         "10: n=0,f=1",
         "11: n=0,f=0; two same-zero drivers on n",
-        "Z is neither zero nor a Boolean wildcard; never feed an unresolved Z into a cell."
+        "Z is neither zero nor a Boolean wildcard; never feed an unresolved Z into a cell.",
+        "At 00 two drivers agree on 1.",
+        "At 11 both A cells disconnect and only B drives 0."
       ]
     },
     "verification": {
@@ -3204,19 +3216,21 @@
         "checked_on": "2026-09-27",
         "script_path": "checks/check_prep_015.py",
         "method": "כל ארבעת הקלטים נבדקו עם שילוב מפורש של מוצאי A/B, תוך דחיית רשתות צפות ומתנגשות. חיפוש מינימום מדויק קיבע 43 מצבים ללא קבועים ו־25 עם קבועים, ובשניהם המינימום 7. השרטוט נבדק חזותית.",
-        "scope": "מודל דיסקרטי סטטי בפייתון ומנייה קומבינטורית בתחום המוגדר; ללא סימולציית HDL, סינתזה או ניתוח תזמון אנלוגי."
+        "scope": "מודל דיסקרטי סטטי בפייתון ומנייה קומבינטורית בתחום המוגדר; ללא סימולציית HDL, סינתזה או ניתוח תזמון אנלוגי.",
+        "batch22_nand_drivers": "נבדקו ארבע שורות האמת, מספר הדרייברים הפעילים והסכמה ביניהם. נמנו כל כיסויי הדרייברים במחירים עד 3 עם ובלי קבועים. אין בדיקת מעבר אנלוגי."
       },
       "en": {
         "status": "passed",
         "checked_on": "2026-09-27",
         "script_path": "checks/check_prep_015.py",
         "method": "All four inputs checked with explicit A/B output resolution, rejecting floating and conflicting nets. Exact minimum search settled 43 states without constants and 25 with constants, both minimum 7. Diagram visually inspected.",
-        "scope": "Python static discrete model and scoped combinational enumeration; no HDL simulation, synthesis or analog timing analysis."
+        "scope": "Python static discrete model and scoped combinational enumeration; no HDL simulation, synthesis or analog timing analysis.",
+        "batch22_nand_drivers": "Checked all four truth rows, active-driver counts and agreement; enumerated covers through cost 3 with and without constants. No analog transient check."
       }
     },
     "interview_answer": {
-      "he": "אבנה תחילה n=NOT(x OR y) מחיבור A(x,y), B(x,x), B(y,y). אחר כך אחבר A(x,n), A(y,n), B(x,y), B(n,n) לפלט אחד. הם מכסים בהתאמה את 01,10,11,00 עם הערכים 1,1,0,0. כל חוט פנימי חוקי וכל מצב מכוסה ללא התנגשות; סך הכול שבעה רכיבים.",
-      "en": "I would first build n=NOT(x OR y) by joining A(x,y), B(x,x), B(y,y). Then join A(x,n), A(y,n), B(x,y), B(n,n) on one output. These cover 01,10,11,00 respectively with values 1,1,0,0. Every internal net is valid and every case is covered without contention: seven components in total."
+      "he": "אבנה תחילה n=NOT(x OR y) מחיבור A(x,y), B(x,x), B(y,y). אחר כך אחבר A(x,n), A(y,n), B(x,y), B(n,n) לפלט אחד. הם מכסים בהתאמה את 01,10,11,00 עם הערכים 1,1,0,0. כל חוט פנימי חוקי וכל מצב מכוסה ללא התנגשות; סך הכול שבעה רכיבים.\n\nאחבר A(x, x), A(y, y), B(x, y). כל השורות מכוסות בלי התנגשויות. צריך B בשביל האפס ב־11 ושני A כדי לכסות את 01 ו־10, ולכן 3 הוא מינימום במודל הנתון.",
+      "en": "I would first build n=NOT(x OR y) by joining A(x,y), B(x,x), B(y,y). Then join A(x,n), A(y,n), B(x,y), B(n,n) on one output. These cover 01,10,11,00 respectively with values 1,1,0,0. Every internal net is valid and every case is covered without contention: seven components in total.\n\nJoin A(x, x), A(y, y), B(x, y). Every row is driven consistently. One B is needed for zero at 11 and two A cells for 01 and 10, so 3 is minimal in this model."
     },
     "common_mistakes": {
       "he": [
@@ -3225,7 +3239,11 @@
         "חיבור A(x,y) ו־B(x,y) בלבד משאיר את 01/10 צפים",
         "התרת נהגים פעילים בעלי ערכים מנוגדים",
         "שימוש בשער OR רגיל במקום שילוב המוצאים שהוגדר",
-        "שימוש ב־NOT/NOR בחינם במקום בנייתם מרכיבי A/B"
+        "שימוש ב־NOT/NOR בחינם במקום בנייתם מרכיבי A/B",
+        "לבלבל Z עם 0.",
+        "לאסור בלי הצדקה שתי יציאות שמניעות אותה רמה.",
+        "להשתמש בכניסות NOT x ו־NOT y בלי לשלם על יצירתן.",
+        "להעתיק את מינימום XOR אל יעד NAND."
       ],
       "en": [
         "Treating Z as 0",
@@ -3233,7 +3251,11 @@
         "Joining A(x,y) and B(x,y) alone leaves 01/10 floating",
         "Allowing opposing active drivers",
         "Using an ordinary OR gate instead of the specified output joining",
-        "Using NOT/NOR for free instead of building them from A/B"
+        "Using NOT/NOR for free instead of building them from A/B",
+        "Confusing Z with 0.",
+        "Unjustifiably banning two outputs driving the same value.",
+        "Using NOT x and NOT y as uncounted free inputs.",
+        "Transferring XOR minimality to NAND."
       ]
     },
     "driver_explanation_he": {
@@ -3269,6 +3291,50 @@
           "status": "passed",
           "script_path": "checks/check_prep_015.py",
           "method": "Four input cases, both inversions, active-driver count and resolved output checked."
+        }
+      }
+    },
+    "source_ambiguities": {
+      "he": "כללי החיבור והקלטים המותרים צריכים חוזה. כאן הם מפורשים ותואמים למודל הדרייברים של התרגיל, בלי להסיק מהם בטיחות חשמלית כללית.",
+      "en": "Joining and allowed inputs need a contract. They are explicit here and match the stated driver model without implying general electrical safety."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה אם אוסרים ששני דרייברים פעילים אפילו מסכימים?",
+          "answer_direction": "הפתרון ב־00 אינו עומד בחוזה החדש, וצריך לתכנן ולבדוק מינימום מחדש.",
+          "principle": "מינימום רכיבים תלוי גם בכללי חיבור היציאות."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if even agreeing simultaneous drivers are forbidden?",
+          "answer_direction": "The 00 case violates that changed contract, requiring a new construction and minimum analysis.",
+          "principle": "Cell minimality depends on output-joining rules too."
+        }
+      ]
+    },
+    "prompt_variants": {
+      "he": {
+        "batch22_nand_drivers": {
+          "prompt": "### וריאציה: NAND מאותם רכיבי A ו־B\nממשו NAND של שני ביטים x, y באמצעות רכיבי A, B הבאים והוכיחו מינימום: A(p, q) מוציא 1 רק ב־00, ו־Z בכל מקרה אחר; B(p, q) מוציא 0 רק ב־11, ו־Z בכל מקרה אחר.\n\nבמודל הסטטי מותר לחבר את יציאות הרכיבים לאותו חוט אם לכל צירוף קלט יש לפחות דרייבר פעיל אחד וכל הפעילים מסכימים. Z אינו ערך לוגי ואינו מוזן לבדו לכניסה. מותר לקשור את שתי כניסות הרכיב לאותו אות, להשתמש ב־fanout ובחיווט. המעגל חסר משוב; אין שערים חיצוניים, נגדי משיכה או כניסות משלימות בחינם. דונו גם בשאלה אם קבועי 0,1 חופשיים משנים את המינימום. היעד כאן NAND; יעד XOR המקורי נשאר סעיף נפרד.",
+          "hints": [
+            "ב־NAND רק המקרה 11 צריך לקבל 0. איזה רכיב מסוגל כבר להניע 0 בדיוק שם?",
+            "כדי לכסות 01 ו־10 עם רמת 1, בדקו בנפרד A(x, x) ו־A(y, y).",
+            "חברו A(x, x), A(y, y), B(x, y) לאותה יציאה. להוכחת מינימום, בדקו למה דרייבר 1 יחיד אינו יכול לכסות גם 01 וגם 10 בלי להתנגש ב־11."
+          ],
+          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "batch22_nand_drivers": {
+          "prompt": "### Variant: NAND from the same A and B cells\nImplement two-input NAND of x, y using these cells and prove a minimum: A(p, q) drives 1 only at 00 and Z otherwise; B(p, q) drives 0 only at 11 and Z otherwise.\n\nIn the static model outputs may share a net if every input case has at least one active driver and all active drivers agree. Z is not a Boolean input value. Tied cell inputs, fanout and wiring are allowed. The circuit is acyclic, without other gates, pull resistors or free complemented inputs. Also discuss whether free constants 0,1 change the minimum. This target is NAND; the original XOR target remains a separate part.",
+          "hints": [
+            "Only input 11 requires NAND output 0. Which cell already drives 0 exactly there?",
+            "To provide 1 at 01 and 10, examine A(x, x) and A(y, y) separately.",
+            "Join A(x, x), A(y, y), B(x, y) at the output. For minimality, show why one high driver cannot cover both 01 and 10 without conflicting at 11."
+          ],
+          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
         }
       }
     }

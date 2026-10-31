@@ -85,6 +85,14 @@ const hebrew: Record<string, string> = {
 };
 
 const additionalLabels: Record<string, Record<"he" | "en", string>> = {
+  batch22_nand_drivers: { he: "מימוש שער NAND ברכיבי דרייבר", en: "NAND using driver components" },
+  batch22_significant_bits: { he: "היפוך הביטים המשמעותיים", en: "Significant-bit reversal" },
+  batch22_uint32_count: { he: "ספירת אחדות במספר בן 32 ביטים", en: "Counting set bits in a 32-bit integer" },
+  batch22_uppercase_counting: { he: "מיון אותיות באמצעות ספירה", en: "Sorting letters by counting" },
+  general_clock_batch22: { he: "זווית מחוגים בשעה נתונה", en: "Clock angle at a supplied time" },
+  general_clock_batch22_hints: { he: "רמזים לחישוב זווית המחוגים", en: "Clock-angle hints" },
+  highest_safe_batch22: { he: "מציאת הקומה הבטוחה הגבוהה ביותר", en: "Finding the highest safe floor" },
+  highest_safe_batch22_hints: { he: "רמזים למציאת הקומה הבטוחה", en: "Highest-safe-floor hints" },
   batch110_random_pixels: { he: "הדלקת פיקסלים אקראית ללא חזרות", en: "Random pixels without repetition" },
   batch30_variant: { he: "וריאציה נוספת", en: "Additional variant" },
   canoe_five_children_before_thirty_batch110: { he: "חמישה ילדים וקאנו לפני תום שלושים דקות", en: "Five children and a canoe before thirty minutes" },

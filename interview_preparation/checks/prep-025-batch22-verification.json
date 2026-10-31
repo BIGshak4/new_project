@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "floors_exhausted": [
+    0,
+    100
+  ],
+  "threshold_scenarios": 10201,
+  "contracts": [
+    "no-breaking-floor allowed",
+    "top floor known breaking"
+  ],
+  "independent_oracle": "Minimax DP over every first test location",
+  "hundred_floors_worst_case": 14,
+  "large_exact_integer_case_digits": 101,
+  "scope": "Logical stable monotone two-egg oracle; no physical dropping experiment."
+}

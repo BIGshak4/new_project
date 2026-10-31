@@ -111,3 +111,16 @@ The extra ball matters after breakage: three balls leave two, enabling interval 
 Coverage C(b,t)=C(b-1,t-1)+1+C(b,t-1), with zero balls or zero drops giving zero coverage. Equivalently C(b,t)=sum binom(t,j), j=1..min(b,t). Seek minimum t with coverage >=100, or >=99 for a known-breaking top. C(3,8)=92,C(3,9)=129; C(4,7)=98,C(4,8)=162; C(5,6)=62,C(5,7)=119. Six binary-result drops distinguish at most 64 outcomes, less than 100 or 101 threshold possibilities; hence seven is a lower bound regardless of additional balls. Five balls suffice with a capacity-aware strategy, not necessarily an arbitrary balanced binary-search tree constrained to five balls.
 
 Verified 606 complete 100-floor threshold scenarios for 1..6 balls and independent minimax DP for 0..150 floors with 1..6 balls, plus recurrence and guaranteed-top conventions. Code and checks linked in the extension.
+
+
+## מקור נוסף — 31.10.2026, מקבץ 22
+
+[צילום מקור פרטי 1](../sources/2026-10-31-batch22-01.png)
+
+יש בניין עם N קומות ואתה מקבל 2 ביצים. יש למצוא את הקומה המקסימלית לזריקת ביצה ללא שבירה שלה במספר איטרציות הנמוך ביותר. ניתן להשתמש בביצה שזרקת ולא נשברה. היה צריך להציג את הדרך לפתרון בצורה מתמטית ולהסביר.
+
+שיוכי מקור מדווחים: Apple.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-025-highest_safe_batch22-addendum.md)

@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "compiler": "gcc",
+  "flags": [
+    "-std=c99",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic"
+  ],
+  "network_policy": "deny-all",
+  "compile_exit": 0,
+  "run_exit": 0,
+  "amalgamated_source_sha256": "59dcd85b5fcad36ae57ae9b17bfac60dd990a6ea7aa84777da01ae05af86ffac",
+  "source_sha256": {
+    "interview_preparation/solutions/prep_230_request_fifo.c": "3ccd4d509961f04d8b0f1763ab40e5329ce8529b47d90d044458dd1883ef4a4b",
+    "interview_preparation/solutions/prep_094_significant_bits_batch22.c": "3d26bf58a865556c46de724c69d47fd59d1f3f1bc5d6e475f86d4011141f2eed",
+    "interview_preparation/solutions/prep_160_uppercase_counting_batch22.c": "5b893b5f1be8640f0fa438cbe4f8bf464540d4a18a80732f452bfb0f8aec6f11",
+    "interview_preparation/checks/check_batch22_software_native.c": "1aa40dc40bea4564e28325b75e847b625c1eb52afbde7690d96c5c3008c0ed42"
+  },
+  "result": {
+    "passed": true,
+    "fifo_traces": 21844,
+    "reversal_cases": 65539,
+    "sort_cases": 9843,
+    "assertions": 562139
+  },
+  "scope": "Finite native C99 execution in an isolated sandbox. No ISR concurrency, hardware timing, all-uint32 exhaustion, or professional human review claimed.",
+  "canonical_lf_source_sha256": {
+    "interview_preparation/solutions/prep_230_request_fifo.c": "3ccd4d509961f04d8b0f1763ab40e5329ce8529b47d90d044458dd1883ef4a4b",
+    "interview_preparation/solutions/prep_094_significant_bits_batch22.c": "3d26bf58a865556c46de724c69d47fd59d1f3f1bc5d6e475f86d4011141f2eed",
+    "interview_preparation/solutions/prep_160_uppercase_counting_batch22.c": "5b893b5f1be8640f0fa438cbe4f8bf464540d4a18a80732f452bfb0f8aec6f11",
+    "interview_preparation/checks/check_batch22_software_native.c": "1aa40dc40bea4564e28325b75e847b625c1eb52afbde7690d96c5c3008c0ed42"
+  },
+  "canonical_lf_amalgamated_sha256": "1c84cd33b88dc0aa39c10e1e67e708715e2a2728dba30ce45d859cb7ebaa42e0"
+}

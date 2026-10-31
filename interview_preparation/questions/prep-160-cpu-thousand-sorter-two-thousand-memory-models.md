@@ -283,3 +283,16 @@ Numbers versus characters, capacity, transfers, external comparisons and output 
     "principle": "The cost model belongs to the problem."
   }
 ]
+
+
+## מקור נוסף — 31.10.2026, מקבץ 22
+
+[צילום מקור פרטי 17](../sources/2026-10-31-batch22-17.png)
+
+יש לך קלט של 1000 אותיות מ-A עד Z, שעובר דרך קופסה שחורה. הקופסה השחורה צריכה למיין את הקלט. אתה יכול להשתמש במבני נתונים וכלי תכנות. דוגמה ...AAABBBB...
+
+שיוכי מקור מדווחים: Apple.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-160-uppercase_counting-batch22-addendum.md)

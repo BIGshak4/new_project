@@ -1,0 +1,63 @@
+{
+  "compiler": "gcc",
+  "flags": [
+    "-std=c99",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic"
+  ],
+  "sandbox": "sbx_t5cNltwDBE7Fo4NaVDo7zAoIw6Dg",
+  "network": "deny-all",
+  "persistent": false,
+  "stopped": true,
+  "compile_exit": 0,
+  "run_exit": 0,
+  "compile_command_id": "cmd_0766812229814c45b1a9abcad392",
+  "run_command_id": "cmd_abbe7418f5a0409d9fc027f060ad",
+  "coverage": {
+    "memory_cases": 8196,
+    "popcount_cases": 85601,
+    "memory_modes": "little/big endian times aligned/all-offset reads; each of 2048 individual byte-bit corruptions; read call counts/bounds asserted",
+    "popcount_oracle": "independent 32-position loop; 65536 exhaustive values, 64 singleton/complement values, UINT32_MAX, 20000 deterministic full-width cases"
+  },
+  "source_hashes": {
+    "interview_preparation/solutions/prep_223_ramp_memory.c": "7f36c3c56592f155c3463553c4a2c9e3f765ef225842e8a37be0fdec1f20e7a2",
+    "interview_preparation/solutions/prep_151_uint32_popcount_batch22.c": "dbe2fa599ab809ed3b979afb84eb6dacba0c0dede3d295a01d1a3b1625dc2b90",
+    "interview_preparation/checks/check_batch22_hardware_native.c": "fac5e16f16db5909260e82045fe6667357c8e1038f3493efd0d71b7fa801d8e1"
+  },
+  "evidence": {
+    "compile": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"result\": {\n    \"items\": [\n      {\n        \"command\": {\n          \"id\": \"cmd_0766812229814c45b1a9abcad392\",\n          \"name\": \"gcc\",\n          \"args\": [\n            \"-std=c99\",\n            \"-O2\",\n            \"-Wall\",\n            \"-Wextra\",\n            \"-Werror\",\n            \"-pedantic\",\n            \"prep_223_ramp_memory.c\",\n            \"prep_151_uint32_popcount_batch22.c\",\n            \"check_batch22_hardware_native.c\",\n            \"-o\",\n            \"hardware_check\"\n          ],\n          \"cwd\": \"/vercel/sandbox\",\n          \"sessionId\": \"sbx_t5cNltwDBE7Fo4NaVDo7zAoIw6Dg\",\n          \"startedAt\": 1793482616778,\n          \"exitCode\": null\n        }\n      },\n      {\n        \"command\": {\n          \"id\": \"cmd_0766812229814c45b1a9abcad392\",\n          \"name\": \"gcc\",\n          \"args\": [\n            \"-std=c99\",\n            \"-O2\",\n            \"-Wall\",\n            \"-Wextra\",\n            \"-Werror\",\n            \"-pedantic\",\n            \"prep_223_ramp_memory.c\",\n            \"prep_151_uint32_popcount_batch22.c\",\n            \"check_batch22_hardware_native.c\",\n            \"-o\",\n            \"hardware_check\"\n          ],\n          \"cwd\": \"/vercel/sandbox\",\n          \"sessionId\": \"sbx_t5cNltwDBE7Fo4NaVDo7zAoIw6Dg\",\n          \"startedAt\": 1793482616778,\n          \"exitCode\": 0,\n          \"durationMs\": 272\n        }\n      }\n    ],\n    \"context\": {\n      \"totalItems\": 2,\n      \"returnedItems\": 2,\n      \"truncated\": false\n    }\n  }\n}"
+        }
+      ],
+      "structuredContent": null,
+      "isError": false
+    },
+    "run": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"result\": {\n    \"items\": [\n      {\n        \"command\": {\n          \"id\": \"cmd_abbe7418f5a0409d9fc027f060ad\",\n          \"name\": \"/vercel/sandbox/hardware_check\",\n          \"args\": [],\n          \"cwd\": \"/vercel/sandbox\",\n          \"sessionId\": \"sbx_t5cNltwDBE7Fo4NaVDo7zAoIw6Dg\",\n          \"startedAt\": 1793482624804,\n          \"exitCode\": null\n        }\n      },\n      {\n        \"command\": {\n          \"id\": \"cmd_abbe7418f5a0409d9fc027f060ad\",\n          \"name\": \"/vercel/sandbox/hardware_check\",\n          \"args\": [],\n          \"cwd\": \"/vercel/sandbox\",\n          \"sessionId\": \"sbx_t5cNltwDBE7Fo4NaVDo7zAoIw6Dg\",\n          \"startedAt\": 1793482624804,\n          \"exitCode\": 0,\n          \"durationMs\": 11\n        }\n      }\n    ],\n    \"context\": {\n      \"totalItems\": 2,\n      \"returnedItems\": 2,\n      \"truncated\": false\n    }\n  }\n}"
+        }
+      ],
+      "structuredContent": null,
+      "isError": false
+    }
+  },
+  "notes": [
+    "All harness assertions completed with exit 0.",
+    "The command API returned exit status but did not include stdout in its response. Coverage counts follow the committed deterministic harness loop bounds; they are not a claimed captured stdout transcript.",
+    "This supplements the earlier local Python verification; proposed source files are unchanged."
+  ],
+  "passed": true,
+  "canonical_lf_source_sha256": {
+    "interview_preparation/solutions/prep_223_ramp_memory.c": "7f36c3c56592f155c3463553c4a2c9e3f765ef225842e8a37be0fdec1f20e7a2",
+    "interview_preparation/solutions/prep_151_uint32_popcount_batch22.c": "dbe2fa599ab809ed3b979afb84eb6dacba0c0dede3d295a01d1a3b1625dc2b90",
+    "interview_preparation/checks/check_batch22_hardware_native.c": "fac5e16f16db5909260e82045fe6667357c8e1038f3493efd0d71b7fa801d8e1"
+  }
+}

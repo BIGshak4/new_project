@@ -674,14 +674,20 @@
         "אפשר להשתמש שוב בכדור שלא נשבר; אי אפשר להשתמש שוב בכדור שנשבר.",
         "קומת הקרקע 0 בטוחה; הקומות הן 1..100.",
         "המקור מרמז שקיימת קומה שוברת; הפתרון מטפל גם במקרה שאין קומה שוברת.",
-        "ממזערים את מספר הזריקות במקרה הגרוע, ולא את התוחלת."
+        "ממזערים את מספר הזריקות במקרה הגרוע, ולא את התוחלת.",
+        "שתי ביצים זהות, שבירה מונוטונית ודטרמיניסטית, ושימוש חוזר בביצה ששרדה.",
+        "קומה 0 בטוחה; במודל הראשי אין הבטחה שקומה N שוברת.",
+        "N שלם לא שלילי; חוזה קומה עליונה ידועה כשוברת נדון בנפרד."
       ],
       "en": [
         "Identical balls with monotone deterministic break threshold.",
         "An unbroken ball can be reused; a broken ball cannot.",
         "Ground floor 0 safe; floors 1..100.",
         "Source implies a breaking floor exists; solution also handles no breaking floor.",
-        "Optimize worst-case number of drops, not expected count."
+        "Optimize worst-case number of drops, not expected count.",
+        "Two identical eggs, deterministic monotone breakage and reuse of surviving eggs.",
+        "Floor zero is safe; the main model does not guarantee a breaking top.",
+        "N is a nonnegative integer; a known breaking top is a separate contract."
       ]
     },
     "optimality": {
@@ -689,13 +695,15 @@
         "criterion": "מספר הזריקות הפיזיות במקרה הגרוע עם שני כדורים.",
         "result": "14, מושג באמצעות מרווחים הולכים וקטנים; 13 אינן מספיקות להבחנה בין כל הספים האפשריים.",
         "proof": "C(2,k)=k(k+1)/2 קומות לא ידועות, או C(2,k)+1 אפשרויות לסף; 91/92 אינן מספיקות, ו־105/106 מספיקות.",
-        "scope": "סף דטרמיניסטי מונוטוני וכדורים זהים שניתנים לשימוש חוזר; גם הגרסה שבה מובטחת שבירה דורשת 14 עבור 100 קומות."
+        "scope": "סף דטרמיניסטי מונוטוני וכדורים זהים שניתנים לשימוש חוזר; גם הגרסה שבה מובטחת שבירה דורשת 14 עבור 100 קומות.",
+        "highest_safe_batch22": "מינימום זריקות k הוא השלם הקטן ביותר עם k(k+1)/2≥N. הליבה O(1) מילות עזר ומספר בדיקות Θ(√N); עקבת אימות אופציונלית דורשת O(k). אם קומה עליונה שוברת ידועה, מחליפים N ב־N−1."
       },
       "en": {
         "criterion": "Worst-case physical drops with two balls.",
         "result": "14, attained by shrinking gaps; 13 cannot distinguish all possible thresholds.",
         "proof": "C(2,k)=k(k+1)/2 unknown floors or C(2,k)+1 threshold cases; 91/92 insufficient, 105/106 sufficient.",
-        "scope": "Deterministic monotone threshold and identical reusable balls; guaranteed-break variant also needs 14 for 100 floors."
+        "scope": "Deterministic monotone threshold and identical reusable balls; guaranteed-break variant also needs 14 for 100 floors.",
+        "highest_safe_batch22": "The optimal budget is the least k with k(k+1)/2≥N. The strategy uses O(1) state words and Θ(√N) test calls; an optional verification trace costs O(k). A known breaking top replaces N by N−1."
       }
     },
     "edge_cases": {
@@ -706,7 +714,8 @@
         "שבירה בדיוק בקומת בדיקה של הכדור הראשון",
         "המרווח האחרון נחתך בקומה העליונה",
         "אין לבדוק שוב קומה שכבר ידוע שהיא שוברת",
-        "עם הכדור האחרון חייבים לסרוק בצורה בטוחה"
+        "עם הכדור האחרון חייבים לסרוק בצורה בטוחה",
+        "N=0; N=1; שבירה בקומה 1; אין שבירה; N מספר משולשי או סמוך לו; קומה עליונה ידועה כשוברת."
       ],
       "en": [
         "Breaks at floor 1",
@@ -715,7 +724,8 @@
         "Break exactly at a first-ball test",
         "Final gap capped at top",
         "Never retest known-breaking floor",
-        "Last remaining ball must scan safely"
+        "Last remaining ball must scan safely",
+        "N=0; N=1; breakage at floor one; no breakage; triangular N and neighbors; known breaking top."
       ]
     },
     "verification": {
@@ -723,18 +733,20 @@
         "status": "passed",
         "checked_on": "2026-09-28",
         "script_path": "checks/check_prep_025.py",
-        "method": "כל הספים לכל N=0..200, תכנון דינמי minimax עצמאי, מחזור שימוש חוקי בכדורים ותזמון מדויק ל־100 קומות."
+        "method": "כל הספים לכל N=0..200, תכנון דינמי minimax עצמאי, מחזור שימוש חוקי בכדורים ותזמון מדויק ל־100 קומות.",
+        "highest_safe_batch22": "10,201 תרחישי סף לכל N=0..100 בשני חוזים התאימו ל־DP minimax עצמאי. נבדקו עקבות, שתי ביצים בלבד, הרצפה הבטוחה, גובה הבניין ושלם גדול ללא עיגול."
       },
       "en": {
         "status": "passed",
         "checked_on": "2026-09-28",
         "script_path": "checks/check_prep_025.py",
-        "method": "All thresholds for each N=0..200, independent minimax DP, legal ball lifecycle and exact 100-floor schedule."
+        "method": "All thresholds for each N=0..200, independent minimax DP, legal ball lifecycle and exact 100-floor schedule.",
+        "highest_safe_batch22": "10,201 threshold scenarios for N=0..100 under both contracts matched independent minimax DP. Traces checked two-egg use, exact safe-floor return, building bounds and a large exact integer budget."
       }
     },
     "interview_answer": {
-      "he": "המינימום הוא 14. אבדוק עם הכדור הראשון בקפיצות 14,13,12,... קומות; אחרי שבירה אסרוק עם השני מהקומה הבטוחה האחרונה ומעלה. כך הזריקות שכבר נוצלו והסריקה שנותרה מסתכמות בעד 14. 13 זריקות מכסות רק 91 קומות, ו־14 מכסות 105, ולכן 14 מספיק וגם הכרחי.",
-      "en": "The minimum is 14. I test with the first ball using gaps of 14,13,12,... floors; after it breaks, I scan upward with the second ball from the last safe floor. Drops already used plus the remaining scan total at most 14. Thirteen drops cover only 91 floors, and fourteen cover 105, so 14 is both sufficient and necessary."
+      "he": "המינימום הוא 14. אבדוק עם הכדור הראשון בקפיצות 14,13,12,... קומות; אחרי שבירה אסרוק עם השני מהקומה הבטוחה האחרונה ומעלה. כך הזריקות שכבר נוצלו והסריקה שנותרה מסתכמות בעד 14. 13 זריקות מכסות רק 91 קומות, ו־14 מכסות 105, ולכן 14 מספיק וגם הכרחי.\n\nאבחר k מינימלי שסכומו המשולשי מכסה N ואקפוץ בפערים יורדים. אחרי השבירה הראשונה אסרוק עם הביצה האחרונה. אחזיר את הקומה הבטוחה הקודמת; אם הכול שרד אחזיר N. אותו כיסוי נותן גם חסם תחתון.",
+      "en": "The minimum is 14. I test with the first ball using gaps of 14,13,12,... floors; after it breaks, I scan upward with the second ball from the last safe floor. Drops already used plus the remaining scan total at most 14. Thirteen drops cover only 91 floors, and fourteen cover 105, so 14 is both sufficient and necessary.\n\nChoose the least k whose triangular capacity covers N and use decreasing gaps. After the first break, scan with the last egg. Return the preceding safe floor, or N if all survive. The same capacity argument supplies the lower bound."
     },
     "common_mistakes": {
       "he": [
@@ -744,7 +756,11 @@
         "בדיקה חוזרת של קומה שידוע שהיא שוברת",
         "התעלמות ממונוטוניות או מהנחות ההתחלה",
         "טענה ש־13 מספיקות על סמך שורש ריבועי מקורב",
-        "שגיאה של אחד במספר מצבי הסף האפשריים"
+        "שגיאה של אחד במספר מצבי הסף האפשריים",
+        "להחזיר F במקום F−1.",
+        "להניח שבירה בקומה העליונה בלי הבטחה.",
+        "לחפש בינארית עם הביצה האחרונה או למחזר ביצה שנשברה.",
+        "לעגל שורש ב־float עבור N גדול."
       ],
       "en": [
         "Using ordinary binary search with two consumable balls",
@@ -753,7 +769,11 @@
         "Retesting a known-breaking floor",
         "Ignoring monotonicity or starting assumptions",
         "Claiming 13 suffices from approximate square root",
-        "Off-by-one in possible threshold states"
+        "Off-by-one in possible threshold states",
+        "Returning F rather than F−1.",
+        "Assuming a breaking top without a guarantee.",
+        "Binary-searching with the last egg or reusing a broken egg.",
+        "Rounding a floating-point square root for large N."
       ]
     },
     "solution_extensions": {
@@ -780,6 +800,11 @@
               "5+": 7
             }
           }
+        },
+        {
+          "question": "אם קומה N ידועה כשוברת, האם תמיד עדיין צריך אותו מספר זריקות?",
+          "answer_direction": "לא. נשארות N−1 קומות לא ידועות. למשל ב־N=2 מספיק לבדוק את קומה 1, בעוד בלי ההבטחה צריך לעתים שתי זריקות.",
+          "principle": "ידע מוקדם משנה את עץ האפשרויות ואת החסם."
         }
       ],
       "en": [
@@ -805,8 +830,39 @@
               "5+": 7
             }
           }
+        },
+        {
+          "question": "If floor N is known to break, is the optimal drop count always unchanged?",
+          "answer_direction": "No. Only N−1 floors remain unknown. For N=2, testing floor one suffices, whereas the unpromised case can need two drops.",
+          "principle": "Prior knowledge changes the decision tree and its bound."
         }
       ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "מינימום מוגדר במקרה הגרוע. ידיעת קומה שוברת משנה את מספר הספים האפשריים ולכן נבחנת בנפרד; אין כאן מטרה של תוחלת תחת התפלגות נתונה."
+      ],
+      "en": [
+        "Minimum means worst case. Knowing a breaking floor changes the possible thresholds and is separate; expected cost under a distribution is not the objective."
+      ]
+    },
+    "prompt_variants": {
+      "he": {
+        "highest_safe_batch22": "### שתי ביצים ו־N קומות: מחזירים את הקומה הבטוחה האחרונה\nיש בניין בן N קומות ממוספרות 1..N ושתי ביצים זהות. ביצה שלא נשברה ניתנת לשימוש חוזר. קיימת התנהגות שבירה מונוטונית וקבועה: מתחת לסף הביצה שורדת, ומהסף ומעלה היא נשברת. קומה 0 ידועה כבטוחה. מותר גם שאף קומה בבניין לא תשבור ביצה.\n\nמצאו את הקומה הגבוהה ביותר שממנה ביצה אינה נשברת, במינימום זריקות במקרה הגרוע. הציגו אסטרטגיה, נוסחה בתקציב זריקות והוכחת אופטימליות. התשובה יכולה להיות 0 או N. הסבירו בנפרד מה משתנה אם ידוע מראש שקומה N שוברת; זו הבטחה נוספת, לא הנחה ראשית.",
+        "highest_safe_batch22_hints": [
+          "אחרי שבירה ראשונה נשארת ביצה אחת, ולכן חייבים לסרוק את הטווח שנותר בלי לדלג על קומות.",
+          "בתקציב של k זריקות, קפיצה ראשונה גבוהה מ־k משאירה יותר מדי קומות לביצה האחרונה אם הראשונה נשברת.",
+          "בחרו פערים k,k−1,k−2,... כך שמספר הזריקות שכבר נוצלו והסריקה שנותרה אינם עוברים k. הכיסוי הכולל הוא סכום המספרים עד k."
+        ]
+      },
+      "en": {
+        "highest_safe_batch22": "### Two eggs and N floors: return the highest safe floor\nA building has N floors numbered 1..N and two identical eggs. An unbroken egg is reusable. Breakage is deterministic and monotone: an egg survives below a threshold and breaks at that threshold or above. Ground floor zero is known safe. It is possible that no building floor breaks an egg.\n\nFind the highest safe floor with the minimum worst-case number of drops. Give a strategy, a drop-budget formula and an optimality proof. Answers zero and N are allowed. Separately explain the extra guarantee that floor N is known to break an egg; do not silently assume it in the main problem.",
+        "highest_safe_batch22_hints": [
+          "After the first break only one egg remains, requiring an upward scan without skipping unknown floors.",
+          "With a k-drop budget, a first gap larger than k leaves too many floors for the last egg if the first breaks.",
+          "Use gaps k,k−1,k−2,... so used drops plus the possible final scan never exceed k. Total coverage is the sum through k."
+        ]
+      }
     }
   },
   "PREP-026": {
