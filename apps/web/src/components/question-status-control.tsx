@@ -28,18 +28,18 @@ export function QuestionStatusControl({
   const t = (he: string, en: string) => lang === "he" ? he : en;
   const saving = useRef(false);
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
 
   async function save(patch: { completed?: boolean; hidden?: boolean }) {
     if (!ready || saving.current) return;
     saving.current = true;
     setBusy(true);
-    setError("");
+    setError(false);
     try {
       const saved = await saveQuestionState(userId, questionStateIds(question, questions), patch);
       onSaved(saved);
     } catch {
-      setError(t("המצב לא נשמר. נסו שוב.", "Status was not saved. Try again."));
+      setError(true);
     } finally {
       saving.current = false;
       setBusy(false);
@@ -73,7 +73,7 @@ export function QuestionStatusControl({
       </div>
       {ready && state.hidden && <span className="small muted question-hidden-label">{t("מוסתרת", "Hidden")}</span>}
       {busy && <span className="small muted" role="status">{t("שומרים…", "Saving…")}</span>}
-      {error && <span className="question-status-error small" role="alert">{error}</span>}
+      {error && <span className="question-status-error small" role="alert">{t("המצב לא נשמר. נסו שוב.", "Status was not saved. Try again.")}</span>}
     </div>
   );
 }

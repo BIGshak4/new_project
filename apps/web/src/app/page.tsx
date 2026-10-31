@@ -154,7 +154,7 @@ function Workspace({
     [subject, setSubject] = useState("all");
   const [category, setCategory] = useState("all");
   const [statusFilter, setStatusFilter] = useState<"visible" | "not_done" | "done" | "hidden">("visible");
-  const [statusMessage, setStatusMessage] = useState("");
+  const [statusMessage, setStatusMessage] = useState<"hidden" | "done" | "not_done" | null>(null);
   const statusFilterRef = useRef<HTMLDivElement>(null);
   const generation = useRef(0);
   const [progressReady, setProgressReady] = useState(false);
@@ -407,9 +407,7 @@ function Workspace({
     const updated = mergeEntries(entries, saved);
     const state = buildQuestionStates(questions, updated).get(q.id) ?? { completed: false, hidden: false };
     setEntries((old) => mergeEntries(old, saved));
-    setStatusMessage(state.hidden
-      ? t("השאלה הוסתרה. אפשר להחזיר אותה דרך מסנן השאלות המוסתרות.", "Question hidden. Restore it using the Hidden questions filter.")
-      : state.completed ? t("השאלה סומנה כבוצעה.", "Question marked as done.") : t("השאלה סומנה כלא בוצעה.", "Question marked as not done."));
+    setStatusMessage(state.hidden ? "hidden" : state.completed ? "done" : "not_done");
     // A filtered row disappears after a successful save; keep keyboard focus on a useful control.
     const focusedRow = document.activeElement?.closest<HTMLElement>(".library-question-row");
     if (!matchesQuestionStatus(state, statusFilter) &&
@@ -879,7 +877,7 @@ function Workspace({
                       value={statusFilter}
                       onChange={(value) => {
                         setStatusFilter(value as typeof statusFilter);
-                        setStatusMessage("");
+                        setStatusMessage(null);
                       }}
                       options={[
                         { value: "visible", label: t("כל השאלות הגלויות", "All visible questions") },
@@ -934,7 +932,10 @@ function Workspace({
                   </div>
                 </div>
                 <p className="small muted library-status-note">{t("סמנו מה בוצע והסתירו שאלות שאינן רלוונטיות. הסימון אישי ונשמר בחשבון.", "Mark what you have done and hide irrelevant questions. Your choices are saved to your account.")}</p>
-                <p className="small library-status-message" role="status" aria-live="polite">{statusMessage}</p>
+                <p className="small library-status-message" role="status" aria-live="polite">{statusMessage === "hidden"
+                  ? t("השאלה הוסתרה. אפשר להחזיר אותה דרך מסנן השאלות המוסתרות.", "Question hidden. Restore it using the Hidden questions filter.")
+                  : statusMessage === "done" ? t("השאלה סומנה כבוצעה.", "Question marked as done.")
+                  : statusMessage === "not_done" ? t("השאלה סומנה כלא בוצעה.", "Question marked as not done.") : null}</p>
                 <p className="company-report-note library-provenance">{companyReportNote(lang)}</p>
                 {jobFilter && jobQuestions && (
                   <p className="small muted filter-note" role="status">
