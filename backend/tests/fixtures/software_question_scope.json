@@ -1,0 +1,666 @@
+{
+  "version": 1,
+  "description": "Canonical software-question scope for the all-question execution validation. This is a scope inventory, not a claim that all answers have automatic correctness suites.",
+  "selection_rule": "Match the website questionCategory: use explicit assets.category first; select software. Subject relevant_programming alone also includes two hardware questions and is not equivalent.",
+  "catalog_sources": [
+    "backend/seeds/questions/example_bank.json",
+    "backend/seeds/questions/preparation_bank.json"
+  ],
+  "live_inventory_verified_on": "2026-10-31",
+  "live_inventory_status": "All 63 matching live questions were trial; trial questions remain servable even when parity_checked is false. Database/API state must be rechecked on every live validation.",
+  "validation_layers": {
+    "transport": "For every question, authenticated capabilities, complete-program execution and isolated runner errors can be validated independently of answer correctness.",
+    "configured_suite": "Only suite_languages declares existing question-specific checks. The exact current contract and cases are owned by backend/seeds/execution_cases.json.",
+    "standalone": "Without a configured suite, successful compilation/execution is completed with correctness unassessed; never convert it to a full answer pass.",
+    "review": "Complexity, prohibited operations, node/reference identity, memory bounds, instruction restrictions, distributions and conceptual explanations may require review beyond ordinary output cases."
+  },
+  "questions": [
+    {
+      "question_key": "example-array-bound-off-by-one",
+      "preparation_id": null,
+      "title_en": "Find an array boundary error",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "C boundary repair needs n=0/null, singleton and exact n-element checks; a successful C compilation does not prove memory safety.",
+      "seed_question_sha256": "a19edaa5cd98da582b9ce447806f86b3ade13990cd11fd8398db73b12f8a1b2a"
+    },
+    {
+      "question_key": "example-balanced-brackets",
+      "preparation_id": null,
+      "title_en": "Validate nested brackets",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Return a Boolean for correctly nested (), [] and {}. Empty input is valid. python: is_balanced(text).",
+      "seed_question_sha256": "3c05fb2831c9cb640330df35c8e6dd2804c23a47f3cb3fc0e06323737d399237"
+    },
+    {
+      "question_key": "example-bounded-circular-queue",
+      "preparation_id": null,
+      "title_en": "Fixed-capacity circular queue",
+      "kind": "stateful",
+      "suite_languages": [],
+      "validation_scope": "Standalone queue demonstration needs full/empty, wraparound, order and state assertions; successful process exit alone establishes none of these.",
+      "seed_question_sha256": "4b9b9202e7086f10c93ea9ed28a45d80dc6bf61b2a9e177dc38d03eaabbedba4"
+    },
+    {
+      "question_key": "example-count-set-bits",
+      "preparation_id": null,
+      "title_en": "Count asserted status bits",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript",
+        "c",
+        "cpp"
+      ],
+      "validation_scope": "Return the number of set bits in an unsigned 32-bit value. Python/JavaScript: count_set_bits(n). C/C++: uint32_t count_set_bits(uint32_t n), returning 0/1 for a Boolean. Do not define main.",
+      "seed_question_sha256": "f212a8fca92ed1d04d67af01ec0e7eb451c91be32e512eaca5450bee7079a3cc"
+    },
+    {
+      "question_key": "example-extract-register-field",
+      "preparation_id": null,
+      "title_en": "Extract a register field",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Return the right-aligned field. Inputs obey the prompt and include width=32. python: extract_field(reg, lsb, width).",
+      "seed_question_sha256": "6ce79959c7fbc5200c711cfbed698ac10cfd3ea2a9f55c7a56859494345532ba"
+    },
+    {
+      "question_key": "example-first-greater-or-equal",
+      "preparation_id": null,
+      "title_en": "First element at least a target",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Return the first index with value at least target, or the array length. python: lower_bound(a, target).",
+      "seed_question_sha256": "3278ba89fdc7050731281985aa005e84b08b90e36c6ec126b750c1727cfc8d13"
+    },
+    {
+      "question_key": "example-merge-measurement-streams",
+      "preparation_id": null,
+      "title_en": "Merge sorted measurement lists",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Return the merged sorted array, preserving every duplicate. python: merge(a, b).",
+      "seed_question_sha256": "c7bf726e954cb6bc44f2cff59541ec7747afcbf1cc71bca01c09f9d69a792253"
+    },
+    {
+      "question_key": "example-pair-sum-indices",
+      "preparation_id": null,
+      "title_en": "Find two distinct matching indices",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Return [i,j] for distinct indices, or null/None when absent. Cases have a unique pair; index order is unrestricted. python: pair_sum(a, target).",
+      "seed_question_sha256": "96caa46cf6f742335fc1b8f2dd912a4e8f7f2a215b209fd358adfb267aed4037"
+    },
+    {
+      "question_key": "example-power-of-two-check",
+      "preparation_id": null,
+      "title_en": "Recognize a power of two",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript",
+        "c",
+        "cpp"
+      ],
+      "validation_scope": "Return a Boolean indicating whether unsigned32 n is a power of two. Zero is not. Python/JavaScript: is_power_of_two(n). C/C++: uint32_t is_power_of_two(uint32_t n), returning 0/1 for a Boolean. Do not define main.",
+      "seed_question_sha256": "019138b2b071f49000c5d90e4cb66e9b07eb09c837eba9eb578de345294171af"
+    },
+    {
+      "question_key": "example-reverse-singly-linked-list",
+      "preparation_id": null,
+      "title_en": "Reverse a linked list in place",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "A linked-node harness must check original node identity, acyclic reversed links, empty input and no node loss; printing reversed values is insufficient.",
+      "seed_question_sha256": "269469e44d0ba9788b98b081aa11eea6f6099d03025feac3a402269a05251276"
+    },
+    {
+      "question_key": "prep-abstract-list-head-tail-concat-reversal",
+      "preparation_id": "PREP-194",
+      "title_en": "Reversing an abstract list using Head, Tail and concatenation",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Head/Tail/concat alone lack an empty test and singleton constructor; executable examples use the explicitly completed interface and must state concatenation cost.",
+      "seed_question_sha256": "b858291826953c7110176abb3fa0f515e0465e1d92a346dd003dd2e7c67d4e2a"
+    },
+    {
+      "question_key": "prep-all-distinct-string-permutations",
+      "preparation_id": "PREP-162",
+      "title_en": "Print every distinct string permutation",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Test adapter: permutations(text) returns every distinct permutation as an array instead of printing. Order is arbitrary; no duplicates. Empty input gives [\"\"].",
+      "seed_question_sha256": "23428023902ad266cc64ccfb4aedbd6a76aced8dcdb58c1f6bbd3710b437f53c"
+    },
+    {
+      "question_key": "prep-all-unique-value-triples-target-sum",
+      "preparation_id": "PREP-101",
+      "title_en": "All unique value triples summing to S — and the index alternative",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Unique lexicographically ordered value triples differ from all index triples; duplicate occurrences and output-size bounds need separate checks.",
+      "seed_question_sha256": "6ce12d3596e4c65d317e002a30f1835c77edbb5b804089d6133a304f00232e58"
+    },
+    {
+      "question_key": "prep-ascii-letter-palindrome-two-pointers",
+      "preparation_id": "PREP-116",
+      "title_en": "ASCII-letter palindrome — compare without normalization",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Implement is_palindrome(text) for ASCII letters with case-sensitive comparison. Only promised valid inputs are tested.",
+      "seed_question_sha256": "46393883846045724d65b080b9ed25e0c8eab14663c140d27e04983973b2dd3c"
+    },
+    {
+      "question_key": "prep-balanced-brackets-mixed-text",
+      "preparation_id": "PREP-037",
+      "title_en": "Validate brackets in mixed text",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Implement is_balanced(text), ignoring characters outside (), [] and {}. Return a Boolean; quotes/comments have no special syntax.",
+      "seed_question_sha256": "6d0d30872750de2e0a39d2bbdba6fbe1223fcf858f2e4ab5450793dd7f7e33f5"
+    },
+    {
+      "question_key": "prep-binary-tree-vs-bst-maximum",
+      "preparation_id": "PREP-026",
+      "title_en": "Binary tree versus BST and finding the maximum",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "A general-tree harness must cover empty trees, non-BST structure and negative payloads; the conceptual tree/BST explanation is reviewed separately.",
+      "seed_question_sha256": "db56162ab71c5d650789e5c97fa2b422c86f068eaf0c3b4746ea4df68771b848"
+    },
+    {
+      "question_key": "prep-byte-popcount-parallel-and-lookup",
+      "preparation_id": "PREP-151",
+      "title_en": "Byte popcount: scan, parallel groups and lookup",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript",
+        "c",
+        "cpp"
+      ],
+      "validation_scope": "Return a byte's set-bit count. Output checks cannot establish loop-free operation or table use. Python/JavaScript: popcount8(n). C/C++: uint32_t popcount8(uint32_t n), no main; input 0..255.",
+      "seed_question_sha256": "f3bfa9b784021db01d4af09460f735d98e0347966390eef746251946da07f00b"
+    },
+    {
+      "question_key": "prep-closest-planar-pair-c",
+      "preparation_id": "PREP-188",
+      "title_en": "Closest pair of points in the plane",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "The C contract returns original distinct indices and exact uint64 squared distance for bounded integer coordinates; duplicate coordinates, allocation failure and invalid input need dedicated assertions.",
+      "seed_question_sha256": "abb735f6113fff62550f21d430efd595082733d27338fbee8bfe724c83829f49"
+    },
+    {
+      "question_key": "prep-constant-time-set-get-setall-array",
+      "preparation_id": "PREP-006",
+      "title_en": "Array with constant-time Set, Get and SetAll",
+      "kind": "stateful",
+      "suite_languages": [],
+      "validation_scope": "Set/Get/SetAll requires operation-sequence and object-reference tests; finite output samples cannot prove O(1) operations or preserve reference identity.",
+      "seed_question_sha256": "24efeb7b36eb9dc1903f31e1046aafcfa9f99cd9057cc0e244da7939360fa87d"
+    },
+    {
+      "question_key": "prep-convexity-ordered-simple-polygon",
+      "preparation_id": "PREP-108",
+      "title_en": "Polygon convexity — vertex order and simplicity matter",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Weak and strict convexity differ and the default assumes simple ordered boundaries; outputs alone do not validate that promise or arbitrary unordered points.",
+      "seed_question_sha256": "d858c89ecc5ce2668807e2877e422c5394d3bf82dc8024c0afd0a2f3f7d88e0d"
+    },
+    {
+      "question_key": "prep-costume-ranked-maximum-assignment",
+      "preparation_id": "PREP-148",
+      "title_en": "Costume assignment: serving people before preference rank",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "The source supplies four preference rows, not five; correctness requires assignment validity and lexicographic maximization of served count then first choices, allowing ties.",
+      "seed_question_sha256": "3fbf2e374f0c212123f71b0083a2303e68c6b5fed37daa8010f75a2c1846f722"
+    },
+    {
+      "question_key": "prep-count-negatives-row-column-sorted-matrix",
+      "preparation_id": "PREP-097",
+      "title_en": "Count negatives in a row-and-column-sorted matrix",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Sorting directions and rectangular-shape handling matter; sample answers cannot establish the promised submatrix-scan access cost.",
+      "seed_question_sha256": "302f72e353d42e566cd9ad7a44bd7295f57651a75051547cd4dde7203f584bdc"
+    },
+    {
+      "question_key": "prep-count-primes-sieve",
+      "preparation_id": "PREP-080",
+      "title_en": "Count primes up to n with the Sieve of Eratosthenes",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "The range is inclusive 1..n with zero for n<2; samples cannot establish sieve implementation, complexity or all input sizes.",
+      "seed_question_sha256": "4324d55ce8971e44a7f8ce26c74d29567e3b5dab15c5142c82373b8301b87bc7"
+    },
+    {
+      "question_key": "prep-count-unordered-index-pairs-target-sum",
+      "preparation_id": "PREP-089",
+      "title_en": "How many array pairs sum to S?",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Count index-pair multiplicities with i<j, not unique value pairs; duplicates, negatives and no input mutation need dedicated cases.",
+      "seed_question_sha256": "03ee0f6375440f09c331a63289c8fdaef0a6e7f06e954b565d2bf3db81a29109"
+    },
+    {
+      "question_key": "prep-cpp-destructor-default-virtual-raii",
+      "preparation_id": "PREP-189",
+      "title_en": "C++ destructors, resource ownership and virtual destruction",
+      "kind": "conceptual",
+      "suite_languages": [],
+      "validation_scope": "This is a C++17 ownership/destruction explanation with examples; compiling an example cannot grade ownership reasoning or justify a virtual base destructor.",
+      "seed_question_sha256": "f2c69671c669825379cd1782e3c472222ce8a4a3ddf53e4905dffd9e85838cc6"
+    },
+    {
+      "question_key": "prep-cpu-thousand-sorter-two-thousand-memory-models",
+      "preparation_id": "PREP-160",
+      "title_en": "Sort 2000 using a 1000-value box: define the memory-access model",
+      "kind": "simulation",
+      "suite_languages": [],
+      "validation_scope": "The three explicit memory-transfer models have different costs; sorted output does not establish minimal external accesses or a hardware timing claim.",
+      "seed_question_sha256": "239e7bd9d50fed69d8cd5e2a4bc6fc7322a26cd5e0fc498b0c9ccd9c97a7e253"
+    },
+    {
+      "question_key": "prep-delete-array-values-below-nineteen",
+      "preparation_id": "PREP-135",
+      "title_en": "Delete values below 19 — indices and edge cases",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "A Del(i) harness must check shifting indices, survivor order/multiplicity and retaining 19; deletion count differs from suffix-shifting cost.",
+      "seed_question_sha256": "7c9102fa724b48f841b8da2e7afda936571a66faf0dd8227740411ffbe8d675a"
+    },
+    {
+      "question_key": "prep-digit-seven-boom-and-incremental-decimal-state",
+      "preparation_id": "PREP-185",
+      "title_en": "Seven boom: emit output only when the digit occurs",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Emit once per integer containing decimal digit 7; divisibility by seven is not requested. Large-range cost and incremental-state reasoning need separate review.",
+      "seed_question_sha256": "bea38ccb3ee2583396979a9414368dabed6bbdf5884debc7821a832d66fcb659"
+    },
+    {
+      "question_key": "prep-first-equal-in-sorted-array",
+      "preparation_id": "PREP-137",
+      "title_en": "First equal index in a sorted array",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Implement first_equal(a,value), returning the first index or -1 when absent. Logarithmic complexity also needs reasoning review. python: first_equal(a, value).",
+      "seed_question_sha256": "a77700fa071d2522ba23763a25d6f36d705c5d337510626485756a3138a5329f"
+    },
+    {
+      "question_key": "prep-horizontal-line-packed-byte-bitmap",
+      "preparation_id": "PREP-111",
+      "title_en": "Draw a horizontal bitmap line without changing surrounding pixels",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "A bitmap harness must verify MSB-first masks, pitch/padding, surrounding bits, zero length and reject-before-write behavior.",
+      "seed_question_sha256": "c9bb912a69327a869701da0716f7e13db77b1b7e18b7d9387c2c231ac20f64b7"
+    },
+    {
+      "question_key": "prep-linked-lists-first-shared-node",
+      "preparation_id": "PREP-032",
+      "title_en": "Find the first shared node of two linked lists",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "The answer concerns identical nodes and a shared tail, not equal values; a pointer-identity fixture is required for correctness.",
+      "seed_question_sha256": "44af3ca680e7cdb8a0907a6e5424b1f059c2aabea133c1ac2517ec393ae4da06"
+    },
+    {
+      "question_key": "prep-longest-contiguous-sum-divisible-by-three",
+      "preparation_id": "PREP-163",
+      "title_en": "Longest contiguous interval whose sum is divisible by three",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Implement longest_mod3(a) for positive inputs; return [length,start,end] with inclusive end. No interval gives [0,null,null]. Ties prefer earlier start then end.",
+      "seed_question_sha256": "820b0d2cfeb3e346a2067ed8a73c6ff5c3f8aa1911d07788797eef575113d1b3"
+    },
+    {
+      "question_key": "prep-maximum-sum-contiguous-subarray",
+      "preparation_id": "PREP-072",
+      "title_en": "Maximum-sum contiguous subarray",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Array part only: max_subarray(a) returns [sum,start,end] with inclusive zero-based bounds, or null/None for empty input. Ties prefer earliest start then earliest end. The stream interface is not tested.",
+      "seed_question_sha256": "730f5c0192cadaf761d1a52761f2ae964f3977629448b41cd9b477229ee6d698"
+    },
+    {
+      "question_key": "prep-maximum-two-integers-without-comparisons",
+      "preparation_id": "PREP-068",
+      "title_en": "Maximum of two integers without comparisons",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Exact Python/abs and signed-32-bit/unsigned-bitwise variants differ; outputs alone do not verify forbidden comparisons or signed-overflow safety.",
+      "seed_question_sha256": "da3ea8fba548f7e2343b06ee84258ba27ca64b17b3c750cf19815247d808c98f"
+    },
+    {
+      "question_key": "prep-merge-two-sorted-arrays",
+      "preparation_id": "PREP-098",
+      "title_en": "Merge two sorted arrays without losing duplicates",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Fresh-output merge and reserved-capacity mutation are distinct variants; duplicate multiplicities, real zeros and input identities need explicit assertions.",
+      "seed_question_sha256": "f9300c76167e978a049b4b1b57194b976ab64d309e4e17bf798bfb8d13e4f511"
+    },
+    {
+      "question_key": "prep-minimum-workers-weighted-interval-demand",
+      "preparation_id": "PREP-149",
+      "title_en": "Minimum workers from weighted interval demand",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Inclusive integer days and half-open continuous intervals require different endpoint handling; growing CPU-log queries assume a consistent finite snapshot.",
+      "seed_question_sha256": "c69c069f1d3a585a796f00886bec62ec5895bc3da3217f60a8f8124b9a43c191"
+    },
+    {
+      "question_key": "prep-multiply-four-registers-unit-instructions",
+      "preparation_id": "PREP-035",
+      "title_en": "Multiplication with four registers and unit instructions",
+      "kind": "custom_isa",
+      "suite_languages": [],
+      "validation_scope": "The restricted register program requires an interpreter enforcing the allowed four-register operations and zero/nonzero jumps; compiling Python multiplication is not validation of the submitted instruction program.",
+      "seed_question_sha256": "61071fd49a4785ededb4a708a0e23e630ed5d9cadd6246338a86846933c3f533"
+    },
+    {
+      "question_key": "prep-one-active-bit-signed-int32-pattern",
+      "preparation_id": "PREP-105",
+      "title_en": "One active bit in an int32 pattern, including the sign bit",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Implement is_one_bit_active(n), returning a Boolean over the whole int32 pattern, including the sign bit; INT32_MIN is true.",
+      "seed_question_sha256": "240ef90c68119e945aac6ca2cf87f4cb87d4af95cc1449c045298b1ffbe997ab"
+    },
+    {
+      "question_key": "prep-one-two-missing-values",
+      "preparation_id": "PREP-041",
+      "title_en": "Find one or two values removed from an array",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Part C only: missing_zero_to_n(a), n=len(a), contains distinct values in 0..n. Return the one missing value. The 1..N/two-omission parts are not tested here.",
+      "seed_question_sha256": "c2f4708add3c2c81594040ace961ced04ef20bae58223c2a5a12ae879046f171"
+    },
+    {
+      "question_key": "prep-pair-sum-existence-and-optimization",
+      "preparation_id": "PREP-040",
+      "title_en": "Does an array contain a pair with a target sum?",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Return a boolean using distinct occurrences, allowing duplicate values; samples do not establish the complexity and memory tradeoff.",
+      "seed_question_sha256": "79420609e97b847de2a44eb66893f786676a7d366e49e3e665ca900205b71b1a"
+    },
+    {
+      "question_key": "prep-pairwise-minimum-maximum-comparisons",
+      "preparation_id": "PREP-142",
+      "title_en": "Minimum and maximum with optimal comparisons",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Returned extrema alone do not establish ceil(3N/2)-2 element comparisons, empty behavior or optimality proof.",
+      "seed_question_sha256": "3d4ffd6e380c823fe5f7f092cbd9b00a2e8921c30bd5c8ff01671d0cdc54c3f7"
+    },
+    {
+      "question_key": "prep-point-in-simple-polygon-ray-crossing",
+      "preparation_id": "PREP-087",
+      "title_en": "Point in a polygon — ray crossing parity",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "The main contract assumes perimeter order, simplicity and a point off every supporting line; boundary/self-intersection extensions require separate policies.",
+      "seed_question_sha256": "59a5acad7a87b90d962eb5db9c187a157dd4463abfb0fe909c9d5e3acc0ff843"
+    },
+    {
+      "question_key": "prep-postfix-expression-stack-evaluation",
+      "preparation_id": "PREP-123",
+      "title_en": "Evaluate a postfix expression with a stack",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Implement evaluate_postfix(tokens) with integer tokens and +,-,*. Only valid expressions are executed; invalid-input handling is reviewed separately.",
+      "seed_question_sha256": "e695dc4ba08e07ed3aba1b5a0044fb0edead4dbe9004bcb22784bbca14f13a97"
+    },
+    {
+      "question_key": "prep-power-of-two-check",
+      "preparation_id": "PREP-023",
+      "title_en": "Power-of-two test with a constant number of operations",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript",
+        "c",
+        "cpp"
+      ],
+      "validation_scope": "Implement is_power_of_two(n) for unsigned32, returning a Boolean. Tests check output; the operation-count argument is reviewed separately. C/C++ signature: uint32_t is_power_of_two(uint32_t n), returning 0/1; no main.",
+      "seed_question_sha256": "e429ed26dbd010310c2662d67c79077ea25aaa3ced9874f0e4f1c8e42142439b"
+    },
+    {
+      "question_key": "prep-primitive-register-multiply-and-absolute-difference",
+      "preparation_id": "PREP-125",
+      "title_en": "Product and absolute difference in a four-instruction register language",
+      "kind": "custom_isa",
+      "suite_languages": [],
+      "validation_scope": "Requires an educational interpreter enforcing immediate arithmetic-result branching, natural registers and forbidden DEC-at-zero; the 26-register/HALT and eight-register/fallthrough variants differ.",
+      "seed_question_sha256": "c8d2f82b52b1388b6db8239b4289cef2fc1822955b619256c0c0e74e86a07c05"
+    },
+    {
+      "question_key": "prep-random-permutation-fisher-yates",
+      "preparation_id": "PREP-022",
+      "title_en": "Random permutation without duplicates",
+      "kind": "randomized",
+      "suite_languages": [],
+      "validation_scope": "Permutation, array and pixel variants need bounded independent random-draw contracts and no-loss/no-duplicate checks; one random output does not establish uniformity.",
+      "seed_question_sha256": "c2acace68c7156410979f9ad6fc47900e2c7196c9b38da68e6c1feef578491e8"
+    },
+    {
+      "question_key": "prep-recursion-benefits-cost-and-termination",
+      "preparation_id": "PREP-196",
+      "title_en": "When recursion helps, and what it costs",
+      "kind": "conceptual",
+      "suite_languages": [],
+      "validation_scope": "This is a conceptual comparison using nonnegative summation examples; matching sums cannot grade readability, base-case proofs, stack limits or the recursion cost discussion.",
+      "seed_question_sha256": "7d8b21be3e0f6cfd0e036eaa84f616aa26f2b6e90ff935746c2dfad424743a21"
+    },
+    {
+      "question_key": "prep-reverse-exactly-eight-bits-without-array",
+      "preparation_id": "PREP-094",
+      "title_en": "Reverse eight bits without an array",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript",
+        "c",
+        "cpp"
+      ],
+      "validation_scope": "Return the reversal of all eight bits, including leading zeros. This tests only the fixed-eight-bit part. Python/JavaScript: reverse8(n). C/C++: uint32_t reverse8(uint32_t n), no main; input 0..255.",
+      "seed_question_sha256": "2146d449f43a01b84bbe33f07ee7a29b4b38f77d10608aa58040a002d8a7d499"
+    },
+    {
+      "question_key": "prep-reverse-words-using-character-reversal",
+      "preparation_id": "PREP-187",
+      "title_en": "Reverse word order by reusing character reversal",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Part B: reverse_words(text) returns reversed word order, retaining all characters and reversing the order of space runs. Mandatory reuse of the character-reversal function needs review.",
+      "seed_question_sha256": "26a82205db0e4ce974355d799dae267d717a2afae04a2d5b6fafabbdabc7ea75"
+    },
+    {
+      "question_key": "prep-singly-linked-list-floyd-cycle",
+      "preparation_id": "PREP-141",
+      "title_en": "Detect a linked-list cycle with two pointers",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Finite static nodes may cycle by identity; empty, self-cycle, cycle entry and link preservation need a linked-node harness.",
+      "seed_question_sha256": "553384d849f7a1c92f670509489b210623a7f5051730e15cf49f218013f1153b"
+    },
+    {
+      "question_key": "prep-sixty-four-slot-inband-free-list",
+      "preparation_id": "PREP-117",
+      "title_en": "64 slots and 32 external control bits — an in-band free list",
+      "kind": "stateful",
+      "suite_languages": [],
+      "validation_scope": "Free-slot link metadata is permitted while allocated 64-bit payload must remain intact; repeated/stale free is explicitly outside the contract.",
+      "seed_question_sha256": "6ecce37fa0588d85ca1ed99b148791daa42d42d698085b948c90e848e097043c"
+    },
+    {
+      "question_key": "prep-software-fibonacci-recursion-improvement",
+      "preparation_id": "PREP-061",
+      "title_en": "Software Fibonacci — recursion, complexity and improvements",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Implement fibonacci(n) for 0..30, with F0=0,F1=1. Tests check values; recursion versus iteration and complexity require reasoning review.",
+      "seed_question_sha256": "6bf9b6e89d5adf78d9ccae8fd2cb372967dc4002480e1fe09e603bc9e9cf15d8"
+    },
+    {
+      "question_key": "prep-stack-with-prefix-minimum",
+      "preparation_id": "PREP-131",
+      "title_en": "Stack with constant-time minimum",
+      "kind": "stateful",
+      "suite_languages": [],
+      "validation_scope": "Needs duplicate-minimum and empty-operation sequence tests; samples alone do not prove the O(1) primitive bound or exception semantics.",
+      "seed_question_sha256": "df4b7358994a53fc3974af73b6f9014ff4a7e77b223659f85ebf6470f7341303"
+    },
+    {
+      "question_key": "prep-stock-one-transaction-best-days",
+      "preparation_id": "PREP-066",
+      "title_en": "Best buy and sell days for one stock transaction",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Must enforce buy<sell, optional no-trade behavior and earliest-buy/earliest-sell ties; mandatory-loss variant has a separate contract.",
+      "seed_question_sha256": "7d9bd044c6442682d7c9225d57c7cec0bf1c12f370ee407dac999919be0d3177"
+    },
+    {
+      "question_key": "prep-swap-without-temp-fixed-width",
+      "preparation_id": "PREP-077",
+      "title_en": "Swap two numbers without a temporary — including 8-bit values",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Unbounded arithmetic, defined 8-bit modular wrap and aliased storage need separate checks; output pairs do not prove the no-temporary restriction.",
+      "seed_question_sha256": "154f634f16613c11950e10967e98d7b74e28a29d5e367c017c30fd5c66390f11"
+    },
+    {
+      "question_key": "prep-thirty-two-slot-bitmap-allocator",
+      "preparation_id": "PREP-102",
+      "title_en": "Allocate 32 memory slots using one occupancy bitmap",
+      "kind": "stateful",
+      "suite_languages": [],
+      "validation_scope": "A stateful harness must test exhaustion, lowest-free choice and invalid/double free. The hardware push/pop extension additionally needs reset and simultaneous-request timing tests.",
+      "seed_question_sha256": "b2ee3eacec96b659e305b1ce6adfeb1a7142886f3fc3c31904667a86a510fc49"
+    },
+    {
+      "question_key": "prep-three-color-in-place-partition",
+      "preparation_id": "PREP-019",
+      "title_en": "In-place three-color array partition in linear time",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Numeric 0/1/2 extension: sort012(a) mutates and returns the sorted array. Tests compare the returned values only; in-place operation, one traversal and memory use need review.",
+      "seed_question_sha256": "d0f98514d3612492dd3eed6f2a115b1ae042d6b6c70c29013aed1934a105634b"
+    },
+    {
+      "question_key": "prep-turtle-single-sequence-return-position",
+      "preparation_id": "PREP-182",
+      "title_en": "Did the turtle return to its starting position?",
+      "kind": "simulation",
+      "suite_languages": [],
+      "validation_scope": "Simulate one sequence of uppercase R/L/M; final position, not final heading or repeated-sequence boundedness, determines the result.",
+      "seed_question_sha256": "f56f419fc3810a9b4ec08571e0f28dd0706dcb494a1247f1d53b31250a6ba952"
+    },
+    {
+      "question_key": "prep-two-missing-zero-through-n-plus-one-no-aux-array",
+      "preparation_id": "PREP-088",
+      "title_en": "Two omissions in 0 through n+1 — no auxiliary array",
+      "kind": "algorithm",
+      "suite_languages": [
+        "python",
+        "javascript"
+      ],
+      "validation_scope": "Implement two_missing(a): n distinct entries from 0..n+1. Return both missing numbers in any order. Tests do not measure auxiliary storage.",
+      "seed_question_sha256": "8e6afe0511cd6c7d03f8aea80835ba4eb065261afdf573e88b795fb6b4fb6c9d"
+    },
+    {
+      "question_key": "prep-uniform-random7-from-random5-rejection",
+      "preparation_id": "PREP-184",
+      "title_en": "From Random5 to Random7 without bias",
+      "kind": "randomized",
+      "suite_languages": [],
+      "validation_scope": "Independent uniform Random5 calls and rejection are required; samples cannot prove exact uniformity, expected calls or almost-sure termination.",
+      "seed_question_sha256": "4047c7012a3493a4cd914501826b9b9f0d03d991ecd60d2e78a25081fdcdd658"
+    },
+    {
+      "question_key": "prep-unique-odd-frequency-digit",
+      "preparation_id": "PREP-027",
+      "title_en": "Find the unique odd-frequency digit",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Requires the promised frequency pattern and digit domain; returned digit samples do not prove complexity or the lower-bound explanation.",
+      "seed_question_sha256": "7ee5199c9e0ceb8631dd5a3d683e1288b8bbccf2fc5f3b1d3ffa043ca5cb32eb"
+    },
+    {
+      "question_key": "prep-unsigned-integer-binary-text-c",
+      "preparation_id": "PREP-138",
+      "title_en": "Unsigned integer to binary text in C",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "The C API includes actual capacity, NUL termination, NULL and no writes on failure; a printed binary string alone does not validate buffer safety.",
+      "seed_question_sha256": "3ddb3af5a2250bad2e08157eea09c900f3c8b0005acadb880c451208e2dae74d"
+    },
+    {
+      "question_key": "prep-zero-matrix-original-rows-columns",
+      "preparation_id": "PREP-150",
+      "title_en": "Zero matrix rows and columns from original zeros",
+      "kind": "algorithm",
+      "suite_languages": [],
+      "validation_scope": "Only original zero locations trigger clearing; harness must check same-object mutation, rectangular validation before writes and no propagated clearing.",
+      "seed_question_sha256": "408dc8690dc5b649e5b1f57ca9b138043ea42510f71a41b511868175a8d78b87"
+    }
+  ],
+  "seed_hash_format": "SHA256 of UTF-8 json.dumps(full seed question, sort_keys=True, ensure_ascii=False, separators=(comma, colon)), with no trailing newline."
+}
