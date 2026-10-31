@@ -263,3 +263,14 @@ Source omits memory, mutation and empty behavior; these are clarified. VSW-007 i
 - [solutions/prep_141_floyd_cycle.py](../solutions/prep_141_floyd_cycle.py)
 - [checks/check_prep_141.py](../checks/check_prep_141.py)
 - [checks/prep-141-verification.json](../checks/prep-141-verification.json)
+
+
+## מקור נוסף — 31.10.2026, מקבץ110
+
+[צילום מקור פרטי 17](../sources/2026-10-31-batch21-17.png)
+
+נתונה רשימה מקושרת. איך למצוא אם יש לולאה ברשימה?
+
+שיוכי מקור מדווחים: NVIDIA.
+
+מקור נוסף בלבד; הגרסה, הנוסח, הרמזים והפתרון נשמרו.

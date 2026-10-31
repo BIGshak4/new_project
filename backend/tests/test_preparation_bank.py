@@ -41,12 +41,12 @@ def test_compilation_preserves_every_question_and_all_original_images(catalog):
     built, uploads = builder.load()
     assert built == json.loads((SEEDS / "questions/preparation_bank.json").read_text(encoding="utf-8"))
     assert uploads == manifest["files"]
-    assert len(source["questions"]) == len(built) == 197
+    assert len(source["questions"]) == len(built) == 208
     for q in built:
         for media in q["assets"]["bank_media"]:
             if any(word in media["filename"] for word in ("external-answer", "clarification", "style-reference", "course-adder-summary")):
                 assert media["role"] == "solution", "An explanation screenshot must never leak before reference reveal"
-    assert len(catalog.questions) == 227
+    assert len(catalog.questions) == 238
     archived_images = {p.relative_to(ROOT / "interview_preparation").as_posix()
                        for folder in ("sources", "diagrams")
                        for p in (ROOT / "interview_preparation" / folder).glob("*.png")}
@@ -156,7 +156,7 @@ async def test_unsafe_storage_path_is_rejected_before_network():
 async def test_archive_screenshots_never_receive_learner_links(catalog):
     archive = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])
                if m.get("source_path", "").startswith("sources/")]
-    assert len(archive) == 311
+    assert len(archive) == 332
     # No credentials or network needed: the boundary applies before signing.
     assert await question_resources.sign_media(archive, "", "") == []
     all_media = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])]
@@ -232,6 +232,7 @@ def test_third_intake_is_bilingual_study_only_and_preserves_frozen_solution_revi
         "prep-sixteen-input-interrupt-controller",
         "prep-random-permutation-fisher-yates",
         "prep-bridge-torch-twelve-hours",
+        "prep-boolean-function-two-muxes",
     }
     assert not (set(q.key for q in additions.values()) & reviewed)
 

@@ -13,6 +13,7 @@ from pathlib import Path
 
 BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_batch90.json").read_bytes())
 BATCH110_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_batch110.json").read_bytes())
+BATCH21_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_20261031_batch21.json").read_bytes())
 VARIANT_IDS = frozenset(BASELINE["variant_ids"])
 
 
@@ -61,7 +62,8 @@ def _before_record(question, baseline):
         assert question.keys() - set(projection["keys"]) <= {
             "sources", "source_tags", "reported_companies", "source_topic_tags"
         }, ident
-    for key, transition in projection.get("scalar_provenance_transitions", {}).items():
+    transitions = projection.get("scalar_provenance_transitions", {}) | projection.get("scalar_revision_transitions", {})
+    for key, transition in transitions.items():
         assert question[key] == transition["after"], (ident, key)
         restored[key] = transition["before"]
     for key, shape in projection["append_shapes"].items():
@@ -70,8 +72,12 @@ def _before_record(question, baseline):
     return restored
 
 
+def before_batch21_record(question):
+    return _before_record(question, BATCH21_BASELINE)
+
+
 def before_batch110_record(question):
-    return _before_record(question, BATCH110_BASELINE)
+    return _before_record(before_batch21_record(question), BATCH110_BASELINE)
 
 
 def before_batch90_record(question):
@@ -85,6 +91,11 @@ def technical_before_batch110(question):
     return copy.deepcopy({key: question.get(key) for key in ("version", "translations", "prepared_hints")})
 
 
+def technical_before_batch21(question):
+    question = before_batch21_record(question)
+    return copy.deepcopy({key: question.get(key) for key in ("version", "translations", "prepared_hints")})
+
+
 def technical_before_batch90(question):
     question = before_batch90_record(question)
     return copy.deepcopy({key: question.get(key) for key in ("version", "translations", "prepared_hints")})
@@ -94,7 +105,7 @@ def _assert_archive(archive, baseline, restore):
     by_id = {question["id"]: question for question in archive["questions"]}
     assert set(baseline["record_order"]) <= by_id.keys()
     original = {key: archive[key] for key in baseline["top_level"]}
-    assert archive["question_count"] == len(archive["questions"]) == 197
+    assert archive["question_count"] == len(archive["questions"]) == 208
     original["question_count"] = baseline["top_level"]["question_count"]
     original["questions"] = [restore(by_id[ident]) for ident in baseline["record_order"]]
     assert digest(original) == baseline["canonical_sha256"]
@@ -102,6 +113,10 @@ def _assert_archive(archive, baseline, restore):
 
 def assert_pre_batch110_archive(archive):
     _assert_archive(archive, BATCH110_BASELINE, before_batch110_record)
+
+
+def assert_pre_batch21_archive(archive):
+    _assert_archive(archive, BATCH21_BASELINE, before_batch21_record)
 
 
 def assert_pre_batch90_archive(archive):
@@ -120,3 +135,18 @@ def assert_pre_batch110_assets(uploads):
     assert BATCH110_BASELINE["asset_sha256"].keys() <= uploads.keys()
     for path, previous_hash in BATCH110_BASELINE["asset_sha256"].items():
         assert digest(uploads[path]) == previous_hash, path
+
+
+def assert_pre_batch21_assets(uploads):
+    assert BATCH21_BASELINE["asset_sha256"].keys() <= uploads.keys()
+    for path, previous_hash in BATCH21_BASELINE["asset_sha256"].items():
+        assert digest(uploads[path]) == previous_hash, path
+
+
+def assert_pre_batch21_localization(localization):
+    """Localized material has its own frozen values and JSON types in both languages."""
+    for ident, previous in BATCH21_BASELINE["localized_material"].items():
+        current = localization[ident]
+        restored = (_prefix(current, previous["append_shape"], ("localized_material", ident))
+                    if "append_shape" in previous else current)
+        assert digest(restored) == previous["sha256"], ("localized_material", ident)

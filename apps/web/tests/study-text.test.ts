@@ -96,10 +96,10 @@ test("formatting retains the existing protections against author HTML, image req
   assert.doesNotMatch(html, /<script|<img|javascript:|href=/);
 });
 
-test("all 227 bilingual catalog prompts and references render with the production study-text component", () => {
+test("all 238 bilingual catalog prompts and references render with the production study-text component", () => {
   const questions = ["example_bank", "preparation_bank"].flatMap(name =>
     JSON.parse(readFileSync(new URL(`../../../backend/seeds/questions/${name}.json`, import.meta.url), "utf8")));
-  assert.equal(questions.length, 227);
+  assert.equal(questions.length, 238);
   for (const question of questions) {
     for (const language of ["he", "en"]) {
       const text = question.translations[language];
@@ -109,6 +109,10 @@ test("all 227 bilingual catalog prompts and references render with the productio
         }));
         assert.ok(html.length > 50, `${question.key}/${language}/${field}`);
         assert.doesNotMatch(html, /<script|<img/);
+        if (question.key === "prep-boolean-function-two-muxes" && field === "prompt") {
+          assert.match(html, /<code[^>]*dir="ltr"[^>]*>[^<]*f=\(a\*b\*c(?:&#x27;|')\)[^<]*<\/code>/,
+            `${language}: the ambiguous source formula must retain its literal multiplication marks`);
+        }
       }
     }
   }

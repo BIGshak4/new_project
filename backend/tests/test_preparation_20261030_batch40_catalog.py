@@ -22,7 +22,7 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
-from tests.preparation_history import assert_pre_batch90_assets
+from tests.preparation_history import assert_pre_batch90_assets, technical_before_batch21
 from tests.test_practice_hardening import scripted
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -84,8 +84,8 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
 
 
 def test_twelve_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 197
-    assert len(catalog.questions) == 227
+    assert len(archive()["questions"]) == 208
+    assert len(catalog.questions) == 238
     additions = {
         q.assets.get("preparation_id"): q
         for q in catalog.questions.values()
@@ -227,11 +227,14 @@ PREFIX_BASELINES = {'PREP-009': {'old_version': 1, 'languages': {'he': {'prompt'
 def test_four_expanded_questions_keep_runtime_prefixes_hints_and_invalidate_whole_solution_attestation(
     catalog,
 ):
+    originals = {q["id"]: q for q in json.loads((BANK / "questions.json").read_bytes())["questions"]}
     for ident, baseline in PREFIX_BASELINES.items():
         question = next(q for q in catalog.questions.values() if q.assets.get("preparation_id") == ident)
         if ident == "PREP-096":
             # The later thousand-person appendix must keep this batch's exact prefix.
             assert question.version >= baseline["old_version"] + 1
+        elif ident == "PREP-094":
+            assert technical_before_batch21(originals[ident])["version"] == baseline["old_version"] + 1
         else:
             assert question.version == baseline["old_version"] + 1
         assert solution_review(question).status == "pending_review"
@@ -252,7 +255,7 @@ def test_batch40_inventory_retains_source_bytes_and_does_not_alias_new_variation
     sources = [value["local_path"] for value in uploads.values() if value["local_path"].startswith("sources/")]
     assert_pre_batch90_assets(uploads)
     assert len(uploads) > 921
-    assert len(sources) == 311 and len(set(sources)) == 310
+    assert len(sources) == 332 and len(set(sources)) == 331
     source_names = json.loads((ROOT / "apps/web/src/lib/source-screenshots.json").read_bytes())
     assert set(source_names) == {Path(path).name for path in sources}
     assert all(f"2026-10-30-batch40-{i:02d}.png" in source_names for i in range(1, 21))

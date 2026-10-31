@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "event_streams_checked": 156158,
+  "observations_checked": 888860,
+  "boundary_conventions": [
+    "(t-10,t]",
+    "[t-10,t]"
+  ],
+  "threshold": "at least five distinct reports",
+  "method": "Enumerate every binary-report stream through length six with every nondecreasing timestamp tuple from seven boundary-focused times. Compare every observation with full-history counting under both endpoint conventions; actual nanosecond boundary, six simultaneous reports and loop-stop behavior checked.",
+  "limitation": "One report=one new incident, observed on a monotonic clock. Does not infer physical event times from a persistent level or delayed batch report. Ten-second boundary convention is explicit."
+}

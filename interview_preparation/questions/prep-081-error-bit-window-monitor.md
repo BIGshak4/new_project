@@ -251,3 +251,22 @@ Sample ERROR each cycle and update a cycle count plus an error count saturated a
 - [solutions/prep_081_error_monitor.py](../solutions/prep_081_error_monitor.py)
 - [checks/check_prep_081.py](../checks/check_prep_081.py)
 - [checks/prep-081-verification.json](../checks/prep-081-verification.json)
+
+
+## מקור נוסף — 31.10.2026, מקבץ110
+
+[צילום מקור פרטי 12](../sources/2026-10-31-batch21-12.png)
+
+קיים קטע הקוד while(!exit) rc = check_error() ... כאשר check_error מחזירה 0 או 1 לפי האם התרחשה שגיאה או לא. יש לצאת מהלולאה רק אם התרחשו 5 שגיאות ב־10 השניות האחרונות.
+
+שיוכי מקור מדווחים: NVIDIA, Amazon.
+
+[צילום מקור פרטי 20](../sources/2026-10-31-batch21-20.png)
+
+קיים קטע הקוד while(!exit) rc = check_error() ... כאשר check_error מחזירה 0 או 1 לפי האם התרחשה שגיאה או לא. יש לצאת מהלולאה רק אם התרחשו 5 שגיאות ב־10 השניות האחרונות.
+
+שיוכי מקור מדווחים: NVIDIA, Amazon.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-081-time_window_batch21-addendum.md)

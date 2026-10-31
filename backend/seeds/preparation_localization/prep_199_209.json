@@ -1,0 +1,770 @@
+{
+  "PREP-201": {
+    "assumptions": {
+      "he": [
+        "מעגל סופי וחיובי; שתי תנועות הפוכות אמינות; מותר מונה מקומי; בלעדיות על המנורות."
+      ],
+      "en": [
+        "Finite positive cycle, reliable reversible movement, local counter permitted and exclusive lamp control."
+      ]
+    },
+    "optimality": {
+      "he": "Θ(n²) תנועות במקרה הגרוע לאלגוריתם הנתון; O(1) מונים ו־O(log n) ביטים.",
+      "en": "Worst-case Θ(n²) movements for this algorithm; O(1) counters requiring O(log n) bits."
+    },
+    "verification": {
+      "he": "18,439 הרצות עם כל המצבים וההתחלות ל־n=1..10 ומקרי חסם תנועה נוספים; לא בדיקה פיזית.",
+      "en": "18,439 runs covering every state/start for n=1..10 plus directed movement-bound cases; no physical-room experiment."
+    },
+    "edge_cases": {
+      "he": [
+        "n=1; כל המנורות כבויות; כולן דולקות; המנורה בעוגן התחילה כבויה; סימן מטעה בחדר הסמוך."
+      ],
+      "en": [
+        "n=1; all lamps off; all on; initially off anchor; a misleading lamp in the adjacent room."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "אין לקרוא את העוגן מרחוק או להניח כתובות כמו ב־PREP-178.",
+        "לא מחזירים את המרחק למנורה הדולקת הראשונה בלי בדיקת העוגן.",
+        "חייבים לחזור בדיוק k צעדים, בלי לכבות סימנים נוספים בחזרה."
+      ],
+      "en": [
+        "Do not read the anchor remotely or assume addresses as in PREP-178.",
+        "Do not report the first lit-lamp distance without checking the anchor.",
+        "Retrace exactly k steps and leave other lamps unchanged on the return."
+      ]
+    },
+    "interview_answer": {
+      "he": "אני מדליק עוגן. בכל ניסיון מכבה את המנורה הדולקת הראשונה וחוזר בספירה; רק אם העוגן כבה המרחק הוא אורך המעגל.",
+      "en": "Light an anchor, clear the first lit lamp and backtrack by counting. Only an extinguished anchor proves that the count is the cycle length."
+    },
+    "source_ambiguities": {
+      "he": [
+        "הצילום אינו מפרט כיווניות או זיכרון מקומי; יכולת ספירת צעדים וחזרה אמינה הן השלמות מפורשות."
+      ],
+      "en": [
+        "The source omits orientation and local-memory details; reliable reversible walking and counted steps are explicit assumptions."
+      ]
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "למה באותו רעיון זיכרון עם כתובות יכול לחסוך תנועה?",
+        "direction": "ב־PREP-178 קוראים את כתובת העוגן אחרי כל כתיבה מרוחקת. כאן כל בדיקה מחייבת חזרה פיזית.",
+        "integration": "מוכן בתוכן; לא מחובר לתור אינטראקטיבי."
+      },
+      "en": {
+        "question": "Why can addressable memory save movement?",
+        "direction": "PREP-178 can read the anchor after remote writes; physical rooms require walking back for each check.",
+        "integration": "Prepared in content; not connected to an interactive queue."
+      }
+    }
+  },
+  "PREP-208": {
+    "assumptions": {
+      "he": [
+        "מזהי קבלה ייחודיים בסדר עולה לפני dispatch; השלמה אמינה אחת לכל מזהה; צילום אטומי; אין גלישה."
+      ],
+      "en": [
+        "Unique increasing accepted IDs before dispatch; one reliable completion per ID; atomic snapshots; no wraparound."
+      ]
+    },
+    "optimality": {
+      "he": "O(n) עבודה כוללת בתוחלת hash על n השלמות; צעד יחיד O(n) אפשרי. O(h) מצב חורים, לא בהכרח O(מספר פעילים).",
+      "en": "Expected O(n) aggregate work for n completions with hashing; one step can be O(n). O(h) hole-buffer state, not necessarily bounded by active tasks."
+    },
+    "verification": {
+      "he": "362,880 בדיקות קידומות מול קבוצת המשימות הנדרשות; אין בדיקת עומס תהליכונים או סינתזת חומרה.",
+      "en": "362,880 prefix checks against required-task sets; no threaded stress test or hardware synthesis."
+    },
+    "edge_cases": {
+      "he": [
+        "לחיצה ריקה; השלמות מחוץ לסדר; משימה ישנה תקועה; לחיצות מרובות; השלמה כפולה; שיגור שנכשל אחרי הקבלה; גלישת מזהים."
+      ],
+      "en": [
+        "Empty snapshot; reordered completions; stalled old task; multiple presses; duplicate completion; failed dispatch after acceptance; ID wraparound."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "ספירת כל ההשלמות עלולה לכלול עבודה מאוחרת במקום המשימות הנדרשות.",
+        "המתנה לריקון מלא עלולה לא להסתיים כשממשיכות להיכנס משימות.",
+        "אי אפשר לצלם מונה קבלה בלי לסנכרן אותו עם הקבלה וההשלמה."
+      ],
+      "en": [
+        "A total completion count may count later work instead of required tasks.",
+        "Waiting for global emptiness can fail under continuing arrivals.",
+        "Snapshot capture must be synchronized with acceptance and completion."
+      ]
+    },
+    "interview_answer": {
+      "he": "בלחיצה שומרים מזהה יעד. מודיעים כשהקידומת השלמה, ללא חורים, מגיעה אליו; משימות מאוחרות אינן משנות את היעד.",
+      "en": "Capture a target ID on the press; notify when the hole-free completed prefix reaches it. Later tasks never change that target."
+    },
+    "source_ambiguities": {
+      "he": [
+        "הצילום אינו קובע סדר השלמה, אמינות מזהים או מדיניות כשל. FIFO הוא מקרה פשוט נפרד, לא הנחה סמויה."
+      ],
+      "en": [
+        "The source omits completion order, ID reliability and failure policy. FIFO is a separate simpler case, not a hidden assumption."
+      ]
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם מזהים הם ברוחב מוגבל?",
+        "direction": "יש למנוע שימוש חוזר לפני שכל הקבלות והבקשות הישנות יצאו מן החלון, או להשתמש בדורות וכללי השוואה מודולרית מוכחים.",
+        "integration": "מוכן בתוכן; לא מחובר לתור אינטראקטיבי."
+      },
+      "en": {
+        "question": "What changes with bounded-width IDs?",
+        "direction": "Prevent reuse until old tasks/requests leave the window, or use generations and proven modular comparison rules.",
+        "integration": "Prepared in content; not connected to the interactive queue."
+      }
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "תיעוד Python — Condition והמתנה לפי predicate",
+          "url": "https://docs.python.org/3/library/threading.html#condition-objects"
+        }
+      ],
+      "en": [
+        {
+          "title": "Python documentation — Condition predicate waiting",
+          "url": "https://docs.python.org/3/library/threading.html#condition-objects"
+        }
+      ]
+    }
+  },
+  "PREP-209": {
+    "assumptions": {
+      "he": [
+        "כל אירוע קבלה/יציאה נצפה; מזהה קיים נשמר או FIFO גלובלי מפורש; התחלה ריקה; שעון משותף ללא גלישה; אין אובדן או שכפול."
+      ],
+      "en": [
+        "Every accepted-arrival/departure observed; preserved existing ID or explicit global FIFO; initially empty; common clock without wrap; no loss/duplication."
+      ]
+    },
+    "optimality": {
+      "he": "O(P) מקום לחותמות P הפקטים הפעילים ו־O(1) פעולות מילים בתוחלת לכל אירוע תחת hash; זמן אמיתי ורוחבי ביטים דורשים תכן נוסף.",
+      "en": "O(P) storage for active-packet timestamps and expected O(1) word operations per event with hashing; hardware timing and bit widths need further design."
+    },
+    "verification": {
+      "he": "20,001 בדיקות מול אורקל חיי פקטים וזהות שטח; דוגמה נגדית לממוצע יוצאים מתוך ספירות בלבד. אין ניסוי תעבורה או בדיקת התכנסות Little.",
+      "en": "20,001 checks against lifetime/area oracles and a count-only indistinguishability example. No traffic experiment or Little-law convergence test."
+    },
+    "edge_cases": {
+      "he": [
+        "אין פקטים שיצאו; תפוסה אפס; קבלות באותו זמן; backpressure; פקטים קיימים בתחילת המדידה; יציאה לא מזוהה; אובדן; גלישת שעון."
+      ],
+      "en": [
+        "No departures; zero occupancy; simultaneous arrivals; backpressure; initially resident packets; unidentified departure; loss; clock wrap."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "תפוסה חלקי קצב רגעי אינה ממוצע יוצאים מדויק.",
+        "ספירה של valid בכל מחזור עלולה לספור אותו פקט כמה פעמים.",
+        "אין להוסיף תג שחוצה את הקופסה בלי שהממשק מרשה זאת."
+      ],
+      "en": [
+        "Instantaneous occupancy divided by an instantaneous rate is not an exact departed mean.",
+        "Counting valid every cycle can count one stalled packet repeatedly.",
+        "Do not invent permission to send a new tag through the box."
+      ]
+    },
+    "interview_answer": {
+      "he": "בממשק מזוהה אני מצמיד חותמת בקבלה וסוכם זמני שהייה ביציאה. בלי זיהוי או FIFO אין תמיד מידע מספיק; שטח תפוסה כולל גם גיל של פקטים שעדיין בפנים.",
+      "en": "With observable identity, timestamp arrivals and accumulate lifetimes at departures. Without identity or FIFO information can be insufficient; occupancy area also contains resident ages."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המילה “ממוצע” אינה מגדירה אוכלוסייה או חלון. גם יכולת תצפית בקבלה, ביציאה ובזהות אינה מצוינת; הפתרון מפריד בין החוזים האפשריים."
+      ],
+      "en": [
+        "“Average” specifies neither population nor observation window; acceptance/departure/identity visibility is also missing. The solution separates these contracts."
+      ]
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מתי אפשר לחשב ממוצע מדויק בלי לשמור חותמת לכל פקט?",
+        "direction": "בחלון שהתחיל והסתיים ריק, שטח התפוסה חלקי מספר הפקטים נותן את ממוצע כל זמני השהייה בחלון. בחלון פתוח נשאר איבר גילים.",
+        "integration": "מוכן בתוכן; לא מחובר לתור אינטראקטיבי."
+      },
+      "en": {
+        "question": "When can an exact mean be computed without per-packet timestamps?",
+        "direction": "An empty-to-empty observation interval has mean equal to occupancy area divided by packet count. An open interval retains a resident-age term.",
+        "integration": "Prepared in content; not connected to the queue."
+      }
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "MIT — חוק Little למערכת יציבה",
+          "url": "https://ocw.mit.edu/courses/6-02-introduction-to-eecs-ii-digital-communication-systems-fall-2012/resources/lecture-22-sliding-window-analysis-littles-law/"
+        },
+        {
+          "title": "MIT — הערות תורים וקצב מעבר",
+          "url": "https://web.mit.edu/6.02/www/s2012/handouts/16.pdf"
+        }
+      ],
+      "en": [
+        {
+          "title": "MIT — Little’s law for a stable system",
+          "url": "https://ocw.mit.edu/courses/6-02-introduction-to-eecs-ii-digital-communication-systems-fall-2012/resources/lecture-22-sliding-window-analysis-littles-law/"
+        },
+        {
+          "title": "MIT — queueing and throughput notes",
+          "url": "https://web.mit.edu/6.02/www/s2012/handouts/16.pdf"
+        }
+      ]
+    }
+  },
+  "PREP-199": {
+    "assumptions": {
+      "he": [
+        "אפיק מקביל, ביטי כמות יציבים ו־MUX הבוחר D0 כש־S=0.",
+        "רוחב שמונה הוא הנחת עריכה; רוטציה קבועה ורוטציה נשלטת הן חוזים נפרדים."
+      ],
+      "en": [
+        "Parallel input, stable amount bits and MUX selecting D0 for S=0.",
+        "Eight-bit width is an editorial choice; fixed and controlled rotations are separate contracts."
+      ]
+    },
+    "optimality": {
+      "he": "24 MUXes ועומק שלוש עבור הרשת המתוארת; אין טענת מינימום שערים או זמן פיזי. חיווט קבוע דורש אפס MUXes.",
+      "en": "The described network has 24 MUXes and depth three; no gate-count or physical-delay optimum is claimed. Fixed wiring needs zero MUXes."
+    },
+    "verification": {
+      "he": "נבדקו כל 2,122 זוגות המילה והכמות ברוחבים 1,2,4,8 מול רוטציית מחרוזת עצמאית. לא בוצעו הידור HDL, סינתזה או בדיקת תזמון.",
+      "en": "All 2,122 word/amount pairs at widths 1,2,4,8 matched an independent string-rotation oracle. No HDL compilation, synthesis or timing check."
+    },
+    "edge_cases": {
+      "he": [
+        "s=0 שומר את המילה.",
+        "אפסים ואחדות מלאים נשמרים; ביט יחיד מדגים כיוון וגלישה ציקלית."
+      ],
+      "en": [
+        "s=0 preserves the word.",
+        "All-zero and all-one words stay unchanged; one-hot words expose direction and wraparound."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "למלא אפס בקצה כמו בהזזה לוגית.",
+        "לספור 24 שכבות במקום שלוש שכבות של שמונה רכיבים."
+      ],
+      "en": [
+        "Zero-filling an edge as in a logical shift.",
+        "Counting twenty-four layers rather than three layers of eight cells."
+      ]
+    },
+    "interview_answer": {
+      "he": "אבנה שכבות רוטציה של 1,2,4, ובכל אחת MUX לכל ביט הנשלט בביט הכמות המתאים. רוטציה קבועה היא חיווט בלבד.",
+      "en": "Use stages of one, two and four positions, each with one MUX per bit controlled by the corresponding amount bit. A fixed rotation is wiring only."
+    },
+    "source_ambiguities": {
+      "he": "רוחב, כמות, שעון וזיכרון אינם מוגדרים בצילום. הם הופרדו במפורש כדי לא להפוך רוטציה צירופית לאוגר הזזה בטעות.",
+      "en": "Width, amount, clock and storage are unspecified. The contracts are separated to avoid silently replacing a combinational rotation with a shift register."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה ברוחב שאינו חזקה של שתיים?",
+          "answer_direction": "שמרו אינדוקס מודולו W והגדירו אם כמויות W ומעלה אסורות או ממופות מודולו W; מספר קודי הבקרה אינו בהכרח W.",
+          "principle": "רוחב קוד הבקרה אינו מגדיר אוטומטית תחום חוקי."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes for a width that is not a power of two?",
+          "answer_direction": "Use indices modulo W and specify whether amounts at least W are invalid or reduced modulo W; the control code count need not equal W.",
+          "principle": "Control width alone does not define the valid domain."
+        }
+      ]
+    }
+  },
+  "PREP-200": {
+    "assumptions": {
+      "he": [
+        "כניסות ובקרה יציבות אחרי זמן התייצבות; S ו־nS משלימים במודל האידאלי.",
+        "סופרים טרנזיסטורים בנפרד משערים, ואת מהפך הבקרה כאשר אינו חיצוני."
+      ],
+      "en": [
+        "Settled data/select inputs; S and nS are complementary in the ideal model.",
+        "Count transistors separately from gates and include select inversion when it is not external."
+      ]
+    },
+    "optimality": {
+      "he": "מושווים 14,6,4 טרנזיסטורים תחת ספירות מפורשות; שתי גרסאות המעבר אינן מבטיחות אותו מרווח רעש. אין טענת מינימום כללי.",
+      "en": "Compare fourteen, six and four devices under explicit counts; pass-only and TG versions do not guarantee identical noise margins. No global minimum claim."
+    },
+    "verification": {
+      "he": "כל שמונה שורות הנתונים והבקרה נבדקו ברשת NAND ובמתגי TG אידאליים. מודל המחשת NMOS מציג תקרה 0.75 V כאשר VDD=1 V, Vtn=0.25 V. זה אינו חישוב תהליך או SPICE.",
+      "en": "All eight data/select rows passed NAND and ideal-TG connectivity checks. An illustrative NMOS cap is 0.75 V at VDD=1 V, Vtn=0.25 V; this is not a process or SPICE calculation."
+    },
+    "edge_cases": {
+      "he": [
+        "שינוי S בזמן שהנתונים שונים עלול לייצר הפרעה או זמן high-Z בהתאם לתזמון המתגים.",
+        "nS מסופק מראש משנה את המניין."
+      ],
+      "en": [
+        "Changing S with unequal data can cause transients or high-Z intervals depending on switch timing.",
+        "An externally supplied nS changes the count."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשוות ארבעה שערים לארבעה טרנזיסטורים.",
+        "להסתיר מהפך או שיקום רמה.",
+        "להבטיח רמה גבוהה מלאה דרך NMOS יחיד."
+      ],
+      "en": [
+        "Comparing four gates with four transistors.",
+        "Hiding select inversion or level restoration.",
+        "Promising a full high rail through one NMOS."
+      ]
+    },
+    "interview_answer": {
+      "he": "אציג NAND ומהפך, אחר כך שני TG ומהפך: שישה טרנזיסטורים. שני NMOS ומהפך נותנים ארבעה, אבל האחד נחלש ולכן אציין שיקום וספי מקלט. המינימום תלוי בספרייה ובדרישת רמות.",
+      "en": "Show three NANDs plus inversion, then two TGs plus inversion: six transistors. Two NMOS switches plus inversion use four, but degrade a high, so receiver thresholds and restoration matter. Minimum count depends on the library and electrical contract."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר „רכיב”, מספר שלבי האופטימיזציה או אם „ללא CMOS” אוסר טכנולוגיה או רק לוגיקה סטטית משלימה. החלופות והנחות הספירה נשמרות בנפרד.",
+      "en": "The source does not define a component, optimization stages or whether “without CMOS” excludes technology or only static complementary logic. Alternatives and counting assumptions remain separate."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה קורה למניין אם צריך יציאה מחודשת ברמות מלאות ובעלת הנעה מוגדרת?",
+          "answer_direction": "יש להוסיף שלבי שיקום או buffers בהתאם לקוטביות, סף, עומס וספרייה. מימוש פסיבי קטן אינו בהכרח התא הדיגיטלי הזול ביותר.",
+          "principle": "עלות פונקציונלית ועלות חשמלית אינן אותו מדד."
+        }
+      ],
+      "en": [
+        {
+          "question": "What happens if a restored full-level output with specified drive is required?",
+          "answer_direction": "Add restoration or buffers according to polarity, thresholds, loading and library. A small passive core need not be the cheapest compliant digital cell.",
+          "principle": "Functional and electrical cost are different metrics."
+        }
+      ]
+    }
+  },
+  "PREP-202": {
+    "assumptions": {
+      "he": [
+        "0..5 כולל הקצה; השהיה של חזית קבלה אחת.",
+        "reset קודם ל־enable, והתאוששות מ־6/7 קודמת להחזקה."
+      ],
+      "en": [
+        "The endpoint five is included; updates occur at the sampling edge.",
+        "Reset overrides enable, and illegal six/seven recovery overrides hold."
+      ]
+    },
+    "optimality": {
+      "he": "שלושה FF בקידוד בינארי נדרשים ומספיקים לשישה מצבים. עלות הלוגיקה וההשהיה תלויות בספרייה.",
+      "en": "Three binary state FFs are necessary and sufficient for six states. Logic cost and delay depend on the library."
+    },
+    "verification": {
+      "he": "נבדקו כל 32 צירופי מצב, enable, reset ועוד 1000 חזיתות עם enable רציף מול מודולו שש. קוד SV מוצע לא הודר.",
+      "en": "All 32 state/enable/reset combinations and one thousand continuously enabled edges passed an independent modulo-six oracle. Proposed SV was not compiled."
+    },
+    "edge_cases": {
+      "he": [
+        "מצב חמש נשמר אם enable=0 וחוזר לאפס אם enable=1.",
+        "6/7 חוזרים לאפס גם כשהמונה כבוי; reset בזמן enable מאפס."
+      ],
+      "en": [
+        "Five holds when disabled and wraps when enabled.",
+        "Six/seven recover even while disabled; reset with enable clears."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לממש מודולו חמש ולדלג על חמש.",
+        "לתת ל־enable לחסום את reset.",
+        "להשתמש בפלט המונה כשעון."
+      ],
+      "en": [
+        "Implementing modulo five and omitting five.",
+        "Letting enable block reset.",
+        "Using a counter output as a clock."
+      ]
+    },
+    "interview_answer": {
+      "he": "אבחר שלושה FF ואעדכן באותו שעון. enable מחזיק או מקדם, חמש חוזר לאפס, reset קודם לכולם, וקודים שש ושבע מתאוששים בנפרד.",
+      "en": "Use three FFs on one clock. Enable holds or advances, five wraps, reset has priority, and six/seven have explicit recovery."
+    },
+    "source_ambiguities": {
+      "he": "נבחר חוזה תואם לדוגמת המונה הקיימת במאגר, כולל איפוס והתאוששות מפורשים, בלי לייחס אותם לצילום הקצר.",
+      "en": "The chosen contract preserves the existing example counter behavior, including explicit reset and recovery, without attributing those details to the terse source."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "האם enable=0 חייב לשמור גם מצב לא חוקי?",
+          "answer_direction": "זו החלטת מפרט. במימוש הזה ההתאוששות קודמת להחזקה; מדיניות אחרת תקפה אם מוגדרת, אך משנה בדיקות ואתחול.",
+          "principle": "סדר הקדימויות הוא חלק מהמפרט."
+        }
+      ],
+      "en": [
+        {
+          "question": "Must disabled operation retain an illegal state too?",
+          "answer_direction": "That is a specification choice. Here recovery outranks hold; another explicit policy changes initialization and tests.",
+          "principle": "Priority ordering belongs to the contract."
+        }
+      ]
+    }
+  },
+  "PREP-204": {
+    "assumptions": {
+      "he": [
+        "טורי, ביט בכל חזית, ללא גבולות מילה חיצוניים; חפיפה מותרת.",
+        "איפוס נדרש לפני התחלה; הפלט מפוענח אחרי התייצבות המצב."
+      ],
+      "en": [
+        "Serial input, one bit per edge, no external word boundaries; overlap allowed.",
+        "Reset before use; observe output after state settling."
+      ]
+    },
+    "optimality": {
+      "he": "Moore מינימלי בן חמישה מצבים: שלושה FF בינאריים. Mealy בן ארבעה מצבים: שני FF ופלט צירופי, או שלושה עם אירוע רשום. העלויות אינן שקולות בלי חוזה תזמון.",
+      "en": "Minimal five-state Moore: three binary FFs. Four-state Mealy: two FFs with combinational event, or three including a registered event. Costs are not comparable without timing."
+    },
+    "verification": {
+      "he": "כל 8191 הזרמים באורכים 0–12 נבדקו מול oracle סיומות, עוד 256 תרחישי reset וכל עשרת זוגות המצבים נבדלו בהמשך מתאים. ה־SV לא הודר.",
+      "en": "All 8191 streams of lengths zero through twelve matched an independent suffix oracle, with 256 reset cases and all ten state pairs distinguished. SV was not compiled."
+    },
+    "edge_cases": {
+      "he": [
+        "1101101 מכיל שני זיהויים חופפים.",
+        "רצף קצר מארבעה ביטים אינו מזוהה; reset מוחק קידומת חלקית."
+      ],
+      "en": [
+        "1101101 contains two overlapping detections.",
+        "Fewer than four bits cannot detect; reset discards a partial prefix."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לומר „שני רגיסטרים” בלי להבחין בפלט ובמספר סיביות.",
+        "לחזור ל־Q0 אחרי זיהוי ולאבד חפיפה."
+      ],
+      "en": [
+        "Saying “two registers” without output timing or bit count.",
+        "Returning blindly to Q0 after detection and losing overlaps."
+      ]
+    },
+    "interview_answer": {
+      "he": "אזכור את הקידומת שמופיעה כסיומת הזרם. למוצא Moore אחרי החזית אבחר חמישה מצבים ושלושה FF; חלופת Mealy חוסכת מצב וביט רק אם הפלט הצירופי מתאים.",
+      "en": "Remember the target prefix that is a suffix of the stream. Post-edge Moore output uses five states and three FFs; Mealy saves a state and bit only if its combinational output timing is acceptable."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר תזמון פלט, חפיפה, reset או אם „רגיסטר” הוא ביט או אפיק. כל ההבחנות מוצגות במפורש.",
+      "en": "The source omits output timing, overlap, reset and whether “register” means a bit or vector. These distinctions are explicit."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "אם נדרש פלט רשום ללא פענוח צירופי, מה תבחרו?",
+          "answer_direction": "אפשר ארבעה מצבי Mealy בשני FF ועוד FF לאירוע, ובכך שלוש סיביות. יש לחשב את האירוע מהמצב והקלט הישנים באותה חזית.",
+          "principle": "מיקום אוגר הפלט משנה את ספירת הזיכרון ואת התזמון."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if the output must itself be registered?",
+          "answer_direction": "Use a two-bit, four-state Mealy machine plus one event FF. Compute the event from old state and sampled input on the same edge.",
+          "principle": "Output register placement changes both storage counting and timing."
+        }
+      ]
+    }
+  },
+  "PREP-205": {
+    "assumptions": {
+      "he": [
+        "אספקה וכניסה בטווח המסילות; טרנזיסטורי enhancement משלימים.",
+        "חיבורי גוף הם לסכימת bulk רגילה, בכפוף לכללי התהליך."
+      ],
+      "en": [
+        "Rail-bounded supply/input and complementary enhancement devices.",
+        "Body connections depict a conventional bulk implementation subject to process rules."
+      ]
+    },
+    "optimality": {
+      "he": "המהפך הבסיסי משתמש בשני טרנזיסטורים; לא מוצגים מינימום שטח, הספק או השהיה בלי ספרייה וגדלים.",
+      "en": "The basic topology uses two transistors; no area, power or delay optimum is claimed without a library and sizing."
+    },
+    "verification": {
+      "he": "שתי שורות רמת המסילה נבדקו במודל מתגים, עם דוגמת Vin=0.5 V ושני ספים של 0.3 V המציגה אפשרות הולכה של שניהם. אין חישוב VTC, SPICE או אימות חומרה.",
+      "en": "Both rail-input rows were checked in an ideal switch model. A Vin=0.5 V example with 0.3 V thresholds flags possible simultaneous conduction. No quantitative VTC, SPICE or hardware validation."
+    },
+    "edge_cases": {
+      "he": [
+        "קלט באמצע התחום אינו עוד שורת אמת דיגיטלית מובטחת.",
+        "עומס קיבולי מעכב תגובה; דליפה קיימת גם במנוחה."
+      ],
+      "en": [
+        "Midrail input is not another guaranteed digital truth-table row.",
+        "Capacitive loading delays switching; leakage remains in steady state."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להפעיל PMOS עם רמה גבוהה בשער כמו NMOS.",
+        "להבטיח VDD/2 לכל יחס גדלים.",
+        "לומר שאין צריכת זרם בכלל כי אין מסלול DC אידאלי במנוחה."
+      ],
+      "en": [
+        "Turning PMOS on with a high gate as if it were NMOS.",
+        "Promising VDD/2 for every sizing ratio.",
+        "Claiming no current consumption because ideal steady-state DC paths are absent."
+      ]
+    },
+    "interview_answer": {
+      "he": "השערים משותפים לכניסה והנקזים ליציאה; PMOS מושך מ־VDD ו־NMOS לאדמה. בכניסה נמוכה הראשון מוליך, ובגבוהה השני. בזמן מעבר יש קיבול וייתכן זרם דרך שניהם; הספים וההשהיה תלויים בתהליך ובעומס.",
+      "en": "Tie gates to input and drains to output; PMOS pulls from VDD and NMOS to ground. Low input activates PMOS, high activates NMOS. Switching involves capacitance and possible through-current; thresholds and delay depend on process and load."
+    },
+    "source_ambiguities": {
+      "he": "אין מקור למספרי מתח, גדלים, קיבול או תהליך בצילום. השרטוט הוא סכימה לימודית ולא תא מוסמך.",
+      "en": "The screenshot supplies no voltage, sizing, capacitance or process values. The diagram is an educational schematic, not a qualified cell."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד הקטנת העומס משפיעה על ההשהיה?",
+          "answer_direction": "באותו חוזק הנעה טעינה של קיבול קטן נוטה להסתיים מהר יותר; נדרשים מודל ותהליך לכימות, ומרווחי רעש אינם נובעים רק מהקיבול.",
+          "principle": "אמת בוליאנית אינה מספיקה לניתוח תזמון."
+        }
+      ],
+      "en": [
+        {
+          "question": "How does reducing load affect delay?",
+          "answer_direction": "With comparable drive, a smaller capacitance generally charges faster; quantitative values need a process/model, and noise margins do not follow from capacitance alone.",
+          "principle": "Boolean truth does not determine timing."
+        }
+      ]
+    }
+  },
+  "PREP-207": {
+    "assumptions": {
+      "he": [
+        "טורי, קלט סינכרוני, חפיפה ופלט Moore לאחר החזית.",
+        "חלופת FIFO מתירה זיכרון, פינוי בהגעה לקיבולת וצפייה בארבעה taps; reset מרוקן ואין הוספת אפסים כנתוני אמת."
+      ],
+      "en": [
+        "Serial synchronous data, overlap and post-edge Moore output.",
+        "FIFO alternative permits storage, eviction at capacity and four-entry peek; reset empties without treating padding zeros as actual samples."
+      ]
+    },
+    "optimality": {
+      "he": "חמישה מצבי Moore מובחנים מצריכים שלוש סיביות בינאריות. חלופת FIFO שומרת ארבעה ביטי נתונים ומידע מילוי פנימי; אין כאן מינימום זיכרון עבור FIFO או מינימום שערים.",
+      "en": "Five distinguishable Moore states need three binary bits. The FIFO alternative retains four data bits and internal fill metadata; no minimum FIFO storage or gate count is claimed."
+    },
+    "verification": {
+      "he": "כל 8191 הזרמים באורכים 0–12 הושוו גם ב־FSM וגם ב־FIFO לאורקל סיומות עצמאי, עם 256 תרחישי reset ועשרה זוגות מצבי Moore מובחנים. אין בדיקת FIFO IP אמיתי או RTL.",
+      "en": "All 8191 streams through length twelve matched an independent suffix oracle for both FSM and FIFO, plus 256 reset cases and ten distinguishable Moore state pairs. No actual FIFO IP or RTL execution."
+    },
+    "edge_cases": {
+      "he": [
+        "010101 מפיק 000101.",
+        "לפני ארבע דגימות אין זיהוי; reset בין חלקי הרצף מונע התאמה."
+      ],
+      "en": [
+        "010101 produces 000101.",
+        "No detection before four samples; a reset within the pattern prevents a match."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להזין FIFO בקבוע במקום בביט x.",
+        "להניח שפלט head מכיל את כל ארבעת הביטים.",
+        "לומר ש־FIFO אינו זיכרון או ששערי feedback הם צירופיים."
+      ],
+      "en": [
+        "Writing a constant instead of current input x into the FIFO.",
+        "Assuming a head-only output exposes all four samples.",
+        "Calling a FIFO memoryless or feedback storage combinational."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשמור קידומות ואאפשר חפיפה, כך ש־010101 מזוהה פעמיים. בלי זיכרון ועם ביט קלט אחד אי אפשר לזהות היסטוריה. FIFO מותר רק כחוזה זיכרון מפורש, עם DIN=x, חלון נגיש ומדיניות מילוי.",
+      "en": "Track suffix prefixes and allow overlap, so 010101 detects twice. One current bit with no memory cannot identify a history. A FIFO is valid only as explicitly permitted storage with DIN=x, accessible window and fill policy."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר אם „ללא FF” אוסר כל זיכרון, אם מותר משוב או מה ממשק FIFO. ניתנות ההבחנות והחלופות בלי להמציא FIFO חסר זיכרון.",
+      "en": "The source does not say whether “no FFs” bans all storage, permits feedback, or defines FIFO ports. The alternatives expose these gaps without inventing a memoryless FIFO."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "האם אפשר לזהות בעזרת FIFO שמציג רק איבר אחד בזמן, בלי לעצור קלט?",
+          "answer_direction": "צריך עוד רוחב קריאה, תדר פנימי או זיכרון עזר כדי להשוות חלון בזמן. מגדירים קצב ופורטים לפני שמבטיחים קלט רציף.",
+          "principle": "ממשק זיכרון וקצב גישה הם חלק מהארכיטקטורה."
+        }
+      ],
+      "en": [
+        {
+          "question": "Can a head-only FIFO support continuous input while comparing four samples?",
+          "answer_direction": "Additional read bandwidth, an internal clock ratio or auxiliary storage is needed. Specify ports and rate before promising continuous throughput.",
+          "principle": "Memory interface and access rate belong to the architecture."
+        }
+      ]
+    }
+  },
+  "PREP-203": {
+    "assumptions": {
+      "he": [
+        "שלושה זאבים ושלוש כבשים; כל החיות והסירה מתחילות יחד.",
+        "הנוסח המילולי הוא בדיוק שתיים הלוך ובדיוק אחת חזור; אי אפשר להחזיר סירה ריקה.",
+        "חיות בסירה נספרות עם גדה היעד. המטרה היא כל הכבשים, לא בהכרח כל הזאבים.",
+        "נבדקים בנפרד פירוש בטיחות עם חריגת גדה ללא כבשים ופירוש מילולי ללא החריגה."
+      ],
+      "en": [
+        "Three wolves and three sheep start together with the boat.",
+        "Literal trips carry exactly two forward and exactly one back; no empty return.",
+        "Passengers count with their destination bank; the goal is all sheep, not necessarily all wolves.",
+        "Safety with and without the zero-sheep exception is analyzed separately."
+      ]
+    },
+    "optimality": {
+      "he": "אין פתרון בנוסח המילולי בשני פירושי הבטיחות. רק בגרסה המקלה של 1–2 חיות בשני הכיוונים וחריגת אפס כבשים מתקבל מינימום 7 להעברתם של כל הכבשים. יעד כל שש החיות הוא אחר ומרחקו 11.",
+      "en": "Literal rules are impossible under either safety interpretation. Only the explicit one/two-passenger relaxation with the zero-sheep exception achieves all sheep in a minimum of seven trips. The separate all-six goal has distance eleven."
+    },
+    "verification": {
+      "he": "כל גרפי המצבים, הקשתות ומרחקי BFS הושוו לאורקל עצמאי של שש זהויות. הקבוצה המילולית הנגישה כוללת 7 מצבים ו־7 קשתות, ואין בה יעד. ללא חריגת אפס כבשים נגישים רק 2 מצבים.",
+      "en": "Complete state graphs, edges and BFS distances matched an independent six-identity oracle. Literal reachable closure has seven states and seven edges with no goal; without the zero-sheep exception only two states are reachable."
+    },
+    "edge_cases": {
+      "he": [
+        "הגדה ללא כבשים משנה את קבוצת המצבים החוקיים, אבל אינה מצילה את כלל החזרה היחידנית.",
+        "אפשר לעצור כשהכבשה השלישית מגיעה; אין דרישה להפליג שוב עם כבשה החוצה.",
+        "חזרה של WS מותרת רק בגרסה המקלה."
+      ],
+      "en": [
+        "Wolf-only banks change legal states but do not rescue the one-animal return rule.",
+        "Stop when the third sheep arrives; no further sheep-return requirement is imposed.",
+        "Returning WS is legal only in the relaxed variant."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להעתיק את פתרון 11 ההפלגות של כל שש החיות בלי לבדוק חזרה של שתיים.",
+        "להוכיח רק שמסלול שנוסה נכשל במקום למצות קבוצה סגורה.",
+        "לשנות את היעד מכבשים בלבד לכל החיות.",
+        "להניח בשקט שזאבים לבדם אסורים או מותרים."
+      ],
+      "en": [
+        "Copying an eleven-trip all-six solution without checking two-animal returns.",
+        "Showing one route fails rather than exhausting a closed reachable set.",
+        "Changing the goal from all sheep to all animals.",
+        "Silently choosing whether wolf-only banks are legal."
+      ]
+    },
+    "interview_answer": {
+      "he": "לפי הכלל המדויק אין פתרון. אמנה את שבעת המצבים הנגישים גם כאשר זאבים לבדם מותרים: שתי ההפלגות הראשונות האפשריות מתמזגות למסלול שנעצר בשתי כבשים ביעד. חזרה של זאב או של כבשה שם אינה בטוחה. אם מתירים גם שתי חיות לחזור, יש פתרון אחר של שבע הפלגות לכבשים בלבד.",
+      "en": "The exact rule is impossible. Even allowing wolf-only banks, the two possible first trips merge into a path ending with two sheep across and no safe single return. Enumerating the seven-state closed set proves impossibility. Allowing two animals to return defines a different seven-trip sheep-only solution."
+    },
+    "source_ambiguities": {
+      "he": [
+        "הצילום אינו מבהיר אם שתי חיות הן קיבולת מרבית או חובה, ואינו אומר במפורש מה קורה בגדה בלי כבשים. הניתוח שומר את הקריאה המילולית ומשווה בגלוי חלופה מקלה."
+      ],
+      "en": [
+        "The source leaves capacity-versus-exact-two and wolf-only-bank semantics unclear. The analysis preserves the literal reading and explicitly separates the relaxation."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם דורשים להעביר גם את כל הזאבים בגרסה המקלה?",
+          "answer_direction": "משנים רק את תנאי היעד ל־w=s=3. אותו גרף BFS נותן 11 הפלגות במקום 7.",
+          "principle": "תנאי היעד הוא חלק מהבעיה ולא פרט שאפשר להחליף."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if every wolf must also cross in the relaxed version?",
+          "answer_direction": "Change only the goal predicate to w=s=3. BFS on the same graph gives eleven trips rather than seven.",
+          "principle": "The goal predicate is part of the problem contract."
+        }
+      ]
+    }
+  },
+  "PREP-206": {
+    "assumptions": {
+      "he": [
+        "מספר שלם לא שלילי בייצוג בינארי רגיל; אפס ואפסים מובילים מותרים.",
+        "לניתוח זמן קבוע מניחים ערך זמין במילת מכונה ומחלקים קבועים 2,4,8."
+      ],
+      "en": [
+        "Nonnegative ordinary binary integer; zero and leading zeros allowed.",
+        "Constant-time analysis assumes a value already in a machine word and the fixed divisors two, four and eight."
+      ]
+    },
+    "optimality": {
+      "he": "התחלקות ב־2^k שקולה לאפס ב־k הסיביות הנמוכות. שלוש הבדיקות הקבועות דורשות O(1) פעולות מילים; קלט טקסטואלי דורש O(L) לאימותו. אין טענת קבוע בביטים למספרים ול־k בלתי חסומים.",
+      "en": "Divisibility by 2^k is equivalent to zero in the low k bits. The three fixed tests take O(1) word operations; validating text takes O(L). No constant-bit-cost claim for unbounded numbers and k."
+    },
+    "verification": {
+      "he": "65,536 קלטי 16 סיביות נבדקו בכל שלוש הבדיקות. בנוסף בוצעו 589,852 השוואות כלליות של חזקה ומסכה מול שארית, כולל ערכים סביב 2^200.",
+      "en": "All 65,536 16-bit inputs were checked for the three divisors. General exponent tests made 589,852 mask-versus-remainder comparisons, including values around 2^200."
+    },
+    "edge_cases": {
+      "he": [
+        "0 מתחלק בכל מחלק חיובי מבין אלה.",
+        "1 אינו מתחלק ב־2,4,8; 2 מתחלק רק ב־2; 4 ב־2 וב־4.",
+        "מספר קצר מושלם באפסים משמאל; אפסים מובילים אינם משנים ערך.",
+        "k=0 משמעו חלוקה ב־1."
+      ],
+      "en": [
+        "Zero is divisible by each specified positive divisor.",
+        "One passes none; two passes only divisor two; four passes two and four.",
+        "Short representations are left-zero-padded; leading zeros preserve value.",
+        "k=0 means divisor one."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לבדוק סיבית במיקום 2 או 3 בלבד במקום את כל הסיומת הנמוכה.",
+        "להשתמש במסכה 4 לבדיקת התחלקות ב־4 במקום במסכה 3.",
+        "לבלבל התחלקות בחזקה של שתיים עם היות המספר חזקה של שתיים.",
+        "לטעון לזמן קבוע גם כאשר חייבים לסרוק ולאמת מחרוזת ארוכה."
+      ],
+      "en": [
+        "Inspecting bit two or three alone instead of the entire low suffix.",
+        "Using mask four for divisibility by four instead of mask three.",
+        "Confusing divisible by a power of two with being a power of two.",
+        "Claiming constant time while parsing and validating a long text input."
+      ]
+    },
+    "interview_answer": {
+      "he": "הסיבית הנמוכה קובעת התחלקות ב־2; שתי הנמוכות חייבות להיות 00 ל־4, ושלוש הנמוכות 000 ל־8. כל שאר הסיביות כבר תורמות כפולות של המחלק, ולכן בדיקת הסיומת מספיקה. אפס עובר את כולן.",
+      "en": "The low bit must be zero for two, the low pair 00 for four, and the low triple 000 for eight. Higher bits already contribute multiples of the divisor, so the suffix is sufficient. Zero passes all three."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מגדיר סימן, רוחב או שבר. העריכה בוחרת מספר שלם לא שלילי ומפרידה קריאת טקסט מפעולת הסיביות."
+      ],
+      "en": [
+        "The source omits signedness, width and fractional semantics. The edited contract selects nonnegative integers and separates parsing from bit tests."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מהו המחלק הגדול ביותר שהוא חזקה של שתיים עבור מספר חיובי?",
+          "answer_direction": "ספרו את מספר האפסים הרצופים מה־LSB. אם יש k כאלה, 2^k מחלק את המספר אך 2^(k+1) אינו מחלק. אפס דורש טיפול נפרד כי אין לו חזקה מרבית כזו.",
+          "principle": "הופכים בדיקת סיומת לניתוח של מספר האפסים הסופיים."
+        }
+      ],
+      "en": [
+        {
+          "question": "What is the largest power-of-two divisor of a positive number?",
+          "answer_direction": "Count trailing zero bits. With k trailing zeros, 2^k divides the number but 2^(k+1) does not. Zero needs separate treatment because no greatest such divisor exists.",
+          "principle": "Extend a suffix test to trailing-zero analysis."
+        }
+      ]
+    }
+  }
+}

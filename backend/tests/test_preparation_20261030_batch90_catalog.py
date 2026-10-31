@@ -85,7 +85,7 @@ def test_twenty_sources_keep_the_exact_original_bytes_and_identity_mapping():
 
 def test_authorized_extensions_preserve_all_176_original_records_and_921_assets(catalog):
     archive = read(BANK / "questions.json")
-    assert len(archive["questions"]) == 197 and len(catalog.questions) == 227
+    assert len(archive["questions"]) == 208 and len(catalog.questions) == 238
     previous_ids = {question["id"] for question in archive["questions"] if int(question["id"].split("-")[1]) <= 187}
     assert previous_ids - set(BASELINE["records"]) == NEW_IDS
     assert_pre_batch90_archive(archive)
@@ -98,9 +98,10 @@ def test_authorized_extensions_preserve_all_176_original_records_and_921_assets(
         "example-power-of-two-check": "prep-power-of-two-check",
         "example-merge-measurement-streams": "prep-merge-two-sorted-arrays",
         "example-overlapping-sequence-1011": "prep-detect-overlapping-1011-stream",
+        "example-mod-six-counter": "prep-enabled-mod-six-counter",
     }
     assert set(aliases) | set(aliases.values()) <= catalog.questions.keys()
-    assert len({aliases.get(key, key) for key in catalog.questions}) == 224
+    assert len({aliases.get(key, key) for key in catalog.questions}) == 234
 
 
 def test_all_new_questions_and_extensions_remain_bilingual_proposed_unrated_and_gated(catalog):
@@ -170,7 +171,7 @@ def test_new_private_assets_are_safe_hash_bound_and_localized(catalog):
             if item["language"] == "en":
                 assert not any("\u05d0" <= char <= "\u05ea" for char in item["caption"])
     sources = [entry["local_path"] for entry in uploads.values() if entry["local_path"].startswith("sources/")]
-    assert len(sources) == 311 and len(set(sources)) == 310
+    assert len(sources) == 332 and len(set(sources)) == 331
     names = read(ROOT / "apps/web/src/lib/source-screenshots.json")
     assert set(names) == {Path(path).name for path in sources}
     assert all(f"2026-10-30-batch90-{number:02d}.png" in names for number in range(1, 21))

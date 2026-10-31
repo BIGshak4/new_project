@@ -209,3 +209,16 @@ Assuming the upper data pin is I0 and the lower I1, the drawn circuit is correct
 Some prose in the supplied answer is inaccurate. MUX without constants is not functionally complete, but it CAN implement AND(a,b)=MUX(a,a,b) and OR(a,b)=MUX(a,b,a) without any constant wires. It cannot implement NOT from raw inputs alone in an acyclic non-inverting mux network. MUX(s,a,b)=s is not a general identity; only MUX(x,x,x)=x when the inputs are identified. A counterexample to the asserted general identity is s=0,a=1,b=0. The specific target's impossibility follows from its value 1 at input 000 versus zero preservation of all such networks. MUX with both 0 and 1 constants is functionally complete, so describing that set as half-complete is misleading. The original interview having two stages is the external author's speculation.
 
 Verified all eight circuit inputs against both the target and prior solution, and all four inputs for the constant-free AND/OR realizations. The source truth table matches the target; unlabeled data-pin orientation remains a stated assumption.
+
+
+## מקור נוסף — 31.10.2026, מקבץ110
+
+[צילום מקור פרטי 11](../sources/2026-10-31-batch21-11.png)
+
+נתון מספר בלתי מוגבל של רכיבי mux 2-1, צריך לממש את הפונק 'f=(a*b*c')
+
+שיוכי מקור מדווחים: NVIDIA.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-011-prime_scope-batch21-addendum.md)

@@ -814,14 +814,20 @@
         "הנוסח הראשי משתמש במקטעים לא חופפים של בדיוק 100,000 דגימות, עם דיווח בסוף.",
         "יותר מ־10 פירושו 11 ומעלה; בדיוק 10 אינו כשל.",
         "קידומת אחרונה קצרה אינה מקטע שלם; חלון זז הוא הרחבה שונה.",
-        "בדיקת החלון הזז משתמשת בזמני Python לא חסומים ומפסיקה בכשל הראשון."
+        "בדיקת החלון הזז משתמשת בזמני Python לא חסומים ומפסיקה בכשל הראשון.",
+        "כל 1 מדווח על אירוע חדש אחד; 0 אינו אירוע. אין זיהוי אוטומטי של תקלה מתמשכת או אירועים שהוחמצו.",
+        "הזמן הוא זמן דיווח מונוטוני בננו־שניות, עם אפשרות לחותמות שוות. היסטוריה לפני תחילת הניטור אינה נתונה.",
+        "הסף הוא לפחות 5. החלון הראשי (t−10,t] פתוח משמאל; חלופה סגורה מוצגת בנפרד."
       ],
       "en": [
         "ERROR is a synchronous binary sample taken once per clock edge; count high samples.",
         "The primary contract uses non-overlapping blocks of exactly 100,000 samples, reporting at block end.",
         "More than ten means eleven or more; exactly ten is not failure.",
         "A final short tail is incomplete; sliding windows are a different extension.",
-        "The sliding implementation uses unbounded Python timestamps and stops at first failure."
+        "The sliding implementation uses unbounded Python timestamps and stops at first failure.",
+        "Each one reports one new incident; zero is not an event. Persistent or missed physical incidents are not inferred.",
+        "Timestamps are monotonic integer-nanosecond report times, allowing ties. Pre-monitoring history is not supplied.",
+        "Threshold is at least five. The main interval is (t−10,t]; an inclusive alternative is separate."
       ]
     },
     "optimality": {
@@ -829,18 +835,20 @@
         "criterion": "עלות עיבוד ואחסון למימושים הנתונים.",
         "result": "מקטעים: O(1) לדגימה ושני מונים. חלון זז: O(1) אמורטי לדגימה ועד 11 רשומות זמן לפני עצירה.",
         "proof": "המונים מתעדכנים פעם לדגימה; כל זמן בתור מוכנס ומוסר פעם אחת בלבד.",
-        "scope": "לא נטען למינימום ביטים; זמני ריצה לא חסומים אינם מספר קבוע של ביטים."
+        "scope": "לא נטען למינימום ביטים; זמני ריצה לא חסומים אינם מספר קבוע של ביטים.",
+        "time_window_batch21": "תור של עד חמש חותמות מספיק בדיוק להחלטת הסף. כל אירוע נכנס ויוצא פעם אחת: O(1) עבודה אמורטית לתצפית ועזר של חמש חותמות. אין הבטחת סיום כשאין פרץ מתאים."
       },
       "en": {
         "criterion": "Processing and storage cost of these constructions.",
         "result": "Fixed blocks: O(1) per sample and two counters. Sliding: amortized O(1) per sample and up to eleven timestamp records before termination.",
         "proof": "Counters update once per sample; each timestamp is inserted and removed at most once.",
-        "scope": "No minimum-bit claim; unbounded run times do not fit a constant number of bits."
+        "scope": "No minimum-bit claim; unbounded run times do not fit a constant number of bits.",
+        "time_window_batch21": "At most five timestamps exactly suffice for the threshold decision. Each event enters/leaves once: O(1) amortized work per observation and five stored timestamps. No termination guarantee without a qualifying burst."
       }
     },
     "verification": {
-      "he": "השוואה לאורקל סכומי פרוסות עברה ב־49,128 שילובים ממצים, 2,000 מקרים מדגמיים וחמישה מקרי גבול מלאים של 200,000 מחזורים. נבדקו סף 10/11, חלון שחוצה גבול ופקיעת חותמת זמן בגיל 100,000 בדיוק. Python בלבד.",
-      "en": "Slice-sum oracle comparison passed 49,128 exhaustive combinations, 2,000 sampled cases and five full 200,000-cycle boundary cases. Checked ten versus eleven, crossing-block windows and expiration at exactly 100,000 cycles. Python only."
+      "he": "השוואה לאורקל סכומי פרוסות עברה ב־49,128 שילובים ממצים, 2,000 מקרים מדגמיים וחמישה מקרי גבול מלאים של 200,000 מחזורים. נבדקו סף 10/11, חלון שחוצה גבול ופקיעת חותמת זמן בגיל 100,000 בדיוק. Python בלבד.\n\n156,158 זרמים ו־888,860 תצפיות נבדקו מול ספירת היסטוריה מלאה בשני פירושי הגבול. נבדקו גם השוואת ננו־שניות בגבול, שש שגיאות באותו זמן, אי־איפוס בעקבות 0 והתנהגות עצירת הלולאה.",
+      "en": "Slice-sum oracle comparison passed 49,128 exhaustive combinations, 2,000 sampled cases and five full 200,000-cycle boundary cases. Checked ten versus eleven, crossing-block windows and expiration at exactly 100,000 cycles. Python only.\n\n156,158 streams and 888,860 observations matched full-history counting under both boundary conventions. Actual nanosecond cutoff, six same-time errors, zero-report retention and loop stopping were also checked."
     },
     "edge_cases": {
       "he": [
@@ -849,7 +857,11 @@
         "ERROR=1 לאורך 11 מחזורים נספר כ־11, גם ללא עליות נוספות.",
         "מקטע חדש מתחיל עם שני מונים מאופסים.",
         "לחלון זז, גיל 100,000 כבר מחוץ לחלון; גיל 99,999 עדיין בפנים.",
-        "מקטעים תקינים בנפרד עשויים ליצור כשל בחלון שחוצה ביניהם."
+        "מקטעים תקינים בנפרד עשויים ליצור כשל בחלון שחוצה ביניהם.",
+        "שגיאה שגילה בדיוק 10 שניות אינה בחלון הראשי; היא כן בחלופה הסגורה.",
+        "שש שגיאות עדיין עומדות בתנאי 'לפחות חמש'.",
+        "דיווח 0 אינו מאפס את תור האירועים.",
+        "בלי חמישה דיווחים בחלון אין צורך וגם אין הבטחה לצאת."
       ],
       "en": [
         "The eleventh error on the final sample must fail that same block.",
@@ -857,7 +869,11 @@
         "Eleven consecutive high cycles count as eleven without additional rising edges.",
         "A new block starts with both counters cleared.",
         "In a sliding window, age 100,000 is expired; age 99,999 remains.",
-        "Individually passing blocks can contain a failing crossing window."
+        "Individually passing blocks can contain a failing crossing window.",
+        "Exactly ten-second-old errors are excluded in the main interval and included in the closed alternative.",
+        "Six errors still satisfy at least five.",
+        "A zero report does not clear event history.",
+        "Without five qualifying reports the loop need not and may never exit."
       ]
     },
     "common_mistakes": {
@@ -867,7 +883,11 @@
         "לבדוק את המונה הישן ולפספס את הדגימה האחרונה.",
         "לאפס אחרי השגיאה ה־11 באמצע מקטע ולשנות את גבולותיו.",
         "לבלבל מקטעים קבועים עם כל חלון זז.",
-        "לטעון ש־11 חותמות זמן לא חסומות הן תמיד מספר קבוע של ביטים."
+        "לטעון ש־11 חותמות זמן לא חסומות הן תמיד מספר קבוע של ביטים.",
+        "לספור קריאות במקום זמן, או להשתמש בשני דליים קבועים במקום חלון זז.",
+        "לצאת רק כשיש בדיוק חמש ולדחות מצב עם יותר מחמש.",
+        "לספור כל דגימה של רמה גבוהה כאירוע פיזי חדש בלי חוזה כזה.",
+        "להשתמש בשעון קיר שעלול לחזור לאחור או לשכוח להגדיר את גבול החלון."
       ],
       "en": [
         "Using >=10 instead of >10.",
@@ -875,23 +895,67 @@
         "Testing the old count and missing the last sample.",
         "Resetting the block on its eleventh error changes block boundaries.",
         "Confusing fixed blocks with every sliding window.",
-        "Claiming eleven unbounded timestamps always use a constant number of bits."
+        "Claiming eleven unbounded timestamps always use a constant number of bits.",
+        "Counting calls instead of time, or using fixed buckets instead of a sliding window.",
+        "Accepting exactly five while rejecting more than five.",
+        "Counting every high-level sample as a new physical incident without that contract.",
+        "Using an adjustable wall clock or leaving the endpoint convention undefined."
       ]
     },
     "interview_answer": {
-      "he": "אדגום ERROR בכל מחזור ואעדכן מונה מחזורים ומונה שגיאות רווי ב־11. אחרי הכללת הדגימה ה־100,000 אדווח Failed רק אם השגיאות גדולות מ־10, ואז אאפס למקטע הבא. אם הכוונה לכל חלון זז, אשמור זמני שגיאות בתור ואוציא כל זמן שגילו לפחות 100,000; 11 זמנים פעילים מראים כשל.",
-      "en": "Sample ERROR each cycle and update a cycle count plus an error count saturated at eleven. After including sample 100,000 report Failed only if errors exceed ten, then reset for the next block. For sliding windows, retain error timestamps, expire ages at least 100,000 and fail when eleven active timestamps coexist."
+      "he": "אדגום ERROR בכל מחזור ואעדכן מונה מחזורים ומונה שגיאות רווי ב־11. אחרי הכללת הדגימה ה־100,000 אדווח Failed רק אם השגיאות גדולות מ־10, ואז אאפס למקטע הבא. אם הכוונה לכל חלון זז, אשמור זמני שגיאות בתור ואוציא כל זמן שגילו לפחות 100,000; 11 זמנים פעילים מראים כשל.\n\nאשמור את חמש חותמות השגיאה האחרונות בשעון מונוטוני. בכל בדיקה אסיר את מה שמחוץ לעשר השניות, אוסיף זמן רק אם זה אירוע חדש, ואצא אם נשארו חמש. כך גם שש שגיאות מתקבלות, קצב הקריאות אינו קובע זמן, ומוגדר במפורש מה קורה בדיוק בגבול עשר השניות.",
+      "en": "Sample ERROR each cycle and update a cycle count plus an error count saturated at eleven. After including sample 100,000 report Failed only if errors exceed ten, then reset for the next block. For sliding windows, retain error timestamps, expire ages at least 100,000 and fail when eleven active timestamps coexist.\n\nKeep the five most recent error timestamps on a monotonic clock. Expire entries outside ten seconds, append only for a new incident report, and exit when five remain. Six errors still qualify, polling count does not define time, and the exactly-ten-seconds boundary is explicit."
     },
     "solution_extensions": {
       "he": {
         "question": "כיצד תמשיכו לנטר גם אחרי שנמצא חלון כושל, עם מספר ביטים מוגדר?",
         "direction": "אפשר לשמור טבעת של 100,000 דגימות ומונה סכום: בכל מחזור מחסירים את הביט היוצא ומוסיפים את החדש. יש להגדיר תוצאות לפני שהחלון מלא, רוחב מונים, איפוס וגלישה; זו חלופה עם אחסון חסום וברור.",
-        "status": "מוכן בתוכן; לא מחובר לתור המשך חי."
+        "status": "מוכן בתוכן; לא מחובר לתור המשך חי.",
+        "time_window_batch21": [
+          {
+            "question": "מה משתנה אם רוצים לדעת כמה שגיאות היו, ולא רק אם היו לפחות חמש?",
+            "answer_direction": "צריך לשמור את כל האירועים שעדיין בחלון או מבנה שקול. קיבולת חמש מאבדת את המספר המדויק כאשר יש שש ויותר.",
+            "principle": "אפשר לצמצם היסטוריה לפי שאלת ההחלטה, לא לפי שאילתת ספירה מדויקת."
+          }
+        ]
       },
       "en": {
         "question": "How would monitoring continue after failures with a fixed storage bit budget?",
         "direction": "Keep a ring of 100,000 sampled bits and a running sum: subtract the departing bit and add the new one each cycle. Specify startup before a full window, counter widths, reset and wraparound. This offers an explicit bounded-storage alternative.",
-        "status": "Prepared in content, not connected to the live follow-up queue."
+        "status": "Prepared in content, not connected to the live follow-up queue.",
+        "time_window_batch21": [
+          {
+            "question": "What if the exact number of recent errors is required?",
+            "answer_direction": "Retain all unexpired events or an equivalent counting structure. A capacity-five queue loses the exact count once six or more occur.",
+            "principle": "History compression depends on the decision query, not an exact-count query."
+          }
+        ]
+      }
+    },
+    "source_ambiguities": {
+      "he": [
+        "הצילום אינו קובע אם 1 הוא אירוע חדש או רמה, אם השעון מודד זמן דיווח או זמן פיזי, מה קורה בגבול, או אם חמש פירושו לפחות. הנחות אלה גלויות; שני הצילומים הזהים 12 ו־20 נשמרים כמקורות של אותה וריאציה."
+      ],
+      "en": [
+        "The source omits event-versus-level semantics, report-versus-physical timestamps, cutoff inclusion and at-least versus exactly five. These choices are explicit. Duplicate screenshots twelve and twenty are retained as sources for this one variant."
+      ]
+    },
+    "prompt_variants": {
+      "he": {
+        "time_window_batch21": "### וריאציה: חלון זמן זז, לא מקטע מחזורי שעון\nבלולאה קוראים ל־check_error(), שמחזירה 0 או 1. יש לצאת בפעם הראשונה שבה זוהו לפחות חמש שגיאות בעשר השניות האחרונות. הציגו אלגוריתם שאינו תלוי בקצב הקריאות, ונמקו כמה זיכרון צריך לשמור.\n\nחוזה מפורש: כל תוצאה 1 היא דיווח על אירוע חדש אחד, ולא רמת תקלה מתמשכת שנקראת שוב. תוצאה 0 אינה מוסיפה אירוע. חותמים כל דיווח בזמן החזרה מן הקריאה באמצעות שעון מונוטוני בננו־שניות; לא מדובר בהסקת זמן התרחשות פיזי שאינו נמסר. סופרים דיווחים שנצפו מתחילת הניטור; היסטוריה קודמת אינה ידועה.\n\nהחלון הראשי הוא (t−10,t]: דיווח שגילו בדיוק עשר שניות כבר מחוץ לחלון. הסבירו גם כיצד לשנות לחלון [t−10,t] הכולל את הגבול. פירוש 'חמש' הוא לפחות חמש, ולא בדיוק חמש. אם המקור מתכוון לרמה מתמשכת, לאירועים שהוחמצו בין קריאות או לזמן פיזי מוקדם מן הדיווח, נדרש ממשק נוסף; אין להמציא את המידע.",
+        "time_window_batch21_hints": [
+          "אל תסיקו מספר שניות ממספר קריאות. אילו זמני אירועים צריך לזכור כדי לדעת אם יש חמישה בחלון?",
+          "התור צריך להיות מסודר בזמן. בכל בדיקה מסירים את מה שהתיישן ומוסיפים חותמת זמן רק לדיווח 1.",
+          "די לשמור את חמש חותמות השגיאה האחרונות: אם אפילו החמישית לא התיישנה, יש לפחות חמש בחלון. הגדירו במפורש מה קורה בגיל עשר שניות בדיוק."
+        ]
+      },
+      "en": {
+        "time_window_batch21": "### Variant: a sliding time window, not a clock-cycle block\nA loop calls check_error(), which returns zero or one. Exit at the first observation where at least five errors have been reported within the last ten seconds. Give an algorithm independent of polling frequency and justify its storage bound.\n\nExplicit contract: each one reports one new incident, not a sustained fault level repeatedly read. Zero adds no event. Timestamp the report when the call returns using a monotonic nanosecond clock; this does not infer an earlier physical occurrence time that the interface never supplies. Count reports observed since monitoring began; earlier history is unknown.\n\nThe main window is (t−10,t]: a report exactly ten seconds old is excluded. Also show the change for inclusive [t−10,t]. Five means at least five, not exactly five. A persistent level, missed incidents between polls or earlier physical event timestamps require an additional input contract rather than invented information.",
+        "time_window_batch21_hints": [
+          "Polling count is not elapsed time. Which incident timestamps are needed to establish five in the window?",
+          "Keep timestamps ordered. On each observation expire old entries, and append only for report one.",
+          "The five most recent error timestamps suffice: if even the fifth most recent is still in the window, at least five qualify. Specify the exactly-ten-seconds boundary."
+        ]
       }
     }
   },

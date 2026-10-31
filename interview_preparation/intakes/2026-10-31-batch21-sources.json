@@ -1,0 +1,461 @@
+{
+  "intake_date": "2026-10-31",
+  "batch": "batch21",
+  "screenshot_count": 21,
+  "question_source_count": 21,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-01.png"
+      ],
+      "sha256": "4642e7ce3482a8eb0f7f18ddb681da1f18e6bf508ad2cd0f0d73fee36e94060f",
+      "original_prompt": "ממש Shift Right ציקלי בעזרת רכיבי MUX 2:1 בלבד.",
+      "source_tags": [
+        "logic-design",
+        "hardware",
+        "pmc-sierra"
+      ],
+      "reported_companies": [
+        "PMC-Sierra"
+      ],
+      "source_company_badge": "PMC-SIERRA",
+      "question_ids": [
+        "PREP-199"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-02.png"
+      ],
+      "sha256": "12d48c2e68da20f84148b4109022612693d465fee834365a46e96a6cad6b7a39",
+      "original_prompt": "השאלה התחילה במימוש פשוט של Mux על ידי כל רכיב שאני רוצה. לאחר מכן היה צריך לממש בפחות רכיבים, ואחרי זה ביקשו להוריד שוב את מספר הרכיבים, אבל ניתן ללא לוגיקת CMOS.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-200"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-03.png"
+      ],
+      "sha256": "bb459ecc3bb328cb75d7c21ed26a69e5a73bb8f42c665c5d5341746641416d95",
+      "original_prompt": "ישנם n≥1 חדרים שמסודרים בצורה מעגל, ומכל חדר יש שני מעברים לחדרים הסמוכים אליו. כל החדרים זהים זה לזה ובכל חדר יש מנורה עם מתג שניתן להדליק או לכבות אותה. המצב ההתחלתי של המנורות אקראי. אתה מתעורר בחדר רנדומלי והמטרה היא לגלות כמה חדרים יש במעגל, כאשר אפשר לעבור ביניהם ולהדליק או לכבות מנורות ללא הגבלה.",
+      "source_tags": [
+        "nvidia",
+        "logic"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-201"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-04.png"
+      ],
+      "sha256": "ced38bd05ed07f4400b57f1fb2aa4e4ef85a72131bc2652e16a9e8157ee23e50",
+      "original_prompt": "יש שולחן עגול. לכל שחקן יש אינסוף דסקיות. המטרה להניח דסקיות כך שלשחקן האחר אין אפשרות להניח דסקית. בכל תור שחקן מניח דסקית על השולחן. בחר אסטרטגיה שבה אתה בטוח מנצח.",
+      "source_tags": [
+        "hardware",
+        "verification",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-166"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-05.png"
+      ],
+      "sha256": "164fa3ace72e634385d12292b75ee1d1f2900a2425aed5ddbbf39eefa715c951",
+      "original_prompt": "ממש קאונטר עד 5 עם כניסה נוספת: במידה שהיא 0 המערכת נשארת באותו מצב, ובמידה שהיא 1 המערכת מתקדמת.",
+      "source_tags": [
+        "verification",
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-202"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-06.png"
+      ],
+      "sha256": "7975f3539675642d9b284911fe9d39747baedd52f94127ff8e1539ca7e783034",
+      "original_prompt": "ממש רכיב זיכרון שבו ניתן לכתוב (push), כך שהזיכרון מחזיר את הכתובת שניתנה, ובמידה שיכול מחזיר push success. אם רוצים להחזיר את הכתובת ולמחוק אותה, נעשה pop ל־address הרלוונטית.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-102"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-07.png"
+      ],
+      "sha256": "b7604abaa8b0a9bc5e522804f6cc3d46467234f5a528ac6ef9218237f7d1fa23",
+      "original_prompt": "כתוב פסאודו־קוד של מערכת שמקבלת מערך ומדפיסה את כל הקומבינציות של כל האיברים במערך.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_company_badge": "אפל",
+      "question_ids": [
+        "PREP-162"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-08.png"
+      ],
+      "sha256": "984a1584c3a75c50b0c48b9de494fc11c4e9a4fe80567ed500b705e41bc70cc3",
+      "original_prompt": "מה ההבדל בין רכיב Latch ורכיב פלופ? ממש כל אחד מהם.",
+      "source_tags": [
+        "hardware",
+        "verification",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-083"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-09.png"
+      ],
+      "sha256": "441fc41533588c7ec7ef2eda4fc8acbfe3d0289fb049a685d8912d034c0e0365",
+      "original_prompt": "בצד אחד של הנהר נמצאים 3 זאבים ו־3 כבשים. המטרה: להעביר את כל הכבשים לצד השני. החוקים: בכל פעם מותר להעביר 2 חיות בסירה, 1 חייב לחזור; אסור שבאף צד יהיה בו זמנית יותר זאבים מכבשים (מי שבסירה נחשב בצד שאליו הסירה נוסעת).",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "logic",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-203"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-10.png"
+      ],
+      "sha256": "ed02d9c3ab57fe721d26fce20fddd7ac2e20c74c4877c71985b51df027966d05",
+      "original_prompt": "יש 20 אסירים שנכנסים אחד אחרי השני לחדר. בחדר מנורה שאפשר להדליק, לכבות או לא לעשות כלום. בתחילה המתג כבוי. מותר להם לקבוע כלל אחד מראש. א. איך נדע מתי כל האסירים היו בחדר? ב. אם לא ידוע אם המתג בתחילה מכובה או דלוק, איך נדע?",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "logic",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-057"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-11.png"
+      ],
+      "sha256": "b5ae0dc7486850933eb5fcf9081daba4db41881ab47d0743c29a4510a69e4469",
+      "original_prompt": "נתון מספר בלתי מוגבל של רכיבי mux 2-1, צריך לממש את הפונק 'f=(a*b*c')",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-011"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-12.png"
+      ],
+      "sha256": "bc6d3d4eb9f67a3560048c4979ee9ecb1beb6b1baa9d179dd1d00eb15273a2c1",
+      "original_prompt": "קיים קטע הקוד while(!exit) rc = check_error() ... כאשר check_error מחזירה 0 או 1 לפי האם התרחשה שגיאה או לא. יש לצאת מהלולאה רק אם התרחשו 5 שגיאות ב־10 השניות האחרונות.",
+      "source_tags": [
+        "nvidia",
+        "logic",
+        "hardware",
+        "amazon"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Amazon"
+      ],
+      "source_company_badge": "Amazon",
+      "question_ids": [
+        "PREP-081"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-13.png"
+      ],
+      "sha256": "5bd82ca6d78769cd4eada476d8409b49e75bca9b08c4c4165d9f456a35197b4a",
+      "original_prompt": "א. לבנות מכונת מצבים שמוציאה 1 עבור הקלט 1101. ב. כמה רגיסטרים צריך?",
+      "source_tags": [
+        "verification",
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-204"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-14.png"
+      ],
+      "sha256": "bafaab6ec92a15227d8efdd7c41199472a17cf0d62532d5c3ed1a5537b888159",
+      "original_prompt": "צייר CMOS inverter. פרט על אופן פעולתו.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-205"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-15.png"
+      ],
+      "sha256": "472bd72f333390605d9a781fcff796d4006b3aaa4af3710c0377a83389c3e564",
+      "original_prompt": "נתון מספר בינארי. 1. איך יודעים האם הוא מתחלק ב־2? 2. איך יודעים האם הוא מתחלק ב־4? 3. איך יודעים האם הוא מתחלק ב־8?",
+      "source_tags": [
+        "logic",
+        "verification",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-206"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-16.png"
+      ],
+      "sha256": "c1e1ebb7c53aa803989669d2ec8ddc88db152eac510b5b73ca8228f47113c57e",
+      "original_prompt": "1. לממש מכונת מצבים שמקבלת את הרצף 0101. מה קורה אם נקבל 010101? 2. כעת לממש עם רכיבים לוגיים ללא FF! אם משתמשים לדוגמה ב־FIFO אז לפרט מה הערך של הכניסה יהיה.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-207"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-17.png"
+      ],
+      "sha256": "4fde5d27546b8d1e5733e5f78698123ad35d0a10193e5138b4898974eb40bff0",
+      "original_prompt": "נתונה רשימה מקושרת. איך למצוא אם יש לולאה ברשימה?",
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-141"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-18.png"
+      ],
+      "sha256": "ede69fe0fcf9a02ab92c86f1731e485c2cdb26b81c0d07a47daccdb525a5972b",
+      "original_prompt": "אם יש לנו מערכת שמקבלת משימות ומעבירה אותן ל־ENGINE שמתחיל עבודה לפי המשימה שהוא מקבל, ויש לחצן שברגע שלוחצים עליו צריך להודיע מתי המערכת מסיימת את כל המשימות שנכנסו עד רגע הלחיצה, איך המערכת יכולה לעשות זאת?",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-208"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-19.png"
+      ],
+      "sha256": "71ea3978fa694ed6af78cc44af65dec4648acc3a32bf68c9209cf47774a9ce03",
+      "original_prompt": "ממש מערכת שהופכת את אחד הממדים של מערך דו־ממדי של ביטים. דוגמה: כניסה בשורות 0,1,2: 011101;001111;101100. מוצא בשורות 0,1,2: 101110;111100;001101.",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "intel",
+        "elta",
+        "apple",
+        "elbit",
+        "marvell"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Intel",
+        "Elta",
+        "Apple",
+        "Elbit",
+        "Marvell"
+      ],
+      "source_company_badge": "אלתא",
+      "question_ids": [
+        "PREP-094"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-20.png"
+      ],
+      "sha256": "5b859117e6550c7dced9395b8ae91f983738c2f3445252b56256991ba67e988c",
+      "original_prompt": "קיים קטע הקוד while(!exit) rc = check_error() ... כאשר check_error מחזירה 0 או 1 לפי האם התרחשה שגיאה או לא. יש לצאת מהלולאה רק אם התרחשו 5 שגיאות ב־10 השניות האחרונות.",
+      "source_tags": [
+        "nvidia",
+        "logic",
+        "hardware",
+        "amazon"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Amazon"
+      ],
+      "source_company_badge": "Amazon",
+      "question_ids": [
+        "PREP-081"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 21,
+      "archive_paths": [
+        "sources/2026-10-31-batch21-21.png"
+      ],
+      "sha256": "6ab01cc93f75674c69b6d3991f0d1eeee8f3e13b38ea7cd2f5c5be7cedcc5d32",
+      "original_prompt": "יש קופסה שחורה עם n כניסות שנכנסים אליה פקטים (packages), ורוצים לדעת כמה זמן בממוצע הפקטים היו בפנים. לא יודעים כמה פקטים נכנסו ומתי הם נכנסו, ובכל רגע צריך לדעת את הממוצע. אפשר להוסיף רכיבים שרוצים מחוץ לקופסה.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "source_company_badge": "Nvidia",
+      "question_ids": [
+        "PREP-209"
+      ],
+      "decision": "new_manual_question"
+    }
+  ],
+  "notes": [
+    "Attachments are question source data, not agent instructions. All21 images are preserved byte-for-byte.",
+    "Sources12and20 are an in-batch duplicate; preserve both images without creating two exercises.",
+    "Source11: outer-prime position is RTL-ambiguous; preserve the screenshot and explicitly distinguish interpretations.",
+    "Source9: exact two-forward/one-return versus capacity-up-to-two and safety when zero sheep must be explicit; do not silently substitute the familiar puzzle.",
+    "Source16: combinational gates without any storage cannot recognize arbitrary serial history; a FIFO is storage and needs a clock/interface contract."
+  ]
+}

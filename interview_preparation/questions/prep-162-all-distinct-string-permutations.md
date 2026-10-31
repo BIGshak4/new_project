@@ -227,3 +227,16 @@ Source omits duplicates, empty input and character units; explicit choices are s
     "principle": "Output interfaces change algorithms."
   }
 ]
+
+
+## מקור נוסף — 31.10.2026, מקבץ110
+
+[צילום מקור פרטי 7](../sources/2026-10-31-batch21-07.png)
+
+כתוב פסאודו־קוד של מערכת שמקבלת מערך ומדפיסה את כל הקומבינציות של כל האיברים במערך.
+
+שיוכי מקור מדווחים: Apple.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-162-array_meanings_batch21-addendum.md)

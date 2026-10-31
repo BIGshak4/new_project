@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "arrays_exhaustively_checked": 1093,
+  "distinct_permutations_checked": 40573,
+  "positional_subsets_checked": 55987,
+  "method": "Every array over three integer values through length six versus independent itertools permutation sets and combination multisets; mixed hashable values, duplicates, empty outputs and input preservation checked.",
+  "limitation": "Permutations deduplicate equal hashable values; subsets distinguish source positions and preserve input order, so repeated value-tuples are intentional. The source word combinations is not silently assigned one meaning."
+}

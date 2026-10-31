@@ -1193,7 +1193,7 @@ def test_thirty_sources_keep_bytes_full_transcriptions_and_exact_identity_mappin
 
 def test_all_previous_questions_preserve_technical_snapshots_or_exact_appended_prefixes(catalog):
     questions = archive()
-    assert len(questions) == 197 and len(catalog.questions) == 227
+    assert len(questions) == 208 and len(catalog.questions) == 238
     current_runtime = {q.assets.get("preparation_id"): q for q in catalog.questions.values() if q.assets.get("preparation_id")}
     for ident, expected in UNCHANGED_TECHNICAL_SHA256.items():
         original = questions[ident]
@@ -1254,7 +1254,7 @@ def test_inventory_retains_old_asset_hashes_and_private_originals(catalog):
         assert by_local[path]["sha256"] == previous_digest
         assert hashlib.sha256((BANK / path).read_bytes()).hexdigest() == previous_digest
     sources = [entry["local_path"] for entry in uploads.values() if entry["local_path"].startswith("sources/")]
-    assert len(sources) == 311 and len(set(sources)) == 310
+    assert len(sources) == 332 and len(set(sources)) == 331
     names = json.loads((ROOT / "apps/web/src/lib/source-screenshots.json").read_bytes())
     assert set(names) == {Path(path).name for path in sources}
     for question in catalog.questions.values():

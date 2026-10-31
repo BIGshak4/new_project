@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "modes": {
+    "literal_strict_inequality": {
+      "legal_count_states": 8,
+      "legal_directed_edges": 3,
+      "reachable_count_states": 2,
+      "all_sheep_minimum_trips": null
+    },
+    "literal_zero_sheep_exception": {
+      "legal_count_states": 20,
+      "legal_directed_edges": 17,
+      "reachable_count_states": 7,
+      "all_sheep_minimum_trips": null
+    },
+    "relaxed_strict_inequality": {
+      "legal_count_states": 8,
+      "legal_directed_edges": 6,
+      "reachable_count_states": 2,
+      "all_sheep_minimum_trips": null
+    },
+    "relaxed_zero_sheep_exception": {
+      "legal_count_states": 20,
+      "legal_directed_edges": 34,
+      "reachable_count_states": 16,
+      "all_sheep_minimum_trips": 7
+    }
+  },
+  "literal_reachable_edges": 7,
+  "relaxed_all_animals_minimum_trips": 11,
+  "method": "Independent six-animal identity bitmask graph; compare every quotient state, legal edge and BFS distance with the count-state model in all four contracts. Literal reachable set is closed and has no all-sheep goal.",
+  "limitation": "Exact finite river model; no-solution verdict depends on literal two-forward/one-back rule. Seven-trip solution explicitly relaxes both directions to one or two passengers and need not transport all wolves."
+}

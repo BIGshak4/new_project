@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "all_unsigned_16_bit_inputs": 65536,
+  "general_exponent_comparisons": 589852,
+  "method": "Direct independent remainder oracle for all 16-bit numbers and exponents 0..8, plus high-precision boundary numbers and exponents around their width.",
+  "limitation": "Nonnegative binary integers; no claim that unsigned bit tests define parsing, BCD or fractional-number semantics."
+}

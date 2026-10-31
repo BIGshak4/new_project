@@ -24,7 +24,9 @@ from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
 from tests.preparation_history import (
+    BATCH21_BASELINE,
     BATCH110_BASELINE,
+    assert_pre_batch21_assets,
     assert_pre_batch110_archive,
     assert_pre_batch110_assets,
     digest,
@@ -88,8 +90,8 @@ def test_twenty_sources_keep_the_exact_original_bytes_and_identity_mapping():
 
 def test_authorized_extensions_preserve_all_186_original_records_and_999_assets(catalog):
     archive = read(BANK / "questions.json")
-    assert len(archive["questions"]) == 197 and len(catalog.questions) == 227
-    previous_ids = {question["id"] for question in archive["questions"]}
+    assert len(archive["questions"]) == 208 and len(catalog.questions) == 238
+    previous_ids = {question["id"] for question in archive["questions"] if int(question["id"].split("-")[1]) <= 198}
     assert previous_ids - set(BATCH110_BASELINE["records"]) == NEW_IDS
     assert_pre_batch110_archive(archive)
     assert_pre_batch110_assets(read(SEEDS / "preparation_uploads.json")["files"])
@@ -101,9 +103,10 @@ def test_authorized_extensions_preserve_all_186_original_records_and_999_assets(
         "example-power-of-two-check": "prep-power-of-two-check",
         "example-merge-measurement-streams": "prep-merge-two-sorted-arrays",
         "example-overlapping-sequence-1011": "prep-detect-overlapping-1011-stream",
+        "example-mod-six-counter": "prep-enabled-mod-six-counter",
     }
     assert set(aliases) | set(aliases.values()) <= catalog.questions.keys()
-    assert len({aliases.get(key, key) for key in catalog.questions}) == 224
+    assert len({aliases.get(key, key) for key in catalog.questions}) == 234
 
 
 def test_all_new_questions_and_extensions_remain_bilingual_proposed_unrated_and_gated(catalog):
@@ -159,12 +162,13 @@ def test_all_new_questions_and_extensions_remain_bilingual_proposed_unrated_and_
 def test_new_private_assets_are_safe_hash_bound_and_localized(catalog):
     uploads = read(SEEDS / "preparation_uploads.json")["files"]
     assert_pre_batch110_assets(uploads)
+    assert_pre_batch21_assets(uploads)
     assert len(BATCH110_BASELINE["asset_sha256"]) == 999
-    new_paths = uploads.keys() - BATCH110_BASELINE["asset_sha256"].keys()
+    new_paths = BATCH21_BASELINE["asset_sha256"].keys() - BATCH110_BASELINE["asset_sha256"].keys()
     media_by_path = {item["path"]: item for q in catalog.questions.values()
                      if q.assets.get("preparation_id") in AFFECTED_IDS for item in q.assets["bank_media"]}
     assert new_paths <= media_by_path.keys()
-    assert len(uploads) == 1070 and len(new_paths) == NEW_ASSET_COUNT
+    assert len(BATCH21_BASELINE["asset_sha256"]) == 1070 and len(new_paths) == NEW_ASSET_COUNT
     assert sum(uploads[path]["local_path"].startswith("sources/") for path in new_paths) == 20
     assert sum(uploads[path]["local_path"].startswith("diagrams/") for path in new_paths) == NEW_DIAGRAM_COUNT
     assert sum(uploads[path]["local_path"].startswith("solutions/") for path in new_paths) == NEW_CODE_COUNT
@@ -181,7 +185,7 @@ def test_new_private_assets_are_safe_hash_bound_and_localized(catalog):
             if item["language"] == "en":
                 assert not any("\u05d0" <= char <= "\u05ea" for char in item["caption"])
     sources = [entry["local_path"] for entry in uploads.values() if entry["local_path"].startswith("sources/")]
-    assert len(sources) == 311 and len(set(sources)) == 310
+    assert len(sources) == 332 and len(set(sources)) == 331
     names = read(ROOT / "apps/web/src/lib/source-screenshots.json")
     assert set(names) == {Path(path).name for path in sources}
     assert all(f"2026-10-30-batch110-{number:02d}.png" in names for number in range(1, 21))

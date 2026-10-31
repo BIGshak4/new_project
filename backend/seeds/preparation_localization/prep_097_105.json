@@ -4,62 +4,116 @@
       "he": [
         "32 תאים נפרדים, אינדקסים 0..31, הקצאת תא יחיד ותחילה כולם פנויים.",
         "סביבה סדרתית; רק מפת התפוסה נשמרת כמצב ניהול.",
-        "כישלון הקצאה מחזיר ‎-1; שחרור שגוי או כפול מחזיר false בלי שינוי."
+        "כישלון הקצאה מחזיר ‎-1; שחרור שגוי או כפול מחזיר false בלי שינוי.",
+        "push ו־pop נדגמים יחד; pop חוקי קודם לבחירת התא ל־push.",
+        "תפוסה מתאפסת, payload אינו נשטף; כל נתון בטווח 32 ביטים.",
+        "הכתובת ידית זמנית שאין להשתמש בה אחרי שחרור."
       ],
       "en": [
         "32 individual slots indexed 0..31, one slot per request, initially all free.",
         "Sequential operation; only the occupancy bitmap is persistent management state.",
-        "Allocation failure returns -1; invalid or repeated release returns false without change."
+        "Allocation failure returns -1; invalid or repeated release returns false without change.",
+        "Push/pop are sampled together, with valid pop preceding allocation.",
+        "Reset clears occupancy, not payload; data fit thirty-two bits.",
+        "An address is a temporary handle that must not be reused after release."
       ]
     },
     "optimality": {
-      "he": "נדרשים לפחות 32 ביטים לתיאור שרירותי של 2^32 קבוצות תפוסה, אם כל קבוצת תאים יכולה להיות מוקצית ואין מידע ניהול חיצוני. המפה משיגה חסם מצב זה. אין טענה למספר הוראות מכונה מינימלי.",
-      "en": "Arbitrary occupancy has 2^32 possible subsets, requiring at least 32 bits when every subset is allowed and no external management information exists. The bitmap meets this state bound; no minimum instruction-count claim is made."
+      "he": "נדרשים לפחות 32 ביטים לתיאור שרירותי של 2^32 קבוצות תפוסה, אם כל קבוצת תאים יכולה להיות מוקצית ואין מידע ניהול חיצוני. המפה משיגה חסם מצב זה. אין טענה למספר הוראות מכונה מינימלי.\n\n32 ביטי ניהול ו־1024 ביטי payload במודל שנבחר, ועוד בקרים ומוצאים לפי הממשק. אין טענת מינימום שטח/השהיה או O(1) חומרתי לכל N.",
+      "en": "Arbitrary occupancy has 2^32 possible subsets, requiring at least 32 bits when every subset is allowed and no external management information exists. The bitmap meets this state bound; no minimum instruction-count claim is made.\n\nChosen storage is thirty-two metadata bits and 1024 payload bits, plus interface/control state. No global area/delay or constant-for-all-N hardware claim."
     },
     "edge_cases": {
       "he": [
         "תחילה ריק; לאחר 32 הקצאות כל בקשה נכשלת.",
         "התא 31 משתמש בביט הגבוה; אין להזיז במספר שלילי או ב־32.",
-        "שחרור כפול, אינדקס שגוי, ומחזור שחרור והקצאה מחדש."
+        "שחרור כפול, אינדקס שגוי, ומחזור שחרור והקצאה מחדש.",
+        "מלא ללא pop: push נכשל.",
+        "מלא עם pop חוקי: אפשר שימוש חוזר; pop כפול או כתובת מחוץ לטווח נכשלים."
       ],
       "en": [
         "Initially empty; after 32 allocations every request fails.",
         "Slot 31 uses the highest bit; never shift by a negative count or by 32.",
-        "Double free, invalid index, and release followed by reallocation."
+        "Double free, invalid index, and release followed by reallocation.",
+        "Full without pop: push fails.",
+        "Full with valid pop permits reuse; duplicate or out-of-range pop fails."
       ]
     },
     "common_mistakes": {
       "he": [
         "להשתמש ב־~used של Python ללא מסכת 32 ביטים.",
         "להחזיר אותו תא בלי לסמן תפוסה או לנקות את כל המפה בשחרור.",
-        "לטעון ש־O(1) פעולות מחייב אפס אתחול, או שמודל Python צורך פיזית רק 32 ביטים."
+        "לטעון ש־O(1) פעולות מחייב אפס אתחול, או שמודל Python צורך פיזית רק 32 ביטים.",
+        "לפרש pop(address) כהוצאת האיבר האחרון.",
+        "להחזיר כתובת בלי valid או להסתיר מדיניות push/pop סימולטניים.",
+        "לחשוב ש־free מוחק את המידע או מונע בעיית כתובת ישנה."
       ],
       "en": [
         "Using Python ~used without a 32-bit mask.",
         "Returning a slot without marking it or clearing the entire map on release.",
-        "Confusing constant-time operations with zero initialization, or claiming a Python object physically occupies 32 bits."
+        "Confusing constant-time operations with zero initialization, or claiming a Python object physically occupies 32 bits.",
+        "Treating pop(address) as stack pop.",
+        "Returning an address without validity or hiding simultaneous-request policy.",
+        "Assuming release erases data or prevents stale-handle problems."
       ]
     },
     "interview_answer": {
-      "he": "מילה בת 32 ביטים היא מפת תפוסה. מקצים על ידי חיפוש ביט אפס והדלקתו, ומשחררים על ידי ניקוי הביט המתאים. סריקה של 32 ביטים היא זמן קבוע בקיבולת הנתונה; כל המטען נשאר מחוץ למצב הניהול.",
-      "en": "Use the 32-bit word as an occupancy bitmap. Allocate by finding and setting a zero bit; release by clearing the indexed bit. Scanning 32 bits is constant time for the fixed capacity, and payload stays separate from management state."
+      "he": "מילה בת 32 ביטים היא מפת תפוסה. מקצים על ידי חיפוש ביט אפס והדלקתו, ומשחררים על ידי ניקוי הביט המתאים. סריקה של 32 ביטים היא זמן קבוע בקיבולת הנתונה; כל המטען נשאר מחוץ למצב הניהול.\n\nאפריד RAM ו־bitmap, אשחרר כתובת חוקית, ואז אבחר את הפנויה הנמוכה בעזרת priority encoder. אדווח success וכתובת תקפה רק אם הכתיבה בוצעה.",
+      "en": "Use the 32-bit word as an occupancy bitmap. Allocate by finding and setting a zero bit; release by clearing the indexed bit. Scanning 32 bits is constant time for the fixed capacity, and payload stays separate from management state.\n\nSeparate RAM from occupancy, release a valid address, then use a priority encoder to select the lowest free slot. Report success/address only for a committed allocation."
     },
     "source_ambiguities": {
-      "he": "המקור אינו מגדיר תחילת מצב, כישלון, מספור, שחרור שגוי, מקביליות או מדיניות בחירה. החוזה המפורש נוסף בעריכה, אינו ציטוט מהמקור.",
-      "en": "The source omits initialization, failure behavior, indexing, invalid frees, concurrency and selection policy. The explicit contract is an editorial addition, not a source quotation."
+      "he": "המקור אינו מגדיר תחילת מצב, כישלון, מספור, שחרור שגוי, מקביליות או מדיניות בחירה. החוזה המפורש נוסף בעריכה, אינו ציטוט מהמקור.\n\nהמקור אינו מגדיר עומק, רוחב, reset, קריאה, פעולות בו־זמניות או כתובות שגויות. אלו הושלמו בגלוי; פתרון ה־malloc/free הישן נשמר.",
+      "en": "The source omits initialization, failure behavior, indexing, invalid frees, concurrency and selection policy. The explicit contract is an editorial addition, not a source quotation.\n\nDepth, width, reset, reading, simultaneous operations and invalid addresses are unspecified. These are explicit completions; the older malloc/free solution remains intact."
     },
     "verification": {
-      "he": "הקוד בפייתון הורץ מול אורקל קבוצות נפרד: כל 65,536 מצבי תפוסת 16 התאים הנמוכים כאשר העליונים תפוסים, 50,000 פעולות אקראיות, מלא/ריק ושחרורים לא תקינים. C++ נכתב אך לא קומפל; אין בדיקת מקביליות.",
-      "en": "The actual Python model was checked against an independent set oracle: all 65,536 lower-16 occupancy states with upper slots occupied, 50,000 random operations, full/empty cases and invalid frees. C++ was authored but not compiled; concurrency was not tested."
+      "he": "הקוד בפייתון הורץ מול אורקל קבוצות נפרד: כל 65,536 מצבי תפוסת 16 התאים הנמוכים כאשר העליונים תפוסים, 50,000 פעולות אקראיות, מלא/ריק ושחרורים לא תקינים. C++ נכתב אך לא קומפל; אין בדיקת מקביליות.\n\n448 צירופי חזית במודל עומק ארבע ו־10000 חזיתות מדגמיות בעומק 32 נבדקו מול אורקל קבוצת כתובות ומילון payload, כולל reset ושחרור לפני הקצאה. לא נבדק RAM פיזי.",
+      "en": "The actual Python model was checked against an independent set oracle: all 65,536 lower-16 occupancy states with upper slots occupied, 50,000 random operations, full/empty cases and invalid frees. C++ was authored but not compiled; concurrency was not tested.\n\n448 one-edge cases at depth four and ten thousand seeded depth-thirty-two edges matched independent live-address/payload oracles, including reset and pop-before-push. No physical RAM test."
     },
     "solution_extensions": {
       "he": {
         "question": "מה משתנה אם שתי יחידות מבקשות להקצות במקביל?",
-        "direction": "עדכון של קריאה-שינוי-כתיבה יכול להחזיר אותו תא פעמיים. נדרש מנעול או לולאת פעולה אטומית; מפת ביטים לבדה אינה מספקת סנכרון."
+        "direction": "עדכון של קריאה-שינוי-כתיבה יכול להחזיר אותו תא פעמיים. נדרש מנעול או לולאת פעולה אטומית; מפת ביטים לבדה אינה מספקת סנכרון.",
+        "batch21_push_pop_address": [
+          {
+            "question": "איך מגינים מפני pop של כתובת ששוחררה והוקצתה מחדש?",
+            "answer_direction": "מוסיפים generation לכל תא ומחזירים handle המורכב מאינדקס ומדור. בודקים התאמה בשחרור ומגדירים טיפול בגלישת generation.",
+            "principle": "כתובת פיזית אינה זהות קבועה של בעלות."
+          }
+        ]
       },
       "en": {
         "question": "What changes if two units allocate concurrently?",
-        "direction": "A read-modify-write race can return the same slot twice. Use synchronization such as a lock or an atomic update loop; a bitmap alone does not synchronize."
+        "direction": "A read-modify-write race can return the same slot twice. Use synchronization such as a lock or an atomic update loop; a bitmap alone does not synchronize.",
+        "batch21_push_pop_address": [
+          {
+            "question": "How can a stale pop be rejected after an address was reallocated?",
+            "answer_direction": "Add a per-slot generation and return an index/generation handle. Validate both on release and define generation wrap.",
+            "principle": "A physical index is not a permanent ownership identity."
+          }
+        ]
+      }
+    },
+    "prompt_variants": {
+      "he": {
+        "batch21_push_pop_address": {
+          "prompt": "### הרחבה: חומרה המקצה כתובת ב־push ומשחררת ב־pop(address)\nתכננו זיכרון שבו push(data) מקצה תא פנוי, שומר נתון ומחזיר כתובת ו־push_success. pop(address) משחרר תא לפי כתובתו. זו אינה הוצאת ראש FIFO או מחסנית LIFO.\n\nנבחרו 32 תאים של 32 סיביות, bitmap תפוסה והעדפה לכתובת הפנויה הנמוכה. כל הבקשות מתקבלות באותה עליית שעון. pop חוקי מוחל לפני push באותה חזית, כך שאפשר להקצות מיד תא ששוחרר, גם כשהזיכרון היה מלא. pop שגוי או כפול נכשל ללא שינוי. reset סינכרוני קודם לבקשות ומאפס תפוסה וסטטוס, ללא מחיקה פיזית של payload. המוצא הוא תגובת החזית, והכתובת תקפה רק כש־push_success=1.",
+          "hints": [
+            "הפרידו את נתוני הזיכרון מן המידע שאומר אילו תאים תפוסים.",
+            "איך מוצאים תא פנוי באמצעות bitmap ו־priority encoder, ומה מסמן שהזיכרון מלא?",
+            "חשבו תפוסה אפקטיבית אחרי pop חוקי, בחרו את האפס הראשון והקצו אותו ל־push. סדר זה מאפשר שחרור והקצאה מחדש באותה חזית."
+          ],
+          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "batch21_push_pop_address": {
+          "prompt": "### Extension: hardware push allocates an address; pop(address) releases it\nDesign memory where push(data) allocates a free slot, stores data and returns its address with push_success. pop(address) releases the addressed slot. This is neither FIFO dequeue nor LIFO stack pop.\n\nChoose thirty-two 32-bit slots, an occupancy bitmap and lowest-free-address priority. Requests are sampled on one rising clock. A valid pop is applied before a simultaneous push, allowing immediate reuse even when initially full. Invalid or duplicate pop fails without changes. Synchronous reset overrides requests and clears occupancy/status without physically scrubbing payload. Outputs describe the sampled operation; the returned address is valid only when push_success=1.",
+          "hints": [
+            "Separate payload storage from occupancy metadata.",
+            "How do a bitmap and priority encoder find a free slot, and how is full represented?",
+            "Compute effective occupancy after a valid pop, select its first zero, then allocate for push. This ordering permits release and reuse on the same edge."
+          ],
+          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+        }
       }
     }
   },

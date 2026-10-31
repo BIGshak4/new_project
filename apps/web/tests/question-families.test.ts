@@ -41,17 +41,17 @@ test("legacy and canonical URLs remain discoverable in both directions", () => {
   assert.deepEqual(relatedQuestionKeys("unrelated-question"), []);
 });
 
-test("the accumulated intakes yield 227 records and 224 unique questions without dropping new exercises", () => {
+test("the accumulated intakes yield 238 records and 234 unique questions without dropping new exercises", () => {
   const rows = ["example_bank", "preparation_bank"].flatMap(name => {
     const seed = JSON.parse(readFileSync(new URL(`../../../backend/seeds/questions/${name}.json`, import.meta.url), "utf8"));
     return seed.map((q: { key: string; assets: { preparation_id?: string } }) => ({
       key: q.key, id: q.key, preparation_id: q.assets.preparation_id,
     } as QuestionSummary));
   });
-  assert.equal(rows.length, 227);
+  assert.equal(rows.length, 238);
   const unique = uniqueLibraryQuestions(rows);
-  assert.equal(unique.length, 224);
-  for (const id of Array.from({ length: 139 }, (_, i) => `PREP-${String(i + 60).padStart(3, "0")}`)) {
+  assert.equal(unique.length, 234);
+  for (const id of Array.from({ length: 150 }, (_, i) => `PREP-${String(i + 60).padStart(3, "0")}`)) {
     assert.equal(rows.filter(q => q.preparation_id === id).length, 1, `${id}: one canonical source record`);
     assert.equal(unique.filter(q => q.preparation_id === id).length, 1, id);
   }
@@ -59,6 +59,21 @@ test("the accumulated intakes yield 227 records and 224 unique questions without
   assert.ok(!unique.some(q => q.key === "example-power-of-two-check"));
   assert.ok(!unique.some(q => q.key === "example-merge-measurement-streams"));
   assert.ok(!unique.some(q => q.key === "example-overlapping-sequence-1011"));
+  assert.ok(!unique.some(q => q.key === "example-mod-six-counter"));
+});
+
+test("the collected modulo-six counter keeps the example's identity and search paths", () => {
+  const example = { ...generic, id: "counter-example-id", key: "example-mod-six-counter", title: "Enabled modulo-six counter" };
+  const collected = { ...manual, id: "counter-manual-id", key: "prep-enabled-mod-six-counter", title: "Counter from zero through five", preparation_id: "PREP-202", reported_companies: ["NVIDIA"] };
+  for (const rows of [[example, collected], [collected, example]]) {
+    assert.deepEqual(uniqueLibraryQuestions(rows), [collected]);
+    assert.deepEqual(uniqueLibraryQuestions(rows.filter(q => matchesQuestion(q, "Enabled modulo-six"))), [example]);
+    assert.deepEqual(uniqueLibraryQuestions(rows.filter(q => matchesQuestion(q, "PREP-202"))), [collected]);
+  }
+  assert.equal(example.id, "counter-example-id");
+  assert.deepEqual(relatedQuestionKeys(example.key), [collected.key]);
+  assert.deepEqual(relatedQuestionKeys(collected.key), [example.key]);
+  assert.equal(questionFamily("example-rotate-versus-shift"), "example-rotate-versus-shift");
 });
 
 test("the collected overlapping 1011 detector is preferred while the example keeps its ID and search path", () => {

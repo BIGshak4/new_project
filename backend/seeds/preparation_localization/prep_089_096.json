@@ -272,7 +272,9 @@
         "סעיף C: uint8_t קיים ביעד; הקלט כבר בית unsigned וכל שמונת הביטים נחשבים.",
         "סעיף C: uint8_t קיים ביעד; הקלט כבר בית unsigned וכל שמונת הביטים נחשבים.",
         "מספר ללא סימן המתאים בדיוק לרוחב W שלם לא שלילי; כל האפסים המובילים נשמרים כחלק מהייצוג.",
-        "W=0 מקבל רק0. קוד הסקאלרים נמנע ממערך וממחרוזת; המקור החדש מתיר בחירת שפה ואף פסאודו־קוד."
+        "W=0 מקבל רק0. קוד הסקאלרים נמנע ממערך וממחרוזת; המקור החדש מתיר בחירת שפה ואף פסאודו־קוד.",
+        "ממדים חיוביים וקבועים; כל הביטים זמינים במקביל.",
+        "c=0 הוא השמאלי בכתיב השורה; מיפוי row-major מפורש."
       ],
       "en": [
         "Unsigned integer input in 0..255; exactly eight bits, including leading zeros.",
@@ -281,7 +283,9 @@
         "C part: target provides uint8_t; input is already an unsigned byte and all eight bits matter.",
         "C part: target provides uint8_t; input is already an unsigned byte and all eight bits matter.",
         "Unsigned value fitting nonnegative integer width W; leading-zero positions retained.",
-        "W=0 accepts only0. Scalar code avoids array/string, while the new source allows any language or pseudocode."
+        "W=0 accepts only0. Scalar code avoids array/string, while the new source allows any language or pseudocode.",
+        "Positive fixed dimensions and all bits available in parallel.",
+        "c=0 is the displayed leftmost bit; row-major mapping is explicit."
       ]
     },
     "optimality": {
@@ -290,14 +294,16 @@
         "space": "O(1) משתנים/מילים; בהכללה הרוחב הכולל הוא O(w) ביטים.",
         "scope": "אין טענת מינימום הוראות או עדיפות על פקודת חומרה ייעודית. החלפות במסכות יכולות לתת חלופה לרוחב קבוע.",
         "variant_C_mirror": "שתי הדרכים קבועות לרוחב8; שלושה שלבי מסכות במקום שמונה איטרציות. הכללה O(logW) לעומת O(W) שלבי מילים, ללא מדידת מהירות.",
-        "variant_given_width": "בדיוק W איטרציות ו־O(1) סקלרים. O(W) זמן במודל מילה מתאימה; Python ארוך דורש עד O(W) ביטי אחסון לסקלר ועלות פעולות תלוית רוחב. אין טענת מינימום."
+        "variant_given_width": "בדיוק W איטרציות ו־O(1) סקלרים. O(W) זמן במודל מילה מתאימה; Python ארוך דורש עד O(W) ביטי אחסון לסקלר ועלות פעולות תלוית רוחב. אין טענת מינימום.",
+        "batch21_matrix_axis": "מיפוי קבוע יכול להתבצע בחוטים בלבד. ספירת חיבורים אינה הערכת שטח ניתוב או תדר."
       },
       "en": {
         "time": "Eight iterations: O(1) for the fixed width. For width w: O(w) bit steps assuming the value fits the word.",
         "space": "O(1) scalar variables/words; generalized scalar width is O(w) bits.",
         "scope": "No minimum-instruction or superiority-to-dedicated-hardware claim. Masked swaps are an alternative at fixed width.",
         "variant_C_mirror": "Both fixed-width approaches are constant; three mask stages replace eight iterations. O(logW) versus O(W) generalized word stages, without measured speed claims.",
-        "variant_given_width": "Exactly W iterations/O(1) scalars. O(W) in a suitable word model; Python long integers use up to O(W) bits per scalar and width-dependent operations. No minimum claim."
+        "variant_given_width": "Exactly W iterations/O(1) scalars. O(W) in a suitable word model; Python long integers use up to O(W) bits per scalar and width-dependent operations. No minimum claim.",
+        "batch21_matrix_axis": "Fixed mapping can use wires only. Wire count is not routed area or frequency characterization."
       }
     },
     "edge_cases": {
@@ -311,7 +317,9 @@
         "1,15,240; אפס,255,one-hot ואפסים מובילים.",
         "רוחב0,1,7,8; קלט0 וכל הביטים דלוקים.",
         "אפסים מובילים, ערך1 ברוחבים שונים, רוחב שאינו חזקה של שתיים.",
-        "ערך מחוץ לרוחב או רוחב שלילי/לא שלם נדחה."
+        "ערך מחוץ לרוחב או רוחב שלילי/לא שלם נדחה.",
+        "מטריצה לא ריבועית אינה משנה ממדים.",
+        "עמודה אחת אינה משתנה; רוחב אי־זוגי משאיר אמצע."
       ],
       "en": [
         "Zero and 255 are unchanged.",
@@ -323,7 +331,9 @@
         "1/15/240; zero,255,one-hot and leading zeros.",
         "Widths0,1,7,8; zero/all ones.",
         "Leading zeros, value1 at different widths, non-power-of-two widths.",
-        "Out-of-width values or negative/noninteger width rejected."
+        "Out-of-width values or negative/noninteger width rejected.",
+        "A non-square matrix retains its shape.",
+        "One column is unchanged; odd widths retain a center."
       ]
     },
     "common_mistakes": {
@@ -339,7 +349,10 @@
         "להציג שלושה שלבים כשלוש הוראות או מודל Python כהידור C.",
         "להשתמש באורך הייצוג המשמעותי במקום הרוחב שנמסר.",
         "לעצור כשהקלט שנותר מתאפס.",
-        "לכנות O(1) סקלרים O(1) ביטים, או להחיל מסכות8 ביט בלי התאמה לרוחב אחר."
+        "לכנות O(1) סקלרים O(1) ביטים, או להחיל מסכות8 ביט בלי התאמה לרוחב אחר.",
+        "לבצע transpose.",
+        "להפוך את האפיק כולו ובכך להפוך גם שורות.",
+        "לבלבל לולאת generate עם אלגוריתם סדרתי."
       ],
       "en": [
         "A while-value loop stops before all eight positions are processed.",
@@ -353,12 +366,15 @@
         "Equating three stages with three instructions or Python modeling with C compilation.",
         "Using significant-bit length rather than supplied width.",
         "Stopping when remaining input becomes zero.",
-        "Equating constant scalars with constant bits or applying byte masks unchanged to other widths."
+        "Equating constant scalars with constant bits or applying byte masks unchanged to other widths.",
+        "Transposing instead of reversing.",
+        "Reversing the entire bus and therefore the rows too.",
+        "Confusing elaboration-time generate wiring with sequential execution."
       ]
     },
     "interview_answer": {
-      "he": "אתחל result=0. חזור שמונה פעמים: הזז את result שמאלה, צרף עם OR את value&1, והזז את value ימינה. הסיבית הראשונה שנקראה נודדת שמאלה עד לקצה. שמונה צעדים קבועים, בלי מערך עזר.\n\nאציג לולאה של שמונה ביטים, ואז החלפות שכנים, זוגות וחצאי בית במסכות 0x55,0x33,0x0F. שני המימושים קבועים לבית; השיפור הוא במספר שלבי העבודה, בלי להבטיח זמן מעבד שנמדד.\n\nאציג לולאה של שמונה ביטים, ואז החלפות שכנים, זוגות וחצאי בית במסכות 0x55,0x33,0x0F. שני המימושים קבועים לבית; השיפור הוא במספר שלבי העבודה, בלי להבטיח זמן מעבד שנמדד.\n\nאחלץ את הביט הימני ואצרף אותו לתוצאה מוזזת שמאלה, בדיוק W פעמים. כך אפסים מובילים ממשיכים להזיז את התוצאה ומתקבל היפוך של הרוחב שנמסר; הדוגמה ברוחב7 מחזירה83.",
-      "en": "Initialize result=0. Repeat eight times: shift result left, OR in value&1, then shift value right. The first extracted bit moves left until it reaches the far end. Eight fixed steps and no auxiliary array.\n\nStart with eight bit steps, then exchange neighbours, pairs and nibbles with0x55/0x33/0x0F. Both are constant for a byte; the improvement is fewer stages, without measured CPU-time guarantees.\n\nStart with eight bit steps, then exchange neighbours, pairs and nibbles with0x55/0x33/0x0F. Both are constant for a byte; the improvement is fewer stages, without measured CPU-time guarantees.\n\nExtract the low bit and append to the left-shifted result exactly W times. Leading zeros still shift the result, yielding the declared-width reversal; the seven-bit example returns83."
+      "he": "אתחל result=0. חזור שמונה פעמים: הזז את result שמאלה, צרף עם OR את value&1, והזז את value ימינה. הסיבית הראשונה שנקראה נודדת שמאלה עד לקצה. שמונה צעדים קבועים, בלי מערך עזר.\n\nאציג לולאה של שמונה ביטים, ואז החלפות שכנים, זוגות וחצאי בית במסכות 0x55,0x33,0x0F. שני המימושים קבועים לבית; השיפור הוא במספר שלבי העבודה, בלי להבטיח זמן מעבד שנמדד.\n\nאציג לולאה של שמונה ביטים, ואז החלפות שכנים, זוגות וחצאי בית במסכות 0x55,0x33,0x0F. שני המימושים קבועים לבית; השיפור הוא במספר שלבי העבודה, בלי להבטיח זמן מעבד שנמדד.\n\nאחלץ את הביט הימני ואצרף אותו לתוצאה מוזזת שמאלה, בדיוק W פעמים. כך אפסים מובילים ממשיכים להזיז את התוצאה ומתקבל היפוך של הרוחב שנמסר; הדוגמה ברוחב7 מחזירה83.\n\nאשאיר את r ואחליף את c ב־C−1−c. עבור אפיק מקביל קבוע זה חיווט; אגדיר בנפרד אינדקסי packed וייצוג זיכרון טורי.",
+      "en": "Initialize result=0. Repeat eight times: shift result left, OR in value&1, then shift value right. The first extracted bit moves left until it reaches the far end. Eight fixed steps and no auxiliary array.\n\nStart with eight bit steps, then exchange neighbours, pairs and nibbles with0x55/0x33/0x0F. Both are constant for a byte; the improvement is fewer stages, without measured CPU-time guarantees.\n\nStart with eight bit steps, then exchange neighbours, pairs and nibbles with0x55/0x33/0x0F. Both are constant for a byte; the improvement is fewer stages, without measured CPU-time guarantees.\n\nExtract the low bit and append to the left-shifted result exactly W times. Leading zeros still shift the result, yielding the declared-width reversal; the seven-bit example returns83.\n\nKeep r and replace c by C−1−c. A fixed parallel bus needs wiring; packed indexing and serial-memory access require explicit separate mappings."
     },
     "source_ambiguities": {
       "he": [
@@ -366,19 +382,21 @@
         "תגיות המקור כוללות Intel ו־Marvell; השיוך מדווח ולא אומת עצמאית.",
         "המקור החדש מוסיף C ובקשת ייעול לאותו יעד של094. נאמר במפורש מהו יעד uint8_t ומה לא נבדק; VSW-003 היא הכללת מסכות ל־32 ביטים.",
         "המקור החדש מוסיף C ובקשת ייעול לאותו יעד של094. נאמר במפורש מהו יעד uint8_t ומה לא נבדק; VSW-003 היא הכללת מסכות ל־32 ביטים.",
-        "המקור החדש מספק רוחב ולא קובע סימן או שפת מימוש. זה שינוי מהותי לעומת8 ביט, ולכן נוסף כסעיף נפרד עם חוזה מפורש, בלי להחליף את נוסחי והרמזים הקודמים. VSW-003 הפרטית מציגה32 ביט בלבד."
+        "המקור החדש מספק רוחב ולא קובע סימן או שפת מימוש. זה שינוי מהותי לעומת8 ביט, ולכן נוסף כסעיף נפרד עם חוזה מפורש, בלי להחליף את נוסחי והרמזים הקודמים. VSW-003 הפרטית מציגה32 ביט בלבד.",
+        "הדוגמה מכריעה שהציר הראשי הוא העמודות. אין להסיק גודל, שעון או ארכיטקטורת RAM מעבר לכך. תוכן היפוך המספר המקורי נשמר."
       ],
       "en": [
         "The source specifies eight bits and no array; the edition clarifies the unsigned range, leading-zero handling and no string workaround.",
         "Intel and Marvell are source-reported attributions, not independently verified.",
         "New source adds C and optimization to094’s same target. uint8_t assumptions and unperformed compilation are explicit; VSW-003 is the32-bit mask generalization.",
         "New source adds C and optimization to 094’s same target. uint8_t assumptions and unperformed compilation are explicit; VSW-003 is the 32-bit mask generalization.",
-        "The new source supplies width but omits signedness/language. This materially generalizes eight bits, so add a separate explicit contract while preserving old prompts/hints. Private VSW-003 uses32 bits only."
+        "The new source supplies width but omits signedness/language. This materially generalizes eight bits, so add a separate explicit contract while preserving old prompts/hints. Private VSW-003 uses32 bits only.",
+        "The example selects column reversal. Width, clock and RAM architecture are otherwise unspecified. Original scalar bit-reversal content is retained."
       ]
     },
     "verification": {
-      "he": "אומתו כל 256 הקלטים מול אורקל בלתי תלוי של היפוך מחרוזת בת שמונה תווים, 2,048 בדיקות מיקום סיבית, היפוך כפול, שימור מספר אחדים, התאמה למשלים ושבע דחיות של קלט לא תקין. מחרוזות משמשות באורקל בלבד. ללא הידור לשפה ברוחב קבוע או מדידת ביצועים.\n\nכל256 הקלטים בשני מודלי Python מול ביטים הפוכים, כולל היפוך כפול. C לא קומפל: ארבע פקודות מהדר לא נמצאו ב־PATH.\n\nכל256 הקלטים בשני מודלי Python מול ביטים הפוכים, כולל היפוך כפול. C לא קומפל: ארבע פקודות מהדר לא נמצאו ב־PATH.\n\n8,191 קלטים ממצים ברוחבים0..12 ועוד800 קלטים רחבים; אורקל מחרוזת נפרד, היפוך כפול ושמירת אחדות. Python הורץ.",
-      "en": "Verified all 256 inputs against independent fixed-width string reversal, 2,048 individual bit positions, reversal involution, set-bit preservation, complement compatibility and seven invalid-input rejections. Strings are used only in the oracle. No fixed-width language compilation or benchmark.\n\nAll256 inputs in two Python models versus reversed bits, including involution. C uncompiled: four compiler commands absent from PATH.\n\nAll 256 inputs in two Python models versus reversed bits, including involution. C uncompiled: four compiler commands absent from PATH.\n\n8,191 exhaustive width0..12 inputs plus800 wide inputs; independent text oracle, involution and popcount. Python executed."
+      "he": "אומתו כל 256 הקלטים מול אורקל בלתי תלוי של היפוך מחרוזת בת שמונה תווים, 2,048 בדיקות מיקום סיבית, היפוך כפול, שימור מספר אחדים, התאמה למשלים ושבע דחיות של קלט לא תקין. מחרוזות משמשות באורקל בלבד. ללא הידור לשפה ברוחב קבוע או מדידת ביצועים.\n\nכל256 הקלטים בשני מודלי Python מול ביטים הפוכים, כולל היפוך כפול. C לא קומפל: ארבע פקודות מהדר לא נמצאו ב־PATH.\n\nכל256 הקלטים בשני מודלי Python מול ביטים הפוכים, כולל היפוך כפול. C לא קומפל: ארבע פקודות מהדר לא נמצאו ב־PATH.\n\n8,191 קלטים ממצים ברוחבים0..12 ועוד800 קלטים רחבים; אורקל מחרוזת נפרד, היפוך כפול ושמירת אחדות. Python הורץ.\n\n5050 מטריצות ביטים בממדים 1..3 על 1..4 נבדקו מול היפוך שורות עצמאי, מיפוי אפיק שטוח ואינוולוציה; גם דוגמת 3×6 נבדקה. אין סינתזה או ניתוב.",
+      "en": "Verified all 256 inputs against independent fixed-width string reversal, 2,048 individual bit positions, reversal involution, set-bit preservation, complement compatibility and seven invalid-input rejections. Strings are used only in the oracle. No fixed-width language compilation or benchmark.\n\nAll256 inputs in two Python models versus reversed bits, including involution. C uncompiled: four compiler commands absent from PATH.\n\nAll 256 inputs in two Python models versus reversed bits, including involution. C uncompiled: four compiler commands absent from PATH.\n\n8,191 exhaustive width0..12 inputs plus800 wide inputs; independent text oracle, involution and popcount. Python executed.\n\n5050 bit matrices at row counts one through three and column counts one through four matched independent row reversal, flat-bus mapping and involution, plus the supplied 3×6 example. No synthesis or routing."
     },
     "relationship_note": {
       "he": "קשורה לתרגילי הזזה וסיבוב, אך היפוך סדר שמונה הסיביות הוא פעולה אחרת; בפרט אין לשנות את הרוחב לפי גודל המספר.",
@@ -400,6 +418,13 @@
             "answer_direction": "יש להגדיר אם הופכים תבנית ברוחב קבוע וללא סימן או ייצוג עם סימן. ממירים לתבנית בלתי מסומנת באותו רוחב; לא מבצעים הזזה אריתמטית לא מוגדרת בחוזה.",
             "status": "בחומר משלים; רמזי הווריאנט אינם מחליפים את התור המקורי."
           }
+        ],
+        "batch21_matrix_axis": [
+          {
+            "question": "מה אם כניסת control בוחרת האם להפוך או להשאיר?",
+            "answer_direction": "לכל ביט יתווסף MUX בין x[r][c] ל־x[r][C−1−c], בעוד ביטי אמצע יכולים להישאר חיווט.",
+            "principle": "שליטה בזמן ריצה הופכת פרמוטציה קבועה ללוגיקת בחירה."
+          }
         ]
       },
       "en": {
@@ -416,6 +441,13 @@
             "question": "What changes for signed input?",
             "answer_direction": "Define whether reversing a fixed-width unsigned pattern or a signed textual representation. Convert to a same-width unsigned pattern; do not rely on an unstated arithmetic-shift contract.",
             "status": "Supplemental; variant hints do not replace the original queue."
+          }
+        ],
+        "batch21_matrix_axis": [
+          {
+            "question": "What if a control selects reversal or identity at runtime?",
+            "answer_direction": "Each bit selects between x[r][c] and x[r][C−1−c] with a MUX; center bits may remain direct wires.",
+            "principle": "Runtime control turns fixed wiring into selection logic."
           }
         ]
       }
@@ -439,6 +471,15 @@
             "בצעו W פעמים result=(result<<1)|(value&1), ואז value>>=1. התחילו result=0, אל תעצרו כשהערך מתאפס, ובדקו שהקלט מתאים לרוחב לפני ההרצה."
           ],
           "integration_status": "בחומר משלים בלבד; תור הרמזים המקורי נשמר."
+        },
+        "batch21_matrix_axis": {
+          "prompt": "### הרחבה: היפוך עמודות בתוך כל שורת מטריצת ביטים\nממשו מערכת ההופכת ממד אחד במערך ביטים דו־ממדי. בדוגמה, השורות 011101;001111;101100 הופכות ל־101110;111100;001101. מספר השורות וסדרן נשמרים: הדוגמה הופכת את סדר העמודות בתוך כל שורה, ולא מבצעת transpose.\n\nנבחר אפיק מקביל של R×C ביטים, עם R, C חיוביים וקבועים בזמן בניית המעגל. אינדקס c=0 מתאר את התו השמאלי בכתיב השורה, ו־flat index=r·C+c בייצוג row-major. יש למפות את האינדקסים הללו לכתיב האפיק הממשי באופן עקבי. אין שעון או זיכרון במימוש החיווט הראשי.",
+          "hints": [
+            "השוו את השורה הראשונה לפני ואחרי: האם התחלפו השורות או התהפך סדר הביטים בתוכן?",
+            "לכל יציאה (r, c) יש כניסה אחת באותה שורה, בעמודה C−1−c.",
+            "ממשו y[r][c]=x[r][C−1−c]. באפיק שטוח נקודת המקור היא r·C+(C−1−c), ולא R·C−1−(r·C+c)."
+          ],
+          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
         }
       },
       "en": {
@@ -459,6 +500,15 @@
             "Repeat result=(result<<1)|(value&1), then value>>=1 exactly W times. Start result0, do not stop at value0, and validate width fit first."
           ],
           "integration_status": "Supplemental only; original hint queue retained."
+        },
+        "batch21_matrix_axis": {
+          "prompt": "### Extension: reverse columns within each row of a bit matrix\nImplement reversal of one dimension of a two-dimensional bit array. Example rows 011101;001111;101100 become 101110;111100;001101. Row count/order remain unchanged: this reverses columns inside each row, not a transpose.\n\nChoose a parallel R×C-bit interface with positive dimensions fixed at circuit construction. Index c=0 denotes the leftmost displayed character; row-major flat index is r·C+c. Map these logical indices consistently to the actual bus declaration. The main wiring implementation has no clock or storage.",
+          "hints": [
+            "Compare the first row before and after: did rows move, or did the bits inside each row reverse?",
+            "Each output (r, c) reads one input in the same row, at column C−1−c.",
+            "Use y[r][c]=x[r][C−1−c]. The row-major source index is r·C+(C−1−c), not R·C−1−(r·C+c)."
+          ],
+          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
         }
       }
     }

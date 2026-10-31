@@ -68,6 +68,7 @@ PRIMARY = [
     "arrays_and_search", "fsm_controllers", "basic_data_structures", "arrays_and_search", "estimation_sanity_checks", "estimation_sanity_checks", "estimation_sanity_checks", "estimation_sanity_checks", "estimation_sanity_checks", "estimation_sanity_checks", "estimation_sanity_checks", "fsm_state_tables", "boolean_algebra", "fsm_sequence_detectors", "binary_arithmetic", "setup_hold_timing", "setup_hold_timing", "setup_hold_timing",
     "debugging_methodology", "binary_arithmetic", "binary_arithmetic", "binary_arithmetic", "arrays_and_search", "estimation_sanity_checks", "arrays_and_search", "arrays_and_search", "estimation_sanity_checks", "arrays_and_search",
     "arrays_and_search", "basic_data_structures", "estimation_sanity_checks", "registers_shifters", "estimation_sanity_checks", "edge_detection", "basic_data_structures", "estimation_sanity_checks", "arrays_and_search", "number_representation", "estimation_sanity_checks",
+    "combinational_blocks", "combinational_blocks", "estimation_sanity_checks", "counters", "estimation_sanity_checks", "fsm_sequence_detectors", "boolean_algebra", "binary_arithmetic", "fsm_sequence_detectors", "fsm_controllers", "estimation_sanity_checks",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

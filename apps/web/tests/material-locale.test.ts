@@ -20,8 +20,8 @@ const response = (overrides: Partial<QuestionResources> = {}): QuestionResources
   media: [], technical_material: null, solution_revealed: true, ...overrides,
 });
 
-test("all 227 canonical references follow display language while attempt language stays fixed", () => {
-  assert.equal(questions.length, 227);
+test("all 238 canonical references follow display language while attempt language stays fixed", () => {
+  assert.equal(questions.length, 238);
   for (const question of questions) {
     for (const originalLanguage of ["he", "en"] as const) {
       const original = question.translations[originalLanguage].reference_solution;
@@ -232,8 +232,37 @@ test("all 20 affected batch110 resources localize their visible structured label
   assert.deepEqual([...new Set(untranslated)], []);
 });
 
-test("all 197 preparation resources pair every visible technical field and render entirely in English", () => {
-  assert.equal(prepared.length, 197);
+test("all 20 affected October31 resources localize their visible structured labels", () => {
+  const affectedIds = new Set(["PREP-011", "PREP-057", "PREP-081", "PREP-083", "PREP-094", "PREP-102", "PREP-141", "PREP-162", "PREP-166",
+    ...Array.from({ length: 11 }, (_, i) => `PREP-${199 + i}`)]);
+  const untranslated: string[] = [];
+  // Actual Boolean variables, netlist ports and latch pins retain their names.
+  const circuitIdentifiers = new Set(["C", "a", "b", "c", "f", "s", "i0", "i1", "out", "t", "EN", "D"]);
+  for (const identifier of circuitIdentifiers) {
+    assert.equal(materialLabel(identifier, "he"), identifier);
+    assert.equal(materialLabel(identifier, "en"), identifier);
+  }
+  let rendered = 0;
+  for (const question of prepared) {
+    const material = question.assets.preparation_resource!;
+    if (!affectedIds.has(String(material.id))) continue;
+    const before = JSON.stringify(material);
+    for (const lang of ["he", "en"] as const) {
+      const html = renderToStaticMarkup(createElement(TechnicalMaterial, { material, lang }));
+      for (const match of html.matchAll(/<dt dir="auto">([\s\S]*?)<\/dt>/g)) {
+        if (lang === "he" && !/\p{Script=Hebrew}/u.test(match[1]) && !circuitIdentifiers.has(match[1])) untranslated.push(`${material.id}: ${match[1]}`);
+        if (lang === "en" && /batch(?:21|30|110)|\p{Script=Hebrew}/u.test(match[1])) untranslated.push(`${material.id} [en]: ${match[1]}`);
+      }
+    }
+    assert.equal(JSON.stringify(material), before, "Rendering does not rewrite published content keys");
+    rendered += 1;
+  }
+  assert.equal(rendered, affectedIds.size);
+  assert.deepEqual([...new Set(untranslated)], []);
+});
+
+test("all 208 preparation resources pair every visible technical field and render entirely in English", () => {
+  assert.equal(prepared.length, 208);
   for (const question of prepared) {
     const material = question.assets.preparation_resource!;
     const pairs = material.learner_material as Record<string, Record<ApiLang, unknown>> | undefined;
