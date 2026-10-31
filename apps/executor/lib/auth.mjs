@@ -54,7 +54,7 @@ export function verifyTicket(ticket, jobJson, encodedKey, now = Math.floor(Date.
     throw new RequestError(401, "Invalid execution signature.");
   }
   if (claims.iss !== "jobrun-api" || claims.aud !== "jobrun-executor" || !Number.isInteger(claims.exp) || !Number.isInteger(claims.iat)
-    || claims.exp <= now || claims.exp > now + 90 || claims.iat > now + 5 || claims.iat < now - 90
+    || claims.exp <= now || claims.iat > now + 5 || claims.iat < now - 90
     || claims.exp <= claims.iat || claims.exp - claims.iat > 90 || typeof claims.sub !== "string" || !claims.sub || claims.sub.length > 128
     || typeof claims.jti !== "string" || !/^[A-Za-z0-9_-]{16,80}$/.test(claims.jti)) {
     throw new RequestError(401, "Execution ticket expired or invalid.");

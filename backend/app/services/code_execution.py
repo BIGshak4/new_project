@@ -42,18 +42,21 @@ def public_key_bytes(key: Ed25519PrivateKey) -> bytes:
 
 
 def answer_code(answer: str) -> tuple[str, str] | None:
-    # Match the editor's final, variable-length fence first. Earlier snippets may
-    # illustrate mistakes and must not silently replace the candidate's final code.
-    final = re.fullmatch(r"(?:[\s\S]*?\n\n)?(`{3,})(c|cpp|python|javascript|verilog|systemverilog|vhdl|text)\n([\s\S]*)\n\1", answer.strip())
-    if final:
-        return (final[2], final[3].strip()) if final[2] in LANGUAGES and final[3].strip() else None
-    candidates = []
-    for match in re.finditer(r"(`{3,})([^\n`]*)\n([\s\S]*?)\n\1(?!`)", answer):
-        language = match[2].strip().lower()
-        language = ALIASES.get(language, language)
-        if language in LANGUAGES and match[3].strip():
-            candidates.append((language, match[3].strip()))
-    return candidates[-1] if candidates else None
+    # Match the editor's terminal block. Earlier examples stay explanation,
+    # even when their opening/closing fences have the same length as the final block.
+    closing = re.search(r"\n(`{3,})(?:\n)?$", answer)
+    if closing is None or closing.end() != len(answer):
+        return None
+    opening = None
+    for candidate in re.finditer(r"(^|\n)(`{3,})(c|cpp|python|javascript|verilog|systemverilog|vhdl|text)\n", answer):
+        if candidate[2] == closing[1] and candidate.end() <= closing.start():
+            opening = candidate
+    if opening is None:
+        return None
+    code = answer[opening.end():closing.start()]
+    if re.search(r"^" + re.escape(closing[1]) + r"$", code, flags=re.MULTILINE):
+        return None
+    return (opening[3], code.strip()) if opening[3] in LANGUAGES and code.strip() else None
 
 
 def _unavailable(language: str, detail="No verified execution result is available. The isolated runner is temporarily unavailable."):

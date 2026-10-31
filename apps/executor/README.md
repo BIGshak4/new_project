@@ -43,6 +43,13 @@ limits in the JobRun API remain necessary, independently of provider quotas.
 Snapshots can expire after inactivity; reprovision and verify before replacing a
 snapshot. The broker fails closed when snapshot/key configuration is missing.
 
+`scripts/seal-snapshot.mjs` is a one-off trusted build task for converting an
+installed toolchain snapshot into a snapshot with `expiration: 0` via the SDK.
+It can be invoked by an explicit Vercel build-command override, uses build OIDC,
+and creates no administration HTTP route. Restore the normal build command
+afterward; retain only the chosen toolchain snapshot. Its metadata is public,
+and it never puts credentials or candidate code inside a VM.
+
 ## Wire contract
 
 `POST /api/execute` has JSON `{ "job_json": "<exact UTF-8 job JSON>", "ticket":

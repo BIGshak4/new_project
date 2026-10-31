@@ -11,18 +11,26 @@ export const answerLanguages = [
 export type AnswerLanguage = (typeof answerLanguages)[number];
 
 export function parseTechnicalAnswer(value: string) {
-  // Only our final, recognized fenced block is split. Legacy/free-form answers remain intact.
-  const match =
-    /^(?:([\s\S]*?)\n\n)?(`{3,})(c|cpp|python|javascript|verilog|systemverilog|vhdl|text)\n([\s\S]*)\n\2$/.exec(
-      value,
-    );
-  return match
-    ? {
-        explanation: match[1] ?? "",
-        language: match[3] as AnswerLanguage,
-        code: match[4],
-      }
-    : { explanation: value, code: "", language: undefined };
+  // Split the final recognized block, retaining earlier examples as explanation.
+  // A greedy body regex can accidentally swallow several same-fence blocks.
+  const untouched = () => ({ explanation: value, code: "", language: undefined });
+  const closing = /\n(`{3,})(?:\n)?$/.exec(value);
+  if (!closing || closing.index + closing[0].length !== value.length) return untouched();
+  const openings = /(^|\n\n)(`{3,})(c|cpp|python|javascript|verilog|systemverilog|vhdl|text)\n/g;
+  let finalOpening: RegExpExecArray | null = null;
+  for (let opening; (opening = openings.exec(value));) {
+    if (opening[2] === closing[1] && openings.lastIndex <= closing.index) finalOpening = opening;
+  }
+  if (!finalOpening) return untouched();
+  const code = value.slice(finalOpening.index + finalOpening[0].length, closing.index);
+  // A prior closing delimiter means the terminal fence belongs to a different
+  // block (for example, a final unknown language). Keep that answer intact.
+  if (new RegExp(`^${closing[1]}$`, "m").test(code)) return untouched();
+  return {
+    explanation: value.slice(0, finalOpening.index),
+    language: finalOpening[3] as AnswerLanguage,
+    code,
+  };
 }
 
 export function formatTechnicalAnswer(

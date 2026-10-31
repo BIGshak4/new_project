@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  answerLanguages,
   formatTechnicalAnswer,
   parseTechnicalAnswer,
 } from "../src/lib/technical-answer";
@@ -38,4 +39,41 @@ test("technical content with backticks, blank lines and no prose remains recover
     { explanation: "", code, language: "text" },
   );
   assert.equal(formatTechnicalAnswer("draft", "", "c"), "draft");
+});
+
+test("only the last same-fence answer is code; an earlier flawed example remains explanation", () => {
+  const explanation = "Earlier flawed example:\n\n```python\ndef f(x):\n return 0\n```";
+  assert.deepEqual(parseTechnicalAnswer(`${explanation}\n\n\`\`\`python\ndef f(x):\n return x\n\`\`\``), {
+    explanation,
+    language: "python",
+    code: "def f(x):\n return x",
+  });
+});
+
+test("the final exact fence selects the last recognized answer across languages and fence lengths", () => {
+  for (const language of answerLanguages) for (const fence of ["```", "````", "``````"]) {
+    const explanation = `הסבר לפני הדוגמאות.\n\n\`\`\`python\nreturn 0\n\`\`\`\n\n${fence}${language}\nfirst version\n${fence}`;
+    const value = `${explanation}\n\n${fence}${language}\nfinal version\n${fence}`;
+    assert.deepEqual(parseTechnicalAnswer(value), { explanation, language, code: "final version" });
+    assert.deepEqual(parseTechnicalAnswer(value + "\n"), { explanation, language, code: "final version" });
+  }
+});
+
+test("formatter round-trips embedded fence lines and literal openings in every supported language", () => {
+  const explanation = "Earlier code stays in reasoning:\n\n```cpp\nreturn 0;\n```\n";
+  const code = 'literal with `inline` backticks\n\n```python\nthis is part of the code\n```\n\n`````javascript\nmore literal source\n`````\n\r\n';
+  for (const language of answerLanguages) {
+    assert.deepEqual(parseTechnicalAnswer(formatTechnicalAnswer(explanation, code, language)), { explanation, language, code });
+    assert.deepEqual(parseTechnicalAnswer(formatTechnicalAnswer("", code, language)), { explanation: "", language, code });
+  }
+});
+
+test("a final unknown block, mismatched fence or trailing prose never consumes an earlier recognized block", () => {
+  const earlier = "```python\nreturn 0\n```";
+  for (const value of [
+    `${earlier}\n\n\`\`\`unknown\nnew code\n\`\`\``,
+    `${earlier}\n\n\`\`\`\`python\nnew code\n\`\`\``,
+    `${earlier}\n\n\`\`\`python\nnew code\n\`\`\`\ntrailing reasoning`,
+    `${earlier}\n\n\`\`\`python\nnew code\n\`\`\`\n\n`,
+  ]) assert.deepEqual(parseTechnicalAnswer(value), { explanation: value, code: "", language: undefined });
 });

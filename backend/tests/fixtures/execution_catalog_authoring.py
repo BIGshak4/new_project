@@ -283,7 +283,7 @@ begin
 end
 endtask
 initial begin
-''' + "".join(f"  sample(1'b{r},1'b{e});\n" for r, e in COUNTER_STIMULUS) + "  $finish;\nend\nendmodule\n"
+''' + "".join(f"  sample(1'b{r},1'b{e});\n" for r, e in COUNTER_STIMULUS) + "  $finish(0);\nend\nendmodule\n"
     counter_starter = '''module enabled_mod_six_counter(input clk, rst, enable, output reg [2:0] count);
 // Synchronous active-high reset, rising edge. Advance modulo 6 only when enabled.
 always @(posedge clk) begin
@@ -312,7 +312,7 @@ begin
 end
 endtask
 initial begin
-''' + "".join(f"  sample(1'b{r},1'b{b});\n" for r, b in SEQUENCE_STIMULUS) + "  $finish;\nend\nendmodule\n"
+''' + "".join(f"  sample(1'b{r},1'b{b});\n" for r, b in SEQUENCE_STIMULUS) + "  $finish(0);\nend\nendmodule\n"
     sequence_starter = '''module sequence_1101(input clk, rst, bit_in, output found);
 // Overlapping Moore detector: found reflects the state after the sampling edge.
 // Synchronous active-high reset clears found and all matched prefix history.
@@ -332,7 +332,7 @@ reg a,b,c; wire y; integer i;
 majority3 dut(.a(a),.b(b),.c(c),.y(y));
 initial begin
   for(i=0;i<8;i=i+1) begin {a,b,c}=i; #1; $display("%0d",y); end
-  $finish;
+  $finish(0);
 end
 endmodule
 '''
@@ -386,7 +386,7 @@ reg [{width_in-1}:0] x; wire [{width_out-1}:0] y; integer i;
 {module} dut(.x(x),.y(y));
 initial begin
   for(i=0;i<{len(values)};i=i+1) begin x=i; #1; $display("%0d",y); end
-  $finish;
+  $finish(0);
 end
 endmodule
 '''

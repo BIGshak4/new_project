@@ -24,6 +24,9 @@ test("signed exact-byte envelope verifies with PEM and raw public keys", () => {
   const rawKey = publicKey.export({ type: "spki", format: "der" }).subarray(-32).toString("base64");
   assert.equal(verifyTicket(ticket(), raw, rawKey, now).jti, claim.jti);
   assert.equal(verificationFingerprint(key), createHash("sha256").update(Buffer.from(rawKey, "base64")).digest("hex"));
+  // The ticket remains at most 90 seconds long, while allowing normal NTP skew
+  // between the signing API and broker clocks.
+  assert.equal(verifyTicket(ticket({ iat: now + 3, exp: now + 93 }), raw, key, now).sub, "user-uuid");
 });
 test("changed bytes, wrong key, expired and long-lived signatures fail before execution", () => {
   assert.throws(() => verifyTicket(ticket(), raw + " ", key, now), errorStatus(401));

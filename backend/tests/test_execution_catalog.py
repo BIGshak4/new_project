@@ -73,6 +73,11 @@ def test_language_specs_have_complete_safe_contract_shapes(key, language, spec):
         assert "expected_stdout" not in spec["testbench"]
         assert "$fatal" not in spec["testbench"]
         assert "assert " not in spec["testbench"]
+        if language in {"verilog", "systemverilog"}:
+            # Icarus 12 prints a diagnostic footer for default $finish; its
+            # verbosity argument must be zero to keep the stdout oracle exact.
+            assert "$finish(0);" in spec["testbench"]
+            assert "$finish;" not in spec["testbench"]
 
 
 def test_all_seven_preexisting_python_tests_keep_their_test_inputs():

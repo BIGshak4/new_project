@@ -139,8 +139,9 @@ async def test_ledger_idempotency_limits_and_concurrent_reservations():
 
 
 def test_extraction_never_executes_and_request_forbids_caller_testbench():
-    assert answer_code("text ```python\ndef f(): return 1\n``` end") == ("python", "def f(): return 1")
+    assert answer_code("text\n\n```python\ndef f(): return 1\n```") == ("python", "def f(): return 1")
     assert answer_code("a formula") is None
+    assert answer_code("Earlier:\n\n```python\ndef f(x): return 0\n```\n\n```python\ndef f(x): return x\n```") == ("python", "def f(x): return x")
     assert answer_code('Wrong:\n```python\nraise Exception()\n```\n\n````python\ndef f(): return "```"\n````') == ("python", 'def f(): return "```"')
     assert answer_code("```python\nwrong\n```\n\n```text\nformula\n```") is None
     with pytest.raises(ValueError):
