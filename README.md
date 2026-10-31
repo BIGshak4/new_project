@@ -24,3 +24,7 @@ See [the deployment and access guide](docs/netlify-and-supabase.md). Manual Netl
 Supabase's canonical schema lives in `supabase/migrations`. The founder additions use `jr_` tables and preserve the existing product/AI schema. Seed generation is in `scripts/seed-example-questions.mjs`; it writes `supabase/seed-example-questions.sql` from the original example question bank. Seeding is an explicit database operation, never part of application startup.
 
 `PRODUCT.md` records product scope; `DESIGN.md` records the shipped interface. Earlier product specifications remain in their existing directories. The legacy Python starter is retained.
+
+## Code execution — 2026-10-31
+
+The live practice site now compiles and runs Python, JavaScript, C, C++, Verilog, SystemVerilog and VHDL in isolated microVMs. See [the implementation, coverage and live verification record](docs/isolated-code-execution.md) and [executor operations](apps/executor/README.md). That record includes the current AI-feedback limitation and supersedes the earlier execution-readiness notes above.
