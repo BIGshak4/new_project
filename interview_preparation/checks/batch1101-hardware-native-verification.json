@@ -1,0 +1,43 @@
+{
+  "compile_exit": 0,
+  "compile_args": [
+    "iverilog",
+    "-g2012",
+    "-Wall",
+    "-s",
+    "tb",
+    "-o",
+    "/vercel/sandbox/rtl-check",
+    "/vercel/sandbox/prep_234_controlled_predicates.sv",
+    "/vercel/sandbox/prep_235_late_mux.sv",
+    "/vercel/sandbox/prep_236_decoder_mux.sv",
+    "/vercel/sandbox/prep_091_polarity_batch1101.sv",
+    "/vercel/sandbox/tb_batch20_hardware.sv"
+  ],
+  "compile_stdout": "",
+  "compile_stderr": "",
+  "canonical_lf_source_sha256": {
+    "interview_preparation/solutions/prep_234_controlled_predicates.sv": "68bf4beed3449250fe3ed330b1ea22b3a42956361d80a2cc1c4d98a4d6d77797",
+    "interview_preparation/solutions/prep_235_late_mux.sv": "812b1490e6c0980a9e7e380b557922dc60c5149c923d49713d171327b8582544",
+    "interview_preparation/solutions/prep_236_decoder_mux.sv": "d5efd3e589d45e99a9725dfd0e8eb1f86fcfe2eb4ad6fca18685a1c4e65e5c76",
+    "interview_preparation/solutions/prep_091_polarity_batch1101.sv": "e6e7f28764960301292bdb441f444ed0fd7e9c8c1a35dc0e4869c663c9457a7f",
+    "interview_preparation/checks/tb_batch20_hardware.sv": "ca9dc44b0edee72616feeead02115cf966395174cd47a7ec091627c62fcff48e"
+  },
+  "run_exit": 0,
+  "stdout": "PASS batch20 hardware checks=1054857\n/vercel/sandbox/tb_batch20_hardware.sv:64: $finish called at 1054858 (1s)\n",
+  "stderr": "",
+  "passed": true,
+  "sandbox": "sbx_mqNmZal5albVY15S3QAXsvdsKQMt",
+  "network_policy": "deny-all",
+  "persistent": false,
+  "stopped": true,
+  "coverage": {
+    "predicates": 64,
+    "mux8": 2048,
+    "decoderN1": 8,
+    "decoderN2": 64,
+    "decoderN3": 2048,
+    "decoderN4": 1048576,
+    "edgeEvents": 4097
+  }
+}

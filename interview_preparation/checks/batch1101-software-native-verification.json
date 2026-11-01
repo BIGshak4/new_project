@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "compiler": "gcc",
+  "flags": [
+    "-std=c99",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic"
+  ],
+  "compile_exit": 0,
+  "run_exit": 0,
+  "network_policy": "deny-all",
+  "persistent": false,
+  "stopped": true,
+  "actual_compiler_input_sha256": "289d09448dc7f2ec5ffe15344f48fdff7f4cfa0127e41e61240dd8adb7eeebaf",
+  "canonical_lf_amalgamated_sha256": "2ee0ff7cc38fdaa2a1ce0c39e45350c27deb847ca8ace6ae8467c186b819e06c",
+  "canonical_lf_source_sha256": {
+    "interview_preparation/solutions/prep_237_dictionary.h": "989aaccebdf01de2858a83f71df5a305bcbcf847727dcc7d5d40c45b463ea1ab",
+    "interview_preparation/solutions/prep_237_dictionary.c": "16e112e790ad6018e41c72821c466854c118d44c632664639e21729146e4a397",
+    "interview_preparation/solutions/prep_238_reverse_linked_list.c": "dcc904f0f8171d61d120641fc652bac6d0696cc6f47aff9e81b4bb710588a727",
+    "interview_preparation/solutions/prep_117_int_arena_batch1101.c": "eb20283fea6cd864b45c1ea2c891a4d89ea0b85fe2c1160d05cf126f8be5ccc8",
+    "interview_preparation/checks/check_intake20261101_software_native.c": "452685b1494ddab4962fb1139fc7c2907647ac9025c584f7fa68f75bd6274041"
+  },
+  "result": {
+    "passed": true,
+    "dictionary_histories": 66430,
+    "reversal_cases": 511,
+    "arena_steps": 36000,
+    "assertions": 2454609,
+    "live_blocks": 0
+  },
+  "scope": "Actual isolated strict C99 execution, finite domains and injected allocation failure. Not a sanitizer, concurrent execution or professional human review."
+}

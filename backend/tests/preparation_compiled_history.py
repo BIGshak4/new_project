@@ -12,7 +12,8 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
-from tests.preparation_history import BATCH22_BASELINE, _prefix, digest
+from tests.preparation_history import BATCH22_BASELINE, _prefix, before_batch1101_record, digest
+from tests.preparation_november_compiled_history import before_batch1101_compiled
 
 ROOT = Path(__file__).resolve().parents[2]
 PROJECTIONS = json.loads((Path(__file__).parent / 'fixtures/preparation_compiled_before_20261031_batch22.json').read_bytes())['records']
@@ -25,6 +26,7 @@ def _raw_archive():
 
 def before_batch22_compiled(question):
     """Require the current compiled provenance, then verify the old full object."""
+    question = before_batch1101_compiled(question)
     ident = question['assets']['preparation_id']
     assert ident in BATCH22_BASELINE['records'], ident
     if ident not in PROJECTIONS:
@@ -33,7 +35,7 @@ def before_batch22_compiled(question):
     frozen = PROJECTIONS[ident]
     assert question['key'] == frozen['key'], ident
     current = copy.deepcopy(question)
-    raw = _raw_archive()[ident]
+    raw = before_batch1101_record(_raw_archive()[ident])
     source_hash = hashlib.sha256(json.dumps(raw, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
     assert current['assets']['source_sha256'] == source_hash, ident
     current['assets']['source_sha256'] = frozen['source_sha256_before']

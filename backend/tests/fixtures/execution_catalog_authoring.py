@@ -333,6 +333,67 @@ def batch22_source(key):
     return (ROOT / "interview_preparation/solutions" / BATCH22_SOURCES[key]).read_text(encoding="utf-8")
 
 
+BATCH1101_SOURCES = {
+    "prep-c-linked-list-dictionary-ownership": "prep_237_dictionary.c",
+    "prep-reverse-singly-linked-list-in-place": "prep_238_reverse_linked_list.py",
+    "prep-streaming-csv-parser-without-library": "prep_239_streaming_csv.py",
+}
+
+
+def batch1101_csv(text):
+    import csv
+    import io
+    # The declared dialect treats a blank record as one empty field.
+    return [row if row else [""] for row in csv.reader(io.StringIO(text, newline=""), strict=True)]
+
+
+def batch1101_dictionary_output(stdin):
+    lines = stdin.splitlines()
+    count, state, output = int(lines[0]), {}, []
+    assert len(lines) == count + 1
+    for line in lines[1:]:
+        parts = line.split()
+        action, key = parts[0], "" if parts[1] == "_" else parts[1]
+        if action == "P":
+            state[key] = "" if parts[2] == "_" else parts[2]
+            output.append("0")
+        elif action == "G":
+            output.append("V " + state[key] if key in state else "N")
+        else:
+            assert action == "D"
+            output.append("0" if key in state else "3")
+            state.pop(key, None)
+    output.append(f"S {len(state)}")
+    return "\n".join(output) + "\n"
+
+
+BATCH1101_ORACLES = {
+    "prep-reverse-singly-linked-list-in-place": lambda values: values[::-1],
+    "prep-streaming-csv-parser-without-library": batch1101_csv,
+}
+ORACLES.update(BATCH1101_ORACLES)
+
+
+def build_batch1101_contracts():
+    inputs = json.loads((BACKEND / "tests/fixtures/execution_batch1101_inputs.json").read_text(encoding="utf-8"))
+    for key, question in inputs.items():
+        for language, spec in question["languages"].items():
+            for case in spec["cases"]:
+                if language == "python":
+                    case["expected"] = BATCH1101_ORACLES[key](*case["args"])
+                else:
+                    case["expected_stdout"] = batch1101_dictionary_output(case["stdin"])
+    return inputs
+
+
+def batch1101_source(key):
+    source = (ROOT / "interview_preparation/solutions" / BATCH1101_SOURCES[key]).read_text(encoding="utf-8")
+    if key == "prep-c-linked-list-dictionary-ownership":
+        header = (ROOT / "interview_preparation/solutions/prep_237_dictionary.h").read_text(encoding="utf-8")
+        source = source.replace('#include "prep_237_dictionary.h"', header)
+    return source
+
+
 COUNTER_STIMULUS = [(1, 1), (0, 0)] + [(int(i in (15, 29)), int(i % 5 not in (0, 1))) for i in range(45)]
 SEQUENCE_STIMULUS = [(1, 1)] + [(0, int(c)) for c in "1101110111010011011010110110"] + [(1, 1)] + [(0, int(c)) for c in "1011101101"]
 
@@ -623,6 +684,7 @@ endmodule
         }}
 
     questions.update(build_batch22_contracts())
+    questions.update(build_batch1101_contracts())
 
     # Every function contract names the callable interface; this is a test adapter, not a new question.
     for question in questions.values():
@@ -670,6 +732,20 @@ def build_smoke():
                 syntax = f"def {entry}(*args)\n    return None\n"
             else:
                 wrong = '#include <stdbool.h>\n#include <stddef.h>\ntypedef struct { bool valid,wrote,read; int value; } FifoResult;\nFifoResult fifo_step(int *data,size_t capacity,size_t *read_head,size_t *write_head,\n bool *is_full,bool *is_empty,bool write_request,int write_value,bool read_request) {\n    FifoResult result={true,false,false,0};\n    return result;\n}\n'
+                syntax = "this is not valid C source\n"
+            cases.append({"question_key": key, "language": language, "correct": correct,
+                          "wrong": wrong, "syntax_error": syntax})
+    for key, question in build_batch1101_contracts().items():
+        for language, spec in question["languages"].items():
+            correct = batch1101_source(key)
+            if language == "python":
+                entry = spec["entry"]
+                wrong = ("def reverse_values(values):\n    return values\n" if "linked-list" in key
+                         else "def parse_csv(text):\n    return [line.split(',') for line in text.splitlines()]\n")
+                syntax = f"def {entry}(*args)\n    return None\n"
+            else:
+                wrong = correct.replace("return entry->value;", "return NULL;")
+                assert wrong != correct
                 syntax = "this is not valid C source\n"
             cases.append({"question_key": key, "language": language, "correct": correct,
                           "wrong": wrong, "syntax_error": syntax})
@@ -1197,6 +1273,8 @@ end architecture;
 '''
     for key, filename in BATCH22_SOURCES.items():
         (c if filename.endswith(".c") else python)[key] = batch22_source(key)
+    for key, filename in BATCH1101_SOURCES.items():
+        (c if filename.endswith(".c") else python)[key] = batch1101_source(key)
     cases = []
     for key, question in build_manifest()["questions"].items():
         for language in question["languages"]:

@@ -1,0 +1,430 @@
+{
+  "received_on": "2026-11-01",
+  "screenshot_count": 21,
+  "question_source_count": 20,
+  "first_two_images_same_question": true,
+  "sources": [
+    {
+      "screenshot": 1,
+      "question_source": 1,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-01.png"
+      ],
+      "sha256": "15c86be6bde8265edf8a7119338534fe3174342b8709075efcd030f2f61aeaac",
+      "original_prompt": "מצורפות דיאגרמות הגלים הבאות. בנה את המעגל עבור כל אחת מהדיאגרמות.",
+      "source_tags": [],
+      "reported_companies": [],
+      "question_ids": [
+        "PREP-091"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 2,
+      "question_source": 1,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-02.png"
+      ],
+      "sha256": "31cf754649b7b675d3abb5e9ae6005bb87c6bfd74d81bd528634161df239d027",
+      "original_prompt": "[תמונת המשך לאותה שאלה: שלוש דיאגרמות עם הסימונים clock, d, out; מתחתיהן שלושה שרטוטי מעגל מסומנים 1, 2, 3 תחת הכותרת פתרון.]",
+      "source_tags": [],
+      "reported_companies": [],
+      "question_ids": [
+        "PREP-091"
+      ],
+      "decision": "existing_question_source_and_variant",
+      "source_description": "הצילום כולל גם פתרונות מועמדים בכתב יד. הם נשמרים כמקור ואינם נחשבים הוכחת נכונות; יש להסיק את דרישת התזמון מהגלים."
+    },
+    {
+      "screenshot": 3,
+      "question_source": 2,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-03.png"
+      ],
+      "sha256": "0be601ec1da60c6f01e6486912328d565b5993d554cd350a3d6b90d71a508d9d",
+      "original_prompt": "מערך עם 2n+1 איברים. במערך n זוגות של מספרים ומספר אחד בודד. עליך למצוא את המספר שאין לו זוג (לדוגמא 4,3,2,4,2). לא ידוע מה n. להציע כמה שיותר פתרונות אפשריים ולנתח סיבוכיות זמן וסיבוכיות מקום.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-027"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 4,
+      "question_source": 3,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-04.png"
+      ],
+      "sha256": "d1a5b857e53d4335558e317c004182fa72a4b08675a9865bc824c3bf36e1b189",
+      "original_prompt": "לממש בשפת אסמבלי כפל בין שני מספרים, למשל R1=a, R2=b ולאחסן את התוצאה ברגיסטר נוסף R3=a*b. מותר להיעזר רק בפקודות INC, DEC, JNZ. מותר להשתמש בכמה רגיסטרים שרוצים, אך אין להניח שהם מאופסים.",
+      "source_tags": [
+        "hardware",
+        "amazon"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "question_ids": [
+        "PREP-125"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 5,
+      "question_source": 4,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-05.png"
+      ],
+      "sha256": "b1d661645abb0cdc804ae60cec35873a8ed094fa88e9f2f1eb33ee03a8fed7db",
+      "original_prompt": "בנו מכונה אשר מזהה את רצף הביטים 1011.",
+      "source_tags": [
+        "sandisk",
+        "marvell",
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "SanDisk",
+        "Marvell",
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-173"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 6,
+      "question_source": 5,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-06.png"
+      ],
+      "sha256": "cfbf18b63ae4d5784cae403047c719bccc094648d7481bce425cb4ccc154a11a",
+      "original_prompt": "מימוש מילון כמו בפייתון בעזרת רשימות מקושרות בשפת C. מימוש הפעולות: עדכון רשומה, הוספת רשומה, מחיקת המילון או איבר. דגש על הקצאות זיכרון.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-237"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 7,
+      "question_source": 6,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-07.png"
+      ],
+      "sha256": "86bd33754640f5ad670ad075b5ea5ded62b7916f871e7ae9a43ed6753be951da",
+      "original_prompt": "ממש בקוד האם מספר נתון הוא חזקה של 2 והחזר את החזקה, בזמן ריצה פחות מ-O(N).",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-023"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 8,
+      "question_source": 7,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-08.png"
+      ],
+      "sha256": "cc98b56925ae58d4286c09f1f6ac757b952a46f0194e5e10058e55eeaaff2a92",
+      "original_prompt": "יש לממש פונקציה שמקבלת מצביע לרשימה משורשרת ומחזירה את אותה רשימה משורשרת רק הפוכה. למשל A,B,C,D הופכת ל-D,C,B,A.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-238"
+      ],
+      "decision": "manual_canonical_existing_example"
+    },
+    {
+      "screenshot": 9,
+      "question_source": 8,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-09.png"
+      ],
+      "sha256": "eeb6d5c79bad0d19f92ec0ec9c1f3202c99b129f9fbd798380f71c8143181db3",
+      "original_prompt": "כתוב תוכנה בפייתון שקוראת את קובץ csv ללא שימוש בחבילת csv.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-239"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 10,
+      "question_source": 9,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-10.png"
+      ],
+      "sha256": "0d2f3fcc291eb74b59dfd62df8190127d45404b579c26fcca585912c1e4f1b37",
+      "original_prompt": "25 אסירים עומדים בטור, לכל אחד מהם כובע שחור/לבן. אין חוקיות לגבי הכובעים. הסוהרים שואלים אחד אחד איזה כובע יש לך? מי שטועה נהרג. תבנה אלגוריתם להציל כמה שיותר אסירים.",
+      "source_tags": [
+        "logic",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "question_ids": [
+        "PREP-096"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 11,
+      "question_source": 10,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-11.png"
+      ],
+      "sha256": "1ca36a39156d908f2f59eb643f4b8d3f47ae9b32c870c068f650384d62432360",
+      "original_prompt": "מה זה IRDROP וכיצד ניתן להתגבר על בעיה זו?",
+      "source_tags": [
+        "hardware",
+        "amazon"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "question_ids": [
+        "PREP-233"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 12,
+      "question_source": 11,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-12.png"
+      ],
+      "sha256": "c24cc1466d91c96494e6c207f38e7e71c3c51f888dd6df754ac4b0d1c23fbc65",
+      "original_prompt": "בנה רכיב המקבל 4 ביטים ו-2 כניסות בקרה A,B ומוציא פלט 1 בהתאם לבקרה: 00 האם יש לפחות 0 אחד במספר; 01 האם מספר ה-1 גדול ממספר ה-0; 10 האם המספר מכיל כמות אי-זוגית של 1; 11 האם המספר מכיל כמות זוגית של 1.",
+      "source_tags": [],
+      "reported_companies": [],
+      "question_ids": [
+        "PREP-234"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 13,
+      "question_source": 12,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-13.png"
+      ],
+      "sha256": "40300749c2273be7323a00252fc6601ccdc1d3003485bd141f2012852b86fe09",
+      "original_prompt": "1. ממש שער MUX 2:1. 2. בעזרת השער הקודם ממש שער MUX 8:1. 3. לאחת הכניסות של MUX 8:1 יש עיכוב בהגעה. מצא דרך לקצר את המסלול של כניסה זאת.",
+      "source_tags": [
+        "apple",
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Apple",
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-235"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 14,
+      "question_source": 13,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-14.png"
+      ],
+      "sha256": "763f2e97adc38068ea7fd0e13bf0fd1bdbed9e04ffb91e324eb63bd98e1758f2",
+      "original_prompt": "יש 100 אופנועים, לכל אופנוע יש מיכל דלק של 50 ליטר. ניתן להעביר דלק בין האופנועים הנמצאים באותו מקום. נגיד שאופנוע עושה ליטר למטר. תאר את המרחק המקסימלי שניתן להגיע.",
+      "source_tags": [
+        "logic",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "question_ids": [
+        "PREP-244"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 15,
+      "question_source": 14,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-15.png"
+      ],
+      "sha256": "cdbe37f616c4c014586a61d60c31e0144be6153324b0bd4cd8cac8c8c454ded5",
+      "original_prompt": "1. massive array of bits. how many '1' does the array contain? 2. Given 2gb array, write 2 functions: a. responsible to allocate memory b. responsible to free memory. Assume that only int* may be allocated. No other memory may be used.",
+      "source_tags": [
+        "software",
+        "checkpoint"
+      ],
+      "reported_companies": [
+        "Check Point"
+      ],
+      "question_ids": [
+        "PREP-151",
+        "PREP-117"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 16,
+      "question_source": 15,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-16.png"
+      ],
+      "sha256": "6dcf45466d828e06cb654f029240c07580abd2ac5d12ce3b30193e629db24fcf",
+      "original_prompt": "מה זה IP? מה זה FTP? מה ההבדל בין WAN ל-LAN? למה אתה רואה את עצמך מתאים לעבודה? איזה שכר אתה מבקש?",
+      "source_tags": [
+        "software",
+        "qa",
+        "checkpoint"
+      ],
+      "reported_companies": [
+        "Check Point"
+      ],
+      "question_ids": [
+        "PREP-240"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 17,
+      "question_source": 16,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-17.png"
+      ],
+      "sha256": "05a901e3000847263e335ec31cffe81c75214f3cddc19d49282791c535f6151f",
+      "original_prompt": "לרשותך שתי מערכות A,B שמממשות פונקציות לפי טבלאות האמת המצורפות. עליך לממש בעזרת מערכות אלו בלבד מערכת XOR. A(00)=1 וביתר הקלטים High Z. B(11)=0 וביתר הקלטים High Z.",
+      "source_tags": [
+        "microsoft",
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Microsoft",
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-015"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 18,
+      "question_source": 17,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-18.png"
+      ],
+      "sha256": "0e1ec1be22a484bef94c682f16837a030015ad8c4e2e2170b3f85379ea926499",
+      "original_prompt": "מה זה סטאטיק ב-C? מה זה סטאטיק ב-C++?",
+      "source_tags": [
+        "software",
+        "rafael"
+      ],
+      "reported_companies": [
+        "Rafael"
+      ],
+      "question_ids": [
+        "PREP-241"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 19,
+      "question_source": 18,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-19.png"
+      ],
+      "sha256": "aea754859e33c3d1a34dccd12ab5b50b64d87904d979e99e0c30a72cf3dda4d9",
+      "original_prompt": "למי שמכיר שפות OOP כמו JAVA C# C++ ותוכן PYTHON, צריך להשוות בין OOP ב-PYTHON לשאר השפות: מה לא קיים ומה קיים אבל באופן מוחלש.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-242"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 20,
+      "question_source": 19,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-20.png"
+      ],
+      "sha256": "c59ea7eb75bcdb5520e5a00910b19c79735a37a33eea25c3da880b500d769ea5",
+      "original_prompt": "לכותבי C++ ו-C#: מהי מחלקה אבסטרקטית? מה ההבדל בינה לבין PURE VIRTUAL?",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-243"
+      ],
+      "decision": "new_manual_question"
+    },
+    {
+      "screenshot": 21,
+      "question_source": 20,
+      "archive_paths": [
+        "sources/2026-11-01-batch20-21.png"
+      ],
+      "sha256": "2ddfe4791dcb31fe027ebc96c0e1198e92d1a2d375de99a95415048bff59194d",
+      "original_prompt": "ממש MUX 2^n:1 באמצעות decoder ושערים לוגיים בסיסיים.",
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-236"
+      ],
+      "decision": "new_manual_question"
+    }
+  ],
+  "new_record_count": 12,
+  "new_topic_count": 11,
+  "canonicalized_example_count": 1,
+  "variant_record_count": 5,
+  "source_only_record_count": 4,
+  "affected_record_count": 21
+}

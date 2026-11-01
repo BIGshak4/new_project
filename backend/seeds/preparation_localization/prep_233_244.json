@@ -1,0 +1,714 @@
+{
+  "PREP-233": {
+    "assumptions": {
+      "he": [
+        "מודל DC מרוכז, מקור אידאלי וזרם עומס נתון; ערכים מספריים הם דוגמה נוספת.",
+        "מתח העומס נמדד בין האספקה והאדמה המקומיות שלו."
+      ],
+      "en": [
+        "Lumped DC model, ideal source and specified load current; numerical values are added examples.",
+        "Measure load voltage between its local supply and ground."
+      ]
+    },
+    "optimality": {
+      "he": "מודל מרוכז: O(1) פעולות. תיקון פיזי משווה שטח, חימום, ניתוב וביצועים; אין מינימום אוניברסלי.",
+      "en": "Lumped calculation: O(1) operations. Physical remedies trade area, heat, routing and performance; no universal minimum."
+    },
+    "verification": {
+      "he": "בדיקות עצמאיות של חוק אוהם, מאזן הספק ותקציב מטען. אין סימולציית SPICE או בדיקת שבב.",
+      "en": "Independent Ohm-law, power-balance and charge-budget checks. No SPICE or silicon verification."
+    },
+    "edge_cases": {
+      "he": [
+        "זרם אפס או התנגדות אפס נותנים נפילה אפס במודל.",
+        "נתיב חזרה לבדו יכול לגרום לנפילה.",
+        "המתח המחושב עלול להיות לא אפשרי לעומס הזרם שנבחר; יש לבדוק תחום תוקף."
+      ],
+      "en": [
+        "Zero current or zero resistance gives zero modeled drop.",
+        "The return path alone can cause drop.",
+        "A calculated negative voltage can invalidate the chosen current-load operating model."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להתעלם מהאדמה המקומית.",
+        "להציע קבל כפתרון יחיד ל־DC.",
+        "להעלות מתח מקור בלי לבדוק מגבלות וענפים אחרים."
+      ],
+      "en": [
+        "Ignoring local-ground rise.",
+        "Using only a capacitor to fix DC drop.",
+        "Raising the source voltage without checking limits and other branches."
+      ]
+    },
+    "interview_answer": {
+      "he": "אחשב נפילה בשני נתיבי הזרם ואבדיל DC ממעבר מהיר. אקטין התנגדות או דרישת זרם; קבלים וחישה מרחוק עוזרים במצבים מוגדרים ואינם מבטלים את כל ההפסדים.",
+      "en": "Account for both current paths and separate DC from fast transients. Reduce resistance or demand; decoupling and remote sense have specific benefits and do not remove every loss."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מציין PCB או שבב, מתח או זרם. המודל הוא דוגמת הבהרה ולא תכנון יצרן מסוים.",
+      "en": "The source specifies neither PCB/chip scope nor voltage/current. The model is an explicit illustration, not a device-specific design."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מדוע שני קבלים בעלי אותו ערך נומינלי יכולים לתת תגובת מעבר שונה?",
+          "answer_direction": "ESR/ESL, מיקום, מסלול חזרה וקיבול אפקטיבי שונים משנים את עכבת הרשת כתלות בתדר.",
+          "principle": "ערך קיבול יחיד אינו מודל מלא של רשת אספקה."
+        }
+      ],
+      "en": [
+        {
+          "question": "Why can two capacitors with the same nominal value produce different transient responses?",
+          "answer_direction": "ESR/ESL, placement, return path and effective capacitance change frequency-dependent network impedance.",
+          "principle": "A capacitance number alone is not a complete PDN model."
+        }
+      ]
+    }
+  },
+  "PREP-234": {
+    "assumptions": {
+      "he": [
+        "AB הוא בורר לפי הסדר 00,01,10,11; A משמעותי יותר.",
+        "קלט בינארי של ארבעה ביטים, לוגיקה קומבינטורית ללא שעון."
+      ],
+      "en": [
+        "AB selects modes00,01,10,11 with A most significant.",
+        "Four binary data bits; combinational logic without a clock."
+      ]
+    },
+    "optimality": {
+      "he": "בנייה מפורשת עם שיתוף זוגיות: 11 AND, 3 OR, 3 XOR, 2 NOT ו־3 MUX, בשערים דו־כניסתיים. אין הוכחת מינימום.",
+      "en": "Explicit separate-product construction:11 AND,3 OR,3 XOR,2 NOT and 3 MUX cells using two-input gates. No minimum proof."
+    },
+    "verification": {
+      "he": "64 קלטים/מצבים מול ספירת אחדים עצמאית; בדיקת HDL נפרדת מתועדת בדוח ההרצה.",
+      "en": "64 data/mode cases against independent population counting; separate HDL execution is recorded in its report."
+    },
+    "edge_cases": {
+      "he": [
+        "1111 נכשל בתנאי קיום אפס.",
+        "0000 מקיים קיום אפס וזוגיות.",
+        "שני אחדים אינם רוב."
+      ],
+      "en": [
+        "1111 fails the any-zero predicate.",
+        "0000 satisfies any-zero and even parity.",
+        "Two ones are not a strict majority."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לפרש קיום אפס כקיום אחד.",
+        "לבדוק רק LSB כדי לספור זוגיות אחדים.",
+        "להחליף בין A ו־B בבורר."
+      ],
+      "en": [
+        "Replacing any-zero by any-one.",
+        "Using only the LSB to decide population parity.",
+        "Swapping A and B in mode selection."
+      ]
+    },
+    "interview_answer": {
+      "he": "אבנה ארבע בדיקות ואבחר לפי AB. קיום אפס הוא היפוך AND, רוב הוא לפחות שלושה, ואי־זוגיות היא XOR; זוגיות היא המשלים שלו.",
+      "en": "Build four predicates then select by AB: any-zero is inverted AND, majority means at least three, odd parity is XOR and even parity its complement."
+    },
+    "source_ambiguities": {
+      "he": "הנוסח 00 אומר לפחות ביט אחד שערכו אפס. אין במקור דרישת מינימום או שעון.",
+      "en": "Mode 00 means at least one zero-valued bit. The source gives no minimum-count or clock requirement."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם אורך הקלט N ולא ארבעה?",
+          "answer_direction": "רוב דורש popcount גדול מ־N/2, זוגיות נשארת XOR וקיום אפס נשאר היפוך reduction AND. עלות ועומק תלויים במבנה המימוש.",
+          "principle": "להפריד משמעות פונקציה ממבנה מעגל ברוחב נתון."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes for N data bits?",
+          "answer_direction": "Majority requires popcount>N/2; parity remains reduction XOR and any-zero inverted reduction AND. Cost/depth depend on topology.",
+          "principle": "Separate predicate semantics from fixed-width construction."
+        }
+      ]
+    }
+  },
+  "PREP-235": {
+    "assumptions": {
+      "he": [
+        "המשמעות D[k] נבחר ב־S=k נשמרת; D0 הוא הנתון המאוחר שנבחר להמחשה.",
+        "במודל השהיית הנתונים הבחירה והפענוח יציבים מראש; אין pipeline.",
+        "לוגיקת בקרה מותרת בסעיף האופטימיזציה; ניתנת גם חלופת פענוח במרבבים."
+      ],
+      "en": [
+        "Preserve D[k] at S=k; D0 is the chosen illustrative late input.",
+        "Data-delay comparison assumes settled select/predecode; no pipeline.",
+        "Optimization permits explicit control logic and also gives a MUX-only predecode alternative."
+      ]
+    },
+    "optimality": {
+      "he": "מאוזן: 7 MUX ועומק 3. חלופה: 7 MUX ועוד פענוח, עומק D0=1, D1=3 והיתר 4. מינימום התאים והעומק נטען רק במודל עץ בינארי.",
+      "en": "Balanced:7 MUXes, depth3. Alternative:7 plus predecode, depths D0=1,D1=3,others4. Cell/depth lower bounds are scoped to binary merge trees."
+    },
+    "verification": {
+      "he": "2048 צירופי נתונים ובחירה מול אינדוקס ישיר, וחישוב עצמאי של זמני הגעה. סימולציית RTL מדווחת בנפרד; אין STA פיזי.",
+      "en": "2048 data/select cases against direct indexing and independent arrival arithmetic. RTL simulation is recorded separately; no physical STA."
+    },
+    "edge_cases": {
+      "he": [
+        "S=000 בוחר D0 אף ש־REST מחזיר D1.",
+        "אם D0 אינו מאוחר, העומק המרבי החדש יכול להזיק.",
+        "בקרה מאוחרת מבטלת את הנחת הקיצור."
+      ],
+      "en": [
+        "S=000 selects D0 even though REST returns D1.",
+        "If D0 is not late, increased maximum depth may hurt.",
+        "Late control invalidates the early-predecode assumption."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להוסיף רק bypass בלי להבטיח בחירה נכונה.",
+        "לספור רק מרבבי נתונים ולהתעלם מהמפענח.",
+        "להפוך את המערכת לרשומה בלי לדון בהשהיית מחזור."
+      ],
+      "en": [
+        "Adding a bypass without preserving selection.",
+        "Counting data MUXes while omitting predecode.",
+        "Adding pipeline latency without agreement."
+      ]
+    },
+    "interview_answer": {
+      "he": "אבנה קודם עץ 7 תאים. לקלט המאוחר אתן כניסה במרבב האחרון לפי פענוח מוקדם, ואת יתר הערכים אמזג בעץ אחר; אוכיח כל בחירה ואשווה זמני הגעה של כל הנתיבים.",
+      "en": "Start with a seven-cell tree. Give the late input a final-cell branch using early predecode, merge the others separately, prove each selection and compare all arrival paths."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מפרט איזה קלט מאוחר או אילו זמני בקרה ורכיבים מותרים. החוזה בוחר D0 ומפרט שתי ספריות בקרה; אין הבטחת שיפור לכל תזמון.",
+      "en": "The source omits the late index, select arrivals and allowed control primitives. The contract chooses D0 and compares two control libraries; improvement is conditional."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד מטפלים ב־D5 כקלט המאוחר?",
+          "answer_direction": "אפשר להגדיר S′=S XOR 101 ולחבר D′[j]=D[j XOR 101]. אז D′0 הוא D5; יש לספור את עלות שינוי הבקרה.",
+          "principle": "מיפוי פנימי צריך לשמר את משמעות אינדקס הבחירה החיצוני."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can D5 be the protected input?",
+          "answer_direction": "Use S′=S XOR101 and D′[j]=D[j XOR101], making D′0 the old D5. Count any control-remapping cost.",
+          "principle": "Internal relabeling must preserve external selection semantics."
+        }
+      ]
+    }
+  },
+  "PREP-236": {
+    "assumptions": {
+      "he": [
+        "n≥1 קבוע בבנייה; כניסות נתונים של ביט אחד.",
+        "המפענח פעיל בגבוה ו־enable שלו, אם קיים, מופעל."
+      ],
+      "en": [
+        "n≥1 is fixed at construction; single-bit data inputs.",
+        "Decoder outputs are active-high and its enable, if any, is asserted."
+      ]
+    },
+    "optimality": {
+      "he": "אחרי מפענח נתון: M AND ו־M−1 OR עבור M=2^n. עומק OR מאוזן n; עלות המפענח נפרדת. אין טענת מינימום פיזי.",
+      "en": "After a supplied decoder: M AND and M−1 OR gates, M=2^n; balanced OR depth n. Decoder cost is separate; no physical-minimum claim."
+    },
+    "verification": {
+      "he": "כל הנתונים והבחירות ברוחבים קטנים, ובדיקת one-hot; היקף HDL מדויק בדוח ההרצה.",
+      "en": "All data/select values at small widths and exact one-hot checks; precise HDL coverage in the execution report."
+    },
+    "edge_cases": {
+      "he": [
+        "n=1 נותן שתי כניסות.",
+        "אפסים בכל הנתונים מחזירים אפס; אחדים בכולם מחזירים אחד עם enable.",
+        "enable כבוי או פלט פעיל בנמוך הם חוזים אחרים."
+      ],
+      "en": [
+        "n=1 gives two data inputs.",
+        "All-zero data gives zero; all-one data gives one with enable asserted.",
+        "Disabled enable or active-low decoding are different contracts."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להחליף בין מספר הנתונים למספר ביטי הבחירה.",
+        "לחשוב שגם D חייב להיות one-hot.",
+        "לספור את המפענח כרכיב ללא השהיה או שטח."
+      ],
+      "en": [
+        "Confusing data count with select width.",
+        "Requiring data D to be one-hot.",
+        "Treating the decoder as physically free."
+      ]
+    },
+    "interview_answer": {
+      "he": "אפענח את S לקו פעיל יחיד, אמסך כל Dj בקו Ej ואחבר ב־OR. עבור S=k נשאר רק Dk; זה מוכיח את הבחירה בלי תלות בשאר הנתונים.",
+      "en": "Decode S to one active line, AND each Dj with Ej and OR the terms. At S=k only Dk remains, proving selection independently of the other data."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר קוטביות מפענח, enable, רוחב נתון או מודל השהיה. החוזה מגדיר את כולם במפורש.",
+      "en": "The source omits decoder polarity/enable, data width and delay model. The edited contract states them explicitly."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד משתנה המימוש עבור נתונים ברוחב W ביטים?",
+          "answer_direction": "משתפים את המפענח ומשכפלים W רשתות מיסוך/OR; fanout על קווי הבחירה גדל ולכן עומס אינו חינם.",
+          "principle": "שיתוף בקרה חוסך שכפול לוגיקה אך משנה עומס."
+        }
+      ],
+      "en": [
+        {
+          "question": "How does W-bit-wide data change the implementation?",
+          "answer_direction": "Share the decoder and replicate W mask/OR networks. Decoder fanout increases and load is not free.",
+          "principle": "Shared control saves logic but changes loading."
+        }
+      ]
+    }
+  },
+  "PREP-237": {
+    "assumptions": {
+      "he": [
+        "מחרוזות חיות עם NUL; מפתחות ייחודיים ורגישים לרישיות; עותקים בבעלות המפה.",
+        "הידיות אינן מועתקות לבעלות כפולה; גישה סדרתית; מצביע get מושאל."
+      ],
+      "en": [
+        "Live NUL-terminated strings; unique case-sensitive keys; map-owned copies.",
+        "No duplicated handle ownership; serialized access; get returns a borrowed pointer."
+      ]
+    },
+    "optimality": {
+      "he": "חיפוש O(nL) במקרה הגרוע, בתוספת תווי ההעתקה ב־put; O(n) צמתים ותוכן המחרוזות. אין טענת ביצועי hash או allocator.",
+      "en": "Worst-case O(nL) search plus copied characters in put; O(n) nodes and string contents. No hash-table or allocator latency guarantee."
+    },
+    "verification": {
+      "he": "C99 הודר והורץ ב־GCC עם אזהרות כשגיאות: 66,430 עקבות מילון, הזרקת OOM ושחרור מלא. הרתמה המשולבת בדקה 2,454,609 assertions בכל שלושת נושאי C; אין sanitizer או ביקורת אנושית.",
+      "en": "C99 passed GCC with warnings as errors: 66,430 map histories, OOM injection and complete cleanup. The combined three-topic C harness checked 2,454,609 assertions; no sanitizer or human review is claimed."
+    },
+    "edge_cases": {
+      "he": [
+        "מפה ריקה; מפתח/ערך ריק; עדכון עצמי דרך get; כשל בכל הקצאה; מחיקת ראש וזנב; מפתח חסר."
+      ],
+      "en": [
+        "Empty map/key/value; self-update through get; every allocation failure point; head/tail removal; missing key."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לשמור מצביע למערך מקומי של הקורא בלי חוזה בעלות.",
+        "free לפני הצלחת החלפה; דליפה במסלול כשל חלקי.",
+        "להשוות כתובות מחרוזות או לאפשר מפתחות כפולים.",
+        "לטעון לזמן קבוע רק כי שם המבנה הוא מילון."
+      ],
+      "en": [
+        "Keeping caller-local string pointers without an ownership contract.",
+        "Freeing before successful replacement; leaking partial allocations.",
+        "Comparing string addresses or allowing duplicate keys.",
+        "Claiming constant time merely because the abstraction is a dictionary."
+      ]
+    },
+    "interview_answer": {
+      "he": "אעתיק מפתח וערך ואשמור בעלות אחת לכל הקצאה. אכין רשומה או ערך חדש לפני commit, ואשתמש במצביע לקישור למחיקה; הרשימה נשארת עקבית גם בכשל הקצאה.",
+      "en": "Own independent key/value copies. Prepare a complete entry or replacement before committing, and remove through a pointer to a link; allocation failures leave the map consistent."
+    },
+    "source_ambiguities": {
+      "he": "סוגי מפתח וערך, התנהגות עדכון וסדר איטרציה לא הוגדרו. נבחרו מחרוזות מועתקות ו־upsert; אין הבטחה לסדר הכנסה או למימוש Python המלא.",
+      "en": "Key/value types, update policy and iteration order were unspecified. This version chooses copied strings and upsert, without insertion-order or full Python implementation guarantees."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מקצרים חיפוש בלי לשנות את חוזה הבעלות?",
+          "answer_direction": "אפשר טבלת buckets עם רשימות שרשור וגיבוב מוגדר. נשמרים כללי העתקה ו־OOM, אך מתווספים מערך buckets, התנגשויות ו־rehash אטומי.",
+          "principle": "ייצוג ביצועי אינו מחליף חוזה בעלות."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can lookup be accelerated without changing ownership?",
+          "answer_direction": "Use hash buckets with linked chains and a defined hash. Copy/OOM rules remain, while buckets, collisions and atomic rehash add costs.",
+          "principle": "A faster representation does not replace ownership semantics."
+        }
+      ]
+    }
+  },
+  "PREP-238": {
+    "assumptions": {
+      "he": [
+        "שרשרת חד־כיוונית סופית וללא מעגלים; בעלות בלעדית על שינוי הקישורים.",
+        "אין שינוי ערכים, הקצאה או שחרור; הראש החדש מוחזר."
+      ],
+      "en": [
+        "Finite acyclic singly linked chain with exclusive link mutation.",
+        "No payload change, allocation or freeing; return the new head."
+      ]
+    },
+    "optimality": {
+      "he": "O(N) זמן ו־O(1) מילות עזר; רקורסיה אינה עומדת באותו חסם מחסנית. אין הקצאת צמתי פלט.",
+      "en": "O(N) time and O(1) auxiliary words; recursion would not have the same stack bound. No output nodes are allocated."
+    },
+    "verification": {
+      "he": "9,841 מקרי זהות וקישורים ב־Python; 511 מקרי C99 שהודרו והורצו ב־GCC מחמיר. בדיקות כוללות היפוך כפול ושמירת ערכים, לא שינוי מקביל.",
+      "en": "9,841 Python identity/link cases and 511 strictly compiled/executed C99 cases, including double reversal and payload preservation; no concurrent mutation test."
+    },
+    "edge_cases": {
+      "he": [
+        "ריק; צומת יחיד; שני צמתים; כל הערכים זהים; זנב שצריך להתאפס."
+      ],
+      "en": [
+        "Empty; one/two nodes; identical payloads; the old head must terminate as the tail."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "דריסת next לפני שמירתו.",
+        "החזרת הראש הישן.",
+        "החלפת ערכים או בניית רשימה חדשה במקום שינוי קישורים.",
+        "התעלמות מכינויים חיצוניים או ממעגל."
+      ],
+      "en": [
+        "Overwriting next before saving it.",
+        "Returning the original head.",
+        "Reversing payloads or allocating new nodes instead of links.",
+        "Ignoring external aliases or cycles."
+      ]
+    },
+    "interview_answer": {
+      "he": "אחלק לקידומת הפוכה וסיומת לא מטופלת. אשמור את היורש, אהפוך קישור ואקדם את שני הראשים; בסוף ראש הקידומת הוא התשובה.",
+      "en": "Maintain a reversed prefix and untouched suffix. Save the successor, reverse one link and advance; the final prefix head is the answer."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו קובע סוג רשימה, בעלות או טיפול בריק. נבחרה רשימה חד־כיוונית ללא מעגלים והיפוך צמתים במקום, בלי להחליף את ממשק הרשימה האבסטרקטית.",
+      "en": "The source omits list type, ownership and empty handling. This version chooses an acyclic singly linked list with in-place node reversal, distinct from an immutable abstract-list interface."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם אסור לשנות אף next?",
+          "answer_direction": "צריך ליצור מבנה פלט נפרד או לעבוד בממשק בלתי משתנה. זהות הצמתים והעלות אינן עוד אותן דרישות; ראו את חוזה Head/Tail/concat.",
+          "principle": "שינוי בעלות ויכולת כתיבה משנה את הבעיה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if no next pointer may be changed?",
+          "answer_direction": "Allocate separate output or use an immutable interface. Node identities and costs then differ; compare the Head/Tail/concat contract.",
+          "principle": "Ownership and mutation permissions change the problem."
+        }
+      ]
+    }
+  },
+  "PREP-239": {
+    "assumptions": {
+      "he": [
+        "דיאלקט מפורש עם פסיק ומירכאות כפולות; קלט טקסט, ללא המרת טיפוסים.",
+        "מצב נשמר בין מקטעים; שגיאה מאוחרת אינה מבטלת שורות שכבר הופקו."
+      ],
+      "en": [
+        "Explicit comma/double-quote dialect over text, without type coercion.",
+        "State survives chunks; late errors do not roll back already yielded rows."
+      ]
+    },
+    "optimality": {
+      "he": "O(C) זמן עבור C תווים; O(R+K) מקום פעיל לרשומה ולמקטע, בלי הפלט שנשמר אצל הצרכן. מתאם parse_csv שומר פלט מלא.",
+      "en": "O(C) time for C characters; O(R+K) active storage for the record and chunk, excluding consumer-retained output. parse_csv materializes all results."
+    },
+    "verification": {
+      "he": "8,191 מסמכים שנוצרו באופן עצמאי, 32,764 הרצות חיתוך, שמונה קלטי גבול ושמונה קלטים פגומים בכל נקודת חיתוך. נבדק prefix שהופק לפני שגיאה מאוחרת.",
+      "en": "8,191 independently generated documents, 32,764 chunked runs, eight directed boundaries and eight malformed inputs at every split; checked a yielded prefix before a later error."
+    },
+    "edge_cases": {
+      "he": [
+        "ריק ושורה ריקה שונים; שדה אחרון ריק; CRLF שחוצה מקטע; מירכאה מוכפלת; newline בתוך שדה; EOF בלי newline."
+      ],
+      "en": [
+        "Empty file versus blank record; empty final field; split CRLF; doubled quote; quoted newline; final EOF without newline."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "split לפי פסיק או newline בלבד.",
+        "איפוס מצב בכל מקטע.",
+        "קבלת טקסט נוסף אחרי סגירת מירכאות.",
+        "טענה לזיכרון קבוע או לתמיכה בכל דיאלקט."
+      ],
+      "en": [
+        "Splitting only on commas/newlines.",
+        "Resetting state per chunk.",
+        "Accepting arbitrary text after a closing quote.",
+        "Claiming constant memory or every dialect."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשתמש במכונת מצבים על תווים, ואבדיל מירכאה סוגרת ממירכאה מוכפלת. אשמור מצב בין מקטעים ואפיק רשומה רק בגבול מחוץ לציטוט.",
+      "en": "Use a character-state machine, distinguish closing from escaped quotes, retain context across chunks, and yield records only at unquoted boundaries."
+    },
+    "source_ambiguities": {
+      "he": "CSV אינו דיאלקט יחיד. הוגדרו מפריד, ציטוט, מעברי שורה, ריק ושגיאות; הכותרת אינה מומרת למילון אוטומטית.",
+      "en": "CSV has multiple dialects. Separator, quoting, line endings, empties and errors are explicit; headers are not automatically converted to a map."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מבטיחים שלא יהיה פלט חלקי מקובץ פגום?",
+          "answer_direction": "צריך קודם לאמת את כל הקלט או לשמור פלט עד commit, בזיכרון או באחסון זמני. זו תוספת משאבים וחוזה אחר מזרימה מיידית.",
+          "principle": "אטומיות קובץ שלם וזרימה מיידית הן דרישות שונות."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can a malformed file produce no partial output?",
+          "answer_direction": "Validate the entire input first or stage output until commit in memory or temporary storage. That adds resources and changes the immediate-streaming contract.",
+          "principle": "Whole-file atomicity and immediate streaming are different requirements."
+        }
+      ]
+    }
+  },
+  "PREP-240": {
+    "assumptions": {
+      "he": "IP פירושו Internet Protocol; FTP פירושו File Transfer Protocol. השאלות האישיות נענות לפי מידע אמיתי שהמועמד בוחר לספק.",
+      "en": "IP means Internet Protocol; FTP means File Transfer Protocol. Personal prompts use true information voluntarily supplied by the candidate."
+    },
+    "optimality": {
+      "he": "הסבר מושגים ולא בעיית אופטימיזציה. תעבורת FTP וביצועי רשת תלויים במימוש ובסביבה; לא נמדדו כאן.",
+      "en": "Conceptual explanation, not an optimization problem. FTP traffic and network performance depend on implementation and environment; none were measured."
+    },
+    "verification": {
+      "he": "נבדקו הגדרות מול RFCs ותיעוד רשת ראשוני; נבדקה נוכחות מסגרת אישית ללא סכומי שכר או ביוגרפיה מומצאים. לא נשלחו חבילות או פרטי גישה.",
+      "en": "Definitions were reviewed against primary RFC/network documents, and the personal template checked for invented biography or salary values. No packets or credentials were sent."
+    },
+    "edge_cases": {
+      "he": "LAN יכול לכלול אלפי מכשירים; WAN יכול להיות פרטי. IP אינו זהה לכתובת IP, ו־FTP אינו שם של כל העברת קובץ.",
+      "en": "A LAN may contain thousands of devices; a WAN may be private. IP is not merely an IP address, and FTP is not the name of every file-transfer mechanism."
+    },
+    "common_mistakes": {
+      "he": "בלבול בין פרוטוקול להיקף גאוגרפי; הבטחת הצפנה ב־FTP רגיל; המצאת שנות ניסיון או ציפיית שכר.",
+      "en": "Confusing protocol with geographical scope; claiming encryption for ordinary FTP; inventing years of experience or salary expectations."
+    },
+    "interview_answer": {
+      "he": "IP מנתב חבילות; FTP מעביר קבצים; LAN מקומי ו־WAN מחבר אתרים. להתאמה ולשכר אתן תשובה אישית מבוססת עובדות, לא ערך מומצא.",
+      "en": "IP routes packets, FTP transfers files, LAN is local and WAN connects sites. Fit and salary answers require actual candidate facts, not invented values."
+    },
+    "source_ambiguities": {
+      "he": "לא נמסרו תפקיד, מדינה, ניסיון או שכר. אין להפוך את שאלת המקור לדיווח על המשתמש; פרטי המועמד נשארים שדות למילוי.",
+      "en": "The source supplies no role, country, experience or salary. It is not a statement about the user; candidate details remain fill-in fields."
+    },
+    "solution_extensions": {
+      "he": "כיצד תסבירו LAN עם אלפי מכשירים ו־WAN פרטי? הציגו דוגמה אמיתית קצרה להתאמה לתפקיד בלי להוסיף עובדות חסרות.",
+      "en": "Explain a LAN with thousands of devices and a private WAN. Give a short true role-fit example without filling missing facts."
+    },
+    "technical_references": {
+      "he": [
+        "[IP: RFC 791](https://www.rfc-editor.org/rfc/rfc791)",
+        "[IPv6: RFC 8200](https://www.rfc-editor.org/rfc/rfc8200)",
+        "[FTP: RFC 959](https://www.rfc-editor.org/rfc/rfc959)",
+        "[גבולות אבטחת FTP: RFC 2577](https://datatracker.ietf.org/doc/html/rfc2577)",
+        "[הגדרת LAN של Cisco](https://www.cisco.com/site/us/en/learn/topics/networking/what-is-a-lan-local-area-network.html)"
+      ],
+      "en": [
+        "[IP: RFC 791](https://www.rfc-editor.org/rfc/rfc791)",
+        "[IPv6: RFC 8200](https://www.rfc-editor.org/rfc/rfc8200)",
+        "[FTP: RFC 959](https://www.rfc-editor.org/rfc/rfc959)",
+        "[FTP security: RFC 2577](https://datatracker.ietf.org/doc/html/rfc2577)",
+        "[Cisco LAN definition](https://www.cisco.com/site/us/en/learn/topics/networking/what-is-a-lan-local-area-network.html)"
+      ]
+    }
+  },
+  "PREP-241": {
+    "assumptions": {
+      "he": "דוגמאות C17 ו־C++17; אין תחרות בפועל בדוגמאות המונים. דוגמת האתחול המקביל מתייחסת במפורש ל־C++11 ואילך.",
+      "en": "Examples use C17/C++17; the counter examples are sequential. Concurrent local-static initialization refers specifically to C++11 and later."
+    },
+    "optimality": {
+      "he": "זו הבחנה סמנטית, לא טענת אופטימום. אין להסיק על layout, זמן גישה או מחיר סנכרון מהמילה static בלבד.",
+      "en": "This is a semantic distinction, not an optimum claim. Layout, access time and synchronization cost do not follow from static alone."
+    },
+    "verification": {
+      "he": "ההבחנות נבדקו מול תיעוד C וטיוטת תקן C++; קטעי C/C++ נקראו אך לא קומפלו. אין בדיקת תהליכונים או ABI.",
+      "en": "The distinctions were reviewed against C documentation and the C++ draft. C/C++ snippets were read but not compiled; no threading or ABI test was performed."
+    },
+    "edge_cases": {
+      "he": "קריאה ראשונה ושנייה; משתנה אוטומטי לעומת static; שתי יחידות תרגום; שני אובייקטים; אתחול לעומת שינוי לאחר האתחול.",
+      "en": "First/second call; automatic versus static; two translation units; two objects; initialization versus later mutation."
+    },
+    "common_mistakes": {
+      "he": "לומר static משמעו גלובלי או thread-safe; לייחס internal linkage למשתנה מקומי; לשכוח שאין this בפונקציה סטטית.",
+      "en": "Calling static global or thread-safe; giving a static local internal linkage; forgetting the absence of this in a static member function."
+    },
+    "interview_answer": {
+      "he": "בבלוק static שומר מצב בין קריאות; בקובץ הוא משפיע על linkage; במחלקת C++ הוא שייך למחלקה. תמיד אבחין בין משך חיים, scope ו־linkage.",
+      "en": "In a block static preserves state; at file scope it affects linkage; in a C++ class it belongs to the class. I separate duration, scope and linkage."
+    },
+    "source_ambiguities": {
+      "he": "לא צוינה גרסת שפה או צורת הכרזה. לכן מוצגים שימושים נפרדים ולא משמעות יחידה לכל מופע של static.",
+      "en": "The source specifies neither a language version nor a declaration form, so distinct uses are compared rather than assigning one meaning to every static."
+    },
+    "solution_extensions": {
+      "he": "מה יקרה אם שני תהליכונים יגדילו את המונה אחרי האתחול? כיצד תשתנה הדוגמה לפני C++17 ללא inline static?",
+      "en": "What if two threads increment after initialization? How would the class-data example change before C++17 without inline static?"
+    },
+    "technical_references": {
+      "he": [
+        "[משך אחסון ב־C](https://learn.microsoft.com/en-us/cpp/c-language/c-storage-classes?view=msvc-170)",
+        "[קישוריות ב־C++](https://eel.is/c++draft/basic.link)",
+        "[משך אחסון סטטי](https://eel.is/c++draft/basic.stc.static)",
+        "[חברי מחלקה סטטיים](https://eel.is/c++draft/class.static)",
+        "[אתחול משתנה מקומי סטטי](https://eel.is/c++draft/stmt.dcl)"
+      ],
+      "en": [
+        "[C storage classes](https://learn.microsoft.com/en-us/cpp/c-language/c-storage-classes?view=msvc-170)",
+        "[C++ linkage](https://eel.is/c++draft/basic.link)",
+        "[Static storage duration](https://eel.is/c++draft/basic.stc.static)",
+        "[Static class members](https://eel.is/c++draft/class.static)",
+        "[Local static initialization](https://eel.is/c++draft/stmt.dcl)"
+      ]
+    }
+  },
+  "PREP-242": {
+    "assumptions": {
+      "he": "Python 3.12 רגיל; דוגמאות קונבנציונליות של C++17 ושל מחלקות Java/C#. אין טענה שכל פרטי המודלים זהים.",
+      "en": "Ordinary Python 3.12 with conventional C++17 and Java/C# class comparisons; the object models are not asserted identical."
+    },
+    "optimality": {
+      "he": "אין יעד ביצועים או אופטימום. דוגמאות קטנות נועדו לחשוף כלל סמנטי; זמן וזיכרון של תוכנית אמיתית תלויים בתוכנית ובמימוש.",
+      "en": "No performance optimum is requested. Small examples expose semantic rules; actual time and memory depend on program and implementation."
+    },
+    "verification": {
+      "he": "הורצו דוגמאות Python ל־override, duck typing, שיתוף והצללת נתון מחלקה, mangling, annotations, החלפת מתודה, MRO ו־ABC. לא בוצעו קומפילציה או benchmark של שפות אחרות.",
+      "en": "Python examples executed overriding, duck typing, shared/shadowed class data, mangling, annotations, method replacement, MRO and ABC behavior. Other languages were not compiled or benchmarked."
+    },
+    "edge_cases": {
+      "he": "מתודה חסרה יכולה להיכשל בזמן ריצה; ירושה מרובה עשויה להיות לא עקבית; שיתוף mutable class attribute שונה ממצב לכל מופע.",
+      "en": "A missing method can fail at runtime; multiple inheritance may be inconsistent; mutable class data differs from per-instance state."
+    },
+    "common_mistakes": {
+      "he": "לומר שאין private ולכן אין כימוס; לכנות טיפוסים דינמיים חלשים; לבלבל override, overload ו־operator overloading; לצפות מאכיפת annotations אוטומטית.",
+      "en": "Equating no enforced private with no encapsulation; calling dynamic types weak; mixing overriding, signature overloading and operator overloading; expecting automatic annotation enforcement."
+    },
+    "interview_answer": {
+      "he": "Python תומך ב־OOP ובשיגור דינמי; חלק מכללי הגישה הם קונבנציה, ויש ABC וכלי טיפוסים. אבחין בין סמנטיקה, אכיפה ודוגמה קונקרטית.",
+      "en": "Python supports OOP and dynamic dispatch; some access rules are conventions, with ABCs and typing tools available. I separate semantics, enforcement and concrete examples."
+    },
+    "source_ambiguities": {
+      "he": "הנוסח ״מוחלש״ אינו מדד מוגדר. הדיון מפרש אותו כהבדל באכיפה או בתחביר ומדגים גם מנגנונים שקיימים.",
+      "en": "“Weakened” is not a defined metric; the answer treats it as enforcement/syntax differences and also demonstrates supported mechanisms."
+    },
+    "solution_extensions": {
+      "he": "מה קורה כש־self.shared מקבל רשימה חדשה? מדוע annotations אינם בדיקת קלט? במה Protocol שונה מבסיס משותף בזמן ריצה?",
+      "en": "What happens when self.shared receives a new list? Why are annotations not input validation? How does a Protocol differ from a shared runtime base?"
+    },
+    "technical_references": {
+      "he": [
+        "[מחלקות Python 3.12](https://docs.python.org/3.12/tutorial/classes.html)",
+        "[מחלקות בסיס אבסטרקטיות](https://docs.python.org/3.12/library/abc.html)",
+        "[רמזי טיפוסים ו־overload](https://docs.python.org/3.12/library/typing.html)",
+        "[ירושה ב־Java, מדריך JDK 8](https://docs.oracle.com/javase/tutorial/java/IandI/subclasses.html)",
+        "[virtual ב־C#](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/virtual)"
+      ],
+      "en": [
+        "[Python 3.12 classes](https://docs.python.org/3.12/tutorial/classes.html)",
+        "[Abstract base classes](https://docs.python.org/3.12/library/abc.html)",
+        "[Typing and overload](https://docs.python.org/3.12/library/typing.html)",
+        "[Java inheritance, JDK 8 tutorial](https://docs.oracle.com/javase/tutorial/java/IandI/subclasses.html)",
+        "[C# virtual](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/virtual)"
+      ]
+    }
+  },
+  "PREP-243": {
+    "assumptions": {
+      "he": "השוואת C++17 ו־C# עם מתודות מופע; הדגמת Python 3.12 נפרדת ואינה קומפילציה של השפות האחרות.",
+      "en": "C++17/C# instance-method comparison; the separate Python 3.12 analogue does not compile those other languages."
+    },
+    "optimality": {
+      "he": "הסבר סמנטי, לא בעיית מינימום או benchmark. ההפשטה מתארת חוזה ומצב מחלקה, לא את מחיר השיגור במימוש מסוים.",
+      "en": "Semantic explanation, not minimization or a benchmark. Abstraction describes a contract/class status, not an implementation-specific dispatch cost."
+    },
+    "verification": {
+      "he": "תיעוד C++/C# נבדק; דוגמת ABC הורצה מול מחלקות שלא מממשות ומחלקה שמממשת area. קוד C++ לא קומפל ו־C# לא הורץ.",
+      "en": "C++/C# documentation was reviewed; the ABC analogue executed missing-implementation and concrete-area cases. C++ was not compiled and C# was not run."
+    },
+    "edge_cases": {
+      "he": "מחלקה נגזרת שנותרה אבסטרקטית; מתודה רגילה עם גוף; בסיס עם שדות; חתימת override שונה; C# abstract ללא מתודה אבסטרקטית.",
+      "en": "A still-abstract derived class; a method with a body; base state; mismatched override signature; a C# abstract class with no abstract methods."
+    },
+    "common_mistakes": {
+      "he": "להשוות מחלקה למתודה כאילו הן חלופות; לפרש =0 כהחזרת אפס; להניח שכל virtual הוא pure; להשתמש בתחביר C++ בתוך C#.",
+      "en": "Treating class and method as alternatives; interpreting =0 as returning zero; assuming every virtual is pure; using C++ syntax in C#."
+    },
+    "interview_answer": {
+      "he": "מחלקה אבסטרקטית אינה ניתנת למופע עצמאי; pure virtual היא דרישת מתודה ב־C++. נגזרת קונקרטית מממשת את הדרישות; ב־C# משתמשים ב־abstract וב־override.",
+      "en": "An abstract class cannot be instantiated alone; pure virtual is a C++ method requirement. A concrete derived class implements the requirements; C# uses abstract and override."
+    },
+    "source_ambiguities": {
+      "he": "המקור מערבב מונח של מחלקה ומונח של פונקציה. ההסבר שומר על שתי השפות אך אינו מציג pure virtual כמילת מפתח של C#.",
+      "en": "The source compares a class-level term with a function-level term. Both languages are covered without presenting pure virtual as a C# keyword."
+    },
+    "solution_extensions": {
+      "he": "האם מתודה pure virtual יכולה לקבל גוף? האם נגזרת ללא override ניתנת למופע? מדוע דסטרקטור וירטואלי רגיל נבחר בדוגמה?",
+      "en": "Can a pure virtual function have a body? Can a derived class without the override be instantiated? Why does this example use an ordinary virtual destructor?"
+    },
+    "technical_references": {
+      "he": [
+        "[מחלקות אבסטרקטיות ב־C++](https://eel.is/c++draft/class.abstract)",
+        "[abstract ב־C#](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract)",
+        "[virtual ב־C#](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/virtual)",
+        "[דוגמת ABC בשפת Python](https://docs.python.org/3.12/library/abc.html)"
+      ],
+      "en": [
+        "[C++ abstract classes](https://eel.is/c++draft/class.abstract)",
+        "[C# abstract](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract)",
+        "[C# virtual](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/virtual)",
+        "[Python ABC analogue](https://docs.python.org/3.12/library/abc.html)"
+      ]
+    }
+  },
+  "PREP-244": {
+    "assumptions": {
+      "he": "מאה מכלים מלאים, התחלה משותפת, מסלול משותף, צריכה של ליטר למטר, קיבולת קשיחה והעברה ללא אובדן רק במפגש; אין דרישת חזרה או מכל נוסף. החסם סופר גם נסיעות חזרה.",
+      "en": "One hundred full tanks at a common start on a shared route; one litre/metre; hard capacity and lossless colocated transfers; no return requirement or extra tanks. The upper bound counts return legs too."
+    },
+    "optimality": {
+      "he": "חסם חציית נקודה לפי קיבולת משיג בדיוק 50H100 מטר. בנייה עם מאה שלבי נטישה משיגה אותו. מחיר חישוב כללי הוא n פעולות שבר, לא טענת עלות ביטים קבועה.",
+      "en": "The capacity cut bound is exactly 50H100 metres, attained by one hundred abandonment stages. General computation uses n rational updates, not constant bit complexity."
+    },
+    "verification": {
+      "he": "נבדקו שימור דלק, קיבולת ושברים מדויקים בכל מאה השלבים. אורקל עצמאי של כל חלוקות שלבי הנטישה נבדק עד n=9; ההוכחה האנליטית נפרדת מהבדיקה הסופית.",
+      "en": "Exact fuel conservation/capacity was checked for all hundred stages. An independent oracle enumerated abandonment-stage partitions through n=9; the analytical proof is separate from finite checking."
+    },
+    "edge_cases": {
+      "he": "אופנוע אחד מגיע 50 מטר; אפס אופנועים מגיעים אפס; צריכה או קיבולת לא חיוביות אינן במודל. שינוי יחידות משנה את ערך המרחק ביחידות הנתונות.",
+      "en": "One motorcycle reaches 50 metres; zero motorcycles reach zero; nonpositive capacity/consumption is outside the model. Unit changes change the numerical distance in those units."
+    },
+    "common_mistakes": {
+      "he": "לומר 5,000 מטר בלי לספור מובילים; לחלק דלק שווה בשווה פעם אחת; להחליף ליטר למטר בליטר לקילומטר; להציג greedy ללא חסם עליון.",
+      "en": "Claiming 5,000 metres without carrier cost; redistributing only once; changing litres/metre to litres/kilometre; giving greedy without an upper bound."
+    },
+    "interview_answer": {
+      "he": "עם k מלאים נוסעים 50/k מטר, ממלאים k−1 מכלים מדלק האופנוע הנטוש, וחוזרים על כך. סכום השלבים הוא 50H100, וחסם קיבולת לחציית כל נקודה מוכיח אופטימליות במודל.",
+      "en": "With k full tanks drive 50/k metres, refill k−1 from the abandoned donor and repeat. The sum is 50H100; the capacity cut bound proves optimality in this model."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו אומר במפורש שכל המכלים מלאים או שכולם מתחילים יחד. תנאים אלו והיעדר דרישת חזרה נבחרו במפורש; אין לייחס למקור יחידות קילומטר.",
+      "en": "The source does not explicitly state full tanks or a shared starting point. Those conditions and no return requirement are declared; kilometre units are not attributed to the source."
+    },
+    "solution_extensions": {
+      "he": "כיצד משתנה המרחק לקיבולת C ולצריכה r? מה חסר בהוכחה אם מוסיפים מכלי נשיאה או דורשים מכולם לחזור?",
+      "en": "How does the answer scale with capacity C and consumption r? What changes if extra carrying tanks or return of every motorcycle is required?"
+    },
+    "technical_references": {
+      "he": [
+        "הפתרון מבוסס על שימור דלק וחסם קיבולת שנגזרו כאן; אין טענה להוכחה באמצעות מדידה פיזית."
+      ],
+      "en": [
+        "The solution derives a fuel-conservation/capacity bound here; no physical measurement is claimed as a proof."
+      ]
+    }
+  }
+}

@@ -306,3 +306,16 @@ All256 bytes in four methods,256 table entries, four invalid values each and com
 נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
 
 [הווריאציה המלאה / Full variant](prep-151-uint32_count-batch22-addendum.md)
+
+
+## מקור נוסף — 01.11.2026, מקבץ 20
+
+[צילום מקור פרטי 15](../sources/2026-11-01-batch20-15.png)
+
+1. massive array of bits. how many '1' does the array contain? 2. Given 2gb array, write 2 functions: a. responsible to allocate memory b. responsible to free memory. Assume that only int* may be allocated. No other memory may be used.
+
+שיוכי מקור מדווחים: Check Point.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-151-packed_array-batch1101-addendum.md)

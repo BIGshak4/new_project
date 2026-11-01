@@ -72,9 +72,28 @@ def fifo_request_transcript_oracle(stdin):
     return "\n".join(output) + "\n"
 
 
+# Hand-derived transcripts independently bind every C dictionary adapter case.
+DICTIONARY_EXPECTED = {
+    "0\n": "S 0\n",
+    "4\nP a one\nG a\nP a two\nG a\n": "0\nV one\n0\nV two\nS 1\n",
+    "6\nP a x\nP b y\nD a\nG a\nG b\nD b\n": "0\n0\n0\nN\nV y\n0\nS 0\n",
+    "4\nP _ _\nG _\nD _\nG _\n": "0\nV \n0\nN\nS 0\n",
+    "5\nP A first\nP a second\nG A\nG a\nD missing\n": "0\n0\nV first\nV second\n3\nS 2\n",
+    "5\nP c third\nP b second\nP a first\nD b\nG c\n": "0\n0\n0\n0\nV third\nS 2\n",
+}
+
+CSV_EXPECTED = {
+    "": [], "\n": [[""]], ",": [["", ""]], "a,b,": [["a", "b", ""]],
+    "name,value\r\nx,12\r\n": [["name", "value"], ["x", "12"]],
+    '"a,b",c': [["a,b", "c"]], '"a\r\nb","c""d"\r\n': [["a\r\nb", 'c"d']],
+    '""': [[""]], '""""': [['"']], " a , b ": [[" a ", " b "]],
+    "x\nlast,": [["x"], ["last", ""]], '"a\nb",c\n': [["a\nb", "c"]],
+}
+
+
 def test_manifest_is_versioned_and_all_contracts_belong_to_current_catalog():
     assert MANIFEST["version"] == 1
-    assert len(QUESTIONS) == 33
+    assert len(QUESTIONS) == 36
     assert set(QUESTIONS) <= CATALOG.keys()
     for question in QUESTIONS.values():
         assert set(question["contract"]) == {"he", "en"}
@@ -158,6 +177,10 @@ def test_c_and_cpp_driver_cases_use_the_same_independent_scalar_oracles(key, lan
             assert language == "c"
             assert case["expected_stdout"] == fifo_request_transcript_oracle(case["stdin"])
             continue
+        if key == "prep-c-linked-list-dictionary-ownership":
+            assert language == "c"
+            assert case["expected_stdout"] == DICTIONARY_EXPECTED[case["stdin"]]
+            continue
         n = int(case["stdin"].strip())
         assert case["expected_stdout"] == f"{int(ORACLES[key](n))}\n"
 
@@ -194,6 +217,64 @@ def test_fifo_profile_covers_empty_full_both_requests_and_wrap_without_conflatio
     assert any(int(case["stdin"].split()[1]) > int(case["stdin"].split()[0]) for case in spec["cases"])
     for case in spec["cases"]:
         assert case["expected_stdout"] == fifo_request_transcript_oracle(case["stdin"])
+
+
+def test_csv_profile_expected_rows_bind_quotes_multiline_empty_and_preserved_spaces():
+    spec = QUESTIONS["prep-streaming-csv-parser-without-library"]["languages"]["python"]
+    assert {case["args"][0] for case in spec["cases"]} == set(CSV_EXPECTED)
+    for case in spec["cases"]:
+        assert case["expected"] == CSV_EXPECTED[case["args"][0]]
+    fixture = next(case for case in POSITIVE["cases"]
+                   if case["question_key"] == "prep-streaming-csv-parser-without-library")
+    namespace = {}
+    exec(compile(fixture["source"], "<committed-CSV-reference>", "exec"), namespace)
+    for text, expected in CSV_EXPECTED.items():
+        for cut in range(len(text) + 1):
+            assert list(namespace["iter_csv_rows"]([text[:cut], text[cut:]])) == expected
+    for text in ['"unterminated', '"a"b', 'a"b', 'a\r']:
+        with pytest.raises(ValueError):
+            namespace["parse_csv"](text)
+
+
+def test_dictionary_profile_is_self_contained_and_hand_checked():
+    key = "prep-c-linked-list-dictionary-ownership"
+    spec = QUESTIONS[key]["languages"]["c"]
+    assert {case["stdin"] for case in spec["cases"]} == set(DICTIONARY_EXPECTED)
+    for case in spec["cases"]:
+        assert case["expected_stdout"] == DICTIONARY_EXPECTED[case["stdin"]]
+    fixture = next(case for case in POSITIVE["cases"] if case["question_key"] == key)
+    assert not re.search(r'^\s*#\s*include\s+"', fixture["source"], re.M)
+    assert "typedef struct Dict Dict;" in fixture["source"]
+    assert "dict_put" in fixture["source"] and "dict_destroy" in fixture["source"]
+    assert '#include "solution.c"' in spec["driver"]
+
+
+def test_reverse_profile_includes_identity_sensitive_cases_without_claiming_to_prove_identity():
+    key = "prep-reverse-singly-linked-list-in-place"
+    spec = QUESTIONS[key]["languages"]["python"]
+    by_input = {tuple(case["args"][0]): case["expected"] for case in spec["cases"]}
+    assert by_input[()] == [] and by_input[(1,)] == [1]
+    assert by_input[(1, 2)] == [2, 1] and by_input[(0, 0, 0)] == [0, 0, 0]
+    assert by_input[(-3, 0, 9, -3)] == [-3, 9, 0, -3]
+    assert "value" in QUESTIONS[key]["contract"]["en"].lower()
+    assert "identity" in QUESTIONS[key]["contract"]["en"].lower()
+
+
+@pytest.mark.parametrize("key,language", [
+    ("prep-c-linked-list-dictionary-ownership", "c"),
+    ("prep-reverse-singly-linked-list-in-place", "python"),
+    ("prep-streaming-csv-parser-without-library", "python"),
+])
+def test_latest_profiles_have_one_positive_and_semantically_wrong_fixture(key, language):
+    positive = [item for item in POSITIVE["cases"] if item["question_key"] == key and item["language"] == language]
+    smoke = [item for item in SMOKE["cases"] if item["question_key"] == key and item["language"] == language]
+    assert len(positive) == len(smoke) == 1
+    assert positive[0]["source"] == smoke[0]["correct"]
+    if language == "python":
+        namespace = {}
+        exec(compile(smoke[0]["wrong"], "<committed-wrong-reference>", "exec"), namespace)
+        spec = QUESTIONS[key]["languages"][language]
+        assert any(namespace[spec["entry"]](*case["args"]) != case["expected"] for case in spec["cases"])
 
 
 @pytest.mark.parametrize("key", [

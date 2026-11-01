@@ -748,12 +748,16 @@
       "he": [
         "OUT מציין אי־התאמה בין In הנוכחי לדגימה האחרונה בחזית עולה.",
         "אתחול In=Q=0 נוסף למודל ואינו איפוס שניתן במקור.",
-        "שינוי קלט אינו חופף לחזית ונדרש setup/hold; הניתוח הבוליאני מתעלם מהשהיה."
+        "שינוי קלט אינו חופף לחזית ונדרש setup/hold; הניתוח הבוליאני מתעלם מהשהיה.",
+        "אירועים נפרדים, דגימת אפס ידועה לפני תחילת התצפית, דגימה בעליית clk.",
+        "d הוא נתון חי; q נשמר בין קצוות."
       ],
       "en": [
         "OUT is the mismatch between current In and its last rising-edge sample.",
         "Known initial In=Q=0 is an added model condition, not a source reset.",
-        "Input transitions do not coincide with sampling edges and satisfy setup/hold; ideal zero-delay Boolean behavior."
+        "Input transitions do not coincide with sampling edges and satisfy setup/hold; ideal zero-delay Boolean behavior.",
+        "Distinct events, a known initial zero sample, rising-clk sampling.",
+        "d is live data; q is retained between clock edges."
       ]
     },
     "waveform_observations": {
@@ -769,59 +773,87 @@
     "source_ambiguities": {
       "he": [
         "תרשים סופי אינו מגדיר את כל הקלטים האפשריים; חוזה אי־ההתאמה נוסף בעריכה.",
-        "אין הגדרת איפוס, אירועים חופפים, ריבוי שינויים במחזור או תזמון פיזי."
+        "אין הגדרת איפוס, אירועים חופפים, ריבוי שינויים במחזור או תזמון פיזי.",
+        "תרשימי אירועים אינם מגדירים התנהגות לכל רצף אנלוגי. המודל בוחר דגימה בעלייה ונתון חי; יש להבחין בין כניסת הנתון לכניסת השעון."
       ],
       "en": [
         "Finite source traces do not distinguish every possible circuit; the explicit mismatch contract is editorial.",
-        "Reset, simultaneous events, repeated within-cycle transitions and physical timing are unspecified."
+        "Reset, simultaneous events, repeated within-cycle transitions and physical timing are unspecified.",
+        "Finite event drawings do not define every analog behavior. The model uses rising-clock sampling and live data; distinguish the data input from the clock input."
       ]
     },
     "edge_cases": {
       "he": [
         "קלט קבוע אינו יוצר פולס אחרי אתחול.",
         "שני שינויים לפני דגימה מבטלים את אי־ההתאמה; אין תור אירועים.",
-        "אתחול לא ידוע או הפרת setup/hold אינם מכוסים בהבטחה האידאלית."
+        "אתחול לא ידוע או הפרת setup/hold אינם מכוסים בהבטחה האידאלית.",
+        "שינוי חוזר לפני שעון יכול לסגור דופק מוקדם.",
+        "לפני דגימה ידועה q אינו ידוע.",
+        "אירועים בו־זמניים מחוץ למודל."
       ],
       "en": [
         "No input change gives no pulse after initialization.",
         "Two input changes before sampling cancel the disagreement rather than queue events.",
-        "Unknown startup state or setup/hold violations invalidate the ideal guarantee."
+        "Unknown startup state or setup/hold violations invalidate the ideal guarantee.",
+        "Another change can end a pulse before sampling.",
+        "q is unknown before a known sample.",
+        "Simultaneous events are outside the model."
       ]
     },
     "common_mistakes": {
       "he": [
         "שימוש בשני רגיסטרים דגומים שמאחרים את תחילת הפולס.",
         "הבטחת פולס באורך מחזור או לכידת כל שינוי אסינכרוני.",
-        "התייחסות למוצא XOR כשעון בטוח או כמסנכרן CDC."
+        "התייחסות למוצא XOR כשעון בטוח או כמסנכרן CDC.",
+        "להחליף D ו־CLK.",
+        "להניח רוחב דופק מחזור שלם.",
+        "להציג FF אחד כפתרון CDC בטוח."
       ],
       "en": [
         "Using two sampled registers and silently delaying the pulse until an edge.",
         "Claiming a one-cycle pulse or guaranteed capture for arbitrary asynchronous input.",
-        "Using XOR output as a safe clock or a CDC synchronizer."
+        "Using XOR output as a safe clock or a CDC synchronizer.",
+        "Swapping D and CLK.",
+        "Assuming every pulse lasts a full cycle.",
+        "Treating one FF as a safe CDC synchronizer."
       ]
     },
     "optimality": {
-      "he": "דלגלג D אחד ו־XOR מספיקים לחוזה שנבחר. דרוש זיכרון; לא הוכח מינימום פיזי של שטח או השהיה.",
-      "en": "One DFF plus XOR suffices for the explicit ideal mismatch contract; memory is necessary, but physical gate-area/delay minima are not claimed."
+      "he": "דלגלג D אחד ו־XOR מספיקים לחוזה שנבחר. דרוש זיכרון; לא הוכח מינימום פיזי של שטח או השהיה.\n\nFF אחד משותף ושלושה ביטויי פלט; זמן דופק תלוי במיקום שינוי הנתון. אין מינימום שטח פיזי.",
+      "en": "One DFF plus XOR suffices for the explicit ideal mismatch contract; memory is necessary, but physical gate-area/delay minima are not claimed.\n\nOne shared FF and three output expressions; pulse width depends on data-change timing. No physical-area minimum."
     },
     "verification": {
-      "he": "עברו 19,682 רצפי אירועים ממצים, 147,624 השוואות אירועים ושבע בדיקות אירועי דוגמת המקור מול שמירת הדגימה האחרונה בנפרד. Python אידאלי בלבד; ללא HDL, סינתזה, STA או בדיקה פיזית.",
-      "en": "Passed 19,682 exhaustive event traces, 147,624 event comparisons and seven source-waveform event checks against independently retained last-sample state. Ideal Python only; no HDL, synthesis, STA or physical verification."
+      "he": "עברו 19,682 רצפי אירועים ממצים, 147,624 השוואות אירועים ושבע בדיקות אירועי דוגמת המקור מול שמירת הדגימה האחרונה בנפרד. Python אידאלי בלבד; ללא HDL, סינתזה, STA או בדיקה פיזית.\n\nכל עקבות האירועים הקצרות מול אורקל דגימה אחרונה; RTL ודוח הידור/הרצה נפרדים. אין בדיקת metastability.",
+      "en": "Passed 19,682 exhaustive event traces, 147,624 event comparisons and seven source-waveform event checks against independently retained last-sample state. Ideal Python only; no HDL, synthesis, STA or physical verification.\n\nAll short event histories against a last-sample oracle; separate RTL compile/run evidence. No metastability measurement."
     },
     "interview_answer": {
-      "he": "שומרים את In בדלגלג D בחזית עולה ומשווים ב־XOR לקלט החי. שינוי יוצר אי־התאמה עד הדגימה הבאה. יש להגדיר אתחול, תזמון וריבוי שינויים.",
-      "en": "Store In in a rising-edge DFF and XOR the stored sample with live In. A change creates mismatch until the next sample. Both input directions work; timing, initialization and multiple-change behavior must be specified."
+      "he": "שומרים את In בדלגלג D בחזית עולה ומשווים ב־XOR לקלט החי. שינוי יוצר אי־התאמה עד הדגימה הבאה. יש להגדיר אתחול, תזמון וריבוי שינויים.\n\nאשמור את d האחרון ב־q. הזוג 10 הוא עלייה, 01 ירידה ושני אי־השוויונות הם XOR; בעליית clk דגימת d מבטלת את אי־ההתאמה.",
+      "en": "Store In in a rising-edge DFF and XOR the stored sample with live In. A change creates mismatch until the next sample. Both input directions work; timing, initialization and multiple-change behavior must be specified.\n\nRetain the last d sample in q. Pair10 detects rising disagreement,01 falling, and either is XOR. Sampling d clears the disagreement."
     },
     "solution_extensions": {
       "he": {
         "question": "איך ייראה פולס סינכרוני באורך מחזור מלא?",
         "direction": "משווים דגימות מושהות ומגדירים השהיית דיווח ודרישות CDC; התוצאה אינה תגובה מיידית מהצילום.",
-        "status": "מוכן בתוכן; אינו מחובר לתור המשך חי."
+        "status": "מוכן בתוכן; אינו מחובר לתור המשך חי.",
+        "batch1101_polarity": [
+          {
+            "question": "איך מבטיחים שלא מאבדים שני שינויים בין דגימות?",
+            "answer_direction": "צריך מנגנון אירועים, מונה או handshake לפי קצב וחוזה; XOR מול דגימה יכול להתאפס לאחר מספר זוגי של שינויים.",
+            "principle": "זיהוי הבדל ורישום כל אירוע הן דרישות שונות."
+          }
+        ]
       },
       "en": {
         "question": "How would a synchronous full-cycle pulse differ?",
         "direction": "Sample and compare delayed values, with explicit latency and CDC assumptions; do not promise the immediate source waveform.",
-        "status": "Prepared; not connected to the live follow-up queue."
+        "status": "Prepared; not connected to the live follow-up queue.",
+        "batch1101_polarity": [
+          {
+            "question": "How can two changes between samples be retained?",
+            "answer_direction": "An event protocol, counter or handshake is needed under a rate contract. XOR can return to zero after an even number of changes.",
+            "principle": "Detecting disagreement and recording every event are different requirements."
+          }
+        ]
       }
     },
     "technical_references": {
@@ -839,6 +871,30 @@
           "note": "Timing limitations only; source interpretation, circuit and checks are independently authored."
         }
       ]
+    },
+    "prompt_variants": {
+      "he": {
+        "batch1101_polarity": {
+          "prompt": "### הרחבה: שלושה פלטים לפי קוטביות השינוי\nבנו מעגל עבור כל אחד משלושת תרשימי התזמון: (1) תגובה לעליית d, (2) תגובה לירידת d, (3) תגובה לשני הכיוונים. הפלט מתחיל בשינוי הנתון בין קצות השעון ומסתיים בעליית השעון הבאה, או כשאי־ההתאמה נעלמת קודם.\n\nמודל אידאלי: q הוא d שנשמר בעליית השעון האחרונה; לפני תחילת התצפית d=q=0 אחרי דגימה ידועה. אירועי נתון ושעון אינם בו־זמניים והקלט יציב בחלון setup/hold. ללא השהיות שערים. יש לממש את שלושת הביטויים ולבדוק מה קורה אם d משתנה שוב לפני השעון. אין להפוך את d לשעון ואין להחליף את הדופק החי בדופק סינכרוני באורך קבוע.",
+          "hints": [
+            "איזה מידע נשאר ברכיב בין שתי עליות שעון? השוו אותו ל־d העכשווי.",
+            "לזיהוי עלייה נדרשים נתון נוכחי 1 ודגימה קודמת 0. מה התנאים לירידה?",
+            "חברו D=d ו־CLK=clk. העלייה היא d AND NOT q, הירידה q AND NOT d, ושני הכיוונים XOR."
+          ],
+          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "batch1101_polarity": {
+          "prompt": "### Extension: three outputs distinguished by transition polarity\nBuild circuits for (1) rising d changes, (2) falling d changes and (3) both directions. Output starts at a data change between clock edges and ends at the next rising clock edge, or earlier if disagreement disappears.\n\nIdeal model: q is d sampled at the last rising clock edge. Before observation a known sample establishes d=q=0. Data and clock events are not simultaneous and setup/hold are valid; gate delays are ignored. Derive all three outputs and analyze another data change before the clock. Do not clock the flip-flop from d or replace the live pulse by a fixed-length synchronous one.",
+          "hints": [
+            "What information remains between rising clock edges? Compare it with current d.",
+            "A rising disagreement needs current1 and saved0. Which pair gives falling disagreement?",
+            "Connect D=d and CLK=clk. Use d AND NOT q, q AND NOT d, and XOR for both directions."
+          ],
+          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+        }
+      }
     }
   },
   "PREP-095": {

@@ -583,31 +583,37 @@
         "קישורי ניהול מותרים רק בתוך תאים פנויים; כל 64 ביטי מטען מוקצה נשמרים.",
         "כל התאים פנויים תחילה, אתחול הקישורים מותר, ואינדקסים הם 0..63.",
         "free מקבלת תא שמוקצה כרגע; שחרור כפול או מזהה ישן מחוץ לחוזה.",
-        "פעולות סדרתיות; מילה חיצונית אחת בת 32 ביטים, כתובת בסיס נתונה ומשתנים זמניים קבועים."
+        "פעולות סדרתיות; מילה חיצונית אחת בת 32 ביטים, כתובת בסיס נתונה ומשתנים זמניים קבועים.",
+        "יחידה אחת היא int יחיד; מערך תקף ומיושר עם M≤INT_MAX.",
+        "מצביע ראש יחיד מתמיד מותר; קישורים בתאים חופשיים; free חוקי וסדרתי."
       ],
       "en": [
         "Links may occupy free cells only; every allocated 64-bit payload is preserved.",
         "Initially all free, link initialization allowed, indices 0..63.",
         "free requires a currently allocated slot; repeated/stale frees are outside the contract.",
-        "Sequential operations; one external 32-bit control word, supplied base address and constant temporaries."
+        "Sequential operations; one external 32-bit control word, supplied base address and constant temporaries.",
+        "One allocation is one int cell; valid aligned array with M≤INT_MAX.",
+        "One persistent head pointer is permitted; links use free cells; valid sequential frees."
       ]
     },
     "optimality": {
-      "he": "אתחול O(m), פעולות חוקיות O(1), וראש בעל שבעה ביטים לוגיים בתוך 32 החיצוניים. לא נטען למינימום הוראות או לתקציב היפ Python. חסם 64 הביטים חל רק כשאסור לאחסן ניהול בתוך כל המאגר.",
-      "en": "O(m) initialization, O(1) valid operations, seven logical head bits within 32 external bits. No instruction minimum or Python heap-budget claim. The 64-bit lower bound applies only when all in-band management is forbidden."
+      "he": "אתחול O(m), פעולות חוקיות O(1), וראש בעל שבעה ביטים לוגיים בתוך 32 החיצוניים. לא נטען למינימום הוראות או לתקציב היפ Python. חסם 64 הביטים חל רק כשאסור לאחסן ניהול בתוך כל המאגר.\n\nאתחול Θ(M), ואחריו O(1) לפעולה חוקית. מצביע ניהול חיצוני אחד; אין הפחתת payload אלא אם בוחרים לשמור גם ראש בתוך האזור.",
+      "en": "O(m) initialization, O(1) valid operations, seven logical head bits within 32 external bits. No instruction minimum or Python heap-budget claim. The 64-bit lower bound applies only when all in-band management is forbidden.\n\nΘ(M) initialization, then O(1) per valid operation. One external management pointer; payload capacity changes only under an alternative in-arena-head design."
     },
     "edge_cases": {
       "he": [
         "הרשימה מתרוקנת אחרי 64 הקצאות ואז malloc מחזירה ‎-1 בלי שינוי.",
         "שחרור והקצאה מחדש, תא 63, וערכי מטען 0,64,2^64−1.",
         "אין להניח שהמילה בתא מוקצה עדיין מכילה קישור.",
-        "קלט free מחוץ לטווח נפסל; שחרור כפול אינו נבדק."
+        "קלט free מחוץ לטווח נפסל; שחרור כפול אינו נבדק.",
+        "מאגר ריק; יחיד; מלא; שימוש חוזר; payload השווה לסמן −1; סוף רשימה; רוחב מצביע שונה מ־int."
       ],
       "en": [
         "Empty list after 64 allocations; subsequent malloc returns -1 unchanged.",
         "Release/reuse, slot 63 and payload values 0,64,2^64−1.",
         "An allocated word need not retain a next link.",
-        "Out-of-range free is rejected; repeated free is not detected."
+        "Out-of-range free is rejected; repeated free is not detected.",
+        "Empty/one/full arena; reuse; payload equal to −1; end sentinel; pointer width unlike int."
       ]
     },
     "common_mistakes": {
@@ -615,26 +621,34 @@
         "להכריז על אי־אפשרות רק מפני שמפה חיצונית דורשת 64 ביטים.",
         "לשמור דגל או קישור במטען מוקצה בלי רשות או להסתמך על ערך קסם.",
         "להסתיר set תפוסה במודל ולייחס את מצבו לראש בלבד.",
-        "להבטיח זיהוי שחרור כפול או סדר האינדקס הנמוך ביותר בלי לממשם."
+        "להבטיח זיהוי שחרור כפול או סדר האינדקס הנמוך ביותר בלי לממשם.",
+        "bitmap חיצוני החורג מהתקציב.",
+        "המרת מצביע ל־int ושחזורו בלי הבטחת ייצוג.",
+        "סימון תפוסה בערך payload שרשאי להופיע אצל לקוח.",
+        "הבטחת free שרירותי או בלוקים משתנים בלי מטא־דאטה."
       ],
       "en": [
         "Declaring impossibility merely because an external bitmap needs 64 bits.",
         "Using allocated payload bits without permission or relying on a magic value.",
         "Hiding an occupancy set in the model while attributing state to head alone.",
-        "Promising repeated-free detection or lowest-index selection without implementing it."
+        "Promising repeated-free detection or lowest-index selection without implementing it.",
+        "An over-budget external bitmap.",
+        "Truncating a pointer into int and reconstructing it.",
+        "Using a legal client payload as an occupancy marker.",
+        "Promising arbitrary frees or variable blocks without metadata."
       ]
     },
     "interview_answer": {
-      "he": "אברר אם תאים פנויים מותרים למטא־נתונים. אם כן אשמור בהם רשימת קישורים, וב־32 הביטים החיצוניים רק ראש 0..64. malloc מוציאה ראש ו־free של תא מוקצה מכניסה אותו. כל מטען מוקצה נשמר; בלי רשות לאחסון פנימי יש חסם מידע אחר.",
-      "en": "Clarify whether free cells may store metadata. If so, put links there and only head 0..64 in external control. malloc pops; free of a live slot pushes. All allocated payload is preserved. Forbidding in-band state gives a different information bound."
+      "he": "אברר אם תאים פנויים מותרים למטא־נתונים. אם כן אשמור בהם רשימת קישורים, וב־32 הביטים החיצוניים רק ראש 0..64. malloc מוציאה ראש ו־free של תא מוקצה מכניסה אותו. כל מטען מוקצה נשמר; בלי רשות לאחסון פנימי יש חסם מידע אחר.\n\nאשתמש בתאים הפנויים כרשימה, עם אינדקס יורש בכל אחד ומצביע ראש יחיד. אגדיר במפורש יחידת int ו־free חוקי, ולא אכנה זאת malloc כללי.",
+      "en": "Clarify whether free cells may store metadata. If so, put links there and only head 0..64 in external control. malloc pops; free of a live slot pushes. All allocated payload is preserved. Forbidding in-band state gives a different information bound.\n\nUse free cells as a list, storing a next index in each with one head pointer. Explicitly require one-int allocations and valid frees rather than claiming general malloc."
     },
     "source_ambiguities": {
-      "he": "המקור מצמצם ניהול חיצוני ל־32 ביטים אך אינו אומר אם מותר לכתוב ניהול בתאים פנויים, אם יש דרישת סדר או איך מטפלים ב־free לא חוקית. הפתרון מתנה את הבנייה ברשות מפורשת לאחסון פנימי ובשחרור חוקי, ומנתח בנפרד איסור מוחלט.",
-      "en": "The source limits external management to 32 bits but does not define free-cell metadata permission, allocation order or invalid free semantics. The construction explicitly assumes in-band free links and valid releases; a total in-band prohibition is analyzed separately."
+      "he": "המקור מצמצם ניהול חיצוני ל־32 ביטים אך אינו אומר אם מותר לכתוב ניהול בתאים פנויים, אם יש דרישת סדר או איך מטפלים ב־free לא חוקית. הפתרון מתנה את הבנייה ברשות מפורשת לאחסון פנימי ובשחרור חוקי, ומנתח בנפרד איסור מוחלט.\n\n2gb והביטוי int* עמומים. נשמרו שתי פרשנויות יחידות הזיכרון; החוזה הראשי מתיר ראש אחד ומפרש יחידה כתא int. אין הנחה שרוחב int הוא 32 ביט.",
+      "en": "The source limits external management to 32 bits but does not define free-cell metadata permission, allocation order or invalid free semantics. The construction explicitly assumes in-band free links and valid releases; a total in-band prohibition is analyzed separately.\n\n2gb and int* are ambiguous. Unit interpretations are retained; the main contract permits one head and chooses one int cell per allocation. int is not silently assumed to be 32 bits."
     },
     "verification": {
-      "he": "10,065 פעולות תקינות נבדקו מול רתמת deque ומילון מטענים בלתי תלויים: ריקון 64 התאים, כישלון במלא ו־10,000 פעולות מדגמיות. אחרי כל פעולה נבדקו רשימת הפנויים, ראש עד 64 וכל מטעני ה־64 ביטים המוקצים. הרתמה בלבד מחזיקה מידע חברות; היישום אינו מחזיקו.",
-      "en": "10,065 valid operations matched an independent deque and allocated-payload dictionary: draining all 64 slots, full failure and 10,000 seeded actions. Every step checked free-list membership, head≤64 and all allocated uint64 payloads. Membership metadata exists only in the oracle, not the implementation."
+      "he": "10,065 פעולות תקינות נבדקו מול רתמת deque ומילון מטענים בלתי תלויים: ריקון 64 התאים, כישלון במלא ו־10,000 פעולות מדגמיות. אחרי כל פעולה נבדקו רשימת הפנויים, ראש עד 64 וכל מטעני ה־64 ביטים המוקצים. הרתמה בלבד מחזיקה מידע חברות; היישום אינו מחזיקו.\n\n15,309 עקבות Python ו־36,000 צעדי C99 מהודר מול אורקל בעלות חיצוני. אין טענת זיהוי double-free, בדיקת מקביליות או הקצאת 2gb בפועל.",
+      "en": "10,065 valid operations matched an independent deque and allocated-payload dictionary: draining all 64 slots, full failure and 10,000 seeded actions. Every step checked free-list membership, head≤64 and all allocated uint64 payloads. Membership metadata exists only in the oracle, not the implementation.\n\n15,309 Python histories and 36,000 compiled C99 steps against an external ownership oracle. No double-free detection, concurrency test or actual 2gb allocation claim."
     },
     "relationship_note": {
       "he": "וריאציה חדשה המקושרת ל־PREP-102: שם 32 תאים ומפת 32 ביטים מספיקים. כאן הקיבולת גדלה בלי להגדיל את הבקרה החיצונית, ולכן נדרש לברר מקום למידע ולהחליף ייצוג.",
@@ -644,12 +658,50 @@
       "he": {
         "question": "איך מזהים שחרור של תא שכבר פנוי בלי מפה חיצונית נוספת?",
         "direction": "אפשר לסרוק את הרשימה לפני ההכנסה ולבדוק אם האינדקס מופיע. העלות היא עד מספר התאים הפנויים; לקיבולת כללית m היא O(m). מזהה ישן לתא שהוקצה מחדש דורש חוזה או מידע נוספים.",
-        "status": "מוכן בתוכן; לא מחובר לתור המשך."
+        "status": "מוכן בתוכן; לא מחובר לתור המשך.",
+        "מאגר של תאי מספר שלם": [
+          {
+            "question": "איך מזהים שחרור כפול בלי bitmap חיצוני?",
+            "answer_direction": "אפשר לסרוק את רשימת החופשיים לפני שחרור, במחיר O(M), או להתיר מטא־דאטה נוסף. מצביע בטווח לבדו אינו הוכחת הקצאה חיה.",
+            "principle": "אימות בעלות דורש מידע או זמן נוספים."
+          }
+        ]
       },
       "en": {
         "question": "How could an already-free release be detected without another external bitmap?",
         "direction": "Scan the list for the index before pushing. Cost is up to the free-list length, O(m) for general capacity m. Stale handles after reuse require another contract or information.",
-        "status": "Prepared in content; not connected to the follow-up queue."
+        "status": "Prepared in content; not connected to the follow-up queue.",
+        "An integer-cell arena": [
+          {
+            "question": "How can double-free be detected without an external bitmap?",
+            "answer_direction": "Scan the free list before release at O(M) cost, or permit more metadata. In-range pointers alone do not prove a live allocation.",
+            "principle": "Ownership validation needs additional information or time."
+          }
+        ]
+      }
+    },
+    "prompt_variants": {
+      "he": {
+        "מאגר של תאי מספר שלם": {
+          "prompt": "### מאגר גדול ללא מטא־דאטה חיצוני נוסף\nנתון אזור הזיכרון המתואר במקור כ־2gb. ממשו allocate ו־free כשאפשר להקצות ממנו int* ואסור להשתמש בזיכרון נוסף. הכתיב אינו מבהיר gigabit מול gigabyte או בסיס עשרוני מול בינארי; נתחו באמצעות M תאי int זמינים, בלי להמציא קיבולת מדויקת.\n\nנבחר חוזה יחידות מפורש: כל allocate מחזיר תא int יחיד, לא בלוק באורך משתנה. התאים כבר הוקצו ומיושרים כמערך int אמיתי, וידועים base ואורכם. מותר int* free_head אחד כמצב ניהול חיצוני מתמיד, ומספר קבוע של משתנים זמניים בזמן קריאה. קישורי רשימת החופשיים נשמרים בתאים החופשיים בלבד; התאים שבשימוש יכולים להכיל כל int. M≤INT_MAX. free מקבל רק תא חי מאותו מאגר; double-free, מצביע זר ושימוש אחרי free אינם בתחום. הפעולות סדרתיות. הבחינו בין החוזה הזה לבין בלוקים משתנים, או איסור גם על המצביע החיצוני.",
+          "hints": [
+            "תא חופשי אינו צריך לשמור ערך לקוח. מה אפשר לאחסן בו עד שיוקצה?",
+            "אחסנו בו את אינדקס התא החופשי הבא, והחזיקו מצביע לראש הרשימה.",
+            "allocate מוציא את הראש; free כותב בתא המשוחרר את אינדקס הראש הקודם ומציבו כראש החדש. השתמשו באינדקס ולא בהמרת מצביע 64 ביט ל־int."
+          ],
+          "integration_status": "רמזי הסעיף בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "An integer-cell arena": {
+          "prompt": "### A large arena without additional external metadata\nThe source gives a region called 2gb and asks for allocate/free returning int*, with no other memory. The spelling does not distinguish gigabits from gigabytes or decimal from binary units. Analyze M available int cells instead of inventing an exact capacity.\n\nChoose an explicit unit contract: allocate returns one int cell, not a variable-size block. Storage is already a valid aligned int array with known base/length. Permit one persistent external int* free_head and constant temporary scalars during calls. Links reside only in free cells; allocated cells may contain any int. Require M≤INT_MAX. free receives a live cell from this arena; double/stale/foreign frees are outside scope. Operations are sequential. Distinguish this from variable-size blocks or a ban on even the external head pointer.",
+          "hints": [
+            "A free cell need not retain client payload. What could it store until allocated?",
+            "Store the next free-cell index there and retain a pointer to the free-list head.",
+            "allocate pops the head; free writes the previous head index into the released cell and pushes it. Store an index, not a truncated 64-bit pointer in int."
+          ],
+          "integration_status": "Part-specific hints are supplemental; the original interactive hint queue is retained."
+        }
       }
     }
   }

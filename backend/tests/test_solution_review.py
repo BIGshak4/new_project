@@ -32,6 +32,8 @@ REVISED_SOLUTION_KEYS = {
     "prep-clock-hands-angle-six-thirty",
     "prep-two-crystal-balls-hundred-floors",
     "prep-xor-from-high-impedance-components",
+    "prep-power-of-two-check",
+    "prep-unique-odd-frequency-digit",
 }
 
 
@@ -75,7 +77,7 @@ def test_prisoner_explanation_revision_preserves_but_does_not_inherit_old_attest
         assert summary(row, language).solution_review.status == "pending_review"
         assert detail(row, language).solution_review.status == "pending_review"
     reviewed = {q.key for q in catalog.questions.values() if solution_review(q).status == "human_reviewed"}
-    assert len(reviewed) == 71
+    assert len(reviewed) == 69
     assert reviewed == set(registry["questions"]) - REVISED_SOLUTION_KEYS
 
 

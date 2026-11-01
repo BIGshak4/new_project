@@ -41,16 +41,16 @@ test("legacy and canonical URLs remain discoverable in both directions", () => {
   assert.deepEqual(relatedQuestionKeys("unrelated-question"), []);
 });
 
-test("the accumulated intakes yield 261 records and 257 unique questions without dropping new exercises", () => {
+test("the accumulated intakes yield 273 records and 268 unique questions without dropping new exercises", () => {
   const rows = ["example_bank", "preparation_bank"].flatMap(name => {
     const seed = JSON.parse(readFileSync(new URL(`../../../backend/seeds/questions/${name}.json`, import.meta.url), "utf8"));
     return seed.map((q: { key: string; assets: { preparation_id?: string } }) => ({
       key: q.key, id: q.key, preparation_id: q.assets.preparation_id,
     } as QuestionSummary));
   });
-  assert.equal(rows.length, 261);
+  assert.equal(rows.length, 273);
   const unique = uniqueLibraryQuestions(rows);
-  assert.equal(unique.length, 257);
+  assert.equal(unique.length, 268);
   for (const id of Array.from({ length: 150 }, (_, i) => `PREP-${String(i + 60).padStart(3, "0")}`)) {
     assert.equal(rows.filter(q => q.preparation_id === id).length, 1, `${id}: one canonical source record`);
     assert.equal(unique.filter(q => q.preparation_id === id).length, 1, id);
@@ -60,6 +60,17 @@ test("the accumulated intakes yield 261 records and 257 unique questions without
   assert.ok(!unique.some(q => q.key === "example-merge-measurement-streams"));
   assert.ok(!unique.some(q => q.key === "example-overlapping-sequence-1011"));
   assert.ok(!unique.some(q => q.key === "example-mod-six-counter"));
+  assert.ok(!unique.some(q => q.key === "example-reverse-singly-linked-list"));
+  assert.equal(unique.filter(q => q.preparation_id === "PREP-238").length, 1);
+});
+
+test("the source-matched reversal keeps the canonical linked-list exercise and both URLs", () => {
+  const example = { ...generic, id: "reversal-example-id", key: "example-reverse-singly-linked-list", title: "Reverse a singly linked list" };
+  const collected = { ...manual, id: "reversal-manual-id", key: "prep-reverse-singly-linked-list-in-place", preparation_id: "PREP-238", title: "In-place singly linked list reversal" };
+  for (const rows of [[example, collected], [collected, example]]) assert.deepEqual(uniqueLibraryQuestions(rows), [collected]);
+  assert.deepEqual(relatedQuestionKeys(example.key), [collected.key]);
+  assert.deepEqual(relatedQuestionKeys(collected.key), [example.key]);
+  assert.deepEqual(uniqueLibraryQuestions([example]), [example]);
 });
 
 test("the collected modulo-six counter keeps the example's identity and search paths", () => {

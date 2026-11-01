@@ -20,8 +20,8 @@ const response = (overrides: Partial<QuestionResources> = {}): QuestionResources
   media: [], technical_material: null, solution_revealed: true, ...overrides,
 });
 
-test("all 261 canonical references follow display language while attempt language stays fixed", () => {
-  assert.equal(questions.length, 261);
+test("all 273 canonical references follow display language while attempt language stays fixed", () => {
+  assert.equal(questions.length, 273);
   for (const question of questions) {
     for (const originalLanguage of ["he", "en"] as const) {
       const original = question.translations[originalLanguage].reference_solution;
@@ -300,8 +300,32 @@ test("all 20 batch22 resources localize visible metadata in both languages", () 
   assert.deepEqual([...new Set(untranslated)], []);
 });
 
-test("all 231 preparation resources pair every visible technical field and render entirely in English", () => {
-  assert.equal(prepared.length, 231);
+test("all 21 November intake resources localize visible metadata in both languages", () => {
+  const ids = new Set(["PREP-015", "PREP-023", "PREP-027", "PREP-091", "PREP-096", "PREP-117", "PREP-125", "PREP-151", "PREP-173",
+    ...Array.from({ length: 12 }, (_, i) => `PREP-${233 + i}`)]);
+  const symbols = new Set(["A", "B", "C", "D", "EN", "a", "b", "c", "d", "f", "s", "n", "x", "y", "q", "i0", "i1", "in1", "in2", "out", "t"]);
+  const untranslated: string[] = [];
+  let rendered = 0;
+  for (const question of prepared) {
+    const material = question.assets.preparation_resource!;
+    if (!ids.has(String(material.id))) continue;
+    const before = JSON.stringify(material);
+    for (const lang of ["he", "en"] as const) {
+      const html = renderToStaticMarkup(createElement(TechnicalMaterial, { material, lang }));
+      for (const match of html.matchAll(/<dt dir="auto">([\s\S]*?)<\/dt>/g)) {
+        if (lang === "he" && !/\p{Script=Hebrew}/u.test(match[1]) && !symbols.has(match[1]) && !/^\d+\+?$/.test(match[1])) untranslated.push(`${material.id}: ${match[1]}`);
+        if (lang === "en" && /batch1101|20261101|november|\p{Script=Hebrew}/u.test(match[1])) untranslated.push(`${material.id} [en]: ${match[1]}`);
+      }
+    }
+    assert.equal(JSON.stringify(material), before);
+    rendered += 1;
+  }
+  assert.equal(rendered, 21);
+  assert.deepEqual([...new Set(untranslated)], []);
+});
+
+test("all 243 preparation resources pair every visible technical field and render entirely in English", () => {
+  assert.equal(prepared.length, 243);
   for (const question of prepared) {
     const material = question.assets.preparation_resource!;
     const pairs = material.learner_material as Record<string, Record<ApiLang, unknown>> | undefined;

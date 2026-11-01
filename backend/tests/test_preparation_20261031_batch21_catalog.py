@@ -90,7 +90,7 @@ def test_twenty_one_sources_keep_the_exact_original_bytes_and_identity_mapping()
 
 def test_authorized_extensions_preserve_all_197_original_records_and_1070_assets(catalog):
     archive = read(BANK / "questions.json")
-    assert len(archive["questions"]) == 231 and len(catalog.questions) == 261
+    assert len(archive["questions"]) == 243 and len(catalog.questions) == 273
     # Freeze this intake's 208-record endpoint before projecting its 197-record
     # predecessor. The later eleven additions have their own batch20 tests.
     previous_ids = {question["id"] for question in archive["questions"]
@@ -107,7 +107,7 @@ def test_authorized_extensions_preserve_all_197_original_records_and_1070_assets
     historical_ids = localization.keys() & BATCH20_BASELINE["localized_material"].keys()
     assert historical_ids - BATCH21_BASELINE["localized_material"].keys() == NEW_IDS
     assert_pre_batch21_localization(localization)
-    # The three old aliases stay intact, plus the explicitly audited modulo-six example.
+    # Old aliases remain intact; the exact reversal source adds one audited family.
     module = (ROOT / "apps/web/src/lib/question-families.ts").read_text("utf-8")
     pairs = re.findall(r'^\s*"([^"]+)":\s*"([^"]+)",', module, re.MULTILINE)
     aliases = dict(pairs)
@@ -116,9 +116,10 @@ def test_authorized_extensions_preserve_all_197_original_records_and_1070_assets
         "example-merge-measurement-streams": "prep-merge-two-sorted-arrays",
         "example-overlapping-sequence-1011": "prep-detect-overlapping-1011-stream",
         "example-mod-six-counter": "prep-enabled-mod-six-counter",
+        "example-reverse-singly-linked-list": "prep-reverse-singly-linked-list-in-place",
     }
     assert set(aliases) | set(aliases.values()) <= catalog.questions.keys()
-    assert len({aliases.get(key, key) for key in catalog.questions}) == 257
+    assert len({aliases.get(key, key) for key in catalog.questions}) == 268
 
 
 def test_all_new_questions_and_extensions_remain_bilingual_proposed_unrated_and_gated(catalog):
@@ -198,7 +199,7 @@ def test_new_private_assets_are_safe_hash_bound_and_localized(catalog):
             if item["language"] == "en":
                 assert not any("\u05d0" <= char <= "\u05ea" for char in item["caption"])
     sources = [entry["local_path"] for entry in uploads.values() if entry["local_path"].startswith("sources/")]
-    assert len(sources) == 372 and len(set(sources)) == 371
+    assert len(sources) == 394 and len(set(sources)) == 392
     names = read(ROOT / "apps/web/src/lib/source-screenshots.json")
     assert set(names) == {Path(path).name for path in sources}
     assert all(f"2026-10-31-batch21-{number:02d}.png" in names for number in range(1, 22))

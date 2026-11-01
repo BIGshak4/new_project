@@ -471,25 +471,31 @@
         "הקלט הוא מספר שלם; בודקים חזקות 2^k כאשר k>=0.",
         "אחת נכללת; אפס וערכים שליליים אינם נכללים.",
         "זמן O(1) מניח פעולות על מילה ברוחב קבוע; עלות הפעולות על מספרים שלמים בלתי מוגבלים ב־Python תלויה בגודלם.",
-        "לא מסיקים מהמקור הלא מפורט חוזה קלט של נקודה צפה או מספרים ממשיים שרירותיים."
+        "לא מסיקים מהמקור הלא מפורט חוזה קלט של נקודה צפה או מספרים ממשיים שרירותיים.",
+        "uint32 בתחום; אפס נפסל ו־1 מחזיר מעריך אפס.",
+        "None מציין מעריך לא מוגדר; אינו מתחלף במעריך אפס."
       ],
       "en": [
         "Input is an integer; test powers 2^k with k>=0.",
         "One is included; zero and negative values excluded.",
         "O(1) runtime assumes fixed-width word operations; unbounded Python ints have size-dependent costs.",
-        "No floating-point or arbitrary-real input contract inferred from the unspecified source."
+        "No floating-point or arbitrary-real input contract inferred from the unspecified source.",
+        "uint32 range; reject zero, return exponent zero for one.",
+        "None denotes an undefined exponent, distinct from exponent zero."
       ]
     },
     "optimality": {
       "he": {
         "criterion": "מספר קבוע של פעולות חשבון/פעולות ביטיות במודל מילה ברוחב קבוע.",
         "result": "n>0 and (n & (n-1))==0; זמן ומקום נוסף O(1) תחת מודל זה.",
-        "scope": "אין זו סיבוכיות ביטים קבועה למספרים שלמים באורך שרירותי, טענה למספר מינימלי של פקודות CPU או טענה לתזמון קריפטוגרפי."
+        "scope": "אין זו סיבוכיות ביטים קבועה למספרים שלמים באורך שרירותי, טענה למספר מינימלי של פקודות CPU או טענה לתזמון קריפטוגרפי.",
+        "בדיקת חזקה והחזרת המעריך": "עד 31 הזזות בתחום הקבוע; O(W) ברוחב כללי, O(log n) ביחס לערך n. אינו חסם קבוע ל־BigInt."
       },
       "en": {
         "criterion": "Constant number of arithmetic/bitwise operations under fixed-width word model.",
         "result": "n>0 and (n & (n-1))==0; O(1) time/extra space under that model.",
-        "scope": "Not constant bit complexity for arbitrary-length integers, nor minimum CPU-instruction count or cryptographic timing claim."
+        "scope": "Not constant bit complexity for arbitrary-length integers, nor minimum CPU-instruction count or cryptographic timing claim.",
+        "Power test and exponent": "At most 31 shifts in the fixed domain; O(W) for general width, O(log n) in numeric value n. No unbounded-integer constant-time claim."
       }
     },
     "edge_cases": {
@@ -499,7 +505,8 @@
         "מספרים שלמים שליליים",
         "הביט הגבוה ביותר הדלוק במילה ללא סימן",
         "מספרים סמוכים לחזקות של שתיים",
-        "מספרים שלמים גדולים מאוד ב־Python"
+        "מספרים שלמים גדולים מאוד ב־Python",
+        "0; 1; 2; 12; הביט העליון; ערך מחוץ לתחום."
       ],
       "en": [
         "Zero",
@@ -507,7 +514,8 @@
         "Negative integers",
         "Highest set bit of an unsigned word",
         "Neighbors of powers of two",
-        "Very large Python integers"
+        "Very large Python integers",
+        "0; 1; 2; 12; highest bit; out-of-domain value."
       ]
     },
     "verification": {
@@ -516,19 +524,21 @@
         "checked_on": "2026-09-28",
         "script_path": "checks/check_prep_023.py",
         "method": "131073 מספרים שלמים רצופים מול חזקות שנוצרו; 32 מקרי גבול גדולים ודוגמאות מפורשות.",
-        "scope": "נכונות התוצאה המתמטית/ב־Python, ללא מדידת זמני ריצה."
+        "scope": "נכונות התוצאה המתמטית/ב־Python, ללא מדידת זמני ריצה.",
+        "בדיקת חזקה והחזרת המעריך": "65,540 מקרים מול טבלת חזקות עצמאית; נבדקו אפס, אחד, גבולות uint32 ושכנים של חזקות."
       },
       "en": {
         "status": "passed",
         "checked_on": "2026-09-28",
         "script_path": "checks/check_prep_023.py",
         "method": "131073 consecutive integers vs generated powers; 32 large boundary cases and explicit examples.",
-        "scope": "Mathematical/Python result correctness, no timing benchmark."
+        "scope": "Mathematical/Python result correctness, no timing benchmark.",
+        "Power test and exponent": "65,540 cases against an independent power table, including zero, one, uint32 boundaries and neighbors of powers."
       }
     },
     "interview_answer": {
-      "he": "לחזקה חיובית של 2 יש בדיוק ביט 1 אחד. הפעולה n & (n−1) מכבה את ה־1 הימני ביותר, ולכן אבדוק n>0 וגם תוצאה אפס. כך 1 מתקבל, ואפס ושליליים נדחים. זה O(1) למילה ברוחב קבוע; בפייתון עם מספרים בלתי מוגבלים עלות הפעולות תלויה באורך.",
-      "en": "A positive power of 2 has exactly one set bit. The operation n & (n−1) clears the rightmost 1, so I check n>0 and that the result is zero. This accepts 1 and rejects zero and negative integers. It is O(1) for a fixed-width word; with Python’s unbounded integers, operation cost depends on length."
+      "he": "לחזקה חיובית של 2 יש בדיוק ביט 1 אחד. הפעולה n & (n−1) מכבה את ה־1 הימני ביותר, ולכן אבדוק n>0 וגם תוצאה אפס. כך 1 מתקבל, ואפס ושליליים נדחים. זה O(1) למילה ברוחב קבוע; בפייתון עם מספרים בלתי מוגבלים עלות הפעולות תלויה באורך.\n\nאבדוק תחילה ביט דולק יחיד וקלט שאינו אפס. אחר כך אספור הזזות עד אחד; אפריד בין עלות ביחס לערך וביחס לרוחב.",
+      "en": "A positive power of 2 has exactly one set bit. The operation n & (n−1) clears the rightmost 1, so I check n>0 and that the result is zero. This accepts 1 and rejects zero and negative integers. It is O(1) for a fixed-width word; with Python’s unbounded integers, operation cost depends on length.\n\nFirst test a single set bit and reject zero. Then count shifts to one, distinguishing value-based and width-based cost."
     },
     "common_mistakes": {
       "he": [
@@ -537,7 +547,10 @@
         "שימוש ב־and בוליאני במקום & ביטי",
         "טענה ש־BigInt ב־Python פועל בזמן קבוע לכל גודל",
         "שימוש בלוגריתמים מקורבים",
-        "הנחת רוחב מספר שלא צוין במקור"
+        "הנחת רוחב מספר שלא צוין במקור",
+        "להחזיר 0 עבור כישלון וגם עבור 1.",
+        "לקרוא CTZ באפס בלי לבדוק חוזה.",
+        "לכתוב O(1) עבור int בלתי חסום או להשתמש בלוגריתם מעוגל."
       ],
       "en": [
         "Forgetting zero guard",
@@ -545,8 +558,55 @@
         "Using Boolean and instead of bitwise &",
         "Claiming Python BigInt is constant-time for all magnitudes",
         "Using approximate logarithms",
-        "Assuming a numeric width absent from source"
+        "Assuming a numeric width absent from source",
+        "Returning zero for both failure and input one.",
+        "Calling CTZ on zero without its contract.",
+        "Claiming O(1) for unbounded int or using rounded logarithms."
       ]
+    },
+    "source_ambiguities": {
+      "he": "N ופורמט פלט המעריך לא הוגדרו. נבחרו uint32 וזוג valid/exponent בלי לשנות את הבדיקה הבוליאנית הישנה.",
+      "en": "N and the exponent result format were unspecified. This part uses uint32 and a valid/exponent pair while preserving the earlier Boolean test."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מתי floor(log2(n)) אינו מספיק כדי לבדוק חזקה?",
+          "answer_direction": "גם 12 נותן רצפה 3, כמו מספרים אחרים בטווח 8..15. צריך להשוות לחזקה המתאימה או לוודא ביט יחיד.",
+          "principle": "מיקום הביט הגבוה אינו מוכיח שכל שאר הביטים אפס."
+        }
+      ],
+      "en": [
+        {
+          "question": "Why is floor(log2(n)) alone insufficient to test a power?",
+          "answer_direction": "Twelve also has floor three, like all values eight through fifteen. Verify equality with the power or a single set bit.",
+          "principle": "The highest-bit position does not prove other bits are zero."
+        }
+      ]
+    },
+    "prompt_variants": {
+      "he": {
+        "בדיקת חזקה והחזרת המעריך": {
+          "prompt": "### בדיקת חזקה והחזרת המעריך\nכתבו קוד המקבל מספר לא־מסומן בטווח uint32, בודק אם הוא 2^k, ואם כן מחזיר גם k. הגדירו פלט [true,k] להצלחה ו־[false,None] אחרת; 1 הוא 2^0 ואפס אינו חזקה. הסבירו את הדרישה ״פחות מ־O(N)״ לפי משמעות N: ערך המספר, רוחב המילה או מספר איברי קלט.",
+          "hints": [
+            "בדיקת ביט יחיד והחזרת מיקומו הן שתי משימות קשורות אך שונות.",
+            "תחילה פסלו אפס ומספרים שיש בהם יותר מביט אחד. אחר כך אפשר לספור הזזות עד אחד.",
+            "לאחר בדיקת n & (n−1), כל הזזה ימינה מחלקת חזקה בשתיים. מספר ההזזות עד 1 הוא המעריך; לא משתמשים ב־log עם עיגול."
+          ],
+          "integration_status": "רמזי הסעיף בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "Power test and exponent": {
+          "prompt": "### Test the power and return its exponent\nFor a uint32-range value, decide whether it equals 2^k and return k when it does. Use [true,k] for success and [false,None] otherwise; 1 is 2^0, zero is not a power. Interpret the source requirement below O(N) by specifying whether N denotes numeric value, word width or input length.",
+          "hints": [
+            "Testing for one bit and returning its position are related but distinct.",
+            "Reject zero and values with multiple set bits, then count right shifts until one.",
+            "After the n & (n−1) test, each right shift halves the power. The shift count until one is its exponent, without floating-point logarithm rounding."
+          ],
+          "integration_status": "Part-specific hints are supplemental; the original interactive hint queue is retained."
+        }
+      }
     }
   },
   "PREP-024": {
@@ -963,13 +1023,15 @@
         "בדיוק לספרה אחת תדירות אי־זוגית; כל ערך הוא ב־0..9.",
         "גישה רגילה למערך, ללא סיכום שחושב מראש או פעולה בסיסית ברוחב בלתי מוגבל.",
         "מבדילים בין סימון big-O שסביר שהתכוונו אליו לבין little-o באות קטנה כפי שנכתב מילולית.",
-        "סעיף ב שואל על זמן; אין להחליף זאת בשקט בדרישת מקום."
+        "סעיף ב שואל על זמן; אין להחליף זאת בשקט בדרישת מקום.",
+        "אורך או סיום ידועים; הבטחת זוגות וערך בודד; שלמים ברוחב מפורש לניתוח מכונה."
       ],
       "en": [
         "Exactly one digit has odd frequency; every value is in 0..9.",
         "Ordinary array access, no precomputed aggregate or unbounded-width primitive.",
         "Likely intended big-O notation distinguished from literal lowercase little-o.",
-        "Part (b) asks time; no silent replacement with space."
+        "Part (b) asks time; no silent replacement with space.",
+        "Known length/termination; paired-value promise with one unpaired value; explicit machine width."
       ]
     },
     "optimality": {
@@ -977,13 +1039,15 @@
         "criterion": "העבודה במקרה הגרוע לזיהוי ספרה בתדירות אי־זוגית ממערך בסדר שרירותי שלא סוכם מראש.",
         "result": "זמן Θ(n) ומצב עזר O(1) עם XOR; זמן O(1) אינו אפשרי.",
         "proof": "מערך חוקי באורך אי־זוגי שכולו אפסים לעומת החלפת אפס אחד שלא נקרא באחת: התצפיות זהות, אך התשובות החוקיות שונות.",
-        "scope": "גישה לתא יחיד במודל RAM ונכונות מדויקת; הנחות של עיבוד מקדים או חומרה מקבילית ישנו את המודל."
+        "scope": "גישה לתא יחיד במודל RAM ונכונות מדויקת; הנחות של עיבוד מקדים או חומרה מקבילית ישנו את המודל.",
+        "זוגות של מספרים שלמים": "Θ(L) קריאות ו־O(1) מילות XOR תחת ההבטחה; בדיקת ההבטחה או מפתחות רחבים משנה עלויות."
       },
       "en": {
         "criterion": "Worst-case work to identify odd-frequency digit from an unsummarized arbitrary-order array.",
         "result": "Θ(n) time and O(1) auxiliary state with XOR; O(1) time impossible.",
         "proof": "All-zero valid odd-length array versus one unread zero replaced by one: indistinguishable observations, distinct valid answers.",
-        "scope": "Single-cell RAM access and exact correctness; preprocessing/parallel-hardware assumptions would change the model."
+        "scope": "Single-cell RAM access and exact correctness; preprocessing/parallel-hardware assumptions would change the model.",
+        "General integer pairs": "Θ(L) reads and O(1) XOR words under the promise; validating the promise or unbounded keys changes costs."
       }
     },
     "edge_cases": {
@@ -994,7 +1058,8 @@
         "איברים לא ממוינים שמשולבים זה בזה",
         "מערכים ריקים או באורך זוגי מפרים את ההבטחה",
         "כמה ספרות בתדירות אי־זוגית",
-        "איברים שאינם בטווח או אינם שלמים"
+        "איברים שאינם בטווח או אינם שלמים",
+        "איבר יחיד; בודד אפס; שליליים; כמה זוגות מאותו ערך; קלט מפר הבטחה."
       ],
       "en": [
         "Odd digit is zero",
@@ -1003,7 +1068,8 @@
         "Unsorted interleaving",
         "Empty/even-length arrays violate promise",
         "Several odd-frequency digits",
-        "Out-of-range/noninteger elements"
+        "Out-of-range/noninteger elements",
+        "One item; zero target; negatives; repeated pairs of one value; invalid promise."
       ]
     },
     "verification": {
@@ -1011,18 +1077,20 @@
         "status": "passed",
         "checked_on": "2026-09-28",
         "script_path": "checks/check_prep_027.py",
-        "method": "כל האורכים האי־זוגיים 1..7 מעל האלפבית 0..3, כל השלשות של עשר הספרות, בדיקות ספרת יעד וקלט לא תקין ודוגמאות עדות של תא שלא נקרא."
+        "method": "כל האורכים האי־זוגיים 1..7 מעל האלפבית 0..3, כל השלשות של עשר הספרות, בדיקות ספרת יעד וקלט לא תקין ודוגמאות עדות של תא שלא נקרא.",
+        "זוגות של מספרים שלמים": "8,911 מקרי Python מול שכיחויות; אינו אימות של כל ערך שלם אפשרי או של הקצאת מערך C."
       },
       "en": {
         "status": "passed",
         "checked_on": "2026-09-28",
         "script_path": "checks/check_prep_027.py",
-        "method": "All odd lengths 1..7 over alphabet 0..3, all ten-digit triples, target-digit and invalid-input checks, unread-cell witness examples."
+        "method": "All odd lengths 1..7 over alphabet 0..3, all ten-digit triples, target-digit and invalid-input checks, unread-cell witness examples.",
+        "General integer pairs": "8,911 Python cases against frequency counts; not exhaustion of every integer or validation of C array allocation."
       }
     },
     "interview_answer": {
-      "he": "אעבור על המערך עם XOR מצטבר. זוגות מתבטלים והספרה בעלת מספר ההופעות האי־זוגי נשארת. זמן Θ(n) וזיכרון עזר O(1). סעיף ב כפי שנכתב, זמן O(1), אינו אפשרי בלי מידע נוסף: תא שלא נקרא יכול לשנות את התשובה גם תוך שמירה על ההבטחה.",
-      "en": "I scan the array with a running XOR. Pairs cancel, leaving the digit with an odd number of occurrences. Time is Θ(n) and auxiliary memory O(1). As written, part (b), O(1) time, is impossible without extra information: an unread cell can change the answer while preserving the promise."
+      "he": "אעבור על המערך עם XOR מצטבר. זוגות מתבטלים והספרה בעלת מספר ההופעות האי־זוגי נשארת. זמן Θ(n) וזיכרון עזר O(1). סעיף ב כפי שנכתב, זמן O(1), אינו אפשרי בלי מידע נוסף: תא שלא נקרא יכול לשנות את התשובה גם תוך שמירה על ההבטחה.\n\nאצבור XOR של כל האיברים; כל זוג זהה מתבטל והבודד נשאר. אציין שהסריקה דורשת גבול ושההבטחה נתונה מראש.",
+      "en": "I scan the array with a running XOR. Pairs cancel, leaving the digit with an odd number of occurrences. Time is Θ(n) and auxiliary memory O(1). As written, part (b), O(1) time, is impossible without extra information: an unread cell can change the answer while preserving the promise.\n\nXOR all items; pairs cancel and the unpaired value remains. State that traversal is bounded and the input promise is supplied."
     },
     "common_mistakes": {
       "he": [
@@ -1032,7 +1100,10 @@
         "התייחסות לאפס כאילו לא נמצאה תוצאה",
         "הנחה שתדירות אי־זוגית פירושה הופעה יחידה",
         "שימוש ב־XOR כבדיקת תקינות הקלט",
-        "התעלמות מסימון o באות קטנה"
+        "התעלמות מסימון o באות קטנה",
+        "להשתמש באפס כסמן חסר.",
+        "לטעון ש־XOR בודק בעצמו את הבטחת השכיחויות.",
+        "לסרוק מצביע C בלי גבול."
       ],
       "en": [
         "Confusing O(1) time with O(1) space",
@@ -1041,7 +1112,10 @@
         "Treating zero as missing result",
         "Assuming odd-frequency means singleton",
         "Using XOR as an input validator",
-        "Ignoring the lowercase o notation"
+        "Ignoring the lowercase o notation",
+        "Using zero as an absent marker.",
+        "Claiming XOR validates frequencies.",
+        "Walking a raw C pointer without bounds."
       ]
     },
     "solution_extensions": {
@@ -1051,6 +1125,11 @@
           "content": "### XOR TREE לעומת הלולאה, והאם סכום המערך מספיק?\n\nהקוד עם מצבר XOR הוא צבירה סדרתית, לא עץ מאוזן: result מתעדכן פעם אחת לכל איבר, ולכן זמן הריצה O(n). מאחר ש־XOR אסוציאטיבי, אפשר לארגן את החישוב כעץ מאוזן. לדוגמה, לשמונה איברים: ארבע פעולות XOR בזוגות בשכבה הראשונה, שתי פעולות בשנייה ואחת בשלישית. זה שלוש שכבות, אבל 4+2+1=7 פעולות בסך הכול. בחישוב סדרתי גם עץ כזה דורש Θ(n) עבודה/זמן. בחומרה עם מספיק יחידות מקבילות עומק העץ הוא ceil(log2 n) ושיעור החומרה הוא n−1 רכיבי XOR וקטוריים, או ארבעה שערים ביטיים לכל רכיב עבור ספרות המקודדות בארבעה ביטים; זו ספירת מימוש, לא הוכחת מינימום של כל הפונקציה תחת הבטחת הקלט. במודל מעבדים מקבילי עם מספיק משאבים אפשר לקבל O(log n) עומק חישוב, אך זה מודל שונה מהלולאה ומשאלת הזמן הסדרתית. טעינה סדרתית של הקלט עדיין דורשת O(n) קריאות. אין סתירה לחסם Ω(n) על סך התאים שצריך לקרוא; עומק מקבילי שונה מסך העבודה.\n\nסכום רגיל של הערכים אינו מספיק למציאת הספרה האי־זוגית. שני קלטים חוקיים באותו אורך נותנים אותו סכום ותשובות שונות:\n[1,2,2] — סכום 5, הספרה האי־זוגית 1;\n[3,1,1] — סכום 5, הספרה האי־זוגית 3.\nלכן שום חישוב שמקבל רק את הסכום (ואפילו גם את n) אינו יכול להבחין בין שני הקלטים. מבחינת הסיבוכיות, סריקת סכום היא O(n) זמן ו־O(1) משתנים במודל מילות מכונה, אבל האלגוריתם אינו נכון.\n\nאם ״שארית מחלוקה ב־2״ היא sum % 2, התוצאה היא רק 0 או 1 והכפלה ב־2 נותנת רק 0 או 2. אם הכוונה לחלק השברי של sum/2 ואז הכפלה ב־2, מתקבלת רק 0 או 1. אף פירוש אינו מחזיר ספרה כללית 0..9. הסכום מודולו 2 אכן מגלה אם הספרה המבוקשת זוגית או אי־זוגית: כל ספרה בתדירות זוגית תורמת סכום זוגי, והספרה בתדירות אי־זוגית קובעת את הזוגיות. אבל הוא אינו מגלה איזו ספרה זו. XOR מבטל כל זוג ערכים זהים כערכים ביטיים שלמים, ולכן שומר את כל ביטי הספרה הנותרת ולא רק את הזוגיות שלה.\n\nהזיכרון של מצבר יחיד נקרא O(1) זיכרון עזר, גם ללא מערך נוסף. עבור סכום בגודל בלתי מוגבל נדרשים יותר ביטים כש־n גדל; במודל המקובל מונים מילים/משתנים. הדוגמה הנגדית נבדקה מול המימוש שנשמר; סכומי הקלטים שווים ותשובות ה־XOR שונות.\n",
           "verification_script": "solutions/update_prep_027_tree_and_sum.py",
           "verification_status": "passed"
+        },
+        {
+          "question": "כיצד תבדקו שיש בדיוק בודד אחד וכל היתר פעמיים?",
+          "answer_direction": "ספירת שכיחויות או מיון מאפשרים אימות, במחירי זמן/מקום מפורשים. XOR לבדו מאבד מידע על כל השכיחויות.",
+          "principle": "חישוב תחת הבטחה שונה מאימות ההבטחה."
         }
       ],
       "en": [
@@ -1059,8 +1138,41 @@
           "content": "### XOR TREE versus the loop, and is the array sum sufficient?\n\nThe XOR-accumulator code performs serial accumulation, not a balanced tree: result is updated once per item, so runtime is O(n). Since XOR is associative, the computation can be organized as a balanced tree. For example, for eight items: four pairwise XOR operations in the first layer, two in the second, and one in the third. There are three layers, but 4+2+1=7 operations in total. In a serial computation even this tree requires Θ(n) work/time. In hardware with enough parallel units, tree depth is ceil(log2 n) and hardware usage is n−1 vector XOR components, or four bitwise gates per component for digits encoded in four bits; this is an implementation count, not a proof of the minimum for the whole function under the input promise. A parallel-processor model with sufficient resources can achieve O(log n) computation depth, but this is a different model from the loop and the serial-time question. Serial input loading still requires O(n) reads. This does not contradict the Ω(n) bound on the total number of cells that must be read; parallel depth differs from total work.\n\nOrdinary summation of the values is insufficient to find the odd-frequency digit. Two legal inputs of the same length give the same sum and different answers:\n[1,2,2] — sum 5, odd-frequency digit 1;\n[3,1,1] — sum 5, odd-frequency digit 3.\nThus no computation receiving only the sum (even together with n) can distinguish these inputs. In complexity terms, a sum scan takes O(n) time and O(1) variables in the machine-word model, but the algorithm is incorrect.\n\nIf “remainder after division by 2” means sum % 2, the result is only 0 or 1 and multiplying by 2 gives only 0 or 2. If it means the fractional part of sum/2 followed by multiplication by 2, the result is only 0 or 1. Neither interpretation returns an arbitrary digit in 0..9. The sum modulo 2 does reveal whether the target digit is even or odd: each even-frequency digit contributes an even sum, and the odd-frequency digit determines the parity. However, it does not identify the digit. XOR cancels every pair of identical values as complete bitwise values, preserving all the bits of the remaining digit rather than only its parity.\n\nThe memory for one accumulator is called O(1) auxiliary memory, even without an additional array. An unbounded sum needs more bits as n grows; the usual model counts words/variables. The counterexample was checked against the saved implementation; the input sums are equal and the XOR answers differ.\n",
           "verification_script": "solutions/update_prep_027_tree_and_sum.py",
           "verification_status": "passed"
+        },
+        {
+          "question": "How can the exact one-singleton/rest-twice promise be validated?",
+          "answer_direction": "Frequency counts or sorting permit validation with explicit costs. XOR alone loses full frequency information.",
+          "principle": "Solving under a promise differs from validating it."
         }
       ]
+    },
+    "source_ambiguities": {
+      "he": "n לא ידוע אינו אומר שאורך המערך לא זמין. הערכים הכלליים והזוגות המדויקים הם סעיף נוסף, בלי למחוק את חוזה הספרות המקורי.",
+      "en": "Unknown n need not mean unknown array length. General integers and exact pairs are an additional part preserving the original digit contract."
+    },
+    "prompt_variants": {
+      "he": {
+        "זוגות של מספרים שלמים": {
+          "prompt": "### מספר בודד בין זוגות של מספרים שלמים\nנתון מערך סופי באורך L=2n+1: כל הערכים מופיעים בזוגות, למעט ערך אחד שמופיע פעם אחת. מצאו את הבודד והציעו חלופות עם ניתוח זמן ומקום. n אינו נתון בנפרד, אבל אורך המערך או ממשק סיום תקין זמינים. הערכים אינם מוגבלים לספרות; עבור מימוש מכונה נניח שלמים ברוחב W קבוע.\n\nאין צורך למיין ואין לשנות את הקלט בפתרון הראשי. ההבטחה על הזוגות היא הנחת קלט, ולא משהו ש־XOR מוכיח בעצמו. דונו בנפרד במערך שאינו עומד בהבטחה ובמצביע C שאין לצדו אורך.",
+          "hints": [
+            "איזו פעולה על x ועל עותק זהה שלו מבטלת את שניהם?",
+            "XOR אסוציאטיבי וקומוטטיבי, ולכן סדר הזוגות אינו משנה.",
+            "צברו XOR החל מאפס. כל זוג מתאפס והבודד נשאר; עדיין חייבים לדעת היכן המערך מסתיים."
+          ],
+          "integration_status": "רמזי הסעיף בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "General integer pairs": {
+          "prompt": "### An unpaired integer among equal pairs\nA finite array has length L=2n+1: values occur in equal pairs except for one value occurring once. Find the unpaired value and compare solutions with time/space costs. n is not supplied separately, but array length or a valid terminating interface is available. Values are not restricted to digits; use fixed W-bit integers for machine-level analysis.\n\nThe main solution does not sort or mutate input. The pairing promise is an input assumption, not something XOR validates. Separately discuss invalid promises and a raw C pointer with no length.",
+          "hints": [
+            "Which operation cancels two equal copies of x?",
+            "XOR is associative and commutative, so pair order does not matter.",
+            "Accumulate XOR from zero. Pairs vanish and the unpaired value remains; array termination is still required."
+          ],
+          "integration_status": "Part-specific hints are supplemental; the original interactive hint queue is retained."
+        }
+      }
     }
   },
   "PREP-028": {

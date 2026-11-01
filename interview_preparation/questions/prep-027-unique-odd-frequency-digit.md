@@ -97,3 +97,16 @@ Valid input length is odd and positive, although odd length alone does not estab
 The accumulator loop is serial O(n), not a balanced XOR tree. Associativity permits a balanced tree: eight operands require layers of 4,2,1 operations, depth 3 but total work 7. In general n-1 pairwise operations and ceil(log2 n) depth. Sequential evaluation is Θ(n); sufficiently parallel hardware/processors achieve O(log n) reduction depth with growing resources, a different model. Digits need four-bit XOR units. Sequential input loading still costs linear reads; the total-read lower bound does not forbid logarithmic parallel depth.
 
 Ordinary sum loses required information. Valid equal-length inputs [1,2,2] and [3,1,1] both sum to 5 but have answers 1 and 3, so no function of only sum and length can solve the problem. (sum % 2)*2 yields only 0 or 2; multiplying the fractional part of sum/2 by 2 yields only 0 or 1. Sum parity reveals target parity, not its identity. XOR cancels equal values across all bit positions. Sum scanning has the proposed linear time and constant word-variable count, but is incorrect; one accumulator is O(1) auxiliary space, not zero memory. Exact unbounded sums grow in bit length. Counterexamples checked against saved XOR implementation.
+
+
+## מקור נוסף — 01.11.2026, מקבץ 20
+
+[צילום מקור פרטי 3](../sources/2026-11-01-batch20-03.png)
+
+מערך עם 2n+1 איברים. במערך n זוגות של מספרים ומספר אחד בודד. עליך למצוא את המספר שאין לו זוג (לדוגמא 4,3,2,4,2). לא ידוע מה n. להציע כמה שיותר פתרונות אפשריים ולנתח סיבוכיות זמן וסיבוכיות מקום.
+
+שיוכי מקור מדווחים: Apple.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-027-general_integer_pairs-batch1101-addendum.md)

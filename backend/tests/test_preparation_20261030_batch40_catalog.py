@@ -84,8 +84,8 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
 
 
 def test_twelve_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 231
-    assert len(catalog.questions) == 261
+    assert len(archive()["questions"]) == 243
+    assert len(catalog.questions) == 273
     additions = {
         q.assets.get("preparation_id"): q
         for q in catalog.questions.values()
@@ -255,7 +255,7 @@ def test_batch40_inventory_retains_source_bytes_and_does_not_alias_new_variation
     sources = [value["local_path"] for value in uploads.values() if value["local_path"].startswith("sources/")]
     assert_pre_batch90_assets(uploads)
     assert len(uploads) > 921
-    assert len(sources) == 372 and len(set(sources)) == 371
+    assert len(sources) == 394 and len(set(sources)) == 392
     source_names = json.loads((ROOT / "apps/web/src/lib/source-screenshots.json").read_bytes())
     assert set(source_names) == {Path(path).name for path in sources}
     assert all(f"2026-10-30-batch40-{i:02d}.png" in source_names for i in range(1, 21))

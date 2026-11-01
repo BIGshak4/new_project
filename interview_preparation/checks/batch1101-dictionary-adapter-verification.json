@@ -1,0 +1,88 @@
+{
+  "passed": true,
+  "compile_exit": 0,
+  "compile_stdout": "",
+  "compile_stderr": "",
+  "compile_argv": [
+    "gcc",
+    "-std=c17",
+    "-O0",
+    "-Wall",
+    "-Wextra",
+    "/vercel/sandbox/jobrun-control/driver.c",
+    "-lm",
+    "-o",
+    "/vercel/sandbox/job/program"
+  ],
+  "run_argv": [
+    "/vercel/sandbox/job/program"
+  ],
+  "source_sha256": "bc7cdaa108dda4a4024ca472b5cad0a73bb418dc1125ca3510a66eb62329623b",
+  "driver_sha256": "c1d15d6a1b00611275bc405c07bc2fcd9da9ff58d63e2b88412d70ebbc0cf3bc",
+  "cases": [
+    {
+      "case": 1,
+      "exit_code": 0,
+      "passed": true,
+      "stdin": "0\n",
+      "expected": "S 0\n",
+      "actual": "S 0\n",
+      "stderr": ""
+    },
+    {
+      "case": 2,
+      "exit_code": 0,
+      "passed": true,
+      "stdin": "4\nP a one\nG a\nP a two\nG a\n",
+      "expected": "0\nV one\n0\nV two\nS 1\n",
+      "actual": "0\nV one\n0\nV two\nS 1\n",
+      "stderr": ""
+    },
+    {
+      "case": 3,
+      "exit_code": 0,
+      "passed": true,
+      "stdin": "6\nP a x\nP b y\nD a\nG a\nG b\nD b\n",
+      "expected": "0\n0\n0\nN\nV y\n0\nS 0\n",
+      "actual": "0\n0\n0\nN\nV y\n0\nS 0\n",
+      "stderr": ""
+    },
+    {
+      "case": 4,
+      "exit_code": 0,
+      "passed": true,
+      "stdin": "4\nP _ _\nG _\nD _\nG _\n",
+      "expected": "0\nV \n0\nN\nS 0\n",
+      "actual": "0\nV \n0\nN\nS 0\n",
+      "stderr": ""
+    },
+    {
+      "case": 5,
+      "exit_code": 0,
+      "passed": true,
+      "stdin": "5\nP A first\nP a second\nG A\nG a\nD missing\n",
+      "expected": "0\n0\nV first\nV second\n3\nS 2\n",
+      "actual": "0\n0\nV first\nV second\n3\nS 2\n",
+      "stderr": ""
+    },
+    {
+      "case": 6,
+      "exit_code": 0,
+      "passed": true,
+      "stdin": "5\nP c third\nP b second\nP a first\nD b\nG c\n",
+      "expected": "0\n0\n0\n0\nV third\nS 2\n",
+      "actual": "0\n0\n0\n0\nV third\nS 2\n",
+      "stderr": ""
+    }
+  ],
+  "question_key": "prep-c-linked-list-dictionary-ownership",
+  "language": "c",
+  "sandbox": "sbx_uUF0bbWYWSozmj8CxH8MLAbqqTc4",
+  "network_policy": "deny-all",
+  "persistent": false,
+  "stopped": true,
+  "method": "Actual executionPlan-generated driver.c and exact positive self-contained reference solution.c from merged execution catalogs; compiled once using plan argv and ran all six profile stdin cases.",
+  "source_catalog": "backend/tests/fixtures/execution_positive.json",
+  "profile_catalog": "backend/seeds/execution_cases.json",
+  "limits": "30-second compilation, 5-second test limits inside ephemeral microVM. This adapter smoke does not retest broker HTTP/auth/UI or process_runner privilege isolation."
+}

@@ -8,11 +8,13 @@ from app.engine.solution_review import solution_review
 from app.services import question_resources
 from tests.preparation_history import (
     BATCH22_BASELINE,
+    BATCH1101_BASELINE,
     assert_pre_batch22_archive,
     assert_pre_batch22_assets,
     assert_pre_batch22_localization,
     digest,
 )
+from tests.preparation_november_compiled_history import before_batch1101_compiled
 
 ROOT = Path(__file__).resolve().parents[2]
 BANK = ROOT / 'interview_preparation'
@@ -46,8 +48,9 @@ def test_sources_have_exact_bytes_tags_and_twenty_stable_targets():
 
 def test_all_219_old_records_and_localizations_keep_frozen_prefixes():
     archive = read(BANK/'questions.json')
-    assert len(archive['questions']) == archive['question_count'] == 231
-    assert {q['id'] for q in archive['questions']} - BATCH22_BASELINE['records'].keys() == NEW
+    assert len(archive['questions']) == archive['question_count'] == 243
+    historical_ids = {q['id'] for q in archive['questions']} & BATCH1101_BASELINE['records'].keys()
+    assert historical_ids - BATCH22_BASELINE['records'].keys() == NEW
     assert set(BATCH22_BASELINE['variant_ids']) == VARIANTS
     assert set(BATCH22_BASELINE['source_only_ids']) == SOURCES
     assert_pre_batch22_archive(archive)
@@ -61,6 +64,9 @@ def test_all_219_old_records_and_localizations_keep_frozen_prefixes():
     assert_pre_batch22_localization(localized)
     for q in read(SEEDS/'questions/preparation_bank.json'):
         ident=q['assets']['preparation_id']
+        if ident not in BATCH1101_BASELINE['records']:
+            continue
+        q = before_batch1101_compiled(q)
         if ident in BATCH22_BASELINE['records'] and ident not in VARIANTS|SOURCES:
             assert digest(q) == BATCH22_BASELINE['compiled_sha256'][q['key']]
         if ident in VARIANTS:
@@ -71,7 +77,7 @@ def test_all_219_old_records_and_localizations_keep_frozen_prefixes():
 
 def test_new_and_expanded_content_is_bilingual_proposed_and_private():
     catalog = load_catalog(SEEDS)
-    assert len(catalog.questions) == 261
+    assert len(catalog.questions) == 273
     selected={q.assets.get('preparation_id'):q for q in catalog.questions.values()
               if q.assets.get('preparation_id') in NEW|VARIANTS|SOURCES}
     assert set(selected) == NEW|VARIANTS|SOURCES

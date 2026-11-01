@@ -16,6 +16,7 @@ BATCH110_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_be
 BATCH21_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_20261031_batch21.json").read_bytes())
 BATCH20_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_20261031_batch20.json").read_bytes())
 BATCH22_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_20261031_batch22.json").read_bytes())
+BATCH1101_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_20261101_batch20.json").read_bytes())
 VARIANT_IDS = frozenset(BASELINE["variant_ids"])
 
 
@@ -74,8 +75,12 @@ def _before_record(question, baseline):
     return restored
 
 
+def before_batch1101_record(question):
+    return _before_record(question, BATCH1101_BASELINE)
+
+
 def before_batch22_record(question):
-    return _before_record(question, BATCH22_BASELINE)
+    return _before_record(before_batch1101_record(question), BATCH22_BASELINE)
 
 
 def before_batch20_record(question):
@@ -115,7 +120,7 @@ def _assert_archive(archive, baseline, restore):
     by_id = {question["id"]: question for question in archive["questions"]}
     assert set(baseline["record_order"]) <= by_id.keys()
     original = {key: archive[key] for key in baseline["top_level"]}
-    assert archive["question_count"] == len(archive["questions"]) == 231
+    assert archive["question_count"] == len(archive["questions"]) == 243
     original["question_count"] = baseline["top_level"]["question_count"]
     original["questions"] = [restore(by_id[ident]) for ident in baseline["record_order"]]
     assert digest(original) == baseline["canonical_sha256"]
@@ -135,6 +140,10 @@ def assert_pre_batch20_archive(archive):
 
 def assert_pre_batch22_archive(archive):
     _assert_archive(archive, BATCH22_BASELINE, before_batch22_record)
+
+
+def assert_pre_batch1101_archive(archive):
+    _assert_archive(archive, BATCH1101_BASELINE, before_batch1101_record)
 
 
 def assert_pre_batch90_archive(archive):
@@ -170,7 +179,7 @@ def assert_pre_batch20_assets(uploads):
 
 def assert_pre_batch20_localization(localization):
     for ident, previous in BATCH20_BASELINE['localized_material'].items():
-        current = localization[ident]
+        current = _before_batch1101_localized(ident, localization[ident])
         latest = BATCH22_BASELINE['localized_material'][ident]
         if 'append_shape' in latest:
             current = _prefix(current, latest['append_shape'], ('localized_material', ident))
@@ -182,7 +191,7 @@ def assert_pre_batch20_localization(localization):
 def assert_pre_batch21_localization(localization):
     """Localized material has its own frozen values and JSON types in both languages."""
     for ident, previous in BATCH21_BASELINE["localized_material"].items():
-        current = localization[ident]
+        current = _before_batch1101_localized(ident, localization[ident])
         newest = BATCH22_BASELINE['localized_material'][ident]
         if 'append_shape' in newest:
             current = _prefix(current, newest['append_shape'], ('localized_material', ident))
@@ -201,7 +210,25 @@ def assert_pre_batch22_assets(uploads):
 
 def assert_pre_batch22_localization(localization):
     for ident, previous in BATCH22_BASELINE['localized_material'].items():
-        current = localization[ident]
+        current = _before_batch1101_localized(ident, localization[ident])
         restored = (_prefix(current, previous['append_shape'], ('localized_material', ident))
                     if 'append_shape' in previous else current)
         assert digest(restored) == previous['sha256'], ('localized_material', ident)
+
+
+def _before_batch1101_localized(ident, value):
+    previous = BATCH1101_BASELINE['localized_material'][ident]
+    restored = (_prefix(value, previous['append_shape'], ('localized_material', ident))
+                if 'append_shape' in previous else value)
+    assert digest(restored) == previous['sha256'], ('localized_material', ident)
+    return restored
+
+
+def assert_pre_batch1101_localization(localization):
+    for ident in BATCH1101_BASELINE['localized_material']:
+        _before_batch1101_localized(ident, localization[ident])
+
+
+def assert_pre_batch1101_assets(uploads):
+    for path, previous_hash in BATCH1101_BASELINE['asset_sha256'].items():
+        assert digest(uploads[path]) == previous_hash, path

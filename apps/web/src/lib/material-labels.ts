@@ -85,6 +85,7 @@ const hebrew: Record<string, string> = {
 };
 
 const additionalLabels: Record<string, Record<"he" | "en", string>> = {
+  batch1101_polarity: { he: "גלאי שינוי לפי קוטביות", en: "Edge detection by polarity" },
   batch22_nand_drivers: { he: "מימוש שער NAND ברכיבי דרייבר", en: "NAND using driver components" },
   batch22_significant_bits: { he: "היפוך הביטים המשמעותיים", en: "Significant-bit reversal" },
   batch22_uint32_count: { he: "ספירת אחדות במספר בן 32 ביטים", en: "Counting set bits in a 32-bit integer" },

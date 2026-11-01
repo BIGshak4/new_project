@@ -1,0 +1,192 @@
+{
+  "prep-c-linked-list-dictionary-ownership": {
+    "contract": {
+      "he": "C99: ממשו Dict, DictStatus והפונקציות dict_create/dict_put/dict_get/dict_remove/dict_size/dict_destroy בממשק הנתון, בקובץ יחיד ללא main וללא include של קובץ מקומי. get מחזירה ערך מושאל או NULL בחסר; put מעתיקה מחרוזות ומבצעת upsert. מצבי החזרה: OK=0, OOM=1, INVALID=2, NOT_FOUND=3. מתאם הבדיקה משתמש במחרוזות ASCII בלי רווחים; _ מייצג מחרוזת ריקה רק בקלט המתאם. הזרקת OOM ובעלות נבדקות בנפרד ברתמה.",
+      "en": "C99: provide Dict, DictStatus and dict_create/dict_put/dict_get/dict_remove/dict_size/dict_destroy using the stated API, in one file without main or local includes. get returns a borrowed value or NULL if absent; put copies strings and upserts. Status values: OK=0, OOM=1, INVALID=2, NOT_FOUND=3. The adapter uses whitespace-free ASCII strings; _ encodes an empty string only in adapter input. OOM injection and ownership are checked separately in the reference harness."
+    },
+    "languages": {
+      "c": {
+        "kind": "program",
+        "driver": "#include <stdio.h>\n#include <string.h>\n#include \"solution.c\"\nstatic void decode_empty(char *text) { if(strcmp(text,\"_\")==0) text[0]='\\0'; }\nint main(void) {\n    unsigned steps; if(scanf(\"%u\",&steps)!=1 || steps>1000) return 2;\n    Dict *dict=dict_create(); if(!dict) return 3;\n    for(unsigned i=0;i<steps;++i) {\n        char op[16],key[256],value[256];\n        if(scanf(\"%15s%255s\",op,key)!=2) {dict_destroy(dict);return 2;}\n        decode_empty(key);\n        if(strcmp(op,\"P\")==0) {\n            if(scanf(\"%255s\",value)!=1) {dict_destroy(dict);return 2;}\n            decode_empty(value);printf(\"%d\\n\",(int)dict_put(dict,key,value));\n        } else if(strcmp(op,\"G\")==0) {\n            const char *found=dict_get(dict,key);\n            if(found) printf(\"V %s\\n\",found); else puts(\"N\");\n        } else if(strcmp(op,\"D\")==0) printf(\"%d\\n\",(int)dict_remove(dict,key));\n        else {dict_destroy(dict);return 2;}\n    }\n    printf(\"S %zu\\n\",dict_size(dict));dict_destroy(dict);return 0;\n}\n",
+        "starter": "#ifndef PREP_237_DICTIONARY_H\n#define PREP_237_DICTIONARY_H\n#include <stddef.h>\ntypedef struct Dict Dict;\ntypedef enum { DICT_OK, DICT_OOM, DICT_INVALID, DICT_NOT_FOUND } DictStatus;\n/* Live NUL-terminated keys/values; dictionary owns independent copies. */\nDict *dict_create(void);\nDictStatus dict_put(Dict *dict, const char *key, const char *value);\n/* Borrowed value: valid until that key is updated/removed or map destroyed. */\nconst char *dict_get(const Dict *dict, const char *key);\nDictStatus dict_remove(Dict *dict, const char *key);\nsize_t dict_size(const Dict *dict);\nvoid dict_destroy(Dict *dict); /* NULL is harmless. */\n#endif\n\n/* Define struct Dict and implement all functions declared above.\n * Own string copies; do not define main. */\n",
+        "cases": [
+          {
+            "stdin": "0\n"
+          },
+          {
+            "stdin": "4\nP a one\nG a\nP a two\nG a\n"
+          },
+          {
+            "stdin": "6\nP a x\nP b y\nD a\nG a\nG b\nD b\n"
+          },
+          {
+            "stdin": "4\nP _ _\nG _\nD _\nG _\n"
+          },
+          {
+            "stdin": "5\nP A first\nP a second\nG A\nG a\nD missing\n"
+          },
+          {
+            "stdin": "5\nP c third\nP b second\nP a first\nD b\nG c\n"
+          }
+        ]
+      }
+    }
+  },
+  "prep-reverse-singly-linked-list-in-place": {
+    "contract": {
+      "he": "מתאם reverse_values(values) מקבל ערכי רשימה ומחזיר ערכים בסדר הפוך. פתרון הראיון הראשי משנה next בצמתים קיימים; בדיקת הערכים אינה מוכיחה זהות, היעדר הקצאה או זיכרון קבוע. אלה נבדקים ברתמה ובהסבר בנפרד.",
+      "en": "Adapter reverse_values(values) returns reversed list values. The main interview solution rewires existing nodes; value output alone does not prove identity, no allocation or constant auxiliary storage, which are assessed separately."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "reverse_values",
+        "starter": "def reverse_values(values):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              []
+            ]
+          },
+          {
+            "args": [
+              [
+                1
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                1,
+                2
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                1,
+                2,
+                3,
+                4
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                -3,
+                0,
+                9,
+                -3
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "prep-streaming-csv-parser-without-library": {
+    "contract": {
+      "he": "parse_csv(text) מחזירה רשימת שורות של שדות כמחרוזות לפי דיאלקט השאלה: פסיק, ציטוט כפול, מירכאה מוכפלת, CRLF/LF, שדה מצוטט רב־שורי וריק. המקרים כאן תקינים; שגיאות ValueError וזרימה במקטעים נבדקות בנפרד ברתמה. אין import csv במימוש. המתאם שומר את הפלט כולו, בניגוד לליבת generator.",
+      "en": "parse_csv(text) returns rows of string fields under the question dialect: commas, double quotes, doubled-quote escaping, CRLF/LF, multiline quoted fields and empties. These execution cases are valid; ValueError cases and chunk streaming are assessed separately. Do not import csv in the implementation. This adapter materializes all output unlike the core generator."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "parse_csv",
+        "starter": "def parse_csv(text):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              ""
+            ]
+          },
+          {
+            "args": [
+              "\n"
+            ]
+          },
+          {
+            "args": [
+              ","
+            ]
+          },
+          {
+            "args": [
+              "a,b,"
+            ]
+          },
+          {
+            "args": [
+              "name,value\r\nx,12\r\n"
+            ]
+          },
+          {
+            "args": [
+              "\"a,b\",c"
+            ]
+          },
+          {
+            "args": [
+              "\"a\r\nb\",\"c\"\"d\"\r\n"
+            ]
+          },
+          {
+            "args": [
+              "\"\""
+            ]
+          },
+          {
+            "args": [
+              "\"\"\"\""
+            ]
+          },
+          {
+            "args": [
+              " a , b "
+            ]
+          },
+          {
+            "args": [
+              "x\nlast,"
+            ]
+          },
+          {
+            "args": [
+              "\"a\nb\",c\n"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

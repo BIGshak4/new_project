@@ -8,6 +8,7 @@ const DUPLICATES: Readonly<Record<string, string>> = {
   "example-merge-measurement-streams": "prep-merge-two-sorted-arrays",
   "example-overlapping-sequence-1011": "prep-detect-overlapping-1011-stream",
   "example-mod-six-counter": "prep-enabled-mod-six-counter",
+  "example-reverse-singly-linked-list": "prep-reverse-singly-linked-list-in-place",
 };
 
 export function questionFamily(key: string): string {
