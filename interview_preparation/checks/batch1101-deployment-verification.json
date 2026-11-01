@@ -1,0 +1,56 @@
+{
+  "expected_revisions": {
+    "web": "41cbd58c264aadcb9a9ceab591ecbcd8fb648666",
+    "backend": "41cbd58c264aadcb9a9ceab591ecbcd8fb648666"
+  },
+  "verified_at": "2026-11-01T08:32:15.539235+00:00",
+  "web": {
+    "service": "jobruner-web",
+    "status": "ok",
+    "revision": "41cbd58c264aadcb9a9ceab591ecbcd8fb648666",
+    "checks": {
+      "application": "ok"
+    }
+  },
+  "backend": {
+    "status": "ok",
+    "engine_version": "0.1.0",
+    "source_revision": "41cbd58c264aadcb9a9ceab591ecbcd8fb648666",
+    "env": "staging",
+    "llm_provider": "openai",
+    "database_configured": true,
+    "database_host": "pooler",
+    "database_pooler": "transaction",
+    "auth_configured": true,
+    "allowed_origins": 3,
+    "store": "database",
+    "models": {
+      "evaluator": "gpt-6.1-sol",
+      "feedback": "gpt-6.1-terra",
+      "tip": "gpt-6.1-terra",
+      "generator": "gpt-6.1-terra"
+    },
+    "speed": {
+      "effort": {
+        "evaluator": "low",
+        "generator": "medium",
+        "tip": "low",
+        "report": "medium",
+        "feedback": "low"
+      },
+      "service_tier": "default"
+    },
+    "answer_images": "assessed",
+    "code_execution": {
+      "enabled": true,
+      "wired": true,
+      "last_probe": null
+    },
+    "database": {
+      "round_trip_ms": 7.23,
+      "pool_size": 5,
+      "pool_checked_out": 0,
+      "pool_overflow": -4
+    }
+  }
+}
