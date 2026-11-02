@@ -56,12 +56,15 @@ from app.schemas.api import (
     InterviewTurnView,
     InterviewView,
     LabelledSkill,
+    NextStepView,
+    SkillChangeView,
     SkillReportView,
 )
 from app.schemas.bank import BankQuestion
 from app.schemas.engine import (
     Action,
     AssessmentMode,
+    Band,
     Decision,
     EvidenceStatus,
     PlanSkill,
@@ -70,7 +73,7 @@ from app.schemas.engine import (
     SkillStatus,
 )
 from app.schemas.visual_answer import VisualAnswer
-from app.services.coins import coins_for_turn
+from app.services.coins import coins_for_finish, coins_for_turn
 from app.services.store import Store
 
 log = logging.getLogger("app.interview")
@@ -282,19 +285,35 @@ class InterviewService:
                         evaluation=evaluation.model_dump(mode="json"), evidence_weight=outcome.evidence_weight,
                         evaluator_model=result.model, flags=list(result.flags), evaluated_at=self._stamp(), evaluating_since=None)
 
-            # 4. the next question, or the end
+            # 4. the next question, or the end. Shaked, 2026-11-02 ("fitted to the person; never feel bad; try more"):
+            #    the engine's hint after a weak answer now arrives WITH the next question (it used to be decided and
+            #    never delivered), and an interview that would end on a weak answer asks one closing question on a
+            #    skill the candidate already answered well, so it ends on a win.
             changed = [turn]
             decision = outcome.decision
-            if decision.action != Action.END and len(turns) < MAX_TURNS:
+            seen = {t["question_key"] for t in turns}
+            if meta.get("closing"):
+                self._after_closing(state, meta["closing"])        # the skill keeps the status it resolved with
+                decision = Decision(action=Action.END, reason_code="closing_answered")
+            elif decision.action == Action.END and outcome.band == Band.WEAK and len(turns) < MAX_TURNS:
                 pool = await self._pool_for(language, row["config"].get("job_type"))
-                decision, next_question = self._open(engine, plan, state, decision, pool,
-                                                     seen={t["question_key"] for t in turns}, language=language)
+                closing = self._closing_question(state, plan, pool, seen=seen, language=language)
+                if closing is not None:
+                    decision, next_question, snapshot = closing
+                    new_turn = self._new_turn(len(turns), decision, next_question, language, self._stamp())
+                    new_turn["question_generation_meta"]["closing"] = snapshot
+                    turns.append(new_turn)
+                    changed.append(new_turn)
+            elif decision.action != Action.END and len(turns) < MAX_TURNS:
+                pool = await self._pool_for(language, row["config"].get("job_type"))
+                decision, next_question = self._open(engine, plan, state, decision, pool, seen=seen, language=language)
                 if next_question is not None:
                     new_turn = self._new_turn(len(turns), decision, next_question, language, self._stamp())
+                    self._deliver_hint(new_turn, next_question, decision, language, row)
                     turns.append(new_turn)
                     changed.append(new_turn)
             if decision.action == Action.END or len(turns) >= MAX_TURNS and turns[-1] is turn:
-                self._finish(row, state, ended_early=False)
+                self._finish(row, state, ended_early=False, answered=self._answered(turns))
             meta.update(action_after=decision.action.value, subject_switch=decision.subject_switch)   # the final decision
             row["turn_count"] = len(turns)
 
@@ -335,7 +354,7 @@ class InterviewService:
                 if open_turn is not None and open_turn["question_generation_meta"].get("status") in ("open", "failed", "evaluating"):
                     open_turn["question_generation_meta"]["status"] = "skipped"
                     open_turn["question_generation_meta"]["action_after"] = Action.END.value
-                self._finish(row, state, ended_early=True)
+                self._finish(row, state, ended_early=True, answered=self._answered(stored.turns))
                 await self._persist(user_id, row, [open_turn] if open_turn else [], state=state)
             return self._view(stored, state)
 
@@ -345,22 +364,25 @@ class InterviewService:
             stored, plan, state, _, _ = await self._load(user_id, session_id)
             if stored.row["status"] != "completed":
                 raise ApiError("conflict", "the report is available once the interview is over")
-            return self._report_view(stored, self._report_data(state, plan, stored.row))
+            data = self._report_data(state, plan, stored.row)
+            return self._report_view(stored, data, since=await self._since_last_time(user_id, stored.row, data))
         async with self._lock(session_id):
             stored, plan, state, engine, _ = await self._load(user_id, session_id)
             row, language = stored.row, stored.row["config"]["language"]
             if row["status"] != "completed":
                 raise ApiError("conflict", "the report is available once the interview is over")
             data = self._report_data(state, plan, row)
+            since = await self._since_last_time(user_id, row, data)
             wrapper = row["state"]
             if wrapper.get("narrative") is None and self.config.narrative:
                 labels = self.catalog.skill_labels()
                 text, source = await reporter.narrative(self.provider, data, language=language, labels=labels,
-                                                        glossary=self.catalog.glossary)
+                                                        glossary=self.catalog.glossary,
+                                                        since_last_time=(since or {}).get("skills"))
                 if source == "generated":                  # a model hiccup must not freeze the plain report forever
                     wrapper["narrative"], wrapper["narrative_source"] = text, source
                     await self._persist(user_id, row, [])
-            return self._report_view(stored, data)
+            return self._report_view(stored, data, since=since)
 
     # ------------------------------------------------------------------ building blocks
 
@@ -546,11 +568,117 @@ class InterviewService:
             "answer_started_at": now, "answer_submitted_at": None, "asked_at": now, "created_at": now,
         }
 
-    def _finish(self, row: dict, state: SessionState, *, ended_early: bool) -> None:
+    def _finish(self, row: dict, state: SessionState, *, ended_early: bool, answered: int = 0) -> None:
         row["status"] = "completed"
         row["ended_at"] = self._stamp()
         row["state"]["ended_early"] = ended_early
+        row["state"]["answered_turns"] = answered           # what the finishing coins look at
         row["state"]["engine"] = state.model_dump(mode="json")
+
+    @staticmethod
+    def _answered(turns: list[dict]) -> int:
+        return sum(1 for t in turns if (t.get("question_generation_meta") or {}).get("status") == "done")
+
+    # ------------------------------------------------------------------ fitted to the person (Shaked, 2026-11-02)
+
+    def _deliver_hint(self, new_turn: dict, question: BankQuestion, decision: Decision, language: str, row: dict) -> None:
+        """The controller's HINT decision arrives with the next question: the richest hint the question has, up to
+        the engine's level. The judge is told the level; XP and coins discount it as they do a requested hint."""
+        if not decision.deliver_hint or decision.hint_level < 1:
+            return
+        for level in range(decision.hint_level, 0, -1):
+            text = generator.bank_hint(question, level, language)
+            if text:
+                break
+        else:
+            return
+        meta = new_turn["question_generation_meta"]
+        meta.update(hint_level=level, hints=[{"level": level, "text": text}], hint_delivered=True)
+        row["hints_used"] = row.get("hints_used", 0) + 1
+
+    def _closing_question(self, state: SessionState, plan: list[PlanSkill], pool: list[BankQuestion], *,
+                          seen: set[str], language: str) -> tuple[Decision, BankQuestion, dict] | None:
+        """One last question on a strength when the interview would otherwise end on a weak answer: the skill the
+        candidate answered STRONG at the highest difficulty, asked at that difficulty; failing that, the current
+        skill at its easiest. None when the bank has nothing unseen to offer. Returns the decision, the question and
+        a snapshot of the skill's controller state, restored after the answer so a resolved skill stays resolved."""
+        by_key = {s.key: s for s in plan}
+        options: list[tuple[int, PlanSkill]] = []
+        for key, skill_state in state.skill_state.items():
+            strong = [t.difficulty for t in skill_state.history if t.band == Band.STRONG]
+            if key in by_key and strong:
+                options.append((max(strong), by_key[key]))
+        options.sort(key=lambda option: (-option[0], -option[1].combined_weight))
+        current = by_key.get(state.current_skill or "")
+        if current is not None:
+            options.append((current.min_difficulty, current))
+        for difficulty, skill in options:
+            decision = Decision(action=Action.HOLD, reason_code="closing_on_strength", target_subject=skill.subject,
+                                target_skill=skill.key, target_difficulty=difficulty,
+                                subject_switch=skill.subject != state.current_subject)
+            question = self._select(pool, decision, seen, language, difficulty)
+            if question is None:
+                continue
+            skill_state = state.skill_state[skill.key]
+            snapshot = {"skill": skill.key, "status": skill_state.status.value, "resolved_reason": skill_state.resolved_reason,
+                        "current_difficulty": skill_state.current_difficulty, "hint_level": skill_state.hint_level,
+                        "partial_count": skill_state.partial_count, "budget": skill_state.budget}
+            state.current_subject, state.current_skill, state.current_difficulty = skill.subject, skill.key, difficulty
+            skill_state.current_difficulty, skill_state.hint_level, skill_state.partial_count = difficulty, 0, 0
+            return decision, question, snapshot
+        return None
+
+    @staticmethod
+    def _after_closing(state: SessionState, snapshot: dict) -> None:
+        """The closing turn's evidence stays (scores, history, the profile); the controller state goes back to what
+        the skill had resolved with, so the report reads the interview as it was."""
+        skill_state = state.skill_state.get(snapshot.get("skill") or "")
+        if skill_state is None:
+            return
+        skill_state.status = SkillStatus(snapshot["status"])
+        skill_state.resolved_reason = snapshot.get("resolved_reason")
+        skill_state.current_difficulty = snapshot.get("current_difficulty")
+        skill_state.hint_level = int(snapshot.get("hint_level") or 0)
+        skill_state.partial_count = int(snapshot.get("partial_count") or 0)
+        skill_state.budget = int(snapshot.get("budget", skill_state.budget))
+
+    async def _since_last_time(self, user_id: uuid.UUID, row: dict, data: ReportData) -> dict | None:
+        """The change against the candidate's previous completed interview: per plan skill, improved / held / lower /
+        new, and the fit's direction. None when this is the first."""
+        async with self.store.transaction() as tx:
+            listed = await tx.list_sessions(user_id, limit=10)
+            ended = row.get("ended_at") or ""
+            previous = next((s for s in listed if s["status"] == "completed" and s["id"] != row["id"]
+                             and (s.get("ended_at") or "") < ended), None)
+            stored = await tx.load_session(uuid.UUID(previous["id"]), user_id=user_id) if previous else None
+        if stored is None:
+            return None
+        try:
+            plan = [PlanSkill.model_validate(p) for p in stored.row["config"]["plan"]]
+            state = SessionState.model_validate(stored.row["state"]["engine"])
+            before = self._report_data(state, plan, stored.row)
+        except (KeyError, ValueError):                    # an older row the current schema cannot read: no comparison
+            return None
+        labels = self.catalog.skill_labels()
+        earlier = {a.key: a.proficiency_level for a in before.assessments if a.proficiency_level is not None}
+        changes = []
+        for a in data.assessments:
+            if a.assessment_mode != "questioned" or a.proficiency_level is None:
+                continue
+            was = earlier.get(a.key)
+            change = ("new" if was is None else "improved" if a.proficiency_level > was
+                      else "lower" if a.proficiency_level < was else "held")
+            changes.append({"key": a.key, "label": labels.get(a.key, a.key), "change": change,
+                            "before": was, "after": a.proficiency_level})
+        order = {"improved": 0, "held": 1, "new": 2, "lower": 3}
+        changes.sort(key=lambda c: order[c["change"]])
+        now_card, then_card = data.scorecards.get("session_overall"), before.scorecards.get("session_overall")
+        now_fit = now_card.fit_score if now_card else None
+        then_fit = then_card.fit_score if then_card else None
+        fit_change = None
+        if now_fit is not None and then_fit is not None:
+            fit_change = "higher" if now_fit > then_fit + 0.5 else "lower" if now_fit < then_fit - 0.5 else "same"
+        return {"previous_session_id": previous["id"], "skills": changes[:8], "fit_change": fit_change}
 
     async def _load(self, user_id: uuid.UUID, session_id: uuid.UUID
                     ) -> tuple[StoredSession, list[PlanSkill], SessionState, SessionEngine, LoadedProfile]:
@@ -604,6 +732,11 @@ class InterviewService:
                                                             turn_index=int(t["turn_index"]), band=m["band"],
                                                             hints_seen=int(m.get("hint_level") or 0),
                                                             related=scores.OFF_TOPIC_FLAG not in (m.get("flags") or []))
+                    if row["status"] == "completed" and not row["state"].get("finish_coins_awarded"):
+                        # finishing counts, not the score (Shaked, 2026-11-02); the reference dedups a re-save
+                        await self.coins.award_for_finish(tx, user_id=user_id, session_id=session_id,
+                                                          answered_turns=int(row["state"].get("answered_turns") or 0))
+                        row["state"]["finish_coins_awarded"] = True
         except StaleSession:
             row["state"]["revision"] = expected
             raise ApiError("conflict", "another request changed this interview at the same time; reload it") from None
@@ -613,11 +746,14 @@ class InterviewService:
     def _report_data(self, state: SessionState, plan: list[PlanSkill], row: dict) -> ReportData:
         wrapper = row["state"]
         return reporter.build_report(state, plan, wrapper.get("metrics", []), notes=wrapper.get("notes") or None,
-                                     tips_library=list(self.catalog.tips.values()))
+                                     tips_library=list(self.catalog.tips.values()),
+                                     duration_min=row["config"].get("duration_min"))
 
-    def _report_view(self, stored: StoredSession, data: ReportData) -> InterviewReportView:
+    def _report_view(self, stored: StoredSession, data: ReportData, *, since: dict | None = None) -> InterviewReportView:
         row, language = stored.row, stored.row["config"]["language"]
         labels = self.catalog.skill_labels()
+        since = since or {}
+        answered = self._answered(stored.turns)
 
         def labelled(keys: list[str]) -> list[LabelledSkill]:
             return [LabelledSkill(key=k, label=labels.get(k, k)) for k in keys]
@@ -636,9 +772,19 @@ class InterviewService:
                                     level_gap=a.level_gap, turns_count=a.turns_count, hints_used=a.hints_used,
                                     importance=a.importance, strengths=a.strengths, gaps=a.gaps) for a in data.assessments],
             subjects=[{**s, "label": labels.get(s["key"], s["key"])} for s in data.subjects],
-            timeline=data.timeline, recommended_next_skills=labelled(data.recommended_next_skills),
-            cover_next_time=labelled(data.cover_next_time), top_tips=tips_text,
-            narrative_md=row["state"].get("narrative") or reporter.fallback_narrative(data, labels, language),
+            timeline=data.timeline, held_up=labelled(data.held_up),
+            recommended_next_skills=labelled(data.recommended_next_skills),
+            cover_next_time=labelled(data.cover_next_time),
+            next_step=NextStepView(step=data.next_step.get("step", "same"),
+                                   duration_min=int(data.next_step.get("duration_min") or row["config"]["duration_min"]),
+                                   skills=labelled(data.next_step.get("skills") or [])) if data.next_step else None,
+            since_last_time=[SkillChangeView(**change) for change in since.get("skills", [])],
+            previous_session_id=since.get("previous_session_id"), fit_change=since.get("fit_change"),
+            completion_coins=(coins_for_finish(self.coins.rules, answered_turns=answered)
+                              if self.coins is not None and self.coins.known_enabled else None),
+            top_tips=tips_text,
+            narrative_md=row["state"].get("narrative") or reporter.fallback_narrative(data, labels, language,
+                                                                                      since.get("skills")),
             narrative_source=row["state"].get("narrative_source") or "fallback",
             turns=[self._turn_view(t, language, revealed=True) for t in stored.turns
                    if t["question_generation_meta"].get("status") in ("done", "failed", "skipped")])
@@ -668,7 +814,7 @@ class InterviewService:
                             mismatches=list(check.get("mismatches") or [])[:8],
                             execution=check.get("execution")) if revealed and check else None,
             action_after=meta.get("action_after") if revealed else None,
-            subject_switch=bool(meta.get("subject_switch", False)),
+            subject_switch=bool(meta.get("subject_switch", False)), closing=bool(meta.get("closing")),
             related=(scores.OFF_TOPIC_FLAG not in (meta.get("flags") or [])) if revealed else True,
             xp_earned=(xp.answer_xp(meta["band"], difficulty=turn["difficulty"], hints_seen=int(meta.get("hint_level") or 0),
                                     interview=True, related=scores.OFF_TOPIC_FLAG not in (meta.get("flags") or []))

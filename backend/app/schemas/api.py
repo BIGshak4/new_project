@@ -349,6 +349,7 @@ class InterviewTurnView(BaseModel):
     xp_earned: int | None = None                # XP for this turn, revealed with the results (interview turns count x1.5)
     coins_earned: int | None = None             # coins for this turn (STRONG: 10), revealed with the results
     related: bool = True                        # false: the answer did not address the question; the turn earns no XP
+    closing: bool = False                       # the one last question on a strength that ends an interview on a win
 
 
 class InterviewView(BaseModel):
@@ -409,6 +410,24 @@ class SkillReportView(BaseModel):
     gaps: list[str] = Field(default_factory=list)
 
 
+class SkillChangeView(BaseModel):
+    """One skill compared with the candidate's previous interview (Shaked, 2026-11-02: progress against yourself)."""
+
+    key: str
+    label: str
+    change: str                                 # improved | held | lower | new
+    before: int | None = None                   # the level last time (None: not assessed then)
+    after: int | None = None                    # the level now
+
+
+class NextStepView(BaseModel):
+    """What the report proposes for the next interview: the same plan, one notch harder, easier or the same."""
+
+    step: str                                   # harder | same | easier
+    duration_min: int
+    skills: list[LabelledSkill] = Field(default_factory=list)   # what to practise before it
+
+
 class InterviewReportView(BaseModel):
     session_id: str
     language: str
@@ -418,8 +437,14 @@ class InterviewReportView(BaseModel):
     skills: list[SkillReportView]
     subjects: list[dict]
     timeline: list[dict]
+    held_up: list[LabelledSkill] = Field(default_factory=list)   # what went well, first (Shaked, 2026-11-02)
     recommended_next_skills: list[LabelledSkill]
     cover_next_time: list[LabelledSkill]
+    next_step: NextStepView | None = None
+    since_last_time: list[SkillChangeView] = Field(default_factory=list)
+    previous_session_id: str | None = None
+    fit_change: str | None = None               # higher | same | lower, against the previous interview
+    completion_coins: int | None = None         # coins for finishing (not for the score); None when coins are off
     top_tips: list[str]
     narrative_md: str
     narrative_source: str                       # generated | fallback

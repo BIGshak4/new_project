@@ -1716,6 +1716,69 @@ and moves to the next question; weak and partial answers get the hint or step-ba
 `ASSESS_UNREVIEWED_QUESTIONS=true` (in `render.yaml`; confirm it in the dashboard if Render did not sync it) for the
 rule to survive Harel's next seed reload; until then the data change alone keeps production right.
 
+## 5zy. The interview, fitted to the person (2026-11-02, Shaked: "i want the interview to be fitted to the person, i dont want the user to feel bad, i want him to try more"; "go")
+
+**Where the interview stood.** Shaked's starting point: the interview "has no benefit from what the websites give us
+now", because its questions are the bank's and most of the bank now comes from public sites through Harel's intake.
+The usage numbers agree about the mode, for a different reason: five interviews ever, two users (both of us), six
+questions shown and **one answered**. People open it and leave before the first answer. So the first question and the
+first weak answer are the moments that decide whether anyone comes back, and that is what this section changes.
+The judge is untouched: nothing here changes how an answer is graded, only which question comes next and how the
+result is told.
+
+**What the engine already did.** The skill controller adapts inside a skill (a strong answer escalates, a weak one
+hints while budget lasts, then steps back), the interview starts from the profile's measured levels, and the plan
+follows role, company and job type. Two things were missing, and one was a plain bug.
+
+**Built, backend only (`app/services/interview_service.py`, `app/engine/reporter.py`, `app/services/coins.py`):**
+
+1. **The hint arrives with the next question.** After a weak answer the controller decides `HINT`, and the interview
+   asked a new question in the same skill but never delivered the hint (`_new_turn` stored `hint_level 0`, no
+   hints), so the candidate met a second hard question with no help, then a third, then a step back. Now
+   `_deliver_hint` attaches the richest bank hint the question has, up to the engine's level, to the new turn
+   (`hints`, `hint_level`, `hint_delivered`); the judge is told the level, XP and coins discount it exactly as a
+   requested hint, `hints_used` counts it, `hints_requested_by_user` does not. The candidate can still ask for the
+   next level.
+2. **End on a win.** When the engine's decision is `END` (time up, nothing left) and the answer just given was
+   `WEAK`, `_closing_question` picks the skill the candidate answered `STRONG` at the highest difficulty this
+   interview and asks one unseen question at that difficulty; with no strong answer yet, the current skill at its
+   easiest. The turn is marked `closing` (API: `InterviewTurnView.closing`), it is judged and scored like any other
+   and reaches the profile, the interview ends after it whatever the band, and the skill's controller status goes
+   back to what it had resolved with, so the report reads the interview as it was. Ending early by hand never adds
+   one. The web shows "time is up, the interviewer wraps up after this answer" at 00:00 today, which still lets the
+   candidate answer; the wording is Harel's row 22.
+3. **The report invites the next interview.** `ReportData.held_up` (questioned skills at or above requirement,
+   heaviest first, then any skill with a STRONG answer) comes first; gaps stay `recommended_next_skills` but are
+   written as the next thing to learn; `next_step` proposes the same plan one notch harder (no gaps and at least half
+   the answers strong), easier (weak answers outnumber strong ones) or at the same level, with the skills to practise
+   first; `since_last_time` compares every assessed plan skill with the candidate's previous completed interview
+   (improved / held / lower / new, with `fit_change`) and `previous_session_id` names it. Report prompt
+   **v2** (`prompts/report.v2.md`, `PROMPT_VERSIONS["report"]`): what held up first, the next thing to learn, how the
+   interview moved, next time; no percentages in the prose; v1 kept. The fallback narrative follows the same order
+   in both languages.
+4. **Finishing earns coins.** `interview_finished` 15 once at least `interview_finished_min_turns` 3 questions were
+   answered, whatever the bands (`seeds/coins.json`, Shaked's numbers to change); reference
+   `interview:<session>:finished`, so a re-save never pays twice; `InterviewReportView.completion_coins`. Start-and-quit
+   earns nothing.
+
+**Verification.** `tests/test_interview_fitted.py` (15 tests: the nudge and its discount, the closing question on a
+strength and on the easiest question, no closing on a strong ending or an early end, report order in both languages,
+the second interview's comparison, the narrative payload and prompt version, coins once and not for quitting). Its
+catalog marks every question assessable, as production does with `ASSESS_UNREVIEWED_QUESTIONS`; without that the seed
+bank has one question per skill and neither path can fire, which is also why the first real-model run showed no
+closing question. `scripts/e2e_mock_interview.py` gained `--pattern GGWW`, `--minutes-per-answer 5` (a fast clock,
+so the engine's END and the closing rule run) and `--twice`; on the real model with the switch on: the nudge came
+with the next question twice, the all-weak interview closed on the skill's easiest question and ended, the report
+proposed an easier next time; the two-interview run reported "held" on every skill with the same answers, $0.03 for
+eight model calls. The live interview test accepts the generated narrative's new first heading. Offline suite after
+the change: 3,883 passed / 12 skipped up to the TypeScript contract test, which failed on the new fields until they
+joined its `PENDING_IN_CLIENT` list (the screen side is Harel's), then that file and everything after it: 100 passed.
+
+**Left out, on purpose.** The interview's length fitted to the level (fewer questions for a beginner) needs the
+lobby to offer a suggested duration: a small endpoint plus Harel's lobby; not in this stage. Varying bank questions
+on the fly, interviewer pushback, a read on delivery from the stored soft dimensions, and company shape are the second
+stage Shaked chose the order of; none started. The on-screen side of everything above is Harel's row 22.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1756,6 +1819,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-02 | The interview, fitted to the person (§5zy; usage before: five interviews ever, one answered question): the controller's hint after a weak answer is now delivered with the next question (it was decided and never shown); an interview that would end on a weak answer asks one closing question on a strength and ends after it; the report opens with what held up, proposes the next interview (harder / same / easier) and compares with the previous one; finishing earns 15 coins after three answers. Report prompt v2. `InterviewTurnView.closing`, `InterviewReportView.held_up / next_step / since_last_time / fit_change / completion_coins`. 15 new tests; real-model dry runs on the mock interview script (now `--pattern`, `--minutes-per-answer`, `--twice`). Screen side: Harel's row 22. |
 | 2026-11-02 | Follow-ups on every question (§5zx): 243 generated questions were study-only (weight 0 → no follow-up, XP or coins); with Shaked's approval their `assessment_ready` flag was set true in production and tomerfahn@gmail.com joined `jr_members`; `ASSESS_UNREVIEWED_QUESTIONS` (true on Render) makes the rule survive seed reloads without touching Harel's intake or tests; 3 new tests. |
 | 2026-11-01 | The judge's speed, measured and made tunable, and the review of Harel's code-execution feature (§5zw): `OPENAI_ROLE_EFFORT` / `OPENAI_SERVICE_TIER` settings, priority pricing on the usage record, `/health.speed` and `/health.code_execution`, `scripts/judge_speed_matrix.py` (production judge 3.5 s median warm, $0.0027/answer, 13/13 bands; Terra identical at $0.0012; priority −1 s at 2×); OpenAI vs Anthropic: ≈5× cheaper, judge ≈2× faster, same bands on the review set and the real flow. Merged Harel's 42 commits; found code execution live in production; nine review fixes with tests (unguarded checker that could stick an answer, 25 s submit budget, trimmed stored run facts, streamed bounded bodies, timeout reuse, aliases, avatar price/ownership, quiz loader validation). Offline 3,888 passed / 11 skipped; live db 3 passed; coins/duels scenario 33 checks on production, rolled back. Decisions left to Shaked and Harel listed in §5zw. |
 | 2026-10-29 | OpenAI as a second real provider (§5zv): `OpenAIProvider` on the Responses API behind the same interface (instructions prefix cache, structured parse with JSON-in-text fallback, effort per role, images, incomplete/refusal handling, cached tokens split out, OpenAI price table); `LLM_PROVIDER=openai`, `OPENAI_API_KEY`, `OPENAI_MODEL=gpt-6.1-sol`, `OPENAI_ROLE_MODELS` (Terra for prose); the two real-model scripts follow the settings. 19 new tests; offline 1,468 passed / 9 skipped (one duel test was pinned to 22 October and failed on the real calendar day; its clock now starts on today's date). Calibration on the review set waits for the key. |

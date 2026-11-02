@@ -15,7 +15,9 @@ PROMPT_DIR = Path(__file__).parent / "prompts"
 # Shaked): after a strong answer the follow-up is an edge case of the same problem; v1 and v2 kept.
 # evaluator v2 (2026-10-03, Shaked): worked examples are confirmation, not substance; a correct method is strong
 # without them; v1 kept.
-PROMPT_VERSIONS = {"evaluator": "v2", "generator": "v3", "feedback": "v1", "tip": "v1", "report": "v1"}
+# report v2 (2026-11-02, Shaked: "fitted to the person, never feel bad, try more"): what held up first, gaps as the
+# next thing to learn, the next interview proposed, the change since last time; v1 kept.
+PROMPT_VERSIONS = {"evaluator": "v2", "generator": "v3", "feedback": "v1", "tip": "v1", "report": "v2"}
 LANGUAGE_NAMES = {"en": "English", "he": "Hebrew"}
 
 

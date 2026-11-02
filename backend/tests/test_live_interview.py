@@ -107,7 +107,7 @@ async def test_a_mock_interview_persists_every_step_in_the_real_schema(case):
     assert row.state["engine"]["turn_index"] == len(asked) and row.hints_used == view.hints_used
 
     report = await svc.report(user, sid)
-    assert report.narrative_md.startswith("## Summary") and report.fit["session_overall"].skills_total >= 1
+    assert report.narrative_md.startswith("## ") and report.fit["session_overall"].skills_total >= 1
     answered = [x for x in report.turns if x.status != "skipped"]     # the question left open at "end early" is listed as skipped
     assert len(answered) == len(asked) and all(x.band for x in answered)
     assert time.perf_counter() - started < 240, "an interview of a few turns should not take minutes against the database"
