@@ -1771,8 +1771,8 @@ so the engine's END and the closing rule run) and `--twice`; on the real model w
 with the next question twice, the all-weak interview closed on the skill's easiest question and ended, the report
 proposed an easier next time; the two-interview run reported "held" on every skill with the same answers, $0.03 for
 eight model calls. The live interview test accepts the generated narrative's new first heading. Offline suite after
-the change: 3,883 passed / 12 skipped up to the TypeScript contract test, which failed on the new fields until they
-joined its `PENDING_IN_CLIENT` list (the screen side is Harel's), then that file and everything after it: 100 passed.
+the change: **3,967 passed / 12 skipped** (the TypeScript contract test first failed on the new fields until they
+joined its `PENDING_IN_CLIENT` list, since the screen side is Harel's). Deployed as `4333c97`; smoke against Render clean.
 
 **Left out, on purpose.** The interview's length fitted to the level (fewer questions for a beginner) needs the
 lobby to offer a suggested duration: a small endpoint plus Harel's lobby; not in this stage. Varying bank questions
