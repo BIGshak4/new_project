@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from app.config import Settings
+from app.engine import bank
 from app.engine.catalog import Catalog, load_catalog
 from app.engine.providers import Provider, build_provider
 from app.repo.fundamentals import DbFundamentalsRepository, MemoryFundamentalsRepository
@@ -74,6 +75,9 @@ def make_provider(settings: Settings) -> Provider:
 def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provider: Provider | None = None,
                   store: Store | None = None) -> Runtime:
     catalog = catalog or load_catalog(settings.seeds_dir)
+    bank.ASSESS_UNREVIEWED_QUESTIONS = settings.assess_unreviewed_questions
+    for question in catalog.questions.values():
+        bank.apply_readiness(question.assets)
     provider = provider or make_provider(settings)
     if store is None:
         if settings.database_url:

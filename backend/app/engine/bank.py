@@ -28,6 +28,19 @@ class Selection:
     relaxed: list[str]                 # which preferences had to be dropped to find it
 
 
+# ASSESS_UNREVIEWED_QUESTIONS (Settings.assess_unreviewed_questions, set by the runtime): when true, a question whose
+# intake marked it assessment_ready=false is treated as ready everywhere, because every reader of the flag goes through
+# `apply_readiness` when the question is built from the database or the seed catalog (Shaked, 2026-11-02).
+ASSESS_UNREVIEWED_QUESTIONS = False
+
+
+def apply_readiness(assets: dict) -> dict:
+    """The question's assets with the readiness decision applied, in place. False stays False unless the switch is on."""
+    if ASSESS_UNREVIEWED_QUESTIONS and assets.get("assessment_ready") is False:
+        assets["assessment_ready"] = True
+    return assets
+
+
 def _servable(question: BankQuestion, *, mode: str, language: str, allow_in_review: bool, require_parity: bool) -> bool:
     if question.assets.get("assessment_ready") is False:
         return False  # available for manual study, not adaptive plans or assessed mock interviews yet

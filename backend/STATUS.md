@@ -1682,6 +1682,40 @@ Render: clean on build `96aeb55` (the speed knobs; `/health.speed` shows the def
 5. The owner items still open: `HEALTH_KEY`, DB password rotation (set `CODE_EXECUTION_SIGNING_SEED` first), Supabase
    2FA and leaked-password protection.
 
+## 5zx. Follow-ups on every question, and Tomer on the pilot list (2026-11-02, Shaked: "why i cant see follow up questions"; "change all the questions to on the fly so they act like normal questions and just need the last stamp"; "tomerfahn@gmail.com add him too")
+
+**Why there were no follow-ups.** The three answers Shaked gave on the morning of 2 November were judged, carded and
+tipped, but no follow-up was ever written: the generator was not called once. Every question he opened carries
+`assets.assessment_ready = false`, the mark Harel's intake (`scripts/build_preparation_bank.py`) puts on every generated
+question until it is reviewed. The engine treats such a question as study-only: evidence weight 0, so no XP, no coins,
+no skill progress, and the follow-up controller only opens a follow-up when the weight is above zero
+(`app/engine/practice.py`, the `weight > 0` guard). Of the 273 live questions, 243 were in that state; the original
+30 were not. This was the open "study-only questions" decision from §5zt and §5zv, and Harel's "Expansion A".
+
+**Decision and data change (approved by Shaked in chat, dry run then applied, 2026-11-02 ≈ 09:40 UTC).**
+`update public.question set assets = assets || '{"assessment_ready": true}' where assets->>'assessment_ready' = 'false'`
+→ 243 rows; the review stamp (`status`, still `trial`; the `content_review_pending` flag on answers) is untouched. Same
+transaction: `insert into public.jr_members (email, display_name) values ('tomerfahn@gmail.com', 'Tomer')` → 12 members.
+The question cache lives sixty seconds, so no restart was needed.
+
+**Durable rule in code: `ASSESS_UNREVIEWED_QUESTIONS`.** Harel's intake and about twenty of his tests pin
+`assessment_ready: false` in `seeds/questions/preparation_bank.json` (the file is built from sources and a test asserts
+it equals the build), so flipping the seed would break his pipeline and the next reload would quietly turn the 243
+questions back into study-only. Instead `Settings.assess_unreviewed_questions` (default false; `true` in `render.yaml`)
+sets `bank.ASSESS_UNREVIEWED_QUESTIONS`, and `bank.apply_readiness` rewrites `false` to `true` at the two places a
+question is built: `repo/questions._bank_question` (database rows) and over the seed catalog in `build_runtime`
+(memory store, scripts). Every reader of the flag (`_servable`, the engine's `study_only`, the service's profile and
+usage checks, the summaries' `reviewed` / `assessment_ready`) sees the rewritten value. `/health` shows the setting.
+Tests: `tests/test_assess_unreviewed_questions.py` (3): the function flips only `false` and only when on; the same
+generated question gives a weak answer no follow-up and weight 0 by default, and one hint follow-up with weight > 0
+under the switch; the runtime applies the setting to the catalog.
+
+**Still true, by the normal rule, not this switch:** a STRONG answer at the difficulty ceiling resolves the skill
+without a follow-up, and every generated question is difficulty 5, so a strong first answer on them ends the attempt
+and moves to the next question; weak and partial answers get the hint or step-back follow-up. Render must carry
+`ASSESS_UNREVIEWED_QUESTIONS=true` (in `render.yaml`; confirm it in the dashboard if Render did not sync it) for the
+rule to survive Harel's next seed reload; until then the data change alone keeps production right.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1722,6 +1756,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-02 | Follow-ups on every question (§5zx): 243 generated questions were study-only (weight 0 → no follow-up, XP or coins); with Shaked's approval their `assessment_ready` flag was set true in production and tomerfahn@gmail.com joined `jr_members`; `ASSESS_UNREVIEWED_QUESTIONS` (true on Render) makes the rule survive seed reloads without touching Harel's intake or tests; 3 new tests. |
 | 2026-11-01 | The judge's speed, measured and made tunable, and the review of Harel's code-execution feature (§5zw): `OPENAI_ROLE_EFFORT` / `OPENAI_SERVICE_TIER` settings, priority pricing on the usage record, `/health.speed` and `/health.code_execution`, `scripts/judge_speed_matrix.py` (production judge 3.5 s median warm, $0.0027/answer, 13/13 bands; Terra identical at $0.0012; priority −1 s at 2×); OpenAI vs Anthropic: ≈5× cheaper, judge ≈2× faster, same bands on the review set and the real flow. Merged Harel's 42 commits; found code execution live in production; nine review fixes with tests (unguarded checker that could stick an answer, 25 s submit budget, trimmed stored run facts, streamed bounded bodies, timeout reuse, aliases, avatar price/ownership, quiz loader validation). Offline 3,888 passed / 11 skipped; live db 3 passed; coins/duels scenario 33 checks on production, rolled back. Decisions left to Shaked and Harel listed in §5zw. |
 | 2026-10-29 | OpenAI as a second real provider (§5zv): `OpenAIProvider` on the Responses API behind the same interface (instructions prefix cache, structured parse with JSON-in-text fallback, effort per role, images, incomplete/refusal handling, cached tokens split out, OpenAI price table); `LLM_PROVIDER=openai`, `OPENAI_API_KEY`, `OPENAI_MODEL=gpt-6.1-sol`, `OPENAI_ROLE_MODELS` (Terra for prose); the two real-model scripts follow the settings. 19 new tests; offline 1,468 passed / 9 skipped (one duel test was pinned to 22 October and failed on the real calendar day; its clock now starts on today's date). Calibration on the review set waits for the key. |
 | 2026-10-22 | Full verification of coins and duels (§5zu): independent review + quiz fact-check + a real-database scenario in a rolled-back transaction (`scripts/verify_coins_duels_db.py`, 32 checks) + race and deadline tests. Fixed: the ledger insert could not match the partial unique index on Postgres (every coin write would have been a 500), `table.c.items` was the collection's method, a ledger error could roll back a saved answer (now a savepoint), a judged answer still with the judge at the deadline was forfeited (two-minute grace), promises before the ledger was looked at, seed defaults, removed-question 500s; forty quiz answers verified right, Hebrew formulas given left-to-right marks. Offline 1,446 passed / 9 skipped; live suites did not complete (pooler timeout in the seeding fixture, as on 21 Oct). Build `6562694` live, smoke clean. |

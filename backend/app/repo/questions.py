@@ -22,6 +22,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app import db
+from app.engine.bank import apply_readiness
 from app.engine.solution_review import SolutionReview, solution_review
 from app.repo import cache
 from app.schemas.bank import BankQuestion, CommonError, QuestionSkillLink, QuestionText, RubricCriterion
@@ -103,7 +104,7 @@ async def _tip_keys(connection: AsyncConnection) -> dict[str, str]:
 
 def _bank_question(row, translations: list, links: list, skill_keys: dict, tip_keys: dict) -> BankQuestion:
     """The inverse of seed_db's row construction."""
-    assets = dict(row.assets or {})
+    assets = apply_readiness(dict(row.assets or {}))
     archetype = assets.pop("archetype", None) or Archetype.CONCEPTUAL.value
     choices = row.choices or {}
     texts: dict[str, QuestionText] = {}

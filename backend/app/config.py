@@ -131,6 +131,12 @@ class Settings(BaseSettings):
             raise ValueError("the execution broker must use HTTPS (HTTP is allowed for loopback development only)")
         return value.rstrip("/")
 
+    # Shaked, 2026-11-02 ("change all the questions so they act like normal questions; they just need the last stamp"):
+    # true = a question loaded with assessment_ready=false (Harel's intake marks every generated question so until it
+    # is reviewed) still gets follow-ups, evidence, XP and coins; the review stamp is the question's status, not this
+    # flag. False = the old rule: such questions are study-only. Production: true (set on Render).
+    assess_unreviewed_questions: bool = False
+
     default_language: str = "en"
     default_role: str = "digital-hardware-engineer"
     default_company: str = "generic"

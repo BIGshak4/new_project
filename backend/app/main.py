@@ -317,7 +317,8 @@ async def health(request: Request, db_check: bool = False) -> dict:
             "answer_images": "assessed" if settings.supabase_service_role_key and settings.supabase_url else "stored_only",
             # the code runner (Harel, 2026-10-31): wired = enabled with a URL and a signing key; last_probe = what the
             # broker said when it was last asked (None = not asked yet); nothing here calls the broker
-            "code_execution": _code_execution_health(runtime)}
+            "code_execution": _code_execution_health(runtime),
+            "assess_unreviewed_questions": settings.assess_unreviewed_questions}
     if not detailed:
         body = {k: body[k] for k in ("status", "engine_version", "source_revision", "llm_provider") if k in body}
     if db_check and runtime is not None and runtime.store_kind == "database":
