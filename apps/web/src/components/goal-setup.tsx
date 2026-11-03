@@ -1,30 +1,26 @@
 "use client";
 
-import { Select } from "./ui/select";
-import { toast } from "./toaster";
-
-import { useEffect, useRef, useState } from "react";
-import { CalendarDays, Clock3, Sparkles, Target } from "lucide-react";
+import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { BookOpen, BriefcaseBusiness, CalendarDays, ChevronDown, Clock3, GraduationCap, RotateCcw, Sparkles, Target, X } from "lucide-react";
 import type { Lang } from "./auth";
 import type { Goal, JobType, PracticeApi, Seniority } from "../lib/practice-api";
 import { apiMessage } from "../lib/practice-ui";
+import { goalJobTypes } from "../lib/goal-selection";
+import { BidiText } from "./bidi-text";
+import { toast } from "./toaster";
+import styles from "./goal-setup.module.css";
 
 const MINUTES = [15, 30, 45, 60, 90] as const;
+const MIN_DAILY_MINUTES = 5;
+const MAX_DAILY_MINUTES = 600;
 const SENIORITIES: Seniority[] = ["student", "junior", "mid", "senior", "staff", "principal"];
+type Mode = "targeted" | "explore";
+type Field = "roles" | "minutes" | "date";
+const selectedKeys = goalJobTypes;
+const signature = (goal: Goal | null) => JSON.stringify([selectedKeys(goal), goal?.learning_mode ?? "targeted", goal?.minutes_per_day, goal?.seniority, goal?.interview_date]);
 
-/**
- * The first thing a new user answers: which job they are interviewing for, when, and how much time they have
- * each day. The plan, the question order and the mock interview follow these answers. Editable any time.
- */
-export function GoalSetup({
-  api,
-  lang,
-  goal,
-  onSaved,
-  onSkip,
-  compact = false,
-  focusRequest = 0,
-}: {
+/** Goal choices stay compact; the account stores the complete set of selected roles. */
+export function GoalSetup({ api, lang, goal, onSaved, onSkip, compact = false, focusRequest = 0 }: {
   api: PracticeApi;
   lang: Lang;
   goal: Goal | null;
@@ -34,15 +30,40 @@ export function GoalSetup({
   /** Increment on each explicit open, including when this form is already mounted. */
   focusRequest?: number;
 }) {
-  const t = (he: string, en: string) => (lang === "he" ? he : en);
+  const t = (he: string, en: string) => lang === "he" ? he : en;
+  const id = useId();
   const [jobs, setJobs] = useState<JobType[]>([]);
-  const [jobType, setJobType] = useState(goal?.job_type ?? "");
+  const [jobsLoading, setJobsLoading] = useState(true);
+  const [jobsError, setJobsError] = useState("");
+  const [jobsRetry, setJobsRetry] = useState(0);
+  const [jobTypes, setJobTypes] = useState<string[]>(() => selectedKeys(goal));
+  const [mode, setMode] = useState<Mode>(goal?.learning_mode ?? "targeted");
   const [date, setDate] = useState(goal?.interview_date ?? "");
-  const [minutes, setMinutes] = useState<number>(goal?.minutes_per_day ?? 30);
+  const [hasDate, setHasDate] = useState(!!goal?.interview_date);
+  const [minutes, setMinutes] = useState(String(goal?.minutes_per_day ?? 30));
+  const [customMinutes, setCustomMinutes] = useState(!MINUTES.some(value => value === (goal?.minutes_per_day ?? 30)));
   const [seniority, setSeniority] = useState<Seniority>(goal?.seniority ?? "student");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [invalid, setInvalid] = useState<Field | null>(null);
   const heading = useRef<HTMLHeadingElement>(null);
+  const rolesSection = useRef<HTMLDetailsElement>(null);
+  const minutesSection = useRef<HTMLDetailsElement>(null);
+  const dateSection = useRef<HTMLDetailsElement>(null);
+  const dirty = useRef(false);
+  const savedSignature = signature(goal);
+
+  // Loading the saved goal must not replace an edit or reset it when language changes.
+  useEffect(() => {
+    if (dirty.current) return;
+    setJobTypes(selectedKeys(goal));
+    setMode(goal?.learning_mode ?? "targeted");
+    setDate(goal?.interview_date ?? "");
+    setHasDate(!!goal?.interview_date);
+    setMinutes(String(goal?.minutes_per_day ?? 30));
+    setCustomMinutes(!MINUTES.some(value => value === (goal?.minutes_per_day ?? 30)));
+    setSeniority(goal?.seniority ?? "student");
+  }, [savedSignature]);
 
   useEffect(() => {
     if (!focusRequest) return;
@@ -54,164 +75,192 @@ export function GoalSetup({
   }, [focusRequest]);
 
   useEffect(() => {
-    let cancelled = false;
-    api
-      .jobTypes(lang)
-      .then((list) => {
-        if (!cancelled) setJobs(list);
-      })
-      .catch((e) => {
-        if (!cancelled) setError(apiMessage(e, lang));
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [api, lang]);
+    let current = true;
+    setJobsLoading(true);
+    setJobsError("");
+    void api.jobTypes(lang).then(list => {
+      if (!current) return;
+      if (!list.length) throw new Error(t("רשימת התפקידים אינה זמינה כרגע.", "The list of roles is unavailable right now."));
+      setJobs(list);
+    }).catch(reason => {
+      if (current) setJobsError(apiMessage(reason, lang));
+    }).finally(() => {
+      if (current) setJobsLoading(false);
+    });
+    return () => { current = false; };
+  }, [api, lang, jobsRetry]);
+
+  function edited() {
+    dirty.current = true;
+    setError("");
+    setInvalid(null);
+  }
 
   const today = new Date();
-  // the user's local calendar day, not the UTC one (after midnight in Israel the UTC date is still yesterday)
   const todayIso = new Date(today.getTime() - today.getTimezoneOffset() * 60_000).toISOString().slice(0, 10);
   const days = date ? Math.round((new Date(`${date}T12:00:00`).getTime() - new Date(`${todayIso}T12:00:00`).getTime()) / 86_400_000) : null;
+  const minuteCount = Number(minutes);
+  const minutesValid = minutes.trim() !== "" && Number.isInteger(minuteCount) && minuteCount >= MIN_DAILY_MINUTES && minuteCount <= MAX_DAILY_MINUTES;
+  const selectedJobs = jobTypes.map(key => jobs.find(job => job.key === key));
+  const unavailableRoles = selectedJobs.some(job => !job);
+  const seniorityLabel = (value: Seniority) => ({
+    student: t("סטודנט/ית או בוגר/ת טרי/ה", "Student or new graduate"),
+    junior: t("ג׳וניור (עד שנתיים)", "Junior (up to 2 years)"),
+    mid: t("ניסיון בינוני (2–5 שנים)", "Mid-level (2–5 years)"),
+    senior: t("סניור", "Senior"),
+    staff: t("סטאף", "Staff"),
+    principal: t("פרינסיפל", "Principal"),
+  })[value];
 
-  async function save() {
-    if (!jobType || busy) return;
+  function showValidation(field: Field, message: string) {
+    setInvalid(field);
+    setError(message);
+    const section = field === "roles" ? rolesSection.current : field === "minutes" ? minutesSection.current : dateSection.current;
+    if (section) section.open = true;
+    requestAnimationFrame(() => section?.querySelector<HTMLInputElement>(field === "minutes" ? 'input[type="number"]' : field === "date" ? 'input[type="date"]' : "input")?.focus());
+  }
+
+  async function save(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (busy || jobsLoading || jobsError) return;
+    if (mode === "targeted" && (!jobTypes.length || unavailableRoles)) {
+      showValidation("roles", unavailableRoles
+        ? t("אחד התפקידים שנשמרו כבר לא זמין. הסירו אותו ובחרו תפקיד מהרשימה.", "One saved role is no longer available. Remove it and choose a role from the list.")
+        : t("בחרו לפחות תפקיד אחד, או עברו למסלול ללא יעד מוגדר.", "Choose at least one role, or switch to learning without a defined goal."));
+      return;
+    }
+    if (!minutesValid) {
+      setCustomMinutes(true);
+      showValidation("minutes", t("הזינו מספר שלם בין 5 ל־600 דקות ביום.", "Enter a whole number from 5 to 600 minutes a day."));
+      return;
+    }
+    if (mode === "targeted" && hasDate && (!date || days === null || !Number.isFinite(days) || days < 0)) {
+      showValidation("date", t("בחרו תאריך מהיום והלאה, או סמנו שעדיין אין תאריך לראיון.", "Choose today or a future date, or select that you do not have an interview date yet."));
+      return;
+    }
     setBusy(true);
     setError("");
     try {
       const saved = await api.saveGoal({
-        job_type: jobType,
-        interview_date: date || null,
-        minutes_per_day: minutes,
+        job_type: mode === "targeted" ? jobTypes[0] : null,
+        job_types: mode === "targeted" ? jobTypes : [],
+        learning_mode: mode,
+        interview_date: mode === "targeted" && hasDate ? date : null,
+        minutes_per_day: minuteCount,
         seniority,
         language: lang,
       });
+      dirty.current = false;
       onSaved(saved);
-      toast.success(t("היעד נשמר. התוכנית מתעדכנת.", "Goal saved. Your plan is updating."));
-    } catch (e) {
-      setError(apiMessage(e, lang));
+      toast.success(t("ההעדפות נשמרו. תוכנית הלמידה מתעדכנת.", "Preferences saved. Your learning plan is updating."));
+    } catch (reason) {
+      setError(apiMessage(reason, lang));
     } finally {
       setBusy(false);
     }
   }
 
-  const seniorityLabel = (s: Seniority) =>
-    ({
-      student: t("סטודנט/ית או בוגר/ת טרי/ה", "Student or new graduate"),
-      junior: t("ג׳וניור (עד 2 שנים)", "Junior (up to 2 years)"),
-      mid: t("ניסיון בינוני (2-5 שנים)", "Mid-level (2-5 years)"),
-      senior: t("סניור", "Senior"),
-      staff: t("סטאף", "Staff"),
-      principal: t("פרינסיפל", "Principal"),
-    })[s];
+  function bar(label: string, value: string, icon: ReactNode, labelId: string) {
+    return <summary className={styles.bar} aria-disabled={busy || undefined} onClick={event => { if (busy) event.preventDefault(); }}>
+      <span className={styles.barIcon}>{icon}</span>
+      <span className={styles.barText}><span id={labelId} className={styles.barLabel}>{label}</span><span className={styles.barValue}>{value}</span></span>
+      <ChevronDown className={styles.chevron} size={18} aria-hidden="true" />
+    </summary>;
+  }
 
-  return (
-    <section className={`goal-setup ${compact ? "compact" : ""}`} aria-labelledby="goal-title">
-      <header className="goal-head">
-        <Target size={22} aria-hidden="true" />
+  return <section className={`goal-setup ${compact ? "compact" : ""} ${styles.setup}`} aria-labelledby="goal-title">
+    <header className="goal-head">
+      <Target size={22} aria-hidden="true" />
+      <div>
+        <h2 id="goal-title" className={styles.heading} ref={heading} tabIndex={-1}>{goal?.complete ? t("עדכון תוכנית הלמידה", "Update your learning plan") : t("איך תרצו ללמוד?", "How would you like to learn?")}</h2>
+        <p className={styles.intro}>{t("בחרו כיוון וקצב שנוח לכם. אפשר לשנות הכול בהמשך.", "Choose a direction and a pace that work for you. You can change them later.")}</p>
+      </div>
+    </header>
+
+    <form className={styles.form} noValidate onSubmit={event => void save(event)} aria-busy={busy}>
+      <fieldset className={styles.mode} disabled={busy}>
+        <legend className={styles.visuallyHidden}>{t("מסלול הלמידה", "Learning approach")}</legend>
+        <label className={`${styles.modeChoice} ${mode === "targeted" ? styles.chosen : ""}`}>
+          <input type="radio" name={`${id}-mode`} value="targeted" checked={mode === "targeted"} onChange={() => { edited(); setMode("targeted"); }} />
+          <span>{t("אני מתכונן לתפקיד", "I’m preparing for a role")}</span>
+        </label>
+        <label className={`${styles.modeChoice} ${mode === "explore" ? styles.chosen : ""}`}>
+          <input type="radio" name={`${id}-mode`} value="explore" checked={mode === "explore"} onChange={() => { edited(); setMode("explore"); }} />
+          <span>{t("אין לי יעד מוגדר, למד אותי", "I don’t have a defined goal. Teach me")}</span>
+        </label>
+      </fieldset>
+
+      <div className={styles.sections}>
         <div>
-          <h2 id="goal-title" ref={heading} tabIndex={-1}>
-            {goal?.complete
-              ? t("עדכון היעד שלכם", "Update your goal")
-              : t("לאיזה ראיון אתם מתכוננים?", "What are you preparing for?")}
-          </h2>
-          <p className="muted">
-            {t(
-              "לפי התשובות נבנה תוכנית עבודה עד הראיון, נסדר את השאלות לפי הרלוונטיות ונתאים את הראיון המדומה.",
-              "Your answers shape the plan until the interview, the order of the questions and the mock interview.",
-            )}
-          </p>
+          {mode === "targeted" ? <>
+            <details className={styles.section} ref={rolesSection} data-goal-section="roles">
+              {bar(t("תפקיד", "Role"), jobTypes.length === 1 ? t("תפקיד אחד נבחר", "One role selected") : jobTypes.length > 1 ? t(`${jobTypes.length} תפקידים נבחרו`, `${jobTypes.length} roles selected`) : t("בחרו תפקיד אחד או יותר", "Choose one or more roles"), <BriefcaseBusiness size={19} aria-hidden="true" />, `${id}-roles-label`)}
+              <fieldset className={styles.options} disabled={busy || jobsLoading || !!jobsError} aria-labelledby={`${id}-roles-label`}>
+                <legend className={styles.visuallyHidden}>{t("בחירת תפקידים", "Choose roles")}</legend>
+                <p className={styles.help}>{t("אפשר לבחור כמה תפקידים. התוכנית תשלב ביניהם.", "Choose as many roles as you like. Your plan will combine them.")}</p>
+                {jobs.map(job => <label className={styles.option} key={job.key}>
+                  <input type="checkbox" checked={jobTypes.includes(job.key)} aria-invalid={invalid === "roles" || undefined} onChange={event => { edited(); setJobTypes(keys => event.target.checked ? [...keys, job.key] : keys.filter(key => key !== job.key)); }} />
+                  <span dir="auto"><BidiText>{job.label}</BidiText></span>
+                </label>)}
+              </fieldset>
+            </details>
+            {jobTypes.length > 0 && <div className={styles.selectedRoles} role="list" aria-label={t("התפקידים שבחרתם", "Your selected roles")}>
+              {jobTypes.map((key, index) => {
+                const job = selectedJobs[index];
+                const label = job?.label ?? goal?.job_type_labels?.[index] ?? (goal?.job_type === key ? goal.job_type_label : null) ?? key;
+                return <article className={styles.selectedRole} key={key} role="listitem">
+                  <div className={styles.roleTitle}><strong dir="auto"><BidiText>{label}</BidiText></strong><button type="button" className={styles.remove} disabled={busy} aria-label={t(`הסרת התפקיד ${label}`, `Remove ${label}`)} onClick={() => { edited(); setJobTypes(keys => keys.filter(value => value !== key)); }}><X size={17} aria-hidden="true" /></button></div>
+                  <p dir="auto"><BidiText>{job?.description ?? (jobsLoading ? t("טוענים את תיאור התפקיד…", "Loading the role description…") : t("התפקיד הזה אינו זמין כרגע. אפשר להסיר אותו ולבחור תפקיד אחר.", "This role is unavailable right now. Remove it and choose another role."))}</BidiText></p>
+                </article>;
+              })}
+            </div>}
+          </> : <section className={styles.explore} aria-labelledby={`${id}-explore-title`}>
+            <div className={styles.exploreHead}><BookOpen size={20} aria-hidden="true" /><h3 id={`${id}-explore-title`}>{t("מכירים את התפקידים", "Explore the roles")}</h3></div>
+            <p className={styles.help}>{t("נלמד יסודות ממגוון התחומים, בלי לבחור תפקיד או לקבוע תאריך לראיון.", "Learn fundamentals across the fields, without choosing a role or setting an interview date.")}</p>
+            <div className={styles.roleOverview}>{jobs.map(job => <article className={styles.overviewRole} key={job.key}><h4 dir="auto"><BidiText>{job.label}</BidiText></h4><p dir="auto"><BidiText>{job.description}</BidiText></p></article>)}</div>
+          </section>}
+          {jobsLoading && <p className={styles.catalogStatus} role="status">{t("טוענים את התפקידים…", "Loading roles…")}</p>}
+          {jobsError && <div className={styles.catalogError} role="alert"><p>{t("לא הצלחנו לטעון את התפקידים. נסו שוב כדי להמשיך.", "We couldn’t load the roles. Try again to continue.")}</p><button type="button" disabled={busy} onClick={() => setJobsRetry(value => value + 1)}><RotateCcw size={16} aria-hidden="true" />{t("טעינה מחדש", "Retry loading")}</button></div>}
         </div>
-      </header>
 
-      <div className="goal-field">
-        <h3>{t("סוג התפקיד", "The kind of job")}</h3>
-        <div className="job-grid" role="radiogroup" aria-label={t("סוג התפקיד", "Job type")}>
-          {jobs.map((job) => (
-            <button
-              key={job.key}
-              type="button"
-              role="radio"
-              aria-checked={jobType === job.key}
-              className={`job-card ${jobType === job.key ? "on" : ""}`}
-              onClick={() => setJobType(job.key)}
-            >
-              <strong dir="auto">{job.label}</strong>
-              <span dir="auto">{job.description}</span>
-            </button>
-          ))}
-          {!jobs.length && !error && <span className="muted small">{t("טוענים את סוגי התפקידים…", "Loading job types…")}</span>}
-        </div>
+        <details className={styles.section} ref={minutesSection} data-goal-section="minutes">
+          {bar(t("זמן ביום", "Daily time"), minutesValid ? t(`${minuteCount} דקות ביום`, `${minuteCount} minutes a day`) : t("הזינו זמן בדקות", "Enter a time in minutes"), <Clock3 size={19} aria-hidden="true" />, `${id}-minutes-label`)}
+          <fieldset className={styles.options} disabled={busy} aria-labelledby={`${id}-minutes-label`}>
+            <legend className={styles.visuallyHidden}>{t("כמה זמן ביום?", "How much time a day?")}</legend>
+            <div className={styles.presets}>{MINUTES.map(value => <label className={`${styles.preset} ${!customMinutes && Number(minutes) === value ? styles.chosen : ""}`} key={value}>
+              <input type="radio" name={`${id}-minutes`} checked={!customMinutes && Number(minutes) === value} onChange={() => { edited(); setCustomMinutes(false); setMinutes(String(value)); }} />
+              <span>{value} {t("דקות", "min")}</span>
+            </label>)}</div>
+            <label className={styles.option}><input type="radio" name={`${id}-minutes`} checked={customMinutes} onChange={() => { edited(); setCustomMinutes(true); }} /><span>{t("הגדרה ידנית בדקות", "Set a custom number of minutes")}</span></label>
+            {customMinutes && <div className={styles.customMinutes}><label htmlFor={`${id}-custom-minutes`}>{t("מספר דקות ביום", "Minutes per day")}</label><input id={`${id}-custom-minutes`} type="number" inputMode="numeric" step={1} min={MIN_DAILY_MINUTES} max={MAX_DAILY_MINUTES} value={minutes} aria-invalid={invalid === "minutes" || undefined} aria-describedby={`${id}-minutes-help`} onChange={event => { edited(); setMinutes(event.target.value); }} /><p id={`${id}-minutes-help`} className={styles.help}>{t("מספר שלם בין 5 ל־600 דקות.", "A whole number from 5 to 600 minutes.")}</p></div>}
+          </fieldset>
+        </details>
+
+        <details className={styles.section} data-goal-section="seniority">
+          {bar(t("שלב בקריירה", "Career stage"), seniorityLabel(seniority), <GraduationCap size={19} aria-hidden="true" />, `${id}-seniority-label`)}
+          <fieldset className={styles.options} disabled={busy} aria-labelledby={`${id}-seniority-label`}>
+            <legend className={styles.visuallyHidden}>{t("שלב בקריירה", "Career stage")}</legend>
+            {SENIORITIES.map(value => <label className={styles.option} key={value}><input type="radio" name={`${id}-seniority`} checked={seniority === value} onChange={() => { edited(); setSeniority(value); }} /><span>{seniorityLabel(value)}</span></label>)}
+          </fieldset>
+        </details>
+
+        {mode === "targeted" && <details className={styles.section} ref={dateSection} data-goal-section="date">
+          {bar(t("תאריך ראיון", "Interview date"), !hasDate ? t("עדיין אין תאריך לראיון", "No interview date yet") : date && Number.isFinite(days) ? new Date(`${date}T12:00:00`).toLocaleDateString(lang === "he" ? "he-IL" : "en-GB") : t("בחרו תאריך", "Choose a date"), <CalendarDays size={19} aria-hidden="true" />, `${id}-date-label`)}
+          <fieldset className={styles.options} disabled={busy} aria-labelledby={`${id}-date-label`}>
+            <legend className={styles.visuallyHidden}>{t("תאריך הראיון", "Interview date")}</legend>
+            <label className={styles.option}><input type="radio" name={`${id}-date`} checked={!hasDate} onChange={() => { edited(); setHasDate(false); }} /><span>{t("עדיין אין תאריך לראיון", "I don’t have an interview date yet")}</span></label>
+            <label className={styles.option}><input type="radio" name={`${id}-date`} checked={hasDate} onChange={() => { edited(); setHasDate(true); }} /><span>{t("יש לי תאריך לראיון", "I have an interview date")}</span></label>
+            {hasDate && <div className={styles.dateInput}><label htmlFor={`${id}-interview-date`}>{t("תאריך הראיון", "Interview date")}</label><input id={`${id}-interview-date`} type="date" value={date} min={todayIso} aria-invalid={invalid === "date" || undefined} onChange={event => { edited(); setDate(event.target.value); }} />{date && <p className={styles.help}>{days !== null && days < 0 ? t("התאריך עבר. בחרו תאריך מהיום והלאה.", "That date has passed. Choose today or a future date.") : days === 0 ? t("היום! בהצלחה.", "Today! Good luck.") : t(`${days} ימים עד הראיון`, `${days} days until the interview`)}</p>}</div>}
+            {!hasDate && <p className={styles.help}>{t("אין צורך בתאריך כדי להתחיל. התוכנית תתקדם משבוע לשבוע.", "You can start without a date. The plan will continue week by week.")}</p>}
+          </fieldset>
+        </details>}
       </div>
 
-      <div className="goal-columns">
-        <div className="goal-field">
-          <h3>
-            <CalendarDays size={16} aria-hidden="true" /> {t("מתי הראיון?", "When is the interview?")}
-          </h3>
-          <input
-            type="date"
-            value={date}
-            min={todayIso}
-            onChange={(e) => setDate(e.target.value)}
-            aria-label={t("תאריך הראיון", "Interview date")}
-          />
-          <p className="small muted">
-            {days === null
-              ? t("לא ידוע עדיין? השאירו ריק, נבנה תוכנית שבועית.", "Not known yet? Leave it empty; the plan runs week by week.")
-              : days < 0
-                ? t("התאריך עבר. בחרו תאריך עתידי.", "That date has passed. Pick a future one.")
-                : days === 0
-                  ? t("היום! בהצלחה.", "Today! Good luck.")
-                  : `${days} ${t("ימים עד הראיון", "days until the interview")}`}
-          </p>
-        </div>
-        <div className="goal-field">
-          <h3>
-            <Clock3 size={16} aria-hidden="true" /> {t("כמה זמן ביום?", "How much time a day?")}
-          </h3>
-          <div className="chips" role="radiogroup" aria-label={t("דקות ביום", "Minutes a day")}>
-            {MINUTES.map((m) => (
-              <button
-                key={m}
-                type="button"
-                role="radio"
-                aria-checked={minutes === m}
-                className={`chip-button ${minutes === m ? "on" : ""}`}
-                onClick={() => setMinutes(m)}
-              >
-                {m} {t("דק׳", "min")}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="goal-field">
-          <h3>{t("איפה אתם בקריירה?", "Where are you in your career?")}</h3>
-          <Select
-            ariaLabel={t("ניסיון", "Seniority")}
-            dir={lang === "he" ? "rtl" : "ltr"}
-            value={seniority}
-            onChange={(v) => setSeniority(v as Seniority)}
-            options={SENIORITIES.map((s) => ({ value: s, label: seniorityLabel(s) }))}
-          />
-        </div>
-      </div>
-
-      {error && (
-        <p className="notice error" role="alert">
-          {error}
-        </p>
-      )}
+      {error && <p className="notice error" role="alert">{error}</p>}
       <div className="goal-actions">
-        <button className="primary" disabled={busy || !jobType} onClick={() => void save()}>
-          <Sparkles size={16} aria-hidden="true" />
-          {busy ? t("שומרים…", "Saving…") : goal?.complete ? t("שמירת היעד", "Save goal") : t("בונים לי תוכנית", "Build my plan")}
-        </button>
-        {onSkip && (
-          <button className="text-button" type="button" onClick={onSkip}>
-            {t("אחר כך", "Later")}
-          </button>
-        )}
+        <button className="primary" type="submit" disabled={busy || jobsLoading || !!jobsError || (mode === "targeted" && !jobTypes.length)}><Sparkles size={16} aria-hidden="true" />{busy ? t("שומרים…", "Saving…") : mode === "explore" ? t("מתחילים ללמוד", "Start learning") : goal?.complete ? t("שמירת התוכנית", "Save plan") : t("בונים לי תוכנית", "Build my plan")}</button>
+        {onSkip && <button className="text-button" type="button" disabled={busy} onClick={onSkip}>{t("אחר כך", "Later")}</button>}
       </div>
-    </section>
-  );
+    </form>
+  </section>;
 }

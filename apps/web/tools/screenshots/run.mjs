@@ -217,8 +217,18 @@ for (const lang of LANGS) {
       const { identifier } = (await send("Page.addScriptToEvaluateOnNewDocument", { source: inject(lang, signedIn) })).result;
       await send("Page.navigate", { url: `http://localhost:${WEB_PORT}${path}` });
       let found = false;
+      // Category-only URLs now enter Personal Area. Reach other categories through the real navigation.
+      const requested = new URL(path, "http://localhost").searchParams;
+      const tabIndex = !requested.has("attempt") && !requested.has("question") && !requested.has("interview")
+        ? { library: 1, interview: 2 }[requested.get("view")] : undefined;
+      let navigated = tabIndex === undefined;
       for (let i = 0; i < 60 && !found; i++) {
         await sleep(500);
+        if (!navigated) {
+          const navigation = await send("Runtime.evaluate", { expression: `(() => { const tab = document.querySelectorAll('.topnav .tabs .tab')[${tabIndex}]; if (!tab) return false; tab.click(); return true; })()`, returnByValue: true });
+          navigated = navigation.result?.result?.value === true;
+          if (!navigated) continue;
+        }
         const r = await send("Runtime.evaluate", { expression: `!!document.querySelector(${JSON.stringify(selector)})`, returnByValue: true });
         found = r.result?.result?.value === true;
       }

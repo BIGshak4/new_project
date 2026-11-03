@@ -12,6 +12,7 @@ import { daysToGoLabel, eligibleAhead, pathNodes, todayProgress, type PathNode }
 import { revealDelay, shouldScrollToNode } from "../lib/ui";
 import { Breathe, Pop, motion, spring, useReducedMotion } from "./ui/motion";
 import { BidiText } from "./bidi-text";
+import { goalRoleLabel } from "../lib/goal-selection";
 
 /** The real adaptive program, displayed in the approved Ion shell. */
 export function LearnHome({
@@ -155,7 +156,7 @@ export function LearnHome({
   // The title is grounded in the current program item.
   const topic = goalComplete && current ? current.item.skills[0]?.label ?? "" : "";
   const title = !goalComplete
-    ? t("נבנה לכם תוכנית עד הראיון.", "Let’s build your plan until the interview.")
+    ? t("האזור האישי שלכם", "Your personal area")
     : current
       ? current.kind === "interview"
         ? t("היום ראיון מדומה.", "Today, a mock interview.")
@@ -185,7 +186,7 @@ export function LearnHome({
               {topic && current?.kind !== "interview" && <span className="mark"><bdi dir="auto"><BidiText>{topic}</BidiText></bdi>.</span>}
             </h1>
             <div className="learn-context" dir="auto">
-              <BidiText>{[userName, goal?.job_type_label ?? t("סוג התפקיד לא נבחר עדיין", "No job type chosen yet"), interviewDate ? `${t("ראיון ב", "interview on")}${lang === "he" ? "־" : " "}${interviewDate}` : null]
+              <BidiText>{[userName, goalRoleLabel(goal, lang), interviewDate ? `${t("ראיון ב", "interview on")}${lang === "he" ? "־" : " "}${interviewDate}` : null]
                 .filter(Boolean)
                 .join(" · ")}</BidiText>
             </div>
@@ -214,8 +215,8 @@ export function LearnHome({
             <Target size={28} aria-hidden="true" />
             <p>
               {t(
-                "ספרו לנו לאיזה תפקיד אתם מתכוננים, מתי הראיון וכמה זמן יש לכם ביום. הכול נגזר מזה.",
-                "Tell us the job you are preparing for, when the interview is and how much time you have a day. Everything follows from that.",
+                "בחרו תפקיד אחד או כמה וכמה זמן תרצו ללמוד ביום. אפשר גם להתחיל ללמוד בלי יעד מוגדר ובלי תאריך לראיון.",
+                "Choose one or more roles and your daily study time. You can also start learning without a fixed goal or an interview date.",
               )}
             </p>
             <button type="button" className="primary" onClick={onOpenGoal}>

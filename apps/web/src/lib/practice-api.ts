@@ -84,13 +84,17 @@ export type Company = {
 export type Goal = {
   job_type: string | null;
   job_type_label: string | null;
+  /** All chosen roles. Legacy responses expose only job_type. */
+  job_types?: string[];
+  job_type_labels?: string[];
+  learning_mode?: "targeted" | "explore";
   /** ISO date */
   interview_date: string | null;
   /** negative once the date has passed */
   days_to_interview: number | null;
   minutes_per_day: number | null;
   seniority: Seniority | null;
-  /** job type and minutes are known: the onboarding was answered */
+  /** A targeted role selection or explicit exploration and daily time have been saved. */
   complete: boolean;
 };
 
@@ -104,6 +108,8 @@ export type Seniority =
 
 export type GoalRequest = {
   job_type?: string | null;
+  job_types?: string[];
+  learning_mode?: "targeted" | "explore";
   interview_date?: string | null;
   minutes_per_day?: number | null;
   seniority?: Seniority | null;

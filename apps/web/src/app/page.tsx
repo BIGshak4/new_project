@@ -30,6 +30,8 @@ import { BidiText } from "../components/bidi-text";
 import { QuestionTitle } from "../components/question-title";
 import { relatedQuestionKeys, uniqueLibraryQuestions } from "../lib/question-families";
 import { shuffleQuestions, useQuestionOrderSeed } from "../lib/question-order";
+import { defaultGoalJobFilter, goalJobTypes, goalProgramKey, GOAL_JOBS_FILTER } from "../lib/goal-selection";
+import { DEFAULT_WORKSPACE_VIEW, readWorkspaceRoute, type WorkspaceRoute } from "../lib/workspace-route";
 import { Auth, type Lang } from "../components/auth";
 import { avatarApi } from "../lib/avatar-api";
 import type { AvatarConfig } from "../lib/avatar-types";
@@ -63,8 +65,8 @@ import {
   type Entry,
 } from "../lib/practice-ui";
 
-type Route = { view: string; question?: string; attempt?: string; interview?: string; source?: "retry" | "suggestion"; duration?: number };
-const DEFAULT_VIEW = "learn";
+type Route = WorkspaceRoute;
+const DEFAULT_VIEW = DEFAULT_WORKSPACE_VIEW;
 /** The library owns its interview, quick-study, saved and history views; old links keep working. */
 const LIBRARY_VIEWS = new Set(["library", "fundamentals", "bookmarks", "history"]);
 const QuickPractice = dynamic(() => import("../components/quick-practice").then(module => module.QuickPractice));
@@ -75,21 +77,12 @@ const emptyProgress: Progress = {
   attempts_today: 0,
   daily_limit: 30,
 };
-function currentRoute(): Route {
-  const q = new URLSearchParams(window.location.search);
-  // Retired Progress links keep their saved attempt or question in Personal Area.
-  if (q.get("view") === "progress") {
-    q.delete("view");
-    window.history.replaceState({}, "", `${window.location.pathname}${q.size ? `?${q}` : ""}${window.location.hash}`);
+function currentRoute(entry = false): Route {
+  const next = readWorkspaceRoute(window.location.search, entry);
+  if (next.search !== window.location.search.replace(/^\?/, "")) {
+    window.history.replaceState({}, "", `${window.location.pathname}${next.search ? `?${next.search}` : ""}${window.location.hash}`);
   }
-  return {
-    view: q.get("view") ?? DEFAULT_VIEW,
-    question: q.get("question") ?? undefined,
-    attempt: q.get("attempt") ?? undefined,
-    interview: q.get("interview") ?? undefined,
-    source: q.get("source") === "retry" ? "retry" : q.get("source") === "suggestion" ? "suggestion" : undefined,
-    duration: [20, 30, 45].includes(Number(q.get("duration"))) ? Number(q.get("duration")) : undefined,
-  };
+  return next.route;
 }
 
 export default function Page() {
@@ -186,7 +179,7 @@ function Workspace({
 
   useEffect(() => {
     const sync = () => setRoute(currentRoute());
-    sync();
+    setRoute(currentRoute(true));
     window.addEventListener("popstate", sync);
     return () => window.removeEventListener("popstate", sync);
   }, []);
@@ -257,7 +250,7 @@ function Workspace({
         .then((g) => {
           if (!current()) return;
           setGoal(g);
-          if (!jobFilterTouched.current) setJobFilter(g.job_type ?? "");
+          if (!jobFilterTouched.current) setJobFilter(defaultGoalJobFilter(g));
         })
         .catch(() => {}),
       api
@@ -308,6 +301,7 @@ function Workspace({
       .then(setProgress)
       .catch(() => {});
   }, [api, lang]);
+  const goalRolesKey = JSON.stringify(goalJobTypes(goal));
   // Job matching comes from the server; presentation keeps this visit's shuffled catalog order.
   useEffect(() => {
     if (!jobFilter) {
@@ -316,10 +310,10 @@ function Workspace({
     }
     let cancelled = false;
     setJobQuestions(null);
-    api
-      .listQuestions(lang, undefined, { job: jobFilter })
-      .then((list) => {
-        if (!cancelled) setJobQuestions(list);
+    const roleKeys: string[] = jobFilter === GOAL_JOBS_FILTER ? JSON.parse(goalRolesKey) : [jobFilter];
+    Promise.all(roleKeys.map(job => api.listQuestions(lang, undefined, { job })))
+      .then((lists) => {
+        if (!cancelled) setJobQuestions([...new Map(lists.flat().map(question => [question.key, question])).values()]);
       })
       .catch(() => {
         // the server refused the filter (a job type that no longer exists): show everything, unfiltered
@@ -332,11 +326,12 @@ function Workspace({
     return () => {
       cancelled = true;
     };
-  }, [api, lang, jobFilter, questions.length]);
+  }, [api, lang, jobFilter, questions.length, goalRolesKey]);
   const onGoalSaved = (g: Goal) => {
     setGoal(g);
     setEditingGoal(false);
-    if (!jobFilterTouched.current) setJobFilter(g.job_type ?? "");
+    jobFilterTouched.current = false;
+    setJobFilter(defaultGoalJobFilter(g));
     refreshProgress();
   };
   const skipGoal = () => {
@@ -434,7 +429,7 @@ function Workspace({
     </button>)}
   </div>;
   const reducedMotion = useReducedMotion();
-  const refreshKey = `${progress.attempts_today}-${goal?.job_type ?? ""}-${goal?.seniority ?? ""}-${goal?.minutes_per_day ?? ""}-${goal?.interview_date ?? ""}-${overview?.xp_total ?? 0}`;
+  const refreshKey = `${progress.attempts_today}-${goalProgramKey(goal)}-${overview?.xp_total ?? 0}`;
 
   return (
     <div className="app-shell">
@@ -833,7 +828,9 @@ function Workspace({
                       jobFilterTouched.current = true;
                       setJobFilter(v);
                     }}
-                    options={[{ value: "", label: t("כל התפקידים", "All job types") }, ...jobs.map((j) => ({ value: j.key, label: j.label }))]}
+                    options={[{ value: "", label: t("כל התפקידים", "All job types") },
+                      ...(goalJobTypes(goal).length > 1 ? [{ value: GOAL_JOBS_FILTER, label: t("התפקידים שבחרתם ביעד", "Your selected goal roles") }] : []),
+                      ...jobs.map((j) => ({ value: j.key, label: j.label }))]}
                   />
                   <div className="search company-search">
                     <Building2 size={16} />
@@ -860,8 +857,8 @@ function Workspace({
                 {jobFilter && jobQuestions && (
                   <p className="small muted filter-note" role="status">
                     {t(
-                      "מוצגות שאלות שמתאימות לתפקיד שבחרתם, בסדר מעורבב.",
-                      "Questions matching your chosen job are shown in shuffled order.",
+                      "מוצגות שאלות שמתאימות לתפקידים שבחרתם, בסדר מעורבב.",
+                      "Questions matching your chosen roles are shown in shuffled order.",
                     )}
                   </p>
                 )}

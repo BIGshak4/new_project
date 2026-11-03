@@ -25,6 +25,14 @@ Readable Hebrew RTL and English LTR, keyboard focus and touch targets in both th
 
 At the user's request, Today is now Personal area (אזור אישי), and the separate Progress category and its dedicated overview, readiness and plan-table screens are removed. The authenticated desktop and phone navigation, public previews and Muxi tours follow the same structure. Old Progress links resolve to Personal area while preserving a linked attempt or question. Daily practice, goals, skills, streaks and saved history continue to use the existing account data.
 
+## Goal setup, 2026-11-03
+
+Fresh workspace visits enter Personal area, including saved category URLs; direct links to a question, attempt or ongoing interview retain their work. In-session navigation remains available.
+
+Goal setup uses four initially closed disclosure bars in this order: roles, daily time, career stage, interview date. Multiple selected roles remain visible as removable cards with the catalog's descriptions. Daily time offers presets and a whole-minute value from 5 to 600. A native date field is optional through an explicit no-interview-date choice. The alternative “I don't have a defined goal. Teach me” approach displays every role description and keeps the same time and career controls without an interview date.
+
+The complete role selection and learning approach persist in the existing profile and drive real combined-role or broad-learning plans. The interface retains drafts on language changes and save failures, opens invalid collapsed fields, and uses native keyboard controls. Verification used the actual frontend and an isolated memory-backed API at 1360px and 390px in Hebrew light and English dark, including save/reopen, custom minutes, optional date, role selection, broad-learning program generation and Personal area on reload. No new visual world, account entitlement or image asset is introduced.
+
 ## Technical notation correction, 2026-10-18
 
 The user supplied a broken rendering of `example-enabled-decoder`: the source has correct `Y[3:0]` and `A[1:0]` but their closing brackets escaped the old LTR isolates. Preserve the approved Ion design and fix shared rendering across questions, references, hints, feedback, interview reports, metadata and tours in both languages. Keep complete technical units and their brackets together, including nested expressions, intervals and Markdown formatting boundaries. Derive each prose block's direction from its original content before isolation. Code and deliberately invalid bracket examples must retain their exact source characters and visual order; ordinary Hebrew parentheticals retain their RTL reading order. Do not rewrite the bank or affect editor drafts, account data or assessments. Verify the complete bilingual catalog and independent glyph-position cases at desktop and phone sizes in both themes, plus the real app decoder screen.
