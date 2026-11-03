@@ -142,22 +142,48 @@ def sanitize(evaluation: Evaluation, known_error_keys: set[str]) -> Evaluation:
     })
 
 
-async def evaluate(provider: Provider, *, question_context: str, known_error_keys: set[str], language: str,
-                   difficulty: int, answer: str, check: CheckResult | None = None, hint_level: int = 0,
-                   glossary: list[dict] | None = None, max_attempts: int = 2, circuit: str | None = None,
-                   images: list[tuple[str, bytes]] | None = None, images_missing: int = 0,
-                   question_images: list[tuple[str, bytes]] | None = None) -> EvaluationResult:
+WARM_MAX_TOKENS = 16            # the smallest reply OpenAI accepts: a warm-up only needs the prefix read
+
+
+def build_request(*, question_context: str, language: str, difficulty: int, answer: str,
+                  check: CheckResult | None = None, hint_level: int = 0, glossary: list[dict] | None = None,
+                  circuit: str | None = None, images: list[tuple[str, bytes]] | None = None, images_missing: int = 0,
+                  question_images: list[tuple[str, bytes]] | None = None) -> LLMRequest:
+    """The judge's request. Everything that is the same for every answer to a question comes first (instructions,
+    question block, the question's figures, language and difficulty), the answer last: that order is what the
+    provider's prefix cache catches, and what `warm_request` sends ahead of time."""
     images = list(images or [])
     question_images = list(question_images or [])
     image_note = (f"The FIRST {len(question_images)} attached images are SOURCE QUESTION material, NOT the candidate's answer. "
                   f"Only the following {len(images)} images belong to the candidate.\n") if question_images else ""
-    request = LLMRequest(
+    return LLMRequest(
         role="evaluator",
         system=[i18n.stable_system_block("evaluator", language, glossary), question_context],
         user=image_note + user_message(language=language, difficulty=difficulty, answer=answer, check=check, hint_level=hint_level,
                           circuit=circuit, images=len(images), images_missing=images_missing),
         schema=Evaluation, prompt_version=i18n.prompt_version("evaluator"), images=question_images + images,
     )
+
+
+def warm_request(*, question_context: str, language: str, difficulty: int, glossary: list[dict] | None = None,
+                 question_images: list[tuple[str, bytes]] | None = None) -> LLMRequest:
+    """The same request with no answer yet and a one-token reply: sent when a question is opened so the real
+    verdict finds its prefix cached (Shaked, 2026-11-02). Byte-identical to the real call up to the answer."""
+    request = build_request(question_context=question_context, language=language, difficulty=difficulty, answer="",
+                            glossary=glossary, question_images=question_images)
+    request.max_tokens = WARM_MAX_TOKENS
+    return request
+
+
+async def evaluate(provider: Provider, *, question_context: str, known_error_keys: set[str], language: str,
+                   difficulty: int, answer: str, check: CheckResult | None = None, hint_level: int = 0,
+                   glossary: list[dict] | None = None, max_attempts: int = 2, circuit: str | None = None,
+                   images: list[tuple[str, bytes]] | None = None, images_missing: int = 0,
+                   question_images: list[tuple[str, bytes]] | None = None) -> EvaluationResult:
+    images = list(images or [])
+    request = build_request(question_context=question_context, language=language, difficulty=difficulty, answer=answer,
+                            check=check, hint_level=hint_level, glossary=glossary, circuit=circuit, images=images,
+                            images_missing=images_missing, question_images=question_images)
     result = EvaluationResult(evaluation=None, prompt_version=request.prompt_version)
     if not answer.strip() and not circuit and not images:
         result.evaluation = Evaluation(correctness=0, depth=0, clarity=0, structure=0, tradeoff_reasoning=0.5,

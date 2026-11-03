@@ -56,7 +56,51 @@ class StorageImageFetcher:
         if mime is None:
             log.warning("image rejected path=%s reason=not an image", path)
             return None
-        return mime, data
+        return shrink_image(mime, data)              # bounded size for the model (2026-11-02)
 
     async def aclose(self) -> None:
         await self.client.aclose()
+
+
+# Shaked, 2026-11-02 ("cut the time"): the judge read every figure and photo at full size. A diagram or a waveform
+# is as readable at this size, and the model's image tokens and vision time shrink with the pixels. Applied to
+# question figures and to answer photos (phone photos are usually 3,000-4,000 px wide).
+MAX_IMAGE_SIDE = 1024
+JPEG_QUALITY = 85
+
+
+def shrink_image(mime: str, data: bytes, *, max_side: int = MAX_IMAGE_SIDE) -> tuple[str, bytes]:
+    """The same picture bounded to `max_side` pixels on its long side; unchanged when already small enough or when
+    it cannot be decoded (the original bytes then go to the model as before). Never raises."""
+    try:
+        import io
+
+        from PIL import Image, ImageOps
+
+        with Image.open(io.BytesIO(data)) as image:
+            image = ImageOps.exif_transpose(image)            # phone photos carry their rotation in EXIF
+            width, height = image.size
+            longest = max(width, height)
+            if longest <= max_side:
+                return mime, data
+            scale = max_side / longest
+            work = image.convert("RGBA") if image.mode in ("P", "1", "LA", "PA") else image
+            resized = work.resize((max(1, round(width * scale)), max(1, round(height * scale))), Image.LANCZOS)
+            out = io.BytesIO()
+            if mime == "image/jpeg":
+                if resized.mode not in ("RGB", "L"):
+                    resized = resized.convert("RGB")
+                resized.save(out, format="JPEG", quality=JPEG_QUALITY, optimize=True)
+                return "image/jpeg", out.getvalue()
+            # PNG and WebP are diagrams, waveforms, screenshots: resampling smears their few colours into thousands
+            # of shades and a bigger file, so transparency goes onto white and the picture is quantised back to 256
+            # colours without dithering (lines and text stay crisp)
+            if "A" in resized.mode:
+                white = Image.new("RGBA", resized.size, (255, 255, 255, 255))
+                resized = Image.alpha_composite(white, resized.convert("RGBA"))
+            resized = resized.convert("RGB").quantize(colors=256, dither=Image.Dither.NONE)
+            resized.save(out, format="PNG", optimize=True)
+            return "image/png", out.getvalue()
+    except Exception:                                          # noqa: BLE001 - a picture must never cost an answer
+        log.warning("image could not be shrunk; sent as is (%s, %d bytes)", mime, len(data))
+        return mime, data

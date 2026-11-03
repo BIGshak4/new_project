@@ -102,6 +102,11 @@ class Settings(BaseSettings):
     # Grade first: a submission answers once the answer is scored; the feedback card, the tip and the follow-up's
     # wording follow within seconds (the app polls). False = the old way, everything in one response.
     feedback_in_background: bool = True
+    # Shaked, 2026-11-02 ("each user that is connected warms the cache"): when a question is opened, a one-token call
+    # with the judge's exact prefix (instructions, question block, figures) is sent in the background so the real
+    # verdict finds the prefix cached (measured in production: 11.4 s cold vs 7.8 s cached on the same question).
+    # OpenAI only; false switches it off from Render without a deploy.
+    judge_warm: bool = True
 
     # Only the separate microVM broker can execute submitted source. The API never runs it locally.
     # Broker health must advertise our pinned public-key fingerprint before any job is sent.

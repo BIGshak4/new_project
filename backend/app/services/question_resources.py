@@ -8,6 +8,7 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import re
+import time
 from typing import Literal
 
 import httpx
@@ -78,17 +79,27 @@ async def sign_media(media: list[dict], base_url: str, service_key: str) -> list
     return out
 
 
-async def fetch_question_images(question) -> list[tuple[str, bytes]] | None:
-    """Only curated prompt images, never a user's URL. None means do not guess an assessment."""
-    from app.config import get_settings
+# The figures of a question, once fetched and shrunk, are kept for a while: the judge's warm-up fetches them when the
+# question is opened and the verdict a minute later must not download them again (Shaked, 2026-11-02, "cut the time").
+IMAGE_CACHE_SECONDS = 600
+IMAGE_CACHE_MAX = 64
+_image_cache: dict[str, tuple[float, list[tuple[str, bytes]]]] = {}
+
+
+def _cache_key(question, media: list[dict]) -> str:
+    return question.key + "|" + ",".join(str(m.get("sha256", "")) for m in media)
+
+
+def cached_images(question) -> list[tuple[str, bytes]] | None:
+    """The question's figures if they were fetched recently (tests and the warm-up look here)."""
+    media = [m for m in question.assets.get("bank_media", []) if m.get("role") == "prompt" and m.get("kind") == "image"]
+    hit = _image_cache.get(_cache_key(question, media)) if media else None
+    return list(hit[1]) if hit and hit[0] > time.monotonic() else None
+
+
+async def _download(settings, media: list[dict]) -> list[tuple[str, bytes] | None]:
     from app.services.storage_images import sniff_image
 
-    media = [m for m in question.assets.get("bank_media", []) if m.get("role") == "prompt" and m.get("kind") == "image"]
-    if not media:
-        return []
-    settings = get_settings()
-    if not settings.supabase_service_role_key or any(not PATH.fullmatch(m.get("path", "")) for m in media):
-        return None
     async with httpx.AsyncClient(timeout=20, headers={"Authorization": f"Bearer {settings.supabase_service_role_key}",
                                                      "apikey": settings.supabase_service_role_key}) as client:
         async def fetch(m):
@@ -101,5 +112,31 @@ async def fetch_question_images(question) -> list[tuple[str, bytes]] | None:
                 return (mime, r.content) if mime else None
             except httpx.HTTPError:
                 return None
-        images = await asyncio.gather(*(fetch(m) for m in media))
-    return images if all(image is not None for image in images) else None
+        return list(await asyncio.gather(*(fetch(m) for m in media)))
+
+
+async def fetch_question_images(question) -> list[tuple[str, bytes]] | None:
+    """Only curated prompt images, never a user's URL. None means do not guess an assessment. The pictures go to the
+    model bounded to 1024 px on their long side, and a question's set is cached for ten minutes."""
+    from app.config import get_settings
+    from app.services.storage_images import shrink_image
+
+    media = [m for m in question.assets.get("bank_media", []) if m.get("role") == "prompt" and m.get("kind") == "image"]
+    if not media:
+        return []
+    key = _cache_key(question, media)
+    hit = _image_cache.get(key)
+    if hit is not None and hit[0] > time.monotonic():
+        return list(hit[1])
+    settings = get_settings()
+    if not settings.supabase_service_role_key or any(not PATH.fullmatch(m.get("path", "")) for m in media):
+        return None
+    images = await _download(settings, media)
+    if not all(image is not None for image in images):
+        return None
+    shrunk = [shrink_image(mime, data) for mime, data in images]
+    if len(_image_cache) >= IMAGE_CACHE_MAX:
+        for old in sorted(_image_cache, key=lambda k: _image_cache[k][0])[: IMAGE_CACHE_MAX // 4]:
+            del _image_cache[old]
+    _image_cache[key] = (time.monotonic() + IMAGE_CACHE_SECONDS, shrunk)
+    return list(shrunk)

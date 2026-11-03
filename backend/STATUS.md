@@ -1779,6 +1779,67 @@ lobby to offer a suggested duration: a small endpoint plus Harel's lobby; not in
 on the fly, interviewer pushback, a read on delivery from the stored soft dimensions, and company shape are the second
 stage Shaked chose the order of; none started. The on-screen side of everything above is Harel's row 22.
 
+## 5zz. Warming the judge's cache when a question opens, and smaller pictures (2026-11-02, Shaked: "i want that each user that is connected warm the cach for him and i want to cut the time"; "amazing apply it")
+
+**Where the time went.** Production since the OpenAI switch (six judged answers, one user): the wait from send to
+verdict was about 12 s median, the judge call alone 7 to 12.6 s, against 3.5 s in the speed-night benchmark. The
+difference is the pictures: Harel's generated questions carry three to five figures, and the API sent them to the
+judge at full size on every answer. The database round trip from Render is 4 ms; the network is not the problem.
+Among those six calls two were on the same question minutes apart: 11.4 s with a cold prompt cache, 7.8 s with the
+prefix cached (figures included). The judge's prompt is instructions + question block + figures + language and
+difficulty, then the answer; OpenAI keeps a recently read prefix for a few minutes and skips re-reading it.
+
+**Built.**
+
+1. **`app/engine/warmup.py`, `JudgeWarmer`.** When a question is shown (practice `start`, `next_hint`,
+   `reveal_reference`; every interview turn and `hint`), the service schedules a background call with the judge's
+   exact prefix and an empty answer, `max_output_tokens` 16 (`evaluator.warm_request`, built by the same
+   `evaluator.build_request` the real call uses, so the bytes match up to the answer). One warm-up per question,
+   language and figure set per four minutes, whoever opens it: the cache is per question, so one user's warm-up
+   serves everyone on it in the window; a hint or a reveal re-warms because it proves the user is still reading.
+   OpenAI only (`active` needs the provider and a key); a cut-off reply is the expected outcome and counts as sent;
+   any other failure is counted and logged, never raised, never in the request's path. `JUDGE_WARM=false` switches
+   it off from Render. Counters on `/health.judge_warm` (sent, failed, skipped_recent, images_unavailable, tokens,
+   cost). The warm-up's own cost is not a `usage_event` row (it runs outside any transaction); the counter is the
+   record. `Runtime.aclose` drains pending warm-ups on shutdown.
+2. **Pictures bounded to 1024 px** (`storage_images.shrink_image`, Pillow added as a dependency): question figures
+   and answer photos alike (phone photos are 3,000 to 4,000 px wide; EXIF rotation honoured). PNG and WebP come
+   back as PNG quantised to 256 colours without dithering, transparency on white; JPEG stays JPEG at quality 85.
+   Undecodable bytes go through unchanged. OpenAI's image tokens follow 512 px tiles, so a 1,906 × 250 strip goes
+   from four tiles to two.
+3. **A question's figures are fetched once per ten minutes** (`question_resources._image_cache`): the warm-up fetches
+   and shrinks them on open, the verdict a minute later takes them from memory instead of downloading them again.
+
+**Measured on the real model (`scripts/judge_warm_check.py`, question `prep-eight-bit-popcount-adders`, three figures).**
+
+| | wall | input tokens | cost |
+|---|---|---|---|
+| judge, cold | 10.0 s | 4,874 uncached | $0.0116 |
+| warm-up | 3.7 to 4.6 s, in the background | | |
+| judge, after the warm-up | 5.4 s | 4,871 cached, 3 uncached | $0.0024 |
+
+The same band and summary both times. The cached call costs about a fifth of the cold one, so at scale the warm-up
+roughly pays for itself: the prefix is read once either way, and every answer after the first on that question is
+cheap. The first warm-up run reported `failed` although the cache was warmed: the SDK's structured parse rejected
+the one-token reply; that is now classified as the expected cut-off.
+
+**Verification.** `tests/test_judge_warm.py` (12 tests: the warm request is the judge's prefix byte for byte up to the
+answer; one warm-up per question and language per window and again after it; figures fetched for it and their
+absence survived; a cut-off reply counts as sent and nothing raises; only OpenAI with a key warms; practice start,
+hint and reveal warm and the interview's turns and hints warm without figures; a 3,000 px PNG shrinks to 1,024 and
+a small one is untouched; a JPEG stays a JPEG; a question's figures are downloaded once and shrunk). The evaluator,
+practice, provider, interview and visual-answer suites pass unchanged (134 tests). Offline suite on the final code:
+**3,979 passed / 12 skipped** (a first run took 21 hours and failed ten date-based tests because the laptop slept
+across midnight; rerun awake, all green).
+
+**Pilot list.** joni25022001@gmail.com joined `jr_members` as 'Joni' on 2026-11-03 (Shaked: "add him"; dry run,
+then applied): thirteen members.
+
+**What this does not do.** The follow-up question's judge (a different prefix) is not warmed; the interview judge
+never saw figures and still does not. The structural fix for pictures, describing each figure in words once so the
+judge reads text, is the next step if the remaining 5 s matter; the priority tier and Render Starter are Shaked's
+switches.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1819,6 +1880,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-02 | The judge's prompt cache is warmed when a question opens, and pictures are bounded (§5zz): `JudgeWarmer` sends the judge's exact prefix with an empty answer in the background on practice start / hint / reveal and on every interview turn, once per question per four minutes (`JUDGE_WARM`, counters on `/health.judge_warm`); question figures and answer photos go to the model at 1024 px (Pillow), a question's figures are cached ten minutes. Measured on the real model: judge 10.0 s / $0.0116 cold, 5.4 s / $0.0024 after the warm-up, same verdict. 12 new tests; `scripts/judge_warm_check.py`. |
 | 2026-11-02 | The interview, fitted to the person (§5zy; usage before: five interviews ever, one answered question): the controller's hint after a weak answer is now delivered with the next question (it was decided and never shown); an interview that would end on a weak answer asks one closing question on a strength and ends after it; the report opens with what held up, proposes the next interview (harder / same / easier) and compares with the previous one; finishing earns 15 coins after three answers. Report prompt v2. `InterviewTurnView.closing`, `InterviewReportView.held_up / next_step / since_last_time / fit_change / completion_coins`. 15 new tests; real-model dry runs on the mock interview script (now `--pattern`, `--minutes-per-answer`, `--twice`). Screen side: Harel's row 22. |
 | 2026-11-02 | Follow-ups on every question (§5zx): 243 generated questions were study-only (weight 0 → no follow-up, XP or coins); with Shaked's approval their `assessment_ready` flag was set true in production and tomerfahn@gmail.com joined `jr_members`; `ASSESS_UNREVIEWED_QUESTIONS` (true on Render) makes the rule survive seed reloads without touching Harel's intake or tests; 3 new tests. |
 | 2026-11-01 | The judge's speed, measured and made tunable, and the review of Harel's code-execution feature (§5zw): `OPENAI_ROLE_EFFORT` / `OPENAI_SERVICE_TIER` settings, priority pricing on the usage record, `/health.speed` and `/health.code_execution`, `scripts/judge_speed_matrix.py` (production judge 3.5 s median warm, $0.0027/answer, 13/13 bands; Terra identical at $0.0012; priority −1 s at 2×); OpenAI vs Anthropic: ≈5× cheaper, judge ≈2× faster, same bands on the review set and the real flow. Merged Harel's 42 commits; found code execution live in production; nine review fixes with tests (unguarded checker that could stick an answer, 25 s submit budget, trimmed stored run facts, streamed bounded bodies, timeout reuse, aliases, avatar price/ownership, quiz loader validation). Offline 3,888 passed / 11 skipped; live db 3 passed; coins/duels scenario 33 checks on production, rolled back. Decisions left to Shaked and Harel listed in §5zw. |

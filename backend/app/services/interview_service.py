@@ -99,9 +99,10 @@ class InterviewConfig:
 
 class InterviewService:
     def __init__(self, store: Store, catalog: Catalog, provider: Provider, config: InterviewConfig | None = None, *,
-                 image_fetcher: ImageFetcher | None = None, on_finished=None, coins=None):
+                 image_fetcher: ImageFetcher | None = None, on_finished=None, coins=None, warmer=None):
         self.store, self.catalog, self.provider = store, catalog, provider
         self.coins = coins                               # CoinsService: a strong turn earns coins (Shaked, 2026-10-22)
+        self.warmer = warmer                             # JudgeWarmer: the judge's prefix is cached while the candidate reads
         self.on_finished = on_finished                   # async (tx, user_id, session_id) -> None: the program ticks its item
         self.config = config or InterviewConfig()
         self.image_fetcher = image_fetcher               # None: photos are kept but not shown to the evaluator
@@ -157,6 +158,7 @@ class InterviewService:
                           "job_type": job_type, "job_types": list(job_types), "learning_mode": goal.learning_mode,
                           "plan": [p.model_dump(mode="json") for p in plan]}}
         turns = [self._new_turn(0, decision, question, language, now)]
+        self._warm(question, language)
         async with self.store.transaction() as tx:
             # The early check is just a fast refusal. This locked check and INSERT
             # share one transaction, so parallel workers cannot spend one slot twice.
@@ -312,6 +314,7 @@ class InterviewService:
                     new_turn["question_generation_meta"]["closing"] = snapshot
                     turns.append(new_turn)
                     changed.append(new_turn)
+                    self._warm(next_question, language)
             elif decision.action != Action.END and len(turns) < MAX_TURNS:
                 pool = await self._pool_for(language, self._session_selection(row["config"]))
                 decision, next_question = self._open(engine, plan, state, decision, pool, seen=seen, language=language)
@@ -320,6 +323,7 @@ class InterviewService:
                     self._deliver_hint(new_turn, next_question, decision, language, row)
                     turns.append(new_turn)
                     changed.append(new_turn)
+                    self._warm(next_question, language)
             if decision.action == Action.END or len(turns) >= MAX_TURNS and turns[-1] is turn:
                 self._finish(row, state, ended_early=False, answered=self._answered(turns))
             meta.update(action_after=decision.action.value, subject_switch=decision.subject_switch)   # the final decision
@@ -351,6 +355,7 @@ class InterviewService:
             row["hints_used"] = row.get("hints_used", 0) + 1
             row["hints_requested_by_user"] = row.get("hints_requested_by_user", 0) + 1
             await self._persist(user_id, row, [turn], state=state)
+            self._warm(question, language)                   # still reading: keep the judge's prefix warm
             return HintView(level=level, text=text), self._view(stored, state)
 
     async def end(self, user_id: uuid.UUID, session_id: uuid.UUID) -> InterviewView:
@@ -591,6 +596,12 @@ class InterviewService:
     @staticmethod
     def _answered(turns: list[dict]) -> int:
         return sum(1 for t in turns if (t.get("question_generation_meta") or {}).get("status") == "done")
+
+    def _warm(self, question: BankQuestion, language: str) -> None:
+        """The judge's prefix for this question is read by OpenAI now, in the background, so the verdict a minute
+        from now finds it cached (Shaked, 2026-11-02). The interview judge sees no figures, so none are sent."""
+        if self.warmer is not None:
+            self.warmer.schedule(question, language, self.catalog.skills.get(question.primary_skill), with_images=False)
 
     # ------------------------------------------------------------------ fitted to the person (Shaked, 2026-11-02)
 

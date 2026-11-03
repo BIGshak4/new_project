@@ -144,11 +144,12 @@ FEEDBACK_STALE_SECONDS = 30
 
 class PracticeService:
     def __init__(self, store: Store, catalog: Catalog, provider: Provider, config: ServiceConfig | None = None, *,
-                 image_fetcher: ImageFetcher | None = None, question_image_fetcher=None):
+                 image_fetcher: ImageFetcher | None = None, question_image_fetcher=None, warmer=None):
         self.store, self.catalog, self.provider = store, catalog, provider
         self.config = config or ServiceConfig()
         self.image_fetcher = image_fetcher                 # None: photos are stored but not shown to the evaluator
         self.question_image_fetcher = question_image_fetcher
+        self.warmer = warmer                               # JudgeWarmer: the judge's prefix is cached while the user reads
         self.code_execution = None
         self._locks: dict[uuid.UUID, asyncio.Lock] = {}
         self._user_locks: dict[uuid.UUID, asyncio.Lock] = {}     # one program action at a time per user (rebuild, start, goal)
@@ -400,7 +401,14 @@ class PracticeService:
             raise ApiError("conflict", "your profile was updated by another request; try again")
         stored = StoredAttempt(id=attempt.attempt_id_uuid, user_id=user_id, question_id=loaded.id,
                                question_key=loaded.question.key, started_at=_now(), row=row)
+        self._warm(loaded.question, language)
         return self._view(attempt, stored, loaded, language)
+
+    def _warm(self, question, language: str) -> None:
+        """The judge's prefix for this question (instructions, question block, figures) is read by OpenAI now, in
+        the background, so the verdict a minute from now finds it cached (Shaked, 2026-11-02)."""
+        if self.warmer is not None:
+            self.warmer.schedule(question, language, self.catalog.skills.get(question.primary_skill))
 
     async def get(self, user_id: uuid.UUID, attempt_id: uuid.UUID) -> AttemptView:
         attempt, stored, loaded, _ = await self._load(user_id, attempt_id)
@@ -426,6 +434,7 @@ class PracticeService:
             else:
                 raise ApiError("conflict", "your profile was updated by another request; try again")
             hint = HintView(level=result[0], text=result[1]) if result else None
+            self._warm(attempt.question, stored.row["practice_language"])       # still reading: keep the prefix warm
             return hint, self._view(attempt, stored, loaded, stored.row["practice_language"])
 
     async def reveal_reference(self, user_id: uuid.UUID, attempt_id: uuid.UUID) -> tuple[str, AttemptView]:
@@ -437,6 +446,7 @@ class PracticeService:
                 async with self.store.transaction() as tx:
                     await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
                                           revisions=set())
+            self._warm(attempt.question, stored.row["practice_language"])
             return text, self._view(attempt, stored, loaded, stored.row["practice_language"])
 
     async def submit(self, user_id: uuid.UUID, attempt_id: uuid.UUID, answer, *, idempotency_key: str | None,

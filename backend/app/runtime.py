@@ -12,6 +12,7 @@ from app.config import Settings
 from app.engine import bank
 from app.engine.catalog import Catalog, load_catalog
 from app.engine.providers import Provider, build_provider
+from app.engine.warmup import JudgeWarmer
 from app.repo.fundamentals import DbFundamentalsRepository, MemoryFundamentalsRepository
 from app.services.avatars import AvatarsService
 from app.services.avatars import load_catalog as load_avatar_catalog
@@ -46,10 +47,13 @@ class Runtime:
     avatars: AvatarsService | None = None             # persistent logical-component customization and cosmetic ownership
     code_execution: CodeExecutionService | None = None
     identities: IdentityService | None = None
+    warmer: JudgeWarmer | None = None                 # warms the judge's prompt cache when a question is opened
 
     async def aclose(self) -> None:
         # a redeploy waits a little for feedback being written; anything unfinished is resumed on the next read
         await self.practice.drain(timeout=20)
+        if self.warmer is not None:
+            await self.warmer.drain()
         if self.image_fetcher is not None:
             await self.image_fetcher.aclose()
         if self.code_execution is not None:
@@ -108,8 +112,10 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                                                            free_option_visible=settings.billing_free_option_visible,
                                                            site_url=settings.site_url, configured=configured))
     from app.services.question_resources import fetch_question_images
+    # Shaked, 2026-11-02: a question opened = the judge's prefix read by OpenAI in the background (JUDGE_WARM)
+    warmer = JudgeWarmer(provider, fetch_images=fetch_question_images, glossary=catalog.glossary, enabled=settings.judge_warm)
     practice = PracticeService(store, catalog, provider, config, image_fetcher=fetcher,
-                               question_image_fetcher=fetch_question_images)
+                               question_image_fetcher=fetch_question_images, warmer=warmer)
     # the plan decides how many questions a day (regular 30, premium 50; a free user keeps the default while
     # payment is optional; Shaked, 2026-10-20)
     coins = CoinsService(store, load_coin_rules(settings.seeds_dir / "coins.json"))
@@ -133,7 +139,8 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                        DbFundamentalsRepository() if kind == "database" else MemoryFundamentalsRepository(),
                        load_fundamentals_catalog(settings.seeds_dir / "fundamentals_catalog.json")),
                    interview=InterviewService(store, catalog, provider, interview_config, image_fetcher=fetcher,
-                                              on_finished=interview_finished, coins=coins))
+                                              on_finished=interview_finished, coins=coins, warmer=warmer),
+                   warmer=warmer)
     runtime.code_execution = CodeExecutionService(settings, database=kind == "database")
     runtime.identities = IdentityService(store, runtime.avatars)
     practice.code_execution = runtime.code_execution

@@ -40,6 +40,7 @@ services:
       #   OPENAI_SERVICE_TIER=priority           (faster processing at a higher price; flex = slower, cheaper)
       - key: ALLOW_IN_REVIEW_CONTENT
         value: "true"                  # the pilot serves in_review questions until the first ones are published
+      # JUDGE_WARM defaults to true (the judge's prompt cache is warmed when a question opens, 2026-11-02); set false here to stop it
       - key: ASSESS_UNREVIEWED_QUESTIONS
         value: "true"                  # generated questions act like normal ones; the review stamp is their status (Shaked, 2026-11-02)
       - key: DAILY_ATTEMPT_LIMIT

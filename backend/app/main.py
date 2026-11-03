@@ -327,6 +327,9 @@ async def health(request: Request, db_check: bool = False) -> dict:
             # the speed knobs (2026-11-01): each role's reasoning effort and the processing tier asked for
             "speed": ({"effort": {**ROLE_EFFORT, **settings.role_effort}, "service_tier": settings.service_tier or "default"}
                       if settings.llm_provider == "openai" else None),
+            # the judge's cache warm-up (Shaked, 2026-11-02): active = OpenAI with a key; the counters since start
+            "judge_warm": ({"enabled": settings.judge_warm, "active": runtime.warmer.active, **runtime.warmer.stats}
+                           if runtime is not None and runtime.warmer is not None else None),
             "answer_images": "assessed" if settings.supabase_service_role_key and settings.supabase_url else "stored_only",
             # the code runner (Harel, 2026-10-31): wired = enabled with a URL and a signing key; last_probe = what the
             # broker said when it was last asked (None = not asked yet); nothing here calls the broker
