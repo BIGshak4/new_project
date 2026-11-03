@@ -68,7 +68,7 @@ import {
 
 type Route = WorkspaceRoute;
 const DEFAULT_VIEW = DEFAULT_WORKSPACE_VIEW;
-/** The library owns its interview, quick-study, saved and history views; old links keep working. */
+/** History stays addressable for saved attempts; library navigation shows questions, quick study and saved items. */
 const LIBRARY_VIEWS = new Set(["library", "fundamentals", "bookmarks", "history"]);
 const QuickPractice = dynamic(() => import("../components/quick-practice").then(module => module.QuickPractice));
 const emptyProgress: Progress = {
@@ -305,6 +305,10 @@ function Workspace({
     setGoal(g);
     setEditingGoal(false);
     refreshProgress();
+    requestAnimationFrame(() => {
+      document.querySelector<HTMLElement>("[data-goal-summary]")?.focus({ preventScroll: true });
+      window.scrollTo({ top: 0, behavior: "instant" });
+    });
   };
   const skipGoal = () => {
     setEditingGoal(false);
@@ -390,7 +394,6 @@ function Workspace({
       { id: "library", icon: BookOpen, label: t("שאלות ראיון", "Interview questions") },
       { id: "fundamentals", icon: Zap, label: t("יסודות בקטנה", "A little practice") },
       { id: "bookmarks", icon: Bookmark, label: t("שמורות", "Saved") },
-      { id: "history", icon: History, label: t("התרגול שלי", "My practice") },
     ].map(({ id, icon: Icon, label }) => <button key={id} aria-pressed={route.view === id}
       className={route.view === id ? "active" : ""} onClick={() => navigate({ view: id })}>
       <Icon size={15} aria-hidden="true" /> {label}

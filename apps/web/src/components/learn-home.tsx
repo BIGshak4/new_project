@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Clock3, MessageSquareText, Play, RefreshCw, Target } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, MessageSquareText, Play, RefreshCw, Target } from "lucide-react";
 import type { Lang } from "./auth";
 import { StreakCard } from "./skill-strength";
 import { SubjectSketch, sketchCaption } from "./sketches";
@@ -9,12 +9,13 @@ import type { Goal, PlanItem, PracticeApi, Program, Progress, ReadinessQuestion 
 import { apiMessage } from "../lib/practice-ui";
 import { dayLabel, modeLabel } from "../lib/timeline";
 import { daysToGoLabel, eligibleAhead, pathNodes, todayProgress, type PathNode } from "../lib/path";
-import { revealDelay, shouldScrollToNode } from "../lib/ui";
+import { revealDelay } from "../lib/ui";
 import { Breathe, Pop, motion, spring, useReducedMotion } from "./ui/motion";
 import { BidiText } from "./bidi-text";
 import { goalRoleLabel } from "../lib/goal-selection";
 import { RecommendationWaves } from "./recommendation-waves";
 import type { AccountActivity } from "../lib/account-stats-api";
+import { GoalSummary } from "./goal-summary";
 
 /** The real adaptive program, displayed in the approved Ion shell. */
 export function LearnHome({
@@ -89,18 +90,7 @@ export function LearnHome({
   }, [api, lang]);
   useEffect(() => load(), [load, refreshKey]);
 
-  // on open, bring the day's sheet into view once (only if it is not already visible)
   const reduced = useReducedMotion();
-  const scrolled = useRef(false);
-  useEffect(() => {
-    if (scrolled.current || !program || goalSlot || !program.goal_complete || !progress.overview?.answered) return;
-    const el = document.querySelector<HTMLElement>(".today-sheet");
-    if (!el) return;
-    scrolled.current = true;
-    if (shouldScrollToNode(el.getBoundingClientRect(), window.innerHeight)) {
-      el.scrollIntoView({ block: "start", behavior: reduced ? "auto" : "smooth" });
-    }
-  }, [program, reduced, goalSlot, progress.overview?.answered]);
 
   async function start(node: PathNode | null) {
     const id = node?.item.id ?? undefined;
@@ -205,6 +195,8 @@ export function LearnHome({
   return (
     <div className="learn">
       <div className="learn-main">
+        {goal && (goal.complete || goal.learning_mode === "explore" || goal.job_type) && <GoalSummary goal={goal} lang={lang} onEdit={onOpenGoal} />}
+        {goalSlot}
         <header className="learn-head">
           <div>
             <h1 dir="auto">
@@ -228,8 +220,6 @@ export function LearnHome({
             </p>
           )}
         </header>
-
-        {goalSlot}
 
         {loading ? (
           <p className="loading loading-sheet" role="status">
@@ -458,11 +448,6 @@ export function LearnHome({
             <small>{t("פתק מהמאמן · מתעדכן כל בוקר", "A note from the coach · refreshed every morning")}</small>
           </div>
         )}
-        {minutes ? (
-          <button type="button" className="pill-button" onClick={onOpenGoal} aria-label={t("עריכת היעד", "Edit goal")}>
-            <Clock3 size={15} aria-hidden="true" /> {minutes} {t("דק׳ ביום · עריכת היעד", "min a day · edit goal")}
-          </button>
-        ) : null}
       </aside>
     </div>
   );

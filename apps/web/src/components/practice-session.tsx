@@ -383,8 +383,8 @@ export function PracticeSession({
         apiMessage(e, lang) +
           " " +
           t(
-            "אם הפתיחה התבצעה לפני הניתוק, התרגול יופיע תחת ״התרגול שלי״.",
-            "If the attempt was created before disconnecting, find it in My practice.",
+            "אם התרגול נפתח לפני הניתוק, הנתונים שלו נשמרו בחשבון.",
+            "If the attempt was created before disconnecting, its data is saved in your account.",
           ),
       );
     } finally {
@@ -702,8 +702,8 @@ export function PracticeSession({
                     </div>
                     <p className="small muted">
                       {t(
-                        "כל אחת מהאפשרויות פותחת תרגול אחד מהמכסה היומית. צפייה בפתרון לפני שליחת תשובה מסמנת למידה בעזרת פתרון, ולא הערכה של פתרון עצמאי. התרגול נשמר ב׳התרגול שלי׳.",
-                        "Either option starts one attempt from your daily allowance. Viewing the solution before submitting marks it as learning with a reference, rather than an independent assessment. The attempt stays in My practice.",
+                        "כל אחת מהאפשרויות פותחת תרגול אחד מהמכסה היומית. צפייה בפתרון לפני שליחת תשובה מסמנת למידה בעזרת פתרון, ולא הערכה של פתרון עצמאי. התשובה והמשוב נשמרים בחשבון יחד עם התרגול.",
+                        "Either option starts one attempt from your daily allowance. Viewing the solution before submitting marks it as learning with a reference, rather than an independent assessment. The answer and feedback are saved with the attempt in your account.",
                       )}
                     </p>
                   </section>

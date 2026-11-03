@@ -1,0 +1,12 @@
+.summary { min-width: 0; padding: 20px 22px; margin-block-end: 26px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); scroll-margin-block-start: 180px; }
+.summary:focus { outline: none; }
+.header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-block-end: 16px; }
+.header h2 { margin: 0; font-size: 21px; line-height: 1.35; }
+.header button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 9px 13px; color: var(--link); background: var(--soft); border: 1px solid var(--line); }
+.fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 20px; padding: 0; margin: 0; }
+.fields > div { min-width: 0; }
+.roles { grid-column: 1 / -1; }
+.fields dt { color: var(--muted); font-size: 12px; line-height: 1.5; }
+.fields dd { margin: 4px 0 0; color: var(--ink); font-size: 15px; font-weight: 500; line-height: 1.6; overflow-wrap: anywhere; }
+.note { margin: 16px 0 0; font-size: 13px; line-height: 1.6; color: var(--muted); font-weight: 400; }
+@media(max-width:600px) { .summary { padding: 17px; scroll-margin-block-start: 200px; } .fields { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; } .fields > div:last-child { grid-column: 1 / -1; } .header h2 { font-size: 20px; } }
