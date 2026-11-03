@@ -32,6 +32,7 @@ type Props = {
   initialDuration?: number | null;
   demo: boolean;
   onStarted: (id: string) => void;
+  onProgress?: () => void;
   onBack: () => void;
 };
 
@@ -162,7 +163,7 @@ function InterviewLobby({ api, lang, demo, onStarted, initialDuration }: Props) 
   );
 }
 
-function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { interviewId: string }) {
+function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: Props & { interviewId: string }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const reduced = useReducedMotion();
   const [interview, setInterview] = useState<Interview | null>(null);
@@ -176,6 +177,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
   const [now, setNow] = useState(Date.now());
   const barRef = useRef<HTMLElement>(null);
   const live = useRef(true);
+  const completedNotified = useRef<string | null>(null);
   const draftKey = `jr-interview-draft-${userId}-${interviewId}`;
 
   useEffect(() => {
@@ -244,6 +246,13 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack }: Props & { int
       api.interviewReport(interviewId).then((r) => live.current && setReport(r)).catch((e) => setError(apiMessage(e, lang)));
     }
   }, [api, interviewId, interview?.status, report, lang]);
+
+  useEffect(() => {
+    if (interview?.status === "completed" && completedNotified.current !== interviewId) {
+      completedNotified.current = interviewId;
+      onProgress?.();
+    }
+  }, [interview?.status, interviewId, onProgress]);
 
   useEffect(() => {
     if (interview?.current_turn) writeLocal(draftKey, { answer, visual, turn: interview.current_turn.index });

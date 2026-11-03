@@ -1,9 +1,12 @@
 import { before, test } from "node:test";
 import assert from "node:assert/strict";
+import { createRequire } from "node:module";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import type { PlanItem, Program } from "../src/lib/practice-api";
 import { eligibleAhead, todayProgress } from "../src/lib/path";
+const require = createRequire(import.meta.url);
+require.extensions[".css"] = module => { module.exports = {}; };
 process.env.NEXT_PUBLIC_SUPABASE_URL = "https://example.supabase.co";
 process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = "readiness-test-publishable-key";
 let WorkAheadCard: typeof import("../src/components/learn-home").WorkAheadCard;

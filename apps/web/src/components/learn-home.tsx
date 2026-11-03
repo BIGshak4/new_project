@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, Check, Clock3, MessageSquareText, Play, RefreshC
 import type { Lang } from "./auth";
 import { StreakCard } from "./skill-strength";
 import { SubjectSketch, sketchCaption } from "./sketches";
-import type { Goal, PlanItem, PracticeApi, Program, Progress } from "../lib/practice-api";
+import type { Goal, PlanItem, PracticeApi, Program, Progress, ReadinessQuestion } from "../lib/practice-api";
 import { apiMessage } from "../lib/practice-ui";
 import { dayLabel, modeLabel } from "../lib/timeline";
 import { daysToGoLabel, eligibleAhead, pathNodes, todayProgress, type PathNode } from "../lib/path";
@@ -13,6 +13,8 @@ import { revealDelay, shouldScrollToNode } from "../lib/ui";
 import { Breathe, Pop, motion, spring, useReducedMotion } from "./ui/motion";
 import { BidiText } from "./bidi-text";
 import { goalRoleLabel } from "../lib/goal-selection";
+import { RecommendationWaves } from "./recommendation-waves";
+import type { AccountActivity } from "../lib/account-stats-api";
 
 /** The real adaptive program, displayed in the approved Ion shell. */
 export function LearnHome({
@@ -23,6 +25,8 @@ export function LearnHome({
   refreshKey,
   goalSlot,
   userName,
+  userId,
+  activity,
   onStartAttempt,
   onStartInterview,
   onOpenGoal,
@@ -38,6 +42,9 @@ export function LearnHome({
   goalSlot?: React.ReactNode;
   /** the user's first name, for the kicker */
   userName?: string;
+  /** Bind recommended question starts to the account which owns this workspace. */
+  userId: string;
+  activity: AccountActivity | null;
   onStartAttempt: (attemptId: string) => void;
   onStartInterview: (durationMin: number | null) => void;
   onOpenGoal: () => void;
@@ -49,6 +56,7 @@ export function LearnHome({
   const [busy, setBusy] = useState<string | null>(null);
   const [message, setMessage] = useState("");
   const [loadError, setLoadError] = useState("");
+  const [recommendationError, setRecommendationError] = useState("");
   const loadVersion = useRef(0);
   const starting = useRef(false);
   const mounted = useRef(false);
@@ -62,6 +70,7 @@ export function LearnHome({
     const version = ++loadVersion.current;
     setLoading(true);
     setLoadError("");
+    setRecommendationError("");
     api
       .program(lang)
       .then((p) => {
@@ -112,6 +121,24 @@ export function LearnHome({
       }
     } catch (e) {
       if (isCurrent()) setMessage(apiMessage(e, lang));
+    } finally {
+      starting.current = false;
+      if (mounted.current) setBusy(null);
+    }
+  }
+
+  async function startRecommendation(question: ReadinessQuestion) {
+    if (!mounted.current || starting.current || loading || loadError) return;
+    starting.current = true;
+    setBusy(`recommendation:${question.key}`);
+    setRecommendationError("");
+    const versionAtStart = loadVersion.current;
+    const isCurrent = () => mounted.current && loadVersion.current === versionAtStart;
+    try {
+      const attempt = await api.startAttempt({ question_key: question.key, language: lang, mode: "deep", source: "readiness", screen: "learn" }, userId);
+      if (isCurrent()) onStartAttempt(attempt.id);
+    } catch (reason) {
+      if (isCurrent()) setRecommendationError(apiMessage(reason, lang));
     } finally {
       starting.current = false;
       if (mounted.current) setBusy(null);
@@ -197,7 +224,7 @@ export function LearnHome({
               <br />
               {t("אתמול", "yesterday")}: {yesterdayWord}
               <br />
-              {t("רצף", "streak")}: {overview?.streak_days ?? 0}
+              {t("רצף", "streak")}: {activity?.streak_days ?? "—"}
             </p>
           )}
         </header>
@@ -348,6 +375,9 @@ export function LearnHome({
               )}
             </section>
 
+            <RecommendationWaves api={api} lang={lang} refreshKey={refreshKey} enabled={goalComplete} busyKey={busy}
+              disabled={loading || !!loadError} actionError={recommendationError} onStart={question => void startRecommendation(question)} onOpenGoal={onOpenGoal} onOpenLibrary={onOpenLibrary} />
+
             {laterNodes.length > 0 && (
               <section className="later" aria-label={t("בהמשך השבוע", "Later this week")}>
                 <h3>{t("בהמשך השבוע", "Later this week")}</h3>
@@ -418,7 +448,7 @@ export function LearnHome({
             ) : null}
           </p>
         </section>
-        <StreakCard days={overview?.streak_days ?? 0} todayDone={(overview?.xp_today ?? 0) > 0} lang={lang} />
+        {activity && <StreakCard days={activity.streak_days} todayDone={activity.today_count > 0} lang={lang} />}
         {tomorrow && (
           <div className="sticky" dir="auto">
             {dayLabel(tomorrow.item.date, tomorrow.dayIndex, lang)}{": "}

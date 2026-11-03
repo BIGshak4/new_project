@@ -1,17 +1,15 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import type { Goal } from "../src/lib/practice-api";
-import { defaultGoalJobFilter, goalJobTypes, goalProgramKey, goalRoleLabel, GOAL_JOBS_FILTER } from "../src/lib/goal-selection";
+import { goalJobTypes, goalProgramKey, goalRoleLabel } from "../src/lib/goal-selection";
 import { readWorkspaceRoute } from "../src/lib/workspace-route";
 
 const goal = (updates: Partial<Goal> = {}): Goal => ({ job_type: "verification", job_type_label: "Verification", interview_date: null, days_to_interview: null, minutes_per_day: 37, seniority: "junior", complete: true, ...updates });
 
-test("legacy goals and plural role selections retain their full library scope", () => {
+test("legacy goals and plural role selections retain their full personal plan selection", () => {
   assert.deepEqual(goalJobTypes(goal()), ["verification"]);
-  assert.equal(defaultGoalJobFilter(goal()), "verification");
   const multi = goal({ job_types: ["verification", "software", "verification"], job_type_labels: ["Verification", "Software"] });
   assert.deepEqual(goalJobTypes(multi), ["verification", "software"]);
-  assert.equal(defaultGoalJobFilter(multi), GOAL_JOBS_FILTER);
   assert.equal(goalRoleLabel(multi, "en"), "Verification · Software");
   assert.deepEqual(goalJobTypes(goal({ job_types: [] })), []);
 });
@@ -19,7 +17,6 @@ test("legacy goals and plural role selections retain their full library scope", 
 test("exploration cannot accidentally resurrect a legacy target role", () => {
   const explore = goal({ learning_mode: "explore", job_types: ["verification"] });
   assert.deepEqual(goalJobTypes(explore), []);
-  assert.equal(defaultGoalJobFilter(explore), "");
   assert.equal(goalRoleLabel(explore, "he"), "למידה ללא יעד מוגדר");
 });
 

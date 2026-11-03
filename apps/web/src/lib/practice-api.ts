@@ -742,8 +742,8 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
     questionResources: (key: string, attemptId?: string, language?: ApiLang) =>
       call<QuestionResources>("GET", `/v1/questions/${encodeURIComponent(key)}/resources${q({ attempt_id: attemptId, language })}`),
 
-    startAttempt: (body: StartAttemptRequest) =>
-      call<Attempt>("POST", "/v1/practice/attempts", body),
+    startAttempt: (body: StartAttemptRequest, expectedUserId?: string) =>
+      call<Attempt>("POST", "/v1/practice/attempts", body, {}, expectedUserId),
     getAttempt: (attemptId: string) =>
       call<Attempt>("GET", `/v1/practice/attempts/${attemptId}`),
     executionCapabilities: (attemptId: string, signal?: AbortSignal) =>

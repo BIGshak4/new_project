@@ -1,6 +1,6 @@
 /** Real, public-tour end-to-end checks. Runs a fresh temporary Edge context only.
  * node tools/tours/verify.mjs [http://localhost:3214] [output-directory] [flows]
- * Optional flows is a comma-separated subset: full,short,navigation,storage,mobile.
+ * Optional flows is a comma-separated subset: policy,short,navigation,storage,mobile. The public tour is short-only; full authenticated tours are tested separately.
  * PLAYWRIGHT_MODULE may point at a bundled playwright package; EDGE_EXECUTABLE
  * may override the installed Edge binary. No account, practice API or user profile.
  */
@@ -381,32 +381,21 @@ async function perform(p, id, full = false) {
   }
 }
 
-async function fullTour() {
+async function publicPolicy() {
   const { ctx, p } = await context();
   try {
-    check(fullIds.length === 36 && new Set(fullIds).size === 36, "Full catalog contains 36 unique stations");
-    check(!fullIds.some(id => ["progress", "readiness", "plan"].includes(id)), "Full catalog omits the removed Progress screen and its obsolete stations");
-    check(fullIds.includes("topics") && !fullIds.includes("digital") && !fullIds.includes("fsm"), "Shared topics overview replaces repetitive per-question stations");
-    await shot(p, "desktop-chooser"); await shot(p, "muxi-mascot", p.getByRole("img", { name: "מוקסי מנופף לשלום" }));
-    await button(p, "מתחילים בסיור המעמיק", "Start the full tour").click();
-    let alreadyAt = null;
-    for (const id of fullIds) {
-      current = `full:${id}`; await station(p, id);
-      check(await next(p).isDisabled(), `Full ${id}: Continue is disabled before the required interaction`);
-      const result = await perform(p, id, true);
-      if (result === "advanced") { alreadyAt = "export-circuit"; continue; }
-      await continueStation(p);
-      if (id === "goal") {
-        await station(p, "search"); await coach(p).getByRole("button", { name: "התחנה הקודמת", exact: true }).click(); await station(p, "goal");
-        check(await next(p).isEnabled(), "Backtracking retains completed stations"); await continueStation(p);
-      }
-      alreadyAt = null;
-    }
-    await p.getByRole("heading", { name: /עכשיו הכלים בידיים שלכם|The tools are yours to use/ }).waitFor();
+    check(await button(p, "מתחילים בסיור המעמיק", "Start the full tour").count() === 0, "Public chooser offers no full tour");
+    check(await root(p).getAttribute("data-muxi-kind") === "short", "Public tour starts with the short policy");
+    await p.goto(`${base}/tour?kind=full`, { waitUntil: "networkidle" });
+    check(await button(p, "מתחילים בסיור המעמיק", "Start the full tour").count() === 0, "A full-kind URL cannot bypass the public short-only policy");
+    await p.evaluate(() => localStorage.setItem("jobrun-muxi-tour-v1-visitor", JSON.stringify({ version: 1, offered: true, kind: "full", stepId: "photo", completed: ["goal", "search", "truth"], skipped: [], status: "paused", updatedAt: 123 })));
+    await p.reload({ waitUntil: "networkidle" });
+    await button(p, "ממשיכים מהמקום שעצרנו", "Resume where I stopped").click();
+    await station(p, "topics");
     const saved = await p.evaluate(() => JSON.parse(localStorage.getItem("jobrun-muxi-tour-v1-visitor") || "null"));
-    check(saved.status === "completed" && saved.completed.length === fullIds.length && saved.skipped.length === 0, `Full tour completed all ${fullIds.length} stations with zero skips`);
-    await verifyAutomaticScroll(p, "Full tour");
-    await shot(p, "full-completion");
+    check(saved.kind === "short" && !saved.completed.includes("truth"), "An old full checkpoint is migrated without full-only stations");
+    check(await root(p).getAttribute("data-muxi-kind") === "short", "Resume cannot reopen a public full tour");
+    await shot(p, "public-short-policy");
   } catch (error) { await captureFailure(p, error); throw error; } finally { await ctx.close(); }
 }
 async function shortTour() {
@@ -421,26 +410,26 @@ async function shortTour() {
     check(saved.completed.length === shortIds.length && saved.skipped.length === 0, `Short tour completed all ${shortIds.length} stations with zero skips`);
     await verifyAutomaticScroll(p, "Short tour");
     await shot(p, "short-completion");
-    await button(p, "ממשיכים לסיור המעמיק", "Explore the full tour").click(); await station(p, "goal"); check(await next(p).isDisabled(), "Short completion can launch a fresh full tour");
+    check(await button(p, "ממשיכים לסיור המעמיק", "Explore the full tour").count() === 0, "Public short completion has no full-tour upsell");
   } catch (error) { await captureFailure(p, error); throw error; } finally { await ctx.close(); }
 }
 async function navigationAndPersistence() {
   const { ctx, p } = await context();
   try {
-    await button(p, "מתחילים בסיור המעמיק", "Start the full tour").click(); await station(p, "goal");
+    await button(p, "מתחילים בסיור הקצר", "Start the short tour").click(); await station(p, "goal");
     const focused = await p.evaluate(() => document.activeElement?.tagName); check(focused === "H2", "Tour start focuses the coach heading");
     await p.keyboard.press("Tab"); check(await p.evaluate(() => document.activeElement?.tagName === "BUTTON"), "Keyboard Tab reaches a usable tour control");
     await perform(p, "goal"); await continueStation(p); await station(p, "search");
-    await coach(p).getByRole("button", { name: "יציאה ושמירת המקום", exact: true }).click(); await p.waitForURL(`${base}/`, { waitUntil: "domcontentloaded" });
+    await coach(p).getByRole("button", { name: "יציאה ושמירת המקום", exact: true }).click(); await p.waitForURL(url => url.pathname === "/" && url.hash === "#signin", { waitUntil: "domcontentloaded" });
     await p.goto(`${base}/tour`, { waitUntil: "networkidle" }); await button(p, "ממשיכים מהמקום שעצרנו", "Resume where I stopped").click(); await station(p, "search");
     check(await next(p).isDisabled(), "Pause/resume restores the station while preserving action gate");
-    await expandChapters(p, "בונים ובודקים מעגל"); await station(p, "wire");
-    await coach(p).getByRole("button", { name: "בחירת סיור אחר", exact: true }).click();
+    await expandChapters(p, "בונים ובודקים מעגל"); await station(p, "simulate");
+    await coach(p).getByRole("button", { name: "בחזרה לפתיחת הסיור", exact: true }).click();
     await button(p, "מתחילים בסיור הקצר", "Start the short tour").click(); await station(p, "goal");
     check(await next(p).isDisabled(), "Choosing another tour starts its own progress");
     await coach(p).getByRole("button", { name: "דלגו על התחנה הזאת", exact: true }).click(); await station(p, "search");
     const saved = await p.evaluate(() => JSON.parse(localStorage.getItem("jobrun-muxi-tour-v1-visitor") || "null")); check(saved.skipped.includes("goal") && !saved.completed.includes("goal"), "Skip is tracked separately from completion");
-    await p.keyboard.press("Escape"); await p.waitForURL(`${base}/`, { waitUntil: "domcontentloaded" }); check(true, "Escape exits a tour with no native dialog open");
+    await p.keyboard.press("Escape"); await p.waitForURL(url => url.pathname === "/" && url.hash === "#signin", { waitUntil: "domcontentloaded" }); check(true, "Escape exits a tour with no native dialog open");
   } catch (error) { await captureFailure(p, error); throw error; } finally { await ctx.close(); }
 }
 async function storageRobustness() {
@@ -455,57 +444,22 @@ async function mobile() {
   const { ctx, p } = await context({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   try {
     await overflow(p, "Mobile chooser Hebrew"); await shot(p, "mobile-chooser-light");
+    check(await button(p, "מתחילים בסיור המעמיק", "Start the full tour").count() === 0, "Mobile public chooser is short-only");
     await language(p, "en"); await theme(p); await overflow(p, "Mobile chooser English dark"); await shot(p, "mobile-chooser-dark-english"); await language(p, "he");
-    await button(p, "מתחילים בסיור המעמיק", "Start the full tour").click(); await station(p, "goal");
+    await button(p, "מתחילים בסיור הקצר", "Start the short tour").click(); await station(p, "goal");
     await p.waitForFunction(() => document.querySelector("[data-muxi-coach] svg[data-point-direction]")?.getAttribute("data-point-direction") === "down");
     check(await coach(p).locator("svg[data-point-direction]").getAttribute("data-point-direction") === "down", "Mobile Muxi points down toward the exercise");
     await overflow(p, "Mobile goal"); await shot(p, "mobile-exercise-goal");
-    await expandChapters(p, "בונים ובודקים מעגל"); await station(p, "wire"); await perform(p, "wire", true); await continueStation(p); await station(p, "simulate"); await ensureRunning(p);
-    await noSimulationPointer(p, "Mobile completed simulation before expanding");
-    await overflow(p, "Mobile circuit"); await shot(p, "mobile-circuit-dark");
-    await button(stage(p), "הרחבת הלוח", "Expand drawing").click(); await p.locator("dialog:modal").waitFor();
-    await guidancePreservesCircuit(p, p.locator("dialog:modal"), true);
-    await overflow(p, "Mobile expanded circuit and coach"); await shot(p, "mobile-expanded-coach");
-    await button(p.locator("dialog:modal"), "חזרה לתשובה", "Back to answer").click();
-    await p.getByRole("button", { name: /מעבר למצב בהיר/ }).click(); await overflow(p, "Mobile circuit light");
-    await language(p, "en");
-    await button(stage(p), "הרחבת הלוח", "Expand drawing").click(); await p.locator("dialog:modal").waitFor();
-    await guidancePreservesCircuit(p, p.locator("dialog:modal"), true, "-en");
-    await overflow(p, "Mobile expanded circuit English light"); await shot(p, "mobile-expanded-coach-en");
-    const compact = p.locator("dialog:modal [data-muxi-expanded-guide]");
-    // A completed station must be quiet, but the next unfinished station must
-    // locate the actual controls inside the native dialog's top layer.
-    if (await compact.getAttribute("data-minimized") === "true") await button(compact, "פתיחת ההדרכה", "Open guidance").click();
-    await p.locator("dialog:modal [data-muxi-coach]").getByRole("button", { name: /^(ממשיכים|Continue)/ }).click();
-    await station(p, "inputs");
-    if (await compact.getAttribute("data-minimized") !== "true") await button(compact, "מזעור ההדרכה", "Minimize guidance").click();
-    await guidance(p, "circuit-component");
-    const activeDialog = p.locator("dialog:modal");
-    check(await activeDialog.locator('[data-muxi-pointer][data-muxi-for="circuit-component"]').count() === 1, "Unfinished input station points to the component selector inside the actual native modal");
-    await activeDialog.locator('[data-muxi-control="circuit-component"]').selectOption("a");
-    await guidance(p, "circuit-input-toggle");
-    check(await activeDialog.locator('[data-muxi-pointer][data-muxi-for="circuit-input-toggle"]').count() === 1, "Native input-toggle guidance is portalled into the top-layer dialog");
-    await p.waitForFunction(() => {
-      const modal = document.querySelector("dialog:modal");
-      const control = modal?.querySelector('[data-muxi-control="circuit-input-toggle"][data-muxi-spotlight]');
-      if (!control) return false;
-      const rect = control.getBoundingClientRect();
-      const x = rect.left + rect.width / 2, y = rect.top + rect.height / 2;
-      return rect.top >= 0 && rect.bottom <= window.innerHeight && control.contains(document.elementFromPoint(x, y));
-    });
-    check(true, "Native input-toggle control is visible and hit-testable before any Playwright action scroll");
-    await shot(p, "mobile-native-input-guidance-en-light");
-    await activeDialog.locator('[data-muxi-control="circuit-input-toggle"]').click();
-    await button(compact, "פתיחת ההדרכה", "Open guidance").click();
-    check(await activeDialog.locator("[data-muxi-coach]").getByRole("button", { name: /^(ממשיכים|Continue)/ }).isEnabled(), "Toggling the actual native-modal input completes the unfinished station");
-    await button(compact, "מזעור ההדרכה", "Minimize guidance").click();
-    await compact.getByRole("button", { name: /^(יציאה מהסיור|Exit tour)$/, exact: true }).click(); await p.waitForURL(`${base}/`, { waitUntil: "domcontentloaded" });
-    check(true, "Always-visible compact guidance exit leaves the native drawing dialog and tour");
+    await expandChapters(p, "בונים ובודקים מעגל"); await station(p, "simulate"); await perform(p, "simulate");
+    await overflow(p, "Mobile short-tour circuit"); await shot(p, "mobile-short-circuit-dark");
+    await p.keyboard.press("Escape"); await p.waitForURL(url => url.pathname === "/" && url.hash === "#signin", { waitUntil: "domcontentloaded" });
+    check(true, "Mobile short tour exits to sign in");
   } catch (error) { await captureFailure(p, error); throw error; } finally { await ctx.close(); }
 }
+
 try {
   for (let i = 0; i < 30; i++) { try { if ((await fetch(`${base}/tour`)).ok) break; } catch {} await wait(1000); }
-  for (const [name, fn] of [["full", fullTour], ["short", shortTour], ["navigation", navigationAndPersistence], ["storage", storageRobustness], ["mobile", mobile]].filter(([name]) => !requestedFlows || requestedFlows.includes(name))) {
+  for (const [name, fn] of [["policy", publicPolicy], ["short", shortTour], ["navigation", navigationAndPersistence], ["storage", storageRobustness], ["mobile", mobile]].filter(([name]) => !requestedFlows || requestedFlows.includes(name))) {
     current = name;
     try { await fn(); report.flows.push({ name, passed: true }); console.log(`PASS ${name}`); }
     catch (error) {

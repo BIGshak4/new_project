@@ -12,9 +12,7 @@ import {
   MessageSquareText,
   Briefcase,
   Building2,
-  Flame,
   Map as MapIcon,
-  Star,
   Zap,
   Gamepad2,
   Shirt,
@@ -22,15 +20,16 @@ import {
 import type { User } from "@supabase/supabase-js";
 import { readQuestionCache, writeQuestionCache } from "../lib/question-cache";
 import { isRealEvaluationProvider } from "../lib/evaluation-readiness";
-import { companyNames, companyReportNote, matchesCompany, matchesQuestion, questionCategory } from "../lib/question-discovery";
+import { companyNames, companyReportNote, matchesCompany } from "../lib/question-discovery";
 import { QuestionMetadata } from "../components/question-metadata";
 import { QuestionStatusControl } from "../components/question-status-control";
-import { buildQuestionStates, matchesQuestionStatus } from "../lib/question-personal-state";
+import { buildQuestionStates } from "../lib/question-personal-state";
+import { matchesLibraryFilters, matchesLibraryStatuses, type LibraryStatus } from "../lib/library-filters";
 import { BidiText } from "../components/bidi-text";
 import { QuestionTitle } from "../components/question-title";
 import { relatedQuestionKeys, uniqueLibraryQuestions } from "../lib/question-families";
 import { shuffleQuestions, useQuestionOrderSeed } from "../lib/question-order";
-import { defaultGoalJobFilter, goalJobTypes, goalProgramKey, GOAL_JOBS_FILTER } from "../lib/goal-selection";
+import { goalProgramKey } from "../lib/goal-selection";
 import { DEFAULT_WORKSPACE_VIEW, readWorkspaceRoute, type WorkspaceRoute } from "../lib/workspace-route";
 import { Auth, type Lang } from "../components/auth";
 import { avatarApi } from "../lib/avatar-api";
@@ -43,8 +42,10 @@ import { LanguageMenu } from "../components/ui/language-menu";
 import { ThemeToggle } from "../components/ui/theme-toggle";
 import { MuxiTourLauncher } from "../components/tour/muxi-tour";
 import { UserInboxButton } from "../components/user-inbox";
-import { Select } from "../components/ui/select";
-import { AnimatePresence, CountUp, motion, useReducedMotion } from "../components/ui/motion";
+import { MultiSelect } from "../components/ui/multi-select";
+import { AccountStats } from "../components/account-stats";
+import type { AccountActivity } from "../lib/account-stats-api";
+import { AnimatePresence, motion, useReducedMotion } from "../components/ui/motion";
 import { SignOff } from "../components/sign-off";
 import { LearnHome } from "../components/learn-home";
 import { InterviewSession } from "../components/interview-session";
@@ -140,14 +141,16 @@ function Workspace({
   const orderedQuestions = useMemo(() => shuffleQuestions(questions, orderSeed, q => q.key), [questions, orderSeed]);
   const [entries, setEntries] = useState<Entry[]>([]);
   const [progress, setProgress] = useState<Progress>(emptyProgress);
+  const [progressRevision, setProgressRevision] = useState(0);
+  const [accountActivity, setAccountActivity] = useState<AccountActivity | null>(null);
   const [loading, setLoading] = useState(true),
     [error, setError] = useState("");
   const [demo, setDemo] = useState(true),
     [healthKnown, setHealthKnown] = useState(false);
-  const [query, setQuery] = useState(""),
-    [subject, setSubject] = useState("all");
-  const [category, setCategory] = useState("all");
-  const [statusFilter, setStatusFilter] = useState<"visible" | "not_done" | "done" | "hidden">("visible");
+  const [query, setQuery] = useState("");
+  const [subjects, setSubjects] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [statusFilters, setStatusFilters] = useState<LibraryStatus[]>([]);
   const [statusMessage, setStatusMessage] = useState<"hidden" | "done" | "not_done" | null>(null);
   const statusFilterRef = useRef<HTMLDivElement>(null);
   const generation = useRef(0);
@@ -157,17 +160,15 @@ function Workspace({
   const [progressLoading, setProgressLoading] = useState(true);
   const [entriesLoading, setEntriesLoading] = useState(true);
   const [cachedQuestions, setCachedQuestions] = useState(false);
-  // the user's goal drives the default job filter, the plan and the onboarding card
+  // Goals guide the personal plan; the library starts with all questions and no filters.
   const [goal, setGoal] = useState<Goal | null>(null);
   const [goalSkipped, setGoalSkipped] = useState(true);
   const [editingGoal, setEditingGoal] = useState(false);
   const [goalFocusRequest, setGoalFocusRequest] = useState(0);
   const [jobs, setJobs] = useState<JobType[]>([]);
   const [companies, setCompanies] = useState<Company[]>([]);
-  const [jobFilter, setJobFilter] = useState(""),
-    [companyQuery, setCompanyQuery] = useState("");
-  const jobFilterTouched = useRef(false);
-  const [jobQuestions, setJobQuestions] = useState<QuestionSummary[] | null>(null);
+  const [jobFilters, setJobFilters] = useState<string[]>([]);
+  const [companyFilters, setCompanyFilters] = useState<string[]>([]);
   const skipKey = `jobrun-goal-skipped-${user.id}`;
   useEffect(() => {
     try {
@@ -250,7 +251,6 @@ function Workspace({
         .then((g) => {
           if (!current()) return;
           setGoal(g);
-          if (!jobFilterTouched.current) setJobFilter(defaultGoalJobFilter(g));
         })
         .catch(() => {}),
       api
@@ -298,40 +298,12 @@ function Workspace({
   const refreshProgress = useCallback(() => {
     api
       .progress(lang)
-      .then(setProgress)
+      .then(value => { setProgress(value); setProgressRevision(revision => revision + 1); })
       .catch(() => {});
   }, [api, lang]);
-  const goalRolesKey = JSON.stringify(goalJobTypes(goal));
-  // Job matching comes from the server; presentation keeps this visit's shuffled catalog order.
-  useEffect(() => {
-    if (!jobFilter) {
-      setJobQuestions(null);
-      return;
-    }
-    let cancelled = false;
-    setJobQuestions(null);
-    const roleKeys: string[] = jobFilter === GOAL_JOBS_FILTER ? JSON.parse(goalRolesKey) : [jobFilter];
-    Promise.all(roleKeys.map(job => api.listQuestions(lang, undefined, { job })))
-      .then((lists) => {
-        if (!cancelled) setJobQuestions([...new Map(lists.flat().map(question => [question.key, question])).values()]);
-      })
-      .catch(() => {
-        // the server refused the filter (a job type that no longer exists): show everything, unfiltered
-        if (!cancelled) {
-          setJobQuestions(null);
-          jobFilterTouched.current = true;
-          setJobFilter("");
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [api, lang, jobFilter, questions.length, goalRolesKey]);
   const onGoalSaved = (g: Goal) => {
     setGoal(g);
     setEditingGoal(false);
-    jobFilterTouched.current = false;
-    setJobFilter(defaultGoalJobFilter(g));
     refreshProgress();
   };
   const skipGoal = () => {
@@ -355,17 +327,13 @@ function Workspace({
   const active = !!(route.question || route.attempt);
   const topics = [...new Set(questions.map((q) => q.subject))];
   const questionsByKey = new Map(questions.map(q => [q.key, q]));
-  const jobFiltering = !!jobFilter && jobQuestions === null;
-  const jobKeys = jobFilter ? new Set((jobQuestions ?? []).map(q => q.key)) : null;
-  const shown = jobKeys ? orderedQuestions.filter(q => jobKeys.has(q.key)) : orderedQuestions;
   const questionStates = buildQuestionStates(questions, entries);
-  const matching = shown.filter(
+  const companyOptions = companyNames({ reported_companies: [...companies.map(company => company.name), ...questions.flatMap(companyNames)] }).sort((a, b) => a.localeCompare(b));
+  const matching = orderedQuestions.filter(
     (q) =>
-      matchesQuestionStatus(questionStates.get(q.id) ?? { completed: false, hidden: false }, statusFilter) &&
-      (category === "all" || questionCategory(q) === category) &&
-      (subject === "all" || q.subject === subject) &&
-      matchesQuestion(q, query, [subjectLabel(q.subject, "he"), subjectLabel(q.subject, "en")]) &&
-      matchesCompany(q, companyQuery) &&
+      matchesLibraryFilters(q, questionStates.get(q.id) ?? { completed: false, hidden: false },
+        { query, statuses: statusFilters, categories, subjects, jobs: jobFilters, companies: companyFilters },
+        [subjectLabel(q.subject, "he"), subjectLabel(q.subject, "en")]) &&
       (route.view !== "bookmarks" ||
         entries.some((e) => e.question_id === q.id && e.bookmarked)),
   );
@@ -383,7 +351,7 @@ function Workspace({
     setStatusMessage(state.hidden ? "hidden" : state.completed ? "done" : "not_done");
     // A filtered row disappears after a successful save; keep keyboard focus on a useful control.
     const focusedRow = document.activeElement?.closest<HTMLElement>(".library-question-row");
-    if (!matchesQuestionStatus(state, statusFilter) &&
+    if (!matchesLibraryStatuses(state, statusFilters) &&
       (focusedRow?.dataset.questionId === q.id || document.activeElement === document.body)) {
       statusFilterRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
     }
@@ -429,7 +397,7 @@ function Workspace({
     </button>)}
   </div>;
   const reducedMotion = useReducedMotion();
-  const refreshKey = `${progress.attempts_today}-${goalProgramKey(goal)}-${overview?.xp_total ?? 0}`;
+  const refreshKey = `${progressRevision}-${progress.attempts_today}-${goalProgramKey(goal)}-${overview?.answered ?? 0}-${overview?.xp_total ?? 0}`;
 
   return (
     <div className="app-shell">
@@ -441,27 +409,7 @@ function Workspace({
           {tabButtons(false)}
         </nav>
         <FeatureNav lang={lang} avatar={profileAvatar} hideAvatar={active || route.view === "interview"} />
-        {overview && overview.answered > 0 && <div className="topnav-stats">
-          <span
-            className={`stat-chip streak ${(overview?.streak_days ?? 0) > 0 ? "lit" : ""}`}
-            title={t("ימים ברצף עם תשובה", "Days in a row with an answer")}
-            role="img"
-            aria-label={`${overview?.streak_days ?? 0} ${t("ימים ברצף", "day streak")}`}
-          >
-            <Flame size={20} aria-hidden="true" />
-            {overview?.streak_days ?? 0}
-          </span>
-          <span
-            className="stat-chip xp"
-            title={t("נקודות ניסיון והרמה", "Experience points and level")}
-            role="img"
-            aria-label={`${overview?.xp_total ?? 0} XP · ${overview?.level ?? ""}`}
-          >
-            <Star size={20} aria-hidden="true" />
-            <span className="xp-number" dir="ltr"><CountUp value={overview?.xp_total ?? 0} /> XP</span>
-            {overview?.level && <span className="level-word" dir="auto">{overview.level}</span>}
-          </span>
-        </div>}
+        <AccountStats userId={user.id} lang={lang} refreshKey={refreshKey} onActivity={setAccountActivity} />
         <div className={`topnav-actions ${headerStyles.toolbar}`}>
           <UserInboxButton lang={lang} />
           <MuxiTourLauncher userId={user.id} lang={lang} controls={languageControl} ready={!loading} />
@@ -516,6 +464,7 @@ function Workspace({
             interviewId={route.interview}
             initialDuration={route.duration}
             demo={demo}
+            onProgress={refreshProgress}
             onStarted={(id) => {
               navigate({ view: "interview", interview: id }, true);
               refreshProgress();
@@ -565,6 +514,8 @@ function Workspace({
             )}
             <LearnHome
               api={api}
+              userId={user.id}
+              activity={accountActivity}
               lang={lang}
               userName={firstName(user)}
               goal={goal}
@@ -631,7 +582,7 @@ function Workspace({
             {activeTab === "library" && (
               <div className="summary-strip">
                 <span>
-                  <strong>{loading || jobFiltering || !entriesReady ? "—" : filtered.length}</strong>
+                  <strong>{loading || !entriesReady ? "—" : filtered.length}</strong>
                   {" "}{route.view === "bookmarks" ? t("שאלות שמורות בתצוגה", "saved questions shown") : t("שאלות בתצוגה", "questions shown")}
                   {route.view !== "bookmarks" && <span>{" "}{t(`מתוך ${libraryTotal} שאלות במאגר`, `of ${libraryTotal} questions in the library`)}</span>}
                 </span>
@@ -677,7 +628,7 @@ function Workspace({
                     )}
               </p>
             )}
-            {loading || (activeTab === "library" && route.view !== "history" && jobFiltering) ||
+            {loading ||
             (route.view === "history" &&
               progressLoading) ||
             (activeTab === "library" && route.view !== "history" && entriesLoading) ? (
@@ -786,75 +737,63 @@ function Workspace({
                     />
                   </div>
                   <div ref={statusFilterRef} className="question-status-filter">
-                    <Select
-                      ariaLabel={t("סינון לפי מצב אישי", "Filter by personal status")}
-                      dir={lang === "he" ? "rtl" : "ltr"}
-                      value={statusFilter}
-                      onChange={(value) => {
-                        setStatusFilter(value as typeof statusFilter);
+                    <MultiSelect
+                      label={t("סטטוס שאלה", "Question status")}
+                      allLabel={t("סטטוס שאלה", "Question status")}
+                      lang={lang}
+                      values={statusFilters}
+                      onChange={(values) => {
+                        setStatusFilters(values as LibraryStatus[]);
                         setStatusMessage(null);
                       }}
                       options={[
-                        { value: "visible", label: t("כל הסטטוסים", "All statuses") },
                         { value: "not_done", label: t("לא בוצעו", "Not done") },
                         { value: "done", label: t("בוצעו", "Done") },
                         { value: "hidden", label: t("מוסתרות", "Hidden") },
                       ]}
                     />
                   </div>
-                  <Select
-                    ariaLabel={t("תחום", "Discipline")}
-                    dir={lang === "he" ? "rtl" : "ltr"}
-                    value={category}
-                    onChange={setCategory}
-                    options={[{ value: "all", label: t("כל התחומים", "All disciplines") },
+                  <MultiSelect
+                    label={t("תחום", "Discipline")}
+                    allLabel={t("כל התחומים", "All disciplines")}
+                    lang={lang}
+                    values={categories}
+                    onChange={setCategories}
+                    options={[
                       { value: "hardware", label: t("חומרה", "Hardware") },
                       { value: "software", label: t("תוכנה", "Software") },
-                      { value: "logic", label: t("חידות והיגיון", "Logic & puzzles") }]}
+                      { value: "logic", label: t("חידות והיגיון", "Logic & puzzles") },
+                      { value: "general", label: t("כללי", "General") }]}
                   />
-                  <Select
-                    ariaLabel={t("נושא", "Topic")}
-                    dir={lang === "he" ? "rtl" : "ltr"}
-                    value={subject}
-                    onChange={setSubject}
-                    options={[{ value: "all", label: t("כל הנושאים", "All topics") }, ...topics.map((s) => ({ value: s, label: subjectLabel(s, lang) }))]}
+                  <MultiSelect
+                    label={t("נושא", "Topic")}
+                    allLabel={t("כל הנושאים", "All topics")}
+                    lang={lang}
+                    values={subjects}
+                    onChange={setSubjects}
+                    options={topics.map((s) => ({ value: s, label: subjectLabel(s, lang) }))}
                   />
-                  <Select
-                    ariaLabel={t("סוג תפקיד", "Job type")}
-                    dir={lang === "he" ? "rtl" : "ltr"}
+                  <MultiSelect
+                    label={t("סוג תפקיד", "Job type")}
+                    allLabel={t("כל התפקידים", "All job types")}
+                    lang={lang}
                     icon={<Briefcase size={16} aria-hidden="true" />}
-                    value={jobFilter}
-                    onChange={(v) => {
-                      jobFilterTouched.current = true;
-                      setJobFilter(v);
-                    }}
-                    options={[{ value: "", label: t("כל התפקידים", "All job types") },
-                      ...(goalJobTypes(goal).length > 1 ? [{ value: GOAL_JOBS_FILTER, label: t("התפקידים שבחרתם ביעד", "Your selected goal roles") }] : []),
-                      ...jobs.map((j) => ({ value: j.key, label: j.label }))]}
+                    values={jobFilters}
+                    onChange={setJobFilters}
+                    options={jobs.map((j) => ({ value: j.key, label: j.label }))}
                   />
-                  <div className="search company-search">
-                    <Building2 size={16} />
-                    <input
-                      list="company-list"
-                      aria-label={t("חיפוש לפי חברה", "Search by company")}
-                      placeholder={t("חברה שהוזכרה…", "Company mentioned…")}
-                      value={companyQuery}
-                      onChange={(e) => setCompanyQuery(e.target.value)}
-                    />
-                    <datalist id="company-list">
-                      {[...new Set([...companies.map(c => c.name), ...questions.flatMap(companyNames)])].sort().map((name) => (
-                        <option key={name} value={name} />
-                      ))}
-                    </datalist>
-                  </div>
+                  <MultiSelect label={t("חברות", "Companies")} allLabel={t("כל החברות", "All companies")} lang={lang}
+                    icon={<Building2 size={16} aria-hidden="true" />} values={companyFilters} onChange={setCompanyFilters}
+                    matchesOption={(option, search) => matchesCompany({ reported_companies: [option.label] }, search)}
+                    options={companyOptions.map(name => ({ value: name, label: name }))} />
                 </div>
-                <p className="small muted library-status-note">{t("הסימון אישי ונשמר בחשבון. שאלות שהוסתרו זמינות במסנן ״מוסתרות״.", "Your choices are saved to your account. Find hidden questions using the Hidden filter.")}</p>
+                <p className="small muted library-status-note">{t("סימוני השאלות נשמרים בחשבון. המסננים מתאפסים בכניסה מחדש; ללא בחירה מוצגות כל השאלות.", "Question flags are saved to your account. Filters reset on a new visit; no selection shows every question.")}</p>
                 <p className="small library-status-message" role="status" aria-live="polite">{statusMessage === "hidden"
-                  ? t("השאלה הוסתרה. אפשר להחזיר אותה דרך מסנן השאלות המוסתרות.", "Question hidden. Restore it using the Hidden questions filter.")
+                  ? t("השאלה סומנה כמוסתרת. אפשר לסנן שאלות לפי הסטטוס שלהן.", "Question marked as hidden. Use Question status to filter your questions.")
                   : statusMessage === "done" ? t("השאלה סומנה כבוצעה.", "Question marked as done.")
                   : statusMessage === "not_done" ? t("השאלה סומנה כלא בוצעה.", "Question marked as not done.") : null}</p>
                 <p className="company-report-note library-provenance">{companyReportNote(lang)}</p>
-                {jobFilter && jobQuestions && (
+                {jobFilters.length > 0 && (
                   <p className="small muted filter-note" role="status">
                     {t(
                       "מוצגות שאלות שמתאימות לתפקידים שבחרתם, בסדר מעורבב.",

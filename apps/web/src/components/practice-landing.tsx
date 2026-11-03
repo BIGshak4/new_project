@@ -48,7 +48,7 @@ export function PracticeLanding({
           <a href="#signin">{t("הרשמה וכניסה", "Sign up / Sign in")}</a>
           <a className={styles.navTour} href="/tour">
             <Compass size={17} aria-hidden="true" />
-            <span>{t("סיור עם מוקסי", "Tour with Muxi")}</span>
+            <span>{t("סיור קצר עם מוקסי", "Short tour with Muxi")}</span>
           </a>
         </nav>
         <div className="topnav-actions">{controls}</div>
@@ -74,13 +74,13 @@ export function PracticeLanding({
               </a>
               <a className={styles.tourButton} href="/tour" aria-describedby="landing-tour-description">
                 <Compass size={20} aria-hidden="true" />
-                {t("סיור עם מוקסי", "Tour with Muxi")}
+                {t("סיור קצר עם מוקסי", "Short tour with Muxi")}
               </a>
             </div>
             <p id="landing-tour-description" className={styles.tourDescription}>
               {t(
-                "מכירים את האתר לפני שנרשמים: מוקסי מדגים את הכלים ואתם מתנסים. ללא הרשמה.",
-                "Explore before signing up: Muxi demonstrates the tools and you try them. No account needed.",
+                "מכירים את האתר בסיור קצר לפני שנרשמים: מוקסי מדגים את הכלים ואתם מתנסים. ללא הרשמה.",
+                "Explore with a short tour before signing up: Muxi demonstrates the tools and you try them. No account needed.",
               )}
             </p>
             <div className="ion-hero-topics">

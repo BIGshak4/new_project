@@ -10,6 +10,7 @@ import { lockBodyScroll } from "../../lib/body-scroll-lock";
 import { SUPPORT_OPEN_EVENT } from "../../lib/support-report";
 import { UserInboxButton } from "../user-inbox";
 import { checkpoint, initialTourProgress, parseTourProgress, stationReady, tourKey, tourSteps, type TourKind, type TourProgress } from "../../lib/muxi-tour";
+import { tourKindForSurface, tourProgressForSurface, tourStepsForSurface } from "../../app/tour/policy";
 import styles from "./muxi-tour.module.css";
 
 const TourExercises = dynamic(() => import("./tour-exercises").then((m) => m.TourExercises), {
@@ -56,7 +57,7 @@ export function MuxiTourLauncher({ userId, lang, controls, ready = true }: { use
 
 export function MuxiTour({ lang, userId, controls, onClose, standalone = false }: { lang: Lang; userId?: string; controls: ReactNode; onClose: () => void; standalone?: boolean }) {
   const t = (he: string, en: string) => lang === "he" ? he : en;
-  const [progress, setProgress] = useState<TourProgress>(initialTourProgress);
+  const [progress, setProgress] = useState<TourProgress>(() => tourProgressForSurface(initialTourProgress(), standalone));
   const [screen, setScreen] = useState<"choose" | "tour" | "finish">("choose");
   const [stationActions, setStationActions] = useState<Record<string, string[]>>({});
   const [storageReady, setStorageReady] = useState(false);
@@ -67,7 +68,7 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
   const previousFocus = useRef<HTMLElement | null>(null);
   const progressRef = useRef(progress); progressRef.current = progress;
   const key = tourKey(userId), titleId = useId();
-  const steps = tourSteps(progress.kind);
+  const steps = tourStepsForSurface(progress.kind, standalone);
   const index = Math.max(0, steps.findIndex((s) => s.id === progress.stepId));
   const step = steps[index];
   const actions = stationActions[step.id] ?? [];
@@ -81,8 +82,8 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
   }, []);
 
   useEffect(() => {
-    setProgress(read(key)); setStorageReady(true);
-  }, [key]);
+    setProgress(tourProgressForSurface(read(key), standalone)); setStorageReady(true);
+  }, [key, standalone]);
   useEffect(() => {
     if (storageReady) write(key, progress);
   }, [key, progress, storageReady]);
@@ -136,7 +137,8 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
     return () => document.removeEventListener("keydown", escape);
   }, [close]);
   function start(kind: TourKind, resume = false) {
-    setProgress((old) => resume ? { ...old, offered: true, status: "paused" } : { ...initialTourProgress(), offered: true, kind, stepId: tourSteps(kind)[0].id });
+    const allowedKind = tourKindForSurface(kind, standalone);
+    setProgress((old) => resume ? { ...tourProgressForSurface(old, standalone), offered: true, status: "paused" } : { ...initialTourProgress(), offered: true, kind: allowedKind, stepId: tourStepsForSurface(allowedKind, standalone)[0].id });
     if (!resume) setStationActions({});
     setScreen("tour"); setOutline(false);
   }
@@ -171,7 +173,7 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
     {!ready && <p className={styles.hint}>{t("בצעו את הפעולה המסומנת כדי להמשיך, או דלגו על התחנה.", "Try the highlighted action to continue, or skip this station.")}</p>}
     <button type="button" className={styles.quiet} onClick={() => advance(true)}>{t("דלגו על התחנה הזאת", "Skip this station")}</button>
     <div className={styles.coachFooter}>
-      <button type="button" onClick={() => setScreen("choose")}><Compass size={15} />{t("בחירת סיור אחר", "Choose another tour")}</button>
+      <button type="button" onClick={() => setScreen("choose")}><Compass size={15} />{standalone ? t("בחזרה לפתיחת הסיור", "Back to the tour introduction") : t("בחירת סיור אחר", "Choose another tour")}</button>
       <button type="button" onClick={close}><Pause size={15} />{t("יציאה ושמירת המקום", "Exit and save my place")}</button>
     </div>
   </aside>;
@@ -183,24 +185,24 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
       else if (!event.shiftKey && document.activeElement === items.at(-1)) { event.preventDefault(); items[0]?.focus(); }
     }}>
     <header className={styles.header}>
-      <div className={styles.brand}><span dir="ltr">jobrun</span><span className={styles.brandDivider} /><h1 id={titleId}>{t("הסיורים של מוקסי", "Muxi's guided tours")}</h1></div>
+      <div className={styles.brand}><span dir="ltr">jobrun</span><span className={styles.brandDivider} /><h1 id={titleId}>{standalone ? t("סיור קצר עם מוקסי", "Short tour with Muxi") : t("הסיורים של מוקסי", "Muxi's guided tours")}</h1></div>
       <div className={styles.headerActions}><UserInboxButton lang={lang} />{controls}<button type="button" className={styles.reportHelp} aria-label={t("נתקלתם בבעיה?", "Report a problem")} onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={17} aria-hidden="true" />{t("דיווח", "Report")}</button><button type="button" className={styles.exit} onClick={close}><X size={17} />{t("דילוג ויציאה מהסיור", "Skip and exit tour")}</button></div>
     </header>
     {screen === "choose" ? <main className={styles.welcome}>
       <div className={styles.welcomeIntro}><MuxiMascot pose="wave" label={t("מוקסי מנופף לשלום", "Muxi waves hello")} className={styles.welcomeMascot} /><div><h2 ref={heading} tabIndex={-1}>{t("נעים להכיר, אני מוקסי.", "Hi, I'm Muxi.")}</h2><p>{t("אני מוקס קטן עם משימה גדולה: לעזור לכם להפוך את כל הכלים כאן ללמידה שעובדת בשבילכם.", "A little multiplexer with a big job: helping you make these tools work for your learning.")}</p></div></div>
       <p className={styles.welcomeLead}>{standalone
-        ? t("מכירים את JobRun לפני שנרשמים. מוקסי מדגים איך משתמשים בכלים, ואתם מתנסים בעצמכם — ללא הרשמה. בחרו סיור קצר או מעמיק; בכל רגע אפשר לדלג או לעצור.", "Explore JobRun before signing up. Muxi shows you how the tools work, and you can try them yourself — no account needed. Choose a short or full tour; skip or pause at any time.")
+        ? t("מכירים את JobRun בסיור קצר לפני שנרשמים. מוקסי מדגים את הכלים ואתם מתנסים בעצמכם, ללא הרשמה. בכל רגע אפשר לדלג או לעצור.", "Explore JobRun with a short tour before signing up. Muxi demonstrates the tools and you try them yourself, with no account needed. Skip or pause at any time.")
         : t("איך תרצו להכיר את JobRun? בשני המסלולים מתנסים בידיים, ובכל רגע אפשר לדלג או לעצור.", "How would you like to explore JobRun? Both tours are hands-on, and you can skip or pause at any time.")}</p>
-      <div className={styles.choices}>
-        <section className={styles.fullChoice}>
+      <div className={styles.choices} style={standalone ? { gridTemplateColumns: "minmax(0, 1fr)" } : undefined}>
+        {!standalone && <section className={styles.fullChoice}>
           <div className={styles.choiceTitle}><h3>{t("נכנסים לעומק", "The full experience")}</h3><span>{t("מומלץ", "Recommended")}</span></div>
           <p>{t("סיור מעמיק שמראה כמה אפשר לעשות כאן: סקירת הנושאים, כתיבה וקוד, מעגלים וסימולציה, טבלאות אמת, רמזים, צילומים, משוב וראיון מדומה.", "Explore what makes practice different here: a subject overview, reasoning and code, circuits, simulation, truth tables, hints, images, feedback and mock interviews.")}</p>
           <p className={styles.choiceMeta}>{tourSteps("full").length} {t("תחנות · פרקים שאפשר לחזור אליהם · בקצב שלכם", "stations · replayable chapters · at your own pace")}</p>
           <button type="button" className="primary" onClick={() => start("full")}><Play size={17} />{t("מתחילים בסיור המעמיק", "Start the full tour")}</button>
-        </section>
+        </section>}
         <section className={styles.shortChoice}>
           <h3>{t("סיבוב קצר, ויוצאים לדרך", "A quick look around")}</h3>
-          <p>{t("מכירים את שלושת אזורי האתר: אזור אישי, מאגר וראיון מדומה. מתנסים ביעד, חיפוש ונושאים, עורך קוד, סימולציה, רמז ומשוב. אפשר להעמיק אחר כך.", "Meet the three areas: Personal area, Library and Mock interview. Try a goal, search and subjects, code editor, simulation, a hint and feedback. Go deeper later.")}</p>
+          <p>{t("מכירים את שלושת אזורי האתר: אזור אישי, מאגר וראיון מדומה. מתנסים ביעד, חיפוש ונושאים, עורך קוד, סימולציה, רמז ומשוב.", "Meet the three areas: Personal area, Library and Mock interview. Try a goal, search and subjects, code editor, simulation, a hint and feedback.")}</p>
           <p className={styles.choiceMeta}>{tourSteps("short").length} {t("תחנות · היכרות מעשית וקצרה", "stations · a short hands-on introduction")}</p>
           <button type="button" className="primary" onClick={() => start("short")}>{t("מתחילים בסיור הקצר", "Start the short tour")}<NextArrow size={17} /></button>
         </section>
@@ -212,7 +214,7 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
       <h2 ref={heading} tabIndex={-1}>{t("עכשיו הכלים בידיים שלכם.", "The tools are yours to use.")}</h2>
       <p>{t("ביצעתם", "You tried")} <bdi>{progress.completed.length}</bdi> {t("תחנות", "stations")}{progress.skipped.length ? ` · ${t("דילגתם על", "Skipped")} ${progress.skipped.length}` : ""}.</p>
       <p>{t("את ההיכרות הזאת אפשר לפתוח שוב דרך סיור עם מוקסי. בתחנות שדילגתם עליהן תמיד אפשר להתנסות אחר כך.", "Reopen Tour with Muxi any time. You can return to skipped stations whenever you like.")}</p>
-      <div className={styles.finishActions}><button type="button" className="primary" onClick={close}>{standalone ? t("להרשמה או לכניסה", "Sign up or sign in") : t("יוצאים לתרגול", "Start practicing")}<NextArrow size={18} /></button>{progress.kind === "short" && <button type="button" onClick={() => start("full")}>{t("ממשיכים לסיור המעמיק", "Explore the full tour")}</button>}<button type="button" onClick={() => setScreen("choose")}><RotateCcw size={16} />{t("בחירת סיור מחדש", "Choose a tour again")}</button></div>
+      <div className={styles.finishActions}><button type="button" className="primary" onClick={close}>{standalone ? t("להרשמה או לכניסה", "Sign up or sign in") : t("יוצאים לתרגול", "Start practicing")}<NextArrow size={18} /></button>{!standalone && progress.kind === "short" && <button type="button" onClick={() => start("full")}>{t("ממשיכים לסיור המעמיק", "Explore the full tour")}</button>}<button type="button" onClick={() => setScreen("choose")}><RotateCcw size={16} />{standalone ? t("פתיחת הסיור מחדש", "Restart the tour") : t("בחירת סיור מחדש", "Choose a tour again")}</button></div>
     </main> : <>
       <div className={styles.tourBar}><span>{progress.kind === "full" ? t("הסיור המעמיק", "The full tour") : t("הסיור הקצר", "The short tour")}</span><button type="button" onClick={() => setOutline(!outline)} aria-expanded={outline}>{t("כל הפרקים", "All chapters")}<ChevronDown size={16} /></button><span className={styles.localNote}>{t("נתוני דוגמה · בלי שינוי בחשבון", "Sample data · no account changes")}</span></div>
       {outline && <nav className={styles.outline} aria-label={t("פרקי הסיור", "Tour chapters")}>{chapters.map((s) => <button type="button" key={s.id} onClick={() => jump(s.id)} aria-current={s.chapter.he === step.chapter.he ? "step" : undefined}>{s.chapter[lang]}</button>)}</nav>}
