@@ -37,6 +37,7 @@ from app.engine import (
     xp,
 )
 from app.engine.catalog import Catalog
+from app.engine.job_selection import JobSelection, combined_job
 from app.engine.plan import merge_skill_sets
 from app.engine.plan_router import SIMULATION_DURATIONS
 from app.engine.practice import UsageEvent
@@ -127,9 +128,10 @@ class InterviewService:
             goal = await tx.load_goal(user_id)
             seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
             servable = await tx.list_questions(language=language)
-        job_type = goal.job_type if goal.job_type in self.catalog.job_types else None
-        pool = self._pool(servable, job_type)
-        plan, ceiling, baseline = self._plan(seniority, duration_min, job_type)
+        job_types = tuple(key for key in goal.selection if key in self.catalog.job_types)
+        job_type = goal.job_type if goal.job_type in job_types else None
+        pool = self._pool(servable, job_types)
+        plan, ceiling, baseline = self._plan(seniority, duration_min, job_types)
         plan = self._covered(plan, pool, language)
         priors = {k: (s.k, s.c) for k, s in profile.states.items() if s.k is not None and s.c is not None}
         # the session starts from the profile's scores (k, c) but counts its own turns: the report is about
@@ -152,7 +154,8 @@ class InterviewService:
                "started_at": now, "ended_at": None, "state": wrapper,
                "config": {"language": language, "duration_min": duration_min, "role": self.config.role,
                           "company": self.config.company, "reviewed_only": self.config.reviewed_only,
-                          "job_type": job_type, "plan": [p.model_dump(mode="json") for p in plan]}}
+                          "job_type": job_type, "job_types": list(job_types), "learning_mode": goal.learning_mode,
+                          "plan": [p.model_dump(mode="json") for p in plan]}}
         turns = [self._new_turn(0, decision, question, language, now)]
         async with self.store.transaction() as tx:
             # The early check is just a fast refusal. This locked check and INSERT
@@ -296,7 +299,7 @@ class InterviewService:
                 self._after_closing(state, meta["closing"])        # the skill keeps the status it resolved with
                 decision = Decision(action=Action.END, reason_code="closing_answered")
             elif decision.action == Action.END and outcome.band == Band.WEAK and len(turns) < MAX_TURNS:
-                pool = await self._pool_for(language, row["config"].get("job_type"))
+                pool = await self._pool_for(language, self._session_selection(row["config"]))
                 closing = self._closing_question(state, plan, pool, seen=seen, language=language)
                 if closing is not None:
                     decision, next_question, snapshot = closing
@@ -305,7 +308,7 @@ class InterviewService:
                     turns.append(new_turn)
                     changed.append(new_turn)
             elif decision.action != Action.END and len(turns) < MAX_TURNS:
-                pool = await self._pool_for(language, row["config"].get("job_type"))
+                pool = await self._pool_for(language, self._session_selection(row["config"]))
                 decision, next_question = self._open(engine, plan, state, decision, pool, seen=seen, language=language)
                 if next_question is not None:
                     new_turn = self._new_turn(len(turns), decision, next_question, language, self._stamp())
@@ -430,9 +433,9 @@ class InterviewService:
             raise ApiError("validation", "invalid visual answer") from exc
         return visual if visual.has_content else None
 
-    def _plan(self, seniority: str, duration_min: int, job_type: str | None = None) -> tuple[list[PlanSkill], int, int]:
+    def _plan(self, seniority: str, duration_min: int, job_type: JobSelection = None) -> tuple[list[PlanSkill], int, int]:
         """The interview plan for a seniority, a length and the user's job type (which re-weights the role's skills)."""
-        job = self.catalog.job_types.get(job_type) if job_type else None
+        job = combined_job(self.catalog.job_types, job_type)
         key = (seniority, duration_min, job.key if job else None)
         if key not in self._plans:
             role = self.catalog.roles[self.config.role]
@@ -470,11 +473,11 @@ class InterviewService:
             levels[skill.key] = level
         return levels
 
-    def _pool(self, servable, job_type: str | None = None) -> list[BankQuestion]:
+    def _pool(self, servable, job_type: JobSelection = None) -> list[BankQuestion]:
         """The questions this interview may ask: reviewed and published, unless configured for development; never
         one whose primary skill the job type excludes (task 8, 2026-10-15)."""
         keep = [s for s in servable if s.reviewed or not self.config.reviewed_only]
-        job = self.catalog.job_types.get(job_type) if job_type else None
+        job = combined_job(self.catalog.job_types, job_type)
         pool = []
         for s in keep:
             self._question_ids[s.key] = s.id            # the database id the turn row points at
@@ -486,7 +489,12 @@ class InterviewService:
             pool.append(question)
         return pool
 
-    async def _pool_for(self, language: str, job_type: str | None = None) -> list[BankQuestion]:
+    @staticmethod
+    def _session_selection(config: dict) -> JobSelection:
+        # New sessions freeze the role union; older sessions retain their saved scalar role.
+        return config["job_types"] if "job_types" in config else config.get("job_type")
+
+    async def _pool_for(self, language: str, job_type: JobSelection = None) -> list[BankQuestion]:
         async with self.store.transaction() as tx:
             servable = await tx.list_questions(language=language)
         return self._pool(servable, job_type)

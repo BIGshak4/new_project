@@ -28,6 +28,7 @@ from datetime import UTC, date, datetime, timedelta
 from app.api.errors import ApiError
 from app.engine import bank, next_question, plan_router, scorecards, scores, soft_skills, xp
 from app.engine.catalog import Catalog
+from app.engine.job_selection import JobSelection, combined_job
 from app.engine.plan import merge_skill_sets
 from app.engine.practice import (
     FEEDBACK_PENDING,
@@ -187,9 +188,9 @@ class PracticeService:
         (until 2026-10-15 the library hid anything weighted under 1.0 while the plan hid nothing)."""
         return [key for key, job in self.catalog.job_types.items() if job.fits(question)]
 
-    def _fitting(self, questions: list[BankQuestion], job_type: str | None) -> list[BankQuestion]:
+    def _fitting(self, questions: list[BankQuestion], job_type: JobSelection) -> list[BankQuestion]:
         """The questions the goal's job type does not exclude; everything when there is no goal or job type."""
-        job = self.catalog.job_types.get(job_type) if job_type else None
+        job = combined_job(self.catalog.job_types, job_type)
         return questions if job is None else [q for q in questions if job.fits(q)]
 
     @staticmethod
@@ -305,13 +306,24 @@ class PracticeService:
         return self._goal_view(goal, self._language(language))
 
     async def save_goal(self, user_id: uuid.UUID, *, job_type: str | None, interview_date: date | None,
-                        minutes_per_day: int | None, seniority: str | None, language: str | None = None) -> GoalView:
+                        minutes_per_day: int | None, seniority: str | None, language: str | None = None,
+                        job_types: list[str] | None = None, learning_mode: str = "targeted") -> GoalView:
         self._job_type(job_type)
-        if minutes_per_day is not None and not MIN_MINUTES_PER_DAY <= minutes_per_day <= MAX_MINUTES_PER_DAY:
+        if learning_mode not in ("targeted", "explore"):
+            raise ApiError("validation", "learning_mode must be targeted or explore")
+        if job_types is not None and (not isinstance(job_types, list) or len(job_types) > 30 or
+                                      any(not isinstance(key, str) or not key or len(key) > 40 for key in job_types)):
+            raise ApiError("validation", "job_types must be a list of job type keys")
+        selected = list(dict.fromkeys(job_types if job_types is not None else ([job_type] if job_type else [])))
+        for key in selected:
+            self._job_type(key)
+        if minutes_per_day is not None and (isinstance(minutes_per_day, bool) or not isinstance(minutes_per_day, int) or
+                                           not MIN_MINUTES_PER_DAY <= minutes_per_day <= MAX_MINUTES_PER_DAY):
             raise ApiError("validation", f"minutes_per_day must be between {MIN_MINUTES_PER_DAY} and {MAX_MINUTES_PER_DAY}")
         if seniority is not None and seniority not in SENIORITIES:
             raise ApiError("validation", f"seniority must be one of {', '.join(SENIORITIES)}")
-        goal = Goal(job_type=job_type, interview_date=interview_date, minutes_per_day=minutes_per_day, seniority=seniority)
+        goal = Goal(job_type=selected[0] if selected else None, job_types=selected, learning_mode=learning_mode,
+                    interview_date=interview_date, minutes_per_day=minutes_per_day, seniority=seniority)
         async with self._user_lock(user_id), self.store.transaction() as tx:
             await tx.save_goal(user_id, goal)
             # the plan is not thrown away: it is rebuilt on the next read because the goal is newer than the plan
@@ -320,8 +332,11 @@ class PracticeService:
         return self._goal_view(stored, self._language(language))
 
     def _goal_view(self, goal: Goal, language: str) -> GoalView:
-        job = self.catalog.job_types.get(goal.job_type) if goal.job_type else None
+        jobs = [self.catalog.job_types[key] for key in goal.job_types if key in self.catalog.job_types]
+        job = jobs[0] if jobs else None
         return GoalView(job_type=job.key if job else None, job_type_label=job.text("label", language) if job else None,
+                        job_types=[j.key for j in jobs], job_type_labels=[j.text("label", language) for j in jobs],
+                        learning_mode=goal.learning_mode,
                         interview_date=goal.interview_date.isoformat() if goal.interview_date else None,
                         days_to_interview=goal.days_to_interview(), minutes_per_day=goal.minutes_per_day,
                         seniority=goal.seniority, complete=goal.complete)
@@ -365,7 +380,7 @@ class PracticeService:
                     profile = await tx.load_profile(user_id)
                     goal = await tx.load_goal(user_id)
                     seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
-                    ctx = self._context(seniority, language, goal.job_type, user_id=user_id)
+                    ctx = self._context(seniority, language, goal.selection, user_id=user_id)
                     try:
                         attempt = PracticeAttempt(ctx, loaded.question, profile.states, mode=mode, familiarity="new",
                                                   self_confidence=self_confidence, entry=entry)
@@ -671,7 +686,7 @@ class PracticeService:
         # never a question the job type excludes, even after a weak answer on one opened from the unfiltered library
         # (the job type rides on the context: no second goal read per answer; review finding 2026-10-15)
         candidates = self._fitting([self.catalog.questions[s.key] for s in servable if s.key in self.catalog.questions],
-                                   attempt.ctx.job_type)
+                                   attempt.ctx.job_types or attempt.ctx.job_type)
         question = attempt.question
         # what was hard: the bank's own explanation of each known mistake this attempt hit, and the skill it undermines
         text = question.translations.get(language) or question.translations.get("en")
@@ -876,11 +891,11 @@ class PracticeService:
             seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
             servable = await tx.list_questions(language=language)
             seen = await tx.seen_question_keys(user_id)
-        job = self.catalog.job_types.get(goal.job_type) if goal.job_type else None
+        job = combined_job(self.catalog.job_types, goal.selection)
         job_label = job.text("label", language) if job else None
         if job is None:
             return ReadinessView(job_type=None, job_type_label=None, message=texts["no_goal"])
-        required, _, _, plan_skills = self._plan(seniority, job.key)
+        required, _, _, plan_skills = self._plan(seniority, goal.selection)
         by_key = {s.key: s for s in self._skill_rows(profile, required, datetime.now(UTC), None)}
         askable = {link.skill for q in self.catalog.questions.values() for link in q.skills}
         questioned = [p for p in plan_skills if p.assessment_mode.value == "questioned" and p.key in self.catalog.skills]
@@ -920,7 +935,7 @@ class PracticeService:
         # the next questions: the biggest gaps first (weight x gap), then the heaviest skills without counted evidence
         candidates = self._fitting([self.catalog.questions[s.key] for s in servable
                                     if s.key in self.catalog.questions and s.assessment_ready
-                                    and (s.reviewed or not self.config.suggest_reviewed_only)], job.key)
+                                    and (s.reviewed or not self.config.suggest_reviewed_only)], goal.selection)
         order = sorted((r for r in rows if r.askable and r.gap != 0),
                        key=lambda r: (-(r.gap or 0) * r.weight_share, r.gap is None and r.freshness == "none", -r.weight_share))
         picked: list[ReadinessQuestionView] = []
@@ -953,7 +968,7 @@ class PracticeService:
             profile = await tx.load_profile(user_id)
             goal = await tx.load_goal(user_id)
             seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
-        _, weights, _, _ = self._plan(seniority, goal.job_type)
+        _, weights, _, _ = self._plan(seniority, goal.selection)
         evidence = []
         for r in rows:
             question = self.catalog.questions.get(r.get("question_key") or "")
@@ -983,7 +998,7 @@ class PracticeService:
             servable = await tx.list_questions(language=language)
             # XP is read, never stored: the scored answers and interview turns as the engine left them
             scored_rows = await tx.scored_submissions(user_id) + await tx.scored_interview_turns(user_id)
-            required, weights, _, plan_skills = self._plan(seniority, goal.job_type)
+            required, weights, _, plan_skills = self._plan(seniority, goal.selection)
             program = await self._ensure_program(tx, user_id, profile, plan_skills, required, servable, history, goal,
                                                  seniority, language, today)
         now = datetime.now(UTC)
@@ -1075,7 +1090,7 @@ class PracticeService:
             seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
             servable = await tx.list_questions(language=language)
             history = await tx.recent_attempts(user_id, limit=60)
-            required, _, _, plan_skills = self._plan(seniority, goal.job_type)
+            required, _, _, plan_skills = self._plan(seniority, goal.selection)
             program = await self._ensure_program(tx, user_id, profile, plan_skills, required, servable, history, goal, seniority,
                                                  language, today)
         return self._program_view(program, goal, today), profile, goal, seniority, servable
@@ -1132,8 +1147,8 @@ class PracticeService:
             existing = await self.get(user_id, opened)
             if existing.status in ("in_progress", "evaluating", "failed") and existing.submission is None:
                 return ProgramStartView(kind="attempt", item=item, attempt=existing)
-        required, _, ceiling, _ = self._plan(seniority, goal.job_type)
-        question = self._question_for(item, profile, servable, seen, required, ceiling, mode, language, goal.job_type)
+        required, _, ceiling, _ = self._plan(seniority, goal.selection)
+        question = self._question_for(item, profile, servable, seen, required, ceiling, mode, language, goal.selection)
         if question is None:
             async with self.store.transaction() as tx:
                 await tx.update_plan_item(uuid.UUID(item.id), status="skipped")
@@ -1145,7 +1160,7 @@ class PracticeService:
         return ProgramStartView(kind="attempt", item=item.model_copy(update={"status": "started"}), attempt=attempt)
 
     def _question_for(self, item: PlanItemView, profile: LoadedProfile, servable, seen: set[str], required: dict[str, int],
-                      ceiling: int, mode: str, language: str, job_type: str | None = None) -> BankQuestion | None:
+                      ceiling: int, mode: str, language: str, job_type: JobSelection = None) -> BankQuestion | None:
         """The same choice the coach makes after an answer: the item's skill, the user's level, unseen and reviewed first;
         never a question the job type excludes (a secondary link could otherwise pull one in)."""
         pool = self._fitting(self._servable_pool(servable), job_type)
@@ -1417,7 +1432,7 @@ class PracticeService:
         """The Plan Router's week, from today until the interview (or seven days), within the user's minutes."""
         minutes = goal.minutes_per_day or DEFAULT_MINUTES_PER_DAY
         days_left = goal.days_to_interview(today)
-        pool = self._servable_pool(servable)
+        pool = self._fitting(self._servable_pool(servable), goal.selection)
         coverage = bank.coverage_by_skill(pool, language=language, allow_in_review=not self.config.suggest_reviewed_only,
                                           require_parity=False)
         scored = [r for r in recent if r.get("band")]
@@ -1498,7 +1513,7 @@ class PracticeService:
             if not lock.locked() and not getattr(lock, "_waiters", None) and self._locks.get(attempt_id) is lock:
                 del self._locks[attempt_id]
 
-    def _plan(self, seniority: str, job_type: str | None = None
+    def _plan(self, seniority: str, job_type: JobSelection = None
               ) -> tuple[dict[str, int], dict[str, float], int, list[PlanSkill]]:
         """(required levels, skill weights, difficulty ceiling, plan rows) for a seniority and a job type.
 
@@ -1507,7 +1522,7 @@ class PracticeService:
         plan lean the same way. A skill the job type excludes (emphasis 0) leaves the plan altogether: an embedded
         plan has no HDL coding, a software plan no flip-flops (Harel's task 8, 2026-10-15). An unknown job type is
         ignored, never an error here."""
-        job = self.catalog.job_types.get(job_type) if job_type else None
+        job = combined_job(self.catalog.job_types, job_type)
         role = self.catalog.roles[self.config.role]
         if seniority not in role.seniority_profiles:                  # normalised before the key: one entry per real profile
             seniority = next(iter(role.seniority_profiles))
@@ -1526,13 +1541,15 @@ class PracticeService:
                                 profile.difficulty_ceiling, plan)
         return self._plans[key]
 
-    def _context(self, seniority: str, language: str, job_type: str | None = None, *, user_id=None) -> PracticeContext:
+    def _context(self, seniority: str, language: str, job_type: JobSelection = None, *, user_id=None) -> PracticeContext:
         required, weights, ceiling, _ = self._plan(seniority, job_type)
         role = self.catalog.roles[self.config.role]
         async def code_checker(question, answer, attempt_id):
             return await self.code_execution.check_answer(user_id, f"practice:{attempt_id}", question, answer)
+        keys = (job_type,) if isinstance(job_type, str) else tuple(job_type or ())
         return PracticeContext(provider=self.provider, skills=self.catalog.leaf_skills, language=language,
-                               seniority=seniority, job_type=job_type, difficulty_ceiling=ceiling, required_levels=required,
+                               seniority=seniority, job_type=keys[0] if keys else None, job_types=keys,
+                               difficulty_ceiling=ceiling, required_levels=required,
                                skill_weights=weights, tips=list(self.catalog.tips.values()), glossary=self.catalog.glossary,
                                role_family=role.family, polish_tips=self.config.polish_tips,
                                image_fetcher=self.image_fetcher, question_image_fetcher=self.question_image_fetcher,
@@ -1562,7 +1579,7 @@ class PracticeService:
             goal = await tx.load_goal(user_id)
             seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
         profile.seniority = seniority
-        ctx = self._context(seniority, stored.row["practice_language"], goal.job_type, user_id=user_id)
+        ctx = self._context(seniority, stored.row["practice_language"], goal.selection, user_id=user_id)
         attempt = PracticeAttempt.restore(ctx, loaded.question, profile.states, stored.row)
         return attempt, stored, loaded, profile
 

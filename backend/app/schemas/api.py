@@ -3,6 +3,8 @@ no hidden hints, no expected answers of follow-ups."""
 
 from __future__ import annotations
 
+from typing import Literal
+
 from pydantic import BaseModel, Field
 
 from app.repo.questions import QuestionDetail
@@ -155,11 +157,14 @@ class GoalView(BaseModel):
 
     job_type: str | None = None                 # a key from GET /v1/job-types
     job_type_label: str | None = None
+    job_types: list[str] = Field(default_factory=list)
+    job_type_labels: list[str] = Field(default_factory=list)
+    learning_mode: Literal["targeted", "explore"] = "targeted"
     interview_date: str | None = None           # ISO date
     days_to_interview: int | None = None        # negative once the date has passed
     minutes_per_day: int | None = None
     seniority: str | None = None                # student | junior | mid | senior | staff | principal
-    complete: bool = False                      # job type and minutes are known: the onboarding was answered
+    complete: bool = False                      # selected roles + minutes, or broad learning + minutes + career stage
 
 
 class JobTypeView(BaseModel):

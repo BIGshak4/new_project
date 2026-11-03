@@ -8,7 +8,7 @@ normally created by the signup trigger; the insert here covers accounts created 
 from __future__ import annotations
 
 import uuid
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, date, datetime
 
 from sqlalchemy import func, select, update
@@ -58,21 +58,38 @@ SENIORITIES = ("student", "junior", "mid", "senior", "staff", "principal")      
 
 @dataclass
 class Goal:
-    """What the user is preparing for: the job type, when the interview is, how much time they have per day.
+    """Selected career roles or broad learning, an optional interview date, and daily practice time.
 
-    Stored on `user_profile` without a schema change: `background["job_type"]`, `target_interview_date`,
-    `available_minutes_per_day`, `seniority_self_assessed`. Every field is optional; `complete` says whether the
-    onboarding questions were answered."""
+    Stored without a schema change: `background` keeps the legacy primary `job_type`, the selected `job_types`,
+    and `learning_mode`; existing profile columns keep the date, minutes and seniority. Partial goals stay editable.
+    Explore intentionally clears roles and the interview date, and requires a career stage before starting."""
 
     job_type: str | None = None
     interview_date: date | None = None
     minutes_per_day: int | None = None
     seniority: str | None = None
     saved_at: datetime | None = None              # when the goal was last saved: a plan older than that is rebuilt at once
+    job_types: list[str] = field(default_factory=list)
+    learning_mode: str = "targeted"
+
+    def __post_init__(self) -> None:
+        self.job_types = list(dict.fromkeys(self.job_types or ([self.job_type] if self.job_type else [])))
+        if self.learning_mode == "explore":
+            self.job_types = []
+            self.interview_date = None
+        self.job_type = self.job_types[0] if self.job_types else None
 
     @property
     def complete(self) -> bool:
-        return self.job_type is not None and self.minutes_per_day is not None
+        valid_minutes = (isinstance(self.minutes_per_day, int) and not isinstance(self.minutes_per_day, bool)
+                         and 5 <= self.minutes_per_day <= 600)
+        return valid_minutes and ((self.learning_mode == "targeted" and bool(self.job_types)) or
+                                  (self.learning_mode == "explore" and self.seniority in SENIORITIES))
+
+    @property
+    def selection(self) -> tuple[str, ...]:
+        """Stable role union for plan caching and pool filtering; explore has no role restriction."""
+        return tuple(sorted(self.job_types)) if self.learning_mode == "targeted" else ()
 
     def days_to_interview(self, today: date | None = None) -> int | None:
         if self.interview_date is None:
@@ -88,7 +105,11 @@ async def load_goal(connection: AsyncConnection, user_id: uuid.UUID) -> Goal:
     if row is None:
         return Goal()
     background = row.background if isinstance(row.background, dict) else {}
-    job_type = background.get("job_type")
+    job_types = background.get("job_types")
+    # An explicitly empty plural selection clears the legacy role; only genuinely old records fall back.
+    job_type = None if isinstance(job_types, list) else background.get("job_type")
+    job_types = [v for v in job_types if isinstance(v, str) and v] if isinstance(job_types, list) else []
+    learning_mode = "explore" if background.get("learning_mode") == "explore" else "targeted"
     saved_at = None
     if background.get("goal_saved_at"):
         try:
@@ -99,7 +120,8 @@ async def load_goal(connection: AsyncConnection, user_id: uuid.UUID) -> Goal:
             saved_at = None
     return Goal(job_type=str(job_type) if job_type else None, interview_date=row.target_interview_date,
                 minutes_per_day=int(row.available_minutes_per_day) if row.available_minutes_per_day is not None else None,
-                seniority=str(row.seniority_self_assessed) if row.seniority_self_assessed else None, saved_at=saved_at)
+                seniority=str(row.seniority_self_assessed) if row.seniority_self_assessed else None, saved_at=saved_at,
+                job_types=job_types, learning_mode=learning_mode)
 
 
 async def save_goal(connection: AsyncConnection, user_id: uuid.UUID, goal: Goal) -> Goal:
@@ -111,6 +133,8 @@ async def save_goal(connection: AsyncConnection, user_id: uuid.UUID, goal: Goal)
         background["job_type"] = goal.job_type
     else:
         background.pop("job_type", None)
+    background["job_types"] = list(goal.job_types)
+    background["learning_mode"] = goal.learning_mode
     goal.saved_at = datetime.now(UTC)
     background["goal_saved_at"] = goal.saved_at.isoformat()
     values = {"background": background, "target_interview_date": goal.interview_date,

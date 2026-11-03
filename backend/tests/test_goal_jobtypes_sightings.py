@@ -172,7 +172,7 @@ class TestTheGoal:
                                    seniority="junior", language="he")
         assert view.complete and view.job_type_label == "וריפיקציה" and view.days_to_interview == 10
         again = await svc.get_goal(USER, language="en")
-        assert again.model_dump() == {**view.model_dump(), "job_type_label": "Verification"}
+        assert again.model_dump() == {**view.model_dump(), "job_type_label": "Verification", "job_type_labels": ["Verification"]}
         assert store.seniority[USER] == "junior"
         # a request without seniority keeps the stored one, and the response says what is stored
         partial = await svc.save_goal(USER, job_type="fpga", interview_date=None, minutes_per_day=45, seniority=None)
@@ -349,6 +349,28 @@ def headers():
 
 
 class TestOverHttp:
+    async def test_plural_goals_and_broad_learning_round_trip_through_the_api(self, client, headers):
+        targeted = await client.post("/v1/me/goal", headers=headers, json={
+            "job_types": ["software", "digital_design", "software"], "learning_mode": "targeted",
+            "minutes_per_day": 37, "seniority": "junior", "interview_date": None,
+        })
+        assert targeted.status_code == 200
+        assert targeted.json()["job_types"] == ["software", "digital_design"]
+        assert targeted.json()["job_type"] == "software" and targeted.json()["complete"]
+        assert (await client.get("/v1/me/goal", headers=headers)).json() == targeted.json()
+        assert (await client.get("/v1/me/program", headers=headers)).json()["goal_complete"]
+        unknown = await client.post("/v1/me/goal", headers=headers,
+                                    json={"job_types": ["software", "astronaut"], "minutes_per_day": 37})
+        assert unknown.status_code == 422
+        broad = await client.post("/v1/me/goal", headers=headers, json={
+            "job_types": [], "learning_mode": "explore", "minutes_per_day": 22, "seniority": "student",
+        })
+        assert broad.status_code == 200 and broad.json()["complete"]
+        assert broad.json()["job_type"] is None and broad.json()["job_types"] == []
+        assert broad.json()["learning_mode"] == "explore" and broad.json()["interview_date"] is None
+        program = (await client.get("/v1/me/program", headers=headers)).json()
+        assert program["goal_complete"] and program["plan"]["minutes_per_day"] == 22
+
     async def test_job_types_goal_sightings_and_filters(self, client, headers):
         jobs = await client.get("/v1/job-types?language=he", headers=headers)
         assert jobs.status_code == 200 and {j["key"] for j in jobs.json()} >= {"verification", "fpga"}

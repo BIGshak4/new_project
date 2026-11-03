@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import date
-from typing import Annotated
+from typing import Annotated, Literal
 
 from fastapi import APIRouter, Header, Query
 from pydantic import BaseModel, Field
@@ -37,8 +37,10 @@ async def progress(access: CurrentAccess, practice: Practice,
 
 class GoalRequest(BaseModel):
     job_type: str | None = Field(None, max_length=40, description="a key from GET /v1/job-types")
+    job_types: list[Annotated[str, Field(min_length=1, max_length=40)]] | None = Field(None, max_length=30)
+    learning_mode: Literal["targeted", "explore"] = "targeted"
     interview_date: date | None = None
-    minutes_per_day: int | None = Field(None, ge=1, le=1440)
+    minutes_per_day: int | None = Field(None, ge=5, le=600, strict=True)
     seniority: str | None = Field(None, max_length=20)
     language: str | None = Field(None, pattern="^(en|he)$")
 
@@ -63,7 +65,8 @@ async def readiness(access: CurrentAccess, practice: Practice,
 @router.post("/goal", response_model=GoalView, summary="Set or change my goal")
 async def save_goal(body: GoalRequest, access: CurrentAccess, practice: Practice) -> GoalView:
     return await practice.save_goal(access.user_id, job_type=body.job_type, interview_date=body.interview_date,
-                                    minutes_per_day=body.minutes_per_day, seniority=body.seniority, language=body.language)
+                                    minutes_per_day=body.minutes_per_day, seniority=body.seniority, language=body.language,
+                                    job_types=body.job_types, learning_mode=body.learning_mode)
 
 
 class ProgramStartRequest(BaseModel):
