@@ -1,0 +1,443 @@
+{
+  "received_on": "2026-11-03",
+  "screenshot_count": 21,
+  "question_source_count": 20,
+  "duplicate_image_pairs": [
+    [
+      7,
+      8
+    ]
+  ],
+  "sources": [
+    {
+      "screenshot": 1,
+      "question_source": 1,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-01.png"
+      ],
+      "sha256": "566b1779aba01955a615244a823d35c5175dcba99971c68e4e56104748f4da29",
+      "original_prompt": "ממש בחומרה מערכת שתקבל מספר בעל שלושה ביטים ותוציא את המספר שהתקבל, למעט 5 שיהפוך ל-7 ולהיפך.",
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-254"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 2,
+      "question_source": 2,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-02.png"
+      ],
+      "sha256": "b35dc41a8ab8feada166c0ace08529ad29e8f86b0ebf59eaf3830c1837557c2a",
+      "original_prompt": "עליך לממש פונקציה שמקבלת בית ומחזירה בית כך שסדר הסיביות בו הפוך. לדוגמה 00111010 הופך ל-01011100. אסור להשתמש במערך. לאחר המימוש נאמר שהפונקציה לוקחת יותר מדי זמן: כיצד לשפר את זמן הריצה? לא ניתן לאתחל LUT מראש; ניתן להשתמש במקום קבוע.",
+      "source_tags": [
+        "software",
+        "qualcomm"
+      ],
+      "reported_companies": [
+        "Qualcomm"
+      ],
+      "question_ids": [
+        "PREP-094"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 3,
+      "question_source": 3,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-03.png"
+      ],
+      "sha256": "567e4bfb6e831ef3993e639b41b8cd6f9db5b0e95aeba5b742d2879226a7011a",
+      "original_prompt": "שאלה במערכות ספרתיות: יש בידך אוגרים בעלי רוחב כניסה ויציאה n ורכיבים מספקים. ממש את סדרת הריבועים השלמים 1,4,9,16,... כך שבכל מחזור שעון יתקבל איבר מהסדרה.",
+      "source_tags": [
+        "ceva",
+        "hardware",
+        "marvell"
+      ],
+      "reported_companies": [
+        "CEVA",
+        "Marvell"
+      ],
+      "question_ids": [
+        "PREP-140"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 4,
+      "question_source": 4,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-04.png"
+      ],
+      "sha256": "12ee174b6ba416e62c548251718edb0db73c2c911bf2ff5d6117fa6f9921a1ca",
+      "original_prompt": "יש בלוק שמקבל 4 כניסות ויש 4 יציאות. כניסת load: בערך 0 הבלוק עובד כמונה רגיל; בערך 1 נקבל במוצא את ערכי הכניסה במחזור הבא. מוסיפים כניסה ומוצא אחד (a4,q4). יש להשתמש בבלוק הקיים כך שיעבוד כנדרש.",
+      "source_tags": [
+        "hardware",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "question_ids": [
+        "PREP-152"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 5,
+      "question_source": 5,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-05.png"
+      ],
+      "sha256": "58a0f10eda50204a2d52b378262177810cad9dbde678da2f47c0d3b99a181769",
+      "original_prompt": "נתונה רשימה מקושרת ומצביע head. א. הפוך את הרשימה: החוליה הראשונה תהפוך לאחרונה ותצביע ל-NULL, וה-head יצביע לחוליה האחרונה המקורית. ב. הסר חוליה כאשר נתון head ומצביע לאיבר להסרה. ג. ללא head, אלא רק מצביע לאיבר שאותו צריך להסיר.",
+      "source_tags": [
+        "hardware",
+        "intel",
+        "software"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-238"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 6,
+      "question_source": 6,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-06.png"
+      ],
+      "sha256": "a44e3cc5b2083379bbf93e057ee10ef7d10a67131513d1e6988593849e184244",
+      "original_prompt": "ברשותך וולטמטר וטיימר. מצא דרך למדוד גובה בניין בן עשר קומות.",
+      "source_tags": [
+        "logic",
+        "sandisk"
+      ],
+      "reported_companies": [
+        "SanDisk"
+      ],
+      "question_ids": [
+        "PREP-248"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 7,
+      "question_source": 7,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-07.png"
+      ],
+      "sha256": "aabbb7cbc75c2133bf44d814951e5e87f7fe982756c3e01a9025fa09c0645568",
+      "original_prompt": "יש רשימה מקושרת: start מצביע לרכיב הראשון ו-next לרכיב הבא. next של הרכיב האחרון מצביע ל-NULL. הפוך את כיוון הרשימה כך ש-start יצביע לרכיב שהיה אחרון, ו-next של הרכיב שהיה ראשון יצביע ל-NULL.",
+      "source_tags": [
+        "hardware",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "question_ids": [
+        "PREP-238"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 8,
+      "question_source": 7,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-08.png"
+      ],
+      "sha256": "9f12466c90597ddb121460c14c7e294f058bd4ea0c81c95af3315df94212282b",
+      "original_prompt": "יש רשימה מקושרת: start מצביע לרכיב הראשון ו-next לרכיב הבא. next של הרכיב האחרון מצביע ל-NULL. הפוך את כיוון הרשימה כך ש-start יצביע לרכיב שהיה אחרון, ו-next של הרכיב שהיה ראשון יצביע ל-NULL.",
+      "source_tags": [
+        "hardware",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "question_ids": [
+        "PREP-238"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 9,
+      "question_source": 8,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-09.png"
+      ],
+      "sha256": "ca429787b2dfc9fadc70ded8f52990c2898c99329b03ebe5fedb3b18bae6f77a",
+      "original_prompt": "מה הסיבה לשימוש ביחידות dB?",
+      "source_tags": [
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-249"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 10,
+      "question_source": 9,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-10.png"
+      ],
+      "sha256": "16f3d2c78bcafc939ae29eebfdee93e6d7b5e7064d524697a08afab3bdcd1186",
+      "original_prompt": "Given a sudoku board write a function that solves the board if possible or indicates it is unsolvable otherwise.",
+      "source_tags": [
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-245"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 11,
+      "question_source": 10,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-11.png"
+      ],
+      "sha256": "c9e656fee05d08702cce28ccbbc9db072aaa6f49c54db7ea0cc3efb8722b633c",
+      "original_prompt": "50 גמדים מחוץ לחדר, חצי חובשים כובע אדום וחצי כחול. עליהם להיכנס לחדר אטום ולהסתדר חצי כחול בצד אחד וחצי אדום בצד השני. הנכנס רואה את כל הגמדים שלפניו; מי שבחדר אינו יודע מי הבאים שייכנסו; כל גמד אינו יודע את צבעו; מי שנכנס מתמקם ואינו יכול לזוז לאחר מכן. ניתן לבנות אסטרטגיה משותפת מראש.",
+      "source_tags": [
+        "intel",
+        "hp",
+        "logic"
+      ],
+      "reported_companies": [
+        "Intel",
+        "HP"
+      ],
+      "question_ids": [
+        "PREP-250"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 12,
+      "question_source": 11,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-12.png"
+      ],
+      "sha256": "2f7de0b34c70cafbcc2d4de705a4ec4ee7c20e640be28480444d1bbb02109a24",
+      "original_prompt": "מה זה Copy Constructor ולמה הוא חשוב?",
+      "source_tags": [
+        "software",
+        "kla"
+      ],
+      "reported_companies": [
+        "KLA"
+      ],
+      "question_ids": [
+        "PREP-252"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 13,
+      "question_source": 12,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-13.png"
+      ],
+      "sha256": "47081ee9e9687920666b866de38f911762a34ff09273f6bbe3d0e2aaa5a5b1bf",
+      "original_prompt": "ממש על ידי שערים לוגיים רכיב שמקבל Vin ו-CLK ומוציא Vout לפי התרשים: Vin גבוה במשך שלושה מחזורי שעון, והפלט גבוה רק בחצי המחזור הגבוה השלישי. בתרשים עליית Vin חופפת לעליית CLK וירידתו חופפת לירידת CLK.",
+      "source_tags": [
+        "hardware",
+        "freescale",
+        "2312313"
+      ],
+      "reported_companies": [
+        "Freescale"
+      ],
+      "question_ids": [
+        "PREP-255"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 14,
+      "question_source": 13,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-14.png"
+      ],
+      "sha256": "1d7cd0981b40f7c53280b979bfef76ee75c1fda034785c9ae89b51728ba7bec0",
+      "original_prompt": "חדר עם מסדרון צר שבו עובר אדם אחד בכל פעם. גלאי מאפיין ארבעה מצבים: גבר יוצא, גבר נכנס, אישה יוצאת, אישה נכנסת. כשאין תנועה מוציא 0000. ממש מערכת עם שלוש נורות: RED אם יש יותר גברים בחדר, GREEN אם מספר הגברים והנשים שווה, BLUE אם יש יותר נשים.",
+      "source_tags": [
+        "hardware",
+        "logic-design",
+        "marvell",
+        "state-machines"
+      ],
+      "reported_companies": [
+        "Marvell"
+      ],
+      "question_ids": [
+        "PREP-256"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 15,
+      "question_source": 14,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-15.png"
+      ],
+      "sha256": "75eb7879ac409f9369e64582f7c488f842f45d227fb7ee5001b0d0ba5568b92b",
+      "original_prompt": "נתונה רשת רחובות ומיקומי אנשים שונים על הרשת. מצא נקודת מסיבה שממזערת את סך מרחקי ההליכה של כולם. ניתן ללכת רק על הרחובות ולא ביניהם. כתוב אלגוריתם בזמן מינימלי.",
+      "source_tags": [
+        "software",
+        "google",
+        "logic",
+        "algorithms-software"
+      ],
+      "reported_companies": [
+        "Google"
+      ],
+      "question_ids": [
+        "PREP-246"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 16,
+      "question_source": 15,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-16.png"
+      ],
+      "sha256": "666abb5a4b9fb69d277ae379cf7b1ad3ea2e77519c2405650a043c4a95dd601f",
+      "original_prompt": "א. נתון בית של 8 סיביות: הצע דרך להפוך את סדר סיביותיו בזמן אופטימלי, סיבית 0 למקום 7 ולהיפך. ב. כעת מספר 32 סיביות ובניית מערך של 4 ג'יגה אינה עומדת בדרישות הזיכרון. מצא פתרון בזמן אופטימלי.",
+      "source_tags": [
+        "software",
+        "marvell",
+        "algorithms-software"
+      ],
+      "reported_companies": [
+        "Marvell"
+      ],
+      "question_ids": [
+        "PREP-094"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 17,
+      "question_source": 16,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-17.png"
+      ],
+      "sha256": "cf3b86cba126577d9442a4638d5e31f9bd498ff76491dc1825bb4577b7322de9",
+      "original_prompt": "ממש סכום אחדות של 3 ביטים רק על ידי HA.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-001"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 18,
+      "question_source": 17,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-18.png"
+      ],
+      "sha256": "40b0addcec92d5b02e90c77b78100e71d996ed39d2526455c558363cb8eea868",
+      "original_prompt": "יש מד משקל שנותן כל משקל שתרצה. בחר מספר מינימלי של משקולות שיאפשרו להציג כל משקל שלם בין 1 ל-40 קילו על ידי הנחת המשקולות הנבחרות על המד. למשל 10,5,2 מייצגות יחד 17 קילו.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-251"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 19,
+      "question_source": 18,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-19.png"
+      ],
+      "sha256": "4163d3ad74a2645b476ed134916184cb2091f9605f978ae092e742a37ee5de9f",
+      "original_prompt": "תאר תרחיש שבו אתר או שירות חווה עומס שיא Stress/Spike Load נקודתי, צפוי ומתוכנן: פרסום ציונים ארצי, תחילת שנה אקדמית או מכירה מיוחדת. בפרק זמן קצר מספר עצום של משתמשים מבצע פעולה דומה. אילו כלים ושיקולים ארכיטקטוניים נדרשים מצוות הפיתוח כדי שהאתר לא יקרוס ויטפל בעומס? פרט פעולות לפני האירוע, במהלכו ואחריו.",
+      "source_tags": [
+        "nvidia",
+        "software"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-253"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 20,
+      "question_source": 19,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-20.png"
+      ],
+      "sha256": "ac706815063d0ea51815f22f7e31ab71f27cdac303725d8487111a5ff79e3192",
+      "original_prompt": "נתון מערך עם n מספרים שלמים חיוביים ושליליים. מהי הדרך היעילה למצוא את המספר החיובי הראשון שחסר? לדוגמה 1,2,4,-1: המספר החסר הוא 3.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-247"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 21,
+      "question_source": 20,
+      "archive_paths": [
+        "sources/2026-11-03-batch20-21.png"
+      ],
+      "sha256": "f81034419921a699c79dbcbb1a19fbb949b2b5866a36532b7b3496c76ebac392",
+      "original_prompt": "מרוץ בין 3 חלזונות עם חיישן. כשהחלזון עובר בחיישן הוא מסמן שסיים. צריך לדעת איזה חלזון ניצח ולשמור את מצב הזוכה הראשון; ממעברי חלזונות נוספים צריך להתעלם.",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-045"
+      ],
+      "decision": "additional_source_existing_question"
+    }
+  ]
+}

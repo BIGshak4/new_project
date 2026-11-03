@@ -1,0 +1,628 @@
+{
+  "PREP-254": {
+    "assumptions": {
+      "he": [
+        "כל שמונת המספרים 0..7 חוקיים; המספר אינו מסומן.",
+        "מודל צירופי אידאלי עם שערים דו־כניסתיים."
+      ],
+      "en": [
+        "All values0..7 are legal unsigned inputs.",
+        "Ideal combinational model with two-input gates."
+      ]
+    },
+    "optimality": {
+      "he": "שני שערים במימוש הנתון; לכל היותר שתי רמות שערים. אין טענת אופטימליות פיזית.",
+      "en": "Two gates in this construction; at most two gate levels, without a physical optimality claim."
+    },
+    "verification": {
+      "he": "מודל Python נבדק מול טבלה עצמאית בכל שמונת הקלטים וגם בהפעלה כפולה: 16 בדיקות. קוד HDL וסימולציה מתועדים בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם נועלי ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+      "en": "Python was compared with an independent eight-row table and the involution property:16 checks. HDL code and simulation evidence are recorded separately.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
+    },
+    "edge_cases": {
+      "he": [
+        "0,7 וששת הערכים שאינם מוחלפים.",
+        "סדר ביטים וקלטים 101/111."
+      ],
+      "en": [
+        "0,7 and all six unaffected values.",
+        "Bit order and the101/111 inputs."
+      ]
+    },
+    "common_mistakes": {
+      "he": "שימוש ב־XOR2 ללא אפשור; הנחה שהקלט תמיד5 או7; החלפת MSB במקום הסיבית האמצעית.",
+      "en": "Using unconditional XOR2; assuming the input is always5 or7; toggling MSB rather than the middle bit."
+    },
+    "interview_answer": {
+      "he": "5 ו־7 שונים רק בסיבית האמצעית, ושניהם מזוהים באמצעות AND של הסיביות החיצוניות. אני משתמש בתוצאה כדי לאפשר XOR של הסיבית האמצעית.",
+      "en": "5 and7 differ only in the middle bit. AND of the outer bits identifies exactly that pair and enables the middle-bit XOR."
+    },
+    "source_ambiguities": {
+      "he": "המקור מגדיר במפורש לשמר את יתר הערכים; ספריית השערים לספירה היא בחירת עריכה.",
+      "en": "The source explicitly preserves other values; the counting gate library is an editorial choice."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד מחליפים שני ערכים שרירותיים בני n ביטים ומשאירים את השאר?",
+        "direction": "זהו אות התאמה לאחד משניהם ו־XOR עם המסכה a XOR b רק כאשר הוא פעיל.",
+        "tests": "השוואה בין מיפוי על תחום מובטח לבין החלפה סלקטיבית."
+      },
+      "en": {
+        "question": "How can two arbitrary n-bit values be exchanged while preserving all others?",
+        "direction": "Detect membership in the selected pair, then conditionally XOR the mask a XOR b.",
+        "tests": "Promised-domain maps versus selective replacement."
+      }
+    }
+  },
+  "PREP-255": {
+    "assumptions": {
+      "he": [
+        "Vin עומד בתזמון ביחס לחזית יורדת; המונה נדגם בירידה.",
+        "האיפוס מוחזק דרך חזית יורדת; שערים עם משוב מותרים לבניית זיכרון.",
+        "פולס יחיד לכל רצף גבוה שנדגם, ורווי במצב3."
+      ],
+      "en": [
+        "Vin meets timing at falling edges; state samples on falls.",
+        "Reset spans a falling edge; gate feedback may construct storage.",
+        "One pulse per sampled high run, saturating at3."
+      ]
+    },
+    "optimality": {
+      "he": "שני ביטי מצב, משוואות לוגיות ונועלי master/slave. אין טענת מינימום פיזי או תדר.",
+      "en": "Two state bits, Boolean equations and master/slave storage; no physical minimum or frequency claim."
+    },
+    "verification": {
+      "he": "מודל Python עבר155,648 בדיקות לכל4096 רצפי Vin באורך12, כולל איפוס ומיסוך במחצית הנמוכה. קוד התנהגותי ושערי NAND מופרדים לצורך סימולציית HDL בדוח נפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם נועלי ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+      "en": "Python passed155,648 checks over all4096 length12 Vin histories, including reset and low-phase masking. Behavioral and NAND-storage RTL are provided for separately recorded HDL simulation.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
+    },
+    "edge_cases": {
+      "he": [
+        "Vin נמוך תמיד או גבוה זמן ממושך.",
+        "דופק קצר שלא נלכד; ירידת Vin בזמן Out; איפוס באמצע רצף.",
+        "שינוי Vin בדיוק בחזית דגימה אינו בתחום ההבטחה."
+      ],
+      "en": [
+        "Vin always low or prolonged high.",
+        "An unsampled short low; Vin falling during Out; reset during a run.",
+        "Vin changing exactly at a sampling edge is outside the timing promise."
+      ]
+    },
+    "common_mistakes": {
+      "he": "הסקת פונקציה צירופית מהתרשים; הנחה שפלט חייב להימשך מחזור מלא; טענה ששיהוי שערים לא מכויל סופר מחזורים; התעלמות מאתחול ומשוב.",
+      "en": "Inferring a memoryless function; assuming a full-cycle output; counting cycles with uncalibrated gate delay; ignoring initialization and feedback."
+    },
+    "interview_answer": {
+      "he": "צריך לזכור כמה חזיתות יורדות רצופות ראו Vin=1. מצב2 מאפשר רק את המחצית הגבוהה הבאה; מצב3 חוסם חזרה עד דגימת0. את שני הדלגלגים ניתן לבנות מנועלי NAND.",
+      "en": "Remember how many consecutive falling edges sampled Vin=1. State2 enables the next high phase; state3 blocks repeats until a sampled0. Two flip-flops can be built from NAND latches."
+    },
+    "source_ambiguities": {
+      "he": "איפוס, דגימה בירידה, rearm ו־Vin ממושך הוגדרו כאן כי הצילום אינו מכריע. הזרמת Vin אסינכרוני מחייבת תכנון CDC נוסף.",
+      "en": "Reset, falling-edge sampling, rearming and prolonged Vin are editorial choices because the source is incomplete. Asynchronous Vin needs additional CDC design."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם מבקשים פולס מלא ומיושר לשעון בכל עליית Vin אסינכרונית?",
+        "direction": "סנכרון/handshake, שמירת אירוע וחוזה latency חדשים; אין להבטיח קליטה של פולס צר ללא מנגנון מתאים.",
+        "tests": "הבדל בין ציור גל, CDC והבטחת זיהוי."
+      },
+      "en": {
+        "question": "What changes if every asynchronous Vin rise requires a full synchronous pulse?",
+        "direction": "Define synchronization/handshake, event retention and latency; a narrow pulse is not automatically captured.",
+        "tests": "Distinguishing a waveform sketch, CDC and capture guarantees."
+      }
+    }
+  },
+  "PREP-256": {
+    "assumptions": {
+      "he": [
+        "חדר ריק באיפוס; גלאי אמין, סינכרוני ואירוע יחיד.",
+        "קיבולת M≥1 והיסטוריה חוקית; קידוד one-hot נקבע כאן."
+      ],
+      "en": [
+        "Empty room at reset; reliable synchronous single-event detector.",
+        "Capacity M≥1 and legal histories; one-hot coding is an editorial choice."
+      ]
+    },
+    "optimality": {
+      "he": "אוגר O(log M) ביטים ומעגל עדכון והשוואה ברוחב זה; בלי טענת מינימום שטח או זמן פיזי.",
+      "en": "O(log M) stored bits and matching-width update/comparison logic; no minimum physical area or timing claim."
+    },
+    "verification": {
+      "he": "מודל עצמאי בדק29,760 טענות על קיבולות1..16, כל אוכלוסייה חוקית וכל מילות האירוע, עם בדיקת טווח ואחת משלוש נורות. RTL מופיע לבדיקת סימולציה נפרדת.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם נועלי ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+      "en": "An independent population oracle checked29,760 assertions over capacities1..16, every legal population and all event words, including signed range and one-of-three outputs. RTL is supplied for separately recorded simulation.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
+    },
+    "edge_cases": {
+      "he": [
+        "חדר ריק ושוויון שאינו אפס.",
+        "d=±M, חזרה דרך אפס, אירועי סרק.",
+        "אין להניח אפשרות לאמת יציאה או קיבולת מתוך d בלבד."
+      ],
+      "en": [
+        "Empty room and nonzero equal populations.",
+        "d=±M, crossing zero and idle cycles.",
+        "Do not assume d alone validates departures or occupancy."
+      ]
+    },
+    "common_mistakes": {
+      "he": "שמירת שלושה צבעים בלבד; ספירה לא מסומנת; גלישה ושימוש שגוי בסימן; החלפת סימן של יציאת אישה; הצגת קידוד שהמצאנו כנתון מקור.",
+      "en": "Storing only three colors; unsigned arithmetic; wraparound sign errors; reversing the woman-exit delta; presenting added coding as a source fact."
+    },
+    "interview_answer": {
+      "he": "אשמור הפרש מסומן. כניסת גבר ויציאת אישה מוסיפות1, ושני האירועים האחרים מחסירים1. השוואה לאפס קובעת צבע, וברוחב הזיכרון אשתמש בגבול התפוסה.",
+      "en": "Store a signed difference. Man-enter and woman-exit add1; the other two subtract1. Compare with zero for color, and size storage from the occupancy bound."
+    },
+    "source_ambiguities": {
+      "he": "הקיבולת, מצב ההתחלה, קידוד האירועים ומדיניות קלט לא חוקי אינם מוגדרים במקור והוספו במפורש.",
+      "en": "Capacity, initial state, event coding and invalid-input policy are unspecified in the source and explicitly added."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד תבדקו יציאה לא חוקית או חריגה מהקיבולת?",
+        "direction": "שמרו ספירות נפרדות או מספיק מידע נוסף; הגדירו נורת שגיאה ומדיניות התאוששות.",
+        "tests": "מצב מספיק להפקת פלט לעומת מצב מספיק לאימות קלט."
+      },
+      "en": {
+        "question": "How would you detect an invalid exit or capacity violation?",
+        "direction": "Store both populations or sufficient extra information, with an error flag and recovery policy.",
+        "tests": "State sufficient for output versus state sufficient for input validation."
+      }
+    }
+  },
+  "PREP-245": {
+    "assumptions": {
+      "he": [
+        "לוח 9×9, אפס לתא ריק וספרות 1..9; נשמר עותק של הקלט.",
+        "מותר להחזיר כל פתרון; קלט פסול נבדל מלוח עקבי שאין לו השלמה."
+      ],
+      "en": [
+        "9×9 board; zero is empty and 1..9 are digits; copy the input.",
+        "Any valid completion is acceptable; invalid input differs from consistent but unsatisfiable input."
+      ]
+    },
+    "optimality": {
+      "he": "חסם חיפוש גס O(81·9^E), מקום O(81+E); MRV היא היוריסטיקה, לא הבטחת זמן פולינומי.",
+      "en": "Loose O(81·9^E) search bound, O(81+E) storage; MRV is a heuristic, not a polynomial guarantee."
+    },
+    "verification": {
+      "he": "203 לוחות נבדקו מול חיפוש עצמאי ואימות סמנטי, ועוד 5 קלטים פסולים. Python הורץ; אין מיצוי של כל לוחות הסודוקו.",
+      "en": "203 boards checked against independent search and semantic validation, plus5 invalid inputs. Python executed; not exhaustive over all Sudoku puzzles."
+    },
+    "edge_cases": {
+      "he": [
+        "לוח ריק/מלא, פתרון לא יחיד, אפס מועמדים, כפילות בשורה/עמודה/ריבוע, קלט שלא השתנה."
+      ],
+      "en": [
+        "Empty/full board, multiple completions, zero candidates, duplicate row/column/box clues, unchanged input."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לשכוח undo באחת המסכות.",
+        "להחזיר כישלון אחרי הספרה הראשונה שנכשלה.",
+        "לבדוק רק שורות או להשוות לפתרון צפוי יחיד.",
+        "להציג MRV כהוכחה לזמן פולינומי."
+      ],
+      "en": [
+        "Forgetting to undo a mask.",
+        "Stopping after only the first failed digit.",
+        "Checking only rows or requiring one exact completion.",
+        "Treating MRV as a polynomial-time proof."
+      ]
+    },
+    "interview_answer": {
+      "he": "אאמת את הנתונים, אבחר תא מוגבל ואנסה כל מועמד חוקי עם חזרה לאחור מדויקת. הצלחה שומרת את כל הרמזים; כישלון אחרי מיצוי הענפים אומר שאין השלמה.",
+      "en": "Validate clues, select a constrained cell and try every legal candidate with exact undo. Success preserves all givens; exhausting branches proves no completion."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מציין גודל או ייצוג. לוח 9×9, אפס, מדיניות שגיאות והעתקת קלט הם הבהרות העריכה; לא דרישות שיוחסו לצילום.",
+      "en": "The source omits dimensions/representation.9×9, zero, error policy and input copying are explicit editorial choices."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך בודקים אם הפתרון יחיד?",
+          "answer_direction": "ממשיכים אחרי הפתרון הראשון, סופרים עד שני פתרונות ועוצרים בשני; יש לשמור undo גם במסלול הצלחה.",
+          "principle": "מציאת עדות אחת והוכחת יחידות הן משימות שונות."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can uniqueness be checked?",
+          "answer_direction": "Continue after the first completion, count up to two and stop at the second; retain undo on successful branches too.",
+          "principle": "Finding a witness and proving uniqueness are different tasks."
+        }
+      ]
+    }
+  },
+  "PREP-246": {
+    "assumptions": {
+      "he": [
+        "גרף לא־מכוון סופי עם אורכים חיוביים שלמים; כתובות בתוך קשת מפוצלות לצמתים.",
+        "כל אדם נספר פעם אחת; נדרשת נגישות של כולם. חציון קואורדינטות שייך רק למקרה מנהטן החופשי."
+      ],
+      "en": [
+        "Finite undirected graph with positive integer lengths; split edges at interior homes.",
+        "Every person counts; require common reachability. Coordinate medians apply only to the free Manhattan-grid case."
+      ]
+    },
+    "optimality": {
+      "he": "גרף כללי: O(K(V+E) log(V+E+1)) זמן ו־ O(V+E) מקום בקוד. רשת מנהטן: O(KlogK) במימוש הממיין; אין טענת מיטביות כללית.",
+      "en": "General graph code: O(K(V+E) log(V+E+1)) time and O(V+E) space. Sorting grid implementation: O(KlogK); no universal optimal-runtime claim."
+    },
+    "verification": {
+      "he": "11,920 מקרי גרף,136,032 דגימות פנים ו־ 729 מקרי מנהטן מול אורקלים נפרדים;4 קלטים פסולים. Python הורץ.",
+      "en": "11,920 graph cases,136,032 interior samples and 729 Manhattan cases against separate oracles;4 invalid inputs. Python executed."
+    },
+    "edge_cases": {
+      "he": [
+        "רכיבים מנותקים, אדם אחד, אנשים באותו מקום, שוויון, קשתות מקבילות, כתובת פנימית שנוספה כצומת."
+      ],
+      "en": [
+        "Disconnected components, one person, shared addresses, ties, parallel edges, interior address inserted as a vertex."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשתמש במרחק אווירי או בחציון מזהי צמתים.",
+        "למזער את המרחק המרבי במקום את הסכום.",
+        "לכלול צומת שאינו נגיש לכל האנשים.",
+        "להכליל חציון מנהטן לרשת עם מכשולים."
+      ],
+      "en": [
+        "Using Euclidean distance or median vertex IDs.",
+        "Minimizing maximum distance instead of total.",
+        "Accepting a vertex unreachable by someone.",
+        "Applying Manhattan medians to obstructed networks."
+      ]
+    },
+    "interview_answer": {
+      "he": "אגדיר רשת משוקללת, אחשב מרחקים קצרים מכל מקור ואסכום בכל צומת. קיים מינימום בצומת כי הסכום קעור בתוך כל קשת; במנהטן חופשי ניתן להפריד לחציונים בצירים.",
+      "en": "Model weighted streets, compute shortest distances from each source and sum at vertices. Concavity along every edge guarantees a vertex optimum; free Manhattan grids separate into coordinate medians."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר גאומטריה, כיווניות או משקלים. המודל הגרפי והסעיף המיוחד של מנהטן מוצגים בנפרד; אין הנחת רשת מלבנית נסתרת.",
+      "en": "The source omits geometry, directionality and weights. The graph model and Manhattan specialization are separate; no hidden rectangular-grid assumption."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם המטרה היא זמן ההגעה של האחרון?",
+          "answer_direction": "ממזערים max של המרחקים, בעיית מרכז ולא חציון. בפרט נקודת פנים עשויה להיות טובה משני קצוות.",
+          "principle": "שינוי פונקציית המטרה משנה גם את המועמדים וההוכחה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if the objective is the last arrival time?",
+          "answer_direction": "Minimize maximum distance: a center problem rather than a median. An interior point may then beat both endpoints.",
+          "principle": "Changing the objective changes candidates and proof."
+        }
+      ]
+    }
+  },
+  "PREP-247": {
+    "assumptions": {
+      "he": [
+        "רשימה ניתנת לשינוי עם שלמים, אפסים וכפילויות; סדרה אינו נשמר.",
+        "עלות O(n) נמדדת במודל מילים; Python מאפשר שלמים רחבים שעלותם תלויה במספר הביטים."
+      ],
+      "en": [
+        "Mutable integer list, including zero/duplicates; order is not preserved.",
+        "O(n) measures word operations; Python permits wider integers with representation-dependent costs."
+      ]
+    },
+    "optimality": {
+      "he": "לכל היותר n החלפות מוצלחות, שני מעברים ו־ O(1) מילות עזר; O(n) במודל RAM.",
+      "en": "At most n successful swaps, two scans and O(1) auxiliary words; O(n) in the RAM model."
+    },
+    "verification": {
+      "he": "335,929 מקרים תקינים מול אורקל קבוצה ובדיקת רב־קבוצה, ועוד 3 פסולים. Python הורץ; אין מיצוי של כל השלמים.",
+      "en": "335,929 valid cases against set/multiset oracles, plus3 invalid inputs. Python executed; not exhaustive over all integers."
+    },
+    "edge_cases": {
+      "he": [
+        "ריק, כל 1..n קיימים, רק שליליים, אפסים, עותקים שווים, ערך גדול מאוד, חסר 1."
+      ],
+      "en": [
+        "Empty, all 1..n present, all negative, zeros, equal copies, very large values, missing1."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "אינדוקס לפני בדיקת טווח.",
+        "החלפת כפילויות ללא התקדמות.",
+        "להחזיר 0 למרות שהשאלה מבקשת חיובי.",
+        "לספור כל while בנפרד ולהסיק n²בלי לנתח החלפות."
+      ],
+      "en": [
+        "Indexing before range validation.",
+        "Swapping equal duplicates without progress.",
+        "Returning zero despite a positive answer contract.",
+        "Treating every while independently as n²without counting productive swaps."
+      ]
+    },
+    "interview_answer": {
+      "he": "התשובה עד n+1. אשתמש בתא v−1 כבית של v, אזיז אליו כל ערך רלוונטי פעם שמתקדמים, ואז אמצא את הבית הראשון שחסר בו הדייר. כל החלפה מתקנת בית חדש.",
+      "en": "The answer is at most n+1. Use slot v-1 as v’s home, move relevant values there with productive swaps, then find the first vacant home. Every swap fixes a new home."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר אם מותר לשנות את המערך. המימוש בוחר מוטציה ומציג במפורש את הפשרה אם נדרשת שמירת הקלט.",
+      "en": "The source does not specify mutation permission. This implementation chooses mutation and explicitly discusses immutable-input trade-offs."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה אם צריך לשמר את סדר המערך המקורי?",
+          "answer_direction": "קבוצת ערכים רלוונטיים מאפשרת זמן לינארי עם O(n) מקום; לחלופין העתקה לפני הסידור משלמת גם היא מקום.",
+          "principle": "דרישת שמירת קלט משנה את חוזה הזיכרון."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if original array order must survive?",
+          "answer_direction": "A set of relevant values gives linear time withO(n) space; copying before rearranging pays space too.",
+          "principle": "Input preservation changes the storage contract."
+        }
+      ]
+    }
+  },
+  "PREP-248": {
+    "assumptions": {
+      "he": "ניסוי מחשבתי בלבד: התחלה ממנוחה, תאוצה g קבועה, גרר זניח וזמן בין שחרור להגעה. עשר קומות אינן נותנות גובה מספרי.",
+      "en": "Paper thought experiment: rest at release, constant g, negligible drag and release-to-arrival time. Ten storeys alone do not supply a numerical height."
+    },
+    "optimality": {
+      "he": "מספר קבוע של פעולות לחישוב h; אין טענת אופטימום של מדידה, דיוק או מחיר ניסוי.",
+      "en": "Constant arithmetic work to compute h; no optimal measurement accuracy or experiment-cost claim."
+    },
+    "verification": {
+      "he": "1,204 מקרי זמן וכבידה הושוו לאינטגרציה נפרדת של המהירות; תחומי שגיאה ומקרי קלט פסול נבדקו. לא נמדד בניין.",
+      "en": "1,204 time/gravity cases compared with independent velocity integration; error intervals and invalid inputs checked. No building was measured."
+    },
+    "edge_cases": {
+      "he": "T=0; זמן או g פסולים; הגעה נראית לעומת קול; גרר ומהירות התחלתית; הפרש גובה שאינו בדיוק גובה הבניין.",
+      "en": "T=0; invalid time/g; observed arrival versus sound; drag/initial velocity; level separation differing from architectural height."
+    },
+    "common_mistakes": {
+      "he": "להחליף וולטמטר בברומטר; להניח גובה קומה; להציב זמן הכולל קול כאילו הוא זמן נפילה; לטעון לניסוי פיזי.",
+      "en": "Replacing the voltmeter with a barometer; assuming floor height; treating sound-inclusive time as fall time; claiming a physical experiment."
+    },
+    "interview_answer": {
+      "he": "במודל אידאלי הוולטמטר הוא גוף ולא חיישן גובה: זמן תנועה T ממנוחה נותן h=gT²/2, רק עם הנחות ותזמון נכונים.",
+      "en": "In the ideal model the voltmeter is a body, not a height sensor: travel time T from rest gives h=gT²/2, with explicit assumptions and timing."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר שימוש לא־הרסני או תזמון פגיעה. נבחרה במפורש פרשנות תיאורטית; שימוש בכלים נוספים אינו מובן מאליו.",
+      "en": "The source defines neither nondestructive use nor impact timing. A theoretical interpretation is declared; additional tools are not assumed."
+    },
+    "solution_extensions": {
+      "he": "אם הצופה מודד קול, כתבו את המשוואה עם c והשוו לשגיאה שמתקבלת מהנוסחה הפשוטה.",
+      "en": "If timing the impact sound, write the equation with c and compare against the simple formula error."
+    },
+    "technical_references": {
+      "he": [
+        "[מודל נפילה חופשית של NASA](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/free-falling-objects/)"
+      ],
+      "en": [
+        "[NASA free-fall model](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/free-falling-objects/)"
+      ]
+    }
+  },
+  "PREP-249": {
+    "assumptions": {
+      "he": "הספקים חיוביים; ליחס מתח המקביל ליחס הספק נדרשות עכבות מתאימות. הדוגמה משתמשת בהתנגדויות שוות ובמתחי RMS.",
+      "en": "Positive powers; a voltage ratio representing power gain requires suitable impedances. The example uses equal resistances and RMS voltages."
+    },
+    "optimality": {
+      "he": "סקאלה לוגריתמית מקצרת חישובי שרשרת ומציגה טווח גדול; זו אינה טענת אופטימום או מדידת חומרה.",
+      "en": "A logarithmic scale simplifies cascades and large ranges; this is not an optimum or hardware measurement claim."
+    },
+    "verification": {
+      "he": "900 זוגות הספק הושוו ללוגריתמים ב־Decimal עם 50 ספרות ולחישוב הספקים ממתחי RMS; נבדקו שני ערכי ייחוס dBm.",
+      "en": "900 power pairs compared with 50-digit Decimal logarithms and independently computed RMS powers; two dBm references checked."
+    },
+    "edge_cases": {
+      "he": "יחס1; הנחתה; הספק0 כגבול; ערכים שליליים פסולים; התנגדויות שונות; סכום הספקים לעומת מכפלת הגברים.",
+      "en": "Ratio1; attenuation; zero as a limit; invalid negative power; unequal resistances; summing powers versus multiplying gains."
+    },
+    "common_mistakes": {
+      "he": "להשתמש ב־20 לכל הספק; להציג0dBm כאפס; לחבר רמות מקור כאילו הן הגברים; להתעלם מפאזה או מעומס.",
+      "en": "Using20 for power ratios; treating0dBm as zero; adding source levels as gains; ignoring phase or loading."
+    },
+    "interview_answer": {
+      "he": "dB הוא לוגריתם של יחס:10log להספק ו־20log למשרעת בתנאים המתאימים. מכפלות הופכות לסכומים, וייחוס כמו1mW מגדיר dBm.",
+      "en": "dB logarithmically expresses a ratio:10log for power,20log for amplitude under suitable conditions. Products become sums; a reference such as 1 mW defines dBm."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מציין תחום. הוסברו יחסי הספק ומתח חשמליים; אין להניח שכל dB הוא מדד שמיעה.",
+      "en": "No application domain is specified. Electrical power/voltage ratios are explained; not every dB quantity is a hearing metric."
+    },
+    "solution_extensions": {
+      "he": "שתי יציאות של1mW מתחברות כסכום הספקים: מה הרמה הכוללת? מה משתנה אם ידועים יחסי מתח אך העכבות שונות?",
+      "en": "Two1mW outputs add as powers: what is the total level? What changes with voltage ratios across unequal impedances?"
+    },
+    "technical_references": {
+      "he": [
+        "[NTIA — המרות דציבלים להספק ולמתח](https://its.ntia.gov/publications/download/tn_89-2.pdf)"
+      ],
+      "en": [
+        "[NTIA — power and voltage decibel conversions](https://its.ntia.gov/publications/download/tn_89-2.pdf)"
+      ]
+    }
+  },
+  "PREP-250": {
+    "assumptions": {
+      "he": "שני צבעים; כיוון שורה מוסכם; ראיית כל הקודמים; כניסה בכל רווח עם מקום פנוי. הקודמים נשארים במקומם.",
+      "en": "Two colors; agreed line direction; visibility of all prior occupants; entry at any gap with space. Earlier people stay in place."
+    },
+    "optimality": {
+      "he": "O(k) סריקה בכניסה ה־k ו־O(1) מקום להחלטה; O(n²) בכלל הכניסות במימוש פשוט. אין טענת מינימום פיזי.",
+      "en": "O(k) scanning at entry k and O(1) decision storage; O(n²) across all entries in the simple implementation. No physical optimum claim."
+    },
+    "verification": {
+      "he": "כל8,191 רצפי ההגעה באורכים0–12 נבדקו, שני צבעים אפשריים בכל בחירת רווח ואי־שינוי סדר הקודמים; נוספו200 סדרי25/25.",
+      "en": "All 8,191 arrival strings of lengths 0–12 checked, both own colors at each gap and unchanged prior order; 200 source-sized 25/25 orders added."
+    },
+    "edge_cases": {
+      "he": "שורה ריקה; רק צבע אחד; כניסה ראשונה ואחרונה; ספירות לא שוות; הגבלת מקום או ראייה שפוסלת את ההנחה.",
+      "en": "Empty line; one color only; first/last entry; unequal counts; position or visibility restrictions invalidating the contract."
+    },
+    "common_mistakes": {
+      "he": "להורות לאדם להצטרף לצבעו שאינו ידוע לו; לסמוך על סדר עתידי; להזיז קודמים; לבלבל חלוקה זו עם שאלת אמירת צבע.",
+      "en": "Telling a person to join their unknown color; depending on future order; moving earlier occupants; confusing partition with spoken hat-color guessing."
+    },
+    "interview_answer": {
+      "he": "אשמור גוש אדום ואחריו גוש כחול. כל נכנס עומד בגבול ביניהם; שני צבעי כובעו משמרים את החלוקה, ולכן אין צורך בידיעת הצבע העצמי.",
+      "en": "Maintain a red block followed by a blue block. Every newcomer enters their boundary; either own color preserves the partition, so own-color knowledge is unnecessary."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מפרט אם אפשר להיכנס בין אנשים. הפתרון מצהיר על אפשרות זו ואינו טוען לפתרון תחת איסור כזה.",
+      "en": "The source does not specify insertion between people. This construction explicitly permits it and makes no claim under a ban on insertion."
+    },
+    "solution_extensions": {
+      "he": "אם מותר להיכנס רק בקצוות, הציגו מצב שבו הגבול פנימי והסבירו מדוע צריך אסטרטגיה או הנחות אחרות.",
+      "en": "If entry is allowed only at the ends, exhibit an internal boundary and explain why a different strategy or assumptions are needed."
+    },
+    "technical_references": {
+      "he": [
+        "ההוכחה נגזרה כאן באמצעות אינווריאנט של שני גושי צבע; אינה נשענת על פתרון של שאלת כובעים אחרת."
+      ],
+      "en": [
+        "The proof derives a two-block invariant here; it does not import a different hat-puzzle protocol."
+      ]
+    }
+  },
+  "PREP-251": {
+    "assumptions": {
+      "he": "עותק אחד מכל משקולת שלמה חיובית; משתמשים בתת־קבוצה ורק בחיבור. אין מאזני שתי כפות.",
+      "en": "One copy of each positive integer weight; a subset is selected and only addition is permitted. There is no two-pan subtraction."
+    },
+    "optimality": {
+      "he": "מינימום6 משקולות מוכח מחסם2^k≥41 ובנייה בחזקות2. ל־M כללי נדרשותceil(log2(M+1)) משקולות.",
+      "en": "Six is minimal by2^k≥41 and a powers-of-two construction. General M requiresceil(log2(M+1)) weights."
+    },
+    "verification": {
+      "he": "כל היעדים לכלM מ־0 עד255 נבדקו מול סכומי כל תתי־הקבוצות: 32,896 ייצוגים. החסם המתמטי נפרד מהבדיקה.",
+      "en": "All targets for M=0..255 checked against enumerated subset sums: 32,896 representations. The mathematical bound is separate from finite checks."
+    },
+    "edge_cases": {
+      "he": "יעדים1,17,32,40; יעד0; חזרה על משקולת אסורה; משקולות שאינן מייצגות יעד; קיום כמה קבוצות אופטימליות.",
+      "en": "Targets1,17,32,40; zero; prohibited reuse; an unrepresentable target; multiple optimal weight sets."
+    },
+    "common_mistakes": {
+      "he": "לבחור1,3,9,27 בלי היתר חיסור; לספור3^k במודל שתי אפשרויות; להוכיח רק שסכום המשקולות מספיק; לטעון ליחידות הפתרון.",
+      "en": "Choosing1,3,9,27 without subtraction; counting3^k for two choices; using total mass alone as a coverage proof; claiming uniqueness."
+    },
+    "interview_answer": {
+      "he": "יש41 תוצאות נחוצות כולל0, ו־k משקולות נותנות לכל היותר2^k תתי־קבוצות. לכן צריך6, והמשקולות1,2,4,8,16,32 משיגות זאת.",
+      "en": "There are41 required values including0; k weights give at most 2^k subsets. Six are necessary, and1,2,4,8,16,32 suffice."
+    },
+    "source_ambiguities": {
+      "he": "המקור מדגים10+5+2 על מד משקל. נוסח העריכה מבהיר חיבור בלבד; מודל מאזניים דו־כפי נשאר שאלת המשך נפרדת.",
+      "en": "The source illustrates10+5+2 on a scale. The edited contract makes addition explicit; two-pan balancing is a separate follow-up."
+    },
+    "solution_extensions": {
+      "he": "אם מותר להניח משקולות בשתי כפות, מה משתנה במספר המצבים ובבניית1,3,9,27? הסבירו את ההבדל במודל.",
+      "en": "If weights may be put on either pan, how do outcome counts and1,3,9,27 change? Explain the different model."
+    },
+    "technical_references": {
+      "he": [
+        "הבנייה והחסם נגזרו כאן מספירת תתי־קבוצות וייצוג בינארי; אין טענה לניסוי שקילה פיזי."
+      ],
+      "en": [
+        "The construction and lower bound derive from subset counting and binary representation; no physical weighing is claimed."
+      ]
+    }
+  },
+  "PREP-252": {
+    "assumptions": {
+      "he": "C++17; סמנטיקת ערך למערך int; בעלות יחידה מאחורי הקלעים; אין ירושה או שימוש מקביל בדוגמה.",
+      "en": "C++17; value semantics for an int array; internally unique ownership; no inheritance or concurrent access in the example."
+    },
+    "optimality": {
+      "he": "העתקה עצמאית של n איברים O(n) זמן ו־O(n) זיכרון תוצאה; העברת הבעלות בדוגמה O(1). Rule of Zero עדיף כשחברים תקניים מתאימים.",
+      "en": "Independent n-element copy:O(n) time and O(n) result storage; this ownership move is O(1). Prefer Rule of Zero when standard members meet the contract."
+    },
+    "verification": {
+      "he": "כללי השפה נבדקו מול טיוטת התקן והנחיות C++. GCC ב־C++17 עם אזהרות כשגיאות קימפל והריץ בהצלחה harness של 65 גדלים; נבדקו כתובות וערכים עצמאיים, השמה עצמית, העברה וגבולות. לא הוזרקו כשלי הקצאה.",
+      "en": "Rules reviewed against the C++ draft and Core Guidelines. GCC C++17 with warnings as errors compiled and passed a 65-size harness testing independent addresses/values, self-assignment, moves and bounds. Allocation failures were not injected."
+    },
+    "edge_cases": {
+      "he": "אוסף ריק; מקור const; השמה עצמית; כשל הקצאה; טיפוס שאינו ניתן להעתקה; אובייקט לאחר move; השמטת העתקה.",
+      "en": "Empty storage; const source; self-assignment; allocation failure; noncopyable type; moved-from reuse; copy elision."
+    },
+    "common_mistakes": {
+      "he": "לבלבל בנאי עם השמה; להעתיק כתובת של משאב בעלות יחידה; להוסיף דסטרקטור בלי לבדוק פעולות מיוחדות; להציג כל return כעותק.",
+      "en": "Confusing construction with assignment; copying an owning raw address; adding a destructor without checking special operations; treating every return as a copy."
+    },
+    "interview_answer": {
+      "he": "בנאי העתקה בונה אובייקט חדש מאחר. העתקה לפי חברים מספיקה לחברי ערך, אך בעלות על משאב מחייבת חוזה נכון; אעדיף vector ו־Rule of Zero כשאפשר.",
+      "en": "A copy constructor builds a new object from another. Memberwise copying fits value members, but resource ownership needs correct semantics; prefer vector and Rule of Zero when suitable."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מציין שפה או משאב. המונח פורש כ־C++17, והמשאב המפורש הוא דוגמת הוראה שנוספה.",
+      "en": "The source names neither language version nor resource. It is interpreted as C++17, with an explicitly added ownership teaching example."
+    },
+    "solution_extensions": {
+      "he": "כיצד הופכים את הטיפוס ללא־ניתן־להעתקה אך ניתן להעברה? מתי שיתוף בעלות ולא העתקה עמוקה הוא החוזה הנכון?",
+      "en": "How would the type become move-only? When is shared ownership, rather than deep copying, the appropriate contract?"
+    },
+    "technical_references": {
+      "he": [
+        "[טיוטת C++ — בנאי העתקה והעברה](https://eel.is/c++draft/class.copy.ctor)",
+        "[טיוטת C++ — השמת העתקה והעברה](https://eel.is/c++draft/class.copy.assign)",
+        "[C++ Core Guidelines — Rule of Zero ופעולות מיוחדות](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-zero)"
+      ],
+      "en": [
+        "[C++ draft — copy/move constructors](https://eel.is/c++draft/class.copy.ctor)",
+        "[C++ draft — copy/move assignment](https://eel.is/c++draft/class.copy.assign)",
+        "[C++ Core Guidelines — Rule of Zero and special operations](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-zero)"
+      ]
+    }
+  },
+  "PREP-253": {
+    "assumptions": {
+      "he": "שירות ואירוע היפותטיים; המספרים בדוגמה הנחות. מודל הבדיקה סלוטי, בקשות בעלות אחידה, שירות קבוע ובלי retries או כשלי תשתית.",
+      "en": "Hypothetical service/event; numeric example is assumed. The tested slot model uses uniform requests, constant service and no retries/infrastructure failures."
+    },
+    "optimality": {
+      "he": "אין פתרון מיטבי יחיד. תכנון קיבולת תלוי במדידה וביעדי שירות; מודל הסלוטים O(t) בזמן ו־O(B+1) גודל תור מרבי, בנוסף לפלט.",
+      "en": "No unique optimum. Capacity planning depends on measurements/objectives; the slot model takes O(t) time and at most O(B+1) queued batches, plus output."
+    },
+    "verification": {
+      "he": "25,920 עקבות תור הושוו לרקורסיה חשבונית ושימור עבודה;1,500 חישובי קיבולת נבדקו בחיפוש מינימום נפרד. לא הורץ עומס רשת או בדיקת ייצור.",
+      "en": "25,920 queue traces compared with a recurrence/work conservation;1,500 capacity plans checked by independent minimum search. No network or production load test was run."
+    },
+    "edge_cases": {
+      "he": "קפיצה לפני autoscale; cache קר; כתיבות כפולות; שירות משנה תקול; קריסת מופע; ירידת עומס עם backlog; בקשות יקרות מהרגיל.",
+      "en": "Spike before autoscale; cold cache; duplicate writes; failing dependency; instance loss; demand drop with backlog; unusually expensive requests."
+    },
+    "common_mistakes": {
+      "he": "להוסיף שרתים בלי למדוד DB; תורים אינסופיים; retries בלתי מוגבלים; cache למידע אישי בלי בידוד; ממוצע במקום p99; לדווח שהמודל הוא load test אמיתי.",
+      "en": "Adding servers without measuring DB; unbounded queues/retries; unisolated private-data caching; means instead of p99; presenting the model as a real load test."
+    },
+    "interview_answer": {
+      "he": "אגדיר יעדי שירות ואמדוד קיבולת לכל הנתיב; אכין scaling ו־cache מראש, גבולות כניסה ותורים, ניטור ונסיגה. אחרי האירוע אאמת סיום עבודה ועקביות ואשפר לפי הנתונים.",
+      "en": "Define service objectives and measure end-to-end capacity; prepare scaling/cache, admission and queue limits, monitoring and rollback. Afterward verify completion/consistency and improve from evidence."
+    },
+    "source_ambiguities": {
+      "he": "אין נתון על עומס, ספק, סוג נתונים או SLO. הוצגה מסגרת החלטות עם מספרים היפותטיים, ולא תוכנית פריסה ספציפית לאתר.",
+      "en": "Traffic, provider, data and SLO are unspecified. This is a decision framework with hypothetical figures, not a deployment plan for this website."
+    },
+    "solution_extensions": {
+      "he": "אם DB מאפשר רק200 כתיבות לשנייה וה־frontend גדל פי10, מה יקרה? תכננו backpressure או מסלול כתיבה שמכבד עקביות ומגבלת זמן.",
+      "en": "If DB allows only 200 writes/second while frontend scales 10x, what happens? Design backpressure or a write path respecting consistency and deadline limits."
+    },
+    "technical_references": {
+      "he": [
+        "[Google SRE — טיפול בעומס יתר](https://sre.google/sre-book/handling-overload/)",
+        "[Google SRE — רשימת בדיקות להשקה](https://sre.google/sre-book/launch-checklist/)",
+        "[Google Cloud — היערכות לאירוע קיבולת שיא](https://docs.cloud.google.com/support/docs/checklists/plan-peak-capacity-event)"
+      ],
+      "en": [
+        "[Google SRE — handling overload](https://sre.google/sre-book/handling-overload/)",
+        "[Google SRE — launch checklist](https://sre.google/sre-book/launch-checklist/)",
+        "[Google Cloud — peak-capacity event planning](https://docs.cloud.google.com/support/docs/checklists/plan-peak-capacity-event)"
+      ]
+    }
+  }
+}

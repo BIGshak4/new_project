@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "kind": "independent_python_models",
+  "records": [
+    {
+      "id": "PREP-001",
+      "checks": 8,
+      "scope": "all eight HA-only inputs and discarded carry"
+    },
+    {
+      "id": "PREP-140",
+      "checks": 98316,
+      "scope": "widths1..12; 4096 steps each; reset; modulo interpretation"
+    },
+    {
+      "id": "PREP-152",
+      "checks": 2048,
+      "scope": "32 states x32 load words x2 control values"
+    },
+    {
+      "id": "PREP-254",
+      "checks": 16,
+      "scope": "all eight inputs and involution"
+    },
+    {
+      "id": "PREP-255",
+      "checks": 155648,
+      "scope": "all4096 length12 Vin histories under falling-edge timing contract"
+    },
+    {
+      "id": "PREP-256",
+      "checks": 29760,
+      "scope": "capacities1..16, all legal populations/events; invalid words hold"
+    }
+  ],
+  "limitations": "Finite software checks, not HDL compilation or physical timing signoff.",
+  "checks": 285796
+}

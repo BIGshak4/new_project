@@ -192,3 +192,16 @@ Intuition: a full adder splits up to three ones into a pair (carry) and a leftov
 ## מקור נוסף — 25.10.2026
 
 נוספה גרסת כניסה מקבילית בת5 ביט באמצעות Full Adder בלבד, לצד גרסאות8 ו7 הביט הקיימות. [הרחבת5 הביט](prep-001-five-input-fa-only-batch11.md).
+
+
+## מקור נוסף — 03.11.2026, מקבץ 20
+
+[צילום מקור פרטי 17](../sources/2026-11-03-batch20-17.png)
+
+ממש סכום אחדות של 3 ביטים רק על ידי HA.
+
+שיוכי מקור מדווחים: NVIDIA.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-001-three_bit_ha_only-batch1103-addendum.md)

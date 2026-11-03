@@ -22,7 +22,7 @@ from scripts.validate_software_execution import (
     output_dir,
 )
 from tests.preparation_compiled_history import before_batch22_compiled
-from tests.preparation_history import BATCH22_BASELINE, BATCH1101_BASELINE
+from tests.preparation_history import BATCH22_BASELINE, BATCH1101_BASELINE, BATCH1103_BASELINE
 
 
 def test_selection_matches_explicit_ui_category_override():
@@ -50,7 +50,7 @@ def test_exact_software_scope_plans_all_suites_and_cpp_checks_with_headroom():
         allocate(questions, positives, maximum=1)
 
 
-def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_79_membership():
+def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_84_membership():
     scope = json.loads((BACKEND / 'tests/fixtures/software_question_scope.json').read_bytes())
     seeds = {q['key']: q for name in ('example_bank.json', 'preparation_bank.json')
              for q in json.loads((BACKEND / 'seeds/questions' / name).read_bytes())}
@@ -66,12 +66,20 @@ def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_79_
     october_endpoint = {key for key in expected if not seeds[key].get('assets', {}).get('preparation_id')
                         or seeds[key]['assets']['preparation_id'] in BATCH1101_BASELINE['records']}
     assert len(october_endpoint) == 72
-    assert len(expected) == 79
-    assert expected - october_endpoint == {
+    november1_endpoint = {key for key in expected if not seeds[key].get('assets', {}).get('preparation_id')
+                         or seeds[key]['assets']['preparation_id'] in BATCH1103_BASELINE['records']}
+    assert len(november1_endpoint) == 79
+    assert len(expected) == 84
+    assert november1_endpoint - october_endpoint == {
         'prep-c-linked-list-dictionary-ownership', 'prep-reverse-singly-linked-list-in-place',
         'prep-streaming-csv-parser-without-library', 'prep-networking-basics-and-interview-answer-prompts',
         'prep-static-duration-linkage-class-members-c-cpp', 'prep-python-oop-language-comparison',
         'prep-abstract-classes-virtual-and-pure-virtual',
+    }
+    assert expected - november1_endpoint == {
+        'prep-sudoku-backtracking-solver', 'prep-street-network-meeting-median',
+        'prep-first-missing-positive-in-place', 'prep-cpp-copy-constructor-and-ownership',
+        'prep-planned-spike-load-readiness',
     }
     assert october_endpoint - rows.keys() == {
         'prep-merge-k-sorted-linked-lists', 'prep-most-frequent-word-list',

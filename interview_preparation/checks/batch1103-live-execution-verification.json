@@ -1,0 +1,49 @@
+{
+  "summary": {
+    "live": true,
+    "kind": "all-authored-positive-execution",
+    "executor": "https://jobrun-executor-job-runer.vercel.app",
+    "started_at": "2026-11-03T21:50:36.671Z",
+    "finished_at": "2026-11-03T21:50:57.796Z",
+    "concurrency": 1,
+    "checked": 3,
+    "passed": 3,
+    "failed": 0,
+    "question_count": 3,
+    "languages": [
+      "python"
+    ]
+  },
+  "rows": [
+    {
+      "question": "prep-sudoku-backtracking-solver",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 5,
+      "passed_count": 5,
+      "runtime_ms": 4601
+    },
+    {
+      "question": "prep-first-missing-positive-in-place",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 15,
+      "passed_count": 15,
+      "runtime_ms": 7458
+    },
+    {
+      "question": "prep-street-network-meeting-median",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 6,
+      "passed_count": 6,
+      "runtime_ms": 3477
+    }
+  ]
+}

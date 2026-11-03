@@ -1,0 +1,13 @@
+{
+  "question_id": "PREP-252",
+  "status": "passed",
+  "received_on": "2026-11-03",
+  "method": "Primary-reference review plus separately recorded GCC C++17 native run",
+  "cases": 65,
+  "verification": "C++ semantics reviewed against primary draft and Core Guidelines. A separate GCC C++17 invocation with -O2 -Wall -Wextra -Werror -pedantic compiled and ran the supplied 65-size ownership harness successfully, with empty stderr. This Python invocation does not compile C++.",
+  "limitations": "Finite model coverage does not certify physical measurement, production capacity or professional human review.",
+  "native_evidence_path": "checks/batch1103-native-verification.json",
+  "native_source_sha256": "5fa001a2a032678b14eaa028903b0217eab0850f452b9ed197f52fd69675fab0",
+  "native_harness_sha256": "623c44e20275693954b4c4963b6d3589820622ca4729d6e835b506400dbb5045",
+  "native_compile_performed_by_this_python_script": false
+}

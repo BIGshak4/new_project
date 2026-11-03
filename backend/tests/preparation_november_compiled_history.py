@@ -6,13 +6,15 @@ import hashlib
 import json
 from pathlib import Path
 
-from tests.preparation_history import BATCH1101_BASELINE, _prefix, digest
+from tests.preparation_history import BATCH1101_BASELINE, _prefix, before_batch1103_record, digest
+from tests.preparation_november3_compiled_history import before_batch1103_compiled
 
 ROOT = Path(__file__).resolve().parents[2]
 PROJECTIONS = json.loads((Path(__file__).parent / 'fixtures/preparation_compiled_before_20261101_batch20.json').read_bytes())['records']
 
 
 def before_batch1101_compiled(question):
+    question = before_batch1103_compiled(question)
     ident = question['assets']['preparation_id']
     assert ident in BATCH1101_BASELINE['records'], ident
     if ident not in PROJECTIONS:
@@ -21,7 +23,7 @@ def before_batch1101_compiled(question):
     frozen = PROJECTIONS[ident]
     assert question['key'] == frozen['key']
     current = copy.deepcopy(question)
-    raw = next(q for q in json.loads((ROOT/'interview_preparation/questions.json').read_bytes())['questions'] if q['id'] == ident)
+    raw = before_batch1103_record(next(q for q in json.loads((ROOT/'interview_preparation/questions.json').read_bytes())['questions'] if q['id'] == ident))
     assert current['assets']['source_sha256'] == hashlib.sha256(json.dumps(raw,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
     current['assets']['source_sha256'] = frozen['source_sha256_before']
     for transition in frozen['transitions']:

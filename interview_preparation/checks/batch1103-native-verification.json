@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "verified_at": "2026-11-03T21:31:16.820Z",
+  "sandbox": "sbx_vpQkfi6VSYSaShhbTbBYQ3ED5mjr",
+  "sandbox_stopped": true,
+  "execution_network_policy": "deny-all",
+  "bootstrap_network_policy": "Official Ubuntu package domains only; network denied before compiling/running authored code.",
+  "tool_versions": {
+    "gcc": "15.2.0",
+    "gpp": "15.2.0",
+    "icarus": "12.0"
+  },
+  "source_sha256": {
+    "interview_preparation/checks/check_batch1103_hardware_native.sv": "217406f88c19aeee162a19d67830e8def3fdaa5985ace2016127f07ff5397091",
+    "interview_preparation/solutions/prep_254_swap_five_seven.sv": "0424278a3662615e92392fc4b4f5b6eebfd20fdfabeaacb0931599b43b200c4f",
+    "interview_preparation/solutions/prep_255_third_high_phase.sv": "ca1d801890de13c44233baff8cf0f58305f274aac9b1488b85f646da0d50c4ab",
+    "interview_preparation/solutions/prep_256_room_balance.sv": "549acf24cd25cdf68038ae4d895135bea10eefd7b09c542efbb24acde0f01a72",
+    "interview_preparation/solutions/prep_001_ha_three_batch1103.sv": "afacc48b8d4131705bdce0ea3df413692bb5c2f1a58bbdaf4303d3d228522d6c",
+    "interview_preparation/solutions/prep_140_modular_squares_batch1103.sv": "c01f793d010a44876ae6431ebf8e727af86cd72032f1d6ebf72ebb1d3f5b2358",
+    "interview_preparation/solutions/prep_152_load_extension_batch1103.sv": "b8c2325343716e9398847ab04f0c2ea9ce53a1b02bf54278e2bae0fd360167cb",
+    "interview_preparation/checks/check_intake20261103_software_native.c": "005c9fbebf3d6e21beeb2a1ac719b41e26129eecf0c387107bcc4c3d5bad61f5",
+    "interview_preparation/solutions/prep_094_reverse32_batch1103.c": "fcb36de80ce9252a4f78228b6f8ebb273142e9a36dec4762e229ec30d377e86d",
+    "interview_preparation/solutions/prep_238_delete_batch1103.c": "4a05119a2a5ce6f1ef7fa386dce09beb460247d8dcb6c427d15f141c1baf1a72",
+    "interview_preparation/solutions/prep_252_copy_constructor.cpp": "5fa001a2a032678b14eaa028903b0217eab0850f452b9ed197f52fd69675fab0",
+    "interview_preparation/checks/check_prep_252_copy_constructor_native.cpp": "623c44e20275693954b4c4963b6d3589820622ca4729d6e835b506400dbb5045"
+  },
+  "runs": {
+    "hdl": {
+      "command": "bash",
+      "args": [
+        "-lc",
+        "iverilog -g2012 -Wall -I interview_preparation/solutions -o hw.vvp interview_preparation/checks/check_batch1103_hardware_native.sv && vvp hw.vvp"
+      ],
+      "command_id": "cmd_aa1bc857809f445abb527e977c21",
+      "exit_code": 0,
+      "stdout": "PASS batch1103 native hardware checks=333512\ninterview_preparation/checks/check_batch1103_hardware_native.sv:84: $finish called at 531734000 (1ps)\n",
+      "stderr": "interview_preparation/checks/check_batch1103_hardware_native.sv:8: warning: timescale for tb inherited from another file.\ninterview_preparation/solutions/prep_152_load_extension_batch1103.sv:1: ...: The inherited timescale is here.\n"
+    },
+    "c": {
+      "command": "bash",
+      "args": [
+        "-lc",
+        "gcc -std=c99 -O2 -Wall -Wextra -Werror -pedantic interview_preparation/checks/check_intake20261103_software_native.c -o native-c && ./native-c"
+      ],
+      "command_id": "cmd_483fab0e8fde45939aec988ef65e",
+      "exit_code": 0,
+      "stdout": "{\"passed\":true,\"word_cases\":165792,\"list_cases\":156,\"assertions\":234489,\"live_blocks\":0}\n",
+      "stderr": ""
+    },
+    "cpp": {
+      "command": "bash",
+      "args": [
+        "-lc",
+        "cat interview_preparation/solutions/prep_252_copy_constructor.cpp interview_preparation/checks/check_prep_252_copy_constructor_native.cpp > copy-test.cpp && g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic copy-test.cpp -o native-cpp && ./native-cpp"
+      ],
+      "command_id": "cmd_73fc441634cb42e0827b8a488090",
+      "exit_code": 0,
+      "stdout": "PASS 65 OwnedInts sizes; Rule of Zero independence\n",
+      "stderr": ""
+    }
+  },
+  "limitations": [
+    "One inherited-timescale warning for the HDL testbench is recorded verbatim; all functional checks passed.",
+    "RTL simulation is not synthesis, STA, physical timing signoff or measurement.",
+    "C++ tests cover65 finite sizes and value ownership, not allocation-failure injection."
+  ]
+}

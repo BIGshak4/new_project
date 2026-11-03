@@ -85,6 +85,11 @@ const hebrew: Record<string, string> = {
 };
 
 const additionalLabels: Record<string, Record<"he" | "en", string>> = {
+  examples: { he: "דוגמאות", en: "Examples" },
+  batch11_five_input_fa: { he: "ספירת חמישה ביטים באמצעות מחברים מלאים", en: "Five-bit population count using full adders" },
+  batch1103_three_bit_ha_only: { he: "ספירת שלושה ביטים באמצעות חצאי מחבר", en: "Three-bit population count using half adders" },
+  batch1103_n_bit_modular_squares: { he: "סדרת ריבועים באוגרים ברוחב קבוע", en: "Square sequence in fixed-width registers" },
+  batch1103_loaded_five_bit_extension: { he: "הרחבת מונה עם טעינה לחמישה ביטים", en: "Extending a loadable counter to five bits" },
   batch1101_polarity: { he: "גלאי שינוי לפי קוטביות", en: "Edge detection by polarity" },
   batch22_nand_drivers: { he: "מימוש שער NAND ברכיבי דרייבר", en: "NAND using driver components" },
   batch22_significant_bits: { he: "היפוך הביטים המשמעותיים", en: "Significant-bit reversal" },

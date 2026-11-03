@@ -93,7 +93,7 @@ CSV_EXPECTED = {
 
 def test_manifest_is_versioned_and_all_contracts_belong_to_current_catalog():
     assert MANIFEST["version"] == 1
-    assert len(QUESTIONS) == 36
+    assert len(QUESTIONS) == 39
     assert set(QUESTIONS) <= CATALOG.keys()
     for question in QUESTIONS.values():
         assert set(question["contract"]) == {"he", "en"}
@@ -381,6 +381,81 @@ def test_manifest_and_smoke_are_reproducible_author_artifacts():
     assert AUTHORING["build_positive"]() == POSITIVE
 
 
+def test_november3_input_fixture_contains_no_expected_values_or_developer_sources():
+    fixture = json.loads((BACKEND / "tests/fixtures/execution_batch1103_inputs.json").read_text(encoding="utf-8"))
+    assert set(fixture) == set(AUTHORING["BATCH1103_ORACLES"])
+    for key, question in fixture.items():
+        assert set(question["languages"]) == {"python"}
+        spec = question["languages"]["python"]
+        assert isinstance(spec["entry"], str)
+        assert all(set(case) == {"args"} for case in spec["cases"])
+        shipped = QUESTIONS[key]["languages"]["python"]
+        assert [case["args"] for case in shipped["cases"]] == [case["args"] for case in spec["cases"]]
+
+
+def test_sudoku_runtime_cases_have_unique_completions_or_no_solution_and_preserve_givens():
+    key = "prep-sudoku-backtracking-solver"
+    spec = QUESTIONS[key]["languages"]["python"]
+    assert len(spec["cases"]) == 5
+    assert sum(case["expected"] is None for case in spec["cases"]) == 1
+    expected_digits = set(range(1, 10))
+    for case in spec["cases"]:
+        board, result = case["args"][0], case["expected"]
+        assert len(board) == 9 and all(len(row) == 9 for row in board)
+        # A scan-based enumerator rejects two-or-more completions. It is
+        # deliberately different from the mask/MRV developer implementation.
+        assert AUTHORING["BATCH1103_ORACLES"][key](board) == result
+        if result is None:
+            continue
+        assert all(not board[r][c] or board[r][c] == result[r][c]
+                   for r in range(9) for c in range(9))
+        groups = result + [[result[r][c] for r in range(9)] for c in range(9)]
+        groups += [[result[r][c] for r in range(br, br + 3) for c in range(bc, bc + 3)]
+                   for br in (0, 3, 6) for bc in (0, 3, 6)]
+        assert all(set(group) == expected_digits for group in groups)
+    with pytest.raises(ValueError, match="unique"):
+        AUTHORING["BATCH1103_ORACLES"][key]([[0] * 9 for _ in range(9)])
+    assert "exact" in QUESTIONS[key]["contract"]["en"]
+    assert "multi-solution" in QUESTIONS[key]["contract"]["en"]
+
+
+def test_missing_positive_runtime_cases_include_duplicates_negatives_and_full_prefix():
+    cases = QUESTIONS["prep-first-missing-positive-in-place"]["languages"]["python"]["cases"]
+    assert {"args": [[]], "expected": 1} in cases
+    assert {"args": [[1, 1]], "expected": 2} in cases
+    assert {"args": [[2, 2, 2]], "expected": 1} in cases
+    assert {"args": [[1, 2, -4, -1]], "expected": 3} in cases
+    assert {"args": [list(range(1, 101))], "expected": 101} in cases
+    assert any(any(value < 0 for value in case["args"][0]) for case in cases)
+
+
+def test_street_runtime_cases_bind_shortest_paths_disconnection_and_tie_policy():
+    cases = QUESTIONS["prep-street-network-meeting-median"]["languages"]["python"]["cases"]
+    assert {"args": [1, [], [0]], "expected": [0, 0]} in cases
+    assert {"args": [2, [[0, 1, 9]], [0, 1]], "expected": [0, 9]} in cases
+    assert {"args": [3, [[0, 1, 1]], [0, 2]], "expected": None} in cases
+    assert {"args": [3, [[0, 1, 1]], [0, 1, 1]], "expected": [1, 1]} in cases
+    assert any(case["args"][1] == [[0, 1, 10], [0, 1, 2], [1, 2, 3]] for case in cases)
+
+
+@pytest.mark.parametrize("key", [
+    "prep-sudoku-backtracking-solver", "prep-first-missing-positive-in-place",
+    "prep-street-network-meeting-median",
+])
+def test_november3_smoke_rejects_wrong_and_syntax_sources(key):
+    fixtures = [item for item in SMOKE["cases"] if item["question_key"] == key]
+    positive = [item for item in POSITIVE["cases"] if item["question_key"] == key]
+    assert len(fixtures) == len(positive) == 1
+    fixture = fixtures[0]
+    assert fixture["correct"] == positive[0]["source"]
+    with pytest.raises(SyntaxError):
+        compile(fixture["syntax_error"], "<committed-syntax-fixture>", "exec")
+    namespace = {}
+    exec(compile(fixture["wrong"], "<committed-wrong-fixture>", "exec"), namespace)
+    spec = QUESTIONS[key]["languages"]["python"]
+    assert any(namespace[spec["entry"]](*case["args"]) != case["expected"] for case in spec["cases"])
+
+
 def test_positive_developer_sources_cover_every_manifest_question_language_pair_once():
     assert POSITIVE["version"] == 1
     assert len(POSITIVE["cases"]) == len(SPECS)
@@ -402,6 +477,10 @@ def test_committed_trusted_python_references_match_independent_expected_values(f
         args = json.loads(json.dumps(case["args"]))  # sort012 intentionally mutates its input.
         actual = namespace[spec["entry"]](*args)
         expected = ORACLES[fixture["question_key"]](*case["args"])
+        if fixture["question_key"] in AUTHORING["BATCH1103_ORACLES"]:
+            # The execution adapter serializes Python tuples as JSON arrays.
+            # Apply that same boundary before checking the new graph reference.
+            actual = json.loads(json.dumps(actual))
         if case.get("unordered"):
             assert sorted(actual) == sorted(expected)
         else:

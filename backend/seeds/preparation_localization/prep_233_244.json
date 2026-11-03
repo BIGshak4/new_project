@@ -343,27 +343,33 @@
     "assumptions": {
       "he": [
         "שרשרת חד־כיוונית סופית וללא מעגלים; בעלות בלעדית על שינוי הקישורים.",
-        "אין שינוי ערכים, הקצאה או שחרור; הראש החדש מוחזר."
+        "אין שינוי ערכים, הקצאה או שחרור; הראש החדש מוחזר.",
+        "רשימה סופית ללא מעגלים; צמתים חיים מוקצים באמצעות malloc עם int; גישה סדרתית.",
+        "מחיקה מדויקת מקבלת כתובת head. העתקת יורש מוגבלת לצומת שאינו זנב ולחוזה המתיר שינוי זהות לוגית."
       ],
       "en": [
         "Finite acyclic singly linked chain with exclusive link mutation.",
-        "No payload change, allocation or freeing; return the new head."
+        "No payload change, allocation or freeing; return the new head.",
+        "Finite acyclic list; live malloc nodes with int payloads; serialized access.",
+        "Exact removal takes the address of head. Successor-copy requires a non-tail and permission to change logical identity."
       ]
     },
     "optimality": {
-      "he": "O(N) זמן ו־O(1) מילות עזר; רקורסיה אינה עומדת באותו חסם מחסנית. אין הקצאת צמתי פלט.",
-      "en": "O(N) time and O(1) auxiliary words; recursion would not have the same stack bound. No output nodes are allocated."
+      "he": "O(N) זמן ו־O(1) מילות עזר; רקורסיה אינה עומדת באותו חסם מחסנית. אין הקצאת צמתי פלט.\n\nמחיקה עם head דורשת O(n) לחיפוש קישור נכנס ו־ O(1) מקום. העתקת יורש O(1) אך אינה מסירה את אותה הזהות ואינה תומכת בזנב.",
+      "en": "O(N) time and O(1) auxiliary words; recursion would not have the same stack bound. No output nodes are allocated.\n\nWith head: O(n) incoming-link search and O(1) space. Successor-copy is O(1) but removes another identity and cannot handle tails."
     },
     "verification": {
-      "he": "9,841 מקרי זהות וקישורים ב־Python; 511 מקרי C99 שהודרו והורצו ב־GCC מחמיר. בדיקות כוללות היפוך כפול ושמירת ערכים, לא שינוי מקביל.",
-      "en": "9,841 Python identity/link cases and 511 strictly compiled/executed C99 cases, including double reversal and payload preservation; no concurrent mutation test."
+      "he": "9,841 מקרי זהות וקישורים ב־Python; 511 מקרי C99 שהודרו והורצו ב־GCC מחמיר. בדיקות כוללות היפוך כפול ושמירת ערכים, לא שינוי מקביל.\n\nGCC C99 מחמיר עבר 156 מקרי מחיקה לפי מיקום ובדיקות זהות ושחרורים;234,489 בדיקות ברתמה המשולבת ואפס בלוקים חיים. אין בדיקת מצביעים תלויים.",
+      "en": "9,841 Python identity/link cases and 511 strictly compiled/executed C99 cases, including double reversal and payload preservation; no concurrent mutation test.\n\nStrict GCC C99 native run passed 156 position-based removal cases with identity/release-count checks;234,489 combined assertions and zero live blocks. No dangling-pointer validation."
     },
     "edge_cases": {
       "he": [
-        "ריק; צומת יחיד; שני צמתים; כל הערכים זהים; זנב שצריך להתאפס."
+        "ריק; צומת יחיד; שני צמתים; כל הערכים זהים; זנב שצריך להתאפס.",
+        "ראש, זנב, רשימה של צומת יחיד, ערכים שווים, צומת זר, head ריק, NULL וכינויים חיצוניים."
       ],
       "en": [
-        "Empty; one/two nodes; identical payloads; the old head must terminate as the tail."
+        "Empty; one/two nodes; identical payloads; the old head must terminate as the tail.",
+        "Head, tail, one-node list, equal payloads, foreign node, empty head, NULL and external aliases."
       ]
     },
     "common_mistakes": {
@@ -371,22 +377,30 @@
         "דריסת next לפני שמירתו.",
         "החזרת הראש הישן.",
         "החלפת ערכים או בניית רשימה חדשה במקום שינוי קישורים.",
-        "התעלמות מכינויים חיצוניים או ממעגל."
+        "התעלמות מכינויים חיצוניים או ממעגל.",
+        "free לפני קריאת next.",
+        "לחפש על פי ערך במקום זהות.",
+        "להציג העתקת יורש כמחיקת אותו הצומת.",
+        "להתעלם ממקרה הזנב או מהבעלות על payload."
       ],
       "en": [
         "Overwriting next before saving it.",
         "Returning the original head.",
         "Reversing payloads or allocating new nodes instead of links.",
-        "Ignoring external aliases or cycles."
+        "Ignoring external aliases or cycles.",
+        "Freeing before reading next.",
+        "Searching by payload instead of identity.",
+        "Presenting successor-copy as removal of the same node.",
+        "Ignoring tails or payload ownership."
       ]
     },
     "interview_answer": {
-      "he": "אחלק לקידומת הפוכה וסיומת לא מטופלת. אשמור את היורש, אהפוך קישור ואקדם את שני הראשים; בסוף ראש הקידומת הוא התשובה.",
-      "en": "Maintain a reversed prefix and untouched suffix. Save the successor, reverse one link and advance; the final prefix head is the answer."
+      "he": "אחלק לקידומת הפוכה וסיומת לא מטופלת. אשמור את היורש, אהפוך קישור ואקדם את שני הראשים; בסוף ראש הקידומת הוא התשובה.\n\nעם head אמצא את כתובת הקישור שמגיע לצומת, אעקוף ואשחרר אותו. בלי ראש לרוב אי אפשר לשנות את הקודם; העתקת יורש היא תחליף מוגבל לערכים בלבד, לא לזהות.",
+      "en": "Maintain a reversed prefix and untouched suffix. Save the successor, reverse one link and advance; the final prefix head is the answer.\n\nWith head locate the incoming-link address, bypass and free the target. Without it the predecessor is generally inaccessible; successor-copy is a limited value-level workaround, not identity removal."
     },
     "source_ambiguities": {
-      "he": "המקור אינו קובע סוג רשימה, בעלות או טיפול בריק. נבחרה רשימה חד־כיוונית ללא מעגלים והיפוך צמתים במקום, בלי להחליף את ממשק הרשימה האבסטרקטית.",
-      "en": "The source omits list type, ownership and empty handling. This version chooses an acyclic singly linked list with in-place node reversal, distinct from an immutable abstract-list interface."
+      "he": "המקור אינו קובע סוג רשימה, בעלות או טיפול בריק. נבחרה רשימה חד־כיוונית ללא מעגלים והיפוך צמתים במקום, בלי להחליף את ממשק הרשימה האבסטרקטית.\n\nהמקור אינו מגדיר בעלות או זהות.העריכה מפרידה בין הסרת הקצאה מדויקת להסרת ערך ומבהירה שזנב ללא head אינו ניתן להסרה כללית.",
+      "en": "The source omits list type, ownership and empty handling. This version chooses an acyclic singly linked list with in-place node reversal, distinct from an immutable abstract-list interface.\n\nThe source omits ownership/identity. This edition separates exact allocation removal from value-level removal and explains why tail-only removal is generally impossible."
     },
     "solution_extensions": {
       "he": [
@@ -394,6 +408,11 @@
           "question": "מה משתנה אם אסור לשנות אף next?",
           "answer_direction": "צריך ליצור מבנה פלט נפרד או לעבוד בממשק בלתי משתנה. זהות הצמתים והעלות אינן עוד אותן דרישות; ראו את חוזה Head/Tail/concat.",
           "principle": "שינוי בעלות ויכולת כתיבה משנה את הבעיה."
+        },
+        {
+          "question": "איך תשתנה העלות ברשימה דו כיוונית?",
+          "answer_direction": "כאשר לכל צומת יש prev וגם next אפשר לעדכן את השכנים בזמן קבוע, אך עדיין צריך עדכון head כאשר מוחקים את הראש וחוזה בעלות תקין.",
+          "principle": "מידע הקישוריות הקיים קובע את הפעולות האפשריות."
         }
       ],
       "en": [
@@ -401,8 +420,37 @@
           "question": "What if no next pointer may be changed?",
           "answer_direction": "Allocate separate output or use an immutable interface. Node identities and costs then differ; compare the Head/Tail/concat contract.",
           "principle": "Ownership and mutation permissions change the problem."
+        },
+        {
+          "question": "What changes for a doubly linked list?",
+          "answer_direction": "With prev and next the neighbors can be updated in constant time, but head removal still needs a head-update contract and valid ownership.",
+          "principle": "Available connectivity determines possible operations."
         }
       ]
+    },
+    "prompt_variants": {
+      "he": {
+        "מחיקת צומת עם הראש ובלעדיו": {
+          "prompt": "### סעיפים נוספים: הסרת צומת עם head ועם מצביע יחיד\n היפוך הרשימה שבסעיף המקורי נשמר. כעת, ברשימה חד־כיוונית סופית וללא מעגלים: ב. הסירו צומת כאשר נתונים כתובת משתנה head ומצביע לצומת שיש להסיר. ג. מה אפשר לעשות כאשר נתון רק מצביע לצומת, ללא head וללא קודמו? דונו גם בצומת האחרון.\n\n בחרו צמתים שהוקצו ב־ malloc ועם int כערך. פעולת המחיקה עם head מסירה ומשחררת בדיוק את הצומת שנמסר, בלי לשנות ערכי אחרים. NULL או צומת חי שאינו שייך לרשימה מחזירים false בלי שינוי. מצביעים תלויים אינם קלט תקין. ללא head יש להפריד בין הסרת זהות צומת לבין הסרת הערך הלוגי באמצעות העתקת היורש: זו חלופה מותנית לצומת שאינו זנב בלבד, כאשר אין דרישה לשמר זהויות, כינויים או בעלות מורכבת על payload.",
+          "hints": [
+            "איזה קישור מצביע אל הצומת שצריך להסיר, ומי יכול לשנות אותו?",
+            "כתובת head ושדה next של קודמו ממלאים אותו תפקיד: הם הקישור הנכנס לצומת. האם יש גישה לקישור הזה בלי head או קודמו?",
+            "עם head עברו באמצעות Node**ושנו את הקישור הנכנס ליורש לפני free. בלי head אפשר להעתיק את ערך היורש ולעקוף אותו רק כאשר יש יורש; זה משחרר את היורש, לא את הצומת המקורי."
+          ],
+          "integration_status": "רמזי הסעיף בחומר המשלים; תור הרמזים המקורי נשמר."
+        }
+      },
+      "en": {
+        "Removing a node with and without the head": {
+          "prompt": "### Additional parts: removing with head and with only one node pointer\nThe original reversal task remains unchanged. For a finite acyclic singly linked list: B. Remove a node given the address of head and the node pointer. C. What can be done given only that node, without head or predecessor? Include the tail case.\n\nChoose malloc-allocated nodes with int payloads. With head, remove and free exactly the supplied node without changing other payloads. NULL or a live nonmember returns false unchanged. Dangling pointers are outside the contract. Without head distinguish actual node-identity removal from logical-value removal by copying a successor: the latter requires a non-tail node and permission to change identities/aliases and trivial payload ownership.",
+          "hints": [
+            "Which link points into the node, and who can update it?",
+            "The address of head and a predecessor’s next field play the same role: an incoming link. Is that link accessible without head or predecessor?",
+            "With head traverse using Node**and bypass the target before free. Without head, copying/bypassing a successor requires one to exist; it frees the successor, not the original node."
+          ],
+          "integration_status": "Part-specific hints are supplemental; the original interactive hint queue is retained."
+        }
+      }
     }
   },
   "PREP-239": {

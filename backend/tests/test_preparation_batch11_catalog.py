@@ -20,7 +20,12 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
-from tests.preparation_history import BATCH110_BASELINE, before_batch110_record, technical_before_batch21
+from tests.preparation_history import (
+    BATCH110_BASELINE,
+    before_batch110_record,
+    before_batch1103_record,
+    technical_before_batch21,
+)
 from tests.test_practice_hardening import scripted
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -72,8 +77,8 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
 
 
 def test_five_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 243
-    assert len(catalog.questions) == 273
+    assert len(archive()["questions"]) == 255
+    assert len(catalog.questions) == 285
     additions = {q.assets.get("preparation_id"): q for q in catalog.questions.values()
                  if q.assets.get("preparation_id") in NEW_IDS}
     assert set(additions) == NEW_IDS
@@ -183,7 +188,12 @@ PREFIX_BASELINES = {'PREP-001': {'old_version': 1, 'languages': {'he': {'prompt'
 def test_two_expanded_questions_keep_runtime_prefixes_hints_and_invalidate_whole_solution_attestation(catalog):
     for ident, baseline in PREFIX_BASELINES.items():
         question = next(q for q in catalog.questions.values() if q.assets.get("preparation_id") == ident)
-        assert question.version == baseline["old_version"] + 1
+        # This test's exact version belongs to the October expansion. Remove
+        # only the hash-bound November3 addition before checking that version;
+        # current title/hints/prefixes below remain checked without projection.
+        archived = next(row for row in archive()["questions"] if row["id"] == ident)
+        historical = before_batch1103_record(archived)
+        assert historical["version"] == baseline["old_version"] + 1
         assert solution_review(question).status == "pending_review"
         for language, previous in baseline["languages"].items():
             current = question.text(language)
