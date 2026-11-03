@@ -1,0 +1,63 @@
+{
+  "expected_revisions": {
+    "web": "cadf6407c344cb14cb23a6e8a06166bd12186ddd",
+    "backend": "cadf6407c344cb14cb23a6e8a06166bd12186ddd"
+  },
+  "verified_at": "2026-11-03T22:02:57.172753+00:00",
+  "web": {
+    "service": "jobruner-web",
+    "status": "ok",
+    "revision": "cadf6407c344cb14cb23a6e8a06166bd12186ddd",
+    "checks": {
+      "application": "ok"
+    }
+  },
+  "backend": {
+    "status": "ok",
+    "engine_version": "0.1.0",
+    "source_revision": "cadf6407c344cb14cb23a6e8a06166bd12186ddd",
+    "env": "staging",
+    "llm_provider": "openai",
+    "database_configured": true,
+    "database_host": "pooler",
+    "database_pooler": "transaction",
+    "auth_configured": true,
+    "allowed_origins": 3,
+    "store": "database",
+    "models": {
+      "evaluator": "gpt-6.1-sol",
+      "feedback": "gpt-6.1-terra",
+      "tip": "gpt-6.1-terra",
+      "generator": "gpt-6.1-terra"
+    },
+    "speed": {
+      "effort": {
+        "evaluator": "low",
+        "generator": "medium",
+        "tip": "low",
+        "report": "medium",
+        "feedback": "low"
+      },
+      "service_tier": "default"
+    },
+    "answer_images": "assessed",
+    "code_execution": {
+      "enabled": true,
+      "wired": true,
+      "last_probe": null
+    },
+    "assess_unreviewed_questions": true,
+    "database": {
+      "round_trip_ms": 3.59,
+      "pool_size": 5,
+      "pool_checked_out": 0,
+      "pool_overflow": -4
+    }
+  },
+  "catalog_summary": {
+    "valid": true,
+    "questions": 285,
+    "quiz_source_count": 500,
+    "quiz_variant_count": 2500
+  }
+}
