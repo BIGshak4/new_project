@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, Clock3, MessageSquareText, Play, RefreshCw, Target } from "lucide-react";
 import type { Lang } from "./auth";
-import { SkillStrength, StreakCard } from "./skill-strength";
+import { StreakCard } from "./skill-strength";
 import { SubjectSketch, sketchCaption } from "./sketches";
 import type { Goal, PlanItem, PracticeApi, Program, Progress } from "../lib/practice-api";
 import { apiMessage } from "../lib/practice-ui";
@@ -418,7 +418,6 @@ export function LearnHome({
             ) : null}
           </p>
         </section>
-        <SkillStrength skills={progress.focus_skills ?? []} lang={lang} limit={5} ordered hotKey={current?.item.skills[0]?.key} />
         <StreakCard days={overview?.streak_days ?? 0} todayDone={(overview?.xp_today ?? 0) > 0} lang={lang} />
         {tomorrow && (
           <div className="sticky" dir="auto">
