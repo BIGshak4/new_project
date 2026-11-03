@@ -1,7 +1,7 @@
 /** Tour progress contains station IDs only. Answers, images and real practice records stay separate. */
 export type TourKind = "short" | "full";
 export type TourText = { he: string; en: string };
-export type TourExercise = "goal" | "library" | "topics" | "reasoning" | "code" | "hints" | "circuit" | "sequential" | "photos" | "feedback" | "followup" | "history" | "progress" | "interview" | "settings" | "materials" | "mux" | "readiness" | "reports";
+export type TourExercise = "goal" | "library" | "topics" | "reasoning" | "code" | "hints" | "circuit" | "sequential" | "photos" | "feedback" | "followup" | "history" | "interview" | "settings" | "materials" | "mux" | "reports";
 export type TourStep = { id: string; chapter: TourText; exercise: TourExercise; title: TourText; body: TourText; task: TourText; actions: string[] };
 const text = (he: string, en: string): TourText => ({ he, en });
 const chapters = {
@@ -13,14 +13,14 @@ const chapters = {
   assist: text("רמזים, מקורות וצילומים", "Hints, resources and images"),
   feedback: text("לומדים מהמשוב", "Learn from feedback"),
   interview: text("מתכוננים לראיון", "Prepare for an interview"),
-  progress: text("ממשיכים ומשתפרים", "Continue and improve"),
+  continue: text("ממשיכים ומשתפרים", "Continue and improve"),
   settings: text("מרגישים בבית", "Make yourself at home"),
 };
 function step(id: string, chapter: keyof typeof chapters, exercise: TourExercise, he: string, en: string, bodyHe: string, bodyEn: string, taskHe: string, taskEn: string, ...actions: string[]): TourStep {
   return { id, chapter: chapters[chapter], exercise, title: text(he, en), body: text(bodyHe, bodyEn), task: text(taskHe, taskEn), actions };
 }
 export const FULL_TOUR: readonly TourStep[] = [
-  step("goal", "start", "goal", "מה היעד שלכם?", "What are you working toward?", "באתר יש ארבעה אזורים: היום, המאגר, ראיון מדומה והתקדמות. מתחילים ביעד שמכוון את התוכנית. כאן נתנסה בדוגמה מקומית.", "The site has four areas: Today, Library, Mock interview and Progress. A goal guides your plan. Here we will use a local example.", "בחרו תפקיד, תאריך וזמן יומי ושמרו את יעד ההיכרות.", "Choose a role, date and daily time, then save the example goal.", "goal-saved"),
+  step("goal", "start", "goal", "מה היעד שלכם?", "What are you working toward?", "באתר יש שלושה אזורים: אזור אישי, המאגר וראיון מדומה. מתחילים ביעד שמכוון את התוכנית. כאן נתנסה בדוגמה מקומית.", "The site has three areas: Personal area, Library and Mock interview. A goal guides your plan. Here we will use a local example.", "בחרו תפקיד, תאריך וזמן יומי ושמרו את יעד ההיכרות.", "Choose a role, date and daily time, then save the example goal.", "goal-saved"),
   step("search", "discover", "library", "מוצאים שאלה גם בעברית", "Find questions in either language", "אפשר לחפש לפי נושא, מונח מקצועי וחברה. שמות כמו אינטל, Intel ו־INTEL מובילים לאותו סינון. החברות בסיור הן דוגמת סינון בלבד.", "Search by topic, technical term or company. Intel, INTEL and אינטל use the same filter. Companies here are filter examples only.", "הקלידו אינטל או Intel בשדה החיפוש.", "Type Intel or אינטל in the search field.", "library-search"),
   step("filter", "discover", "library", "מסננים לפי הנושא", "Filter by topic", "לכל שאלה תחום, נושא ומטא־נתונים. המאגר האמיתי כולל גם תפקידים וחברות שדווחו על ידי מתרגלים.", "Questions have a discipline, topic and metadata. The real library also has role filters and user-reported company sightings.", "נקו את החיפוש ובחרו נושא במסנן.", "Clear the search and choose a topic filter.", "library-filter"),
   step("topics", "discover", "topics", "כל הנושאים, במבט אחד", "All subjects at a glance", "מכירים את תחומי המאגר בלי לפתוח שאלה מכל נושא: חומרה, תוכנה, היגיון והכנה אישית לראיון. כל תחום מרכז את הנושאים והכלים המתאימים לו.", "Explore hardware, software, reasoning and personal interview preparation without opening an example question for every topic. Each area groups its subjects and useful tools.", "בחרו תחום אחד כדי לראות מה אפשר לתרגל בו.", "Choose one area to see what you can practice.", "topics-explored"),
@@ -52,11 +52,8 @@ export const FULL_TOUR: readonly TourStep[] = [
   step("interview", "interview", "interview", "מתרגלים ראיון שלם", "Practice a full interview", "בוחרים 20, 30 או 45 דקות. בסיור מתחילים ראיון מקומי קצר, בלי צורך להמתין לזמן האמיתי.", "Choose 20, 30 or 45 minutes. Here we start a local example without waiting for the real duration.", "בחרו משך והתחילו את ראיון ההיכרות.", "Choose a duration and start the example interview.", "interview-started"),
   step("interview-answer", "interview", "interview", "עונים בזמן ראיון", "Answer during the interview", "מסבירים את הדרך, בודקים דרישות ומנהלים את הזמן. אפשר לסיים מוקדם; בדוח נשמר מה שנענה ומה שעדיין חסר.", "Explain the approach, check requirements and manage time. Early finishing is allowed; the report distinguishes answered and missing work.", "כתבו תשובה ושלחו אותה בראיון לדוגמה.", "Write and submit an example interview answer.", "interview-answered"),
   step("interview-report", "interview", "interview", "חוזרים לדוח הראיון", "Review the interview report", "הדוח מרכז נקודות לחיזוק ואת התשובות. אין להסיק רמה מקצועית משאלה אחת או ממשוב הדוגמה שבסיור.", "The report gathers next steps and responses. One answer or sample feedback cannot establish professional readiness.", "סיימו את ראיון הדוגמה ופתחו את הדוח.", "Finish the example interview and open its report.", "interview-finished"),
-  step("saved", "progress", "history", "שומרים שאלות לחזרה", "Save questions for later", "בתוך המאגר יש שמורים והתרגולים שלי. כך אפשר לחזור לשאלה מסוימת או לראות את הפתרון שכבר שלחתם.", "The library includes Saved and My practice. Return to a question or review a previously submitted answer.", "סמנו שאלת דוגמה לשמירה.", "Bookmark an example question.", "bookmark"),
-  step("history", "progress", "history", "ממשיכים מאיפה שעצרנו", "Resume where you left off", "היסטוריית התרגול שומרת הקשר: תשובות, רמזים שנפתחו וחשיפה לפתרון. פתיחת סיור אינה מוחקת טיוטת תרגול.", "History keeps context: answers, hints and reference exposure. Opening the tour does not discard an active practice draft.", "פתחו תרגול מהיסטוריית הדוגמה.", "Open a practice record from the example history.", "history-opened"),
-  step("progress", "progress", "progress", "מבינים איפה להשתפר", "See what needs practice", "שליטה מקצועית מבוססת על ראיות ועדכניות. נקודות ורצף ימים נותנים מוטיבציה, אך אינם תחליף לידע.", "Mastery depends on evidence and freshness. XP and streaks motivate, but do not replace skill.", "פתחו מיומנות שדורשת חיזוק.", "Open a skill that needs more practice.", "skill-opened"),
-  step("readiness", "progress", "readiness", "מוכנות עם הקשר", "Readiness with context", "דוגמת המוכנות מבדילה בין ראיות חזקות, תרגול עם עזרה ומידע שחסר. הנתונים כאן אינם הנתונים של החשבון שלכם.", "Readiness distinguishes strong evidence, assisted practice and missing information. These are not your account's data.", "פתחו את פירוט המוכנות לדוגמה.", "Open the sample readiness details.", "readiness-opened"),
-  step("plan", "progress", "progress", "הצעד הבא, לא עוד רשימה", "Find the next useful step", "באזור היום התוכנית מתחשבת ביעד ובהתקדמות. אפשר לחזור לתרגול או להתקדם בנושא שצריך חיזוק.", "Today connects your goal and progress to the next practice step. Resume work or strengthen a weak topic.", "פתחו משימה מתוך תוכנית הדוגמה.", "Open a task from the example plan.", "plan-opened"),
+  step("saved", "continue", "history", "שומרים שאלות לחזרה", "Save questions for later", "בתוך המאגר יש שמורים והתרגולים שלי. כך אפשר לחזור לשאלה מסוימת או לראות את הפתרון שכבר שלחתם.", "The library includes Saved and My practice. Return to a question or review a previously submitted answer.", "סמנו שאלת דוגמה לשמירה.", "Bookmark an example question.", "bookmark"),
+  step("history", "continue", "history", "ממשיכים מאיפה שעצרנו", "Resume where you left off", "היסטוריית התרגול שומרת הקשר: תשובות, רמזים שנפתחו וחשיפה לפתרון. פתיחת סיור אינה מוחקת טיוטת תרגול.", "History keeps context: answers, hints and reference exposure. Opening the tour does not discard an active practice draft.", "פתחו תרגול מהיסטוריית הדוגמה.", "Open a practice record from the example history.", "history-opened"),
   step("theme", "settings", "settings", "בוחרים את התאורה שנוחה לכם", "Choose a comfortable appearance", "מצב בהיר הוא ברירת המחדל. לחיצה על השמש או הירח מחליפה מצב ושומרת את הבחירה.", "Light is the default. The sun/moon control switches appearance and remembers your choice.", "שנו מצב באמצעות כפתור השמש או הירח בראש הסיור.", "Change appearance using the sun/moon control in the tour header.", "theme-changed"),
   step("language", "settings", "settings", "אותו אתר, שתי שפות", "One site, two languages", "אפשר להחליף בין עברית לאנגלית. קוד ונוסחאות נשארים משמאל לימין; הסיור והעבודה שלכם נשמרים.", "Switch Hebrew and English. Code and formulas remain left-to-right; tour progress and work are preserved.", "החליפו שפה דרך הכפתור בראש הסיור.", "Switch language using the control in the tour header.", "language-changed"),
 ];
@@ -70,7 +67,6 @@ export const SHORT_TOUR: readonly TourStep[] = [
   byId("hint"),
   byId("feedback"),
   byId("interview"),
-  byId("progress"),
   { ...byId("theme"), body: text("כאן משנים שפה ומצב בהיר או כהה. את שני הסיורים אפשר לפתוח שוב בכל רגע באמצעות סיור עם מוקסי. נסיים בהחלפת מצב אחת.", "Change language and appearance here. Reopen either tour any time through Tour with Muxi. Finish by changing the theme once.") },
 ];
 export const tourSteps = (kind: TourKind) => kind === "short" ? SHORT_TOUR : FULL_TOUR;
@@ -87,8 +83,9 @@ export function parseTourProgress(value: string | null): TourProgress {
     const valid = new Set(tourSteps(p.kind).map((s) => s.id));
     const ids = (input: unknown) => Array.isArray(input) ? [...new Set(input.filter((id): id is string => typeof id === "string" && valid.has(id)))].slice(0, FULL_TOUR.length) : [];
     const oldTopics = new Set(["digital", "fsm", "programming", "algorithms", "reasoning-topic", "behavioral", "design-topic", "communication"]);
+    const removedProgressStations = new Set(["progress", "readiness", "plan"]);
     const completed = ids(p.completed);
-    return { version: 1, offered: p.offered === true, kind: p.kind, stepId: valid.has(p.stepId) ? p.stepId : oldTopics.has(p.stepId) ? "topics" : tourSteps(p.kind)[0].id, completed, skipped: ids(p.skipped).filter((id) => !completed.includes(id)), status: p.status, updatedAt: Number.isFinite(p.updatedAt) ? p.updatedAt : 0 };
+    return { version: 1, offered: p.offered === true, kind: p.kind, stepId: valid.has(p.stepId) ? p.stepId : oldTopics.has(p.stepId) ? "topics" : removedProgressStations.has(p.stepId) ? "theme" : tourSteps(p.kind)[0].id, completed, skipped: ids(p.skipped).filter((id) => !completed.includes(id)), status: p.status, updatedAt: Number.isFinite(p.updatedAt) ? p.updatedAt : 0 };
   } catch { return initialTourProgress(); }
 }
 export function stationReady(step: TourStep, actions: readonly string[]): boolean {

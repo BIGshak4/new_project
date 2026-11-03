@@ -49,7 +49,7 @@ export function Preview() {
 
   return <div className={`${styles.preview} ${styles[variant]} ${moving ? styles.moving : ""}`} dir="rtl">
     <div className={styles.demoNotice}>הדמיית עיצוב · השאלות, שיוכי החברות וההתקדמות להמחשה בלבד</div>
-    <header className={styles.nav}><a className={styles.brand} href="/design-lab" target="_top">jobrun<span>.</span></a><nav aria-label="ניווט בהדמיה"><button aria-current={view === "today" && !active ? "page" : undefined} onClick={() => home("today")}>היום שלי</button><button aria-current={view === "library" && !active ? "page" : undefined} onClick={() => home("library")}>מאגר השאלות</button></nav><span className={styles.avatar} aria-label="משתמש לדוגמה">ה</span></header>
+    <header className={styles.nav}><a className={styles.brand} href="/design-lab" target="_top">jobrun<span>.</span></a><nav aria-label="ניווט בהדמיה"><button aria-current={view === "today" && !active ? "page" : undefined} onClick={() => home("today")}>אזור אישי</button><button aria-current={view === "library" && !active ? "page" : undefined} onClick={() => home("library")}>מאגר השאלות</button></nav><span className={styles.avatar} aria-label="משתמש לדוגמה">ה</span></header>
     <main className={styles.main}>
       {active ? <><button className={styles.back} onClick={() => setActive(null)}>חזרה לתצוגה <ArrowLeft size={17} /></button>{workspace(active)}</>
       : view === "library" ? <section className={styles.library}><h1>שאלה טובה. התחלה טובה.</h1><p>בחרו משהו שמסקרן אתכם, ותנו למחשבה מקום.</p>{search}{list}<p className={styles.sourceNote}>במוצר, שיוך חברות מבוסס על דיווחי אנשים ומקורות הכנה. השיוכים כאן הם להמחשת העיצוב.</p></section>

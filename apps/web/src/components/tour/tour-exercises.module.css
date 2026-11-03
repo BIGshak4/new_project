@@ -69,10 +69,6 @@
 .historyRow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding-block: 20px; border-block: 1px solid var(--line); }
 .historyRow > div { flex: 1 1 240px; }
 .historyRow p { color: var(--muted); margin: 6px 0 0; font-size: .9rem; }
-.skillRows { border-block: 1px solid var(--line); }
-.skillRows > div, .root .skillRows > button { display: flex; flex-direction: column; align-items: flex-start; width: 100%; padding: 18px 0; border: 0; border-radius: 0; background: transparent; text-align: start; }
-.skillRows > div { border-block-end: 1px solid var(--line); }
-.skillRows span { color: var(--muted); font-size: .9rem; font-weight: 400; }
 .diagram { margin: 0; color: var(--link); }
 .diagram svg { display: block; width: 100%; max-width: 650px; height: auto; }
 .diagram figcaption { color: var(--muted); font-size: .9rem; }

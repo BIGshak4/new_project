@@ -517,7 +517,7 @@ export function PracticeSession({
       <div className="row spread" style={{ marginBottom: 22 }}>
         <button className="text-button" onClick={onBack}>
           <ArrowRight size={17} />
-          {t("חזרה למאגר", "Back to library")}
+          {screen === "learn" ? t("חזרה לאזור האישי", "Back to personal area") : t("חזרה למאגר", "Back to library")}
         </button>
         {attempt && (
           <button className="text-button" onClick={download}>

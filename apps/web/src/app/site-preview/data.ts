@@ -45,7 +45,6 @@ export type Screen =
   | "library"
   | "practice"
   | "interview"
-  | "progress"
   | "history"
   | "saved"
   | "profile"
@@ -59,7 +58,6 @@ export const screens: Screen[] = [
   "library",
   "practice",
   "interview",
-  "progress",
   "history",
   "saved",
   "profile",

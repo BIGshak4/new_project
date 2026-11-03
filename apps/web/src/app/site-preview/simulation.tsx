@@ -24,7 +24,6 @@ import {
   Cpu,
   FileImage,
   Flame,
-  History,
   Lightbulb,
   ListChecks,
   Map,
@@ -39,7 +38,6 @@ import {
   Sun,
   Target,
   Trash2,
-  TrendingUp,
   UserRound,
   X,
   Zap,
@@ -184,9 +182,17 @@ export function SiteSimulation() {
   const params = useSearchParams();
   const style =
     siteDirections.find((d) => d.id === params.get("style"))?.id ?? "studio";
-  const screen = screens.includes(params.get("screen") as Screen)
-    ? (params.get("screen") as Screen)
-    : "home";
+  const screen = params.get("screen") === "progress"
+    ? "today"
+    : screens.includes(params.get("screen") as Screen)
+      ? (params.get("screen") as Screen)
+      : "home";
+  useEffect(() => {
+    if (params.get("screen") !== "progress") return;
+    const next = new URLSearchParams(params.toString());
+    next.set("screen", "today");
+    window.history.replaceState(null, "", `?${next}${window.location.hash}`);
+  }, [params]);
   const q =
     questions.find((v) => v.id === params.get("question")) ?? questions[0];
   const [lang, setLang] = useState<"he" | "en">("he");
@@ -238,20 +244,17 @@ export function SiteSimulation() {
     setRecent((old) => [q.id, ...old.filter((v) => v !== q.id)]);
   }
   const nav = [
-    { id: "today", icon: Map, label: t("היום שלי", "Today") },
+    { id: "today", icon: Map, label: t("אזור אישי", "Personal area") },
     { id: "library", icon: BookOpen, label: t("מאגר השאלות", "Questions") },
     {
       id: "interview",
       icon: MessageSquare,
       label: t("ראיון מדומה", "Interview"),
     },
-    { id: "progress", icon: TrendingUp, label: t("ההתקדמות שלי", "Progress") },
   ];
-  const activeNav = ["practice", "saved"].includes(screen)
+  const activeNav = ["practice", "saved", "history"].includes(screen)
     ? "library"
-    : screen === "history"
-      ? "progress"
-      : screen;
+    : screen;
   return (
     <div
       className={`${s.root} ${s[theme]} ${params.get("motion") === "0" ? s.noMotion : ""}`}
@@ -352,8 +355,6 @@ export function SiteSimulation() {
           />
         ) : screen === "interview" ? (
           <Interview t={t} go={go} />
-        ) : screen === "progress" ? (
-          <Progress t={t} go={go} />
         ) : screen === "history" ? (
           <HistoryScreen t={t} go={go} recent={recent} drafts={drafts} />
         ) : screen === "profile" || screen === "goal" ? (
@@ -582,7 +583,7 @@ function Home({ t, go, theme }: Props & { theme: string }) {
               key={en}
               onClick={() =>
                 go(
-                  i === 0 ? "library" : i === 1 ? "practice" : "progress",
+                  i === 0 ? "library" : i === 1 ? "practice" : "today",
                   i === 1 ? "xor" : undefined,
                 )
               }
@@ -1495,119 +1496,6 @@ function Feedback({ t, go, q, draft }: Props & { q: Sample; draft: Draft }) {
   );
 }
 
-function Progress({ t, go }: Props) {
-  const skills = [
-    ["לוגיקה קומבינטורית", "Combinational logic", 82, 35],
-    ["מכונות מצבים", "State machines", 54, 25],
-    ["תכנות ב־C", "C programming", 71, 42],
-    ["הסבר ודרך חשיבה", "Explaining your reasoning", 68, 40],
-  ] as const;
-  return (
-    <>
-      <div className={s.pageHeading}>
-        <div>
-          <h1>{t("רואים את הדרך שעשיתם.", "See how far you've come.")}</h1>
-          <p>
-            {t(
-              "התקדמות היא גם לדעת על מה לעבוד עכשיו.",
-              "Progress also means knowing what to work on next.",
-            )}
-          </p>
-        </div>
-        <Button secondary onClick={() => go("history")}>
-          <History size={17} />
-          {t("היסטוריית תרגול", "Practice history")}
-        </Button>
-      </div>
-      <p className={s.demoFeedback}>
-        {t(
-          "כל המדדים והציונים במסך הזה הם נתוני הדגמה.",
-          "All metrics and scores on this screen are demonstration data.",
-        )}
-      </p>
-      <div className={s.progressSummary}>
-        <div>
-          <strong>24</strong>
-          <span>{t("תרגולים שהושלמו", "sessions completed")}</span>
-        </div>
-        <div>
-          <strong>6</strong>
-          <span>{t("שעות של מחשבה", "hours of focused work")}</span>
-        </div>
-        <div>
-          <strong>3</strong>
-          <span>{t("ימים ברצף", "day streak")}</span>
-        </div>
-        <div>
-          <strong>8</strong>
-          <span>{t("נושאים בתהליך", "topics in progress")}</span>
-        </div>
-      </div>
-      <div className={s.progressLayout}>
-        <section className={s.skillSection}>
-          <div className={s.sectionHeading}>
-            <h2>{t("הידע שלכם, לפי נושא", "Your knowledge, by topic")}</h2>
-            <span>{t("תחילת הדרך / עכשיו", "Starting point / now")}</span>
-          </div>
-          {skills.map(([he, en, now, before]) => (
-            <div className={s.skillRow} key={en}>
-              <div>
-                <strong>{t(he, en)}</strong>
-                <span dir="ltr">
-                  {before} → {now}
-                </span>
-              </div>
-              <div
-                className={s.skillTrack}
-                role="img"
-                aria-label={`${t(he, en)}: ${before} → ${now}`}
-              >
-                <i style={{ width: `${now}%` }} />
-                <b style={{ left: `${before}%` }} />
-              </div>
-              <small>
-                {now < 60
-                  ? t("כדאי לתרגל שוב", "Worth revisiting")
-                  : t("בסיס טוב, ממשיכים להעמיק", "A solid base to build on")}
-              </small>
-            </div>
-          ))}
-        </section>
-        <aside className={s.progressNext}>
-          <Target size={31} />
-          <h2>{t("הצעד הבא כבר ברור.", "Your next step is clear.")}</h2>
-          <p>
-            {t(
-              "במסלול לדוגמה, כדאי לחזק מכונות מצבים ולתרגל זיהוי רצפים חופפים.",
-              "In this example plan, focus on state machines and overlapping sequence detection.",
-            )}
-          </p>
-          <Button onClick={() => go("practice", "fsm")}>
-            {t("לתרגול מכונות מצבים", "Practice state machines")}
-            <ArrowLeft size={18} />
-          </Button>
-          <div className={s.miniCalendar}>
-            <h3>{t("השבוע בתמונה", "This week at a glance")}</h3>
-            <div>
-              {[2, 4, 0, 3, 1, 0, 0].map((n, i) => (
-                <span key={i}>
-                  <b style={{ height: `${14 + n * 13}px` }} />
-                  <small>
-                    {t(
-                      ["א", "ב", "ג", "ד", "ה", "ו", "ש"][i],
-                      ["S", "M", "T", "W", "T", "F", "S"][i],
-                    )}
-                  </small>
-                </span>
-              ))}
-            </div>
-          </div>
-        </aside>
-      </div>
-    </>
-  );
-}
-
 function HistoryScreen({
   t,
   go,
@@ -1626,9 +1514,9 @@ function HistoryScreen({
             )}
           </p>
         </div>
-        <Button secondary onClick={() => go("progress")}>
-          {t("לתמונת ההתקדמות", "View progress")}
-          <TrendingUp size={17} />
+        <Button secondary onClick={() => go("today")}>
+          {t("לאזור האישי", "Go to my personal area")}
+          <Map size={17} />
         </Button>
       </div>
       <div className={s.historyList}>
@@ -1804,8 +1692,8 @@ function Interview({ t, go }: Props) {
             </details>
           ))}
           <div className={s.heroActions}>
-            <Button onClick={() => go("progress")}>
-              {t("להתקדמות שלי", "View my progress")}
+            <Button onClick={() => go("today")}>
+              {t("לאזור האישי", "Go to my personal area")}
               <ArrowLeft size={18} />
             </Button>
             <Button

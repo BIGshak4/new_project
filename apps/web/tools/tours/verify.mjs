@@ -375,12 +375,6 @@ async function perform(p, id, full = false) {
     case "interview-report": await button(s, "סיום ופתיחת דוח היכרות", "Finish and open introduction report").click(); check(await s.getByRole("heading", { name: /דוח ראיון היכרות|Introduction interview report/ }).count() > 0, "Local interview report opens with the submitted answer"); break;
     case "saved": await button(s, "שמירה לחזרה", "Bookmark for later").click(); break;
     case "history": await button(s, "פתיחת הניסיון", "Open attempt").click(); break;
-    case "progress": await s.getByRole("button", { name: /מכונות מצבים — לחיזוק|FSMs — practice focus/ }).click(); break;
-    case "readiness": await button(s, "פתיחת ראיות מוכנות לדוגמה", "Open example readiness evidence").click(); break;
-    case "plan":
-      const skill = s.getByRole("button", { name: /מכונות מצבים — לחיזוק|FSMs — practice focus/ });
-      if (!(await button(s, "בחירת משימת ההמשך לדוגמה", "Choose the example next task").count())) await skill.click();
-      await button(s, "בחירת משימת ההמשך לדוגמה", "Choose the example next task").click(); break;
     case "theme": await theme(p); check(await p.locator("html").getAttribute("data-theme") === "dark", `${current}: theme control applies dark mode`); await shot(p, `${current}-dark-settings`); break;
     case "language": await language(p, "en"); check(await stage(p).getByRole("heading", { name: "Make the site comfortable for you" }).isVisible(), "English translation updates in the active station"); await shot(p, "english-dark-settings"); break;
     default: throw new Error(`No actual interaction implemented for station ${id}`);
@@ -390,7 +384,8 @@ async function perform(p, id, full = false) {
 async function fullTour() {
   const { ctx, p } = await context();
   try {
-    check(fullIds.length === 39 && new Set(fullIds).size === 39, "Full catalog contains 39 unique stations");
+    check(fullIds.length === 36 && new Set(fullIds).size === 36, "Full catalog contains 36 unique stations");
+    check(!fullIds.some(id => ["progress", "readiness", "plan"].includes(id)), "Full catalog omits the removed Progress screen and its obsolete stations");
     check(fullIds.includes("topics") && !fullIds.includes("digital") && !fullIds.includes("fsm"), "Shared topics overview replaces repetitive per-question stations");
     await shot(p, "desktop-chooser"); await shot(p, "muxi-mascot", p.getByRole("img", { name: "מוקסי מנופף לשלום" }));
     await button(p, "מתחילים בסיור המעמיק", "Start the full tour").click();
@@ -417,7 +412,8 @@ async function fullTour() {
 async function shortTour() {
   const { ctx, p } = await context();
   try {
-    check(shortIds.length === 10 && new Set(shortIds).size === 10 && shortIds.includes("topics"), "Short catalog contains 10 unique stations including the shared topics overview");
+    check(shortIds.length === 9 && new Set(shortIds).size === 9 && shortIds.includes("topics"), "Short catalog contains 9 unique stations including the shared topics overview");
+    check(!shortIds.some(id => ["progress", "readiness", "plan"].includes(id)), "Short catalog omits the removed Progress screen and its obsolete stations");
     await button(p, "מתחילים בסיור הקצר", "Start the short tour").click();
     for (const id of shortIds) { current = `short:${id}`; await station(p, id); check(await next(p).isDisabled(), `Short ${id}: Continue gated before interaction`); await perform(p, id); await continueStation(p); }
     await p.getByRole("heading", { name: /עכשיו הכלים בידיים שלכם|The tools are yours to use/ }).waitFor();

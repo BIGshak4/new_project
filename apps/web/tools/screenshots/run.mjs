@@ -197,7 +197,7 @@ const SCREENS = [
   ["question", "/?question=example-sensor-majority", true, ".question-sheet"],
   ["practice-done", `/?attempt=${a.id}`, true, ".evaluation, .practice-flow"],
   ["practice-followup", `/?attempt=${b.id}`, true, ".follow-ups, .practice-flow"],
-  ["progress", "/?view=progress", true, ".progress-board, .plan-table"],
+  ["legacy-progress", "/?view=progress", true, ".learn, .path-card"],
   ["interview-lobby", "/?view=interview", true, ".interview-lobby, .interview-setup"],
   ["interview-room", `/?view=interview&interview=${room.id}`, true, ".interview-room"],
   ["interview-report", `/?view=interview&interview=${done.id}`, true, ".interview-report"],

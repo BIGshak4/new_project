@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import {
   BookOpen,
-  BarChart3,
   History,
   Search,
   Bookmark,
@@ -46,9 +45,6 @@ import { Select } from "../components/ui/select";
 import { AnimatePresence, CountUp, motion, useReducedMotion } from "../components/ui/motion";
 import { SignOff } from "../components/sign-off";
 import { LearnHome } from "../components/learn-home";
-import { OverviewCard, PlanTable, ProgressGraph } from "../components/progress-board";
-import { SkillStrength } from "../components/skill-strength";
-import { ReadinessCard } from "../components/readiness-card";
 import { InterviewSession } from "../components/interview-session";
 import { supabase } from "../lib/supabase";
 import {
@@ -81,6 +77,11 @@ const emptyProgress: Progress = {
 };
 function currentRoute(): Route {
   const q = new URLSearchParams(window.location.search);
+  // Retired Progress links keep their saved attempt or question in Personal Area.
+  if (q.get("view") === "progress") {
+    q.delete("view");
+    window.history.replaceState({}, "", `${window.location.pathname}${q.size ? `?${q}` : ""}${window.location.hash}`);
+  }
   return {
     view: q.get("view") ?? DEFAULT_VIEW,
     question: q.get("question") ?? undefined,
@@ -338,29 +339,6 @@ function Workspace({
     if (!jobFilterTouched.current) setJobFilter(g.job_type ?? "");
     refreshProgress();
   };
-  const [startingItem, setStartingItem] = useState<string | null>(null);
-  const [startError, setStartError] = useState("");
-  // a plan row's Start does exactly what the Learn path does: open the item's attempt, or the interview lobby
-  const startPlanItem = async (item: { id?: string | null }) => {
-    if (!item.id || startingItem) return;
-    setStartingItem(item.id);
-    setStartError("");
-    try {
-      const result = await api.startProgram(item.id, lang);
-      if (result.kind === "attempt" && result.attempt) {
-        navigate({ view: "learn", attempt: result.attempt.id });
-        refreshProgress();
-      } else if (result.kind === "interview") navigate({ view: "interview" });
-      else {
-        setStartError(result.message ?? t("אין מה להתחיל כרגע.", "Nothing to start right now."));
-        refreshProgress();
-      }
-    } catch (e) {
-      setStartError(apiMessage(e, lang));
-    } finally {
-      setStartingItem(null);
-    }
-  };
   const skipGoal = () => {
     setEditingGoal(false);
     setGoalSkipped(true);
@@ -424,10 +402,9 @@ function Workspace({
   const overview = demo ? null : progress.overview ?? null;
   const activeTab = LIBRARY_VIEWS.has(route.view) ? "library" : route.view;
   const tabs = [
-    { id: "learn", icon: MapIcon, label: t("היום", "Today") },
+    { id: "learn", icon: MapIcon, label: t("אזור אישי", "Personal area") },
     { id: "library", icon: BookOpen, label: t("מאגר", "Library") },
     { id: "interview", icon: MessageSquareText, label: t("ראיון מדומה", "Mock interview") },
-    { id: "progress", icon: BarChart3, label: t("התקדמות", "Progress") },
   ];
   const goTab = (id: string) => {
     navigate({ view: id });
@@ -617,7 +594,6 @@ function Workspace({
               }}
               onStartInterview={(duration) => navigate({ view: "interview", duration: duration ?? undefined })}
               onOpenGoal={openGoal}
-              onOpenProgress={() => goTab("progress")}
               onOpenLibrary={() => goTab("library")}
             />
             <button className="quick-home-link" onClick={() => navigate({ view: "fundamentals" })}>
@@ -640,23 +616,19 @@ function Workspace({
                 <h1>
                   {route.view === "history"
                     ? t("התרגול שלכם", "Your practice")
-                    : route.view === "progress"
-                      ? t("איפה אתם עומדים", "Where you stand")
-                      : route.view === "bookmarks"
-                        ? t("שאלות ששמרתם", "Saved questions")
-                        : t("מאגר השאלות", "The question bank")}
+                    : route.view === "bookmarks"
+                      ? t("שאלות ששמרתם", "Saved questions")
+                      : t("מאגר השאלות", "The question bank")}
                 </h1>
                 <p>
-                  {route.view === "progress"
-                    ? t("הרמה במילים, הדרך עד כאן והתוכנית עד הראיון.", "Your level in words, the road so far and the plan until the interview.")
-                    : route.view === "history"
-                      ? t("כל תשובה ששלחתם, עם הציון והמשוב, מהחדשה לישנה.", "Every answer you sent, with its grade and feedback, newest first.")
-                      : route.view === "bookmarks"
-                        ? t("שאלות שסימנתם כדי לחזור אליהן. לחצו על שאלה כדי להתחיל.", "Questions you marked to come back to. Open one to start.")
-                        : t(
-                            "שאלות הכנה בלוגיקה ספרתית, מכונות מצבים, חידות ותכנות.",
-                            "Practice questions in digital logic, state machines, puzzles and code.",
-                          )}
+                  {route.view === "history"
+                    ? t("כל תשובה ששלחתם, עם הציון והמשוב, מהחדשה לישנה.", "Every answer you sent, with its grade and feedback, newest first.")
+                    : route.view === "bookmarks"
+                      ? t("שאלות שסימנתם כדי לחזור אליהן. לחצו על שאלה כדי להתחיל.", "Questions you marked to come back to. Open one to start.")
+                      : t(
+                          "שאלות הכנה בלוגיקה ספרתית, מכונות מצבים, חידות ותכנות.",
+                          "Practice questions in digital logic, state machines, puzzles and code.",
+                        )}
                 </p>
               </div>
             </div>
@@ -711,7 +683,7 @@ function Workspace({
               </p>
             )}
             {loading || (activeTab === "library" && route.view !== "history" && jobFiltering) ||
-            ((route.view === "progress" || route.view === "history") &&
+            (route.view === "history" &&
               progressLoading) ||
             (activeTab === "library" && route.view !== "history" && entriesLoading) ? (
               <div className="loading" role="status">
@@ -720,62 +692,10 @@ function Workspace({
                   "Loading practice… after a pause the server may need about a minute.",
                 )}
               </div>
-            ) : ((route.view === "progress" || route.view === "history") &&
+            ) : (route.view === "history" &&
                 !progressReady) ||
               (activeTab === "library" && route.view !== "history" &&
-                !entriesReady) ? null : route.view === "progress" ? (
-              <div className="progress-board">
-                {demo ? (
-                  <p className="notice">
-                    {t(
-                      "עוזר התרגול עדיין אינו מחובר בסביבה הזו, ולכן לא מוצגים ציוני הדגמה. התוכנית עד הראיון פועלת.",
-                      "The practice assistant is not connected in this environment, so demo scores are hidden. The plan until the interview works.",
-                    )}
-                  </p>
-                ) : (
-                  progress.overview && (
-                    <OverviewCard
-                      overview={progress.overview}
-                      goal={progress.goal ?? goal}
-                      lang={lang}
-                      onEditGoal={openGoal}
-                      onStartPractice={() => goTab("learn")}
-                      onOpenLibrary={() => goTab("library")}
-                    />
-                  )
-                )}
-                {(editingGoal || (demo && goal && !goal.complete)) && (
-                  <GoalSetup
-                    api={api}
-                    lang={lang}
-                    goal={goal}
-                    compact
-                    onSaved={onGoalSaved}
-                    onSkip={editingGoal ? () => setEditingGoal(false) : undefined}
-                  />
-                )}
-                {!demo && <ReadinessCard api={api} lang={lang} refreshKey={refreshKey} onEditGoal={openGoal}
-                  onStartAttempt={(id) => { navigate({ view: "progress", attempt: id }); refreshProgress(); }} />}
-                {!demo && progress.overview?.answered !== 0 && (
-                  <div className="progress-pair">
-                    <ProgressGraph timeline={progress.timeline ?? []} lang={lang} />
-                    <SkillStrength skills={progress.focus_skills ?? []} lang={lang} limit={5} ordered />
-                  </div>
-                )}
-                <PlanTable
-                  plan={progress.plan ?? null}
-                  lang={lang}
-                  onEditGoal={openGoal}
-                  onStart={(item) => void startPlanItem(item)}
-                  startingId={startingItem}
-                />
-                {startError && (
-                  <p className="notice error" role="alert">
-                    {startError}
-                  </p>
-                )}
-              </div>
-            ) : route.view === "history" ? (
+                !entriesReady) ? null : route.view === "history" ? (
               <>
                 <h2>{t("תרגולים אחרונים", "Recent attempts")}</h2>
                 <div className="question-table">

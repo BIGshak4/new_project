@@ -205,11 +205,10 @@ export default function DesignLab() {
                 >
                   {[
                     ["home", "דף הבית"],
-                    ["today", "היום שלי"],
+                    ["today", "אזור אישי"],
                     ["library", "מאגר השאלות"],
                     ["practice", "פתרון שאלה"],
                     ["interview", "ראיון מדומה"],
-                    ["progress", "התקדמות"],
                     ["history", "היסטוריה"],
                     ["saved", "שמורים"],
                     ["goal", "בחירת מטרה"],

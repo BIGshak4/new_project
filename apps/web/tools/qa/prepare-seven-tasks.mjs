@@ -107,7 +107,6 @@ const result = {
     pending_follow_up: `${web}/?attempt=${pending.id}`,
     skipped_follow_up: `${web}/?attempt=${skipped.id}`,
     today_and_ahead: `${web}/`,
-    readiness: `${web}/?view=progress`,
     written_interview: `${web}/?view=interview`,
   },
 };

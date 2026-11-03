@@ -25,7 +25,6 @@ export function LearnHome({
   onStartAttempt,
   onStartInterview,
   onOpenGoal,
-  onOpenProgress,
   onOpenLibrary,
 }: {
   api: PracticeApi;
@@ -41,7 +40,6 @@ export function LearnHome({
   onStartAttempt: (attemptId: string) => void;
   onStartInterview: (durationMin: number | null) => void;
   onOpenGoal: () => void;
-  onOpenProgress: () => void;
   onOpenLibrary: () => void;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
@@ -368,9 +366,6 @@ export function LearnHome({
                     );
                   })}
                 </ol>
-                <button type="button" className="text-button" onClick={onOpenProgress}>
-                  {t("כל התוכנית בטבלה", "The whole plan as a table")} <Arrow size={14} aria-hidden="true" />
-                </button>
               </section>
             )}
           </>

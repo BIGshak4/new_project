@@ -14,12 +14,16 @@ On 2026-10-01 the user explicitly approved the adaptive Ion simulation and reque
 THESIS: A confident engineering learning environment, with room to reason and a clear next step.
 OWN-WORLD: Ion's violet midnight, lilac text accents and amber actions; its alternate cream canvas and deep purple type. Heebo 400/500/700/900, JetBrains Mono for code; 7px controls, 12px panels, thin dividers. No graph paper, handwriting, navy header or sticky-note metaphor.
 STORY: Sign in, set a real goal, follow the program, answer with text/code/circuits/photos, use hints, receive genuine backend feedback, revisit progress and practice interviews. Never substitute the simulation's sample records for production data.
-FIRST VIEWPORT: Spacious paired landing headline and the approved physical violet chip; interactive XOR switches. Authenticated header has four destinations, compact theme/language tools. Work pages retain functional backend flows under the preview's quieter shell, typography and split panes. Mobile stacks panes and uses bottom navigation.
+FIRST VIEWPORT: Spacious paired landing headline and the approved physical violet chip; interactive XOR switches. Authenticated header has three destinations: Personal area, Library and Mock interview, with compact theme/language tools. Work pages retain functional backend flows under the preview's quieter shell, typography and split panes. Mobile stacks panes and uses bottom navigation.
 FORM: Inherited user-selected Ion direction (seed lineage 9e6466ae, docs/ten-independent-design-worlds.md); no new random direction. Exact approved reference screenshots are `.impeccable/review/full-site/ion-desktop.png`, `ion-light-desktop.png`, `adaptive-practice-dark-desktop.png`, `adaptive-practice-light-desktop.png`, `circuit-dark-desktop.png` and matching mobile captures. Production evidence is under `.impeccable/review/ion-production/`.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
 ## Quality bar
 Readable Hebrew RTL and English LTR, keyboard focus and touch targets in both themes, durable optional theme storage with light default and no first-paint flash. Theme changes must not remount editors or reset attempts. Questions, solutions, diagrams and metadata remain intact. Existing raster `/design-worlds/ion-chip.png` retains its embedded prompt and provenance.json. Backend and database permissions remain unchanged.
+
+## Navigation simplification, 2026-11-03
+
+At the user's request, Today is now Personal area (אזור אישי), and the separate Progress category and its dedicated overview, readiness and plan-table screens are removed. The authenticated desktop and phone navigation, public previews and Muxi tours follow the same structure. Old Progress links resolve to Personal area while preserving a linked attempt or question. Daily practice, goals, skills, streaks and saved history continue to use the existing account data.
 
 ## Technical notation correction, 2026-10-18
 

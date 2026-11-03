@@ -117,9 +117,6 @@ export function MuxiGuidance({ root, station, lang, actions, ready, onAction }: 
         case "interview-report": return target("interview-finish", "סיימו כאן כדי לראות את דוח הדוגמה", "Finish here to view the example report");
         case "saved": return target("history-bookmark", "כאן שומרים שאלה לחזרה", "Bookmark a question here");
         case "history": return target("history-open", "כאן פותחים תרגול קודם", "Open a previous practice record here");
-        case "progress": return target("progress-skill", "פתחו כאן מיומנות לחיזוק", "Open a skill to practice here");
-        case "readiness": return target("readiness-open", "כאן פותחים את הראיות למוכנות", "Open the readiness evidence here");
-        case "plan": return target("progress-plan", "כאן פותחים את המשימה הבאה", "Open the next task here");
         case "theme": {
           const element = scope.querySelector<HTMLElement>(".theme-toggle");
           return element ? { element, label: t("כאן מחליפים בין מצב בהיר לכהה", "Switch between light and dark here") } : null;
