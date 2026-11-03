@@ -26,7 +26,7 @@ from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 
 from app.api.errors import ApiError
-from app.engine import bank, next_question, plan_router, scorecards, scores, soft_skills, xp
+from app.engine import activity, bank, next_question, plan_router, scorecards, scores, soft_skills, xp
 from app.engine.catalog import Catalog
 from app.engine.job_selection import JobSelection, combined_job
 from app.engine.plan import merge_skill_sets
@@ -893,8 +893,11 @@ class PracticeService:
             seen = await tx.seen_question_keys(user_id)
         job = combined_job(self.catalog.job_types, goal.selection)
         job_label = job.text("label", language) if job else None
-        if job is None:
+        exploring = goal.learning_mode == "explore" and goal.complete
+        if job is None and not exploring:
             return ReadinessView(job_type=None, job_type_label=None, message=texts["no_goal"])
+        if exploring:
+            job_label = "הלמידה שלכם" if language == "he" else "your learning path"
         required, _, _, plan_skills = self._plan(seniority, goal.selection)
         by_key = {s.key: s for s in self._skill_rows(profile, required, datetime.now(UTC), None)}
         askable = {link.skill for q in self.catalog.questions.values() for link in q.skills}
@@ -924,7 +927,7 @@ class PracticeService:
                                            freshness=freshness, askable=p.key in askable))
         fit = scorecards.target_fit(plan_skills, levels)
         coverage = round(sum(p.combined_weight for p in questioned if p.key in levels) / total, 3)
-        ready = coverage >= self.READY_COVERAGE and fit.fit_score is not None
+        ready = not exploring and coverage >= self.READY_COVERAGE and fit.fit_score is not None
         score = fit.fit_score if ready else None
         word = None
         if ready:
@@ -950,14 +953,26 @@ class PracticeService:
             exclude.add(question.key)
             why = ("gap" if r.gap else "refresh" if r.freshness in ("aging", "expired")
                    else "confirm" if r.status == "insufficient_evidence" else "unassessed")
+            reason = reasons[why].format(skill=r.label, job=job_label)
+            if exploring:
+                reason = (f"השאלה הבאה נבחרה כדי לתרגל ולחזק את {r.label}." if language == "he"
+                          else f"This next question helps you practise and strengthen {r.label}.")
             picked.append(ReadinessQuestionView(key=question.key, title=question.text(language).title, skill=r.key,
                                                 skill_label=r.label, difficulty=question.difficulty, why=why,
-                                                reason=reasons[why].format(skill=r.label, job=job_label)))
+                                                reason=reason))
         message = (texts["judged"].format(word=word, job=job_label, meets=meets, total=len(rows), gaps=gaps, unknown=unknown)
                    if ready else texts["not_yet"].format(job=job_label))
-        return ReadinessView(job_type=job.key, job_type_label=job_label, skills=rows, coverage=coverage, ready_to_judge=ready,
+        if exploring:
+            message = "השאלות הבאות נבחרו לחיזוק הלמידה שלכם במגוון תחומים." if language == "he" else "These next questions support your learning across the available fields."
+        return ReadinessView(job_type=job.key if job else None, job_type_label=job_label, skills=rows, coverage=coverage, ready_to_judge=ready,
                              readiness_word=word, readiness_score=score, skills_meeting_requirement=meets, skills_with_gap=gaps,
                              skills_without_evidence=unknown, next_questions=picked, message=message)
+
+    async def activity(self, user_id: uuid.UUID, *, timezone: str = "UTC") -> dict:
+        """Completed main practice answers and completed-interview turns, regardless of XP or correctness."""
+        async with self.store.transaction() as tx:
+            events = await tx.solved_question_events(user_id)
+        return activity.activity_summary(events, timezone)
 
     async def soft_skills(self, user_id: uuid.UUID) -> dict:
         """The seven soft skills and the improvement gradient for one candidate, read from the judge's stored output

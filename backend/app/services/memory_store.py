@@ -428,6 +428,27 @@ class _MemoryTx:
                             "related": "off_topic" not in (meta.get("flags") or []), "skills": [[t["skill_key"], 1.0]]})
         return out
 
+    async def solved_question_events(self, user_id):
+        out = []
+        for attempt in self.s.attempts.values():
+            if attempt["user_id"] != user_id:
+                continue
+            for submission in attempt["row"].get("submissions", []):
+                if submission.get("turn", 0) == 0:
+                    out.append({"at": submission.get("accepted_at"), "question": attempt["row"]["question_key"],
+                                "status": submission.get("status"), "band": submission.get("band"),
+                                "model": submission.get("evaluator_model"), "flags": submission.get("flags", []), "turn": 0})
+        for session_id, session in self.s.sessions.items():
+            if session["user_id"] != user_id or session["row"].get("status") != "completed":
+                continue
+            for turn in session["turns"]:
+                meta = turn.get("question_generation_meta") or {}
+                out.append({"at": turn.get("answer_submitted_at"),
+                            "question": turn.get("question_key") or meta.get("question_key") or f"interview:{session_id}:{turn['turn_index']}",
+                            "status": meta.get("status"), "band": meta.get("band"), "model": meta.get("evaluator_model"),
+                            "flags": meta.get("flags", []), "turn": 0})
+        return out
+
     # ------------------------------------------------------------------ the saved program
 
     async def load_active_plan(self, user_id):

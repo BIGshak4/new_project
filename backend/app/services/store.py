@@ -24,6 +24,7 @@ from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine
 
 from app import db
 from app.repo import (
+    activity,
     attempts,
     avatars,
     billing,
@@ -101,6 +102,7 @@ class Tx(Protocol):
     async def duels_accepted_today(self, user_id: uuid.UUID) -> int: ...
     async def duel_question_keys(self, user_id: uuid.UUID) -> set[str]: ...
     async def scored_interview_turns(self, user_id: uuid.UUID, *, days: int = 365) -> list[dict]: ...
+    async def solved_question_events(self, user_id: uuid.UUID) -> list[dict]: ...
     # the saved program
     async def load_active_plan(self, user_id: uuid.UUID) -> StoredPlan | None: ...
     async def create_plan(self, *, user_id: uuid.UUID, role_slug: str, seniority: str, week_start: date,
@@ -212,6 +214,9 @@ class DbTx:
 
     async def scored_interview_turns(self, user_id, *, days=365):
         return await sessions.scored_turns(self.connection, user_id, days=days)
+
+    async def solved_question_events(self, user_id):
+        return await activity.solved_question_events(self.connection, user_id)
 
     async def load_subscription(self, user_id):
         return await billing.load(self.connection, user_id)

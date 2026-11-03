@@ -428,7 +428,8 @@ class TestErrors:
 def every_route():
     aid = str(uuid.uuid4())
     return [
-        ("GET", "/v1/me", None), ("GET", "/v1/me/progress", None), ("GET", "/v1/questions", None),
+        ("GET", "/v1/me", None), ("GET", "/v1/me/progress", None), ("GET", "/v1/me/activity", None),
+        ("GET", "/v1/questions", None),
         ("GET", f"/v1/questions/{Q}", None), ("GET", f"/v1/questions/{Q}/resources", None), ("POST", BASE, {"question_key": Q}), ("GET", f"{BASE}/{aid}", None),
         ("POST", f"{BASE}/{aid}/hints/next", None), ("POST", f"{BASE}/{aid}/reference", None),
         ("GET", f"{BASE}/{aid}/execution-capabilities", None),

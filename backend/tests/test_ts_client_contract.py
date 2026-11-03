@@ -15,6 +15,7 @@ from app.main import app
 CLIENT = Path(__file__).resolve().parents[2] / "apps" / "web" / "src" / "lib" / "practice-api.ts"
 GAME_CLIENT = CLIENT.with_name("duel-api.ts")
 AVATAR_CLIENT = CLIENT.with_name("avatar-api.ts")
+STATS_CLIENT = CLIENT.with_name("account-stats-api.ts")
 pytestmark = pytest.mark.skipif(not CLIENT.exists(), reason="apps/web not checked out")
 
 # OpenAPI schema name -> TypeScript type name
@@ -77,6 +78,14 @@ def test_every_response_field_is_typed_both_ways(spec, source, schema_name, ts_n
     assert client == backend, f"{ts_name}: missing in TS {backend - client}, extra in TS {client - backend}"
 
 
+@pytest.mark.parametrize("schema_name, ts_name", [("ActivityView", "AccountActivity"),
+                                               ("ActivityDayView", "AccountActivityDay")])
+def test_account_activity_response_fields_match_the_account_stats_client(spec, schema_name, ts_name):
+    backend = set(spec["components"]["schemas"][schema_name]["properties"])
+    client = ts_fields(STATS_CLIENT.read_text(encoding="utf-8"), ts_name)
+    assert client == backend, f"{ts_name}: missing in TS {backend - client}, extra in TS {client - backend}"
+
+
 def test_every_v1_route_is_called_by_the_client(spec, source):
     routes = {(m.upper(), p) for p, ops in spec["paths"].items() if p.startswith("/v1") for m in ops}
     called = set()
@@ -95,6 +104,10 @@ def test_every_v1_route_is_called_by_the_client(spec, source):
     assert "/v1/me/avatar${suffix}" in avatar
     for method, suffix in re.findall(r'call\("(GET|PUT|POST)"(?:,\s*"([^"]*)")?', avatar):
         called.add((method, "/v1/me/avatar" + suffix))
+    # Account stats use an account-bound read helper; both activity and wallet are canonical GETs.
+    stats = STATS_CLIENT.read_text(encoding="utf-8")
+    for path in re.findall(r'read\(\s*["`]([^"`]+)["`]', stats):
+        called.add(("GET", path.split("?")[0]))
     missing = []
     for method, path in routes:
         pattern = re.sub(r"\{[^}]+\}", "{}", path)

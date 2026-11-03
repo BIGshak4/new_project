@@ -35,6 +35,26 @@ async def progress(access: CurrentAccess, practice: Practice,
     return await practice.progress(access.user_id, language=language)
 
 
+class ActivityDayView(BaseModel):
+    date: str
+    questions: int
+
+
+class ActivityView(BaseModel):
+    timezone: str
+    today: str
+    streak_days: int
+    today_count: int
+    last_solved_date: str | None
+    days: list[ActivityDayView]
+
+
+@router.get("/activity", response_model=ActivityView, summary="My solved-question days and current streak")
+async def activity(access: CurrentAccess, practice: Practice,
+                   timezone: str = Query("UTC", min_length=1, max_length=100)) -> ActivityView:
+    return ActivityView(**await practice.activity(access.user_id, timezone=timezone))
+
+
 class GoalRequest(BaseModel):
     job_type: str | None = Field(None, max_length=40, description="a key from GET /v1/job-types")
     job_types: list[Annotated[str, Field(min_length=1, max_length=40)]] | None = Field(None, max_length=30)
