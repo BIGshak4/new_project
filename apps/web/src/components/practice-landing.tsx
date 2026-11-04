@@ -11,7 +11,6 @@ import {
   MousePointer2,
   MessagesSquare,
 } from "lucide-react";
-import { SignOff } from "./sign-off";
 import { LandingXorControls } from "./landing-xor-controls";
 import { LandingCompanyReports } from "./landing-company-reports";
 import { LandingTestimonials } from "./landing-testimonials";
@@ -185,7 +184,6 @@ export function PracticeLanding({
         </section>
         <LandingTestimonials he={he} className={styles.testimonials} />
       </main>
-      <SignOff lang={he ? "he" : "en"} />
     </div>
   );
 }

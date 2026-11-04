@@ -46,7 +46,6 @@ import { MultiSelect } from "../components/ui/multi-select";
 import { AccountStats } from "../components/account-stats";
 import type { AccountActivity } from "../lib/account-stats-api";
 import { AnimatePresence, motion, useReducedMotion } from "../components/ui/motion";
-import { SignOff } from "../components/sign-off";
 import { LearnHome } from "../components/learn-home";
 import { InterviewSession } from "../components/interview-session";
 import { supabase } from "../lib/supabase";
@@ -151,8 +150,9 @@ function Workspace({
   const [subjects, setSubjects] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [statusFilters, setStatusFilters] = useState<LibraryStatus[]>([]);
-  const [statusMessage, setStatusMessage] = useState<"hidden" | "done" | "not_done" | null>(null);
+  const [statusMessage, setStatusMessage] = useState<"hidden" | "done" | "not_done" | "saved" | "unsaved" | null>(null);
   const statusFilterRef = useRef<HTMLDivElement>(null);
+  const libraryViewsRef = useRef<HTMLDivElement>(null);
   const generation = useRef(0);
   const [progressReady, setProgressReady] = useState(false);
   const [entriesReady, setEntriesReady] = useState(false);
@@ -360,6 +360,15 @@ function Workspace({
       statusFilterRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
     }
   };
+  const onQuestionBookmarkSaved = (q: QuestionSummary, saved: Entry) => {
+    setEntries((old) => mergeEntries(old, [saved]));
+    setStatusMessage(saved.bookmarked ? "saved" : "unsaved");
+    const focusedRow = document.activeElement?.closest<HTMLElement>(".library-question-row");
+    if (route.view === "bookmarks" && !saved.bookmarked &&
+      (focusedRow?.dataset.questionId === q.id || document.activeElement === document.body)) {
+      libraryViewsRef.current?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]')?.focus();
+    }
+  };
   const date = (s: string) =>
     new Date(s).toLocaleString(lang === "he" ? "he-IL" : "en-GB", {
       dateStyle: "medium",
@@ -389,7 +398,7 @@ function Workspace({
         <span>{label}</span>
       </button>
     ));
-  const libraryViews = <div className="segmented library-views" role="group" aria-label={t("תצוגות המאגר", "Library views")}>
+  const libraryViews = <div ref={libraryViewsRef} className="segmented library-views" role="group" aria-label={t("תצוגות המאגר", "Library views")}>
     {[
       { id: "library", icon: BookOpen, label: t("שאלות ראיון", "Interview questions") },
       { id: "fundamentals", icon: Zap, label: t("יסודות בקטנה", "A little practice") },
@@ -430,22 +439,17 @@ function Workspace({
         {tabButtons(true)}
       </nav>
       <main className="content">
-        <div className="pilot-note" role="note">
+        {(!healthKnown || demo) && <div className="pilot-note" role="note">
           {!healthKnown
             ? t(
                 "בודקים את מצב סביבת התרגול…",
                 "Checking the practice environment…",
               )
-            : demo
-              ? t(
+            : t(
                   "פיילוט · עוזר התרגול עדיין אינו מחובר. אפשר לפתור שאלות ולהיעזר ברמזים. התשובות שלכם נשמרות.",
                   "Pilot · The practice assistant is not connected yet. Solve questions and use hints; your answers are saved.",
-                )
-              : t(
-                  "פיילוט פרטי · משוב אוטומטי עשוי לטעות. השוו לפתרון ובדקו עם איש מקצוע.",
-                  "Private pilot · Automated feedback can be wrong. Compare with the reference and review with an expert.",
                 )}
-        </div>
+        </div>}
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={route.view}
@@ -794,7 +798,9 @@ function Workspace({
                 <p className="small library-status-message" role="status" aria-live="polite">{statusMessage === "hidden"
                   ? t("השאלה סומנה כמוסתרת. אפשר לסנן שאלות לפי הסטטוס שלהן.", "Question marked as hidden. Use Question status to filter your questions.")
                   : statusMessage === "done" ? t("השאלה סומנה כבוצעה.", "Question marked as done.")
-                  : statusMessage === "not_done" ? t("השאלה סומנה כלא בוצעה.", "Question marked as not done.") : null}</p>
+                  : statusMessage === "not_done" ? t("השאלה סומנה כלא בוצעה.", "Question marked as not done.")
+                  : statusMessage === "saved" ? t("השאלה נוספה לשמורות.", "Question added to Saved.")
+                  : statusMessage === "unsaved" ? t("השאלה הוסרה מהשמורות.", "Question removed from Saved.") : null}</p>
                 <p className="company-report-note library-provenance">{companyReportNote(lang)}</p>
                 {jobFilters.length > 0 && (
                   <p className="small muted filter-note" role="status">
@@ -822,7 +828,8 @@ function Workspace({
                       </div>
                       <QuestionStatusControl userId={user.id} question={q} questions={questions}
                         state={questionStates.get(q.id) ?? { completed: false, hidden: false }} lang={lang}
-                        ready={entriesReady} onSaved={(saved) => onQuestionStatusSaved(q, saved)} />
+                        ready={entriesReady} onSaved={(saved) => onQuestionStatusSaved(q, saved)}
+                        bookmark={{ saved: entries.some(e => e.question_id === q.id && e.bookmarked), onSaved: saved => onQuestionBookmarkSaved(q, saved) }} />
                     </div>
                   ))}
                 </div>
@@ -838,7 +845,6 @@ function Workspace({
           </motion.div>
         </AnimatePresence>
       </main>
-      <SignOff lang={lang} />
     </div>
   );
 }
