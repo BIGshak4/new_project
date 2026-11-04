@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, Clock3, Cpu, Lightbulb, MessageSquareText, Squar
 import type { Lang } from "./auth";
 import { revealDelay, timerTone } from "../lib/ui";
 import { AnimatePresence, Pop, Reveal, motion, spring, useReducedMotion } from "./ui/motion";
-import { QuestionReport } from "./question-report";
+import { QuestionActions } from "./question-actions";
 import { AnswerEditor } from "./answer-editor";
 import { VisualAnswer } from "./visual-answer";
 import { emptyVisual, hasVisual, type VisualAnswer as Visual } from "../lib/circuit";
@@ -373,9 +373,11 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: P
             </span>
             <span className="row">
               {turn.subject_switch && <span className="small muted">{t("נושא חדש", "new subject")}</span>}
-              {turn.question_key && <QuestionReport api={api} questionKey={turn.question_key} lang={lang} context="interview" />}
             </span>
           </div>
+          <QuestionActions key={`${interviewId}-${turn.index}`} api={turn.question_key ? api : undefined}
+            questionKey={turn.question_key ?? `interview-${interviewId}-${turn.index}`} questionTitle={turn.question}
+            lang={lang} context="interview" />
           <InterviewQuestionText text={turn.question} />
           {turn.hints.length > 0 && (
             <div className="interview-hints">
@@ -398,8 +400,9 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: P
                   "Write your answer below. You can add code, a diagram, or a photo of your work.",
                 )}
               </p>
-              <AnswerEditor value={answer} onChange={setAnswer} lang={lang} disabled={busy} codeLanguage={null} starterCode={null} />
+              <AnswerEditor key={`answer-${turn.index}`} value={answer} onChange={setAnswer} lang={lang} disabled={busy} codeLanguage={null} starterCode={null} />
               <VisualAnswer
+                key={`visual-${turn.index}`}
                 value={visual}
                 onChange={setVisual}
                 lang={lang}

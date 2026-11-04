@@ -356,7 +356,7 @@ def rationale(n, p, value):
         231: ("הנתון המוחזק אינו בהכרח תשובה חדשה; Valid מבדיל בין קבלה חדשה לבין ערך ישן.", "Held data need not be a new response; Valid distinguishes a new capture from an old value."),
         232: ("הכרעת התנגשות אינה נגזרת מעצם המילה סינכרוני; משתמשים במדיניות שהוגדרה במפורש.", "Collision behavior is not implied by the word synchronous; use the explicitly specified policy."),
         233: ("יש ארבע מילות אחסון ועוד כל רגיסטר יציאה שנדרש בנפרד; כל ביט דורש FF במימוש זה.", "Count four stored words plus each separately required output register; each bit requires an FF in this implementation."),
-        234: ("מפענח מפעיל ביט יחיד בכתובת הנבחרת רק כאשר כתיבה מאופשרת.", "The decoder activates exactly the selected address bit only when writing is enabled."),
+        234: ("דקודר מפעיל ביט יחיד בכתובת הנבחרת רק כאשר כתיבה מאופשרת.", "The decoder activates exactly the selected address bit only when writing is enabled."),
         235: ("שחרור האיפוס אינו נתון רגיל, אך גם לו תנאי תזמון: מחפשים חזית שאינה קודמת לזמן השחרור ועוד recovery.", "Reset release is not ordinary data, but it has timing constraints too: find an edge no earlier than release plus recovery."),
         236: ("מחשבים נשא משני הביטים הנמוכים ובוחרים בעזרתו את זוג תוצאת הסכום והנשא הגבוהים; אסור לבחור אותם מנתיבי קדם־חישוב שונים.", "Compute carry from the low two bits and use it to select both high sum and high carry; never mix results from different precomputed branches."),
         237: ("G נבדק עם נשא כניסה אפס. הקבוצה מעבירה נשא רק כשסכומה ללא נשא הוא בדיוק 2^W-1.", "Evaluate G with carry-in zero. The group propagates only when its sum without carry-in is exactly 2^W-1."),

@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { BidiText } from "./bidi-text";
 import { proseDirection } from "../lib/bidi-segments";
 import * as RadixPopover from "@radix-ui/react-popover";
-import { Flag } from "lucide-react";
+import { CircleHelp } from "lucide-react";
 import type { Lang } from "./auth";
 import type { PracticeApi, PracticeApiError } from "../lib/practice-api";
 import { apiMessage } from "../lib/practice-ui";
@@ -13,17 +13,18 @@ import { toast } from "./toaster";
 type Reason = "unclear" | "wrong" | "other";
 
 /**
- * "This question is not clear": a quiet flag on the question sheet and in the interview room. Three reasons and an
+ * A question-specific report from the question sheet and interview room. Three reasons and an
  * optional line, stored per question for the review queue; a second press by the same person updates the note.
  * Nothing about grading changes, and other users never see it.
  */
-export function QuestionReport({ api, questionKey, lang, context }: { api: PracticeApi; questionKey: string; lang: Lang; context: "practice" | "interview" | "library" }) {
+export function QuestionReport({ api, questionKey, lang, context, triggerClassName }: { api: Pick<PracticeApi, "reportQuestion">; questionKey: string; lang: Lang; context: "practice" | "interview" | "library"; triggerClassName?: string }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState<Reason>("unclear");
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const id = useId();
   const reasons: [Reason, string][] = [
     ["unclear", t("לא הבנתי מה נשאל", "I did not understand what is asked")],
     ["wrong", t("נראה לי שיש טעות בשאלה", "Something in the question looks wrong")],
@@ -37,10 +38,10 @@ export function QuestionReport({ api, questionKey, lang, context }: { api: Pract
       await api.reportQuestion(questionKey, { reason, note: note.trim() || undefined, language: lang, context });
       setOpen(false);
       setNote("");
-      toast.success(t("תודה. נבדוק את השאלה ונתקן.", "Thank you. We will look at the question and fix it."));
+      toast.success(t("תודה, הדיווח נשלח לבדיקת הצוות.", "Thank you. Your report was sent to the team for review."));
     } catch (e) {
       const code = (e as PracticeApiError).code;
-      setError(code === "temporarily_unavailable" ? t("הדיווח ייפתח בקרוב.", "Reporting opens soon.") : apiMessage(e, lang));
+      setError(code === "temporarily_unavailable" ? t("לא ניתן לשלוח את הדיווח כרגע. נסו שוב בעוד רגע.", "The report could not be sent right now. Please try again shortly.") : apiMessage(e, lang));
     } finally {
       setBusy(false);
     }
@@ -48,23 +49,23 @@ export function QuestionReport({ api, questionKey, lang, context }: { api: Pract
   return (
     <RadixPopover.Root open={open} onOpenChange={setOpen}>
       <RadixPopover.Trigger asChild>
-        <button type="button" className="text-button report-trigger">
-          <Flag size={14} aria-hidden="true" /> {t("השאלה לא ברורה?", "Question unclear?")}
+        <button type="button" className={triggerClassName ?? "text-button report-trigger"}>
+          <CircleHelp size={17} aria-hidden="true" /> {t("שאלה לא ברורה", "Unclear question")}
         </button>
       </RadixPopover.Trigger>
       <RadixPopover.Portal>
-        <RadixPopover.Content className="ui-popover report-popover" side="bottom" align="start" sideOffset={8} collisionPadding={12}>
+        <RadixPopover.Content className="ui-popover report-popover" side="bottom" align="start" sideOffset={8} collisionPadding={12} dir={lang === "he" ? "rtl" : "ltr"} lang={lang} aria-labelledby={`${id}-title`}>
           <form
             onSubmit={(e) => {
               e.preventDefault();
               void send();
             }}
           >
-            <p className="report-title">{t("מה לא עבד בשאלה הזאת?", "What did not work in this question?")}</p>
+            <p className="report-title" id={`${id}-title`}>{t("מה לא ברור בשאלה?", "What is unclear about the question?")}</p>
             <div className="report-reasons" role="radiogroup" aria-label={t("סיבה", "Reason")}>
               {reasons.map(([value, label]) => (
                 <label key={value} className={`report-reason ${reason === value ? "on" : ""}`}>
-                  <input type="radio" name="reason" value={value} checked={reason === value} onChange={() => setReason(value)} />
+                  <input type="radio" name={`${id}-reason`} value={value} checked={reason === value} onChange={() => setReason(value)} disabled={busy} />
                   {label}
                 </label>
               ))}
@@ -74,6 +75,7 @@ export function QuestionReport({ api, questionKey, lang, context }: { api: Pract
               onChange={(e) => setNote(e.target.value)}
               maxLength={500}
               rows={2}
+              disabled={busy}
               dir="auto"
               placeholder={t("במילה או שתיים: מה היה לא ברור?", "In a word or two: what was unclear?")}
               aria-label={t("הערה", "Note")}

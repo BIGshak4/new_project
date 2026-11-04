@@ -119,7 +119,7 @@
         "לא נמסר אות ממשי/מורכב, סינון, אי־ודאות או טיפול בקצות התחום; ההנחות הוגדרו בנפרד."
       ],
       "en": [
-        "Real/complex signal, filtering, uncertainty and endpoint treatment are unspecified; editorial assumptions are explicit."
+        "Real/complex signal, filtering, uncertainty and endpoint treatment are unspecified; explicit assumptions are explicit."
       ]
     },
     "technical_references": {
@@ -158,7 +158,7 @@
   "PREP-157": {
     "assumptions": {
       "he": [
-        "מרבב2:1 של סיבית אחת; S=0 בוחרD0.",
+        "מוקס2:1 של סיבית אחת; S=0 בוחרD0.",
         "אין איפשור, שעון או מצב פנימי; לוגיקה דו־ערכית אידאלית."
       ],
       "en": [
@@ -197,12 +197,12 @@
       ]
     },
     "interview_answer": {
-      "he": "מרבב מחבר לוגית כניסה נבחרת ליציאה: S=0 מעבירD0 ו־S=1 מעבירD1. הוא צירופי, והנוסחה היא NOT S·D0+S·D1 בלוגיקה בוליאנית.",
+      "he": "מוקס מחבר לוגית כניסה נבחרת ליציאה: S=0 מעבירD0 ו־S=1 מעבירD1. הוא צירופי, והנוסחה היא NOT S·D0+S·D1 בלוגיקה בוליאנית.",
       "en": "A multiplexer selects one input:S=0 passesD0,S=1 passesD1. It is combinational; the Boolean expression is NOT S·D0+S·D1."
     },
     "source_ambiguities": {
       "he": [
-        "גודל המרבב ומוסכמת הבחירה אינם נתונים;2:1 והמוסכמה הוגדרו בנפרד."
+        "גודל המוקס ומוסכמת הבחירה אינם נתונים;2:1 והמוסכמה הוגדרו בנפרד."
       ],
       "en": [
         "Size and selection convention are unspecified;2:1 and its convention are explicit."
@@ -211,8 +211,8 @@
     "solution_extensions": {
       "he": [
         {
-          "question": "איך מרחיבים למרבב4:1 באמצעות2:1?",
-          "answer_direction": "שני מרבבים בשלב ראשון ומרבב אחד בשני; סדר סיביות הבחירה חייב להיות עקבי.",
+          "question": "איך מרחיבים למוקס4:1 באמצעות2:1?",
+          "answer_direction": "שני מוקסים בשלב ראשון ומוקס אחד בשני; סדר סיביות הבחירה חייב להיות עקבי.",
           "principle": "פירוק בחירה היררכי."
         }
       ],
@@ -231,7 +231,7 @@
         "הקופסה מבצעת בדיוק מודולו 16 בכל חזית עולה; המוצא שלה זמין כלוגיקה סינכרונית.",
         "מותר ביט אחסון נוסף ושערים; כל הרכיבים באותו clk.",
         "התחלה באפס דורשת אתחול משותף שהמקור לא הבטיח.",
-        "הקופסה טוענת או סופרת באותה חזית עולה כמו הדלגלג הנוסף.",
+        "הקופסה טוענת או סופרת באותה חזית עולה כמו הפליפ-פלופ הנוסף.",
         "load קודם לספירה; התחלות מיושרות באמצעות טעינה מפורשת."
       ],
       "en": [
@@ -243,11 +243,11 @@
       ]
     },
     "optimality": {
-      "he": "קופסה אחת, דלגלג נוסף אחד, גילוי ארבע אחדות ו־XOR. ביט נוסף הוא מינימום לאחסון לוגי עצמאי במודל בן 16 מצבים; אין הוכחת מינימום שערים או השהיה.\n\nביט מצב נוסף אחד וגלאי נשא, XOR ו־MUX טעינה. חסם מינימום מתייחס רק לזיכרון הנוסף.",
+      "he": "קופסה אחת, פליפ-פלופ נוסף אחד, גילוי ארבע אחדות ו־XOR. ביט נוסף הוא מינימום לאחסון לוגי עצמאי במודל בן 16 מצבים; אין הוכחת מינימום שערים או השהיה.\n\nביט מצב נוסף אחד וגלאי נשא, XOR ו־MUX טעינה. חסם מינימום מתייחס רק לזיכרון הנוסף.",
       "en": "One supplied box, one extra DFF, four-one detection and XOR. One additional independent bit is minimal for logical storage in the 16-state model; no gate or delay minimum is proved.\n\nOne extra state bit, carry detection, XOR and load selection; the minimum bound concerns added storage only."
     },
     "verification": {
-      "he": "נבדקו 32 מעברים,32 מקרי איפוס מיושר ו־3,104 חזיתות ברצפים ארוכים מכל מצב, מול אורקל מודולו 32 ורכיב מודולו 16 בטבלת מעברים עצמאית. חמישה קלטים פגומים נדחו. Python בלבד; ללא HDL או תזמון פיזי.\n\n2,048 צירופים של32 מצבים,32 נתונים ו־load בשני ערכיו נבדקו מול מספר שלם בן5 ביטים. HDL וסימולציה מתועדים בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם נועלי ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+      "he": "נבדקו 32 מעברים,32 מקרי איפוס מיושר ו־3,104 חזיתות ברצפים ארוכים מכל מצב, מול אורקל מודולו 32 ורכיב מודולו 16 בטבלת מעברים עצמאית. חמישה קלטים פגומים נדחו. Python בלבד; ללא HDL או תזמון פיזי.\n\n2,048 צירופים של32 מצבים,32 נתונים ו־load בשני ערכיו נבדקו מול מספר שלם בן5 ביטים. HDL וסימולציה מתועדים בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
       "en": "Checked 32 transitions,32 aligned resets and3,104 long-trace edges from every state against modulo32 and an independent modulo16 transition lookup. Five malformed states rejected. Python only; no HDL or physical timing.\n\n2,048 combinations of32 states,32 input words and both load values were compared with a five-bit integer oracle. HDL/simulation is recorded separately.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
     },
     "edge_cases": {
@@ -287,7 +287,7 @@
       ]
     },
     "interview_answer": {
-      "he": "ארבעת הביטים הנמוכים מגיעים מהקופסה. אוסיף h בדלגלג על אותו שעון, עם D=h XOR(q==15), ואוציא {h, q}. הבדיקה היא למצב הישן: כשהנמוכים עוברים 15→0, העליון מתהפך. אתחול שני החלקים חייב להיות מיושר.\n\nהקופסה נשארת בארבע הסיביות הנמוכות. הביט החמישי נטען ישירות מ־a4 כאשר load פעיל, ואחרת מתהפך רק כשהנמוכות הישנות15.",
+      "he": "ארבעת הביטים הנמוכים מגיעים מהקופסה. אוסיף h בפליפ-פלופ על אותו שעון, עם D=h XOR(q==15), ואוציא {h, q}. הבדיקה היא למצב הישן: כשהנמוכים עוברים 15→0, העליון מתהפך. אתחול שני החלקים חייב להיות מיושר.\n\nהקופסה נשארת בארבע הסיביות הנמוכות. הביט החמישי נטען ישירות מ־a4 כאשר load פעיל, ואחרת מתהפך רק כשהנמוכות הישנות15.",
       "en": "Use the box as the low four bits. Add same-clock h with D=h XOR(q==15) and output{h, q}. Evaluate the old state: whenever low bits wrap15→0, toggle high. Align initialization of both parts.\n\nKeep the box for low bits. Load the high bit from a4 when load is active; otherwise toggle only when the old low bits equal15."
     },
     "source_ambiguities": {
@@ -335,9 +335,9 @@
           "hints": [
             "אילו ארבע סיביות אפשר לקבל ישירות מהקופסה בלי לשנות דבר?",
             "מתי הביט החמישי צריך להתהפך בספירה רגילה, ומה אמור לקרות לו בטעינה?",
-            "חברו את ארבע הסיביות הנמוכות לקופסה. לדלגלג החמישי תנו D=load?a4:(q4 XOR(q3 AND q2 AND q1 AND q0))."
+            "חברו את ארבע הסיביות הנמוכות לקופסה. לפליפ-פלופ החמישי תנו D=load?a4:(q4 XOR(q3 AND q2 AND q1 AND q0))."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -348,7 +348,7 @@
             "When should the fifth bit toggle during counting, and what should it do on load?",
             "Reuse the low four bits; the high flip-flop gets D=load?a4:(q4 XOR(q3 AND q2 AND q1 AND q0))."
           ],
-          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }
@@ -903,7 +903,7 @@
             "בדקו מה עושה x AND (x−1) לביט ה־1 הימני ביותר.",
             "הגדילו מונה פעם בכל מחיקה, עד x=0. האינווריאנט הוא המונה ועוד מספר האחדים שנותרו שווה למספר האחדים בקלט המקורי."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         },
         "ספירת מערך ביטים ארוז": {
           "prompt": "### ספירת מערך ביטים גדול\nנתון מערך גדול של ביטים. ספרו כמה ביטי 1 יש בו. הגדירו את הייצוג ואת גודל מונה התוצאה, והסבירו סריקה יעילה בלי להעתיק את כל הקלט.\n\nבחוזה ההדגמה data הוא מערך בתים בני שמונה ביטים ו־bit_length הוא מספר הביטים התקפים, בין 0 ל־8·len(data). הביטים מסודרים בתוך הבית מהנמוך לגבוה; רק הביטים הנמוכים בבית האחרון החלקי נספרים. אין לשנות את data. הסעיף הזה נפרד משאלת המקצה באותו מקור: איסור הזיכרון של המקצה אינו מועבר אוטומטית לספירת הביטים. דונו בסריקה, lookup, פעולת popcount ובקריאה במקטעים תחת חוזים מפורשים.",
@@ -912,7 +912,7 @@
             "עברו על הבתים התקפים בלבד וצברו במונה מספיק רחב. אם הבית האחרון חלקי, מסכו את הביטים הלא תקפים.",
             "אפשר לספור כל בית באמצעות value &= value−1, או טבלה קבועה. לולאת בתים נמנעת מהעתקת מערך מלא; מספר קריאות עדיין תלוי בגודל הקלט."
           ],
-          "integration_status": "רמזי הסעיף בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -923,7 +923,7 @@
             "Inspect what x AND (x−1) does to the lowest set bit.",
             "Increment once per deletion until x=0. Counter plus remaining ones equals the original population count."
           ],
-          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         },
         "Counting a packed bit array": {
           "prompt": "### Count a massive bit array\nCount the ones in a large bit array. Define representation and result-counter width, and explain efficient scanning without copying all input.\n\nIn the demonstration, data contains eight-bit bytes and bit_length is the valid bit count, 0..8·len(data). Within a byte bits are low-to-high; only low bits in a partial final byte count. Do not mutate data. This is separate from the allocator question in the same source; its no-extra-memory constraint is not silently applied here. Discuss scanning, lookup, popcount and chunked reading under explicit contracts.",
@@ -932,7 +932,7 @@
             "Visit valid bytes and use a sufficiently wide total. Mask unused high bits of a partial final byte.",
             "Use value &= value−1 per byte or a fixed lookup table. Byte scanning avoids a full-array copy, but reads still scale with input size."
           ],
-          "integration_status": "Part-specific hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }

@@ -10,6 +10,7 @@ import copy
 import hashlib
 import json
 from pathlib import Path
+from tests.learner_copy_history import before_learner_copy_localized
 
 BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_batch90.json").read_bytes())
 BATCH110_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_batch110.json").read_bytes())
@@ -245,6 +246,7 @@ def assert_pre_batch1101_assets(uploads):
 
 
 def _before_batch1103_localized(ident, value):
+    value = before_learner_copy_localized(ident, value)
     previous = BATCH1103_BASELINE['localized_material'][ident]
     restored = (_prefix(value, previous['append_shape'], ('localized_material', ident))
                 if 'append_shape' in previous else value)

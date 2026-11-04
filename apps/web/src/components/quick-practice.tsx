@@ -4,6 +4,7 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
 import { ArrowLeft, ArrowRight, Check, RotateCcw, Search, Shuffle } from "lucide-react";
 import { BidiText } from "./bidi-text";
 import { StudyText } from "./question-materials";
+import { QuestionActions } from "./question-actions";
 import { filterQuickQuestions, quickAnswerMarkdown, quickQuestions, quickTopics, type QuickDiagram, type QuickTopic } from "../lib/fundamentals";
 import { confirmQuickCompletion, filterQuickHistory, quickCompletionState, quickRevision, readQuickProgress, type QuickHistoryView, type QuickProgressApi } from "../lib/fundamentals-progress";
 import type { FundamentalCompletion } from "../lib/practice-api";
@@ -158,6 +159,7 @@ export function QuickPractice({ lang, api, userId }: { lang: "he" | "en"; api: Q
         <span>{t(`סיימתם ${completedCount} מתוך ${quickQuestions.length}`, `Finished ${completedCount} of ${quickQuestions.length}`)}</span></div>
       <article className="quick-sheet">
         <h2 ref={heading} tabIndex={-1}><BidiText>{question.title[lang]}</BidiText></h2>
+        <QuestionActions key={question.id} lang={lang} questionKey={question.id} questionTitle={question.title[lang]} context="quick" />
         {record && <p className="quick-completed-label"><Check size={16} aria-hidden="true" />{state === "updated"
           ? t("כבר סיימתם; השאלה עודכנה מאז", "Previously finished; updated since then")
           : t("כבר סיימתם את השאלה הזאת", "You already finished this question")}{" · "}<time dateTime={record.completed_at}>{new Date(record.completed_at).toLocaleDateString(lang === "he" ? "he-IL" : "en-GB")}</time></p>}

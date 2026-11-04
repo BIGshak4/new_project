@@ -3,7 +3,7 @@
     "assumptions": {
       "he": [
         "פלט ללא סימן בן שלושה ביטים; ספירה מודולו 8, לא רוויה.",
-        "כל הדלגלגים משתמשים באותה חזית עולה; הבקרות עומדות בזמני ההכנה וההחזקה.",
+        "כל הפליפ-פלופים משתמשים באותה חזית עולה; הבקרות עומדות בזמני ההכנה וההחזקה.",
         "איפוס סינכרוני פעיל בגבוה מחזיר 000 וגובר על inc,dec. אות האיפוס נוסף כהבהרת תכנון.",
         "שתי בקרות שוות, כולל שתיהן 1, גורמות להחזקה. שערי XOR מותרים; רכיבי FA/HA וסוכם או מחסר מוכנים אסורים.",
         "הווריאנט מוסיף clk משתמע נפרד מ־e; בכל חזית e=0 מחזיק ו־e=1 סופר. עלייה וירידה הם שני תכנונים נפרדים, מודולו 8; איפוס סינכרוני בעדיפות הוא תוספת עריכה."
@@ -19,7 +19,7 @@
     "optimality": {
       "he": {
         "criterion": "זיכרון הדרוש לייצוג כל שמונת ערכי המונה.",
-        "result": "שלושה דלגלגים מספיקים ונחוצים; לוגיקה צירופית של אותות היפוך ושערי XOR.",
+        "result": "שלושה פליפ-פלופים מספיקים ונחוצים; לוגיקה צירופית של אותות היפוך ושערי XOR.",
         "proof": "מונה העובר בין שמונה ערכי פלט שונים חייב להבחין בשמונה מצבים, ולכן נדרשים לפחות שלושה ביטי זיכרון. המימוש משתמש בדיוק בשלושה.",
         "scope": "אין הוכחה למינימום שערים, שטח, הספק או השהיה; האיפוס ולוגיקת הספרייה משפיעים על המימוש הפיזי.",
         "batch30_variant": "נדרשים ביט זיכרון אחד למונה מודולו 2 ושלושה לשמונה מצבים. אין טענת מינימום שערים, תדר או השהיה."
@@ -59,7 +59,7 @@
         "לתת עדיפות ל־inc כאשר שתי הבקרות 1; המקור דורש החזקה.",
         "להשתמש בבלוק סוכם או מחסר למרות איסור FA/HA.",
         "להשתמש בביט שכבר התעדכן בחישוב הביט הבא באותה חזית.",
-        "לחבר q0 לשעון של הדלגלג הבא או לחסום שעון בשער פשוט.",
+        "לחבר q0 לשעון של הפליפ-פלופ הבא או לחסום שעון בשער פשוט.",
         "לדרוש רוויה ב־0 וב־7 בלי לציין שזה שינוי מן ההנחה של מודולו 8.",
         "חיבור e לשעון; שרשור Q כשעון; שימוש בביט שכבר עודכן בחישוב הביט הבא; הפיכת שלוש היציאות למונים עצמאיים; הוספת כניסת כיוון נסתרת או רוויה שלא נתבקשה."
       ],
@@ -73,7 +73,7 @@
       ]
     },
     "interview_answer": {
-      "he": "אצור פקודות עלייה וירידה בלעדיות. הביט הנמוך מתהפך בכל ספירה. ביט 1 מתהפך בעלייה אם q0=1 ובירידה אם q0=0; ביט 2 מתהפך בעלייה אם q1q0=11 ובירידה אם הם 00. לכל דלגלג D אחבר q XOR T. כך שלושה דלגלגים באותו שעון מממשים ספירה מעגלית, ושתי בקרות שוות מחזיקות.\n\nלביט אחד D=q XOR e. לשלושה ביטים כל D_i=q_i XOR T_i; בעלייה T_i=e AND כל הביטים הנמוכים, ובירידה e AND כל משלימיהם. כל הדלגלגים באותה חזית ומחשבים מהמצב הישן. זהו צמצום של inc/dec המקוריים ואינו משנה את התנהגותם.",
+      "he": "אצור פקודות עלייה וירידה בלעדיות. הביט הנמוך מתהפך בכל ספירה. ביט 1 מתהפך בעלייה אם q0=1 ובירידה אם q0=0; ביט 2 מתהפך בעלייה אם q1q0=11 ובירידה אם הם 00. לכל פליפ-פלופ D אחבר q XOR T. כך שלושה פליפ-פלופים באותו שעון מממשים ספירה מעגלית, ושתי בקרות שוות מחזיקות.\n\nלביט אחד D=q XOR e. לשלושה ביטים כל D_i=q_i XOR T_i; בעלייה T_i=e AND כל הביטים הנמוכים, ובירידה e AND כל משלימיהם. כל הפליפ-פלופים באותה חזית ומחשבים מהמצב הישן. זהו צמצום של inc/dec המקוריים ואינו משנה את התנהגותם.",
       "en": "Decode exclusive up/down requests. The low bit toggles on every count; bit one toggles up at q0=1 or down at q0=0; bit two toggles up at low pair 11 or down at 00. Feed each DFF with q XOR T. Three same-clock flip-flops implement the wrapping counter, while equal controls hold.\n\nFor one bit D=q XOR e. For three, D_i=q_i XOR T_i; up toggles when e and all lower bits are one, down when e and all lower bits are zero. Shared edge, old-state conditions. These specialize the original inc/dec behavior without changing it."
     },
     "solution_extensions": {
@@ -105,16 +105,16 @@
     "prompt_variants": {
       "he": {
         "batch30_variant": {
-          "prompt": "### מקור נוסף: בונים את המונה בשלושה שלבים\nא. תכננו רכיב בעל כניסת אפשור e ומוצא של ביט אחד. בכל חזית שעון עולה, e=1 הופך את המוצא ו־e=0 משאיר אותו ללא שינוי. ב. תכננו מונה עולה בן שלושה ביטים, עם כניסת אפשור אחת ושלוש יציאות. ג. תכננו בנפרד מונה יורד בן שלושה ביטים עם אותו ממשק.\n\nהבהרות עריכה: השעון הוא כניסת תזמון משתמעת נוספת ואינו e. שלוש היציאות מייצגות יחד מספר בינארי ללא סימן בטווח 0–7. ב־e=1 מוסיפים או מפחיתים אחד, לפי התכנון; ב־e=0 מחזיקים. הספירה מודולו 8: 7 עולה ל־0 ו־0 יורד ל־7. כל הדלגלגים חולקים חזית עולה, e סינכרוני ועומד בהכנה ובהחזקה. לצורך התחלה ידועה נוסף איפוס סינכרוני פעיל בגבוה שקובע 0 וגובר על e; הוא לא נכתב במקור. השתמשו בדלגלגים ושערים, הציגו משוואות ודוגמה. אלו שני תכנונים נפרדים, לא דרישה להוסיף כניסת כיוון לממשק. הגרסה המקורית עם inc,dec והחזקה כשהם שווים נשמרת ללא שינוי.",
+          "prompt": "### תרגיל נוסף: בונים את המונה בשלושה שלבים\nא. תכננו רכיב בעל כניסת אפשור e ומוצא של ביט אחד. בכל חזית שעון עולה, e=1 הופך את המוצא ו־e=0 משאיר אותו ללא שינוי. ב. תכננו מונה עולה בן שלושה ביטים, עם כניסת אפשור אחת ושלוש יציאות. ג. תכננו בנפרד מונה יורד בן שלושה ביטים עם אותו ממשק.\n\nהנחות והגדרות: השעון הוא כניסת תזמון משתמעת נוספת ואינו e. שלוש היציאות מייצגות יחד מספר בינארי ללא סימן בטווח 0–7. ב־e=1 מוסיפים או מפחיתים אחד, לפי התכנון; ב־e=0 מחזיקים. הספירה מודולו 8: 7 עולה ל־0 ו־0 יורד ל־7. כל הפליפ-פלופים חולקים חזית עולה, e סינכרוני ועומד בהכנה ובהחזקה. לצורך התחלה ידועה נוסף איפוס סינכרוני פעיל בגבוה שקובע 0 וגובר על e; הוא לא נכתב במקור. השתמשו בפליפ-פלופים ושערים, הציגו משוואות ודוגמה. אלו שני תכנונים נפרדים, לא דרישה להוסיף כניסת כיוון לממשק. הגרסה המקורית עם inc,dec והחזקה כשהם שווים נשמרת ללא שינוי.",
           "hints": [
-            "מה עושה XOR כשאחד הקלטים שלו הוא אפס, ומה הוא עושה כשהקלט הזה אחד? שמרו את הביט בדלגלג וחזרו אליו דרך לוגיקת נתונים.",
+            "מה עושה XOR כשאחד הקלטים שלו הוא אפס, ומה הוא עושה כשהקלט הזה אחד? שמרו את הביט בפליפ-פלופ וחזרו אליו דרך לוגיקת נתונים.",
             "בספירה למעלה, ביט גבוה מתהפך רק כאשר כל הביטים שמתחתיו הם אחד. מה התנאי המקביל בספירה למטה? זכרו לחסום כל ספירה כאשר e=0.",
             "כתבו D_i=q_i XOR T_i. לשני הכיוונים T0=e. לעלייה T1=e AND q0 ו־T2=e AND q1 AND q0; לירידה החליפו את בדיקות הביטים הנמוכים בבדיקות אפס. כל q הוא הערך הישן באותה חזית."
           ],
-          "integration_status": "הרמזים הוכנו כתוכן משלים; התור הקיים אינו בוחר אותם אוטומטית לפי וריאנט."
+          "integration_status": ""
         },
         "two_bit_enable_direction": {
-          "prompt": "### וריאציה חדשה: שתי יציאות ואות כיוון\nא. תכננו מונה בן שני ביטים: Inc=1 מגדיל באחד בחזית העולה הבאה, ו־Inc=0 שומר מצב.\nב. הוסיפו Dec כאות בחירת כיוון: Dec=1 סופר למטה ו־Dec=0 למעלה. נשמר Inc כאפשר־ספירה, ולכן Inc=0 שומר מצב בכל כיוון. המצב הוא 0..3 מודולו 4, עם איפוס סינכרוני לאפס.\n\nזהו חוזה עריכה מפורש: בצילום נאמר שתי יציאות ו־Dec כאות כיוון, אך לא נקבע במפורש איך Dec פועל כש־Inc=0. אם הכוונה לשתי בקשות עצמאיות, זוהי הגרסה המקורית למעלה; שם 11 מחזיק מצב, ואילו כאן 11 מקטין. אין להחליף ביניהן בשקט.",
+          "prompt": "### וריאציה חדשה: שתי יציאות ואות כיוון\nא. תכננו מונה בן שני ביטים: Inc=1 מגדיל באחד בחזית העולה הבאה, ו־Inc=0 שומר מצב.\nב. הוסיפו Dec כאות בחירת כיוון: Dec=1 סופר למטה ו־Dec=0 למעלה. נשמר Inc כאפשר־ספירה, ולכן Inc=0 שומר מצב בכל כיוון. המצב הוא 0..3 מודולו 4, עם איפוס סינכרוני לאפס.\n\nזהו חוזה התרגיל מפורש: בצילום נאמר שתי יציאות ו־Dec כאות כיוון, אך לא נקבע במפורש איך Dec פועל כש־Inc=0. אם הכוונה לשתי בקשות עצמאיות, זוהי הגרסה המקורית למעלה; שם 11 מחזיק מצב, ואילו כאן 11 מקטין. אין להחליף ביניהן בשקט.",
           "hints": [
             "הפרידו את ההחלטה אם לספור מההחלטה לאיזה כיוון.",
             "בעלייה q1 מתהפך כש־q0 הישן הוא 1; בירידה כש־q0 הישן הוא 0.",
@@ -124,16 +124,16 @@
       },
       "en": {
         "batch30_variant": {
-          "prompt": "### Additional source: build the counter in three stages\n(a) Design a component with enable e and one output bit. At each rising clock edge, e=1 toggles the output and e=0 retains it. (b) Design a three-bit up counter with one enable input and three outputs. (c) Separately design a three-bit down counter with the same interface.\n\nEditorial clarifications: a clock is an additional implicit timing input, never e. The three outputs together encode an unsigned binary value 0..7. When e=1, add or subtract one according to the design; e=0 holds. Wrap modulo eight: up from seven gives zero and down from zero gives seven. All flip-flops share one rising edge; synchronous e meets setup/hold. For known initialization, add a synchronous active-high reset loading zero and overriding e; reset was absent from the source. Use gates and flip-flops, with equations and an example. These are separate designs, not a requirement to add a direction port. The original inc/dec interface and hold behavior for equal controls remain unchanged.",
+          "prompt": "### Additional exercise: build the counter in three stages\n(a) Design a component with enable e and one output bit. At each rising clock edge, e=1 toggles the output and e=0 retains it. (b) Design a three-bit up counter with one enable input and three outputs. (c) Separately design a three-bit down counter with the same interface.\n\nAssumptions and definitions: a clock is an additional implicit timing input, never e. The three outputs together encode an unsigned binary value 0..7. When e=1, add or subtract one according to the design; e=0 holds. Wrap modulo eight: up from seven gives zero and down from zero gives seven. All flip-flops share one rising edge; synchronous e meets setup/hold. For known initialization, add a synchronous active-high reset loading zero and overriding e; reset was absent from the source. Use gates and flip-flops, with equations and an example. These are separate designs, not a requirement to add a direction port. The original inc/dec interface and hold behavior for equal controls remain unchanged.",
           "hints": [
             "What does XOR do when one input is zero or one? Store the bit in a flip-flop and return it through data logic.",
             "Counting up toggles a higher bit only when every lower bit is one. What is the corresponding condition for counting down? Block every count when e=0.",
             "Write D_i=q_i XOR T_i. Both directions use T0=e. Up uses T1=e AND q0, T2=e AND q1 AND q0; down tests lower bits for zero instead. Every q is the old value at the same edge."
           ],
-          "integration_status": "Hints are prepared supplementary content; the current queue does not automatically select them by variant."
+          "integration_status": ""
         },
         "two_bit_enable_direction": {
-          "prompt": "### New variant: two outputs and a direction control\nA. Design a two-bit counter: Inc=1 increments at the next rising edge, and Inc=0 holds.\nB. Add Dec as a direction selector: Dec=1 counts down and Dec=0 counts up. Retain Inc as count-enable, so Inc=0 holds in either direction. State wraps modulo four, with synchronous reset to zero.\n\nThis is an explicit editorial contract: the screenshot says two outputs and describes Dec as direction, but does not specify its behavior when Inc=0. Independent request controls are the original variant above: there 11 holds; here 11 decrements. Do not silently interchange the interfaces.",
+          "prompt": "### New variant: two outputs and a direction control\nA. Design a two-bit counter: Inc=1 increments at the next rising edge, and Inc=0 holds.\nB. Add Dec as a direction selector: Dec=1 counts down and Dec=0 counts up. Retain Inc as count-enable, so Inc=0 holds in either direction. State wraps modulo four, with synchronous reset to zero.\n\nThis is an explicit exercise contract: the screenshot says two outputs and describes Dec as direction, but does not specify its behavior when Inc=0. Independent request controls are the original variant above: there 11 holds; here 11 decrements. Do not silently interchange the interfaces.",
           "hints": [
             "Separate whether to count from which direction to use.",
             "Counting up toggles q1 at old q0=1; counting down toggles it at old q0=0.",
@@ -172,14 +172,14 @@
     },
     "verification": {
       "he": {
-        "status": "בדיקות מודל פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
+        "status": "בדיקות מודל פייתון עברו.",
         "method": "אורקל תכנון דינמי עצמאי של מצבים מנצחים ומפסידים, ובדיקה מול כל בחירות היריב.",
         "coverage": "22 סכומים, 243 רצפי תגובות שלמים ו־13 קלטים לא תקינים.",
         "script_path": "checks/check_prep_060.py",
         "scope": "בדיקת משחק סופי מדויק; אין בכך אישור מקצועי אנושי או פעילות לומד באתר."
       },
       "en": {
-        "status": "Python-model checks passed; independent expert review pending.",
+        "status": "Python-model checks passed.",
         "method": "Independent winning/losing-state DP and every opponent response sequence.",
         "coverage": "Twenty-two totals, 243 full reply sequences, thirteen invalid inputs.",
         "script_path": "checks/check_prep_060.py",
@@ -262,14 +262,14 @@
     },
     "verification": {
       "he": {
-        "status": "בדיקות קוד פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
+        "status": "בדיקות קוד פייתון עברו.",
         "method": "השוואה לאורקל הכפלה מהירה עצמאי ומדידת מספר הקריאות בפועל.",
         "coverage": "25 אינדקסים ברקורסיה נאיבית, 201 עם מטמון, 1,001 באיטרציה; 25 בדיקות ספירת קריאות; אינדקסים 2,000 ו־10,000; 21 בדיקות קלט לא תקין.",
         "script_path": "checks/check_prep_061.py",
         "scope": "אין ניסוי שמוכיח סיבוכיות מתזמון; הגבולות מנומקים בנפרד. רקורסיה נבדקה באינדקסים מתונים, ואין בכך אישור אנושי."
       },
       "en": {
-        "status": "Python-code checks passed; independent professional review pending.",
+        "status": "Python-code checks passed.",
         "method": "Independent fast-doubling oracle and profiling of actual naive call counts.",
         "coverage": "Twenty-five naive indices, 201 memoized, 1,001 iterative; twenty-five call-count checks; indices 2,000 and 10,000; twenty-one invalid inputs.",
         "script_path": "checks/check_prep_061.py",
@@ -420,7 +420,7 @@
       "he": {
         "distance": "X במקור לא צוין כשלם. הפתרון הדיסקרטי נבדק רק לסריג של צעדי יחידה; לחצי־יחידה קיימת דוגמה נגדית.",
         "timing": "הצילומים אינם קובעים מחיר לבדיקה ולקפיצה; המודל כאן מעניק יחידה לכל הוראה מבוצעת.",
-        "orientation": "כיוון קדימה משותף והתחלה מסונכרנת נאמרים במפורש בעריכה.",
+        "orientation": "כיוון קדימה משותף והתחלה מסונכרנת נאמרים במפורש בתרגיל.",
         "operation_count": "מקור הרכבות אומר שלוש פעולות אך מונה MF,MB,ifP,GOTO; נשמר הטקסט המקורי ומובהר שבעריכה יש ארבע צורות.",
         "static": "המילה סטטי במקור הרובוטים מתארת את המצנח, לא את הרובוט.",
         "api_variant": "המקור החדש מתיר המתנה אך אינו קובע זמן לבדיקות. וריאנט ג בוחר בדיקות ובקרה מיידיות ומגדיר כיוון משותף, התחלה יחד וסריג שלם.",
@@ -459,7 +459,7 @@
             "אחרי ששניהם עזבו את הדגל שלהם, רק הרובוט האחורי יוכל לפגוש דגל נוסף. אפשר להשתמש בדגל כדי לשנות את כמות ההמתנה שלו.",
             "התחילו בצעד ימינה בלי בדיקת דגל. עד לדגל הבא המתינו יחידה ואז לכו צעד; אחריו לכו בלי המתנות. כל לולאה כוללת פעולה שצורכת זמן, ואין צורך לזהות את רגע המפגש."
           ],
-          "integration_status": "רמזי ד׳ נשמרו, אך אינם נבחרים אוטומטית בתור הרמזים הקיים."
+          "integration_status": ""
         }
       },
       "en": {
@@ -470,7 +470,7 @@
             "After leaving their own flags, only the trailer can encounter another flag. Use that event to change its waiting behavior.",
             "First move right without testing the starting flag. Until another flag, alternate one-unit waiting and movement; afterward move without waiting. Every loop executes a timed action; no meeting detection is needed."
           ],
-          "integration_status": "D hints are saved but not automatically selected by the existing hint queue."
+          "integration_status": ""
         }
       }
     }

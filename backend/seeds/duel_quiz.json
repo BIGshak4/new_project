@@ -2068,7 +2068,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D דוגם רק בחזית עולה, ללא איפוס. Q=1, ו־D יורד ל־0 בין חזיתות. מהו Q לפני החזית העולה הבאה?",
+        "he": "פליפ-פלופ D דוגם רק בחזית עולה, ללא איפוס. Q=1, ו־D יורד ל־0 בין חזיתות. מהו Q לפני החזית העולה הבאה?",
         "en": "A D flip-flop samples only on rising edges and has no reset. Q=1 and D falls to 0 between edges. What is Q before the next rising edge?"
       },
       "choices": [
@@ -2091,13 +2091,14 @@
       ],
       "correct": 1,
       "explanation": {
-        "he": "בין חזיתות הדלגלג שומר את Q הקודם, 1.",
+        "he": "בין חזיתות הפליפ-פלופ שומר את Q הקודם, 1.",
         "en": "Between rising edges the flip-flop retains its previous Q value, 1."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
-        "professional_review": "pending"
+        "professional_review": "pending",
+        "wording_updated_on": "2026-11-04"
       }
     },
     {
@@ -2107,7 +2108,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D דוגם בחזית עולה, ללא איפוס, ומתחיל ב־Q=1. ערכי D היציבים כנדרש סביב שתי חזיתות עוקבות הם 0 ואז 1. מהו רצף Q אחרי כל חזית וזמן ההתפשטות?",
+        "he": "פליפ-פלופ D דוגם בחזית עולה, ללא איפוס, ומתחיל ב־Q=1. ערכי D היציבים כנדרש סביב שתי חזיתות עוקבות הם 0 ואז 1. מהו רצף Q אחרי כל חזית וזמן ההתפשטות?",
         "en": "A D flip-flop samples on rising edges, has no reset, and starts at Q=1. The validly stable D values at two successive edges are 0 then 1. What is Q after each edge and propagation delay?"
       },
       "choices": [
@@ -2136,7 +2137,8 @@
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
-        "professional_review": "pending"
+        "professional_review": "pending",
+        "wording_updated_on": "2026-11-04"
       }
     },
     {
@@ -2146,7 +2148,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D דוגם בחזית עולה בלבד וללא איפוס. תחילה Q=0 ו־D=1. מתרחשת רק חזית יורדת. מהו Q אחריה?",
+        "he": "פליפ-פלופ D דוגם בחזית עולה בלבד וללא איפוס. תחילה Q=0 ו־D=1. מתרחשת רק חזית יורדת. מהו Q אחריה?",
         "en": "A D flip-flop samples only on rising edges, with no reset. Initially Q=0 and D=1. Only a falling edge occurs. What is Q afterward?"
       },
       "choices": [
@@ -2175,7 +2177,8 @@
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
-        "professional_review": "pending"
+        "professional_review": "pending",
+        "wording_updated_on": "2026-11-04"
       }
     },
     {
@@ -2185,7 +2188,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D דוגם בחזית עולה, ללא איפוס. D עולה ל־1 וחוזר ל־0 בין שתי חזיתות, ונשאר 0 סביב החזית הבאה כנדרש. מה יישמר בחזית הבאה?",
+        "he": "פליפ-פלופ D דוגם בחזית עולה, ללא איפוס. D עולה ל־1 וחוזר ל־0 בין שתי חזיתות, ונשאר 0 סביב החזית הבאה כנדרש. מה יישמר בחזית הבאה?",
         "en": "A D flip-flop samples on rising edges, with no reset. D pulses to 1 and returns to 0 between two edges, remaining validly stable at 0 around the next edge. What is stored at the next edge?"
       },
       "choices": [
@@ -2208,13 +2211,14 @@
       ],
       "correct": 3,
       "explanation": {
-        "he": "הדלגלג דוגם את D בחזית. פולס שהסתיים לפניה אינו נשמר, ולכן נדגם 0.",
+        "he": "הפליפ-פלופ דוגם את D בחזית. פולס שהסתיים לפניה אינו נשמר, ולכן נדגם 0.",
         "en": "The flip-flop samples D at the edge. The pulse ended before it, so the sampled value is 0."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
-        "professional_review": "pending"
+        "professional_review": "pending",
+        "wording_updated_on": "2026-11-04"
       }
     },
     {
@@ -2224,7 +2228,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D דוגם בחזית עולה, ללא איפוס. ערכי D היציבים סביב שלוש חזיתות עוקבות הם 1,0,1. מהו רצף Q אחרי כל חזית וזמן ההתפשטות?",
+        "he": "פליפ-פלופ D דוגם בחזית עולה, ללא איפוס. ערכי D היציבים סביב שלוש חזיתות עוקבות הם 1,0,1. מהו רצף Q אחרי כל חזית וזמן ההתפשטות?",
         "en": "A D flip-flop samples on rising edges, with no reset. The validly stable D values at three successive edges are 1,0,1. What is Q after each edge and propagation delay?"
       },
       "choices": [
@@ -2253,7 +2257,8 @@
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
-        "professional_review": "pending"
+        "professional_review": "pending",
+        "wording_updated_on": "2026-11-04"
       }
     },
     {
@@ -6928,7 +6933,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "בדלגלג בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 10 ns, והשעון עצמו גבוה רק 2 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
+        "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 10 ns, והשעון עצמו גבוה רק 2 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
         "en": "A rising-edge flip-flop has D=NOT Q. Rising edges are 10 ns apart, and the clock itself is high for only 2 ns each period. After initialization, what are Q's period and high duty cycle in a zero-delay model?"
       },
       "choices": [
@@ -6958,8 +6963,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "bae8f55d31bf22a8e8dd00a2382b3036586b5ea73448d90d2dbfd64daf1413fb",
-        "content_sha256": "bae8f55d31bf22a8e8dd00a2382b3036586b5ea73448d90d2dbfd64daf1413fb"
+        "authored_sha256": "30751b5749a84271c526d244490db63d93e121f5b844daf6cbadf011d25e974a",
+        "content_sha256": "30751b5749a84271c526d244490db63d93e121f5b844daf6cbadf011d25e974a"
       }
     },
     {
@@ -6969,7 +6974,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "בדלגלג בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 12 ns, והשעון עצמו גבוה רק 3 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
+        "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 12 ns, והשעון עצמו גבוה רק 3 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
         "en": "A rising-edge flip-flop has D=NOT Q. Rising edges are 12 ns apart, and the clock itself is high for only 3 ns each period. After initialization, what are Q's period and high duty cycle in a zero-delay model?"
       },
       "choices": [
@@ -6999,8 +7004,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "97aec3f51985f77e67424e9fe30f6c8b08b68657ff82c00a0c83dd429a847c93",
-        "content_sha256": "97aec3f51985f77e67424e9fe30f6c8b08b68657ff82c00a0c83dd429a847c93"
+        "authored_sha256": "381e1f594fc9ce84d6e5ab47b250b3df80f7532349826d64ee13efea628ec893",
+        "content_sha256": "381e1f594fc9ce84d6e5ab47b250b3df80f7532349826d64ee13efea628ec893"
       }
     },
     {
@@ -7010,7 +7015,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "בדלגלג בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 8 ns, והשעון עצמו גבוה רק 6 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
+        "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 8 ns, והשעון עצמו גבוה רק 6 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
         "en": "A rising-edge flip-flop has D=NOT Q. Rising edges are 8 ns apart, and the clock itself is high for only 6 ns each period. After initialization, what are Q's period and high duty cycle in a zero-delay model?"
       },
       "choices": [
@@ -7040,8 +7045,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "d2e6de562b5c7bccd48cff0ffc791e00ce7e22e5f25c4d633018eb53f5d368a3",
-        "content_sha256": "d2e6de562b5c7bccd48cff0ffc791e00ce7e22e5f25c4d633018eb53f5d368a3"
+        "authored_sha256": "4e7223da5d18438b3b194c4fc905d9ce4a6ae3c151e239713447464aa152cef9",
+        "content_sha256": "4e7223da5d18438b3b194c4fc905d9ce4a6ae3c151e239713447464aa152cef9"
       }
     },
     {
@@ -7051,7 +7056,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "בדלגלג בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 20 ns, והשעון עצמו גבוה רק 4 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
+        "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 20 ns, והשעון עצמו גבוה רק 4 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
         "en": "A rising-edge flip-flop has D=NOT Q. Rising edges are 20 ns apart, and the clock itself is high for only 4 ns each period. After initialization, what are Q's period and high duty cycle in a zero-delay model?"
       },
       "choices": [
@@ -7081,8 +7086,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "2533aa29a526c6a143f5d672128eb9c5dd270e7a3d909c271f0532d10f2430ef",
-        "content_sha256": "2533aa29a526c6a143f5d672128eb9c5dd270e7a3d909c271f0532d10f2430ef"
+        "authored_sha256": "96bd5b3cfd2182d7f70b626a9bced9eb9b474539521c42d0c5bef3b7d1723064",
+        "content_sha256": "96bd5b3cfd2182d7f70b626a9bced9eb9b474539521c42d0c5bef3b7d1723064"
       }
     },
     {
@@ -7092,7 +7097,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "בדלגלג בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 16 ns, והשעון עצמו גבוה רק 12 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
+        "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 16 ns, והשעון עצמו גבוה רק 12 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
         "en": "A rising-edge flip-flop has D=NOT Q. Rising edges are 16 ns apart, and the clock itself is high for only 12 ns each period. After initialization, what are Q's period and high duty cycle in a zero-delay model?"
       },
       "choices": [
@@ -7122,8 +7127,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "0294a31d428380634cb457b6e16dbcd5263ddc8116b9feb3ac8c36a7982b5dd9",
-        "content_sha256": "0294a31d428380634cb457b6e16dbcd5263ddc8116b9feb3ac8c36a7982b5dd9"
+        "authored_sha256": "763db743f1cb63313dbaf72bd4874a96417f26b7910f2ecf1568a66b278d6236",
+        "content_sha256": "763db743f1cb63313dbaf72bd4874a96417f26b7910f2ecf1568a66b278d6236"
       }
     },
     {
@@ -17588,7 +17593,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "שני דלגלגי D דוגמים באותה חזית עולה: D1=x, D2=Q1. מתחילים ב־Q1Q2=00, ללא איפוס נוסף. ערכי x היציבים בחזיתות הם 1, 1, 1. מהם ערכי Q1Q2 לאחר כל חזית?",
+        "he": "שני פליפ-פלופי D דוגמים באותה חזית עולה: D1=x, D2=Q1. מתחילים ב־Q1Q2=00, ללא איפוס נוסף. ערכי x היציבים בחזיתות הם 1, 1, 1. מהם ערכי Q1Q2 לאחר כל חזית?",
         "en": "Two D flip-flops sample on the same rising edge: D1=x, D2=Q1. Start at Q1Q2=00, with no further reset. Stable x values at the edges are 1, 1, 1. What is Q1Q2 after each edge?"
       },
       "choices": [
@@ -17618,8 +17623,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "651c0d579bd2417852bda41de34bbc720add1957d031b8f83d97ad9d3ad0a23e",
-        "content_sha256": "651c0d579bd2417852bda41de34bbc720add1957d031b8f83d97ad9d3ad0a23e"
+        "authored_sha256": "5d4c8985df6e7b0477fe9dcfc8184dd9b4e19d7e6323888dab2c3ad25ba51289",
+        "content_sha256": "5d4c8985df6e7b0477fe9dcfc8184dd9b4e19d7e6323888dab2c3ad25ba51289"
       }
     },
     {
@@ -17629,7 +17634,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "שני דלגלגי D דוגמים באותה חזית עולה: D1=x, D2=Q1. מתחילים ב־Q1Q2=10, ללא איפוס נוסף. ערכי x היציבים בחזיתות הם 0, 0, 0. מהם ערכי Q1Q2 לאחר כל חזית?",
+        "he": "שני פליפ-פלופי D דוגמים באותה חזית עולה: D1=x, D2=Q1. מתחילים ב־Q1Q2=10, ללא איפוס נוסף. ערכי x היציבים בחזיתות הם 0, 0, 0. מהם ערכי Q1Q2 לאחר כל חזית?",
         "en": "Two D flip-flops sample on the same rising edge: D1=x, D2=Q1. Start at Q1Q2=10, with no further reset. Stable x values at the edges are 0, 0, 0. What is Q1Q2 after each edge?"
       },
       "choices": [
@@ -17659,8 +17664,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "7ab1457a5f8cd830b30da527307cd4079e097a9c7f6137051f9e7dfbf49d58f2",
-        "content_sha256": "7ab1457a5f8cd830b30da527307cd4079e097a9c7f6137051f9e7dfbf49d58f2"
+        "authored_sha256": "27585630297f7b3c5dc4587549bf7f066559cf3695ff948fec8163e449a2416e",
+        "content_sha256": "27585630297f7b3c5dc4587549bf7f066559cf3695ff948fec8163e449a2416e"
       }
     },
     {
@@ -17670,7 +17675,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "שני דלגלגי D דוגמים באותה חזית עולה: D1=x, D2=Q1. מתחילים ב־Q1Q2=01, ללא איפוס נוסף. ערכי x היציבים בחזיתות הם 1, 0, 1. מהם ערכי Q1Q2 לאחר כל חזית?",
+        "he": "שני פליפ-פלופי D דוגמים באותה חזית עולה: D1=x, D2=Q1. מתחילים ב־Q1Q2=01, ללא איפוס נוסף. ערכי x היציבים בחזיתות הם 1, 0, 1. מהם ערכי Q1Q2 לאחר כל חזית?",
         "en": "Two D flip-flops sample on the same rising edge: D1=x, D2=Q1. Start at Q1Q2=01, with no further reset. Stable x values at the edges are 1, 0, 1. What is Q1Q2 after each edge?"
       },
       "choices": [
@@ -17700,8 +17705,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "69dd104849647ab8517293809b5474067c640f3a6522c178f94bb9351968f2f5",
-        "content_sha256": "69dd104849647ab8517293809b5474067c640f3a6522c178f94bb9351968f2f5"
+        "authored_sha256": "54d546a14e9c523a1c6cbeb7d3d51f31e826e34e9b7f0b8a800476cb6794490b",
+        "content_sha256": "54d546a14e9c523a1c6cbeb7d3d51f31e826e34e9b7f0b8a800476cb6794490b"
       }
     },
     {
@@ -17711,7 +17716,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "שני דלגלגי D דוגמים באותה חזית עולה: D1=x, D2=Q1. מתחילים ב־Q1Q2=11, ללא איפוס נוסף. ערכי x היציבים בחזיתות הם 0, 1, 0. מהם ערכי Q1Q2 לאחר כל חזית?",
+        "he": "שני פליפ-פלופי D דוגמים באותה חזית עולה: D1=x, D2=Q1. מתחילים ב־Q1Q2=11, ללא איפוס נוסף. ערכי x היציבים בחזיתות הם 0, 1, 0. מהם ערכי Q1Q2 לאחר כל חזית?",
         "en": "Two D flip-flops sample on the same rising edge: D1=x, D2=Q1. Start at Q1Q2=11, with no further reset. Stable x values at the edges are 0, 1, 0. What is Q1Q2 after each edge?"
       },
       "choices": [
@@ -17741,8 +17746,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "d90b94324b6011092a427510765131c59e8e4c369ee7fb4fffeb0cbe4bc3b858",
-        "content_sha256": "d90b94324b6011092a427510765131c59e8e4c369ee7fb4fffeb0cbe4bc3b858"
+        "authored_sha256": "0dd882df9c6ffdc42fd7838331d8e4b62e10dfc77d957d39b7c4db6c94d8fda4",
+        "content_sha256": "0dd882df9c6ffdc42fd7838331d8e4b62e10dfc77d957d39b7c4db6c94d8fda4"
       }
     },
     {
@@ -17752,7 +17757,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "שני דלגלגי D דוגמים באותה חזית עולה: D1=x, D2=Q1. מתחילים ב־Q1Q2=00, ללא איפוס נוסף. ערכי x היציבים בחזיתות הם 0, 1, 0, 1. מהם ערכי Q1Q2 לאחר כל חזית?",
+        "he": "שני פליפ-פלופי D דוגמים באותה חזית עולה: D1=x, D2=Q1. מתחילים ב־Q1Q2=00, ללא איפוס נוסף. ערכי x היציבים בחזיתות הם 0, 1, 0, 1. מהם ערכי Q1Q2 לאחר כל חזית?",
         "en": "Two D flip-flops sample on the same rising edge: D1=x, D2=Q1. Start at Q1Q2=00, with no further reset. Stable x values at the edges are 0, 1, 0, 1. What is Q1Q2 after each edge?"
       },
       "choices": [
@@ -17782,8 +17787,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "0b48780479dbce63b9c2a883b44b6a5bb3fee1e3cc4de6ffc961a057f2ec6b69",
-        "content_sha256": "0b48780479dbce63b9c2a883b44b6a5bb3fee1e3cc4de6ffc961a057f2ec6b69"
+        "authored_sha256": "dd140eaeb458d677ae37ee225ff1adfd0eb9abb5f5c1f4e4d345c2be5e347552",
+        "content_sha256": "dd140eaeb458d677ae37ee225ff1adfd0eb9abb5f5c1f4e4d345c2be5e347552"
       }
     },
     {
@@ -19843,7 +19848,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג T מתחיל ב־Q=0. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 1, 1, 1, 1?",
+        "he": "פליפ-פלופ T מתחיל ב־Q=0. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 1, 1, 1, 1?",
         "en": "A T flip-flop starts at Q=0. At each rising edge, T=1 toggles Q and T=0 holds it. There is no reset. What are Q values after T inputs: 1, 1, 1, 1?"
       },
       "choices": [
@@ -19873,8 +19878,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "30c7b2e6563950be8c0f72064835b4ffddc9a3cf26c3668c5027469e784dd7a6",
-        "content_sha256": "30c7b2e6563950be8c0f72064835b4ffddc9a3cf26c3668c5027469e784dd7a6"
+        "authored_sha256": "040e0d73b63958360001d3cdcecc7744bc10edc3ce9072229501a2ecd912af63",
+        "content_sha256": "040e0d73b63958360001d3cdcecc7744bc10edc3ce9072229501a2ecd912af63"
       }
     },
     {
@@ -19884,7 +19889,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג T מתחיל ב־Q=1. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 1, 1, 1?",
+        "he": "פליפ-פלופ T מתחיל ב־Q=1. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 1, 1, 1?",
         "en": "A T flip-flop starts at Q=1. At each rising edge, T=1 toggles Q and T=0 holds it. There is no reset. What are Q values after T inputs: 1, 1, 1?"
       },
       "choices": [
@@ -19914,8 +19919,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "ce78d61e80b34e48f6992620fc1c9e577fff77481cfcddafaef2c1bf4c5921c4",
-        "content_sha256": "ce78d61e80b34e48f6992620fc1c9e577fff77481cfcddafaef2c1bf4c5921c4"
+        "authored_sha256": "74b27322e1bd887bf5245abfe953c11c35163102af046edd72c484e5ca8bc899",
+        "content_sha256": "74b27322e1bd887bf5245abfe953c11c35163102af046edd72c484e5ca8bc899"
       }
     },
     {
@@ -19925,7 +19930,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג T מתחיל ב־Q=0. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 1, 0, 1, 1?",
+        "he": "פליפ-פלופ T מתחיל ב־Q=0. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 1, 0, 1, 1?",
         "en": "A T flip-flop starts at Q=0. At each rising edge, T=1 toggles Q and T=0 holds it. There is no reset. What are Q values after T inputs: 1, 0, 1, 1?"
       },
       "choices": [
@@ -19955,8 +19960,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "bcc8f10bcd3f5235e3f1d5ec90573aadfee6328a0288471e86b2d153e76c8103",
-        "content_sha256": "bcc8f10bcd3f5235e3f1d5ec90573aadfee6328a0288471e86b2d153e76c8103"
+        "authored_sha256": "64c83361a71a9ee6b8bf2ff955b0901dd10d20bb7d3c6bbe1483e50df7925c55",
+        "content_sha256": "64c83361a71a9ee6b8bf2ff955b0901dd10d20bb7d3c6bbe1483e50df7925c55"
       }
     },
     {
@@ -19966,7 +19971,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג T מתחיל ב־Q=1. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 1, 0, 1?",
+        "he": "פליפ-פלופ T מתחיל ב־Q=1. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 1, 0, 1?",
         "en": "A T flip-flop starts at Q=1. At each rising edge, T=1 toggles Q and T=0 holds it. There is no reset. What are Q values after T inputs: 0, 1, 0, 1?"
       },
       "choices": [
@@ -19996,8 +20001,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "3a3683926204a6d92781b6139ad981bcf1cc889b3ef1e3a1df41351790c31aaa",
-        "content_sha256": "3a3683926204a6d92781b6139ad981bcf1cc889b3ef1e3a1df41351790c31aaa"
+        "authored_sha256": "6d0dcb7394b73c696678a99f28bd8e108684934bdb3a59045bfc0a709c804ab0",
+        "content_sha256": "6d0dcb7394b73c696678a99f28bd8e108684934bdb3a59045bfc0a709c804ab0"
       }
     },
     {
@@ -20007,7 +20012,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג T מתחיל ב־Q=0. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 0, 1, 0?",
+        "he": "פליפ-פלופ T מתחיל ב־Q=0. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 0, 1, 0?",
         "en": "A T flip-flop starts at Q=0. At each rising edge, T=1 toggles Q and T=0 holds it. There is no reset. What are Q values after T inputs: 0, 0, 1, 0?"
       },
       "choices": [
@@ -20037,8 +20042,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "6e2bfde25ce079bc4b0d6be9f2f0b0a247ce8b6c91166829b5bde17911f33eed",
-        "content_sha256": "6e2bfde25ce079bc4b0d6be9f2f0b0a247ce8b6c91166829b5bde17911f33eed"
+        "authored_sha256": "6486801e6955b1149df74e6fc904a861ca31720fb173b522e7dda1f172a932cc",
+        "content_sha256": "6486801e6955b1149df74e6fc904a861ca31720fb173b522e7dda1f172a932cc"
       }
     },
     {
@@ -22098,7 +22103,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג T מתחיל ב־Q=1. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 0, 0?",
+        "he": "פליפ-פלופ T מתחיל ב־Q=1. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 0, 0?",
         "en": "A T flip-flop starts at Q=1. At each rising edge, T=1 toggles Q and T=0 holds it. There is no reset. What are Q values after T inputs: 0, 0, 0?"
       },
       "choices": [
@@ -22128,8 +22133,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "529acf8bd8cc0fafd4f9f89a66e8bc5365ae143a12cb462920cf6114bf7f2f0b",
-        "content_sha256": "529acf8bd8cc0fafd4f9f89a66e8bc5365ae143a12cb462920cf6114bf7f2f0b"
+        "authored_sha256": "24346b6492ea10c7ea6efa1383bba1646cd8b832cd33543e95dc172a395fb9bf",
+        "content_sha256": "24346b6492ea10c7ea6efa1383bba1646cd8b832cd33543e95dc172a395fb9bf"
       }
     },
     {
@@ -22139,7 +22144,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג T מתחיל ב־Q=0. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 0, 0, 0?",
+        "he": "פליפ-פלופ T מתחיל ב־Q=0. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 0, 0, 0?",
         "en": "A T flip-flop starts at Q=0. At each rising edge, T=1 toggles Q and T=0 holds it. There is no reset. What are Q values after T inputs: 0, 0, 0, 0?"
       },
       "choices": [
@@ -22169,8 +22174,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "7c3c373260b75f9a87516f2e8889cabe7730b2584f99c2d2de8bbfa2099d6107",
-        "content_sha256": "7c3c373260b75f9a87516f2e8889cabe7730b2584f99c2d2de8bbfa2099d6107"
+        "authored_sha256": "a88fae3722462fb26595bb4a9fdedcff5eeb2380df70a000e240cc23ab20a2ae",
+        "content_sha256": "a88fae3722462fb26595bb4a9fdedcff5eeb2380df70a000e240cc23ab20a2ae"
       }
     },
     {
@@ -22180,7 +22185,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג T מתחיל ב־Q=1. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 0, 0, 0, 0?",
+        "he": "פליפ-פלופ T מתחיל ב־Q=1. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 0, 0, 0, 0?",
         "en": "A T flip-flop starts at Q=1. At each rising edge, T=1 toggles Q and T=0 holds it. There is no reset. What are Q values after T inputs: 0, 0, 0, 0, 0?"
       },
       "choices": [
@@ -22210,8 +22215,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "328edbfe1fd5f932d49f4e4b54292c90090e4d401716b140d5fcb8bb7fcf101a",
-        "content_sha256": "328edbfe1fd5f932d49f4e4b54292c90090e4d401716b140d5fcb8bb7fcf101a"
+        "authored_sha256": "4cade362e007cc57479e4d000313678a903809aa2ef9f97aedf95bb37f6ffcb1",
+        "content_sha256": "4cade362e007cc57479e4d000313678a903809aa2ef9f97aedf95bb37f6ffcb1"
       }
     },
     {
@@ -22221,7 +22226,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג T מתחיל ב־Q=0. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 0, 0, 0, 0, 0?",
+        "he": "פליפ-פלופ T מתחיל ב־Q=0. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 0, 0, 0, 0, 0?",
         "en": "A T flip-flop starts at Q=0. At each rising edge, T=1 toggles Q and T=0 holds it. There is no reset. What are Q values after T inputs: 0, 0, 0, 0, 0, 0?"
       },
       "choices": [
@@ -22251,8 +22256,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "d54ad5047e230f0b47cbb159c445dd4609822fbd849e7a8481fdab90aa5767f5",
-        "content_sha256": "d54ad5047e230f0b47cbb159c445dd4609822fbd849e7a8481fdab90aa5767f5"
+        "authored_sha256": "f49e3939f60c45485a5ed4c7ccd83ecc6cb5b5e4cd7c49b3ab60bd1dd24c54ad",
+        "content_sha256": "f49e3939f60c45485a5ed4c7ccd83ecc6cb5b5e4cd7c49b3ab60bd1dd24c54ad"
       }
     },
     {
@@ -22262,7 +22267,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג T מתחיל ב־Q=1. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 0, 0, 0, 0, 0, 0?",
+        "he": "פליפ-פלופ T מתחיל ב־Q=1. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: 0, 0, 0, 0, 0, 0, 0?",
         "en": "A T flip-flop starts at Q=1. At each rising edge, T=1 toggles Q and T=0 holds it. There is no reset. What are Q values after T inputs: 0, 0, 0, 0, 0, 0, 0?"
       },
       "choices": [
@@ -22292,8 +22297,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "3f517564b1e232a84878921972db9b553460811a5154333916b896856d9bf930",
-        "content_sha256": "3f517564b1e232a84878921972db9b553460811a5154333916b896856d9bf930"
+        "authored_sha256": "15e6675767c000e5b2a7a90ff571990c2523fa0865a22761b5cd55d84dc6f664",
+        "content_sha256": "15e6675767c000e5b2a7a90ff571990c2523fa0865a22761b5cd55d84dc6f664"
       }
     },
     {
@@ -30913,7 +30918,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D מחובר כך ש־D=NOT Q ודוגם בחזית עולה. מתחילים ב־Q=1, ללא איפוס. מהם ערכי Q לאחר 3 החזיתות הבאות?",
+        "he": "פליפ-פלופ D מחובר כך ש־D=NOT Q ודוגם בחזית עולה. מתחילים ב־Q=1, ללא איפוס. מהם ערכי Q לאחר 3 החזיתות הבאות?",
         "en": "A rising-edge D flip-flop has D=NOT Q. Start with Q=1, with no reset. What are the Q values after the next 3 edges?"
       },
       "choices": [
@@ -30943,8 +30948,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "89ead15871d2ee67b4e1f5ee340ba4d5acfaacb3832ab23c4d916f361661afad",
-        "content_sha256": "89ead15871d2ee67b4e1f5ee340ba4d5acfaacb3832ab23c4d916f361661afad"
+        "authored_sha256": "f0dd6add72e840c422f4eadecda9a2eb4d86c72ca9bcc63d9e59947c87d1764f",
+        "content_sha256": "f0dd6add72e840c422f4eadecda9a2eb4d86c72ca9bcc63d9e59947c87d1764f"
       }
     },
     {
@@ -30954,7 +30959,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D מחובר כך ש־D=NOT Q ודוגם בחזית עולה. מתחילים ב־Q=0, ללא איפוס. מהם ערכי Q לאחר 4 החזיתות הבאות?",
+        "he": "פליפ-פלופ D מחובר כך ש־D=NOT Q ודוגם בחזית עולה. מתחילים ב־Q=0, ללא איפוס. מהם ערכי Q לאחר 4 החזיתות הבאות?",
         "en": "A rising-edge D flip-flop has D=NOT Q. Start with Q=0, with no reset. What are the Q values after the next 4 edges?"
       },
       "choices": [
@@ -30984,8 +30989,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "b20ff59163a69f11678063de9403dd5d8467e379e1fa55a686d15e04ff84b38f",
-        "content_sha256": "b20ff59163a69f11678063de9403dd5d8467e379e1fa55a686d15e04ff84b38f"
+        "authored_sha256": "e670b10729d822b97ebcdea5063479fae90b2e63f8aa9ce335608bb209764c9e",
+        "content_sha256": "e670b10729d822b97ebcdea5063479fae90b2e63f8aa9ce335608bb209764c9e"
       }
     },
     {
@@ -30995,7 +31000,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D מחובר כך ש־D=NOT Q ודוגם בחזית עולה. מתחילים ב־Q=1, ללא איפוס. מהם ערכי Q לאחר 5 החזיתות הבאות?",
+        "he": "פליפ-פלופ D מחובר כך ש־D=NOT Q ודוגם בחזית עולה. מתחילים ב־Q=1, ללא איפוס. מהם ערכי Q לאחר 5 החזיתות הבאות?",
         "en": "A rising-edge D flip-flop has D=NOT Q. Start with Q=1, with no reset. What are the Q values after the next 5 edges?"
       },
       "choices": [
@@ -31025,8 +31030,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "960814c363fb86c9d9734879fdf21cd081f79690246fb966048d580be43cdf0e",
-        "content_sha256": "960814c363fb86c9d9734879fdf21cd081f79690246fb966048d580be43cdf0e"
+        "authored_sha256": "c8a3cce9bc3fb0df0b30d04ab8e26620d5bb802a6274ee26a1319897b7cafa89",
+        "content_sha256": "c8a3cce9bc3fb0df0b30d04ab8e26620d5bb802a6274ee26a1319897b7cafa89"
       }
     },
     {
@@ -31036,7 +31041,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D מחובר כך ש־D=NOT Q ודוגם בחזית עולה. מתחילים ב־Q=0, ללא איפוס. מהם ערכי Q לאחר 6 החזיתות הבאות?",
+        "he": "פליפ-פלופ D מחובר כך ש־D=NOT Q ודוגם בחזית עולה. מתחילים ב־Q=0, ללא איפוס. מהם ערכי Q לאחר 6 החזיתות הבאות?",
         "en": "A rising-edge D flip-flop has D=NOT Q. Start with Q=0, with no reset. What are the Q values after the next 6 edges?"
       },
       "choices": [
@@ -31066,8 +31071,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "4d1f9edb04569c481c54eedcd0d13152008d7bce28d94801234ac63e746ef64a",
-        "content_sha256": "4d1f9edb04569c481c54eedcd0d13152008d7bce28d94801234ac63e746ef64a"
+        "authored_sha256": "00e022d9764cce98f1529f381bef817c965f12e45923e8ab9401f418aef0f184",
+        "content_sha256": "00e022d9764cce98f1529f381bef817c965f12e45923e8ab9401f418aef0f184"
       }
     },
     {
@@ -31077,7 +31082,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D מחובר כך ש־D=NOT Q ודוגם בחזית עולה. מתחילים ב־Q=1, ללא איפוס. מהם ערכי Q לאחר 7 החזיתות הבאות?",
+        "he": "פליפ-פלופ D מחובר כך ש־D=NOT Q ודוגם בחזית עולה. מתחילים ב־Q=1, ללא איפוס. מהם ערכי Q לאחר 7 החזיתות הבאות?",
         "en": "A rising-edge D flip-flop has D=NOT Q. Start with Q=1, with no reset. What are the Q values after the next 7 edges?"
       },
       "choices": [
@@ -31107,8 +31112,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "af05cab894357060e4e976b68747646c7900e38e34dbd8146264ba7a8e507d97",
-        "content_sha256": "af05cab894357060e4e976b68747646c7900e38e34dbd8146264ba7a8e507d97"
+        "authored_sha256": "8e12e3a2a9e17c12bbb06bec2d975addcebbb0a3dc5bf81fd700e6e9e807a723",
+        "content_sha256": "8e12e3a2a9e17c12bbb06bec2d975addcebbb0a3dc5bf81fd700e6e9e807a723"
       }
     },
     {
@@ -34216,15 +34221,15 @@
       ],
       "correct": 3,
       "explanation": {
-        "he": "1. מפענח מפעיל ביט יחיד בכתובת הנבחרת רק כאשר כתיבה מאופשרת.",
+        "he": "1. דקודר מפעיל ביט יחיד בכתובת הנבחרת רק כאשר כתיבה מאופשרת.",
         "en": "1. The decoder activates exactly the selected address bit only when writing is enabled."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-31",
         "professional_review": "pending",
-        "authored_sha256": "fe05283e4e6bf3fbc314cf5cbfa7f398b91936793a5807ff6659ba1e5e8829b7",
-        "content_sha256": "fe05283e4e6bf3fbc314cf5cbfa7f398b91936793a5807ff6659ba1e5e8829b7"
+        "authored_sha256": "398a16bb423b90fadbd0239c007c05f556dd0fbbe2477de27099c696c4f31e2c",
+        "content_sha256": "398a16bb423b90fadbd0239c007c05f556dd0fbbe2477de27099c696c4f31e2c"
       }
     },
     {
@@ -34257,15 +34262,15 @@
       ],
       "correct": 2,
       "explanation": {
-        "he": "8. מפענח מפעיל ביט יחיד בכתובת הנבחרת רק כאשר כתיבה מאופשרת.",
+        "he": "8. דקודר מפעיל ביט יחיד בכתובת הנבחרת רק כאשר כתיבה מאופשרת.",
         "en": "8. The decoder activates exactly the selected address bit only when writing is enabled."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-31",
         "professional_review": "pending",
-        "authored_sha256": "ba6c1bc7285505261fa9c8eed89247e85bbd12cd4413671adb8af1f278de5d3d",
-        "content_sha256": "ba6c1bc7285505261fa9c8eed89247e85bbd12cd4413671adb8af1f278de5d3d"
+        "authored_sha256": "6d098acbea6708a15dbb742df863b79efdd5dc7e70b6b964cdf0b8002a174093",
+        "content_sha256": "6d098acbea6708a15dbb742df863b79efdd5dc7e70b6b964cdf0b8002a174093"
       }
     },
     {
@@ -34298,15 +34303,15 @@
       ],
       "correct": 1,
       "explanation": {
-        "he": "0. מפענח מפעיל ביט יחיד בכתובת הנבחרת רק כאשר כתיבה מאופשרת.",
+        "he": "0. דקודר מפעיל ביט יחיד בכתובת הנבחרת רק כאשר כתיבה מאופשרת.",
         "en": "0. The decoder activates exactly the selected address bit only when writing is enabled."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-31",
         "professional_review": "pending",
-        "authored_sha256": "785356f1a59110eef6345dff73529721fbd0d5fc1b2311ce00fbe180fe7d1e59",
-        "content_sha256": "785356f1a59110eef6345dff73529721fbd0d5fc1b2311ce00fbe180fe7d1e59"
+        "authored_sha256": "0038eb9c3e5c8ef214727ce730d7c4fbf6a4dce3a1b9fb452390524f0a97141c",
+        "content_sha256": "0038eb9c3e5c8ef214727ce730d7c4fbf6a4dce3a1b9fb452390524f0a97141c"
       }
     },
     {
@@ -34339,15 +34344,15 @@
       ],
       "correct": 0,
       "explanation": {
-        "he": "2. מפענח מפעיל ביט יחיד בכתובת הנבחרת רק כאשר כתיבה מאופשרת.",
+        "he": "2. דקודר מפעיל ביט יחיד בכתובת הנבחרת רק כאשר כתיבה מאופשרת.",
         "en": "2. The decoder activates exactly the selected address bit only when writing is enabled."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-31",
         "professional_review": "pending",
-        "authored_sha256": "be713eda0301ea86cfe88c7eb88463693dd64136075cee6fe3bc81ba0ad7af7f",
-        "content_sha256": "be713eda0301ea86cfe88c7eb88463693dd64136075cee6fe3bc81ba0ad7af7f"
+        "authored_sha256": "ef2b58e7cb791ad3666b0e665103b248b2233b214da31e02e05398a688873739",
+        "content_sha256": "ef2b58e7cb791ad3666b0e665103b248b2233b214da31e02e05398a688873739"
       }
     },
     {
@@ -34380,15 +34385,15 @@
       ],
       "correct": 3,
       "explanation": {
-        "he": "4. מפענח מפעיל ביט יחיד בכתובת הנבחרת רק כאשר כתיבה מאופשרת.",
+        "he": "4. דקודר מפעיל ביט יחיד בכתובת הנבחרת רק כאשר כתיבה מאופשרת.",
         "en": "4. The decoder activates exactly the selected address bit only when writing is enabled."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-31",
         "professional_review": "pending",
-        "authored_sha256": "5950aa2c7caf0dfe1472c05c76522f6dc5d6872bd3b51f7d00f95f7c217b8b16",
-        "content_sha256": "5950aa2c7caf0dfe1472c05c76522f6dc5d6872bd3b51f7d00f95f7c217b8b16"
+        "authored_sha256": "cbcf318f3dc113d98f420a03cdf512b3b69cbfb82db74985d9b515a1fbea8f3d",
+        "content_sha256": "cbcf318f3dc113d98f420a03cdf512b3b69cbfb82db74985d9b515a1fbea8f3d"
       }
     },
     {
@@ -42188,7 +42193,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "בורר לפני דלגלג D בוחר D0 כש־S=0 ואת D1 כש־S=1. S=EN. האוגר חייב לשמור Q כש־EN=0 ולטעון data כש־EN=1. לפני חזית עולה Q=0, data=1, EN=0, ללא איפוס. איזה זוג חיבורים מממש זאת לכל הקלטים, ומה Q אחרי החזית?",
+        "he": "בורר לפני פליפ-פלופ D בוחר D0 כש־S=0 ואת D1 כש־S=1. S=EN. האוגר חייב לשמור Q כש־EN=0 ולטעון data כש־EN=1. לפני חזית עולה Q=0, data=1, EN=0, ללא איפוס. איזה זוג חיבורים מממש זאת לכל הקלטים, ומה Q אחרי החזית?",
         "en": "A MUX before a D flip-flop selects D0 when S=0 and D1 when S=1. S=EN. The register must hold Q when EN=0 and load data when EN=1. Before a rising edge Q=0, data=1, EN=0, with no reset. Which wiring works for all inputs, and what is Q after the edge?"
       },
       "choices": [
@@ -42218,8 +42223,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "634d23130b436571ea0ec7684e8849423de4b1789d07fd466bd621e314622ca2",
-        "content_sha256": "634d23130b436571ea0ec7684e8849423de4b1789d07fd466bd621e314622ca2"
+        "authored_sha256": "cbb9be0c15b2ea9a0c1ad78233c4af1cce4a5960e82eb114b0a2b955c63afc1d",
+        "content_sha256": "cbb9be0c15b2ea9a0c1ad78233c4af1cce4a5960e82eb114b0a2b955c63afc1d"
       }
     },
     {
@@ -42229,7 +42234,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "בורר לפני דלגלג D בוחר D0 כש־S=0 ואת D1 כש־S=1. S=EN. האוגר חייב לשמור Q כש־EN=0 ולטעון data כש־EN=1. לפני חזית עולה Q=1, data=0, EN=0, ללא איפוס. איזה זוג חיבורים מממש זאת לכל הקלטים, ומה Q אחרי החזית?",
+        "he": "בורר לפני פליפ-פלופ D בוחר D0 כש־S=0 ואת D1 כש־S=1. S=EN. האוגר חייב לשמור Q כש־EN=0 ולטעון data כש־EN=1. לפני חזית עולה Q=1, data=0, EN=0, ללא איפוס. איזה זוג חיבורים מממש זאת לכל הקלטים, ומה Q אחרי החזית?",
         "en": "A MUX before a D flip-flop selects D0 when S=0 and D1 when S=1. S=EN. The register must hold Q when EN=0 and load data when EN=1. Before a rising edge Q=1, data=0, EN=0, with no reset. Which wiring works for all inputs, and what is Q after the edge?"
       },
       "choices": [
@@ -42259,8 +42264,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "cd12041dde578c9b42ca784c9630006179370985a6a1f2549fc43d7fb20e7f0f",
-        "content_sha256": "cd12041dde578c9b42ca784c9630006179370985a6a1f2549fc43d7fb20e7f0f"
+        "authored_sha256": "8e6e9794dae0982c92b76229074f0bd0eb645972c53e7df445959681806c6faf",
+        "content_sha256": "8e6e9794dae0982c92b76229074f0bd0eb645972c53e7df445959681806c6faf"
       }
     },
     {
@@ -42270,7 +42275,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "בורר לפני דלגלג D בוחר D0 כש־S=0 ואת D1 כש־S=1. S=EN. האוגר חייב לשמור Q כש־EN=0 ולטעון data כש־EN=1. לפני חזית עולה Q=0, data=1, EN=1, ללא איפוס. איזה זוג חיבורים מממש זאת לכל הקלטים, ומה Q אחרי החזית?",
+        "he": "בורר לפני פליפ-פלופ D בוחר D0 כש־S=0 ואת D1 כש־S=1. S=EN. האוגר חייב לשמור Q כש־EN=0 ולטעון data כש־EN=1. לפני חזית עולה Q=0, data=1, EN=1, ללא איפוס. איזה זוג חיבורים מממש זאת לכל הקלטים, ומה Q אחרי החזית?",
         "en": "A MUX before a D flip-flop selects D0 when S=0 and D1 when S=1. S=EN. The register must hold Q when EN=0 and load data when EN=1. Before a rising edge Q=0, data=1, EN=1, with no reset. Which wiring works for all inputs, and what is Q after the edge?"
       },
       "choices": [
@@ -42300,8 +42305,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "0f650c1d1d3d01d7ae66d3d4e727e053b69e66105c5d29b17ebb2544234c43be",
-        "content_sha256": "0f650c1d1d3d01d7ae66d3d4e727e053b69e66105c5d29b17ebb2544234c43be"
+        "authored_sha256": "c92e78d4594a2cc778d47887bcd8818f35c0eb33391016f4a5e904e183d93c00",
+        "content_sha256": "c92e78d4594a2cc778d47887bcd8818f35c0eb33391016f4a5e904e183d93c00"
       }
     },
     {
@@ -42311,7 +42316,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "בורר לפני דלגלג D בוחר D0 כש־S=0 ואת D1 כש־S=1. S=EN. האוגר חייב לשמור Q כש־EN=0 ולטעון data כש־EN=1. לפני חזית עולה Q=1, data=0, EN=1, ללא איפוס. איזה זוג חיבורים מממש זאת לכל הקלטים, ומה Q אחרי החזית?",
+        "he": "בורר לפני פליפ-פלופ D בוחר D0 כש־S=0 ואת D1 כש־S=1. S=EN. האוגר חייב לשמור Q כש־EN=0 ולטעון data כש־EN=1. לפני חזית עולה Q=1, data=0, EN=1, ללא איפוס. איזה זוג חיבורים מממש זאת לכל הקלטים, ומה Q אחרי החזית?",
         "en": "A MUX before a D flip-flop selects D0 when S=0 and D1 when S=1. S=EN. The register must hold Q when EN=0 and load data when EN=1. Before a rising edge Q=1, data=0, EN=1, with no reset. Which wiring works for all inputs, and what is Q after the edge?"
       },
       "choices": [
@@ -42341,8 +42346,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "dec9a332ae98981a2f0fcef77487ef122df2b278ec30591d2bab26cf1f783967",
-        "content_sha256": "dec9a332ae98981a2f0fcef77487ef122df2b278ec30591d2bab26cf1f783967"
+        "authored_sha256": "59c465be5ac4ae4c789e9e3ca4ce7d080a87433678d21ee4085b7741fee641cb",
+        "content_sha256": "59c465be5ac4ae4c789e9e3ca4ce7d080a87433678d21ee4085b7741fee641cb"
       }
     },
     {
@@ -42352,7 +42357,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "בורר לפני דלגלג D בוחר D0 כש־S=0 ואת D1 כש־S=1. S=EN. האוגר חייב לשמור Q כש־EN=0 ולטעון data כש־EN=1. לפני חזית עולה Q=1, data=1, EN=1, ללא איפוס. איזה זוג חיבורים מממש זאת לכל הקלטים, ומה Q אחרי החזית?",
+        "he": "בורר לפני פליפ-פלופ D בוחר D0 כש־S=0 ואת D1 כש־S=1. S=EN. האוגר חייב לשמור Q כש־EN=0 ולטעון data כש־EN=1. לפני חזית עולה Q=1, data=1, EN=1, ללא איפוס. איזה זוג חיבורים מממש זאת לכל הקלטים, ומה Q אחרי החזית?",
         "en": "A MUX before a D flip-flop selects D0 when S=0 and D1 when S=1. S=EN. The register must hold Q when EN=0 and load data when EN=1. Before a rising edge Q=1, data=1, EN=1, with no reset. Which wiring works for all inputs, and what is Q after the edge?"
       },
       "choices": [
@@ -42382,8 +42387,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "8ce39ae01eb3f94ef8db9e16768615406e6ccd131eca41ba5673c2cd72aa6ff6",
-        "content_sha256": "8ce39ae01eb3f94ef8db9e16768615406e6ccd131eca41ba5673c2cd72aa6ff6"
+        "authored_sha256": "886e85da1903da0ef2ad69d0c6ce6b640ea08b136261403d2a7dbc755d6c5103",
+        "content_sha256": "886e85da1903da0ef2ad69d0c6ce6b640ea08b136261403d2a7dbc755d6c5103"
       }
     },
     {
@@ -43008,7 +43013,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "לדלגלג D אין איפוס ואין ערך התחלתי מוגדר. D=1 יציב כנדרש סביב כל אחת מ־1 החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
+        "he": "לפליפ-פלופ D אין איפוס ואין ערך התחלתי מוגדר. D=1 יציב כנדרש סביב כל אחת מ־1 החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
         "en": "A D flip-flop has no reset or specified initial value. D=1 is stable as required around each of the first 1 rising edges. What is guaranteed about Q before the first edge and after the final edge, in that order?"
       },
       "choices": [
@@ -43038,8 +43043,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "801cc0f8f744648c9456d45b78ee9ce5437de23600974c4a130d347a1bc4aae4",
-        "content_sha256": "801cc0f8f744648c9456d45b78ee9ce5437de23600974c4a130d347a1bc4aae4"
+        "authored_sha256": "a3adaf0dd79b77680dfd3357744accdb84d1b5dd44d7d59a1b7732226bf50962",
+        "content_sha256": "a3adaf0dd79b77680dfd3357744accdb84d1b5dd44d7d59a1b7732226bf50962"
       }
     },
     {
@@ -43049,7 +43054,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "לדלגלג D אין איפוס ואין ערך התחלתי מוגדר. D=0 יציב כנדרש סביב כל אחת מ־1 החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
+        "he": "לפליפ-פלופ D אין איפוס ואין ערך התחלתי מוגדר. D=0 יציב כנדרש סביב כל אחת מ־1 החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
         "en": "A D flip-flop has no reset or specified initial value. D=0 is stable as required around each of the first 1 rising edges. What is guaranteed about Q before the first edge and after the final edge, in that order?"
       },
       "choices": [
@@ -43079,8 +43084,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "ac4309a9f8dc614a1ccfb57a6d1d461178c4ba9772a13cadc7c7afb29000a4de",
-        "content_sha256": "ac4309a9f8dc614a1ccfb57a6d1d461178c4ba9772a13cadc7c7afb29000a4de"
+        "authored_sha256": "9e0efb9262cff168a9800bbf78a3b0c8a4e156e4ef6f3f563ff727b8692fe58d",
+        "content_sha256": "9e0efb9262cff168a9800bbf78a3b0c8a4e156e4ef6f3f563ff727b8692fe58d"
       }
     },
     {
@@ -43090,7 +43095,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "לדלגלג D אין איפוס ואין ערך התחלתי מוגדר. D=1 יציב כנדרש סביב כל אחת מ־2 החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
+        "he": "לפליפ-פלופ D אין איפוס ואין ערך התחלתי מוגדר. D=1 יציב כנדרש סביב כל אחת מ־2 החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
         "en": "A D flip-flop has no reset or specified initial value. D=1 is stable as required around each of the first 2 rising edges. What is guaranteed about Q before the first edge and after the final edge, in that order?"
       },
       "choices": [
@@ -43120,8 +43125,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "d70329cb670f68779d3b87e1186fd7584e143a4429aaa219f1ad2dad6f68efd0",
-        "content_sha256": "d70329cb670f68779d3b87e1186fd7584e143a4429aaa219f1ad2dad6f68efd0"
+        "authored_sha256": "81fb6406c59577358bca6a3e466043d8d286fd01470c06529710283450f78f1d",
+        "content_sha256": "81fb6406c59577358bca6a3e466043d8d286fd01470c06529710283450f78f1d"
       }
     },
     {
@@ -43131,7 +43136,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "לדלגלג D אין איפוס ואין ערך התחלתי מוגדר. D=0 יציב כנדרש סביב כל אחת מ־2 החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
+        "he": "לפליפ-פלופ D אין איפוס ואין ערך התחלתי מוגדר. D=0 יציב כנדרש סביב כל אחת מ־2 החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
         "en": "A D flip-flop has no reset or specified initial value. D=0 is stable as required around each of the first 2 rising edges. What is guaranteed about Q before the first edge and after the final edge, in that order?"
       },
       "choices": [
@@ -43161,8 +43166,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "e240f1ece004d3125c9a923196ac89dfbb1a28c9958ec8b153ae749787884a11",
-        "content_sha256": "e240f1ece004d3125c9a923196ac89dfbb1a28c9958ec8b153ae749787884a11"
+        "authored_sha256": "a25afe63c848c97f8c8330bd7f0a9294947a8a001a311fe29ef7f9172da92588",
+        "content_sha256": "a25afe63c848c97f8c8330bd7f0a9294947a8a001a311fe29ef7f9172da92588"
       }
     },
     {
@@ -43172,7 +43177,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "לדלגלג D אין איפוס ואין ערך התחלתי מוגדר. D=1 יציב כנדרש סביב כל אחת מ־3 החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
+        "he": "לפליפ-פלופ D אין איפוס ואין ערך התחלתי מוגדר. D=1 יציב כנדרש סביב כל אחת מ־3 החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
         "en": "A D flip-flop has no reset or specified initial value. D=1 is stable as required around each of the first 3 rising edges. What is guaranteed about Q before the first edge and after the final edge, in that order?"
       },
       "choices": [
@@ -43202,8 +43207,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "1471051a82b848bba0d2af81859a2bd02b370c0ed6c69475eae24a3cb423df12",
-        "content_sha256": "1471051a82b848bba0d2af81859a2bd02b370c0ed6c69475eae24a3cb423df12"
+        "authored_sha256": "c4cd2ad1a4eab5ae72591e44cc99e55bb42bef11958b2196c5b3bb17b5c5217a",
+        "content_sha256": "c4cd2ad1a4eab5ae72591e44cc99e55bb42bef11958b2196c5b3bb17b5c5217a"
       }
     },
     {
@@ -43418,7 +43423,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "שלושה דלגלגי D דוגמים באותה חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=000, ללא איפוס נוסף. x יציב בחזיתות וערכיו 1, 0, 0, 0. מהן מילות המצב לאחר כל חזית?",
+        "he": "שלושה פליפ-פלופי D דוגמים באותה חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=000, ללא איפוס נוסף. x יציב בחזיתות וערכיו 1, 0, 0, 0. מהן מילות המצב לאחר כל חזית?",
         "en": "Three D flip-flops sample on the same rising edge: D1=x, D2=Q1, D3=Q2. Start at Q1Q2Q3=000, with no further reset. Stable x values at the edges are 1, 0, 0, 0. What are the state words after each edge?"
       },
       "choices": [
@@ -43448,8 +43453,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "5af3030c7c957ce27a82ce1f9ff86b8a8d20dff8892b8b51ec2dc35b67913c31",
-        "content_sha256": "5af3030c7c957ce27a82ce1f9ff86b8a8d20dff8892b8b51ec2dc35b67913c31"
+        "authored_sha256": "4ae2771135a4d725c836c5dbf49b2d35b59c8c716f922fe0c34d10e2e156cd26",
+        "content_sha256": "4ae2771135a4d725c836c5dbf49b2d35b59c8c716f922fe0c34d10e2e156cd26"
       }
     },
     {
@@ -43459,7 +43464,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "שלושה דלגלגי D דוגמים באותה חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=000, ללא איפוס נוסף. x יציב בחזיתות וערכיו 0, 1, 0, 0. מהן מילות המצב לאחר כל חזית?",
+        "he": "שלושה פליפ-פלופי D דוגמים באותה חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=000, ללא איפוס נוסף. x יציב בחזיתות וערכיו 0, 1, 0, 0. מהן מילות המצב לאחר כל חזית?",
         "en": "Three D flip-flops sample on the same rising edge: D1=x, D2=Q1, D3=Q2. Start at Q1Q2Q3=000, with no further reset. Stable x values at the edges are 0, 1, 0, 0. What are the state words after each edge?"
       },
       "choices": [
@@ -43489,8 +43494,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "6d12947cae677fb8c7c4d883f29a30a97b0d738c492618763144e12d1ae53939",
-        "content_sha256": "6d12947cae677fb8c7c4d883f29a30a97b0d738c492618763144e12d1ae53939"
+        "authored_sha256": "13d8f23e0964749e4501b044e46003404737f9ea7b0f75622fccfe38efc6435b",
+        "content_sha256": "13d8f23e0964749e4501b044e46003404737f9ea7b0f75622fccfe38efc6435b"
       }
     },
     {
@@ -43500,7 +43505,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "שלושה דלגלגי D דוגמים באותה חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=100, ללא איפוס נוסף. x יציב בחזיתות וערכיו 0, 0, 0, 0. מהן מילות המצב לאחר כל חזית?",
+        "he": "שלושה פליפ-פלופי D דוגמים באותה חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=100, ללא איפוס נוסף. x יציב בחזיתות וערכיו 0, 0, 0, 0. מהן מילות המצב לאחר כל חזית?",
         "en": "Three D flip-flops sample on the same rising edge: D1=x, D2=Q1, D3=Q2. Start at Q1Q2Q3=100, with no further reset. Stable x values at the edges are 0, 0, 0, 0. What are the state words after each edge?"
       },
       "choices": [
@@ -43530,8 +43535,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "f1571e5a5aed1c42cd7cd0c5a47c75089095aff7c1beb3f20b580faaa287bce5",
-        "content_sha256": "f1571e5a5aed1c42cd7cd0c5a47c75089095aff7c1beb3f20b580faaa287bce5"
+        "authored_sha256": "496f00f5d7cce0fe99e20dfe236a7d07f562374dfd051eed610c940318a5a45a",
+        "content_sha256": "496f00f5d7cce0fe99e20dfe236a7d07f562374dfd051eed610c940318a5a45a"
       }
     },
     {
@@ -43541,7 +43546,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "שלושה דלגלגי D דוגמים באותה חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=010, ללא איפוס נוסף. x יציב בחזיתות וערכיו 0, 0, 0, 0. מהן מילות המצב לאחר כל חזית?",
+        "he": "שלושה פליפ-פלופי D דוגמים באותה חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=010, ללא איפוס נוסף. x יציב בחזיתות וערכיו 0, 0, 0, 0. מהן מילות המצב לאחר כל חזית?",
         "en": "Three D flip-flops sample on the same rising edge: D1=x, D2=Q1, D3=Q2. Start at Q1Q2Q3=010, with no further reset. Stable x values at the edges are 0, 0, 0, 0. What are the state words after each edge?"
       },
       "choices": [
@@ -43571,8 +43576,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "6e8975f46d9508f470db3a1d88023a1abca489f90199aec6c65a65f09ecfe26f",
-        "content_sha256": "6e8975f46d9508f470db3a1d88023a1abca489f90199aec6c65a65f09ecfe26f"
+        "authored_sha256": "09adba7f4678c429cd0a7af2d3d82e627de14f4a1378806a9832302e0a65d9c3",
+        "content_sha256": "09adba7f4678c429cd0a7af2d3d82e627de14f4a1378806a9832302e0a65d9c3"
       }
     },
     {
@@ -43582,7 +43587,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "שלושה דלגלגי D דוגמים באותה חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=000, ללא איפוס נוסף. x יציב בחזיתות וערכיו 1, 1, 0, 0. מהן מילות המצב לאחר כל חזית?",
+        "he": "שלושה פליפ-פלופי D דוגמים באותה חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=000, ללא איפוס נוסף. x יציב בחזיתות וערכיו 1, 1, 0, 0. מהן מילות המצב לאחר כל חזית?",
         "en": "Three D flip-flops sample on the same rising edge: D1=x, D2=Q1, D3=Q2. Start at Q1Q2Q3=000, with no further reset. Stable x values at the edges are 1, 1, 0, 0. What are the state words after each edge?"
       },
       "choices": [
@@ -43612,8 +43617,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "ba62b6649d5420c99cd33fd4bf8d30c38d847a691368568519b2d9bb28e3ae46",
-        "content_sha256": "ba62b6649d5420c99cd33fd4bf8d30c38d847a691368568519b2d9bb28e3ae46"
+        "authored_sha256": "1b88d4f88e341d84d7f3298569de3b0e5857ed0098552e55fdc65ae00b9b74e9",
+        "content_sha256": "1b88d4f88e341d84d7f3298569de3b0e5857ed0098552e55fdc65ae00b9b74e9"
       }
     },
     {
@@ -44238,7 +44243,7 @@
       "topic": "states",
       "status": "approved",
       "prompt": {
-        "he": "בקידוד one-hot מקצים ביט נפרד לכל מצב, ורק ביט המצב הנוכחי הוא 1. כמה דלגלגים דרושים למכונה עם 3 מצבים?",
+        "he": "בקידוד one-hot מקצים ביט נפרד לכל מצב, ורק ביט המצב הנוכחי הוא 1. כמה פליפ-פלופים דרושים למכונה עם 3 מצבים?",
         "en": "One-hot encoding assigns one separate bit to each state, with only the current state bit equal to 1. How many flip-flops are needed for 3 states?"
       },
       "choices": [
@@ -44261,15 +44266,15 @@
       ],
       "correct": 2,
       "explanation": {
-        "he": "ב־one-hot יש דלגלג אחד לכל מצב, בניגוד לקידוד בינארי קומפקטי.",
+        "he": "ב־one-hot יש פליפ-פלופ אחד לכל מצב, בניגוד לקידוד בינארי קומפקטי.",
         "en": "One-hot uses one flip-flop per state, unlike compact binary encoding."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "56fd82e079e6197e5e820937b2286e38d69ef845605567ab116833a4f7e290e5",
-        "content_sha256": "56fd82e079e6197e5e820937b2286e38d69ef845605567ab116833a4f7e290e5"
+        "authored_sha256": "0785727741926ad22eb4c82ffe86de8aadd1265c80720b27c9590378929deb43",
+        "content_sha256": "0785727741926ad22eb4c82ffe86de8aadd1265c80720b27c9590378929deb43"
       }
     },
     {
@@ -44279,7 +44284,7 @@
       "topic": "states",
       "status": "approved",
       "prompt": {
-        "he": "בקידוד one-hot מקצים ביט נפרד לכל מצב, ורק ביט המצב הנוכחי הוא 1. כמה דלגלגים דרושים למכונה עם 4 מצבים?",
+        "he": "בקידוד one-hot מקצים ביט נפרד לכל מצב, ורק ביט המצב הנוכחי הוא 1. כמה פליפ-פלופים דרושים למכונה עם 4 מצבים?",
         "en": "One-hot encoding assigns one separate bit to each state, with only the current state bit equal to 1. How many flip-flops are needed for 4 states?"
       },
       "choices": [
@@ -44302,15 +44307,15 @@
       ],
       "correct": 1,
       "explanation": {
-        "he": "ב־one-hot יש דלגלג אחד לכל מצב, בניגוד לקידוד בינארי קומפקטי.",
+        "he": "ב־one-hot יש פליפ-פלופ אחד לכל מצב, בניגוד לקידוד בינארי קומפקטי.",
         "en": "One-hot uses one flip-flop per state, unlike compact binary encoding."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "a0d2a27bb70665e79e3cd05a1a2e909bec53477168e653444bb06e4fae714801",
-        "content_sha256": "a0d2a27bb70665e79e3cd05a1a2e909bec53477168e653444bb06e4fae714801"
+        "authored_sha256": "759762666e8c5712c9b5433814e191c9404a3937fee4c6db855f0710f37bc5c3",
+        "content_sha256": "759762666e8c5712c9b5433814e191c9404a3937fee4c6db855f0710f37bc5c3"
       }
     },
     {
@@ -44320,7 +44325,7 @@
       "topic": "states",
       "status": "approved",
       "prompt": {
-        "he": "בקידוד one-hot מקצים ביט נפרד לכל מצב, ורק ביט המצב הנוכחי הוא 1. כמה דלגלגים דרושים למכונה עם 5 מצבים?",
+        "he": "בקידוד one-hot מקצים ביט נפרד לכל מצב, ורק ביט המצב הנוכחי הוא 1. כמה פליפ-פלופים דרושים למכונה עם 5 מצבים?",
         "en": "One-hot encoding assigns one separate bit to each state, with only the current state bit equal to 1. How many flip-flops are needed for 5 states?"
       },
       "choices": [
@@ -44343,15 +44348,15 @@
       ],
       "correct": 0,
       "explanation": {
-        "he": "ב־one-hot יש דלגלג אחד לכל מצב, בניגוד לקידוד בינארי קומפקטי.",
+        "he": "ב־one-hot יש פליפ-פלופ אחד לכל מצב, בניגוד לקידוד בינארי קומפקטי.",
         "en": "One-hot uses one flip-flop per state, unlike compact binary encoding."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "2813bd0110cadd82082352cdaa49ad9a2f31209a6badac8c16a49502e033f9d4",
-        "content_sha256": "2813bd0110cadd82082352cdaa49ad9a2f31209a6badac8c16a49502e033f9d4"
+        "authored_sha256": "39c9ffa6e568577c9c9077cc6c8cf4599a6e8905a55cbf39272f4f65dccf6a09",
+        "content_sha256": "39c9ffa6e568577c9c9077cc6c8cf4599a6e8905a55cbf39272f4f65dccf6a09"
       }
     },
     {
@@ -44361,7 +44366,7 @@
       "topic": "states",
       "status": "approved",
       "prompt": {
-        "he": "בקידוד one-hot מקצים ביט נפרד לכל מצב, ורק ביט המצב הנוכחי הוא 1. כמה דלגלגים דרושים למכונה עם 6 מצבים?",
+        "he": "בקידוד one-hot מקצים ביט נפרד לכל מצב, ורק ביט המצב הנוכחי הוא 1. כמה פליפ-פלופים דרושים למכונה עם 6 מצבים?",
         "en": "One-hot encoding assigns one separate bit to each state, with only the current state bit equal to 1. How many flip-flops are needed for 6 states?"
       },
       "choices": [
@@ -44384,15 +44389,15 @@
       ],
       "correct": 3,
       "explanation": {
-        "he": "ב־one-hot יש דלגלג אחד לכל מצב, בניגוד לקידוד בינארי קומפקטי.",
+        "he": "ב־one-hot יש פליפ-פלופ אחד לכל מצב, בניגוד לקידוד בינארי קומפקטי.",
         "en": "One-hot uses one flip-flop per state, unlike compact binary encoding."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "fbe8cd72675796cc6bdee67d479da2803870b10ad1507498de7b17e42fcf8b80",
-        "content_sha256": "fbe8cd72675796cc6bdee67d479da2803870b10ad1507498de7b17e42fcf8b80"
+        "authored_sha256": "b85bc331bae6340349763c97f78afb8a4ea5d1972c177b9a4523e6e6241c55c4",
+        "content_sha256": "b85bc331bae6340349763c97f78afb8a4ea5d1972c177b9a4523e6e6241c55c4"
       }
     },
     {
@@ -44402,7 +44407,7 @@
       "topic": "states",
       "status": "approved",
       "prompt": {
-        "he": "בקידוד one-hot מקצים ביט נפרד לכל מצב, ורק ביט המצב הנוכחי הוא 1. כמה דלגלגים דרושים למכונה עם 9 מצבים?",
+        "he": "בקידוד one-hot מקצים ביט נפרד לכל מצב, ורק ביט המצב הנוכחי הוא 1. כמה פליפ-פלופים דרושים למכונה עם 9 מצבים?",
         "en": "One-hot encoding assigns one separate bit to each state, with only the current state bit equal to 1. How many flip-flops are needed for 9 states?"
       },
       "choices": [
@@ -44425,15 +44430,15 @@
       ],
       "correct": 2,
       "explanation": {
-        "he": "ב־one-hot יש דלגלג אחד לכל מצב, בניגוד לקידוד בינארי קומפקטי.",
+        "he": "ב־one-hot יש פליפ-פלופ אחד לכל מצב, בניגוד לקידוד בינארי קומפקטי.",
         "en": "One-hot uses one flip-flop per state, unlike compact binary encoding."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "529be7c5024baa1a642d02604d9a72358e2038dbe28de3ae60c4a1567cec944c",
-        "content_sha256": "529be7c5024baa1a642d02604d9a72358e2038dbe28de3ae60c4a1567cec944c"
+        "authored_sha256": "5b147038d55b7929e2932dcda391fa5e1e28292e22bc2fb967b5d60119b85e90",
+        "content_sha256": "5b147038d55b7929e2932dcda391fa5e1e28292e22bc2fb967b5d60119b85e90"
       }
     },
     {
@@ -45468,7 +45473,7 @@
       "topic": "gates",
       "status": "approved",
       "prompt": {
-        "he": "מקודד עדיפות בן 4 כניסות בוחר את הביט הפעיל הגבוה ביותר. עבור x=0000, מה צריך לציין ממשק עם valid ואינדקס?",
+        "he": "אנקודר עדיפות בן 4 כניסות בוחר את הביט הפעיל הגבוה ביותר. עבור x=0000, מה צריך לציין ממשק עם valid ואינדקס?",
         "en": "A 4-input priority encoder selects the highest set bit. For x=0000, what should a valid-plus-index interface report?"
       },
       "choices": [
@@ -45498,8 +45503,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "027ec7edc7d61f4f9d8c6904beea106132c9db710dde059a672837615ff1d576",
-        "content_sha256": "027ec7edc7d61f4f9d8c6904beea106132c9db710dde059a672837615ff1d576"
+        "authored_sha256": "96b9b2b3b6568eeae3494ea093b3a082f8afe876c2e64fc4c639b9924e14a1e1",
+        "content_sha256": "96b9b2b3b6568eeae3494ea093b3a082f8afe876c2e64fc4c639b9924e14a1e1"
       }
     },
     {
@@ -45509,7 +45514,7 @@
       "topic": "gates",
       "status": "approved",
       "prompt": {
-        "he": "מקודד עדיפות בן 4 כניסות בוחר את הביט הפעיל הגבוה ביותר. עבור x=0001, מה צריך לציין ממשק עם valid ואינדקס?",
+        "he": "אנקודר עדיפות בן 4 כניסות בוחר את הביט הפעיל הגבוה ביותר. עבור x=0001, מה צריך לציין ממשק עם valid ואינדקס?",
         "en": "A 4-input priority encoder selects the highest set bit. For x=0001, what should a valid-plus-index interface report?"
       },
       "choices": [
@@ -45539,8 +45544,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "8e637300fef6620f2341549b41bcda2870dc0a6722e9fb0efc3845c3c07ac2dd",
-        "content_sha256": "8e637300fef6620f2341549b41bcda2870dc0a6722e9fb0efc3845c3c07ac2dd"
+        "authored_sha256": "35a2d9690ae1a55bbeed47a913508817f6316f57b369e00f473c7928907a3e73",
+        "content_sha256": "35a2d9690ae1a55bbeed47a913508817f6316f57b369e00f473c7928907a3e73"
       }
     },
     {
@@ -45550,7 +45555,7 @@
       "topic": "gates",
       "status": "approved",
       "prompt": {
-        "he": "מקודד עדיפות בן 4 כניסות בוחר את הביט הפעיל הגבוה ביותר. עבור x=0010, מה צריך לציין ממשק עם valid ואינדקס?",
+        "he": "אנקודר עדיפות בן 4 כניסות בוחר את הביט הפעיל הגבוה ביותר. עבור x=0010, מה צריך לציין ממשק עם valid ואינדקס?",
         "en": "A 4-input priority encoder selects the highest set bit. For x=0010, what should a valid-plus-index interface report?"
       },
       "choices": [
@@ -45580,8 +45585,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "11c2e9507a9308e1bba257780cb27afec307b241e32b50de33cc67d7ba4490d2",
-        "content_sha256": "11c2e9507a9308e1bba257780cb27afec307b241e32b50de33cc67d7ba4490d2"
+        "authored_sha256": "5bba84ce236e8749297ffc8e98f403e65db9c43d3f942aa40a6d4e84855b2b98",
+        "content_sha256": "5bba84ce236e8749297ffc8e98f403e65db9c43d3f942aa40a6d4e84855b2b98"
       }
     },
     {
@@ -45591,7 +45596,7 @@
       "topic": "gates",
       "status": "approved",
       "prompt": {
-        "he": "מקודד עדיפות בן 4 כניסות בוחר את הביט הפעיל הגבוה ביותר. עבור x=1010, מה צריך לציין ממשק עם valid ואינדקס?",
+        "he": "אנקודר עדיפות בן 4 כניסות בוחר את הביט הפעיל הגבוה ביותר. עבור x=1010, מה צריך לציין ממשק עם valid ואינדקס?",
         "en": "A 4-input priority encoder selects the highest set bit. For x=1010, what should a valid-plus-index interface report?"
       },
       "choices": [
@@ -45621,8 +45626,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "fff57c8dfb2e27f2b6e0d2a03b9ec8acb27a914e96bb41a828d242d2829dd686",
-        "content_sha256": "fff57c8dfb2e27f2b6e0d2a03b9ec8acb27a914e96bb41a828d242d2829dd686"
+        "authored_sha256": "1c6375a7caf8bcb2452e49bb200d5dde152e202c845081b7d63606222e72dcb0",
+        "content_sha256": "1c6375a7caf8bcb2452e49bb200d5dde152e202c845081b7d63606222e72dcb0"
       }
     },
     {
@@ -45632,7 +45637,7 @@
       "topic": "gates",
       "status": "approved",
       "prompt": {
-        "he": "מקודד עדיפות בן 4 כניסות בוחר את הביט הפעיל הגבוה ביותר. עבור x=1000, מה צריך לציין ממשק עם valid ואינדקס?",
+        "he": "אנקודר עדיפות בן 4 כניסות בוחר את הביט הפעיל הגבוה ביותר. עבור x=1000, מה צריך לציין ממשק עם valid ואינדקס?",
         "en": "A 4-input priority encoder selects the highest set bit. For x=1000, what should a valid-plus-index interface report?"
       },
       "choices": [
@@ -45662,8 +45667,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "c182fec7dbb416fa1116006dbee1a2693de3e5d5f16891bedeeb0cb70bb708ff",
-        "content_sha256": "c182fec7dbb416fa1116006dbee1a2693de3e5d5f16891bedeeb0cb70bb708ff"
+        "authored_sha256": "d8dc07ae6cfce4edb749a2163e33da9187d81bda5a8f6000415db6b49410b303",
+        "content_sha256": "d8dc07ae6cfce4edb749a2163e33da9187d81bda5a8f6000415db6b49410b303"
       }
     },
     {
@@ -45673,7 +45678,7 @@
       "topic": "gates",
       "status": "approved",
       "prompt": {
-        "he": "מקודד בעל 16 כניסות מחולק ל־4 קבוצות רצופות של 4, ממוספרות מ־0. הקבוצה הפעילה הגבוהה ביותר היא 0, והאינדקס המקומי בה הוא 3. מה האינדקס הכללי?",
+        "he": "אנקודר בעל 16 כניסות מחולק ל־4 קבוצות רצופות של 4, ממוספרות מ־0. הקבוצה הפעילה הגבוהה ביותר היא 0, והאינדקס המקומי בה הוא 3. מה האינדקס הכללי?",
         "en": "A 16-input encoder uses 4 consecutive groups of 4, numbered from 0. The highest valid group is 0, with local index 3. What is the global index?"
       },
       "choices": [
@@ -45703,8 +45708,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "88ef78baec795390f5ea3f403192611ee8db15c08d2e790fe5537ba3b98d8891",
-        "content_sha256": "88ef78baec795390f5ea3f403192611ee8db15c08d2e790fe5537ba3b98d8891"
+        "authored_sha256": "eb03d94707da48474ae3258f6bf097e2089869d25f4e6959d77f6e2feb3b7842",
+        "content_sha256": "eb03d94707da48474ae3258f6bf097e2089869d25f4e6959d77f6e2feb3b7842"
       }
     },
     {
@@ -45714,7 +45719,7 @@
       "topic": "gates",
       "status": "approved",
       "prompt": {
-        "he": "מקודד בעל 16 כניסות מחולק ל־4 קבוצות רצופות של 4, ממוספרות מ־0. הקבוצה הפעילה הגבוהה ביותר היא 1, והאינדקס המקומי בה הוא 2. מה האינדקס הכללי?",
+        "he": "אנקודר בעל 16 כניסות מחולק ל־4 קבוצות רצופות של 4, ממוספרות מ־0. הקבוצה הפעילה הגבוהה ביותר היא 1, והאינדקס המקומי בה הוא 2. מה האינדקס הכללי?",
         "en": "A 16-input encoder uses 4 consecutive groups of 4, numbered from 0. The highest valid group is 1, with local index 2. What is the global index?"
       },
       "choices": [
@@ -45744,8 +45749,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "c6eeee56ce9861196342d1dff03816bcd559b90dfaeba6c2e858f8f12ab21593",
-        "content_sha256": "c6eeee56ce9861196342d1dff03816bcd559b90dfaeba6c2e858f8f12ab21593"
+        "authored_sha256": "f371be94e2ba1d5ab8fd60abdb222fcc0c3cb549b08d658a306606ea7074e82c",
+        "content_sha256": "f371be94e2ba1d5ab8fd60abdb222fcc0c3cb549b08d658a306606ea7074e82c"
       }
     },
     {
@@ -45755,7 +45760,7 @@
       "topic": "gates",
       "status": "approved",
       "prompt": {
-        "he": "מקודד בעל 16 כניסות מחולק ל־4 קבוצות רצופות של 4, ממוספרות מ־0. הקבוצה הפעילה הגבוהה ביותר היא 2, והאינדקס המקומי בה הוא 1. מה האינדקס הכללי?",
+        "he": "אנקודר בעל 16 כניסות מחולק ל־4 קבוצות רצופות של 4, ממוספרות מ־0. הקבוצה הפעילה הגבוהה ביותר היא 2, והאינדקס המקומי בה הוא 1. מה האינדקס הכללי?",
         "en": "A 16-input encoder uses 4 consecutive groups of 4, numbered from 0. The highest valid group is 2, with local index 1. What is the global index?"
       },
       "choices": [
@@ -45785,8 +45790,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "a58ea6cae45366c68430de78b04322cb2eece438dda7527e33422ffc90c06c6f",
-        "content_sha256": "a58ea6cae45366c68430de78b04322cb2eece438dda7527e33422ffc90c06c6f"
+        "authored_sha256": "47036ab5d98e91aeb4df0f95beb1581cf7bd2d30f0ea23c64f74eaa07f93e3da",
+        "content_sha256": "47036ab5d98e91aeb4df0f95beb1581cf7bd2d30f0ea23c64f74eaa07f93e3da"
       }
     },
     {
@@ -45796,7 +45801,7 @@
       "topic": "gates",
       "status": "approved",
       "prompt": {
-        "he": "מקודד בעל 16 כניסות מחולק ל־4 קבוצות רצופות של 4, ממוספרות מ־0. הקבוצה הפעילה הגבוהה ביותר היא 3, והאינדקס המקומי בה הוא 0. מה האינדקס הכללי?",
+        "he": "אנקודר בעל 16 כניסות מחולק ל־4 קבוצות רצופות של 4, ממוספרות מ־0. הקבוצה הפעילה הגבוהה ביותר היא 3, והאינדקס המקומי בה הוא 0. מה האינדקס הכללי?",
         "en": "A 16-input encoder uses 4 consecutive groups of 4, numbered from 0. The highest valid group is 3, with local index 0. What is the global index?"
       },
       "choices": [
@@ -45826,8 +45831,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "428ae7bed62e114c33893bf14dcb31135cf5c4d92774be897ecf787c76ee7e71",
-        "content_sha256": "428ae7bed62e114c33893bf14dcb31135cf5c4d92774be897ecf787c76ee7e71"
+        "authored_sha256": "b47f234921d445b6e9b1f61df97d6349e5d99002f804eb36ee04a05c00999591",
+        "content_sha256": "b47f234921d445b6e9b1f61df97d6349e5d99002f804eb36ee04a05c00999591"
       }
     },
     {
@@ -45837,7 +45842,7 @@
       "topic": "gates",
       "status": "approved",
       "prompt": {
-        "he": "מקודד בעל 16 כניסות מחולק ל־4 קבוצות רצופות של 4, ממוספרות מ־0. הקבוצה הפעילה הגבוהה ביותר היא 3, והאינדקס המקומי בה הוא 3. מה האינדקס הכללי?",
+        "he": "אנקודר בעל 16 כניסות מחולק ל־4 קבוצות רצופות של 4, ממוספרות מ־0. הקבוצה הפעילה הגבוהה ביותר היא 3, והאינדקס המקומי בה הוא 3. מה האינדקס הכללי?",
         "en": "A 16-input encoder uses 4 consecutive groups of 4, numbered from 0. The highest valid group is 3, with local index 3. What is the global index?"
       },
       "choices": [
@@ -45867,8 +45872,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "94de57b190513b0fc25c33ac0ea52698f095272e780a07af8f018fd8261e6774",
-        "content_sha256": "94de57b190513b0fc25c33ac0ea52698f095272e780a07af8f018fd8261e6774"
+        "authored_sha256": "c2ea2f8eba672154e41124b4813bf72282942f329ac5c89ad272e741070ba8bf",
+        "content_sha256": "c2ea2f8eba672154e41124b4813bf72282942f329ac5c89ad272e741070ba8bf"
       }
     },
     {
@@ -48748,7 +48753,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג SR בעל חזית עולה ובקרות סינכרוניות פעילות ב־1: SR=00 שומר, 01 מאפס, 10 מציב, 11 אסור. כדי לממש Q_next=D, אילו זוגות SR יש להזין עבור דגימות D=01, משמאל לימין? הניחו עמידה בדרישות תזמון.",
+        "he": "פליפ-פלופ SR בעל חזית עולה ובקרות סינכרוניות פעילות ב־1: SR=00 שומר, 01 מאפס, 10 מציב, 11 אסור. כדי לממש Q_next=D, אילו זוגות SR יש להזין עבור דגימות D=01, משמאל לימין? הניחו עמידה בדרישות תזמון.",
         "en": "A rising-edge SR flip-flop has synchronous controls active at 1: SR=00 holds, 01 resets, 10 sets, and 11 is forbidden. To implement Q_next=D, which SR pairs match D samples 01, left to right? Assume timing requirements are met."
       },
       "choices": [
@@ -48778,8 +48783,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "49db8c20827f5b896fe5466e6b310e7b25323353ab9700cedc3d99aac428709e",
-        "content_sha256": "49db8c20827f5b896fe5466e6b310e7b25323353ab9700cedc3d99aac428709e"
+        "authored_sha256": "01098b05d921ec763a5a491751c1fd2d0ebe912bb127317ab219220397c3ecea",
+        "content_sha256": "01098b05d921ec763a5a491751c1fd2d0ebe912bb127317ab219220397c3ecea"
       }
     },
     {
@@ -48789,7 +48794,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג SR בעל חזית עולה ובקרות סינכרוניות פעילות ב־1: SR=00 שומר, 01 מאפס, 10 מציב, 11 אסור. כדי לממש Q_next=D, אילו זוגות SR יש להזין עבור דגימות D=10, משמאל לימין? הניחו עמידה בדרישות תזמון.",
+        "he": "פליפ-פלופ SR בעל חזית עולה ובקרות סינכרוניות פעילות ב־1: SR=00 שומר, 01 מאפס, 10 מציב, 11 אסור. כדי לממש Q_next=D, אילו זוגות SR יש להזין עבור דגימות D=10, משמאל לימין? הניחו עמידה בדרישות תזמון.",
         "en": "A rising-edge SR flip-flop has synchronous controls active at 1: SR=00 holds, 01 resets, 10 sets, and 11 is forbidden. To implement Q_next=D, which SR pairs match D samples 10, left to right? Assume timing requirements are met."
       },
       "choices": [
@@ -48819,8 +48824,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "a5d157be9a42d436a96e35b37e545c74ddc8179a1f626af0825fe31d1a0562b5",
-        "content_sha256": "a5d157be9a42d436a96e35b37e545c74ddc8179a1f626af0825fe31d1a0562b5"
+        "authored_sha256": "186b0b5a051f62d6371241ef22cd1c2736b2819ffcb5757cab262ea43430f2a4",
+        "content_sha256": "186b0b5a051f62d6371241ef22cd1c2736b2819ffcb5757cab262ea43430f2a4"
       }
     },
     {
@@ -48830,7 +48835,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג SR בעל חזית עולה ובקרות סינכרוניות פעילות ב־1: SR=00 שומר, 01 מאפס, 10 מציב, 11 אסור. כדי לממש Q_next=D, אילו זוגות SR יש להזין עבור דגימות D=001, משמאל לימין? הניחו עמידה בדרישות תזמון.",
+        "he": "פליפ-פלופ SR בעל חזית עולה ובקרות סינכרוניות פעילות ב־1: SR=00 שומר, 01 מאפס, 10 מציב, 11 אסור. כדי לממש Q_next=D, אילו זוגות SR יש להזין עבור דגימות D=001, משמאל לימין? הניחו עמידה בדרישות תזמון.",
         "en": "A rising-edge SR flip-flop has synchronous controls active at 1: SR=00 holds, 01 resets, 10 sets, and 11 is forbidden. To implement Q_next=D, which SR pairs match D samples 001, left to right? Assume timing requirements are met."
       },
       "choices": [
@@ -48860,8 +48865,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "85da870c12d2889900d8cb4a74dbedd61d74ce1939b23d4fbd3d773b253ee322",
-        "content_sha256": "85da870c12d2889900d8cb4a74dbedd61d74ce1939b23d4fbd3d773b253ee322"
+        "authored_sha256": "79e7b490a183fc31f944ea112894ca7524c6987f2b3b6f9391688826201cea1a",
+        "content_sha256": "79e7b490a183fc31f944ea112894ca7524c6987f2b3b6f9391688826201cea1a"
       }
     },
     {
@@ -48871,7 +48876,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג SR בעל חזית עולה ובקרות סינכרוניות פעילות ב־1: SR=00 שומר, 01 מאפס, 10 מציב, 11 אסור. כדי לממש Q_next=D, אילו זוגות SR יש להזין עבור דגימות D=110, משמאל לימין? הניחו עמידה בדרישות תזמון.",
+        "he": "פליפ-פלופ SR בעל חזית עולה ובקרות סינכרוניות פעילות ב־1: SR=00 שומר, 01 מאפס, 10 מציב, 11 אסור. כדי לממש Q_next=D, אילו זוגות SR יש להזין עבור דגימות D=110, משמאל לימין? הניחו עמידה בדרישות תזמון.",
         "en": "A rising-edge SR flip-flop has synchronous controls active at 1: SR=00 holds, 01 resets, 10 sets, and 11 is forbidden. To implement Q_next=D, which SR pairs match D samples 110, left to right? Assume timing requirements are met."
       },
       "choices": [
@@ -48901,8 +48906,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "a7ae34ac3bef3f7e5dce932a7dc10ec2985884e1bc95b0a39feb14c26713830e",
-        "content_sha256": "a7ae34ac3bef3f7e5dce932a7dc10ec2985884e1bc95b0a39feb14c26713830e"
+        "authored_sha256": "af1031ce839c921acfc347ff7e2bf77a5c78d440abf7c6be70118ab81f47fa3a",
+        "content_sha256": "af1031ce839c921acfc347ff7e2bf77a5c78d440abf7c6be70118ab81f47fa3a"
       }
     },
     {
@@ -48912,7 +48917,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג SR בעל חזית עולה ובקרות סינכרוניות פעילות ב־1: SR=00 שומר, 01 מאפס, 10 מציב, 11 אסור. כדי לממש Q_next=D, אילו זוגות SR יש להזין עבור דגימות D=101, משמאל לימין? הניחו עמידה בדרישות תזמון.",
+        "he": "פליפ-פלופ SR בעל חזית עולה ובקרות סינכרוניות פעילות ב־1: SR=00 שומר, 01 מאפס, 10 מציב, 11 אסור. כדי לממש Q_next=D, אילו זוגות SR יש להזין עבור דגימות D=101, משמאל לימין? הניחו עמידה בדרישות תזמון.",
         "en": "A rising-edge SR flip-flop has synchronous controls active at 1: SR=00 holds, 01 resets, 10 sets, and 11 is forbidden. To implement Q_next=D, which SR pairs match D samples 101, left to right? Assume timing requirements are met."
       },
       "choices": [
@@ -48942,8 +48947,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "623966b61c9f715433d4f560c5a7d808770b3965e3f227a1fc201057db9bb026",
-        "content_sha256": "623966b61c9f715433d4f560c5a7d808770b3965e3f227a1fc201057db9bb026"
+        "authored_sha256": "fdfe4ad0c75212984dbb6a573747505ea01f007ff96917fa6c792a6841fd29d6",
+        "content_sha256": "fdfe4ad0c75212984dbb6a573747505ea01f007ff96917fa6c792a6841fd29d6"
       }
     },
     {
@@ -48953,7 +48958,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "ללַאץ׳ D ולדלגלג D בעל חזית עולה יש בתחילה Q=0. בין חזיתות, D נקבע ל־1, ו־EN של הלאץ׳ נשאר 1. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
+        "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=0. בין חזיתות, D נקבע ל־1, ו־EN של הלאץ׳ נשאר 1. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
         "en": "A D latch and a rising-edge D flip-flop initially have Q=0. Between edges, D is set to 1, while the latch EN remains 1. There are no asynchronous controls. After propagation and before the next edge, what are the outputs?"
       },
       "choices": [
@@ -48976,15 +48981,15 @@
       ],
       "correct": 1,
       "explanation": {
-        "he": "לאץ׳ שקוף כש־EN=1; אחרת הוא שומר. דלגלג ללא חזית פעילה שומר את הדגימה הקודמת.",
+        "he": "לאץ׳ שקוף כש־EN=1; אחרת הוא שומר. פליפ-פלופ ללא חזית פעילה שומר את הדגימה הקודמת.",
         "en": "The latch is transparent when EN=1 and otherwise holds. Without an active edge, the flip-flop retains its previous sample."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "1c1ccaef039004d599b335bb163de4c526e0d90f9a2fdf204ea7d8b628b4fb13",
-        "content_sha256": "1c1ccaef039004d599b335bb163de4c526e0d90f9a2fdf204ea7d8b628b4fb13"
+        "authored_sha256": "81fe6936ac295654683229ff147221f982b66198616df847818af0f95b789b86",
+        "content_sha256": "81fe6936ac295654683229ff147221f982b66198616df847818af0f95b789b86"
       }
     },
     {
@@ -48994,7 +48999,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "ללַאץ׳ D ולדלגלג D בעל חזית עולה יש בתחילה Q=1. בין חזיתות, D נקבע ל־0, ו־EN של הלאץ׳ נשאר 1. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
+        "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=1. בין חזיתות, D נקבע ל־0, ו־EN של הלאץ׳ נשאר 1. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
         "en": "A D latch and a rising-edge D flip-flop initially have Q=1. Between edges, D is set to 0, while the latch EN remains 1. There are no asynchronous controls. After propagation and before the next edge, what are the outputs?"
       },
       "choices": [
@@ -49017,15 +49022,15 @@
       ],
       "correct": 2,
       "explanation": {
-        "he": "לאץ׳ שקוף כש־EN=1; אחרת הוא שומר. דלגלג ללא חזית פעילה שומר את הדגימה הקודמת.",
+        "he": "לאץ׳ שקוף כש־EN=1; אחרת הוא שומר. פליפ-פלופ ללא חזית פעילה שומר את הדגימה הקודמת.",
         "en": "The latch is transparent when EN=1 and otherwise holds. Without an active edge, the flip-flop retains its previous sample."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "26a26a5e909ddecc361812b852f2469f9bbdf0b4ab4e800760fb051a1c65ed5e",
-        "content_sha256": "26a26a5e909ddecc361812b852f2469f9bbdf0b4ab4e800760fb051a1c65ed5e"
+        "authored_sha256": "d54c2b38e68d29c1a30cd86a2462031d26675fefc1e2487e9ad29bee955cafd4",
+        "content_sha256": "d54c2b38e68d29c1a30cd86a2462031d26675fefc1e2487e9ad29bee955cafd4"
       }
     },
     {
@@ -49035,7 +49040,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "ללַאץ׳ D ולדלגלג D בעל חזית עולה יש בתחילה Q=0. בין חזיתות, D נקבע ל־1, ו־EN של הלאץ׳ נשאר 0. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
+        "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=0. בין חזיתות, D נקבע ל־1, ו־EN של הלאץ׳ נשאר 0. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
         "en": "A D latch and a rising-edge D flip-flop initially have Q=0. Between edges, D is set to 1, while the latch EN remains 0. There are no asynchronous controls. After propagation and before the next edge, what are the outputs?"
       },
       "choices": [
@@ -49058,15 +49063,15 @@
       ],
       "correct": 3,
       "explanation": {
-        "he": "לאץ׳ שקוף כש־EN=1; אחרת הוא שומר. דלגלג ללא חזית פעילה שומר את הדגימה הקודמת.",
+        "he": "לאץ׳ שקוף כש־EN=1; אחרת הוא שומר. פליפ-פלופ ללא חזית פעילה שומר את הדגימה הקודמת.",
         "en": "The latch is transparent when EN=1 and otherwise holds. Without an active edge, the flip-flop retains its previous sample."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "b7b0f035c4ec1090a2e0372f97f0f64ef4733c20b5ff1503c1f62d42b670242e",
-        "content_sha256": "b7b0f035c4ec1090a2e0372f97f0f64ef4733c20b5ff1503c1f62d42b670242e"
+        "authored_sha256": "40e940ee9fb3009ad19643f051c93ecbd31bf490051fe31ca1010ba8ad7ea206",
+        "content_sha256": "40e940ee9fb3009ad19643f051c93ecbd31bf490051fe31ca1010ba8ad7ea206"
       }
     },
     {
@@ -49076,7 +49081,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "ללַאץ׳ D ולדלגלג D בעל חזית עולה יש בתחילה Q=1. בין חזיתות, D נקבע ל־0, ו־EN של הלאץ׳ נשאר 0. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
+        "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=1. בין חזיתות, D נקבע ל־0, ו־EN של הלאץ׳ נשאר 0. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
         "en": "A D latch and a rising-edge D flip-flop initially have Q=1. Between edges, D is set to 0, while the latch EN remains 0. There are no asynchronous controls. After propagation and before the next edge, what are the outputs?"
       },
       "choices": [
@@ -49099,15 +49104,15 @@
       ],
       "correct": 0,
       "explanation": {
-        "he": "לאץ׳ שקוף כש־EN=1; אחרת הוא שומר. דלגלג ללא חזית פעילה שומר את הדגימה הקודמת.",
+        "he": "לאץ׳ שקוף כש־EN=1; אחרת הוא שומר. פליפ-פלופ ללא חזית פעילה שומר את הדגימה הקודמת.",
         "en": "The latch is transparent when EN=1 and otherwise holds. Without an active edge, the flip-flop retains its previous sample."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "cb32429fb14e08462e70cc2db1fddf1782fbcfedff8c9f2f1b57970273aa46df",
-        "content_sha256": "cb32429fb14e08462e70cc2db1fddf1782fbcfedff8c9f2f1b57970273aa46df"
+        "authored_sha256": "414ace18c765ca9d35c1057d35c7949b0a0d7d2e186cc906fa08a2305b53b509",
+        "content_sha256": "414ace18c765ca9d35c1057d35c7949b0a0d7d2e186cc906fa08a2305b53b509"
       }
     },
     {
@@ -49117,7 +49122,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "ללַאץ׳ D ולדלגלג D בעל חזית עולה יש בתחילה Q=1. בין חזיתות, D נקבע ל־1, ו־EN של הלאץ׳ נשאר 1. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
+        "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=1. בין חזיתות, D נקבע ל־1, ו־EN של הלאץ׳ נשאר 1. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
         "en": "A D latch and a rising-edge D flip-flop initially have Q=1. Between edges, D is set to 1, while the latch EN remains 1. There are no asynchronous controls. After propagation and before the next edge, what are the outputs?"
       },
       "choices": [
@@ -49140,15 +49145,15 @@
       ],
       "correct": 1,
       "explanation": {
-        "he": "לאץ׳ שקוף כש־EN=1; אחרת הוא שומר. דלגלג ללא חזית פעילה שומר את הדגימה הקודמת.",
+        "he": "לאץ׳ שקוף כש־EN=1; אחרת הוא שומר. פליפ-פלופ ללא חזית פעילה שומר את הדגימה הקודמת.",
         "en": "The latch is transparent when EN=1 and otherwise holds. Without an active edge, the flip-flop retains its previous sample."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "cab6036be6fd549a6dc9660e79e1f451f48b0d3997aec29856c29c036e0995f2",
-        "content_sha256": "cab6036be6fd549a6dc9660e79e1f451f48b0d3997aec29856c29c036e0995f2"
+        "authored_sha256": "7050f952dfd66924167e34b846a720e154dd3ffb79a63959ab2aeee3ca53c133",
+        "content_sha256": "7050f952dfd66924167e34b846a720e154dd3ffb79a63959ab2aeee3ca53c133"
       }
     },
     {
@@ -49978,7 +49983,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "סיבית בקרה מוחזקת יציבה מספיק זמן ונכנסת לסנכרון בשני דלגלגים בשעון היעד. מה נכון לגבי מטא־יציבות?",
+        "he": "סיבית בקרה מוחזקת יציבה מספיק זמן ונכנסת לסנכרון בשני פליפ-פלופים בשעון היעד. מה נכון לגבי מטא־יציבות?",
         "en": "A control bit is held stable long enough and crosses through two destination-clock flip-flops. What is true about metastability?"
       },
       "choices": [
@@ -50008,8 +50013,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "f89af76e47e79d60faab7e366696d7ed86ee35068f9d8988aa127ef12498cfe9",
-        "content_sha256": "f89af76e47e79d60faab7e366696d7ed86ee35068f9d8988aa127ef12498cfe9"
+        "authored_sha256": "101acf24d25d457472ccab83cf4cbeec9a7ecda97aa5a9f1624ef21b801b37d9",
+        "content_sha256": "101acf24d25d457472ccab83cf4cbeec9a7ecda97aa5a9f1624ef21b801b37d9"
       }
     },
     {
@@ -50142,7 +50147,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "האם הוספת שני דלגלגים בשעון היעד מבטיחה לבדה שמילה רב־ביטית תהיה עקבית ושכל אירוע קצר ייקלט?",
+        "he": "האם הוספת שני פליפ-פלופים בשעון היעד מבטיחה לבדה שמילה רב־ביטית תהיה עקבית ושכל אירוע קצר ייקלט?",
         "en": "Does adding two destination-clock flip-flops alone guarantee both coherent multi-bit words and capture of every short event?"
       },
       "choices": [
@@ -50172,8 +50177,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "e6de554b15698e490440d5f44e81a693a5266d4df8893cd8f478413fd2a6db59",
-        "content_sha256": "e6de554b15698e490440d5f44e81a693a5266d4df8893cd8f478413fd2a6db59"
+        "authored_sha256": "60fdcb2f23d5a375d4347a57b02bc1324a8e776227240febb127da187543e07b",
+        "content_sha256": "60fdcb2f23d5a375d4347a57b02bc1324a8e776227240febb127da187543e07b"
       }
     },
     {
@@ -50206,15 +50211,15 @@
       ],
       "correct": 3,
       "explanation": {
-        "he": "הפולס כולו נמצא בין חזיתות ולכן אינו נדגם. שני דלגלגים אינם שומרים אירוע שמעולם לא נדגם.",
+        "he": "הפולס כולו נמצא בין חזיתות ולכן אינו נדגם. שני פליפ-פלופים אינם שומרים אירוע שמעולם לא נדגם.",
         "en": "The pulse lies entirely between edges and is never sampled. Two flip-flops do not retain an event that was never sampled."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "f838ea03406d5cb64b544e054e69cf526028574ba6b4d7cb7b721915d5c46b7d",
-        "content_sha256": "f838ea03406d5cb64b544e054e69cf526028574ba6b4d7cb7b721915d5c46b7d"
+        "authored_sha256": "032bd9cab2c57157793af068c435d74725b2d3f72fb245f0b372614099e52ee5",
+        "content_sha256": "032bd9cab2c57157793af068c435d74725b2d3f72fb245f0b372614099e52ee5"
       }
     },
     {
@@ -50247,15 +50252,15 @@
       ],
       "correct": 0,
       "explanation": {
-        "he": "הפולס כולו נמצא בין חזיתות ולכן אינו נדגם. שני דלגלגים אינם שומרים אירוע שמעולם לא נדגם.",
+        "he": "הפולס כולו נמצא בין חזיתות ולכן אינו נדגם. שני פליפ-פלופים אינם שומרים אירוע שמעולם לא נדגם.",
         "en": "The pulse lies entirely between edges and is never sampled. Two flip-flops do not retain an event that was never sampled."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "b14c0e12a3d5069a93a5da0ef9772fac8cf3cd916185a286e0270d5ffb9a4731",
-        "content_sha256": "b14c0e12a3d5069a93a5da0ef9772fac8cf3cd916185a286e0270d5ffb9a4731"
+        "authored_sha256": "2c50eea8fbb49b5e595297cbf15ac1946a7e5d40ae648fb967f7e304cdc1e0a8",
+        "content_sha256": "2c50eea8fbb49b5e595297cbf15ac1946a7e5d40ae648fb967f7e304cdc1e0a8"
       }
     },
     {
@@ -50288,15 +50293,15 @@
       ],
       "correct": 1,
       "explanation": {
-        "he": "הפולס כולו נמצא בין חזיתות ולכן אינו נדגם. שני דלגלגים אינם שומרים אירוע שמעולם לא נדגם.",
+        "he": "הפולס כולו נמצא בין חזיתות ולכן אינו נדגם. שני פליפ-פלופים אינם שומרים אירוע שמעולם לא נדגם.",
         "en": "The pulse lies entirely between edges and is never sampled. Two flip-flops do not retain an event that was never sampled."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "4e9172b55710ea612d7d691d7719766aa2ae279c16799363a774eab243762e3e",
-        "content_sha256": "4e9172b55710ea612d7d691d7719766aa2ae279c16799363a774eab243762e3e"
+        "authored_sha256": "912a55abce5749092e679f57aea32838c7d0b42a2bdf21b4ada19591d1f3d46b",
+        "content_sha256": "912a55abce5749092e679f57aea32838c7d0b42a2bdf21b4ada19591d1f3d46b"
       }
     },
     {
@@ -50329,15 +50334,15 @@
       ],
       "correct": 2,
       "explanation": {
-        "he": "הפולס כולו נמצא בין חזיתות ולכן אינו נדגם. שני דלגלגים אינם שומרים אירוע שמעולם לא נדגם.",
+        "he": "הפולס כולו נמצא בין חזיתות ולכן אינו נדגם. שני פליפ-פלופים אינם שומרים אירוע שמעולם לא נדגם.",
         "en": "The pulse lies entirely between edges and is never sampled. Two flip-flops do not retain an event that was never sampled."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "b8e3d16e2dac67f7843990a1e8345d5ab49f37e0bdb9de736c277ed9966aa36e",
-        "content_sha256": "b8e3d16e2dac67f7843990a1e8345d5ab49f37e0bdb9de736c277ed9966aa36e"
+        "authored_sha256": "6a89ce81e1f57eefd4861ae58ba76aef5b0af78a368d71374f741feb60242e00",
+        "content_sha256": "6a89ce81e1f57eefd4861ae58ba76aef5b0af78a368d71374f741feb60242e00"
       }
     },
     {
@@ -50370,15 +50375,15 @@
       ],
       "correct": 3,
       "explanation": {
-        "he": "הפולס כולו נמצא בין חזיתות ולכן אינו נדגם. שני דלגלגים אינם שומרים אירוע שמעולם לא נדגם.",
+        "he": "הפולס כולו נמצא בין חזיתות ולכן אינו נדגם. שני פליפ-פלופים אינם שומרים אירוע שמעולם לא נדגם.",
         "en": "The pulse lies entirely between edges and is never sampled. Two flip-flops do not retain an event that was never sampled."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "58b0f8d383b9f5fe5509ebe46b36976dd2ddce6560d95735ffa242325d99283d",
-        "content_sha256": "58b0f8d383b9f5fe5509ebe46b36976dd2ddce6560d95735ffa242325d99283d"
+        "authored_sha256": "d1685f23d60bf05b4b2d7a4d7f141a5b6267e53b98923ba6819e922b924d6a32",
+        "content_sha256": "d1685f23d60bf05b4b2d7a4d7f141a5b6267e53b98923ba6819e922b924d6a32"
       }
     },
     {
@@ -52438,7 +52443,7 @@
       "topic": "states",
       "status": "approved",
       "prompt": {
-        "he": "מקודד סיבובי מתקדם במחזור 00→01→11→10→00, ולאחור בסדר ההפוך. הדגימה הקודמת היא 01 והחדשה 00. מה אפשר להסיק בהנחה שמזהים צעד חוקי יחיד רק כאשר השתנה ביט אחד?",
+        "he": "אנקודר סיבובי מתקדם במחזור 00→01→11→10→00, ולאחור בסדר ההפוך. הדגימה הקודמת היא 01 והחדשה 00. מה אפשר להסיק בהנחה שמזהים צעד חוקי יחיד רק כאשר השתנה ביט אחד?",
         "en": "A rotary encoder moves forward through 00→01→11→10→00 and backward in reverse. The previous sample is 01, the new sample 00. What follows if a legal single step requires exactly one changed bit?"
       },
       "choices": [
@@ -52468,8 +52473,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "35e629185cf5e6fdae86981be287d5be118c146b4bc3fc6788f0b8bd2c6b1207",
-        "content_sha256": "35e629185cf5e6fdae86981be287d5be118c146b4bc3fc6788f0b8bd2c6b1207"
+        "authored_sha256": "50f476101625d3dc5d7b9fa9dcb22e2da590e5a68cc01d464c765fa42f87d29e",
+        "content_sha256": "50f476101625d3dc5d7b9fa9dcb22e2da590e5a68cc01d464c765fa42f87d29e"
       }
     },
     {
@@ -52479,7 +52484,7 @@
       "topic": "states",
       "status": "approved",
       "prompt": {
-        "he": "מקודד סיבובי מתקדם במחזור 00→01→11→10→00, ולאחור בסדר ההפוך. הדגימה הקודמת היא 00 והחדשה 01. מה אפשר להסיק בהנחה שמזהים צעד חוקי יחיד רק כאשר השתנה ביט אחד?",
+        "he": "אנקודר סיבובי מתקדם במחזור 00→01→11→10→00, ולאחור בסדר ההפוך. הדגימה הקודמת היא 00 והחדשה 01. מה אפשר להסיק בהנחה שמזהים צעד חוקי יחיד רק כאשר השתנה ביט אחד?",
         "en": "A rotary encoder moves forward through 00→01→11→10→00 and backward in reverse. The previous sample is 00, the new sample 01. What follows if a legal single step requires exactly one changed bit?"
       },
       "choices": [
@@ -52509,8 +52514,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "ed97cff27d63388d2897703fbc5296e27514b8c9c8e95f9502119d2b6c7fa2ba",
-        "content_sha256": "ed97cff27d63388d2897703fbc5296e27514b8c9c8e95f9502119d2b6c7fa2ba"
+        "authored_sha256": "7c9d0258e2504f6770dfa0ba3df214f3b9badbe5ea9967f717ecdc87c0bc2edf",
+        "content_sha256": "7c9d0258e2504f6770dfa0ba3df214f3b9badbe5ea9967f717ecdc87c0bc2edf"
       }
     },
     {
@@ -52520,7 +52525,7 @@
       "topic": "states",
       "status": "approved",
       "prompt": {
-        "he": "מקודד סיבובי מתקדם במחזור 00→01→11→10→00, ולאחור בסדר ההפוך. הדגימה הקודמת היא 11 והחדשה 10. מה אפשר להסיק בהנחה שמזהים צעד חוקי יחיד רק כאשר השתנה ביט אחד?",
+        "he": "אנקודר סיבובי מתקדם במחזור 00→01→11→10→00, ולאחור בסדר ההפוך. הדגימה הקודמת היא 11 והחדשה 10. מה אפשר להסיק בהנחה שמזהים צעד חוקי יחיד רק כאשר השתנה ביט אחד?",
         "en": "A rotary encoder moves forward through 00→01→11→10→00 and backward in reverse. The previous sample is 11, the new sample 10. What follows if a legal single step requires exactly one changed bit?"
       },
       "choices": [
@@ -52550,8 +52555,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "f2ca4ed49360532d78762c52cc2329a5707ab39850b02c68450731758baac249",
-        "content_sha256": "f2ca4ed49360532d78762c52cc2329a5707ab39850b02c68450731758baac249"
+        "authored_sha256": "5af2232531e4837951e61d6471e4156de98ab42f81e4898315f478e1292be135",
+        "content_sha256": "5af2232531e4837951e61d6471e4156de98ab42f81e4898315f478e1292be135"
       }
     },
     {
@@ -52561,7 +52566,7 @@
       "topic": "states",
       "status": "approved",
       "prompt": {
-        "he": "מקודד סיבובי מתקדם במחזור 00→01→11→10→00, ולאחור בסדר ההפוך. הדגימה הקודמת היא 00 והחדשה 11. מה אפשר להסיק בהנחה שמזהים צעד חוקי יחיד רק כאשר השתנה ביט אחד?",
+        "he": "אנקודר סיבובי מתקדם במחזור 00→01→11→10→00, ולאחור בסדר ההפוך. הדגימה הקודמת היא 00 והחדשה 11. מה אפשר להסיק בהנחה שמזהים צעד חוקי יחיד רק כאשר השתנה ביט אחד?",
         "en": "A rotary encoder moves forward through 00→01→11→10→00 and backward in reverse. The previous sample is 00, the new sample 11. What follows if a legal single step requires exactly one changed bit?"
       },
       "choices": [
@@ -52591,8 +52596,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "af45dd870a09bcd5f6f9e38b77d52b97f5982f93cee0416238769dd348bf6ec1",
-        "content_sha256": "af45dd870a09bcd5f6f9e38b77d52b97f5982f93cee0416238769dd348bf6ec1"
+        "authored_sha256": "e02b16f8776e001911659e565b10ecb79918c6f9713b6ae956584bf98a5ad71f",
+        "content_sha256": "e02b16f8776e001911659e565b10ecb79918c6f9713b6ae956584bf98a5ad71f"
       }
     },
     {
@@ -52602,7 +52607,7 @@
       "topic": "states",
       "status": "approved",
       "prompt": {
-        "he": "מקודד סיבובי מתקדם במחזור 00→01→11→10→00, ולאחור בסדר ההפוך. הדגימה הקודמת היא 10 והחדשה 10. מה אפשר להסיק בהנחה שמזהים צעד חוקי יחיד רק כאשר השתנה ביט אחד?",
+        "he": "אנקודר סיבובי מתקדם במחזור 00→01→11→10→00, ולאחור בסדר ההפוך. הדגימה הקודמת היא 10 והחדשה 10. מה אפשר להסיק בהנחה שמזהים צעד חוקי יחיד רק כאשר השתנה ביט אחד?",
         "en": "A rotary encoder moves forward through 00→01→11→10→00 and backward in reverse. The previous sample is 10, the new sample 10. What follows if a legal single step requires exactly one changed bit?"
       },
       "choices": [
@@ -52632,8 +52637,8 @@
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
         "professional_review": "pending",
-        "authored_sha256": "b9433d8908af8fda58a2644ec217e7a04b79ad473058628b5adde5cdfc706c48",
-        "content_sha256": "b9433d8908af8fda58a2644ec217e7a04b79ad473058628b5adde5cdfc706c48"
+        "authored_sha256": "406a8d773fd0ec670e3a8132d9f0e6e42498a28debe9a94fe0731228f3528301",
+        "content_sha256": "406a8d773fd0ec670e3a8132d9f0e6e42498a28debe9a94fe0731228f3528301"
       }
     },
     {

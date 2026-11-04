@@ -2,7 +2,7 @@
   "PREP-083": {
     "assumptions": {
       "he": [
-        "REGISTER מוגדר כאן כרגיסטר בחזית עולה; נועל ברמה גבוהה אינו אותו רכיב.",
+        "REGISTER מוגדר כאן כרגיסטר בחזית עולה; לאץ׳ ברמה גבוהה אינו אותו רכיב.",
         "מותר משוב וקבועים 0/1; נתון יציב סביב חזית ומודל שלבים אידאלי אחרי התייצבות.",
         "אין איפוס במקור ואין ערך התחלתי מובטח. clock ו־NOT clock אינם כשלעצמם אישור לתזמון פיזי.",
         "בגרסת צילום 19 קבועי 0/1 ומשוב מותרים; כל MUX בוחר D0 באפס.",
@@ -139,25 +139,25 @@
       ],
       "en": [
         "The screenshot does not define REGISTER; the edited problem explicitly uses rising-edge storage.",
-        "Polarity, reset and auxiliary components are unspecified; the editorial contract states them.",
+        "Polarity, reset and auxiliary components are unspecified; the exercise contract states them.",
         "No company tags are visible in this screenshot, so none are attributed.",
         "Screenshot nineteen omits transparency polarity, constants and clock quality. The edit states the model without claiming physical nonoverlap."
       ]
     },
     "optimality": {
-      "he": "ספירת שני בוררי משוב לביט ועוד יצירת שעון משלים היא תיאור המבנה המסוים, לא הוכחת שטח מזערי בספריית תאים. רגיסטר W ביטים דורש W ביטי מצב; עלות שעון וחיווט אינה מיוצגת במודל.\n\nNOT/OR: מרבב אחד; XOR: שניים בלי משלים מוכן; נועל: מרבב משוב אחד; דלגלג מושגי: שני מרבבי משוב ועוד מהפך שעון לפי הצורך. אין טענת מינימום תאים פיזיים.",
+      "he": "ספירת שני בוררי משוב לביט ועוד יצירת שעון משלים היא תיאור המבנה המסוים, לא הוכחת שטח מזערי בספריית תאים. רגיסטר W ביטים דורש W ביטי מצב; עלות שעון וחיווט אינה מיוצגת במודל.\n\nNOT/OR: מוקס אחד; XOR: שניים בלי משלים מוכן; לאץ׳: מוקס משוב אחד; פליפ-פלופ מושגי: שני מוקסי משוב ועוד מהפך שעון לפי הצורך. אין טענת מינימום תאים פיזיים.",
       "en": "Two feedback MUXes per bit plus complement generation describe this topology, not minimum physical area in a cell library. W-bit storage requires W state bits; clock and wire costs are outside this model.\n\nNOT/OR: one MUX; XOR: two without a supplied complement; latch: one feedback MUX; conceptual flip-flop: two feedback MUXes plus clock inverter if needed. No physical-cell optimum claim."
     },
     "verification": {
-      "he": "עברו 8 שורות אמת, 10,922 רצפי נועל/61,896 צעדים, 8,192 עקבות דלגלג/131,072 שלבים יציבים ו־512 מקרי enable ל־4 ביטים. Python אידאלי בלבד; HDL לא קומפל ואין STA או אימות פיזי.\n\nבדיקת הגרסה: שמונה שורות נועל, 8,192 צעדי עקבה ו־32 מקרי פאזה יציבה. ללא HDL, בדיקת מטא־יציבות או אי־חפיפה פיזית.",
+      "he": "עברו 8 שורות אמת, 10,922 רצפי לאץ׳/61,896 צעדים, 8,192 עקבות פליפ-פלופ/131,072 שלבים יציבים ו־512 מקרי enable ל־4 ביטים. Python אידאלי בלבד; HDL לא קומפל ואין STA או אימות פיזי.\n\nבדיקת הגרסה: שמונה שורות לאץ׳, 8,192 צעדי עקבה ו־32 מקרי פאזה יציבה. ללא HDL, בדיקת מטא־יציבות או אי־חפיפה פיזית.",
       "en": "Passed eight truth rows, 10,922 latch streams/61,896 steps, 8,192 flip-flop traces/131,072 settled phases and 512 four-bit enable cases. Ideal Python only; HDL not compiled, no STA or physical verification.\n\nVariant checks: eight latch rows, 8,192 trace steps and 32 stable-phase cases. No HDL, metastability or physical nonoverlap test."
     },
     "edge_cases": {
       "he": [
-        "EN=0 אינו מאפס נועל; הוא שומר גם ערך התחלתי לא ידוע.",
-        "נועל שקוף יכול להעביר כמה שינויי D באותו מחזור.",
-        "שני נועלים באותה קוטביות עלולים להיות שקופים יחד ואינם דלגלג בחזית.",
-        "W=1 הוא דלגלג יחיד; W>1 משתף שעון אך שומר ביטים נפרדים.",
+        "EN=0 אינו מאפס לאץ׳; הוא שומר גם ערך התחלתי לא ידוע.",
+        "לאץ׳ שקוף יכול להעביר כמה שינויי D באותו מחזור.",
+        "שני לאצ׳ים באותה קוטביות עלולים להיות שקופים יחד ואינם פליפ-פלופ בחזית.",
+        "W=1 הוא פליפ-פלופ יחיד; W>1 משתף שעון אך שומר ביטים נפרדים.",
         "שינוי D סביב חזית או חפיפת שקיפות אינו מכוסה במודל הבוליאני.",
         "שינוי D בשעון גבוה אינו עובר דרך האב הסגור.",
         "שינוי D בשעון נמוך משנה את M אך העבד מחזיק Q.",
@@ -178,11 +178,11 @@
       "he": [
         "להחליף בין רגישות לרמה לרגישות לחזית.",
         "לצייר MUX ללא משוב ולקרוא לו זיכרון.",
-        "להרכיב שני נועלים עם אותה בקרת enable.",
+        "להרכיב שני לאצ׳ים עם אותה בקרת enable.",
         "להציג clk והיפוכו כהבטחת אי־חפיפה פיזית, או להשתמש ב־EN כשעון לא מבוקר.",
         "לטעון שהקוד המושגי עבר סינתזה או STA בלי בדיקה כזאת.",
-        "שני נועלים השקופים באותה רמה מאפשרים מעבר רציף במקום דגימה בחזית.",
-        "יש לספור מרבב עבור היפוך השעון כשאין משלים מוכן.",
+        "שני לאצ׳ים השקופים באותה רמה מאפשרים מעבר רציף במקום דגימה בחזית.",
+        "יש לספור מוקס עבור היפוך השעון כשאין משלים מוכן.",
         "שעונים משלימים במודל אינם הוכחה לאי־חפיפה בחומרה."
       ],
       "en": [
@@ -197,12 +197,12 @@
       ]
     },
     "interview_answer": {
-      "he": "נועל שקוף בזמן enable, ודלגלג דוגם בחזית. MUX בוחר בין D לבין Q במשוב. כדי לקבל חזית עולה מחברים נועל ששקוף בנמוך לנועל ששקוף בגבוה; השני מעביר רק דגימה שהראשון סגר. מרחיבים לביטים במקביל, ומוסיפים enable באמצעות MUX נתונים. את המרוץ והתזמון הפיזיים צריך לבדוק בנפרד.\n\nשערים מתקבלים משני ענפי מרבב. אחסון דורש משוב; אב שקוף בנמוך ועבד בגבוה נותנים דגימה בחזית עולה במודל אידאלי, עם מרבב נוסף להיפוך השעון.",
+      "he": "לאץ׳ שקוף בזמן enable, ופליפ-פלופ דוגם בחזית. MUX בוחר בין D לבין Q במשוב. כדי לקבל חזית עולה מחברים לאץ׳ ששקוף בנמוך ללאץ׳ ששקוף בגבוה; השני מעביר רק דגימה שהראשון סגר. מרחיבים לביטים במקביל, ומוסיפים enable באמצעות MUX נתונים. את המרוץ והתזמון הפיזיים צריך לבדוק בנפרד.\n\nשערים מתקבלים משני ענפי מוקס. אחסון דורש משוב; אב שקוף בנמוך ועבד בגבוה נותנים דגימה בחזית עולה במודל אידאלי, עם מוקס נוסף להיפוך השעון.",
       "en": "A latch is transparent during enable; a DFF samples at an edge. A feedback MUX selects D or retained Q. A low-open master followed by a high-open slave transfers only the sample closed by the master at a rising edge. Replicate bits for a register and use a data MUX for enable; separately validate physical race and timing constraints.\n\nGates follow from MUX cofactors. Storage requires feedback; low-transparent master plus high-transparent slave gives ideal rising-edge capture, with an extra MUX for clock inversion."
     },
     "solution_extensions": {
       "he": {
-        "question": "מה משתנה אם מחליפים את קוטביות שני הנועלים?\n\nאיך הופכים את המבנה לדגימה בחזית יורדת בלי לשנות את מסלול הנתונים?",
+        "question": "מה משתנה אם מחליפים את קוטביות שני הלאצ׳ים?\n\nאיך הופכים את המבנה לדגימה בחזית יורדת בלי לשנות את מסלול הנתונים?",
         "direction": "ראשון שקוף בגבוה ושני בנמוך נותנים דגימה בחזית יורדת, תחת אותם אילוצי תזמון. אין צורך לשנות את רעיון המשוב.\n\nהאב יהיה שקוף בגבוה והעבד בנמוך. ניתוח חצאי המחזור מתהפך; אותן מגבלות תזמון פיזיות נשארות.",
         "status": "מוכן בתוכן; אינו מחובר לתור המשך חי.",
         "integration": "מוכן בתוכן; אינו מחובר לתור המשך אינטראקטיבי."
@@ -217,9 +217,9 @@
     "technical_references": {
       "he": [
         {
-          "title": "MIT 6.111 — נועלים ודלגלגים",
+          "title": "MIT 6.111 — לאצ׳ים ופליפ-פלופים",
           "url": "https://web.mit.edu/6.111/www/f2017/handouts/TheDigitalWorld.pdf",
-          "note": "פרקי Latch ו־Flip Flop תומכים בהגדרות ובמבנה משני נועלים. ההסבר, המודל והשרטוטים כאן נכתבו מחדש באופן עצמאי."
+          "note": "פרקי Latch ו־Flip Flop תומכים בהגדרות ובמבנה משני לאצ׳ים. ההסבר, המודל והשרטוטים כאן נכתבו מחדש באופן עצמאי."
         }
       ],
       "en": [
@@ -662,7 +662,7 @@
         "למסך לפי ביט גבוה שכן יחיד ולא לפי כל הגבוהים.",
         "לחשב V מהיציאות שכבר נחסמו ולשבור את ההיררכיה.",
         "לצייר OR בעל n כניסות ולייחס לו השהיה של שער קטן בלי להצהיר על מודל.",
-        "להוסיף דלגלגים ולקרוא לכך אותו פתרון קומבינטורי.",
+        "להוסיף פליפ-פלופים ולקרוא לכך אותו פתרון קומבינטורי.",
         "לקרוא למעברי העץ שני מחזורי שעון למרות שאין שעון."
       ],
       "en": [
@@ -908,7 +908,7 @@
         "זו וריאציה מקושרת ל־PREP-041; פתרון הדגלים שם אינו עומד באילוץ החדש, אך עקרון ה־XOR מתאים."
       ],
       "en": [
-        "The source explicitly forbids an auxiliary array. Repeatability, read-only input and the word-space model are editorial clarifications.",
+        "The source explicitly forbids an auxiliary array. Repeatability, read-only input and the word-space model are explicit assumptions.",
         "This is a linked variant of PREP-041. Its marking-array alternative violates the new constraint, while the XOR principle applies."
       ]
     },

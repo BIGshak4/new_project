@@ -61,7 +61,7 @@
       "en": "9 and 13 differ only at the bit of weight 4. XOR with 4 toggles it in both directions, so return x^4. The two-value domain promise is essential.\n\nForif, subtraction, no-subtraction andXOR use a branch,11−x,28/x andx XOR3 under the 4/7 promise."
     },
     "source_ambiguities": {
-      "he": "המקור אינו קובע שפת תכנות או עלות מינימלית. הותר XOR במפורש בעריכה; קלטים אחרים נשארים מחוץ לחוזה המקורי.\n\n[\"המקור חוזר על אותו כיוון פעמיים; ההשלמה ההדדית היא הנחת עריכה.\", \"Intel מדווחת בצילום בלבד.\"]",
+      "he": "המקור אינו קובע שפת תכנות או עלות מינימלית. הותר XOR במפורש בתרגיל; קלטים אחרים נשארים מחוץ לחוזה המקורי.\n\n[\"המקור חוזר על אותו כיוון פעמיים; ההשלמה ההדדית היא הנחת עריכה.\", \"Intel מדווחת בצילום בלבד.\"]",
       "en": "The source does not specify a language or minimum cost. XOR permission is explicit in the edited contract; other inputs remain outside the original promise.\n\n[\"The source repeats one direction; reciprocal mapping is an editorial assumption.\", \"Intel is source-reported only.\"]"
     },
     "verification": {
@@ -95,13 +95,13 @@
     "prompt_variants": {
       "he": {
         "119_four_seven_70": {
-          "prompt": "### הרחבה: מחליפים בין 4 ל־7 תחת ארבע ספריות פעולות\nמשתנה x מקבל רק 4 או 7. א. החזירו את הערך האחר בעזרת if. ב. ללא if, עם חיבור וחיסור בלבד. ג. ללא if, חיבור או חיסור. ד. באמצעות XOR בלבד.\n\nבמקור כתוב פעמיים 4→7 ולא כתובה הדרישה ההפוכה. המקור נשמר כלשונו; בעריכה נבחרה הכוונה ההדדית 4→7,7→4 לפי תחום הקלט ושאר הסעיפים. אם הכוונה המילולית היא רק 4→7, ההתנהגות עבור 7 אינה מוגדרת. מותרות קבועים, והגבלות כל סעיף הן עצמאיות. בסעיף ג נציג חלופה עם חלוקה שלמה מדויקת בתחום המובטח; אם גם חלוקה אינה מותרת זו דרישה נוספת, ו־XOR נשאר אפשרי אם הוא זמין. אין כאן החלפת שני משתנים כמו ב־PREP-077.",
+          "prompt": "### הרחבה: מחליפים בין 4 ל־7 תחת ארבע ספריות פעולות\nמשתנה x מקבל רק 4 או 7. א. החזירו את הערך האחר בעזרת if. ב. ללא if, עם חיבור וחיסור בלבד. ג. ללא if, חיבור או חיסור. ד. באמצעות XOR בלבד.\n\nבמקור כתוב פעמיים 4→7 ולא כתובה הדרישה ההפוכה. המקור נשמר כלשונו; בתרגיל נבחרה הכוונה ההדדית 4→7,7→4 לפי תחום הקלט ושאר הסעיפים. אם הכוונה המילולית היא רק 4→7, ההתנהגות עבור 7 אינה מוגדרת. מותרות קבועים, והגבלות כל סעיף הן עצמאיות. בסעיף ג נציג חלופה עם חלוקה שלמה מדויקת בתחום המובטח; אם גם חלוקה אינה מותרת זו דרישה נוספת, ו־XOR נשאר אפשרי אם הוא זמין. אין כאן החלפת שני משתנים כמו ב־PREP-077.",
           "hints": [
             "התחום כולל רק שני ערכים. אפשר לתכנן נוסחה שמחליפה אותם בלי להגדיר התנהגות לכל מספר אחר.",
             "הסכום 4+7 והמכפלה 4·7 משותפים לשני הכיוונים. איך משתמשים בהם בחיסור או בחלוקה?",
             "4 XOR7 הוא 3. הפעלת XOR עם אותה מסכה פעמיים משחזרת את הקלט; בדקו גם 11−x וגם 28/x בתחום 4,7."
           ],
-          "integration_status": "רמזי ההרחבה בחומר המשלים בלבד; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -112,7 +112,7 @@
             "Their sum4+7 and product4·7 are shared by both directions. How can subtraction or division use them?",
             "4 XOR7 equals 3, and applying the same XOR mask twice restores input. Also test 11−x and 28/x on4,7."
           ],
-          "integration_status": "Variant hints are supplemental only; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }
@@ -120,7 +120,7 @@
   "PREP-120": {
     "assumptions": {
       "he": [
-        "מרבבים לא־מהפכים בעלי select יחיד; S=0 בוחר D0.",
+        "מוקסים לא־מהפכים בעלי select יחיד; S=0 בוחר D0.",
         "A,B וקבועי 0,1 זמינים; כניסות מהופכות אינן חינם.",
         "רשת קומבינטורית חסרת מחזורים; מותר פיצול ושימוש חוזר בפלט ביניים."
       ],
@@ -150,7 +150,7 @@
       "he": [
         "להחליף D0 ו־D1 בלי לשנות את הגדרת select.",
         "לצייר NOT B שמגיע משום מקום בלי לספור את יצירתו.",
-        "לספור ארבעה מרבבים כשההיפוך ניתן לשיתוף, או לטעון שאחד מספיק כשאין כניסה מהופכת."
+        "לספור ארבעה מוקסים כשההיפוך ניתן לשיתוף, או לטעון שאחד מספיק כשאין כניסה מהופכת."
       ],
       "en": [
         "Swapping D0,D1 while keeping the select convention.",
@@ -163,17 +163,17 @@
       "en": "Generate t=NOT B using MUX(B,1,0). NAND is MUX(A,1,t); NOR is MUX(A,t,0). Each alone takes two, or both share t for three total."
     },
     "source_ambiguities": {
-      "he": "המקור אינו מגדיר קבועים, כניסות מהופכות, מלאי מרבבים או דרישת מינימום. המודל הראשי והחלופות מוגדרים במפורש; זה אינו אילוץ ״רק אפס״ של 031.",
+      "he": "המקור אינו מגדיר קבועים, כניסות מהופכות, מלאי מוקסים או דרישת מינימום. המודל הראשי והחלופות מוגדרים במפורש; זה אינו אילוץ ״רק אפס״ של 031.",
       "en": "The source omits constants, complemented inputs, available MUX count and minimum requirements. The primary model and alternatives are explicit; this is not PREP-031's zero-only constraint."
     },
     "verification": {
-      "he": "כל ארבע השורות וכל 64 חיבורי המרבב היחיד נבדקו בפייתון; נמצאו 12 פונקציות שונות, ללא NAND/NOR. הוכחת מינימום לשני מוצאים היא נימוק מבני נפרד.",
+      "he": "כל ארבע השורות וכל 64 חיבורי המוקס היחיד נבדקו בפייתון; נמצאו 12 פונקציות שונות, ללא NAND/NOR. הוכחת מינימום לשני מוצאים היא נימוק מבני נפרד.",
       "en": "All four rows and 64 single-MUX wirings were executed in Python, yielding 12 distinct functions without NAND/NOR. The two-output lower bound is a separate structural argument."
     },
     "solution_extensions": {
       "he": {
         "question": "האם אפשר לבנות אחד מהשערים אם מותר רק קבוע 0 וללא כניסות מהופכות?",
-        "direction": "לא ברשת חסרת מחזורים: ב־A=B=0 כל אות התחלתי הוא אפס, וכל מרבב ישמור על אפס. שני היעדים דורשים דווקא 1 בקלט הזה."
+        "direction": "לא ברשת חסרת מחזורים: ב־A=B=0 כל אות התחלתי הוא אפס, וכל מוקס ישמור על אפס. שני היעדים דורשים דווקא 1 בקלט הזה."
       },
       "en": {
         "question": "Can either target be built with only zero and no complemented inputs?",
@@ -347,7 +347,7 @@
             "ב־NMOS לדוגמה שער גבוה יכול ליצור ערוץ ולפרוק מוצא, אך נגד עומס וקיבולים קובעים את המעבר בפועל.",
             "אם בוחרים במפורש מודל מתג עם Ron ונגד pull-up, המוצא מתקרב למחלק מתח בקבוע זמן(Rpullup||Ron)Cout. זו המחשה שנוספה, לא המעגל החסר במקור."
           ],
-          "integration_status": "רמזי ההרחבה בחומר המשלים בלבד; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -358,7 +358,7 @@
             "In anNMOS illustration a high gate can form a conducting channel and discharge output; loading and capacitance govern the transition.",
             "An explicitly chosenRon switch plus pull-up approaches a divider voltage with time constant(Rpullup||Ron)Cout. This is an added illustration, not the missing original circuit."
           ],
-          "integration_status": "Variant hints are supplemental only; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }
@@ -553,8 +553,8 @@
       "en": "Compare first and last letters with two indices, moving inward. Any mismatch returns false; matching every pair returns true. Comparison is case-sensitive and empty input is true. O(n) time, O(1) auxiliary words, no reverse copy."
     },
     "source_ambiguities": {
-      "he": "המקור אומר אותיות ASCII אך לא קובע טיפול בקלט שגוי, ריקה או רגישות לגודל אות. A..Z/a..z, השוואה מדויקת, ריקה אמת ודחייה מפורשת נוספו בעריכה. ASCII עצמו כולל גם ספרות, פיסוק ותווי בקרה; איסורם הוא מדיניות תחום הקלט שבחרנו, ולא תכונה של התקן. אם הכוונה לכל תווי ASCII בעלי קודים 0..127, אותו אלגוריתם השוואה תקף אחרי הרחבת האימות. לא הונחו סינון או נרמול.",
-      "en": "The source says ASCII letters without specifying invalid input, empty strings or case sensitivity. A..Z/a..z, exact comparison, empty-as-true and explicit rejection are editorial choices. ASCII itself also includes digits, punctuation and control characters; rejecting them is this edition’s domain policy, not a property of the standard. If all ASCII characters with codes 0..127 are intended, the same exact-comparison algorithm applies after broadening validation. Filtering and normalization were not inferred."
+      "he": "המקור אומר אותיות ASCII אך לא קובע טיפול בקלט שגוי, ריקה או רגישות לגודל אות. A..Z/a..z, השוואה מדויקת, ריקה אמת ודחייה מפורשת מפורשות בתרגיל. ASCII עצמו כולל גם ספרות, פיסוק ותווי בקרה; איסורם הוא מדיניות תחום הקלט שבחרנו, ולא תכונה של התקן. אם הכוונה לכל תווי ASCII בעלי קודים 0..127, אותו אלגוריתם השוואה תקף אחרי הרחבת האימות. לא הונחו סינון או נרמול.",
+      "en": "The source says ASCII letters without specifying invalid input, empty strings or case sensitivity. A..Z/a..z, exact comparison, empty-as-true and explicit rejection are explicit assumptions. ASCII itself also includes digits, punctuation and control characters; rejecting them is this edition’s domain policy, not a property of the standard. If all ASCII characters with codes 0..127 are intended, the same exact-comparison algorithm applies after broadening validation. Filtering and normalization were not inferred."
     },
     "verification": {
       "he": "21,845 מחרוזות ממצות באורכים 0..7 מעל A,B,a,b עברו מול אורקל היפוך עצמאי. נוספו דוגמאות גודל אות, עשר דחיות תחום ו־10,001 אותיות. רק אורקל הבדיקה יוצר מחרוזת הפוכה; הפונקציה המוצעת אינה מעתיקה.",
@@ -689,7 +689,7 @@
             "אחסנו בו את אינדקס התא החופשי הבא, והחזיקו מצביע לראש הרשימה.",
             "allocate מוציא את הראש; free כותב בתא המשוחרר את אינדקס הראש הקודם ומציבו כראש החדש. השתמשו באינדקס ולא בהמרת מצביע 64 ביט ל־int."
           ],
-          "integration_status": "רמזי הסעיף בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -700,7 +700,7 @@
             "Store the next free-cell index there and retain a pointer to the free-list head.",
             "allocate pops the head; free writes the previous head index into the released cell and pushes it. Store an index, not a truncated 64-bit pointer in int."
           ],
-          "integration_status": "Part-specific hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }

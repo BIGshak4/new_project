@@ -17,7 +17,7 @@
     "optimality": {
       "he": {
         "criterion": "מספר מצבים לוגיים לזיהוי חלוקה ב־5 בכל אורך מילה בסדר קליטה זה.",
-        "result": "חמישה מצבים מספיקים ונחוצים; שלושה דלגלגים בקידוד בינארי. פתרון ישיר של שארית ומשקל עם עד 20 מצבים תקף גם הוא.",
+        "result": "חמישה מצבים מספיקים ונחוצים; שלושה פליפ-פלופים בקידוד בינארי. פתרון ישיר של שארית ומשקל עם עד 20 מצבים תקף גם הוא.",
         "proof": "השארית המנורמלת מתעדכנת לפי s_next=3(s+b) mod5. כל המצבים נגישים וכל זוג מובחן בעזרת המשך בן שלושה ביטים שערכו (-s) mod5.",
         "scope": "אין טענה למינימום שערים, שטח, השהיה או מספר מצבים כשמוסיפים למפרט דגל פנימי של מילה לא ריקה."
       },
@@ -85,9 +85,9 @@
     "assumptions": {
       "he": [
         "שלוש כניסות עצמאיות בנות ביט אחד; הפלט הוא הזוגיות האי־זוגית שלהן.",
-        "רק מרבבי 2:1 לא מהופכים וקבוע 0. אין קבוע 1, שערים נוספים או אותות משלימים מוכנים.",
-        "אות קלט או מוצא מרבב קודם רשאי להניע גם פין נתונים וגם פין בחירה. מותר פיצול חוטים; אין משוב.",
-        "סימן MUX(S,D0,D1) בוחר D0 ב־S=0 ו־D1 ב־S=1. גודל המרבב הובהר בעריכה."
+        "רק מוקסי 2:1 לא מהופכים וקבוע 0. אין קבוע 1, שערים נוספים או אותות משלימים מוכנים.",
+        "אות קלט או מוצא מוקס קודם רשאי להניע גם פין נתונים וגם פין בחירה. מותר פיצול חוטים; אין משוב.",
+        "סימן MUX(S,D0,D1) בוחר D0 ב־S=0 ו־D1 ב־S=1. גודל המוקס הובהר בעריכה."
       ],
       "en": [
         "Three independent one-bit inputs; output is their odd parity.",
@@ -98,10 +98,10 @@
     },
     "optimality": {
       "he": {
-        "criterion": "בניית רשת צירופית תקפה תחת מגבלת מרבבים ואפס בלבד.",
-        "result": "ארבעה מרבבי 2:1, בשני בלוקים של שני מרבבים.",
+        "criterion": "בניית רשת צירופית תקפה תחת מגבלת מוקסים ואפס בלבד.",
+        "result": "ארבעה מוקסי 2:1, בשני בלוקים של שני מוקסים.",
         "proof": "כל בלוק מממש XOR לפי פיצול למקרים X=0 ו־X=1; הרכבה נותנת XOR של שלוש כניסות.",
-        "scope": "זהו חסם עליון ומימוש מפורש; לא הוכח מינימום מספר מרבבים או שטח, עומק והשהיה."
+        "scope": "זהו חסם עליון ומימוש מפורש; לא הוכח מינימום מספר מוקסים או שטח, עומק והשהיה."
       },
       "en": {
         "criterion": "A valid combinational construction under the MUX-and-zero-only constraint.",
@@ -111,7 +111,7 @@
       }
     },
     "verification": {
-      "he": "עברו כל שמונה שורות האמת מול זוגיות סכום שלם. נבדקה רשימת חיבורים טופולוגית בת ארבעה מרבבים, בלי קבוע 1, שער חיצוני או אות שטרם נוצר. נבדק גם בלוק שני מרבבים בנפרד. בדיקת מודל פייתון בלבד; ללא קומפילציית HDL, סימולציית חומרה או תזמון.",
+      "he": "עברו כל שמונה שורות האמת מול זוגיות סכום שלם. נבדקה רשימת חיבורים טופולוגית בת ארבעה מוקסים, בלי קבוע 1, שער חיצוני או אות שטרם נוצר. נבדק גם בלוק שני מוקסים בנפרד. בדיקת מודל פייתון בלבד; ללא קומפילציית HDL, סימולציית חומרה או תזמון.",
       "en": "All eight truth rows passed against integer-sum parity. Topological validation checks four MUX instances with no constant one, external gate or unavailable wire; the two-cell block is also checked independently. Python functional model only; no HDL compilation, hardware simulation or timing."
     },
     "edge_cases": {
@@ -145,13 +145,13 @@
       ]
     },
     "interview_answer": {
-      "he": "אבנה XOR של שני ביטים בשני מרבבים: t=MUX(Y,X,0), ואחריו Z=MUX(X,Y,t). אם X=0 מעבירים Y; אם X=1, האות t מתפקד כשלילת Y בלי מקור 1 נוסף. אשתמש בבלוק פעם ל־A,B ופעם לתוצאה ול־C. סך הכול ארבעה מרבבים וקבוע אפס בלבד.",
+      "he": "אבנה XOR של שני ביטים בשני מוקסים: t=MUX(Y,X,0), ואחריו Z=MUX(X,Y,t). אם X=0 מעבירים Y; אם X=1, האות t מתפקד כשלילת Y בלי מקור 1 נוסף. אשתמש בבלוק פעם ל־A,B ופעם לתוצאה ול־C. סך הכול ארבעה מוקסים וקבוע אפס בלבד.",
       "en": "Use a two-MUX XOR block: t=MUX(Y,X,0), then Z=MUX(X,Y,t). At X=0 pass Y; at X=1, t behaves as NOT Y without an extra one source. Apply it first to A,B and then to that result and C: four MUXes with only constant zero."
     },
     "solution_extensions": {
       "he": {
-        "question": "למה אפשר לממש XOR, אבל אי אפשר לממש NOT של כניסה אחת באמצעות מרבבים וקבוע 0 בלבד?",
-        "direction": "כל רשת מותרת שומרת אפס: אם כל הקלטים אפס, כל מרבב בוחר אפס. NOT דורש פלט 1 במצב זה ולכן בלתי אפשרי. XOR שומר אפס; ההיפוך שבפתרון הוא מותנה בענף שבו קלט אחר כבר שווה 1.",
+        "question": "למה אפשר לממש XOR, אבל אי אפשר לממש NOT של כניסה אחת באמצעות מוקסים וקבוע 0 בלבד?",
+        "direction": "כל רשת מותרת שומרת אפס: אם כל הקלטים אפס, כל מוקס בוחר אפס. NOT דורש פלט 1 במצב זה ולכן בלתי אפשרי. XOR שומר אפס; ההיפוך שבפתרון הוא מותנה בענף שבו קלט אחר כבר שווה 1.",
         "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
       },
       "en": {
@@ -165,8 +165,8 @@
     "assumptions": {
       "he": [
         "מחבר מלא של ביט אחד: A+B+Cin=S+2*Cout, כאשר Cout הוא הביט המשמעותי.",
-        "המקור אינו מפרט קבועים. בגרסה הראשית מותרים 0 ו־1; חלופה של חמישה מרבבים עם אפס בלבד מפורטת בנפרד.",
-        "רק מרבבי 2:1 רגילים, חוטים ופיצול; אין היפוכים מוכנים או שערי NOT חיצוניים. כל מרבב היפוך נספר.",
+        "המקור אינו מפרט קבועים. בגרסה הראשית מותרים 0 ו־1; חלופה של חמישה מוקסים עם אפס בלבד מפורטת בנפרד.",
+        "רק מוקסי 2:1 רגילים, חוטים ופיצול; אין היפוכים מוכנים או שערי NOT חיצוניים. כל מוקס היפוך נספר.",
         "אין שעון או זיכרון. סדר הפינים הוא MUX(S,D0,D1)."
       ],
       "en": [
@@ -178,8 +178,8 @@
     },
     "optimality": {
       "he": {
-        "criterion": "מימוש שני פלטי מחבר מלא באמצעות מרבבי 2:1.",
-        "result": "חמישה מרבבים עם 0 ו־1, כולל שני מרבבי היפוך. קיימת גם חלופה בת חמישה מרבבים עם 0 בלבד.",
+        "criterion": "מימוש שני פלטי מחבר מלא באמצעות מוקסי 2:1.",
+        "result": "חמישה מוקסים עם 0 ו־1, כולל שני מוקסי היפוך. קיימת גם חלופה בת חמישה מוקסים עם 0 בלבד.",
         "proof": "P=A XOR B קובע את הנשא: ב־P=0 בוחרים A, וב־P=1 בוחרים Cin; הסכום הוא P XOR Cin.",
         "scope": "חסם עליון קונסטרוקטיבי, לא הוכחת מינימום שערים, רכיבים, שטח או השהיה. התגית 2312313 נשמרה מהמקור ללא פרשנות."
       },
@@ -191,7 +191,7 @@
       }
     },
     "verification": {
-      "he": "עברו כל שמונה שורות האמת ברשימת חיבורים של חמישה מרבבים מול חיבור שלם, כולל זהות שימור הסכום. נבדק שאין חיבור קדימה, וששתי השלילות מיוצרות במרבבים נספרים. חלופת אפס בלבד נבדקה גם היא לכל שמונת הקלטים. זו בדיקת מודל פייתון; קוד SystemVerilog לא קומפל או הורץ ולא בוצעה סינתזה.",
+      "he": "עברו כל שמונה שורות האמת ברשימת חיבורים של חמישה מוקסים מול חיבור שלם, כולל זהות שימור הסכום. נבדק שאין חיבור קדימה, וששתי השלילות מיוצרות במוקסים נספרים. חלופת אפס בלבד נבדקה גם היא לכל שמונת הקלטים. זו בדיקת מודל פייתון; קוד SystemVerilog לא קומפל או הורץ ולא בוצעה סינתזה.",
       "en": "All eight truth rows of the five-MUX netlist passed against integer addition, including value conservation. Structural checks reject forward references and ensure both complements come from counted MUXes. The zero-only alternative also passed all eight inputs. Python models only; SystemVerilog not compiled/simulated or synthesized."
     },
     "edge_cases": {
@@ -213,9 +213,9 @@
     "common_mistakes": {
       "he": [
         "להציג רק S בלי Cout ולהכריז שמומש מחבר מלא.",
-        "לא לספור את המרבבים שמייצרים nB ו־nCin.",
-        "להחליף את A ואת Cin בפיני הנתונים של מרבב הנשא בלי להחליף את הבחירה.",
-        "לחבר P כנתון במקום לסלקטור של מרבב הנשא.",
+        "לא לספור את המוקסים שמייצרים nB ו־nCin.",
+        "להחליף את A ואת Cin בפיני הנתונים של מוקס הנשא בלי להחליף את הבחירה.",
+        "לחבר P כנתון במקום לסלקטור של מוקס הנשא.",
         "לפרש את התגית 2312313 כחברה או להוסיף חברות שלא נראות במקור."
       ],
       "en": [
@@ -227,13 +227,13 @@
       ]
     },
     "interview_answer": {
-      "he": "אחשב P=A XOR B בעזרת מרבב היפוך ל־B ומרבב שבוחר B או שלילתו לפי A. בדומה אחשב S=P XOR Cin בעזרת שני מרבבים. לנשא אשתמש במרבב שבוחר A אם P=0 ו־Cin אם P=1. סך הכול חמישה מרבבים, כולל ההיפוכים, ובלי שערים חיצוניים.",
+      "he": "אחשב P=A XOR B בעזרת מוקס היפוך ל־B ומוקס שבוחר B או שלילתו לפי A. בדומה אחשב S=P XOR Cin בעזרת שני מוקסים. לנשא אשתמש במוקס שבוחר A אם P=0 ו־Cin אם P=1. סך הכול חמישה מוקסים, כולל ההיפוכים, ובלי שערים חיצוניים.",
       "en": "Compute P=A XOR B with a counted B-inverting MUX and a MUX selecting B or its complement by A. Repeat for S=P XOR Cin using two cells. Carry uses one MUX selecting A at P=0 and Cin at P=1: five MUXes including the inversions, no external gates."
     },
     "solution_extensions": {
       "he": {
-        "question": "כיצד תממשו את אותו מחבר אם מותר רק קבוע אפס, והאם מספר המרבבים חייב לגדול?",
-        "direction": "לא חייב לגדול: שני בלוקי XOR של שני מרבבים כל אחד במימוש המותנה עם אפס בלבד, ואחריהם מרבב הנשא, נותנים שוב חמישה. הציגו את כל הפינים; אין צורך לייצר שלילה גלובלית.",
+        "question": "כיצד תממשו את אותו מחבר אם מותר רק קבוע אפס, והאם מספר המוקסים חייב לגדול?",
+        "direction": "לא חייב לגדול: שני בלוקי XOR של שני מוקסים כל אחד במימוש המותנה עם אפס בלבד, ואחריהם מוקס הנשא, נותנים שוב חמישה. הציגו את כל הפינים; אין צורך לייצר שלילה גלובלית.",
         "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
       },
       "en": {
@@ -397,7 +397,7 @@
             "שני גלאים מסודרים נותנים סדר הפעלה שונה לשני הכיוונים, אך אדם יכול לעצור או לחזור לאחור.",
             "השתמשו ב־FSM המקורית שסופרת רק 00→10→11→01→00 או המסלול ההפוך. לא מספיק לספור כל קצה, והשאלה ״בכל רגע״ דורשת גבול ספירה מוגדר."
           ],
-          "integration_status": "רמזי ההרחבה בחומר המשלים בלבד; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -408,7 +408,7 @@
             "Two ordered detectors reveal different activation order, but a person may pause or retreat.",
             "Use the original full-passageFSM paths, not every edge. The phrase “at every instant” needs an explicit counting boundary."
           ],
-          "integration_status": "Variant hints are supplemental only; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }
@@ -533,7 +533,7 @@
             "במצב התחלתי לא ידוע, נורה דלוקה יכולה להוסיף אות מדומה אחד. אפשרו שתי שליחות מכל מדווח והוכיחו שסף 200 אינו אפשרי אם אחד מתוך המאה לא ביקר."
           ],
           "reference_solution": "### פתרון מוצע לווריאציית 101 האסירים ושתי הנורות\n\nאתם ועוד 100 הם **101**, ולא 100. אפשר למנות אתכם לסופר, ואת מאה האחרים למדווחים. נורה אחת S תשמור אות שממתין לסופר, והנורה השנייה D תהיה נורת דמה.\n\nבשני הסעיפים משתמשים רק בפעולות שמשנות נורה אחת. הדבר חוקי גם כאשר מותר לשנות אחת או שתיים; אין חובה לנצל את האפשרות לשנות שתיים. בכל ביקור שבו לא מדליקים או מכבים את S לפי הכללים, הופכים את D. כך לעולם לא נשארות שתי הנורות ללא שינוי, ולעולם לא מוחקים אות בטעות באמצעות שינוי שתיהן.\n\n**א. שתיהן כבויות בהתחלה:** כל אחד ממאה המדווחים רשאי להדליק את S פעם אחת בלבד, ורק אם היא כבויה. אם היא דלוקה, או שכבר שלח, הוא הופך את D במקום. הסופר מכבה S דלוקה וסופר איסוף אחד; אם היא כבויה הוא הופך את D. כשהסופר מגיע ל־100 איסופים הוא מכריז. רק מדווח יכול ליצור הדלקה, כל מדווח עושה זאת לכל היותר פעם, ולכן 100 איסופים מוכיחים ביקור של כל מאה המדווחים. גם הסופר עצמו ביקר.\n\n**ב. מצב התחלתי לא ידוע:** כל מדווח רשאי להדליק S כבויה לכל היותר פעמיים בסך הכול, בביקורים נפרדים. הסופר מכבה וסופר כמקודם, אבל מכריז רק ב־200. נורת דמה שמתחילה דלוקה אינה משנה דבר; מצב התחלתי דלוק של S יכול להוסיף לכל היותר איסוף שגוי אחד.\n\nאם מדווח אחד מתוך המאה לא ביקר, 99 האחרים יכולים לספק לכל היותר 198 אותות. גם עם אות התחלתי שגוי מגיעים לכל היותר ל־199, ולכן אי אפשר להגיע ל־200 בלי שכולם ביקרו:\n\n```text\nmissing one contributor: C <= 2*99 + 1 = 199 < 200\n```\n\nלא נדרש שכל מדווח יסיים את שתי שליחותיו לפני ההכרזה; צריך רק להוכיח שביקר. הסופר עצמו בהכרח ביקר כי ההכרזה נעשית במהלך ביקורו.\n\n**סיום והוגנות:** אם יש אות דלוק, ביקור עתידי של הסופר יכבה אותו ויספור. אם האות כבוי ועוד לא נאספו מספיק, יש מדווח עם מכסה שלא נוצלה, ותחת הוגנות יגיע ביקור מועיל. כל שליחה או איסוף מקדמים מכסה סופית. סדר הוגן מסתיים; סדר שאינו בוחר אסיר מסוים יכול להתעכב לעד, אך לא להפיק הכרזה שגויה. אין מספר ביקורים קבוע שמבטיח סיום, ואין שימוש בלוח זמנים או בידיעת ביקורים של אחרים.\n\nבדיקת המצבים הממצה של הסעיף הידוע בדקה 402 מצבים ו־1,196 מעברים; הסעיף הלא ידוע בדק 82,404 מצבים ו־324,772 מעברים בכל ארבע התחלות הנורות. נוספו 100 ו־400 ריצות פרטניות בהתאמה. נבדקו שימור אותות, סף בטוח, מכסה מקומית ושינוי של בדיוק נורה אחת בכל ביקור. זו בדיקת בטיחות של מודל, לא ניסוי עם אסירים או הוכחת סיום ללא הוגנות. קוד ותרשים נפרדים מצורפים לווריאציה; התוכן הראשי של 17 האסירים נשמר.",
-          "review_status": "מוצע בסיוע AI; סקירה מקצועית, תרגום אנושי וזכויות שימוש ממתינים."
+          "review_status": ""
         }
       ],
       "en": [
@@ -548,7 +548,7 @@
             "Unknown initial ON may add one phantom token. Allow two sends per contributor and show threshold 200 cannot occur if any of the hundred has not visited."
           ],
           "reference_solution": "### Proposed solution for the 101-prisoner, two-light variant\n\nYou plus 100 others means 101, not 100. Designate yourself the counter and the other hundred as contributors. Light S stores a pending token; light D is a dummy.\n\nBoth parts use exactly one light change per visit. This is legal when one OR both changes are permitted; using both is optional. Whenever no S action below applies, toggle D. Thus neither both-unchanged nor accidental token erasure by toggling both occurs.\n\n**A. Both initially OFF:** each of the hundred contributors turns S ON at most ONCE, only while it is OFF. If it is ON or that contributor has already sent, toggle D instead. The counter turns ON S OFF and counts a collection; when S is OFF, toggle D. Declare at 100 collections. Only contributors create ON events, each at most once, so 100 collections certify all hundred contributors. The counter has also visited.\n\n**B. Unknown initial lights:** each contributor may turn OFF S ON at most TWICE in total, on separate visits. The counter clears and counts as before but declares only at 200. Initial dummy state is irrelevant; initially ON S can contribute at most one phantom collection.\n\nIf one of the hundred contributors has not visited, the other 99 can supply at most 198 tokens. Even one phantom initial token yields at most 199, so 200 is impossible unless all have visited:\n\n```text\nmissing one contributor: C <= 2*99 + 1 = 199 < 200\n```\n\nThe declaration does not require every contributor to have exhausted both signals; it certifies visiting. The counter has necessarily visited because the declaration happens on their visit.\n\n**Termination and fairness:** an ON token is eventually cleared and counted by a future counter visit. If S is OFF and the target has not been reached, some contributor has unused allowance and fairness eventually supplies a productive visit. Every send/collect advances a finite token budget. Fair schedules terminate; a schedule forever excluding somebody can stall, but cannot yield a false declaration. There is no fixed visit bound and no use of a timetable or knowledge of others’ visits.\n\nThe known-state exhaustive search checked 402 states and 1,196 transitions; unknown state checked 82,404 states and 324,772 transitions across all four initial light settings. Added 100 and 400 individual-memory simulations respectively. Checked token conservation, safe threshold, local allowance and exactly one changed light on every visit. This is model safety verification, not a prisoner experiment or termination proof without fairness. Separate code and a figure accompany the variant; the original 17-prisoner content is preserved.",
-          "review_status": "AI proposed; expert, human parity and reuse review pending."
+          "review_status": ""
         }
       ]
     }
@@ -677,7 +677,7 @@
             "מתג דולק בתחילה עלול להוסיף לספירה אות שלא שייך לשום אסיר. איך מגבילים את התרומה של כל אסיר כדי להתגבר על אות כזה?",
             "אפשרו לכל מדווח עד שני מעברי כבוי→דולק. הסופר בלבד מכבה וסופר עד198; אם מדווח אחד חסר, לכל היותר196 אותות אמיתיים ועוד אות התחלתי אחד."
           ],
-          "reference_solution": "### אותו פרוטוקול, מספר אסירים אחר\nממנים סופר אחד ו־99 מדווחים. כל מדווח זוכר אם שלח0,1 או2 אותות. אם הוא מוצא את המתג כבוי ועדיין לא שלח פעמיים, הוא מדליק ומגדיל את זיכרון השליחות; אחרת אינו משנה אותו. הסופר בלבד מכבה מתג דולק ומקדם מונה, ומכריז כשהגיע ל־198. ביקור סרק אינו נספר. אין חובה להזיז מתג בכל ביקור, ולכן אין צורך במתג סרק שני.\n\nאות דולק ממתין עד שהסופר אוסף אותו, ואחרים לא מוחקים אותו. מצב התחלתי דולק יכול להוסיף לכל היותר אות דמה אחד, כי הסופר מכבה אותו באיסוף הראשון. אילו אחד מ־99 המדווחים לא היה מבקר,98 האחרים היו שולחים לכל היותר פעמיים כל אחד. לכן:\n\n```text\ncount <= 2*98+1 = 197 < 198\n```\n\nמכאן ש־198 מוכיח שכל99 ביקרו; הסופר נמצא בחדר בעת ההכרזה, ולכן כל100 ביקרו. אין טענה שכל אחד דיווח פעמיים לפני ההכרזה: כאשר היה אות התחלתי, אחד יכול לדווח פעם אחת בלבד ועדיין להבטיח ביקור.\n\n### בטיחות וסיום הם טענות נפרדות\nהכרזה לעולם אינה שגויה, בכל סדר ביקורים. סיום דורש את ההוגנות שנמסרה: אם יש אות דולק הסופר יחזור ויאסוף; אם הוא כבוי ועדיין נדרשים אותות, יש מדווח שנותרו לו שליחות והוא יחזור. יש רק מספר סופי של שליחות ואיסופים מועילים, ולכן התהליך מסתיים בהוגנות, אף שאפשר לעכב כל צעד בהרבה ביקורי סרק. אין חסם קבוע על זמן או על מספר הביקורים. בדגימה אקראית בלתי תלויה ואחידה ההוגנות מתקיימת בהסתברות1; אין פירוש הדבר שכל רצף אינסופי אפשרי הוא הוגן.\n\nאם המתג ידוע כבוי בתחילה, מספיקה שליחה אחת מכל מדווח וספירה עד99. אין להשתמש בקיצור הזה במצב התחלתי לא ידוע. הסופר מחזיק מונה עד198, כל מדווח זיכרון של שלושה מצבים, והעבודה המקומית בכל ביקור קבועה. לא הוכח זמן צפוי מיטבי או מינימום מצבים.\n\nהמודל הקיים מקבל n=100 ומממש את ענף המצב הלא ידוע. הורצו עשר ריצות מחזוריות הוגנות עבור2,3,5,21,100 אסירים ובשני מצבי התחלה, ונבדק סדר עוין שבו מדווח אחד חסר והסופר נעצר ב־197. סיום לכל סדר הוגן נשען על ההוכחה ולא על המדגם. שלושת הרמזים המקוריים נשארים בתור של21 אסירים; רמזי100 האסירים נשמרים כאן כחומר משלים ולא נבחרים אוטומטית לפי הסעיף."
+          "reference_solution": "### אותו פרוטוקול, מספר אסירים אחר\nממנים סופר אחד ו־99 מדווחים. כל מדווח זוכר אם שלח0,1 או2 אותות. אם הוא מוצא את המתג כבוי ועדיין לא שלח פעמיים, הוא מדליק ומגדיל את זיכרון השליחות; אחרת אינו משנה אותו. הסופר בלבד מכבה מתג דולק ומקדם מונה, ומכריז כשהגיע ל־198. ביקור סרק אינו נספר. אין חובה להזיז מתג בכל ביקור, ולכן אין צורך במתג סרק שני.\n\nאות דולק ממתין עד שהסופר אוסף אותו, ואחרים לא מוחקים אותו. מצב התחלתי דולק יכול להוסיף לכל היותר אות דמה אחד, כי הסופר מכבה אותו באיסוף הראשון. אילו אחד מ־99 המדווחים לא היה מבקר,98 האחרים היו שולחים לכל היותר פעמיים כל אחד. לכן:\n\n```text\ncount <= 2*98+1 = 197 < 198\n```\n\nמכאן ש־198 מוכיח שכל99 ביקרו; הסופר נמצא בחדר בעת ההכרזה, ולכן כל100 ביקרו. אין טענה שכל אחד דיווח פעמיים לפני ההכרזה: כאשר היה אות התחלתי, אחד יכול לדווח פעם אחת בלבד ועדיין להבטיח ביקור.\n\n### בטיחות וסיום הם טענות נפרדות\nהכרזה לעולם אינה שגויה, בכל סדר ביקורים. סיום דורש את ההוגנות שנמסרה: אם יש אות דולק הסופר יחזור ויאסוף; אם הוא כבוי ועדיין נדרשים אותות, יש מדווח שנותרו לו שליחות והוא יחזור. יש רק מספר סופי של שליחות ואיסופים מועילים, ולכן התהליך מסתיים בהוגנות, אף שאפשר לעכב כל צעד בהרבה ביקורי סרק. אין חסם קבוע על זמן או על מספר הביקורים. בדגימה אקראית בלתי תלויה ואחידה ההוגנות מתקיימת בהסתברות1; אין פירוש הדבר שכל רצף אינסופי אפשרי הוא הוגן.\n\nאם המתג ידוע כבוי בתחילה, מספיקה שליחה אחת מכל מדווח וספירה עד99. אין להשתמש בקיצור הזה במצב התחלתי לא ידוע. הסופר מחזיק מונה עד198, כל מדווח זיכרון של שלושה מצבים, והעבודה המקומית בכל ביקור קבועה. לא הוכח זמן צפוי מיטבי או מינימום מצבים.\n\nהמודל הקיים מקבל n=100 ומממש את ענף המצב הלא ידוע. הורצו עשר ריצות מחזוריות הוגנות עבור2,3,5,21,100 אסירים ובשני מצבי התחלה, ונבדק סדר עוין שבו מדווח אחד חסר והסופר נעצר ב־197. סיום לכל סדר הוגן נשען על ההוכחה ולא על המדגם."
         }
       },
       "en": {
@@ -696,7 +696,7 @@
   "PREP-056": {
     "assumptions": {
       "he": [
-        "דלגלג D דוגם בחזית עולה; האפשור והנתון עומדים בזמני הכנה והחזקה.",
+        "פליפ-פלופ D דוגם בחזית עולה; האפשור והנתון עומדים בזמני הכנה והחזקה.",
         "המוצא הוא ביט אחד. אין דרישה לאיפוס או לערך הפעלה ידוע.",
         "השינוי הוא בנתיב הנתונים; השעון נשאר אותו שעון."
       ],
@@ -709,7 +709,7 @@
     "optimality": {
       "he": {
         "criterion": "מספר רכיבי הזיכרון הדרושים לשמירת ביט עם אפשור.",
-        "result": "דלגלג אחד ובורר צירופי 2:1 מספיקים.",
+        "result": "פליפ-פלופ אחד ובורר צירופי 2:1 מספיקים.",
         "proof": "כשאין טעינה צריך להבחין בין ערך שמור 0 לערך שמור 1; לכן נדרש זיכרון של ביט. משוב דרך הבורר מממש החזקה.",
         "scope": "אין טענה למינימום שערים, שטח, הספק או השהיה בספרייה פיזית."
       },
@@ -722,14 +722,14 @@
     },
     "verification": {
       "he": {
-        "status": "בדיקות מודל פייתון עברו; ביקורת מקצועית עצמאית ממתינה.",
+        "status": "בדיקות מודל פייתון עברו.",
         "method": "השוואת משוואת השערים לאורקל שטוען רק כאשר האפשור פעיל.",
         "coverage": "כל 8 מעברי מצב/נתון/אפשור וכל 10,922 הרצפים באורכים 0–6 משני מצבי התחלה.",
         "script_path": "checks/check_prep_056_058_059_and_032_update.py",
         "scope": "לא בוצעו קומפילציה או סימולציית HDL, סינתזה או בדיקת תזמון פיזית."
       },
       "en": {
-        "status": "Python-model checks passed; independent professional review pending.",
+        "status": "Python-model checks passed.",
         "method": "Compare the Boolean gate equation with an independent load-only-when-enabled oracle.",
         "coverage": "All 8 transitions and all 10,922 streams of lengths 0..6 from both initial states.",
         "script_path": "checks/check_prep_056_058_059_and_032_update.py",
@@ -739,7 +739,7 @@
     "edge_cases": {
       "he": [
         "אפשור 0 מחזיק גם כשהנתון מתחלף.",
-        "אפשור 1 בכל חזית משחזר דלגלג D רגיל.",
+        "אפשור 1 בכל חזית משחזר פליפ-פלופ D רגיל.",
         "ללא איפוס מצב ההתחלה הפיזי אינו מובטח.",
         "שינוי בין חזיתות אינו אמור לשנות Q; עדיין חייבים לכבד הכנה והחזקה."
       ],
@@ -755,7 +755,7 @@
         "חסימת שעון באמצעות AND פשוט.",
         "חיבור המשוב לכניסה 1 והנתון לכניסה 0, שהופך את משמעות האפשור.",
         "הנחת ערך התחלה אפס בלי איפוס.",
-        "הוספת דלגלג לאפשור ויצירת עיכוב של מחזור שלא נדרש."
+        "הוספת פליפ-פלופ לאפשור ויצירת עיכוב של מחזור שלא נדרש."
       ],
       "en": [
         "Gating clock with a plain AND.",
@@ -765,7 +765,7 @@
       ]
     },
     "interview_answer": {
-      "he": "אשים בורר לפני D. האפשור יבחר בנתון החדש כשערכו 1 ובמשוב מהמוצא כשערכו 0. כך אותו שעון ממשיך להגיע לדלגלג ובחזית מתקבלת טעינה או החזקה. אין צורך בדלגלג נוסף או בשער על השעון.",
+      "he": "אשים בורר לפני D. האפשור יבחר בנתון החדש כשערכו 1 ובמשוב מהמוצא כשערכו 0. כך אותו שעון ממשיך להגיע לפליפ-פלופ ובחזית מתקבלת טעינה או החזקה. אין צורך בפליפ-פלופ נוסף או בשער על השעון.",
       "en": "Place a mux before D: enable selects new data when one and feedback Q when zero. The original clock still reaches the DFF, and each edge loads or retains the value. No extra flip-flop or clock gate is needed."
     },
     "solution_extensions": {
@@ -812,14 +812,14 @@
     },
     "verification": {
       "he": {
-        "status": "בדיקות מודל פייתון עברו; ביקורת מקצועית עצמאית ממתינה.",
+        "status": "בדיקות מודל פייתון עברו.",
         "method": "השוואת הרכבת הביטים לאורקל עצמאי שמחשב ממוצע בשלמים.",
         "coverage": "כל 2,026 זוגות הקלט התקינים ברוחבים 2–10 ועוד 6 בדיקות דחיית קלט.",
         "script_path": "checks/check_prep_056_058_059_and_032_update.py",
         "scope": "לא בוצעו קומפילציה או סימולציית HDL, סינתזה או בדיקת תזמון פיזית."
       },
       "en": {
-        "status": "Python-model checks passed; independent professional review pending.",
+        "status": "Python-model checks passed.",
         "method": "Compare gate-equivalent bit assembly against an independent integer-average oracle.",
         "coverage": "All 2,026 valid pairs at widths 2..10 plus six invalid-contract checks.",
         "script_path": "checks/check_prep_056_058_059_and_032_update.py",
@@ -910,7 +910,7 @@
     },
     "verification": {
       "he": {
-        "status": "בדיקות מודל פייתון עברו; ביקורת מקצועית עצמאית ממתינה.",
+        "status": "בדיקות מודל פייתון עברו.",
         "method": "התוכנית אינה מקבלת כיוונים. אורקל עצמאי הופך את קבוצת האינדקסים באמצעות הפרש סימטרי וסופר פלי בשתי הקבוצות.",
         "coverage": "כל 12,375 סידורי עשרה פלי עבור k=11..16; עוד 500 מדגמים משוחזרים לגדלים גדולים; 2,026 מקרי הכללה.",
         "script_path": "checks/check_prep_056_058_059_and_032_update.py",
@@ -918,7 +918,7 @@
         "variant_059_thirty_coins": "כל 4,060 הסידורים של שלושה שחורים בין 30 מטבעות עברו. נבדקו חלוקה מלאה ללא חפיפה, שלושה היפוכים בלבד וארבעת ערכי x. המודל אינו מעביר צדדים לפונקציית התכנון."
       },
       "en": {
-        "status": "Python-model checks passed; independent professional review pending.",
+        "status": "Python-model checks passed.",
         "method": "The planner receives no orientations. An independent oracle flips the planned indices using symmetric difference and counts tails in each group.",
         "coverage": "All 12,375 placements of ten tails for k=11..16; 500 reproducible larger samples; 2,026 generalized cases.",
         "script_path": "checks/check_prep_056_058_059_and_032_update.py",
@@ -1017,7 +1017,7 @@
             "אם בוחרים שלושה ובהם x שחורים, כמה שחורים נשארו בחוץ וכמה לבנים נבחרו?",
             "הפכו רק את שלושת המטבעות שנבחרו. הלבנים בקבוצה הזאת יהפכו לשחורים, ומספרם הוא בדיוק מספר השחורים שנותרו בחוץ."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -1028,7 +1028,7 @@
             "If three chosen coins contain x black faces, how many black remain outside and how many selected faces are white?",
             "Flip only the chosen three. Their white faces become black, and their count equals the black faces left outside."
           ],
-          "integration_status": "Variant hints are supplemental; original interactive hint queue retained."
+          "integration_status": ""
         }
       }
     }

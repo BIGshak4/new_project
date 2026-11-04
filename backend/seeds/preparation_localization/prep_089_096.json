@@ -63,12 +63,12 @@
     "source_ambiguities": {
       "he": [
         "בצילום לא נקבע אם חזרות נספרות לפי אינדקסים או לפי ערכים; הנוסח הערוך בוחר בראשונה ומפרט את החלופה.",
-        "תחום המספרים, אי־שינוי הקלט והרשאה למילון הם הבהרות עריכה.",
+        "תחום המספרים, אי־שינוי הקלט והרשאה למילון הם הנחות והגדרות.",
         "התגיות hardware ו־verification הן תגיות מקור; הדרישה המהותית היא אלגוריתם תוכנה."
       ],
       "en": [
         "The screenshot does not specify index multiplicity versus unique values; the edited contract chooses the former and explains the alternative.",
-        "Integer domain, input immutability and permission for a dictionary are editorial clarifications.",
+        "Integer domain, input immutability and permission for a dictionary are explicit assumptions.",
         "Hardware and verification are source tags; the substantive task is a software algorithm."
       ]
     },
@@ -442,7 +442,7 @@
         "variant_C_mirror": {
           "question": "איך מרחיבים לרוחב32?",
           "direction": "ממשיכים בהחלפת בתים וחצאי מילה עם מסכות unsigned ברוחב מתאים; אין להשתמש בהזזה בגודל הרוחב.",
-          "status": "מוכן בתוכן בלבד; הרמזים המקוריים נשמרו."
+          "status": ""
         },
         "variant_given_width": [
           {
@@ -480,7 +480,7 @@
         "variant_C_mirror": {
           "question": "How does this extend to 32 bits?",
           "direction": "Continue byte and halfword exchanges using width-correct unsigned masks; avoid shifts equal to the width.",
-          "status": "Content prepared only; original hints retained."
+          "status": ""
         },
         "variant_given_width": [
           {
@@ -521,7 +521,7 @@
             "במקום להעביר כל ביט בנפרד, אפשר להחליף זוגות של קבוצות ביטים שלמות.",
             "החליפו שכנים עם 0x55, קבוצות של שני ביטים עם 0x33 ואז חצאי בית עם 0x0F; שמרו פעולות unsigned והסבירו שלושה שלבים, לא שלוש הוראות מכונה."
           ],
-          "integration_status": "רמזי הסעיף מוכנים בחומר המשלים בלבד; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         },
         "given_width": {
           "prompt": "### הרחבה: הרוחב נתון כחלק מהקלט\nנתונים מספר בינארי ורוחב הייצוג W. כתבו קוד או פסאודו־קוד שהופך בדיוק את W הסיביות: ה־MSB הופכת ל־LSB ולהפך. דוגמת המקור היא W=7: הקלט1100101 הופך ל־1010011.\n\nנבחר קלט ללא סימן0≤value<2^W, עם W שלם לא שלילי. אפסים מובילים שייכים לרוחב ואסור להשמיטם; W=0 מקבל רק value=0 ומחזיר0. מימוש הסקאלרים אינו משתמש במערך או במחרוזת, אף שהמקור החדש לא חייב הגבלה זו. גרסת8 הביט המקורית וה־C שלה נשמרות בנפרד. נתחו מספר איטרציות, מקום במילים לעומת ביטים ומודל מספרים ברוחב לא חסום.",
@@ -530,7 +530,7 @@
             "אחרי חילוץ הביט הימני שומרים מקום לבא באמצעות הזזה שמאלה של התוצאה. מספר החזרות חייב להיות הרוחב הנתון.",
             "בצעו W פעמים result=(result<<1)|(value&1), ואז value>>=1. התחילו result=0, אל תעצרו כשהערך מתאפס, ובדקו שהקלט מתאים לרוחב לפני ההרצה."
           ],
-          "integration_status": "בחומר משלים בלבד; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         },
         "batch21_matrix_axis": {
           "prompt": "### הרחבה: היפוך עמודות בתוך כל שורת מטריצת ביטים\nממשו מערכת ההופכת ממד אחד במערך ביטים דו־ממדי. בדוגמה, השורות 011101;001111;101100 הופכות ל־101110;111100;001101. מספר השורות וסדרן נשמרים: הדוגמה הופכת את סדר העמודות בתוך כל שורה, ולא מבצעת transpose.\n\nנבחר אפיק מקביל של R×C ביטים, עם R, C חיוביים וקבועים בזמן בניית המעגל. אינדקס c=0 מתאר את התו השמאלי בכתיב השורה, ו־flat index=r·C+c בייצוג row-major. יש למפות את האינדקסים הללו לכתיב האפיק הממשי באופן עקבי. אין שעון או זיכרון במימוש החיווט הראשי.",
@@ -539,7 +539,7 @@
             "לכל יציאה (r, c) יש כניסה אחת באותה שורה, בעמודה C−1−c.",
             "ממשו y[r][c]=x[r][C−1−c]. באפיק שטוח נקודת המקור היא r·C+(C−1−c), ולא R·C−1−(r·C+c)."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         },
         "batch22_significant_bits": {
           "prompt": "### סעיף נוסף: הופכים רק את הייצוג המשמעותי של מספר\nכתבו פונקציה המקבלת מספר לא־שלילי בטווח uint32 ומחזירה את המספר שמתקבל מהיפוך הכתיב הבינארי הקצר שלו. לדוגמה, 13 נכתב 1101 ומחזיר 1011, כלומר 11. עבור אפס נגדיר תוצאה אפס. אין מערך או מחרוזת במימוש.\n\nזהו חוזה שונה מהסעיף המקורי בעל שמונה ביטים: שם 13=00001101 מחזיר 10110000=176. כאן רוחב ההיפוך הוא bit_length של הערך, ואפסים מובילים אינם חלק מהקלט. הסעיפים הקודמים נשארים ברוחביהם; אין לשנות אותם כדי להתאים לדוגמה החדשה.",
@@ -548,7 +548,7 @@
             "אם הופכים רק ביטים משמעותיים, מתי אין עוד ביט קלט שצריך להעביר?",
             "כל עוד n אינו אפס: out=(out<<1)|(n&1), ואז n>>=1. עבור n=0 הלולאה ריקה ומוחזר אפס."
           ],
-          "integration_status": "רמזי הסעיף בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         },
         "היפוך 32 ביטים בלי טבלה ענקית": {
           "prompt": "### סעיף נוסף: היפוך בית והכללה ל־ 32 ביטים במקום קבוע\n א. הפכו בית בן שמונה ביטים, למשל 00111010 ל־ 01011100, בלי מערך ובלי לאתחל LUT מראש. שפרו את מספר שלבי ההיפוך בעזרת מסכות.\n ב. הפכו את כל 32 הביטים של uint32_t, כך שביט 0 עובר למקום 31 ולהפך. מערך טבלה הממפה כל קלט 32 ביט לפלט אינו מתאים למגבלת הזיכרון. השתמשו במספר קבוע של משתנים, ללא מערך או טבלת חיפוש. הסבירו את עלות ההכללה לרוחב w, והבדילו בין מספר שלבי תלות, מספר הוראות וזמן שנמדד בפועל.\n\n הנחות: יעד C99 ומעלה מספק uint8_t ו־ uint32_t. אלה תבניות ללא סימן ברוחב קבוע, כולל אפסים מובילים; אין להסיק רוחב מהערך. השיפור אינו הבטחת זמן מעבד מסוים, ולא היפוך של ביטים משמעותיים בלבד.",
@@ -557,7 +557,7 @@
             "אחרי החלפת שכנים, החליפו זוגות, אחר כך קבוצות של ארבעה וכן הלאה. איזה תפקיד למסכה?",
             "ל־ 32 ביט בצעו החלפות במרחקים 1,2,4,8,16. לפני הזזה שמאלה מסכו את החצי הנמוך בכל קבוצה; שלבו ב־ OR את שני הכיוונים, בטיפוס ללא סימן."
           ],
-          "integration_status": "רמזי הסעיף בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -568,7 +568,7 @@
             "Instead of moving each bit separately, exchange pairs of whole bit groups.",
             "Swap neighbours using 0x55, two-bit groups using 0x33, then nibbles using 0x0F. Use unsigned operations; distinguish three stages from three machine instructions."
           ],
-          "integration_status": "Part-specific hints are supplemental only; original hint queue retained."
+          "integration_status": ""
         },
         "given_width": {
           "prompt": "### Extension: width is part of the input\nGiven a binary number and representation width W, write code or pseudocode reversing exactly W bit positions, exchanging MSB and LSB. Source example uses W=7:1100101 becomes1010011.\n\nChoose unsigned0<=value<2^W with nonnegative integer W. Leading zeros belong to the width and must not be discarded; W=0 accepts only value0 and returns0. The scalar implementation uses no array/string even though the new source does not impose that restriction. Original eight-bit and C contracts remain separate. Analyze iterations, words versus bits, and unbounded numeric representations.",
@@ -577,7 +577,7 @@
             "After extracting the rightmost bit, shift the result left to make room for the next. The iteration count must equal the supplied width.",
             "Repeat result=(result<<1)|(value&1), then value>>=1 exactly W times. Start result0, do not stop at value0, and validate width fit first."
           ],
-          "integration_status": "Supplemental only; original hint queue retained."
+          "integration_status": ""
         },
         "batch21_matrix_axis": {
           "prompt": "### Extension: reverse columns within each row of a bit matrix\nImplement reversal of one dimension of a two-dimensional bit array. Example rows 011101;001111;101100 become 101110;111100;001101. Row count/order remain unchanged: this reverses columns inside each row, not a transpose.\n\nChoose a parallel R×C-bit interface with positive dimensions fixed at circuit construction. Index c=0 denotes the leftmost displayed character; row-major flat index is r·C+c. Map these logical indices consistently to the actual bus declaration. The main wiring implementation has no clock or storage.",
@@ -586,7 +586,7 @@
             "Each output (r, c) reads one input in the same row, at column C−1−c.",
             "Use y[r][c]=x[r][C−1−c]. The row-major source index is r·C+(C−1−c), not R·C−1−(r·C+c)."
           ],
-          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         },
         "batch22_significant_bits": {
           "prompt": "### Additional part: reverse only the significant representation\nGiven a nonnegative uint32-range integer, reverse its shortest binary representation and return the resulting integer. For example, 13 is 1101 and returns 1011, namely 11. Define zero to return zero. Use no array or string in the implementation.\n\nThis differs from the original eight-bit contract: there, 13=00001101 reverses to 10110000=176. Here reversal width is the value’s bit_length; leading zeroes are not supplied. Earlier fixed-width parts retain their own widths rather than being changed to match this example.",
@@ -595,7 +595,7 @@
             "For significant-only reversal, when are there no input bits left to move?",
             "While n is nonzero, set out=(out<<1)|(n&1), then n>>=1. Zero performs no iterations and returns zero."
           ],
-          "integration_status": "Part-specific hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         },
         "Reverse32 without a huge lookup table": {
           "prompt": "### Additional part: byte reversal and constant-storage uint32 reversal\nA. Reverse all eight bits of a byte, for example00111010 to 01011100, without an array or preinitialized LUT. Reduce reversal stages using masks.\nB. Reverse all 32 bits of uint32_t, mapping bit 0 to 31 and vice versa. A table mapping every 32-bit input to a result does not fit the memory constraint. Use a fixed number of scalar variables, with no array or lookup table. Analyze general word width w and distinguish dependent stages, instructions and measured runtime.\n\nAssume C99+providing uint8_t and uint32_t. These are fixed-width unsigned patterns, including leading zeros; do not infer width from value. Optimization is not a processor-speed guarantee and does not reverse only significant bits.",
@@ -604,7 +604,7 @@
             "After swapping neighbors, exchange pairs, then groups of four, and so on. Why is a mask needed?",
             "For32 bits swap at distances1,2,4,8,16. Mask the lower half of each group before left shifting and OR the two directions using unsigned types."
           ],
-          "integration_status": "Part-specific hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }
@@ -869,7 +869,7 @@
       ]
     },
     "optimality": {
-      "he": "דלגלג D אחד ו־XOR מספיקים לחוזה שנבחר. דרוש זיכרון; לא הוכח מינימום פיזי של שטח או השהיה.\n\nFF אחד משותף ושלושה ביטויי פלט; זמן דופק תלוי במיקום שינוי הנתון. אין מינימום שטח פיזי.",
+      "he": "פליפ-פלופ D אחד ו־XOR מספיקים לחוזה שנבחר. דרוש זיכרון; לא הוכח מינימום פיזי של שטח או השהיה.\n\nFF אחד משותף ושלושה ביטויי פלט; זמן דופק תלוי במיקום שינוי הנתון. אין מינימום שטח פיזי.",
       "en": "One DFF plus XOR suffices for the explicit ideal mismatch contract; memory is necessary, but physical gate-area/delay minima are not claimed.\n\nOne shared FF and three output expressions; pulse width depends on data-change timing. No physical-area minimum."
     },
     "verification": {
@@ -877,7 +877,7 @@
       "en": "Passed 19,682 exhaustive event traces, 147,624 event comparisons and seven source-waveform event checks against independently retained last-sample state. Ideal Python only; no HDL, synthesis, STA or physical verification.\n\nAll short event histories against a last-sample oracle; separate RTL compile/run evidence. No metastability measurement."
     },
     "interview_answer": {
-      "he": "שומרים את In בדלגלג D בחזית עולה ומשווים ב־XOR לקלט החי. שינוי יוצר אי־התאמה עד הדגימה הבאה. יש להגדיר אתחול, תזמון וריבוי שינויים.\n\nאשמור את d האחרון ב־q. הזוג 10 הוא עלייה, 01 ירידה ושני אי־השוויונות הם XOR; בעליית clk דגימת d מבטלת את אי־ההתאמה.",
+      "he": "שומרים את In בפליפ-פלופ D בחזית עולה ומשווים ב־XOR לקלט החי. שינוי יוצר אי־התאמה עד הדגימה הבאה. יש להגדיר אתחול, תזמון וריבוי שינויים.\n\nאשמור את d האחרון ב־q. הזוג 10 הוא עלייה, 01 ירידה ושני אי־השוויונות הם XOR; בעליית clk דגימת d מבטלת את אי־ההתאמה.",
       "en": "Store In in a rising-edge DFF and XOR the stored sample with live In. A change creates mismatch until the next sample. Both input directions work; timing, initialization and multiple-change behavior must be specified.\n\nRetain the last d sample in q. Pair10 detects rising disagreement,01 falling, and either is XOR. Sampling d clears the disagreement."
     },
     "solution_extensions": {
@@ -931,7 +931,7 @@
             "לזיהוי עלייה נדרשים נתון נוכחי 1 ודגימה קודמת 0. מה התנאים לירידה?",
             "חברו D=d ו־CLK=clk. העלייה היא d AND NOT q, הירידה q AND NOT d, ושני הכיוונים XOR."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -942,7 +942,7 @@
             "A rising disagreement needs current1 and saved0. Which pair gives falling disagreement?",
             "Connect D=d and CLK=clk. Use d AND NOT q, q AND NOT d, and XOR for both directions."
           ],
-          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }
@@ -1111,7 +1111,7 @@
             "סכום השגיאות יכול להתעדכן בהוספת הקלט וחיסור הביט שיוצא, במקום לספור את כל החלון מחדש.",
             "שמרו 7 סיביות ומונה שגיאות. השתמשו ב־count_next=count+error−oldest, והכריעו לפי count_next כדי לכלול את הדגימה הנוכחית."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -1122,7 +1122,7 @@
             "Update the count by adding the new bit and subtracting the expired bit.",
             "Store seven history bits and a count. Use count_next=count+error−oldest so the current sample is included in the decision."
           ],
-          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }
@@ -1271,7 +1271,7 @@
         "variant_096_thousand_binary": [
           "Viewing direction, speaking order, and communication rules are made explicit.",
           "At least two thirds of 1,000 means 667 integral survivors.",
-          "This supplements the existing binary/ternary versions and retains their original hints.",
+          "",
           "NVIDIA attribution is source-reported only."
         ]
       }
@@ -1317,8 +1317,8 @@
       }
     },
     "verification": {
-      "he": "בדיקת Python ממצה של 32,766 עולמות עבור n=1..14, ובהם 393,220 תשובות של גמדים שאינם הראשונים. נבדקו 16,383 זוגות עולמות עם אותו מידע גלוי וצבע אחורי שונה, ועוד 120 עולמות מדגמיים עד n=1024. נבדקו שימור הקלט וארבע דחיות קלט. ההוכחה הכללית והחסם העליון כתובים בנפרד; אין כאן ניסוי פיזי או ביקורת אנושית.\n\nכל 9,840 סידורי שלושה צבעים באורכים 1..8 נבדקו בשלוש האסטרטגיות כשהן מוגדרות, וכן 1,000 סידורים בני 100. ב־243 מחלקות תצפית שונה רק כובע הראשון ונבדקה זהות הודעתו. פונקציות התשובה אינן מקבלות את הכובע שלהן. גבול 99 מוכח בנפרד.\n\nכל 8,190 עולמות הכובעים באורכים 1..12;200 עולמות בני 1,000;עדי מקרה גרוע עם בדיוק 667 ו־999 תשובות נכונות. למפענח המקומי אין גישה לכובע של הדובר.",
-      "en": "Python exhaustively checks 32,766 worlds for n=1..14, including 393,220 nonfirst replies, plus16,383 paired worlds differing only in the invisible rear hat and120 seeded worlds up to n=1024. Input preservation and4 invalid-world rejections are checked. The general proof and upper bound are separate; no physical experiment or human review.\n\nChecked all 9,840 three-color worlds of lengths 1..8 with each applicable strategy, plus 1,000 hundred-person worlds. In 243 visible-view classes only the first speaker hat changes and the first message stays identical. Reply functions do not receive their own hat. The 99 upper bound is separately proved.\n\nAll 8,190 binary worlds of lengths 1..12;200 worlds of size 1,000;explicit worst-case witnesses with exactly 667 and 999 correct. Local decoders cannot access the speaker's own hat."
+      "he": "בדיקת Python ממצה של 32,766 עולמות עבור n=1..14, ובהם 393,220 תשובות של גמדים שאינם הראשונים. נבדקו 16,383 זוגות עולמות עם אותו מידע גלוי וצבע אחורי שונה, ועוד 120 עולמות מדגמיים עד n=1024. נבדקו שימור הקלט וארבע דחיות קלט. ההוכחה הכללית והחסם העליון כתובים בנפרד; אין כאן ניסוי פיזי.\n\nכל 9,840 סידורי שלושה צבעים באורכים 1..8 נבדקו בשלוש האסטרטגיות כשהן מוגדרות, וכן 1,000 סידורים בני 100. ב־243 מחלקות תצפית שונה רק כובע הראשון ונבדקה זהות הודעתו. פונקציות התשובה אינן מקבלות את הכובע שלהן. גבול 99 מוכח בנפרד.\n\nכל 8,190 עולמות הכובעים באורכים 1..12;200 עולמות בני 1,000;עדי מקרה גרוע עם בדיוק 667 ו־999 תשובות נכונות. למפענח המקומי אין גישה לכובע של הדובר.",
+      "en": "Python exhaustively checks 32,766 worlds for n=1..14, including 393,220 nonfirst replies, plus16,383 paired worlds differing only in the invisible rear hat and120 seeded worlds up to n=1024. Input preservation and4 invalid-world rejections are checked. The general proof and upper bound are separate; no physical experiment.\n\nChecked all 9,840 three-color worlds of lengths 1..8 with each applicable strategy, plus 1,000 hundred-person worlds. In 243 visible-view classes only the first speaker hat changes and the first message stays identical. Reply functions do not receive their own hat. The 99 upper bound is separately proved.\n\nAll 8,190 binary worlds of lengths 1..12;200 worlds of size 1,000;explicit worst-case witnesses with exactly 667 and 999 correct. Local decoders cannot access the speaker's own hat."
     },
     "relationship_note": {
       "he": "קשורה ל־PREP-033 בנושא כובעים, אך כאן n כללי, אין מכסת צבעים ידועה והמידע מועבר במכוון בתשובות סדרתיות.",
@@ -1333,7 +1333,7 @@
             "ל־98 האחרים אפשר להעביר שני ביטים על צבעים באמצעות שני הדוברים הראשונים. האם זוגיות של שני צבעים מספיקה לזהות את השלישי?",
             "כדי להסתפק בדובר מסמן אחד, קודדו את שלושת הצבעים 0,1,2 והעבירו סכום מודולו 3. כל דובר אחר מחסר את הצבעים שהוא רואה ואת התשובות הקודמות שנכונות בוודאות."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         },
         "096_thousand_binary": {
           "prompt": "### וריאציה: 1,000 משתתפים, שני צבעים ושתי רמות של הבטחה\nאלף משתתפים עומדים בטור. לכל אחד כובע אדום או כחול, וצבעים יכולים לחזור ללא הגבלה או מכסה ידועה. כל משתתף רואה רק את הכובעים שלפניו, אינו רואה את שלו, ושומע את כל התשובות שכבר נאמרו. מתחילים מהאחרון בטור, שרואה 999 כובעים, ומתקדמים קדימה. כל אדם חייב לענות פעם אחת רק \"אדום\" או \"כחול\";תשובה נכונה מצילה אותו. מותר לתאם אסטרטגיה מראש, בלי מחוות, קצב דיבור או תקשורת נוספת.\n\nא. הבטיחו הצלה של לפחות שני שלישים. עבור 1,000 אנשים פירוש הדבר לפחות 667 בכל חלוקת צבעים. ב. מצאו אסטרטגיה שמבטיחה הצלה של כולם מלבד אחד, והוכיחו שלא ניתן להבטיח הצלה של כל האלף. אפשר להשתמש כבר בסעיף א באסטרטגיה החזקה של סעיף ב;הציגו גם בנייה מקומית בקבוצות שמסבירה את רף 667.",
@@ -1342,7 +1342,7 @@
             "בקבוצת שלושה, הראשון מדווח זוגיות של שני הכובעים שלפניו. השניים האחרים יכולים להסיק את צבעיהם. טפלו בשארית:332 שלישיות ועוד רביעייה אחת.",
             "לבנייה של 999, האדם הראשון מדווח זוגיות של כל 999 הכובעים שהוא רואה. בכל תור מחסרים ב־XOR את הצבעים שנשמעו ואת הצבעים שעוד רואים. הראשון אינו יכול לדעת את כובעו משני עולמות הנבדלים רק בו."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -1353,7 +1353,7 @@
             "Two first speakers can send two bits about the remaining 98 hats. Can parities for two colors distinguish all three possibilities?",
             "To use just one signaler, encode colors 0,1,2 and announce a sum modulo 3. Later speakers subtract visible colors and previous answers known to be correct."
           ],
-          "integration_status": "Variant hints are supplemental; original interactive hint queue retained."
+          "integration_status": ""
         },
         "096_thousand_binary": {
           "prompt": "### Variant: 1,000 people, two colors, and two guarantee levels\nOne thousand people stand in line. Every hat is red or blue;colors may repeat with no known quota. A person sees only the hats ahead, never their own, and hears every earlier answer. The rear person, who sees 999 hats, answers first, and turns proceed toward the front. Each person says exactly one color word, red or blue. A correct answer saves that person. A strategy may be agreed beforehand;gestures, timing codes, and other communication are forbidden.\n\n(a) Guarantee at least two thirds survive, meaning at least 667 of 1,000 for every coloring. (b) Guarantee everyone except possibly one survives, and prove all 1,000 cannot be guaranteed. The stronger strategy also answers(a);include a local block construction to explain the 667 threshold.",
@@ -1362,7 +1362,7 @@
             "In a triple, the first person signals the parity of the other two hats. Both followers infer their own hats. Handle the remainder with 332 triples and one block of four.",
             "For 999, let the first person signal the parity of all 999 visible hats. Each follower XORs away prior correct colors and still-visible hats. The first person cannot distinguish worlds differing only in their own hat."
           ],
-          "integration_status": "Variant hints are supplemental; original interactive hint queue retained."
+          "integration_status": ""
         }
       }
     }

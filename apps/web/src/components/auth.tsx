@@ -150,8 +150,8 @@ export function Auth({
               ? "צריך לאמת את האימייל לפני הכניסה."
               : "Confirm your email before signing in."
             : he
-              ? "הכניסה לא הושלמה. בדקו את הפרטים ונסו שוב. אם לא מגיע מייל, פנו למנהלי הפיילוט."
-              : "Sign-in failed. Check your details and try again. Contact the pilot team if email does not arrive.",
+              ? "הכניסה לא הושלמה. בדקו את הפרטים ונסו שוב. אם לא מגיע מייל, פנו לצוות האתר."
+              : "Sign-in failed. Check your details and try again. Contact the site team if email does not arrive.",
       );
     } finally {
       if (current()) setBusy(false);
@@ -176,8 +176,8 @@ export function Auth({
       </h2>
       <p>
         {he
-          ? "הסביבה פתוחה כרגע למשתתפי הפיילוט שאושרו מראש."
-          : "This workspace is available to approved pilot participants."}
+          ? "סביבת התרגול זמינה לחשבונות שאושרו מראש."
+          : "This workspace is available to accounts approved for access."}
       </p>
       <p dir="ltr">{user?.email}</p>
       {accessError && <p role="alert">{accessError}</p>}
@@ -229,11 +229,11 @@ export function Auth({
       <p>
         {kind === "practice" && mode === "signup"
           ? he
-            ? "בפעם הראשונה? צרו חשבון עם האימייל שאושר לפיילוט."
-            : "First time here? Create an account with the email approved for the pilot."
+            ? "בפעם הראשונה? צרו חשבון עם כתובת האימייל שלכם."
+            : "First time here? Create an account with your email address."
           : he
-            ? "התחברו עם האימייל שאושר לפיילוט."
-            : "Sign in with the email approved for the pilot."}
+            ? "התחברו לחשבון שלכם כדי להמשיך לתרגל."
+            : "Sign in to your account to continue practicing."}
       </p>
       {mode === "signup" && <>
         <UsernameField value={username} onChange={setUsername} lang={lang} disabled={busy} />
@@ -313,8 +313,8 @@ export function Auth({
       <p className="small muted">
         {kind === "practice"
           ? he
-            ? "יצירת חשבון אינה מעניקה גישה אוטומטית לפיילוט. הגישה מיועדת למשתתפים שאושרו מראש."
-            : "Creating an account does not automatically grant pilot access. Access is for participants approved in advance."
+            ? "יצירת חשבון אינה מעניקה גישה אוטומטית לתרגול. הגישה נפתחת לאחר אישור החשבון."
+            : "Creating an account does not automatically grant practice access. Access opens after your account is approved."
           : he
             ? "יצירת חשבון אינה מעניקה גישה אוטומטית לנתוני הצוות."
             : "Creating an account does not automatically grant access to team data."}

@@ -1,8 +1,12 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { createRequire } from "node:module";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import type { InterviewTurn, PracticeApi } from "../src/lib/practice-api";
+
+const require = createRequire(import.meta.url);
+require.extensions[".css"] = module => { module.exports = {}; };
 
 // VisualAnswer imports the shared Supabase client. Rendering the lobby needs no
 // network, and this local-only configuration makes the component import inert.

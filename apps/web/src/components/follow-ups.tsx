@@ -1,7 +1,7 @@
 "use client";
 
-import { MessageSquare } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ChevronDown, ChevronUp, MessageSquare, PencilLine } from "lucide-react";
+import { useEffect, useId, useState } from "react";
 import type { Lang } from "./auth";
 import { Pop, Reveal } from "./ui/motion";
 import type { Attempt } from "../lib/practice-api";
@@ -136,22 +136,13 @@ export function FollowUps({
                 <BidiText>{pending.question}</BidiText>
               </p>
             )}
-            <textarea
-              value={value}
-              onChange={(e) => onChange(e.target.value)}
-              disabled={disabled || resend || !!pending.question_pending}
-              rows={4}
-              dir="auto"
-              placeholder={t("התשובה שלכם לשאלת ההמשך…", "Your answer to the follow-up…")}
-              aria-label={t("התשובה שלכם לשאלת ההמשך", "Your answer to the follow-up")}
-              maxLength={20000}
-            />
-            <DictationControls
-              key={pending.turn}
+            <FollowUpAnswer
+              key={`${attempt.id}:${pending.turn}`}
               value={value}
               onChange={onChange}
               lang={lang}
-              disabled={disabled || busy || resend || !!pending.question_pending || confirmSkip}
+              disabled={disabled || resend || !!pending.question_pending}
+              dictationDisabled={disabled || busy || resend || !!pending.question_pending || confirmSkip}
             />
             <div className="row">
               <button
@@ -200,4 +191,36 @@ export function FollowUps({
       </ol>
     </section>
   );
+}
+
+/** A new attempt/turn remounts this disclosure; folding it leaves the controlled draft intact. */
+function FollowUpAnswer({ value, onChange, lang, disabled, dictationDisabled }: {
+  value: string; onChange: (text: string) => void; lang: Lang; disabled: boolean; dictationDisabled: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const id = useId();
+  const t = (he: string, en: string) => lang === "he" ? he : en;
+  return <>
+    <div className="visual-answer-actions">
+      <button type="button" aria-expanded={open} aria-controls={`${id}-follow-up-answer`} onClick={() => setOpen(current => !current)}>
+        <PencilLine size={18} aria-hidden="true" />
+        {open ? t("סגירת תשובת ההמשך", "Close follow-up answer") : t("כתיבת תשובה לשאלת ההמשך", "Write follow-up answer")}
+        {!open && value.trim() && <span className="small muted">{t("יש תוכן", "Has content")}</span>}
+        {open ? <ChevronUp size={16} aria-hidden="true" /> : <ChevronDown size={16} aria-hidden="true" />}
+      </button>
+    </div>
+    <div id={`${id}-follow-up-answer`} hidden={!open}>
+      <textarea
+        value={value}
+        onChange={event => onChange(event.target.value)}
+        disabled={disabled}
+        rows={4}
+        dir="auto"
+        placeholder={t("התשובה שלכם לשאלת ההמשך…", "Your answer to the follow-up…")}
+        aria-label={t("התשובה שלכם לשאלת ההמשך", "Your answer to the follow-up")}
+        maxLength={20000}
+      />
+      <DictationControls value={value} onChange={onChange} lang={lang} disabled={dictationDisabled || !open} />
+    </div>
+  </>;
 }

@@ -788,7 +788,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D דוגם רק בחזית עולה, ללא איפוס. Q=1, ו־D יורד ל־0 בין חזיתות. מהו Q לפני החזית העולה הבאה?",
+        "he": "פליפ-פלופ D דוגם רק בחזית עולה, ללא איפוס. Q=1, ו־D יורד ל־0 בין חזיתות. מהו Q לפני החזית העולה הבאה?",
         "en": "A D flip-flop samples only on rising edges and has no reset. Q=1 and D falls to 0 between edges. What is Q before the next rising edge?"
       },
       "choices": [
@@ -811,7 +811,7 @@
       ],
       "correct": 1,
       "explanation": {
-        "he": "בין חזיתות הדלגלג שומר את Q הקודם, 1.",
+        "he": "בין חזיתות הפליפ-פלופ שומר את Q הקודם, 1.",
         "en": "Between rising edges the flip-flop retains its previous Q value, 1."
       },
       "release_approval": {
@@ -827,7 +827,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D דוגם בחזית עולה, ללא איפוס, ומתחיל ב־Q=1. ערכי D היציבים כנדרש סביב שתי חזיתות עוקבות הם 0 ואז 1. מהו רצף Q אחרי כל חזית וזמן ההתפשטות?",
+        "he": "פליפ-פלופ D דוגם בחזית עולה, ללא איפוס, ומתחיל ב־Q=1. ערכי D היציבים כנדרש סביב שתי חזיתות עוקבות הם 0 ואז 1. מהו רצף Q אחרי כל חזית וזמן ההתפשטות?",
         "en": "A D flip-flop samples on rising edges, has no reset, and starts at Q=1. The validly stable D values at two successive edges are 0 then 1. What is Q after each edge and propagation delay?"
       },
       "choices": [
@@ -866,7 +866,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D דוגם בחזית עולה בלבד וללא איפוס. תחילה Q=0 ו־D=1. מתרחשת רק חזית יורדת. מהו Q אחריה?",
+        "he": "פליפ-פלופ D דוגם בחזית עולה בלבד וללא איפוס. תחילה Q=0 ו־D=1. מתרחשת רק חזית יורדת. מהו Q אחריה?",
         "en": "A D flip-flop samples only on rising edges, with no reset. Initially Q=0 and D=1. Only a falling edge occurs. What is Q afterward?"
       },
       "choices": [
@@ -905,7 +905,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D דוגם בחזית עולה, ללא איפוס. D עולה ל־1 וחוזר ל־0 בין שתי חזיתות, ונשאר 0 סביב החזית הבאה כנדרש. מה יישמר בחזית הבאה?",
+        "he": "פליפ-פלופ D דוגם בחזית עולה, ללא איפוס. D עולה ל־1 וחוזר ל־0 בין שתי חזיתות, ונשאר 0 סביב החזית הבאה כנדרש. מה יישמר בחזית הבאה?",
         "en": "A D flip-flop samples on rising edges, with no reset. D pulses to 1 and returns to 0 between two edges, remaining validly stable at 0 around the next edge. What is stored at the next edge?"
       },
       "choices": [
@@ -928,7 +928,7 @@
       ],
       "correct": 3,
       "explanation": {
-        "he": "הדלגלג דוגם את D בחזית. פולס שהסתיים לפניה אינו נשמר, ולכן נדגם 0.",
+        "he": "הפליפ-פלופ דוגם את D בחזית. פולס שהסתיים לפניה אינו נשמר, ולכן נדגם 0.",
         "en": "The flip-flop samples D at the edge. The pulse ended before it, so the sampled value is 0."
       },
       "release_approval": {
@@ -944,7 +944,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "דלגלג D דוגם בחזית עולה, ללא איפוס. ערכי D היציבים סביב שלוש חזיתות עוקבות הם 1,0,1. מהו רצף Q אחרי כל חזית וזמן ההתפשטות?",
+        "he": "פליפ-פלופ D דוגם בחזית עולה, ללא איפוס. ערכי D היציבים סביב שלוש חזיתות עוקבות הם 1,0,1. מהו רצף Q אחרי כל חזית וזמן ההתפשטות?",
         "en": "A D flip-flop samples on rising edges, with no reset. The validly stable D values at three successive edges are 1,0,1. What is Q after each edge and propagation delay?"
       },
       "choices": [

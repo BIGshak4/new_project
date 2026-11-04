@@ -16,7 +16,7 @@
         "The torch accompanies every trip through the tunnel, including returns; it cannot be thrown or passed between banks.",
         "At most two people occupy the tunnel at once, and a pair takes the slower person's time. No intermediate handoffs or changes inside the tunnel are allowed.",
         "Crossing times are fixed and deterministic. The battery supplies 12 hours of use, without replacement or recharging. Preparation takes no time and the schedule never waits. Thus summed trip time also equals wall-clock time if the torch stays on continuously.",
-        "Finishing exactly at 12 hours is allowed. These are editorial assumptions; the source screenshot does not state all of them explicitly.",
+        "Finishing exactly at 12 hours is allowed. These are explicit assumptions; the source screenshot does not state all of them explicitly.",
         "Canoe variant: five children with times 1,3,6,9,11 minutes, initially together with one canoe of capacity 1..2.",
         "Every return has a rower; cost is the slower rower's time, with no overhead or extra current.",
         "Arrival must be strictly before 30, not exactly at minute 30."
@@ -133,7 +133,7 @@
         "חסמי הסיבוכיות מניחים פעולות על שלמים בגודל מילה. שלמים בלתי מוגבלים בפייתון אינם גולשים, אך לפעולות עליהם עלות התלויה באורך הייצוג."
       ],
       "en": [
-        "Editorial assumptions: an unsorted integer array; empty and one-element inputs return false.",
+        "Assumptions: an unsorted integer array; empty and one-element inputs return false.",
         "Two distinct positions are required; equal values at different positions are allowed.",
         "Only existence is required, not all pairs or a prescribed pair.",
         "Auxiliary storage is allowed to improve expected time. Supplied implementations preserve the input.",
@@ -156,14 +156,14 @@
     },
     "verification": {
       "he": {
-        "status": "עברו בדיקות תוכנה; סקירה מקצועית עצמאית ממתינה.",
+        "status": "עברו בדיקות תוכנה.",
         "method": "215,863 מקרי מערך ויעד מול אורקל עצמאי של צירופי שני אינדקסים. בכל מקרה נבדקו שלושה פתרונות קיום ופתרון המחזיר אינדקסים, כולל תקינות האינדקסים ושמירת הקלט.",
         "coverage": "214,841 מקרים ממצים: 19,531 מערכים באורכים 0–6 מעל חמישה ערכים, כפול 11 יעדים. בנוסף 16 מקרי גבול מפורשים, שני מקרי התנגשות גיבוב, 1,000 דגימות עם seed קבוע וארבעה מקרי קלט בלתי ניתן לשינוי.",
         "script_path": "checks/check_prep_040.py",
         "scope": "אימות פונקציונלי סופי ונדגם; נימוק הסיבוכיות נפרד. לא נערך מבחן ביצועים שמוכיח זמן ריצה ולא נרשם אישור מומחה."
       },
       "en": {
-        "status": "Software checks passed; independent expert review remains pending.",
+        "status": "Software checks passed.",
         "method": "215,863 array/target cases against an independent index-combination oracle. Each case checks three Boolean solvers and the index-returning extension, including index validity and input preservation.",
         "coverage": "214,841 exhaustive cases: 19,531 arrays of lengths 0–6 over five values, each with 11 targets. Also 16 explicit boundaries, two hash-collision cases, 1,000 seeded samples and four immutable-sequence cases.",
         "script_path": "checks/check_prep_040.py",
@@ -233,7 +233,7 @@
         "התחלה מתמורה של כל המספרים מ־1 עד n, כל מספר פעם אחת; n=100 במקרה הנתון.",
         "אחד או שני ערכים שונים הוצאו והוסתרו; נותרו n-1 או n-2 ערכים נגישים. כל סעיף עצמאי.",
         "אפשר לקרוא את המערך שנותר יותר מפעם אחת, ולא נדרש לשנות אותו.",
-        "המקור אינו מנסח את מודל השליפה באופן חד־משמעי. הנחות ההוצאה וההסתרה נוספו בעריכה באישור הראל; חלופות הניסוח מוסברות בפתרון.",
+        "המקור אינו מנסח את מודל השליפה באופן חד־משמעי. הנחות ההוצאה וההסתרה מפורשות בתרגיל ; חלופות הניסוח מוסברות בפתרון.",
         "הקוד מניח קלט העומד בהבטחה. בדיקת האורך בקובץ הקוד אינה בדיקה מלאה של ייחודיות או תחום.",
         "חלופת הדגלים מותנית בכך שמותר O(n) זיכרון נוסף. היא משתמשת בערך המספר כאינדקס, משאירה את התא 0 ללא שימוש ומניחה את אותה הבטחת קלט.",
         "בסעיף ג בלבד: n הוא אורך הקלט; הערכים שונים ובטווח הסגור 0..n, כולל אפס. ההבטחה אינה מאומתת במלואה. הקלט נשאר ללא שינוי.",
@@ -250,7 +250,7 @@
         "The initial contents are a permutation of 1 through n, each value once; n=100 in the given instance.",
         "One or two distinct values are removed and hidden; n-1 or n-2 accessible entries remain. The parts are independent.",
         "The remaining array may be read more than once and need not be modified.",
-        "The source does not specify an unambiguous draw model. Removal and concealment are user-authorized editorial assumptions; alternatives are explained in the solution.",
+        "The source does not specify an unambiguous draw model. Removal and concealment are user-authorized explicit assumptions; alternatives are explained in the solution.",
         "The code assumes the promised input contract. The file's length checks do not fully validate uniqueness or range.",
         "The flag-array alternative requires permission to use O(n) additional storage. It indexes by value, leaves index zero unused, and assumes the same valid-input promise.",
         "Part C only: n is input length; entries are distinct in the closed range 0..n, including zero. The promise is not fully validated. Input remains unchanged.",
@@ -295,8 +295,8 @@
       }
     },
     "verification": {
-      "he": "48,214 בדיקות פייתון עברו מול אורקל בלתי תלוי של הפרש קבוצות: 24,023 בדיקות של פתרונות הסכום וה־XOR ו־24,191 בדיקות של מערך הדגלים. נבדקו כל 100 החסרים היחידים וכל 4,950 זוגות החסרים עבור n=100, בשלושה סדרי קלט; כל סדרי השארית בגדלים 1 עד 7; תנאי התחלה, קלט ריק, שמירת הקלט ואי־החזרת אינדקס 0. בדיקות נוספות מאמתות את פונקציית הדגלים גם ללא חסרים ועם יותר משניים, בלי לשנות את סעיפי השאלה. זהו אימות תוכנה במסגרת ההנחות, ולא סקירה מקצועית או בדיקת לחיצות באתר חי.\n\nסעיף ג: 46,233 תמורות חוקיות ממצות עבור n=0..7 ועוד 400 דגימות עד n=2000 עברו מול חיפוש חברות עצמאי. שני המימושים בפייתון הורצו ונבדקה שמירת הקלט; אין כאן קומפילציה ברוחב קבוע או אישור מומחה.\n\nמיצוי קלטיN−1 עבורN=1..7 ועוד300 דגימות מול חברות עצמאית; נבדקו שימור קלט/רב־קבוצה ופסילה אטומית.\n\n280,392 קלטי N−1 ממצים עבור N=1..7 ועוד 300 דגימות מול חברות עצמאית; נבדקו שימור קלט/רב־קבוצה ופסילה אטומית.\n\n46233 סדרים לחסר אחד,23116 לשניים ו־ 4950 זוגות מתוך 100; מבקר צריכה אחת ושורש מדויק.",
-      "en": "48,214 Python checks passed against an independent set-difference oracle: 24,023 checks of the sum/XOR alternatives and 24,191 of the flag array. Coverage includes all 100 single omissions and all 4,950 missing pairs for n=100 in three input orders, every remaining permutation for sizes 1 through 7, initialization, empty inputs, input preservation and exclusion of unused index zero. Additional generic flags cases cover no omissions and more than two without changing the question's subparts. This is software verification under the stated assumptions, not professional review or authenticated live-site clicking.\n\nPart C: all 46,233 valid permutations for n=0..7 plus 400 seeded cases up to n=2000 passed independent membership-search checks. Both actual Python implementations ran with input preservation checked; no fixed-width compilation or expert approval is claimed.\n\nExhaustive length-N−1 inputs for N=1..7 plus300 seeded arrays versus membership search; preservation/multiset and atomic rejection checked.\n\n280,392 exhaustive length-N−1 inputs for N=1..7 plus 300 seeded arrays versus membership search; preservation/multiset and atomic rejection checked.\n\n46233 single orders,23116 double orders and 4950 hundred-range pairs; one-consumption guards and exact root."
+      "he": "48,214 בדיקות פייתון עברו מול אורקל בלתי תלוי של הפרש קבוצות: 24,023 בדיקות של פתרונות הסכום וה־XOR ו־24,191 בדיקות של מערך הדגלים. נבדקו כל 100 החסרים היחידים וכל 4,950 זוגות החסרים עבור n=100, בשלושה סדרי קלט; כל סדרי השארית בגדלים 1 עד 7; תנאי התחלה, קלט ריק, שמירת הקלט ואי־החזרת אינדקס 0. בדיקות נוספות מאמתות את פונקציית הדגלים גם ללא חסרים ועם יותר משניים, בלי לשנות את סעיפי השאלה. זהו אימות תוכנה במסגרת ההנחות.\n\nסעיף ג: 46,233 תמורות חוקיות ממצות עבור n=0..7 ועוד 400 דגימות עד n=2000 עברו מול חיפוש חברות עצמאי. שני המימושים בפייתון הורצו ונבדקה שמירת הקלט; אין כאן קומפילציה ברוחב קבוע או אישור מומחה.\n\nמיצוי קלטיN−1 עבורN=1..7 ועוד300 דגימות מול חברות עצמאית; נבדקו שימור קלט/רב־קבוצה ופסילה אטומית.\n\n280,392 קלטי N−1 ממצים עבור N=1..7 ועוד 300 דגימות מול חברות עצמאית; נבדקו שימור קלט/רב־קבוצה ופסילה אטומית.\n\n46233 סדרים לחסר אחד,23116 לשניים ו־ 4950 זוגות מתוך 100; מבקר צריכה אחת ושורש מדויק.",
+      "en": "48,214 Python checks passed against an independent set-difference oracle: 24,023 checks of the sum/XOR alternatives and 24,191 of the flag array. Coverage includes all 100 single omissions and all 4,950 missing pairs for n=100 in three input orders, every remaining permutation for sizes 1 through 7, initialization, empty inputs, input preservation and exclusion of unused index zero. Additional generic flags cases cover no omissions and more than two without changing the question's subparts. This is software verification under the stated assumptions.\n\nPart C: all 46,233 valid permutations for n=0..7 plus 400 seeded cases up to n=2000 passed independent membership-search checks. Both actual Python implementations ran with input preservation checked; no fixed-width compilation or expert approval is claimed.\n\nExhaustive length-N−1 inputs for N=1..7 plus300 seeded arrays versus membership search; preservation/multiset and atomic rejection checked.\n\n280,392 exhaustive length-N−1 inputs for N=1..7 plus 300 seeded arrays versus membership search; preservation/multiset and atomic rejection checked.\n\n46233 single orders,23116 double orders and 4950 hundred-range pairs; one-consumption guards and exact root."
     },
     "edge_cases": {
       "he": [
@@ -396,12 +396,12 @@
         "variant_c_zero_based": {
           "question": "בסעיף ג, מה קורה אם החוזה מתיר חזרה אחת במקום ערך חסר?",
           "direction": "הוכחת הביטול כבר אינה נותנת בהכרח מספר חסר יחיד. יש להגדיר מחדש את מספר החזרות והחסרים, להוסיף מידע מתאים או לאמת את החוזה; אין להציג את אוגר ה־XOR לבדו כתשובה מאומתת.",
-          "status": "שלושת רמזי ג ושאלת ההמשך מוכנים בתוכן בלבד; תור הרמזים המקורי נשמר."
+          "status": ""
         },
         "variant_D_all_missing": {
           "question": "מה אם אסור לשנות קלט ומותר מעט זיכרון, אך מותר זמן רב יותר?",
           "direction": "אפשר לבדוק כל מועמד מול כל הקלט בסריקות חוזרות ולהזרים חסרים; החיסכון בזיכרון בא על חשבוןO(NL) זמן.",
-          "status": "רמזים והמשך מוכנים בחומר המשלים בלבד; התור הקודם נשמר."
+          "status": ""
         },
         "variant_one_pass_moments": [
           {
@@ -418,7 +418,7 @@
         "variant_c_zero_based": {
           "question": "In C, what changes if a duplicate may replace a value?",
           "direction": "Cancellation no longer necessarily identifies one omission. Define duplicate/missing multiplicities and add suitable information or contract validation; the XOR accumulator alone is not a validated answer.",
-          "status": "C’s three hints and follow-up are prepared as content only; the original hint queue is retained."
+          "status": ""
         },
         "variant_D_all_missing": {
           "question": "What if input is read-only and little workspace is available, but more time is allowed?",
@@ -446,13 +446,13 @@
           "integration_status": "מוכן בחומר המשלים; אינו מחליף את תור שלושת הרמזים המקורי של א–ב."
         },
         "D_all_missing": {
-          "prompt": "### ד. חזרות, אפסים וכל הערכים החסרים\nבסעיף החדש התחום המבוקש הוא 1..N, עם N≥1. בקלט N−1 תאים, אך כעת מותרות חזרות ואפסים; אפס הוא מציין מקום שאינו ערך בתחום. החזירו בסדר עולה את כל ערכי1..N שלא הופיעו. גם קלט שכולו אפסים אפשרי, ואז כולם חסרים. האם אפשר להבטיח גם זמן וגם מקום קטנים מ־O(N)?\n\nהבהרות: תחום הקלט0..N מובטח ונבדק במימוש החדש; אין מספרים שליליים. הבדילו זיכרון עזר מזיכרון הפלט, ופלט מפורש מזרם. תחילה פתרון שאינו משנה קלט, המוכלל לאורך L כלשהו. אחר כך חלופה מפורשת שמותר לה לשנות את N−1 התאים. סעיפי א–ג והרמזים הקודמים נשארים ללא שינוי; שני החסרים בסעיף ב דורשים N−2 ערכים שונים.",
+          "prompt": "### ד. חזרות, אפסים וכל הערכים החסרים\nבסעיף החדש התחום המבוקש הוא 1..N, עם N≥1. בקלט N−1 תאים, אך כעת מותרות חזרות ואפסים; אפס הוא מציין מקום שאינו ערך בתחום. החזירו בסדר עולה את כל ערכי1..N שלא הופיעו. גם קלט שכולו אפסים אפשרי, ואז כולם חסרים. האם אפשר להבטיח גם זמן וגם מקום קטנים מ־O(N)?\n\nהבהרות: תחום הקלט0..N מובטח ונבדק במימוש החדש; אין מספרים שליליים. הבדילו זיכרון עזר מזיכרון הפלט, ופלט מפורש מזרם. תחילה פתרון שאינו משנה קלט, המוכלל לאורך L כלשהו. אחר כך חלופה מפורשת שמותר לה לשנות את N−1 התאים.",
           "hints": [
             "מה משתנה בבדיקת נוכחות כאשר אותו ערך מופיע כמה פעמים, והאם צריך להחזיר אפס?",
             "דגל נוכחות אינו משתנה אחרי החזרה הראשונה. במקרה של אפסים בלבד יש לכתוב N תוצאות, בלי קשר לאלגוריתם הפנימי.",
             "ללא שינוי קלט סמנו דגל לכל ערך. אם מותר לשנות N−1 תאים, הציבו v בתחום1..N−1 במקוםv−1, הימנעו מהחלפת כפילויות ללא סוף, ושמרו דגל יחיד לנוכחותN."
           ],
-          "integration_status": "רמזי הסעיף מוכנים בחומר המשלים בלבד; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         },
         "one_pass_moments": {
           "prompt": "### הרחבה: מעבר יחיד ומשתנה צבירה אחד או שניים\nא.99 ערכים שונים מתוך 1..100, חסר אחד: מצאו אותו במעבר אחד ובצובר מספרי אחד. ב.98 ערכים שונים מאותו תחום, חסרים שניים שונים: מצאו אותם במעבר אחד ובשני צוברים.\n\nזהו חוזה חדש: הקלט יכול להיות זרם חד־פעמי שאסור לקרוא שוב. n ידוע מראש; אורך, תחום וייחוד הם הבטחה. המגבלה סופרת צוברים מספריים שמתעדכנים בזמן הזרימה, לא את n, פריט הקלט הנוכחי, בקרת הלולאה או משתני חישוב/פלט אחרי הסיום. נדרשת אריתמטיקה מדויקת עם רוחב מספיק, ושורש שלם מדויק. הכלילו ל־ 1..n ושמרו את גרסאות הקריאה החוזרת הקודמות.",
@@ -461,7 +461,7 @@
             "צברו גם ריבועים. בסוף תקבלו S=a+b ו־Q=a²+b².",
             "2Q−S²=(a−b)². חשבו שורש שלם מדויק d, ואז a=(S−d)/2, b=(S+d)/2; הגדירו רוחב והימנעו מעיגול."
           ],
-          "integration_status": "בחומר משלים בלבד; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -472,7 +472,7 @@
             "With extra storage, use each observed value as a flag index. Leave room for n as well as zero.",
             "Without flags, exploit x XOR x = 0: cancel the complete range against the observed input. Only the missing value occurs once."
           ],
-          "integration_status": "Prepared in supplemental material; does not replace the original three-hint queue for A–B."
+          "integration_status": ""
         },
         "D_all_missing": {
           "prompt": "### D. Repetitions, zero sentinels and every missing value\nThe new part asks for domain1..N, N≥1. Input has N−1 entries, now allowing repetitions and zeros. Zero is a sentinel outside the requested domain. Return in ascending order every value1..N absent from input. All-zero input is valid and makes all N values missing. Can both time and space be guaranteed below O(N)?\n\nClarify auxiliary versus output storage and materialized versus streamed output. Input values lie in0..N; new implementations validate this. First give a read-only solution generalized to arbitrary length L, then an explicitly permitted mutating alternative for exactly N−1 slots. Parts A–C and their old hints remain unchanged; distinct two-omission Part B has N−2 observations.",
@@ -481,7 +481,7 @@
             "A presence flag does not change after the first occurrence. All-zero input requires writing N answers regardless of internal algorithm.",
             "Read-only: mark value-indexed flags. With N−1 mutable slots, place v in1..N−1 at v−1, avoid duplicate swap loops, and retain one presence flag for N."
           ],
-          "integration_status": "Part-specific hints are supplemental only; original hint queue retained."
+          "integration_status": ""
         },
         "one_pass_moments": {
           "prompt": "### Extension: one pass with one or two numeric accumulators\nA.99 distinct observations from 1..100 omit one value: find it in one pass/one numeric accumulator. B.98 distinct observations omit two distinct values: one pass/two accumulators.\n\nThis new contract permits a one-shot stream that cannot be reread. n is known; length/range/uniqueness are promises. The budget counts numeric accumulators updated while streaming, not n, the current input item, loop control or post-stream arithmetic/output scratch. Use exact arithmetic with sufficient width and exact integer square root. Generalize to 1..n while preserving prior repeatable-input variants.",
@@ -490,7 +490,7 @@
             "Accumulate squares as well, obtaining S=a+b and Q=a²+b².",
             "2Q−S²=(a−b)². Use exact integer root d, then a=(S−d)/2, b=(S+d)/2; define width rather than rounding."
           ],
-          "integration_status": "Supplemental only; original interactive hint queue retained."
+          "integration_status": ""
         }
       }
     },
@@ -530,14 +530,14 @@
     },
     "verification": {
       "he": {
-        "status": "בדיקות מודל פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
+        "status": "בדיקות מודל פייתון עברו.",
         "method": "השוואה לאורקל עצמאי שמזהה עלייה לפי הפרש חיובי של 1 בין שתי דגימות.",
         "coverage": "16,382 רצפים בינאריים באורכים 0–12 עם שתי אפשרויות לדגימה הקודמת; 2,048 עקבות איפוס באמצע; דוגמה מפורשת וקלט גבוה במשך 100 מחזורים.",
         "script_path": "checks/check_prep_042.py",
         "scope": "הקוד ב־SystemVerilog צורף אך לא קומפל או הורץ בסימולטור HDL. לא נעשו סינתזה, בדיקת זמני הכנה/החזקה או מדידת מטא־יציבות ותזמון בחומרה."
       },
       "en": {
-        "status": "Python-model checks passed; independent expert review remains pending.",
+        "status": "Python-model checks passed.",
         "method": "Comparison with an independent oracle identifying a rise from a sample difference of positive one.",
         "coverage": "16,382 binary streams of lengths 0–12 across both initial previous states; 2,048 midstream-reset traces; one explicit example and a 100-cycle held-high trace.",
         "script_path": "checks/check_prep_042.py",
@@ -626,7 +626,7 @@
         "timing": "לא נמסרו שעון, מועד דגימה או איפוס. דגימת תו בכל חזית עולה ואיפוס סינכרוני מסומנים כהבהרות מימוש.",
         "symbols": "המקור מציין ארבעה תווים שונים. פתרון זה משתמש בתווים הסמליים A/B/C/D ומאפשר תווים אחרים כאי־התאמות.",
         "variant_043_three_bit_symbols": [
-          "לא נמסרו קודי התבנית, שונות הסמלים, חפיפה, שעון או איפוס; הפרמטרים והחוזה הם השלמות עריכה גלויות."
+          "לא נמסרו קודי התבנית, שונות הסמלים, חפיפה, שעון או איפוס; הפרמטרים והחוזה הם הגדרות נוספות גלויות."
         ]
       },
       "en": {
@@ -634,15 +634,15 @@
         "timing": "Clocking, sampling instant, and reset are unspecified. One symbol per rising edge and synchronous reset are labeled implementation clarifications.",
         "symbols": "The source states four distinct symbols. This solution uses A/B/C/D symbolically and treats other symbols as mismatches.",
         "variant_043_three_bit_symbols": [
-          "Target codes, distinctness, overlap, clock and reset were omitted; parameters and timing are explicit editorial choices."
+          "Target codes, distinctness, overlap, clock and reset were omitted; parameters and timing are explicit explicit assumptions."
         ]
       }
     },
     "optimality": {
       "he": {
         "criterion": "מספר מצבים במכונת Mealy מופשטת לזיהוי הרצף הקבוע, וזיכרון ועבודה לכל תו. אין מדד פיזי של שטח שערים או השהיה.",
-        "result": "ארבעה מצבי התקדמות מופשטים. הקוד שפלטו רשום דורש שתי סיביות מצב ועוד דלגלג פעימה. לחלופה ששומרת פתיחה יש חמישה מצבים לוגיים. זמן O(1) לכל תו ו־O(m) לזרם בן m תווים.",
-        "proof": "מצב ההתקדמות הוא הסיומת הארוכה ביותר שהיא תחילית ממש של ABCD. המצבים נבדלים על ידי המשכים D, CD, BCD או ABCD: המשך שמשלים זיהוי ממצב מתקדם יותר לא מספיק ממצב פחות מתקדם. בכך מוצדקים ארבעת מצבי ה־Mealy, אך לא נובע שדי בשני דלגלגים למימוש שפלטו נשמר אחרי החזית.",
+        "result": "ארבעה מצבי התקדמות מופשטים. הקוד שפלטו רשום דורש שתי סיביות מצב ועוד פליפ-פלופ פעימה. לחלופה ששומרת פתיחה יש חמישה מצבים לוגיים. זמן O(1) לכל תו ו־O(m) לזרם בן m תווים.",
+        "proof": "מצב ההתקדמות הוא הסיומת הארוכה ביותר שהיא תחילית ממש של ABCD. המצבים נבדלים על ידי המשכים D, CD, BCD או ABCD: המשך שמשלים זיהוי ממצב מתקדם יותר לא מספיק ממצב פחות מתקדם. בכך מוצדקים ארבעת מצבי ה־Mealy, אך לא נובע שדי בשני פליפ-פלופים למימוש שפלטו נשמר אחרי החזית.",
         "scope": "ארבעה מצבי זיהוי מופשטים אינם אותה ספירה כמו מצב חומרה הכולל אוגר פלט. הקידוד הבינרי, ההשוואות והשהיות תלויים בטכנולוגיה ובמימוש; לא הוכחה אופטימליות של מספר שערים.",
         "variant_043_three_bit_symbols": "חמישה מצבי קידומת, שלושה ביטי מצב בקידוד בינארי, טבלה עד 40 שורות עבור תבנית קבועה. זהו חסם בנייה, ללא טענת מינימום שערים או השהיה."
       },
@@ -689,7 +689,7 @@
         "חזרה ל־S0 על כל אי־התאמה: מפספסת רצף חדש שמתחיל ב־A, כגון ABCABCD.",
         "הפקת פלט 1 מיד לאחר ABC: חסר התו D.",
         "הגדרה עמומה של פתיחת הכספת: פעימה של מחזור אחד ופתיחה עד איפוס הן התנהגויות שונות.",
-        "הכרזה שארבעה מצבים מבטיחים שני דלגלגים לכל המימוש: הקוד מוסיף אוגר פלט פעימה.",
+        "הכרזה שארבעה מצבים מבטיחים שני פליפ-פלופים לכל המימוש: הקוד מוסיף אוגר פלט פעימה.",
         "התעלמות מתווים שאינם בתבנית במקום לאפס התקדמות: כך ABXCD עלול להיחשב בטעות כהתאמה.",
         "הנחה שחזרה ל־S0 אחרי כל תבנית נכונה לכל גלאי: כאן היא נכונה בגלל התווים השונים; לתבנית כמו ABAB יש חפיפה.",
         "דיווח שסימולציית פייתון מאשרת סינתזה, גליצ'ים או עמידה בתזמון של קוד SystemVerilog: נדרש אימות חומרה נפרד.",
@@ -749,7 +749,7 @@
             "חזרות בתבנית עשויות לאפשר התאמה חדשה עוד לפני שהישנה הסתיימה. בדקו את התבנית 1,2,1,2 על הזרם 1,2,1,2,1,2.",
             "שמרו מצב 0..4 לפי אורך הקידומת הארוכה ביותר שהיא גם סיומת ההיסטוריה. במעבר הוסיפו סמל וחפשו סיומת מתאימה; מוצא 1 רק במצב 4."
           ],
-          "integration_status": "רמזי ההרחבה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -760,7 +760,7 @@
             "Repeated target items can preserve progress after a mismatch or a match. Test target1,2,1,2 against stream1,2,1,2,1,2.",
             "Use states0..4 for the longest target prefix that is a history suffix. Append the next symbol and keep the longest matching suffix; output one only in state4."
           ],
-          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }

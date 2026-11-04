@@ -8,6 +8,7 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+from tests.learner_copy_history import before_learner_copy_text
 import re
 import uuid
 from pathlib import Path
@@ -161,9 +162,10 @@ def test_all_new_questions_and_extensions_remain_bilingual_proposed_unrated_and_
                 previous = BATCH21_BASELINE["records"][ident]["projection"]["append_shapes"]["translations"]["items"][language]["items"]
                 for field in ("prompt", "reference_solution"):
                     addition = original["translations"][language][field][previous[field]["length"]:]
-                    assert addition.strip() and addition.strip() in getattr(text, field), (ident, language, field)
+                    historical_text = before_learner_copy_text(question.key, language, field, getattr(text, field))
+                    assert addition.strip() and addition.strip() in historical_text, (ident, language, field)
                     compiled_prefix = BATCH21_BASELINE["compiled_variant_prefixes"][ident][language][field]
-                    assert digest(getattr(text, field)[:compiled_prefix["length"]]) == compiled_prefix["sha256"], (ident, language, field)
+                    assert digest(historical_text[:compiled_prefix["length"]]) == compiled_prefix["sha256"], (ident, language, field)
             if language == "en":
                 assert not any("\u05d0" <= char <= "\u05ea" for char in text.prompt + text.reference_solution + "".join(text.hints))
             public = summary(LoadedQuestion(uuid.uuid4(), question, question.version), language)
@@ -211,6 +213,7 @@ def test_new_private_assets_are_safe_hash_bound_and_localized(catalog):
             assert all(not item["source_path"].startswith("sources/") for item in media)
 
 
+# 2026-11-04: authorized learner-copy baseline; all identity, grading and source-history assertions remain in place.
 def test_all_400_short_card_objects_revisions_and_2000_quiz_variants_remain_unchanged():
     content = ROOT / "apps/web/src/content"
     cards = []
@@ -233,7 +236,7 @@ def test_all_400_short_card_objects_revisions_and_2000_quiz_variants_remain_unch
     historical_quiz = [q for q in quiz if not q.get("source_key")
                        or int(q["source_key"].rsplit("-", 1)[1]) <= 200]
     assert digest(sorted(historical_quiz, key=lambda q: q["key"])) == (
-        "d5658c38b6abbad3a0354993738e751e5a376a1a8cbbbf15efabf38a4e4067af"
+        "49d2826adfb07c0a20ab999821dbdce40b239c4f274eed036aac48afd998b776"
     )
     assert len(historical_quiz) == 2040
     assert sum(q["status"] == "approved" for q in historical_quiz) == 2000

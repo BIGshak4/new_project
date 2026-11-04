@@ -15,7 +15,7 @@
       "en": "Two gates in this construction; at most two gate levels, without a physical optimality claim."
     },
     "verification": {
-      "he": "מודל Python נבדק מול טבלה עצמאית בכל שמונת הקלטים וגם בהפעלה כפולה: 16 בדיקות. קוד HDL וסימולציה מתועדים בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם נועלי ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+      "he": "מודל Python נבדק מול טבלה עצמאית בכל שמונת הקלטים וגם בהפעלה כפולה: 16 בדיקות. קוד HDL וסימולציה מתועדים בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
       "en": "Python was compared with an independent eight-row table and the involution property:16 checks. HDL code and simulation evidence are recorded separately.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
     },
     "edge_cases": {
@@ -67,11 +67,11 @@
       ]
     },
     "optimality": {
-      "he": "שני ביטי מצב, משוואות לוגיות ונועלי master/slave. אין טענת מינימום פיזי או תדר.",
+      "he": "שני ביטי מצב, משוואות לוגיות ולאצ׳י master/slave. אין טענת מינימום פיזי או תדר.",
       "en": "Two state bits, Boolean equations and master/slave storage; no physical minimum or frequency claim."
     },
     "verification": {
-      "he": "מודל Python עבר155,648 בדיקות לכל4096 רצפי Vin באורך12, כולל איפוס ומיסוך במחצית הנמוכה. קוד התנהגותי ושערי NAND מופרדים לצורך סימולציית HDL בדוח נפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם נועלי ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+      "he": "מודל Python עבר155,648 בדיקות לכל4096 רצפי Vin באורך12, כולל איפוס ומיסוך במחצית הנמוכה. קוד התנהגותי ושערי NAND מופרדים לצורך סימולציית HDL בדוח נפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
       "en": "Python passed155,648 checks over all4096 length12 Vin histories, including reset and low-phase masking. Behavioral and NAND-storage RTL are provided for separately recorded HDL simulation.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
     },
     "edge_cases": {
@@ -91,12 +91,12 @@
       "en": "Inferring a memoryless function; assuming a full-cycle output; counting cycles with uncalibrated gate delay; ignoring initialization and feedback."
     },
     "interview_answer": {
-      "he": "צריך לזכור כמה חזיתות יורדות רצופות ראו Vin=1. מצב2 מאפשר רק את המחצית הגבוהה הבאה; מצב3 חוסם חזרה עד דגימת0. את שני הדלגלגים ניתן לבנות מנועלי NAND.",
+      "he": "צריך לזכור כמה חזיתות יורדות רצופות ראו Vin=1. מצב2 מאפשר רק את המחצית הגבוהה הבאה; מצב3 חוסם חזרה עד דגימת0. את שני הפליפ-פלופים ניתן לבנות מלאצ׳י NAND.",
       "en": "Remember how many consecutive falling edges sampled Vin=1. State2 enables the next high phase; state3 blocks repeats until a sampled0. Two flip-flops can be built from NAND latches."
     },
     "source_ambiguities": {
       "he": "איפוס, דגימה בירידה, rearm ו־Vin ממושך הוגדרו כאן כי הצילום אינו מכריע. הזרמת Vin אסינכרוני מחייבת תכנון CDC נוסף.",
-      "en": "Reset, falling-edge sampling, rearming and prolonged Vin are editorial choices because the source is incomplete. Asynchronous Vin needs additional CDC design."
+      "en": "Reset, falling-edge sampling, rearming and prolonged Vin are explicit assumptions because the source is incomplete. Asynchronous Vin needs additional CDC design."
     },
     "solution_extensions": {
       "he": {
@@ -127,7 +127,7 @@
       "en": "O(log M) stored bits and matching-width update/comparison logic; no minimum physical area or timing claim."
     },
     "verification": {
-      "he": "מודל עצמאי בדק29,760 טענות על קיבולות1..16, כל אוכלוסייה חוקית וכל מילות האירוע, עם בדיקת טווח ואחת משלוש נורות. RTL מופיע לבדיקת סימולציה נפרדת.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם נועלי ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+      "he": "מודל עצמאי בדק29,760 טענות על קיבולות1..16, כל אוכלוסייה חוקית וכל מילות האירוע, עם בדיקת טווח ואחת משלוש נורות. RTL מופיע לבדיקת סימולציה נפרדת.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
       "en": "An independent population oracle checked29,760 assertions over capacities1..16, every legal population and all event words, including signed range and one-of-three outputs. RTL is supplied for separately recorded simulation.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
     },
     "edge_cases": {
@@ -213,8 +213,8 @@
       "en": "Validate clues, select a constrained cell and try every legal candidate with exact undo. Success preserves all givens; exhausting branches proves no completion."
     },
     "source_ambiguities": {
-      "he": "המקור אינו מציין גודל או ייצוג. לוח 9×9, אפס, מדיניות שגיאות והעתקת קלט הם הבהרות העריכה; לא דרישות שיוחסו לצילום.",
-      "en": "The source omits dimensions/representation.9×9, zero, error policy and input copying are explicit editorial choices."
+      "he": "המקור אינו מציין גודל או ייצוג. לוח 9×9, אפס, מדיניות שגיאות והעתקת קלט הם הנחות והגדרות; לא דרישות שיוחסו לצילום.",
+      "en": "The source omits dimensions/representation.9×9, zero, error policy and input copying are explicit explicit assumptions."
     },
     "solution_extensions": {
       "he": [

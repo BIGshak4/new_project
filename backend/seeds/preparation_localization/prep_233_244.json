@@ -140,7 +140,7 @@
       "he": [
         "המשמעות D[k] נבחר ב־S=k נשמרת; D0 הוא הנתון המאוחר שנבחר להמחשה.",
         "במודל השהיית הנתונים הבחירה והפענוח יציבים מראש; אין pipeline.",
-        "לוגיקת בקרה מותרת בסעיף האופטימיזציה; ניתנת גם חלופת פענוח במרבבים."
+        "לוגיקת בקרה מותרת בסעיף האופטימיזציה; ניתנת גם חלופת פענוח במוקסים."
       ],
       "en": [
         "Preserve D[k] at S=k; D0 is the chosen illustrative late input.",
@@ -171,7 +171,7 @@
     "common_mistakes": {
       "he": [
         "להוסיף רק bypass בלי להבטיח בחירה נכונה.",
-        "לספור רק מרבבי נתונים ולהתעלם מהמפענח.",
+        "לספור רק מוקסי נתונים ולהתעלם מהדקודר.",
         "להפוך את המערכת לרשומה בלי לדון בהשהיית מחזור."
       ],
       "en": [
@@ -181,7 +181,7 @@
       ]
     },
     "interview_answer": {
-      "he": "אבנה קודם עץ 7 תאים. לקלט המאוחר אתן כניסה במרבב האחרון לפי פענוח מוקדם, ואת יתר הערכים אמזג בעץ אחר; אוכיח כל בחירה ואשווה זמני הגעה של כל הנתיבים.",
+      "he": "אבנה קודם עץ 7 תאים. לקלט המאוחר אתן כניסה במוקס האחרון לפי פענוח מוקדם, ואת יתר הערכים אמזג בעץ אחר; אוכיח כל בחירה ואשווה זמני הגעה של כל הנתיבים.",
       "en": "Start with a seven-cell tree. Give the late input a final-cell branch using early predecode, merge the others separately, prove each selection and compare all arrival paths."
     },
     "source_ambiguities": {
@@ -209,7 +209,7 @@
     "assumptions": {
       "he": [
         "n≥1 קבוע בבנייה; כניסות נתונים של ביט אחד.",
-        "המפענח פעיל בגבוה ו־enable שלו, אם קיים, מופעל."
+        "הדקודר פעיל בגבוה ו־enable שלו, אם קיים, מופעל."
       ],
       "en": [
         "n≥1 is fixed at construction; single-bit data inputs.",
@@ -217,7 +217,7 @@
       ]
     },
     "optimality": {
-      "he": "אחרי מפענח נתון: M AND ו־M−1 OR עבור M=2^n. עומק OR מאוזן n; עלות המפענח נפרדת. אין טענת מינימום פיזי.",
+      "he": "אחרי דקודר נתון: M AND ו־M−1 OR עבור M=2^n. עומק OR מאוזן n; עלות הדקודר נפרדת. אין טענת מינימום פיזי.",
       "en": "After a supplied decoder: M AND and M−1 OR gates, M=2^n; balanced OR depth n. Decoder cost is separate; no physical-minimum claim."
     },
     "verification": {
@@ -240,7 +240,7 @@
       "he": [
         "להחליף בין מספר הנתונים למספר ביטי הבחירה.",
         "לחשוב שגם D חייב להיות one-hot.",
-        "לספור את המפענח כרכיב ללא השהיה או שטח."
+        "לספור את הדקודר כרכיב ללא השהיה או שטח."
       ],
       "en": [
         "Confusing data count with select width.",
@@ -253,14 +253,14 @@
       "en": "Decode S to one active line, AND each Dj with Ej and OR the terms. At S=k only Dk remains, proving selection independently of the other data."
     },
     "source_ambiguities": {
-      "he": "המקור אינו מגדיר קוטביות מפענח, enable, רוחב נתון או מודל השהיה. החוזה מגדיר את כולם במפורש.",
+      "he": "המקור אינו מגדיר קוטביות דקודר, enable, רוחב נתון או מודל השהיה. החוזה מגדיר את כולם במפורש.",
       "en": "The source omits decoder polarity/enable, data width and delay model. The edited contract states them explicitly."
     },
     "solution_extensions": {
       "he": [
         {
           "question": "כיצד משתנה המימוש עבור נתונים ברוחב W ביטים?",
-          "answer_direction": "משתפים את המפענח ומשכפלים W רשתות מיסוך/OR; fanout על קווי הבחירה גדל ולכן עומס אינו חינם.",
+          "answer_direction": "משתפים את הדקודר ומשכפלים W רשתות מיסוך/OR; fanout על קווי הבחירה גדל ולכן עומס אינו חינם.",
           "principle": "שיתוף בקרה חוסך שכפול לוגיקה אך משנה עומס."
         }
       ],
@@ -289,8 +289,8 @@
       "en": "Worst-case O(nL) search plus copied characters in put; O(n) nodes and string contents. No hash-table or allocator latency guarantee."
     },
     "verification": {
-      "he": "C99 הודר והורץ ב־GCC עם אזהרות כשגיאות: 66,430 עקבות מילון, הזרקת OOM ושחרור מלא. הרתמה המשולבת בדקה 2,454,609 assertions בכל שלושת נושאי C; אין sanitizer או ביקורת אנושית.",
-      "en": "C99 passed GCC with warnings as errors: 66,430 map histories, OOM injection and complete cleanup. The combined three-topic C harness checked 2,454,609 assertions; no sanitizer or human review is claimed."
+      "he": "C99 הודר והורץ ב־GCC עם אזהרות כשגיאות: 66,430 עקבות מילון, הזרקת OOM ושחרור מלא. הרתמה המשולבת בדקה 2,454,609 assertions בכל שלושת נושאי C; אין sanitizer.",
+      "en": "C99 passed GCC with warnings as errors: 66,430 map histories, OOM injection and complete cleanup. The combined three-topic C harness checked 2,454,609 assertions; no sanitizer is claimed."
     },
     "edge_cases": {
       "he": [
@@ -437,7 +437,7 @@
             "כתובת head ושדה next של קודמו ממלאים אותו תפקיד: הם הקישור הנכנס לצומת. האם יש גישה לקישור הזה בלי head או קודמו?",
             "עם head עברו באמצעות Node**ושנו את הקישור הנכנס ליורש לפני free. בלי head אפשר להעתיק את ערך היורש ולעקוף אותו רק כאשר יש יורש; זה משחרר את היורש, לא את הצומת המקורי."
           ],
-          "integration_status": "רמזי הסעיף בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -448,7 +448,7 @@
             "The address of head and a predecessor’s next field play the same role: an incoming link. Is that link accessible without head or predecessor?",
             "With head traverse using Node**and bypass the target before free. Without head, copying/bypassing a successor requires one to exist; it frees the successor, not the original node."
           ],
-          "integration_status": "Part-specific hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }

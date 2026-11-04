@@ -177,7 +177,7 @@
     ],
     "accepted_approaches": {
       "en": ["A truth table with E, A1, A0 as inputs instead of equations.", "A 1-to-2 decoder tree with E feeding the first stage."],
-      "he": ["טבלת אמת עם E, A1, A0 כקלטים במקום משוואות.", "עץ מפענחים 1-ל-2 עם E מזין את השלב הראשון."]
+      "he": ["טבלת אמת עם E, A1, A0 כקלטים במקום משוואות.", "עץ דקודרים 1-ל-2 עם E מזין את השלב הראשון."]
     },
     "deterministic_check": {"type": "truth_table", "spec": {"variables": ["E", "A1", "A0"], "minterms": [6], "output_name": "Y2"}},
     "check_self_test": {"pass": ["Y0=E&~A1&~A0; Y1=E&~A1&A0; Y2=E&A1&~A0; Y3=E&A1&A0", "Y2 = E & A1 & A0'"], "fail": ["Y2 = A1 & ~A0", "Y2 = E & ~A1 & A0"]}

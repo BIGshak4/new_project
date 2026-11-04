@@ -358,7 +358,7 @@
     },
     "source_ambiguities": {
       "he": "הצילום אינו מגדיר סימן, ממשק התחלה, השהיה או טיפול באפס. אלו הנחות עריכה מפורשות. 100100 מתפרש כבינארי, כלומר 36.",
-      "en": "The source omits signedness, start interface, latency and zero behavior. These are explicit editorial choices. 100100 is interpreted as binary, namely 36."
+      "en": "The source omits signedness, start interface, latency and zero behavior. These are explicit explicit assumptions. 100100 is interpreted as binary, namely 36."
     },
     "solution_extensions": {
       "he": [
@@ -384,7 +384,7 @@
         "המודל בפייתון דוגם רמות בינאריות בזמני יחידה, ואינו מדמה מתח אנלוגי, ספי Schmitt, רעש או השהיות התפשטות."
       ],
       "en": [
-        "Rising-edge trigger, low resting output and a positive fixed duration τ are editorial choices.",
+        "Rising-edge trigger, low resting output and a positive fixed duration τ are explicit assumptions.",
         "The Python model samples binary levels at integer times. It does not simulate analog voltages, Schmitt thresholds, noise or propagation delay."
       ]
     },

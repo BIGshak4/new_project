@@ -30,14 +30,14 @@
     },
     "verification": {
       "he": {
-        "status": "בדיקות מודל פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
+        "status": "בדיקות מודל פייתון עברו.",
         "method": "השוואה לאורקל הכפלה מהירה שמחשב פיבונצ׳י במספרים שלמים מדויקים ולאחר מכן מצמצם מודולו.",
         "coverage": "10,260 מצבי דגימה ב־20 רוחבים, 8,192 עקבות איפוס באורך 10 ושש בדיקות קלט רוחב לא תקין.",
         "script_path": "checks/check_prep_044.py",
         "scope": "SystemVerilog צורף אך לא קומפל או הורץ בסימולטור HDL; לא בוצעו סינתזה או תזמון פיזי."
       },
       "en": {
-        "status": "Python-model checks passed; independent expert review pending.",
+        "status": "Python-model checks passed.",
         "method": "Comparison to independent exact fast-doubling Fibonacci followed by modular reduction.",
         "coverage": "10,260 sampled states across 20 widths, 8,192 length-ten reset traces and six invalid-width cases.",
         "script_path": "checks/check_prep_044.py",
@@ -115,7 +115,7 @@
     "optimality": {
       "he": {
         "criterion": "מספר ביטי הזיכרון במודל סינכרוני עם ארבע תוצאות יציבות.",
-        "result": "שני ביטי מצב מספיקים ונדרשים; מקודד, בדיקת אפס ובחירת החזקה משלימים את הבנייה.",
+        "result": "שני ביטי מצב מספיקים ונדרשים; אנקודר, בדיקת אפס ובחירת החזקה משלימים את הבנייה.",
         "proof": "אין זוכה ושלושת הזוכים דורשים ארבעה מצבים נבדלים בפלט. ביט אחד מייצג רק שני מצבים; שני ביטים מייצגים ארבעה. קוד הזוכה עצמו שומר את המצב.",
         "scope": "אין טענה למינימום שערים, שטח או השהיה. הדרישה היא הגעה ראשונה לפי דגימות ולא הכרעה אנלוגית בין אירועים קרובים."
       },
@@ -128,14 +128,14 @@
     },
     "verification": {
       "he": {
-        "status": "בדיקות מודל פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
+        "status": "בדיקות מודל פייתון עברו.",
         "method": "אורקל עצמאי סורק את היסטוריית הדגימות מאז האיפוס האחרון ובוחר את זוג החזית והמסלול המינימלי. נבדקו גם משוואות בוליאניות ואינווריאנטים.",
         "coverage": "64 מעברי מצב/קלט/איפוס; 299,593 רצפי פולסים באורכים 0–6; 69,905 רצפי פולסים ואיפוס באורכים 0–4; החזקת זוכה 100 מחזורים. ארבע שורות האמת של אפשור NOR ועדיפות איפוס גם כשהאפשור אפס.",
         "script_path": "checks/check_prep_045.py",
         "scope": "אין סימולציית HDL, סינתזה, בדיקת CDC או מדידת חומרה; קוד SystemVerilog צורף כמימוש מוצע."
       },
       "en": {
-        "status": "Python-model checks passed; independent expert review remains pending.",
+        "status": "Python-model checks passed.",
         "method": "Independent oracle scans sampled history since the latest reset and selects the smallest arrival-edge/lane pair. Boolean equations and invariants were also checked.",
         "coverage": "64 state/input/reset transitions; 299,593 pulse streams of lengths 0–6; 69,905 pulse/reset streams of lengths 0–4; a 100-cycle locked hold. Four NOR-enable truth rows and reset overriding disabled loading.",
         "script_path": "checks/check_prep_045.py",
@@ -164,7 +164,7 @@
     },
     "common_mistakes": {
       "he": [
-        "מקודד צירופי בלבד: מאבד את התוצאה בסיום הפולס ומאפשר ללחיצות מאוחרות לשנות אותה.",
+        "אנקודר צירופי בלבד: מאבד את התוצאה בסיום הפולס ומאפשר ללחיצות מאוחרות לשנות אותה.",
         "עדכון הקוד בכל לחיצה במקום רק במצב שעדיין אין זוכה.",
         "שימוש ב־OR של קודי מסלולים בלי להגדיר תיקו: למשל מסלולים 1 ו־2 עלולים להיראות בטעות כמסלול 3.",
         "סימון 00 כמסלול 1 ואז שימוש באפס כדי לזהות שאין זוכה.",
@@ -183,7 +183,7 @@
       ]
     },
     "interview_answer": {
-      "he": "מקודד עדיפות מפיק קוד מועמד בן שני ביטים. אשמור אותו באוגר שהאפשור שלו הוא NOR של שני ביטי הזוכה: EN=NOT(Q1 OR Q0). רק כשהזוכה 00 האוגר טוען מועמד בחזית; אחרי זכייה האפשור אפס והאוגר מחזיק. איפוס סינכרוני REST גובר גם על EN=0 ומחזיר ל־00. נגדיר תיקו באותה דגימה במפורש; כאן מסלול 1 קודם ל־2 ול־3. אין הכרעה בסדר הגעה בתוך מחזור.",
+      "he": "אנקודר עדיפות מפיק קוד מועמד בן שני ביטים. אשמור אותו באוגר שהאפשור שלו הוא NOR של שני ביטי הזוכה: EN=NOT(Q1 OR Q0). רק כשהזוכה 00 האוגר טוען מועמד בחזית; אחרי זכייה האפשור אפס והאוגר מחזיק. איפוס סינכרוני REST גובר גם על EN=0 ומחזיר ל־00. נגדיר תיקו באותה דגימה במפורש; כאן מסלול 1 קודם ל־2 ול־3. אין הכרעה בסדר הגעה בתוך מחזור.",
       "en": "A priority encoder produces a two-bit candidate. Store it in a register enabled by the NOR of the stored winner bits: EN=NOT(Q1 OR Q0). A zero winner permits loading at an edge; a winner disables loading and holds. Synchronous REST overrides even EN=0 and clears to 00. Define same-edge ties explicitly; here lane 1 precedes 2 and 3. Subcycle ordering is not resolved."
     },
     "solution_extensions": {
@@ -229,7 +229,7 @@
       }
     },
     "verification": {
-      "he": "עברו 1,969 בדיקות של מודל Python מול אורקל עצמאי של עולמות אפשריים: כל 1,024 תתי־הקבוצות של הרשימה, 200 ערבובים, 24 שינויי שמות חודשים, 720 שינויי שמות ימים ודחיית מועמד כפול. נבדקו במפורש קבוצות הביניים וגדליהן 10,5,3,1. שינוי שמות הוא בדיקת סימטריה לוגית בלבד; אינו רשימת תאריכים חדשה לפרסום. לא בוצעה ביקורת אנושית מקצועית או בדיקת לחיצות באתר חי.",
+      "he": "עברו 1,969 בדיקות של מודל Python מול אורקל עצמאי של עולמות אפשריים: כל 1,024 תתי־הקבוצות של הרשימה, 200 ערבובים, 24 שינויי שמות חודשים, 720 שינויי שמות ימים ודחיית מועמד כפול. נבדקו במפורש קבוצות הביניים וגדליהן 10,5,3,1. שינוי שמות הוא בדיקת סימטריה לוגית בלבד; אינו רשימת תאריכים חדשה לפרסום. ",
       "en": "1,969 Python model checks passed against an independent possible-world oracle: all 1,024 candidate subsets, 200 input shuffles, 24 month relabellings, 720 day relabellings and duplicate rejection. Exact intermediate sets and sizes 10,5,3,1 were asserted. Relabelling checks logical symmetry only; these are not new published date lists. No professional human approval or authenticated live-site clicking is implied."
     },
     "edge_cases": {
@@ -286,13 +286,13 @@
       "he": [
         "קלטים בינאריים ומעגל צירופי ללא משוב; כמה עותקים של A מותרים.",
         "קבועים 0,1, חוטים, פיצול אות וחיבור חוזר לפינים מותרים ללא ספירת עלות; אין NOT או שערים אחרים בחינם.",
-        "קריטריון המינימום הוא מספר קופסאות A במודל הזה. ההיתרים אינם מפורשים במקור והתווספו כהבהרת עריכה.",
+        "קריטריון המינימום הוא מספר קופסאות A במודל הזה. ההיתרים אינם מפורשים במקור והתווספו כהבהרה.",
         "כל משמעות AND/OR על חוט מתארת את התוצאה של קופסה, ולא רכיב חיצוני נוסף."
       ],
       "en": [
         "Binary inputs and an acyclic combinational circuit; multiple A instances are permitted.",
         "Free constants 0,1, wires, fanout and repeated pins; no free NOT or other gates.",
-        "Minimize A-instance count under this grammar. Permissions were not specified in the source and are editorial clarifications.",
+        "Minimize A-instance count under this grammar. Permissions were not specified in the source and are explicit assumptions.",
         "AND/OR wire labels describe primitive outputs, not additional external gates."
       ]
     },
@@ -312,14 +312,14 @@
     },
     "verification": {
       "he": {
-        "status": "בדיקות לוגיקה ומינימליות עברו; סקירה מקצועית עצמאית ממתינה.",
+        "status": "בדיקות לוגיקה ומינימליות עברו.",
         "method": "טבלת אמת עצמאית המבוססת על ספירת אחדות, בדיקת אותות הביניים וחיפוש סינתזה ממצה של חתימות אמת בנות 16 ביטים.",
         "coverage": "16 שורות לרכיב, 16 לבנייה, 16 לחלופת ההיפוך ו־4 קלטים לא תקינים; 126+6,930+312,840 רביעיות פינים, על 1,33,948 קבוצות אותות בהתאמה.",
         "script_path": "checks/check_prep_047.py",
         "scope": "קוד SystemVerilog צורף אך לא הורץ בסימולטור HDL. לא בוצעו סינתזה, מדידת תזמון פיזי או בדיקת הפרעות מעבר."
       },
       "en": {
-        "status": "Boolean and minimality checks passed; independent expert review pending.",
+        "status": "Boolean and minimality checks passed.",
         "method": "Independent population-count truth oracle, intermediate-wire checks and exhaustive synthesis using complete 16-bit truth signatures.",
         "coverage": "16 primitive rows, 16 construction rows, 16 inversion-alternative rows and 4 invalid inputs; 126+6,930+312,840 pin multisets across 1,33,948 available-signal sets respectively.",
         "script_path": "checks/check_prep_047.py",
@@ -418,14 +418,14 @@
     },
     "verification": {
       "he": {
-        "status": "בדיקות מודל פייתון עברו; סקירה מקצועית עצמאית ממתינה.",
+        "status": "בדיקות מודל פייתון עברו.",
         "method": "השוואה לאורקל עצמאי המחזיק את מספר החזיתות מאז האיפוס ומחשב מתי הוא כפולה חיובית של 3.",
         "coverage": "65,535 עקבות איפוס באורכים 0–15, 917,506 חזיתות ועוד 3,000 מחזורים רציפים עם 1,000 פולסים.",
         "script_path": "checks/check_prep_048.py",
         "scope": "SystemVerilog צורף אך לא קומפל או הורץ בסימולטור HDL; לא בוצעו סינתזה או בדיקת תזמון פיזית."
       },
       "en": {
-        "status": "Python-model checks passed; independent expert review pending.",
+        "status": "Python-model checks passed.",
         "method": "Comparison to an independent oracle tracking edges since reset and checking positive multiples of three.",
         "coverage": "65,535 reset traces of lengths zero through fifteen, 917,506 sampled edges, plus 3,000 continuous cycles with 1,000 pulses.",
         "script_path": "checks/check_prep_048.py",

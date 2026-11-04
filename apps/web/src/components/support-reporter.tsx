@@ -8,7 +8,7 @@ import { observeAuthUser } from "../lib/auth-access";
 import { lockBodyScroll } from "../lib/body-scroll-lock";
 import {
   SUPPORT_ACCEPT, SUPPORT_LIMITS, SUPPORT_OPEN_EVENT, inspectSupportFiles, removeSupportReservation, sendSupportReport, supportErrorMessage,
-  hasSupportDraft, supportOpenCategory, supportPageContext, validateSupportDetails, type SupportCategory, type SupportFile, type SupportLanguage,
+  hasSupportDraft, supportOpenRequest, supportPageContext, validateSupportDetails, type SupportCategory, type SupportFile, type SupportLanguage, type SupportOpenDetail,
   type SupportSubmission, type SupportTransport,
 } from "../lib/support-report";
 import { BidiText } from "./bidi-text";
@@ -79,6 +79,7 @@ export function SupportReporter() {
   const generation = useRef(0);
   const working = useRef(false);
   const reportSnapshot = useRef<SupportSubmission | null>(null);
+  const pendingShortcut = useRef<{ request: SupportOpenDetail; page: ReturnType<typeof supportPageContext> } | null>(null);
   const ids = useId();
   const he = lang === "he";
   const launcherLabel = he ? "נתקלתם בבעיה?" : "Report a problem";
@@ -89,7 +90,22 @@ export function SupportReporter() {
     setSubject(""); setDescription(""); setCategory("bug"); setFiles([]); setError(""); setSaved(false); setSubmitted(false);
     setCategoryEdited(false); setPreservedDraft(false);
     setReportId(""); setConfirmReset(false); reportSnapshot.current = null;
+    pendingShortcut.current = null;
+    setContext(supportPageContext(window.location.href));
     if (input.current) input.current.value = "";
+  }
+
+  function startNewReport() {
+    const pendingRequest = pendingShortcut.current;
+    reset();
+    if (pendingRequest) applyRequest(pendingRequest.request, pendingRequest.page);
+  }
+
+  function applyRequest(request: SupportOpenDetail, page: ReturnType<typeof supportPageContext>) {
+    if (request.category) setCategory(request.category);
+    if (request.subject) setSubject(request.subject);
+    if (request.description) setDescription(request.description);
+    setContext({ ...page, questionKey: request.questionKey ?? page.questionKey });
   }
 
   useEffect(() => {
@@ -118,7 +134,13 @@ export function SupportReporter() {
     if (open && !dialog.current.open) {
       dialog.current.showModal();
       heading.current?.focus();
-    } else if (!open && dialog.current.open) dialog.current.close();
+    } else if (!open && dialog.current.open) {
+      dialog.current.close();
+      const original = opener.current;
+      const fallback = trigger.current;
+      const returnTarget = original?.isConnected && original.getClientRects().length ? original : fallback;
+      if (returnTarget?.isConnected && returnTarget.getClientRects().length) returnTarget.focus({ preventScroll: true });
+    }
   }, [open]);
 
   useEffect(() => {
@@ -128,7 +150,7 @@ export function SupportReporter() {
 
   // Effect events read the latest draft, even though the window listener is installed once.
   const handleOpenRequest = useEffectEvent((event: Event) => {
-    launch(supportOpenCategory(event instanceof CustomEvent ? event.detail : undefined));
+    launch(supportOpenRequest(event instanceof CustomEvent ? event.detail : undefined));
   });
   useEffect(() => {
     const listener = (event: Event) => handleOpenRequest(event);
@@ -136,20 +158,23 @@ export function SupportReporter() {
     return () => window.removeEventListener(SUPPORT_OPEN_EVENT, listener);
   }, []);
 
-  function launch(requestedCategory?: SupportCategory) {
+  function launch(request: SupportOpenDetail = {}) {
     opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : trigger.current;
     const existingDraft = hasSupportDraft({ subject, description, categoryEdited, fileCount: files.length, busy: busy || working.current, checkingFiles, reportId, saved, submitted, error });
-    setPreservedDraft(!!requestedCategory && requestedCategory !== category && existingDraft);
+    const requested = !!(request.category || request.subject || request.description || request.questionKey);
+    const page = supportPageContext(window.location.href);
+    setPreservedDraft(existingDraft && requested);
+    pendingShortcut.current = existingDraft && requested ? { request, page } : null;
+    setConfirmReset(false);
     if (!existingDraft) {
-      if (requestedCategory) setCategory(requestedCategory);
-      setContext(supportPageContext(window.location.href));
+      pendingShortcut.current = null;
+      applyRequest(request, page);
     }
     setOpen(true);
   }
 
   function close() {
     setOpen(false);
-    (opener.current ?? trigger.current)?.focus();
   }
 
   async function selectFiles(selected: FileList | null) {
@@ -220,7 +245,7 @@ export function SupportReporter() {
       <div className={styles.header}>
         <div><h2 ref={heading} tabIndex={-1} id={`${ids}-title`}>{he ? "ספרו לנו מה קרה" : "Tell us what happened"}</h2>
           <p id={`${ids}-intro`}>{he ? "הדיווח יגיע ישירות להראל ולשקד. נבדוק ונטפל בהקדם." : "Your report goes directly to Harel and Shaked. We will investigate as soon as we can."}</p>
-          {preservedDraft && <p role="status">{he ? "פתחנו את הפנייה הקיימת ושמרנו על הפרטים ועל סוג הפנייה שלה." : "We opened your existing report and kept its details and category unchanged."}</p>}</div>
+          {preservedDraft && <p role="status">{he ? "פתחנו את הפנייה הקיימת ושמרנו על הפרטים שלה, כולל השאלה שאליה היא מתייחסת. לפתיחת פנייה על שאלה אחרת, סיימו את הפנייה הזאת או בחרו להתחיל מחדש." : "We opened your existing report and kept its details, including the question it refers to. To report another question, finish this report or choose to start over."}</p>}</div>
         <button type="button" className={styles.close} onClick={close} aria-label={he ? "סגירה ושמירת הטיוטה בלשונית" : "Close and keep the draft in this tab"}><X size={21} aria-hidden="true" /></button>
       </div>
       {!authReady ? <p className={styles.auth} role="status">{he ? "בודקים את החיבור לחשבון…" : "Checking your account…"}</p>
@@ -233,7 +258,7 @@ export function SupportReporter() {
           <p>{he ? "תודה שעזרתם לנו לשפר את חוויית התרגול. הפנייה מופיעה כעת במרכז הניהול של הצוות." : "Thank you for helping us improve practice. Your report is now in the team's support inbox."}</p>
           <p className={styles.reference}>{he ? "מספר פנייה" : "Report reference"}<bdi dir="ltr">{reportId}</bdi></p>
           {files.length > 0 && <p>{he ? `צורפו ${files.length} קבצים.` : `${files.length} attachments received.`}</p>}
-          <div className={styles.actions}><button type="button" className={styles.primary} onClick={close}>{he ? "בחזרה לתרגול" : "Back to practice"}</button><button type="button" onClick={() => { dialog.current?.close(); close(); openUserInbox(reportId); }}>{he ? "מעקב אחרי הפנייה שלי" : "View my request"}</button><button type="button" onClick={reset}>{he ? "דיווח נוסף" : "Report another issue"}</button></div>
+          <div className={styles.actions}><button type="button" className={styles.primary} onClick={close}>{he ? "בחזרה לתרגול" : "Back to practice"}</button><button type="button" onClick={() => { dialog.current?.close(); close(); openUserInbox(reportId); }}>{he ? "מעקב אחרי הפנייה שלי" : "View my request"}</button><button type="button" onClick={startNewReport}>{he ? "דיווח נוסף" : "Report another issue"}</button></div>
         </div> : <form className={styles.form} onSubmit={submit}>
           <p className={styles.account}>{he ? "שולחים מהחשבון" : "Reporting as"} <bdi dir="ltr">{user.email}</bdi></p>
           {saved && <p className={styles.saved} role="status"><CheckCircle2 size={18} aria-hidden="true" />{pending ? he ? "הדיווח כבר נשמר. נותר להעלות את הקבצים המסומנים, או לוותר עליהם." : "The report is saved. Retry the marked attachments or omit them." : he ? "הדיווח נשמר. אפשר לסיים." : "The report is saved. You can finish now."}</p>}
@@ -262,10 +287,16 @@ export function SupportReporter() {
             {busy ? he ? "שולחים…" : "Sending…" : saved ? pending ? he ? `ניסיון נוסף להעלאת ${pending} קבצים` : `Retry ${pending} attachments` : he ? "סיום הדיווח" : "Finish report" : he ? "שליחת דיווח" : "Send report"}
           </button><button type="button" onClick={close}>{he ? "סגירה ושמירת הטיוטה" : "Close and keep draft"}</button></div>
           <p className={styles.draft}>{he ? "הטיוטה נשמרת כל עוד הלשונית פתוחה. ניתן לשלוח עד 5 דיווחים ביום." : "Your draft stays in this tab until it is closed or reloaded. You can send up to 5 reports per day."}</p>
+          {preservedDraft && !reportId && !busy && !checkingFiles && <div className={styles.recovery}>
+            {!confirmReset ? <button type="button" onClick={() => setConfirmReset(true)}>{he ? "פתיחת הפנייה החדשה שביקשתי" : "Open the new report I requested"}</button> : <>
+              <p>{he ? "הטיוטה שעדיין לא נשלחה תימחק מהחלון הזה. לפתוח במקומה את הפנייה החדשה?" : "The unsent draft in this window will be cleared. Open the new report instead?"}</p>
+              <button type="button" onClick={startNewReport}>{he ? "כן, לפתוח פנייה חדשה" : "Yes, open the new report"}</button><button type="button" onClick={() => setConfirmReset(false)}>{he ? "שמירת הטיוטה הקיימת" : "Keep the existing draft"}</button>
+            </>}
+          </div>}
           {!!reportId && !saved && !busy && <div className={styles.recovery}>
             {!confirmReset ? <button type="button" onClick={() => setConfirmReset(true)}>{he ? "פתיחת טיוטה חדשה במקום ניסיון נוסף" : "Start a new draft instead of retrying"}</button> : <>
               <p>{he ? "ייתכן שהפנייה כבר נשמרה בשרת. פתיחת טיוטה חדשה תמחק את הטיוטה מהחלון הזה בלבד. מספר הפנייה הנוכחית:" : "The report may already be saved on the server. Starting again clears only the draft in this window. Current report reference:"} <bdi dir="ltr">{reportId}</bdi></p>
-              <button type="button" onClick={reset}>{he ? "הבנתי, לפתוח טיוטה חדשה" : "Understood, start a new draft"}</button><button type="button" onClick={() => setConfirmReset(false)}>{he ? "להישאר עם הטיוטה" : "Keep this draft"}</button>
+              <button type="button" onClick={startNewReport}>{he ? "הבנתי, לפתוח טיוטה חדשה" : "Understood, start a new draft"}</button><button type="button" onClick={() => setConfirmReset(false)}>{he ? "להישאר עם הטיוטה" : "Keep this draft"}</button>
             </>}
           </div>}
         </form>}

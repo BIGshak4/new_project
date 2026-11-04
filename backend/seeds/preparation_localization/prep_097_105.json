@@ -101,7 +101,7 @@
             "איך מוצאים תא פנוי באמצעות bitmap ו־priority encoder, ומה מסמן שהזיכרון מלא?",
             "חשבו תפוסה אפקטיבית אחרי pop חוקי, בחרו את האפס הראשון והקצו אותו ל־push. סדר זה מאפשר שחרור והקצאה מחדש באותה חזית."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -112,7 +112,7 @@
             "How do a bitmap and priority encoder find a free slot, and how is full represented?",
             "Compute effective occupancy after a valid pop, select its first zero, then allocate for push. This ordering permits release and reuse on the same edge."
           ],
-          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }
@@ -231,8 +231,8 @@
       "en": "Start bottom left. For a negative, count its entire remaining column above and move right; otherwise discard the row remainder and move up. Every step removes a row or column portion: O(R+C) time and O(1) state."
     },
     "source_ambiguities": {
-      "he": "המקור אומר שגם השורות וגם העמודות ממוינות אך אינו מגדיר בבירור את כיוון העמודות. כיוונים לא יורדים, מלבניות, קלט שלם ודרישת אי־שינוי הם הבהרות עריכה. תגית hardware נשמרת כתגית מקור; הבעיה אלגוריתמית.",
-      "en": "The source says rows and columns are sorted without clearly specifying the column direction. Nondecreasing directions, rectangular shape, integer input and immutability are editorial clarifications. Hardware remains a source tag; the task is algorithmic."
+      "he": "המקור אומר שגם השורות וגם העמודות ממוינות אך אינו מגדיר בבירור את כיוון העמודות. כיוונים לא יורדים, מלבניות, קלט שלם ודרישת אי־שינוי הם הנחות והגדרות. תגית hardware נשמרת כתגית מקור; הבעיה אלגוריתמית.",
+      "en": "The source says rows and columns are sorted without clearly specifying the column direction. Nondecreasing directions, rectangular shape, integer input and immutability are explicit assumptions. Hardware remains a source tag; the task is algorithmic."
     },
     "verification": {
       "he": "הקוד בפועל עבר 337 מטריצות ממוינות ממצות עד גודל 3×3 מעל ‎{-1,0,1}, מול אורקל שסופר בכל התאים. נבדקו גם ריק, אי־שינוי, שלמים גדולים ודחיית מבנה לא מלבני. אין אימות חומרה או מדידת ביצועים.",
@@ -435,7 +435,7 @@
         "הצילום החדש אוסר מקום נוסף ומספק קיבולת ב־b, בניגוד למערך חדש בגרסה המקורית. ממוינת היא הקידומת התקפה, לא האפסים השמורים. ההבדל נשמר כסעיף נפרד תחת098."
       ],
       "en": [
-        "The source contains only four English words; integer type, duplicates, nondecreasing order, fresh output and immutability are explicit editorial choices.",
+        "The source contains only four English words; integer type, duplicates, nondecreasing order, fresh output and immutability are explicit explicit assumptions.",
         "The source neither provides spare capacity nor requires in-place merging; those are separate contracts.",
         "Left-first ties are a stability clarification, not a technical difference justifying an extra unique question relative to SW-005.",
         "New source forbids extra space and provides b capacity, unlike the original fresh output. Only the valid prefix is sorted input, not padding. Retained as a separate098 part.",
@@ -458,7 +458,7 @@
         "variant_B_inplace": {
           "question": "מה משתנה אם המערכים חולקים זיכרון?",
           "direction": "כתיבה עלולה להשחית גם אתa שלא נקרא. יש להגדיר בדיוק את החפיפה ולתכנן אלגוריתם אחר או להתיר העתקה; ההוכחה הנוכחית אינה חלה.",
-          "status": "מוכן בחומר משלים בלבד; תור הרמזים המקורי נשמר."
+          "status": ""
         }
       },
       "en": {
@@ -468,7 +468,7 @@
         "variant_B_inplace": {
           "question": "What changes with overlapping memory?",
           "direction": "Writing can corrupt unread a as well. Specify overlap and redesign or permit copying; the current safety proof does not apply.",
-          "status": "Supplemental only; original hint queue retained."
+          "status": ""
         }
       }
     },
@@ -481,7 +481,7 @@
             "השטח הפנוי נמצא בסוף, והערך הגדול ביותר שנותר מתאים למקום האחרון שעוד לא מולא.",
             "שמרו אינדקס אחרון ב־a, אינדקס אחרון בקידומת התקפה שלb ואינדקס כתיבה בסופו. מלאו מהגדול לקטן; כש־a נגמר, קידומתb שנותרה כבר במקומה."
           ],
-          "integration_status": "רמזי הסעיף מוכנים בחומר המשלים בלבד; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -492,7 +492,7 @@
             "Free space is at the end; the largest remaining value belongs in the last unfilled slot.",
             "Track the last unread a value, last valid-prefix b value and last destination slot. Fill largest first; after a ends, the remaining b prefix is already in place."
           ],
-          "integration_status": "Part-specific hints are supplemental only; original hint queue retained."
+          "integration_status": ""
         }
       }
     }
@@ -631,7 +631,7 @@
     "common_mistakes": {
       "he": [
         "חיבור T=D ישירות: D=1 יהפוך שוב ושוב במקום לשמור 1.",
-        "בלבול בין TFF דוגם לנועל שקוף.",
+        "בלבול בין TFF דוגם ללאץ׳ שקוף.",
         "שינוי נתיב השעון כדי לחקות החזקה.",
         "הנחת אפס התחלתי או התעלמות מתזמון מסלול המשוב.",
         "הסקת התנהגות אנלוגית או התאוששות מ־X מאלגברה בינארית."

@@ -1,0 +1,30 @@
+.root { margin-block: 22px 20px; min-width: 0; }
+.frame { padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--soft); }
+.toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; }
+.label { font-size: 14px; line-height: 1.5; }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-inline-start: auto; }
+.action { min-height: 44px; padding: 9px 13px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); color: var(--ink); font-size: 14px; line-height: 1.5; }
+.action:hover { background: var(--paper); border-color: var(--link); }
+.action:focus-visible, .companyFields button:focus-visible, .companyFields input:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
+.action[aria-expanded="true"] { border-color: var(--link); background: var(--surface); }
+.action svg { flex-shrink: 0; }
+.expanded { transform: rotate(180deg); }
+.companyForm { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+.companyForm > label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 700; }
+.companyFields { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.companyFields input { flex: 1 1 220px; min-width: 0; width: auto; min-height: 44px; background: var(--surface); font-size: 16px; }
+.companyFields button { min-height: 44px; font-size: 14px; }
+.close { background: transparent; border-color: transparent; }
+.help, .error { margin: 10px 0 0; font-size: 13px; line-height: 1.65; }
+.help { color: var(--muted); }
+.error { color: var(--danger); }
+.provenance { margin-top: 14px; font-size: 13px; line-height: 1.65; color: var(--muted); }
+.provenance p { margin: 5px 0 0; max-width: 85ch; font-size: 12px; line-height: 1.65; }
+@media (max-width: 600px) {
+  .frame { padding: 13px; }
+  .toolbar { align-items: stretch; gap: 10px; }
+  .label { width: 100%; }
+  .actions { width: 100%; margin-inline-start: 0; }
+  .action { flex: 1 1 145px; }
+  .companyFields input { flex-basis: 100%; }
+}

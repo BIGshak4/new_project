@@ -1,11 +1,17 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { createRequire } from "node:module";
 import { renderToStaticMarkup } from "react-dom/server";
 import { createElement } from "react";
 import { quickQuestions, quickTopics, filterQuickQuestions } from "../src/lib/fundamentals";
-import { QuickPractice, QuickDiagramView } from "../src/components/quick-practice";
 import { hasHumanReviewedSolution, solutionReviewLabel } from "../src/lib/solution-review";
 import type { QuickProgressApi } from "../src/lib/fundamentals-progress";
+
+// Shared question actions import the API error helpers, but these SSR checks never make a request.
+process.env.NEXT_PUBLIC_SUPABASE_URL = "http://localhost:8792";
+process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = "fundamentals-render-test-key";
+const require = createRequire(import.meta.url);
+require.extensions[".css"] = module => { module.exports = {}; };
 
 const api: QuickProgressApi = {
   fundamentalsProgress: async () => ({ completed: [] }),
@@ -57,7 +63,8 @@ test("switching the display language preserves a searched card and its ordering"
   }
 });
 
-test("initial quick practice loads owned history before showing potentially repeated questions", () => {
+test("initial quick practice loads owned history before showing potentially repeated questions", async () => {
+  const { QuickPractice } = await import("../src/components/quick-practice");
   for (const lang of ["he", "en"] as const) {
     const html = renderToStaticMarkup(createElement(QuickPractice, { lang, api, userId: "alice" }));
     assert.ok(html.includes('aria-expanded="false"'));
@@ -70,7 +77,8 @@ test("initial quick practice loads owned history before showing potentially repe
   }
 });
 
-test("all authored diagrams render with labelled arrows and one initial state where relevant", () => {
+test("all authored diagrams render with labelled arrows and one initial state where relevant", async () => {
+  const { QuickDiagramView } = await import("../src/components/quick-practice");
   const cards = quickQuestions.filter(q => q.diagram);
   assert.ok(cards.length >= 18);
   for (const q of cards) for (const lang of ["he", "en"] as const) {

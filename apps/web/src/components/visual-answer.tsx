@@ -1,8 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
-import { CircuitBoard, ImagePlus, X, ExternalLink } from "lucide-react";
+import { useEffect, useId, useRef, useState } from "react";
+import { CircuitBoard, ImagePlus, X, ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import {
   emptyCircuit,
@@ -149,7 +149,11 @@ export function VisualAnswer({
   question?: CircuitQuestionReference;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
-  const [open, setOpen] = useState(!!value.circuit?.parts.length),
+  const id = useId();
+  const [open, setOpen] = useState(false),
+    [circuitMounted, setCircuitMounted] = useState(false),
+    [photosOpen, setPhotosOpen] = useState(false),
+    [photosMounted, setPhotosMounted] = useState(false),
     [uploading, setUploading] = useState(false),
     [error, setError] = useState("");
   const fileInput = useRef<HTMLInputElement>(null),
@@ -217,37 +221,90 @@ export function VisualAnswer({
     >
       {!readonly && (
         <>
-          <div className="visual-answer-actions">
+          <div className="visual-answer-actions" role="group" aria-label={t("כלי שרטוט ותמונות", "Circuit and image tools")}>
             <button
               type="button"
-              data-muxi-control="circuit-open"
+              data-muxi-control={open ? undefined : "circuit-open"}
               disabled={disabled}
               aria-expanded={open}
+              aria-controls={`${id}-circuit`}
               onClick={() => {
                 if (!open && !value.circuit)
                   onChange?.({ ...value, circuit: emptyCircuit() });
+                setCircuitMounted(true);
                 setOpen(!open);
               }}
             >
-              <CircuitBoard size={18} />
+              <CircuitBoard size={18} aria-hidden="true" />
               {open
                 ? t("קיפול השרטוט", "Collapse circuit")
                 : value.circuit?.parts.length
                   ? t("עריכת המעגל", "Edit circuit")
                   : t("שרטוט מעגל לוגי", "Draw a logic circuit")}
+              {!open && !!value.circuit?.parts.length && <span className="small muted">{t(`${value.circuit.parts.length} רכיבים`, `${value.circuit.parts.length} components`)}</span>}
+              {open ? <ChevronUp size={16} aria-hidden="true" /> : <ChevronDown size={16} aria-hidden="true" />}
             </button>
-            {photos && (
+            {(photos || value.images.length > 0) && (
               <button
                 type="button"
-                disabled={disabled || uploading || value.images.length >= 4}
-                onClick={() => fileInput.current?.click()}
+                data-muxi-control={photosOpen ? undefined : "photos-open"}
+                disabled={disabled}
+                aria-expanded={photosOpen}
+                aria-controls={`${id}-photos`}
+                onClick={() => {
+                  setPhotosMounted(true);
+                  setPhotosOpen((visible) => !visible);
+                }}
               >
-                <ImagePlus size={18} />
-                {uploading
-                  ? t("מעלים תמונה…", "Uploading image…")
-                  : t("צירוף תמונת פתרון", "Attach answer image")}
+                <ImagePlus size={18} aria-hidden="true" />
+                {photosOpen
+                  ? t("סגירת התמונות", "Close images")
+                  : value.images.length
+                    ? t(`תמונות הפתרון (${value.images.length})`, `Answer images (${value.images.length})`)
+                    : t("צירוף תמונות פתרון", "Attach answer images")}
+                {photosOpen ? <ChevronUp size={16} aria-hidden="true" /> : <ChevronDown size={16} aria-hidden="true" />}
               </button>
             )}
+          </div>
+          <p className="small muted">
+            {photos
+              ? t(
+                  "פתחו את הכלים שמתאימים לכם. אפשר לשלב הסבר, קוד, מעגל ותמונות. קיפול הכלים לא מוחק את התשובה.",
+                  "Open the tools you need. You can combine an explanation, code, a circuit and images. Closing a tool keeps your answer.",
+                )
+              : t(
+                  "פתחו את הכלים שמתאימים לכם. אפשר לשלב הסבר, קוד ומעגל. קיפול הכלים לא מוחק את התשובה.",
+                  "Open the tools you need. You can combine an explanation, code and a circuit. Closing a tool keeps your answer.",
+                )}
+          </p>
+        </>
+      )}
+      <div id={`${id}-circuit`} hidden={!readonly && !open}>
+        {((readonly && value.circuit?.parts.length) || circuitMounted) && value.circuit && (
+          <CircuitEditor
+            value={value.circuit}
+            lang={lang}
+            question={question}
+            readOnly={readonly || disabled}
+            onChange={(circuit) => onChange?.({ ...current.current, circuit })}
+          />
+        )}
+      </div>
+      <div id={`${id}-photos`} hidden={!readonly && !photosOpen}>
+        {!readonly && photos && (
+          <>
+            <p className="small muted">
+              {t("עד 4 תמונות, כל אחת עד 10 מגה־בייט לפני התאמה. קבצים נתמכים:", "Up to 4 images, 10 MB each before resizing. Formats:")}{" "}
+              <bdi>JPG, PNG, WebP</bdi>.
+            </p>
+            <button
+              type="button"
+              disabled={disabled || uploading || value.images.length >= 4}
+              onClick={() => fileInput.current?.click()}
+            >
+              <ImagePlus size={18} aria-hidden="true" />
+              {uploading ? t("מעלים תמונה…", "Uploading image…") : t("בחירת תמונות מהמכשיר", "Choose images from your device")}
+            </button>
             <input
               ref={fileInput}
               type="file"
@@ -260,58 +317,32 @@ export function VisualAnswer({
                 void upload(files);
               }}
             />
+          </>
+        )}
+        {(readonly || photosMounted) && !!value.images.length && (
+          <div className="answer-images">
+            {value.images.map((image) => (
+              <PrivateImage
+                key={image.path}
+                image={image}
+                lang={lang}
+                disabled={disabled || uploading}
+                remove={
+                  readonly
+                    ? undefined
+                    : () =>
+                        onChange?.({
+                          ...value,
+                          images: value.images.filter(
+                            (i) => i.path !== image.path,
+                          ),
+                        })
+                }
+              />
+            ))}
           </div>
-          <p className="small muted">
-            {photos
-              ? t(
-                  "אפשר לשלב הסבר, קוד, מעגל ותמונות — או לשלוח רק שרטוט. עד 4 תמונות, כל אחת עד 10 מגה־בייט לפני התאמה. קבצים נתמכים:",
-                  "Combine explanation, code, a circuit and images — or submit a drawing on its own. Up to 4 images, 10 MB each before resizing. Formats:",
-                )
-              : t(
-                  "אפשר לשלב הסבר, קוד ומעגל — או לשלוח רק שרטוט.",
-                  "Combine explanation, code and a circuit — or submit a drawing on its own.",
-                )}
-            {photos && (
-              <>
-                {" "}
-                <bdi>JPG, PNG, WebP</bdi>.
-              </>
-            )}
-          </p>
-        </>
-      )}
-      {((readonly && value.circuit?.parts.length) || open) && value.circuit && (
-        <CircuitEditor
-          value={value.circuit}
-          lang={lang}
-          question={question}
-          readOnly={readonly || disabled}
-          onChange={(circuit) => onChange?.({ ...current.current, circuit })}
-        />
-      )}
-      {!!value.images.length && (
-        <div className="answer-images">
-          {value.images.map((image) => (
-            <PrivateImage
-              key={image.path}
-              image={image}
-              lang={lang}
-              disabled={disabled || uploading}
-              remove={
-                readonly
-                  ? undefined
-                  : () =>
-                      onChange?.({
-                        ...value,
-                        images: value.images.filter(
-                          (i) => i.path !== image.path,
-                        ),
-                      })
-              }
-            />
-          ))}
-        </div>
-      )}
+        )}
+      </div>
       {uploading && (
         <p role="status" className="small muted">
           {t(
@@ -325,7 +356,7 @@ export function VisualAnswer({
           {error}
         </p>
       )}
-      {(!!value.images.length || !!value.circuit?.parts.length) && (
+      {(readonly || open || photosOpen) && (!!value.images.length || !!value.circuit?.parts.length) && (
         <p className="visual-review-note">
           {t(
             "השרטוט נבדק כחלק מהתשובה: העוזר מקבל את רשימת הרכיבים והחיבורים ואת הפונקציה הלוגית שנגזרה ממנו. תמונות נבדקות רק כשהשרת מורשה לקרוא אותן; אחרת הן נשמרות לבדיקה אנושית.",

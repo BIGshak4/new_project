@@ -62,7 +62,7 @@
         "שיוך Apple מדווח בלבד."
       ],
       "en": [
-        "The source omits ready/valid, port count, simultaneous order and ACK semantics; editorial choices are explicit.",
+        "The source omits ready/valid, port count, simultaneous order and ACK semantics; explicit assumptions are explicit.",
         "Apple attribution is source-reported only."
       ]
     },
@@ -105,7 +105,7 @@
       "en": "Multiplier-free: s adder, n incrementer, concatenation, comparator and O(log(N+1)) storage. No minimum area/frequency claim; the source did not forbid a multiplier.\n\nTwo n-bit registers and two sums; O(n) stored bits and width-n logic, without a multiplier."
     },
     "verification": {
-      "he": "נבדקו כל N בין 0 ל־256: 33,924 דגימות וריצות איפוס, ועוד 15 מקרי גבול ברוחבים גדולים. השוואה לכפל שלמים עצמאי ובדיקת רוחב. Python בלבד.\n\n98,316 טענות בדיקה: רוחבים1..12,4096 צעדים לכל רוחב ואיפוס, מול k² ו־2k+1 ישירים. סימולציית HDL מתועדת בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם נועלי ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+      "he": "נבדקו כל N בין 0 ל־256: 33,924 דגימות וריצות איפוס, ועוד 15 מקרי גבול ברוחבים גדולים. השוואה לכפל שלמים עצמאי ובדיקת רוחב. Python בלבד.\n\n98,316 טענות בדיקה: רוחבים1..12,4096 צעדים לכל רוחב ואיפוס, מול k² ו־2k+1 ישירים. סימולציית HDL מתועדת בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
       "en": "Checked every N from zero through 256: 33,924 trajectory/reset samples plus 15 wide boundary cases, against independent integer multiplication and width bounds. Python only.\n\n98,316 checks: widths1..12,4096 steps per width plus reset, compared with direct k² and2k+1. HDL simulation is recorded separately.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
     },
     "edge_cases": {
@@ -195,7 +195,7 @@
             "ההפרשים הם מספרים אי־זוגיים, וההפרש בין שני הפרשים עוקבים קבוע.",
             "שמרו square ו־odd. באותו שעון עדכנו square←square+odd ו־odd←odd+2, עם ערכי ההתחלה0 ו־1."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -206,7 +206,7 @@
             "They are odd numbers, whose own consecutive differences are constant.",
             "Store square and odd; simultaneously update square←square+odd and odd←odd+2, starting from0 and1."
           ],
-          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }
@@ -225,7 +225,7 @@
       ]
     },
     "optimality": {
-      "he": "רכיב INC8 אחד ושתי שכבות ניתוב עם שערי גילוי נשא/valid. לא הוכח מינימום מרבבים, שערים, שטח או השהיה; שערים יכולים אף לממש הגדלה בעצמם ולכן המגבלה הפונקציונלית אינה מדד אופטימליות.",
+      "he": "רכיב INC8 אחד ושתי שכבות ניתוב עם שערי גילוי נשא/valid. לא הוכח מינימום מוקסים, שערים, שטח או השהיה; שערים יכולים אף לממש הגדלה בעצמם ולכן המגבלה הפונקציונלית אינה מדד אופטימליות.",
       "en": "One INC8 block plus input/output routing and carry/valid gates. No minimum MUX, gate, area or delay proof; gates could themselves implement incrementing, so the functional restriction is not an optimality metric."
     },
     "verification": {
@@ -265,7 +265,7 @@
       ]
     },
     "interview_answer": {
-      "he": "עבור SIZE=2^k אגדיל את A>>k פעם אחת, אחזיר אותו שמאלה k ואצרף את k הביטים הנמוכים המקוריים. מרבב בוחר k=0,1,2. רק בהגדלת255 בשלמותו נדרש נשא חיצוני AND של כל הביטים; בשאר המקרים הוא נמצא בתוצאת המגדיל המנותבת.",
+      "he": "עבור SIZE=2^k אגדיל את A>>k פעם אחת, אחזיר אותו שמאלה k ואצרף את k הביטים הנמוכים המקוריים. מוקס בוחר k=0,1,2. רק בהגדלת255 בשלמותו נדרש נשא חיצוני AND של כל הביטים; בשאר המקרים הוא נמצא בתוצאת המגדיל המנותבת.",
       "en": "For SIZE=2^k increment A>>k once, route it back left by k, and restore the original low k bits. A MUX selects k=0,1,2. Only whole-address255 increment needs an external all-bits-AND carry; other carries remain in the routed incrementer output."
     },
     "source_ambiguities": {
@@ -315,7 +315,7 @@
       "en": "Three writes and W-bit XOR logic: O(W) logic and no extra data register. No minimum-cycle proof across architectures or cell-area claim."
     },
     "verification": {
-      "he": "87,380 זוגות ממצים לרוחבים 1..8 ועוד 400 זוגות מדגמיים רחבים, 263,340 חזיתות קליטה. כל עקבה נבדקה מול החלפה וערכי הביניים האלגבריים. Python בלבד, ללא HDL או מרוצי נועלים.",
+      "he": "87,380 זוגות ממצים לרוחבים 1..8 ועוד 400 זוגות מדגמיים רחבים, 263,340 חזיתות קליטה. כל עקבה נבדקה מול החלפה וערכי הביניים האלגבריים. Python בלבד, ללא HDL או מרוצי לאצ׳ים.",
       "en": "87,380 exhaustive pairs for widths 1..8 plus 400 seeded wide pairs, 263,340 capture edges. Every trace checked against pair permutation and algebraic intermediate states. Python only; no HDL or latch-race validation."
     },
     "edge_cases": {
@@ -324,7 +324,7 @@
         "x=0,y=0 או W=1.",
         "כל הביטים 1 והחלפת ערכים מנוגדים.",
         "חזית רביעית אינה מובטחת להחזיק את התוצאה.",
-        "נועל שקוף במקום אוגר בחזית משנה את הבעיה."
+        "לאץ׳ שקוף במקום אוגר בחזית משנה את הבעיה."
       ],
       "en": [
         "x=y produces an intermediate zero but finishes correctly.",

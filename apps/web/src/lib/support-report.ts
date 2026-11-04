@@ -1,18 +1,30 @@
 export type SupportLanguage = "he" | "en";
 export const SUPPORT_OPEN_EVENT = "jobrun:report-problem";
 export type SupportCategory = "bug" | "question" | "feedback" | "other";
-export type SupportOpenDetail = { category?: SupportCategory };
+export type SupportOpenDetail = { category?: SupportCategory; subject?: string; description?: string; questionKey?: string };
 
 /** Other site tools can prepare a report; submitting it always stays a user action. */
-export function openSupportReport(category?: SupportCategory) {
+export function openSupportReport(category?: SupportCategory, prefill: Omit<SupportOpenDetail, "category"> = {}) {
   if (typeof window === "undefined") return;
-  window.dispatchEvent(new CustomEvent<SupportOpenDetail>(SUPPORT_OPEN_EVENT, { detail: { category } }));
+  window.dispatchEvent(new CustomEvent<SupportOpenDetail>(SUPPORT_OPEN_EVENT, { detail: supportOpenRequest({ ...prefill, category }) }));
 }
 
 export function supportOpenCategory(detail: unknown): SupportCategory | undefined {
   if (!detail || typeof detail !== "object" || !("category" in detail)) return undefined;
   const category = detail.category;
   return category === "bug" || category === "question" || category === "feedback" || category === "other" ? category : undefined;
+}
+
+/** Accept only bounded report fields, never a caller's URL, account, answer or arbitrary context object. */
+export function supportOpenRequest(detail: unknown): SupportOpenDetail {
+  const request: SupportOpenDetail = {};
+  const category = supportOpenCategory(detail);
+  if (category) request.category = category;
+  if (!detail || typeof detail !== "object") return request;
+  if ("subject" in detail && typeof detail.subject === "string") request.subject = detail.subject.slice(0, 160);
+  if ("description" in detail && typeof detail.description === "string") request.description = detail.description.slice(0, 6000);
+  if ("questionKey" in detail && typeof detail.questionKey === "string" && /^[a-zA-Z0-9][a-zA-Z0-9_.:-]{0,199}$/.test(detail.questionKey)) request.questionKey = detail.questionKey;
+  return request;
 }
 
 export type SupportDraftState = {
@@ -79,10 +91,10 @@ export function validateSupportDetails(subject: string, description: string) {
 export function supportPageContext(href: string): { pagePath: string; questionKey: string | null } {
   try {
     const url = new URL(href);
-    const routes = ["/", "/tour", "/design-lab", "/support", "/privacy"];
+    const routes = ["/", "/tour", "/design-lab", "/support", "/privacy", "/games", "/games/preview"];
     const question = url.searchParams.get("question");
     return {
-      pagePath: routes.includes(url.pathname) ? url.pathname : "/",
+      pagePath: routes.includes(url.pathname) ? url.pathname : url.pathname.startsWith("/games/") ? "/games" : "/",
       questionKey: question && /^[a-zA-Z0-9][a-zA-Z0-9_.:-]{0,199}$/.test(question) ? question : null,
     };
   } catch { return { pagePath: "/", questionKey: null }; }

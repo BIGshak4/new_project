@@ -2,9 +2,9 @@
   "PREP-065": {
     "assumptions": {
       "he": [
-        "דלגלג SR בחזית עולה עם S,R סינכרוניים פעילים בגבוה; 11 אסור.",
+        "פליפ-פלופ SR בחזית עולה עם S,R סינכרוניים פעילים בגבוה; 11 אסור.",
         "D עומד בתזמון בשני הנתיבים, כולל המהפך; אין איפוס נוסף.",
-        "הקשר בין DFF לנועל מוסבר בנפרד ואינו משנה בשקט את הרכיב הנתון."
+        "הקשר בין DFF ללאץ׳ מוסבר בנפרד ואינו משנה בשקט את הרכיב הנתון."
       ],
       "en": [
         "Rising-edge synchronous active-high SR primitive; 11 forbidden.",
@@ -35,7 +35,7 @@
         "Q ראשוני אינו חייב להיות ידוע; החזית החוקית הראשונה קובעת D.",
         "אין חזית: Q נשמר.",
         "שינוי D סמוך לחזית עלול להפר תזמון.",
-        "S,R אסינכרוניים או נועל שקוף אינם מממשים את אותו חוזה."
+        "S,R אסינכרוניים או לאץ׳ שקוף אינם מממשים את אותו חוזה."
       ],
       "en": [
         "Initial Q may be unknown; the first valid edge establishes D.",
@@ -47,7 +47,7 @@
     "common_mistakes": {
       "he": [
         "לחבר S=D וגם R=D, וכך להגיע ל־11.",
-        "להשתמש בנועל שקוף ולקרוא לו DFF.",
+        "להשתמש בלאץ׳ שקוף ולקרוא לו DFF.",
         "להניח שהמהפך מוחק כל חפיפה רגעית.",
         "להציג איפוס אסינכרוני כקלט נתונים סינכרוני."
       ],
@@ -59,7 +59,7 @@
       ]
     },
     "interview_answer": {
-      "he": "בהנחה שזה דלגלג SR סינכרוני בחזית, אחבר S=D ו־R=NOT D ואשתמש באותו clk. D=0 בוחר איפוס ו־D=1 בוחר קביעה, לכן אחרי החזית Q=D. אם נתון נועל או S,R אסינכרוניים, זה אינו אותו מימוש וצריך לדון במבנה שעון מתאים.",
+      "he": "בהנחה שזה פליפ-פלופ SR סינכרוני בחזית, אחבר S=D ו־R=NOT D ואשתמש באותו clk. D=0 בוחר איפוס ו־D=1 בוחר קביעה, לכן אחרי החזית Q=D. אם נתון לאץ׳ או S,R אסינכרוניים, זה אינו אותו מימוש וצריך לדון במבנה שעון מתאים.",
       "en": "For an edge-triggered synchronous SR primitive, wire S=D and R=NOT D on the same clock. D=0 resets and D=1 sets, so Q after the edge equals D. A transparent latch or asynchronous controls need a different clocked construction."
     },
     "solution_extensions": {
@@ -242,9 +242,9 @@
   "PREP-070": {
     "assumptions": {
       "he": [
-        "מרבב אידאלי בוחר D0 ב־S=0 ו־D1 ב־S=1.",
+        "מוקס אידאלי בוחר D0 ב־S=0 ו־D1 ב־S=1.",
         "קבוע אפס וחוטים מותרים; אין שער נוסף או שעון.",
-        "לגרסה הנוספת בלבד מותרים שני הקבועים ומרבב היוצר משלים; מוסכמת D0 באפס."
+        "לגרסה הנוספת בלבד מותרים שני הקבועים ומוקס היוצר משלים; מוסכמת D0 באפס."
       ],
       "en": [
         "Ideal MUX chooses D0 at S=0 and D1 at S=1.",
@@ -254,11 +254,11 @@
     },
     "optimality": {
       "he": {
-        "criterion": "מספר מרבבים כשמותר רק חיווט וקבועים לצדם.",
-        "result": "מרבב אחד נחוץ ומספיק.",
+        "criterion": "מספר מוקסים כשמותר רק חיווט וקבועים לצדם.",
+        "result": "מוקס אחד נחוץ ומספיק.",
         "proof": "בלי רכיב פונקציונלי אפשר לקבל רק כניסה או קבוע, ולא AND; המימוש משתמש באחד.",
         "scope": "אין טענת שטח או השהיה מינימליים בספריית שערים כללית.",
-        "batch20_extension": "בנייה לכל ארבעת השערים: ארבעה מרבבי פונקציה ועוד מהפך MUX משותף אם nB אינו זמין. אין הוכחת מינימום משותף."
+        "batch20_extension": "בנייה לכל ארבעת השערים: ארבעה מוקסי פונקציה ועוד מהפך MUX משותף אם nB אינו זמין. אין הוכחת מינימום משותף."
       },
       "en": {
         "criterion": "MUX count with only wires and constants otherwise.",
@@ -269,7 +269,7 @@
       }
     },
     "verification": {
-      "he": "עברו כל 8 שורות המרבב, כל 4 שורות AND ו־4 שורות המימוש הסימטרי בפייתון. לא בוצעה סינתזה או בדיקת חומרה.\n\nגרסת 2026-10-31 עברה ארבע שורות קלט ו־20 השוואות פונקציה; ללא סינתזה.",
+      "he": "עברו כל 8 שורות המוקס, כל 4 שורות AND ו־4 שורות המימוש הסימטרי בפייתון. לא בוצעה סינתזה או בדיקת חומרה.\n\nגרסת 2026-10-31 עברה ארבע שורות קלט ו־20 השוואות פונקציה; ללא סינתזה.",
       "en": "Passed all eight MUX rows, four AND rows and four symmetric-implementation rows in Python. No synthesis or hardware tests.\n\nThe 2026-10-31 variant passed four input rows and twenty function assertions; no synthesis."
     },
     "edge_cases": {
@@ -311,13 +311,13 @@
       ]
     },
     "interview_answer": {
-      "he": "אבחר A כ־S, אחבר D0=0 ו־D1=B. כאשר A=0 נקבל 0 וכאשר A=1 נקבל B, ולכן בדיוק A AND B. מספיק מרבב אחד, ללא שעון או שער נוסף.\n\nאבחר A כבורר, אכתוב את שני ענפי כל פונקציה ואשתף NOT B שנוצר מ־MUX(B,1,0).",
+      "he": "אבחר A כ־S, אחבר D0=0 ו־D1=B. כאשר A=0 נקבל 0 וכאשר A=1 נקבל B, ולכן בדיוק A AND B. מספיק מוקס אחד, ללא שעון או שער נוסף.\n\nאבחר A כבורר, אכתוב את שני ענפי כל פונקציה ואשתף NOT B שנוצר מ־MUX(B,1,0).",
       "en": "Use S=A,D0=0,D1=B. Select zero returns zero; select one returns B, exactly A AND B. One MUX suffices with no clock or extra gate.\n\nUse A as select, write both cofactors for each function and share NOT B from MUX(B,1,0)."
     },
     "solution_extensions": {
       "he": {
-        "question": "כיצד תממשו OR בעזרת אותו סוג מרבב יחיד?\n\nאם B ו־NOT B כבר זמינים, כמה מרבבים צריך לבנייה המוצגת וכמה מפלסים יש?",
-        "direction": "בחרו S=A,D0=B,D1=1: כאשר A=0 צריך B וכאשר A=1 צריך תמיד 1. נדרש קבוע 1 מותר בגרסת ההמשך.\n\nארבעה מרבבים במקביל ומפלס אחד לכל פלט. בלי משלים מוכן למסלול XOR/NAND יש עוד מפלס היפוך.",
+        "question": "כיצד תממשו OR בעזרת אותו סוג מוקס יחיד?\n\nאם B ו־NOT B כבר זמינים, כמה מוקסים צריך לבנייה המוצגת וכמה מפלסים יש?",
+        "direction": "בחרו S=A,D0=B,D1=1: כאשר A=0 צריך B וכאשר A=1 צריך תמיד 1. נדרש קבוע 1 מותר בגרסת ההמשך.\n\nארבעה מוקסים במקביל ומפלס אחד לכל פלט. בלי משלים מוכן למסלול XOR/NAND יש עוד מפלס היפוך.",
         "status": "מוכן בתוכן; לא מחובר לתור המשך חי.",
         "integration": "מוכן בתוכן; אינו מחובר לתור המשך אינטראקטיבי."
       },
@@ -333,7 +333,7 @@
         "צילום 11 מוסיף ארבע פונקציות אך אינו מציין זמינות קבועים או משלים; ההרשאות ועלות המשלים מפורשות בעריכה."
       ],
       "en": [
-        "Screenshot eleven adds four functions but omits constant/complement availability; permissions and complement cost are explicit editorial assumptions."
+        "Screenshot eleven adds four functions but omits constant/complement availability; permissions and complement cost are explicit explicit assumptions."
       ]
     }
   },
@@ -367,8 +367,8 @@
       }
     },
     "verification": {
-      "he": "עברו 43,690 השוואות לאורקל עצמאי: 21,845 מערכים באורכים 0–7 מעל 0–3, כל אחד בשתי גרסאות. עוד 1,000 בדיקות על 500 מערכי מספרים גדולים. נבדקו זוג האינדקסים, הרווח, שוויונות והימנעות מעסקה, ולא רק הרווח. קוד פייתון רץ בפועל; סקירה מקצועית עצמאית ממתינה.",
-      "en": "Passed 43,690 independent-oracle checks: 21,845 arrays of lengths 0..7 over 0..3 under both contracts, plus 1,000 checks on 500 large-integer arrays. Assertions cover indices, profit, tie order and abstention, not profit alone. Python executed; independent professional review pending."
+      "he": "עברו 43,690 השוואות לאורקל עצמאי: 21,845 מערכים באורכים 0–7 מעל 0–3, כל אחד בשתי גרסאות. עוד 1,000 בדיקות על 500 מערכי מספרים גדולים. נבדקו זוג האינדקסים, הרווח, שוויונות והימנעות מעסקה, ולא רק הרווח. קוד פייתון רץ בפועל.",
+      "en": "Passed 43,690 independent-oracle checks: 21,845 arrays of lengths 0..7 over 0..3 under both contracts, plus 1,000 checks on 500 large-integer arrays. Assertions cover indices, profit, tie order and abstention, not profit alone. Python executed."
     },
     "edge_cases": {
       "he": [
@@ -459,8 +459,8 @@
       }
     },
     "verification": {
-      "he": "עברו 65,536 זוגות קטנים בשתי שיטות פייתון, 81 זוגות גבול בני 32 ביטים, עוד 10,000 זוגות אקראיים במודל רוחב קבוע ועוד 500 זוגות גדולים בנוסחה המדויקת. בדיקת AST שוללת השוואות, תנאים ולולאות בפונקציות. אורקל max נמצא בבדיקה בלבד. C++ לא קומפל ולא הורץ; סקירה מקצועית ממתינה.",
-      "en": "Passed 65,536 small pairs in both Python methods, 81 signed32 boundary pairs, 10,000 additional fixed-width random pairs and 500 large exact-integer pairs. AST excludes comparisons, conditionals and loops inside the functions; builtin max appears only in the checker. C++ was not compiled/run; professional review pending."
+      "he": "עברו 65,536 זוגות קטנים בשתי שיטות פייתון, 81 זוגות גבול בני 32 ביטים, עוד 10,000 זוגות אקראיים במודל רוחב קבוע ועוד 500 זוגות גדולים בנוסחה המדויקת. בדיקת AST שוללת השוואות, תנאים ולולאות בפונקציות. אורקל max נמצא בבדיקה בלבד. C++ לא קומפל ולא הורץ.",
+      "en": "Passed 65,536 small pairs in both Python methods, 81 signed32 boundary pairs, 10,000 additional fixed-width random pairs and 500 large exact-integer pairs. AST excludes comparisons, conditionals and loops inside the functions; builtin max appears only in the checker. C++ was not compiled/run."
     },
     "edge_cases": {
       "he": [
@@ -601,8 +601,8 @@
       }
     },
     "verification": {
-      "he": "עברו כל 97,656 המערכים באורכים 0–7 מעל ‎-2..2 ועוד 500 מערכי מספרים גדולים. אורקל עצמאי מונה כל רצף לא־ריק ומחשב את סכומו ישירות; משווה סכום, שני גבולות ושוויונות. נבדקה גם אי־התאמה בין טענת 7 לבין התעתיק האפשרי שמחזיר 6. קוד פייתון רץ בפועל; אין עדיין סקירה מקצועית אנושית עצמאית.\n\nבנוסף לבדיקות הקודמות, הווריאציה הטורית עברה 97,655 השוואות מול מנייה עצמאית של כל הקטעים באורכים 1–7 מעל חמשת הערכים −2..2; נבדקו שוויונות, שליליים בלבד ואיסור מעבר נוסף.",
-      "en": "Passed all 97,656 arrays of lengths 0..7 over -2..2 plus 500 large-integer arrays. Independent oracle enumerates every nonempty interval and sums directly; checks include sum, both boundaries and ties. Also verified the seven-versus-six discrepancy for the possible source transcription. Python executed; independent human professional review pending.\n\nIn addition to prior checks, the stream variant passed 97,655 comparisons with independent interval enumeration at lengths 1–7 over values −2..2, including ties, all-negative input and no replay."
+      "he": "עברו כל 97,656 המערכים באורכים 0–7 מעל ‎-2..2 ועוד 500 מערכי מספרים גדולים. אורקל עצמאי מונה כל רצף לא־ריק ומחשב את סכומו ישירות; משווה סכום, שני גבולות ושוויונות. נבדקה גם אי־התאמה בין טענת 7 לבין התעתיק האפשרי שמחזיר 6. קוד פייתון רץ בפועל.\n\nבנוסף לבדיקות הקודמות, הווריאציה הטורית עברה 97,655 השוואות מול מנייה עצמאית של כל הקטעים באורכים 1–7 מעל חמשת הערכים −2..2; נבדקו שוויונות, שליליים בלבד ואיסור מעבר נוסף.",
+      "en": "Passed all 97,656 arrays of lengths 0..7 over -2..2 plus 500 large-integer arrays. Independent oracle enumerates every nonempty interval and sums directly; checks include sum, both boundaries and ties. Also verified the seven-versus-six discrepancy for the possible source transcription. Python executed.\n\nIn addition to prior checks, the stream variant passed 97,655 comparisons with independent interval enumeration at lengths 1–7 over values −2..2, including ties, all-negative input and no replay."
     },
     "edge_cases": {
       "he": [
@@ -703,8 +703,8 @@
       }
     },
     "verification": {
-      "he": "עברו 157 רצפים סקלריים, 6,885 תתי־קבוצות של סריג 4×4, דוגמאות מינימום בממדים 1–6 וחמש דחיות קלט. אורקל עצמאי בחשבון Fraction. מודל פייתון סופי לצד הוכחה כללית; ביקורת מקצועית ממתינה.",
-      "en": "Passed 157 scalar streams, 6,885 subsets of a 4x4 lattice, tight witnesses in dimensions 1..6 and five invalid-input rejections. Independent Fraction oracle. Finite Python checks accompany a general proof; professional review pending."
+      "he": "עברו 157 רצפים סקלריים, 6,885 תתי־קבוצות של סריג 4×4, דוגמאות מינימום בממדים 1–6 וחמש דחיות קלט. אורקל עצמאי בחשבון Fraction. מודל פייתון סופי לצד הוכחה כללית.",
+      "en": "Passed 157 scalar streams, 6,885 subsets of a 4x4 lattice, tight witnesses in dimensions 1..6 and five invalid-input rejections. Independent Fraction oracle. Finite Python checks accompany a general proof."
     },
     "edge_cases": {
       "he": [
@@ -797,8 +797,8 @@
       }
     },
     "verification": {
-      "he": "נבדקו כל 1000 אפשרויות הבקבוק המורעל לפי חברות בתערובות, ייחודיות ופענוח; הושוו לאורקל חלוקות ושאריות עצמאי. נבדקו כולם חיים, 24 דפוסים בלתי מנוצלים וחמישה קלטים פגומים. מודל פייתון בלבד; ללא ניסוי אנושי או כימי; ביקורת מקצועית ממתינה.\n\n1,000 הדמיות חד־רעל:כל 500 הבקבוקים עם 9 וגם 10 טועמים. כל 536 תבניות התוצאה הבלתי משויכות בשני הרוחבים נדחו. אומת שהטועם העשירי אינו מקבל דגימות. בדיקות קידוד בלבד.\n\nכל 1000 זהויות הבקבוק נבדקו מול אורקל חלוקה ושארית, כולל דפוס שלילי מלא ו־24 דפוסים לא משויכים. נבדקו 1000 דפוסי השהיות תקפים וכן תשעה זמני גבול בחשבון רציונלי. החסם האדפטיבי הוא הוכחה נפרדת, לא בדיקה ממצה של כל מדיניות זמנים.",
-      "en": "All 1000 poisoned-bottle cases passed pool-membership simulation, uniqueness and decoding against an independent division/remainder oracle. All-survive, 24 unused patterns and five malformed inputs passed. Python model only, no real human or chemical experiment; professional review pending.\n\n1,000 single-poison simulations cover all 500 bottles with nine and with ten testers. All 536 unassigned patterns across both widths are rejected. Tester 10 has an empty pool. These are coding checks only.\n\nAll one thousand bottle identities were checked against an independent division/remainder oracle, including all-negative and twenty-four unassigned masks. One thousand allowed delay patterns and nine rational-arithmetic timing boundaries were checked. The adaptive lower bound is a separate proof, not exhaustive testing of all timing policies."
+      "he": "נבדקו כל 1000 אפשרויות הבקבוק המורעל לפי חברות בתערובות, ייחודיות ופענוח; הושוו לאורקל חלוקות ושאריות עצמאי. נבדקו כולם חיים, 24 דפוסים בלתי מנוצלים וחמישה קלטים פגומים. מודל פייתון בלבד; ללא ניסוי אנושי או כימי.\n\n1,000 הדמיות חד־רעל:כל 500 הבקבוקים עם 9 וגם 10 טועמים. כל 536 תבניות התוצאה הבלתי משויכות בשני הרוחבים נדחו. אומת שהטועם העשירי אינו מקבל דגימות. בדיקות קידוד בלבד.\n\nכל 1000 זהויות הבקבוק נבדקו מול אורקל חלוקה ושארית, כולל דפוס שלילי מלא ו־24 דפוסים לא משויכים. נבדקו 1000 דפוסי השהיות תקפים וכן תשעה זמני גבול בחשבון רציונלי. החסם האדפטיבי הוא הוכחה נפרדת, לא בדיקה ממצה של כל מדיניות זמנים.",
+      "en": "All 1000 poisoned-bottle cases passed pool-membership simulation, uniqueness and decoding against an independent division/remainder oracle. All-survive, 24 unused patterns and five malformed inputs passed. Python model only, no real human or chemical experiment.\n\n1,000 single-poison simulations cover all 500 bottles with nine and with ten testers. All 536 unassigned patterns across both widths are rejected. Tester 10 has an empty pool. These are coding checks only.\n\nAll one thousand bottle identities were checked against an independent division/remainder oracle, including all-negative and twenty-four unassigned masks. One thousand allowed delay patterns and nine rational-arithmetic timing boundaries were checked. The adaptive lower bound is a separate proof, not exhaustive testing of all timing policies."
     },
     "edge_cases": {
       "he": [
@@ -919,42 +919,42 @@
     "prompt_variants": {
       "he": {
         "073_five_hundred": {
-          "prompt": "### וריאציה: 500 בקבוקים ועשרה טועמים זמינים\nיש 500 בקבוקים, בדיוק אחד מהם מורעל. עומדים לרשותכם עשרה טועמים. די במנה קטנה מהבקבוק המורעל כדי לגרום לתוצאה בינארית מובחנת לאחר 24 שעות בדיוק. מותר להכין לכל טועם תערובת ממספר בקבוקים ולהתחיל את כל הבדיקות במקביל. כיצד מזהים את הבקבוק המורעל עד תום 24 השעות, ומה מספר הטועמים המזערי הנדרש?\n\nהבהרות עריכה: מודל החידה מניח שהתוצאה ניתנת לצפייה בנקודת 24 השעות, תוצאה חיובית נשמרת, וכל תערובת המכילה מנה מספקת מהרעל מזוהה ללא נטרול או דילול שמבטל זיהוי. אין מגבלת נפח או מספר מנות. זו חידת קידוד מופשטת. המועד כולל את נקודת 24 השעות;דרישה לסיים לפניה היא שאלה אחרת.",
+          "prompt": "### וריאציה: 500 בקבוקים ועשרה טועמים זמינים\nיש 500 בקבוקים, בדיוק אחד מהם מורעל. עומדים לרשותכם עשרה טועמים. די במנה קטנה מהבקבוק המורעל כדי לגרום לתוצאה בינארית מובחנת לאחר 24 שעות בדיוק. מותר להכין לכל טועם תערובת ממספר בקבוקים ולהתחיל את כל הבדיקות במקביל. כיצד מזהים את הבקבוק המורעל עד תום 24 השעות, ומה מספר הטועמים המזערי הנדרש?\n\nהנחות והגדרות: מודל החידה מניח שהתוצאה ניתנת לצפייה בנקודת 24 השעות, תוצאה חיובית נשמרת, וכל תערובת המכילה מנה מספקת מהרעל מזוהה ללא נטרול או דילול שמבטל זיהוי. אין מגבלת נפח או מספר מנות. זו חידת קידוד מופשטת. המועד כולל את נקודת 24 השעות;דרישה לסיים לפניה היא שאלה אחרת.",
           "hints": [
             "לכל טועם יש שתי תוצאות. כמה תבניות שונות יכולים k טועמים להחזיר בסבב מקביל אחד?",
             "השוו 256 ו־512 למספר 500. אין חובה להשתמש בכל עשרת הטועמים הזמינים.",
             "תנו לבקבוקים תוויות פנימיות 0 עד 499 ב־9 ביטים. טועם i מקבל מכל בקבוק שהביט i בתוויתו הוא 1. גם תבנית שכל הביטים בה 0 היא מידע חוקי כשידוע שיש בדיוק בקבוק מורעל אחד."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         },
         "batch110_ninety_minutes": {
-          "prompt": "### וריאציה: אלף בקבוקים, עשרה בודקים ושעה וחצי\nבדיוק אחד מ־1000 בקבוקים מורעל. יש עשרה בודקים ו־90 דקות לזהותו. כל כמות מספקת מן הרעל גורמת לתוצאה מזוהה בתוך לכל היותר 60 דקות מהחשיפה הראשונה; אין ידיעה על זמן מדויק. מותר להכין ולדגום תערובות במקביל בתחילת הזמן, ללא מגבלת כמות שמכשילה את המודל. תכננו זיהוי מובטח והסבירו מה אפשר להסיק מזמני תגובה.\n\nהבהרת עריכה: המקור אומר „תוך כשעה”. לצורך הבטחה מתמטית נדרש חסם עליון קשיח של 60 דקות; זמן מקורב ללא חסם אינו מבטיח תוצאה לפני המשתה. ההצעה משתמשת רק בתוצאת קצה בינארית בדקה 60. היא אינה דורשת זמן תגובה זהה בין הבודקים. זהו מודל חידת קידוד מופשט.",
+          "prompt": "### וריאציה: אלף בקבוקים, עשרה בודקים ושעה וחצי\nבדיוק אחד מ־1000 בקבוקים מורעל. יש עשרה בודקים ו־90 דקות לזהותו. כל כמות מספקת מן הרעל גורמת לתוצאה מזוהה בתוך לכל היותר 60 דקות מהחשיפה הראשונה; אין ידיעה על זמן מדויק. מותר להכין ולדגום תערובות במקביל בתחילת הזמן, ללא מגבלת כמות שמכשילה את המודל. תכננו זיהוי מובטח והסבירו מה אפשר להסיק מזמני תגובה.\n\nהבהרה: המקור אומר „תוך כשעה”. לצורך הבטחה מתמטית נדרש חסם עליון קשיח של 60 דקות; זמן מקורב ללא חסם אינו מבטיח תוצאה לפני המשתה. ההצעה משתמשת רק בתוצאת קצה בינארית בדקה 60. היא אינה דורשת זמן תגובה זהה בין הבודקים. זהו מודל חידת קידוד מופשט.",
           "hints": [
             "כבר אחרי שעה אפשר לצפות בתוצאה של כל בדיקה שהחלה מיד. כמה תבניות בינאריות יש לעשרה בודקים?",
             "כל בודק יכול להשתתף בתערובת אחרת, כך שיחד התוצאות יקודדו את מספר הבקבוק.",
             "מספרו את הבקבוקים בקודים 0..999. בודק i מקבל בדיוק את הבקבוקים שבקוד שלהם סיבית i היא אחת. בדקה 60 קראו את דפוס התוצאות והוסיפו אחת."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
         "073_five_hundred": {
-          "prompt": "### Variant: 500 bottles and ten available testers\nExactly one of 500 bottles is poisoned. Ten testers are available. An adequate small portion from the poisoned bottle produces a distinguishable binary outcome exactly 24 hours later. A tester may receive a mixture from multiple bottles, and all tests may start simultaneously. How can the poisoned bottle be identified by the end of 24 hours, and what is the minimum number of testers needed?\n\nEditorial contract: the outcome is observable at the 24-hour endpoint and persists. Any mixture containing an adequate poisoned portion tests positive without neutralization or detection-defeating dilution. There is no volume or aliquot limit. This is an abstract coding puzzle. The deadline includes the endpoint;strictly before it is a different requirement.",
+          "prompt": "### Variant: 500 bottles and ten available testers\nExactly one of 500 bottles is poisoned. Ten testers are available. An adequate small portion from the poisoned bottle produces a distinguishable binary outcome exactly 24 hours later. A tester may receive a mixture from multiple bottles, and all tests may start simultaneously. How can the poisoned bottle be identified by the end of 24 hours, and what is the minimum number of testers needed?\n\nExercise contract: the outcome is observable at the 24-hour endpoint and persists. Any mixture containing an adequate poisoned portion tests positive without neutralization or detection-defeating dilution. There is no volume or aliquot limit. This is an abstract coding puzzle. The deadline includes the endpoint;strictly before it is a different requirement.",
           "hints": [
             "Each tester has two outcomes. How many patterns can k testers produce in one parallel round?",
             "Compare 256 and 512 with 500. All ten available testers need not be used.",
             "Give bottles internal labels 0 through 499 in nine bits. Tester i samples every bottle whose label has bit i set. The all-zero outcome is valid when exactly one poisoned bottle is guaranteed."
           ],
-          "integration_status": "Variant hints are supplemental; original interactive hint queue retained."
+          "integration_status": ""
         },
         "batch110_ninety_minutes": {
-          "prompt": "### Variant: one thousand bottles, ten testers and ninety minutes\nExactly one of one thousand bottles is poisoned. Ten testers and ninety minutes are available to identify it. Any adequate poisoned portion produces an identifiable outcome no later than sixty minutes after first exposure; the exact delay is unknown. Mixtures may be prepared and sampled simultaneously at time zero, without a volume limitation that defeats the model. Give a guaranteed identification strategy and explain what reaction timing does and does not reveal.\n\nEditorial clarification: the source says “within about an hour.” A mathematical guarantee needs a hard sixty-minute upper bound; an approximate duration without a bound cannot guarantee an answer before the feast. The construction uses only binary endpoint outcomes at minute sixty. It does not require equal reaction delays across testers. This is an abstract coding puzzle.",
+          "prompt": "### Variant: one thousand bottles, ten testers and ninety minutes\nExactly one of one thousand bottles is poisoned. Ten testers and ninety minutes are available to identify it. Any adequate poisoned portion produces an identifiable outcome no later than sixty minutes after first exposure; the exact delay is unknown. Mixtures may be prepared and sampled simultaneously at time zero, without a volume limitation that defeats the model. Give a guaranteed identification strategy and explain what reaction timing does and does not reveal.\n\nClarification: the source says “within about an hour.” A mathematical guarantee needs a hard sixty-minute upper bound; an approximate duration without a bound cannot guarantee an answer before the feast. The construction uses only binary endpoint outcomes at minute sixty. It does not require equal reaction delays across testers. This is an abstract coding puzzle.",
           "hints": [
             "Every test started immediately has an observable result by sixty minutes. How many binary patterns can ten testers produce?",
             "Each tester can receive a different mixture so the joint outcomes encode a bottle label.",
             "Label bottles zero through 999. Tester i samples exactly those whose labels have bit i set. At minute sixty decode the outcome mask and add one."
           ],
-          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }

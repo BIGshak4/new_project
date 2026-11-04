@@ -173,7 +173,7 @@
             "שני תאי HA יפיקו את סיבית הסכום ושני נשאים. האם שני הנשאים יכולים להיות 1 יחד?",
             "הנשאים הם g=A·B ו־h=(A XOR B)·Cin. הם זרים, לכן OR שלהם שווה XOR: גם איחוד הנשאים ניתן לביצוע בתא HA."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -184,7 +184,7 @@
             "Two HAs give the final sum and two carries. Can both carries be1 simultaneously?",
             "g=A·B and h=(A XOR B)·Cin are mutually exclusive. Their OR equals XOR, so a third HA can combine them."
           ],
-          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }
@@ -337,7 +337,7 @@
     "prompt_variants": {
       "he": {
         "batch110_eight_register_product": {
-          "prompt": "### וריאציה: שמונה אוגרים ושלוש פקודות בלבד\nהפקודות היחידות הן INC R, DEC R ו־BNZ label לפי התוצאה החשבונית שבוצעה מיד לפני הקפיצה. האוגרים הם R0..R7. בתחילה R0=a,R1=b, כאשר a,b טבעיים כולל אפס; שאר האוגרים יכולים להכיל טבעיים שרירותיים. חשבו R2=a·b ללא HALT, MOV, CMP או JMP.\n\nמודל העריכה הוא טבעיים ללא גלישה ו־DEC באפס אסורה. END היא תווית מיד אחרי ההוראה האחרונה: המפרש הלימודי מסתיים בהגעה לסוף הרשימה. זו אינה הוראת HALT ואינה מבטיחה שמעבד פיזי יפסיק; התנהגות מעטפת ההרצה לא הוגדרה במקור. אין חובה לשמר R1; המימוש משמר את R0.",
+          "prompt": "### וריאציה: שמונה אוגרים ושלוש פקודות בלבד\nהפקודות היחידות הן INC R, DEC R ו־BNZ label לפי התוצאה החשבונית שבוצעה מיד לפני הקפיצה. האוגרים הם R0..R7. בתחילה R0=a,R1=b, כאשר a,b טבעיים כולל אפס; שאר האוגרים יכולים להכיל טבעיים שרירותיים. חשבו R2=a·b ללא HALT, MOV, CMP או JMP.\n\nמודל התרגיל הוא טבעיים ללא גלישה ו־DEC באפס אסורה. END היא תווית מיד אחרי ההוראה האחרונה: המפרש הלימודי מסתיים בהגעה לסוף הרשימה. זו אינה הוראת HALT ואינה מבטיחה שמעבד פיזי יפסיק; התנהגות מעטפת ההרצה לא הוגדרה במקור. אין חובה לשמר R1; המימוש משמר את R0.",
           "hints": [
             "איך תבדקו ערך אוגר כשהקפיצה רואה רק את התוצאה האחרונה?",
             "INC ואז DEC משחזרים ערך ומשאירים אותו כתוצאת הבדיקה. כפל ניתן לבצע בחיבור חוזר.",
@@ -347,7 +347,7 @@
       },
       "en": {
         "batch110_eight_register_product": {
-          "prompt": "### Variant: eight registers and only three instructions\nOnly INC R, DEC R and BNZ label are allowed; BNZ sees the arithmetic result executed immediately before it. Registers are R0..R7. Initially R0=a,R1=b for arbitrary naturals including zero; scratch registers may contain arbitrary naturals. Compute R2=a·b without HALT, MOV, CMP or JMP.\n\nThe editorial model uses unbounded naturals and forbids DEC at zero. END labels the position immediately beyond the listing; the educational interpreter completes on falling off the listing. This is not HALT and does not guarantee a physical CPU stops; the source gives no execution-envelope contract. R1 need not be preserved; this implementation preserves R0.",
+          "prompt": "### Variant: eight registers and only three instructions\nOnly INC R, DEC R and BNZ label are allowed; BNZ sees the arithmetic result executed immediately before it. Registers are R0..R7. Initially R0=a,R1=b for arbitrary naturals including zero; scratch registers may contain arbitrary naturals. Compute R2=a·b without HALT, MOV, CMP or JMP.\n\nThe exercise model uses unbounded naturals and forbids DEC at zero. END labels the position immediately beyond the listing; the educational interpreter completes on falling off the listing. This is not HALT and does not guarantee a physical CPU stops; the source gives no execution-envelope contract. R1 need not be preserved; this implementation preserves R0.",
           "hints": [
             "How do you test a register when branches see only the preceding result?",
             "INC then DEC restores its value and provides that result; multiply with repeated addition.",

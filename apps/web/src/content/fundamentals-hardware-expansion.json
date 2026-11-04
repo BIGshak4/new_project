@@ -18,14 +18,14 @@
   {
     "id": "quick-hw-63", "topic": "gates",
     "title": {"he": "אינדקס אפס אינו אומר ריק", "en": "Index zero does not mean empty"},
-    "prompt": {"he": "מקודד עדיפויות מחזיר את אינדקס הביט הדלוק הגבוה ביותר ב־x[3:0]. למה שני ביטי האינדקס לבדם אינם מספיקים כשמותר x=0000?", "en": "A priority encoder returns the index of the highest set bit in x[3:0]. Why are its two index bits insufficient when x=0000 is allowed?"},
+    "prompt": {"he": "אנקודר עדיפויות מחזיר את אינדקס הביט הדלוק הגבוה ביותר ב־x[3:0]. למה שני ביטי האינדקס לבדם אינם מספיקים כשמותר x=0000?", "en": "A priority encoder returns the index of the highest set bit in x[3:0]. Why are its two index bits insufficient when x=0000 is allowed?"},
     "answer": {"he": "האינדקס `00` יכול לציין שביט 0 דולק, אך אין ביט נבחר עבור `0000`. מוסיפים `valid=x0 OR x1 OR x2 OR x3`. קוראים את האינדקס רק כש־valid=1; כשהוא 0 ערך האינדקס אינו בעל משמעות.", "en": "Index `00` can identify set bit 0, but `0000` selects no bit. Add `valid=x0 OR x1 OR x2 OR x3`. Interpret the index only when valid=1; when valid=0 its value has no meaning."},
     "takeaway": {"he": "מפרידים בין ערך תוצאה לבין השאלה אם קיימת תוצאה תקפה.", "en": "Separate a result’s value from whether a valid result exists."}
   },
   {
     "id": "quick-hw-64", "topic": "gates",
     "title": {"he": "עדיפות בין קבוצות", "en": "Priority between groups"},
-    "prompt": {"he": "מחלקים מקודד עדיפויות של 16 כניסות לארבע קבוצות רצופות של 4. לכל קבוצה אינדקס מקומי ו־valid. איך מרכיבים את האינדקס של הביט הדלוק הגבוה ביותר?", "en": "Split a 16-input priority encoder into four consecutive groups of four. Each group supplies a local index and valid. How is the global highest-set-bit index assembled?"},
+    "prompt": {"he": "מחלקים אנקודר עדיפויות של 16 כניסות לארבע קבוצות רצופות של 4. לכל קבוצה אינדקס מקומי ו־valid. איך מרכיבים את האינדקס של הביט הדלוק הגבוה ביותר?", "en": "Split a 16-input priority encoder into four consecutive groups of four. Each group supplies a local index and valid. How is the global highest-set-bit index assembled?"},
     "answer": {"he": "מקודדים בעדיפות את ארבעת אותות valid ובוחרים את הקבוצה הגבוהה התקפה. שני הביטים הגבוהים הם מספר הקבוצה; שני הנמוכים הם האינדקס המקומי שלה. למשל קבוצה 2 ואינדקס 1 נותנים `1001`, כלומר 9. לא עושים OR לכל האינדקסים המקומיים.", "en": "Priority-encode the four valid signals and select the highest valid group. Its group number supplies the upper two bits; its local index supplies the lower two. Group 2 and local index 1 give `1001`, or 9. Do not OR all local indices together."},
     "takeaway": {"he": "בהרכבה היררכית בוחרים תחילה קבוצה, ואז משתמשים בתוצאה של הקבוצה שנבחרה.", "en": "In a hierarchy, select a group first, then use that group’s result."}
   },
@@ -131,15 +131,15 @@
   {
     "id": "quick-hw-79", "topic": "sequential",
     "title": {"he": "מנתון לפקודות קביעה ואיפוס", "en": "From data to set and reset"},
-    "prompt": {"he": "נתון דלגלג SR בחזית עולה, עם כניסות סינכרוניות פעילות ב־1: 00 שומר, 01 מאפס, 10 קובע, 11 אסור. איך נחבר D כדי לקבל דלגלג D? מניחים עמידה בתזמון.", "en": "A rising-edge SR flip-flop has synchronous active-high inputs: 00 holds, 01 resets, 10 sets, 11 is forbidden. How should D be connected to obtain a D flip-flop? Assume timing requirements are met."},
-    "answer": {"he": "נחבר `S=D, R=NOT D` ונשתמש באותו שעון. D=0 יוצר 01 ו־Q הבא 0; D=1 יוצר 10 ו־Q הבא 1. זו הנחה על SR בחזית עם כניסות סינכרוניות; חיבור כזה לנועל או ל־Set/Reset אסינכרוניים אינו מבטיח DFF.", "en": "Connect `S=D, R=NOT D` and use the same clock. D=0 gives 01 and next Q=0; D=1 gives 10 and next Q=1. This assumes an edge-triggered SR with synchronous controls; wiring a latch or asynchronous set/reset this way does not guarantee a DFF."},
+    "prompt": {"he": "נתון פליפ-פלופ SR בחזית עולה, עם כניסות סינכרוניות פעילות ב־1: 00 שומר, 01 מאפס, 10 קובע, 11 אסור. איך נחבר D כדי לקבל פליפ-פלופ D? מניחים עמידה בתזמון.", "en": "A rising-edge SR flip-flop has synchronous active-high inputs: 00 holds, 01 resets, 10 sets, 11 is forbidden. How should D be connected to obtain a D flip-flop? Assume timing requirements are met."},
+    "answer": {"he": "נחבר `S=D, R=NOT D` ונשתמש באותו שעון. D=0 יוצר 01 ו־Q הבא 0; D=1 יוצר 10 ו־Q הבא 1. זו הנחה על SR בחזית עם כניסות סינכרוניות; חיבור כזה ללאץ׳ או ל־Set/Reset אסינכרוניים אינו מבטיח DFF.", "en": "Connect `S=D, R=NOT D` and use the same clock. D=0 gives 01 and next Q=0; D=1 gives 10 and next Q=1. This assumes an edge-triggered SR with synchronous controls; wiring a latch or asynchronous set/reset this way does not guarantee a DFF."},
     "takeaway": {"he": "לפני החלפת רכיב זיכרון, מוודאים מתי כניסות הבקרה שלו משפיעות.", "en": "Before replacing a memory primitive, establish when its controls take effect."}
   },
   {
     "id": "quick-hw-80", "topic": "sequential",
     "title": {"he": "שקיפות לעומת דגימה בחזית", "en": "Transparency versus edge sampling"},
-    "prompt": {"he": "נועל D שקוף כש־EN=1, ולצדו דלגלג D בחזית עולה. EN נשאר 1 ו־D משתנה בין חזיתות השעון. מי רשאי לעקוב אחרי השינוי מיד?", "en": "A D latch is transparent while EN=1, alongside a rising-edge D flip-flop. EN stays 1 and D changes between clock edges. Which may follow the change immediately?"},
-    "answer": {"he": "הנועל עוקב אחרי D בזמן ש־EN=1, לאחר השהיית הרכיב. הדלגלג שומר את הדגימה עד החזית הבאה, בהיעדר בקרה אסינכרונית. אפשור ברמה וחזית שעון אינם אותו חוזה התנהגות.", "en": "The latch follows D while EN=1, after its propagation delay. The flip-flop holds its sample until the next edge, assuming no asynchronous control. Level enable and a clock edge specify different behavior."},
+    "prompt": {"he": "לאץ׳ D שקוף כש־EN=1, ולצדו פליפ-פלופ D בחזית עולה. EN נשאר 1 ו־D משתנה בין חזיתות השעון. מי רשאי לעקוב אחרי השינוי מיד?", "en": "A D latch is transparent while EN=1, alongside a rising-edge D flip-flop. EN stays 1 and D changes between clock edges. Which may follow the change immediately?"},
+    "answer": {"he": "הלאץ׳ עוקב אחרי D בזמן ש־EN=1, לאחר השהיית הרכיב. הפליפ-פלופ שומר את הדגימה עד החזית הבאה, בהיעדר בקרה אסינכרונית. אפשור ברמה וחזית שעון אינם אותו חוזה התנהגות.", "en": "The latch follows D while EN=1, after its propagation delay. The flip-flop holds its sample until the next edge, assuming no asynchronous control. Level enable and a clock edge specify different behavior."},
     "takeaway": {"he": "מזהים אם רכיב הזיכרון רגיש לרמה או לחזית לפני שעוקבים אחרי אותות.", "en": "Identify level sensitivity versus edge sensitivity before tracing signals."}
   },
   {
@@ -173,15 +173,15 @@
   {
     "id": "quick-hw-85", "topic": "sequential",
     "title": {"he": "שני שלבים לא מבטיחים אפס סיכון", "en": "Two stages do not guarantee zero risk"},
-    "prompt": {"he": "אות בקרה בודד עובר לתחום שעון אחר דרך שני דלגלגים בטור בשעון היעד. המקור שומר כל רמה מספיק זמן. האם המבנה מבטיח שלעולם לא תהיה בעיית מטא־יציבות?", "en": "A single control bit crosses into another clock domain through two flip-flops clocked by the destination. The source holds each level long enough. Does this guarantee that metastability can never cause a problem?"},
+    "prompt": {"he": "אות בקרה בודד עובר לתחום שעון אחר דרך שני פליפ-פלופים בטור בשעון היעד. המקור שומר כל רמה מספיק זמן. האם המבנה מבטיח שלעולם לא תהיה בעיית מטא־יציבות?", "en": "A single control bit crosses into another clock domain through two flip-flops clocked by the destination. The source holds each level long enough. Does this guarantee that metastability can never cause a problem?"},
     "answer": {"he": "לא. השלב הראשון עלול להיכנס למטא־יציבות; הזמן עד לדגימת השלב השני מפחית את הסיכוי שהיא תגיע ללוגיקה בהמשך. זהו צמצום הסתברות כשל, לא הבטחת אפס. אין להחיל את הרעיון באופן עצמאי על כל ביט של מילת נתונים ולצפות לתמונה עקבית.", "en": "No. The first stage may become metastable; time before the second sample reduces the probability of metastability reaching downstream logic. This reduces failure probability rather than guaranteeing zero. Independently synchronizing every bit of a data word also does not guarantee a coherent word."},
     "takeaway": {"he": "מסנכרן לביט בקרה מפחית סיכון, אך אינו פרוטוקול להעברת כל סוג מידע.", "en": "A control-bit synchronizer reduces risk; it is not a protocol for every kind of information."}
   },
   {
     "id": "quick-hw-86", "topic": "sequential",
     "title": {"he": "פולס שנופל בין הדגימות", "en": "A pulse between samples"},
-    "prompt": {"he": "פולס מהמקור קצר ממחזור שעון היעד ונכנס למסנכרן בן שני דלגלגים. האם מובטח שהיעד יראה אותו?", "en": "A source pulse is shorter than one destination clock period and enters a two-flip-flop synchronizer. Is the destination guaranteed to see it?"},
-    "answer": {"he": "לא. הפולס יכול לעלות ולרדת בין שתי חזיתות יעד, כך שאפילו השלב הראשון לא ידגום 1. משתמשים בפרוטוקול מתאים, למשל בקשה שנשמרת עד אישור. שני דלגלגים מטפלים בסיכון מטא־יציבות; הם אינם שומרים אוטומטית אירוע שלא נדגם.", "en": "No. The pulse can rise and fall between destination edges, so even the first stage may never sample 1. Use a suitable protocol, such as holding a request until acknowledged. Two flip-flops address metastability risk; they do not automatically retain an unsampled event."},
+    "prompt": {"he": "פולס מהמקור קצר ממחזור שעון היעד ונכנס למסנכרן בן שני פליפ-פלופים. האם מובטח שהיעד יראה אותו?", "en": "A source pulse is shorter than one destination clock period and enters a two-flip-flop synchronizer. Is the destination guaranteed to see it?"},
+    "answer": {"he": "לא. הפולס יכול לעלות ולרדת בין שתי חזיתות יעד, כך שאפילו השלב הראשון לא ידגום 1. משתמשים בפרוטוקול מתאים, למשל בקשה שנשמרת עד אישור. שני פליפ-פלופים מטפלים בסיכון מטא־יציבות; הם אינם שומרים אוטומטית אירוע שלא נדגם.", "en": "No. The pulse can rise and fall between destination edges, so even the first stage may never sample 1. Use a suitable protocol, such as holding a request until acknowledged. Two flip-flops address metastability risk; they do not automatically retain an unsampled event."},
     "takeaway": {"he": "בהעברת אירוע בין שעונים צריך להבטיח גם שהאירוע נלכד.", "en": "A cross-clock event transfer must also ensure the event is captured."}
   },
   {
@@ -228,9 +228,9 @@
   },
   {
     "id": "quick-hw-93", "topic": "states",
-    "title": {"he": "ברירת מחדל שמונעת נועל", "en": "A default that prevents a latch"},
-    "prompt": {"he": "בבלוק צירופי לחישוב מצב הבא כתוב רק: אם go=1, קבע next=DONE. רוצים שב־go=0 יתקבל next=state, בלי נועל נוסף. איזו השמה חסרה? אוגר state מתעדכן בנפרד בחזית שעון.", "en": "A combinational next-state block only says: if go=1, assign next=DONE. We want next=state when go=0, without an extra latch. What assignment is missing? The state register updates separately on a clock edge."},
-    "answer": {"he": "נותנים ברירת מחדל `next=state` לפני התנאי. כך next מקבל ערך בכל מסלול. בלי השמה ב־go=0, נדרש לשמור את next הקודם ועלול להיווצר נועל. ברירת המחדל מחשבת את המצב הבא הנכון; אוגר state הוא הזיכרון הרצוי והנפרד.", "en": "Assign default `next=state` before the condition, so next receives a value on every path. With no assignment for go=0, next must retain its previous value and a latch can be inferred. The default computes the intended next state; the separate state register provides the intended memory."},
+    "title": {"he": "ברירת מחדל שמונעת לאץ׳", "en": "A default that prevents a latch"},
+    "prompt": {"he": "בבלוק צירופי לחישוב מצב הבא כתוב רק: אם go=1, קבע next=DONE. רוצים שב־go=0 יתקבל next=state, בלי לאץ׳ נוסף. איזו השמה חסרה? אוגר state מתעדכן בנפרד בחזית שעון.", "en": "A combinational next-state block only says: if go=1, assign next=DONE. We want next=state when go=0, without an extra latch. What assignment is missing? The state register updates separately on a clock edge."},
+    "answer": {"he": "נותנים ברירת מחדל `next=state` לפני התנאי. כך next מקבל ערך בכל מסלול. בלי השמה ב־go=0, נדרש לשמור את next הקודם ועלול להיווצר לאץ׳. ברירת המחדל מחשבת את המצב הבא הנכון; אוגר state הוא הזיכרון הרצוי והנפרד.", "en": "Assign default `next=state` before the condition, so next receives a value on every path. With no assignment for go=0, next must retain its previous value and a latch can be inferred. The default computes the intended next state; the separate state register provides the intended memory."},
     "takeaway": {"he": "בלוגיקה צירופית מגדירים כל מוצא בכל מסלול ביצוע.", "en": "In combinational logic, assign every output on every execution path."},
     "code": {"language": "verilog", "text": "always @* begin\n  next = state;\n  if (go) next = DONE;\nend"}
   },
@@ -275,7 +275,7 @@
   {
     "id": "quick-hw-99", "topic": "sequential",
     "title": {"he": "לתייג את אותו פריט", "en": "Tag the same item"},
-    "prompt": {"he": "צינור ללא עצירות מעכב נתונים בשני דלגלגים טוריים. לכל קלט יש valid שמציין אם הוא פריט אמיתי. בכמה מחזורים צריך לעכב את valid כדי שישייך נכון את נתוני המוצא?", "en": "A stall-free pipeline delays data through two serial flip-flops. Each input has valid marking whether it is a real item. How many cycles must valid be delayed to correctly label output data?"},
+    "prompt": {"he": "צינור ללא עצירות מעכב נתונים בשני פליפ-פלופים טוריים. לכל קלט יש valid שמציין אם הוא פריט אמיתי. בכמה מחזורים צריך לעכב את valid כדי שישייך נכון את נתוני המוצא?", "en": "A stall-free pipeline delays data through two serial flip-flops. Each input has valid marking whether it is a real item. How many cycles must valid be delayed to correctly label output data?"},
     "answer": {"he": "באותם `2` מחזורים, עם אותם תנאי עדכון ואיפוס תקף ל־valid. עיכוב הנתונים בלבד היה מצמיד את valid של פריט חדש לנתון ישן. ערך נתונים בזמן valid=0 אינו הופך לפריט רק כי הוא מספר הגיוני.", "en": "The same `2` cycles, with matching update conditions and a defined valid reset. Delaying only data would pair a new item’s valid with old data. A plausible-looking data value while valid=0 does not make it a real item."},
     "takeaway": {"he": "אותות בקרה והנתונים שהם מתארים צריכים לעבור השהיות תואמות.", "en": "Control signals and the data they describe need matching delays."}
   },

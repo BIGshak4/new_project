@@ -89,7 +89,8 @@ test("focus selectors remain attached to real editor controls, never hint or sub
     assert.doesNotMatch(selector, /hint|solution-open|submit|reference/);
     for (const match of selector.matchAll(/\[data-muxi-control="([a-z-]+)"\]/g)) {
       const anchor = match[1];
-      assert.ok(sources.includes(`data-muxi-control="${anchor}"`) || sources.includes(`"data-muxi-control": "${anchor}"`), `Missing actual control: ${anchor}`);
+      const conditionalAttribute = new RegExp(`data-muxi-control=\\{[^}]*"${anchor}"[^}]*\\}`);
+      assert.ok(sources.includes(`data-muxi-control="${anchor}"`) || sources.includes(`"data-muxi-control": "${anchor}"`) || conditionalAttribute.test(sources), `Missing actual control: ${anchor}`);
     }
   }
   assert.ok(sources.includes('className="visual-answer-actions"'));

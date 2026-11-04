@@ -146,8 +146,8 @@ export function PracticeLanding({
               <h3>{t("מתכוננים לרגע האמת", "Get ready for the interview")}</h3>
               <p>
                 {t(
-                  "מתרגלים גם ראיון מדומה, חוזרים למשוב ורואים את הדרך שעשיתם. המשובים בפיילוט נבדקים ומשתפרים.",
-                  "Practice a mock interview, revisit feedback and see your progress. Pilot feedback is being reviewed and improved.",
+                  "מתרגלים גם ראיון מדומה, חוזרים למשוב ורואים את הדרך שעשיתם.",
+                  "Practice a mock interview, revisit feedback and see your progress.",
                 )}
               </p>
             </article>
@@ -164,8 +164,8 @@ export function PracticeLanding({
             </p>
             <p className="muted small">
               {t(
-                "כרגע בפיילוט פרטי לחברים שהוזמנו.",
-                "Currently a private pilot for invited members.",
+                "התרגול זמין למשתמשים שאושרו מראש.",
+                "Practice is available to users approved for access.",
               )}
             </p>
           </div>

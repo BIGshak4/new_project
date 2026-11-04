@@ -157,7 +157,7 @@ def run():
         emit(
             63,
             v,
-            f"מקודד עדיפות בן 4 כניסות בוחר את הביט הפעיל הגבוה ביותר. עבור x={word}, מה צריך לציין ממשק עם valid ואינדקס?",
+            f"אנקודר עדיפות בן 4 כניסות בוחר את הביט הפעיל הגבוה ביותר. עבור x={word}, מה צריך לציין ממשק עם valid ואינדקס?",
             f"A 4-input priority encoder selects the highest set bit. For x={word}, what should a valid-plus-index interface report?",
             [correct] + wrong,
             (
@@ -175,7 +175,7 @@ def run():
         numeric(
             64,
             v,
-            f"מקודד בעל 16 כניסות מחולק ל־4 קבוצות רצופות של 4, ממוספרות מ־0. הקבוצה הפעילה הגבוהה ביותר היא {g}, והאינדקס המקומי בה הוא {local}. מה האינדקס הכללי?",
+            f"אנקודר בעל 16 כניסות מחולק ל־4 קבוצות רצופות של 4, ממוספרות מ־0. הקבוצה הפעילה הגבוהה ביותר היא {g}, והאינדקס המקומי בה הוא {local}. מה האינדקס הכללי?",
             f"A 16-input encoder uses 4 consecutive groups of 4, numbered from 0. The highest valid group is {g}, with local index {local}. What is the global index?",
             n,
             (
@@ -548,7 +548,7 @@ def run():
         emit(
             79,
             v,
-            f"דלגלג SR בעל חזית עולה ובקרות סינכרוניות פעילות ב־1: SR=00 שומר, 01 מאפס, 10 מציב, 11 אסור. כדי לממש Q_next=D, אילו זוגות SR יש להזין עבור דגימות D={seq}, משמאל לימין? הניחו עמידה בדרישות תזמון.",
+            f"פליפ-פלופ SR בעל חזית עולה ובקרות סינכרוניות פעילות ב־1: SR=00 שומר, 01 מאפס, 10 מציב, 11 אסור. כדי לממש Q_next=D, אילו זוגות SR יש להזין עבור דגימות D={seq}, משמאל לימין? הניחו עמידה בדרישות תזמון.",
             f"A rising-edge SR flip-flop has synchronous controls active at 1: SR=00 holds, 01 resets, 10 sets, and 11 is forbidden. To implement Q_next=D, which SR pairs match D samples {seq}, left to right? Assume timing requirements are met.",
             [correct] + wrong,
             (
@@ -569,11 +569,11 @@ def run():
         emit(
             80,
             v,
-            f"ללַאץ׳ D ולדלגלג D בעל חזית עולה יש בתחילה Q={start}. בין חזיתות, D נקבע ל־{end}, ו־EN של הלאץ׳ נשאר {en}. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
+            f"ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q={start}. בין חזיתות, D נקבע ל־{end}, ו־EN של הלאץ׳ נשאר {en}. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
             f"A D latch and a rising-edge D flip-flop initially have Q={start}. Between edges, D is set to {end}, while the latch EN remains {en}. There are no asynchronous controls. After propagation and before the next edge, what are the outputs?",
             options,
             (
-                "לאץ׳ שקוף כש־EN=1; אחרת הוא שומר. דלגלג ללא חזית פעילה שומר את הדגימה הקודמת.",
+                "לאץ׳ שקוף כש־EN=1; אחרת הוא שומר. פליפ-פלופ ללא חזית פעילה שומר את הדגימה הקודמת.",
                 "The latch is transparent when EN=1 and otherwise holds. Without an active edge, the flip-flop retains its previous sample.",
             ),
             "level_enable_vs_edge_transition",
@@ -664,7 +664,7 @@ def run():
 
     cases85 = [
         (
-            "סיבית בקרה מוחזקת יציבה מספיק זמן ונכנסת לסנכרון בשני דלגלגים בשעון היעד. מה נכון לגבי מטא־יציבות?",
+            "סיבית בקרה מוחזקת יציבה מספיק זמן ונכנסת לסנכרון בשני פליפ-פלופים בשעון היעד. מה נכון לגבי מטא־יציבות?",
             "A control bit is held stable long enough and crosses through two destination-clock flip-flops. What is true about metastability?",
             ("הסיכון מצטמצם, אך אינו נהפך לאפס מובטח", "The risk is reduced, but not guaranteed to be zero"),
             [
@@ -710,7 +710,7 @@ def run():
             ],
         ),
         (
-            "האם הוספת שני דלגלגים בשעון היעד מבטיחה לבדה שמילה רב־ביטית תהיה עקבית ושכל אירוע קצר ייקלט?",
+            "האם הוספת שני פליפ-פלופים בשעון היעד מבטיחה לבדה שמילה רב־ביטית תהיה עקבית ושכל אירוע קצר ייקלט?",
             "Does adding two destination-clock flip-flops alone guarantee both coherent multi-bit words and capture of every short event?",
             (
                 "לא; לכל דרישה נדרש מנגנון העברה מתאים",
@@ -750,7 +750,7 @@ def run():
             f"Destination edges occur at 0, {period}, {2 * period} ns. The source pulse is high only from {start} to {finish} ns and low otherwise. In an ideal sampling model, what does the first synchronizer stage sample at the first two edges?",
             ["0, 0", "0, 1", "1, 0", "1, 1"],
             (
-                "הפולס כולו נמצא בין חזיתות ולכן אינו נדגם. שני דלגלגים אינם שומרים אירוע שמעולם לא נדגם.",
+                "הפולס כולו נמצא בין חזיתות ולכן אינו נדגם. שני פליפ-פלופים אינם שומרים אירוע שמעולם לא נדגם.",
                 "The pulse lies entirely between edges and is never sampled. Two flip-flops do not retain an event that was never sampled.",
             ),
             "explicit_edge_sample_pulse_intersection",
@@ -1152,7 +1152,7 @@ def run():
         emit(
             97,
             v,
-            f"מקודד סיבובי מתקדם במחזור 00→01→11→10→00, ולאחור בסדר ההפוך. הדגימה הקודמת היא {old} והחדשה {new}. מה אפשר להסיק בהנחה שמזהים צעד חוקי יחיד רק כאשר השתנה ביט אחד?",
+            f"אנקודר סיבובי מתקדם במחזור 00→01→11→10→00, ולאחור בסדר ההפוך. הדגימה הקודמת היא {old} והחדשה {new}. מה אפשר להסיק בהנחה שמזהים צעד חוקי יחיד רק כאשר השתנה ביט אחד?",
             f"A rotary encoder moves forward through 00→01→11→10→00 and backward in reverse. The previous sample is {old}, the new sample {new}. What follows if a legal single step requires exactly one changed bit?",
             [meanings[delta]] + [m for i, m in enumerate(meanings) if i != delta],
             (
@@ -1525,7 +1525,7 @@ def run():
         emit(
             111,
             v,
-            f"בדלגלג בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא {period} ns, והשעון עצמו גבוה רק {clock_high} ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
+            f"בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא {period} ns, והשעון עצמו גבוה רק {clock_high} ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
             f"A rising-edge flip-flop has D=NOT Q. Rising edges are {period} ns apart, and the clock itself is high for only {clock_high} ns each period. After initialization, what are Q's period and high duty cycle in a zero-delay model?",
             [
                 (f"{2 * period} ns; 50%", f"{2 * period} ns; 50%"),

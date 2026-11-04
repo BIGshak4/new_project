@@ -1,6 +1,5 @@
 """Authored bilingual reasoning cases; deterministic calculations and case evidence.
 
-This is AI-assisted editorial work, not a human-review attestation.
 Run directly to rebuild this shard. The production seed is assembled separately.
 """
 

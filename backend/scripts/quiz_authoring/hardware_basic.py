@@ -569,7 +569,7 @@ def build():
         seq(
             16,
             v,
-            f"שני דלגלגי D דוגמים באותה חזית עולה: D1=x, D2=Q1. מתחילים ב־Q1Q2={''.join(map(str, init))}, ללא איפוס נוסף. ערכי x היציבים בחזיתות הם {text(xs)}. מהם ערכי Q1Q2 לאחר כל חזית?",
+            f"שני פליפ-פלופי D דוגמים באותה חזית עולה: D1=x, D2=Q1. מתחילים ב־Q1Q2={''.join(map(str, init))}, ללא איפוס נוסף. ערכי x היציבים בחזיתות הם {text(xs)}. מהם ערכי Q1Q2 לאחר כל חזית?",
             f"Two D flip-flops sample on the same rising edge: D1=x, D2=Q1. Start at Q1Q2={''.join(map(str, init))}, with no further reset. Stable x values at the edges are {text(xs)}. What is Q1Q2 after each edge?",
             result,
             "בכל חזית Q2 מקבל את Q1 הישן, ו־Q1 מקבל את x.",
@@ -592,13 +592,13 @@ def build():
             p = {"initial": initial, "inputs": xs}
             result = simulate("toggle", p)
             if n == 22:
-                he = f"דלגלג D מחובר כך ש־D=NOT Q ודוגם בחזית עולה. מתחילים ב־Q={initial}, ללא איפוס. מהם ערכי Q לאחר {len(xs)} החזיתות הבאות?"
+                he = f"פליפ-פלופ D מחובר כך ש־D=NOT Q ודוגם בחזית עולה. מתחילים ב־Q={initial}, ללא איפוס. מהם ערכי Q לאחר {len(xs)} החזיתות הבאות?"
                 en = f"A rising-edge D flip-flop has D=NOT Q. Start with Q={initial}, with no reset. What are the Q values after the next {len(xs)} edges?"
             elif n == 23:
                 he = f"נורה נשלטת על ידי ביט מצב Q, שמתחיל ב־{initial}. בכל חזית עולה t=1 הופך את Q ו־t=0 משאיר אותו. ללא איפוס, מהם ערכי Q אחרי קלטי t: {text(xs)}?"
                 en = f"A light is controlled by state bit Q, initially {initial}. At each rising edge, t=1 toggles Q and t=0 holds it. With no reset, what are Q values after t inputs: {text(xs)}?"
             else:
-                he = f"דלגלג T מתחיל ב־Q={initial}. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: {text(xs)}?"
+                he = f"פליפ-פלופ T מתחיל ב־Q={initial}. בכל חזית עולה T=1 הופך את Q ו־T=0 משאיר אותו. אין איפוס. מהם ערכי Q אחרי קלטי T: {text(xs)}?"
                 en = f"A T flip-flop starts at Q={initial}. At each rising edge, T=1 toggles Q and T=0 holds it. There is no reset. What are Q values after T inputs: {text(xs)}?"
             seq(
                 n,
@@ -982,7 +982,7 @@ def build():
         emit(
             47,
             v,
-            f"בורר לפני דלגלג D בוחר D0 כש־S=0 ואת D1 כש־S=1. S=EN. האוגר חייב לשמור Q כש־EN=0 ולטעון data כש־EN=1. לפני חזית עולה Q={initial}, data={data}, EN={enable}, ללא איפוס. איזה זוג חיבורים מממש זאת לכל הקלטים, ומה Q אחרי החזית?",
+            f"בורר לפני פליפ-פלופ D בוחר D0 כש־S=0 ואת D1 כש־S=1. S=EN. האוגר חייב לשמור Q כש־EN=0 ולטעון data כש־EN=1. לפני חזית עולה Q={initial}, data={data}, EN={enable}, ללא איפוס. איזה זוג חיבורים מממש זאת לכל הקלטים, ומה Q אחרי החזית?",
             f"A MUX before a D flip-flop selects D0 when S=0 and D1 when S=1. S=EN. The register must hold Q when EN=0 and load data when EN=1. Before a rising edge Q={initial}, data={data}, EN={enable}, with no reset. Which wiring works for all inputs, and what is Q after the edge?",
             good,
             wrong,
@@ -1032,7 +1032,7 @@ def build():
         emit(
             51,
             v,
-            f"לדלגלג D אין איפוס ואין ערך התחלתי מוגדר. D={data} יציב כנדרש סביב כל אחת מ־{edges} החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
+            f"לפליפ-פלופ D אין איפוס ואין ערך התחלתי מוגדר. D={data} יציב כנדרש סביב כל אחת מ־{edges} החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
             f"A D flip-flop has no reset or specified initial value. D={data} is stable as required around each of the first {edges} rising edges. What is guaranteed about Q before the first edge and after the final edge, in that order?",
             good,
             [
@@ -1076,7 +1076,7 @@ def build():
         seq(
             53,
             v,
-            f"שלושה דלגלגי D דוגמים באותה חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3={''.join(map(str, initial))}, ללא איפוס נוסף. x יציב בחזיתות וערכיו {text(xs)}. מהן מילות המצב לאחר כל חזית?",
+            f"שלושה פליפ-פלופי D דוגמים באותה חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3={''.join(map(str, initial))}, ללא איפוס נוסף. x יציב בחזיתות וערכיו {text(xs)}. מהן מילות המצב לאחר כל חזית?",
             f"Three D flip-flops sample on the same rising edge: D1=x, D2=Q1, D3=Q2. Start at Q1Q2Q3={''.join(map(str, initial))}, with no further reset. Stable x values at the edges are {text(xs)}. What are the state words after each edge?",
             result,
             "כל שלב דוגם את הערך הקודם של קודמו; ביט מתקדם שלב אחד בכל חזית.",
@@ -1142,10 +1142,10 @@ def build():
         numeric(
             57,
             v,
-            f"בקידוד one-hot מקצים ביט נפרד לכל מצב, ורק ביט המצב הנוכחי הוא 1. כמה דלגלגים דרושים למכונה עם {states} מצבים?",
+            f"בקידוד one-hot מקצים ביט נפרד לכל מצב, ורק ביט המצב הנוכחי הוא 1. כמה פליפ-פלופים דרושים למכונה עם {states} מצבים?",
             f"One-hot encoding assigns one separate bit to each state, with only the current state bit equal to 1. How many flip-flops are needed for {states} states?",
             states,
-            "ב־one-hot יש דלגלג אחד לכל מצב, בניגוד לקידוד בינארי קומפקטי.",
+            "ב־one-hot יש פליפ-פלופ אחד לכל מצב, בניגוד לקידוד בינארי קומפקטי.",
             "One-hot uses one flip-flop per state, unlike compact binary encoding.",
             "onehot_width",
             {"states": states},

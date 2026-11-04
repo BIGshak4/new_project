@@ -1,6 +1,7 @@
 "use client";
 
-import { QuestionMetadata, ReportedCompanies } from "./question-metadata";
+import { QuestionMetadata } from "./question-metadata";
+import { QuestionActions } from "./question-actions";
 import { BidiText } from "./bidi-text";
 import { QuestionTitle } from "./question-title";
 import { proseDirection } from "../lib/bidi-segments";
@@ -9,7 +10,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Bookmark,
-  Building2,
   Lightbulb,
   RotateCcw,
   Download,
@@ -28,7 +28,6 @@ import { EvaluationPanel, NextUpCard } from "./evaluation-panel";
 import { ExecutionResultView } from "./code-execution-result";
 import { HelpPopover } from "./ui/popover";
 import { SubjectSketch } from "./sketches";
-import { QuestionReport } from "./question-report";
 import { StudyText, QuestionFigures, TechnicalMaterial, ResourceStatus, useQuestionResources } from "./question-materials";
 import { Reveal } from "./ui/motion";
 import { toast } from "./toaster";
@@ -40,7 +39,6 @@ import { supabase } from "../lib/supabase";
 import {
   newIdempotencyKey,
   type Attempt,
-  type CompanyTag,
   type PracticeApi,
   type PracticeApiError,
   type QuestionDetail,
@@ -556,10 +554,8 @@ export function PracticeSession({
                 {question.assessment_ready === false && <p className="notice study-review-note">
                   {t("המשוב ראשוני והתרגול נשמר, אך אינו משנה את רמת השליטה או מעניק נקודות.", "Feedback is provisional and practice is saved, but does not change skill levels or earn points.")}
                 </p>}
-                <div className="row question-tools">
-                  <SawItAt api={api} question={question} lang={lang} />
-                  <QuestionReport api={api} questionKey={question.key} lang={lang} context="practice" />
-                </div>
+                <QuestionActions api={api} questionKey={question.key} questionTitle={question.title}
+                  lang={lang} context="practice" companies={question.companies} reportedCompanies={question.reported_companies} />
                 {!attempt && (
                   <p className="preview-guide">
                     {t(
@@ -757,6 +753,7 @@ export function PracticeSession({
                     {!attempt.submission ? (
                       <>
                         <AnswerEditor
+                          key={`answer-${attempt.id}`}
                           value={answer}
                           onChange={setAnswer}
                           lang={lang}
@@ -766,6 +763,7 @@ export function PracticeSession({
                           execution={executionEnabled ? { attemptId: attempt.id, api } : undefined}
                         />
                         <VisualAnswer
+                          key={`visual-${attempt.id}`}
                           value={visual}
                           onChange={setVisual}
                           lang={lang}
@@ -1191,86 +1189,6 @@ function PersonalNotes({
       <p className="small" role="status">
         <BidiText>{message}</BidiText>
       </p>
-    </div>
-  );
-}
-
-/** "I saw this question at company X": one line of tags and a small form; the tags help everyone search by company. */
-function SawItAt({
-  api,
-  question,
-  lang,
-}: {
-  api: PracticeApi;
-  question: QuestionDetail;
-  lang: Lang;
-}) {
-  const t = (he: string, en: string) => (lang === "he" ? he : en);
-  const [tags, setTags] = useState<CompanyTag[]>(question.companies ?? []);
-  const [open, setOpen] = useState(false),
-    [company, setCompany] = useState(""),
-    [busy, setBusy] = useState(false),
-    [message, setMessage] = useState("");
-  useEffect(() => {
-    setTags(question.companies ?? []);
-  }, [question.id, question.companies]);
-  async function save() {
-    const name = company.trim();
-    if (!name || busy) return;
-    setBusy(true);
-    setMessage("");
-    try {
-      const result = await api.addSighting(question.key, name);
-      setTags(result.companies);
-      setCompany("");
-      setOpen(false);
-      toast.success(t("תודה! נוסף לרשימת החברות של השאלה.", "Thanks! Added to this question's companies."));
-    } catch (e) {
-      const code = (e as PracticeApiError).code;
-      setMessage(
-        code === "temporarily_unavailable"
-          ? t("תיוג חברות ייפתח בקרוב.", "Company tags are opening soon.")
-          : apiMessage(e, lang),
-      );
-    } finally {
-      setBusy(false);
-    }
-  }
-  return (
-    <div className="saw-it-at">
-      <ReportedCompanies question={{ reported_companies: question.reported_companies, companies: tags }} lang={lang} note />
-      <div className="row">
-        <button type="button" className="text-button" aria-expanded={open} onClick={() => setOpen(!open)}>
-          <Building2 size={15} aria-hidden="true" />
-          {t("ראיתי את זה בחברה…", "I saw it at a company…")}
-        </button>
-      </div>
-      {open && (
-        <form
-          className="row saw-it-form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            void save();
-          }}
-        >
-          <input
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-            maxLength={80}
-            placeholder={t("שם החברה, למשל Intel", "Company name, e.g. Intel")}
-            aria-label={t("שם החברה", "Company name")}
-            disabled={busy}
-          />
-          <button type="submit" className="primary" disabled={busy || !company.trim()}>
-            {busy ? t("שומרים…", "Saving…") : t("הוספה", "Add")}
-          </button>
-        </form>
-      )}
-      {message && (
-        <p className="small" role="status">
-          <BidiText>{message}</BidiText>
-        </p>
-      )}
     </div>
   );
 }

@@ -332,15 +332,15 @@
       "en": "Input changed: does output follow?"
     },
     "prompt": {
-      "he": "דלגלג D מעדכן את Q רק בחזית עולה של השעון. כעת Q=0, ו־D משתנה מ־0 ל־1 בין חזיתות. אין איפוס. מה קורה ל־Q?",
+      "he": "פליפ-פלופ D מעדכן את Q רק בחזית עולה של השעון. כעת Q=0, ו־D משתנה מ־0 ל־1 בין חזיתות. אין איפוס. מה קורה ל־Q?",
       "en": "A D flip-flop updates Q only on a rising clock edge. Q is currently 0, and D changes from 0 to 1 between edges. There is no reset. What happens to Q?"
     },
     "answer": {
-      "he": "עד החזית הבאה `Q=0`. בחזית העולה הבאה יישמר `Q=1`, בהנחה ש־D נשאר יציב מספיק לפני החזית ואחריה. דלגלג אינו מעביר את D ברציפות.",
+      "he": "עד החזית הבאה `Q=0`. בחזית העולה הבאה יישמר `Q=1`, בהנחה ש־D נשאר יציב מספיק לפני החזית ואחריה. פליפ-פלופ אינו מעביר את D ברציפות.",
       "en": "Until the next edge, `Q=0`. At the next rising edge it stores `Q=1`, assuming D remains stable sufficiently before and after that edge. A flip-flop does not continuously pass D through."
     },
     "takeaway": {
-      "he": "בדלגלג D שואלים מהו הקלט ברגע הדגימה.",
+      "he": "בפליפ-פלופ D שואלים מהו הקלט ברגע הדגימה.",
       "en": "For a D flip-flop, ask what the input is at the sampling edge."
     }
   },
@@ -348,11 +348,11 @@
     "id": "quick-hw-16",
     "topic": "sequential",
     "title": {
-      "he": "שני דלגלגים באותו שעון",
+      "he": "שני פליפ-פלופים באותו שעון",
       "en": "Two flip-flops, one clock"
     },
     "prompt": {
-      "he": "שני דלגלגי D משתמשים באותה חזית עולה: D1=1 ו־D2=Q1. מתחילים ב־Q1Q2=00, ללא איפוס בהמשך. מה הערכים אחרי שתי חזיתות?",
+      "he": "שני פליפ-פלופי D משתמשים באותה חזית עולה: D1=1 ו־D2=Q1. מתחילים ב־Q1Q2=00, ללא איפוס בהמשך. מה הערכים אחרי שתי חזיתות?",
       "en": "Two D flip-flops share the same rising edge: D1=1 and D2=Q1. Start at Q1Q2=00, with no later reset. What are the values after each of two edges?"
     },
     "answer": {
@@ -360,7 +360,7 @@
       "en": "The sequence is `00 → 10 → 11`. At the first edge, Q2 samples the old Q1, which was 0. At the second edge it samples the 1 stored in Q1 earlier."
     },
     "takeaway": {
-      "he": "דלגלגים באותה חזית דוגמים את הערכים שלפני החזית.",
+      "he": "פליפ-פלופים באותה חזית דוגמים את הערכים שלפני החזית.",
       "en": "Flip-flops sharing an edge sample values from before that edge."
     }
   },
@@ -372,7 +372,7 @@
       "en": "T held at 1"
     },
     "prompt": {
-      "he": "דלגלג T הופך את Q בחזית עולה כשהכניסה T=1. מתחילים ב־Q=0 ומשאירים T=1. מה ערכי Q אחרי ארבע חזיתות, ללא איפוס?",
+      "he": "פליפ-פלופ T הופך את Q בחזית עולה כשהכניסה T=1. מתחילים ב־Q=0 ומשאירים T=1. מה ערכי Q אחרי ארבע חזיתות, ללא איפוס?",
       "en": "A T flip-flop toggles Q on a rising edge when T=1. Start at Q=0 and hold T=1. What are the Q values after four edges, with no reset?"
     },
     "answer": {
@@ -380,7 +380,7 @@
       "en": "After the edges: `1, 0, 1, 0`. Each edge flips the value. One full Q period takes two rising edges of the input clock."
     },
     "takeaway": {
-      "he": "דלגלג T עם T=1 מחלק את תדר השעון ב־2.",
+      "he": "פליפ-פלופ T עם T=1 מחלק את תדר השעון ב־2.",
       "en": "A T flip-flop with T=1 divides the clock frequency by 2."
     }
   },
@@ -392,11 +392,11 @@
       "en": "T held at 0"
     },
     "prompt": {
-      "he": "בדלגלג T, הערך הנוכחי הוא Q=1. כעת T=0 ואין איפוס. מה יקרה ל־Q בשלוש החזיתות העולות הבאות?",
+      "he": "בפליפ-פלופ T, הערך הנוכחי הוא Q=1. כעת T=0 ואין איפוס. מה יקרה ל־Q בשלוש החזיתות העולות הבאות?",
       "en": "A T flip-flop currently has Q=1. T is now 0 and reset is inactive. What happens to Q at the next three rising edges?"
     },
     "answer": {
-      "he": "הרצף הוא `1, 1, 1`. כש־T=0 הדלגלג שומר את הערך שהיה בו; הוא אינו כותב 0 ל־Q.",
+      "he": "הרצף הוא `1, 1, 1`. כש־T=0 הפליפ-פלופ שומר את הערך שהיה בו; הוא אינו כותב 0 ל־Q.",
       "en": "The sequence is `1, 1, 1`. When T=0 the flip-flop holds its stored value; it does not write 0 to Q."
     },
     "takeaway": {
@@ -472,15 +472,15 @@
       "en": "An inverter in feedback"
     },
     "prompt": {
-      "he": "מחברים D=NOT Q בדלגלג D הפועל בחזית עולה. מתחילים ב־Q=0, ללא איפוס בהמשך. מה קורה בכל חזית, והאם זה מתנהג כמו T=1?",
+      "he": "מחברים D=NOT Q בפליפ-פלופ D הפועל בחזית עולה. מתחילים ב־Q=0, ללא איפוס בהמשך. מה קורה בכל חזית, והאם זה מתנהג כמו T=1?",
       "en": "Connect D=NOT Q on a rising-edge D flip-flop. Start at Q=0, with no later reset. What happens at each edge, and does it behave like T=1?"
     },
     "answer": {
-      "he": "כן. בכל חזית נשמר ההפך של Q הישן, ולכן מתקבל `0 → 1 → 0 → 1`. המהפך מחשב את הערך הבא, והדלגלג משנה את הערך השמור רק בחזית.",
+      "he": "כן. בכל חזית נשמר ההפך של Q הישן, ולכן מתקבל `0 → 1 → 0 → 1`. המהפך מחשב את הערך הבא, והפליפ-פלופ משנה את הערך השמור רק בחזית.",
       "en": "Yes. Each edge stores the inverse of the old Q, giving `0 → 1 → 0 → 1`. The inverter computes the next value; the flip-flop changes its stored value only at an edge."
     },
     "takeaway": {
-      "he": "משוב דרך דלגלג מתאר את המצב הבא על בסיס המצב הנוכחי.",
+      "he": "משוב דרך פליפ-פלופ מתאר את המצב הבא על בסיס המצב הנוכחי.",
       "en": "Feedback through a flip-flop defines the next state from the current state."
     }
   },
@@ -1143,11 +1143,11 @@
       "en": "Write enable from a multiplexer"
     },
     "prompt": {
-      "he": "דלגלג D רגיל דוגם בחזית עולה. רוצים שיטען data כש־EN=1 וישמור Q כש־EN=0. בורר בוחר D0 כש־S=0 ו־D1 כש־S=1. איך נחבר אותו לפני הדלגלג?",
+      "he": "פליפ-פלופ D רגיל דוגם בחזית עולה. רוצים שיטען data כש־EN=1 וישמור Q כש־EN=0. בורר בוחר D0 כש־S=0 ו־D1 כש־S=1. איך נחבר אותו לפני הפליפ-פלופ?",
       "en": "A regular D flip-flop samples on rising edges. It should load data when EN=1 and hold Q when EN=0. A MUX selects D0 for S=0 and D1 for S=1. How should it be connected before the flip-flop?"
     },
     "answer": {
-      "he": "נחבר `S=EN, D0=Q, D1=data`. את מוצא הבורר Y מחברים לכניסת D של הדלגלג. כש־EN=0, Q הישן מוזן בחזרה ונשמר בחזית; כש־EN=1 נטען data. מניחים שאין איפוס פעיל.",
+      "he": "נחבר `S=EN, D0=Q, D1=data`. את מוצא הבורר Y מחברים לכניסת D של הפליפ-פלופ. כש־EN=0, Q הישן מוזן בחזרה ונשמר בחזית; כש־EN=1 נטען data. מניחים שאין איפוס פעיל.",
       "en": "Connect `S=EN, D0=Q, D1=data`, and connect MUX output Y to the flip-flop’s D input. With EN=0, the old Q feeds back and is stored again; with EN=1, data is loaded. Assume reset is inactive."
     },
     "takeaway": {
@@ -1233,11 +1233,11 @@
       "en": "Without a defined initial value"
     },
     "prompt": {
-      "he": "לדלגלג D אין איפוס ולא הוגדר ערך התחלתי. האם אפשר להניח ש־Q=0 לפני השעון הראשון? D=1 יציב סביב החזית העולה הראשונה; מה נדע אחריה?",
+      "he": "לפליפ-פלופ D אין איפוס ולא הוגדר ערך התחלתי. האם אפשר להניח ש־Q=0 לפני השעון הראשון? D=1 יציב סביב החזית העולה הראשונה; מה נדע אחריה?",
       "en": "A D flip-flop has no reset or specified initial value. Can Q be assumed to be 0 before the first clock? D=1 is stable around the first rising edge; what is known afterward?"
     },
     "answer": {
-      "he": "לפני החזית אין ערך Q מובטח במפרט. אחרי החזית הראשונה `Q=1`, לאחר השהיית הדלגלג. אין להסיק ערך התחלתי רק מכך שהרכיב הוא דלגלג D.",
+      "he": "לפני החזית אין ערך Q מובטח במפרט. אחרי החזית הראשונה `Q=1`, לאחר השהיית הפליפ-פלופ. אין להסיק ערך התחלתי רק מכך שהרכיב הוא פליפ-פלופ D.",
       "en": "Before the edge, the specification guarantees no particular Q value. After the first edge, `Q=1`, following the flip-flop’s propagation delay. Being a D flip-flop does not itself specify an initial value."
     },
     "takeaway": {
@@ -1273,15 +1273,15 @@
       "en": "A pulse through a pipeline"
     },
     "prompt": {
-      "he": "שלושה דלגלגי D חולקים חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=000. ערכי x בחזיתות הם 1,0,0,0, ללא איפוס נוסף. מה נשמר אחרי כל חזית?",
+      "he": "שלושה פליפ-פלופי D חולקים חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=000. ערכי x בחזיתות הם 1,0,0,0, ללא איפוס נוסף. מה נשמר אחרי כל חזית?",
       "en": "Three D flip-flops share a rising edge: D1=x, D2=Q1, D3=Q2. Start at Q1Q2Q3=000. The sampled x values are 1,0,0,0, with no further reset. What is stored after each edge?"
     },
     "answer": {
-      "he": "אחרי החזיתות: `100, 010, 001, 000`. ה־1 מתקדם דלגלג אחד בכל חזית, משום שכל דלגלג דוגם את מוצא השלב הקודם כפי שהיה לפני החזית.",
+      "he": "אחרי החזיתות: `100, 010, 001, 000`. ה־1 מתקדם פליפ-פלופ אחד בכל חזית, משום שכל פליפ-פלופ דוגם את מוצא השלב הקודם כפי שהיה לפני החזית.",
       "en": "After the edges: `100, 010, 001, 000`. The 1 advances by one flip-flop per edge because every stage samples the previous stage’s value from before that edge."
     },
     "takeaway": {
-      "he": "בשרשרת דלגלגים, מידע מתקדם שלב אחד בכל חזית משותפת.",
+      "he": "בשרשרת פליפ-פלופים, מידע מתקדם שלב אחד בכל חזית משותפת.",
       "en": "In a flip-flop chain, information advances one stage per shared clock edge."
     }
   },
@@ -1449,15 +1449,15 @@
       "en": "One bit per state"
     },
     "prompt": {
-      "he": "בקידוד מצבים one-hot מוקצה לכל מצב ביט משלו; בדיוק הביט שלו הוא 1 וכל האחרים 0. כמה דלגלגים נדרשים למכונה עם שלושה מצבים?",
+      "he": "בקידוד מצבים one-hot מוקצה לכל מצב ביט משלו; בדיוק הביט שלו הוא 1 וכל האחרים 0. כמה פליפ-פלופים נדרשים למכונה עם שלושה מצבים?",
       "en": "In one-hot state encoding, each state has its own bit: that bit is 1 and all others are 0. How many flip-flops are needed for three states?"
     },
     "answer": {
-      "he": "נדרשים `3` דלגלגים, למשל לקודים `001, 010, 100`. בקידוד בינארי צפוף היו מספיקים שני דלגלגים, אבל זהו קידוד אחר.",
+      "he": "נדרשים `3` פליפ-פלופים, למשל לקודים `001, 010, 100`. בקידוד בינארי צפוף היו מספיקים שני פליפ-פלופים, אבל זהו קידוד אחר.",
       "en": "It needs `3` flip-flops, for example with codes `001, 010, 100`. Compact binary encoding would need only two flip-flops, but that is a different encoding."
     },
     "takeaway": {
-      "he": "מספר דלגלגי המצב תלוי בשיטת הקידוד שנבחרה.",
+      "he": "מספר פליפ-פלופי המצב תלוי בשיטת הקידוד שנבחרה.",
       "en": "The number of state flip-flops depends on the chosen encoding."
     }
   },

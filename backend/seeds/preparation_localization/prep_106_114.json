@@ -150,7 +150,7 @@
       "he": [
         "ליבה אסינכרונית עם NOR ו־S,R פעילים ב־1; אין שעון מוסתר.",
         "11 אסור כאשר הליבה פעילה; אין הבטחת מצב הפעלה התחלתי.",
-        "חלופת חזית משתמשת בנועלי D ממשערים ובפאזות תקינות; המודל אינו מנבא התנהגות אנלוגית."
+        "חלופת חזית משתמשת בלאצ׳י D ממשערים ובפאזות תקינות; המודל אינו מנבא התנהגות אנלוגית."
       ],
       "en": [
         "Asynchronous NOR core with active-high S,R; no hidden clock.",
@@ -160,7 +160,7 @@
     },
     "optimality": {
       "he": {
-        "construction": "שני NOR לליבה; שני AND נוספים לאפשור רמה. חלופת חזית היא מבנה אחר עם שתי דרגות נועל.",
+        "construction": "שני NOR לליבה; שני AND נוספים לאפשור רמה. חלופת חזית היא מבנה אחר עם שתי דרגות לאץ׳.",
         "scope": "אין טענת מינימום שטח, עיכוב או חסינות למרוץ פיזי."
       },
       "en": {
@@ -189,7 +189,7 @@
         "כינוי ליבת שני NOR כרכיב דוגם בחזית.",
         "קביעה שמצב התחלתי הוא אפס בלי אתחול.",
         "ערבוב קוטביות NAND ו־NOR או הענקת עדיפות ל־11.",
-        "הנחה שמהפך שעון לבדו מונע חפיפת נועלים פיזית.",
+        "הנחה שמהפך שעון לבדו מונע חפיפת לאצ׳ים פיזית.",
         "הסתרת FF מוכן בתוך פתרון שאמור להשתמש בשערים."
       ],
       "en": [
@@ -201,12 +201,12 @@
       ]
     },
     "interview_answer": {
-      "he": "אחבר Q=NOR(R,Qbar) ו־Qbar=NOR(S,Q): 00 מחזיק, 10 קובע ו־01 מאפס; 11 אסור. זו ליבת נועל. AND על שתי הכניסות נותן אפשור רמה; ל־FF אמיתי צריך מבנה שתי פאזות נפרד ותנאי תזמון.",
+      "he": "אחבר Q=NOR(R,Qbar) ו־Qbar=NOR(S,Q): 00 מחזיק, 10 קובע ו־01 מאפס; 11 אסור. זו ליבת לאץ׳. AND על שתי הכניסות נותן אפשור רמה; ל־FF אמיתי צריך מבנה שתי פאזות נפרד ותנאי תזמון.",
       "en": "Connect Q=NOR(R,Qbar) and Qbar=NOR(S,Q): 00 holds, 10 sets, 01 resets, 11 is invalid. This is a latch core. AND-masking requests adds level enable; a true FF requires a separate two-phase construction and valid timing."
     },
     "source_ambiguities": {
       "he": [
-        "המקור אומר SR FF אך אינו מגדיר שעון, קוטביות או נועל לעומת דוגם; הנוסח מפריד בין החלופות.",
+        "המקור אומר SR FF אך אינו מגדיר שעון, קוטביות או לאץ׳ לעומת דוגם; הנוסח מפריד בין החלופות.",
         "Mellanox ו־NVIDIA מדווחות במקור בלבד, ללא אימות עצמאי."
       ],
       "en": [
@@ -215,11 +215,11 @@
       ]
     },
     "verification": {
-      "he": "שש שורות חוקיות, שמונה החזקות באפשור כבוי, 6,560 רצפים ו־42,648 עדכוני נועל, ועוד 36 מקרי פאזות, עברו מול משוואות NOR ואורקל SR נפרדים. בקשות אסורות נדחות במודל. Python בלבד; ללא HDL, בדיקת פיזיקה או אישור אנושי.",
+      "he": "שש שורות חוקיות, שמונה החזקות באפשור כבוי, 6,560 רצפים ו־42,648 עדכוני לאץ׳, ועוד 36 מקרי פאזות, עברו מול משוואות NOR ואורקל SR נפרדים. בקשות אסורות נדחות במודל. Python בלבד; ללא HDL, בדיקת פיזיקה או אישור אנושי.",
       "en": "Six valid rows, eight disabled holds, 6,560 streams and 42,648 latch updates, plus 36 phase cases, passed against separate NOR equations and an SR oracle. Forbidden requests are rejected. Python only; no HDL, physical verification or human approval."
     },
     "relationship_note": {
-      "he": "PREP-065 מניח רכיב SR נתון ומשתמש בו לבניית DFF. כאן בונים את ליבת SR ממשערים ומפרידים רמה מחזית. PREP-083 עוסק בנועלי MUX ולא בליבת NOR.",
+      "he": "PREP-065 מניח רכיב SR נתון ומשתמש בו לבניית DFF. כאן בונים את ליבת SR ממשערים ומפרידים רמה מחזית. PREP-083 עוסק בלאצ׳י MUX ולא בליבת NOR.",
       "en": "PREP-065 assumes an existing SR primitive to build a DFF. This constructs SR storage from gates and distinguishes level/edge behavior. PREP-083 concerns MUX latches rather than the NOR core."
     },
     "solution_extensions": {
@@ -313,11 +313,11 @@
         "בצילום חסר אפס מוביל בפלט הדוגמה; נשמר רוחב n במפורש.",
         "תגובה לקלט אפס ומודל שערים הוגדרו בעריכה.",
         "Mellanox מופיעה במקור בלבד ולא אומתה עצמאית.",
-        "צילום 5 נותן תקציבי זמן אך לא מפרט השהיית שער או fan-in. מודל שתי כניסות ו־1 ns הוא הבהרת עריכה מפורשת."
+        "נתון תקציבי זמן אך לא מפרט השהיית שער או fan-in. מודל שתי כניסות ו־1 ns הוא הבהרה מפורשת."
       ],
       "en": [
         "The source example omits one leading output zero; the edition explicitly retains n bits.",
-        "Zero behavior and the gate model are editorial clarifications.",
+        "Zero behavior and the gate model are explicit assumptions.",
         "Mellanox appears in the source only, without independent verification.",
         "Screenshot five gives time budgets without gate-delay or fan-in details. The fan-in-two, 1 ns model is an explicit editorial assumption."
       ]
@@ -333,7 +333,7 @@
     "solution_extensions": {
       "he": {
         "question": "איך מצמצמים עומק כש־n גדול?\n\nאם המוצא צריך להיות האינדקס של האחד הנמוך במקום וקטור one-hot, מה נוסף?",
-        "direction": "מחשבים קידומות OR במבנה הכפלה מקבילי. בכל רמה משתמשים רק באותות מהרמה הקודמת במרחק 1,2,4 וכן הלאה; המסיכה נשארת על הביטים הנמוכים בלבד.\n\nמקודד על הווקטור one-hot וסיבית valid נפרדת. ב־20 כניסות צריך חמישה ביטי אינדקס, ו־valid מבדיל בין קלט אפס לבין אינדקס אפס.",
+        "direction": "מחשבים קידומות OR במבנה הכפלה מקבילי. בכל רמה משתמשים רק באותות מהרמה הקודמת במרחק 1,2,4 וכן הלאה; המסיכה נשארת על הביטים הנמוכים בלבד.\n\nאנקודר על הווקטור one-hot וסיבית valid נפרדת. ב־20 כניסות צריך חמישה ביטי אינדקס, ו־valid מבדיל בין קלט אפס לבין אינדקס אפס.",
         "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך.",
         "integration": "מוכן בתוכן; אינו מחובר לתור המשך אינטראקטיבי."
       },

@@ -17,10 +17,11 @@ ROOT=Path(__file__).resolve().parents[2]
 CONTENT=ROOT/'apps/web/src/content'
 SEEDS=ROOT/'backend/seeds'
 NEW_NAMES=('fundamentals-hardware-400.json','fundamentals-reasoning-400.json','fundamentals-code-400.json')
-OLD_FILE_SHA256={'fundamentals-hardware.json': '3d942668f98ce6065d09727f1509c483124a61b46c94ddb3a09407cc67cbe8d0', 'fundamentals-code-logic.json': 'd8012fe97385ec924a0bd31c07bb6fd20a64eb3f39912572fc512f6aa1ad5e1f', 'fundamentals-hardware-expansion.json': 'be5cc9b500f314821accc08172408279572773c50620f2b86c0fcdc9940b4f60', 'fundamentals-reasoning-expansion.json': '507a827ec0e1719209aac9da6f7ed483696bbda454caad8ae2412e1d90cc4e2a', 'fundamentals-code-expansion.json': '16b2ff6a0e2071b0ec92dc526647d8ddd70fe49b2a6296ad223a26ae8c9d1823', 'fundamentals-hardware-250.json': 'd9ea4e135e6ed0e2225c4538228daa2ec59cf0bee8f662057de350ac7f01da8d', 'fundamentals-reasoning-250.json': 'ac1bb8d8f4a06f3a4e2342f87941d0d7b34e45b8b86d2d8c664a5fb20b6229df', 'fundamentals-code-250.json': '7bf15b8e095fd920596724a76db81b7dea7a794ae76c2f963563874f431b7470'}
-OLD_REVISIONS_SHA256='8f6055ae85bc6606a04be36eb17486e80dcb39bd6b46dd59eea3c5b0042b4b68'
-OLD_QUIZ_SHA256='6a495652ed9c23b591f039e0f5f36d7874319f0df1621e726e10ab331ad56e5d'
-OLD_RELEASE_SHA256='098332d7f2cffae68d19843a540ceb8a57024f5052f1b9c71621753d06576822'
+# 2026-11-04: authorized learner-copy baseline; all identity, grading and source-history assertions remain in place.
+OLD_FILE_SHA256 = {'fundamentals-hardware.json': '5f147cd447817ea020f1adf9bfe665d396e2cb2b684f07841d6b70c015208289', 'fundamentals-code-logic.json': 'd8012fe97385ec924a0bd31c07bb6fd20a64eb3f39912572fc512f6aa1ad5e1f', 'fundamentals-hardware-expansion.json': 'ee93ad7796923ee32c90daaca7626c791b29b60aad8e91f1502fccc36f6e35c0', 'fundamentals-reasoning-expansion.json': '507a827ec0e1719209aac9da6f7ed483696bbda454caad8ae2412e1d90cc4e2a', 'fundamentals-code-expansion.json': '16b2ff6a0e2071b0ec92dc526647d8ddd70fe49b2a6296ad223a26ae8c9d1823', 'fundamentals-hardware-250.json': 'c1e945aea20276a5f05b6be040c043501e6bd4e774ff2db46913f13a133d3634', 'fundamentals-reasoning-250.json': 'ac1bb8d8f4a06f3a4e2342f87941d0d7b34e45b8b86d2d8c664a5fb20b6229df', 'fundamentals-code-250.json': '7bf15b8e095fd920596724a76db81b7dea7a794ae76c2f963563874f431b7470'}
+OLD_REVISIONS_SHA256 = '1ae3cf998aeeaa0bf31178d685487711b8835455eff5c593043613ec4b25afdd'
+OLD_QUIZ_SHA256 = '5a4012c3db0e943e2811ffaeb7d6c94a1caf5beb8d0a42f46868dde64d4a3961'
+OLD_RELEASE_SHA256 = '246d5f70f6d1f4066f55283eccb93b4a53f9a7ec7ae53732ec16cd5c3630e646'
 ARCHIVE_SHA256='5bae12aa23d16895bb038afbe068f2479c26dbf72048b937a5cb65119a520316'
 REVIEW_SHA256='334081f0a306ba1715a585e664935c8de59a9fc2e6f3e517f3a6fa3e239aa678'
 

@@ -10,9 +10,9 @@ export type HelperTopicId =
 
 /** Focus actions locate controls only: they never run, submit, or reveal an answer. */
 export const helperTargets = {
-  explanation: '[data-muxi-control="answer-explanation"]',
+  explanation: '[data-muxi-control="explanation-open"], [data-muxi-control="answer-explanation"]',
   code: '[data-muxi-control="code-input"], [data-muxi-control="code-open"]',
-  "run-code": '[data-muxi-control="code-execute"]',
+  "run-code": '[data-muxi-control="code-execute"], [data-muxi-control="code-open"]',
   circuit: '[data-muxi-control="circuit-expand"], [data-muxi-control="circuit-open"]',
   feedback: "#feedback",
 } as const;

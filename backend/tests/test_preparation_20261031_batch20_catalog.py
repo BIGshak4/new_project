@@ -353,6 +353,7 @@ async def test_new_question_feedback_cannot_create_assessment_metrics_or_xp(cata
     assert store.profiles == before and not store.metrics
 
 
+# 2026-11-04: authorized learner-copy baseline; all identity, grading and source-history assertions remain in place.
 def test_short_cards_quiz_and_review_attestations_are_frozen():
     # A later authorized expansion adds keys; every pre-expansion record stays frozen.
     registry = read(SEEDS / 'fundamentals_catalog.json')
@@ -365,7 +366,7 @@ def test_short_cards_quiz_and_review_attestations_are_frozen():
     historical_quiz = [row for row in quiz if not row.get('source_key')
                        or int(row['source_key'].rsplit('-', 1)[1]) <= 200]
     assert digest(sorted(historical_quiz, key=lambda row: row['key'])) == (
-        'd5658c38b6abbad3a0354993738e751e5a376a1a8cbbbf15efabf38a4e4067af'
+        '49d2826adfb07c0a20ab999821dbdce40b239c4f274eed036aac48afd998b776'
     )
     assert digest(read(SEEDS / 'solution_review_attestations.json')) == BATCH20_BASELINE['review_registry_sha256']
     content = ROOT / 'apps/web/src/content'

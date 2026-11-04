@@ -7,12 +7,14 @@ import json
 from pathlib import Path
 
 from tests.preparation_history import BATCH1103_BASELINE, _prefix, digest
+from tests.learner_copy_history import before_learner_copy_compiled
 
 ROOT = Path(__file__).resolve().parents[2]
 PROJECTIONS = json.loads((Path(__file__).parent / 'fixtures/preparation_compiled_before_20261103_batch20.json').read_bytes())['records']
 
 
 def before_batch1103_compiled(question):
+    question = before_learner_copy_compiled(question)
     ident = question['assets']['preparation_id']
     assert ident in BATCH1103_BASELINE['records'], ident
     if ident not in PROJECTIONS:

@@ -51,7 +51,8 @@ export function MuxiGuidance({ root, station, lang, actions, ready, onAction }: 
           ? target("library-search", "נקו את החיפוש, ואז נבחר נושא", "Clear the search, then choose a topic")
           : target("library-filter", "בחרו נושא במסנן הזה", "Choose a subject in this filter");
         case "topics": return target("topics-hardware", "בחרו תחום כדי לראות את הנושאים שלו", "Choose an area to see its subjects");
-        case "explanation": return target("answer-explanation", "כאן כותבים את דרך הפתרון", "Write your reasoning here");
+        case "explanation": return target("explanation-open", "לחצו כאן כדי לפתוח את ההסבר החופשי", "Open the written explanation here")
+          ?? target("answer-explanation", "כאן כותבים את דרך הפתרון", "Write your reasoning here");
         case "code": return openCode()
           ?? target("code-copy", "כעת העתיקו את קוד השאלה לעורך", "Now copy the question code into the editor")
           ?? target("code-input", "תקנו כאן את תנאי הלולאה; הקוד ניתן לעריכה", "Edit the loop condition here; this code is editable");

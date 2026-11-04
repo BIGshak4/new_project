@@ -15,8 +15,8 @@
       "en": "Worst-case Θ(n) time, O(1) extra words and at most 2n−1 element reads in this implementation. An unknown-valued damaged group hidden among zero groups gives an Ω(n) lower bound."
     },
     "verification": {
-      "he": "בוצעו 6,270 בדיקות: 6,015 תצורות קבוצות/מיקום ממצות ועוד 255 מקרי אורך 253, מול ספירת תדירויות עצמאית, כולל שמירת הקלט וחסם קריאות. ביקורת אנושית ממתינה.",
-      "en": "6,270 executed checks: 6,015 exhaustive group/damage configurations and 255 length-253 cases, against independent frequency counts, including input preservation and the access bound. Human review pending."
+      "he": "בוצעו 6,270 בדיקות: 6,015 תצורות קבוצות/מיקום ממצות ועוד 255 מקרי אורך 253, מול ספירת תדירויות עצמאית, כולל שמירת הקלט וחסם קריאות.",
+      "en": "6,270 executed checks: 6,015 exhaustive group/damage configurations and 255 length-253 cases, against independent frequency counts, including input preservation and the access bound."
     },
     "edge_cases": {
       "he": [
@@ -54,7 +54,7 @@
         "המקור מתיר חזרת ערכים בשלשות. אין לפרש זאת כהבטחת שלשות שונות או מיון. נשמר הנוסח המקורי בנפרד."
       ],
       "en": [
-        "The source does not specify numeric type or cost model; integer values and access/comparison costs are explicit editorial assumptions.",
+        "The source does not specify numeric type or cost model; integer values and access/comparison costs are explicit explicit assumptions.",
         "The source permits repeated group values. Distinct triples and sorting are not promised. Original text is preserved separately."
       ]
     },
@@ -120,7 +120,7 @@
     },
     "source_ambiguities": {
       "he": [
-        "המקור אינו מגדיר אם “שני הגדולים” שונים, מה קורה במערך ריק או בשוויון שכיחים. אלו השלמות עריכה מפורשות.",
+        "המקור אינו מגדיר אם “שני הגדולים” שונים, מה קורה במערך ריק או בשוויון שכיחים. אלו הגדרות נוספות מפורשות.",
         "המקור אינו מתיר שינוי במפורש ואינו מגביל טווח; נבחר חוזה משמר־קלט ללא מערך תדירויות ישיר."
       ],
       "en": [
@@ -159,8 +159,8 @@
       "en": "Search/destruction O(n); insertion at p is O(p+1), head insertion O(1), with O(1) extra space. Creation performs constant work apart from malloc; no optimality claim across all data structures."
     },
     "verification": {
-      "he": "רתמת C קוּמפלה והורצה בפועל בשירות מבודד: עברו 54 תרחישי הכנסה ו־2,264 בדיקות assert, כולל דחיית זנב ובעלות כפולה, שמירת הסדר והזרקת כשלי הקצאה; מונה הבלוקים החיים הסתיים באפס. אין דיווח גרסת מהדר או בדיקת sanitizer. הראיות ב־checks/prep-212-verification.json; ביקורת אנושית ממתינה.",
-      "en": "A C harness actually compiled and ran in an isolated service: 54 insertion scenarios and 2,264 assertions passed, including tail/double-ownership rejection, order preservation and allocation-failure injection; tracked live blocks ended at zero. No compiler version was returned and no sanitizer run is claimed. Evidence: checks/prep-212-verification.json; human review pending."
+      "he": "רתמת C קוּמפלה והורצה בפועל בשירות מבודד: עברו 54 תרחישי הכנסה ו־2,264 בדיקות assert, כולל דחיית זנב ובעלות כפולה, שמירת הסדר והזרקת כשלי הקצאה; מונה הבלוקים החיים הסתיים באפס. אין דיווח גרסת מהדר או בדיקת sanitizer. הראיות ב־checks/prep-212-verification.json.",
+      "en": "A C harness actually compiled and ran in an isolated service: 54 insertion scenarios and 2,264 assertions passed, including tail/double-ownership rejection, order preservation and allocation-failure injection; tracked live blocks ended at zero. No compiler version was returned and no sanitizer run is claimed. Evidence: checks/prep-212-verification.json."
     },
     "edge_cases": {
       "he": [
@@ -194,11 +194,11 @@
     },
     "source_ambiguities": {
       "he": [
-        "המקור מונה פעולות אך אינו מגדיר כיוון, טיפוס מטען, אינדוקס, בעלות, טיפול בכשל או API מחזור חיים; כל אלה הוגדרו כהשלמות עריכה.",
+        "המקור מונה פעולות אך אינו מגדיר כיוון, טיפוס מטען, אינדוקס, בעלות, טיפול בכשל או API מחזור חיים; כל אלה הוגדרו כהגדרות נוספות.",
         "לא נוספה פעולת הסרה למימוש הנדרש; היא נידונה כהמשך בלבד. הנוסח המקורי נשמר בנפרד."
       ],
       "en": [
-        "The source names operations but omits direction, payload type, indexing, ownership, failure behavior and lifetime APIs; these are explicit editorial completions.",
+        "The source names operations but omits direction, payload type, indexing, ownership, failure behavior and lifetime APIs; these are explicit explicit definitions.",
         "Removal is discussed only as a follow-up, not added to the required implementation. Original text is preserved separately."
       ]
     },
@@ -297,7 +297,7 @@
       ]
     },
     "optimality": {
-      "he": "שלושה מרבבים ושני מפלסי נתונים. חסם העלים m+1 מוכיח מינימום רכיבים רק ברשת הנתונים הבינארית המוגדרת; עומק אחד מכסה לכל היותר שני עלים.",
+      "he": "שלושה מוקסים ושני מפלסי נתונים. חסם העלים m+1 מוכיח מינימום רכיבים רק ברשת הנתונים הבינארית המוגדרת; עומק אחד מכסה לכל היותר שני עלים.",
       "en": "Three MUXes and two data levels. The m+1 leaf bound proves minimum count only for the declared binary data network; one level can reach at most two leaves."
     },
     "verification": {
@@ -319,7 +319,7 @@
     "common_mistakes": {
       "he": [
         "החלפה שקטה של Q3 ו־Q0 מאבדת את משמעות איור המקור.",
-        "שרשור כל שלושת המרבבים בטור יוצר עומק מיותר למבנה הזה.",
+        "שרשור כל שלושת המוקסים בטור יוצר עומק מיותר למבנה הזה.",
         "אין לזהות מספר פורט D1 עם קבוע לוגי אחד."
       ],
       "en": [
@@ -329,7 +329,7 @@
       ]
     },
     "interview_answer": {
-      "he": "שני מרבבים עם S0 בוחרים בזוגות, ושלישי עם S1 בוחר זוג. במקור הקוד 00 בוחר Q3; אפשר לקבל סדר רגיל בהחלפת חיווט הנתונים.",
+      "he": "שני מוקסים עם S0 בוחרים בזוגות, ושלישי עם S1 בוחר זוג. במקור הקוד 00 בוחר Q3; אפשר לקבל סדר רגיל בהחלפת חיווט הנתונים.",
       "en": "Two S0 MUXes select within pairs; one S1 MUX selects the pair. The source maps 00 to Q3; rewiring data gives conventional order."
     },
     "source_ambiguities": {
@@ -342,8 +342,8 @@
     },
     "solution_extensions": {
       "he": {
-        "question": "כיצד בונים מרבב 8:1 באותו מודל, ומה מוכיח את ספירת הרכיבים?",
-        "direction": "ארבעה מרבבים, שניים ואחד: שבעה רכיבים ושלושה מפלסים. שמונה עלי נתונים דורשים m+1≥8; עומק d מגיע לכל היותר ל־2^d עלים.",
+        "question": "כיצד בונים מוקס 8:1 באותו מודל, ומה מוכיח את ספירת הרכיבים?",
+        "direction": "ארבעה מוקסים, שניים ואחד: שבעה רכיבים ושלושה מפלסים. שמונה עלי נתונים דורשים m+1≥8; עומק d מגיע לכל היותר ל־2^d עלים.",
         "integration": "מוכן בתוכן; אינו מחובר לתור המשך אינטראקטיבי."
       },
       "en": {
@@ -358,7 +358,7 @@
       "he": [
         "Unsigned A בן שתי סיביות ו־B בן ארבע; בלי carry-in חיצוני; נדרש סכום ללא איבוד מידע.",
         "חוטים וקבועים חופשיים; כל פלט FA מגיע 1 ns אחרי הקלט המאוחר ביותר.",
-        "בחלופה המילולית מספר מרבבי אפס־השהיה אינו מוגבל, ולכן גם מימוש מלא במרבבים מותר."
+        "בחלופה המילולית מספר מוקסי אפס־השהיה אינו מוגבל, ולכן גם מימוש מלא במוקסים מותר."
       ],
       "en": [
         "Unsigned two-bit A and four-bit B; no external carry-in; retain the entire sum.",
@@ -392,7 +392,7 @@
       "he": [
         "2+4 אינו חישוב רוחב נכון; רוחב חיבור נקבע מהטווח ולא מסכום הרוחבים.",
         "לספור FA חמישי עבור carry-out מוסיף רכיב מיותר.",
-        "לטעון ל־2 ns כמינימום בלי להגביל מרבבי אפס־השהיה מתעלם מהאוניברסליות שלהם.",
+        "לטעון ל־2 ns כמינימום בלי להגביל מוקסי אפס־השהיה מתעלם מהאוניברסליות שלהם.",
         "אין להעתיק את זמני המודל לתא פיזי בלי ספריית השהיות."
       ],
       "en": [
@@ -403,13 +403,13 @@
       ]
     },
     "interview_answer": {
-      "he": "הסכום מגיע עד 18 ולכן צריך חמש סיביות. ארבעה FA עם הרחבת אפס נותנים 4 ns. carry-select מוגדר יכול לתת 2 ns, אבל מרבבי אפס בלתי מוגבלים מאפשרים 0 ns ולכן צריך לברר את מגבלת הארכיטקטורה.",
+      "he": "הסכום מגיע עד 18 ולכן צריך חמש סיביות. ארבעה FA עם הרחבת אפס נותנים 4 ns. carry-select מוגדר יכול לתת 2 ns, אבל מוקסי אפס בלתי מוגבלים מאפשרים 0 ns ולכן צריך לברר את מגבלת הארכיטקטורה.",
       "en": "The maximum sum is eighteen, needing five bits. Four zero-extended ripple FAs give 4 ns. A declared carry-select gives 2 ns, but unrestricted zero-delay MUXes allow 0 ns, so the architecture must be specified."
     },
     "source_ambiguities": {
       "he": [
-        "הצילום לא מגדיר signed, carry-in, השהיות חוטים, זמני פלטי FA או מגבלת מרבבים; ההנחות כאן מפורשות.",
-        "המקור שואל על שיפור בעזרת מרבבים, אך אינו שולל מימוש אוניברסלי מלא בהם."
+        "הצילום לא מגדיר signed, carry-in, השהיות חוטים, זמני פלטי FA או מגבלת מוקסים; ההנחות כאן מפורשות.",
+        "המקור שואל על שיפור בעזרת מוקסים, אך אינו שולל מימוש אוניברסלי מלא בהם."
       ],
       "en": [
         "The source omits signedness, carry-in, wire delay, FA output timing and MUX limits; the assumptions here are explicit.",
@@ -418,7 +418,7 @@
     },
     "solution_extensions": {
       "he": {
-        "question": "אם כל מרבב מוסיף השהיה d>0, מתי חלופת carry-select של 2+2 מהירה מהשרשרת?",
+        "question": "אם כל מוקס מוסיף השהיה d>0, מתי חלופת carry-select של 2+2 מהירה מהשרשרת?",
         "direction": "בארכיטקטורה המוצהרת החלקים מוכנים ב־2 ns והבחירה מוסיפה d, כלומר 2+d<4 ולכן d<2 ns. אין בכך הוכחה לאופטימום בכל הארכיטקטורות.",
         "integration": "מוכן בתוכן; אינו מחובר לתור המשך אינטראקטיבי."
       },
@@ -693,7 +693,7 @@
       ]
     },
     "optimality": {
-      "he": "מימוש FF מפורש:4W לאחסון ועוד W לפלט ועוד1 ל־Valid, כלומר5W+1. מפענח/load/mux נוספים. אין מינימום טרנזיסטורים אוניברסלי או אופטימום מול מאקרו זיכרון.",
+      "he": "מימוש FF מפורש:4W לאחסון ועוד W לפלט ועוד1 ל־Valid, כלומר5W+1. דקודר/load/mux נוספים. אין מינימום טרנזיסטורים אוניברסלי או אופטימום מול מאקרו זיכרון.",
       "en": "Explicit FF design:4W storage plus W output plus1 Valid, totaling5W+1. Decoder/load/mux logic is additional. No universal transistor minimum or memory-macro optimum."
     },
     "verification": {
@@ -725,7 +725,7 @@
       ]
     },
     "interview_answer": {
-      "he": "ארבעה רגיסטרי W ביט, מפענח כתיבה2ל־4 ומרבב קריאה4ל־1. הקריאה נרשמת, Valid מעוכב עם הבקשה; בחוזה שלי שני הפורטים עובדים יחד וקריאה בהתנגשות מקבלת ערך ישן. העלות5W+1 FF.",
+      "he": "ארבעה רגיסטרי W ביט, דקודר כתיבה2ל־4 ומוקס קריאה4ל־1. הקריאה נרשמת, Valid מעוכב עם הבקשה; בחוזה שלי שני הפורטים עובדים יחד וקריאה בהתנגשות מקבלת ערך ישן. העלות5W+1 FF.",
       "en": "Four W-bit registers, a2-to-4 write decoder and4:1 read mux. Register the response and its validity. Both ports operate together; collision reads old data. The realization uses5W+1 FFs."
     },
     "source_ambiguities": {

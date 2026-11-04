@@ -24,6 +24,27 @@ function skipButton(html: string) {
   return html.match(/<button[^>]*>Skip (?:this follow-up|to the next question)<\/button>/)?.[0];
 }
 
+test("follow-up writing starts folded in both languages and retains any restored draft", () => {
+  for (const lang of ["he", "en"] as const) {
+    for (const value of ["", "A saved follow-up explanation"]) {
+      let changes = 0;
+      const html = render({}, { lang, value, onChange: () => { changes += 1; } });
+      const button = html.match(/<button[^>]*aria-controls="([^"]+-follow-up-answer)"[^>]*>.*?<\/button>/)?.[0];
+      assert.ok(button, "A named button opens the existing answer tool");
+      assert.match(button, /type="button"/);
+      assert.match(button, /aria-expanded="false"/);
+      assert.ok(button.includes(lang === "he" ? "כתיבת תשובה לשאלת ההמשך" : "Write follow-up answer"));
+      const panel = button.match(/aria-controls="([^"]+)"/)![1];
+      assert.ok(html.includes(`<div id="${panel}" hidden="">`));
+      if (value) {
+        assert.ok(button.includes(lang === "he" ? "יש תוכן" : "Has content"));
+        assert.ok(html.includes(`>${value}</textarea>`), "Folding keeps the draft in its mounted textarea");
+      }
+      assert.equal(changes, 0, "The disclosure never rewrites the controlled answer");
+    }
+  }
+});
+
 test("a skipped turn remains visible without a grade, answer, or XP", () => {
   const html = render({ status: "done", pending_follow_up: null, follow_ups: [{
     turn: 1, question: "Why?", action: "probe", created_at: "", skipped: true, submission: null,

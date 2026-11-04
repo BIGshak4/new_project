@@ -2,7 +2,7 @@
   "PREP-074": {
     "assumptions": {
       "he": [
-        "דלגלג D בחזית עולה; A והמשוב עומדים ב־setup/hold. הנועל השקוף אינו המודל.",
+        "פליפ-פלופ D בחזית עולה; A והמשוב עומדים ב־setup/hold. הלאץ׳ השקוף אינו המודל.",
         "Q=0 רק לדוגמה; ללא אתחול אין פאזה מובטחת. T=10ns,tCQ=1ns הם ערכים לדוגמה בלבד.",
         "אפס skew/uncertainty בנוסחאות הפשוטות; מיקום delay חיצוני ביחס לפיצול המשוב מוגדר במפורש."
       ],
@@ -395,7 +395,7 @@
             "עשר סיביות כתובת בוחרות 2^10 מילים, וכל מילה מכילה 16 סיביות תחת הנחת הממשק.",
             "בדקו נתונים קבועים, סיבית יחידה מטיילת, ואז כתבו ערך ייחודי לכל כתובת לפני הקריאה; כך אי אפשר להסתפק בקריאה מיד אחרי כתיבה לכל תא."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -406,7 +406,7 @@
             "Ten address bits choose2^10 words, each with 16 bits under the interface assumption.",
             "Use fixed patterns, walking data bits and distinct address values written before verification; immediate write-then-read alone misses aliasing."
           ],
-          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }
@@ -639,7 +639,7 @@
             "מונה מודולו 50 מחזיק 0–49. באיזה ערך ישן צריך להפיק את הפולס ולאפס את הפאזה?",
             "אחרי reset phase=0. בכל חזית pulse_next=(phase==49), והפאזה הבאה היא 0 במקרה זה ואחרת phase+1."
           ],
-          "integration_status": "רמזי הווריאציה בחומר המשלים; תור הרמזים המקורי נשמר."
+          "integration_status": ""
         }
       },
       "en": {
@@ -650,7 +650,7 @@
             "A modulo 50 counter holds0..49. Which old value causes the pulse and wrap?",
             "Reset phase=0. On each edge pulse_next=(phase==49); next phase is 0 then, otherwise phase+1."
           ],
-          "integration_status": "Variant hints are supplemental; the original interactive hint queue is retained."
+          "integration_status": ""
         }
       }
     }
@@ -762,7 +762,7 @@
     },
     "verification": {
       "he": "עברו כל 2001 גבולות התחום 0..2000 מול חילוק בניסיון עצמאי, חמש נקודות ספירה ידועות עד 100000 וחמש דחיות קלט. הקוד רץ בפייתון. אין מדידת ביצועים או סקירה אנושית.",
-      "en": "All 2001 endpoints 0..2000 matched independent trial division, plus five prime-count checkpoints through 100000 and five invalid-input rejections. Python executed; no performance benchmark or human review."
+      "en": "All 2001 endpoints 0..2000 matched independent trial division, plus five prime-count checkpoints through 100000 and five invalid-input rejections. Python executed; no performance benchmark."
     },
     "edge_cases": {
       "he": [

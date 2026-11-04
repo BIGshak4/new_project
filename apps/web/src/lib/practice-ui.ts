@@ -70,8 +70,8 @@ export function apiMessage(error: unknown, lang: ApiLang) {
       "Your session expired. Sign in again; submitted answers remain saved.",
     ],
     forbidden: [
-      "החשבון עדיין לא אושר לפיילוט.",
-      "This account has not been approved for the pilot.",
+      "החשבון עדיין לא אושר לגישה לתרגול.",
+      "This account has not been approved for practice access yet.",
     ],
     network: [
       "לא הצלחנו להגיע לשרת. הטיוטה נשמרת בדפדפן; בדקו חיבור ונסו שוב.",
