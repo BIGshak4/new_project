@@ -30,8 +30,6 @@ import { shuffleQuestions, useQuestionOrderSeed } from "../lib/question-order";
 import { goalProgramKey } from "../lib/goal-selection";
 import { DEFAULT_WORKSPACE_VIEW, readWorkspaceRoute, type WorkspaceRoute } from "../lib/workspace-route";
 import { Auth, type Lang } from "../components/auth";
-import { avatarApi } from "../lib/avatar-api";
-import type { AvatarConfig } from "../lib/avatar-types";
 import { FeatureNav } from "../components/wardrobe/feature-nav";
 import headerStyles from "../components/wardrobe/workspace-header.module.css";
 import { PracticeSession } from "../components/practice-session";
@@ -127,12 +125,6 @@ function Workspace({
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [api] = useState(() => practiceApi());
-  const [profileAvatar, setProfileAvatar] = useState<AvatarConfig | null>(null);
-  useEffect(() => {
-    let current = true;
-    void avatarApi(user.id).get().then(value => { if (current) setProfileAvatar(value.avatar); }).catch(() => {});
-    return () => { current = false; };
-  }, [user.id]);
   const [route, setRoute] = useState<Route>({ view: DEFAULT_VIEW });
   const entryRoute = useRef<Route | null>(null);
   const [questions, setQuestions] = useState<QuestionSummary[]>([]);
@@ -402,7 +394,7 @@ function Workspace({
         <a href="/" className="wordmark" dir="ltr">
           <span>.</span>jobrun
         </a>
-        <FeatureNav lang={lang} avatar={profileAvatar} hideAvatar={active || route.view === "interview"}
+        <FeatureNav lang={lang}
           className="tabs" current={activeTab === "library" ? "library" : activeTab === "interview" ? "interview" : "learn"} onPracticeNavigate={goTab} />
         <AccountStats userId={user.id} lang={lang} refreshKey={refreshKey} onActivity={setAccountActivity} />
         <div className={`topnav-actions ${headerStyles.toolbar}`}>
@@ -418,7 +410,7 @@ function Workspace({
           </button>
         </div>
       </header>
-      <FeatureNav lang={lang} className="tabbar" variant="bottom" hideAvatar
+      <FeatureNav lang={lang} className="tabbar" variant="bottom"
         current={activeTab === "library" ? "library" : activeTab === "interview" ? "interview" : "learn"} onPracticeNavigate={goTab} />
       <main className="content">
         {(!healthKnown || demo) && <div className="pilot-note" role="note">

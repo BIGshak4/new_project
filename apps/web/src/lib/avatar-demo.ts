@@ -1,5 +1,6 @@
 /** Public shop preview only. It does not call an API or change a real wallet. */
 import catalog from "./avatar-catalog.json";
+import { publishAvatarUpdate } from "./avatar-events";
 import { DEFAULT_AVATAR, type AvatarClient, type AvatarConfig, type AvatarPayload, type AvatarSkin } from "./avatar-types";
 
 const STORAGE = "jobrun-avatar-shop-demo-v1";
@@ -19,7 +20,10 @@ export function getDemoAvatar(): AvatarConfig { return read().avatar; }
 export function demoAvatarClient(): AvatarClient {
   let state = read();
   function result(): AvatarPayload { return structuredClone({ ...catalog, skins: catalog.skins as AvatarSkin[], ...state, enabled: true, shop_enabled: true, shirt_text: "Job_Run", capabilities: { persistent_avatar: true, cosmetic_shop: true } }); }
-  function persist() { try { sessionStorage.setItem(STORAGE, JSON.stringify(state)); } catch {} }
+  function persist() {
+    try { sessionStorage.setItem(STORAGE, JSON.stringify(state)); } catch {}
+    publishAvatarUpdate({ userId: null, avatar: state.avatar, demo: true });
+  }
   return {
     get: async () => result(),
     save: async config => {

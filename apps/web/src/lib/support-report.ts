@@ -1,6 +1,30 @@
 export type SupportLanguage = "he" | "en";
 export const SUPPORT_OPEN_EVENT = "jobrun:report-problem";
 export type SupportCategory = "bug" | "question" | "feedback" | "other";
+export type SupportOpenDetail = { category?: SupportCategory };
+
+/** Other site tools can prepare a report; submitting it always stays a user action. */
+export function openSupportReport(category?: SupportCategory) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new CustomEvent<SupportOpenDetail>(SUPPORT_OPEN_EVENT, { detail: { category } }));
+}
+
+export function supportOpenCategory(detail: unknown): SupportCategory | undefined {
+  if (!detail || typeof detail !== "object" || !("category" in detail)) return undefined;
+  const category = detail.category;
+  return category === "bug" || category === "question" || category === "feedback" || category === "other" ? category : undefined;
+}
+
+export type SupportDraftState = {
+  subject: string; description: string; fileCount: number; categoryEdited: boolean;
+  busy: boolean; checkingFiles: boolean; reportId: string; saved: boolean; submitted: boolean; error: string;
+};
+
+/** A shortcut must not reclassify an existing draft, an in-flight upload or a retryable report. */
+export function hasSupportDraft(state: SupportDraftState): boolean {
+  return !!(state.subject || state.description || state.fileCount || state.categoryEdited || state.busy || state.checkingFiles || state.reportId || state.saved || state.submitted || state.error);
+}
+
 export const SUPPORT_LIMITS = { files: 5, fileBytes: 5 * 1024 * 1024, totalBytes: 15 * 1024 * 1024 } as const;
 export const SUPPORT_ACCEPT = ".png,.jpg,.jpeg,.webp,.pdf,.txt";
 

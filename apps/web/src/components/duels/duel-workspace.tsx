@@ -127,10 +127,10 @@ export function DuelWorkspace({ client, lang, demo = false, invite = "", control
   return <div className={styles.shell} dir={lang === "he" ? "rtl" : "ltr"}>
     <header className={`topnav ${headerStyles.header}`}>
       <a className="wordmark" href="/" dir="ltr"><span>.</span>jobrun</a>
-      <FeatureNav className="tabs" lang={lang} avatar={duel?.me.avatar ?? avatar ?? DEFAULT_AVATAR} demo={demo} current="games" />
+      <FeatureNav className="tabs" lang={lang} demo={demo} current="games" />
       <div className={`topnav-actions ${headerStyles.toolbar} ${styles.controls}`}><button type="button" aria-label={t("דיווח על בעיה", "Report a problem")} title={t("דיווח על בעיה", "Report a problem")} aria-haspopup="dialog" onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={18} aria-hidden="true" /></button>{controls}</div>
     </header>
-    <FeatureNav className="tabbar" variant="bottom" hideAvatar lang={lang} demo={demo} current="games" />
+    <FeatureNav className="tabbar" variant="bottom" lang={lang} demo={demo} current="games" />
     <main className={styles.main}>
       <div className={styles.topline}>
         {duel && <button className={styles.textButton} onClick={home} disabled={busy}><Back size={17} />{t("לכל המשחקים", "All games")}</button>}

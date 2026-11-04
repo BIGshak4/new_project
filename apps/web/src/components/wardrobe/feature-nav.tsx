@@ -1,13 +1,12 @@
 import { BookOpen, Gamepad2, Map, MessageSquareText, ShoppingBag } from "lucide-react";
-import { LogicAvatar } from "./logic-avatar";
-import { DEFAULT_AVATAR, type AvatarConfig, type AvatarLanguage } from "../../lib/avatar-types";
+import type { AvatarLanguage } from "../../lib/avatar-types";
 import styles from "./feature-nav.module.css";
 
 export type PracticeDestination = "learn" | "library" | "interview";
 export type FeatureDestination = PracticeDestination | "games" | "shop";
 
-export function FeatureNav({ lang, avatar, hideAvatar = false, demo = false, current, onPracticeNavigate, className, variant = "header" }: {
-  lang: AvatarLanguage; avatar?: AvatarConfig | null; hideAvatar?: boolean; demo?: boolean;
+export function FeatureNav({ lang, demo = false, current, onPracticeNavigate, className, variant = "header" }: {
+  lang: AvatarLanguage; demo?: boolean;
   current?: FeatureDestination; onPracticeNavigate?: (view: PracticeDestination) => void;
   className?: string; variant?: "header" | "bottom";
 }) {
@@ -26,6 +25,5 @@ export function FeatureNav({ lang, avatar, hideAvatar = false, demo = false, cur
           event.preventDefault(); onPracticeNavigate(id as PracticeDestination);
         }
       }}><Icon size={variant === "bottom" ? 21 : 18} aria-hidden="true" /><span>{label}</span></a>)}
-    {!hideAvatar && variant !== "bottom" && <a className={styles.identity} href={`${base}/shop#my-character`} aria-label={he ? "הדמות שלי — עיצוב חינמי" : "My character — free customization"} title={he ? "הדמות שלי" : "My character"}><LogicAvatar config={avatar ?? DEFAULT_AVATAR} size={56} /></a>}
   </nav>;
 }

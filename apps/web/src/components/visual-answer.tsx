@@ -220,6 +220,7 @@ export function VisualAnswer({
           <div className="visual-answer-actions">
             <button
               type="button"
+              data-muxi-control="circuit-open"
               disabled={disabled}
               aria-expanded={open}
               onClick={() => {

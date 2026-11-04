@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { useEffect, useEffectEvent, useId, useRef, useState, type FormEvent } from "react";
 import { CheckCircle2, CircleHelp, FileText, LoaderCircle, Paperclip, Send, X } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
@@ -8,7 +8,7 @@ import { observeAuthUser } from "../lib/auth-access";
 import { lockBodyScroll } from "../lib/body-scroll-lock";
 import {
   SUPPORT_ACCEPT, SUPPORT_LIMITS, SUPPORT_OPEN_EVENT, inspectSupportFiles, removeSupportReservation, sendSupportReport, supportErrorMessage,
-  supportPageContext, validateSupportDetails, type SupportCategory, type SupportFile, type SupportLanguage,
+  hasSupportDraft, supportOpenCategory, supportPageContext, validateSupportDetails, type SupportCategory, type SupportFile, type SupportLanguage,
   type SupportSubmission, type SupportTransport,
 } from "../lib/support-report";
 import { BidiText } from "./bidi-text";
@@ -58,6 +58,8 @@ export function SupportReporter() {
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<SupportCategory>("bug");
+  const [categoryEdited, setCategoryEdited] = useState(false);
+  const [preservedDraft, setPreservedDraft] = useState(false);
   const [files, setFiles] = useState<SupportFile[]>([]);
   const [busy, setBusy] = useState(false);
   const [checkingFiles, setCheckingFiles] = useState(false);
@@ -85,6 +87,7 @@ export function SupportReporter() {
 
   function reset() {
     setSubject(""); setDescription(""); setCategory("bug"); setFiles([]); setError(""); setSaved(false); setSubmitted(false);
+    setCategoryEdited(false); setPreservedDraft(false);
     setReportId(""); setConfirmReset(false); reportSnapshot.current = null;
     if (input.current) input.current.value = "";
   }
@@ -123,14 +126,24 @@ export function SupportReporter() {
     return lockBodyScroll();
   }, [open]);
 
+  // Effect events read the latest draft, even though the window listener is installed once.
+  const handleOpenRequest = useEffectEvent((event: Event) => {
+    launch(supportOpenCategory(event instanceof CustomEvent ? event.detail : undefined));
+  });
   useEffect(() => {
-    window.addEventListener(SUPPORT_OPEN_EVENT, launch);
-    return () => window.removeEventListener(SUPPORT_OPEN_EVENT, launch);
+    const listener = (event: Event) => handleOpenRequest(event);
+    window.addEventListener(SUPPORT_OPEN_EVENT, listener);
+    return () => window.removeEventListener(SUPPORT_OPEN_EVENT, listener);
   }, []);
 
-  function launch() {
+  function launch(requestedCategory?: SupportCategory) {
     opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : trigger.current;
-    setContext(supportPageContext(window.location.href));
+    const existingDraft = hasSupportDraft({ subject, description, categoryEdited, fileCount: files.length, busy: busy || working.current, checkingFiles, reportId, saved, submitted, error });
+    setPreservedDraft(!!requestedCategory && requestedCategory !== category && existingDraft);
+    if (!existingDraft) {
+      if (requestedCategory) setCategory(requestedCategory);
+      setContext(supportPageContext(window.location.href));
+    }
     setOpen(true);
   }
 
@@ -199,14 +212,15 @@ export function SupportReporter() {
   }
 
   return <>
-    <button ref={trigger} type="button" className={styles.launcher} onClick={launch} aria-label={launcherLabel} title={launcherLabel} aria-haspopup="dialog" aria-controls={`${ids}-dialog`}>
+    <button ref={trigger} type="button" className={styles.launcher} onClick={() => launch()} aria-label={launcherLabel} title={launcherLabel} aria-haspopup="dialog" aria-controls={`${ids}-dialog`}>
       <CircleHelp size={18} aria-hidden="true" /><span className={styles.launcherLabel}>{launcherLabel}</span>
     </button>
     <dialog ref={dialog} data-jobrun-support-dialog id={`${ids}-dialog`} className={styles.dialog} dir={he ? "rtl" : "ltr"} lang={lang}
       aria-labelledby={`${ids}-title`} aria-describedby={`${ids}-intro`} onCancel={event => { event.preventDefault(); close(); }}>
       <div className={styles.header}>
         <div><h2 ref={heading} tabIndex={-1} id={`${ids}-title`}>{he ? "ספרו לנו מה קרה" : "Tell us what happened"}</h2>
-          <p id={`${ids}-intro`}>{he ? "הדיווח יגיע ישירות להראל ולשקד. נבדוק ונטפל בהקדם." : "Your report goes directly to Harel and Shaked. We will investigate as soon as we can."}</p></div>
+          <p id={`${ids}-intro`}>{he ? "הדיווח יגיע ישירות להראל ולשקד. נבדוק ונטפל בהקדם." : "Your report goes directly to Harel and Shaked. We will investigate as soon as we can."}</p>
+          {preservedDraft && <p role="status">{he ? "פתחנו את הפנייה הקיימת ושמרנו על הפרטים ועל סוג הפנייה שלה." : "We opened your existing report and kept its details and category unchanged."}</p>}</div>
         <button type="button" className={styles.close} onClick={close} aria-label={he ? "סגירה ושמירת הטיוטה בלשונית" : "Close and keep the draft in this tab"}><X size={21} aria-hidden="true" /></button>
       </div>
       {!authReady ? <p className={styles.auth} role="status">{he ? "בודקים את החיבור לחשבון…" : "Checking your account…"}</p>
@@ -226,7 +240,7 @@ export function SupportReporter() {
           {!!reportId && !saved && <p className={styles.draft}>{he ? "פרטי הדיווח נשמרים ללא שינוי לניסיון נוסף, כדי למנוע שליחה כפולה." : "Report details are kept unchanged for a safe retry without duplicates."}</p>}
           <fieldset disabled={busy || checkingFiles || !!reportId} className={styles.fields}>
             <label htmlFor={`${ids}-subject`}>{he ? "כותרת קצרה" : "Short subject"}<input id={`${ids}-subject`} dir="auto" value={subject} onChange={event => setSubject(event.target.value)} required minLength={3} maxLength={160} autoComplete="off" placeholder={he ? "למשל: השרטוט לא נשמר" : "For example: my circuit did not save"} /></label>
-            <label htmlFor={`${ids}-category`}>{he ? "במה מדובר?" : "What is this about?"}<select id={`${ids}-category`} value={category} onChange={event => setCategory(event.target.value as SupportCategory)}>
+            <label htmlFor={`${ids}-category`}>{he ? "במה מדובר?" : "What is this about?"}<select id={`${ids}-category`} value={category} onChange={event => { setCategory(event.target.value as SupportCategory); setCategoryEdited(true); setPreservedDraft(false); }}>
               <option value="bug">{he ? "תקלה באתר" : "Something is broken"}</option><option value="question">{he ? "בעיה בשאלה או בפתרון" : "A question or solution"}</option><option value="feedback">{he ? "הצעה לשיפור" : "An improvement idea"}</option><option value="other">{he ? "משהו אחר" : "Something else"}</option>
             </select></label>
             <label htmlFor={`${ids}-description`}>{he ? "תיאור הבעיה" : "Describe the issue"}<textarea id={`${ids}-description`} dir="auto" value={description} onChange={event => setDescription(event.target.value)} required minLength={20} maxLength={6000} rows={5} placeholder={he ? "מה ניסיתם לעשות? מה ציפיתם שיקרה, ומה קרה בפועל?" : "What were you trying to do? What did you expect, and what happened instead?"} aria-describedby={`${ids}-privacy`} /></label>

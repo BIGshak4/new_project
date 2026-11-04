@@ -1,4 +1,5 @@
 import { supabase } from "./supabase";
+import { isAvatarConfig, publishAvatarUpdate } from "./avatar-events";
 import type { AvatarClient, AvatarConfig, AvatarPayload } from "./avatar-types";
 
 export class AvatarApiError extends Error {
@@ -19,12 +20,13 @@ export function avatarApi(userId: string, baseUrl = process.env.NEXT_PUBLIC_API_
         ...(body ? { body: JSON.stringify(body) } : {}),
       });
     } catch { throw new AvatarApiError("network", "Unable to reach the wardrobe server."); }
+    const payload = await response.json().catch(() => null);
     const current = await supabase.auth.getSession();
     if (current.data.session?.user.id !== userId) throw new AvatarApiError("unauthenticated", "The account changed.", 401);
-    const payload = await response.json().catch(() => null);
     if (!response.ok) throw new AvatarApiError(payload?.error?.code ?? "internal", payload?.error?.message ?? "Wardrobe request failed.", response.status);
-    if (!payload?.avatar || !Array.isArray(payload.owned_skins) || !Array.isArray(payload.skins) || !Array.isArray(payload.components) || !Array.isArray(payload.colors) || typeof payload.balance !== "number" || typeof payload.enabled !== "boolean" || typeof payload.shop_enabled !== "boolean")
+    if (!isAvatarConfig(payload?.avatar) || !Array.isArray(payload.owned_skins) || !Array.isArray(payload.skins) || !Array.isArray(payload.components) || !Array.isArray(payload.colors) || typeof payload.balance !== "number" || typeof payload.enabled !== "boolean" || typeof payload.shop_enabled !== "boolean")
       throw new AvatarApiError("invalid_response", "The wardrobe response was incomplete.");
+    if (method !== "GET") publishAvatarUpdate({ userId, avatar: payload.avatar, demo: false });
     return payload as AvatarPayload;
   }
   return {

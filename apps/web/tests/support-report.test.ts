@@ -2,13 +2,36 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   SUPPORT_LIMITS, inspectSupportFile, inspectSupportFiles, removeSupportReservation, sendSupportReport, supportPageContext,
-  supportErrorMessage, SupportValidationError, validateSupportDetails,
-  type SupportFile, type SupportSubmission, type SupportTransport,
+  hasSupportDraft, supportOpenCategory, supportErrorMessage, SupportValidationError, validateSupportDetails,
+  type SupportDraftState, type SupportFile, type SupportSubmission, type SupportTransport,
 } from "../src/lib/support-report";
 
 const input: SupportSubmission = { id: "stable-report-id", subject: "Circuit not saved", description: "I connected two gates but saving did not complete.", category: "bug", language: "en", pagePath: "/", questionKey: "example-enabled-decoder" };
 const sample = (name = "example.txt", content: BlobPart = "A valid support attachment.", type = "text/plain") => new File([content], name, { type });
 const item = (id: string): SupportFile => ({ id, file: sample(), mimeType: "text/plain", uploaded: false });
+
+test("support shortcuts accept only the four known categories; legacy and malformed requests remain safe", () => {
+  for (const category of ["bug", "question", "feedback", "other"]) {
+    assert.equal(supportOpenCategory({ category }), category);
+  }
+  for (const detail of [undefined, null, "feedback", {}, { category: "admin" }, { category: ["bug"] }, { category: 1 }]) {
+    assert.equal(supportOpenCategory(detail), undefined);
+  }
+});
+
+test("support shortcuts prefill only a clean form and preserve every kind of existing work", () => {
+  const clean: SupportDraftState = {
+    subject: "", description: "", fileCount: 0, categoryEdited: false,
+    busy: false, checkingFiles: false, reportId: "", saved: false, submitted: false, error: "",
+  };
+  assert.equal(hasSupportDraft(clean), false);
+  const existingWork: Partial<SupportDraftState>[] = [
+    { subject: "Draft title" }, { subject: " " }, { description: "Started explaining" },
+    { fileCount: 1 }, { categoryEdited: true }, { busy: true }, { checkingFiles: true },
+    { reportId: "uncertain-save-id" }, { saved: true }, { submitted: true }, { error: "Retry upload" },
+  ];
+  for (const state of existingWork) assert.equal(hasSupportDraft({ ...clean, ...state }), true, JSON.stringify(state));
+});
 
 test("support accepts signatures for each supported binary format and UTF-8 text", async () => {
   const examples = [

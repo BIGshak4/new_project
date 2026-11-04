@@ -109,10 +109,10 @@ export function Wardrobe({ client, lang, controls, demo = false, draftKey }: { c
   return <div className={styles.shell} dir={lang === "he" ? "rtl" : "ltr"}>
     <header className={`topnav ${headerStyles.header}`}>
       <a href="/" className="wordmark" dir="ltr"><span>.</span>jobrun</a>
-      <FeatureNav className="tabs" lang={lang} avatar={data?.avatar} demo={demo} current="shop"/>
+      <FeatureNav className="tabs" lang={lang} demo={demo} current="shop"/>
       <div className={`topnav-actions ${headerStyles.toolbar} ${styles.controls}`}><button type="button" aria-haspopup="dialog" aria-label={t("דיווח על בעיה", "Report a problem")} title={t("דיווח על בעיה", "Report a problem")} onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={18} aria-hidden="true"/></button>{controls}</div>
     </header>
-    <FeatureNav className="tabbar" variant="bottom" hideAvatar lang={lang} demo={demo} current="shop" />
+    <FeatureNav className="tabbar" variant="bottom" lang={lang} demo={demo} current="shop" />
     <main className={styles.main}>
       <div className={styles.topline}><span className={styles.wallet}><Coins size={20} aria-hidden="true"/>{data ? data.balance : "—"} {t(demo ? "מטבעות הדגמה" : "מטבעות", demo ? "demo coins" : "coins")}</span></div>
       {demo && <aside className={styles.demo}><strong>{t("חנות לדוגמה", "Shop preview")}</strong><span>{t("מודדים וקונים במטבעות הדגמה בלבד. החשבון שלכם אינו משתנה.", "Try and buy with demo coins only. Your account is unchanged.")}</span><a href="/games/shop">{t("לחנות האמיתית", "Open your real shop")}</a></aside>}
