@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, type RefObject } from "react";
+import { BidiText } from "../bidi-text";
+import { proseDirection } from "../../lib/bidi-segments";
 import { createPortal } from "react-dom";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { MuxiMascot } from "./muxi-mascot";
@@ -202,6 +204,6 @@ export function MuxiGuidance({ root, station, lang, actions, ready, onAction }: 
     data-below={pointer.below} style={{ left: pointer.x, top: pointer.y }} aria-hidden="true">
     {pointer.below ? <ArrowUp size={18} /> : <ArrowDown size={18} />}
     <MuxiMascot pose="point" pointDirection={pointer.below ? "left" : "down"} className={styles.pointerMascot} />
-    <span>{pointer.label}</span>
+    <span dir={proseDirection(pointer.label, lang === "he" ? "rtl" : "ltr")}><BidiText>{pointer.label}</BidiText></span>
   </div>, pointer.host);
 }

@@ -25,6 +25,14 @@ test("assessment prose preserves technical expressions inside Hebrew across feed
   assert.ok((html.match(/הביטוי <bdi dir="ltr">A XOR B<\/bdi> תקין/g) ?? []).length >= 7);
   assert.match(html, /<td dir="ltr"><bdi dir="ltr">A=1, B=0<\/bdi><\/td>/);
   assert.doesNotMatch(html, /הביטוי A XOR B תקין/);
+  const prefixed = "A XOR B הוא הביטוי שנבדק (כאשר A=1), נכון?";
+  const prefixedHtml = renderToStaticMarkup(createElement(EvaluationPanel, {
+    submission: { ...submission, summary: prefixed, key_points_hit: [prefixed],
+      tip: { key: "tip", text: prefixed }, check: { ...submission.check!, detail: prefixed } }, lang: "he",
+  }));
+  assert.match(prefixedHtml, /class="evaluation-summary" dir="rtl"><bdi dir="ltr">A XOR B<\/bdi>/);
+  assert.match(prefixedHtml, /<li dir="rtl"><bdi dir="ltr">A XOR B<\/bdi>/);
+  assert.match(prefixedHtml, /\(כאשר <bdi dir="ltr">A=1<\/bdi>\), נכון\?/);
 });
 
 test("next-question titles, focus and reasons keep their expression order", async () => {

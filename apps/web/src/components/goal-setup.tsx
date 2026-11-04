@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { proseDirection } from "../lib/bidi-segments";
 import { BookOpen, BriefcaseBusiness, CalendarDays, ChevronDown, Clock3, GraduationCap, RotateCcw, Sparkles, Target, X } from "lucide-react";
 import type { Lang } from "./auth";
 import type { Goal, JobType, PracticeApi, Seniority } from "../lib/practice-api";
@@ -163,7 +164,7 @@ export function GoalSetup({ api, lang, goal, onSaved, onSkip, compact = false, f
   function bar(label: string, value: string, icon: ReactNode, labelId: string) {
     return <summary className={styles.bar} aria-disabled={busy || undefined} onClick={event => { if (busy) event.preventDefault(); }}>
       <span className={styles.barIcon}>{icon}</span>
-      <span className={styles.barText}><span id={labelId} className={styles.barLabel}>{label}</span><span className={styles.barValue}>{value}</span></span>
+      <span className={styles.barText}><span id={labelId} className={styles.barLabel}>{label}</span><span className={styles.barValue} dir={proseDirection(value, lang === "he" ? "rtl" : "ltr")}><BidiText>{value}</BidiText></span></span>
       <ChevronDown className={styles.chevron} size={18} aria-hidden="true" />
     </summary>;
   }
@@ -200,7 +201,7 @@ export function GoalSetup({ api, lang, goal, onSaved, onSkip, compact = false, f
                 <p className={styles.help}>{t("אפשר לבחור כמה תפקידים. התוכנית תשלב ביניהם.", "Choose as many roles as you like. Your plan will combine them.")}</p>
                 {jobs.map(job => <label className={styles.option} key={job.key}>
                   <input type="checkbox" checked={jobTypes.includes(job.key)} aria-invalid={invalid === "roles" || undefined} onChange={event => { edited(); setJobTypes(keys => event.target.checked ? [...keys, job.key] : keys.filter(key => key !== job.key)); }} />
-                  <span dir="auto"><BidiText>{job.label}</BidiText></span>
+                  <span dir={proseDirection(job.label)}><BidiText>{job.label}</BidiText></span>
                 </label>)}
               </fieldset>
             </details>
@@ -209,15 +210,15 @@ export function GoalSetup({ api, lang, goal, onSaved, onSkip, compact = false, f
                 const job = selectedJobs[index];
                 const label = job?.label ?? goal?.job_type_labels?.[index] ?? (goal?.job_type === key ? goal.job_type_label : null) ?? key;
                 return <article className={styles.selectedRole} key={key} role="listitem">
-                  <div className={styles.roleTitle}><strong dir="auto"><BidiText>{label}</BidiText></strong><button type="button" className={styles.remove} disabled={busy} aria-label={t(`הסרת התפקיד ${label}`, `Remove ${label}`)} onClick={() => { edited(); setJobTypes(keys => keys.filter(value => value !== key)); }}><X size={17} aria-hidden="true" /></button></div>
-                  <p dir="auto"><BidiText>{job?.description ?? (jobsLoading ? t("טוענים את תיאור התפקיד…", "Loading the role description…") : t("התפקיד הזה אינו זמין כרגע. אפשר להסיר אותו ולבחור תפקיד אחר.", "This role is unavailable right now. Remove it and choose another role."))}</BidiText></p>
+                  <div className={styles.roleTitle}><strong dir={proseDirection(label)}><BidiText>{label}</BidiText></strong><button type="button" className={styles.remove} disabled={busy} aria-label={t(`הסרת התפקיד ${label}`, `Remove ${label}`)} onClick={() => { edited(); setJobTypes(keys => keys.filter(value => value !== key)); }}><X size={17} aria-hidden="true" /></button></div>
+                  <p dir={proseDirection(job?.description ?? "", lang === "he" ? "rtl" : "ltr")}><BidiText>{job?.description ?? (jobsLoading ? t("טוענים את תיאור התפקיד…", "Loading the role description…") : t("התפקיד הזה אינו זמין כרגע. אפשר להסיר אותו ולבחור תפקיד אחר.", "This role is unavailable right now. Remove it and choose another role."))}</BidiText></p>
                 </article>;
               })}
             </div>}
           </> : <section className={styles.explore} aria-labelledby={`${id}-explore-title`}>
             <div className={styles.exploreHead}><BookOpen size={20} aria-hidden="true" /><h3 id={`${id}-explore-title`}>{t("מכירים את התפקידים", "Explore the roles")}</h3></div>
             <p className={styles.help}>{t("נלמד יסודות ממגוון התחומים, בלי לבחור תפקיד או לקבוע תאריך לראיון.", "Learn fundamentals across the fields, without choosing a role or setting an interview date.")}</p>
-            <div className={styles.roleOverview}>{jobs.map(job => <article className={styles.overviewRole} key={job.key}><h4 dir="auto"><BidiText>{job.label}</BidiText></h4><p dir="auto"><BidiText>{job.description}</BidiText></p></article>)}</div>
+            <div className={styles.roleOverview}>{jobs.map(job => <article className={styles.overviewRole} key={job.key}><h4 dir={proseDirection(job.label)}><BidiText>{job.label}</BidiText></h4><p dir={proseDirection(job.description)}><BidiText>{job.description}</BidiText></p></article>)}</div>
           </section>}
           {jobsLoading && <p className={styles.catalogStatus} role="status">{t("טוענים את התפקידים…", "Loading roles…")}</p>}
           {jobsError && <div className={styles.catalogError} role="alert"><p>{t("לא הצלחנו לטעון את התפקידים. נסו שוב כדי להמשיך.", "We couldn’t load the roles. Try again to continue.")}</p><button type="button" disabled={busy} onClick={() => setJobsRetry(value => value + 1)}><RotateCcw size={16} aria-hidden="true" />{t("טעינה מחדש", "Retry loading")}</button></div>}
@@ -256,7 +257,7 @@ export function GoalSetup({ api, lang, goal, onSaved, onSkip, compact = false, f
         </details>}
       </div>
 
-      {error && <p className="notice error" role="alert">{error}</p>}
+      {error && <p className="notice error" role="alert" dir={proseDirection(error)}><BidiText>{error}</BidiText></p>}
       <div className="goal-actions">
         <button className="primary" type="submit" disabled={busy || jobsLoading || !!jobsError || (mode === "targeted" && !jobTypes.length)}><Sparkles size={16} aria-hidden="true" />{busy ? t("שומרים…", "Saving…") : mode === "explore" ? t("מתחילים ללמוד", "Start learning") : goal?.complete ? t("שמירת התוכנית", "Save plan") : t("בונים לי תוכנית", "Build my plan")}</button>
         {onSkip && <button className="text-button" type="button" disabled={busy} onClick={onSkip}>{t("אחר כך", "Later")}</button>}

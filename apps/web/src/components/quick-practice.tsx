@@ -4,7 +4,7 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
 import { ArrowLeft, ArrowRight, Check, RotateCcw, Search, Shuffle } from "lucide-react";
 import { BidiText } from "./bidi-text";
 import { StudyText } from "./question-materials";
-import { filterQuickQuestions, quickQuestions, quickTopics, type QuickDiagram, type QuickTopic } from "../lib/fundamentals";
+import { filterQuickQuestions, quickAnswerMarkdown, quickQuestions, quickTopics, type QuickDiagram, type QuickTopic } from "../lib/fundamentals";
 import { confirmQuickCompletion, filterQuickHistory, quickCompletionState, quickRevision, readQuickProgress, type QuickHistoryView, type QuickProgressApi } from "../lib/fundamentals-progress";
 import type { FundamentalCompletion } from "../lib/practice-api";
 import { shuffleQuestions, useQuestionOrderSeed } from "../lib/question-order";
@@ -161,14 +161,14 @@ export function QuickPractice({ lang, api, userId }: { lang: "he" | "en"; api: Q
         {record && <p className="quick-completed-label"><Check size={16} aria-hidden="true" />{state === "updated"
           ? t("כבר סיימתם; השאלה עודכנה מאז", "Previously finished; updated since then")
           : t("כבר סיימתם את השאלה הזאת", "You already finished this question")}{" · "}<time dateTime={record.completed_at}>{new Date(record.completed_at).toLocaleDateString(lang === "he" ? "he-IL" : "en-GB")}</time></p>}
-        <StudyText text={question.prompt[lang]} />
+        <StudyText text={question.prompt[lang]} lang={lang} />
         {question.code?.language === "python" && <p className="small muted">{t("המימוש המוצע כתוב בפייתון. דרך הפתרון מוסברת בקצרה בהמשך.", "The proposed implementation uses Python. A short explanation of the approach appears below.")}</p>}
         <p className="quick-think">{t("נסו לענות בראש לפני פתיחת הפתרון.", "Try answering in your head before opening the solution.")}</p>
         <button className={revealed ? "text-button quick-reveal" : "primary quick-reveal"} onClick={() => revealed ? setRevealedId(null) : reveal()} aria-expanded={!!revealed} aria-controls="quick-answer">
           {revealed ? t("הסתרת הפתרון", "Hide solution") : t("הצגת פתרון קצר", "Show short solution")}</button>
         {revealed && <section id="quick-answer" className="quick-answer" aria-label={t("פתרון קצר", "Short solution")}>
             <h3>{t("הפתרון בקצרה", "The short solution")}</h3>
-            <StudyText text={question.answer[lang]} />
+            <StudyText text={quickAnswerMarkdown(question.answer[lang])} lang={lang} />
             {question.code && <pre className="code-block" dir="ltr" aria-label={`${question.code.language} ${t("קוד הפתרון", "solution code")}`}><code>{question.code.text}</code></pre>}
             {question.diagram && <QuickDiagramView diagram={question.diagram} lang={lang} />}
             <p className="quick-takeaway"><strong>{t("מה לוקחים הלאה?", "What carries over?")}</strong> <BidiText>{question.takeaway[lang]}</BidiText></p>

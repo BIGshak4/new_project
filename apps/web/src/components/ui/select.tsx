@@ -4,6 +4,8 @@ import * as RadixSelect from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
 import type { ReactNode } from "react";
 import { fromSelectValue, toSelectValue } from "../../lib/ui";
+import { proseDirection } from "../../lib/bidi-segments";
+import { BidiText } from "../bidi-text";
 
 export type SelectOption = { value: string; label: string };
 
@@ -43,8 +45,8 @@ export function Select({
         <RadixSelect.Content className="ui-select-content" position="popper" sideOffset={6} align="start" collisionPadding={12}>
           <RadixSelect.Viewport className="ui-select-viewport">
             {options.map((o) => (
-              <RadixSelect.Item key={o.value} value={toSelectValue(o.value)} className="ui-select-item">
-                <RadixSelect.ItemText>{o.label}</RadixSelect.ItemText>
+              <RadixSelect.Item key={o.value} value={toSelectValue(o.value)} textValue={o.label} className="ui-select-item">
+                <RadixSelect.ItemText><span dir={proseDirection(o.label, dir)}><BidiText>{o.label}</BidiText></span></RadixSelect.ItemText>
                 <RadixSelect.ItemIndicator className="ui-select-tick">
                   <Check size={15} aria-hidden="true" />
                 </RadixSelect.ItemIndicator>

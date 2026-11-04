@@ -3,8 +3,9 @@ export type BidiSegment = { text: string; direction: "ltr" | "inherit" };
 
 const rtlLetter = /[\p{Script=Hebrew}\p{Script=Arabic}\p{Script=Syriac}\p{Script=Thaana}\p{Script=Nko}\p{Script=Adlam}]/u;
 const letter = /\p{L}/u;
-const technicalCore = /[\p{Script=Latin}\p{Script=Greek}\p{N}]/u;
-const technicalCharacter = /[\x20-\x7e\t\p{Script=Latin}\p{Script=Greek}\p{N}\p{Sm}\u00a0\u00ac\u00b0\u00b1\u00d7\u00f7\u2010-\u2015\u2032\u2033\u2190-\u21ff]/u;
+const technicalCore = /[\p{Script=Latin}\p{Script=Greek}\p{N}\p{Sm}\u00ac\u00b0\u2100-\u214f\u2190-\u21ff\u{1d400}-\u{1d7ff}]/u;
+const technicalCharacter = /[\x20-\x7e\t\p{Script=Latin}\p{Script=Greek}\p{N}\p{Sm}\u00a0\u00ac\u00b0\u00b1\u00d7\u00f7\u2010-\u2015\u2032\u2033\u2100-\u214f\u2190-\u21ff\u{1d400}-\u{1d7ff}]/u;
+const combiningMark = /\p{M}/u;
 const opening = new Set(["(", "[", "{"]);
 const closing = new Set([
   ")", "]", "}",
@@ -19,6 +20,20 @@ export function textDirection(text: string): "ltr" | "rtl" {
     if (letter.test(character)) return rtlLetter.test(character) ? "rtl" : "ltr";
   }
   return "ltr";
+}
+
+/**
+ * Prose may begin with an identifier ("X הוא...") while its sentence is Hebrew.
+ * A trusted content-language preference resolves genuinely mixed prose; without
+ * one, RTL-language prose wins over its embedded technical notation. Pure
+ * English and pure RTL prose keep their own direction, even on the other UI.
+ * Unlike textDirection, numbers and technical prefixes do not decide the base.
+ */
+export function proseDirection(text: string, preferred?: "ltr" | "rtl"): "ltr" | "rtl" {
+  const hasRtl = rtlLetter.test(text);
+  const hasLtr = [...text].some(character => letter.test(character) && !rtlLetter.test(character));
+  if (hasRtl) return hasLtr ? preferred ?? "rtl" : "rtl";
+  return hasLtr ? "ltr" : preferred ?? "ltr";
 }
 
 /** Keep an interval's intentional mixed delimiters, e.g. [lo, hi) or (0, n]. */
@@ -100,7 +115,11 @@ function isolateRun(text: string): BidiSegment[] {
     // unary operators, pointers and postfix operators stay with their expression.
     let first = 0;
     let last = value.length;
-    while (first < last && /[\s,.;:?]/u.test(value[first])) first++;
+    while (first < last && /[\s,.;:?]/u.test(value[first])) {
+      // A leading decimal point is part of the number, not sentence punctuation.
+      if (value[first] === "." && /\p{N}/u.test(value[first + 1] ?? "")) break;
+      first++;
+    }
     while (last > first && /[\s,.;:!?]/u.test(value[last - 1])) last--;
     if (first) parts.push({ text: value.slice(0, first), direction: "inherit" });
     if (last > first) parts.push({ text: value.slice(first, last), direction: "ltr" });
@@ -120,18 +139,25 @@ function segmentTechnicalRuns(text: string): BidiSegment[] {
   if (!text) return [];
   const segments: BidiSegment[] = [];
   let runStart = 0;
-  let technical = technicalCharacter.test(text[0]);
+  let technical = technicalCharacter.test(String.fromCodePoint(text.codePointAt(0)!));
   const flush = (end: number) => {
     const run = text.slice(runStart, end);
     segments.push(...(technical ? isolateRun(run) : [{ text: run, direction: "inherit" as const }]));
     runStart = end;
   };
-  for (let index = 1; index < text.length; index++) {
-    const next = technicalCharacter.test(text[index]);
+  let index = 0;
+  let previous = "";
+  // Iterate Unicode code points, while retaining UTF-16 offsets for React's
+  // source slices. Mathematical letters such as 𝑥 must not split in half.
+  for (const character of text) {
+    const next = technicalCharacter.test(character)
+      || (combiningMark.test(character) && technical && previous !== "" && !/\s/u.test(previous));
     if (next !== technical) {
       flush(index);
       technical = next;
     }
+    previous = character;
+    index += character.length;
   }
   flush(text.length);
   return segments;

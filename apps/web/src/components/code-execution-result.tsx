@@ -1,4 +1,6 @@
 import type { Lang } from "./auth";
+import { BidiText } from "./bidi-text";
+import { proseDirection } from "../lib/bidi-segments";
 import { executionStatusLabel, executionValue, type CodeExecutionResult } from "../lib/code-execution";
 
 export function ExecutionResultView({ result, lang, stale = false }: {
@@ -26,7 +28,7 @@ export function ExecutionResultView({ result, lang, stale = false }: {
         <li>{result.passed === null ? t("נכונות: לא נבדקה", "Correctness: not assessed") : result.passed ? t("בדיקות השאלה: עברו", "Question tests: passed") : t("בדיקות השאלה: נכשלו", "Question tests: failed")}</li>
       </ul>
       {hasTotals && <p className="small"><bdi dir="ltr">{result.passed_count}/{result.test_count}</bdi> {t("מהבדיקות שהוגדרו עברו", "defined tests passed")}</p>}
-      {result.detail && <p className="small" dir="auto">{result.detail}</p>}
+      {result.detail && <p className="small" dir={proseDirection(result.detail)}><BidiText>{result.detail}</BidiText></p>}
       {result.passed === true && <p className="small muted">{t("מעבר הבדיקות אינו מוכיח נכונות לכל קלט ואינו בודק בהכרח יעילות או מינימליות.", "Passing these tests does not prove correctness for every input or necessarily assess efficiency or minimality.")}</p>}
       {output.map(([label, value]) => <details key={label} open>
         <summary>{label}</summary>

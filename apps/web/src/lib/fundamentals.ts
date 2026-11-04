@@ -45,6 +45,11 @@ export const quickQuestions = [
   ...hardware500, ...reasoning500, ...code500,
 ] as QuickQuestion[];
 
+/** A one-line numeric answer ("0. ...") is prose, not a Markdown list marker. */
+export function quickAnswerMarkdown(text: string): string {
+  return /[\r\n]/.test(text) ? text : text.replace(/^([ ]{0,3}\d{1,9})([.)])(?=[ \t])/, "$1\\$2");
+}
+
 export function filterQuickQuestions(topic: QuickTopic | "all", query: string, lang: "he" | "en", questions: readonly QuickQuestion[] = quickQuestions) {
   const needle = query.trim().toLocaleLowerCase();
   const other = lang === "he" ? "en" : "he";

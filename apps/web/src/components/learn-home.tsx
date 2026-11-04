@@ -12,6 +12,7 @@ import { daysToGoLabel, eligibleAhead, pathNodes, todayProgress, type PathNode }
 import { revealDelay } from "../lib/ui";
 import { Breathe, Pop, motion, spring, useReducedMotion } from "./ui/motion";
 import { BidiText } from "./bidi-text";
+import { proseDirection } from "../lib/bidi-segments";
 import { goalRoleLabel } from "../lib/goal-selection";
 import { RecommendationWaves } from "./recommendation-waves";
 import type { AccountActivity } from "../lib/account-stats-api";
@@ -194,6 +195,10 @@ export function LearnHome({
         : t("תרגול מעמיק: התשובה, שאלת המשך, ואז השאלה הבאה שנבחרת לפי מה שכתבתם.", "Deep practice: your answer, one follow-up, then the next question chosen by what you wrote.");
 
   const tomorrow = laterNodes.find((n) => n.state !== "done" && n.state !== "skipped") ?? null;
+  const contextText = [userName, goalRoleLabel(goal, lang), interviewDate ? `${t("ראיון ב", "interview on")}${lang === "he" ? "־" : " "}${interviewDate}` : null].filter(Boolean).join(" · ");
+  const currentTitle = !current ? "" : current.kind === "interview"
+    ? t(`ראיון מדומה, ${current.item.minutes} דקות, על ${currentSkills}.`, `A ${current.item.minutes}-minute mock interview on ${currentSkills}.`)
+    : `${modeLabel(current.item.mode, lang)} ${t("על", "on")} ${currentSkills}.`;
 
   return (
     <div className="learn">
@@ -203,15 +208,13 @@ export function LearnHome({
         {accountSlot}
         <header className="learn-head">
           <div>
-            <h1 dir="auto">
+            <h1 dir={lang === "he" ? "rtl" : "ltr"}>
               {daysLabel && goalComplete ? `${daysLabel}. ` : ""}
               {title}
-              {topic && current?.kind !== "interview" && <span className="mark"><bdi dir="auto"><BidiText>{topic}</BidiText></bdi>.</span>}
+              {topic && current?.kind !== "interview" && <span className="mark"><bdi dir={proseDirection(topic)}><BidiText>{topic}</BidiText></bdi>.</span>}
             </h1>
-            <div className="learn-context" dir="auto">
-              <BidiText>{[userName, goalRoleLabel(goal, lang), interviewDate ? `${t("ראיון ב", "interview on")}${lang === "he" ? "־" : " "}${interviewDate}` : null]
-                .filter(Boolean)
-                .join(" · ")}</BidiText>
+            <div className="learn-context" dir={proseDirection(contextText, lang === "he" ? "rtl" : "ltr")}>
+              <BidiText>{contextText}</BidiText>
             </div>
           </div>
           {goalComplete && (
@@ -230,7 +233,7 @@ export function LearnHome({
             {t("טוענים את התוכנית…", "Loading your program…")}
           </p>
         ) : loadError ? (
-          <section className="sheet path-empty"><p role="alert">{loadError}</p><button type="button" onClick={() => { load(); }}>{t("לטעון שוב את התוכנית", "Reload the program")}</button></section>
+          <section className="sheet path-empty"><p role="alert" dir={proseDirection(loadError)}><BidiText>{loadError}</BidiText></p><button type="button" onClick={() => { load(); }}>{t("לטעון שוב את התוכנית", "Reload the program")}</button></section>
         ) : !goalComplete && !goalSlot ? (
           <section className="sheet path-empty">
             <Target size={28} aria-hidden="true" />
@@ -262,18 +265,16 @@ export function LearnHome({
             <section className="sheet today-sheet" aria-label={t("הפריט של עכשיו", "The item to do now")}>
               {current ? (
                 <>
-                  <h2 className="sheet-title" dir="auto">
-                    <BidiText>{current.kind === "interview"
-                      ? t(`ראיון מדומה, ${current.item.minutes} דקות, על ${currentSkills}.`, `A ${current.item.minutes}-minute mock interview on ${currentSkills}.`)
-                      : `${modeLabel(current.item.mode, lang)} ${t("על", "on")} ${currentSkills}.`}</BidiText>
+                  <h2 className="sheet-title" dir={proseDirection(currentTitle, lang === "he" ? "rtl" : "ltr")}>
+                    <BidiText>{currentTitle}</BidiText>
                   </h2>
                   <div className="sheet-row">
                     <span className="tag">
                       {t("עכשיו", "Now")} · {today.done + 1}/{today.total} · {current.item.minutes} {t("דק׳", "min")}
                     </span>
-                    <span className="sheet-skill" dir="auto"><BidiText>{currentSkills}</BidiText></span>
+                    <span className="sheet-skill" dir={proseDirection(currentSkills)}><BidiText>{currentSkills}</BidiText></span>
                   </div>
-                  <p className="sheet-why" dir="auto">
+                  <p className="sheet-why" dir={proseDirection(`${current.item.reason} ${modeLine}`, lang === "he" ? "rtl" : "ltr")}>
                     <BidiText>{current.item.reason}</BidiText>{" "}<BidiText>{modeLine}</BidiText>
                   </p>
                   <div className="sheet-actions">
@@ -352,7 +353,7 @@ export function LearnHome({
                             </span>
                           )}
                         </Breathe>
-                        <b dir="auto"><BidiText>{node.kind === "interview" ? t("ראיון מדומה", "Mock interview") : node.item.skills.map((s) => s.label).join(", ")}</BidiText></b>
+                        <b dir={proseDirection(node.item.skills.map((s) => s.label).join(", "), lang === "he" ? "rtl" : "ltr")}><BidiText>{node.kind === "interview" ? t("ראיון מדומה", "Mock interview") : node.item.skills.map((s) => s.label).join(", ")}</BidiText></b>
                         <span>
                           {node.state === "done"
                             ? t("הושלם", "done")
@@ -381,7 +382,7 @@ export function LearnHome({
                     return (
                       <li key={node.key} className={node.dayIndex !== previousDay ? "first" : ""}>
                         <span className="later-day">{node.dayIndex !== previousDay ? dayLabel(node.item.date, node.dayIndex, lang) : ""}</span>
-                        <span className="later-what" dir="auto">
+                        <span className="later-what" dir={proseDirection(node.item.skills.map((s) => s.label).join(", "), lang === "he" ? "rtl" : "ltr")}>
                           <BidiText>{node.kind === "interview" ? t("ראיון מדומה", "Mock interview") : node.item.skills.map((s) => s.label).join(", ")}</BidiText>
                         </span>
                         <span className="later-mode">
@@ -396,8 +397,8 @@ export function LearnHome({
           </>
         )}
         {message && (
-          <p className="notice path-message" role="status">
-            {message}
+          <p className="notice path-message" role="status" dir={proseDirection(message)}>
+            <BidiText>{message}</BidiText>
           </p>
         )}
       </div>
@@ -444,7 +445,7 @@ export function LearnHome({
         </section>
         {activity && <StreakCard days={activity.streak_days} todayDone={activity.today_count > 0} lang={lang} />}
         {tomorrow && (
-          <div className="sticky" dir="auto">
+          <div className="sticky" dir={lang === "he" ? "rtl" : "ltr"}>
             {dayLabel(tomorrow.item.date, tomorrow.dayIndex, lang)}{": "}
             <BidiText>{tomorrow.kind === "interview" ? t("ראיון מדומה", "a mock interview") : tomorrow.item.skills.map((s) => s.label).join(", ")}</BidiText>
             {" · "}
@@ -469,7 +470,7 @@ export function WorkAheadCard({ item, lang, busy, starting, onStart }: {
   const Arrow = lang === "he" ? ArrowLeft : ArrowRight;
   const isInterview = item.mode === "simulation";
   return <section className="work-ahead" aria-labelledby="work-ahead-title">
-    <div className="work-ahead-copy"><span className="tag">{dayLabel(item.date, item.day_index, lang)} · {item.minutes} {t("דק׳", "min")}</span><h3 id="work-ahead-title">{item.status === "started" ? t("להמשיך את התרגול שהתחלתם מראש", "Continue the item you opened early") : t("רוצים להתקדם מעבר להיום?", "Want to work ahead?")}</h3><p dir="auto"><BidiText>{item.skills.map((skill) => skill.label).join(", ")}</BidiText> · {modeLabel(item.mode, lang)}</p><p className="small muted">{t("הפריט יישאר משויך ליום המקורי שלו. אם תשלימו אותו כעת, הוא יופיע שם כהושלם.", "This item stays assigned to its original day. If you complete it now, it will be marked done there.")}</p></div>
+    <div className="work-ahead-copy"><span className="tag">{dayLabel(item.date, item.day_index, lang)} · {item.minutes} {t("דק׳", "min")}</span><h3 id="work-ahead-title">{item.status === "started" ? t("להמשיך את התרגול שהתחלתם מראש", "Continue the item you opened early") : t("רוצים להתקדם מעבר להיום?", "Want to work ahead?")}</h3><p dir={proseDirection(`${item.skills.map((skill) => skill.label).join(", ")} · ${modeLabel(item.mode, lang)}`, lang === "he" ? "rtl" : "ltr")}><BidiText>{item.skills.map((skill) => skill.label).join(", ")} · {modeLabel(item.mode, lang)}</BidiText></p><p className="small muted">{t("הפריט יישאר משויך ליום המקורי שלו. אם תשלימו אותו כעת, הוא יופיע שם כהושלם.", "This item stays assigned to its original day. If you complete it now, it will be marked done there.")}</p></div>
     <button type="button" className="primary" disabled={busy} onClick={onStart}>{starting ? t("פותחים…", "Opening…") : isInterview ? t("לראיון המתוכנן הבא", "Open the next planned interview") : item.status === "started" ? t("להמשיך את הפריט הבא", "Continue the next item") : t("להתחיל את הפריט הבא מראש", "Start the next item early")}<Arrow size={16} aria-hidden="true" /></button>
   </section>;
 }

@@ -20,7 +20,7 @@ import {
 } from "../lib/practice-api";
 import { apiMessage, bandLabel, readLocal, removeLocal, subjectLabel, writeLocal } from "../lib/practice-ui";
 import { BidiText } from "./bidi-text";
-import { textDirection } from "../lib/bidi-segments";
+import { proseDirection } from "../lib/bidi-segments";
 import { ExecutionResultView } from "./code-execution-result";
 
 type Props = {
@@ -380,7 +380,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: P
           {turn.hints.length > 0 && (
             <div className="interview-hints">
               {turn.hints.map((h) => (
-                <p key={h.level} className="hint" dir={textDirection(h.text)}>
+                <p key={h.level} className="hint" dir={proseDirection(h.text)}>
                   <Lightbulb size={14} /> <BidiText>{h.text}</BidiText>
                 </p>
               ))}
@@ -455,7 +455,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: P
           </summary>
           <ol>
             {interview.turns.map((x) => (
-              <li key={x.index} dir={textDirection(`${x.skill_label} ${x.question}`)}>
+              <li key={x.index} dir={proseDirection(`${x.skill_label} ${x.question}`)}>
                 <span className="badge"><BidiText>{x.skill_label}</BidiText></span>{" "}<BidiText>{x.question.slice(0, 120)}</BidiText>
                 {x.question.length > 120 ? "…" : ""}
               </li>
@@ -538,7 +538,7 @@ function InterviewReportView({
                     .filter((s) => s.status !== "not_assessed")
                     .map((s) => (
                       <tr key={s.key} className={s.level_gap !== null && s.level_gap < 0 ? "gap" : ""}>
-                        <td dir={textDirection(s.label)}>
+                        <td dir={proseDirection(s.label)}>
                           <BidiText>{s.label}</BidiText>
                           {s.status === "insufficient_evidence" && (
                             <span className="small muted"> · {t("עדות חלקית", "partial evidence")}</span>
@@ -560,7 +560,7 @@ function InterviewReportView({
               <h3>{t("מה לתרגל הלאה", "What to practise next")}</h3>
               <ul>
                 {report.recommended_next_skills.map((s) => (
-                  <li key={s.key} dir={textDirection(s.label)}><BidiText>{s.label}</BidiText></li>
+                  <li key={s.key} dir={proseDirection(s.label)}><BidiText>{s.label}</BidiText></li>
                 ))}
                 {report.recommended_next_skills.length === 0 &&
                   (report.skills.filter((s) => s.status === "assessed").length >= 3 ? (
@@ -579,7 +579,7 @@ function InterviewReportView({
                   <h3>{t("טיפים", "Tips")}</h3>
                   <ul>
                     {report.top_tips.map((tip, i) => (
-                      <li key={i} dir={textDirection(tip)}><BidiText>{tip}</BidiText></li>
+                      <li key={i} dir={proseDirection(tip)}><BidiText>{tip}</BidiText></li>
                     ))}
                   </ul>
                 </>
@@ -607,7 +607,7 @@ function InterviewReportView({
 
 /** Shared by the live question and the completed report so both keep formula direction intact. */
 function InterviewQuestionText({ text }: { text: string }) {
-  return <p className="interview-prompt" dir={textDirection(text)}><BidiText>{text}</BidiText></p>;
+  return <p className="interview-prompt" dir={proseDirection(text)}><BidiText>{text}</BidiText></p>;
 }
 
 export function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang }) {
@@ -628,7 +628,7 @@ export function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang })
         </span>
       </div>
       <InterviewQuestionText text={x.question} />
-      {x.answer && <p className="report-answer" dir={textDirection(x.answer)}><BidiText>{x.answer}</BidiText></p>}
+      {x.answer && <p className="report-answer" dir={proseDirection(x.answer)}><BidiText>{x.answer}</BidiText></p>}
       {x.visual && hasVisual(x.visual) && <VisualAnswer value={x.visual} lang={lang}
         question={{ title: x.skill_label, content: <InterviewQuestionText text={x.question} /> }} />}
       {x.flags?.includes("circuit_assessed") && (
@@ -636,14 +636,14 @@ export function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang })
           <Cpu size={14} /> {t("המעגל שציירתם נבדק", "Your circuit was assessed")}
         </span>
       )}
-      {x.summary && <p dir={textDirection(`${t("סיכום:", "Summary:")} ${x.summary}`)}><strong>{t("סיכום:", "Summary:")}</strong> <BidiText>{x.summary}</BidiText></p>}
+      {x.summary && <p dir={proseDirection(`${t("סיכום:", "Summary:")} ${x.summary}`)}><strong>{t("סיכום:", "Summary:")}</strong> <BidiText>{x.summary}</BidiText></p>}
       {x.key_points_missed.length > 0 && (
-        <p className="small" dir={textDirection(`${t("מה חסר:", "Missing:")} ${x.key_points_missed.join(" · ")}`)}>
+        <p className="small" dir={proseDirection(`${t("מה חסר:", "Missing:")} ${x.key_points_missed.join(" · ")}`)}>
           {t("מה חסר:", "Missing:")} <BidiText>{x.key_points_missed.join(" · ")}</BidiText>
         </p>
       )}
       {x.check?.execution ? <ExecutionResultView result={x.check.execution} lang={lang} /> : x.check && (
-        <p className="small muted" dir={textDirection(t("הבדיקה האוטומטית", "Automatic check"))}>
+        <p className="small muted" dir={proseDirection(t("הבדיקה האוטומטית", "Automatic check"))}>
           {x.check.passed === true
             ? t("הבדיקה האוטומטית עברה", "Automatic check passed")
             : x.check.passed === false
@@ -666,7 +666,7 @@ function SimpleMarkdown({ text }: { text: string }) {
       blocks.push(
         <ul key={`l${blocks.length}`}>
           {list.map((item, i) => (
-            <li key={i} dir={textDirection(item)}><BidiText>{item}</BidiText></li>
+            <li key={i} dir={proseDirection(item)}><BidiText>{item}</BidiText></li>
           ))}
         </ul>,
       );
@@ -682,12 +682,12 @@ function SimpleMarkdown({ text }: { text: string }) {
     if (line.startsWith("#")) {
       flush();
       const heading = line.replace(/^#+\s*/, "");
-      blocks.push(<h3 key={`h${blocks.length}`} dir={textDirection(heading)}><BidiText>{heading}</BidiText></h3>);
+      blocks.push(<h3 key={`h${blocks.length}`} dir={proseDirection(heading)}><BidiText>{heading}</BidiText></h3>);
     } else if (line.startsWith("- ") || line.startsWith("* ")) {
       list.push(line.slice(2));
     } else {
       flush();
-      blocks.push(<p key={`p${blocks.length}`} dir={textDirection(line)}><BidiText>{line}</BidiText></p>);
+      blocks.push(<p key={`p${blocks.length}`} dir={proseDirection(line)}><BidiText>{line}</BidiText></p>);
     }
   }
   flush();

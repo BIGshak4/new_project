@@ -3,7 +3,7 @@ import test from "node:test";
 import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { BidiText } from "../src/components/bidi-text";
-import { segmentBidiText, textDirection } from "../src/lib/bidi-segments";
+import { proseDirection, segmentBidiText, textDirection } from "../src/lib/bidi-segments";
 
 const ltr = (text: string) => segmentBidiText(text).filter(segment => segment.direction === "ltr").map(segment => segment.text);
 const render = (...children: ReactNode[]) => renderToStaticMarkup(createElement(BidiText, null, ...children));
@@ -104,6 +104,47 @@ test("textDirection uses the first source letter while numbers and punctuation a
   assert.equal(textDirection("[3:0]"), "ltr");
   assert.equal(textDirection("\u200f English"), "rtl");
   assert.equal(textDirection("\u200e עברית"), "ltr");
+});
+
+test("prose direction treats technical prefixes as embedded notation rather than the sentence language", () => {
+  for (const source of [
+    "X בן 2 ביטים ללא סימן, וערכו 0. מה ביט המשקל 4 בתוצאה המדויקת X²?",
+    "ADC בעל 8 ביטים: מה ערך ה־LSB?",
+    "(A AND B) הוא הביטוי הנתון.",
+    "O(n log n) היא סיבוכיות הפתרון.",
+  ]) assert.equal(proseDirection(source), "rtl", source);
+  assert.equal(proseDirection("An English question (with brackets)?", "rtl"), "ltr");
+  assert.equal(proseDirection("הסבר בעברית בלבד", "ltr"), "rtl");
+  assert.equal(proseDirection('Translate "שלום" into English.', "ltr"), "ltr");
+  assert.equal(proseDirection("123 — ?", "rtl"), "rtl");
+  assert.equal(proseDirection("123 — ?"), "ltr");
+});
+
+test("the reported X-squared prompt leaves its sentence punctuation outside technical isolates", () => {
+  const source = "X בן 2 ביטים ללא סימן, וערכו 0. מה ביט המשקל 4 בתוצאה המדויקת X²?";
+  assert.deepEqual(ltr(source), ["X", "2", "0", "4", "X²"]);
+  assert.match(render(source), /<bdi dir="ltr">X²<\/bdi>\?$/);
+  assert.equal(segmentBidiText(source).map(part => part.text).join(""), source);
+});
+
+test("complete Unicode math expressions retain symbols, surrogate pairs and attached combining marks", () => {
+  for (const expression of ["(−∞, +∞)", "𝑥² + 𝑦² = 𝑧²", "x\u0305 = y\u0305", "α\u0302[3:0]", "ℝ → ℂ", "√(x² + y²)"]) {
+    const source = `הביטוי ${expression} תקין.`;
+    assert.deepEqual(ltr(source), [expression]);
+    assert.equal(segmentBidiText(source).map(part => part.text).join(""), source);
+  }
+  // Marks belonging to RTL words must remain with those words.
+  const hebrew = "הַבִּיטוּי x תקין.";
+  assert.deepEqual(ltr(hebrew), ["x"]);
+  assert.equal(segmentBidiText(hebrew).map(part => part.text).join(""), hebrew);
+});
+
+test("leading decimal points stay with their numbers while surrounding prose punctuation stays outside", () => {
+  for (const expression of [".5", ".25e-3", "−.5", "±.05"]) {
+    const source = `הערך ${expression}?`;
+    assert.deepEqual(ltr(source), [expression]);
+    assert.equal(segmentBidiText(source).at(-1)?.text, "?");
+  }
 });
 
 test("one isolate spans strong/emphasis formatting without losing markup or attributes", () => {

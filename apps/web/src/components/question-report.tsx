@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { BidiText } from "./bidi-text";
+import { proseDirection } from "../lib/bidi-segments";
 import * as RadixPopover from "@radix-ui/react-popover";
 import { Flag } from "lucide-react";
 import type { Lang } from "./auth";
@@ -77,8 +79,8 @@ export function QuestionReport({ api, questionKey, lang, context }: { api: Pract
               aria-label={t("הערה", "Note")}
             />
             {error && (
-              <p className="small" role="alert">
-                {error}
+              <p className="small" role="alert" dir={proseDirection(error)}>
+                <BidiText>{error}</BidiText>
               </p>
             )}
             <div className="row report-actions">

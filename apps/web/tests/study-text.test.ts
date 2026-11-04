@@ -5,6 +5,47 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { StudyText } from "../src/components/question-materials";
 import { solutionMarkdown } from "../src/lib/solution-markdown";
+import { quickAnswerMarkdown, quickQuestions } from "../src/lib/fundamentals";
+
+test("the reported X-squared question reads as Hebrew with its question mark outside the formula", () => {
+  const question = quickQuestions.find(q => q.id === "quick-hw-184");
+  assert.ok(question);
+  const html = renderToStaticMarkup(createElement(StudyText, { text: question.prompt.he, lang: "he" }));
+  assert.match(html, /<p dir="rtl"><bdi dir="ltr">X<\/bdi> בן/);
+  assert.match(html, /<bdi dir="ltr">X²<\/bdi>\?<\/p>/);
+});
+
+test("technical prefixes do not reverse Hebrew headings, lists, parentheses or sentence punctuation", () => {
+  const text = "### ADC הוא ממיר (Analog to Digital)\n\nX הוא קלט. מהו Y[3:0]?\n\n- XOR מחזיר 1 (כאשר A != B), נכון?\n\n| הסבר | ערך |\n|---|---|\n| X הוא הקלט | Y[3:0] |";
+  const html = renderToStaticMarkup(createElement(StudyText, { text, lang: "he" }));
+  assert.match(html, /<h3 dir="rtl"><bdi dir="ltr">ADC<\/bdi>/);
+  assert.match(html, /<p dir="rtl"><bdi dir="ltr">X<\/bdi>/);
+  assert.match(html, /<li dir="rtl"><bdi dir="ltr">XOR<\/bdi>/);
+  assert.match(html, /<td dir="rtl"><bdi dir="ltr">X<\/bdi>/);
+  assert.match(html, /\(כאשר <bdi dir="ltr">A != B<\/bdi>\), נכון\?/);
+  assert.match(html, /<bdi dir="ltr">Y\[3:0\]<\/bdi>\?<\/p>/);
+});
+
+test("trusted English content containing a Hebrew quoted term remains English", () => {
+  const html = renderToStaticMarkup(createElement(StudyText, {
+    text: 'The Hebrew word "קלט" means input.\n\nקלט הוא ערך.\n\n```python\nprint("קלט")\n```', lang: "en",
+  }));
+  assert.match(html, /<p dir="ltr">/);
+  assert.match(html, /<p dir="rtl">קלט הוא/);
+  assert.match(html, /<pre class="code-block" dir="ltr">/);
+});
+
+test("a short numeric answer keeps its zero and period as prose, while real tables and inline code survive", () => {
+  const question = quickQuestions.find(q => q.id === "quick-hw-184")!;
+  const html = renderToStaticMarkup(createElement(StudyText, { text: quickAnswerMarkdown(question.answer.he), lang: "he" }));
+  assert.match(html, /<p dir="rtl"><bdi dir="ltr">0<\/bdi>\. הריבועים/);
+  assert.doesNotMatch(html, /<ol|<li/);
+  const inline = renderToStaticMarkup(createElement(StudyText, { text: quickAnswerMarkdown("1. בדקו `X[0]`."), lang: "he" }));
+  assert.match(inline, /<code dir="ltr">X\[0\]<\/code>/);
+  const table = quickQuestions.find(q => q.id === "quick-hw-01")!;
+  const tableHtml = renderToStaticMarkup(createElement(StudyText, { text: quickAnswerMarkdown(table.answer.he), lang: "he" }));
+  assert.match(tableHtml, /<table dir="ltr">/);
+});
 
 test("Hebrew prose isolates an LTR expression while retaining every character in order", () => {
   const html = renderToStaticMarkup(createElement(StudyText, { text: "הביטוי הוא x!=0 && (x & (x-1))==0. התוצאות: false,true,false,true,true." }));
@@ -105,13 +146,40 @@ test("all 285 bilingual catalog prompts and references render with the productio
       const text = question.translations[language];
       for (const field of ["prompt", "reference_solution"]) {
         const html = renderToStaticMarkup(createElement(StudyText, {
-          text: text[field], solution: field === "reference_solution",
+          text: text[field], solution: field === "reference_solution", lang: language as "he" | "en",
         }));
         assert.ok(html.length > 50, `${question.key}/${language}/${field}`);
         assert.doesNotMatch(html, /<script|<img/);
+        if (language === "he") {
+          for (const block of html.matchAll(/<p dir="(rtl|ltr)">([\s\S]*?)<\/p>/g)) {
+            if (/[\p{Script=Hebrew}]/u.test(block[2])) assert.equal(block[1], "rtl", `${question.key}/${field}: Hebrew paragraph`);
+          }
+        }
         if (question.key === "prep-boolean-function-two-muxes" && field === "prompt") {
           assert.match(html, /<code[^>]*dir="ltr"[^>]*>[^<]*f=\(a\*b\*c(?:&#x27;|')\)[^<]*<\/code>/,
             `${language}: the ambiguous source formula must retain its literal multiplication marks`);
+        }
+      }
+    }
+  }
+});
+
+test("all 500 bilingual short questions and answers render with Hebrew paragraph direction intact", () => {
+  assert.equal(quickQuestions.length, 500);
+  for (const question of quickQuestions) {
+    for (const lang of ["he", "en"] as const) {
+      for (const field of ["prompt", "answer"] as const) {
+        const html = renderToStaticMarkup(createElement(StudyText, {
+          text: field === "answer" ? quickAnswerMarkdown(question[field][lang]) : question[field][lang], lang,
+        }));
+        assert.ok(html.length > 25, `${question.id}/${lang}/${field}`);
+        assert.doesNotMatch(html, /<script|<img/);
+        // Short cards have no authored lists: a numeric result must remain part of the answer.
+        if (field === "answer") assert.doesNotMatch(html, /<ol(?:\s|>)/, `${question.id}/${lang}: numeric answer became a list`);
+        if (lang === "he") {
+          for (const block of html.matchAll(/<p dir="(rtl|ltr)">([\s\S]*?)<\/p>/g)) {
+            if (/[\p{Script=Hebrew}]/u.test(block[2])) assert.equal(block[1], "rtl", `${question.id}/${field}: Hebrew paragraph`);
+          }
         }
       }
     }

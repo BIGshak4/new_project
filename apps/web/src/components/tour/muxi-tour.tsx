@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { BidiText } from "../bidi-text";
+import { proseDirection } from "../../lib/bidi-segments";
 import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { ArrowLeft, ArrowRight, ChevronDown, CircleHelp, Compass, Pause, Play, RotateCcw, X } from "lucide-react";
@@ -157,14 +159,14 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
   const guide = <aside className={styles.coach} aria-label={t("ההדרכה של מוקסי", "Muxi's guidance")} data-muxi-coach>
     <div className={styles.coachIdentity}>
       <MuxiMascot pose={ready ? "celebrate" : "point"} pointDirection={mobile ? "down" : lang === "he" ? "left" : "right"} label={t("מוקסי, מוקס קטן שמלווה אתכם", "Muxi, your little multiplexer guide")} className={styles.mascot} />
-      <div><strong>{t("מוקסי כאן איתכם", "Muxi is here with you")}</strong><span>{step.chapter[lang]}</span></div>
+      <div><strong>{t("מוקסי כאן איתכם", "Muxi is here with you")}</strong><span><BidiText>{step.chapter[lang]}</BidiText></span></div>
     </div>
-    <p className={styles.stationCount}>{t("תחנה", "Station")} <bdi>{index + 1} / {steps.length}</bdi></p>
+    <p className={styles.stationCount}>{t("תחנה", "Station")} <bdi dir="ltr">{index + 1} / {steps.length}</bdi></p>
     <progress className={styles.progress} max={steps.length} value={index + 1} aria-label={t("מיקום בסיור", "Tour position")} />
-    <h2 ref={heading} tabIndex={-1} className={styles.coachTitle}>{step.title[lang]}</h2>
-    <p>{step.body[lang]}</p>
+    <h2 ref={heading} tabIndex={-1} className={styles.coachTitle} dir={proseDirection(step.title[lang], lang === "he" ? "rtl" : "ltr")}><BidiText>{step.title[lang]}</BidiText></h2>
+    <p dir={proseDirection(step.body[lang], lang === "he" ? "rtl" : "ltr")}><BidiText>{step.body[lang]}</BidiText></p>
     <div className={styles.task} role="status" aria-live="polite">
-      <div><strong>{ready ? t("הפעולה הושלמה", "Action completed") : t("עכשיו תורכם", "Your turn")}</strong><p>{ready ? ["explanation", "code", "feedback", "feedback-details", "followup", "interview-answer"].includes(step.id) ? t("השלמתם את פעולת ההיכרות. זה אינו אישור לנכונות התשובה.", "You completed the introduction action. This does not confirm that an answer is correct.") : t("סיימתם את הפעולה. אפשר להמשיך לתחנה הבאה או להתנסות עוד.", "The action is complete. Continue to the next station or explore a little more.") : step.task[lang]}</p></div>
+      <div><strong>{ready ? t("הפעולה הושלמה", "Action completed") : t("עכשיו תורכם", "Your turn")}</strong><p><BidiText>{ready ? ["explanation", "code", "feedback", "feedback-details", "followup", "interview-answer"].includes(step.id) ? t("השלמתם את פעולת ההיכרות. זה אינו אישור לנכונות התשובה.", "You completed the introduction action. This does not confirm that an answer is correct.") : t("סיימתם את הפעולה. אפשר להמשיך לתחנה הבאה או להתנסות עוד.", "The action is complete. Continue to the next station or explore a little more.") : step.task[lang]}</BidiText></p></div>
     </div>
     <div className={styles.stepActions}>
       <button type="button" onClick={() => index > 0 && jump(steps[index - 1].id)} disabled={index === 0} aria-label={t("התחנה הקודמת", "Previous station")}><BackArrow size={18} /></button>
@@ -224,7 +226,7 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
       </main>
       <MuxiGuidance root={root} station={step.id} lang={lang} actions={actions} ready={ready} onAction={onAction} />
       <div className={styles.mobileNav} data-muxi-mobile-nav>
-        <button type="button" className={styles.mobileBack} onClick={() => heading.current?.scrollIntoView({ block: "center" })}>{t("בחזרה להדרכה", "Back to guidance")}<span>{step.title[lang]}</span></button>
+        <button type="button" className={styles.mobileBack} onClick={() => heading.current?.scrollIntoView({ block: "center" })}>{t("בחזרה להדרכה", "Back to guidance")}<span><BidiText>{step.title[lang]}</BidiText></span></button>
         <button type="button" className="primary" disabled={!ready} onClick={() => advance()}>{t("הבא בסיור", "Next in tour")}<NextArrow size={16} /></button>
         <button type="button" className={styles.quiet} onClick={() => advance(true)}>{t("דלגו", "Skip")}</button>
       </div>

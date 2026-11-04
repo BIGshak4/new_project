@@ -4,7 +4,7 @@ import { QuestionMetadata, ReportedCompanies } from "./question-metadata";
 import { QuestionStatusControl } from "./question-status-control";
 import { BidiText } from "./bidi-text";
 import { QuestionTitle } from "./question-title";
-import { textDirection } from "../lib/bidi-segments";
+import { proseDirection } from "../lib/bidi-segments";
 import { buildQuestionStates } from "../lib/question-personal-state";
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -35,6 +35,7 @@ import { StudyText, QuestionFigures, TechnicalMaterial, ResourceStatus, useQuest
 import { Reveal } from "./ui/motion";
 import { toast } from "./toaster";
 import { FollowUps } from "./follow-ups";
+import { useFeedbackArrival } from "./use-feedback-arrival";
 import { parseTechnicalAnswer } from "../lib/technical-answer";
 import { referenceInLanguage } from "../lib/material-locale";
 import { supabase } from "../lib/supabase";
@@ -120,6 +121,8 @@ export function PracticeSession({
   const [pending, setPending] = useState<PendingAnswer | null>(null);
   const guard = useRef(false),
     live = useRef(true);
+  const feedbackRef = useRef<HTMLElement>(null);
+  useFeedbackArrival({ attempt, attemptId, loading, enabled: !demo, feedbackRef });
   const key = `jr-attempt-draft-v1-${user.id}-${attemptId}`;
   const entry = entries.find((e) => e.question_id === question?.id);
   const personalStateQuestions = question
@@ -273,9 +276,6 @@ export function PracticeSession({
         // the grade changes progress (XP, levels); the words that follow it do not
         if (evaluating && next.status !== "evaluating") {
           onProgress();
-          // bring the grade into view once, gently
-          const reduce = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
-          document.getElementById("feedback")?.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
         }
         if (next.status !== "evaluating" && !next.feedback_pending) return;
         if (Date.now() < deadline)
@@ -498,14 +498,14 @@ export function PracticeSession({
   const drawingQuestion: CircuitQuestionReference | undefined = question ? {
     title: question.title,
     content: <>
-      <RichText text={question.prompt} />
+      <RichText text={question.prompt} lang={lang} />
       {question.has_media && (resources.data
         ? <QuestionFigures media={resources.data.media} lang={lang} role="prompt" onRefresh={resources.retry} />
         : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />)}
       {question.choices && (
         <ol className="choices">
           {question.choices.map((choice, index) => (
-            <li key={index} dir={textDirection(choice)}><BidiText>{choice}</BidiText></li>
+            <li key={index} dir={proseDirection(choice, lang === "he" ? "rtl" : "ltr")}><BidiText>{choice}</BidiText></li>
           ))}
         </ol>
       )}
@@ -590,7 +590,7 @@ export function PracticeSession({
                     .
                   </p>
                 )}
-                <RichText text={question.prompt} />
+                <RichText text={question.prompt} lang={lang} />
                 {question.has_media && (resources.data
                   ? <QuestionFigures media={resources.data.media} lang={lang} role="prompt" onRefresh={resources.retry} />
                   : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />)}
@@ -653,7 +653,7 @@ export function PracticeSession({
                         <h3>
                           {t("רמז", "Hint")} {h.level}
                         </h3>
-                        <RichText text={h.text} />
+                        <RichText text={h.text} lang={lang} />
                       </div>
                     ))}
                     {attempt.reference &&
@@ -671,7 +671,7 @@ export function PracticeSession({
                 {question.choices && (
                   <ol className="choices">
                     {question.choices.map((c, i) => (
-                      <li key={i} dir={textDirection(c)}>
+                      <li key={i} dir={proseDirection(c, lang === "he" ? "rtl" : "ltr")}>
                         <BidiText>{c}</BidiText>
                       </li>
                     ))}
@@ -927,6 +927,11 @@ export function PracticeSession({
             {attempt?.submission && (
               <section
                 id="feedback"
+                ref={feedbackRef}
+                tabIndex={-1}
+                data-feedback-attempt={attempt.id}
+                data-feedback-revision={attempt.submission.revision}
+                style={{ scrollMarginBlockStart: 110 }}
                 className="practice-flow"
                 aria-label={t("המשוב וההמשך", "Feedback and what comes next")}
               >
@@ -984,8 +989,8 @@ export function PracticeSession({
   );
 }
 
-function RichText({ text }: { text: string }) {
-  return <div className="question-prompt"><StudyText text={text} /></div>;
+function RichText({ text, lang }: { text: string; lang?: Lang }) {
+  return <div className="question-prompt"><StudyText text={text} lang={lang} /></div>;
 }
 
 function ReferenceSolution({ text, sourceLanguage, lang, resources, hasMedia }: {
@@ -1011,7 +1016,7 @@ function ReferenceSolution({ text, sourceLanguage, lang, resources, hasMedia }: 
       </h3>
       {reference === null
         ? <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} solution />
-        : <div className="question-prompt"><StudyText text={reference} solution /></div>}
+        : <div className="question-prompt"><StudyText text={reference} lang={lang} solution /></div>}
       {(hasMedia || resources.data?.technical_material) && (!resources.data?.solution_revealed
         ? reference === null ? null
         : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />

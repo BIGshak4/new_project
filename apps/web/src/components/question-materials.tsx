@@ -12,37 +12,39 @@ import { solutionMarkdown } from "../lib/solution-markdown";
 import { materialInLanguage } from "../lib/material-locale";
 import { materialLabel, materialStatus } from "../lib/material-labels";
 import { BidiText } from "./bidi-text";
-import { textDirection } from "../lib/bidi-segments";
+import { proseDirection, textDirection } from "../lib/bidi-segments";
 
 function textContent(part: Element | ElementContent | undefined): string {
   if (!part) return "";
   if (part.type === "text") return part.value;
   return "children" in part ? part.children.map(textContent).join("") : "";
 }
-function blockDirection(node?: Element): "rtl" | "ltr" {
-  return textDirection(textContent(node));
+function blockDirection(node?: Element, preferred?: "rtl" | "ltr"): "rtl" | "ltr" {
+  return proseDirection(textContent(node), preferred);
 }
 function tableDirection(node?: Element): "rtl" | "ltr" {
   const header = node?.children.find((part) => part.type === "element" && part.tagName === "thead");
   // Read the original Markdown node: rendered LTR <bdi> children are ignored by HTML dir="auto".
-  return blockDirection(header?.type === "element" ? header : node);
+  return textDirection(textContent(header?.type === "element" ? header : node));
 }
 
-export function StudyText({ text, solution = false }: { text: string; solution?: boolean }) {
-  return <div className="study-text" dir={textDirection(text)}><Markdown remarkPlugins={[remarkGfm]} skipHtml
+export function StudyText({ text, solution = false, lang }: { text: string; solution?: boolean; lang?: Lang }) {
+  const preferred = lang === "he" ? "rtl" : lang === "en" ? "ltr" : undefined;
+  const direction = (node?: Element) => blockDirection(node, preferred);
+  return <div className="study-text" dir={proseDirection(text, preferred)}><Markdown remarkPlugins={[remarkGfm]} skipHtml
     components={{
-      p: ({ children, node }) => <p dir={blockDirection(node)}><BidiText>{children}</BidiText></p>,
-      li: ({ children, node }) => <li dir={blockDirection(node)}><BidiText>{children}</BidiText></li>,
+      p: ({ children, node }) => <p dir={direction(node)}><BidiText>{children}</BidiText></p>,
+      li: ({ children, node }) => <li dir={direction(node)}><BidiText>{children}</BidiText></li>,
       strong: ({ children }) => <strong>{children}</strong>,
       em: ({ children }) => <em>{children}</em>,
-      h1: ({ children, node }) => <h1 dir={blockDirection(node)}><BidiText>{children}</BidiText></h1>,
-      h2: ({ children, node }) => <h2 dir={blockDirection(node)}><BidiText>{children}</BidiText></h2>,
-      h3: ({ children, node }) => <h3 dir={blockDirection(node)}><BidiText>{children}</BidiText></h3>,
-      h4: ({ children, node }) => <h4 dir={blockDirection(node)}><BidiText>{children}</BidiText></h4>,
-      h5: ({ children, node }) => <h5 dir={blockDirection(node)}><BidiText>{children}</BidiText></h5>,
-      h6: ({ children, node }) => <h6 dir={blockDirection(node)}><BidiText>{children}</BidiText></h6>,
-      td: ({ children, node }) => <td dir={blockDirection(node)}><BidiText>{children}</BidiText></td>,
-      th: ({ children, node }) => <th dir={blockDirection(node)}><BidiText>{children}</BidiText></th>,
+      h1: ({ children, node }) => <h1 dir={direction(node)}><BidiText>{children}</BidiText></h1>,
+      h2: ({ children, node }) => <h2 dir={direction(node)}><BidiText>{children}</BidiText></h2>,
+      h3: ({ children, node }) => <h3 dir={direction(node)}><BidiText>{children}</BidiText></h3>,
+      h4: ({ children, node }) => <h4 dir={direction(node)}><BidiText>{children}</BidiText></h4>,
+      h5: ({ children, node }) => <h5 dir={direction(node)}><BidiText>{children}</BidiText></h5>,
+      h6: ({ children, node }) => <h6 dir={direction(node)}><BidiText>{children}</BidiText></h6>,
+      td: ({ children, node }) => <td dir={direction(node)}><BidiText>{children}</BidiText></td>,
+      th: ({ children, node }) => <th dir={direction(node)}><BidiText>{children}</BidiText></th>,
       code: ({ children, className }) => <code className={className} dir="ltr">{children}</code>,
       pre: ({ children }) => <pre className="code-block" dir="ltr">{children}</pre>,
       a: ({ href, children }) => href?.startsWith("https://")
@@ -104,7 +106,7 @@ export function QuestionFigures({ media, lang, role, onRefresh }: {
           onError={() => setFailed(old => old.includes(m.url) ? old : [...old, m.url])} />
       </a>
       {failed.includes(m.url) && <ResourceStatus error retry={onRefresh} lang={lang} />}
-      <figcaption><span dir={textDirection(m.caption || m.filename)}><BidiText>{m.caption || m.filename}</BidiText></span><ExternalLink size={14} aria-hidden="true" /></figcaption>
+      <figcaption><span dir={proseDirection(m.caption || m.filename)}><BidiText>{m.caption || m.filename}</BidiText></span><ExternalLink size={14} aria-hidden="true" /></figcaption>
     </figure>)}</div>
     {files.some(m => m.kind === "file") && <ul className="resource-files">{files.filter(m => m.kind === "file").map(m => <li key={m.id}>
       <a href={m.url} target="_blank" rel="noreferrer"><Download size={16} /><bdi>{m.filename}</bdi></a>
@@ -151,7 +153,7 @@ const labels: Record<string, [string, string]> = {
 
 function Value({ value, lang, field }: { value: unknown; lang: Lang; field?: string }) {
   if (value === null || value === undefined) return null;
-  if (typeof value === "string") return <StudyText text={materialStatus(value, field, lang)} />;
+  if (typeof value === "string") return <StudyText text={materialStatus(value, field, lang)} lang={lang} />;
   if (typeof value !== "object") return <span>{typeof value === "boolean" ? lang === "he" ? value ? "כן" : "לא" : value ? "Yes" : "No" : String(value)}</span>;
   if (Array.isArray(value)) return <ol>{value.map((v, i) => <li key={i}><Value value={v} lang={lang} /></li>)}</ol>;
   const object = value as Record<string, unknown>;

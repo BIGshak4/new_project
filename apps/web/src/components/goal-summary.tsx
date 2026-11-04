@@ -1,6 +1,7 @@
 "use client";
 
 import { useId } from "react";
+import { proseDirection } from "../lib/bidi-segments";
 import { CalendarDays, Clock3, GraduationCap, PencilLine, Target } from "lucide-react";
 import type { Goal, Seniority } from "../lib/practice-api";
 import { goalRoleLabel } from "../lib/goal-selection";
@@ -28,9 +29,9 @@ export function GoalSummary({ goal, lang, onEdit }: { goal: Goal; lang: "he" | "
       <button type="button" onClick={onEdit} aria-label={he ? "עריכת היעד" : "Edit goal"}><PencilLine size={17} aria-hidden="true" />{he ? "עריכת היעד" : "Edit goal"}</button>
     </header>
     <dl className={styles.fields}>
-      <div className={styles.roles}><dt>{he ? explore ? "מסלול הלמידה" : "התפקידים שבחרתם" : explore ? "Learning approach" : "Your chosen roles"}</dt><dd className={styles.roleList}>{roles.map((role) => <span className={styles.role} key={role} dir="auto"><BidiText>{role}</BidiText></span>)}</dd></div>
+      <div className={styles.roles}><dt>{he ? explore ? "מסלול הלמידה" : "התפקידים שבחרתם" : explore ? "Learning approach" : "Your chosen roles"}</dt><dd className={styles.roleList}>{roles.map((role) => <span className={styles.role} key={role} dir={proseDirection(role)}><BidiText>{role}</BidiText></span>)}</dd></div>
       <div className={styles.detail}><dt><Clock3 size={17} aria-hidden="true" />{he ? "זמן ביום" : "Daily time"}</dt><dd>{goal.minutes_per_day !== null ? he ? `${goal.minutes_per_day} דקות` : `${goal.minutes_per_day} minutes` : he ? "עדיין לא נבחר זמן" : "No time chosen yet"}</dd></div>
-      <div className={styles.detail}><dt><GraduationCap size={18} aria-hidden="true" />{he ? "שלב בקריירה" : "Career stage"}</dt><dd>{career}</dd></div>
+      <div className={styles.detail}><dt><GraduationCap size={18} aria-hidden="true" />{he ? "שלב בקריירה" : "Career stage"}</dt><dd dir={proseDirection(career, he ? "rtl" : "ltr")}><BidiText>{career}</BidiText></dd></div>
       {!explore && <div className={styles.detail}><dt><CalendarDays size={17} aria-hidden="true" />{he ? "תאריך ראיון" : "Interview date"}</dt><dd>{date}</dd></div>}
     </dl>
     <footer className={styles.footer}><p className={styles.note}>{he ? "אפשר לשנות את הבחירות בכל רגע. התוכנית והשאלות המומלצות יתעדכנו בהתאם." : "Change these choices whenever you need. Your plan and recommended questions will update with them."}</p></footer>

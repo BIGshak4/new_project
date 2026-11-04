@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { proseDirection } from "../lib/bidi-segments";
 import { ArrowLeft, ArrowRight, RotateCcw } from "lucide-react";
 import type { Lang } from "./auth";
 import type { PracticeApi, ReadinessQuestion } from "../lib/practice-api";
@@ -60,10 +61,10 @@ export function RecommendationWaves({ api, lang, refreshKey, enabled, busyKey, d
       {enabled && <button type="button" className={styles.refresh} disabled={blocked} onClick={load} aria-label={t("רענון השאלות המומלצות", "Refresh recommended questions")}><RotateCcw size={17} aria-hidden="true" /></button>}
     </header>
     <span className={styles.visuallyHidden} role="status">{busyKey?.startsWith("recommendation:") ? t("פותחים את השאלה שבחרתם…", "Opening your chosen question…") : ""}</span>
-    {actionError && <p className="notice error" role="alert">{actionError}</p>}
+    {actionError && <p className="notice error" role="alert" dir={proseDirection(actionError)}><BidiText>{actionError}</BidiText></p>}
     {!enabled ? <div className={styles.empty}><p>{t("בחרו תפקידים או למידה ללא יעד מוגדר, ונציע שאלות שמתאימות לתוכנית שלכם.", "Choose roles or open-ended learning to get questions for your plan.")}</p><button type="button" onClick={onOpenGoal}>{t("לבחירת מסלול למידה", "Choose a learning approach")}</button></div>
       : loading ? <p className={styles.status} role="status">{t("מוצאים את השאלות הבאות שלכם…", "Finding your next questions…")}</p>
-      : error ? <div className="notice error" role="alert"><p>{error}</p><button type="button" disabled={!!busyKey} onClick={load}><RotateCcw size={16} aria-hidden="true" />{t("לנסות שוב", "Try again")}</button></div>
+      : error ? <div className="notice error" role="alert"><p dir={proseDirection(error)}><BidiText>{error}</BidiText></p><button type="button" disabled={!!busyKey} onClick={load}><RotateCcw size={16} aria-hidden="true" />{t("לנסות שוב", "Try again")}</button></div>
       : !questions.length ? <div className={styles.empty}><p>{t("אין כרגע המלצות נוספות. אפשר לבחור שאלה מהמאגר או לרענן את ההמלצות.", "There are no further recommendations right now. Choose a question from the library or refresh the recommendations.")}</p><button type="button" onClick={onOpenLibrary}>{t("למאגר השאלות", "Open the question library")}</button></div>
       : <div className={styles.path} data-recommendation-path>
         <svg className={styles.desktopWave} viewBox={`0 0 ${questions.length * 300} 160`} preserveAspectRatio="none" aria-hidden="true"><path d={wave} /></svg>
@@ -72,9 +73,9 @@ export function RecommendationWaves({ api, lang, refreshKey, enabled, busyKey, d
             <svg className={styles.mobileWave} viewBox="0 0 72 100" preserveAspectRatio="none" aria-hidden="true"><path d="M48 0 C48 25 24 25 24 50 S48 75 48 100" /></svg>
             <button type="button" className={styles.question} disabled={blocked} onClick={() => onStart(question)} aria-label={t(`לתרגל: ${question.title}`, `Practice: ${question.title}`)} aria-describedby={question.reason ? `${id}-reason-${index}` : undefined}>
               <span className={styles.node} aria-hidden="true">{index + 1}</span>
-              <span className={styles.topic} dir="auto"><BidiText>{question.skill_label}</BidiText></span>
-              <strong className={styles.title} dir="auto"><BidiText>{question.title}</BidiText></strong>
-              {question.reason && <span id={`${id}-reason-${index}`} className={styles.reason} dir="auto"><BidiText>{question.reason}</BidiText></span>}
+              <span className={styles.topic} dir={proseDirection(question.skill_label)}><BidiText>{question.skill_label}</BidiText></span>
+              <strong className={styles.title} dir={proseDirection(question.title)}><BidiText>{question.title}</BidiText></strong>
+              {question.reason && <span id={`${id}-reason-${index}`} className={styles.reason} dir={proseDirection(question.reason)}><BidiText>{question.reason}</BidiText></span>}
               <span className={styles.action}>{busyKey === `recommendation:${question.key}` ? t("פותחים…", "Opening…") : t("לתרגול השאלה", "Practice this question")}<Arrow size={16} aria-hidden="true" /></span>
             </button>
           </li>)}

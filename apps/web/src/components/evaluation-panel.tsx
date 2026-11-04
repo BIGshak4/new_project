@@ -18,7 +18,7 @@ import { GRADE_SEQUENCE as G } from "../lib/ui";
 import { Pop, Reveal, motion, useReducedMotion } from "./ui/motion";
 import { BidiText } from "./bidi-text";
 import { QuestionTitle } from "./question-title";
-import { textDirection } from "../lib/bidi-segments";
+import { proseDirection } from "../lib/bidi-segments";
 import { ExecutionResultView } from "./code-execution-result";
 
 /**
@@ -136,7 +136,7 @@ export function EvaluationPanel({
             )}
           </div>
           {s.summary && (
-            <p className="evaluation-summary" dir={textDirection(s.summary)}>
+            <p className="evaluation-summary" dir={proseDirection(s.summary)}>
               <BidiText>{s.summary}</BidiText>
             </p>
           )}
@@ -151,7 +151,7 @@ export function EvaluationPanel({
           {s.key_points_hit.length ? (
             <ul>
               {s.key_points_hit.map((p, i) => (
-                <li dir={textDirection(p)} key={i}>
+                <li dir={proseDirection(p)} key={i}>
                   <BidiText>{p}</BidiText>
                 </li>
               ))}
@@ -167,7 +167,7 @@ export function EvaluationPanel({
           {missed.length ? (
             <ul>
               {missed.map((p, i) => (
-                <li dir={textDirection(p)} key={i}>
+                <li dir={proseDirection(p)} key={i}>
                   <BidiText>{p}</BidiText>
                 </li>
               ))}
@@ -184,12 +184,12 @@ export function EvaluationPanel({
         </p>
       )}
       {(s.tip || s.card?.next_step) && (
-        <Reveal as="aside" className="evaluation-tip" dir="auto" delay={G.tip}>
+        <Reveal as="aside" className="evaluation-tip" dir={lang === "he" ? "rtl" : "ltr"} delay={G.tip}>
           <Lightbulb size={18} aria-hidden="true" />
           <div>
             <h4>{t("טיפ לפעם הבאה", "A tip for next time")}</h4>
-            {s.tip && <p dir={textDirection(s.tip.text)}><BidiText>{s.tip.text}</BidiText></p>}
-            {s.card?.next_step && s.card.next_step !== s.tip?.text && <p dir={textDirection(s.card.next_step)}><BidiText>{s.card.next_step}</BidiText></p>}
+            {s.tip && <p dir={proseDirection(s.tip.text)}><BidiText>{s.tip.text}</BidiText></p>}
+            {s.card?.next_step && s.card.next_step !== s.tip?.text && <p dir={proseDirection(s.card.next_step)}><BidiText>{s.card.next_step}</BidiText></p>}
           </div>
         </Reveal>
       )}
@@ -242,7 +242,7 @@ export function EvaluationPanel({
               .map(([label, value]) => (
                 <section className="evaluation-tile" key={label}>
                   <h4>{label}</h4>
-                  <p dir={textDirection(value)}><BidiText>{value}</BidiText></p>
+                  <p dir={proseDirection(value)}><BidiText>{value}</BidiText></p>
                 </section>
               ))}
           </div>
@@ -276,7 +276,7 @@ export function NextUpCard({
         <span className={`badge why-${next.why}`}>{whyLabel(next.why, lang)}</span>
       </div>
       {next.focus && (
-        <p className="next-up-focus" dir={textDirection(`${t("מה היה קשה כאן:", "What was hard here:")} ${next.focus}`)}>
+        <p className="next-up-focus" dir={proseDirection(`${t("מה היה קשה כאן:", "What was hard here:")} ${next.focus}`)}>
           <strong>{t("מה היה קשה כאן:", "What was hard here:")}</strong> <BidiText>{next.focus}</BidiText>
         </p>
       )}
@@ -284,7 +284,7 @@ export function NextUpCard({
       <p className="small muted">
         <BidiText>{subjectLabel(next.subject, lang)}</BidiText>
       </p>
-      <p dir={textDirection(next.reason)}><BidiText>{next.reason}</BidiText></p>
+      <p dir={proseDirection(next.reason)}><BidiText>{next.reason}</BidiText></p>
       <button type="button" onClick={() => onStart(next.key)}>
         {t("להתחיל את השאלה הבאה", "Start the next question")} <Arrow size={16} />
       </button>
@@ -314,7 +314,7 @@ function CheckBlock({ check, lang }: { check: CheckResult; lang: Lang }) {
             ? t("טבלת האמת של התשובה", "Truth table of your answer")
             : t("בדיקה אוטומטית", "Automatic check")}
       </strong>
-      <p dir={textDirection(check.detail)}><BidiText>{check.detail}</BidiText></p>
+      <p dir={proseDirection(check.detail)}><BidiText>{check.detail}</BidiText></p>
       {rows.length > 0 && (
         <table className="mismatch-table">
           <thead>

@@ -1,6 +1,8 @@
 "use client";
 
 import { Flame, RefreshCw, Sparkles } from "lucide-react";
+import { BidiText } from "./bidi-text";
+import { proseDirection } from "../lib/bidi-segments";
 import type { Lang } from "./auth";
 import type { SkillProgress } from "../lib/practice-api";
 import { filledBlocks, skillLevelWord, strengthSkills, strengthTone } from "../lib/path";
@@ -31,7 +33,7 @@ export function SkillStrength({
   return (
     <section className="side-card skill-strength" aria-labelledby="strength-title">
       <h2 id="strength-title">
-        {title ?? t("חוזק", "Strength")}
+        <BidiText>{title ?? t("חוזק", "Strength")}</BidiText>
         <small>{t("מיומנויות למיקוד בתפקיד שלכם", "skills to focus on for your role")}</small>
       </h2>
       {shown.length === 0 ? (
@@ -46,8 +48,8 @@ export function SkillStrength({
             return (
               <li key={s.key} className={`strength tone-${tone} ${s.key === hotKey ? "hot" : ""}`}>
                 <div className="strength-head">
-                  <span className="strength-name" dir="auto">
-                    {s.label}
+                  <span className="strength-name" dir={proseDirection(s.label)}>
+                    <BidiText>{s.label}</BidiText>
                   </span>
                   <span className="strength-word">
                     {tone === "blue" ? (

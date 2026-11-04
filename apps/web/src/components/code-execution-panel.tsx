@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { BidiText } from "./bidi-text";
+import { proseDirection } from "../lib/bidi-segments";
 import { Play, Square } from "lucide-react";
 import type { Lang } from "./auth";
 import type { PracticeApi } from "../lib/practice-api";
@@ -107,13 +109,13 @@ export function CodeExecutionPanel({ context, language, source, lang, disabled, 
       <span className="small muted">{t("הרצה אינה מגישה את התשובה למשוב", "Running does not submit your answer for feedback")}</span>
     </div>
     {!available && !capabilityError && <p className="small muted" role="status">{t("בודקים אילו אפשרויות הרצה זמינות…", "Checking available execution options…")}</p>}
-    {capabilityError && <div role="alert"><p>{capabilityError}</p><button type="button" onClick={() => setReload((n) => n + 1)}>{t("ניסיון נוסף", "Try again")}</button></div>}
+    {capabilityError && <div role="alert"><p dir={proseDirection(capabilityError)}><BidiText>{capabilityError}</BidiText></p><button type="button" onClick={() => setReload((n) => n + 1)}>{t("ניסיון נוסף", "Try again")}</button></div>}
     {available && !available.available && <div><p role="status" className="small muted">{t("שירות ההרצה אינו זמין כרגע. אפשר להמשיך לכתוב ולשלוח תשובה למשוב.", "Execution is currently unavailable. You can continue editing and submit your answer for feedback.")}</p><button type="button" onClick={() => setReload((n) => n + 1)}>{t("בדיקת זמינות מחדש", "Check availability again")}</button></div>}
     {available?.available && !supported && <p className="small muted">{t("אין הרצה לשפה הזאת. בחרו שפת תכנות או HDL נתמכת.", "This language cannot be executed. Choose a supported programming or HDL language.")}</p>}
     {available?.available && supported && <>
       {tested ? <>
         <p className="small">{t("הקוד יורץ מול בדיקות השאלה לפי הממשק הבא:", "Your code will run against the question tests using this interface:")}</p>
-        {available.contract?.[lang] && <p className={styles.contract} dir="auto">{available.contract[lang]}</p>}
+        {available.contract?.[lang] && <p className={styles.contract} dir={proseDirection(available.contract[lang], lang === "he" ? "rtl" : "ltr")}><BidiText>{available.contract[lang]}</BidiText></p>}
         {!source.trim() && available.starters[language] && <button type="button" disabled={disabled} onClick={() => onUseStarter(available.starters[language])}>{t("טעינת שלד קוד לבדיקה", "Load a test-ready starter")}</button>}
       </> : <>
         <p className="small muted">{t("לשאלה הזאת אין בדיקות מוכנות בשפה שבחרתם. אפשר להריץ תוכנית מלאה או testbench משלכם; הצלחת ההרצה לא קובעת שהתשובה נכונה.", "This question has no prepared tests in the selected language. Run a complete program or your own testbench; successful execution does not establish answer correctness.")}</p>
@@ -134,7 +136,7 @@ export function CodeExecutionPanel({ context, language, source, lang, disabled, 
       </div>
       {running && <p className="small muted" role="status">{t("הקוד רץ בסביבה מבודדת. התוצאה תוצג כאן; אפשר להמשיך לערוך את הטיוטה.", "Code runs in an isolated environment. Results will appear here; you may continue editing the draft.")}</p>}
       {cancelled && <p className="small muted" role="status">{t("ההמתנה הופסקה. ההרצה בשרת עשויה להסתיים עד מגבלת הזמן שלה.", "Waiting stopped. The server execution may continue until its time limit.")}</p>}
-      {!!error && <p role="alert">{executionErrorMessage(error, lang)}</p>}
+      {!!error && <p role="alert" dir={proseDirection(executionErrorMessage(error, lang))}><BidiText>{executionErrorMessage(error, lang)}</BidiText></p>}
     </>}
     {result && <ExecutionResultView result={result.value} lang={lang} stale={result.key !== inputKey} />}
   </section>;

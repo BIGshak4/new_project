@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { BidiText } from "../bidi-text";
+import { proseDirection } from "../../lib/bidi-segments";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -139,23 +141,23 @@ function HelperConversation({ userId, demo, lang }: { userId?: string; demo: boo
             const item = helperTopics[turn.topic];
             const current = index === turns.length - 1;
             return <div key={`${index}-${turn.topic}`} ref={current ? currentTurn : undefined} className={styles.turn}>
-              {turn.selected && <p className={styles.userMessage}>{turn.selected[lang]}</p>}
+              {turn.selected && <p className={styles.userMessage} dir={proseDirection(turn.selected[lang], he ? "rtl" : "ltr")}><BidiText>{turn.selected[lang]}</BidiText></p>}
               <div className={styles.reply}>
-                <h3 tabIndex={-1} ref={current ? currentHeading : undefined}>{item.title[lang]}</h3>
-                {item.messages.map((message, i) => <p key={i}>{message[lang]}</p>)}
+                <h3 tabIndex={-1} ref={current ? currentHeading : undefined} dir={proseDirection(item.title[lang], he ? "rtl" : "ltr")}><BidiText>{item.title[lang]}</BidiText></h3>
+                {item.messages.map((message, i) => <p key={i} dir={proseDirection(message[lang], he ? "rtl" : "ltr")}><BidiText>{message[lang]}</BidiText></p>)}
               </div>
             </div>;
           })}
           <div className={styles.choices} role="group" aria-label={t("איך ממשיכים?", "What would you like to do?")}>
             {topic.choices.map((choice, index) => choice.action?.type === "navigate"
               ? <a key={index} className={styles.choice} href={href(choice.action)} target="_blank" rel="noopener noreferrer">
-                  <span>{choice.label[lang]}<small>{t("פתיחה בלשונית חדשה", "Opens in a new tab")}</small></span><ExternalLink size={16} aria-hidden="true" />
+                  <span><BidiText>{choice.label[lang]}</BidiText><small>{t("פתיחה בלשונית חדשה", "Opens in a new tab")}</small></span><ExternalLink size={16} aria-hidden="true" />
                 </a>
               : <button key={index} type="button" className={styles.choice} onClick={() => goTo(choice)}>
-                  <span>{choice.label[lang]}</span>{he ? <ChevronLeft size={18} aria-hidden="true" /> : <ChevronRight size={18} aria-hidden="true" />}
+                  <span><BidiText>{choice.label[lang]}</BidiText></span>{he ? <ChevronLeft size={18} aria-hidden="true" /> : <ChevronRight size={18} aria-hidden="true" />}
                 </button>)}
           </div>
-          {notice && <div className={styles.notice} role="status"><p>{notice[lang]}</p><button type="button" onClick={() => act({ type: "tour" })}>{t("להתנסות בסיור", "Try the tour")}</button></div>}
+          {notice && <div className={styles.notice} role="status"><p dir={proseDirection(notice[lang], he ? "rtl" : "ltr")}><BidiText>{notice[lang]}</BidiText></p><button type="button" onClick={() => act({ type: "tour" })}>{t("להתנסות בסיור", "Try the tour")}</button></div>}
           {turns.length === 1 && <p className={styles.caption}>{t("בוחרים נושא, ואני אכוון אתכם לכלים המתאימים.", "Choose a topic and I’ll help you find the right tools.")}</p>}
           {status === "fallback" && userId && <p className={styles.caption}>{t("הדמות האישית לא זמינה כרגע. העזרה עדיין כאן.", "Your avatar is unavailable right now. You can still use the helper.")}</p>}
         </div>
