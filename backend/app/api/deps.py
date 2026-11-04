@@ -16,6 +16,7 @@ from app.services.avatars import AvatarsService
 from app.services.billing import BillingService
 from app.services.coins import CoinsService
 from app.services.duels import DuelService
+from app.services.identity import IdentityService
 from app.services.interview_service import InterviewService
 from app.services.practice_service import PracticeService
 
@@ -98,6 +99,13 @@ def interview_service(request: Request) -> InterviewService:
     return runtime.interview
 
 
+def identity_service(request: Request) -> IdentityService:
+    runtime = getattr(request.app.state, "runtime", None)
+    if runtime is None or getattr(runtime, "identities", None) is None:
+        raise ApiError("evaluation_unavailable", "account identities are not started", status=503)
+    return runtime.identities
+
+
 CurrentAccess = Annotated[Access, Depends(current_access)]
 PaidAccess = Annotated[Access, Depends(paid_access)]
 Billing = Annotated[BillingService, Depends(billing_service)]
@@ -106,3 +114,4 @@ Avatars = Annotated[AvatarsService, Depends(avatars_service)]
 Duels = Annotated[DuelService, Depends(duel_service)]
 Practice = Annotated[PracticeService, Depends(practice_service)]
 Interview = Annotated[InterviewService, Depends(interview_service)]
+Identities = Annotated[IdentityService, Depends(identity_service)]

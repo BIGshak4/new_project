@@ -45,7 +45,7 @@ export function LogicAvatar({ config = DEFAULT_AVATAR, size = 280, label, classN
       <path d="M112 153Q141 182 172 153L164 150Q142 167 122 150Z" fill={palette.collar} strokeWidth="3"/>
       <path d="M89 175 102 184M195 175 182 184M102 268Q143 274 183 268" fill="none" stroke={palette.seam} strokeWidth="2" opacity=".65"/>
       {skin === "circuit" && <g stroke="#2e7d67" strokeWidth="2" fill="none"><path d="M102 201H113V188M181 199H170V187M103 255H116V266M181 255H167V267"/><circle cx="113" cy="186" r="3"/><circle cx="170" cy="185" r="3"/></g>}
-      {skin === "cosmic" && <g fill="#e5dcff" stroke="none"><circle cx="106" cy="185" r="2.3"/><circle cx="175" cy="192" r="2"/><circle cx="111" cy="253" r="2"/><path d="m176 244 2.5 5 5 1-5 2-2.5 5-1.5-5-5-2 5-1Z"/></g>}
+      {skin === "cosmic" && <g fill="var(--shirt-cosmic-print, #e5dcff)" stroke="none"><circle cx="106" cy="185" r="2.3"/><circle cx="175" cy="192" r="2"/><circle cx="111" cy="253" r="2"/><path d="m176 244 2.5 5 5 1-5 2-2.5 5-1.5-5-5-2 5-1Z"/></g>}
       <path d={head} fill={color}/>
       {component === "xor" && <path d="M60 37Q95 91 60 146" fill="none" strokeWidth="4"/>}
       <path d={pins} fill="none" strokeWidth="3"/>

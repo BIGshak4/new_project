@@ -460,6 +460,13 @@ def every_route():
         ("PUT", "/v1/me/avatar", {"component": "mux", "color": "violet", "skin": "classic"}),
         ("POST", "/v1/me/avatar/buy", {"skin": "aurora"}),
         ("POST", "/v1/me/avatar/onboarding", {}),
+        # Permanent own-account identity and participant-only friendship actions.
+        ("GET", "/v1/me/identity", None),
+        ("PUT", "/v1/me/identity/username", {"username": "SafeName"}),
+        ("GET", "/v1/me/friends", None), ("POST", "/v1/me/friends/requests", {"friend_code": "ABCDEF01"}),
+        ("POST", f"/v1/me/friends/requests/{aid}/accept", None),
+        ("POST", f"/v1/me/friends/requests/{aid}/decline", None),
+        ("DELETE", f"/v1/me/friends/requests/{aid}", None), ("DELETE", f"/v1/me/friends/{aid}", None),
         # duels (2026-10-22)
         ("GET", "/v1/duels", None), ("POST", "/v1/duels", {"language": "he"}), ("POST", "/v1/duels/accept", {"code": "abcd2345"}),
         ("POST", f"/v1/duels/{uuid.UUID(int=0)}/ready", {}),
@@ -495,7 +502,15 @@ class TestEveryRouteIsProtected:
                        .replace("/v1/fundamentals/progress/quick-sw-01", "/v1/fundamentals/progress/{question_key}"))
                       for m, p in normalized}
         normalized = {(m, p.replace("/v1/duels/{attempt_id}", "/v1/duels/{duel_id}")) for m, p in normalized}
-        assert v1 == normalized, f"routes without a protection test: {v1 - normalized}"
+        normalized = {(m, p.replace("/v1/me/friends/requests/{attempt_id}", "/v1/me/friends/requests/{request_id}")
+                       .replace("/v1/me/friends/{attempt_id}", "/v1/me/friends/{user_id}")) for m, p in normalized}
+        public = {("GET", "/v1/usernames/availability")}
+        assert v1 == normalized | public, f"routes without a protection test: {v1 - normalized - public}"
+
+    async def test_username_availability_is_explicitly_public_without_account_details(self, client):
+        response = await client.get("/v1/usernames/availability?username=PublicCandidate")
+        assert response.status_code == 200 and response.json() == {"available": True, "reason": None}
+        assert response.headers["Cache-Control"] == "no-store"
 
     async def test_another_users_attempt_is_404_on_every_route(self, client, user):
         _, h = user

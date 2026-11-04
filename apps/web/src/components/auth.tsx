@@ -7,6 +7,9 @@ import { ArrowLeft, ArrowRight, LockKeyhole, LogOut, Mail } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
 import { AccessCheck, accessForUser, observeAuthUser, type AccessState } from "../lib/auth-access";
+import { usernameAvailability } from "../lib/identity-api";
+import { IdentityApiError, identityErrorMessage, normalizeUsername, validUsernameFormat } from "../lib/identity-types";
+import { UsernameField } from "./username-field";
 import styles from "./auth.module.css";
 export type Lang = "he" | "en";
 export function Auth({
@@ -25,28 +28,36 @@ export function Auth({
     [ready, setReady] = useState(false),
     [access, setAccess] = useState<AccessState | null>(null);
   const currentUser = useRef<User | null>(null);
+  const authRevision = useRef(0);
+  const submitRevision = useRef(0);
   const accessCheck = useRef(new AccessCheck());
   const { checking, allowed: member, failed } = accessForUser(user?.id, access);
   const accessError = failed
     ? he ? "לא הצלחנו לבדוק הרשאות. נסו שוב." : "Unable to check access. Try again."
     : "";
   const [email, setEmail] = useState(""),
+    [username, setUsername] = useState(""),
     [password, setPassword] = useState(""),
     [mode, setMode] = useState<"login" | "signup">("login"),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState(""),
     [error, setError] = useState("");
   useEffect(() => {
-    return observeAuthUser(supabase.auth, (next) => {
+    const stop = observeAuthUser(supabase.auth, (next) => {
       if (currentUser.current?.id !== next?.id) {
+        authRevision.current++;
+        submitRevision.current++;
         accessCheck.current.invalidate();
         setAccess(null);
+        setBusy(false);
       }
       currentUser.current = next;
       setUser(next);
       setPassword("");
+      if (next) setUsername("");
       setReady(true);
     });
+    return () => { authRevision.current++; submitRevision.current++; stop(); };
   }, []);
   async function checkAccess() {
     if (!user) return;
@@ -74,6 +85,15 @@ export function Auth({
   };
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (busy) return;
+    const revision = authRevision.current;
+    const request = ++submitRevision.current;
+    const current = () => authRevision.current === revision && submitRevision.current === request;
+    const chosenUsername = normalizeUsername(username);
+    if (mode === "signup" && !validUsernameFormat(chosenUsername)) {
+      setError(identityErrorMessage({ code: "username_invalid" }, lang));
+      return;
+    }
     setBusy(true);
     setError("");
     setMessage("");
@@ -81,13 +101,19 @@ export function Auth({
     // The Auth component remains mounted while signed in; do not retain a reusable password.
     setPassword("");
     try {
+      if (mode === "signup") {
+        const availability = await usernameAvailability(chosenUsername);
+        if (!current()) return;
+        if (!availability.available) throw new IdentityApiError(`username_${availability.reason}`, "The username is unavailable");
+      }
       const result =
         mode === "login"
           ? await supabase.auth.signInWithPassword(credentials)
           : await supabase.auth.signUp({
               ...credentials,
-              options: { emailRedirectTo: window.location.origin },
+              options: { emailRedirectTo: window.location.origin, data: { username: chosenUsername } },
             });
+      if (!current()) return;
       if (result.error) throw result.error;
       if (mode === "signup" && !result.data.session)
         setMessage(
@@ -96,7 +122,24 @@ export function Auth({
             : "Check your email to confirm your account, then sign in here.",
         );
     } catch (err) {
+      if (!current()) return;
       const code = (err as { code?: string }).code;
+      if (mode === "signup") {
+        if (code?.startsWith("username_") || err instanceof IdentityApiError) {
+          setError(identityErrorMessage(err, lang));
+          return;
+        }
+        // A concurrent claim may win between availability and the authoritative signup.
+        try {
+          const availability = await usernameAvailability(chosenUsername);
+          if (!current()) return;
+          if (!availability.available) {
+            setError(identityErrorMessage({ code: `username_${availability.reason}` }, lang));
+            return;
+          }
+        } catch { /* Keep the actual sign-up failure when availability cannot be checked. */ }
+      }
+      if (!current()) return;
       setError(
         code === "invalid_credentials"
           ? he
@@ -111,7 +154,7 @@ export function Auth({
               : "Sign-in failed. Check your details and try again. Contact the pilot team if email does not arrive.",
       );
     } finally {
-      setBusy(false);
+      if (current()) setBusy(false);
     }
   }
   if (!ready || checking)
@@ -192,6 +235,10 @@ export function Auth({
             ? "התחברו עם האימייל שאושר לפיילוט."
             : "Sign in with the email approved for the pilot."}
       </p>
+      {mode === "signup" && <>
+        <UsernameField value={username} onChange={setUsername} lang={lang} disabled={busy} />
+        <p className="small muted">{he ? "שם המשתמש נבחר פעם אחת ונשאר קבוע בחשבון." : "Your username is chosen once and stays with your account."}</p>
+      </>}
       <label>
         {he ? "אימייל" : "Email"}
         <div className="input-icon">

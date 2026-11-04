@@ -1,5 +1,16 @@
 /* Production Ion. Same palette, typography and imagery as the approved adaptive preview.
    Shared semantic tokens also reach body portals, charts, CodeMirror and React Flow. */
+/* Cloth and print colors remain coordinated across worn, merchandise and enlarged shirt views. */
+:root[data-theme="dark"] {
+  --shirt-dark-fabric: #e7eee7;
+  --shirt-dark-ink: #35204f;
+  --shirt-dark-collar: #c4d6cc;
+  --shirt-dark-seam: #718b7f;
+  --shirt-warm-print: #795019;
+  --shirt-green-print: #246852;
+  --shirt-purple-print: #674294;
+  --shirt-cosmic-print: #5b3979;
+}
 .solution-review-note { color: var(--ink-2); max-width: 75ch; line-height: 1.7; }
 .badge.solution-reviewed { color: var(--ok); background: var(--ok-soft); border: 1px solid var(--ok-line); }
 .quick-home-link { display: flex; align-items: center; gap: 14px; width: 100%; text-align: start; padding: 18px 20px; margin-block: 24px 0; }

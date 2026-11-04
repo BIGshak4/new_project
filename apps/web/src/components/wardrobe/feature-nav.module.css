@@ -1,7 +1,14 @@
-.nav { display:flex; align-items:center; justify-content:center; gap:14px; min-width:0; }
+.nav { display:flex; align-items:center; justify-content:center; gap:16px; min-width:0; }
 .nav a { display:inline-flex; align-items:center; gap:7px; min-height:44px; color:var(--muted); font:inherit; font-size:13px; white-space:nowrap; text-decoration:none; border-bottom:2px solid transparent; }
 .nav a:hover, .nav a[aria-current="page"] { color:var(--link); border-color:var(--link); }
 .nav a:focus-visible { outline:2px solid var(--link); outline-offset:3px; }
 .nav .identity { width:58px; height:64px; min-height:0; background:var(--surface-2); border:1px solid var(--line); border-radius:18px; justify-content:center; overflow:hidden; }
 .identity svg { display:block; width:54px; height:62px; }
-@media(max-width:700px) { .nav { gap:14px; justify-content:space-between; width:100%; } .nav a { font-size:13px; } .nav .identity { width:48px; height:55px; } .identity svg { width:46px; height:53px; } }
+.nav.bottom { display:none; }
+@media(max-width:780px) {
+  .nav.header { display:none; }
+  .nav.bottom { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:4px; width:100%; }
+  .nav.bottom a { display:flex; flex-direction:column; justify-content:center; gap:5px; min-width:0; min-height:50px; padding:5px 2px; font-size:10px; line-height:1.25; text-align:center; white-space:normal; border:0; }
+  .bottom a[aria-current="page"] { border:0; background:var(--soft); border-radius:7px; }
+  .nav.bottom a span { overflow-wrap:anywhere; white-space:normal; overflow:visible; text-overflow:clip; font-size:10px; line-height:1.3; }
+}

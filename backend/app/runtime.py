@@ -22,6 +22,7 @@ from app.services.coins import load_rules as load_coin_rules
 from app.services.demo_provider import DemoProvider
 from app.services.duels import DuelService, load_quiz
 from app.services.fundamentals import FundamentalsService, load_fundamentals_catalog
+from app.services.identity import IdentityService
 from app.services.interview_service import InterviewConfig, InterviewService
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
@@ -44,6 +45,7 @@ class Runtime:
     fundamentals: FundamentalsService | None = None  # self-reported short-card history, no grading
     avatars: AvatarsService | None = None             # persistent logical-component customization and cosmetic ownership
     code_execution: CodeExecutionService | None = None
+    identities: IdentityService | None = None
 
     async def aclose(self) -> None:
         # a redeploy waits a little for feedback being written; anything unfinished is resumed on the next read
@@ -133,6 +135,7 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                    interview=InterviewService(store, catalog, provider, interview_config, image_fetcher=fetcher,
                                               on_finished=interview_finished, coins=coins))
     runtime.code_execution = CodeExecutionService(settings, database=kind == "database")
+    runtime.identities = IdentityService(store, runtime.avatars)
     practice.code_execution = runtime.code_execution
     runtime.interview.code_execution = runtime.code_execution
     runtime.duels.code_execution = runtime.code_execution

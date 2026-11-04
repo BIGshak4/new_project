@@ -16,6 +16,8 @@ CLIENT = Path(__file__).resolve().parents[2] / "apps" / "web" / "src" / "lib" / 
 GAME_CLIENT = CLIENT.with_name("duel-api.ts")
 AVATAR_CLIENT = CLIENT.with_name("avatar-api.ts")
 STATS_CLIENT = CLIENT.with_name("account-stats-api.ts")
+IDENTITY_CLIENT = CLIENT.with_name("identity-api.ts")
+IDENTITY_TYPES = CLIENT.with_name("identity-types.ts")
 pytestmark = pytest.mark.skipif(not CLIENT.exists(), reason="apps/web not checked out")
 
 # OpenAPI schema name -> TypeScript type name
@@ -86,6 +88,15 @@ def test_account_activity_response_fields_match_the_account_stats_client(spec, s
     assert client == backend, f"{ts_name}: missing in TS {backend - client}, extra in TS {client - backend}"
 
 
+@pytest.mark.parametrize("schema_name, ts_name", [("IdentityView", "AccountIdentityData"),
+    ("UsernameAvailability", "UsernameAvailability"), ("FriendPerson", "FriendPerson"),
+    ("FriendRequestView", "FriendRequest"), ("FriendsView", "FriendsData")])
+def test_identity_and_friend_response_fields_match_the_identity_client(spec, schema_name, ts_name):
+    backend = set(spec["components"]["schemas"][schema_name]["properties"])
+    client = ts_fields(IDENTITY_TYPES.read_text(encoding="utf-8"), ts_name)
+    assert client == backend, f"{ts_name}: missing in TS {backend - client}, extra in TS {client - backend}"
+
+
 def test_every_v1_route_is_called_by_the_client(spec, source):
     routes = {(m.upper(), p) for p, ops in spec["paths"].items() if p.startswith("/v1") for m in ops}
     called = set()
@@ -108,6 +119,11 @@ def test_every_v1_route_is_called_by_the_client(spec, source):
     stats = STATS_CLIENT.read_text(encoding="utf-8")
     for path in re.findall(r'read\(\s*["`]([^"`]+)["`]', stats):
         called.add(("GET", path.split("?")[0]))
+    identity = IDENTITY_CLIENT.read_text(encoding="utf-8")
+    for path, method in re.findall(r'call\(\s*["`]([^"`]+)["`],\s*\w+(?:,\s*"(GET|POST|PUT|DELETE)")?', identity):
+        called.add((method or "GET", re.sub(r"\$\{[^}]+\}", "{}", path)))
+    assert "/v1/usernames/availability?username=" in identity
+    called.add(("GET", "/v1/usernames/availability"))
     missing = []
     for method, path in routes:
         pattern = re.sub(r"\{[^}]+\}", "{}", path)

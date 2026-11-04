@@ -1,0 +1,60 @@
+.account, .friends { min-width: 0; padding: 22px 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); }
+.account { margin-block: 18px 26px; scroll-margin-block-start: 110px; }
+.profileHeading:focus { outline: none; }
+.accountTop, .friendsTop { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.accountName { min-width: 0; }
+.sectionHeading { display: flex; align-items: center; gap: 10px; }
+.sectionHeading > svg { color: var(--link); flex: none; }
+.sectionHeading h2 { margin: 0; font-size: 19px; font-weight: 700; }
+.username { margin: 9px 0 0; color: var(--ink); font-size: 22px; font-weight: 700; overflow-wrap: anywhere; }
+.caption { display: block; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.codeBlock { min-width: 0; }
+.codeRow { display: flex; align-items: center; gap: 12px; margin-top: 3px; }
+.codeRow code { color: var(--ink); font-family: var(--font-code, "JetBrains Mono", monospace); letter-spacing: .08em; font-size: 19px; font-weight: 700; user-select: text; }
+.copyButton, .refresh { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 44px; padding: 8px 11px; border-radius: 7px; border: 1px solid var(--line); color: var(--ink); background: transparent; font-size: 13px; }
+.copyStatus { display: block; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.copyStatus:empty { display: none; }
+.claim { display: grid; gap: 14px; max-width: 480px; padding-top: 18px; }
+.claim > p { margin: 0; font-size: 14px; line-height: 1.7; color: var(--muted); }
+.claim > button { justify-self: start; min-height: 44px; }
+.message, .empty { color: var(--muted); font-size: 13px; font-weight: 400; line-height: 1.7; margin: 12px 0 0; }
+.error { color: var(--danger); font-size: 14px; line-height: 1.7; margin-block: 12px 0; }
+.error p { margin: 0 0 8px; }
+.error button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+.success { color: var(--ok, var(--link)); font-size: 14px; line-height: 1.7; margin: 12px 0 0; }
+.friends { display: grid; gap: 20px; }
+.friends > .codeBlock { padding-block: 4px 15px; border-bottom: 1px solid var(--line); }
+.friends > .message, .friends > .error, .friends > .success { margin: 0; }
+.addFriend { display: grid; gap: 8px; }
+.addFriend > label { font-size: 14px; font-weight: 700; }
+.addFriendRow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 10px; }
+.addFriendRow input { width: 180px; max-width: 100%; min-width: 0; min-height: 44px; text-transform: uppercase; letter-spacing: .09em; font-variant-numeric: tabular-nums; }
+.addFriendRow > button { min-height: 44px; }
+.addFriend .message { margin-top: 0; }
+.requestSection { padding-top: 16px; border-top: 1px solid var(--line); }
+.requestSection h3, .friendListHeading h3 { margin: 0; font-size: 16px; font-weight: 700; }
+.requestSection h3 span, .friendListHeading h3 span { font-size: 13px; color: var(--muted); font-weight: 400; }
+.requests { list-style: none; padding: 0; margin: 9px 0 0; }
+.request { display: flex; align-items: center; gap: 12px; padding-block: 10px; }
+.request + .request { border-top: 1px solid var(--line); }
+.request > svg { flex: none; }
+.requestName { display: grid; flex: 1; min-width: 0; gap: 4px; font-size: 14px; }
+.requestName strong { overflow-wrap: anywhere; }
+.requestName span { color: var(--muted); font-size: 12px; }
+.requestActions { display: flex; gap: 8px; flex-wrap: wrap; }
+.requestActions button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 8px 11px; font-size: 13px; }
+.friendListHeading { margin-top: 3px; }
+.friendGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 20px 12px; padding: 0; margin: 0; list-style: none; }
+.friend { display: flex; flex-direction: column; align-items: center; min-width: 0; text-align: center; }
+.friend > strong { margin-block: 6px 0; max-width: 100%; overflow-wrap: anywhere; font-size: 14px; line-height: 1.6; }
+.remove { min-height: 44px; padding: 6px 10px; border: 0; background: transparent; color: var(--muted); font-size: 12px; }
+.empty { margin: 0; }
+@media (max-width: 600px) {
+  .account, .friends { padding: 18px 16px; }
+  .accountTop { align-items: start; gap: 18px; }
+  .accountTop > .codeBlock { flex-basis: 100%; }
+  .request { flex-wrap: wrap; gap: 8px; }
+  .requestActions { flex-basis: 100%; justify-content: end; }
+  .addFriendRow > input { width: 100%; }
+  .addFriendRow > button { width: 100%; }
+}

@@ -18,6 +18,7 @@
 .shell ~ :global(button[aria-haspopup="dialog"]) { display: none; }
 .controls button { padding: 8px; }
 .main { width: min(980px, 90%); margin-inline: auto; padding-block: 28px 24px; }
+@media(max-width:780px) { .main { padding-block-end:calc(var(--tabbar-height,72px) + 32px); } }
 .topline { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .shell .textButton { display: inline-flex; justify-content: flex-start; gap: 7px; padding: 5px 0; color: var(--link); background: transparent; border: 0; font-size: 14px; text-decoration: none; }
 .shell .textButton:hover:not(:disabled) { background: transparent; text-decoration: underline; }

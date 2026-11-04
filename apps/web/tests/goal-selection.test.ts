@@ -42,3 +42,15 @@ test("focused links and in-session back navigation preserve real work", () => {
   assert.equal(readWorkspaceRoute("?view=progress&attempt=a", true).route.view, "learn");
   assert.equal(readWorkspaceRoute("?view=library").route.view, "library");
 });
+
+test("explicit category links from Games or Shop are consumed once, then reload defaults to Personal Area", () => {
+  for (const view of ["learn", "library", "interview"]) {
+    const destination = readWorkspaceRoute(`?view=${view}&nav=1`, true);
+    assert.equal(destination.route.view, view);
+    assert.equal(new URLSearchParams(destination.search).has("nav"), false);
+    assert.equal(readWorkspaceRoute(destination.search, true).route.view, "learn");
+  }
+  for (const search of ["?view=history&nav=1", "?view=progress&nav=1", "?view=library&nav=2"]) {
+    assert.equal(readWorkspaceRoute(search, true).route.view, "learn");
+  }
+});

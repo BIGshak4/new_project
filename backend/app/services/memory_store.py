@@ -7,6 +7,7 @@ from __future__ import annotations
 import asyncio
 import copy
 import dataclasses
+import secrets
 import uuid
 from contextlib import asynccontextmanager
 from datetime import UTC, datetime, timedelta
@@ -53,6 +54,9 @@ class InMemoryStore:
         self.duels_enabled = True
         self.avatars: dict[uuid.UUID, dict] = {}
         self.avatars_enabled = True
+        self.identities: dict[uuid.UUID, dict] = {}
+        self.friendships: dict[uuid.UUID, dict] = {}
+        self.identities_enabled = True
         self.failures: set[str] = set()                           # names of operations that should raise (tests)
         self.fail_once: set[str] = set()                          # ... only the next time
         self._commits = 0
@@ -68,7 +72,8 @@ class InMemoryStore:
         # made every action slower as the store grew)
         snapshot = (dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips),
                     dict(self.sessions), dict(self.goals), list(self.sightings), dict(self.plans), dict(self.plan_links),
-                    list(self.reports), list(self.coin_ledger), dict(self.duels), dict(self.avatars))
+                    list(self.reports), list(self.coin_ledger), dict(self.duels), dict(self.avatars),
+                    dict(self.identities), dict(self.friendships))
         commits_before = self._commits
         tx = _MemoryTx(self)
         try:
@@ -76,7 +81,8 @@ class InMemoryStore:
         except BaseException:
             if self._commits == commits_before:
                 (self.attempts, self.profiles, self.metrics, self.usage, self.tips, self.sessions, self.goals,
-                 self.sightings, self.plans, self.plan_links, self.reports, self.coin_ledger, self.duels, self.avatars) = snapshot
+                 self.sightings, self.plans, self.plan_links, self.reports, self.coin_ledger, self.duels, self.avatars,
+                 self.identities, self.friendships) = snapshot
             raise
         else:
             self._commits += 1
@@ -107,6 +113,75 @@ class _MemoryTx:
             if not getattr(lock, "_waiters", None) and self.s._usage_locks.get(key) is lock:
                 del self.s._usage_locks[key]
         self._held_usage_locks.clear()
+
+    async def identities_available(self):
+        return self.s.identities_enabled
+
+    async def load_identity(self, user_id):
+        if user_id not in self.s.identities:
+            for _ in range(128):
+                code = secrets.token_hex(4).upper()
+                if all(row["friend_code"] != code for row in self.s.identities.values()):
+                    self.s.identities[user_id] = {"id": user_id, "username": None, "friend_code": code}
+                    break
+            else:
+                raise RuntimeError("friend code allocation failed")
+        return copy.deepcopy(self.s.identities[user_id])
+
+    async def load_identities(self, user_ids):
+        return {str(user): copy.deepcopy(self.s.identities[user]) for user in user_ids if user in self.s.identities}
+
+    async def identity_by_code(self, friend_code):
+        return next((copy.deepcopy(row) for row in self.s.identities.values() if row["friend_code"] == friend_code), None)
+
+    async def username_taken(self, key):
+        from app.services.usernames import username_key
+        return any(row["username"] and username_key(row["username"]) == key for row in self.s.identities.values())
+
+    async def claim_username(self, user_id, username):
+        from app.services.usernames import username_key
+        current = await self.load_identity(user_id)
+        if current["username"] is not None:
+            return None
+        if await self.username_taken(username_key(username)):
+            raise ValueError("username_taken")
+        self.s.identities[user_id] = {**current, "username": username}
+        return copy.deepcopy(self.s.identities[user_id])
+
+    async def friend_relationships(self, user_id):
+        return sorted([copy.deepcopy(row) for row in self.s.friendships.values()
+                       if user_id in (row["requester_id"], row["recipient_id"])], key=lambda row: (row["created_at"], str(row["id"])))[:500]
+
+    async def friend_relationship(self, user_id, request_id=None, other_id=None):
+        return next((row for row in await self.friend_relationships(user_id)
+                     if (request_id is None or row["id"] == request_id) and
+                     (other_id is None or other_id in (row["requester_id"], row["recipient_id"]))), None)
+
+    async def add_friend_request(self, requester_id, recipient_id):
+        if requester_id == recipient_id or await self.friend_relationship(requester_id, other_id=recipient_id):
+            raise ValueError("friend_request_conflict")
+        request_id = uuid.uuid4()
+        row = {"id": request_id, "requester_id": requester_id, "recipient_id": recipient_id,
+               "status": "pending", "created_at": datetime.now(UTC), "accepted_at": None}
+        self.s.friendships[request_id] = row
+        return copy.deepcopy(row)
+
+    async def accept_friend_request(self, user_id, request_id):
+        row = await self.friend_relationship(user_id, request_id=request_id)
+        if row is None or row["recipient_id"] != user_id or row["status"] != "pending":
+            return None
+        self.s.friendships[request_id] = {**row, "status": "accepted", "accepted_at": datetime.now(UTC)}
+        return copy.deepcopy(self.s.friendships[request_id])
+
+    async def delete_friend_request(self, user_id, request_id, incoming):
+        row = await self.friend_relationship(user_id, request_id=request_id)
+        if row and row["status"] == "pending" and row["recipient_id" if incoming else "requester_id"] == user_id:
+            self.s.friendships.pop(request_id, None)
+
+    async def remove_friend(self, user_id, other_id):
+        row = await self.friend_relationship(user_id, other_id=other_id)
+        if row and row["status"] == "accepted":
+            self.s.friendships.pop(row["id"], None)
 
     async def validate_answer_images(self, user_id, attempt_id, images):
         return all(i.path.startswith(f"{user_id}/{attempt_id}/") and

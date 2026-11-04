@@ -9,10 +9,8 @@ import {
   Bookmark,
   LogOut,
   RotateCcw,
-  MessageSquareText,
   Briefcase,
   Building2,
-  Map as MapIcon,
   Zap,
   Gamepad2,
   Shirt,
@@ -47,6 +45,7 @@ import { AccountStats } from "../components/account-stats";
 import type { AccountActivity } from "../lib/account-stats-api";
 import { AnimatePresence, motion, useReducedMotion } from "../components/ui/motion";
 import { LearnHome } from "../components/learn-home";
+import { AccountIdentity } from "../components/account-identity";
 import { InterviewSession } from "../components/interview-session";
 import { supabase } from "../lib/supabase";
 import {
@@ -135,6 +134,7 @@ function Workspace({
     return () => { current = false; };
   }, [user.id]);
   const [route, setRoute] = useState<Route>({ view: DEFAULT_VIEW });
+  const entryRoute = useRef<Route | null>(null);
   const [questions, setQuestions] = useState<QuestionSummary[]>([]);
   const orderSeed = useQuestionOrderSeed();
   const orderedQuestions = useMemo(() => shuffleQuestions(questions, orderSeed, q => q.key), [questions, orderSeed]);
@@ -180,7 +180,9 @@ function Workspace({
 
   useEffect(() => {
     const sync = () => setRoute(currentRoute());
-    setRoute(currentRoute(true));
+    // Strict Mode replays effects; consume a cross-page destination only once per workspace mount.
+    entryRoute.current ??= currentRoute(true);
+    setRoute(entryRoute.current);
     window.addEventListener("popstate", sync);
     return () => window.removeEventListener("popstate", sync);
   }, []);
@@ -377,27 +379,10 @@ function Workspace({
   // demo grades are hidden everywhere else, so the numbers derived from them (XP, streak, level) are hidden too
   const overview = demo ? null : progress.overview ?? null;
   const activeTab = LIBRARY_VIEWS.has(route.view) ? "library" : route.view;
-  const tabs = [
-    { id: "learn", icon: MapIcon, label: t("אזור אישי", "Personal area") },
-    { id: "library", icon: BookOpen, label: t("מאגר", "Library") },
-    { id: "interview", icon: MessageSquareText, label: t("ראיון מדומה", "Mock interview") },
-  ];
   const goTab = (id: string) => {
     navigate({ view: id });
     refreshProgress();
   };
-  const tabButtons = (compact: boolean) =>
-    tabs.map(({ id, icon: Icon, label }) => (
-      <button
-        key={id}
-        className={`tab ${activeTab === id ? "active" : ""}`}
-        aria-current={activeTab === id ? "page" : undefined}
-        onClick={() => goTab(id)}
-      >
-        <Icon size={compact ? 22 : 18} aria-hidden="true" />
-        <span>{label}</span>
-      </button>
-    ));
   const libraryViews = <div ref={libraryViewsRef} className="segmented library-views" role="group" aria-label={t("תצוגות המאגר", "Library views")}>
     {[
       { id: "library", icon: BookOpen, label: t("שאלות ראיון", "Interview questions") },
@@ -417,10 +402,8 @@ function Workspace({
         <a href="/" className="wordmark" dir="ltr">
           <span>.</span>jobrun
         </a>
-        <nav className="tabs" aria-label={t("ניווט", "Navigation")}>
-          {tabButtons(false)}
-        </nav>
-        <FeatureNav lang={lang} avatar={profileAvatar} hideAvatar={active || route.view === "interview"} />
+        <FeatureNav lang={lang} avatar={profileAvatar} hideAvatar={active || route.view === "interview"}
+          className="tabs" current={activeTab === "library" ? "library" : activeTab === "interview" ? "interview" : "learn"} onPracticeNavigate={goTab} />
         <AccountStats userId={user.id} lang={lang} refreshKey={refreshKey} onActivity={setAccountActivity} />
         <div className={`topnav-actions ${headerStyles.toolbar}`}>
           <UserInboxButton lang={lang} />
@@ -435,9 +418,8 @@ function Workspace({
           </button>
         </div>
       </header>
-      <nav className="tabbar" aria-label={t("ניווט", "Navigation")}>
-        {tabButtons(true)}
-      </nav>
+      <FeatureNav lang={lang} className="tabbar" variant="bottom" hideAvatar
+        current={activeTab === "library" ? "library" : activeTab === "interview" ? "interview" : "learn"} onPracticeNavigate={goTab} />
       <main className="content">
         {(!healthKnown || demo) && <div className="pilot-note" role="note">
           {!healthKnown
@@ -526,6 +508,7 @@ function Workspace({
               lang={lang}
               userName={firstName(user)}
               goal={goal}
+              accountSlot={<AccountIdentity key={user.id} userId={user.id} lang={lang} />}
               progress={demo ? { ...progress, overview: null, skills: [] } : progress}
               refreshKey={refreshKey}
               goalSlot={

@@ -25,6 +25,7 @@ export function LearnHome({
   progress,
   refreshKey,
   goalSlot,
+  accountSlot,
   userName,
   userId,
   activity,
@@ -41,6 +42,8 @@ export function LearnHome({
   refreshKey: string;
   /** the goal card when the goal is incomplete (or being edited) */
   goalSlot?: React.ReactNode;
+  /** Account identity remains available independently of the learning goal. */
+  accountSlot?: React.ReactNode;
   /** the user's first name, for the kicker */
   userName?: string;
   /** Bind recommended question starts to the account which owns this workspace. */
@@ -197,6 +200,7 @@ export function LearnHome({
       <div className="learn-main">
         {goal && (goal.complete || goal.learning_mode === "explore" || goal.job_type) && <GoalSummary goal={goal} lang={lang} onEdit={onOpenGoal} />}
         {goalSlot}
+        {accountSlot}
         <header className="learn-head">
           <div>
             <h1 dir="auto">

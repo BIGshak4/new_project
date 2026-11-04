@@ -6,6 +6,7 @@ import { MuxiMascot } from "../tour/muxi-mascot";
 import { LogicAvatar } from "./logic-avatar";
 import { ShirtArtwork, ShirtPrint, shirtPalette } from "./shirt-print";
 import { FeatureNav } from "./feature-nav";
+import headerStyles from "./workspace-header.module.css";
 import { MEME_SKINS, muxiShopLine } from "./muxi-shop-copy";
 import { SUPPORT_OPEN_EVENT } from "../../lib/support-report";
 import { DEFAULT_AVATAR, sameAvatar, type AvatarClient, type AvatarConfig, type AvatarLanguage, type AvatarPayload } from "../../lib/avatar-types";
@@ -106,13 +107,14 @@ export function Wardrobe({ client, lang, controls, demo = false, draftKey }: { c
   const catalog = data?.skins.filter(skin => filter === "owned" ? data.owned_skins.includes(skin.key) : filter === "memes" ? MEME_SKINS.has(skin.key) : !MEME_SKINS.has(skin.key)) ?? [];
 
   return <div className={styles.shell} dir={lang === "he" ? "rtl" : "ltr"}>
-    <header className={styles.header}>
-      <a href="/" className={styles.brand}>JobRun<span>{t("הדוכן של מוקסי", "Muxi's booth")}</span></a>
-      <FeatureNav lang={lang} avatar={data?.avatar} demo={demo} current="shop"/>
-      <div className={styles.controls}><button type="button" aria-haspopup="dialog" aria-label={t("דיווח על בעיה", "Report a problem")} title={t("דיווח על בעיה", "Report a problem")} onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={18} aria-hidden="true"/></button>{controls}</div>
+    <header className={`topnav ${headerStyles.header}`}>
+      <a href="/" className="wordmark" dir="ltr"><span>.</span>jobrun</a>
+      <FeatureNav className="tabs" lang={lang} avatar={data?.avatar} demo={demo} current="shop"/>
+      <div className={`topnav-actions ${headerStyles.toolbar} ${styles.controls}`}><button type="button" aria-haspopup="dialog" aria-label={t("דיווח על בעיה", "Report a problem")} title={t("דיווח על בעיה", "Report a problem")} onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={18} aria-hidden="true"/></button>{controls}</div>
     </header>
+    <FeatureNav className="tabbar" variant="bottom" hideAvatar lang={lang} demo={demo} current="shop" />
     <main className={styles.main}>
-      <div className={styles.topline}><a href={demo ? "/games/preview" : "/games"}><Back size={17} aria-hidden="true"/>{t("לחדר המשחקים", "Back to games")}</a><span className={styles.wallet}><Coins size={20} aria-hidden="true"/>{data ? data.balance : "—"} {t(demo ? "מטבעות הדגמה" : "מטבעות", demo ? "demo coins" : "coins")}</span></div>
+      <div className={styles.topline}><span className={styles.wallet}><Coins size={20} aria-hidden="true"/>{data ? data.balance : "—"} {t(demo ? "מטבעות הדגמה" : "מטבעות", demo ? "demo coins" : "coins")}</span></div>
       {demo && <aside className={styles.demo}><strong>{t("חנות לדוגמה", "Shop preview")}</strong><span>{t("מודדים וקונים במטבעות הדגמה בלבד. החשבון שלכם אינו משתנה.", "Try and buy with demo coins only. Your account is unchanged.")}</span><a href="/games/shop">{t("לחנות האמיתית", "Open your real shop")}</a></aside>}
       {!!error && <div className={styles.error} role="alert"><span>{errorText(error, lang)}</span><button disabled={!!busy} onClick={() => void refresh()}><RefreshCw size={16} aria-hidden="true"/>{t("רענון החנות", "Refresh shop")}</button></div>}
       {!data && !error && <p className={styles.loading} role="status">{t("מוקסי פותח את הדוכן…", "Muxi is opening the booth…")}</p>}

@@ -4,8 +4,11 @@ export const DEFAULT_WORKSPACE_VIEW = "learn";
 /** New visits start in Personal Area; focused practice links keep their destination. */
 export function readWorkspaceRoute(search: string, entry = false): { route: WorkspaceRoute; search: string } {
   const query = new URLSearchParams(search);
+  // Cross-page category links carry a one-use intent; refreshing that URL still starts in Personal Area.
+  const navigation = query.get("nav") === "1" && ["learn", "library", "interview"].includes(query.get("view") ?? "");
+  query.delete("nav");
   const focused = !!(query.get("question") || query.get("attempt") || query.get("interview"));
-  if (query.get("view") === "progress" || (entry && !focused)) {
+  if (query.get("view") === "progress" || (entry && !focused && !navigation)) {
     query.delete("view");
     if (!focused) query.delete("duration");
   }

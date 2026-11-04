@@ -9,6 +9,7 @@ import { avatarApi } from "../../lib/avatar-api";
 import type { AvatarConfig } from "../../lib/avatar-types";
 import type { DuelLanguage } from "../../lib/duel-types";
 import { DuelWorkspace } from "./duel-workspace";
+import { FriendsPanel } from "../friends-panel";
 
 export function useDuelLanguage() {
   const [lang, setLang] = useState<DuelLanguage>("he");
@@ -25,7 +26,8 @@ function LiveWorkspace({ userId, lang, invite, controls }: { userId: string; lan
     void avatarApi(userId).get().then(value => { if (current) setAvatar(value.avatar); }).catch(() => {});
     return () => { current = false; };
   }, [userId]);
-  return <DuelWorkspace client={client} lang={lang} invite={invite} controls={controls} avatar={avatar} />;
+  return <DuelWorkspace client={client} lang={lang} invite={invite} controls={controls} avatar={avatar}
+    friendsSlot={<FriendsPanel key={userId} userId={userId} lang={lang} />} />;
 }
 
 export function DuelPage({ invite = "" }: { invite?: string }) {

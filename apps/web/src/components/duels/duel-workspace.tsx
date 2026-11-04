@@ -9,6 +9,7 @@ import { inviteCode, quizSecondsLeft } from "../../lib/duel-types";
 import { DEFAULT_AVATAR, type AvatarConfig } from "../../lib/avatar-types";
 import { LogicAvatar } from "../wardrobe/logic-avatar";
 import { FeatureNav } from "../wardrobe/feature-nav";
+import headerStyles from "../wardrobe/workspace-header.module.css";
 import { DuelLooks } from "./duel-looks";
 import styles from "./duels.module.css";
 import avatarStyles from "./game-avatar.module.css";
@@ -25,8 +26,8 @@ function errorMessage(error: unknown, lang: DuelLanguage) {
   return he ? "לא הצלחנו לעדכן את המשחק. רעננו כדי לבדוק מה נשמר לפני ניסיון נוסף." : "Unable to update the game. Refresh to check what was saved before trying again.";
 }
 
-export function DuelWorkspace({ client, lang, demo = false, invite = "", controls, avatar }: {
-  client: DuelClient; lang: DuelLanguage; demo?: boolean; invite?: string; controls?: React.ReactNode; avatar?: AvatarConfig | null;
+export function DuelWorkspace({ client, lang, demo = false, invite = "", controls, avatar, friendsSlot }: {
+  client: DuelClient; lang: DuelLanguage; demo?: boolean; invite?: string; controls?: React.ReactNode; avatar?: AvatarConfig | null; friendsSlot?: React.ReactNode;
 }) {
   const t = (he: string, en: string) => lang === "he" ? he : en;
   const [list, setList] = useState<DuelList | null>(null);
@@ -124,14 +125,15 @@ export function DuelWorkspace({ client, lang, demo = false, invite = "", control
   const statusLabel = (d: Duel) => d.status === "open" ? t("ממתינים לחבר", "Waiting for a friend") : d.status === "cancelled" ? t("בוטל · המטבעות הוחזרו", "Cancelled · coins refunded") : d.status === "settled" ? d.won === true ? t("ניצחתם", "You won") : d.won === false ? t("החבר ניצח", "Your friend won") : t("תיקו · המטבעות הוחזרו", "Draw · coins refunded") : d.deadline ? t("במשחק", "In progress") : t("בחדר ההמתנה", "In the lobby");
 
   return <div className={styles.shell} dir={lang === "he" ? "rtl" : "ltr"}>
-    <header className={styles.header}>
-      <a className={styles.brand} href="/">JobRun<span>{t("משחקים", "Games")}</span></a>
-      <FeatureNav lang={lang} avatar={duel?.me.avatar ?? avatar ?? DEFAULT_AVATAR} demo={demo} current="games" />
-      <div className={styles.controls}><button type="button" aria-label={t("דיווח על בעיה", "Report a problem")} title={t("דיווח על בעיה", "Report a problem")} aria-haspopup="dialog" onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={18} aria-hidden="true" /></button>{controls}</div>
+    <header className={`topnav ${headerStyles.header}`}>
+      <a className="wordmark" href="/" dir="ltr"><span>.</span>jobrun</a>
+      <FeatureNav className="tabs" lang={lang} avatar={duel?.me.avatar ?? avatar ?? DEFAULT_AVATAR} demo={demo} current="games" />
+      <div className={`topnav-actions ${headerStyles.toolbar} ${styles.controls}`}><button type="button" aria-label={t("דיווח על בעיה", "Report a problem")} title={t("דיווח על בעיה", "Report a problem")} aria-haspopup="dialog" onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={18} aria-hidden="true" /></button>{controls}</div>
     </header>
+    <FeatureNav className="tabbar" variant="bottom" hideAvatar lang={lang} demo={demo} current="games" />
     <main className={styles.main}>
       <div className={styles.topline}>
-        {duel ? <button className={styles.textButton} onClick={home} disabled={busy}><Back size={17} />{t("לכל המשחקים", "All games")}</button> : <a className={styles.textButton} href="/"><Back size={17} />{t("בחזרה לתרגול", "Back to practice")}</a>}
+        {duel && <button className={styles.textButton} onClick={home} disabled={busy}><Back size={17} />{t("לכל המשחקים", "All games")}</button>}
         <span className={styles.wallet}><Coins size={18} aria-hidden="true" />{wallet?.enabled ? wallet.balance : "—"} {t(demo ? "מטבעות הדגמה" : "מטבעות", demo ? "demo coins" : "coins")}</span>
       </div>
       {demo && <aside className={styles.demoNotice}><strong>{t("תצוגה מקדימה", "Game preview")}</strong><span>{t("משחק מול יריב מדומה, עם שאלות בטיוטה ומטבעות הדגמה בלבד.", "A simulated opponent, draft questions and demo coins only.")}</span><a href="/games">{t("למשחקים באתר", "Live games")}</a></aside>}
@@ -139,6 +141,7 @@ export function DuelWorkspace({ client, lang, demo = false, invite = "", control
       {error && <div className={styles.error} role="alert"><span>{error}</span><button onClick={() => { setError(""); void refresh(); }} disabled={busy}><RefreshCw size={16} />{t("רענון מצב", "Refresh status")}</button></div>}
       {!loaded && <p className={styles.loading} role="status">{t("טוענים את חדר המשחקים…", "Loading your games…")}</p>}
       {!duel && <>
+        {friendsSlot}
         <div className={styles.intro}><Swords size={36} strokeWidth={1.5} aria-hidden="true" /><h1>{t("חמש שאלות. חבר מול חבר.", "Five questions. Friend vs friend.")}</h1><p>{t("אותן שאלות, אותו אתגר. עונים נכון, חושבים מהר ומגלים מי לקח את הסיבוב.", "The same questions, the same challenge. Answer correctly, think quickly and see who wins.")}</p></div>
         <div className={styles.rules}><span>{rules?.quiz_questions ?? 5} {t("שאלות", "questions")}</span><span>{rules?.quiz_seconds_per_question ?? 60} {t("שניות לשאלה", "seconds per question")}</span><span>{rules?.stake ?? 5} {t("מטבעות מכל צד", "coins each")}</span></div>
         {loaded && !available && <p className={styles.notice}>{!wallet?.enabled ? t("מערכת המטבעות עדיין אינה פעילה בשרת. אפשר להתרשם מהמשחק בתצוגה המקדימה.", "The coin system is not active on the server yet. Explore the game in the preview.") : !serverReady ? t("השרת ממתין לעדכון המשחק עם חדר המוכנות. בינתיים אפשר לנסות את ההדגמה.", "The server needs the game update with the ready room. You can try the preview meanwhile.") : t("מאגר המשחק ממתין לאישור השאלות. המשחק האמיתי ייפתח כשיהיו מספיק שאלות מאושרות.", "The game bank is awaiting question review. Live play opens when enough questions are approved.")} <a href="/games/preview">{t("לנסות את ההדגמה", "Try the preview")}</a></p>}

@@ -31,6 +31,7 @@ from app.repo import (
     coins,
     duels,
     events,
+    identity,
     plans,
     profiles,
     questions,
@@ -55,6 +56,18 @@ __all__ = ["DuplicateSubmissionKey", "StaleProfile", "Store", "Tx", "DbStore"]
 
 class Tx(Protocol):
     async def lock_usage(self, user_id: uuid.UUID, scope: str) -> None: ...
+    async def identities_available(self) -> bool: ...
+    async def load_identity(self, user_id: uuid.UUID) -> dict | None: ...
+    async def load_identities(self, user_ids: list[uuid.UUID]) -> dict: ...
+    async def identity_by_code(self, friend_code: str) -> dict | None: ...
+    async def username_taken(self, key: str) -> bool: ...
+    async def claim_username(self, user_id: uuid.UUID, username: str) -> dict | None: ...
+    async def friend_relationships(self, user_id: uuid.UUID) -> list[dict]: ...
+    async def friend_relationship(self, user_id: uuid.UUID, request_id: uuid.UUID | None = None, other_id: uuid.UUID | None = None) -> dict | None: ...
+    async def add_friend_request(self, requester_id: uuid.UUID, recipient_id: uuid.UUID) -> dict: ...
+    async def accept_friend_request(self, user_id: uuid.UUID, request_id: uuid.UUID) -> dict | None: ...
+    async def delete_friend_request(self, user_id: uuid.UUID, request_id: uuid.UUID, incoming: bool) -> None: ...
+    async def remove_friend(self, user_id: uuid.UUID, other_id: uuid.UUID) -> None: ...
     async def validate_answer_images(self, user_id: uuid.UUID, attempt_id: uuid.UUID, images: list) -> bool: ...
     async def load_question(self, *, key: str | None = None, question_id: uuid.UUID | None = None) -> LoadedQuestion | None: ...
     async def list_questions(self, *, language: str, subject: str | None = None) -> list[QuestionSummary]: ...
@@ -160,6 +173,42 @@ class DbTx:
         """
         await self.connection.execute(text("select pg_advisory_xact_lock(hashtextextended(:key, 0))"),
                                       {"key": f"jobrun:usage:{scope}:{user_id}"})
+
+    async def identities_available(self):
+        return await identity.available()
+
+    async def load_identity(self, user_id):
+        return await identity.load(self.connection, user_id)
+
+    async def load_identities(self, user_ids):
+        return await identity.load_many(self.connection, user_ids)
+
+    async def identity_by_code(self, friend_code):
+        return await identity.by_code(self.connection, friend_code)
+
+    async def username_taken(self, key):
+        return await identity.username_taken(self.connection, key)
+
+    async def claim_username(self, user_id, username):
+        return await identity.claim(self.connection, user_id, username)
+
+    async def friend_relationships(self, user_id):
+        return await identity.relationships(self.connection, user_id)
+
+    async def friend_relationship(self, user_id, request_id=None, other_id=None):
+        return await identity.relationship(self.connection, user_id, request_id, other_id)
+
+    async def add_friend_request(self, requester_id, recipient_id):
+        return await identity.add_request(self.connection, requester_id, recipient_id)
+
+    async def accept_friend_request(self, user_id, request_id):
+        return await identity.accept(self.connection, user_id, request_id)
+
+    async def delete_friend_request(self, user_id, request_id, incoming):
+        await identity.delete_request(self.connection, user_id, request_id, incoming)
+
+    async def remove_friend(self, user_id, other_id):
+        await identity.remove(self.connection, user_id, other_id)
 
     async def validate_answer_images(self, user_id, attempt_id, images):
         prefix = f"{user_id}/{attempt_id}/"
