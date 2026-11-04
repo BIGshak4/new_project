@@ -21,7 +21,8 @@ test("assessment prose preserves technical expressions inside Hebrew across feed
     },
     check: { type: "truth_table", passed: false, detail: mixed, mismatches: [{ inputs: { A: 1, B: 0 }, expected: 1, got: 0 }] },
   };
-  const html = renderToStaticMarkup(createElement(EvaluationPanel, { submission, lang: "he" }));
+  const html = renderToStaticMarkup(createElement(EvaluationPanel, { submission, lang: "he", focusTarget: true }));
+  assert.match(html, /class="evaluation tone-strong" data-feedback-revision="1" tabindex="-1" role="region" aria-label="המשוב המלא"/);
   assert.ok((html.match(/הביטוי <bdi dir="ltr">A XOR B<\/bdi> תקין/g) ?? []).length >= 7);
   assert.match(html, /<td dir="ltr"><bdi dir="ltr">A=1, B=0<\/bdi><\/td>/);
   assert.doesNotMatch(html, /הביטוי A XOR B תקין/);

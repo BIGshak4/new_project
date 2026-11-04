@@ -29,9 +29,11 @@ import { ExecutionResultView } from "./code-execution-result";
 export function EvaluationPanel({
   submission: s,
   lang,
+  focusTarget = false,
 }: {
   submission: Submission;
   lang: Lang;
+  focusTarget?: boolean;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const reduced = useReducedMotion();
@@ -96,7 +98,12 @@ export function EvaluationPanel({
   const missed = [...s.key_points_missed];
   if (s.check && s.check.passed === false && s.check.detail) missed.push(s.check.detail);
   return (
-    <div className={`evaluation tone-${tone}`}>
+    <div className={`evaluation tone-${tone}`}
+      data-feedback-revision={focusTarget ? s.revision : undefined}
+      tabIndex={focusTarget ? -1 : undefined}
+      role={focusTarget ? "region" : undefined}
+      aria-label={focusTarget ? t("המשוב המלא", "Full feedback") : undefined}
+      style={focusTarget ? { scrollMarginBlockStart: 110 } : undefined}>
       <header className="evaluation-head">
         <svg className="band-ring" viewBox="0 0 64 64" aria-hidden="true">
           <circle className="ring-track" cx="32" cy="32" r={radius} />

@@ -1,11 +1,9 @@
 "use client";
 
 import { QuestionMetadata, ReportedCompanies } from "./question-metadata";
-import { QuestionStatusControl } from "./question-status-control";
 import { BidiText } from "./bidi-text";
 import { QuestionTitle } from "./question-title";
 import { proseDirection } from "../lib/bidi-segments";
-import { buildQuestionStates } from "../lib/question-personal-state";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -67,12 +65,10 @@ type Props = {
   api: PracticeApi;
   questionKey?: string;
   relatedQuestions?: QuestionSummary[];
-  statusQuestions?: QuestionSummary[];
   attemptId?: string;
   lang: Lang;
   user: User;
   entries: Entry[];
-  entriesReady?: boolean;
   onSaved: (entry: Entry) => void;
   onStarted: (id: string) => void;
   onNew: (key: string, source?: "retry" | "suggestion") => void;
@@ -89,12 +85,10 @@ export function PracticeSession({
   api,
   questionKey,
   relatedQuestions = [],
-  statusQuestions,
   attemptId,
   lang,
   user,
   entries,
-  entriesReady = true,
   onSaved,
   onStarted,
   onNew,
@@ -122,13 +116,9 @@ export function PracticeSession({
   const guard = useRef(false),
     live = useRef(true);
   const feedbackRef = useRef<HTMLElement>(null);
-  useFeedbackArrival({ attempt, attemptId, loading, enabled: !demo, feedbackRef });
+  const requestFeedback = useFeedbackArrival({ attempt, attemptId, loading, enabled: !demo, feedbackRef });
   const key = `jr-attempt-draft-v1-${user.id}-${attemptId}`;
   const entry = entries.find((e) => e.question_id === question?.id);
-  const personalStateQuestions = question
-    ? [...(statusQuestions ?? relatedQuestions).filter((q) => q.id !== question.id), question]
-    : statusQuestions ?? relatedQuestions;
-  const personalStates = buildQuestionStates(personalStateQuestions, entries);
 
   useEffect(() => {
     if (loading || !attempt?.reference) return;
@@ -413,6 +403,7 @@ export function PracticeSession({
       visual: hasVisual(visual) ? visual : null,
       turn: turn ?? null,
     };
+    requestFeedback({ key: p.key });
     setPending(p);
     // Persist identity BEFORE the request; a response lost in transit must not become a new submission.
     writeLocal(key, {
@@ -562,15 +553,6 @@ export function PracticeSession({
                 <SubjectSketch subject={question.subject} className="sheet-sketch-corner" />
                 <QuestionTitle as="h1" lang={lang}><BidiText>{question.title}</BidiText></QuestionTitle>
                 <QuestionMetadata question={question} lang={lang} showCompanies={false} />
-                <QuestionStatusControl
-                  userId={user.id}
-                  question={question}
-                  questions={personalStateQuestions}
-                  state={personalStates.get(question.id) ?? { completed: false, hidden: false }}
-                  lang={lang}
-                  ready={entriesReady}
-                  onSaved={(saved) => saved.forEach(onSaved)}
-                />
                 {question.assessment_ready === false && <p className="notice study-review-note">
                   {t("המשוב ראשוני והתרגול נשמר, אך אינו משנה את רמת השליטה או מעניק נקודות.", "Feedback is provisional and practice is saved, but does not change skill levels or earn points.")}
                 </p>}
@@ -852,7 +834,8 @@ export function PracticeSession({
                         </p>
                         <button
                           disabled={disabled}
-                          onClick={() =>
+                          onClick={() => {
+                            requestFeedback({ revision: retryable.revision });
                             void mutate(
                               async () =>
                                 (
@@ -861,8 +844,8 @@ export function PracticeSession({
                                     retryable.revision,
                                   )
                                 ).attempt,
-                            )
-                          }
+                            );
+                          }}
                         >
                           {t("ניסיון הערכה נוסף", "Retry evaluation")}
                         </button>
@@ -928,15 +911,13 @@ export function PracticeSession({
               <section
                 id="feedback"
                 ref={feedbackRef}
-                tabIndex={-1}
                 data-feedback-attempt={attempt.id}
-                data-feedback-revision={attempt.submission.revision}
                 style={{ scrollMarginBlockStart: 110 }}
                 className="practice-flow"
                 aria-label={t("המשוב וההמשך", "Feedback and what comes next")}
               >
                 {attempt.submission.status !== "done" ? (
-                  <EvaluationPanel submission={attempt.submission} lang={lang} />
+                  <EvaluationPanel submission={attempt.submission} lang={lang} focusTarget />
                 ) : attempt.submission.assessed_by === "unassessed" ? (
                   <p className="notice">
                     {t(
@@ -952,7 +933,7 @@ export function PracticeSession({
                     )}
                   </p>
                 ) : (
-                  <EvaluationPanel submission={attempt.submission} lang={lang} />
+                  <EvaluationPanel submission={attempt.submission} lang={lang} focusTarget />
                 )}
                 {attempt.submission.status === "done" &&
                   (attempt.submission.assessed_by === "unassessed" || demo || attempt.submission.assessed_by === "demo") &&

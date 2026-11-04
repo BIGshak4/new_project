@@ -4,7 +4,7 @@ import type { Attempt, Submission } from "../src/lib/practice-api";
 import { FeedbackArrivalTracker } from "../src/lib/feedback-arrival";
 
 function submission(overrides: Partial<Submission> = {}): Submission {
-  return { revision: 1, status: "done", assessed_by: "model", ...overrides } as Submission;
+  return { revision: 1, key: "answer-1", status: "done", assessed_by: "model", ...overrides } as Submission;
 }
 function attempt(main: Submission | null, overrides: Partial<Attempt> = {}): Attempt {
   return { id: "a", status: "done", submission: main, follow_ups: [], ...overrides } as Attempt;
@@ -15,9 +15,95 @@ test("grade-first responses wait until all feedback words have arrived", () => {
   assert.equal(tracker.observe(attempt(null, { status: "in_progress" })), null);
   assert.equal(tracker.observe(attempt(submission({ status: "evaluating" }), { status: "evaluating" })), null);
   assert.equal(tracker.observe(attempt(submission({ feedback_pending: true }), { feedback_pending: true })), null);
-  assert.equal(tracker.observe(attempt(submission(), { feedback_pending: true })), null);
   assert.equal(tracker.observe(attempt(submission({ feedback_pending: true }))), null);
   assert.deepEqual(tracker.observe(attempt(submission())), { attemptId: "a", revision: 1 });
+});
+
+test("a finished selected card does not wait for unrelated aggregate pending state", () => {
+  const tracker = new FeedbackArrivalTracker();
+  tracker.observe(attempt(submission({ feedback_pending: true })));
+  const ready = attempt(submission(), { status: "evaluating", feedback_pending: true });
+  const arrival = tracker.observe(ready)!;
+  assert.deepEqual(arrival, { attemptId: "a", revision: 1 });
+  tracker.acknowledge(arrival);
+  assert.equal(tracker.observe(ready), null);
+});
+
+test("explicit submit intent announces an already completed first response", () => {
+  const tracker = new FeedbackArrivalTracker();
+  tracker.request("a", { key: "new-answer" });
+  const ready = attempt(submission({ key: "new-answer" }));
+  const arrival = tracker.observe(ready)!;
+  assert.deepEqual(arrival, { attemptId: "a", revision: 1 });
+  tracker.acknowledge(arrival);
+  assert.equal(tracker.observe({ ...ready }), null);
+});
+
+test("a submit request cannot announce an older ready answer while its own answer is pending", () => {
+  const tracker = new FeedbackArrivalTracker();
+  tracker.request("a", { key: "follow-up-answer" });
+  const oldReady = attempt(submission());
+  assert.equal(tracker.observe(oldReady), null);
+  assert.equal(tracker.observe({ ...oldReady }), null);
+  const followUp = { turn: 1, submission: submission({ key: "follow-up-answer", revision: 2, status: "evaluating" }) };
+  const evaluating = { ...oldReady, follow_ups: [followUp] } as Attempt;
+  assert.equal(tracker.observe(evaluating), null);
+  assert.equal(tracker.observe({ ...evaluating, follow_ups: [{ ...followUp,
+    submission: { ...followUp.submission, status: "done", feedback_pending: true } }] } as Attempt), null);
+  const ready = { ...evaluating, follow_ups: [{ ...followUp,
+    submission: { ...followUp.submission, status: "done" } }] } as Attempt;
+  const arrival = tracker.observe(ready)!;
+  assert.deepEqual(arrival, { attemptId: "a", revision: 2 });
+  tracker.acknowledge(arrival);
+  assert.equal(tracker.observe({ ...ready }), null);
+  assert.equal(tracker.observe(oldReady), null);
+});
+
+test("an explicit request requires the exact submission key, not merely a new completed revision", () => {
+  const tracker = new FeedbackArrivalTracker();
+  tracker.observe(attempt(null));
+  tracker.request("a", { key: "requested-answer" });
+  assert.equal(tracker.observe(attempt(submission({ key: "another-tab-answer" }))), null);
+  assert.deepEqual(tracker.observe(attempt(submission({ key: "requested-answer", revision: 2 }))),
+    { attemptId: "a", revision: 2 });
+});
+
+test("explicit retry intent re-announces its completed revision once even if it was previously delivered", () => {
+  const tracker = new FeedbackArrivalTracker();
+  tracker.observe(attempt(null));
+  const ready = attempt(submission());
+  tracker.acknowledge(tracker.observe(ready)!);
+  tracker.request("a", { revision: 1 });
+  assert.equal(tracker.observe(attempt(submission({ status: "failed" }))), null);
+  assert.equal(tracker.observe(attempt(submission({ feedback_pending: true }))), null);
+  const retried = tracker.observe(ready)!;
+  assert.deepEqual(retried, { attemptId: "a", revision: 1 });
+  tracker.acknowledge(retried);
+  assert.equal(tracker.observe({ ...ready }), null);
+});
+
+test("explicit retry can complete before the first observation without becoming history", () => {
+  const tracker = new FeedbackArrivalTracker();
+  tracker.request("a", { revision: 3 });
+  assert.equal(tracker.observe(attempt(submission({ revision: 2 }))), null);
+  assert.deepEqual(tracker.observe(attempt(submission({ revision: 3 }))), { attemptId: "a", revision: 3 });
+});
+
+test("requested arrivals cannot pull the reader back after a newer revision has been observed", () => {
+  const tracker = new FeedbackArrivalTracker();
+  tracker.request("a", { key: "requested-answer" });
+  assert.equal(tracker.observe(attempt(submission({ revision: 3, key: "newer-answer", status: "evaluating" }))), null);
+  assert.equal(tracker.observe(attempt(submission({ revision: 2, key: "requested-answer" }))), null);
+});
+
+test("leaving an attempt clears its request and keeps unrelated completed reports historical", () => {
+  const tracker = new FeedbackArrivalTracker();
+  tracker.request("a", { key: "new-answer" });
+  assert.equal(tracker.observe(attempt(submission({ key: "new-answer" }), { id: "b" })), null);
+  assert.equal(tracker.observe(attempt(submission({ key: "new-answer" }))), null);
+  tracker.request("a", { revision: 1 });
+  tracker.reset();
+  assert.equal(tracker.observe(attempt(submission())), null);
 });
 
 test("an immediately completed submit also produces an arrival", () => {

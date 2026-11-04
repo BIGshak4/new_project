@@ -465,8 +465,6 @@ function Workspace({
             lang={lang}
             user={user}
             entries={entries}
-            entriesReady={entriesReady && !loading && questions.length > 0}
-            statusQuestions={questions}
             onSaved={onSaved}
             onStarted={(id) =>
               navigate({ view: route.view, attempt: id }, true)
