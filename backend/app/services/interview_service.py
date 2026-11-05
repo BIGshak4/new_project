@@ -177,6 +177,11 @@ class InterviewService:
         async with self.store.transaction() as tx:
             return await tx.list_sessions(user_id, limit=limit)
 
+    async def delete(self, user_id: uuid.UUID, session_id: uuid.UUID) -> None:
+        async with self.store.transaction() as tx:
+            if not await tx.delete_session_from_history(session_id, user_id=user_id):
+                raise ApiError("not_found", "interview not found")
+
     async def answer(self, user_id: uuid.UUID, session_id: uuid.UUID, turn_index: int, answer, *,
                      idempotency_key: str, latency_ms: int | None = None) -> tuple[InterviewTurnView, InterviewView]:
         async with self._lock(session_id):

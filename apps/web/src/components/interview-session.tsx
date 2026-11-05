@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Clock3, Cpu, Lightbulb, MessageSquareText, Square } from "lucide-react";
+import { ArrowLeft, ArrowRight, Clock3, Cpu, Lightbulb, MessageSquareText, Square, Trash2 } from "lucide-react";
+import historyStyles from "./interview-history.module.css";
 import type { Lang } from "./auth";
 import { revealDelay, timerTone } from "../lib/ui";
 import { AnimatePresence, Pop, Reveal, motion, spring, useReducedMotion } from "./ui/motion";
@@ -48,18 +49,62 @@ const INTERVIEW_PHOTOS = true;
 export function InterviewSession(props: Props) {
   return props.interviewId
     ? <InterviewRoom {...props} interviewId={props.interviewId} />
-    : <InterviewLobby key={plannedDuration(props.initialDuration)} {...props} />;
+    : <InterviewLobby key={`${props.userId}:${plannedDuration(props.initialDuration)}`} {...props} />;
 }
 
-function InterviewLobby({ api, lang, demo, onStarted, initialDuration }: Props) {
+function InterviewLobby({ api, lang, demo, onStarted, initialDuration, userId }: Props) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [duration, setDuration] = useState(() => plannedDuration(initialDuration));
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [past, setPast] = useState<InterviewListItem[]>([]);
+  const [historyState, setHistoryState] = useState<"loading" | "ready" | "error">("loading");
+  const [historyRefresh, setHistoryRefresh] = useState(0);
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [historyError, setHistoryError] = useState<{ code?: string } | null>(null);
+  const [historyMessage, setHistoryMessage] = useState(false);
+  const deleting = useRef(false);
+  const historyGeneration = useRef(0);
+  const historyHeading = useRef<HTMLHeadingElement>(null);
+  const confirmDeleteButton = useRef<HTMLButtonElement>(null);
+  const deleteTriggers = useRef(new Map<string, HTMLButtonElement>());
+  useEffect(() => { if (confirmDelete) confirmDeleteButton.current?.focus(); }, [confirmDelete]);
   useEffect(() => {
-    api.listInterviews().then(setPast).catch(() => {});
-  }, [api]);
+    const generation = ++historyGeneration.current;
+    setHistoryState("loading");
+    void api.listInterviews().then(rows => {
+      if (historyGeneration.current !== generation) return;
+      setPast(rows); setHistoryState("ready");
+    }).catch(() => { if (historyGeneration.current === generation) setHistoryState("error"); });
+    return () => { historyGeneration.current++; };
+  }, [api, historyRefresh]);
+
+  async function deletePast(id: string) {
+    if (deleting.current) return;
+    deleting.current = true;
+    const generation = historyGeneration.current;
+    setDeletingId(id); setHistoryError(null); setHistoryMessage(false);
+    try {
+      const result = await api.deleteInterview(id, userId);
+      if (result.deleted !== true) throw new Error("Deletion was not confirmed");
+      if (historyGeneration.current !== generation) return;
+      setPast(rows => rows.filter(row => row.id !== id));
+      setConfirmDelete(null);
+      setHistoryMessage(true);
+      requestAnimationFrame(() => historyHeading.current?.focus());
+    } catch (failure) {
+      if (historyGeneration.current === generation) setHistoryError(failure as { code?: string });
+    } finally {
+      deleting.current = false;
+      if (historyGeneration.current === generation) setDeletingId(null);
+    }
+  }
+
+  function cancelDelete(id: string) {
+    setConfirmDelete(null); setHistoryError(null);
+    requestAnimationFrame(() => deleteTriggers.current.get(id)?.focus());
+  }
 
   async function start() {
     setBusy(true);
@@ -134,16 +179,21 @@ function InterviewLobby({ api, lang, demo, onStarted, initialDuration }: Props) 
           <li>{t("אפשר לסיים מוקדם; הדוח מכסה את מה שנענה.", "You can stop early; the report covers what you answered.")}</li>
         </ul>
         {error && <p className="notice error" role="alert"><BidiText>{error}</BidiText></p>}
-        <button className="primary" disabled={busy} onClick={() => void start()}>
+        <button className="primary" disabled={busy || !!deletingId} onClick={() => void start()}>
           <MessageSquareText size={16} aria-hidden="true" /> {busy ? t("פותחים את הראיון…", "Opening the interview…") : t("להתחיל ראיון בכתב", "Start written interview")}
         </button>
       </div>
-      {past.length > 0 && (
+      {(past.length > 0 || historyState !== "loading") && (
         <div className="interview-past">
-          <h3>{t("ראיונות קודמים", "Previous interviews")}</h3>
-          <div className="question-table">
+          <h3 ref={historyHeading} tabIndex={-1}>{t("ראיונות קודמים", "Previous interviews")}</h3>
+          {historyMessage && <p className="small" role="status">{t("הראיון נמחק מהרשימה.", "The interview was removed from your history.")}</p>}
+          {historyError && <p className="notice error" role="alert"><BidiText>{historyError.code === "unauthenticated" || historyError.code === "forbidden" ? apiMessage(historyError, lang) : t("המחיקה לא הושלמה. נסו שוב או רעננו את הרשימה.", "The interview could not be deleted. Try again or refresh the list.")}</BidiText></p>}
+          {historyState === "error" && <div className="notice error" role="alert"><p>{t("לא הצלחנו לטעון את הראיונות הקודמים.", "We could not load your previous interviews.")}</p><button disabled={!!deletingId} onClick={() => setHistoryRefresh(value => value + 1)}>{t("ניסיון נוסף", "Try again")}</button></div>}
+          {historyState === "ready" && !past.length && <p className="muted small">{t("אין ראיונות קודמים להצגה.", "No previous interviews to show.")}</p>}
+          {past.length > 0 && <div className="question-table">
             {past.map((p) => (
-              <button className="question-row history-row" key={p.id} onClick={() => onStarted(p.id)}>
+              <div className={historyStyles.row} key={p.id}>
+              <button className={`question-row history-row ${historyStyles.open}`} disabled={!!deletingId} onClick={() => onStarted(p.id)}>
                 <MessageSquareText size={18} aria-hidden="true" />
                 <div>
                   <h3>
@@ -155,8 +205,14 @@ function InterviewLobby({ api, lang, demo, onStarted, initialDuration }: Props) 
                   {p.status === "completed" ? t("הדוח מוכן", "Report ready") : t("בתהליך", "In progress")}
                 </span>
               </button>
+              {confirmDelete === p.id ? <div className={historyStyles.confirm} role="group" aria-label={t("אישור מחיקת הראיון", "Confirm interview deletion")}>
+                <p>{t("למחוק את הראיון מהרשימה?", "Remove this interview from your history?")}</p>
+                <div className="row"><button type="button" ref={confirmDeleteButton} className={historyStyles.delete} disabled={!!deletingId} onClick={() => void deletePast(p.id)}>{deletingId === p.id ? t("מוחקים…", "Deleting…") : t("מחק", "Delete")}</button><button type="button" disabled={!!deletingId} onClick={() => cancelDelete(p.id)}>{t("ביטול", "Cancel")}</button></div>
+              </div> : <button type="button" className={historyStyles.delete} disabled={!!deletingId} ref={node => { if (node) deleteTriggers.current.set(p.id, node); else deleteTriggers.current.delete(p.id); }}
+                aria-label={t(`מחק ראיון מ־${date(p.started_at)}`, `Delete interview from ${date(p.started_at)}`)} onClick={() => { setConfirmDelete(p.id); setHistoryError(null); setHistoryMessage(false); }}><Trash2 size={17} aria-hidden="true" />{t("מחק", "Delete")}</button>}
+              </div>
             ))}
-          </div>
+          </div>}
         </div>
       )}
     </section>

@@ -148,6 +148,7 @@ class Tx(Protocol):
     async def save_session(self, *, user_id: uuid.UUID, row: dict, turns: list[dict], plan: list[dict] | None,
                            role_slug: str, company_slug: str, expected_revision: int | None = None) -> None: ...
     async def list_sessions(self, user_id: uuid.UUID, *, limit: int = 20) -> list[dict]: ...
+    async def delete_session_from_history(self, session_id: uuid.UUID, *, user_id: uuid.UUID) -> bool: ...
     async def sessions_started_today(self, user_id: uuid.UUID) -> int: ...
     async def record_session_metrics(self, *, user_id: uuid.UUID, session_id: uuid.UUID, metrics: list[dict],
                                      seniority: str | None, role_slug: str, company_slug: str) -> int: ...
@@ -442,6 +443,9 @@ class DbTx:
 
     async def list_sessions(self, user_id, *, limit=20):
         return await sessions.list_sessions(self.connection, user_id, limit=limit)
+
+    async def delete_session_from_history(self, session_id, *, user_id):
+        return await sessions.delete_from_history(self.connection, session_id, user_id=user_id)
 
     async def sessions_started_today(self, user_id):
         return await sessions.started_today(self.connection, user_id)

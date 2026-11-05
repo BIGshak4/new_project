@@ -713,7 +713,7 @@ class _MemoryTx:
 
     async def load_session(self, session_id, *, user_id):
         stored = self.s.sessions.get(session_id)
-        if stored is None or stored["user_id"] != user_id:
+        if stored is None or stored["user_id"] != user_id or stored.get("deleted_at") is not None:
             return None
         return StoredSession(id=session_id, user_id=user_id, row=copy.deepcopy(stored["row"]),
                              turns=copy.deepcopy(stored["turns"]))
@@ -734,14 +734,23 @@ class _MemoryTx:
         self.s.sessions[session_id] = {
             "user_id": user_id, "row": copy.deepcopy(row), "turns": [by_index[i] for i in sorted(by_index)],
             "plan": copy.deepcopy(plan) if plan is not None else (current["plan"] if current else None),
+            "deleted_at": current.get("deleted_at") if current else None,
             "created_at": current["created_at"] if current else datetime.now(UTC)}
 
     async def list_sessions(self, user_id, *, limit=20):
-        mine = sorted((s for s in self.s.sessions.values() if s["user_id"] == user_id),
+        mine = sorted((s for s in self.s.sessions.values() if s["user_id"] == user_id and s.get("deleted_at") is None),
                       key=lambda s: s["created_at"], reverse=True)[:limit]
         return [{"id": s["row"]["id"], "status": s["row"]["status"], "duration_min": s["row"]["config"].get("duration_min"),
                  "language": s["row"]["config"].get("language"), "turn_count": s["row"]["turn_count"],
                  "started_at": s["row"].get("started_at"), "ended_at": s["row"].get("ended_at")} for s in mine]
+
+    async def delete_session_from_history(self, session_id, *, user_id):
+        stored = self.s.sessions.get(session_id)
+        if stored is None or stored["user_id"] != user_id:
+            return False
+        # Copy rather than mutating the row in place so transaction rollback works.
+        self.s.sessions[session_id] = {**stored, "deleted_at": stored.get("deleted_at") or datetime.now(UTC)}
+        return True
 
     async def sessions_started_today(self, user_id):
         today = datetime.now(UTC).date()

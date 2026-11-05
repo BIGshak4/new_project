@@ -3,6 +3,7 @@
     POST /v1/interviews                                   start (duration, language)
     GET  /v1/interviews                                   my interviews, newest first
     GET  /v1/interviews/{id}                              the interview as it is now (refresh-safe)
+    DELETE /v1/interviews/{id}                            remove an owned interview from history
     POST /v1/interviews/{id}/turns/{turn}/answer          answer the current question
     POST /v1/interviews/{id}/hints/next                   ask for a hint (coach mode)
     POST /v1/interviews/{id}/end                          stop early; the report covers what was answered
@@ -63,6 +64,10 @@ class InterviewHintResponse(BaseModel):
     interview: InterviewView
 
 
+class InterviewDeleteResponse(BaseModel):
+    deleted: bool
+
+
 InterviewId = Annotated[uuid.UUID, Path(description="the interview id returned when it was started")]
 IdempotencyKey = Annotated[str | None, Header(alias="Idempotency-Key", max_length=128)]
 
@@ -90,6 +95,13 @@ async def list_interviews(access: CurrentAccess, interviews: Interview) -> list[
 @router.get("/{interview_id}", response_model=InterviewView, summary="The interview as it is now (refresh-safe)")
 async def get_interview(interview_id: InterviewId, access: CurrentAccess, interviews: Interview) -> InterviewView:
     return await interviews.get(access.user_id, interview_id)
+
+
+@router.delete("/{interview_id}", response_model=InterviewDeleteResponse, summary="Delete an interview from my history",
+               responses={404: {"description": "interview not found for this account"}})
+async def delete_interview(interview_id: InterviewId, access: CurrentAccess, interviews: Interview) -> InterviewDeleteResponse:
+    await interviews.delete(access.user_id, interview_id)
+    return InterviewDeleteResponse(deleted=True)
 
 
 @router.post("/{interview_id}/turns/{turn_index}/answer", response_model=InterviewAnswerResponse,

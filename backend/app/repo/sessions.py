@@ -65,7 +65,8 @@ async def _versioned_id(connection: AsyncConnection, table_name: str, slug: str)
 async def load(connection: AsyncConnection, session_id: uuid.UUID, *, user_id: uuid.UUID) -> StoredSession | None:
     session, turn = await db.table("interview_session"), await db.table("session_turn")
     skill, question = await db.table("skill"), await db.table("question")
-    row = (await connection.execute(select(session).where(session.c.id == session_id, session.c.user_id == user_id))).first()
+    row = (await connection.execute(select(session).where(
+        session.c.id == session_id, session.c.user_id == user_id, session.c.deleted_at.is_(None)))).first()
     if row is None:
         return None
     turns = (await connection.execute(
@@ -133,10 +134,24 @@ async def list_sessions(connection: AsyncConnection, user_id: uuid.UUID, *, limi
     session = await db.table("interview_session")
     rows = (await connection.execute(
         select(session.c.id, session.c.status, session.c.config, session.c.turn_count, session.c.started_at, session.c.ended_at)
-        .where(session.c.user_id == user_id).order_by(session.c.created_at.desc()).limit(limit))).all()
+        .where(session.c.user_id == user_id, session.c.deleted_at.is_(None))
+        .order_by(session.c.created_at.desc()).limit(limit))).all()
     return [{"id": str(r.id), "status": r.status, "duration_min": (r.config or {}).get("duration_min"),
              "language": (r.config or {}).get("language"), "turn_count": r.turn_count,
              "started_at": _iso(r.started_at), "ended_at": _iso(r.ended_at)} for r in rows]
+
+
+async def delete_from_history(connection: AsyncConnection, session_id: uuid.UUID, *, user_id: uuid.UUID) -> bool:
+    """Hide an owned session without touching its turns, evidence, or daily usage.
+
+    The marker is deliberately outside SESSION_COLUMNS: a previously accepted
+    evaluation or report may finish saving, but cannot restore a deleted entry.
+    Matching an already-deleted owned row makes retries idempotent.
+    """
+    session = await db.table("interview_session")
+    result = await connection.execute(update(session).where(session.c.id == session_id, session.c.user_id == user_id)
+                                     .values(deleted_at=func.coalesce(session.c.deleted_at, func.now())))
+    return result.rowcount == 1
 
 
 async def started_today(connection: AsyncConnection, user_id: uuid.UUID, *, now: datetime | None = None) -> int:

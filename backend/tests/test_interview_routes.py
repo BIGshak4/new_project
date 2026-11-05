@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import pytest
+import uuid
 from httpx import ASGITransport, AsyncClient
 
 from app.config import Settings, get_settings
@@ -123,3 +124,21 @@ async def test_reviewed_only_refuses_when_nothing_is_published(catalog, monkeypa
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
         response = await c.post(BASE, json={"duration_min": 20}, headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 409 and response.json()["error"]["code"] == "no_reviewed_questions"
+
+
+async def test_delete_interview_contract_ownership_and_retry(client, headers):
+    response = await client.post(BASE, json={"duration_min": 20}, headers=headers)
+    path = f"{BASE}/{response.json()['id']}"
+    _, other_token = make_token(uuid.uuid4(), email=MEMBER)
+    other_headers = {"Authorization": f"Bearer {other_token}"}
+    assert (await client.delete(path)).status_code == 401
+    assert (await client.delete(path, headers=other_headers)).status_code == 404
+    assert (await client.get(path, headers=headers)).status_code == 200
+    deleted = await client.delete(path, headers=headers)
+    assert deleted.status_code == 200 and deleted.json() == {"deleted": True}
+    replay = await client.delete(path, headers=headers)
+    assert replay.status_code == 200 and replay.json() == {"deleted": True}
+    assert (await client.get(BASE, headers=headers)).json() == []
+    assert (await client.get(path, headers=headers)).status_code == 404
+    assert (await client.get(path + "/report", headers=headers)).status_code == 404
+    assert (await client.post(path + "/end", headers=headers)).status_code == 404

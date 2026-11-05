@@ -762,6 +762,8 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
     startInterview: (body: StartInterviewRequest) =>
       call<Interview>("POST", "/v1/interviews", body),
     listInterviews: () => call<InterviewListItem[]>("GET", "/v1/interviews"),
+    deleteInterview: (interviewId: string, expectedUserId?: string) =>
+      call<{ deleted: boolean }>("DELETE", `/v1/interviews/${encodeURIComponent(interviewId)}`, undefined, {}, expectedUserId),
     getInterview: (interviewId: string) =>
       call<Interview>("GET", `/v1/interviews/${interviewId}`),
     /** 202 means saved and still being evaluated: poll getInterview until status leaves "evaluating". */

@@ -1,0 +1,14 @@
+.row { display: flex; align-items: center; flex-wrap: wrap; padding-inline-end: 18px; border-bottom: 1px solid var(--line-soft); gap: 10px; }
+.row:last-child { border-bottom: 0; }
+.open { flex: 1 1 320px; min-width: 0; border-bottom: 0; }
+.open:hover { transform: none; }
+.delete { min-height: 44px; padding: 9px 13px; color: var(--danger); border-color: var(--line); background: var(--surface); flex-shrink: 0; }
+.delete:hover { background: var(--danger-soft); }
+.confirm { flex: 0 1 340px; padding: 12px 0; }
+.confirm p { margin: 0 0 8px; font-size: 14px; }
+.confirm button { min-height: 44px; }
+@media (max-width: 600px) {
+  .row { padding: 0 14px 14px; gap: 0 12px; }
+  .open { padding: 18px 0 12px; flex-basis: 100%; }
+  .confirm { flex-basis: 100%; }
+}
