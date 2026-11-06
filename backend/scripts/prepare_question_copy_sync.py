@@ -12,14 +12,14 @@ here executes SQL, inserts/deletes rows, changes identities, or grants approval.
 from __future__ import annotations
 
 import argparse
-from copy import deepcopy
-from datetime import datetime, timezone
 import hashlib
 import json
-from pathlib import Path
 import re
 import subprocess
 import sys
+from copy import deepcopy
+from datetime import UTC, datetime
+from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -228,8 +228,9 @@ def content_hash(question: dict) -> str:
     # Reuse the actual importer's fingerprint; importing it performs no I/O to a DB.
     sys.path.insert(0, str(ROOT / "backend"))
     sys.path.insert(0, str(ROOT / "backend/scripts"))
-    from app.schemas.bank import BankQuestion
     from seed_db import content_hash as seed_content_hash
+
+    from app.schemas.bank import BankQuestion
     return seed_content_hash(BankQuestion.model_validate(question))
 
 
@@ -442,7 +443,7 @@ def main(argv=None) -> int:
     old, new = read_seed_pair(ROOT, revision)
     live, files = read_backups(args.backups.resolve())
     plan = build_plan(old, new, live)
-    plan.update({"baseline_commit": revision, "prepared_at": datetime.now(timezone.utc).isoformat(), "backups": files,
+    plan.update({"baseline_commit": revision, "prepared_at": datetime.now(UTC).isoformat(), "backups": files,
                  "backup_question_count": len(live), "backup_skill_link_count": sum(len(x["skills"]) for x in live.values()),
                  "seed_files": [{"path": path, "sha256": hashlib.sha256((ROOT / path).read_bytes()).hexdigest()} for path in SEEDS]})
     digest = hashlib.sha256(json.dumps(plan, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:12]

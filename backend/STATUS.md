@@ -1835,10 +1835,65 @@ across midnight; rerun awake, all green).
 **Pilot list.** joni25022001@gmail.com joined `jr_members` as 'Joni' on 2026-11-03 (Shaked: "add him"; dry run,
 then applied): thirteen members.
 
+**Not deployed as of 2026-11-06.** The commit above was never pushed (the session's permission checker refused the
+push); Harel pushed seventeen commits meanwhile, and the full verification of 2026-11-06 (§5zza) rebased it onto
+them. Production still judges without the warm-up until the push lands.
+
 **What this does not do.** The follow-up question's judge (a different prefix) is not warmed; the interview judge
 never saw figures and still does not. The structural fix for pictures, describing each figure in words once so the
 judge reads text, is the next step if the remaining 5 s matter; the priority tier and Render Starter are Shaked's
 switches.
+
+## 5zza. Full check and verification of the system (2026-11-06, Shaked: "do a full check and verification on the system")
+
+**Starting point.** Local master was one commit ahead (the warm-up, §5zz, never pushed) and seventeen behind: Harel's
+work of 3–5 November (permanent usernames and friend codes, account activity and streaks, multi-role goals, question
+waves, interview history deletion, topic quizzes, the November 3 intake, 124 files, two migrations). Rebased onto
+his commits with one conflict (both added a field to `Runtime`; both kept). Production ran his `6bf3626`.
+
+**What was checked, and the result.**
+
+| Layer | Result |
+|---|---|
+| Production health (`/health?db_check=true`) | ok on `6bf3626`; OpenAI, evaluator low effort, default tier; database round trip 2.6 ms; code execution enabled and wired; readiness switch on |
+| Smoke against Render (`scripts/smoke_http.py`) | clean once the route list learned Harel's eleven new routes: **61 v1 routes**, CORS, error shapes, JWKS |
+| Harel's new routes without a token | identity, friends, activity and interview delete answer 401; `GET /v1/usernames/availability` is public by design (200), returns no account details and is budgeted to thirty checks a minute per caller |
+| Web site, broker, signing key | Netlify 200; the broker reports available and its key fingerprint equals the one the API publishes; the deploy workflow for `6bf3626` succeeded on 5 November |
+| Offline suite on the merged code | **4,128 passed / 13 skipped / 18 failed**; the same 18 fail on a clean checkout of `origin/master` without my commit (worktree run), so they are Harel's: a missing protection test for `DELETE /v1/interviews/{id}`, two activity tests that need a time-zone database (none on Windows; `tzdata` added as a dependency, they pass now), and fifteen content tests whose attestations disagree with his seed (`test_solution_review` ×4, `test_preparation_*` ×9, `test_fundamentals_expansion_catalog` ×2). Listed for him in to-do row 23; not touched |
+| Live database suite (alone) | 3 passed in 10 min |
+| Live service suite (alone) | 18 tests, all passed by the end, in pieces: the double-click test takes 3.5 min from this laptop (three concurrent submits on one connection), which is why two whole-suite runs died on timeouts; the laptop slept during one run (5.5 h, three network errors); the listing-speed test read 3.06 s once against a 3.0 s limit and 2.2 s on the rerun; and **the HTTP flow test exposed a real bug, below** |
+| Live interview suite (alone) | 1 passed in 2.7 min |
+| Coins and duels scenario on production, rolled back | all 33 checks passed |
+| Real model, practice (`scripts/e2e_real_flow.py`) | Hebrew flow with a follow-up, English drawn circuit with a passing truth-table check and a follow-up, progress read back: 14 model calls, $0.06, 51 s |
+| Real model, mock interview (fast clock, `GGWW`) | nudge delivered with the next question at levels 1 and 2, a step back, the closing question, the interview ended on it, report proposed "easier": $0.05, 42 s |
+| Real model, judge warm-up | 7.2 s / $0.0133 cold against 4.6 s / $0.0023 warmed, 5,707 of 5,710 input tokens cached, same verdict |
+| Web (`apps/web`) | typecheck clean; **422 tests pass**; `next build` fails on this laptop only because the public Supabase variables are not set here (the client is created at module load and `/_not-found` is prerendered); with placeholder public variables the build compiles and generates all 16 routes; Netlify has the variables |
+| Production data | 13 pilot members; 128 practice attempts; usage since 2 November: 10 judged answers, $0.15, main-answer wait still 12 s median (the warm-up is not deployed); last 30 days $0.74 |
+| Lint | 12 import-order fixes applied in Harel's new test files; 4 findings remain in his `scripts/prepare_question_copy_sync.py` (a closure over loop variables that is in fact called inside the iteration, and a `zip` without `strict`), his to fix |
+
+**Migrations.** `20261104073217_permanent_identity_and_friendships` and `20261105104930_interview_history_deletion` are
+applied in production (`friendship` table, `user_profile.username`, `interview_session.deleted_at`), outside the dry-run
+and approval loop again (§5zn, §5zu, §5zw). Read for policy: writes stay on the service role, the helper functions
+live in a private schema revoked from `authenticated`, and `authenticated` may only read its own friendships, so the
+backend-mediated-writes rule holds. The process conversation with Harel is still owed.
+
+**A bug the live HTTP test found: a connection held while waiting for another.** `PracticeService.start` read
+the day's cap (`_daily_limit`: the billing plan plus the coins shop's top-up, each opening its own transaction)
+*inside* its own transaction, since coins arrived on 2026-10-22. On the live test's single-connection
+`RollbackStore` that is a client-side deadlock (the database session sat "idle in transaction" after
+`started_today`, waiting for a client that was waiting for itself; `pg_stat_activity` showed no lock, which is what
+pointed at the client). On the production pool it is a connection held while waiting for a second one: with
+enough simultaneous question opens (pool size plus overflow) the API would stop answering until the pooler dropped
+the sessions. Never hit, because the pilot has never had that many people opening questions at once; it would have
+been the first thing to happen under load. Fix: the cap is read before the transaction opens;
+`tests/test_start_holds_one_connection.py` pins it with a store whose transactions are strictly one at a time. The
+test's own fixture also picked "the first profile in the table" as the pilot user, which is no longer a member
+(Harel's identity work added other kinds of accounts); it now picks a member, and `/v1/me` failures state the status.
+
+**Changes made during the check.** The start-path fix above and its test; the live test fixture; the smoke route
+list; `tzdata` as a dependency; Harel's to-do row 23; this record. The practice, billing, coins and chaos suites
+pass after the fix (64 tests); the full offline suite ran before it (4,128 passed) and the change is confined to the
+order of two reads in `start`.
 
 ## 6. Known gaps and open items
 
@@ -1880,6 +1935,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-06 | Full check and verification (§5zza): rebased the unpushed warm-up onto Harel's seventeen commits; production health, smoke (61 routes), web, broker and signing key all good; offline 4,128 passed with 18 of Harel's own tests failing on a clean `origin/master` too (content attestations, a missing protection test, two needing `tzdata`, now a dependency); live database 3, live service 18 (in pieces), live interview 1, coins/duels scenario 33 checks; three real-model flows. Found and fixed: `PracticeService.start` opened a second transaction inside its own for the day's cap (a deadlock on a single-connection store, a pool-exhaustion hazard under load in production); the live HTTP test's fixture picks a pilot member again. Harel's to-do row 23. |
 | 2026-11-02 | The judge's prompt cache is warmed when a question opens, and pictures are bounded (§5zz): `JudgeWarmer` sends the judge's exact prefix with an empty answer in the background on practice start / hint / reveal and on every interview turn, once per question per four minutes (`JUDGE_WARM`, counters on `/health.judge_warm`); question figures and answer photos go to the model at 1024 px (Pillow), a question's figures are cached ten minutes. Measured on the real model: judge 10.0 s / $0.0116 cold, 5.4 s / $0.0024 after the warm-up, same verdict. 12 new tests; `scripts/judge_warm_check.py`. |
 | 2026-11-02 | The interview, fitted to the person (§5zy; usage before: five interviews ever, one answered question): the controller's hint after a weak answer is now delivered with the next question (it was decided and never shown); an interview that would end on a weak answer asks one closing question on a strength and ends after it; the report opens with what held up, proposes the next interview (harder / same / easier) and compares with the previous one; finishing earns 15 coins after three answers. Report prompt v2. `InterviewTurnView.closing`, `InterviewReportView.held_up / next_step / since_last_time / fit_change / completion_coins`. 15 new tests; real-model dry runs on the mock interview script (now `--pattern`, `--minutes-per-answer`, `--twice`). Screen side: Harel's row 22. |
 | 2026-11-02 | Follow-ups on every question (§5zx): 243 generated questions were study-only (weight 0 → no follow-up, XP or coins); with Shaked's approval their `assessment_ready` flag was set true in production and tomerfahn@gmail.com joined `jr_members`; `ASSESS_UNREVIEWED_QUESTIONS` (true on Render) makes the rule survive seed reloads without touching Harel's intake or tests; 3 new tests. |

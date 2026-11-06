@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-import pytest
 import uuid
+
+import pytest
 from httpx import ASGITransport, AsyncClient
 
 from app.config import Settings, get_settings

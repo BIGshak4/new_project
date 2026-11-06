@@ -54,6 +54,12 @@ V1_ROUTES = {
     ("POST", "/v1/me/avatar/onboarding"),
     # Harel's self-reported short-card completion (2026-10-21)
     ("GET", "/v1/practice/attempts/{attempt_id}/execution-capabilities"), ("POST", "/v1/practice/attempts/{attempt_id}/executions"),
+    # Harel's permanent usernames, friend codes, account activity and interview history deletion (2026-11-04/05)
+    ("GET", "/v1/me/identity"), ("PUT", "/v1/me/identity/username"), ("GET", "/v1/usernames/availability"),
+    ("GET", "/v1/me/friends"), ("POST", "/v1/me/friends/requests"),
+    ("POST", "/v1/me/friends/requests/{request_id}/accept"), ("POST", "/v1/me/friends/requests/{request_id}/decline"),
+    ("DELETE", "/v1/me/friends/requests/{request_id}"), ("DELETE", "/v1/me/friends/{user_id}"),
+    ("GET", "/v1/me/activity"), ("DELETE", "/v1/interviews/{interview_id}"),
     ("GET", "/v1/fundamentals/progress"), ("PUT", "/v1/fundamentals/progress/{question_key}"),
     ("DELETE", "/v1/fundamentals/progress/{question_key}"),
     ("GET", "/v1/me/program"), ("POST", "/v1/me/program/start"),

@@ -1,6 +1,6 @@
 """Copy deployment planning is offline, field-scoped, and refuses live drift."""
-from copy import deepcopy
 import importlib.util
+from copy import deepcopy
 from pathlib import Path
 
 import pytest

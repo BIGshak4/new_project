@@ -366,12 +366,15 @@ class PracticeService:
         if mode not in MODES:
             raise ApiError("validation", f"mode must be one of {', '.join(MODES)}")
         language = self._language(language)
+        # The day's cap (the billing plan plus the coins shop's top-up) is read BEFORE the transaction opens: it takes
+        # its own connections, and a connection held while waiting for another is how a pool deadlocks under load.
+        # Found by the HTTP live test on a single-connection store, which hung here since coins arrived (2026-11-06).
+        limit = await self._daily_limit(user_id)
         for _try in range(2):                                        # a profile race (two tabs) is redone once
             try:
                 async with self.store.transaction() as tx:
                     await tx.lock_usage(user_id, "practice")
                     started = await tx.started_today(user_id)
-                    limit = await self._daily_limit(user_id)
                     if started >= limit:
                         raise ApiError("usage_limit", f"you have started {started} attempts today; the daily limit is "
                                                       f"{limit}. Come back tomorrow.")

@@ -16,7 +16,7 @@ from app.engine.providers import ScriptedProvider
 from app.repo import sessions
 from app.services.interview_service import InterviewConfig, InterviewService
 from app.services.memory_store import InMemoryStore
-from tests.test_interview_service import Clock, GOOD, SEEDS, USER, OTHER, interviewer, service
+from tests.test_interview_service import GOOD, OTHER, SEEDS, USER, Clock, interviewer, service
 
 
 @pytest.fixture(scope="module")

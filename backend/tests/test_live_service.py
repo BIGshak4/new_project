@@ -60,7 +60,11 @@ async def case(catalog):
         await _seed_in(connection, tables, catalog)
         cache.clear()
         seed_seconds = time.perf_counter() - started
-        user = (await connection.execute(text("select id from public.user_profile limit 1"))).scalar_one()
+        # a profile that is a pilot member: the HTTP test goes through the real access resolver, and "the first
+        # profile" stopped being a member once the pilot had more than one kind of account (2026-11-06)
+        user = (await connection.execute(text(
+            "select p.id from public.user_profile p join auth.users u on u.id = p.id "
+            "join public.jr_members m on lower(m.email) = lower(u.email) limit 1"))).scalar_one()
         email = (await connection.execute(text("select email from auth.users where id = :id"), {"id": user})).scalar_one()
         try:
             yield {"connection": connection, "catalog": catalog, "user_id": user, "email": email,
@@ -461,7 +465,9 @@ class TestOverHttp:
         base = "/v1/practice/attempts"
         try:
             async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
-                me = (await client.get("/v1/me", headers=h)).json()
+                me_response = await client.get("/v1/me", headers=h)
+                assert me_response.status_code == 200, f"/v1/me answered {me_response.status_code}: {me_response.text[:200]}"
+                me = me_response.json()
                 assert me["pilot_member"] is True and me["id"] == str(case["user_id"])
                 assert len((await client.get("/v1/questions", headers=h)).json()) == len(case["catalog"].questions)
                 attempt = (await client.post(base, json={"question_key": "example-sensor-majority", "language": "he",
