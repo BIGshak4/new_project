@@ -36,12 +36,13 @@ def price_ils(answers_per_month: float, *, paying_users: int, profit: float, mod
             "price_ils": round(gross, 1), "suggested_ils": int(math.ceil(gross / 10.0) * 10 - 1)}
 
 
-def answers_for_profit(price_ils_gross: float, *, paying_users: int, profit: float) -> float:
+def answers_for_profit(price_ils_gross: float, *, paying_users: int, profit: float,
+                       model_cost_usd: float = MODEL_COST_PER_ANSWER_USD) -> float:
     """How many answers a month a given price still carries at the target profit (and at break-even when profit=0)."""
     net = price_ils_gross / (1 + VAT)
     fixed = FIXED_MONTHLY_USD * USD_TO_ILS / max(1, paying_users)
     model_budget = (net - STRIPE_FIXED_ILS) * (1 - STRIPE_PERCENT) / (1 + profit) - fixed
-    return max(0.0, model_budget / (MODEL_COST_PER_ANSWER_USD * USD_TO_ILS))
+    return max(0.0, model_budget / (model_cost_usd * USD_TO_ILS))
 
 
 def main() -> None:
@@ -60,8 +61,10 @@ def main() -> None:
               f"model ₪{p['model_cost_ils']}, fixed ₪{p['fixed_share_ils']}, net ₪{p['price_net_ils']}, "
               f"incl. VAT ₪{p['price_ils']} -> suggested ₪{p['suggested_ils']}")
         for price in (p["suggested_ils"],):
-            print(f"          at ₪{price}: {args.profit:.0%} profit up to {answers_for_profit(price, paying_users=args.users, profit=args.profit):.0f} "
-                  f"answers/month, break-even at {answers_for_profit(price, paying_users=args.users, profit=0.0):.0f}; "
+            print(f"          at ₪{price}: {args.profit:.0%} profit up to "
+                  f"{answers_for_profit(price, paying_users=args.users, profit=args.profit, model_cost_usd=args.cost):.0f} "
+                  f"answers/month, break-even at "
+                  f"{answers_for_profit(price, paying_users=args.users, profit=0.0, model_cost_usd=args.cost):.0f}; "
                   f"the daily cap allows {plan['daily_cap'] * 30}")
 
 
