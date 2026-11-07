@@ -1,0 +1,131 @@
+{
+  "status": "verified",
+  "deployed_commit": "ff71aeb716d7aa6fbab7252ad47ed5e799ce36db",
+  "content_commit": "a0f2f61cd41730e048f807dca760aeadf3cc4de2",
+  "integrated_remote_base": "9e2f24171cf162de7b18076d49416975336501d3",
+  "frontend_git_tree_unchanged_by_rebase": "c083639f50c638f3475fe9670244670c9525aa46",
+  "checked_endpoints": {
+    "web": "https://jobrun-practice.netlify.app/api/health?expected=ff71aeb716d7aa6fbab7252ad47ed5e799ce36db",
+    "backend": "https://jobrun-api.onrender.com/health?db_check=true",
+    "catalog": "https://jobrun-api.onrender.com/catalog/summary"
+  },
+  "live_probes": {
+    "expected_revisions": {
+      "web": "ff71aeb716d7aa6fbab7252ad47ed5e799ce36db",
+      "backend": "ff71aeb716d7aa6fbab7252ad47ed5e799ce36db"
+    },
+    "verified_at": "2026-11-07T19:06:31.999219+00:00",
+    "web": {
+      "service": "jobruner-web",
+      "status": "ok",
+      "revision": "ff71aeb716d7aa6fbab7252ad47ed5e799ce36db",
+      "checks": {
+        "application": "ok"
+      }
+    },
+    "backend": {
+      "status": "ok",
+      "engine_version": "0.1.0",
+      "source_revision": "ff71aeb716d7aa6fbab7252ad47ed5e799ce36db",
+      "env": "staging",
+      "llm_provider": "openai",
+      "database_configured": true,
+      "database_host": "pooler",
+      "database_pooler": "transaction",
+      "auth_configured": true,
+      "allowed_origins": 3,
+      "store": "database",
+      "models": {
+        "evaluator": "gpt-6.1-sol",
+        "feedback": "gpt-6.1-terra",
+        "tip": "gpt-6.1-terra",
+        "generator": "gpt-6.1-terra"
+      },
+      "speed": {
+        "effort": {
+          "evaluator": "low",
+          "generator": "medium",
+          "tip": "none",
+          "report": "medium",
+          "feedback": "none"
+        },
+        "service_tier": "default",
+        "role_service_tier": {
+          "feedback": "flex",
+          "tip": "flex",
+          "generator": "flex"
+        },
+        "fallbacks": {
+          "flex_to_default": 0,
+          "effort_none_to_low": 0
+        }
+      },
+      "judge_warm": {
+        "enabled": true,
+        "active": true,
+        "sent": 0,
+        "failed": 0,
+        "skipped_recent": 0,
+        "images_unavailable": 0,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "cost_usd": 0.0,
+        "last_latency_ms": null
+      },
+      "answer_images": "assessed",
+      "code_execution": {
+        "enabled": true,
+        "wired": true,
+        "last_probe": null
+      },
+      "assess_unreviewed_questions": true,
+      "database": {
+        "round_trip_ms": 5.07,
+        "pool_size": 5,
+        "pool_checked_out": 0,
+        "pool_overflow": -4
+      }
+    }
+  },
+  "catalog": {
+    "valid": true,
+    "subjects": [
+      "digital_fundamentals",
+      "fsms",
+      "projects_behavioral",
+      "reasoning",
+      "relevant_programming",
+      "sequential_logic"
+    ],
+    "skills": 35,
+    "roles": [
+      "digital-hardware-engineer"
+    ],
+    "companies": [
+      "generic"
+    ],
+    "questions": 317,
+    "tips": 10,
+    "glossary_terms": 32,
+    "quiz_source_count": 500,
+    "quiz_variant_count": 2500
+  },
+  "browser": {
+    "url": "https://jobrun-practice.netlify.app/",
+    "observed": "Public landing loaded past loading state, with Hebrew content and login controls.",
+    "authenticated": false,
+    "account_or_learner_writes": false
+  },
+  "local_evidence_sha256": {
+    ".impeccable/intake-20261107-batch20/deployment-verified.json": "2a8a705cb50a2707fe05f6ce6804e7b99cfa0a59b6311798c67c89495f91302a",
+    ".impeccable/intake-20261107-batch20/catalog-summary-verified.json": "fab057aa55ff684a6811b2b6f77de45a1b95da6d7b788e4e5f9fae09c841f1bb",
+    ".impeccable/intake-20261107-batch20/live-public-landing.txt": "349dc52313fcbbaf543b08dc1b98d4146e322e6a7915b4971ed0c8950ac657e7",
+    ".impeccable/intake-20261107-batch20/live-public-landing.png": "935c8f9bb8c22304823abbc08bea4137cf1675b25eb2283b1ad1dc68f15112be"
+  },
+  "limitations": [
+    "Live public landing and revision probes are separate from76local material-renderer observations.",
+    "No authenticated production learner flow or AI-feedback evaluation was submitted.",
+    "37new-profile cases were direct signed live-broker jobs, not authenticated Run-button submissions.",
+    "A subsequent documentation-only commit records this already verified content revision."
+  ]
+}
